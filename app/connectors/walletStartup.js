@@ -4,6 +4,7 @@ import { selectorMap } from "../fp";
 import * as sel from "../selectors";
 import * as wla from "../actions/WalletLoaderActions";
 import * as da from "../actions/DaemonActions";
+import * as ca from "../actions/ControlActions";
 
 const mapStateToProps = selectorMap({
   appVersion: sel.appVersion,
@@ -70,7 +71,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onCreateWallet: da.createWallet,
   onRemoveWallet: da.removeWallet,
   setCredentialsAppdataError: da.setCredentialsAppdataError,
-  onGetAvailableWallets: da.getAvailableWallets
+  onGetAvailableWallets: da.getAvailableWallets,
+  validateMasterPubKey: ca.validateMasterPubKey,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

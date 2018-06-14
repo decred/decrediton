@@ -3,7 +3,7 @@ import { withLog as log, logOptionNoArgs } from "./app";
 import { loader as rpcLoader } from "middleware/grpc/client";
 import { WalletExistsRequest, CreateWalletRequest, OpenWalletRequest,
   CloseWalletRequest, StartConsensusRpcRequest, DiscoverAddressesRequest,
-  SubscribeToBlockNotificationsRequest, FetchHeadersRequest } from "middleware/walletrpc/api_pb";
+  SubscribeToBlockNotificationsRequest, FetchHeadersRequest, CreateWatchingOnlyWalletRequest } from "middleware/walletrpc/api_pb";
 
 export const getLoader = log(({ isTestNet, walletName, address, port }) =>
   new Promise((resolve, reject) =>
@@ -33,11 +33,18 @@ export const createWallet = log((loader, pubPass, privPass, seed) =>
     loader.createWallet(request, error => error ? reject(error) : resolve());
   }), "Create Wallet", logOptionNoArgs());
 
+export const createWatchingOnlyWallet = log((loader, extendedPubKey) =>
+  new Promise((resolve, reject) => {
+    const request = new CreateWatchingOnlyWalletRequest();
+    request.setExtendedPubKey(extendedPubKey);
+    loader.createWatchingOnlyWallet(request, error => error ? reject(error) : resolve());
+  }), "Create Watch Only Wallet", logOptionNoArgs());
+
 export const openWallet = log((loader, pubPass) =>
   new Promise((resolve, reject) => {
     const request = new OpenWalletRequest();
     request.setPublicPassphrase(new Uint8Array(Buffer.from(pubPass)));
-    loader.openWallet(request, error => error ? reject(error) : resolve());
+    loader.openWallet(request, (error, response) => error ? reject(error) : resolve(response));
   }), "Open Wallet", logOptionNoArgs());
 
 export const closeWallet = log((loader) =>

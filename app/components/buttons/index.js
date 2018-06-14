@@ -13,12 +13,13 @@ export { default as EnableExternalRequestButton } from "./EnableExternalRequestB
 import ModalButton from "./ModalButton";
 import KeyBlueButton from "./KeyBlueButton";
 import AutoBuyerSwitch from "./AutoBuyerSwitch";
+import WatchOnlyWalletSwitch from "./WatchOnlyWalletSwitch";
 import NetworkSwitch from "./NetworkSwitch";
 import DangerButton from "./DangerButton";
 import CloseButton from "./CloseButton";
 import InvisibleButton from "./InvisibleButton";
 export { ModalButton, AutoBuyerSwitch, KeyBlueButton, DangerButton,
-  CloseButton, NetworkSwitch, InvisibleButton };
+  CloseButton, NetworkSwitch, InvisibleButton, WatchOnlyWalletSwitch };
 
 /***************************************************
  * Custom Modal Buttons

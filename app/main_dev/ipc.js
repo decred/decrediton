@@ -9,6 +9,7 @@ import { launchDCRD, launchDCRWallet, GetDcrdPID, GetDcrwPID, closeDCRW, GetDcrw
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const logger = createLogger();
+let watchingOnlyWallet;
 
 export const getAvailableWallets = (network) => {
   // Attempt to find all currently available wallet.db's in the respective network direction in each wallets data dir
@@ -181,3 +182,9 @@ export const checkDaemon = (mainWindow, rpcCreds, testnet) => {
     mainWindow.webContents.send("check-daemon-response", 0);
   });
 };
+
+export const setWatchingOnlyWallet = (isWatchingOnly) => {
+  watchingOnlyWallet = isWatchingOnly;
+};
+
+export const getWatchingOnlyWallet = () => watchingOnlyWallet;

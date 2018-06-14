@@ -4,7 +4,7 @@ import DaemonLoading from "./DaemonLoading";
 import Logs from "./Logs";
 import Settings from "./Settings";
 import ReleaseNotes from "./ReleaseNotes";
-import { WalletSelectionBody } from "./WalletSelection";
+import WalletSelectionBody from "./WalletSelection";
 import StartRPCBody from "./StartRPC";
 import { DiscoverAddressesBody } from "./DiscoverAddresses";
 import { FetchBlockHeadersBody } from "./FetchBlockHeaders";

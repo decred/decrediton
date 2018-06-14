@@ -1,7 +1,7 @@
 // @flow
 import * as wallet from "wallet";
 import * as sel from "selectors";
-import { isValidAddress } from "helpers";
+import { isValidAddress, isValidMasterPubKey } from "helpers";
 import { getAccountsAttempt, getStartupWalletInfo, getStakeInfoAttempt } from "./ClientActions";
 import { getWalletCfg } from "../config";
 import { RescanRequest, ConstructTransactionRequest } from "../middleware/walletrpc/api_pb";
@@ -451,6 +451,24 @@ export const validateAddress = address => async (dispatch, getState) => {
   } catch (error) {
     dispatch({ type: VALIDATEADDRESS_FAILED });
     return { isValid: false, error, getIsValid () { return false; } };
+  }
+};
+
+export const VALIDATEMASTERPUBKEY_FAILED = "VALIDATEMASTERPUBKEY_FAILED";
+export const VALIDATEMASTERPUBKEY_SUCCESS = "VALIDATEMASTERPUBKEY_SUCCESS";
+
+export const validateMasterPubKey = masterPubKey => async (dispatch) => {
+  try {
+    const validationErr = isValidMasterPubKey(masterPubKey);
+    if (validationErr) {
+      dispatch({ type: VALIDATEMASTERPUBKEY_FAILED });
+      return { isValid: false, error: validationErr };
+    }
+    dispatch({ type: VALIDATEMASTERPUBKEY_SUCCESS, isWatchOnly: true, masterPubKey });
+    return { isValid: true, error: null };
+  } catch (error) {
+    dispatch({ error, type: VALIDATEMASTERPUBKEY_FAILED });
+    return { isValid: false, error };
   }
 };
 

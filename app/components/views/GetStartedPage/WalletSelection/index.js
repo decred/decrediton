@@ -1,6 +1,5 @@
-import {
-  WalletSelectionFormBody
-} from "./Form";
+import { WalletSelectionFormBody } from "./Form";
+import { createWallet } from "connectors";
 
 @autobind
 class WalletSelectionBody extends React.Component {
@@ -17,6 +16,9 @@ class WalletSelectionBody extends React.Component {
       newWalletName: "",
       selectedWallet: this.props.availableWallets ? this.props.availableWallets[0] : null,
       hasFailedAttempt: false,
+      isWatchOnly: false,
+      walletMasterPubKey: "",
+      masterPubKeyError: false,
     };
   }
   componentWillReceiveProps(nextProps) {
@@ -42,6 +44,8 @@ class WalletSelectionBody extends React.Component {
       hideCreateWalletForm,
       onEditWallets,
       onCloseEditWallets,
+      toggleWatchOnly,
+      onChangeCreateWalletMasterPubKey,
     } = this;
     const {
       selectedWallet,
@@ -51,7 +55,10 @@ class WalletSelectionBody extends React.Component {
       createWalletForm,
       createNewWallet,
       editWallets,
-      hasFailedAttempt
+      hasFailedAttempt,
+      isWatchOnly,
+      walletMasterPubKey,
+      masterPubKeyError,
     } = this.state;
     return (
       <WalletSelectionFormBody
@@ -74,6 +81,11 @@ class WalletSelectionBody extends React.Component {
           editWallets,
           networkSelected: newWalletNetwork == "mainnet",
           getDaemonSynced,
+          toggleWatchOnly,
+          isWatchOnly,
+          onChangeCreateWalletMasterPubKey,
+          walletMasterPubKey,
+          masterPubKeyError,
           ...this.props,
           ...this.state,
         }}
@@ -102,14 +114,37 @@ class WalletSelectionBody extends React.Component {
     this.setState({ newWalletName });
   }
   createWallet() {
-    const { newWalletName, createNewWallet } = this.state;
+    const { newWalletName, createNewWallet,
+      isWatchOnly, masterPubKeyError, walletMasterPubKey } = this.state;
     if (newWalletName == "" ) {
       this.setState({ hasFailedAttempt: true });
       return;
     }
+    if (isWatchOnly) {
+      if (masterPubKeyError || !walletMasterPubKey) {
+        this.setState({ hasFailedAttempt: true });
+        return;
+      }
+    }
     this.props.onCreateWallet(
       createNewWallet,
       { label: newWalletName, value: { wallet: newWalletName } });
+  }
+  toggleWatchOnly() {
+    const { isWatchOnly } = this.state;
+    this.setState({ isWatchOnly : !isWatchOnly });
+  }
+  async onChangeCreateWalletMasterPubKey(walletMasterPubKey) {
+    if (walletMasterPubKey === "") {
+      this.setState({ hasFailedAttempt: true });
+    }
+    const { isValid } = await this.props.validateMasterPubKey(walletMasterPubKey);
+    if (!isValid) {
+      this.setState({ masterPubKeyError: true });
+    } else {
+      this.setState({ masterPubKeyError: false });
+    }
+    this.setState({ walletMasterPubKey });
   }
   startWallet() {
     this.props.onStartWallet(this.state.selectedWallet);
@@ -120,4 +155,4 @@ class WalletSelectionBody extends React.Component {
 
 }
 
-export { WalletSelectionBody };
+export default createWallet(WalletSelectionBody);

@@ -10,7 +10,7 @@ import {
   FETCHHEADERS_ATTEMPT, FETCHHEADERS_FAILED, FETCHHEADERS_PROGRESS, FETCHHEADERS_SUCCESS,
   CREATEWALLET_EXISTINGSEED_INPUT, CREATEWALLET_NEWSEED_INPUT, CREATEWALLET_NEWSEED_CONFIRM_INPUT, CREATEWALLET_NEWSEED_BACK_INPUT,
   CREATEWALLET_GOBACK_EXISITNG_OR_NEW, CREATEWALLET_GOBACK,
-  UPDATEDISCOVERACCOUNTS, NEEDED_BLOCKS_DETERMINED
+  UPDATEDISCOVERACCOUNTS, NEEDED_BLOCKS_DETERMINED, CREATEWATCHONLYWALLET_ATTEMPT,
 } from "actions/WalletLoaderActions";
 import {
   WALLETCREATED
@@ -69,6 +69,10 @@ export default function walletLoader(state = {}, action) {
       stepIndex: 1,
       existingOrNew: true,
       createNewWallet: false,
+    };
+  case CREATEWATCHONLYWALLET_ATTEMPT:
+    return { ...state,
+      stepIndex: 1,
     };
   case CREATEWALLET_GOBACK_EXISITNG_OR_NEW:
     return { ...state,
@@ -148,6 +152,7 @@ export default function walletLoader(state = {}, action) {
     return { ...state,
       walletOpenError: null,
       walletOpenRequestAttempt: false,
+      isWatchingOnly: action.isWatchingOnly,
       walletOpenResponse: action.response,
       advancedDaemonInputRequest: true,
       stepIndex: 3,

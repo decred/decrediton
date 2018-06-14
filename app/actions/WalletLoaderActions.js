@@ -1,7 +1,7 @@
 // @flow
 import {
   getLoader, startRpc, getWalletExists, createWallet, openWallet, closeWallet, discoverAddresses,
-  subscribeToBlockNotifications, fetchHeaders, getStakePoolInfo
+  subscribeToBlockNotifications, fetchHeaders, getStakePoolInfo,
 } from "wallet";
 import * as wallet from "wallet";
 import { getWalletServiceAttempt, startWalletServices } from "./ClientActions";
@@ -101,6 +101,24 @@ export const createWalletRequest = (pubPass, privPass, seed, existing) =>
       .catch(error => dispatch({ error, type: CREATEWALLET_FAILED }));
   };
 
+export const CREATEWATCHONLYWALLET_ATTEMPT = "CREATEWATCHONLYWALLET_ATTEMPT";
+export const CREATEWATCHONLYWALLET_FAILED = "CREATEWATCHONLYWALLET_FAILED";
+export const CREATEWATCHONLYWALLET_SUCCESS = "CREATEWATCHONLYWALLET_SUCCESS";
+
+export const createWatchOnlyWalletRequest = (extendedPubKey, pubPass ="") => (dispatch, getState) => {
+  dispatch({ type: CREATEWATCHONLYWALLET_ATTEMPT });
+  return wallet.createWatchingOnlyWallet(getState().walletLoader.loader, extendedPubKey, pubPass)
+    .then(() => {
+      const { daemon: { walletName } } = getState();
+      const config = getWalletCfg(isTestNet(getState()), walletName);
+      config.delete("discoveraccounts");
+      dispatch({ response: {}, type: CREATEWATCHONLYWALLET_SUCCESS });
+      dispatch(getWalletServiceAttempt());
+      dispatch(startRpcRequestFunc());
+    })
+    .catch(error => dispatch({ error, type: CREATEWATCHONLYWALLET_FAILED }));
+};
+
 export const OPENWALLET_INPUT = "OPENWALLET_INPUT";
 export const OPENWALLET_FAILED_INPUT = "OPENWALLET_FAILED_INPUT";
 export const OPENWALLET_ATTEMPT = "OPENWALLET_ATTEMPT";
@@ -110,14 +128,16 @@ export const OPENWALLET_SUCCESS = "OPENWALLET_SUCCESS";
 export const openWalletAttempt = (pubPass, retryAttempt) => (dispatch, getState) => {
   dispatch({ type: OPENWALLET_ATTEMPT });
   return openWallet(getState().walletLoader.loader, pubPass)
-    .then(() => {
+    .then((response) => {
       dispatch(getWalletServiceAttempt());
-      dispatch({ type: OPENWALLET_SUCCESS });
+      wallet.setIsWatchingOnly(response.getWatchingOnly());
+      dispatch({ isWatchingOnly: response.getWatchingOnly(),  type: OPENWALLET_SUCCESS });
     })
-    .catch(error => {
+    .catch(async error => {
       if (error.message.includes("wallet already")) {
         dispatch(getWalletServiceAttempt());
-        dispatch({ response: {}, type: OPENWALLET_SUCCESS });
+        const isWatchingOnly = await wallet.getIsWatchingOnly();
+        dispatch({ isWatchingOnly, type: OPENWALLET_SUCCESS });
       } else if (error.message.includes("invalid passphrase") && error.message.includes("public key")) {
         if (retryAttempt) {
           dispatch({ error, type: OPENWALLET_FAILED_INPUT });

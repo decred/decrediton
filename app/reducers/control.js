@@ -19,7 +19,7 @@ import { GETNEXTADDRESS_ATTEMPT, GETNEXTADDRESS_FAILED, GETNEXTADDRESS_SUCCESS,
   CONSTRUCTTX_ATTEMPT, CONSTRUCTTX_FAILED, CONSTRUCTTX_SUCCESS,
   SETBALANCETOMAINTAIN, SETMAXFEE, SETMAXPRICEABSOLUTE, SETMAXPRICERELATIVE, SETMAXPERBLOCK,
   VALIDATEADDRESS_ATTEMPT, VALIDATEADDRESS_SUCCESS, VALIDATEADDRESS_FAILED, VALIDATEADDRESS_CLEANSTORE,
-  MODAL_SHOWN, MODAL_HIDDEN,
+  MODAL_SHOWN, MODAL_HIDDEN, VALIDATEMASTERPUBKEY_SUCCESS, VALIDATEMASTERPUBKEY_FAILED,
 } from "../actions/ControlActions";
 import { WALLET_AUTOBUYER_SETTINGS } from "actions/DaemonActions";
 
@@ -392,6 +392,16 @@ export default function control(state = {}, action) {
   case VALIDATEADDRESS_CLEANSTORE:
     return { ...state,
       validateAddressResponse: null
+    };
+  case VALIDATEMASTERPUBKEY_SUCCESS:
+    return { ...state,
+      masterPubKey: action.masterPubKey,
+      isWatchOnly: action.isWatchOnly,
+    };
+  case VALIDATEMASTERPUBKEY_FAILED:
+    return { ...state,
+      masterPubKey: null,
+      validateMasterPubKeyResponse: null,
     };
   case WALLET_AUTOBUYER_SETTINGS:
     return { ...state,

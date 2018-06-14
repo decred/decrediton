@@ -45,3 +45,18 @@ export function isValidAddress(addr, network) {
 
   return null;
 }
+
+const ERR_INVALID_MASTER_PUB_KEY = "ERR_INVALID_MASTER_PUB_KEY";
+const ERR_INVALID_MASTERPUB_CHECKSUM = "ERR_INVALID_MASTERPUB_CHECKSUM";
+
+export function isValidMasterPubKey(masterPubKey) {
+  if (!masterPubKey || !masterPubKey.trim().length) return ERR_INVALID_MASTER_PUB_KEY;
+  try {
+    var bs58check = bs58checkBase(_blake256x2);
+    bs58check.decode(masterPubKey, _blake256x2);
+  } catch (error) {
+    return ERR_INVALID_MASTERPUB_CHECKSUM;
+  }
+
+  return null;
+}

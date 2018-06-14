@@ -35,6 +35,12 @@
   background-color: @disabled-color;
 }
 
+.eye-filter-menu-button-icon-disabled {
+  .eye-filter-menu-button-icon;
+
+  background-image: @contextbutton-eye-disabled-icon;
+}
+
 .eye-filter-menu-button-icon::after {
   content: "";
   border-color: #fff transparent transparent;
@@ -48,6 +54,10 @@
 }
 
 .eye-filter-menu-button-icon:hover {
+  background-color: @enabled-color;
+}
+
+.eye-filter-menu-button-icon-disabled:hover {
   background-color: @enabled-color;
 }
 
