@@ -7,6 +7,11 @@ export const TestNetParams = {
   SStxChangeMaturity:      1,
   GenesisTimestamp:        1489550400,
   TargetTimePerBlock:      2 * 60, // in seconds
+
+  // no way to know which one the wallet is using right now, so we record both
+  // types for the moment.
+  LegacyHDCoinType: 11,
+  HDCoinType: 1,
 };
 
 export const MainNetParams = {
@@ -16,4 +21,9 @@ export const MainNetParams = {
   SStxChangeMaturity:      1,
   GenesisTimestamp:        1454954400,
   TargetTimePerBlock:      5 * 60, // in seconds
+
+  // no way to know which one the wallet is using right now, so we record both
+  // types for the moment.
+  LegacyHDCoinType: 20,
+  HDCoinType: 42,
 };

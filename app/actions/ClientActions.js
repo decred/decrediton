@@ -244,43 +244,32 @@ export const getAccountNumbersBalances = (accountNumbers) => (dispatch) => {
 };
 
 const getAccountsBalances = (accounts) => (dispatch, getState) => {
-  var balances = new Array();
-  const { daemon: { hiddenAccounts } } = getState();
+  const walletService = sel.walletService(getState());
+  const chainParams = sel.chainParams(getState());
+  const hiddenAccounts = sel.hiddenAccounts(getState());
 
-  accounts.forEach(account => {
-    let hidden = false;
-    let HDPath = "";
-    if (hiddenAccounts.find(eq(account.getAccountNumber()))) hidden = true;
-    if (sel.isMainNet(getState())) {
-      HDPath = "m / 44' / 20' / " + account.getAccountNumber() + "'";
-    } else if (sel.isTestNet(getState())) {
-      HDPath = "m / 44' / 11' / " + account.getAccountNumber() + "'";
-    }
-    wallet.getBalance(sel.walletService(getState()), account.getAccountNumber(), 0)
-      .then(resp => {
-        const accountEntry = {
-          accountNumber: account.getAccountNumber(),
-          accountName: account.getAccountName(),
-          externalKeys: account.getExternalKeyCount(),
-          internalKeys: account.getInternalKeyCount(),
-          importedKeys: account.getImportedKeyCount(),
-          hidden,
-          HDPath,
-          total: resp.getTotal(),
-          spendable: resp.getSpendable(),
-          immatureReward: resp.getImmatureReward(),
-          immatureStakeGeneration: resp.getImmatureStakeGeneration(),
-          lockedByTickets: resp.getLockedByTickets(),
-          votingAuthority: resp.getVotingAuthority(),
-        };
-        balances.push(accountEntry);
-      })
-      .catch(error => {
-        dispatch({ error, type: GETBALANCE_FAILED });
-        return;
-      });
+  const promises = accounts.map(async (account) => {
+    const resp = await wallet.getBalance(walletService, account.getAccountNumber(), 0);
+    return {
+      accountNumber: account.getAccountNumber(),
+      accountName: account.getAccountName(),
+      externalKeys: account.getExternalKeyCount(),
+      internalKeys: account.getInternalKeyCount(),
+      importedKeys: account.getImportedKeyCount(),
+      hidden: !!hiddenAccounts.find(eq(account.getAccountNumber())),
+      HDPath: "m / 44' / " + chainParams.HDCoinType + "' / " + account.getAccountNumber() + "'",
+      total: resp.getTotal(),
+      spendable: resp.getSpendable(),
+      immatureReward: resp.getImmatureReward(),
+      immatureStakeGeneration: resp.getImmatureStakeGeneration(),
+      lockedByTickets: resp.getLockedByTickets(),
+      votingAuthority: resp.getVotingAuthority(),
+    };
   });
-  dispatch({ balances, type: GETBALANCE_SUCCESS });
+
+  Promise.all(promises)
+    .then(balances => dispatch({ balances, type: GETBALANCE_SUCCESS }))
+    .catch(error => dispatch({ error, type: GETBALANCE_FAILED }));
 };
 
 export const GETBALANCE_ATTEMPT = "GETBALANCE_ATTEMPT";
