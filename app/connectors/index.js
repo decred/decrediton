@@ -44,3 +44,4 @@ export { default as modalVisible } from "./modalVisible";
 export { default as locale } from "./locale";
 export { default as fatalErrorPage } from "./fatalErrorPage";
 export { default as theming } from "./theming";
+export { default as newStakePool } from "./newStakePool";

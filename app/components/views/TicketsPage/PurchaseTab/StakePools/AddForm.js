@@ -37,6 +37,7 @@ const StakePoolsAddForm = ({
           </div>
           <div className="stakepool-field-value">
             <StakePoolSelect
+              creatable
               options={unconfiguredStakePools}
               value={selectedUnconfigured}
               onChange={onChangeSelectedUnconfigured}

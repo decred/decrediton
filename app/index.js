@@ -47,6 +47,7 @@ var initialState = {
     activeStakePoolConfig: false,
     selectedStakePool: null,
     updatedStakePoolList: false,
+    addCustomStakePoolAttempt: false,
   },
   daemon: {
     appVersion: pkg.version,

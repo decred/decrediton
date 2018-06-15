@@ -103,3 +103,12 @@ export function getPurchaseInfo(apiUrl, apiToken, cb) {
       cb(null, error, apiUrl);
     });
 }
+
+// statsFromStakePool grabs stats and config information directly from the
+// stakepool host.
+export function statsFromStakePool(host, cb) {
+  const url = host + "/api/v1/stats";
+  axios.get(url)
+    .then(resp => cb(resp, null, host))
+    .catch(error => cb(null, error, host));
+}

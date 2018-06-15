@@ -780,6 +780,7 @@ const purchaseTicketsRequestAttempt = get([ "control", "purchaseTicketsRequestAt
 const importScriptRequestAttempt = get([ "control", "importScriptRequestAttempt" ]);
 
 export const isSavingStakePoolConfig = bool(currentStakePoolConfigRequest);
+export const isAddingCustomStakePool = bool(get([ "stakePool", "addCustomStakePoolAttempt" ]));
 export const isPurchasingTickets = bool(purchaseTicketsRequestAttempt);
 export const isImportingScript = bool(importScriptRequestAttempt);
 

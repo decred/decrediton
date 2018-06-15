@@ -81,6 +81,7 @@ export const allowStakepoolRequests = (stakePoolHost) => {
   addAllowedURL(stakePoolHost + "/api/v1/address");
   addAllowedURL(stakePoolHost + "/api/v2/voting");
   addAllowedURL(stakePoolHost + "/api/v1/getpurchaseinfo");
+  addAllowedURL(stakePoolHost + "/api/v1/stats");
 };
 
 export const reloadAllowedExternalRequests = () => {
