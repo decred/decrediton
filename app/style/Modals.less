@@ -49,6 +49,7 @@
 }
 
 .app-modal.info-modal,
+.app-modal.confirm-modal,
 .app-modal-reduced-bar.info-modal,
 .app-modal-standalone.info-modal {
   max-height: 60%;
@@ -82,12 +83,14 @@
 .app-modal-reduced-bar.info-modal.double,
 .app-modal-standalone.info-modal.double,
 .app-modal.passphrase-modal,
+.app-modal.confirm-modal,
 .app-modal-reduced-bar.passphrase-modal {
   width: 540px;
   margin-top: 172px;
 }
 
 .app-modal.info-modal.double,
+.app-modal.confirm-modal,
 .app-modal.passphrase-modal {
   margin-left: 134px;
 }
@@ -156,6 +159,7 @@
 
 @media screen and (max-height: 420px) {
   .app-modal.passphrase-modal,
+  .app-modal.confirm-modal,
   .app-modal.reduced-bar.passphrase-modal {
     top: 10%;
     max-height: 60%;
@@ -285,7 +289,7 @@
 }
 
 .confirm-seed-copy-modal-toolbar > .confirm-modal-close-button {
-  float: left;
+  float: right;
 }
 
 .confirm-seed-copy-modal-header {
@@ -345,7 +349,7 @@
 }
 
 .confirm-modal-toolbar {
-  position: absolute;
+  margin-top: 2em;
   bottom: 20px;
   right: 20px;
 }
@@ -355,7 +359,7 @@
 }
 
 .confirm-modal-toolbar > .confirm-modal-close-button {
-  float: left;
+  float: right;
 }
 
 .confirm-modal-header {
