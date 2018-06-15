@@ -4,10 +4,8 @@ import { selectorMap } from "fp";
 import * as sel from "selectors";
 import * as wla from "actions/WalletLoaderActions";
 import * as ca from "actions/ClientActions";
-import { getSeedService } from "wallet/seed";
 
 const mapStateToProps = selectorMap({
-  seedService: getSeedService,
   createWalletExisting: sel.createWalletExisting,
   isCreatingWallet: sel.isCreatingWallet,
   confirmNewSeed: sel.confirmNewSeed,
@@ -23,6 +21,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   createWalletRequest: wla.createWalletRequest,
   copySeedToClipboard: ca.copySeedToClipboard,
   createWatchOnlyWalletRequest: wla.createWatchOnlyWalletRequest,
+  generateSeed: wla.generateSeed,
+  decodeSeed: wla.decodeSeed,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

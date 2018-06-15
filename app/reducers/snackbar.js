@@ -37,6 +37,9 @@ import {
   GETMYTICKETSSTATS_FAILED,
 } from "actions/StatisticsActions";
 import { WALLETREMOVED_FAILED } from "actions/DaemonActions";
+import {
+  GETWALLETSEEDSVC_FAILED
+} from "actions/WalletLoaderActions";
 
 const messages = defineMessages({
   defaultSuccessMessage: {
@@ -243,6 +246,7 @@ export default function snackbar(state = {}, action) {
   case EXPORT_ERROR:
   case GETSTARTUPSTATS_FAILED:
   case GETMYTICKETSSTATS_FAILED:
+  case GETWALLETSEEDSVC_FAILED:
     type = "Error";
     message = messages[action.type] || messages.defaultErrorMessage;
     values = { originalError: String(action.error) };

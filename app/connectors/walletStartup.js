@@ -43,6 +43,8 @@ const mapStateToProps = selectorMap({
   defaultLocale: sel.defaultLocaleName,
   updateAvailable: sel.updateAvailable,
   createNewWallet: sel.createNewWallet,
+  isWatchOnly: sel.isWatchOnly,
+  masterPubKey: sel.masterPubKey,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

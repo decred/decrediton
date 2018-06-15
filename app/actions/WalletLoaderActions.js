@@ -35,6 +35,21 @@ export const loaderRequest = () => (dispatch, getState) => {
     .catch(error => dispatch({ error, type: LOADER_FAILED }));
 };
 
+export const GETWALLETSEEDSVC_ATTEMPT = "GETWALLETSEEDSVC_ATTEMPT";
+export const GETWALLETSEEDSVC_FAILED = "GETWALLETSEEDSVC_FAILED";
+export const GETWALLETSEEDSVC_SUCCESS = "GETWALLETSEEDSVC_SUCCESS";
+
+export const getWalletSeedService = () => (dispatch, getState) => {
+  const { grpc: { address, port } } = getState();
+  const { daemon: { walletName } } = getState();
+  dispatch({ type: GETWALLETSEEDSVC_ATTEMPT });
+  return wallet.getSeedService(isTestNet(getState()), walletName, address, port)
+    .then(seedService => {
+      dispatch({ seedService, type: GETWALLETSEEDSVC_SUCCESS });
+    })
+    .catch(error => dispatch({ error, type: GETWALLETSEEDSVC_FAILED }));
+};
+
 export const WALLETEXIST_ATTEMPT = "WALLETEXIST_ATTEMPT";
 export const WALLETEXIST_FAILED = "WALLETEXIST_FAILED";
 export const WALLETEXIST_SUCCESS = "WALLETEXIST_SUCCESS";
@@ -327,3 +342,45 @@ export function determineNeededBlocks() {
       });
   };
 }
+
+export const GENERATESEED_ATTEMPT = "GENERATESEED_ATTEMPT";
+export const GENERATESEED_FAILED = "GENERATESEED_FAILED";
+export const GENERATESEED_SUCCESS = "GENERATESEED_SUCCESS";
+
+// generateSeed generates a new seed for a new wallet. Please note that the seed
+// is *not* replicated into the global redux state, to prevent being extracted
+// or logged.
+// This is an async function, so it returns a promise that resolves once the
+// seed is obtained.
+export const generateSeed = () => async (dispatch, getState) => {
+  const seedService = getState().walletLoader.seedService;
+  dispatch({ type: GENERATESEED_ATTEMPT });
+  try {
+    const response = wallet.generateSeed(seedService);
+    dispatch({ type: GENERATESEED_SUCCESS }); // please note: don't copy the seed here.
+    return response;
+  } catch (error) {
+    dispatch({ error, type: GENERATESEED_FAILED });
+    throw error;
+  }
+};
+
+export const DECODESEED_ATTEMPT = "DECODESEED_ATTEMPT";
+export const DECODESEED_FAILED = "DECODESEED_FAILED";
+export const DECODESEED_SUCCESS = "DECODESEED_SUCCESS";
+
+// decodeSeed tries to decode the given mnemonic as a seed. Please note that
+// this mnenomic is *not* replicated into the global redux state, to prevent
+// being extracted or logged.
+export const decodeSeed = (mnemonic) => async (dispatch, getState) => {
+  const seedService = getState().walletLoader.seedService;
+  dispatch({ type: DECODESEED_ATTEMPT }); // please note: don't copy the seed here.
+  try {
+    const response = wallet.decodeSeed(seedService, mnemonic);
+    dispatch({ type: DECODESEED_SUCCESS });
+    return response;
+  } catch (error) {
+    dispatch({ error, type: DECODESEED_FAILED });
+    throw error;
+  }
+};

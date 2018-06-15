@@ -1,5 +1,5 @@
 // @flow
-import { loaderRequest } from "./WalletLoaderActions";
+import { loaderRequest, getWalletSeedService } from "./WalletLoaderActions";
 import { getVersionService, getVersionResponse } from "wallet";
 import { push as pushHistory } from "react-router-redux";
 import { ipcRenderer } from "electron";
@@ -52,6 +52,7 @@ export const getWalletRPCVersionAttempt = () => (dispatch, getState) => {
       } else {
         const { address, port } = getState().grpc;
         dispatch(loaderRequest(address,port));
+        dispatch(getWalletSeedService(address, port));
       }
     })
     .catch(error => dispatch({ error, type: WALLETRPCVERSION_FAILED }));
