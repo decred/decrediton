@@ -52,7 +52,7 @@ class ConfirmSeed extends React.Component {
     if (seedWordStr == mnemonic) {
       this.setState({ seedWordsError: null });
       this.props
-        .decode(mnemonic)
+        .decodeSeed(mnemonic)
         .then(response => this.props.onChange(response.getDecodedSeed()))
         .then(() => this.setState({ seedError: null }))
         .catch(e => console.log(e));

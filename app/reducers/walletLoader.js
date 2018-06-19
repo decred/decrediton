@@ -11,6 +11,7 @@ import {
   CREATEWALLET_EXISTINGSEED_INPUT, CREATEWALLET_NEWSEED_INPUT, CREATEWALLET_NEWSEED_CONFIRM_INPUT, CREATEWALLET_NEWSEED_BACK_INPUT,
   CREATEWALLET_GOBACK_EXISITNG_OR_NEW, CREATEWALLET_GOBACK,
   UPDATEDISCOVERACCOUNTS, NEEDED_BLOCKS_DETERMINED, CREATEWATCHONLYWALLET_ATTEMPT,
+  GETWALLETSEEDSVC_ATTEMPT, GETWALLETSEEDSVC_SUCCESS,
 } from "actions/WalletLoaderActions";
 import {
   WALLETCREATED
@@ -278,6 +279,14 @@ export default function walletLoader(state = {}, action) {
   case WALLET_LOADER_SETTINGS:
     return { ...state,
       discoverAccountsComplete: action.discoverAccountsComplete,
+    };
+  case GETWALLETSEEDSVC_ATTEMPT:
+    return { ...state,
+      seedService: null,
+    };
+  case GETWALLETSEEDSVC_SUCCESS:
+    return { ...state,
+      seedService: action.seedService
     };
   default:
     return state;

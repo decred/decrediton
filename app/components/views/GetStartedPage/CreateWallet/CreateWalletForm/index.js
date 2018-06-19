@@ -14,7 +14,6 @@ class CreateWalletForm extends React.Component {
       mnemonic: "",
       seed: "",
       passPhrase: "",
-      decode: null,
       showCopySeedConfirm: false,
     };
   }
@@ -65,6 +64,7 @@ class CreateWalletForm extends React.Component {
       getNeededBlocks,
       getEstimatedTimeLeft,
       getDaemonSynced,
+      decodeSeed,
     } = this.props;
     const {
       setSeed,
@@ -74,7 +74,7 @@ class CreateWalletForm extends React.Component {
       onSubmitCopySeedConfirm,
       onCancelCopySeedConfirm,
     } = this;
-    const { mnemonic, decode, showCopySeedConfirm } = this.state;
+    const { mnemonic, showCopySeedConfirm } = this.state;
     const isValid = this.isValid();
 
     return (confirmNewSeed || createWalletExisting)
@@ -87,7 +87,7 @@ class CreateWalletForm extends React.Component {
             createNewWallet,
             setPassPhrase,
             onCreateWallet,
-            decode,
+            decodeSeed,
             isValid,
             onReturnToNewSeed,
             onReturnToWalletSelection,
@@ -126,13 +126,10 @@ class CreateWalletForm extends React.Component {
   }
 
   generateSeed() {
-    return this.props.seedService.then(({ generate, decode }) =>
-      generate().then(response => this.setState({
-        decode,
-        mnemonic: response.getSeedMnemonic(),
-        seed: this.props.isTestNet ? response.getSeedBytes() : null // Allows verification skip in dev
-      }))
-    );
+    return this.props.generateSeed().then(response => this.setState({
+      mnemonic: response.getSeedMnemonic(),
+      seed: this.props.isTestNet ? response.getSeedBytes() : null // Allows verification skip in dev
+    }));
   }
 
   setSeed(seed) {

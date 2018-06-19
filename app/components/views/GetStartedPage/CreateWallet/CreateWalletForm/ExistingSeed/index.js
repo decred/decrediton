@@ -58,14 +58,14 @@ class ExistingSeed extends React.Component {
       const mnemonic = this.getSeedWordsStr();
       if (this.props.mnemonic && this.isMatch()) {
         this.props
-          .decode(mnemonic)
+          .decodeSeed(mnemonic)
           .then(response => this.props.onChange(response.getDecodedSeed()))
           .then(() => this.setState({ seedError: null }))
           .catch(onError);
       } else {
         this.props.onChange(null);
         this.props
-          .decode(mnemonic)
+          .decodeSeed(mnemonic)
           .then(response => {
             this.setState({ mnemonic, seedError: null });
             this.props.onChange(response.getDecodedSeed());
@@ -110,14 +110,14 @@ class ExistingSeed extends React.Component {
       const mnemonic = this.getSeedWordsStr();
       if (this.props.mnemonic && this.isMatch()) {
         this.props
-          .decode(mnemonic)
+          .decodeSeed(mnemonic)
           .then(response => this.props.onChange(response.getDecodedSeed()))
           .then(() => this.setState({ seedError: null }))
           .catch(onError);
       } else {
         this.props.onChange(null);
         this.props
-          .decode(mnemonic)
+          .decodeSeed(mnemonic)
           .then(response => {
             this.setState({ mnemonic, seedError: null });
             this.props.onChange(response.getDecodedSeed());

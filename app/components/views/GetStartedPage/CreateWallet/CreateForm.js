@@ -15,8 +15,10 @@ const CreateForm = ({
   getNeededBlocks,
   getEstimatedTimeLeft,
   getDaemonSynced,
+  isWatchOnly,
+  masterPubKey,
 }) => (
-  (availableWallets.length == 0 && existingOrNew) || createNewWallet ?
+  ((availableWallets.length == 0 && existingOrNew) || !createNewWallet) && !(isWatchOnly && masterPubKey) ?
     <ExistingOrNewScreen {...{ onSetCreateWalletFromExisting,
       onReturnToWalletSelection,
       getCurrentBlockCount,

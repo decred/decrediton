@@ -13,6 +13,7 @@ export const getVotingService = promisify(client.getVotingService);
 export const getAgendaService = promisify(client.getAgendaService);
 export const getMessageVerificationService = promisify(client.getMessageVerificationService);
 export const getDecodeService = promisify(client.getDecodeMessageService);
+export const getSeedService = promisify(client.getSeedService);
 
 export const getNextAddress = log((walletService, accountNum) =>
   new Promise((resolve, reject) => {

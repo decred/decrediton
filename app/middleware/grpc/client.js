@@ -29,7 +29,7 @@ const getServiceClient = (clientClass) => (isTestNet, walletPath, address, port,
 export const getWalletService = getServiceClient(services.WalletServiceClient);
 export const getTicketBuyerService = getServiceClient(services.TicketBuyerServiceClient);
 export const loader = getServiceClient(services.WalletLoaderServiceClient);
-export const seeder = getServiceClient(services.SeedServiceClient);
+export const getSeedService = getServiceClient(services.SeedServiceClient);
 export const getVersionService = getServiceClient(services.VersionServiceClient);
 export const getVotingService = getServiceClient(services.VotingServiceClient);
 export const getAgendaService = getServiceClient(services.AgendaServiceClient);
