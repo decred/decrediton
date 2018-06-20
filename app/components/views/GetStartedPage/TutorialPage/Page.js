@@ -3,21 +3,27 @@ import "style/Tutorial.less";
 import { FormattedMessage as T } from "react-intl";
 import { Documentation } from "shared";
 import { StepIndicator } from "indicators";
+import { onboard01, onboard02, onboard03, onboard04 } from "assets/videos";
 
 const docByStep = {
-  0: "GetStartedTutorialPage00",
-  1: "GetStartedTutorialPage01",
-  2: "GetStartedTutorialPage02",
-  3: "GetStartedTutorialPage03",
-  4: "GetStartedTutorialPage04",
+  0: "GetStartedTutorialPage01",
+  1: "GetStartedTutorialPage02",
+  2: "GetStartedTutorialPage03",
+  3: "GetStartedTutorialPage04",
+};
+
+const videosByStep = {
+  0: onboard01,
+  1: onboard02,
+  2: onboard03,
+  3: onboard04,
 };
 
 const TutorialPage = ({ tutorialStep, onNextTutorialStep, onGoToStep, finishTutorial }) => {
   return (
     <div className="getstarted-tutorial">
       <div className={"tutorial-side step-" + tutorialStep}>
-        <div className={"tutorial-side-image step-" + tutorialStep}>
-        </div>
+        <video autoPlay loop src={videosByStep[tutorialStep]} width="100%" />
       </div>
 
       <div className="tutorial-main">
@@ -26,17 +32,17 @@ const TutorialPage = ({ tutorialStep, onNextTutorialStep, onGoToStep, finishTuto
         </div>
 
         <div className="tutorial-main-toolbar">
-          <KeyBlueButton className="next-button" onClick={tutorialStep < 4 ? onNextTutorialStep : finishTutorial} >
+          <KeyBlueButton className="next-button" onClick={tutorialStep < 3 ? onNextTutorialStep : finishTutorial} >
             <T id="tutorial.nextBtn" m={"Next"}/>
           </KeyBlueButton>
 
           <StepIndicator
             currentPageIndex={tutorialStep}
-            pageCount={5}
+            pageCount={4}
             onGotoPage={onGoToStep}
           />
 
-          {tutorialStep < 4 &&
+          {tutorialStep < 3 &&
             <InvisibleButton className="skip-button" onClick={finishTutorial}>
               <T id="tutorial.skipBtn" m={"Skip"}/>
             </InvisibleButton>

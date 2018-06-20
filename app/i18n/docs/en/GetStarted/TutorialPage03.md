@@ -1,9 +1,11 @@
 # Staking and Governance
 
-Participation in staking (PoS) requires only existing Decred funds, _unlike Proof-of-Work (PoW) mining that requires computing resources and electricity_.
+Participation in Staking (PoS) requires stakeholders to time-lock a portion of their DCR in return for tickets. The function of these tickets is twofold:
+- Firstly, they allow a staker to provide a check on miners by voting on the validity of blocks.
+- Secondly, they grant the right to partake in the decision-making process which determines the future of Decred.
 
-Funds can be time-locked in return for tickets on the network. Tickets are chosen at random to vote on the validity of blocks. By average a ticket gets voted in 28 days _(with possible maximum time period is 142 days)_.
+The process is essentially like a lottery, where tickets are chosen randomly. Once voted, the original cost of the ticket is unlocked and released, and a part of the blockreward is granted to the stakeholder.
 
-A successful vote returns the stakeholder a part of the Block Reward plus the original cost of the ticket. In case of missing the vote _(0.5% probability)_ the original cost of the ticket is safely returned to the user without the reward.
+By average a ticket gets voted in 28 days _(possible maximum time period is 142 days)_. A successful vote returns the stakeholder a part of the Block Reward plus the original cost of the ticket. In case of missing the vote _(0.5% probability), the original cost of the ticket is safely returned to the user without the reward.
 
-Changes are inevitable for all digital currencies, whether deciding on development matters or resolving unexpected problems. Decred’s innovative governance system is built into the blockchain. This allows for seamless adaption to changes while keeping the existing blockchain ecosystem safe. The same tickets are also used as voting power when deciding on consensus changes.
+Staking is open to anyone who owns DCR and encourages longterm investment in Decred by giving stakeholders decision making in project governance and rewards them for their participation.

@@ -46,7 +46,7 @@ export default {
       use: [{
         loader: "raw-loader",
       }]
-    },
+    }
     ]
   },
 
