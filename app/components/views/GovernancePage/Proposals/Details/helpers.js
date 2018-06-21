@@ -1,11 +1,13 @@
 import { KeyBlueButton } from "buttons";
 import { FormattedMessage as T, FormattedRelative } from "react-intl";
-import { StakeyBounceXs, VotingProgress } from "indicators";
+import { StakeyBounceXs, VotingProgress, PoliteiaLoading } from "indicators";
 import { tsToDate } from "helpers";
 import UpdateVoteChoiceModalButton from "./UpdateVoteChoiceModalButton";
 import { default as ReactMarkdown }  from "react-markdown";
 
-export const LoadingProposal = () => <div><T id="proposalDetails.loading" m="Loading Proposal Details" /></div>;
+export const LoadingProposal = () => (
+  <div className="proposal-loading-page"><PoliteiaLoading /></div>
+);
 
 export const ProposalError = ( { error } ) => <div><T id="proposalDetails.loadingError" m="Error loading Proposal: {error}" values={{ error }} /></div>;
 

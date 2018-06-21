@@ -66,21 +66,22 @@ export const getActiveVoteProposals = () => async (dispatch, getState) => {
         token: p.censorshiprecord.token,
         numComments: p.numcomments,
         timestamp: p.timestamp,
-        voteOptions: vinfo.vote.Options,
-        voteMask: vinfo.vote.mask,
+        voteOptions: vinfo.startvote.vote.options,
+        voteMask: vinfo.startvote.vote.mask,
         voteDetails: {
-          eligibleTickets: vinfo.votedetails.eligibletickets,
+          eligibleTickets: vinfo.startvotereply.eligibletickets,
 
-          startBlockHeight: parseInt(vinfo.votedetails.startblockheight),
-          endBlockHeight: parseInt(vinfo.votedetails.endheight),
+          startBlockHeight: parseInt(vinfo.startvotereply.startblockheight),
+          endBlockHeight: parseInt(vinfo.startvotereply.endheight),
 
           // start/end timestamp are only estimations based on target block time
-          startTimestamp: blockTimestampFromNow(parseInt(vinfo.votedetails.startblockheight)),
-          endTimestamp: blockTimestampFromNow(parseInt(vinfo.votedetails.endheight)),
+          startTimestamp: blockTimestampFromNow(parseInt(vinfo.startvotereply.startblockheight)),
+          endTimestamp: blockTimestampFromNow(parseInt(vinfo.startvotereply.endheight)),
         },
       };
 
-      const commitedTicketsResp = await wallet.committedTickets(walletService, ticketHashesToByte(vinfo.votedetails.eligibletickets));
+      const commitedTicketsResp = await wallet.committedTickets(walletService,
+        ticketHashesToByte(vinfo.startvotereply.eligibletickets));
       const tickets = commitedTicketsResp.getTicketaddressesList();
       proposal.hasEligibleTickets = tickets.length > 0;
       proposal.eligibleTickets = tickets.map(t => ({

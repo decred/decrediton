@@ -3,6 +3,12 @@ import { ExternalLink } from "shared";
 import { Switch, Route, NavLink } from "react-router-dom";
 import { ActiveVoteProposals, VettedProposals } from "./ProposalList";
 
+const PiLink = ({ children }) => (
+  <ExternalLink href="https://proposals.decred.org" hrefTestNet="https://test-proposals.decred.org">
+    {children}
+  </ExternalLink>
+);
+
 const Page = () => (
   <Aux>
     <div className="proposals-community-header">
@@ -12,8 +18,8 @@ const Page = () => (
       </div>
 
       <div className="links">
-        <ExternalLink href="https://politeia.com"><T id="proposals.community.allLink" m="All Proposals" /></ExternalLink>
-        <ExternalLink href="https://politeia.com"><T id="proposals.community.createLink" m="Create a Proposal" /></ExternalLink>
+        <PiLink><T id="proposals.community.allLink" m="All Proposals" /></PiLink>
+        <PiLink><T id="proposals.community.createLink" m="Create a Proposal" /></PiLink>
       </div>
     </div>
 

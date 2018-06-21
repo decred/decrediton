@@ -33,6 +33,6 @@ export function castVotes(piURL, votes) {
 
 export function getVoteResults(piURL, token) {
   const url = piURL + "/v1/proposals/voteresults";
-  const data = { vote: { token } };
+  const data = { token };
   return axios.post(url, data);
 }
