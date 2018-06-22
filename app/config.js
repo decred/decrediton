@@ -149,8 +149,14 @@ export function getWalletCert(certPath) {
 
 export function readDcrdConfig(configPath, testnet) {
   try {
-    if (!fs.existsSync(dcrdCfg(configPath))) return;
-    const readCfg = ini.parse(Buffer.from(fs.readFileSync(dcrdCfg(configPath))).toString());
+    let readCfg;
+    if (fs.existsSync(dcrdCfg(configPath))) {
+      readCfg = ini.parse(Buffer.from(fs.readFileSync(dcrdCfg(configPath))).toString());
+    } else if (fs.existsSync(dcrdCfg(appDataDirectory()))) {
+      readCfg = ini.parse(Buffer.from(fs.readFileSync(dcrdCfg(appDataDirectory()))).toString());
+    } else {
+      return;
+    }
     let newCfg = {};
     newCfg.rpc_host = "127.0.0.1";
     if (testnet) {
