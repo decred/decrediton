@@ -1,6 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import { SettingsInput, LanguageSelect, NumericInput } from "inputs";
-import { InfoDocModalButton } from "buttons";
+import { InfoDocFieldModalButton } from "buttons";
 import "style/LanguageSelect.less";
 
 const propTypes = {
@@ -66,8 +66,10 @@ const GeneralSettings = ({
       </div>
       <div className="settings-row">
         <div className="settings-label">
-          <InfoDocModalButton document="GapLimitInfo" double/>
-          <T id="settings.gapLimit.label" m="Gap Limit" />
+          <div className="info-label">
+            <T id="settings.gapLimit.label" m="Gap Limit" />
+          </div>
+          <InfoDocFieldModalButton document="GapLimitInfo" double/>
         </div>
         <div className="settings-input">
           <NumericInput

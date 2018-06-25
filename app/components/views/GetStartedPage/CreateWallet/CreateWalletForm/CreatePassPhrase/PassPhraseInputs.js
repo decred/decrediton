@@ -1,6 +1,6 @@
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { PasswordInput } from "inputs";
-import { InfoDocModalButton } from "buttons";
+import { InfoDocFieldModalButton } from "buttons";
 import "style/CreateWalletForm.less";
 
 const messages = defineMessages({
@@ -10,15 +10,15 @@ const messages = defineMessages({
   },
   verifyPassphrasePlaceholder: {
     id: "createWallet.verifyPassphrasePlaceholder",
-    defaultMessage: "Confirm"
+    defaultMessage: "Confirm Private Passphrase"
   }
 });
 
 const PassPhraseInputs = ({
   passPhraseLabel = <T id="createWallet.passhraseInput.label" m="Private passphrase" />,
-  passPhraseVerificationLabel = <T id="createWallet.passphraseInput.verifyLabel" m="Confirm" />,
+  passPhraseVerificationLabel = <T id="createWallet.passphraseInput.verifyLabel" m="Repeat Private Passphrase" />,
   blankPassPhraseError = <T id="createWallet.passphraseInput.errors.noPassPhrase" m="*Please enter your private passphrase" />,
-  passPhraseVerificationError = <T id="createWallet.passphraseInput.errors.noMatch" m="*Passwords do not match" />,
+  passPhraseVerificationError = <T id="createWallet.passphraseInput.errors.noMatch" m="*Passphrases do not match" />,
   passPhrase,
   passPhraseVerification,
   isBlank,
@@ -31,8 +31,10 @@ const PassPhraseInputs = ({
   <Aux>
     <div className="confirm-seed-row passphrase">
       <div className="confirm-seed-label-text passphrase">
-        <InfoDocModalButton document="PassphraseInfo" />
-        {passPhraseLabel}
+        <div className="info-label">
+          {passPhraseLabel}
+        </div>
+        <InfoDocFieldModalButton document="PassphraseInfo" />
       </div>
       <div className="create-wallet-field">
         <div className="input-form">
