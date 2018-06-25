@@ -19,7 +19,7 @@ class StakePoolSelect extends React.Component {
   }
 
   onChange(value) {
-    if (!value) return;
+    if (!value || !value.Host) return;
 
     const { onChange, addCustomStakePool } = this.props;
     if (!onChange) return;
@@ -52,12 +52,24 @@ class StakePoolSelect extends React.Component {
     this.lastInput = input;
   }
 
+  getOptions() {
+    if (!this.props.creatable || this.lastInput) return this.props.options;
+    const options = [ ...this.props.options ];
+    options.unshift({
+      label: <T id="stakePoolSelect.addNewPromptEmpty" m="Type to add new Stake Pool" />,
+      Host: null
+    });
+    return options;
+  }
+
   render() {
     const Component = this.props.creatable ? Creatable : Select;
+    const options = this.getOptions();
 
     return (
       <Component
         {...this.props}
+        options={options}
         placeholder={this.props.intl.formatMessage(messages.placeholder)}
         promptTextCreator={this.addStakePoolLabel}
         onChange={this.onChange}
@@ -68,5 +80,9 @@ class StakePoolSelect extends React.Component {
     );
   }
 }
+
+StakePoolSelect.defaultProps = {
+  clearable: false,
+};
 
 export default injectIntl(newStakePool(StakePoolSelect));
