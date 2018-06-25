@@ -32,6 +32,7 @@ const Form = ({
           </div>
           <div className="value">
             <StakePoolSelect
+              creatable
               options={unconfiguredStakePools}
               value={selectedUnconfigured}
               onChange={onChangeSelectedUnconfigured}

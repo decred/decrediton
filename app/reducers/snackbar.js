@@ -22,7 +22,8 @@ import {
 import {
   UPDATESTAKEPOOLCONFIG_SUCCESS, UPDATESTAKEPOOLCONFIG_FAILED,
   SETSTAKEPOOLVOTECHOICES_SUCCESS, SETSTAKEPOOLVOTECHOICES_FAILED,
-  REMOVESTAKEPOOLCONFIG
+  REMOVESTAKEPOOLCONFIG,
+  ADDCUSTOMSTAKEPOOL_SUCCESS, ADDCUSTOMSTAKEPOOL_FAILED,
 } from "../actions/StakePoolActions";
 import {
   NEW_TRANSACTIONS_RECEIVED,
@@ -178,6 +179,14 @@ const messages = defineMessages({
     id: "export.completed",
     defaultMessage: "Export of file '{filename}' completed!"
   },
+  ADDCUSTOMSTAKEPOOL_FAILED: {
+    id: "addCustomStakePool.failed",
+    defaultMessage: "Error trying to add custom stakepool: {originalError}"
+  },
+  ADDCUSTOMSTAKEPOOL_SUCCESS: {
+    id: "addCustomStakePool.success",
+    defaultMessage: "Successfully added stakepool {host}!"
+  }
 });
 
 export default function snackbar(state = {}, action) {
@@ -238,6 +247,7 @@ export default function snackbar(state = {}, action) {
   case STARTAUTOBUYER_FAILED:
   case UPDATESTAKEPOOLCONFIG_FAILED:
   case SETSTAKEPOOLVOTECHOICES_FAILED:
+  case ADDCUSTOMSTAKEPOOL_FAILED:
   case DECODERAWTXS_FAILED:
   case SIGNMESSAGE_FAILED:
   case VERIFYMESSAGE_FAILED:
@@ -257,6 +267,12 @@ export default function snackbar(state = {}, action) {
     type = "Success";
     message = messages[PURCHASETICKETS_SUCCESS];
     values = { numTickets: action.purchaseTicketsResponse.getTicketHashesList().length };
+    break;
+
+  case ADDCUSTOMSTAKEPOOL_SUCCESS:
+    type = "Success";
+    message = messages[ADDCUSTOMSTAKEPOOL_SUCCESS];
+    values = { host: action.poolInfo.Host };
     break;
   }
 

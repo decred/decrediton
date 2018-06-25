@@ -5,7 +5,6 @@ import "style/StakePool.less";
 
 const StakePoolsList = ({
   configuredStakePools,
-  unconfiguredStakePools,
   onShowAddStakePool,
   onHideStakePoolConfig,
   onRemoveStakePool,
@@ -54,11 +53,9 @@ const StakePoolsList = ({
         ))}
       </div>
     </div>
-    {unconfiguredStakePools.length > 0 ? (
-      <KeyBlueButton className="stakepool-content-send" disabled={rescanRequest} onClick={onShowAddStakePool}>
-        <T id="stakepools.list.form.submit" m="Add stakepool" />
-      </KeyBlueButton>
-    ) : null}
+    <KeyBlueButton className="stakepool-content-send" disabled={rescanRequest} onClick={onShowAddStakePool}>
+      <T id="stakepools.list.form.submit" m="Add stakepool" />
+    </KeyBlueButton>
     <SlateGrayButton
       className="stakepool-hide-config"
       onClick={onHideStakePoolConfig}

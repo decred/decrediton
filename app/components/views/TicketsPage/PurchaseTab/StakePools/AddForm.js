@@ -13,6 +13,12 @@ const messages = defineMessages({
   }
 });
 
+const UnconfiguedStakepoolLink = ({ selectedUnconfigured }) => (
+  selectedUnconfigured
+    ? <ExternalLink href={selectedUnconfigured.label}>{selectedUnconfigured.label}</ExternalLink>
+    : null
+);
+
 const StakePoolsAddForm = ({
   selectedUnconfigured,
   unconfiguredStakePools,
@@ -37,6 +43,7 @@ const StakePoolsAddForm = ({
           </div>
           <div className="stakepool-field-value">
             <StakePoolSelect
+              creatable
               options={unconfiguredStakePools}
               value={selectedUnconfigured}
               onChange={onChangeSelectedUnconfigured}
@@ -65,7 +72,7 @@ const StakePoolsAddForm = ({
             "Create an account or login to your existing account at {stakePoolLink} Once logged in, select the ‘Settings’ tab, copy and paste your API KEY into the field."
           }
           values={{
-            stakePoolLink: <ExternalLink href={selectedUnconfigured.label}>{selectedUnconfigured.label}</ExternalLink>
+            stakePoolLink: <UnconfiguedStakepoolLink { ...{ selectedUnconfigured } } />
           }}/>
           <ScriptRedeemableButton
             modalTitle={<T id="stake.notRedeemed" m="Script not redeemable?" />}

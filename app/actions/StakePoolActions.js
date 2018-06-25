@@ -173,7 +173,7 @@ export const discoverAvailableStakepools = () => (dispatch, getState) =>
         let config = getWalletCfg(sel.isTestNet(getState()), walletName);
         updateStakePoolConfig(config, foundStakepoolConfigs);
         dispatch({ type: DISCOVERAVAILABLESTAKEPOOLS_SUCCESS, currentStakePoolConfig: config.get("stakepools") });
-      } // TODO: add error notification after global snackbar is merged
+      }
     });
 
 export const CHANGESELECTEDSTAKEPOOL = "CHANGESELECTEDSTAKEPOOL";
@@ -207,4 +207,37 @@ export const removeStakePoolConfig = (host) => (dispatch, getState) => {
     selectedStakePool,
     currentStakePoolConfig: newPools,
     type: REMOVESTAKEPOOLCONFIG });
+};
+
+export const ADDCUSTOMSTAKEPOOL_ATTEMPT = "ADDCUSTOMSTAKEPOOL_ATTEMPT";
+export const ADDCUSTOMSTAKEPOOL_FAILED = "ADDCUSTOMSTAKEPOOL_FAILED";
+export const ADDCUSTOMSTAKEPOOL_SUCCESS = "ADDCUSTOMSTAKEPOOL_SUCCESS";
+
+export const addCustomStakePool = host => async (dispatch, getState) => {
+  dispatch({ type: ADDCUSTOMSTAKEPOOL_ATTEMPT });
+  try {
+    await wallet.allowStakePoolHost(host);
+    const resp = await wallet.getStakePoolStats(host);
+    const data = resp.data.data;
+    const poolInfo = {
+      Host: host,
+      Network: data.Network === "mainnet" ? "mainnet" : "testnet", // needed because may return testnet2, testnet3, etc
+      APIVersionsSupported: data.APIVersionsSupported
+    };
+
+    if (poolInfo.Network !== sel.network(getState())) {
+      throw "Pool configured for a network different than wallet (" + poolInfo.Network + ")";
+    }
+
+    const { daemon: { walletName } } = getState();
+    let config = getWalletCfg(sel.isTestNet(getState()), walletName);
+    updateStakePoolConfig(config, [ poolInfo ]);
+    const currentStakePoolConfig = config.get("stakepools");
+
+    dispatch({ poolInfo, currentStakePoolConfig, type: ADDCUSTOMSTAKEPOOL_SUCCESS });
+
+    return poolInfo;
+  } catch (error) {
+    dispatch({ error, type: ADDCUSTOMSTAKEPOOL_FAILED });
+  }
 };
