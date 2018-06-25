@@ -129,7 +129,7 @@ const importScriptSuccess = (importScriptResponse, votingAddress, cb, willRescan
 export const importScriptAttempt = (passphrase, script, rescan, scanFrom, votingAddress, cb) =>
   (dispatch, getState) => {
     dispatch({ type: IMPORTSCRIPT_ATTEMPT });
-    return wallet.importScript(sel.walletService(getState()), passphrase, script, rescan, scanFrom)
+    return wallet.importScript(sel.walletService(getState()), passphrase, script, false, 0)
       .then(importScriptResponse => {
         if (rescan) dispatch(rescanAttempt(0));
         dispatch(importScriptSuccess(importScriptResponse, votingAddress, cb));
