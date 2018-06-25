@@ -1,6 +1,6 @@
 import CreateWalletForm from "./CreateWalletForm";
 import { FormattedMessage as T, injectIntl, FormattedRelative } from "react-intl";
-import { KeyBlueButton, RemoveWalletButton, InvisibleButton } from "buttons";
+import { RemoveWalletButton } from "buttons";
 import { Tooltip } from "shared";
 
 const WalletSelectionBodyBase = ({
@@ -101,17 +101,7 @@ const WalletSelectionBodyBase = ({
       </div> :
       <div className="advanced-page">
         <div className="advanced-page-form">
-          <CreateWalletForm {...{ ...props, intl, createNewWallet, isWatchOnly, toggleWatchOnly, masterPubKeyError }} />
-          <div className="loader-bar-buttons">
-            {availableWallets && availableWallets.length > 0 &&
-              <InvisibleButton onClick={hideCreateWalletForm}>
-                <T id="advancedStartup.cancel" m="Cancel"/>
-              </InvisibleButton>
-            }
-            <KeyBlueButton onClick={createWallet}>
-              <T id="wallet.create.button" m="Create new wallet" />
-            </KeyBlueButton>
-          </div>
+          <CreateWalletForm {...{ ...props, intl, availableWallets, hideCreateWalletForm, createWallet, createNewWallet, isWatchOnly, toggleWatchOnly, masterPubKeyError }} />
         </div>
       </div>
   );

@@ -1,17 +1,15 @@
 import { Tooltip } from "shared";
-import { InvisibleButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import "style/EyeFilterMenu.less";
 import "style/StakePool.less";
 
 const WatchOnlyWalletSwitch = ({ enabled, onClick, className }) => (
   <div className={className ? className : ""}>
-    <Tooltip text={enabled ? <T id="autobuyer.enabled" m="Watch only Wallet" /> : <T id="autobuyer.disabled" m="Not Watch only Wallet" />}>
-      <div className="eye-filter-menu-button">
-        <InvisibleButton
-          className={ enabled ? "eye-filter-menu-button-icon" : "eye-filter-menu-button-icon-disabled" }
-          onClick={onClick}
-        />
+    <Tooltip text={enabled ? <T id="watchOnly.enabled" m="Watch Only" /> : <T id="watchOnly.disabled" m="Normal" />}>
+      <div className="autobuyer-switch">
+        <div className={enabled ? "autobuyer-switch-enabled" : "autobuyer-switch-disabled"} onClick={onClick}>
+          <div className={enabled ? "autobuyer-switch-knob-enabled" : "autobuyer-switch-knob-disabled"}/>
+        </div>
       </div>
     </Tooltip>
   </div>
