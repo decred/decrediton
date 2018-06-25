@@ -23,7 +23,9 @@ export default ({
             <T id="getStarted.btnLogs" m="Logs" />
           </InvisibleButton>
         </div>
-        <Tooltip text={ <T id="logs.goBack" m="Go back" /> }><div className="go-back-screen-button" onClick={onHideReleaseNotes}/></Tooltip>
+        <div className="go-back-screen-button-area">
+          <Tooltip text={ <T id="logs.goBack" m="Go back" /> }><div className="go-back-screen-button" onClick={onHideReleaseNotes}/></Tooltip>
+        </div>
         <T id="getStarted.logsTitle" m="Decrediton v{version} Released" values={{ version: (appVersion) }}/>
       </div>
       <div className="release-notes">
