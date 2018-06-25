@@ -10,18 +10,28 @@ export default ({
   getCurrentBlockCount,
   getNeededBlocks,
   getEstimatedTimeLeft,
-  appVersion
+  appVersion,
+  getWalletReady,
+  getDaemonStarted,
+  isDaemonRemote,
 }) => (
   <div className="page-body getstarted">
     <div className="getstarted loader logs">
       <div className="content-title">
         <div className="loader-settings-logs">
-          <InvisibleButton onClick={onShowSettings}>
-            <T id="getStarted.btnSettings" m="Settings" />
-          </InvisibleButton>
-          <InvisibleButton onClick={onShowLogs}>
-            <T id="getStarted.btnLogs" m="Logs" />
-          </InvisibleButton>
+          <Aux>
+            {getWalletReady &&
+              <InvisibleButton onClick={onShowSettings}>
+                <T id="getStarted.btnSettings" m="Settings" />
+              </InvisibleButton>
+            }
+            {(getDaemonStarted && !isDaemonRemote) || getWalletReady ?
+              <InvisibleButton onClick={onShowLogs}>
+                <T id="getStarted.btnLogs" m="Logs" />
+              </InvisibleButton> :
+              <div/>
+            }
+          </Aux>
         </div>
         <div className="go-back-screen-button-area">
           <Tooltip text={ <T id="logs.goBack" m="Go back" /> }><div className="go-back-screen-button" onClick={onHideReleaseNotes}/></Tooltip>
