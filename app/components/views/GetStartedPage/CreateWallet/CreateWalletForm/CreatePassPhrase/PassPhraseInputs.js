@@ -21,12 +21,13 @@ const PassPhraseInputs = ({
   passPhraseVerificationError = <T id="createWallet.passphraseInput.errors.noMatch" m="*Passphrases do not match" />,
   passPhrase,
   passPhraseVerification,
-  isBlank,
   isMatching,
+  isBlank,
   setPassPhrase,
   setPassPhraseVerification,
   intl,
-  onKeyDown
+  onKeyDown,
+  hasFailedAttempt
 }) => (
   <Aux>
     <div className="confirm-seed-row passphrase">
@@ -40,15 +41,17 @@ const PassPhraseInputs = ({
         <div className="input-form">
           <form className="input-form">
             <PasswordInput
+              required
               className="input-private-password"
               placeholder={intl.formatMessage(messages.passphrasePlaceholder)}
               value={passPhrase}
               onKeyDown={onKeyDown}
               onChange={(e) => setPassPhrase(e.target.value)}
+              showErrors={hasFailedAttempt}
+              requiredMessage={blankPassPhraseError}
             />
           </form>
         </div>
-        {isBlank ? <div className="input-form-error">{blankPassPhraseError}</div> : null}
       </div>
     </div>
     <div className="confirm-seed-row passphrase">
@@ -58,14 +61,16 @@ const PassPhraseInputs = ({
           <form className="input-form">
             <PasswordInput
               className="input-private-password"
+              invalid={!isBlank && !isMatching}
+              invalidMessage={passPhraseVerificationError}
               placeholder={intl.formatMessage(messages.verifyPassphrasePlaceholder)}
               value={passPhraseVerification}
               onKeyDown={onKeyDown}
               onChange={(e) => setPassPhraseVerification(e.target.value)}
+              showErrors={true}
             />
           </form>
         </div>
-        {(!isBlank && !isMatching) && <div className="input-form-error">{passPhraseVerificationError}</div>}
       </div>
     </div>
   </Aux>

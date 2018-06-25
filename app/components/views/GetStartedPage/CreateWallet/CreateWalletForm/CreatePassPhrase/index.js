@@ -11,7 +11,8 @@ class CreatePassPhrase extends React.Component {
     return {
       passPhrase: "",
       passPhraseVerification: "",
-      isShowingPassphraseInformation: false
+      isShowingPassphraseInformation: false,
+      hasFailedAttempt: false
     };
   }
 
@@ -21,15 +22,15 @@ class CreatePassPhrase extends React.Component {
 
   render() {
     const { setPassPhrase, setPassPhraseVerification, onKeyDown, showPassphraseInformation, hidePassphraseInformation } = this;
-    const { passPhrase, passPhraseVerification,isShowingPassphraseInformation } = this.state;
+    const { passPhrase, passPhraseVerification,isShowingPassphraseInformation, hasFailedAttempt } = this.state;
     const isValid = this.isValid();
     const isBlank = this.isBlank();
     const isMatching = this.isMatching();
-
     return (
       <PassPhraseInputs
         {...{
           ...this.props,
+          hasFailedAttempt,
           passPhrase,
           passPhraseVerification,
           isValid,
@@ -64,6 +65,7 @@ class CreatePassPhrase extends React.Component {
   }
 
   setPassPhrase(passPhrase) {
+    this.setState({ hasFailedAttempt: true });
     this.setState({ passPhrase }, this.onChange);
   }
 
