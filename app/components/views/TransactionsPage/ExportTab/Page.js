@@ -23,8 +23,8 @@ const ExportPage =
   }) => (
     <Aux>
       <div className="tabbed-page-subtitle"><T id="export.subtitle" m="Export Transactions"/></div>
-      <div className="tab-card export-tab">
-        <div className="export-selection">
+      <div className="export-area">
+        <div className="export-area-left">
           <InlineField label={<T id="export.select" m="Export Type" />}>
             <Select
               clearable={false}
@@ -47,13 +47,13 @@ const ExportPage =
             />
           </InlineField>
         </div>
-
-        <p className="export-info-description">{selectedExport.description}</p>
-        <h4><T id="export.infoFieldsHeader" m="Exported Fields" /></h4>
-        <ul className="export-info-fields">
-          {selectedExport.fields.map(p => <FieldDescription key={p.name} {...p} />)}
-        </ul>
-
+        <div  className="export-area-right">
+          <p className="export-info-description">{selectedExport.description}</p>
+          <T id="export.infoFieldsHeader" m="Exported Fields" />
+          <ul className="export-info-fields">
+            {selectedExport.fields.map(p => <FieldDescription key={p.name} {...p} />)}
+          </ul>
+        </div>
         <KeyBlueButton onClick={exportCSV} disabled={exportingData || !destinationFile} loading={exportingData}>
           <T id="export.btnExport" m="Export" />
         </KeyBlueButton>
