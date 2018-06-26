@@ -13,18 +13,16 @@ const CreateWallet = ({
   showCopySeedConfirm,
   onCancelCopySeedConfirm,
   onSubmitCopySeedConfirm,
-  onReturnToExistingOrNewScreen,
   onReturnToWalletSelection,
   getCurrentBlockCount,
   getNeededBlocks,
   getEstimatedTimeLeft,
   getDaemonSynced,
-  createNewWallet
 }) => (
   <Aux>
     <div className="getstarted content">
       <div className="go-back-screen-button-area">
-        <Tooltip text={ <T id="createWallet.goBack" m="Go back" /> }><div className="go-back-screen-button" onClick={onReturnToExistingOrNewScreen}/></Tooltip>
+        <Tooltip text={ <T id="createWallet.goBack" m="Go back" /> }><div className="go-back-screen-button" onClick={onReturnToWalletSelection}/></Tooltip>
       </div>
       <div className="content-title">
         <T id="createWallet.title" m={"Create a new wallet"}/>
@@ -48,7 +46,7 @@ const CreateWallet = ({
         </KeyBlueButton>
         <InvisibleButton
           className="go-back-button"
-          onClick={!createNewWallet ? onReturnToWalletSelection : onReturnToExistingOrNewScreen}>
+          onClick={onReturnToWalletSelection}>
           <T id="getStarted.backBtn" m="Cancel" />
         </InvisibleButton>
       </div>
