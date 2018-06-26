@@ -21,7 +21,6 @@ const messages = defineMessages({
 const CreateWalletForm = ({
   createWallet,
   hideCreateWalletForm,
-  availableWallets,
   newWalletName,
   createNewWallet,
   onChangeCreateWalletName,
@@ -95,11 +94,9 @@ const CreateWalletForm = ({
         <KeyBlueButton onClick={createWallet}>
           <T id="wallet.create.button" m="Continue" />
         </KeyBlueButton>
-        {availableWallets && availableWallets.length > 0 &&
-          <InvisibleButton onClick={hideCreateWalletForm}>
-            <T id="advancedStartup.cancel" m="Cancel"/>
-          </InvisibleButton>
-        }
+        <InvisibleButton onClick={hideCreateWalletForm}>
+          <T id="advancedStartup.cancel" m="Cancel"/>
+        </InvisibleButton>
       </div>
     </Aux>
   );

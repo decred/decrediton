@@ -25,7 +25,7 @@ const WalletSelectionBodyBase = ({
   ...props,
 }) => {
   return (
-    availableWallets && availableWallets.length > 0 && !createWalletForm ?
+    availableWallets && !createWalletForm ?
       <div className="advanced-page">
         <div className="advanced-page-form">
           <div className="advanced-daemon-row">
@@ -72,13 +72,15 @@ const WalletSelectionBodyBase = ({
                 </div>
               );
             })}
-            {editWallets ?
-              <Tooltip text={<T id="walletselection.closeEditWallets" m="Close"/>}>
-                <div className="edit-wallets-button close" onClick={onCloseEditWallets}/>
-              </Tooltip> :
-              <Tooltip text={<T id="walletselection.editWallets" m="Edit Wallets"/>}>
-                <div className="edit-wallets-button" onClick={onEditWallets}/>
-              </Tooltip>
+            {availableWallets.length > 0 ?
+              editWallets ?
+                <Tooltip text={<T id="walletselection.closeEditWallets" m="Close"/>}>
+                  <div className="edit-wallets-button close" onClick={onCloseEditWallets}/>
+                </Tooltip> :
+                <Tooltip text={<T id="walletselection.editWallets" m="Edit Wallets"/>}>
+                  <div className="edit-wallets-button" onClick={onEditWallets}/>
+                </Tooltip> :
+              <div/>
             }
             {availableWallets.length < 3 &&
             <Aux>
