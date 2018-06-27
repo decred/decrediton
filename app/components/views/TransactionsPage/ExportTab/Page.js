@@ -49,8 +49,8 @@ const ExportPage =
             />
           </InlineField>
         </div>
-        <div  className="export-area-right">
-          <div className={expanded ? "vertical-expand expanded" : "vertical-expand"} onClick={expandFields}/>
+        <div  className="export-area-right" onClick={expandFields}>
+          <div className={expanded ? "vertical-expand expanded" : "vertical-expand"}/>
           <p className="export-info-description">{selectedExport.description}</p>
           <T id="export.infoFieldsHeader" m="Exported Fields" />:&nbsp;
           {expanded ?
