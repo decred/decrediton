@@ -1,24 +1,26 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { TextInput } from "inputs";
-import { WatchOnlyWalletSwitch } from "buttons";
+import { KeyBlueButton, InvisibleButton, WatchOnlyWalletSwitch } from "buttons";
 import "style/LoginForm.less";
 
 const messages = defineMessages({
   messageWalletNamePlaceholder: {
     id: "createwallet.walletname.placehlder",
-    defaultMessage: "Enter your wallet name here",
+    defaultMessage: "Choose a Name",
   },
   messageWalletMasterPubKey: {
     id: "createwallet.walletpubkey.placeholder",
-    defaultMessage: "Enter wallet master pub key here",
+    defaultMessage: "Master Pub Key",
   },
   messageWalletMasterPubkeyError: {
     id: "createwallet.walletWatchOnly.error",
-    defaultMessage: "Wrong Master Pubkey",
+    defaultMessage: "Invalid Master Pubkey",
   }
 });
 
 const CreateWalletForm = ({
+  createWallet,
+  hideCreateWalletForm,
   newWalletName,
   createNewWallet,
   onChangeCreateWalletName,
@@ -32,12 +34,23 @@ const CreateWalletForm = ({
 }) => {
   return (
     <Aux>
+      {!createNewWallet ?
+        <div className="new-wallet-title-area">
+          <div className="wallet-icon-small createnew" />
+          <div className="new-wallet-title">
+            <T id="getStarted.newSeedTab" m="Create a New Wallet"/>
+          </div>
+        </div> :
+        <div className="new-wallet-title-area">
+          <div className="wallet-icon-small restore" />
+          <div className="new-wallet-title">
+            <T id="getStarted.restore" m="Restore Existing Wallet"/>
+          </div>
+        </div>
+      }
       <div className="advanced-daemon-row">
         <div className="advanced-daemon-label">
-          {!createNewWallet ?
-            <T id="createwallet.walletname.label" m="New Wallet Name" /> :
-            <T id="createwallet.walletname.restored.label" m="Restored Wallet Name" />
-          }
+          <T id="createwallet.walletname.label" m="Wallet Name" />
         </div>
         <div className="advanced-daemon-input">
           <TextInput
@@ -49,32 +62,42 @@ const CreateWalletForm = ({
           />
         </div>
       </div>
+      {createNewWallet &&
+        <Aux>
+          <div className="advanced-daemon-row">
+            <div className="advanced-daemon-label">
+              <T id="createwallet.walletOnly.label" m="Watch only" />
+            </div>
+            <div className="advanced-daemon-input">
+              <WatchOnlyWalletSwitch className="wallet-switch" enabled={ isWatchOnly } onClick={ toggleWatchOnly } />
+            </div>
+          </div>
+          {isWatchOnly &&
+            <div className="advanced-daemon-row">
+              <div className="advanced-daemon-label">
+                <T id="createwallet.walletmasterpubkey.label" m="Master Pub Key" />
+              </div>
+              <div className="advanced-daemon-long-input">
+                <TextInput
+                  required
+                  value={ walletMasterPubKey }
+                  onChange={(e) => onChangeCreateWalletMasterPubKey(e.target.value)}
+                  placeholder={ intl.formatMessage(messages.messageWalletMasterPubKey) }
+                  showErrors={ hasFailedAttempt || masterPubKeyError }
+                  invalid={ masterPubKeyError }
+                  invalidMessage={ intl.formatMessage(messages.messageWalletMasterPubkeyError) }
+                />
+              </div>
+            </div>}
+        </Aux>}
       <div className="advanced-daemon-row">
-        <div className="wallet-switch-wrapper">
-          <WatchOnlyWalletSwitch className="wallet-switch" enabled={ isWatchOnly } onClick={ toggleWatchOnly } />
-          {isWatchOnly ? <T id="createwallet.walletOnly.label" m="Watch only wallet" /> :
-            <T id="createwallet.notWalletOnly.label" m="Not Watch only wallet" />}
-        </div>
+        <KeyBlueButton onClick={createWallet}>
+          <T id="wallet.create.button" m="Continue" />
+        </KeyBlueButton>
+        <InvisibleButton onClick={hideCreateWalletForm}>
+          <T id="advancedStartup.cancel" m="Cancel"/>
+        </InvisibleButton>
       </div>
-      {isWatchOnly &&
-              (
-                <div className="advanced-daemon-row">
-                  <div className="advanced-daemon-label">
-                    <T id="createwallet.walletmasterpubkey.label" m="Master Pub key here" />
-                  </div>
-                  <div className="advanced-daemon-long-input">
-                    <TextInput
-                      required
-                      value={ walletMasterPubKey }
-                      onChange={(e) => onChangeCreateWalletMasterPubKey(e.target.value)}
-                      placeholder={ intl.formatMessage(messages.messageWalletMasterPubKey) }
-                      showErrors={ hasFailedAttempt || masterPubKeyError }
-                      invalid={ masterPubKeyError }
-                      invalidMessage={ intl.formatMessage(messages.messageWalletMasterPubkeyError) }
-                    />
-                  </div>
-                </div>
-              )}
     </Aux>
   );
 };

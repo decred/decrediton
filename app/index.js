@@ -192,7 +192,7 @@ var initialState = {
     maturingBlockHeights: {},
   },
   walletLoader: {
-    existingOrNew: true,
+    existingOrNew: false,
     rpcRetryAttempts: 0,
     neededBlocks: 0,
     curBlocks: 0,

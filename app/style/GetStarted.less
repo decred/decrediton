@@ -20,7 +20,8 @@
   float: left;
   width: 75%;
   height: 44px;
-  padding-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 30px;
 }
 
 .advanced-daemon-label {
@@ -596,6 +597,38 @@
     background-image: @launcher-network-active;
     color: #2970ff;
   }
+}
+
+.new-wallet-title-area {
+  float: left;
+  width: 100%;
+  margin-left: 22px;
+  margin-top: 20px;
+  margin-bottom: 22px;
+}
+
+.new-wallet-title {
+  float: left;
+  font-size: 15px;
+  line-height: 19px;
+  margin-top: 3px;
+}
+
+.wallet-icon-small {
+  float: left;
+  height: 30px;
+  width: 30px;
+  background-repeat: no-repeat;
+  background-size: 30px;
+  margin-right: 10px;
+}
+
+.wallet-icon-small.createnew {
+  background-image: @createnewwallet;
+}
+
+.wallet-icon-small.restore {
+  background-image: @restorewallet;
 }
 
 .get-started-custom-privacy-settings {
