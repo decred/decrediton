@@ -685,3 +685,61 @@
   opacity: 0.3;
   font-size: 75%;
 }
+
+.agenda-options-radio-label {
+  display: block;
+  position: relative;
+  padding-left: 25px;
+  line-height: 14px;
+  cursor: pointer;
+}
+
+.agenda-options-radio-label input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 12px;
+  width: 12px;
+  background-color: #fff;
+  border-radius: 50%;
+  border: 1px solid #c4cbd2;
+  padding: 1px;
+}
+
+.agenda-options-radio-label:hover input ~ .checkmark {
+  opacity: 0.8;
+  border: 2px solid #2971ff;
+  padding: 0;
+}
+
+.agenda-options-radio-label input:checked ~ .checkmark {
+  border: 2px solid #2971ff;
+  padding: 0;
+}
+
+.checkmark::after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.agenda-options-radio-label input:checked ~ .checkmark::after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.agenda-options-radio-label .checkmark::after {
+  top: 3px;
+  left: 3px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #2971ff;
+}

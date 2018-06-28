@@ -41,7 +41,10 @@ const Overview = ({
       </div>
       <div className="agenda-overview-options-section-middle">
         {choices.map(({ choiceId }) => (
-          <div key={agendaId+choiceId}>
+          <label
+            className="agenda-options-radio-label"
+            htmlFor={choiceId} key={agendaId+choiceId}>
+            {choiceId}
             <input
               disabled={disabled}
               className="agenda-options-radio"
@@ -52,10 +55,8 @@ const Overview = ({
               checked={selectedChoiceId === choiceId}
               onChange={(e) => setSelecedChoiceId(e.target.value)}
             />
-            <label
-              className="agenda-options-radio-label"
-              htmlFor={choiceId}><span><span></span></span>{choiceId}</label>
-          </div>
+            <span className="checkmark"></span>
+          </label>
         ))}
       </div>
     </div>
