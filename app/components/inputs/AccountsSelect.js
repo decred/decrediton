@@ -79,7 +79,7 @@ class AccountsSelect extends React.Component {
       <div className="accounts-select-value">
         <div className="accounts-select-name">{option.name}</div>
         <div className="accounts-select-spendable">
-          (<Balance amount={option.spendable} />)
+          (<Balance flat amount={option.spendable} />)
         </div>
       </div>
     );
