@@ -111,7 +111,7 @@ const SendPage = ({
                 :
           </div>
           <div className="total-amount-send-amount">
-            <Balance amount={totalSpent} />
+            <Balance flat amount={totalSpent} />
           </div>
         </div>
         <div className="total-amount-send">
@@ -120,7 +120,7 @@ const SendPage = ({
                 :
           </div>
           <div className="total-amount-send-amount">
-            <Balance amount={estimatedFee} />
+            <Balance flat amount={estimatedFee} />
           </div>
         </div>
         <div className="total-amount-send">
@@ -128,7 +128,7 @@ const SendPage = ({
             <T id="send.sizeEstimation" m="Estimated Size" />
                 :
           </div>
-          <div className="total-amount-send-amount">{estimatedSignedSize} bytes</div>
+          <div className="total-amount-send-amount">{estimatedSignedSize}<span className="total-amount-send-amount-bytes"> bytes</span></div>
         </div>
       </div>
     </div>
