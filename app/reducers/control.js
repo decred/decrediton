@@ -16,7 +16,7 @@ import { GETNEXTADDRESS_ATTEMPT, GETNEXTADDRESS_FAILED, GETNEXTADDRESS_SUCCESS,
   SETTICKETBUYERCONFIG_ATTEMPT, SETTICKETBUYERCONFIG_FAILED, SETTICKETBUYERCONFIG_SUCCESS,
   STARTAUTOBUYER_ATTEMPT, STARTAUTOBUYER_FAILED, STARTAUTOBUYER_SUCCESS,
   STOPAUTOBUYER_ATTEMPT, STOPAUTOBUYER_FAILED, STOPAUTOBUYER_SUCCESS,
-  CONSTRUCTTX_ATTEMPT, CONSTRUCTTX_FAILED, CONSTRUCTTX_SUCCESS,
+  CONSTRUCTTX_ATTEMPT, CONSTRUCTTX_FAILED, CONSTRUCTTX_SUCCESS, CONSTRUCTTX_FAILED_LOW_BALANCE,
   SETBALANCETOMAINTAIN, SETMAXFEE, SETMAXPRICEABSOLUTE, SETMAXPRICERELATIVE, SETMAXPERBLOCK,
   VALIDATEADDRESS_ATTEMPT, VALIDATEADDRESS_SUCCESS, VALIDATEADDRESS_FAILED, VALIDATEADDRESS_CLEANSTORE,
   MODAL_SHOWN, MODAL_HIDDEN, VALIDATEMASTERPUBKEY_SUCCESS, VALIDATEMASTERPUBKEY_FAILED,
@@ -191,6 +191,7 @@ export default function control(state = {}, action) {
   case CLEARTX:
     return { ...state,
       constructTxResponse: null,
+      constructTxLowBalance: false,
       validateAddressResponse: null,
       validateAddressError: null,
     };
@@ -363,11 +364,18 @@ export default function control(state = {}, action) {
   case CONSTRUCTTX_ATTEMPT:
     return { ...state,
       constructTxRequestAttempt: true,
+      constructTxLowBalance: false,
     };
   case CONSTRUCTTX_FAILED:
     return { ...state,
       constructTxRequestAttempt: false,
       constructTxResponse: null,
+    };
+  case CONSTRUCTTX_FAILED_LOW_BALANCE:
+    return { ...state,
+      constructTxRequestAttempt: false,
+      constructTxResponse: null,
+      constructTxLowBalance: true,
     };
   case CONSTRUCTTX_SUCCESS:
     return { ...state,

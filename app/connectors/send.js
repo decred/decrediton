@@ -16,7 +16,8 @@ const mapStateToProps = selectorMap({
   nextAddress: sel.nextAddress,
   nextAddressAccount: sel.nextAddressAccount,
   unitDivisor: sel.unitDivisor,
-  hasUnminedTransactions: sel.hasUnminedTransactions
+  hasUnminedTransactions: sel.hasUnminedTransactions,
+  constructTxLowBalance: sel.constructTxLowBalance,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

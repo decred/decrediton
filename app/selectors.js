@@ -589,6 +589,7 @@ export const defaultSpendingAccount = createSelector(
   [ spendingAccounts ], find(compose(eq(0), get("value")))
 );
 
+export const constructTxLowBalance = get([ "control", "constructTxLowBalance" ]);
 const constructTxResponse = get([ "control", "constructTxResponse" ]);
 const constructTxRequestAttempt = get([ "control", "constructTxRequestAttempt" ]);
 const signTransactionRequestAttempt = get([ "control", "signTransactionRequestAttempt" ]);

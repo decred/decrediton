@@ -376,6 +376,7 @@ export const stopAutoBuyerAttempt = () => (dispatch, getState) => {
 
 export const CONSTRUCTTX_ATTEMPT = "CONSTRUCTTX_ATTEMPT";
 export const CONSTRUCTTX_FAILED = "CONSTRUCTTX_FAILED";
+export const CONSTRUCTTX_FAILED_LOW_BALANCE = "CONSTRUCTTX_FAILED_LOW_BALANCE";
 export const CONSTRUCTTX_SUCCESS = "CONSTRUCTTX_SUCCESS";
 
 export function constructTransactionAttempt(account, confirmations, outputs, all) {
@@ -418,7 +419,11 @@ export function constructTransactionAttempt(account, confirmations, outputs, all
     walletService.constructTransaction(request,
       function(error, constructTxResponse) {
         if (error) {
-          dispatch({ error, type: CONSTRUCTTX_FAILED });
+          if (String(error).indexOf("insufficient balance") > 0) {
+            dispatch({ error, type: CONSTRUCTTX_FAILED_LOW_BALANCE });
+          } else {
+            dispatch({ error, type: CONSTRUCTTX_FAILED });
+          }
         } else {
           if (!all) {
             constructTxResponse.totalAmount = totalAmount;
