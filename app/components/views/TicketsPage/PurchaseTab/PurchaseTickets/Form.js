@@ -13,6 +13,7 @@ const PurchaseTicketsForm = ({
   getQuickBarComponent,
   getAdvancedComponent,
   getIsValid,
+  handleOnKeyDown,
   hasTicketsToRevoke,
   numTicketsToBuy,
   canAffordTickets,
@@ -58,6 +59,7 @@ const PurchaseTicketsForm = ({
                 incrementNumTickets={onIncrementNumTickets}
                 decrementNumTickets={onDecrementNumTickets}
                 onChangeNumTickets={onChangeNumTickets}
+                onKeyDown={handleOnKeyDown}
                 showErrors={true}
               />
             </div>

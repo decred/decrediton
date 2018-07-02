@@ -7,14 +7,17 @@ const NumTicketsInput = ({
   incrementNumTickets,
   decrementNumTickets,
   onChangeNumTickets,
+  required,
   invalid,
   invalidMessage,
   showErrors,
+  onKeyDown
 }) => (
   <div className="num-tickets-input-area">
     <div className="num-tickets-input">
       <IntegerInput
-        required
+        required={required}
+        onKeyDown={onKeyDown}
         showErrors={showErrors}
         invalid={invalid}
         invalidMessage={invalidMessage}
