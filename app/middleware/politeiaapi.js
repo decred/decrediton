@@ -32,7 +32,6 @@ export function castVotes(piURL, votes) {
 }
 
 export function getVoteResults(piURL, token) {
-  const url = piURL + "/v1/proposals/voteresults";
-  const data = { token };
-  return axios.post(url, data);
+  const url = piURL + "/v1/proposals/" + token + "/votes";
+  return axios.get(url);
 }
