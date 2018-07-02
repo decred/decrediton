@@ -93,6 +93,8 @@ const PurchaseTicketsAdvanced = ({
           <div className="stakepool-input-form-purchase-ticket">
             <BlocksInput
               required
+              invalid={expiryError}
+              invalidMessage={<T id="purchaseTickets.errors.expiryRequred" m="Invalid expiry" />}
               placeholder={formatMessage(messages.expiryPlaceholder)}
               value={expiry}
               onChange={onChangeExpiry}
