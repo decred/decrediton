@@ -60,7 +60,7 @@ const PurchaseTicketsAdvanced = ({
               name={"ticketFee"}
               required
               invalid={ticketFeeError}
-              invalidMessage={<T id="purchaseTickets.errors.invalidTicketFee" m="Invalid ticket fee (0 - 0.1 DCR/KB)" />}
+              invalidMessage={<T id="purchaseTickets.errors.invalidTicketFee" m="Invalid ticket fee" />}
               placeholder={formatMessage(messages.ticketFeePlaceholder)}
               value={ticketFee}
               onChange={onChangeTicketFee}
@@ -77,7 +77,7 @@ const PurchaseTicketsAdvanced = ({
             <FeeInput
               required
               invalid={txFeeError}
-              invalidMessage={<T id="purchaseTickets.errors.invalidTxFee" m="Invalid tx fee (0 - 0.1 DCR/KB)" />}
+              invalidMessage={<T id="purchaseTickets.errors.invalidTxFee" m="Invalid tx fee" />}
               placeholder={formatMessage(messages.txFeePlaceholder)}
               value={txFee}
               onChange={onChangeTxFee}
