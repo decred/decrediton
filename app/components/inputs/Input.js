@@ -72,7 +72,7 @@ class Input extends React.Component{
               onBlur={this.onInputBlur}
               onKeyDown={this.onKeyDown}
             />
-            {unit ? <div className="unit-area">{unit}</div> : null}
+            {unit && !(showErrors && ((invalid && value) || (required && !value))) ? <div className="unit-area">{unit}</div> : null}
           </div>
           {showErrors ? (
             <div className="input-errors-area">
