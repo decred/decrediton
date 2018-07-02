@@ -17,7 +17,7 @@ export const Balance = ({ currencyDisplay, amount, onClick, bold, large,
     const negativeZero = (parseFloat(head) === 0) && (amount < 0);
     return (
       <div className={classNameWrapper}>
-        <span className="mono" {...{ onClick }}>
+        <span {...{ onClick }}>
           <span className={ bold ? "bold" : null }>
             {negativeZero ? "-" : ""}
             <FormattedNumber value={ head } maximumFractionDigits={ 2 } minimumFractionDigits={ 2 }/>

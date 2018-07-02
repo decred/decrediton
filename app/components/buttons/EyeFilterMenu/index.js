@@ -46,6 +46,7 @@ class EyeFilterMenu extends React.Component {
 
     return (
       <div className="eye-filter-menu-items">
+        <div className={"arrow-up"}/>
         {options.map(opt => (
           <MenuItem
             className={"context-menu-item " + (selected === opt[keyField] ? "selected" : "")}
