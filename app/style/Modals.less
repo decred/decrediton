@@ -157,6 +157,10 @@
   break-inside: avoid-page;
 }
 
+.info-modal-content li {
+  margin-left: -28px;
+}
+
 @media screen and (max-height: 420px) {
   .app-modal.passphrase-modal,
   .app-modal.confirm-modal,
@@ -249,6 +253,12 @@
 .info-modal.info-modal-fields .info-modal-documentation {
   strong {
     color: #69d5f7;
+  }
+}
+
+.info-modal.has-warning .info-modal-documentation {
+  strong {
+    color: #fd714b;
   }
 }
 

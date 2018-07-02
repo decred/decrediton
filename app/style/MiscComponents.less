@@ -58,10 +58,10 @@
 .key-blue-button {
   cursor: pointer;
   display: inline-block;
-  padding: 12px 20px 14px 20px;
+  padding: 12px 30px 14px 30px;
   border-radius: 5px;
   background-color: #2971ff;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 13px rgba(0, 0, 0, 0.21);
   border: 1px solid transparent;
   color: #fff;
   font-size: 13px;
@@ -87,7 +87,7 @@
   .danger-button[disabled] {
   cursor: default;
   display: inline-block;
-  padding: 12px 20px 14px 20px;
+  padding: 12px 30px 14px 30px;
   border-radius: 5px;
   background-color: @disabled-background-color;
   box-shadow: none;
@@ -103,10 +103,10 @@
 .slate-gray-button {
   cursor: pointer;
   display: inline-block;
-  padding: 12px 20px 14px 20px;
+  padding: 12px 30px 14px 30px;
   border-radius: 5px;
   background-color: #8997a5;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 13px rgba(0, 0, 0, 0.21);
   color: #fff;
   font-size: 13px;
   line-height: 17px;
@@ -122,7 +122,7 @@
 }
 
 .slate-gray-button:active {
-  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.22);
+  box-shadow: 0 5px 13px rgba(0, 0, 0, 0.21);
 }
 
 .invisible-button {
@@ -160,7 +160,7 @@
   padding: 12px 20px 14px 20px;
   border-radius: 5px;
   background-color: #b12d2d;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 13px rgba(0, 0, 0, 0.21);
   color: #fff;
   font-size: 13px;
   line-height: 17px;
@@ -181,7 +181,7 @@
   padding: 12px 20px 14px 20px;
   border-radius: 5px;
   background-color: #48566e;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 13px rgba(0, 0, 0, 0.21);
   color: #e9f8fe;
   font-size: 13px;
   line-height: 17px;
@@ -210,7 +210,7 @@
   height: 20px;
   padding: 0px;
   border-radius: 5px;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 13px rgba(0, 0, 0, 0.21);
   color: white;
   border: 0;
   line-height: inherit;
@@ -235,7 +235,7 @@
   height: 52px;
   padding-left: 65px;
   color: #8997a5;
-  font-size: 18px;
+  font-size: 15px;
   text-decoration: none;
   text-transform: capitalize;
   transition: color 0.13s ease-in-out;
@@ -597,7 +597,7 @@
 
 .tabs > .tab > a:hover,
 .tabs > .tab > a.active {
-  color: @input-color-hovered;
+  color: #3d5873;
 }
 
 .overview-header {
@@ -608,7 +608,7 @@
   }
 
   .tabs > .tab > a.active {
-    border: 1px solid #8997a6;
+    border: 1px solid #3d5873;
     border-radius: 3px;
     padding: 5px 9px 5px 9px;
   }
@@ -684,4 +684,62 @@
 .doc-unavailable-alert {
   opacity: 0.3;
   font-size: 75%;
+}
+
+.agenda-options-radio-label {
+  display: block;
+  position: relative;
+  padding-left: 25px;
+  line-height: 14px;
+  cursor: pointer;
+}
+
+.agenda-options-radio-label input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 12px;
+  width: 12px;
+  background-color: #fff;
+  border-radius: 50%;
+  border: 1px solid #c4cbd2;
+  padding: 1px;
+}
+
+.agenda-options-radio-label:hover input ~ .checkmark {
+  opacity: 0.8;
+  border: 2px solid #2971ff;
+  padding: 0;
+}
+
+.agenda-options-radio-label input:checked ~ .checkmark {
+  border: 2px solid #2971ff;
+  padding: 0;
+}
+
+.checkmark::after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.agenda-options-radio-label input:checked ~ .checkmark::after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.agenda-options-radio-label .checkmark::after {
+  top: 3px;
+  left: 3px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #2971ff;
 }

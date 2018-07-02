@@ -69,7 +69,7 @@ const GeneralSettings = ({
           <div className="info-label">
             <T id="settings.gapLimit.label" m="Gap Limit" />
           </div>
-          <InfoDocFieldModalButton document="GapLimitInfo" double/>
+          <InfoDocFieldModalButton document="GapLimitInfo" modalClassName="has-warning" double/>
         </div>
         <div className="settings-input">
           <NumericInput
