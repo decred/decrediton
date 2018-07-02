@@ -51,10 +51,14 @@ const PurchaseTicketsForm = ({
               <T id="purchaseTickets.ticketAmount" m="Amount" />:</div>
             <div className="stakepool-purchase-ticket-num-select">
               <NumTicketsInput
+                required
+                invalid={!canAffordTickets}
+                invalidMessage={<T id="purchaseTickets.errors.insufficientBalance" m="Not enough funds" />}
                 numTickets={numTicketsToBuy}
                 incrementNumTickets={onIncrementNumTickets}
                 decrementNumTickets={onDecrementNumTickets}
                 onChangeNumTickets={onChangeNumTickets}
+                showErrors={true}
               />
             </div>
           </div>
@@ -94,10 +98,6 @@ const PurchaseTicketsForm = ({
           onSubmit={onPurchaseTickets}
           buttonLabel={<T id="purchaseTickets.purchaseBtn" m="Purchase" />}
         />
-        {!canAffordTickets &&
-          <div className="stakepool-purchase-error">
-            <T id="purchaseTickets.errors.insufficientBalance" m="Insufficient spendable account balance to purchase tickets." />
-          </div>}
         {hasTicketsToRevoke &&
           <PassphraseModalButton
             modalTitle={<T id="tickets.revokeConfirmations" m="Revoke Tickets Confirmation" />}

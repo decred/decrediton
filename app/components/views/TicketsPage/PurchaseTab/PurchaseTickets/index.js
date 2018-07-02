@@ -163,7 +163,9 @@ class PurchaseTickets extends React.Component {
   }
 
   onChangeNumTickets(numTicketsToBuy) {
-    this.setState({ numTicketsToBuy });
+    if (parseInt(numTicketsToBuy)) {
+      this.setState({ numTicketsToBuy: parseInt(numTicketsToBuy) });
+    }
   }
 
   onDecrementNumTickets() {
