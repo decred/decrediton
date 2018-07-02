@@ -12,6 +12,7 @@ const PurchaseTicketsForm = ({
   isShowingAdvanced,
   getQuickBarComponent,
   getAdvancedComponent,
+  getIsValid,
   hasTicketsToRevoke,
   numTicketsToBuy,
   canAffordTickets,
@@ -89,7 +90,7 @@ const PurchaseTicketsForm = ({
         <PassphraseModalButton
           modalTitle={<T id="tickets.purchaseConfirmation" m="Ticket Purchase Confirmation" />}
           className="stakepool-content-purchase-button"
-          disabled={!canAffordTickets}
+          disabled={getIsValid && !getIsValid()}
           onSubmit={onPurchaseTickets}
           buttonLabel={<T id="purchaseTickets.purchaseBtn" m="Purchase" />}
         />

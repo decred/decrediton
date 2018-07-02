@@ -117,6 +117,7 @@ class PurchaseTickets extends React.Component {
             getAdvancedComponent: null,
             willEnter: null,
             willLeave: null,
+            getIsValid: null,
           }, this)
         }}
       />
