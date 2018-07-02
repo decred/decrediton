@@ -43,7 +43,13 @@ class ExportTab extends React.Component {
     this.state = {
       selectedExport: AvailableExports[0],
       destinationFile: "",
+      expanded: false
     };
+  }
+
+  expandFields() {
+    const { expanded } = this.state;
+    this.setState({ expanded: !expanded });
   }
 
   onChangeSelectedExport(selectedExport) {
@@ -64,11 +70,14 @@ class ExportTab extends React.Component {
   }
 
   render() {
-    const { exportCSV, onChangeSelectedExport, setDestinationFile } = this;
+    const { exportCSV, onChangeSelectedExport, setDestinationFile, expandFields } = this;
+    const { expanded } = this.state;
 
     return (<Page
       {...this.props}
       {...this.state}
+      expanded={expanded}
+      expandFields={expandFields}
       availableExports={AvailableExports}
       exportCSV={exportCSV}
       onChangeSelectedExport={onChangeSelectedExport}

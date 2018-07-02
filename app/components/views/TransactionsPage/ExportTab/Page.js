@@ -20,11 +20,13 @@ const ExportPage =
     selectedExport,
     destinationFile,
     setDestinationFile,
+    expanded,
+    expandFields
   }) => (
     <Aux>
       <div className="tabbed-page-subtitle"><T id="export.subtitle" m="Export Transactions"/></div>
-      <div className="tab-card export-tab">
-        <div className="export-selection">
+      <div className="export-area">
+        <div className="export-area-left">
           <InlineField label={<T id="export.select" m="Export Type" />}>
             <Select
               clearable={false}
@@ -47,13 +49,17 @@ const ExportPage =
             />
           </InlineField>
         </div>
-
-        <p className="export-info-description">{selectedExport.description}</p>
-        <h4><T id="export.infoFieldsHeader" m="Exported Fields" /></h4>
-        <ul className="export-info-fields">
-          {selectedExport.fields.map(p => <FieldDescription key={p.name} {...p} />)}
-        </ul>
-
+        <div  className="export-area-right" onClick={expandFields}>
+          <div className={expanded ? "vertical-expand expanded" : "vertical-expand"}/>
+          <p className="export-info-description">{selectedExport.description}</p>
+          <T id="export.infoFieldsHeader" m="Exported Fields" />:&nbsp;
+          {expanded ?
+            <ul className="export-info-fields">
+              {selectedExport.fields.map(p => <FieldDescription key={p.name} {...p} />)}
+            </ul> :
+            selectedExport.fields.map((p, i) => i == selectedExport.fields.length - 1 ? <span key={p.name}>{p.name}.</span> : <span key={p.name}>{p.name}, </span>)
+          }
+        </div>
         <KeyBlueButton onClick={exportCSV} disabled={exportingData || !destinationFile} loading={exportingData}>
           <T id="export.btnExport" m="Export" />
         </KeyBlueButton>
