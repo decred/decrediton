@@ -15,6 +15,10 @@ const messages = defineMessages({
   messageWalletMasterPubkeyError: {
     id: "createwallet.walletWatchOnly.error",
     defaultMessage: "Invalid Master Pubkey",
+  },
+  messageWalletDupeNameError: {
+    id: "createwallet.dupeWalletName.error",
+    defaultMessage: "Please choose an unused wallet name",
   }
 });
 
@@ -22,6 +26,7 @@ const CreateWalletForm = ({
   createWallet,
   hideCreateWalletForm,
   newWalletName,
+  walletNameError,
   createNewWallet,
   onChangeCreateWalletName,
   hasFailedAttempt,
@@ -55,6 +60,8 @@ const CreateWalletForm = ({
         <div className="advanced-daemon-input">
           <TextInput
             required
+            invalid={walletNameError}
+            invalidMessage={intl.formatMessage(messages.messageWalletDupeNameError)}
             value={newWalletName}
             onChange={(e) => onChangeCreateWalletName(e.target.value)}
             placeholder={intl.formatMessage(messages.messageWalletNamePlaceholder)}
