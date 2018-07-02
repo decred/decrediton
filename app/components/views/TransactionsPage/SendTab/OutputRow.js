@@ -6,7 +6,7 @@ import "style/SendPage.less";
 const messages = defineMessages({
   destinationAddrPlaceholder: {
     id: "send.destinationAddrPlaceholder",
-    defaultMessage: "Destination Address"
+    defaultMessage: "Address"
   },
   amountPlaceholder: {
     id: "send.amountPlaceholder",

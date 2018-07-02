@@ -2,15 +2,18 @@
 @import (reference) "./Icons.less";
 
 .send-select-account-area {
-  padding: 1em;
+  margin-bottom: 20px;
 }
 
 .send-select-account-input {
-  width: 39%;
   margin-right: 1em;
   display: inline-block;
   vertical-align: middle;
-  padding-bottom: 2em; // this is to match the padding for the inputs
+
+  .accounts-select {
+    width: 300px;
+    margin-right: 20px;
+  }
 }
 
 .send-address .accounts-select {
@@ -24,34 +27,36 @@
 
 .send-send-all-input {
   float: right;
-  margin-top: 0.5em;
 }
 
 .send-amount-area {
-  padding: 1em;
+  margin-bottom: 10px;
 }
 
 .send-row {
-  margin-bottom: 1em;
+  height: 40px;
 }
-
-// .send-output-row {
-// }
 
 .send-label {
   .inline-block-mixin;
 
   vertical-align: top;
-  font-size: 20px;
-  width: 3em;
+  font-size: 19px;
+  line-height: 24px;
+  width: 46px;
   text-align: right;
 }
 
 .send-address {
   .inline-block-mixin;
 
-  width: 39%;
-  padding-top: 2px;
+  font-size: 13px;
+  line-height: 17px;
+
+  .accounts-select {
+    width: 300px;
+    margin-right: 20px;
+  }
 }
 
 .send-address.send-output-address {
@@ -62,7 +67,6 @@
   .inline-block-mixin;
 
   vertical-align: top;
-  margin-left: 0.5em;
   width: 20px;
   height: 19px;
   background-image: @add-icon;
@@ -70,10 +74,6 @@
   background-size: 19px;
   background-repeat: no-repeat;
   cursor: pointer;
-  // margin-top: -1em;
-}
-
-.send-address .accounts-select {
   // margin-top: -1em;
 }
 
@@ -137,6 +137,7 @@
 
   vertical-align: top;
   margin-top: -2px;
+  float: right;
 }
 
 .send-amount-label {
@@ -153,6 +154,7 @@
   color: #091440;
   height: 19px;
   padding-top: 4px;
+  width: 150px;
 }
 
 .send-address-amount-sum-gradient {
@@ -173,6 +175,7 @@
   text-align: right;
   cursor: text;
 }
+
 .send-address-input-amount[hidden] {
   display: none;
 }
@@ -181,7 +184,7 @@
   .inline-block-mixin;
 
   width: 20px;
-  height: 34px;
+  height: 20px;
 }
 
 .send-address-amount-spacer {
@@ -191,15 +194,17 @@
 .send-address-delete-icon {
   .inline-block-mixin;
 
-  margin-left: 0.5em;
-  margin-bottom: 1em;
   width: 20px;
-  height: 34px;
+  height: 20px;
   background-image: @delete-icon;
   background-position: 50% 50%;
   background-size: 10px;
   background-repeat: no-repeat;
   cursor: pointer;
+}
+
+.send-address-delete-icon:hover {
+  opacity: 0.7;
 }
 
 .send-button-area {
@@ -220,7 +225,9 @@
 }
 
 .total-amount-send {
-  font-size: 15px;
+  font-size: 11px;
+  color: #8997a5;
+  line-height: 14px;
   margin-bottom: 0.3em;
 }
 
@@ -233,8 +240,17 @@
 .total-amount-send-amount {
   .inline-block-mixin;
 
-  width: 15vw;
+  color: #091440;
+  width: 14vw;
   font-family: Inconsolata, monospace;
+
+  .balance-base {
+    color: #8997a5;
+  }
+}
+
+.total-amount-send-amount-bytes {
+  color: #8997a5;
 }
 
 .send-address-hash-to {
@@ -257,7 +273,10 @@
 .send-input-form {
   .inline-block-mixin;
 
-  width: 82%;
+  width: 286px;
+  font-size: 13px;
+  line-height: 17px;
+  margin-right: 34px;
 }
 
 .send-address-amount-sum {
@@ -268,7 +287,14 @@
 }
 
 .send-flex-height {
-  padding-top: 1px;
+  padding: 14px 10px 0px 40px;
   background-color: #fff;
-  min-height: 13em;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.output-row {
+  display: flex;
+  flex-direction: column;
 }
