@@ -233,23 +233,22 @@
 .hide-account-button {
   .inline-block-mixin;
 
-  margin: 15px 8px;
-  border-radius: 0px;
+  border-radius: 5px;
   background-position: 50% 50%;
-  background-size: 40px;
+  background-size: 20px;
   background-repeat: no-repeat;
-  box-shadow: none;
+  box-shadow: 0px 3px 5px rgba(9, 20, 64, 0.16);
   outline: 0;
   position: relative;
-  width: 40px;
-  height: 40px;
+  width: 20px;
+  height: 20px;
   padding: 0px;
-  background-color: transparent;
-  color: white;
+  background-color: #2971ff;
   border: 0;
   line-height: inherit;
   text-decoration: none;
   cursor: pointer;
+  float: right;
 }
 
 .rename-account-button {
@@ -267,7 +266,7 @@
 .rename-account-button:hover,
 .show-account-button:hover,
 .hide-account-button:hover {
-  opacity: 0.7;
+  background-color: #1b58ff;
 }
 
 .account-actions {
@@ -275,4 +274,5 @@
   width: 93%;
   margin-left: 20px;
   border-top: 1px solid #c4cbd2;
+  text-align: right;
 }
