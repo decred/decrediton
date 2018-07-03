@@ -58,9 +58,13 @@ const PurchaseTicketsAdvanced = ({
           <div className="stakepool-input-form-purchase-ticket">
             <FeeInput {...{ ...props }}
               name={"ticketFee"}
+              required
+              invalid={ticketFeeError}
+              invalidMessage={<T id="purchaseTickets.errors.invalidTicketFee" m="Invalid ticket fee" />}
               placeholder={formatMessage(messages.ticketFeePlaceholder)}
               value={ticketFee}
               onChange={onChangeTicketFee}
+              showErrors={true}
             />
           </div>
         </div>
@@ -71,10 +75,13 @@ const PurchaseTicketsAdvanced = ({
         <div className="stakepool-purchase-ticket-thirds-input">
           <div className="stakepool-input-form-purchase-ticket">
             <FeeInput
-              name={"txFee"}
+              required
+              invalid={txFeeError}
+              invalidMessage={<T id="purchaseTickets.errors.invalidTxFee" m="Invalid tx fee" />}
               placeholder={formatMessage(messages.txFeePlaceholder)}
               value={txFee}
               onChange={onChangeTxFee}
+              showErrors={true}
             />
           </div>
         </div>
@@ -85,9 +92,13 @@ const PurchaseTicketsAdvanced = ({
         <div className="stakepool-purchase-ticket-thirds-input">
           <div className="stakepool-input-form-purchase-ticket">
             <BlocksInput
+              required
+              invalid={expiryError}
+              invalidMessage={<T id="purchaseTickets.errors.expiryRequred" m="Invalid expiry" />}
               placeholder={formatMessage(messages.expiryPlaceholder)}
               value={expiry}
               onChange={onChangeExpiry}
+              showErrors={true}
             />
           </div>
         </div>
@@ -131,16 +142,6 @@ const PurchaseTicketsAdvanced = ({
             value={stakePool ? stakePool.value.PoolFees : null}
           />
         </div>
-      </div>
-    </div>
-    <div className="stakepool-purchase-ticket-row">
-      <div className="stakepool-purchase-advanced-error">
-        {!ticketFeeError ? null :
-          <T id="purchaseTickets.errors.invalidTicketFee" m="*Invalid ticket fee (0 - 0.1 DCR/KB)" />}
-        {!expiryError ? null :
-          <T id="purchaseTickets.errors.expiryRequred" m="Expiry is required" />}
-        {!txFeeError ? null :
-          <T id="purchaseTickets.errors.invalidTxFee" m="*Invalid tx fee (0 - 0.1 DCR/KB)" />}
       </div>
     </div>
   </Aux>);

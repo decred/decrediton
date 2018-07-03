@@ -117,10 +117,22 @@ class PurchaseTickets extends React.Component {
             getAdvancedComponent: null,
             willEnter: null,
             willLeave: null,
+            getIsValid: null,
+            handleOnKeyDown: null,
           }, this)
         }}
       />
     );
+  }
+
+  handleOnKeyDown = (e) => {
+    if (e.keyCode == 38) {
+      e.preventDefault();
+      this.onIncrementNumTickets();
+    } else if (e.keyCode == 40) {
+      e.preventDefault();
+      this.onDecrementNumTickets();
+    }
   }
 
   getStakePool() {
@@ -158,11 +170,19 @@ class PurchaseTickets extends React.Component {
   }
 
   onIncrementNumTickets() {
-    this.setState({ numTicketsToBuy: this.state.numTicketsToBuy + 1 });
+    const { numTicketsToBuy } = this.state;
+    if (numTicketsToBuy == "")
+      this.setState({ numTicketsToBuy: 1 });
+    else
+      this.setState({ numTicketsToBuy: this.state.numTicketsToBuy + 1 });
   }
 
   onChangeNumTickets(numTicketsToBuy) {
-    this.setState({ numTicketsToBuy });
+    if (parseInt(numTicketsToBuy)) {
+      this.setState({ numTicketsToBuy: parseInt(numTicketsToBuy) });
+    } else if (numTicketsToBuy == "") {
+      this.setState({ numTicketsToBuy });
+    }
   }
 
   onDecrementNumTickets() {
