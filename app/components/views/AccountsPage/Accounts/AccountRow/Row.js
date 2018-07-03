@@ -57,7 +57,9 @@ const Row = ({
             <div className="account-row-top-spendable-label">
               <T id="accounts.row.spendable" m="Spendable" />
             </div>
-            <Balance amount={account.spendable} />
+            <div className="account-row-top-spendable-value">
+              <Balance flat amount={account.spendable} />
+            </div>
           </div>
         </div>
       </div>

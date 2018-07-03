@@ -10,10 +10,10 @@
 .account-row-hidden {
   position: relative;
   overflow: hidden;
-  padding-top: 0.5em;
+  padding: 27px 30px 10px 15px;
   border-top: 1px solid #f0f4f4;
   background-image: @arrow-right-gray-icon;
-  background-position: 60px 30px;
+  background-position: 60px;
   background-size: 5px auto;
   background-repeat: no-repeat;
   cursor: pointer;
@@ -48,22 +48,29 @@
 
 .account-row-top-spendable {
   color: #596d81;
-  font-size: 12px;
-  display: flex;
+  font-size: 13px;
+  line-height: 17px;
+  width: 230px;
 }
 
 .account-row-top-spendable-label {
-  padding-right: 5px;
+  float: left;
+  margin-right: 40px;
+}
+
+.account-row-top-spendable-value {
+  float: right;
+  width: 130px;
+  color: #091440;
 }
 
 .account-row-wallet-icon {
   .inline-block-mixin;
 
-  width: 50px;
-  height: 56px;
+  width: 20px;
+  height: 20px;
   margin-right: 3em;
   background-image: @wallet-gray-icon;
-  background-position: 50% 20px;
   background-size: 20px auto;
   background-repeat: no-repeat;
 }
@@ -73,19 +80,17 @@
 
   color: #091440;
   font-size: 19px;
+  line-height: 24px;
 }
 
 .account-row-top-account-funds {
-  .inline-block-mixin;
-
-  margin-top: 0.5em;
   float: right;
-  font-family: Inconsolata, monospace;
   color: #091440;
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 19px;
+  line-height: 24px;
   display: flex;
   flex-direction: column;
+  text-align: right;
 }
 
 .account-row-details-top {
@@ -93,11 +98,11 @@
   z-index: 0;
   background-color: transparent;
   background-image: @arrow-down-mid-blue-icon;
-  background-position: 57px 26px;
+  background-position: 57px 36px;
   background-size: 10px auto;
   background-repeat: no-repeat;
   cursor: pointer;
-  padding-top: 0.5em;
+  padding: 27px 30px 10px 15px;
 }
 
 .account-row-details-top:hover {
@@ -106,21 +111,20 @@
 }
 
 .account-row-details-bottom-column-left {
-  .inline-block-mixin;
-
-  width: 44%;
+  float: left;
+  width: 50%;
 }
 
 .account-row-details-bottom-columns {
-  display: flex;
-  flex-direction: row;
+  float: left;
+  width: 100%;
+  color: #596d81;
+  margin-bottom: 20px;
 }
 
 .account-row-details-bottom-column-right {
-  .inline-block-mixin;
-
-  width: 52%;
-  vertical-align: top;
+  float: right;
+  width: 50%;
 }
 
 .account-row-details-bottom-columns::after,
@@ -139,7 +143,6 @@
 
 .account-row-details-bottom-title-name {
   margin-bottom: 0.5em;
-  color: #596d81;
 }
 
 .account-row-details-bottom-column-left .account-row-details-bottom-title-name {
@@ -154,7 +157,6 @@
 
 .account-row-details-bottom-spec {
   text-align: right;
-  color: #091440;
   font-size: 12px;
   margin-bottom: 0.5em;
 }
@@ -182,8 +184,7 @@
 .account-row-details-bottom-spec-value {
   .inline-block-mixin;
 
-  font-family: Inconsolata, monospace;
-  font-weight: 700;
+  color: #091440;
   text-align: left;
   width: 40%;
 }
@@ -212,11 +213,7 @@
 
 .account-row-long {
   border-top: 1px #a9b4bf solid;
-  border-bottom: 1px #a9b4bf solid;
 }
-
-// .account-row-short {
-// }
 
 .account-row-short-hidden {
   background-color: transparent;
@@ -271,4 +268,11 @@
 .show-account-button:hover,
 .hide-account-button:hover {
   opacity: 0.7;
+}
+
+.account-actions {
+  float: left;
+  width: 93%;
+  margin-left: 20px;
+  border-top: 1px solid #c4cbd2;
 }
