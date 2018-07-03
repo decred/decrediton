@@ -1,5 +1,5 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
-import { KeyBlueButton, SlateGrayButton } from "buttons";
+import { KeyBlueButton, InvisibleButton } from "buttons";
 import { TextInput } from "inputs";
 
 const messages = defineMessages({
@@ -47,11 +47,11 @@ const RenameAccount = ({
         onClick={renameAccount}>
         <T id="accounts.renameBtn" m="Rename" />
       </KeyBlueButton>
-      <SlateGrayButton
+      <InvisibleButton
         className="content-confirm-new-account"
         onClick={hideRenameAccount}>
         <T id="accounts.cancelRenameBtn" m="Cancel" />
-      </SlateGrayButton>
+      </InvisibleButton>
     </div>
   </div>
 );

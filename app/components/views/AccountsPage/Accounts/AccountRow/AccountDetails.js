@@ -74,7 +74,7 @@ const AccountsList = ({
         </div>
         <div className="account-row-details-bottom-spec">
           <div className="account-row-details-bottom-spec-name">
-            <T id="accounts.immatureStake" m="Immature Stake Generation" />
+            <T id="accounts.immatureStake" m="Immature Stake Gen" />
           </div>
           <div className="account-row-details-bottom-spec-value"><Balance flat amount={account.immatureStakeGeneration} /></div>
         </div>
