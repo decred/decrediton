@@ -32,15 +32,19 @@ class Send extends React.Component {
       account: this.props.defaultSpendingAccount,
       outputs: [ { key: "output_0", data:{ ...BASE_OUTPUT } } ],
       outputAccount: this.props.defaultSpendingAccount,
+      lowBalanceError: false,
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    const { nextAddress } = this.props;
+    const { nextAddress, constructTxLowBalance } = this.props;
     const { isSendSelf, outputs } = this.state;
     if (isSendSelf && (nextAddress != nextProps.nextAddress)) {
       let newOutputs = outputs.map(o => ({ ...o, data:{ ...o.data, destination: nextProps.nextAddress } }));
       this.setState({ outputs: newOutputs }, this.onAttemptConstructTransaction);
+    }
+    if ( constructTxLowBalance !== nextProps.constructTxLowBalance ) {
+      this.setState({ lowBalanceError: nextProps.constructTxLowBalance });
     }
   }
 
@@ -269,7 +273,8 @@ class Send extends React.Component {
               amount: newAmount
             },
           };
-        })
+        }),
+        lowBalanceError: false,
       }, () => reconstruct && this.onAttemptConstructTransaction());
     };
   }
@@ -307,10 +312,11 @@ class Send extends React.Component {
   }
 
   getAmountError(key) {
-    const { outputs, isSendAll } = this.state;
+    const { outputs, isSendAll, lowBalanceError } = this.state;
     const { amount } = outputs[key].data;
     if (isNaN(amount) && !isSendAll) return <T id="send.errors.invalidAmount" m="Please enter a valid amount" /> ;
     if (amount <= 0 && !isSendAll) return <T id="send.errors.negativeAmount" m="Please enter a valid amount (> 0)" />;
+    if (lowBalanceError) return <T id="send.errors.insufficientFunds" m="Not Enough Funds" />;
   }
 }
 
