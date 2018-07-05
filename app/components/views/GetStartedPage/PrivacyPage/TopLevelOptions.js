@@ -2,10 +2,10 @@ import { FormattedMessage as T } from "react-intl";
 
 const PrivacyOption = ({ title, description, icon, onClick }) => (
   <div className="privacy-option" onClick={onClick}>
+    <div className={[ "privacy-option-icon", icon ].join(" ")} />
     <div className="privacy-option-title">
       {title}
     </div>
-    <div className={[ "privacy-option-icon", icon ].join(" ")} />
     <div className="privacy-option-description">
       {description}
     </div>
