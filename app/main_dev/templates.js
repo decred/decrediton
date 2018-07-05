@@ -140,29 +140,6 @@ const defaultTemplate = (mainWindow, locale) => [ {
       shell.openItem(getDirectoryLogs(getDcrdPath()));
     }
   } ]
-}, {
-  label: locale.messages["appMenu.help"],
-  submenu: [ {
-    label: locale.messages["appMenu.learnMore"],
-    click() {
-      shell.openExternal("https://decred.org");
-    }
-  }, {
-    label: locale.messages["appMenu.documentation"],
-    click() {
-      shell.openExternal("https://github.com/decred/decrediton");
-    }
-  }, {
-    label: locale.messages["appMenu.communityDiscussions"],
-    click() {
-      shell.openExternal("https://forum.decred.org");
-    }
-  }, {
-    label: locale.messages["appMenu.searchIssues"],
-    click() {
-      shell.openExternal("https://github.com/decred/decrediton/issues");
-    }
-  } ]
 } ];
 
 export const initTemplate = (mainWindow, locale) => {
