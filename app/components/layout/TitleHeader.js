@@ -1,4 +1,4 @@
-const TitleHeader = ({ title, iconClassName }) => (
+const TitleHeader = ({ title, iconClassName, optionalButton }) => (
   <Aux>
     <div className="title-header-icon">
       <div className={iconClassName} />
@@ -6,6 +6,11 @@ const TitleHeader = ({ title, iconClassName }) => (
     <div className="title-header-title">
       {title}
     </div>
+    {optionalButton &&
+    <div className="title-header-button">
+      {optionalButton}
+    </div>
+    }
   </Aux>
 );
 

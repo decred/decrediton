@@ -4,11 +4,16 @@ import { TutorialsTab, TutorialsTabHeader } from "./TutorialsTab";
 import { TabbedPage, TabbedPageTab as Tab, TitleHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
 import { Switch, Redirect } from "react-router-dom";
+import { AboutModalButton } from "buttons";
 
 const HelpPageHeader = () =>
   <TitleHeader
     iconClassName="help"
     title={<T id="help.title" m="Help" />}
+    optionalButton={
+      <AboutModalButton
+        buttonLabel={<T id="help.about" m="About" />}
+      />}
   />;
 
 export default () =>
