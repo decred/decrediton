@@ -330,13 +330,25 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
   // closure that calcs ticket info necessary to correctly account for its delta
   // to balances, given a ticket tx
   const ticketInfo = tx => {
+    const debits = tx.tx.getDebitsList();
     const change = tx.tx.getCreditsList().reduce((s, c) => s + isTicketChange(c) ? c.getAmount() : 0, 0);
     const isWallet = isWalletTicket(tx.tx);
-    const debitsSum = tx.tx.getDebitsList().reduce((s, d) => s + d.getPreviousAmount(), 0);
-    const commitAmount = debitsSum - change - (isWallet ? tx.tx.getFee() : 0);
-    const spentAmount = commitAmount + (isWallet ? tx.fee : 0);
+    const debitsSum = debits.reduce((s, d) => s + d.getPreviousAmount(), 0);
+
+    // pool fee exists and needs to be accounted for when there are more than
+    // two debits and the index of the first one is zero
+    const poolFee = (debits.length > 1) && (debits[0].getIndex() === 0)
+      ? debits[0].getPreviousAmount() : 0;
+
+    // commit amount is deduced by seeing subtracting everything the wallet
+    // spent from what it got back. Ideally, this would be gotten by decoding
+    // appropriate stake commitment output. This is specially true if, in the
+    // future, consensus rules change to break the requirement that
+    // amount_in[x] == commitment_amount[x].
+    const commitAmount = debitsSum - change - (isWallet ? tx.tx.getFee() : 0) - poolFee;
+    const spentAmount = commitAmount + (isWallet ? tx.fee : 0) + poolFee;
     const purchaseFees = debitsSum - commitAmount;
-    return { isWallet, commitAmount, spentAmount, purchaseFees };
+    return { isWallet, commitAmount, spentAmount, purchaseFees, poolFee };
   };
 
   // closure that cals vote/revoke info necessary to correctly account for its
