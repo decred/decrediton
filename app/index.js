@@ -385,6 +385,13 @@ var initialState = {
     proposals: {}, // map from proposal token (id) to proposal details
     lastVettedFetchTime: new Date(0), // time when vetted proposals were requested
   },
+  trezor: {
+    enabled: true,
+    debug: true,
+    deviceList: null,
+    transportError: false,
+    device: null,
+  },
   locales: locales
 };
 
