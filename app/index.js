@@ -136,7 +136,7 @@ var initialState = {
     // SignMessage
     getSignMessageError: null,
     getSignMessageRequestAttempt: false,
-    getSignMessageResponse: null,
+    getSignMessageSignature: null,
     // VerifyMessage
     getVerifyMessageError: null,
     getVerifyMessageRequestAttempt: false,

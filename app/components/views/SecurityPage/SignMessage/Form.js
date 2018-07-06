@@ -1,5 +1,5 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
-import { InfoDocModalButton, PassphraseModalButton } from "buttons";
+import { InfoDocModalButton, SignMessageButton } from "buttons";
 import { TextInput } from "inputs";
 
 const messages = defineMessages({
@@ -14,7 +14,6 @@ const messages = defineMessages({
 });
 
 const SignMessageForm = ({
-  onSubmit,
   onChangeAddress,
   onChangeMessage,
   address,
@@ -63,20 +62,17 @@ const SignMessageForm = ({
           </div>
         </div>
       </div>
-      <PassphraseModalButton
-        modalTitle={<T id="securitycenter.signMessageModal" m="Sign Message" />}
+      <SignMessageButton
         className="stakepool-content-purchase-button"
+        address={address}
+        message={message}
         disabled={isSigningMessage || address == "" || message == "" || addressError || messageError}
-        onSubmit={onSubmit}
-        loading={isSigningMessage}
-        buttonLabel={<T id="securitycenter.signMessageBtn" m="Sign Message" />}
       />
     </Aux>
   );
 };
 
 SignMessageForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
   formatMessage: PropTypes.func.isRequired,
   error: PropTypes.string,
 };

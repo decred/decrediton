@@ -1,7 +1,7 @@
 import { AccountsSelect } from "inputs";
 import { FormattedMessage as T } from "react-intl";
 import { Balance, Tooltip, TransitionMotionWrapper } from "shared";
-import { PassphraseModalButton, KeyBlueButton } from "buttons";
+import { SendTransactionButton, KeyBlueButton } from "buttons";
 import OutputAccountRow from "./OutputAccountRow";
 import "style/SendPage.less";
 import "style/MiscComponents.less";
@@ -10,7 +10,6 @@ const wrapperComponent = props => <div className="output-row" { ...props } />;
 
 const SendPage = ({
   account,
-  isSendingTransaction,
   isSendAll,
   isSendSelf,
   outputs,
@@ -70,33 +69,26 @@ const SendPage = ({
       </div>
     </div>
     <div className="send-button-area">
-      <PassphraseModalButton
-        modalTitle={<T id="send.sendConfirmations" m="Transaction Confirmation" />}
-        modalDescription={
-          <div className="passphrase-modal-confirm-send">
-            {!isSendSelf ?
-              <Aux>
-                <div className="passphrase-modal-confirm-send-label">{outputs.length > 1 ? <T id="send.confirmAmountAddresses" m="Destination addresses" /> : <T id="send.confirmAmountAddress" m="Destination address" /> }:</div>
-                {outputs.map((output, index) => {
-                  return (
-                    <div className="passphrase-modal-confirm-send-address" key={"confirm-" + index}>{output.data.destination}</div>
-                  );}
-                )}
-              </Aux> :
-              <Aux>
-                <div className="passphrase-modal-confirm-send-label"><T id="send.confirmAmountAccount" m="Destination account" />:</div>
-                <div className="passphrase-modal-confirm-send-address">{nextAddressAccount.name}</div>
-              </Aux>
-            }
-            <div className="passphrase-modal-confirm-send-label"><T id="send.confirmAmountLabelFor" m="Total Spent" />:</div>
-            <div className="passphrase-modal-confirm-send-balance"><Balance amount={totalSpent} /></div>
-          </div>}
-        disabled={!isValid}
-        className="content-send"
-        onSubmit={onAttemptSignTransaction}
-        loading={isSendingTransaction}
-        buttonLabel={<T id="send.sendBtn" m="Send" />}
-      />
+      <SendTransactionButton disabled={!isValid} onSubmit={onAttemptSignTransaction} >
+        <div className="passphrase-modal-confirm-send">
+          {!isSendSelf ?
+            <Aux>
+              <div className="passphrase-modal-confirm-send-label">{outputs.length > 1 ? <T id="send.confirmAmountAddresses" m="Destination addresses" /> : <T id="send.confirmAmountAddress" m="Destination address" /> }:</div>
+              {outputs.map((output, index) => {
+                return (
+                  <div className="passphrase-modal-confirm-send-address" key={"confirm-" + index}>{output.data.destination}</div>
+                );}
+              )}
+            </Aux> :
+            <Aux>
+              <div className="passphrase-modal-confirm-send-label"><T id="send.confirmAmountAccount" m="Destination account" />:</div>
+              <div className="passphrase-modal-confirm-send-address">{nextAddressAccount.name}</div>
+            </Aux>
+          }
+          <div className="passphrase-modal-confirm-send-label"><T id="send.confirmAmountLabelFor" m="Total Spent" />:</div>
+          <div className="passphrase-modal-confirm-send-balance"><Balance amount={totalSpent} /></div>
+        </div>
+      </SendTransactionButton>
       <Aux show={hasUnminedTransactions}>
         <Tooltip md text={<T id="send.rebroadcastTooltip" m="Rebroadcasting transactions may help in situations when a transaction has been sent to a node that had poor connectivity to the general Decred network."/>}>
           <KeyBlueButton onClick={onRebroadcastUnmined}>

@@ -652,10 +652,7 @@ export const spvMode = get([ "settings", "currentSettings", "spvMode" ]);
 
 export const isSigningMessage = get([ "grpc", "getSignMessageRequestAttempt" ]);
 export const signMessageError = get([ "grpc", "getSignMessageError" ]);
-export const signMessageResponse = get([ "grpc", "getSignMessageResponse" ]);
-export const signMessageSuccess = compose(
-  r => r ? r.toObject() : null, signMessageResponse
-);
+export const signMessageSignature = get([ "grpc", "getSignMessageSignature" ]);
 
 export const messageVerificationService = get([ "grpc", "messageVerificationService" ]);
 export const isVerifyingMessage = get([ "grpc", "getVerifyMessageRequestAttempt" ]);
