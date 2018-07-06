@@ -613,7 +613,7 @@ export const defaultSpendingAccount = createSelector(
 export const changePassphraseRequestAttempt = get([ "control", "changePassphraseRequestAttempt" ]);
 
 export const constructTxLowBalance = get([ "control", "constructTxLowBalance" ]);
-const constructTxResponse = get([ "control", "constructTxResponse" ]);
+export const constructTxResponse = get([ "control", "constructTxResponse" ]);
 const constructTxRequestAttempt = get([ "control", "constructTxRequestAttempt" ]);
 const signTransactionRequestAttempt = get([ "control", "signTransactionRequestAttempt" ]);
 export const signTransactionError = get([ "control", "signTransactionError" ]);
@@ -918,10 +918,12 @@ export const stakeRewardsStats = createSelector(
 export const modalVisible = get([ "control", "modalVisible" ]);
 export const aboutModalMacOSVisible = get([ "control", "aboutModalMacOSVisible" ]);
 
-export const isSignMessageDisabled = isWatchingOnly;
+export const isTrezor = get([ "trezor", "enabled" ]);
+
+export const isSignMessageDisabled = and(isWatchingOnly, not(isTrezor));
 export const isCreateAccountDisabled = isWatchingOnly;
 export const isChangePassPhraseDisabled = isWatchingOnly;
-export const isTransactionsSendTabDisabled = isWatchingOnly;
+export const isTransactionsSendTabDisabled = and(isWatchingOnly, not(isTrezor));
 export const isTicketPurchaseTabDisabled = isWatchingOnly;
 
 export const politeiaURL = createSelector(
@@ -974,3 +976,5 @@ export const initialProposalLoading = createSelector(
   [ proposalsDetails, getVettedProposalsAttempt ],
   ( proposals, getVettedAttempt ) => (Object.keys(proposals).length === 0) && getVettedAttempt
 );
+
+export const trezorDevice = get([ "trezor", "device" ]);
