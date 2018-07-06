@@ -2,7 +2,7 @@ import { LogsTab } from "views/HelpPage/LogsTab";
 import { Tooltip } from "shared";
 import { FormattedMessage as T } from "react-intl";
 import { LoaderBarBottom } from "indicators";
-import { InvisibleButton } from "buttons";
+import { InvisibleButton, AboutModalButtonInvisible } from "buttons";
 
 export default ({
   onHideLogs,
@@ -11,11 +11,14 @@ export default ({
   getNeededBlocks,
   getEstimatedTimeLeft,
   getWalletReady,
+  appVersion,
+  updateAvailable,
 }) => (
   <div className="page-body getstarted">
     <div className="getstarted loader logs">
       <div className="content-title">
         <div className="loader-settings-logs">
+          <AboutModalButtonInvisible version={appVersion} updateAvailable={updateAvailable} buttonLabel={<T id="help.about" m="About Decrediton" />}/>
           {getWalletReady &&
             <InvisibleButton onClick={onShowSettings}>
               <T id="getStarted.btnSettings" m="Settings" />
