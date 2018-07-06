@@ -24,8 +24,8 @@ const AboutModal = ({ show, onCancelModal, version, updateAvailable }) => (
       <div className="about-modal-bottom-area-left">
         <T id="aboutModal.version" m="Version"/> {version} -&nbsp;
         {updateAvailable ?
-          <a onClick={() => shell.openExternal("https://github.com/decred/decred-binaries/releases")}><T id="aboutModal.upgradeAvailable" m="Upgrade Available"/></a> :
-          <a onClick={() => shell.openExternal("https://github.com/decred/decred-binaries/releases/tag/v1.2.1")}><T id="aboutModal.whatsNew" m="What's New?"/></a> }
+          <a className="about-modal-upgrade" onClick={() => shell.openExternal("https://github.com/decred/decred-binaries/releases")}><T id="aboutModal.upgradeAvailable" m="Upgrade Available"/></a> :
+          <a className="about-modal-upgrade" onClick={() => shell.openExternal("https://github.com/decred/decred-binaries/releases/tag/v1.2.1")}><T id="aboutModal.whatsNew" m="What's New?"/></a> }
       </div>
       <div className="about-modal-bottom-area-middle">
         Copyright &copy; 2018 <a onClick={() => shell.openExternal("https://decred.org")}>Decred</a>

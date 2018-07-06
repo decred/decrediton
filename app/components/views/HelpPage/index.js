@@ -15,7 +15,7 @@ const HelpPageHeader = ({ appVersion, updateAvailable }) =>
       <AboutModalButton
         version={appVersion}
         updateAvailable={updateAvailable}
-        buttonLabel={<T id="help.about" m="About" />}
+        buttonLabel={<T id="help.about" m="About Decrediton" />}
       />}
   />;
 
