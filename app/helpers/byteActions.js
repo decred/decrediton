@@ -16,3 +16,17 @@ export function reverseRawHash(arr) {
 export function strHashToRaw(hash) {
   return new Uint8Array(Buffer.from(hash, "hex").reverse());
 }
+
+// Convert hash encoded as raw bytes into an hex (reversed) string hash.
+export function rawHashToHex(raw) {
+  return reverseHash(Buffer.from(raw).toString("hex"));
+}
+
+// Convert raw bytes (from grpc endpoint) to hex
+export function rawToHex(bin) {
+  return Buffer.from(bin).toString("hex");
+}
+
+export function hexToRaw(hex) {
+  return new Uint8Array(Buffer.from(hex, "hex"));
+}
