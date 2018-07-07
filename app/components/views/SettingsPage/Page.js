@@ -23,6 +23,7 @@ const SettingsPage = ({
   onChangeTempSettings,
   onSaveSettings,
   onAttemptChangePassphrase,
+  isChangePassPhraseDisabled,
 }) => (
   <StandalonePage header={<SettingsPageHeader />}>
     <div className="settings-wrapper">
@@ -32,6 +33,8 @@ const SettingsPage = ({
         <ProxySettings {...{ tempSettings, onChangeTempSettings }} />
       </div>
       <div className="settings-columns">
+      {
+        !isChangePassPhraseDisabled &&
         <div className="settings-security">
           <div className="settings-column-title"><T id="settings.security.title" m="Security" /></div>
           <div className="settings-action-buttons">
@@ -43,6 +46,7 @@ const SettingsPage = ({
             </div>
           </div>
         </div>
+      }
         <PrivacySettings {...{ tempSettings, onChangeTempSettings }} />
       </div>
     </div>
