@@ -879,3 +879,12 @@ export const stakeRewardsStats = createSelector(
   })));
 
 export const modalVisible = get([ "control", "modalVisible" ]);
+
+// Functionalities deactivated
+export const isSignMessageDisabled = compose(v => v, isWatchingOnly);
+
+export const isVerifyMessageDisabled = compose(v => v, isWatchingOnly);
+
+export const isCreateAccountDisabled = compose(v => v, isWatchingOnly);
+
+export const isChangePassPhraseDisabled = compose(v => v, isWatchingOnly);
