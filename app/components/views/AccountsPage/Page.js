@@ -13,6 +13,6 @@ const Page = ({
 Page.propTypes = {
   walletService: PropTypes.object.isRequired,
   isCreateAccountDisabled: PropTypes.bool.isRequired,
-}
+};
 
 export default Page;
