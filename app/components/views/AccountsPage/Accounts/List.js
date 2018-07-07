@@ -5,19 +5,21 @@ import { DecredLoading } from "indicators";
 import { InfoDocModalButton, PassphraseModalButton } from "buttons";
 import { AddAccountModal } from "modals";
 
-const AccountsListHeader = ({ onGetNextAccountAttempt }) =>
-  <StandaloneHeader
+const AccountsListHeader = ({ onGetNextAccountAttempt, isCreateAccountDisabled }) =>{
+  return  <StandaloneHeader
     title={<T id="accounts.title" m="Accounts" />}
     description={<T id="accounts.description" m={"Accounts allow you to keep separate records of your DCR funds.\nTransferring DCR across accounts will create a transaction on the blockchain."}/>}
     iconClassName="accounts"
     actionButton={
+      !isCreateAccountDisabled &&
       <PassphraseModalButton
         modalTitle={<T id="accounts.newAccountConfirmations" m="Create new account" />}
         modalComponent={AddAccountModal}
         onSubmit={onGetNextAccountAttempt}
         buttonLabel={<T id="accounts.addNewButton" m="Add New" />}
       />}
-  />;
+  />
+    }
 
 const AccountsList = ({
   accounts,
@@ -29,8 +31,9 @@ const AccountsList = ({
   onShowAccountDetails,
   onHideAccountDetails,
   accountNumDetailsShown,
+  isCreateAccountDisabled,
 }) => (
-  <StandalonePage header={<AccountsListHeader {...{ onGetNextAccountAttempt }} />}>
+  <StandalonePage header={<AccountsListHeader {...{ onGetNextAccountAttempt, isCreateAccountDisabled }} />}>
     { isLoading ? <DecredLoading/> :
       <Aux>
         <div className="account-content-title-buttons-area">

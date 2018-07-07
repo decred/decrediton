@@ -10,6 +10,7 @@ class AccountsPage extends React.Component {
       <Page
         {...{
           walletService: this.props.walletService,
+          isCreateAccountDisabled: this.props.isCreateAccountDisabled,
         }}
       />
     );
