@@ -63,4 +63,16 @@ const SettingsPage = ({
   </StandalonePage>
 );
 
+SettingsPage.propTypes = {
+  areSettingsDirty: PropTypes.bool.isRequired,
+  tempSettings: PropTypes.object.isRequired,
+  networks: PropTypes.array.isRequired,
+  currencies: PropTypes.array.isRequired,
+  locales: PropTypes.array,
+  onChangeTempSettings: PropTypes.func.isRequired,
+  onSaveSettings: PropTypes.func.isRequired,
+  onAttemptChangePassphrase: PropTypes.func,
+  isChangePassPhraseDisabled: PropTypes.bool.isRequired,
+}
+
 export default SettingsPage;

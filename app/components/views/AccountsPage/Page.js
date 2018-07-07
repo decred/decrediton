@@ -10,4 +10,9 @@ const Page = ({
     <Accounts {...{ isCreateAccountDisabled }}/>
 );
 
+Page.propTypes = {
+  walletService: PropTypes.object.isRequired,
+  isCreateAccountDisabled: PropTypes.bool.isRequired,
+}
+
 export default Page;
