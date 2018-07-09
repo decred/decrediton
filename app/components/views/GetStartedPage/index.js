@@ -89,6 +89,8 @@ class GetStartedPage extends React.Component {
       remoteAppdataError,
       startupError,
       hasExistingWallet,
+      appVersion,
+      updateAvailable,
       ...props
     } = this.props;
 
@@ -111,9 +113,9 @@ class GetStartedPage extends React.Component {
 
     let text, Form;
     if (showSettings) {
-      return <Settings {...{ onShowLogs, onHideSettings, ...props }} />;
+      return <Settings {...{ onShowLogs, onHideSettings, appVersion, updateAvailable, ...props }} />;
     } else if (showLogs) {
-      return <Logs {...{ onShowSettings, onHideLogs, getWalletReady, ...props }} />;
+      return <Logs {...{ onShowSettings, onHideLogs, getWalletReady, appVersion, updateAvailable,  ...props }} />;
     } else if (showReleaseNotes) {
       return <ReleaseNotes {...{ onShowSettings, onShowLogs, onHideReleaseNotes, getWalletReady, ...props }} />;
     } else if (isAdvancedDaemon && openForm && !remoteAppdataError && !isPrepared && !getWalletReady) {
@@ -176,7 +178,9 @@ class GetStartedPage extends React.Component {
         onHideSettings,
         onShowLogs,
         onHideLogs,
-        onSetWalletPrivatePassphrase
+        onSetWalletPrivatePassphrase,
+        appVersion,
+        updateAvailable,
       }} />;
   }
 }

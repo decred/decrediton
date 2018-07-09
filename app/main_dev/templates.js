@@ -1,5 +1,5 @@
-import { app, shell, BrowserWindow } from "electron";
-import { cleanShutdown, GetDcrdPID, GetDcrwPID, readExesVersion } from "./launch";
+import { app, shell } from "electron";
+import { cleanShutdown, GetDcrdPID, GetDcrwPID } from "./launch";
 import { getDirectoryLogs, getDcrwalletPath, getDcrdPath } from "./paths";
 
 let versionWin = null;
@@ -138,47 +138,6 @@ const defaultTemplate = (mainWindow, locale) => [ {
     label: locale.messages["appMenu.showDaemonLog"],
     click() {
       shell.openItem(getDirectoryLogs(getDcrdPath()));
-    }
-  } ]
-}, {
-  label: locale.messages["appMenu.help"],
-  submenu: [ {
-    label: locale.messages["appMenu.learnMore"],
-    click() {
-      shell.openExternal("https://decred.org");
-    }
-  }, {
-    label: locale.messages["appMenu.documentation"],
-    click() {
-      shell.openExternal("https://github.com/decred/decrediton");
-    }
-  }, {
-    label: locale.messages["appMenu.communityDiscussions"],
-    click() {
-      shell.openExternal("https://forum.decred.org");
-    }
-  }, {
-    label: locale.messages["appMenu.searchIssues"],
-    click() {
-      shell.openExternal("https://github.com/decred/decrediton/issues");
-    }
-  }, {
-    label: locale.messages["appMenu.about"],
-    click() {
-      if (!versionWin) {
-        versionWin = new BrowserWindow({ width: 575, height: 325, show: false, autoHideMenuBar: true, resizable: false });
-        versionWin.on("closed", () => {
-          versionWin = null;
-        });
-
-        // Load a remote URL
-        versionWin.loadURL(`file://${__dirname}/../staticPages/version.html`);
-
-        versionWin.once("ready-to-show", () => {
-          versionWin.webContents.send("exes-versions", readExesVersion(app, grpcVersions));
-          versionWin.show();
-        });
-      }
     }
   } ]
 } ];

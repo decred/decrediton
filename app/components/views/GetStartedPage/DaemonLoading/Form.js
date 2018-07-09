@@ -4,6 +4,7 @@ import { SlateGrayButton, InvisibleButton } from "buttons";
 import { Tooltip } from "shared";
 import { shell } from "electron";
 import "style/GetStarted.less";
+import { AboutModalButtonInvisible } from "buttons";
 
 export default ({
   Form,
@@ -39,6 +40,7 @@ export default ({
               </Tooltip>
             }
             <Aux>
+              <AboutModalButtonInvisible version={appVersion} updateAvailable={updateAvailable} buttonLabel={<T id="help.about" m="About Decrediton" />}/>
               {getWalletReady &&
                   <InvisibleButton onClick={onShowSettings}>
                     <T id="getStarted.btnSettings" m="Settings" />

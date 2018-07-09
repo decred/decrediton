@@ -26,7 +26,7 @@ export { ModalButton, AutoBuyerSwitch, KeyBlueButton, DangerButton,
  ***************************************************/
 import {
   InfoModal, PassphraseModal, ChangePassphraseModal,
-  ConfirmModal, InfoDocumentModal,
+  ConfirmModal, InfoDocumentModal, AboutModal
 } from "modals";
 
 // mbb = ModalButtonBuilder (func to build a functional ModalButton component
@@ -56,3 +56,5 @@ export const RemoveStakePoolButton = mbb(null, ConfirmModal, DangerButton);
 export const RemoveWalletButton = mbb(null, ConfirmModal, DangerButton);
 export const RemoveDaemonButton = mbb(null, ConfirmModal, DangerButton);
 export const ScriptRedeemableButton = mbb(null, InfoModal, helpLinkButton);
+export const AboutModalButton = mbb(null, AboutModal, KeyBlueButton);
+export const AboutModalButtonInvisible = mbb(null, AboutModal, InvisibleButton);

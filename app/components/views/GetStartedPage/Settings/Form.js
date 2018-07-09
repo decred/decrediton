@@ -4,7 +4,7 @@ import ProxySettings from "views/SettingsPage/ProxySettings";
 import { Tooltip } from "shared";
 import { FormattedMessage as T } from "react-intl";
 import { LoaderBarBottom } from "indicators";
-import { KeyBlueButton, InvisibleButton } from "buttons";
+import { KeyBlueButton, InvisibleButton, AboutModalButtonInvisible } from "buttons";
 
 export default ({
   areSettingsDirty,
@@ -18,12 +18,15 @@ export default ({
   onShowLogs,
   getCurrentBlockCount,
   getNeededBlocks,
-  getEstimatedTimeLeft
+  getEstimatedTimeLeft,
+  appVersion,
+  updateAvailable
 }) => (
   <div className="page-body getstarted">
     <div className="getstarted loader logs">
       <div className="content-title">
         <div className="loader-settings-logs">
+          <AboutModalButtonInvisible version={appVersion} updateAvailable={updateAvailable} buttonLabel={<T id="help.about" m="About Decrediton" />}/>
           <InvisibleButton className="active">
             <T id="getStarted.btnSettings" m="Settings" />
           </InvisibleButton>
