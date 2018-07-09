@@ -124,7 +124,7 @@ class AccountRow extends React.Component {
       />,
       key: "output_0",
       style: {
-        height: spring(280, { stiffness: 110, damping: 14 }),
+        height: spring(245, { stiffness: 110, damping: 14 }),
         opacity: spring(1, { stiffness: 65, damping: 35 }),
       }
     } ];

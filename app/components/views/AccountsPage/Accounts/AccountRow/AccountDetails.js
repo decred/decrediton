@@ -46,37 +46,37 @@ const AccountsList = ({
           <div className="account-row-details-bottom-spec-name">
             <T id="accounts.total" m="Total" />
           </div>
-          <div className="account-row-details-bottom-spec-value"><Balance amount={account.total} /></div>
+          <div className="account-row-details-bottom-spec-value"><Balance flat amount={account.total} /></div>
         </div>
         <div className="account-row-details-bottom-spec">
           <div className="account-row-details-bottom-spec-name">
             <T id="accounts.details.spendable" m="Spendable" />
           </div>
-          <div className="account-row-details-bottom-spec-value"><Balance amount={account.spendable} /></div>
+          <div className="account-row-details-bottom-spec-value"><Balance flat amount={account.spendable} /></div>
         </div>
         <div className="account-row-details-bottom-spec">
           <div className="account-row-details-bottom-spec-name">
             <T id="accounts.immatureRewards" m="Immature Rewards" />
           </div>
-          <div className="account-row-details-bottom-spec-value"><Balance amount={account.immatureReward} /></div>
+          <div className="account-row-details-bottom-spec-value"><Balance flat amount={account.immatureReward} /></div>
         </div>
         <div className="account-row-details-bottom-spec">
           <div className="account-row-details-bottom-spec-name">
             <T id="accounts.lockedByTickets" m="Locked By Tickets" />
           </div>
-          <div className="account-row-details-bottom-spec-value"><Balance amount={account.lockedByTickets} /></div>
+          <div className="account-row-details-bottom-spec-value"><Balance flat amount={account.lockedByTickets} /></div>
         </div>
         <div className="account-row-details-bottom-spec">
           <div className="account-row-details-bottom-spec-name">
             <T id="accounts.votingAuthority" m="Voting Authority" />
           </div>
-          <div className="account-row-details-bottom-spec-value"><Balance amount={account.votingAuthority} /></div>
+          <div className="account-row-details-bottom-spec-value"><Balance flat amount={account.votingAuthority} /></div>
         </div>
         <div className="account-row-details-bottom-spec">
           <div className="account-row-details-bottom-spec-name">
-            <T id="accounts.immatureStake" m="Immature Stake Generation" />
+            <T id="accounts.immatureStake" m="Immature Stake Gen" />
           </div>
-          <div className="account-row-details-bottom-spec-value"><Balance amount={account.immatureStakeGeneration} /></div>
+          <div className="account-row-details-bottom-spec-value"><Balance flat amount={account.immatureStakeGeneration} /></div>
         </div>
       </div>
       <div className="account-row-details-bottom-column-right">
