@@ -84,7 +84,7 @@ export const startupError = or(
 
 const availableWallets = get([ "daemon", "availableWallets" ]);
 
-export const availableWalletsSelect = createSelector(
+const availableWalletsSelect = createSelector(
   [ availableWallets ],
   (wallets) => map(
     wallet => ({
@@ -97,6 +97,11 @@ export const availableWalletsSelect = createSelector(
     }),
     wallets
   )
+);
+
+export const sortedAvailableWallets = createSelector(
+  [ availableWalletsSelect ],
+  (availableWallets) => (availableWallets.sort((a, b) => (b.lastAccess - a.lastAccess)))
 );
 export const previousWallet = get([ "daemon", "previousWallet" ]);
 export const getWalletName = get([ "daemon", "walletName" ]);
