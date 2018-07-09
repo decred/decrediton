@@ -1,0 +1,27 @@
+@import (reference) "./main.less";
+
+.trezor-pin-modal {
+  h1 {
+    margin: 0;
+  }
+
+  .pin-pad {
+    display: grid;
+    grid-template-columns: 2em 2em 2em;
+    text-align: center;
+    font-size: 150%;
+
+    .pin-pad-button {
+      padding: 0.5em 0em;
+      border: 1px solid transparent;
+
+      &:hover {
+        border: 1px solid #6397ff;
+      }
+    }
+  }
+}
+
+.trezor-label {
+  font-family: @font-family-monospaced;
+}

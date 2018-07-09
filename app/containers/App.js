@@ -11,11 +11,11 @@ import FatalErrorPage from "components/views/FatalErrorPage";
 import Snackbar from "components/Snackbar";
 import AboutModal from "../components/modals/AboutModal/AboutModal";
 import { log } from "wallet";
+import { TrezorModals } from "components/modals/trezor";
 import "style/Themes.less";
 import "style/Layout.less";
 import { ipcRenderer } from "electron";
 const topLevelAnimation = { atEnter: { opacity: 0 }, atLeave: { opacity: 0 }, atActive: { opacity: 1 } };
-
 
 @autobind
 class App extends React.Component {
@@ -119,7 +119,7 @@ class App extends React.Component {
           <div id="modal-portal-macos" >
             <AboutModal show={aboutModalMacOSVisible} onCancelModal={hideAboutModalMacOS}></AboutModal>
           </div>
-
+          <TrezorModals />
         </div>
       </IntlProvider>
     );

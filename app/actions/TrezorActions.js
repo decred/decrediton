@@ -76,6 +76,7 @@ export const loadDeviceList = () => (dispatch, getState) => {
       if (!currentDevice) {
         // first device connected. Use it.
         dispatch({ device, type: TRZ_SELECTEDDEVICE_CHANGED });
+        setDeviceListeners(device, dispatch);
       }
     });
 
@@ -111,6 +112,127 @@ export const selectDevice = (path) => async (dispatch, getState) => {
   const devList = getState().trezor.deviceList;
   if (!devList.devices[path]) return;
   dispatch({ device: devList.devices[path], type: TRZ_SELECTEDDEVICE_CHANGED });
+  setDeviceListeners(devList.devices[path], dispatch);
+};
+
+export const TRZ_PIN_REQUESTED = "TRZ_PIN_REQUESTED";
+export const TRZ_PIN_ENTERED = "TRZ_PIN_ENTERED";
+export const TRZ_PIN_CANCELED = "TRZ_PIN_CANCELED";
+export const TRZ_PASSPHRASE_REQUESTED = "TRZ_PASSPHRASE_REQUESTED";
+export const TRZ_PASSPHRASE_ENTERED = "TRZ_PASSPHRASE_ENTERED";
+export const TRZ_PASSPHRASE_CANCELED = "TRZ_PASSPHRASE_CANCELED";
+
+function setDeviceListeners(device, dispatch) {
+  device.on("pin", (pinMessage, pinCallBack) => {
+    dispatch({ pinMessage, pinCallBack, type: TRZ_PIN_REQUESTED });
+  });
+
+  device.on("passphrase", (passPhraseCallBack) => {
+    dispatch({ passPhraseCallBack, type: TRZ_PASSPHRASE_REQUESTED });
+  });
+}
+
+// deviceRun is the main function for executing trezor operations. This handles
+// cleanup for cancellations and device disconnections during mid-operation (eg:
+// someone disconnected trezor while it was waiting for a pin input).
+// In general, fn itself shouldn't handle errors, letting this function handle
+// the common cases, which are then propagated up the call stack into fn's
+// parent.
+async function deviceRun(dispatch, getState, device, fn) {
+
+  const handleError = error => {
+    const { trezor: { waitingForPin, waitingForPassphrase } } = getState();
+    console.log("Handle error no deviceRun");
+    if (waitingForPin) dispatch({ error, type: TRZ_PIN_CANCELED });
+    if (waitingForPassphrase) dispatch({ error, type: TRZ_PASSPHRASE_CANCELED });
+    if (error instanceof Error) {
+      if (error.message.includes("Inconsistent state")) {
+        return "Device returned inconsistent state. Disconnect and reconnect the device.";
+      }
+    }
+    return error;
+  };
+
+  try {
+    return await device.run(async session => {
+      try {
+        return await fn(session);
+      } catch (err) {
+        // doesn't seem to be reachable by trezor interruptions, but might be
+        // caused by fn() failing in some other way (even though it's
+        // recommended not to do (non-trezor) lengthy operations inside fn())
+        throw handleError(err);
+      }
+    });
+  } catch (outerErr) {
+    throw handleError(outerErr);
+  }
+}
+
+export const TRZ_CANCELOPERATION_SUCCESS = "TRZ_CANCELOPERATION_SUCCESS";
+export const TRZ_CANCELOPERATION_FAILED = "TRZ_CANCELOPERATION_FAILED";
+
+// Note that calling this function while no pin/passphrase operation is running
+// will attempt to steal the device, cancelling operations from apps *other
+// than decrediton*.
+export const cancelCurrentOperation = () => async (dispatch, getState) => {
+  const device = selectors.trezorDevice(getState());
+  const { trezor: { pinCallBack, passPhraseCallBack } } = getState();
+
+  if (!device) return;
+  try {
+    if (pinCallBack) await pinCallBack("cancelled", null);
+    else if (passPhraseCallBack) await passPhraseCallBack("cancelled", null);
+    else await device.steal();
+
+    dispatch({ type: TRZ_CANCELOPERATION_SUCCESS });
+  } catch (error) {
+    dispatch({ error, type: TRZ_CANCELOPERATION_FAILED });
+  }
+};
+
+export const submitPin = (pin) => (dispatch, getState) => {
+  const { trezor: { pinCallBack } } = getState();
+  dispatch({ type: TRZ_PIN_ENTERED });
+  if (!pinCallBack) return;
+  pinCallBack(null, pin);
+};
+
+export const submitPassPhrase = (passPhrase) => (dispatch, getState) => {
+  const { trezor: { passPhraseCallBack } } = getState();
+  dispatch({ type: TRZ_PASSPHRASE_ENTERED });
+  if (!passPhraseCallBack) return;
+  passPhraseCallBack(null, passPhrase);
+};
+
+// checkTrezorIsDcrwallet verifies whether the wallet currently running on
+// dcrwallet (presumably a watch only wallet created from a trezor provided
+// xpub) is the same wallet as the one of the currently connected trezor. This
+// function throws an error if they are not the same.
+// This is useful for making sure, prior to performing some wallet related
+// function such as transaction signing, that trezor will correctly perform the
+// operation.
+// Note that this might trigger pin/passphrase modals, depending on the current
+// trezor configuration.
+// The way the check is performed is by generating the first address from the
+// trezor wallet and then validating this address agains dcrwallet, ensuring
+// this is an owned address at the appropriate branch/index.
+// This check is only valid for a single session (ie, a single execution of
+// `deviceRun`) as the physical device might change between sessions.
+const checkTrezorIsDcrwallet = (session) => async (dispatch, getState) => {
+  const { grpc: { walletService } } = getState();
+  const chainParams = selectors.chainParams(getState());
+
+  const address_n = addressPath(0, 0, WALLET_ACCOUNT, chainParams.HDCoinType);
+  const resp = await session.getAddress(address_n, chainParams.trezorCoinName, false);
+  const addr = resp.message.address;
+
+  const addrValidResp = await wallet.validateAddress(walletService, addr);
+  if (!addrValidResp.getIsValid()) throw "Trezor provided an invalid address " + addr;
+
+  if (!addrValidResp.getIsMine()) throw "Trezor and dcrwallet not running from the same extended public key";
+
+  if (addrValidResp.getIndex() !== 0) throw "Wallet replied with wrong index.";
 };
 
 export const signTransactionAttemptTrezor = (rawUnsigTx, constructTxResponse) => async (dispatch, getState) => {
@@ -120,7 +242,10 @@ export const signTransactionAttemptTrezor = (rawUnsigTx, constructTxResponse) =>
   const chainParams = selectors.chainParams(getState());
 
   const device = selectors.trezorDevice(getState());
-  // TODO: handle not having device
+  if (!device) {
+    dispatch({ error: "Device not connected", type: SIGNTX_FAILED });
+    return;
+  }
 
   console.log("construct tx response", constructTxResponse);
 
@@ -135,7 +260,9 @@ export const signTransactionAttemptTrezor = (rawUnsigTx, constructTxResponse) =>
     const txInfo = await dispatch(walletTxToBtcjsTx(decodedUnsigTx,
       changeIndex, inputTxs));
 
-    const signedRaw = await device.run(async session => {
+    const signedRaw = await deviceRun(dispatch, getState, device, async session => {
+      await dispatch(checkTrezorIsDcrwallet(session));
+
       const signedResp = await session.signTx(txInfo.inputs, txInfo.outputs,
         refTxs, chainParams.trezorCoinName, 0);
       return signedResp.message.serialized.serialized_tx;
@@ -196,6 +323,7 @@ export const walletTxToBtcjsTx = (tx, changeIndex, inputTxs) => async (dispatch,
       sequence: inp.getSequence(),
       address_n: addressPath(addrIndex, addrBranch, WALLET_ACCOUNT,
         chainParams.HDCoinType),
+      decred_tree: inp.getTree()
 
       // FIXME: this needs to be supported on trezor.js.
       // decredTree: inp.getTree(),
@@ -228,6 +356,7 @@ export const walletTxToBtcjsTx = (tx, changeIndex, inputTxs) => async (dispatch,
       script_type: "PAYTOADDRESS", // needs to change on OP_RETURNs
       address: addr,
       address_n: address_n,
+      decred_script_version: outp.getVersion(),
     });
   }
 
@@ -249,6 +378,7 @@ export function walletTxToRefTx(tx) {
     amount: inp.getAmountIn(),
     prev_hash: rawHashToHex(inp.getPreviousTransactionHash()),
     prev_index: inp.getPreviousTransactionIndex(),
+    decred_tree: inp.getTree()
 
     // TODO: this needs to be supported on trezor.js
     // decredTree: inp.getTree(),
@@ -258,6 +388,7 @@ export function walletTxToRefTx(tx) {
   const bin_outputs = tx.getOutputsList().map(outp => ({
     amount: outp.getValue(),
     script_pubkey: rawToHex(outp.getScript()),
+    decred_script_version: outp.getVersion(),
   }));
 
   const txInfo = {

@@ -977,4 +977,6 @@ export const initialProposalLoading = createSelector(
   ( proposals, getVettedAttempt ) => (Object.keys(proposals).length === 0) && getVettedAttempt
 );
 
+export const trezorWaitingForPin = get([ "trezor", "waitingForPin" ]);
+export const trezorWaitingForPassPhrase = get([ "trezor", "waitingForPassPhrase" ]);
 export const trezorDevice = get([ "trezor", "device" ]);
