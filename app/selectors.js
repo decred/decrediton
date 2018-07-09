@@ -92,6 +92,7 @@ export const availableWalletsSelect = createSelector(
       value: wallet,
       network: wallet.network,
       finished: wallet.finished,
+      isWatchOnly: wallet.watchOnly,
       lastAccess: wallet.lastAccess ? new Date(wallet.lastAccess) : null,
     }),
     wallets

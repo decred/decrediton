@@ -126,6 +126,7 @@ export const createWatchOnlyWalletRequest = (extendedPubKey, pubPass ="") => (di
     .then(() => {
       const { daemon: { walletName } } = getState();
       const config = getWalletCfg(isTestNet(getState()), walletName);
+      config.set("iswatchonly", true);
       config.delete("discoveraccounts");
       dispatch({ response: {}, type: CREATEWATCHONLYWALLET_SUCCESS });
       dispatch(getWalletServiceAttempt());
