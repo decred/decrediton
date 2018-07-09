@@ -46,7 +46,7 @@ const WalletSelectionBodyBase = ({
                       </Tooltip>
                     </div>}
                   <div className={selected && !editWallets ? "display-wallet-complete selected" : "display-wallet-complete"}>
-                    {!wallet.finished && "Setup incomplete"}
+                    {!wallet.isWatchOnly ? !wallet.finished && <T id="walletselection.setupIncomplete" m="Setup incomplete"/> : <T id="walletselection.watchOnly" m="Watch Only"/>}
                   </div>
                   <div className={selected && !editWallets ? "wallet-icon selected" : "wallet-icon wallet"}/>
                   <div className={selected && !editWallets ? "display-wallet-name selected" : "display-wallet-name"}>
