@@ -8,13 +8,24 @@ const mapStateToProps = selectorMap({
   isTrezor: sel.isTrezor,
   waitingForPin: sel.trezorWaitingForPin,
   waitingForPassPhrase: sel.trezorWaitingForPassPhrase,
+  waitingForWord: sel.trezorWaitingForWord,
   device: sel.trezorDevice,
+  performingOperation: sel.trezorPerformingOperation,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   cancelCurrentOperation: trza.cancelCurrentOperation,
   submitPin: trza.submitPin,
   submitPassPhrase: trza.submitPassPhrase,
+  submitWord: trza.submitWord,
+  togglePinProtection: trza.togglePinProtection,
+  togglePassPhraseProtection: trza.togglePassPhraseProtection,
+  changeToDecredHomeScreen: trza.changeToDecredHomeScreen,
+  changeLabel: trza.changeLabel,
+  wipeDevice: trza.wipeDevice,
+  recoverDevice: trza.recoverDevice,
+  initDevice: trza.initDevice,
+  updateFirmware: trza.updateFirmware,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

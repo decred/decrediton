@@ -2,9 +2,11 @@ import * as trezorjs from "trezor.js";
 import trezorTransports from "trezor-link";
 import * as wallet from "wallet";
 import * as selectors from "selectors";
+import fs from "fs";
 import { sprintf } from "sprintf-js";
 import { rawHashToHex, rawToHex, hexToRaw } from "helpers";
 import { publishTransactionAttempt } from "./ControlActions";
+import { model1_decred_homescreen } from "helpers/trezor";
 
 import { EXTERNALREQUEST_TREZOR_BRIDGE } from "main_dev/externalRequests";
 import { SIGNTX_ATTEMPT, SIGNTX_FAILED, SIGNTX_SUCCESS } from "./ControlActions";
@@ -121,6 +123,9 @@ export const TRZ_PIN_CANCELED = "TRZ_PIN_CANCELED";
 export const TRZ_PASSPHRASE_REQUESTED = "TRZ_PASSPHRASE_REQUESTED";
 export const TRZ_PASSPHRASE_ENTERED = "TRZ_PASSPHRASE_ENTERED";
 export const TRZ_PASSPHRASE_CANCELED = "TRZ_PASSPHRASE_CANCELED";
+export const TRZ_WORD_REQUESTED = "TRZ_WORD_REQUESTED";
+export const TRZ_WORD_ENTERED = "TRZ_WORD_ENTERED";
+export const TRZ_WORD_CANCELED = "TRZ_WORD_CANCELED";
 
 function setDeviceListeners(device, dispatch) {
   device.on("pin", (pinMessage, pinCallBack) => {
@@ -129,6 +134,10 @@ function setDeviceListeners(device, dispatch) {
 
   device.on("passphrase", (passPhraseCallBack) => {
     dispatch({ passPhraseCallBack, type: TRZ_PASSPHRASE_REQUESTED });
+  });
+
+  device.on("word", (wordCallBack) => {
+    dispatch({ wordCallBack, type: TRZ_WORD_REQUESTED });
   });
 }
 
@@ -177,12 +186,13 @@ export const TRZ_CANCELOPERATION_FAILED = "TRZ_CANCELOPERATION_FAILED";
 // than decrediton*.
 export const cancelCurrentOperation = () => async (dispatch, getState) => {
   const device = selectors.trezorDevice(getState());
-  const { trezor: { pinCallBack, passPhraseCallBack } } = getState();
+  const { trezor: { pinCallBack, passPhraseCallBack, wordCallBack } } = getState();
 
   if (!device) return;
   try {
     if (pinCallBack) await pinCallBack("cancelled", null);
     else if (passPhraseCallBack) await passPhraseCallBack("cancelled", null);
+    else if (wordCallBack) await wordCallBack("cancelled", null);
     else await device.steal();
 
     dispatch({ type: TRZ_CANCELOPERATION_SUCCESS });
@@ -203,6 +213,13 @@ export const submitPassPhrase = (passPhrase) => (dispatch, getState) => {
   dispatch({ type: TRZ_PASSPHRASE_ENTERED });
   if (!passPhraseCallBack) return;
   passPhraseCallBack(null, passPhrase);
+};
+
+export const submitWord = (word) => (dispatch, getState) => {
+  const { trezor: { wordCallBack } } = getState();
+  dispatch({ type: TRZ_WORD_ENTERED });
+  if (!wordCallBack) return;
+  wordCallBack(null, word);
 };
 
 // checkTrezorIsDcrwallet verifies whether the wallet currently running on
@@ -402,3 +419,209 @@ export function walletTxToRefTx(tx) {
 
   return txInfo;
 }
+
+export const TRZ_TOGGLEPINPROTECTION_ATTEMPT = "TRZ_TOGGLEPINPROTECTION_ATTEMPT";
+export const TRZ_TOGGLEPINPROTECTION_FAILED = "TRZ_TOGGLEPINPROTECTION_FAILED";
+export const TRZ_TOGGLEPINPROTECTION_SUCCESS = "TRZ_TOGGLEPINPROTECTION_SUCCESS";
+
+export const togglePinProtection = () => async (dispatch, getState) => {
+
+  const device = selectors.trezorDevice(getState());
+  if (!device) {
+    dispatch({ error: "Device not connected", type:  TRZ_TOGGLEPINPROTECTION_FAILED });
+    return;
+  }
+
+  const clearProtection = !!device.features.pin_protection;
+  dispatch({ clearProtection, type: TRZ_TOGGLEPINPROTECTION_ATTEMPT });
+
+  try {
+    await deviceRun(dispatch, getState, device, async session => {
+      await session.changePin(clearProtection);
+    });
+    dispatch({ clearProtection, deviceLabel: device.features.label, type: TRZ_TOGGLEPINPROTECTION_SUCCESS });
+  } catch (error) {
+    dispatch({ error, type: TRZ_TOGGLEPINPROTECTION_FAILED });
+  }
+};
+
+export const TRZ_TOGGLEPASSPHRASEPROTECTION_ATTEMPT = "TRZ_TOGGLEPASSPHRASEPROTECTION_ATTEMPT";
+export const TRZ_TOGGLEPASSPHRASEPROTECTION_FAILED =  "TRZ_TOGGLEPASSPHRASEPROTECTION_FAILED";
+export const TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS = "TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS";
+
+export const togglePassPhraseProtection = () => async (dispatch, getState) => {
+
+  const device = selectors.trezorDevice(getState());
+  if (!device) {
+    dispatch({ error: "Device not connected", type:  TRZ_TOGGLEPASSPHRASEPROTECTION_FAILED });
+    return;
+  }
+
+  const enableProtection = !device.features.passphrase_protection;
+  dispatch({ enableProtection, type: TRZ_TOGGLEPASSPHRASEPROTECTION_ATTEMPT });
+
+  try {
+    await deviceRun(dispatch, getState, device, async session => {
+      await session.togglePassphrase(enableProtection);
+    });
+    dispatch({ enableProtection, deviceLabel: device.features.label, type: TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS });
+  } catch (error) {
+    dispatch({ error, type: TRZ_TOGGLEPASSPHRASEPROTECTION_FAILED });
+  }
+};
+
+export const TRZ_CHANGEHOMESCREEN_ATTEMPT = "TRZ_CHANGEHOMESCREEN_ATTEMPT";
+export const TRZ_CHANGEHOMESCREEN_FAILED =  "TRZ_CHANGEHOMESCREEN_FAILED";
+export const TRZ_CHANGEHOMESCREEN_SUCCESS = "TRZ_CHANGEHOMESCREEN_SUCCESS";
+
+export const changeToDecredHomeScreen = () => async (dispatch, getState) => {
+  const device = selectors.trezorDevice(getState());
+  if (!device) {
+    dispatch({ error: "Device not connected", type:  TRZ_TOGGLEPASSPHRASEPROTECTION_FAILED });
+    return;
+  }
+
+  dispatch({ type: TRZ_CHANGEHOMESCREEN_ATTEMPT });
+
+  try {
+    await deviceRun(dispatch, getState, device, async session => {
+      await session.changeHomescreen(model1_decred_homescreen);
+    });
+    dispatch({ type: TRZ_CHANGEHOMESCREEN_SUCCESS });
+  } catch (error) {
+    dispatch({ error, type: TRZ_CHANGEHOMESCREEN_FAILED });
+  }
+};
+
+export const TRZ_CHANGELABEL_ATTEMPT = "TRZ_CHANGELABEL_ATTEMPT";
+export const TRZ_CHANGELABEL_FAILED =  "TRZ_CHANGELABEL_FAILED";
+export const TRZ_CHANGELABEL_SUCCESS = "TRZ_CHANGELABEL_SUCCESS";
+
+export const changeLabel = (label) => async (dispatch, getState) => {
+  const device = selectors.trezorDevice(getState());
+  if (!device) {
+    dispatch({ error: "Device not connected", type:  TRZ_CHANGELABEL_FAILED });
+    return;
+  }
+
+  dispatch({ type: TRZ_CHANGELABEL_ATTEMPT });
+
+  try {
+    await deviceRun(dispatch, getState, device, async session => {
+      await session.changeLabel(label);
+    });
+    dispatch({ deviceLabel: label, type: TRZ_CHANGELABEL_SUCCESS });
+  } catch (error) {
+    dispatch({ error, type: TRZ_CHANGELABEL_FAILED });
+  }
+};
+
+export const TRZ_WIPEDEVICE_ATTEMPT = "TRZ_WIPEDEVICE_ATTEMPT";
+export const TRZ_WIPEDEVICE_FAILED =  "TRZ_WIPEDEVICE_FAILED";
+export const TRZ_WIPEDEVICE_SUCCESS = "TRZ_WIPEDEVICE_SUCCESS";
+
+export const wipeDevice = () => async (dispatch, getState) => {
+  const device = selectors.trezorDevice(getState());
+  if (!device) {
+    dispatch({ error: "Device not connected", type:  TRZ_WIPEDEVICE_FAILED });
+    return;
+  }
+
+  dispatch({ type: TRZ_WIPEDEVICE_ATTEMPT });
+
+  try {
+    await deviceRun(dispatch, getState, device, async session => {
+      await session.wipeDevice();
+    });
+    dispatch({ type: TRZ_WIPEDEVICE_SUCCESS });
+  } catch (error) {
+    dispatch({ error, type: TRZ_WIPEDEVICE_FAILED });
+  }
+};
+
+export const TRZ_RECOVERDEVICE_ATTEMPT = "TRZ_RECOVERDEVICE_ATTEMPT";
+export const TRZ_RECOVERDEVICE_FAILED =  "TRZ_RECOVERDEVICE_FAILED";
+export const TRZ_RECOVERDEVICE_SUCCESS = "TRZ_RECOVERDEVICE_SUCCESS";
+
+export const recoverDevice = () => async (dispatch, getState) => {
+  const device = selectors.trezorDevice(getState());
+  if (!device) {
+    dispatch({ error: "Device not connected", type:  TRZ_RECOVERDEVICE_FAILED });
+    return;
+  }
+
+  dispatch({ type: TRZ_RECOVERDEVICE_ATTEMPT });
+
+  try {
+    await deviceRun(dispatch, getState, device, async session => {
+      const settings = {
+        word_count: 24, // FIXED at 24 (256 bits)
+        passphrase_protection: false,
+        pin_protection: false,
+        label: "New DCR Trezor",
+        dry_run: false,
+      };
+
+      await session.recoverDevice(settings);
+    });
+    dispatch({ type: TRZ_RECOVERDEVICE_SUCCESS });
+  } catch (error) {
+    dispatch({ error, type: TRZ_RECOVERDEVICE_FAILED });
+  }
+};
+
+export const TRZ_INITDEVICE_ATTEMPT = "TRZ_INITDEVICE_ATTEMPT";
+export const TRZ_INITDEVICE_FAILED =  "TRZ_INITDEVICE_FAILED";
+export const TRZ_INITDEVICE_SUCCESS = "TRZ_INITDEVICE_SUCCESS";
+
+export const initDevice = () => async (dispatch, getState) => {
+  const device = selectors.trezorDevice(getState());
+  if (!device) {
+    dispatch({ error: "Device not connected", type:  TRZ_RECOVERDEVICE_FAILED });
+    return;
+  }
+
+  dispatch({ type: TRZ_INITDEVICE_ATTEMPT });
+
+  try {
+    await deviceRun(dispatch, getState, device, async session => {
+      const settings = {
+        strength: 256, // 24 words
+        passphrase_protection: false,
+        pin_protection: false,
+        label: "New DCR Trezor",
+      };
+
+      await session.resetDevice(settings);
+    });
+    dispatch({ type: TRZ_INITDEVICE_SUCCESS });
+  } catch (error) {
+    dispatch({ error, type: TRZ_INITDEVICE_FAILED });
+  }
+};
+
+export const TRZ_UPDATEFIRMWARE_ATTEMPT = "TRZ_UPDATEFIRMWARE_ATTEMPT";
+export const TRZ_UPDATEFIRMWARE_FAILED =  "TRZ_UPDATEFIRMWARE_FAILED";
+export const TRZ_UPDATEFIRMWARE_SUCCESS = "TRZ_UPDATEFIRMWARE_SUCCESS";
+
+export const updateFirmware = (path) => async (dispatch, getState) => {
+  const device = selectors.trezorDevice(getState());
+  if (!device) {
+    dispatch({ error: "Device not connected", type:  TRZ_UPDATEFIRMWARE_FAILED });
+    return;
+  }
+
+  dispatch({ type: TRZ_UPDATEFIRMWARE_ATTEMPT });
+
+  try {
+    const rawFirmware = fs.readFileSync(path);
+    const hexFirmware = rawToHex(rawFirmware);
+
+    await deviceRun(dispatch, getState, device, async session => {
+      await session.updateFirmware(hexFirmware);
+    });
+    dispatch({ type: TRZ_UPDATEFIRMWARE_SUCCESS });
+  } catch (error) {
+    dispatch({ error, type: TRZ_UPDATEFIRMWARE_FAILED });
+  }
+};

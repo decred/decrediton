@@ -10,6 +10,8 @@ export { default as ScriptNotRedeemableInfo } from "./InfoModals/ScriptNotRedeem
 
 export { default as SeedCopyWarning } from "./Warnings/SeedCopy.md";
 export { default as WalletCreationWarning } from "./Warnings/WalletCreation.md";
+export { default as TrezorWipeWarning } from "./Warnings/TrezorWipe.md";
+export { default as TrezorFirmwareUpdateWarning } from "./Warnings/TrezorFirmwareUpdate.md";
 
 export { default as GetStartedTutorialPage01 } from "./GetStarted/TutorialPage01.md";
 export { default as GetStartedTutorialPage02 } from "./GetStarted/TutorialPage02.md";

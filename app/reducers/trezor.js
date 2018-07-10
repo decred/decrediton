@@ -4,8 +4,20 @@ import {
   TRZ_SELECTEDDEVICE_CHANGED,
   TRZ_PIN_REQUESTED, TRZ_PIN_ENTERED, TRZ_PIN_CANCELED,
   TRZ_PASSPHRASE_REQUESTED, TRZ_PASSPHRASE_ENTERED, TRZ_PASSPHRASE_CANCELED,
+  TRZ_WORD_REQUESTED, TRZ_WORD_ENTERED, TRZ_WORD_CANCELED,
   TRZ_CANCELOPERATION_SUCCESS,
+  TRZ_TOGGLEPINPROTECTION_ATTEMPT, TRZ_TOGGLEPINPROTECTION_FAILED, TRZ_TOGGLEPINPROTECTION_SUCCESS,
+  TRZ_TOGGLEPASSPHRASEPROTECTION_ATTEMPT, TRZ_TOGGLEPASSPHRASEPROTECTION_FAILED, TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS,
+  TRZ_CHANGEHOMESCREEN_ATTEMPT, TRZ_CHANGEHOMESCREEN_FAILED, TRZ_CHANGEHOMESCREEN_SUCCESS,
+  TRZ_CHANGELABEL_ATTEMPT, TRZ_CHANGELABEL_FAILED, TRZ_CHANGELABEL_SUCCESS,
+  TRZ_WIPEDEVICE_ATTEMPT, TRZ_WIPEDEVICE_FAILED, TRZ_WIPEDEVICE_SUCCESS,
+  TRZ_RECOVERDEVICE_ATTEMPT, TRZ_RECOVERDEVICE_FAILED, TRZ_RECOVERDEVICE_SUCCESS,
+  TRZ_INITDEVICE_ATTEMPT, TRZ_INITDEVICE_FAILED, TRZ_INITDEVICE_SUCCESS,
+  TRZ_UPDATEFIRMWARE_ATTEMPT, TRZ_UPDATEFIRMWARE_FAILED, TRZ_UPDATEFIRMWARE_SUCCESS,
 } from "actions/TrezorActions";
+import {
+  SIGNTX_ATTEMPT, SIGNTX_FAILED, SIGNTX_SUCCESS
+} from "actions/ControlActions";
 
 export default function trezor(state = {}, action) {
   switch (action.type) {
@@ -29,6 +41,7 @@ export default function trezor(state = {}, action) {
       deviceList: null,
       transportError: action.error,
       device: null,
+      performingOperation: false,
     };
   case TRZ_SELECTEDDEVICE_CHANGED:
     return { ...state,
@@ -39,6 +52,7 @@ export default function trezor(state = {}, action) {
       waitingForPin: true,
       pinCallBack: action.pinCallBack,
       pinMessage: action.pinMessage,
+      performingOperation: true,
     };
   case TRZ_PIN_CANCELED:
   case TRZ_PIN_ENTERED:
@@ -46,25 +60,77 @@ export default function trezor(state = {}, action) {
       waitingForPin: false,
       pinCallBack: null,
       pinMessage: null,
+      performingOperation: false,
     };
   case TRZ_PASSPHRASE_REQUESTED:
     return { ...state,
       waitingForPassPhrase: true,
       passPhraseCallBack: action.passPhraseCallBack,
+      performingOperation: true,
     };
   case TRZ_PASSPHRASE_CANCELED:
   case TRZ_PASSPHRASE_ENTERED:
     return { ...state,
       waitingForPassPhrase: false,
       passPhraseCallBack: null,
+      performingOperation: false,
+    };
+  case TRZ_WORD_REQUESTED:
+    return { ...state,
+      waitingForWord: true,
+      wordCallBack: action.wordCallBack,
+      performingOperation: true,
+    };
+  case TRZ_WORD_CANCELED:
+  case TRZ_WORD_ENTERED:
+    return { ...state,
+      waitingForWord: false,
+      wordCallBack: null,
+      performingOperation: false,
     };
   case TRZ_CANCELOPERATION_SUCCESS:
     return { ...state,
       waitingForPin: false,
       pinCallBack: null,
       pinMessage: null,
+      wordCallBack: null,
       waitingForPassPhrase: false,
       passPhraseCallBack: null,
+      performingOperation: false,
+      waitingForWord: false,
+    };
+  case SIGNTX_ATTEMPT:
+  case TRZ_TOGGLEPINPROTECTION_ATTEMPT:
+  case TRZ_TOGGLEPASSPHRASEPROTECTION_ATTEMPT:
+  case TRZ_CHANGEHOMESCREEN_ATTEMPT:
+  case TRZ_CHANGELABEL_ATTEMPT:
+  case TRZ_WIPEDEVICE_ATTEMPT:
+  case TRZ_RECOVERDEVICE_ATTEMPT:
+  case TRZ_INITDEVICE_ATTEMPT:
+  case TRZ_UPDATEFIRMWARE_ATTEMPT:
+    return { ...state,
+      performingOperation: true,
+    };
+  case SIGNTX_FAILED:
+  case SIGNTX_SUCCESS:
+  case TRZ_TOGGLEPINPROTECTION_FAILED:
+  case TRZ_TOGGLEPINPROTECTION_SUCCESS:
+  case TRZ_TOGGLEPASSPHRASEPROTECTION_FAILED:
+  case TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS:
+  case TRZ_CHANGEHOMESCREEN_FAILED:
+  case TRZ_CHANGEHOMESCREEN_SUCCESS:
+  case TRZ_CHANGELABEL_FAILED:
+  case TRZ_CHANGELABEL_SUCCESS:
+  case TRZ_WIPEDEVICE_FAILED:
+  case TRZ_WIPEDEVICE_SUCCESS:
+  case TRZ_RECOVERDEVICE_FAILED:
+  case TRZ_RECOVERDEVICE_SUCCESS:
+  case TRZ_INITDEVICE_FAILED:
+  case TRZ_INITDEVICE_SUCCESS:
+  case TRZ_UPDATEFIRMWARE_FAILED:
+  case TRZ_UPDATEFIRMWARE_SUCCESS:
+    return { ...state,
+      performingOperation: false,
     };
   default:
     return state;

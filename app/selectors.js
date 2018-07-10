@@ -979,4 +979,6 @@ export const initialProposalLoading = createSelector(
 
 export const trezorWaitingForPin = get([ "trezor", "waitingForPin" ]);
 export const trezorWaitingForPassPhrase = get([ "trezor", "waitingForPassPhrase" ]);
+export const trezorWaitingForWord = get([ "trezor", "waitingForWord" ]);
+export const trezorPerformingOperation = get([ "trezor", "performingOperation" ]);
 export const trezorDevice = get([ "trezor", "device" ]);

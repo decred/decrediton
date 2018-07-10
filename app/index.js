@@ -391,12 +391,15 @@ var initialState = {
     deviceList: null,
     transportError: false,
     device: null,
+    performingOperation: false,
     waitingForPin: false,
     waitingForPassPhrase: false,
+    waitingForWord: false,
     pinCallBack: null,
     passPhraseCallBack: null,
     pinMessage: null,
     passPhraseMessage: null,
+    wordCallBack: null,
   },
   locales: locales
 };
