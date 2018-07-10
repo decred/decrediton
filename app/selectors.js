@@ -134,9 +134,9 @@ export const getNetworkError = get([ "grpc", "getNetworkError" ]);
 const accounts = createSelector([ getAccountsResponse ], r => r ? r.getAccountsList() : []);
 
 export const isWatchingOnly = get([ "walletLoader", "isWatchingOnly" ]);
-export const accountExtendedKey =createSelector(
+export const accountExtendedKey = createSelector(
   [ get([ "control", "getAccountExtendedKeyResponse" ]) ],
-  (accountExtendedKey) => accountExtendedKey ? accountExtendedKey.getAccountextendedkey() : null
+  (response) => response ? response.getAccountextendedkey() : null
 );
 export const sortedAccounts = createSelector(
   [ balances ], balances => balances.slice().sort((a, b) => a.accountNumber - b.accountNumber)

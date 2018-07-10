@@ -25,6 +25,7 @@ class Accounts extends React.Component {
           accountNumDetailsShown: this.state.accountNumDetailsShown,
           onShowAccountDetails: this.onShowAccountDetails,
           onHideAccountDetails: this.onHideAccountDetails,
+          accountExtendedKey: this.props.accountExtendedKey
         }}
       />
     );

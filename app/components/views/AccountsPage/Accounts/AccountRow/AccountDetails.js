@@ -112,7 +112,7 @@ const AccountsList = ({
         <div className="account-actions-pubkey-label">
           <T id="account.pubKey" m="Extended Public Key"/>
         </div>
-        {showPubKey ?
+        {showPubKey  && accountExtendedKey?
           <Aux>
             <div className="account-actions-pubkey-area">
               {accountExtendedKey}
