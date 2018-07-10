@@ -84,7 +84,7 @@ export const startupError = or(
 
 const availableWallets = get([ "daemon", "availableWallets" ]);
 
-export const availableWalletsSelect = createSelector(
+const availableWalletsSelect = createSelector(
   [ availableWallets ],
   (wallets) => map(
     wallet => ({
@@ -92,10 +92,16 @@ export const availableWalletsSelect = createSelector(
       value: wallet,
       network: wallet.network,
       finished: wallet.finished,
+      isWatchOnly: wallet.watchOnly,
       lastAccess: wallet.lastAccess ? new Date(wallet.lastAccess) : null,
     }),
     wallets
   )
+);
+
+export const sortedAvailableWallets = createSelector(
+  [ availableWalletsSelect ],
+  (availableWallets) => (availableWallets.sort((a, b) => (b.lastAccess - a.lastAccess)))
 );
 export const previousWallet = get([ "daemon", "previousWallet" ]);
 export const getWalletName = get([ "daemon", "walletName" ]);

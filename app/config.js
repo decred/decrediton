@@ -53,6 +53,9 @@ export function initWalletCfg(testnet, walletPath) {
   if (!config.has("gaplimit")) {
     config.set("gaplimit","20");
   }
+  if (!config.has("iswatchonly")) {
+    config.set("iswatchonly", false);
+  }
   stakePoolInfo(function(foundStakePoolConfigs) {
     if (foundStakePoolConfigs !== null) {
       updateStakePoolConfig(config, foundStakePoolConfigs);
