@@ -466,6 +466,28 @@ function deserialize_walletrpc_GenerateRandomSeedResponse(buffer_arg) {
   return api_pb.GenerateRandomSeedResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_walletrpc_GetAccountExtendedKeyRequest(arg) {
+  if (!(arg instanceof api_pb.GetAccountExtendedKeyRequest)) {
+    throw new Error('Expected argument of type walletrpc.GetAccountExtendedKeyRequest');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_GetAccountExtendedKeyRequest(buffer_arg) {
+  return api_pb.GetAccountExtendedKeyRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_GetAccountExtendedKeyResponse(arg) {
+  if (!(arg instanceof api_pb.GetAccountExtendedKeyResponse)) {
+    throw new Error('Expected argument of type walletrpc.GetAccountExtendedKeyResponse');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_GetAccountExtendedKeyResponse(buffer_arg) {
+  return api_pb.GetAccountExtendedKeyResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_walletrpc_GetTicketsRequest(arg) {
   if (!(arg instanceof api_pb.GetTicketsRequest)) {
     throw new Error('Expected argument of type walletrpc.GetTicketsRequest');
@@ -1528,6 +1550,17 @@ var WalletServiceService = exports.WalletServiceService = {
     requestDeserialize: deserialize_walletrpc_BalanceRequest,
     responseSerialize: serialize_walletrpc_BalanceResponse,
     responseDeserialize: deserialize_walletrpc_BalanceResponse,
+  },
+  getAccountExtendedKey: {
+    path: '/walletrpc.WalletService/GetAccountExtendedKey',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.GetAccountExtendedKeyRequest,
+    responseType: api_pb.GetAccountExtendedKeyResponse,
+    requestSerialize: serialize_walletrpc_GetAccountExtendedKeyRequest,
+    requestDeserialize: deserialize_walletrpc_GetAccountExtendedKeyRequest,
+    responseSerialize: serialize_walletrpc_GetAccountExtendedKeyResponse,
+    responseDeserialize: deserialize_walletrpc_GetAccountExtendedKeyResponse,
   },
   getTransaction: {
     path: '/walletrpc.WalletService/GetTransaction',
