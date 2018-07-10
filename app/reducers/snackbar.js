@@ -271,6 +271,7 @@ export default function snackbar(state = {}, action) {
   case GETVETTED_FAILED:
   case GETPROPOSAL_FAILED:
   case UPDATEVOTECHOICE_FAILED:
+  case GETACCOUNTEXTENDEDKEY_FAILED:
     type = "Error";
     message = messages[action.type] || messages.defaultErrorMessage;
     values = { originalError: String(action.error) };
