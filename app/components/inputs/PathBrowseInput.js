@@ -74,11 +74,15 @@ class PathBrowseInput extends React.Component {
   render() {
     return (
       <div className={"path-input-and-button"}>
-        <PathInput
-          value={this.props.value}
-          onChange={this.onChange}
-          placeholder={this.props.placeholder}
-        />
+        <div className="path-input-area">
+          <PathInput
+            required={this.props.required}
+            value={this.props.value}
+            onChange={this.onChange}
+            placeholder={this.props.placeholder}
+            showErrors={true}
+          />
+        </div>
         <PathButton onClick={this.selectDirectory} />
       </div>
     );

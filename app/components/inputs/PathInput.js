@@ -1,11 +1,6 @@
+import Input from "./Input";
 
-const PathInput = ({ onChange, value, placeholder }) =>
-  <input
-    type="text"
-    className="path-input"
-    value={value}
-    onChange={(e) => onChange(e.target.value)}
-    placeholder={placeholder}
-  />;
+const PathInput = ({ onChange, ...props }) =>
+  <Input {...{ ...props, className: "path-input", onChange: (e) => onChange(e.target.value) }}/>;
 
 export default PathInput;
