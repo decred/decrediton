@@ -18,6 +18,7 @@ class AccountRow extends React.Component {
       renameAccountNumber: this.props.account.accountNumber,
       hidden: this.props.account.hidden,
       hasFailedAttempt: false,
+      showPubKey: false,
     };
   }
 
@@ -60,6 +61,11 @@ class AccountRow extends React.Component {
     this.setState({ hidden: true });
   }
 
+  onShowPubKey() {
+    this.props.onGetAccountExtendedKey(this.props.account.accountNumber);
+    this.setState({ showPubKey: true });
+  }
+
   getRenameAccountStyles () {
     const { account, intl } = this.props;
     const {
@@ -84,13 +90,14 @@ class AccountRow extends React.Component {
   }
 
   getAccountDetailsStyles() {
-    const { account } = this.props;
+    const { account, accountExtendedKey } = this.props;
     const {
       showRenameAccount,
       showAccount,
       hideAccount,
+      onShowPubKey,
     } = this;
-    const { hidden } = this.state;
+    const { hidden, showPubKey } = this.state;
     return (
       <AccountDetails
         {...{
@@ -99,6 +106,9 @@ class AccountRow extends React.Component {
           hidden,
           hideAccount,
           showAccount,
+          onShowPubKey,
+          showPubKey,
+          accountExtendedKey,
         }}
       />
     );

@@ -18,6 +18,7 @@ class Accounts extends React.Component {
           isLoading: this.props.isLoading,
           isCreateAccountDisabled: this.props.isCreateAccountDisabled,
           onGetNextAccountAttempt: this.onGetNextAccountAttempt,
+          onGetAccountExtendedKey: this.props.onGetAccountExtendedKey,
           onHideAccount: this.props.onHideAccount,
           onShowAccount: this.props.onShowAccount,
           onRenameAccount: this.props.onRenameAccount,

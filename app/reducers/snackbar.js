@@ -18,6 +18,7 @@ import {
   CHANGEPASSPHRASE_SUCCESS, CHANGEPASSPHRASE_FAILED,
   SIGNMESSAGE_FAILED, VERIFYMESSAGE_FAILED,
   PUBLISHUNMINEDTRANSACTIONS_SUCCESS, PUBLISHUNMINEDTRANSACTIONS_FAILED,
+  GETACCOUNTEXTENDEDKEY_FAILED,
 } from "../actions/ControlActions";
 import {
   UPDATESTAKEPOOLCONFIG_SUCCESS, UPDATESTAKEPOOLCONFIG_FAILED,
@@ -191,7 +192,11 @@ const messages = defineMessages({
   ADDCUSTOMSTAKEPOOL_SUCCESS: {
     id: "addCustomStakePool.success",
     defaultMessage: "Successfully added stakepool {host}!"
-  }
+  },
+  GETACCOUNTEXTENDEDKEY_FAILED: {
+    id: "accountExtendedKey.failed",
+    defaultMessage: "Error getting account extended key: {originalError}"
+  },
 });
 
 export default function snackbar(state = {}, action) {

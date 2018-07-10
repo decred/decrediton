@@ -14,6 +14,12 @@ export const getNextAccount = (walletService, passphrase, name) => new Promise((
   walletService.nextAccount(request, (err, res) => err ? fail(err) : ok(res));
 });
 
+export const getAccountExtendedKey = (walletService, accountNum) => new Promise((ok, fail) => {
+  const request = new api.GetAccountExtendedKeyRequest();
+  request.setAccount(accountNum);
+  walletService.getAccountExtendedKey(request, (err, res) => err ? fail(err) : ok(res));
+});
+
 export const renameAccount = (walletService, accountNum, newName) => new Promise((ok, fail) => {
   const request = new api.RenameAccountRequest();
   request.setAccountNumber(accountNum);
