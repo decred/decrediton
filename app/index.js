@@ -246,6 +246,10 @@ var initialState = {
     accountNtfnsResponse: null,
   },
   control: {
+    // ExtendedPubKey
+    getExtendedPubKeyAttempt: false,
+    getExtendedPubKeyResponse: null,
+    getExtendedPubKeyError: null,
     // NextAddress
     getNextAddressRequestAttempt: false,
     getNextAddressResponse: null,
