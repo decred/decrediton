@@ -10,4 +10,5 @@ export { default as ShowWarning } from "./ShowWarning";
 export { default as ShowError } from "./ShowError";
 export { default as Documentation } from "./Documentation";
 export { default as StaticSwitch } from "./StaticSwitch";
+export { default as VerticalAccordion } from "./VerticalAccordion";
 export * from "./RoutedTabsHeader";

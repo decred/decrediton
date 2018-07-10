@@ -777,3 +777,26 @@
     bottom: 18px;
   }
 }
+
+.vertical-accordion-header {
+  cursor: pointer;
+}
+
+.vertical-accordion-header:after {
+  content:"";
+  background-image: @arrow-right-gray-icon;
+  background-repeat: no-repeat;
+  background-position: center right;
+  background-size: contain;
+  width: 10px;
+  height: 14px;
+  display: inline-block;
+  float: right;
+  margin-top: 6px;
+  transition: transform 0.25s ease-in-out;
+  transform: rotate(-90deg);
+}
+
+.vertical-accordion.active .vertical-accordion-header:after {
+  transform: rotate(90deg);
+}
