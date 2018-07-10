@@ -1,5 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
-import { Balance, Tooltip } from "shared";
+import { Balance, Tooltip, CopyToClipboard } from "shared";
 import { SlateGrayButton } from "buttons";
 
 function isHidable(account) {
@@ -111,9 +111,13 @@ const AccountsList = ({
         <div className="account-actions-pubkey-label">
           <T id="account.pubKey" m="Extended Public Key"/>
         </div>
-        {showingPubKey ?
-          <div className="account-actions-pubkey-area">
-          </div> :
+        {!showingPubKey ?
+          <Aux>
+            <div className="account-actions-pubkey-area">
+              tpubVpQrvxzSBfnqkKCi3riQKqq5LJXUo5fK179pGtQkHLgS54vXdxxPVWWSJ2RGNsPJt213GTX5yA1CbB7qDb1KxGQ3a2dSSWZ5C9yJJvCSg39
+            </div>
+            <CopyToClipboard textToCopy={"TkQ3fQTbQQFhHbztmBmvUGjUGrXTXbLMYU9NY1bwHbgUQCRUjjxQS"} className="account-actions-pubkey-clipboard" />
+          </Aux> :
           <SlateGrayButton className="account-actions-pubkey-button" onClick={showPubKey}><T id="account.reveal" m="Reveal"/></SlateGrayButton>
         }
       </div>
