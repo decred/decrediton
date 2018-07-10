@@ -30,6 +30,8 @@ const AdvancedBodyBase = ({
   appDataHasFailedAttempt,
   appData,
   intl,
+  remoteValid,
+  appDataValid,
   ...props,
 }) => {
   return (
@@ -79,10 +81,10 @@ const AdvancedBodyBase = ({
             <T id="advancedStartup.skip" m="Skip"/>
           </InvisibleButton>
           { sideActive ?
-            <KeyBlueButton onClick={onSubmitRemoteForm}>
+            <KeyBlueButton onClick={onSubmitRemoteForm} disabled={!remoteValid}>
               <T id="login.form.connect.button" m="Use Remote Daemon" />
             </KeyBlueButton> :
-            <KeyBlueButton onClick={onSubmitAppDataForm}>
+            <KeyBlueButton onClick={onSubmitAppDataForm} disabled={!appDataValid}>
               <T id="login.form.appdata.button" m="Start AppData Daemon" />
             </KeyBlueButton>
           }

@@ -57,7 +57,11 @@ class AdvancedStartupBody extends React.Component {
       skipAdvancedDaemon,
       onShowRemote,
       onShowAppData,
+      isAppDataValid,
+      isRemoteValid,
     } = this;
+    const remoteValid = isRemoteValid();
+    const appDataValid = isAppDataValid();
     return (
       <AdvancedBody
         {...{
@@ -74,6 +78,8 @@ class AdvancedStartupBody extends React.Component {
           setRpcHost,
           setRpcPort,
           setAppData,
+          remoteValid,
+          appDataValid
         }}
       />
     );

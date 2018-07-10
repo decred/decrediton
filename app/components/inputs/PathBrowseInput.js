@@ -80,7 +80,7 @@ class PathBrowseInput extends React.Component {
             value={this.props.value}
             onChange={this.onChange}
             placeholder={this.props.placeholder}
-            showErrors={true}
+            showErrors={this.props.showErrors}
           />
         </div>
         <PathButton onClick={this.selectDirectory} />

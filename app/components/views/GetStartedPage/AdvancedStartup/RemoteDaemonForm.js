@@ -5,23 +5,23 @@ import "style/LoginForm.less";
 const messages = defineMessages({
   messageLoginPlaceholder: {
     id: "login.form.rpcuser.placeholder",
-    defaultMessage: "Enter your RPC User here",
+    defaultMessage: "RPC Username",
   },
   passphraseFieldPlaceholder: {
     id: "login.form.rpcpassword.placeholder",
-    defaultMessage: "Enter your RPC Password here",
+    defaultMessage: "RPC Password",
   },
   certFieldPlaceholder: {
     id: "login.form.rpccert.placeholder.",
-    defaultMessage: "Enter your RPC cert location here",
+    defaultMessage: "RPC Certificate path",
   },
   hostFieldPlaceholder: {
     id: "login.form.rpchost.placeholder.",
-    defaultMessage: "Enter your RPC host here",
+    defaultMessage: "RPC Host",
   },
   portFieldPlaceholder: {
     id: "login.form.rpcport.placeholder.",
-    defaultMessage: "Enter your RPC port here",
+    defaultMessage: "RPC Port",
   },
 });
 

@@ -5,7 +5,7 @@ import "style/LoginForm.less";
 const messages = defineMessages({
   appdataFieldPlaceholder: {
     id: "login.form.appdata.placeholder",
-    defaultMessage: "Enter your Path to application home directory",
+    defaultMessage: "Daemon Data Directory",
   },
 });
 
