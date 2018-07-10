@@ -26,6 +26,13 @@ class AccountRow extends React.Component {
     this.setState(this.getInitialState());
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { account, accountNumDetailsShown } = this.props;
+    if (accountNumDetailsShown !== nextProps.accountNumDetailsShown && accountNumDetailsShown == account.accountNumber) {
+      this.setState({ showPubKey: false });
+    }
+  }
+
   updateRenameAccountName(accountName) {
     if (accountName == "") {
       this.setState({ hasFailedAttempt: true });

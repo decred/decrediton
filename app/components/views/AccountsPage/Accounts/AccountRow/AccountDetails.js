@@ -108,24 +108,26 @@ const AccountsList = ({
       </div>
     </div>
     <div className="account-actions">
-      <div className="account-actions-pubkey">
-        <div className="account-actions-pubkey-label">
-          <T id="account.pubKey" m="Extended Public Key"/>
+      {account.accountName !== "imported" &&
+        <div className="account-actions-pubkey">
+          <div className="account-actions-pubkey-label">
+            <T id="account.pubKey" m="Extended Public Key"/>
+          </div>
+          {showPubKey && accountExtendedKey?
+            <Aux>
+              <div className="account-actions-pubkey-area">
+                {accountExtendedKey}
+              </div>
+              <CopyToClipboard textToCopy={accountExtendedKey} className="account-actions-pubkey-clipboard" />
+            </Aux> :
+            <SlateGrayButton className="account-actions-pubkey-button" onClick={onShowPubKey}><T id="account.reveal" m="Reveal"/></SlateGrayButton>
+          }
         </div>
-        {showPubKey  && accountExtendedKey?
-          <Aux>
-            <div className="account-actions-pubkey-area">
-              {accountExtendedKey}
-            </div>
-            <CopyToClipboard textToCopy={accountExtendedKey} className="account-actions-pubkey-clipboard" />
-          </Aux> :
-          <SlateGrayButton className="account-actions-pubkey-button" onClick={onShowPubKey}><T id="account.reveal" m="Reveal"/></SlateGrayButton>
-        }
-      </div>
+      }
       <div className="account-actions-buttons">
-        {account.accountName !== "imported" ? <RenameAccountBtn {...{ showRenameAccount }} /> : null }
-        {isHidable(account) && !hidden ? <HideAccountBtn {...{ hideAccount }} /> : null }
-        {hidden ? <ShowAccountBtn {...{ showAccount }} /> : null }
+        {account.accountName !== "imported" && <RenameAccountBtn {...{ showRenameAccount }} /> }
+        {isHidable(account) && !hidden && <HideAccountBtn {...{ hideAccount }} /> }
+        {hidden && <ShowAccountBtn {...{ showAccount }} /> }
       </div>
     </div>
   </div>
