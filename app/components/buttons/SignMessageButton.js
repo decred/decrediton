@@ -1,5 +1,5 @@
 import { signMessagePage } from "connectors";
-import { PassphraseModalButton } from "./index";
+import { PassphraseModalButton, KeyBlueButton } from "./index";
 import { FormattedMessage as T } from "react-intl";
 
 @autobind
@@ -16,19 +16,39 @@ class SignMessageButton extends React.Component {
     onSubmit && onSubmit();
   }
 
-  render() {
-    const { disabled, isSigningMessage, className } = this.props;
+  async onAttemptSignMessageTrezor() {
+    const { address, message, disabled, signMessageAttemptTrezor, onSubmit } = this.props;
+    if (disabled || !signMessageAttemptTrezor) return;
+    await signMessageAttemptTrezor(address, message);
+    onSubmit && onSubmit();
+  }
 
-    return (
-      <PassphraseModalButton
-        modalTitle={<T id="securitycenter.signMessageModal" m="Sign Message" />}
-        className={className}
-        disabled={disabled}
-        onSubmit={this.onAttemptSignMessage}
-        loading={isSigningMessage}
-        buttonLabel={<T id="securitycenter.signMessageBtn" m="Sign Message" />}
-      />
-    );
+  render() {
+    const { disabled, isSigningMessage, className, isTrezor } = this.props;
+
+    if (isTrezor) {
+      return (
+        <KeyBlueButton
+          className={className}
+          disabled={disabled}
+          onClick={this.onAttemptSignMessageTrezor}
+          loading={isSigningMessage}
+        >
+          <T id="securitycenter.signMessageBtn" m="Sign Message" />
+        </KeyBlueButton>
+      );
+    } else {
+      return (
+        <PassphraseModalButton
+          modalTitle={<T id="securitycenter.signMessageModal" m="Sign Message" />}
+          className={className}
+          disabled={disabled}
+          onSubmit={this.onAttemptSignMessage}
+          loading={isSigningMessage}
+          buttonLabel={<T id="securitycenter.signMessageBtn" m="Sign Message" />}
+        />
+      );
+    }
   }
 }
 

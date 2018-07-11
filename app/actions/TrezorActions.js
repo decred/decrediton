@@ -4,12 +4,15 @@ import * as wallet from "wallet";
 import * as selectors from "selectors";
 import fs from "fs";
 import { sprintf } from "sprintf-js";
-import { rawHashToHex, rawToHex, hexToRaw } from "helpers";
+import { rawHashToHex, rawToHex, hexToRaw, str2utf8hex, hex2b64 } from "helpers";
 import { publishTransactionAttempt } from "./ControlActions";
 import { model1_decred_homescreen } from "helpers/trezor";
 
 import { EXTERNALREQUEST_TREZOR_BRIDGE } from "main_dev/externalRequests";
-import { SIGNTX_ATTEMPT, SIGNTX_FAILED, SIGNTX_SUCCESS } from "./ControlActions";
+import {
+  SIGNTX_ATTEMPT, SIGNTX_FAILED, SIGNTX_SUCCESS,
+  SIGNMESSAGE_ATTEMPT, SIGNMESSAGE_FAILED, SIGNMESSAGE_SUCCESS
+} from "./ControlActions";
 
 const hardeningConstant = 0x80000000;
 
@@ -291,6 +294,44 @@ export const signTransactionAttemptTrezor = (rawUnsigTx, constructTxResponse) =>
   } catch (error) {
     dispatch({ error, type: SIGNTX_FAILED });
   }
+};
+
+export const signMessageAttemptTrezor = (address, message) => async (dispatch, getState) => {
+
+  dispatch({ type: SIGNMESSAGE_ATTEMPT });
+
+  const device = selectors.trezorDevice(getState());
+  if (!device) {
+    dispatch({ error: "Device not connected", type: SIGNMESSAGE_FAILED });
+    return;
+  }
+
+  const chainParams = selectors.chainParams(getState());
+  const { grpc: { walletService } } = getState();
+
+  try {
+    const addrValidResp = await wallet.validateAddress(walletService, address);
+    if (!addrValidResp.getIsValid()) throw "Input has an invalid address " + address;
+    if (!addrValidResp.getIsMine()) throw "Trezor only supports signing with wallet addresses";
+    const addrIndex = addrValidResp.getIndex();
+    const addrBranch = addrValidResp.getIsInternal() ? 1 : 0;
+    const address_n = addressPath(addrIndex, addrBranch, WALLET_ACCOUNT,
+      chainParams.HDCoinType);
+
+    const signedMsg = await deviceRun(dispatch, getState, device, async session => {
+      await dispatch(checkTrezorIsDcrwallet(session));
+
+      return await session.signMessage(address_n, str2utf8hex(message),
+        chainParams.trezorCoinName, false);
+    });
+
+    const signature = hex2b64(signedMsg.message.signature);
+    dispatch({ getSignMessageSignature: signature, type: SIGNMESSAGE_SUCCESS });
+
+  } catch (error) {
+    dispatch({ error, type: SIGNMESSAGE_FAILED });
+  }
+
 };
 
 // walletTxToBtcjsTx converts a tx decoded by the decred wallet (ie,
