@@ -401,7 +401,12 @@
 
 .path-input-and-button {
   display: flex;
-  flex: 1;
+  flex-direction: row;
+}
+
+.path-input-area {
+  width: 100%;
+  margin-right: 15px;
 }
 
 .path-button {
@@ -412,8 +417,7 @@
   background-color: transparent;
   background-image: @search-icon;
   background-size: 16px 16px;
-  display: flex;
-  flex: auto;
+  margin-top: 5px;
 }
 
 .path-button:hover {
