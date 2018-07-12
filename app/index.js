@@ -353,11 +353,10 @@ var initialState = {
     getMyTicketsStatsRequest: false,
   },
   governance: {
-    getActiveVoteAttempt: false,
-    activeVote: [],
-
     getVettedAttempt: false,
-    vetted: [],
+    activeVote: [],
+    preVote: [],
+    voted: [],
 
     getProposalAttempt: false,
     getProposalError: null,

@@ -1,13 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
-import { ExternalLink } from "shared";
+import { PoliteiaLink as PiLink } from "shared";
 import { Switch, Route, NavLink } from "react-router-dom";
-import { ActiveVoteProposals, VettedProposals } from "./ProposalList";
-
-const PiLink = ({ children }) => (
-  <ExternalLink href="https://proposals.decred.org" hrefTestNet="https://test-proposals.decred.org">
-    {children}
-  </ExternalLink>
-);
+import { ActiveVoteProposals, PreVoteProposals, VotedProposals } from "./ProposalList";
 
 const Page = () => (
   <Aux>
@@ -25,12 +19,14 @@ const Page = () => (
 
     <div className="proposals-status-links">
       <NavLink to="/governance/proposals/activevote"><T id="proposals.statusLinks.underVote" m="Under Vote" /></NavLink>
-      <NavLink to="/governance/proposals/vetted"><T id="proposals.statusLinks.reviewed" m="Reviewed" /></NavLink>
+      <NavLink to="/governance/proposals/prevote"><T id="proposals.statusLinks.preVote" m="Under Discussion" /></NavLink>
+      <NavLink to="/governance/proposals/voted"><T id="proposals.statusLinks.voted" m="Vote Ended" /></NavLink>
     </div>
 
     <Switch>
       <Route path="/governance/proposals/activevote" component={ActiveVoteProposals} />
-      <Route path="/governance/proposals/vetted" component={VettedProposals} />
+      <Route path="/governance/proposals/prevote" component={PreVoteProposals} />
+      <Route path="/governance/proposals/voted" component={VotedProposals} />
     </Switch>
 
   </Aux>

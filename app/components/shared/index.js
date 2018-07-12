@@ -11,4 +11,5 @@ export { default as ShowError } from "./ShowError";
 export { default as Documentation } from "./Documentation";
 export { default as StaticSwitch } from "./StaticSwitch";
 export { default as VerticalAccordion } from "./VerticalAccordion";
+export { default as PoliteiaLink } from "./PoliteiaLink";
 export * from "./RoutedTabsHeader";

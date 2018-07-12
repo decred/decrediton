@@ -6,10 +6,8 @@ import * as ga from "actions/GovernanceActions";
 import * as ca from "actions/ClientActions";
 
 const mapStateToProps = selectorMap({
-  getActiveVoteProposalsAttempt: sel.getActiveVoteProposalsAttempt,
   activeVoteProposals: sel.activeVoteProposals,
   getVettedProposalsAttempt: sel.getVettedProposalsAttempt,
-  vettedProposals: sel.vettedProposals,
   politeiaEnabled: sel.politeiaEnabled,
   viewedProposalDetails: sel.viewedProposalDetails,
   getProposalAttempt: sel.getProposalAttempt,
@@ -19,7 +17,6 @@ const mapStateToProps = selectorMap({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  getActiveVoteProposals: ga.getActiveVoteProposals,
   getVettedProposals: ga.getVettedProposals,
   getProposalDetails: ga.getProposalDetails,
   viewProposalDetails: ga.viewProposalDetails,

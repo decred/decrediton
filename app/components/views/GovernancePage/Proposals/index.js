@@ -9,9 +9,6 @@ class Proposals extends React.Component {
 
   constructor(props) {
     super(props);
-    if (!props.activeVoteProposals.length && !props.getActiveVoteProposalsAttempt && props.politeiaEnabled) {
-      props.getActiveVoteProposals();
-    }
     if (!props.getVettedProposals.length && !props.getVettedProposalsAttempt && props.politeiaEnabled) {
       props.getVettedProposals();
     }
@@ -20,7 +17,6 @@ class Proposals extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.politeiaEnabled && !this.props.politeiaEnabled) {
       this.props.getVettedProposals();
-      this.props.getActiveVoteProposals();
     }
   }
 

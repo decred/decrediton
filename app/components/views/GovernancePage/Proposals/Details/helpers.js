@@ -14,6 +14,9 @@ export const ProposalError = ( { error } ) => <div><T id="proposalDetails.loadin
 export const ProposalNotVoting = () =>
   <div className="proposal-details-voting-not-voting"><T id="proposalDetails.votingInfo.notVoting" m="Proposal not yet on voting stage" /></div>;
 
+export const ProposalVoted = () =>
+  <div className="proposal-details-voting-voted"><T id="proposalDetails.votingInfo.voted" m="Voting has ended for this proposal" /></div>;
+
 export const NoTicketsVotingInfo = ({ showPurchaseTicketsPage }) => (
   <Aux>
     <div className="proposal-details-no-tickets"><T id="proposalDetails.votingInfo.noTickets" m="Voting is only available upon participation in Staking." /></div>
@@ -85,7 +88,8 @@ export const OverviewVotingProgressInfo = ({ voteCounts }) => (
     <div className="proposal-details-voting-progress-counts">
       <div className="yes-count-box" /><T id="proposal.progressCount.yes" m="{count} Yes" values={{ count: voteCounts.yes }} />
       <div className="no-count-box" /><T id="proposal.progressCount.no" m="{count} No" values={{ count: voteCounts.no }} />
-      <div className="abstain-count-box" /><T id="proposal.progressCount.abstain" m="{count} Abstain" values={{ count: voteCounts.abstain }} />
+      {/* // TODO: return if we have have quorum/total ticket counts available.
+      <div className="abstain-count-box" /><T id="proposal.progressCount.abstain" m="{count} Abstain" values={{ count: voteCounts.abstain }} /> */}
     </div>
 
     <VotingProgress voteCounts={voteCounts} />

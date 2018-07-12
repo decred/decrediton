@@ -911,10 +911,10 @@ export const politeiaEnabled = compose(
 );
 
 export const updateVoteChoiceAttempt = get([ "governance", "updateVoteChoiceAttempt" ]);
-export const getActiveVoteProposalsAttempt = get([ "governance", "getActiveVoteAttempt" ]);
 export const activeVoteProposals = get([ "governance", "activeVote" ]);
 export const getVettedProposalsAttempt = get([ "governance", "getVettedAttempt" ]);
-export const vettedProposals = get([ "governance", "vetted" ]);
+export const preVoteProposals = get([ "governance", "preVote" ]);
+export const votedProposals = get([ "governance", "voted" ]);
 
 export const hasTickets = createSelector(
   [ allTickets ],

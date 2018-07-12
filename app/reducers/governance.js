@@ -1,5 +1,4 @@
 import {
-  GETACTIVEVOTE_ATTEMPT, GETACTIVEVOTE_FAILED, GETACTIVEVOTE_SUCCESS,
   GETVETTED_ATTEMPT, GETVETTED_FAILED, GETVETTED_SUCCESS,
   GETPROPOSAL_ATTEMPT, GETPROPOSAL_FAILED, GETPROPOSAL_SUCCESS,
   UPDATEVOTECHOICE_ATTEMPT, UPDATEVOTECHOICE_SUCCESS, UPDATEVOTECHOICE_FAILED,
@@ -7,23 +6,17 @@ import {
 
 export default function governance(state = {}, action) {
   switch (action.type) {
-  case GETACTIVEVOTE_ATTEMPT:
-    return { ...state, getActiveVoteAttempt: true };
-  case GETACTIVEVOTE_FAILED:
-    return { ...state, getActiveVoteAttempt: false };
-  case GETACTIVEVOTE_SUCCESS:
-    return { ...state,
-      getActiveVoteAttempt: false,
-      activeVote: action.proposals
-    };
   case GETVETTED_ATTEMPT:
     return { ...state, getVettedAttempt: true };
   case GETVETTED_FAILED:
     return { ...state, getVettedAttempt: false };
   case GETVETTED_SUCCESS:
     return { ...state,
+      proposals: { ...state.proposals, ...action.proposals },
       getVettedAttempt: false,
-      vetted: action.proposals
+      preVote: action.preVote,
+      activeVote: action.activeVote,
+      voted: action.voted,
     };
   case GETPROPOSAL_ATTEMPT:
     return { ...state, getProposalAttempt: true, getProposalError: null };

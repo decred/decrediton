@@ -28,6 +28,11 @@ export function getVetted(piURL) {
   return ensureCSRF(piURL).then(() => axios.get(url));
 }
 
+export function getVoteStatus(piURL) {
+  const url = piURL + "/v1/proposals/votestatus";
+  return ensureCSRF(piURL).then(() => axios.get(url));
+}
+
 export function getProposal(piURL, token) {
   const url = piURL + "/v1/proposals/" + token;
   return ensureCSRF(piURL).then(() => axios.get(url));
@@ -47,7 +52,7 @@ export function castVotes(piURL, votes) {
         [CSRF_TOKEN_HEADER]: resp.headers[CSRF_TOKEN_HEADER]
       }
     };
-    axios.post(url, { votes }, cfg);
+    return axios.post(url, { votes }, cfg);
   });
 }
 
