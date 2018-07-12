@@ -879,3 +879,10 @@ export const stakeRewardsStats = createSelector(
   })));
 
 export const modalVisible = get([ "control", "modalVisible" ]);
+
+// Functionalities deactivated
+export const isSignVerifyMessageDisabled = or(isWatchingOnly, isWatchOnly);
+
+export const isCreateAccountDisabled = or(isWatchingOnly, isWatchOnly);
+
+export const isChangePassPhraseDisabled = or(isWatchingOnly, isWatchOnly);

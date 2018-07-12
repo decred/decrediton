@@ -23,6 +23,7 @@ const SettingsPage = ({
   onChangeTempSettings,
   onSaveSettings,
   onAttemptChangePassphrase,
+  isChangePassPhraseDisabled,
 }) => (
   <StandalonePage header={<SettingsPageHeader />}>
     <div className="settings-wrapper">
@@ -32,17 +33,20 @@ const SettingsPage = ({
         <ProxySettings {...{ tempSettings, onChangeTempSettings }} />
       </div>
       <div className="settings-columns">
-        <div className="settings-security">
-          <div className="settings-column-title"><T id="settings.security.title" m="Security" /></div>
-          <div className="settings-action-buttons">
-            <div className="settings-update-passphrase-button">
-              <T id="settings.updatePrivatePassphrase" m="Update Private Passphrase" />
-              <ChangePassphraseButton
-                modalTitle={<T id="settings.changeConfirmation" m="Change your passphrase" />}
-                onSubmit={onAttemptChangePassphrase} />
+        {
+          !isChangePassPhraseDisabled &&
+          <div className="settings-security">
+            <div className="settings-column-title"><T id="settings.security.title" m="Security" /></div>
+            <div className="settings-action-buttons">
+              <div className="settings-update-passphrase-button">
+                <T id="settings.updatePrivatePassphrase" m="Update Private Passphrase" />
+                <ChangePassphraseButton
+                  modalTitle={<T id="settings.changeConfirmation" m="Change your passphrase" />}
+                  onSubmit={onAttemptChangePassphrase} />
+              </div>
             </div>
           </div>
-        </div>
+        }
         <PrivacySettings {...{ tempSettings, onChangeTempSettings }} />
       </div>
     </div>
@@ -58,5 +62,17 @@ const SettingsPage = ({
     </div>
   </StandalonePage>
 );
+
+SettingsPage.propTypes = {
+  areSettingsDirty: PropTypes.bool.isRequired,
+  tempSettings: PropTypes.object.isRequired,
+  networks: PropTypes.array.isRequired,
+  currencies: PropTypes.array.isRequired,
+  locales: PropTypes.array,
+  onChangeTempSettings: PropTypes.func.isRequired,
+  onSaveSettings: PropTypes.func.isRequired,
+  onAttemptChangePassphrase: PropTypes.func,
+  isChangePassPhraseDisabled: PropTypes.bool.isRequired,
+};
 
 export default SettingsPage;

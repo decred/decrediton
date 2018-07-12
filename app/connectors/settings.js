@@ -10,7 +10,8 @@ const mapStateToProps = selectorMap({
   networks: sel.networks,
   locales: sel.sortedLocales,
   tempSettings: sel.tempSettings,
-  areSettingsDirty: sel.settingsChanged
+  areSettingsDirty: sel.settingsChanged,
+  isChangePassPhraseDisabled: sel.isChangePassPhraseDisabled,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

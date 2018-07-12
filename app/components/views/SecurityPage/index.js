@@ -3,6 +3,7 @@ import { StandalonePage, StandaloneHeader } from "layout";
 import { default as SignTab } from "./SignMessage";
 import { default as ValidateAddressTab } from "./ValidateAddress";
 import { default as VerifyMessageTab } from "./VerifyMessage";
+import { security } from "connectors";
 
 const SecurityHeader = () =>
   <StandaloneHeader
@@ -35,23 +36,29 @@ class SecurityPage extends React.Component {
   render() {
     const { sideActive } = this.state;
     const { onShowSign, onShowVerify } = this;
+    const { isSignVerifyMessageDisabled } = this.props;
     return (
       <StandalonePage header={<SecurityHeader />}>
-        <div className="advanced-page-toggle security-page">
-          <div className="text-toggle">
-            <div className={"text-toggle-button-left " + (sideActive && "text-toggle-button-active")} onClick={!sideActive ? onShowVerify : null}>
-              <T id="security.signTitle" m="Sign Message" />
+        {
+          !isSignVerifyMessageDisabled &&
+          <Aux>
+            <div className="advanced-page-toggle security-page">
+              <div className="text-toggle">
+                <div className={"text-toggle-button-left " + (sideActive && "text-toggle-button-active")} onClick={!sideActive ? onShowVerify : null}>
+                  <T id="security.signTitle" m="Sign Message" />
+                </div>
+                <div className={"text-toggle-button-right " + (!sideActive && "text-toggle-button-active")} onClick={sideActive ? onShowSign : null}>
+                  <T id="security.verifyTitle" m="Verify Message" />
+                </div>
+              </div>
             </div>
-            <div className={"text-toggle-button-right " + (!sideActive && "text-toggle-button-active")} onClick={sideActive ? onShowSign : null}>
-              <T id="security.verifyTitle" m="Verify Message" />
+            <div className="security-page-form">
+              {sideActive ?
+                <SignTab /> : <VerifyMessageTab />
+              }
             </div>
-          </div>
-        </div>
-        <div className="security-page-form">
-          {sideActive ?
-            <SignTab /> : <VerifyMessageTab />
-          }
-        </div>
+          </Aux>
+        }
         <ValidateAddressTab />
       </StandalonePage>
     );
@@ -65,4 +72,4 @@ class SecurityPage extends React.Component {
   }
 }
 
-export default SecurityPage;
+export default security(SecurityPage);

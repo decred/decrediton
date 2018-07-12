@@ -3,8 +3,7 @@ import { selectorMap } from "../fp";
 import * as sel from "../selectors";
 
 const mapStateToProps = selectorMap({
-  walletService: sel.walletService,
-  isCreateAccountDisabled: sel.isCreateAccountDisabled,
+  isSignVerifyMessageDisabled: sel.isSignVerifyMessageDisabled,
 });
 
 export default connect(mapStateToProps);

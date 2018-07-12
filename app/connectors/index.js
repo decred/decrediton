@@ -12,6 +12,7 @@ export { default as purchaseTickets } from "./purchaseTickets";
 export { default as receive } from "./receive";
 export { default as receiveAccountsSelect } from "./receiveAccountsSelect";
 export { default as rescan } from "./rescan";
+export { default as security } from "./security";
 export { default as send } from "./send";
 export { default as service } from "./service";
 export { default as settings } from "./settings";

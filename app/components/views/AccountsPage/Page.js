@@ -3,10 +3,16 @@ import ErrorScreen from "ErrorScreen";
 import "style/AccountsPage.less";
 
 const Page = ({
-  walletService
+  walletService,
+  isCreateAccountDisabled,
 }) => (
   !walletService ? <ErrorScreen/> :
-    <Accounts />
+    <Accounts {...{ isCreateAccountDisabled }}/>
 );
+
+Page.propTypes = {
+  walletService: PropTypes.object.isRequired,
+  isCreateAccountDisabled: PropTypes.bool.isRequired,
+};
 
 export default Page;
