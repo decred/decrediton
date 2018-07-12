@@ -3,7 +3,8 @@ import { PassphraseModalButton } from "buttons";
 
 const VoteOption = ({ value, description, onClick, checked }) => (
   <div className="proposal-vote-option" onClick={() => onClick(value)}>
-    <input type="radio" name="proposalVoteChoice" value={value} checked={checked} />
+    <input type="radio" name="proposalVoteChoice" onChange={() => onClick(value)}
+      value={value} checked={checked} />
     {description}
   </div>
 );
