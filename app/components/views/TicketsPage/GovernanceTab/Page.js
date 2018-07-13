@@ -13,7 +13,7 @@ const VotingPrefsPage = ({
   getAgendaSelectedChoice,
   onShowAgenda,
   onCloseAgenda,
-  onUpdateVotePreference
+  onUpdateVotePreference,
 }) => (
   <Aux>
     <div className="stakepool-voting-title-area">

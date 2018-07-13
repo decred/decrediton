@@ -109,6 +109,9 @@ export function initGlobalCfg() {
     };
     config.set("remote_credentials",credentialKeys);
   }
+  if (!config.has("spv_mode")) {
+    config.set("spv_mode", false);
+  }
   return(config);
 }
 

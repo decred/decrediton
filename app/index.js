@@ -28,6 +28,7 @@ var initialState = {
       allowedExternalRequests: globalCfg.get("allowed_external_requests"),
       proxyType: globalCfg.get("proxy_type"),
       proxyLocation: globalCfg.get("proxy_location"),
+      spvMode: globalCfg.get("spv_mode"),
     },
     tempSettings: {
       locale: locale,
@@ -35,6 +36,7 @@ var initialState = {
       allowedExternalRequests: globalCfg.get("allowed_external_requests"),
       proxyType: globalCfg.get("proxy_type"),
       proxyLocation: globalCfg.get("proxy_location"),
+      spvMode: globalCfg.get("spv_mode"),
     },
     settingsChanged: false,
     uiAnimations: globalCfg.get("ui_animations"),

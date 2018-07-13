@@ -2,18 +2,38 @@ import PurchaseTickets from "./PurchaseTickets";
 import TicketAutoBuyer from "./TicketAutoBuyer";
 import { FormattedMessage as T } from "react-intl";
 import StakeInfo from "./StakeInfo";
+import { spv } from "connectors";
+import { ShowWarning } from "shared";
 import "style/StakePool.less";
 
+const purchaseTicketSpvWarn = (blocksNumber) => <T id="spv.purchase.warn"
+  m="Purchase Tickets is not available right now,
+  because we are in the beginning of a ticket interval.
+  after {blocksNumber} blocks it will be available again."
+  values={{
+    blocksNumber: blocksNumber
+  }}
+/>;
+
+const autoBuyerSpvWarn = <T id="spv.auto.buyer.warn" m="Ticket Auto Buyer Not available in spv mode" />;
+
 const Tickets = ({
-  ...props
+  spvMode,
+  blocksPassedOnTicketInterval,
+  ...props,
 }) => (
   <Aux>
     <div className="tabbed-page-subtitle"><T id="purchase.subtitle" m="Purchase Tickets"/></div>
     <StakeInfo />
-    <PurchaseTickets {...{ ...props }} />
+    {
+      blocksPassedOnTicketInterval < 5  ?
+        <ShowWarning warn={purchaseTicketSpvWarn(5-blocksPassedOnTicketInterval)}/> : <PurchaseTickets {...{ ...props }} />
+    }
     <div className="stakepool-area-spacing"></div>
-    <TicketAutoBuyer {...{ ...props }} />
+    {
+      spvMode ? <ShowWarning warn={autoBuyerSpvWarn}/>  : <TicketAutoBuyer {...{ ...props }} />
+    }
   </Aux>
 );
 
-export default Tickets;
+export default spv(Tickets);
