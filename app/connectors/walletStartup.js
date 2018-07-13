@@ -5,6 +5,7 @@ import * as sel from "../selectors";
 import * as wla from "../actions/WalletLoaderActions";
 import * as da from "../actions/DaemonActions";
 import * as ca from "../actions/ControlActions";
+import * as cla from "../actions/ClientActions";
 
 const mapStateToProps = selectorMap({
   appVersion: sel.appVersion,
@@ -45,6 +46,9 @@ const mapStateToProps = selectorMap({
   createNewWallet: sel.createNewWallet,
   isWatchOnly: sel.isWatchOnly,
   masterPubKey: sel.masterPubKey,
+  fetchHeadersDone: sel.fetchHeadersDone,
+  isSPV: sel.isSPV,
+  spvInput: sel.spvInput,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -70,11 +74,13 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onFetchHeaders: wla.fetchHeadersAttempt,
   onStartDaemon: da.startDaemon,
   onStartWallet: da.startWallet,
+  startSPVSync: wla.spvSyncAttempt,
   onCreateWallet: da.createWallet,
   onRemoveWallet: da.removeWallet,
   setCredentialsAppdataError: da.setCredentialsAppdataError,
   onGetAvailableWallets: da.getAvailableWallets,
   validateMasterPubKey: ca.validateMasterPubKey,
+  startWalletServices: cla.startWalletServices,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

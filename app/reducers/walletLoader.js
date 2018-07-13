@@ -12,6 +12,9 @@ import {
   CREATEWALLET_GOBACK_EXISITNG_OR_NEW, CREATEWALLET_GOBACK,
   UPDATEDISCOVERACCOUNTS, NEEDED_BLOCKS_DETERMINED, CREATEWATCHONLYWALLET_ATTEMPT,
   GETWALLETSEEDSVC_ATTEMPT, GETWALLETSEEDSVC_SUCCESS,
+  FETCHMISSINGCFILTERS_ATTEMPT, FETCHMISSINGCFILTERS_FAILED, FETCHMISSINGCFILTERS_SUCCESS,
+  RESCANPOINT_ATTEMPT, RESCANPOINT_FAILED, RESCANPOINT_SUCCESS,
+  SPVSYNC_SUCCESS, SPVSYNC_UPDATE, SPVSYNC_FAILED, SPVSYNC_ATTEMPT, SPVSYNC_INPUT
 } from "actions/WalletLoaderActions";
 import {
   WALLETCREATED
@@ -221,12 +224,11 @@ export default function walletLoader(state = {}, action) {
       discoverAddressError: null,
       discoverAddressRequestAttempt: false,
       discoverAddressResponse: true,
-      stepIndex: action.complete ? 7 : 6, // 6 = stakepool selection, 7 = fetch headers
+      stepIndex: action.complete ? 6 : 7, // 6 = stakepool selection, 7 = fetch headers
     };
   case FETCHHEADERS_ATTEMPT:
     return { ...state,
       fetchHeadersRequestAttempt: true,
-      stepIndex: 7,
     };
   case FETCHHEADERS_FAILED:
     return { ...state,
@@ -242,6 +244,7 @@ export default function walletLoader(state = {}, action) {
       fetchHeadersError: null,
       fetchHeadersRequestAttempt: false,
       fetchHeadersResponse: action.response,
+      stepIndex: 6,
     };
   case RESCAN_ATTEMPT:
     return { ...state,
@@ -250,6 +253,24 @@ export default function walletLoader(state = {}, action) {
   case GETSTARTUPWALLETINFO_ATTEMPT:
     return { ...state,
       stepIndex: 9
+    };
+  case FETCHMISSINGCFILTERS_ATTEMPT:
+    return { ...state,
+      fetchHeadersError: null,
+      fetchHeadersRequestAttempt: true,
+      fetchHeadersResponse: null,
+    };
+  case FETCHMISSINGCFILTERS_FAILED:
+    return { ...state,
+      fetchHeadersError: action.error,
+      fetchHeadersRequestAttempt: false,
+      fetchHeadersResponse: null,
+    };
+  case FETCHMISSINGCFILTERS_SUCCESS:
+    return { ...state,
+      fetchHeadersError: null,
+      fetchHeadersRequestAttempt: false,
+      stepIndex: 4.5
     };
   case SUBSCRIBEBLOCKNTFNS_ATTEMPT:
     return { ...state,
@@ -287,6 +308,53 @@ export default function walletLoader(state = {}, action) {
   case GETWALLETSEEDSVC_SUCCESS:
     return { ...state,
       seedService: action.seedService
+    };
+  case RESCANPOINT_ATTEMPT:
+    return { ...state,
+      rescanPointAttemptRequest: true,
+      rescanPointError: null,
+      rescanPointResponse: null,
+    };
+  case RESCANPOINT_FAILED:
+    return { ...state,
+      rescanPointAttemptRequest: false,
+      rescanPointError: action.error,
+      rescanPointResponse: null,
+    };
+  case RESCANPOINT_SUCCESS:
+    return { ...state,
+      rescanPointAttemptRequest: false,
+      rescanPointError: null,
+      rescanPointResponse: action.response,
+    };
+  case SPVSYNC_INPUT:
+    return { ...state,
+      spvInput: true,
+    };
+  case SPVSYNC_ATTEMPT:
+    return { ...state,
+      spvInput: false,
+      spvSyncAttemptRequest: true,
+      spvSyncError: null,
+      spvSynced: false,
+    };
+  case SPVSYNC_FAILED:
+    return { ...state,
+      spvInput: true,
+      spvSyncAttemptRequest: false,
+      spvSynced: false,
+    };
+  case SPVSYNC_UPDATE:
+    return { ...state,
+      spvSyncError: null,
+      spvSynced: action.synced,
+      syncCall: action.syncCall,
+    };
+  case SPVSYNC_SUCCESS:
+    return { ...state,
+      spvSyncAttemptRequest: false,
+      spvSyncError: null,
+      spvSynced: false,
     };
   default:
     return state;

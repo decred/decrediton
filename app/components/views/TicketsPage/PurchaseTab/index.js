@@ -1,6 +1,5 @@
 import { substruct, compose, eq, get } from "fp";
 import { service, ticketsPage } from "connectors";
-import ErrorScreen from "ErrorScreen";
 import PurchasePage from "./Page";
 import { FormattedMessage as T } from "react-intl";
 
@@ -28,7 +27,7 @@ class Purchase extends React.Component {
   }
 
   render() {
-    return (!this.props.walletService || !this.props.ticketBuyerService) ? <ErrorScreen /> : (
+    return (
       <PurchasePage
         {...{
           ...this.props,
@@ -48,8 +47,7 @@ class Purchase extends React.Component {
             onRevokeTickets: null,
           }, this)
         }}
-      />
-    );
+      />);
   }
 
   onToggleTicketStakePool(side) {

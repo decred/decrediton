@@ -45,9 +45,13 @@ export const RESCAN_PROGRESS = "RESCAN_PROGRESS";
 export const RESCAN_COMPLETE = "RESCAN_COMPLETE";
 export const RESCAN_CANCEL = "RESCAN_CANCEL";
 
-export function rescanAttempt(beginHeight) {
+export function rescanAttempt(beginHeight, beginHash) {
   var request = new RescanRequest();
-  request.setBeginHeight(beginHeight);
+  if (beginHeight !== null) {
+    request.setBeginHeight(beginHeight);
+  } else {
+    request.setBeginHash(new Uint8Array(Buffer.from(beginHash)));
+  }
   return (dispatch, getState) => {
     return new Promise((resolve, reject) => {
       dispatch({ request: request, type: RESCAN_ATTEMPT });
@@ -76,8 +80,10 @@ export function rescanAttempt(beginHeight) {
 export function rescanCancel() {
   return (dispatch, getState) => {
     const { rescanCall } = getState().control;
-    rescanCall.cancel();
-    dispatch({ type: RESCAN_CANCEL });
+    if (rescanCall) {
+      rescanCall.cancel();
+      dispatch({ type: RESCAN_CANCEL });
+    }
   };
 }
 

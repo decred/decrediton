@@ -9,6 +9,7 @@ const promisifyReq = (fnName, Req) => log((service, ...args) => new Promise((ok,
 const promisifyReqLogNoData = (fnName, Req) => withLogNoData((service, ...args) => new Promise((ok, fail) =>
   service[fnName](new Req(), ...args, (err, res) => err ? fail(err) : ok(res))), fnName);
 
+export const bestBlock = promisifyReq("bestBlock", api.BestBlockRequest);
 export const getNetwork = promisifyReq("network", api.NetworkRequest);
 export const getStakeInfo = promisifyReqLogNoData("stakeInfo", api.StakeInfoRequest);
 export const getTicketPrice = promisifyReq("ticketPrice", api.TicketPriceRequest);

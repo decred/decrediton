@@ -19,6 +19,7 @@ import {
   GETVOTECHOICES_ATTEMPT, GETVOTECHOICES_FAILED, GETVOTECHOICES_SUCCESS,
   SETVOTECHOICES_ATTEMPT, SETVOTECHOICES_FAILED, SETVOTECHOICES_SUCCESS,
   MATURINGHEIGHTS_CHANGED, GETTRANSACTIONSSINCELASTOPPENED_ATTEMPT, GETTRANSACTIONSSINCELASTOPPENED_FAILED,
+  GETBESTBLOCK_ATTEMPT, GETBESTBLOCK_FAILED, GETBESTBLOCK_SUCCESS,
   GETTRANSACTIONSSINCELASTOPPENED_SUCCESS,
 } from "../actions/ClientActions";
 import { STARTUPBLOCK, WALLETREADY } from "../actions/DaemonActions";
@@ -144,6 +145,25 @@ export default function grpc(state = {}, action) {
       getAccountNumberError: "",
       getAccountNumberRequestAttempt: false,
       getAccountNumberResponse: action.getAccountNumberResponse,
+    };
+  case GETBESTBLOCK_ATTEMPT:
+    return {
+      ...state,
+      getBestBlockHeightRequest: true,
+      getAccountNumberError: null,
+    };
+  case GETBESTBLOCK_FAILED:
+    return {
+      ...state,
+      getBestBlockHeightRequest: false,
+      getAccountNumberError: action.error,
+    };
+  case GETBESTBLOCK_SUCCESS:
+    return {
+      ...state,
+      getBestBlockHeightRequest: false,
+      getAccountNumberError: null,
+      currentBlockHeight: action.height,
     };
   case GETNETWORK_ATTEMPT:
     return {

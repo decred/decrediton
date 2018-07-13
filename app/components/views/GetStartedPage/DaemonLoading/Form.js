@@ -25,6 +25,7 @@ export default ({
   updateAvailable,
   appVersion,
   isDaemonRemote,
+  isSPV,
   ...props,
 }) => (
   <div className="page-body getstarted">
@@ -65,7 +66,7 @@ export default ({
         <div className="loader-bar">
           <LinearProgressFull
             error={startupError}
-            getDaemonSynced={getDaemonSynced}
+            getDaemonSynced={getDaemonSynced || isSPV}
             disabled={!getDaemonStarted || getCurrentBlockCount == null}
             barText={barText}
             min={0}
@@ -92,7 +93,7 @@ export default ({
           }
           <DecredLoading hidden={startupError || isInputRequest} />
         </div>
-        { Form && <Form {...{ ...props, isInputRequest, startupError, getCurrentBlockCount, getDaemonSynced }}/> }
+        { Form && <Form {...{ ...props, isInputRequest, startupError, getCurrentBlockCount, getDaemonSynced, isSPV }}/> }
       </Aux>
     </div>
   </div>
