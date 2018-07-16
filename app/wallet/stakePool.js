@@ -2,6 +2,11 @@ import Promise from "promise";
 import * as api from "../middleware/stakepoolapi";
 import { withLog as log, logOptionNoArgs, withLogNoData } from "./index";
 
+export const getStakePoolInfo = withLogNoData(() =>
+  new Promise((resolve, reject) =>
+    api.stakePoolInfo((response, error) => !response ? reject(error) : resolve(response))),
+"Get Stakepool Info");
+
 export const getPurchaseInfo = (poolHost, apiKey) =>
   new Promise((resolve, reject) =>
     api.getPurchaseInfo(poolHost, apiKey, (response, error, poolHost) =>

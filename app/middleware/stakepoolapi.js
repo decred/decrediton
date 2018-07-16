@@ -2,6 +2,28 @@
 import axios from "axios";
 import querystring from "querystring";
 
+const URL_BASE = "https://api.decred.org";
+
+const GET = (path, apiToken) => {
+  const config = {
+    headers: {
+      "Authorization": "Bearer " + apiToken,
+    }
+  };
+  return axios.get(path, config);
+};
+
+const POST = (path, apiToken, json) => {
+  const config = {
+    headers: {
+      "Authorization": "Bearer " + apiToken,
+    }
+  };
+  return axios.post(URL_BASE + path,
+    querystring.stringify(json),
+    config);
+};
+
 // stakepPoolInfoResponseToConfig converts a response object for the
 // stakePoolInfo call into an object array of available stakepool configs.
 function stakepPoolInfoResponseToConfig(response) {
@@ -16,7 +38,7 @@ function stakepPoolInfoResponseToConfig(response) {
 }
 
 export function stakePoolInfo(cb) {
-  axios.get("https://api.decred.org/?c=gsd")
+  GET(URL_BASE + "/?c=gsd")
     .then(function (response) {
       cb(stakepPoolInfoResponseToConfig(response));
     })
@@ -38,7 +60,7 @@ function parseStakePoolResults(response) {
 }
 
 export function allStakePoolStats(cb) {
-  axios.get("https://api.decred.org/?c=gsd")
+  GET(URL_BASE + "/?c=gsd")
     .then(function (response) {
       cb(parseStakePoolResults(response));
     })
@@ -49,17 +71,9 @@ export function allStakePoolStats(cb) {
 }
 
 export function setStakePoolAddress(apiUrl, apiToken, pKAddress, cb) {
-  var config = {
-    headers: {
-      "Authorization": "Bearer " + apiToken,
-    }
-  };
-  var url = apiUrl+"/api/v1/address";
-  axios.post(url,
-    querystring.stringify({
-      UserPubKeyAddr: pKAddress,
-    }),
-    config)
+  POST(apiUrl + "/api/v1/address", apiToken, {
+    UserPubKeyAddr: pKAddress,
+  })
     .then(function(response) {
       cb(response);
     })
@@ -69,17 +83,9 @@ export function setStakePoolAddress(apiUrl, apiToken, pKAddress, cb) {
 }
 
 export function setVoteChoices(apiUrl, apiToken, voteChoices, cb) {
-  var config = {
-    headers: {
-      "Authorization": "Bearer " + apiToken,
-    }
-  };
-  var url = apiUrl+"/api/v2/voting";
-  axios.post(url,
-    querystring.stringify({
-      VoteBits: voteChoices.toString(),
-    }),
-    config)
+  POST(apiUrl+"/api/v2/voting", apiToken, {
+    VoteBits: voteChoices.toString(),
+  })
     .then(function(response) {
       cb(response);
     })
@@ -89,13 +95,7 @@ export function setVoteChoices(apiUrl, apiToken, voteChoices, cb) {
 }
 
 export function getPurchaseInfo(apiUrl, apiToken, cb) {
-  var config = {
-    headers: {
-      "Authorization": "Bearer " + apiToken,
-    }
-  };
-  var url = apiUrl+"/api/v1/getpurchaseinfo";
-  axios.get(url, config)
+  GET(apiUrl+"/api/v1/getpurchaseinfo", apiToken)
     .then(function(response) {
       cb(response, null, apiUrl);
     })
@@ -107,8 +107,7 @@ export function getPurchaseInfo(apiUrl, apiToken, cb) {
 // statsFromStakePool grabs stats and config information directly from the
 // stakepool host.
 export function statsFromStakePool(host, cb) {
-  const url = host + "/api/v1/stats";
-  axios.get(url)
+  GET(host + "/api/v1/stats")
     .then(resp => cb(resp, null, host))
     .catch(error => cb(null, error, host));
 }
