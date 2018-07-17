@@ -30,14 +30,17 @@ const snackbarClasses = ({ type }) => ({
 
 @autobind
 class Snackbar extends React.Component {
-
   constructor(props) {
     super(props);
     this.hideTimer = null;
+    this.newMessage = null;
+    this.timeoutRunning = null;
     this.state = {
       message: props.messages.length > 0
         ? props.messages[props.messages.length-1]
-        : null
+        : null,
+      delay: 250, // delay in ms to render component
+      isWaiting: true,
     };
   }
 
@@ -46,9 +49,16 @@ class Snackbar extends React.Component {
       ? nextProps.messages[nextProps.messages.length-1]
       : null;
     if (message !== this.state.message) {
-      const state = this.state;
-      this.setState({ ...state, message });
-      message && this.enableHideTimer();
+      this.newMessage = message;
+    }
+    if (!this.timeoutRunning && this.newMessage) {
+      this.timeoutRunning = setTimeout(() => {
+        const state = this.state;
+        this.setState({ ...state, isWaiting: false, message: this.newMessage });
+        this.timeoutRunning = null;
+        this.newMessage = null;
+        message && this.enableHideTimer();
+      }, this.state.delay);
     }
   }
 
@@ -127,6 +137,8 @@ class Snackbar extends React.Component {
   }
 
   render() {
+    if (this.state.isWaiting)
+      return null;
     const notification = this.props.uiAnimations
       ? this.getAnimatedNotification()
       : this.getStaticNotification();
