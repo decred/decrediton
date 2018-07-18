@@ -778,11 +778,15 @@
   }
 }
 
-.vertical-accordion-header {
-  cursor: pointer;
+.vertical-accordion {
 }
 
-.vertical-accordion-header:after {
+.vertical-accordion-header {
+  cursor: pointer;
+  position: relative;
+}
+
+.vertical-accordion-arrow {
   content:"";
   background-image: @arrow-right-gray-icon;
   background-repeat: no-repeat;
@@ -790,13 +794,18 @@
   background-size: contain;
   width: 10px;
   height: 14px;
-  display: inline-block;
-  float: right;
-  margin-top: 6px;
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: 10px;
   transition: transform 0.25s ease-in-out;
   transform: rotate(-90deg);
 }
 
-.vertical-accordion.active .vertical-accordion-header:after {
+.vertical-accordion-header:hover .vertical-accordion-arrow {
+  background-image: @arrow-right-blue-icon;
+}
+
+.vertical-accordion.active .vertical-accordion-arrow {
   transform: rotate(90deg);
 }

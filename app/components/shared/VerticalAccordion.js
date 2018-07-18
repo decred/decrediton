@@ -78,6 +78,7 @@ class VerticalAccordion extends React.Component {
       <div className={classNames}>
         <div className="vertical-accordion-header" onClick={this.onToggleAccordion} >
           {this.props.header}
+          <div className="vertical-accordion-arrow" />
         </div>
 
         <div className="vertical-accordion-body">

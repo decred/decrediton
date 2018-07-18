@@ -1,84 +1,45 @@
 import { FormattedMessage as T } from "react-intl";
-import { Balance, TransitionMotionWrapper } from "shared";
+import { Balance, VerticalAccordion } from "shared";
 import "style/Fonts.less";
 import "style/AccountRow.less";
 
-const wrapperComponent = props => <div className="account-wrapper" { ...props } />;
-
-const Row = ({
+const Header = ({
   account,
-  hideAccountDetails,
-  showAccountDetails,
-  isShowingAccountDetails,
-  isShowingRenameAccount,
-  hidden,
-  willEnter,
-  willLeave,
-  getAccountDetailsStyles,
-  getRenameAccountStyles,
-  getNullStyles,
-  getDefaultStyles,
+  hidden
 }) => (
-  <div
-    className={
-      isShowingAccountDetails
-        ? isShowingRenameAccount
-          ? "account-row-rename"
-          : "account-row-long"
-        : "account-row-short"
-    }
-  >
-    <div
-      className={
-        isShowingAccountDetails
-          ? "account-row-details-top"
-          : hidden
-            ? "account-row-hidden"
-            : "account-row"
-      }
-      key={"top" + account.accountNumber}
-      onClick={
-        isShowingAccountDetails
-          ? hideAccountDetails
-          : () => showAccountDetails(account.accountNumber)
-      }
-    >
-      <div className="account-row-top-top">
-        <div className="account-row-wallet-icon" />
-        <div className="account-row-top-account-name">{account.accountName}{
-          hidden
-            ? <span> (hidden)</span>
-            : <span></span>
-        }</div>
-        <div className="account-row-top-account-funds">
-          <Balance amount={account.total} />
-          <div className="account-row-top-last-tx"></div>
-          <div className="account-row-top-spendable">
-            <div className="account-row-top-spendable-label">
-              <T id="accounts.row.spendable" m="Spendable" />
-            </div>
-            <div className="account-row-top-spendable-value">
-              <Balance flat amount={account.spendable} />
-            </div>
-          </div>
-        </div>
+  <div className={"account-row-details-top" + (hidden ? " account-hidden" : "")} >
+    <div className="account-row-top-account-name">{account.accountName}{
+      hidden
+        ? <span> (hidden)</span>
+        : <span></span>
+    }</div>
+    <div className="account-row-top-account-funds">
+      <div className="account-row-top-total-value">
+        <Balance amount={account.total} />
+      </div>
+      <div className="account-row-top-spendable">
+        <T id="accounts.row.spendable" m="Spendable" />
+        <Balance classNameWrapper="account-row-top-spendable-value" flat amount={account.spendable} />
       </div>
     </div>
-    {
-      <TransitionMotionWrapper
-        {
-        ...{
-          styles: !isShowingAccountDetails ?
-            getNullStyles() :
-            isShowingRenameAccount ? getRenameAccountStyles() :
-              getAccountDetailsStyles(),
-          defaultStyles: getDefaultStyles(),
-          wrapperComponent,
-          willEnter,
-          willLeave }}
-      />
-    }
   </div>
+);
+
+const Row = ({
+  isShowingRenameAccount,
+  getAccountDetailsStyles,
+  getRenameAccountStyles,
+  ...props,
+}) => (
+  <VerticalAccordion
+    header={<Header {...{ ...props, isShowingRenameAccount }} />}
+    height={isShowingRenameAccount ? 175 : 275}
+  >
+    {isShowingRenameAccount
+      ? getRenameAccountStyles()
+      : getAccountDetailsStyles()
+    }
+  </VerticalAccordion>
 );
 
 export default Row;
