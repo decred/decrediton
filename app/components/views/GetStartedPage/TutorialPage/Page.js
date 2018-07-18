@@ -42,11 +42,11 @@ const TutorialPage = ({ tutorialStep, onNextTutorialStep, onGoToStep, finishTuto
             onGotoPage={onGoToStep}
           />
 
-          {tutorialStep < 3 &&
-            <InvisibleButton className="skip-button" onClick={finishTutorial}>
-              <T id="tutorial.skipBtn" m={"Skip"}/>
-            </InvisibleButton>
-          }
+          <InvisibleButton className="skip-button" onClick={finishTutorial}>
+            { tutorialStep < 3
+              ? <T id="tutorial.skipBtn" m={"Skip"}/>
+              : <T id="tutorial.finishBtn" m={"Finish"}/> }
+          </InvisibleButton>
         </div>
       </div>
     </div>
