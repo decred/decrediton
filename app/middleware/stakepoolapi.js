@@ -82,7 +82,7 @@ export function setStakePoolAddress({ apiUrl, apiToken, pKAddress }, cb) {
     });
 }
 
-export function setVoteChoices(apiUrl, apiToken, voteChoices, cb) {
+export function setVoteChoices({ apiUrl, apiToken, voteChoices }, cb) {
   POST(apiUrl+"/api/v2/voting", apiToken, {
     VoteBits: voteChoices.toString(),
   })
