@@ -6,8 +6,9 @@ const promisifyReq = (fnName, Req) => log( (...args) => new Promise((ok, fail) =
   Req(...args, (res, err) => err ? fail(err) : ok(res))
 ), fnName);
 
-const promisifyReqLogNoData = (fnName, Req) => withLogNoData((service, ...args) => new Promise((ok, fail) =>
-  service[fnName](new Req(), ...args, (err, res) => err ? fail(err) : ok(res))), fnName);
+const promisifyReqLogNoData = (fnName, Req) => withLogNoData( (...args) => new Promise((ok, fail) =>
+  Req(...args, (res, err) => err ? fail(err) : ok(res))
+), fnName);
 
 export const getStakePoolInfo = withLogNoData(() =>
   new Promise((resolve, reject) =>
@@ -17,12 +18,5 @@ export const getStakePoolInfo = withLogNoData(() =>
 export const getPurchaseInfo = promisifyReq("getPurchaseInfo", api.getPurchaseInfo);
 export const setStakePoolAddress = promisifyReq("setStakePoolAddress", api.setStakePoolAddress);
 export const setVoteChoices = promisifyReq("setVoteChoices", api.setVoteChoices)
-
-
-export const getAllStakePoolStats = withLogNoData(() =>
-  new Promise((resolve, reject) =>
-    api.allStakePoolStats((response, error) => !response ? reject(error) : resolve(response))), "Get All Stakepool Stats");
-
-export const getStakePoolStats = withLogNoData(host =>
-  new Promise((resolve, reject) =>
-    api.statsFromStakePool(host, (response, error) => !response ? reject(error) : resolve(response))), "Get Single Stakepool Stats");
+export const getAllStakePoolStats = promisifyReqLogNoData("getAllStakePoolStats", api.allStakePoolStats)
+export const getStakePoolStats = promisifyReqLogNoData("getStakePoolStats", api.statsFromStakePool)
