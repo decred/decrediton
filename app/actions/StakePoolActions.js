@@ -57,7 +57,7 @@ const setStakePoolAddressAction = (privpass, poolHost, apiKey, accountNum) =>
     getNextAddress(walletService, accountNum)
       .then(({ publicKey }) => {
         wallet.allowStakePoolHost(poolHost);
-        setStakePoolAddress(poolHost, apiKey, publicKey)
+        setStakePoolAddress({ apiUrl: poolHost, apiToken: apiKey, pKAddress: publicKey })
           .then(response => {
             if (response.data.status == "success") {
               dispatch(setStakePoolInformation(privpass, poolHost, apiKey, accountNum, true));

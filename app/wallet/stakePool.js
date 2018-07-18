@@ -15,13 +15,7 @@ export const getStakePoolInfo = withLogNoData(() =>
 "Get Stakepool Info");
 
 export const getPurchaseInfo = promisifyReq("getPurchaseInfo", api.getPurchaseInfo);
-
-export const setStakePoolAddress = log((poolHost, apiKey, addressPubKey) =>
-  new Promise((resolve, reject) =>
-    api.setStakePoolAddress(
-      poolHost, apiKey, addressPubKey,
-      (response, error) => error ? reject(error) : resolve(response)
-    )), "Set Stakepool Address", logOptionNoArgs());
+export const setStakePoolAddress = promisifyReq("setStakePoolAddress", api.setStakePoolAddress);
 
 export const setVoteChoices = log((poolHost, apiKey, voteBits) =>
   new Promise((resolve, reject) =>

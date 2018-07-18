@@ -19,7 +19,7 @@ const POST = (path, apiToken, json) => {
       "Authorization": "Bearer " + apiToken,
     }
   };
-  return axios.post(URL_BASE + path,
+  return axios.post(path,
     querystring.stringify(json),
     config);
 };
@@ -70,7 +70,7 @@ export function allStakePoolStats(cb) {
     });
 }
 
-export function setStakePoolAddress(apiUrl, apiToken, pKAddress, cb) {
+export function setStakePoolAddress({ apiUrl, apiToken, pKAddress }, cb) {
   POST(apiUrl + "/api/v1/address", apiToken, {
     UserPubKeyAddr: pKAddress,
   })
