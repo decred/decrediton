@@ -79,10 +79,10 @@ export const updateStakepoolPurchaseInformation = () => (dispatch, getState) =>
   Promise.all(sel.configuredStakePools(getState()).map(
     ({ Host, ApiKey }) => {
       wallet.allowStakePoolHost(Host);
-      getPurchaseInfo(Host, ApiKey)
-        .then(({ response: { data: { status, data } }, poolHost }) =>
-          (status === "success")
-            ? dispatch(updateSavedConfig(data, poolHost))
+      getPurchaseInfo({ apiUrl: Host, apiToken: ApiKey })
+        .then( response =>
+          response.data.status === "success"
+            ? dispatch(updateSavedConfig(response.data.data, Host))
             : null)
         .catch(error => dispatch({
           error: `Unable to contact stakepool: ${error} please try again later`,
@@ -95,22 +95,22 @@ export const setStakePoolInformation = (privpass, poolHost, apiKey, accountNum, 
   (dispatch) => {
     wallet.allowStakePoolHost(poolHost);
     if (!internal) dispatch({ type: UPDATESTAKEPOOLCONFIG_ATTEMPT });
-    getPurchaseInfo(poolHost, apiKey)
-      .then(({ response: { data: { message, status, data } }, poolHost }) => {
-        if (status === "success") {
+    getPurchaseInfo({ apiUrl:poolHost, apiToken: apiKey })
+      .then( response => {
+        if (response.data.status === "success") {
           dispatch(
             importScriptAttempt(
-              privpass, data.Script, !creatingWallet, 0, data.TicketAddress,
+              privpass, response.data.data.Script, !creatingWallet, 0, response.data.data.TicketAddress,
               (error) => error
                 ? dispatch({ error, type: UPDATESTAKEPOOLCONFIG_FAILED })
-                : dispatch(updateSavedConfig(data, poolHost, apiKey, accountNum))
+                : dispatch(updateSavedConfig(response.data.data, poolHost, apiKey, accountNum))
             )
           );
-        } else if (status === "error") {
-          if (message == "purchaseinfo error - no address submitted") {
+        } else if (response.data.status === "error") {
+          if (response.data.message == "purchaseinfo error - no address submitted") {
             dispatch(setStakePoolAddressAction(privpass, poolHost, apiKey, accountNum));
           } else {
-            dispatch({ error: message, type: UPDATESTAKEPOOLCONFIG_FAILED });
+            dispatch({ error: response.data.message, type: UPDATESTAKEPOOLCONFIG_FAILED });
           }
         }
       })

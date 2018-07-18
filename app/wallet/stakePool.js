@@ -2,15 +2,19 @@ import Promise from "promise";
 import * as api from "../middleware/stakepoolapi";
 import { withLog as log, logOptionNoArgs, withLogNoData } from "./index";
 
+const promisifyReq = (fnName, Req) => log( (...args) => new Promise((ok, fail) =>
+  Req(...args, (res, err) => err ? fail(err) : ok(res))
+), fnName);
+
+const promisifyReqLogNoData = (fnName, Req) => withLogNoData((service, ...args) => new Promise((ok, fail) =>
+  service[fnName](new Req(), ...args, (err, res) => err ? fail(err) : ok(res))), fnName);
+
 export const getStakePoolInfo = withLogNoData(() =>
   new Promise((resolve, reject) =>
     api.stakePoolInfo((response, error) => !response ? reject(error) : resolve(response))),
 "Get Stakepool Info");
 
-export const getPurchaseInfo = (poolHost, apiKey) =>
-  new Promise((resolve, reject) =>
-    api.getPurchaseInfo(poolHost, apiKey, (response, error, poolHost) =>
-      error ? reject(error) : resolve({ response, poolHost })));
+export const getPurchaseInfo = promisifyReq("getPurchaseInfo", api.getPurchaseInfo);
 
 export const setStakePoolAddress = log((poolHost, apiKey, addressPubKey) =>
   new Promise((resolve, reject) =>

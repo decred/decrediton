@@ -94,7 +94,7 @@ export function setVoteChoices(apiUrl, apiToken, voteChoices, cb) {
     });
 }
 
-export function getPurchaseInfo(apiUrl, apiToken, cb) {
+export function getPurchaseInfo({ apiUrl, apiToken }, cb) {
   GET(apiUrl+"/api/v1/getpurchaseinfo", apiToken)
     .then(function(response) {
       cb(response, null, apiUrl);
