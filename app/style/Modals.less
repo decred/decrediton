@@ -254,6 +254,91 @@
   margin-left: -28px;
 }
 
+.simple-keyboard {
+  font-family: HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;
+  width: 100%;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  overflow: hidden
+}
+
+.simple-keyboard .hg-row {
+  display: -ms-flexbox;
+  display: flex
+}
+
+.simple-keyboard .hg-row:not(:last-child) {
+  margin-bottom: 5px
+}
+
+.simple-keyboard .hg-row .hg-button:not(:last-child) {
+  margin-right: 5px
+}
+
+.simple-keyboard .hg-button {
+  display: inline-block;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  cursor: pointer
+}
+
+.simple-keyboard.hg-layout-default .hg-button.hg-standardBtn {
+  max-width: 100px
+}
+
+#keyboardPopup {
+  position: absolute;
+  top: 670px;
+  background-color: white;
+  height: 250px;
+  margin-left: 288px;
+  width: 760px;
+  padding: 20px;
+  box-shadow: 0 15px 34px 0 rgba(12, 30, 62, 0.34);
+}
+
+.simple-keyboard.hg-theme-default {
+  background-color: rgba(0,0,0,.1);
+  padding: 5px;
+  border-radius: 5px;
+  position: absolute;
+  top: 727px;
+  display: none;
+  width: 800px;
+  margin-left: 288px;
+}
+
+.simple-keyboard.hg-theme-default .hg-button {
+  -webkit-box-shadow: 0 0 3px -1px rgba(0,0,0,.3);
+  box-shadow: 0 0 3px -1px rgba(0,0,0,.3);
+  height: 40px;
+  border-radius: 5px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 5px;
+  background: #fff;
+  border-bottom: 1px solid #b5b5b5
+}
+
+.simple-keyboard.hg-theme-default .hg-button:active {
+  background: #e4e4e4
+}
+
+.simple-keyboard.hg-theme-default.hg-layout-numeric .hg-button {
+  width: 33.3%;
+  height: 60px;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+  justify-content: center
+}
+
 @media screen and (max-height: 420px) {
   .app-modal.passphrase-modal,
   .app-modal.confirm-modal,
@@ -433,6 +518,16 @@
   text-align: left;
 }
 
+@media screen and (max-width: 1390px) {
+  #keyboardPopup {
+    margin-left: 56px;
+  }
+
+  .simple-keyboard.hg-theme-default {
+    margin-left: 56px;
+  }
+}
+
 @media screen and (max-width: 588px) {
   .about-modal-icon {
     height: 66px;
@@ -511,4 +606,28 @@
 .confirm-seed-copy-phrase {
   text-decoration: underline;
   margin: 0px 4px 0px 4px;
+}
+
+@media screen and (max-height: 970px) {
+  #keyboardPopup {
+    top: 434px;
+  }
+
+  .simple-keyboard.hg-theme-default {
+    top: 487px;
+  }
+}
+
+@media screen and (max-height: 720px) {
+  .app-modal.passphrase-modal, .app-modal-reduced-bar.passphrase-modal {
+    margin-top: 14px;
+  }
+
+  #keyboardPopup {
+    top: 304px;
+  }
+
+  .simple-keyboard.hg-theme-default {
+    top: 358px;
+  }
 }
