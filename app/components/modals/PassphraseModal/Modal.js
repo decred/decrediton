@@ -2,7 +2,7 @@ import Modal from "../Modal";
 import ButtonsToolbar from "./ButtonsToolbar";
 import PassphraseInputRow from "./PassphraseInputRow";
 import { FormattedMessage as T } from "react-intl";
-import Keyboard from 'react-simple-keyboard';
+import Keyboard from "react-simple-keyboard";
 
 
 const propTypes = {
@@ -17,7 +17,8 @@ function showKeyboard() {
 
   // Do not show on Update Private Password from settings
   try {
-    if (typeof (document.getElementById("password-box").childNodes[2].childNodes[0].childNodes[0].innerHTML) == "Confirm:") {
+    if (document.getElementById("password-box").childNodes[2].childNodes[0].childNodes[0].innerHTML == "Confirm:") {
+      return null;
     }
   } catch (e) {
     var keyboardBox = document.getElementById("keyboardPopup");
@@ -33,12 +34,12 @@ function showKeyboard() {
       keys[0].style.display = "block";
     }
   }
-  
+
 
 }
 
 // Trigger React onchange to save update to React state on simple keyboard input
-var event = new Event('input', { bubbles: true });
+var event = new Event("input", { bubbles: true });
 
 var onChange = (input) => {
   //console.log("Input changed", input);
@@ -46,7 +47,7 @@ var onChange = (input) => {
 
   // Second element on New Account Name
   if (document.getElementById("password-box").childNodes[0].childNodes[0].childNodes[0].innerHTML == "New Account Name") {
-    var x = document.getElementById("password-box").childNodes[1].childNodes[1].childNodes[0].childNodes[0];
+    x = document.getElementById("password-box").childNodes[1].childNodes[1].childNodes[0].childNodes[0];
   }
 
   // Update UI
@@ -58,7 +59,7 @@ var onChange = (input) => {
     tracker.setValue("'" + x.value + "'");
   }
   x.dispatchEvent(event);
-}
+};
 
 const StandardPassphraseModal = (props) => {
   const {
