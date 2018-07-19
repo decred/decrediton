@@ -18,45 +18,32 @@ function ensureCSRF(piURL) {
   return CSRFPromise;
 }
 
-export function getActiveVotes(piURL) {
-  const url = piURL + "/v1/proposals/activevote";
-  return ensureCSRF(piURL).then(() => axios.get(url));
+function GET(piURL, path) {
+  return ensureCSRF(piURL).then(() => axios.get(piURL + path));
 }
 
-export function getVetted(piURL) {
-  const url = piURL + "/v1/proposals/vetted";
-  return ensureCSRF(piURL).then(() => axios.get(url));
-}
-
-export function getVoteStatus(piURL) {
-  const url = piURL + "/v1/proposals/votestatus";
-  return ensureCSRF(piURL).then(() => axios.get(url));
-}
-
-export function getProposal(piURL, token) {
-  const url = piURL + "/v1/proposals/" + token;
-  return ensureCSRF(piURL).then(() => axios.get(url));
-}
-
-export function Vote(token, ticket, voteBitInt, signature) {
-  const voteBit = voteBitInt.toString(16);
-  return { token, ticket, voteBit, signature };
-}
-
-// votes must be an array of Vote()-produced objects.
-export function castVotes(piURL, votes) {
-  const url = piURL + "/v1/proposals/castvotes";
+function POST(piURL, path, payload) {
   return ensureCSRF(piURL).then(resp => {
     const cfg = {
       headers: {
         [CSRF_TOKEN_HEADER]: resp.headers[CSRF_TOKEN_HEADER]
       }
     };
-    return axios.post(url, { votes }, cfg);
+    return axios.post(piURL + path, payload, cfg);
   });
 }
 
-export function getVoteResults(piURL, token) {
-  const url = piURL + "/v1/proposals/" + token + "/votes";
-  return ensureCSRF(piURL).then(() => axios.get(url));
+// Return an object to be sent as vote information.
+export function Vote(token, ticket, voteBitInt, signature) {
+  const voteBit = voteBitInt.toString(16);
+  return { token, ticket, voteBit, signature };
 }
+
+export const getActiveVotes = (piURL) => GET(piURL, "/v1/proposals/activevote");
+export const getVetted = (piURL) => GET(piURL, "/v1/proposals/vetted");
+export const getVoteStatus = (piURL) => GET(piURL, "/v1/proposals/votestatus");
+export const getProposal = (piURL, token) => GET(piURL, "/v1/proposals/" + token);
+export const getVoteResults = (piURL, token) => GET(piURL, "/v1/proposals/" + token + "/votes");
+
+// votes must be an array of Vote()-produced objects.
+export const castVotes = (piURL, votes) => POST(piURL, "/v1/proposals/castvotes", { votes });
