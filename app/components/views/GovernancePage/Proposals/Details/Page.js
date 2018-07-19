@@ -15,13 +15,9 @@ export default ({ viewedProposalDetails,
   showPurchaseTicketsPage, hasTickets, onVoteOptionSelected, onUpdateVoteChoice,
   newVoteChoice, updateVoteChoiceAttempt }) =>
 {
-  console.log("viewing", viewedProposalDetails);
-
   const { name, token, hasEligibleTickets, voteStatus, voteOptions,
     voteCounts, creator, timestamp, voteDetails, currentVoteChoice } = viewedProposalDetails;
   const eligibleTicketCount = viewedProposalDetails.eligibleTickets.length;
-
-  console.log(voteDetails);
 
   let text = "";
   viewedProposalDetails.files.forEach(f => {

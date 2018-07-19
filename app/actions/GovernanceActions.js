@@ -70,7 +70,6 @@ const getProposalVoteResults = async (proposal, piURL) => {
   const myTickets = proposal.eligibleTickets.reduce( (m, t) => { m[t.ticket] = true; return m; }, {});
 
   const voteResults = await pi.getVoteResults(piURL, proposal.token);
-  console.log("Got vote results", voteResults);
 
   voteResults.data.castvotes.forEach(vote => {
     const choiceID = voteBitToChoice[parseInt(vote.votebit)];
@@ -94,9 +93,6 @@ export const getVettedProposals = () => async (dispatch, getState) => {
   try {
     const [ vetted, votesStatus, activeVotes ] = await Promise.all(
       [ pi.getVetted(piURL), pi.getVoteStatus(piURL), pi.getActiveVotes(piURL) ]);
-    console.log("vetted", vetted);
-    console.log("vote status", votesStatus);
-    console.log("active votes", activeVotes);
 
     // helpers
     const chainParams = sel.chainParams(getState());
@@ -182,7 +178,6 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
 
   try {
     const resp = await pi.getProposal(piURL, token);
-    console.log("received proposal data", resp);
 
     const { walletService } = getState().grpc;
     const proposals = getState().governance.proposals;
@@ -219,7 +214,6 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
       await getProposalVoteResults(proposal, piURL);
     }
 
-    console.log("proposal data", proposal);
     dispatch({ token, proposal, type: GETPROPOSAL_SUCCESS });
   } catch (error) {
     dispatch({ error, type: GETPROPOSAL_FAILED });
@@ -263,7 +257,6 @@ export const updateVoteChoice = (proposal, newVoteChoiceID, passphrase) =>
       proposal.eligibleTickets.forEach((t, i) => {
         const signature = sigs[i];
         if (signature.getError() != "") {
-          console.log("Error signing message", signature.getError());
           return;
         }
         const hexSig = Buffer.from(signature.getSignature()).toString("hex");
@@ -271,11 +264,8 @@ export const updateVoteChoice = (proposal, newVoteChoiceID, passphrase) =>
         votes.push(pi.Vote(proposal.token, t.ticket, voteChoice.bits, hexSig));
       });
 
-      console.log("casting votes", votes);
-
       const piURL = sel.politeiaURL(getState());
-      const voted = await pi.castVotes(piURL, votes);
-      console.log("voted", voted);
+      await pi.castVotes(piURL, votes);
 
       // update the vote count for the proposal from pi, so we can see our
       // vote counting towards the totals
@@ -290,7 +280,6 @@ export const updateVoteChoice = (proposal, newVoteChoiceID, passphrase) =>
 
       dispatch({ votes, proposals, type: UPDATEVOTECHOICE_SUCCESS });
     } catch (error) {
-      console.log("cast votes errored", error);
       dispatch({ error, type: UPDATEVOTECHOICE_FAILED });
     }
   };
