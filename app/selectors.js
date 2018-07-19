@@ -915,6 +915,7 @@ export const activeVoteProposals = get([ "governance", "activeVote" ]);
 export const getVettedProposalsAttempt = get([ "governance", "getVettedAttempt" ]);
 export const preVoteProposals = get([ "governance", "preVote" ]);
 export const votedProposals = get([ "governance", "voted" ]);
+export const lastVettedFetchTime = get([ "governance", "lastVettedFetchTime" ]);
 
 export const hasTickets = createSelector(
   [ allTickets ],

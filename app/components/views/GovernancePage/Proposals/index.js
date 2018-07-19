@@ -9,7 +9,10 @@ class Proposals extends React.Component {
 
   constructor(props) {
     super(props);
-    if (!props.getVettedProposals.length && !props.getVettedProposalsAttempt && props.politeiaEnabled) {
+    const now = new Date();
+    const msLastReq = (now - props.lastVettedFetchTime);
+    const vettedTooOld = msLastReq > (5 * 60 * 1000); // 5 minutes
+    if (!props.getVettedProposalsAttempt && props.politeiaEnabled && vettedTooOld) {
       props.getVettedProposals();
     }
   }

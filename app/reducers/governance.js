@@ -17,6 +17,7 @@ export default function governance(state = {}, action) {
       preVote: action.preVote,
       activeVote: action.activeVote,
       voted: action.voted,
+      lastVettedFetchTime: new Date(),
     };
   case GETPROPOSAL_ATTEMPT:
     return { ...state, getProposalAttempt: true, getProposalError: null };
