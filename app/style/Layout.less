@@ -51,7 +51,6 @@
 // Main content that allows scrolling
 .page-content {
   .page-content-mixin;
-
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -64,7 +63,6 @@
 // Main content that has been blured by something positioned "on top" of it
 .page-content-blur {
   .page-content-mixin;
-
   filter: blur(6px);
 }
 
@@ -292,7 +290,7 @@
   margin-bottom: 10px;
 }
 
-@media screen and (max-width: 511px) {
+@media screen and (max-width:511px) {
   .fatal-error {
     width: 220px;
     margin-left: -100px;
@@ -316,7 +314,8 @@
   }
 }
 
-@media screen and (max-width: 676px) {
+
+@media screen and (max-width:676px) {
   .page-view {
     position: inherit;
   }
@@ -329,8 +328,7 @@
     left: 43px;
   }
 
-  .tabbed-page-header,
-  .standalone-page-header {
+  .tabbed-page-header, .standalone-page-header {
     top: -20px;
   }
 
@@ -346,9 +344,9 @@
   .fatal-error-page {
     margin: 64px 50px 0px 50px;
   }
-}
+  }
 
-@media screen and (max-width: 299px) {
+@media screen and (max-width:299px) {
   .fatal-error-suggestion {
     height: 473px;
   }
