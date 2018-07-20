@@ -1929,10 +1929,10 @@ msgstr "Taxa"
 
 #. [export.transactions.fields.fee]
 #. defaultMessage is:
-#. Fee payed by the wallet for the transaction
+#. Fee paid by the wallet for the transaction
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
 msgctxt "export.transactions.fields.fee"
-msgid "Fee payed by the wallet for the transaction"
+msgid "Fee paid by the wallet for the transaction"
 msgstr "Taxa paga pela carteira para a transação"
 
 #. [getStarted.header.fetchingBlockHeaders.meta]
