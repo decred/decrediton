@@ -1,7 +1,8 @@
 import { FormattedMessage as T } from "react-intl";
 import {
   EXTERNALREQUEST_NETWORK_STATUS, EXTERNALREQUEST_STAKEPOOL_LISTING,
-  EXTERNALREQUEST_UPDATE_CHECK, EXTERNALREQUEST_POLITEIA,
+  EXTERNALREQUEST_UPDATE_CHECK,
+  // EXTERNALREQUEST_POLITEIA,
 } from "main_dev/externalRequests";
 
 const AllowableRequestType = ({ id, label, description, checked, onChange }) => (
@@ -59,13 +60,14 @@ const PrivacySettings = ({
           checked={tempSettings.allowedExternalRequests.indexOf(EXTERNALREQUEST_UPDATE_CHECK) > -1}
           onChange={toggle(EXTERNALREQUEST_UPDATE_CHECK)}
         />
-        <AllowableRequestType
+        {/* // TODO: enable once politeia hits production */}
+        {/* <AllowableRequestType
           label={<T id="settings.privacy.politeia.label" m="Politeia" />}
           id="politeia"
           description={<T id="settings.privacy.politeia.description" m="List and vote on proposals on proposals.decred.org" />}
           checked={tempSettings.allowedExternalRequests.indexOf(EXTERNALREQUEST_POLITEIA) > -1}
           onChange={toggle(EXTERNALREQUEST_POLITEIA)}
-        />
+        /> */}
       </div>
     </div>
   );

@@ -353,6 +353,7 @@ var initialState = {
     getMyTicketsStatsRequest: false,
   },
   governance: {
+    politeiaBetaEnabled: globalCfg.get("politeia_beta"), // TODO: remove once politeia hits production
     getVettedAttempt: false,
     activeVote: [],
     preVote: [],
