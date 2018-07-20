@@ -1,30 +1,18 @@
 import Promise from "promise";
 import * as api from "../middleware/stakepoolapi";
-import { withLog as log, logOptionNoArgs, withLogNoData } from "./index";
+import { withLog as log, withLogNoData } from "./index";
 
-export const getPurchaseInfo = (poolHost, apiKey) =>
-  new Promise((resolve, reject) =>
-    api.getPurchaseInfo(poolHost, apiKey, (response, error, poolHost) =>
-      error ? reject(error) : resolve({ response, poolHost })));
+const promisifyReq = (fnName, Req) => log( (...args) => new Promise((ok, fail) =>
+  Req(...args, (res, err) => err ? fail(err) : ok(res))
+), fnName);
 
-export const setStakePoolAddress = log((poolHost, apiKey, addressPubKey) =>
-  new Promise((resolve, reject) =>
-    api.setStakePoolAddress(
-      poolHost, apiKey, addressPubKey,
-      (response, error) => error ? reject(error) : resolve(response)
-    )), "Set Stakepool Address", logOptionNoArgs());
+const promisifyReqLogNoData = (fnName, Req) => withLogNoData( (...args) => new Promise((ok, fail) =>
+  Req(...args, (res, err) => err ? fail(err) : ok(res))
+), fnName);
 
-export const setVoteChoices = log((poolHost, apiKey, voteBits) =>
-  new Promise((resolve, reject) =>
-    api.setVoteChoices(
-      poolHost, apiKey, voteBits,
-      (response, error) => error ? reject(error) : resolve(response)
-    )), "Set Vote Choices", logOptionNoArgs());
-
-export const getAllStakePoolStats = withLogNoData(() =>
-  new Promise((resolve, reject) =>
-    api.allStakePoolStats((response, error) => !response ? reject(error) : resolve(response))), "Get All Stakepool Stats");
-
-export const getStakePoolStats = withLogNoData(host =>
-  new Promise((resolve, reject) =>
-    api.statsFromStakePool(host, (response, error) => !response ? reject(error) : resolve(response))), "Get Single Stakepool Stats");
+export const getPurchaseInfo = promisifyReq("getPurchaseInfo", api.getPurchaseInfo);
+export const setStakePoolAddress = promisifyReq("setStakePoolAddress", api.setStakePoolAddress);
+export const setVoteChoices = promisifyReq("setVoteChoices", api.setVoteChoices);
+export const getAllStakePoolStats = promisifyReqLogNoData("getAllStakePoolStats", api.allStakePoolStats);
+export const getStakePoolStats = promisifyReqLogNoData("getStakePoolStats", api.statsFromStakePool);
+export const getStakePoolInfo = promisifyReqLogNoData("getStakePoolInfo", api.stakePoolInfo);
