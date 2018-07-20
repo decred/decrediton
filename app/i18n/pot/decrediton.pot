@@ -1719,9 +1719,9 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
 #. [export.transactions.fields.fee]
 #. defaultMessage is:
-#. Fee payed by the wallet for the transaction
+#. Fee paid by the wallet for the transaction
 msgctxt "export.transactions.fields.fee"
-msgid "Fee payed by the wallet for the transaction"
+msgid "Fee paid by the wallet for the transaction"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/GetStartedPage/index.json

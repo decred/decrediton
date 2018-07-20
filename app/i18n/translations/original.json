@@ -180,7 +180,7 @@
   "export.transactions.fields.credits": "Sum of credits (transaction outputs) of the wallet included in this transaction.",
   "export.transactions.fields.debits": "Sum of debits (transaction inputs) of the wallet included in this transaction.",
   "export.transactions.fields.direction": "Detected direction of a regular transaction in relation to the wallet (send/receive/transfer)",
-  "export.transactions.fields.fee": "Fee payed by the wallet for the transaction",
+  "export.transactions.fields.fee": "Fee paid by the wallet for the transaction",
   "export.transactions.fields.hash": "Hash of the transaction (txid)",
   "export.transactions.fields.time": "Date/time of the transaction",
   "export.transactions.fields.type": "Detected transaction type (regular, ticket purchase, vote, etc)",
