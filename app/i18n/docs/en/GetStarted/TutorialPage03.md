@@ -1,9 +1,14 @@
 # Staking and Governance
 
-Participation in staking (PoS) requires only existing Decred funds, _unlike Proof-of-Work (PoW) mining that requires computing resources and electricity_.
+Participation in Staking (PoS) is open to everyone and requires time-locking a portion of Your DCR in return for tickets. The purpose of these tickets is twofold:
 
-Funds can be time-locked in return for tickets on the network. Tickets are chosen at random to vote on the validity of blocks. By average a ticket gets voted in 28 days _(with possible maximum time period is 142 days)_.
+- Firstly they serve an automatic function of voting on the validity of new blocks.
+- Secondly they grant the right to partake in the decision-making processes which determines the future of Decred.
 
-A successful vote returns the stakeholder a part of the Block Reward plus the original cost of the ticket. In case of missing the vote _(0.5% probability)_ the original cost of the ticket is safely returned to the user without the reward.
+The process of staking is essentially a lottery, where tickets are chosen to vote randomly. A successful vote returns the participant the original cost of the ticket and a part of the blockreward as profit in newly created DCR.
 
-Changes are inevitable for all digital currencies, whether deciding on development matters or resolving unexpected problems. Decred’s innovative governance system is built into the blockchain. This allows for seamless adaption to changes while keeping the existing blockchain ecosystem safe. The same tickets are also used as voting power when deciding on consensus changes.
+In case the vote misses (0.5% probability), original cost of the ticket is safely returned without the reward. Average time for a ticket to vote is within 28 days and maximum up to 142 days.
+
+**Staking encourages long term investment in Decred**. Participants are given a
+real voice in the decision-making and are rewarded for engagement in the
+project's governance.

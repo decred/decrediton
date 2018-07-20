@@ -1,5 +1,9 @@
-# What is a Wallet?
+# What is Decred Blockchain?
 
-**Wallet is the tool for interacting with the blockchain and using the currency.** It can be used to send and receive Decred funds, and acts as a personal ledger of transactions.
+At Decred’s heart is an ever growing list of records shared globally across a decentralised ledger; this is Decred’s blockchain.
 
-Decrediton Wallet can also be used for participating in staking (PoS) and project governance by time-locking your funds in return for tickets.
+The blockchain holds all of Decred’s transactional data and uses an innovative **Proof-of-Stake (PoS)/Proof-of-Work (PoW) system** to validate transactions and keep the network secure.
+
+This hybrid system mitigates weaknesses that PoS and PoW have individually. Furthermore it forms the cornerstone for **smart governance** of the project.
+
+Widespread participation in **staking (PoS)** and **mining (PoW)** helps to protect the neutrality of the network and rewards the participants with newly generated DCR from the blockreward.

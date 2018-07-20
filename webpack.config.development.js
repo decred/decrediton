@@ -104,7 +104,17 @@ export default merge(baseConfig, {
           loader: "url-loader",
           options: { limit: 10000, mimetype: "image/svg+xml" }
         }]
-      }
+      },
+
+      {
+        test: /\.(mp4)$/,
+        use: [{
+          loader: "file-loader",
+          options: {
+            mimetype: "video/mp4"
+          }
+        }]
+      },
     ]
   },
 
