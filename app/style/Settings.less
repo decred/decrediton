@@ -182,3 +182,30 @@ input[type="checkbox"]:checked + label {
   width: 12px;
   height: 12px;
 }
+
+@media screen and (max-width: 676px) {
+  .app-modal.about-modal,
+  .app-modal-reduced-bar.about-modal,
+  .app-modal-standalone.about-modal {
+    margin-left: 9px;
+  }
+}
+
+@media screen and (max-width: 1106px) {
+  .settings-wrapper {
+    display: inherit;
+    margin-top: -50px;
+    height: 639px;
+  }
+
+  .app-modal.about-modal,
+  .app-modal-reduced-bar.about-modal,
+  .app-modal-standalone.about-modal {
+    margin-top: 30px;
+  }
+
+  .settings-privacy .settings-column-title,
+  .settings-security .settings-column-title {
+    text-align: left;
+  }
+}

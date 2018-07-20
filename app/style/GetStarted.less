@@ -530,9 +530,17 @@
 }
 
 @keyframes bounce {
-  0% { margin-left: 0px; }
-  50% { margin-left: 2px; }
-  100% { margin-left: 0px; }
+  0% {
+    margin-left: 0px;
+  }
+
+  50% {
+    margin-left: 2px;
+  }
+
+  100% {
+    margin-left: 0px;
+  }
 }
 
 .launch-arrow-bounce {
@@ -732,4 +740,74 @@
 
 .getstarted-stakepool-add-buttons {
   float: left;
+}
+
+@media screen and (max-width: 676px) {
+  .loader-settings-logs {
+    position: fixed;
+    top: 100px;
+  }
+
+  .getstarted.loader .loader-bar {
+    margin-left: -30px;
+  }
+
+  .linear-progress-text {
+    position: relative;
+  }
+
+  .display-wallet .wallet-icon {
+    position: relative;
+  }
+
+  .display-wallet-name {
+    margin-top: 77px;
+  }
+
+  .getstarted.loader {
+    margin-left: 0px;
+  }
+
+  .page-body.getstarted {
+    background-position: 80px 20px;
+    background-color: #f7f8f9 !important;
+    z-index: 5;
+  }
+
+  .getstarted.loader .loader-settings-logs {
+    background-color: #f7f8f9;
+  }
+
+  .display-wallet.new {
+    background-color: inherit;
+    margin-top: 60px;
+  }
+
+  .display-wallet.new .display-wallet-name {
+    margin-top: 0px;
+  }
+
+  .display-wallet-launch {
+    color: indigo;
+  }
+
+  .getstarted.loader.logs .settings-privacy {
+    float: inherit;
+  }
+
+  .advanced-daemon-row {
+    margin-top: 25px;
+  }
+}
+
+@media screen and (max-width: 566px) {
+  .display-wallet .wallet-icon.restore {
+    margin-top: -69px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .whatsnew {
+    display: none;
+  }
 }
