@@ -2,6 +2,7 @@ import ErrorScreen from "ErrorScreen";
 import HomePage from "./Page";
 import { service, home } from "connectors";
 import { substruct } from "fp";
+import { shell } from "electron";
 
 const ROWS_NUMBER_ON_TABLE = 5;
 
@@ -65,5 +66,22 @@ class Home extends React.Component{
   }
 
 }
+
+// Prevent middle click from opening new electron window
+(function () {
+  function callback(e) {
+   // var e = window.e || e;
+      e.preventDefault();
+      //shell.openExternal(e.target.href);
+    return
+  }
+
+  if (document.addEventListener) {
+    document.addEventListener('auxclick', callback, false);
+  } else {
+    document.attachEvent('onauxclick', callback);
+  }
+})();
+
 
 export default service(home(Home));
