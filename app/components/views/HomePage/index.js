@@ -2,7 +2,6 @@ import ErrorScreen from "ErrorScreen";
 import HomePage from "./Page";
 import { service, home } from "connectors";
 import { substruct } from "fp";
-import { shell } from "electron";
 
 const ROWS_NUMBER_ON_TABLE = 5;
 
