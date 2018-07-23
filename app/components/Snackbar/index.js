@@ -137,8 +137,9 @@ class Snackbar extends React.Component {
   }
 
   render() {
-    if (this.state.isWaiting)
+    if (this.state.isWaiting) {
       return null;
+    }
     const notification = this.props.uiAnimations
       ? this.getAnimatedNotification()
       : this.getStaticNotification();
