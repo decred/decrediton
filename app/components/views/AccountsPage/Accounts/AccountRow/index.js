@@ -1,5 +1,4 @@
 import Row from "./Row";
-import { spring } from "react-motion";
 import AccountDetails from "./AccountDetails";
 import RenameAccount from "./RenameAccount";
 import { injectIntl } from "react-intl";
@@ -61,21 +60,6 @@ class AccountRow extends React.Component {
     this.setState({ hidden: true });
   }
 
-  getDefaultStyles() {
-    return [ { key: "output_0",style: { height: 0, opacity: 0 } } ];
-  }
-
-  getNullStyles () {
-    return [ {
-      data: <div />,
-      key: "output_0",
-      style: {
-        height: spring(0, { stiffness: 90, damping: 16 }),
-        opacity: spring(0, { stiffness: 30, damping: 15 }),
-      }
-    } ];
-  }
-
   getRenameAccountStyles () {
     const { account, intl } = this.props;
     const {
@@ -84,8 +68,8 @@ class AccountRow extends React.Component {
       hideRenameAccount,
     } = this;
     const { hasFailedAttempt, renameAccountName } = this.state;
-    return [ {
-      data: <RenameAccount
+    return (
+      <RenameAccount
         {...{
           account,
           updateRenameAccountName,
@@ -95,13 +79,8 @@ class AccountRow extends React.Component {
           intl,
           hasFailedAttempt,
         }}
-      />,
-      key: "output_0",
-      style: {
-        height: spring(140, { stiffness: 110, damping: 14 }),
-        opacity: spring(1, { stiffness: 65, damping: 35 }),
-      }
-    } ];
+      />
+    );
   }
 
   getAccountDetailsStyles() {
@@ -112,8 +91,8 @@ class AccountRow extends React.Component {
       hideAccount,
     } = this;
     const { hidden } = this.state;
-    return [ {
-      data: <AccountDetails
+    return (
+      <AccountDetails
         {...{
           account,
           showRenameAccount,
@@ -121,13 +100,8 @@ class AccountRow extends React.Component {
           hideAccount,
           showAccount,
         }}
-      />,
-      key: "output_0",
-      style: {
-        height: spring(245, { stiffness: 110, damping: 14 }),
-        opacity: spring(1, { stiffness: 65, damping: 35 }),
-      }
-    } ];
+      />
+    );
   }
 
   render() {

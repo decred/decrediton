@@ -1,7 +1,7 @@
 import { createElement as h } from "react";
 export * from "./dateFormat";
 export { addSpacingAroundText, restrictToStdDecimalNumber } from "./strings";
-export { reverseHash, reverseRawHash } from "./byteActions";
+export * from "./byteActions";
 export * from "./addresses";
 export * from "./arrays";
 export * from "./dom.js";

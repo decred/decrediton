@@ -6,7 +6,6 @@ import { getAccountsAttempt, getStartupWalletInfo, getStakeInfoAttempt } from ".
 import { getWalletCfg } from "../config";
 import { RescanRequest, ConstructTransactionRequest } from "../middleware/walletrpc/api_pb";
 
-
 export const GETNEXTADDRESS_ATTEMPT = "GETNEXTADDRESS_ATTEMPT";
 export const GETNEXTADDRESS_FAILED = "GETNEXTADDRESS_FAILED";
 export const GETNEXTADDRESS_SUCCESS = "GETNEXTADDRESS_SUCCESS";
@@ -491,7 +490,7 @@ export function signMessageAttempt(address, message, passphrase ) {
     dispatch({ type: SIGNMESSAGE_ATTEMPT });
     wallet.signMessage(sel.walletService(getState()), address, message, passphrase)
       .then(getSignMessageResponse =>
-        dispatch({ getSignMessageResponse, type: SIGNMESSAGE_SUCCESS }))
+        dispatch({ getSignMessageSignature: getSignMessageResponse.toObject().signature, type: SIGNMESSAGE_SUCCESS }))
       .catch(error => dispatch({ error, type: SIGNMESSAGE_FAILED }));
   };
 }

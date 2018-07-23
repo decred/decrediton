@@ -1,13 +1,20 @@
 import { connect } from "react-redux";
-import * as sel from "../selectors";
-import { signMessageAttempt, validateAddress, signMessageCleanStore } from "../actions/ControlActions";
+import { bindActionCreators } from "redux";
 import { selectorMap } from "../fp";
+import * as sel from "../selectors";
+import * as ca from "../actions/ControlActions";
 
 const mapStateToProps = selectorMap({
   signMessageError: sel.signMessageError,
-  signMessageSuccess: sel.signMessageSuccess,
+  signMessageSignature: sel.signMessageSignature,
   isSigningMessage: sel.isSigningMessage,
   walletService: sel.walletService,
 });
 
-export default connect(mapStateToProps, { signMessageAttempt, validateAddress, signMessageCleanStore });
+const mapDispatchToProps = dispatch => bindActionCreators({
+  signMessageAttempt: ca.signMessageAttempt,
+  validateAddress: ca.validateAddress,
+  signMessageCleanStore: ca.signMessageCleanStore,
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps);

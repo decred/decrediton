@@ -1,124 +1,59 @@
 @import (reference) "./main.less";
 @import (reference) "./Icons.less";
 
-.address-content-nest-address-hash-to {
-  width: 96%;
-  height: 100%;
-}
-
-.account-row,
-.account-row-hidden {
-  position: relative;
-  overflow: hidden;
-  padding: 27px 30px 10px 15px;
-  border-top: 1px solid #f0f4f4;
-  background-image: @arrow-right-gray-icon;
-  background-position: 60px;
-  background-size: 5px auto;
-  background-repeat: no-repeat;
-  cursor: pointer;
-}
-
-.account-row {
-  background-color: #fff;
-}
-
-.account-row-hidden {
-  background-color: transparent;
-}
-
-.account-row:hover,
-.account-row-hidden:hover {
-  background-color: rgba(212, 240, 253, 0.5);
-  background-image: @arrow-right-key-blue-icon;
-  background-size: 5px;
-}
-
-// .account-row-top-top {
-// }
-
-.account-row-top-bottom {
-  font-size: 12px;
-}
-
-.account-row-top-last-tx {
-  color: #132f4b;
-  font-size: 12px;
-}
-
 .account-row-top-spendable {
   color: #596d81;
   font-size: 13px;
   line-height: 17px;
-  width: 230px;
-}
-
-.account-row-top-spendable-label {
-  float: left;
-  margin-left: 30px;
 }
 
 .account-row-top-spendable-value {
-  float: right;
-  width: 130px;
   color: #091440;
-}
-
-.account-row-wallet-icon {
-  .inline-block-mixin;
-
-  width: 20px;
-  height: 20px;
-  margin-right: 3em;
-  background-image: @wallet-gray-icon;
-  background-size: 20px auto;
-  background-repeat: no-repeat;
+  display: inline-block;
+  width: 140px;
 }
 
 .account-row-top-account-name {
-  .inline-block-mixin;
-
   color: #091440;
   font-size: 19px;
   line-height: 24px;
 }
 
 .account-row-top-account-funds {
-  float: right;
   color: #091440;
   font-size: 19px;
-  line-height: 24px;
-  display: flex;
-  flex-direction: column;
   text-align: right;
 }
 
 .account-row-details-top {
-  position: relative;
-  z-index: 0;
-  background-color: transparent;
-  background-image: @arrow-down-mid-blue-icon;
-  background-position: 57px 36px;
-  background-size: 10px auto;
-  background-repeat: no-repeat;
   cursor: pointer;
-  padding: 27px 30px 10px 15px;
+  padding: 21px 30px 21px 90px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  background-image: @wallet-gray-icon;
+  background-size: 20px auto;
+  background-repeat: no-repeat;
+  background-position: 15px center;
+  background-color: #fff;
+  border-top: 1px solid #f0f4f4;
+}
+
+.account-row-details-top.account-hidden,
+.vertical-accordion.active .account-row-details-top {
+  background-color: #f0f4f4;
 }
 
 .account-row-details-top:hover {
-  background-image: @arrow-down-key-blue-icon;
-  background-size: 10px;
+  background-color: #f0f4f4;
 }
 
-.account-wrapper {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
+// .account-row-details-bottom {
+// }
 
 .account-row-details-bottom-column-left {
-  float: left;
-  width: 50%;
+  width: 24em;
 }
 
 .account-row-details-bottom-columns {
@@ -126,11 +61,13 @@
   color: #596d81;
   margin-bottom: 20px;
   margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .account-row-details-bottom-column-right {
-  float: right;
-  width: 50%;
+  width: 22em;
 }
 
 .account-row-details-bottom-columns::after,
@@ -140,10 +77,8 @@
   .clearfloat-mixin;
 }
 
-// .account-row-details-bottom {
-// }
-
-.account-row-details-bottom-title {
+.account-row-details-bottom-title,
+.account-row-rename-bottom-title {
   font-size: 19px;
 }
 
@@ -158,6 +93,7 @@
   text-align: right;
   font-size: 12px;
   margin-bottom: 0.5em;
+  display: flex;
 }
 
 .account-row-details-bottom-spec-last {
@@ -170,49 +106,28 @@
   margin-right: 10px;
   width: 117px;
   margin-left: 40px;
-  float: left;
 }
 
 .account-row-details-bottom-spec-value {
   width: 200px;
-  float: left;
   text-align: left;
   color: #091440;
 }
 
-.account-row-details-bottom-rename {
+.account-row-rename-bottom {
   color: #091440;
   font-size: 12px;
+  padding: 14px;
 }
 
-.account-row-details-bottom-rename-name {
-  float: left;
-  width: 12em;
+.account-row-rename-bottom-fields {
+  display: flex;
+  margin: 12px 0px;
 }
 
-.account-row-details-bottom-rename-field {
-  float: left;
-  width: 40%;
-  height: 36px;
-}
-
-.account-rename-form-buttons {
-  float: left;
-  width: 100%;
-  margin-top: 10px;
-}
-
-.account-row-long {
-  border-bottom: 1px #a9b4bf solid;
-}
-
-.account-row-short-hidden {
-  background-color: transparent;
-}
-
-.account-row-rename {
-  border-top: 1px #a9b4bf solid;
-  border-bottom: 1px #a9b4bf solid;
+.account-row-rename-bottom-value {
+  width: 70%;
+  margin-left: 10px;
 }
 
 .content-confirm-new-account {

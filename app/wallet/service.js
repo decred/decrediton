@@ -1,6 +1,6 @@
 import Promise from "promise";
 import * as client from "middleware/grpc/client";
-import { reverseHash, strHashToRaw } from "../helpers/byteActions";
+import { reverseHash, strHashToRaw, rawHashToHex } from "../helpers/byteActions";
 import { withLog as log, withLogNoData, logOptionNoResponseData } from "./index";
 import * as api from "middleware/walletrpc/api_pb";
 
@@ -207,6 +207,35 @@ export const getTransaction = (walletService, txHash) =>
       resolve(tx);
     });
   });
+
+export const getUnformattedTransaction = (walletService, txHash) =>
+  new Promise((resolve, reject) => {
+    var request = new api.GetTransactionRequest();
+    var buffer = Buffer.isBuffer(txHash) ? txHash : strHashToRaw(txHash);
+    request.setTransactionHash(buffer);
+    walletService.getTransaction(request, (err, resp) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      const tx = resp.getTransaction();
+      resolve(tx);
+    });
+  });
+
+// getInputTransactions returns the input transactions to the given source
+// transaction (assumes srcTx was returned from decodeTransaction).
+export const getInputTransactions = async (walletService, decodeMessageService, srcTx) => {
+  const txs = [];
+  for (let inp of srcTx.getInputsList()) {
+    const inpTx = await getUnformattedTransaction(walletService, rawHashToHex(inp.getPreviousTransactionHash()));
+    const decodedInpResp = await decodeTransaction(decodeMessageService, inpTx.getTransaction());
+    txs.push(decodedInpResp.getTransaction());
+  }
+
+  return txs;
+};
 
 export const publishUnminedTransactions = log((walletService) => new Promise((resolve, reject) => {
   const req = new api.PublishUnminedTransactionsRequest();

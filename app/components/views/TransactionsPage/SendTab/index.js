@@ -152,11 +152,8 @@ class Send extends React.Component {
     this.setState({ account }, this.onAttemptConstructTransaction);
   }
 
-  onAttemptSignTransaction(privpass) {
-    const { unsignedTransaction, onAttemptSignTransaction,
-      getNextAddressAttempt, nextAddressAccount } = this.props;
-    if (!privpass || !this.getIsValid()) return;
-    onAttemptSignTransaction && onAttemptSignTransaction(privpass, unsignedTransaction);
+  onAttemptSignTransaction() {
+    const { getNextAddressAttempt, nextAddressAccount } = this.props;
     getNextAddressAttempt && nextAddressAccount && getNextAddressAttempt(nextAddressAccount.value);
     this.onClearTransaction();
   }

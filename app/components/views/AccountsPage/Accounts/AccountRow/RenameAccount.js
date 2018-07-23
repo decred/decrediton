@@ -18,17 +18,15 @@ const RenameAccount = ({
   intl,
   hasFailedAttempt
 }) => (
-  <div className="account-row-details-bottom" key={"details" + account.accountNumber}>
-    <div className="account-row-details-bottom-title">
-      <div className="account-row-details-bottom-title-name">
-        <T id="accounts.rename" m="Rename Account" />
-      </div>
+  <div className="account-row-rename-bottom" key={"details" + account.accountNumber}>
+    <div className="account-row-rename-bottom-title">
+      <T id="accounts.rename" m="Rename Account" />
     </div>
-    <div className="account-row-details-bottom-rename">
-      <div className="account-row-details-bottom-rename-name">
+    <div className="account-row-rename-bottom-fields">
+      <div className="account-row-rename-bottom-label">
         <T id="accounts.newName" m="New Account Name" />:
       </div>
-      <div className="account-row-details-bottom-rename-field">
+      <div className="account-row-rename-bottom-value">
         <TextInput
           required
           autoFocus={true}
@@ -41,7 +39,7 @@ const RenameAccount = ({
         />
       </div>
     </div>
-    <div className="account-rename-form-buttons">
+    <div className="account-row-rename-bottom-buttons">
       <KeyBlueButton
         className="content-confirm-new-account"
         onClick={renameAccount}>

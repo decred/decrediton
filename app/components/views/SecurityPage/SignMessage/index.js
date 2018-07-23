@@ -32,19 +32,19 @@ class SignMessage extends React.Component {
   }
 
   render() {
-    const { signMessageSuccess, isSigningMessage, intl } = this.props;
-    const { onChangeAddress, onChangeMessage, onSubmit } = this;
+    const { signMessageSignature, isSigningMessage, intl } = this.props;
+    const { onChangeAddress, onChangeMessage } = this;
     const { address, addressError, message, messageError } = this.state;
     let result = null;
-    if (signMessageSuccess) {
+    if (signMessageSignature) {
       result = (
         <div className="message">
           <div className="message-nest">
             <div className="message-content">
               <div>
-                {signMessageSuccess.signature}
+                {signMessageSignature}
               </div>
-              <CopyToClipboard textToCopy={signMessageSuccess.signature} className="message-content-nest-copy-to-clipboard-icon" />
+              <CopyToClipboard textToCopy={signMessageSignature} className="message-content-nest-copy-to-clipboard-icon" />
             </div>
           </div>
         </div>
@@ -53,7 +53,7 @@ class SignMessage extends React.Component {
 
     return (
       <Aux>
-        <SignMessageForm {...{ onSubmit, onChangeAddress, onChangeMessage, address, addressError, message, messageError, formatMessage: intl.formatMessage, isSigningMessage } }/>
+        <SignMessageForm {...{ onChangeAddress, onChangeMessage, address, addressError, message, messageError, formatMessage: intl.formatMessage, isSigningMessage } }/>
         {result}
       </Aux>
     );
@@ -77,21 +77,13 @@ class SignMessage extends React.Component {
     if (message == "") this.setState({ message: "", messageError: "Please enter a message" });
     else this.setState({ message, messageError: null });
   }
-
-  onSubmit(passphrase) {
-    const { address, addressError, message, messageError } = this.state;
-    if (addressError || messageError) return;
-    this.props.signMessageAttempt(address, message, passphrase);
-  }
 }
 
 SignMessage.propTypes = {
   intl: PropTypes.object.isRequired,
   walletService: PropTypes.object,
   signMessageCleanStore: PropTypes.func.isRequired,
-  signMessageSuccess: PropTypes.shape({
-    signature: PropTypes.string,
-  }),
+  signMessageSignature: PropTypes.string,
 };
 
 SignMessage.contextTypes = {

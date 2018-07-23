@@ -372,7 +372,7 @@ export default function grpc(state = {}, action) {
   case SIGNMESSAGE_FAILED:
     return {
       ...state,
-      getSignMessageSuccess: null,
+      getSignMessageSignature: null,
       getSignMessageError: String(action.error),
       getSignMessageRequestAttempt: false,
     };
@@ -380,14 +380,14 @@ export default function grpc(state = {}, action) {
     return {
       ...state,
       getSignMessageError: null,
-      getSignMessageResponse: action.getSignMessageResponse,
+      getSignMessageSignature: action.getSignMessageSignature,
       getSignMessageRequestAttempt: false,
     };
   case SIGNMESSAGE_CLEANSTORE:
     return {
       ...state,
       getSignMessageError: null,
-      getSignMessageResponse: null,
+      getSignMessageSignature: null,
       getSignMessageRequestAttempt: false,
     };
   case VERIFYMESSAGE_ATTEMPT:
