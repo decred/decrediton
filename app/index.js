@@ -352,6 +352,18 @@ var initialState = {
     voteTime: null,
     getMyTicketsStatsRequest: false,
   },
+  governance: {
+    politeiaBetaEnabled: globalCfg.get("politeia_beta"), // TODO: remove once politeia hits production
+    getVettedAttempt: false,
+    activeVote: [],
+    preVote: [],
+    voted: [],
+
+    getProposalAttempt: false,
+    getProposalError: null,
+    proposals: {}, // map from proposal token (id) to proposal details
+    lastVettedFetchTime: new Date(0), // time when vetted proposals were requested
+  },
   locales: locales
 };
 

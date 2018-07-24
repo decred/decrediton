@@ -813,6 +813,9 @@ export const listenForAppReloadRequest = cb => () => onAppReloadRequested(cb);
 export const showTicketList = status => dispatch =>
   dispatch(pushHistory("/tickets/mytickets/" + status));
 
+export const showPurchaseTicketsPage = () => dispatch =>
+  dispatch(pushHistory("/tickets/purchase"));
+
 export const goBackHistory = () => dispatch => dispatch(goBack());
 
 export const SEEDCOPIEDTOCLIPBOARD = "SEEDCOPIEDTOCLIPBOARD";

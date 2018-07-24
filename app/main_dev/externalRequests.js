@@ -8,10 +8,12 @@
 import { session } from "electron";
 import { isRegExp } from "util";
 import { getGlobalCfg } from "../config";
+import { POLITEIA_URL_TESTNET, POLITEIA_URL_MAINNET } from "../middleware/politeiaapi";
 
 export const EXTERNALREQUEST_NETWORK_STATUS = "EXTERNALREQUEST_NETWORK_STATUS";
 export const EXTERNALREQUEST_STAKEPOOL_LISTING = "EXTERNALREQUEST_STAKEPOOL_LISTING";
 export const EXTERNALREQUEST_UPDATE_CHECK = "EXTERNALREQUEST_UPDATE_CHECK";
+export const EXTERNALREQUEST_POLITEIA = "EXTERNALREQUEST_POLITEIA";
 
 // These are the requests allowed when the standard privacy mode is selected.
 export const STANDARD_EXTERNAL_REQUESTS = [
@@ -33,6 +35,23 @@ export const installSessionHandlers = (mainLogger) => {
   const filter = {
     urls: []
   };
+
+  // ***IMPORTANT***
+  // If testing politeia (or other ssl-enabled services which use a self-signed
+  // certificate) locally, you need to uncomment and adjust the following lines
+  // to allow electron to accept the self-signed cert as valid.
+  // This MUST NOT go enabled into production, as it's a possible security
+  // vulnerability, so any PRs enabling this by default will be rejected.
+  // if (process.env.NODE_ENV === "development") {
+  //   app.on("certificate-error", (event, webContents, url, error, certificate, callback) => {
+  //     if (url.match(/^https:\/\/localhost:4443\/v1\/.*$/)) {
+  //       event.preventDefault();
+  //       callback(true);
+  //     } else {
+  //       callback(false);
+  //     }
+  //   });
+  // }
 
   // TODO: check if this filtering is working even when multiple windows are
   // created (relevent to multi-wallet usage)
@@ -66,6 +85,10 @@ export const allowExternalRequest = (externalReqType) => {
     break;
   case EXTERNALREQUEST_UPDATE_CHECK:
     addAllowedURL("https://api.github.com/repos/decred/decrediton/releases");
+    break;
+  case EXTERNALREQUEST_POLITEIA:
+    addAllowedURL(POLITEIA_URL_TESTNET);
+    addAllowedURL(POLITEIA_URL_MAINNET);
     break;
   default:
     logger.log("error", "Unknown external request type: " + externalReqType);

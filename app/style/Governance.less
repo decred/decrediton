@@ -1,0 +1,219 @@
+@import (reference) "./main.less";
+@import (reference) "./Icons.less";
+
+.proposals-community-header {
+  background-color: #dadfe3;
+  padding: 30px 30px 30px 60px;
+  margin: -60px -60px 0px -60px;
+  display: flex;
+
+  .links {
+    width: 66%;
+    margin-top: 14px;
+
+    > a {
+      display: inline-block;
+      border: 1px solid;
+      border-radius: 5px;
+      padding: 4px 9px;
+      margin: 4px;
+      text-decoration: none;
+      color: #9e9e9e;
+
+      &:hover {
+        color: #7e7e7e;
+      }
+    }
+  }
+}
+
+.proposals-status-links {
+  background-color: #edeff1;
+  padding: 10px 30px 10px 60px;
+  margin: 0px -60px 0px -60px;
+
+  > a {
+    margin-right: 2em;
+    text-decoration: none;
+    color: #7e7e7e;
+    padding: 4px 9px;
+
+    &.active {
+      background-color: #fff;
+    }
+
+    &:hover:not(.active) {
+      color: #9e9e9e;
+    }
+  }
+}
+
+.proposal-list {
+  margin-top: 20px;
+  background-color: #fff;
+
+  > .proposal-list-item {
+    padding: 1em;
+    display: flex;
+
+    > .info {
+      > .proposal-name {
+        color: #5b83ff;
+        font-size: 120%;
+      }
+
+      > .proposal-token {
+        color: #e3e9ec;
+      }
+    }
+
+    > .voting-progress-indicator {
+      width: 50%;
+      height: 5px;
+    }
+  }
+}
+
+.proposal-details-overview {
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  .proposal-details-overview-info {
+    padding: 30px 10px 15px 30px;
+    max-width: 60%;
+  }
+
+  .proposal-details-title {
+    font-size: 200%;
+    color: #485e6e;
+    line-height: 28px;
+  }
+
+  .proposal-details-token a {
+    color: #8b99a7;
+    font-size: 90%;
+    margin: 5px 0px 10px 0px;
+    word-break: break-all;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .proposal-details-overview-voting {
+    background-color: #f9fafa;
+    padding: 30px;
+    width: 25%;
+
+    .go-back-icon-button {
+      margin: -15px -15px 0px 0px;
+      float: right;
+    }
+
+    .button {
+      padding: 10px;
+    }
+
+    .proposal-details-no-tickets,
+    .proposal-details-voting-preference-title,
+    .proposal-details-voting-not-voting,
+    .proposal-details-voting-voted {
+      font-size: 120%;
+      margin-bottom: 15px;
+    }
+
+    .proposal-details-voting-preference-ticket-count {
+      font-size: 80%;
+    }
+
+    .proposal-details-current-choice-box {
+      margin-bottom: 10px;
+
+      > div {
+        width: 10px;
+        height: 10px;
+        margin: 0px 0.5em 0px 0px;
+        display: inline-block;
+      }
+
+      .yes {
+        background-color: @vote-yes-color;
+      }
+
+      .no {
+        background-color: @vote-no-color;
+      }
+
+      .abstain {
+        background-color: @vote-abstain-color;
+      }
+    }
+  }
+
+  .proposal-details-overview-field {
+    .label {
+      display: inline-block;
+      margin-right: 0.5em;
+      width: 30%;
+      text-align: right;
+    }
+
+    .value {
+      display: inline-block;
+    }
+
+    .time-value {
+      font-weight: bold;
+      margin-right: 0.2em;
+    }
+  }
+
+  .proposal-details-voting-progress {
+    width: 100%;
+    height: 60px;
+    padding: 10px 30px;
+
+    .voting-progress-indicator {
+      height: 10px;
+    }
+  }
+}
+
+.proposal-details-voting-progress-counts {
+  text-align: right;
+  padding-right: 20px;
+
+  > div {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    margin: 0px 5px 0px 10px;
+  }
+
+  .yes-count-box {
+    background-color: @vote-yes-color;
+  }
+
+  .no-count-box {
+    background-color: @vote-no-color;
+  }
+
+  .abstain-count-box {
+    background-color: @vote-abstain-color;
+  }
+}
+
+.proposal-loading-page {
+  width: 100%;
+  text-align: center;
+}
+
+.politeia-loading-indicator {
+  background-size: 100%;
+  background-image: @politeia-loading-icon;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: inline-block;
+  width: 256px;
+  height: 256px;
+}

@@ -13,6 +13,7 @@ import TransactionsPage from "components/views/TransactionsPage";
 import TransactionPage from "components/views/TransactionPage";
 import TicketsPage from "components/views/TicketsPage";
 import TutorialsPage from "components/views/TutorialsPage";
+import GovernancePage from "components/views/GovernancePage";
 import SideBar from "components/SideBar";
 import { BlurableContainer } from "layout";
 import { walletContainer, theming } from "connectors";
@@ -42,6 +43,7 @@ class Wallet extends React.Component {
             <Route path="/transactions"                   component={TransactionsPage} />
             <Route path="/tickets"                        component={TicketsPage} />
             <Route path="/tutorial"                       component={TutorialsPage} />
+            <Route path="/governance"                     component={GovernancePage} />
           </MainSwitch>
         </BlurableContainer>
       </div>

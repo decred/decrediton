@@ -7,7 +7,8 @@ import { reverseHash } from "./helpers/byteActions";
 import { TRANSACTION_TYPES }  from "wallet/service";
 import { MainNetParams, TestNetParams } from "wallet/constants";
 import { TicketTypes, decodeVoteScript } from "./helpers/tickets";
-import { EXTERNALREQUEST_STAKEPOOL_LISTING } from "main_dev/externalRequests";
+import { EXTERNALREQUEST_STAKEPOOL_LISTING, EXTERNALREQUEST_POLITEIA } from "main_dev/externalRequests";
+import { POLITEIA_URL_TESTNET, POLITEIA_URL_MAINNET } from "./middleware/politeiaapi";
 
 const EMPTY_ARRAY = [];  // Maintaining identity (will) improve performance;
 
@@ -893,9 +894,39 @@ export const stakeRewardsStats = createSelector(
 
 export const modalVisible = get([ "control", "modalVisible" ]);
 
-// Functionalities deactivated
 export const isSignVerifyMessageDisabled = or(isWatchingOnly, isWatchOnly);
 
 export const isCreateAccountDisabled = or(isWatchingOnly, isWatchOnly);
 
 export const isChangePassPhraseDisabled = or(isWatchingOnly, isWatchOnly);
+
+export const politeiaBetaEnabled = get([ "governance", "politeiaBetaEnabled" ]); // TODO: remove once politeia hits production
+export const politeiaURL = createSelector(
+  [ isTestNet ],
+  (isTestNet) => isTestNet ? POLITEIA_URL_TESTNET : POLITEIA_URL_MAINNET
+);
+
+export const politeiaEnabled = compose(
+  l => l.indexOf(EXTERNALREQUEST_POLITEIA) > -1,
+  allowedExternalRequests
+);
+
+export const updateVoteChoiceAttempt = get([ "governance", "updateVoteChoiceAttempt" ]);
+export const activeVoteProposals = get([ "governance", "activeVote" ]);
+export const getVettedProposalsAttempt = get([ "governance", "getVettedAttempt" ]);
+export const preVoteProposals = get([ "governance", "preVote" ]);
+export const votedProposals = get([ "governance", "voted" ]);
+export const lastVettedFetchTime = get([ "governance", "lastVettedFetchTime" ]);
+
+export const hasTickets = createSelector(
+  [ allTickets ],
+  (tickets) => tickets.length > 0,
+);
+export const getProposalAttempt = get([ "governance", "getProposalAttempt" ]);
+export const getProposalError = get([ "governance", "getProposalError" ]);
+export const proposalDetails = get([ "governance", "proposals" ]);
+export const viewedProposalToken = (state, ctx) => ctx.match && ctx.match.params && ctx.match.params.token ? ctx.match.params.token : null;
+export const viewedProposalDetails = createSelector(
+  [ proposalDetails, viewedProposalToken ],
+  (proposals, token) => proposals[token]
+);

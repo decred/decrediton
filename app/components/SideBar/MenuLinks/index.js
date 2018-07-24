@@ -8,6 +8,7 @@ const linkList = [
   { path: "/home",          link: <T id="sidebar.link.home" m="Overview" />,             icon:"overview" },
   { path: "/transactions",  link: <T id="sidebar.link.transactions" m="Transactions" />, icon:"transactions" },
   { path: "/tickets",       link: <T id="sidebar.link.tickets" m="Tickets" /> ,          icon:"tickets" },
+  { path: "/governance",    link: <T id="sidebar.link.governance" m="Governance" />,     icon:"governance" },
   { path: "/accounts",      link: <T id="sidebar.link.accounts" m="Accounts" />,         icon:"accounts" },
   { path: "/security",      link: <T id="activesidebar.link.security" m="Security" />,   icon:"securitycntr" },
   { path: "/settings",      link: <T id="sidebar.link.settings" m="Settings" />,         icon:"settings" },
@@ -22,6 +23,13 @@ class MenuLinks extends React.Component {
 
   constructor (props) {
     super(props);
+
+    // TODO: remove once politeia hits production
+    // it's ugly, but sufficient for this, as it's temporary :)
+    if (!props.politeiaBetaEnabled) {
+      const idx = linkList.findIndex(l => l.path === "/governance");
+      idx === -1 ? null : linkList.splice(idx, 1);
+    }
   }
 
   componentDidMount() {

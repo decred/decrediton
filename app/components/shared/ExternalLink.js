@@ -1,9 +1,15 @@
 import { shell } from "electron";
+import { network } from "connectors";
 
-const ExternalLink = ({ className, href, children }) => (
-  <a className={className} onClick={() => shell.openExternal(href)} href="#">
+const clicker = (isTestNet, href, hrefTestNet) => () => {
+  const url = hrefTestNet && isTestNet ? hrefTestNet : href;
+  shell.openExternal(url);
+};
+
+const ExternalLink = ({ className, href, children, hrefTestNet, isTestNet }) => (
+  <a className={className} onClick={clicker(isTestNet, href, hrefTestNet) } href="#">
     {children}
   </a>
 );
 
-export default ExternalLink;
+export default network(ExternalLink);

@@ -30,3 +30,11 @@ export function rawToHex(bin) {
 export function hexToRaw(hex) {
   return new Uint8Array(Buffer.from(hex, "hex"));
 }
+
+// hexReversedHashToArray converts a (reversed, hex-encoded) hash string into
+// an Uint8Array, suitable for sending into grpc calls.
+export function hexReversedHashToArray(hexStr) {
+  const res = new Uint8Array(Buffer.from(hexStr, "hex"));
+  res.reverse();
+  return res;
+}

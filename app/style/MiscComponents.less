@@ -339,6 +339,20 @@
   background-image: @menu-overview-hover;
 }
 
+.menu-link.governanceIcon {
+  background-image: @menu-governance-default;
+  cursor: default;
+}
+
+.menu-link-active.governanceIcon {
+  background-image: @menu-governance-active;
+  cursor: default;
+}
+
+.menu-link.governanceIcon:not(.menu-link-active):hover {
+  background-image: @menu-governance-hover;
+}
+
 .menu-caret {
   position: absolute;
   height: 52px;
@@ -808,4 +822,39 @@
 
 .vertical-accordion.active .vertical-accordion-arrow {
   transform: rotate(90deg);
+}
+
+.go-back-icon-button {
+  height: 12px;
+  width: 12px;
+  background-repeat: no-repeat;
+  background-size: 12px;
+  background-image: @x-grey;
+  padding: 0px;
+}
+
+.voting-progress-indicator {
+  > div {
+    height: 100%;
+    border-radius: 50px;
+    display: inline-block;
+    margin-right: -10px;
+    position: relative;
+  }
+
+  .voting-progress-yes {
+    background-color: @vote-yes-color;
+    z-index: 10;
+    min-width: 10px;
+  }
+
+  .voting-progress-no {
+    background-color: @vote-no-color;
+    z-index: 5;
+    min-width: 15px;
+  }
+
+  .voting-progress-abstain {
+    background-color: @vote-abstain-color;
+  }
 }
