@@ -56,6 +56,7 @@ export default ({ viewedProposalDetails,
               label={<T id="proposal.overview.submitted.label" m="Submitted" />}
               value={<TimeValue timestamp={timestamp} />} />
             <OverviewField
+              show={voting && voteDetails && voteDetails.endTimestamp}
               label={<T id="proposal.overview.deadline.label" m="Voting Deadline" />}
               value={voting ? <TimeValue timestamp={voteDetails.endTimestamp} /> : null } />
           </div>

@@ -1,7 +1,7 @@
 import { KeyBlueButton } from "buttons";
 import { FormattedMessage as T, FormattedRelative } from "react-intl";
 import { StakeyBounceXs, VotingProgress, PoliteiaLoading } from "indicators";
-import { tsToDate } from "helpers";
+import { tsToDate, showCheck } from "helpers";
 import UpdateVoteChoiceModalButton from "./UpdateVoteChoiceModalButton";
 import { default as ReactMarkdown }  from "react-markdown";
 
@@ -76,12 +76,12 @@ export const UpdatingVoteChoice = () => (
   </Aux>
 );
 
-export const OverviewField = ( { label, value } ) => (
+export const OverviewField = showCheck(( { label, value } ) => (
   <div className="proposal-details-overview-field">
     <div className="label">{label}:</div>
     <div className="value">{value}</div>
   </div>
-);
+));
 
 export const OverviewVotingProgressInfo = ({ voteCounts }) => (
   <div className="proposal-details-voting-progress">
