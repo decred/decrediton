@@ -8,7 +8,6 @@ class TrezorPassphraseModal extends React.Component {
   }
 
   onSubmit(passPhrase) {
-    console.log("gonna submit", passPhrase);
     this.props.submitPassPhrase(passPhrase);
   }
 
@@ -18,11 +17,16 @@ class TrezorPassphraseModal extends React.Component {
 
     const trezorLabel = this.props.device ? this.props.device.features.label : "";
 
+    const className = [
+      "trezor-passphrase-modal",
+      this.props.isGetStarted ? "get-started" : ""
+    ].join(" ");
+
     return (
       <PassphraseModal
         show={true}
-        modalTitle={<T id="trezor.passphraseModal.title" m="Confirm Trezor Passphrase" />}
-        className="trezor-passphrase-modal"
+        modalTitle={<T id="trezor.passphraseModal.title" m="Enter Trezor Passphrase" />}
+        modalClassName={className}
         modalDescription={
           <p>
             <T id="trezor.passphraseModal.description" m="Type the secret passphrase for the wallet stored in trezor {label}"

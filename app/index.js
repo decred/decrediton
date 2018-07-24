@@ -386,9 +386,10 @@ var initialState = {
     lastVettedFetchTime: new Date(0), // time when vetted proposals were requested
   },
   trezor: {
-    enabled: true,
-    debug: true,
+    enabled: false,
+    debug: globalCfg.get("trezor_debug"),
     deviceList: null,
+    getDeviceListAttempt: false,
     transportError: false,
     device: null,
     performingOperation: false,
@@ -400,6 +401,7 @@ var initialState = {
     pinMessage: null,
     passPhraseMessage: null,
     wordCallBack: null,
+    walletCreationMasterPubkeyAttempt: false,
   },
   locales: locales
 };

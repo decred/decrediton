@@ -139,7 +139,7 @@ export const reloadAllowedExternalRequests = log(() => Promise
 
 export const allowExternalRequest = log(requestType => Promise
   .resolve(ipcRenderer.sendSync("allow-external-request", requestType))
-  , "Allow External Request");
+, "Allow External Request");
 
 export const allowStakePoolHost = log(host => Promise
   .resolve(ipcRenderer.sendSync("allow-stakepool-host", host))

@@ -41,9 +41,14 @@ class PinModal extends React.Component {
       <PinButton label={labels[index-1]} index={index} onClick={onPinButtonClick} />;
 
     const trezorLabel = this.props.device ? this.props.device.features.label : "";
+    const className = [
+      "passphrase-modal",
+      "trezor-pin-modal",
+      this.props.isGetStarted ? "get-started" : ""
+    ].join(" ");
 
     return (
-      <Modal className="passphrase-modal trezor-pin-modal" {...{ onCancelModal }}>
+      <Modal {...{ className, onCancelModal }}>
         <h1><T id="trezor.pinModal.title" m="Enter Pin" /></h1>
         <p><T id="trezor.pinModal.description" m="Click button sequence that corresponds to your pin on trezor {label}"
           values={{ label: <span className="trezor-label">'{trezorLabel}'</span> }} /></p>

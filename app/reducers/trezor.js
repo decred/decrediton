@@ -1,4 +1,5 @@
 import {
+  TRZ_TREZOR_ENABLED,
   TRZ_LOADDEVICELIST_ATTEMPT, TRZ_LOADDEVICELIST_FAILED, TRZ_LOADDEVICELIST_SUCCESS,
   TRZ_DEVICELISTTRANSPORT_LOST,
   TRZ_SELECTEDDEVICE_CHANGED,
@@ -14,6 +15,7 @@ import {
   TRZ_RECOVERDEVICE_ATTEMPT, TRZ_RECOVERDEVICE_FAILED, TRZ_RECOVERDEVICE_SUCCESS,
   TRZ_INITDEVICE_ATTEMPT, TRZ_INITDEVICE_FAILED, TRZ_INITDEVICE_SUCCESS,
   TRZ_UPDATEFIRMWARE_ATTEMPT, TRZ_UPDATEFIRMWARE_FAILED, TRZ_UPDATEFIRMWARE_SUCCESS,
+  TRZ_GETWALLETCREATIONMASTERPUBKEY_ATTEMPT, TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED, TRZ_GETWALLETCREATIONMASTERPUBKEY_SUCCESS,
 } from "actions/TrezorActions";
 import {
   SIGNTX_ATTEMPT, SIGNTX_FAILED, SIGNTX_SUCCESS
@@ -21,20 +23,27 @@ import {
 
 export default function trezor(state = {}, action) {
   switch (action.type) {
+  case TRZ_TREZOR_ENABLED:
+    return { ...state,
+      enabled: true,
+    };
   case TRZ_LOADDEVICELIST_ATTEMPT:
     return { ...state,
       deviceList: null,
       transportError: false,
       device: null,
+      getDeviceListAttempt: true,
     };
   case TRZ_LOADDEVICELIST_SUCCESS:
     return { ...state,
       deviceList: action.deviceList,
       transportError: false,
+      getDeviceListAttempt: false,
     };
   case TRZ_LOADDEVICELIST_FAILED:
     return { ...state,
       transportError: action.error,
+      getDeviceListAttempt: false,
     };
   case TRZ_DEVICELISTTRANSPORT_LOST:
     return { ...state,
@@ -98,6 +107,15 @@ export default function trezor(state = {}, action) {
       passPhraseCallBack: null,
       performingOperation: false,
       waitingForWord: false,
+    };
+  case TRZ_GETWALLETCREATIONMASTERPUBKEY_ATTEMPT:
+    return { ...state,
+      walletCreationMasterPubkeyAttempt: true
+    };
+  case TRZ_GETWALLETCREATIONMASTERPUBKEY_SUCCESS:
+  case TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED:
+    return { ...state,
+      walletCreationMasterPubkeyAttempt: false
     };
   case SIGNTX_ATTEMPT:
   case TRZ_TOGGLEPINPROTECTION_ATTEMPT:

@@ -37,6 +37,9 @@ const CreateWalletForm = ({
   toggleWatchOnly,
   onChangeCreateWalletMasterPubKey,
   masterPubKeyError,
+  isTrezor,
+  toggleTrezor,
+  onShowTrezorConfig,
 }) => {
   return (
     <Aux>
@@ -78,6 +81,15 @@ const CreateWalletForm = ({
             </div>
             <div className="advanced-daemon-input">
               <WatchOnlyWalletSwitch className="wallet-switch" enabled={ isWatchingOnly } onClick={ toggleWatchOnly } />
+            </div>
+          </div>
+          <div className="advanced-daemon-row">
+            <div className="advanced-daemon-label">
+              <T id="createwallet.isTrezor.label" m="Trezor" />
+            </div>
+            <div className="advanced-daemon-input">
+              <WatchOnlyWalletSwitch className="wallet-switch" enabled={ isTrezor } onClick={ toggleTrezor } />
+              <span onClick={onShowTrezorConfig} className="whatsnew"><T id="createWallet.isTrezor.setupLink" m="(setup device)" /></span>
             </div>
           </div>
           {isWatchingOnly &&

@@ -7,11 +7,13 @@ import { sprintf } from "sprintf-js";
 import { rawHashToHex, rawToHex, hexToRaw, str2utf8hex, hex2b64 } from "helpers";
 import { publishTransactionAttempt } from "./ControlActions";
 import { model1_decred_homescreen } from "helpers/trezor";
+import { getWalletCfg } from "../config";
 
 import { EXTERNALREQUEST_TREZOR_BRIDGE } from "main_dev/externalRequests";
 import {
   SIGNTX_ATTEMPT, SIGNTX_FAILED, SIGNTX_SUCCESS,
-  SIGNMESSAGE_ATTEMPT, SIGNMESSAGE_FAILED, SIGNMESSAGE_SUCCESS
+  SIGNMESSAGE_ATTEMPT, SIGNMESSAGE_FAILED, SIGNMESSAGE_SUCCESS,
+  VALIDATEMASTERPUBKEY_SUCCESS,
 } from "./ControlActions";
 
 const hardeningConstant = 0x80000000;
@@ -31,15 +33,44 @@ function addressPath(index, branch, account, coinType) {
   ];
 }
 
+function accountPath(account, coinType) {
+  return [
+    (44 | hardeningConstant) >>> 0, // purpose
+    ((coinType || 0)| hardeningConstant) >>> 0, // coin type
+    ((account || 0) | hardeningConstant) >>> 0  // account
+  ];
+}
+
+export const TRZ_TREZOR_ENABLED = "TRZ_TREZOR_ENABLED";
+
+export const enableTrezor = () => (dispatch, getState) => {
+  const walletName = selectors.getWalletName(getState());
+
+  if (walletName) {
+    const config = getWalletCfg(selectors.isTestNet(getState()), walletName);
+    config.set("trezor", true);
+  }
+
+  dispatch({ type: TRZ_TREZOR_ENABLED });
+
+  const { trezor: { deviceList, getDeviceListAttempt } } = getState();
+  if (!deviceList && !getDeviceListAttempt) {
+    dispatch(loadDeviceList());
+  }
+};
+
 export const TRZ_LOADDEVICELIST_ATTEMPT = "TRZ_LOADDEVICELIST_ATTEMPT";
 export const TRZ_LOADDEVICELIST_FAILED = "TRZ_LOADDEVICELIST_FAILED";
 export const TRZ_LOADDEVICELIST_SUCCESS = "TRZ_LOADDEVICELIST_SUCCESS";
 export const TRZ_DEVICELISTTRANSPORT_LOST = "TRZ_DEVICELISTTRANSPORT_LOST";
 export const TRZ_SELECTEDDEVICE_CHANGED = "TRZ_SELECTEDDEVICE_CHANGED";
+export const TRZ_NOCONNECTEDDEVICE = "TRZ_NOCONNECTEDDEVICE";
 
 export const loadDeviceList = () => (dispatch, getState) => {
   return new Promise((resolve, reject) => {
-    if (!getState().trezor.enabled) return;
+    const { trezor: { getDeviceListAttempt } } = getState();
+    if (getDeviceListAttempt) return;
+
     wallet.allowExternalRequest(EXTERNALREQUEST_TREZOR_BRIDGE);
 
     dispatch({ type: TRZ_LOADDEVICELIST_ATTEMPT });
@@ -118,6 +149,10 @@ export const selectDevice = (path) => async (dispatch, getState) => {
   if (!devList.devices[path]) return;
   dispatch({ device: devList.devices[path], type: TRZ_SELECTEDDEVICE_CHANGED });
   setDeviceListeners(devList.devices[path], dispatch);
+};
+
+export const alertNoConnectedDevice = () => dispatch => {
+  dispatch({ type: TRZ_NOCONNECTEDDEVICE });
 };
 
 export const TRZ_PIN_REQUESTED = "TRZ_PIN_REQUESTED";
@@ -664,5 +699,36 @@ export const updateFirmware = (path) => async (dispatch, getState) => {
     dispatch({ type: TRZ_UPDATEFIRMWARE_SUCCESS });
   } catch (error) {
     dispatch({ error, type: TRZ_UPDATEFIRMWARE_FAILED });
+  }
+};
+
+export const TRZ_GETWALLETCREATIONMASTERPUBKEY_ATTEMPT = "TRZ_GETWALLETCREATIONMASTERPUBKEY_ATTEMPT";
+export const TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED = "TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED";
+export const TRZ_GETWALLETCREATIONMASTERPUBKEY_SUCCESS = "TRZ_GETWALLETCREATIONMASTERPUBKEY_SUCCESS";
+
+export const getWalletCreationMasterPubKey = () => async (dispatch, getState) => {
+  dispatch({ type: TRZ_GETWALLETCREATIONMASTERPUBKEY_ATTEMPT });
+
+  const device = selectors.trezorDevice(getState());
+  if (!device) {
+    dispatch({ error: "Device not connected", type:  TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED });
+    return;
+  }
+
+  const chainParams = selectors.chainParams(getState());
+
+  try {
+    const path = accountPath(WALLET_ACCOUNT, chainParams.HDCoinType);
+
+    const masterPubKey = await deviceRun(dispatch, getState, device, async session => {
+      const res = await session.getPublicKey(path, chainParams.trezorCoinName, false);
+      return res.message.xpub;
+    });
+
+    dispatch({ type: VALIDATEMASTERPUBKEY_SUCCESS, isWatchOnly: true, masterPubKey });
+    dispatch({ type: TRZ_GETWALLETCREATIONMASTERPUBKEY_SUCCESS });
+  } catch (error) {
+    dispatch({ error, type:  TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED });
+    throw error;
   }
 };

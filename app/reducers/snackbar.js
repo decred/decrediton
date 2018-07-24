@@ -54,6 +54,8 @@ import {
   TRZ_RECOVERDEVICE_SUCCESS, TRZ_RECOVERDEVICE_FAILED,
   TRZ_INITDEVICE_SUCCESS, TRZ_INITDEVICE_FAILED,
   TRZ_UPDATEFIRMWARE_SUCCESS, TRZ_UPDATEFIRMWARE_FAILED,
+  TRZ_NOCONNECTEDDEVICE,
+  TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED,
 } from "actions/TrezorActions";
 
 import {
@@ -275,6 +277,14 @@ const messages = defineMessages({
   TRZ_UPDATEFIRMWARE_SUCCESS: {
     id: "trezor.updateFirmware.success",
     defaultMessage: "Firmware updated on trezor device"
+  },
+  TRZ_NOCONNECTEDDEVICE: {
+    id: "trezor.noConnectedDevice",
+    defaultMessage: "No trezor device connected. Check the device connection and trezor bridge."
+  },
+  TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED: {
+    id: "trezor.getWalletCreationMasterPubKey.failed",
+    defaultMessage: "Failed to obtain master extended pubkey from trezor device: {originalError}"
   }
 });
 
@@ -398,6 +408,8 @@ export default function snackbar(state = {}, action) {
   case TRZ_RECOVERDEVICE_FAILED:
   case TRZ_INITDEVICE_FAILED:
   case TRZ_UPDATEFIRMWARE_FAILED:
+  case TRZ_NOCONNECTEDDEVICE:
+  case TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED:
     if (action.error && String(action.error).indexOf("wallet.Unlock: invalid passphrase:: secretkey.DeriveKey") > -1) {
       // intercepting all wrong passphrase errors, independently of which error
       // state was triggered. Not terribly pretty.

@@ -11,9 +11,13 @@ const mapStateToProps = selectorMap({
   waitingForWord: sel.trezorWaitingForWord,
   device: sel.trezorDevice,
   performingOperation: sel.trezorPerformingOperation,
+  isGetStarted: sel.isGetStarted,
+  deviceList: sel.trezorDeviceList,
+  walletCreationMasterPubkeyAttempt: sel.trezorWalletCreationMasterPubkeyAttempt,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  loadDeviceList: trza.loadDeviceList,
   cancelCurrentOperation: trza.cancelCurrentOperation,
   submitPin: trza.submitPin,
   submitPassPhrase: trza.submitPassPhrase,
@@ -26,6 +30,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   recoverDevice: trza.recoverDevice,
   initDevice: trza.initDevice,
   updateFirmware: trza.updateFirmware,
+  enableTrezor: trza.enableTrezor,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

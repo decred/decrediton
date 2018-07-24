@@ -46,8 +46,14 @@ class WordModal extends React.Component {
   render() {
     const { onCancelModal, onSubmit, onWordChanged, onSelectKeyDown, getSeedWords } = this;
 
+    const className = [
+      "passphrase-modal",
+      "trezor-word-modal",
+      this.props.isGetStarted ? "get-started" : ""
+    ].join(" ");
+
     return (
-      <Modal className="passphrase-modal trezor-word-modal" {...{ onCancelModal }}>
+      <Modal {...{ className, onCancelModal }}>
         <h1><T id="trezor.wordModal.title" m="Type the requested word" /></h1>
         <p><T id="trezor.wordModal.description" m="Type the word requested in the trezor device." /></p>
 

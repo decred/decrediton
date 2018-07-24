@@ -17,7 +17,6 @@ import { getVettedProposals } from "./GovernanceActions";
 import { rawHashToHex } from "../helpers/byteActions";
 import * as da from "../middleware/dcrdataapi";
 import { EXTERNALREQUEST_DCRDATA, EXTERNALREQUEST_POLITEIA } from "main_dev/externalRequests";
-import * as trezorActions from "./TrezorActions";
 
 export const goToTransactionHistory = () => (dispatch) => {
   dispatch(pushHistory("/transactions/history"));
@@ -61,7 +60,6 @@ const startWalletServicesTrigger = () => (dispatch, getState) => new Promise((re
       await dispatch(getStartupWalletInfo());
       await dispatch(transactionNtfnsStart());
       await dispatch(accountNtfnsStart());
-      await dispatch(trezorActions.loadDeviceList());
 
       await dispatch(pushHistory("/home"));
       resolve();

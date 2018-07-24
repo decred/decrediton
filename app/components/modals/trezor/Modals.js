@@ -1,6 +1,7 @@
 import { trezor } from "connectors";
 import PinModal from "./PinModal";
 import PassPhraseModal from "./PassPhraseModal";
+import WalletCreationPassPhraseModal from "./WalletCreationPassPhraseModal";
 import WordModal from "./WordModal";
 import "style/Trezor.less";
 
@@ -15,24 +16,27 @@ class TrezorModals extends React.Component {
   }
 
   render() {
+    let Component = null;
+
     if (this.props.waitingForPin) {
-      return <PinModal
-        {...this.props}
-        onCancelModal={this.onCancelModal}
-      />;
+      Component = PinModal;
     } else if (this.props.waitingForPassPhrase) {
-      return <PassPhraseModal
-        {...this.props}
-        onCancelModal={this.onCancelModal}
-      />;
+      if (this.props.walletCreationMasterPubkeyAttempt) {
+        Component = WalletCreationPassPhraseModal;
+      } else {
+        Component = PassPhraseModal;
+      }
     } else if (this.props.waitingForWord) {
-      return <WordModal
+      Component = WordModal;
+    }
+
+    if (!Component) return null;
+    return (
+      <Component
         {...this.props}
         onCancelModal={this.onCancelModal}
-      />;
-    } else {
-      return null;
-    }
+      />
+    );
   }
 }
 
