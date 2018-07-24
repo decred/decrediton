@@ -27,6 +27,7 @@ const SendOutputRow = ({
   getOnChangeOutputAmount,
   isSendAll,
   totalSpent,
+  onKeyDown,
   intl
 }) => (
   <div className="send-row">
@@ -43,6 +44,7 @@ const SendOutputRow = ({
             className="send-address-hash-to"
             placeholder={intl.formatMessage(messages.destinationAddrPlaceholder)}
             onChange={compose(getOnChangeOutputDestination(index), e => e.target.value)}
+            onKeyDown={onKeyDown}
           />
         </div>
         {index === 0 && !isSendAll ? (
@@ -64,6 +66,7 @@ const SendOutputRow = ({
             className="send-address-input-amount"
             disabled={true}
             amount={totalSpent}
+            onKeyDown={onKeyDown}
           />
           <DcrInput
             showErrors={true}
@@ -74,6 +77,7 @@ const SendOutputRow = ({
             className="send-address-input-amount"
             placeholder={intl.formatMessage(messages.amountPlaceholder)}
             onChangeAmount={getOnChangeOutputAmount(index)}
+            onKeyDown={onKeyDown}
           />
         </div>
       </div>

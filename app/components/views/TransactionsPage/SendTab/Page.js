@@ -30,6 +30,7 @@ const SendPage = ({
   hasUnminedTransactions,
   onRebroadcastUnmined,
   nextAddressAccount,
+  onKeyDown,
   ...props
 }) => (
   <Aux>
@@ -38,7 +39,7 @@ const SendPage = ({
       <div className="send-select-account-area">
         <div className="send-label"><T id="send.from" m="From" />:</div>
         <AccountsSelect className="send-select-account-input"
-          {...{ account }} onChange={onChangeAccount} showAccountsButton={true} />
+          {...{ account }} onChange={onChangeAccount} showAccountsButton={true} onKeyUp={onKeyDown}/>
         <div className="send-send-all-input">
           {!isSendSelf ?
             <Tooltip text={<T id="send.sendSelfTitle" m="Send funds to another account"/>}>
