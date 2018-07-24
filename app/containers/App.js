@@ -102,4 +102,18 @@ class App extends React.Component {
   }
 }
 
+// Prevent middle click from opening new electron window
+(function () {
+  function callback(e) {
+    e.preventDefault();
+    return
+  }
+
+  if (document.addEventListener) {
+    document.addEventListener('auxclick', callback, false);
+  } else {
+    document.attachEvent('onauxclick', callback);
+  }
+})();
+
 export default app(theming(App));
