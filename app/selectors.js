@@ -305,8 +305,7 @@ export const spendableAndLockedBalance = createSelector(
   ( stats, unitDivisor ) => stats.map(s => ({
     time: s.time,
     available: s.series.spendable / unitDivisor,
-    locked: (s.series.locked + s.series.lockedNonWallet + s.series.immature +
-      s.series.immatureNonWallet) / unitDivisor,
+    locked: (s.series.locked + s.series.immature) / unitDivisor,
   })));
 
 export const balanceSent = createSelector(
