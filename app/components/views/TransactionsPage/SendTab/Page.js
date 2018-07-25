@@ -31,6 +31,8 @@ const SendPage = ({
   onRebroadcastUnmined,
   nextAddressAccount,
   onKeyDown,
+  showPassphraseModal,
+  resetShowPassphraseModal,
   ...props
 }) => (
   <Aux>
@@ -70,7 +72,11 @@ const SendPage = ({
       </div>
     </div>
     <div className="send-button-area">
-      <SendTransactionButton disabled={!isValid} onSubmit={onAttemptSignTransaction} >
+      <SendTransactionButton
+        disabled={!isValid}
+        showModal={showPassphraseModal}
+        onShow={resetShowPassphraseModal}
+        onSubmit={onAttemptSignTransaction} >
         <div className="passphrase-modal-confirm-send">
           {!isSendSelf ?
             <Aux>

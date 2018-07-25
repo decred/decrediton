@@ -17,12 +17,14 @@ class SendTransactionButton extends React.Component {
   }
 
   render() {
-    const { disabled, isSendingTransaction, children } = this.props;
+    const { disabled, isSendingTransaction, onShow, showModal, children } = this.props;
 
     return (
       <PassphraseModalButton
         modalTitle={<T id="send.sendConfirmations" m="Transaction Confirmation" />}
         modalDescription={children}
+        showModal={showModal}
+        onShow={onShow}
         disabled={disabled || isSendingTransaction}
         className="content-send"
         onSubmit={this.onAttemptSignTransaction}

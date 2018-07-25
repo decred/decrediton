@@ -33,6 +33,7 @@ class Send extends React.Component {
       outputs: [ { key: "output_0", data:{ ...BASE_OUTPUT } } ],
       outputAccount: this.props.defaultSpendingAccount,
       lowBalanceError: false,
+      canEnterPassphrase: false,
     };
   }
 
@@ -75,8 +76,10 @@ class Send extends React.Component {
       getStyles,
       getDefaultStyles,
       onKeyDown,
+      resetShowPassphraseModal,
     } = this;
     const isValid = this.getIsValid();
+    const showPassphraseModal = this.getShowPassphraseModal();
 
     return !this.props.walletService ? <ErrorScreen /> : (
       <SendPage
@@ -104,6 +107,8 @@ class Send extends React.Component {
           willLeave,
           getStyles,
           getDefaultStyles,
+          showPassphraseModal,
+          resetShowPassphraseModal,
         }}
       />
     );
@@ -226,12 +231,17 @@ class Send extends React.Component {
   }
 
   onKeyDown(e) {
-    if (e.keyCode === 13 && this.getIsValid()) {
-      var b = document.getElementsByClassName("content-send");
-      if (b.length > 0) {
-        b[0].click();
-      }
+    if (e.keyCode === 13 || this.getIsValid()) {
+      this.setState({ showPassphraseModal: true });
     }
+  }
+
+  getShowPassphraseModal() {
+    return this.state.showPassphraseModal;
+  }
+
+  resetShowPassphraseModal() {
+    this.setState({ showPassphraseModal: false });
   }
 
   getOnRemoveOutput(key) {

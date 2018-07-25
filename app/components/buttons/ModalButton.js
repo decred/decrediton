@@ -12,6 +12,7 @@ class ModalButton extends React.Component {
 
   showModal() {
     this.setState({ show: true });
+    this.onShow();
   }
 
   hideModal() {
@@ -22,6 +23,17 @@ class ModalButton extends React.Component {
     const { onSubmit } = this.props;
     this.hideModal();
     onSubmit && this.props.onSubmit(...args);
+  }
+
+  onShow() {
+    const { onShow } = this.props;
+    onShow && this.props.onShow();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.showModal) {
+      this.showModal();
+    }
   }
 
   render() {
