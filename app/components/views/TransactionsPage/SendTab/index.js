@@ -231,7 +231,7 @@ class Send extends React.Component {
   }
 
   onKeyDown(e) {
-    if (e.keyCode === 13 || this.getIsValid()) {
+    if (e.keyCode === 13 && this.getIsValid()) {
       this.setState({ showPassphraseModal: true });
     }
   }

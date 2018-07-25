@@ -26,6 +26,7 @@ const SendOutputAccountRow = ({
         <ReceiveAccountsSelect
           getAddressForSelected={true}
           showAccountsButton={false}
+          onKeyDown={onKeyDown}
         />
       </div>
 
