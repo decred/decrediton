@@ -28,6 +28,7 @@ class App extends React.Component {
     const { window } = props;
     window.addEventListener("beforeunload", this.beforeWindowUnload);
     window.addEventListener("click", this.onClick);
+    window.addEventListener("auxclick", this.onAuxClick);
     this.refreshing = false;
 
     props.listenForAppReloadRequest(this.onReloadRequested);
@@ -67,6 +68,13 @@ class App extends React.Component {
       event.preventDefault();
       return false;
     }
+  }
+
+  // Prevent middle click from opening new electron window
+  onAuxClick(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    return false;
   }
 
   onReloadRequested(event) {
