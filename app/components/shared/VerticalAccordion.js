@@ -1,6 +1,17 @@
 import TransitionMotionWrapper from "./TransitionMotionWrapper";
 import { spring } from "react-motion";
 
+/**
+ * A vertical accordion. Can be used in two modes:
+ *
+ * 1. Standalone: Provide header, height, and children props to render. It will
+ *    be expanded/contracted when the header is clicked.
+ *
+ * 2. Group: Provide the previous props + groupKey, activeGroupKey and
+ *    onToggleAccordion. Then the accordion will be expanded only when
+ *    activeGroupKey === groupKey. onToggleAccordion will be triggered once the
+ *    accordion header is clicked.
+ */
 @autobind
 class VerticalAccordion extends React.Component {
   constructor(props) {
@@ -12,7 +23,12 @@ class VerticalAccordion extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ shownStyles: this.chosenStyles(nextProps, this.state.show) });
+    if ((this.props.groupKey !== undefined) && this.props.onToggleAccordion) {
+      const show = nextProps.groupKey === nextProps.activeGroupKey;
+      this.setState({ shownStyles: this.chosenStyles(nextProps, show), show });
+    } else {
+      this.setState({ shownStyles: this.chosenStyles(nextProps, this.state.show) });
+    }
   }
 
   // Style when body is hidden
@@ -61,10 +77,14 @@ class VerticalAccordion extends React.Component {
   }
 
   onToggleAccordion() {
-    this.setState({
-      show: !this.state.show,
-      shownStyles: this.chosenStyles(this.props, !this.state.show),
-    });
+    if ((this.props.groupKey !== undefined) && this.props.onToggleAccordion) {
+      this.props.onToggleAccordion(this.props.groupKey, this.state.show);
+    } else {
+      this.setState({
+        show: !this.state.show,
+        shownStyles: this.chosenStyles(this.props, !this.state.show),
+      });
+    }
   }
 
   render() {

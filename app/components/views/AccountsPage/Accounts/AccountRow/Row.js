@@ -26,14 +26,20 @@ const Header = ({
 );
 
 const Row = ({
+  account,
+  hidden,
+  accountNumDetailsShown,
   isShowingRenameAccount,
+  onToggleShowDetails,
   getAccountDetailsStyles,
   getRenameAccountStyles,
-  ...props,
 }) => (
   <VerticalAccordion
-    header={<Header {...{ ...props, isShowingRenameAccount }} />}
+    header={<Header {...{ account, hidden }} />}
     height={isShowingRenameAccount ? 175 : 275}
+    groupKey={account.accountNumber}
+    activeGroupKey={accountNumDetailsShown}
+    onToggleAccordion={onToggleShowDetails}
   >
     {isShowingRenameAccount
       ? getRenameAccountStyles()
