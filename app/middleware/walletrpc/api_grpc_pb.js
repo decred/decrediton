@@ -466,26 +466,26 @@ function deserialize_walletrpc_GenerateRandomSeedResponse(buffer_arg) {
   return api_pb.GenerateRandomSeedResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_walletrpc_GetAccountExtendedKeyRequest(arg) {
-  if (!(arg instanceof api_pb.GetAccountExtendedKeyRequest)) {
-    throw new Error('Expected argument of type walletrpc.GetAccountExtendedKeyRequest');
+function serialize_walletrpc_GetAccountExtendedPubKeyRequest(arg) {
+  if (!(arg instanceof api_pb.GetAccountExtendedPubKeyRequest)) {
+    throw new Error('Expected argument of type walletrpc.GetAccountExtendedPubKeyRequest');
   }
   return new Buffer(arg.serializeBinary());
 }
 
-function deserialize_walletrpc_GetAccountExtendedKeyRequest(buffer_arg) {
-  return api_pb.GetAccountExtendedKeyRequest.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_walletrpc_GetAccountExtendedPubKeyRequest(buffer_arg) {
+  return api_pb.GetAccountExtendedPubKeyRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_walletrpc_GetAccountExtendedKeyResponse(arg) {
-  if (!(arg instanceof api_pb.GetAccountExtendedKeyResponse)) {
-    throw new Error('Expected argument of type walletrpc.GetAccountExtendedKeyResponse');
+function serialize_walletrpc_GetAccountExtendedPubKeyResponse(arg) {
+  if (!(arg instanceof api_pb.GetAccountExtendedPubKeyResponse)) {
+    throw new Error('Expected argument of type walletrpc.GetAccountExtendedPubKeyResponse');
   }
   return new Buffer(arg.serializeBinary());
 }
 
-function deserialize_walletrpc_GetAccountExtendedKeyResponse(buffer_arg) {
-  return api_pb.GetAccountExtendedKeyResponse.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_walletrpc_GetAccountExtendedPubKeyResponse(buffer_arg) {
+  return api_pb.GetAccountExtendedPubKeyResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_walletrpc_GetTicketsRequest(arg) {
@@ -1551,16 +1551,16 @@ var WalletServiceService = exports.WalletServiceService = {
     responseSerialize: serialize_walletrpc_BalanceResponse,
     responseDeserialize: deserialize_walletrpc_BalanceResponse,
   },
-  getAccountExtendedKey: {
-    path: '/walletrpc.WalletService/GetAccountExtendedKey',
+  getAccountExtendedPubKey: {
+    path: '/walletrpc.WalletService/GetAccountExtendedPubKey',
     requestStream: false,
     responseStream: false,
-    requestType: api_pb.GetAccountExtendedKeyRequest,
-    responseType: api_pb.GetAccountExtendedKeyResponse,
-    requestSerialize: serialize_walletrpc_GetAccountExtendedKeyRequest,
-    requestDeserialize: deserialize_walletrpc_GetAccountExtendedKeyRequest,
-    responseSerialize: serialize_walletrpc_GetAccountExtendedKeyResponse,
-    responseDeserialize: deserialize_walletrpc_GetAccountExtendedKeyResponse,
+    requestType: api_pb.GetAccountExtendedPubKeyRequest,
+    responseType: api_pb.GetAccountExtendedPubKeyResponse,
+    requestSerialize: serialize_walletrpc_GetAccountExtendedPubKeyRequest,
+    requestDeserialize: deserialize_walletrpc_GetAccountExtendedPubKeyRequest,
+    responseSerialize: serialize_walletrpc_GetAccountExtendedPubKeyResponse,
+    responseDeserialize: deserialize_walletrpc_GetAccountExtendedPubKeyResponse,
   },
   getTransaction: {
     path: '/walletrpc.WalletService/GetTransaction',

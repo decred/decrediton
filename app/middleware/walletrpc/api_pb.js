@@ -71,8 +71,8 @@ goog.exportSymbol('proto.walletrpc.FundTransactionResponse', null, global);
 goog.exportSymbol('proto.walletrpc.FundTransactionResponse.PreviousOutput', null, global);
 goog.exportSymbol('proto.walletrpc.GenerateRandomSeedRequest', null, global);
 goog.exportSymbol('proto.walletrpc.GenerateRandomSeedResponse', null, global);
-goog.exportSymbol('proto.walletrpc.GetAccountExtendedKeyRequest', null, global);
-goog.exportSymbol('proto.walletrpc.GetAccountExtendedKeyResponse', null, global);
+goog.exportSymbol('proto.walletrpc.GetAccountExtendedPubKeyRequest', null, global);
+goog.exportSymbol('proto.walletrpc.GetAccountExtendedPubKeyResponse', null, global);
 goog.exportSymbol('proto.walletrpc.GetTicketsRequest', null, global);
 goog.exportSymbol('proto.walletrpc.GetTicketsResponse', null, global);
 goog.exportSymbol('proto.walletrpc.GetTicketsResponse.BlockDetails', null, global);
@@ -30785,12 +30785,12 @@ proto.walletrpc.CommittedTicketsRequest.prototype.clearTicketsList = function() 
  * @extends {jspb.Message}
  * @constructor
  */
-proto.walletrpc.GetAccountExtendedKeyRequest = function(opt_data) {
+proto.walletrpc.GetAccountExtendedPubKeyRequest = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
-goog.inherits(proto.walletrpc.GetAccountExtendedKeyRequest, jspb.Message);
+goog.inherits(proto.walletrpc.GetAccountExtendedPubKeyRequest, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
-  proto.walletrpc.GetAccountExtendedKeyRequest.displayName = 'proto.walletrpc.GetAccountExtendedKeyRequest';
+  proto.walletrpc.GetAccountExtendedPubKeyRequest.displayName = 'proto.walletrpc.GetAccountExtendedPubKeyRequest';
 }
 
 
@@ -30805,8 +30805,8 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-proto.walletrpc.GetAccountExtendedKeyRequest.prototype.toObject = function(opt_includeInstance) {
-  return proto.walletrpc.GetAccountExtendedKeyRequest.toObject(opt_includeInstance, this);
+proto.walletrpc.GetAccountExtendedPubKeyRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.GetAccountExtendedPubKeyRequest.toObject(opt_includeInstance, this);
 };
 
 
@@ -30815,13 +30815,13 @@ proto.walletrpc.GetAccountExtendedKeyRequest.prototype.toObject = function(opt_i
  * @param {boolean|undefined} includeInstance Whether to include the JSPB
  *     instance for transitional soy proto support:
  *     http://goto/soy-param-migration
- * @param {!proto.walletrpc.GetAccountExtendedKeyRequest} msg The msg instance to transform.
+ * @param {!proto.walletrpc.GetAccountExtendedPubKeyRequest} msg The msg instance to transform.
  * @return {!Object}
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.walletrpc.GetAccountExtendedKeyRequest.toObject = function(includeInstance, msg) {
+proto.walletrpc.GetAccountExtendedPubKeyRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    account: jspb.Message.getFieldWithDefault(msg, 1, 0)
+    accountNumber: jspb.Message.getFieldWithDefault(msg, 1, 0)
   };
 
   if (includeInstance) {
@@ -30835,23 +30835,23 @@ proto.walletrpc.GetAccountExtendedKeyRequest.toObject = function(includeInstance
 /**
  * Deserializes binary data (in protobuf wire format).
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.walletrpc.GetAccountExtendedKeyRequest}
+ * @return {!proto.walletrpc.GetAccountExtendedPubKeyRequest}
  */
-proto.walletrpc.GetAccountExtendedKeyRequest.deserializeBinary = function(bytes) {
+proto.walletrpc.GetAccountExtendedPubKeyRequest.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.walletrpc.GetAccountExtendedKeyRequest;
-  return proto.walletrpc.GetAccountExtendedKeyRequest.deserializeBinaryFromReader(msg, reader);
+  var msg = new proto.walletrpc.GetAccountExtendedPubKeyRequest;
+  return proto.walletrpc.GetAccountExtendedPubKeyRequest.deserializeBinaryFromReader(msg, reader);
 };
 
 
 /**
  * Deserializes binary data (in protobuf wire format) from the
  * given reader into the given message object.
- * @param {!proto.walletrpc.GetAccountExtendedKeyRequest} msg The message object to deserialize into.
+ * @param {!proto.walletrpc.GetAccountExtendedPubKeyRequest} msg The message object to deserialize into.
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.walletrpc.GetAccountExtendedKeyRequest}
+ * @return {!proto.walletrpc.GetAccountExtendedPubKeyRequest}
  */
-proto.walletrpc.GetAccountExtendedKeyRequest.deserializeBinaryFromReader = function(msg, reader) {
+proto.walletrpc.GetAccountExtendedPubKeyRequest.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
@@ -30860,7 +30860,7 @@ proto.walletrpc.GetAccountExtendedKeyRequest.deserializeBinaryFromReader = funct
     switch (field) {
     case 1:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setAccount(value);
+      msg.setAccountNumber(value);
       break;
     default:
       reader.skipField();
@@ -30875,9 +30875,9 @@ proto.walletrpc.GetAccountExtendedKeyRequest.deserializeBinaryFromReader = funct
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.walletrpc.GetAccountExtendedKeyRequest.prototype.serializeBinary = function() {
+proto.walletrpc.GetAccountExtendedPubKeyRequest.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  proto.walletrpc.GetAccountExtendedKeyRequest.serializeBinaryToWriter(this, writer);
+  proto.walletrpc.GetAccountExtendedPubKeyRequest.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
 
@@ -30885,13 +30885,13 @@ proto.walletrpc.GetAccountExtendedKeyRequest.prototype.serializeBinary = functio
 /**
  * Serializes the given message to binary data (in protobuf wire
  * format), writing to the given BinaryWriter.
- * @param {!proto.walletrpc.GetAccountExtendedKeyRequest} message
+ * @param {!proto.walletrpc.GetAccountExtendedPubKeyRequest} message
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.walletrpc.GetAccountExtendedKeyRequest.serializeBinaryToWriter = function(message, writer) {
+proto.walletrpc.GetAccountExtendedPubKeyRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getAccount();
+  f = message.getAccountNumber();
   if (f !== 0) {
     writer.writeUint32(
       1,
@@ -30902,16 +30902,16 @@ proto.walletrpc.GetAccountExtendedKeyRequest.serializeBinaryToWriter = function(
 
 
 /**
- * optional uint32 Account = 1;
+ * optional uint32 account_number = 1;
  * @return {number}
  */
-proto.walletrpc.GetAccountExtendedKeyRequest.prototype.getAccount = function() {
+proto.walletrpc.GetAccountExtendedPubKeyRequest.prototype.getAccountNumber = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
 };
 
 
 /** @param {number} value */
-proto.walletrpc.GetAccountExtendedKeyRequest.prototype.setAccount = function(value) {
+proto.walletrpc.GetAccountExtendedPubKeyRequest.prototype.setAccountNumber = function(value) {
   jspb.Message.setField(this, 1, value);
 };
 
@@ -30927,12 +30927,12 @@ proto.walletrpc.GetAccountExtendedKeyRequest.prototype.setAccount = function(val
  * @extends {jspb.Message}
  * @constructor
  */
-proto.walletrpc.GetAccountExtendedKeyResponse = function(opt_data) {
+proto.walletrpc.GetAccountExtendedPubKeyResponse = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
-goog.inherits(proto.walletrpc.GetAccountExtendedKeyResponse, jspb.Message);
+goog.inherits(proto.walletrpc.GetAccountExtendedPubKeyResponse, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
-  proto.walletrpc.GetAccountExtendedKeyResponse.displayName = 'proto.walletrpc.GetAccountExtendedKeyResponse';
+  proto.walletrpc.GetAccountExtendedPubKeyResponse.displayName = 'proto.walletrpc.GetAccountExtendedPubKeyResponse';
 }
 
 
@@ -30947,8 +30947,8 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-proto.walletrpc.GetAccountExtendedKeyResponse.prototype.toObject = function(opt_includeInstance) {
-  return proto.walletrpc.GetAccountExtendedKeyResponse.toObject(opt_includeInstance, this);
+proto.walletrpc.GetAccountExtendedPubKeyResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.GetAccountExtendedPubKeyResponse.toObject(opt_includeInstance, this);
 };
 
 
@@ -30957,13 +30957,13 @@ proto.walletrpc.GetAccountExtendedKeyResponse.prototype.toObject = function(opt_
  * @param {boolean|undefined} includeInstance Whether to include the JSPB
  *     instance for transitional soy proto support:
  *     http://goto/soy-param-migration
- * @param {!proto.walletrpc.GetAccountExtendedKeyResponse} msg The msg instance to transform.
+ * @param {!proto.walletrpc.GetAccountExtendedPubKeyResponse} msg The msg instance to transform.
  * @return {!Object}
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.walletrpc.GetAccountExtendedKeyResponse.toObject = function(includeInstance, msg) {
+proto.walletrpc.GetAccountExtendedPubKeyResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    accountextendedkey: jspb.Message.getFieldWithDefault(msg, 1, "")
+    accExtendedPubKey: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
 
   if (includeInstance) {
@@ -30977,23 +30977,23 @@ proto.walletrpc.GetAccountExtendedKeyResponse.toObject = function(includeInstanc
 /**
  * Deserializes binary data (in protobuf wire format).
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.walletrpc.GetAccountExtendedKeyResponse}
+ * @return {!proto.walletrpc.GetAccountExtendedPubKeyResponse}
  */
-proto.walletrpc.GetAccountExtendedKeyResponse.deserializeBinary = function(bytes) {
+proto.walletrpc.GetAccountExtendedPubKeyResponse.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.walletrpc.GetAccountExtendedKeyResponse;
-  return proto.walletrpc.GetAccountExtendedKeyResponse.deserializeBinaryFromReader(msg, reader);
+  var msg = new proto.walletrpc.GetAccountExtendedPubKeyResponse;
+  return proto.walletrpc.GetAccountExtendedPubKeyResponse.deserializeBinaryFromReader(msg, reader);
 };
 
 
 /**
  * Deserializes binary data (in protobuf wire format) from the
  * given reader into the given message object.
- * @param {!proto.walletrpc.GetAccountExtendedKeyResponse} msg The message object to deserialize into.
+ * @param {!proto.walletrpc.GetAccountExtendedPubKeyResponse} msg The message object to deserialize into.
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.walletrpc.GetAccountExtendedKeyResponse}
+ * @return {!proto.walletrpc.GetAccountExtendedPubKeyResponse}
  */
-proto.walletrpc.GetAccountExtendedKeyResponse.deserializeBinaryFromReader = function(msg, reader) {
+proto.walletrpc.GetAccountExtendedPubKeyResponse.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
@@ -31002,7 +31002,7 @@ proto.walletrpc.GetAccountExtendedKeyResponse.deserializeBinaryFromReader = func
     switch (field) {
     case 1:
       var value = /** @type {string} */ (reader.readString());
-      msg.setAccountextendedkey(value);
+      msg.setAccExtendedPubKey(value);
       break;
     default:
       reader.skipField();
@@ -31017,9 +31017,9 @@ proto.walletrpc.GetAccountExtendedKeyResponse.deserializeBinaryFromReader = func
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.walletrpc.GetAccountExtendedKeyResponse.prototype.serializeBinary = function() {
+proto.walletrpc.GetAccountExtendedPubKeyResponse.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  proto.walletrpc.GetAccountExtendedKeyResponse.serializeBinaryToWriter(this, writer);
+  proto.walletrpc.GetAccountExtendedPubKeyResponse.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
 
@@ -31027,13 +31027,13 @@ proto.walletrpc.GetAccountExtendedKeyResponse.prototype.serializeBinary = functi
 /**
  * Serializes the given message to binary data (in protobuf wire
  * format), writing to the given BinaryWriter.
- * @param {!proto.walletrpc.GetAccountExtendedKeyResponse} message
+ * @param {!proto.walletrpc.GetAccountExtendedPubKeyResponse} message
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.walletrpc.GetAccountExtendedKeyResponse.serializeBinaryToWriter = function(message, writer) {
+proto.walletrpc.GetAccountExtendedPubKeyResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getAccountextendedkey();
+  f = message.getAccExtendedPubKey();
   if (f.length > 0) {
     writer.writeString(
       1,
@@ -31044,16 +31044,16 @@ proto.walletrpc.GetAccountExtendedKeyResponse.serializeBinaryToWriter = function
 
 
 /**
- * optional string AccountExtendedKey = 1;
+ * optional string acc_extended_pub_key = 1;
  * @return {string}
  */
-proto.walletrpc.GetAccountExtendedKeyResponse.prototype.getAccountextendedkey = function() {
+proto.walletrpc.GetAccountExtendedPubKeyResponse.prototype.getAccExtendedPubKey = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
 /** @param {string} value */
-proto.walletrpc.GetAccountExtendedKeyResponse.prototype.setAccountextendedkey = function(value) {
+proto.walletrpc.GetAccountExtendedPubKeyResponse.prototype.setAccExtendedPubKey = function(value) {
   jspb.Message.setField(this, 1, value);
 };
 

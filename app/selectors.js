@@ -136,7 +136,7 @@ const accounts = createSelector([ getAccountsResponse ], r => r ? r.getAccountsL
 export const isWatchingOnly = get([ "walletLoader", "isWatchingOnly" ]);
 export const accountExtendedKey = createSelector(
   [ get([ "control", "getAccountExtendedKeyResponse" ]) ],
-  (response) => response ? response.getAccountextendedkey() : null
+  (response) => response ? response.getAccExtendedPubKey() : null
 );
 export const sortedAccounts = createSelector(
   [ balances ], balances => balances.slice().sort((a, b) => a.accountNumber - b.accountNumber)
