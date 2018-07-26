@@ -30,6 +30,9 @@ const SendPage = ({
   hasUnminedTransactions,
   onRebroadcastUnmined,
   nextAddressAccount,
+  onKeyDown,
+  showPassphraseModal,
+  resetShowPassphraseModal,
   ...props
 }) => (
   <Aux>
@@ -38,7 +41,7 @@ const SendPage = ({
       <div className="send-select-account-area">
         <div className="send-label"><T id="send.from" m="From" />:</div>
         <AccountsSelect className="send-select-account-input"
-          {...{ account }} onChange={onChangeAccount} showAccountsButton={true} />
+          {...{ account }} onChange={onChangeAccount} showAccountsButton={true} onKeyDown={onKeyDown}/>
         <div className="send-send-all-input">
           {!isSendSelf ?
             <Tooltip text={<T id="send.sendSelfTitle" m="Send funds to another account"/>}>
@@ -63,13 +66,17 @@ const SendPage = ({
           !isSendSelf
             ? <TransitionMotionWrapper {...{ styles: getStyles(), willLeave, willEnter, wrapperComponent }} />
             : <OutputAccountRow
-              {...{ index: 0, ...props, ...outputs[0].data, isSendAll, totalSpent }}
+              {...{ index: 0, ...props, ...outputs[0].data, isSendAll, totalSpent, onKeyDown }}
               amountError={getAmountError(0)} />
         }
       </div>
     </div>
     <div className="send-button-area">
-      <SendTransactionButton disabled={!isValid} onSubmit={onAttemptSignTransaction} >
+      <SendTransactionButton
+        disabled={!isValid}
+        showModal={showPassphraseModal}
+        onShow={resetShowPassphraseModal}
+        onSubmit={onAttemptSignTransaction} >
         <div className="passphrase-modal-confirm-send">
           {!isSendSelf ?
             <Aux>

@@ -14,6 +14,7 @@ const SendOutputAccountRow = ({
   amount,
   amountError,
   getOnChangeOutputAmount,
+  onKeyDown,
   isSendAll,
   totalSpent,
   intl,
@@ -25,6 +26,7 @@ const SendOutputAccountRow = ({
         <ReceiveAccountsSelect
           getAddressForSelected={true}
           showAccountsButton={false}
+          onKeyDown={onKeyDown}
         />
       </div>
 
@@ -37,6 +39,7 @@ const SendOutputAccountRow = ({
             className="send-address-input-amount"
             disabled={true}
             amount={totalSpent}
+            onKeyDown={onKeyDown}
           />
           <DcrInput
             showErrors={true}
@@ -47,6 +50,7 @@ const SendOutputAccountRow = ({
             className="send-address-input-amount"
             placeholder={intl.formatMessage(messages.amountPlaceholder)}
             onChangeAmount={getOnChangeOutputAmount(index)}
+            onKeyDown={onKeyDown}
           />
         </div>
       </div>

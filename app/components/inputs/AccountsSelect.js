@@ -64,13 +64,16 @@ class AccountsSelect extends React.Component {
     );
   }
 
-  selectKeyDown (e) {
+  selectKeyDown(e) {
+    const { onKeyDown } = this.props;
+
     switch(e.keyCode) {
     case 8:
     case 46:
       e.preventDefault();
       break;
     }
+    onKeyDown && this.props.onKeyDown(e);
   }
 
   valueRenderer(option) {

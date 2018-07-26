@@ -33,6 +33,7 @@ class Send extends React.Component {
       outputs: [ { key: "output_0", data:{ ...BASE_OUTPUT } } ],
       outputAccount: this.props.defaultSpendingAccount,
       lowBalanceError: false,
+      canEnterPassphrase: false,
     };
   }
 
@@ -74,14 +75,18 @@ class Send extends React.Component {
       willLeave,
       getStyles,
       getDefaultStyles,
+      onKeyDown,
+      resetShowPassphraseModal,
     } = this;
     const isValid = this.getIsValid();
+    const showPassphraseModal = this.getShowPassphraseModal();
 
     return !this.props.walletService ? <ErrorScreen /> : (
       <SendPage
         {...{ ...this.props, ...this.state }}
         {...{
           isValid,
+          onKeyDown,
           onChangeAccount,
           onAttemptSignTransaction,
           onClearTransaction,
@@ -102,6 +107,8 @@ class Send extends React.Component {
           willLeave,
           getStyles,
           getDefaultStyles,
+          showPassphraseModal,
+          resetShowPassphraseModal,
         }}
       />
     );
@@ -124,6 +131,7 @@ class Send extends React.Component {
           getOnChangeOutputAmount={this.getOnChangeOutputAmount}
           onAddOutput={this.onAddOutput}
           getOnRemoveOutput={this.getOnRemoveOutput(index)}
+          onKeyDown={this.onKeyDown}
         />,
         key: "output_" + index,
         style: {
@@ -220,6 +228,20 @@ class Send extends React.Component {
   onRebroadcastUnmined() {
     const { publishUnminedTransactions } = this.props;
     publishUnminedTransactions && publishUnminedTransactions();
+  }
+
+  onKeyDown(e) {
+    if (e.keyCode === 13 && this.getIsValid()) {
+      this.setState({ showPassphraseModal: true });
+    }
+  }
+
+  getShowPassphraseModal() {
+    return this.state.showPassphraseModal;
+  }
+
+  resetShowPassphraseModal() {
+    this.setState({ showPassphraseModal: false });
   }
 
   getOnRemoveOutput(key) {
