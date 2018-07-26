@@ -68,12 +68,14 @@ class Snackbar extends React.Component {
   }
 
   checkIsSameMessage(messageObj, oldMessageObj) {
-    if(messageObj === oldMessageObj)
+    if (messageObj === oldMessageObj) {
       return true;
-    if(!messageObj || !oldMessageObj)
+    }
+    if (!messageObj || !oldMessageObj) {
       return false;
+    }
     const { type, message } = messageObj;
-    if(type !== oldMessageObj.type) {
+    if (type !== oldMessageObj.type) {
       return false;
     }
     // message can be a FormattedMessage from react-intl or a transaction
