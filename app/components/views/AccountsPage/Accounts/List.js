@@ -23,6 +23,8 @@ const AccountsList = ({
   accounts,
   isLoading,
   onGetNextAccountAttempt,
+  onGetAccountExtendedKey,
+  accountExtendedKey,
   onShowAccount,
   onHideAccount,
   onRenameAccount,
@@ -48,6 +50,8 @@ const AccountsList = ({
               showAccount={onShowAccount}
               showAccountDetails={onShowAccountDetails}
               hideAccountDetails={onHideAccountDetails}
+              onGetAccountExtendedKey={onGetAccountExtendedKey}
+              accountExtendedKey={accountExtendedKey}
             />
           ))}
         </div>

@@ -20,6 +20,7 @@ import { GETNEXTADDRESS_ATTEMPT, GETNEXTADDRESS_FAILED, GETNEXTADDRESS_SUCCESS,
   SETBALANCETOMAINTAIN, SETMAXFEE, SETMAXPRICEABSOLUTE, SETMAXPRICERELATIVE, SETMAXPERBLOCK,
   VALIDATEADDRESS_ATTEMPT, VALIDATEADDRESS_SUCCESS, VALIDATEADDRESS_FAILED, VALIDATEADDRESS_CLEANSTORE,
   MODAL_SHOWN, MODAL_HIDDEN, VALIDATEMASTERPUBKEY_SUCCESS, VALIDATEMASTERPUBKEY_FAILED,
+  GETACCOUNTEXTENDEDKEY_ATTEMPT, GETACCOUNTEXTENDEDKEY_FAILED, GETACCOUNTEXTENDEDKEY_SUCCESS,
 } from "../actions/ControlActions";
 import { WALLET_AUTOBUYER_SETTINGS } from "actions/DaemonActions";
 
@@ -438,6 +439,21 @@ export default function control(state = {}, action) {
   case MODAL_HIDDEN:
     return { ...state,
       modalVisible: false
+    };
+  case GETACCOUNTEXTENDEDKEY_ATTEMPT:
+    return { ...state,
+      getAccountExtendedKeyRequest: true,
+      getAccountExtendedKeyResponse: null,
+    };
+  case GETACCOUNTEXTENDEDKEY_FAILED:
+    return { ...state,
+      getAccountExtendedKeyRequest: false,
+      getAccountExtendedKeyResponse: null,
+    };
+  case GETACCOUNTEXTENDEDKEY_SUCCESS:
+    return { ...state,
+      getAccountExtendedKeyRequest: false,
+      getAccountExtendedKeyResponse: action.getAccountExtendedKeyResponse,
     };
   default:
     return state;

@@ -1,5 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
-import { Balance, Tooltip } from "shared";
+import { Balance, Tooltip, CopyToClipboard } from "shared";
+import { SlateGrayButton } from "buttons";
 
 function isHidable(account) {
   return (
@@ -33,6 +34,9 @@ const AccountsList = ({
   hidden,
   hideAccount,
   showAccount,
+  showPubKey,
+  onShowPubKey,
+  accountExtendedKey
 }) => (
   <div className="account-row-details-bottom" key={"details" + account.accountNumber}>
     <div className="account-row-details-bottom-columns">
@@ -104,9 +108,27 @@ const AccountsList = ({
       </div>
     </div>
     <div className="account-actions">
-      {account.accountName !== "imported" ? <RenameAccountBtn {...{ showRenameAccount }} /> : null }
-      {isHidable(account) && !hidden ? <HideAccountBtn {...{ hideAccount }} /> : null }
-      {hidden ? <ShowAccountBtn {...{ showAccount }} /> : null }
+      {account.accountName !== "imported" &&
+        <div className="account-actions-pubkey">
+          <div className="account-actions-pubkey-label">
+            <T id="account.pubKey" m="Extended Public Key"/>
+          </div>
+          {showPubKey && accountExtendedKey?
+            <Aux>
+              <div className="account-actions-pubkey-area">
+                {accountExtendedKey}
+              </div>
+              <CopyToClipboard textToCopy={accountExtendedKey} className="account-actions-pubkey-clipboard" />
+            </Aux> :
+            <SlateGrayButton className="account-actions-pubkey-button" onClick={onShowPubKey}><T id="account.reveal" m="Reveal"/></SlateGrayButton>
+          }
+        </div>
+      }
+      <div className="account-actions-buttons">
+        {account.accountName !== "imported" && <RenameAccountBtn {...{ showRenameAccount }} /> }
+        {isHidable(account) && !hidden && <HideAccountBtn {...{ hideAccount }} /> }
+        {hidden && <ShowAccountBtn {...{ showAccount }} /> }
+      </div>
     </div>
   </div>
 );

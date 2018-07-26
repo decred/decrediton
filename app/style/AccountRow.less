@@ -180,5 +180,59 @@
   width: 93%;
   margin-left: 20px;
   border-top: 1px solid #c4cbd2;
-  text-align: right;
+  display: flex;
+  flex-direction: row;
+}
+
+.account-actions-pubkey {
+  display: flex;
+  flex-direction: row;
+  margin-left: 30px;
+  margin-top: 18px;
+  width: 88%;
+
+  .account-actions-pubkey-label {
+    font-size: 13px;
+    line-height: 17px;
+    margin-top: 2px;
+    margin-right: 14px;
+  }
+
+  .account-actions-pubkey-button {
+    height: 15px;
+    width: 37px;
+    color: #091440;
+    font-size: 13px;
+    line-height: 17px;
+    font-weight: 400;
+    background-color: #8997a5;
+    padding: 2px 20px 3px 20px;
+    box-shadow: none;
+    transition: all 131ms @easeInOutQuart;
+  }
+
+  .account-actions-pubkey-button:hover {
+    color: #fff;
+    background-color: #8997a5;
+  }
+
+  .account-actions-pubkey-area {
+    color: #fff;
+    font-size: 13px;
+    line-height: 17px;
+    font-weight: 400;
+    padding: 2px 20px 3px 20px;
+    border-radius: 3px;
+    background-color: #8997a5;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    height: 15px;
+    width: 378px;
+    transition: all 131ms @easeInOutQuart;
+  }
+
+  .account-actions-pubkey-clipboard {
+    margin-left: 10px;
+  }
 }

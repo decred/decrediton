@@ -23,6 +23,7 @@ service WalletService {
 	rpc AccountNumber (AccountNumberRequest) returns (AccountNumberResponse);
 	rpc Accounts (AccountsRequest) returns (AccountsResponse);
 	rpc Balance (BalanceRequest) returns (BalanceResponse);
+	rpc GetAccountExtendedPubKey (GetAccountExtendedPubKeyRequest) returns (GetAccountExtendedPubKeyResponse);	
 	rpc GetTransaction (GetTransactionRequest) returns (GetTransactionResponse);
 	rpc GetTransactions (GetTransactionsRequest) returns (stream GetTransactionsResponse);
 	rpc GetTickets (GetTicketsRequest) returns (stream GetTicketsResponse);
@@ -442,6 +443,7 @@ message ConstructTransactionResponse {
 	int64 total_previous_output_amount = 2;
 	int64 total_output_amount = 3;
 	uint32 estimated_signed_size = 4;
+	int32 change_index = 5;
 }
 
 message SignTransactionRequest {
@@ -924,6 +926,14 @@ message ValidateAddressResponse {
 
 message CommittedTicketsRequest {
 	repeated bytes tickets = 1;
+}
+
+message GetAccountExtendedPubKeyRequest {
+	uint32 account_number = 1;
+}
+
+message GetAccountExtendedPubKeyResponse {
+	string acc_extended_pub_key = 1;
 }
 
 message CommittedTicketsResponse {

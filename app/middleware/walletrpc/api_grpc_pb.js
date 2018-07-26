@@ -466,6 +466,28 @@ function deserialize_walletrpc_GenerateRandomSeedResponse(buffer_arg) {
   return api_pb.GenerateRandomSeedResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_walletrpc_GetAccountExtendedPubKeyRequest(arg) {
+  if (!(arg instanceof api_pb.GetAccountExtendedPubKeyRequest)) {
+    throw new Error('Expected argument of type walletrpc.GetAccountExtendedPubKeyRequest');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_GetAccountExtendedPubKeyRequest(buffer_arg) {
+  return api_pb.GetAccountExtendedPubKeyRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_GetAccountExtendedPubKeyResponse(arg) {
+  if (!(arg instanceof api_pb.GetAccountExtendedPubKeyResponse)) {
+    throw new Error('Expected argument of type walletrpc.GetAccountExtendedPubKeyResponse');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_GetAccountExtendedPubKeyResponse(buffer_arg) {
+  return api_pb.GetAccountExtendedPubKeyResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_walletrpc_GetTicketsRequest(arg) {
   if (!(arg instanceof api_pb.GetTicketsRequest)) {
     throw new Error('Expected argument of type walletrpc.GetTicketsRequest');
@@ -1528,6 +1550,17 @@ var WalletServiceService = exports.WalletServiceService = {
     requestDeserialize: deserialize_walletrpc_BalanceRequest,
     responseSerialize: serialize_walletrpc_BalanceResponse,
     responseDeserialize: deserialize_walletrpc_BalanceResponse,
+  },
+  getAccountExtendedPubKey: {
+    path: '/walletrpc.WalletService/GetAccountExtendedPubKey',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.GetAccountExtendedPubKeyRequest,
+    responseType: api_pb.GetAccountExtendedPubKeyResponse,
+    requestSerialize: serialize_walletrpc_GetAccountExtendedPubKeyRequest,
+    requestDeserialize: deserialize_walletrpc_GetAccountExtendedPubKeyRequest,
+    responseSerialize: serialize_walletrpc_GetAccountExtendedPubKeyResponse,
+    responseDeserialize: deserialize_walletrpc_GetAccountExtendedPubKeyResponse,
   },
   getTransaction: {
     path: '/walletrpc.WalletService/GetTransaction',

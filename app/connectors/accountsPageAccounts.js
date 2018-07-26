@@ -12,13 +12,15 @@ const mapStateToProps = selectorMap({
     sel.getNextAccountRequestAttempt,
     sel.renameAccountRequestAttempt
   )),
+  accountExtendedKey: sel.accountExtendedKey
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   onRenameAccount: ca.renameAccountAttempt,
   onHideAccount: cla.hideAccount,
   onShowAccount: cla.showAccount,
-  onGetNextAccountAttempt: ca.getNextAccountAttempt
+  onGetNextAccountAttempt: ca.getNextAccountAttempt,
+  onGetAccountExtendedKey: ca.getAccountExtendedKeyAttempt,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

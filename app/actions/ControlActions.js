@@ -533,3 +533,20 @@ export const MODAL_SHOWN = "MODAL_SHOWN";
 export const MODAL_HIDDEN = "MODAL_HIDDEN";
 export const modalShown = () => (dispatch) => dispatch({ type: MODAL_SHOWN });
 export const modalHidden = () => (dispatch) => dispatch({ type: MODAL_HIDDEN });
+
+export const GETACCOUNTEXTENDEDKEY_ATTEMPT = "GETACCOUNTEXTENDEDKEY_ATTEMPT";
+export const GETACCOUNTEXTENDEDKEY_FAILED = "GETACCOUNTEXTENDEDKEY_FAILED";
+export const GETACCOUNTEXTENDEDKEY_SUCCESS = "GETACCOUNTEXTENDEDKEY_SUCCESS";
+
+export const getAccountExtendedKeyAttempt = (accountNumber) => (dispatch, getState) => {
+  dispatch({ type: GETACCOUNTEXTENDEDKEY_ATTEMPT });
+  return wallet.getAccountExtendedKey(sel.walletService(getState()), accountNumber)
+    .then(res => {
+      res.accountNumber = accountNumber;
+      return dispatch({
+        getAccountExtendedKeyResponse: res,
+        type: GETACCOUNTEXTENDEDKEY_SUCCESS
+      });
+    })
+    .catch(error => dispatch({ error, type: GETACCOUNTEXTENDEDKEY_FAILED }));
+};
