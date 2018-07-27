@@ -13,6 +13,7 @@ const mapStateToProps = selectorMap({
   isTestNet: sel.isTestNet,
   isWatchOnly: sel.isWatchOnly,
   masterPubKey: sel.masterPubKey,
+  maxWalletCount: sel.maxWalletCount,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

@@ -34,7 +34,8 @@ class WalletSelectionBody extends React.Component {
 
   render() {
     const {
-      getDaemonSynced
+      getDaemonSynced,
+      maxWalletCount,
     } = this.props;
     const {
       onChangeAvailableWallets,
@@ -89,6 +90,7 @@ class WalletSelectionBody extends React.Component {
           walletMasterPubKey,
           masterPubKeyError,
           walletNameError,
+          maxWalletCount,
           ...this.props,
           ...this.state,
         }}
