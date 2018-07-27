@@ -27,6 +27,7 @@ export const getDaemonSynced = get([ "daemon", "daemonSynced" ]);
 export const isAdvancedDaemon = get([ "daemon", "daemonAdvanced" ]);
 export const getWalletReady = get([ "daemon", "walletReady" ]);
 export const createNewWallet = get([ "walletLoader", "createNewWallet" ]);
+export const maxWalletCount = get([ "walletLoader", "maxWalletCount" ]);
 export const isPrepared = and(
   getDaemonStarted,
   getDaemonSynced,

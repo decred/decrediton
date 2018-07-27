@@ -22,6 +22,7 @@ const WalletSelectionBodyBase = ({
   toggleWatchOnly,
   isWatchOnly,
   masterPubKeyError,
+  maxWalletCount,
   ...props,
 }) => {
   return (
@@ -82,7 +83,7 @@ const WalletSelectionBodyBase = ({
                 </Tooltip> :
               <div/>
             }
-            {availableWallets.length < 3 &&
+            {availableWallets.length < maxWalletCount &&
             <Aux>
               <div className="display-wallet new" onClick={()=>showCreateWalletForm(false)}>
                 <div className="wallet-icon createnew" />
