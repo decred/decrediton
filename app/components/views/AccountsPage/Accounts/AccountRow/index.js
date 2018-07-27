@@ -73,6 +73,12 @@ class AccountRow extends React.Component {
     this.setState({ showPubKey: true });
   }
 
+  onToggleShowDetails(accountNum, isVisible) {
+    isVisible && accountNum === this.props.accountNumDetailsShown
+      ? this.props.hideAccountDetails()
+      : this.props.showAccountDetails(accountNum);
+  }
+
   getRenameAccountStyles () {
     const { account, intl } = this.props;
     const {
@@ -124,39 +130,28 @@ class AccountRow extends React.Component {
   render() {
     const {
       getAccountDetailsStyles,
-      getNullStyles,
-      getDefaultStyles,
-      willEnter,
-      willLeave,
-      getRenameAccountStyles
+      getRenameAccountStyles,
+      onToggleShowDetails,
     } = this;
     const {
       account,
       accountNumDetailsShown,
-      hideAccountDetails,
-      showAccountDetails
     } = this.props;
     const {
       isShowingRenameAccount,
       hidden
     } = this.state;
-    const isShowingAccountDetails = accountNumDetailsShown !== null && accountNumDetailsShown == account.accountNumber ;
 
     return (
       <Row
         {...{
           account,
-          hideAccountDetails,
-          showAccountDetails,
-          isShowingAccountDetails,
+          accountNumDetailsShown,
           isShowingRenameAccount,
           hidden,
           getRenameAccountStyles,
           getAccountDetailsStyles,
-          getNullStyles,
-          getDefaultStyles,
-          willEnter,
-          willLeave
+          onToggleShowDetails,
         }}
       />
     );
