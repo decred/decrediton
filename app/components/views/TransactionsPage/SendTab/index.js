@@ -34,6 +34,7 @@ class Send extends React.Component {
       outputAccount: this.props.defaultSpendingAccount,
       lowBalanceError: false,
       canEnterPassphrase: false,
+      sendAllAmount: this.props.totalSpent,
     };
   }
 
@@ -76,6 +77,7 @@ class Send extends React.Component {
       getStyles,
       getDefaultStyles,
       onKeyDown,
+      sendAllAmount,
       resetShowPassphraseModal,
     } = this;
     const isValid = this.getIsValid();
@@ -109,6 +111,7 @@ class Send extends React.Component {
           getDefaultStyles,
           showPassphraseModal,
           resetShowPassphraseModal,
+          sendAllAmount,
         }}
       />
     );
@@ -119,12 +122,12 @@ class Send extends React.Component {
   }
 
   getStyles() {
-    const { outputs, isSendAll } = this.state;
+    const { outputs, isSendAll, sendAllAmount } = this.state;
     const { totalSpent } = this.props;
     return outputs.map((output, index) => {
       return {
         data: <OutputRow
-          {...{ index, outputs, ...this.props, ...output.data, isSendAll, totalSpent }}
+          {...{ index, outputs, ...this.props, ...output.data, isSendAll, totalSpent, sendAllAmount }}
           addressError={this.getAddressError(index)}
           amountError={this.getAmountError(index)}
           getOnChangeOutputDestination={this.getOnChangeOutputDestination}
@@ -198,6 +201,9 @@ class Send extends React.Component {
   onAttemptConstructTransaction() {
     const { onAttemptConstructTransaction } = this.props;
     const confirmations = 0;
+
+    this.setState({ sendAllAmount: this.state.account.spendable })
+
     if (this.getHasEmptyFields()) return;
     this.setState({ hastAttemptedConstruct: true });
     if (this.getIsInvalid()) return;
