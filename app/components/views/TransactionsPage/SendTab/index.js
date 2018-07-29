@@ -202,7 +202,7 @@ class Send extends React.Component {
     const { onAttemptConstructTransaction } = this.props;
     const confirmations = 0;
 
-    this.setState({ sendAllAmount: this.state.account.spendable })
+    this.setState({ sendAllAmount: this.state.account.spendable });
 
     if (this.getHasEmptyFields()) return;
     this.setState({ hastAttemptedConstruct: true });

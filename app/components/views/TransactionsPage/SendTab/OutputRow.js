@@ -26,7 +26,6 @@ const SendOutputRow = ({
   getOnChangeOutputDestination,
   getOnChangeOutputAmount,
   isSendAll,
-  totalSpent,
   onKeyDown,
   sendAllAmount,
   intl
