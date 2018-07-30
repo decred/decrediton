@@ -35,7 +35,7 @@ class GetStartedPage extends React.Component {
     if (!getNeededBlocks && !isSPV) {
       determineNeededBlocks();
     }
-    if (!getDaemonStarted) {
+    if (!getDaemonStarted && !isSPV) {
       setTimeout(()=>prepStartDaemon(), 1000);
     }
   }
