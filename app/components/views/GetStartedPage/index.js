@@ -101,6 +101,7 @@ class GetStartedPage extends React.Component {
       updateAvailable,
       isSPV,
       spvInput,
+      isInputRequest,
       ...props
     } = this.props;
 
@@ -169,7 +170,9 @@ class GetStartedPage extends React.Component {
         break;
       case 6:
         text = <T id="getStarted.header.discoveringAddresses.meta" m="Discovering addresses" />;
-        Form = DiscoverAddressesBody;
+        if (isInputRequest) {
+          Form = DiscoverAddressesBody;
+        }
         break;
       case 7:
         text = <T id="getStarted.header.stakePools.meta" m="Import StakePools" />;
@@ -203,7 +206,8 @@ class GetStartedPage extends React.Component {
         appVersion,
         updateAvailable,
         isSPV,
-        spvInput
+        spvInput,
+        isInputRequest
       }} />;
   }
 }
