@@ -224,7 +224,7 @@ export default function walletLoader(state = {}, action) {
       discoverAddressError: null,
       discoverAddressRequestAttempt: false,
       discoverAddressResponse: true,
-      stepIndex: action.complete ? 6 : 7, // 6 = stakepool selection, 7 = fetch headers
+      stepIndex: action.complete ? 8 : 7, // 7 = stakepool selection, 8 = rescanning
     };
   case FETCHHEADERS_ATTEMPT:
     return { ...state,
@@ -270,7 +270,7 @@ export default function walletLoader(state = {}, action) {
     return { ...state,
       fetchHeadersError: null,
       fetchHeadersRequestAttempt: false,
-      stepIndex: 4.5
+      stepIndex: 5
     };
   case SUBSCRIBEBLOCKNTFNS_ATTEMPT:
     return { ...state,
@@ -287,7 +287,7 @@ export default function walletLoader(state = {}, action) {
       subscribeBlockNtfnsRequestAttempt: false,
       subscribeBlockNtfnsRequest: null,
       subscribeBlockNtfnsResponse: action.response,
-      stepIndex: 5,  // Onto final prep
+      stepIndex: 4.5,
     };
   case UPDATEDISCOVERACCOUNTS:
     return { ...state,

@@ -144,11 +144,13 @@ class GetStartedPage extends React.Component {
       }
     } else {
       switch (startStepIndex || 0) {
+      case 0:
       case 1:
         text = startupError ? startupError :
           <T id="getStarted.header.checkingWalletState.meta" m="Checking wallet state" />;
         break;
       case 2:
+        text = <T id="getStarted.header.openingwallet.meta" m="Opening Wallet" />;
         if (hasExistingWallet) {
           Form = OpenWallet;
         } else {
@@ -156,9 +158,11 @@ class GetStartedPage extends React.Component {
         }
         break;
       case 3:
-      case 4:
         text = <T id="getStarted.header.startrpc.meta" m="Establishing RPC connection" />;
         Form = StartRPCBody;
+        break;
+      case 4:
+        text = <T id="getStarted.header.subcribe.meta" m="Subscribing to Block Notifications" />;
         break;
       case 4.5:
         text = <T id="getStarted.header.fetchingMissingCFilter.meta" m="Fetching Missing CFilters" />;

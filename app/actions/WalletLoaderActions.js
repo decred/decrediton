@@ -215,12 +215,12 @@ export const startRpcRequestFunc = (isRetry) =>
     return startRpc(loader, daemonhost, rpcport, rpcuser, rpcpass, cert)
       .then(() => {
         dispatch({ type: STARTRPC_SUCCESS });
-        dispatch(fetchMissingCFiltersAttempt());
+        dispatch(subscribeBlockAttempt());
       })
       .catch(error => {
         if (error.message.includes("RPC client already created")) {
           dispatch({ type: STARTRPC_SUCCESS });
-          dispatch(fetchMissingCFiltersAttempt());
+          dispatch(subscribeBlockAttempt());
         } else if (isRetry) {
           const { rpcRetryAttempts } = getState().walletLoader;
           if (rpcRetryAttempts < MAX_RPC_RETRIES) {
@@ -288,7 +288,7 @@ const fetchMissingCFiltersAttempt = () => (dispatch, getState) => {
   return fetchMissingCFilters(loader)
     .then(() => {
       dispatch({ response: {}, type: FETCHMISSINGCFILTERS_SUCCESS });
-      dispatch(subscribeBlockAttempt());
+      dispatch(fetchHeadersAttempt());
     })
     .catch(error => dispatch({ error, type: FETCHMISSINGCFILTERS_FAILED }));
 };
@@ -305,7 +305,7 @@ const subscribeBlockAttempt = () => (dispatch, getState) => {
   return subscribeToBlockNotifications(loader)
     .then(() => {
       dispatch({ response: {}, type: SUBSCRIBEBLOCKNTFNS_SUCCESS });
-      dispatch(fetchHeadersAttempt());
+      dispatch(fetchMissingCFiltersAttempt());
     })
     .catch(error => dispatch({ error, type: SUBSCRIBEBLOCKNTFNS_FAILED }));
 };
