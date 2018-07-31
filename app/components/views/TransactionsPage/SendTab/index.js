@@ -87,13 +87,14 @@ class Send extends React.Component {
     } = this;
     const isValid = this.getIsValid();
     const showPassphraseModal = this.getShowPassphraseModal();
+    const { isTransactionsSendTabDisabled } = this.props;
 
     return (
       <Aux>
         {
-          this.props.isTransactionsSendTabDisabled && <WatchingOnlyWarnModal />
+          isTransactionsSendTabDisabled && <WatchingOnlyWarnModal />
         }
-        <div className={"pseudo-modal-wrapper blur"}>
+        <div className={isTransactionsSendTabDisabled && "pseudo-modal-wrapper blur"}>
           <SendPage
             {...{ ...this.props, ...this.state }}
             {...{
