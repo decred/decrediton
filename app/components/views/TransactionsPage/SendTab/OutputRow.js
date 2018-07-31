@@ -26,8 +26,8 @@ const SendOutputRow = ({
   getOnChangeOutputDestination,
   getOnChangeOutputAmount,
   isSendAll,
-  totalSpent,
   onKeyDown,
+  sendAllAmount,
   intl
 }) => (
   <div className="send-row">
@@ -65,7 +65,7 @@ const SendOutputRow = ({
             hidden={!isSendAll}
             className="send-address-input-amount"
             disabled={true}
-            amount={totalSpent}
+            amount={sendAllAmount}
             onKeyDown={onKeyDown}
           />
           <DcrInput
