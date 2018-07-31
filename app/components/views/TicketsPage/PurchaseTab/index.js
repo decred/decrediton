@@ -28,31 +28,37 @@ class Purchase extends React.Component {
   }
 
   render() {
-    return (!this.props.walletService || !this.props.ticketBuyerService) ? <ErrorScreen /> : (
+    if (!this.props.walletService || !this.props.ticketBuyerService) {
+      return <ErrorScreen />;
+    }
+
+    return (
       <Aux>
         {
           this.props.isTicketPurchaseTabDisabled && <WatchingOnlyWarnModal />
         }
-        <PurchasePage
-          {...{
-            ...this.props,
-            ...this.state,
-            stakePool: this.getStakePool(),
-            account: this.getAccount(),
-            ...substruct({
-              onChangeStakePool: null,
-              onChangeAccount: null,
-              onShowImportScript: null,
-              onShowRevokeTicket: null,
-              onCancelImportScript: null,
-              onToggleTicketStakePool: null,
-              onShowStakePoolConfig: null,
-              onHideStakePoolConfig: null,
-              onImportScript: null,
-              onRevokeTickets: null,
-            }, this)
-          }}
-        />
+        <div className={"pseudo-modal-wrapper blur"}>
+          <PurchasePage
+            {...{
+              ...this.props,
+              ...this.state,
+              stakePool: this.getStakePool(),
+              account: this.getAccount(),
+              ...substruct({
+                onChangeStakePool: null,
+                onChangeAccount: null,
+                onShowImportScript: null,
+                onShowRevokeTicket: null,
+                onCancelImportScript: null,
+                onToggleTicketStakePool: null,
+                onShowStakePoolConfig: null,
+                onHideStakePoolConfig: null,
+                onImportScript: null,
+                onRevokeTickets: null,
+              }, this)
+            }}
+          />
+        </div>
       </Aux>
     );
   }

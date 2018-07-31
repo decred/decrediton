@@ -6,6 +6,7 @@ import { FormattedMessage as T } from "react-intl";
 import { spring, presets } from "react-motion";
 import OutputRow from "./OutputRow";
 import { DescriptionHeader } from "layout";
+import WatchingOnlyWarnModal from "PseudoModal/WatchingOnlyWarn";
 
 const BASE_OUTPUT = { destination: "", amount: null };
 
@@ -55,6 +56,10 @@ class Send extends React.Component {
   }
 
   render() {
+    if (!this.props.walletService) {
+      return  <ErrorScreen />;
+    }
+
     const {
       onChangeAccount,
       onAttemptSignTransaction,
@@ -83,37 +88,44 @@ class Send extends React.Component {
     const isValid = this.getIsValid();
     const showPassphraseModal = this.getShowPassphraseModal();
 
-    return !this.props.walletService ? <ErrorScreen /> : (
-      <SendPage
-        {...{ ...this.props, ...this.state }}
-        {...{
-          isValid,
-          onKeyDown,
-          onChangeAccount,
-          onAttemptSignTransaction,
-          onClearTransaction,
-          onShowConfirm,
-          onShowSendAll,
-          onHideSendAll,
-          onShowSendSelf,
-          onShowSendOthers,
-          onAttemptConstructTransaction,
-          onAddOutput,
-          onRebroadcastUnmined,
-          getOnRemoveOutput,
-          getOnChangeOutputDestination,
-          getOnChangeOutputAmount,
-          getAddressError,
-          getAmountError,
-          willEnter,
-          willLeave,
-          getStyles,
-          getDefaultStyles,
-          showPassphraseModal,
-          resetShowPassphraseModal,
-          sendAllAmount,
-        }}
-      />
+    return (
+      <Aux>
+        {
+          this.props.isTransactionsSendTabDisabled && <WatchingOnlyWarnModal />
+        }
+        <div className={"pseudo-modal-wrapper blur"}>
+          <SendPage
+            {...{ ...this.props, ...this.state }}
+            {...{
+              isValid,
+              onKeyDown,
+              onChangeAccount,
+              onAttemptSignTransaction,
+              onClearTransaction,
+              onShowConfirm,
+              onShowSendAll,
+              onHideSendAll,
+              onShowSendSelf,
+              onShowSendOthers,
+              onAttemptConstructTransaction,
+              onAddOutput,
+              onRebroadcastUnmined,
+              getOnRemoveOutput,
+              getOnChangeOutputDestination,
+              getOnChangeOutputAmount,
+              getAddressError,
+              getAmountError,
+              willEnter,
+              willLeave,
+              getStyles,
+              getDefaultStyles,
+              showPassphraseModal,
+              resetShowPassphraseModal,
+              sendAllAmount,
+            }}
+          />
+        </div>
+      </Aux>
     );
   }
 
