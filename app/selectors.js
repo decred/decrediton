@@ -908,6 +908,10 @@ export const isCreateAccountDisabled = or(isWatchingOnly, isWatchOnly);
 
 export const isChangePassPhraseDisabled = or(isWatchingOnly, isWatchOnly);
 
+export const isTransactionsSendTabDisabled = or(isWatchingOnly, isWatchOnly);
+
+export const isTicketPurchaseTabDisabled = or(isWatchingOnly, isWatchOnly);
+
 export const politeiaBetaEnabled = get([ "governance", "politeiaBetaEnabled" ]); // TODO: remove once politeia hits production
 export const politeiaURL = createSelector(
   [ isTestNet ],

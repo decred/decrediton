@@ -5,6 +5,7 @@ import { SendTransactionButton, KeyBlueButton } from "buttons";
 import OutputAccountRow from "./OutputAccountRow";
 import "style/SendPage.less";
 import "style/MiscComponents.less";
+import WatchingOnlyWarnModal from "PseudoModal/WatchingOnlyWarn";
 
 const wrapperComponent = props => <div className="output-row" { ...props } />;
 
@@ -33,9 +34,13 @@ const SendPage = ({
   onKeyDown,
   showPassphraseModal,
   resetShowPassphraseModal,
+  isTransactionsSendTabDisabled,
   ...props
 }) => (
   <Aux>
+    {
+      isTransactionsSendTabDisabled && <WatchingOnlyWarnModal />
+    }
     <div className="tabbed-page-subtitle"><T id="send.subtitle" m="Send DCR"/></div>
     <div className="send-flex-height">
       <div className="send-select-account-area">
