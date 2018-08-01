@@ -27,6 +27,7 @@
 .input-and-unit:hover:not(.disabled):not(.active):not(.error) {
   color: var(--input-color-hovered);
   border-bottom: 1px var(--stroke-color-hovered) solid;
+  cursor: pointer;
 }
 
 .input-and-unit.active:not(.disabled) {
@@ -36,7 +37,49 @@
 }
 
 .input-and-unit.disabled {
+  color: #8997a5;
   background-color: var(--disabled-background-color);
+}
+
+#viewInputDisplay:hover {
+  cursor: pointer;
+}
+
+.input-comp {
+  border: none;
+  background-image: none;
+  background-color: transparent;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+.input-comp::-webkit-inner-spin-button,
+.input-comp::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input-main {
+  font-size: 1.3em;
+  width: 96px;
+  display: inline-block;
+  text-align: right;
+  margin-left: -50px;
+}
+
+.input-sub {
+  font-size: 1em;
+  display: inline-block;
+  width: 46px;
+  margin-left: 6px;
+}
+
+.inverted-colors .input-and-unit,
+.inverted-colors .input-and-unit:hover:not(.disabled):not(.active),
+.inverted-colors .input-and-unit.active:not(.disabled),
+.inverted-colors .input {
+  color: #fff;
 }
 
 .input {
@@ -46,6 +89,18 @@
   flex-grow: 1;
   width: 100%;
   outline: none;
+}
+
+.input:hover,
+.Select:hover,
+.Select-placeholder,
+.accounts-select-value {
+  cursor: pointer;
+}
+
+.Select-placeholder,
+.Select--single > .Select-control .Select-value {
+  cursor: pointer;
 }
 
 .input::placeholder {

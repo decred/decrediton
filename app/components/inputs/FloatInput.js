@@ -1,4 +1,4 @@
-import NumericInput from "./NumericInput";
+import NumericInputCash from "./NumericInputCash";
 import { restrictToStdDecimalNumber, limitFractionalDigits } from "helpers/strings";
 
 const FloatInput = ({ maxFracDigits, ...props }) => {
@@ -15,7 +15,7 @@ const FloatInput = ({ maxFracDigits, ...props }) => {
     }
   };
 
-  return <NumericInput {...props} onChange={onChange} value={value}/>;
+  return <NumericInputCash {...props} onChange={onChange} value={value}/>;
 };
 
 export default FloatInput;

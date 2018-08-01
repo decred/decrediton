@@ -1,3 +1,5 @@
+// Legacy input component no longer in use as replaced with Numeric Input Cash
+
 import Input from "./Input";
 import "style/Input.less";
 
