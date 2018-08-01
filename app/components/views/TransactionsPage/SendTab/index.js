@@ -82,7 +82,6 @@ class Send extends React.Component {
       getStyles,
       getDefaultStyles,
       onKeyDown,
-      sendAllAmount,
       resetShowPassphraseModal,
     } = this;
     const isValid = this.getIsValid();
@@ -94,7 +93,7 @@ class Send extends React.Component {
         {
           isTransactionsSendTabDisabled && <WatchingOnlyWarnModal />
         }
-        <div className={isTransactionsSendTabDisabled && "pseudo-modal-wrapper blur"}>
+        <div className={ isTransactionsSendTabDisabled ? "pseudo-modal-wrapper blur" : null }>
           <SendPage
             {...{ ...this.props, ...this.state }}
             {...{
@@ -122,7 +121,6 @@ class Send extends React.Component {
               getDefaultStyles,
               showPassphraseModal,
               resetShowPassphraseModal,
-              sendAllAmount,
             }}
           />
         </div>

@@ -28,17 +28,13 @@ class Purchase extends React.Component {
   }
 
   render() {
-    if (!this.props.walletService || !this.props.ticketBuyerService) {
-      return <ErrorScreen />;
-    }
     const { isTicketPurchaseTabDisabled } = this.props;
-
     return (
       <Aux>
         {
           isTicketPurchaseTabDisabled && <WatchingOnlyWarnModal />
         }
-        <div className={ isTicketPurchaseTabDisabled && "pseudo-modal-wrapper blur" }>
+        <div className={ isTicketPurchaseTabDisabled ? "pseudo-modal-wrapper blur" : null }>
           <PurchasePage
             {...{
               ...this.props,
