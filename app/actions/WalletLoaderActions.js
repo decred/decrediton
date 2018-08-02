@@ -414,8 +414,8 @@ export const SPVSYNC_CANCEL = "SPVSYNC_CANCEL";
 export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
   const { discoverAccountsComplete, spvConnect } = getState().walletLoader;
   var request = new SpvSyncRequest();
-  if (spvConnect) {
-    request.setSpvConnect(spvConnect);
+  for (var i = 0; spvConnect && i < spvConnect.length; i++) {
+    request.addSpvConnect(spvConnect[i]);
   }
   if (!discoverAccountsComplete && privPass) {
     request.setDiscoverAccounts(true);

@@ -113,7 +113,7 @@ export function initGlobalCfg() {
     config.set("spv_mode", false);
   }
   if (!config.has("spv_connect")) {
-    config.set("spv_connect", "");
+    config.set("spv_connect", []);
   }
   if (!config.has("politeia_beta")) { // TODO: remove once politeia hits production
     config.set("politeia_beta", false);
