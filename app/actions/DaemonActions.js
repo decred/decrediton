@@ -175,12 +175,12 @@ export const shutdownApp = () => (dispatch, getState) => {
     setLastHeight(currentBlockHeight);
   }
   dispatch({ type: SHUTDOWN_REQUESTED });
-  dispatch(stopNotifcations());
-  dispatch(rescanCancel());
-  dispatch(spvSyncCancel());
   ipcRenderer.on("daemon-stopped", () => {
     dispatch({ type: DAEMONSTOPPED });
   });
+  dispatch(stopNotifcations());
+  dispatch(rescanCancel());
+  dispatch(spvSyncCancel());
   dispatch(hideSidebarMenu());
   dispatch(pushHistory("/shutdown"));
 };
