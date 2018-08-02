@@ -21989,12 +21989,19 @@ proto.walletrpc.FetchHeadersResponse.prototype.setMainChainTipBlockHeight = func
  * @constructor
  */
 proto.walletrpc.SpvSyncRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.walletrpc.SpvSyncRequest.repeatedFields_, null);
 };
 goog.inherits(proto.walletrpc.SpvSyncRequest, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
   proto.walletrpc.SpvSyncRequest.displayName = 'proto.walletrpc.SpvSyncRequest';
 }
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.walletrpc.SpvSyncRequest.repeatedFields_ = [3];
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -22026,7 +22033,7 @@ proto.walletrpc.SpvSyncRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
     discoverAccounts: jspb.Message.getFieldWithDefault(msg, 1, false),
     privatePassphrase: msg.getPrivatePassphrase_asB64(),
-    spvConnect: jspb.Message.getFieldWithDefault(msg, 3, "")
+    spvConnectList: jspb.Message.getRepeatedField(msg, 3)
   };
 
   if (includeInstance) {
@@ -22073,7 +22080,7 @@ proto.walletrpc.SpvSyncRequest.deserializeBinaryFromReader = function(msg, reade
       break;
     case 3:
       var value = /** @type {string} */ (reader.readString());
-      msg.setSpvConnect(value);
+      msg.addSpvConnect(value);
       break;
     default:
       reader.skipField();
@@ -22118,9 +22125,9 @@ proto.walletrpc.SpvSyncRequest.serializeBinaryToWriter = function(message, write
       f
     );
   }
-  f = message.getSpvConnect();
+  f = message.getSpvConnectList();
   if (f.length > 0) {
-    writer.writeString(
+    writer.writeRepeatedString(
       3,
       f
     );
@@ -22185,17 +22192,31 @@ proto.walletrpc.SpvSyncRequest.prototype.setPrivatePassphrase = function(value) 
 
 
 /**
- * optional string spv_connect = 3;
- * @return {string}
+ * repeated string spv_connect = 3;
+ * @return {!Array.<string>}
  */
-proto.walletrpc.SpvSyncRequest.prototype.getSpvConnect = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+proto.walletrpc.SpvSyncRequest.prototype.getSpvConnectList = function() {
+  return /** @type {!Array.<string>} */ (jspb.Message.getRepeatedField(this, 3));
 };
 
 
-/** @param {string} value */
-proto.walletrpc.SpvSyncRequest.prototype.setSpvConnect = function(value) {
-  jspb.Message.setField(this, 3, value);
+/** @param {!Array.<string>} value */
+proto.walletrpc.SpvSyncRequest.prototype.setSpvConnectList = function(value) {
+  jspb.Message.setField(this, 3, value || []);
+};
+
+
+/**
+ * @param {!string} value
+ * @param {number=} opt_index
+ */
+proto.walletrpc.SpvSyncRequest.prototype.addSpvConnect = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 3, value, opt_index);
+};
+
+
+proto.walletrpc.SpvSyncRequest.prototype.clearSpvConnectList = function() {
+  this.setSpvConnectList([]);
 };
 
 

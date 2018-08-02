@@ -685,7 +685,7 @@ message FetchHeadersResponse {
 message SpvSyncRequest {
 	bool discover_accounts = 1;
 	bytes private_passphrase = 2;
-	string spv_connect = 3;
+	repeated string spv_connect = 3;
 }
 message SpvSyncResponse {
 	bool synced = 1;
