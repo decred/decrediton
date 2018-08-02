@@ -1,10 +1,10 @@
 import {
-  DiscoverAddressesFormHeader as DiscoverAddressesHeader,
-  DiscoverAddressesFormBody
+  SpvSyncFormHeader as SpvSyncHeader,
+  SpvSyncFormBody
 } from "./Form";
 
 @autobind
-class DiscoverAddressesBody extends React.Component {
+class SpvSyncBody extends React.Component {
   constructor(props)  {
     super(props);
     this.state = this.getInitialState();
@@ -16,7 +16,7 @@ class DiscoverAddressesBody extends React.Component {
 
   componentDidMount() {
     if (this.props.walletPrivatePassphrase && this.props.fetchHeadersDone !== null) {
-      this.props.onDiscoverAddresses(this.props.walletPrivatePassphrase);
+      this.props.onSpvSynces(this.props.walletPrivatePassphrase);
     }
   }
 
@@ -29,16 +29,16 @@ class DiscoverAddressesBody extends React.Component {
 
   render() {
     const { passPhrase, hasAttemptedDiscover } = this.state;
-    const { onSetPassPhrase, onDiscoverAddresses, onKeyDown } = this;
+    const { onSetPassPhrase, onSpvSync, onKeyDown } = this;
 
     return (
-      <DiscoverAddressesFormBody
+      <SpvSyncFormBody
         {...{
           ...this.props,
           passPhrase,
           hasAttemptedDiscover,
           onSetPassPhrase,
-          onDiscoverAddresses,
+          onSpvSync,
           onKeyDown
         }}
       />
@@ -53,27 +53,27 @@ class DiscoverAddressesBody extends React.Component {
     this.setState({ passPhrase });
   }
 
-  onDiscoverAddresses() {
+  onSpvSync() {
     const { passPhrase } = this.state;
 
     if (!passPhrase) {
       return this.setState({ hasAttemptedDiscover: true });
     }
 
-    const { onDiscoverAddresses, onSetWalletPrivatePassphrase } = this.props;
+    const { startSPVSync, onSetWalletPrivatePassphrase } = this.props;
 
     onSetWalletPrivatePassphrase && onSetWalletPrivatePassphrase(passPhrase);
-    onDiscoverAddresses(passPhrase);
+    startSPVSync(passPhrase);
     this.resetState();
   }
 
   onKeyDown(e) {
     if(e.keyCode == 13) {   // Enter key
       e.preventDefault();
-      this.onDiscoverAddresses();
+      this.onSpvSync();
     }
   }
 
 }
 
-export { DiscoverAddressesHeader, DiscoverAddressesBody };
+export { SpvSyncHeader, SpvSyncBody };

@@ -60,6 +60,7 @@ export const versionInvalidError = createSelector(
   [ versionInvalid, get([ "version", "versionInvalidError" ]) ],
   (invalid, error) => invalid ? error || "Unknown Error" : null
 );
+export const spvInput = get([ "walletLoader", "spvInput" ]);
 
 const isStartStepOpen = compose(eq(START_STEP_OPEN), startStepIndex);
 const isStartStepDiscover = compose(eq(START_STEP_DISCOVER), startStepIndex);
@@ -72,6 +73,8 @@ const walletOpenError = and(get([ "walletLoader", "walletOpenError" ]), isStartS
 const startRpcError = and(get([ "walletLoader", "startRpcError" ]), isStartStepRPC);
 const discoverAddrError = and(get([ "walletLoader", "discoverAddressError" ]), isStartStepDiscover);
 const fetchHeadersError = and(get([ "walletLoader", "fetchHeadersError" ]), isStartStepFetch);
+export const fetchHeadersDone = (get([ "walletLoader", "fetchHeadersResponse" ]));
+
 export const startupError = or(
   getVersionServiceError,
   getWalletRPCVersionError,
@@ -175,6 +178,8 @@ export const defaultLocaleName = createSelector(
   (currentLocaleName) => {
     return appLocaleFromElectronLocale(currentLocaleName);
   });
+
+export const isSPV = get([ "settings", "currentSettings", "spvMode" ]);
 
 export const sortedLocales = createSelector(
   [ get([ "locales" ]) ],

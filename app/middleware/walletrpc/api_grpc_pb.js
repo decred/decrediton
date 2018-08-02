@@ -422,6 +422,28 @@ function deserialize_walletrpc_FetchHeadersResponse(buffer_arg) {
   return api_pb.FetchHeadersResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_walletrpc_FetchMissingCFiltersRequest(arg) {
+  if (!(arg instanceof api_pb.FetchMissingCFiltersRequest)) {
+    throw new Error('Expected argument of type walletrpc.FetchMissingCFiltersRequest');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_FetchMissingCFiltersRequest(buffer_arg) {
+  return api_pb.FetchMissingCFiltersRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_FetchMissingCFiltersResponse(arg) {
+  if (!(arg instanceof api_pb.FetchMissingCFiltersResponse)) {
+    throw new Error('Expected argument of type walletrpc.FetchMissingCFiltersResponse');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_FetchMissingCFiltersResponse(buffer_arg) {
+  return api_pb.FetchMissingCFiltersResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_walletrpc_FundTransactionRequest(arg) {
   if (!(arg instanceof api_pb.FundTransactionRequest)) {
     throw new Error('Expected argument of type walletrpc.FundTransactionRequest');
@@ -818,6 +840,28 @@ function deserialize_walletrpc_RenameAccountResponse(buffer_arg) {
   return api_pb.RenameAccountResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_walletrpc_RescanPointRequest(arg) {
+  if (!(arg instanceof api_pb.RescanPointRequest)) {
+    throw new Error('Expected argument of type walletrpc.RescanPointRequest');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_RescanPointRequest(buffer_arg) {
+  return api_pb.RescanPointRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_RescanPointResponse(arg) {
+  if (!(arg instanceof api_pb.RescanPointResponse)) {
+    throw new Error('Expected argument of type walletrpc.RescanPointResponse');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_RescanPointResponse(buffer_arg) {
+  return api_pb.RescanPointResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_walletrpc_RescanRequest(arg) {
   if (!(arg instanceof api_pb.RescanRequest)) {
     throw new Error('Expected argument of type walletrpc.RescanRequest');
@@ -1168,6 +1212,28 @@ function serialize_walletrpc_SignTransactionsResponse(arg) {
 
 function deserialize_walletrpc_SignTransactionsResponse(buffer_arg) {
   return api_pb.SignTransactionsResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_SpvSyncRequest(arg) {
+  if (!(arg instanceof api_pb.SpvSyncRequest)) {
+    throw new Error('Expected argument of type walletrpc.SpvSyncRequest');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_SpvSyncRequest(buffer_arg) {
+  return api_pb.SpvSyncRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_SpvSyncResponse(arg) {
+  if (!(arg instanceof api_pb.SpvSyncResponse)) {
+    throw new Error('Expected argument of type walletrpc.SpvSyncResponse');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_SpvSyncResponse(buffer_arg) {
+  return api_pb.SpvSyncResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_walletrpc_StakeInfoRequest(arg) {
@@ -2018,6 +2084,39 @@ var WalletLoaderServiceService = exports.WalletLoaderServiceService = {
     requestDeserialize: deserialize_walletrpc_FetchHeadersRequest,
     responseSerialize: serialize_walletrpc_FetchHeadersResponse,
     responseDeserialize: deserialize_walletrpc_FetchHeadersResponse,
+  },
+  fetchMissingCFilters: {
+    path: '/walletrpc.WalletLoaderService/FetchMissingCFilters',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.FetchMissingCFiltersRequest,
+    responseType: api_pb.FetchMissingCFiltersResponse,
+    requestSerialize: serialize_walletrpc_FetchMissingCFiltersRequest,
+    requestDeserialize: deserialize_walletrpc_FetchMissingCFiltersRequest,
+    responseSerialize: serialize_walletrpc_FetchMissingCFiltersResponse,
+    responseDeserialize: deserialize_walletrpc_FetchMissingCFiltersResponse,
+  },
+  spvSync: {
+    path: '/walletrpc.WalletLoaderService/SpvSync',
+    requestStream: false,
+    responseStream: true,
+    requestType: api_pb.SpvSyncRequest,
+    responseType: api_pb.SpvSyncResponse,
+    requestSerialize: serialize_walletrpc_SpvSyncRequest,
+    requestDeserialize: deserialize_walletrpc_SpvSyncRequest,
+    responseSerialize: serialize_walletrpc_SpvSyncResponse,
+    responseDeserialize: deserialize_walletrpc_SpvSyncResponse,
+  },
+  rescanPoint: {
+    path: '/walletrpc.WalletLoaderService/RescanPoint',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.RescanPointRequest,
+    responseType: api_pb.RescanPointResponse,
+    requestSerialize: serialize_walletrpc_RescanPointRequest,
+    requestDeserialize: deserialize_walletrpc_RescanPointRequest,
+    responseSerialize: serialize_walletrpc_RescanPointResponse,
+    responseDeserialize: deserialize_walletrpc_RescanPointResponse,
   },
 };
 

@@ -1,15 +1,16 @@
-import { versionCheckAction } from "./WalletLoaderActions";
+import { versionCheckAction, spvSyncCancel } from "./WalletLoaderActions";
 import { stopNotifcations } from "./NotificationActions";
+import { saveSettings, updateStateSettingsChanged } from "./SettingsActions";
+import { rescanCancel } from "./ControlActions";
+import { hideSidebarMenu, showSidebar } from "./SidebarActions";
+import { semverCompatible } from "./VersionActions";
 import * as wallet from "wallet";
 import { push as pushHistory, goBack } from "react-router-redux";
 import { ipcRenderer } from "electron";
 import { setMustOpenForm, getWalletCfg, getAppdataPath, getRemoteCredentials, getGlobalCfg, setLastHeight } from "../config";
-import { hideSidebarMenu, showSidebar } from "./SidebarActions";
 import { isTestNet } from "selectors";
 import axios from "axios";
-import { semverCompatible } from "./VersionActions";
 import { STANDARD_EXTERNAL_REQUESTS } from "main_dev/externalRequests";
-import { saveSettings, updateStateSettingsChanged } from "./SettingsActions";
 
 export const DECREDITON_VERSION = "DECREDITON_VERSION";
 export const SELECT_LANGUAGE = "SELECT_LANGUAGE";
@@ -174,10 +175,12 @@ export const shutdownApp = () => (dispatch, getState) => {
     setLastHeight(currentBlockHeight);
   }
   dispatch({ type: SHUTDOWN_REQUESTED });
-  dispatch(stopNotifcations());
   ipcRenderer.on("daemon-stopped", () => {
     dispatch({ type: DAEMONSTOPPED });
   });
+  dispatch(stopNotifcations());
+  dispatch(rescanCancel());
+  dispatch(spvSyncCancel());
   dispatch(hideSidebarMenu());
   dispatch(pushHistory("/shutdown"));
 };

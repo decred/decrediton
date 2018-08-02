@@ -40,7 +40,8 @@ import {
 } from "actions/StatisticsActions";
 import { WALLETREMOVED_FAILED } from "actions/DaemonActions";
 import {
-  GETWALLETSEEDSVC_FAILED
+  GETWALLETSEEDSVC_FAILED,
+  SPVSYNC_FAILED,
 } from "actions/WalletLoaderActions";
 
 import {
@@ -197,6 +198,10 @@ const messages = defineMessages({
     id: "accountExtendedKey.failed",
     defaultMessage: "Error getting account extended key: {originalError}"
   },
+  SPVSYNC_FAILED: {
+    id: "spvSync.Failed",
+    defaultMessage: "Error syncing SPV wallet: {originalError}"
+  }
 });
 
 export default function snackbar(state = {}, action) {
@@ -270,6 +275,7 @@ export default function snackbar(state = {}, action) {
   case GETACTIVEVOTE_FAILED:
   case GETVETTED_FAILED:
   case GETPROPOSAL_FAILED:
+  case SPVSYNC_FAILED:
   case UPDATEVOTECHOICE_FAILED:
   case GETACCOUNTEXTENDEDKEY_FAILED:
     type = "Error";

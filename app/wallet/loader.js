@@ -3,7 +3,8 @@ import { withLog as log, logOptionNoArgs } from "./app";
 import { loader as rpcLoader } from "middleware/grpc/client";
 import { WalletExistsRequest, CreateWalletRequest, OpenWalletRequest,
   CloseWalletRequest, StartConsensusRpcRequest, DiscoverAddressesRequest,
-  SubscribeToBlockNotificationsRequest, FetchHeadersRequest, CreateWatchingOnlyWalletRequest } from "middleware/walletrpc/api_pb";
+  SubscribeToBlockNotificationsRequest, FetchHeadersRequest, CreateWatchingOnlyWalletRequest,
+  SpvSyncRequest, FetchMissingCFiltersRequest, RescanPointRequest } from "middleware/walletrpc/api_pb";
 
 export const getLoader = log(({ isTestNet, walletName, address, port }) =>
   new Promise((resolve, reject) =>
@@ -52,12 +53,15 @@ export const closeWallet = log((loader) =>
     loader.closeWallet(new CloseWalletRequest(), error => error ? reject(error) : resolve())),
 "Close Wallet");
 
-export const discoverAddresses = log((loader, shouldDiscoverAccounts, privPass) =>
+export const discoverAddresses = log((loader, shouldDiscoverAccounts, privPass, startingBlockHash) =>
   new Promise((resolve, reject) => {
     const request = new DiscoverAddressesRequest();
     request.setDiscoverAccounts(!!shouldDiscoverAccounts);
     if (shouldDiscoverAccounts) {
       request.setPrivatePassphrase(new Uint8Array(Buffer.from(privPass)));
+    }
+    if (startingBlockHash) {
+      request.setStartingBlockHash(new Uint8Array(Buffer.from(startingBlockHash)));
     }
     loader.discoverAddresses(request, error => error ? reject(error) : resolve());
   }), "Discover Addresses", logOptionNoArgs());
@@ -74,3 +78,21 @@ export const fetchHeaders = log((loader) =>
   new Promise((resolve, reject) =>
     loader.fetchHeaders(new FetchHeadersRequest(), (error, response) =>
       error ? reject(error) : resolve(response))), "Fetch Headers");
+
+export const spvSync = log((loader) =>
+  new Promise((resolve, reject) => {
+    const request = new SpvSyncRequest();
+    loader.spvSync(request, (error, response) => error ? reject(error) : resolve(response));
+  }), "Start SPV Sync");
+
+export const fetchMissingCFilters = log((loader) =>
+  new Promise((resolve, reject) => {
+    const request = new FetchMissingCFiltersRequest();
+    loader.fetchMissingCFilters(request, (error, response) => error ? reject(error) : resolve(response));
+  }), "Fetch Missing CFilters");
+
+export const rescanPoint = log((loader) =>
+  new Promise((resolve, reject) => {
+    const request = new RescanPointRequest();
+    loader.rescanPoint(request, (error, response) => error ? reject(error) : resolve(response));
+  }), "Get Rescan Point");

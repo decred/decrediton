@@ -51,7 +51,7 @@ class StakePoolsBody extends React.Component {
       const { onSetWalletPrivatePassphrase } = this.props;
       onSetWalletPrivatePassphrase && onSetWalletPrivatePassphrase(this.state.passPhrase);
     }
-    this.props.onFetchHeaders();
+    this.props.startWalletServices();
   }
 
   onSetStakePoolInfo() {

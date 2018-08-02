@@ -15,8 +15,6 @@ const purchaseTicketSpvWarn = (blocksNumber) => <T id="spv.purchase.warn"
   }}
 />;
 
-const autoBuyerSpvWarn = <T id="spv.auto.buyer.warn" m="Ticket Auto Buyer Not available in spv mode" />;
-
 const Tickets = ({
   spvMode,
   blocksPassedOnTicketInterval,
@@ -31,7 +29,7 @@ const Tickets = ({
     }
     <div className="stakepool-area-spacing"></div>
     {
-      spvMode ? <ShowWarning warn={autoBuyerSpvWarn}/>  : <TicketAutoBuyer {...{ ...props }} />
+      spvMode ? <div className="spv-autobuyer-warning"><T id="spv.auto.buyer.warn" m="Ticket Auto Buyer not available while using SPV" /></div>  : <TicketAutoBuyer {...{ ...props }} />
     }
   </Aux>
 );

@@ -36,7 +36,11 @@ function getWalletServiceSuccess(walletService) {
 
 export function startWalletServices() {
   return (dispatch, getState) => {
-    setTimeout(() => { dispatch(loadActiveDataFiltersAttempt()); }, 1000);
+    const { walletCreateExisting, walletCreateResponse, rescanPointResponse, spvSynced } = getState().walletLoader;
+    if (!spvSynced) {
+      dispatch(loadActiveDataFiltersAttempt());
+      setTimeout(() => { dispatch(getTicketBuyerServiceAttempt()); }, 1000);
+    }
     setTimeout(() => { dispatch(getNextAddressAttempt(0)); }, 1000);
     setTimeout(() => { dispatch(getTicketPriceAttempt()); }, 1000);
     setTimeout(() => { dispatch(getPingAttempt()); }, 1000);
@@ -45,7 +49,6 @@ export function startWalletServices() {
     setTimeout(() => { dispatch(accountNtfnsStart()); }, 1000);
     setTimeout(() => { dispatch(updateStakepoolPurchaseInformation()); }, 1000);
     setTimeout(() => { dispatch(getDecodeMessageServiceAttempt()); }, 1000);
-    setTimeout(() => { dispatch(getTicketBuyerServiceAttempt()); }, 1000);
     setTimeout(() => { dispatch(getVotingServiceAttempt()); }, 1000);
     setTimeout(() => { dispatch(getAgendaServiceAttempt()); }, 1000);
     setTimeout(() => { dispatch(getStakepoolStats()); }, 1000);
@@ -59,12 +62,10 @@ export function startWalletServices() {
     // Check here to see if wallet was just created from an existing
     // seed.  If it was created from a newly generated seed there is no
     // expectation of address use so rescan can be skipped.
-    const { walletCreateExisting, walletCreateResponse } = getState().walletLoader;
-    const { fetchHeadersResponse } = getState().walletLoader;
-    if (walletCreateExisting) {
+    if (walletCreateExisting && !spvSynced) {
       setTimeout(() => { dispatch(rescanAttempt(0)).then(goHomeCb); }, 1000);
-    } else if (walletCreateResponse == null && fetchHeadersResponse != null && fetchHeadersResponse.getFirstNewBlockHeight() !== 0) {
-      setTimeout(() => { dispatch(rescanAttempt(fetchHeadersResponse.getFirstNewBlockHeight())).then(goHomeCb); }, 1000);
+    } else if (walletCreateResponse == null && rescanPointResponse != null && rescanPointResponse.getRescanPointHash().length !== 0) {
+      setTimeout(() => { dispatch(rescanAttempt(null, rescanPointResponse.getRescanPointHash())).then(goHomeCb); }, 1000);
     } else {
       dispatch(getStartupWalletInfo()).then(goHomeCb);
     }
@@ -304,6 +305,24 @@ export const getAccountNumberAttempt = (accountName) => (dispatch, getState) => 
   wallet.getAccountNumber(sel.walletService(getState()), accountName)
     .then(resp => dispatch({ getAccountNumberResponse: resp, type: GETACCOUNTNUMBER_SUCCESS }))
     .catch(error => dispatch({ error, type: GETACCOUNTNUMBER_FAILED }));
+};
+
+export const GETBESTBLOCK_ATTEMPT = "GETBESTBLOCK_ATTEMPT";
+export const GETBESTBLOCK_FAILED = "GETBESTBLOCK_FAILED";
+export const GETBESTBLOCK_SUCCESS = "GETBESTBLOCK_SUCCESS";
+
+export const getBestBlockHeightAttempt = (cb) => (dispatch, getState) => {
+  dispatch({ type: GETBESTBLOCK_ATTEMPT });
+  wallet.bestBlock(sel.walletService(getState()))
+    .then(resp => {
+      dispatch({ height: resp.getHeight(), type: GETBESTBLOCK_SUCCESS });
+      if (cb) {
+        dispatch(cb());
+      }
+    })
+    .catch(error => {
+      dispatch({ error, type: GETBESTBLOCK_FAILED });
+    });
 };
 
 export const GETNETWORK_ATTEMPT = "GETNETWORK_ATTEMPT";

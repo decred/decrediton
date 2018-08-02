@@ -1,16 +1,18 @@
 // @flow
 import {
   getLoader, startRpc, getWalletExists, createWallet, openWallet, closeWallet, discoverAddresses,
-  subscribeToBlockNotifications, fetchHeaders, getStakePoolInfo,
+  subscribeToBlockNotifications, fetchHeaders, getStakePoolInfo, fetchMissingCFilters,
+  rescanPoint
 } from "wallet";
 import * as wallet from "wallet";
-import { getWalletServiceAttempt, startWalletServices } from "./ClientActions";
+import { getWalletServiceAttempt, startWalletServices, getBestBlockHeightAttempt } from "./ClientActions";
 import { getVersionServiceAttempt } from "./VersionActions";
 import { getAvailableWallets, WALLETREMOVED_FAILED } from "./DaemonActions";
 import { getWalletCfg, getDcrdCert } from "../config";
 import { getWalletPath } from "main_dev/paths";
 import { isTestNet } from "selectors";
 import axios from "axios";
+import { SpvSyncRequest } from "../middleware/walletrpc/api_pb";
 
 const MAX_RPC_RETRIES = 5;
 const RPC_RETRY_DELAY = 5000;
@@ -107,11 +109,11 @@ export const createWalletRequest = (pubPass, privPass, seed, existing) =>
         const { daemon: { walletName } } = getState();
         const config = getWalletCfg(isTestNet(getState()), walletName);
         config.delete("discoveraccounts");
+        config.set("discoveraccounts", !existing);
+        dispatch({ complete: !existing, type: UPDATEDISCOVERACCOUNTS });
         dispatch({ response: {}, type: CREATEWALLET_SUCCESS });
         dispatch(clearStakePoolConfigNewWallet());
         dispatch(getWalletServiceAttempt());
-        dispatch({ complete: !existing, type: UPDATEDISCOVERACCOUNTS });
-        config.set("discoveraccounts", !existing);
       })
       .catch(error => dispatch({ error, type: CREATEWALLET_FAILED }));
   };
@@ -206,7 +208,6 @@ export const startRpcRequestFunc = (isRetry) =>
       daemonhost = "127.0.0.1";
       rpcport = "9109";
     }
-
     const loader = getState().walletLoader.loader;
 
     const cert = getDcrdCert(rpccertPath);
@@ -244,50 +245,67 @@ export const DISCOVERADDRESS_FAILED = "DISCOVERADDRESS_FAILED";
 export const DISCOVERADDRESS_SUCCESS = "DISCOVERADDRESS_SUCCESS";
 
 export const discoverAddressAttempt = (privPass) => (dispatch, getState) => {
-  const { walletLoader: { loader, discoverAccountsComplete } } = getState();
+  const { walletLoader: { loader, discoverAccountsComplete, rescanPointResponse } } = getState();
   const { daemon: { walletName } } = getState();
   dispatch({ type: DISCOVERADDRESS_ATTEMPT });
-  discoverAddresses(loader, !discoverAccountsComplete, privPass)
-    .then(() => {
-
-      if (!discoverAccountsComplete) {
-        const config = getWalletCfg(isTestNet(getState()), walletName);
-        config.delete("discoveraccounts");
-        config.set("discoveraccounts", true);
-        dispatch({ complete: true, type: UPDATEDISCOVERACCOUNTS });
-      } else {
-        const { subscribeBlockNtfnsResponse } = getState().walletLoader;
-        if (subscribeBlockNtfnsResponse !== null) dispatch(fetchHeadersAttempt());
-      }
-
-      dispatch({ response: {}, complete: discoverAccountsComplete, type: DISCOVERADDRESS_SUCCESS });
-    })
-    .catch(error => {
-      if (error.message.includes("invalid passphrase") && error.message.includes("private key")) {
-        dispatch({ error, type: DISCOVERADDRESS_FAILED_INPUT });
-      } else {
-        dispatch({ error, type: DISCOVERADDRESS_FAILED });
-      }
-    });
+  var startingBlockHash = "";
+  if (rescanPointResponse) {
+    startingBlockHash = rescanPointResponse.getRescanPointHash();
+  }
+  if ((startingBlockHash !== null && startingBlockHash.length !== 0) || !discoverAccountsComplete) {
+    discoverAddresses(loader, !discoverAccountsComplete, privPass, startingBlockHash)
+      .then(() => {
+        dispatch({ response: {}, complete: discoverAccountsComplete, type: DISCOVERADDRESS_SUCCESS });
+        if (!discoverAccountsComplete) {
+          const config = getWalletCfg(isTestNet(getState()), walletName);
+          config.delete("discoveraccounts");
+          config.set("discoveraccounts", true);
+          dispatch({ complete: true, type: UPDATEDISCOVERACCOUNTS });
+        } else {
+          dispatch(startWalletServices());
+        }
+      })
+      .catch(error => {
+        if (error.message.includes("invalid passphrase") && error.message.includes("private key")) {
+          dispatch({ error, type: DISCOVERADDRESS_FAILED_INPUT });
+        } else {
+          dispatch({ error, type: DISCOVERADDRESS_FAILED });
+        }
+      });
+  } else {
+    dispatch(startWalletServices());
+  }
 };
+
+export const FETCHMISSINGCFILTERS_ATTEMPT = "FETCHMISSINGCFILTERS_ATTEMPT";
+export const FETCHMISSINGCFILTERS_FAILED = "FETCHMISSINGCFILTERS_FAILED";
+export const FETCHMISSINGCFILTERS_SUCCESS = "FETCHMISSINGCFILTERS_SUCCESS";
+
+const fetchMissingCFiltersAttempt = () => (dispatch, getState) => {
+  const { loader } = getState().walletLoader;
+
+  dispatch({ request: {}, type: FETCHMISSINGCFILTERS_ATTEMPT });
+  return fetchMissingCFilters(loader)
+    .then(() => {
+      dispatch({ response: {}, type: FETCHMISSINGCFILTERS_SUCCESS });
+      dispatch(fetchHeadersAttempt());
+    })
+    .catch(error => dispatch({ error, type: FETCHMISSINGCFILTERS_FAILED }));
+};
+
 
 export const SUBSCRIBEBLOCKNTFNS_ATTEMPT = "SUBSCRIBEBLOCKNTFNS_ATTEMPT";
 export const SUBSCRIBEBLOCKNTFNS_FAILED = "SUBSCRIBEBLOCKNTFNS_FAILED";
 export const SUBSCRIBEBLOCKNTFNS_SUCCESS = "SUBSCRIBEBLOCKNTFNS_SUCCESS";
 
 const subscribeBlockAttempt = () => (dispatch, getState) => {
-  const { loader, discoverAccountsComplete } = getState().walletLoader;
+  const { loader } = getState().walletLoader;
 
   dispatch({ request: {}, type: SUBSCRIBEBLOCKNTFNS_ATTEMPT });
   return subscribeToBlockNotifications(loader)
     .then(() => {
       dispatch({ response: {}, type: SUBSCRIBEBLOCKNTFNS_SUCCESS });
-      if (discoverAccountsComplete) {
-        dispatch(discoverAddressAttempt());
-      } else {
-        // This is dispatched to indicate we should wait for user input to discover addresses.
-        dispatch({ response: {}, type: DISCOVERADDRESS_INPUT });
-      }
+      dispatch(fetchMissingCFiltersAttempt());
     })
     .catch(error => dispatch({ error, type: SUBSCRIBEBLOCKNTFNS_FAILED }));
 };
@@ -302,7 +320,7 @@ export const fetchHeadersAttempt = () => (dispatch, getState) => {
   return fetchHeaders(getState().walletLoader.loader)
     .then(response => {
       dispatch({ response, type: FETCHHEADERS_SUCCESS });
-      dispatch(startWalletServices());
+      dispatch(rescanPointAttempt());
     })
     .catch(error => dispatch({ error, type: FETCHHEADERS_FAILED }));
 };
@@ -384,4 +402,85 @@ export const decodeSeed = (mnemonic) => async (dispatch, getState) => {
     dispatch({ error, type: DECODESEED_FAILED });
     throw error;
   }
+};
+
+export const SPVSYNC_ATTEMPT = "SPVSYNC_ATTEMPT";
+export const SPVSYNC_FAILED = "SPVSYNC_FAILED";
+export const SPVSYNC_SUCCESS = "SPVSYNC_SUCCESS";
+export const SPVSYNC_UPDATE = "SPVSYNC_UPDATE";
+export const SPVSYNC_INPUT = "SPVSYNC_INPUT";
+export const SPVSYNC_CANCEL = "SPVSYNC_CANCEL";
+
+export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
+  const { discoverAccountsComplete, spvConnect } = getState().walletLoader;
+  var request = new SpvSyncRequest();
+  if (spvConnect) {
+    request.setSpvConnect(spvConnect);
+  }
+  if (!discoverAccountsComplete && privPass) {
+    request.setDiscoverAccounts(true);
+    request.setPrivatePassphrase(new Uint8Array(Buffer.from(privPass)));
+  } else if (!discoverAccountsComplete && !privPass) {
+    dispatch({ type: SPVSYNC_INPUT });
+    return;
+  }
+  return new Promise(() => {
+    dispatch({ type: SPVSYNC_ATTEMPT });
+    const { loader } = getState().walletLoader;
+    var spvSyncCall = loader.spvSync(request);
+    spvSyncCall.on("data", function(response) {
+      if (!discoverAccountsComplete) {
+        const { daemon: { walletName } } = getState();
+        const config = getWalletCfg(isTestNet(getState()), walletName);
+        config.delete("discoveraccounts");
+        config.set("discoveraccounts", true);
+        dispatch({ complete: true, type: UPDATEDISCOVERACCOUNTS });
+      }
+      dispatch({ syncCall: spvSyncCall, synced: response.getSynced(), type: SPVSYNC_UPDATE });
+      dispatch(getBestBlockHeightAttempt(startWalletServices));
+    });
+    spvSyncCall.on("end", function() {
+      dispatch({ type: SPVSYNC_SUCCESS });
+    });
+    spvSyncCall.on("error", function(status) {
+      status = status + "";
+      if (status.indexOf("Cancelled") < 0) {
+        console.log(status);
+        //reject(status);
+        dispatch({ error: status, type: SPVSYNC_FAILED });
+      }
+    });
+  });
+};
+
+export function spvSyncCancel() {
+  return (dispatch, getState) => {
+    const { syncCall } = getState().walletLoader;
+    if (syncCall) {
+      syncCall.cancel();
+      dispatch({ type: SPVSYNC_CANCEL });
+    }
+  };
+}
+
+export const RESCANPOINT_ATTEMPT = "RESCANPOINT_ATTEMPT";
+export const RESCANPOINT_FAILED = "RESCANPOINT_FAILED";
+export const RESCANPOINT_SUCCESS = "RESCANPOINT_SUCCESS";
+
+export const rescanPointAttempt = () => (dispatch, getState) => {
+  const { discoverAccountsComplete } = getState().walletLoader;
+  dispatch({ type: RESCANPOINT_ATTEMPT });
+  return rescanPoint(getState().walletLoader.loader)
+    .then((response) => {
+      dispatch({ response, type: RESCANPOINT_SUCCESS });
+      if (discoverAccountsComplete) {
+        dispatch(discoverAddressAttempt());
+      } else {
+        // This is dispatched to indicate we should wait for user input to discover addresses.
+        dispatch({ response: {}, type: DISCOVERADDRESS_INPUT });
+      }
+    })
+    .catch(async error => {
+      dispatch({ error, type: RESCANPOINT_FAILED });
+    });
 };

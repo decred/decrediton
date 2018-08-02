@@ -23,6 +23,7 @@ const WalletSelectionBodyBase = ({
   isWatchOnly,
   masterPubKeyError,
   maxWalletCount,
+  isSPV,
   ...props,
 }) => {
   return (
@@ -61,7 +62,7 @@ const WalletSelectionBodyBase = ({
                       <T id="walletselection.canelChanges" m="Cancel Changes"/>
                     </div>
                   }
-                  {!editWallets && getDaemonSynced && selected ?
+                  {!editWallets && (getDaemonSynced || isSPV) && selected ?
                     <Aux>
                       <div className={"display-wallet-launch"} onClick={startWallet}>
                         <T id="walletselection.launchWallet" m="Launch Wallet "/>

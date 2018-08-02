@@ -79,7 +79,7 @@ var initialState = {
   },
   version: {
     // RequiredVersion
-    requiredVersion: "4.40.0",
+    requiredVersion: "5.0.1",
     versionInvalid: false,
     versionInvalidError: null,
     // VersionService
@@ -194,6 +194,8 @@ var initialState = {
     maturingBlockHeights: {},
   },
   walletLoader: {
+    spvConnect: globalCfg.get("spv_connect"),
+    spvInput: false,
     existingOrNew: false,
     rpcRetryAttempts: 0,
     neededBlocks: 0,
