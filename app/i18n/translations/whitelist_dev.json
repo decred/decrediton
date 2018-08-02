@@ -1,9 +1,11 @@
 [
   "rescan.progressPercent",
   "transaction.timestamp",
+  "proposal.overview.fullTime",
   "ticket.timestamp",
   "txDetails.timestamp",
   "snackbar.defaults.error",
+  "createwallet.errors.walletRemoveFailed",
   "send.errors.publishTxFailed",
   "send.errors.signTxFailed",
   "send.errors.constructTxFailed",
