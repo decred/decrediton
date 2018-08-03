@@ -1,7 +1,5 @@
 # Informações sobre Compra de Tickets
 
----
-
 **Conta** Essa é a conta que vai comprar tickets e receber a recompensa
 
 **Número de Tickets** The number of tickets to attempt to purchase.

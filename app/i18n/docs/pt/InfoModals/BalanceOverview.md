@@ -1,7 +1,5 @@
 # Informações sobre os Saldos
 
----
-
 **Total** Esse é o saldo total controlado por essa conta atualmente.
 
 **Saldo Disponível** O saldo disponível para gastos por essa conta.

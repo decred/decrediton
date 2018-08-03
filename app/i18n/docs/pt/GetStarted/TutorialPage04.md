@@ -1,11 +1,11 @@
 # Dicas de Segurança
 
-*Apenas você é responsável pela sua segurança*. Sempre mantenha sua seed e senha seguros. Se você perder sua seed ou senha, ninguém poderá recuperá-las.
+**Apenas você é responsável por sua segurança**. Sempre mantenha sua seed e senha seguras. Se você perdê-las, ninguém mais poderá recuperá-las.
 
-Faça um backup da sua seed e senha. Não a armazene no seu computador. Ao invés disso, escreva ou imprima em um pedaço de papel ou salve em um disco USB.
+Faça um backup da sua seed e senha. Não armazene-as no seu computador. Ao invés disso escreva ou imprima a seed em um pedaço de papel ou salve-a em um disco USB.
 
-Não armazene sua seed em armazenamento de nuvem ou em um serviço de senhas. Se a sua conta desse serviço for comprometida, seus fundos também serão.
+Não armazene sua seed em um serviço de nuvem ou de senhas online. Se a sua conta for comprometida, os seus fundos também serão.
 
-Não digite a sua seed em nenhum website. Ninguém pode reverter, cancelar ou extornar suas transações caso sua carteira tenha sido comprometida.
+Não digite sua seed em nenhum site. Ninguém poderá reverter, cancelar ou estornar transações caso a sua carteira seja comprometida.
 
-Quando algo não parecer correto para você ou você não entender do que se trata, pergunte e pesquise. Evite tomar decisões baseadas em medo.
+**Quando algo não parecer certo ou você não entender, pergunte e faça sua própria pesquisa. Evite tomar decisões baseadas no medo.**

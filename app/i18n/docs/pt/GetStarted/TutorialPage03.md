@@ -1,11 +1,12 @@
-# Governança e Staking
+# Staking e Governança
 
-Participação em staking (PoS) requer apenas fundos Decred existentes _(ao contrário de mineração Proof-of-Word (PoW) que requer recursos de computação e eletricidade)_.
+Participação em Staking (PoS) está aberto para todo mundo e consiste em bloquear uma certa quantidade das suas DCR por um tempo em troca de tickets. Um ticket serve para dois propósitos:
 
-Fundos podem ser trancados por um tempo em retorno por tickets da rede. Tickets são escolhidos aleatoriamente para votar a validade dos blocos. Na média, um ticket é votado em 28 dias _(o maior tempo possível é de 142 dias)_.
+- Votar na validade de novos blocos
+- Participar nos processos de decisão que determinam o futuro da Decred
 
- Um voto bem sucedido retorna ao stakeholder uma parte da Recompensa de Bloco mais o custo original do ticket. No caso de um voto perdido _(0.5% de probabilidade_ o custo original do ticket é retornado ao usuário de forma segura, porém sem a recompensa.
+O processo de staking é essencialmente uma loteria, onde tickets são selecionados para votar de forma aleatória. Um voto bem sucedido devolve ao participante o custo original do ticket e uma parte das DCRs criadas na recompensa do bloco.
 
-Mudanças são inevitáveis para todas as moedas digitais, seja para decidir questões de desenvolvimento ou resolver problemas inesperados. O sistema inovador de governança da Decred é construído dentro da blockchain. Isso permite que as mudanças sejam adotadas de forma suave, ao mesmo tempo em que mantém o ecossistema existente da blockchain seguro. Os mesmos tickets também são tem poder de votação para decidir mudanças das regras de consenso.
+Caso o voto seja perdido (0.5% de probabilidade) o custo original do ticket é retornado de forma segura, sem a recompensa. O tempo médio para um ticket votar é de 28 dias, com um máximo de 142 dias.
 
-Staking encoraja um investimento de longo prazo na Decred ao proporcionar aos participantes (stakeholders) poder de decisão sobre a governança, além de recompensá-los pela participação.
+**Staking encoraja investimento de longo prazo na Decred**. Participantes tem voz ativa no processo de decisão e são recompensados por seu engajamento na governança do projeto.
