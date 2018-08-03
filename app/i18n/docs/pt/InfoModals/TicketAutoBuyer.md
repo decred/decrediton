@@ -1,7 +1,5 @@
 # Informação sobre Compra Automática
 
----
-
 **Saldo a ser Mantido** Se o seu saldo é menor do que esse número, você não comprará mais tickets. O valor de 0 significa que todos os fundos da sua conta irão para a compra de tickets.
 
 **Taxa Máxima** Tickets entram na mempool na ordem de sua taxa por kilobyte. Esse parâmetro estabelece a taxa máxima que você está disposto a pagar.

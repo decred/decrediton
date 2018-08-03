@@ -1,7 +1,5 @@
 # Informações sobre o Limite de Intervalo
 
----
-
 *Atenção* Esse limite de intervalo normalmente não deve ser alterado. Aumentar esse limite pode causar grande perda de desempenho.",
 
 O limite de intervalo (gap limit) indica a quantidade de endereços que a carteira irá gerar e observar para determinar seu uso. O padrão desse limite é 20. Isso significa duas coisas:
