@@ -53,7 +53,6 @@ class Input extends React.Component {
     document.getElementById("parsedInputDisplay").innerHTML = number;
     document.getElementById("parsedInputDisplay").style.display = "inherit";
     document.getElementById("viewInputDisplay").style.display = "none";
-    document.getElementById("parsedInputDisplay").focus();
   };
   onChange2 = () => {
     var number = document.getElementById("parsedInputDisplay").innerHTML;
@@ -150,11 +149,11 @@ class Input extends React.Component {
               placeholder={placeholder}
               value={isNullOrUndefined(value) ? "" : value}
               onChange={this.sendToParser}
-              onFocus={this.onChange}
+              onMouseOver={this.onChange}
               onBlur={this.onChange2}
               onKeyDown={this.onKeyDown2}
             >
-              <span id="parsedInputDisplay" style={{ display: "none" }}
+              <span id="parsedInputDisplay" style={{ display: "none", marginTop: "2px;" }}
                 onKeyDown={this.onKeyDown2}
               ></span>
               <div id="viewInputDisplay">
