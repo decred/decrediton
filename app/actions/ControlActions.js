@@ -2,7 +2,7 @@
 import * as wallet from "wallet";
 import * as sel from "selectors";
 import { isValidAddress, isValidMasterPubKey } from "helpers";
-import { getAccountsAttempt, getStartupWalletInfo, getStakeInfoAttempt } from "./ClientActions";
+import { getAccountsAttempt, getStakeInfoAttempt, startWalletServices } from "./ClientActions";
 import { getWalletCfg } from "../config";
 import { RescanRequest, ConstructTransactionRequest } from "../middleware/walletrpc/api_pb";
 
@@ -56,13 +56,24 @@ export function rescanAttempt(beginHeight, beginHash) {
     return new Promise((resolve, reject) => {
       dispatch({ request: request, type: RESCAN_ATTEMPT });
       const { walletService } = getState().grpc;
+      const { walletCreateExisting, walletCreateResponse, rescanPointResponse } = getState().walletLoader;
       var rescanCall = walletService.rescan(request);
       rescanCall.on("data", function(response) {
         dispatch({ rescanCall: rescanCall, rescanResponse: response, type: RESCAN_PROGRESS });
       });
       rescanCall.on("end", function() {
         dispatch({ type: RESCAN_COMPLETE });
-        dispatch(getStartupWalletInfo()).then(resolve);
+
+        // Check here to see if wallet was just created from an existing
+        // seed.  If it was created from a newly generated seed there is no
+        // expectation of address use so rescan can be skipped.
+        if (walletCreateExisting) {
+          setTimeout(() => { dispatch(rescanAttempt(0)); }, 1000);
+        } else if (walletCreateResponse == null && rescanPointResponse != null && rescanPointResponse.getRescanPointHash().length !== 0) {
+          setTimeout(() => { dispatch(rescanAttempt(null, rescanPointResponse != null && rescanPointResponse.getRescanPointHash())); }, 1000);
+        } else {
+          dispatch(startWalletServices()).then(resolve);
+        }
       });
       rescanCall.on("error", function(status) {
         status = status + "";
