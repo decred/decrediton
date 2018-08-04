@@ -173,6 +173,7 @@ export const currencies = () => [ { name: "DCR" }, { name: "atoms" } ];
 export const currencyDisplay = get([ "settings", "currentSettings", "currencyDisplay" ]);
 export const unitDivisor = compose(disp => disp === "DCR" ? 100000000 : 1, currencyDisplay);
 export const currentLocaleName = get([ "settings", "currentSettings", "locale" ]);
+export const timezone = get([ "settings", "currentSettings", "timezone" ]);
 export const defaultLocaleName = createSelector(
   [ currentLocaleName ],
   (currentLocaleName) => {

@@ -5,6 +5,7 @@ import { WatchOnlyWarnNotification } from "shared";
 import GeneralSettings from "./GeneralSettings";
 import PrivacySettings from "./PrivacySettings";
 import ProxySettings from "./ProxySettings";
+import TimezoneSettings from "./TimezoneSettings";
 import "style/StakePool.less";
 import "style/Settings.less";
 
@@ -50,6 +51,7 @@ const SettingsPage = ({
           </div>
         </div>
         <PrivacySettings {...{ tempSettings, onChangeTempSettings }} />
+        <TimezoneSettings {...{ tempSettings, onChangeTempSettings }} />
       </div>
     </div>
 

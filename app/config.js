@@ -121,6 +121,9 @@ export function initGlobalCfg() {
   if (!config.has("max_wallet_count")) {
     config.set("max_wallet_count", 3);
   }
+  if (!config.has("timezone")) {
+    config.set("timezone", "local");
+  }
   return(config);
 }
 

@@ -150,11 +150,13 @@
   margin-top: 2px;
 }
 
-input[type="checkbox"] {
+input[type="checkbox"],
+input[type="radio"] {
   display: none;
 }
 
-input[type="checkbox"]:disabled + label {
+input[type="checkbox"]:disabled + label,
+input[type="radio"]:disabled + label {
   display: inline-block;
   background-color: #e7eaed;
   border: 1px solid #8997a5;
@@ -162,7 +164,8 @@ input[type="checkbox"]:disabled + label {
   height: 12px;
 }
 
-input[type="checkbox"]:checked:disabled + label {
+input[type="checkbox"]:checked:disabled + label,
+input[type="radio"]:checked:disabled + label {
   display: inline-block;
   border: 1px solid #8997a5;
   background-color: #e7eaed;
@@ -174,7 +177,8 @@ input[type="checkbox"]:checked:disabled + label {
   height: 12px;
 }
 
-input[type="checkbox"] + label {
+input[type="checkbox"] + label,
+input[type="radio"] + label {
   display: inline-block;
   border: 1px solid #8997a5;
   background-color: none;
@@ -182,7 +186,8 @@ input[type="checkbox"] + label {
   height: 12px;
 }
 
-input[type="checkbox"]:checked + label {
+input[type="checkbox"]:checked + label,
+input[type="radio"]:checked + label {
   display: inline-block;
   border: 1px solid #2970ff;
   background-color: none;
@@ -192,6 +197,12 @@ input[type="checkbox"]:checked + label {
   background-position: 1px;
   width: 12px;
   height: 12px;
+}
+
+input[type="radio"] + label {
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
 }
 
 @media screen and (max-width: 676px) {
@@ -206,7 +217,7 @@ input[type="checkbox"]:checked + label {
   .settings-wrapper {
     display: inherit;
     margin-top: -50px;
-    height: 639px;
+    height: 680px;
   }
 
   .app-modal.about-modal,
