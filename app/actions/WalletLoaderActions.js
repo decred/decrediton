@@ -437,7 +437,7 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
         dispatch({ complete: true, type: UPDATEDISCOVERACCOUNTS });
       }
       dispatch({ syncCall: spvSyncCall, synced: response.getSynced(), type: SPVSYNC_UPDATE });
-      dispatch(getBestBlockHeightAttempt(startWalletServices(true)));
+      dispatch(getBestBlockHeightAttempt(startWalletServices));
     });
     spvSyncCall.on("end", function() {
       dispatch({ type: SPVSYNC_SUCCESS });
