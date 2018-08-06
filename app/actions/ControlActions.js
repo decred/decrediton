@@ -2,7 +2,7 @@
 import * as wallet from "wallet";
 import * as sel from "selectors";
 import { isValidAddress, isValidMasterPubKey } from "helpers";
-import { getAccountsAttempt, getStakeInfoAttempt, startWalletServices } from "./ClientActions";
+import { getAccountsAttempt, getStakeInfoAttempt, startWalletServices, getStartupWalletInfo } from "./ClientActions";
 import { getWalletCfg } from "../config";
 import { RescanRequest, ConstructTransactionRequest } from "../middleware/walletrpc/api_pb";
 
@@ -45,7 +45,7 @@ export const RESCAN_PROGRESS = "RESCAN_PROGRESS";
 export const RESCAN_COMPLETE = "RESCAN_COMPLETE";
 export const RESCAN_CANCEL = "RESCAN_CANCEL";
 
-export function rescanAttempt(beginHeight, beginHash) {
+export function rescanAttempt(beginHeight, beginHash, startup) {
   var request = new RescanRequest();
   if (beginHeight !== null) {
     request.setBeginHeight(beginHeight);
@@ -62,6 +62,11 @@ export function rescanAttempt(beginHeight, beginHash) {
       });
       rescanCall.on("end", function() {
         dispatch({ type: RESCAN_COMPLETE });
+        if (startup) {
+          dispatch(startWalletServices(startup));
+        } else {
+          dispatch(getStartupWalletInfo());
+        }
       });
       rescanCall.on("error", function(status) {
         status = status + "";
@@ -178,11 +183,11 @@ export const loadActiveDataFiltersAttempt = () => (dispatch, getState) => {
       // seed.  If it was created from a newly generated seed there is no
       // expectation of address use so rescan can be skipped.
       if (walletCreateExisting) {
-        setTimeout(() => { dispatch(rescanAttempt(0)); }, 1000);
+        setTimeout(() => { dispatch(rescanAttempt(0, null, true)); }, 1000);
       } else if (walletCreateResponse == null && rescanPointResponse != null && rescanPointResponse.getRescanPointHash().length !== 0) {
-        setTimeout(() => { dispatch(rescanAttempt(null, rescanPointResponse != null && rescanPointResponse.getRescanPointHash())); }, 1000);
+        setTimeout(() => { dispatch(rescanAttempt(null, rescanPointResponse != null && rescanPointResponse.getRescanPointHash(), true)); }, 1000);
       } else {
-        dispatch(startWalletServices());
+        dispatch(startWalletServices(true));
       }
     }
     )

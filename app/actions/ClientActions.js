@@ -2,7 +2,7 @@
 import * as wallet from "wallet";
 import * as sel from "selectors";
 import eq from "lodash/fp/eq";
-import { getNextAddressAttempt, loadActiveDataFiltersAttempt,
+import { getNextAddressAttempt,
   stopAutoBuyerAttempt, getTicketBuyerConfigAttempt, publishUnminedTransactionsAttempt } from "./ControlActions";
 import { transactionNtfnsStart, accountNtfnsStart } from "./NotificationActions";
 import { updateStakepoolPurchaseInformation, setStakePoolVoteChoices, getStakepoolStats } from "./StakePoolActions";
@@ -34,34 +34,30 @@ function getWalletServiceSuccess(walletService) {
   };
 }
 
-export function startWalletServices(startup) {
+export function startWalletServices() {
   return (dispatch, getState) => {
-    if (startup) {
-      const { spvSynced } = getState().walletLoader;
-      if (!spvSynced) {
-        dispatch(loadActiveDataFiltersAttempt());
-        setTimeout(() => { dispatch(getTicketBuyerServiceAttempt()); }, 1000);
-      }
-      setTimeout(() => { dispatch(getNextAddressAttempt(0)); }, 1000);
-      setTimeout(() => { dispatch(getTicketPriceAttempt()); }, 1000);
-      setTimeout(() => { dispatch(getPingAttempt()); }, 1000);
-      setTimeout(() => { dispatch(getNetworkAttempt()); }, 1000);
-      setTimeout(() => { dispatch(transactionNtfnsStart()); }, 1000);
-      setTimeout(() => { dispatch(accountNtfnsStart()); }, 1000);
-      setTimeout(() => { dispatch(updateStakepoolPurchaseInformation()); }, 1000);
-      setTimeout(() => { dispatch(getDecodeMessageServiceAttempt()); }, 1000);
-      setTimeout(() => { dispatch(getVotingServiceAttempt()); }, 1000);
-      setTimeout(() => { dispatch(getAgendaServiceAttempt()); }, 1000);
-      setTimeout(() => { dispatch(getStakepoolStats()); }, 1000);
-
-      var goHomeCb = () => {
-        setTimeout(() => { dispatch(pushHistory("/home")); }, 1000);
-        setTimeout(() => { dispatch(showSidebar()); }, 1000);
-        setTimeout(() => { dispatch(showSidebarMenu()); }, 1000);
-      };
-    } else {
-      dispatch(getStartupWalletInfo()).then(goHomeCb);
+    const { spvSynced } = getState().walletLoader;
+    if (!spvSynced) {
+      setTimeout(() => { dispatch(getTicketBuyerServiceAttempt()); }, 1000);
     }
+    setTimeout(() => { dispatch(getNextAddressAttempt(0)); }, 1000);
+    setTimeout(() => { dispatch(getTicketPriceAttempt()); }, 1000);
+    setTimeout(() => { dispatch(getPingAttempt()); }, 1000);
+    setTimeout(() => { dispatch(getNetworkAttempt()); }, 1000);
+    setTimeout(() => { dispatch(transactionNtfnsStart()); }, 1000);
+    setTimeout(() => { dispatch(accountNtfnsStart()); }, 1000);
+    setTimeout(() => { dispatch(updateStakepoolPurchaseInformation()); }, 1000);
+    setTimeout(() => { dispatch(getDecodeMessageServiceAttempt()); }, 1000);
+    setTimeout(() => { dispatch(getVotingServiceAttempt()); }, 1000);
+    setTimeout(() => { dispatch(getAgendaServiceAttempt()); }, 1000);
+    setTimeout(() => { dispatch(getStakepoolStats()); }, 1000);
+
+    var goHomeCb = () => {
+      setTimeout(() => { dispatch(pushHistory("/home")); }, 1000);
+      setTimeout(() => { dispatch(showSidebar()); }, 1000);
+      setTimeout(() => { dispatch(showSidebarMenu()); }, 1000);
+    };
+    dispatch(getStartupWalletInfo()).then(goHomeCb);
   };
 }
 

@@ -5,6 +5,7 @@ import {
   rescanPoint
 } from "wallet";
 import * as wallet from "wallet";
+import { loadActiveDataFiltersAttempt } from "./ControlActions";
 import { getWalletServiceAttempt, startWalletServices, getBestBlockHeightAttempt } from "./ClientActions";
 import { getVersionServiceAttempt } from "./VersionActions";
 import { getAvailableWallets, WALLETREMOVED_FAILED } from "./DaemonActions";
@@ -261,9 +262,8 @@ export const discoverAddressAttempt = (privPass) => (dispatch, getState) => {
           config.delete("discoveraccounts");
           config.set("discoveraccounts", true);
           dispatch({ complete: true, type: UPDATEDISCOVERACCOUNTS });
-        } else {
-          dispatch(startWalletServices());
         }
+        dispatch(loadActiveDataFiltersAttempt());
       })
       .catch(error => {
         if (error.message.includes("invalid passphrase") && error.message.includes("private key")) {
@@ -273,7 +273,7 @@ export const discoverAddressAttempt = (privPass) => (dispatch, getState) => {
         }
       });
   } else {
-    dispatch(startWalletServices());
+    dispatch(loadActiveDataFiltersAttempt());
   }
 };
 
@@ -437,7 +437,7 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
         dispatch({ complete: true, type: UPDATEDISCOVERACCOUNTS });
       }
       dispatch({ syncCall: spvSyncCall, synced: response.getSynced(), type: SPVSYNC_UPDATE });
-      dispatch(getBestBlockHeightAttempt(startWalletServices));
+      dispatch(getBestBlockHeightAttempt(startWalletServices(true)));
     });
     spvSyncCall.on("end", function() {
       dispatch({ type: SPVSYNC_SUCCESS });
