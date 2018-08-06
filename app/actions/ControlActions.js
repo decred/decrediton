@@ -2,7 +2,7 @@
 import * as wallet from "wallet";
 import * as sel from "selectors";
 import { isValidAddress, isValidMasterPubKey } from "helpers";
-import { getAccountsAttempt, getStartupWalletInfo, getStakeInfoAttempt } from "./ClientActions";
+import { getAccountsAttempt, getStakeInfoAttempt, startWalletServices, getStartupWalletInfo } from "./ClientActions";
 import { getWalletCfg } from "../config";
 import { RescanRequest, ConstructTransactionRequest } from "../middleware/walletrpc/api_pb";
 
@@ -45,7 +45,7 @@ export const RESCAN_PROGRESS = "RESCAN_PROGRESS";
 export const RESCAN_COMPLETE = "RESCAN_COMPLETE";
 export const RESCAN_CANCEL = "RESCAN_CANCEL";
 
-export function rescanAttempt(beginHeight, beginHash) {
+export function rescanAttempt(beginHeight, beginHash, startup) {
   var request = new RescanRequest();
   if (beginHeight !== null) {
     request.setBeginHeight(beginHeight);
@@ -62,7 +62,11 @@ export function rescanAttempt(beginHeight, beginHash) {
       });
       rescanCall.on("end", function() {
         dispatch({ type: RESCAN_COMPLETE });
-        dispatch(getStartupWalletInfo()).then(resolve);
+        if (startup) {
+          dispatch(startWalletServices());
+        } else {
+          dispatch(getStartupWalletInfo());
+        }
       });
       rescanCall.on("error", function(status) {
         status = status + "";
@@ -169,9 +173,24 @@ export const LOADACTIVEDATAFILTERS_FAILED= "LOADACTIVEDATAFILTERS_FAILED";
 export const LOADACTIVEDATAFILTERS_SUCCESS = "LOADACTIVEDATAFILTERS_SUCCESS";
 
 export const loadActiveDataFiltersAttempt = () => (dispatch, getState) => {
+  const { walletCreateExisting, walletCreateResponse, rescanPointResponse } = getState().walletLoader;
   dispatch({ type: LOADACTIVEDATAFILTERS_ATTEMPT });
   return wallet.loadActiveDataFilters(sel.walletService(getState()))
-    .then(res => dispatch({ response: res, type: LOADACTIVEDATAFILTERS_SUCCESS }))
+    .then(res => {
+      dispatch({ response: res, type: LOADACTIVEDATAFILTERS_SUCCESS });
+
+      // Check here to see if wallet was just created from an existing
+      // seed.  If it was created from a newly generated seed there is no
+      // expectation of address use so rescan can be skipped.
+      if (walletCreateExisting) {
+        setTimeout(() => { dispatch(rescanAttempt(0, null, true)); }, 1000);
+      } else if (walletCreateResponse == null && rescanPointResponse != null && rescanPointResponse.getRescanPointHash().length !== 0) {
+        setTimeout(() => { dispatch(rescanAttempt(null, rescanPointResponse != null && rescanPointResponse.getRescanPointHash(), true)); }, 1000);
+      } else {
+        dispatch(startWalletServices());
+      }
+    }
+    )
     .catch(error => dispatch({ error, type: LOADACTIVEDATAFILTERS_FAILED }));
 };
 

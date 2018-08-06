@@ -5,6 +5,7 @@ import {
   rescanPoint
 } from "wallet";
 import * as wallet from "wallet";
+import { loadActiveDataFiltersAttempt } from "./ControlActions";
 import { getWalletServiceAttempt, startWalletServices, getBestBlockHeightAttempt } from "./ClientActions";
 import { getVersionServiceAttempt } from "./VersionActions";
 import { getAvailableWallets, WALLETREMOVED_FAILED } from "./DaemonActions";
@@ -262,7 +263,7 @@ export const discoverAddressAttempt = (privPass) => (dispatch, getState) => {
           config.set("discoveraccounts", true);
           dispatch({ complete: true, type: UPDATEDISCOVERACCOUNTS });
         } else {
-          dispatch(startWalletServices());
+          dispatch(loadActiveDataFiltersAttempt());
         }
       })
       .catch(error => {
@@ -273,7 +274,7 @@ export const discoverAddressAttempt = (privPass) => (dispatch, getState) => {
         }
       });
   } else {
-    dispatch(startWalletServices());
+    dispatch(loadActiveDataFiltersAttempt());
   }
 };
 

@@ -2,7 +2,7 @@
 import * as wallet from "wallet";
 import * as sel from "selectors";
 import eq from "lodash/fp/eq";
-import { getNextAddressAttempt, loadActiveDataFiltersAttempt, rescanAttempt,
+import { getNextAddressAttempt,
   stopAutoBuyerAttempt, getTicketBuyerConfigAttempt, publishUnminedTransactionsAttempt } from "./ControlActions";
 import { transactionNtfnsStart, accountNtfnsStart } from "./NotificationActions";
 import { updateStakepoolPurchaseInformation, setStakePoolVoteChoices, getStakepoolStats } from "./StakePoolActions";
@@ -36,9 +36,8 @@ function getWalletServiceSuccess(walletService) {
 
 export function startWalletServices() {
   return (dispatch, getState) => {
-    const { walletCreateExisting, walletCreateResponse, rescanPointResponse, spvSynced } = getState().walletLoader;
+    const { spvSynced } = getState().walletLoader;
     if (!spvSynced) {
-      dispatch(loadActiveDataFiltersAttempt());
       setTimeout(() => { dispatch(getTicketBuyerServiceAttempt()); }, 1000);
     }
     setTimeout(() => { dispatch(getNextAddressAttempt(0)); }, 1000);
@@ -58,17 +57,7 @@ export function startWalletServices() {
       setTimeout(() => { dispatch(showSidebar()); }, 1000);
       setTimeout(() => { dispatch(showSidebarMenu()); }, 1000);
     };
-
-    // Check here to see if wallet was just created from an existing
-    // seed.  If it was created from a newly generated seed there is no
-    // expectation of address use so rescan can be skipped.
-    if (walletCreateExisting && !spvSynced) {
-      setTimeout(() => { dispatch(rescanAttempt(0)).then(goHomeCb); }, 1000);
-    } else if (walletCreateResponse == null && rescanPointResponse != null && rescanPointResponse.getRescanPointHash().length !== 0) {
-      setTimeout(() => { dispatch(rescanAttempt(null, rescanPointResponse.getRescanPointHash())).then(goHomeCb); }, 1000);
-    } else {
-      dispatch(getStartupWalletInfo()).then(goHomeCb);
-    }
+    dispatch(getStartupWalletInfo()).then(goHomeCb);
   };
 }
 
