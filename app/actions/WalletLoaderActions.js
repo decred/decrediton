@@ -262,8 +262,9 @@ export const discoverAddressAttempt = (privPass) => (dispatch, getState) => {
           config.delete("discoveraccounts");
           config.set("discoveraccounts", true);
           dispatch({ complete: true, type: UPDATEDISCOVERACCOUNTS });
+        } else {
+          dispatch(loadActiveDataFiltersAttempt());
         }
-        dispatch(loadActiveDataFiltersAttempt());
       })
       .catch(error => {
         if (error.message.includes("invalid passphrase") && error.message.includes("private key")) {

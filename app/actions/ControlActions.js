@@ -63,7 +63,7 @@ export function rescanAttempt(beginHeight, beginHash, startup) {
       rescanCall.on("end", function() {
         dispatch({ type: RESCAN_COMPLETE });
         if (startup) {
-          dispatch(startWalletServices(startup));
+          dispatch(startWalletServices());
         } else {
           dispatch(getStartupWalletInfo());
         }
@@ -187,7 +187,7 @@ export const loadActiveDataFiltersAttempt = () => (dispatch, getState) => {
       } else if (walletCreateResponse == null && rescanPointResponse != null && rescanPointResponse.getRescanPointHash().length !== 0) {
         setTimeout(() => { dispatch(rescanAttempt(null, rescanPointResponse != null && rescanPointResponse.getRescanPointHash(), true)); }, 1000);
       } else {
-        dispatch(startWalletServices(true));
+        dispatch(startWalletServices());
       }
     }
     )
