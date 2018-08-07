@@ -57,7 +57,7 @@ class SignMessage extends React.Component {
           onChangeAddress, onChangeMessage, address, addressError, message,
           messageError, formatMessage: intl.formatMessage, isSigningMessage,
           isSignMessageDisabled,
-          } }/>
+        } }/>
         {result}
       </Aux>
     );

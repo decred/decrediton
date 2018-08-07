@@ -10,8 +10,8 @@ const AccountsListHeader = ({ onGetNextAccountAttempt, isCreateAccountDisabled }
   description={<T id="accounts.description" m={"Accounts allow you to keep separate records of your DCR funds.\nTransferring DCR across accounts will create a transaction on the blockchain."}/>}
   iconClassName="accounts"
   actionButton={
-    !isCreateAccountDisabled &&
     <PassphraseModalButton
+      disabled={isCreateAccountDisabled}
       modalTitle={<T id="accounts.newAccountConfirmations" m="Create new account" />}
       modalComponent={AddAccountModal}
       onSubmit={onGetNextAccountAttempt}
