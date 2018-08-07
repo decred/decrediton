@@ -9,7 +9,8 @@ const mapStateToProps = selectorMap({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  onDismissAllMessages: ca.dismissAllMessages
+  onDismissAllMessages: ca.dismissAllMessages,
+  dispatchSingleMessage: ca.dispatchSingleMessage,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

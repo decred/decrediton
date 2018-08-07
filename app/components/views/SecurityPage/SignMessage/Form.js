@@ -1,6 +1,7 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { InfoDocModalButton, SignMessageButton } from "buttons";
 import { TextInput } from "inputs";
+import { WatchOnlyWarnNotification } from "shared";
 
 const messages = defineMessages({
   addressFieldPlaceholder: {
@@ -35,16 +36,18 @@ const SignMessageForm = ({
             <T id="securitycenter.form.field.address.label" m="Address"/>
           </div>
           <div className="security-center-form-row-field">
-            <TextInput
-              required
-              value={address}
-              invalid={addressError}
-              invalidMessage={addressError}
-              onChange={(e) => onChangeAddress(e.target.value)}
-              placeholder={formatMessage(messages.addressFieldPlaceholder)}
-              showErrors={addressError}
-              disabled={isSignMessageDisabled}
-            />
+            <WatchOnlyWarnNotification isActive={ isSignMessageDisabled }>
+              <TextInput
+                required
+                value={address}
+                invalid={addressError}
+                invalidMessage={addressError}
+                onChange={(e) => onChangeAddress(e.target.value)}
+                placeholder={formatMessage(messages.addressFieldPlaceholder)}
+                showErrors={addressError}
+                disabled={isSignMessageDisabled}
+              />
+            </WatchOnlyWarnNotification>
           </div>
         </div>
         <div className="security-center-form-row">
