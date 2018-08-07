@@ -21,7 +21,8 @@ const SignMessageForm = ({
   addressError,
   messageError,
   isSigningMessage,
-  formatMessage
+  formatMessage,
+  isSignMessageDisabled,
 }) => {
   return (
     <Aux>
@@ -42,6 +43,7 @@ const SignMessageForm = ({
               onChange={(e) => onChangeAddress(e.target.value)}
               placeholder={formatMessage(messages.addressFieldPlaceholder)}
               showErrors={addressError}
+              disabled={isSignMessageDisabled}
             />
           </div>
         </div>
@@ -58,6 +60,7 @@ const SignMessageForm = ({
               onChange={(e) => onChangeMessage(e.target.value)}
               placeholder={formatMessage(messages.messageFieldPlaceholder)}
               showErrors={messageError}
+              disabled={isSignMessageDisabled}
             />
           </div>
         </div>
@@ -66,7 +69,7 @@ const SignMessageForm = ({
         className="stakepool-content-purchase-button"
         address={address}
         message={message}
-        disabled={isSigningMessage || address == "" || message == "" || addressError || messageError}
+        disabled={isSigningMessage || address == "" || message == "" || addressError || messageError || isSignMessageDisabled}
       />
     </Aux>
   );
