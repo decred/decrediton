@@ -41,69 +41,104 @@ export default ({
       <div className="release-notes">
         <div className="release-notes-text">
           <p>
-          This release of decrediton adds some major changes to the wallet startup,
-          overview page and adds the first round of statistics for better user
-          information.  Now that the overall look and feel designed by Eeter has been
-          impletmented we will be focusing on refinement and adding improved
-          responsiveness (eg dark mode, resolving to various media widths).
+            This release of Decrediton marks the dawn of a large milestone in development.
+            SPV (simple payment verification) has been added in dcrwallet which allows
+            wallets to connect directly to peers and not required a fully synced node to be
+            connected.  For now this feature will be turned OFF by default, then when we
+            have gotten thorough feedback and a confident in the usage, it will be turned
+            on by default.
           </p>
           <p>
-          Launcher has been redesigned to provide the user with a more intuitive startup
-          experience.  In normal working mode, the daemon (of the chosen network) will
-          begin to sync and become operational while the user completes wallet
-          creation/selection.  Then once both the wallet is ready and the daemon has
-          synced the wallet will fully load.
+            While it's hard to give details of speed increases due to variances in systems,
+            we've seen roughly a 5x increase in syncing a previously used seed to tip on
+            mainnet.  Previously syncing the chain would take roughly 1hr plus another 5-10
+            mins for the wallet to become synced, now we're seeing about 20mins total time
+            to being able to fully use a wallet to send or purchase tickets.
           </p>
           <p>
-          A tutorial, release notes, settings and logs have all been added to the
-          launcher for the user to utilize whilst they may be waiting for their daemon
-          to sync.  Hopefully this will allow the user to more seamlessly create wallets
-          with less confusion or require any additional support.
+            In the coming releases, we are going to work on further speeding this process up,
+            as well as providing more feedback from dcrwallet to Decrediton to make a more
+            rich user experience.
           </p>
           <p>
-          The wallet creation by seed has received a substantial update as well.  We now
-          allow the user to copy seeds (if they complete a warning screen) and also paste
-          seeds.  And for confirmation for new wallets only requires the user to complete
-          1/3 of the words to confirm storage of wallet's seed.
+            *Note: Automatic ticket purchasing has been disabled for SPV.  We will be
+            implementing a way to start and stop the new v2 ticketbuyer in dcrwallet.  This
+            new version is much more simple and really only has 1 option to set which would
+            be an absolute balance to maintain.  This new version will also allow users to
+            run multiple ticket purchases for each account.
           </p>
           <p>
-          Overview has beed redesigned to give the user more information about their
-          wallet's current situation and to guide them where to find various features
-          of their wallet.  Basic graphs covering balances, tickets and transactions have
-          been added.  All recent transactions and recent ticket activity can be found
-          below the overview graphs.  We will be adding more features to the overview page
-          as we gauge user interest and feedback on existing additions.
+            This release also has been audited by our design team at Eeter LLC.  Most of the
+            pages have received an update to the styling to add more polish and be more
+            resilient to various sizing and displays.  In the near future, we will be
+            focusing on color themes and window sizing for small, medium and large displays.
           </p>
           <p>
-          Introductory data prepartion and statistics have been implemented for this
-          release.  For now we are providing a small window of lookback for transactions,
-          staking and other information.  The reduced window size is mostly an issue
-          with unsatisfactory performance.  When this performance improves, we will be
-          adding custom windows and window lengths for custom graphing and exporting
-          options.
+            We are also proud to announce the intial release of the Politeia integration.
+            While this functionality is still in beta-testing, what you see will be roughly
+            the final form.  Proposals up for vote will be shown and your possible tickets
+            will be compared to the proposal's allowed tickets to vote.  If there are
+            tickets available to vote, you simply choose your choice, enter your passphrase
+            and your tickets are used to send the Politeia server your cryptographic proof
+            of ownership.
           </p>
           New Features
           <ul>
-            <li>Validate Addresses - a form to validate addresses has been added to the
-            Security Center.  This will allow users to test addresses to confirm address
-            ownership and/or validity.</li>
+            <li>SPV integration - *Note: This integration is currently headen from normal
+            usage, if you would like to test it, please set `"spv_mode": true`, in your
+            `config.json` file.  With this new integration, there has been a new way of
+            syncing that has been added.  Now instead of needing to do all of the wallet
+            loader processes in the proper order, one can simply call the SpvSync grpc and
+            that will handle everything within dcrwallet.  This will lead to much less
+            errors and other headaches down the road.  We have also added an
+            `"spv_connect": [],` option in the `config.json` file, which will allow users to
+            connect directly to a known peer instead of relying on the DNS seeders to find
+            peers.</li>
 
-            <li>Filter by address - now transactions can be filtered by address in History.
-            When the user enters a string into the address filter form, it will show any
-            address that has an output with a matching address.</li>
+            <li>Whitelisting and Proxy - We have added new support to control the connections
+            to domains that are used for various information.  We have also added proxy
+            support for those that choose to have the extra security.  These were both
+            necessary since the addition of Politeia wallet's communicating with the outside
+            world.  We felt the users should have full control over where the wallet is
+            communicating.  This support will be further improved upon in further releases
+            and requests for things are made.</li>
 
-            <li>Charts - we have decided to use [recharts](https://recharts.org) as our first
-            charting solution.  </li>
+            <li>Initial Politeia Integration - *Note: This integration is currently headen
+            from normal usage, but can be accessed by setting `"politeia_beta": true`, in
+            your `config.json` file.  When activated the user is shown a new page on the
+            side bar menu, reading "Governance."  This will show them the Politeia
+            information, of which is pulled from a request to the proposals site.
+            They will be shown currently live and past votes.</li>
 
-            <li>Import wallet from hex seed - instead of entering in the 33 word
-            mnemonic, they are now able to use the hex representation of their seed.</li>
+            <li>Animated Onboarding Slides - All new animated slides were added.  Big thanks
+            for all the hard work from @kyleFirethought and everyone at Eeter! They really
+            make the wallet shine.</li>
+          </ul>
+          Other improvements
+          <ul>
+            <li>Launcher - The launcher UI was audited and has most of its issues smoothed
+            out.  There were some lingering issues and possible ways of users to get "stuck"
+            while loading up their wallets.</li>
 
-            <li>Export data to CSV - we now all users to export various types of data to csv.
-            These options are found under the Transactions page.  </li>
+            <li>* Inputs and Errors - All inputs have been audited for consistency and proper
+            input error states are now being used.  We are very pleased with the look and
+            feel of the input errors and believe they are not too intrusive for users while
+            being very clear of what needs to be corrected.</li>
 
-            <li>Show logs - logs can now be found on the launcher and on the help page.
-            For now, we only show the logs of the current instance of wallet and daemon.
-            This is mostly due to performance with pulling in thousands of lines of text.</li>
+            <li>* Max Wallet Option - Users are now able to set the max number of wallets are
+            shown on the launcher screen.  The default is set to 3, but users can alter that
+            to whatever whole number they'd like.  But keep in mind that it was styled
+            assuming only 3 would be shown, so there may be some distortions as that number
+            grows.  </li>
+
+            <li>* Refined About Modal - The additional window was removed in favor of a React
+            modal.  This allowed us to clean up the code and remove a redundant menu bar
+            group.</li>
+
+            <li>* Long Form Translations - Due issues translating large pieces of text that were
+            split up into partial sentences, we are now keeping large sections of
+            documentation that need to be translated together.  This is for things like the
+            onboarding slides and various informational modals.</li>
           </ul>
         </div>
         <div className="release-notes-image" />
