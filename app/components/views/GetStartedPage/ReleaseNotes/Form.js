@@ -94,7 +94,6 @@ export default ({
             `"spv_connect": [],` option in the `config.json` file, which will allow users to
             connect directly to a known peer instead of relying on the DNS seeders to find
             peers.</li>
-
             <li>Whitelisting and Proxy - We have added new support to control the connections
             to domains that are used for various information.  We have also added proxy
             support for those that choose to have the extra security.  These were both
@@ -102,14 +101,12 @@ export default ({
             world.  We felt the users should have full control over where the wallet is
             communicating.  This support will be further improved upon in future releases
             and requests for things are made.</li>
-
             <li>Initial Politeia Integration - *Note: This integration is currently hidden
             from normal usage, but can be accessed by setting `"politeia_beta": true`, in
             your `config.json` file.  When activated the user is shown a new page on the
             side bar menu, reading "Governance."  This will show them the Politeia
             information, of which is pulled from a request to the proposals site.
             They will be shown currently live and past votes.</li>
-
             <li>Animated Onboarding Slides - All new animated slides were added.  Big thanks
             for all the hard work from @kyleFirethought and everyone at Eeter! They really
             make the wallet shine.</li>
@@ -119,22 +116,19 @@ export default ({
             <li>Launcher - The launcher UI was audited and has most of its issues smoothed
             out.  There were some lingering issues and possible ways of users to get "stuck"
             while loading up their wallets.</li>
-
-            <li>* Inputs and Errors - All inputs have been audited for consistency and proper
+            <li>Inputs and Errors - All inputs have been audited for consistency and proper
             input error states are now being used.  We are very pleased with the look and
             feel of the input errors and believe they are not too intrusive for users while
             being very clear of what needs to be corrected.</li>
-
-            <li>* Max Wallet Option - Users are now able to set the max wallets that are
+            <li>Max Wallet Option - Users are now able to set the max wallets that are
             shown on the launcher screen.  The default is currentlyset to 3.  But keep in mind
             that it was styled assuming only 3 would be shown, so there may be some distortions
             as that number grows.  </li>
-
-            <li>* Refined About Modal - The additional window was removed in favor of a React
+            <li>Refined About Modal - The additional window was removed in favor of a React
             modal.  This allowed us to clean up the code and remove a redundant menu bar
             group.</li>
 
-            <li>* Long Form Translations - Due issues translating large pieces of text that were
+            <li>Long Form Translations - Due issues translating large pieces of text that were
             split up into partial sentences, we are now keeping large sections of
             documentation that need to be translated together.  This is for things like the
             onboarding slides and various informational modals.</li>
