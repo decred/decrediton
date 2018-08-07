@@ -1,6 +1,6 @@
 
-const defaultButton = ({ onClick, enabled, buttonLabel, className }) =>
-  (<button onClick={onClick} enabled={enabled} className={className}>{buttonLabel}</button>);
+const defaultButton = ({ onClick, disabled, buttonLabel, className }) =>
+  (<button onClick={onClick} disabled className={className}>{buttonLabel}</button>);
 
 @autobind
 class ModalButton extends React.Component {

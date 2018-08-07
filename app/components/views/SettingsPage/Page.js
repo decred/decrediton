@@ -33,20 +33,19 @@ const SettingsPage = ({
         <ProxySettings {...{ tempSettings, onChangeTempSettings }} />
       </div>
       <div className="settings-columns">
-        {
-          !isChangePassPhraseDisabled &&
-          <div className="settings-security">
-            <div className="settings-column-title"><T id="settings.security.title" m="Security" /></div>
-            <div className="settings-action-buttons">
-              <div className="settings-update-passphrase-button">
-                <T id="settings.updatePrivatePassphrase" m="Update Private Passphrase" />
-                <ChangePassphraseButton
-                  modalTitle={<T id="settings.changeConfirmation" m="Change your passphrase" />}
-                  onSubmit={onAttemptChangePassphrase} />
-              </div>
+        <div className="settings-security">
+          <div className="settings-column-title"><T id="settings.security.title" m="Security" /></div>
+          <div className="settings-action-buttons">
+            <div disabled={isChangePassPhraseDisabled} className="settings-update-passphrase-button">
+              <T id="settings.updatePrivatePassphrase" m="Update Private Passphrase" />
+              <ChangePassphraseButton
+                className={isChangePassPhraseDisabled && "change-password-disabled-icon"}
+                disabled={isChangePassPhraseDisabled}
+                modalTitle={<T id="settings.changeConfirmation" m="Change your passphrase" />}
+                onSubmit={onAttemptChangePassphrase} />
             </div>
           </div>
-        }
+        </div>
         <PrivacySettings {...{ tempSettings, onChangeTempSettings }} />
       </div>
     </div>
