@@ -22,7 +22,6 @@
 }
 
 .sidebar-reduce-arrow {
-  margin-left: 240px;
   height: 20px;
   width: 20px;
   background-repeat: no-repeat;
@@ -52,11 +51,17 @@
   box-shadow: 5px 0 21px rgba(9, 20, 64, 0.21);
 }
 
-.sidebar-logo {
+.sidebar-logo,
+.reduced-sidebar-logo, {
+  display: flex;
   position: relative;
   z-index: 3;
   padding: 20px 18px 20px 18px;
   border-bottom: 1px solid #eaecee;
+}
+
+.reduced-sidebar-logo {
+  flex-direction: column;
 }
 
 .sidebar-main {
@@ -190,4 +195,13 @@
 
 .sidebar-scroll::-webkit-scrollbar-thumb {
   background-color: #8795a2;
+}
+
+.sidebar-watch-only-icon {
+  width: 16px;
+  height: 16px;
+  background-repeat: no-repeat;
+  background-image: @watch-only-icon;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
