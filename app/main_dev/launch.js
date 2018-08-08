@@ -11,7 +11,6 @@ import { concat, isString } from "lodash";
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const debug = argv.debug || process.env.NODE_ENV === "development";
 const logger = createLogger(debug);
-const win32ipcLocation = "../node_modules/win32ipc/build/Release/win32ipc.node";
 
 let dcrdPID;
 let dcrwPID;
@@ -105,7 +104,7 @@ export const launchDCRD = (mainWindow, daemonIsAdvanced, daemonPath, appdata, te
   if (os.platform() == "win32") {
     try {
       const util = require("util");
-      const win32ipc = require(win32ipcLocation);
+      const win32ipc = require("../node_modules/win32ipc/build/Release/win32ipc.node");
       var pipe = win32ipc.createPipe("out");
       args.push(util.format("--piperx=%d", pipe.readEnd));
     } catch (e) {
@@ -191,7 +190,7 @@ export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
   if (os.platform() == "win32") {
     try {
       const util = require("util");
-      const win32ipc = require(win32ipcLocation);
+      const win32ipc = require("../node_modules/win32ipc/build/Release/win32ipc.node");
       const pipe = win32ipc.createPipe("out");
       args.push(util.format("--piperx=%d", pipe.readEnd));
     } catch (e) {
