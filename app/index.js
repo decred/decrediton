@@ -101,8 +101,8 @@ var initialState = {
     currentBlockHeight: 0,
 
     // ints for mainnet and testnet protocol hex
-    // TestNet2 CurrencyNet = 0x48e7a065
-    testnet: 1223139429,
+    // TestNet3 CurrencyNet = 0xb194aa75
+    testnet: 2979310197,
     // MainNet CurrencyNet = 0xd9b400f9
     mainnet: 3652452601,
 
