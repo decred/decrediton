@@ -1,7 +1,7 @@
 import { EyeFilterMenu } from "buttons";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { Tooltip } from "shared";
-import { TextInput } from "../../../inputs";
+import { TextInput, DcrInput } from "inputs";
 import TxHistory from "TxHistory";
 import { LoadingMoreTransactionsIndicator, NoMoreTransactionsIndicator, NoTransactions } from "indicators";
 import InfiniteScroll from "react-infinite-scroller";
@@ -29,6 +29,10 @@ const Page = ({
   onChangeSortType,
   onChangeSearchText,
   onLoadMoreTransactions,
+  minAmount,
+  maxAmount,
+  onChangeMinAmount,
+  onChangeMaxAmount,
 }) => (
   <InfiniteScroll
     hasMore={!noMoreTransactions}
@@ -43,6 +47,20 @@ const Page = ({
       </div>
       <div className="history-select-tx-types-area">
         <div className="history-select-tx-types">
+          <div>
+            <div><T id="history.minAmount" m="Min Amount" /></div>
+            <DcrInput
+              amount={minAmount}
+              onChangeAmount={onChangeMinAmount}
+              showErrors
+            />
+            <div><T id="history.maxAmount" m="Max Amount" /></div>
+            <DcrInput
+              amount={maxAmount}
+              onChangeAmount={onChangeMaxAmount}
+              showErrors
+            />
+          </div>
           <div className="history-search-tx">
             <TextInput
               type="text"

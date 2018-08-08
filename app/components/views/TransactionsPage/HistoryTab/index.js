@@ -25,9 +25,14 @@ class History extends React.Component {
   constructor(props) {
     super(props);
     const selectedTxTypeKey = this.selectedTxTypeFromFilter(this.props.transactionsFilter);
-    const selectedSortOrderKey = this.props.transactionsFilter.listDirection;
-    const searchText = this.props.transactionsFilter.search;
-    this.state = { selectedTxTypeKey, selectedSortOrderKey, searchText };
+    const { minAmount, maxAmount, search, listDirection } = this.props.transactionsFilter;
+    this.state = {
+      selectedTxTypeKey,
+      selectedSortOrderKey: listDirection,
+      searchText: search,
+      minAmount,
+      maxAmount,
+    };
   }
 
   render() {
@@ -50,7 +55,9 @@ class History extends React.Component {
             onChangeSelectedType: null,
             onChangeSortType: null,
             onChangeSearchText: null,
-            onLoadMoreTransactions: null
+            onLoadMoreTransactions: null,
+            onChangeMinAmount: null,
+            onChangeMaxAmount: null,
           }, this)
         }}
       />
@@ -109,6 +116,16 @@ class History extends React.Component {
     this.setState({ searchText });
   }
 
+  onChangeMinAmount(minAmount) {
+    this.onChangeFilter({ minAmount });
+    this.setState({ minAmount });
+  }
+
+  onChangeMaxAmount(maxAmount) {
+    this.onChangeFilter({ maxAmount });
+    this.setState({ maxAmount });
+  }
+
   selectedTxTypeFromFilter(filter) {
     if (filter.types.length === 0) return "all";
     const types = this.getTxTypes();
@@ -116,7 +133,6 @@ class History extends React.Component {
     return types.reduce((a, v) =>
       (v.value.types[0] === filter.types[0] && v.value.direction === filter.direction)
         ? v.key : a, null);
-
   }
 }
 
