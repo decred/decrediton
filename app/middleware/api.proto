@@ -688,7 +688,17 @@ message SpvSyncRequest {
 	repeated string spv_connect = 3;
 }
 message SpvSyncResponse {
-	bool synced = 1;
+	message SyncingStatus {
+		message FetchHeaders {
+			int32 fetched_headers_count = 1;
+			int64 last_header_time = 2;
+		}
+		FetchHeaders fetch_headers = 1;
+		bool discovered_addresses = 2;
+		int32 rescanned_through = 3;
+	}
+	SyncingStatus syncing_status = 1;
+	int32 peer_count = 2;
 }
 
 message RescanPointRequest {}

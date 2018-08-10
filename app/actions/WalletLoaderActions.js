@@ -429,15 +429,26 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
     const { loader } = getState().walletLoader;
     var spvSyncCall = loader.spvSync(request);
     spvSyncCall.on("data", function(response) {
-      if (!discoverAccountsComplete) {
-        const { daemon: { walletName } } = getState();
-        const config = getWalletCfg(isTestNet(getState()), walletName);
-        config.delete("discoveraccounts");
-        config.set("discoveraccounts", true);
-        dispatch({ complete: true, type: UPDATEDISCOVERACCOUNTS });
+      if (response.getSyncingStatus()) {
+        console.log("getSyncingStatus is not null!");
+        if (response.getSyncingStatus().getFetchHeaders()) {
+          console.log("fetch headers progress: ", response.getSyncingStatus().getFetchHeaders().getFetchedHeadersCount(), new Date(response.getSyncingStatus().getFetchHeaders().getLastHeaderTime()/1000000));
+        }
+        if (response.getSyncingStatus().getDiscoveredAddresses() !== null) {
+          console.log("discover addresses: ", response.getSyncingStatus().getDiscoveredAddresses());
+        }
+      } else {
+        console.log("getSyncingStatus is null so that means it's synced!");
+        if (!discoverAccountsComplete) {
+          const { daemon: { walletName } } = getState();
+          const config = getWalletCfg(isTestNet(getState()), walletName);
+          config.delete("discoveraccounts");
+          config.set("discoveraccounts", true);
+          dispatch({ complete: true, type: UPDATEDISCOVERACCOUNTS });
+        }
+        dispatch({ syncCall: spvSyncCall, synced: true, type: SPVSYNC_UPDATE });
+        dispatch(getBestBlockHeightAttempt(startWalletServices));
       }
-      dispatch({ syncCall: spvSyncCall, synced: response.getSynced(), type: SPVSYNC_UPDATE });
-      dispatch(getBestBlockHeightAttempt(startWalletServices));
     });
     spvSyncCall.on("end", function() {
       dispatch({ type: SPVSYNC_SUCCESS });
