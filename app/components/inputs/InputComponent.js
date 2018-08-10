@@ -11,7 +11,11 @@ class Input extends React.Component {
   getInitialState() {
     return {
       inputUnitDiv: null,
-      divClassName: "input-and-unit " + (this.props.className || "") + (this.props.disabled ? " disabled " : "")
+      divClassName: "input-and-unit " + (this.props.className || "") + (this.props.disabled ? " disabled " : ""),
+      inputPhase: 0,
+      inputVal: "0.003000000",
+      inputMain: "0.00",
+      inputSub: "0000000"
     };
   }
   componentDidMount() {
@@ -47,15 +51,13 @@ class Input extends React.Component {
     onKeyDown && !e.defaultPrevented && onKeyDown(e);
   }
   onChange = () => {
-    var number =
-      (document.getElementById("input-main").innerHTML)
-      + (document.getElementById("input-sub").innerHTML);
-    document.getElementById("parsedInputDisplay").innerHTML = number;
-    document.getElementById("parsedInputDisplay").style.display = "inherit";
-    document.getElementById("viewInputDisplay").style.display = "none";
+    this.setState({ inputPhase: 1 });
+    var number = this.state.inputMain + this.state.inputSub;
+    this.setState({ inputVal: number });
   };
-  onChange2 = () => {
-    var number = document.getElementById("parsedInputDisplay").innerHTML;
+  onChange2 = (e) => {
+    this.setState({ inputPhase: 0 });
+    var number = e.target.textContent;
     var number_f = parseFloat(number);
     var left_part = number_f.toFixed(2);
     var right_part_raw = number_f - left_part;
@@ -79,7 +81,7 @@ class Input extends React.Component {
     }
 
     // Pad for numbers, so 0032 decimal will not turn to 32
-    right_part = pad(String(right_part), 6);
+    right_part = right_part.toString().padStart(6, "0");
 
     if (right_part <= 0) {
       right_part = "000000";
@@ -91,8 +93,8 @@ class Input extends React.Component {
       right_part = "000000";
     }
 
-    document.getElementById("input-main").innerHTML = left_part;
-    document.getElementById("input-sub").innerHTML = right_part;
+    this.setState({ inputMain: left_part });
+    this.setState({ inputSub: right_part });
 
     // Send to other older previous unstyled component and trigger event
     document.getElementById("parsedInput").value = number_f;
@@ -101,9 +103,6 @@ class Input extends React.Component {
     var tracker = x._valueTracker;
     tracker.setValue("'" + x.value + "'");
     x.dispatchEvent(event);
-
-    document.getElementById("parsedInputDisplay").style.display = "none";
-    document.getElementById("viewInputDisplay").style.display = "inherit";
   };
 
   render() {
@@ -153,14 +152,14 @@ class Input extends React.Component {
               onBlur={this.onChange2}
               onKeyDown={this.onKeyDown2}
             >
-              <span id="parsedInputDisplay" style={{ display: "none", marginTop: "2px;" }}
+              <span id="parsedInputDisplay" style={{ marginTop: "2px" }}
+                className={"parsedInput-" + this.state.inputPhase}
                 onKeyDown={this.onKeyDown2}
-              ></span>
-              <div id="viewInputDisplay">
+              >{this.state.inputVal}</span>
+              <div id="viewInputDisplay" className={"viewInput-" + this.state.inputPhase}>
                 <span
-
-                  type="number" id="input-main" className="input-main">0.00</span>
-                <span type="number" id="input-sub" className="input-sub">0000000</span>
+                  type="number" id="input-main" className="input-main">{this.state.inputMain}</span>
+                <span type="number" id="input-sub" className="input-sub">{this.state.inputSub}</span>
               </div>
             </div>
             {unit && !(showErrors && ((invalid && value) || (required && !value))) ? <div className="unit-area">{unit}</div> : null}
@@ -184,11 +183,6 @@ class Input extends React.Component {
         </Aux>
     );
   }
-}
-
-function pad(str, max) {
-  str = str.toString();
-  return str.length < max ? pad("0" + str, max) : str;
 }
 
 export default Input;
