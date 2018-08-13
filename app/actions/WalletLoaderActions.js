@@ -433,6 +433,7 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
         console.log("getSyncingStatus is not null!");
         if (response.getSyncingStatus().getFetchHeaders()) {
           console.log("fetch headers progress: ", response.getSyncingStatus().getFetchHeaders().getFetchedHeadersCount(), new Date(response.getSyncingStatus().getFetchHeaders().getLastHeaderTime()/1000000));
+          console.log("fetch cfilters progress: ", response.getSyncingStatus().getFetchHeaders().GetfetchedCfiltersCount());
         } else {
           console.log("fetch headers complete!");
           if (response.getSyncingStatus().getDiscoveredAddresses() !== null) {

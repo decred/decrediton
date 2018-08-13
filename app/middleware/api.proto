@@ -692,6 +692,7 @@ message SpvSyncResponse {
 		message FetchHeaders {
 			int32 fetched_headers_count = 1;
 			int64 last_header_time = 2;
+			int32 fetched_cfilters_count = 3;
 		}
 		FetchHeaders fetch_headers = 1;
 		bool discovered_addresses = 2;
