@@ -410,6 +410,12 @@ export const SPVSYNC_SUCCESS = "SPVSYNC_SUCCESS";
 export const SPVSYNC_UPDATE = "SPVSYNC_UPDATE";
 export const SPVSYNC_INPUT = "SPVSYNC_INPUT";
 export const SPVSYNC_CANCEL = "SPVSYNC_CANCEL";
+export const SPVSYNC_FETCH_HEADERS = "SPVSYNC_FETCH_HEADERS";
+export const SPVSYNC_DISCOVER_ADDRESS_WORKING = "SPVSYNC_DISCOVER_ADDRESS_WORKING";
+export const SPVSYNC_DISCOVER_ADDRESS_COMPLETE = "SPVSYNC_DISCOVER_ADDRESS_COMPLETE";
+export const SPVSYNC_RESCAN_PROGRESS = "SPVSYNC_RESCAN_PROGRESS";
+export const SPVSYNC_PEER_COUNT = "SPVSYNC_PEER_COUNT";
+export const SPVSYNC_UNSYNCED = "SPVSYNC_UNSYNCED";
 
 export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
   const { discoverAccountsComplete, spvConnect } = getState().walletLoader;
@@ -426,34 +432,41 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
   }
   return new Promise(() => {
     dispatch({ type: SPVSYNC_ATTEMPT });
-    const { loader } = getState().walletLoader;
+    const { loader, spvDiscoverAddresses, spvSynced } = getState().walletLoader;
     var spvSyncCall = loader.spvSync(request);
     spvSyncCall.on("data", function(response) {
       if (response.getSyncingStatus()) {
-        console.log("getSyncingStatus is not null!");
+        if (spvSynced) {
+          dispatch({ type: SPVSYNC_UNSYNCED });
+        }
         if (response.getSyncingStatus().getFetchHeaders()) {
-          console.log("fetch headers progress: ", response.getSyncingStatus().getFetchHeaders().getFetchedHeadersCount(), new Date(response.getSyncingStatus().getFetchHeaders().getLastHeaderTime()/1000000));
-          console.log("fetch cfilters progress: ", response.getSyncingStatus().getFetchHeaders().GetfetchedCfiltersCount());
+          var fetchedHeadersCount = response.getSyncingStatus().getFetchHeaders().getFetchedHeadersCount();
+          var lastFetchedHeaderTime = new Date(response.getSyncingStatus().getFetchHeaders().getLastHeaderTime()/1000000);
+          var fetchedMissingCfilters = response.getSyncingStatus().getFetchHeaders().getfetchedCfiltersCount();
+          dispatch({ fetchedHeadersCount, lastFetchedHeaderTime, fetchedMissingCfilters, type: SPVSYNC_FETCH_HEADERS });
         } else {
-          console.log("fetch headers complete!");
-          if (response.getSyncingStatus().getDiscoveredAddresses() !== null) {
-            console.log("discover addresses: ", response.getSyncingStatus().getDiscoveredAddresses());
+          if (!spvDiscoverAddresses) {
+            dispatch({ type: SPVSYNC_DISCOVER_ADDRESS_WORKING });
+          } else if (response.getSyncingStatus().getDiscoveredAddresses()) {
+            dispatch({ type: SPVSYNC_DISCOVER_ADDRESS_COMPLETE });
           }
-          if (response.getSyncingStatus().getRescannedThrough() !== null) {
-            console.log("rescan progress: ", response.getSyncingStatus().getRescannedThrough());
+          if (spvDiscoverAddresses && response.getSyncingStatus().getRescannedThrough() !== null) {
+            dispatch({ rescannedThrough: response.getSyncingStatus().getRescannedThrough(), type: SPVSYNC_RESCAN_PROGRESS });
           }
         }
       } else {
-        console.log("getSyncingStatus is null so that means it's synced!");
-        if (!discoverAccountsComplete) {
-          const { daemon: { walletName } } = getState();
-          const config = getWalletCfg(isTestNet(getState()), walletName);
-          config.delete("discoveraccounts");
-          config.set("discoveraccounts", true);
-          dispatch({ complete: true, type: UPDATEDISCOVERACCOUNTS });
+        if (!spvSynced) {
+          if (!discoverAccountsComplete) {
+            const { daemon: { walletName } } = getState();
+            const config = getWalletCfg(isTestNet(getState()), walletName);
+            config.delete("discoveraccounts");
+            config.set("discoveraccounts", true);
+            dispatch({ complete: true, type: UPDATEDISCOVERACCOUNTS });
+          }
+          dispatch({ syncCall: spvSyncCall, synced: true, type: SPVSYNC_UPDATE });
+          dispatch(getBestBlockHeightAttempt(startWalletServices));
         }
-        dispatch({ syncCall: spvSyncCall, synced: true, type: SPVSYNC_UPDATE });
-        dispatch(getBestBlockHeightAttempt(startWalletServices));
+        dispatch({ peerCount: response.getPeerCount(), type: SPVSYNC_PEER_COUNT });
       }
     });
     spvSyncCall.on("end", function() {

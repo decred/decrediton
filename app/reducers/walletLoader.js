@@ -14,7 +14,9 @@ import {
   GETWALLETSEEDSVC_ATTEMPT, GETWALLETSEEDSVC_SUCCESS,
   FETCHMISSINGCFILTERS_ATTEMPT, FETCHMISSINGCFILTERS_FAILED, FETCHMISSINGCFILTERS_SUCCESS,
   RESCANPOINT_ATTEMPT, RESCANPOINT_FAILED, RESCANPOINT_SUCCESS,
-  SPVSYNC_SUCCESS, SPVSYNC_UPDATE, SPVSYNC_FAILED, SPVSYNC_ATTEMPT, SPVSYNC_INPUT
+  SPVSYNC_SUCCESS, SPVSYNC_UPDATE, SPVSYNC_FAILED, SPVSYNC_ATTEMPT, SPVSYNC_INPUT,
+  SPVSYNC_UNSYNCED, SPVSYNC_FETCH_HEADERS, SPVSYNC_DISCOVER_ADDRESS_WORKING, SPVSYNC_DISCOVER_ADDRESS_COMPLETE,
+  SPVSYNC_RESCAN_PROGRESS, SPVSYNC_PEER_COUNT
 } from "actions/WalletLoaderActions";
 import {
   WALLETCREATED
@@ -355,6 +357,35 @@ export default function walletLoader(state = {}, action) {
       spvSyncAttemptRequest: false,
       spvSyncError: null,
       spvSynced: false,
+    };
+  case SPVSYNC_UNSYNCED:
+    return { ...state,
+      spvSynced: false,
+    };
+  case SPVSYNC_DISCOVER_ADDRESS_COMPLETE:
+    return { ...state,
+      spvDiscoverAddresses: true,
+    };
+  case SPVSYNC_DISCOVER_ADDRESS_WORKING:
+    return { ...state,
+      spvDiscoverAddresses: false,
+      spvFetchHeaders: false,
+    };
+  case SPVSYNC_FETCH_HEADERS:
+    return { ...state,
+      spvFetchHeaders: true,
+      fetchedHeadersCount: action.fetchedHeadersCount !== 0 ? action.fetchedHeadersCount + state.fetchedHeadersCount : state.fetchedMissingCfilters,
+      lastFetchedHeaderTime: action.lastFetchedHeaderTime,
+      fetchedMissingCfilters: action.fetchedMissingCfilters !== 0 ? action.fetchedMissingCfilters : state.fetchedMissingCfilters,
+    };
+  case SPVSYNC_RESCAN_PROGRESS:
+    return { ...state,
+      spvSynced: false,
+      spvRescannedThrough: action.rescannedThrough,
+    };
+  case SPVSYNC_PEER_COUNT:
+    return { ...state,
+      peerCount: false,
     };
   default:
     return state;
