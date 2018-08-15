@@ -52,10 +52,10 @@ function parseStakePoolResults(response) {
   var stakePoolNames = Object.keys(response.data);
 
   return stakePoolNames.map(name => {
-    let { APIEnabled } = response.data[name];
+    let { APIEnabled, URL } = response.data[name];
     return !APIEnabled
       ? null
-      : response.data[name];
+      : { Host: URL, ...response.data[name] };
   }).filter(v => v);
 }
 
