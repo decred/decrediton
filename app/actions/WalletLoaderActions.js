@@ -432,9 +432,10 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
   }
   return new Promise(() => {
     dispatch({ type: SPVSYNC_ATTEMPT });
-    const { loader, spvDiscoverAddresses, spvSynced } = getState().walletLoader;
+    const { loader } = getState().walletLoader;
     var spvSyncCall = loader.spvSync(request);
     spvSyncCall.on("data", function(response) {
+      const { spvFetchHeaders, spvDiscoverAddresses, spvSynced } = getState().walletLoader;
       if (response.getSyncingStatus()) {
         if (spvSynced) {
           dispatch({ type: SPVSYNC_UNSYNCED });
@@ -455,7 +456,8 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
           }
         }
       } else {
-        if (!spvSynced) {
+        console.log("peer count", response.getPeerCount(), spvFetchHeaders, spvDiscoverAddresses );
+        if (!spvSynced && response.getPeerCount() == -1) {
           if (!discoverAccountsComplete) {
             const { daemon: { walletName } } = getState();
             const config = getWalletCfg(isTestNet(getState()), walletName);
