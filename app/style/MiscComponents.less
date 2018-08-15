@@ -548,8 +548,13 @@
 }
 
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .rescan-button.spin {
@@ -648,7 +653,7 @@
 
 .no-transactions-indicator {
   background-image: @no-tx-icon;
-  color: #224;
+  color: #091440;
 }
 
 .no-tickets-indicator {
@@ -861,5 +866,11 @@
 
   .voting-progress-abstain {
     background-color: @vote-abstain-color;
+  }
+}
+
+@media screen and (min-width: 1149px) {
+  .no-transactions-indicator span {
+    line-height: 700%;
   }
 }
