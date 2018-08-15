@@ -16,7 +16,8 @@ const TxRowByType = { // TODO: use constants instead of string
   "live": stake("Live"),
   "out": regular("Send", true),
   "in": regular("Receive", false),
-  "transfer": regular("Transfer", true)
+  "transfer": regular("Transfer", true),
+  "Coinbase": regular("Receive", true),
 };
 
 const TxRow = ({ tx, overview }, { router }) => {

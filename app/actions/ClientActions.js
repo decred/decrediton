@@ -532,7 +532,8 @@ export const getTransactions = () => async (dispatch, getState) => {
 
   // now, request a batch of mined transactions until `maximumTransactionCount`
   // transactions have been obtained (after filtering)
-  while (!noMoreTransactions && (filtered.length < maximumTransactionCount)) {
+  let reachedGenesis = false;
+  while (!noMoreTransactions && (filtered.length < maximumTransactionCount) && !reachedGenesis) {
     let startRequestHeight, endRequestHeight;
 
     if ( transactionsFilter.listDirection === "desc" ) {
@@ -547,8 +548,10 @@ export const getTransactions = () => async (dispatch, getState) => {
     try {
       let { mined } = await walletGetTransactions(walletService,
         startRequestHeight, endRequestHeight, pageCount);
-      noMoreTransactions = mined.length === 0;
       lastTransaction = mined.length ? mined[mined.length -1] : lastTransaction;
+      reachedGenesis = (transactionsFilter.listDirection === "desc") &&
+        lastTransaction && (lastTransaction.height === 1);
+      noMoreTransactions = mined.length === 0 || reachedGenesis;
       filterTransactions(mined, transactionsFilter)
         .forEach(v => filtered.push(v));
     } catch (error) {
