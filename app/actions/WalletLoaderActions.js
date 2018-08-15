@@ -442,7 +442,7 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
         if (response.getSyncingStatus().getFetchHeaders()) {
           var fetchedHeadersCount = response.getSyncingStatus().getFetchHeaders().getFetchedHeadersCount();
           var lastFetchedHeaderTime = new Date(response.getSyncingStatus().getFetchHeaders().getLastHeaderTime()/1000000);
-          var fetchedMissingCfilters = response.getSyncingStatus().getFetchHeaders().getfetchedCfiltersCount();
+          var fetchedMissingCfilters = response.getSyncingStatus().getFetchHeaders().getFetchedCfiltersCount();
           dispatch({ fetchedHeadersCount, lastFetchedHeaderTime, fetchedMissingCfilters, type: SPVSYNC_FETCH_HEADERS });
         } else {
           if (!spvDiscoverAddresses) {

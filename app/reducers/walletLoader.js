@@ -385,7 +385,7 @@ export default function walletLoader(state = {}, action) {
     };
   case SPVSYNC_PEER_COUNT:
     return { ...state,
-      peerCount: false,
+      peerCount: action.peerCount,
     };
   default:
     return state;
