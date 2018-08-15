@@ -21,6 +21,7 @@ class Send extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.getInitialState();
+    this.state.account = this.props.defaultSpendingAccount;
   }
 
   getInitialState() {
@@ -29,7 +30,6 @@ class Send extends React.Component {
       isSendAll: false,
       isSendSelf: false,
       hastAttemptedConstruct: false,
-      account: this.props.defaultSpendingAccount,
       outputs: [ { key: "output_0", data:{ ...BASE_OUTPUT } } ],
       outputAccount: this.props.defaultSpendingAccount,
       lowBalanceError: false,
