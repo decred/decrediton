@@ -2,6 +2,18 @@ import {
   SpvSyncFormHeader as SpvSyncHeader,
   SpvSyncFormBody
 } from "./Form";
+import { getDcrwalletLastLogLine } from "wallet";
+
+function parseLogLine(line) {
+  const res = /^[\d :\-.]+ \[...\] (.+)$/.exec(line);
+  return res ? res[1] : "";
+}
+
+const LastLogLinesFragment = ({ lastDcrwalletLogLine }) => (
+  <div className="get-started-last-log-lines">
+    <div className="last-dcrwallet-log-line">{lastDcrwalletLogLine}</div>
+  </div>
+);
 
 @autobind
 class SpvSyncBody extends React.Component {
@@ -10,18 +22,31 @@ class SpvSyncBody extends React.Component {
     this.state = this.getInitialState();
   }
 
-  componentWillUnmount() {
-    this.resetState();
-  }
-
   componentDidMount() {
+    this.props.setInterval(() => {
+      Promise
+        .all([ getDcrwalletLastLogLine() ])
+        .then(([ dcrwalletLine ]) => {
+          const lastDcrwalletLogLine = parseLogLine(dcrwalletLine);
+          if (lastDcrwalletLogLine !== this.state.lastDcrwalletLogLine)
+          {
+            this.setState({ lastDcrwalletLogLine });
+          }
+        });
+    }, 2000);
     if (this.props.walletPrivatePassphrase && this.props.fetchHeadersDone !== null) {
       this.props.onSpvSynces(this.props.walletPrivatePassphrase);
     }
   }
 
+  componentWillUnmount() {
+    this.resetState();
+  }
+
   getInitialState() {
     return {
+      lastDcrdLogLine: "",
+      lastDcrwalletLogLine: "",
       passPhrase: "",
       hasAttemptedDiscover: false
     };
@@ -30,18 +55,23 @@ class SpvSyncBody extends React.Component {
   render() {
     const { passPhrase, hasAttemptedDiscover } = this.state;
     const { onSetPassPhrase, onSpvSync, onKeyDown } = this;
+    const { isSpvSyncAttempt } = this.state;
 
     return (
-      <SpvSyncFormBody
-        {...{
-          ...this.props,
-          passPhrase,
-          hasAttemptedDiscover,
-          onSetPassPhrase,
-          onSpvSync,
-          onKeyDown
-        }}
-      />
+      <Aux>
+        {!isSpvSyncAttempt ? <LastLogLinesFragment {...this.state} /> :
+          <SpvSyncFormBody
+            {...{
+              ...this.props,
+              passPhrase,
+              hasAttemptedDiscover,
+              onSetPassPhrase,
+              onSpvSync,
+              onKeyDown
+            }}
+          />
+        }
+      </Aux>
     );
   }
 

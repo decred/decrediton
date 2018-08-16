@@ -9,7 +9,6 @@ import { AboutModalButtonInvisible } from "buttons";
 export default ({
   Form,
   text,
-  barText,
   spvSynced,
   spvFetchedHeadersCount,
   isInputRequest,
