@@ -12,12 +12,14 @@ import "style/Fonts.less";
 const messages = defineMessages({
   Ticket:     { id: "transaction.type.ticket", defaultMessage: "Ticket" },
   Vote:       { id: "transaction.type.vote",   defaultMessage: "Vote" },
-  Revocation: { id: "transaction.type.revoke", defaultMessage: "Revoke" }
+  Revocation: { id: "transaction.type.revoke", defaultMessage: "Revoke" },
+  Coinbase:   { id: "transaction.type.coinbase", defaultMessage: "Coinbase" },
 });
 
 const headerIcons = {
   in:         "plusBig",
   out:        "minusBig",
+  Coinbase:   "plusBig",
   transfer:   "walletGray",
   Ticket:     "ticketSmall",
   Vote:       "ticketSmall",
