@@ -309,16 +309,12 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
       };
 
       maturingTxs[h].forEach(({ tx, amount, isWallet, isTicket }) => {
-        // res.push({
         maturedThisHeight.spendable += !isTicket ? amount*inc : 0; // isTicket == false means vote, revoke, coinbase
         maturedThisHeight.immature += isWallet ? -amount*inc : 0;
         maturedThisHeight.immatureNonWallet +=  isWallet ? 0 : -amount*inc;
         maturedThisHeight.locked += isWallet && isTicket ? amount*inc : 0;
         maturedThisHeight.lockedNonWallet += !isWallet && isTicket ? amount*inc : 0;
         maturedThisHeight.tx = tx;
-        // voted: 0, revoked: 0, sent: 0, received: 0, ticket: 0,
-        // stakeRewards: 0, stakeFees: 0, totalStake: 0,
-        // timestamp, tx });
       });
 
       res.push(maturedThisHeight);
@@ -530,6 +526,17 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
   const toProcess = [];
 
   try {
+    if (backwards) {
+      // when calculating backwards, we need to account for unmined txs, because
+      // the account balances for locked tickets include them. To simplify the
+      // logic, we modify the unmined transactions to simulate as if it had been
+      // just mined in the last block.
+      const { unmined } = await wallet.getTransactions(walletService, -1, -1, 0);
+      const fixedUnmined = unmined.map(tx => ({ ...tx, timestamp: currentDate.getTime(),
+        height: currentBlock }));
+      toProcess.push(...fixedUnmined);
+    }
+
     // now, grab transactions in batches of (roughly) `pageSize`
     // transactions, so that if we can stop in the middle of the process
     // (say, because we're interested in only the first 10 days worth of
