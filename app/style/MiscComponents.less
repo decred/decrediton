@@ -652,8 +652,15 @@
 }
 
 .no-transactions-indicator {
+  color: #617386;
+}
+
+.no-transactions-indicator-img {
   background-image: @no-tx-icon;
-  color: #091440;
+  height: 100px;
+  background-repeat: no-repeat;
+  background-size: 80px;
+  background-position: center 30px;
 }
 
 .no-tickets-indicator {
@@ -801,10 +808,8 @@
     bottom: 18px;
   }
 }
-
 // .vertical-accordion {
 // }
-
 .vertical-accordion-header {
   cursor: pointer;
   position: relative;
@@ -866,11 +871,5 @@
 
   .voting-progress-abstain {
     background-color: @vote-abstain-color;
-  }
-}
-
-@media screen and (min-width: 1149px) {
-  .no-transactions-indicator span {
-    line-height: 700%;
   }
 }
