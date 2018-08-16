@@ -48,6 +48,14 @@ const mapStateToProps = selectorMap({
   fetchHeadersDone: sel.fetchHeadersDone,
   isSPV: sel.isSPV,
   spvInput: sel.spvInput,
+  spvDiscoverAddresses: sel.spvDiscoverAddresses,
+  spvFetchHeaders: sel.spvFetchHeaders,
+  spvFetchedHeadersCount: sel.fetchedHeadersCount,
+  spvLastFetchedHeaderTime: sel.lastFetchedHeaderTime,
+  spvFetchedMissingCfilters: sel.fetchedMissingCfilters,
+  spvPeerCount: sel.peerCount,
+  spvRescannedThrough: sel.spvRescannedThrough,
+  spvSynced: sel.spvSynced,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

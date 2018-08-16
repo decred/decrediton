@@ -60,7 +60,18 @@ export const versionInvalidError = createSelector(
   [ versionInvalid, get([ "version", "versionInvalidError" ]) ],
   (invalid, error) => invalid ? error || "Unknown Error" : null
 );
+
 export const spvInput = get([ "walletLoader", "spvInput" ]);
+export const spvDiscoverAddresses = get([ "walletLoader", "spvDiscoverAddresses" ]);
+export const spvFetchHeaders = get([ "walletLoader", "spvFetchHeaders" ]);
+export const fetchedHeadersCount = get([ "walletLoader", "fetchedHeadersCount" ]);
+export const lastFetchedHeaderTime = get([ "walletLoader", "lastFetchedHeaderTime" ]);
+export const peerCount = get([ "walletLoader", "peerCount" ]);
+export const ffetchedMissingCfilters = get([ "walletLoader", "fetchedMissingCfilters" ]);
+export const spvRescannedThrough = get([ "walletLoader", "spvRescannedThrough" ]);
+export const spvSynced = get([ "walletLoader", "spvSynced" ]);
+
+
 
 const isStartStepOpen = compose(eq(START_STEP_OPEN), startStepIndex);
 const isStartStepDiscover = compose(eq(START_STEP_DISCOVER), startStepIndex);
