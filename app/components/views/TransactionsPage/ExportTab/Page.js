@@ -24,7 +24,7 @@ const ExportPage =
     expandFields
   }) => (
     <Aux>
-      <div className="tabbed-page-subtitle"><T id="export.subtitle" m="Export Transactions"/></div>
+      <div className="tabbed-page-subtitle export"><T id="export.subtitle" m="Export Transactions"/></div>
       <div className="export-area">
         <div className="export-area-left">
           <InlineField label={<T id="export.select" m="Export Type" />}>
