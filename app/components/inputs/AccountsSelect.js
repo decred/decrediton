@@ -23,20 +23,40 @@ class AccountsSelect extends React.Component {
 
   constructor(props) {
     super(props);
-    let accountsPerType = {
-      "spending": this.props.spendingAccounts,
-      "visible": this.props.visibleAccounts
-    };
     this.state = {
       account: props.account || props.defaultSpendingAccount,
-      accounts: accountsPerType[this.props.accountsType||"spending"]
+      accounts: this.getAccountsToShow(props),
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.state.account !== nextProps.account) {
-      this.setState({ account: nextProps.account });
+    let newState = null;
+
+    if (this.props.account !== nextProps.account) {
+      newState = { account: nextProps.account };
     }
+
+    if ((this.props.spendingAccounts !== nextProps.spendingAccounts) ||
+        (this.props.visibleAccounts !== nextProps.visibleAccounts) ||
+        (this.props.accountsType !== nextProps.accountsType)) {
+      newState = { accounts: this.getAccountsToShow(nextProps), ...newState };
+      if (nextProps.account && !newState.account) {
+        const newAccount = newState.accounts.find(a => a.value === nextProps.account.value);
+        newState = { account: newAccount, ...newState };
+      }
+    }
+
+    if (newState) {
+      this.setState(newState);
+    }
+  }
+
+  getAccountsToShow(nextProps) {
+    let accountsPerType = {
+      "spending": nextProps.spendingAccounts,
+      "visible": nextProps.visibleAccounts
+    };
+    return accountsPerType[this.props.accountsType||"spending"];
   }
 
   render() {
