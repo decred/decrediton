@@ -51,7 +51,8 @@
 .app-modal.info-modal,
 .app-modal.confirm-modal,
 .app-modal-reduced-bar.info-modal,
-.app-modal-standalone.info-modal {
+.app-modal-standalone.info-modal,
+.pseudo-modal.info-modal, {
   max-height: 60%;
   z-index: 200;
   overflow-y: auto;
@@ -511,4 +512,38 @@
 .confirm-seed-copy-phrase {
   text-decoration: underline;
   margin: 0px 4px 0px 4px;
+}
+
+.watch-only-modal-title {
+  font-size: 27px;
+  color: #48566e;
+  line-height: 1;
+  width: 215px;
+  height: 102px;
+}
+
+.watch-only-modal-content {
+  color: #48566e;
+  font-size: 13px;
+}
+
+.pseudo-modal {
+  position: fixed;
+  color: #48566e;
+  background-color: #fff;
+  box-shadow: 0 15px 34px rgba(9, 20, 64, 0.21);
+  z-index: 98;
+}
+
+.pseudo-modal.info-modal {
+  z-index: 98;
+  margin-top: 0;
+  margin-left: 150px;
+}
+
+.pseudo-modal-overlay {
+  position: fixed;
+  z-index: 99;
+  height: 100%;
+  width: 100%;
 }

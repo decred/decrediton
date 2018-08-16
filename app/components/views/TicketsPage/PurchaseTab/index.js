@@ -2,6 +2,7 @@ import { substruct, compose, eq, get } from "fp";
 import { service, ticketsPage } from "connectors";
 import PurchasePage from "./Page";
 import { FormattedMessage as T } from "react-intl";
+import WatchingOnlyWarnModal from "PseudoModal/WatchingOnlyWarn";
 
 @autobind
 class Purchase extends React.Component {
@@ -27,27 +28,36 @@ class Purchase extends React.Component {
   }
 
   render() {
+    const { isTicketPurchaseTabDisabled } = this.props;
     return (
-      <PurchasePage
-        {...{
-          ...this.props,
-          ...this.state,
-          stakePool: this.getStakePool(),
-          account: this.getAccount(),
-          ...substruct({
-            onChangeStakePool: null,
-            onChangeAccount: null,
-            onShowImportScript: null,
-            onShowRevokeTicket: null,
-            onCancelImportScript: null,
-            onToggleTicketStakePool: null,
-            onShowStakePoolConfig: null,
-            onHideStakePoolConfig: null,
-            onImportScript: null,
-            onRevokeTickets: null,
-          }, this)
-        }}
-      />);
+      <Aux>
+        {
+          isTicketPurchaseTabDisabled && <WatchingOnlyWarnModal />
+        }
+        <div className={ isTicketPurchaseTabDisabled ? "pseudo-modal-wrapper blur" : null }>
+          <PurchasePage
+            {...{
+              ...this.props,
+              ...this.state,
+              stakePool: this.getStakePool(),
+              account: this.getAccount(),
+              ...substruct({
+                onChangeStakePool: null,
+                onChangeAccount: null,
+                onShowImportScript: null,
+                onShowRevokeTicket: null,
+                onCancelImportScript: null,
+                onToggleTicketStakePool: null,
+                onShowStakePoolConfig: null,
+                onHideStakePoolConfig: null,
+                onImportScript: null,
+                onRevokeTickets: null,
+              }, this)
+            }}
+          />
+        </div>
+      </Aux>
+    );
   }
 
   onToggleTicketStakePool(side) {

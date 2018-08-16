@@ -18,6 +18,7 @@ const mapStateToProps = selectorMap({
   unitDivisor: sel.unitDivisor,
   hasUnminedTransactions: sel.hasUnminedTransactions,
   constructTxLowBalance: sel.constructTxLowBalance,
+  isTransactionsSendTabDisabled: sel.isTransactionsSendTabDisabled,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

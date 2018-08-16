@@ -6,6 +6,7 @@ import { FormattedMessage as T } from "react-intl";
 import { spring, presets } from "react-motion";
 import OutputRow from "./OutputRow";
 import { DescriptionHeader } from "layout";
+import WatchingOnlyWarnModal from "PseudoModal/WatchingOnlyWarn";
 
 const BASE_OUTPUT = { destination: "", amount: null };
 
@@ -55,6 +56,10 @@ class Send extends React.Component {
   }
 
   render() {
+    if (!this.props.walletService) {
+      return  <ErrorScreen />;
+    }
+
     const {
       onChangeAccount,
       onAttemptSignTransaction,
@@ -77,43 +82,49 @@ class Send extends React.Component {
       getStyles,
       getDefaultStyles,
       onKeyDown,
-      sendAllAmount,
       resetShowPassphraseModal,
     } = this;
     const isValid = this.getIsValid();
     const showPassphraseModal = this.getShowPassphraseModal();
+    const { isTransactionsSendTabDisabled } = this.props;
 
-    return !this.props.walletService ? <ErrorScreen /> : (
-      <SendPage
-        {...{ ...this.props, ...this.state }}
-        {...{
-          isValid,
-          onKeyDown,
-          onChangeAccount,
-          onAttemptSignTransaction,
-          onClearTransaction,
-          onShowConfirm,
-          onShowSendAll,
-          onHideSendAll,
-          onShowSendSelf,
-          onShowSendOthers,
-          onAttemptConstructTransaction,
-          onAddOutput,
-          onRebroadcastUnmined,
-          getOnRemoveOutput,
-          getOnChangeOutputDestination,
-          getOnChangeOutputAmount,
-          getAddressError,
-          getAmountError,
-          willEnter,
-          willLeave,
-          getStyles,
-          getDefaultStyles,
-          showPassphraseModal,
-          resetShowPassphraseModal,
-          sendAllAmount,
-        }}
-      />
+    return (
+      <Aux>
+        {
+          isTransactionsSendTabDisabled && <WatchingOnlyWarnModal />
+        }
+        <div className={ isTransactionsSendTabDisabled ? "pseudo-modal-wrapper blur" : null }>
+          <SendPage
+            {...{ ...this.props, ...this.state }}
+            {...{
+              isValid,
+              onKeyDown,
+              onChangeAccount,
+              onAttemptSignTransaction,
+              onClearTransaction,
+              onShowConfirm,
+              onShowSendAll,
+              onHideSendAll,
+              onShowSendSelf,
+              onShowSendOthers,
+              onAttemptConstructTransaction,
+              onAddOutput,
+              onRebroadcastUnmined,
+              getOnRemoveOutput,
+              getOnChangeOutputDestination,
+              getOnChangeOutputAmount,
+              getAddressError,
+              getAmountError,
+              willEnter,
+              willLeave,
+              getStyles,
+              getDefaultStyles,
+              showPassphraseModal,
+              resetShowPassphraseModal,
+            }}
+          />
+        </div>
+      </Aux>
     );
   }
 
