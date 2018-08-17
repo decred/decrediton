@@ -47,9 +47,18 @@ class SpvSync extends React.Component {
   render() {
     const { passPhrase, hasAttemptedDiscover } = this.state;
     const { onSetPassPhrase, onSpvSync, onKeyDown, lastDcrwalletLogLine } = this;
+    const secondsLeft = this.props.spvSyncSecondsLeft;
+
+    let finishDateEstimation = null;
+    if (secondsLeft !== null && secondsLeft !== undefined) {
+      finishDateEstimation = new Date();
+      finishDateEstimation.setSeconds(finishDateEstimation.getSeconds() + secondsLeft);
+    }
+
     return (
       <SpvSyncFormBody {...{
         ...this.props,
+        finishDateEstimation,
         lastDcrwalletLogLine,
         passPhrase,
         hasAttemptedDiscover,

@@ -22563,9 +22563,10 @@ proto.walletrpc.SpvSyncResponse.SyncingStatus.FetchHeaders.prototype.toObject = 
  */
 proto.walletrpc.SpvSyncResponse.SyncingStatus.FetchHeaders.toObject = function(includeInstance, msg) {
   var f, obj = {
-    fetchedHeadersCount: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    lastHeaderTime: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    fetchedCfiltersCount: jspb.Message.getFieldWithDefault(msg, 3, 0)
+    peerInitialHeight: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    lastHeaderHeight: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    lastHeaderTime: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    fetchedCfiltersCount: jspb.Message.getFieldWithDefault(msg, 4, 0)
   };
 
   if (includeInstance) {
@@ -22604,13 +22605,17 @@ proto.walletrpc.SpvSyncResponse.SyncingStatus.FetchHeaders.deserializeBinaryFrom
     switch (field) {
     case 1:
       var value = /** @type {number} */ (reader.readInt32());
-      msg.setFetchedHeadersCount(value);
+      msg.setPeerInitialHeight(value);
       break;
     case 2:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setLastHeaderHeight(value);
+      break;
+    case 3:
       var value = /** @type {number} */ (reader.readInt64());
       msg.setLastHeaderTime(value);
       break;
-    case 3:
+    case 4:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setFetchedCfiltersCount(value);
       break;
@@ -22643,24 +22648,31 @@ proto.walletrpc.SpvSyncResponse.SyncingStatus.FetchHeaders.prototype.serializeBi
  */
 proto.walletrpc.SpvSyncResponse.SyncingStatus.FetchHeaders.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getFetchedHeadersCount();
+  f = message.getPeerInitialHeight();
   if (f !== 0) {
     writer.writeInt32(
       1,
       f
     );
   }
+  f = message.getLastHeaderHeight();
+  if (f !== 0) {
+    writer.writeInt32(
+      2,
+      f
+    );
+  }
   f = message.getLastHeaderTime();
   if (f !== 0) {
     writer.writeInt64(
-      2,
+      3,
       f
     );
   }
   f = message.getFetchedCfiltersCount();
   if (f !== 0) {
     writer.writeInt32(
-      3,
+      4,
       f
     );
   }
@@ -22668,47 +22680,62 @@ proto.walletrpc.SpvSyncResponse.SyncingStatus.FetchHeaders.serializeBinaryToWrit
 
 
 /**
- * optional int32 fetched_headers_count = 1;
+ * optional int32 peer_initial_height = 1;
  * @return {number}
  */
-proto.walletrpc.SpvSyncResponse.SyncingStatus.FetchHeaders.prototype.getFetchedHeadersCount = function() {
+proto.walletrpc.SpvSyncResponse.SyncingStatus.FetchHeaders.prototype.getPeerInitialHeight = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
 };
 
 
 /** @param {number} value */
-proto.walletrpc.SpvSyncResponse.SyncingStatus.FetchHeaders.prototype.setFetchedHeadersCount = function(value) {
+proto.walletrpc.SpvSyncResponse.SyncingStatus.FetchHeaders.prototype.setPeerInitialHeight = function(value) {
   jspb.Message.setField(this, 1, value);
 };
 
 
 /**
- * optional int64 last_header_time = 2;
+ * optional int32 last_header_height = 2;
  * @return {number}
  */
-proto.walletrpc.SpvSyncResponse.SyncingStatus.FetchHeaders.prototype.getLastHeaderTime = function() {
+proto.walletrpc.SpvSyncResponse.SyncingStatus.FetchHeaders.prototype.getLastHeaderHeight = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
 
 
 /** @param {number} value */
-proto.walletrpc.SpvSyncResponse.SyncingStatus.FetchHeaders.prototype.setLastHeaderTime = function(value) {
+proto.walletrpc.SpvSyncResponse.SyncingStatus.FetchHeaders.prototype.setLastHeaderHeight = function(value) {
   jspb.Message.setField(this, 2, value);
 };
 
 
 /**
- * optional int32 fetched_cfilters_count = 3;
+ * optional int64 last_header_time = 3;
  * @return {number}
  */
-proto.walletrpc.SpvSyncResponse.SyncingStatus.FetchHeaders.prototype.getFetchedCfiltersCount = function() {
+proto.walletrpc.SpvSyncResponse.SyncingStatus.FetchHeaders.prototype.getLastHeaderTime = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
 };
 
 
 /** @param {number} value */
-proto.walletrpc.SpvSyncResponse.SyncingStatus.FetchHeaders.prototype.setFetchedCfiltersCount = function(value) {
+proto.walletrpc.SpvSyncResponse.SyncingStatus.FetchHeaders.prototype.setLastHeaderTime = function(value) {
   jspb.Message.setField(this, 3, value);
+};
+
+
+/**
+ * optional int32 fetched_cfilters_count = 4;
+ * @return {number}
+ */
+proto.walletrpc.SpvSyncResponse.SyncingStatus.FetchHeaders.prototype.getFetchedCfiltersCount = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.SpvSyncResponse.SyncingStatus.FetchHeaders.prototype.setFetchedCfiltersCount = function(value) {
+  jspb.Message.setField(this, 4, value);
 };
 
 

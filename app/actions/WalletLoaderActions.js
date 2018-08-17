@@ -434,17 +434,30 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
     dispatch({ type: SPVSYNC_ATTEMPT });
     const { loader } = getState().walletLoader;
     var spvSyncCall = loader.spvSync(request);
+    var timeStart;
     spvSyncCall.on("data", function(response) {
-      const { spvFetchHeaders, spvDiscoverAddresses, spvSynced } = getState().walletLoader;
+      const { spvDiscoverAddresses, spvSynced, lastHeaderHeight } = getState().walletLoader;
       if (response.getSyncingStatus()) {
         if (spvSynced) {
           dispatch({ type: SPVSYNC_UNSYNCED });
         }
         if (response.getSyncingStatus().getFetchHeaders()) {
-          var fetchedHeadersCount = response.getSyncingStatus().getFetchHeaders().getFetchedHeadersCount();
+          if (!timeStart) {
+            timeStart = new Date();
+          }
+
+          var peerInitialHeight = response.getSyncingStatus().getFetchHeaders().getPeerInitialHeight();
+          var lastHeaderHeightUpdate = response.getSyncingStatus().getFetchHeaders().getLastHeaderHeight();
           var lastFetchedHeaderTime = new Date(response.getSyncingStatus().getFetchHeaders().getLastHeaderTime()/1000000);
           var fetchedMissingCfilters = response.getSyncingStatus().getFetchHeaders().getFetchedCfiltersCount();
-          dispatch({ fetchedHeadersCount, lastFetchedHeaderTime, fetchedMissingCfilters, type: SPVSYNC_FETCH_HEADERS });
+
+          const blocksLeft = peerInitialHeight - lastHeaderHeightUpdate;
+          const blocksDiff = lastHeaderHeightUpdate - lastHeaderHeight;
+          const currentTime = new Date();
+          const timeSyncing = (currentTime - timeStart) / 1000;
+          const spvSyncSecondsLeft = Math.round(blocksLeft / blocksDiff * timeSyncing);
+          console.log(blocksLeft, blocksDiff, currentTime, timeStart, timeSyncing, spvSyncSecondsLeft);
+          dispatch({ spvSyncSecondsLeft, peerInitialHeight, lastHeaderHeight: lastHeaderHeightUpdate, lastFetchedHeaderTime, fetchedMissingCfilters, type: SPVSYNC_FETCH_HEADERS });
         } else {
           if (!spvDiscoverAddresses) {
             dispatch({ type: SPVSYNC_DISCOVER_ADDRESS_WORKING });
@@ -456,7 +469,7 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
           }
         }
       } else {
-        console.log("peer count", response.getPeerCount(), spvFetchHeaders, spvDiscoverAddresses );
+        console.log("peer count", response.getPeerCount() );
         if (!spvSynced && response.getPeerCount() == -1) {
           if (!discoverAccountsComplete) {
             const { daemon: { walletName } } = getState();

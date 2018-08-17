@@ -1,10 +1,10 @@
 import { LinearProgressFull, DecredLoading } from "indicators";
 import { FormattedMessage as T, FormattedRelative, injectIntl, defineMessages } from "react-intl";
-import { SlateGrayButton, InvisibleButton } from "buttons";
+import { KeyBlueButton, SlateGrayButton, InvisibleButton, AboutModalButtonInvisible } from "buttons";
+import { PasswordInput } from "inputs";
 import { Tooltip } from "shared";
 import { shell } from "electron";
 import "style/GetStarted.less";
-import { AboutModalButtonInvisible } from "buttons";
 
 const messages = defineMessages({
   passphrasePlaceholder: {
@@ -16,9 +16,7 @@ const messages = defineMessages({
 const SpvSyncBody = ({
   text,
   spvSynced,
-  spvFetchedHeadersCount,
   isInputRequest,
-  getNeededBlocks,
   getWalletReady,
   finishDateEstimation,
   onShowSettings,
@@ -34,7 +32,9 @@ const SpvSyncBody = ({
   onSpvSync,
   onKeyDown,
   spvInput,
-  lastDcrwalletLogLine
+  lastDcrwalletLogLine,
+  spvPeerInitialHeight,
+  spvLastHeaderHeight,
 }) => (
   <div className="page-body getstarted">
     <div className="getstarted loader">
@@ -75,14 +75,13 @@ const SpvSyncBody = ({
             <LinearProgressFull
               error={startupError}
               getDaemonSynced={spvSynced}
-              disabled={!getWalletReady}
               min={0}
-              max={getNeededBlocks}
-              value={spvFetchedHeadersCount}
+              max={spvPeerInitialHeight}
+              value={spvLastHeaderHeight}
             />
             <div className="loader-bar-estimation">
               <T id="getStarted.chainLoading.syncEstimation" m="Estimated time left"/>
-              <span className="bold"> {finishDateEstimation ? <FormattedRelative value={finishDateEstimation}/> : "--"} ({0} / {getNeededBlocks})</span>
+              <span className="bold"> {finishDateEstimation ? <FormattedRelative value={finishDateEstimation}/> : "--"} ({spvLastHeaderHeight} / {spvPeerInitialHeight})</span>
             </div>
             }
           </Aux>

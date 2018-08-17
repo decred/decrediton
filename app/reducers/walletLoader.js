@@ -374,9 +374,11 @@ export default function walletLoader(state = {}, action) {
   case SPVSYNC_FETCH_HEADERS:
     return { ...state,
       spvFetchHeaders: true,
-      fetchedHeadersCount: action.fetchedHeadersCount !== 0 ? action.fetchedHeadersCount + state.fetchedHeadersCount : state.fetchedMissingCfilters,
+      peerInitialHeight: action.peerInitialHeight,
+      lastHeaderHeight: action.lastHeaderHeight,
       lastFetchedHeaderTime: action.lastFetchedHeaderTime,
       fetchedMissingCfilters: action.fetchedMissingCfilters !== 0 ? action.fetchedMissingCfilters : state.fetchedMissingCfilters,
+      spvSyncSecondsLeft: action. spvSyncSecondsLeft
     };
   case SPVSYNC_RESCAN_PROGRESS:
     return { ...state,

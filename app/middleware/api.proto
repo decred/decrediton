@@ -690,9 +690,10 @@ message SpvSyncRequest {
 message SpvSyncResponse {
 	message SyncingStatus {
 		message FetchHeaders {
-			int32 fetched_headers_count = 1;
-			int64 last_header_time = 2;
-			int32 fetched_cfilters_count = 3;
+			int32 peer_initial_height = 1;
+			int32 last_header_height = 2;
+			int64 last_header_time = 3;
+			int32 fetched_cfilters_count = 4;
 		}
 		FetchHeaders fetch_headers = 1;
 		bool discovered_addresses = 2;
