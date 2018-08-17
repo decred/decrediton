@@ -435,8 +435,9 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
     const { loader } = getState().walletLoader;
     var spvSyncCall = loader.spvSync(request);
     var timeStart;
+    var blockStart;
     spvSyncCall.on("data", function(response) {
-      const { spvDiscoverAddresses, spvSynced, lastHeaderHeight } = getState().walletLoader;
+      const { spvDiscoverAddresses, spvSynced } = getState().walletLoader;
       if (response.getSyncingStatus()) {
         if (spvSynced) {
           dispatch({ type: SPVSYNC_UNSYNCED });
@@ -445,19 +446,21 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
           if (!timeStart) {
             timeStart = new Date();
           }
-
+          if (!blockStart) {
+            blockStart = response.getSyncingStatus().getFetchHeaders().getLastHeaderHeight();
+          }
           var peerInitialHeight = response.getSyncingStatus().getFetchHeaders().getPeerInitialHeight();
-          var lastHeaderHeightUpdate = response.getSyncingStatus().getFetchHeaders().getLastHeaderHeight();
+          var lastHeaderHeight = response.getSyncingStatus().getFetchHeaders().getLastHeaderHeight();
           var lastFetchedHeaderTime = new Date(response.getSyncingStatus().getFetchHeaders().getLastHeaderTime()/1000000);
           var fetchedMissingCfilters = response.getSyncingStatus().getFetchHeaders().getFetchedCfiltersCount();
 
-          const blocksLeft = peerInitialHeight - lastHeaderHeightUpdate;
-          const blocksDiff = lastHeaderHeightUpdate - lastHeaderHeight;
+          const blocksLeft = peerInitialHeight - lastHeaderHeight;
+          const blocksDiff = lastHeaderHeight - blockStart;
           const currentTime = new Date();
           const timeSyncing = (currentTime - timeStart) / 1000;
           const spvSyncSecondsLeft = Math.round(blocksLeft / blocksDiff * timeSyncing);
-          console.log(blocksLeft, blocksDiff, currentTime, timeStart, timeSyncing, spvSyncSecondsLeft);
-          dispatch({ spvSyncSecondsLeft, peerInitialHeight, lastHeaderHeight: lastHeaderHeightUpdate, lastFetchedHeaderTime, fetchedMissingCfilters, type: SPVSYNC_FETCH_HEADERS });
+
+          dispatch({ spvSyncSecondsLeft, peerInitialHeight, lastHeaderHeight, lastFetchedHeaderTime, fetchedMissingCfilters, type: SPVSYNC_FETCH_HEADERS });
         } else {
           if (!spvDiscoverAddresses) {
             dispatch({ type: SPVSYNC_DISCOVER_ADDRESS_WORKING });
