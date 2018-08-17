@@ -329,7 +329,7 @@ const transactionNormalizer = createSelector(
       if (ticketDecoded) {
         status = ticketDecoded.status;
       }
-      
+
       const { blockHash } = tx;
       const type = tx.type || (tx.getTransactionType ? tx.getTransactionType() : null);
       let txInfo = tx.tx ? tx : {};
