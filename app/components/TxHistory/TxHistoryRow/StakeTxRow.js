@@ -76,10 +76,10 @@ const StakeTxRow = ({ status, txType, ...props }) => {
         </div>
       </Row>
     ) : (
-      <Row {...{ className: txType, ...props }}>
+      <Row {...{ className: status , ...props }}>
         <div className="transaction-info">
           <span className="icon" />
-          <span className="transaction-stake-type">{messageByType[txType] || "(unknown type)"}</span>
+          <span className="transaction-stake-type">{messageByType[status] || "(unknown type)"}</span>
         </div>
       </Row>
     );
