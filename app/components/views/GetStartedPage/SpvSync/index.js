@@ -1,22 +1,14 @@
-import {
-  SpvSyncFormHeader as SpvSyncHeader,
-  SpvSyncFormBody
-} from "./Form";
+import SpvSyncFormBody from "./Form";
 import { getDcrwalletLastLogLine } from "wallet";
+import ReactTimeout from "react-timeout";
 
 function parseLogLine(line) {
   const res = /^[\d :\-.]+ \[...\] (.+)$/.exec(line);
   return res ? res[1] : "";
 }
 
-const LastLogLinesFragment = ({ lastDcrwalletLogLine }) => (
-  <div className="get-started-last-log-lines">
-    <div className="last-dcrwallet-log-line">{lastDcrwalletLogLine}</div>
-  </div>
-);
-
 @autobind
-class SpvSyncBody extends React.Component {
+class SpvSync extends React.Component {
   constructor(props)  {
     super(props);
     this.state = this.getInitialState();
@@ -24,7 +16,6 @@ class SpvSyncBody extends React.Component {
 
   componentDidMount() {
     this.props.setInterval(() => {
-      console.log("sdfds");
       Promise
         .all([ getDcrwalletLastLogLine() ])
         .then(([ dcrwalletLine ]) => {
@@ -55,26 +46,16 @@ class SpvSyncBody extends React.Component {
 
   render() {
     const { passPhrase, hasAttemptedDiscover } = this.state;
-    const { onSetPassPhrase, onSpvSync, onKeyDown } = this;
-    const { spvInput } = this.props;
-
+    const { onSetPassPhrase, onSpvSync, onKeyDown, lastDcrwalletLogLine } = this;
     return (
-      <Aux>
-        {!spvInput ? <LastLogLinesFragment {...{
-          lastDcrwalletLogLine: this.lastDcrwalletLogLine }} /> :
-          <SpvSyncFormBody
-            {...{
-              ...this.props,
-              passPhrase,
-              hasAttemptedDiscover,
-              onSetPassPhrase,
-              onSpvSync,
-              onKeyDown
-            }}
-          />
-        }
-      </Aux>
-    );
+      <SpvSyncFormBody {...{
+        ...this.props,
+        lastDcrwalletLogLine,
+        passPhrase,
+        hasAttemptedDiscover,
+        onSetPassPhrase,
+        onSpvSync,
+        onKeyDown }}/>);
   }
 
   resetState() {
@@ -108,4 +89,4 @@ class SpvSyncBody extends React.Component {
 
 }
 
-export { SpvSyncHeader, SpvSyncBody };
+export default ReactTimeout(SpvSync);
