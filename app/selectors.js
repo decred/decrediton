@@ -67,7 +67,7 @@ export const spvFetchHeaders = get([ "walletLoader", "spvFetchHeaders" ]);
 export const fetchedHeadersCount = get([ "walletLoader", "fetchedHeadersCount" ]);
 export const lastFetchedHeaderTime = get([ "walletLoader", "lastFetchedHeaderTime" ]);
 export const peerCount = get([ "walletLoader", "peerCount" ]);
-export const ffetchedMissingCfilters = get([ "walletLoader", "fetchedMissingCfilters" ]);
+export const fetchedMissingCfilters = get([ "walletLoader", "fetchedMissingCfilters" ]);
 export const spvRescannedThrough = get([ "walletLoader", "spvRescannedThrough" ]);
 export const spvSynced = get([ "walletLoader", "spvSynced" ]);
 

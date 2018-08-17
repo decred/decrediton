@@ -137,11 +137,7 @@ class GetStartedPage extends React.Component {
       Form = WalletSelectionBody;
     } else if (isSPV && startStepIndex > 2) {
       text = <T id="getStarted.header.syncSpv.meta" m="Syncing SPV Wallet" />;
-      if (spvInput) {
-        Form = SpvSyncBody;
-      } else {
-        Form = FetchBlockHeadersBody;
-      }
+      Form = SpvSyncBody;
     } else {
       switch (startStepIndex || 0) {
       case 0:

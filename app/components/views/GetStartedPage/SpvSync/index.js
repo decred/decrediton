@@ -24,13 +24,14 @@ class SpvSyncBody extends React.Component {
 
   componentDidMount() {
     this.props.setInterval(() => {
+      console.log("sdfds");
       Promise
         .all([ getDcrwalletLastLogLine() ])
         .then(([ dcrwalletLine ]) => {
           const lastDcrwalletLogLine = parseLogLine(dcrwalletLine);
-          if (lastDcrwalletLogLine !== this.state.lastDcrwalletLogLine)
+          if (lastDcrwalletLogLine !== this.lastDcrwalletLogLine)
           {
-            this.setState({ lastDcrwalletLogLine });
+            this.lastDcrwalletLogLine = lastDcrwalletLogLine;
           }
         });
     }, 2000);
@@ -55,11 +56,12 @@ class SpvSyncBody extends React.Component {
   render() {
     const { passPhrase, hasAttemptedDiscover } = this.state;
     const { onSetPassPhrase, onSpvSync, onKeyDown } = this;
-    const { isSpvSyncAttempt } = this.state;
+    const { spvInput } = this.props;
 
     return (
       <Aux>
-        {!isSpvSyncAttempt ? <LastLogLinesFragment {...this.state} /> :
+        {!spvInput ? <LastLogLinesFragment {...{
+          lastDcrwalletLogLine: this.lastDcrwalletLogLine }} /> :
           <SpvSyncFormBody
             {...{
               ...this.props,
