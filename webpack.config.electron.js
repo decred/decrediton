@@ -9,7 +9,7 @@ import baseConfig from "./webpack.config.base";
 export default merge(baseConfig, {
   devtool: "source-map",
 
-  entry: ["babel-polyfill", "./app/main.development"],
+  entry: [ "babel-polyfill", "./app/main.development" ],
 
   // 'main.js' in root
   output: {
