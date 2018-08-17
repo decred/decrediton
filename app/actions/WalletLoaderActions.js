@@ -472,7 +472,6 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
           }
         }
       } else {
-        console.log("peer count", response.getPeerCount() );
         if (!spvSynced && response.getPeerCount() == -1) {
           if (!discoverAccountsComplete) {
             const { daemon: { walletName } } = getState();

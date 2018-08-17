@@ -101,6 +101,9 @@ class GetStartedPage extends React.Component {
       updateAvailable,
       isSPV,
       isInputRequest,
+      spvFetchHeaders,
+      spvDiscoverAddresses,
+      spvRescannedThrough,
       ...props
     } = this.props;
 
@@ -136,11 +139,20 @@ class GetStartedPage extends React.Component {
       Form = WalletSelectionBody;
     } else if (isSPV && startStepIndex > 2) {
       text = <T id="getStarted.header.syncSpv.meta" m="Syncing SPV Wallet" />;
+      if (spvFetchHeaders) {
+        text = <T id="getStarted.header.fetchingBlockHeaders.meta" m="Fetching block headers" />;
+      } else if (spvDiscoverAddresses) {
+        text = <T id="getStarted.header.discoveringAddresses.meta" m="Discovering addresses" />;
+      } else if (spvRescannedThrough !== 0) {
+        text = <T id="getStarted.header.rescanWallet.meta" m="Scanning blocks for transactions" />;
+        Form = RescanWalletBody;
+      }
       return <SpvSync
         {...{
           ...props,
           ...state,
           text,
+          Form,
         }}/>;
     } else {
       switch (startStepIndex || 0) {

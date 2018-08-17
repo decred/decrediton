@@ -26,12 +26,31 @@ class RescanWalletBody extends React.Component {
 
   render() {
     const { showLongWaitMessage } = this.state;
+    const { isSPV,
+      rescanEndBlock,
+      rescanStartBlock,
+      rescanCurrentBlock,
+      spvRescannedThrough,
+      spvPeerInitialHeight,
+    } = this.props;
+    var rescanEnd = rescanEndBlock;
+    var rescanStart = rescanStartBlock;
+    var rescanCurrent = rescanCurrentBlock;
+
+    if (isSPV) {
+      rescanEnd = spvPeerInitialHeight;
+      rescanCurrent = spvRescannedThrough;
+      rescanStart = this.rescanStart;
+    }
 
     return (
       <RescanWalletFormBody
         {...{
           ...this.props,
-          showLongWaitMessage
+          showLongWaitMessage,
+          rescanEndBlock: rescanEnd,
+          rescanStartBlock: rescanStart,
+          rescanCurrentBlock: rescanCurrent,
         }}
       />
     );
@@ -45,6 +64,7 @@ class RescanWalletBody extends React.Component {
       }
       delete this.timeoutId;
     }, 2000);
+    this.rescanStart = this.props.spvRescannedThrough;
   }
 
   resetState() {

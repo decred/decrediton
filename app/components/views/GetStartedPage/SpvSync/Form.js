@@ -35,6 +35,8 @@ const SpvSyncBody = ({
   lastDcrwalletLogLine,
   spvPeerInitialHeight,
   spvLastHeaderHeight,
+  Form,
+  ...props,
 }) => (
   <div className="page-body getstarted">
     <div className="getstarted loader">
@@ -99,6 +101,7 @@ const SpvSyncBody = ({
           }
           <DecredLoading hidden={startupError || isInputRequest} />
         </div>
+        {Form && <Form {...props}/>}
         {spvInput ?
           <div className="advanced-page-form">
             <div className="advanced-daemon-row">
