@@ -1,3 +1,4 @@
+
 # Translators:
 # Matheus Degiovani <mathdegiovani@gmail.com>, 2017
 msgid ""
@@ -3323,7 +3324,7 @@ msgstr "Comprar Tickets"
 #. defaultMessage is:
 #. Purchase Tickets is not available right now,
 #.   because we are in the beginning of a ticket interval.
-#.   after {blocksNumber} blocks it will be available again.
+#.   After {blocksNumber} blocks it will be available again.
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/Tickets.json
 msgctxt "spv.purchase.warn"
 msgid ""
