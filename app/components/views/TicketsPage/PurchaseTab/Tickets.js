@@ -22,8 +22,10 @@ const Tickets = ({
     }
     <div className="stakepool-area-spacing"></div>
     {
-      spvMode ? <div className="spv-autobuyer-warning"><T id="spv.auto.buyer.warn" m="Ticket Auto Buyer not available while using SPV" /></div>  : <TicketAutoBuyer {...{ ...props }} />
+      spvMode ? <div className="spv-autobuyer-warning"><T id="spv.auto.buyer.warn" m="Ticket Auto Buyer not available while using SPV" />
+                </div>  : <TicketAutoBuyer {...{ ...props }} />
     }
   </Aux>
 );
+
 export default spv(Tickets);
