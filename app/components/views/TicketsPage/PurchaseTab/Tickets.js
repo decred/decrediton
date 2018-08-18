@@ -6,8 +6,7 @@ import { spv } from "connectors";
 import { ShowWarning } from "shared";
 import "style/StakePool.less";
 const purchaseTicketSpvWarn = (blocksNumber) => <T id="spv.purchase.warn"
-m="Purchase Tickets is not available right now,
-because we are in the beginning of a ticket interval.
+m="Purchase Tickets is not available right now, because we are in the beginning of a ticket interval.
 After {blocksNumber} blocks it will be available again."values={{blocksNumber: blocksNumber}}
 />;
 const Tickets = ({ spvMode, blocksPassedOnTicketInterval, ...props,
