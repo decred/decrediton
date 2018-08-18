@@ -3141,7 +3141,7 @@ msgstr ""
 #.   because we are in the beginning of a ticket interval.
 #.   After {blocksNumber} blocks it will be available again.
 msgctxt "spv.purchase.warn"
-msgid "Purchase Tickets is not available right now,\n  because we are in the beginning of a ticket interval.\n  after {blocksNumber} blocks it will be available again."
+msgid "Purchase Tickets is not available right now,\n  because we are in the beginning of a ticket interval.\n After {blocksNumber} blocks it will be available again."
 msgstr ""
 
 #: app/i18n/extracted/app/components/TxHistory/TxHistoryRow/StakeTxRow.json
