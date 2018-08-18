@@ -549,7 +549,7 @@
   "snackbar.defaults.error": "{originalError}",
   "snackbar.defaults.success": "Success!",
   "spv.auto.buyer.warn": "Ticket Auto Buyer not available while using SPV",
-  "spv.purchase.warn": "Purchase Tickets is not available right now,\n  because we are in the beginning of a ticket interval.\n  after {blocksNumber} blocks it will be available again.",
+  "spv.purchase.warn": "Purchase Tickets is not available right now,\n  because we are in the beginning of a ticket interval.\n  After {blocksNumber} blocks it will be available again.",
   "spvSync.Failed": "Error syncing SPV wallet: {originalError}",
   "stake.addPool.addBtn": "Continue",
   "stake.addPool.cancelBtn": "Cancel",

@@ -3139,7 +3139,7 @@ msgstr ""
 #. defaultMessage is:
 #. Purchase Tickets is not available right now,
 #.   because we are in the beginning of a ticket interval.
-#.   after {blocksNumber} blocks it will be available again.
+#.   After {blocksNumber} blocks it will be available again.
 msgctxt "spv.purchase.warn"
 msgid "Purchase Tickets is not available right now,\n  because we are in the beginning of a ticket interval.\n  after {blocksNumber} blocks it will be available again."
 msgstr ""
