@@ -157,7 +157,7 @@ export const openWalletAttempt = (pubPass, retryAttempt) => (dispatch, getState)
         dispatch(getWalletServiceAttempt());
         const isWatchingOnly = await wallet.getIsWatchingOnly();
         dispatch({ isWatchingOnly, type: OPENWALLET_SUCCESS });
-      } else if (error.message.includes("invalid passphrase") && error.message.includes("public key")) {
+      } else if (error.message.includes("invalid passphrase:: wallet.Open")) {
         if (retryAttempt) {
           dispatch({ error, type: OPENWALLET_FAILED_INPUT });
         } else {
@@ -293,7 +293,6 @@ const fetchMissingCFiltersAttempt = () => (dispatch, getState) => {
     })
     .catch(error => dispatch({ error, type: FETCHMISSINGCFILTERS_FAILED }));
 };
-
 
 export const SUBSCRIBEBLOCKNTFNS_ATTEMPT = "SUBSCRIBEBLOCKNTFNS_ATTEMPT";
 export const SUBSCRIBEBLOCKNTFNS_FAILED = "SUBSCRIBEBLOCKNTFNS_FAILED";
