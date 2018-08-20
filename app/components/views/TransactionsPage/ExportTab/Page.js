@@ -48,8 +48,13 @@ const ExportPage =
               onChange={(value) => setDestinationFile(value)}
             />
           </InlineField>
+          <div className="export-area-button-wrapper">
+            <KeyBlueButton onClick={exportCSV} disabled={exportingData || !destinationFile} loading={exportingData}>
+              <T id="export.btnExport" m="Export" />
+            </KeyBlueButton>
+          </div>
         </div>
-        <div  className="export-area-right" onClick={expandFields}>
+        <div  className={["export-area-right",!expanded && "export-info-not-expanded "].join(" ")} onClick={expandFields}>
           <div className={expanded ? "vertical-expand expanded" : "vertical-expand"}/>
           <p className="export-info-description">{selectedExport.description}</p>
           <T id="export.infoFieldsHeader" m="Exported Fields" />:&nbsp;
@@ -57,12 +62,13 @@ const ExportPage =
             <ul className="export-info-fields">
               {selectedExport.fields.map(p => <FieldDescription key={p.name} {...p} />)}
             </ul> :
-            selectedExport.fields.map((p, i) => i == selectedExport.fields.length - 1 ? <span key={p.name}>{p.name}.</span> : <span key={p.name}>{p.name}, </span>)
+            <div className="export-info-not-expanded">
+              {
+                selectedExport.fields.map((p, i) => i == selectedExport.fields.length - 1 ? <span key={p.name}>{p.name}.</span> : <span key={p.name}>{p.name}, </span>)
+              }
+            </div>
           }
         </div>
-        <KeyBlueButton onClick={exportCSV} disabled={exportingData || !destinationFile} loading={exportingData}>
-          <T id="export.btnExport" m="Export" />
-        </KeyBlueButton>
       </div>
     </Aux>
   );
