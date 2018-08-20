@@ -27,19 +27,19 @@ export default merge(baseConfig, {
     rules: [
       {
         test: /\.min\.css$/,
-        use: [{
+        use: [ {
           loader: "style-loader"
         }, {
           loader: "css-loader",
           options: {
             sourceMap: true
           }
-        }]
+        } ]
       },
 
       {
         test: /^((?!\.min).)*\.css$/,
-        use: [{
+        use: [ {
           loader: "style-loader"
         }, {
           loader: "css-loader",
@@ -48,12 +48,12 @@ export default merge(baseConfig, {
             modules: true,
             localIdentName: "[name]__[local]___[hash:base64:5]"
           }
-        }]
+        } ]
       },
 
       {
         test: /\.less$/,
-        use: [{
+        use: [ {
           loader: "style-loader"
         }, {
           loader: "css-loader",
@@ -69,51 +69,51 @@ export default merge(baseConfig, {
             noIeCompat: true,
             strictMath: true
           }
-        }]
+        } ]
       },
 
       {
         test: [ /\.woff(\?v=\d+\.\d+\.\d+)?$/, /\.woff2(\?v=\d+\.\d+\.\d+)?$/ ],
-        use: [{
+        use: [ {
           loader: "url-loader",
           options: { limit: 10000, mimetype: "application/font-woff" }
-        }]
+        } ]
       },
 
       {
         test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-        use: [{
+        use: [ {
           loader: "url-loader",
           options: { limit: 10000, mimetype: "application/octet-stream" }
-        }]
+        } ]
       },
 
       {
         test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-        use: [{ loader: "file-loader" }]
+        use: [ { loader: "file-loader" } ]
       },
 
       {
         test: /\.gif(\?v=\d+\.\d+\.\d+)?$/,
-        use: [{ loader: "file-loader" }]
+        use: [ { loader: "file-loader" } ]
       },
 
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        use: [{
+        use: [ {
           loader: "url-loader",
           options: { limit: 10000, mimetype: "image/svg+xml" }
-        }]
+        } ]
       },
 
       {
         test: /\.(mp4)$/,
-        use: [{
+        use: [ {
           loader: "file-loader",
           options: {
             mimetype: "video/mp4"
           }
-        }]
+        } ]
       },
     ]
   },

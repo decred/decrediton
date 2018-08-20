@@ -11,41 +11,41 @@ import {
 
 export default {
   module: {
-    rules: [{
+    rules: [ {
       test: /\.jsx?$/,
       exclude: /node_modules/,
-      use: [{
+      use: [ {
         loader: "babel-loader"
-      }]
+      } ]
     }, {
       test: /\.json$/,
-      use: [{
+      use: [ {
         loader: "json-loader"
-      }]
+      } ]
     },
     {
       test: /\.(png|jpg)$/,
-      use: [{
+      use: [ {
         loader: "url-loader",
         options: {
           limit: 8192
         }
-      }]
+      } ]
     },
     {
       test: /\.node$/,
-      use: [{
+      use: [ {
         loader: "node-addon-loader",
         options: {
           basePath: path.resolve(__dirname, "bin")
         }
-      }]
+      } ]
     },
     {
       test: /\.(md)$/,
-      use: [{
+      use: [ {
         loader: "raw-loader",
-      }]
+      } ]
     }
     ]
   },
@@ -60,8 +60,8 @@ export default {
 
   // https://webpack.github.io/docs/configuration.html#resolve
   resolve: {
-    extensions: [".js", ".jsx", ".json", ".node"],
-    mainFields: ["webpack", "browser", "web", "browserify", ["jam", "main"], "main"],
+    extensions: [ ".js", ".jsx", ".json", ".node" ],
+    mainFields: [ "webpack", "browser", "web", "browserify", [ "jam", "main" ], "main" ],
     modules: [
       path.resolve(__dirname, "app"),
       path.resolve(__dirname, "app/components"),
@@ -69,12 +69,12 @@ export default {
     ]
   },
 
-  plugins: [new webpack.ProvidePlugin({
+  plugins: [ new webpack.ProvidePlugin({
     React:     "react",
     PropTypes: "prop-types",
-    autobind: ["core-decorators", "autobind"],
-    Aux:      ["shared/EmptyHandler",      "default"]
-  })],
+    autobind: [ "core-decorators", "autobind" ],
+    Aux:      [ "shared/EmptyHandler",      "default" ]
+  }) ],
 
   externals: Object.keys(dependencies || {}).concat(Object.keys(optionalDependencies || {}))
 };
