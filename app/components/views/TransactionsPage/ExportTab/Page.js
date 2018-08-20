@@ -54,7 +54,7 @@ const ExportPage =
             </KeyBlueButton>
           </div>
         </div>
-        <div  className={["export-area-right",!expanded && "export-info-not-expanded "].join(" ")} onClick={expandFields}>
+        <div  className={[ "export-area-right",!expanded && "export-info-not-expanded " ].join(" ")} onClick={expandFields}>
           <div className={expanded ? "vertical-expand expanded" : "vertical-expand"}/>
           <p className="export-info-description">{selectedExport.description}</p>
           <T id="export.infoFieldsHeader" m="Exported Fields" />:&nbsp;
