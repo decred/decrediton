@@ -55,16 +55,18 @@ const SignMessageForm = ({
             <T id="securitycenter.form.field.message.label" m="Message"/>
           </div>
           <div className="security-center-form-row-field-message">
-            <TextInput
-              required
-              value={message}
-              invalid={messageError}
-              invalidMessage={messageError}
-              onChange={(e) => onChangeMessage(e.target.value)}
-              placeholder={formatMessage(messages.messageFieldPlaceholder)}
-              showErrors={messageError}
-              disabled={isSignMessageDisabled}
-            />
+            <WatchOnlyWarnNotification isActive={ isSignMessageDisabled }>
+              <TextInput
+                required
+                value={message}
+                invalid={messageError}
+                invalidMessage={messageError}
+                onChange={(e) => onChangeMessage(e.target.value)}
+                placeholder={formatMessage(messages.messageFieldPlaceholder)}
+                showErrors={messageError}
+                disabled={isSignMessageDisabled}
+              />
+            </WatchOnlyWarnNotification>
           </div>
         </div>
       </div>

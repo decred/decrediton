@@ -1,6 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
 import { StandaloneHeader, StandalonePage } from "layout";
 import { ChangePassphraseButton, KeyBlueButton } from "buttons";
+import { WatchOnlyWarnNotification } from "shared";
 import GeneralSettings from "./GeneralSettings";
 import PrivacySettings from "./PrivacySettings";
 import ProxySettings from "./ProxySettings";
@@ -38,11 +39,13 @@ const SettingsPage = ({
           <div className="settings-action-buttons">
             <div disabled={isChangePassPhraseDisabled} className="settings-update-passphrase-button">
               <T id="settings.updatePrivatePassphrase" m="Update Private Passphrase" />
-              <ChangePassphraseButton
-                className={isChangePassPhraseDisabled && "change-password-disabled-icon"}
-                disabled={isChangePassPhraseDisabled}
-                modalTitle={<T id="settings.changeConfirmation" m="Change your passphrase" />}
-                onSubmit={onAttemptChangePassphrase} />
+              <WatchOnlyWarnNotification isActive={ isChangePassPhraseDisabled }>
+                <ChangePassphraseButton
+                  className={isChangePassPhraseDisabled && "change-password-disabled-icon"}
+                  isDisabled={isChangePassPhraseDisabled}
+                  modalTitle={<T id="settings.changeConfirmation" m="Change your passphrase" />}
+                  onSubmit={onAttemptChangePassphrase} />
+              </WatchOnlyWarnNotification>
             </div>
           </div>
         </div>

@@ -9,9 +9,9 @@ const messages = defineMessages({
 });
 
 const WatchOnlyWarnNotification = ({ dispatchSingleMessage, children, isActive }) => (
-  <div onClick={isActive ? () => dispatchSingleMessage(messages.watchOnlyWarn) : null}>
+  <span onClick={isActive ? () => dispatchSingleMessage(messages.watchOnlyWarn) : null}>
     {children}
-  </div>
+  </span>
 )
 
 export default snackbar(WatchOnlyWarnNotification);
