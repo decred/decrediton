@@ -184,6 +184,9 @@ export const loadActiveDataFiltersAttempt = () => (dispatch, getState) => {
       // expectation of address use so rescan can be skipped.
       if (walletCreateExisting) {
         setTimeout(() => { dispatch(rescanAttempt(0, null, true)); }, 1000);
+      } else if (walletCreateResponse) {
+        wallet.bestBlock(sel.walletService(getState()))
+          .then(resp => dispatch(rescanAttempt(resp.getHeight(), null, true)));
       } else if (walletCreateResponse == null && rescanPointResponse != null && rescanPointResponse.getRescanPointHash().length !== 0) {
         setTimeout(() => { dispatch(rescanAttempt(null, rescanPointResponse != null && rescanPointResponse.getRescanPointHash(), true)); }, 1000);
       } else {
