@@ -20,7 +20,7 @@ const TxRowByType = { // TODO: use constants instead of string
   "Coinbase": regular("Receive", true),
 };
 
-const TxRow = ({ tx, overview }, { router }) => {
+const TxRow = ({ tx, overview, tsDate }, { router }) => {
   const rowType = tx.status ? tx.status :
     tx.txType ? tx.txType : tx.txDirection;
   const Component = TxRowByType[rowType];
@@ -29,6 +29,7 @@ const TxRow = ({ tx, overview }, { router }) => {
     <Component
       {...{
         ...tx,
+        tsDate,
         overview,
         pending: !tx.txTimestamp,
         onClick: () => router.history.push(`/transactions/history/${tx.txHash}`)

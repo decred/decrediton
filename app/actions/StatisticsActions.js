@@ -699,7 +699,7 @@ export const ticketStats = (opts) => (dispatch, getState) => {
     tickets.forEach(t => {
 
       const ticket = normalizeTicket(t);
-      const tsDate = sel.tsDate(getState())
+      const tsDate = sel.tsDate(getState());
       progressFunction(tsDate(ticket.enterTimestamp), {
         spenderTimestamp: ticket.leaveTimestamp ? tsDate(ticket.leaveTimestamp) : null,
         status: ticket.status,

@@ -1,9 +1,8 @@
 import { FormattedDate, FormattedTime, FormattedMessage as T } from "react-intl";
 import "style/TxHistory.less";
-import { tsToDate } from "helpers/dateFormat";
 import { Tooltip } from "shared";
 
-const StatusSmall = ({ pending, txTimestamp, onClick }) => {
+const StatusSmall = ({ pending, txTimestamp, onClick, tsDate }) => {
 
   return (
     <Aux>
@@ -13,10 +12,10 @@ const StatusSmall = ({ pending, txTimestamp, onClick }) => {
             id="txHistory.statusSmall.date"
             defaultMessage="{day} {month} {year} {time}"
             values={{
-              day: <FormattedDate value={tsToDate(txTimestamp)} day="2-digit" />,
-              month: <FormattedDate value={tsToDate(txTimestamp)} month="short" />,
-              year: <FormattedDate value={tsToDate(txTimestamp)} year="numeric" />,
-              time: <FormattedTime value={tsToDate(txTimestamp)} hour12={false} />,
+              day: <FormattedDate value={tsDate(txTimestamp)} day="2-digit" />,
+              month: <FormattedDate value={tsDate(txTimestamp)} month="short" />,
+              year: <FormattedDate value={tsDate(txTimestamp)} year="numeric" />,
+              time: <FormattedTime value={tsDate(txTimestamp)} hour12={false} />,
             }}
           />
         </div>) : (

@@ -15,6 +15,7 @@ const mapStateToProps = selectorMap({
   hasTickets: sel.hasTickets,
   updateVoteChoiceAttempt: sel.updateVoteChoiceAttempt,
   lastVettedFetchTime: sel.lastVettedFetchTime,
+  tsDate: sel.tsDate,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

@@ -1,6 +1,5 @@
 import Bar from "./Bar";
 import { rescan, sideBar } from "connectors";
-import { tsToDate } from "helpers/dateFormat";
 import ReactTimeout from "react-timeout";
 
 @autobind
@@ -32,7 +31,7 @@ class SideBar extends React.Component {
       }
 
       const now = new Date();
-      lastBlockDate = tsToDate(lastBlockTimestamp);
+      lastBlockDate = this.props.tsDate(lastBlockTimestamp);
       const timeFromLastBlock = now.getTime() - lastBlockDate.getTime();
       lastBlockIsRecent = timeFromLastBlock < 60000;
       if (lastBlockIsRecent) {

@@ -66,12 +66,13 @@ class TicketListPage extends React.Component{
 
   render() {
     const { currentPage, totalPages, expandedTicket } = this.state;
+    const { tsDate } = this.props;
 
     const visibleTickets = this.getVisibleTickets();
     const visibleCards = visibleTickets.map(ticket => {
       const key = ticket.hash;
       const expanded = expandedTicket && ticket.hash === expandedTicket.hash;
-      return <TicketInfoCard {...{ key, ticket, expanded }} onClick={this.onInfoCardClick} />;
+      return <TicketInfoCard {...{ key, ticket, expanded, tsDate }} onClick={this.onInfoCardClick} />;
     });
 
     return (

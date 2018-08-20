@@ -6,7 +6,8 @@ import * as dma from "../actions/DecodeMessageActions";
 import * as ca from "../actions/ClientActions";
 
 const mapStateToProps = selectorMap({
-  tickets: sel.viewedTicketListing
+  tickets: sel.viewedTicketListing,
+  tsDate: sel.tsDate,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

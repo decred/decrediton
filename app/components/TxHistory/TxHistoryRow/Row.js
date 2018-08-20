@@ -3,7 +3,7 @@ import StatusSmall from "./StatusSmall";
 import "style/TxHistory.less";
 
 const Row = ({
-  txAccountName, pending, txTimestamp, onClick, className, children, overview
+  txAccountName, pending, txTimestamp, onClick, className, children, overview, tsDate
 }) => {
   const rowClsname = "tx-history-row";
   const StatusComponent = overview ? StatusSmall : Status;
@@ -15,9 +15,9 @@ const Row = ({
       <div className={[ rowClsname, className,overviewTxIsPending ? "is-row-pending" : null ].join(" ")} {...{ onClick }}>
         {children}
         {!overviewTxIsPending ?
-          <StatusComponent {...{ txAccountName, pending, txTimestamp, overview }} /> : null}
+          <StatusComponent {...{ txAccountName, pending, txTimestamp, overview, tsDate }} /> : null}
       </div>
-      {overviewTxIsPending && <StatusComponent {...{ txAccountName, pending, txTimestamp, overview, onClick }} />}
+      {overviewTxIsPending && <StatusComponent {...{ txAccountName, pending, txTimestamp, overview, onClick, tsDate }} />}
     </div>
   );
 };

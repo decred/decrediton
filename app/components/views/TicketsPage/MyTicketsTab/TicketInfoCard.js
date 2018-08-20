@@ -1,11 +1,10 @@
 import TicketCard from "./TicketCard";
 import ExpandedInfo from "./ExpandedInfo";
 import { Balance, Tooltip } from "shared";
-import { tsToDate } from "helpers/dateFormat";
 import { FormattedMessage as T } from "react-intl";
 import { statusTxt } from "./messages";
 
-const TicketInfoCard = ({ ticket, onClick, expanded }) => {
+const TicketInfoCard = ({ ticket, onClick, expanded, tsDate }) => {
 
   const className = "ticket-info-card" + (expanded ? " is-expanded" : "");
   let returnTipText;
@@ -54,7 +53,7 @@ const TicketInfoCard = ({ ticket, onClick, expanded }) => {
         <T
           id="ticket.timestamp"
           m="{timestamp, date, medium} {timestamp, time, medium}"
-          values={{ timestamp: tsToDate(ticket.leaveTimestamp || ticket.enterTimestamp) }} />
+          values={{ timestamp: tsDate(ticket.leaveTimestamp || ticket.enterTimestamp) }} />
       </Tooltip>
     </div>
     <ExpandedInfo {...{ ticket }} />

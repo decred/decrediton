@@ -1,5 +1,4 @@
 import { format } from "util";
-import { getGlobalCfg } from "config";
 
 export function dateToLocal(d) {
   Date.prototype.stdTimezoneOffset = function () {
@@ -25,25 +24,6 @@ export function dateToUTC(d) {
   return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),
     date.getUTCHours(), date.getUTCMinutes(),  date.getUTCSeconds());
 }
-
-// tsToDate converts a transaction timestamp into a date
-// object
-export function tsToDate(txTimestamp) {
-  //const ts = txTimestamp * 1000;
-  /**const ts = txTimestamp;
-  const tz = getGlobalCfg().get("timezone");
-
-  switch (tz) {
-  case "local":
-    return dateToLocal(ts);
-  case "utc":
-    return dateToUTC(ts);
-  default:
-    return dateToLocal(ts);
-  }**/
-  return dateToUTC(txTimestamp);
-}
-
 // endOfDay returns a new date pointing to the end of the day (last second)
 // of the day stored in the given date.
 export function endOfDay(dt) {
@@ -86,7 +66,7 @@ export function formatLocalISODate(d) {
 // represent number of days
 export function diffBetweenTwoTs(date1, date2) {
   const oneDay = 24*60*60*1000;
-  const firstDate = tsToDate(date1);
-  const secondDate = tsToDate(date2);
+  const firstDate = dateToLocal(date1);
+  const secondDate = dateToLocal(date2);
   return Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
 }

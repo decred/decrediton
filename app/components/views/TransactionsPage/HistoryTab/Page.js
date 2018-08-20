@@ -18,6 +18,7 @@ const Page = ({
   sortTypes,
   txTypes,
   transactions,
+  tsDate,
   selectedSortOrderKey,
   selectedTxTypeKey,
   searchText,
@@ -74,7 +75,7 @@ const Page = ({
     </div>
     <div className="history-content-nest">
       {transactions.length > 0
-        ? <TxHistory transactions={transactions} />
+        ? <TxHistory {...{ transactions, tsDate }} />
         : null }
     </div>
     {!noMoreTransactions

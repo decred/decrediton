@@ -12,7 +12,8 @@ const RecentTickets = ({
   getTransactionsRequestAttempt,
   getAccountsResponse,
   rowNumber,
-  goToMyTickets
+  goToMyTickets,
+  tsDate,
 }) => {
   const hasTickets = tickets.length > 0;
   return (
@@ -30,7 +31,7 @@ const RecentTickets = ({
         </div>
         <div className="home-content-nest">
           {hasTickets
-            ? <TxHistory overview limit={rowNumber} {...{ getAccountsResponse, transactions: tickets }} />
+            ? <TxHistory overview limit={rowNumber} {...{ getAccountsResponse, transactions: tickets, tsDate }} />
             : <NoTicketsLinks />}
         </div>
       </Aux>

@@ -1,5 +1,4 @@
 import { FormattedMessage as T } from "react-intl";
-import { tsToDate } from "helpers/dateFormat";
 import "style/TxHistory.less";
 
 // TODO: use a global component for these indicators
@@ -8,7 +7,7 @@ const indicators = {
   [false]: <span className="indicator confirmed"><T id="transaction.indicatorConfirmed" m="Confirmed" /></span>
 };
 
-const Status = ({ txAccountName, pending, txTimestamp }) => (
+const Status = ({ txAccountName, pending, txTimestamp, tsDate }) => (
   <Aux>
     <div className="transaction-status">
       <span className="transaction-account-name">{txAccountName}</span>
@@ -18,7 +17,7 @@ const Status = ({ txAccountName, pending, txTimestamp }) => (
       <div className="transaction-time-date">
         <T id="transaction.timestamp"
           m="{timestamp, date, medium} {timestamp, time, medium}"
-          values={{ timestamp: tsToDate(txTimestamp) }}/>
+          values={{ timestamp: tsDate(txTimestamp) }}/>
       </div>
     )}
   </Aux>
