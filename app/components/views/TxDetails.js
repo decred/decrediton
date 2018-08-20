@@ -66,11 +66,12 @@ const TxDetails = ({
   },
   currentBlockHeight,
   intl,
-  goBackHistory
+  goBackHistory,
+  tsDate,
 }) => {
   const isConfirmed = !!txTimestamp;
   const icon = headerIcons[txType || txDirection];
-  const subtitle = isConfirmed ? <T id="txDetails.timestamp" m="{timestamp, date, medium} {timestamp, time, medium}" values={{ timestamp: tsToDate(txTimestamp) }}/> : <T id="txDetails.unConfirmed" m="Unconfirmed"/>;
+  const subtitle = isConfirmed ? <T id="txDetails.timestamp" m="{timestamp, date, medium} {timestamp, time, medium}" values={{ timestamp: tsDate(txTimestamp) }}/> : <T id="txDetails.unConfirmed" m="Unconfirmed"/>;
   const goBack = () => goBackHistory();
   const openTxUrl = () => shell.openExternal(txUrl);
   const openBlockUrl = () => shell.openExternal(txBlockUrl);

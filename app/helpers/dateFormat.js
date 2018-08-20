@@ -30,7 +30,7 @@ export function dateToUTC(d) {
 // object
 export function tsToDate(txTimestamp) {
   //const ts = txTimestamp * 1000;
-  const ts = txTimestamp;
+  /**const ts = txTimestamp;
   const tz = getGlobalCfg().get("timezone");
 
   switch (tz) {
@@ -40,7 +40,8 @@ export function tsToDate(txTimestamp) {
     return dateToUTC(ts);
   default:
     return dateToLocal(ts);
-  }
+  }**/
+  return dateToUTC(txTimestamp);
 }
 
 // endOfDay returns a new date pointing to the end of the day (last second)
