@@ -211,8 +211,8 @@ export default function snackbar(state = {}, action) {
   case SNACKBAR_SIMPLE_MESSAGE: {
     return {
       ...state,
-      messages: [action],
-    }
+      messages: [ action ],
+    };
   }
   // snackbar management events
   case SNACKBAR_DISMISS_MESSAGES:

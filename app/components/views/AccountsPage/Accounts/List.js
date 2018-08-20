@@ -20,7 +20,7 @@ const AccountsListHeader = ({ onGetNextAccountAttempt, isCreateAccountDisabled }
         buttonLabel={<T id="accounts.addNewButton" m="Add New" />}
       />
     </WatchOnlyWarnNotification>
-    }
+  }
 />;
 
 const AccountsList = ({

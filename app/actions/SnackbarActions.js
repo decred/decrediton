@@ -7,5 +7,5 @@ export function dismissAllMessages() {
 
 export const SNACKBAR_SIMPLE_MESSAGE = "SNACKBAR_SIMPLE_MESSAGE";
 export const dispatchSingleMessage = (message) => (dispatch) => {
-  dispatch({ type: SNACKBAR_SIMPLE_MESSAGE, message })
-}
+  dispatch({ type: SNACKBAR_SIMPLE_MESSAGE, message });
+};

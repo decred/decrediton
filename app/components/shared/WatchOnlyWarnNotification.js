@@ -1,4 +1,4 @@
-import { snackbar } from "connectors"
+import { snackbar } from "connectors";
 import { defineMessages } from "react-intl";
 
 const messages = defineMessages({
@@ -12,6 +12,6 @@ const WatchOnlyWarnNotification = ({ dispatchSingleMessage, children, isActive }
   <span onClick={isActive ? () => dispatchSingleMessage(messages.watchOnlyWarn) : null}>
     {children}
   </span>
-)
+);
 
 export default snackbar(WatchOnlyWarnNotification);
