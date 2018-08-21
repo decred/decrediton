@@ -15,8 +15,11 @@ import {
   FETCHMISSINGCFILTERS_ATTEMPT, FETCHMISSINGCFILTERS_FAILED, FETCHMISSINGCFILTERS_SUCCESS,
   RESCANPOINT_ATTEMPT, RESCANPOINT_FAILED, RESCANPOINT_SUCCESS,
   SPVSYNC_SUCCESS, SPVSYNC_UPDATE, SPVSYNC_FAILED, SPVSYNC_ATTEMPT, SPVSYNC_INPUT,
-  SPVSYNC_UNSYNCED, SPVSYNC_FETCH_HEADERS, SPVSYNC_DISCOVER_ADDRESS_WORKING, SPVSYNC_DISCOVER_ADDRESS_COMPLETE,
-  SPVSYNC_RESCAN_PROGRESS, SPVSYNC_PEER_COUNT
+  SYNC_SYNCED, SYNC_UNSYNCED, SYNC_FETCHED_HEADERS_STARTED, SYNC_FETCHED_HEADERS_PROGRESS, SYNC_FETCHED_HEADERS_FINISHED,
+  SYNC_PEER_CONNECTED, SYNC_PEER_DISCONNECTED, SYNC_FETCHED_MISSING_CFILTERS_STARTED,
+  SYNC_FETCHED_MISSING_CFILTERS_PROGRESS, SYNC_FETCHED_MISSING_CFILTERS_FINISHED,
+  SYNC_DISCOVER_ADDRESSES_STARTED, SYNC_DISCOVER_ADDRESSES_FINISHED,
+  SYNC_RESCAN_STARTED, SYNC_RESCAN_PROGRESS, SYNC_RESCAN_FINISHED,
 } from "actions/WalletLoaderActions";
 import {
   WALLETCREATED
@@ -358,36 +361,68 @@ export default function walletLoader(state = {}, action) {
       spvSyncError: null,
       spvSynced: false,
     };
-  case SPVSYNC_UNSYNCED:
+  case SYNC_SYNCED:
     return { ...state,
-      spvSynced: false,
+      synced: true,
     };
-  case SPVSYNC_DISCOVER_ADDRESS_COMPLETE:
+  case SYNC_UNSYNCED:
     return { ...state,
-      spvDiscoverAddresses: true,
+      synced: false,
     };
-  case SPVSYNC_DISCOVER_ADDRESS_WORKING:
-    return { ...state,
-      spvDiscoverAddresses: false,
-      spvFetchHeaders: false,
-    };
-  case SPVSYNC_FETCH_HEADERS:
-    return { ...state,
-      spvFetchHeaders: true,
-      peerInitialHeight: action.peerInitialHeight,
-      lastHeaderHeight: action.lastHeaderHeight,
-      lastFetchedHeaderTime: action.lastFetchedHeaderTime,
-      fetchedMissingCfilters: action.fetchedMissingCfilters !== 0 ? action.fetchedMissingCfilters : state.fetchedMissingCfilters,
-      spvSyncSecondsLeft: action. spvSyncSecondsLeft
-    };
-  case SPVSYNC_RESCAN_PROGRESS:
-    return { ...state,
-      spvSynced: false,
-      spvRescannedThrough: action.rescannedThrough,
-    };
-  case SPVSYNC_PEER_COUNT:
+  case SYNC_PEER_CONNECTED:
     return { ...state,
       peerCount: action.peerCount,
+    };
+  case SYNC_PEER_DISCONNECTED:
+    return { ...state,
+      peerCount: action.peerCount,
+    };
+  case SYNC_FETCHED_MISSING_CFILTERS_STARTED:
+    return { ...state,
+      syncFetchMissingCfiltersAttempt: true,
+    };
+  case SYNC_FETCHED_MISSING_CFILTERS_PROGRESS:
+    return { ...state,
+      syncFetchMissingCfiltersStart: action.cFiltersStart,
+      syncFetchMissingCfiltersEnd: action.cFiltersEnd,
+    };
+  case SYNC_FETCHED_MISSING_CFILTERS_FINISHED:
+    return { ...state,
+      syncFetchMissingCfiltersAttempt: false,
+    };
+  case SYNC_FETCHED_HEADERS_STARTED:
+    return { ...state,
+      syncFetchHeadersAttempt: true,
+    };
+  case SYNC_FETCHED_HEADERS_PROGRESS:
+    return { ...state,
+      spvSyncSecondsLeft: action.spvSyncSecondsLeft,
+      fetchHeadersCount: action.fetchHeadersCount,
+      lastFetchedHeaderTime: action.lastFetchedHeaderTime,
+    };
+  case SYNC_FETCHED_HEADERS_FINISHED:
+    return { ...state,
+      syncFetchHeadersAttempt: false,
+    };
+  case SYNC_DISCOVER_ADDRESSES_STARTED:
+    return { ...state,
+      syncDiscoverAddressesAttempt: true,
+    };
+  case SYNC_DISCOVER_ADDRESSES_FINISHED:
+    return { ...state,
+      syncDiscoverAddressesAttempt: false,
+    };
+  case SYNC_RESCAN_STARTED:
+    return { ...state,
+      syncRescanAttempt: true,
+    };
+  case SYNC_RESCAN_PROGRESS:
+    return { ...state,
+      syncRescanProgress: action.rescannedThrough,
+    };
+  case SYNC_RESCAN_FINISHED:
+    return { ...state,
+      syncRescanAttempt: false,
     };
   default:
     return state;

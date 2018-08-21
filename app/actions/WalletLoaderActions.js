@@ -445,7 +445,6 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
     const { loader } = getState().walletLoader;
     var spvSyncCall = loader.spvSync(request);
     var timeStart;
-    var blockStart;
     spvSyncCall.on("data", function(response) {
       const { syncCall } = getState().walletLoader;
       if (!syncCall) {
@@ -462,11 +461,11 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
         break;
       }
       case SyncNotificationType.PEER_CONNECTED: {
-        dispatch({ peerCount: response.getPeerCount(), type: SYNC_PEER_CONNECTED });
+        dispatch({ peerCount: response.getPeerInformation().getPeerCount(), type: SYNC_PEER_CONNECTED });
         break;
       }
       case SyncNotificationType.PEER_DISCONNECTED: {
-        dispatch({ peerCount: response.getPeerCount(), type: SYNC_PEER_DISCONNECTED });
+        dispatch({ peerCount: response.getPeerInformation().getPeerCount(), type: SYNC_PEER_DISCONNECTED });
         break;
       }
       case SyncNotificationType.FETCHED_MISSING_CFILTERS_STARTED: {
@@ -474,7 +473,9 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
         break;
       }
       case SyncNotificationType.FETCHED_MISSING_CFILTERS_PROGRESS: {
-        dispatch({ type: SYNC_FETCHED_MISSING_CFILTERS_PROGRESS });
+        const cFiltersStart = response.getFetchMissingCfilters().getFetchedCfiltersStartHeight();
+        const cFiltersEnd = response.getFetchMissingCfilters().getFetchedCfiltersEndHeight();
+        dispatch({ cFiltersStart, cFiltersEnd, type: SYNC_FETCHED_MISSING_CFILTERS_PROGRESS });
         break;
       }
       case SyncNotificationType.FETCHED_MISSING_CFILTERS_FINISHED: {
@@ -486,24 +487,18 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
         break;
       }
       case SyncNotificationType.FETCHED_HEADERS_PROGRESS: {
+        const lastFetchedHeaderTime = new Date(response.getFetchHeaders().getLastHeaderTime()/1000000);
+        const fetchHeadersCount = response.getFetchHeaders().getFetchHeadersCount();
         if (!timeStart) {
-          timeStart = new Date();
+          timeStart = lastFetchedHeaderTime;
         }
-        if (!blockStart) {
-          blockStart = response.getFetchHeaders().getLastHeaderHeight();
-        }
-        var peerInitialHeight = response.getFetchHeaders().getPeerInitialHeight();
-        var lastHeaderHeight = response.getFetchHeaders().getLastHeaderHeight();
-        var lastFetchedHeaderTime = new Date(response.getFetchHeaders().getLastHeaderTime()/1000000);
-        var fetchedMissingCfilters = response.getFetchHeaders().getFetchedCfiltersCount();
-
-        const blocksLeft = peerInitialHeight - lastHeaderHeight;
-        const blocksDiff = lastHeaderHeight - blockStart;
         const currentTime = new Date();
+        const timeLeft = currentTime - lastFetchedHeaderTime;
+        const timeDiff = lastFetchedHeaderTime - timeStart;
         const timeSyncing = (currentTime - timeStart) / 1000;
-        const spvSyncSecondsLeft = Math.round(blocksLeft / blocksDiff * timeSyncing);
+        const spvSyncSecondsLeft = Math.round(timeLeft / timeDiff * timeSyncing);
 
-        dispatch({ spvSyncSecondsLeft, peerInitialHeight, lastHeaderHeight, lastFetchedHeaderTime, fetchedMissingCfilters, type: SYNC_FETCHED_HEADERS_PROGRESS });
+        dispatch({ fetchHeadersCount, spvSyncSecondsLeft, lastFetchedHeaderTime, type: SYNC_FETCHED_HEADERS_PROGRESS });
         break;
       }
       case SyncNotificationType.FETCHED_HEADERS_FINISHED: {
@@ -530,7 +525,7 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
         break;
       }
       case SyncNotificationType.RESCAN_PROGRESS: {
-        dispatch({ rescannedThrough: response.getSyncingStatus().getRescannedThrough(), type: SYNC_RESCAN_PROGRESS });
+        dispatch({ rescannedThrough: response.getRescanProgress().getRescannedThrough(), type: SYNC_RESCAN_PROGRESS });
         break;
       }
       case SyncNotificationType.RESCAN_FINISHED: {
