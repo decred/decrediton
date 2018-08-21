@@ -32,7 +32,7 @@ class SignMessage extends React.Component {
   }
 
   render() {
-    const { signMessageSignature, isSigningMessage, intl } = this.props;
+    const { signMessageSignature, isSigningMessage, isSignMessageDisabled, intl } = this.props;
     const { onChangeAddress, onChangeMessage } = this;
     const { address, addressError, message, messageError } = this.state;
     let result = null;
@@ -53,7 +53,11 @@ class SignMessage extends React.Component {
 
     return (
       <Aux>
-        <SignMessageForm {...{ onChangeAddress, onChangeMessage, address, addressError, message, messageError, formatMessage: intl.formatMessage, isSigningMessage } }/>
+        <SignMessageForm {...{
+          onChangeAddress, onChangeMessage, address, addressError, message,
+          messageError, formatMessage: intl.formatMessage, isSigningMessage,
+          isSignMessageDisabled,
+        } }/>
         {result}
       </Aux>
     );

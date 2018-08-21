@@ -4,3 +4,8 @@ export function dismissAllMessages() {
     dispatch({ type: SNACKBAR_DISMISS_MESSAGES });
   };
 }
+
+export const SNACKBAR_SIMPLE_MESSAGE = "SNACKBAR_SIMPLE_MESSAGE";
+export const dispatchSingleMessage = (message) => (dispatch) => {
+  dispatch({ type: SNACKBAR_SIMPLE_MESSAGE, message });
+};

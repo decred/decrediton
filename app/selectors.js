@@ -910,7 +910,7 @@ export const stakeRewardsStats = createSelector(
 
 export const modalVisible = get([ "control", "modalVisible" ]);
 
-export const isSignVerifyMessageDisabled = or(isWatchingOnly, isWatchOnly);
+export const isSignMessageDisabled = or(isWatchingOnly, isWatchOnly);
 
 export const isCreateAccountDisabled = or(isWatchingOnly, isWatchOnly);
 

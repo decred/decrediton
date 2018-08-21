@@ -1,6 +1,7 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { InfoDocModalButton, SignMessageButton } from "buttons";
 import { TextInput } from "inputs";
+import { WatchOnlyWarnNotification } from "shared";
 
 const messages = defineMessages({
   addressFieldPlaceholder: {
@@ -21,7 +22,8 @@ const SignMessageForm = ({
   addressError,
   messageError,
   isSigningMessage,
-  formatMessage
+  formatMessage,
+  isSignMessageDisabled,
 }) => {
   return (
     <Aux>
@@ -34,15 +36,18 @@ const SignMessageForm = ({
             <T id="securitycenter.form.field.address.label" m="Address"/>
           </div>
           <div className="security-center-form-row-field">
-            <TextInput
-              required
-              value={address}
-              invalid={addressError}
-              invalidMessage={addressError}
-              onChange={(e) => onChangeAddress(e.target.value)}
-              placeholder={formatMessage(messages.addressFieldPlaceholder)}
-              showErrors={addressError}
-            />
+            <WatchOnlyWarnNotification isActive={ isSignMessageDisabled }>
+              <TextInput
+                required
+                value={address}
+                invalid={addressError}
+                invalidMessage={addressError}
+                onChange={(e) => onChangeAddress(e.target.value)}
+                placeholder={formatMessage(messages.addressFieldPlaceholder)}
+                showErrors={addressError}
+                disabled={isSignMessageDisabled}
+              />
+            </WatchOnlyWarnNotification>
           </div>
         </div>
         <div className="security-center-form-row">
@@ -50,15 +55,18 @@ const SignMessageForm = ({
             <T id="securitycenter.form.field.message.label" m="Message"/>
           </div>
           <div className="security-center-form-row-field-message">
-            <TextInput
-              required
-              value={message}
-              invalid={messageError}
-              invalidMessage={messageError}
-              onChange={(e) => onChangeMessage(e.target.value)}
-              placeholder={formatMessage(messages.messageFieldPlaceholder)}
-              showErrors={messageError}
-            />
+            <WatchOnlyWarnNotification isActive={ isSignMessageDisabled }>
+              <TextInput
+                required
+                value={message}
+                invalid={messageError}
+                invalidMessage={messageError}
+                onChange={(e) => onChangeMessage(e.target.value)}
+                placeholder={formatMessage(messages.messageFieldPlaceholder)}
+                showErrors={messageError}
+                disabled={isSignMessageDisabled}
+              />
+            </WatchOnlyWarnNotification>
           </div>
         </div>
       </div>
@@ -66,7 +74,7 @@ const SignMessageForm = ({
         className="stakepool-content-purchase-button"
         address={address}
         message={message}
-        disabled={isSigningMessage || address == "" || message == "" || addressError || messageError}
+        disabled={isSigningMessage || address == "" || message == "" || addressError || messageError || isSignMessageDisabled}
       />
     </Aux>
   );

@@ -31,7 +31,7 @@ import {
   GETSTARTUPWALLETINFO_FAILED,
   SEEDCOPIEDTOCLIPBOARD,
 } from "../actions/ClientActions";
-import { SNACKBAR_DISMISS_MESSAGES } from "../actions/SnackbarActions";
+import { SNACKBAR_DISMISS_MESSAGES, SNACKBAR_SIMPLE_MESSAGE } from "../actions/SnackbarActions";
 import {
   EXPORT_ERROR,
   EXPORT_COMPLETED,
@@ -208,6 +208,12 @@ export default function snackbar(state = {}, action) {
   let values, type, message;
 
   switch (action.type) {
+  case SNACKBAR_SIMPLE_MESSAGE: {
+    return {
+      ...state,
+      messages: [ action ],
+    };
+  }
   // snackbar management events
   case SNACKBAR_DISMISS_MESSAGES:
     return { ...state, messages: Array() };

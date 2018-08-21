@@ -9,6 +9,7 @@ const mapStateToProps = selectorMap({
   signMessageSignature: sel.signMessageSignature,
   isSigningMessage: sel.isSigningMessage,
   walletService: sel.walletService,
+  isSignMessageDisabled: sel.isSignMessageDisabled,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

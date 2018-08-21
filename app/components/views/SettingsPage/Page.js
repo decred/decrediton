@@ -1,6 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
 import { StandaloneHeader, StandalonePage } from "layout";
 import { ChangePassphraseButton, KeyBlueButton } from "buttons";
+import { WatchOnlyWarnNotification } from "shared";
 import GeneralSettings from "./GeneralSettings";
 import PrivacySettings from "./PrivacySettings";
 import ProxySettings from "./ProxySettings";
@@ -33,20 +34,21 @@ const SettingsPage = ({
         <ProxySettings {...{ tempSettings, onChangeTempSettings }} />
       </div>
       <div className="settings-columns">
-        {
-          !isChangePassPhraseDisabled &&
-          <div className="settings-security">
-            <div className="settings-column-title"><T id="settings.security.title" m="Security" /></div>
-            <div className="settings-action-buttons">
-              <div className="settings-update-passphrase-button">
-                <T id="settings.updatePrivatePassphrase" m="Update Private Passphrase" />
+        <div className="settings-security">
+          <div className="settings-column-title"><T id="settings.security.title" m="Security" /></div>
+          <div className="settings-action-buttons">
+            <div disabled={isChangePassPhraseDisabled} className="settings-update-passphrase-button">
+              <T id="settings.updatePrivatePassphrase" m="Update Private Passphrase" />
+              <WatchOnlyWarnNotification isActive={ isChangePassPhraseDisabled }>
                 <ChangePassphraseButton
+                  className={isChangePassPhraseDisabled && "change-password-disabled-icon"}
+                  isDisabled={isChangePassPhraseDisabled}
                   modalTitle={<T id="settings.changeConfirmation" m="Change your passphrase" />}
                   onSubmit={onAttemptChangePassphrase} />
-              </div>
+              </WatchOnlyWarnNotification>
             </div>
           </div>
-        }
+        </div>
         <PrivacySettings {...{ tempSettings, onChangeTempSettings }} />
       </div>
     </div>
