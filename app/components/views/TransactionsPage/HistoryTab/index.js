@@ -134,7 +134,7 @@ class History extends React.Component {
   }
 
   onToggleSliderInfo(expandedSliderInfo) {
-    this.setState({ expandedSliderInfo: !expandedSliderInfo })
+    this.setState({ expandedSliderInfo: !expandedSliderInfo });
   }
 
   onChangeMinValue(min) {

@@ -84,7 +84,7 @@ const Page = ({
           </Tooltip>
           <div className="history-select-tx-amounts-area">
             <div className="history-select-tx-amounts">
-              <div className="history-select-tx-min-amount"> 
+              <div className="history-select-tx-min-amount">
                 <div><T id="history.minAmount" m="Min Amount" /></div>
                 <SlideRanger step={step} min={min} max={max} value={minAmount} onChange={onChangeMinAmount} />
               </div>
