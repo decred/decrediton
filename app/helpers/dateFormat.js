@@ -1,7 +1,7 @@
 import { format } from "util";
 import { getGlobalCfg } from "config";
 
-function dateToLocal(d) {
+export function dateToLocal(d) {
   Date.prototype.stdTimezoneOffset = function () {
     var jan = new Date(this.getFullYear(), 0, 1);
     var jul = new Date(this.getFullYear(), 6, 1);
@@ -12,7 +12,7 @@ function dateToLocal(d) {
     return this.getTimezoneOffset() < this.stdTimezoneOffset();
   };
 
-  var date = new Date(d);
+  var date = new Date(d * 1000);
   if (date.dst()) {
     date.setHours(date.getHours() + 1);
     return date;
@@ -20,8 +20,8 @@ function dateToLocal(d) {
   return date;
 }
 
-function dateToUTC(d) {
-  const date = new Date(d);
+export function dateToUTC(d) {
+  const date = new Date(d * 1000);
   return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),
     date.getUTCHours(), date.getUTCMinutes(),  date.getUTCSeconds());
 }
@@ -29,7 +29,8 @@ function dateToUTC(d) {
 // tsToDate converts a transaction timestamp into a date
 // object
 export function tsToDate(txTimestamp) {
-  const ts = txTimestamp * 1000;
+  //const ts = txTimestamp * 1000;
+  const ts = txTimestamp;
   const tz = getGlobalCfg().get("timezone");
 
   switch (tz) {

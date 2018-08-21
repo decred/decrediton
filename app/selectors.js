@@ -9,7 +9,7 @@ import { MainNetParams, TestNetParams } from "wallet/constants";
 import { TicketTypes, decodeVoteScript } from "./helpers/tickets";
 import { EXTERNALREQUEST_STAKEPOOL_LISTING, EXTERNALREQUEST_POLITEIA } from "main_dev/externalRequests";
 import { POLITEIA_URL_TESTNET, POLITEIA_URL_MAINNET } from "./middleware/politeiaapi";
-
+import { dateToLocal, dateToUTC } from "./helpers/dateFormat";
 const EMPTY_ARRAY = [];  // Maintaining identity (will) improve performance;
 
 export const daemonError = get([ "daemon" , "daemonError" ]);
@@ -179,6 +179,7 @@ export const defaultLocaleName = createSelector(
   (currentLocaleName) => {
     return appLocaleFromElectronLocale(currentLocaleName);
   });
+export const tsDate = compose(timezone => timezone === "utc" ? dateToUTC : dateToLocal, timezone);
 
 export const isSPV = get([ "settings", "currentSettings", "spvMode" ]);
 
