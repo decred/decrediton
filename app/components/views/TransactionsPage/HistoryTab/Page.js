@@ -36,15 +36,13 @@ const Page = ({
     useWindow={false}
     threshold={loadMoreThreshold}
   >
-    <div className="history-content-title" style={transactions.length == 0
-      ? { display: "none" }
-      : { display: "initial" }} >
+    <div className="history-content-title"
+      style = {{ display: transactions.length == 0 ? "none" : "initial" }} >
       <div className="history-content-title-text">
         <T id="history.title" m="Transaction History" />
       </div>
-      <div className="history-select-tx-types-area" style={transactions.length == 0
-        ? { display: "none" }
-        : { display: "initial" } } >
+      <div className="history-select-tx-types-area"
+        style = {{ display: transactions.length == 0 ? "none" : "initial" }} >
         <div className="history-select-tx-types">
           <div className="history-search-tx">
             <TextInput
@@ -76,9 +74,8 @@ const Page = ({
         </div>
       </div>
     </div>
-    <div className="history-content-nest" style={transactions.length == 0
-      ? { display: "none" }
-      : { display: "initial" }} >
+    <div className="history-content-nest"
+      style = {{ display: transactions.length == 0 ? "none" : "initial" }} >
       {transactions.length > 0
         ? <TxHistory transactions={transactions} />
         : null }
