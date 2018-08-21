@@ -13,7 +13,7 @@ import { getWalletCfg, getDcrdCert } from "../config";
 import { getWalletPath } from "main_dev/paths";
 import { isTestNet } from "selectors";
 import axios from "axios";
-import { SpvSyncRequest } from "../middleware/walletrpc/api_pb";
+import { SpvSyncRequest, SyncNotificationType } from "../middleware/walletrpc/api_pb";
 
 const MAX_RPC_RETRIES = 5;
 const RPC_RETRY_DELAY = 5000;
@@ -410,12 +410,22 @@ export const SPVSYNC_SUCCESS = "SPVSYNC_SUCCESS";
 export const SPVSYNC_UPDATE = "SPVSYNC_UPDATE";
 export const SPVSYNC_INPUT = "SPVSYNC_INPUT";
 export const SPVSYNC_CANCEL = "SPVSYNC_CANCEL";
-export const SPVSYNC_FETCH_HEADERS = "SPVSYNC_FETCH_HEADERS";
-export const SPVSYNC_DISCOVER_ADDRESS_WORKING = "SPVSYNC_DISCOVER_ADDRESS_WORKING";
-export const SPVSYNC_DISCOVER_ADDRESS_COMPLETE = "SPVSYNC_DISCOVER_ADDRESS_COMPLETE";
-export const SPVSYNC_RESCAN_PROGRESS = "SPVSYNC_RESCAN_PROGRESS";
-export const SPVSYNC_PEER_COUNT = "SPVSYNC_PEER_COUNT";
-export const SPVSYNC_UNSYNCED = "SPVSYNC_UNSYNCED";
+
+export const SYNC_SYNCED = "SYNC_SYNCED";
+export const SYNC_UNSYNCED = "SYNC_UNSYNCED";
+export const SYNC_PEER_CONNECTED = "SYNC_PEER_CONNECTED";
+export const SYNC_PEER_DISCONNECTED = "SYNC_PEER_DISCONNECTED";
+export const SYNC_FETCHED_MISSING_CFILTERS_STARTED = "SYNC_FETCHED_MISSING_CFILTERS_STARTED";
+export const SYNC_FETCHED_MISSING_CFILTERS_PROGRESS = "SYNC_FETCHED_MISSING_CFILTERS_PROGRESS";
+export const SYNC_FETCHED_MISSING_CFILTERS_FINISHED = "SYNC_FETCHED_MISSING_CFILTERS_FINISHED";
+export const SYNC_FETCHED_HEADERS_STARTED = "SYNC_FETCHED_HEADERS_STARTED";
+export const SYNC_FETCHED_HEADERS_PROGRESS = "SYNC_FETCHED_HEADERS_PROGRESS";
+export const SYNC_FETCHED_HEADERS_FINISHED = "SYNC_FETCHED_HEADERS_FINISHED";
+export const SYNC_DISCOVER_ADDRESSES_FINISHED = "SYNC_DISCOVER_ADDRESSES_FINISHED";
+export const SYNC_DISCOVER_ADDRESSES_STARTED= "SYNC_DISCOVER_ADDRESSES_STARTED";
+export const SYNC_RESCAN_STARTED = "SYNC_RESCAN_STARTED";
+export const SYNC_RESCAN_PROGRESS = "SYNC_RESCAN_PROGRESS";
+export const SYNC_RESCAN_FINISHED = "SYNC_RESCAN_FINISHED";
 
 export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
   const { discoverAccountsComplete, spvConnect } = getState().walletLoader;
@@ -437,54 +447,96 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
     var timeStart;
     var blockStart;
     spvSyncCall.on("data", function(response) {
-      const { spvDiscoverAddresses, spvSynced } = getState().walletLoader;
-      if (response.getSyncingStatus()) {
-        if (spvSynced) {
-          dispatch({ type: SPVSYNC_UNSYNCED });
-        }
-        if (response.getSyncingStatus().getFetchHeaders()) {
-          if (!timeStart) {
-            timeStart = new Date();
-          }
-          if (!blockStart) {
-            blockStart = response.getSyncingStatus().getFetchHeaders().getLastHeaderHeight();
-          }
-          var peerInitialHeight = response.getSyncingStatus().getFetchHeaders().getPeerInitialHeight();
-          var lastHeaderHeight = response.getSyncingStatus().getFetchHeaders().getLastHeaderHeight();
-          var lastFetchedHeaderTime = new Date(response.getSyncingStatus().getFetchHeaders().getLastHeaderTime()/1000000);
-          var fetchedMissingCfilters = response.getSyncingStatus().getFetchHeaders().getFetchedCfiltersCount();
-
-          const blocksLeft = peerInitialHeight - lastHeaderHeight;
-          const blocksDiff = lastHeaderHeight - blockStart;
-          const currentTime = new Date();
-          const timeSyncing = (currentTime - timeStart) / 1000;
-          const spvSyncSecondsLeft = Math.round(blocksLeft / blocksDiff * timeSyncing);
-
-          dispatch({ spvSyncSecondsLeft, peerInitialHeight, lastHeaderHeight, lastFetchedHeaderTime, fetchedMissingCfilters, type: SPVSYNC_FETCH_HEADERS });
-        } else {
-          if (!spvDiscoverAddresses) {
-            dispatch({ type: SPVSYNC_DISCOVER_ADDRESS_WORKING });
-          } else if (response.getSyncingStatus().getDiscoveredAddresses()) {
-            dispatch({ type: SPVSYNC_DISCOVER_ADDRESS_COMPLETE });
-          }
-          if (spvDiscoverAddresses && response.getSyncingStatus().getRescannedThrough() !== null) {
-            dispatch({ rescannedThrough: response.getSyncingStatus().getRescannedThrough(), type: SPVSYNC_RESCAN_PROGRESS });
-          }
-        }
-      } else {
-        if (!spvSynced && response.getPeerCount() == -1) {
-          if (!discoverAccountsComplete) {
-            const { daemon: { walletName } } = getState();
-            const config = getWalletCfg(isTestNet(getState()), walletName);
-            config.delete("discoveraccounts");
-            config.set("discoveraccounts", true);
-            dispatch({ complete: true, type: UPDATEDISCOVERACCOUNTS });
-          }
-          dispatch({ syncCall: spvSyncCall, synced: true, type: SPVSYNC_UPDATE });
-          dispatch(getBestBlockHeightAttempt(startWalletServices));
-        }
-        dispatch({ peerCount: response.getPeerCount(), type: SPVSYNC_PEER_COUNT });
+      const { syncCall } = getState().walletLoader;
+      if (!syncCall) {
+        dispatch({ syncCall: spvSyncCall, type: SPVSYNC_UPDATE });
       }
+      switch (response.getNotificationType()) {
+      case SyncNotificationType.SYNCED: {
+        dispatch({ type: SYNC_SYNCED });
+        dispatch(getBestBlockHeightAttempt(startWalletServices));
+        break;
+      }
+      case SyncNotificationType.UNSYNCED: {
+        dispatch({ type: SYNC_UNSYNCED });
+        break;
+      }
+      case SyncNotificationType.PEER_CONNECTED: {
+        dispatch({ peerCount: response.getPeerCount(), type: SYNC_PEER_CONNECTED });
+        break;
+      }
+      case SyncNotificationType.PEER_DISCONNECTED: {
+        dispatch({ peerCount: response.getPeerCount(), type: SYNC_PEER_DISCONNECTED });
+        break;
+      }
+      case SyncNotificationType.FETCHED_MISSING_CFILTERS_STARTED: {
+        dispatch({ type: SYNC_FETCHED_MISSING_CFILTERS_STARTED });
+        break;
+      }
+      case SyncNotificationType.FETCHED_MISSING_CFILTERS_PROGRESS: {
+        dispatch({ type: SYNC_FETCHED_MISSING_CFILTERS_PROGRESS });
+        break;
+      }
+      case SyncNotificationType.FETCHED_MISSING_CFILTERS_FINISHED: {
+        dispatch({ type: SYNC_FETCHED_MISSING_CFILTERS_FINISHED });
+        break;
+      }
+      case SyncNotificationType.FETCHED_HEADERS_STARTED: {
+        dispatch({ type: SYNC_FETCHED_HEADERS_STARTED });
+        break;
+      }
+      case SyncNotificationType.FETCHED_HEADERS_PROGRESS: {
+        if (!timeStart) {
+          timeStart = new Date();
+        }
+        if (!blockStart) {
+          blockStart = response.getFetchHeaders().getLastHeaderHeight();
+        }
+        var peerInitialHeight = response.getFetchHeaders().getPeerInitialHeight();
+        var lastHeaderHeight = response.getFetchHeaders().getLastHeaderHeight();
+        var lastFetchedHeaderTime = new Date(response.getFetchHeaders().getLastHeaderTime()/1000000);
+        var fetchedMissingCfilters = response.getFetchHeaders().getFetchedCfiltersCount();
+
+        const blocksLeft = peerInitialHeight - lastHeaderHeight;
+        const blocksDiff = lastHeaderHeight - blockStart;
+        const currentTime = new Date();
+        const timeSyncing = (currentTime - timeStart) / 1000;
+        const spvSyncSecondsLeft = Math.round(blocksLeft / blocksDiff * timeSyncing);
+
+        dispatch({ spvSyncSecondsLeft, peerInitialHeight, lastHeaderHeight, lastFetchedHeaderTime, fetchedMissingCfilters, type: SYNC_FETCHED_HEADERS_PROGRESS });
+        break;
+      }
+      case SyncNotificationType.FETCHED_HEADERS_FINISHED: {
+        dispatch({ type: SYNC_FETCHED_HEADERS_FINISHED });
+        break;
+      }
+      case SyncNotificationType.DISCOVER_ADDRESSES_STARTED: {
+        dispatch({ type: SYNC_DISCOVER_ADDRESSES_STARTED });
+        break;
+      }
+      case SyncNotificationType.DISCOVER_ADDRESSES_FINISHED: {
+        dispatch({ type: SYNC_DISCOVER_ADDRESSES_FINISHED });
+        if (!discoverAccountsComplete) {
+          const { daemon: { walletName } } = getState();
+          const config = getWalletCfg(isTestNet(getState()), walletName);
+          config.delete("discoveraccounts");
+          config.set("discoveraccounts", true);
+          dispatch({ complete: true, type: UPDATEDISCOVERACCOUNTS });
+        }
+        break;
+      }
+      case SyncNotificationType.RESCAN_STARTED: {
+        dispatch({ type: SYNC_RESCAN_STARTED });
+        break;
+      }
+      case SyncNotificationType.RESCAN_PROGRESS: {
+        dispatch({ rescannedThrough: response.getSyncingStatus().getRescannedThrough(), type: SYNC_RESCAN_PROGRESS });
+        break;
+      }
+      case SyncNotificationType.RESCAN_FINISHED: {
+        dispatch({ type: SYNC_RESCAN_FINISHED });
+        break;
+      }}
     });
     spvSyncCall.on("end", function() {
       dispatch({ type: SPVSYNC_SUCCESS });
