@@ -1,7 +1,7 @@
 import { EyeFilterMenu } from "buttons";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { Tooltip } from "shared";
-import { TextInput, DcrInput, SlideRanger } from "inputs";
+import { TextInput, SlideRanger, NumericInput } from "inputs";
 import TxHistory from "TxHistory";
 import { LoadingMoreTransactionsIndicator, NoMoreTransactionsIndicator, NoTransactions } from "indicators";
 import InfiniteScroll from "react-infinite-scroller";
@@ -29,10 +29,18 @@ const Page = ({
   onChangeSortType,
   onChangeSearchText,
   onLoadMoreTransactions,
+  min,
+  max,
+  step,
+  onChangeMinValue,
+  onChangeMaxValue,
+  onChangeStepValue,
   minAmount,
   maxAmount,
   onChangeMinAmount,
   onChangeMaxAmount,
+  expandedSliderInfo,
+  onToggleSliderInfo,
 }) => (
   <InfiniteScroll
     hasMore={!noMoreTransactions}
@@ -47,12 +55,6 @@ const Page = ({
       </div>
       <div className="history-select-tx-types-area">
         <div className="history-select-tx-types">
-          <div>
-            <div><T id="history.minAmount" m="Min Amount" /></div>
-            <SlideRanger min={0} max={1000} value={minAmount} onChange={onChangeMinAmount} />
-            <div><T id="history.maxAmount" m="Max Amount" /></div>
-            <SlideRanger min={0} max={1000} value={maxAmount} onChange={onChangeMaxAmount} />
-          </div>
           <div className="history-search-tx">
             <TextInput
               type="text"
@@ -80,6 +82,37 @@ const Page = ({
               onChange={onChangeSelectedType}
             />
           </Tooltip>
+          <div className="history-select-tx-amounts-area">
+            <div className="history-select-tx-amounts">
+              <div className="history-select-tx-min-amount"> 
+                <div><T id="history.minAmount" m="Min Amount" /></div>
+                <SlideRanger step={step} min={min} max={max} value={minAmount} onChange={onChangeMinAmount} />
+              </div>
+              <div className="history-select-tx-max-amount">
+                <T id="history.maxAmount" m="Max Amount" />
+                <SlideRanger step={step} min={min} max={max} value={maxAmount} onChange={onChangeMaxAmount} />
+              </div>
+              <span onClick={() => onToggleSliderInfo(expandedSliderInfo)} className="history-select-tx-kebab"></span>
+            </div>
+            {
+              expandedSliderInfo && (
+                <div className="history-select-tx-slider-info">
+                  <div>
+                    <T id="history.min.value" m="Slider min Value" />:
+                    <NumericInput value={min} onChange={(e) => onChangeMinValue(e.target.value)} />
+                  </div>
+                  <div>
+                    <T id="history.max.value" m="Slider max Value" />:
+                    <NumericInput value={max} onChange={(e) => onChangeMaxValue(e.target.value)} />
+                  </div>
+                  <div>
+                    <T id="history.step.value" m="Step Value" />:
+                    <NumericInput value={step} onChange={(e) => onChangeStepValue(e.target.value)} />
+                  </div>
+                </div>
+              )
+            }
+          </div>
         </div>
       </div>
     </div>

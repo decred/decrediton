@@ -24,14 +24,18 @@ class History extends React.Component {
 
   constructor(props) {
     super(props);
-    const selectedTxTypeKey = this.selectedTxTypeFromFilter(this.props.transactionsFilter);
-    const { search, listDirection } = this.props.transactionsFilter;
+    const selectedTxTypeKey = this.selectedTxTypeFromFilter(props.transactionsFilter);
+    const { search, listDirection } = props.transactionsFilter;
     this.state = {
       selectedTxTypeKey,
       selectedSortOrderKey: listDirection,
       searchText: search,
       minAmount: 0,
       maxAmount: 0,
+      min: 0,
+      max: 100,
+      step: 1,
+      expandedSliderInfo: true,
     };
   }
 
@@ -58,6 +62,10 @@ class History extends React.Component {
             onLoadMoreTransactions: null,
             onChangeMinAmount: null,
             onChangeMaxAmount: null,
+            onChangeMaxValue: null,
+            onChangeMinValue: null,
+            onChangeStepValue: null,
+            onToggleSliderInfo: null,
           }, this)
         }}
       />
@@ -123,6 +131,22 @@ class History extends React.Component {
     // this is needed because transactions at filter are all at atoms
     amount = currencyDisplay === "DCR" ? amount*unitDivisor : amount;
     this.onChangeFilter({ minAmount: amount });
+  }
+
+  onToggleSliderInfo(expandedSliderInfo) {
+    this.setState({ expandedSliderInfo: !expandedSliderInfo })
+  }
+
+  onChangeMinValue(min) {
+    this.setState({ min });
+  }
+
+  onChangeMaxValue(max) {
+    this.setState({ max });
+  }
+
+  onChangeStepValue(step) {
+    this.setState({ step });
   }
 
   onChangeMaxAmount(maxAmount) {
