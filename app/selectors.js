@@ -208,161 +208,7 @@ export const blockURLBuilder= createSelector(
     (txHash) => `https://${network !== "testnet" ? "explorer" : network}.dcrdata.org/${network == "testnet" ? "explorer/" : ""}block/${txHash}`
 );
 
-export const transactionNormalizer = createSelector(
-  [ accounts, txURLBuilder, blockURLBuilder ],
-  (accounts, txURLBuilder, blockURLBuilder) => {
-    const findAccount = num => accounts.find(account => account.getAccountNumber() === num);
-    const getAccountName = num => (act => act ? act.getAccountName() : "")(findAccount(num));
-    return tx => {
-      const { blockHash } = tx;
-      const type = tx.type || (tx.getTransactionType ? tx.getTransactionType() : null);
-      let txInfo = tx.tx ? tx : {};
-      let timestamp = tx.timestamp;
-      tx = tx.tx || tx;
-      timestamp = timestamp || tx.timestamp;
-      let totalFundsReceived = 0;
-      let totalChange = 0;
-      let addressStr = [];
-      let debitedAccount;
-      let creditedAccount;
-      const txInputs = [];
-      const txOutputs = [];
-      const txHash = reverseHash(Buffer.from(tx.getHash()).toString("hex"));
-      const txBlockHash = blockHash ? reverseHash(Buffer.from(blockHash).toString("hex")) : null;
-      const fee = tx.getFee();
-      const totalDebit = tx.getDebitsList().reduce((total, debit) => {
-        debitedAccount = debit.getPreviousAccount();
-        const accountName = getAccountName(debitedAccount);
-        const amount = debit.getPreviousAmount();
-        txInputs.push({ accountName, amount, index: debit.getIndex() });
-        return total + amount;
-      }, 0);
-
-      tx.getCreditsList().forEach((credit) => {
-        const amount = credit.getAmount();
-        const address = credit.getAddress();
-        addressStr.push(address);
-        creditedAccount = credit.getAccount();
-        const accountName = getAccountName(creditedAccount);
-        txOutputs.push({ accountName, amount, address, index: credit.getIndex() });
-        credit.getInternal() ? (totalChange += amount) : (totalFundsReceived += amount);
-      });
-
-      const txDetails = ((totalFundsReceived + totalChange + fee) < totalDebit)
-        ? {
-          txDescription: { direction: "Sent", addressStr: null },
-          txAmount: totalDebit - fee - totalChange - totalFundsReceived,
-          txDirection: "out",
-          txAccountName: getAccountName(debitedAccount)
-        }
-        : ((totalFundsReceived + totalChange + fee) === totalDebit)
-          ? {
-            txDescription: { direction: "Transferred", addressStr },
-            txAmount: fee,
-            txDirection: "transfer",
-            txAccountName: getAccountName(creditedAccount)
-          }
-          : {
-            txDescription: { direction: "Received at:", addressStr },
-            txAmount: totalFundsReceived,
-            txDirection: "in",
-            txAccountName: getAccountName(creditedAccount)
-          };
-
-      return {
-        txUrl: txURLBuilder(txHash),
-        txBlockUrl: txBlockHash ? blockURLBuilder(txBlockHash) : null,
-        txHash,
-        txHeight: txInfo.height,
-        txType: getTxTypeStr(type),
-        txTimestamp: timestamp,
-        txFee: fee,
-        txInputs,
-        txOutputs,
-        txBlockHash,
-        txNumericType: type,
-        rawTx: Buffer.from(tx.getTransaction()).toString("hex"),
-        ...txDetails
-      };
-    };
-  }
-);
-
-export const noMoreTransactions = get([ "grpc", "noMoreTransactions" ]);
-export const transactionsNormalizer = createSelector([ transactionNormalizer ], map);
-export const transactionsFilter = get([ "grpc", "transactionsFilter" ]);
-export const hasUnminedTransactions = compose(l => l && l.length > 0, get([ "grpc", "unminedTransactions" ]));
-export const transactions = createSelector(
-  [ transactionsNormalizer, get([ "grpc", "transactions" ]) ], apply
-);
-
-export const homeHistoryTransactions = createSelector(
-  [ transactionsNormalizer, get([ "grpc", "recentRegularTransactions" ]) ], apply
-);
-
-const txSinceLastOpened = get([ "grpc", "transactionsSinceLastOpened" ]);
-
-export const transactionsSinceLastOpened = createSelector(
-  [ txSinceLastOpened ],
-  (txSinceLastOpened) => txSinceLastOpened ? txSinceLastOpened : []
-);
-
-export const dailyBalancesStats = get([ "statistics", "dailyBalances" ]);
-
-export const spendableAndLockedBalance = createSelector(
-  [ dailyBalancesStats, unitDivisor ],
-  ( stats, unitDivisor ) => stats.map(s => ({
-    time: s.time,
-    available: s.series.spendable / unitDivisor,
-    locked: (s.series.locked + s.series.immature) / unitDivisor,
-  })));
-
-export const balanceSent = createSelector(
-  [ dailyBalancesStats ],
-  (balances) => balances.reduce((s, b) => s + b.series.sent, 0)
-);
-
-export const balanceReceived = createSelector(
-  [ dailyBalancesStats ],
-  (balances) => balances.reduce((s, b) => s + b.series.received, 0)
-);
-
-export const sentAndReceivedTransactions = createSelector(
-  [ dailyBalancesStats, unitDivisor ],
-  ( stats, unitDivisor ) => stats.map(s => ({
-    time: s.time,
-    sent: s.series.sent / unitDivisor,
-    received: s.series.received / unitDivisor
-  })));
-
-//fake data for ticket tab on overview Page
-export const totalValueOfLiveTickets = createSelector(
-  [ dailyBalancesStats ],
-  (balances) => {
-    if (!balances) return 0;
-    const lastBalance = balances[balances.length-1];
-    if (!lastBalance) return 0;
-    return lastBalance.series.locked + lastBalance.series.lockedNonWallet;
-  }
-);
-
-export const ticketDataChart = createSelector(
-  [ dailyBalancesStats, unitDivisor ],
-  ( stats, unitDivisor ) => stats.map(s => ({
-    time: s.time,
-    voted: s.series.voted / unitDivisor,
-    revoked: s.series.revoked / unitDivisor,
-    ticket: s.series.ticket / unitDivisor,
-    locked: (s.series.locked + s.series.lockedNonWallet) / unitDivisor,
-    immature: (s.series.immature + s.series.immatureNonWallet) / unitDivisor,
-  })));
-
 export const decodedTransactions = get([ "grpc", "decodedTransactions" ]);
-
-export const viewedDecodedTransaction = createSelector(
-  [ transactions, (state, { match: { params: { txHash } } }) => txHash, decodedTransactions ],
-  (transactions, txHash, decodedTransactions) => decodedTransactions[txHash]
-);
 
 export const ticketNormalizer = createSelector(
   [ decodedTransactions, network ],
@@ -454,15 +300,12 @@ export const ticketNormalizer = createSelector(
     };
   }
 );
+
 const ticketSorter = (a, b) => (b.leaveTimestamp||b.enterTimestamp) - (a.leaveTimestamp||a.enterTimestamp);
 
 export const allTickets = createSelector(
   [ ticketNormalizer, get([ "grpc", "tickets" ]) ],
   (normalizer, tickets) => tickets.map(normalizer).sort(ticketSorter)
-);
-
-const recentStakeTransactions = createSelector(
-  [ transactionsNormalizer, get([ "grpc", "recentStakeTransactions" ]) ], apply
 );
 
 // aux map from ticket/spender hash => ticket info
@@ -473,6 +316,171 @@ const txHashToTicket = createSelector(
     m[t.spenderHash] = t;
     return m;
   }, {})
+);
+
+const transactionNormalizer = createSelector(
+  [ accounts, txURLBuilder, blockURLBuilder, txHashToTicket ],
+  (accounts, txURLBuilder, blockURLBuilder, txHashToTicket) => {
+    const findAccount = num => accounts.find(account => account.getAccountNumber() === num);
+    const getAccountName = num => (act => act ? act.getAccountName() : "")(findAccount(num));
+    return tx => {
+      let status;
+      const ticketDecoded = txHashToTicket[tx.txHash];
+      if (ticketDecoded) {
+        status = ticketDecoded.status;
+      }
+
+      const { blockHash } = tx;
+      const type = tx.type || (tx.getTransactionType ? tx.getTransactionType() : null);
+      let txInfo = tx.tx ? tx : {};
+      let timestamp = tx.timestamp;
+      tx = tx.tx || tx;
+      timestamp = timestamp || tx.timestamp;
+      let totalFundsReceived = 0;
+      let totalChange = 0;
+      let addressStr = [];
+      let debitedAccount;
+      let creditedAccount;
+      const txInputs = [];
+      const txOutputs = [];
+      const txHash = reverseHash(Buffer.from(tx.getHash()).toString("hex"));
+      const txBlockHash = blockHash ? reverseHash(Buffer.from(blockHash).toString("hex")) : null;
+      const fee = tx.getFee();
+      const totalDebit = tx.getDebitsList().reduce((total, debit) => {
+        debitedAccount = debit.getPreviousAccount();
+        const accountName = getAccountName(debitedAccount);
+        const amount = debit.getPreviousAmount();
+        txInputs.push({ accountName, amount, index: debit.getIndex() });
+        return total + amount;
+      }, 0);
+
+      tx.getCreditsList().forEach((credit) => {
+        const amount = credit.getAmount();
+        const address = credit.getAddress();
+        addressStr.push(address);
+        creditedAccount = credit.getAccount();
+        const accountName = getAccountName(creditedAccount);
+        txOutputs.push({ accountName, amount, address, index: credit.getIndex() });
+        credit.getInternal() ? (totalChange += amount) : (totalFundsReceived += amount);
+      });
+
+      const txDetails = ((totalFundsReceived + totalChange + fee) < totalDebit)
+        ? {
+          txDescription: { direction: "Sent", addressStr: null },
+          txAmount: totalDebit - fee - totalChange - totalFundsReceived,
+          txDirection: "out",
+          txAccountName: getAccountName(debitedAccount)
+        }
+        : ((totalFundsReceived + totalChange + fee) === totalDebit)
+          ? {
+            txDescription: { direction: "Transferred", addressStr },
+            txAmount: fee,
+            txDirection: "transfer",
+            txAccountName: getAccountName(creditedAccount)
+          }
+          : {
+            txDescription: { direction: "Received at:", addressStr },
+            txAmount: totalFundsReceived,
+            txDirection: "in",
+            txAccountName: getAccountName(creditedAccount)
+          };
+
+      return {
+        txUrl: txURLBuilder(txHash),
+        txBlockUrl: txBlockHash ? blockURLBuilder(txBlockHash) : null,
+        txHash,
+        status,
+        txHeight: txInfo.height,
+        txType: getTxTypeStr(type),
+        txTimestamp: timestamp,
+        txFee: fee,
+        txInputs,
+        txOutputs,
+        txBlockHash,
+        txNumericType: type,
+        rawTx: Buffer.from(tx.getTransaction()).toString("hex"),
+        ...txDetails
+      };
+    };
+  }
+);
+
+export const noMoreTransactions = get([ "grpc", "noMoreTransactions" ]);
+const transactionsNormalizer = createSelector([ transactionNormalizer ], map);
+export const transactionsFilter = get([ "grpc", "transactionsFilter" ]);
+export const hasUnminedTransactions = compose(l => l && l.length > 0, get([ "grpc", "unminedTransactions" ]));
+export const transactions = createSelector(
+  [ transactionsNormalizer, get([ "grpc", "transactions" ]) ], apply
+);
+
+export const homeHistoryTransactions = createSelector(
+  [ transactionsNormalizer, get([ "grpc", "recentRegularTransactions" ]) ], apply
+);
+
+const txSinceLastOpened = get([ "grpc", "transactionsSinceLastOpened" ]);
+
+export const transactionsSinceLastOpened = createSelector(
+  [ txSinceLastOpened ],
+  (txSinceLastOpened) => txSinceLastOpened ? txSinceLastOpened : []
+);
+
+export const dailyBalancesStats = get([ "statistics", "dailyBalances" ]);
+
+export const spendableAndLockedBalance = createSelector(
+  [ dailyBalancesStats, unitDivisor ],
+  ( stats, unitDivisor ) => stats.map(s => ({
+    time: s.time,
+    available: s.series.spendable / unitDivisor,
+    locked: (s.series.locked + s.series.immature) / unitDivisor,
+  })));
+
+export const balanceSent = createSelector(
+  [ dailyBalancesStats ],
+  (balances) => balances.reduce((s, b) => s + b.series.sent, 0)
+);
+
+export const balanceReceived = createSelector(
+  [ dailyBalancesStats ],
+  (balances) => balances.reduce((s, b) => s + b.series.received, 0)
+);
+
+export const sentAndReceivedTransactions = createSelector(
+  [ dailyBalancesStats, unitDivisor ],
+  ( stats, unitDivisor ) => stats.map(s => ({
+    time: s.time,
+    sent: s.series.sent / unitDivisor,
+    received: s.series.received / unitDivisor
+  })));
+
+//fake data for ticket tab on overview Page
+export const totalValueOfLiveTickets = createSelector(
+  [ dailyBalancesStats ],
+  (balances) => {
+    if (!balances) return 0;
+    const lastBalance = balances[balances.length-1];
+    if (!lastBalance) return 0;
+    return lastBalance.series.locked + lastBalance.series.lockedNonWallet;
+  }
+);
+
+export const ticketDataChart = createSelector(
+  [ dailyBalancesStats, unitDivisor ],
+  ( stats, unitDivisor ) => stats.map(s => ({
+    time: s.time,
+    voted: s.series.voted / unitDivisor,
+    revoked: s.series.revoked / unitDivisor,
+    ticket: s.series.ticket / unitDivisor,
+    locked: (s.series.locked + s.series.lockedNonWallet) / unitDivisor,
+    immature: (s.series.immature + s.series.immatureNonWallet) / unitDivisor,
+  })));
+
+export const viewedDecodedTransaction = createSelector(
+  [ transactions, (state, { match: { params: { txHash } } }) => txHash, decodedTransactions ],
+  (transactions, txHash, decodedTransactions) => decodedTransactions[txHash]
+);
+
+const recentStakeTransactions = createSelector(
+  [ transactionsNormalizer, get([ "grpc", "recentStakeTransactions" ]) ], apply
 );
 
 export const homeHistoryTickets = createSelector(
@@ -489,7 +497,7 @@ export const homeHistoryTickets = createSelector(
         return null;
       }
       tx.ticketPrice = ticketDecoded.ticketPrice;
-      tx.status = tx.txType;
+      tx.status = ticketDecoded.status;
       tx.enterTimestamp = ticketDecoded.enterTimestamp;
       tx.leaveTimestamp = ticketDecoded.leaveTimestamp;
       tx.ticketReward = ticketDecoded.ticketReward;

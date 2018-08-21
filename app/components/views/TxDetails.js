@@ -20,7 +20,7 @@ const headerIcons = {
   in:         "plusBig",
   out:        "minusBig",
   Coinbase:   "plusBig",
-  transfer:   "walletGray",
+  transfer:   "walletTransfer",
   Ticket:     "ticketSmall",
   Vote:       "ticketSmall",
   Revocation: "ticketSmall",

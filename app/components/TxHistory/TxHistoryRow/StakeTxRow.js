@@ -19,9 +19,7 @@ const messageByType = { // TODO: use constants instead of string
   "live": <T id="transaction.type.live" m="Live" />,
 };
 
-// ToDo Add status to transactions selector, so we can use status instead of txType
-// to show on transactions history page
-const StakeTxRow = ({ status, txType, ...props }) => {
+const StakeTxRow = ({ status, ...props }) => {
   const { overview, ticketPrice, ticketReward, leaveTimestamp, enterTimestamp } = props;
 
   const rewardLabel = <T id="ticket.rewardLabel" m="Ticket Reward" />;
@@ -76,17 +74,17 @@ const StakeTxRow = ({ status, txType, ...props }) => {
         </div>
       </Row>
     ) : (
-      <Row {...{ className: txType, ...props }}>
+      <Row {...{ className: status , ...props }}>
         <div className="transaction-info">
           <span className="icon" />
-          <span className="transaction-stake-type">{messageByType[txType] || "(unknown type)"}</span>
+          <span className="transaction-stake-type">{messageByType[status] || "(unknown type)"}</span>
         </div>
       </Row>
     );
 };
 
-export const StakeTxRowOfType = (txType) => {
-  const Comp = ({ ...p }) => h(StakeTxRow, { txType, ...p });
-  Comp.displayName = `StakeTxRowOfClass: ${txType}`;
+export const StakeTxRowOfType = (status) => {
+  const Comp = ({ ...p }) => h(StakeTxRow, { status, ...p });
+  Comp.displayName = `StakeTxRowOfClass: ${status}`;
   return Comp;
 };

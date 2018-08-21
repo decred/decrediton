@@ -40,6 +40,7 @@ const Row = ({
     groupKey={account.accountNumber}
     activeGroupKey={accountNumDetailsShown}
     onToggleAccordion={onToggleShowDetails}
+    className={"account-row-details-bottom"}
   >
     {isShowingRenameAccount
       ? getRenameAccountStyles()
