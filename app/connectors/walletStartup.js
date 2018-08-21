@@ -48,6 +48,7 @@ const mapStateToProps = selectorMap({
   fetchHeadersDone: sel.fetchHeadersDone,
   isSPV: sel.isSPV,
   spvInput: sel.spvInput,
+
   spvSyncSecondsLeft: sel.spvSyncSecondsLeft,
   spvDiscoverAddresses: sel.spvDiscoverAddresses,
   spvFetchHeaders: sel.spvFetchHeaders,
@@ -55,9 +56,21 @@ const mapStateToProps = selectorMap({
   spvLastHeaderHeight: sel.lastHeaderHeight,
   spvLastFetchedHeaderTime: sel.lastFetchedHeaderTime,
   spvFetchedMissingCfilters: sel.fetchedMissingCfilters,
-  spvPeerCount: sel.peerCount,
+
+  peerCount: sel.peerCount,
   spvRescannedThrough: sel.spvRescannedThrough,
-  spvSynced: sel.spvSynced,
+
+  synced: sel.synced,
+  syncFetchMissingCfiltersAttempt: sel.syncFetchMissingCfiltersAttempt,
+  syncFetchMissingCfiltersStart: sel.syncFetchMissingCfiltersStart,
+  syncFetchMissingCfiltersEnd: sel.syncFetchMissingCfiltersEnd,
+  syncFetchHeadersAttempt: sel.syncFetchHeadersAttempt,
+  syncFetchHeadersCount: sel.syncFetchHeadersCount,
+  syncFetchHeadersLastHeaderTime: sel.syncFetchHeadersLastHeaderTime,
+  syncSecondsLeft: sel.syncSecondsLeft,
+  syncDiscoverAddressesAttempt: sel.syncDiscoverAddressesAttempt,
+  syncRescanAttempt: sel.syncRescanAttempt,
+  syncRescanProgress: sel.syncRescanProgress,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

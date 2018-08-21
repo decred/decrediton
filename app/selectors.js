@@ -62,18 +62,17 @@ export const versionInvalidError = createSelector(
 );
 
 export const spvInput = get([ "walletLoader", "spvInput" ]);
-export const spvDiscoverAddresses = get([ "walletLoader", "spvDiscoverAddresses" ]);
-export const spvFetchHeaders = get([ "walletLoader", "spvFetchHeaders" ]);
-export const lastHeaderHeight = get([ "walletLoader", "lastHeaderHeight" ]);
-export const lastFetchedHeaderTime = get([ "walletLoader", "lastFetchedHeaderTime" ]);
-export const peerInitialHeight = get([ "walletLoader", "peerInitialHeight" ]);
-export const spvSyncSecondsLeft = get([ "walletLoader" , "spvSyncSecondsLeft" ]);
 export const peerCount = get([ "walletLoader", "peerCount" ]);
-export const fetchedMissingCfilters = get([ "walletLoader", "fetchedMissingCfilters" ]);
-export const spvRescannedThrough = get([ "walletLoader", "spvRescannedThrough" ]);
-export const spvSynced = get([ "walletLoader", "spvSynced" ]);
-
-
+export const synced = get([ "walletLoader", "synced" ]);
+export const syncFetchMissingCfiltersAttempt = get([ "walletLoader", "syncFetchMissingCfiltersAttempt" ]);
+export const syncFetchMissingCfiltersStart = get([ "walletLoader", "syncFetchMissingCfiltersStart" ]);
+export const syncFetchMissingCfiltersEnd = get([ "walletLoader", "syncFetchMissingCfiltersEnd" ]);
+export const syncFetchHeadersAttempt = get([ "walletLoader", "syncFetchHeadersAttempt" ]);
+export const syncFetchHeadersCount = get([ "walletLoader", "syncFetchHeadersCount" ]);
+export const syncFetchHeadersLastHeaderTime = get([ "walletLoader", "syncLastFetchedHeaderTime" ]);
+export const syncDiscoverAddressesAttempt = get([ "walletLoader", "syncDiscoverAddressesAttempt" ]);
+export const syncRescanAttempt = get([ "walletLoader", "syncRescanAttempt" ]);
+export const syncRescanProgress = get([ "walletLoader", "syncRescanProgress" ]);
 
 const isStartStepOpen = compose(eq(START_STEP_OPEN), startStepIndex);
 const isStartStepDiscover = compose(eq(START_STEP_DISCOVER), startStepIndex);

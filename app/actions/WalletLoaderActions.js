@@ -496,9 +496,9 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
         const timeLeft = currentTime - lastFetchedHeaderTime;
         const timeDiff = lastFetchedHeaderTime - timeStart;
         const timeSyncing = (currentTime - timeStart) / 1000;
-        const spvSyncSecondsLeft = Math.round(timeLeft / timeDiff * timeSyncing);
+        const syncSecondsLeft = Math.round(timeLeft / timeDiff * timeSyncing);
 
-        dispatch({ fetchHeadersCount, spvSyncSecondsLeft, lastFetchedHeaderTime, type: SYNC_FETCHED_HEADERS_PROGRESS });
+        dispatch({ fetchHeadersCount, syncSecondsLeft, lastFetchedHeaderTime, type: SYNC_FETCHED_HEADERS_PROGRESS });
         break;
       }
       case SyncNotificationType.FETCHED_HEADERS_FINISHED: {

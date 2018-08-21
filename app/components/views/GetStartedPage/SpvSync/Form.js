@@ -15,7 +15,7 @@ const messages = defineMessages({
 
 const SpvSyncBody = ({
   text,
-  spvSynced,
+  synced,
   isInputRequest,
   getWalletReady,
   finishDateEstimation,
@@ -76,7 +76,7 @@ const SpvSyncBody = ({
           <Aux>
             <LinearProgressFull
               error={startupError}
-              getDaemonSynced={spvSynced}
+              getDaemonSynced={synced}
               min={0}
               max={spvPeerInitialHeight}
               value={spvLastHeaderHeight}

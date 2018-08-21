@@ -396,9 +396,9 @@ export default function walletLoader(state = {}, action) {
     };
   case SYNC_FETCHED_HEADERS_PROGRESS:
     return { ...state,
-      spvSyncSecondsLeft: action.spvSyncSecondsLeft,
-      fetchHeadersCount: action.fetchHeadersCount,
-      lastFetchedHeaderTime: action.lastFetchedHeaderTime,
+      syncSecondsLeft: action.syncSecondsLeft,
+      syncFetchHeadersCount: action.fetchHeadersCount,
+      syncLastFetchedHeaderTime: action.lastFetchedHeaderTime,
     };
   case SYNC_FETCHED_HEADERS_FINISHED:
     return { ...state,
