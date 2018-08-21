@@ -1,7 +1,7 @@
 import { substruct } from "fp";
 import ErrorScreen from "ErrorScreen";
 import HistoryPage from "./Page";
-import { historyPage } from "connectors";
+import { historyPage, balance } from "connectors";
 import { injectIntl } from "react-intl";
 import { TransactionDetails }  from "middleware/walletrpc/api_pb";
 import { FormattedMessage as T } from "react-intl";
@@ -25,13 +25,13 @@ class History extends React.Component {
   constructor(props) {
     super(props);
     const selectedTxTypeKey = this.selectedTxTypeFromFilter(this.props.transactionsFilter);
-    const { minAmount, maxAmount, search, listDirection } = this.props.transactionsFilter;
+    const { search, listDirection } = this.props.transactionsFilter;
     this.state = {
       selectedTxTypeKey,
       selectedSortOrderKey: listDirection,
       searchText: search,
-      minAmount,
-      maxAmount,
+      minAmount: 0,
+      maxAmount: 0,
     };
   }
 
@@ -117,13 +117,21 @@ class History extends React.Component {
   }
 
   onChangeMinAmount(minAmount) {
-    this.onChangeFilter({ minAmount });
-    this.setState({ minAmount });
+    const { unitDivisor, currencyDisplay } = this.props;
+    let amount = minAmount/unitDivisor;
+    this.setState({ minAmount: amount });
+    // this is needed because transactions at filter are all at atoms
+    amount = currencyDisplay === "DCR" ? amount*unitDivisor : amount;
+    this.onChangeFilter({ minAmount: amount });
   }
 
   onChangeMaxAmount(maxAmount) {
-    this.onChangeFilter({ maxAmount });
-    this.setState({ maxAmount });
+    const { unitDivisor, currencyDisplay } = this.props;
+    let amount = maxAmount/unitDivisor;
+    this.setState({ maxAmount: amount });
+    // this is needed because transactions at filter are all at atoms
+    amount = currencyDisplay === "DCR" ? amount*unitDivisor : amount;
+    this.onChangeFilter({ maxAmount: amount });
   }
 
   selectedTxTypeFromFilter(filter) {
@@ -136,4 +144,4 @@ class History extends React.Component {
   }
 }
 
-export default historyPage(injectIntl(History));
+export default balance(historyPage(injectIntl(History)));

@@ -1,7 +1,7 @@
 import { EyeFilterMenu } from "buttons";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { Tooltip } from "shared";
-import { TextInput, DcrInput } from "inputs";
+import { TextInput, DcrInput, SlideRanger } from "inputs";
 import TxHistory from "TxHistory";
 import { LoadingMoreTransactionsIndicator, NoMoreTransactionsIndicator, NoTransactions } from "indicators";
 import InfiniteScroll from "react-infinite-scroller";
@@ -49,17 +49,9 @@ const Page = ({
         <div className="history-select-tx-types">
           <div>
             <div><T id="history.minAmount" m="Min Amount" /></div>
-            <DcrInput
-              amount={minAmount}
-              onChangeAmount={onChangeMinAmount}
-              showErrors
-            />
+            <SlideRanger min={0} max={1000} value={minAmount} onChange={onChangeMinAmount} />
             <div><T id="history.maxAmount" m="Max Amount" /></div>
-            <DcrInput
-              amount={maxAmount}
-              onChangeAmount={onChangeMaxAmount}
-              showErrors
-            />
+            <SlideRanger min={0} max={1000} value={maxAmount} onChange={onChangeMaxAmount} />
           </div>
           <div className="history-search-tx">
             <TextInput
