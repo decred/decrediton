@@ -40,7 +40,9 @@ const Page = ({
       <div className="history-content-title-text">
         <T id="history.title" m="Transaction History" />
       </div>
-      <div className="history-select-tx-types-area">
+      <div className="history-select-tx-types-area" style={transactions.length == 0
+        ? { display: "none" }
+        : { display: "initial" } } >
         <div className="history-select-tx-types">
           <div className="history-search-tx">
             <TextInput
