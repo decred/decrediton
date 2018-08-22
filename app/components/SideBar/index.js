@@ -69,7 +69,8 @@ class SideBar extends React.Component {
           showingSidebarMenu: this.props.showingSidebarMenu,
           expandSideBar: this.props.expandSideBar,
           onExpandSideBar: this.props.onExpandSideBar,
-          onReduceSideBar: this.props.onReduceSideBar
+          onReduceSideBar: this.props.onReduceSideBar,
+          isWatchOnly: this.props.isWatchOnly,
         }}
       />
     );

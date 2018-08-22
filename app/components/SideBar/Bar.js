@@ -24,9 +24,10 @@ const Bar = ({
   expandSideBar,
   onExpandSideBar,
   onReduceSideBar,
+  isWatchOnly,
 }) => (
   <div className={(expandSideBar ? "sidebar-menu " : "sidebar-menu-reduced ") + (isTestNet ? "sidebar-testnet" : "sidebar-mainnet")}>
-    <Logo {...{ isTestNet, expandSideBar, onReduceSideBar, onExpandSideBar }} />
+    <Logo {...{ isTestNet, expandSideBar, onReduceSideBar, onExpandSideBar, isWatchOnly }} />
     <Aux show={ showingSidebarMenu }>
       <div className="sidebar-main">
         <div className="sidebar-scroll">
