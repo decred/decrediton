@@ -32,9 +32,9 @@ const SpvSyncBody = ({
   onSpvSync,
   onKeyDown,
   spvInput,
+  currentTime,
+  secondsLeft,
   lastDcrwalletLogLine,
-  spvPeerInitialHeight,
-  spvLastHeaderHeight,
   Form,
   ...props,
 }) => (
@@ -78,12 +78,12 @@ const SpvSyncBody = ({
               error={startupError}
               getDaemonSynced={synced}
               min={0}
-              max={spvPeerInitialHeight}
-              value={spvLastHeaderHeight}
+              max={currentTime}
+              value={secondsLeft}
             />
             <div className="loader-bar-estimation">
               <T id="getStarted.chainLoading.syncEstimation" m="Estimated time left"/>
-              <span className="bold"> {finishDateEstimation ? <FormattedRelative value={finishDateEstimation}/> : "--"} ({spvLastHeaderHeight} / {spvPeerInitialHeight})</span>
+              <span className="bold"> {finishDateEstimation ? <FormattedRelative value={finishDateEstimation}/> : "--"}</span>
             </div>
             }
           </Aux>

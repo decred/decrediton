@@ -47,14 +47,14 @@ class SpvSync extends React.Component {
   render() {
     const { passPhrase, hasAttemptedDiscover } = this.state;
     const { onSetPassPhrase, onSpvSync, onKeyDown, lastDcrwalletLogLine } = this;
-    const secondsLeft = this.props.spvSyncSecondsLeft;
+    const secondsLeft = this.props.syncSecondsLeft;
     const { Form } = this.props;
     let finishDateEstimation = null;
     if (secondsLeft !== null && secondsLeft !== undefined) {
       finishDateEstimation = new Date();
       finishDateEstimation.setSeconds(finishDateEstimation.getSeconds() + secondsLeft);
     }
-
+    const currentTime = new Date();
     return (
       <SpvSyncFormBody {...{
         ...this.props,
@@ -65,6 +65,8 @@ class SpvSync extends React.Component {
         hasAttemptedDiscover,
         onSetPassPhrase,
         onSpvSync,
+        currentTime,
+        secondsLeft,
         onKeyDown }}/>);
   }
 

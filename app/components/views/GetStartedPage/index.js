@@ -14,6 +14,7 @@ import { RescanWalletBody } from "./RescanWallet/index";
 import StakePoolsBody from "./StakePools";
 import { walletStartup } from "connectors";
 import { FormattedMessage as T } from "react-intl";
+import {  } from "../../../selectors";
 
 @autobind
 class GetStartedPage extends React.Component {
@@ -101,9 +102,10 @@ class GetStartedPage extends React.Component {
       updateAvailable,
       isSPV,
       isInputRequest,
-      spvFetchHeaders,
-      spvDiscoverAddresses,
-      spvRescannedThrough,
+      syncFetchHeadersAttempt,
+      syncDiscoverAddressesAttempt,
+      syncRescanProgress,
+      syncFetchMissingCfiltersAttempt,
       ...props
     } = this.props;
 
@@ -139,11 +141,13 @@ class GetStartedPage extends React.Component {
       Form = WalletSelectionBody;
     } else if (isSPV && startStepIndex > 2) {
       text = <T id="getStarted.header.syncSpv.meta" m="Syncing SPV Wallet" />;
-      if (spvFetchHeaders) {
+      if (syncFetchMissingCfiltersAttempt) {
+        text = <T id="getStarted.header.fetchingMissing.meta" m="Fetching missing committed filters" />;
+      } else if (syncFetchHeadersAttempt) {
         text = <T id="getStarted.header.fetchingBlockHeaders.meta" m="Fetching block headers" />;
-      } else if (spvDiscoverAddresses) {
+      } else if (syncDiscoverAddressesAttempt) {
         text = <T id="getStarted.header.discoveringAddresses.meta" m="Discovering addresses" />;
-      } else if (spvRescannedThrough !== 0) {
+      } else if (syncRescanProgress) {
         text = <T id="getStarted.header.rescanWallet.meta" m="Scanning blocks for transactions" />;
         Form = RescanWalletBody;
       }

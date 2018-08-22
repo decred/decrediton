@@ -49,17 +49,7 @@ const mapStateToProps = selectorMap({
   isSPV: sel.isSPV,
   spvInput: sel.spvInput,
 
-  spvSyncSecondsLeft: sel.spvSyncSecondsLeft,
-  spvDiscoverAddresses: sel.spvDiscoverAddresses,
-  spvFetchHeaders: sel.spvFetchHeaders,
-  spvPeerInitialHeight: sel.peerInitialHeight,
-  spvLastHeaderHeight: sel.lastHeaderHeight,
-  spvLastFetchedHeaderTime: sel.lastFetchedHeaderTime,
-  spvFetchedMissingCfilters: sel.fetchedMissingCfilters,
-
   peerCount: sel.peerCount,
-  spvRescannedThrough: sel.spvRescannedThrough,
-
   synced: sel.synced,
   syncFetchMissingCfiltersAttempt: sel.syncFetchMissingCfiltersAttempt,
   syncFetchMissingCfiltersStart: sel.syncFetchMissingCfiltersStart,
