@@ -205,13 +205,8 @@ var initialState = {
     stepIndex: 0,
     maxWalletCount: globalCfg.get("max_wallet_count"),
 
-    // SpvSync
-    spvFetchHeaders: false,
-    spvDiscoverAddresses: false,
-    fetchedHeadersCount: 0,
-    lastFetchedHeaderTime: 0,
-    fetchedMissingCfilters: 0,
-    spvRescannedThrough: 0,
+    synced: false,
+    syncFetchHeadersComplete: false,
 
     // Loader
     getLoaderRequestAttempt: false,

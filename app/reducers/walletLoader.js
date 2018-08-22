@@ -341,25 +341,24 @@ export default function walletLoader(state = {}, action) {
       spvInput: false,
       spvSyncAttemptRequest: true,
       spvSyncError: null,
-      spvSynced: false,
+      synced: false,
     };
   case SPVSYNC_FAILED:
     return { ...state,
       spvInput: true,
       spvSyncAttemptRequest: false,
-      spvSynced: false,
+      synced: false,
     };
   case SPVSYNC_UPDATE:
     return { ...state,
       spvSyncError: null,
-      spvSynced: action.synced,
       syncCall: action.syncCall,
     };
   case SPVSYNC_SUCCESS:
     return { ...state,
       spvSyncAttemptRequest: false,
       spvSyncError: null,
-      spvSynced: false,
+      synced: false,
     };
   case SYNC_SYNCED:
     return { ...state,
@@ -403,6 +402,7 @@ export default function walletLoader(state = {}, action) {
   case SYNC_FETCHED_HEADERS_FINISHED:
     return { ...state,
       syncFetchHeadersAttempt: false,
+      syncFetchHeadersComplete: true,
     };
   case SYNC_DISCOVER_ADDRESSES_STARTED:
     return { ...state,

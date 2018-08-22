@@ -157,6 +157,7 @@ class GetStartedPage extends React.Component {
           ...state,
           text,
           Form,
+          syncFetchHeadersAttempt,
         }}/>;
     } else {
       switch (startStepIndex || 0) {

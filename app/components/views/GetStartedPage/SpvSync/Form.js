@@ -15,7 +15,6 @@ const messages = defineMessages({
 
 const SpvSyncBody = ({
   text,
-  synced,
   isInputRequest,
   getWalletReady,
   finishDateEstimation,
@@ -36,6 +35,8 @@ const SpvSyncBody = ({
   secondsLeft,
   lastDcrwalletLogLine,
   Form,
+  syncFetchHeadersAttempt,
+  syncFetchHeadersComplete,
   ...props,
 }) => (
   <div className="page-body getstarted">
@@ -76,15 +77,16 @@ const SpvSyncBody = ({
           <Aux>
             <LinearProgressFull
               error={startupError}
-              getDaemonSynced={synced}
+              getDaemonSynced={syncFetchHeadersComplete}
               min={0}
-              max={currentTime}
+              max={currentTime.getSeconds()}
               value={secondsLeft}
             />
-            <div className="loader-bar-estimation">
-              <T id="getStarted.chainLoading.syncEstimation" m="Estimated time left"/>
-              <span className="bold"> {finishDateEstimation ? <FormattedRelative value={finishDateEstimation}/> : "--"}</span>
-            </div>
+            {syncFetchHeadersAttempt &&
+              <div className="loader-bar-estimation">
+                <T id="getStarted.chainLoading.syncEstimation" m="Estimated time left"/>
+                <span className="bold"> {finishDateEstimation ? <FormattedRelative value={finishDateEstimation}/> : "--" }</span>
+              </div>
             }
           </Aux>
         </div>
