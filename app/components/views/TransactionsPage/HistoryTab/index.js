@@ -21,7 +21,6 @@ export const HistoryTabHeader = historyPage(({ totalBalance }) =>
 
 @autobind
 class History extends React.Component {
-
   constructor(props) {
     super(props);
     const selectedTxTypeKey = this.selectedTxTypeFromFilter(props.transactionsFilter);
@@ -35,7 +34,8 @@ class History extends React.Component {
       min: 0,
       max: 100,
       step: 1,
-      expandedSliderInfo: true,
+      expandedSliderInfo: false,
+      isChangingFilter: false,
     };
   }
 
@@ -102,6 +102,17 @@ class History extends React.Component {
   }
 
   onChangeFilter(value) {
+    const { isChangingFilter } = this.state;
+    if (isChangingFilter) {
+      return setTimeout(() => {
+        this.changeFilter(value);
+        this.setState({ isChangingFilter: false });
+      }, 250);
+    }
+    setTimeout(this.changeFilter(value), 250);
+  }
+
+  changeFilter(value) {
     const newFilter = {
       ...this.props.transactionsFilter,
       ...value
