@@ -55,7 +55,6 @@ class SpvSync extends React.Component {
       finishDateEstimation.setSeconds(finishDateEstimation.getSeconds() + secondsLeft);
     }
     const currentTime = new Date();
-    console.log(currentTime, secondsLeft, finishDateEstimation);
     return (
       <SpvSyncFormBody {...{
         ...this.props,

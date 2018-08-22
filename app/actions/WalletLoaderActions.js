@@ -487,21 +487,23 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
         break;
       }
       case SyncNotificationType.FETCHED_HEADERS_PROGRESS: {
-        const { lastFetchedHeaderTime } = getState().walletLoader;
-        const lastFetchedHeaderTimeUpdate = new Date(response.getFetchHeaders().getLastHeaderTime()/1000000);
+        const { syncLastFetchedHeaderTime } = getState().walletLoader;
+        const lastFetchedHeaderTime = new Date(response.getFetchHeaders().getLastHeaderTime()/1000000);
         const fetchHeadersCount = response.getFetchHeaders().getFetchedHeadersCount();
         const currentTime = new Date();
         if (!timeStart) {
           timeStart = currentTime;
         }
-        const timeLeft = currentTime.getSeconds() - lastFetchedHeaderTimeUpdate.getSeconds();
-        var timeDiff = lastFetchedHeaderTime ? lastFetchedHeaderTimeUpdate.getSeconds() - lastFetchedHeaderTime.getSeconds() : 1;
-        var timeSyncing = (currentTime.getSeconds() - timeStart.getSeconds());
+        const timeLeft = currentTime - lastFetchedHeaderTime;
+        console.log(currentTime, lastFetchedHeaderTime, timeLeft);
+        var timeDiff = syncLastFetchedHeaderTime ? lastFetchedHeaderTime - syncLastFetchedHeaderTime : 1;
+        var timeSyncing = currentTime - timeStart;
+        console.log(currentTime, timeStart);
         timeSyncing = timeSyncing == 0 ? 1 : timeSyncing;
         const syncSecondsLeft = Math.round(timeLeft / timeDiff * timeSyncing);
         console.log("action", timeLeft, timeDiff, timeSyncing, syncSecondsLeft);
 
-        dispatch({ fetchHeadersCount, syncSecondsLeft, lastFetchedHeaderTime: lastFetchedHeaderTimeUpdate, type: SYNC_FETCHED_HEADERS_PROGRESS });
+        dispatch({ fetchHeadersCount, syncSecondsLeft, lastFetchedHeaderTime, type: SYNC_FETCHED_HEADERS_PROGRESS });
         break;
       }
       case SyncNotificationType.FETCHED_HEADERS_FINISHED: {
@@ -549,7 +551,6 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
     });
   });
 };
-
 export function spvSyncCancel() {
   return (dispatch, getState) => {
     const { syncCall } = getState().walletLoader;

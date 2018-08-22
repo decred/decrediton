@@ -79,8 +79,8 @@ const SpvSyncBody = ({
               error={startupError}
               getDaemonSynced={syncFetchHeadersComplete}
               min={0}
-              max={currentTime.getSeconds()}
-              value={secondsLeft}
+              max={finishDateEstimation}
+              value={currentTime}
             />
             {syncFetchHeadersAttempt &&
               <div className="loader-bar-estimation">
