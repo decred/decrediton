@@ -13,7 +13,7 @@ class Input extends React.Component {
       inputUnitDiv: null,
       divClassName: "input-and-unit " + (this.props.className || "") + (this.props.disabled ? " disabled " : ""),
       inputPhase: 0,
-      inputVal: "0.003000000",
+      inputVal: "0.000000000",
       inputMain: "0.00",
       inputSub: "0000000"
     };
@@ -71,7 +71,7 @@ class Input extends React.Component {
     right_part = right_part.toFixed(0);
 
     // Deduce rounding errors
-    if (Math.floor(prepad) < right_part && Math.floor(prepad) == (parseInt(right_part)) - 1 ) {
+    if (Math.floor(prepad) < right_part && Math.floor(prepad) == (parseInt(right_part)) - 1) {
       right_part = (parseInt(right_part)) - 1;
     }
 
@@ -96,13 +96,8 @@ class Input extends React.Component {
     this.setState({ inputMain: left_part });
     this.setState({ inputSub: right_part });
 
-    // Send to other older previous unstyled component and trigger event
-    document.getElementById("parsedInput").value = number_f;
-    var event = new Event("input", { bubbles: true });
-    var x = document.getElementById("parsedInput");
-    var tracker = x._valueTracker;
-    tracker.setValue("'" + x.value + "'");
-    x.dispatchEvent(event);
+    // Send to other older previous unstyled component
+    this.setState({ inputValue: number_f });
   };
 
   render() {
@@ -132,7 +127,7 @@ class Input extends React.Component {
             disabled={disabled ? disabled : null}
             readOnly={readOnly ? readOnly : null}
             placeholder={placeholder}
-            value={isNullOrUndefined(value) ? "" : value}
+            value={isNullOrUndefined(value) ? "" : this.state.inputVal}
             onChange={onChange}
             onFocus={this.onInputFocus}
             onBlur={this.onInputBlur}
