@@ -143,7 +143,7 @@ class Input extends React.Component {
               placeholder={placeholder}
               value={isNullOrUndefined(value) ? "" : value}
               onChange={this.sendToParser}
-              onMouseOver={this.onChange}
+              onFocus={this.onChange}
               onBlur={this.onChange2}
               onKeyDown={this.onKeyDown2}
             >
