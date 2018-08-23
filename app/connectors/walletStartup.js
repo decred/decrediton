@@ -62,6 +62,8 @@ const mapStateToProps = selectorMap({
   syncRescanAttempt: sel.syncRescanAttempt,
   syncRescanProgress: sel.syncRescanProgress,
   syncFetchHeadersComplete: sel.syncFetchHeadersComplete,
+  syncFetchTimeStart: sel.syncFetchTimeStart,
+  firstBlockTime: sel.firstBlockTime,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

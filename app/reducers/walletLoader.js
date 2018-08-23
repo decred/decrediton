@@ -391,6 +391,7 @@ export default function walletLoader(state = {}, action) {
     };
   case SYNC_FETCHED_HEADERS_STARTED:
     return { ...state,
+      syncFetchTimeStart: action.fetchTimeStart,
       syncFetchHeadersAttempt: true,
     };
   case SYNC_FETCHED_HEADERS_PROGRESS:

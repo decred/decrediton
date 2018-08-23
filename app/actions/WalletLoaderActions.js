@@ -483,25 +483,20 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
         break;
       }
       case SyncNotificationType.FETCHED_HEADERS_STARTED: {
-        dispatch({ type: SYNC_FETCHED_HEADERS_STARTED });
+        const fetchTimeStart = new Date();
+        dispatch({ fetchTimeStart, type: SYNC_FETCHED_HEADERS_STARTED });
         break;
       }
       case SyncNotificationType.FETCHED_HEADERS_PROGRESS: {
-        const { syncLastFetchedHeaderTime } = getState().walletLoader;
+        const { syncLastFetchedHeaderTime, syncFetchTimeStart } = getState().walletLoader;
         const lastFetchedHeaderTime = new Date(response.getFetchHeaders().getLastHeaderTime()/1000000);
         const fetchHeadersCount = response.getFetchHeaders().getFetchedHeadersCount();
         const currentTime = new Date();
-        if (!timeStart) {
-          timeStart = currentTime;
-        }
-        const timeLeft = currentTime - lastFetchedHeaderTime;
-        console.log(currentTime, lastFetchedHeaderTime, timeLeft);
+        const timeLeft = syncFetchTimeStart - lastFetchedHeaderTime;
         var timeDiff = syncLastFetchedHeaderTime ? lastFetchedHeaderTime - syncLastFetchedHeaderTime : 1;
-        var timeSyncing = currentTime - timeStart;
-        console.log(currentTime, timeStart);
+        var timeSyncing = currentTime - syncFetchTimeStart;
         timeSyncing = timeSyncing == 0 ? 1 : timeSyncing;
-        const syncSecondsLeft = Math.round(timeLeft / timeDiff * timeSyncing);
-        console.log("action", timeLeft, timeDiff, timeSyncing, syncSecondsLeft);
+        const syncSecondsLeft = timeLeft;
 
         dispatch({ fetchHeadersCount, syncSecondsLeft, lastFetchedHeaderTime, type: SYNC_FETCHED_HEADERS_PROGRESS });
         break;

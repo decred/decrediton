@@ -17,7 +17,6 @@ const SpvSyncBody = ({
   text,
   isInputRequest,
   getWalletReady,
-  finishDateEstimation,
   onShowSettings,
   onShowLogs,
   onShowTutorial,
@@ -31,8 +30,9 @@ const SpvSyncBody = ({
   onSpvSync,
   onKeyDown,
   spvInput,
-  currentTime,
-  secondsLeft,
+  firstBlockTime,
+  syncFetchTimeStart,
+  syncFetchHeadersLastHeaderTime,
   lastDcrwalletLogLine,
   Form,
   syncFetchHeadersAttempt,
@@ -78,14 +78,14 @@ const SpvSyncBody = ({
             <LinearProgressFull
               error={startupError}
               getDaemonSynced={syncFetchHeadersComplete}
-              min={0}
-              max={finishDateEstimation}
-              value={currentTime}
+              min={firstBlockTime.getTime()}
+              max={syncFetchTimeStart ? syncFetchTimeStart.getTime()/1000 : firstBlockTime.getTime()}
+              value={syncFetchHeadersLastHeaderTime ? syncFetchHeadersLastHeaderTime.getTime() : firstBlockTime.getTime()}
             />
             {syncFetchHeadersAttempt &&
               <div className="loader-bar-estimation">
-                <T id="getStarted.chainLoading.syncEstimation" m="Estimated time left"/>
-                <span className="bold"> {finishDateEstimation ? <FormattedRelative value={finishDateEstimation}/> : "--" }</span>
+                <T id="getStarted.chainLoading.headerTime" m="Time from last fetched header:"/>
+                <span className="bold"> {syncFetchHeadersLastHeaderTime ? <FormattedRelative value={syncFetchHeadersLastHeaderTime}/> : "--" }</span>
               </div>
             }
           </Aux>

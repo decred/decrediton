@@ -5,7 +5,7 @@ import { FormattedMessage as T } from "react-intl";
 class LinearProgressFull extends React.Component {
   render() {
     const { value, min, max, error, disabled, getDaemonSynced } = this.props;
-    const perComplete = value/max-min;
+    const perComplete = (value-min)/(max-min);
     const leftStartingPoint = perComplete*95 + "%";
     return (
       <div className="linear-progress">
