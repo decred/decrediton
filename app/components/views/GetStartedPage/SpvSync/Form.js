@@ -1,4 +1,4 @@
-import { LinearProgressFull, DecredLoading } from "indicators";
+import { AnimatedLinearProgressFull } from "indicators";
 import { FormattedMessage as T, FormattedRelative, injectIntl, defineMessages } from "react-intl";
 import { KeyBlueButton, SlateGrayButton, InvisibleButton, AboutModalButtonInvisible } from "buttons";
 import { PasswordInput } from "inputs";
@@ -15,7 +15,7 @@ const messages = defineMessages({
 
 const SpvSyncBody = ({
   text,
-  isInputRequest,
+  animationType,
   getWalletReady,
   onShowSettings,
   onShowLogs,
@@ -75,7 +75,9 @@ const SpvSyncBody = ({
         </div>
         <div className="loader-bar">
           <Aux>
-            <LinearProgressFull
+            <AnimatedLinearProgressFull
+              text={text}
+              animationType={animationType}
               error={startupError}
               getDaemonSynced={syncFetchHeadersComplete}
               disabled={!syncFetchHeadersComplete && syncFetchHeadersLastHeaderTime == null}
@@ -92,17 +94,11 @@ const SpvSyncBody = ({
           </Aux>
         </div>
         <div className="loader-bar-icon">
-          {text && !startupError &&
-            <div className="loader-bar-icon-text">
-              {text}...
-            </div>
-          }
           {startupError &&
             <div className="loader-bar-icon-text error">
               {startupError}
             </div>
           }
-          <DecredLoading hidden={startupError || isInputRequest} />
         </div>
         {Form && <Form {...props}/>}
         {spvInput ?

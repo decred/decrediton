@@ -125,7 +125,15 @@ class GetStartedPage extends React.Component {
       onSetWalletPrivatePassphrase
     } = this;
 
-    let text, Form;
+    const blockChainLoading = "blockchain-syncing";
+    const daemonWaiting = "daemon-waiting";
+    const discoveringAddresses = "discovering-addresses";
+    const scanningBlocks = "scanning-blocks";
+    const finalizingSetup = "finalizing-setup";
+    const fetchingHeaders = "fetching-headers";
+    const establishingRpc = "establishing-rpc";
+
+    let text, Form, animationType;
     if (showSettings) {
       return <Settings {...{ onShowLogs, onHideSettings, appVersion, updateAvailable, ...props }} />;
     } else if (showLogs) {
@@ -139,14 +147,19 @@ class GetStartedPage extends React.Component {
     } else if (!getWalletReady) {
       Form = WalletSelectionBody;
     } else if (isSPV && startStepIndex > 2) {
+      animationType = blockChainLoading;
       text = <T id="getStarted.header.syncSpv.meta" m="Syncing SPV Wallet" />;
       if (syncFetchMissingCfiltersAttempt) {
+        animationType = daemonWaiting;
         text = <T id="getStarted.header.fetchingMissing.meta" m="Fetching missing committed filters" />;
       } else if (syncFetchHeadersAttempt) {
+        animationType = fetchingHeaders;
         text = <T id="getStarted.header.fetchingBlockHeaders.meta" m="Fetching block headers" />;
       } else if (syncDiscoverAddressesAttempt) {
+        animationType = discoveringAddresses;
         text = <T id="getStarted.header.discoveringAddresses.meta" m="Discovering addresses" />;
       } else if (syncRescanAttempt) {
+        animationType = scanningBlocks;
         text = <T id="getStarted.header.rescanWallet.meta" m="Scanning blocks for transactions" />;
         Form = RescanWalletBody;
       }
@@ -156,6 +169,7 @@ class GetStartedPage extends React.Component {
           ...state,
           isSPV,
           text,
+          animationType,
           Form,
           syncFetchHeadersAttempt,
         }}/>;
@@ -163,10 +177,12 @@ class GetStartedPage extends React.Component {
       switch (startStepIndex || 0) {
       case 0:
       case 1:
+        animationType = discoveringAddresses;
         text = startupError ? startupError :
           <T id="getStarted.header.checkingWalletState.meta" m="Checking wallet state" />;
         break;
       case 2:
+        animationType = discoveringAddresses;
         text = <T id="getStarted.header.openingwallet.meta" m="Opening Wallet" />;
         if (hasExistingWallet) {
           Form = OpenWallet;
@@ -175,6 +191,7 @@ class GetStartedPage extends React.Component {
         }
         break;
       case 3:
+        animationType = establishingRpc;
         text = <T id="getStarted.header.startrpc.meta" m="Establishing RPC connection" />;
         Form = StartRPCBody;
         break;
@@ -182,14 +199,17 @@ class GetStartedPage extends React.Component {
         text = <T id="getStarted.header.subcribe.meta" m="Subscribing to Block Notifications" />;
         break;
       case 4.5:
+        animationType = daemonWaiting;
         text = <T id="getStarted.header.fetchingMissingCFilter.meta" m="Fetching Missing CFilters" />;
         Form = FetchBlockHeadersBody;
         break;
       case 5:
+        animationType = fetchingHeaders;
         text = <T id="getStarted.header.fetchingBlockHeaders.meta" m="Fetching block headers" />;
         Form = FetchBlockHeadersBody;
         break;
       case 6:
+        animationType = discoveringAddresses;
         text = <T id="getStarted.header.discoveringAddresses.meta" m="Discovering addresses" />;
         if (isInputRequest) {
           Form = DiscoverAddressesBody;
@@ -200,10 +220,12 @@ class GetStartedPage extends React.Component {
         Form = StakePoolsBody;
         break;
       case 8:
+        animationType = scanningBlocks;
         text = <T id="getStarted.header.rescanWallet.meta" m="Scanning blocks for transactions" />;
         Form = RescanWalletBody;
         break;
       default:
+        animationType = finalizingSetup;
         text = <T id="getStarted.header.finalizingSetup.meta" m="Finalizing setup" />;
       }
     }
@@ -213,6 +235,7 @@ class GetStartedPage extends React.Component {
         ...props,
         ...state,
         text,
+        animationType,
         getWalletReady,
         startupError,
         showSettings,

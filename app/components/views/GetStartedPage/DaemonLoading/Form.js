@@ -1,4 +1,4 @@
-import { LinearProgressFull, DecredLoading } from "indicators";
+import { LinearProgressFull } from "indicators";
 import { FormattedMessage as T, FormattedRelative } from "react-intl";
 import { SlateGrayButton, InvisibleButton } from "buttons";
 import { Tooltip } from "shared";
@@ -9,6 +9,7 @@ import { AboutModalButtonInvisible } from "buttons";
 export default ({
   Form,
   text,
+  animationType,
   isInputRequest,
   getCurrentBlockCount,
   getWalletReady,
@@ -65,6 +66,8 @@ export default ({
         <div className="loader-bar">
           <Aux>
             <LinearProgressFull
+              animationType={animationType}
+              text={text}
               error={startupError}
               getDaemonSynced={getDaemonSynced}
               disabled={!getDaemonStarted || getCurrentBlockCount == null}
@@ -81,17 +84,11 @@ export default ({
           </Aux>
         </div>
         <div className="loader-bar-icon">
-          {text && !startupError &&
-            <div className="loader-bar-icon-text">
-              {text}...
-            </div>
-          }
           {startupError &&
             <div className="loader-bar-icon-text error">
               {startupError}
             </div>
           }
-          <DecredLoading hidden={startupError || isInputRequest} />
         </div>
         { Form && <Form {...{ ...props, isInputRequest, startupError, getCurrentBlockCount, getDaemonSynced, isSPV }}/> }
       </Aux>
