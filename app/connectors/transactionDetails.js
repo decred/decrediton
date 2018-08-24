@@ -5,7 +5,8 @@ import * as sel from "../selectors";
 import * as ca from "../actions/ClientActions";
 
 const mapStateToProps = selectorMap({
-  currentBlockHeight: sel.currentBlockHeight
+  currentBlockHeight: sel.currentBlockHeight,
+  tsDate: sel.tsDate,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

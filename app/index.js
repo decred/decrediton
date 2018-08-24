@@ -29,6 +29,7 @@ var initialState = {
       proxyType: globalCfg.get("proxy_type"),
       proxyLocation: globalCfg.get("proxy_location"),
       spvMode: globalCfg.get("spv_mode"),
+      timezone: globalCfg.get("timezone"),
     },
     tempSettings: {
       locale: locale,
@@ -37,6 +38,7 @@ var initialState = {
       proxyType: globalCfg.get("proxy_type"),
       proxyLocation: globalCfg.get("proxy_location"),
       spvMode: globalCfg.get("spv_mode"),
+      timezone: globalCfg.get("timezone"),
     },
     settingsChanged: false,
     uiAnimations: globalCfg.get("ui_animations"),

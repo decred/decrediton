@@ -13,7 +13,7 @@ import {
 
 export default ({ viewedProposalDetails,
   showPurchaseTicketsPage, hasTickets, onVoteOptionSelected, onUpdateVoteChoice,
-  newVoteChoice, updateVoteChoiceAttempt }) =>
+  newVoteChoice, updateVoteChoiceAttempt, tsDate }) =>
 {
   const { name, token, hasEligibleTickets, voteStatus, voteOptions,
     voteCounts, creator, timestamp, voteDetails, currentVoteChoice } = viewedProposalDetails;
@@ -54,11 +54,11 @@ export default ({ viewedProposalDetails,
               value={creator} />
             <OverviewField
               label={<T id="proposal.overview.submitted.label" m="Submitted" />}
-              value={<TimeValue timestamp={timestamp} />} />
+              value={<TimeValue timestamp={timestamp} tsDate={tsDate} />} />
             <OverviewField
               show={voting && voteDetails && voteDetails.endTimestamp}
               label={<T id="proposal.overview.deadline.label" m="Voting Deadline" />}
-              value={voting ? <TimeValue timestamp={voteDetails.endTimestamp} /> : null } />
+              value={voting ? <TimeValue timestamp={voteDetails.endTimestamp} tsDate={tsDate} /> : null } />
           </div>
         </div>
         <div className="proposal-details-overview-voting">

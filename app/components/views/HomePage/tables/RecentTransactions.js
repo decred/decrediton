@@ -12,7 +12,8 @@ const RecentTransactions = ({
   getTransactionsRequestAttempt,
   getAccountsResponse,
   rowNumber,
-  goToTransactionHistory
+  goToTransactionHistory,
+  tsDate,
 }) => {
   const hasTxs = (transactions.length > 0);
   return (
@@ -30,7 +31,7 @@ const RecentTransactions = ({
         </div>
         <div className="home-content-nest">
           {transactions.length > 0 ?
-            <TxHistory overview limit={rowNumber} {...{ getAccountsResponse, transactions }} /> :
+            <TxHistory overview limit={rowNumber} {...{ getAccountsResponse, transactions, tsDate }} /> :
             <NoTransactionsLinks />}
         </div>
       </Aux>

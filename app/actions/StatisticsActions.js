@@ -2,7 +2,7 @@ import * as wallet from "wallet";
 import * as sel from "selectors";
 import fs from "fs";
 import { isNumber, isNullOrUndefined, isUndefined } from "util";
-import { tsToDate, endOfDay, reverseRawHash, formatLocalISODate } from "helpers";
+import { endOfDay, reverseRawHash, formatLocalISODate } from "helpers";
 
 const VALUE_TYPE_ATOMAMOUNT = "VALUE_TYPE_ATOMAMOUNT";
 const VALUE_TYPE_DATETIME = "VALUE_TYPE_DATETIME";
@@ -200,8 +200,10 @@ export const transactionStats = (opts) => (dispatch, getState) => {
     };
   };
 
+  const tsDate = sel.tsDate(getState());
+
   const txDataCb = (mined) => {
-    mined.forEach(tx => progressFunction(tsToDate(tx.timestamp), formatTx(tx)));
+    mined.forEach(tx => progressFunction(tsDate(tx.timestamp), formatTx(tx)));
   };
 
   wallet.streamGetTransactions(walletService, 0, currentBlockHeight, 0, txDataCb)
@@ -434,9 +436,11 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
     }, currentBalance);
   }
 
+  const tsDate = sel.tsDate(getState());
+
   // account for this delta in the balances and call the progress function
   let addDelta = (delta) => {
-    backwards && progressFunction(tsToDate(delta.timestamp), { ...currentBalance, delta });
+    backwards && progressFunction(tsDate(delta.timestamp), { ...currentBalance, delta });
 
     currentBalance = {
       spendable: currentBalance.spendable + delta.spendable,
@@ -452,7 +456,7 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
     currentBalance.total = currentBalance.spendable + currentBalance.locked +
       currentBalance.immature;
 
-    !backwards && progressFunction(tsToDate(delta.timestamp), currentBalance);
+    !backwards && progressFunction(tsDate(delta.timestamp), currentBalance);
   };
 
   let lastTxHeight = 0;
@@ -547,7 +551,7 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
       if (mined.length > 0) {
         const lastTx = mined[mined.length-1];
         currentBlock = lastTx.height + pageDir;
-        currentDate = tsToDate(lastTx.timestamp);
+        currentDate = tsDate(lastTx.timestamp);
         toProcess.push(...mined);
       }
       continueGetting =
@@ -695,8 +699,9 @@ export const ticketStats = (opts) => (dispatch, getState) => {
     tickets.forEach(t => {
 
       const ticket = normalizeTicket(t);
-      progressFunction(tsToDate(ticket.enterTimestamp), {
-        spenderTimestamp: ticket.leaveTimestamp ? tsToDate(ticket.leaveTimestamp) : null,
+      const tsDate = sel.tsDate(getState());
+      progressFunction(tsDate(ticket.enterTimestamp), {
+        spenderTimestamp: ticket.leaveTimestamp ? tsDate(ticket.leaveTimestamp) : null,
         status: ticket.status,
         ticketHash: ticket.hash,
         spenderHash: ticket.spenderHash,

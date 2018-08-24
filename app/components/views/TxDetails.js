@@ -3,7 +3,7 @@ import { StandaloneHeader, StandalonePage } from "layout";
 import { shell } from "electron";
 import { transactionDetails } from "connectors";
 import { SlateGrayButton } from "buttons";
-import { addSpacingAroundText, tsToDate, reverseHash } from "helpers";
+import { addSpacingAroundText, reverseHash } from "helpers";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { DecodedTransaction }  from "middleware/walletrpc/api_pb";
 import "style/TxDetails.less";
@@ -66,11 +66,12 @@ const TxDetails = ({
   },
   currentBlockHeight,
   intl,
-  goBackHistory
+  goBackHistory,
+  tsDate,
 }) => {
   const isConfirmed = !!txTimestamp;
   const icon = headerIcons[txType || txDirection];
-  const subtitle = isConfirmed ? <T id="txDetails.timestamp" m="{timestamp, date, medium} {timestamp, time, medium}" values={{ timestamp: tsToDate(txTimestamp) }}/> : <T id="txDetails.unConfirmed" m="Unconfirmed"/>;
+  const subtitle = isConfirmed ? <T id="txDetails.timestamp" m="{timestamp, date, medium} {timestamp, time, medium}" values={{ timestamp: tsDate(txTimestamp) }}/> : <T id="txDetails.unConfirmed" m="Unconfirmed"/>;
   const goBack = () => goBackHistory();
   const openTxUrl = () => shell.openExternal(txUrl);
   const openBlockUrl = () => shell.openExternal(txBlockUrl);

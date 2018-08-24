@@ -1,7 +1,7 @@
 import { KeyBlueButton } from "buttons";
 import { FormattedMessage as T, FormattedRelative } from "react-intl";
 import { StakeyBounceXs, VotingProgress, PoliteiaLoading } from "indicators";
-import { tsToDate, showCheck } from "helpers";
+import { showCheck } from "helpers";
 import UpdateVoteChoiceModalButton from "./UpdateVoteChoiceModalButton";
 import { default as ReactMarkdown }  from "react-markdown";
 
@@ -96,10 +96,10 @@ export const OverviewVotingProgressInfo = ({ voteCounts }) => (
   </div>
 );
 
-export const TimeValue = ({ timestamp }) => (
+export const TimeValue = ({ timestamp, tsDate }) => (
   <Aux>
-    <span className="time-value"><FormattedRelative  value={ tsToDate(timestamp) } /></span>
-    (<T id="proposal.overview.fullTime" m="{timestamp, date, medium} {timestamp, time, short} UTC" values={{ timestamp: tsToDate(timestamp) }} />)
+    <span className="time-value"><FormattedRelative  value={ tsDate(timestamp) } /></span>
+    (<T id="proposal.overview.fullTime" m="{timestamp, date, medium} {timestamp, time, short} UTC" values={{ timestamp: tsDate(timestamp) }} />)
   </Aux>
 );
 

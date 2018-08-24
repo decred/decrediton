@@ -9,7 +9,7 @@ import { MainNetParams, TestNetParams } from "wallet/constants";
 import { TicketTypes, decodeVoteScript } from "./helpers/tickets";
 import { EXTERNALREQUEST_STAKEPOOL_LISTING, EXTERNALREQUEST_POLITEIA } from "main_dev/externalRequests";
 import { POLITEIA_URL_TESTNET, POLITEIA_URL_MAINNET } from "./middleware/politeiaapi";
-
+import { dateToLocal, dateToUTC } from "./helpers/dateFormat";
 const EMPTY_ARRAY = [];  // Maintaining identity (will) improve performance;
 
 export const daemonError = get([ "daemon" , "daemonError" ]);
@@ -173,11 +173,13 @@ export const currencies = () => [ { name: "DCR" }, { name: "atoms" } ];
 export const currencyDisplay = get([ "settings", "currentSettings", "currencyDisplay" ]);
 export const unitDivisor = compose(disp => disp === "DCR" ? 100000000 : 1, currencyDisplay);
 export const currentLocaleName = get([ "settings", "currentSettings", "locale" ]);
+export const timezone = get([ "settings", "currentSettings", "timezone" ]);
 export const defaultLocaleName = createSelector(
   [ currentLocaleName ],
   (currentLocaleName) => {
     return appLocaleFromElectronLocale(currentLocaleName);
   });
+export const tsDate = compose(timezone => timezone === "utc" ? dateToUTC : dateToLocal, timezone);
 
 export const isSPV = get([ "settings", "currentSettings", "spvMode" ]);
 

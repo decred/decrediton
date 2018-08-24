@@ -22,6 +22,7 @@ export const saveSettings = (settings) => (dispatch, getState) => {
   config.set("allowed_external_requests", settings.allowedExternalRequests);
   config.set("proxy_type", settings.proxyType);
   config.set("proxy_location", settings.proxyLocation);
+  config.set("timezone", settings.timezone);
 
   const walletConfig = getWalletCfg(isTestNet(getState()), walletName);
   walletConfig.set("currency_display", settings.currencyDisplay);

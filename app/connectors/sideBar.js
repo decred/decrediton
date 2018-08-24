@@ -15,6 +15,7 @@ const mapStateToProps = selectorMap({
   showingSidebarMenu: sel.showingSidebarMenu,
   expandSideBar: sel.expandSideBar,
   isWatchOnly: sel.isWatchOnly,
+  tsDate: sel.tsDate,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
