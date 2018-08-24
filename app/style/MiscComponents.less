@@ -548,8 +548,13 @@
 }
 
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .rescan-button.spin {
@@ -647,7 +652,15 @@
 }
 
 .no-transactions-indicator {
+  color: #617386;
+}
+
+.no-transactions-indicator-img {
   background-image: @no-tx-icon;
+  height: 100px;
+  background-repeat: no-repeat;
+  background-size: 80px;
+  background-position: center 30px;
 }
 
 .no-tickets-indicator {
@@ -795,10 +808,8 @@
     bottom: 18px;
   }
 }
-
 // .vertical-accordion {
 // }
-
 .vertical-accordion-header {
   cursor: pointer;
   position: relative;
