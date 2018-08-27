@@ -78,8 +78,9 @@ const SpvSyncBody = ({
             <LinearProgressFull
               error={startupError}
               getDaemonSynced={syncFetchHeadersComplete}
+              disabled={!syncFetchHeadersComplete && syncFetchHeadersLastHeaderTime == null}
               min={firstBlockTime.getTime()}
-              max={syncFetchTimeStart ? syncFetchTimeStart.getTime()/1000 : firstBlockTime.getTime()}
+              max={syncFetchTimeStart ? syncFetchTimeStart.getTime() : firstBlockTime.getTime()}
               value={syncFetchHeadersLastHeaderTime ? syncFetchHeadersLastHeaderTime.getTime() : firstBlockTime.getTime()}
             />
             {syncFetchHeadersAttempt &&
