@@ -37,11 +37,8 @@ class RescanWalletBody extends React.Component {
     var rescanCurrent = rescanCurrentBlock;
 
     if (isSPV) {
-      rescanEnd = 0;
       rescanCurrent = syncRescanProgress;
-      rescanStart = this.rescanStart;
     }
-
     return (
       <RescanWalletFormBody
         {...{
@@ -50,6 +47,7 @@ class RescanWalletBody extends React.Component {
           rescanEndBlock: rescanEnd,
           rescanStartBlock: rescanStart,
           rescanCurrentBlock: rescanCurrent,
+          isSPV,
         }}
       />
     );
@@ -63,7 +61,6 @@ class RescanWalletBody extends React.Component {
       }
       delete this.timeoutId;
     }, 2000);
-    this.rescanStart = this.props.syncRescanProgress;
   }
 
   resetState() {

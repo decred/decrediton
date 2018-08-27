@@ -14,7 +14,6 @@ import { RescanWalletBody } from "./RescanWallet/index";
 import StakePoolsBody from "./StakePools";
 import { walletStartup } from "connectors";
 import { FormattedMessage as T } from "react-intl";
-import {  } from "../../../selectors";
 
 @autobind
 class GetStartedPage extends React.Component {
@@ -102,10 +101,10 @@ class GetStartedPage extends React.Component {
       updateAvailable,
       isSPV,
       isInputRequest,
+      syncFetchMissingCfiltersAttempt,
       syncFetchHeadersAttempt,
       syncDiscoverAddressesAttempt,
-      syncRescanProgress,
-      syncFetchMissingCfiltersAttempt,
+      syncRescanAttempt,
       ...props
     } = this.props;
 
@@ -147,7 +146,7 @@ class GetStartedPage extends React.Component {
         text = <T id="getStarted.header.fetchingBlockHeaders.meta" m="Fetching block headers" />;
       } else if (syncDiscoverAddressesAttempt) {
         text = <T id="getStarted.header.discoveringAddresses.meta" m="Discovering addresses" />;
-      } else if (syncRescanProgress) {
+      } else if (syncRescanAttempt) {
         text = <T id="getStarted.header.rescanWallet.meta" m="Scanning blocks for transactions" />;
         Form = RescanWalletBody;
       }
@@ -155,6 +154,7 @@ class GetStartedPage extends React.Component {
         {...{
           ...props,
           ...state,
+          isSPV,
           text,
           Form,
           syncFetchHeadersAttempt,
