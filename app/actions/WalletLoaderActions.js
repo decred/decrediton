@@ -444,7 +444,6 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
     dispatch({ type: SPVSYNC_ATTEMPT });
     const { loader } = getState().walletLoader;
     var spvSyncCall = loader.spvSync(request);
-    var timeStart;
     spvSyncCall.on("data", function(response) {
       const { syncCall } = getState().walletLoader;
       if (!syncCall) {
@@ -488,17 +487,10 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
         break;
       }
       case SyncNotificationType.FETCHED_HEADERS_PROGRESS: {
-        const { syncLastFetchedHeaderTime, syncFetchTimeStart } = getState().walletLoader;
         const lastFetchedHeaderTime = new Date(response.getFetchHeaders().getLastHeaderTime()/1000000);
         const fetchHeadersCount = response.getFetchHeaders().getFetchedHeadersCount();
-        const currentTime = new Date();
-        const timeLeft = syncFetchTimeStart - lastFetchedHeaderTime;
-        var timeDiff = syncLastFetchedHeaderTime ? lastFetchedHeaderTime - syncLastFetchedHeaderTime : 1;
-        var timeSyncing = currentTime - syncFetchTimeStart;
-        timeSyncing = timeSyncing == 0 ? 1 : timeSyncing;
-        const syncSecondsLeft = timeLeft;
 
-        dispatch({ fetchHeadersCount, syncSecondsLeft, lastFetchedHeaderTime, type: SYNC_FETCHED_HEADERS_PROGRESS });
+        dispatch({ fetchHeadersCount, lastFetchedHeaderTime, type: SYNC_FETCHED_HEADERS_PROGRESS });
         break;
       }
       case SyncNotificationType.FETCHED_HEADERS_FINISHED: {

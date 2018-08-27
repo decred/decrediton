@@ -57,7 +57,6 @@ const mapStateToProps = selectorMap({
   syncFetchHeadersAttempt: sel.syncFetchHeadersAttempt,
   syncFetchHeadersCount: sel.syncFetchHeadersCount,
   syncFetchHeadersLastHeaderTime: sel.syncFetchHeadersLastHeaderTime,
-  syncSecondsLeft: sel.syncSecondsLeft,
   syncDiscoverAddressesAttempt: sel.syncDiscoverAddressesAttempt,
   syncRescanAttempt: sel.syncRescanAttempt,
   syncRescanProgress: sel.syncRescanProgress,

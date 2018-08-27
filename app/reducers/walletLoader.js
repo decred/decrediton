@@ -396,7 +396,6 @@ export default function walletLoader(state = {}, action) {
     };
   case SYNC_FETCHED_HEADERS_PROGRESS:
     return { ...state,
-      syncSecondsLeft: action.syncSecondsLeft,
       syncFetchHeadersCount: action.fetchHeadersCount,
       syncLastFetchedHeaderTime: action.lastFetchedHeaderTime,
     };
