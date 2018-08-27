@@ -10,7 +10,7 @@ const RescanWalletFormBody = ({
   isSPV,
 }) => (
   showLongWaitMessage &&
-    (isSPV ?
+    (!isSPV ?
       <Aux>
         <LinearProgressSmall
           min={rescanStartBlock}
