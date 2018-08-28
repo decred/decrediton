@@ -487,7 +487,7 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
         break;
       }
       case SyncNotificationType.FETCHED_HEADERS_PROGRESS: {
-        const lastFetchedHeaderTime = new Date(response.getFetchHeaders().getLastHeaderTime()/1000000);
+        const lastFetchedHeaderTime = new Date(response.getFetchHeaders().getLastHeaderTime());
         const fetchHeadersCount = response.getFetchHeaders().getFetchedHeadersCount();
 
         dispatch({ fetchHeadersCount, lastFetchedHeaderTime, type: SYNC_FETCHED_HEADERS_PROGRESS });
