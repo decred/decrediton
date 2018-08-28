@@ -29,7 +29,8 @@ const CreateWalletForm = ({
   walletNameError,
   createNewWallet,
   onChangeCreateWalletName,
-  hasFailedAttempt,
+  hasFailedAttemptName,
+  hasFailedAttemptPubKey,
   intl,
   isWatchOnly,
   walletMasterPubKey,
@@ -65,7 +66,7 @@ const CreateWalletForm = ({
             value={newWalletName}
             onChange={(e) => onChangeCreateWalletName(e.target.value)}
             placeholder={intl.formatMessage(messages.messageWalletNamePlaceholder)}
-            showErrors={hasFailedAttempt}
+            showErrors={hasFailedAttemptName}
           />
         </div>
       </div>
@@ -90,7 +91,7 @@ const CreateWalletForm = ({
                   value={ walletMasterPubKey }
                   onChange={(e) => onChangeCreateWalletMasterPubKey(e.target.value)}
                   placeholder={ intl.formatMessage(messages.messageWalletMasterPubKey) }
-                  showErrors={ hasFailedAttempt || masterPubKeyError }
+                  showErrors={ hasFailedAttemptPubKey || masterPubKeyError }
                   invalid={ masterPubKeyError }
                   invalidMessage={ intl.formatMessage(messages.messageWalletMasterPubkeyError) }
                 />
