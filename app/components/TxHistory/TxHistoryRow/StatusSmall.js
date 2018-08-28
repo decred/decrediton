@@ -20,9 +20,7 @@ const StatusSmall = ({ pending, txTimestamp, onClick, tsDate }) => {
           />
         </div>) : (
         <Tooltip text={<T id="txHistory.Pending" m="Pending" />}>
-          <div className="pending-overview-details" onClick={onClick}>
-            ...
-          </div>
+          <div className="pending-overview-details" onClick={onClick}/>
         </Tooltip>
       )}
     </Aux>
