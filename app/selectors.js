@@ -137,6 +137,7 @@ export const getNetworkResponse = get([ "grpc", "getNetworkResponse" ]);
 export const getNetworkError = get([ "grpc", "getNetworkError" ]);
 const accounts = createSelector([ getAccountsResponse ], r => r ? r.getAccountsList() : []);
 
+// set as watching only when openning wallet
 export const isWatchingOnly = get([ "walletLoader", "isWatchingOnly" ]);
 export const accountExtendedKey = createSelector(
   [ get([ "control", "getAccountExtendedKeyResponse" ]) ],
@@ -687,6 +688,7 @@ export const validateAddressSuccess = compose(
   r => r ? r.toObject() : null, validateAddressResponse
 );
 
+// set as watching only when creating wallet
 export const isWatchOnly = get([ "control", "isWatchOnly" ]);
 export const masterPubKey = get([ "control", "masterPubKey" ]);
 
