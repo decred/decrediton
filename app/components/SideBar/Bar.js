@@ -38,7 +38,7 @@ const Bar = ({
             { balances.map(({ hidden, total, accountName }) => !hidden &&
             <div className="sidebar-menu-total-balance-extended-bottom-account" key={accountName}>
               <div className="sidebar-menu-total-balance-extended-bottom-account-name">{accountName}</div>
-              <div className="sidebar-menu-total-balance-extended-bottom-account-number">{total / 100000000}</div>
+              <div className="sidebar-menu-total-balance-extended-bottom-account-number">{total ? total / 100000000 : 0}</div>
             </div> )}
           </div>
         </div>
