@@ -14,7 +14,8 @@ import { getWalletCfg, getDcrdCert } from "../config";
 import { getWalletPath } from "main_dev/paths";
 import { isTestNet } from "selectors";
 import axios from "axios";
-import { SpvSyncRequest, SyncNotificationType } from "../middleware/walletrpc/api_pb";
+import { SpvSyncRequest, SyncNotificationType, RpcSyncRequest } from "../middleware/walletrpc/api_pb";
+import { RpcSyncRequest } from "../middleware/walletrpc/api_pb";
 import { push as pushHistory } from "react-router-redux";
 import { stopNotifcations } from "./NotificationActions";
 
@@ -200,7 +201,7 @@ export const STARTRPC_RETRY = "STARTRPC_RETRY";
 
 export const startRpcRequestFunc = (isRetry) =>
   (dispatch, getState) => {
-    const { daemon: { credentials, appData, walletName } }= getState();
+    const { daemon: { credentials, appData, walletName }, walletLoader: { discoverAccountsComplete } }= getState();
     const cfg = getWalletCfg(isTestNet(getState()), walletName);
     let rpcuser, rpccertPath, rpcpass, daemonhost, rpcport;
 
@@ -222,9 +223,29 @@ export const startRpcRequestFunc = (isRetry) =>
       daemonhost = "127.0.0.1";
       rpcport = "9109";
     }
-    const loader = getState().walletLoader.loader;
-
+    var privPass;
+    var request = new RpcSyncRequest();
     const cert = getDcrdCert(rpccertPath);
+    request.setNetworkAddress(daemonhost + ":" + rpcport);
+    request.setUsername(rpcuser);
+    request.setPassword(new Uint8Array(Buffer.from(rpcpass)));
+    request.setCertificate(new Uint8Array(cert));
+    if (!discoverAccountsComplete && privPass) {
+      request.setDiscoverAccounts(true);
+      request.setPrivatePassphrase(new Uint8Array(Buffer.from(privPass)));
+    } else if (!discoverAccountsComplete && !privPass) {
+      dispatch({ type: SPVSYNC_INPUT });
+      return;
+    }
+    return new Promise(() => {
+      dispatch({ type: SPVSYNC_ATTEMPT });
+      const { loader } = getState().walletLoader;
+      var rpcSyncCall = loader.rpcSync(request);
+      rpcSyncCall.on("data", function(response) {
+        console.log(response);
+      });
+    });
+    /*
     if (!isRetry) dispatch({ type: STARTRPC_ATTEMPT });
     return startRpc(loader, daemonhost, rpcport, rpcuser, rpcpass, cert)
       .then(() => {
@@ -250,6 +271,7 @@ export const startRpcRequestFunc = (isRetry) =>
           dispatch(startRpcRequestFunc(true));
         }
       });
+      */
   };
 
 export const DISCOVERADDRESS_INPUT = "DISCOVERADDRESS_INPUT";
