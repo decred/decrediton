@@ -160,8 +160,6 @@ input[type="radio"]:disabled + label {
   display: inline-block;
   background-color: #e7eaed;
   border: 1px solid #8997a5;
-  width: 12px;
-  height: 12px;
 }
 
 input[type="checkbox"]:checked:disabled + label,
@@ -172,9 +170,6 @@ input[type="radio"]:checked:disabled + label {
   background-image: @checkmarkGrey;
   background-repeat: no-repeat;
   background-size: 10px;
-  background-position: 1px;
-  width: 12px;
-  height: 12px;
 }
 
 input[type="checkbox"] + label,
@@ -182,8 +177,6 @@ input[type="radio"] + label {
   display: inline-block;
   border: 1px solid #8997a5;
   background-color: none;
-  width: 12px;
-  height: 12px;
 }
 
 input[type="checkbox"]:checked + label,
@@ -194,15 +187,19 @@ input[type="radio"]:checked + label {
   background-image: @checkmarkBlue;
   background-repeat: no-repeat;
   background-size: 10px;
-  background-position: 1px;
-  width: 12px;
-  height: 12px;
 }
 
 input[type="radio"] + label {
   border-radius: 50%;
-  width: 15px;
-  height: 15px;
+  width: 14px;
+  height: 14px;
+  background-position: 2px;
+}
+
+input[type="checkbox"] + label {
+  width: 12px;
+  height: 12px;
+  background-position: 1px;
 }
 
 @media screen and (max-width: 676px) {
