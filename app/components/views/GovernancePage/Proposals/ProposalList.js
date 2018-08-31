@@ -17,7 +17,7 @@ const ProposalListItem = ({ name, timestamp, token, voting, voteCounts, tsDate, 
   </div>
 );
 
-const ProposalList = ({ proposals, loading, viewProposalDetails }) => (
+const ProposalList = ({ proposals, loading, viewProposalDetails, tsDate }) => (
   <Aux>
     { loading
       ? <div className="proposal-loading-page"><PoliteiaLoading center /></div>
@@ -25,7 +25,7 @@ const ProposalList = ({ proposals, loading, viewProposalDetails }) => (
         ? (
           <div className="proposal-list">
             {proposals.map(v => (
-              <ProposalListItem key={v.token} {...v} onClick={viewProposalDetails} />
+              <ProposalListItem key={v.token} {...v} tsDate={tsDate} onClick={viewProposalDetails} />
             ))}
           </div>
         )

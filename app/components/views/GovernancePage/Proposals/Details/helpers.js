@@ -99,7 +99,7 @@ export const OverviewVotingProgressInfo = ({ voteCounts }) => (
 export const TimeValue = ({ timestamp, tsDate }) => (
   <Aux>
     <span className="time-value"><FormattedRelative  value={ tsDate(timestamp) } /></span>
-    (<T id="proposal.overview.fullTime" m="{timestamp, date, medium} {timestamp, time, short} UTC" values={{ timestamp: tsDate(timestamp) }} />)
+    (<T id="proposal.overview.fullTime" m="{timestamp, date, medium} {timestamp, time, short}" values={{ timestamp: tsDate(timestamp) }} />)
   </Aux>
 );
 
