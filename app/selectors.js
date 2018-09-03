@@ -6,7 +6,7 @@ import { appLocaleFromElectronLocale } from "./i18n/locales";
 import { reverseHash } from "./helpers/byteActions";
 import { TRANSACTION_TYPES }  from "wallet/service";
 import { MainNetParams, TestNetParams } from "wallet/constants";
-import { TicketTypes, decodeVoteScript } from "./helpers/tickets";
+import { /*TicketTypes,*/ decodeVoteScript } from "./helpers/tickets";
 import { EXTERNALREQUEST_STAKEPOOL_LISTING, EXTERNALREQUEST_POLITEIA } from "main_dev/externalRequests";
 import { POLITEIA_URL_TESTNET, POLITEIA_URL_MAINNET } from "./middleware/politeiaapi";
 import { dateToLocal, dateToUTC } from "./helpers/dateFormat";
@@ -313,21 +313,20 @@ export const ticketNormalizer = createSelector(
         status: ticket.status,
         ticketRawTx: Buffer.from(ticketTx.getTransaction()).toString("hex"),
         spenderRawTx: hasSpender ? Buffer.from(spenderTx.getTransaction()).toString("hex") : null,
+        originalTicket: ticket,
       };
     };
   }
 );
 
-const ticketSorter = (a, b) => (b.leaveTimestamp||b.enterTimestamp) - (a.leaveTimestamp||a.enterTimestamp);
-
-export const allTickets = createSelector(
-  [ ticketNormalizer, get([ "grpc", "tickets" ]) ],
-  (normalizer, tickets) => tickets.map(normalizer).sort(ticketSorter)
-);
+export const noMoreTickets = get([ "grpc", "noMoreTickets" ]);
+export const ticketsFilter = get([ "grpc", "ticketsFilter" ]);
+export const ticketsNormalizer = createSelector([ ticketNormalizer ], map);
+export const tickets = get([ "grpc", "tickets" ]);
 
 // aux map from ticket/spender hash => ticket info
 const txHashToTicket = createSelector(
-  [ allTickets ],
+  [ tickets ],
   reduce((m, t) => {
     m[t.hash] = t;
     m[t.spenderHash] = t;
@@ -336,7 +335,7 @@ const txHashToTicket = createSelector(
 );
 
 const transactionNormalizer = createSelector(
-  [ accounts, txURLBuilder, blockURLBuilder, txHashToTicket ],
+  [ accounts, txURLBuilder, blockURLBuilder ],
   (accounts, txURLBuilder, blockURLBuilder) => {
     const findAccount = num => accounts.find(account => account.getAccountNumber() === num);
     const getAccountName = num => (act => act ? act.getAccountName() : "")(findAccount(num));
@@ -540,26 +539,6 @@ export const viewedTransaction = createSelector(
     return tx;
   }
 );
-
-export const ticketsPerStatus = createSelector(
-  [ allTickets ],
-  tickets => tickets.reduce(
-    (perStatus, ticket) => {
-      perStatus[ticket.status].push(ticket);
-      return perStatus;
-    },
-    Array.from(TicketTypes.values()).reduce((a, v) => (a[v] = [], a), {}),
-  )
-);
-
-export const viewedTicketListing = createSelector(
-  [ ticketsPerStatus, (state, { match: { params: { status } } }) => status ],
-  (tickets, status) => tickets[status]
-);
-// export const viewedTicketListing = createSelector(
-//   [ticketsPerStatus, (state, something) => { console.log(something); return "voted"; }],
-//   (tickets, status) => tickets[status]
-// );
 
 const rescanResponse = get([ "control", "rescanResponse" ]);
 export const rescanRequest = get([ "control", "rescanRequest" ]);
@@ -959,8 +938,8 @@ export const votedProposals = get([ "governance", "voted" ]);
 export const lastVettedFetchTime = get([ "governance", "lastVettedFetchTime" ]);
 
 export const hasTickets = createSelector(
-  [ allTickets ],
-  (tickets) => tickets.length > 0,
+  [ tickets ],
+  (tickets) => tickets && tickets.length > 0,
 );
 export const getProposalAttempt = get([ "governance", "getProposalAttempt" ]);
 export const getProposalError = get([ "governance", "getProposalError" ]);
