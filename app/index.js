@@ -360,6 +360,7 @@ var initialState = {
     fullDailyBalances: Array(),
     voteTime: null,
     getMyTicketsStatsRequest: false,
+    getStartupStatsAttempt: false,
   },
   governance: {
     politeiaBetaEnabled: globalCfg.get("politeia_beta"), // TODO: remove once politeia hits production

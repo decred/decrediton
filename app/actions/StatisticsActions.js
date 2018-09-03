@@ -12,7 +12,13 @@ export const GETSTARTUPSTATS_SUCCESS = "GETSTARTUPSTATS_SUCCESS";
 export const GETSTARTUPSTATS_FAILED = "GETSTARTUPSTATS_FAILED";
 
 // Calculates all startup statistics
-export const getStartupStats = () => (dispatch) => {
+export const getStartupStats = () => (dispatch, getState) => {
+
+  if (getState().statistics.getStartupStatsAttempt) {
+    return;
+  }
+
+  dispatch({ type: GETSTARTUPSTATS_ATTEMPT });
 
   const endDate = new Date();
   endDate.setDate(endDate.getDate()-16);
@@ -21,7 +27,6 @@ export const getStartupStats = () => (dispatch) => {
     { calcFunction: dailyBalancesStats, backwards: true, endDate },
   ];
 
-  dispatch({ type: GETSTARTUPSTATS_ATTEMPT });
   return Promise.all(startupStats.map(s => dispatch(generateStat(s))))
     .then(([ dailyBalances ]) => {
 
