@@ -10,13 +10,13 @@ Electron.
 
 Currently decrediton is available on Windows, Linux, and macOS.
 
-Decrediton will NOT use or in any way disrupt the wallet file you may
+Decrediton will NOT use or in any way disrupt the CLI wallet file you may
 already be using at this time.
 
 Download the decrediton release for your operating system on [decred/decred-binaries](https://github.com/decred/decred-binaries/releases).
 
 On macOS, Ubuntu (14.04 LTS kernel 3.16 and later), and recent Debians, there should be
-no additional dependencies needed.
+no additional dependencies needed (exception: Ubuntu 18.04+, see [issue #1404](https://github.com/decred/decrediton/issues/1404)).
 
 On Fedora or similar distros you may need to install the libXScrnSaver
 package if you see this error:
@@ -44,7 +44,7 @@ This will start dcrd and dcrwallet for you.
 On macOS, double-click the .dmg file, drag the .app to your
 Applications folder.  Double click on Decrediton.app to start.
 
-You can also install via [brew cask](https://caskroom.github.io): 
+You can also install via [brew cask](https://caskroom.github.io):
 ```bash
 brew cask install decrediton
 ```
@@ -70,9 +70,9 @@ decrediton --extrawalletargs='-d=debug'
 ## Developing
 
 Due to potential compatibility issues, for now, all work should be
-done with electron 1.4.15.
+done with electron 2.0.0.
 
-You need to install dcrd, dcrwallet and dcrctl.  
+You need to install dcrd, dcrwallet and dcrctl.
 
 - [dcrd/dcrctl installation instructions](https://github.com/decred/dcrd#updating)
 - [dcrwallet installation instructions](https://github.com/decred/dcrwallet#installation-and-updating)
@@ -105,7 +105,7 @@ It will be helpful to you to run the Decred node in a separate process and simpl
 
 Note: Your config.json file is located in the following directory(s)
 
-Windows - ```C:\Users\<your-username>\AppData\Local\Decrediton\config.json``` 
+Windows - ```C:\Users\<your-username>\AppData\Local\Decrediton\config.json```
 
 OSX - ```$HOME/Library/Application\ Support/Decrediton/config.json```
 
@@ -113,7 +113,7 @@ Linux - ```~/.config/decrediton/config.json```
 
 Run the following to start the Decred daemon in a standalone terminal window:
 
-Windows - ```dcrd --testnet -u USER -P PASSWORD --rpclisten=127.0.0.1:19119 --rpccert=C:\Users\<username>\AppData\Local\Dcrd\rpc.cert``` 
+Windows - ```dcrd --testnet -u USER -P PASSWORD --rpclisten=127.0.0.1:19119 --rpccert=C:\Users\<username>\AppData\Local\Dcrd\rpc.cert```
 
 OSX - ```dcrd --testnet -u USER -P PASSWORD --rpclisten=127.0.0.1:19119 --rpccert=$HOME/Library/Application\ Support/Dcrd/rpc.cert```
 
@@ -124,11 +124,11 @@ You can connect to this daemon in ```Advanced Startup => Different Local Daemon 
 ### Windows
 
 On windows you will need some extra steps to build grpc.  This assumes
-you are using msys2 with various development tools (copilers, make,
-ect) all installed.
+you are using msys2 with various development tools (compilers, make,
+etc) all installed.
 
 Install node from the official package https://nodejs.org/en/download/
-and add it to your msys2 path.  You must install the same version of node as required for Linux and OSX (6.9.5).
+and add it to your msys2 path.  You must install the same version of node as required for Linux and OSX (8.6.0+).
 
 Install openssl from the following site:
 https://slproweb.com/products/Win32OpenSSL.html
@@ -143,7 +143,7 @@ Then build grpc as described above.
 
 ## Building the package
 
-You need to install dcrd, dcrwallet and dcrctl.  
+You need to install dcrd, dcrwallet and dcrctl.
 
 - [dcrd/dcrctl installation instructions](https://github.com/decred/dcrd#updating)
 - [dcrwallet installation instructions](https://github.com/decred/dcrwallet#installation-and-updating)
@@ -158,8 +158,8 @@ mkdir bin
 cp `which dcrd` bin/
 cp `which dcrctl` bin/
 cp `which dcrwallet` bin/
-npm install
-npm run package
+yarn
+yarn package
 ```
 
 ## Building release versions
@@ -172,10 +172,16 @@ You need to make sure you have the following packages installed for the building
 - rpm-build
 
 ```bash
-npm run package-linux
+yarn package-linux
 ```
 
 After it is finished it will have the built rpm, deb and tar.gz in the releases/ directory.
+
+If you're only interested in a tar.gz, you can alternatively use:
+
+```bash
+yarn package-dev-linux
+```
 
 ## Contact
 
