@@ -17,13 +17,13 @@ const messages = defineMessages({
 });
 
 const headerIcons = {
-  in:         "plusBig",
-  out:        "minusBig",
-  Coinbase:   "plusBig",
-  transfer:   "walletTransfer",
-  Ticket:     "ticketSmall",
-  Vote:       "ticketSmall",
-  Revocation: "ticketSmall",
+  in:         "tx-detail-icon-in",
+  out:        "tx-detail-icon-out",
+  Coinbase:   "tx-detail-icon-in",
+  transfer:   "tx-detail-icon-transfer",
+  Ticket:     "tx-detail-icon-ticket",
+  Vote:       "tx-detail-icon-vote",
+  Revocation: "tx-detail-icon-revocation",
 };
 
 function mapNonWalletOutput(output) {

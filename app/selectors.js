@@ -323,16 +323,10 @@ const txHashToTicket = createSelector(
 
 const transactionNormalizer = createSelector(
   [ accounts, txURLBuilder, blockURLBuilder, txHashToTicket ],
-  (accounts, txURLBuilder, blockURLBuilder, txHashToTicket) => {
+  (accounts, txURLBuilder, blockURLBuilder) => {
     const findAccount = num => accounts.find(account => account.getAccountNumber() === num);
     const getAccountName = num => (act => act ? act.getAccountName() : "")(findAccount(num));
     return tx => {
-      let status;
-      const ticketDecoded = txHashToTicket[tx.txHash];
-      if (ticketDecoded) {
-        status = ticketDecoded.status;
-      }
-
       const { blockHash } = tx;
       const type = tx.type || (tx.getTransactionType ? tx.getTransactionType() : null);
       let txInfo = tx.tx ? tx : {};
@@ -392,7 +386,6 @@ const transactionNormalizer = createSelector(
         txUrl: txURLBuilder(txHash),
         txBlockUrl: txBlockHash ? blockURLBuilder(txBlockHash) : null,
         txHash,
-        status,
         txHeight: txInfo.height,
         txType: getTxTypeStr(type),
         txTimestamp: timestamp,
@@ -500,7 +493,9 @@ export const homeHistoryTickets = createSelector(
         return null;
       }
       tx.ticketPrice = ticketDecoded.ticketPrice;
-      tx.status = ticketDecoded.status;
+      if (ticketDecoded.status != "voted") {
+        tx.status = ticketDecoded.status;
+      }
       tx.enterTimestamp = ticketDecoded.enterTimestamp;
       tx.leaveTimestamp = ticketDecoded.leaveTimestamp;
       tx.ticketReward = ticketDecoded.ticketReward;
