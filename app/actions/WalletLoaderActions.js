@@ -5,8 +5,9 @@ import {
   rescanPoint
 } from "wallet";
 import * as wallet from "wallet";
-import { loadActiveDataFiltersAttempt } from "./ControlActions";
-import { getWalletServiceAttempt, startWalletServices, getBestBlockHeightAttempt } from "./ClientActions";
+import { loadActiveDataFiltersAttempt, rescanCancel } from "./ControlActions";
+import { getWalletServiceAttempt, startWalletServices, getBestBlockHeightAttempt,
+  cancelPingAttempt } from "./ClientActions";
 import { getVersionServiceAttempt } from "./VersionActions";
 import { getAvailableWallets, WALLETREMOVED_FAILED } from "./DaemonActions";
 import { getWalletCfg, getDcrdCert } from "../config";
@@ -14,6 +15,8 @@ import { getWalletPath } from "main_dev/paths";
 import { isTestNet } from "selectors";
 import axios from "axios";
 import { SpvSyncRequest } from "../middleware/walletrpc/api_pb";
+import { push as pushHistory } from "react-router-redux";
+import { stopNotifcations } from "./NotificationActions";
 
 const MAX_RPC_RETRIES = 5;
 const RPC_RETRY_DELAY = 5000;
@@ -173,11 +176,21 @@ export const CLOSEWALLET_ATTEMPT = "CLOSEWALLET_ATTEMPT";
 export const CLOSEWALLET_FAILED = "CLOSEWALLET_FAILED";
 export const CLOSEWALLET_SUCCESS = "CLOSEWALLET_SUCCESS";
 
-export const closeWalletRequest = () => (dispatch, getState) => {
+export const closeWalletRequest = () => async(dispatch, getState) => {
   dispatch({ type: CLOSEWALLET_ATTEMPT });
-  return closeWallet(getState().walletLoader.loader)
-    .then(() => dispatch({ type: CLOSEWALLET_SUCCESS }))
-    .catch(error => dispatch({ error, type: CLOSEWALLET_FAILED }));
+  try {
+    await dispatch(cancelPingAttempt());
+    await dispatch(stopNotifcations());
+    await dispatch(spvSyncCancel());
+    await dispatch(rescanCancel());
+    await closeWallet(getState().walletLoader.loader);
+    await wallet.stopWallet();
+    dispatch({ type: CLOSEWALLET_SUCCESS });
+    dispatch(pushHistory("/getStarted/initial"));
+  } catch (error) {
+    dispatch({ error, type: CLOSEWALLET_FAILED });
+    dispatch(pushHistory("/error"));
+  }
 };
 
 export const STARTRPC_ATTEMPT = "STARTRPC_ATTEMPT";

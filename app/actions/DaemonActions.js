@@ -3,6 +3,7 @@ import { stopNotifcations } from "./NotificationActions";
 import { saveSettings, updateStateSettingsChanged } from "./SettingsActions";
 import { rescanCancel } from "./ControlActions";
 import { hideSidebarMenu, showSidebar } from "./SidebarActions";
+import { cancelPingAttempt } from "./ClientActions";
 import { semverCompatible } from "./VersionActions";
 import * as wallet from "wallet";
 import { push as pushHistory, goBack } from "react-router-redux";
@@ -167,8 +168,8 @@ export const deleteDaemonData = () => (dispatch, getState) => {
 export const shutdownApp = () => (dispatch, getState) => {
   const { daemon: { walletName } } = getState();
   const { currentBlockHeight } = getState().grpc;
-  const cfg = getWalletCfg(isTestNet(getState()), walletName);
   if (walletName) {
+    const cfg = getWalletCfg(isTestNet(getState()), walletName);
     cfg.set("lastaccess", Date.now());
   }
   if(currentBlockHeight) {
@@ -180,6 +181,7 @@ export const shutdownApp = () => (dispatch, getState) => {
   });
   dispatch(stopNotifcations());
   dispatch(rescanCancel());
+  dispatch(cancelPingAttempt());
   dispatch(spvSyncCancel());
   dispatch(hideSidebarMenu());
   dispatch(pushHistory("/shutdown"));

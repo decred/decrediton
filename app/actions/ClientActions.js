@@ -350,15 +350,27 @@ export const getNetworkAttempt = () => (dispatch, getState) => {
 export const GETPING_ATTEMPT = "GETPING_ATTEMPT";
 export const GETPING_FAILED = "GETPING_FAILED";
 export const GETPING_SUCCESS = "GETPING_SUCCESS";
+export const GETPING_CANCELED = "GETPING_CANCELED";
 
 export const getPingAttempt = () => (dispatch, getState) =>
   wallet.doPing(sel.walletService(getState()))
-    .then(() => setTimeout(() => dispatch(getPingAttempt()), 10000))
+    .then(() => {
+      const pingTimer = setTimeout(() => dispatch(getPingAttempt()), 10000);
+      dispatch({ pingTimer, type: GETPING_SUCCESS });
+    })
     .catch(error => {
       const { daemon: { shutdownRequested } } = getState();
       dispatch({ error, type: GETPING_FAILED });
       if (!shutdownRequested) setTimeout(() => { dispatch(pushHistory("/walletError")); }, 1000);
     });
+
+export const cancelPingAttempt = () => (dispatch, getState) => {
+  const { pingTimer } = getState().grpc;
+  if (pingTimer) {
+    clearTimeout(pingTimer);
+    dispatch({ type: GETPING_CANCELED });
+  }
+};
 
 export const GETSTAKEINFO_ATTEMPT = "GETSTAKEINFO_ATTEMPT";
 export const GETSTAKEINFO_FAILED = "GETSTAKEINFO_FAILED";
