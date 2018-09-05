@@ -20,7 +20,7 @@ import {
 } from "../actions/DaemonActions";
 import {
   CREATEWALLET_GOBACK,
-  CLOSEWALLET_SUCCESS,
+  CLOSEWALLET_SUCCESS, CLOSEWALLET_FAILED,
 } from "../actions/WalletLoaderActions";
 import {
   UPDATEHIDDENACCOUNTS
@@ -140,6 +140,11 @@ export default function version(state = {}, action) {
       hiddenAccounts: [],
       walletReady: false,
       walletName: null,
+    };
+  case CLOSEWALLET_FAILED:
+    return {
+      ...state,
+      walletError: action.error,
     };
   default:
     return state;
