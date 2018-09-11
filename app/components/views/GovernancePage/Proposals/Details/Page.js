@@ -16,7 +16,8 @@ export default ({ viewedProposalDetails,
   newVoteChoice, updateVoteChoiceAttempt, tsDate }) =>
 {
   const { name, token, hasEligibleTickets, voteStatus, voteOptions,
-    voteCounts, creator, timestamp, voteDetails, currentVoteChoice } = viewedProposalDetails;
+    voteCounts, creator, timestamp, voteDetails, currentVoteChoice,
+    version } = viewedProposalDetails;
   const eligibleTicketCount = viewedProposalDetails.eligibleTickets.length;
 
   let text = "";
@@ -53,7 +54,10 @@ export default ({ viewedProposalDetails,
               label={<T id="proposal.overview.created.label" m="Created by" />}
               value={creator} />
             <OverviewField
-              label={<T id="proposal.overview.submitted.label" m="Submitted" />}
+              label={<T id="proposal.overview.version.label" m="Version" />}
+              value={version} />
+            <OverviewField
+              label={<T id="proposal.overview.lastUpdated.label" m="Last Updated" />}
               value={<TimeValue timestamp={timestamp} tsDate={tsDate} />} />
             <OverviewField
               show={voting && voteDetails && voteDetails.endTimestamp}

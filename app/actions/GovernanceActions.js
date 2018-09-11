@@ -123,6 +123,7 @@ export const getVettedProposals = () => async (dispatch, getState) => {
       const proposal = {
         creator: p.username,
         name: p.name,
+        version: p.version,
         token: p.censorshiprecord.token,
         numComments: p.numcomments,
         timestamp: p.timestamp,
@@ -201,6 +202,7 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
       ...proposal,
       creator: p.username,
       token: token,
+      version: p.version,
       name: p.name,
       numComments: p.numcomments,
       timestamp: p.timestamp,
