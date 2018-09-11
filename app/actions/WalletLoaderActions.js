@@ -488,7 +488,6 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
       }
       case SyncNotificationType.FETCHED_HEADERS_PROGRESS: {
         const lastFetchedHeaderTime = new Date(response.getFetchHeaders().getLastHeaderTime()*1000);
-        console.log(lastFetchedHeaderTime);
         const fetchHeadersCount = response.getFetchHeaders().getFetchedHeadersCount();
 
         dispatch({ fetchHeadersCount, lastFetchedHeaderTime, type: SYNC_FETCHED_HEADERS_PROGRESS });
@@ -532,8 +531,7 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
     spvSyncCall.on("error", function(status) {
       status = status + "";
       if (status.indexOf("Cancelled") < 0) {
-        console.log(status);
-        //reject(status);
+        console.error(status);
         dispatch({ error: status, type: SPVSYNC_FAILED });
       }
     });
