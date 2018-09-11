@@ -60,7 +60,21 @@ export const versionInvalidError = createSelector(
   [ versionInvalid, get([ "version", "versionInvalidError" ]) ],
   (invalid, error) => invalid ? error || "Unknown Error" : null
 );
+
 export const spvInput = get([ "walletLoader", "spvInput" ]);
+export const peerCount = get([ "walletLoader", "peerCount" ]);
+export const synced = get([ "walletLoader", "synced" ]);
+export const syncFetchMissingCfiltersAttempt = get([ "walletLoader", "syncFetchMissingCfiltersAttempt" ]);
+export const syncFetchMissingCfiltersStart = get([ "walletLoader", "syncFetchMissingCfiltersStart" ]);
+export const syncFetchMissingCfiltersEnd = get([ "walletLoader", "syncFetchMissingCfiltersEnd" ]);
+export const syncFetchHeadersAttempt = get([ "walletLoader", "syncFetchHeadersAttempt" ]);
+export const syncFetchHeadersCount = get([ "walletLoader", "syncFetchHeadersCount" ]);
+export const syncFetchHeadersLastHeaderTime = get([ "walletLoader", "syncLastFetchedHeaderTime" ]);
+export const syncDiscoverAddressesAttempt = get([ "walletLoader", "syncDiscoverAddressesAttempt" ]);
+export const syncRescanAttempt = get([ "walletLoader", "syncRescanAttempt" ]);
+export const syncRescanProgress = get([ "walletLoader", "syncRescanProgress" ]);
+export const syncFetchHeadersComplete = get([ "walletLoader" , "syncFetchHeadersComplete" ]);
+export const syncFetchTimeStart = get([ "walletLoader" , "syncFetchTimeStart" ]);
 
 const isStartStepOpen = compose(eq(START_STEP_OPEN), startStepIndex);
 const isStartStepDiscover = compose(eq(START_STEP_DISCOVER), startStepIndex);
@@ -170,6 +184,7 @@ export const networks = () => [ { name: "testnet" }, { name: "mainnet" } ];
 export const network = get([ "daemon", "network" ]);
 export const isTestNet = compose(eq("testnet"), network);
 export const isMainNet = not(isTestNet);
+export const firstBlockTime = compose(isMainNet => isMainNet ? new Date("2016-02-08 18:00:00 UTC") : new Date("2018-08-06 00:00:00 UTC"), isMainNet);
 export const currencies = () => [ { name: "DCR" }, { name: "atoms" } ];
 export const currencyDisplay = get([ "settings", "currentSettings", "currencyDisplay" ]);
 export const unitDivisor = compose(disp => disp === "DCR" ? 100000000 : 1, currencyDisplay);

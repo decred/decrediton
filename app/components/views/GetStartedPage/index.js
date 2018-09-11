@@ -6,7 +6,7 @@ import Settings from "./Settings";
 import ReleaseNotes from "./ReleaseNotes";
 import WalletSelectionBody from "./WalletSelection";
 import StartRPCBody from "./StartRPC";
-import { SpvSyncBody } from "./SpvSync";
+import SpvSync from "./SpvSync";
 import { DiscoverAddressesBody } from "./DiscoverAddresses";
 import { FetchBlockHeadersBody } from "./FetchBlockHeaders";
 import { AdvancedStartupBody, RemoteAppdataError } from "./AdvancedStartup";
@@ -100,8 +100,11 @@ class GetStartedPage extends React.Component {
       appVersion,
       updateAvailable,
       isSPV,
-      spvInput,
       isInputRequest,
+      syncFetchMissingCfiltersAttempt,
+      syncFetchHeadersAttempt,
+      syncDiscoverAddressesAttempt,
+      syncRescanAttempt,
       ...props
     } = this.props;
 
@@ -137,11 +140,25 @@ class GetStartedPage extends React.Component {
       Form = WalletSelectionBody;
     } else if (isSPV && startStepIndex > 2) {
       text = <T id="getStarted.header.syncSpv.meta" m="Syncing SPV Wallet" />;
-      if (spvInput) {
-        Form = SpvSyncBody;
-      } else {
-        Form = FetchBlockHeadersBody;
+      if (syncFetchMissingCfiltersAttempt) {
+        text = <T id="getStarted.header.fetchingMissing.meta" m="Fetching missing committed filters" />;
+      } else if (syncFetchHeadersAttempt) {
+        text = <T id="getStarted.header.fetchingBlockHeaders.meta" m="Fetching block headers" />;
+      } else if (syncDiscoverAddressesAttempt) {
+        text = <T id="getStarted.header.discoveringAddresses.meta" m="Discovering addresses" />;
+      } else if (syncRescanAttempt) {
+        text = <T id="getStarted.header.rescanWallet.meta" m="Scanning blocks for transactions" />;
+        Form = RescanWalletBody;
       }
+      return <SpvSync
+        {...{
+          ...props,
+          ...state,
+          isSPV,
+          text,
+          Form,
+          syncFetchHeadersAttempt,
+        }}/>;
     } else {
       switch (startStepIndex || 0) {
       case 0:
@@ -210,7 +227,6 @@ class GetStartedPage extends React.Component {
         appVersion,
         updateAvailable,
         isSPV,
-        spvInput,
         isInputRequest
       }} />;
   }

@@ -204,6 +204,10 @@ var initialState = {
     curBlocks: 0,
     stepIndex: 0,
     maxWalletCount: globalCfg.get("max_wallet_count"),
+
+    synced: false,
+    syncFetchHeadersComplete: false,
+
     // Loader
     getLoaderRequestAttempt: false,
     loader: null,

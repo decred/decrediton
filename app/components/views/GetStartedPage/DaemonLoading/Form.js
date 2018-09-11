@@ -9,7 +9,6 @@ import { AboutModalButtonInvisible } from "buttons";
 export default ({
   Form,
   text,
-  barText,
   isInputRequest,
   getCurrentBlockCount,
   getWalletReady,
@@ -64,21 +63,22 @@ export default ({
           <span onClick={onShowReleaseNotes} className="whatsnew"><T id="getStarted.whatsNew" m="What's New in v{version}" values={{ version: (appVersion) }}/></span>
         </div>
         <div className="loader-bar">
-          <LinearProgressFull
-            error={startupError}
-            getDaemonSynced={getDaemonSynced || isSPV}
-            disabled={!getDaemonStarted || getCurrentBlockCount == null}
-            barText={barText}
-            min={0}
-            max={getNeededBlocks}
-            value={getCurrentBlockCount}
-          />
-          {!getDaemonStarted || getCurrentBlockCount == null || getDaemonSynced ? <div></div> :
-            <div className="loader-bar-estimation">
-              <T id="getStarted.chainLoading.syncEstimation" m="Estimated time left"/>
-              <span className="bold"> {finishDateEstimation ? <FormattedRelative value={finishDateEstimation}/> : "--"} ({getCurrentBlockCount} / {getNeededBlocks})</span>
-            </div>
-          }
+          <Aux>
+            <LinearProgressFull
+              error={startupError}
+              getDaemonSynced={getDaemonSynced}
+              disabled={!getDaemonStarted || getCurrentBlockCount == null}
+              min={0}
+              max={getNeededBlocks}
+              value={getCurrentBlockCount}
+            />
+            {!getDaemonStarted || getCurrentBlockCount == null || getDaemonSynced ? <div></div> :
+              <div className="loader-bar-estimation">
+                <T id="getStarted.chainLoading.syncEstimation" m="Estimated time left"/>
+                <span className="bold"> {finishDateEstimation ? <FormattedRelative value={finishDateEstimation}/> : "--"} ({getCurrentBlockCount} / {getNeededBlocks})</span>
+              </div>
+            }
+          </Aux>
         </div>
         <div className="loader-bar-icon">
           {text && !startupError &&
