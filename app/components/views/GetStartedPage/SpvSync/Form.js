@@ -29,7 +29,7 @@ const SpvSyncBody = ({
   onSetPassPhrase,
   onSpvSync,
   onKeyDown,
-  spvInput,
+  syncInput,
   firstBlockTime,
   syncFetchTimeStart,
   syncFetchHeadersLastHeaderTime,
@@ -101,7 +101,7 @@ const SpvSyncBody = ({
           }
         </div>
         {Form && <Form {...props}/>}
-        {spvInput ?
+        {syncInput ?
           <div className="advanced-page-form">
             <div className="advanced-daemon-row">
               <T id="getStarted.discoverAccountsInfo" m={`

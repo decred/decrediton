@@ -1,4 +1,4 @@
-import { versionCheckAction, spvSyncCancel } from "./WalletLoaderActions";
+import { versionCheckAction, syncCancel } from "./WalletLoaderActions";
 import { stopNotifcations } from "./NotificationActions";
 import { saveSettings, updateStateSettingsChanged } from "./SettingsActions";
 import { rescanCancel } from "./ControlActions";
@@ -179,7 +179,7 @@ export const shutdownApp = () => (dispatch, getState) => {
   dispatch(stopNotifcations());
   dispatch(rescanCancel());
   dispatch(cancelPingAttempt());
-  dispatch(spvSyncCancel());
+  dispatch(syncCancel());
   dispatch(pushHistory("/shutdown"));
 };
 

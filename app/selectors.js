@@ -61,7 +61,7 @@ export const versionInvalidError = createSelector(
   (invalid, error) => invalid ? error || "Unknown Error" : null
 );
 
-export const spvInput = get([ "walletLoader", "spvInput" ]);
+export const syncInput = get([ "walletLoader", "syncInput" ]);
 export const peerCount = get([ "walletLoader", "peerCount" ]);
 export const synced = get([ "walletLoader", "synced" ]);
 export const syncFetchMissingCfiltersAttempt = get([ "walletLoader", "syncFetchMissingCfiltersAttempt" ]);

@@ -14,7 +14,7 @@ import {
   GETWALLETSEEDSVC_ATTEMPT, GETWALLETSEEDSVC_SUCCESS,
   FETCHMISSINGCFILTERS_ATTEMPT, FETCHMISSINGCFILTERS_FAILED, FETCHMISSINGCFILTERS_SUCCESS,
   RESCANPOINT_ATTEMPT, RESCANPOINT_FAILED, RESCANPOINT_SUCCESS,
-  SPVSYNC_SUCCESS, SPVSYNC_UPDATE, SPVSYNC_FAILED, SPVSYNC_ATTEMPT, SPVSYNC_INPUT,
+  SYNC_SUCCESS, SYNC_UPDATE, SYNC_FAILED, SYNC_ATTEMPT, SYNC_INPUT,
   SYNC_SYNCED, SYNC_UNSYNCED, SYNC_FETCHED_HEADERS_STARTED, SYNC_FETCHED_HEADERS_PROGRESS, SYNC_FETCHED_HEADERS_FINISHED,
   SYNC_PEER_CONNECTED, SYNC_PEER_DISCONNECTED, SYNC_FETCHED_MISSING_CFILTERS_STARTED,
   SYNC_FETCHED_MISSING_CFILTERS_PROGRESS, SYNC_FETCHED_MISSING_CFILTERS_FINISHED,
@@ -353,32 +353,32 @@ export default function walletLoader(state = {}, action) {
       rescanPointError: null,
       rescanPointResponse: action.response,
     };
-  case SPVSYNC_INPUT:
+  case SYNC_INPUT:
     return { ...state,
-      spvInput: true,
+      syncInput: true,
     };
-  case SPVSYNC_ATTEMPT:
+  case SYNC_ATTEMPT:
     return { ...state,
-      spvInput: false,
-      spvSyncAttemptRequest: true,
-      spvSyncError: null,
+      syncInput: false,
+      syncAttemptRequest: true,
+      syncError: null,
       synced: false,
     };
-  case SPVSYNC_FAILED:
+  case SYNC_FAILED:
     return { ...state,
-      spvInput: true,
-      spvSyncAttemptRequest: false,
+      syncInput: true,
+      syncAttemptRequest: false,
       synced: false,
     };
-  case SPVSYNC_UPDATE:
+  case SYNC_UPDATE:
     return { ...state,
-      spvSyncError: null,
+      syncError: null,
       syncCall: action.syncCall,
     };
-  case SPVSYNC_SUCCESS:
+  case SYNC_SUCCESS:
     return { ...state,
-      spvSyncAttemptRequest: false,
-      spvSyncError: null,
+      syncAttemptRequest: false,
+      syncError: null,
       synced: false,
     };
   case SYNC_SYNCED:

@@ -47,7 +47,7 @@ const mapStateToProps = selectorMap({
   masterPubKey: sel.masterPubKey,
   fetchHeadersDone: sel.fetchHeadersDone,
   isSPV: sel.isSPV,
-  spvInput: sel.spvInput,
+  syncInput: sel.syncInput,
 
   peerCount: sel.peerCount,
   synced: sel.synced,
