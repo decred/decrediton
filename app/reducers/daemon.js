@@ -19,7 +19,8 @@ import {
   FATAL_WALLET_ERROR,
 } from "../actions/DaemonActions";
 import {
-  CREATEWALLET_GOBACK
+  CREATEWALLET_GOBACK,
+  CLOSEWALLET_SUCCESS, CLOSEWALLET_FAILED,
 } from "../actions/WalletLoaderActions";
 import {
   UPDATEHIDDENACCOUNTS
@@ -129,6 +130,18 @@ export default function version(state = {}, action) {
       daemonError: action.error,
     };
   case FATAL_WALLET_ERROR:
+    return {
+      ...state,
+      walletError: action.error,
+    };
+  case CLOSEWALLET_SUCCESS:
+    return {
+      ...state,
+      hiddenAccounts: [],
+      walletReady: false,
+      walletName: null,
+    };
+  case CLOSEWALLET_FAILED:
     return {
       ...state,
       walletError: action.error,

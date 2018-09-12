@@ -3,6 +3,9 @@ import {
   GETSTARTUPSTATS_ATTEMPT, GETSTARTUPSTATS_FAILED, GETSTARTUPSTATS_SUCCESS,
   GETMYTICKETSSTATS_ATTEMPT, GETMYTICKETSSTATS_SUCCESS, GETMYTICKETSSTATS_FAILED
 } from "actions/StatisticsActions";
+import {
+  CLOSEWALLET_SUCCESS,
+} from "actions/WalletLoaderActions";
 
 export default function statistics(state = {}, action) {
   switch (action.type) {
@@ -38,6 +41,16 @@ export default function statistics(state = {}, action) {
     return {
       ...state,
       getMyTicketsStatsRequest: false,
+    };
+  case CLOSEWALLET_SUCCESS:
+    return {
+      ...state,
+      statistics: {
+        dailyBalances: Array(),
+        fullDailyBalances: Array(),
+        voteTime: null,
+        getMyTicketsStatsRequest: false,
+      },
     };
   default:
     return state;
