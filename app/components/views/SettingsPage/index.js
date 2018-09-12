@@ -11,7 +11,8 @@ class Settings extends React.Component {
   render() {
     const {
       onAttemptChangePassphrase,
-      onSaveSettings
+      onSaveSettings,
+      onCloseWallet,
     } = this;
 
     return !this.props.walletService ? <ErrorScreen /> : (
@@ -20,7 +21,8 @@ class Settings extends React.Component {
           ...this.props, ...this.state }}
         {...{
           onAttemptChangePassphrase,
-          onSaveSettings
+          onSaveSettings,
+          onCloseWallet
         }}
       />
     );
@@ -34,6 +36,10 @@ class Settings extends React.Component {
   onSaveSettings() {
     const { onSaveSettings, tempSettings } = this.props;
     onSaveSettings && onSaveSettings(tempSettings);
+  }
+
+  onCloseWallet() {
+    this.props.onCloseWallet();
   }
 }
 

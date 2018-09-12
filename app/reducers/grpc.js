@@ -4,7 +4,7 @@ import {
   GETBALANCE_ATTEMPT, GETBALANCE_FAILED, GETBALANCE_SUCCESS,
   GETACCOUNTNUMBER_ATTEMPT, GETACCOUNTNUMBER_FAILED, GETACCOUNTNUMBER_SUCCESS,
   GETNETWORK_ATTEMPT, GETNETWORK_FAILED, GETNETWORK_SUCCESS,
-  GETPING_ATTEMPT, GETPING_FAILED, GETPING_SUCCESS,
+  GETPING_ATTEMPT, GETPING_FAILED, GETPING_SUCCESS, GETPING_CANCELED,
   GETSTAKEINFO_ATTEMPT, GETSTAKEINFO_FAILED, GETSTAKEINFO_SUCCESS,
   GETTICKETPRICE_ATTEMPT, GETTICKETPRICE_FAILED, GETTICKETPRICE_SUCCESS,
   GETACCOUNTS_ATTEMPT, GETACCOUNTS_FAILED, GETACCOUNTS_SUCCESS,
@@ -30,6 +30,9 @@ import {
 } from "../actions/DecodeMessageActions";
 import { SIGNMESSAGE_ATTEMPT, SIGNMESSAGE_SUCCESS, SIGNMESSAGE_FAILED, SIGNMESSAGE_CLEANSTORE } from "../actions/ControlActions";
 import { VERIFYMESSAGE_ATTEMPT, VERIFYMESSAGE_SUCCESS, VERIFYMESSAGE_FAILED, VERIFYMESSAGE_CLEANSTORE } from "../actions/ControlActions";
+import {
+  CLOSEWALLET_SUCCESS,
+} from "actions/WalletLoaderActions";
 
 export default function grpc(state = {}, action) {
   switch (action.type) {
@@ -189,12 +192,14 @@ export default function grpc(state = {}, action) {
       ...state,
       getPingError: "",
       getPingRequestAttempt: true,
+      pingTimer: null,
     };
   case GETPING_FAILED:
     return {
       ...state,
       getPingError: String(action.error),
       getPingRequestAttempt: false,
+      pingTimer: null,
     };
   case GETPING_SUCCESS:
     return {
@@ -202,6 +207,15 @@ export default function grpc(state = {}, action) {
       getPingError: "",
       getPingRequestAttempt: false,
       getPingResponse: action.getPingResponse,
+      pingTimer: action.pingTimer,
+    };
+  case GETPING_CANCELED:
+    return {
+      ...state,
+      getPingError: "",
+      getPingRequestAttempt: false,
+      getPingResponse: null,
+      pingTimer: null,
     };
   case GETSTAKEINFO_ATTEMPT:
     return {
@@ -526,6 +540,39 @@ export default function grpc(state = {}, action) {
     return {
       ...state,
       port: action.port
+    };
+  case CLOSEWALLET_SUCCESS:
+    return {
+      ...state,
+      port: "9121",
+      agendaService: null,
+      balances: [],
+      decodeMessageService: null,
+      decodedTransactions: {},
+      getAccountsResponse: null,
+      getAgendasResponse: null,
+      getNetworkResponse: null,
+      getStakeInfoResponse: null,
+      getTicketPriceResponse: null,
+      lastTransaction: null,
+      maturingBlockHeights: {},
+      minedTransactions: Array(),
+      unminedTransactions: Array(),
+      tickets: Array(),
+      transactions: Array(),
+      noMoreTransactions: false,
+      transactionsFilter: {
+        search: null,
+        listDirection: "desc",
+        types: [],
+        direction: null,
+      },
+      recentTransactions: Array(),
+      recentStakeTransactions: Array(),
+      ticketBuyerService: null,
+      transactionsSinceLastOpened: null,
+      votingService: null,
+      walletService: null,
     };
   default:
     return state;

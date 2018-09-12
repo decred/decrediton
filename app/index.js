@@ -78,6 +78,7 @@ var initialState = {
     previousWallet: null,
     selectCreateWalletInputRequest: true,
     hiddenAccounts: Array(),
+    walletName: null,
   },
   version: {
     // RequiredVersion
@@ -127,6 +128,7 @@ var initialState = {
     getPingError: null,
     getPingRequestAttempt: false,
     getPingResponse: null,
+    pingTimer: null,
     // StakeInfo
     getStakeInfoError: null,
     getStakeInfoRequestAttempt: false,
@@ -151,9 +153,11 @@ var initialState = {
     // Transactions for Overview Page
     recentTransactionCount: 8,
     recentTransactions: Array(),
+    recentStakeTransactions: Array(),
 
     // Transactions since last opened
     recentTxSinceLastOpenedCount: 10,
+    transactionsSinceLastOpened: null,
 
     // GetTransactions
     minedTransactions: Array(),

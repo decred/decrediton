@@ -1,6 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import { StandaloneHeader, StandalonePage } from "layout";
-import { ChangePassphraseButton, KeyBlueButton } from "buttons";
+import { ChangePassphraseButton, KeyBlueButton, InvisibleButton } from "buttons";
 import { WatchOnlyWarnNotification } from "shared";
 import GeneralSettings from "./GeneralSettings";
 import PrivacySettings from "./PrivacySettings";
@@ -25,6 +25,7 @@ const SettingsPage = ({
   onChangeTempSettings,
   onSaveSettings,
   onAttemptChangePassphrase,
+  onCloseWallet,
   isChangePassPhraseDisabled,
 }) => (
   <StandalonePage header={<SettingsPageHeader />}>
@@ -63,6 +64,14 @@ const SettingsPage = ({
         onClick={onSaveSettings}>
         <T id="settings.save" m="Save" />
       </KeyBlueButton>
+    </div>
+
+    <div className="settings-close-wallet-button">
+      <InvisibleButton
+        size="large"
+        onClick={onCloseWallet}>
+        <T id="settings.closeWallet" m="Close Wallet" />
+      </InvisibleButton>
     </div>
   </StandalonePage>
 );
