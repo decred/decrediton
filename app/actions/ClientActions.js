@@ -71,7 +71,7 @@ const startWalletServicesTrigger = () => (dispatch, getState) => new Promise((re
 });
 
 export const startWalletServices = () => (dispatch, getState) => {
- const { startWalletServiceAttempt } = getState().grpc;
+  const { startWalletServiceAttempt } = getState().grpc;
   if( startWalletServiceAttempt ) {
     return;
   }
@@ -80,8 +80,8 @@ export const startWalletServices = () => (dispatch, getState) => {
     dispatch({ type: STARTWALLETSERVICE_SUCCESS });
   }).catch(error => {
     dispatch({ type: STARTWALLETSERVICE_FAILED, error });
-  })
-}
+  });
+};
 
 export const GETSTARTUPWALLETINFO_ATTEMPT = "GETSTARTUPWALLETINFO_ATTEMPT";
 export const GETSTARTUPWALLETINFO_SUCCESS = "GETSTARTUPWALLETINFO_SUCCESS";
