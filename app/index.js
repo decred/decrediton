@@ -242,18 +242,6 @@ var initialState = {
     startRpcRequestAttempt: false,
     startRpcResponse: null,
     startRpcError: null,
-    // DiscoverAddress
-    discoverAddressRequestAttempt: false,
-    discoverAddressResponse: null,
-    discoverAddressError: null,
-    // SubscribeBlockNtfns
-    subscribeBlockNtfnsRequestAttempt: false,
-    subscribeBlockNtfnsResponse: null,
-    subscribeBlockNtfnsError: null,
-    // FetchHeaders
-    fetchHeadersRequestAttempt: false,
-    fetchHeadersResponse: null,
-    fetchHeadersError: null,
   },
   notifications: {
     transactionNtfns: null,

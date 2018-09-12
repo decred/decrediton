@@ -7,8 +7,6 @@ import ReleaseNotes from "./ReleaseNotes";
 import WalletSelectionBody from "./WalletSelection";
 import StartRPCBody from "./StartRPC";
 import SpvSync from "./SpvSync";
-import { DiscoverAddressesBody } from "./DiscoverAddresses";
-import { FetchBlockHeadersBody } from "./FetchBlockHeaders";
 import { AdvancedStartupBody, RemoteAppdataError } from "./AdvancedStartup";
 import { RescanWalletBody } from "./RescanWallet/index";
 import StakePoolsBody from "./StakePools";
@@ -207,34 +205,9 @@ class GetStartedPage extends React.Component {
         text = <T id="getStarted.header.startrpc.meta" m="Establishing RPC connection" />;
         Form = StartRPCBody;
         break;
-      case 4:
-        text = <T id="getStarted.header.subcribe.meta" m="Subscribing to Block Notifications" />;
-        break;
-      case 4.5:
-        animationType = daemonWaiting;
-        text = <T id="getStarted.header.fetchingMissingCFilter.meta" m="Fetching Missing CFilters" />;
-        Form = FetchBlockHeadersBody;
-        break;
-      case 5:
-        animationType = fetchingHeaders;
-        text = <T id="getStarted.header.fetchingBlockHeaders.meta" m="Fetching block headers" />;
-        Form = FetchBlockHeadersBody;
-        break;
-      case 6:
-        animationType = discoveringAddresses;
-        text = <T id="getStarted.header.discoveringAddresses.meta" m="Discovering addresses" />;
-        if (isInputRequest) {
-          Form = DiscoverAddressesBody;
-        }
-        break;
       case 7:
         text = <T id="getStarted.header.stakePools.meta" m="Import StakePools" />;
         Form = StakePoolsBody;
-        break;
-      case 8:
-        animationType = scanningBlocks;
-        text = <T id="getStarted.header.rescanWallet.meta" m="Scanning blocks for transactions" />;
-        Form = RescanWalletBody;
         break;
       default:
         animationType = finalizingSetup;

@@ -1,11 +1,9 @@
 // @flow
 import {
-  getLoader, getWalletExists, createWallet, openWallet, closeWallet, discoverAddresses,
-  subscribeToBlockNotifications, fetchHeaders, getStakePoolInfo, fetchMissingCFilters,
-  rescanPoint
+  getLoader, getWalletExists, createWallet, openWallet, closeWallet, getStakePoolInfo, rescanPoint
 } from "wallet";
 import * as wallet from "wallet";
-import { loadActiveDataFiltersAttempt, rescanCancel } from "./ControlActions";
+import { rescanCancel } from "./ControlActions";
 import { getWalletServiceAttempt, startWalletServices, getBestBlockHeightAttempt,
   cancelPingAttempt } from "./ClientActions";
 import { getVersionServiceAttempt } from "./VersionActions";
@@ -15,7 +13,6 @@ import { getWalletPath } from "main_dev/paths";
 import { isTestNet } from "selectors";
 import axios from "axios";
 import { SpvSyncRequest, SyncNotificationType, RpcSyncRequest } from "../middleware/walletrpc/api_pb";
-import { RpcSyncRequest } from "../middleware/walletrpc/api_pb";
 import { push as pushHistory } from "react-router-redux";
 import { stopNotifcations } from "./NotificationActions";
 
@@ -182,7 +179,7 @@ export const closeWalletRequest = () => async(dispatch, getState) => {
   try {
     await dispatch(cancelPingAttempt());
     await dispatch(stopNotifcations());
-    await dispatch(spvSyncCancel());
+    await dispatch(syncCancel());
     await dispatch(rescanCancel());
     await closeWallet(getState().walletLoader.loader);
     await wallet.stopWallet();
@@ -278,92 +275,6 @@ export const startRpcRequestFunc = (isRetry) =>
       });
     });
   };
-
-export const DISCOVERADDRESS_INPUT = "DISCOVERADDRESS_INPUT";
-export const DISCOVERADDRESS_FAILED_INPUT = "DISCOVERADDRESS_FAILED_INPUT";
-export const DISCOVERADDRESS_ATTEMPT = "DISCOVERADDRESS_ATTEMPT";
-export const DISCOVERADDRESS_FAILED = "DISCOVERADDRESS_FAILED";
-export const DISCOVERADDRESS_SUCCESS = "DISCOVERADDRESS_SUCCESS";
-
-export const discoverAddressAttempt = (privPass) => (dispatch, getState) => {
-  const { walletLoader: { loader, discoverAccountsComplete, rescanPointResponse } } = getState();
-  const { daemon: { walletName } } = getState();
-  dispatch({ type: DISCOVERADDRESS_ATTEMPT });
-  var startingBlockHash = "";
-  if (rescanPointResponse) {
-    startingBlockHash = rescanPointResponse.getRescanPointHash();
-  }
-  if ((startingBlockHash !== null && startingBlockHash.length !== 0) || !discoverAccountsComplete) {
-    discoverAddresses(loader, !discoverAccountsComplete, privPass, startingBlockHash)
-      .then(() => {
-        dispatch({ response: {}, complete: discoverAccountsComplete, type: DISCOVERADDRESS_SUCCESS });
-        if (!discoverAccountsComplete) {
-          const config = getWalletCfg(isTestNet(getState()), walletName);
-          config.delete("discoveraccounts");
-          config.set("discoveraccounts", true);
-          dispatch({ complete: true, type: UPDATEDISCOVERACCOUNTS });
-        } else {
-          dispatch(loadActiveDataFiltersAttempt());
-        }
-      })
-      .catch(error => {
-        if (error.message.includes("invalid passphrase") && error.message.includes("private key")) {
-          dispatch({ error, type: DISCOVERADDRESS_FAILED_INPUT });
-        } else {
-          dispatch({ error, type: DISCOVERADDRESS_FAILED });
-        }
-      });
-  } else {
-    dispatch(loadActiveDataFiltersAttempt());
-  }
-};
-
-export const FETCHMISSINGCFILTERS_ATTEMPT = "FETCHMISSINGCFILTERS_ATTEMPT";
-export const FETCHMISSINGCFILTERS_FAILED = "FETCHMISSINGCFILTERS_FAILED";
-export const FETCHMISSINGCFILTERS_SUCCESS = "FETCHMISSINGCFILTERS_SUCCESS";
-
-const fetchMissingCFiltersAttempt = () => (dispatch, getState) => {
-  const { loader } = getState().walletLoader;
-
-  dispatch({ request: {}, type: FETCHMISSINGCFILTERS_ATTEMPT });
-  return fetchMissingCFilters(loader)
-    .then(() => {
-      dispatch({ response: {}, type: FETCHMISSINGCFILTERS_SUCCESS });
-      dispatch(fetchHeadersAttempt());
-    })
-    .catch(error => dispatch({ error, type: FETCHMISSINGCFILTERS_FAILED }));
-};
-
-export const SUBSCRIBEBLOCKNTFNS_ATTEMPT = "SUBSCRIBEBLOCKNTFNS_ATTEMPT";
-export const SUBSCRIBEBLOCKNTFNS_FAILED = "SUBSCRIBEBLOCKNTFNS_FAILED";
-export const SUBSCRIBEBLOCKNTFNS_SUCCESS = "SUBSCRIBEBLOCKNTFNS_SUCCESS";
-
-const subscribeBlockAttempt = () => (dispatch, getState) => {
-  const { loader } = getState().walletLoader;
-
-  dispatch({ request: {}, type: SUBSCRIBEBLOCKNTFNS_ATTEMPT });
-  return subscribeToBlockNotifications(loader)
-    .then(() => {
-      dispatch({ response: {}, type: SUBSCRIBEBLOCKNTFNS_SUCCESS });
-      dispatch(fetchMissingCFiltersAttempt());
-    })
-    .catch(error => dispatch({ error, type: SUBSCRIBEBLOCKNTFNS_FAILED }));
-};
-
-export const FETCHHEADERS_ATTEMPT = "FETCHHEADER_ATTEMPT";
-export const FETCHHEADERS_FAILED = "FETCHHEADERS_FAILED";
-export const FETCHHEADERS_SUCCESS = "FETCHHEADERS_SUCCESS";
-export const FETCHHEADERS_PROGRESS = "FETCHHEADERS_PROGRESS";
-
-export const fetchHeadersAttempt = () => (dispatch, getState) => {
-  dispatch({ request: {}, type: FETCHHEADERS_ATTEMPT });
-  return fetchHeaders(getState().walletLoader.loader)
-    .then(response => {
-      dispatch({ response, type: FETCHHEADERS_SUCCESS });
-      dispatch(rescanPointAttempt());
-    })
-    .catch(error => dispatch({ error, type: FETCHHEADERS_FAILED }));
-};
 
 export const UPDATEDISCOVERACCOUNTS = "UPDATEDISCOVERACCOUNTS";
 export const CLEARSTAKEPOOLCONFIG = "CLEARSTAKEPOOLCONFIG";
@@ -601,17 +512,10 @@ export const RESCANPOINT_FAILED = "RESCANPOINT_FAILED";
 export const RESCANPOINT_SUCCESS = "RESCANPOINT_SUCCESS";
 
 export const rescanPointAttempt = () => (dispatch, getState) => {
-  const { discoverAccountsComplete } = getState().walletLoader;
   dispatch({ type: RESCANPOINT_ATTEMPT });
   return rescanPoint(getState().walletLoader.loader)
     .then((response) => {
       dispatch({ response, type: RESCANPOINT_SUCCESS });
-      if (discoverAccountsComplete) {
-        dispatch(discoverAddressAttempt());
-      } else {
-        // This is dispatched to indicate we should wait for user input to discover addresses.
-        dispatch({ response: {}, type: DISCOVERADDRESS_INPUT });
-      }
     })
     .catch(async error => {
       dispatch({ error, type: RESCANPOINT_FAILED });
