@@ -172,7 +172,7 @@ class GetStartedPage extends React.Component {
           syncFetchHeadersAttempt,
         }}/>;
     } else if (!isSPV && startStepIndex > 2) {
-      text = <T id="getStarted.header.syncSpv.meta" m="Syncing SPV Wallet" />;
+      text = <T id="getStarted.header.sync.meta" m="Syncing Wallet" />;
       if (syncFetchMissingCfiltersAttempt) {
         text = <T id="getStarted.header.fetchingMissing.meta" m="Fetching missing committed filters" />;
       } else if (syncFetchHeadersAttempt) {
