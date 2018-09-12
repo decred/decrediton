@@ -44,7 +44,6 @@ const mapStateToProps = selectorMap({
   createNewWallet: sel.createNewWallet,
   isWatchingOnly: sel.isWatchingOnly,
   masterPubKey: sel.masterPubKey,
-  fetchHeadersDone: sel.fetchHeadersDone,
   isSPV: sel.isSPV,
   syncInput: sel.syncInput,
 
@@ -91,7 +90,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   setCredentialsAppdataError: da.setCredentialsAppdataError,
   onGetAvailableWallets: da.getAvailableWallets,
   validateMasterPubKey: ca.validateMasterPubKey,
-  startWalletServices: ca.loadActiveDataFiltersAttempt,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);
