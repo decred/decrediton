@@ -323,6 +323,10 @@ export const GETBESTBLOCK_FAILED = "GETBESTBLOCK_FAILED";
 export const GETBESTBLOCK_SUCCESS = "GETBESTBLOCK_SUCCESS";
 
 export const getBestBlockHeightAttempt = (cb) => (dispatch, getState) => {
+  const { getBestBlockHeightRequest } = getState().grpc;
+  if (getBestBlockHeightRequest) {
+    return;
+  }
   dispatch({ type: GETBESTBLOCK_ATTEMPT });
   wallet.bestBlock(sel.walletService(getState()))
     .then(resp => {
