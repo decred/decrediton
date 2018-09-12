@@ -1,6 +1,6 @@
 // @flow
 import {
-  getLoader, startRpc, getWalletExists, createWallet, openWallet, closeWallet, discoverAddresses,
+  getLoader, getWalletExists, createWallet, openWallet, closeWallet, discoverAddresses,
   subscribeToBlockNotifications, fetchHeaders, getStakePoolInfo, fetchMissingCFilters,
   rescanPoint
 } from "wallet";
@@ -242,7 +242,7 @@ export const startRpcRequestFunc = (isRetry) =>
       return;
     }
     return new Promise(() => {
-      dispatch({ type: SYNC_ATTEMPT });
+      if (!isRetry) dispatch({ type: SYNC_ATTEMPT });
       const { loader } = getState().walletLoader;
       var rpcSyncCall = loader.rpcSync(request);
       rpcSyncCall.on("data", function(response) {
@@ -259,39 +259,25 @@ export const startRpcRequestFunc = (isRetry) =>
         status = status + "";
         if (status.indexOf("Cancelled") < 0) {
           console.error(status);
-          dispatch({ error: status, type: SYNC_FAILED });
+          if (isRetry) {
+            const { rpcRetryAttempts } = getState().walletLoader;
+            if (rpcRetryAttempts < MAX_RPC_RETRIES) {
+              dispatch({ rpcRetryAttempts: rpcRetryAttempts+1, type: STARTRPC_RETRY });
+              setTimeout(() => dispatch(startRpcRequestFunc(isRetry)), RPC_RETRY_DELAY);
+            } else {
+              dispatch({
+                error: `${status}.  You may need to edit ${getWalletPath(isTestNet(getState()), walletName)} and try again`,
+                type: STARTRPC_FAILED
+              });
+              dispatch({ error: status, type: SYNC_FAILED });
+            }
+          } else {
+            dispatch(startRpcRequestFunc(true));
+          }
         }
       });
     });
   };
-
-  /*
-    if (!isRetry) dispatch({ type: STARTRPC_ATTEMPT });
-    return startRpc(loader, daemonhost, rpcport, rpcuser, rpcpass, cert)
-      .then(() => {
-        dispatch({ type: STARTRPC_SUCCESS });
-        dispatch(subscribeBlockAttempt());
-      })
-      .catch(error => {
-        if (error.message.includes("RPC client already created")) {
-          dispatch({ type: STARTRPC_SUCCESS });
-          dispatch(subscribeBlockAttempt());
-        } else if (isRetry) {
-          const { rpcRetryAttempts } = getState().walletLoader;
-          if (rpcRetryAttempts < MAX_RPC_RETRIES) {
-            dispatch({ rpcRetryAttempts: rpcRetryAttempts+1, type: STARTRPC_RETRY });
-            setTimeout(() => dispatch(startRpcRequestFunc(isRetry)), RPC_RETRY_DELAY);
-          } else {
-            dispatch({
-              error: `${error}.  You may need to edit ${getWalletPath(isTestNet(getState()), walletName)} and try again`,
-              type: STARTRPC_FAILED
-            });
-          }
-        } else {
-          dispatch(startRpcRequestFunc(true));
-        }
-      });
-      */
 
 export const DISCOVERADDRESS_INPUT = "DISCOVERADDRESS_INPUT";
 export const DISCOVERADDRESS_FAILED_INPUT = "DISCOVERADDRESS_FAILED_INPUT";
