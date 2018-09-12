@@ -34,31 +34,53 @@ function getWalletServiceSuccess(walletService) {
   };
 }
 
-export function startWalletServices() {
-  return (dispatch, getState) => {
-    const { spvSynced } = getState().walletLoader;
-    if (!spvSynced) {
-      setTimeout(() => { dispatch(getTicketBuyerServiceAttempt()); }, 1000);
-    }
-    setTimeout(() => { dispatch(getNextAddressAttempt(0)); }, 1000);
-    setTimeout(() => { dispatch(getTicketPriceAttempt()); }, 1000);
-    setTimeout(() => { dispatch(getPingAttempt()); }, 1000);
-    setTimeout(() => { dispatch(getNetworkAttempt()); }, 1000);
-    setTimeout(() => { dispatch(transactionNtfnsStart()); }, 1000);
-    setTimeout(() => { dispatch(accountNtfnsStart()); }, 1000);
-    setTimeout(() => { dispatch(updateStakepoolPurchaseInformation()); }, 1000);
-    setTimeout(() => { dispatch(getDecodeMessageServiceAttempt()); }, 1000);
-    setTimeout(() => { dispatch(getVotingServiceAttempt()); }, 1000);
-    setTimeout(() => { dispatch(getAgendaServiceAttempt()); }, 1000);
-    setTimeout(() => { dispatch(getStakepoolStats()); }, 1000);
+export const STARTWALLETSERVICE_ATTEMPT = "STARTWALLETSERVICE_ATTEMPT";
+export const STARTWALLETSERVICE_FAILED = "STARTWALLETSERVICE_FAILED";
+export const STARTWALLETSERVICE_SUCCESS = "STARTWALLETSERVICE_SUCCESS";
 
-    var goHomeCb = () => {
-      setTimeout(() => { dispatch(pushHistory("/home")); }, 1000);
-      setTimeout(() => { dispatch(showSidebar()); }, 1000);
-      setTimeout(() => { dispatch(showSidebarMenu()); }, 1000);
-    };
-    dispatch(getStartupWalletInfo()).then(goHomeCb);
-  };
+const startWalletServicesTrigger = () => (dispatch, getState) => new Promise((resolve,reject) => {
+  try {
+    setTimeout( async () => {
+      const { spvSynced } = getState().walletLoader;
+      if (!spvSynced) {
+        dispatch(getTicketBuyerServiceAttempt());
+      }
+      await dispatch(getNextAddressAttempt(0));
+      await dispatch(getTicketPriceAttempt());
+      await dispatch(getPingAttempt());
+      await dispatch(getNetworkAttempt());
+      await dispatch(transactionNtfnsStart());
+      await dispatch(accountNtfnsStart());
+      await dispatch(updateStakepoolPurchaseInformation());
+      await dispatch(getDecodeMessageServiceAttempt());
+      await dispatch(getVotingServiceAttempt());
+      await dispatch(getAgendaServiceAttempt());
+      await dispatch(getStakepoolStats());
+
+      var goHomeCb = () => {
+        dispatch(pushHistory("/home"));
+        dispatch(showSidebar());
+        dispatch(showSidebarMenu());
+      };
+      await dispatch(getStartupWalletInfo()).then(goHomeCb);
+      resolve();
+    }, 1000);
+  } catch (err) {
+    reject (err);
+  }
+});
+
+export const startWalletServices = () => (dispatch, getState) => {
+ const { startWalletServiceAttempt } = getState().grpc;
+  if( startWalletServiceAttempt ) {
+    return;
+  }
+  dispatch({ type: STARTWALLETSERVICE_ATTEMPT });
+  dispatch(startWalletServicesTrigger()).then(() => {
+    dispatch({ type: STARTWALLETSERVICE_SUCCESS });
+  }).catch(error => {
+    dispatch({ type: STARTWALLETSERVICE_FAILED, error });
+  })
 }
 
 export const GETSTARTUPWALLETINFO_ATTEMPT = "GETSTARTUPWALLETINFO_ATTEMPT";
