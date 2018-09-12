@@ -64,8 +64,10 @@ goog.exportSymbol('proto.walletrpc.DecodedTransaction.Output', null, global);
 goog.exportSymbol('proto.walletrpc.DecodedTransaction.Output.ScriptClass', null, global);
 goog.exportSymbol('proto.walletrpc.DiscoverAddressesRequest', null, global);
 goog.exportSymbol('proto.walletrpc.DiscoverAddressesResponse', null, global);
+goog.exportSymbol('proto.walletrpc.FetchHeadersNotification', null, global);
 goog.exportSymbol('proto.walletrpc.FetchHeadersRequest', null, global);
 goog.exportSymbol('proto.walletrpc.FetchHeadersResponse', null, global);
+goog.exportSymbol('proto.walletrpc.FetchMissingCFiltersNotification', null, global);
 goog.exportSymbol('proto.walletrpc.FetchMissingCFiltersRequest', null, global);
 goog.exportSymbol('proto.walletrpc.FetchMissingCFiltersResponse', null, global);
 goog.exportSymbol('proto.walletrpc.FundTransactionRequest', null, global);
@@ -100,6 +102,7 @@ goog.exportSymbol('proto.walletrpc.NextAddressRequest.Kind', null, global);
 goog.exportSymbol('proto.walletrpc.NextAddressResponse', null, global);
 goog.exportSymbol('proto.walletrpc.OpenWalletRequest', null, global);
 goog.exportSymbol('proto.walletrpc.OpenWalletResponse', null, global);
+goog.exportSymbol('proto.walletrpc.PeerNotification', null, global);
 goog.exportSymbol('proto.walletrpc.PingRequest', null, global);
 goog.exportSymbol('proto.walletrpc.PingResponse', null, global);
 goog.exportSymbol('proto.walletrpc.PublishTransactionRequest', null, global);
@@ -112,6 +115,7 @@ goog.exportSymbol('proto.walletrpc.RenameAccountRequest', null, global);
 goog.exportSymbol('proto.walletrpc.RenameAccountResponse', null, global);
 goog.exportSymbol('proto.walletrpc.RescanPointRequest', null, global);
 goog.exportSymbol('proto.walletrpc.RescanPointResponse', null, global);
+goog.exportSymbol('proto.walletrpc.RescanProgressNotification', null, global);
 goog.exportSymbol('proto.walletrpc.RescanRequest', null, global);
 goog.exportSymbol('proto.walletrpc.RescanResponse', null, global);
 goog.exportSymbol('proto.walletrpc.RevokeTicketsRequest', null, global);
@@ -163,6 +167,7 @@ goog.exportSymbol('proto.walletrpc.StopAutoBuyerRequest', null, global);
 goog.exportSymbol('proto.walletrpc.StopAutoBuyerResponse', null, global);
 goog.exportSymbol('proto.walletrpc.SubscribeToBlockNotificationsRequest', null, global);
 goog.exportSymbol('proto.walletrpc.SubscribeToBlockNotificationsResponse', null, global);
+goog.exportSymbol('proto.walletrpc.SyncNotificationType', null, global);
 goog.exportSymbol('proto.walletrpc.TicketBuyerConfigRequest', null, global);
 goog.exportSymbol('proto.walletrpc.TicketBuyerConfigResponse', null, global);
 goog.exportSymbol('proto.walletrpc.TicketPriceRequest', null, global);
@@ -21988,6 +21993,655 @@ proto.walletrpc.FetchHeadersResponse.prototype.setMainChainTipBlockHeight = func
  * @extends {jspb.Message}
  * @constructor
  */
+proto.walletrpc.FetchHeadersNotification = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.walletrpc.FetchHeadersNotification, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.walletrpc.FetchHeadersNotification.displayName = 'proto.walletrpc.FetchHeadersNotification';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.walletrpc.FetchHeadersNotification.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.FetchHeadersNotification.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.walletrpc.FetchHeadersNotification} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.FetchHeadersNotification.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    fetchedHeadersCount: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    lastHeaderTime: jspb.Message.getFieldWithDefault(msg, 2, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.walletrpc.FetchHeadersNotification}
+ */
+proto.walletrpc.FetchHeadersNotification.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.walletrpc.FetchHeadersNotification;
+  return proto.walletrpc.FetchHeadersNotification.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.walletrpc.FetchHeadersNotification} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.walletrpc.FetchHeadersNotification}
+ */
+proto.walletrpc.FetchHeadersNotification.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setFetchedHeadersCount(value);
+      break;
+    case 2:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setLastHeaderTime(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.FetchHeadersNotification.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.walletrpc.FetchHeadersNotification.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.walletrpc.FetchHeadersNotification} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.FetchHeadersNotification.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getFetchedHeadersCount();
+  if (f !== 0) {
+    writer.writeInt32(
+      1,
+      f
+    );
+  }
+  f = message.getLastHeaderTime();
+  if (f !== 0) {
+    writer.writeInt64(
+      2,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional int32 fetched_headers_count = 1;
+ * @return {number}
+ */
+proto.walletrpc.FetchHeadersNotification.prototype.getFetchedHeadersCount = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.FetchHeadersNotification.prototype.setFetchedHeadersCount = function(value) {
+  jspb.Message.setField(this, 1, value);
+};
+
+
+/**
+ * optional int64 last_header_time = 2;
+ * @return {number}
+ */
+proto.walletrpc.FetchHeadersNotification.prototype.getLastHeaderTime = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.FetchHeadersNotification.prototype.setLastHeaderTime = function(value) {
+  jspb.Message.setField(this, 2, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.walletrpc.FetchMissingCFiltersNotification = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.walletrpc.FetchMissingCFiltersNotification, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.walletrpc.FetchMissingCFiltersNotification.displayName = 'proto.walletrpc.FetchMissingCFiltersNotification';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.walletrpc.FetchMissingCFiltersNotification.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.FetchMissingCFiltersNotification.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.walletrpc.FetchMissingCFiltersNotification} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.FetchMissingCFiltersNotification.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    fetchedCfiltersStartHeight: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    fetchedCfiltersEndHeight: jspb.Message.getFieldWithDefault(msg, 2, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.walletrpc.FetchMissingCFiltersNotification}
+ */
+proto.walletrpc.FetchMissingCFiltersNotification.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.walletrpc.FetchMissingCFiltersNotification;
+  return proto.walletrpc.FetchMissingCFiltersNotification.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.walletrpc.FetchMissingCFiltersNotification} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.walletrpc.FetchMissingCFiltersNotification}
+ */
+proto.walletrpc.FetchMissingCFiltersNotification.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setFetchedCfiltersStartHeight(value);
+      break;
+    case 2:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setFetchedCfiltersEndHeight(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.FetchMissingCFiltersNotification.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.walletrpc.FetchMissingCFiltersNotification.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.walletrpc.FetchMissingCFiltersNotification} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.FetchMissingCFiltersNotification.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getFetchedCfiltersStartHeight();
+  if (f !== 0) {
+    writer.writeInt32(
+      1,
+      f
+    );
+  }
+  f = message.getFetchedCfiltersEndHeight();
+  if (f !== 0) {
+    writer.writeInt32(
+      2,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional int32 fetched_cfilters_start_height = 1;
+ * @return {number}
+ */
+proto.walletrpc.FetchMissingCFiltersNotification.prototype.getFetchedCfiltersStartHeight = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.FetchMissingCFiltersNotification.prototype.setFetchedCfiltersStartHeight = function(value) {
+  jspb.Message.setField(this, 1, value);
+};
+
+
+/**
+ * optional int32 fetched_cfilters_end_height = 2;
+ * @return {number}
+ */
+proto.walletrpc.FetchMissingCFiltersNotification.prototype.getFetchedCfiltersEndHeight = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.FetchMissingCFiltersNotification.prototype.setFetchedCfiltersEndHeight = function(value) {
+  jspb.Message.setField(this, 2, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.walletrpc.RescanProgressNotification = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.walletrpc.RescanProgressNotification, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.walletrpc.RescanProgressNotification.displayName = 'proto.walletrpc.RescanProgressNotification';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.walletrpc.RescanProgressNotification.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.RescanProgressNotification.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.walletrpc.RescanProgressNotification} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.RescanProgressNotification.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    rescannedThrough: jspb.Message.getFieldWithDefault(msg, 1, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.walletrpc.RescanProgressNotification}
+ */
+proto.walletrpc.RescanProgressNotification.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.walletrpc.RescanProgressNotification;
+  return proto.walletrpc.RescanProgressNotification.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.walletrpc.RescanProgressNotification} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.walletrpc.RescanProgressNotification}
+ */
+proto.walletrpc.RescanProgressNotification.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setRescannedThrough(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.RescanProgressNotification.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.walletrpc.RescanProgressNotification.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.walletrpc.RescanProgressNotification} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.RescanProgressNotification.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getRescannedThrough();
+  if (f !== 0) {
+    writer.writeInt32(
+      1,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional int32 rescanned_through = 1;
+ * @return {number}
+ */
+proto.walletrpc.RescanProgressNotification.prototype.getRescannedThrough = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.RescanProgressNotification.prototype.setRescannedThrough = function(value) {
+  jspb.Message.setField(this, 1, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.walletrpc.PeerNotification = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.walletrpc.PeerNotification, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.walletrpc.PeerNotification.displayName = 'proto.walletrpc.PeerNotification';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.walletrpc.PeerNotification.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.PeerNotification.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.walletrpc.PeerNotification} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.PeerNotification.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    peerCount: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    address: jspb.Message.getFieldWithDefault(msg, 2, "")
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.walletrpc.PeerNotification}
+ */
+proto.walletrpc.PeerNotification.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.walletrpc.PeerNotification;
+  return proto.walletrpc.PeerNotification.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.walletrpc.PeerNotification} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.walletrpc.PeerNotification}
+ */
+proto.walletrpc.PeerNotification.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setPeerCount(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setAddress(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.PeerNotification.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.walletrpc.PeerNotification.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.walletrpc.PeerNotification} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.PeerNotification.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getPeerCount();
+  if (f !== 0) {
+    writer.writeInt32(
+      1,
+      f
+    );
+  }
+  f = message.getAddress();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional int32 peer_count = 1;
+ * @return {number}
+ */
+proto.walletrpc.PeerNotification.prototype.getPeerCount = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.PeerNotification.prototype.setPeerCount = function(value) {
+  jspb.Message.setField(this, 1, value);
+};
+
+
+/**
+ * optional string address = 2;
+ * @return {string}
+ */
+proto.walletrpc.PeerNotification.prototype.getAddress = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.walletrpc.PeerNotification.prototype.setAddress = function(value) {
+  jspb.Message.setField(this, 2, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
 proto.walletrpc.SpvSyncRequest = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, proto.walletrpc.SpvSyncRequest.repeatedFields_, null);
 };
@@ -22267,7 +22921,12 @@ proto.walletrpc.SpvSyncResponse.prototype.toObject = function(opt_includeInstanc
  */
 proto.walletrpc.SpvSyncResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    synced: jspb.Message.getFieldWithDefault(msg, 1, false)
+    synced: jspb.Message.getFieldWithDefault(msg, 1, false),
+    notificationType: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    fetchHeaders: (f = msg.getFetchHeaders()) && proto.walletrpc.FetchHeadersNotification.toObject(includeInstance, f),
+    fetchMissingCfilters: (f = msg.getFetchMissingCfilters()) && proto.walletrpc.FetchMissingCFiltersNotification.toObject(includeInstance, f),
+    rescanProgress: (f = msg.getRescanProgress()) && proto.walletrpc.RescanProgressNotification.toObject(includeInstance, f),
+    peerInformation: (f = msg.getPeerInformation()) && proto.walletrpc.PeerNotification.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -22308,6 +22967,30 @@ proto.walletrpc.SpvSyncResponse.deserializeBinaryFromReader = function(msg, read
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setSynced(value);
       break;
+    case 2:
+      var value = /** @type {!proto.walletrpc.SyncNotificationType} */ (reader.readEnum());
+      msg.setNotificationType(value);
+      break;
+    case 3:
+      var value = new proto.walletrpc.FetchHeadersNotification;
+      reader.readMessage(value,proto.walletrpc.FetchHeadersNotification.deserializeBinaryFromReader);
+      msg.setFetchHeaders(value);
+      break;
+    case 4:
+      var value = new proto.walletrpc.FetchMissingCFiltersNotification;
+      reader.readMessage(value,proto.walletrpc.FetchMissingCFiltersNotification.deserializeBinaryFromReader);
+      msg.setFetchMissingCfilters(value);
+      break;
+    case 5:
+      var value = new proto.walletrpc.RescanProgressNotification;
+      reader.readMessage(value,proto.walletrpc.RescanProgressNotification.deserializeBinaryFromReader);
+      msg.setRescanProgress(value);
+      break;
+    case 6:
+      var value = new proto.walletrpc.PeerNotification;
+      reader.readMessage(value,proto.walletrpc.PeerNotification.deserializeBinaryFromReader);
+      msg.setPeerInformation(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -22344,6 +23027,45 @@ proto.walletrpc.SpvSyncResponse.serializeBinaryToWriter = function(message, writ
       f
     );
   }
+  f = message.getNotificationType();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      2,
+      f
+    );
+  }
+  f = message.getFetchHeaders();
+  if (f != null) {
+    writer.writeMessage(
+      3,
+      f,
+      proto.walletrpc.FetchHeadersNotification.serializeBinaryToWriter
+    );
+  }
+  f = message.getFetchMissingCfilters();
+  if (f != null) {
+    writer.writeMessage(
+      4,
+      f,
+      proto.walletrpc.FetchMissingCFiltersNotification.serializeBinaryToWriter
+    );
+  }
+  f = message.getRescanProgress();
+  if (f != null) {
+    writer.writeMessage(
+      5,
+      f,
+      proto.walletrpc.RescanProgressNotification.serializeBinaryToWriter
+    );
+  }
+  f = message.getPeerInformation();
+  if (f != null) {
+    writer.writeMessage(
+      6,
+      f,
+      proto.walletrpc.PeerNotification.serializeBinaryToWriter
+    );
+  }
 };
 
 
@@ -22361,6 +23083,141 @@ proto.walletrpc.SpvSyncResponse.prototype.getSynced = function() {
 /** @param {boolean} value */
 proto.walletrpc.SpvSyncResponse.prototype.setSynced = function(value) {
   jspb.Message.setField(this, 1, value);
+};
+
+
+/**
+ * optional SyncNotificationType notification_type = 2;
+ * @return {!proto.walletrpc.SyncNotificationType}
+ */
+proto.walletrpc.SpvSyncResponse.prototype.getNotificationType = function() {
+  return /** @type {!proto.walletrpc.SyncNotificationType} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/** @param {!proto.walletrpc.SyncNotificationType} value */
+proto.walletrpc.SpvSyncResponse.prototype.setNotificationType = function(value) {
+  jspb.Message.setField(this, 2, value);
+};
+
+
+/**
+ * optional FetchHeadersNotification fetch_headers = 3;
+ * @return {?proto.walletrpc.FetchHeadersNotification}
+ */
+proto.walletrpc.SpvSyncResponse.prototype.getFetchHeaders = function() {
+  return /** @type{?proto.walletrpc.FetchHeadersNotification} */ (
+    jspb.Message.getWrapperField(this, proto.walletrpc.FetchHeadersNotification, 3));
+};
+
+
+/** @param {?proto.walletrpc.FetchHeadersNotification|undefined} value */
+proto.walletrpc.SpvSyncResponse.prototype.setFetchHeaders = function(value) {
+  jspb.Message.setWrapperField(this, 3, value);
+};
+
+
+proto.walletrpc.SpvSyncResponse.prototype.clearFetchHeaders = function() {
+  this.setFetchHeaders(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.walletrpc.SpvSyncResponse.prototype.hasFetchHeaders = function() {
+  return jspb.Message.getField(this, 3) != null;
+};
+
+
+/**
+ * optional FetchMissingCFiltersNotification fetch_missing_cfilters = 4;
+ * @return {?proto.walletrpc.FetchMissingCFiltersNotification}
+ */
+proto.walletrpc.SpvSyncResponse.prototype.getFetchMissingCfilters = function() {
+  return /** @type{?proto.walletrpc.FetchMissingCFiltersNotification} */ (
+    jspb.Message.getWrapperField(this, proto.walletrpc.FetchMissingCFiltersNotification, 4));
+};
+
+
+/** @param {?proto.walletrpc.FetchMissingCFiltersNotification|undefined} value */
+proto.walletrpc.SpvSyncResponse.prototype.setFetchMissingCfilters = function(value) {
+  jspb.Message.setWrapperField(this, 4, value);
+};
+
+
+proto.walletrpc.SpvSyncResponse.prototype.clearFetchMissingCfilters = function() {
+  this.setFetchMissingCfilters(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.walletrpc.SpvSyncResponse.prototype.hasFetchMissingCfilters = function() {
+  return jspb.Message.getField(this, 4) != null;
+};
+
+
+/**
+ * optional RescanProgressNotification rescan_progress = 5;
+ * @return {?proto.walletrpc.RescanProgressNotification}
+ */
+proto.walletrpc.SpvSyncResponse.prototype.getRescanProgress = function() {
+  return /** @type{?proto.walletrpc.RescanProgressNotification} */ (
+    jspb.Message.getWrapperField(this, proto.walletrpc.RescanProgressNotification, 5));
+};
+
+
+/** @param {?proto.walletrpc.RescanProgressNotification|undefined} value */
+proto.walletrpc.SpvSyncResponse.prototype.setRescanProgress = function(value) {
+  jspb.Message.setWrapperField(this, 5, value);
+};
+
+
+proto.walletrpc.SpvSyncResponse.prototype.clearRescanProgress = function() {
+  this.setRescanProgress(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.walletrpc.SpvSyncResponse.prototype.hasRescanProgress = function() {
+  return jspb.Message.getField(this, 5) != null;
+};
+
+
+/**
+ * optional PeerNotification peer_information = 6;
+ * @return {?proto.walletrpc.PeerNotification}
+ */
+proto.walletrpc.SpvSyncResponse.prototype.getPeerInformation = function() {
+  return /** @type{?proto.walletrpc.PeerNotification} */ (
+    jspb.Message.getWrapperField(this, proto.walletrpc.PeerNotification, 6));
+};
+
+
+/** @param {?proto.walletrpc.PeerNotification|undefined} value */
+proto.walletrpc.SpvSyncResponse.prototype.setPeerInformation = function(value) {
+  jspb.Message.setWrapperField(this, 6, value);
+};
+
+
+proto.walletrpc.SpvSyncResponse.prototype.clearPeerInformation = function() {
+  this.setPeerInformation(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.walletrpc.SpvSyncResponse.prototype.hasPeerInformation = function() {
+  return jspb.Message.getField(this, 6) != null;
 };
 
 
@@ -32736,5 +33593,26 @@ proto.walletrpc.BestBlockResponse.prototype.setHash = function(value) {
   jspb.Message.setField(this, 2, value);
 };
 
+
+/**
+ * @enum {number}
+ */
+proto.walletrpc.SyncNotificationType = {
+  SYNCED: 0,
+  UNSYNCED: 1,
+  PEER_CONNECTED: 2,
+  PEER_DISCONNECTED: 3,
+  FETCHED_MISSING_CFILTERS_STARTED: 4,
+  FETCHED_MISSING_CFILTERS_PROGRESS: 5,
+  FETCHED_MISSING_CFILTERS_FINISHED: 6,
+  FETCHED_HEADERS_STARTED: 7,
+  FETCHED_HEADERS_PROGRESS: 8,
+  FETCHED_HEADERS_FINISHED: 9,
+  DISCOVER_ADDRESSES_STARTED: 10,
+  DISCOVER_ADDRESSES_FINISHED: 11,
+  RESCAN_STARTED: 12,
+  RESCAN_PROGRESS: 13,
+  RESCAN_FINISHED: 14
+};
 
 goog.object.extend(exports, proto.walletrpc);

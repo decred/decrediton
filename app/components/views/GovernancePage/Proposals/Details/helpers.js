@@ -105,8 +105,7 @@ export const TimeValue = ({ timestamp, tsDate }) => (
 
 // This changes links to never open. Debatable whether we want to
 // allow proposals to link somewhere directly from decrediton.
-const renderInternalProposalLink = ({ href, children }) => {
-  console.log("rendering internal link", href);
+const renderInternalProposalLink = ({ children }) => {
   return <a onClick={() => {} } href="#">{children}</a>;
 };
 

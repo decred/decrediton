@@ -208,6 +208,10 @@ var initialState = {
     curBlocks: 0,
     stepIndex: 0,
     maxWalletCount: globalCfg.get("max_wallet_count"),
+
+    synced: false,
+    syncFetchHeadersComplete: false,
+
     // Loader
     getLoaderRequestAttempt: false,
     loader: null,
@@ -364,6 +368,7 @@ var initialState = {
     fullDailyBalances: Array(),
     voteTime: null,
     getMyTicketsStatsRequest: false,
+    getStartupStatsAttempt: false,
   },
   governance: {
     politeiaBetaEnabled: globalCfg.get("politeia_beta"), // TODO: remove once politeia hits production

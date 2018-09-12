@@ -1,6 +1,6 @@
 
 import {
-  GETSTARTUPSTATS_SUCCESS,
+  GETSTARTUPSTATS_ATTEMPT, GETSTARTUPSTATS_FAILED, GETSTARTUPSTATS_SUCCESS,
   GETMYTICKETSSTATS_ATTEMPT, GETMYTICKETSSTATS_SUCCESS, GETMYTICKETSSTATS_FAILED
 } from "actions/StatisticsActions";
 import {
@@ -9,10 +9,21 @@ import {
 
 export default function statistics(state = {}, action) {
   switch (action.type) {
+  case GETSTARTUPSTATS_ATTEMPT:
+    return {
+      ...state,
+      getStartupStatsAttempt: true,
+    };
+  case GETSTARTUPSTATS_FAILED:
+    return {
+      ...state,
+      getStartupStatsAttempt: false,
+    };
   case GETSTARTUPSTATS_SUCCESS:
     return {
       ...state,
-      dailyBalances: action.dailyBalances
+      dailyBalances: action.dailyBalances,
+      getStartupStatsAttempt: false
     };
   case GETMYTICKETSSTATS_ATTEMPT:
     return {

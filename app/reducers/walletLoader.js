@@ -14,7 +14,12 @@ import {
   GETWALLETSEEDSVC_ATTEMPT, GETWALLETSEEDSVC_SUCCESS,
   FETCHMISSINGCFILTERS_ATTEMPT, FETCHMISSINGCFILTERS_FAILED, FETCHMISSINGCFILTERS_SUCCESS,
   RESCANPOINT_ATTEMPT, RESCANPOINT_FAILED, RESCANPOINT_SUCCESS,
-  SPVSYNC_SUCCESS, SPVSYNC_UPDATE, SPVSYNC_FAILED, SPVSYNC_ATTEMPT, SPVSYNC_INPUT
+  SPVSYNC_SUCCESS, SPVSYNC_UPDATE, SPVSYNC_FAILED, SPVSYNC_ATTEMPT, SPVSYNC_INPUT,
+  SYNC_SYNCED, SYNC_UNSYNCED, SYNC_FETCHED_HEADERS_STARTED, SYNC_FETCHED_HEADERS_PROGRESS, SYNC_FETCHED_HEADERS_FINISHED,
+  SYNC_PEER_CONNECTED, SYNC_PEER_DISCONNECTED, SYNC_FETCHED_MISSING_CFILTERS_STARTED,
+  SYNC_FETCHED_MISSING_CFILTERS_PROGRESS, SYNC_FETCHED_MISSING_CFILTERS_FINISHED,
+  SYNC_DISCOVER_ADDRESSES_STARTED, SYNC_DISCOVER_ADDRESSES_FINISHED,
+  SYNC_RESCAN_STARTED, SYNC_RESCAN_PROGRESS, SYNC_RESCAN_FINISHED,
 } from "actions/WalletLoaderActions";
 import {
   WALLETCREATED
@@ -350,25 +355,88 @@ export default function walletLoader(state = {}, action) {
       spvInput: false,
       spvSyncAttemptRequest: true,
       spvSyncError: null,
-      spvSynced: false,
+      synced: false,
     };
   case SPVSYNC_FAILED:
     return { ...state,
       spvInput: true,
       spvSyncAttemptRequest: false,
-      spvSynced: false,
+      synced: false,
     };
   case SPVSYNC_UPDATE:
     return { ...state,
       spvSyncError: null,
-      spvSynced: action.synced,
       syncCall: action.syncCall,
     };
   case SPVSYNC_SUCCESS:
     return { ...state,
       spvSyncAttemptRequest: false,
       spvSyncError: null,
-      spvSynced: false,
+      synced: false,
+    };
+  case SYNC_SYNCED:
+    return { ...state,
+      synced: true,
+    };
+  case SYNC_UNSYNCED:
+    return { ...state,
+      synced: false,
+    };
+  case SYNC_PEER_CONNECTED:
+    return { ...state,
+      peerCount: action.peerCount,
+    };
+  case SYNC_PEER_DISCONNECTED:
+    return { ...state,
+      peerCount: action.peerCount,
+    };
+  case SYNC_FETCHED_MISSING_CFILTERS_STARTED:
+    return { ...state,
+      syncFetchMissingCfiltersAttempt: true,
+    };
+  case SYNC_FETCHED_MISSING_CFILTERS_PROGRESS:
+    return { ...state,
+      syncFetchMissingCfiltersStart: action.cFiltersStart,
+      syncFetchMissingCfiltersEnd: action.cFiltersEnd,
+    };
+  case SYNC_FETCHED_MISSING_CFILTERS_FINISHED:
+    return { ...state,
+      syncFetchMissingCfiltersAttempt: false,
+    };
+  case SYNC_FETCHED_HEADERS_STARTED:
+    return { ...state,
+      syncFetchTimeStart: action.fetchTimeStart,
+      syncFetchHeadersAttempt: true,
+    };
+  case SYNC_FETCHED_HEADERS_PROGRESS:
+    return { ...state,
+      syncFetchHeadersCount: action.fetchHeadersCount,
+      syncLastFetchedHeaderTime: action.lastFetchedHeaderTime,
+    };
+  case SYNC_FETCHED_HEADERS_FINISHED:
+    return { ...state,
+      syncFetchHeadersAttempt: false,
+      syncFetchHeadersComplete: true,
+    };
+  case SYNC_DISCOVER_ADDRESSES_STARTED:
+    return { ...state,
+      syncDiscoverAddressesAttempt: true,
+    };
+  case SYNC_DISCOVER_ADDRESSES_FINISHED:
+    return { ...state,
+      syncDiscoverAddressesAttempt: false,
+    };
+  case SYNC_RESCAN_STARTED:
+    return { ...state,
+      syncRescanAttempt: true,
+    };
+  case SYNC_RESCAN_PROGRESS:
+    return { ...state,
+      syncRescanProgress: action.rescannedThrough,
+    };
+  case SYNC_RESCAN_FINISHED:
+    return { ...state,
+      syncRescanAttempt: false,
     };
   default:
     return state;
