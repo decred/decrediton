@@ -20,7 +20,8 @@ import {
   SETVOTECHOICES_ATTEMPT, SETVOTECHOICES_FAILED, SETVOTECHOICES_SUCCESS,
   MATURINGHEIGHTS_CHANGED, GETTRANSACTIONSSINCELASTOPPENED_ATTEMPT, GETTRANSACTIONSSINCELASTOPPENED_FAILED,
   GETBESTBLOCK_ATTEMPT, GETBESTBLOCK_FAILED, GETBESTBLOCK_SUCCESS,
-  GETTRANSACTIONSSINCELASTOPPENED_SUCCESS,
+  GETTRANSACTIONSSINCELASTOPPENED_SUCCESS, STARTWALLETSERVICE_ATTEMPT,
+  STARTWALLETSERVICE_FAILED, STARTWALLETSERVICE_SUCCESS,
 } from "../actions/ClientActions";
 import { STARTUPBLOCK, WALLETREADY } from "../actions/DaemonActions";
 import { NEWBLOCKCONNECTED } from "../actions/NotificationActions";
@@ -573,6 +574,27 @@ export default function grpc(state = {}, action) {
       transactionsSinceLastOpened: null,
       votingService: null,
       walletService: null,
+    };
+  case STARTWALLETSERVICE_ATTEMPT:
+    return {
+      ...state,
+      startWalletServiceAttempt: true,
+      startWalletServiceSuccess: null,
+      startWalletServiceFailed: null,
+    };
+  case STARTWALLETSERVICE_FAILED:
+    return {
+      ... state,
+      startWalletServiceAttempt: false,
+      startWalletServiceFailed: action.error,
+      startWalletServiceSuccess: null,
+    };
+  case STARTWALLETSERVICE_SUCCESS:
+    return {
+      ... state,
+      startWalletServiceAttempt: false,
+      startWalletServiceFailed: null,
+      startWalletServiceSuccess: action.success,
     };
   default:
     return state;
