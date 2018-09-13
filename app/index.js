@@ -84,7 +84,7 @@ var initialState = {
   },
   version: {
     // RequiredVersion
-    requiredVersion: "5.1.0",
+    requiredVersion: "5.3.0",
     versionInvalid: false,
     versionInvalidError: null,
     // VersionService
