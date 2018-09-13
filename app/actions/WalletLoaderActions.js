@@ -441,6 +441,11 @@ export const SYNC_RESCAN_PROGRESS = "SYNC_RESCAN_PROGRESS";
 export const SYNC_RESCAN_FINISHED = "SYNC_RESCAN_FINISHED";
 
 export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
+  const { spvSyncAttemptRequest } =  getState().walletLoader;
+  if (spvSyncAttemptRequest) {
+    return;
+  }
+  dispatch({ type: SPVSYNC_ATTEMPT });
   const { discoverAccountsComplete, spvConnect } = getState().walletLoader;
   var request = new SpvSyncRequest();
   for (var i = 0; spvConnect && i < spvConnect.length; i++) {
@@ -454,7 +459,6 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
     return;
   }
   return new Promise(() => {
-    dispatch({ type: SPVSYNC_ATTEMPT });
     const { loader } = getState().walletLoader;
     var spvSyncCall = loader.spvSync(request);
     spvSyncCall.on("data", function(response) {
