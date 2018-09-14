@@ -32,4 +32,8 @@ struct pipe {
 
 result<pipe> create_pipe(pipe_direction direction);
 
+int close_pipe_end(uintptr_t end_handle);
+
+result<pipe> open_named_pipe(const char *pipe_name);
+
 } // namespace pipe_wrapper

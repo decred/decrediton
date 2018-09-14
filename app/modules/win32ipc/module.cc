@@ -6,7 +6,7 @@
 
 void CreatePipe(v8::FunctionCallbackInfo<v8::Value> const& args) {
     auto isolate = v8::Isolate::GetCurrent();
-    
+
     if (args.Length() != 1) {
         isolate->ThrowException(v8::Exception::TypeError(
             v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
@@ -56,10 +56,71 @@ void CreatePipe(v8::FunctionCallbackInfo<v8::Value> const& args) {
     args.GetReturnValue().Set(obj);
 }
 
+void OpenNamedPipe(v8::FunctionCallbackInfo<v8::Value> const& args) {
+    auto isolate = v8::Isolate::GetCurrent();
+
+	if (args.Length() != 1) {
+        isolate->ThrowException(v8::Exception::TypeError(
+            v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+        return;
+    }
+    if (!args[0]->IsString()) {
+        isolate->ThrowException(v8::Exception::TypeError(
+            v8::String::NewFromUtf8(isolate, "Argument type error")));
+        return;
+    }
+
+	v8::String::Utf8Value const arg0(args[0]->ToString());
+
+	auto const pipe_result = pipe_wrapper::open_named_pipe(*arg0);
+    if (pipe_result.err_msg != nullptr) {
+        isolate->ThrowException(v8::Exception::Error(
+            v8::String::NewFromUtf8(isolate, pipe_result.err_msg)));
+        return;
+    }
+
+
+	auto& pipe = pipe_result.value;
+
+	auto obj = v8::Object::New(isolate);
+    obj->Set(v8::String::NewFromUtf8(isolate, "readEnd"),
+        v8::Number::New(isolate, (double)pipe.read_end_handle));
+    obj->Set(v8::String::NewFromUtf8(isolate, "writeEnd"),
+        v8::Number::New(isolate, (double)pipe.write_end_handle));
+	args.GetReturnValue().Set(obj);
+}
+
+
+void ClosePipeEnd(v8::FunctionCallbackInfo<v8::Value> const& args) {
+    auto isolate = v8::Isolate::GetCurrent();
+
+    if (args.Length() != 1) {
+        isolate->ThrowException(v8::Exception::TypeError(
+            v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+        return;
+    }
+    if (!args[0]->IsNumber()) {
+        isolate->ThrowException(v8::Exception::TypeError(
+            v8::String::NewFromUtf8(isolate, "Argument type error")));
+        return;
+    }
+
+
+	uintptr_t end_handle = (uintptr_t)args[0]->Int32Value();
+	int res = pipe_wrapper::close_pipe_end(end_handle);
+
+	auto obj = v8::Object::New(isolate);
+	args.GetReturnValue().Set(obj);
+}
+
 void Init(v8::Handle<v8::Object> exports) {
     auto isolate = v8::Isolate::GetCurrent();
     exports->Set(v8::String::NewFromUtf8(isolate, "createPipe"),
         v8::FunctionTemplate::New(isolate, CreatePipe)->GetFunction());
+    exports->Set(v8::String::NewFromUtf8(isolate, "openNamedPipe"),
+          v8::FunctionTemplate::New(isolate, OpenNamedPipe)->GetFunction());
+    exports->Set(v8::String::NewFromUtf8(isolate, "closePipeEnd"),
+          v8::FunctionTemplate::New(isolate, ClosePipeEnd)->GetFunction());
 }
 
 NODE_MODULE(win32ipc, Init)

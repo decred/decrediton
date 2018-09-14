@@ -48,5 +48,28 @@ err_close_handles:
 err:
     return result<pipe>::error(err_msg);
 }
-    
+
+int close_pipe_end(uintptr_t end_handle) {
+	return CloseHandle((HANDLE)end_handle);
+}
+
+result<pipe> open_named_pipe(const char *pipe_name) {
+    char const* err_msg;
+
+    SECURITY_ATTRIBUTES sec_attr;
+    sec_attr.nLength = sizeof(SECURITY_ATTRIBUTES);
+    sec_attr.bInheritHandle = TRUE;
+    sec_attr.lpSecurityDescriptor = NULL;
+
+    HANDLE hPipe = CreateFile(pipe_name, GENERIC_WRITE, 3, &sec_attr, OPEN_ALWAYS, 0, NULL);
+    if (!hPipe) {
+      err_msg = "OpenNamedPipe";
+      goto err;
+    }
+
+    return result<pipe>::ok(pipe{(uintptr_t) hPipe, (uintptr_t)0});
+err:
+    return result<pipe>::error(err_msg);
+}
+
 } // namespace pipe_wrapper

@@ -14,7 +14,7 @@ const logger = createLogger(debug);
 
 let dcrdPID;
 let dcrwPID;
-
+let dcrwPipe;
 let dcrwPort;
 
 function closeClis() {
@@ -38,6 +38,14 @@ export const closeDCRW = () => {
     if (require("is-running")(dcrwPID) && os.platform() != "win32") {
       logger.log("info", "Sending SIGINT to dcrwallet at pid:" + dcrwPID);
       process.kill(dcrwPID, "SIGINT");
+    } else if (dcrwPipe) {
+      logger.log("info", "closing dcrw pipe");
+      try {
+        const win32ipc = require("../node_modules/win32ipc/build/Release/win32ipc.node");
+        win32ipc.closePipeEnd(dcrwPipe.readEnd);
+      } catch (error) {
+        logger.log("error", "error closing dcrw pipe: " + error);
+      }
     }
     dcrwPID = null;
     return true;
@@ -188,14 +196,22 @@ export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
   }
 
   if (os.platform() == "win32") {
-    try {
-      const util = require("util");
-      const win32ipc = require("../node_modules/win32ipc/build/Release/win32ipc.node");
-      const pipe = win32ipc.createPipe("out");
-      args.push(util.format("--piperx=%d", pipe.readEnd));
-    } catch (e) {
-      logger.log("error", "can't find proper module to launch dcrwallet: " + e);
-    }
+    const util = require("util");
+    const pipeFname = "\\\\.\\pipe\\dcrwallet-" + Date.now();
+    args.push(util.format("--namedpiperx=%s", pipeFname));
+    logger.log("info", "Opening named piperx " + pipeFname);
+    setTimeout(() => {
+      // This needs to happen only after the server end in the wallet has been
+      // opened. 5 seconds should be sufficient since we're just about to spawn
+      // the dcrwallet process.
+      try {
+        const win32ipc = require("../node_modules/win32ipc/build/Release/win32ipc.node");
+        dcrwPipe = win32ipc.openNamedPipe(pipeFname);
+        logger.log("info", "created named pipe: " + dcrwPipe.readEnd);
+      } catch (e) {
+        logger.log("error", "error using module to open pipe to dcrwallet: " + e);
+      }
+    }, 5000);
   } else {
     args.push("--rpclistenerevents");
     args.push("--pipetx=4");
