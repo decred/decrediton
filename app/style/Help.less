@@ -6,26 +6,69 @@
   flex-wrap: wrap;
   justify-content: flex-start;
   margin-left: 42px;
-  width: 75%;
 }
 
 .help-icon {
-  height: 60px;
-  width: 60px;
-  padding-top: 80px;
-  padding-bottom: 20px;
-  padding-right: 100px;
-  background-size: auto 60px;
-  background-position: 0px 0px;
+  margin-bottom: 20px;
+  margin-right: 20px;
+  height: 90px;
+  width: 320px;
+  background-color: #fff;
+  background-size: 35px;
+  background-position: 23px 28px;
   background-repeat: no-repeat;
-  text-align: left;
   color: #091440;
-  font-size: 19px;
   cursor: pointer;
 }
 
-.help-icon:hover {
-  color: #2970ff;
+.help-icon-text {
+  float: left;
+  margin-left: 70px;
+  margin-top: 24px;
+}
+
+.help-icon-title {
+  font-size: 19px;
+  line-height: 24px;
+  color: #091440;
+}
+
+.help-icon-subtitle {
+  font-size: 13px;
+  line-height: 17px;
+  color: #8997a6;
+}
+
+.help-icon-link-expand {
+  float: right;
+  height: 16px;
+  width: 16px;
+  margin-top: 37px;
+  margin-right: 20px;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  background-position: 0px;
+  background-image: @help-expand-default;
+}
+
+.help-icon:hover .help-icon-link-expand {
+  background-image: @help-expand-hover;
+}
+
+.help-icon-link-external {
+  float: right;
+  height: 16px;
+  width: 16px;
+  margin-top: 37px;
+  margin-right: 20px;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  background-position: 0px;
+  background-image: @help-external-default;
+}
+
+.help-icon:hover .help-icon-link-external {
+  background-image: @help-external-hover;
 }
 
 .help-star-icon {
@@ -90,8 +133,4 @@
 
 .help-external-icon-hover {
   background-image: @help-external-hover;
-}
-
-.help-icon-text {
-  float: left;
 }
