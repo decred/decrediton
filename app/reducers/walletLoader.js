@@ -72,6 +72,7 @@ export default function walletLoader(state = {}, action) {
   case WALLETCREATED:
     return { ...state,
       createWalletExisting: action.createNewWallet,
+      isWatchingOnly: action.isWatchingOnly,
     };
   case CREATEWALLET_GOBACK:
     return { ...state,

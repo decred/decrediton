@@ -209,7 +209,8 @@ export const createWallet = (createNewWallet, selectedWallet) => (dispatch, getS
   const { network } = getState().daemon;
   wallet.createNewWallet(selectedWallet.value.wallet, network == "testnet")
     .then(() => {
-      dispatch({ createNewWallet, type: WALLETCREATED });
+      dispatch({ createNewWallet, isWatchingOnly: selectedWallet.value.watchingOnly,
+        type: WALLETCREATED });
       dispatch(startWallet(selectedWallet));
     })
     .catch((err) => {

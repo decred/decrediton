@@ -20,7 +20,7 @@ const WalletSelectionBodyBase = ({
   editWallets,
   intl,
   toggleWatchOnly,
-  isWatchOnly,
+  isWatchingOnly,
   masterPubKeyError,
   maxWalletCount,
   isSPV,
@@ -48,7 +48,7 @@ const WalletSelectionBodyBase = ({
                       </Tooltip>
                     </div>}
                   <div className={selected && !editWallets ? "display-wallet-complete selected" : "display-wallet-complete"}>
-                    {!wallet.isWatchOnly ? !wallet.finished && <T id="walletselection.setupIncomplete" m="Setup incomplete"/> : <T id="walletselection.watchOnly" m="Watch Only"/>}
+                    {!wallet.isWatchingOnly ? !wallet.finished && <T id="walletselection.setupIncomplete" m="Setup incomplete"/> : <T id="walletselection.watchOnly" m="Watch Only"/>}
                   </div>
                   <div className={selected && !editWallets ? "wallet-icon selected" : "wallet-icon wallet"}/>
                   <div className={selected && !editWallets ? "display-wallet-name selected" : "display-wallet-name"}>
@@ -105,7 +105,9 @@ const WalletSelectionBodyBase = ({
       </div> :
       <div className="advanced-page">
         <div className="advanced-page-form">
-          <CreateWalletForm {...{ ...props, intl, availableWallets, hideCreateWalletForm, createWallet, createNewWallet, isWatchOnly, toggleWatchOnly, masterPubKeyError }} />
+          <CreateWalletForm {...{ ...props, intl, availableWallets,
+            hideCreateWalletForm, createWallet, createNewWallet, isWatchingOnly,
+            toggleWatchOnly, masterPubKeyError }} />
         </div>
       </div>
   );

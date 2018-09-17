@@ -23,10 +23,10 @@ const Bar = ({
   expandSideBar,
   onExpandSideBar,
   onReduceSideBar,
-  isWatchOnly,
+  isWatchingOnly,
 }) => (
   <div className={(expandSideBar ? "sidebar-menu " : "sidebar-menu-reduced ") + (isTestNet ? "sidebar-testnet" : "sidebar-mainnet")}>
-    <Logo {...{ isTestNet, expandSideBar, onReduceSideBar, onExpandSideBar, isWatchOnly }} />
+    <Logo {...{ isTestNet, expandSideBar, onReduceSideBar, onExpandSideBar, isWatchingOnly }} />
     <div className="sidebar-main">
       <div className="sidebar-scroll">
         <MenuLinks {...{ expandSideBar }}/>

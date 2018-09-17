@@ -496,7 +496,7 @@ export const validateMasterPubKey = masterPubKey => async (dispatch) => {
       dispatch({ type: VALIDATEMASTERPUBKEY_FAILED });
       return { isValid: false, error: validationErr };
     }
-    dispatch({ type: VALIDATEMASTERPUBKEY_SUCCESS, isWatchOnly: true, masterPubKey });
+    dispatch({ type: VALIDATEMASTERPUBKEY_SUCCESS, isWatchingOnly: true, masterPubKey });
     return { isValid: true, error: null };
   } catch (error) {
     dispatch({ error, type: VALIDATEMASTERPUBKEY_FAILED });
