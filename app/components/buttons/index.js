@@ -52,7 +52,7 @@ const helpLinkButton = ({ className, onClick, buttonLabel }) =>
   <div className={className} onClick={onClick}>{buttonLabel}</div>;
 
 export const HelpLinkInfoModal = mbb(null, InfoModal, helpLinkButtonNew);
-export const HelpLinkAboutModal = mbb("help-icon", AboutModal, helpLinkButtonNew);
+export const HelpLinkAboutModal = mbb(null, AboutModal, helpLinkButtonNew);
 export const InfoModalButton = mbb("info-modal-button", InfoModal);
 export const InfoDocModalButton = mbb("info-modal-button", InfoDocumentModal);
 export const InfoDocFieldModalButton = mbb("info-field-modal-button", InfoDocumentModal);

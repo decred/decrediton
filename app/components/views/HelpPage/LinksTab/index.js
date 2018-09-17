@@ -16,7 +16,7 @@ export const LinksTab = () => (
       <HelpLink className={"help-github-icon"} href="https://github.com/decred/decrediton" title={<T id="help.github.title" m="Github"/>} subtitle={<T id="help.github.subtitle" m="github.com/decred/decrediton"/>} />
       <HelpLink className={"help-docs-icon"} href="https://docs.decred.org/" title={<T id="help.documentation" m="Documentation" />} subtitle={<T id="help.documentation.subtitle" m="docs.decred.org"/>}/>
       <HelpLink className={"help-stakepools-icon"} href="https://decred.org/stakepools" title={<T id="help.stakepools" m=" Stakepools" />} subtitle={<T id="help.stakepools.subtitle" m="decred.org/stakepools"/>}/>
-      <HelpLink className={"help-blockchain-explorer-icon"} href="https://explorder.dcrdata.org" title={<T id="help.blockchain" m=" Blockchain Explorer" />} subtitle={<T id="help.blockchain.subtitle" m="explorer.dcrdata.org"/>}/>
+      <HelpLink className={"help-blockchain-explorer-icon"} href="https://explorer.dcrdata.org" title={<T id="help.blockchain" m=" Blockchain Explorer" />} subtitle={<T id="help.blockchain.subtitle" m="explorer.dcrdata.org"/>}/>
       <HelpLinkInfoModal className={"help-constitution-icon"}
         title={<T id="help.constitution" m="Constitution"/>}
         subtitle={<T id="help.constitution.subtitle" m="Decred Project Constitution"/>}
@@ -27,9 +27,6 @@ export const LinksTab = () => (
       <HelpLinkAboutModal className={"help-star-icon"}
         title={<T id="help.about.decrediton" m="About Decrediton"/>}
         subtitle={<T id="help.about.decrediton.subtitle" m="Software Summary"/>}
-        modalTitle={<h1><T id="help.constitution.modal.title" m="Decred Constitution" /></h1>}
-        modalContent={<ConstitutionModalContent />}
-        double
       />
     </div>
     <div className="tabbed-page-subtitle"><T id="help.subtitle.communications" m="Communications"/></div>
