@@ -836,8 +836,10 @@ export const renameAccountError = get([ "control", "renameAccountError" ]);
 export const renameAccountSuccess = get([ "control", "renameAccountSuccess" ]);
 export const renameAccountRequestAttempt = get([ "control", "renameAccountRequestAttempt" ]);
 
-export const showingSidebar = get([ "sidebar", "showingSidebar" ]);
-export const showingSidebarMenu = get([ "sidebar", "showingSidebarMenu" ]);
+export const location = get([ "routing", "location" ]);
+export const isGetStarted = compose(l => /^\/getstarted\//.test(l.pathname), location);
+
+export const showingSidebarMenu = not(isGetStarted);
 export const expandSideBar = get([ "sidebar", "expandSideBar" ]);
 
 export const snackbarMessages = get([ "snackbar", "messages" ]);
@@ -865,8 +867,6 @@ export const blocksNumberToNextTicket = createSelector(
 );
 
 export const exportingData = get([ "control", "exportingData" ]);
-
-export const location = get([ "routing", "location" ]);
 
 export const voteTimeStats = get([ "statistics", "voteTime" ]);
 export const averageVoteTime = createSelector(

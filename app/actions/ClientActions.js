@@ -7,7 +7,6 @@ import { getNextAddressAttempt,
 import { transactionNtfnsStart, accountNtfnsStart } from "./NotificationActions";
 import { updateStakepoolPurchaseInformation, setStakePoolVoteChoices, getStakepoolStats } from "./StakePoolActions";
 import { getDecodeMessageServiceAttempt } from "./DecodeMessageActions";
-import { showSidebarMenu, showSidebar } from "./SidebarActions";
 import { push as pushHistory, goBack } from "react-router-redux";
 import { getWalletCfg, getGlobalCfg } from "../config";
 import { onAppReloadRequested } from "wallet";
@@ -59,8 +58,6 @@ const startWalletServicesTrigger = () => (dispatch, getState) => new Promise((re
 
       var goHomeCb = () => {
         dispatch(pushHistory("/home"));
-        dispatch(showSidebar());
-        dispatch(showSidebarMenu());
       };
       await dispatch(getStartupWalletInfo()).then(goHomeCb);
       resolve();

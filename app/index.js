@@ -30,6 +30,7 @@ var initialState = {
       proxyLocation: globalCfg.get("proxy_location"),
       spvMode: globalCfg.get("spv_mode"),
       timezone: globalCfg.get("timezone"),
+      currencyDisplay: "DCR",
     },
     tempSettings: {
       locale: locale,
@@ -39,6 +40,7 @@ var initialState = {
       proxyLocation: globalCfg.get("proxy_location"),
       spvMode: globalCfg.get("spv_mode"),
       timezone: globalCfg.get("timezone"),
+      currencyDisplay: "DCR",
     },
     settingsChanged: false,
     uiAnimations: globalCfg.get("ui_animations"),
@@ -359,8 +361,6 @@ var initialState = {
     messages: Array()
   },
   sidebar: {
-    showingSidebar: !globalCfg.get("show_tutorial"),
-    showingSidebarMenu: false,
     expandSideBar: true,
   },
   statistics: {
