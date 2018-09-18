@@ -107,7 +107,13 @@
   }
 }
 
+.linear-progress-animation {
+  float: left;
+  margin: -5px 10px -5px 18px;
+}
+
 .linear-progress-text {
+  height: 100%;
   text-align: left;
   color: #fff;
   font-size: 11px;
@@ -119,6 +125,55 @@
   background-position: 20px 20px;
   background-size: 16px;
   background-repeat: no-repeat;
+}
+
+.linear-progress-text.blockchain-syncing {
+  padding-left: 56px;
+  background-image: @loader-animation-blockchain-syncing;
+  background-position: 15px 15px;
+  background-size: 30px;
+}
+
+.linear-progress-text.daemon-waiting {
+  padding-left: 56px;
+  background-image: @loader-animation-daemon-waiting;
+  background-position: 15px 15px;
+  background-size: 30px;
+}
+
+.linear-progress-text.discovering-addresses {
+  padding-left: 56px;
+  background-image: @loader-animation-discovering-addresses;
+  background-position: 15px 15px;
+  background-size: 30px;
+}
+
+.linear-progress-text.establishing-rpc {
+  padding-left: 56px;
+  background-image: @loader-animation-establishing-rpc;
+  background-position: 15px 15px;
+  background-size: 30px;
+}
+
+.linear-progress-text.fetching-headers {
+  padding-left: 56px;
+  background-image: @loader-animation-fetching-headers;
+  background-position: 15px 15px;
+  background-size: 30px;
+}
+
+.linear-progress-text.finalizing-setup {
+  padding-left: 56px;
+  background-image: @loader-animation-finalizing-setup;
+  background-position: 15px 15px;
+  background-size: 30px;
+}
+
+.linear-progress-text.scanning-blocks {
+  padding-left: 56px;
+  background-image: @loader-animation-scanning-blocks;
+  background-position: 15px 15px;
+  background-size: 30px;
 }
 
 .linear-progress-text.loading {
