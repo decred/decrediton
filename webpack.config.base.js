@@ -10,17 +10,14 @@ import {
 } from "./app/package.json";
 
 export default {
+  mode: "production",
+
   module: {
     rules: [ {
       test: /\.jsx?$/,
       exclude: /node_modules/,
       use: [ {
         loader: "babel-loader"
-      } ]
-    }, {
-      test: /\.json$/,
-      use: [ {
-        loader: "json-loader"
       } ]
     },
     {
