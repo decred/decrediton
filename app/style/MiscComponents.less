@@ -108,10 +108,9 @@
   border-radius: 5px;
   background-color: #8997a5;
   box-shadow: 0 5px 13px rgba(0, 0, 0, 0.21);
-  color: #fff;
+  color: #f3f6f6;
   font-size: 13px;
   line-height: 17px;
-  font-weight: 600;
   text-align: center;
   text-decoration: none;
   text-transform: capitalize;
@@ -121,6 +120,10 @@
 
 .slate-gray-button:hover {
   background-color: #596d81;
+}
+
+.thin-button {
+  padding: 5px 20px 5px 20px;
 }
 
 .invisible-button {
@@ -872,4 +875,15 @@
   .voting-progress-abstain {
     background-color: @vote-abstain-color;
   }
+}
+
+.rebroadcast-button {
+  background-image: @rebroadcastTransaction;
+  background-position: 20px 12px;
+  background-size: 20px;
+  background-repeat: no-repeat;
+  padding-left: 48px;
+  float: right;
+  margin-top: -22px;
+  margin-right: 68px;
 }
