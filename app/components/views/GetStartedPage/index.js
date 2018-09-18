@@ -172,14 +172,19 @@ class GetStartedPage extends React.Component {
           syncFetchHeadersAttempt,
         }}/>;
     } else if (!isSPV && startStepIndex > 2) {
+      animationType = blockChainLoading;
       text = <T id="getStarted.header.sync.meta" m="Syncing Wallet" />;
       if (syncFetchMissingCfiltersAttempt) {
+        animationType = daemonWaiting;
         text = <T id="getStarted.header.fetchingMissing.meta" m="Fetching missing committed filters" />;
       } else if (syncFetchHeadersAttempt) {
+        animationType = fetchingHeaders;
         text = <T id="getStarted.header.fetchingBlockHeaders.meta" m="Fetching block headers" />;
       } else if (syncDiscoverAddressesAttempt) {
+        animationType = discoveringAddresses;
         text = <T id="getStarted.header.discoveringAddresses.meta" m="Discovering addresses" />;
       } else if (syncRescanAttempt) {
+        animationType = scanningBlocks;
         text = <T id="getStarted.header.rescanWallet.meta" m="Scanning blocks for transactions" />;
         Form = RescanWalletBody;
       }
