@@ -6,100 +6,131 @@
   flex-wrap: wrap;
   justify-content: flex-start;
   margin-left: 42px;
-  width: 75%;
 }
 
 .help-icon {
-  height: 60px;
-  width: 60px;
-  padding-top: 80px;
-  padding-bottom: 20px;
-  padding-right: 100px;
-  background-size: auto 60px;
-  background-position: 0px 0px;
+  margin-bottom: 20px;
+  margin-right: 20px;
+  height: 90px;
+  width: 320px;
+  background-color: #fff;
+  background-size: 35px;
+  background-position: 23px 28px;
   background-repeat: no-repeat;
-  text-align: left;
   color: #091440;
-  font-size: 19px;
   cursor: pointer;
-}
-
-.help-icon:hover {
-  color: #2970ff;
-}
-
-.help-slack-icon {
-  background-image: @help-slack-icon;
-}
-
-.help-slack-icon:hover {
-  background-image: @help-slack-active-icon;
-}
-
-.help-forum-icon {
-  background-image: @help-forum-icon;
-}
-
-.help-forum-icon:hover {
-  background-image: @help-forum-active-icon;
-}
-
-.help-docs-icon {
-  background-image: @help-docs-icon;
-}
-
-.help-docs-icon:hover {
-  background-image: @help-docs-active-icon;
-}
-
-.help-freenode-icon {
-  background-image: @help-freenode-icon;
-}
-
-.help-freenode-icon:hover {
-  background-image: @help-freenode-active-icon;
-}
-
-.help-github-icon {
-  background-image: @help-github-icon;
-}
-
-.help-github-icon:hover {
-  background-image: @help-github-active-icon;
-}
-
-.help-stakepools-icon {
-  background-image: @help-stakepools-icon;
-}
-
-.help-stakepools-icon:hover {
-  background-image: @help-stakepools-active-icon;
-}
-
-.help-constitution-icon {
-  background-image: @help-constitution-icon;
-}
-
-.help-constitution-icon:hover {
-  background-image: @help-constitution-active-icon;
-}
-
-.help-matrix-icon {
-  background-image: @help-matrix-icon;
-}
-
-.help-matrix-icon:hover {
-  background-image: @help-matrix-active-icon;
-}
-
-.help-rocketchat-icon {
-  background-image: @help-rocketchat-icon;
-}
-
-.help-rocketchat-icon:hover {
-  background-image: @help-rocketchat-active-icon;
 }
 
 .help-icon-text {
   float: left;
+  margin-left: 70px;
+  margin-top: 24px;
+}
+
+.help-icon-title {
+  font-size: 19px;
+  line-height: 24px;
+  color: #091440;
+}
+
+.help-icon-subtitle {
+  font-size: 13px;
+  line-height: 17px;
+  color: #8997a6;
+}
+
+.help-icon-link-expand {
+  float: right;
+  height: 16px;
+  width: 16px;
+  margin-top: 37px;
+  margin-right: 20px;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  background-position: 0px;
+  background-image: @help-expand-default;
+}
+
+.help-icon:hover .help-icon-link-expand {
+  background-image: @help-expand-hover;
+}
+
+.help-icon-link-external {
+  float: right;
+  height: 16px;
+  width: 16px;
+  margin-top: 37px;
+  margin-right: 20px;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  background-position: 0px;
+  background-image: @help-external-default;
+}
+
+.help-icon:hover .help-icon-link-external {
+  background-image: @help-external-hover;
+}
+
+.help-star-icon {
+  background-image: @help-star;
+}
+
+.help-blockchain-explorer-icon {
+  background-image: @help-blockchain-explorer;
+}
+
+.help-slack-icon {
+  background-image: @help-slack;
+}
+
+.help-forum-icon {
+  background-image: @help-forum;
+}
+
+.help-docs-icon {
+  background-image: @help-docs;
+}
+
+.help-freenode-icon {
+  background-image: @help-freenode;
+}
+
+.help-github-icon {
+  background-image: @help-github;
+}
+
+.help-stakepools-icon {
+  background-image: @help-stakepools;
+}
+
+.help-constitution-icon {
+  background-image: @help-constitution;
+}
+
+.help-matrix-icon {
+  background-image: @help-matrix;
+}
+
+.help-rocketchat-icon {
+  background-image: @help-rocketchat;
+}
+
+.help-telegram-icon {
+  background-image: @help-telegram;
+}
+
+.help-expand-icon {
+  background-image: @help-expand-default;
+}
+
+.help-expand-icon-hover {
+  background-image: @help-expand-hover;
+}
+
+.help-external-icon {
+  background-image: @help-external-default;
+}
+
+.help-external-icon-hover {
+  background-image: @help-external-hover;
 }

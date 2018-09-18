@@ -20,6 +20,7 @@ import WatchOnlyWalletSwitch from "./WatchOnlyWalletSwitch";
 import NetworkSwitch from "./NetworkSwitch";
 import DangerButton from "./DangerButton";
 import CloseButton from "./CloseButton";
+import HelpLink from "./HelpLink";
 import InvisibleButton from "./InvisibleButton";
 export { ModalButton, AutoBuyerSwitch, KeyBlueButton, DangerButton,
   CloseButton, NetworkSwitch, InvisibleButton, WatchOnlyWalletSwitch };
@@ -44,10 +45,14 @@ const mbb = (className, modalComponent, buttonComponent) => p =>
     }}
   />;
 
+const helpLinkButtonNew = ({ className, onClick, title, subtitle }) =>
+  <HelpLink className={className} onClick={onClick} title={title} subtitle={subtitle} expand/>;
+
 const helpLinkButton = ({ className, onClick, buttonLabel }) =>
   <div className={className} onClick={onClick}>{buttonLabel}</div>;
 
-export const HelpLinkInfoModal = mbb("help-icon", InfoModal, helpLinkButton);
+export const HelpLinkInfoModal = mbb(null, InfoModal, helpLinkButtonNew);
+export const HelpLinkAboutModal = mbb(null, AboutModal, helpLinkButtonNew);
 export const InfoModalButton = mbb("info-modal-button", InfoModal);
 export const InfoDocModalButton = mbb("info-modal-button", InfoDocumentModal);
 export const InfoDocFieldModalButton = mbb("info-field-modal-button", InfoDocumentModal);
