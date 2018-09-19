@@ -20,6 +20,7 @@ import {
   SYNC_FETCHED_MISSING_CFILTERS_PROGRESS, SYNC_FETCHED_MISSING_CFILTERS_FINISHED,
   SYNC_DISCOVER_ADDRESSES_STARTED, SYNC_DISCOVER_ADDRESSES_FINISHED,
   SYNC_RESCAN_STARTED, SYNC_RESCAN_PROGRESS, SYNC_RESCAN_FINISHED,
+  GENERATESEED_ATTEMPT
 } from "actions/WalletLoaderActions";
 import {
   WALLETCREATED
@@ -73,6 +74,10 @@ export default function walletLoader(state = {}, action) {
     return { ...state,
       createWalletExisting: action.createNewWallet,
       isWatchingOnly: action.isWatchingOnly,
+    };
+  case GENERATESEED_ATTEMPT:
+    return { ...state,
+      confirmNewSeed: false,
     };
   case CREATEWALLET_GOBACK:
     return { ...state,
@@ -134,6 +139,7 @@ export default function walletLoader(state = {}, action) {
       walletCreateRequestAttempt: false,
       walletCreateResponse: action.response,
       advancedDaemonInputRequest: true,
+      confirmNewSeed: false,
       stepIndex: 3,
     };
   case OPENWALLET_INPUT:
