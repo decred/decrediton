@@ -2,7 +2,6 @@ import { versionCheckAction, spvSyncCancel } from "./WalletLoaderActions";
 import { stopNotifcations } from "./NotificationActions";
 import { saveSettings, updateStateSettingsChanged } from "./SettingsActions";
 import { rescanCancel } from "./ControlActions";
-import { hideSidebarMenu, showSidebar } from "./SidebarActions";
 import { cancelPingAttempt } from "./ClientActions";
 import { semverCompatible } from "./VersionActions";
 import * as wallet from "wallet";
@@ -101,7 +100,6 @@ export const selectLanguage = (selectedLanguage) => (dispatch) => {
 export const finishTutorial = () => (dispatch) => {
   const config = getGlobalCfg();
   config.set("show_tutorial", false);
-  dispatch(showSidebar());
   dispatch({ type: FINISH_TUTORIAL });
   dispatch(pushHistory("/getstarted"));
 };
@@ -109,7 +107,6 @@ export const finishTutorial = () => (dispatch) => {
 export const finishPrivacy = () => (dispatch) => {
   const config = getGlobalCfg();
   config.set("show_privacy", false);
-  dispatch(showSidebar());
   dispatch({ type: FINISH_PRIVACY });
   dispatch(goBack());
 };
@@ -183,7 +180,6 @@ export const shutdownApp = () => (dispatch, getState) => {
   dispatch(rescanCancel());
   dispatch(cancelPingAttempt());
   dispatch(spvSyncCancel());
-  dispatch(hideSidebarMenu());
   dispatch(pushHistory("/shutdown"));
 };
 
@@ -213,7 +209,8 @@ export const createWallet = (createNewWallet, selectedWallet) => (dispatch, getS
   const { network } = getState().daemon;
   wallet.createNewWallet(selectedWallet.value.wallet, network == "testnet")
     .then(() => {
-      dispatch({ createNewWallet, type: WALLETCREATED });
+      dispatch({ createNewWallet, isWatchingOnly: selectedWallet.value.watchingOnly,
+        type: WALLETCREATED });
       dispatch(startWallet(selectedWallet));
     })
     .catch((err) => {

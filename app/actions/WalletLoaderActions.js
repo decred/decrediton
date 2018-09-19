@@ -186,7 +186,7 @@ export const closeWalletRequest = () => async(dispatch, getState) => {
     await closeWallet(getState().walletLoader.loader);
     await wallet.stopWallet();
     dispatch({ type: CLOSEWALLET_SUCCESS });
-    dispatch(pushHistory("/getStarted/initial"));
+    dispatch(pushHistory("/getstarted/initial"));
   } catch (error) {
     dispatch({ error, type: CLOSEWALLET_FAILED });
     dispatch(pushHistory("/error"));

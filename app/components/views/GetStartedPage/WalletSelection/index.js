@@ -16,7 +16,7 @@ class WalletSelectionBody extends React.Component {
       newWalletName: "",
       selectedWallet: this.props.availableWallets ? this.props.availableWallets[0] : null,
       hasFailedAttempt: false,
-      isWatchOnly: false,
+      isWatchingOnly: false,
       walletMasterPubKey: "",
       masterPubKeyError: false,
       walletNameError: null,
@@ -60,7 +60,7 @@ class WalletSelectionBody extends React.Component {
       editWallets,
       hasFailedAttemptName,
       hasFailedAttemptPubKey,
-      isWatchOnly,
+      isWatchingOnly,
       walletMasterPubKey,
       masterPubKeyError,
       walletNameError,
@@ -88,7 +88,7 @@ class WalletSelectionBody extends React.Component {
           networkSelected: newWalletNetwork == "mainnet",
           getDaemonSynced,
           toggleWatchOnly,
-          isWatchOnly,
+          isWatchingOnly,
           onChangeCreateWalletMasterPubKey,
           walletMasterPubKey,
           masterPubKeyError,
@@ -133,12 +133,12 @@ class WalletSelectionBody extends React.Component {
   }
   createWallet() {
     const { newWalletName, createNewWallet,
-      isWatchOnly, masterPubKeyError, walletMasterPubKey, walletNameError } = this.state;
+      isWatchingOnly, masterPubKeyError, walletMasterPubKey, walletNameError } = this.state;
     if (newWalletName == "" || walletNameError) {
       this.setState({ hasFailedAttemptName: true });
       return;
     }
-    if (isWatchOnly) {
+    if (isWatchingOnly) {
       if (masterPubKeyError || !walletMasterPubKey) {
         this.setState({ hasFailedAttemptPubKey: true });
         return;
@@ -146,11 +146,11 @@ class WalletSelectionBody extends React.Component {
     }
     this.props.onCreateWallet(
       createNewWallet,
-      { label: newWalletName, value: { wallet: newWalletName } });
+      { label: newWalletName, value: { wallet: newWalletName, watchingOnly: isWatchingOnly } });
   }
   toggleWatchOnly() {
-    const { isWatchOnly } = this.state;
-    this.setState({ isWatchOnly : !isWatchOnly });
+    const { isWatchingOnly } = this.state;
+    this.setState({ isWatchingOnly : !isWatchingOnly });
   }
   async onChangeCreateWalletMasterPubKey(walletMasterPubKey) {
     if (walletMasterPubKey === "") {

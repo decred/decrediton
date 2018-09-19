@@ -1,10 +1,10 @@
 import { Tooltip } from "shared";
 import { FormattedMessage as T } from "react-intl";
 
-const Logo = ({ isTestNet, expandSideBar, onReduceSideBar, onExpandSideBar, isWatchOnly, }) => (
+const Logo = ({ isTestNet, expandSideBar, onReduceSideBar, onExpandSideBar, isWatchingOnly, }) => (
   <div className={expandSideBar ? "sidebar-logo" : "reduced-sidebar-logo"} onClick={!expandSideBar ? onExpandSideBar : null}>
     {
-      isWatchOnly &&
+      isWatchingOnly &&
       <Tooltip text={<T id="createWallet.goBack" m="This is a watch-only wallet with limited functionality." /> }>
         <div className="sidebar-watch-only-icon"/>
       </Tooltip>

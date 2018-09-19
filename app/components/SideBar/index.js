@@ -46,9 +46,6 @@ class SideBar extends React.Component {
   }
 
   render() {
-    if (!this.props.showingSidebar) {
-      return null;
-    }
 
     return (
       <Bar
@@ -65,11 +62,10 @@ class SideBar extends React.Component {
           onHideAccounts: this.onHideAccounts,
           rescanRequest: this.props.rescanRequest,
           rescanAttempt: this.props.rescanAttempt,
-          showingSidebarMenu: this.props.showingSidebarMenu,
           expandSideBar: this.props.expandSideBar,
           onExpandSideBar: this.props.onExpandSideBar,
           onReduceSideBar: this.props.onReduceSideBar,
-          isWatchOnly: this.props.isWatchOnly,
+          isWatchingOnly: this.props.isWatchingOnly,
         }}
       />
     );
@@ -85,8 +81,7 @@ class SideBar extends React.Component {
 }
 
 SideBar.propTypes = {
-  showingSidebar: PropTypes.bool.isRequired,
-  showingSidebarMenu: PropTypes.bool.isRequired,
+  expandSideBar: PropTypes.bool.isRequired,
 };
 
 export default sideBar(rescan(ReactTimeout(SideBar)));
