@@ -97,7 +97,7 @@ const availableWalletsSelect = createSelector(
       value: wallet,
       network: wallet.network,
       finished: wallet.finished,
-      isWatchOnly: wallet.watchOnly,
+      isWatchingOnly: wallet.watchingOnly,
       lastAccess: wallet.lastAccess ? new Date(wallet.lastAccess) : null,
     }),
     wallets
@@ -137,7 +137,6 @@ export const getNetworkResponse = get([ "grpc", "getNetworkResponse" ]);
 export const getNetworkError = get([ "grpc", "getNetworkError" ]);
 const accounts = createSelector([ getAccountsResponse ], r => r ? r.getAccountsList() : []);
 
-// set as watching only when openning wallet
 export const isWatchingOnly = get([ "walletLoader", "isWatchingOnly" ]);
 export const accountExtendedKey = createSelector(
   [ get([ "control", "getAccountExtendedKeyResponse" ]) ],
@@ -683,8 +682,6 @@ export const validateAddressSuccess = compose(
   r => r ? r.toObject() : null, validateAddressResponse
 );
 
-// set as watching only when creating wallet
-export const isWatchOnly = get([ "control", "isWatchOnly" ]);
 export const masterPubKey = get([ "control", "masterPubKey" ]);
 
 const getStakeInfoResponse = get([ "grpc", "getStakeInfoResponse" ]);
@@ -821,8 +818,10 @@ export const renameAccountError = get([ "control", "renameAccountError" ]);
 export const renameAccountSuccess = get([ "control", "renameAccountSuccess" ]);
 export const renameAccountRequestAttempt = get([ "control", "renameAccountRequestAttempt" ]);
 
-export const showingSidebar = get([ "sidebar", "showingSidebar" ]);
-export const showingSidebarMenu = get([ "sidebar", "showingSidebarMenu" ]);
+export const location = get([ "routing", "location" ]);
+export const isGetStarted = compose(l => /^\/getstarted\//.test(l.pathname), location);
+
+export const showingSidebarMenu = not(isGetStarted);
 export const expandSideBar = get([ "sidebar", "expandSideBar" ]);
 
 export const snackbarMessages = get([ "snackbar", "messages" ]);
@@ -850,8 +849,6 @@ export const blocksNumberToNextTicket = createSelector(
 );
 
 export const exportingData = get([ "control", "exportingData" ]);
-
-export const location = get([ "routing", "location" ]);
 
 export const voteTimeStats = get([ "statistics", "voteTime" ]);
 export const averageVoteTime = createSelector(
@@ -909,15 +906,11 @@ export const stakeRewardsStats = createSelector(
 
 export const modalVisible = get([ "control", "modalVisible" ]);
 
-export const isSignMessageDisabled = or(isWatchingOnly, isWatchOnly);
-
-export const isCreateAccountDisabled = or(isWatchingOnly, isWatchOnly);
-
-export const isChangePassPhraseDisabled = or(isWatchingOnly, isWatchOnly);
-
-export const isTransactionsSendTabDisabled = or(isWatchingOnly, isWatchOnly);
-
-export const isTicketPurchaseTabDisabled = or(isWatchingOnly, isWatchOnly);
+export const isSignMessageDisabled = isWatchingOnly;
+export const isCreateAccountDisabled = isWatchingOnly;
+export const isChangePassPhraseDisabled = isWatchingOnly;
+export const isTransactionsSendTabDisabled = isWatchingOnly;
+export const isTicketPurchaseTabDisabled = isWatchingOnly;
 
 export const politeiaBetaEnabled = get([ "governance", "politeiaBetaEnabled" ]); // TODO: remove once politeia hits production
 export const politeiaURL = createSelector(

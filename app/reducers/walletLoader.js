@@ -14,7 +14,8 @@ import {
   GETWALLETSEEDSVC_ATTEMPT, GETWALLETSEEDSVC_SUCCESS,
   FETCHMISSINGCFILTERS_ATTEMPT, FETCHMISSINGCFILTERS_FAILED, FETCHMISSINGCFILTERS_SUCCESS,
   RESCANPOINT_ATTEMPT, RESCANPOINT_FAILED, RESCANPOINT_SUCCESS,
-  SPVSYNC_SUCCESS, SPVSYNC_UPDATE, SPVSYNC_FAILED, SPVSYNC_ATTEMPT, SPVSYNC_INPUT
+  SPVSYNC_SUCCESS, SPVSYNC_UPDATE, SPVSYNC_FAILED, SPVSYNC_ATTEMPT, SPVSYNC_INPUT,
+  GENERATESEED_ATTEMPT
 } from "actions/WalletLoaderActions";
 import {
   WALLETCREATED
@@ -67,6 +68,11 @@ export default function walletLoader(state = {}, action) {
   case WALLETCREATED:
     return { ...state,
       createWalletExisting: action.createNewWallet,
+      isWatchingOnly: action.isWatchingOnly,
+    };
+  case GENERATESEED_ATTEMPT:
+    return { ...state,
+      confirmNewSeed: false,
     };
   case CREATEWALLET_GOBACK:
     return { ...state,
@@ -128,6 +134,7 @@ export default function walletLoader(state = {}, action) {
       walletCreateRequestAttempt: false,
       walletCreateResponse: action.response,
       advancedDaemonInputRequest: true,
+      confirmNewSeed: false,
       stepIndex: 3,
     };
   case OPENWALLET_INPUT:

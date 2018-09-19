@@ -95,10 +95,10 @@ class App extends React.Component {
         defaultFormats={defaultFormats}
         key={locale.key}>
         <Aux>
-          <Switch><Redirect from="/" exact to="/getStarted" /></Switch>
+          <Switch><Redirect from="/" exact to="/getstarted" /></Switch>
           <Snackbar/>
           <MainSwitch {...topLevelAnimation} className="top-level-container">
-            <Route path="/getStarted"  component={GetStartedContainer} />
+            <Route path="/getstarted"  component={GetStartedContainer} />
             <Route path="/shutdown"    component={ShutdownAppPage} />
             <Route path="/error"       component={FatalErrorPage} />
             <Route path="/"            component={WalletContainer} />

@@ -24,10 +24,10 @@ export const getAvailableWallets = (network) => {
 
     const cfg = getWalletCfg(isTestNet, wallet);
     const lastAccess = cfg.get("lastaccess");
-    const watchOnly = cfg.get("iswatchonly");
+    const watchingOnly = cfg.get("iswatchonly");
     const walletDbFilePath = getWalletDBPathFromWallets(isTestNet, wallet);
     const finished = fs.pathExistsSync(walletDbFilePath);
-    availableWallets.push({ network, wallet, finished, lastAccess, watchOnly });
+    availableWallets.push({ network, wallet, finished, lastAccess, watchingOnly });
   });
 
   return availableWallets;

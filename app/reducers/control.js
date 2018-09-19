@@ -405,7 +405,7 @@ export default function control(state = {}, action) {
   case VALIDATEMASTERPUBKEY_SUCCESS:
     return { ...state,
       masterPubKey: action.masterPubKey,
-      isWatchOnly: action.isWatchOnly,
+      isCreatingWatchingOnly: true,
     };
   case VALIDATEMASTERPUBKEY_FAILED:
     return { ...state,

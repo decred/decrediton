@@ -32,7 +32,7 @@ const CreateWalletForm = ({
   hasFailedAttemptName,
   hasFailedAttemptPubKey,
   intl,
-  isWatchOnly,
+  isWatchingOnly,
   walletMasterPubKey,
   toggleWatchOnly,
   onChangeCreateWalletMasterPubKey,
@@ -77,10 +77,10 @@ const CreateWalletForm = ({
               <T id="createwallet.walletOnly.label" m="Watch only" />
             </div>
             <div className="advanced-daemon-input">
-              <WatchOnlyWalletSwitch className="wallet-switch" enabled={ isWatchOnly } onClick={ toggleWatchOnly } />
+              <WatchOnlyWalletSwitch className="wallet-switch" enabled={ isWatchingOnly } onClick={ toggleWatchOnly } />
             </div>
           </div>
-          {isWatchOnly &&
+          {isWatchingOnly &&
             <div className="advanced-daemon-row">
               <div className="advanced-daemon-label">
                 <T id="createwallet.walletmasterpubkey.label" m="Master Pub Key" />
