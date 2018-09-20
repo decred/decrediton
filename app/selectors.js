@@ -524,8 +524,21 @@ export const viewableTransactions = createSelector(
   (transactions, homeTransactions, homeHistoryTickets) => [ ...transactions, ...homeTransactions, ...homeHistoryTickets ]
 );
 export const viewedTransaction = createSelector(
-  [ viewableTransactions, (state, { match: { params: { txHash } } }) => txHash ],
-  (transactions, txHash) => find({ txHash }, transactions)
+  [ viewableTransactions, (state, { match: { params: { txHash } } }) => txHash, txHashToTicket ],
+  (transactions, txHash, txHashToTicket) => {
+    const ticketDecoded = txHashToTicket[txHash];
+    const tx = find({ txHash }, transactions);
+    if (ticketDecoded) {
+      tx.ticketPrice = ticketDecoded.ticketPrice;
+      if (ticketDecoded.status != "voted") {
+        tx.status = ticketDecoded.status;
+      }
+      tx.enterTimestamp = ticketDecoded.enterTimestamp;
+      tx.leaveTimestamp = ticketDecoded.leaveTimestamp;
+      tx.ticketReward = ticketDecoded.ticketReward;
+    }
+    return tx;
+  }
 );
 
 export const ticketsPerStatus = createSelector(
