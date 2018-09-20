@@ -43,9 +43,18 @@ class Input extends React.Component {
     onKeyDown && !e.defaultPrevented && onKeyDown(e);
   }
   onKeyDown2 = (e) => {
-    if (e.keyCode === 13) {
+
+    // filter non numeric keys, below allows arrow keys and decimal
+    if (e.keyCode == 8 || (e.keyCode >= 37 && e.keyCode <= 40) ||
+        e.keyCode == 46 || e.keyCode == 190 || e.keyCode == 110) {
+
+      // continue with flow
+    }
+
+    else if (e.keyCode === 13 || e.keyCode < 48 || e.keyCode > 57) {
       e.preventDefault();
     }
+
     const { onKeyDownSubmit, onKeyDown } = this.props;
     (e.keyCode === 13) && onKeyDownSubmit && onKeyDownSubmit(e);
     onKeyDown && !e.defaultPrevented && onKeyDown(e);
@@ -55,6 +64,7 @@ class Input extends React.Component {
     var number = this.state.inputMain + this.state.inputSub;
     this.setState({ inputVal: number });
   };
+
   onChange2 = (e) => {
     this.setState({ inputPhase: 0 });
     var number = e.target.textContent;
@@ -146,6 +156,7 @@ class Input extends React.Component {
               onFocus={this.onChange}
               onBlur={this.onChange2}
               onKeyDown={this.onKeyDown2}
+              suppressContentEditableWarning = {true}
             >
               <span id="parsedInputDisplay" style={{ marginTop: "2px" }}
                 className={"parsedInput-" + this.state.inputPhase}
