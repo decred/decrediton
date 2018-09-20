@@ -1,7 +1,7 @@
 import { AccountsSelect } from "inputs";
 import { FormattedMessage as T } from "react-intl";
 import { Balance, Tooltip, TransitionMotionWrapper } from "shared";
-import { SendTransactionButton, KeyBlueButton } from "buttons";
+import { SendTransactionButton } from "buttons";
 import OutputAccountRow from "./OutputAccountRow";
 import "style/SendPage.less";
 import "style/MiscComponents.less";
