@@ -231,9 +231,9 @@ graceful-fs@^4.1.2, graceful-fs@^4.1.6:
   version "4.1.11"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.11.tgz#0e8bdfe4d1ddb8854d64e04ea7c00e2a026e5658"
 
-grpc@1.12.3:
-  version "1.12.3"
-  resolved "https://registry.yarnpkg.com/grpc/-/grpc-1.12.3.tgz#b38bf05f26477d42f8285794c0b1f8b8c0b6dec3"
+grpc@1.15.0:
+  version "1.15.0"
+  resolved "https://registry.yarnpkg.com/grpc/-/grpc-1.15.0.tgz#0faf0c6bf8fd319da510dc2f661b2855876aa150"
   dependencies:
     lodash "^4.17.5"
     nan "^2.0.0"

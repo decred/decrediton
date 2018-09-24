@@ -166,7 +166,6 @@
     "jsdom": "^9.8.3",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
-    "mini-css-extract-plugin": "^0.4.3",
     "minimist": "^1.2.0",
     "mocha": "^5.2.0",
     "node-gyp": "^3.6.2",
