@@ -97,9 +97,9 @@ export default () => (
     (&ldquo;PoA&rdquo;), until such time PoA is integrated into the
     blockchain.</li>
       <li>The
-      {" "}<em>Decred Assembly</em> shall be composed of diverse Assembly members who
+        {" "}<em>Decred Assembly</em> shall be composed of diverse Assembly members who
     are selected for membership by the
-      {" "}<em>Admission Council</em> from the project ecosystem for
+        {" "}<em>Admission Council</em> from the project ecosystem for
     representation.</li>
       <li>Councils that are composed of Assembly members shall be formed to address
   ongoing and episodic matters. The initial Councils shall serve the separate
@@ -108,18 +108,18 @@ export default () => (
       {" "}<em>Creation Council</em>), and attrition (
       {" "}<em>Attrition Council</em>).</li>
       <li>The
-      {" "}<em>Admission Council</em> shall vote on the inclusion of new members into
+        {" "}<em>Admission Council</em> shall vote on the inclusion of new members into
     the Assembly. All additional Councils shall be created by the
-      {" "}<em>Creation Council</em>. The
-      {" "}<em>Attrition Council</em> shall be responsible for deactivating both
+        {" "}<em>Creation Council</em>. The
+        {" "}<em>Attrition Council</em> shall be responsible for deactivating both
     Councils and Assembly members as necessary.</li>
       <li>Membership of the
-      {" "}<em>Decred Assembly</em> shall consist of Assembly members who have been
+        {" "}<em>Decred Assembly</em> shall consist of Assembly members who have been
     confirmed by a 60% or greater affirmative vote by the
-      {" "}<em>Admission Council</em>. There is no restriction on the age or
+        {" "}<em>Admission Council</em>. There is no restriction on the age or
     nationality of Assembly members, the only requirement is that of merit as
     judged by the
-      {" "}<em>Admission Council</em>. Merit is judged on the basis of two
+        {" "}<em>Admission Council</em>. Merit is judged on the basis of two
     characteristics: (1) the amount of time over which one has been involved
     with the project, and (2) one&rsquo;s body of work and its impact in the
     context of the project.</li>
@@ -150,11 +150,11 @@ export default () => (
       <li>DHG shall put forth a budget proposal each year on March 8th, after the
   corresponding public financial statement has been issued.</li>
       <li>The
-      {" "}<em>Funding Council</em> shall review, propose changes, make changes, and
+        {" "}<em>Funding Council</em> shall review, propose changes, make changes, and
     ultimately approve the proposal by April 8th, one month from the initial
     budget proposal.</li>
       <li>Final approval of the budget via PoA vote shall occur after
-      {" "}<em>Funding Council</em> approval by April 18th, two months from the initial
+        {" "}<em>Funding Council</em> approval by April 18th, two months from the initial
     proposal.</li>
       <li>DHG shall make public requests for proposals (&ldquo;RFPs&rdquo;) for
   projects that are to be completed by parties on a contractual basis. RFPs
