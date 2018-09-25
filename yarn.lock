@@ -6544,9 +6544,9 @@ no-case@^2.2.0:
   dependencies:
     lower-case "^1.1.1"
 
-node-addon-loader@alexlyp/node-addon-loader#master:
+node-addon-loader@decred/node-addon-loader#master:
   version "0.0.4"
-  resolved "https://codeload.github.com/alexlyp/node-addon-loader/tar.gz/db5bd96925a252dae420b8231f2c894e7c2e3f84"
+  resolved "https://codeload.github.com/decred/node-addon-loader/tar.gz/db5bd96925a252dae420b8231f2c894e7c2e3f84"
   dependencies:
     loader-utils "^1.1.0"
 
