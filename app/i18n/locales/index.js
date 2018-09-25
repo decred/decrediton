@@ -1,4 +1,9 @@
 import staticDefaults from "../extracted/static";
+import { addLocaleData } from "react-intl";
+import en_data from "react-intl/locale-data/en";
+import pt_data from "react-intl/locale-data/pt";
+
+addLocaleData([ ...en_data, ...pt_data ]);
 
 // Extra formats. May be customized by each locale.
 export const defaultFormats = {
