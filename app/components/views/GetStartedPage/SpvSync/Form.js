@@ -34,6 +34,7 @@ const SpvSyncBody = ({
   syncFetchTimeStart,
   syncFetchHeadersLastHeaderTime,
   lastDcrwalletLogLine,
+  hasAttemptedDiscover,
   Form,
   syncFetchHeadersAttempt,
   syncFetchHeadersComplete,
@@ -116,12 +117,14 @@ const SpvSyncBody = ({
               </div>
               <div className="advanced-daemon-input">
                 <PasswordInput
+                  required
                   autoFocus
                   className="get-started-input-private-password"
                   placeholder={intl.formatMessage(messages.passphrasePlaceholder)}
                   value={passPhrase}
                   onChange={(e) => onSetPassPhrase(e.target.value)}
-                  onKeyDown={onKeyDown}/>
+                  onKeyDown={onKeyDown}
+                  showErrors={hasAttemptedDiscover}/>
               </div>
             </div>
             <div className="loader-bar-buttons">

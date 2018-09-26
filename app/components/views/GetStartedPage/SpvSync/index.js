@@ -72,6 +72,9 @@ class SpvSync extends React.Component {
   }
 
   onSetPassPhrase(passPhrase) {
+    if (passPhrase != "")
+      this.setState({ hasAttemptedDiscover: true });
+
     this.setState({ passPhrase });
   }
 
