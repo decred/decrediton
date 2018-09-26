@@ -4,5 +4,6 @@
   "rules": {
       "length-zero-no-unit": null,
       "shorthand-property-no-redundant-values": null,
+      "no-descending-specificity": null,
   }
 }
