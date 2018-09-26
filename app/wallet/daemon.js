@@ -5,7 +5,7 @@ import { withLog as log, logOptionNoResponseData } from "./app";
 
 export const checkDecreditonVersion = log(() => Promise
   .resolve(ipcRenderer.sendSync("check-version"))
-  , "Check Decrediton release version");
+, "Check Decrediton release version");
 
 export const startDaemon = log((appData, testnet) => Promise
   .resolve(ipcRenderer.sendSync("start-daemon", appData, testnet))
@@ -76,11 +76,11 @@ export const startWallet = log((walletPath, testnet) => new Promise((resolve, re
 
 export const setPreviousWallet = log((cfg) => Promise
   .resolve(ipcRenderer.sendSync("set-previous-wallet", cfg))
-  , "Set Previous Wallet");
+, "Set Previous Wallet");
 
 export const getPreviousWallet = log(() => Promise
   .resolve(ipcRenderer.sendSync("get-previous-wallet"))
-  , "Get Previous Wallet", logOptionNoResponseData());
+, "Get Previous Wallet", logOptionNoResponseData());
 
 export const getBlockCount = log((rpcCreds, testnet) => new Promise(resolve => {
   ipcRenderer.once("check-daemon-response", (e, block) => {
@@ -120,11 +120,11 @@ export const getAvailableWallets = log((network) => Promise
 
 export const reloadAllowedExternalRequests = log(() => Promise
   .resolve(ipcRenderer.sendSync("reload-allowed-external-request"))
-  , "Reload allowed external request");
+, "Reload allowed external request");
 
 export const allowStakePoolHost = log(host => Promise
   .resolve(ipcRenderer.sendSync("allow-stakepool-host", host))
-  , "Allow StakePool Host");
+, "Allow StakePool Host");
 
 export const getDcrdLastLogLine = () => Promise
   .resolve(ipcRenderer.sendSync("get-last-log-line-dcrd"));
