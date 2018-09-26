@@ -265,10 +265,13 @@ export const startRpcRequestFunc = (isRetry, privPass) =>
                 error: `${status}.  You may need to edit ${getWalletPath(isTestNet(getState()), walletName)} and try again`,
                 type: STARTRPC_FAILED
               });
-              dispatch({ error: status, type: SYNC_FAILED });
             }
           } else {
-            dispatch(startRpcRequestFunc(true, privPass));
+            if (status.indexOf("invalid passphrase") > 0) {
+              dispatch({ error: status, type: SYNC_FAILED });
+            } else {
+              dispatch(startRpcRequestFunc(true, privPass));
+            }
           }
         }
       });
