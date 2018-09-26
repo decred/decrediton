@@ -204,6 +204,10 @@ var initialState = {
   walletLoader: {
     spvConnect: globalCfg.get("spv_connect"),
     syncInput: false,
+    syncError: null,
+    syncAttemptRequest: false,
+    syncCall: null,
+    peerCount: 0,
     existingOrNew: false,
     rpcRetryAttempts: 0,
     neededBlocks: 0,
