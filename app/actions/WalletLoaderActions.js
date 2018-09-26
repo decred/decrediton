@@ -202,7 +202,7 @@ export const startRpcRequestFunc = (isRetry, privPass) =>
     if (syncAttemptRequest) {
       return;
     }
-    const { daemon: { credentials, appData, walletName }, walletLoader: { discoverAccountsComplete } }= getState();
+    const { daemon: { credentials, appData, walletName }, walletLoader: { discoverAccountsComplete,isWatchingOnly } }= getState();
     const cfg = getWalletCfg(isTestNet(getState()), walletName);
     let rpcuser, rpccertPath, rpcpass, daemonhost, rpcport;
 
@@ -233,7 +233,7 @@ export const startRpcRequestFunc = (isRetry, privPass) =>
     if (!discoverAccountsComplete && privPass) {
       request.setDiscoverAccounts(true);
       request.setPrivatePassphrase(new Uint8Array(Buffer.from(privPass)));
-    } else if (!discoverAccountsComplete && !privPass) {
+    } else if (!discoverAccountsComplete && !privPass && !isWatchingOnly) {
       dispatch({ type: SYNC_INPUT });
       return;
     }
