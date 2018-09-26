@@ -24,6 +24,7 @@ var initialState = {
   settings: {
     currentSettings: {
       locale: locale,
+      spv: globalCfg.get("spv_mode"),
       daemonStartAdvanced: globalCfg.get("daemon_start_advanced"),
       allowedExternalRequests: globalCfg.get("allowed_external_requests"),
       proxyType: globalCfg.get("proxy_type"),
@@ -34,6 +35,7 @@ var initialState = {
     },
     tempSettings: {
       locale: locale,
+      spv: globalCfg.get("spv_mode"),
       daemonStartAdvanced: globalCfg.get("daemon_start_advanced"),
       allowedExternalRequests: globalCfg.get("allowed_external_requests"),
       proxyType: globalCfg.get("proxy_type"),

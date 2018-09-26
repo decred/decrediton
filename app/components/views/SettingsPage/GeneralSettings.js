@@ -24,6 +24,23 @@ const GeneralSettings = ({
 
       <div className="settings-row">
         <div className="settings-label">
+          <T id="settings.SPV" m="SPV" />
+        </div>
+        <SettingsInput
+          className="settings-input"
+          value={tempSettings.spv ? "true" : "false"}
+          onChange={(opt) => onChangeTempSettings({ spv: opt.value })}
+          valueKey="key"
+          labelKey="description"
+          options={[
+            { key: "true", value: true, description: <T id="settings.spv.true" m="Enabled" /> },
+            { key: "false", value: false, description: <T id="settings.spv.false" m="Disabled" /> },
+          ]}
+        />
+      </div>
+
+      <div className="settings-row">
+        <div className="settings-label">
           <T id="settings.displayedUnits" m="Displayed Units" />
         </div>
         <SettingsInput
