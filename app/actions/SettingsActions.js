@@ -47,6 +47,14 @@ export function updateStateSettingsChanged(settings) {
     const settingsFields = Object.keys(tempSettings);
     const newDiffersFromTemp = settingsFields
       .reduce((d, f) => (d || newSettings[f] !== tempSettings[f]), false);
+    console.log(newDiffersFromTemp);
+    const needNetworkReset = settingsFields
+      .reduce((d, f) => {
+        console.log(d, f);
+        return d || newSettings[f] !== tempSettings[f];
+      }, false);
+
+    console.log(needNetworkReset);
 
     if (newDiffersFromTemp) {
       const newDiffersFromCurrent = settingsFields
