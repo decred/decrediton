@@ -84,8 +84,9 @@ class DaemonLoading extends React.Component {
   }
 
   onSetPassPhrase(passPhrase) {
-    if (passPhrase != "")
+    if (passPhrase != "") {
       this.setState({ hasAttemptedDiscover: true });
+    }
 
     this.setState({ passPhrase });
   }
@@ -105,7 +106,7 @@ class DaemonLoading extends React.Component {
   }
 
   onKeyDown(e) {
-    if(e.keyCode == 13) {   // Enter key
+    if (e.keyCode == 13) {   // Enter key
       e.preventDefault();
       this.onRPCSync();
     }
