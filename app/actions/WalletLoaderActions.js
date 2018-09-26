@@ -196,7 +196,7 @@ export const STARTRPC_FAILED = "STARTRPC_FAILED";
 export const STARTRPC_SUCCESS = "STARTRPC_SUCCESS";
 export const STARTRPC_RETRY = "STARTRPC_RETRY";
 
-export const startRpcRequestFunc = (isRetry) =>
+export const startRpcRequestFunc = (isRetry, privPass) =>
   (dispatch, getState) => {
     const { syncAttemptRequest } =  getState().walletLoader;
     if (syncAttemptRequest) {
@@ -224,7 +224,6 @@ export const startRpcRequestFunc = (isRetry) =>
       daemonhost = "127.0.0.1";
       rpcport = "9109";
     }
-    var privPass;
     var request = new RpcSyncRequest();
     const cert = getDcrdCert(rpccertPath);
     request.setNetworkAddress(daemonhost + ":" + rpcport);
@@ -260,7 +259,7 @@ export const startRpcRequestFunc = (isRetry) =>
             const { rpcRetryAttempts } = getState().walletLoader;
             if (rpcRetryAttempts < MAX_RPC_RETRIES) {
               dispatch({ rpcRetryAttempts: rpcRetryAttempts+1, type: STARTRPC_RETRY });
-              setTimeout(() => dispatch(startRpcRequestFunc(isRetry)), RPC_RETRY_DELAY);
+              setTimeout(() => dispatch(startRpcRequestFunc(isRetry, privPass)), RPC_RETRY_DELAY);
             } else {
               dispatch({
                 error: `${status}.  You may need to edit ${getWalletPath(isTestNet(getState()), walletName)} and try again`,
@@ -269,7 +268,7 @@ export const startRpcRequestFunc = (isRetry) =>
               dispatch({ error: status, type: SYNC_FAILED });
             }
           } else {
-            dispatch(startRpcRequestFunc(true));
+            dispatch(startRpcRequestFunc(true, privPass));
           }
         }
       });

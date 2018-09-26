@@ -43,7 +43,7 @@ class GetStartedPage extends React.Component {
     if (!isSPV) {
       if (startStepIndex != nextProps.startStepIndex || getDaemonSynced != nextProps.getDaemonSynced ){
         if (nextProps.startStepIndex == 3 && nextProps.getDaemonSynced)
-          onRetryStartRPC();
+          onRetryStartRPC(false, this.state.walletPrivatePassphrase);
       }
     } else {
       if (startStepIndex != nextProps.startStepIndex ){
