@@ -62,7 +62,6 @@ class DaemonLoading extends React.Component {
       finishDateEstimation = new Date();
       finishDateEstimation.setSeconds(finishDateEstimation.getSeconds() + secondsLeft);
     }
-    console.log(hasAttemptedDiscover);
     return (
       <DaemonLoadingForm
         {...{

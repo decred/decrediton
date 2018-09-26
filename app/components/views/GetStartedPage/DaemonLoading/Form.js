@@ -42,6 +42,8 @@ const DaemonLoadingBody = ({
   onKeyDown,
   onRPCSync,
   hasAttemptedDiscover,
+  syncFetchHeadersLastHeaderTime,
+  syncFetchHeadersAttempt,
   ...props,
 }) => (
   <div className="page-body getstarted">
@@ -91,7 +93,13 @@ const DaemonLoadingBody = ({
               max={getNeededBlocks}
               value={getCurrentBlockCount}
             />
-            {!getDaemonStarted || getCurrentBlockCount == null || getDaemonSynced ? <div></div> :
+            {!getDaemonStarted || getCurrentBlockCount == null || getDaemonSynced ?
+              syncFetchHeadersAttempt &&
+              <div className="loader-bar-estimation">
+                <T id="getStarted.chainLoading.headerTime" m="Time from last fetched header:"/>
+                <span className="bold"> {syncFetchHeadersLastHeaderTime ? <FormattedRelative value={syncFetchHeadersLastHeaderTime}/> : "--" }</span>
+              </div>
+              :
               <div className="loader-bar-estimation">
                 <T id="getStarted.chainLoading.syncEstimation" m="Estimated time left"/>
                 <span className="bold"> {finishDateEstimation ? <FormattedRelative value={finishDateEstimation}/> : "--"} ({getCurrentBlockCount} / {getNeededBlocks})</span>

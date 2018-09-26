@@ -240,7 +240,8 @@ class GetStartedPage extends React.Component {
         appVersion,
         updateAvailable,
         isSPV,
-        isInputRequest
+        isInputRequest,
+        syncFetchHeadersAttempt,
       }} />;
   }
 }
