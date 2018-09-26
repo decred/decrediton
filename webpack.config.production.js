@@ -14,7 +14,7 @@ const config = merge(baseConfig, {
   devtool: "cheap-module-source-map",
 
   entry: [
-    "babel-polyfill",
+    "@babel/polyfill",
     "./app/index"
   ],
 
