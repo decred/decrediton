@@ -128,7 +128,7 @@ const SpvSyncBody = ({
               </div>
             </div>
             <div className="loader-bar-buttons">
-              <KeyBlueButton onClick={onSpvSync}>
+              <KeyBlueButton onClick={onSpvSync} disabled={!passPhrase}>
                 <T id="getStarted.discoverAddresses.scanBtn" m="Scan" />
               </KeyBlueButton>
             </div>
