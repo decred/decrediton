@@ -187,13 +187,12 @@ export default function walletLoader(state = {}, action) {
       walletOpenResponse: null,
       advancedDaemonInputRequest: true,
       walletExistResponse: null,
-      subscribeBlockNtfnsResponse: null,
-      startRpcResponse: false,
       seedService: null,
       rescanPointResponse: null,
-      fetchHeadersResponse: null,
-      discoverAddressRequestAttempt: false,
-      discoverAccountsComplete: false,
+      syncInput: false,
+      syncAttemptRequest: false,
+      syncError: null,
+      synced: false,
     };
   case STARTRPC_ATTEMPT:
     return { ...state,
