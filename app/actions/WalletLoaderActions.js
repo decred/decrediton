@@ -406,7 +406,7 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
       if (!syncCall) {
         dispatch({ syncCall: spvSyncCall, type: SYNC_UPDATE });
       }
-      syncConsumer(response, dispatch);
+      dispatch(syncConsumer(response));
     });
     spvSyncCall.on("end", function() {
       dispatch({ type: SYNC_SUCCESS });
