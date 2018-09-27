@@ -1,12 +1,20 @@
 import { LinearProgressFull } from "indicators";
-import { FormattedMessage as T, FormattedRelative } from "react-intl";
-import { SlateGrayButton, InvisibleButton } from "buttons";
+import { FormattedMessage as T, FormattedRelative, injectIntl, defineMessages } from "react-intl";
+import { SlateGrayButton, InvisibleButton, KeyBlueButton } from "buttons";
+import { PasswordInput } from "inputs";
 import { Tooltip } from "shared";
 import { shell } from "electron";
 import "style/GetStarted.less";
 import { AboutModalButtonInvisible } from "buttons";
 
-export default ({
+const messages = defineMessages({
+  passphrasePlaceholder: {
+    id: "getStarted.discoverAddresses.passphrasePlaceholder",
+    defaultMessage: "Private Passphrase"
+  }
+});
+
+const DaemonLoadingBody = ({
   Form,
   text,
   animationType,
@@ -26,6 +34,16 @@ export default ({
   appVersion,
   isDaemonRemote,
   isSPV,
+  syncInput,
+  passPhrase,
+  intl,
+  lastDcrwalletLogLine,
+  onSetPassPhrase,
+  onKeyDown,
+  onRPCSync,
+  hasAttemptedDiscover,
+  syncFetchHeadersLastHeaderTime,
+  syncFetchHeadersAttempt,
   ...props,
 }) => (
   <div className="page-body getstarted">
@@ -75,7 +93,13 @@ export default ({
               max={getNeededBlocks}
               value={getCurrentBlockCount}
             />
-            {!getDaemonStarted || getCurrentBlockCount == null || getDaemonSynced ? <div></div> :
+            {!getDaemonStarted || getCurrentBlockCount == null || getDaemonSynced ?
+              syncFetchHeadersAttempt &&
+              <div className="loader-bar-estimation">
+                <T id="getStarted.chainLoading.headerTime" m="Time from last fetched header:"/>
+                <span className="bold"> {syncFetchHeadersLastHeaderTime ? <FormattedRelative value={syncFetchHeadersLastHeaderTime}/> : "--" }</span>
+              </div>
+              :
               <div className="loader-bar-estimation">
                 <T id="getStarted.chainLoading.syncEstimation" m="Estimated time left"/>
                 <span className="bold"> {finishDateEstimation ? <FormattedRelative value={finishDateEstimation}/> : "--"} ({getCurrentBlockCount} / {getNeededBlocks})</span>
@@ -91,7 +115,44 @@ export default ({
           }
         </div>
         { Form && <Form {...{ ...props, isInputRequest, startupError, getCurrentBlockCount, getDaemonSynced, isSPV }}/> }
+        {syncInput ?
+          <div className="advanced-page-form">
+            <div className="advanced-daemon-row">
+              <T id="getStarted.discoverAccountsInfo" m={`
+                Enter the passphrase you just created to scan the blockchain for additional accounts you may have previously created with your wallet.
+
+                Your account names aren't stored on the blockchain, so you will have to rename them after setting up Decrediton.
+              `}/>
+            </div>
+            <div className="advanced-daemon-row">
+              <div className="advanced-daemon-label">
+                <T id="getStarted.discover.label" m="Scan for accounts" />
+              </div>
+              <div className="advanced-daemon-input">
+                <PasswordInput
+                  required
+                  autoFocus
+                  className="get-started-input-private-password"
+                  placeholder={intl.formatMessage(messages.passphrasePlaceholder)}
+                  value={passPhrase}
+                  onChange={(e) => onSetPassPhrase(e.target.value)}
+                  onKeyDown={onKeyDown}
+                  showErrors={hasAttemptedDiscover}/>
+              </div>
+            </div>
+            <div className="loader-bar-buttons">
+              <KeyBlueButton onClick={onRPCSync} disabled={!passPhrase}>
+                <T id="getStarted.discoverAddresses.scanBtn" m="Scan" />
+              </KeyBlueButton>
+            </div>
+          </div> :
+          <div className="get-started-last-log-lines">
+            <div className="last-dcrwallet-log-line">{lastDcrwalletLogLine}</div>
+          </div>
+        }
       </Aux>
     </div>
   </div>
 );
+
+export default injectIntl(DaemonLoadingBody);

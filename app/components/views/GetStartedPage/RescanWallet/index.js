@@ -35,10 +35,7 @@ class RescanWalletBody extends React.Component {
     var rescanEnd = rescanEndBlock;
     var rescanStart = rescanStartBlock;
     var rescanCurrent = rescanCurrentBlock;
-
-    if (isSPV) {
-      rescanCurrent = syncRescanProgress;
-    }
+    rescanCurrent = syncRescanProgress;
     return (
       <RescanWalletFormBody
         {...{

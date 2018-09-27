@@ -37,8 +37,6 @@ export const getCredentials = get([ "daemon", "credentials" ]);
 const START_STEP_OPEN = 2;
 const START_STEP_RPC1 = 3;
 const START_STEP_RPC2 = 4;
-const START_STEP_DISCOVER = 5;
-const START_STEP_FETCH = 6;
 
 export const setLanguage = get([ "daemon", "setLanguage" ]);
 export const showTutorial = get([ "daemon", "tutorial" ]);
@@ -61,7 +59,7 @@ export const versionInvalidError = createSelector(
   (invalid, error) => invalid ? error || "Unknown Error" : null
 );
 
-export const spvInput = get([ "walletLoader", "spvInput" ]);
+export const syncInput = get([ "walletLoader", "syncInput" ]);
 export const peerCount = get([ "walletLoader", "peerCount" ]);
 export const synced = get([ "walletLoader", "synced" ]);
 export const syncFetchMissingCfiltersAttempt = get([ "walletLoader", "syncFetchMissingCfiltersAttempt" ]);
@@ -77,17 +75,12 @@ export const syncFetchHeadersComplete = get([ "walletLoader" , "syncFetchHeaders
 export const syncFetchTimeStart = get([ "walletLoader" , "syncFetchTimeStart" ]);
 
 const isStartStepOpen = compose(eq(START_STEP_OPEN), startStepIndex);
-const isStartStepDiscover = compose(eq(START_STEP_DISCOVER), startStepIndex);
 const isStartStepRPC = compose(or(eq(START_STEP_RPC1), eq(START_STEP_RPC2)), startStepIndex);
-const isStartStepFetch = compose(eq(START_STEP_FETCH), startStepIndex);
 
 const walletExistError = and(get([ "walletLoader", "walletExistError" ]), isStartStepOpen);
 const walletCreateError = and(get([ "walletLoader", "walletCreateError" ]), isStartStepOpen);
 const walletOpenError = and(get([ "walletLoader", "walletOpenError" ]), isStartStepOpen);
 const startRpcError = and(get([ "walletLoader", "startRpcError" ]), isStartStepRPC);
-const discoverAddrError = and(get([ "walletLoader", "discoverAddressError" ]), isStartStepDiscover);
-const fetchHeadersError = and(get([ "walletLoader", "fetchHeadersError" ]), isStartStepFetch);
-export const fetchHeadersDone = (get([ "walletLoader", "fetchHeadersResponse" ]));
 
 export const startupError = or(
   getVersionServiceError,
@@ -97,8 +90,6 @@ export const startupError = or(
   walletCreateError,
   walletOpenError,
   startRpcError,
-  discoverAddrError,
-  fetchHeadersError
 );
 
 const availableWallets = get([ "daemon", "availableWallets" ]);
@@ -127,19 +118,15 @@ export const getWalletName = get([ "daemon", "walletName" ]);
 
 const openWalletInputRequest = get([ "walletLoader", "openWalletInputRequest" ]);
 const createWalletInputRequest = get([ "walletLoader", "createWalletInputRequest" ]);
-const discoverAddressInputRequest = get([ "walletLoader", "discoverAddressInputRequest" ]);
 const advancedDaemonInputRequest = get([ "walletLoader", "advancedDaemonInputRequest" ]);
 const selectCreateWalletInputRequest = get([ "daemon", "selectCreateWalletInputRequest" ]);
 
 export const isInputRequest = or(
   openWalletInputRequest,
   createWalletInputRequest,
-  discoverAddressInputRequest,
   and(openForm, isAdvancedDaemon, advancedDaemonInputRequest),
   selectCreateWalletInputRequest
 );
-
-export const isDiscoverAddressAttempt = get([ "walletLoader", "discoverAddressRequestAttempt" ]);
 
 export const balances = or(get([ "grpc", "balances" ]), () => []);
 export const walletService = get([ "grpc", "walletService" ]);

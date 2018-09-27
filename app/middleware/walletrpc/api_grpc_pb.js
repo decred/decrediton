@@ -906,6 +906,28 @@ function deserialize_walletrpc_RevokeTicketsResponse(buffer_arg) {
   return api_pb.RevokeTicketsResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_walletrpc_RpcSyncRequest(arg) {
+  if (!(arg instanceof api_pb.RpcSyncRequest)) {
+    throw new Error('Expected argument of type walletrpc.RpcSyncRequest');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_RpcSyncRequest(buffer_arg) {
+  return api_pb.RpcSyncRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_RpcSyncResponse(arg) {
+  if (!(arg instanceof api_pb.RpcSyncResponse)) {
+    throw new Error('Expected argument of type walletrpc.RpcSyncResponse');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_RpcSyncResponse(buffer_arg) {
+  return api_pb.RpcSyncResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_walletrpc_SetAccountRequest(arg) {
   if (!(arg instanceof api_pb.SetAccountRequest)) {
     throw new Error('Expected argument of type walletrpc.SetAccountRequest');
@@ -2106,6 +2128,17 @@ var WalletLoaderServiceService = exports.WalletLoaderServiceService = {
     requestDeserialize: deserialize_walletrpc_SpvSyncRequest,
     responseSerialize: serialize_walletrpc_SpvSyncResponse,
     responseDeserialize: deserialize_walletrpc_SpvSyncResponse,
+  },
+  rpcSync: {
+    path: '/walletrpc.WalletLoaderService/RpcSync',
+    requestStream: false,
+    responseStream: true,
+    requestType: api_pb.RpcSyncRequest,
+    responseType: api_pb.RpcSyncResponse,
+    requestSerialize: serialize_walletrpc_RpcSyncRequest,
+    requestDeserialize: deserialize_walletrpc_RpcSyncRequest,
+    responseSerialize: serialize_walletrpc_RpcSyncResponse,
+    responseDeserialize: deserialize_walletrpc_RpcSyncResponse,
   },
   rescanPoint: {
     path: '/walletrpc.WalletLoaderService/RescanPoint',

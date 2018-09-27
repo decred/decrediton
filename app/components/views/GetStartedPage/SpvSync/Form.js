@@ -29,11 +29,12 @@ const SpvSyncBody = ({
   onSetPassPhrase,
   onSpvSync,
   onKeyDown,
-  spvInput,
+  syncInput,
   firstBlockTime,
   syncFetchTimeStart,
   syncFetchHeadersLastHeaderTime,
   lastDcrwalletLogLine,
+  hasAttemptedDiscover,
   Form,
   syncFetchHeadersAttempt,
   syncFetchHeadersComplete,
@@ -101,7 +102,7 @@ const SpvSyncBody = ({
           }
         </div>
         {Form && <Form {...props}/>}
-        {spvInput ?
+        {syncInput ?
           <div className="advanced-page-form">
             <div className="advanced-daemon-row">
               <T id="getStarted.discoverAccountsInfo" m={`
@@ -116,16 +117,18 @@ const SpvSyncBody = ({
               </div>
               <div className="advanced-daemon-input">
                 <PasswordInput
+                  required
                   autoFocus
                   className="get-started-input-private-password"
                   placeholder={intl.formatMessage(messages.passphrasePlaceholder)}
                   value={passPhrase}
                   onChange={(e) => onSetPassPhrase(e.target.value)}
-                  onKeyDown={onKeyDown}/>
+                  onKeyDown={onKeyDown}
+                  showErrors={hasAttemptedDiscover}/>
               </div>
             </div>
             <div className="loader-bar-buttons">
-              <KeyBlueButton onClick={onSpvSync}>
+              <KeyBlueButton onClick={onSpvSync} disabled={!passPhrase}>
                 <T id="getStarted.discoverAddresses.scanBtn" m="Scan" />
               </KeyBlueButton>
             </div>

@@ -26,7 +26,7 @@ class SpvSync extends React.Component {
           }
         });
     }, 2000);
-    if (this.props.walletPrivatePassphrase && this.props.fetchHeadersDone !== null) {
+    if (this.props.walletPrivatePassphrase) {
       this.props.onSpvSynces(this.props.walletPrivatePassphrase);
     }
   }
@@ -72,6 +72,10 @@ class SpvSync extends React.Component {
   }
 
   onSetPassPhrase(passPhrase) {
+    if (passPhrase != "") {
+      this.setState({ hasAttemptedDiscover: true });
+    }
+
     this.setState({ passPhrase });
   }
 
@@ -90,7 +94,7 @@ class SpvSync extends React.Component {
   }
 
   onKeyDown(e) {
-    if(e.keyCode == 13) {   // Enter key
+    if (e.keyCode == 13) {   // Enter key
       e.preventDefault();
       this.onSpvSync();
     }

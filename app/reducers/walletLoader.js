@@ -5,16 +5,12 @@ import {
   OPENWALLET_INPUT, OPENWALLET_FAILED_INPUT, OPENWALLET_ATTEMPT, OPENWALLET_FAILED, OPENWALLET_SUCCESS,
   CLOSEWALLET_ATTEMPT, CLOSEWALLET_FAILED, CLOSEWALLET_SUCCESS,
   STARTRPC_ATTEMPT, STARTRPC_FAILED, STARTRPC_SUCCESS, STARTRPC_RETRY,
-  DISCOVERADDRESS_INPUT, DISCOVERADDRESS_FAILED_INPUT, DISCOVERADDRESS_ATTEMPT, DISCOVERADDRESS_FAILED, DISCOVERADDRESS_SUCCESS,
-  SUBSCRIBEBLOCKNTFNS_ATTEMPT, SUBSCRIBEBLOCKNTFNS_FAILED, SUBSCRIBEBLOCKNTFNS_SUCCESS,
-  FETCHHEADERS_ATTEMPT, FETCHHEADERS_FAILED, FETCHHEADERS_PROGRESS, FETCHHEADERS_SUCCESS,
   CREATEWALLET_EXISTINGSEED_INPUT, CREATEWALLET_NEWSEED_INPUT, CREATEWALLET_NEWSEED_CONFIRM_INPUT, CREATEWALLET_NEWSEED_BACK_INPUT,
   CREATEWALLET_GOBACK_EXISITNG_OR_NEW, CREATEWALLET_GOBACK,
   UPDATEDISCOVERACCOUNTS, NEEDED_BLOCKS_DETERMINED, CREATEWATCHONLYWALLET_ATTEMPT,
   GETWALLETSEEDSVC_ATTEMPT, GETWALLETSEEDSVC_SUCCESS,
-  FETCHMISSINGCFILTERS_ATTEMPT, FETCHMISSINGCFILTERS_FAILED, FETCHMISSINGCFILTERS_SUCCESS,
   RESCANPOINT_ATTEMPT, RESCANPOINT_FAILED, RESCANPOINT_SUCCESS,
-  SPVSYNC_SUCCESS, SPVSYNC_UPDATE, SPVSYNC_FAILED, SPVSYNC_ATTEMPT, SPVSYNC_INPUT,
+  SYNC_SUCCESS, SYNC_UPDATE, SYNC_FAILED, SYNC_ATTEMPT, SYNC_INPUT,
   SYNC_SYNCED, SYNC_UNSYNCED, SYNC_FETCHED_HEADERS_STARTED, SYNC_FETCHED_HEADERS_PROGRESS, SYNC_FETCHED_HEADERS_FINISHED,
   SYNC_PEER_CONNECTED, SYNC_PEER_DISCONNECTED, SYNC_FETCHED_MISSING_CFILTERS_STARTED,
   SYNC_FETCHED_MISSING_CFILTERS_PROGRESS, SYNC_FETCHED_MISSING_CFILTERS_FINISHED,
@@ -29,9 +25,6 @@ import {
 import {
   GETSTARTUPWALLETINFO_ATTEMPT
 } from "actions/ClientActions";
-import {
-  RESCAN_ATTEMPT
-} from "actions/ControlActions";
 import { WALLET_LOADER_SETTINGS } from "actions/DaemonActions";
 
 export default function walletLoader(state = {}, action) {
@@ -194,13 +187,12 @@ export default function walletLoader(state = {}, action) {
       walletOpenResponse: null,
       advancedDaemonInputRequest: true,
       walletExistResponse: null,
-      subscribeBlockNtfnsResponse: null,
-      startRpcResponse: false,
       seedService: null,
       rescanPointResponse: null,
-      fetchHeadersResponse: null,
-      discoverAddressRequestAttempt: false,
-      discoverAccountsComplete: false,
+      syncInput: false,
+      syncAttemptRequest: false,
+      syncError: null,
+      synced: false,
     };
   case STARTRPC_ATTEMPT:
     return { ...state,
@@ -224,96 +216,9 @@ export default function walletLoader(state = {}, action) {
       startRpcResponse: true,
       stepIndex: 4,
     };
-  case DISCOVERADDRESS_INPUT:
-    return { ...state,
-      discoverAddressInputRequest: true,
-    };
-  case DISCOVERADDRESS_FAILED_INPUT:
-    return { ...state,
-      discoverAddressInputRequest: true,
-      discoverAddressError: String(action.error),
-      discoverAddressRequestAttempt: false,
-    };
-  case DISCOVERADDRESS_ATTEMPT:
-    return { ...state,
-      discoverAddressInputRequest: false,
-      discoverAddressError: null,
-      discoverAddressRequestAttempt: true,
-    };
-  case DISCOVERADDRESS_FAILED:
-    return { ...state,
-      discoverAddressError: String(action.error),
-      discoverAddressRequestAttempt: false,
-    };
-  case DISCOVERADDRESS_SUCCESS:
-    return { ...state,
-      discoverAddressError: null,
-      discoverAddressRequestAttempt: false,
-      discoverAddressResponse: true,
-      stepIndex: action.complete ? 8 : 7, // 7 = stakepool selection, 8 = rescanning
-    };
-  case FETCHHEADERS_ATTEMPT:
-    return { ...state,
-      fetchHeadersRequestAttempt: true,
-    };
-  case FETCHHEADERS_FAILED:
-    return { ...state,
-      fetchHeadersError: String(action.error),
-      fetchHeadersRequestAttempt: false,
-    };
-  case FETCHHEADERS_PROGRESS:
-    return { ...state,
-      fetchHeadersResponse: action.response,
-    };
-  case FETCHHEADERS_SUCCESS:
-    return { ...state,
-      fetchHeadersError: null,
-      fetchHeadersRequestAttempt: false,
-      fetchHeadersResponse: action.response,
-      stepIndex: 6,
-    };
-  case RESCAN_ATTEMPT:
-    return { ...state,
-      stepIndex: 8
-    };
   case GETSTARTUPWALLETINFO_ATTEMPT:
     return { ...state,
       stepIndex: 9
-    };
-  case FETCHMISSINGCFILTERS_ATTEMPT:
-    return { ...state,
-      fetchHeadersError: null,
-      fetchHeadersRequestAttempt: true,
-      fetchHeadersResponse: null,
-    };
-  case FETCHMISSINGCFILTERS_FAILED:
-    return { ...state,
-      fetchHeadersError: action.error,
-      fetchHeadersRequestAttempt: false,
-      fetchHeadersResponse: null,
-    };
-  case FETCHMISSINGCFILTERS_SUCCESS:
-    return { ...state,
-      fetchHeadersError: null,
-      fetchHeadersRequestAttempt: false,
-      stepIndex: 5
-    };
-  case SUBSCRIBEBLOCKNTFNS_ATTEMPT:
-    return { ...state,
-      subscribeBlockNtfnsRequestAttempt: true,
-    };
-  case SUBSCRIBEBLOCKNTFNS_FAILED:
-    return { ...state,
-      subscribeBlockNtfnsError: String(action.error),
-      subscribeBlockNtfnsRequestAttempt: false,
-    };
-  case SUBSCRIBEBLOCKNTFNS_SUCCESS:
-    return { ...state,
-      subscribeBlockNtfnsError: null,
-      subscribeBlockNtfnsRequestAttempt: false,
-      subscribeBlockNtfnsRequest: null,
-      subscribeBlockNtfnsResponse: action.response,
-      stepIndex: 4.5,
     };
   case UPDATEDISCOVERACCOUNTS:
     return { ...state,
@@ -353,32 +258,32 @@ export default function walletLoader(state = {}, action) {
       rescanPointError: null,
       rescanPointResponse: action.response,
     };
-  case SPVSYNC_INPUT:
+  case SYNC_INPUT:
     return { ...state,
-      spvInput: true,
+      syncInput: true,
     };
-  case SPVSYNC_ATTEMPT:
+  case SYNC_ATTEMPT:
     return { ...state,
-      spvInput: false,
-      spvSyncAttemptRequest: true,
-      spvSyncError: null,
+      syncInput: false,
+      syncAttemptRequest: true,
+      syncError: null,
       synced: false,
     };
-  case SPVSYNC_FAILED:
+  case SYNC_FAILED:
     return { ...state,
-      spvInput: true,
-      spvSyncAttemptRequest: false,
+      syncInput: true,
+      syncAttemptRequest: false,
       synced: false,
     };
-  case SPVSYNC_UPDATE:
+  case SYNC_UPDATE:
     return { ...state,
-      spvSyncError: null,
+      syncError: null,
       syncCall: action.syncCall,
     };
-  case SPVSYNC_SUCCESS:
+  case SYNC_SUCCESS:
     return { ...state,
-      spvSyncAttemptRequest: false,
-      spvSyncError: null,
+      syncAttemptRequest: false,
+      syncError: null,
       synced: false,
     };
   case SYNC_SYNCED:

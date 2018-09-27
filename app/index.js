@@ -84,7 +84,7 @@ var initialState = {
   },
   version: {
     // RequiredVersion
-    requiredVersion: "5.1.0",
+    requiredVersion: "5.3.0",
     versionInvalid: false,
     versionInvalidError: null,
     // VersionService
@@ -203,7 +203,11 @@ var initialState = {
   },
   walletLoader: {
     spvConnect: globalCfg.get("spv_connect"),
-    spvInput: false,
+    syncInput: false,
+    syncError: null,
+    syncAttemptRequest: false,
+    syncCall: null,
+    peerCount: 0,
     existingOrNew: false,
     rpcRetryAttempts: 0,
     neededBlocks: 0,
@@ -242,18 +246,6 @@ var initialState = {
     startRpcRequestAttempt: false,
     startRpcResponse: null,
     startRpcError: null,
-    // DiscoverAddress
-    discoverAddressRequestAttempt: false,
-    discoverAddressResponse: null,
-    discoverAddressError: null,
-    // SubscribeBlockNtfns
-    subscribeBlockNtfnsRequestAttempt: false,
-    subscribeBlockNtfnsResponse: null,
-    subscribeBlockNtfnsError: null,
-    // FetchHeaders
-    fetchHeadersRequestAttempt: false,
-    fetchHeadersResponse: null,
-    fetchHeadersError: null,
   },
   notifications: {
     transactionNtfns: null,

@@ -13,7 +13,6 @@ const mapStateToProps = selectorMap({
   showPrivacy: sel.showPrivacy,
   startStepIndex: sel.startStepIndex,
   isInputRequest: sel.isInputRequest,
-  isDiscoverAddressAttempt: sel.isDiscoverAddressAttempt,
   startupError: sel.startupError,
   confirmNewSeed: sel.confirmNewSeed,
   existingOrNew: sel.existingOrNew,
@@ -45,9 +44,8 @@ const mapStateToProps = selectorMap({
   createNewWallet: sel.createNewWallet,
   isWatchingOnly: sel.isWatchingOnly,
   masterPubKey: sel.masterPubKey,
-  fetchHeadersDone: sel.fetchHeadersDone,
   isSPV: sel.isSPV,
-  spvInput: sel.spvInput,
+  syncInput: sel.syncInput,
 
   peerCount: sel.peerCount,
   synced: sel.synced,
@@ -81,11 +79,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onReturnToWalletSelection: wla.createWalletGoBackWalletSelection,
   onReturnToExistingOrNewScreen: wla.createWalletGoBackExistingOrNew,
   onSetCreateWalletFromExisting: wla.createWalletExistingToggle,
-  onDiscoverAddresses: wla.discoverAddressAttempt,
   onOpenWallet: wla.openWalletAttempt,
   onRetryStartRPC: wla.startRpcRequestFunc,
   doVersionCheck: wla.versionCheckAction,
-  onFetchHeaders: wla.fetchHeadersAttempt,
   onStartDaemon: da.startDaemon,
   onStartWallet: da.startWallet,
   startSPVSync: wla.spvSyncAttempt,
@@ -94,7 +90,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   setCredentialsAppdataError: da.setCredentialsAppdataError,
   onGetAvailableWallets: da.getAvailableWallets,
   validateMasterPubKey: ca.validateMasterPubKey,
-  startWalletServices: ca.loadActiveDataFiltersAttempt,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);
