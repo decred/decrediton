@@ -15,15 +15,15 @@ const purchaseTicketSpvWarn = (blocksNumber) => <T id="spv.purchase.warn"
 
 const Tickets = ({
   spvMode,
-  blocksPassedOnTicketInterval,
+  blocksNumberToNextTicket,
   ...props,
 }) => (
   <Aux>
     <div className="tabbed-page-subtitle"><T id="purchase.subtitle" m="Purchase Tickets"/></div>
     <StakeInfo />
     {
-      spvMode && blocksPassedOnTicketInterval < 5  ?
-        <ShowWarning warn={purchaseTicketSpvWarn(5-blocksPassedOnTicketInterval)}/> : <PurchaseTickets {...{ ...props }} />
+      spvMode && blocksNumberToNextTicket < 2  ?
+        <ShowWarning warn={purchaseTicketSpvWarn(2-blocksNumberToNextTicket)}/> : <PurchaseTickets {...{ ...props }} />
     }
     <div className="stakepool-area-spacing"></div>
     {
