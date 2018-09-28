@@ -34,17 +34,21 @@ export const getAccountNumber = log((walletService, accountName) => new Promise(
   walletService.accountNumber(request, (err, res) => err ? fail(err) : ok(res));
 }), "Get Account Number");
 
-export const getTickets = log((walletService, startHeight, endHeight) => new Promise((ok, fail) => {
+export const getTickets = log((walletService, startHeight, endHeight, targetCount) => new Promise((ok, fail) => {
   const tickets = [];
   const request = new api.GetTicketsRequest();
   request.setStartingBlockHeight(startHeight);
   request.setEndingBlockHeight(endHeight);
+  request.setTargetTicketCount(targetCount);
   const getTx = walletService.getTickets(request);
-  getTx.on("data", res => tickets.unshift({
-    status: TicketTypes.get(res.getTicket().getTicketStatus()),
-    ticket: res.getTicket().getTicket(),
-    spender: res.getTicket().getSpender()
-  }));
+  getTx.on("data", res => {
+    tickets.push({
+      status: TicketTypes.get(res.getTicket().getTicketStatus()),
+      ticket: res.getTicket().getTicket(),
+      spender: res.getTicket().getSpender(),
+      block: res.getBlock(),
+    });
+  });
   getTx.on("end", () => ok(tickets));
   getTx.on("error", fail);
 }), "Get Tickets", logOptionNoResponseData());

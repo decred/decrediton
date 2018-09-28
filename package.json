@@ -207,6 +207,7 @@
     "react-router-transition": "^1.2.1",
     "react-select": "1.0.0",
     "react-timeout": "^1.0.1",
+    "react-visibility-sensor": "^4.1.1",
     "recharts": "^1.0.0-beta.10",
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0",

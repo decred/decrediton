@@ -19,7 +19,7 @@ const messageByType = { // TODO: use constants instead of string
   "live": <T id="transaction.type.live" m="Live" />,
 };
 
-const StakeTxRow = ({ status, ...props }) => {
+const StakeTxRow = ({ status,  ...props }) => {
   const { overview, ticketPrice, ticketReward, leaveTimestamp, enterTimestamp } = props;
 
   const rewardLabel = <T id="ticket.rewardLabel" m="Ticket Reward" />;
