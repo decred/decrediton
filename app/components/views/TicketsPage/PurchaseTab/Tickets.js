@@ -22,7 +22,7 @@ const Tickets = ({
     <div className="tabbed-page-subtitle"><T id="purchase.subtitle" m="Purchase Tickets"/></div>
     <StakeInfo />
     {
-      blocksPassedOnTicketInterval < 5  ?
+      spvMode && blocksPassedOnTicketInterval < 5  ?
         <ShowWarning warn={purchaseTicketSpvWarn(5-blocksPassedOnTicketInterval)}/> : <PurchaseTickets {...{ ...props }} />
     }
     <div className="stakepool-area-spacing"></div>
