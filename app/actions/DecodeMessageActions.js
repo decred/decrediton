@@ -36,7 +36,7 @@ export const decodeRawTransactions = (hexTxs) => (dispatch, getState) => {
     dispatch({ transactions, type: DECODERAWTXS_SUCCESS });
   };
 
-  Promise
+  return Promise
     .all(hexTxs.map(hex => decodeTransaction(decodeMessageService, hex)))
     .then(resolved)
     .catch(error => dispatch({ error, type: DECODERAWTXS_FAILED }));

@@ -6,7 +6,7 @@ import { getNextAddressAttempt,
   stopAutoBuyerAttempt, getTicketBuyerConfigAttempt, publishUnminedTransactionsAttempt } from "./ControlActions";
 import { transactionNtfnsStart, accountNtfnsStart } from "./NotificationActions";
 import { updateStakepoolPurchaseInformation, setStakePoolVoteChoices, getStakepoolStats } from "./StakePoolActions";
-import { getDecodeMessageServiceAttempt } from "./DecodeMessageActions";
+import { getDecodeMessageServiceAttempt, decodeRawTransactions } from "./DecodeMessageActions";
 import { push as pushHistory, goBack } from "react-router-redux";
 import { getWalletCfg, getGlobalCfg } from "../config";
 import { onAppReloadRequested } from "wallet";
@@ -87,7 +87,7 @@ export const GETSTARTUPWALLETINFO_FAILED = "GETSTARTUPWALLETINFO_FAILED";
 export const getStartupWalletInfo = () => (dispatch) => {
   dispatch({ type: GETSTARTUPWALLETINFO_ATTEMPT });
   setTimeout( () => { dispatch(getStakeInfoAttempt()); }, 1000);
-  setTimeout( () => { dispatch(getTicketsInfoAttempt()); }, 1000);
+  setTimeout( () => { dispatch(reloadTickets()); }, 1000);
   return new Promise((resolve, reject) => {
     setTimeout( async () => {
       try {
@@ -408,14 +408,12 @@ export const getStakeInfoAttempt = () => (dispatch, getState) => {
 
       const checkedFields = [ "getExpired", "getLive", "getMissed", "getOwnMempoolTix",
         "getRevoked", "getVoted" ];
-      const reloadTickets = getStakeInfoResponse
+      const doReloadTickets = getStakeInfoResponse
         ? checkedFields.reduce((a, v) => a||getStakeInfoResponse[v]() !== resp[v](), false)
         : false;
 
-      if (reloadTickets) {
-        // TODO: once we switch to fully streamed getTickets(), just invalidate
-        // the current ticket list.
-        setTimeout( () => {dispatch(getTicketsInfoAttempt());}, 1000);
+      if (doReloadTickets) {
+        setTimeout( () => { dispatch(reloadTickets()); }, 1000);
       }
     })
     .catch(error => dispatch({ error, type: GETSTAKEINFO_FAILED }));
@@ -499,19 +497,99 @@ export const GETTICKETS_ATTEMPT = "GETTICKETS_ATTEMPT";
 export const GETTICKETS_FAILED = "GETTICKETS_FAILED";
 export const GETTICKETS_COMPLETE = "GETTICKETS_COMPLETE";
 
-export const getTicketsInfoAttempt = () => (dispatch, getState) => {
-  const { grpc: { getTicketsRequestAttempt } } = getState();
+function filterTickets(tickets, filter) {
+  return tickets
+    .filter(v => filter.status.length ? filter.status.indexOf(v.status) > -1 : true );
+}
+
+export const getTickets = () => async (dispatch, getState) => {
+  const { getTicketsRequestAttempt } = getState().grpc;
   if (getTicketsRequestAttempt) return;
 
-  // using 0..-1 requests all+unmined tickets
-  let startRequestHeight = 0;
-  let endRequestHeight = -1;
-
   dispatch({ type: GETTICKETS_ATTEMPT });
-  wallet.getTickets(sel.walletService(getState()), startRequestHeight, endRequestHeight)
-    .then(tickets => setTimeout(() => dispatch({ tickets, type: GETTICKETS_COMPLETE }), 1000))
-    .catch(error => console.error(error + " Please try again"));
+
+  const { ticketsFilter, maximumTransactionCount, walletService,
+    currentBlockHeight } = getState().grpc;
+  let { noMoreTickets, lastTicket, minedTickets } = getState().grpc;
+  const pageCount = maximumTransactionCount;
+
+  // List of transactions found after filtering
+  let filtered = [];
+  let tickets;
+
+  // always request unmined tickets as new ones may be available or some may
+  // have been mined
+  tickets = await wallet.getTickets(walletService, -1, -1, 0);
+  const unminedFiltered = filterTickets(tickets, ticketsFilter);
+  const unminedTickets = sel.ticketsNormalizer(getState())(unminedFiltered);
+
+  // now, request a batch of mined transactions until `maximumTransactionCount`
+  // transactions have been obtained (after filtering)
+  while (!noMoreTickets && (filtered.length < maximumTransactionCount)) {
+    let startRequestHeight, endRequestHeight;
+
+    if ( ticketsFilter.listDirection === "desc" ) {
+      startRequestHeight = lastTicket ? lastTicket.block.getHeight() -1 : currentBlockHeight;
+      endRequestHeight = 1;
+    } else {
+      startRequestHeight = lastTicket ? lastTicket.block.getHeight() +1 : 1;
+      endRequestHeight = currentBlockHeight;
+    }
+
+    try {
+      tickets = await wallet.getTickets(walletService,
+        startRequestHeight, endRequestHeight, pageCount);
+      noMoreTickets = tickets.length === 0;
+      lastTicket = tickets.length ? tickets[tickets.length -1] : lastTicket;
+      filterTickets(tickets, ticketsFilter)
+        .forEach(v => filtered.push(v));
+    } catch (error) {
+      dispatch({ error, type: GETTICKETS_FAILED });
+      return;
+    }
+  }
+
+  const normalized = sel.ticketsNormalizer(getState())(filtered);
+
+  minedTickets = [ ...minedTickets, ...normalized ];
+
+  dispatch({ unminedTickets, minedTickets,
+    noMoreTickets, lastTicket, type: GETTICKETS_COMPLETE });
 };
+
+export const RAWTICKETTRANSACTIONS_DECODED = "RAWTICKETTRANSACTIONS_DECODED";
+export const decodeRawTicketTransactions = (ticket) => async (dispatch, getState) => {
+  const toDecode = [];
+  if (!ticket.decodedTicketTx) {
+    toDecode.push(ticket.ticketRawTx);
+    if (ticket.spenderHash) {
+      toDecode.push(ticket.spenderRawTx);
+    }
+  }
+  if (!toDecode.length) return;
+
+  try {
+    await dispatch(decodeRawTransactions(toDecode));
+    const newTicket = sel.ticketNormalizer(getState())(ticket.originalTicket);
+    dispatch({ ticket, newTicket, type: RAWTICKETTRANSACTIONS_DECODED });
+  } catch (error) {
+    console.log("xxxxx error in decodeRawTicketTransactions", error);
+  }
+};
+
+export const CLEAR_TICKETS = "CLEAR_TICKETS";
+export const reloadTickets = () => dispatch => {
+  dispatch({ type: CLEAR_TICKETS });
+  dispatch(getTickets());
+};
+
+export const CHANGE_TICKETS_FILTER = "CHANGE_TICKETS_FILTER";
+export function changeTicketsFilter(newFilter) {
+  return (dispatch) => {
+    dispatch({ ticketsFilter: newFilter, type: CHANGE_TICKETS_FILTER });
+    dispatch(getTickets());
+  };
+}
 
 export const GETTRANSACTIONS_ATTEMPT = "GETTRANSACTIONS_ATTEMPT";
 export const GETTRANSACTIONS_FAILED = "GETTRANSACTIONS_FAILED";

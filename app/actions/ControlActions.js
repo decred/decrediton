@@ -2,7 +2,8 @@
 import * as wallet from "wallet";
 import * as sel from "selectors";
 import { isValidAddress, isValidMasterPubKey } from "helpers";
-import { getAccountsAttempt, getStakeInfoAttempt, startWalletServices, getStartupWalletInfo } from "./ClientActions";
+import { getAccountsAttempt, getStakeInfoAttempt, startWalletServices,
+  getStartupWalletInfo, reloadTickets } from "./ClientActions";
 import { getWalletCfg } from "../config";
 import { RescanRequest, ConstructTransactionRequest } from "../middleware/walletrpc/api_pb";
 
@@ -251,8 +252,9 @@ export const purchaseTicketsAttempt = (
       )
         .then(purchaseTicketsResponse => {
           dispatch({ purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
-          setTimeout( () => {dispatch(getAccountsAttempt());}, 4000);
+          setTimeout(() => { dispatch(getAccountsAttempt()); }, 4000);
           setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 4000);
+          setTimeout(() => { dispatch(reloadTickets()); }, 4000);
         })
         .catch(error => dispatch({ error, type: PURCHASETICKETS_FAILED }))
   ));
