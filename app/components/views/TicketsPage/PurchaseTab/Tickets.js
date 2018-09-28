@@ -6,13 +6,6 @@ import { spv } from "connectors";
 import { ShowWarning } from "shared";
 import "style/StakePool.less";
 
-const purchaseTicketSpvWarn = (blocksNumber) => <T id="spv.purchase.warn"
-  m="Purchase Tickets is not available right now, because we are in the beginning of a ticket interval. After {blocksNumber} blocks it will be available again."
-  values={{
-    blocksNumber: blocksNumber
-  }}
-/>;
-
 const Tickets = ({
   spvMode,
   blocksNumberToNextTicket,
@@ -22,8 +15,9 @@ const Tickets = ({
     <div className="tabbed-page-subtitle"><T id="purchase.subtitle" m="Purchase Tickets"/></div>
     <StakeInfo />
     {
-      spvMode && blocksNumberToNextTicket < 2  ?
-        <ShowWarning warn={purchaseTicketSpvWarn(2-blocksNumberToNextTicket)}/> : <PurchaseTickets {...{ ...props }} />
+      spvMode && blocksNumberToNextTicket == 2  ?
+        <ShowWarning warn={<T id="spv.purchase.warn" m="Purchase Tickets is not available right now, because we are at the end of a ticket interval. After one block it will be available again."/>}/> :
+        <PurchaseTickets {...{ ...props }} />
     }
     <div className="stakepool-area-spacing"></div>
     {
