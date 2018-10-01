@@ -34,9 +34,9 @@ export default ({
           </Aux>
         </div>
         <div className="go-back-screen-button-area">
-          <Tooltip text={ <T id="logs.goBack" m="Go back" /> }><div className="go-back-screen-button" onClick={onHideReleaseNotes}/></Tooltip>
+          <Tooltip text={ <T id="releaseNotes.goBack" m="Go back" /> }><div className="go-back-screen-button" onClick={onHideReleaseNotes}/></Tooltip>
         </div>
-        <T id="getStarted.logsTitle" m="Decrediton v{version} Released" values={{ version: (appVersion) }}/>
+        <T id="getStarted.releaseNotesTitle" m="Decrediton v{version} Released" values={{ version: (appVersion) }}/>
       </div>
       <div className="release-notes">
         <div className="release-notes-text">
