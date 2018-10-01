@@ -42,7 +42,7 @@ export const closeDCRW = () => {
     } else if (require("is-running")(dcrwPID)) {
       const win32ipc = require("../node_modules/win32ipc/build/Release/win32ipc.node");
       try {
-        win32ipc.closePipe(dcrwPipeRx.readEnd, dcrwPipeRx.writeEnd);
+        win32ipc.closePipe(dcrwPipeRx);
       } catch (e) {
         logger.log("error", "Error closing dcrwallet piperx: " + e);
       }
