@@ -14,6 +14,7 @@ const logger = createLogger(debug);
 
 let dcrdPID;
 let dcrwPID;
+let dcrwPipeRx;
 
 let dcrwPort;
 
@@ -38,6 +39,13 @@ export const closeDCRW = () => {
     if (require("is-running")(dcrwPID) && os.platform() != "win32") {
       logger.log("info", "Sending SIGINT to dcrwallet at pid:" + dcrwPID);
       process.kill(dcrwPID, "SIGINT");
+    } else if (require("is-running")(dcrwPID)) {
+      const win32ipc = require("../node_modules/win32ipc/build/Release/win32ipc.node");
+      try {
+        win32ipc.closePipe(dcrwPipeRx.readEnd, dcrwPipeRx.writeEnd);
+      } catch (e) {
+        logger.log("error", "Error closing dcrwallet piperx: " + e);
+      }
     }
     dcrwPID = null;
     return true;
@@ -191,8 +199,8 @@ export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
     try {
       const util = require("util");
       const win32ipc = require("../node_modules/win32ipc/build/Release/win32ipc.node");
-      const pipe = win32ipc.createPipe("out");
-      args.push(util.format("--piperx=%d", pipe.readEnd));
+      dcrwPipeRx = win32ipc.createPipe("out");
+      args.push(util.format("--piperx=%d", dcrwPipeRx.readEnd));
     } catch (e) {
       logger.log("error", "can't find proper module to launch dcrwallet: " + e);
     }
