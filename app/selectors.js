@@ -311,6 +311,10 @@ export const ticketsFilter = get([ "grpc", "ticketsFilter" ]);
 export const ticketsNormalizer = createSelector([ ticketNormalizer ], map);
 export const tickets = get([ "grpc", "tickets" ]);
 
+// note that hasTickets means "ever had any tickets", **NOT** "currently has live
+// tickets".
+export const hasTickets = compose(t => t && t.length > 0, tickets);
+
 // aux map from ticket/spender hash => ticket info
 const txHashToTicket = createSelector(
   [ tickets ],
@@ -924,10 +928,6 @@ export const preVoteProposals = get([ "governance", "preVote" ]);
 export const votedProposals = get([ "governance", "voted" ]);
 export const lastVettedFetchTime = get([ "governance", "lastVettedFetchTime" ]);
 
-export const hasTickets = createSelector(
-  [ tickets ],
-  (tickets) => tickets && tickets.length > 0,
-);
 export const getProposalAttempt = get([ "governance", "getProposalAttempt" ]);
 export const getProposalError = get([ "governance", "getProposalError" ]);
 export const proposalDetails = get([ "governance", "proposals" ]);

@@ -6,8 +6,8 @@ import StakePoolStats from "./charts/StakePoolStats";
 import { DecredLoading, NoStats } from "indicators";
 import { Tooltip } from "shared";
 
-const TicketsStatsPage = ({ getMyTicketsStatsRequest, hasStats, allTickets, allStakePoolStats }) => {
-  if (allTickets.length === 0 && allStakePoolStats.length === 0) return <NoStats />;
+const TicketsStatsPage = ({ getMyTicketsStatsRequest, hasStats, hasTickets, allStakePoolStats }) => {
+  if (!hasTickets && allStakePoolStats.length === 0) return <NoStats />;
   return (
     <Aux>
       <div className="tabbed-page-subtitle"><T id="statistics.subtitle" m="Statistics"/>

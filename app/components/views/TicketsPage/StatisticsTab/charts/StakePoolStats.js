@@ -12,8 +12,17 @@ class StakePoolStats extends React.Component{
   }
 
   getInitialState() {
+    let stakePool = this.props.allStakePoolStats[0];
+    if (this.props.selectedStakePool) {
+      const idxSel = this.props.allStakePoolStats.findIndex(
+        s => s.Host === this.props.selectedStakePool.Host);
+      if (idxSel > -1) {
+        stakePool = this.props.allStakePoolStats[idxSel];
+      }
+    }
+
     return {
-      stakePool: this.props.allStakePoolStats[0]
+      stakePool: stakePool,
     };
   }
 
