@@ -27,6 +27,7 @@ const SettingsPage = ({
   onAttemptChangePassphrase,
   onCloseWallet,
   isChangePassPhraseDisabled,
+  changePassphraseRequestAttempt,
 }) => (
   <StandalonePage header={<SettingsPageHeader />}>
     <div className="settings-wrapper">
@@ -43,7 +44,9 @@ const SettingsPage = ({
               <T id="settings.updatePrivatePassphrase" m="Update Private Passphrase" />
               <WatchOnlyWarnNotification isActive={ isChangePassPhraseDisabled }>
                 <ChangePassphraseButton
-                  className={isChangePassPhraseDisabled && "change-password-disabled-icon"}
+                  className={[
+                    isChangePassPhraseDisabled ? "change-password-disabled-icon" : "",
+                    changePassphraseRequestAttempt ? "change-password-loading" : "" ].join(" ")}
                   isDisabled={isChangePassPhraseDisabled}
                   modalTitle={<T id="settings.changeConfirmation" m="Change your passphrase" />}
                   onSubmit={onAttemptChangePassphrase} />

@@ -13,6 +13,7 @@ const mapStateToProps = selectorMap({
   tempSettings: sel.tempSettings,
   areSettingsDirty: sel.settingsChanged,
   isChangePassPhraseDisabled: sel.isChangePassPhraseDisabled,
+  changePassphraseRequestAttempt: sel.changePassphraseRequestAttempt,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
