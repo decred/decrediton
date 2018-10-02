@@ -841,9 +841,11 @@ export const blocksPassedOnTicketInterval = createSelector(
 );
 
 export const blocksNumberToNextTicket = createSelector(
-  [ blocksPassedOnTicketInterval, chainParams ],
-  (chainParams, blocksPassedOnTicketInterval) =>
-    chainParams.WorkDiffWindowSize - blocksPassedOnTicketInterval
+  [ chainParams, blocksPassedOnTicketInterval ],
+  (chainParams, blocksPassedOnTicketInterval) => {
+    const { WorkDiffWindowSize } = chainParams;
+    return WorkDiffWindowSize - blocksPassedOnTicketInterval;
+  }
 );
 
 export const exportingData = get([ "control", "exportingData" ]);
