@@ -62,7 +62,7 @@ export const importScript = (walletService, passphrase, script, rescan, scanFrom
 export const changePassphrase = (walletService, oldPass, newPass, priv) =>
   new Promise((ok, fail) => {
     const request = new api.ChangePassphraseRequest();
-    request.setKey(api.ChangePassphraseRequest.key[priv ? "PRIVATE" : "PUBLIC"]);
+    request.setKey(api.ChangePassphraseRequest.Key[priv ? "PRIVATE" : "PUBLIC"]);
     request.setOldPassphrase(new Uint8Array(Buffer.from(oldPass)));
     request.setNewPassphrase(new Uint8Array(Buffer.from(newPass)));
     walletService.changePassphrase(request, (err, res) => err ? fail(err) : ok(res));
