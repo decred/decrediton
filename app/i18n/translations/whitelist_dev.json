@@ -1,7 +1,6 @@
 [
   "rescan.progressPercent",
   "transaction.timestamp",
-  "proposal.overview.fullTime",
   "ticket.timestamp",
   "txDetails.timestamp",
   "snackbar.defaults.error",
