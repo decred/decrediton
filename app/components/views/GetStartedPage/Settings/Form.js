@@ -4,7 +4,8 @@ import ProxySettings from "views/SettingsPage/ProxySettings";
 import { Tooltip } from "shared";
 import { FormattedMessage as T } from "react-intl";
 import { LoaderBarBottom } from "indicators";
-import { KeyBlueButton, InvisibleButton, AboutModalButtonInvisible } from "buttons";
+import { KeyBlueButton, InvisibleButton } from "buttons";
+import { LogsLinkMsg, SettingsLinkMsg, GoBackMsg, AboutModalButton } from "../messages";
 
 export default ({
   areSettingsDirty,
@@ -26,16 +27,16 @@ export default ({
     <div className="getstarted loader logs">
       <div className="content-title">
         <div className="loader-settings-logs">
-          <AboutModalButtonInvisible version={appVersion} updateAvailable={updateAvailable} buttonLabel={<T id="help.about" m="About Decrediton" />}/>
+          <AboutModalButton { ...{ appVersion, updateAvailable } } />
           <InvisibleButton className="active">
-            <T id="getStarted.btnSettings" m="Settings" />
+            <SettingsLinkMsg />
           </InvisibleButton>
           <InvisibleButton onClick={onShowLogs}>
-            <T id="getStarted.btnLogs" m="Logs" />
+            <LogsLinkMsg />
           </InvisibleButton>
         </div>
         <div className="go-back-screen-button-area">
-          <Tooltip text={ <T id="logs.goBack" m="Go back" /> }><div className="go-back-screen-button" onClick={onHideSettings}/></Tooltip>
+          <Tooltip text={ <GoBackMsg /> }><div className="go-back-screen-button" onClick={onHideSettings}/></Tooltip>
         </div>
       </div>
 
@@ -54,7 +55,7 @@ export default ({
         size="large"
         block={false}
         onClick={() => onSaveSettings(tempSettings)}>
-        <T id="settings.save" m="Save" />
+        <T id="getStarted.settings.save" m="Save" />
       </KeyBlueButton>
       <LoaderBarBottom  {...{ getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft }}  />
     </div>

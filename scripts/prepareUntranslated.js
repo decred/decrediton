@@ -1,5 +1,6 @@
 // translationRunner.js
 const manageTranslations = require("react-intl-translations-manager").default;
+const fs = require("fs");
 
 const defaultOpts = {
   messagesDirectory: "app/i18n/extracted",
@@ -18,6 +19,11 @@ manageTranslations({
   // all other production languages are translated at transifex
   languages: [ "dev" ],
 });
+
+// Remove original.json because react-intl-translations-manager doesn't update
+// changed strings. This isn't an issue on the pot->po->json workflow because
+// the pot files *do* get updated.
+fs.unlinkSync("app/i18n/translations/original.json");
 
 manageTranslations({
   ...defaultOpts,

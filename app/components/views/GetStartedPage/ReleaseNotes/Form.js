@@ -2,6 +2,7 @@ import { Tooltip } from "shared";
 import { FormattedMessage as T } from "react-intl";
 import { LoaderBarBottom } from "indicators";
 import { InvisibleButton } from "buttons";
+import { LogsLinkMsg, SettingsLinkMsg } from "../messages";
 
 export default ({
   onHideReleaseNotes,
@@ -22,12 +23,12 @@ export default ({
           <Aux>
             {getWalletReady &&
               <InvisibleButton onClick={onShowSettings}>
-                <T id="getStarted.btnSettings" m="Settings" />
+                <SettingsLinkMsg />
               </InvisibleButton>
             }
             {(getDaemonStarted && !isDaemonRemote) || getWalletReady ?
               <InvisibleButton onClick={onShowLogs}>
-                <T id="getStarted.btnLogs" m="Logs" />
+                <LogsLinkMsg />
               </InvisibleButton> :
               <div/>
             }

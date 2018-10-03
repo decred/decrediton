@@ -60,14 +60,14 @@ class History extends React.Component {
   getTxTypes() {
     const types = TransactionDetails.TransactionType;
     return [
-      { key: "all",      value: { types: [],                      direction: null },  label: (<T id="transaction.type.all" m="All"/>) },
-      { key: "regular",  value: { types: [ types.REGULAR ],         direction: null },  label: (<T id="transaction.type.regular" m="Regular"/>) },
-      { key: "ticket",   value: { types: [ types.TICKET_PURCHASE ], direction: null },  label: (<T id="transaction.type.tickets" m="Tickets"/>) },
-      { key: "vote",     value: { types: [ types.VOTE ],            direction: null },  label: (<T id="transaction.type.votes" m="Votes"/>) },
-      { key: "revoke",   value: { types: [ types.REVOCATION ],      direction: null },  label: (<T id="transaction.type.revokes" m="Revokes"/>) },
-      { key: "sent",     value: { types: [ types.REGULAR ],         direction: TRANSACTION_DIR_SENT },       label: (<T id="transaction.type.sent" m="Sent"/>) },
-      { key: "receiv",   value: { types: [ types.REGULAR ],         direction: TRANSACTION_DIR_RECEIVED },   label: (<T id="transaction.type.received" m="Received"/>) },
-      { key: "transf",   value: { types: [ types.REGULAR ],         direction: TRANSACTION_DIR_TRANSFERED }, label: (<T id="transaction.type.transfered" m="Transfered"/>) },
+      { key: "all",      value: { types: [],                      direction: null },  label: (<T id="txFilter.type.all" m="All"/>) },
+      { key: "regular",  value: { types: [ types.REGULAR ],         direction: null },  label: (<T id="txFilter.type.regular" m="Regular"/>) },
+      { key: "ticket",   value: { types: [ types.TICKET_PURCHASE ], direction: null },  label: (<T id="txFilter.type.tickets" m="Tickets"/>) },
+      { key: "vote",     value: { types: [ types.VOTE ],            direction: null },  label: (<T id="txFilter.type.votes" m="Votes"/>) },
+      { key: "revoke",   value: { types: [ types.REVOCATION ],      direction: null },  label: (<T id="txFilter.type.revokes" m="Revokes"/>) },
+      { key: "sent",     value: { types: [ types.REGULAR ],         direction: TRANSACTION_DIR_SENT },       label: (<T id="txFilter.type.sent" m="Sent"/>) },
+      { key: "receiv",   value: { types: [ types.REGULAR ],         direction: TRANSACTION_DIR_RECEIVED },   label: (<T id="txFilter.type.received" m="Received"/>) },
+      { key: "transf",   value: { types: [ types.REGULAR ],         direction: TRANSACTION_DIR_TRANSFERED }, label: (<T id="txFilter.type.transfered" m="Transfered"/>) },
     ];
   }
 

@@ -43,7 +43,7 @@ const OpenWalletDecryptFormBodyBase = ({
         onClick={onOpenWallet}
         disabled={publicPassPhrase == "" || isOpeningWallet}
         loading={isOpeningWallet}>
-        <T id="advancedStartup.skip" m="Open Wallet"/>
+        <T id="decryptWalletForm.openBtn" m="Open Wallet"/>
       </KeyBlueButton>
     </div>
   </div>

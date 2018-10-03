@@ -1,6 +1,7 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { TextInput } from "inputs";
 import { KeyBlueButton, InvisibleButton, WatchOnlyWalletSwitch } from "buttons";
+import { NewSeedTabMsg, RestoreTabMsg } from "../messages";
 import "style/LoginForm.less";
 
 const messages = defineMessages({
@@ -44,13 +45,13 @@ const CreateWalletForm = ({
         <div className="new-wallet-title-area">
           <div className="wallet-icon-small createnew" />
           <div className="new-wallet-title">
-            <T id="getStarted.newSeedTab" m="Create a New Wallet"/>
+            <NewSeedTabMsg />
           </div>
         </div> :
         <div className="new-wallet-title-area">
           <div className="wallet-icon-small restore" />
           <div className="new-wallet-title">
-            <T id="getStarted.restore" m="Restore Existing Wallet"/>
+            <RestoreTabMsg />
           </div>
         </div>
       }

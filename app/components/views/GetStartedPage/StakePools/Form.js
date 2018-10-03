@@ -41,7 +41,7 @@ const Form = ({
         </div>
         <div className="field">
           <div className="label">
-            <T id="stakepool.apikey" m="API Key" />:
+            <T id="getStarted.stakepool.apikey" m="API Key" />:
           </div>
           <div className="value">
             <TextInput

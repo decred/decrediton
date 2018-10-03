@@ -1,6 +1,7 @@
 import CreateWalletForm from "./CreateWalletForm";
 import { FormattedMessage as T, injectIntl, FormattedRelative } from "react-intl";
 import { RemoveWalletButton } from "buttons";
+import { NewSeedTabMsg, RestoreTabMsg } from "../messages";
 import { Tooltip } from "shared";
 
 const WalletSelectionBodyBase = ({
@@ -89,13 +90,13 @@ const WalletSelectionBodyBase = ({
               <div className="display-wallet new" onClick={()=>showCreateWalletForm(false)}>
                 <div className="wallet-icon createnew" />
                 <div className="display-wallet-name">
-                  <T id="getStarted.newSeedTab" m="Create a New Wallet"/>
+                  <NewSeedTabMsg />
                 </div>
               </div>
               <div className="display-wallet new" onClick={()=>showCreateWalletForm(true)}>
                 <div className="wallet-icon restore" />
                 <div className="display-wallet-name">
-                  <T id="getStarted.restore" m="Restore Existing Wallet"/>
+                  <RestoreTabMsg />
                 </div>
               </div>
             </Aux>
