@@ -3,7 +3,7 @@ import { TextInput } from "inputs";
 
 const messages = defineMessages({
   addressFieldPlaceholder: {
-    id: "securitycenter.validate.form.field.address.placeholder",
+    id: "securitycenter.validate.field.address.placeholder",
     defaultMessage: "Enter an address to validate",
   },
 });
@@ -18,7 +18,7 @@ const ValidateAddressForm = ({
     <div className="tabbed-page-subtitle"><T id="security.validate.title" m="Validate Addresses"/></div>
     <div className="validate-address-form">
       <div className="validate-address-form-label">
-        <T id="securitycenter.form.field.address.label" m="Address"/>
+        <T id="securitycenter.validate.field.address.label" m="Address"/>
       </div>
       <div className="validate-address-form-address">
         <TextInput

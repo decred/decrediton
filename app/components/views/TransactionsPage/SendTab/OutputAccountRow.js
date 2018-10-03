@@ -4,7 +4,7 @@ import "style/SendPage.less";
 
 const messages = defineMessages({
   amountPlaceholder: {
-    id: "send.amountPlaceholder",
+    id: "sendToAccount.amountPlaceholder",
     defaultMessage: "Amount"
   }
 });
@@ -21,7 +21,7 @@ const SendOutputAccountRow = ({
 }) => (
   <div className="send-row">
     <div className="send-output-row">
-      <div className="send-label"><T id="send.to" m="To" />:</div>
+      <div className="send-label"><T id="sendToAccount.to" m="To" />:</div>
       <div className="send-address">
         <ReceiveAccountsSelect
           getAddressForSelected={true}
@@ -31,7 +31,7 @@ const SendOutputAccountRow = ({
       </div>
 
       <div className="send-amount">
-        <div className="send-amount-label"><T id="send.amount" m="Amount" />:</div>
+        <div className="send-amount-label"><T id="sendToAccount.amount" m="Amount" />:</div>
         <div className="send-address-amount-sum-and-currency">
           <DcrInput
             showErrors={true}

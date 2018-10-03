@@ -8,7 +8,7 @@ const Page2 = StandardPage("staking-01", "StakingTutorialPage02");
 export default (props) => (
   <PagedTutorial
     {...props}
-    title={<T id="tutorial.ticketLifecycle.title" m="Ticket Lifecycle" />}
+    title={<T id="tutorial.staking.title" m="Staking" />}
     pages={[ Page1, Page2 ]}
   />
 );

@@ -19,10 +19,10 @@ const TicketsStatsPage = ({ getMyTicketsStatsRequest, hasStats, hasTickets, allS
           }
           { hasStats &&
             <Aux>
-              <Tooltip text={<T id="mytickets.statistics.stakerewards.title" m="Stake Rewards" />}>
+              <Tooltip text={<T id="mytickets.statistics.stakerewards.link" m="Stake Rewards" />}>
                 <Link to="/tickets/statistics/stakerewards" activeClassName="my-tickets-active-chart-link stakerewards" className="stakerewards"/>
               </Tooltip>
-              <Tooltip text={<T id="mytickets.statistics.votetime.title" m="Vote Time" />}>
+              <Tooltip text={<T id="mytickets.statistics.votetime.link" m="Vote Time" />}>
                 <Link to="/tickets/statistics/voteTime" activeClassName="my-tickets-active-chart-link vote-time" className="vote-time"/>
               </Tooltip>
             </Aux>

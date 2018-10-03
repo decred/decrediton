@@ -4,15 +4,15 @@ import { InfoDocModalButton, KeyBlueButton } from "buttons";
 
 const messages = defineMessages({
   addressFieldPlaceholder: {
-    id: "securitycenter.form.field.address.placeholder",
+    id: "securitycenter.verify.field.address.placeholder",
     defaultMessage: "Enter an address",
   },
   messageFieldPlaceholder: {
-    id: "securitycenter.form.field.message.placeholder",
+    id: "securitycenter.verify.field.message.placeholder",
     defaultMessage: "Enter your message",
   },
   signatureFieldPlaceholder: {
-    id: "securitycenter.form.field.signature.placeholder",
+    id: "securitycenter.verify.field.signature.placeholder",
     defaultMessage: "Enter your signature",
   },
 });
@@ -39,7 +39,7 @@ const VerifyMessageForm = ({
         </div>
         <div className="security-center-form-row">
           <div className="security-center-form-row-label">
-            <T id="securitycenter.form.field.address.label" m="Address"/>
+            <T id="securitycenter.verify.field.address.label" m="Address"/>
           </div>
           <div className="security-center-form-row-field">
             <TextInput
@@ -55,7 +55,7 @@ const VerifyMessageForm = ({
         </div>
         <div className="security-center-form-row">
           <div className="security-center-form-row-label">
-            <T id="securitycenter.form.field.signature.label" m="Signature"/>
+            <T id="securitycenter.verify.field.signature.label" m="Signature"/>
           </div>
           <div className="security-center-form-row-field">
             <TextInput
@@ -71,7 +71,7 @@ const VerifyMessageForm = ({
         </div>
         <div className="security-center-form-row">
           <div className="security-center-form-row-label">
-            <T id="securitycenter.form.field.message.label" m="Message"/>
+            <T id="securitycenter.verify.field.message.label" m="Message"/>
           </div>
           <div className="security-center-form-row-field-message">
             <TextInput
