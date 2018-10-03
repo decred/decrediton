@@ -5,11 +5,11 @@ import { WatchOnlyWarnNotification } from "shared";
 
 const messages = defineMessages({
   addressFieldPlaceholder: {
-    id: "securitycenter.form.field.address.placeholder",
+    id: "securitycenter.signMessage.field.address.placeholder",
     defaultMessage: "Enter an address",
   },
   messageFieldPlaceholder: {
-    id: "securitycenter.form.field.message.placeholder",
+    id: "securitycenter.signMessage.field.message.placeholder",
     defaultMessage: "Enter your message",
   }
 });
@@ -33,7 +33,7 @@ const SignMessageForm = ({
         </div>
         <div className="security-center-form-row">
           <div className="security-center-form-row-label">
-            <T id="securitycenter.form.field.address.label" m="Address"/>
+            <T id="securitycenter.signMessage.field.address.label" m="Address"/>
           </div>
           <div className="security-center-form-row-field">
             <WatchOnlyWarnNotification isActive={ isSignMessageDisabled }>
@@ -52,7 +52,7 @@ const SignMessageForm = ({
         </div>
         <div className="security-center-form-row">
           <div className="security-center-form-row-label">
-            <T id="securitycenter.form.field.message.label" m="Message"/>
+            <T id="securitycenter.signMessage.field.message.label" m="Message"/>
           </div>
           <div className="security-center-form-row-field-message">
             <WatchOnlyWarnNotification isActive={ isSignMessageDisabled }>

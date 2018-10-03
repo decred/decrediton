@@ -4,6 +4,7 @@ import { SeedCopyConfirmModal } from "modals";
 import { Tooltip } from "shared";
 import { LoaderBarBottom } from "indicators";
 import { Documentation } from "shared";
+import { BackBtnMsg, CreateWalletTitleMsg } from "../../messages";
 import "style/CreateWalletForm.less";
 
 const CreateWallet = ({
@@ -25,7 +26,7 @@ const CreateWallet = ({
         <Tooltip text={ <T id="createWallet.goBack" m="Go back" /> }><div className="go-back-screen-button" onClick={onReturnToWalletSelection}/></Tooltip>
       </div>
       <div className="content-title">
-        <T id="createWallet.title" m={"Create a new wallet"}/>
+        <CreateWalletTitleMsg />
       </div>
       <Documentation name="WalletCreationWarning" className="create-wallet-warning" />
       <div className="seedArea">
@@ -47,7 +48,7 @@ const CreateWallet = ({
         <InvisibleButton
           className="go-back-button"
           onClick={onReturnToWalletSelection}>
-          <T id="getStarted.backBtn" m="Cancel" />
+          <BackBtnMsg />
         </InvisibleButton>
       </div>
       <LoaderBarBottom  {...{ getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft, getDaemonSynced }}  />

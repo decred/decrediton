@@ -11,10 +11,10 @@ import "style/Fonts.less";
 import KeyBlueButton from "../buttons/KeyBlueButton";
 
 const messages = defineMessages({
-  Ticket:     { id: "transaction.type.ticket", defaultMessage: "Ticket" },
-  Vote:       { id: "transaction.type.vote",   defaultMessage: "Vote" },
-  Revocation: { id: "transaction.type.revoke", defaultMessage: "Revoke" },
-  Coinbase:   { id: "transaction.type.coinbase", defaultMessage: "Coinbase" },
+  Ticket:     { id: "txDetails.type.ticket", defaultMessage: "Ticket" },
+  Vote:       { id: "txDetails.type.vote",   defaultMessage: "Vote" },
+  Revocation: { id: "txDetails.type.revoke", defaultMessage: "Revoke" },
+  Coinbase:   { id: "txDetails.type.coinbase", defaultMessage: "Coinbase" },
 });
 
 const headerIcons = {
@@ -159,9 +159,9 @@ const TxDetails = ({
         <div className="txdetails-top-row">
           <div className="txdetails-name">
             {isConfirmed ? (<div className="txdetails-indicator-confirmed">
-              <T id="transaction.indicatorConfirmed" m="Confirmed" />
+              <T id="txDetails.indicatorConfirmed" m="Confirmed" />
             </div>) : (<div className="txdetails-indicator-pending">
-              <T id="transaction.indicatorPending" m="Pending" /></div>)}
+              <T id="txDetails.indicatorPending" m="Pending" /></div>)}
           </div>
           <div className="txdetails-value">
             {isConfirmed && <span className="txdetails-value-text">

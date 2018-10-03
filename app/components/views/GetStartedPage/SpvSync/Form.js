@@ -1,17 +1,11 @@
 import { AnimatedLinearProgressFull } from "indicators";
-import { FormattedMessage as T, FormattedRelative, injectIntl, defineMessages } from "react-intl";
-import { KeyBlueButton, SlateGrayButton, InvisibleButton, AboutModalButtonInvisible } from "buttons";
+import { FormattedRelative, injectIntl } from "react-intl";
+import { KeyBlueButton, SlateGrayButton, InvisibleButton } from "buttons";
 import { PasswordInput } from "inputs";
-import { Tooltip } from "shared";
-import { shell } from "electron";
+import { LogsLinkMsg, SettingsLinkMsg, HeaderTimeMsg, DiscoverLabelMsg,
+  DiscoverAccountsInfoMsg, ScanBtnMsg, LearnBasicsMsg, UpdateAvailableLink,
+  WhatsNewLink, LoaderTitleMsg, AboutModalButton, messages } from "../messages";
 import "style/GetStarted.less";
-
-const messages = defineMessages({
-  passphrasePlaceholder: {
-    id: "getStarted.discoverAddresses.passphrasePlaceholder",
-    defaultMessage: "Private Passphrase"
-  }
-});
 
 const SpvSyncBody = ({
   text,
@@ -45,34 +39,28 @@ const SpvSyncBody = ({
       <Aux>
         <div className="content-title">
           <div className="loader-settings-logs">
-            {updateAvailable &&
-              <Tooltip text={<T id="getStarted.updateAvailableTooltip" m="New version {version} available" values={{ version: (updateAvailable) }}/>}>
-                <InvisibleButton className="update-available-button" onClick={() => shell.openExternal("https://decred.org/downloads")}>
-                  <T id="getStarted.updateAvailable" m="Update Available" />
-                </InvisibleButton>
-              </Tooltip>
-            }
+            {updateAvailable && <UpdateAvailableLink updateAvailable={updateAvailable} /> }
             <Aux>
-              <AboutModalButtonInvisible version={appVersion} updateAvailable={updateAvailable} buttonLabel={<T id="help.about" m="About Decrediton" />}/>
+              <AboutModalButton { ...{ appVersion, updateAvailable } } />
               {getWalletReady &&
                 <Aux>
                   <InvisibleButton onClick={onShowSettings}>
-                    <T id="getStarted.btnSettings" m="Settings" />
+                    <SettingsLinkMsg />
                   </InvisibleButton>
                   <InvisibleButton onClick={onShowLogs}>
-                    <T id="getStarted.btnLogs" m="Logs" />
+                    <LogsLinkMsg />
                   </InvisibleButton>
                 </Aux>
               }
             </Aux>
           </div>
-          <T id="loader.title" m={"Welcome to Decrediton Wallet"}/>
+          <LoaderTitleMsg />
         </div>
         <div className="loader-buttons">
           <SlateGrayButton className="tutorial-button" onClick={onShowTutorial}>
-            <T id="getStarted.learnBasics" m="Learn the Basics" />
+            <LearnBasicsMsg />
           </SlateGrayButton>
-          <span onClick={onShowReleaseNotes} className="whatsnew"><T id="getStarted.whatsNew" m="What's New in v{version}" values={{ version: (appVersion) }}/></span>
+          <WhatsNewLink {...{ onShowReleaseNotes, appVersion }} />
         </div>
         <div className="loader-bar">
           <Aux>
@@ -88,7 +76,7 @@ const SpvSyncBody = ({
             />
             {syncFetchHeadersAttempt &&
               <div className="loader-bar-estimation">
-                <T id="getStarted.chainLoading.headerTime" m="Time from last fetched header:"/>
+                <HeaderTimeMsg />
                 <span className="bold"> {syncFetchHeadersLastHeaderTime ? <FormattedRelative value={syncFetchHeadersLastHeaderTime}/> : "--" }</span>
               </div>
             }
@@ -105,15 +93,11 @@ const SpvSyncBody = ({
         {syncInput ?
           <div className="advanced-page-form">
             <div className="advanced-daemon-row">
-              <T id="getStarted.discoverAccountsInfo" m={`
-                Enter the passphrase you just created to scan the blockchain for additional accounts you may have previously created with your wallet.
-
-                Your account names aren't stored on the blockchain, so you will have to rename them after setting up Decrediton.
-              `}/>
+              <DiscoverAccountsInfoMsg />
             </div>
             <div className="advanced-daemon-row">
               <div className="advanced-daemon-label">
-                <T id="getStarted.discover.label" m="Scan for accounts" />
+                <DiscoverLabelMsg />
               </div>
               <div className="advanced-daemon-input">
                 <PasswordInput
@@ -129,7 +113,7 @@ const SpvSyncBody = ({
             </div>
             <div className="loader-bar-buttons">
               <KeyBlueButton onClick={onSpvSync} disabled={!passPhrase}>
-                <T id="getStarted.discoverAddresses.scanBtn" m="Scan" />
+                <ScanBtnMsg />
               </KeyBlueButton>
             </div>
           </div> :
