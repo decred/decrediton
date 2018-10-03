@@ -14,6 +14,8 @@ install:
   - yarn
 
 script:
-  - yarn lint
-  - yarn test
+  - yarn lint || travis_terminate 1
+  - yarn test || travis_terminate 1
+  - yarn build || travis_terminate 1
+  - yarn i18n-check-dupes || travis_terminate 1
   - travis_wait yarn package-dev-linux
