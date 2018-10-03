@@ -1,5 +1,6 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
-import { ExternalLink } from "shared";
+import { ExternalLink, Tooltip } from "shared";
+import { AboutModalButtonInvisible } from "buttons";
 
 export const LogsLinkMsg = () => <T id="getStarted.btnLogs" m="Logs" />;
 export const SettingsLinkMsg = () => <T id="getStarted.btnSettings" m="Settings" />;
