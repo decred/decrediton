@@ -20,32 +20,23 @@ const locale = globalCfg.get("locale");
 
 log("info", "Starting main react app");
 
+const currentSettings = {
+  locale: locale,
+  daemonStartAdvanced: globalCfg.get("daemon_start_advanced"),
+  allowedExternalRequests: globalCfg.get("allowed_external_requests"),
+  proxyType: globalCfg.get("proxy_type"),
+  proxyLocation: globalCfg.get("proxy_location"),
+  spvMode: globalCfg.get("spv_mode"),
+  timezone: globalCfg.get("timezone"),
+  currencyDisplay: "DCR",
+};
 var initialState = {
   settings: {
-    currentSettings: {
-      locale: locale,
-      spv: globalCfg.get("spv_mode"),
-      daemonStartAdvanced: globalCfg.get("daemon_start_advanced"),
-      allowedExternalRequests: globalCfg.get("allowed_external_requests"),
-      proxyType: globalCfg.get("proxy_type"),
-      proxyLocation: globalCfg.get("proxy_location"),
-      spvMode: globalCfg.get("spv_mode"),
-      timezone: globalCfg.get("timezone"),
-      currencyDisplay: "DCR",
-    },
-    tempSettings: {
-      locale: locale,
-      spv: globalCfg.get("spv_mode"),
-      daemonStartAdvanced: globalCfg.get("daemon_start_advanced"),
-      allowedExternalRequests: globalCfg.get("allowed_external_requests"),
-      proxyType: globalCfg.get("proxy_type"),
-      proxyLocation: globalCfg.get("proxy_location"),
-      spvMode: globalCfg.get("spv_mode"),
-      timezone: globalCfg.get("timezone"),
-      currencyDisplay: "DCR",
-    },
+    currentSettings: currentSettings,
+    tempSettings: currentSettings,
     settingsChanged: false,
     uiAnimations: globalCfg.get("ui_animations"),
+    needNetworkReset: false,
   },
   stakepool: {
     currentStakePoolConfig: null,

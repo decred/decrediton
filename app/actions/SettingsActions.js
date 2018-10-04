@@ -45,22 +45,20 @@ export function updateStateSettingsChanged(settings) {
     const { tempSettings, currentSettings } = getState().settings;
     const newSettings = { ...tempSettings, ...settings };
     const settingsFields = Object.keys(tempSettings);
+    const networkChange = {
+      network: true,
+      spvMode: true,
+    };
     const newDiffersFromTemp = settingsFields
       .reduce((d, f) => (d || newSettings[f] !== tempSettings[f]), false);
-    console.log(newDiffersFromTemp);
-    const needNetworkReset = settingsFields
-      .reduce((d, f) => {
-        console.log(d, f);
-        return d || newSettings[f] !== tempSettings[f];
-      }, false);
-
-    console.log(needNetworkReset);
 
     if (newDiffersFromTemp) {
       const newDiffersFromCurrent = settingsFields
         .reduce((d, f) => (d || newSettings[f] !== currentSettings[f]), false);
+      const needNetworkReset =  Object.keys(networkChange)
+        .reduce((d, f) => (d || newSettings[f] !== currentSettings[f]), false);
       newDiffersFromCurrent
-        ? dispatch({ tempSettings: newSettings, type: SETTINGS_CHANGED })
+        ? dispatch({ tempSettings: newSettings, needNetworkReset, type: SETTINGS_CHANGED })
         : dispatch({ tempSettings: currentSettings, type: SETTINGS_UNCHANGED });
     }
   };

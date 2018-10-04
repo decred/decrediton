@@ -28,8 +28,8 @@ const GeneralSettings = ({
         </div>
         <SettingsInput
           className="settings-input"
-          value={tempSettings.spv ? "true" : "false"}
-          onChange={(opt) => onChangeTempSettings({ spv: opt.value })}
+          value={tempSettings.spvMode ? "true" : "false"}
+          onChange={(opt) => onChangeTempSettings({ spvMode: opt.value })}
           valueKey="key"
           labelKey="description"
           options={[
