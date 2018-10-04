@@ -32,9 +32,8 @@ export const renameAccountAttempt = (accountNumber, newName) => (dispatch, getSt
   dispatch({ type: RENAMEACCOUNT_ATTEMPT });
   return wallet.renameAccount(sel.walletService(getState()), accountNumber, newName)
     .then(renameAccountResponse => {
-      const renameAccountSuccess = "You have successfully updated the account name.";
       setTimeout(() => dispatch({
-        renameAccountSuccess, renameAccountResponse, type: RENAMEACCOUNT_SUCCESS
+        renameAccountResponse, type: RENAMEACCOUNT_SUCCESS
       }), 1000);
     })
     .catch(error => dispatch({ error, type: RENAMEACCOUNT_FAILED }));
@@ -101,8 +100,7 @@ export const getNextAccountAttempt = (passphrase, accountName) => (dispatch, get
   return wallet.getNextAccount(sel.walletService(getState()), passphrase, accountName)
     .then(getNextAccountResponse => {
       setTimeout( () => dispatch({
-        getNextAccountResponse, type: GETNEXTACCOUNT_SUCCESS,
-        successMessage: `Account - ${accountName} - has been successfully created.`
+        getNextAccountResponse, type: GETNEXTACCOUNT_SUCCESS
       }), 1000);
     })
     .catch(error => dispatch({ error, type: GETNEXTACCOUNT_FAILED }));

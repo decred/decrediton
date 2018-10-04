@@ -48,22 +48,18 @@
   background-color: #f9fafa;
 }
 
-.account-row-details-bottom-column-left {
-  width: 24em;
-}
-
 .account-row-details-bottom-columns {
   width: 100%;
   color: #596d81;
   margin-bottom: 20px;
-  margin-top: 15px;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
 }
 
+.account-row-details-bottom-column-left,
 .account-row-details-bottom-column-right {
-  width: 22em;
+  margin-top: 15px;
 }
 
 .account-row-details-bottom-columns::after,
@@ -73,23 +69,22 @@
   .clearfloat-mixin;
 }
 
-.account-row-details-bottom-title,
+.account-row-details-bottom-title {
+  font-size: 19px;
+  text-align: right;
+  padding-right: 200px;
+  margin-bottom: 10px;
+}
+
 .account-row-rename-bottom-title {
   font-size: 19px;
 }
 
-.account-row-details-bottom-title-name {
-  margin-bottom: 0.5em;
-  width: 134px;
-  text-align: right;
-  margin-left: 23px;
-}
-
 .account-row-details-bottom-spec {
-  text-align: right;
   font-size: 12px;
   margin-bottom: 0.5em;
-  display: flex;
+  display: grid;
+  grid-template-columns: 160px 200px;
 }
 
 .account-row-details-bottom-spec-last {
@@ -99,13 +94,11 @@
 }
 
 .account-row-details-bottom-spec-name {
-  margin-right: 10px;
-  width: 117px;
-  margin-left: 40px;
+  text-align: right;
 }
 
 .account-row-details-bottom-spec-value {
-  width: 200px;
+  margin-left: 1em;
   text-align: left;
   color: #091440;
 }
