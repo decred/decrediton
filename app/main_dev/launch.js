@@ -1,6 +1,7 @@
 import { dcrwalletCfg, getWalletPath, getExecutablePath, dcrdCfg, getDcrdRpcCert } from "./paths";
 import { getWalletCfg, readDcrdConfig } from "../config";
-import { createLogger, AddToDcrdLog, AddToDcrwalletLog, GetDcrdLogs, GetDcrwalletLogs, lastErrorLine } from "./logging";
+import { createLogger, AddToDcrdLog, AddToDcrwalletLog, GetDcrdLogs,
+  GetDcrwalletLogs, lastErrorLine, ClearDcrwalletLogs } from "./logging";
 import parseArgs from "minimist";
 import { OPTIONS } from "./constants";
 import os from "os";
@@ -238,6 +239,7 @@ export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
   });
 
   dcrwallet.on("close", (code) => {
+    ClearDcrwalletLogs();
     if (daemonIsAdvanced)
       return;
     if (code !== 0) {
