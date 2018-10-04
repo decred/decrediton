@@ -452,11 +452,24 @@ export function updateAccount(account) {
   return (dispatch, getState) => {
     const { grpc: { balances } } = getState();
     const existingAccount = balances.find(a => a.accountNumber === account.accountNumber);
-    const updatedAccount = { ...existingAccount, ...account };
-    const updatedBalances = balances.map(a =>
-      (a.accountNumber === account.accountNumber) ? updatedAccount : a);
+    let updatedBalances;
     if (!existingAccount) {
-      updatedBalances.push(updatedAccount);
+      const chainParams = sel.chainParams(getState());
+      const newAccount = {
+        immatureReward: 0,
+        immatureStakeGeneration: 0,
+        lockedByTickets: 0,
+        spendable: 0,
+        total: 0,
+        votingAuthority: 0,
+        HDPath: "m / 44' / " + chainParams.HDCoinType + "' / " + account.accountNumber + "'",
+        ...account
+      };
+      updatedBalances = [ ...balances, newAccount ];
+    } else {
+      const updatedAccount = { ...existingAccount, ...account };
+      updatedBalances = balances.map(a =>
+        (a.accountNumber === account.accountNumber) ? updatedAccount : a);
     }
 
     dispatch({ balances: updatedBalances, type: GETBALANCE_SUCCESS });
