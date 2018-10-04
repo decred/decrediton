@@ -9,6 +9,7 @@ export const SETTINGS_CHANGED = "SETTINGS_CHANGED";
 export const SETTINGS_UNCHANGED = "SETTINGS_UNCHANGED";
 
 export const saveSettings = (settings) => (dispatch, getState) => {
+  const { settings: { needNetworkReset } } = getState();
   const { daemon: { walletName } } = getState();
 
   const config = getGlobalCfg();
@@ -23,7 +24,7 @@ export const saveSettings = (settings) => (dispatch, getState) => {
   config.set("proxy_type", settings.proxyType);
   config.set("proxy_location", settings.proxyLocation);
   config.set("timezone", settings.timezone);
-  config.set("spv_mode", settings.spv);
+  config.set("spv_mode", settings.spvMode);
 
   const walletConfig = getWalletCfg(isTestNet(getState()), walletName);
   walletConfig.set("currency_display", settings.currencyDisplay);
@@ -38,6 +39,11 @@ export const saveSettings = (settings) => (dispatch, getState) => {
   if (updatedProxy) {
     wallet.setupProxy();
   }
+
+  if (needNetworkReset) {
+    console.log("need a network reset too!");
+  }
+
 };
 
 export function updateStateSettingsChanged(settings) {

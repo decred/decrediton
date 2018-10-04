@@ -172,6 +172,7 @@ export const isTestNet = compose(eq("testnet"), network);
 export const isMainNet = not(isTestNet);
 export const firstBlockTime = compose(isMainNet => isMainNet ? new Date("2016-02-08 18:00:00 UTC") : new Date("2018-08-06 00:00:00 UTC"), isMainNet);
 export const currencies = () => [ { name: "DCR" }, { name: "atoms" } ];
+export const needNetworkReset = get([ "settings", "needNetworkReset" ]);
 export const currencyDisplay = get([ "settings", "currentSettings", "currencyDisplay" ]);
 export const unitDivisor = compose(disp => disp === "DCR" ? 100000000 : 1, currencyDisplay);
 export const currentLocaleName = get([ "settings", "currentSettings", "locale" ]);

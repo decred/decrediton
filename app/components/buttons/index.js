@@ -63,6 +63,7 @@ export const PassphraseModalSwitch = mbb(null, PassphraseModal, AutoBuyerSwitch)
 export const RemoveStakePoolButton = mbb(null, ConfirmModal, DangerButton);
 export const RemoveWalletButton = mbb(null, ConfirmModal, DangerButton);
 export const RemoveDaemonButton = mbb(null, ConfirmModal, DangerButton);
+export const ResetNetworkButton = mbb(null, ConfirmModal, KeyBlueButton);
 export const ScriptRedeemableButton = mbb(null, InfoModal, helpLinkButton);
 export const AboutModalButton = mbb(null, AboutModal, KeyBlueButton);
 export const AboutModalButtonInvisible = mbb(null, AboutModal, InvisibleButton);
