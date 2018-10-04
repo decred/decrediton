@@ -118,3 +118,7 @@ export function lastErrorLine(log) {
   let lastLineBuff = log.slice(lastLineIdx, endOfErrorLineIdx).toString("utf-8");
   return lastLineBuff.trim();
 }
+
+export function ClearDcrwalletLogs() {
+  dcrwalletLogs = Buffer.from("");
+}
