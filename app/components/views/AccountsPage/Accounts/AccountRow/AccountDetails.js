@@ -28,6 +28,17 @@ const RenameAccountBtn = ({ showRenameAccount }) => (
   </Tooltip>
 );
 
+const DataLine = ({ children }) => (
+  <div className="account-row-details-bottom-spec">
+    <div className="account-row-details-bottom-spec-name">
+      {children[0]}
+    </div>
+    <div className="account-row-details-bottom-spec-value">
+      {children[1]}
+    </div>
+  </div>
+);
+
 const AccountsList = ({
   account,
   showRenameAccount,
@@ -42,71 +53,57 @@ const AccountsList = ({
     <div className="account-row-details-bottom-columns">
       <div className="account-row-details-bottom-column-left">
         <div className="account-row-details-bottom-title">
-          <div className="account-row-details-bottom-title-name">
-            <T id="accounts.balances" m="Balances" />
-          </div>
+          <T id="accounts.balances" m="Balances" />
         </div>
-        <div className="account-row-details-bottom-spec">
-          <div className="account-row-details-bottom-spec-name">
-            <T id="accounts.total" m="Total" />
-          </div>
-          <div className="account-row-details-bottom-spec-value"><Balance flat amount={account.total} /></div>
-        </div>
-        <div className="account-row-details-bottom-spec">
-          <div className="account-row-details-bottom-spec-name">
-            <T id="accounts.details.spendable" m="Spendable" />
-          </div>
-          <div className="account-row-details-bottom-spec-value"><Balance flat amount={account.spendable} /></div>
-        </div>
-        <div className="account-row-details-bottom-spec">
-          <div className="account-row-details-bottom-spec-name">
-            <T id="accounts.immatureRewards" m="Immature Rewards" />
-          </div>
-          <div className="account-row-details-bottom-spec-value"><Balance flat amount={account.immatureReward} /></div>
-        </div>
-        <div className="account-row-details-bottom-spec">
-          <div className="account-row-details-bottom-spec-name">
-            <T id="accounts.lockedByTickets" m="Locked By Tickets" />
-          </div>
-          <div className="account-row-details-bottom-spec-value"><Balance flat amount={account.lockedByTickets} /></div>
-        </div>
-        <div className="account-row-details-bottom-spec">
-          <div className="account-row-details-bottom-spec-name">
-            <T id="accounts.votingAuthority" m="Voting Authority" />
-          </div>
-          <div className="account-row-details-bottom-spec-value"><Balance flat amount={account.votingAuthority} /></div>
-        </div>
-        <div className="account-row-details-bottom-spec">
-          <div className="account-row-details-bottom-spec-name">
-            <T id="accounts.immatureStake" m="Immature Stake Gen" />
-          </div>
-          <div className="account-row-details-bottom-spec-value"><Balance flat amount={account.immatureStakeGeneration} /></div>
-        </div>
+        <DataLine>
+          <T id="accounts.total" m="Total" />
+          <Balance flat amount={account.total} />
+        </DataLine>
+        <DataLine>
+          <T id="accounts.details.spendable" m="Spendable" />
+          <Balance flat amount={account.spendable} />
+        </DataLine>
+        <DataLine>
+          <T id="accounts.immatureRewards" m="Immature Rewards" />
+          <Balance flat amount={account.immatureReward} />
+        </DataLine>
+        <DataLine>
+          <T id="accounts.lockedByTickets" m="Locked By Tickets" />
+          <Balance flat amount={account.lockedByTickets} />
+        </DataLine>
+        <DataLine>
+          <T id="accounts.votingAuthority" m="Voting Authority" />
+          <Balance flat amount={account.votingAuthority} />
+        </DataLine>
+        <DataLine>
+          <T id="accounts.immatureStake" m="Immature Stake Gen" />
+          <Balance flat amount={account.immatureStakeGeneration} />
+        </DataLine>
       </div>
+
       <div className="account-row-details-bottom-column-right">
         <div className="account-row-details-bottom-title">
-          <div className="account-row-details-bottom-title-name"><T id="accounts.properties" m="Properties" /></div>
+          <T id="accounts.properties" m="Properties" />
         </div>
-        <div className="account-row-details-bottom-spec">
-          <div className="account-row-details-bottom-spec-name"><T id="accounts.number" m="Account number" /></div>
-          <div className="account-row-details-bottom-spec-value">{account.accountNumber}</div>
-        </div>
-        <div className="account-row-details-bottom-spec">
-          <div className="account-row-details-bottom-spec-name"><T id="accounts.hdPath" m="HD Path" /></div>
-          <div className="account-row-details-bottom-spec-value">{account.HDPath}</div>
-        </div>
-        <div className="account-row-details-bottom-spec">
-          <div className="account-row-details-bottom-spec-name"><T id="accounts.keys" m="Keys" /></div>
-          <div className="account-row-details-bottom-spec-value">
-            <T id="accounts.keys.counts" m="{external} external, {internal} internal, {imported} imported"
-              values={{
-                external: account.externalKeys,
-                internal: account.internalKeys,
-                imported: account.importedKeys }} />
-          </div>
-        </div>
+        <DataLine>
+          <T id="accounts.number" m="Account number" />
+          {account.accountNumber}
+        </DataLine>
+        <DataLine>
+          <T id="accounts.hdPath" m="HD Path" />
+          {account.HDPath}
+        </DataLine>
+        <DataLine>
+          <T id="accounts.keys" m="Keys" />
+          <T id="accounts.keys.counts" m="{external} external, {internal} internal, {imported} imported"
+            values={{
+              external: account.externalKeys,
+              internal: account.internalKeys,
+              imported: account.importedKeys }} />
+        </DataLine>
       </div>
     </div>
+
     <div className="account-actions">
       {account.accountName !== "imported" &&
         <div className="account-actions-pubkey">
