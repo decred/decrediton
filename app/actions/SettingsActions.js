@@ -3,6 +3,7 @@ import { getWalletCfg, getGlobalCfg } from "../config";
 import { isTestNet } from "selectors";
 import { equalElements } from "helpers";
 import * as wallet from "wallet";
+import { closeWalletRequest, closeDaemonRequest } from "actions/WalletLoaderActions";
 
 export const SETTINGS_SAVE = "SETTINGS_SAVE";
 export const SETTINGS_CHANGED = "SETTINGS_CHANGED";
@@ -41,7 +42,8 @@ export const saveSettings = (settings) => (dispatch, getState) => {
   }
 
   if (needNetworkReset) {
-    console.log("need a network reset too!");
+    dispatch(closeWalletRequest());
+    dispatch(closeDaemonRequest());
   }
 
 };

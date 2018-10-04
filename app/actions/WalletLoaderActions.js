@@ -170,6 +170,21 @@ export const openWalletAttempt = (pubPass, retryAttempt) => (dispatch, getState)
     });
 };
 
+export const CLOSEDAEMON_ATTEMPT = "CLOSEDAEMON_ATTEMPT";
+export const CLOSEDAEMON_FAILED = "CLOSEDAEMON_FAILED";
+export const CLOSEDAEMON_SUCCESS = "CLOSEDAEMON_SUCCESS";
+
+export const closeDaemonRequest = () => async(dispatch) => {
+  dispatch({ type: CLOSEDAEMON_ATTEMPT });
+  try {
+    await wallet.stopDaemon();
+    dispatch({ type: CLOSEDAEMON_SUCCESS });
+  } catch (error) {
+    dispatch({ error, type: CLOSEDAEMON_FAILED });
+    dispatch(pushHistory("/error"));
+  }
+};
+
 export const CLOSEWALLET_ATTEMPT = "CLOSEWALLET_ATTEMPT";
 export const CLOSEWALLET_FAILED = "CLOSEWALLET_FAILED";
 export const CLOSEWALLET_SUCCESS = "CLOSEWALLET_SUCCESS";
