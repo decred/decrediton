@@ -1,5 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
-import { SettingsInput, LanguageSelect, NumericInput } from "inputs";
+import { SettingsInput, SettingsTextInput, LanguageSelect, NumericInput } from "inputs";
 import { InfoDocFieldModalButton } from "buttons";
 import "style/LanguageSelect.less";
 
@@ -36,6 +36,16 @@ const GeneralSettings = ({
             { key: "true", value: true, description: <T id="settings.spv.true" m="Enabled" /> },
             { key: "false", value: false, description: <T id="settings.spv.false" m="Disabled" /> },
           ]}
+        />
+      </div>
+
+      <div className="settings-row">
+        <div className="settings-label">
+          <T id="settings.SPVConnect" m="SPV Connect" />
+        </div>
+        <SettingsTextInput
+          value={tempSettings.spvConnect}
+          onChange={(e) => onChangeTempSettings({ spvConnect: e.target.value.split(",") })}
         />
       </div>
 

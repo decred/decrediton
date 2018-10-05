@@ -386,7 +386,9 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
     return;
   }
   dispatch({ type: SYNC_ATTEMPT });
-  const { discoverAccountsComplete, spvConnect } = getState().walletLoader;
+  const { discoverAccountsComplete } = getState().walletLoader;
+  const { currentSettings } = getState().settings;
+  const spvConnect = currentSettings.spvConnect;
   var request = new SpvSyncRequest();
   for (var i = 0; spvConnect && i < spvConnect.length; i++) {
     request.addSpvConnect(spvConnect[i]);

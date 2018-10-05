@@ -27,6 +27,7 @@ const currentSettings = {
   proxyType: globalCfg.get("proxy_type"),
   proxyLocation: globalCfg.get("proxy_location"),
   spvMode: globalCfg.get("spv_mode"),
+  spvConnect: globalCfg.get("spv_connect"),
   timezone: globalCfg.get("timezone"),
   currencyDisplay: "DCR",
 };
@@ -203,7 +204,6 @@ var initialState = {
     maturingBlockHeights: {},
   },
   walletLoader: {
-    spvConnect: globalCfg.get("spv_connect"),
     syncInput: false,
     syncError: null,
     syncAttemptRequest: false,
