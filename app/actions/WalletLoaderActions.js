@@ -267,7 +267,7 @@ export const startRpcRequestFunc = (isRetry, privPass) =>
               });
             }
           } else {
-            if (status.indexOf("invalid passphrase") > 0) {
+            if (status.indexOf("invalid passphrase") > 0 || status.indexOf("Stream removed")) {
               dispatch({ error: status, type: SYNC_FAILED });
             } else {
               dispatch(startRpcRequestFunc(true, privPass));
