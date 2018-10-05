@@ -3,7 +3,8 @@ import { getWalletCfg, getGlobalCfg } from "../config";
 import { isTestNet } from "selectors";
 import { equalElements } from "helpers";
 import * as wallet from "wallet";
-import { closeWalletRequest, closeDaemonRequest } from "actions/WalletLoaderActions";
+import { closeWalletRequest } from "actions/WalletLoaderActions";
+import { closeDaemonRequest } from "actions/DaemonActions";
 
 export const SETTINGS_SAVE = "SETTINGS_SAVE";
 export const SETTINGS_CHANGED = "SETTINGS_CHANGED";

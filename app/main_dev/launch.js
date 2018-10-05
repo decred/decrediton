@@ -43,6 +43,7 @@ export function closeDCRD() {
       logger.log("error", "Error closing dcrd piperx: " + e);
     }
   }
+  return true;
 }
 
 export const closeDCRW = () => {
