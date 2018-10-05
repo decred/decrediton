@@ -88,6 +88,11 @@ export default function version(state = {}, action) {
       daemonStopped: true,
       credentials: null,
       appData: null,
+      daemonSynced: false,
+      currentBlockCount: null,
+      timeLeftEstimate: null,
+      timeStart: null,
+      blockStart: null,
     };
   case DAEMONSYNCING_START:
     return { ...state,
