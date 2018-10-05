@@ -139,7 +139,6 @@ ipcMain.on("remove-wallet", (event, walletPath, testnet) => {
 });
 
 ipcMain.on("stop-daemon", (event) => {
-  previousWallet = null;
   event.returnValue = stopDaemon();
 });
 

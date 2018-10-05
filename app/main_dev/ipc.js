@@ -130,7 +130,8 @@ export const startWallet = (mainWindow, daemonIsAdvanced, testnet, walletPath, r
 };
 
 export const stopDaemon = () => {
-  return closeDCRD(GetDcrdPID());
+  //return closeDCRD(GetDcrdPID());
+  return true;
 };
 
 export const stopWallet = () => {
