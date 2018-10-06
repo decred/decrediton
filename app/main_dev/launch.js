@@ -14,7 +14,10 @@ const logger = createLogger(debug);
 
 let dcrdPID;
 let dcrwPID;
+
+// windows-only stuff
 let dcrwPipeRx;
+let dcrdPipeRx;
 
 let dcrwPort;
 
@@ -31,6 +34,13 @@ function closeDCRD() {
   if (require("is-running")(dcrdPID) && os.platform() != "win32") {
     logger.log("info", "Sending SIGINT to dcrd at pid:" + dcrdPID);
     process.kill(dcrdPID, "SIGINT");
+  } else if (require("is-running")(dcrdPID)) {
+    const win32ipc = require("../node_modules/win32ipc/build/Release/win32ipc.node");
+    try {
+      win32ipc.closePipe(dcrdPipeRx);
+    } catch (e) {
+      logger.log("error", "Error closing dcrd piperx: " + e);
+    }
   }
 }
 
@@ -113,8 +123,8 @@ export const launchDCRD = (mainWindow, daemonIsAdvanced, daemonPath, appdata, te
     try {
       const util = require("util");
       const win32ipc = require("../node_modules/win32ipc/build/Release/win32ipc.node");
-      var pipe = win32ipc.createPipe("out");
-      args.push(util.format("--piperx=%d", pipe.readEnd));
+      dcrdPipeRx = win32ipc.createPipe("out");
+      args.push(util.format("--piperx=%d", dcrdPipeRx.readEnd));
     } catch (e) {
       logger.log("error", "can't find proper module to launch dcrd: " + e);
     }
