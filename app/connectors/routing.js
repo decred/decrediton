@@ -6,7 +6,6 @@ import * as ca from "../actions/ClientActions";
 
 const mapStateToProps = selectorMap({
   location: sel.location,
-  politeiaBetaEnabled: sel.politeiaBetaEnabled, // TODO: remove once politeia hits production
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
