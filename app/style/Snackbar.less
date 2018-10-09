@@ -5,85 +5,78 @@
   border-radius: 5px;
   color: #48566e;
   font-family: Source Sans Pro, sans-serif;
+  font-size: 13px;
+  line-height: 17px;
   background-color: #fff;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px;
   margin-bottom: 50px;
   position: fixed;
   width: 352px;
-  min-height: 74px;
+  min-height: 34px;
   z-index: 100;
   left: 60%;
   transform: translateX(-40%);
-  font-size: 14px;
-  padding: 0px 24px;
+  padding: 20px 34px 10px 60px;
   transition: box-shadow 0.2s;
   background-position: 15px 15px;
   background-size: 30px;
   background-repeat: no-repeat;
 }
 
-.snackbar:hover {
-}
-
 .snackbar.snackbar-warning,
 .snackbar.snackbar-error {
-  //background-color: rgba(253, 110, 75, 0.8);
   background-image: @warning-input;
 }
 
 .snackbar.snackbar-success {
-  //background-color: rgba(69, 191, 87, 0.8);
   background-image: @plus-big-icon;
 }
 
-.snackbar-information {
-  padding-top: 25px;
-}
-
 .snackbar-message {
-  //word-break: break-all;
-  padding: 0.5em;
+  word-break: break-all;
   word-wrap: break-word;
   text-overflow: ellipsis;
 }
 
 .snackbar-information-row {
   width: 100%;
-  float: left;
-  height: 25px;
+  margin-bottom: 10px;
+  display: flex;
 }
 
 .snackbar-information-row-type {
-  width: 30%;
-  float: left;
+  width: 50%;
+}
+
+.snackbar-information-row-type-bold {
+  font-weight: 600;
 }
 
 .snackbar-information-row-amount {
-  width: 40%;
-  float: left;
+  width: 50%;
+  text-align: right;
 }
 
 .snackbar-information-row-fee {
-  width: 30%;
-  float: left;
+  width: 50%;
   text-align: right;
 }
 
 .snackbar-information-row-tx {
-  width: 100%;
-  float: left;
-  text-align: center;
-  font-family: Inconsolata, monospace;
+  width: 50%;
+  text-align: right;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  a {
+    color: #2970ff;
+    text-decoration: none;
+  }
 }
 
 .snackbar-tx-mixin {
-  height: 78px;
-  padding: 0px 50px 20px;
-  background-color: rgba(12, 30, 62, 0.5);
-  background-position: 15px 50%;
-  background-size: 24px;
-  background-repeat: no-repeat;
-  margin-bottom: 0px;
+  min-height: 40px;
 }
 
 .snackbar-stake {
@@ -107,5 +100,5 @@
 .snackbar-transfer {
   .snackbar-tx-mixin;
 
-  background-image: @wallet-gray-icon;
+  background-image: @transfer-transaction;
 }

@@ -92,8 +92,8 @@ class Snackbar extends React.Component {
   }
 
   enableHideTimer() {
-    this.clearHideTimer();
-    this.hideTimer = this.props.setTimeout(this.onDismissMessage, 4000);
+    //this.clearHideTimer();
+    //this.hideTimer = this.props.setTimeout(this.onDismissMessage, 4000);
   }
 
   clearHideTimer() {
