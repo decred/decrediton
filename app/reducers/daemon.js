@@ -17,6 +17,7 @@ import {
   DECREDITON_VERSION,
   FATAL_DAEMON_ERROR,
   FATAL_WALLET_ERROR,
+  CLOSEDAEMON_ATTEMPT, CLOSEDAEMON_FAILED, CLOSEDAEMON_SUCCESS
 } from "../actions/DaemonActions";
 import {
   CREATEWALLET_GOBACK,
@@ -67,6 +68,31 @@ export default function version(state = {}, action) {
       daemonStopped: false,
       appData: action.appData,
       credentials: action.credentials,
+    };
+  case CLOSEDAEMON_ATTEMPT:
+    return { ...state,
+      daemonCloseRequestAttempt: true,
+    };
+  case CLOSEDAEMON_FAILED:
+    return { ...state,
+      daemonCloseError: String(action.error),
+      daemonCloseRequestAttempt: false,
+    };
+  case CLOSEDAEMON_SUCCESS:
+    return { ...state,
+      daemonCloseError: null,
+      daemonCloseRequestAttempt: false,
+      daemonCloseResponse: action.response,
+      daemonStarted: false,
+      daemonAdvanced: action.advanced,
+      daemonStopped: true,
+      credentials: null,
+      appData: null,
+      daemonSynced: false,
+      currentBlockCount: null,
+      timeLeftEstimate: null,
+      timeStart: null,
+      blockStart: null,
     };
   case DAEMONSYNCING_START:
     return { ...state,

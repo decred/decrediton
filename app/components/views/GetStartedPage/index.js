@@ -165,6 +165,7 @@ class GetStartedPage extends React.Component {
         {...{
           ...props,
           ...state,
+          appVersion,
           isSPV,
           text,
           animationType,

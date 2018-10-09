@@ -19,6 +19,7 @@ export default function settings(state = {}, action) {
     return { ...state,
       tempSettings: action.tempSettings,
       settingsChanged: true,
+      needNetworkReset: action.needNetworkReset,
     };
   case SETTINGS_UNCHANGED:
     return { ...state,

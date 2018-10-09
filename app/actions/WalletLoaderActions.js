@@ -267,7 +267,7 @@ export const startRpcRequestFunc = (isRetry, privPass) =>
               });
             }
           } else {
-            if (status.indexOf("invalid passphrase") > 0) {
+            if (status.indexOf("invalid passphrase") > 0 || status.indexOf("Stream removed")) {
               dispatch({ error: status, type: SYNC_FAILED });
             } else {
               dispatch(startRpcRequestFunc(true, privPass));
@@ -386,7 +386,9 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
     return;
   }
   dispatch({ type: SYNC_ATTEMPT });
-  const { discoverAccountsComplete, spvConnect } = getState().walletLoader;
+  const { discoverAccountsComplete } = getState().walletLoader;
+  const { currentSettings } = getState().settings;
+  const spvConnect = currentSettings.spvConnect;
   var request = new SpvSyncRequest();
   for (var i = 0; spvConnect && i < spvConnect.length; i++) {
     request.addSpvConnect(spvConnect[i]);

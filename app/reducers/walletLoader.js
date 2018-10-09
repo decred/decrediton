@@ -271,7 +271,7 @@ export default function walletLoader(state = {}, action) {
     };
   case SYNC_FAILED:
     return { ...state,
-      syncInput: true,
+      syncInput: false,
       syncAttemptRequest: false,
       synced: false,
     };

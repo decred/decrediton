@@ -31,7 +31,7 @@ function closeClis() {
     closeDCRW(dcrwPID);
 }
 
-function closeDCRD() {
+export function closeDCRD() {
   if (require("is-running")(dcrdPID) && os.platform() != "win32") {
     logger.log("info", "Sending SIGINT to dcrd at pid:" + dcrdPID);
     process.kill(dcrdPID, "SIGINT");
@@ -39,10 +39,13 @@ function closeDCRD() {
     try {
       const win32ipc = require("../node_modules/win32ipc/build/Release/win32ipc.node");
       win32ipc.closePipe(dcrdPipeRx);
+      dcrdPID = null;
     } catch (e) {
       logger.log("error", "Error closing dcrd piperx: " + e);
+      return false;
     }
   }
+  return true;
 }
 
 export const closeDCRW = () => {
