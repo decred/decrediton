@@ -1,6 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import { StandaloneHeader, StandalonePage } from "layout";
-import { ChangePassphraseButton, KeyBlueButton, InvisibleButton } from "buttons";
+import { ChangePassphraseButton, KeyBlueButton, InvisibleButton, ResetNetworkButton } from "buttons";
 import { WatchOnlyWarnNotification } from "shared";
 import GeneralSettings from "./GeneralSettings";
 import PrivacySettings from "./PrivacySettings";
@@ -28,6 +28,7 @@ const SettingsPage = ({
   onCloseWallet,
   isChangePassPhraseDisabled,
   changePassphraseRequestAttempt,
+  needNetworkReset,
 }) => (
   <StandalonePage header={<SettingsPageHeader />}>
     <div className="settings-wrapper">
@@ -60,13 +61,24 @@ const SettingsPage = ({
     </div>
 
     <div className="settings-save-button">
-      <KeyBlueButton
-        disabled={!areSettingsDirty}
-        size="large"
-        block={false}
-        onClick={onSaveSettings}>
-        <T id="settings.save" m="Save" />
-      </KeyBlueButton>
+      {needNetworkReset ?
+        <ResetNetworkButton
+          modalTitle={<T id="settings.resetNetworkTitle" m="Reset required" />}
+          buttonLabel={<T id="settings.save" m="Save" />}
+          modalContent={
+            <T id="settings.resetNetworkContent" m="The setting you have chosen to change requires Decrediton to be restarted.  Please confirm this action before proceeding."/>}
+          disabled={!areSettingsDirty}
+          size="large"
+          block={false}
+          onSubmit={onSaveSettings}/>:
+        <KeyBlueButton
+          disabled={!areSettingsDirty}
+          size="large"
+          block={false}
+          onClick={onSaveSettings}>
+          <T id="settings.save" m="Save" />
+        </KeyBlueButton>
+      }
     </div>
 
     <div className="settings-close-wallet-button">

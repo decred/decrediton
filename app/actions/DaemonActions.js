@@ -219,6 +219,22 @@ export const createWallet = (createNewWallet, selectedWallet) => (dispatch, getS
     });
 };
 
+export const CLOSEDAEMON_ATTEMPT = "CLOSEDAEMON_ATTEMPT";
+export const CLOSEDAEMON_FAILED = "CLOSEDAEMON_FAILED";
+export const CLOSEDAEMON_SUCCESS = "CLOSEDAEMON_SUCCESS";
+
+export const closeDaemonRequest = () => async(dispatch, getState) => {
+  dispatch({ type: CLOSEDAEMON_ATTEMPT });
+  try {
+    await wallet.stopDaemon();
+    const { currentSettings } = getState().settings;
+    dispatch({ advanced: currentSettings.daemonStartAdvanced, type: CLOSEDAEMON_SUCCESS });
+  } catch (error) {
+    dispatch({ error, type: CLOSEDAEMON_FAILED });
+    dispatch(pushHistory("/error"));
+  }
+};
+
 export const startWallet = (selectedWallet) => (dispatch, getState) => {
   const { network } = getState().daemon;
   wallet.startWallet(selectedWallet.value.wallet, network == "testnet")

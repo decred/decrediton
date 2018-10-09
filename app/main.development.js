@@ -10,7 +10,7 @@ import { getGlobalCfgPath, checkAndInitWalletCfg } from "./main_dev/paths";
 import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRequests } from "./main_dev/externalRequests";
 import { setupProxy } from "./main_dev/proxy";
 import { cleanShutdown, GetDcrdPID, GetDcrwPID } from "./main_dev/launch";
-import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopWallet, startWallet, checkDaemon, deleteDaemon, setWatchingOnlyWallet, getWatchingOnlyWallet } from "./main_dev/ipc";
+import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopDaemon, stopWallet, startWallet, checkDaemon, deleteDaemon, setWatchingOnlyWallet, getWatchingOnlyWallet } from "./main_dev/ipc";
 import { initTemplate, getVersionWin, setGrpcVersions, getGrpcVersions, inputMenu, selectionMenu } from "./main_dev/templates";
 
 // setPath as decrediton
@@ -136,6 +136,10 @@ ipcMain.on("create-wallet", (event, walletPath, testnet) => {
 
 ipcMain.on("remove-wallet", (event, walletPath, testnet) => {
   event.returnValue = removeWallet(testnet, walletPath);
+});
+
+ipcMain.on("stop-daemon", (event) => {
+  event.returnValue = stopDaemon();
 });
 
 ipcMain.on("stop-wallet", (event) => {
