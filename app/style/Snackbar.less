@@ -2,32 +2,38 @@
 @import (reference) "./Icons.less";
 
 .snackbar {
-  background-color: rgba(12, 30, 62, 0.5);
+  border-radius: 5px;
+  color: #48566e;
   font-family: Source Sans Pro, sans-serif;
-  margin-bottom: 0.5em;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px;
+  margin-bottom: 50px;
   position: fixed;
-  // bottom: 0px;
-  max-width: 568px;
+  width: 352px;
+  min-height: 74px;
   z-index: 100;
   left: 60%;
   transform: translateX(-40%);
   font-size: 14px;
-  color: #fff;
   padding: 0px 24px;
   transition: box-shadow 0.2s;
+  background-position: 15px 15px;
+  background-size: 30px;
+  background-repeat: no-repeat;
 }
 
 .snackbar:hover {
-  box-shadow: #ccc 0px 0px 24px 8px;
 }
 
 .snackbar.snackbar-warning,
 .snackbar.snackbar-error {
-  background-color: rgba(253, 110, 75, 0.8);
+  //background-color: rgba(253, 110, 75, 0.8);
+  background-image: @warning-input;
 }
 
 .snackbar.snackbar-success {
-  background-color: rgba(69, 191, 87, 0.8);
+  //background-color: rgba(69, 191, 87, 0.8);
+  background-image: @plus-big-icon;
 }
 
 .snackbar-information {
