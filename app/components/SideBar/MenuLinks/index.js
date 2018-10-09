@@ -23,13 +23,6 @@ class MenuLinks extends React.Component {
 
   constructor (props) {
     super(props);
-
-    // TODO: remove once politeia hits production
-    // it's ugly, but sufficient for this, as it's temporary :)
-    if (!props.politeiaBetaEnabled) {
-      const idx = linkList.findIndex(l => l.path === "/governance");
-      idx === -1 ? null : linkList.splice(idx, 1);
-    }
   }
 
   componentDidMount() {

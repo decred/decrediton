@@ -377,7 +377,6 @@ var initialState = {
     getStartupStatsAttempt: false,
   },
   governance: {
-    politeiaBetaEnabled: globalCfg.get("politeia_beta"), // TODO: remove once politeia hits production
     getVettedAttempt: false,
     activeVote: [],
     preVote: [],
