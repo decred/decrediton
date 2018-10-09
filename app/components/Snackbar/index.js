@@ -92,8 +92,8 @@ class Snackbar extends React.Component {
   }
 
   enableHideTimer() {
-    //this.clearHideTimer();
-    //this.hideTimer = this.props.setTimeout(this.onDismissMessage, 4000);
+    this.clearHideTimer();
+    this.hideTimer = this.props.setTimeout(this.onDismissMessage, 10000);
   }
 
   clearHideTimer() {
@@ -119,6 +119,7 @@ class Snackbar extends React.Component {
 
   getStaticNotification() {
     const { message } = this.state;
+    const { onDismissMessage } = this;
     return (
       <div
         className={snackbarClasses(message || "")}
@@ -126,7 +127,7 @@ class Snackbar extends React.Component {
         onMouseLeave={this.enableHideTimer}
         style={{ bottom: "0px" }}
       >
-        {message ? <Notification {...message} /> : ""}
+        {message ? <Notification  {...{ onDismissMessage, message }} /> : ""}
       </div>
     );
   }
@@ -137,7 +138,7 @@ class Snackbar extends React.Component {
 
   getAnimatedNotification() {
     const { message } = this.state;
-
+    const { onDismissMessage } = this;
     const styles = [ {
       key: "ntf"+Math.random(),
       data: message,
@@ -154,7 +155,7 @@ class Snackbar extends React.Component {
             onMouseLeave={this.enableHideTimer}
             style={is[0].style}
           >
-            <Notification {...is[0].data} />
+            <Notification {...{ onDismissMessage, ...is[0].data }} />
           </div>
         }
       </TransitionMotion>
@@ -167,9 +168,11 @@ class Snackbar extends React.Component {
       : this.getStaticNotification();
 
     return (
-      <EventListener target="document" onMouseUp={this.windowClicked}>
+      //<EventListener target="document" onMouseUp={this.windowClicked}>
+      <Aux>
         {notification}
-      </EventListener>
+      </Aux>
+      //</EventListener>
     );
   }
 }

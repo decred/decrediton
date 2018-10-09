@@ -15,9 +15,9 @@ const transactionTypes = [
   ...Object.values(TRANSACTION_TYPES)
 ];
 
-const Notification = ({ type, ...message }) =>
+const Notification = ({ onDismissMessages, type, ...message }) =>
   (transactionTypes.indexOf(type) > -1)
-    ? <Transaction {...{ type, ...message } } />
-    : <Message {...{ ...message, type } } />;
+    ? <Transaction {...{ onDismissMessages, type, ...message } } />
+    : <Message {...{ onDismissMessages, ...message, type } } />;
 
 export default Notification;
