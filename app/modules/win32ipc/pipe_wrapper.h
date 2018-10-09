@@ -31,5 +31,6 @@ struct pipe {
 };
 
 result<pipe> create_pipe(pipe_direction direction);
+char const* close_pipe_end(uintptr_t read_end_handle, uintptr_t write_end_handle);
 
 } // namespace pipe_wrapper

@@ -48,5 +48,18 @@ err_close_handles:
 err:
     return result<pipe>::error(err_msg);
 }
-    
+
+char const* close_pipe_end(uintptr_t read_end_handle, uintptr_t write_end_handle) {
+    if (!CloseHandle((HANDLE) read_end_handle)) {
+        return "Close(read_end_handle)";
+    }
+
+
+    if (!CloseHandle((HANDLE) write_end_handle)) {
+        return "Close(write_end_handle)";
+    }
+
+    return nullptr;
+}
+
 } // namespace pipe_wrapper
