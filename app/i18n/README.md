@@ -171,6 +171,22 @@ Assuming all strings in the app have been properly recorded on the `extracted/` 
 $ npm run i18n-prepare-untranslated
 ```
 
+## Obtaining translated files
+
+To download the translated files from Transifex you have two options: log in to the Transifex admin UI, go into each resource, click on the action menu (the three vertical dots menu at the top right corner of the UI) and select "Download All Translations". You'll get a zip file with all translated files in your email.
+
+A second option is to use the [Transifex CLI client](https://docs.transifex.com/client/config). Again, log into Transifex, go to your settings page and create an API token. Then configure an environment variable `TX_TOKEN` holding the value of the generated token.
+
+Then install the Transifex CLI client via pip (minimum version: **0.13.4**) and run `tx pull -a`. For example:
+
+```
+$ cd src/decrediton
+$ export TX_TOKEN="<your api token>"
+$ tx pull -a
+```
+
+**:exclamation: Note**: I (@matheusd) haven't personally tested the `tx push` command within the Decrediton project, so pushing might wrongly replace the resources in Transifex. Use with care!
+
 ## Assembling translated files
 
 Transifex will generate a bunch of *.po files (one per language). Save them on the `po/` dir. To get back the json files that the app actually uses, execute the following:
