@@ -324,6 +324,10 @@ export const getBestBlockHeightAttempt = (cb) => (dispatch, getState) => {
   if (getBestBlockHeightRequest) {
     return;
   }
+  if (sel.walletService(getState()) == null) {
+    setTimeout(() => dispatch(getBestBlockHeightAttempt(cb)), 100);
+    return;
+  }
   dispatch({ type: GETBESTBLOCK_ATTEMPT });
   wallet.bestBlock(sel.walletService(getState()))
     .then(resp => {
