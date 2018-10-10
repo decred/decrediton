@@ -240,7 +240,7 @@ export const purchaseTicketsAttempt = (
   expiry = expiry === 0 ? expiry : currentBlockHeight + expiry;
   txFee = txFee * 1e8;
   ticketFee = ticketFee * 1e8;
-  dispatch({ type: PURCHASETICKETS_ATTEMPT });
+  dispatch({ numTicketsToBuy: numTickets, type: PURCHASETICKETS_ATTEMPT });
   dispatch(importScriptAttempt(passphrase, stakepool.Script, false, 0, stakepool.TicketAddress,
     error => error
       ? dispatch({ error, type: PURCHASETICKETS_FAILED })

@@ -267,6 +267,7 @@ var initialState = {
     accountNtfnsResponse: null,
   },
   control: {
+    numTicketsToBuy: 1,
     // ExtendedPubKey
     getExtendedPubKeyAttempt: false,
     getExtendedPubKeyResponse: null,

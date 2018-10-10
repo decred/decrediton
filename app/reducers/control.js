@@ -230,6 +230,7 @@ export default function control(state = {}, action) {
     return { ...state,
       purchaseTicketsError: null,
       purchaseTicketsRequestAttempt: true,
+      numTicketsToBuy: action.numTicketsToBuy,
     };
   case PURCHASETICKETS_FAILED:
     return { ...state,
@@ -242,6 +243,7 @@ export default function control(state = {}, action) {
       purchaseTicketsError: null,
       purchaseTicketsRequestAttempt: false,
       purchaseTicketsResponse: action.purchaseTicketsResponse,
+      numTicketsToBuy: 1,
     };
   case REVOKETICKETS_ATTEMPT:
     return { ...state,

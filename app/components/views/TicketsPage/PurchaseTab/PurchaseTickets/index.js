@@ -20,7 +20,7 @@ class PurchaseTickets extends React.Component {
       txFeeError: false,
       expiryError: false,
       isShowingAdvanced: false,
-      numTicketsToBuy: 1,
+      numTicketsToBuy: this.props.numTicketsToBuy,
       ticketFee: 0.001, // DCR/kB
       txFee: 0.001, // DCR/kB
       conf: 0,
