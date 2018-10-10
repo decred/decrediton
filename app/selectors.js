@@ -311,6 +311,7 @@ export const noMoreTickets = get([ "grpc", "noMoreTickets" ]);
 export const ticketsFilter = get([ "grpc", "ticketsFilter" ]);
 export const ticketsNormalizer = createSelector([ ticketNormalizer ], map);
 export const tickets = get([ "grpc", "tickets" ]);
+export const numTicketsToBuy = get([ "control", "numTicketsToBuy" ]);
 
 // note that hasTickets means "ever had any tickets", **NOT** "currently has live
 // tickets".
