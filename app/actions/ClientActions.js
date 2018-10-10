@@ -325,7 +325,7 @@ export const getBestBlockHeightAttempt = (cb) => (dispatch, getState) => {
     return;
   }
   if (sel.walletService(getState()) == null) {
-    dispatch(getBestBlockHeightAttempt(cb));
+    setTimeout(() => dispatch(getBestBlockHeightAttempt(cb)), 100);
     return;
   }
   dispatch({ type: GETBESTBLOCK_ATTEMPT });
