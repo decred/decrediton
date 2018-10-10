@@ -437,7 +437,7 @@ const syncConsumer = (response) => (dispatch, getState) => {
   switch (response.getNotificationType()) {
   case SyncNotificationType.SYNCED: {
     dispatch({ type: SYNC_SYNCED });
-    setTimeout(() => dispatch(getBestBlockHeightAttempt(startWalletServices)), 1000);
+    dispatch(getBestBlockHeightAttempt(startWalletServices));
     break;
   }
   case SyncNotificationType.UNSYNCED: {
