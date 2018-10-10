@@ -14,6 +14,7 @@ import { isTestNet } from "selectors";
 import { SpvSyncRequest, SyncNotificationType, RpcSyncRequest } from "../middleware/walletrpc/api_pb";
 import { push as pushHistory } from "react-router-redux";
 import { stopNotifcations } from "./NotificationActions";
+import { clearDeviceSession as trezorClearDeviceSession } from "./TrezorActions";
 
 const MAX_RPC_RETRIES = 5;
 const RPC_RETRY_DELAY = 5000;
@@ -182,6 +183,7 @@ export const closeWalletRequest = () => async(dispatch, getState) => {
     await dispatch(stopNotifcations());
     await dispatch(syncCancel());
     await dispatch(rescanCancel());
+    await dispatch(trezorClearDeviceSession());
     await closeWallet(getState().walletLoader.loader);
     await wallet.stopWallet();
     dispatch({ type: CLOSEWALLET_SUCCESS });

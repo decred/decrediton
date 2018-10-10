@@ -236,6 +236,26 @@ export const cancelCurrentOperation = () => async (dispatch, getState) => {
     dispatch({ type: TRZ_CANCELOPERATION_SUCCESS });
   } catch (error) {
     dispatch({ error, type: TRZ_CANCELOPERATION_FAILED });
+    throw error;
+  }
+};
+
+export const TRZ_CLEARDEVICESESSION_SUCCESS = "TRZ_CLEARDEVICESESSION_SUCCESS";
+export const TRZ_CLEARDEVICESESSION_FAILED = "TRZ_CLEARDEVICESESSION_FAILED";
+
+// Closes a device session, locking the device (if it requires a pin).
+export const clearDeviceSession = () => async (dispatch, getState) => {
+  const device = selectors.trezorDevice(getState());
+  if (!device) return;
+
+  await dispatch(cancelCurrentOperation());
+  try {
+    await deviceRun(dispatch, getState, device, async session => {
+      await session.clearSession();
+    });
+    dispatch({ type: TRZ_CLEARDEVICESESSION_SUCCESS });
+  } catch (error) {
+    dispatch({ error, type: TRZ_CLEARDEVICESESSION_FAILED });
   }
 };
 
