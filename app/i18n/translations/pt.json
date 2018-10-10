@@ -625,7 +625,7 @@
   "stakepools.list.form.field.script": "Script:",
   "stakepools.list.form.field.ticketaddress": "Endereço do Ticket:",
   "stakepools.list.form.field.url": "URL:",
-  "stakepools.list.form.submit": "Adicionar stakepoo",
+  "stakepools.list.form.submit": "Adicionar stakepool",
   "stakepools.list.removeConfirmTitle": "Remover StakePool",
   "stakepools.list.title": "Stake pools configuradas:",
   "stakepools.removedStakePoolConfig": "Configuração de stakepool removida com sucesso",
