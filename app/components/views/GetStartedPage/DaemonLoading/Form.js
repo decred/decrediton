@@ -1,4 +1,4 @@
-import { LinearProgressFull } from "indicators";
+import { LinearProgressFull, DecredLoading } from "indicators";
 import { FormattedMessage as T, FormattedRelative, injectIntl } from "react-intl";
 import { SlateGrayButton, InvisibleButton, KeyBlueButton } from "buttons";
 import { PasswordInput } from "inputs";
