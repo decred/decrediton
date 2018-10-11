@@ -1,9 +1,10 @@
 # Translators:
 # e2f_cn c3 <tx_e2f_cn_c3@e2f.com>, 2018
+# Matheus Degiovani, 2018
 msgid ""
 msgstr ""
 "POT-Creation-Date: 2018-10-03T19:39:55.113Z\n"
-"Last-Translator: e2f_cn c3 <tx_e2f_cn_c3@e2f.com>, 2018\n"
+"Last-Translator: Matheus Degiovani, 2018\n"
 "Language-Team: Chinese (https://www.transifex.com/decred/teams/79156/zh/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -50,7 +51,7 @@ msgstr "* 请粘贴有效位数为 33 字的种子。"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/Details.json
 msgctxt "autobuyer.invalidMaxFee"
 msgid "*Invalid max fee (0 - 0.1 DCR/KB)"
-msgstr "*无效的最高收费（0-0.1DCR/KB）"
+msgstr "*无效的最大手续费（0-0.1DCR/KB）"
 
 #. [createWallet.passphraseInput.errors.noMatch]
 #. defaultMessage is:
@@ -66,7 +67,7 @@ msgstr "*密码不匹配"
 #: app/i18n/extracted/app/components/views/GetStartedPage/CreateWallet/CreateWalletForm/CreatePassPhrase/PassPhraseInputs.json
 msgctxt "createWallet.passphraseInput.errors.noPassPhrase"
 msgid "*Please enter your private passphrase"
-msgstr "*请输入您的私人密码"
+msgstr "*请输入您的钱包密码"
 
 #. [autobuyer.canNotEnableAutobuyer]
 #. defaultMessage is:
