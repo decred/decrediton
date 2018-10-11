@@ -1,6 +1,6 @@
 // @flow
 import { Link } from "react-router-dom";
-import { Balance } from "shared";
+import { Balance, Tooltip } from "shared";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { TRANSACTION_DIR_SENT, TRANSACTION_DIR_RECEIVED,
   TRANSACTION_DIR_TRANSFERED
@@ -15,47 +15,55 @@ const messages = defineMessages({
   },
   Vote: {
     id: "notifications.type.vote",
-    defaultMessage: "Vote"
+    defaultMessage: "Voted"
   },
   Revocation: {
     id: "notifications.type.revocation",
-    defaultMessage: "Revocation"
+    defaultMessage: "Revoked"
   },
   [TRANSACTION_DIR_SENT]: {
     id: "notifications.type.send",
-    defaultMessage: "Send"
+    defaultMessage: "Sent"
   },
   [TRANSACTION_DIR_TRANSFERED]: {
     id: "notifications.type.transfer",
-    defaultMessage: "Transfer"
+    defaultMessage: "Transferred"
   },
   [TRANSACTION_DIR_RECEIVED]: {
     id: "notifications.type.receive",
-    defaultMessage: "Receive"
+    defaultMessage: "Received"
   }
 });
 
 const Transaction = ({
   type,
   message,
+  onDismissMessage,
   intl
 }) => (
-  <div className="snackbar-information">
+  <Aux>
+    <div className="snackbar-close-button-top" onClick={onDismissMessage}/>
     <div className="snackbar-information-row">
-      <div className="snackbar-information-row-tx"><Link to={`/transactions/history/${message.txHash}`}>{message.txHash}</Link></div>
-    </div>
-    <div className="snackbar-information-row">
-      <div className="snackbar-information-row-type">{intl.formatMessage(messages[type])}</div>
+      <div className="snackbar-information-row-type"><T id="notification.new" m="New Transaction"/>, <span className="snackbar-information-row-type-bold">{intl.formatMessage(messages[type])}</span></div>
       <div className="snackbar-information-row-amount">
-        <T id="notification.transfer.amount" m="Amount" />  <Balance amount={message.amount}/>
+        <Balance flat amount={message.amount}/>
       </div>
-      {message.fee > 0 &&
-        <div className="snackbar-information-row-fee">
-          <T id="notification.transfer.fee" m="Fee" />  <Balance amount={message.fee}/>
-        </div>
-      }
     </div>
-  </div>
+    {message.fee > 0 &&
+    <div className="snackbar-information-row">
+      <div className="snackbar-information-row-type"><T id="notification.transfer.fee" m="Transaction Fee" /></div>
+      <div className="snackbar-information-row-fee">
+        <Balance flat amount={message.fee}/>
+      </div>
+    </div>
+    }
+    <div className="snackbar-information-row">
+      <div className="snackbar-information-row-type"><T id="notification.seeTransactionDetails" m="See Transaction Details"/></div>
+      <div className="snackbar-information-row-tx">
+        <Tooltip width={300} text={`${message.txHash}`}><Link onClick={onDismissMessage} to={`/transactions/history/${message.txHash}`}>{message.txHash}</Link></Tooltip>
+      </div>
+    </div>
+  </Aux>
 );
 
 export default injectIntl(Transaction);

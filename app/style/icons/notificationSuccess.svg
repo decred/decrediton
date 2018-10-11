@@ -1,0 +1,22 @@
+<svg id="success" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+      }
+
+      .cls-2 {
+        fill: #41bf53;
+      }
+
+      .cls-3 {
+        fill: #c6eccb;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1" data-name="Layer 1">
+    <rect id="Rectangle_1473" data-name="Rectangle 1473" class="cls-1" width="30" height="30"/>
+    <circle id="Ellipse_1" data-name="Ellipse 1" class="cls-2" cx="13.333" cy="13.333" r="13.333" transform="translate(1.667 1.667)"/>
+    <path id="Path_727" data-name="Path 727" class="cls-3" d="M114.767,126q-3.819,3.827-7.647,7.645l-3.633-3.033L101,133.6l5.006,4.171,1.364,1.139,1.26-1.26c2.963-2.97,5.933-5.923,8.9-8.9Z" transform="translate(-94.267 -117.6)"/>
+  </g>
+</svg>
