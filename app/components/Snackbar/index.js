@@ -1,7 +1,7 @@
 // @flow
 import { snackbar, theming } from "connectors";
 import ReactTimeout from "react-timeout";
-//import EventListener from "react-event-listener";
+import EventListener from "react-event-listener";
 import Notification from "./Notification";
 import theme from "theme";
 import { eventOutsideComponent } from "helpers";
