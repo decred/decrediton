@@ -168,11 +168,9 @@ class Snackbar extends React.Component {
       : this.getStaticNotification();
 
     return (
-      //<EventListener target="document" onMouseUp={this.windowClicked}>
-      <Aux>
+      <EventListener target="document" onMouseUp={this.windowClicked}>
         {notification}
-      </Aux>
-      //</EventListener>
+      </EventListener>
     );
   }
 }
