@@ -29,9 +29,11 @@ export const saveSettings = (settings) => (dispatch, getState) => {
   config.set("spv_mode", settings.spvMode);
   config.set("spv_connect", settings.spvConnect);
 
-  const walletConfig = getWalletCfg(isTestNet(getState()), walletName);
-  walletConfig.set("currency_display", settings.currencyDisplay);
-  walletConfig.set("gaplimit", settings.gapLimit);
+  if (walletName) {
+    const walletConfig = getWalletCfg(isTestNet(getState()), walletName);
+    walletConfig.set("currency_display", settings.currencyDisplay);
+    walletConfig.set("gaplimit", settings.gapLimit);
+  }
 
   if (!equalElements(oldAllowedExternalRequests, settings.allowedExternalRequests)) {
     wallet.reloadAllowedExternalRequests();
