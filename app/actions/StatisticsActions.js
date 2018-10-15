@@ -21,6 +21,7 @@ export const getStartupStats = () => (dispatch, getState) => {
 
   dispatch({ type: GETSTARTUPSTATS_ATTEMPT });
 
+  const startCalcTime = new Date();
   const endDate = new Date();
   endDate.setDate(endDate.getDate()-16);
 
@@ -58,7 +59,11 @@ export const getStartupStats = () => (dispatch, getState) => {
         }
         date.setDate(date.getDate()+1);
       }
-      dispatch({ dailyBalances: lastBalances, type: GETSTARTUPSTATS_SUCCESS });
+
+      const endCalcTime = new Date();
+      const startupStatsCalcSeconds = (endCalcTime.getTime() - startCalcTime.getTime()) / 1000;
+      dispatch({ dailyBalances: lastBalances, startupStatsCalcSeconds,
+        startupStatsEndCalcTime: endCalcTime, type: GETSTARTUPSTATS_SUCCESS });
     })
     .catch(error => dispatch({ error, type: GETSTARTUPSTATS_FAILED }));
 };
@@ -220,7 +225,7 @@ export const transactionStats = (opts) => (dispatch, getState) => {
 export const balancesStats = (opts) => async (dispatch, getState) => {
   const { progressFunction, startFunction, endFunction, errorFunction } = opts;
 
-  const { currentBlockHeight, walletService, decodeMessageService,
+  const { currentBlockHeight, walletService,
     recentBlockTimestamp, balances } = getState().grpc;
 
   const backwards = opts.backwards;
@@ -590,15 +595,18 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
 
     console.log(formatDate(new Date(), "HH:mm:ss.SSS"), "got extra txs for maturity", toProcess[toProcess.length-1]);
 
-    let ct = 0;
-    toProcess.forEach(tx => {
-      if (tx.txType == wallet.TRANSACTION_TYPE_TICKET_PURCHASE) {
-        var { isWallet, commitAmount } = ticketInfo(tx);
-        recordTicket(tx, commitAmount, isWallet);
-        ct++;
-      }
-    });
-    console.log(formatDate(new Date(), "HH:mm:ss.SSS"), "Processed tickets", ct);
+    if (backwards) {
+      // on backwards stats, we find vote txs before finding ticket txs, so
+      // pre-process tickets from all grabbed txs to avoid making the separate
+      // getTransaction calls in voteRevokeInfo()
+      toProcess.forEach(tx => {
+        if (tx.txType == wallet.TRANSACTION_TYPE_TICKET_PURCHASE) {
+          var { isWallet, commitAmount } = ticketInfo(tx);
+          recordTicket(tx, commitAmount, isWallet);
+        }
+      });
+      console.log(formatDate(new Date(), "HH:mm:ss.SSS"), "Processed tickets");
+    }
 
     await callback({ mined: toProcess });
 

@@ -818,7 +818,12 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
     newlyMinedTransactions, recentRegularTransactions, recentStakeTransactions, type: NEW_TRANSACTIONS_RECEIVED });
 
   if (newlyMinedTransactions.length > 0) {
-    dispatch(getStartupStats());
+    const { startupStatsEndCalcTime, startupStatsCalcSeconds } = getState().statistics;
+    const secFromLastStats = (new Date() - startupStatsEndCalcTime) / 1000;
+    console.log(secFromLastStats, startupStatsCalcSeconds, secFromLastStats);
+    if (secFromLastStats > 5*startupStatsCalcSeconds) {
+      dispatch(getStartupStats());
+    }
   }
 };
 

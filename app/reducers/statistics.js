@@ -23,7 +23,9 @@ export default function statistics(state = {}, action) {
     return {
       ...state,
       dailyBalances: action.dailyBalances,
-      getStartupStatsAttempt: false
+      getStartupStatsAttempt: false,
+      startupStatsCalcSeconds: action.startupStatsCalcSeconds,
+      startupStatsEndCalcTime: action.startupStatsEndCalcTime,
     };
   case GETMYTICKETSSTATS_ATTEMPT:
     return {
