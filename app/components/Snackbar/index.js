@@ -95,7 +95,7 @@ class Snackbar extends React.Component {
   enableHideTimer() {
     console.log("clearTImer!");
     this.clearHideTimer();
-    this.hideTimer = this.props.setTimeout(this.onDismissMessage, 10000);
+    //this.hideTimer = this.props.setTimeout(this.onDismissMessage, 10000);
   }
 
   clearHideTimer() {
@@ -151,7 +151,7 @@ class Snackbar extends React.Component {
       const styles = [ {
         key: key+i,
         data: messages[i],
-        style: { backgroundColor:  i == messages.length ? "#fff" : "inherit", bottom: spring(i * 74, theme("springs.tab")) }
+        style: { backgroundColor:  i == messages.length ? "#fff" : "inherit", bottom: spring(20, theme("springs.tab")) }
       } ];
       const notification = <TransitionMotion key={key} styles={styles} willEnter={this.notifWillEnter}>
         { is => !is[0].data
@@ -181,7 +181,11 @@ class Snackbar extends React.Component {
 
     return (
       <EventListener target="document" >
-        {notification}
+        {notification.length > 0 &&
+          <div className="snackbar-panel">
+            {notification}
+          </div>
+        }
       </EventListener>
     );
   }
