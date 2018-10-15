@@ -1,5 +1,6 @@
 // @flow
 import { injectIntl } from "react-intl";
+import { ProgressRing } from "indicators";
 
 @autobind
 class Message extends React.Component {
@@ -8,7 +9,14 @@ class Message extends React.Component {
     const txt = intl.formatMessage(message, values);
     return (
       <div className="snackbar-message">
-        {topNotification && <div className="snackbar-close-button-top" onClick={onDismissMessage}/>}
+        {topNotification &&
+        <div className="snackbar-close-button-top" onClick={onDismissMessage}>
+          <ProgressRing
+            radius={ 12 }
+            stroke={ 1 }
+            progress={ 100 }
+          />
+        </div>}
         {txt}
       </div>
     );
