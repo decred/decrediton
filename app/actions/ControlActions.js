@@ -120,10 +120,15 @@ export const importPrivateKeyAttempt = (...args) => (dispatch, getState) => {
 export const IMPORTSCRIPT_ATTEMPT = "IMPORTSCRIPT_ATTEMPT";
 export const IMPORTSCRIPT_FAILED = "IMPORTSCRIPT_FAILED";
 export const IMPORTSCRIPT_SUCCESS = "IMPORTSCRIPT_SUCCESS";
+export const IMPORTSCRIPT_SUCCESS_PURCHASE_TICKETS = "IMPORTSCRIPT_SUCCESS_PURCHASE_TICKETS";
 
-const importScriptSuccess = (importScriptResponse, votingAddress, cb, willRescan) => (dispatch) => {
+const importScriptSuccess = (importScriptResponse, votingAddress, purchaseTickets, cb, willRescan) => (dispatch) => {
   const importScriptSuccess = "Script successfully imported, rescanning now";
-  dispatch({ importScriptSuccess, importScriptResponse, willRescan, type: IMPORTSCRIPT_SUCCESS });
+  if (purchaseTickets) {
+    dispatch({ importScriptSuccess, importScriptResponse, willRescan, type: IMPORTSCRIPT_SUCCESS_PURCHASE_TICKETS });
+  } else {
+    dispatch({ importScriptSuccess, importScriptResponse, willRescan, type: IMPORTSCRIPT_SUCCESS });
+  }
   if (votingAddress) {
     if (importScriptResponse.getP2shAddress() == votingAddress) {
       dispatch(() => cb());
@@ -134,13 +139,13 @@ const importScriptSuccess = (importScriptResponse, votingAddress, cb, willRescan
   }
 };
 
-export const importScriptAttempt = (passphrase, script, rescan, scanFrom, votingAddress, cb) =>
+export const importScriptAttempt = (passphrase, script, rescan, scanFrom, votingAddress, purchaseTickets, cb) =>
   (dispatch, getState) => {
     dispatch({ type: IMPORTSCRIPT_ATTEMPT });
     return wallet.importScript(sel.walletService(getState()), passphrase, script, false, 0)
       .then(importScriptResponse => {
         if (rescan) dispatch(rescanAttempt(0));
-        dispatch(importScriptSuccess(importScriptResponse, votingAddress, cb));
+        dispatch(importScriptSuccess(importScriptResponse, votingAddress, purchaseTickets, cb));
         if (!votingAddress && !cb) setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 1000);
       })
       .catch(error => {
@@ -241,7 +246,7 @@ export const purchaseTicketsAttempt = (
   txFee = txFee * 1e8;
   ticketFee = ticketFee * 1e8;
   dispatch({ numTicketsToBuy: numTickets, type: PURCHASETICKETS_ATTEMPT });
-  dispatch(importScriptAttempt(passphrase, stakepool.Script, false, 0, stakepool.TicketAddress,
+  dispatch(importScriptAttempt(passphrase, stakepool.Script, false, 0, stakepool.TicketAddress, true,
     error => error
       ? dispatch({ error, type: PURCHASETICKETS_FAILED })
       : wallet.purchaseTickets(

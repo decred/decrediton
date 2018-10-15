@@ -119,7 +119,7 @@ class Snackbar extends React.Component {
     this.setState({ ...state, messages: newMessages });
     // dismiss single message of the one popped
     this.props.onDismissAllMessages(newMessages);
-    this.clearHideTimer();
+    this.enableHideTimer();
   }
 
   getStaticNotification() {
