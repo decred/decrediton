@@ -113,6 +113,7 @@ class Snackbar extends React.Component {
   }
 
   onDismissMessage() {
+    console.log("dismiss message!");
     const state = this.state;
     const messages = [];//state.messages;
     var newMessages = messages;
@@ -151,7 +152,7 @@ class Snackbar extends React.Component {
       const styles = [ {
         key: key+i,
         data: messages[i],
-        style: { backgroundColor:  i == messages.length ? "#fff" : "inherit", bottom: spring(20, theme("springs.tab")) }
+        style: { bottom: spring(20, theme("springs.tab")) }
       } ];
       const notification = <TransitionMotion key={key} styles={styles} willEnter={this.notifWillEnter}>
         { is => !is[0].data
@@ -159,11 +160,11 @@ class Snackbar extends React.Component {
           : <div
             key={is[0].key}
             className={snackbarClasses(is[0].data || "")}
-            onMouseEnter={is[0].bottom ? this.clearHideTimer : null }
-            onMouseLeave={is[0].bottom ? this.enableHideTimer : null }
+            onMouseEnter={this.clearHideTimer}
+            onMouseLeave={this.enableHideTimer}
             style={is[0].style}
           >
-            <Notification {...{ onDismissMessage, ...is[0].data }} />
+            <Notification {...{ onDismissMessage: i == messages.length - 1 ? onDismissMessage : null, ...is[0].data }} />
           </div>
         }
       </TransitionMotion>;
