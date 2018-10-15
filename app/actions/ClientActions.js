@@ -98,7 +98,7 @@ export const getStartupWalletInfo = () => (dispatch) => {
         await dispatch(publishUnminedTransactionsAttempt());
         await dispatch(findImmatureTransactions());
         await dispatch(getAccountsAttempt(true));
-        // await dispatch(getStartupStats());
+        await dispatch(getStartupStats());
         dispatch({ type: GETSTARTUPWALLETINFO_SUCCESS });
         resolve();
       } catch (error) {
@@ -149,7 +149,6 @@ export const findImmatureTransactions = () => async (dispatch, getState) => {
 
   const pageSize = 30;
   const checkHeightDeltas = [
-    // chainParams.TicketExpiry,
     chainParams.TicketMaturity,
     chainParams.CoinbaseMaturity,
     chainParams.SStxChangeMaturity
@@ -819,7 +818,7 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
     newlyMinedTransactions, recentRegularTransactions, recentStakeTransactions, type: NEW_TRANSACTIONS_RECEIVED });
 
   if (newlyMinedTransactions.length > 0) {
-    //dispatch(getStartupStats());
+    dispatch(getStartupStats());
   }
 };
 
