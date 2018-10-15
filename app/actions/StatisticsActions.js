@@ -3,6 +3,7 @@ import * as sel from "selectors";
 import fs from "fs";
 import { isNumber, isNullOrUndefined, isUndefined } from "util";
 import { endOfDay, reverseRawHash, formatLocalISODate } from "helpers";
+import { format as formatDate } from "date-fns";
 
 const VALUE_TYPE_ATOMAMOUNT = "VALUE_TYPE_ATOMAMOUNT";
 const VALUE_TYPE_DATETIME = "VALUE_TYPE_DATETIME";
@@ -358,9 +359,15 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
   // delta to balances, given a vote/revoke tx
   const voteRevokeInfo = async tx => {
     const isVote = tx.txType === wallet.TRANSACTION_TYPE_VOTE;
-    const decodedSpender = await wallet.decodeTransaction(decodeMessageService, tx.tx.getTransaction());
-    const spenderInputs = decodedSpender.getTransaction().getInputsList();
-    const ticketHash = reverseRawHash(spenderInputs[spenderInputs.length-1].getPreviousTransactionHash());
+
+    // const decodedSpender = await wallet.decodeTransaction(decodeMessageService, tx.tx.getTransaction());
+    // const spenderInputs = decodedSpender.getTransaction().getInputsList();
+    // const ticketHash = reverseRawHash(spenderInputs[spenderInputs.length-1].getPreviousTransactionHash());
+
+    const decodedSpender = await wallet.decodeTransactionLocal(tx.tx.getTransaction());
+    const spenderInputs = decodedSpender.inputs;
+    const ticketHash = reverseRawHash(spenderInputs[spenderInputs.length-1].prevTxId);
+
     let ticket = liveTickets[ticketHash];
     if (!ticket) {
       const ticketTx = await wallet.getTransaction(walletService, ticketHash);
@@ -525,7 +532,7 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
   let startBlock = backwards ? currentBlockHeight : 1;
   let endBlock = backwards ? 1 : currentBlockHeight;
   const callback = backwards ? txDataCbBackwards : txDataCb;
-  const pageSize = 20;
+  const pageSize = 200;
   const pageDir = backwards ? -1 : +1;
   const endDate = opts.endDate;
   const maxMaturity = Math.max(chainParams.CoinbaseMaturity, chainParams.TicketMaturity);
@@ -535,6 +542,8 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
   const toProcess = [];
 
   try {
+    console.log(formatDate(new Date(), "HH:mm:ss.SSS"), "starting process");
+
     if (backwards) {
       // when calculating backwards, we need to account for unmined txs, because
       // the account balances for locked tickets include them. To simplify the
@@ -566,6 +575,8 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
         ((!endDate) || (endDate && !backwards && currentDate < endDate) || (endDate && backwards && currentDate > endDate)) ;
     }
 
+    console.log(formatDate(new Date(), "HH:mm:ss.SSS"), "got all txs", toProcess[toProcess.length-1]);
+
     // grab all txs that are ticket/coinbase maturity blocks from the last tx
     // so that we can account for tickets and votes maturing
     endBlock = currentBlock + maxMaturity * pageDir;
@@ -577,8 +588,24 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
       }
     }
 
+    console.log(formatDate(new Date(), "HH:mm:ss.SSS"), "got extra txs for maturity", toProcess[toProcess.length-1]);
+
+    let ct = 0;
+    toProcess.forEach(tx => {
+      if (tx.txType == wallet.TRANSACTION_TYPE_TICKET_PURCHASE) {
+        var { isWallet, commitAmount } = ticketInfo(tx);
+        recordTicket(tx, commitAmount, isWallet);
+        ct++;
+      }
+    });
+    console.log(formatDate(new Date(), "HH:mm:ss.SSS"), "Processed tickets", ct);
+
     await callback({ mined: toProcess });
+
+    console.log(formatDate(new Date(), "HH:mm:ss.SSS"), "Processed txs");
     endFunction();
+
+    console.log(formatDate(new Date(), "HH:mm:ss.SSS"), "end function called");
   } catch (err) {
     errorFunction(err);
   }

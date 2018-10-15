@@ -45,22 +45,21 @@ const startWalletServicesTrigger = () => (dispatch, getState) => new Promise((re
       if (!spvSynced) {
         dispatch(getTicketBuyerServiceAttempt());
       }
+
       await dispatch(getNextAddressAttempt(0));
       await dispatch(getTicketPriceAttempt());
       await dispatch(getPingAttempt());
       await dispatch(getNetworkAttempt());
-      await dispatch(transactionNtfnsStart());
-      await dispatch(accountNtfnsStart());
       await dispatch(updateStakepoolPurchaseInformation());
       await dispatch(getDecodeMessageServiceAttempt());
       await dispatch(getVotingServiceAttempt());
       await dispatch(getAgendaServiceAttempt());
       await dispatch(getStakepoolStats());
+      await dispatch(getStartupWalletInfo());
+      await dispatch(transactionNtfnsStart());
+      await dispatch(accountNtfnsStart());
 
-      var goHomeCb = () => {
-        dispatch(pushHistory("/home"));
-      };
-      await dispatch(getStartupWalletInfo()).then(goHomeCb);
+      await dispatch(pushHistory("/home"));
       resolve();
     }, 1000);
   } catch (err) {
@@ -99,7 +98,7 @@ export const getStartupWalletInfo = () => (dispatch) => {
         await dispatch(publishUnminedTransactionsAttempt());
         await dispatch(findImmatureTransactions());
         await dispatch(getAccountsAttempt(true));
-        await dispatch(getStartupStats());
+        // await dispatch(getStartupStats());
         dispatch({ type: GETSTARTUPWALLETINFO_SUCCESS });
         resolve();
       } catch (error) {
@@ -150,19 +149,14 @@ export const findImmatureTransactions = () => async (dispatch, getState) => {
 
   const pageSize = 30;
   const checkHeightDeltas = [
-    chainParams.TicketExpiry,
+    // chainParams.TicketExpiry,
     chainParams.TicketMaturity,
     chainParams.CoinbaseMaturity,
     chainParams.SStxChangeMaturity
   ];
   const immatureHeight = currentBlockHeight - Math.max(...checkHeightDeltas);
 
-  let txs = await walletGetTransactions(walletService, immatureHeight,
-    currentBlockHeight, pageSize);
-
   let checkHeights = {};
-  // const mergeCheckHeights = (h) => (h > currentBlockHeight && checkHeights.indexOf(h) === -1)
-  //   ? checkHeights.push(h) : null;
   const mergeCheckHeights = (hs) => Object.keys(hs).forEach(h => {
     if (h < currentBlockHeight) return;
     const accounts = checkHeights[h] || [];
@@ -170,12 +164,22 @@ export const findImmatureTransactions = () => async (dispatch, getState) => {
     checkHeights[h] = accounts;
   });
 
+  dispatch({ immatureHeight, type: "FINDIMMATURETRANSACTIONS_START" });
+
+  let txs = await walletGetTransactions(walletService, immatureHeight,
+    currentBlockHeight, pageSize);
+
+  let tot = txs.mined.length;
+
   while (txs.mined.length > 0) {
+    tot += txs.mined.length;
     let lastTx = txs.mined[txs.mined.length-1];
     mergeCheckHeights(transactionsMaturingHeights(txs.mined, chainParams));
     txs = await walletGetTransactions(walletService, lastTx.height+1,
       currentBlockHeight+1, pageSize);
   }
+
+  dispatch({ tot, type: "FINDIMMATURETRANSACTIONS_FINISHED" });
 
   dispatch({ maturingBlockHeights: checkHeights, type: MATURINGHEIGHTS_CHANGED });
 };
@@ -815,7 +819,7 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
     newlyMinedTransactions, recentRegularTransactions, recentStakeTransactions, type: NEW_TRANSACTIONS_RECEIVED });
 
   if (newlyMinedTransactions.length > 0) {
-    dispatch(getStartupStats());
+    //dispatch(getStartupStats());
   }
 };
 

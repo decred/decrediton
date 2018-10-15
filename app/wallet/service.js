@@ -39,18 +39,10 @@ export const validateAddress = withLogNoData((walletService, address) =>
     walletService.validateAddress(request, (error, response) => error ? reject(error) : resolve(response));
   }), "Validate Address");
 
-export const decodeTransactionLocal = (decodeMessageService, rawTx) =>
-  new Promise((resolve, reject) => {
-    var buffer = Buffer.isBuffer(rawTx) ? rawTx : Buffer.from(rawTx, "hex");
-    //var buff = new Uint8Array(buffer);
-    decodeRawTransaction(buffer, (error, tx) => {
-      if (error) {
-        reject(error);
-      } else {
-        resolve(tx);
-      }
-    });
-  });
+export const decodeTransactionLocal = (rawTx) => {
+  var buffer = Buffer.isBuffer(rawTx) ? rawTx : Buffer.from(rawTx, "hex");
+  return Promise.resolve(decodeRawTransaction(buffer));
+};
 
 export const decodeTransaction = withLogNoData((decodeMessageService, rawTx) =>
   new Promise((resolve, reject) => {
@@ -263,7 +255,7 @@ export const committedTickets = withLogNoData((walletService, ticketHashes) => n
   walletService.committedTickets(req, (err, tickets) => err ? reject(err) : resolve(tickets));
 }), "Committed Tickets");
 
-const decodeRawTransaction = (rawTx, cb) => {
+const decodeRawTransaction = (rawTx) => {
   var position = 0;
 
   var tx = {};
@@ -344,5 +336,5 @@ const decodeRawTransaction = (rawTx, cb) => {
   position += 4;
   tx.expiry = rawTx.readUInt32LE(position);
   position += 4;
-  return cb(null, tx);
+  return tx;
 };
