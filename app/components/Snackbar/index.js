@@ -72,7 +72,6 @@ class Snackbar extends React.Component {
   }
 
   checkIsSameMessage(messageObj, oldMessageObj) {
-    console.log(messageObj, oldMessageObj);
     if (messageObj === oldMessageObj) {
       return true;
     }
@@ -101,14 +100,17 @@ class Snackbar extends React.Component {
     // emulating progress
     this.hideTimer = setInterval(() => {
       this.setState({ progress: this.state.progress + 10 });
-      if (this.state.progress >= 100)
+      if (this.state.progress >= 100) {
         this.onDismissMessage();
+        if (this.state.messages.length === 0)
+          this.clearHideTimer();
+      }
     }, 500);
   }
 
   clearHideTimer() {
+    this.setState({ progress: 0 });
     if (this.hideTimer) {
-      this.setState({ progress: 0 });
       this.props.clearInterval(this.hideTimer);
       this.hideTimer = null;
     }
@@ -129,7 +131,8 @@ class Snackbar extends React.Component {
     this.setState({ ...state, messages: newMessages });
     // dismiss single message of the one popped
     this.props.onDismissAllMessages(newMessages);
-    this.enableHideTimer();
+    if (newMessages.length > 0)
+      this.enableHideTimer();
   }
 
   getStaticNotification() {
@@ -161,7 +164,6 @@ class Snackbar extends React.Component {
     const { onDismissMessage, clearHideTimer, enableHideTimer, notifWillEnter } = this;
     var notifications = new Array();
     for (var i = 0; i < messages.length; i++) {
-      console.log(i, messages.length - 1, i == messages.length -1, messages[i]);
       const key = "ntf"+Math.random();
       const styles = [ {
         key: key+i,
