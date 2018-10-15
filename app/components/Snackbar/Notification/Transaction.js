@@ -42,6 +42,7 @@ const Transaction = ({
   onDismissMessage,
   intl,
   topNotification,
+  progress
 }) => (
   <Aux>
     {topNotification &&
@@ -49,7 +50,7 @@ const Transaction = ({
         <ProgressRing
           radius={ 12 }
           stroke={ 1 }
-          progress={ 100 }
+          progress={ progress }
         />
       </div>}
     <div className="snackbar-information-row">

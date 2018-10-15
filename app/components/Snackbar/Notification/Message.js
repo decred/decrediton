@@ -5,7 +5,7 @@ import { ProgressRing } from "indicators";
 @autobind
 class Message extends React.Component {
   render() {
-    const { intl, message, values, onDismissMessage, topNotification } = this.props;
+    const { intl, message, values, onDismissMessage, progress, topNotification } = this.props;
     const txt = intl.formatMessage(message, values);
     return (
       <div className="snackbar-message">
@@ -14,7 +14,7 @@ class Message extends React.Component {
           <ProgressRing
             radius={ 12 }
             stroke={ 1 }
-            progress={ 100 }
+            progress={ progress }
           />
         </div>}
         {txt}

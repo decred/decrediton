@@ -37,7 +37,8 @@ class Snackbar extends React.Component {
       message: props.messages.length > 0
         ? props.messages[props.messages.length-1]
         : null,
-      messages: new Array()
+      messages: new Array(),
+      progress: 0,
     };
   }
 
@@ -94,13 +95,19 @@ class Snackbar extends React.Component {
 
   enableHideTimer() {
     this.clearHideTimer();
-    this.hideTimer = this.props.setTimeout(this.onDismissMessage, 10000);
+    // emulating progress
+    this.hideTimer = setInterval(() => {
+      this.setState({ progress: this.state.progress + 10 });
+      if (this.state.progress >= 100)
+        this.onDismissMessage();
+    }, 500);
   }
 
   clearHideTimer() {
     if (this.hideTimer) {
-      this.props.clearTimeout(this.hideTimer);
+      this.props.clearInterval(this.hideTimer);
       this.hideTimer = null;
+      this.setState({ progress: 0 });
     }
   }
 
@@ -123,7 +130,7 @@ class Snackbar extends React.Component {
   }
 
   getStaticNotification() {
-    const { messages } = this.state;
+    const { messages, progress } = this.state;
     const { onDismissMessage, clearHideTimer, enableHideTimer } = this;
     var notifications = new Array();
     for (var i = 0; i < messages.length; i++) {
@@ -135,7 +142,7 @@ class Snackbar extends React.Component {
         onMouseEnter={clearHideTimer}
         onMouseLeave={enableHideTimer}
         style={{ bottom: "0px" }}>
-        <Notification  {...{ topNotification: i == messages.length - 1, onDismissMessage, ...message }} />
+        <Notification  {...{ topNotification: i == messages.length - 1, progress, onDismissMessage, ...message }} />
       </div>;
       notifications.push(notification);
     }
@@ -147,7 +154,7 @@ class Snackbar extends React.Component {
   }
 
   getAnimatedNotification() {
-    const { messages } = this.state;
+    const { messages, progress } = this.state;
     const { onDismissMessage, clearHideTimer, enableHideTimer, notifWillEnter } = this;
     var notifications = new Array();
     for (var i = 0; i < messages.length; i++) {
@@ -168,7 +175,7 @@ class Snackbar extends React.Component {
             onMouseLeave={enableHideTimer}
             style={is[0].style}
           >
-            <Notification {...{ topNotification: i, onDismissMessage: onDismissMessage, ...is[0].data }} />
+            <Notification {...{ topNotification: i == messages.length - 1, progress, onDismissMessage, ...is[0].data }} />
           </div>
         }
       </TransitionMotion>;
