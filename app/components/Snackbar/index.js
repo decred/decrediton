@@ -49,12 +49,14 @@ class Snackbar extends React.Component {
     if(!message) {
       return;
     }
-    const messages = nextProps.messages;
+    const { messages } = this.state;
     this.enableHideTimer();
-    if(this.checkIfMessageHasShown(message, this.props.messages)) {
+    if(this.checkIfMessageHasShown(message, messages)) {
       return;
     } else {
-      this.setState({ ...this.state, messages });
+      var newMessages = messages;
+      newMessages.push(message);
+      this.setState({ ...this.state, messages: newMessages });
     }
   }
 
@@ -70,6 +72,7 @@ class Snackbar extends React.Component {
   }
 
   checkIsSameMessage(messageObj, oldMessageObj) {
+    console.log(messageObj, oldMessageObj);
     if (messageObj === oldMessageObj) {
       return true;
     }
@@ -105,9 +108,9 @@ class Snackbar extends React.Component {
 
   clearHideTimer() {
     if (this.hideTimer) {
+      this.setState({ progress: 0 });
       this.props.clearInterval(this.hideTimer);
       this.hideTimer = null;
-      this.setState({ progress: 0 });
     }
   }
 
