@@ -4,9 +4,9 @@ import * as wallet from "wallet";
 import { push as pushHistory } from "react-router-redux";
 import { hexReversedHashToArray, reverseRawHash } from "helpers";
 
-export const VOTESTATUS_PREVOTE = 1;
-export const VOTESTATUS_ACTIVEVOTE = 2;
-export const VOTESTATUS_VOTED = 3;
+// enum values from politeiawww's v1.PropVoteStatusT
+export const VOTESTATUS_ACTIVEVOTE = 3;
+export const VOTESTATUS_VOTED = 4;
 
 // Aux function to parse the optionsresult member of a votestatus call into
 // structures to use within a proposal data.
@@ -145,9 +145,10 @@ export const getVettedProposals = () => async (dispatch, getState) => {
 
     proposals.forEach(p => {
       switch (p.voteStatus) {
-      case VOTESTATUS_PREVOTE: preVote.push(p); break;
       case VOTESTATUS_ACTIVEVOTE: activeVote.push(p); break;
       case VOTESTATUS_VOTED: voted.push(p); break;
+      default:
+        preVote.push(p); break;
       }
 
       byToken[p.token] = p;
