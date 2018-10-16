@@ -109,7 +109,6 @@ class Snackbar extends React.Component {
   }
 
   clearHideTimer() {
-    this.setState({ progress: 0 });
     if (this.hideTimer) {
       this.props.clearInterval(this.hideTimer);
       this.hideTimer = null;
@@ -128,7 +127,7 @@ class Snackbar extends React.Component {
     const messages = this.state.messages;
     var newMessages = messages;
     newMessages.pop();
-    this.setState({ ...state, messages: newMessages });
+    this.setState({ ...state, progress: 0, messages: newMessages });
     // dismiss single message of the one popped
     this.props.onDismissAllMessages(newMessages);
     if (newMessages.length > 0)
