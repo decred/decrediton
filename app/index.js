@@ -307,7 +307,6 @@ var initialState = {
     signTransactionRespsonse: null,
     // PublishTransaction
     publishTransactionRequestAttempt: false,
-    publishTransactionResponse: null,
     // PurchaseTicket
     purchaseTicketsRequestAttempt: false,
     purchaseTicketsResponse: null,
