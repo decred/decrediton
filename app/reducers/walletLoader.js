@@ -195,7 +195,7 @@ export default function walletLoader(state = {}, action) {
       synced: false,
     };
   case CLOSEDAEMON_SUCCESS:
-    return { ...state, 
+    return { ...state,
       neededBlocks: 0
     };
   case STARTRPC_ATTEMPT:
