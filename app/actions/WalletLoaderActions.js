@@ -306,7 +306,6 @@ export function determineNeededBlocks() {
     const { currentSettings } = getState().settings;
     const network = currentSettings.network;
     const explorerInfoURL = `https://${network}.decred.org/api/status`;
-    console.log(explorerInfoURL);
     axios.get(explorerInfoURL, { timeout: 5000 })
       .then(function (response) {
         const neededBlocks = response.data.info.blocks;
