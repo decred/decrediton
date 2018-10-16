@@ -18,3 +18,4 @@ export { default as StepIndicator } from "./StepIndicator";
 export { default as VotingProgress } from "./VotingProgress";
 export { default as NoProposals } from "./NoProposals";
 export { default as PoliteiaLoading } from "./PoliteiaLoading";
+export { default as ProgressRing } from "./ProgressRing";

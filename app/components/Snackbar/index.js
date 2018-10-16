@@ -37,6 +37,8 @@ class Snackbar extends React.Component {
       message: props.messages.length > 0
         ? props.messages[props.messages.length-1]
         : null,
+      messages: new Array(),
+      progress: 0,
     };
   }
 
@@ -47,12 +49,14 @@ class Snackbar extends React.Component {
     if(!message) {
       return;
     }
-
+    const { messages } = this.state;
     this.enableHideTimer();
-    if(this.checkIfMessageHasShown(message, this.props.messages)) {
+    if(this.checkIfMessageHasShown(message, messages)) {
       return;
     } else {
-      this.setState({ ...this.state, message });
+      var newMessages = messages;
+      newMessages.push(message);
+      this.setState({ ...this.state, messages: newMessages });
     }
   }
 
@@ -93,12 +97,20 @@ class Snackbar extends React.Component {
 
   enableHideTimer() {
     this.clearHideTimer();
-    this.hideTimer = this.props.setTimeout(this.onDismissMessage, 10000);
+    // emulating progress
+    this.hideTimer = setInterval(() => {
+      this.setState({ progress: this.state.progress + 10 });
+      if (this.state.progress >= 100) {
+        this.onDismissMessage();
+        if (this.state.messages.length === 0)
+          this.clearHideTimer();
+      }
+    }, 500);
   }
 
   clearHideTimer() {
     if (this.hideTimer) {
-      this.props.clearTimeout(this.hideTimer);
+      this.props.clearInterval(this.hideTimer);
       this.hideTimer = null;
     }
   }
@@ -112,24 +124,34 @@ class Snackbar extends React.Component {
 
   onDismissMessage() {
     const state = this.state;
-    this.setState({ ...state, message: null });
-    this.props.onDismissAllMessages();
-    this.clearHideTimer();
+    const messages = this.state.messages;
+    var newMessages = messages;
+    newMessages.pop();
+    this.setState({ ...state, progress: 0, messages: newMessages });
+    // dismiss single message of the one popped
+    this.props.onDismissAllMessages(newMessages);
+    if (newMessages.length > 0)
+      this.enableHideTimer();
   }
 
   getStaticNotification() {
-    const { message } = this.state;
-    const { onDismissMessage } = this;
-    return (
+    const { messages, progress } = this.state;
+    const { onDismissMessage, clearHideTimer, enableHideTimer } = this;
+    var notifications = new Array();
+    for (var i = 0; i < messages.length; i++) {
+      const message = messages[i];
+      const notification =
       <div
+        key={"ntf" + i }
         className={snackbarClasses(message || "")}
-        onMouseEnter={this.clearHideTimer}
-        onMouseLeave={this.enableHideTimer}
-        style={{ bottom: "0px" }}
-      >
-        {message ? <Notification  {...{ onDismissMessage, message }} /> : ""}
-      </div>
-    );
+        onMouseEnter={clearHideTimer}
+        onMouseLeave={enableHideTimer}
+        style={{ bottom: "0px" }}>
+        <Notification  {...{ topNotification: i == messages.length - 1, progress, onDismissMessage, ...message }} />
+      </div>;
+      notifications.push(notification);
+    }
+    return notifications;
   }
 
   notifWillEnter() {
@@ -137,39 +159,47 @@ class Snackbar extends React.Component {
   }
 
   getAnimatedNotification() {
-    const { message } = this.state;
-    const { onDismissMessage } = this;
-    const styles = [ {
-      key: "ntf"+Math.random(),
-      data: message,
-      style: { bottom: spring(0, theme("springs.tab")) }
-    } ];
-
-    return (
-      <TransitionMotion styles={styles} willEnter={this.notifWillEnter}>
+    const { messages, progress } = this.state;
+    const { onDismissMessage, clearHideTimer, enableHideTimer, notifWillEnter } = this;
+    var notifications = new Array();
+    for (var i = 0; i < messages.length; i++) {
+      const key = "ntf"+Math.random();
+      const styles = [ {
+        key: key+i,
+        data: messages[i],
+        style: { bottom: spring(20, theme("springs.tab")) }
+      } ];
+      const notification = <TransitionMotion key={key} styles={styles} willEnter={notifWillEnter}>
         { is => !is[0].data
           ? ""
           : <div
-            className={snackbarClasses(message || "")}
-            onMouseEnter={this.clearHideTimer}
-            onMouseLeave={this.enableHideTimer}
+            key={is[0].key}
+            className={snackbarClasses(is[0].data || "")}
+            onMouseEnter={clearHideTimer}
+            onMouseLeave={enableHideTimer}
             style={is[0].style}
           >
-            <Notification {...{ onDismissMessage, ...is[0].data }} />
+            <Notification {...{ topNotification: i == messages.length - 1, progress, onDismissMessage, ...is[0].data }} />
           </div>
         }
-      </TransitionMotion>
-    );
+      </TransitionMotion>;
+      notifications.push(notification);
+    }
+    return notifications;
   }
 
   render() {
-    const notification = this.props.uiAnimations
+    const notification = !this.props.uiAnimations
       ? this.getAnimatedNotification()
       : this.getStaticNotification();
 
     return (
-      <EventListener target="document" onMouseUp={this.windowClicked}>
-        {notification}
+      <EventListener target="document" >
+        {notification.length > 0 &&
+          <div className="snackbar-panel">
+            {notification}
+          </div>
+        }
       </EventListener>
     );
   }
