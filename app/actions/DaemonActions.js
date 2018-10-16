@@ -163,12 +163,7 @@ export const deleteDaemonData = () => (dispatch, getState) => {
 };
 
 export const shutdownApp = () => (dispatch, getState) => {
-  const { daemon: { walletName } } = getState();
   const { currentBlockHeight } = getState().grpc;
-  if (walletName) {
-    const cfg = getWalletCfg(isTestNet(getState()), walletName);
-    cfg.set("lastaccess", Date.now());
-  }
   if(currentBlockHeight) {
     setLastHeight(currentBlockHeight);
   }
@@ -268,6 +263,7 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => {
       var discoverAccountsComplete = walletCfg.get("discoveraccounts");
       var activeStakePoolConfig = foundStakePoolConfig;
       var selectedStakePool = firstConfiguredStakePool;
+      walletCfg.set("lastaccess", Date.now());
       dispatch({ type: WALLETREADY, walletName: selectedWallet.value.wallet, network: network, hiddenAccounts, port });
       dispatch({ type: WALLET_AUTOBUYER_SETTINGS, balanceToMaintain, maxFee, maxPriceAbsolute, maxPriceRelative, maxPerBlock });
       dispatch({ type: WALLET_SETTINGS, currencyDisplay, gapLimit });
