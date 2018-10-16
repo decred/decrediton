@@ -2,10 +2,11 @@
 import * as wallet from "wallet";
 import * as sel from "selectors";
 import { isValidAddress, isValidMasterPubKey } from "helpers";
-import { getAccountsAttempt, getStakeInfoAttempt, startWalletServices,
-  getStartupWalletInfo, reloadTickets } from "./ClientActions";
+import { getStakeInfoAttempt, startWalletServices,
+  getStartupWalletInfo } from "./ClientActions";
 import { getWalletCfg } from "../config";
 import { RescanRequest, ConstructTransactionRequest } from "../middleware/walletrpc/api_pb";
+import { reverseRawHash } from "../helpers/byteActions";
 
 export const GETNEXTADDRESS_ATTEMPT = "GETNEXTADDRESS_ATTEMPT";
 export const GETNEXTADDRESS_FAILED = "GETNEXTADDRESS_FAILED";
@@ -227,8 +228,7 @@ export const publishTransactionAttempt = (tx) => (dispatch, getState) => {
   dispatch({ type: PUBLISHTX_ATTEMPT });
   return wallet.publishTransaction(sel.walletService(getState()), tx)
     .then(res => {
-      dispatch({ publishTransactionResponse: Buffer.from(res.getTransactionHash()), type: PUBLISHTX_SUCCESS });
-      setTimeout( () => {dispatch(getAccountsAttempt());}, 4000);
+      dispatch({ hash: reverseRawHash(res.getTransactionHash()), type: PUBLISHTX_SUCCESS });
     })
     .catch(error => dispatch({ error, type: PUBLISHTX_FAILED }));
 };
@@ -255,9 +255,6 @@ export const purchaseTicketsAttempt = (
       )
         .then(purchaseTicketsResponse => {
           dispatch({ purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
-          setTimeout(() => { dispatch(getAccountsAttempt()); }, 4000);
-          setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 4000);
-          setTimeout(() => { dispatch(reloadTickets()); }, 4000);
         })
         .catch(error => dispatch({ error, type: PURCHASETICKETS_FAILED }))
   ));

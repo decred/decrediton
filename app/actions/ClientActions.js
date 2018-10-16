@@ -752,7 +752,11 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
   accountsToUpdate = Array.from(new Set(accountsToUpdate));
   accountsToUpdate.forEach(v => dispatch(getBalanceUpdateAttempt(v, 0)));
 
-  if (checkForStakeTransactions(unminedDupeCheck) || checkForStakeTransactions(newlyMinedTransactions)) dispatch(getStakeInfoAttempt());
+  const hasStakeTxs = checkForStakeTransactions(unminedDupeCheck) || checkForStakeTransactions(newlyMinedTransactions);
+  if (hasStakeTxs) {
+    dispatch(getStakeInfoAttempt());
+    dispatch(reloadTickets());
+  }
 
   unminedTransactions = filterTransactions([
     ...newlyUnminedTransactions,

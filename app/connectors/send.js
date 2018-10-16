@@ -10,7 +10,6 @@ const mapStateToProps = selectorMap({
   unsignedTransaction: sel.unsignedTransaction,
   estimatedFee: sel.estimatedFee,
   totalSpent: sel.totalSpent,
-  publishedTransactionHash: sel.publishedTransactionHash,
   isSendingTransaction: sel.isSendingTransaction,
   isConstructingTransaction: sel.isConstructingTransaction,
   nextAddress: sel.nextAddress,

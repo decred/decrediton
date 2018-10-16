@@ -19,6 +19,7 @@ import {
   SIGNMESSAGE_FAILED, VERIFYMESSAGE_FAILED,
   PUBLISHUNMINEDTRANSACTIONS_SUCCESS, PUBLISHUNMINEDTRANSACTIONS_FAILED,
   GETACCOUNTEXTENDEDKEY_FAILED,
+  PUBLISHTX_SUCCESS,
 } from "../actions/ControlActions";
 import {
   UPDATESTAKEPOOLCONFIG_SUCCESS, UPDATESTAKEPOOLCONFIG_FAILED,
@@ -300,6 +301,12 @@ export default function snackbar(state = {}, action) {
     type = "Success";
     message = messages[ADDCUSTOMSTAKEPOOL_SUCCESS];
     values = { host: action.poolInfo.Host };
+    break;
+
+  case PUBLISHTX_SUCCESS:
+    type = "Success";
+    message = messages[PUBLISHTX_SUCCESS];
+    values = { hash: action.hash };
     break;
   }
 
