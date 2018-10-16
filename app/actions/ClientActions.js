@@ -86,19 +86,19 @@ export const GETSTARTUPWALLETINFO_FAILED = "GETSTARTUPWALLETINFO_FAILED";
 
 export const getStartupWalletInfo = () => (dispatch) => {
   dispatch({ type: GETSTARTUPWALLETINFO_ATTEMPT });
-  setTimeout( () => { dispatch(getStakeInfoAttempt()); }, 1000);
-  setTimeout( () => { dispatch(reloadTickets()); }, 1000);
   return new Promise((resolve, reject) => {
     setTimeout( async () => {
       try {
-        await dispatch(getAccountsAttempt(true));
+        await dispatch(getStakeInfoAttempt());
+        await dispatch(reloadTickets());
         await dispatch(getMostRecentRegularTransactions());
         await dispatch(getTransactionsSinceLastOppened());
         await dispatch(getMostRecentStakeTransactions());
         await dispatch(getMostRecentTransactions());
         await dispatch(publishUnminedTransactionsAttempt());
+        await dispatch(findImmatureTransactions());
+        await dispatch(getAccountsAttempt(true));
         await dispatch(getStartupStats());
-        dispatch(findImmatureTransactions());
         dispatch({ type: GETSTARTUPWALLETINFO_SUCCESS });
         resolve();
       } catch (error) {
@@ -276,7 +276,7 @@ const getAccountsBalances = (accounts) => (dispatch, getState) => {
     };
   });
 
-  Promise.all(promises)
+  return Promise.all(promises)
     .then(balances => dispatch({ balances, type: GETBALANCE_SUCCESS }))
     .catch(error => dispatch({ error, type: GETBALANCE_FAILED }));
 };
@@ -443,7 +443,7 @@ export const getAccountsAttempt = (startup) => async (dispatch, getState) => {
   dispatch({ type: GETACCOUNTS_ATTEMPT });
   try {
     const response = await wallet.getAccounts(sel.walletService(getState()));
-    if (startup) dispatch(getAccountsBalances(response.getAccountsList()));
+    if (startup) await dispatch(getAccountsBalances(response.getAccountsList()));
     dispatch({ accounts: response.getAccountsList(), response, type: GETACCOUNTS_SUCCESS });
   } catch (error) {
     dispatch({ error, type: GETACCOUNTS_FAILED });
