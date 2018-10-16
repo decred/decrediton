@@ -81,7 +81,9 @@ export const createWalletGoBackNewSeed = () => ({ type: CREATEWALLET_NEWSEED_BAC
 export const createWalletGoBackExistingOrNew = () => ({ type: CREATEWALLET_GOBACK_EXISITNG_OR_NEW });
 
 export const createWalletGoBackWalletSelection = () => (dispatch, getState) => {
-  const { daemon: { walletName, network } } = getState();
+  const { daemon: { walletName } } = getState();
+  const { currentSettings } = getState().settings;
+  const network = currentSettings.network;
   wallet.stopWallet().then(() => {
     wallet.removeWallet(walletName, network == "testnet")
       .then(() => {
@@ -301,8 +303,10 @@ export function clearStakePoolConfigNewWallet() {
 export const NEEDED_BLOCKS_DETERMINED = "NEEDED_BLOCKS_DETERMINED";
 export function determineNeededBlocks() {
   return (dispatch, getState) => {
-    const network = getState().daemon.network;
+    const { currentSettings } = getState().settings;
+    const network = currentSettings.network;
     const explorerInfoURL = `https://${network}.decred.org/api/status`;
+    console.log(explorerInfoURL);
     axios.get(explorerInfoURL, { timeout: 5000 })
       .then(function (response) {
         const neededBlocks = response.data.info.blocks;

@@ -348,7 +348,8 @@ export const GETNETWORK_SUCCESS = "GETNETWORK_SUCCESS";
 function getNetworkSuccess(getNetworkResponse) {
   return (dispatch, getState) => {
     const { testnet, mainnet } = getState().grpc;
-    const { network } = getState().daemon;
+    const { currentSettings } = getState().settings;
+    const network = currentSettings.network;
     var currentNetwork = getNetworkResponse.getActiveNetwork();
     // XXX remove network magic numbers here
     var networkStr = "";

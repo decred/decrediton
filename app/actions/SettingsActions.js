@@ -28,6 +28,7 @@ export const saveSettings = (settings) => (dispatch, getState) => {
   config.set("timezone", settings.timezone);
   config.set("spv_mode", settings.spvMode);
   config.set("spv_connect", settings.spvConnect);
+  config.set("network", settings.network);
 
   if (walletName) {
     const walletConfig = getWalletCfg(isTestNet(getState()), walletName);

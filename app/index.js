@@ -30,6 +30,7 @@ const currentSettings = {
   spvConnect: globalCfg.get("spv_connect"),
   timezone: globalCfg.get("timezone"),
   currencyDisplay: "DCR",
+  network: globalCfg.get("network"),
 };
 var initialState = {
   settings: {
@@ -52,7 +53,6 @@ var initialState = {
   daemon: {
     appVersion: pkg.version,
     daemonRemote: false,
-    network: globalCfg.get("network"),
     locale: locale,
     tutorial: globalCfg.get("show_tutorial"),
     showPrivacy: globalCfg.get("show_privacy"),

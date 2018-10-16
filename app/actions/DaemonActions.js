@@ -186,7 +186,8 @@ export const shutdownApp = () => (dispatch, getState) => {
 export const cleanShutdown = () => () => wallet.cleanShutdown();
 
 export const getAvailableWallets = () => async (dispatch, getState) => {
-  const { network } = getState().daemon;
+  const { currentSettings } = getState().settings;
+  const network = currentSettings.network;
   const availableWallets = await wallet.getAvailableWallets(network);
   const previousWallet = await wallet.getPreviousWallet();
   dispatch({ availableWallets, previousWallet, type: AVAILABLE_WALLETS });
@@ -206,7 +207,8 @@ export const removeWallet = (selectedWallet) => (dispatch) => {
 };
 
 export const createWallet = (createNewWallet, selectedWallet) => (dispatch, getState) => {
-  const { network } = getState().daemon;
+  const { currentSettings } = getState().settings;
+  const network = currentSettings.network;
   wallet.createNewWallet(selectedWallet.value.wallet, network == "testnet")
     .then(() => {
       dispatch({ createNewWallet, isWatchingOnly: selectedWallet.value.watchingOnly,
@@ -236,7 +238,8 @@ export const closeDaemonRequest = () => async(dispatch, getState) => {
 };
 
 export const startWallet = (selectedWallet) => (dispatch, getState) => {
-  const { network } = getState().daemon;
+  const { currentSettings } = getState().settings;
+  const network = currentSettings.network;
   wallet.startWallet(selectedWallet.value.wallet, network == "testnet")
     .then(({ port }) => {
       const walletCfg = getWalletCfg(network == "testnet", selectedWallet.value.wallet);

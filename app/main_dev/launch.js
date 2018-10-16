@@ -35,6 +35,7 @@ export function closeDCRD() {
   if (require("is-running")(dcrdPID) && os.platform() != "win32") {
     logger.log("info", "Sending SIGINT to dcrd at pid:" + dcrdPID);
     process.kill(dcrdPID, "SIGINT");
+    dcrdPID = null;
   } else if (require("is-running")(dcrdPID)) {
     try {
       const win32ipc = require("../node_modules/win32ipc/build/Release/win32ipc.node");
