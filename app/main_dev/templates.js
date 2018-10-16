@@ -1,6 +1,5 @@
-import { app, shell } from "electron";
+import { app } from "electron";
 import { cleanShutdown, GetDcrdPID, GetDcrwPID } from "./launch";
-import { getDirectoryLogs, getDcrwalletPath, getDcrdPath } from "./paths";
 
 let versionWin = null;
 let grpcVersions = { requiredVersion: null, walletVersion: null };
@@ -118,26 +117,11 @@ const regularTemplate = (mainWindow, locale) => [ {
     click() {
       mainWindow.webContents.send("app-reload-requested", mainWindow);
     },
-  } ]
-} ];
-
-const defaultTemplate = (mainWindow, locale) => [ {
-  label: locale.messages["appMenu.advanced"],
-  submenu: [ {
+  }, {
     label: locale.messages["appMenu.developerTools"],
     accelerator: "Alt+Ctrl+I",
     click() {
       mainWindow.toggleDevTools();
-    }
-  }, {
-    label: locale.messages["appMenu.showWalletLog"],
-    click() {
-      shell.openItem(getDirectoryLogs(getDcrwalletPath()));
-    }
-  }, {
-    label: locale.messages["appMenu.showDaemonLog"],
-    click() {
-      shell.openItem(getDirectoryLogs(getDcrdPath()));
     }
   } ]
 } ];
@@ -150,7 +134,6 @@ export const initTemplate = (mainWindow, locale) => {
   } else {
     template = regularTemplate(mainWindow, locale);
   }
-  template.push(...defaultTemplate(mainWindow, locale));
 
   return template;
 };
