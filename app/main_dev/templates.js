@@ -118,26 +118,11 @@ const regularTemplate = (mainWindow, locale) => [ {
     click() {
       mainWindow.webContents.send("app-reload-requested", mainWindow);
     },
-  } ]
-} ];
-
-const defaultTemplate = (mainWindow, locale) => [ {
-  label: locale.messages["appMenu.advanced"],
-  submenu: [ {
+  }, {
     label: locale.messages["appMenu.developerTools"],
     accelerator: "Alt+Ctrl+I",
     click() {
       mainWindow.toggleDevTools();
-    }
-  }, {
-    label: locale.messages["appMenu.showWalletLog"],
-    click() {
-      shell.openItem(getDirectoryLogs(getDcrwalletPath()));
-    }
-  }, {
-    label: locale.messages["appMenu.showDaemonLog"],
-    click() {
-      shell.openItem(getDirectoryLogs(getDcrdPath()));
     }
   } ]
 } ];
@@ -150,7 +135,6 @@ export const initTemplate = (mainWindow, locale) => {
   } else {
     template = regularTemplate(mainWindow, locale);
   }
-  template.push(...defaultTemplate(mainWindow, locale));
 
   return template;
 };
