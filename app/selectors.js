@@ -167,7 +167,7 @@ export const lockedBalance = createSelector(
 );
 
 export const networks = () => [ { name: "testnet" }, { name: "mainnet" } ];
-export const network = get([ "daemon", "network" ]);
+export const network = get([ "settings", "currentSettings", "network" ]);
 export const isTestNet = compose(eq("testnet"), network);
 export const isMainNet = not(isTestNet);
 export const firstBlockTime = compose(isMainNet => isMainNet ? new Date("2016-02-08 18:00:00 UTC") : new Date("2018-08-06 00:00:00 UTC"), isMainNet);

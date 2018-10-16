@@ -475,7 +475,8 @@ export const VALIDATEADDRESS_CLEANSTORE ="VALIDATEADDRESS_CLEANSTORE";
 
 export const validateAddress = address => async (dispatch, getState) => {
   try {
-    const { network } = getState().daemon;
+    const { currentSettings } = getState().settings;
+    const network = currentSettings.network;
     const validationErr = isValidAddress(address, network);
     if (validationErr) {
       dispatch({ type: VALIDATEADDRESS_FAILED });

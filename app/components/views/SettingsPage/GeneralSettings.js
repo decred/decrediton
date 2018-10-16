@@ -48,6 +48,22 @@ const GeneralSettings = ({
           onChange={(e) => onChangeTempSettings({ spvConnect: e.target.value.split(",") })}
         />
       </div>
+      <div className="settings-row">
+        <div className="settings-label">
+          <T id="settings.network" m="Network" />
+        </div>
+        <SettingsInput
+          className="settings-input"
+          value={tempSettings.network}
+          onChange={(opt) => onChangeTempSettings({ network: opt.value })}
+          valueKey="value"
+          labelKey="description"
+          options={[
+            { key: "true", value: "mainnet", description: <T id="settings.network.mainnet" m="Mainnet" /> },
+            { key: "false", value: "testnet", description: <T id="settings.network.testnet" m="Testnet" /> },
+          ]}
+        />
+      </div>
 
       <div className="settings-row">
         <div className="settings-label">

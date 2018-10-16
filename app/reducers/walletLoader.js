@@ -19,7 +19,7 @@ import {
   GENERATESEED_ATTEMPT
 } from "actions/WalletLoaderActions";
 import {
-  WALLETCREATED
+  WALLETCREATED, CLOSEDAEMON_SUCCESS
 } from "actions/DaemonActions";
 
 import {
@@ -193,6 +193,10 @@ export default function walletLoader(state = {}, action) {
       syncAttemptRequest: false,
       syncError: null,
       synced: false,
+    };
+  case CLOSEDAEMON_SUCCESS:
+    return { ...state,
+      neededBlocks: 0
     };
   case STARTRPC_ATTEMPT:
     return { ...state,
