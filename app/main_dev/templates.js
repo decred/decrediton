@@ -1,6 +1,5 @@
-import { app, shell } from "electron";
+import { app } from "electron";
 import { cleanShutdown, GetDcrdPID, GetDcrwPID } from "./launch";
-import { getDirectoryLogs, getDcrwalletPath, getDcrdPath } from "./paths";
 
 let versionWin = null;
 let grpcVersions = { requiredVersion: null, walletVersion: null };
