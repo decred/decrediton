@@ -222,8 +222,8 @@ export default function snackbar(state = {}, action) {
   case NEW_TRANSACTIONS_RECEIVED: {
     // TODO: show more notifications or a summary when receiving many transactions.
     const tx = action.newlyMinedTransactions.length
-      ? action.newlyMinedTransactions[0]
-      : action.newlyUnminedTransactions[0];
+      ? action.newlyMinedTransactions[action.newlyMinedTransactions.length-1]
+      : action.newlyUnminedTransactions[action.newlyUnminedTransactions.length-1];
 
     type = tx.direction || wallet.TRANSACTION_TYPES[tx.type];
     message = { ...tx, type };
