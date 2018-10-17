@@ -25,6 +25,12 @@ class WalletSelectionBody extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.availableWallets && this.props.availableWallets.length !== nextProps.availableWallets.length) {
       this.setState({ selectedWallet: nextProps.availableWallets[0] });
+    } else {
+      for (var i = 0; i < this.props.availableWallets.length; i++) {
+        if (nextProps.availableWallets[i].label !== this.props.availableWallets[i].label) {
+          this.setState({ selectedWallet: nextProps.availableWallets[0] });
+        }
+      }
     }
   }
 
