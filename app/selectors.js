@@ -616,7 +616,6 @@ const constructTxResponse = get([ "control", "constructTxResponse" ]);
 const constructTxRequestAttempt = get([ "control", "constructTxRequestAttempt" ]);
 const signTransactionRequestAttempt = get([ "control", "signTransactionRequestAttempt" ]);
 export const signTransactionError = get([ "control", "signTransactionError" ]);
-const publishTransactionResponse = get([ "control", "publishTransactionResponse" ]);
 const publishTransactionRequestAttempt = get([ "control", "publishTransactionRequestAttempt" ]);
 const totalOutputAmount = compose(r => r ? r.getTotalOutputAmount() : 0, constructTxResponse);
 const totalAmount = compose(res => res ? res.totalAmount : 0, constructTxResponse);
@@ -641,10 +640,6 @@ export const totalSpent = createSelector(
   [ totalPreviousOutputAmount, totalOutputAmount, totalAmount ],
   (totalPreviousOutputAmount, totalOutputAmount, totalAmount) =>
     totalPreviousOutputAmount - totalOutputAmount + totalAmount
-);
-
-export const publishedTransactionHash = compose(
-  r => r ? reverseHash(r.toString("hex")) : null, publishTransactionResponse
 );
 
 export const isSendingTransaction = bool(or(

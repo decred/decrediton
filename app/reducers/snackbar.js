@@ -19,6 +19,7 @@ import {
   SIGNMESSAGE_FAILED, VERIFYMESSAGE_FAILED,
   PUBLISHUNMINEDTRANSACTIONS_SUCCESS, PUBLISHUNMINEDTRANSACTIONS_FAILED,
   GETACCOUNTEXTENDEDKEY_FAILED,
+  PUBLISHTX_SUCCESS,
 } from "../actions/ControlActions";
 import {
   UPDATESTAKEPOOLCONFIG_SUCCESS, UPDATESTAKEPOOLCONFIG_FAILED,
@@ -207,6 +208,8 @@ const messages = defineMessages({
 export default function snackbar(state = {}, action) {
   let values, type, message;
 
+  const oldMessages = state.messages || [];
+
   switch (action.type) {
   case SNACKBAR_SIMPLE_MESSAGE: {
     return {
@@ -219,10 +222,16 @@ export default function snackbar(state = {}, action) {
     return { ...state, messages: action.newMessages };
 
   case NEW_TRANSACTIONS_RECEIVED: {
-    // TODO: show more notifications or a summary when receiving many transactions.
     const tx = action.newlyMinedTransactions.length
-      ? action.newlyMinedTransactions[0]
-      : action.newlyUnminedTransactions[0];
+      ? action.newlyMinedTransactions[action.newlyMinedTransactions.length-1]
+      : action.newlyUnminedTransactions[action.newlyUnminedTransactions.length-1];
+
+    // check if this transaction is already in the message stack and don't add it
+    // if it is to prevent double notifications (eg: published tx and it got mined
+    // very fast)
+    if (oldMessages.some(m => m.txHash === tx.txHash)) {
+      break;
+    }
 
     type = tx.direction || wallet.TRANSACTION_TYPES[tx.type];
     message = { ...tx, type };
@@ -301,12 +310,21 @@ export default function snackbar(state = {}, action) {
     message = messages[ADDCUSTOMSTAKEPOOL_SUCCESS];
     values = { host: action.poolInfo.Host };
     break;
+
+  case PUBLISHTX_SUCCESS:
+    type = "Success";
+    message = messages[PUBLISHTX_SUCCESS];
+    values = { hash: action.hash };
+    break;
   }
 
-  if (message && type) {
-    const newMessage = { type, message, values };
-    return { ...state, messages: [ ...state.messages, newMessage ] };
+  if (!message || !type) {
+    // no new messages
+    return { ...state };
   }
 
-  return { ...state };
+  const key = "ntf"+Math.random();
+  const newMessage = { type, message, values, key };
+
+  return { ...state, messages: [ ...state.messages, newMessage ] };
 }

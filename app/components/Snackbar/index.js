@@ -1,4 +1,5 @@
 // @flow
+import { keyBy } from "fp";
 import { snackbar, theming } from "connectors";
 import ReactTimeout from "react-timeout";
 import EventListener from "react-event-listener";
@@ -34,75 +35,29 @@ class Snackbar extends React.Component {
     super(props);
     this.hideTimer = null;
     this.state = {
-      message: props.messages.length > 0
-        ? props.messages[props.messages.length-1]
-        : null,
       messages: new Array(),
       progress: 0,
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    const message = nextProps.messages.length > 0
-      ? nextProps.messages[nextProps.messages.length-1]
-      : null;
-    if(!message) {
-      return;
-    }
-    const { messages } = this.state;
-    this.enableHideTimer();
-    if(this.checkIfMessageHasShown(message, messages)) {
-      return;
-    } else {
-      var newMessages = messages;
-      newMessages.push(message);
-      this.setState({ ...this.state, messages: newMessages });
-    }
-  }
-
-  checkIfMessageHasShown(message, messages) {
-    let isSame = false;
-    messages.forEach(m => {
-      if (this.checkIsSameMessage(message, m)) {
-        isSame = true;
-        return;
-      }
-    });
-    return isSame;
-  }
-
-  checkIsSameMessage(messageObj, oldMessageObj) {
-    if (messageObj === oldMessageObj) {
-      return true;
-    }
-    if (!messageObj || !oldMessageObj) {
-      return false;
-    }
-    const { type, message } = messageObj;
-    if (type !== oldMessageObj.type) {
-      return false;
-    }
-    // message can be a FormattedMessage from react-intl or a transaction
-    if (message.defaultMessage !== oldMessageObj.message.defaultMessage) {
-      return false;
-    }
-    const { txHash } = message;
-    const oldTxHash = oldMessageObj.message.txHash;
-    if ( txHash !== oldTxHash) {
-      return false;
+    if (nextProps.messages.length > 0) {
+      this.enableHideTimer();
     }
 
-    return true;
+    const messagesByKey = keyBy(this.state.messages, "key");
+    const newMessages = nextProps.messages.map(m => messagesByKey[m.key] ? messagesByKey[m.key] : m);
+    this.setState({ messages: newMessages });
   }
 
   enableHideTimer() {
     this.clearHideTimer();
     // emulating progress
-    this.hideTimer = setInterval(() => {
+    this.hideTimer = this.props.setInterval(() => {
       this.setState({ progress: this.state.progress + 10 });
       if (this.state.progress >= 100) {
         this.onDismissMessage();
-        if (this.state.messages.length === 0)
+        if (this.props.messages.length === 0)
           this.clearHideTimer();
       }
     }, 500);
@@ -123,14 +78,12 @@ class Snackbar extends React.Component {
   }
 
   onDismissMessage() {
-    const state = this.state;
-    const messages = this.state.messages;
-    var newMessages = messages;
-    newMessages.pop();
-    this.setState({ ...state, progress: 0, messages: newMessages });
+    const messages = [ ...this.props.messages ];
+    messages.shift();
+    this.setState({ progress: 0 });
     // dismiss single message of the one popped
-    this.props.onDismissAllMessages(newMessages);
-    if (newMessages.length > 0)
+    this.props.onDismissAllMessages(messages);
+    if (messages.length > 0)
       this.enableHideTimer();
   }
 
@@ -147,7 +100,7 @@ class Snackbar extends React.Component {
         onMouseEnter={clearHideTimer}
         onMouseLeave={enableHideTimer}
         style={{ bottom: "0px" }}>
-        <Notification  {...{ topNotification: i == messages.length - 1, progress, onDismissMessage, ...message }} />
+        <Notification  {...{ topNotification: i === 0, progress, onDismissMessage, ...message }} />
       </div>;
       notifications.push(notification);
     }
@@ -158,48 +111,66 @@ class Snackbar extends React.Component {
     return { bottom: -10 };
   }
 
+  animatedNotifRef(key, ref) {
+    if (!ref) return;
+    const height = ref.clientHeight;
+    let changedHeight = false;
+    const newMessages = this.state.messages.map(m => {
+      if (m.key !== key) return m;
+      if (m.height === height) return m;
+      changedHeight = true;
+      return { ...m, height };
+    });
+    if (!changedHeight) return;
+    this.setState({ messages: newMessages });
+  }
+
   getAnimatedNotification() {
     const { messages, progress } = this.state;
-    const { onDismissMessage, clearHideTimer, enableHideTimer, notifWillEnter } = this;
-    var notifications = new Array();
-    for (var i = 0; i < messages.length; i++) {
-      const key = "ntf"+Math.random();
-      const styles = [ {
-        key: key+i,
+    const { onDismissMessage, clearHideTimer, enableHideTimer, notifWillEnter,
+      animatedNotifRef } = this;
+
+    const styles = [];
+
+    let totalHeight = 0;
+    for (var i = messages.length-1; i >= 0; i--) {
+      styles.unshift({
+        key: messages[i].key,
         data: messages[i],
-        style: { bottom: spring(20, theme("springs.tab")) }
-      } ];
-      const notification = <TransitionMotion key={key} styles={styles} willEnter={notifWillEnter}>
-        { is => !is[0].data
-          ? ""
-          : <div
-            key={is[0].key}
-            className={snackbarClasses(is[0].data || "")}
+        style: { bottom: spring(20 + (messages.length-i-1)*20 + totalHeight, theme("springs.tab")) }
+      });
+      totalHeight += messages[i].height || 64;
+    }
+
+    return (
+      <TransitionMotion styles={styles} willEnter={notifWillEnter}>
+        { is => (<> {is.map((s, i) => (
+          <div
+            key={s.key}
+            className={snackbarClasses(s.data || "")}
             onMouseEnter={clearHideTimer}
             onMouseLeave={enableHideTimer}
-            style={is[0].style}
+            style={s.style}
+            ref={ref => animatedNotifRef(s.key, ref)}
           >
-            <Notification {...{ topNotification: i == messages.length - 1, progress, onDismissMessage, ...is[0].data }} />
+            <Notification {...{ topNotification: i === 0, progress,
+              onDismissMessage, ...s.data }} />
           </div>
-        }
-      </TransitionMotion>;
-      notifications.push(notification);
-    }
-    return notifications;
+        )) } </> ) }
+      </TransitionMotion>
+    );
   }
 
   render() {
-    const notification = !this.props.uiAnimations
+    const notification = this.props.uiAnimations
       ? this.getAnimatedNotification()
       : this.getStaticNotification();
 
     return (
       <EventListener target="document" >
-        {notification.length > 0 &&
-          <div className="snackbar-panel">
-            {notification}
-          </div>
-        }
+        <div className="snackbar-panel">
+          {notification}
+        </div>
       </EventListener>
     );
   }

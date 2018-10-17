@@ -1,5 +1,5 @@
 export { createSelector } from "reselect";
-export { compose, reduce, find, filter, get, eq, map } from "lodash/fp";
+export { compose, reduce, find, filter, get, eq, map, keyBy } from "lodash/fp";
 import compose from "lodash/fp/compose";
 import get from "lodash/fp/get";
 
