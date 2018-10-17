@@ -622,12 +622,18 @@ export const GETTRANSACTIONS_COMPLETE = "GETTRANSACTIONS_COMPLETE";
 //
 // If empty, all transactions are accepted.
 function filterTransactions(transactions, filter) {
+  // console.log(filter)
   return transactions
     .filter(v => filter.types.length ? filter.types.indexOf(v.type) > -1 : true)
     .filter(v => filter.direction ? filter.direction === v.direction : true)
     .filter(v => filter.search ? v.creditAddresses.find(address => address.length > 1 && address.toLowerCase().indexOf(filter.search.toLowerCase()) !== -1) != undefined : true)
     .filter(v => filter.minAmount ? Math.abs(v.amount) >= filter.minAmount : true)
-    .filter(v => filter.maxAmount ? Math.abs(v.amount) <= filter.maxAmount : true);
+    .filter(v => {
+      // console.log("tx value: " + Math.abs(v.amount))
+      console.log("filter maxAmount value: " + filter.maxAmount)
+      console.log("filter minAmount value: " + filter.minAmount)
+      return filter.maxAmount ? Math.abs(v.amount) <= filter.maxAmount : true
+    })
 }
 
 // getTransactions loads a list of transactions from the wallet, given the

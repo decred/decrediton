@@ -31,9 +31,9 @@ class History extends React.Component {
       selectedSortOrderKey: listDirection,
       searchText: search,
       minAmount: 0,
-      maxAmount: 0,
+      maxAmount: 100,
       min: 0,
-      max: 100,
+      max: 1000,
       step: 1,
       expandedSliderInfo: false,
       isChangingFilter: false,
@@ -41,15 +41,34 @@ class History extends React.Component {
   }
 
   componentDidMount() {
-    var range = document.getElementById('min-max-slider');
+    const range = document.getElementById('min-max-slider');
+
+    const { minAmount, maxAmount, min, max, step } = this.state;
+    const toolTipFormatter = {
+      to: (value) => {
+        return value.toFixed(2);
+      },
+    }
 
     noUiSlider.create(range, {
-      start: [4000, 8000],
+      start: [minAmount, maxAmount],
       range: {
-          'min': [2000],
-          'max': [10000]
+          'min': [min],
+          'max': [max]
       },
       connect: true,
+      step: step,
+      tooltips: [true, toolTipFormatter],
+    });
+
+    range.noUiSlider.on('end', (values, handle) => {
+      const value = values[handle];
+      if (handle) {
+        this.onChangeMaxAmount(value)
+      } else {
+        this.onChangeMinAmount(value)
+      }
+      
     });
   }
 
@@ -74,8 +93,6 @@ class History extends React.Component {
             onChangeSortType: null,
             onChangeSearchText: null,
             onLoadMoreTransactions: null,
-            onChangeMinAmount: null,
-            onChangeMaxAmount: null,
             onChangeMaxValue: null,
             onChangeMinValue: null,
             onChangeStepValue: null,
@@ -150,11 +167,18 @@ class History extends React.Component {
 
   onChangeMinAmount(minAmount) {
     const { unitDivisor, currencyDisplay } = this.props;
-    let amount = minAmount/unitDivisor;
     this.setState({ minAmount: amount });
     // this is needed because transactions at filter are all at atoms
-    amount = currencyDisplay === "DCR" ? amount*unitDivisor : amount;
+    const amount = currencyDisplay === "DCR" ? minAmount*unitDivisor : amount;
     this.onChangeFilter({ minAmount: amount });
+  }
+
+  onChangeMaxAmount(maxAmount) {
+    const { unitDivisor, currencyDisplay } = this.props;
+    this.setState({ maxAmount: amount });
+    // this is needed because transactions at filter are all at atoms
+    const amount = currencyDisplay === "DCR" ? maxAmount*unitDivisor : amount;
+    this.onChangeFilter({ maxAmount: amount });
   }
 
   onToggleSliderInfo(expandedSliderInfo) {
@@ -171,15 +195,6 @@ class History extends React.Component {
 
   onChangeStepValue(step) {
     this.setState({ step });
-  }
-
-  onChangeMaxAmount(maxAmount) {
-    const { unitDivisor, currencyDisplay } = this.props;
-    let amount = maxAmount/unitDivisor;
-    this.setState({ maxAmount: amount });
-    // this is needed because transactions at filter are all at atoms
-    amount = currencyDisplay === "DCR" ? amount*unitDivisor : amount;
-    this.onChangeFilter({ maxAmount: amount });
   }
 
   selectedTxTypeFromFilter(filter) {
