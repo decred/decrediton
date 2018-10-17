@@ -1,5 +1,6 @@
 @import (reference) "./main.less";
 @import (reference) "./Icons.less";
+@import "~nouislider/distribute/nouislider.min.css";
 
 .history-content-title {
   border-bottom: 1px solid transparent;
@@ -104,4 +105,31 @@
 
 .history-select-tx-slider-info {
   display: flex;
+}
+
+// noUiSlider style
+
+.min-max-slider {
+  width: 142px;
+  height: 10px;
+}
+
+.noUi-handle {
+  border-radius: 50%;
+  background: #2970FF;
+  border-color: #2970FF;
+  height: 18px !important;
+  width: 18px !important;
+}
+
+.noUi-handle::after {
+  height: 0px;
+}
+
+.noUi-handle::before {
+  height: 0px;
+}
+
+.noUi-connect {
+  background: #2970FF;
 }

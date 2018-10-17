@@ -10,6 +10,7 @@ import { TRANSACTION_DIR_SENT, TRANSACTION_DIR_RECEIVED,
 } from "wallet/service";
 import { DescriptionHeader } from "layout";
 import { Balance } from "shared";
+import noUiSlider from "nouislider";
 
 export const HistoryTabHeader = historyPage(({ totalBalance }) =>
   <DescriptionHeader
@@ -37,6 +38,19 @@ class History extends React.Component {
       expandedSliderInfo: false,
       isChangingFilter: false,
     };
+  }
+
+  componentDidMount() {
+    var range = document.getElementById('min-max-slider');
+
+    noUiSlider.create(range, {
+      start: [4000, 8000],
+      range: {
+          'min': [2000],
+          'max': [10000]
+      },
+      connect: true,
+    });
   }
 
   render() {
@@ -102,21 +116,20 @@ class History extends React.Component {
   }
 
   onChangeFilter(value) {
-    const { isChangingFilter } = this.state;
-    if (isChangingFilter) {
-      return setTimeout(() => {
-        this.changeFilter(value);
-        this.setState({ isChangingFilter: false });
-      }, 250);
+    const { isChangingFilterTimer } = this.state;
+    if (isChangingFilterTimer) {
+      clearTimeout(isChangingFilterTimer);
     }
-    setTimeout(this.changeFilter(value), 250);
+    this.setState({ isChangingFilterTimer: setTimeout(() => this.changeFilter(value), 100) });
   }
 
   changeFilter(value) {
+    const { isChangingFilterTimer } = this.state;
     const newFilter = {
       ...this.props.transactionsFilter,
       ...value
     };
+    clearTimeout(isChangingFilterTimer)
     this.props.changeTransactionsFilter(newFilter);
   }
 

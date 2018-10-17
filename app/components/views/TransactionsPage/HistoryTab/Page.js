@@ -82,16 +82,9 @@ const Page = ({
               onChange={onChangeSelectedType}
             />
           </Tooltip>
+          <div id="min-max-slider" className="min-max-slider"></div>
           <div className="history-select-tx-amounts-area">
             <div className="history-select-tx-amounts">
-              <div className="history-select-tx-min-amount">
-                <div><T id="history.minAmount" m="Min Amount" /></div>
-                <SlideRanger step={step} min={min} max={max} value={minAmount} onChange={onChangeMinAmount} />
-              </div>
-              <div className="history-select-tx-max-amount">
-                <T id="history.maxAmount" m="Max Amount" />
-                <SlideRanger step={step} min={min} max={max} value={maxAmount} onChange={onChangeMaxAmount} />
-              </div>
               <span onClick={() => onToggleSliderInfo(expandedSliderInfo)} className="history-select-tx-kebab"></span>
             </div>
             {
