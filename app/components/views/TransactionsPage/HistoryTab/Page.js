@@ -31,16 +31,12 @@ const Page = ({
   onLoadMoreTransactions,
   min,
   max,
-  step,
   onChangeMinValue,
   onChangeMaxValue,
-  onChangeStepValue,
-  minAmount,
-  maxAmount,
-  onChangeMinAmount,
-  onChangeMaxAmount,
   expandedSliderInfo,
   onToggleSliderInfo,
+  onToggleSortBy,
+  isSortByExpanded,
 }) => (
   <InfiniteScroll
     hasMore={!noMoreTransactions}
@@ -63,16 +59,45 @@ const Page = ({
               onChange={(e) => onChangeSearchText(e.target.value)}
             />
           </div>
-          <Tooltip tipWidth={ 300 } text={<T id="transactions.sortby.tooltip" m="Sort By" />}>
-            <EyeFilterMenu
-              labelKey="label"
-              keyField="value"
-              options={sortTypes}
-              selected={selectedSortOrderKey}
-              onChange={onChangeSortType}
-              className="sort-by"
-            />
-          </Tooltip>
+            <Tooltip tipWidth={ 300 } text={<T id="transactions.sortby.tooltip" m="Sort By" />}>
+              <div className="sort-by" onClick={() => onToggleSortBy(isSortByExpanded)}>
+                <div className="sort-by-icon">
+                </div>
+              </div>
+            </Tooltip>
+            {
+              isSortByExpanded && (
+                <div className="sort-by-menu-items">
+                  <div>
+                    {
+                      sortTypes.map((value, index) =>
+                        <div key={ index } className="context-menu-item">{value.value}</div>
+                      )
+                    }
+                  </div>
+                  <div id="min-max-slider" className="min-max-slider"></div>
+                  <div className="history-select-tx-amounts-area">
+                    <div className="history-select-tx-amounts">
+                      <span onClick={() => onToggleSliderInfo(expandedSliderInfo)} className="history-select-tx-kebab"></span>
+                    </div>
+                    {
+                      expandedSliderInfo && (
+                        <div className="history-select-tx-slider-info">
+                          <div>
+                            <T id="history.min.value" m="Slider min Value" />:
+                            <NumericInput value={min} onChange={(e) => onChangeMinValue(e.target.value)} />
+                          </div>
+                          <div>
+                            <T id="history.max.value" m="Slider max Value" />:
+                            <NumericInput value={max} onChange={(e) => onChangeMaxValue(e.target.value)} />
+                          </div>
+                        </div>
+                      )
+                    }
+                  </div>
+                </div>
+              )
+          }
           <Tooltip tipWidth={ 300 } text={<T id="transactions.txtypes.tooltip" m="Transaction Type" />}>
             <EyeFilterMenu
               labelKey="label"
@@ -82,30 +107,6 @@ const Page = ({
               onChange={onChangeSelectedType}
             />
           </Tooltip>
-          <div id="min-max-slider" className="min-max-slider"></div>
-          <div className="history-select-tx-amounts-area">
-            <div className="history-select-tx-amounts">
-              <span onClick={() => onToggleSliderInfo(expandedSliderInfo)} className="history-select-tx-kebab"></span>
-            </div>
-            {
-              expandedSliderInfo && (
-                <div className="history-select-tx-slider-info">
-                  <div>
-                    <T id="history.min.value" m="Slider min Value" />:
-                    <NumericInput value={min} onChange={(e) => onChangeMinValue(e.target.value)} />
-                  </div>
-                  <div>
-                    <T id="history.max.value" m="Slider max Value" />:
-                    <NumericInput value={max} onChange={(e) => onChangeMaxValue(e.target.value)} />
-                  </div>
-                  <div>
-                    <T id="history.step.value" m="Step Value" />:
-                    <NumericInput value={step} onChange={(e) => onChangeStepValue(e.target.value)} />
-                  </div>
-                </div>
-              )
-            }
-          </div>
         </div>
       </div>
     </div>

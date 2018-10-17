@@ -33,43 +33,12 @@ class History extends React.Component {
       minAmount: 0,
       maxAmount: 100,
       min: 0,
-      max: 1000,
-      step: 1,
+      max: 100,
       expandedSliderInfo: false,
       isChangingFilter: false,
+      rangeSlider: null,
+      isSortByExpanded: false,
     };
-  }
-
-  componentDidMount() {
-    const range = document.getElementById('min-max-slider');
-
-    const { minAmount, maxAmount, min, max, step } = this.state;
-    const toolTipFormatter = {
-      to: (value) => {
-        return value.toFixed(2);
-      },
-    }
-
-    noUiSlider.create(range, {
-      start: [minAmount, maxAmount],
-      range: {
-          'min': [min],
-          'max': [max]
-      },
-      connect: true,
-      step: step,
-      tooltips: [true, toolTipFormatter],
-    });
-
-    range.noUiSlider.on('end', (values, handle) => {
-      const value = values[handle];
-      if (handle) {
-        this.onChangeMaxAmount(value)
-      } else {
-        this.onChangeMinAmount(value)
-      }
-      
-    });
   }
 
   render() {
@@ -95,8 +64,8 @@ class History extends React.Component {
             onLoadMoreTransactions: null,
             onChangeMaxValue: null,
             onChangeMinValue: null,
-            onChangeStepValue: null,
             onToggleSliderInfo: null,
+            onToggleSortBy: null,
           }, this)
         }}
       />
@@ -185,16 +154,64 @@ class History extends React.Component {
     this.setState({ expandedSliderInfo: !expandedSliderInfo });
   }
 
+  onToggleSortBy(isSortByExpanded) {
+    this.setState({ isSortByExpanded: !isSortByExpanded})
+
+    if(!isSortByExpanded) {
+      setTimeout(() => {
+        const range = document.getElementById('min-max-slider');
+    
+        const { minAmount, maxAmount, min, max } = this.state;
+        const toolTipFormatter = {
+          to: (value) => {
+            return value.toFixed(2);
+          },
+        }
+    
+        noUiSlider.create(range, {
+          start: [minAmount, maxAmount],
+          range: {
+              'min': [min],
+              'max': [max]
+          },
+          connect: true,
+          tooltips: [true, toolTipFormatter],
+        });
+    
+        range.noUiSlider.on('end', (values, handle) => {
+          const value = values[handle];
+          if (handle) {
+            this.onChangeMaxAmount(value)
+          } else {
+            this.onChangeMinAmount(value)
+          }
+        });
+    
+        this.setState({ rangeSlider: range })
+      }, 25)
+    }
+  }
+
   onChangeMinValue(min) {
+    const { rangeSlider, max } = this.state;
     this.setState({ min });
+    rangeSlider.noUiSlider.updateOptions({
+      range: {
+          'min': [parseInt(min)],
+          'max': [max]
+      }
+    });
   }
 
   onChangeMaxValue(max) {
+    const { rangeSlider, min } = this.state;
     this.setState({ max });
-  }
-
-  onChangeStepValue(step) {
-    this.setState({ step });
+    rangeSlider.noUiSlider.updateOptions({
+      range: {
+          'min': [min],
+          'max': [parseInt(max)]
+      }
+    });
   }
 
   selectedTxTypeFromFilter(filter) {
