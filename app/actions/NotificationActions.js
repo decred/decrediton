@@ -16,7 +16,7 @@ export const NEWBLOCKCONNECTED = "NEWBLOCKCONNECTED";
 // transactionNtfnsDataHandler is closed over (dispatch, getState) and returns
 // a function that is to be called directly by the transaction notification data
 // stream. This is done for performance reasons, as it allows the top level
-// function (transactionNtfnsDataHandler) to create a local state closed which
+// function (transactionNtfnsDataHandler) to create a local state which
 // the child (anonymous) function closes over to buffer the notifications so
 // that on a heavily used wallet, where a large number of notifications is
 // received in a short period of time after a new block is connected, only a
