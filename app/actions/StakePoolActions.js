@@ -100,7 +100,7 @@ export const setStakePoolInformation = (privpass, poolHost, apiKey, accountNum, 
         if (response.data.status === "success") {
           dispatch(
             importScriptAttempt(
-              privpass, response.data.data.Script, !creatingWallet, 0, response.data.data.TicketAddress,
+              privpass, response.data.data.Script, !creatingWallet, 0, response.data.data.TicketAddress, false,
               (error) => error
                 ? dispatch({ error, type: UPDATESTAKEPOOLCONFIG_FAILED })
                 : dispatch(updateSavedConfig(response.data.data, poolHost, apiKey, accountNum))
