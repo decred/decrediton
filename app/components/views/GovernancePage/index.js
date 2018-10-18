@@ -2,6 +2,7 @@ import { TabbedPage, TabbedPageTab as Tab, TitleHeader, DescriptionHeader } from
 import { FormattedMessage as T } from "react-intl";
 import { Switch, Redirect } from "react-router-dom";
 import { default as ProposalsTab } from "./Proposals";
+import { default as BlockchainTab } from "./Blockchain";
 import "style/Governance.less";
 
 const PageHeader = () =>
@@ -22,6 +23,7 @@ export default () => (
       <Redirect from="/governance/proposals" exact to="/governance/proposals/activevote" />
     </Switch>
 
-    <Tab path="/governance/proposals" component={ProposalsTab} header={TabHeader} link={<T id="governance.tab.proposals" m="Proposals"/>}/>
+    <Tab path="/governance/proposals" component={ProposalsTab} header={TabHeader} link={<T id="governance.tab.politeia" m="Politeia"/>}/>
+    <Tab path="/governance/blockchain" component={BlockchainTab} header={TabHeader} link={<T id="governance.tab.blockchain" m="Blockchain"/>}/>
   </TabbedPage>
 );
