@@ -38,6 +38,7 @@ class History extends React.Component {
       isChangingFilter: false,
       rangeSlider: null,
       isSortByExpanded: false,
+      sliderShower: true,
     };
   }
 
@@ -66,6 +67,7 @@ class History extends React.Component {
             onChangeMinValue: null,
             onToggleSliderInfo: null,
             onToggleSortBy: null,
+            onToggleSliderShower: null,
           }, this)
         }}
       />
@@ -136,7 +138,7 @@ class History extends React.Component {
 
   onChangeMinAmount(minAmount) {
     const { unitDivisor, currencyDisplay } = this.props;
-    this.setState({ minAmount: amount });
+    this.setState({ minAmount });
     // this is needed because transactions at filter are all at atoms
     const amount = currencyDisplay === "DCR" ? minAmount*unitDivisor : amount;
     this.onChangeFilter({ minAmount: amount });
@@ -144,10 +146,14 @@ class History extends React.Component {
 
   onChangeMaxAmount(maxAmount) {
     const { unitDivisor, currencyDisplay } = this.props;
-    this.setState({ maxAmount: amount });
+    this.setState({ maxAmount });
     // this is needed because transactions at filter are all at atoms
     const amount = currencyDisplay === "DCR" ? maxAmount*unitDivisor : amount;
     this.onChangeFilter({ maxAmount: amount });
+  }
+
+  onToggleSliderShower(sliderShower) {
+    this.setState({ sliderShower: !sliderShower });
   }
 
   onToggleSliderInfo(expandedSliderInfo) {
@@ -179,6 +185,15 @@ class History extends React.Component {
         });
     
         range.noUiSlider.on('end', (values, handle) => {
+          const value = values[handle];
+          if (handle) {
+            this.setState({ maxAmount: value });
+          } else {
+            this.setState({ minAmount: value });
+          }
+        });
+
+        range.noUiSlider.on('update', (values, handle) => {
           const value = values[handle];
           if (handle) {
             this.onChangeMaxAmount(value)

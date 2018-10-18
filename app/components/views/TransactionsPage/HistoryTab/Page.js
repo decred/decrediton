@@ -37,6 +37,11 @@ const Page = ({
   onToggleSliderInfo,
   onToggleSortBy,
   isSortByExpanded,
+  currencyDisplay,
+  minAmount,
+  maxAmount,
+  onToggleSliderShower,
+  sliderShower,
 }) => (
   <InfiniteScroll
     hasMore={!noMoreTransactions}
@@ -68,32 +73,49 @@ const Page = ({
             {
               isSortByExpanded && (
                 <div className="sort-by-menu-items">
-                  <div>
+                  <div className="sort-menu-wrapper">
                     {
-                      sortTypes.map((value, index) =>
-                        <div key={ index } className="context-menu-item">{value.value}</div>
+                      sortTypes.map((sortType, index) =>
+                        <div key={ index } onClick={() => onChangeSortType(sortType)}
+                          className= {
+                            [selectedSortOrderKey === sortType.value && "selected", "context-menu-item"].join(" ")
+                          }
+                        >{sortType.label}</div>
                       )
                     }
                   </div>
-                  <div id="min-max-slider" className="min-max-slider"></div>
-                  <div className="history-select-tx-amounts-area">
-                    <div className="history-select-tx-amounts">
-                      <span onClick={() => onToggleSliderInfo(expandedSliderInfo)} className="history-select-tx-kebab"></span>
+                  <div className="history-slider-wrapper">
+                    <div className="history-amount-range-label"><T id="history.amount.range" m="Amount Range" /></div>
+                    <div id="min-max-slider" className="min-max-slider"></div>
+                    <div className="history-select-tx-amounts-area">
+                      <div className="history-select-tx-amounts">
+                        <span onClick={() => onToggleSliderInfo(expandedSliderInfo)} className="history-select-tx-kebab"></span>
+                      </div>
+                      {
+                        expandedSliderInfo && (
+                          <div className="history-select-tx-slider-info">
+                            <div>
+                              <T id="history.min.value" m="Slider min" />:
+                              <NumericInput value={min} onChange={(e) => onChangeMinValue(e.target.value)} />
+                            </div>
+                            <div>
+                              <T id="history.max.value" m="Slider max" />:
+                              <NumericInput value={max} onChange={(e) => onChangeMaxValue(e.target.value)} />
+                            </div>
+                          </div>
+                        )
+                      }
                     </div>
                     {
-                      expandedSliderInfo && (
-                        <div className="history-select-tx-slider-info">
-                          <div>
-                            <T id="history.min.value" m="Slider min Value" />:
-                            <NumericInput value={min} onChange={(e) => onChangeMinValue(e.target.value)} />
-                          </div>
-                          <div>
-                            <T id="history.max.value" m="Slider max Value" />:
-                            <NumericInput value={max} onChange={(e) => onChangeMaxValue(e.target.value)} />
-                          </div>
+                      sliderShower && (
+                        <div className="history-slider-value-shower">
+                          {minAmount} {currencyDisplay} - {maxAmount} {currencyDisplay}
+                          <div className="history-slider-value-shower-closer"
+                            onClick={() => onToggleSliderShower(sliderShower)}></div>
                         </div>
                       )
                     }
+                    
                   </div>
                 </div>
               )
