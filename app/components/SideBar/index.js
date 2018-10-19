@@ -31,7 +31,7 @@ class SideBar extends React.Component {
       }
 
       const now = new Date();
-      lastBlockDate = this.props.tsDate(lastBlockTimestamp);
+      lastBlockDate = new Date(lastBlockTimestamp*1000);
       const timeFromLastBlock = now.getTime() - lastBlockDate.getTime();
       lastBlockIsRecent = timeFromLastBlock < 60000;
       if (lastBlockIsRecent) {
