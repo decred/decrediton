@@ -50,7 +50,8 @@
       "<rootDir>/../../app",
       "<rootDir>/../../app/components",
       "<rootDir>/../../node_modules",
-      "<rootDir>/../../app/node_modules"
+      "<rootDir>/../../app/node_modules",
+      "<rootDir>/../"
     ]
   },
   "build": {
