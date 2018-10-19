@@ -622,7 +622,6 @@ export const GETTRANSACTIONS_COMPLETE = "GETTRANSACTIONS_COMPLETE";
 //
 // If empty, all transactions are accepted.
 function filterTransactions(transactions, filter) {
-  // console.log(filter)
   return transactions
     .filter(v => filter.types.length ? filter.types.indexOf(v.type) > -1 : true)
     .filter(v => filter.direction ? filter.direction === v.direction : true)
