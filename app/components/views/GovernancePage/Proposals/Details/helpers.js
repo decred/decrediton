@@ -109,6 +109,10 @@ const renderInternalProposalLink = ({ children }) => {
   return <a onClick={() => {} } href="#">{children}</a>;
 };
 
+const renderProposalImage = ({ alt }) => {
+  return <span>{alt}</span>;
+};
+
 export const ProposalText = ({ text }) => (
   <ReactMarkdown
     source={text}
@@ -127,7 +131,10 @@ export const ProposalText = ({ text }) => (
 
       // debatable whether we wanna allow inline image references in proposals
       // in decrediton.
-      imageReference: () => {},
+      imageReference: () => renderProposalImage,
+      image: () => renderProposalImage,
+
+      html: () => null,
     }}
   />
 );
