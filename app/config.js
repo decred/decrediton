@@ -16,9 +16,6 @@ export function getWalletCfg(testnet, walletPath){
 
 export function initWalletCfg(testnet, walletPath) {
   const config = new Store({ cwd: getWalletPath(testnet, walletPath) });
-  if (!config.has("wallet_start_advanced")) {
-    config.set("wallet_start_advanced", false);
-  }
   if (!config.has("enableticketbuyer")) {
     config.set("enableticketbuyer","0");
   }
@@ -47,9 +44,6 @@ export function initWalletCfg(testnet, walletPath) {
   if (!config.has("discoveraccounts")) {
     config.set("discoveraccounts",true);
   }
-  if (!config.has("appdata_path")) {
-    config.set("appdata_path","");
-  }
   if (!config.has("gaplimit")) {
     config.set("gaplimit","20");
   }
@@ -61,7 +55,26 @@ export function initWalletCfg(testnet, walletPath) {
       updateStakePoolConfig(config, foundStakePoolConfigs);
     }
   });
+  cleanWalletCfg(config);
   return (config);
+}
+
+function cleanWalletCfg(config) {
+  var key;
+  const walletCfgFields = [ "enableticketbuyer", "balancetomaintain", "maxfee",
+    "maxpricerelative", "maxpriceabsolute", "maxperblock", "currency_display",
+    "hiddenaccounts", "discoveraccounts", "gaplimit", "iswatchonly", "stakepools", "lastaccess" ];
+  for (key in config.store) {
+    var found = false;
+    for (var i = 0; i < walletCfgFields.length; i++) {
+      if (key == walletCfgFields[i]) {
+        found = true;
+      }
+    }
+    if (!found) {
+      config.delete(key);
+    }
+  }
 }
 
 export function initGlobalCfg() {
@@ -109,6 +122,9 @@ export function initGlobalCfg() {
     };
     config.set("remote_credentials",credentialKeys);
   }
+  if (!config.has("appdata_path")) {
+    config.set("appdata_path", "");
+  }
   if (!config.has("spv_mode")) {
     config.set("spv_mode", false);
   }
@@ -121,7 +137,25 @@ export function initGlobalCfg() {
   if (!config.has("timezone")) {
     config.set("timezone", "local");
   }
+  cleanGlobalCfg(config);
   return(config);
+}
+
+function cleanGlobalCfg(config) {
+  var key;
+  const globalCfgFields = [ "daemon_start_advanced", "must_open_form", "locale", "network", "set_language", "ui_animations", "show_tutorial", "show_privacy", "allowed_external_requests", "proxy_type", "proxy_location",
+    "remote_credentials", "spv_mode", "spv_connect", "max_wallet_count", "timezone", "last_height", "appdata_path" ];
+  for (key in config.store) {
+    var found = false;
+    for (var i = 0; i < globalCfgFields.length; i++) {
+      if (key == globalCfgFields[i]) {
+        found = true;
+      }
+    }
+    if (!found) {
+      config.delete(key);
+    }
+  }
 }
 
 export function validateGlobalCfgFile() {
