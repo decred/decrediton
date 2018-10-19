@@ -64,61 +64,61 @@ const Page = ({
               onChange={(e) => onChangeSearchText(e.target.value)}
             />
           </div>
-            <Tooltip tipWidth={ 300 } text={<T id="transactions.sortby.tooltip" m="Sort By" />}>
-              <div className="sort-by" onClick={() => onToggleSortBy(isSortByExpanded)}>
-                <div className="sort-by-icon">
-                </div>
+          <Tooltip tipWidth={ 300 } text={<T id="transactions.sortby.tooltip" m="Sort By" />}>
+            <div className="sort-by" onClick={() => onToggleSortBy(isSortByExpanded)}>
+              <div className="sort-by-icon">
               </div>
-            </Tooltip>
-            {
-              isSortByExpanded && (
-                <div className="sort-by-menu-items">
-                  <div className="sort-menu-wrapper">
-                    {
-                      sortTypes.map((sortType, index) =>
-                        <div key={ index } onClick={() => onChangeSortType(sortType)}
-                          className= {
-                            [selectedSortOrderKey === sortType.value && "selected", "context-menu-item"].join(" ")
-                          }
-                        >{sortType.label}</div>
-                      )
-                    }
-                  </div>
-                  <div className="history-slider-wrapper">
-                    <div className="history-amount-range-label"><T id="history.amount.range" m="Amount Range" /></div>
-                    <div id="min-max-slider" className="min-max-slider"></div>
-                    <div className="history-select-tx-amounts-area">
-                      <div className="history-select-tx-amounts">
-                        <span onClick={() => onToggleSliderInfo(expandedSliderInfo)} className="history-select-tx-kebab"></span>
-                      </div>
-                      {
-                        expandedSliderInfo && (
-                          <div className="history-select-tx-slider-info">
-                            <div>
-                              <T id="history.min.value" m="Slider min" />:
-                              <NumericInput value={min} onChange={(e) => onChangeMinValue(e.target.value)} />
-                            </div>
-                            <div>
-                              <T id="history.max.value" m="Slider max" />:
-                              <NumericInput value={max} onChange={(e) => onChangeMaxValue(e.target.value)} />
-                            </div>
-                          </div>
-                        )
-                      }
+            </div>
+          </Tooltip>
+          {
+            isSortByExpanded && (
+              <div className="sort-by-menu-items">
+                <div className="sort-menu-wrapper">
+                  {
+                    sortTypes.map((sortType, index) =>
+                      <div key={ index } onClick={() => onChangeSortType(sortType)}
+                        className= {
+                          [ selectedSortOrderKey === sortType.value && "selected", "context-menu-item" ].join(" ")
+                        }
+                      >{sortType.label}</div>
+                    )
+                  }
+                </div>
+                <div className="history-slider-wrapper">
+                  <div className="history-amount-range-label"><T id="history.amount.range" m="Amount Range" /></div>
+                  <div id="min-max-slider" className="min-max-slider"></div>
+                  <div className="history-select-tx-amounts-area">
+                    <div className="history-select-tx-amounts">
+                      <span onClick={() => onToggleSliderInfo(expandedSliderInfo)} className="history-select-tx-kebab"></span>
                     </div>
                     {
-                      sliderShower && (
-                        <div className="history-slider-value-shower">
-                          {minAmount} {currencyDisplay} - {maxAmount} {currencyDisplay}
-                          <div className="history-slider-value-shower-closer"
-                            onClick={() => onToggleSliderShower(sliderShower)}></div>
+                      expandedSliderInfo && (
+                        <div className="history-select-tx-slider-info">
+                          <div>
+                            <T id="history.min.value" m="Slider min" />:
+                            <NumericInput value={min} onChange={(e) => onChangeMinValue(e.target.value)} />
+                          </div>
+                          <div>
+                            <T id="history.max.value" m="Slider max" />:
+                            <NumericInput value={max} onChange={(e) => onChangeMaxValue(e.target.value)} />
+                          </div>
                         </div>
                       )
                     }
-                    
                   </div>
+                  {
+                    sliderShower && (
+                      <div className="history-slider-value-shower">
+                        {minAmount} {currencyDisplay} - {maxAmount} {currencyDisplay}
+                        <div className="history-slider-value-shower-closer"
+                          onClick={() => onToggleSliderShower(sliderShower)}></div>
+                      </div>
+                    )
+                  }
+
                 </div>
-              )
+              </div>
+            )
           }
           <Tooltip tipWidth={ 300 } text={<T id="transactions.txtypes.tooltip" m="Transaction Type" />}>
             <EyeFilterMenu

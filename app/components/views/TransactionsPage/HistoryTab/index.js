@@ -117,7 +117,7 @@ class History extends React.Component {
       ...this.props.transactionsFilter,
       ...value
     };
-    clearTimeout(isChangingFilterTimer)
+    clearTimeout(isChangingFilterTimer);
     this.props.changeTransactionsFilter(newFilter);
   }
 
@@ -161,30 +161,30 @@ class History extends React.Component {
   }
 
   onToggleSortBy(isSortByExpanded) {
-    this.setState({ isSortByExpanded: !isSortByExpanded})
+    this.setState({ isSortByExpanded: !isSortByExpanded });
 
     if(!isSortByExpanded) {
       setTimeout(() => {
-        const range = document.getElementById('min-max-slider');
-    
+        const range = document.getElementById("min-max-slider");
+
         const { minAmount, maxAmount, min, max } = this.state;
         const toolTipFormatter = {
           to: (value) => {
             return value.toFixed(2);
           },
-        }
-    
+        };
+
         noUiSlider.create(range, {
-          start: [minAmount, maxAmount],
+          start: [ minAmount, maxAmount ],
           range: {
-              'min': [min],
-              'max': [max]
+            "min": [ min ],
+            "max": [ max ]
           },
           connect: true,
-          tooltips: [true, toolTipFormatter],
+          tooltips: [ true, toolTipFormatter ],
         });
-    
-        range.noUiSlider.on('end', (values, handle) => {
+
+        range.noUiSlider.on("end", (values, handle) => {
           const value = values[handle];
           if (handle) {
             this.setState({ maxAmount: value });
@@ -193,17 +193,17 @@ class History extends React.Component {
           }
         });
 
-        range.noUiSlider.on('update', (values, handle) => {
+        range.noUiSlider.on("update", (values, handle) => {
           const value = values[handle];
           if (handle) {
-            this.onChangeMaxAmount(value)
+            this.onChangeMaxAmount(value);
           } else {
-            this.onChangeMinAmount(value)
+            this.onChangeMinAmount(value);
           }
         });
-    
-        this.setState({ rangeSlider: range })
-      }, 25)
+
+        this.setState({ rangeSlider: range });
+      }, 25);
     }
   }
 
@@ -212,8 +212,8 @@ class History extends React.Component {
     this.setState({ min });
     rangeSlider.noUiSlider.updateOptions({
       range: {
-          'min': [parseInt(min)],
-          'max': [max]
+        "min": [ parseInt(min) ],
+        "max": [ max ]
       }
     });
   }
@@ -223,8 +223,8 @@ class History extends React.Component {
     this.setState({ max });
     rangeSlider.noUiSlider.updateOptions({
       range: {
-          'min': [min],
-          'max': [parseInt(max)]
+        "min": [ min ],
+        "max": [ parseInt(max) ]
       }
     });
   }
