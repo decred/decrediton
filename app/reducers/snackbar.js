@@ -157,7 +157,7 @@ const messages = defineMessages({
   },
   CHANGEPASSPHRASE_FAILED: {
     id: "settings.errors.changePassphraseFailed",
-    defaultMessage: "{originalError}"
+    defaultMessage: "Update passphrase failed. Incorrect private passphrase, please try again."
   },
   DECODERAWTXS_FAILED: {
     id: "decodeRawTx.errors.decodeFailed",
