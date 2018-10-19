@@ -9682,6 +9682,11 @@ timers-browserify@^2.0.4:
   dependencies:
     setimmediate "^1.0.4"
 
+timezone-mock@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/timezone-mock/-/timezone-mock-1.0.2.tgz#f2194ef34234eb2200193c8caf5b9eae3aad07aa"
+  integrity sha512-t6axrwpYW5cKcfHbsNjhcPjCSaFoS78geyPlo7r8HTwuOszMRr1QTeibf0Ue5jge6zth8djnrMtL5Ul6jiOJOg==
+
 tmp@^0.0.33:
   version "0.0.33"
   resolved "https://registry.yarnpkg.com/tmp/-/tmp-0.0.33.tgz#6d34335889768d21b2bcda0aa277ced3b1bfadf9"

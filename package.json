@@ -230,6 +230,7 @@
     "source-map-support": "^0.5.9",
     "string-argv": "0.1.1",
     "stylelint": "^9.6.0",
+    "timezone-mock": "^1.0.2",
     "winston": "^2.3.1"
   },
   "devEngines": {
