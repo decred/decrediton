@@ -2,7 +2,7 @@ import { FormattedMessage as T, FormattedRelative } from "react-intl";
 import ReactTimeout from "react-timeout";
 
 @autobind
-export class LastBlockTime extends React.Component {
+class LastBlockTime extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.getBlockDate(props.lastBlockTimestamp);
@@ -57,5 +57,7 @@ export class LastBlockTime extends React.Component {
 LastBlockTime.propTypes = {
   lastBlockDate: PropTypes.number,
 };
+
+export { LastBlockTime as LastBlockTime };
 
 export default ReactTimeout(LastBlockTime);

@@ -131,7 +131,7 @@
   "devDependencies": {
     "@babel/core": "^7.0.0",
     "@babel/plugin-proposal-class-properties": "^7.0.0",
-    "@babel/plugin-proposal-decorators": "^7.0.0",
+    "@babel/plugin-proposal-decorators": "^7.1.2",
     "@babel/plugin-proposal-do-expressions": "^7.0.0",
     "@babel/plugin-proposal-export-default-from": "^7.0.0",
     "@babel/plugin-proposal-export-namespace-from": "^7.0.0",
@@ -164,7 +164,7 @@
     "cross-env": "^5.2.0",
     "electron": "2.0.8",
     "enzyme": "^3.1.0",
-    "eslint": "5.x",
+    "eslint": "^5.7.0",
     "eslint-formatter-pretty": "^1.1.0",
     "eslint-plugin-react": "^7.11.1",
     "express": "^4.14.0",
