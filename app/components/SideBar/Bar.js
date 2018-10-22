@@ -1,8 +1,9 @@
 // @flow
-import { FormattedMessage as T, FormattedRelative } from "react-intl";
+import { FormattedMessage as T } from "react-intl";
 import { RescanProgress } from "indicators";
 import MenuLinks from "./MenuLinks";
 import Logo from "./Logo";
+import LastBlockTime from "./LastBlockTime";
 import { Balance } from "shared";
 import { RescanButton } from "buttons";
 import "style/Fonts.less";
@@ -12,8 +13,7 @@ const Bar = ({
   isTestNet,
   balances,
   currentHeight,
-  lastBlockDate,
-  lastBlockIsRecent,
+  lastBlockTimestamp,
   totalBalance,
   isShowingAccounts,
   onShowAccounts,
@@ -63,9 +63,7 @@ const Bar = ({
               <span className="sidebar-menu-bottom-latest-block-number"> {currentHeight}</span>
             </a>
             <div className="sidebar-menu-bottom-latest-block-time">
-              { lastBlockDate && lastBlockIsRecent ?
-                <T id="sidebar.lastBlockIsRecent" m="< 1 minute ago" /> :
-                lastBlockDate && <FormattedRelative value={lastBlockDate} updateInterval={1*1000}/> }
+              <LastBlockTime lastBlockTimestamp={lastBlockTimestamp} />
             </div>
           </Aux>
         </div>

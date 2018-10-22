@@ -1,29 +1,29 @@
 import { format } from "util";
 
-export function dateToLocal(d) {
-  Date.prototype.stdTimezoneOffset = function () {
-    var jan = new Date(this.getFullYear(), 0, 1);
-    var jul = new Date(this.getFullYear(), 6, 1);
-    return Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
-  };
-
-  Date.prototype.dst = function () {
-    return this.getTimezoneOffset() < this.stdTimezoneOffset();
-  };
-
-  var date = new Date(d * 1000);
-  if (date.dst()) {
-    date.setHours(date.getHours() + 1);
-    return date;
-  }
-  return date;
+// dateToLocal converts the specified unix timestamp (possibly a block or
+// transaction timestamp) from seconds to a JS Date object.
+export function dateToLocal(timestamp) {
+  return new Date(timestamp * 1000);
 }
 
-export function dateToUTC(d) {
-  const date = new Date(d * 1000);
+// dateToUTC converts the specified unix timestamp (possibly a block or
+// transaction timestamp) from seconds to a JS Date object in such a way that,
+// when formatted using the local timezone, the actual time displayed is the UTC
+// equivalent of the timestamp.
+// This function is slightly cheating, because javascript Date objects do *not*
+// have an internal timezone; they are always internally stored as unix
+// timestamps and formatted using the local timezone with no way to change the
+// timezone offset they use.
+// While this particular trick works for UTC, it's not great, and not easily
+// generalizable to using multiple timezones. If in the future we want to add
+// the ability to use timezones other than UTC and local, we should really
+// start using a decent library like momentjs.
+export function dateToUTC(timestamp) {
+  const date = new Date(timestamp * 1000);
   return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),
     date.getUTCHours(), date.getUTCMinutes(),  date.getUTCSeconds());
 }
+
 // endOfDay returns a new date pointing to the end of the day (last second)
 // of the day stored in the given date.
 export function endOfDay(dt) {
