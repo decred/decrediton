@@ -10,7 +10,6 @@ import { TRANSACTION_DIR_SENT, TRANSACTION_DIR_RECEIVED,
 } from "wallet/service";
 import { DescriptionHeader } from "layout";
 import { Balance } from "shared";
-import noUiSlider from "nouislider";
 
 export const HistoryTabHeader = historyPage(({ totalBalance }) =>
   <DescriptionHeader
@@ -24,21 +23,12 @@ export const HistoryTabHeader = historyPage(({ totalBalance }) =>
 class History extends React.Component {
   constructor(props) {
     super(props);
-    const selectedTxTypeKey = this.selectedTxTypeFromFilter(props.transactionsFilter);
+    const selectedTxTypeKey = this.selectedTxTypeFromFilter(this.props.transactionsFilter);
     const { search, listDirection } = props.transactionsFilter;
-    this.state = {
-      selectedTxTypeKey,
+    this.state = { selectedTxTypeKey,
       selectedSortOrderKey: listDirection,
       searchText: search,
-      minAmount: 0,
-      maxAmount: 100,
-      min: 0,
-      max: 100,
-      expandedSliderInfo: false,
-      isChangingFilter: false,
-      rangeSlider: null,
-      isSortByExpanded: false,
-      sliderShower: true,
+      isChangingFilterTimer: null,
     };
   }
 
@@ -62,12 +52,8 @@ class History extends React.Component {
             onChangeSelectedType: null,
             onChangeSortType: null,
             onChangeSearchText: null,
-            onLoadMoreTransactions: null,
-            onChangeMaxValue: null,
-            onChangeMinValue: null,
-            onToggleSliderInfo: null,
-            onToggleSortBy: null,
-            onToggleSliderShower: null,
+            onChangeSliderValue: null,
+            onLoadMoreTransactions: null
           }, this)
         }}
       />
@@ -136,97 +122,16 @@ class History extends React.Component {
     this.setState({ searchText });
   }
 
-  onChangeMinAmount(minAmount) {
+  onChangeSliderValue(value, minOrMax) {
     const { unitDivisor, currencyDisplay } = this.props;
-    this.setState({ minAmount });
     // this is needed because transactions at filter are all at atoms
-    const amount = currencyDisplay === "DCR" ? minAmount*unitDivisor : amount;
-    this.onChangeFilter({ minAmount: amount });
-  }
+    const amount = currencyDisplay === "DCR" ? value*unitDivisor : value;
 
-  onChangeMaxAmount(maxAmount) {
-    const { unitDivisor, currencyDisplay } = this.props;
-    this.setState({ maxAmount });
-    // this is needed because transactions at filter are all at atoms
-    const amount = currencyDisplay === "DCR" ? maxAmount*unitDivisor : amount;
-    this.onChangeFilter({ maxAmount: amount });
-  }
-
-  onToggleSliderShower(sliderShower) {
-    this.setState({ sliderShower: !sliderShower });
-  }
-
-  onToggleSliderInfo(expandedSliderInfo) {
-    this.setState({ expandedSliderInfo: !expandedSliderInfo });
-  }
-
-  onToggleSortBy(isSortByExpanded) {
-    this.setState({ isSortByExpanded: !isSortByExpanded });
-
-    if(!isSortByExpanded) {
-      setTimeout(() => {
-        const range = document.getElementById("min-max-slider");
-
-        const { minAmount, maxAmount, min, max } = this.state;
-        const toolTipFormatter = {
-          to: (value) => {
-            return value.toFixed(2);
-          },
-        };
-
-        noUiSlider.create(range, {
-          start: [ minAmount, maxAmount ],
-          range: {
-            "min": [ min ],
-            "max": [ max ]
-          },
-          connect: true,
-          tooltips: [ true, toolTipFormatter ],
-        });
-
-        range.noUiSlider.on("end", (values, handle) => {
-          const value = values[handle];
-          if (handle) {
-            this.setState({ maxAmount: value });
-          } else {
-            this.setState({ minAmount: value });
-          }
-        });
-
-        range.noUiSlider.on("update", (values, handle) => {
-          const value = values[handle];
-          if (handle) {
-            this.onChangeMaxAmount(value);
-          } else {
-            this.onChangeMinAmount(value);
-          }
-        });
-
-        this.setState({ rangeSlider: range });
-      }, 25);
-    }
-  }
-
-  onChangeMinValue(min) {
-    const { rangeSlider, max } = this.state;
-    this.setState({ min });
-    rangeSlider.noUiSlider.updateOptions({
-      range: {
-        "min": [ parseInt(min) ],
-        "max": [ max ]
-      }
-    });
-  }
-
-  onChangeMaxValue(max) {
-    const { rangeSlider, min } = this.state;
-    this.setState({ max });
-    rangeSlider.noUiSlider.updateOptions({
-      range: {
-        "min": [ min ],
-        "max": [ parseInt(max) ]
-      }
-    });
+    if(minOrMax === "min") {
+      this.onChangeFilter({ minAmount: amount });
+    } else if (minOrMax === "max") {
+      this.onChangeFilter({ maxAmount: amount });
+    }    
   }
 
   selectedTxTypeFromFilter(filter) {

@@ -1,7 +1,7 @@
-import { EyeFilterMenu } from "buttons";
+import { EyeFilterMenu, EyeFilterMenuWithSlider } from "buttons";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { Tooltip } from "shared";
-import { TextInput, NumericInput } from "inputs";
+import { TextInput } from "inputs";
 import TxHistory from "TxHistory";
 import { LoadingMoreTransactionsIndicator, NoMoreTransactionsIndicator, NoTransactions } from "indicators";
 import InfiniteScroll from "react-infinite-scroller";
@@ -29,19 +29,7 @@ const Page = ({
   onChangeSortType,
   onChangeSearchText,
   onLoadMoreTransactions,
-  min,
-  max,
-  onChangeMinValue,
-  onChangeMaxValue,
-  expandedSliderInfo,
-  onToggleSliderInfo,
-  onToggleSortBy,
-  isSortByExpanded,
-  currencyDisplay,
-  minAmount,
-  maxAmount,
-  onToggleSliderShower,
-  sliderShower,
+  onChangeSliderValue,
 }) => (
   <InfiniteScroll
     hasMore={!noMoreTransactions}
@@ -65,61 +53,16 @@ const Page = ({
             />
           </div>
           <Tooltip tipWidth={ 300 } text={<T id="transactions.sortby.tooltip" m="Sort By" />}>
-            <div className="sort-by" onClick={() => onToggleSortBy(isSortByExpanded)}>
-              <div className="sort-by-icon">
-              </div>
-            </div>
+            <EyeFilterMenuWithSlider
+              labelKey="label"
+              keyField="value"
+              options={sortTypes}
+              selected={selectedSortOrderKey}
+              onChange={onChangeSortType}
+              className="sort-by"
+              onChangeSlider={onChangeSliderValue}
+            />
           </Tooltip>
-          {
-            isSortByExpanded && (
-              <div className="sort-by-menu-items">
-                <div className="sort-menu-wrapper">
-                  {
-                    sortTypes.map((sortType, index) =>
-                      <div key={ index } onClick={() => onChangeSortType(sortType)}
-                        className= {
-                          [ selectedSortOrderKey === sortType.value && "selected", "context-menu-item" ].join(" ")
-                        }
-                      >{sortType.label}</div>
-                    )
-                  }
-                </div>
-                <div className="history-slider-wrapper">
-                  <div className="history-amount-range-label"><T id="history.amount.range" m="Amount Range" /></div>
-                  <div id="min-max-slider" className="min-max-slider"></div>
-                  <div className="history-select-tx-amounts-area">
-                    <div className="history-select-tx-amounts">
-                      <span onClick={() => onToggleSliderInfo(expandedSliderInfo)} className="history-select-tx-kebab"></span>
-                    </div>
-                    {
-                      expandedSliderInfo && (
-                        <div className="history-select-tx-slider-info">
-                          <div>
-                            <T id="history.min.value" m="Slider min" />:
-                            <NumericInput value={min} onChange={(e) => onChangeMinValue(e.target.value)} />
-                          </div>
-                          <div>
-                            <T id="history.max.value" m="Slider max" />:
-                            <NumericInput value={max} onChange={(e) => onChangeMaxValue(e.target.value)} />
-                          </div>
-                        </div>
-                      )
-                    }
-                  </div>
-                  {
-                    sliderShower && (
-                      <div className="history-slider-value-shower">
-                        {minAmount} {currencyDisplay} - {maxAmount} {currencyDisplay}
-                        <div className="history-slider-value-shower-closer"
-                          onClick={() => onToggleSliderShower(sliderShower)}></div>
-                      </div>
-                    )
-                  }
-
-                </div>
-              </div>
-            )
-          }
           <Tooltip tipWidth={ 300 } text={<T id="transactions.txtypes.tooltip" m="Transaction Type" />}>
             <EyeFilterMenu
               labelKey="label"
