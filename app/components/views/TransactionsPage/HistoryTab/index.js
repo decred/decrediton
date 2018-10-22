@@ -131,7 +131,7 @@ class History extends React.Component {
       this.onChangeFilter({ minAmount: amount });
     } else if (minOrMax === "max") {
       this.onChangeFilter({ maxAmount: amount });
-    }    
+    }
   }
 
   selectedTxTypeFromFilter(filter) {

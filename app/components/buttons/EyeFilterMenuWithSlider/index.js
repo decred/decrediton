@@ -1,13 +1,9 @@
-import InvisibleButton from "../InvisibleButton";
 import { EyeFilterMenu } from "buttons";
-import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
-import { eventOutsideComponent } from "helpers";
-import EventListener from "react-event-listener";
+import { FormattedMessage as T } from "react-intl";
 import "style/EyeFilterMenu.less";
 import "style/MiscComponents.less";
 import noUiSlider from "nouislider";
 import {  NumericInput } from "inputs";
-import { substruct } from "fp";
 
 @autobind
 class EyeFilterMenuWithSlider extends React.Component {
@@ -35,32 +31,32 @@ class EyeFilterMenuWithSlider extends React.Component {
       };
 
       noUiSlider.create(range, {
-        start: [minAmount, maxAmount],
+        start: [ minAmount, maxAmount ],
         range: {
-          "min": [min],
-          "max": [max]
+          "min": [ min ],
+          "max": [ max ]
         },
         connect: true,
-        tooltips: [true, toolTipFormatter],
+        tooltips: [ true, toolTipFormatter ],
       });
 
       range.noUiSlider.on("end", (values, handle) => {
         const value = values[handle];
         if (handle) {
-          this.props.onChangeSlider(value, "max")
+          this.props.onChangeSlider(value, "max");
           this.setState({ maxAmount: value });
         } else {
           this.setState({ minAmount: value });
-          this.props.onChangeSlider(value, "min")
+          this.props.onChangeSlider(value, "min");
         }
       });
 
       range.noUiSlider.on("update", (values, handle) => {
         const value = values[handle];
         if (handle) {
-          this.setState({ maxAmount: value }); 
+          this.setState({ maxAmount: value });
         } else {
-          this.setState({ minAmount: value });          
+          this.setState({ minAmount: value });
         }
       });
 
@@ -87,11 +83,11 @@ class EyeFilterMenuWithSlider extends React.Component {
               <div className="history-select-tx-slider-info">
                 <div>
                   <T id="history.min.value" m="Slider min" />:
-                      <NumericInput value={min} onChange={(e) => this.onChangeMinValue(e.target.value)} />
+                  <NumericInput value={min} onChange={(e) => this.onChangeMinValue(e.target.value)} />
                 </div>
                 <div>
                   <T id="history.max.value" m="Slider max" />:
-                      <NumericInput value={max} onChange={(e) => this.onChangeMaxValue(e.target.value)} />
+                  <NumericInput value={max} onChange={(e) => this.onChangeMaxValue(e.target.value)} />
                 </div>
               </div>
             )
@@ -112,12 +108,12 @@ class EyeFilterMenuWithSlider extends React.Component {
 
   onChangeMinValue(min) {
     const { rangeSlider, max } = this.state;
-    const intMin = parseInt(min)
+    const intMin = parseInt(min);
     this.setState({ min: intMin });
     rangeSlider.noUiSlider.updateOptions({
       range: {
-        "min": [intMin],
-        "max": [max]
+        "min": [ intMin ],
+        "max": [ max ]
       }
     });
   }
@@ -128,8 +124,8 @@ class EyeFilterMenuWithSlider extends React.Component {
     this.setState({ max: intMax });
     rangeSlider.noUiSlider.updateOptions({
       range: {
-        "min": [min],
-        "max": [intMax]
+        "min": [ min ],
+        "max": [ intMax ]
       }
     });
   }
@@ -145,21 +141,9 @@ class EyeFilterMenuWithSlider extends React.Component {
   render() {
     return (
       <EyeFilterMenu
+        {...{ ...this.state,...this.props, }}
         openingMenu = {this.getSliderWhenOpeningMenu}
         getOpenedMenu = {this.getSliderWhenOpenedMenu}
-        {...{
-          ...this.state,
-          ...this.props,
-          ...substruct({
-            onChangeSortType: null,
-            onChangeSearchText: null,
-            onChangeSliderValue: null,
-            onLoadMoreTransactions: null,
-            onToggleSliderInfo: null,
-            onToggleSortBy: null,
-            onToggleSliderShower: null,
-          }, this)
-        }}
       />
     );
   }
