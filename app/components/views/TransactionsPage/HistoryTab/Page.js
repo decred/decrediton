@@ -30,6 +30,7 @@ const Page = ({
   onChangeSearchText,
   onLoadMoreTransactions,
   onChangeSliderValue,
+  currencyDisplay,
 }) => (
   <InfiniteScroll
     hasMore={!noMoreTransactions}
@@ -61,6 +62,7 @@ const Page = ({
               onChange={onChangeSortType}
               className="sort-by"
               onChangeSlider={onChangeSliderValue}
+              currencyDisplay={currencyDisplay}
             />
           </Tooltip>
           <Tooltip tipWidth={ 300 } text={<T id="transactions.txtypes.tooltip" m="Transaction Type" />}>

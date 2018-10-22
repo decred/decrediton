@@ -57,11 +57,11 @@ class EyeFilterMenuWithSlider extends React.Component {
 
       range.noUiSlider.on("update", (values, handle) => {
         const value = values[handle];
-        // if (handle) {
-        //   this.onChangeMaxAmount(value);
-        // } else {
-        //   this.onChangeMinAmount(value);
-        // }
+        if (handle) {
+          this.setState({ maxAmount: value }); 
+        } else {
+          this.setState({ minAmount: value });          
+        }
       });
 
       this.setState({ rangeSlider: range });
@@ -110,28 +110,13 @@ class EyeFilterMenuWithSlider extends React.Component {
     );
   }
 
-  onChangeMinAmount(minAmount) {
-    const { unitDivisor, currencyDisplay } = this.props;
-    this.setState({ minAmount });
-    // this is needed because transactions at filter are all at atoms
-    const amount = currencyDisplay === "DCR" ? minAmount * unitDivisor : amount;
-    this.onChangeFilter({ minAmount: amount });
-  }
-
-  onChangeMaxAmount(maxAmount) {
-    const { unitDivisor, currencyDisplay } = this.props;
-    this.setState({ maxAmount });
-    // this is needed because transactions at filter are all at atoms
-    const amount = currencyDisplay === "DCR" ? maxAmount * unitDivisor : amount;
-    this.onChangeFilter({ maxAmount: amount });
-  }
-
   onChangeMinValue(min) {
     const { rangeSlider, max } = this.state;
-    this.setState({ min });
+    const intMin = parseInt(min)
+    this.setState({ min: intMin });
     rangeSlider.noUiSlider.updateOptions({
       range: {
-        "min": [parseInt(min)],
+        "min": [intMin],
         "max": [max]
       }
     });
@@ -139,11 +124,12 @@ class EyeFilterMenuWithSlider extends React.Component {
 
   onChangeMaxValue(max) {
     const { rangeSlider, min } = this.state;
-    this.setState({ max });
+    const intMax = parseInt(max);
+    this.setState({ max: intMax });
     rangeSlider.noUiSlider.updateOptions({
       range: {
         "min": [min],
-        "max": [parseInt(max)]
+        "max": [intMax]
       }
     });
   }
