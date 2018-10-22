@@ -22,18 +22,6 @@ export function initWalletCfg(testnet, walletPath) {
   if (!config.has("balancetomaintain")) {
     config.set("balancetomaintain","0");
   }
-  if (!config.has("maxfee")) {
-    config.set("maxfee","0.1");
-  }
-  if (!config.has("maxpricerelative")) {
-    config.set("maxpricerelative","1.25");
-  }
-  if (!config.has("maxpriceabsolute")) {
-    config.set("maxpriceabsolute","0");
-  }
-  if (!config.has("maxperblock")) {
-    config.set("maxperblock","5");
-  }
   if (!config.has("currency_display")) {
     config.set("currency_display","DCR");
   }
@@ -61,8 +49,7 @@ export function initWalletCfg(testnet, walletPath) {
 
 function cleanWalletCfg(config) {
   var key;
-  const walletCfgFields = [ "enableticketbuyer", "balancetomaintain", "maxfee",
-    "maxpricerelative", "maxpriceabsolute", "maxperblock", "currency_display",
+  const walletCfgFields = [ "enableticketbuyer", "balancetomaintain", "currency_display",
     "hiddenaccounts", "discoveraccounts", "gaplimit", "iswatchonly", "stakepools", "lastaccess" ];
   for (key in config.store) {
     var found = false;

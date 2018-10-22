@@ -258,10 +258,46 @@
 
 .stakepool-flex-height-auto-buyer-wrapper {
   background-color: var(--background-back-color);
+  padding: 10px 20px 0px 20px;
+  flex-direction: column;
+  display: flex;
+  width: 100%;
 }
 
 .stakepool-auto-buyer-row {
-  padding: 1em;
+  display: flex;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.stakepool-auto-buyer-row-portion-full {
+  width: 100%;
+  text-align: center;
+
+  .stakepool-autobuyer-input {
+    width: 100px;
+  }
+}
+
+.stakepool-auto-buyer-row-portion-half {
+  width: 50%;
+
+  .stakepool-autobuyer-input {
+    width: 230px;
+  }
+}
+
+.stakepool-autobuyer-label {
+  .inline-block-mixin;
+
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.stakepool-autobuyer-input {
+  .inline-block-mixin;
+
+  width: 200px;
 }
 
 .autobuyer-switch {

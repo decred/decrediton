@@ -715,14 +715,10 @@ export const hasTicketsToRevoke = compose(
 );
 
 export const ticketBuyerService = get([ "grpc", "ticketBuyerService" ]);
+export const ticketBuyerConfig = get([ "control" , "ticketBuyerConfig" ]);
 const startAutoBuyerResponse = get([ "control", "startAutoBuyerResponse" ]);
 
 export const balanceToMaintain = get([ "control", "balanceToMaintain" ]);
-export const maxFee = get([ "control", "maxFee" ]);
-export const maxPriceRelative = get([ "control", "maxPriceRelative" ]);
-export const maxPriceAbsolute = get([ "control", "maxPriceAbsolute" ]);
-export const maxPerBlock = get([ "control", "maxPerBlock" ]);
-export const getTicketBuyerConfigResponse = get([ "control", "getTicketBuyerConfigResponse" ]);
 
 const getTicketPriceResponse = get([ "grpc", "getTicketPriceResponse" ]);
 

@@ -333,10 +333,6 @@ var initialState = {
     ticketBuyerService: null,
     // TicketBuyerConfig
     balanceToMaintain: null,
-    maxFee: null,
-    maxPriceAbsolute: null,
-    maxPriceRelative: null,
-    maxPerBlock: null,
     getTicketBuyerConfigRequestAttempt: false,
     getTicketBuyerConfigResponse: null,
     getTicketBuyerConfigSuccess: null,

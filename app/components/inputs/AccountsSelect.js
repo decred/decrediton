@@ -61,10 +61,11 @@ class AccountsSelect extends React.Component {
 
   render() {
     const { formatMessage } = this.props.intl;
-    const { className, showAccountsButton } = this.props;
+    const { className, showAccountsButton, disabled } = this.props;
     return (
       <div className={className}>
         <Select
+          disabled={disabled}
           clearable={false}
           style={{ zIndex:"9" }}
           placeholder={formatMessage(messages.placeholder)}
@@ -101,9 +102,11 @@ class AccountsSelect extends React.Component {
     return (
       <div className="accounts-select-value">
         <div className="accounts-select-name">{option.name}</div>
-        <div className="accounts-select-spendable">
-          <Balance flat amount={option.spendable} />
-        </div>
+        {!this.props.hideSpendable &&
+          <div className="accounts-select-spendable">
+            <Balance flat amount={option.spendable} />
+          </div>
+        }
       </div>
     );
   }

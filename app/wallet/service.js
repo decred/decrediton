@@ -10,7 +10,7 @@ const promisify = fn => (...args) => new Promise((ok, fail) => fn(...args,
   (res, err) => err ? fail(err) : ok(res)));
 
 export const getWalletService = promisify(client.getWalletService);
-export const getTicketBuyerService = promisify(client.getTicketBuyerService);
+export const getTicketBuyerService = promisify(client.getTicketBuyerV2Service);
 export const getVotingService = promisify(client.getVotingService);
 export const getAgendaService = promisify(client.getAgendaService);
 export const getMessageVerificationService = promisify(client.getMessageVerificationService);

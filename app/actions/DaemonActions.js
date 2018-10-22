@@ -284,16 +284,12 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => {
       var hiddenAccounts = walletCfg.get("hiddenaccounts");
       var currencyDisplay = walletCfg.get("currency_display");
       var balanceToMaintain = walletCfg.get("balancetomaintain");
-      var maxFee = walletCfg.get("maxfee");
-      var maxPriceAbsolute = walletCfg.get("maxpriceabsolute");
-      var maxPriceRelative = walletCfg.get("maxpricerelative");
-      var maxPerBlock = walletCfg.get("maxperblock");
       var discoverAccountsComplete = walletCfg.get("discoveraccounts");
       var activeStakePoolConfig = foundStakePoolConfig;
       var selectedStakePool = firstConfiguredStakePool;
       walletCfg.set("lastaccess", Date.now());
       dispatch({ type: WALLETREADY, walletName: selectedWallet.value.wallet, network: network, hiddenAccounts, port });
-      dispatch({ type: WALLET_AUTOBUYER_SETTINGS, balanceToMaintain, maxFee, maxPriceAbsolute, maxPriceRelative, maxPerBlock });
+      dispatch({ type: WALLET_AUTOBUYER_SETTINGS, balanceToMaintain });
       dispatch({ type: WALLET_SETTINGS, currencyDisplay, gapLimit });
       dispatch({ type: WALLET_STAKEPOOL_SETTINGS, activeStakePoolConfig, selectedStakePool, currentStakePoolConfig });
       dispatch({ type: WALLET_LOADER_SETTINGS, discoverAccountsComplete });
