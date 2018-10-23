@@ -345,6 +345,7 @@ export default function snackbar(state = {}, action) {
   case TRZ_RECOVERDEVICE_SUCCESS:
   case TRZ_INITDEVICE_SUCCESS:
   case TRZ_UPDATEFIRMWARE_SUCCESS:
+  case TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS:
     type = "Success";
     message = messages[action.type] || messages.defaultSuccessMessage;
 
@@ -434,6 +435,12 @@ export default function snackbar(state = {}, action) {
       console.error(action.type, "\n", action.error);
     }
 
+    break;
+
+  case TRZ_TOGGLEPINPROTECTION_SUCCESS:
+    type = "Success";
+    message = messages["TRZ_TOGGLEPINPROTECTION_SUCCESS_" + (action.clearProtection ? "DISABLED" : "ENABLED")];
+    values = { label: action.deviceLabel };
     break;
   }
 
