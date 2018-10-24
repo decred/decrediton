@@ -27,7 +27,7 @@ class SpvSync extends React.Component {
         });
     }, 2000);
     if (this.props.walletPrivatePassphrase) {
-      this.props.onSpvSynces(this.props.walletPrivatePassphrase);
+      this.props.startSPVSync(this.props.walletPrivatePassphrase);
     }
   }
 
