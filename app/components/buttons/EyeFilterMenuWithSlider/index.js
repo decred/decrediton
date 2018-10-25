@@ -44,8 +44,8 @@ class EyeFilterMenuWithSlider extends React.Component {
           connect: true,
           tooltips: [ true, toolTipFormatter ],
         });
-        this.setState({ rangeSlider: slider })
-  
+        this.setState({ rangeSlider: slider });
+
         range.noUiSlider.on("end", (values, handle) => {
           const value = values[handle];
           if (handle) {
@@ -56,7 +56,7 @@ class EyeFilterMenuWithSlider extends React.Component {
             this.props.onChangeSlider(value, "min");
           }
         });
-  
+
         range.noUiSlider.on("update", (values, handle) => {
           const value = values[handle];
           if (handle) {
