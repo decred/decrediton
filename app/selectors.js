@@ -12,6 +12,7 @@ import { POLITEIA_URL_TESTNET, POLITEIA_URL_MAINNET } from "./middleware/politei
 import { dateToLocal, dateToUTC } from "./helpers/dateFormat";
 const EMPTY_ARRAY = [];  // Maintaining identity (will) improve performance;
 
+export const theme = get([ "settings", "theme" ]);
 export const daemonError = get([ "daemon" , "daemonError" ]);
 export const walletError = get([ "daemon", "walletError" ]);
 export const appVersion = get([ "daemon", "appVersion" ]);

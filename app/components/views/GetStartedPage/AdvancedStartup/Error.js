@@ -1,5 +1,3 @@
-import "style/LoginForm.less";
-
 const ErrorMessage = () => {
   return (
     <div className="advanced-page">

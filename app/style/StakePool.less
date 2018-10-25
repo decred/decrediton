@@ -2,7 +2,7 @@
 @import (reference) "./Icons.less";
 
 .stakepool-flex-height {
-  background-color: #fff;
+  background-color: var(--background-back-color);
   padding: 1em;
 }
 
@@ -30,13 +30,13 @@
 }
 
 .stakepool-link {
-  color: #2971ff;
+  color: var(--input-color);
   font-weight: bold;
   cursor: pointer;
 }
 
 .stakepool-highligh-text-orange {
-  color: #fd714b;
+  color: var(--error-text-color);
 }
 
 .stakepool-content-send {
@@ -68,7 +68,7 @@
 
 .stakepool-voting-title-area {
   margin: 1em 0em 1em 0em;
-  color: #596d81;
+  color: var(--stroke-color-hovered);
   font-size: 20px;
   min-height: 1em;
 }
@@ -94,7 +94,7 @@
 .stakepool-purchase-ticket-row-wrapper {
   margin-bottom: 1em;
   transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s;
-  background: #fff;
+  background: var(--background-back-color);
 }
 
 .stakepool-purchase-ticket-advanced-wrapper {
@@ -105,7 +105,7 @@
 
 .stakepool-purchase-ticket-row {
   padding: 0.7em 0em 0.7em 0em;
-  border-bottom: 1px #e7eaed solid;
+  border-bottom: 1px var(--disabled-background-color) solid;
 }
 
 .stakepool-purchase-ticket-row-account-select {
@@ -257,7 +257,7 @@
 }
 
 .stakepool-flex-height-auto-buyer-wrapper {
-  background-color: #fff;
+  background-color: var(--background-back-color);
 }
 
 .stakepool-auto-buyer-row {
@@ -277,7 +277,7 @@
   height: 20px;
   border-radius: 3px;
   transition: all 200ms ease-in-out;
-  background-color: #d1d5db;
+  background-color: var(--white-border);
   float: left;
 }
 
@@ -301,26 +301,26 @@
 }
 
 .autobuyer-switch-knob-enabled {
-  background-color: #2971ff;
+  background-color: var(--input-color);
 }
 
 .autobuyer-switch-knob-disabled {
   float: right;
-  background-color: #959dac;
+  background-color: var(--disabled-color);
 }
 
 .stakepool-auto-buyer-label {
   .inline-block-mixin;
 
-  color: #091440;
+  color: var(--input-color-default);
   font-size: 19px;
   text-transform: capitalize;
 }
 
 .stakepool-auto-buyer-icon-areas {
   font-size: 11px;
-  color: #091440;
-  font-family: inconsolata, monospace;
+  color: var(--input-color-default);
+  font-family: Inconsolata, monospace;
 }
 
 .stakepool-auto-buyer-show-advanced-area {
@@ -343,7 +343,7 @@
 
   width: 47%;
   font-family: inconsolata, monospace;
-  color: #091440;
+  color: var(--input-color-default);
   font-size: 11px;
   vertical-align: top;
 }
@@ -368,7 +368,7 @@
 }
 
 .stakepool-stake-info-area {
-  background-color: #fff;
+  background-color: var(--background-back-color);
 }
 
 .stakepool-stake-info-row {
@@ -417,7 +417,7 @@
   height: 54px;
   width: 480px;
   padding-left: 50px;
-  color: #091440;
+  color: var(--input-color-default);
   font-size: 14px;
 }
 
@@ -426,7 +426,7 @@
 
 .stakepool-content-nest-send {
   padding-top: 1px;
-  background-color: #fff;
+  background-color: var(--background-back-color);
 }
 
 .stakepool-content-nest-delete-address {
@@ -524,12 +524,12 @@ textarea.stakepool-content-nest-content-settings {
   padding-top: 4px;
   padding-left: 10px;
   border-style: none;
-  color: #2971ff;
+  color: var(--input-color);
   font-size: 13px;
   cursor: text;
 
   &:focus {
-    color: #2971ff;
+    color: var(--input-color);
   }
 }
 
@@ -558,7 +558,7 @@ textarea.stakepool-content-nest-content-settings {
   bottom: 0px;
   width: 40px;
   height: 100%;
-  background-image: linear-gradient(90deg, transparent, #fff 80%);
+  background-image: linear-gradient(90deg, transparent, var(--background-back-color) 80%);
 }
 
 .stakepool-select-accounts-send {
@@ -569,8 +569,8 @@ textarea.stakepool-content-nest-content-settings {
   height: 34px;
   min-width: 300px;
   float: left;
-  border-bottom: 1px solid #2971ff;
-  background-color: #fff;
+  border-bottom: 1px solid var(--input-color);
+  background-color: var(--background-back-color);
   background-image: @arrow-down-mid-blue-icon;
   background-position: 100% 50%;
   background-size: 10px;
@@ -588,7 +588,7 @@ textarea.stakepool-content-nest-content-settings {
   overflow: hidden;
   width: 100%;
   height: 100%;
-  color: #091440;
+  color: var(--input-color-default);
   font-size: 19px;
 
   &:hover {
@@ -602,7 +602,7 @@ textarea.stakepool-content-nest-content-settings {
   margin-right: 20px;
   padding-top: 5px;
   padding-left: 10px;
-  color: #2971ff;
+  color: var(--input-color);
   font-size: 19px;
 }
 
@@ -620,9 +620,9 @@ textarea.stakepool-content-nest-content-settings {
   margin-right: 20px;
   padding-top: 7px;
   padding-left: 40px;
-  background-image: linear-gradient(90deg, transparent, #fff 28%);
+  background-image: linear-gradient(90deg, transparent, var(--background-back-color) 28%);
   font-family: inconsolata, monospace;
-  color: #596d81;
+  color: var(--stroke-color-hovered);
   font-size: 11px;
   font-weight: 400;
   text-align: right;
@@ -640,8 +640,8 @@ textarea.stakepool-content-nest-content-settings {
   max-height: 413px;
   padding-top: 10px;
   padding-bottom: 10px;
-  border-bottom: 1px solid #a9b4bf;
-  background-color: #fff;
+  border-bottom: 1px solid var(--stroke-color-default);
+  background-color: var(--background-back-color);
 }
 
 .stakepool-select-account-n-gradient {
@@ -651,7 +651,7 @@ textarea.stakepool-content-nest-content-settings {
   bottom: 0px;
   width: 40px;
   height: 100%;
-  background-image: linear-gradient(90deg, transparent, #fff 75%);
+  background-image: linear-gradient(90deg, transparent, var(--background-back-color) 75%);
 }
 
 .stakepool-select-account-n {
@@ -664,7 +664,7 @@ textarea.stakepool-content-nest-content-settings {
   float: left;
 
   &:hover {
-    color: #2971ff;
+    color: var(--input-color);
   }
 }
 
@@ -673,7 +673,7 @@ textarea.stakepool-content-nest-content-settings {
 }
 
 .stakepool-highlight-text-neon-green {
-  color: #2ed8a3;
+  color: var(--accent-color);
 }
 
 .stakepool-select-voting-preferences {
@@ -682,7 +682,7 @@ textarea.stakepool-content-nest-content-settings {
   overflow: hidden;
   height: 100%;
   padding-top: 3px;
-  color: #091440;
+  color: var(--input-color-default);
 
   &:hover {
     height: auto;
@@ -695,7 +695,7 @@ textarea.stakepool-content-nest-content-settings {
   height: 100%;
   width: 100%;
   padding-top: 3px;
-  color: #091440;
+  color: var(--input-color-default);
 
   &:hover {
     height: auto;
@@ -708,7 +708,7 @@ textarea.stakepool-content-nest-content-settings {
   margin-right: 20px;
   padding-top: 5px;
   padding-left: 10px;
-  color: #2971ff;
+  color: var(--input-color);
   font-size: 19px;
 }
 
@@ -726,9 +726,9 @@ textarea.stakepool-content-nest-content-settings {
   margin-right: 20px;
   padding-top: 7px;
   padding-left: 40px;
-  background-image: linear-gradient(90deg, transparent, #fff 28%);
+  background-image: linear-gradient(90deg, transparent, var(--background-back-color) 28%);
   font-family: inconsolata, monospace;
-  color: #596d81;
+  color: var(--stroke-color-hovered);
   font-size: 11px;
   font-weight: 400;
   text-align: right;
@@ -746,8 +746,8 @@ textarea.stakepool-content-nest-content-settings {
   max-height: 413px;
   padding-top: 10px;
   padding-bottom: 10px;
-  border-bottom: 1px solid #a9b4bf;
-  background-color: #fff;
+  border-bottom: 1px solid var(--stroke-color-default);
+  background-color: var(--background-back-color);
 }
 
 .stakepool-select-purchase-tickets-n-gradient {
@@ -757,7 +757,7 @@ textarea.stakepool-content-nest-content-settings {
   bottom: 0px;
   width: 40px;
   height: 100%;
-  background-image: linear-gradient(90deg, transparent, #fff 75%);
+  background-image: linear-gradient(90deg, transparent, var(--background-back-color) 75%);
 }
 
 .stakepool-select-purchase-tickets-n {
@@ -770,7 +770,7 @@ textarea.stakepool-content-nest-content-settings {
   float: left;
 
   &:hover {
-    color: #2971ff;
+    color: var(--input-color);
   }
 }
 
@@ -791,8 +791,8 @@ textarea.stakepool-content-nest-content-settings {
   height: 100%;
   margin-right: 20px;
   float: right;
-  border-bottom: 1px solid #a9b4bf;
-  color: #091440;
+  border-bottom: 1px solid var(--stroke-color-default);
+  color: var(--input-color-default);
   text-align: right;
 }
 
@@ -806,7 +806,7 @@ textarea.stakepool-content-nest-content-settings {
   height: 100%;
   padding-top: 9px;
   padding-right: 10px;
-  background-color: #fff;
+  background-color: var(--background-back-color);
   font-family: inconsolata, monospace;
   font-size: 13px;
   text-transform: uppercase;
@@ -826,7 +826,7 @@ textarea.stakepool-content-nest-content-settings {
   height: 22px;
   padding-left: 30px;
   float: left;
-  color: #091440;
+  color: var(--input-color-default);
 }
 
 .stakepool-content-send-section-checkbox-text {
@@ -853,7 +853,7 @@ textarea.stakepool-content-nest-content-settings {
   padding-top: 1px;
   padding-right: 20px;
   float: right;
-  color: #596d81;
+  color: var(--stroke-color-hovered);
   font-size: 13px;
 }
 
@@ -869,8 +869,8 @@ textarea.stakepool-content-nest-content-settings {
   height: 34px;
   min-width: 300px;
   float: left;
-  border-bottom: 1px solid #2971ff;
-  background-color: #fff;
+  border-bottom: 1px solid var(--input-color);
+  background-color: var(--background-back-color);
   background-image: @arrow-down-mid-blue-icon;
   background-position: 100% 50%;
   background-size: 10px;
@@ -891,8 +891,8 @@ textarea.stakepool-content-nest-content-settings {
   height: 34px;
   min-width: 300px;
   float: left;
-  border-bottom: 1px solid #2971ff;
-  background-color: #fff;
+  border-bottom: 1px solid var(--input-color);
+  background-color: var(--background-back-color);
   background-image: @arrow-up-light-blue-icon;
   background-position: 100% 50%;
   background-size: 10px;
@@ -919,7 +919,7 @@ textarea.stakepool-content-nest-content-settings {
   margin-right: 4em;
   margin-bottom: 5px;
   font-family: inconsolata, monospace;
-  color: #091440;
+  color: var(--input-color-default);
   font-size: 11px;
 }
 
@@ -1017,7 +1017,7 @@ textarea.stakepool-content-nest-content-settings {
 
 .stakepool-flex-height-balance-overview {
   padding-top: 1px;
-  background-color: #fff;
+  background-color: var(--background-back-color);
   height: 553px;
   float: left;
   overflow-y: auto;
@@ -1037,8 +1037,8 @@ textarea.stakepool-content-nest-content-settings {
   height: 34px;
   min-width: 300px;
   float: left;
-  border-bottom: 1px solid #2971ff;
-  background-color: #fff;
+  border-bottom: 1px solid var(--input-color);
+  background-color: var(--background-back-color);
   background-image: @arrow-down-mid-blue-icon;
   background-position: 100% 50%;
   background-size: 10px;
@@ -1063,7 +1063,7 @@ textarea.stakepool-content-nest-content-settings {
   margin-bottom: 10px;
   margin-left: auto;
   border-bottom: 1px solid transparent;
-  color: #596d81;
+  color: var(--stroke-color-hovered);
   font-size: 27px;
 }
 
@@ -1104,20 +1104,20 @@ textarea.stakepool-content-nest-content-settings {
   margin-left: 41px;
   margin-bottom: 15px;
   font-size: 20px;
-  color: #596d81;
+  color: var(--stroke-color-hovered);
 }
 
 .stakepool-add-area {
   height: 150px;
   width: 100%;
   float: left;
-  background-color: #fff;
+  background-color: var(--background-back-color);
 }
 
 .stakepool-add-area-left {
   float: left;
   width: 54%;
-  color: #48566e;
+  color: var(--title-text-and-button-background);
   font-size: 13px;
   padding: 30px 0px 30px 20px;
 }
@@ -1125,7 +1125,7 @@ textarea.stakepool-content-nest-content-settings {
 .stakepool-add-area-right {
   float: right;
   width: 37%;
-  background-color: #edeff1;
+  background-color: var(--disabled-background-color);
   padding: 30px 20px 30px 20px;
   height: 90px;
 }
@@ -1166,7 +1166,7 @@ textarea.stakepool-content-nest-content-settings {
   margin-top: 5px;
   font-family: @font-family-monospaced;
   font-size: 11px;
-  color: #8795a2;
+  color: var(--stroke-color-hovered);
   text-decoration: underline;
   cursor: pointer;
 }
@@ -1186,7 +1186,7 @@ textarea.stakepool-content-nest-content-settings {
 }
 
 .stakepool-purchase-ticket-info {
-  background-color: #edeff1;
+  background-color: var(--disabled-background-color);
 }
 
 .stakepool-purchase-ticket-action-buttons {
@@ -1195,7 +1195,7 @@ textarea.stakepool-content-nest-content-settings {
 }
 
 .stakepool-purchase-advanced-error {
-  color: red;
+  color: var(--error-red);
   padding-left: 10px;
   height: 20px;
 }
@@ -1229,7 +1229,7 @@ textarea.stakepool-content-nest-content-settings {
 
 .spv-autobuyer-warning {
   text-align: center;
-  color: #596d81;
+  color: var(--stroke-color-hovered);
   font-size: 20px;
   line-height: 25px;
 }

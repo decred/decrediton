@@ -52,7 +52,7 @@
   height: 55px;
   width: 100%;
   border-radius: 8px;
-  background-color: #d1d5db;
+  background-color: var(--white-border);
 }
 
 .linear-progress.small {
@@ -67,7 +67,7 @@
   width: 41px;
   border-radius: 3px;
   opacity: 0;
-  background-color: #fff;
+  background-color: var(--background-back-color);
   animation: slide 3s cubic-bezier(0.46, 0.03, 0.52, 0.96) infinite;
 }
 
@@ -115,7 +115,7 @@
 .linear-progress-text {
   height: 100%;
   text-align: left;
-  color: #fff;
+  color: var(--background-back-color);
   font-size: 11px;
   font-weight: 600;
   padding-left: 46px;
@@ -189,5 +189,5 @@
 }
 
 .linear-progress-bar.error {
-  background-color: #fd714b;
+  background-color: var(--error-text-color);
 }

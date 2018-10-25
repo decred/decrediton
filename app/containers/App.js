@@ -84,7 +84,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { locale } = this.props;
+    const { locale, theme } = this.props;
     const MainSwitch = this.props.uiAnimations ? AnimatedSwitch : StaticSwitch;
 
     return (
@@ -94,7 +94,7 @@ class App extends React.Component {
         formats={locale.formats}
         defaultFormats={defaultFormats}
         key={locale.key}>
-        <Aux>
+        <div className={theme}>
           <Switch><Redirect from="/" exact to="/getstarted" /></Switch>
           <Snackbar/>
           <MainSwitch {...topLevelAnimation} className="top-level-container">
@@ -104,7 +104,7 @@ class App extends React.Component {
             <Route path="/"            component={WalletContainer} />
           </MainSwitch>
           <div id="modal-portal" />
-        </Aux>
+        </div>
       </IntlProvider>
     );
   }

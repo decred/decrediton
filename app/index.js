@@ -39,6 +39,7 @@ var initialState = {
     settingsChanged: false,
     uiAnimations: globalCfg.get("ui_animations"),
     needNetworkReset: false,
+    theme: globalCfg.get("theme"),
   },
   stakepool: {
     currentStakePoolConfig: null,

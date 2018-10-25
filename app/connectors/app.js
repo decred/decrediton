@@ -11,6 +11,7 @@ const mapStateToProps = selectorMap({
   window: sel.mainWindow,
   daemonStopped: sel.daemonStopped,
   shutdownRequested: sel.shutdownRequested,
+  theme: sel.theme,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
