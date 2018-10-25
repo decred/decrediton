@@ -11,6 +11,10 @@ class PassphraseModal extends React.Component {
     this.state = this.getInitialState();
   }
 
+  componentDidMount() {
+    document.addEventListener("keydown", this.onKeyPress, false);
+  }
+
   onCancelModal() {
     this.resetState();
     this.props.onCancelModal && this.props.onCancelModal();
@@ -31,6 +35,12 @@ class PassphraseModal extends React.Component {
     if (passPhrase == "") this.setState({ hasFailedAttempt: true });
 
     this.setState({ passPhrase });
+  }
+
+  onKeyPress(event) {
+    if (event.keyCode === 27) {
+      this.onCancelModal();
+    }
   }
 
   isValid() {
