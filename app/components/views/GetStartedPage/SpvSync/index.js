@@ -16,7 +16,7 @@ class SpvSyncBody extends React.Component {
 
   componentDidMount() {
     if (this.props.walletPrivatePassphrase && this.props.fetchHeadersDone !== null) {
-      this.props.onSpvSynces(this.props.walletPrivatePassphrase);
+      this.props.startSPVSync(this.props.walletPrivatePassphrase);
     }
   }
 
