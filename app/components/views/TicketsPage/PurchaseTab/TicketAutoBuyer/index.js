@@ -11,7 +11,6 @@ class TicketAutoBuyer extends React.Component {
   }
 
   getInitialState() {
-    console.log(this.props.ticketBuyerSettings && this.props.ticketBuyerSettings.stakepool, this.props.stakePool);
     return {
       ...this.getCurrentSettings(),
       isScrollingDown: false,
