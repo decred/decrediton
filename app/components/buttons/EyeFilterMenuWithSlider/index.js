@@ -16,52 +16,61 @@ class EyeFilterMenuWithSlider extends React.Component {
       max: 100,
       sliderShower: true,
       expandedSliderInfo: false,
+      rangeSlider: null
     };
   }
 
-  getSliderWhenOpeningMenu() {
+  mountSliderRangeInElement(range) {
     setTimeout(() => {
-      const range = document.getElementById("min-max-slider");
+      if (!range) {
+        return;
+      }
 
-      const { minAmount, maxAmount, min, max } = this.state;
+      const { rangeSlider, minAmount, maxAmount, min, max } = this.state;
       const toolTipFormatter = {
         to: (value) => {
           return value.toFixed(2);
         },
       };
 
-      noUiSlider.create(range, {
-        start: [ minAmount, maxAmount ],
-        range: {
-          "min": [ min ],
-          "max": [ max ]
-        },
-        connect: true,
-        tooltips: [ true, toolTipFormatter ],
-      });
-
-      range.noUiSlider.on("end", (values, handle) => {
-        const value = values[handle];
-        if (handle) {
-          this.props.onChangeSlider(value, "max");
-          this.setState({ maxAmount: value });
-        } else {
-          this.setState({ minAmount: value });
-          this.props.onChangeSlider(value, "min");
-        }
-      });
-
-      range.noUiSlider.on("update", (values, handle) => {
-        const value = values[handle];
-        if (handle) {
-          this.setState({ maxAmount: value });
-        } else {
-          this.setState({ minAmount: value });
-        }
-      });
-
-      this.setState({ rangeSlider: range });
+      if(!rangeSlider) {
+        const slider = noUiSlider.create(range, {
+          start: [ minAmount, maxAmount ],
+          range: {
+            "min": [ min ],
+            "max": [ max ]
+          },
+          step: 1,
+          connect: true,
+          tooltips: [ true, toolTipFormatter ],
+        });
+        this.setState({ rangeSlider: slider })
+  
+        range.noUiSlider.on("end", (values, handle) => {
+          const value = values[handle];
+          if (handle) {
+            this.props.onChangeSlider(value, "max");
+            this.setState({ maxAmount: value });
+          } else {
+            this.setState({ minAmount: value });
+            this.props.onChangeSlider(value, "min");
+          }
+        });
+  
+        range.noUiSlider.on("update", (values, handle) => {
+          const value = values[handle];
+          if (handle) {
+            this.setState({ maxAmount: value });
+          } else {
+            this.setState({ minAmount: value });
+          }
+        });
+      }
     }, 25);
+  }
+
+  unmountSliderRangeInElement() {
+    this.setState({ rangeSlider: null });
   }
 
   getSliderWhenOpenedMenu() {
@@ -73,7 +82,7 @@ class EyeFilterMenuWithSlider extends React.Component {
     return (
       <div className="history-slider-wrapper">
         <div className="history-amount-range-label"><T id="history.amount.range" m="Amount Range" /></div>
-        <div id="min-max-slider" className="min-max-slider"></div>
+        <div ref={r => this.mountSliderRangeInElement(r)} className="min-max-slider"></div>
         <div className="history-select-tx-amounts-area">
           <div className="history-select-tx-amounts">
             <span onClick={() => this.onToggleSliderInfo()} className="history-select-tx-kebab"></span>
@@ -142,8 +151,8 @@ class EyeFilterMenuWithSlider extends React.Component {
     return (
       <EyeFilterMenu
         {...{ ...this.state,...this.props, }}
-        openingMenu = {this.getSliderWhenOpeningMenu}
         getOpenedMenu = {this.getSliderWhenOpenedMenu}
+        unmountMenu = {this.unmountSliderRangeInElement}
       />
     );
   }

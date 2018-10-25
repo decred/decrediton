@@ -29,8 +29,8 @@ class EyeFilterMenu extends React.Component {
 
   toggleMenuOpen() {
     this.setState({ menuOpen: !this.state.menuOpen });
-    if (!this.state.menuOpen) {
-      this.props.openingMenu && this.props.openingMenu();
+    if (this.state.menuOpen) {
+      this.props.unmountMenu && this.props.unmountMenu();
     }
   }
 
