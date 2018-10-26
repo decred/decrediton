@@ -29,25 +29,28 @@ class EyeFilterMenuWithSlider extends React.Component {
       const { rangeSlider, minAmount, maxAmount, min, max } = this.state;
       const toolTipFormatter = {
         to: (value) => {
-          return value.toFixed(2);
+          return value;
         },
       };
 
       if(!rangeSlider) {
-        const slider = noUiSlider.create(range, {
+        noUiSlider.create(range, {
           start: [ minAmount, maxAmount ],
           range: {
-            "min": [ min ],
-            "max": [ max ]
+            "min": [ parseInt(min) ],
+            "max": [ parseInt(max) ]
           },
           step: 1,
           connect: true,
           tooltips: [ true, toolTipFormatter ],
         });
-        this.setState({ rangeSlider: slider });
+        this.setState({ rangeSlider: range });
 
-        range.noUiSlider.on("end", (values, handle) => {
-          const value = values[handle];
+        range.noUiSlider.on("set", (values, handle) => {
+          const value = parseInt(values[handle]);
+          if(value === min || value === max) {
+            return;
+          }
           if (handle) {
             this.props.onChangeSlider(value, "max");
             this.setState({ maxAmount: value });
@@ -58,7 +61,7 @@ class EyeFilterMenuWithSlider extends React.Component {
         });
 
         range.noUiSlider.on("update", (values, handle) => {
-          const value = values[handle];
+          const value = parseInt(values[handle]);
           if (handle) {
             this.setState({ maxAmount: value });
           } else {
@@ -117,23 +120,23 @@ class EyeFilterMenuWithSlider extends React.Component {
 
   onChangeMinValue(min) {
     const { rangeSlider, max } = this.state;
-    const intMin = parseInt(min);
-    this.setState({ min: intMin });
+    this.setState({ min });
+    const intMin = isNaN(parseInt(min)) ? 0 : parseInt(min);
     rangeSlider.noUiSlider.updateOptions({
       range: {
         "min": [ intMin ],
-        "max": [ max ]
+        "max": [ parseInt(max) ]
       }
     });
   }
 
   onChangeMaxValue(max) {
     const { rangeSlider, min } = this.state;
-    const intMax = parseInt(max);
-    this.setState({ max: intMax });
+    this.setState({ max });
+    const intMax = isNaN(parseInt(max)) ? 0 : parseInt(max);
     rangeSlider.noUiSlider.updateOptions({
       range: {
-        "min": [ min ],
+        "min": [ parseInt(min) ],
         "max": [ intMax ]
       }
     });

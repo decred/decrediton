@@ -37,6 +37,7 @@ class EyeFilterMenu extends React.Component {
   mouseUp(event) {
     if (eventOutsideComponent(this, event.target)) {
       this.setState({ menuOpen: false });
+      this.props.unmountMenu && this.props.unmountMenu();
     }
   }
 
