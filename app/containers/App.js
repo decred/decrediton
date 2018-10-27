@@ -13,6 +13,8 @@ import { log } from "wallet";
 import "style/Layout.less";
 const topLevelAnimation = { atEnter: { opacity: 0 }, atLeave: { opacity: 0 }, atActive: { opacity: 1 } };
 
+import { ipcRenderer } from "electron";
+
 @autobind
 class App extends React.Component {
   static propTypes = {
@@ -40,6 +42,10 @@ class App extends React.Component {
 
   componentDidMount() {
     log("info", "Main app container mounted");
+
+    ipcRenderer.on("show-about-modal", function(event, data) {
+      console.log(event);
+    });
   }
 
   beforeWindowUnload(event) {
