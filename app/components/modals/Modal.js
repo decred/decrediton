@@ -15,15 +15,28 @@ class Modal extends React.Component {
     this.props.modalShown();
   }
 
+  componentDidMount() {
+    document.addEventListener("keydown", this.onKeyDown, false);
+  }
+
+  onKeyDown(event) {
+    if (event.keyCode === 27) { // ESC
+      this.props.onCancelModal && this.props.onCancelModal();
+    }
+  }
+
   componentWillUnmount() {
+    document.removeEventListener("keydown", this.onKeyDown);
     this.props.modalHidden();
   }
+
   mouseUp(event) {
     const el = document.getElementById("modal-portal");
     if (eventOutsideElement(el, event.target)) {
       this.props.onCancelModal && this.props.onCancelModal();
     }
   }
+
   render() {
     const { children, className, expandSideBar, showingSidebarMenu } = this.props;
     const domNode = document.getElementById("modal-portal");
