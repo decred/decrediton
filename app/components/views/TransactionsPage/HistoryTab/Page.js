@@ -31,6 +31,8 @@ const Page = ({
   onLoadMoreTransactions,
   onChangeSliderValue,
   currencyDisplay,
+  transactionsFilter,
+  unitDivisor,
 }) => (
   <InfiniteScroll
     hasMore={!noMoreTransactions}
@@ -55,6 +57,7 @@ const Page = ({
           </div>
           <Tooltip tipWidth={ 300 } text={<T id="transactions.sortby.tooltip" m="Sort By" />}>
             <EyeFilterMenuWithSlider
+              {...{ unitDivisor, currencyDisplay }}
               labelKey="label"
               keyField="value"
               options={sortTypes}
@@ -62,7 +65,8 @@ const Page = ({
               onChange={onChangeSortType}
               className="sort-by"
               onChangeSlider={onChangeSliderValue}
-              currencyDisplay={currencyDisplay}
+              minFilterValue={transactionsFilter.minAmount}
+              maxFilterValue={transactionsFilter.maxAmount}
             />
           </Tooltip>
           <Tooltip tipWidth={ 300 } text={<T id="transactions.txtypes.tooltip" m="Transaction Type" />}>

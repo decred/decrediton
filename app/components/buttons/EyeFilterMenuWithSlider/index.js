@@ -20,6 +20,24 @@ class EyeFilterMenuWithSlider extends React.Component {
     };
   }
 
+  componentWillMount() {
+    const { maxFilterValue, minFilterValue, unitDivisor, currencyDisplay } = this.props;
+    if(maxFilterValue) {
+      const maxValue = currencyDisplay === "DCR" ? maxFilterValue/unitDivisor : maxFilterValue;
+      this.setState({ maxAmount: maxValue });
+      if(maxValue > this.state.max) {
+        this.setState({ max: maxValue });
+      }
+    }
+    if(minFilterValue) {
+      const minValue = currencyDisplay === "DCR" ? minFilterValue/unitDivisor : minFilterValue;
+      this.setState({ minAmount: minValue });
+      if(minValue > this.state.min) {
+        this.setState({ min: minValue });
+      }
+    }
+  }
+
   mountSliderRangeInElement(range) {
     setTimeout(() => {
       if (!range) {
@@ -48,7 +66,7 @@ class EyeFilterMenuWithSlider extends React.Component {
 
         range.noUiSlider.on("set", (values, handle) => {
           const value = parseInt(values[handle]);
-          if(value === min || value === max) {
+          if(value === minAmount || value === maxAmount) {
             return;
           }
           if (handle) {
