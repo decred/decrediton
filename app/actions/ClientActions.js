@@ -625,7 +625,9 @@ function filterTransactions(transactions, filter) {
   return transactions
     .filter(v => filter.types.length ? filter.types.indexOf(v.type) > -1 : true)
     .filter(v => filter.direction ? filter.direction === v.direction : true)
-    .filter(v => filter.search ? v.creditAddresses.find(address => address.length > 1 && address.toLowerCase().indexOf(filter.search.toLowerCase()) !== -1) != undefined : true);
+    .filter(v => filter.search ? v.creditAddresses.find(address => address.length > 1 && address.toLowerCase().indexOf(filter.search.toLowerCase()) !== -1) != undefined : true)
+    .filter(v => filter.minAmount ? Math.abs(v.amount) >= filter.minAmount : true)
+    .filter(v => filter.maxAmount ? Math.abs(v.amount) <= filter.maxAmount : true);
 }
 
 // getTransactions loads a list of transactions from the wallet, given the
@@ -821,18 +823,24 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
 // list of recent transactions.
 export const getMostRecentRegularTransactions = () => dispatch => {
   const defaultFilter = {
+    search: null,
     listDirection: "desc",
     types: [ TransactionDetails.TransactionType.REGULAR ],
     direction: null,
+    maxAmount: null,
+    minAmount: null,
   };
   return dispatch(changeTransactionsFilter(defaultFilter));
 };
 
 export const getMostRecentStakeTransactions = () => dispatch => {
   const defaultFilter = {
+    search: null,
     listDirection: "desc",
     types: [ TransactionDetails.TransactionType.TICKET_PURCHASE, TransactionDetails.TransactionType.VOTE, TransactionDetails.TransactionType.REVOCATION ],
     direction: null,
+    maxAmount: null,
+    minAmount: null,
   };
   return dispatch(changeTransactionsFilter(defaultFilter));
 };
@@ -843,6 +851,8 @@ export const getMostRecentTransactions = () => dispatch => {
     listDirection: "desc",
     types: [],
     direction: null,
+    maxAmount: null,
+    minAmount: null,
   };
   return dispatch(changeTransactionsFilter(defaultFilter));
 };

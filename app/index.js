@@ -166,6 +166,8 @@ var initialState = {
       listDirection: "desc", // asc = oldest -> newest, desc => newest -> oldest
       types: [], // desired transaction types (code). All if blank.
       direction: null, // direction of desired transactions (sent/received/transfer)
+      maxAmount: null,
+      minAmount: null,
     },
     lastTransaction: null, //last transaction obtained
 

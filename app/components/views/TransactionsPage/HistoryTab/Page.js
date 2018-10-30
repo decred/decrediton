@@ -1,7 +1,7 @@
-import { EyeFilterMenu } from "buttons";
+import { EyeFilterMenu, EyeFilterMenuWithSlider } from "buttons";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { Tooltip } from "shared";
-import { TextInput } from "../../../inputs";
+import { TextInput } from "inputs";
 import TxHistory from "TxHistory";
 import { LoadingMoreTransactionsIndicator, NoMoreTransactionsIndicator, NoTransactions } from "indicators";
 import InfiniteScroll from "react-infinite-scroller";
@@ -29,6 +29,10 @@ const Page = ({
   onChangeSortType,
   onChangeSearchText,
   onLoadMoreTransactions,
+  onChangeSliderValue,
+  currencyDisplay,
+  transactionsFilter,
+  unitDivisor,
 }) => (
   <InfiniteScroll
     hasMore={!noMoreTransactions}
@@ -52,13 +56,17 @@ const Page = ({
             />
           </div>
           <Tooltip tipWidth={ 300 } text={<T id="transactions.sortby.tooltip" m="Sort By" />}>
-            <EyeFilterMenu
+            <EyeFilterMenuWithSlider
+              {...{ unitDivisor, currencyDisplay }}
               labelKey="label"
               keyField="value"
               options={sortTypes}
               selected={selectedSortOrderKey}
               onChange={onChangeSortType}
               className="sort-by"
+              onChangeSlider={onChangeSliderValue}
+              minFilterValue={transactionsFilter.minAmount}
+              maxFilterValue={transactionsFilter.maxAmount}
             />
           </Tooltip>
           <Tooltip tipWidth={ 300 } text={<T id="transactions.txtypes.tooltip" m="Transaction Type" />}>
