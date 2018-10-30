@@ -15,18 +15,7 @@ class Modal extends React.Component {
     this.props.modalShown();
   }
 
-  componentDidMount() {
-    document.addEventListener("keydown", this.onKeyDown, false);
-  }
-
-  onKeyDown(event) {
-    if (event.keyCode === 27) { // ESC
-      this.props.onCancelModal && this.props.onCancelModal();
-    }
-  }
-
   componentWillUnmount() {
-    document.removeEventListener("keydown", this.onKeyDown);
     this.props.modalHidden();
   }
 
@@ -37,12 +26,19 @@ class Modal extends React.Component {
     }
   }
 
+  onKeyDown(event) {
+    // 27: ESC key
+    if (event.keyCode === 27) {
+      this.props.onCancelModal && this.props.onCancelModal();
+    }
+  }
+
   render() {
     const { children, className, expandSideBar, showingSidebarMenu } = this.props;
     const domNode = document.getElementById("modal-portal");
 
     return ReactDOM.createPortal(
-      <EventListener target="document" onMouseUp={this.mouseUp}>
+      <EventListener target="document" onMouseUp={this.mouseUp} onKeyDown={this.onKeyDown}>
         <div className={showingSidebarMenu ? expandSideBar ? "app-modal-overlay" : "app-modal-overlay-reduced-bar" : "app-modal-overlay-standalone"}></div>
         <div className={(showingSidebarMenu ? expandSideBar ? "app-modal " : "app-modal-reduced-bar " : "app-modal-standalone ") + (className||"")}>
           {children}
