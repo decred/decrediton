@@ -17,7 +17,7 @@
   height: 90px;
   width: 265px;
   padding-left: 62px;
-  background-color: #fff;
+  background-color: var(--background-back-color);
   background-repeat: no-repeat;
   background-size: 31px 43px;
   background-position: 20px 26px;
@@ -44,7 +44,7 @@
 }
 
 .ticket-overview-count {
-  color: @disabled-color;
+  color: var(--disabled-color);
   text-transform: uppercase;
   text-align: center;
 }
@@ -58,8 +58,8 @@
 .ticket-reward {
   .inline-block-mixin;
 
-  color: @disabled-color;
-  border-right: 1px solid @input-color-disabled;
+  color: var(--disabled-color);
+  border-right: 1px solid var(--input-color-disabled);
   padding-right: 0.5em;
 }
 
@@ -70,7 +70,7 @@
 .ticket-timestamp {
   .inline-block-mixin;
 
-  color: @disabled-color;
+  color: var(--disabled-color);
   font-family: @font-family-monospaced;
 }
 
@@ -154,7 +154,7 @@
 }
 
 .my-tickets-charts {
-  background: #fff;
+  background: var(--background-back-color);
   padding: 30px 0px 30px 0px;
   min-height: 230px;
   width: 100%;
@@ -175,7 +175,7 @@
   border-radius: 5px;
   height: 30px;
   width: 30px;
-  background-color: #f9fafa;
+  background-color: var(--background-container);
   background-size: 20px 20px;
   background-repeat: no-repeat;
   background-position: 5px 5px;
@@ -210,13 +210,13 @@
 
 .my-tickets-stats-links a.my-tickets-active-chart-link {
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.16);
-  background-color: #edeff1;
+  background-color: var(--disabled-background-color);
   cursor: default;
 }
 
 .my-tickets-stats-links a:hover {
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.16);
-  background-color: #edeff1;
+  background-color: var(--disabled-background-color);
 }
 
 .my-tickets-stats-chart {
@@ -227,7 +227,7 @@
   float: left;
   width: 250px;
   margin: 0px 40px 0px 42px;
-  color: #0d1e3e;
+  color: var(--input-color-default);
 }
 
 .my-tickets-stats-indicators-row {

@@ -79,6 +79,9 @@ function cleanWalletCfg(config) {
 
 export function initGlobalCfg() {
   const config = new Store();
+  if (!config.has("theme")) {
+    config.set("theme", "theme-light");
+  }
   if (!config.has("daemon_start_advanced")) {
     config.set("daemon_start_advanced", false);
   }
@@ -143,7 +146,7 @@ export function initGlobalCfg() {
 
 function cleanGlobalCfg(config) {
   var key;
-  const globalCfgFields = [ "daemon_start_advanced", "must_open_form", "locale", "network", "set_language", "ui_animations", "show_tutorial", "show_privacy", "allowed_external_requests", "proxy_type", "proxy_location",
+  const globalCfgFields = [ "theme", "daemon_start_advanced", "must_open_form", "locale", "network", "set_language", "ui_animations", "show_tutorial", "show_privacy", "allowed_external_requests", "proxy_type", "proxy_location",
     "remote_credentials", "spv_mode", "spv_connect", "max_wallet_count", "timezone", "last_height", "appdata_path" ];
   for (key in config.store) {
     var found = false;

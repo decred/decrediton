@@ -24,17 +24,17 @@
 .txdetails-indicator-pending {
   .txdetails-indicator-mixin;
 
-  border-color: #2971ff;
+  border-color: var(--input-color);
   background-image: @indicator-pending-icon;
-  color: #2971ff;
+  color: var(--input-color);
 }
 
 .txdetails-indicator-confirmed {
   .txdetails-indicator-mixin;
 
-  border-color: #2ed8a3;
+  border-color: var(--accent-color);
   background-image: @indicator-confirmed-icon;
-  color: #2ed8a3;
+  color: var(--accent-color);
 }
 
 .txdetails-details {
@@ -48,7 +48,7 @@
   padding-top: 25px;
   padding-bottom: 33px;
   font-size: 13px;
-  background-color: #f9fafa;
+  background-color: var(--background-container);
 }
 
 .txdetails-io {
@@ -62,7 +62,7 @@
 }
 
 .txdetails-name {
-  color: #596d81;
+  color: var(--stroke-color-hovered);
   margin-right: 22px;
   min-width: 93px;
   text-align: right;
@@ -82,9 +82,9 @@
   width: 90%;
   height: 233px;
   overflow-y: auto;
-  background-color: #fff;
+  background-color: var(--background-back-color);
   padding: 10px;
-  color: #596d81;
+  color: var(--stroke-color-hovered);
 }
 
 .txdetails-overview {
@@ -94,7 +94,7 @@
 }
 
 .txdetails-overview-title-mixin {
-  color: #091440;
+  color: var(--input-color-default);
   font-size: 19px;
   line-height: 24px;
   margin-bottom: 13px;
@@ -112,7 +112,7 @@
 .txdetails-overview-title-empty {
   .txdetails-overview-title-mixin;
 
-  color: #8997a5;
+  color: var(--disabled-color);
 }
 
 .txdetails-input-arrow {
@@ -137,7 +137,7 @@
 
 .tx-details-area-mixin {
   width: 180px;
-  background-color: #fff;
+  background-color: var(--background-back-color);
   padding: 15px 20px 1px 20px;
   margin-bottom: 10px;
 }
@@ -174,7 +174,7 @@
   line-height: 17px;
   padding: 2px 10px 2px 10px;
   border-radius: 3px;
-  background-color: #d3f0fd;
+  background-color: var(--blue-highlight-background);
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -236,7 +236,7 @@
 }
 
 .txdetails-title {
-  color: #596d81;
+  color: var(--stroke-color-hovered);
   font-size: 20px;
   line-height: 25px;
   margin-bottom: 7px;

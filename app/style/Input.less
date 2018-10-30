@@ -5,15 +5,15 @@
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
-  border-bottom: 1px @stroke-color-default solid;
+  border-bottom: 1px var(--stroke-color-default) solid;
   font-family: @font-family-regular;
   font-size: 13px;
-  color: @input-color-default;
+  color: var(--input-color-default);
   padding: 3px 4px 1px 10px;
 }
 
 .input-and-unit.error {
-  border-bottom: 1px #fd704b solid;
+  border-bottom: 1px var(--error-text-color) solid;
   background-size: 16px 16px;
   background-position: 100% 3px;
   background-repeat: no-repeat;
@@ -25,25 +25,18 @@
 }
 
 .input-and-unit:hover:not(.disabled):not(.active):not(.error) {
-  color: @input-color-hovered;
-  border-bottom: 1px @stroke-color-hovered solid;
+  color: var(--input-color-hovered);
+  border-bottom: 1px var(--stroke-color-hovered) solid;
 }
 
 .input-and-unit.active:not(.disabled) {
-  color: @input-color-focused;
-  border-bottom: 1px @stroke-color-focused solid;
+  color: var(--input-color-focused);
+  border-bottom: 1px var(--stroke-color-focused) solid;
   outline: none;
 }
 
-.inverted-colors .input-and-unit,
-.inverted-colors .input-and-unit:hover:not(.disabled):not(.active),
-.inverted-colors .input-and-unit.active:not(.disabled),
-.inverted-colors .input {
-  color: #fff;
-}
-
 .input-and-unit.disabled {
-  background-color: @disabled-background-color;
+  background-color: var(--disabled-background-color);
 }
 
 .input {
@@ -56,14 +49,14 @@
 }
 
 .input::placeholder {
-  color: #8997a5;
+  color: var(--disabled-color);
   font-size: 13px;
   line-height: 17px;
 }
 
 .input-errors-area {
   text-align: left;
-  color: @error-text-color;
+  color: var(--error-text-color);
   font-size: 9px;
   line-height: 11px;
   padding-top: 3px;

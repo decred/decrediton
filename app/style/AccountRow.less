@@ -2,25 +2,25 @@
 @import (reference) "./Icons.less";
 
 .account-row-top-spendable {
-  color: #596d81;
+  color: var(--stroke-color-hovered);
   font-size: 13px;
   line-height: 17px;
 }
 
 .account-row-top-spendable-value {
-  color: #091440;
+  color: var(--input-color-default);
   display: inline-block;
   width: 140px;
 }
 
 .account-row-top-account-name {
-  color: #091440;
+  color: var(--input-color-default);
   font-size: 19px;
   line-height: 24px;
 }
 
 .account-row-top-account-funds {
-  color: #091440;
+  color: var(--input-color-default);
   font-size: 19px;
   text-align: right;
 }
@@ -36,21 +36,21 @@
   background-size: 20px auto;
   background-repeat: no-repeat;
   background-position: 15px center;
-  background-color: #fff;
-  border-top: 1px solid #f0f4f4;
+  background-color: var(--background-back-color);
+  border-top: 1px solid var(--background-container-hover);
 }
 
 .account-row-details-top:hover {
-  background-color: #f0f4f4;
+  background-color: var(--background-container-hover);
 }
 
 .account-row-details-bottom {
-  background-color: #f9fafa;
+  background-color: var(--background-container);
 }
 
 .account-row-details-bottom-columns {
   width: 100%;
-  color: #596d81;
+  color: var(--stroke-color-hovered);
   margin-bottom: 20px;
   display: flex;
   justify-content: space-between;
@@ -88,8 +88,8 @@
 }
 
 .account-row-details-bottom-spec-last {
-  border-bottom: 1px solid #e7eaed;
-  color: #091440;
+  border-bottom: 1px solid var(--disabled-background-color);
+  color: var(--input-color-default);
   font-size: 12px;
 }
 
@@ -100,11 +100,11 @@
 .account-row-details-bottom-spec-value {
   margin-left: 1em;
   text-align: left;
-  color: #091440;
+  color: var(--input-color-default);
 }
 
 .account-row-rename-bottom {
-  color: #091440;
+  color: var(--input-color-default);
   font-size: 12px;
   padding: 14px;
 }
@@ -138,7 +138,7 @@
   width: 20px;
   height: 20px;
   padding: 0px;
-  background-color: #2971ff;
+  background-color: var(--input-color);
   border: 0;
   line-height: inherit;
   text-decoration: none;
@@ -168,7 +168,7 @@
 .account-actions {
   width: 93%;
   margin-left: 20px;
-  border-top: 1px solid #c4cbd2;
+  border-top: 1px solid var(--disabled-background-color);
   display: flex;
   flex-direction: row;
 }
@@ -190,29 +190,29 @@
   .account-actions-pubkey-button {
     height: 15px;
     width: 37px;
-    color: #091440;
+    color: var(--input-color-default);
     font-size: 13px;
     line-height: 17px;
     font-weight: 400;
-    background-color: #8997a5;
+    background-color: var(--disabled-color);
     padding: 2px 20px 3px 20px;
     box-shadow: none;
     transition: all 131ms @easeInOutQuart;
   }
 
   .account-actions-pubkey-button:hover {
-    color: #fff;
-    background-color: #8997a5;
+    color: var(--background-back-color);
+    background-color: var(--disabled-color);
   }
 
   .account-actions-pubkey-area {
-    color: #fff;
+    color: var(--background-back-color);
     font-size: 13px;
     line-height: 17px;
     font-weight: 400;
     padding: 2px 20px 3px 20px;
     border-radius: 3px;
-    background-color: #8997a5;
+    background-color: var(--disabled-color);
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;

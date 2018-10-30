@@ -9,10 +9,11 @@ import TimezoneSettings from "./TimezoneSettings";
 import "style/StakePool.less";
 import "style/Settings.less";
 
-const SettingsPageHeader = () =>
+const SettingsPageHeader = ({ toggleTheme } ) =>
   <StandaloneHeader
     title={<T id="settings.title" m="Settings"/>}
     iconClassName="settings"
+    actionButton={<KeyBlueButton onClick={toggleTheme}><T id="settings.toggleTheme" m="Toggle Theme" /></KeyBlueButton>}
     description={<T id="settings.description" m="Changing network settings requires a restart"/>}
   />;
 
@@ -29,8 +30,9 @@ const SettingsPage = ({
   isChangePassPhraseDisabled,
   changePassphraseRequestAttempt,
   needNetworkReset,
+  toggleTheme
 }) => (
-  <StandalonePage header={<SettingsPageHeader />}>
+  <StandalonePage header={<SettingsPageHeader {...{ toggleTheme }} />}>
     <div className="settings-wrapper">
       <div className="settings-columns">
         <GeneralSettings {...{ tempSettings, networks, currencies, locales,

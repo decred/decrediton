@@ -1,4 +1,4 @@
-import { SETTINGS_SAVE, SETTINGS_CHANGED, SETTINGS_UNCHANGED } from "../actions/SettingsActions";
+import { SETTINGS_SAVE, SETTINGS_CHANGED, SETTINGS_UNCHANGED, SETTINGS_TOGGLE_THEME } from "../actions/SettingsActions";
 import { WALLET_SETTINGS, SELECT_LANGUAGE } from "actions/DaemonActions";
 export default function settings(state = {}, action) {
   switch (action.type) {
@@ -36,6 +36,10 @@ export default function settings(state = {}, action) {
     return { ...state,
       currentSettings: currentSettings,
       tempSettings: tempSettings
+    };
+  case SETTINGS_TOGGLE_THEME:
+    return { ...state,
+      theme: action.theme,
     };
   default:
     return state;

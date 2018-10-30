@@ -44,7 +44,7 @@
 .page-body.getstarted {
   padding: 40px;
   display: block;
-  background-color: #f7f8f9;
+  background-color: var(--background-container);
   background-repeat: no-repeat;
   background-image: @logo-launcher;
   background-size: 173px;
@@ -54,7 +54,7 @@
 }
 
 .getstarted {
-  color: #48566e;
+  color: var(--title-text-and-button-background);
 }
 
 .getstarted.loader.logs {
@@ -69,7 +69,7 @@
   }
 
   .active {
-    color: #2970ff;
+    color: var(--input-color);
   }
 
   .log-container {
@@ -92,11 +92,11 @@
   margin-left: 60px;
 
   .tutorial-button {
-    background-color: #48566e;
+    background-color: var(--title-text-and-button-background);
   }
 
   .tutorial-button:hover {
-    background-color: rgba(72, 86, 110, 0.7);
+    background-color: var(--title-text-and-button-background-hovered);
   }
 
   .content-title {
@@ -239,9 +239,9 @@
     user-select: none;
     width: 100px;
     height: 23px;
-    background-color: #48566e;
+    background-color: var(--title-text-and-button-background);
     border-radius: 3px;
-    color: #fff;
+    color: var(--background-back-color);
     margin: 5px;
     float: left;
     text-align: center;
@@ -251,13 +251,13 @@
     background-color: transparent;
 
     .Select-control {
-      border: 1px solid #fd714b;
-      color: #48566e;
+      border: 1px solid var(--error-text-color);
+      color: var(--title-text-and-button-background);
     }
 
     .Select-control:hover,
     .Select-control:focus {
-      border: 1px solid #fd714b;
+      border: 1px solid var(--eror-text-color);
     }
   }
 
@@ -265,13 +265,13 @@
     background-color: transparent;
 
     .Select-control {
-      border: 1px solid #48566e;
-      color: #48566e;
+      border: 1px solid var(--title-text-and-button-background);
+      color: var(--title-text-and-button-background);
     }
 
     .Select-control:hover,
     .Select-control:focus {
-      border: 1px solid #959dac;
+      border: 1px solid var(--disabled-color);
     }
   }
 
@@ -279,14 +279,14 @@
     background-color: transparent;
 
     .Select-control {
-      border: 1px solid #d1d5db;
-      color: #48566e;
+      border: 1px solid var(--white-border);
+      color: var(--title-text-and-button-background);
     }
 
     .Select-control:hover,
     .Select-control:focus {
-      color: #091440;
-      border: 1px solid #959dac;
+      color: var(--input-color-default);
+      border: 1px solid var(--disabled-color);
     }
   }
 
@@ -309,8 +309,8 @@
     padding-top: 2px;
     padding-left: 33px;
     height: 21px;
-    color: #2970ff;
-    border: 1px solid #2970ff;
+    color: var(--input-color);
+    border: 1px solid var(--input-color);
     border-radius: 3px;
     width: 177px;
     margin: 4px;
@@ -389,8 +389,8 @@
   height: 161px;
   width: 168px;
   border-radius: 5px;
-  border: 1px solid #f7f8f9;
-  background: linear-gradient(225deg, rgba(209, 213, 219, 1), rgba(149, 157, 172, 1));
+  border: 1px solid var(--background-container);
+  background: linear-gradient(225deg, var(--white-border), var(--display-wallet-gradient-right));
   font-size: 15px;
   cursor: pointer;
 
@@ -427,15 +427,15 @@
 }
 
 .display-wallet:hover {
-  color: #fff;
+  color: var(--background-back-color);
 }
 
 .display-wallet.new {
   background: none;
-  background-color: #fff;
+  background-color: var(--background-back-color);
 
   .display-wallet-name {
-    color: #4c5971;
+    color: var(--title-text-and-button-background);
     margin-top: 20px;
   }
 }
@@ -455,15 +455,15 @@
   background-repeat: no-repeat;
   background-size: 14px;
   background-position: 50% 50%;
-  box-shadow: 0px 3px 8px rgba(72, 86, 110, 0.34);
+  box-shadow: 0px 3px 8px var(--title-text-and-button-background-drop-shadow);
 }
 
 .display-wallet-button:hover {
-  box-shadow: 0px 1px 3px rgba(72, 86, 110, 0.34);
+  box-shadow: 0px 1px 3px var(--title-text-and-button-background-drop-shadow);
 }
 
 .display-wallet-button.remove {
-  background-color: #48566e;
+  background-color: var(--title-text-and-button-background);
   background-image: @launcher-wallet-delete;
 }
 
@@ -472,17 +472,17 @@
 }
 
 .display-wallet:hover:not(.selected) {
-  border: 1px solid #959dac;
+  border: 1px solid var(--disabled-color);
 }
 
 .display-wallet.selected {
-  background: linear-gradient(45deg, rgb(41, 112, 255), rgb(110, 211, 243));
-  box-shadow: 0px 5px 21px rgba(72, 86, 110, 0.34);
-  border: 1px solid #2970ff;
+  background: linear-gradient(45deg, var(--input-color), var(--display-wallet-gradient-selected-right));
+  box-shadow: 0px 5px 21px var(--title-text-and-button-background-drop-shadow);
+  border: 1px solid var(--input-color);
 }
 
 .display-wallet-complete {
-  color: #48566e;
+  color: var(--title-text-and-button-background);
   margin-top: 5px;
   min-height: 20px;
   text-align: center;
@@ -491,13 +491,13 @@
 }
 
 .display-wallet-name {
-  color: #091440;
+  color: var(--input-color-default);
   text-align: center;
 }
 
 .display-wallet-last-access {
   height: 11px;
-  color: #48566e;
+  color: var(--title-text-and-button-background);
   text-align: center;
   font-size: 11px;
 }
@@ -513,7 +513,7 @@
 }
 
 .display-wallet-launch {
-  color: #fff;
+  color: var(--background-back-color);
   float: left;
   margin-top: 7px;
   margin-left: 39px;
@@ -526,7 +526,7 @@
 
 .display-wallet-cancel-changes:hover,
 .display-wallet-launch:hover {
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid var(--background-back-color);
 }
 
 @keyframes bounce {
@@ -544,7 +544,7 @@
 }
 
 .launch-arrow-bounce {
-  color: #fff;
+  color: var(--background-back-color);
   float: left;
   margin-top: 6px;
   animation: bounce 1s @easeInOutQuart infinite;
@@ -552,7 +552,7 @@
 
 .display-wallet-last-access.selected,
 .display-wallet-complete.selected {
-  color: #25549f;
+  color: var(--input-color-hover);
 }
 
 .edit-wallets-button {
@@ -561,7 +561,7 @@
   height: 36px;
   width: 36px;
   border-radius: 5px;
-  background-color: #fff;
+  background-color: var(--background-back-color);
   background-repeat: no-repeat;
   background-size: 20px 20px;
   background-position: 50% 50%;
@@ -574,38 +574,9 @@
 }
 
 .edit-wallets-button.close {
-  background-color: #959dac;
+  background-color: var(--disabled-color);
   background-size: 12px 12px;
   background-image: @x-white;
-}
-
-.text-toggle.network {
-  font-family: @font-family-monospaced;
-  font-size: 11px;
-  float: left;
-
-  .text-toggle-button-left,
-  .text-toggle-button-right {
-    opacity: 0.34;
-    min-width: 0px;
-    padding: 9px 25px;
-    color: rgba(72, 86, 110, 1);
-    background-color: transparent;
-    border: 1px solid rgba(72, 86, 110, 0.21);
-    transition: all 100ms @easeInOutQuart;
-  }
-
-  .text-toggle-button-active {
-    opacity: 1;
-    padding: 9px 13px 9px 36px;
-    border: 1px solid #2970ff;
-    background-color: #fff;
-    background-repeat: no-repeat;
-    background-size: 16px;
-    background-position: 10px 10px;
-    background-image: @launcher-network-active;
-    color: #2970ff;
-  }
 }
 
 .new-wallet-title-area {
@@ -656,17 +627,17 @@
   border-radius: 5px;
   margin-right: 20px;
   padding: 1px;
-  background-color: #fff;
-  color: #48566e;
+  background-color: var(--background-back-color);
+  color: var(--title-text-and-button-background);
   cursor: pointer;
 }
 
 .privacy-option:hover {
   padding: 0;
-  border: 1px solid #2970ff;
+  border: 1px solid var(--input-color);
 
   .privacy-option-title {
-    color: #2970ff;
+    color: var(--input-color);
   }
 }
 
@@ -723,7 +694,7 @@
       float: left;
       width: 27%;
       margin-left: 100px;
-      background-color: #eee;
+      background-color: var(--disabled-background-color);
       padding: 2em;
     }
 
@@ -771,12 +742,12 @@
 
   .page-body.getstarted {
     background-position: 80px 20px;
-    background-color: #f7f8f9 !important;
+    background-color: var(--background-container) !important;
     z-index: 5;
   }
 
   .getstarted.loader .loader-settings-logs {
-    background-color: #f7f8f9;
+    background-color: var(--background-container);
   }
 
   .display-wallet.new {

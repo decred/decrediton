@@ -10,12 +10,12 @@
   margin-right: 20px;
   padding: 20px;
   float: left;
-  background-color: #fff;
+  background-color: var(--background-back-color);
   background-image: @agenda-card-kebab;
   background-position: 93% 27px;
   background-size: 10px;
   background-repeat: no-repeat;
-  color: #091440;
+  color: var(--input-color-default);
   cursor: pointer;
 }
 
@@ -33,12 +33,12 @@
   margin-right: 20px;
   padding: 20px;
   float: left;
-  background-color: @disabled-background-color;
+  background-color: var(--disabled-background-color);
   background-image: @agenda-card-kebab-disabled;
   background-size: 10px;
   background-position: 93% 27px;
   background-repeat: no-repeat;
-  color: @disabled-color;
+  color: var(--disabled-color);
   cursor: default;
 }
 
@@ -60,12 +60,12 @@
   line-height: 8px;
   text-align: right;
   text-transform: capitalize;
-  border-color: #2971ff;
+  border-color: var(--input-color);
   background-image: @agenda-indicator-pending;
   background-position: 6px 50%;
   background-size: 10px;
   background-repeat: no-repeat;
-  color: #2971ff;
+  color: var(--input-color);
   position: absolute;
   right: 0px;
   bottom: 0px;
@@ -79,12 +79,12 @@
   bottom: 0px;
   margin-right: 20px;
   margin-bottom: 20px;
-  border-color: #8997a5;
+  border-color: var(--disabled-color);
   background-image: @agenda-indicator-finished;
   background-position: 6px 50%;
   background-size: 10px;
   background-repeat: no-repeat;
-  color: #8997a5;
+  color: var(--disabled-color);
   display: inline-block;
   padding: 5px 8px 5px 20px;
   border-style: solid;
@@ -100,23 +100,23 @@
   height: 80px;
   margin-bottom: 55px;
   float: left;
-  color: #596d81;
+  color: var(--stroke-color-hovered);
 }
 
 .agenda-card-bottom-cfg-last {
   float: left;
-  color: #091440;
+  color: var(--input-color-default);
 }
 
 .agenda-card-bottom-cfg-disabled {
   height: 80px;
   margin-bottom: 20px;
   float: left;
-  color: @disabled-color;
+  color: var(--disabled-color);
 }
 
 .agenda-card-bottom-cfg-last-disabled {
-  color: @disabled-color;
+  color: var(--disabled-color);
 }
 
 .agenda-card-bottom-cfg-last-bold {
@@ -159,7 +159,7 @@
   padding-right: 2px;
   padding-left: 2px;
   border-radius: 3px;
-  background-color: #d4f0fd;
+  background-color: var(--blue-highlight-background);
   font-size: 13px;
   font-weight: 600;
   text-transform: capitalize;

@@ -2,40 +2,16 @@
 //  Global variables
 ////////////////////////////////////
 
-@error-text-color: #fd704a;
-@warning-text-color: orange;
 @sidebar-width: 296px;
 @sidebar-width-reduced: 60px;
-@disabled-background-color: #e7eaed;
-@disabled-color: #8997a5;
-@enabled-color: #596d82;
 @disabled-box-shadow-color: rgba(0, 0, 0, 0.1);
 @disabled-box-shadow: 0px 1px 1px @disabled-box-shadow-color;
-@input-color: #2970ff;
-@link-color: #2970ff;
-@link-hover-color: #6397ff;
-@accent-color: #2ed8a3;
 
 @font-family-monospaced: "Inconsolata", monospace;
 @font-family-regular: "Source Sans Pro", sans-serif;
 
-@input-color-disabled: #dadfe2;
-@input-color-default: #091440;
-@input-color-hovered: #091440;
-@input-color-focused: #091440;
-@stroke-color-default: #a9b4bf;
-@stroke-color-hovered: #596181;
-@stroke-color-focused: #2970ff;
-
-@background-hovered: #e9f8fe;
-@background-container: #f3f5f6;
-
 @input-transition-time: 230ms;
 @input-timing-function: ease-in-out;
-
-@vote-yes-color: #2ed8a3;
-@vote-no-color: #f2734f;
-@vote-abstain-color: #596d81;
 
 ////////////////////////////////////
 //  Global mixin classes
@@ -77,11 +53,11 @@
 ////////////////////////////////////
 
 .error {
-  color: @error-text-color;
+  color: var(--error-text-color);
 }
 
 .warning {
-  color: @warning-text-color;
+  color: var(--error-text-color);
 }
 
 ////////////////////////////////////
@@ -94,9 +70,9 @@
 // Main scroll bar styling
 ::-webkit-scrollbar {
   width: 5px;
-  background-color: #e7eaed;
+  background-color: var(--disabled-background-color);
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #8797a5;
+  background-color: var(--disabled-color);
 }

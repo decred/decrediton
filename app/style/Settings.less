@@ -3,7 +3,7 @@
 
 .settings-wrapper {
   display: flex;
-  background: white;
+  background: var(--background-back-color);
   margin-bottom: 20px;
   padding: 26px 26px 26px 40px;
   justify-content: space-between;
@@ -25,14 +25,16 @@
 }
 
 .settings-privacy,
-.settings-security {
+.settings-security,
+.settings-timezone {
   width: 100%;
   float: left;
   margin-bottom: 20px;
 }
 
 .settings-privacy .settings-column-title,
-.settings-security .settings-column-title {
+.settings-security .settings-column-title,
+.settings-timezone .settings-column-title {
   text-align: right;
   margin-right: 145px;
 }
@@ -54,7 +56,7 @@
   font-style: italic;
   text-align: right;
   margin: -16px 28px 10px 0px;
-  color: #8997a5;
+  color: var(--disabled-color);
   font-size: 11px;
   line-height: 15px;
   width: 175px;
@@ -69,11 +71,11 @@
 
 .change-password-default-icon {
   background: @change-password-default-icon no-repeat center;
-  background-color: #2971ff;
+  background-color: var(--input-color);
   background-size: 16px;
   cursor: pointer;
-  width: 19px;
-  height: 19px;
+  width: 20px;
+  height: 20px;
   margin-left: 10px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -85,18 +87,18 @@
 .change-password-disabled-icon,
 .change-password-loading {
   background: @password-inactive-icon no-repeat center;
-  background-color: #e7eaed;
+  background-color: var(--disabled-background-color);
   cursor: default;
 }
 
 .change-password-disabled-icon:hover,
 .change-password-loading:hover {
-  background-color: #e7eaed !important;
+  background-color: var(--disabled-background-color) !important;
   box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.13) !important;
 }
 
 .change-password-default-icon:hover {
-  background-color: #1b58ff;
+  background-color: var(--input-color-hover);
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
 }
 
@@ -117,7 +119,7 @@
   float: right;
   height: 100%;
   text-align: left;
-  color: red;
+  color: var(--error-red);
   padding-top: 5px;
 }
 
@@ -146,10 +148,6 @@
   line-height: 17px;
 }
 
-.inverted-colors .settings-general {
-  color: #fff;
-}
-
 .get-started-content-new-seed .settings-general {
   max-width: 400px;
 }
@@ -166,15 +164,15 @@ input[type="radio"] {
 input[type="checkbox"]:disabled + label,
 input[type="radio"]:disabled + label {
   display: inline-block;
-  background-color: #e7eaed;
-  border: 1px solid #8997a5;
+  background-color: var(--disabled-background-color);
+  border: 1px solid var(--disabled-color);
 }
 
 input[type="checkbox"]:checked:disabled + label,
 input[type="radio"]:checked:disabled + label {
   display: inline-block;
-  border: 1px solid #8997a5;
-  background-color: #e7eaed;
+  border: 1px solid var(--disabled-color);
+  background-color: var(--disabled-background-color);
   background-image: @checkmarkGrey;
   background-repeat: no-repeat;
   background-size: 10px;
@@ -183,14 +181,14 @@ input[type="radio"]:checked:disabled + label {
 input[type="checkbox"] + label,
 input[type="radio"] + label {
   display: inline-block;
-  border: 1px solid #8997a5;
+  border: 1px solid var(--disabled-color);
   background-color: none;
 }
 
 input[type="checkbox"]:checked + label,
 input[type="radio"]:checked + label {
   display: inline-block;
-  border: 1px solid #2970ff;
+  border: 1px solid var(--input-color);
   background-color: none;
   background-image: @checkmarkBlue;
   background-repeat: no-repeat;
