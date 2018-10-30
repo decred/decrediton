@@ -99,6 +99,7 @@ export default function version(state = {}, action) {
       currentBlockCount: action.currentBlockCount,
       timeStart: action.timeStart,
       blockStart: action.blockStart,
+      neededBlocks: action.syncHeight,
     };
   case DAEMONSYNCING_PROGRESS:
     return { ...state,

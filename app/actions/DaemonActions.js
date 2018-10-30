@@ -306,20 +306,20 @@ export const STARTUPBLOCK = "STARTUPBLOCK";
 export const syncDaemon = () =>
   (dispatch, getState) => {
     const updateBlockCount = () => {
-      const { walletLoader: { neededBlocks } } = getState();
       const { daemon: { daemonSynced, timeStart, blockStart, credentials, daemonError } } = getState();
       // check to see if user skipped;
       if (daemonSynced || daemonError) return;
       return wallet
         .getBlockCount(credentials, isTestNet(getState()))
-        .then(updateCurrentBlockCount => {
-          if ((neededBlocks == 0 && updateCurrentBlockCount > 0) || (neededBlocks != 0 && updateCurrentBlockCount >= neededBlocks)) {
+        .then((updateCurrentBlockCount, syncHeight) => {
+          console.log(updateBlockCount, syncHeight);
+          if (updateCurrentBlockCount >= syncHeight) {
             dispatch({ type: DAEMONSYNCED });
             dispatch({ currentBlockHeight: updateCurrentBlockCount, type: STARTUPBLOCK });
             setMustOpenForm(false);
             return;
-          } else if (updateCurrentBlockCount !== 0) {
-            const blocksLeft = neededBlocks - updateCurrentBlockCount;
+          } else if (updateCurrentBlockCount !== 0 && syncHeight !== 0) {
+            const blocksLeft = syncHeight - updateCurrentBlockCount;
             const blocksDiff = updateCurrentBlockCount - blockStart;
             if (timeStart !== 0 && blockStart !== 0 && blocksDiff !== 0) {
               const currentTime = new Date();
@@ -331,7 +331,7 @@ export const syncDaemon = () =>
                 type: DAEMONSYNCING_PROGRESS });
             } else if (updateCurrentBlockCount !== 0) {
               const time = new Date();
-              dispatch({ currentBlockCount: parseInt(updateCurrentBlockCount), timeStart: time, blockStart: parseInt(updateCurrentBlockCount), type: DAEMONSYNCING_START });
+              dispatch({ syncHeight: parseInt(syncHeight), currentBlockCount: parseInt(updateCurrentBlockCount), timeStart: time, blockStart: parseInt(updateCurrentBlockCount), type: DAEMONSYNCING_START });
             }
           }
           setTimeout(updateBlockCount, 1000);

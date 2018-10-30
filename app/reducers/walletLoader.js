@@ -228,10 +228,6 @@ export default function walletLoader(state = {}, action) {
     return { ...state,
       discoverAccountsComplete: action.complete,
     };
-  case NEEDED_BLOCKS_DETERMINED:
-    return { ...state,
-      neededBlocks: action.neededBlocks
-    };
   case WALLET_LOADER_SETTINGS:
     return { ...state,
       discoverAccountsComplete: action.discoverAccountsComplete,

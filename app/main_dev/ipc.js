@@ -138,9 +138,8 @@ export const stopWallet = () => {
 };
 
 export const checkDaemon = (mainWindow, rpcCreds, testnet) => {
-  let args = [ "getblockcount" ];
+  let args = [ "getblockchaininfo" ];
   let host, port;
-  let currentBlockCount;
 
   if (!rpcCreds){
     args.push(`--configfile=${dcrctlCfg(appDataDirectory())}`);
@@ -178,9 +177,11 @@ export const checkDaemon = (mainWindow, rpcCreds, testnet) => {
   const dcrctl = spawn(dcrctlExe, args, { detached: false, stdio: [ "ignore", "pipe", "pipe", "pipe" ] });
 
   dcrctl.stdout.on("data", (data) => {
-    currentBlockCount = data.toString();
-    logger.log("info", data.toString());
-    mainWindow.webContents.send("check-daemon-response", currentBlockCount);
+    const parsedData = JSON.parse(data);
+    const currentBlockCount = parsedData.blocks;
+    const syncHeight = parsedData.syncheight;
+    logger.log("info", parsedData.blocks, parsedData.syncheight, parsedData.verificationprogress);
+    mainWindow.webContents.send("check-daemon-response", currentBlockCount, syncHeight);
   });
   dcrctl.stderr.on("data", (data) => {
     logger.log("error", data.toString());
