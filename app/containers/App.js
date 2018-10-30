@@ -44,7 +44,7 @@ class App extends React.Component {
     log("info", "Main app container mounted");
 
     ipcRenderer.on("show-about-modal", function(event, data) {
-      console.log(event);
+      this.props.toggleAboutModalVisibility();
     });
   }
 

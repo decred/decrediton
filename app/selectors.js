@@ -904,6 +904,7 @@ export const stakeRewardsStats = createSelector(
   })));
 
 export const modalVisible = get([ "control", "modalVisible" ]);
+export const aboutModalVisible = get([ "control", "aboutModalVisible" ]);
 
 export const isSignMessageDisabled = isWatchingOnly;
 export const isCreateAccountDisabled = isWatchingOnly;
