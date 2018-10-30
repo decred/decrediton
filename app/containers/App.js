@@ -11,6 +11,7 @@ import FatalErrorPage from "components/views/FatalErrorPage";
 import Snackbar from "components/Snackbar";
 import { log } from "wallet";
 import "style/Layout.less";
+import "style/Themes.less";
 const topLevelAnimation = { atEnter: { opacity: 0 }, atLeave: { opacity: 0 }, atActive: { opacity: 1 } };
 
 @autobind
