@@ -59,6 +59,13 @@ export const enableTrezor = () => (dispatch, getState) => {
   }
 };
 
+export const TRZ_CLEAR_DEVICELIST = "TRZ_CLEAR_DEVICELIST";
+
+export const reloadTrezorDeviceList = () => (dispatch) => {
+  dispatch({ type: TRZ_CLEAR_DEVICELIST });
+  dispatch(loadDeviceList());
+};
+
 export const TRZ_LOADDEVICELIST_ATTEMPT = "TRZ_LOADDEVICELIST_ATTEMPT";
 export const TRZ_LOADDEVICELIST_FAILED = "TRZ_LOADDEVICELIST_FAILED";
 export const TRZ_LOADDEVICELIST_SUCCESS = "TRZ_LOADDEVICELIST_SUCCESS";
@@ -189,7 +196,7 @@ async function deviceRun(dispatch, getState, device, fn) {
 
   const handleError = error => {
     const { trezor: { waitingForPin, waitingForPassphrase } } = getState();
-    console.log("Handle error no deviceRun");
+    console.log("Handle error no deviceRun", error);
     if (waitingForPin) dispatch({ error, type: TRZ_PIN_CANCELED });
     if (waitingForPassphrase) dispatch({ error, type: TRZ_PASSPHRASE_CANCELED });
     if (error instanceof Error) {

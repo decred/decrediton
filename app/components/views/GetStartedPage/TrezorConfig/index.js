@@ -1,7 +1,8 @@
 import { trezor } from "connectors";
 import { FormattedMessage as T } from "react-intl";
-import Form from "./Form";
+import ConfigSections from "views/TrezorPage/ConfigSections";
 import Page from "./Page";
+import { InvisibleButton } from "buttons";
 import "style/Trezor.less";
 
 @autobind
@@ -12,36 +13,15 @@ class TrezorConfig extends React.Component {
     props.enableTrezor();
   }
 
-  onTogglePinProtection() {
-    this.props.togglePinProtection();
-  }
-
-  onTogglePassPhraseProtection() {
-    this.props.togglePassPhraseProtection();
-  }
-
-  onChangeHomeScreen() {
-    this.props.changeToDecredHomeScreen();
-  }
-
-  onChangeLabel(newLabel) {
-    this.props.changeLabel(newLabel);
-  }
-
-  onWipeDevice() {
-    this.props.wipeDevice();
-  }
-
-  onRecoverDevice() {
-    this.props.recoverDevice();
-  }
-
-  onInitDevice() {
-    this.props.initDevice();
-  }
-
-  onUpdateFirmware(path) {
-    this.props.updateFirmware(path);
+  renderNoDevice() {
+    return <>
+      <div><T id="trezor.getStartedConfig.noDeviceFound" m="No trezor device found. Check the connection and the trezor bridge software."/></div>
+      <div>
+        <InvisibleButton onClick={this.props.reloadDeviceList}>
+          <T id="trezor.getStartedConfig.btnReloadDeviceList" m="Reload Device List"/>
+        </InvisibleButton>
+      </div>
+    </>;
   }
 
   render() {
@@ -49,38 +29,10 @@ class TrezorConfig extends React.Component {
     let children;
 
     if (!device) {
-      children = (<div><T id="trezor.getStartedConfig.noDeviceFound" m="No trezor device found. Check the connection and the trezor bridge software."/></div>);
+      children = this.renderNoDevice();
     } else {
       const loading = this.props.performingOperation;
-
-      const {
-        onTogglePinProtection,
-        onTogglePassPhraseProtection,
-        onChangeHomeScreen,
-        onChangeLabel,
-        onWipeDevice,
-        onRecoverDevice,
-        onInitDevice,
-        onUpdateFirmware,
-      } = this;
-
-      children = (
-        <Form
-          {...this.props}
-          {...this.state}
-          {...{
-            loading,
-            onTogglePinProtection,
-            onTogglePassPhraseProtection,
-            onChangeHomeScreen,
-            onChangeLabel,
-            onWipeDevice,
-            onRecoverDevice,
-            onInitDevice,
-            onUpdateFirmware,
-          }}
-        />
-      );
+      children = <ConfigSections device={device} loading={loading} { ...this.props } />;
     }
 
     return (

@@ -17,7 +17,7 @@ class ConfigButtons extends React.Component {
     );
 
     const { loading, onTogglePinProtection, onTogglePassPhraseProtection,
-      onChangeHomeScreen } = this.props;
+      onChangeHomeScreen, onClearDeviceSession } = this.props;
 
     return (
       <VerticalAccordion
@@ -35,6 +35,10 @@ class ConfigButtons extends React.Component {
 
         <KeyBlueButton onClick={onChangeHomeScreen} loading={loading} disabled={loading}>
           <T id="trezorPage.changeHomeScreen" m="Change Home Screen" />
+        </KeyBlueButton>
+
+        <KeyBlueButton onClick={onClearDeviceSession} loading={loading} disabled={loading}>
+          <T id="trezorPage.clearSession" m="Clear Session" />
         </KeyBlueButton>
       </VerticalAccordion>
 

@@ -31,6 +31,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   initDevice: trza.initDevice,
   updateFirmware: trza.updateFirmware,
   enableTrezor: trza.enableTrezor,
+  reloadDeviceList: trza.reloadTrezorDeviceList,
+  clearDeviceSession: trza.clearDeviceSession,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

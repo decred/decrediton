@@ -16,6 +16,7 @@ import {
   TRZ_INITDEVICE_ATTEMPT, TRZ_INITDEVICE_FAILED, TRZ_INITDEVICE_SUCCESS,
   TRZ_UPDATEFIRMWARE_ATTEMPT, TRZ_UPDATEFIRMWARE_FAILED, TRZ_UPDATEFIRMWARE_SUCCESS,
   TRZ_GETWALLETCREATIONMASTERPUBKEY_ATTEMPT, TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED, TRZ_GETWALLETCREATIONMASTERPUBKEY_SUCCESS,
+  TRZ_CLEAR_DEVICELIST
 } from "actions/TrezorActions";
 import {
   SIGNTX_ATTEMPT, SIGNTX_FAILED, SIGNTX_SUCCESS
@@ -26,6 +27,13 @@ export default function trezor(state = {}, action) {
   case TRZ_TREZOR_ENABLED:
     return { ...state,
       enabled: true,
+    };
+  case TRZ_CLEAR_DEVICELIST:
+    return { ...state,
+      deviceList: null,
+      transportError: false,
+      device: null,
+      getDeviceListAttempt: true,
     };
   case TRZ_LOADDEVICELIST_ATTEMPT:
     return { ...state,

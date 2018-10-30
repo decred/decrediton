@@ -4,6 +4,8 @@ import { PasswordInput } from "inputs";
 import { ButtonsToolbar } from "../PassphraseModal";
 import { InvisibleButton } from "buttons";
 
+const PIN_LABELS = "ABCDEFGHI";
+
 const PinButton = ({ index, label, onClick }) =>
   <div className="pin-pad-button" onClick={() => onClick(index)}>{label}</div>;
 
@@ -31,14 +33,24 @@ class PinModal extends React.Component {
     this.setState({ currentPin: "" });
   }
 
-  render() {
-    const { onCancelModal, onSubmit, onPinButtonClick, onClearPin } = this;
+  onChangeCurrentPin(e) {
+    const txt = (e.target.value || "").toUpperCase().trim();
+    let pin = "";
+    for (let i = 0; i < txt.length; i++) {
+      const idx = PIN_LABELS.indexOf(txt[i]);
+      if (idx > -1) pin = pin + "" + (idx+1);
+    }
+    this.setState({ currentPin: pin });
+  }
 
-    const labels = "ABCDEFGHI";
-    const currentPin = this.state.currentPin.split("").map(v => labels[parseInt(v)-1]).join("");
+  render() {
+    const { onCancelModal, onSubmit, onPinButtonClick, onClearPin,
+      onChangeCurrentPin } = this;
+
+    const currentPin = this.state.currentPin.split("").map(v => PIN_LABELS[parseInt(v)-1]).join("");
 
     const Button = ({ index }) =>
-      <PinButton label={labels[index-1]} index={index} onClick={onPinButtonClick} />;
+      <PinButton label={PIN_LABELS[index-1]} index={index} onClick={onPinButtonClick} />;
 
     const trezorLabel = this.props.device ? this.props.device.features.label : "";
     const className = [
@@ -69,7 +81,7 @@ class PinModal extends React.Component {
           </InvisibleButton>
         </div>
         <div className="password-field">
-          <PasswordInput value={currentPin} />
+          <PasswordInput value={currentPin} onChange={onChangeCurrentPin} />
         </div>
         <ButtonsToolbar {... { onCancelModal, onSubmit }} />
       </Modal>
