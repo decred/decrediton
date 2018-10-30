@@ -96,7 +96,7 @@
   }
 
   .tutorial-button:hover {
-    background-color: rgba(72, 86, 110, 0.7);
+    background-color: var(--title-text-and-button-background-hovered);
   }
 
   .content-title {
@@ -390,7 +390,7 @@
   width: 168px;
   border-radius: 5px;
   border: 1px solid var(--background-container);
-  background: linear-gradient(225deg, rgba(209, 213, 219, 1), rgba(149, 157, 172, 1));
+  background: linear-gradient(225deg, var(--white-border), var(--display-wallet-gradient-right));
   font-size: 15px;
   cursor: pointer;
 
@@ -455,11 +455,11 @@
   background-repeat: no-repeat;
   background-size: 14px;
   background-position: 50% 50%;
-  box-shadow: 0px 3px 8px rgba(72, 86, 110, 0.34);
+  box-shadow: 0px 3px 8px var(--title-text-and-button-background-drop-shadow);
 }
 
 .display-wallet-button:hover {
-  box-shadow: 0px 1px 3px rgba(72, 86, 110, 0.34);
+  box-shadow: 0px 1px 3px var(--title-text-and-button-background-drop-shadow);
 }
 
 .display-wallet-button.remove {
@@ -476,8 +476,8 @@
 }
 
 .display-wallet.selected {
-  background: linear-gradient(45deg, rgb(41, 112, 255), rgb(110, 211, 243));
-  box-shadow: 0px 5px 21px rgba(72, 86, 110, 0.34);
+  background: linear-gradient(45deg, var(--input-color), var(--display-wallet-gradient-selected-right));
+  box-shadow: 0px 5px 21px var(--title-text-and-button-background-drop-shadow);
   border: 1px solid var(--input-color);
 }
 
@@ -577,35 +577,6 @@
   background-color: var(--disabled-color);
   background-size: 12px 12px;
   background-image: @x-white;
-}
-
-.text-toggle.network {
-  font-family: @font-family-monospaced;
-  font-size: 11px;
-  float: left;
-
-  .text-toggle-button-left,
-  .text-toggle-button-right {
-    opacity: 0.34;
-    min-width: 0px;
-    padding: 9px 25px;
-    color: rgba(72, 86, 110, 1);
-    background-color: transparent;
-    border: 1px solid rgba(72, 86, 110, 0.21);
-    transition: all 100ms @easeInOutQuart;
-  }
-
-  .text-toggle-button-active {
-    opacity: 1;
-    padding: 9px 13px 9px 36px;
-    border: 1px solid var(--input-color);
-    background-color: var(--background-back-color);
-    background-repeat: no-repeat;
-    background-size: 16px;
-    background-position: 10px 10px;
-    background-image: @launcher-network-active;
-    color: var(--input-color);
-  }
 }
 
 .new-wallet-title-area {
