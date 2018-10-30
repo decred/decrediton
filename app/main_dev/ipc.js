@@ -178,14 +178,14 @@ export const checkDaemon = (mainWindow, rpcCreds, testnet) => {
 
   dcrctl.stdout.on("data", (data) => {
     const parsedData = JSON.parse(data);
-    const currentBlockCount = parsedData.blocks;
+    const blockCount = parsedData.blocks;
     const syncHeight = parsedData.syncheight;
     logger.log("info", parsedData.blocks, parsedData.syncheight, parsedData.verificationprogress);
-    mainWindow.webContents.send("check-daemon-response", currentBlockCount, syncHeight);
+    mainWindow.webContents.send("check-daemon-response", { blockCount, syncHeight });
   });
   dcrctl.stderr.on("data", (data) => {
     logger.log("error", data.toString());
-    mainWindow.webContents.send("check-daemon-response", 0);
+    mainWindow.webContents.send("check-daemon-response", { blockCount: 0, syncHeight: 0 });
   });
 };
 
