@@ -93,7 +93,7 @@ export const loadDeviceList = () => (dispatch, getState) => {
     let resolvedTransport = false;
 
     devList.on("transport", t => {
-      console.log("transport", t);
+      debug && console.log("transport", t);
       if (resolvedTransport) return;
       resolvedTransport = true; // resolved with success
       dispatch({ deviceList: devList, type: TRZ_LOADDEVICELIST_SUCCESS });
@@ -101,7 +101,7 @@ export const loadDeviceList = () => (dispatch, getState) => {
     });
 
     devList.on("error", err => {
-      console.log("error", err);
+      debug && console.log("error", err);
       if (!resolvedTransport && err.message.includes("ECONNREFUSED")) {
         resolvedTransport = true; // resolved with failure
         dispatch({ error: err.message, type: TRZ_LOADDEVICELIST_FAILED });
@@ -114,7 +114,7 @@ export const loadDeviceList = () => (dispatch, getState) => {
     });
 
     devList.on("connect", device => {
-      console.log("connect", Object.keys(devList.devices), device);
+      debug && console.log("connect", Object.keys(devList.devices), device);
       const currentDevice = getState().trezor.device;
       if (!currentDevice) {
         // first device connected. Use it.
@@ -124,7 +124,7 @@ export const loadDeviceList = () => (dispatch, getState) => {
     });
 
     devList.on("disconnect", device => {
-      console.log("disconnect", Object.keys(devList.devices), device);
+      debug && console.log("disconnect", Object.keys(devList.devices), device);
       const currentDevice = getState().trezor.device;
       if (currentDevice && device.originalDescriptor.path === currentDevice.originalDescriptor.path ) {
         const devicePaths = Object.keys(devList.devices);
@@ -141,11 +141,11 @@ export const loadDeviceList = () => (dispatch, getState) => {
     });
 
     devList.on("connectUnacquired", device => {
-      console.log("connect unacquired", device);
+      debug && console.log("connect unacquired", device);
     });
 
     devList.on("disconnectUnacquired", device => {
-      console.log("d.catch(error => dispatch({ error, type: SIGNTX_FAILED }));isconnect unacquired", device);
+      debug && console.log("d.catch(error => dispatch({ error, type: SIGNTX_FAILED }));isconnect unacquired", device);
     });
 
   });
@@ -195,8 +195,8 @@ function setDeviceListeners(device, dispatch) {
 async function deviceRun(dispatch, getState, device, fn) {
 
   const handleError = error => {
-    const { trezor: { waitingForPin, waitingForPassphrase } } = getState();
-    console.log("Handle error no deviceRun", error);
+    const { trezor: { waitingForPin, waitingForPassphrase, debug } } = getState();
+    debug && console.log("Handle error no deviceRun", error);
     if (waitingForPin) dispatch({ error, type: TRZ_PIN_CANCELED });
     if (waitingForPassphrase) dispatch({ error, type: TRZ_PASSPHRASE_CANCELED });
     if (error instanceof Error) {
@@ -320,7 +320,7 @@ const checkTrezorIsDcrwallet = (session) => async (dispatch, getState) => {
 export const signTransactionAttemptTrezor = (rawUnsigTx, constructTxResponse) => async (dispatch, getState) => {
   dispatch({ type: SIGNTX_ATTEMPT });
 
-  const { grpc: { decodeMessageService, walletService } } = getState();
+  const { grpc: { decodeMessageService, walletService }, trezor: { debug } } = getState();
   const chainParams = selectors.chainParams(getState());
 
   const device = selectors.trezorDevice(getState());
@@ -329,7 +329,7 @@ export const signTransactionAttemptTrezor = (rawUnsigTx, constructTxResponse) =>
     return;
   }
 
-  console.log("construct tx response", constructTxResponse);
+  debug && console.log("construct tx response", constructTxResponse);
 
   try {
     const decodedUnsigTxResp = await wallet.decodeTransaction(decodeMessageService, rawUnsigTx);
