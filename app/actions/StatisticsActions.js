@@ -3,7 +3,6 @@ import * as sel from "selectors";
 import fs from "fs";
 import { isNumber, isNullOrUndefined, isUndefined } from "util";
 import { endOfDay, reverseRawHash, formatLocalISODate } from "helpers";
-import { format as formatDate } from "date-fns";
 
 const VALUE_TYPE_ATOMAMOUNT = "VALUE_TYPE_ATOMAMOUNT";
 const VALUE_TYPE_DATETIME = "VALUE_TYPE_DATETIME";
@@ -547,8 +546,6 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
   const toProcess = [];
 
   try {
-    console.log(formatDate(new Date(), "HH:mm:ss.SSS"), "starting process");
-
     if (backwards) {
       // when calculating backwards, we need to account for unmined txs, because
       // the account balances for locked tickets include them. To simplify the
@@ -580,8 +577,6 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
         ((!endDate) || (endDate && !backwards && currentDate < endDate) || (endDate && backwards && currentDate > endDate)) ;
     }
 
-    console.log(formatDate(new Date(), "HH:mm:ss.SSS"), "got all txs", toProcess[toProcess.length-1]);
-
     // grab all txs that are ticket/coinbase maturity blocks from the last tx
     // so that we can account for tickets and votes maturing
     endBlock = currentBlock + maxMaturity * pageDir;
@@ -593,8 +588,6 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
       }
     }
 
-    console.log(formatDate(new Date(), "HH:mm:ss.SSS"), "got extra txs for maturity", toProcess[toProcess.length-1]);
-
     if (backwards) {
       // on backwards stats, we find vote txs before finding ticket txs, so
       // pre-process tickets from all grabbed txs to avoid making the separate
@@ -605,15 +598,10 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
           recordTicket(tx, commitAmount, isWallet);
         }
       });
-      console.log(formatDate(new Date(), "HH:mm:ss.SSS"), "Processed tickets");
     }
 
     await callback({ mined: toProcess });
-
-    console.log(formatDate(new Date(), "HH:mm:ss.SSS"), "Processed txs");
     endFunction();
-
-    console.log(formatDate(new Date(), "HH:mm:ss.SSS"), "end function called");
   } catch (err) {
     errorFunction(err);
   }

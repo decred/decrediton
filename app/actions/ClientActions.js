@@ -820,7 +820,6 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
   if (newlyMinedTransactions.length > 0) {
     const { startupStatsEndCalcTime, startupStatsCalcSeconds } = getState().statistics;
     const secFromLastStats = (new Date() - startupStatsEndCalcTime) / 1000;
-    console.log(secFromLastStats, startupStatsCalcSeconds, secFromLastStats);
     if (secFromLastStats > 5*startupStatsCalcSeconds) {
       dispatch(getStartupStats());
     }
