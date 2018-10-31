@@ -41,7 +41,7 @@ const parseVoteInfo = (voteInfo, blockTimestampFromNow) => {
 };
 
 // Aux function to get the tickets from the wallet that are eligible to vote
-// (commited tickets) for a given proposal (given a list of eligible tickets
+// (committed tickets) for a given proposal (given a list of eligible tickets
 // returned from an activevotes call)
 const getWalletCommittedTickets = async (eligibleTickets, walletService) => {
   const ticketHashesToByte = (hashes) => hashes.map(hexReversedHashToArray);

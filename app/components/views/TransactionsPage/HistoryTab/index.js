@@ -6,7 +6,7 @@ import { injectIntl } from "react-intl";
 import { TransactionDetails }  from "middleware/walletrpc/api_pb";
 import { FormattedMessage as T } from "react-intl";
 import { TRANSACTION_DIR_SENT, TRANSACTION_DIR_RECEIVED,
-  TRANSACTION_DIR_TRANSFERED
+  TRANSACTION_DIR_TRANSFERRED
 } from "wallet/service";
 import { DescriptionHeader } from "layout";
 import { Balance } from "shared";
@@ -70,7 +70,7 @@ class History extends React.Component {
       { key: "revoke",   value: { types: [ types.REVOCATION ],      direction: null },  label: (<T id="txFilter.type.revokes" m="Revokes"/>) },
       { key: "sent",     value: { types: [ types.REGULAR ],         direction: TRANSACTION_DIR_SENT },       label: (<T id="txFilter.type.sent" m="Sent"/>) },
       { key: "receiv",   value: { types: [ types.REGULAR ],         direction: TRANSACTION_DIR_RECEIVED },   label: (<T id="txFilter.type.received" m="Received"/>) },
-      { key: "transf",   value: { types: [ types.REGULAR ],         direction: TRANSACTION_DIR_TRANSFERED }, label: (<T id="txFilter.type.transfered" m="Transfered"/>) },
+      { key: "transf",   value: { types: [ types.REGULAR ],         direction: TRANSACTION_DIR_TRANSFERRED }, label: (<T id="txFilter.type.transfered" m="Transfered"/>) },
     ];
   }
 

@@ -8,7 +8,7 @@ import theme from "theme";
 import { eventOutsideComponent } from "helpers";
 import { spring, TransitionMotion } from "react-motion";
 import { TRANSACTION_DIR_SENT, TRANSACTION_DIR_RECEIVED,
-  TRANSACTION_DIR_TRANSFERED
+  TRANSACTION_DIR_TRANSFERRED
 } from "wallet/service";
 import "style/Snackbar.less";
 
@@ -23,7 +23,7 @@ const snackbarClasses = ({ type }) => ({
   "Revocation": "snackbar snackbar-stake",
   [TRANSACTION_DIR_RECEIVED]: "snackbar snackbar-receive",
   [TRANSACTION_DIR_SENT]: "snackbar snackbar-send",
-  [TRANSACTION_DIR_TRANSFERED]: "snackbar snackbar-transfer",
+  [TRANSACTION_DIR_TRANSFERRED]: "snackbar snackbar-transfer",
   "Warning": "snackbar snackbar-warning",
   "Error": "snackbar snackbar-error",
   "Success": "snackbar snackbar-success",

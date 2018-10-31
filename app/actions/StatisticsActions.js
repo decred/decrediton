@@ -109,7 +109,7 @@ export const exportStatToCSV = (opts) => (dispatch, getState) => {
   var allSeries;
   var seriesOpts;
 
-  // constants (may be overriden/parametrized in the future)
+  // constants (may be overridden/parametrized in the future)
   const unitDivisor = sel.unitDivisor(getState());
   const vsep = ","; // value separator
   const ln = "\n";  // line separator

@@ -78,7 +78,7 @@ export const TRANSACTION_TYPES = {
 
 export const TRANSACTION_DIR_SENT = "sent";
 export const TRANSACTION_DIR_RECEIVED = "received";
-export const TRANSACTION_DIR_TRANSFERED = "transfer";
+export const TRANSACTION_DIR_TRANSFERRED = "transfer";
 
 // formatTransaction converts a transaction from the structure of a grpc reply
 // into a structure more amenable to use within decrediton. It stores the block
@@ -103,7 +103,7 @@ export function formatTransaction(block, transaction, index) {
     if (amount > 0) {
       direction = TRANSACTION_DIR_RECEIVED;
     } else if (amount < 0 && (fee == Math.abs(amount))) {
-      direction = TRANSACTION_DIR_TRANSFERED;
+      direction = TRANSACTION_DIR_TRANSFERRED;
     } else {
       direction = TRANSACTION_DIR_SENT;
     }
@@ -247,4 +247,4 @@ export const committedTickets = withLogNoData((walletService, ticketHashes) => n
   const req = new CommittedTicketsRequest();
   req.setTicketsList(ticketHashes);
   walletService.committedTickets(req, (err, tickets) => err ? reject(err) : resolve(tickets));
-}), "Commited Tickets");
+}), "Committed Tickets");
