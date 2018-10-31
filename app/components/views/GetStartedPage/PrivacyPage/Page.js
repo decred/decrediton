@@ -3,8 +3,6 @@ import CustomPrivacyOptions from "./CustomPrivacyOptions";
 
 export default ({ showCustomPrivacy, ...props }) => (
   <div className="page-body getstarted">
-    <div className="getstarted-logo">
-    </div>
     <div className="getstarted-new">
       {!showCustomPrivacy
         ? <TopLevelPrivacyOptions {...props} />
