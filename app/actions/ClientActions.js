@@ -168,17 +168,14 @@ export const findImmatureTransactions = () => async (dispatch, getState) => {
   let txs = await walletGetTransactions(walletService, immatureHeight,
     currentBlockHeight, pageSize);
 
-  let tot = txs.mined.length;
-
   while (txs.mined.length > 0) {
-    tot += txs.mined.length;
     let lastTx = txs.mined[txs.mined.length-1];
     mergeCheckHeights(transactionsMaturingHeights(txs.mined, chainParams));
     txs = await walletGetTransactions(walletService, lastTx.height+1,
       currentBlockHeight+1, pageSize);
   }
 
-  dispatch({ tot, type: "FINDIMMATURETRANSACTIONS_FINISHED" });
+  dispatch({ type: "FINDIMMATURETRANSACTIONS_FINISHED" });
 
   dispatch({ maturingBlockHeights: checkHeights, type: MATURINGHEIGHTS_CHANGED });
 };

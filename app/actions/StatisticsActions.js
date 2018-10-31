@@ -364,10 +364,6 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
   const voteRevokeInfo = async tx => {
     const isVote = tx.txType === wallet.TRANSACTION_TYPE_VOTE;
 
-    // const decodedSpender = await wallet.decodeTransaction(decodeMessageService, tx.tx.getTransaction());
-    // const spenderInputs = decodedSpender.getTransaction().getInputsList();
-    // const ticketHash = reverseRawHash(spenderInputs[spenderInputs.length-1].getPreviousTransactionHash());
-
     const decodedSpender = await wallet.decodeTransactionLocal(tx.tx.getTransaction());
     const spenderInputs = decodedSpender.inputs;
     const ticketHash = reverseRawHash(spenderInputs[spenderInputs.length-1].prevTxId);
