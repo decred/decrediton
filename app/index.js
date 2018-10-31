@@ -76,6 +76,7 @@ var initialState = {
     selectCreateWalletInputRequest: true,
     hiddenAccounts: Array(),
     walletName: null,
+    neededBlocks: 0,
   },
   version: {
     // RequiredVersion
@@ -214,7 +215,6 @@ var initialState = {
     peerCount: 0,
     existingOrNew: false,
     rpcRetryAttempts: 0,
-    neededBlocks: 0,
     curBlocks: 0,
     stepIndex: 0,
     maxWalletCount: globalCfg.get("max_wallet_count"),

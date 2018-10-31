@@ -306,33 +306,33 @@ export const STARTUPBLOCK = "STARTUPBLOCK";
 export const syncDaemon = () =>
   (dispatch, getState) => {
     const updateBlockCount = () => {
-      const { walletLoader: { neededBlocks } } = getState();
-      const { daemon: { daemonSynced, timeStart, blockStart, credentials, daemonError } } = getState();
+      const { daemon: { daemonSynced, timeStart, blockStart, credentials, daemonError, neededBlocks } } = getState();
       // check to see if user skipped;
       if (daemonSynced || daemonError) return;
       return wallet
         .getBlockCount(credentials, isTestNet(getState()))
-        .then(updateCurrentBlockCount => {
-          if ((neededBlocks == 0 && updateCurrentBlockCount > 0) || (neededBlocks != 0 && updateCurrentBlockCount >= neededBlocks)) {
+        .then(( blockChainInfo ) => {
+          const blockCount = blockChainInfo.blockCount;
+          const syncHeight = blockChainInfo.syncHeight;
+          if (neededBlocks != 0 && blockCount >= syncHeight) {
             dispatch({ type: DAEMONSYNCED });
-            dispatch({ currentBlockHeight: updateCurrentBlockCount, type: STARTUPBLOCK });
+            dispatch({ currentBlockHeight: blockCount, type: STARTUPBLOCK });
             setMustOpenForm(false);
             return;
-          } else if (updateCurrentBlockCount !== 0) {
-            const blocksLeft = neededBlocks - updateCurrentBlockCount;
-            const blocksDiff = updateCurrentBlockCount - blockStart;
+          } else if (neededBlocks !== 0 && blockCount !== 0 && syncHeight !== 0) {
+            const blocksLeft = syncHeight - blockCount;
+            const blocksDiff = blockCount - blockStart;
             if (timeStart !== 0 && blockStart !== 0 && blocksDiff !== 0) {
               const currentTime = new Date();
               const timeSyncing = (currentTime - timeStart) / 1000;
               const secondsLeft = Math.round(blocksLeft / blocksDiff * timeSyncing);
               dispatch({
-                currentBlockCount: parseInt(updateCurrentBlockCount),
+                currentBlockCount: blockCount,
                 timeLeftEstimate: secondsLeft,
                 type: DAEMONSYNCING_PROGRESS });
-            } else if (updateCurrentBlockCount !== 0) {
-              const time = new Date();
-              dispatch({ currentBlockCount: parseInt(updateCurrentBlockCount), timeStart: time, blockStart: parseInt(updateCurrentBlockCount), type: DAEMONSYNCING_START });
             }
+          } else if (blockCount && syncHeight && blockCount !== 0 && syncHeight !== 0) {
+            dispatch({ syncHeight: syncHeight, currentBlockCount: blockCount, timeStart: new Date(), blockStart: blockCount, type: DAEMONSYNCING_START });
           }
           setTimeout(updateBlockCount, 1000);
         }).catch(err=>console.log(err));

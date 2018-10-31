@@ -11,7 +11,6 @@ import { getAvailableWallets, WALLETREMOVED_FAILED } from "./DaemonActions";
 import { getWalletCfg, getDcrdCert } from "../config";
 import { getWalletPath } from "main_dev/paths";
 import { isTestNet } from "selectors";
-import axios from "axios";
 import { SpvSyncRequest, SyncNotificationType, RpcSyncRequest } from "../middleware/walletrpc/api_pb";
 import { push as pushHistory } from "react-router-redux";
 import { stopNotifcations } from "./NotificationActions";
@@ -296,24 +295,6 @@ export function clearStakePoolConfigNewWallet() {
           config.set("stakepools", foundStakePoolConfigs);
           dispatch({ currentStakePoolConfig: foundStakePoolConfigs, type: CLEARSTAKEPOOLCONFIG });
         }
-      });
-  };
-}
-
-export const NEEDED_BLOCKS_DETERMINED = "NEEDED_BLOCKS_DETERMINED";
-export function determineNeededBlocks() {
-  return (dispatch, getState) => {
-    const { currentSettings } = getState().settings;
-    const network = currentSettings.network;
-    const explorerInfoURL = `https://${network}.decred.org/api/status`;
-    axios.get(explorerInfoURL, { timeout: 5000 })
-      .then(function (response) {
-        const neededBlocks = response.data.info.blocks;
-        wallet.log("info", `Determined needed block height as ${neededBlocks}`);
-        dispatch({ neededBlocks, type: NEEDED_BLOCKS_DETERMINED });
-      })
-      .catch(function (error) {
-        console.log("Unable to obtain latest block number.", error);
       });
   };
 }

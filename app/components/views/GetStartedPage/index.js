@@ -23,15 +23,12 @@ class GetStartedPage extends React.Component {
   }
 
   componentDidMount() {
-    const { getWalletReady, getDaemonStarted, getNeededBlocks, onGetAvailableWallets, onStartWallet, prepStartDaemon, determineNeededBlocks, isSPV } = this.props;
+    const { getWalletReady, getDaemonStarted, onGetAvailableWallets, onStartWallet, prepStartDaemon, isSPV } = this.props;
     if (!getWalletReady) {
       onGetAvailableWallets()
         .then(({ previousWallet }) => {
           previousWallet && onStartWallet(previousWallet);
         });
-    }
-    if (!getNeededBlocks && !isSPV) {
-      determineNeededBlocks();
     }
     if (!getDaemonStarted && !isSPV) {
       setTimeout(()=>prepStartDaemon(), 1000);
