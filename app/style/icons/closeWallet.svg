@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.961 15.961">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+
+      .cls-2 {
+        fill: #8997a5;
+      }
+    </style>
+  </defs>
+  <g id="Group_2511" data-name="Group 2511" transform="translate(-5433.24 -1824.86)">
+    <path id="_Составной_контур_" data-name="&lt;Составной контур&gt;" class="cls-1" d="M5441.221,1824.86a7.98,7.98,0,1,0,7.98,7.98A7.98,7.98,0,0,0,5441.221,1824.86Zm-.488,1.761h1v6.225h-1Zm4.365,10.1a5.484,5.484,0,1,1-7.755-7.755l.706.706a4.486,4.486,0,1,0,6.344,0l.7-.705A5.489,5.489,0,0,1,5445.1,1836.716Z" transform="translate(0 0)"/>
+    <g id="_Группа_" data-name="&lt;Группа&gt;" transform="translate(5435.736 1828.961)">
+      <path id="Path_934" data-name="Path 934" class="cls-2" d="M5504.463,1928.357a4.486,4.486,0,1,1-6.344,0l-.706-.705a5.483,5.483,0,1,0,7.754,0Z" transform="translate(-5495.807 -1927.65)"/>
+    </g>
+    <g id="_Группа_2" data-name="&lt;Группа&gt;" transform="translate(5440.732 1826.621)">
+      <rect id="Rectangle_1682" data-name="Rectangle 1682" class="cls-2" width="0.998" height="6.225" transform="translate(0 0)"/>
+    </g>
+  </g>
+</svg>
