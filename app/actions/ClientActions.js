@@ -15,6 +15,7 @@ import { TransactionDetails } from "middleware/walletrpc/api_pb";
 import { clipboard } from "electron";
 import { getStartupStats } from "./StatisticsActions";
 import { rawHashToHex } from "../helpers/byteActions";
+import { getTreasuryInfo, dcrdataURL } from "../middleware/politeiaapi";
 
 export const goToTransactionHistory = () => (dispatch) => {
   dispatch(pushHistory("/transactions/history"));
@@ -100,6 +101,7 @@ export const getStartupWalletInfo = () => (dispatch) => {
         await dispatch(findImmatureTransactions());
         await dispatch(getAccountsAttempt(true));
         await dispatch(getStartupStats());
+        await dispatch(setTreasuryBalance());
         dispatch({ type: GETSTARTUPWALLETINFO_SUCCESS });
         resolve();
       } catch (error) {
@@ -1080,4 +1082,11 @@ export const fetchMissingStakeTxData = tx => async (dispatch, getState) => {
     // (sel.transactions).
     dispatch({ txHash: tx.txHash, type: FETCHMISSINGSTAKETXDATA_FAILED });
   }
+};
+
+export const SET_TREASURY_BALANCE = "SET_TREASURY_BALANCE";
+export const setTreasuryBalance = () => (dispatch, getState) => {
+  const dURL = dcrdataURL(getState());
+  const treasuryBalance = getTreasuryInfo(dURL)["dcr_unspent"];
+  dispatch({ treasuryBalance, type: SET_TREASURY_BALANCE });
 };

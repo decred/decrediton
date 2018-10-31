@@ -9,6 +9,7 @@ import { MainNetParams, TestNetParams } from "wallet/constants";
 import { /*TicketTypes,*/ decodeVoteScript } from "./helpers/tickets";
 import { EXTERNALREQUEST_STAKEPOOL_LISTING, EXTERNALREQUEST_POLITEIA } from "main_dev/externalRequests";
 import { POLITEIA_URL_TESTNET, POLITEIA_URL_MAINNET } from "./middleware/politeiaapi";
+import { DCRDATA_URL_TESTNET, DCRDATA_URL_MAINNET } from "./middleware/politeiaapi";
 import { dateToLocal, dateToUTC } from "./helpers/dateFormat";
 const EMPTY_ARRAY = [];  // Maintaining identity (will) improve performance;
 
@@ -924,6 +925,11 @@ export const isTicketPurchaseTabDisabled = isWatchingOnly;
 export const politeiaURL = createSelector(
   [ isTestNet ],
   (isTestNet) => isTestNet ? POLITEIA_URL_TESTNET : POLITEIA_URL_MAINNET
+);
+
+export const dcrdataURL = createSelector(
+  [ isTestNet ],
+  (isTestNet) => isTestNet ? DCRDATA_URL_TESTNET : DCRDATA_URL_MAINNET
 );
 
 export const politeiaEnabled = compose(
