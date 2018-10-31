@@ -106,6 +106,9 @@ export function initGlobalCfg() {
   if (!config.has("show_privacy")) {
     config.set("show_privacy", true);
   }
+  if (!config.has("show_spvchoice")) {
+    config.set("show_spvchoice", true);
+  }
   if (!config.has("allowed_external_requests")) {
     config.set("allowed_external_requests", []);
   }
@@ -146,7 +149,7 @@ export function initGlobalCfg() {
 
 function cleanGlobalCfg(config) {
   var key;
-  const globalCfgFields = [ "theme", "daemon_start_advanced", "must_open_form", "locale", "network", "set_language", "ui_animations", "show_tutorial", "show_privacy", "allowed_external_requests", "proxy_type", "proxy_location",
+  const globalCfgFields = [ "theme", "daemon_start_advanced", "must_open_form", "locale", "network", "set_language", "ui_animations", "show_spvchoice", "show_tutorial", "show_privacy", "allowed_external_requests", "proxy_type", "proxy_location",
     "remote_credentials", "spv_mode", "spv_connect", "max_wallet_count", "timezone", "last_height", "appdata_path" ];
   for (key in config.store) {
     var found = false;

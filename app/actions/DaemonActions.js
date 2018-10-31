@@ -16,6 +16,7 @@ export const DECREDITON_VERSION = "DECREDITON_VERSION";
 export const SELECT_LANGUAGE = "SELECT_LANGUAGE";
 export const FINISH_TUTORIAL = "FINISH_TUTORIAL";
 export const FINISH_PRIVACY = "FINISH_PRIVACY";
+export const FINISH_SPVCHOICE = "FINISH_SPVCHOICE";
 export const DAEMONSTARTED = "DAEMONSTARTED";
 export const DAEMONSTARTED_APPDATA = "DAEMONSTARTED_APPDATA";
 export const DAEMONSTARTED_REMOTE = "DAEMONSTARTED_REMOTE";
@@ -71,8 +72,26 @@ export const showGetStarted = () => (dispatch) => {
   dispatch(pushHistory("/getstarted/initial"));
 };
 
+export const showSpvChoice = () => (dispatch) => {
+  dispatch(pushHistory("/getstarted/spvchoice"));
+};
+
 export const showPrivacy = () => (dispatch) => {
   dispatch(pushHistory("/getstarted/privacy"));
+};
+
+export const enableSpv = () => (dispatch, getState) => {
+  dispatch(updateStateSettingsChanged({ spvMode: true }, true));
+  const tempSettings = getState().settings.tempSettings;
+  dispatch(saveSettings(tempSettings));
+  dispatch(finishSpvChoice());
+};
+
+export const disableSpv = () => (dispatch, getState) => {
+  dispatch(updateStateSettingsChanged({ spvMode: false }, true));
+  const tempSettings = getState().settings.tempSettings;
+  dispatch(saveSettings(tempSettings));
+  dispatch(finishSpvChoice());
 };
 
 export const setupStandardPrivacy = () => (dispatch, getState) => {
@@ -95,6 +114,13 @@ export const selectLanguage = (selectedLanguage) => (dispatch) => {
   config.set("set_language", false);
   dispatch({ language: selectedLanguage.language, type: SELECT_LANGUAGE });
   dispatch(pushHistory("/getstarted"));
+};
+
+export const finishSpvChoice = () => (dispatch) => {
+  const config = getGlobalCfg();
+  config.set("show_spvchoice", false);
+  dispatch({ type: FINISH_SPVCHOICE });
+  dispatch(goBack());
 };
 
 export const finishTutorial = () => (dispatch) => {

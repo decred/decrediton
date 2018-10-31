@@ -2,6 +2,7 @@ import {
   SELECT_LANGUAGE,
   FINISH_TUTORIAL,
   FINISH_PRIVACY,
+  FINISH_SPVCHOICE,
   DAEMONSTARTED,
   DAEMONSTARTED_REMOTE,
   DAEMONSTARTED_APPDATA,
@@ -41,6 +42,10 @@ export default function version(state = {}, action) {
   case FINISH_TUTORIAL:
     return { ...state,
       tutorial: false,
+    };
+  case FINISH_SPVCHOICE:
+    return { ...state,
+      showSpvChoice: false,
     };
   case FINISH_PRIVACY:
     return { ...state,

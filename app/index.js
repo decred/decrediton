@@ -58,6 +58,7 @@ var initialState = {
     tutorial: globalCfg.get("show_tutorial"),
     showPrivacy: globalCfg.get("show_privacy"),
     setLanguage: globalCfg.get("set_language"),
+    showSpvChoice: globalCfg.get("show_spvchoice"),
     daemonStarted: false,
     daemonSynced: false,
     daemonStopped: false,
