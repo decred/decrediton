@@ -18,20 +18,20 @@ export default ({ enableSpv, disableSpv }) => (
       <T id="spv.title" m={"Simple Payment Verification (SPV)"}/>
     </div>
     <div className="language-select-title-sub">
-      <T id="spv.titleSub" m={"Select how Decrediton should connect to external services. You can change this in the application settings later."}/>
+      <T id="spv.titleSub" m={"Select how Decrediton wallet's should connect to the network. You can change this in the application settings later."}/>
     </div>
     <div className="privacy-options">
       <PrivacyOption
         title={<T id="spv.options.enable.title" m="Enable SPV" />}
         icon="enable-spv"
-        description={<T id="spv.options.enable.description" m="Enables connections to most services for a better user experience and full access to features (such as version update, stakepool listing, politeia, etc). Recommended for most users." />}
+        description={<T id="spv.options.enable.description" m="SPV will allow your wallets to be restored and used much more quickly." />}
         onClick={enableSpv}
       />
 
       <PrivacyOption
         title={<T id="spv.options.disable.title" m="Disable SPV" />}
         icon="disable-spv"
-        description={<T id="spv.options.disable.description" m="Disables all connections to third party (non-dcrd/non-dcrwallet) services. This may prevent you from using certain features of the app. Recommended for advanced users." />}
+        description={<T id="spv.options.disable.description" m="This will use the regular Decred Daemon and fully verify blocks.  This will take longer, but is more secure." />}
         onClick={disableSpv}
       />
 
