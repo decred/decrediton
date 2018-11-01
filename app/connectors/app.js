@@ -4,18 +4,21 @@ import { selectorMap } from "../fp";
 import { bindActionCreators } from "redux";
 import * as sel from "../selectors";
 import * as da from "actions/DaemonActions";
-import * as ca from "actions/ClientActions";
+import * as cla from "actions/ClientActions";
+import * as ca from "actions/ControlActions";
 
 const mapStateToProps = selectorMap({
   locale: sel.locale,
   window: sel.mainWindow,
   daemonStopped: sel.daemonStopped,
   shutdownRequested: sel.shutdownRequested,
+  aboutModalVisible: sel.aboutModalVisible,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   shutdownApp: da.shutdownApp,
-  listenForAppReloadRequest: ca.listenForAppReloadRequest,
+  listenForAppReloadRequest: cla.listenForAppReloadRequest,
+  toggleAboutModalVisibility: ca.toggleAboutModalVisibility
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

@@ -11,9 +11,11 @@ import FatalErrorPage from "components/views/FatalErrorPage";
 import Snackbar from "components/Snackbar";
 import { log } from "wallet";
 import "style/Layout.less";
+import { ipcRenderer } from "electron";
+import AboutModal from "../components/modals/AboutModal/Modal";
+import { AboutModalButtonInvisible } from "../components/buttons";
 const topLevelAnimation = { atEnter: { opacity: 0 }, atLeave: { opacity: 0 }, atActive: { opacity: 1 } };
 
-import { ipcRenderer } from "electron";
 
 @autobind
 class App extends React.Component {
@@ -90,7 +92,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { locale } = this.props;
+    const { locale, aboutModalVisible } = this.props;
     const MainSwitch = this.props.uiAnimations ? AnimatedSwitch : StaticSwitch;
 
     return (
@@ -110,6 +112,8 @@ class App extends React.Component {
             <Route path="/"            component={WalletContainer} />
           </MainSwitch>
           <div id="modal-portal" />
+          {/* <AboutModal show={true} onCancelModal={() => {console.log("closed");}} version="1.2.3.4" updateAvailable={true} /> */}
+          <AboutModalButtonInvisible show={true} />
         </Aux>
       </IntlProvider>
     );
