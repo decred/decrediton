@@ -2,7 +2,6 @@ import { FormattedMessage as T, defineMessages } from "react-intl";
 import { TextInput } from "inputs";
 import { KeyBlueButton, InvisibleButton, WatchOnlyWalletSwitch } from "buttons";
 import { NewSeedTabMsg, RestoreTabMsg } from "../messages";
-import "style/LoginForm.less";
 
 const messages = defineMessages({
   messageWalletNamePlaceholder: {

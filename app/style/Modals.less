@@ -28,8 +28,8 @@
 .app-modal-reduced-bar,
 .app-modal-standalone {
   position: fixed;
-  color: #48566e;
-  background-color: #fff;
+  color: var(--title-text-and-button-background);
+  background-color: var(--background-back-color);
   box-shadow: 0 15px 34px rgba(9, 20, 64, 0.21);
   z-index: 200;
   top: 0;
@@ -117,7 +117,7 @@
 
   a:hover,
   a:active {
-    color: #2970ff;
+    color: var(--input-color);
   }
 }
 
@@ -158,19 +158,19 @@
   float: left;
   width: 571px;
   margin-left: 20px;
-  border-top: 1px solid #a9b4bf;
+  border-top: 1px solid var(--stroke-color-default);
   padding-top: 10px;
   display: flex;
   justify-content: space-between;
 
   a.about-modal-upgrade {
-    color: #2970ff;
+    color: var(--input-color);
     cursor: pointer;
     text-decoration: none;
   }
 
   a.about-modal-upgrade:hover {
-    color: #1c4eb2;
+    color: var(--input-color-hover);
   }
 }
 
@@ -235,7 +235,7 @@
   padding: 2em;
   line-height: normal;
   text-align: left;
-  color: #48566e;
+  color: var(--title-text-and-button-background);
   box-shadow: 0 15px 34px 0 rgba(12, 30, 62, 0.34);
 }
 
@@ -353,13 +353,13 @@
 
 .info-modal.info-modal-fields .info-modal-documentation {
   strong {
-    color: #69d5f7;
+    color: var(--cyan-bold);
   }
 }
 
 .info-modal.has-warning .info-modal-documentation {
   strong {
-    color: #fd714b;
+    color: var(--error-text-color);
   }
 }
 
@@ -371,7 +371,7 @@
   border-radius: 5px;
   overflow-y: auto;
   padding: 2em;
-  color: rgba(12, 30, 62, 1);
+  color: var(--input-color-default);
   line-height: normal;
   text-align: left;
 }
@@ -422,7 +422,7 @@
   border-radius: 5px;
   overflow-y: auto;
   padding: 29px 20px 29px 20px;
-  color: rgba(12, 30, 62, 1);
+  color: var(--input-color-default);
   line-height: normal;
   text-align: left;
 }
@@ -436,7 +436,7 @@
   border-radius: 5px;
   overflow-y: auto;
   padding: 2em;
-  color: rgba(12, 30, 62, 1);
+  color: var(--input-color-default);
   line-height: normal;
   text-align: left;
 }
@@ -516,10 +516,6 @@
   margin-bottom: 20px;
 }
 
-.inverted-colors .confirm-seed-copy-modal-content input {
-  color: @input-color-default;
-}
-
 .confirm-seed-copy-phrase {
   text-decoration: underline;
   margin: 0px 4px 0px 4px;
@@ -527,21 +523,21 @@
 
 .watch-only-modal-title {
   font-size: 27px;
-  color: #48566e;
+  color: var(--title-text-and-button-background);
   line-height: 1;
   width: 215px;
   height: 102px;
 }
 
 .watch-only-modal-content {
-  color: #48566e;
+  color: var(--title-text-and-button-background);
   font-size: 13px;
 }
 
 .pseudo-modal {
   position: fixed;
-  color: #48566e;
-  background-color: #fff;
+  color: var(--title-text-and-button-background);
+  background-color: var(--background-back-color);
   box-shadow: 0 15px 34px rgba(9, 20, 64, 0.21);
   z-index: 98;
 }

@@ -12,6 +12,7 @@ import { POLITEIA_URL_TESTNET, POLITEIA_URL_MAINNET } from "./middleware/politei
 import { dateToLocal, dateToUTC } from "./helpers/dateFormat";
 const EMPTY_ARRAY = [];  // Maintaining identity (will) improve performance;
 
+export const theme = get([ "settings", "theme" ]);
 export const daemonError = get([ "daemon" , "daemonError" ]);
 export const walletError = get([ "daemon", "walletError" ]);
 export const appVersion = get([ "daemon", "appVersion" ]);
@@ -21,7 +22,7 @@ export const isDaemonRemote = get([ "daemon", "daemonRemote" ]);
 export const getDaemonStarted = get([ "daemon", "daemonStarted" ]);
 export const getRemoteAppdataError = get([ "daemon", "remoteAppdataError" ]);
 export const getCurrentBlockCount = get([ "daemon", "currentBlockCount" ]);
-export const getNeededBlocks = get([ "walletLoader", "neededBlocks" ]);
+export const getNeededBlocks = get([ "daemon", "neededBlocks" ]);
 export const getEstimatedTimeLeft = get([ "daemon", "timeLeftEstimate" ]);
 export const getDaemonSynced = get([ "daemon", "daemonSynced" ]);
 export const isAdvancedDaemon = get([ "daemon", "daemonAdvanced" ]);

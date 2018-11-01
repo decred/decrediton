@@ -27,7 +27,7 @@ class Wallet extends React.Component {
     const MainSwitch = this.props.uiAnimations ? AnimatedSwitch : StaticSwitch;
 
     return (
-      <div className="page-body">
+      <div className={"page-body"}>
         <SideBar />
         <BlurableContainer className={expandSideBar ? "page-view" : "page-view-reduced-bar"}>
           <MainSwitch {...pageAnimation}>

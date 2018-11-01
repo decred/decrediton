@@ -15,7 +15,6 @@ const MenuItem = ({ primaryText, className, value, onClick }) => (
 
 @autobind
 class EyeFilterMenu extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = { menuOpen: false };
@@ -30,11 +29,15 @@ class EyeFilterMenu extends React.Component {
 
   toggleMenuOpen() {
     this.setState({ menuOpen: !this.state.menuOpen });
+    if (this.state.menuOpen) {
+      this.props.unmountMenu && this.props.unmountMenu();
+    }
   }
 
   mouseUp(event) {
     if (eventOutsideComponent(this, event.target)) {
       this.setState({ menuOpen: false });
+      this.props.unmountMenu && this.props.unmountMenu();
     }
   }
 
@@ -43,6 +46,7 @@ class EyeFilterMenu extends React.Component {
     const labelKey = this.props.labelKey || "label";
     const keyField = this.props.keyField || labelKey;
     const selected = this.props.selected;
+    const belowMenu = this.props.getOpenedMenu && this.props.getOpenedMenu();
 
     return (
       <div className="eye-filter-menu-items">
@@ -55,6 +59,7 @@ class EyeFilterMenu extends React.Component {
             onClick={this.onMenuChanged}
             primaryText={opt[labelKey]} />
         ))}
+        {belowMenu}
       </div>
     );
   }

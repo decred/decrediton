@@ -25,25 +25,14 @@
   .clearfloat-mixin;
 }
 
-.inverted-colors .text-toggle-button-left,
-.inverted-colors .text-toggle-button-right {
-  background-color: #8997a5;
-  color: #ddd;
-}
-
-.inverted-colors .text-toggle-button-active {
-  background-color: #091440;
-  color: @background-container;
-}
-
 .text-toggle-button-left,
 .text-toggle-button-right {
   min-width: 140px;
   float: left;
-  border: 1px #e7eaed solid;
-  background-color: #f7f8f9;
+  border: 1px var(--disabled-background-color) solid;
+  background-color: var(--background-container);
   box-shadow: none;
-  color: #8997a5;
+  color: var(--disabled-color);
   padding: 12px 18px;
   font-size: 13px;
   line-height: 17px;
@@ -63,8 +52,8 @@
 }
 
 .text-toggle-button-active {
-  background-color: #fff;
-  color: #091440;
+  background-color: var(--background-back-color);
+  color: var(--input-color-default);
   cursor: default;
 }
 

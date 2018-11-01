@@ -1,7 +1,7 @@
 import { substruct } from "fp";
 import ErrorScreen from "ErrorScreen";
 import HistoryPage from "./Page";
-import { historyPage } from "connectors";
+import { historyPage, balance } from "connectors";
 import { injectIntl } from "react-intl";
 import { TransactionDetails }  from "middleware/walletrpc/api_pb";
 import { FormattedMessage as T } from "react-intl";
@@ -21,13 +21,15 @@ export const HistoryTabHeader = historyPage(({ totalBalance }) =>
 
 @autobind
 class History extends React.Component {
-
   constructor(props) {
     super(props);
     const selectedTxTypeKey = this.selectedTxTypeFromFilter(this.props.transactionsFilter);
-    const selectedSortOrderKey = this.props.transactionsFilter.listDirection;
-    const searchText = this.props.transactionsFilter.search;
-    this.state = { selectedTxTypeKey, selectedSortOrderKey, searchText };
+    const { search, listDirection } = props.transactionsFilter;
+    this.state = { selectedTxTypeKey,
+      selectedSortOrderKey: listDirection,
+      searchText: search,
+      isChangingFilterTimer: null,
+    };
   }
 
   render() {
@@ -50,6 +52,7 @@ class History extends React.Component {
             onChangeSelectedType: null,
             onChangeSortType: null,
             onChangeSearchText: null,
+            onChangeSliderValue: null,
             onLoadMoreTransactions: null
           }, this)
         }}
@@ -87,10 +90,20 @@ class History extends React.Component {
   }
 
   onChangeFilter(value) {
+    const { isChangingFilterTimer } = this.state;
+    if (isChangingFilterTimer) {
+      clearTimeout(isChangingFilterTimer);
+    }
+    this.setState({ isChangingFilterTimer: setTimeout(() => this.changeFilter(value), 100) });
+  }
+
+  changeFilter(value) {
+    const { isChangingFilterTimer } = this.state;
     const newFilter = {
       ...this.props.transactionsFilter,
       ...value
     };
+    clearTimeout(isChangingFilterTimer);
     this.props.changeTransactionsFilter(newFilter);
   }
 
@@ -109,6 +122,18 @@ class History extends React.Component {
     this.setState({ searchText });
   }
 
+  onChangeSliderValue(value, minOrMax) {
+    const { unitDivisor, currencyDisplay } = this.props;
+    // this is needed because transactions at filter are all at atoms
+    const amount = currencyDisplay === "DCR" ? value*unitDivisor : value;
+
+    if(minOrMax === "min") {
+      this.onChangeFilter({ minAmount: amount });
+    } else if (minOrMax === "max") {
+      this.onChangeFilter({ maxAmount: amount });
+    }
+  }
+
   selectedTxTypeFromFilter(filter) {
     if (filter.types.length === 0) return "all";
     const types = this.getTxTypes();
@@ -116,8 +141,7 @@ class History extends React.Component {
     return types.reduce((a, v) =>
       (v.value.types[0] === filter.types[0] && v.value.direction === filter.direction)
         ? v.key : a, null);
-
   }
 }
 
-export default historyPage(injectIntl(History));
+export default balance(historyPage(injectIntl(History)));

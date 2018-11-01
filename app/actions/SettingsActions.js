@@ -89,3 +89,17 @@ export const updateStateVoteSettingsChanged = (settings) => (dispatch, getState)
     dispatch({ tempSettings: currentSettings, type: SETTINGS_UNCHANGED });
   }
 };
+
+export const SETTINGS_TOGGLE_THEME = "SETTINGS_TOGGLE_THEME";
+export const toggleTheme = () => (dispatch, getState) => {
+  const { settings: { theme } } = getState();
+  const config = getGlobalCfg();
+  if (theme == "theme-light") {
+    dispatch({ theme: "theme-dark", type: SETTINGS_TOGGLE_THEME });
+    config.set("theme", "theme-dark");
+  } else if (theme == "theme-dark") {
+    dispatch({ theme: "theme-light", type: SETTINGS_TOGGLE_THEME });
+    config.set("theme", "theme-light");
+  }
+
+};

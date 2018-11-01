@@ -13,6 +13,7 @@ const mapStateToProps = selectorMap({
   daemonStopped: sel.daemonStopped,
   shutdownRequested: sel.shutdownRequested,
   aboutModalVisible: sel.aboutModalVisible,
+  theme: sel.theme,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

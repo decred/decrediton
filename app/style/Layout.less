@@ -19,7 +19,7 @@
   width: calc(100% - @sidebar-width);
   position: absolute;
   right: 0px;
-  background-color: @background-container;
+  background-color: var(--background-container);
   overflow-x: hidden;
 }
 
@@ -28,7 +28,7 @@
   width: calc(100% - @sidebar-width-reduced);
   position: absolute;
   right: 0px;
-  background-color: #f3f6f6;
+  background-color: var(--background-container);
   overflow-x: hidden;
 }
 
@@ -44,7 +44,7 @@
 .page-content-mixin {
   position: relative;
   padding: 54px 60px 0px 80px;
-  background-color: @background-container;
+  background-color: var(--background-container);
   overflow-y: scroll;
   height: calc(100% - 214px);
 }
@@ -62,7 +62,7 @@
   overflow: visible;
 }
 
-// Main content that has been blured by something positioned "on top" of it
+// Main content that has been blured by something positioned on top of it
 .page-content-blur {
   .page-content-mixin;
 
@@ -78,10 +78,6 @@
   background-color: transparent;
 }
 
-.inverted-colors {
-  background-color: #091440;
-}
-
 .standalone-page {
   position: absolute;
   top: 0px;
@@ -92,7 +88,7 @@
 
 .tabbed-page-header,
 .standalone-page-header {
-  background-color: #fff;
+  background-color: var(--background-back-color);
   padding: 42px 60px 0px 63px;
   position: absolute;
   top: 0px;
@@ -108,7 +104,7 @@
   top: 173px;
   bottom: 0px;
   left: 0px;
-  background-color: @background-container;
+  background-color: var(--background-container);
 }
 
 .standalone-page-body {
@@ -120,13 +116,13 @@
   bottom: 0px;
   left: 0px;
   padding: 60px 60px 30px 60px;
-  background-color: @background-container;
+  background-color: var(--background-container);
 }
 
 .tabbed-page-header > .title-header-title,
 .standalone-page-header > .title-header-title {
   margin-bottom: 3px;
-  color: #596d81;
+  color: var(--stroke-color-hovered);
   font-size: 27px;
   line-height: 34px;
   float: left;
@@ -148,7 +144,7 @@
 .tabbed-page-header > .description-header,
 .standalone-page-header > .description-header {
   white-space: pre-wrap;
-  color: #091440;
+  color: var(--input-color-default);
   font-size: 13px;
   float: left;
   width: 100%;
@@ -182,7 +178,7 @@
 }
 
 .tabbed-page-header > .tabs > .tabs-caret > .active {
-  background-color: #2ed8a3;
+  background-color: var(--accent-color);
   position: absolute;
   height: 5px;
 }
@@ -196,7 +192,7 @@
   bottom: 0px;
   left: 0px;
   padding: 38px 80px 30px 63px;
-  background-color: @background-container;
+  background-color: var(--background-container);
 }
 
 .log-container > .tabbed-page-subtitle {
@@ -204,7 +200,7 @@
 }
 
 .tabbed-page-subtitle {
-  color: #596d81;
+  color: var(--stroke-color-hovered);
   font-size: 20px;
   line-height: 25px;
   margin-bottom: 17px;
@@ -247,7 +243,7 @@
   top: 0px;
   bottom: 0px;
   width: 20px;
-  background-color: @background-container;
+  background-color: var(--background-container);
 }
 
 .fatal-error-page {
@@ -257,7 +253,7 @@
 .fatal-error-area {
   margin: 10px 10% 10px 10%;
   padding: 10px;
-  border: 1px solid #48566e;
+  border: 1px solid var(--title-text-and-button-background);
   border-radius: 3px;
 }
 
@@ -275,7 +271,7 @@
   font-size: 13px;
   margin: 10px 10% 10px 10%;
   padding: 10px;
-  border: 1px solid #48566e;
+  border: 1px solid var(--title-text-and-button-background);
   border-radius: 3px;
   float: left;
 }
@@ -301,7 +297,7 @@
   }
 
   .fatal-error-area {
-    border: 0px solid #48566e;
+    border: 0px solid var(--title-text-and-button-background);
   }
 
   .fatal-error-title {
@@ -310,7 +306,7 @@
 
   .fatal-error-suggestion {
     margin-left: -95px;
-    border: 0px solid white;
+    border: 0px solid var(--background-back-color);
   }
 
   .fatal-error-reset-blockchain {

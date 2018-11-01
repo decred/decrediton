@@ -1,7 +1,7 @@
 @import (reference) "./main.less";
 
 .chart-tooltip {
-  background-color: @background-container;
+  background-color: var(--background-container);
   padding: 10px;
   border-radius: 10px;
 }
@@ -43,11 +43,11 @@
 }
 
 .metered-ticks.blue-tick {
-  background-color: #2971ff;
+  background-color: var(--input-color);
 }
 
 .metered-ticks.black-tick {
-  background-color: #091440;
+  background-color: var(--input-color-default);
 }
 
 .my-tickets-stakepool-stats-selector-row {
@@ -68,14 +68,14 @@
   .legend-label {
     font-size: 13px;
     line-height: 19px;
-    color: #596d81;
+    color: var(--stroke-color-hovered);
   }
 
   .legend-value {
     font-size: 13px;
     line-height: 19px;
     font-weight: 600;
-    color: #091440;
+    color: var(--input-color-default);
   }
 
   .blue-legend {

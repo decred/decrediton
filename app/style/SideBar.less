@@ -2,11 +2,11 @@
 @import (reference) "./Icons.less";
 
 .sidebar-mainnet {
-  background-color: #f9fafa;
+  background-color: var(--background-container);
 }
 
 .sidebar-testnet {
-  background-color: #f9fafa;
+  background-color: var(--background-container);
 }
 
 .hamburger {
@@ -58,7 +58,7 @@
   position: relative;
   z-index: 3;
   padding: 20px 18px 20px 18px;
-  border-bottom: 1px solid #eaecee;
+  border-bottom: 1px solid var(--white-border);
 }
 
 .reduced-sidebar-logo {
@@ -104,7 +104,7 @@
 }
 
 .sidebar-menu-total-balance-extended-bottom-account-name {
-  color: #a7b3bd;
+  color: var(--stroke-color-hovered);
   font-size: 13px;
   overflow: hidden;
   white-space: nowrap;
@@ -113,7 +113,7 @@
 
 .sidebar-menu-total-balance-extended-bottom-account-number {
   font-family: Inconsolata, monospace;
-  color: #091440;
+  color: var(--input-color-default);
   font-size: 15px;
 }
 
@@ -127,7 +127,7 @@
 .sidebar-menu-bottom-total-balance-short-separator {
   height: 7px;
   margin-bottom: 15px;
-  border-bottom: 1px solid #091440;
+  border-bottom: 1px solid var(--input-color-default);
   background-image: @menu-arrow-up;
   background-position: 50% 0px;
   background-repeat: no-repeat;
@@ -135,7 +135,7 @@
 
 .sidebar-menu-bottom-total-balance-short-name {
   float: left;
-  color: #8997a5;
+  color: var(--disabled-color);
   font-size: 13px;
   text-align: left;
   text-decoration: none;
@@ -149,7 +149,7 @@
 .sidebar-menu-bottom-total-balance-short-value {
   float: right;
   font-family: Inconsolata, monospace;
-  color: #091440;
+  color: var(--input-color-default);
   font-size: 13px;
   text-align: right;
 }
@@ -160,12 +160,12 @@
   padding-top: 14px;
   padding-right: 18px;
   padding-left: 20px;
-  background-color: #fff;
+  background-color: var(--background-back-color);
   font-size: 13px;
 }
 
 .sidebar-menu-bottom-latest-block-name {
-  color: #8997a5;
+  color: var(--disabled-color);
   font-size: 13px;
   line-height: 10px;
   text-align: left;
@@ -174,12 +174,12 @@
 
 .sidebar-menu-bottom-latest-block-number {
   font-family: Inconsolata, monospace;
-  color: #424f67;
+  color: var(--title-text-and-button-background);
 }
 
 .sidebar-menu-bottom-latest-block-time {
   float: right;
-  color: #8997a5;
+  color: var(--disabled-color);
   font-size: 13px;
   text-align: right;
   text-decoration: none;
@@ -187,15 +187,15 @@
 
 .sidebar-scroll::-webkit-scrollbar {
   width: 5px;
-  background-color: #091440;
+  background-color: var(--input-color-default);
 }
 
 .sidebar-testnet .sidebar-scroll::-webkit-scrollbar {
-  background-color: #5d6a77;
+  background-color: var(--disabled-background-color);
 }
 
 .sidebar-scroll::-webkit-scrollbar-thumb {
-  background-color: #8795a2;
+  background-color: var(--disabled-color);
 }
 
 .sidebar-watch-only-icon {

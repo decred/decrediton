@@ -1,7 +1,7 @@
 @import (reference) "./main.less";
 
 .paginator {
-  background-color: #fff;
+  background-color: var(--background-back-color);
   min-height: 44px;
   padding: 10px 20px 10px 20px;
   display: inline-block;
@@ -21,11 +21,11 @@
   padding-top: 8px;
 
   &.active {
-    color: #2971ff;
+    color: var(--input-color);
   }
 
   &:hover {
-    background-color: #e9f8ff;
+    background-color: var(--white-border);
   }
 }
 
@@ -39,7 +39,7 @@
   font-size: 17px;
   height: 21px;
   transform: scale(0.5, 1);
-  color: #8997a5;
+  color: var(--disabled-color);
   padding: 0px;
 }
 

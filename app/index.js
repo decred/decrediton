@@ -39,6 +39,7 @@ var initialState = {
     settingsChanged: false,
     uiAnimations: globalCfg.get("ui_animations"),
     needNetworkReset: false,
+    theme: globalCfg.get("theme"),
   },
   stakepool: {
     currentStakePoolConfig: null,
@@ -75,6 +76,7 @@ var initialState = {
     selectCreateWalletInputRequest: true,
     hiddenAccounts: Array(),
     walletName: null,
+    neededBlocks: 0,
   },
   version: {
     // RequiredVersion
@@ -166,6 +168,8 @@ var initialState = {
       listDirection: "desc", // asc = oldest -> newest, desc => newest -> oldest
       types: [], // desired transaction types (code). All if blank.
       direction: null, // direction of desired transactions (sent/received/transfer)
+      maxAmount: null,
+      minAmount: null,
     },
     lastTransaction: null, //last transaction obtained
 
@@ -211,7 +215,6 @@ var initialState = {
     peerCount: 0,
     existingOrNew: false,
     rpcRetryAttempts: 0,
-    neededBlocks: 0,
     curBlocks: 0,
     stepIndex: 0,
     maxWalletCount: globalCfg.get("max_wallet_count"),

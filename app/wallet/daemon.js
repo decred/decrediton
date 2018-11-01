@@ -89,9 +89,10 @@ export const getPreviousWallet = log(() => Promise
 , "Get Previous Wallet", logOptionNoResponseData());
 
 export const getBlockCount = log((rpcCreds, testnet) => new Promise(resolve => {
-  ipcRenderer.once("check-daemon-response", (e, block) => {
-    const blockCount = isString(block) ? parseInt(block.trim()) : block;
-    resolve(blockCount);
+  ipcRenderer.once("check-daemon-response", (e, info) => {
+    const blockCount = isString(info.blockCount) ? parseInt(info.blockCount.trim()) : info.blockCount;
+    const syncHeight = isString(info.syncHeight) ? parseInt(info.syncHeight.trim()) : info.syncHeight;
+    resolve({ blockCount, syncHeight });
   });
   ipcRenderer.send("check-daemon", rpcCreds, testnet);
 }), "Get Block Count");

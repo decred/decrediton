@@ -21,7 +21,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onAttemptChangePassphrase: ca.changePassphraseAttempt,
   onChangeTempSettings: sa.updateStateSettingsChanged,
   onSaveSettings: sa.saveSettings,
-  onCloseWallet: wla.closeWalletRequest
+  onCloseWallet: wla.closeWalletRequest,
+  toggleTheme: sa.toggleTheme,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);
