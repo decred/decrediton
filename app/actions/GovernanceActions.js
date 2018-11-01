@@ -80,6 +80,22 @@ const getProposalVoteResults = async (proposal, piURL) => {
       proposal.currentVoteChoice = choiceID;
     }
   });
+
+  proposal.quorumPass = false;
+  proposal.voteResult = "declined";
+  const voteResult = await pi.getVoteResult(piURL, proposal.token);
+
+  const quorum = voteResult.data.quorumpercentage ? voteResult.data.quorumpercentage : 20;
+  const totalVotes = voteResult.data.totalvotes;
+  const eligibleVotes = voteResult.data.numofeligiblevotes;
+  if (totalVotes / eligibleVotes > quorum / 100) {
+    proposal.quorumPass = true;
+  }
+
+  const passPercentage = voteResult.data.passPercentage ? voteResult.data.passPercentage : 60;
+  if (proposal.voteCounts["yes"] / totalVotes > passPercentage / 100) {
+    proposal.voteResult = "passed";
+  }
 };
 
 export const GETVETTED_ATTEMPT = "GETVETTED_ATTEMPT";
@@ -120,7 +136,7 @@ export const getVettedProposals = () => async (dispatch, getState) => {
       const voteInfo = activeVotesByToken[p.censorshiprecord.token];
       const voteDetails = parseVoteInfo(voteInfo, blockTimestampFromNow);
 
-      const proposal = {
+      var proposal = {
         creator: p.username,
         name: p.name,
         version: p.version,
@@ -138,6 +154,16 @@ export const getVettedProposals = () => async (dispatch, getState) => {
         voteInfo,
         ...voteData,
       };
+      if (voteStatus.status == VOTESTATUS_ACTIVEVOTE  ||
+        voteStatus.status == VOTESTATUS_VOTED) {
+        const { walletService } = getState().grpc;
+        const eligibleTickets = proposal && proposal.voteInfo
+          ? await getWalletCommittedTickets(proposal.voteInfo.startvotereply.eligibletickets, walletService)
+          : [];
+        proposal.eligibleTickets = eligibleTickets;
+
+        await getProposalVoteResults(proposal, piURL);
+      }
 
       proposals.push(proposal);
     }
