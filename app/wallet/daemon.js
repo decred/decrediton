@@ -122,7 +122,7 @@ export const getAvailableWallets = log((network) => Promise
   .resolve(ipcRenderer.sendSync("get-available-wallets", network))
   .then(availableWallets => {
     if (availableWallets) return availableWallets;
-    throw "Error getting avaiable wallets logs";
+    throw "Error getting available wallets logs";
   }), "Get Available Wallets", logOptionNoResponseData());
 
 export const reloadAllowedExternalRequests = log(() => Promise

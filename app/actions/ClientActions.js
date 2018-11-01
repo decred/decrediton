@@ -618,7 +618,7 @@ export const GETTRANSACTIONS_COMPLETE = "GETTRANSACTIONS_COMPLETE";
 // Currently supported filters in the filter object:
 // - type (array): Array of types a transaction must belong to, to be accepted.
 // - direction (string): A string of one of the allowed directions for regular
-//   transactions (sent/received/transfered)
+//   transactions (sent/received/transferred)
 //
 // If empty, all transactions are accepted.
 function filterTransactions(transactions, filter) {

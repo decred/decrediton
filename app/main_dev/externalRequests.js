@@ -54,7 +54,7 @@ export const installSessionHandlers = (mainLogger) => {
   // }
 
   // TODO: check if this filtering is working even when multiple windows are
-  // created (relevent to multi-wallet usage)
+  // created (relevant to multi-wallet usage)
   session.defaultSession.webRequest.onBeforeSendHeaders(filter, (details, callback) => {
     const isURLAllowed = (urlRegexp) => urlRegexp.test(details.url);
     if (!allowedURLs.some(isURLAllowed)) {
