@@ -14,6 +14,7 @@ import "./style/Global.less";
 import "./style/ReactSelectGlobal.less";
 import pkg from "./package.json";
 import { log } from "./wallet";
+import AboutModal from "./components/modals/AboutModal/Modal";
 
 var globalCfg = getGlobalCfg();
 const locale = globalCfg.get("locale");
@@ -387,11 +388,16 @@ const store = configureStore(initialState, history);
 
 render(
   <Provider store={store}>
-    <ConnectedRouter history={history}>
-      <Switch>
-        <Route path="/" component={App} />
-      </Switch>
-    </ConnectedRouter>
+    <Aux>
+      <ConnectedRouter history={history}>
+        <Switch>
+          <Route path="/" component={App} />
+        </Switch>
+      </ConnectedRouter>
+      <div>
+        <AboutModal show={true} onCancelModal={() => {console.log("closed");}} version="1.2.3.4" updateAvailable={true} />
+      </div>
+    </Aux>
   </Provider>,
   document.getElementById("root")
 );

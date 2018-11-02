@@ -111,7 +111,6 @@ class App extends React.Component {
             <Route path="/"            component={WalletContainer} />
           </MainSwitch>
           <div id="modal-portal" />
-          {/* <AboutModal show={true} onCancelModal={() => {console.log("closed");}} version="1.2.3.4" updateAvailable={true} /> */}
         </Aux>
       </IntlProvider>
     );
