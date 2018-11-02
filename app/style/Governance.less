@@ -215,39 +215,51 @@
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  margin-top: 22px;
 
   .proposal-details-overview-info {
-    padding: 30px 10px 15px 30px;
+    padding: 20px 10px 15px 40px;
     max-width: 60%;
   }
 
   .proposal-details-title {
-    font-size: 200%;
-    color: var(--title-text-and-button-background);
-    line-height: 28px;
+    font-size: 19px;
+    line-height: 24px;
+    color: var(--input-color-default);
+  }
+  
+  .proposal-details-token {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100px;
   }
 
   .proposal-details-token a {
-    color: var(--stroke-color-default);
-    font-size: 90%;
-    margin: 5px 0px 10px 0px;
-    word-break: break-all;
+    font-size: 13px;
+    line-height: 19px;
+    color: var(--stroke-color-hovered);
     text-decoration: none;
     cursor: pointer;
   }
 
   .proposal-details-token a:hover {
-    color: var(--stroke-color-hovered);
+    color: var(--stroke-color-default);
   }
 
   .proposal-details-overview-voting {
-    background-color: var(--background-container);
-    padding: 30px;
-    width: 25%;
+    background-color: var(--disabled-background-color-lighter);
+    padding: 30px 20px;
+    width: 286px;
+    height: 60px;
 
     .go-back-icon-button {
-      margin: -15px -15px 0px 0px;
+      margin: -20px -12px 0px 0px;
       float: right;
+      cursor: pointer;
+      &:hover {
+        opacity: 0.7;
+      }
     }
 
     .button {
@@ -258,7 +270,8 @@
     .proposal-details-voting-preference-title,
     .proposal-details-voting-not-voting,
     .proposal-details-voting-voted {
-      font-size: 120%;
+      font-size: 13px;
+      line-height: 16px;
       margin-bottom: 15px;
     }
 
@@ -270,18 +283,21 @@
       margin-bottom: 10px;
 
       > div {
-        width: 10px;
-        height: 10px;
+        width: 12px;
+        height: 12px;
         margin: 0px 0.5em 0px 0px;
+        border-radius: 100px;
         display: inline-block;
       }
 
       .yes {
-        background-color: var(--vote-yes-color);
+        border: 1px solid var(--vote-yes-color);
+        background-color: var(--disabled-background-color-lighter);
       }
 
       .no {
-        background-color: var(--vote-no-color);
+        border: 1px solid var(--vote-no-color);
+        background-color: var(--disabled-background-color-lighter);
       }
 
       .abstain {
@@ -290,15 +306,21 @@
     }
   }
 
+  .proposal-details-overview-fields {
+    margin-top: 11px;
+  }
+
   .proposal-details-overview-field {
     .label {
+      color: var(--stroke-color-hovered);
       display: inline-block;
       margin-right: 0.5em;
-      width: 30%;
+      width: 100px;
       text-align: right;
     }
 
     .value {
+      color: var(--input-color-default);
       display: inline-block;
     }
 
@@ -314,7 +336,7 @@
     padding: 10px 30px;
 
     .voting-progress-indicator {
-      height: 10px;
+      height: 5px;
     }
   }
 }
@@ -327,13 +349,17 @@
 
 .proposal-details-voting-progress-counts {
   text-align: right;
-  padding-right: 20px;
+  padding-right: 5px;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 19px;
 
   > div {
-    width: 10px;
-    height: 10px;
+    width: 6px;
+    height: 6px;
     display: inline-block;
-    margin: 0px 5px 0px 10px;
+    border-radius: 100px;
+    margin: 0px 5px 0px 20px;
   }
 
   .yes-count-box {

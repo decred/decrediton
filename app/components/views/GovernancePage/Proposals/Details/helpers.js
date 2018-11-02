@@ -86,8 +86,8 @@ export const OverviewField = showCheck(( { label, value } ) => (
 export const OverviewVotingProgressInfo = ({ voteCounts }) => (
   <div className="proposal-details-voting-progress">
     <div className="proposal-details-voting-progress-counts">
-      <div className="yes-count-box" /><T id="proposal.progressCount.yes" m="{count} Yes" values={{ count: voteCounts.yes }} />
-      <div className="no-count-box" /><T id="proposal.progressCount.no" m="{count} No" values={{ count: voteCounts.no }} />
+      <div className="yes-count-box" />{voteCounts.yes}
+      <div className="no-count-box" />{voteCounts.no}
       {/* // TODO: return if we have have quorum/total ticket counts available.
       <div className="abstain-count-box" /><T id="proposal.progressCount.abstain" m="{count} Abstain" values={{ count: voteCounts.abstain }} /> */}
     </div>
