@@ -280,28 +280,44 @@
     }
 
     .proposal-details-current-choice-box {
-      margin-bottom: 10px;
-
-      > div {
-        width: 12px;
-        height: 12px;
-        margin: 0px 0.5em 0px 0px;
-        border-radius: 100px;
-        display: inline-block;
-      }
-
-      .yes {
-        border: 1px solid var(--vote-yes-color);
-        background-color: var(--disabled-background-color-lighter);
-      }
-
-      .no {
-        border: 1px solid var(--vote-no-color);
-        background-color: var(--disabled-background-color-lighter);
-      }
-
-      .abstain {
-        background-color: var(--vote-abstain-color);
+      display: flex;
+      flex-direction: column;
+      .choice {
+        display: flex;
+        margin-bottom: 10px;
+        .yes,
+        .no {
+          width: 12px;
+          height: 12px;
+          border-radius: 100px;
+          background-color: var(--disabled-background-color-lighter);
+          margin-top: 3px;
+        }
+        .yes {
+          border: 1px solid var(--vote-yes-color);
+          > .selected {
+            width: 6px;
+            height: 6px;
+            border-radius: 100px;
+            background-color: var(--vote-yes-color);
+            margin-top: 3px;
+            margin-left: 3px;
+          }
+        }
+        .no {
+          border: 1px solid var(--vote-no-color);
+          > .selected {
+            width: 6px;
+            height: 6px;
+            border-radius: 100px;
+            background-color: var(--vote-no-color);
+            margin-top: 3px;
+            margin-left: 3px;
+          }
+        }
+        > span {
+          margin-left: 10px;
+        }
       }
     }
   }

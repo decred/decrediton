@@ -32,18 +32,10 @@ export const NoElligibleTicketsVotingInfo = ({ showPurchaseTicketsPage }) => (
 );
 
 const CurrentVoteChoiceLabel = ({ currentVoteChoice }) => {
-  const className = "proposal-details-current-choice-box " + currentVoteChoice;
-  const labels = {
-    yes: <T id="proposal.currentChoice.yes" m="Yes" />,
-    no: <T id="proposal.currentChoice.no" m="No" />,
-    abstain: <T id="proposal.currentChoice.abstain" m="Abstain" />,
-    unknown: <T id="proposal.currentChoice.unknown" m="Unknown" />,
-  };
-  const label = labels[currentVoteChoice] || labels.unknown;
-
   return (
     <Aux>
-      <div className={className} />{label}
+      <div className="choice"><div className="yes">{currentVoteChoice == "yes" && <div className="selected"/>}</div><T id="proposal.currentChoice.yes" m="Yes" /></div>
+      <div className="choice"><div className="no">{currentVoteChoice == "no" && <div className="selected"/>}</div><T id="proposal.currentChoice.no" m="No" /></div>
     </Aux>
   );
 };
