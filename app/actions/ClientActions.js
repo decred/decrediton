@@ -14,6 +14,7 @@ import { getTransactions as walletGetTransactions } from "wallet/service";
 import { TransactionDetails } from "middleware/walletrpc/api_pb";
 import { clipboard } from "electron";
 import { getStartupStats } from "./StatisticsActions";
+import { rawHashToHex } from "../helpers/byteActions";
 
 export const goToTransactionHistory = () => (dispatch) => {
   dispatch(pushHistory("/transactions/history"));
@@ -979,4 +980,98 @@ export const copySeedToClipboard = (mnemonic) => (dispatch) => {
   clipboard.clear();
   clipboard.writeText(mnemonic);
   dispatch({ type: SEEDCOPIEDTOCLIPBOARD });
+};
+
+export const FETCHMISSINGSTAKETXDATA_ATTEMPT = "FETCHMISSINGSTAKETXDATA_ATTEMPT";
+export const FETCHMISSINGSTAKETXDATA_SUCCESS = "FETCHMISSINGSTAKETXDATA_SUCCESS";
+export const FETCHMISSINGSTAKETXDATA_FAILED = "FETCHMISSINGSTAKETXDATA_FAILED";
+
+// fetchMissingStakeTxData fetches the missing stake information of a given
+// transaction returned from getTransaction. For tickets, it tries to fill the
+// ticket purchase amount and for votes it tries to fill the purchase info and
+// reward data.
+//
+// This function is not suitable for calling on a list of transactions, since
+// some cases/operations are slow.
+export const fetchMissingStakeTxData = tx => async (dispatch, getState) => {
+
+  if (getState().grpc.fetchMissingStakeTxDataAttempt[tx.txHash]) {
+    return;
+  }
+  dispatch({ txHash: tx.txHash, type: FETCHMISSINGSTAKETXDATA_ATTEMPT });
+
+  let newTx;
+
+  if (tx.txType == "Ticket") {
+    // TODO: the wallet doesn't have a specific call to get ticket details
+    // (including spender tx) from an arbitrary transaction hash, so for the
+    // moment we can only get the ticket price and purchase date (enterTimestamp).
+    // If this ever changes, we can probably merge this code path with the one
+    // in the else clause below, so that voted/revoked tickets will show
+    // all the relevant information.
+
+    // Use the raw decoded transaction vs credit[0] due to situations where the
+    // ticket submission output is not from this wallet (solo voting tickets and
+    // split tickets)
+    let decodedTx = sel.decodedTransactions(getState())[tx.txHash];
+    if (!decodedTx) {
+      decodedTx = (await dispatch(decodeRawTransactions([ tx.rawTx ])))[tx.txHash];
+    }
+
+    newTx = {
+      ...tx.originalTx,
+      enterTimestamp: tx.txTimestamp,
+      ticketPrice: decodedTx.transaction.getOutputsList()[0].getValue(),
+    };
+  } else { // vote/revoke
+    let decodedSpender = sel.decodedTransactions(getState())[tx.txHash];
+    if (!decodedSpender) {
+      // don't have the spender decoded. Request it.
+      decodedSpender = (await dispatch(decodeRawTransactions([ tx.rawTx ])))[tx.txHash];
+    }
+
+    // given that the ticket may be much older than the transactions currently
+    // in the `transactions` state var, we need to manually fetch the ticket
+    // transaction
+    const ticketTxHash = rawHashToHex(decodedSpender.transaction.getInputsList()[1].getPreviousTransactionHash());
+    const ticketTx = await wallet.getTransaction(sel.walletService(getState()),
+      ticketTxHash);
+
+    let decodedTicket = sel.decodedTransactions(getState())[ticketTxHash];
+    if (!decodedTicket) {
+      // don't have the ticket decoded. Request it.
+      const rawTicketTx = Buffer.from(ticketTx.tx.getTransaction()).toString("hex");
+      await dispatch(decodeRawTransactions([ rawTicketTx ]));
+    }
+
+    // normalize ticket+spender as if it was a result item from a wallet.getTickets call
+    const ticket = {
+      ticket: ticketTx.tx,
+      spender: tx.originalTx.tx,
+      status: tx.txType === "Vote" ? "voted" : "revoked",
+    };
+    const ticketNormal = sel.ticketNormalizer(getState())(ticket);
+
+    newTx = {
+      ...tx.originalTx,
+      enterTimestamp: ticketNormal.enterTimestamp,
+      leaveTimestamp: ticketNormal.leaveTimestamp,
+      ticketPrice: ticketNormal.ticketPrice,
+      ticketReward: ticketNormal.ticketReward,
+      // add more stuff from the result of sel.ticketNormalizer if ever needed
+    };
+  }
+
+  const oldTxs = getState().grpc.transactions;
+  const txIdx = oldTxs.findIndex(t => t.txHash === tx.txHash);
+  if (txIdx > -1) {
+    const newTxs = [ ...oldTxs ];
+    newTxs.splice(txIdx, 1, newTx);
+    dispatch({ transactions: newTxs, txHash: tx.txHash, type: FETCHMISSINGSTAKETXDATA_SUCCESS });
+  } else {
+    // not supposed to happen in normal usage; this function  should only be
+    // entered from a transaction already in the transaction list
+    // (sel.transactions).
+    dispatch({ txHash: tx.txHash, type: FETCHMISSINGSTAKETXDATA_FAILED });
+  }
 };

@@ -334,12 +334,12 @@ const transactionNormalizer = createSelector(
   (accounts, txURLBuilder, blockURLBuilder) => {
     const findAccount = num => accounts.find(account => account.getAccountNumber() === num);
     const getAccountName = num => (act => act ? act.getAccountName() : "")(findAccount(num));
-    return tx => {
-      const { blockHash } = tx;
-      const type = tx.type || (tx.getTransactionType ? tx.getTransactionType() : null);
-      let txInfo = tx.tx ? tx : {};
-      let timestamp = tx.timestamp;
-      tx = tx.tx || tx;
+    return origTx => {
+      const { blockHash } = origTx;
+      const type = origTx.type || (origTx.getTransactionType ? origTx.getTransactionType() : null);
+      let txInfo = origTx.tx ? origTx : {};
+      let timestamp = origTx.timestamp;
+      const tx = origTx.tx || origTx;
       timestamp = timestamp || tx.timestamp;
       let totalFundsReceived = 0;
       let totalChange = 0;
@@ -390,6 +390,12 @@ const transactionNormalizer = createSelector(
             txAccountName: getAccountName(creditedAccount)
           };
 
+      let stakeInfo = {};
+      if (origTx.ticketPrice) stakeInfo.ticketPrice = origTx.ticketPrice;
+      if (origTx.enterTimestamp) stakeInfo.enterTimestamp = origTx.enterTimestamp;
+      if (origTx.leaveTimestamp) stakeInfo.leaveTimestamp = origTx.leaveTimestamp;
+      if (origTx.ticketReward) stakeInfo.ticketReward = origTx.ticketReward;
+
       return {
         txUrl: txURLBuilder(txHash),
         txBlockUrl: txBlockHash ? blockURLBuilder(txBlockHash) : null,
@@ -403,6 +409,8 @@ const transactionNormalizer = createSelector(
         txBlockHash,
         txNumericType: type,
         rawTx: Buffer.from(tx.getTransaction()).toString("hex"),
+        originalTx: origTx,
+        ...stakeInfo,
         ...txDetails
       };
     };
