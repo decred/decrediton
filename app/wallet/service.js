@@ -252,7 +252,6 @@ export const publishUnminedTransactions = log((walletService) => new Promise((re
 export const committedTickets = withLogNoData((walletService, ticketHashes) => new Promise((resolve, reject) => {
   const req = new CommittedTicketsRequest();
   req.setTicketsList(ticketHashes);
-  console.log(ticketHashes);
   walletService.committedTickets(req, (err, tickets) => err ? reject(err) : resolve(tickets));
 }), "Committed Tickets");
 

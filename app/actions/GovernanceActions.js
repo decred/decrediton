@@ -57,7 +57,7 @@ const getWalletCommittedTickets = async (eligibleTickets, walletService) => {
 };
 
 // Aux function to fill the vote result information on a given proposal.
-const getProposalVoteResults = async (proposal, piURL) => {
+const getProposalVoteResults = async (proposal, piURL, walletService) => {
   proposal.voteCounts = {};
   proposal.currentVoteChoice = "abstain";
 
@@ -67,9 +67,17 @@ const getProposalVoteResults = async (proposal, piURL) => {
     proposal.voteCounts[opt.id] = 0;
   });
 
-  const myTickets = proposal.eligibleTickets.reduce( (m, t) => { m[t.ticket] = true; return m; }, {});
 
   const voteResults = await pi.getVoteResults(piURL, proposal.token);
+
+  const eligibleTickets = voteResults && voteResults.data && voteResults.data.startvotereply
+    ? await getWalletCommittedTickets(voteResults.data.startvotereply.eligibletickets, walletService)
+    : [];
+  proposal.eligibleTickets = eligibleTickets;
+  proposal.hasEligibleTickets = eligibleTickets.length > 0;
+
+  const myTickets = proposal.eligibleTickets.reduce( (m, t) => { m[t.ticket] = true; return m; }, {});
+
 
   voteResults.data.castvotes.forEach(vote => {
     const choiceID = voteBitToChoice[parseInt(vote.votebit)];
@@ -126,7 +134,7 @@ export const getVettedProposals = () => async (dispatch, getState) => {
       m[p.proposal.censorshiprecord.token] = p;
       return m;
     }, {}) : [];
-    console.log("activeVotes", activeVotesByToken);
+
     // resulting data
     const proposals = [], preVote = [], activeVote = [], voted = [], byToken = {};
 
@@ -157,13 +165,7 @@ export const getVettedProposals = () => async (dispatch, getState) => {
       if (voteStatus.status == VOTESTATUS_ACTIVEVOTE  ||
         voteStatus.status == VOTESTATUS_VOTED) {
         const { walletService } = getState().grpc;
-        console.log(proposal);
-        const eligibleTickets = proposal && proposal.voteInfo
-          ? await getWalletCommittedTickets(proposal.voteInfo.startvotereply.eligibletickets, walletService)
-          : [];
-        proposal.eligibleTickets = eligibleTickets;
-
-        await getProposalVoteResults(proposal, piURL);
+        await getProposalVoteResults(proposal, piURL, walletService);
       }
 
       proposals.push(proposal);
@@ -212,10 +214,6 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
     const proposals = getState().governance.proposals;
     let proposal = proposals[token];
 
-    const eligibleTickets = proposal && proposal.voteInfo
-      ? await getWalletCommittedTickets(proposal.voteInfo.startvotereply.eligibletickets, walletService)
-      : [];
-
     const p = resp.data.proposal;
     const files = p.files.map(f => {
       return {
@@ -236,12 +234,12 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
       timestamp: p.timestamp,
       files: files,
       hasDetails: true,
-      hasEligibleTickets: eligibleTickets.length > 0,
-      eligibleTickets,
+      hasEligibleTickets: false,
+      eligibleTickets: []
     };
 
     if ([ VOTESTATUS_VOTED, VOTESTATUS_ACTIVEVOTE ].includes(proposal.voteStatus)) {
-      await getProposalVoteResults(proposal, piURL);
+      await getProposalVoteResults(proposal, piURL, walletService);
     }
 
     dispatch({ token, proposal, type: GETPROPOSAL_SUCCESS });
