@@ -1030,10 +1030,16 @@ export const fetchMissingStakeTxData = tx => async (dispatch, getState) => {
       decodedSpender = (await dispatch(decodeRawTransactions([ tx.rawTx ])))[tx.txHash];
     }
 
+    // Find the ticket hash of the vote/revoke. Determining whether it's a vote
+    // or revocation by looking at the number of inputs is not great, but works
+    // for now given the current consensus rules.
+    const spenderInputs = decodedSpender.transaction.getInputsList();
+    const outpIdx = spenderInputs.length === 1 ? 0 : 1;
+    const ticketTxHash = rawHashToHex(spenderInputs[outpIdx].getPreviousTransactionHash());
+
     // given that the ticket may be much older than the transactions currently
     // in the `transactions` state var, we need to manually fetch the ticket
     // transaction
-    const ticketTxHash = rawHashToHex(decodedSpender.transaction.getInputsList()[1].getPreviousTransactionHash());
     const ticketTx = await wallet.getTransaction(sel.walletService(getState()),
       ticketTxHash);
 
