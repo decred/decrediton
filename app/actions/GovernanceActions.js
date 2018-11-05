@@ -126,7 +126,7 @@ export const getVettedProposals = () => async (dispatch, getState) => {
       m[p.proposal.censorshiprecord.token] = p;
       return m;
     }, {}) : [];
-
+    console.log("activeVotes", activeVotesByToken);
     // resulting data
     const proposals = [], preVote = [], activeVote = [], voted = [], byToken = {};
 
@@ -157,6 +157,7 @@ export const getVettedProposals = () => async (dispatch, getState) => {
       if (voteStatus.status == VOTESTATUS_ACTIVEVOTE  ||
         voteStatus.status == VOTESTATUS_VOTED) {
         const { walletService } = getState().grpc;
+        console.log(proposal);
         const eligibleTickets = proposal && proposal.voteInfo
           ? await getWalletCommittedTickets(proposal.voteInfo.startvotereply.eligibletickets, walletService)
           : [];
