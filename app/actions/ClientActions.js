@@ -18,6 +18,7 @@ import { rawHashToHex } from "../helpers/byteActions";
 import { getTreasuryInfo, dcrdataURL } from "../middleware/politeiaapi";
 import * as pi from "../middleware/politeiaapi";
 import * as da from "../middleware/dcrdataapi";
+import { EXTERNALREQUEST_DCRDATA } from "main_dev/externalRequests";
 
 export const goToTransactionHistory = () => (dispatch) => {
   dispatch(pushHistory("/transactions/history"));
@@ -90,6 +91,7 @@ export const GETSTARTUPWALLETINFO_FAILED = "GETSTARTUPWALLETINFO_FAILED";
 
 export const getStartupWalletInfo = () => (dispatch) => {
   dispatch({ type: GETSTARTUPWALLETINFO_ATTEMPT });
+  const config = getGlobalCfg();
   return new Promise((resolve, reject) => {
     setTimeout( async () => {
       try {
@@ -103,7 +105,9 @@ export const getStartupWalletInfo = () => (dispatch) => {
         await dispatch(findImmatureTransactions());
         await dispatch(getAccountsAttempt(true));
         await dispatch(getStartupStats());
-        await dispatch(getTreasuryBalance());
+        if (config.get("allowed_external_requests").indexOf(EXTERNALREQUEST_DCRDATA) > -1) {
+          await dispatch(getTreasuryBalance());
+        }
         dispatch({ type: GETSTARTUPWALLETINFO_SUCCESS });
         resolve();
       } catch (error) {
@@ -1086,20 +1090,13 @@ export const fetchMissingStakeTxData = tx => async (dispatch, getState) => {
   }
 };
 
-export const SET_TREASURY_BALANCE = "SET_TREASURY_BALANCE";
-export const setTreasuryBalance = () => (dispatch, getState) => {
-  const dURL = dcrdataURL(getState());
-  const treasuryBalance = getTreasuryInfo(dURL)["dcr_unspent"];
-  dispatch({ treasuryBalance, type: SET_TREASURY_BALANCE });
-};
-
-export const GET_TREASURY_BALANCE = "GET_TREASURY_BALANCE";
+export const GETTREASURY_BALANCE_SUCCESS = "GETTREASURY_BALANCE_SUCCESS";
 export const getTreasuryBalance = () => (dispatch, getState) => {
   const treasuryAddress = sel.chainParams(getState()).TreasuryAddress;
   const dURL = sel.dcrdataURL(getState());
   da.getTreasuryInfo(dURL, treasuryAddress)
     .then(treasuryInfo => {
       const treasuryBalance = treasuryInfo["data"]["dcr_unspent"] * 1e8;
-      dispatch({ treasuryBalance, type: GET_TREASURY_BALANCE });
+      dispatch({ treasuryBalance, type: GETTREASURY_BALANCE_SUCCESS });
     });
 };
