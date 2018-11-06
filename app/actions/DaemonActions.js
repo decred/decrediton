@@ -328,13 +328,28 @@ export const prepStartDaemon = () => (dispatch, getState) => {
   }
 };
 
+const isDaemonDecreditonNetworkMatch = (isDaemonTestnet, network) => {
+  if (network === "mainnet" && isDaemonTestnet) {
+    return false;
+  }
+  if (network === "testnet" && !isDaemonTestnet) {
+    return false;
+  }
+  return true;
+}
+
 export const STARTUPBLOCK = "STARTUPBLOCK";
 export const syncDaemon = () =>
   (dispatch, getState) => {
-    const updateBlockCount = () => {
+    const updateBlockCount = async () => {
       const { daemon: { daemonSynced, timeStart, blockStart, credentials, daemonError, neededBlocks } } = getState();
+      const { currentSettings } = getState().settings;
       // check to see if user skipped;
       if (daemonSynced || daemonError) return;
+      const daemonIsTestNet = await wallet.getDaemonInfo(credentials)
+      if(!isDaemonDecreditonNetworkMatch(daemonIsTestNet, currentSettings.network)) {
+        return dispatch(pushHistory("/error"));
+      }
       return wallet
         .getBlockCount(credentials, isTestNet(getState()))
         .then(( blockChainInfo ) => {
