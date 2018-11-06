@@ -1099,7 +1099,7 @@ export const getTreasuryBalance = () => (dispatch, getState) => {
   const dURL = sel.dcrdataURL(getState());
   da.getTreasuryInfo(dURL, treasuryAddress)
     .then(treasuryInfo => {
-      const treasuryBalance = treasuryInfo["data"]["dcr_unspent"];
+      const treasuryBalance = treasuryInfo["data"]["dcr_unspent"] * 1e8;
       dispatch({ treasuryBalance, type: GET_TREASURY_BALANCE });
     });
 };

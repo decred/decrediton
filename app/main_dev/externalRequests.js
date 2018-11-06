@@ -22,6 +22,7 @@ export const STANDARD_EXTERNAL_REQUESTS = [
   EXTERNALREQUEST_NETWORK_STATUS,
   EXTERNALREQUEST_STAKEPOOL_LISTING,
   EXTERNALREQUEST_UPDATE_CHECK,
+  EXTERNALREQUEST_DCRDATA
 ];
 
 let allowedURLs = [];
@@ -76,8 +77,6 @@ const addAllowedURL = (url) => {
 
 export const allowExternalRequest = (externalReqType) => {
   if (allowedExternalRequests[externalReqType]) return;
-
-  console.log("allowing external req " + externalReqType)
 
   switch (externalReqType) {
   case EXTERNALREQUEST_NETWORK_STATUS:

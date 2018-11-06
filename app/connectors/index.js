@@ -52,3 +52,4 @@ export { default as preVoteProposals } from "./preVoteProposals";
 export { default as votedProposals } from "./votedProposals";
 export { default as proposals } from "./proposals";
 export { default as network } from "./network";
+export { default as treasuryInfo } from "./treasuryInfo";
