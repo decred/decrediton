@@ -18,7 +18,7 @@ import {
   DECREDITON_VERSION,
   FATAL_DAEMON_ERROR,
   FATAL_WALLET_ERROR,
-  CLOSEDAEMON_ATTEMPT, CLOSEDAEMON_FAILED, CLOSEDAEMON_SUCCESS
+  CLOSEDAEMON_ATTEMPT, CLOSEDAEMON_FAILED, CLOSEDAEMON_SUCCESS, NOT_SAME_CONNECTION,
 } from "../actions/DaemonActions";
 import {
   CREATEWALLET_GOBACK,
@@ -177,6 +177,11 @@ export default function version(state = {}, action) {
     return {
       ...state,
       walletError: action.error,
+    };
+  case NOT_SAME_CONNECTION:
+    return {
+      ...state,
+      daemonError: action.error,
     };
   default:
     return state;

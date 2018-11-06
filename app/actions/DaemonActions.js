@@ -11,6 +11,7 @@ import { setMustOpenForm, getWalletCfg, getAppdataPath, getRemoteCredentials, ge
 import { isTestNet } from "selectors";
 import axios from "axios";
 import { STANDARD_EXTERNAL_REQUESTS } from "main_dev/externalRequests";
+import { DIFF_CONNECTION_ERROR } from "main_dev/constants";
 
 export const DECREDITON_VERSION = "DECREDITON_VERSION";
 export const SELECT_LANGUAGE = "SELECT_LANGUAGE";
@@ -42,6 +43,7 @@ export const WALLET_LOADER_SETTINGS = "WALLET_LOADER_SETTINGS";
 export const DELETE_DCRD_ATTEMPT = "DELETE_DCRD_ATTEMPT";
 export const DELETE_DCRD_FAILED = "DELETE_DCRD_FAILED";
 export const DELETE_DCRD_SUCCESS = "DELETE_DCRD_SUCCESS";
+export const NOT_SAME_CONNECTION = "NOT_SAME_CONNECTION";
 
 export const checkDecreditonVersion = () => (dispatch, getState) =>{
   const detectedVersion = getState().daemon.appVersion;
@@ -331,10 +333,16 @@ export const prepStartDaemon = () => (dispatch, getState) => {
 export const STARTUPBLOCK = "STARTUPBLOCK";
 export const syncDaemon = () =>
   (dispatch, getState) => {
-    const updateBlockCount = () => {
+    const updateBlockCount = async () => {
       const { daemon: { daemonSynced, timeStart, blockStart, credentials, daemonError, neededBlocks } } = getState();
       // check to see if user skipped;
       if (daemonSynced || daemonError) return;
+      const daemonInfo = await wallet.getDaemonInfo(credentials);
+      if (daemonInfo.isTestNet !== null &&
+          daemonInfo.isTestNet !== isTestNet(getState())) {
+        dispatch({ error: DIFF_CONNECTION_ERROR, type: NOT_SAME_CONNECTION });
+        return dispatch(pushHistory("/error"));
+      }
       return wallet
         .getBlockCount(credentials, isTestNet(getState()))
         .then(( blockChainInfo ) => {
