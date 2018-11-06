@@ -5,6 +5,8 @@ import "style/Layout.less";
 
 const resourcesUnavailableError = "resource temporarily unavailable";
 
+const diffConnection = "daemon and decrediton does not have the same network"
+
 const corruptedError = "corrupted";
 
 const checkSumError = "checksum does not match";
@@ -28,6 +30,8 @@ class FatalErrorPage extends React.Component {
           <div className="fatal-error-suggestion">
             {daemonError && daemonError.indexOf(resourcesUnavailableError) > 0 ?
               <T id="fatal.suggestion.resources" m="This error typically means you have another instance of daemon running.  You should check your taskmanager or profiler to shutdown any still running daemon and then try again." /> :
+              daemonError && daemonError.indexOf(diffConnection) !== -1 ? 
+                <T id="fatal.suggestion.diffConnection" m="This error typically means you have the testnet flag on your dcrd.conf file. You should check your dcrd.conf file and remove the testnet=1." /> :
               daemonError && (daemonError.indexOf(corruptedError) > 0  || daemonError.indexOf(checkSumError)) ?
                 <Aux>
                   <div className="fatal-error-reset-blockchain">
@@ -40,7 +44,7 @@ class FatalErrorPage extends React.Component {
                     onSubmit={deleteDaemonData}
                     buttonLabel={ <T id="fatal.button.delete" m="Delete and Shutdown"/>}/>
                 </Aux> :
-                <T id="fatal.suggestion.fallthrough" m="Please note the error above and go to the support channel on slack/matrix/rockchat for help resolving the issue." />
+                  <T id="fatal.suggestion.fallthrough" m="Please note the error above and go to the support channel on slack/matrix/rockchat for help resolving the issue." />
             }
           </div>
           <div className="fatal-error-toolbar">

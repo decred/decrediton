@@ -175,7 +175,7 @@ export const getDaemonInfo = (mainWindow, rpcCreds) => {
 
   dcrctl.stdout.on("data", (data) => {
     const parsedData = JSON.parse(data);
-    const isTestNet = !parsedData.testnet;
+    const isTestNet = parsedData.testnet;
     logger.log("info", "isTestnet: " + isTestNet);
 
     mainWindow.webContents.send("check-getinfo-response", { isTestNet });
