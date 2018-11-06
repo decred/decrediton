@@ -6,8 +6,6 @@ import axios from "axios";
 
 export const POLITEIA_URL_TESTNET = "https://test-proposals.decred.org/api";
 export const POLITEIA_URL_MAINNET = "https://proposals.decred.org/api";
-export const DCRDATA_URL_TESTNET = "https://testnet.dcrdata.org/api";
-export const DCRDATA_URL_MAINNET = "https://explorer.dcrdata.org/api";
 
 const CSRF_TOKEN_HEADER = "x-csrf-token"; // must always be lowercase
 
@@ -47,8 +45,6 @@ export const getVoteStatus = (piURL) => GET(piURL, "/v1/proposals/votestatus");
 export const getProposal = (piURL, token) => GET(piURL, "/v1/proposals/" + token);
 export const getVoteResults = (piURL, token) => GET(piURL, "/v1/proposals/" + token + "/votes");
 export const getVoteResult = (piURL, token) => GET(piURL, "/v1/proposals/" + token + "/votestatus");
-
-export const getTreasuryInfo = (dcrdataURL) => GET(dcrdataURL, "/address/Dcur2mcGjmENx4DhNqDctW5wJCVyT3Qeqkx/totals");
 
 // votes must be an array of Vote()-produced objects.
 export const castVotes = (piURL, votes) => POST(piURL, "/v1/proposals/castvotes", { votes });

@@ -17,6 +17,7 @@ import { getStartupStats } from "./StatisticsActions";
 import { rawHashToHex } from "../helpers/byteActions";
 import { getTreasuryInfo, dcrdataURL } from "../middleware/politeiaapi";
 import * as pi from "../middleware/politeiaapi";
+import * as da from "../middleware/dcrdataapi";
 
 export const goToTransactionHistory = () => (dispatch) => {
   dispatch(pushHistory("/transactions/history"));
@@ -1094,12 +1095,11 @@ export const setTreasuryBalance = () => (dispatch, getState) => {
 
 export const GET_TREASURY_BALANCE = "GET_TREASURY_BALANCE";
 export const getTreasuryBalance = () => (dispatch, getState) => {
-  const chainParams = sel.chainParams(getState());
+  const treasuryAddress = sel.chainParams(getState()).TreasuryAddress;
   const dURL = sel.dcrdataURL(getState());
-  pi.getTreasuryInfo(dURL, chainParams.TreasuryAddress)
+  da.getTreasuryInfo(dURL, treasuryAddress)
     .then(treasuryInfo => {
-      const balance = treasuryInfo["dcr_unspent"];
-      console.log("BALANCE of " + chainParams.TreasuryAddress + " is " + balance);
-      dispatch({ balance, type: GET_TREASURY_BALANCE });
+      const treasuryBalance = treasuryInfo["data"]["dcr_unspent"];
+      dispatch({ treasuryBalance, type: GET_TREASURY_BALANCE });
     });
 };

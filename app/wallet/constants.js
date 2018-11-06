@@ -15,7 +15,7 @@ export const TestNetParams = {
 
   WorkDiffWindowSize: 144,
 
-  treasuryAddress: "TcrypGAcGCRVXrES7hWqVZb5oLJKCZEtoL1",
+  TreasuryAddress: "TcrypGAcGCRVXrES7hWqVZb5oLJKCZEtoL1",
 };
 
 export const MainNetParams = {
