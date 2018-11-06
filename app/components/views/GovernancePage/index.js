@@ -20,10 +20,10 @@ export default () => (
   <TabbedPage header={<PageHeader />} >
     <Switch>
       <Redirect from="/governance" exact to="/governance/proposals" />
-      <Redirect from="/governance/proposals" exact to="/governance/proposals/activevote" />
+      <Redirect from="/governance/proposals" exact to="/governance/proposals/prevote" />
     </Switch>
 
-    <Tab path="/governance/proposals" component={ProposalsTab} header={TabHeader} link={<T id="governance.tab.politeia" m="Politeia"/>}/>
-    <Tab path="/governance/blockchain" component={BlockchainTab} header={TabHeader} link={<T id="governance.tab.blockchain" m="Blockchain"/>}/>
+    <Tab path="/governance/proposals" component={ProposalsTab} header={TabHeader} link={<T id="governance.tab.proposals" m="Proposals"/>}/>
+    <Tab path="/governance/blockchain" component={BlockchainTab} header={TabHeader} link={<T id="governance.tab.consensusChanges" m="Consensus Changes"/>}/>
   </TabbedPage>
 );
