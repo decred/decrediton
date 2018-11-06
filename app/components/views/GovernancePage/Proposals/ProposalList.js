@@ -2,6 +2,7 @@ import { FormattedMessage as T, FormattedRelative } from "react-intl";
 import { activeVoteProposals, preVoteProposals, votedProposals, proposals } from "connectors";
 import { VotingProgress } from "indicators";
 import { PoliteiaLoading, NoProposals } from "indicators";
+import { VOTESTATUS_ACTIVEVOTE, VOTESTATUS_VOTED } from "actions/GovernanceActions";
 
 const VoteChoice = ({ currentVoteChoice }) =>
   <div className={"proposal-vote-choice " + currentVoteChoice}/>;
@@ -20,18 +21,18 @@ const ProposalListItem = ({ name, timestamp, token, voteCounts, tsDate, onClick,
     <div className="info">
       <div className="proposal-name">{ name }</div>
       <div className="proposal-token">{ token }</div>
-      {voteStatus !== 4 &&
+      {voteStatus !== VOTESTATUS_VOTED &&
       <div className="proposal-timestamp">
         <T id="proposalItem.lastUpdatedAt" m="Last Updated {reldate}" values={{
           reldate: <FormattedRelative  value={ tsDate(timestamp) } /> }} />
       </div>}
     </div>
-    {voteStatus == 3 &&
+    {voteStatus == VOTESTATUS_ACTIVEVOTE &&
       <Aux>
         <VoteChoice currentVoteChoice={currentVoteChoice} />
         <VotingProgress voteCounts={voteCounts} />
       </Aux>}
-    {voteStatus == 4 &&
+    {voteStatus == VOTESTATUS_VOTED &&
       <VoteResults  {...{ currentVoteChoice, quorumPass, voteResult }}/>}
   </div>
 );
