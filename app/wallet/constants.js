@@ -14,6 +14,8 @@ export const TestNetParams = {
   HDCoinType: 1,
 
   WorkDiffWindowSize: 144,
+
+  treasuryAddress: "TcrypGAcGCRVXrES7hWqVZb5oLJKCZEtoL1",
 };
 
 export const MainNetParams = {
@@ -30,4 +32,6 @@ export const MainNetParams = {
   HDCoinType: 42,
 
   WorkDiffWindowSize: 144,
+
+  TreasuryAddress: "Dcur2mcGjmENx4DhNqDctW5wJCVyT3Qeqkx",
 };
