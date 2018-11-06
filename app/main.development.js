@@ -39,6 +39,10 @@ const daemonIsAdvanced = globalCfg.get("daemon_start_advanced");
 const walletsDirectory = getWalletsDirectoryPath();
 const mainnetWalletsPath = getWalletsDirectoryPathNetwork(false);
 const testnetWalletsPath = getWalletsDirectoryPathNetwork(true);
+if (globalCfg.get("disable_hardware_accel")) {
+  logger.log("info", "Disabling hardware acceleration");
+  app.disableHardwareAcceleration();
+}
 
 if (argv.help) {
   console.log(USAGE_MESSAGE);

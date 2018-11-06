@@ -143,14 +143,21 @@ export function initGlobalCfg() {
   if (!config.has("timezone")) {
     config.set("timezone", "local");
   }
+  if (!config.has("disable_hardware_accel")) {
+    config.set("disable_hardware_accel", false);
+  }
   cleanGlobalCfg(config);
   return(config);
 }
 
 function cleanGlobalCfg(config) {
   var key;
-  const globalCfgFields = [ "theme", "daemon_start_advanced", "must_open_form", "locale", "network", "set_language", "ui_animations", "show_spvchoice", "show_tutorial", "show_privacy", "allowed_external_requests", "proxy_type", "proxy_location",
-    "remote_credentials", "spv_mode", "spv_connect", "max_wallet_count", "timezone", "last_height", "appdata_path" ];
+  const globalCfgFields = [ "theme", "daemon_start_advanced", "must_open_form",
+    "locale", "network", "set_language", "ui_animations", "show_spvchoice",
+    "show_tutorial", "show_privacy", "allowed_external_requests", "proxy_type",
+    "proxy_location", "remote_credentials", "spv_mode", "spv_connect",
+    "max_wallet_count", "timezone", "last_height", "appdata_path",
+    "disable_hardware_accel" ];
   for (key in config.store) {
     var found = false;
     for (var i = 0; i < globalCfgFields.length; i++) {
