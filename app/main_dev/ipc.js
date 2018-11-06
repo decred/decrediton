@@ -171,10 +171,8 @@ export const getDaemonInfo = (mainWindow, rpcCreds, isRetry) => {
 
   dcrctl.stdout.on("data", (data) => {
     const parsedData = JSON.parse(data);
-    const isTestNet = parsedData.testnet;
-    logger.log("info", "isTestnet: " + isTestNet);
-
-    mainWindow.webContents.send("check-getinfo-response", { isTestNet });
+    logger.log("info", "is daemon testnet: " + parsedData.testnet);
+    mainWindow.webContents.send("check-getinfo-response", parsedData);
   });
   dcrctl.stderr.on("data", (data) => {
     logger.log("error", data.toString());

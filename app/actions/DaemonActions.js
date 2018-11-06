@@ -337,8 +337,9 @@ export const syncDaemon = () =>
       const { daemon: { daemonSynced, timeStart, blockStart, credentials, daemonError, neededBlocks } } = getState();
       // check to see if user skipped;
       if (daemonSynced || daemonError) return;
-      const daemonIsTestNet = await wallet.getDaemonInfo(credentials);
-      if (daemonIsTestNet !== null && daemonIsTestNet !== isTestNet(getState())) {
+      const daemonInfo = await wallet.getDaemonInfo(credentials);
+      if (daemonInfo.isTestNet !== null &&
+          daemonInfo.isTestNet !== isTestNet(getState())) {
         dispatch({ error: DIFF_CONNECTION_ERROR, type: NOT_SAME_CONNECTION });
         return dispatch(pushHistory("/error"));
       }
