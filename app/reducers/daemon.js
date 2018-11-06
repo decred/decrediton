@@ -182,7 +182,7 @@ export default function version(state = {}, action) {
     return {
       ...state,
       daemonError: action.error,
-    }
+    };
   default:
     return state;
   }

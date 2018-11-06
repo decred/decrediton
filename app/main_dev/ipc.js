@@ -156,7 +156,7 @@ export const getDaemonInfo = (mainWindow, rpcCreds, isRetry) => {
 
   // retry using testnet to check connection
   if (isRetry) {
-    args.push("--testnet")
+    args.push("--testnet");
   }
 
   const dcrctlExe = getExecutablePath("dcrctl", argv.customBinPath);
@@ -184,7 +184,7 @@ export const getDaemonInfo = (mainWindow, rpcCreds, isRetry) => {
       getDaemonInfo(mainWindow, rpcCreds, true);
     }
   });
-}
+};
 
 export const checkDaemon = (mainWindow, rpcCreds, testnet) => {
   let args = [ "getblockchaininfo" ];
