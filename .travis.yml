@@ -10,8 +10,11 @@ cache:
     - node_modules
     - app/node_modules
 
-install:
-  - yarn
+before_install:
+  - curl -o- -L https://yarnpkg.com/install.sh | bash
+  - export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+  - yarn --version
+
 
 script:
   - yarn lint || travis_terminate 1
