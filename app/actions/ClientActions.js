@@ -1101,3 +1101,8 @@ export const getTreasuryBalance = () => (dispatch, getState) => {
       dispatch({ treasuryBalance, type: GETTREASURY_BALANCE_SUCCESS });
     });
 };
+
+export const RESET_TREASURY_BALANCE = "RESET_TREASURY_BALANCE";
+export const resetTreasuryBalance = () => (dispatch) => {
+  dispatch({ type: RESET_TREASURY_BALANCE });
+};
