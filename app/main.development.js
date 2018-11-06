@@ -156,7 +156,7 @@ ipcMain.on("check-daemon", (event, rpcCreds, testnet) => {
 });
 
 ipcMain.on("get-info", (event, rpcCreds) => {
-  getDaemonInfo(mainWindow, rpcCreds);
+  getDaemonInfo(mainWindow, rpcCreds, false);
 });
 
 ipcMain.on("clean-shutdown", async function(event){

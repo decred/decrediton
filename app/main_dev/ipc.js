@@ -137,10 +137,8 @@ export const stopWallet = () => {
   return closeDCRW(GetDcrwPID());
 };
 
-export const getDaemonInfo = (mainWindow, rpcCreds) => {
+export const getDaemonInfo = (mainWindow, rpcCreds, isRetry) => {
   let args = [ "getinfo" ];
-
-  let host, port;
 
   if (!rpcCreds){
     args.push(`--configfile=${dcrctlCfg(appDataDirectory())}`);
@@ -154,13 +152,11 @@ export const getDaemonInfo = (mainWindow, rpcCreds) => {
     if (rpcCreds.rpc_cert) {
       args.push(`--rpccert=${rpcCreds.rpc_cert}`);
     }
-    if (rpcCreds.rpc_host) {
-      host = rpcCreds.rpc_host;
-    }
-    if (rpcCreds.rpc_port) {
-      port = rpcCreds.rpc_port;
-    }
-    args.push("--rpcserver=" + host + ":" + port);
+  }
+
+  // retry using testnet to check connection
+  if (isRetry) {
+    args.push("--testnet")
   }
 
   const dcrctlExe = getExecutablePath("dcrctl", argv.customBinPath);
@@ -168,7 +164,7 @@ export const getDaemonInfo = (mainWindow, rpcCreds) => {
     logger.log("error", "The dcrctl file does not exists");
   }
 
-  logger.log("info", `checking daemon connection with dcrctl ${args}`);
+  logger.log("info", `checking daemon network with dcrctl ${args}`);
 
   const spawn = require("child_process").spawn;
   const dcrctl = spawn(dcrctlExe, args, { detached: false, stdio: [ "ignore", "pipe", "pipe", "pipe" ] });
@@ -182,7 +178,11 @@ export const getDaemonInfo = (mainWindow, rpcCreds) => {
   });
   dcrctl.stderr.on("data", (data) => {
     logger.log("error", data.toString());
-    mainWindow.webContents.send("check-getinfo-response", null );
+    if (isRetry) {
+      mainWindow.webContents.send("check-getinfo-response", null );
+    } else {
+      getDaemonInfo(mainWindow, rpcCreds, true);
+    }
   });
 }
 
