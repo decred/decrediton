@@ -23,6 +23,7 @@ import {
   GETBESTBLOCK_ATTEMPT, GETBESTBLOCK_FAILED, GETBESTBLOCK_SUCCESS,
   GETTRANSACTIONSSINCELASTOPPENED_SUCCESS, STARTWALLETSERVICE_ATTEMPT,
   STARTWALLETSERVICE_FAILED, STARTWALLETSERVICE_SUCCESS,
+  FETCHMISSINGSTAKETXDATA_ATTEMPT, FETCHMISSINGSTAKETXDATA_SUCCESS, FETCHMISSINGSTAKETXDATA_FAILED,
 } from "../actions/ClientActions";
 import { STARTUPBLOCK, WALLETREADY } from "../actions/DaemonActions";
 import { NEWBLOCKCONNECTED } from "../actions/NotificationActions";
@@ -378,6 +379,31 @@ export default function grpc(state = {}, action) {
       transactions: [],
       lastTransaction: null,
       noMoreTransactions: false
+    };
+  case FETCHMISSINGSTAKETXDATA_ATTEMPT:
+    return {
+      ...state,
+      fetchMissingStakeTxDataAttempt: {
+        ...state.fetchMissingStakeTxDataAttempt,
+        [action.txHash]: true,
+      }
+    };
+  case FETCHMISSINGSTAKETXDATA_SUCCESS:
+    return {
+      ...state,
+      transactions: action.transactions,
+      fetchMissingStakeTxDataAttempt: {
+        ...state.fetchMissingStakeTxDataAttempt,
+        [action.txHash]: false,
+      }
+    };
+  case FETCHMISSINGSTAKETXDATA_FAILED:
+    return {
+      ...state,
+      fetchMissingStakeTxDataAttempt: {
+        ...state.fetchMissingStakeTxDataAttempt,
+        [action.txHash]: false,
+      }
     };
   case UPDATETIMESINCEBLOCK:
     return {

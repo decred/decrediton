@@ -50,7 +50,15 @@ function mapNonWalletInput(input) {
 
 const TxDetails = ({
   decodedTransaction,
-  tx: {
+  tx,
+  currentBlockHeight,
+  intl,
+  goBackHistory,
+  tsDate,
+  publishUnminedTransactions,
+  fetchMissingStakeTxData,
+}) => {
+  const {
     txHash,
     txUrl,
     txHeight,
@@ -68,13 +76,8 @@ const TxDetails = ({
     ticketPrice,
     enterTimestamp,
     leaveTimestamp,
-  },
-  currentBlockHeight,
-  intl,
-  goBackHistory,
-  tsDate,
-  publishUnminedTransactions
-}) => {
+  } = tx;
+
   const isConfirmed = !!txTimestamp;
   const icon = headerIcons[txType || txDirection];
   const goBack = () => goBackHistory();
@@ -110,6 +113,11 @@ const TxDetails = ({
 
   var subtitle = <div/>;
 
+  if (((txType == "Ticket") && (!ticketPrice)) || ((txType == "Vote") && (!leaveTimestamp))) {
+    // don't have the extended stake info for this transaction yet. Request it.
+    fetchMissingStakeTxData(tx);
+  }
+
   switch (txType) {
   case "Ticket":
   case "Vote":
@@ -119,13 +127,13 @@ const TxDetails = ({
         <div className="tx-details-subtitle-pair">
           <div className="tx-details-subtitle-sentfrom"><T id="txDetails.purchasedOn" m="Purchased On" /></div>
           <div className="tx-details-subtitle-date">
-            <T id="txDetails.timestamp" m="{timestamp, date, medium} {timestamp, time, medium}" values={{ timestamp: tsDate(txType == "Vote" ? enterTimestamp : txTimestamp) }}/>
+            <T id="txDetails.timestamp" m="{timestamp, date, medium} {timestamp, time, medium}" values={{ timestamp: tsDate(txType == "Vote" && enterTimestamp ? enterTimestamp : txTimestamp) }}/>
           </div>
         </div>:
         <T id="txDetails.unConfirmed" m="Unconfirmed"/>
       }
       {leaveTimestamp && <div className="tx-details-subtitle-pair"><div className="tx-details-subtitle-sentfrom"><T id="txDetails.votedOn" m="Voted On" /></div><div className="tx-details-subtitle-date"><T id="txDetails.timestamp" m="{timestamp, date, medium} {timestamp, time, medium}" values={{ timestamp: tsDate(leaveTimestamp) }}/></div></div>}
-      <div className="tx-details-subtitle-pair"><div className="tx-details-subtitle-sentfrom"><T id="txDetails.ticketCost" m="Ticket Cost" /></div><div className="tx-details-subtitle-account"><Balance amount={ticketPrice}/></div></div>
+      {ticketPrice && <div className="tx-details-subtitle-pair"><div className="tx-details-subtitle-sentfrom"><T id="txDetails.ticketCost" m="Ticket Cost" /></div><div className="tx-details-subtitle-account"><Balance amount={ticketPrice}/></div></div> }
       {ticketReward && <div className="tx-details-subtitle-pair"><div className="tx-details-subtitle-sentfrom"><T id="txDetails.reward" m="Reward" /></div><div className="tx-details-subtitle-account"><Balance amount={ticketReward}/></div></div>}
     </div>;
     break;

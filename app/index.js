@@ -207,6 +207,10 @@ var initialState = {
     // heights, due to maturing stake transactions. Keys are the heights,
     // values are arrays of account numbers.
     maturingBlockHeights: {},
+
+    // list of outstanding requests for additional stake data from transactions
+    // (indexed by transaction hash)
+    fetchMissingStakeTxDataAttempt: {},
   },
   walletLoader: {
     syncInput: false,
