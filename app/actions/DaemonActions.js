@@ -11,6 +11,7 @@ import { setMustOpenForm, getWalletCfg, getAppdataPath, getRemoteCredentials, ge
 import { isTestNet } from "selectors";
 import axios from "axios";
 import { STANDARD_EXTERNAL_REQUESTS } from "main_dev/externalRequests";
+import { DIFF_CONNECTION_ERROR } from "main_dev/constants";
 
 export const DECREDITON_VERSION = "DECREDITON_VERSION";
 export const SELECT_LANGUAGE = "SELECT_LANGUAGE";
@@ -43,7 +44,6 @@ export const DELETE_DCRD_ATTEMPT = "DELETE_DCRD_ATTEMPT";
 export const DELETE_DCRD_FAILED = "DELETE_DCRD_FAILED";
 export const DELETE_DCRD_SUCCESS = "DELETE_DCRD_SUCCESS";
 export const NOT_SAME_CONNECTION = "NOT_SAME_CONNECTION";
-const diffConnectionError = "daemon and decrediton does not have the same network";
 
 export const checkDecreditonVersion = () => (dispatch, getState) =>{
   const detectedVersion = getState().daemon.appVersion;
@@ -339,7 +339,7 @@ export const syncDaemon = () =>
       if (daemonSynced || daemonError) return;
       const daemonIsTestNet = await wallet.getDaemonInfo(credentials);
       if (daemonIsTestNet !== null && daemonIsTestNet !== isTestNet(getState())) {
-        dispatch({ error: diffConnectionError, type: NOT_SAME_CONNECTION });
+        dispatch({ error: DIFF_CONNECTION_ERROR, type: NOT_SAME_CONNECTION });
         return dispatch(pushHistory("/error"));
       }
       return wallet

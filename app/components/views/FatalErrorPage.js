@@ -1,11 +1,10 @@
 import { FormattedMessage as T } from "react-intl";
 import { fatalErrorPage } from "connectors";
 import { KeyBlueButton, RemoveDaemonButton } from "buttons";
+import { DIFF_CONNECTION_ERROR } from "main_dev/constants";
 import "style/Layout.less";
 
 const resourcesUnavailableError = "resource temporarily unavailable";
-
-const diffConnection = "daemon and decrediton does not have the same network";
 
 const corruptedError = "corrupted";
 
@@ -30,7 +29,7 @@ class FatalErrorPage extends React.Component {
           <div className="fatal-error-suggestion">
             {daemonError && daemonError.indexOf(resourcesUnavailableError) > 0 ?
               <T id="fatal.suggestion.resources" m="This error typically means you have another instance of daemon running.  You should check your taskmanager or profiler to shutdown any still running daemon and then try again." /> :
-              daemonError && daemonError.indexOf(diffConnection) !== -1 ?
+              daemonError && daemonError.indexOf(DIFF_CONNECTION_ERROR) !== -1 ?
                 <T id="fatal.suggestion.diffConnection" m="This error typically means you have the testnet flag on your dcrd.conf file. You should check your dcrd.conf file and remove the testnet=1." /> :
                 daemonError && (daemonError.indexOf(corruptedError) > 0  || daemonError.indexOf(checkSumError)) ?
                   <Aux>
