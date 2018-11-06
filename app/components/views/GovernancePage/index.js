@@ -7,7 +7,6 @@ import { Balance } from "shared";
 import { treasuryInfo } from "connectors";
 import "style/Governance.less";
 
-
 const PageHeader = () =>
   <TitleHeader
     iconClassName="governance"

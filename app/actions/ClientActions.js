@@ -92,6 +92,7 @@ export const GETSTARTUPWALLETINFO_FAILED = "GETSTARTUPWALLETINFO_FAILED";
 export const getStartupWalletInfo = () => (dispatch) => {
   dispatch({ type: GETSTARTUPWALLETINFO_ATTEMPT });
   const config = getGlobalCfg();
+  const dcrdataEnabled = config.get("allowed_external_requests").indexOf(EXTERNALREQUEST_DCRDATA) > -1;
   return new Promise((resolve, reject) => {
     setTimeout( async () => {
       try {
@@ -105,7 +106,7 @@ export const getStartupWalletInfo = () => (dispatch) => {
         await dispatch(findImmatureTransactions());
         await dispatch(getAccountsAttempt(true));
         await dispatch(getStartupStats());
-        if (config.get("allowed_external_requests").indexOf(EXTERNALREQUEST_DCRDATA) > -1) {
+        if (dcrdataEnabled) {
           await dispatch(getTreasuryBalance());
         }
         dispatch({ type: GETSTARTUPWALLETINFO_SUCCESS });
