@@ -271,10 +271,10 @@ graceful-fs@^4.1.2, graceful-fs@^4.1.6:
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.11.tgz#0e8bdfe4d1ddb8854d64e04ea7c00e2a026e5658"
   integrity sha1-Dovf5NHduIVNZOBOp8AOKgJuVlg=
 
-grpc@1.15.0:
-  version "1.15.0"
-  resolved "https://registry.yarnpkg.com/grpc/-/grpc-1.15.0.tgz#0faf0c6bf8fd319da510dc2f661b2855876aa150"
-  integrity sha512-EBvJ0AZDg3ka0rAt97t4HwvJhY/ePefbQGTlxQeeqkZSCw60mVkqRtXCXN+7MjOI4NAb28cKMjUXtOMjFE+D4Q==
+grpc@1.16.0:
+  version "1.16.0"
+  resolved "https://registry.yarnpkg.com/grpc/-/grpc-1.16.0.tgz#cdf56d6ede2f1b6ab5224ad467cb22e1b3ec36fc"
+  integrity sha512-+p8YRIng7Gihkn2jycAXwXdA9aQ10SikRrcHY+/r3W1Z1Pr9NFIbLcmBZPoaTbzzLDv/ysqwqFEZriAdd8tveQ==
   dependencies:
     lodash "^4.17.5"
     nan "^2.0.0"
