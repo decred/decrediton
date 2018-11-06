@@ -220,7 +220,7 @@ ipcMain.on("get-is-watching-only", (event) => {
   event.returnValue = getWatchingOnlyWallet();
 });
 
-primaryInstance = !app.makeSingleInstance(() => true);
+primaryInstance = app.requestSingleInstanceLock();
 const stopSecondInstance = !primaryInstance && !daemonIsAdvanced;
 if (stopSecondInstance) {
   logger.log("error", "Preventing second instance from running.");
