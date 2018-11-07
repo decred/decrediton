@@ -58,7 +58,8 @@ export const installSessionHandlers = (mainLogger) => {
   session.defaultSession.webRequest.onBeforeSendHeaders(filter, (details, callback) => {
     const isURLAllowed = (urlRegexp) => urlRegexp.test(details.url);
     if (!allowedURLs.some(isURLAllowed)) {
-      logger.log("warn", "Cancelling external request " + details.method + " " + details.url);
+      logger.log("error", "Blocking external request: " + details.method + " " + details.url);
+      logger.log("error", "Make sure that the request is whitelisted in main_dev/externalRequests.js");
       callback({ cancel: true, requestHeaders: details.requestHeaders });
     } else {
       logger.log("verbose", details.method + " " + details.url);
