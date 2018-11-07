@@ -64,7 +64,10 @@ export const getStartupStats = () => (dispatch, getState) => {
       dispatch({ dailyBalances: lastBalances, startupStatsCalcSeconds,
         startupStatsEndCalcTime: endCalcTime, type: GETSTARTUPSTATS_SUCCESS });
     })
-    .catch(error => dispatch({ error, type: GETSTARTUPSTATS_FAILED }));
+    .catch(error => {
+      console.error("getStartupStats errored", error);
+      dispatch({ error, type: GETSTARTUPSTATS_FAILED });
+    });
 };
 
 export const GETMYTICKETSSTATS_ATTEMPT = "GETMYTICKETSSTATS_ATTEMPT";
@@ -82,7 +85,10 @@ export const getMyTicketsStats = () => (dispatch) => {
     .then(([ voteTime, dailyBalances ]) => {
       dispatch({ voteTime, dailyBalances, type: GETMYTICKETSSTATS_SUCCESS });
     })
-    .catch(error => dispatch({ error, type: GETMYTICKETSSTATS_FAILED }));
+    .catch(error => {
+      console.error("getMyTicketsStats errored", error);
+      dispatch({ error, type: GETMYTICKETSSTATS_FAILED });
+    });
 };
 
 // generateStat starts generating the statistic as defined on the opts. It
