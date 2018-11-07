@@ -21,11 +21,12 @@ class StakePools extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (!this.state.selectedUnconfigured) {
-      this.setState({ selectedUnconfigured: nextProps.unconfiguredStakePools[0] });
+  // not tested
+  componentDidMount() {
+    if(!this.state.selectedUnconfigured) {
+      this.setState({ selectedUnconfigured: this.props.unconfiguredStakePools[0] });
     }
-    if (!this.getStakepoolListingEnabled() && nextProps.stakePoolListingEnabled) {
+    if (!this.getStakepoolListingEnabled() && this.props.stakePoolListingEnabled) {
       this.props.discoverAvailableStakepools();
     }
   }

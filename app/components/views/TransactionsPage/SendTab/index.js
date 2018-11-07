@@ -39,15 +39,15 @@ class Send extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { nextAddress, constructTxLowBalance } = this.props;
-    const { isSendSelf, outputs } = this.state;
-    if (isSendSelf && (nextAddress != nextProps.nextAddress)) {
-      let newOutputs = outputs.map(o => ({ ...o, data:{ ...o.data, destination: nextProps.nextAddress } }));
+  componentDidUpdate(prevProps, prevState) {
+    const { nextAddress, constructTxLowBalance } = prevProps;
+    const { isSendSelf, outputs } = prevState;
+    if (isSendSelf && (nextAddress != this.props.nextAddress)) {
+      let newOutputs = outputs.map(o => ({ ...o, data:{ ...o.data, destination: this.props.nextAddress } }));
       this.setState({ outputs: newOutputs }, this.onAttemptConstructTransaction);
     }
-    if ( constructTxLowBalance !== nextProps.constructTxLowBalance ) {
-      this.setState({ lowBalanceError: nextProps.constructTxLowBalance });
+    if ( constructTxLowBalance !== this.props.constructTxLowBalance ) {
+      this.setState({ lowBalanceError: this.props.constructTxLowBalance });
     }
   }
 

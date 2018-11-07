@@ -29,19 +29,19 @@ class AccountsSelect extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     let newState = null;
 
-    if (this.props.account !== nextProps.account) {
-      newState = { account: nextProps.account };
+    if (prevProps.account !== this.props.account) {
+      newState = { account: this.props.account };
     }
 
-    if ((this.props.spendingAccounts !== nextProps.spendingAccounts) ||
-        (this.props.visibleAccounts !== nextProps.visibleAccounts) ||
-        (this.props.accountsType !== nextProps.accountsType)) {
-      newState = { accounts: this.getAccountsToShow(nextProps), ...newState };
-      if (nextProps.account && !newState.account) {
-        const newAccount = newState.accounts.find(a => a.value === nextProps.account.value);
+    if ((prevProps.spendingAccounts !== this.props.spendingAccounts) ||
+        (prevProps.visibleAccounts !== this.props.visibleAccounts) ||
+        (prevProps.accountsType !== this.props.accountsType)) {
+      newState = { accounts: this.getAccountsToShow(this.props), ...newState };
+      if (this.props.account && !newState.account) {
+        const newAccount = newState.accounts.find(a => a.value === this.props.account.value);
         newState = { account: newAccount, ...newState };
       }
     }

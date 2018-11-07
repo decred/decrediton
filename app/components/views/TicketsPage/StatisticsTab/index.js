@@ -12,8 +12,15 @@ class Statistics extends React.Component{
     this.state = { hasStats: props.voteTimeStats && !props.getMyTicketsStatsRequest };
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({ hasStats: nextProps.voteTimeStats && !nextProps.getMyTicketsStatsRequest });
+  componentDidUpdate(prevProps) {
+    const hasStats = this.props.voteTimeStats && !this.props.getMyTicketsStatsRequest;
+    if ((prevProps.voteTimeStats && !this.props.getMyTicketsStatsRequest) !== hasStats) {
+      this.setState({ hasStats });
+    }
+  }
+
+  componentDidMount() {
+    this.setState({ hasStats: this.props.voteTimeStats && !this.props.getMyTicketsStatsRequest });
   }
 
   render() {

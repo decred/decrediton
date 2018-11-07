@@ -8,10 +8,10 @@ class LastBlockTime extends React.Component {
     this.state = this.getBlockDate(props.lastBlockTimestamp);
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { lastBlockTimestamp } = this.props;
-    if (lastBlockTimestamp !== nextProps.lastBlockTimestamp) {
-      this.setState(this.getBlockDate(nextProps.lastBlockTimestamp));
+  componentDidUpdate(prevProps) {
+    const { lastBlockTimestamp } = prevProps;
+    if (lastBlockTimestamp !== this.props.lastBlockTimestamp) {
+      this.setState(this.getBlockDate(this.props.lastBlockTimestamp));
     }
   }
 

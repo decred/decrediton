@@ -30,8 +30,8 @@ class ModalButton extends React.Component {
     onShow && this.props.onShow();
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.showModal && !this.props.modal) {
+  componentDidUpdate(prevProps) {
+    if (this.props.showModal && !prevProps.modal) {
       this.showModal();
     }
   }
