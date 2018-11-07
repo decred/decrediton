@@ -15,8 +15,6 @@ import { TransactionDetails } from "middleware/walletrpc/api_pb";
 import { clipboard } from "electron";
 import { getStartupStats } from "./StatisticsActions";
 import { rawHashToHex } from "../helpers/byteActions";
-import { getTreasuryInfo, dcrdataURL } from "../middleware/politeiaapi";
-import * as pi from "../middleware/politeiaapi";
 import * as da from "../middleware/dcrdataapi";
 import { EXTERNALREQUEST_DCRDATA } from "main_dev/externalRequests";
 
