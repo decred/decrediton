@@ -105,7 +105,7 @@ export const getStartupWalletInfo = () => (dispatch) => {
         await dispatch(getAccountsAttempt(true));
         await dispatch(getStartupStats());
         if (dcrdataEnabled) {
-          await dispatch(getTreasuryBalance());
+          dispatch(getTreasuryBalance());
         }
         dispatch({ type: GETSTARTUPWALLETINFO_SUCCESS });
         resolve();
