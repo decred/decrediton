@@ -171,6 +171,16 @@ export const findImmatureTransactions = () => async (dispatch, getState) => {
   while (txs.mined.length > 0) {
     let lastTx = txs.mined[txs.mined.length-1];
     mergeCheckHeights(transactionsMaturingHeights(txs.mined, chainParams));
+
+    if (lastTx && lastTx.height >= currentBlockHeight) {
+      // this may happen on wallets that take a long time to start up (eg: large
+      // wallet left closed for a long time performing a rescan). If a new
+      // block comes in with wallet transactions then the height of the new
+      // transaction will exceed the currentBlockHeight (which is fetched at
+      // the beginning of the startup procedure).
+      break;
+    }
+
     txs = await walletGetTransactions(walletService, lastTx.height+1,
       currentBlockHeight+1, pageSize);
   }
