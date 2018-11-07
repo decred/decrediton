@@ -1,7 +1,8 @@
 import Promise from "promise";
 import * as client from "middleware/grpc/client";
 import { reverseHash, strHashToRaw, rawHashToHex } from "../helpers/byteActions";
-import { CommittedTicketsRequest } from "middleware/walletrpc/api_pb";
+import { Uint64LE } from "int64-buffer";
+import { CommittedTicketsRequest, DecodeRawTransactionRequest } from "middleware/walletrpc/api_pb";
 import { withLog as log, withLogNoData, logOptionNoResponseData } from "./index";
 import * as api from "middleware/walletrpc/api_pb";
 
@@ -38,9 +39,14 @@ export const validateAddress = withLogNoData((walletService, address) =>
     walletService.validateAddress(request, (error, response) => error ? reject(error) : resolve(response));
   }), "Validate Address");
 
+export const decodeTransactionLocal = (rawTx) => {
+  var buffer = Buffer.isBuffer(rawTx) ? rawTx : Buffer.from(rawTx, "hex");
+  return Promise.resolve(decodeRawTransaction(buffer));
+};
+
 export const decodeTransaction = withLogNoData((decodeMessageService, rawTx) =>
   new Promise((resolve, reject) => {
-    var request = new api.DecodeRawTransactionRequest();
+    var request = new DecodeRawTransactionRequest();
     var buffer = Buffer.isBuffer(rawTx) ? rawTx : Buffer.from(rawTx, "hex");
     var buff = new Uint8Array(buffer);
     request.setSerializedTransaction(buff);
@@ -248,3 +254,87 @@ export const committedTickets = withLogNoData((walletService, ticketHashes) => n
   req.setTicketsList(ticketHashes);
   walletService.committedTickets(req, (err, tickets) => err ? reject(err) : resolve(tickets));
 }), "Committed Tickets");
+
+const decodeRawTransaction = (rawTx) => {
+  var position = 0;
+
+  var tx = {};
+  tx.version = rawTx.readUInt32LE(position);
+  position += 4;
+  var first = rawTx.readUInt8(position);
+  position += 1;
+  switch (first) {
+  case 0xFD:
+    tx.numInputs = rawTx.readUInt16LE(position);
+    position += 2;
+    break;
+  case 0xFE:
+    tx.numInputs = rawTx.readUInt32LE(position);
+    position += 4;
+    break;
+  default:
+    tx.numInputs = first;
+  }
+  tx.inputs = [];
+  for (var i = 0; i < tx.numInputs; i++) {
+    var input = {};
+    input.prevTxId = rawTx.slice(position, position+32);
+    position += 32;
+    input.outputIndex = rawTx.readUInt32LE(position);
+    position += 4;
+    input.outputTree = rawTx.readUInt8(position);
+    position += 1;
+    input.sequence = rawTx.readUInt32LE(position);
+    position += 4;
+    tx.inputs.push(input);
+  }
+
+  first = rawTx.readUInt8(position);
+  position += 1;
+  switch (first) {
+  case 0xFD:
+    tx.numOutputs = rawTx.readUInt16LE(position);
+    position += 2;
+    break;
+  case 0xFE:
+    tx.numOutputs = rawTx.readUInt32LE(position);
+    position += 4;
+    break;
+  default:
+    tx.numOutputs = first;
+  }
+
+  tx.outputs = [];
+  for (var j = 0; j < tx.numOutputs; j++) {
+    var output = {};
+    output.value = Uint64LE(rawTx.slice(position, position+8)).toNumber();
+    position += 8;
+    output.version = rawTx.readUInt16LE(position);
+    position += 2;
+    // check length of scripts
+    var scriptLen;
+    first = rawTx.readUInt8(position);
+    position += 1;
+    switch (first) {
+    case 0xFD:
+      scriptLen = rawTx.readUInt16LE(position);
+      position += 2;
+      break;
+    case 0xFE:
+      scriptLen = rawTx.readUInt32LE(position);
+      position += 4;
+      break;
+    default:
+      scriptLen = first;
+    }
+    output.script = rawTx.slice(position, position+scriptLen);
+    position += scriptLen;
+    tx.outputs.push(output);
+  }
+
+  tx.lockTime = rawTx.readUInt32LE(position);
+  position += 4;
+  tx.expiry = rawTx.readUInt32LE(position);
+  position += 4;
+  return tx;
+};

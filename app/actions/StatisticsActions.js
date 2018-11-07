@@ -20,6 +20,7 @@ export const getStartupStats = () => (dispatch, getState) => {
 
   dispatch({ type: GETSTARTUPSTATS_ATTEMPT });
 
+  const startCalcTime = new Date();
   const endDate = new Date();
   endDate.setDate(endDate.getDate()-16);
 
@@ -57,9 +58,16 @@ export const getStartupStats = () => (dispatch, getState) => {
         }
         date.setDate(date.getDate()+1);
       }
-      dispatch({ dailyBalances: lastBalances, type: GETSTARTUPSTATS_SUCCESS });
+
+      const endCalcTime = new Date();
+      const startupStatsCalcSeconds = (endCalcTime.getTime() - startCalcTime.getTime()) / 1000;
+      dispatch({ dailyBalances: lastBalances, startupStatsCalcSeconds,
+        startupStatsEndCalcTime: endCalcTime, type: GETSTARTUPSTATS_SUCCESS });
     })
-    .catch(error => dispatch({ error, type: GETSTARTUPSTATS_FAILED }));
+    .catch(error => {
+      console.error("getStartupStats errored", error);
+      dispatch({ error, type: GETSTARTUPSTATS_FAILED });
+    });
 };
 
 export const GETMYTICKETSSTATS_ATTEMPT = "GETMYTICKETSSTATS_ATTEMPT";
@@ -77,7 +85,10 @@ export const getMyTicketsStats = () => (dispatch) => {
     .then(([ voteTime, dailyBalances ]) => {
       dispatch({ voteTime, dailyBalances, type: GETMYTICKETSSTATS_SUCCESS });
     })
-    .catch(error => dispatch({ error, type: GETMYTICKETSSTATS_FAILED }));
+    .catch(error => {
+      console.error("getMyTicketsStats errored", error);
+      dispatch({ error, type: GETMYTICKETSSTATS_FAILED });
+    });
 };
 
 // generateStat starts generating the statistic as defined on the opts. It
@@ -219,7 +230,7 @@ export const transactionStats = (opts) => (dispatch, getState) => {
 export const balancesStats = (opts) => async (dispatch, getState) => {
   const { progressFunction, startFunction, endFunction, errorFunction } = opts;
 
-  const { currentBlockHeight, walletService, decodeMessageService,
+  const { currentBlockHeight, walletService,
     recentBlockTimestamp, balances } = getState().grpc;
 
   const backwards = opts.backwards;
@@ -358,9 +369,11 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
   // delta to balances, given a vote/revoke tx
   const voteRevokeInfo = async tx => {
     const isVote = tx.txType === wallet.TRANSACTION_TYPE_VOTE;
-    const decodedSpender = await wallet.decodeTransaction(decodeMessageService, tx.tx.getTransaction());
-    const spenderInputs = decodedSpender.getTransaction().getInputsList();
-    const ticketHash = reverseRawHash(spenderInputs[spenderInputs.length-1].getPreviousTransactionHash());
+
+    const decodedSpender = await wallet.decodeTransactionLocal(tx.tx.getTransaction());
+    const spenderInputs = decodedSpender.inputs;
+    const ticketHash = reverseRawHash(spenderInputs[spenderInputs.length-1].prevTxId);
+
     let ticket = liveTickets[ticketHash];
     if (!ticket) {
       const ticketTx = await wallet.getTransaction(walletService, ticketHash);
@@ -525,7 +538,7 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
   let startBlock = backwards ? currentBlockHeight : 1;
   let endBlock = backwards ? 1 : currentBlockHeight;
   const callback = backwards ? txDataCbBackwards : txDataCb;
-  const pageSize = 20;
+  const pageSize = 200;
   const pageDir = backwards ? -1 : +1;
   const endDate = opts.endDate;
   const maxMaturity = Math.max(chainParams.CoinbaseMaturity, chainParams.TicketMaturity);
@@ -575,6 +588,18 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
       if (mined && mined.length > 0) {
         toProcess.push(...mined);
       }
+    }
+
+    if (backwards) {
+      // on backwards stats, we find vote txs before finding ticket txs, so
+      // pre-process tickets from all grabbed txs to avoid making the separate
+      // getTransaction calls in voteRevokeInfo()
+      toProcess.forEach(tx => {
+        if (tx.txType == wallet.TRANSACTION_TYPE_TICKET_PURCHASE) {
+          var { isWallet, commitAmount } = ticketInfo(tx);
+          recordTicket(tx, commitAmount, isWallet);
+        }
+      });
     }
 
     await callback({ mined: toProcess });

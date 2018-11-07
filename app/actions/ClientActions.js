@@ -47,22 +47,21 @@ const startWalletServicesTrigger = () => (dispatch, getState) => new Promise((re
       if (!spvSynced) {
         dispatch(getTicketBuyerServiceAttempt());
       }
+
       await dispatch(getNextAddressAttempt(0));
       await dispatch(getTicketPriceAttempt());
       await dispatch(getPingAttempt());
       await dispatch(getNetworkAttempt());
-      await dispatch(transactionNtfnsStart());
-      await dispatch(accountNtfnsStart());
       await dispatch(updateStakepoolPurchaseInformation());
       await dispatch(getDecodeMessageServiceAttempt());
       await dispatch(getVotingServiceAttempt());
       await dispatch(getAgendaServiceAttempt());
       await dispatch(getStakepoolStats());
+      await dispatch(getStartupWalletInfo());
+      await dispatch(transactionNtfnsStart());
+      await dispatch(accountNtfnsStart());
 
-      var goHomeCb = () => {
-        dispatch(pushHistory("/home"));
-      };
-      await dispatch(getStartupWalletInfo()).then(goHomeCb);
+      await dispatch(pushHistory("/home"));
       resolve();
     }, 1000);
   } catch (err) {
@@ -157,19 +156,13 @@ export const findImmatureTransactions = () => async (dispatch, getState) => {
 
   const pageSize = 30;
   const checkHeightDeltas = [
-    chainParams.TicketExpiry,
     chainParams.TicketMaturity,
     chainParams.CoinbaseMaturity,
     chainParams.SStxChangeMaturity
   ];
   const immatureHeight = currentBlockHeight - Math.max(...checkHeightDeltas);
 
-  let txs = await walletGetTransactions(walletService, immatureHeight,
-    currentBlockHeight, pageSize);
-
   let checkHeights = {};
-  // const mergeCheckHeights = (h) => (h > currentBlockHeight && checkHeights.indexOf(h) === -1)
-  //   ? checkHeights.push(h) : null;
   const mergeCheckHeights = (hs) => Object.keys(hs).forEach(h => {
     if (h < currentBlockHeight) return;
     const accounts = checkHeights[h] || [];
@@ -177,12 +170,29 @@ export const findImmatureTransactions = () => async (dispatch, getState) => {
     checkHeights[h] = accounts;
   });
 
+  dispatch({ immatureHeight, type: "FINDIMMATURETRANSACTIONS_START" });
+
+  let txs = await walletGetTransactions(walletService, immatureHeight,
+    currentBlockHeight, pageSize);
+
   while (txs.mined.length > 0) {
     let lastTx = txs.mined[txs.mined.length-1];
     mergeCheckHeights(transactionsMaturingHeights(txs.mined, chainParams));
+
+    if (lastTx && lastTx.height >= currentBlockHeight) {
+      // this may happen on wallets that take a long time to start up (eg: large
+      // wallet left closed for a long time performing a rescan). If a new
+      // block comes in with wallet transactions then the height of the new
+      // transaction will exceed the currentBlockHeight (which is fetched at
+      // the beginning of the startup procedure).
+      break;
+    }
+
     txs = await walletGetTransactions(walletService, lastTx.height+1,
       currentBlockHeight+1, pageSize);
   }
+
+  dispatch({ type: "FINDIMMATURETRANSACTIONS_FINISHED" });
 
   dispatch({ maturingBlockHeights: checkHeights, type: MATURINGHEIGHTS_CHANGED });
 };
@@ -822,7 +832,11 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
     newlyMinedTransactions, recentRegularTransactions, recentStakeTransactions, type: NEW_TRANSACTIONS_RECEIVED });
 
   if (newlyMinedTransactions.length > 0) {
-    dispatch(getStartupStats());
+    const { startupStatsEndCalcTime, startupStatsCalcSeconds } = getState().statistics;
+    const secFromLastStats = (new Date() - startupStatsEndCalcTime) / 1000;
+    if (secFromLastStats > 5*startupStatsCalcSeconds) {
+      dispatch(getStartupStats());
+    }
   }
 };
 

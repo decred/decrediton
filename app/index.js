@@ -374,6 +374,7 @@ var initialState = {
     voteTime: null,
     getMyTicketsStatsRequest: false,
     getStartupStatsAttempt: false,
+    startupStatsEndCalcTime: new Date(0),
   },
   governance: {
     getVettedAttempt: false,

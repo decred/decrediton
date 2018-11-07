@@ -202,6 +202,7 @@
     "electron-devtools-installer": "^2.2.4",
     "enzyme-adapter-react-16": "^1.6.0",
     "ini": "^1.3.4",
+    "int64-buffer": "^0.1.10",
     "is-running": "^2.1.0",
     "lodash": "^4.17.4",
     "mv": "^2.1.1",
