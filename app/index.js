@@ -211,6 +211,9 @@ var initialState = {
     // list of outstanding requests for additional stake data from transactions
     // (indexed by transaction hash)
     fetchMissingStakeTxDataAttempt: {},
+
+    // Shown under governance tab
+    treasuryBalance: null,
   },
   walletLoader: {
     syncInput: false,

@@ -3,6 +3,8 @@ import { FormattedMessage as T } from "react-intl";
 import { Switch, Redirect } from "react-router-dom";
 import { default as ProposalsTab } from "./Proposals";
 import { default as BlockchainTab } from "./Blockchain";
+import { Balance } from "shared";
+import { treasuryInfo } from "connectors";
 import "style/Governance.less";
 
 const PageHeader = () =>
@@ -11,10 +13,19 @@ const PageHeader = () =>
     title={<T id="governance.title" m="Governance" />}
   />;
 
-const TabHeader = () =>
-  <DescriptionHeader
-    description={<T id="governance.description" m="Governance aspects of Decred." />}
-  />;
+const TabHeader = treasuryInfo(({ treasuryBalance }) =>
+  <Aux>
+    <DescriptionHeader
+      description={<T id="governance.description" m="Governance aspects of Decred." />}
+    />
+    { treasuryBalance && <DescriptionHeader
+      description={
+        <T id="governance.treasury_balance" m="Available Treasury Balance: {treasuryBalance}"
+          values={{ treasuryBalance: <Balance amount={treasuryBalance} classNameWrapper="header-small-balance"/> }} />
+      }
+    />}
+  </Aux>
+);
 
 export default () => (
   <TabbedPage header={<PageHeader />} >

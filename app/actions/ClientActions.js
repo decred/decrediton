@@ -15,6 +15,8 @@ import { TransactionDetails } from "middleware/walletrpc/api_pb";
 import { clipboard } from "electron";
 import { getStartupStats } from "./StatisticsActions";
 import { rawHashToHex } from "../helpers/byteActions";
+import * as da from "../middleware/dcrdataapi";
+import { EXTERNALREQUEST_DCRDATA } from "main_dev/externalRequests";
 
 export const goToTransactionHistory = () => (dispatch) => {
   dispatch(pushHistory("/transactions/history"));
@@ -87,6 +89,8 @@ export const GETSTARTUPWALLETINFO_FAILED = "GETSTARTUPWALLETINFO_FAILED";
 
 export const getStartupWalletInfo = () => (dispatch) => {
   dispatch({ type: GETSTARTUPWALLETINFO_ATTEMPT });
+  const config = getGlobalCfg();
+  const dcrdataEnabled = config.get("allowed_external_requests").indexOf(EXTERNALREQUEST_DCRDATA) > -1;
   return new Promise((resolve, reject) => {
     setTimeout( async () => {
       try {
@@ -100,6 +104,9 @@ export const getStartupWalletInfo = () => (dispatch) => {
         await dispatch(findImmatureTransactions());
         await dispatch(getAccountsAttempt(true));
         await dispatch(getStartupStats());
+        if (dcrdataEnabled) {
+          dispatch(getTreasuryBalance());
+        }
         dispatch({ type: GETSTARTUPWALLETINFO_SUCCESS });
         resolve();
       } catch (error) {
@@ -1080,4 +1087,20 @@ export const fetchMissingStakeTxData = tx => async (dispatch, getState) => {
     // (sel.transactions).
     dispatch({ txHash: tx.txHash, type: FETCHMISSINGSTAKETXDATA_FAILED });
   }
+};
+
+export const GETTREASURY_BALANCE_SUCCESS = "GETTREASURY_BALANCE_SUCCESS";
+export const getTreasuryBalance = () => (dispatch, getState) => {
+  const treasuryAddress = sel.chainParams(getState()).TreasuryAddress;
+  const dURL = sel.dcrdataURL(getState());
+  da.getTreasuryInfo(dURL, treasuryAddress)
+    .then(treasuryInfo => {
+      const treasuryBalance = treasuryInfo["data"]["dcr_unspent"] * 1e8;
+      dispatch({ treasuryBalance, type: GETTREASURY_BALANCE_SUCCESS });
+    });
+};
+
+export const RESET_TREASURY_BALANCE = "RESET_TREASURY_BALANCE";
+export const resetTreasuryBalance = () => (dispatch) => {
+  dispatch({ type: RESET_TREASURY_BALANCE });
 };
