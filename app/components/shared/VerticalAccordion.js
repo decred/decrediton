@@ -13,7 +13,7 @@ class VerticalAccordion extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.show !== this.state.show) {
-      this.chosenStyles(this.props, this.state.show)
+      this.chosenStyles(this.props, this.state.show);
     }
   }
 

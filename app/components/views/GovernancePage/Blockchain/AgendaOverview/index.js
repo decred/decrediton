@@ -12,7 +12,7 @@ class AgendaOverview extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.selectedChoice != this.props.selectedChoice) {
-      this.setState({ selectedChoiceId: nextProps.selectedChoice });
+      this.setState({ selectedChoiceId: this.props.selectedChoice });
     }
   }
 
