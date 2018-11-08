@@ -27,9 +27,9 @@ class CreateWalletForm extends React.Component {
     this.generateSeed();
   }
 
-  componentWillUpdate(nextProps) {
-    if (this.props.decodeSeedError !== nextProps.decodeSeedError) {
-      this.setState({ seedError: nextProps.decodeSeedError });
+  componentDidUpdate(prevProps) {
+    if (prevProps.decodeSeedError !== this.props.decodeSeedError) {
+      this.setState({ seedError: this.props.decodeSeedError });
     }
   }
 
