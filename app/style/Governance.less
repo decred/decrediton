@@ -265,9 +265,9 @@
 
     .button {
       padding: 6px 18px;
-      position: fixed;
-      margin-top: -15px;
-      margin-left: 200px;
+      position: relative;
+      top: -7px;
+      left: 158px;
     }
 
     .proposal-details-no-tickets,
@@ -279,50 +279,17 @@
       margin-bottom: 15px;
     }
 
-    .proposal-details-voting-preference-ticket-count {
-      font-size: 80%;
+    .proposal-details-no-tickets {
+      background-size: 30px 30px;
+      background-position: 0 50%;
+      background-repeat: no-repeat;
+      background-image: @ticket-voted-icon;
+      width: 157px;
+      padding-left: 40px;
     }
 
-    .proposal-details-current-choice-box {
-      display: flex;
-      flex-direction: column;
-      .choice {
-        display: flex;
-        margin-bottom: 10px;
-        .yes,
-        .no {
-          width: 12px;
-          height: 12px;
-          border-radius: 100px;
-          background-color: var(--disabled-background-color-lighter);
-          margin-top: 3px;
-        }
-        .yes {
-          border: 1px solid var(--vote-yes-color);
-          > .selected {
-            width: 6px;
-            height: 6px;
-            border-radius: 100px;
-            background-color: var(--vote-yes-color);
-            margin-top: 3px;
-            margin-left: 3px;
-          }
-        }
-        .no {
-          border: 1px solid var(--vote-no-color);
-          > .selected {
-            width: 6px;
-            height: 6px;
-            border-radius: 100px;
-            background-color: var(--vote-no-color);
-            margin-top: 3px;
-            margin-left: 3px;
-          }
-        }
-        > span {
-          margin-left: 10px;
-        }
-      }
+    .proposal-details-voting-preference-ticket-count {
+      font-size: 80%;
     }
   }
 
