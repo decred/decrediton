@@ -28,7 +28,7 @@ const WalletSelectionBodyBase = ({
   ...props,
 }) => {
   return (
-    availableWallets && !createWalletForm ?
+    availableWallets.length > 0 && !createWalletForm ?
       <div className="advanced-page">
         <div className="advanced-page-form">
           <div className="advanced-daemon-row">
