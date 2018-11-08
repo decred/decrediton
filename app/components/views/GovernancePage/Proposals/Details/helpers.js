@@ -31,20 +31,11 @@ export const NoElligibleTicketsVotingInfo = ({ showPurchaseTicketsPage }) => (
   </Aux>
 );
 
-const CurrentVoteChoiceLabel = ({ currentVoteChoice }) => {
-  return (
-    <Aux>
-      <div className="choice"><div className="yes">{currentVoteChoice == "yes" && <div className="selected"/>}</div><T id="proposal.currentChoice.yes" m="Yes" /></div>
-      <div className="choice"><div className="no">{currentVoteChoice == "no" && <div className="selected"/>}</div><T id="proposal.currentChoice.no" m="No" /></div>
-    </Aux>
-  );
-};
-
 const VoteOption = ({ value, description, onClick, checked }) => (
   <div className="proposal-vote-option" onClick={onClick ? () => onClick(value) : null}>
     <input className={value} type="radio" id={value} name="proposalVoteChoice" readOnly={!onClick} onChange={onClick ? () => onClick(value) : null}
       value={value} checked={checked} />
-    <label htmlFor={value}/>{description}
+    <label className={"radio-label " + value} htmlFor={value}/>{description}
   </div>
 );
 
