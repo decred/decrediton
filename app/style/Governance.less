@@ -429,10 +429,12 @@
         cursor: pointer;
         text-align: center;
         transition: all 250ms ease;
+        margin-bottom: -3px;
       }
       &:empty {
         &:before {
-          margin-right: 0;
+          margin-right: 5px;
+          text-transform:  capitalize;
         }
       }
     }
@@ -487,28 +489,6 @@
       }
     }
   }
-    &.yes,
-    &.no {
-      width: 12px;
-      height: 12px;
-      border-radius: 100px;
-      background-color: var(--disabled-background-color-lighter);
-      margin-top: 3px;
-    }
-      > .selected {
-        width: 6px;
-        height: 6px;
-        border-radius: 100px;
-        background-color: var(--vote-no-color);
-        margin-top: 3px;
-        margin-left: 3px;
-      }
-    > span {
-      margin-left: 10px;
-    }
   label {
-    margin-right: 4px;
-    margin-bottom: -3px;
-    text-transform:  capitalize;
   }
 }
