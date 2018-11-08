@@ -20,7 +20,7 @@ export const ProposalVoted = () =>
 export const NoTicketsVotingInfo = ({ showPurchaseTicketsPage }) => (
   <Aux>
     <div className="proposal-details-no-tickets"><T id="proposalDetails.votingInfo.noTickets" m="Voting is only available upon participation in Staking." /></div>
-    <KeyBlueButton onClick={showPurchaseTicketsPage}><T id="proposalDetails.votingInfo.startStakingBtn" m="Start Staking DCR" /></KeyBlueButton>
+    <KeyBlueButton onClick={showPurchaseTicketsPage}><T id="proposalDetails.votingInfo.startStakingBtn" m="Start Staking" /></KeyBlueButton>
   </Aux>
 );
 
@@ -40,10 +40,24 @@ const CurrentVoteChoiceLabel = ({ currentVoteChoice }) => {
   );
 };
 
-export const ChosenVoteOption = ({ currentVoteChoice }) => (
+const VoteOption = ({ value, description, onClick, checked }) => (
+  <div className="proposal-vote-option" onClick={onClick ? () => onClick(value) : null}>
+    <input className={value} type="radio" id={value} name="proposalVoteChoice" readOnly={!onClick} onChange={onClick ? () => onClick(value) : null}
+      value={value} checked={checked} />
+    <label htmlFor={value}/>{description}
+  </div>
+);
+
+export const ChosenVoteOption = ({ voteOptions, onUpdateVoteChoice, onVoteOptionSelected, newVoteChoice, currentVoteChoice, votingComplete }) => (
   <Aux>
     <div className="proposal-details-voting-preference-title"><T id="proposalDetails.votingInfo.votingPreferenceTitle" m="My Voting Preference" /></div>
-    <div className="proposal-details-current-choice-box"><CurrentVoteChoiceLabel currentVoteChoice={currentVoteChoice} /></div>
+    <div className="proposal-details-current-choice-box">
+      {voteOptions.map(o => (
+        <VoteOption value={o.id} description={o.id} key={o.id} checked={currentVoteChoice !== "abstain" ? o.id === currentVoteChoice : o.id === newVoteChoice}
+          onClick={!votingComplete ? onVoteOptionSelected : null}/>
+      ))}
+    </div>
+    {!votingComplete && <UpdateVoteChoiceModalButton {...{ newVoteChoice, onUpdateVoteChoice }} />}
   </Aux>
 );
 
