@@ -355,6 +355,7 @@ message StakeInfoResponse {
 	uint32 revoked = 8;
 	uint32 expired = 9;
 	int64 total_subsidy = 10;
+	uint32 unspent = 11;
 }
 
 message BlockInfoRequest {
@@ -593,7 +594,7 @@ message TransactionNotificationsResponse {
 	// Any new unmined transactions are included here.  These unmined transactions
 	// refer to the current best chain, so transactions from detached blocks may
 	// be moved to mempool and included here if they are not mined or double spent
-	// in the new chain.  Additionally, if no new blocks were attached but a relevant
+	// in the new chain.  Additonally, if no new blocks were attached but a relevant
 	// unmined transaction is seen by the wallet, it will be reported here.
 	repeated TransactionDetails unmined_transactions = 3;
 
@@ -1004,6 +1005,8 @@ message ValidateAddressResponse {
 	ScriptType script_type = 8;
 	bytes pay_to_addr_script = 9;
 	uint32 sigs_required = 10;
+	bool is_internal = 11;
+	uint32 index = 12;
 }
 
 message CommittedTicketsRequest {
