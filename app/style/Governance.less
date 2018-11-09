@@ -1,7 +1,8 @@
 @import (reference) "./main.less";
 @import (reference) "./Icons.less";
 
-.proposals-community-header {
+.proposals-community-header,
+.consensus-changes-header {
   padding: 30px 30px 30px 60px;
   margin: -38px -80px 0px -60px;
   display: flex;
@@ -54,6 +55,10 @@
   .text {
     color: var(--stroke-color-hovered);
   }
+}
+
+.consensus-changes-header {
+  background-color: var(--disabled-background-color-lighter);
 }
 
 .proposals-status-links {
