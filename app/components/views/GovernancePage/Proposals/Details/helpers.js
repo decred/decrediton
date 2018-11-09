@@ -69,10 +69,10 @@ export const VotingChoicesInfo = (props) => (
 );
 
 export const UpdatingVoteChoice = () => (
-  <Aux>
-    <div className="proposal-details-no-tickets"><T id="proposalDetails.votingInfo.updatingVoteChoice" m="Updating vote choice" /></div>
+  <div className="proposal-details-updating-vote-choice">
     <StakeyBounceXs />
-  </Aux>
+    <T id="proposalDetails.votingInfo.updatingVoteChoice" m="Updating vote choice" />
+  </div>
 );
 
 export const OverviewField = showCheck(( { label, value } ) => (
