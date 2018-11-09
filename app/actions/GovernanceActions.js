@@ -298,7 +298,7 @@ export const updateVoteChoice = (proposal, newVoteChoiceID, passphrase) =>
       // update the vote count for the proposal from pi, so we can see our
       // vote counting towards the totals
       const newProposal = { ...proposal };
-      await getProposalVoteResults(newProposal, piURL);
+      await getProposalVoteResults(newProposal, piURL, walletService);
 
       const existProposals = getState().governance.proposals;
       const proposals = {
