@@ -39,7 +39,7 @@ const VoteOption = ({ value, description, onClick, checked }) => (
   </div>
 );
 
-export const ChosenVoteOption = ({ voteOptions, onUpdateVoteChoice, onVoteOptionSelected, newVoteChoice, currentVoteChoice, votingComplete }) => (
+export const ChosenVoteOption = ({ voteOptions, onUpdateVoteChoice, onVoteOptionSelected, newVoteChoice, currentVoteChoice, votingComplete, eligibleTicketCount }) => (
   <Aux>
     <div className="proposal-details-voting-preference">
       <div className="proposal-details-voting-preference-title"><T id="proposalDetails.votingInfo.votingPreferenceTitle" m="My Voting Preference" /></div>
@@ -50,28 +50,14 @@ export const ChosenVoteOption = ({ voteOptions, onUpdateVoteChoice, onVoteOption
         ))}
       </div>
     </div>
-    {!votingComplete && <UpdateVoteChoiceModalButton {...{ newVoteChoice, onUpdateVoteChoice }} />}
-  </Aux>
-);
-
-export const VotingChoicesInfo = (props) => (
-  <Aux>
-    <div className="proposal-details-voting-preference-title"><T id="proposalDetails.votingInfo.vote" m="Vote on this proposal" /></div>
-    <div className="proposal-details-voting-preference-ticket-count" >
-      <T
-        id="proposalDetails.votingInfo.eligibleCount"
-        m="You have {count, plural, one {one ticket} other {# tickets}} eligible for voting"
-        values={{ count: props.eligibleTicketCount }}
-      />
-    </div>
-    <UpdateVoteChoiceModalButton {...props} />
+    {!votingComplete && <UpdateVoteChoiceModalButton {...{ newVoteChoice, onUpdateVoteChoice, eligibleTicketCount }} />}
   </Aux>
 );
 
 export const UpdatingVoteChoice = () => (
   <div className="proposal-details-updating-vote-choice">
     <StakeyBounceXs />
-    <T id="proposalDetails.votingInfo.updatingVoteChoice" m="Updating vote choice" />
+    <T id="proposalDetails.votingInfo.updatingVoteChoice" m="Updating vote choice" />...
   </div>
 );
 

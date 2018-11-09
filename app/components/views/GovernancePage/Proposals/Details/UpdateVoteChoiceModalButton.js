@@ -2,7 +2,7 @@ import { FormattedMessage as T } from "react-intl";
 import { PassphraseModalButton } from "buttons";
 
 
-export default ({ onUpdateVoteChoice, newVoteChoice }) => (
+export default ({ onUpdateVoteChoice, newVoteChoice, eligibleTicketCount }) => (
   <PassphraseModalButton
     modalTitle={
       <Aux>
@@ -12,6 +12,13 @@ export default ({ onUpdateVoteChoice, newVoteChoice }) => (
           {newVoteChoice}
         </div>
       </Aux>}
+    modalDescription={
+      <T
+        id="proposalDetails.votingInfo.eligibleCount"
+        m="You have {count, plural, one {one ticket} other {# tickets}} eligible for voting"
+        values={{ count: eligibleTicketCount }}
+      />}
+    disabled={!newVoteChoice}
     onSubmit={onUpdateVoteChoice}
     buttonLabel={<T id="proposals.updateVoteChoiceModal.btnLabel" m="Cast Vote" />}
   />
