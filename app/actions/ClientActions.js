@@ -962,12 +962,15 @@ export const SETVOTECHOICES_ATTEMPT = "SETVOTECHOICES_ATTEMPT";
 export const SETVOTECHOICES_FAILED = "SETVOTECHOICES_FAILED";
 export const SETVOTECHOICES_SUCCESS = "SETVOTECHOICES_SUCCESS";
 
-export const setVoteChoicesAttempt = (stakePool, agendaId, choiceId) => (dispatch, getState) => {
+export const setVoteChoicesAttempt = (agendaId, choiceId) => (dispatch, getState) => {
   dispatch({ payload: { agendaId, choiceId }, type: SETVOTECHOICES_ATTEMPT });
+  const stakePools = sel.configuredStakePools(getState());
   wallet.setAgendaVote(sel.votingService(getState()), agendaId, choiceId)
     .then(response => {
       dispatch({ response, type: SETVOTECHOICES_SUCCESS });
-      dispatch(getVoteChoicesAttempt(stakePool));
+      for( var i = 0; i < stakePools.length; i++) {
+        dispatch(getVoteChoicesAttempt(stakePools[i]));
+      }
     })
     .catch(error => dispatch({ error, type: SETVOTECHOICES_FAILED }));
 };
