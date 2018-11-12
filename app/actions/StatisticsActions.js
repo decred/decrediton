@@ -122,13 +122,14 @@ export const exportStatToCSV = (opts) => (dispatch, getState) => {
 
   // constants (may be overridden/parametrized in the future)
   const unitDivisor = sel.unitDivisor(getState());
+  const timezone = sel.timezone(getState());
   const vsep = ","; // value separator
   const ln = "\n";  // line separator
   const precision = Math.ceil(Math.log10(unitDivisor)); // maximum decimal precision
 
   // formatting functions
   const quote = (v) => "\"" + v.replace("\"", "\\\"") + "\"";
-  const formatTime = v => v ? formatLocalISODate(v) : "";
+  const formatTime = v => v ? formatLocalISODate(v, timezone) : "";
   const csvValue = (v) => isNullOrUndefined(v) ? "" : isNumber(v) ? v.toFixed(precision) : quote(v);
   const csvLine = (values) => values.map(csvValue).join(vsep);
 
