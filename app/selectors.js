@@ -707,6 +707,7 @@ export const revokedTicketsCount = compose(r => r ? r.getRevoked() : 0, getStake
 export const immatureTicketsCount = compose(r => r ? r.getImmature() : 0, getStakeInfoResponse);
 export const expiredTicketsCount = compose(r => r ? r.getExpired() : 0, getStakeInfoResponse);
 export const liveTicketsCount = compose(r => r ? r.getLive() : 0, getStakeInfoResponse);
+export const unspentTicketsCount = compose(r => r ? r.getUnspent() : 0, getStakeInfoResponse);
 export const totalSubsidy = compose(r => r ? r.getTotalSubsidy() : 0, getStakeInfoResponse);
 export const hasTicketsToRevoke = compose(
   r => r ? r.getRevoked() !== r.getExpired() + r.getMissed() : 0,

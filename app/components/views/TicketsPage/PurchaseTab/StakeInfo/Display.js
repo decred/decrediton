@@ -9,8 +9,10 @@ const StakeInfoDisplay = ({
   getStakeInfoDetailsComponent,
   isShowingDetails,
   ownMempoolTicketsCount,
+  unspentTicketsCount,
   immatureTicketsCount,
   liveTicketsCount,
+  isSPV,
   onShowStakeInfo,
   onHideStakeInfo
 }) => (
@@ -21,6 +23,8 @@ const StakeInfoDisplay = ({
         ownMempoolTicketsCount,
         immatureTicketsCount,
         liveTicketsCount,
+        unspentTicketsCount,
+        isSPV,
         onShowStakeInfo,
         onHideStakeInfo
       }}

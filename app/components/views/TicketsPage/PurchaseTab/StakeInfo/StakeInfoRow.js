@@ -8,8 +8,10 @@ const StakeInfoDisplay = ({
   ownMempoolTicketsCount,
   immatureTicketsCount,
   liveTicketsCount,
+  unspentTicketsCount,
   onShowStakeInfo,
-  onHideStakeInfo
+  onHideStakeInfo,
+  isSPV,
 }) => (
   <div className="stakepool-stake-info-area" onClick={isShowingDetails ? onHideStakeInfo : onShowStakeInfo}>
     <div className="stakepool-stake-info-show-advanced-area">
@@ -24,9 +26,14 @@ const StakeInfoDisplay = ({
       <Column
         label={<T id="stake.immatureTickets" m="Immature Tickets" />}
         value={<FormattedNumber value={immatureTicketsCount} />} />
-      <Column
-        label={<T id="stake.liveTickets" m="Live Tickets" />}
-        value={<FormattedNumber value={liveTicketsCount} />} />
+      {isSPV ?
+        <Column
+          label={<T id="stake.unspentTickets" m="Unspent Tickets" />}
+          value={<FormattedNumber value={unspentTicketsCount} />} /> :
+        <Column
+          label={<T id="stake.liveTickets" m="Live Tickets" />}
+          value={<FormattedNumber value={liveTicketsCount} />} />
+      }
     </Row>
   </div>
 );
