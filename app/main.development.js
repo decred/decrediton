@@ -39,6 +39,10 @@ const daemonIsAdvanced = globalCfg.get("daemon_start_advanced");
 const walletsDirectory = getWalletsDirectoryPath();
 const mainnetWalletsPath = getWalletsDirectoryPathNetwork(false);
 const testnetWalletsPath = getWalletsDirectoryPathNetwork(true);
+if (globalCfg.get("disable_hardware_accel")) {
+  logger.log("info", "Disabling hardware acceleration");
+  app.disableHardwareAcceleration();
+}
 
 if (argv.help) {
   console.log(USAGE_MESSAGE);
@@ -220,7 +224,7 @@ ipcMain.on("get-is-watching-only", (event) => {
   event.returnValue = getWatchingOnlyWallet();
 });
 
-primaryInstance = !app.makeSingleInstance(() => true);
+primaryInstance = app.requestSingleInstanceLock();
 const stopSecondInstance = !primaryInstance && !daemonIsAdvanced;
 if (stopSecondInstance) {
   logger.log("error", "Preventing second instance from running.");
