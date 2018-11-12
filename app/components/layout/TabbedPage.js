@@ -19,7 +19,6 @@ function getTabs(children) {
 
 @autobind
 class TabbedPage extends React.Component {
-
   constructor(props) {
     super(props);
     this._tabs = getTabs(props.children);
@@ -28,15 +27,14 @@ class TabbedPage extends React.Component {
     this.state = { matchedTab, dir: "l2r", styles };
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.children !== this.props.children) {
-      this._tabs = getTabs(nextProps.children);
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.children !== prevProps.children) {
+      this._tabs = getTabs(this.props.children);
     }
-
-    if (nextProps.location !== this.props.location) {
-      const matchedTab = this.matchedTab(nextProps.location);
+    if (this.props.location !== prevProps.location) {
+      const matchedTab = this.matchedTab(this.props.location);
       const dir =
-        this.state.matchedTab && matchedTab && this.state.matchedTab.index > matchedTab.index
+        prevState.matchedTab && matchedTab && prevState.matchedTab.index > matchedTab.index
           ? "r2l" : "l2r";
       const styles = this.getStyles(matchedTab);
       this.setState({ matchedTab, dir, styles });
