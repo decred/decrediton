@@ -2,7 +2,6 @@ import AgendaCard from "./AgendaCard";
 import AgendaOverview from "./AgendaOverview";
 import { ExternalLink } from "shared";
 import { FormattedMessage as T } from "react-intl";
-import { shell } from "electron";
 
 const VotingPrefsPage = ({
   agendas,
@@ -20,7 +19,7 @@ const VotingPrefsPage = ({
         <T id="votingPreferences.description" m="Consensus changes refer to the on-chain governance aspect of Decred. This means deciding whether to adopt changes to the consensus rules of the network. Participation in voting requires (PoS) tickets." />
       </p>
       <div className="links">
-        <div className="info-modal-button" onClick={() => shell.openExternal("https://docs.decred.org/getting-started/user-guides/agenda-voting/")}/>
+        <ExternalLink className="info-modal-button" href="https://docs.decred.org/getting-started/user-guides/agenda-voting/"/>
         <ExternalLink href="https://voting.decred.org"><T id="votingPreferences.dashboard" m="Voting Dashboard" /></ExternalLink>
       </div>
     </div>
