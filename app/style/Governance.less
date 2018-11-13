@@ -1,8 +1,9 @@
 @import (reference) "./main.less";
 @import (reference) "./Icons.less";
 
-.proposals-community-header {
-  padding: 30px 30px 30px 60px;
+.proposals-community-header,
+.consensus-changes-header {
+  padding: 30px 30px 30px 100px;
   margin: -38px -80px 0px -60px;
   display: flex;
   flex-direction: column;
@@ -33,7 +34,7 @@
     position: absolute;
     right: 80px;
 
-    > a {
+    > a:not(.info-modal-button) {
       font-size: 13px;
       line-height: 17px;
       display: inline-block;
@@ -56,8 +57,12 @@
   }
 }
 
+.consensus-changes-header {
+  background-color: var(--disabled-background-color-lighter);
+}
+
 .proposals-status-links {
-  padding: 10px 30px 10px 60px;
+  padding: 10px 30px 10px 100px;
   margin: 0px -80px 0px -60px;
   background-color: var(--disabled-background-color-lighter);
   > a {
@@ -79,12 +84,14 @@
 
 .no-proposals-indicator {
   margin-top: 20px;
+  margin-left: 38px;
   font-size: 120%;
   padding: 1em;
 }
 
 .proposal-list {
   margin-top: 20px;
+  margin-left: 38px;
   background-color: var(--background-back-color);
   &.ended {
     background-color: var(--disabled-background-color);

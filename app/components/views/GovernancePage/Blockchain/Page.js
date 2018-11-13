@@ -1,33 +1,27 @@
 import AgendaCard from "./AgendaCard";
 import AgendaOverview from "./AgendaOverview";
-import { StakePoolSelect } from "inputs";
+import { ExternalLink } from "shared";
 import { FormattedMessage as T } from "react-intl";
-import "style/StakePool.less";
 
 const VotingPrefsPage = ({
   agendas,
   stakePool,
   selectedAgenda,
-  configuredStakePools,
-  onChangeStakePool,
   getAgendaSelectedChoice,
   onShowAgenda,
   onCloseAgenda,
   onUpdateVotePreference,
 }) => (
   <Aux>
-    <div className="stakepool-voting-title-area">
-      <div className="stakepool-voting-title-area-name">
-        <T id="votingPreferences.title" m="Voting Preferences" />
+    <div className="consensus-changes-header">
+      <div className="proposals-community-header-title"><T id="votingPreferences.title" m="Consensus Changes" /></div>
+      <p className="proposals-community-header-description">
+        <T id="votingPreferences.description" m="Consensus changes refer to the on-chain governance aspect of Decred. This means deciding whether to adopt changes to the consensus rules of the network. Participation in voting requires (PoS) tickets." />
+      </p>
+      <div className="links">
+        <ExternalLink className="info-modal-button" href="https://docs.decred.org/getting-started/user-guides/agenda-voting/"/>
+        <ExternalLink href="https://voting.decred.org"><T id="votingPreferences.dashboard" m="Voting Dashboard" /></ExternalLink>
       </div>
-      {configuredStakePools.length > 0 &&
-      <div className="stakepool-unconfigured-select">
-        <StakePoolSelect
-          options={configuredStakePools}
-          value={stakePool}
-          onChange={onChangeStakePool}
-        />
-      </div>}
     </div>
     <div className="stakepool-voting-agenda-area">
       {selectedAgenda ? (
