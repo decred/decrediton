@@ -3,6 +3,9 @@ import {
   GETPROPOSAL_ATTEMPT, GETPROPOSAL_FAILED, GETPROPOSAL_SUCCESS,
   UPDATEVOTECHOICE_ATTEMPT, UPDATEVOTECHOICE_SUCCESS, UPDATEVOTECHOICE_FAILED,
 } from "actions/GovernanceActions";
+import {
+  CLOSEWALLET_SUCCESS
+} from "actions/WalletLoaderActions";
 
 export default function governance(state = {}, action) {
   switch (action.type) {
@@ -37,6 +40,17 @@ export default function governance(state = {}, action) {
       updateVoteChoiceAttempt: false };
   case UPDATEVOTECHOICE_FAILED:
     return { ...state, updateVoteChoiceAttempt: false };
+  case CLOSEWALLET_SUCCESS:
+    return { ...state,
+      getVettedAttempt: false,
+      activeVote: [],
+      preVote: [],
+      voted: [],
+      getProposalAttempt: false,
+      getProposalError: null,
+      proposals: {},
+      lastVettedFetchTime: new Date(0),
+    };
   default:
     return state;
   }
