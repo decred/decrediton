@@ -1,7 +1,7 @@
 import { AutoBuyerSwitch, PassphraseModalSwitch } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import { DcrInput, AccountsSelect, StakePoolSelect } from "inputs";
-import "style/StakePool.less";
+import { Balance } from "shared";
 
 const TicketAutoBuyerForm = ({
   onStartAutoBuyer,
@@ -28,6 +28,16 @@ const TicketAutoBuyerForm = ({
               <div>
                 <span className="orange-warning"><T id="tickets.startAutoBuyerConfirmation.attention" m="Attention!" /></span>
                 <T id="tickets.startAutoBuyerConfirmation.description" m="Decrediton must remain running for tickets to be automatically purchased." />
+                <div className="auto-buyer-modal-confirm">
+                  <div className="auto-buyer-modal-confirm-row">
+                    <div className="auto-buyer-modal-confirm-label"><T id="autobuyer.modal.balanceToMaintain" m="Balance To Maintain" />:</div>
+                    <div className="auto-buyer-modal-confirm-value"><Balance flat amount={balanceToMaintain} /></div>
+                  </div>
+                  <div className="auto-buyer-modal-confirm-row">
+                    <div className="auto-buyer-modal-confirm-label"><T id="autobuyer.modal.stakepool" m="Stakepool" />:</div>
+                    <div className="auto-buyer-modal-confirm-value">{stakePool.Host}</div>
+                  </div>
+                </div>
               </div>}
             onSubmit={onStartAutoBuyer}
           />
