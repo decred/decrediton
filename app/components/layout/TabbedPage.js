@@ -65,12 +65,12 @@ class TabbedPage extends React.Component {
 
   willLeave() {
     const pos = this.state.dir === "l2r" ? -1000 : +1000;
-    return { left: spring(pos, {stiffness: 180, damping: 20}), opacity: spring(0)  };
+    return { left: spring(pos, { stiffness: 180, damping: 20 }), opacity: spring(0)  };
   }
 
   willEnter() {
     const pos = this.state.dir === "l2r" ? +1000 : -1000;
-    return { left: pos,opacity: spring(0), opacity: 1 };
+    return { left: pos, opacity: 1 };
   }
 
   // returns the state.styles in a static container, without animations.
