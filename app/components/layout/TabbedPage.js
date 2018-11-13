@@ -32,16 +32,14 @@ class TabbedPage extends React.Component {
       return;
     }
 
-    if (this.props.children !== prevProps.children) {
-      this._tabs = getTabs(this.props.children);
-    }
     if (this.props.location !== prevProps.location) {
       const matchedTab = this.matchedTab(this.props.location);
       const haveBoth = prevState.matchedTab && matchedTab;
+
       if (haveBoth && prevState.matchedTab.index === matchedTab.index) {
         return;
       }
-      const dir = haveBoth && prevState.matchedTab.index > matchedTab.index 
+      const dir = haveBoth && prevState.matchedTab.index > matchedTab.index
         ? "r2l" : "l2r";
       const styles = this.getStyles(matchedTab);
       this.setState({ matchedTab, dir, styles });
@@ -61,18 +59,18 @@ class TabbedPage extends React.Component {
     return [ {
       key: matchedTab.tab.props.path,
       data: { matchedTab, element },
-      style: { left: spring(0, theme("springs.tab")) }
+      style: { left: spring(0, theme("springs.tab")), opacity: 1 }
     } ];
   }
 
   willLeave() {
     const pos = this.state.dir === "l2r" ? -1000 : +1000;
-    return { left: spring(pos, spring(theme("springs.tab"))) };
+    return { left: spring(pos, {stiffness: 180, damping: 20}), opacity: spring(0)  };
   }
 
   willEnter() {
     const pos = this.state.dir === "l2r" ? +1000 : -1000;
-    return { left: pos };
+    return { left: pos,opacity: spring(0), opacity: 1 };
   }
 
   // returns the state.styles in a static container, without animations.
@@ -103,6 +101,7 @@ class TabbedPage extends React.Component {
                 <div
                   className={"tab-content"}
                   style={{ left: s.style.left, right: -s.style.left,
+                    opacity: s.style.opacity,
                     visibility: Math.abs(s.style.left) > 990 ? "hidden" : "" }}
                   key={s.key}
                 >
