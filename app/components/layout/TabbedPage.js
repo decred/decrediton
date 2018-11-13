@@ -28,14 +28,21 @@ class TabbedPage extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    if (this.props.location === prevProps.location) {
+      return;
+    }
+
     if (this.props.children !== prevProps.children) {
       this._tabs = getTabs(this.props.children);
     }
     if (this.props.location !== prevProps.location) {
       const matchedTab = this.matchedTab(this.props.location);
-      const dir =
-        prevState.matchedTab && matchedTab && prevState.matchedTab.index > matchedTab.index
-          ? "r2l" : "l2r";
+      const haveBoth = prevState.matchedTab && matchedTab;
+      if (haveBoth && prevState.matchedTab.index === matchedTab.index) {
+        return;
+      }
+      const dir = haveBoth && prevState.matchedTab.index > matchedTab.index 
+        ? "r2l" : "l2r";
       const styles = this.getStyles(matchedTab);
       this.setState({ matchedTab, dir, styles });
     }
@@ -68,20 +75,6 @@ class TabbedPage extends React.Component {
     return { left: pos };
   }
 
-  scrollbarOverlayGetStyles(showScroll) {
-    if (!showScroll) return [];
-
-    return [ {
-      key: "scrollbar",
-      data: {},
-      style: { opacity: spring(1, theme("springs.tab")) }
-    } ];
-  }
-
-  scrollbarOverlayWillLeave() {
-    return { opacity: spring(0, theme("springs.tab")) };
-  }
-
   // returns the state.styles in a static container, without animations.
   staticStyles() {
     return (
@@ -108,26 +101,15 @@ class TabbedPage extends React.Component {
             {interpolatedStyles.map(s => {
               return (
                 <div
-                  className={[ "tab-content", Math.abs(s.style.left) < 0.1 ? "visible" : "" ].join(" ")}
-                  style={{ left: s.style.left, right: -s.style.left }}
+                  className={"tab-content"}
+                  style={{ left: s.style.left, right: -s.style.left,
+                    visibility: Math.abs(s.style.left) > 990 ? "hidden" : "" }}
                   key={s.key}
                 >
                   {s.data.element}
                 </div>
               );
             })}
-            <TransitionMotion
-              styles={this.scrollbarOverlayGetStyles(interpolatedStyles.length !== 1)}
-              willLeave={this.scrollbarOverlayWillLeave}
-            >
-              {sbStyle => {
-                return <Aux>
-                  {sbStyle.map(s =>
-                    <div className="scrollbar-overlay" key={s.key} style={{ opacity: s.style.opacity }} />
-                  )}
-                </Aux>;
-              }}
-            </TransitionMotion>
           </Aux>);
         }}
       </TransitionMotion>
