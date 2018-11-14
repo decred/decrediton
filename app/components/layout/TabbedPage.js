@@ -28,18 +28,13 @@ class TabbedPage extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.location === prevProps.location) {
+    if (this.props.location.pathname === prevProps.location.pathname) {
       return;
     }
 
     const matchedTab = this.matchedTab(this.props.location);
-    const haveBoth = prevState.matchedTab && matchedTab;
-    if (haveBoth && prevState.matchedTab.index === matchedTab.index) {
-      return;
-    }
-
-    const dir = haveBoth && prevState.matchedTab.index > matchedTab.index
-      ? "r2l" : "l2r";
+    const dir = prevState.matchedTab && matchedTab &&
+      prevState.matchedTab.index > matchedTab.index ? "r2l" : "l2r";
     const styles = this.getStyles(matchedTab);
     this.setState({ matchedTab, dir, styles });
   }
