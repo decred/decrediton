@@ -3,8 +3,8 @@ import { GoBackIconButton } from "buttons";
 import { PoliteiaLink } from "shared";
 import {
   ProposalNotVoting, NoTicketsVotingInfo, OverviewField, OverviewVotingProgressInfo,
-  NoElligibleTicketsVotingInfo, VotingChoicesInfo, UpdatingVoteChoice, TimeValue,
-  ChosenVoteOption, ProposalText, ProposalVoted,
+  NoElligibleTicketsVotingInfo, UpdatingVoteChoice, TimeValue,
+  ChosenVoteOption, ProposalText,
 } from "./helpers";
 import { politeiaMarkdownIndexMd } from "helpers";
 import {
@@ -32,14 +32,11 @@ export default ({ viewedProposalDetails,
 
   let voteInfo = null;
   if (updateVoteChoiceAttempt) voteInfo = <UpdatingVoteChoice />;
-  else if (voted) voteInfo = <ProposalVoted />;
+  else if (voted) voteInfo = <ChosenVoteOption {...{ voteOptions, currentVoteChoice, votingComplete: true }} />;
   else if (!voting) voteInfo = <ProposalNotVoting />;
   else if (!hasTickets) voteInfo = <NoTicketsVotingInfo {...{ showPurchaseTicketsPage }} />;
   else if (!hasEligibleTickets) voteInfo = <NoElligibleTicketsVotingInfo {...{ showPurchaseTicketsPage }} />;
-  else if (currentVoteChoice !== "abstain") voteInfo = <ChosenVoteOption {...{ currentVoteChoice }} />;
-  else {
-    voteInfo = <VotingChoicesInfo {...{ voteOptions, onUpdateVoteChoice, onVoteOptionSelected, newVoteChoice, eligibleTicketCount }}  />;
-  }
+  else voteInfo = <ChosenVoteOption {...{ voteOptions, onUpdateVoteChoice, onVoteOptionSelected, newVoteChoice, eligibleTicketCount, currentVoteChoice, votingComplete: currentVoteChoice !== "abstain" }} />;
 
   return (
     <Aux>
