@@ -130,7 +130,9 @@ const TxDetails = ({
             <T id="txDetails.timestamp" m="{timestamp, date, medium} {timestamp, time, medium}" values={{ timestamp: tsDate(txType == "Vote" && enterTimestamp ? enterTimestamp : txTimestamp) }}/>
           </div>
         </div>:
-        <T id="txDetails.unConfirmed" m="Unconfirmed"/>
+        <div className="tx-details-subtitle-date">
+          <T id="txDetails.unConfirmed" m="Unconfirmed"/>
+        </div>
       }
       {leaveTimestamp && <div className="tx-details-subtitle-pair"><div className="tx-details-subtitle-sentfrom"><T id="txDetails.votedOn" m="Voted On" /></div><div className="tx-details-subtitle-date"><T id="txDetails.timestamp" m="{timestamp, date, medium} {timestamp, time, medium}" values={{ timestamp: tsDate(leaveTimestamp) }}/></div></div>}
       {ticketPrice && <div className="tx-details-subtitle-pair"><div className="tx-details-subtitle-sentfrom"><T id="txDetails.ticketCost" m="Ticket Cost" /></div><div className="tx-details-subtitle-account"><Balance amount={ticketPrice}/></div></div> }
