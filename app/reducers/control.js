@@ -16,8 +16,10 @@ import { GETNEXTADDRESS_ATTEMPT, GETNEXTADDRESS_FAILED, GETNEXTADDRESS_SUCCESS,
   SETTICKETBUYERCONFIG_ATTEMPT, SETTICKETBUYERCONFIG_FAILED, SETTICKETBUYERCONFIG_SUCCESS,
   STARTAUTOBUYER_ATTEMPT, STARTAUTOBUYER_FAILED, STARTAUTOBUYER_SUCCESS,
   STOPAUTOBUYER_ATTEMPT, STOPAUTOBUYER_FAILED, STOPAUTOBUYER_SUCCESS,
+  STARTTICKETBUYERV2_ATTEMPT, STARTTICKETBUYERV2_FAILED, STARTTICKETBUYERV2_SUCCESS,
+  STARTTICKETBUYERV2_UPDATE, STOPTICKETBUYERV2_ATTEMPT, STOPTICKETBUYERV2_SUCCESS,
   CONSTRUCTTX_ATTEMPT, CONSTRUCTTX_FAILED, CONSTRUCTTX_SUCCESS, CONSTRUCTTX_FAILED_LOW_BALANCE,
-  SETBALANCETOMAINTAIN, SETMAXFEE, SETMAXPRICEABSOLUTE, SETMAXPRICERELATIVE, SETMAXPERBLOCK,
+  SETBALANCETOMAINTAIN,
   VALIDATEADDRESS_ATTEMPT, VALIDATEADDRESS_SUCCESS, VALIDATEADDRESS_FAILED, VALIDATEADDRESS_CLEANSTORE,
   MODAL_SHOWN, MODAL_HIDDEN, VALIDATEMASTERPUBKEY_SUCCESS, VALIDATEMASTERPUBKEY_FAILED,
   GETACCOUNTEXTENDEDKEY_ATTEMPT, GETACCOUNTEXTENDEDKEY_FAILED, GETACCOUNTEXTENDEDKEY_SUCCESS,
@@ -309,26 +311,6 @@ export default function control(state = {}, action) {
       ...state,
       balanceToMaintain: action.balanceToMaintain,
     };
-  case SETMAXFEE:
-    return {
-      ...state,
-      maxFee: action.maxFee,
-    };
-  case SETMAXPRICEABSOLUTE:
-    return {
-      ...state,
-      maxPriceAbsolute: action.maxPriceAbsolute,
-    };
-  case SETMAXPRICERELATIVE:
-    return {
-      ...state,
-      maxPriceRelative: action.maxPriceRelative,
-    };
-  case SETMAXPERBLOCK:
-    return {
-      ...state,
-      maxPerBlock: action.maxPerBlock,
-    };
   case STARTAUTOBUYER_ATTEMPT:
     return { ...state,
       startAutoBuyerError: null,
@@ -346,10 +328,6 @@ export default function control(state = {}, action) {
       startAutoBuyerResponse: action.startAutoBuyerResponse,
       stopAutoBuyerResponse: null,
       balanceToMaintain: action.balanceToMaintain,
-      maxFeePerKb: action.maxFeePerKb,
-      maxPriceRelative: action.maxPriceRelative,
-      maxPriceAbsolute: action.maxPriceAbsolute,
-      maxPerBlock: action.maxPerBlock,
     };
   case STOPAUTOBUYER_ATTEMPT:
     return { ...state,
@@ -368,6 +346,37 @@ export default function control(state = {}, action) {
       stopAutoBuyerRequestAttempt: false,
       stopAutoBuyerResponse: action.stopAutoBuyerResponse,
       startAutoBuyerSuccess: null,
+      startAutoBuyerResponse: null,
+    };
+  case STARTTICKETBUYERV2_ATTEMPT:
+    return { ...state,
+      startTicketBuyerAttempt: true,
+      startTicketBuyerError: null,
+      ticketBuyerConfig: action.ticketBuyerConfig,
+    };
+  case STARTTICKETBUYERV2_FAILED:
+    return { ...state,
+      startTicketBuyerAttempt: false,
+      startTicketBuyerError: action.error,
+      startAutoBuyerResponse: null,
+    };
+  case STARTTICKETBUYERV2_SUCCESS:
+    return { ...state,
+      startTicketBuyerAttempt: false,
+      startTicketBuyerError: null,
+      startAutoBuyerResponse: null,
+    };
+  case STARTTICKETBUYERV2_UPDATE:
+    return { ...state,
+      ticketBuyerCall: action.ticketBuyerCall,
+      startAutoBuyerResponse: true,
+    };
+  case STOPTICKETBUYERV2_ATTEMPT:
+    return { ...state,
+    };
+  case STOPTICKETBUYERV2_SUCCESS:
+    return { ...state,
+      ticketBuyerCall: null,
       startAutoBuyerResponse: null,
     };
   case CONSTRUCTTX_ATTEMPT:
@@ -423,10 +432,6 @@ export default function control(state = {}, action) {
   case WALLET_AUTOBUYER_SETTINGS:
     return { ...state,
       balanceToMaintain: action.balanceToMaintain,
-      maxFee: action.maxFee,
-      maxPriceAbsolute: action.maxPriceAbsolute,
-      maxPriceRelative: action.maxPriceRelative,
-      maxPerBlock: action.maxPerBlock,
     };
   case EXPORT_STARTED:
     return { ...state,

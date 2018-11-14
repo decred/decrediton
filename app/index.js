@@ -81,7 +81,7 @@ var initialState = {
   },
   version: {
     // RequiredVersion
-    requiredVersion: "5.5.0",
+    requiredVersion: "5.6.0",
     versionInvalid: false,
     versionInvalidError: null,
     // VersionService
@@ -333,10 +333,6 @@ var initialState = {
     ticketBuyerService: null,
     // TicketBuyerConfig
     balanceToMaintain: null,
-    maxFee: null,
-    maxPriceAbsolute: null,
-    maxPriceRelative: null,
-    maxPerBlock: null,
     getTicketBuyerConfigRequestAttempt: false,
     getTicketBuyerConfigResponse: null,
     getTicketBuyerConfigSuccess: null,

@@ -258,10 +258,46 @@
 
 .stakepool-flex-height-auto-buyer-wrapper {
   background-color: var(--background-back-color);
+  padding: 10px 20px 0px 20px;
+  flex-direction: column;
+  display: flex;
+  width: 100%;
 }
 
 .stakepool-auto-buyer-row {
-  padding: 1em;
+  display: flex;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.stakepool-auto-buyer-row-portion-full {
+  width: 100%;
+  text-align: center;
+
+  .stakepool-autobuyer-input {
+    width: 100px;
+  }
+}
+
+.stakepool-auto-buyer-row-portion-half {
+  width: 50%;
+
+  .stakepool-autobuyer-input {
+    width: 230px;
+  }
+}
+
+.stakepool-autobuyer-label {
+  .inline-block-mixin;
+
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.stakepool-autobuyer-input {
+  .inline-block-mixin;
+
+  width: 200px;
 }
 
 .autobuyer-switch {
@@ -1231,4 +1267,26 @@ textarea.stakepool-content-nest-content-settings {
   color: var(--stroke-color-hovered);
   font-size: 20px;
   line-height: 25px;
+}
+
+.auto-buyer-modal-confirm {
+  width: 435px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  .auto-buyer-modal-confirm-row {
+    margin-top: 5px;
+    display: flex;
+    flex-direction: row;
+    .auto-buyer-modal-confirm-label {
+      text-align: left;
+      width: 50%;
+    }
+    .auto-buyer-modal-confirm-value {
+      font-weight: 600;
+      width: 50%;
+      text-align: right;
+    }
+  }
 }

@@ -9,8 +9,8 @@ import {
   PUBLISHTX_FAILED,
   SIGNTX_FAILED, CONSTRUCTTX_FAILED,
   PURCHASETICKETS_SUCCESS, PURCHASETICKETS_FAILED,
-  STARTAUTOBUYER_SUCCESS, STARTAUTOBUYER_FAILED,
-  STOPAUTOBUYER_SUCCESS,
+  STARTTICKETBUYERV2_SUCCESS, STARTTICKETBUYERV2_FAILED,
+  STOPTICKETBUYERV2_SUCCESS,
   REVOKETICKETS_SUCCESS, REVOKETICKETS_FAILED,
   IMPORTSCRIPT_SUCCESS, IMPORTSCRIPT_FAILED,
   RENAMEACCOUNT_SUCCESS, RENAMEACCOUNT_FAILED,
@@ -202,6 +202,18 @@ const messages = defineMessages({
   SPVSYNC_FAILED: {
     id: "spvSync.Failed",
     defaultMessage: "Error syncing SPV wallet: {originalError}"
+  },
+  STARTTICKETBUYERV2_SUCCESS: {
+    id: "runTicketBuyer.Success",
+    defaultMessage: "Ticket Buyer successfully started."
+  },
+  STARTTICKETBUYERV2_FAILED: {
+    id: "runTicketBuyer.Failed",
+    defaultMessage: "Invalid private password.  Please try again."
+  },
+  STOPTICKETBUYERV2_SUCCESS: {
+    id: "stopTicketBuyer.Success",
+    defaultMessage: "Ticket Buyer successfully stopped."
   }
 });
 
@@ -251,8 +263,8 @@ export default function snackbar(state = {}, action) {
   case IMPORTSCRIPT_SUCCESS:
     // willRescan will be false when importing just prior to a ticket purchase
     if (action.willRescan === false) break;
-  case STOPAUTOBUYER_SUCCESS:
-  case STARTAUTOBUYER_SUCCESS:
+  case STARTTICKETBUYERV2_SUCCESS:
+  case STOPTICKETBUYERV2_SUCCESS:
   case UPDATESTAKEPOOLCONFIG_SUCCESS:
   case SETSTAKEPOOLVOTECHOICES_SUCCESS:
   case REMOVESTAKEPOOLCONFIG:
@@ -274,7 +286,6 @@ export default function snackbar(state = {}, action) {
   case PURCHASETICKETS_FAILED:
   case REVOKETICKETS_FAILED:
   case IMPORTSCRIPT_FAILED:
-  case STARTAUTOBUYER_FAILED:
   case UPDATESTAKEPOOLCONFIG_FAILED:
   case SETSTAKEPOOLVOTECHOICES_FAILED:
   case ADDCUSTOMSTAKEPOOL_FAILED:
@@ -293,6 +304,7 @@ export default function snackbar(state = {}, action) {
   case SPVSYNC_FAILED:
   case UPDATEVOTECHOICE_FAILED:
   case GETACCOUNTEXTENDEDKEY_FAILED:
+  case STARTTICKETBUYERV2_FAILED:
     type = "Error";
     message = messages[action.type] || messages.defaultErrorMessage;
     values = { originalError: String(action.error) };

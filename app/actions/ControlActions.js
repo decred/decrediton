@@ -4,8 +4,7 @@ import * as sel from "selectors";
 import { isValidAddress, isValidMasterPubKey } from "helpers";
 import { getStakeInfoAttempt, startWalletServices,
   getStartupWalletInfo } from "./ClientActions";
-import { getWalletCfg } from "../config";
-import { RescanRequest, ConstructTransactionRequest } from "../middleware/walletrpc/api_pb";
+import { RescanRequest, ConstructTransactionRequest, RunTicketBuyerRequest } from "../middleware/walletrpc/api_pb";
 import { reverseRawHash } from "../helpers/byteActions";
 
 export const GETNEXTADDRESS_ATTEMPT = "GETNEXTADDRESS_ATTEMPT";
@@ -274,134 +273,61 @@ export const revokeTicketsAttempt = (passphrase) => (dispatch, getState) => {
     .catch(error => dispatch({ error, type: REVOKETICKETS_FAILED }));
 };
 
-export const GETTICKETBUYERCONFIG_ATTEMPT = "GETTICKETBUYERCONFIG_ATTEMPT";
-export const GETTICKETBUYERCONFIG_FAILED = "GETTICKETBUYERCONFIG_FAILED";
-export const GETTICKETBUYERCONFIG_SUCCESS = "GETTICKETBUYERCONFIG_SUCCESS";
+export const STARTTICKETBUYERV2_ATTEMPT = "STARTTICKETBUYERV2_ATTEMPT";
+export const STARTTICKETBUYERV2_FAILED = "STARTTICKETBUYERV2_FAILED";
+export const STARTTICKETBUYERV2_SUCCESS = "STARTTICKETBUYERV2_SUCCESS";
+export const STARTTICKETBUYERV2_UPDATE = "STARTTICKETBUYERV2_UPDATE";
 
-export const getTicketBuyerConfigAttempt = () => (dispatch, getState) => {
-  dispatch({ type: GETTICKETBUYERCONFIG_ATTEMPT });
-  return wallet.getTicketBuyerConfig(sel.ticketBuyerService(getState()))
-    .then(res => dispatch({ ticketBuyerConfig: res, type: GETTICKETBUYERCONFIG_SUCCESS }))
-    .catch(error => dispatch({ error, type: GETTICKETBUYERCONFIG_FAILED }));
+export const STOPTICKETBUYERV2_ATTEMPT = "STOPTICKETBUYERV2_ATTEMPT";
+export const STOPTICKETBUYERV2_FAILED = "STOPTICKETBUYERV2_FAILED";
+export const STOPTICKETBUYERV2_SUCCESS = "STOPTICKETBUYERV2_SUCCESS";
+
+export const startTicketBuyerV2Attempt = ( passphrase, account, balanceToMaintain, stakepool ) => (dispatch, getState) => {
+  var request = new RunTicketBuyerRequest();
+  request.setBalanceToMaintain(balanceToMaintain);
+  request.setAccount(account.value);
+  request.setVotingAccount(account.value);
+  request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
+  request.setVotingAddress(stakepool.TicketAddress);
+  request.setPoolAddress(stakepool.PoolAddress);
+  request.setPoolFees(stakepool.PoolFees);
+  const ticketBuyerConfig = { stakepool, balanceToMaintain, account };
+  return new Promise(() => {
+    const { ticketBuyerService } = getState().grpc;
+    dispatch({ ticketBuyerConfig, type: STARTTICKETBUYERV2_ATTEMPT });
+    var ticketBuyer = ticketBuyerService.runTicketBuyer(request);
+    ticketBuyer.on("data", function(response) {
+      // No expected responses but log in case.
+      console.log(response);
+    });
+    ticketBuyer.on("end", function() {
+      dispatch({ type: STARTTICKETBUYERV2_SUCCESS });
+    });
+    ticketBuyer.on("error", function(status) {
+      status = status + "";
+      if (status.indexOf("Cancelled") < 0) {
+        if (status.indexOf("invalid passphrase") > 0 || status.indexOf("Stream removed") > 0) {
+          dispatch({ error: status, type: STARTTICKETBUYERV2_FAILED });
+        }
+      } else {
+        dispatch({ type: STOPTICKETBUYERV2_SUCCESS });
+      }
+    });
+    dispatch({ ticketBuyerCall: ticketBuyer , type: STARTTICKETBUYERV2_UPDATE });
+  });
 };
 
-export const SETTICKETBUYERCONFIG_ATTEMPT = "SETTICKETBUYERCONFIG_ATTEMPT";
-export const SETTICKETBUYERCONFIG_FAILED = "SETTICKETBUYERCONFIG_FAILED";
-export const SETTICKETBUYERCONFIG_SUCCESS = "SETTICKETBUYERCONFIG_SUCCESS";
-export const SETBALANCETOMAINTAIN = "SETBALANCETOMAINTAIN";
-export const SETMAXFEE = "SETMAXFEE";
-export const SETMAXPRICEABSOLUTE = "SETMAXPRICEABSOLUTE";
-export const SETMAXPRICERELATIVE = "SETMAXPRICERELATIVE";
-export const SETMAXPERBLOCK = "SETMAXPERBLOCK";
-
-export const setTicketBuyerConfigAttempt = (
-  account, balanceToMaintain, maxFee, maxPriceAbsolute, maxPriceRelative, stakePool, maxPerBlock
-) => (dispatch, getState) => {
-  const { daemon: { walletName } } = getState();
-  const cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
-  const ticketBuyerService = sel.ticketBuyerService(getState());
-  const getTicketBuyerConfigResponse = sel.getTicketBuyerConfigResponse(getState());
-  const promises = [];
-  dispatch({ type: SETTICKETBUYERCONFIG_ATTEMPT });
-
-  if (account !== getTicketBuyerConfigResponse.getAccount())
-    promises.push(wallet.setTicketBuyerAccount(ticketBuyerService, account));
-  if (balanceToMaintain*1e8 !== getTicketBuyerConfigResponse.getBalanceToMaintain())
-    promises.push(wallet
-      .setTicketBuyerBalanceToMaintain(ticketBuyerService, balanceToMaintain*1e8)
-      .then(() => {
-        cfg.set("balancetomaintain", balanceToMaintain);
-        dispatch({ balanceToMaintain, type: SETBALANCETOMAINTAIN });
-      }));
-  if (maxFee*1e8 !== getTicketBuyerConfigResponse.getMaxFee())
-    promises.push(wallet
-      .setTicketBuyerMaxFee(ticketBuyerService, maxFee*1e8)
-      .then(() => {
-        cfg.set("maxfee", maxFee);
-        dispatch({ maxFee, type: SETMAXFEE });
-      }));
-  if (maxPriceAbsolute*1e8 !== getTicketBuyerConfigResponse.getMaxPriceAbsolute())
-    promises.push(wallet
-      .setTicketBuyerMaxPriceAbsolute(ticketBuyerService, maxPriceAbsolute*1e8)
-      .then(() => {
-        cfg.set("maxpriceabsolute",maxPriceAbsolute);
-        dispatch({ maxPriceAbsolute, type: SETMAXPRICEABSOLUTE });
-      }));
-  if (parseFloat(maxPriceRelative) !== getTicketBuyerConfigResponse.getMaxPriceRelative()) {
-    promises.push(wallet
-      .setTicketBuyerMaxPriceRelative(ticketBuyerService, maxPriceRelative)
-      .then(() => {
-        cfg.set("maxpricerelative",maxPriceRelative);
-        dispatch({ maxPriceRelative, type: SETMAXPRICERELATIVE });
-      }));
-  }
-  if (parseInt(maxPerBlock) !== getTicketBuyerConfigResponse.getMaxPerBlock()) {
-    promises.push(wallet
-      .setTicketBuyerMaxPerBlock(ticketBuyerService, maxPerBlock)
-      .then(() => {
-        cfg.set("maxperblock", maxPerBlock);
-        dispatch({ maxPerBlock, type: SETMAXPERBLOCK });
-      }));
-  }
-  if (stakePool.TicketAddress !== getTicketBuyerConfigResponse.getVotingAddress())
-    promises.push(wallet.setTicketBuyerVotingAddress(ticketBuyerService, stakePool.TicketAddress));
-  if (stakePool.PoolAddress !== getTicketBuyerConfigResponse.getPoolAddress())
-    promises.push(wallet.setPoolAddress(ticketBuyerService, stakePool.PoolAddress));
-  if (stakePool.PoolFees !== getTicketBuyerConfigResponse.getPoolFees())
-    promises.push(wallet.setPoolFees(ticketBuyerService, stakePool.PoolFees));
-  return Promise.all(promises)
-    .then(() => {
-      dispatch({
-        type: SETTICKETBUYERCONFIG_SUCCESS
-      });
-      dispatch(getTicketBuyerConfigAttempt());
-    })
-    .catch(error => dispatch({ error, type: SETTICKETBUYERCONFIG_FAILED }));
-};
-
-export const STARTAUTOBUYER_ATTEMPT = "STARTAUTOBUYER_ATTEMPT";
-export const STARTAUTOBUYER_FAILED = "STARTAUTOBUYER_FAILED";
-export const STARTAUTOBUYER_SUCCESS = "STARTAUTOBUYER_SUCCESS";
-
-export const startAutoBuyerAttempt = (
-  passphrase, accountNum, balanceToMaintain, maxFeePerKb, maxPriceRelative, maxPriceAbsolute,
-  maxPerBlock, stakepool
-) => (dispatch, getState) => {
-  dispatch({ type: STARTAUTOBUYER_ATTEMPT, });
-  return wallet.startAutoBuyer(
-    sel.ticketBuyerService(getState()), passphrase, accountNum, balanceToMaintain*1e8, maxFeePerKb*1e8,
-    maxPriceRelative, maxPriceAbsolute*1e8, maxPerBlock, stakepool
-  )
-    .then(startAutoBuyerResponse => {
-      dispatch({
-        startAutoBuyerResponse,
-        type: STARTAUTOBUYER_SUCCESS,
-        balanceToMaintain: balanceToMaintain,
-        maxFeePerKb: maxFeePerKb*1e8,
-        maxPriceRelative: maxPriceRelative,
-        maxPriceAbsolute: maxPriceAbsolute,
-        maxPerBlock: maxPerBlock,
-      });
-      setTimeout(()=>dispatch(getTicketBuyerConfigAttempt(), 1000));
-    })
-    .catch(error => dispatch({ error, type: STARTAUTOBUYER_FAILED }));
-};
-
-export const STOPAUTOBUYER_ATTEMPT = "STOPAUTOBUYER_ATTEMPT";
-export const STOPAUTOBUYER_FAILED = "STOPAUTOBUYER_FAILED";
-export const STOPAUTOBUYER_SUCCESS = "STOPAUTOBUYER_SUCCESS";
-
-export const stopAutoBuyerAttempt = () => (dispatch, getState) => {
-  dispatch({ type: STOPAUTOBUYER_ATTEMPT });
-  return wallet.stopAutoBuyer(sel.ticketBuyerService(getState()))
-    .then(stopAutoBuyerResponse => dispatch({
-      stopAutoBuyerResponse, type: STOPAUTOBUYER_SUCCESS
-    }))
-    .catch(() => dispatch({ type: STOPAUTOBUYER_FAILED }));
-  // The only error that can be returned here is if the autobuyer is not running when requested to stop.
-  // We're currently issuing a stop auto buyer request on startup, so to avoid that error being shown,
-  // it makes sense to just remove the error consumption altogether.
-};
+export function ticketBuyerCancel() {
+  return (dispatch, getState) => {
+    const { ticketBuyerCall } = getState().control;
+    if (ticketBuyerCall) {
+      dispatch({ type: STOPTICKETBUYERV2_ATTEMPT });
+      ticketBuyerCall.cancel();
+    } else {
+      dispatch({ type: STOPTICKETBUYERV2_SUCCESS });
+    }
+  };
+}
 
 export const CONSTRUCTTX_ATTEMPT = "CONSTRUCTTX_ATTEMPT";
 export const CONSTRUCTTX_FAILED = "CONSTRUCTTX_FAILED";
