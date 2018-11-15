@@ -9,17 +9,20 @@ import { session } from "electron";
 import { isRegExp } from "util";
 import { getGlobalCfg } from "../config";
 import { POLITEIA_URL_TESTNET, POLITEIA_URL_MAINNET } from "../middleware/politeiaapi";
+import { DCRDATA_URL_TESTNET, DCRDATA_URL_MAINNET } from "../middleware/dcrdataapi";
 
 export const EXTERNALREQUEST_NETWORK_STATUS = "EXTERNALREQUEST_NETWORK_STATUS";
 export const EXTERNALREQUEST_STAKEPOOL_LISTING = "EXTERNALREQUEST_STAKEPOOL_LISTING";
 export const EXTERNALREQUEST_UPDATE_CHECK = "EXTERNALREQUEST_UPDATE_CHECK";
 export const EXTERNALREQUEST_POLITEIA = "EXTERNALREQUEST_POLITEIA";
+export const EXTERNALREQUEST_DCRDATA = "EXTERNALREQUEST_DCRDATA";
 
 // These are the requests allowed when the standard privacy mode is selected.
 export const STANDARD_EXTERNAL_REQUESTS = [
   EXTERNALREQUEST_NETWORK_STATUS,
   EXTERNALREQUEST_STAKEPOOL_LISTING,
   EXTERNALREQUEST_UPDATE_CHECK,
+  EXTERNALREQUEST_DCRDATA
 ];
 
 let allowedURLs = [];
@@ -54,11 +57,12 @@ export const installSessionHandlers = (mainLogger) => {
   // }
 
   // TODO: check if this filtering is working even when multiple windows are
-  // created (relevent to multi-wallet usage)
+  // created (relevant to multi-wallet usage)
   session.defaultSession.webRequest.onBeforeSendHeaders(filter, (details, callback) => {
     const isURLAllowed = (urlRegexp) => urlRegexp.test(details.url);
     if (!allowedURLs.some(isURLAllowed)) {
-      logger.log("warn", "Cancelling external request " + details.method + " " + details.url);
+      logger.log("error", "Blocking external request: " + details.method + " " + details.url);
+      logger.log("error", "Make sure that the request is whitelisted in main_dev/externalRequests.js");
       callback({ cancel: true, requestHeaders: details.requestHeaders });
     } else {
       logger.log("verbose", details.method + " " + details.url);
@@ -89,6 +93,10 @@ export const allowExternalRequest = (externalReqType) => {
   case EXTERNALREQUEST_POLITEIA:
     addAllowedURL(POLITEIA_URL_TESTNET);
     addAllowedURL(POLITEIA_URL_MAINNET);
+    break;
+  case EXTERNALREQUEST_DCRDATA:
+    addAllowedURL(DCRDATA_URL_TESTNET);
+    addAllowedURL(DCRDATA_URL_MAINNET);
     break;
   default:
     logger.log("error", "Unknown external request type: " + externalReqType);

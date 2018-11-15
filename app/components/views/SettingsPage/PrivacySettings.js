@@ -3,6 +3,7 @@ import {
   EXTERNALREQUEST_NETWORK_STATUS, EXTERNALREQUEST_STAKEPOOL_LISTING,
   EXTERNALREQUEST_UPDATE_CHECK,
   EXTERNALREQUEST_POLITEIA,
+  EXTERNALREQUEST_DCRDATA,
 } from "main_dev/externalRequests";
 
 const AllowableRequestType = ({ id, label, description, checked, onChange }) => (
@@ -66,6 +67,13 @@ const PrivacySettings = ({
           description={<T id="settings.privacy.politeia.description" m="List and vote on proposals on proposals.decred.org" />}
           checked={tempSettings.allowedExternalRequests.indexOf(EXTERNALREQUEST_POLITEIA) > -1}
           onChange={toggle(EXTERNALREQUEST_POLITEIA)}
+        />
+        <AllowableRequestType
+          label={<T id="settings.privacy.dcrdata.label" m="Decred Block Explorer" />}
+          id="dcrdata"
+          description={<T id="settings.privacy.dcrdata.description" m="Access chain information from explorer.dcrdata.org" />}
+          checked={tempSettings.allowedExternalRequests.indexOf(EXTERNALREQUEST_DCRDATA) > -1}
+          onChange={toggle(EXTERNALREQUEST_DCRDATA)}
         />
       </div>
     </div>

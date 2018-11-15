@@ -6,13 +6,9 @@ import * as ca from "../actions/ControlActions";
 
 const mapStateToProps = selectorMap({
   balanceToMaintain: sel.balanceToMaintain,
-  maxFee: sel.maxFee,
-  maxPriceRelative: sel.maxPriceRelative,
-  maxPriceAbsolute: sel.maxPriceAbsolute,
-  maxPerBlock: sel.maxPerBlock,
-  getTicketBuyerConfigResponse: sel.getTicketBuyerConfigResponse,
   isTicketAutoBuyerEnabled: sel.isTicketAutoBuyerEnabled,
-  currencyDisplay: sel.currencyDisplay
+  currencyDisplay: sel.currencyDisplay,
+  ticketBuyerSettings: sel.ticketBuyerConfig,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -20,9 +16,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   clearStartAutoBuyerError: ca.clearStartAutoBuyerError,
   clearStopAutoBuyerSuccess: ca.clearStopAutoBuyerSuccess,
   clearStopAutoBuyerError: ca.clearStopAutoBuyerError,
-  onEnableTicketAutoBuyer: ca.startAutoBuyerAttempt,
-  onDisableTicketAutoBuyer: ca.stopAutoBuyerAttempt,
-  onUpdateTicketAutoBuyerConfig: ca.setTicketBuyerConfigAttempt
+  onEnableTicketAutoBuyer: ca.startTicketBuyerV2Attempt,
+  onDisableTicketAutoBuyer: ca.ticketBuyerCancel,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

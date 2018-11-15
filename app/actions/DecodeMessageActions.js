@@ -34,6 +34,7 @@ export const decodeRawTransactions = (hexTxs) => (dispatch, getState) => {
       return map;
     }, {});
     dispatch({ transactions, type: DECODERAWTXS_SUCCESS });
+    return transactions;
   };
 
   return Promise

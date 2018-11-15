@@ -59,6 +59,7 @@ var initialState = {
     tutorial: globalCfg.get("show_tutorial"),
     showPrivacy: globalCfg.get("show_privacy"),
     setLanguage: globalCfg.get("set_language"),
+    showSpvChoice: globalCfg.get("show_spvchoice"),
     daemonStarted: false,
     daemonSynced: false,
     daemonStopped: false,
@@ -81,7 +82,7 @@ var initialState = {
   },
   version: {
     // RequiredVersion
-    requiredVersion: "5.3.0",
+    requiredVersion: "5.6.0",
     versionInvalid: false,
     versionInvalidError: null,
     // VersionService
@@ -207,6 +208,13 @@ var initialState = {
     // heights, due to maturing stake transactions. Keys are the heights,
     // values are arrays of account numbers.
     maturingBlockHeights: {},
+
+    // list of outstanding requests for additional stake data from transactions
+    // (indexed by transaction hash)
+    fetchMissingStakeTxDataAttempt: {},
+
+    // Shown under governance tab
+    treasuryBalance: null,
   },
   walletLoader: {
     syncInput: false,
@@ -326,10 +334,6 @@ var initialState = {
     ticketBuyerService: null,
     // TicketBuyerConfig
     balanceToMaintain: null,
-    maxFee: null,
-    maxPriceAbsolute: null,
-    maxPriceRelative: null,
-    maxPerBlock: null,
     getTicketBuyerConfigRequestAttempt: false,
     getTicketBuyerConfigResponse: null,
     getTicketBuyerConfigSuccess: null,
@@ -368,6 +372,7 @@ var initialState = {
     voteTime: null,
     getMyTicketsStatsRequest: false,
     getStartupStatsAttempt: false,
+    startupStatsEndCalcTime: new Date(0),
   },
   governance: {
     getVettedAttempt: false,

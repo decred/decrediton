@@ -46,7 +46,7 @@
   display: block;
   background-color: var(--background-container);
   background-repeat: no-repeat;
-  background-image: @logo-launcher;
+  background-image: @launcher-logo;
   background-size: 173px;
   background-position: 40px 40px;
   z-index: 3;
@@ -617,6 +617,7 @@
 
 .privacy-options {
   display: flex;
+  justify-content: center;
   margin-left: 35px;
   padding-right: 2em;
 }
@@ -675,6 +676,13 @@
   background-image: @stakey-privacy-custom;
 }
 
+.privacy-option-icon.enable-spv {
+  background-image: @enable-spv;
+}
+
+.privacy-option-icon.disable-spv {
+  background-image: @disable-spv;
+}
 .get-started-last-log-lines {
   font-size: 9px;
 }

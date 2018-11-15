@@ -2,6 +2,7 @@ import {
   SELECT_LANGUAGE,
   FINISH_TUTORIAL,
   FINISH_PRIVACY,
+  FINISH_SPVCHOICE,
   DAEMONSTARTED,
   DAEMONSTARTED_REMOTE,
   DAEMONSTARTED_APPDATA,
@@ -17,7 +18,7 @@ import {
   DECREDITON_VERSION,
   FATAL_DAEMON_ERROR,
   FATAL_WALLET_ERROR,
-  CLOSEDAEMON_ATTEMPT, CLOSEDAEMON_FAILED, CLOSEDAEMON_SUCCESS
+  CLOSEDAEMON_ATTEMPT, CLOSEDAEMON_FAILED, CLOSEDAEMON_SUCCESS, NOT_SAME_CONNECTION,
 } from "../actions/DaemonActions";
 import {
   CREATEWALLET_GOBACK,
@@ -41,6 +42,10 @@ export default function version(state = {}, action) {
   case FINISH_TUTORIAL:
     return { ...state,
       tutorial: false,
+    };
+  case FINISH_SPVCHOICE:
+    return { ...state,
+      showSpvChoice: false,
     };
   case FINISH_PRIVACY:
     return { ...state,
@@ -172,6 +177,11 @@ export default function version(state = {}, action) {
     return {
       ...state,
       walletError: action.error,
+    };
+  case NOT_SAME_CONNECTION:
+    return {
+      ...state,
+      daemonError: action.error,
     };
   default:
     return state;

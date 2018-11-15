@@ -97,6 +97,14 @@ export const getBlockCount = log((rpcCreds, testnet) => new Promise(resolve => {
   ipcRenderer.send("check-daemon", rpcCreds, testnet);
 }), "Get Block Count");
 
+export const getDaemonInfo = log((rpcCreds) => new Promise(resolve => {
+  ipcRenderer.once("check-getinfo-response", (e, info) => {
+    const isTestNet = info ? info.testnet : null;
+    resolve({ isTestNet });
+  });
+  ipcRenderer.send("get-info", rpcCreds);
+}), "Get Daemon network info");
+
 export const getDcrdLogs = log(() => Promise
   .resolve(ipcRenderer.sendSync("get-dcrd-logs"))
   .then(logs => {
@@ -122,7 +130,7 @@ export const getAvailableWallets = log((network) => Promise
   .resolve(ipcRenderer.sendSync("get-available-wallets", network))
   .then(availableWallets => {
     if (availableWallets) return availableWallets;
-    throw "Error getting avaiable wallets logs";
+    throw "Error getting available wallets logs";
   }), "Get Available Wallets", logOptionNoResponseData());
 
 export const reloadAllowedExternalRequests = log(() => Promise

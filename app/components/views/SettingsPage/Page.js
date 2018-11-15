@@ -1,6 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import { StandaloneHeader, StandalonePage } from "layout";
-import { ChangePassphraseButton, KeyBlueButton, InvisibleButton, ResetNetworkButton } from "buttons";
+import { ChangePassphraseButton, KeyBlueButton, CloseWalletModalButton, ResetNetworkButton } from "buttons";
 import { WatchOnlyWarnNotification } from "shared";
 import GeneralSettings from "./GeneralSettings";
 import PrivacySettings from "./PrivacySettings";
@@ -9,12 +9,20 @@ import TimezoneSettings from "./TimezoneSettings";
 import "style/StakePool.less";
 import "style/Settings.less";
 
-const SettingsPageHeader = ({ toggleTheme } ) =>
+const SettingsPageHeader = ({ onCloseWallet, walletName }) =>
   <StandaloneHeader
     title={<T id="settings.title" m="Settings"/>}
     iconClassName="settings"
-    actionButton={<KeyBlueButton onClick={toggleTheme}><T id="settings.toggleTheme" m="Toggle Theme" /></KeyBlueButton>}
     description={<T id="settings.description" m="Changing network settings requires a restart"/>}
+    actionButton={
+      <CloseWalletModalButton
+        modalTitle={<T id="settings.closeWalletModalTitle" m="Confirmation Required" />}
+        buttonLabel={<T id="settings.closeWalletModalOk" m="Close Wallet" />}
+        modalContent={
+          <T id="settings.closeWalletModalContent"
+            m="Are you sure you want to close {walletName} and return to launcher?"
+            values={{ walletName }}/>}
+        onSubmit={onCloseWallet}/>}
   />;
 
 const SettingsPage = ({
@@ -30,14 +38,18 @@ const SettingsPage = ({
   isChangePassPhraseDisabled,
   changePassphraseRequestAttempt,
   needNetworkReset,
-  toggleTheme
+  toggleTheme,
+  walletName,
 }) => (
-  <StandalonePage header={<SettingsPageHeader {...{ toggleTheme }} />}>
+  <StandalonePage header={<SettingsPageHeader {...{ onCloseWallet, walletName }}/>} >
     <div className="settings-wrapper">
       <div className="settings-columns">
         <GeneralSettings {...{ tempSettings, networks, currencies, locales,
           onChangeTempSettings }} />
         <ProxySettings {...{ tempSettings, onChangeTempSettings }} />
+        <div className="toggle-theme-button-wrapper">
+          <KeyBlueButton onClick={toggleTheme}><T id="settings.toggleTheme" m="Toggle Theme" /></KeyBlueButton>
+        </div>
       </div>
       <div className="settings-columns">
         <div className="settings-security">
@@ -81,14 +93,6 @@ const SettingsPage = ({
           <T id="settings.save" m="Save" />
         </KeyBlueButton>
       }
-    </div>
-
-    <div className="settings-close-wallet-button">
-      <InvisibleButton
-        size="large"
-        onClick={onCloseWallet}>
-        <T id="settings.closeWallet" m="Close Wallet" />
-      </InvisibleButton>
     </div>
   </StandalonePage>
 );

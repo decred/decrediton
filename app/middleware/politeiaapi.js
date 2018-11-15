@@ -44,6 +44,7 @@ export const getVetted = (piURL) => GET(piURL, "/v1/proposals/vetted");
 export const getVoteStatus = (piURL) => GET(piURL, "/v1/proposals/votestatus");
 export const getProposal = (piURL, token) => GET(piURL, "/v1/proposals/" + token);
 export const getVoteResults = (piURL, token) => GET(piURL, "/v1/proposals/" + token + "/votes");
+export const getVoteResult = (piURL, token) => GET(piURL, "/v1/proposals/" + token + "/votestatus");
 
 // votes must be an array of Vote()-produced objects.
 export const castVotes = (piURL, votes) => POST(piURL, "/v1/proposals/castvotes", { votes });

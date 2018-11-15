@@ -10,7 +10,7 @@ import { getGlobalCfgPath, checkAndInitWalletCfg } from "./main_dev/paths";
 import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRequests } from "./main_dev/externalRequests";
 import { setupProxy } from "./main_dev/proxy";
 import { cleanShutdown, GetDcrdPID, GetDcrwPID } from "./main_dev/launch";
-import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopDaemon, stopWallet, startWallet, checkDaemon, deleteDaemon, setWatchingOnlyWallet, getWatchingOnlyWallet } from "./main_dev/ipc";
+import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopDaemon, stopWallet, startWallet, checkDaemon, deleteDaemon, setWatchingOnlyWallet, getWatchingOnlyWallet, getDaemonInfo } from "./main_dev/ipc";
 import { initTemplate, getVersionWin, setGrpcVersions, getGrpcVersions, inputMenu, selectionMenu } from "./main_dev/templates";
 
 // setPath as decrediton
@@ -39,6 +39,10 @@ const daemonIsAdvanced = globalCfg.get("daemon_start_advanced");
 const walletsDirectory = getWalletsDirectoryPath();
 const mainnetWalletsPath = getWalletsDirectoryPathNetwork(false);
 const testnetWalletsPath = getWalletsDirectoryPathNetwork(true);
+if (globalCfg.get("disable_hardware_accel")) {
+  logger.log("info", "Disabling hardware acceleration");
+  app.disableHardwareAcceleration();
+}
 
 if (argv.help) {
   console.log(USAGE_MESSAGE);
@@ -155,6 +159,10 @@ ipcMain.on("check-daemon", (event, rpcCreds, testnet) => {
   checkDaemon(mainWindow, rpcCreds, testnet);
 });
 
+ipcMain.on("get-info", (event, rpcCreds) => {
+  getDaemonInfo(mainWindow, rpcCreds, false);
+});
+
 ipcMain.on("clean-shutdown", async function(event){
   const stopped = await cleanShutdown(mainWindow, app, GetDcrdPID(), GetDcrwPID());
   event.sender.send("clean-shutdown-finished", stopped);
@@ -216,7 +224,7 @@ ipcMain.on("get-is-watching-only", (event) => {
   event.returnValue = getWatchingOnlyWallet();
 });
 
-primaryInstance = !app.makeSingleInstance(() => true);
+primaryInstance = app.requestSingleInstanceLock();
 const stopSecondInstance = !primaryInstance && !daemonIsAdvanced;
 if (stopSecondInstance) {
   logger.log("error", "Preventing second instance from running.");

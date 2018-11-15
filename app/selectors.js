@@ -7,8 +7,9 @@ import { reverseHash } from "./helpers/byteActions";
 import { TRANSACTION_TYPES }  from "wallet/service";
 import { MainNetParams, TestNetParams } from "wallet/constants";
 import { /*TicketTypes,*/ decodeVoteScript } from "./helpers/tickets";
-import { EXTERNALREQUEST_STAKEPOOL_LISTING, EXTERNALREQUEST_POLITEIA } from "main_dev/externalRequests";
+import { EXTERNALREQUEST_STAKEPOOL_LISTING, EXTERNALREQUEST_POLITEIA, EXTERNALREQUEST_DCRDATA } from "main_dev/externalRequests";
 import { POLITEIA_URL_TESTNET, POLITEIA_URL_MAINNET } from "./middleware/politeiaapi";
+import { DCRDATA_URL_TESTNET, DCRDATA_URL_MAINNET } from "./middleware/dcrdataapi";
 import { dateToLocal, dateToUTC } from "./helpers/dateFormat";
 const EMPTY_ARRAY = [];  // Maintaining identity (will) improve performance;
 
@@ -42,6 +43,7 @@ const START_STEP_RPC2 = 4;
 export const setLanguage = get([ "daemon", "setLanguage" ]);
 export const showTutorial = get([ "daemon", "tutorial" ]);
 export const showPrivacy = get([ "daemon", "showPrivacy" ]);
+export const showSpvChoice = get([ "daemon", "showSpvChoice" ]);
 export const versionInvalid = get([ "version", "versionInvalid" ]);
 export const requiredWalletRPCVersion = get([ "version", "requiredVersion" ]);
 export const walletRPCVersion = createSelector(
@@ -333,12 +335,12 @@ const transactionNormalizer = createSelector(
   (accounts, txURLBuilder, blockURLBuilder) => {
     const findAccount = num => accounts.find(account => account.getAccountNumber() === num);
     const getAccountName = num => (act => act ? act.getAccountName() : "")(findAccount(num));
-    return tx => {
-      const { blockHash } = tx;
-      const type = tx.type || (tx.getTransactionType ? tx.getTransactionType() : null);
-      let txInfo = tx.tx ? tx : {};
-      let timestamp = tx.timestamp;
-      tx = tx.tx || tx;
+    return origTx => {
+      const { blockHash } = origTx;
+      const type = origTx.type || (origTx.getTransactionType ? origTx.getTransactionType() : null);
+      let txInfo = origTx.tx ? origTx : {};
+      let timestamp = origTx.timestamp;
+      const tx = origTx.tx || origTx;
       timestamp = timestamp || tx.timestamp;
       let totalFundsReceived = 0;
       let totalChange = 0;
@@ -389,6 +391,12 @@ const transactionNormalizer = createSelector(
             txAccountName: getAccountName(creditedAccount)
           };
 
+      let stakeInfo = {};
+      if (origTx.ticketPrice) stakeInfo.ticketPrice = origTx.ticketPrice;
+      if (origTx.enterTimestamp) stakeInfo.enterTimestamp = origTx.enterTimestamp;
+      if (origTx.leaveTimestamp) stakeInfo.leaveTimestamp = origTx.leaveTimestamp;
+      if (origTx.ticketReward) stakeInfo.ticketReward = origTx.ticketReward;
+
       return {
         txUrl: txURLBuilder(txHash),
         txBlockUrl: txBlockHash ? blockURLBuilder(txBlockHash) : null,
@@ -402,6 +410,8 @@ const transactionNormalizer = createSelector(
         txBlockHash,
         txNumericType: type,
         rawTx: Buffer.from(tx.getTransaction()).toString("hex"),
+        originalTx: origTx,
+        ...stakeInfo,
         ...txDetails
       };
     };
@@ -697,6 +707,7 @@ export const revokedTicketsCount = compose(r => r ? r.getRevoked() : 0, getStake
 export const immatureTicketsCount = compose(r => r ? r.getImmature() : 0, getStakeInfoResponse);
 export const expiredTicketsCount = compose(r => r ? r.getExpired() : 0, getStakeInfoResponse);
 export const liveTicketsCount = compose(r => r ? r.getLive() : 0, getStakeInfoResponse);
+export const unspentTicketsCount = compose(r => r ? r.getUnspent() : 0, getStakeInfoResponse);
 export const totalSubsidy = compose(r => r ? r.getTotalSubsidy() : 0, getStakeInfoResponse);
 export const hasTicketsToRevoke = compose(
   r => r ? r.getRevoked() !== r.getExpired() + r.getMissed() : 0,
@@ -704,14 +715,10 @@ export const hasTicketsToRevoke = compose(
 );
 
 export const ticketBuyerService = get([ "grpc", "ticketBuyerService" ]);
+export const ticketBuyerConfig = get([ "control" , "ticketBuyerConfig" ]);
 const startAutoBuyerResponse = get([ "control", "startAutoBuyerResponse" ]);
 
 export const balanceToMaintain = get([ "control", "balanceToMaintain" ]);
-export const maxFee = get([ "control", "maxFee" ]);
-export const maxPriceRelative = get([ "control", "maxPriceRelative" ]);
-export const maxPriceAbsolute = get([ "control", "maxPriceAbsolute" ]);
-export const maxPerBlock = get([ "control", "maxPerBlock" ]);
-export const getTicketBuyerConfigResponse = get([ "control", "getTicketBuyerConfigResponse" ]);
 
 const getTicketPriceResponse = get([ "grpc", "getTicketPriceResponse" ]);
 
@@ -918,10 +925,22 @@ export const politeiaURL = createSelector(
   (isTestNet) => isTestNet ? POLITEIA_URL_TESTNET : POLITEIA_URL_MAINNET
 );
 
+export const dcrdataURL = createSelector(
+  [ isTestNet ],
+  (isTestNet) => isTestNet ? DCRDATA_URL_TESTNET : DCRDATA_URL_MAINNET
+);
+
 export const politeiaEnabled = compose(
   l => l.indexOf(EXTERNALREQUEST_POLITEIA) > -1,
   allowedExternalRequests
 );
+
+export const dcrdataEnabled = compose(
+  l => l.indexOf(EXTERNALREQUEST_DCRDATA) > -1,
+  allowedExternalRequests
+);
+
+export const treasuryBalance = get([ "grpc", "treasuryBalance" ]);
 
 export const updateVoteChoiceAttempt = get([ "governance", "updateVoteChoiceAttempt" ]);
 export const activeVoteProposals = get([ "governance", "activeVote" ]);
@@ -938,3 +957,4 @@ export const viewedProposalDetails = createSelector(
   [ proposalDetails, viewedProposalToken ],
   (proposals, token) => proposals[token]
 );
+

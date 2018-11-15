@@ -78,6 +78,10 @@ service WalletLoaderService {
 	rpc RescanPoint(RescanPointRequest) returns (RescanPointResponse);
 }
 
+service TicketBuyerV2Service {
+	rpc RunTicketBuyer (RunTicketBuyerRequest) returns (stream RunTicketBuyerResponse);
+}
+
 service TicketBuyerService {
     rpc StartAutoBuyer (StartAutoBuyerRequest) returns (StartAutoBuyerResponse);
     rpc StopAutoBuyer (StopAutoBuyerRequest) returns (StopAutoBuyerResponse);
@@ -355,6 +359,7 @@ message StakeInfoResponse {
 	uint32 revoked = 8;
 	uint32 expired = 9;
 	int64 total_subsidy = 10;
+	uint32 unspent = 11;
 }
 
 message BlockInfoRequest {
@@ -772,6 +777,18 @@ message DecodeSeedResponse {
 	bytes decoded_seed = 1;
 }
 
+message RunTicketBuyerRequest {
+	bytes passphrase = 1;
+	uint32 account = 2;
+	uint32 voting_account = 3;
+	int64 balance_to_maintain = 4;
+	string voting_address = 5;
+	string pool_address = 6;
+	double pool_fees = 7;
+}
+
+message RunTicketBuyerResponse {}
+
 message StartAutoBuyerRequest {
 	bytes passphrase = 1;
 	uint32 account = 2;
@@ -1004,6 +1021,8 @@ message ValidateAddressResponse {
 	ScriptType script_type = 8;
 	bytes pay_to_addr_script = 9;
 	uint32 sigs_required = 10;
+	bool is_internal = 11;
+	uint32 index = 12;
 }
 
 message CommittedTicketsRequest {

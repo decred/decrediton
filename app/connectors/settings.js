@@ -15,6 +15,7 @@ const mapStateToProps = selectorMap({
   isChangePassPhraseDisabled: sel.isChangePassPhraseDisabled,
   changePassphraseRequestAttempt: sel.changePassphraseRequestAttempt,
   needNetworkReset: sel.needNetworkReset,
+  walletName: sel.getWalletName,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

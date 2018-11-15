@@ -21,7 +21,6 @@ class VotingPrefs extends React.Component {
           ...this.state,
           stakePool: this.getStakePool(),
           ...substruct({
-            onChangeStakePool: null,
             getAgendaSelectedChoice: null,
             onShowAgenda: null,
             onCloseAgenda: null,
@@ -37,12 +36,6 @@ class VotingPrefs extends React.Component {
     return pool
       ? this.props.configuredStakePools.find(compose(eq(pool.Host), get("Host")))
       : null;
-  }
-
-  onChangeStakePool(stakePool) {
-    const { onChangeStakePool } = this.props;
-    this.setState({ stakePool });
-    onChangeStakePool && onChangeStakePool(stakePool);
   }
 
   getAgendaSelectedChoice(agenda) {
@@ -61,7 +54,7 @@ class VotingPrefs extends React.Component {
   }
 
   onUpdateVotePreference(agendaId, choiceId) {
-    this.props.onUpdateVotePreference(this.getStakePool().value, agendaId, choiceId);
+    this.props.onUpdateVotePreference(agendaId, choiceId);
   }
 }
 

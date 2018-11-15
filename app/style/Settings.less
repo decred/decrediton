@@ -11,6 +11,58 @@
 
 .settings-columns {
   flex: 50%;
+  
+  input[type="checkbox"],
+  input[type="radio"] {
+    display: none;
+  }
+  
+  input[type="checkbox"]:disabled + label,
+  input[type="radio"]:disabled + label {
+    display: inline-block;
+    background-color: var(--disabled-background-color);
+    border: 1px solid var(--disabled-color);
+  }
+  
+  input[type="checkbox"]:checked:disabled + label,
+  input[type="radio"]:checked:disabled + label {
+    display: inline-block;
+    border: 1px solid var(--disabled-color);
+    background-color: var(--disabled-background-color);
+    background-image: @checkmarkGrey;
+    background-repeat: no-repeat;
+    background-size: 10px;
+  }
+  
+  input[type="checkbox"] + label,
+  input[type="radio"] + label {
+    display: inline-block;
+    border: 1px solid var(--disabled-color);
+    background-color: none;
+  }
+  
+  input[type="checkbox"]:checked + label,
+  input[type="radio"]:checked + label {
+    display: inline-block;
+    border: 1px solid var(--input-color);
+    background-color: none;
+    background-image: @checkmarkBlue;
+    background-repeat: no-repeat;
+    background-size: 10px;
+  }
+  
+  input[type="radio"] + label {
+    border-radius: 50%;
+    width: 14px;
+    height: 14px;
+    background-position: 2px;
+  }
+  
+  input[type="checkbox"] + label {
+    width: 12px;
+    height: 12px;
+    background-position: 1px;
+  }
 }
 
 .settings-wrapper .settings-label {
@@ -156,57 +208,6 @@
   margin-top: 2px;
 }
 
-input[type="checkbox"],
-input[type="radio"] {
-  display: none;
-}
-
-input[type="checkbox"]:disabled + label,
-input[type="radio"]:disabled + label {
-  display: inline-block;
-  background-color: var(--disabled-background-color);
-  border: 1px solid var(--disabled-color);
-}
-
-input[type="checkbox"]:checked:disabled + label,
-input[type="radio"]:checked:disabled + label {
-  display: inline-block;
-  border: 1px solid var(--disabled-color);
-  background-color: var(--disabled-background-color);
-  background-image: @checkmarkGrey;
-  background-repeat: no-repeat;
-  background-size: 10px;
-}
-
-input[type="checkbox"] + label,
-input[type="radio"] + label {
-  display: inline-block;
-  border: 1px solid var(--disabled-color);
-  background-color: none;
-}
-
-input[type="checkbox"]:checked + label,
-input[type="radio"]:checked + label {
-  display: inline-block;
-  border: 1px solid var(--input-color);
-  background-color: none;
-  background-image: @checkmarkBlue;
-  background-repeat: no-repeat;
-  background-size: 10px;
-}
-
-input[type="radio"] + label {
-  border-radius: 50%;
-  width: 14px;
-  height: 14px;
-  background-position: 2px;
-}
-
-input[type="checkbox"] + label {
-  width: 12px;
-  height: 12px;
-  background-position: 1px;
-}
 
 @media screen and (max-width: 676px) {
   .app-modal.about-modal,
@@ -233,4 +234,23 @@ input[type="checkbox"] + label {
   .settings-security .settings-column-title {
     text-align: left;
   }
+}
+
+.close-modal-button {
+  height: 23px;
+  background-color: #8997a5;
+  color: #f3f6f6;
+  background-image: @close-wallet-icon;
+  background-repeat: no-repeat;
+  background-size: 13px;
+  width: 134px;
+  background-position: 10px 8px;
+  border-radius: 10px;
+  padding: 0;
+  padding-top: 6px;
+}
+
+.toggle-theme-button-wrapper {
+  margin-top: 30px;
+  float: right;
 }

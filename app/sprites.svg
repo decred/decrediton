@@ -6,7 +6,7 @@
 		<polygon  points="8,23 18,13 8,3 "/>
 	</symbol>
 
-	<symbol id="recieve" viewBox="0 0 32 32">
+	<symbol id="receive" viewBox="0 0 32 32">
 		<g id="XMLID_2443_">
 			<rect id="XMLID_2447_" y="14" style="fill:#C6ECCB;" width="26" height="14"/>
 			<rect id="XMLID_2446_" x="6" y="4" style="fill:#41BF53;" width="26" height="14"/>
@@ -52,7 +52,7 @@
 			h3.2l0,0h2.1h1.1V6.4V3.2z M6.5,6.4H3.2h0v-3h3.3V6.4L6.5,6.4z"/>
 	</symbol>
 
-	<symbol id="reciever" viewBox="0 0 42 42">
+	<symbol id="receiver" viewBox="0 0 42 42">
 		<polygon style="fill:#69D5F7;" points="38.5,31.5 38.5,38.5 3.5,38.5 3.5,31.5 0,31.5 0,38.5 0,40.6 0,42 42,42 
 		42,40.6 42,38.5 42,31.5 	"/>
 		<polygon style="fill:#69D5F7;" points="18.7,29 21.2,31.5 21.2,31.5 21.2,31.5 23.7,29 23.7,29 31.1,21.6 

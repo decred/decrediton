@@ -928,6 +928,28 @@ function deserialize_walletrpc_RpcSyncResponse(buffer_arg) {
   return api_pb.RpcSyncResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_walletrpc_RunTicketBuyerRequest(arg) {
+  if (!(arg instanceof api_pb.RunTicketBuyerRequest)) {
+    throw new Error('Expected argument of type walletrpc.RunTicketBuyerRequest');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_RunTicketBuyerRequest(buffer_arg) {
+  return api_pb.RunTicketBuyerRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_RunTicketBuyerResponse(arg) {
+  if (!(arg instanceof api_pb.RunTicketBuyerResponse)) {
+    throw new Error('Expected argument of type walletrpc.RunTicketBuyerResponse');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_RunTicketBuyerResponse(buffer_arg) {
+  return api_pb.RunTicketBuyerResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_walletrpc_SetAccountRequest(arg) {
   if (!(arg instanceof api_pb.SetAccountRequest)) {
     throw new Error('Expected argument of type walletrpc.SetAccountRequest');
@@ -2154,6 +2176,21 @@ var WalletLoaderServiceService = exports.WalletLoaderServiceService = {
 };
 
 exports.WalletLoaderServiceClient = grpc.makeGenericClientConstructor(WalletLoaderServiceService);
+var TicketBuyerV2ServiceService = exports.TicketBuyerV2ServiceService = {
+  runTicketBuyer: {
+    path: '/walletrpc.TicketBuyerV2Service/RunTicketBuyer',
+    requestStream: false,
+    responseStream: true,
+    requestType: api_pb.RunTicketBuyerRequest,
+    responseType: api_pb.RunTicketBuyerResponse,
+    requestSerialize: serialize_walletrpc_RunTicketBuyerRequest,
+    requestDeserialize: deserialize_walletrpc_RunTicketBuyerRequest,
+    responseSerialize: serialize_walletrpc_RunTicketBuyerResponse,
+    responseDeserialize: deserialize_walletrpc_RunTicketBuyerResponse,
+  },
+};
+
+exports.TicketBuyerV2ServiceClient = grpc.makeGenericClientConstructor(TicketBuyerV2ServiceService);
 var TicketBuyerServiceService = exports.TicketBuyerServiceService = {
   startAutoBuyer: {
     path: '/walletrpc.TicketBuyerService/StartAutoBuyer',

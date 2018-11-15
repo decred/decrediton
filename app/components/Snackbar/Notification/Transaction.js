@@ -4,7 +4,7 @@ import { Balance, Tooltip } from "shared";
 import { ProgressRing } from "indicators";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { TRANSACTION_DIR_SENT, TRANSACTION_DIR_RECEIVED,
-  TRANSACTION_DIR_TRANSFERED
+  TRANSACTION_DIR_TRANSFERRED
 } from "wallet/service";
 import "style/Header.less";
 
@@ -26,7 +26,7 @@ const messages = defineMessages({
     id: "notifications.type.send",
     defaultMessage: "Sent"
   },
-  [TRANSACTION_DIR_TRANSFERED]: {
+  [TRANSACTION_DIR_TRANSFERRED]: {
     id: "notifications.type.transfer",
     defaultMessage: "Transferred"
   },

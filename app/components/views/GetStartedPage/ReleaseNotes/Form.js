@@ -75,7 +75,7 @@ export default ({
             focusing on color themes and window sizing for small, medium and large displays.
           </p>
           <p>
-            We are also proud to announce the intial release of the Politeia integration.
+            We are also proud to announce the initial release of the Politeia integration.
             While this functionality is still in beta-testing, what you see will be roughly
             the final form.  Proposals up for vote will be shown and your possible tickets
             will be compared to the proposal's allowed tickets to vote.  If there are

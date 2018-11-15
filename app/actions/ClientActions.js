@@ -2,8 +2,7 @@
 import * as wallet from "wallet";
 import * as sel from "selectors";
 import eq from "lodash/fp/eq";
-import { getNextAddressAttempt,
-  stopAutoBuyerAttempt, getTicketBuyerConfigAttempt, publishUnminedTransactionsAttempt } from "./ControlActions";
+import { getNextAddressAttempt, publishUnminedTransactionsAttempt } from "./ControlActions";
 import { transactionNtfnsStart, accountNtfnsStart } from "./NotificationActions";
 import { updateStakepoolPurchaseInformation, setStakePoolVoteChoices, getStakepoolStats } from "./StakePoolActions";
 import { getDecodeMessageServiceAttempt, decodeRawTransactions } from "./DecodeMessageActions";
@@ -14,6 +13,9 @@ import { getTransactions as walletGetTransactions } from "wallet/service";
 import { TransactionDetails } from "middleware/walletrpc/api_pb";
 import { clipboard } from "electron";
 import { getStartupStats } from "./StatisticsActions";
+import { rawHashToHex } from "../helpers/byteActions";
+import * as da from "../middleware/dcrdataapi";
+import { EXTERNALREQUEST_DCRDATA } from "main_dev/externalRequests";
 
 export const goToTransactionHistory = () => (dispatch) => {
   dispatch(pushHistory("/transactions/history"));
@@ -44,22 +46,21 @@ const startWalletServicesTrigger = () => (dispatch, getState) => new Promise((re
       if (!spvSynced) {
         dispatch(getTicketBuyerServiceAttempt());
       }
+
       await dispatch(getNextAddressAttempt(0));
       await dispatch(getTicketPriceAttempt());
       await dispatch(getPingAttempt());
       await dispatch(getNetworkAttempt());
-      await dispatch(transactionNtfnsStart());
-      await dispatch(accountNtfnsStart());
       await dispatch(updateStakepoolPurchaseInformation());
       await dispatch(getDecodeMessageServiceAttempt());
       await dispatch(getVotingServiceAttempt());
       await dispatch(getAgendaServiceAttempt());
       await dispatch(getStakepoolStats());
+      await dispatch(getStartupWalletInfo());
+      await dispatch(transactionNtfnsStart());
+      await dispatch(accountNtfnsStart());
 
-      var goHomeCb = () => {
-        dispatch(pushHistory("/home"));
-      };
-      await dispatch(getStartupWalletInfo()).then(goHomeCb);
+      await dispatch(pushHistory("/home"));
       resolve();
     }, 1000);
   } catch (err) {
@@ -86,6 +87,8 @@ export const GETSTARTUPWALLETINFO_FAILED = "GETSTARTUPWALLETINFO_FAILED";
 
 export const getStartupWalletInfo = () => (dispatch) => {
   dispatch({ type: GETSTARTUPWALLETINFO_ATTEMPT });
+  const config = getGlobalCfg();
+  const dcrdataEnabled = config.get("allowed_external_requests").indexOf(EXTERNALREQUEST_DCRDATA) > -1;
   return new Promise((resolve, reject) => {
     setTimeout( async () => {
       try {
@@ -99,6 +102,9 @@ export const getStartupWalletInfo = () => (dispatch) => {
         await dispatch(findImmatureTransactions());
         await dispatch(getAccountsAttempt(true));
         await dispatch(getStartupStats());
+        if (dcrdataEnabled) {
+          dispatch(getTreasuryBalance());
+        }
         dispatch({ type: GETSTARTUPWALLETINFO_SUCCESS });
         resolve();
       } catch (error) {
@@ -149,19 +155,13 @@ export const findImmatureTransactions = () => async (dispatch, getState) => {
 
   const pageSize = 30;
   const checkHeightDeltas = [
-    chainParams.TicketExpiry,
     chainParams.TicketMaturity,
     chainParams.CoinbaseMaturity,
     chainParams.SStxChangeMaturity
   ];
   const immatureHeight = currentBlockHeight - Math.max(...checkHeightDeltas);
 
-  let txs = await walletGetTransactions(walletService, immatureHeight,
-    currentBlockHeight, pageSize);
-
   let checkHeights = {};
-  // const mergeCheckHeights = (h) => (h > currentBlockHeight && checkHeights.indexOf(h) === -1)
-  //   ? checkHeights.push(h) : null;
   const mergeCheckHeights = (hs) => Object.keys(hs).forEach(h => {
     if (h < currentBlockHeight) return;
     const accounts = checkHeights[h] || [];
@@ -169,12 +169,29 @@ export const findImmatureTransactions = () => async (dispatch, getState) => {
     checkHeights[h] = accounts;
   });
 
+  dispatch({ immatureHeight, type: "FINDIMMATURETRANSACTIONS_START" });
+
+  let txs = await walletGetTransactions(walletService, immatureHeight,
+    currentBlockHeight, pageSize);
+
   while (txs.mined.length > 0) {
     let lastTx = txs.mined[txs.mined.length-1];
     mergeCheckHeights(transactionsMaturingHeights(txs.mined, chainParams));
+
+    if (lastTx && lastTx.height >= currentBlockHeight) {
+      // this may happen on wallets that take a long time to start up (eg: large
+      // wallet left closed for a long time performing a rescan). If a new
+      // block comes in with wallet transactions then the height of the new
+      // transaction will exceed the currentBlockHeight (which is fetched at
+      // the beginning of the startup procedure).
+      break;
+    }
+
     txs = await walletGetTransactions(walletService, lastTx.height+1,
       currentBlockHeight+1, pageSize);
   }
+
+  dispatch({ type: "FINDIMMATURETRANSACTIONS_FINISHED" });
 
   dispatch({ maturingBlockHeights: checkHeights, type: MATURINGHEIGHTS_CHANGED });
 };
@@ -242,8 +259,6 @@ export const getTicketBuyerServiceAttempt = () => (dispatch, getState) => {
   wallet.getTicketBuyerService(sel.isTestNet(getState()), walletName, address, port)
     .then(ticketBuyerService => {
       dispatch({ ticketBuyerService, type: GETTICKETBUYERSERVICE_SUCCESS });
-      setTimeout(() => { dispatch(getTicketBuyerConfigAttempt()); }, 10);
-      setTimeout(() => { dispatch(stopAutoBuyerAttempt()); }, 10);
     })
     .catch(error => dispatch({ error, type: GETTICKETBUYERSERVICE_FAILED }));
 };
@@ -618,7 +633,7 @@ export const GETTRANSACTIONS_COMPLETE = "GETTRANSACTIONS_COMPLETE";
 // Currently supported filters in the filter object:
 // - type (array): Array of types a transaction must belong to, to be accepted.
 // - direction (string): A string of one of the allowed directions for regular
-//   transactions (sent/received/transfered)
+//   transactions (sent/received/transferred)
 //
 // If empty, all transactions are accepted.
 function filterTransactions(transactions, filter) {
@@ -814,7 +829,11 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
     newlyMinedTransactions, recentRegularTransactions, recentStakeTransactions, type: NEW_TRANSACTIONS_RECEIVED });
 
   if (newlyMinedTransactions.length > 0) {
-    dispatch(getStartupStats());
+    const { startupStatsEndCalcTime, startupStatsCalcSeconds } = getState().statistics;
+    const secFromLastStats = (new Date() - startupStatsEndCalcTime) / 1000;
+    if (secFromLastStats > 5*startupStatsCalcSeconds) {
+      dispatch(getStartupStats());
+    }
   }
 };
 
@@ -940,12 +959,15 @@ export const SETVOTECHOICES_ATTEMPT = "SETVOTECHOICES_ATTEMPT";
 export const SETVOTECHOICES_FAILED = "SETVOTECHOICES_FAILED";
 export const SETVOTECHOICES_SUCCESS = "SETVOTECHOICES_SUCCESS";
 
-export const setVoteChoicesAttempt = (stakePool, agendaId, choiceId) => (dispatch, getState) => {
+export const setVoteChoicesAttempt = (agendaId, choiceId) => (dispatch, getState) => {
   dispatch({ payload: { agendaId, choiceId }, type: SETVOTECHOICES_ATTEMPT });
+  const stakePools = sel.configuredStakePools(getState());
   wallet.setAgendaVote(sel.votingService(getState()), agendaId, choiceId)
     .then(response => {
       dispatch({ response, type: SETVOTECHOICES_SUCCESS });
-      dispatch(getVoteChoicesAttempt(stakePool));
+      for( var i = 0; i < stakePools.length; i++) {
+        dispatch(getVoteChoicesAttempt(stakePools[i]));
+      }
     })
     .catch(error => dispatch({ error, type: SETVOTECHOICES_FAILED }));
 };
@@ -979,4 +1001,120 @@ export const copySeedToClipboard = (mnemonic) => (dispatch) => {
   clipboard.clear();
   clipboard.writeText(mnemonic);
   dispatch({ type: SEEDCOPIEDTOCLIPBOARD });
+};
+
+export const FETCHMISSINGSTAKETXDATA_ATTEMPT = "FETCHMISSINGSTAKETXDATA_ATTEMPT";
+export const FETCHMISSINGSTAKETXDATA_SUCCESS = "FETCHMISSINGSTAKETXDATA_SUCCESS";
+export const FETCHMISSINGSTAKETXDATA_FAILED = "FETCHMISSINGSTAKETXDATA_FAILED";
+
+// fetchMissingStakeTxData fetches the missing stake information of a given
+// transaction returned from getTransaction. For tickets, it tries to fill the
+// ticket purchase amount and for votes it tries to fill the purchase info and
+// reward data.
+//
+// This function is not suitable for calling on a list of transactions, since
+// some cases/operations are slow.
+export const fetchMissingStakeTxData = tx => async (dispatch, getState) => {
+
+  if (getState().grpc.fetchMissingStakeTxDataAttempt[tx.txHash]) {
+    return;
+  }
+  dispatch({ txHash: tx.txHash, type: FETCHMISSINGSTAKETXDATA_ATTEMPT });
+
+  let newTx;
+
+  if (tx.txType == "Ticket") {
+    // TODO: the wallet doesn't have a specific call to get ticket details
+    // (including spender tx) from an arbitrary transaction hash, so for the
+    // moment we can only get the ticket price and purchase date (enterTimestamp).
+    // If this ever changes, we can probably merge this code path with the one
+    // in the else clause below, so that voted/revoked tickets will show
+    // all the relevant information.
+
+    // Use the raw decoded transaction vs credit[0] due to situations where the
+    // ticket submission output is not from this wallet (solo voting tickets and
+    // split tickets)
+    let decodedTx = sel.decodedTransactions(getState())[tx.txHash];
+    if (!decodedTx) {
+      decodedTx = (await dispatch(decodeRawTransactions([ tx.rawTx ])))[tx.txHash];
+    }
+
+    newTx = {
+      ...tx.originalTx,
+      enterTimestamp: tx.txTimestamp,
+      ticketPrice: decodedTx.transaction.getOutputsList()[0].getValue(),
+    };
+  } else { // vote/revoke
+    let decodedSpender = sel.decodedTransactions(getState())[tx.txHash];
+    if (!decodedSpender) {
+      // don't have the spender decoded. Request it.
+      decodedSpender = (await dispatch(decodeRawTransactions([ tx.rawTx ])))[tx.txHash];
+    }
+
+    // Find the ticket hash of the vote/revoke. Determining whether it's a vote
+    // or revocation by looking at the number of inputs is not great, but works
+    // for now given the current consensus rules.
+    const spenderInputs = decodedSpender.transaction.getInputsList();
+    const outpIdx = spenderInputs.length === 1 ? 0 : 1;
+    const ticketTxHash = rawHashToHex(spenderInputs[outpIdx].getPreviousTransactionHash());
+
+    // given that the ticket may be much older than the transactions currently
+    // in the `transactions` state var, we need to manually fetch the ticket
+    // transaction
+    const ticketTx = await wallet.getTransaction(sel.walletService(getState()),
+      ticketTxHash);
+
+    let decodedTicket = sel.decodedTransactions(getState())[ticketTxHash];
+    if (!decodedTicket) {
+      // don't have the ticket decoded. Request it.
+      const rawTicketTx = Buffer.from(ticketTx.tx.getTransaction()).toString("hex");
+      await dispatch(decodeRawTransactions([ rawTicketTx ]));
+    }
+
+    // normalize ticket+spender as if it was a result item from a wallet.getTickets call
+    const ticket = {
+      ticket: ticketTx.tx,
+      spender: tx.originalTx.tx,
+      status: tx.txType === "Vote" ? "voted" : "revoked",
+    };
+    const ticketNormal = sel.ticketNormalizer(getState())(ticket);
+
+    newTx = {
+      ...tx.originalTx,
+      enterTimestamp: ticketNormal.enterTimestamp,
+      leaveTimestamp: ticketNormal.leaveTimestamp,
+      ticketPrice: ticketNormal.ticketPrice,
+      ticketReward: ticketNormal.ticketReward,
+      // add more stuff from the result of sel.ticketNormalizer if ever needed
+    };
+  }
+
+  const oldTxs = getState().grpc.transactions;
+  const txIdx = oldTxs.findIndex(t => t.txHash === tx.txHash);
+  if (txIdx > -1) {
+    const newTxs = [ ...oldTxs ];
+    newTxs.splice(txIdx, 1, newTx);
+    dispatch({ transactions: newTxs, txHash: tx.txHash, type: FETCHMISSINGSTAKETXDATA_SUCCESS });
+  } else {
+    // not supposed to happen in normal usage; this function  should only be
+    // entered from a transaction already in the transaction list
+    // (sel.transactions).
+    dispatch({ txHash: tx.txHash, type: FETCHMISSINGSTAKETXDATA_FAILED });
+  }
+};
+
+export const GETTREASURY_BALANCE_SUCCESS = "GETTREASURY_BALANCE_SUCCESS";
+export const getTreasuryBalance = () => (dispatch, getState) => {
+  const treasuryAddress = sel.chainParams(getState()).TreasuryAddress;
+  const dURL = sel.dcrdataURL(getState());
+  da.getTreasuryInfo(dURL, treasuryAddress)
+    .then(treasuryInfo => {
+      const treasuryBalance = treasuryInfo["data"]["dcr_unspent"] * 1e8;
+      dispatch({ treasuryBalance, type: GETTREASURY_BALANCE_SUCCESS });
+    });
+};
+
+export const RESET_TREASURY_BALANCE = "RESET_TREASURY_BALANCE";
+export const resetTreasuryBalance = () => (dispatch) => {
+  dispatch({ type: RESET_TREASURY_BALANCE });
 };

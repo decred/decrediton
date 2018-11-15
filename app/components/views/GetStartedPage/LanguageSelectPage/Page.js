@@ -6,8 +6,6 @@ import { FormattedMessage as T } from "react-intl";
 const LanguageSelectPage = ({ availableLanguages, selectedLang, onChangeSelectedLang, onSelectLang }) => {
   return (
     <div className="page-body getstarted">
-      <div className="getstarted-logo">
-      </div>
       <div className="getstarted-new">
         <div className="language-select-title">
           <T id="selectLang.title" m={"Welcome to Decrediton Wallet"}/>

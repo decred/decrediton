@@ -22,18 +22,6 @@ export function initWalletCfg(testnet, walletPath) {
   if (!config.has("balancetomaintain")) {
     config.set("balancetomaintain","0");
   }
-  if (!config.has("maxfee")) {
-    config.set("maxfee","0.1");
-  }
-  if (!config.has("maxpricerelative")) {
-    config.set("maxpricerelative","1.25");
-  }
-  if (!config.has("maxpriceabsolute")) {
-    config.set("maxpriceabsolute","0");
-  }
-  if (!config.has("maxperblock")) {
-    config.set("maxperblock","5");
-  }
   if (!config.has("currency_display")) {
     config.set("currency_display","DCR");
   }
@@ -61,8 +49,7 @@ export function initWalletCfg(testnet, walletPath) {
 
 function cleanWalletCfg(config) {
   var key;
-  const walletCfgFields = [ "enableticketbuyer", "balancetomaintain", "maxfee",
-    "maxpricerelative", "maxpriceabsolute", "maxperblock", "currency_display",
+  const walletCfgFields = [ "enableticketbuyer", "balancetomaintain", "currency_display",
     "hiddenaccounts", "discoveraccounts", "gaplimit", "iswatchonly", "stakepools", "lastaccess" ];
   for (key in config.store) {
     var found = false;
@@ -106,6 +93,9 @@ export function initGlobalCfg() {
   if (!config.has("show_privacy")) {
     config.set("show_privacy", true);
   }
+  if (!config.has("show_spvchoice")) {
+    config.set("show_spvchoice", true);
+  }
   if (!config.has("allowed_external_requests")) {
     config.set("allowed_external_requests", []);
   }
@@ -140,14 +130,21 @@ export function initGlobalCfg() {
   if (!config.has("timezone")) {
     config.set("timezone", "local");
   }
+  if (!config.has("disable_hardware_accel")) {
+    config.set("disable_hardware_accel", false);
+  }
   cleanGlobalCfg(config);
   return(config);
 }
 
 function cleanGlobalCfg(config) {
   var key;
-  const globalCfgFields = [ "theme", "daemon_start_advanced", "must_open_form", "locale", "network", "set_language", "ui_animations", "show_tutorial", "show_privacy", "allowed_external_requests", "proxy_type", "proxy_location",
-    "remote_credentials", "spv_mode", "spv_connect", "max_wallet_count", "timezone", "last_height", "appdata_path" ];
+  const globalCfgFields = [ "theme", "daemon_start_advanced", "must_open_form",
+    "locale", "network", "set_language", "ui_animations", "show_spvchoice",
+    "show_tutorial", "show_privacy", "allowed_external_requests", "proxy_type",
+    "proxy_location", "remote_credentials", "spv_mode", "spv_connect",
+    "max_wallet_count", "timezone", "last_height", "appdata_path",
+    "disable_hardware_accel" ];
   for (key in config.store) {
     var found = false;
     for (var i = 0; i < globalCfgFields.length; i++) {

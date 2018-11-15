@@ -39,7 +39,7 @@ export function endOfDay(dt) {
 
 // formatLocalISODate formats the given Date object d in an ISO8601 format, using
 // the local timezone (instead of UTC as d.ToISOString())
-export function formatLocalISODate(d) {
+export function formatLocalISODate(d, timezone) {
   const pad = (s, n) => {
     n = n || 2;
     s = Array(n).join("0") + s;
@@ -54,12 +54,13 @@ export function formatLocalISODate(d) {
   }
   let tzOffsetHours = Math.trunc(tzOffset / 60);
   let tzOffsetMinutes = Math.trunc(tzOffset % 60);
+  let tz = timezone === "utc" ? "Z" : tzOffsetSign + pad(tzOffsetHours, 2) + pad(tzOffsetMinutes, 2);
 
-  return format("%s-%s-%sT%s:%s:%s.%s%s%s%s",
+  return format("%s-%s-%sT%s:%s:%s.%s%s",
     d.getFullYear(), pad(d.getMonth()+1, 2), pad(d.getDate(), 2),
     pad(d.getHours(), 2), pad(d.getMinutes(), 2),
     pad(d.getSeconds(), 2), pad(d.getMilliseconds(), 3),
-    tzOffsetSign, pad(tzOffsetHours, 2), pad(tzOffsetMinutes, 2));
+    tz);
 }
 
 // calculate the difference between two timestamps and return an int

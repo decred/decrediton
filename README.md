@@ -61,7 +61,7 @@ To see additional debug information (including the output of dcrd and dcrwallet)
 decrediton --debug
 ```
 
-To pass additional arguements to dcrwallet (such as to increase the logging level run:
+To pass additional arguments to dcrwallet (such as to increase the logging level run:
 
 ```
 decrediton --extrawalletargs='-d=debug'

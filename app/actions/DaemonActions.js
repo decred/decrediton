@@ -11,11 +11,13 @@ import { setMustOpenForm, getWalletCfg, getAppdataPath, getRemoteCredentials, ge
 import { isTestNet } from "selectors";
 import axios from "axios";
 import { STANDARD_EXTERNAL_REQUESTS } from "main_dev/externalRequests";
+import { DIFF_CONNECTION_ERROR } from "main_dev/constants";
 
 export const DECREDITON_VERSION = "DECREDITON_VERSION";
 export const SELECT_LANGUAGE = "SELECT_LANGUAGE";
 export const FINISH_TUTORIAL = "FINISH_TUTORIAL";
 export const FINISH_PRIVACY = "FINISH_PRIVACY";
+export const FINISH_SPVCHOICE = "FINISH_SPVCHOICE";
 export const DAEMONSTARTED = "DAEMONSTARTED";
 export const DAEMONSTARTED_APPDATA = "DAEMONSTARTED_APPDATA";
 export const DAEMONSTARTED_REMOTE = "DAEMONSTARTED_REMOTE";
@@ -41,6 +43,7 @@ export const WALLET_LOADER_SETTINGS = "WALLET_LOADER_SETTINGS";
 export const DELETE_DCRD_ATTEMPT = "DELETE_DCRD_ATTEMPT";
 export const DELETE_DCRD_FAILED = "DELETE_DCRD_FAILED";
 export const DELETE_DCRD_SUCCESS = "DELETE_DCRD_SUCCESS";
+export const NOT_SAME_CONNECTION = "NOT_SAME_CONNECTION";
 
 export const checkDecreditonVersion = () => (dispatch, getState) =>{
   const detectedVersion = getState().daemon.appVersion;
@@ -71,8 +74,26 @@ export const showGetStarted = () => (dispatch) => {
   dispatch(pushHistory("/getstarted/initial"));
 };
 
+export const showSpvChoice = () => (dispatch) => {
+  dispatch(pushHistory("/getstarted/spvchoice"));
+};
+
 export const showPrivacy = () => (dispatch) => {
   dispatch(pushHistory("/getstarted/privacy"));
+};
+
+export const enableSpv = () => (dispatch, getState) => {
+  dispatch(updateStateSettingsChanged({ spvMode: true }, true));
+  const tempSettings = getState().settings.tempSettings;
+  dispatch(saveSettings(tempSettings));
+  dispatch(finishSpvChoice());
+};
+
+export const disableSpv = () => (dispatch, getState) => {
+  dispatch(updateStateSettingsChanged({ spvMode: false }, true));
+  const tempSettings = getState().settings.tempSettings;
+  dispatch(saveSettings(tempSettings));
+  dispatch(finishSpvChoice());
 };
 
 export const setupStandardPrivacy = () => (dispatch, getState) => {
@@ -95,6 +116,13 @@ export const selectLanguage = (selectedLanguage) => (dispatch) => {
   config.set("set_language", false);
   dispatch({ language: selectedLanguage.language, type: SELECT_LANGUAGE });
   dispatch(pushHistory("/getstarted"));
+};
+
+export const finishSpvChoice = () => (dispatch) => {
+  const config = getGlobalCfg();
+  config.set("show_spvchoice", false);
+  dispatch({ type: FINISH_SPVCHOICE });
+  dispatch(goBack());
 };
 
 export const finishTutorial = () => (dispatch) => {
@@ -256,16 +284,12 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => {
       var hiddenAccounts = walletCfg.get("hiddenaccounts");
       var currencyDisplay = walletCfg.get("currency_display");
       var balanceToMaintain = walletCfg.get("balancetomaintain");
-      var maxFee = walletCfg.get("maxfee");
-      var maxPriceAbsolute = walletCfg.get("maxpriceabsolute");
-      var maxPriceRelative = walletCfg.get("maxpricerelative");
-      var maxPerBlock = walletCfg.get("maxperblock");
       var discoverAccountsComplete = walletCfg.get("discoveraccounts");
       var activeStakePoolConfig = foundStakePoolConfig;
       var selectedStakePool = firstConfiguredStakePool;
       walletCfg.set("lastaccess", Date.now());
       dispatch({ type: WALLETREADY, walletName: selectedWallet.value.wallet, network: network, hiddenAccounts, port });
-      dispatch({ type: WALLET_AUTOBUYER_SETTINGS, balanceToMaintain, maxFee, maxPriceAbsolute, maxPriceRelative, maxPerBlock });
+      dispatch({ type: WALLET_AUTOBUYER_SETTINGS, balanceToMaintain });
       dispatch({ type: WALLET_SETTINGS, currencyDisplay, gapLimit });
       dispatch({ type: WALLET_STAKEPOOL_SETTINGS, activeStakePoolConfig, selectedStakePool, currentStakePoolConfig });
       dispatch({ type: WALLET_LOADER_SETTINGS, discoverAccountsComplete });
@@ -305,10 +329,16 @@ export const prepStartDaemon = () => (dispatch, getState) => {
 export const STARTUPBLOCK = "STARTUPBLOCK";
 export const syncDaemon = () =>
   (dispatch, getState) => {
-    const updateBlockCount = () => {
+    const updateBlockCount = async () => {
       const { daemon: { daemonSynced, timeStart, blockStart, credentials, daemonError, neededBlocks } } = getState();
       // check to see if user skipped;
       if (daemonSynced || daemonError) return;
+      const daemonInfo = await wallet.getDaemonInfo(credentials);
+      if (daemonInfo.isTestNet !== null &&
+          daemonInfo.isTestNet !== isTestNet(getState())) {
+        dispatch({ error: DIFF_CONNECTION_ERROR, type: NOT_SAME_CONNECTION });
+        return dispatch(pushHistory("/error"));
+      }
       return wallet
         .getBlockCount(credentials, isTestNet(getState()))
         .then(( blockChainInfo ) => {
