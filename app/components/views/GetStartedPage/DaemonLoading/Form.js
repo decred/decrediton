@@ -41,25 +41,25 @@ const DaemonLoadingBody = ({
 }) => (
   <div className="page-body getstarted">
     <div className="getstarted loader">
+      <div className="loader-settings-logs">
+        {updateAvailable && <UpdateAvailableLink updateAvailable={updateAvailable} /> }
+        <Aux>
+          <AboutModalButton { ...{ appVersion, updateAvailable } } />
+          {getWalletReady &&
+            <InvisibleButton onClick={onShowSettings}>
+              <SettingsLinkMsg />
+            </InvisibleButton>
+          }
+          {(getDaemonStarted && !isDaemonRemote) || getWalletReady ?
+            <InvisibleButton onClick={onShowLogs}>
+              <LogsLinkMsg />
+            </InvisibleButton> :
+            <div/>
+          }
+        </Aux>
+      </div>
       <Aux>
         <div className="content-title">
-          <div className="loader-settings-logs">
-            {updateAvailable && <UpdateAvailableLink updateAvailable={updateAvailable} /> }
-            <Aux>
-              <AboutModalButton { ...{ appVersion, updateAvailable } } />
-              {getWalletReady &&
-                  <InvisibleButton onClick={onShowSettings}>
-                    <SettingsLinkMsg />
-                  </InvisibleButton>
-              }
-              {(getDaemonStarted && !isDaemonRemote) || getWalletReady ?
-                <InvisibleButton onClick={onShowLogs}>
-                  <LogsLinkMsg />
-                </InvisibleButton> :
-                <div/>
-              }
-            </Aux>
-          </div>
           <LoaderTitleMsg />
         </div>
         <div className="loader-buttons">

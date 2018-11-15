@@ -12,14 +12,14 @@ export default ({ cancelCustomPrivacy, acceptCustomPrivacy, ...props }) => (
     </div>
     <div className="get-started-custom-privacy-settings" >
       <PrivacySettings {...props} />
-    </div>
-    <div>
-      <InvisibleButton onClick={cancelCustomPrivacy}>
-        <T id="privacy.custom.cancel" m="Cancel" />
-      </InvisibleButton>
-      <KeyBlueButton onClick={acceptCustomPrivacy}>
-        <T id="privacy.custom.accept" m="Accept" />
-      </KeyBlueButton>
+      <div className="privacy-buttons">
+        <InvisibleButton onClick={cancelCustomPrivacy}>
+          <T id="privacy.custom.cancel" m="Cancel" />
+        </InvisibleButton>
+        <KeyBlueButton onClick={acceptCustomPrivacy}>
+          <T id="privacy.custom.accept" m="Accept" />
+        </KeyBlueButton>
+      </div>
     </div>
   </Aux>
 );

@@ -25,21 +25,19 @@ export default ({
 }) => (
   <div className="page-body getstarted">
     <div className="getstarted loader logs">
-      <div className="content-title">
-        <div className="loader-settings-logs">
-          <AboutModalButton { ...{ appVersion, updateAvailable } } />
-          <InvisibleButton className="active">
-            <SettingsLinkMsg />
-          </InvisibleButton>
-          <InvisibleButton onClick={onShowLogs}>
-            <LogsLinkMsg />
-          </InvisibleButton>
-        </div>
-        <div className="go-back-screen-button-area">
-          <Tooltip text={ <GoBackMsg /> }><div className="go-back-screen-button" onClick={onHideSettings}/></Tooltip>
-        </div>
+      <div className="loader-settings-logs">
+        <AboutModalButton { ...{ appVersion, updateAvailable } } />
+        <InvisibleButton className="active">
+          <SettingsLinkMsg />
+        </InvisibleButton>
+        <InvisibleButton onClick={onShowLogs}>
+          <LogsLinkMsg />
+        </InvisibleButton>
       </div>
-
+      <div className="go-back-screen-button-area">
+        <Tooltip text={ <GoBackMsg /> }><div className="go-back-screen-button" onClick={onHideSettings}/></Tooltip>
+      </div>
+      <div className="tabbed-page-subtitle"><T id="settings.subtitle" m="Settings"/></div>
       <div className="settings-wrapper">
         <div className="settings-columns">
           <GeneralSettings {...{ tempSettings, networks, currencies, locales,
