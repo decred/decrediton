@@ -52,6 +52,7 @@ var initialState = {
     addCustomStakePoolAttempt: false,
   },
   daemon: {
+    networkMatch: false,
     appVersion: pkg.version,
     daemonRemote: false,
     locale: locale,

@@ -44,6 +44,7 @@ export const DELETE_DCRD_ATTEMPT = "DELETE_DCRD_ATTEMPT";
 export const DELETE_DCRD_FAILED = "DELETE_DCRD_FAILED";
 export const DELETE_DCRD_SUCCESS = "DELETE_DCRD_SUCCESS";
 export const NOT_SAME_CONNECTION = "NOT_SAME_CONNECTION";
+export const NETWORK_MATCH = "NETWORK_MATCH";
 
 export const checkDecreditonVersion = () => (dispatch, getState) =>{
   const detectedVersion = getState().daemon.appVersion;
@@ -330,14 +331,18 @@ export const STARTUPBLOCK = "STARTUPBLOCK";
 export const syncDaemon = () =>
   (dispatch, getState) => {
     const updateBlockCount = async () => {
-      const { daemon: { daemonSynced, timeStart, blockStart, credentials, daemonError, neededBlocks } } = getState();
+      const { daemon: { daemonSynced, timeStart, blockStart, credentials, daemonError, neededBlocks, networkMatch } } = getState();
       // check to see if user skipped;
       if (daemonSynced || daemonError) return;
-      const daemonInfo = await wallet.getDaemonInfo(credentials);
-      if (daemonInfo.isTestNet !== null &&
-          daemonInfo.isTestNet !== isTestNet(getState())) {
-        dispatch({ error: DIFF_CONNECTION_ERROR, type: NOT_SAME_CONNECTION });
-        return dispatch(pushHistory("/error"));
+      if (!networkMatch) {
+        const daemonInfo = await wallet.getDaemonInfo(credentials);
+        if (daemonInfo.isTestNet !== null &&
+            daemonInfo.isTestNet !== isTestNet(getState())) {
+          dispatch({ error: DIFF_CONNECTION_ERROR, type: NOT_SAME_CONNECTION });
+          return dispatch(pushHistory("/error"));
+        } else if (daemonInfo.isTestNet !== null && daemonInfo.isTestNet == isTestNet(getState())) {
+          dispatch({ type: NETWORK_MATCH });
+        }
       }
       return wallet
         .getBlockCount(credentials, isTestNet(getState()))
