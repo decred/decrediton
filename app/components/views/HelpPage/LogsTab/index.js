@@ -1,5 +1,5 @@
 import Logs from "./Page";
-import { getDcrdLogs, getDcrwalletLogs } from "wallet";
+import { getDcrdLogs, getDcrwalletLogs, getDecreditonLogs } from "wallet";
 import { logging } from "connectors";
 import { DescriptionHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
@@ -19,14 +19,19 @@ class LogsTabBody extends React.Component {
   componentDidMount() {
     const interval = this.props.setInterval(() => {
       Promise
-        .all([ getDcrdLogs(), getDcrwalletLogs() ])
-        .then(([ rawDcrdLogs, rawDcrwalletLogs ]) => {
+        .all([ getDcrdLogs(), getDcrwalletLogs(), getDecreditonLogs() ])
+        .then(([ rawDcrdLogs, rawDcrwalletLogs, decreditonLogs ]) => {
           const dcrdLogs = Buffer.from(rawDcrdLogs).toString("utf8");
           const dcrwalletLogs = Buffer.from(rawDcrwalletLogs).toString("utf8");
-          if ( dcrdLogs !== this.state.dcrdLogs )
+          if ( dcrdLogs !== this.state.dcrdLogs ) {
             this.setState({ dcrdLogs });
-          if ( dcrwalletLogs !== this.state.dcrwalletLogs )
+          }
+          if ( dcrwalletLogs !== this.state.dcrwalletLogs ) {
             this.setState({ dcrwalletLogs });
+          }
+          if ( decreditonLogs !== this.state.decreditonLogs ) {
+            this.setState({ decreditonLogs });
+          }
         });
     }, 2000);
     this.setState({ interval });
@@ -41,7 +46,7 @@ class LogsTabBody extends React.Component {
       interval: null,
       dcrdLogs: "",
       dcrwalletLogs: "",
-      decreditonLogs: null,
+      decreditonLogs: "",
       showDcrdLogs: false,
       showDcrwalletLogs: false,
       showDecreditonLogs: false
@@ -52,29 +57,17 @@ class LogsTabBody extends React.Component {
     const { onShowDecreditonLogs, onShowDcrdLogs, onShowDcrwalletLogs,
       onHideDecreditonLogs, onHideDcrdLogs, onHideDcrwalletLogs
     } = this;
-    const { isDaemonRemote, isDaemonStarted } = this.props;
-    const {
-      dcrdLogs, dcrwalletLogs, decreditonLogs, showDcrdLogs, showDcrwalletLogs, showDecreditonLogs
-    } = this.state;
     return (
       <Logs
         {...{
-          ...this.props, ...this.state }}
-        {...{
-          showDecreditonLogs,
-          showDcrdLogs,
-          showDcrwalletLogs,
+          ...this.props,
+          ...this.state,
           onShowDecreditonLogs,
           onShowDcrdLogs,
           onShowDcrwalletLogs,
           onHideDecreditonLogs,
           onHideDcrdLogs,
           onHideDcrwalletLogs,
-          dcrdLogs,
-          dcrwalletLogs,
-          decreditonLogs,
-          isDaemonRemote,
-          isDaemonStarted
         }}
       />
     );

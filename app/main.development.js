@@ -195,7 +195,13 @@ ipcMain.on("get-dcrwallet-logs", (event) => {
 });
 
 ipcMain.on("get-decrediton-logs", (event) => {
-  event.returnValue = "decrediton logs!";
+  const logFileName = logger.transports.file.dirname + "/" +logger.transports.file.filename;
+  try {
+    event.returnValue = fs.readFileSync(logFileName, "utf8");
+  } catch (err) {
+    console.log(err);
+    event.returnValue = null;
+  }
 });
 
 ipcMain.on("get-last-log-line-dcrd", event => {
