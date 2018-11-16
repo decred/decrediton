@@ -19,6 +19,7 @@ import {
   FATAL_DAEMON_ERROR,
   FATAL_WALLET_ERROR,
   CLOSEDAEMON_ATTEMPT, CLOSEDAEMON_FAILED, CLOSEDAEMON_SUCCESS, NOT_SAME_CONNECTION,
+  NETWORK_MATCH
 } from "../actions/DaemonActions";
 import {
   CREATEWALLET_GOBACK,
@@ -30,6 +31,10 @@ import {
 
 export default function version(state = {}, action) {
   switch (action.type) {
+  case NETWORK_MATCH:
+    return { ... state,
+      networkMatch: true,
+    };
   case DECREDITON_VERSION:
     return { ...state,
       updateAvailable: action.msg,
