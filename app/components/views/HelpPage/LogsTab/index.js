@@ -17,22 +17,15 @@ class LogsTabBody extends React.Component {
   }
 
   componentDidMount() {
+    this.getLogs();
+  }
+
+  componentDidUpdate() {
+    if(this.state.interval) {
+      return;
+    }
     const interval = this.props.setInterval(() => {
-      Promise
-        .all([ getDcrdLogs(), getDcrwalletLogs(), getDecreditonLogs() ])
-        .then(([ rawDcrdLogs, rawDcrwalletLogs, decreditonLogs ]) => {
-          const dcrdLogs = Buffer.from(rawDcrdLogs).toString("utf8");
-          const dcrwalletLogs = Buffer.from(rawDcrwalletLogs).toString("utf8");
-          if ( dcrdLogs !== this.state.dcrdLogs ) {
-            this.setState({ dcrdLogs });
-          }
-          if ( dcrwalletLogs !== this.state.dcrwalletLogs ) {
-            this.setState({ dcrwalletLogs });
-          }
-          if ( decreditonLogs !== this.state.decreditonLogs ) {
-            this.setState({ decreditonLogs });
-          }
-        });
+      this.getLogs();
     }, 2000);
     this.setState({ interval });
   }
@@ -71,6 +64,24 @@ class LogsTabBody extends React.Component {
         }}
       />
     );
+  }
+
+  getLogs() {
+    return Promise
+      .all([ getDcrdLogs(), getDcrwalletLogs(), getDecreditonLogs() ])
+      .then(([ rawDcrdLogs, rawDcrwalletLogs, decreditonLogs ]) => {
+        const dcrdLogs = Buffer.from(rawDcrdLogs).toString("utf8");
+        const dcrwalletLogs = Buffer.from(rawDcrwalletLogs).toString("utf8");
+        if ( dcrdLogs !== this.state.dcrdLogs ) {
+          this.setState({ dcrdLogs });
+        }
+        if ( dcrwalletLogs !== this.state.dcrwalletLogs ) {
+          this.setState({ dcrwalletLogs });
+        }
+        if ( decreditonLogs !== this.state.decreditonLogs ) {
+          this.setState({ decreditonLogs });
+        }
+      });
   }
 
   onShowDecreditonLogs() {
