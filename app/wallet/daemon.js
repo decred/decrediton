@@ -105,26 +105,26 @@ export const getDaemonInfo = log((rpcCreds) => new Promise(resolve => {
   ipcRenderer.send("get-info", rpcCreds);
 }), "Get Daemon network info");
 
-export const getDcrdLogs = log(() => Promise
+export const getDcrdLogs = () => Promise
   .resolve(ipcRenderer.sendSync("get-dcrd-logs"))
   .then(logs => {
     if (logs) return logs;
     throw "Error getting dcrd logs";
-  }), "Get Dcrd Logs", logOptionNoResponseData());
+  });
 
-export const getDcrwalletLogs = log(() => Promise
+export const getDcrwalletLogs = () => Promise
   .resolve(ipcRenderer.sendSync("get-dcrwallet-logs"))
   .then(logs => {
     if (logs) return logs;
     throw "Error getting dcrwallet logs";
-  }), "Get Dcrwallet Logs", logOptionNoResponseData());
+  });
 
-export const getDecreditonLogs = log(() => Promise
+export const getDecreditonLogs = () => Promise
   .resolve(ipcRenderer.sendSync("get-decrediton-logs"))
   .then(logs => {
     if (logs) return logs;
     throw "Error getting decrediton logs";
-  }), "Get Decrediton Logs", logOptionNoResponseData());
+  });
 
 export const getAvailableWallets = log((network) => Promise
   .resolve(ipcRenderer.sendSync("get-available-wallets", network))
