@@ -4,7 +4,7 @@ import { app, BrowserWindow, Menu, dialog } from "electron";
 import { initGlobalCfg, validateGlobalCfgFile, setMustOpenForm } from "./config";
 import { appLocaleFromElectronLocale, default as locales } from "./i18n/locales";
 import { createLogger, lastLogLine, GetDcrdLogs, GetDcrwalletLogs } from "./main_dev/logging";
-import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, BOTH_CONNECTION_ERR_MESSAGE } from "./main_dev/constants";
+import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, BOTH_CONNECTION_ERR_MESSAGE, MAX_LOG_LENGTH } from "./main_dev/constants";
 import { getWalletsDirectoryPath, getWalletsDirectoryPathNetwork, appDataDirectory } from "./main_dev/paths";
 import { getGlobalCfgPath, checkAndInitWalletCfg } from "./main_dev/paths";
 import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRequests } from "./main_dev/externalRequests";
@@ -196,12 +196,20 @@ ipcMain.on("get-dcrwallet-logs", (event) => {
 
 ipcMain.on("get-decrediton-logs", (event) => {
   const logFileName = logger.transports.file.dirname + "/" +logger.transports.file.filename;
-  try {
-    event.returnValue = fs.readFileSync(logFileName, "utf8");
-  } catch (err) {
-    console.log(err);
-    event.returnValue = null;
-  }
+  fs.readFile(logFileName, (err, data) => {
+    if(err) {
+      logger.log("error", "Error reading log: "+ err );
+      return event.returnValue = null;
+    }
+
+    let result;
+    if (data.length > MAX_LOG_LENGTH) {
+      result = data.slice(data.length - MAX_LOG_LENGTH);
+    } else {
+      result = data;
+    }
+    event.returnValue = result.toString("utf8");
+  });
 });
 
 ipcMain.on("get-last-log-line-dcrd", event => {
