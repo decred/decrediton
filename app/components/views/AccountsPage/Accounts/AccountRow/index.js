@@ -28,7 +28,7 @@ class AccountRow extends React.Component {
       this.setState({ isShowingDetails: false });
     }
     if (accountNumDetailsShown === account.accountNumber) {
-      this.setState({ showPubKey: false })
+      this.setState({ showPubKey: false });
     }
   }
 
@@ -73,7 +73,7 @@ class AccountRow extends React.Component {
   }
 
   onToggleShowDetails() {
-    this.setState({ isShowingDetails: !this.state.isShowingDetails })
+    this.setState({ isShowingDetails: !this.state.isShowingDetails });
     this.state.isShowingDetails ? this.props.hideAccountDetails()
       : this.props.showAccountDetails(this.props.account.accountNumber);
   }
