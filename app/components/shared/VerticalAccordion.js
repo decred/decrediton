@@ -6,14 +6,16 @@ class VerticalAccordion extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      show: false,
       shownStyles: this.chosenStyles(props, false),
     };
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.show !== this.state.show) {
-      this.chosenStyles(this.props, this.state.show);
+  componentDidUpdate(prevProps) {
+    if (prevProps.show !== this.props.show) {
+      this.setState({
+        shownStyles: this.chosenStyles(this.props, this.props.show),
+      });
+      this.chosenStyles(this.props, this.props.show);
     }
   }
 
@@ -63,17 +65,13 @@ class VerticalAccordion extends React.Component {
   }
 
   onToggleAccordion() {
-    this.setState({
-      show: !this.state.show,
-      shownStyles: this.chosenStyles(this.props, !this.state.show),
-    });
     this.props.onToggleAccordion && this.props.onToggleAccordion();
   }
 
   render() {
     const classNames = [
       "vertical-accordion",
-      this.state.show ? "active" : "",
+      this.props.show ? "active" : "",
       this.props.className || "",
     ].join(" ");
 
