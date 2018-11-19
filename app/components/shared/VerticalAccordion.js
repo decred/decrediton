@@ -11,7 +11,28 @@ class VerticalAccordion extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.show !== this.props.show) {
+    let oldChildren, newChildren, newKeys;
+    let needUpdate = false;
+    if(prevProps.children) {
+      oldChildren = prevProps.children;
+    }
+    if (this.props.children) {
+      newChildren = this.props.children;
+      newKeys = Object.keys(newChildren.props)
+    }
+    if (oldChildren && newChildren) {
+      newKeys.forEach( key => {
+        if (typeof(newChildren.props[key]) !== "object" &&
+            typeof(newChildren.props[key]) !== "function") {
+              if (oldChildren.props[key] !== newChildren.props[key]) {
+                needUpdate = true;
+                return;
+              }
+        }
+      })
+    }
+
+    if (prevProps.show !== this.props.show || needUpdate) {
       this.setState({
         shownStyles: this.chosenStyles(this.props, this.props.show),
       });
