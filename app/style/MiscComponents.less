@@ -4,17 +4,21 @@
 .accounts-button-icon {
   display: inline-block;
   width: 20px;
-  height: 18px;
+  height: 20px;
   background-image: @accounts-button-icon;
-  background-position: 0 0;
-  background-size: 20px auto;
+  background-position: 50%;
+  background-size: 12px auto;
   background-repeat: no-repeat;
+  box-shadow: 0 3px 8px var(--input-color-shadow);
+  border-radius: 5px;
+  background-color: var(--input-color);
   cursor: pointer;
   vertical-align: middle;
 }
 
 .accounts-button-icon:hover {
-  background-image: @accounts-button-hover-icon;
+  box-shadow: 0 1px 3px var(--input-color-shadow);
+  background-color: var(--account-button-hover);
 }
 
 .clipboard-box {
