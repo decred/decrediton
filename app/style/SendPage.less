@@ -79,11 +79,15 @@
 
   width: 24px;
   height: 24px;
-  background-image: @send-all-icon;
+  background-image: @send-all-default;
   background-position: 50% 50%;
   background-size: 19px;
   background-repeat: no-repeat;
   cursor: pointer;
+}
+
+.send-all-wallet-icon:hover {
+  background-image: @send-all-hover;
 }
 
 .send-all-cancel-wallet-icon {
@@ -103,11 +107,16 @@
 
   width: 24px;
   height: 24px;
-  background-image: @send-to-self-icon;
+  background-image: @send-self-default;
   background-position: 50% 50%;
   background-size: 19px;
   background-repeat: no-repeat;
   cursor: pointer;
+}
+
+.send-self-wallet-icon:hover {
+  background-image: @send-self-hover;
+  background-size: 15px;
 }
 
 .send-others-wallet-icon {
@@ -123,9 +132,7 @@
 }
 
 .send-to-others-wallet-icon:hover,
-.send-to-self-wallet-icon:hover,
-.send-address-wallet-icon:hover,
-.send-all-wallet-icon:hover {
+.send-address-wallet-icon:hover {
   opacity: 0.85;
 }
 
