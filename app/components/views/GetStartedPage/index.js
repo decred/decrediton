@@ -35,16 +35,16 @@ class GetStartedPage extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { startStepIndex, getDaemonSynced, onRetryStartRPC, isSPV, startSPVSync } = this.props;
+  componentDidUpdate(prevProps) {
+    const { startStepIndex, getDaemonSynced, onRetryStartRPC, isSPV, startSPVSync } = prevProps;
     if (!isSPV) {
-      if (startStepIndex != nextProps.startStepIndex || getDaemonSynced != nextProps.getDaemonSynced ){
-        if (nextProps.startStepIndex == 3 && nextProps.getDaemonSynced)
+      if (startStepIndex != this.props.startStepIndex || getDaemonSynced != this.props.getDaemonSynced ){
+        if (this.props.startStepIndex == 3 && this.props.getDaemonSynced)
           onRetryStartRPC(false, this.state.walletPrivatePassphrase);
       }
     } else {
-      if (startStepIndex != nextProps.startStepIndex ){
-        if (nextProps.startStepIndex == 3)
+      if (startStepIndex != this.props.startStepIndex ){
+        if (this.props.startStepIndex == 3)
           startSPVSync(this.state.walletPrivatePassphrase);
       }
     }

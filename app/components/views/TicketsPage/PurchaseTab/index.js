@@ -21,9 +21,9 @@ class Purchase extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (!this.props.stakePool && nextProps.stakePool) {
-      this.setState({ stakePool: nextProps.stakePool });
+  componentDidMount() {
+    if (!this.props.stakePool && this.props.stakePool) {
+      this.setState({ stakePool: this.props.stakePool });
     }
   }
 

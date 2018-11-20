@@ -21,7 +21,7 @@ class SignMessage extends React.Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     if (!this.props.walletService) {
       this.context.router.push("/error");
     }

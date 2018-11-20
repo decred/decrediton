@@ -22,7 +22,7 @@ class VerifyMessage extends React.Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.getMessageVerificationServiceAttempt();
   }
 
