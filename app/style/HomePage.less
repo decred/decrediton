@@ -61,11 +61,57 @@
   width: 100%;
 }
 
+.overview-spendable-locked-wrapper-area {
+  margin-bottom: 14px;
+  &.tickets {
+    margin-bottom: 8px;
+  }
+}
+
+.overview-spendable-locked-wrapper-row {
+  display: flex;
+  flex-direction: row;
+}
+
 .overview-balance-spendable-locked {
   font-size: 17px;
   color: var(--input-color-default);
   font-family: @font-family-monospaced;
-  line-height: 1;
+  line-height: 18px;
+  padding-left: 10px;
+  margin-right: 2px;
+  background-repeat: no-repeat;
+  background-position: 0 50%;
+  background-size: 7px;
+
+  &.active {
+    background-image: @legend-active;
+  }
+  
+  &.voted {
+    background-image: @legend-voted;
+  }
+  
+  &.received {
+    background-image: @legend-received;
+  }
+
+  &.sent {
+    background-image: @legend-sent;
+  }
+
+  &.available {
+    background-image: @legend-available;
+  }
+
+  &.locked {
+    background-image: @legend-locked;
+  }
+}
+
+.overview-balance-spendable-locked-top-label {
+  font-size: 11px;
+  color: var(--input-color-default);
 }
 
 .overview-balance-spendable-locked-unit {
@@ -75,11 +121,25 @@
   line-height: 1;
 }
 
-.overview-balance-spendable-locked-label {
-  margin-bottom: 14px;
+.overview-balance-spendable-locked-text {
   font-size: 11px;
   color: var(--stroke-color-hovered);
   font-family: @font-family-regular;
+  line-height: 13px;
+  padding-top: 3px;
+  margin-left: 10px;
+  &.back {
+    margin-left: 2px;
+  }
+}
+
+.overview-balance-spendable-locked-label {
+  font-size: 11px;
+  color: var(--stroke-color-hovered);
+  font-family: @font-family-regular;
+  line-height: 13px;
+  margin-left: 10px;
+  margin-top: 4px;
 }
 
 .recent-transactions {
