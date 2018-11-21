@@ -12,6 +12,7 @@ import { setupProxy } from "./main_dev/proxy";
 import { cleanShutdown, GetDcrdPID, GetDcrwPID } from "./main_dev/launch";
 import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopDaemon, stopWallet, startWallet, checkDaemon, deleteDaemon, setWatchingOnlyWallet, getWatchingOnlyWallet, getDaemonInfo } from "./main_dev/ipc";
 import { initTemplate, getVersionWin, setGrpcVersions, getGrpcVersions, inputMenu, selectionMenu } from "./main_dev/templates";
+import { readFileBackward } from "./helpers/byteActions";
 
 // setPath as decrediton
 app.setPath("userData", appDataDirectory());
@@ -196,19 +197,12 @@ ipcMain.on("get-dcrwallet-logs", (event) => {
 
 ipcMain.on("get-decrediton-logs", (event) => {
   const logFileName = logger.transports.file.dirname + "/" +logger.transports.file.filename;
-  fs.readFile(logFileName, (err, data) => {
-    if(err) {
+  readFileBackward(logFileName, MAX_LOG_LENGTH, (err, data) => {
+    if (err) {
       logger.log("error", "Error reading log: "+ err );
       return event.returnValue = null;
     }
-
-    let result;
-    if (data.length > MAX_LOG_LENGTH) {
-      result = data.slice(data.length - MAX_LOG_LENGTH);
-    } else {
-      result = data;
-    }
-    event.returnValue = result.toString("utf8");
+    event.returnValue = data.toString("utf8");
   });
 });
 
