@@ -13,6 +13,10 @@ const Logs = ({
   isDaemonRemote,
   isDaemonStarted,
   walletReady,
+  decreditonLogs,
+  showDecreditonLogs,
+  onShowDecreditonLogs,
+  onHideDecreditonLogs,
 }
 ) => (
   <Aux>
@@ -46,6 +50,21 @@ const Logs = ({
         </div>
         <div className="log-area-logs">
           <textarea rows="30" value={dcrwalletLogs} disabled />
+        </div>
+      </div>
+    }
+    {!showDecreditonLogs ?
+      <div className="log-area hidden">
+        <div className="log-area-title hidden" onClick={onShowDecreditonLogs}>
+          <T id="help.logs.decrediton" m="decrediton" />
+        </div>
+      </div>:
+      <div className="log-area expanded">
+        <div className="log-area-title expanded" onClick={onHideDecreditonLogs}>
+          <T id="help.logs.decrediton" m="decrediton" />
+        </div>
+        <div className="log-area-logs">
+          <textarea rows="30" value={decreditonLogs} disabled />
         </div>
       </div>
     }
