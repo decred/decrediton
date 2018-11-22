@@ -13,19 +13,23 @@ const HomePage = ({
   return (
     <div className="overview-content-wrapper">
       <div className="overview-spendable-locked-wrapper">
-        <Balance
-          classNameWrapper="overview-balance-spendable-locked"
-          classNameUnit="overview-balance-spendable-locked-unit"
-          amount={spendableTotalBalance} />
-        <div className="overview-balance-spendable-locked-label">
-          <T id="home.currentTotalSpendableBalanceLabel" m="Available" />
+        <div className="overview-spendable-locked-wrapper-area">
+          <Balance
+            classNameWrapper="overview-balance-spendable-locked available"
+            classNameUnit="overview-balance-spendable-locked-unit"
+            amount={spendableTotalBalance} />
+          <div className="overview-balance-spendable-locked-label">
+            <T id="home.currentTotalSpendableBalanceLabel" m="Available" />
+          </div>
         </div>
-        <Balance
-          classNameWrapper="overview-balance-spendable-locked"
-          classNameUnit="overview-balance-spendable-locked-unit"
-          amount={lockedTotalBalance} />
-        <div className="overview-balance-spendable-locked-label">
-          <T id="home.currentTotalLockedBalanceLabel" m="Locked" />
+        <div className="overview-spendable-locked-wrapper-area">
+          <Balance
+            classNameWrapper="overview-balance-spendable-locked locked"
+            classNameUnit="overview-balance-spendable-locked-unit"
+            amount={lockedTotalBalance} />
+          <div className="overview-balance-spendable-locked-label">
+            <T id="home.currentTotalLockedBalanceLabel" m="Locked" />
+          </div>
         </div>
       </div>
       <div className="overview-chart-wrapper">

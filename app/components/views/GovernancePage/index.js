@@ -21,7 +21,7 @@ const TabHeader = treasuryInfo(({ treasuryBalance }) =>
     { treasuryBalance && <DescriptionHeader
       description={
         <T id="governance.treasury_balance" m="Available Treasury Balance: {treasuryBalance}"
-          values={{ treasuryBalance: <Balance amount={treasuryBalance} classNameWrapper="header-small-balance"/> }} />
+          values={{ treasuryBalance: <Balance flat amount={treasuryBalance} classNameWrapper="header-small-balance"/> }} />
       }
     />}
   </Aux>
