@@ -7,7 +7,7 @@ const Header = ({
   account,
   hidden
 }) => (
-  <div className={"account-row-details-top" + (hidden ? " account-hidden" : "")} >
+  <div className={"account-row-details-top" + (hidden ? " account-hidden" : "") + (account.accountName == "imported" ? " imported" : "")} >
     <div className="account-row-top-account-name">{account.accountName}{
       hidden
         ? <span> (hidden)</span>
