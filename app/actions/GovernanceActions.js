@@ -67,19 +67,17 @@ const getProposalVoteResults = async (proposal, piURL, walletService) => {
     proposal.voteCounts[opt.id] = 0;
   });
 
+  const propVotes = await pi.getProposalVotes(piURL, proposal.token);
 
-  const voteResults = await pi.getVoteResults(piURL, proposal.token);
-
-  const eligibleTickets = voteResults && voteResults.data && voteResults.data.startvotereply
-    ? await getWalletCommittedTickets(voteResults.data.startvotereply.eligibletickets, walletService)
+  const eligibleTickets = propVotes && propVotes.data && propVotes.data.startvotereply
+    ? await getWalletCommittedTickets(propVotes.data.startvotereply.eligibletickets, walletService)
     : [];
   proposal.eligibleTickets = eligibleTickets;
   proposal.hasEligibleTickets = eligibleTickets.length > 0;
 
   const myTickets = proposal.eligibleTickets.reduce( (m, t) => { m[t.ticket] = true; return m; }, {});
 
-
-  voteResults.data.castvotes.forEach(vote => {
+  propVotes.data.castvotes.forEach(vote => {
     const choiceID = voteBitToChoice[parseInt(vote.votebit)];
     if (!choiceID) { throw "ERRRRR: choiceID not found on vote", vote; }
     // proposal.voteCounts.abstain -= 1; // TODO: support abstain
@@ -91,16 +89,18 @@ const getProposalVoteResults = async (proposal, piURL, walletService) => {
 
   proposal.quorumPass = false;
   proposal.voteResult = "declined";
-  const voteResult = await pi.getVoteResult(piURL, proposal.token);
+  const propVoteStatus = await pi.getProposalVoteStatus(piURL, proposal.token);
 
-  const quorum = voteResult.data.quorumpercentage ? voteResult.data.quorumpercentage : 20;
-  const totalVotes = voteResult.data.totalvotes;
-  const eligibleVotes = voteResult.data.numofeligiblevotes;
+  console.log("propVotes", propVotes, "propVoteStatus", propVoteStatus);
+
+  const quorum = propVoteStatus.data.quorumpercentage ? propVoteStatus.data.quorumpercentage : 20;
+  const totalVotes = propVoteStatus.data.totalvotes;
+  const eligibleVotes = propVoteStatus.data.numofeligiblevotes;
   if (totalVotes / eligibleVotes > quorum / 100) {
     proposal.quorumPass = true;
   }
 
-  const passPercentage = voteResult.data.passPercentage ? voteResult.data.passPercentage : 60;
+  const passPercentage = propVoteStatus.data.passPercentage ? propVoteStatus.data.passPercentage : 60;
   if (proposal.voteCounts["yes"] / totalVotes > passPercentage / 100) {
     proposal.voteResult = "passed";
   }
@@ -115,8 +115,12 @@ export const getVettedProposals = () => async (dispatch, getState) => {
   const piURL = sel.politeiaURL(getState());
 
   try {
+    console.log(new Date(), "starting remote calls");
+
     const [ vetted, votesStatus, activeVotes ] = await Promise.all(
-      [ pi.getVetted(piURL), pi.getVoteStatus(piURL), pi.getActiveVotes(piURL) ]);
+      [ pi.getVetted(piURL), pi.getVotesStatus(piURL), pi.getActiveVotes(piURL) ]);
+
+    console.log(new Date(), "got all remote calls");
 
     // helpers
     const chainParams = sel.chainParams(getState());
@@ -182,6 +186,8 @@ export const getVettedProposals = () => async (dispatch, getState) => {
 
       byToken[p.token] = p;
     });
+
+    console.log(new Date(), "done with processing");
 
     dispatch({ proposals: byToken, preVote, activeVote, voted, type: GETVETTED_SUCCESS });
   } catch (error) {
