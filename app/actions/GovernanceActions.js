@@ -58,14 +58,13 @@ const getWalletCommittedTickets = async (eligibleTickets, walletService) => {
 
 // Aux function to fill the vote result information on a given proposal.
 const getProposalVoteResults = async (proposal, piURL, walletService) => {
-  proposal.voteCounts = {};
   proposal.currentVoteChoice = "abstain";
 
-  const voteBitToChoice = {}; // aux map from bit to vote choice id
-  proposal.voteOptions.forEach(opt => {
-    voteBitToChoice[opt.bits] = opt.id;
-    proposal.voteCounts[opt.id] = 0;
-  });
+  // aux map from bit to vote choice id
+  const voteBitToChoice = proposal.voteOptions.reduce((m, o) => {
+    m[o.bits] = o.id;
+    return m;
+  }, {});
 
   const propVotes = await pi.getProposalVotes(piURL, proposal.token);
 
@@ -77,13 +76,15 @@ const getProposalVoteResults = async (proposal, piURL, walletService) => {
 
   const myTickets = proposal.eligibleTickets.reduce( (m, t) => { m[t.ticket] = true; return m; }, {});
 
-  propVotes.data.castvotes.forEach(vote => {
+  // Find out if this wallet has voted in this prop and what was the choice.
+  // This assumes the wallet will cast all available votes the same way.
+  propVotes.data.castvotes.some(vote => {
     const choiceID = voteBitToChoice[parseInt(vote.votebit)];
     if (!choiceID) { throw "ERRRRR: choiceID not found on vote", vote; }
     // proposal.voteCounts.abstain -= 1; // TODO: support abstain
-    proposal.voteCounts[choiceID] += 1;
     if (myTickets[vote.ticket]) {
       proposal.currentVoteChoice = choiceID;
+      return true;
     }
   });
 
@@ -91,7 +92,11 @@ const getProposalVoteResults = async (proposal, piURL, walletService) => {
   proposal.voteResult = "declined";
   const propVoteStatus = await pi.getProposalVoteStatus(piURL, proposal.token);
 
-  console.log("propVotes", propVotes, "propVoteStatus", propVoteStatus);
+  const hasOptionsResult = propVoteStatus && propVoteStatus.data && propVoteStatus.data.optionsresult;
+  proposal.voteCounts = hasOptionsResult ? propVoteStatus.data.optionsresult.reduce((counts, opt) => {
+    counts[opt.option.id] = opt.votesreceived;
+    return counts;
+  }, {}) : {};
 
   const quorum = propVoteStatus.data.quorumpercentage ? propVoteStatus.data.quorumpercentage : 20;
   const totalVotes = propVoteStatus.data.totalvotes;
