@@ -4,13 +4,28 @@ import { VotingProgress } from "indicators";
 import { PoliteiaLoading, NoProposals } from "indicators";
 import { VOTESTATUS_ACTIVEVOTE, VOTESTATUS_VOTED } from "actions/GovernanceActions";
 
+const VoteChoiceText = ({ currentVoteChoice }) => {
+  if (!currentVoteChoice) {
+    return <div>&nbsp;</div>;
+  }
+
+  let voteChoiceString =
+    (currentVoteChoice !== "abstain")
+      ? (<><T id="proposal.voted" m="Voted"/> {currentVoteChoice}</>)
+      : <T id="proposal.noVote" m="No vote cast"/>;
+
+  return <>
+    <div className={"proposal-vote-choice " + currentVoteChoice}/>
+    <div className="proposal-vote-choice-text">{voteChoiceString}</div>
+  </>;
+};
+
 const VoteChoice = ({ currentVoteChoice }) =>
   <div className={"proposal-vote-choice " + currentVoteChoice}/>;
 const VoteResults = ({ currentVoteChoice, quorumPass, voteResult }) => (
   <div className="proposal-vote-result">
     <div className="proposal-vote-choice-area">
-      <div className={"proposal-vote-choice " + currentVoteChoice}/>
-      <div className="proposal-vote-choice-text">{currentVoteChoice !== "abstain" ? <Aux><T id="proposal.voted" m="Voted"/> {currentVoteChoice}</Aux> : <T id="proposal.noVote" m="No vote cast"/>}</div>
+      <VoteChoiceText currentVoteChoice={currentVoteChoice}/>
     </div>
     <div className="proposal-vote-passage">{quorumPass ? voteResult : <T id="proposals.quorumNotMet" m="Quorum not met"/>}</div>
   </div>
