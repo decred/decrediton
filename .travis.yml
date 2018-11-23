@@ -1,5 +1,9 @@
 sudo: required
 
+os:
+  - linux
+  - osx
+
 language: node_js
 node_js:
 - 10.13.0
@@ -18,4 +22,5 @@ script:
   - yarn test || travis_terminate 1
   - yarn build || travis_terminate 1
   - yarn i18n-check-dupes || travis_terminate 1
-  - travis_wait yarn package-dev-linux
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then travis_wait yarn package-dev-linux; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then travis_wait yarn package-mac; fi
