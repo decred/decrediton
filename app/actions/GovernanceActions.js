@@ -147,6 +147,7 @@ export const GETVETTED_UPDATEDVOTERESULTS_FAILED = "GETVETTED_UPDATEDVOTERESULTS
 export const getVettedProposals = () => async (dispatch, getState) => {
   dispatch({ type: GETVETTED_ATTEMPT });
   const piURL = sel.politeiaURL(getState());
+  const oldProposals = sel.proposalsDetails(getState());
 
   // resulting data
   let proposals = [], preVote = [], activeVote = [], voted = [], byToken = {};
@@ -177,8 +178,11 @@ export const getVettedProposals = () => async (dispatch, getState) => {
       const voteData = parseOptionsResult(voteStatus.optionsresult);
       const voteInfo = activeVotesByToken[p.censorshiprecord.token];
       const voteDetails = parseVoteInfo(voteInfo, blockTimestampFromNow);
+      const oldProposal = oldProposals[p.censorshiprecord.token];
 
-      var proposal = {
+      const proposal = {
+        hasDetails: false,
+        ...oldProposal,
         creator: p.username,
         name: p.name,
         version: p.version,
@@ -187,7 +191,6 @@ export const getVettedProposals = () => async (dispatch, getState) => {
         timestamp: p.timestamp,
         voteStatus: voteStatus.status,
         totalVotes: voteStatus.totalvotes,
-        hasDetails: false,
         files: [],
         voteMask: voteInfo ? voteInfo.startvote.vote.mask : 0,
         hasEligibleTickets: 0,
@@ -312,7 +315,7 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
 };
 
 export const viewProposalDetails = (token) => (dispatch, getState) => {
-  const details = sel.proposalDetails(getState());
+  const details = sel.proposalsDetails(getState());
   if (!details[token] || !details[token].hasDetails) {
     dispatch(getProposalDetails(token));
   }
