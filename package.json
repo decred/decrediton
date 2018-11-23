@@ -57,6 +57,7 @@
   "build": {
     "appId": "com.Electron.Decrediton",
     "dmg": {
+      "publish": "never",
       "contents": [
         {
           "x": 130,
