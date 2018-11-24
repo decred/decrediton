@@ -55,7 +55,7 @@ class Snackbar extends React.Component {
     }
 
     const messagesByKey = keyBy(this.state.messages, "key");
-    const messages = this.newMessages(this.props.messages, messagesByKey)
+    const messages = this.newMessages(this.props.messages, messagesByKey);
     this.setState({ messages });
   }
 
