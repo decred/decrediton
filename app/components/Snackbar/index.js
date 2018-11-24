@@ -5,6 +5,7 @@ import ReactTimeout from "react-timeout";
 import EventListener from "react-event-listener";
 import Notification from "./Notification";
 import theme from "theme";
+import memoize from "memoize-one";
 import { eventOutsideComponent } from "helpers";
 import { spring, TransitionMotion } from "react-motion";
 import { TRANSACTION_DIR_SENT, TRANSACTION_DIR_RECEIVED,
@@ -40,14 +41,22 @@ class Snackbar extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.messages.length > 0) {
+  newMessages = memoize(
+    (messages, messagesByKey) =>
+      messages.map(m => messagesByKey[m.key] ? messagesByKey[m.key] : m)
+  );
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.messages === this.props.messages) {
+      return;
+    }
+    if (this.props.messages.length > 0) {
       this.enableHideTimer();
     }
 
     const messagesByKey = keyBy(this.state.messages, "key");
-    const newMessages = nextProps.messages.map(m => messagesByKey[m.key] ? messagesByKey[m.key] : m);
-    this.setState({ messages: newMessages });
+    const messages = this.newMessages(this.props.messages, messagesByKey)
+    this.setState({ messages });
   }
 
   enableHideTimer() {
