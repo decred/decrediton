@@ -13,9 +13,10 @@ import { getTransactions as walletGetTransactions } from "wallet/service";
 import { TransactionDetails } from "middleware/walletrpc/api_pb";
 import { clipboard } from "electron";
 import { getStartupStats } from "./StatisticsActions";
+import { getVettedProposals } from "./GovernanceActions";
 import { rawHashToHex } from "../helpers/byteActions";
 import * as da from "../middleware/dcrdataapi";
-import { EXTERNALREQUEST_DCRDATA } from "main_dev/externalRequests";
+import { EXTERNALREQUEST_DCRDATA, EXTERNALREQUEST_POLITEIA } from "main_dev/externalRequests";
 
 export const goToTransactionHistory = () => (dispatch) => {
   dispatch(pushHistory("/transactions/history"));
@@ -89,6 +90,8 @@ export const getStartupWalletInfo = () => (dispatch) => {
   dispatch({ type: GETSTARTUPWALLETINFO_ATTEMPT });
   const config = getGlobalCfg();
   const dcrdataEnabled = config.get("allowed_external_requests").indexOf(EXTERNALREQUEST_DCRDATA) > -1;
+  const politeiaEnabled = config.get("allowed_external_requests").indexOf(EXTERNALREQUEST_POLITEIA) > -1;
+
   return new Promise((resolve, reject) => {
     setTimeout( async () => {
       try {
@@ -104,6 +107,9 @@ export const getStartupWalletInfo = () => (dispatch) => {
         await dispatch(getStartupStats());
         if (dcrdataEnabled) {
           dispatch(getTreasuryBalance());
+        }
+        if (politeiaEnabled) {
+          dispatch(getVettedProposals());
         }
         dispatch({ type: GETSTARTUPWALLETINFO_SUCCESS });
         resolve();
