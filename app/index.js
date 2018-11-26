@@ -393,15 +393,11 @@ const store = configureStore(initialState, history);
 
 render(
   <Provider store={store}>
-    <Aux>
-      <ConnectedRouter history={history}>
-        <Switch>
-          <Route path="/" component={App} />
-        </Switch>
-      </ConnectedRouter>
-      <div>
-      </div>
-    </Aux>
+    <ConnectedRouter history={history}>
+      <Switch>
+        <Route path="/" component={App} />
+      </Switch>
+    </ConnectedRouter>
   </Provider>,
   document.getElementById("root")
 );
