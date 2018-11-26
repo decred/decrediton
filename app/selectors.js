@@ -1,5 +1,5 @@
 import {
-  compose, reduce, filter, get, not, or, and, eq, find, bool, map, apply,
+  compose, reduce, filter, get, not, or, and, eq, find, bool, map, apply, some,
   createSelectorEager as createSelector
 } from "./fp";
 import { appLocaleFromElectronLocale } from "./i18n/locales";
@@ -947,6 +947,15 @@ export const getVettedProposalsAttempt = get([ "governance", "getVettedAttempt" 
 export const preVoteProposals = get([ "governance", "preVote" ]);
 export const votedProposals = get([ "governance", "voted" ]);
 export const lastVettedFetchTime = get([ "governance", "lastVettedFetchTime" ]);
+export const newActiveVoteProposalsCount = compose(
+  reduce((acc, p) => acc + p.modifiedSinceLastAccess ? 1 : 0, 0),
+  activeVoteProposals
+);
+export const newPreVoteProposalsCount = compose(
+  reduce((acc, p) => acc + p.modifiedSinceLastAccess ? 1 : 0, 0),
+  preVoteProposals
+);
+export const newProposalsStartedVoting = compose(some(p => p.votingSinceLastAccess), activeVoteProposals);
 
 export const getProposalAttempt = get([ "governance", "getProposalAttempt" ]);
 export const getProposalError = get([ "governance", "getProposalError" ]);
