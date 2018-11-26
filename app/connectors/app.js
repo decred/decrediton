@@ -19,7 +19,8 @@ const mapStateToProps = selectorMap({
 const mapDispatchToProps = dispatch => bindActionCreators({
   shutdownApp: da.shutdownApp,
   listenForAppReloadRequest: cla.listenForAppReloadRequest,
-  toggleAboutModalVisibility: ca.toggleAboutModalVisibility
+  showAboutModalMacOS: ca.showAboutModalMacOS,
+  hideAboutModalMacOS: ca.hideAboutModalMacOS
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

@@ -46,7 +46,7 @@ class App extends React.Component {
     log("info", "Main app container mounted");
 
     ipcRenderer.on("show-about-modal", () => {
-      this.props.toggleAboutModalVisibility();
+      this.props.showAboutModalMacOS();
     });
   }
 
@@ -114,7 +114,7 @@ class App extends React.Component {
 
           <div id="modal-portal" />
           <div id="modal-portal-macos" >
-            <AboutModal show={aboutModalMacOSVisible} onCancelModal={this.props.toggleAboutModalVisibility}></AboutModal>
+            <AboutModal show={aboutModalMacOSVisible} onCancelModal={this.props.hideAboutModalMacOS}></AboutModal>
           </div>
 
         </div>

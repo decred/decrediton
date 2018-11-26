@@ -492,7 +492,10 @@ export const modalShown = () => (dispatch) => dispatch({ type: MODAL_SHOWN });
 export const modalHidden = () => (dispatch) => dispatch({ type: MODAL_HIDDEN });
 
 export const SHOW_ABOUT_MODAL_MACOS = "SHOW_ABOUT_MODAL_MACOS";
-export const toggleAboutModalVisibility = () => (dispatch) => dispatch({ type: SHOW_ABOUT_MODAL_MACOS });
+export const showAboutModalMacOS = () => (dispatch) => dispatch({ type: SHOW_ABOUT_MODAL_MACOS });
+
+export const HIDE_ABOUT_MODAL_MACOS = "HIDE_ABOUT_MODAL_MACOS";
+export const hideAboutModalMacOS = () => (dispatch) => dispatch({ type: HIDE_ABOUT_MODAL_MACOS });
 
 export const GETACCOUNTEXTENDEDKEY_ATTEMPT = "GETACCOUNTEXTENDEDKEY_ATTEMPT";
 export const GETACCOUNTEXTENDEDKEY_FAILED = "GETACCOUNTEXTENDEDKEY_FAILED";
