@@ -1,6 +1,7 @@
 import * as sel from "selectors";
 import * as pi from "middleware/politeiaapi";
 import * as wallet from "wallet";
+import { replace } from "fp";
 import { getWalletCfg } from "../config";
 import { push as pushHistory } from "react-router-redux";
 import { hexReversedHashToArray, reverseRawHash } from "helpers";
@@ -135,6 +136,7 @@ export const getVettedProposals = () => async (dispatch, getState) => {
   const piURL = sel.politeiaURL(getState());
   const oldProposals = sel.proposalsDetails(getState());
   const currentBlockHeight = sel.currentBlockHeight(getState());
+  const chainParams = sel.chainParams(getState());
 
   const cfg = getWalletCfg(sel.isTestNet(getState()), sel.getWalletName(getState()));
   const lastAccessTime = cfg.get("politeia_last_access_time") || 0;
@@ -223,7 +225,7 @@ export const getVettedProposals = () => async (dispatch, getState) => {
       switch (p.voteStatus) {
       case VOTESTATUS_ACTIVEVOTE:
         var startVoteBh = p.startBlockHeight || 0;
-        p.votingSinceLastAccess = startVoteBh > lastAccessBlock;
+        p.votingSinceLastAccess = startVoteBh >= (lastAccessBlock - chainParams.TicketMaturity);
         activeVote.push(p);
         break;
 
@@ -245,15 +247,15 @@ export const getVettedProposals = () => async (dispatch, getState) => {
     return;
   }
 
-  // cfg.set("politeia_last_access_time", (new Date()).getTime());
-  // cfg.set("politeia_last_access_block", currentBlockHeight);
+  cfg.set("politeia_last_access_time", (new Date()).getTime());
+  cfg.set("politeia_last_access_block", currentBlockHeight);
 };
 
 export const GETPROPOSAL_ATTEMPT = "GETPROPOSAL_ATTEMPT";
 export const GETPROPOSAL_FAILED = "GETPROPOSAL_FAILED";
 export const GETPROPOSAL_SUCCESS = "GETPROPOSAL_SUCCESS";
 
-export const getProposalDetails = (token) => async (dispatch, getState) => {
+export const getProposalDetails = (token, markViewed) => async (dispatch, getState) => {
 
   const decodeFilePayload = (f) => {
     switch (f.mime) {
@@ -299,11 +301,21 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
       eligibleTickets: []
     };
 
+    if (markViewed) {
+      proposal.modifiedSinceLastAccess = false;
+      proposal.votingSinceLastAccess = false;
+    }
+
     if ([ VOTESTATUS_VOTED, VOTESTATUS_ACTIVEVOTE ].includes(proposal.voteStatus)) {
       await getProposalVoteResults(proposal, piURL, walletService, blockTimestampFromNow);
     }
 
-    dispatch({ token, proposal, type: GETPROPOSAL_SUCCESS });
+    let { preVote, activeVote, voted } = getState().governance;
+    preVote = replace(preVote, p => p.token === token, proposal);
+    activeVote = replace(activeVote, p => p.token === token, proposal);
+    voted = replace(voted, p => p.token === token, proposal);
+
+    dispatch({ token, proposal, preVote, activeVote, voted, type: GETPROPOSAL_SUCCESS });
   } catch (error) {
     dispatch({ error, type: GETPROPOSAL_FAILED });
     throw error;
@@ -313,7 +325,7 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
 export const viewProposalDetails = (token) => (dispatch, getState) => {
   const details = sel.proposalsDetails(getState());
   if (!details[token] || !details[token].hasDetails) {
-    dispatch(getProposalDetails(token));
+    dispatch(getProposalDetails(token, true));
   }
   dispatch(pushHistory("/governance/proposals/details/" + token));
 };

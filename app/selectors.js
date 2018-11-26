@@ -962,11 +962,11 @@ export const preVoteProposals = get([ "governance", "preVote" ]);
 export const votedProposals = get([ "governance", "voted" ]);
 export const lastVettedFetchTime = get([ "governance", "lastVettedFetchTime" ]);
 export const newActiveVoteProposalsCount = compose(
-  reduce((acc, p) => acc + p.modifiedSinceLastAccess ? 1 : 0, 0),
+  reduce((acc, p) => p.votingSinceLastAccess ? acc + 1 : acc, 0),
   activeVoteProposals
 );
 export const newPreVoteProposalsCount = compose(
-  reduce((acc, p) => acc + p.modifiedSinceLastAccess ? 1 : 0, 0),
+  reduce((acc, p) => p.modifiedSinceLastAccess ? acc + 1 : acc, 0),
   preVoteProposals
 );
 export const newProposalsStartedVoting = compose(some(p => p.votingSinceLastAccess), activeVoteProposals);
