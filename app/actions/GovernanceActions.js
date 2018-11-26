@@ -162,8 +162,6 @@ export const getVettedProposals = () => async (dispatch, getState) => {
     for (let p of vetted.data.proposals) {
       const voteStatus = statusByToken[p.censorshiprecord.token] || defaultVoteStatus;
       const voteData = parseOptionsResult(voteStatus.optionsresult);
-      // const voteInfo = activeVotesByToken[p.censorshiprecord.token];
-      // const voteDetails = parseVoteInfo(voteInfo, blockTimestampFromNow);
       const oldProposal = oldProposals[p.censorshiprecord.token];
 
       const proposal = {
