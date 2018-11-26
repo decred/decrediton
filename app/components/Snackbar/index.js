@@ -5,7 +5,6 @@ import ReactTimeout from "react-timeout";
 import EventListener from "react-event-listener";
 import Notification from "./Notification";
 import theme from "theme";
-import memoize from "memoize-one";
 import { eventOutsideComponent } from "helpers";
 import { spring, TransitionMotion } from "react-motion";
 import { TRANSACTION_DIR_SENT, TRANSACTION_DIR_RECEIVED,
@@ -41,11 +40,6 @@ class Snackbar extends React.Component {
     };
   }
 
-  newMessages = memoize(
-    (messages, messagesByKey) =>
-      messages.map(m => messagesByKey[m.key] ? messagesByKey[m.key] : m)
-  );
-
   componentDidUpdate(prevProps) {
     if (prevProps.messages === this.props.messages) {
       return;
@@ -55,7 +49,7 @@ class Snackbar extends React.Component {
     }
 
     const messagesByKey = keyBy(this.state.messages, "key");
-    const messages = this.newMessages(this.props.messages, messagesByKey);
+    const messages = this.props.messages.map(m => messagesByKey[m.key] ? messagesByKey[m.key] : m);
     this.setState({ messages });
   }
 
