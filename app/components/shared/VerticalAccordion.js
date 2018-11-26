@@ -1,33 +1,42 @@
 import TransitionMotionWrapper from "./TransitionMotionWrapper";
 import { spring } from "react-motion";
 
-/**
- * A vertical accordion. Can be used in two modes:
- *
- * 1. Standalone: Provide header, height, and children props to render. It will
- *    be expanded/contracted when the header is clicked.
- *
- * 2. Group: Provide the previous props + groupKey, activeGroupKey and
- *    onToggleAccordion. Then the accordion will be expanded only when
- *    activeGroupKey === groupKey. onToggleAccordion will be triggered once the
- *    accordion header is clicked.
- */
 @autobind
 class VerticalAccordion extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      show: false,
       shownStyles: this.chosenStyles(props, false),
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    if ((this.props.groupKey !== undefined) && this.props.onToggleAccordion) {
-      const show = nextProps.groupKey === nextProps.activeGroupKey;
-      this.setState({ shownStyles: this.chosenStyles(nextProps, show), show });
-    } else {
-      this.setState({ shownStyles: this.chosenStyles(nextProps, this.state.show) });
+  componentDidUpdate(prevProps) {
+    let oldChildren, newChildren, newKeys;
+    let needUpdate = false;
+    if(prevProps.children) {
+      oldChildren = prevProps.children;
+    }
+    if (this.props.children) {
+      newChildren = this.props.children;
+      newKeys = Object.keys(newChildren.props);
+    }
+    if (oldChildren && newChildren) {
+      newKeys.forEach( key => {
+        if (typeof(newChildren.props[key]) !== "object" &&
+            typeof(newChildren.props[key]) !== "function") {
+          if (oldChildren.props[key] !== newChildren.props[key]) {
+            needUpdate = true;
+            return;
+          }
+        }
+      });
+    }
+
+    if (prevProps.show !== this.props.show || needUpdate) {
+      this.setState({
+        shownStyles: this.chosenStyles(this.props, this.props.show),
+      });
+      this.chosenStyles(this.props, this.props.show);
     }
   }
 
@@ -77,20 +86,13 @@ class VerticalAccordion extends React.Component {
   }
 
   onToggleAccordion() {
-    if ((this.props.groupKey !== undefined) && this.props.onToggleAccordion) {
-      this.props.onToggleAccordion(this.props.groupKey, this.state.show);
-    } else {
-      this.setState({
-        show: !this.state.show,
-        shownStyles: this.chosenStyles(this.props, !this.state.show),
-      });
-    }
+    this.props.onToggleAccordion && this.props.onToggleAccordion();
   }
 
   render() {
     const classNames = [
       "vertical-accordion",
-      this.state.show ? "active" : "",
+      this.props.show ? "active" : "",
       this.props.className || "",
     ].join(" ");
 

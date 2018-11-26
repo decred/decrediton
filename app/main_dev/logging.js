@@ -1,7 +1,7 @@
-import { app } from "electron";
 import winston from "winston";
 import path from "path";
 import { MAX_LOG_LENGTH } from "./constants";
+import { appDataDirectory } from "./paths";
 import os from "os";
 
 let dcrdLogs = Buffer.from("");
@@ -65,7 +65,7 @@ export function createLogger(debug) {
     transports: [
       new (winston.transports.File)({
         json: false,
-        filename: path.join(app.getPath("userData"), "decrediton.log"),
+        filename: path.join(appDataDirectory(), "decrediton.log"),
         timestamp: logTimestamp,
         formatter: logFormatter,
       })

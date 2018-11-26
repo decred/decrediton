@@ -3,15 +3,15 @@
 
 .header-small-balance {
   display: inline;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 600;
-  line-height: 20px;
-  padding: 0px 5px;
+  line-height: 14px;
+  padding: 3px;
   color: var(--input-color-default);
   background-color: var(--blue-highlight-background);
   margin-left: 5px;
   margin-right: 5px;
-  border-radius: 5px;
+  border-radius: 3px;
 }
 
 .header-get-started {
@@ -63,14 +63,13 @@
   background-size: 30px;
   background-repeat: no-repeat;
 
-  &.accounts { background-image: @accounts-page-icon; }
-  &.help { background-image: @help-page-icon; }
-  &.history { background-image: @wallet-gray-icon; }
-  &.security { background-image: @security-center-icon; }
-  &.settings { background-image: @settings-page-icon; }
-  &.tickets { background-image: @tickets-page-icon; }
-  &.transactions { background-image: @transactions-page-icon; }
-  &.governance { background-image: @menu-governance-active; }
+  &.accounts { background-image: @header-accounts; }
+  &.help { background-image: @header-help; }
+  &.security { background-image: @header-security; }
+  &.settings { background-image: @header-settings; }
+  &.tickets { background-image: @header-tickets; }
+  &.transactions { background-image: @header-transactions; }
+  &.governance { background-image: @header-governance; }
 
   &.tx-detail-icon-ticket { background-image: @ticket-live-icon; }
   &.tx-detail-icon-vote { background-image: @ticket-voted-icon; }

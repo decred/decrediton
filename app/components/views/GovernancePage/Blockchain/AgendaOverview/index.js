@@ -10,9 +10,9 @@ class AgendaOverview extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.selectedChoice != nextProps.selectedChoice) {
-      this.setState({ selectedChoiceId: nextProps.selectedChoice });
+  componentDidUpdate(prevProps) {
+    if (prevProps.selectedChoice != this.props.selectedChoice) {
+      this.setState({ selectedChoiceId: this.props.selectedChoice });
     }
   }
 

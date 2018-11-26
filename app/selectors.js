@@ -951,10 +951,13 @@ export const lastVettedFetchTime = get([ "governance", "lastVettedFetchTime" ]);
 
 export const getProposalAttempt = get([ "governance", "getProposalAttempt" ]);
 export const getProposalError = get([ "governance", "getProposalError" ]);
-export const proposalDetails = get([ "governance", "proposals" ]);
+export const proposalsDetails = get([ "governance", "proposals" ]);
 export const viewedProposalToken = (state, ctx) => ctx.match && ctx.match.params && ctx.match.params.token ? ctx.match.params.token : null;
 export const viewedProposalDetails = createSelector(
-  [ proposalDetails, viewedProposalToken ],
+  [ proposalsDetails, viewedProposalToken ],
   (proposals, token) => proposals[token]
 );
-
+export const initialProposalLoading = createSelector(
+  [ proposalsDetails, getVettedProposalsAttempt ],
+  ( proposals, getVettedAttempt ) => (Object.keys(proposals).length === 0) && getVettedAttempt
+);

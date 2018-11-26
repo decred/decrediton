@@ -34,14 +34,14 @@ class DcrInput extends React.Component {
     this.state = { value: this.amountToDisplayStr(props.amount) };
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (!nextProps.amount && !this.state.value) {
+  componentDidUpdate(prevProps) {
+    if (!this.props.amount && !this.state.value) {
       //ignore when emptying or setting to 0
       return;
     }
 
-    if (nextProps.amount !== this.props.amount) {
-      this.setState({ value: this.amountToDisplayStr(nextProps.amount) });
+    if (this.props.amount !== prevProps.amount) {
+      this.setState({ value: this.amountToDisplayStr(this.props.amount) });
     }
   }
 

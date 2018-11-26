@@ -22,13 +22,13 @@ class WalletSelectionBody extends React.Component {
       walletNameError: null,
     };
   }
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.availableWallets && this.props.availableWallets.length !== nextProps.availableWallets.length) {
-      this.setState({ selectedWallet: nextProps.availableWallets[0] });
+  componentDidUpdate(prevProps) {
+    if (this.props.availableWallets.length > 0 && prevProps.availableWallets.length !== this.props.availableWallets.length) {
+      this.setState({ selectedWallet: this.props.availableWallets[0] });
     } else {
-      for (var i = 0; i < this.props.availableWallets.length; i++) {
-        if (nextProps.availableWallets[i].label !== this.props.availableWallets[i].label) {
-          this.setState({ selectedWallet: nextProps.availableWallets[0] });
+      for (var i = 0; i < prevProps.availableWallets.length; i++) {
+        if (this.props.availableWallets[i].label !== prevProps.availableWallets[i].label) {
+          this.setState({ selectedWallet: this.props.availableWallets[0] });
         }
       }
     }

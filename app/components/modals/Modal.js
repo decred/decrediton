@@ -11,7 +11,7 @@ class Modal extends React.Component {
     super(props);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.modalShown();
   }
 

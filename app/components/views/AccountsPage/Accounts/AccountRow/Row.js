@@ -7,7 +7,7 @@ const Header = ({
   account,
   hidden
 }) => (
-  <div className={"account-row-details-top" + (hidden ? " account-hidden" : "")} >
+  <div className={"account-row-details-top" + (hidden ? " account-hidden" : "") + (account.accountName == "imported" ? " imported" : "")} >
     <div className="account-row-top-account-name">{account.accountName}{
       hidden
         ? <span> (hidden)</span>
@@ -28,18 +28,17 @@ const Header = ({
 const Row = ({
   account,
   hidden,
-  accountNumDetailsShown,
   isShowingRenameAccount,
   onToggleShowDetails,
   getAccountDetailsStyles,
   getRenameAccountStyles,
+  isShowingDetails,
 }) => (
   <VerticalAccordion
     header={<Header {...{ account, hidden }} />}
     height={isShowingRenameAccount ? 175 : 275}
-    groupKey={account.accountNumber}
-    activeGroupKey={accountNumDetailsShown}
     onToggleAccordion={onToggleShowDetails}
+    show={isShowingDetails}
     className={"account-row-details-bottom"}
   >
     {isShowingRenameAccount
