@@ -2,9 +2,9 @@
 import axios from "axios";
 
 // Uncomment this and comment the following definition to test locally.
-export const POLITEIA_URL_TESTNET = "https://localhost:4443";
+// export const POLITEIA_URL_TESTNET = "https://localhost:4443";
 
-// export const POLITEIA_URL_TESTNET = "https://test-proposals.decred.org/api";
+export const POLITEIA_URL_TESTNET = "https://test-proposals.decred.org/api";
 export const POLITEIA_URL_MAINNET = "https://proposals.decred.org/api";
 
 const CSRF_TOKEN_HEADER = "x-csrf-token"; // must always be lowercase
