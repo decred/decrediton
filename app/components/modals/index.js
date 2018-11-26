@@ -10,4 +10,3 @@ export { default as PassphraseModal } from "./PassphraseModal/PassphraseModal";
 export { default as ConfirmModal } from "./ConfirmModal";
 export { default as SeedCopyConfirmModal } from "./SeedCopyConfirmModal";
 export { default as AboutModal } from "./AboutModal/AboutModal";
-export { default as AboutModalMacOS } from "./AboutModal/AboutModalMacOS";

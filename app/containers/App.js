@@ -13,8 +13,8 @@ import { log } from "wallet";
 import "style/Themes.less";
 import "style/Layout.less";
 import { ipcRenderer } from "electron";
-import AboutModalMacOS from "../components/modals/AboutModal/AboutModalMacOS";
 const topLevelAnimation = { atEnter: { opacity: 0 }, atLeave: { opacity: 0 }, atActive: { opacity: 1 } };
+import AboutModal from "../components/modals/AboutModal/AboutModal";
 
 
 @autobind
@@ -114,7 +114,7 @@ class App extends React.Component {
 
           <div id="modal-portal" />
           <div id="modal-portal-macos" >
-            <AboutModalMacOS show={aboutModalMacOSVisible} onCancelModal={this.props.toggleAboutModalVisibility}></AboutModalMacOS>
+            <AboutModal show={aboutModalMacOSVisible} onCancelModal={this.props.toggleAboutModalVisibility}></AboutModal>
           </div>
 
         </div>
