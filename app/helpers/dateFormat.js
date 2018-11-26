@@ -71,3 +71,17 @@ export function diffBetweenTwoTs(date1, date2) {
   const secondDate = dateToLocal(date2);
   return Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
 }
+
+// isSameDate receives two dates and return true if they are the same
+// day/month/yeah, false otherwise.
+export function isSameDate(d1,d2) {
+  if (
+      (!d1) || (!d2) ||
+      (d1.getYear() !== d2.getYear()) ||
+      (d1.getMonth() !== d2.getMonth()) ||
+      (d1.getDate() !== d2.getDate())
+    ) {
+    return false;
+  }
+  return true;
+}
