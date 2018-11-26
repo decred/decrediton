@@ -55,7 +55,6 @@
     ]
   },
   "build": {
-    "publish": "null",
     "appId": "com.Electron.Decrediton",
     "dmg": {
       "contents": [
