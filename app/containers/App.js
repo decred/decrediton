@@ -93,7 +93,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { locale, aboutModalVisible } = this.props;
+    const { locale, theme, aboutModalVisible } = this.props;
     const MainSwitch = this.props.uiAnimations ? AnimatedSwitch : StaticSwitch;
 
     return (
@@ -103,7 +103,7 @@ class App extends React.Component {
         formats={locale.formats}
         defaultFormats={defaultFormats}
         key={locale.key}>
-        <Aux>
+        <div className={theme}>
           <Switch><Redirect from="/" exact to="/getstarted" /></Switch>
           <Snackbar/>
           <MainSwitch {...topLevelAnimation} className="top-level-container">
@@ -114,12 +114,11 @@ class App extends React.Component {
           </MainSwitch>
 
           <div id="modal-portal" />
-
           <div id="modal-portal-macos" >
             <AboutModalMacOS show={aboutModalVisible} onCancelModal={this.props.toggleAboutModalVisibility}></AboutModalMacOS>
           </div>
 
-        </Aux>
+        </div>
       </IntlProvider>
     );
   }
