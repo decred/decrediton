@@ -13,6 +13,7 @@ const mapStateToProps = selectorMap({
   daemonStopped: sel.daemonStopped,
   shutdownRequested: sel.shutdownRequested,
   aboutModalMacOSVisible: sel.aboutModalMacOSVisible,
+  modalVisible: sel.modalVisible,
   theme: sel.theme,
 });
 
