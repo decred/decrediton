@@ -401,7 +401,6 @@ render(
         </Switch>
       </ConnectedRouter>
       <div>
-        <AboutModal show={true} onCancelModal={() => {console.log("closed");}} version="1.2.3.4" updateAvailable={true} />
       </div>
     </Aux>
   </Provider>,
