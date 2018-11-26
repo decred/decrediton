@@ -1109,7 +1109,8 @@ export const getTreasuryBalance = () => (dispatch, getState) => {
   const dURL = sel.dcrdataURL(getState());
   da.getTreasuryInfo(dURL, treasuryAddress)
     .then(treasuryInfo => {
-      const treasuryBalance = treasuryInfo["data"]["dcr_unspent"] * 1e8;
+      // Manually convert DCR to atom amounts to avoid floating point multiplication errors (eg. 589926.57667882*1e8 => 58992657667881.99)
+      const treasuryBalance = parseInt(treasuryInfo["data"]["dcr_unspent"].toString().replace(".",""));
       dispatch({ treasuryBalance, type: GETTREASURY_BALANCE_SUCCESS });
     });
 };
