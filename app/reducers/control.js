@@ -29,7 +29,6 @@ import { WALLET_AUTOBUYER_SETTINGS } from "actions/DaemonActions";
 import {
   EXPORT_STARTED, EXPORT_COMPLETED, EXPORT_ERROR
 } from "actions/StatisticsActions";
-import {aboutModalMacOSVisible} from '../selectors';
 
 export default function control(state = {}, action) {
   switch (action.type) {
