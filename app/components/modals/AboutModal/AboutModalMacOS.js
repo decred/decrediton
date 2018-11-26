@@ -1,4 +1,4 @@
-import InlineModal from "../Modal";
+import InlineModal from "../InlineModal";
 import { shell } from "electron";
 import { FormattedMessage as T } from "react-intl";
 

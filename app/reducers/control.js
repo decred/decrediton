@@ -453,9 +453,9 @@ export default function control(state = {}, action) {
     return { ...state,
       modalVisible: false
     };
-  case TOGGLE_ABOUT_MODAL_VISIBILITY:
+  case SHOW_ABOUT_MODAL_MACOS:
     return { ...state,
-      aboutModalVisible: !state.aboutModalVisible
+      aboutModalMacOSVisible: true
     };
   case GETACCOUNTEXTENDEDKEY_ATTEMPT:
     return { ...state,
