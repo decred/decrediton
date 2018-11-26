@@ -10,11 +10,10 @@ import ShutdownAppPage from "components/views/ShutdownAppPage";
 import FatalErrorPage from "components/views/FatalErrorPage";
 import Snackbar from "components/Snackbar";
 import { log } from "wallet";
+import "style/Themes.less";
 import "style/Layout.less";
 import { ipcRenderer } from "electron";
-import AboutModal from "../components/modals/AboutModal/AboutModal";
 import AboutModalMacOS from "../components/modals/AboutModal/AboutModalMacOS";
-import * as ca from "actions/ControlActions";
 const topLevelAnimation = { atEnter: { opacity: 0 }, atLeave: { opacity: 0 }, atActive: { opacity: 1 } };
 
 
@@ -46,7 +45,7 @@ class App extends React.Component {
   componentDidMount() {
     log("info", "Main app container mounted");
 
-    ipcRenderer.on("show-about-modal", (event, data) => {
+    ipcRenderer.on("show-about-modal", () => {
       this.props.toggleAboutModalVisibility();
     });
   }

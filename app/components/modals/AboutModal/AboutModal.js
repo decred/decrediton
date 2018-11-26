@@ -5,7 +5,7 @@ import { FormattedMessage as T } from "react-intl";
 @autobind
 class AboutModal extends React.Component {
   render() {
-    const { show, onCancelModal, version, updateAvailable } = this.props
+    const { show, onCancelModal, version, updateAvailable } = this.props;
     return (
       <Modal className="about-modal" {...{ show, onCancelModal }}>
         <div className="about-modal-icon"/>
@@ -39,7 +39,7 @@ class AboutModal extends React.Component {
           </div>
         </div>
       </Modal>
-    )
+    );
   }
 }
 

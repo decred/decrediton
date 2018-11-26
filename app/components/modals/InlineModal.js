@@ -45,4 +45,4 @@ class InlineModal extends React.Component {
   }
 }
 
-export default showCheck(modal(Modal));
+export default showCheck(modal(InlineModal));

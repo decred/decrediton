@@ -20,7 +20,7 @@ const SettingsPageHeader = ({ onCloseWallet, walletName }) =>
         buttonLabel={<T id="settings.closeWalletModalOk" m="Close Wallet" />}
         modalContent={
           <T id="settings.closeWalletModalContent"
-            m="Are you sure you want to close {walletName} and return to launcher?"
+            m="Are you sure you want to close {walletName} and return to the launcher?"
             values={{ walletName }}/>}
         onSubmit={onCloseWallet}/>}
   />;
