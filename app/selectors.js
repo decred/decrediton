@@ -469,13 +469,13 @@ export const totalValueOfLiveTickets = createSelector(
 export const ticketDataChart = createSelector(
   [ dailyBalancesStats, unitDivisor ],
   ( stats, unitDivisor ) => stats.map(s => ({
-    time: s.time,
-    voted: s.series.voted / unitDivisor,
-    revoked: s.series.revoked / unitDivisor,
-    ticket: s.series.ticket / unitDivisor,
-    locked: (s.series.locked + s.series.lockedNonWallet) / unitDivisor,
-    immature: (s.series.immature + s.series.immatureNonWallet) / unitDivisor,
-  })));
+      time: s.time,
+      voted: s.series.voted / unitDivisor,
+      revoked: s.series.revoked / unitDivisor,
+      ticket: s.series.ticket / unitDivisor,
+      locked: (s.series.locked + s.series.immature) / unitDivisor,
+      immature: (s.series.immature + s.series.immatureNonWallet) / unitDivisor,
+    })));
 
 export const viewedDecodedTransaction = createSelector(
   [ transactions, (state, { match: { params: { txHash } } }) => txHash, decodedTransactions ],
