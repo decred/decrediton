@@ -92,7 +92,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { locale, theme, aboutModalVisible } = this.props;
+    const { locale, theme, aboutModalMacOSVisible } = this.props;
     const MainSwitch = this.props.uiAnimations ? AnimatedSwitch : StaticSwitch;
 
     return (
@@ -114,7 +114,7 @@ class App extends React.Component {
 
           <div id="modal-portal" />
           <div id="modal-portal-macos" >
-            <AboutModalMacOS show={aboutModalVisible} onCancelModal={this.props.toggleAboutModalVisibility}></AboutModalMacOS>
+            <AboutModalMacOS show={aboutModalMacOSVisible} onCancelModal={this.props.toggleAboutModalVisibility}></AboutModalMacOS>
           </div>
 
         </div>
