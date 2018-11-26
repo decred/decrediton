@@ -22,3 +22,5 @@ script:
   - yarn test || travis_terminate 1
   - yarn build || travis_terminate 1
   - yarn i18n-check-dupes || travis_terminate 1
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then travis_wait yarn package-dev-linux; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then travis_wait yarn package-mac; fi
