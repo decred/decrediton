@@ -14,7 +14,6 @@ import "./style/Global.less";
 import "./style/ReactSelectGlobal.less";
 import pkg from "./package.json";
 import { log } from "./wallet";
-import AboutModal from "./components/modals/AboutModal/Modal";
 
 var globalCfg = getGlobalCfg();
 const locale = globalCfg.get("locale");

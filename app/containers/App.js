@@ -12,8 +12,9 @@ import Snackbar from "components/Snackbar";
 import { log } from "wallet";
 import "style/Layout.less";
 import { ipcRenderer } from "electron";
-import AboutModal from "../components/modals/AboutModal/Modal";
-import Modal from "../components/modals/Modal";
+import AboutModal from "../components/modals/AboutModal/AboutModal";
+import AboutModalMacOS from "../components/modals/AboutModal/AboutModalMacOS";
+import * as ca from "actions/ControlActions";
 const topLevelAnimation = { atEnter: { opacity: 0 }, atLeave: { opacity: 0 }, atActive: { opacity: 1 } };
 
 
@@ -45,7 +46,7 @@ class App extends React.Component {
   componentDidMount() {
     log("info", "Main app container mounted");
 
-    ipcRenderer.on("show-about-modal", function(event, data) {
+    ipcRenderer.on("show-about-modal", (event, data) => {
       this.props.toggleAboutModalVisibility();
     });
   }
@@ -95,14 +96,6 @@ class App extends React.Component {
     const { locale, aboutModalVisible } = this.props;
     const MainSwitch = this.props.uiAnimations ? AnimatedSwitch : StaticSwitch;
 
-    const onCancelModal=null;
-    const shell = null;
-    const updateAvailable = null;
-    const version = null;
-    const showingSidebarMenu = true;
-    const expandSideBar = true;
-    const className = null;
-
     return (
       <IntlProvider
         locale={locale.language}
@@ -120,17 +113,11 @@ class App extends React.Component {
             <Route path="/"            component={WalletContainer} />
           </MainSwitch>
 
-          <div id="modal-portal" >
-            {/* <Modal>
-              <div className="about-modal-icon"/>
-              <div className="about-modal-content">
-                <p> Hey </p>
-              </div>
-            </Modal> */}
-            <AboutModal updateAvailable={true} appVersion={"1.3.1"} showingSidebarMenu={true} expandSideBar>
-            </AboutModal>
-          </div>
+          <div id="modal-portal" />
 
+          <div id="modal-portal-macos" >
+            <AboutModalMacOS show={aboutModalVisible} onCancelModal={this.props.toggleAboutModalVisibility}></AboutModalMacOS>
+          </div>
 
         </Aux>
       </IntlProvider>

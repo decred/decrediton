@@ -3,7 +3,7 @@ import { shell } from "electron";
 import { FormattedMessage as T } from "react-intl";
 
 @autobind
-class AboutModal extends React.Component { 
+class AboutModal extends React.Component {
   render() {
     const { show, onCancelModal, version, updateAvailable } = this.props
     return (
