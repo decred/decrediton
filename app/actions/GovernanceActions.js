@@ -1,6 +1,7 @@
 import * as sel from "selectors";
 import * as pi from "middleware/politeiaapi";
 import * as wallet from "wallet";
+import { getWalletCfg } from "../config";
 import { push as pushHistory } from "react-router-redux";
 import { hexReversedHashToArray, reverseRawHash } from "helpers";
 
@@ -148,6 +149,11 @@ export const getVettedProposals = () => async (dispatch, getState) => {
   dispatch({ type: GETVETTED_ATTEMPT });
   const piURL = sel.politeiaURL(getState());
   const oldProposals = sel.proposalsDetails(getState());
+  const currentBlockHeight = sel.currentBlockHeight(getState());
+
+  const cfg = getWalletCfg(sel.isTestNet(getState()), sel.getWalletName(getState()));
+  const lastAccessTime = cfg.get("politeia_last_access_time") || 0;
+  const lastAccessBlock = cfg.get("politeia_last_access_block") || 0;
 
   // resulting data
   let proposals = [], preVote = [], activeVote = [], voted = [], byToken = {};
@@ -195,6 +201,8 @@ export const getVettedProposals = () => async (dispatch, getState) => {
         voteMask: voteInfo ? voteInfo.startvote.vote.mask : 0,
         hasEligibleTickets: 0,
         eligibleTickets: [],
+        modifiedSinceLastAccess: (p.timestamp*1000) > lastAccessTime,
+        votingSinceLastAccess: false,
         voteDetails,
         voteInfo,
         ...voteData,
@@ -238,8 +246,17 @@ export const getVettedProposals = () => async (dispatch, getState) => {
 
     votedWithVotes.forEach(p => {
       switch (p.voteStatus) {
-      case VOTESTATUS_ACTIVEVOTE: activeVote.push(p); break;
-      case VOTESTATUS_VOTED: voted.push(p); break;
+      case VOTESTATUS_ACTIVEVOTE:
+        var startVoteBh = p.voteInfo && p.voteInfo.startvotereply && p.voteInfo.startvotereply.startblockheight
+          ? p.voteInfo.startvotereply.startblockheight : 0;
+        p.votingSinceLastAccess = startVoteBh > lastAccessBlock;
+        activeVote.push(p);
+        break;
+
+      case VOTESTATUS_VOTED:
+        voted.push(p);
+        break;
+
       default:
         voted.push(p); break;
       }
@@ -251,7 +268,11 @@ export const getVettedProposals = () => async (dispatch, getState) => {
     dispatch({ proposals: byToken, activeVote, voted, type: GETVETTED_UPDATEDVOTERESULTS_SUCCESS });
   } catch (error) {
     dispatch({ error, type: GETVETTED_UPDATEDVOTERESULTS_FAILED });
+    return;
   }
+
+  // cfg.set("politeia_last_access_time", (new Date()).getTime());
+  // cfg.set("politeia_last_access_block", currentBlockHeight);
 };
 
 export const GETPROPOSAL_ATTEMPT = "GETPROPOSAL_ATTEMPT";

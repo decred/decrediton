@@ -38,6 +38,12 @@ export function initWalletCfg(testnet, walletPath) {
   if (!config.has("iswatchonly")) {
     config.set("iswatchonly", false);
   }
+  if (!config.has("politeia_last_access_time")) {
+    config.set("politeia_last_access_time", 0);
+  }
+  if (!config.has("politeia_last_access_block")) {
+    config.set("politeia_last_access_block", 0);
+  }
   stakePoolInfo(function(foundStakePoolConfigs) {
     if (foundStakePoolConfigs !== null) {
       updateStakePoolConfig(config, foundStakePoolConfigs);
@@ -50,7 +56,8 @@ export function initWalletCfg(testnet, walletPath) {
 function cleanWalletCfg(config) {
   var key;
   const walletCfgFields = [ "enableticketbuyer", "balancetomaintain", "currency_display",
-    "hiddenaccounts", "discoveraccounts", "gaplimit", "iswatchonly", "stakepools", "lastaccess" ];
+    "hiddenaccounts", "discoveraccounts", "gaplimit", "iswatchonly", "stakepools",
+    "lastaccess", "politeia_last_access_time", "politeia_last_access_block" ];
   for (key in config.store) {
     var found = false;
     for (var i = 0; i < walletCfgFields.length; i++) {
