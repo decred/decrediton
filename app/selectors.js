@@ -855,6 +855,20 @@ export const blocksNumberToNextTicket = createSelector(
   }
 );
 
+// blockTimestampFromNow is a selector that returns a function that can be used
+// to estimate when a given future block will be received. This is isn't super
+// accurate, and depends on the fact that blocks will take on average the
+// TargetTimePerBlock of their chain, but is sufficient for most display
+// purposes.
+export const blockTimestampFromNow = createSelector(
+  [ chainParams, currentBlockHeight ],
+  ( chainParams, currentHeight ) => {
+    const currentTimestamp = new Date().getTime() / 1000;
+    return (block) => {
+      return Math.trunc(currentTimestamp + ((block - currentHeight) * chainParams.TargetTimePerBlock));
+    };
+  }
+);
 export const exportingData = get([ "control", "exportingData" ]);
 
 export const voteTimeStats = get([ "statistics", "voteTime" ]);
