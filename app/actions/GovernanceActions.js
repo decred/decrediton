@@ -1,6 +1,8 @@
 import * as sel from "selectors";
 import * as pi from "middleware/politeiaapi";
 import * as wallet from "wallet";
+import { replace } from "fp";
+import { getWalletCfg } from "../config";
 import { push as pushHistory } from "react-router-redux";
 import { hexReversedHashToArray, reverseRawHash } from "helpers";
 
@@ -23,29 +25,13 @@ const parseOptionsResult = optionsresult => {
   return { voteOptions, voteCounts };
 };
 
-// Aux function to parse the result of a single active vote proposal response
-// into a voteDetails structure to use within a proposal data
-const parseVoteInfo = (voteInfo, blockTimestampFromNow) => {
-  if (!voteInfo) return null;
-
-  return {
-    eligibleTickets: voteInfo.startvotereply.eligibletickets,
-
-    startBlockHeight: parseInt(voteInfo.startvotereply.startblockheight),
-    endBlockHeight: parseInt(voteInfo.startvotereply.endheight),
-
-    // start/end timestamp are only estimations based on target block time
-    startTimestamp: blockTimestampFromNow(parseInt(voteInfo.startvotereply.startblockheight)),
-    endTimestamp: blockTimestampFromNow(parseInt(voteInfo.startvotereply.endheight)),
-  };
-};
-
 // Aux function to parse the vote status of a single proposal, given a response
 // for the /votesStatus or /proposal/P/voteStatus api calls, then fill the
 // proposal object with the results.
-const fillVoteStatus = (proposal, voteStatus) => {
+const fillVoteStatus = (proposal, voteStatus, blockTimestampFromNow) => {
   proposal.quorumPass = false;
   proposal.voteResult = "declined";
+  proposal.endTimestamp = blockTimestampFromNow(parseInt(voteStatus.endheight));
 
   proposal.voteCounts = voteStatus.optionsresult ? voteStatus.optionsresult.reduce((counts, opt) => {
     counts[opt.option.id] = opt.votesreceived;
@@ -84,6 +70,7 @@ const fillVotes = async (proposal, propVotes, walletService) => {
   proposal.eligibleTickets = eligibleTickets;
   proposal.hasEligibleTickets = eligibleTickets.length > 0;
   proposal.currentVoteChoice = "abstain";
+  proposal.startBlockHeight = propVotes.data.startvotereply ? parseInt(propVotes.data.startvotereply.startblockheight) : null;
 
   // Find out if this wallet has voted in this prop and what was the choice.
   // This assumes the wallet will cast all available votes the same way.
@@ -123,7 +110,7 @@ const getProposalVotes = async (proposal, piURL, walletService) => {
 };
 
 // Aux function to fill the vote result information on a given proposal.
-const getProposalVoteResults = async (proposal, piURL, walletService) => {
+const getProposalVoteResults = async (proposal, piURL, walletService, blockTimestampFromNow) => {
 
   const propVotes = await pi.getProposalVotes(piURL, proposal.token);
   if (propVotes && propVotes.data) {
@@ -132,7 +119,7 @@ const getProposalVoteResults = async (proposal, piURL, walletService) => {
 
   const propVoteStatus = await pi.getProposalVoteStatus(piURL, proposal.token);
   if (propVoteStatus && propVoteStatus.data) {
-    fillVoteStatus(proposal, propVoteStatus.data);
+    fillVoteStatus(proposal, propVoteStatus.data, blockTimestampFromNow);
   }
 
   return proposal;
@@ -148,19 +135,22 @@ export const getVettedProposals = () => async (dispatch, getState) => {
   dispatch({ type: GETVETTED_ATTEMPT });
   const piURL = sel.politeiaURL(getState());
   const oldProposals = sel.proposalsDetails(getState());
+  const currentBlockHeight = sel.currentBlockHeight(getState());
+  const chainParams = sel.chainParams(getState());
+
+  const cfg = getWalletCfg(sel.isTestNet(getState()), sel.getWalletName(getState()));
+  const lastAccessTime = cfg.get("politeia_last_access_time") || 0;
+  const lastAccessBlock = cfg.get("politeia_last_access_block") || 0;
 
   // resulting data
   let proposals = [], preVote = [], activeVote = [], voted = [], byToken = {};
 
   try {
-    const [ vetted, votesStatus, activeVotes ] = await Promise.all(
-      [ pi.getVetted(piURL), pi.getVotesStatus(piURL), pi.getActiveVotes(piURL) ]);
+    const [ vetted, votesStatus ] = await Promise.all(
+      [ pi.getVetted(piURL), pi.getVotesStatus(piURL) ]);
 
     // helpers
-    const chainParams = sel.chainParams(getState());
-    const currentHeight = sel.currentBlockHeight(getState());
-    const currentTimestamp = new Date().getTime() / 1000;
-    const blockTimestampFromNow = (block) => Math.trunc(currentTimestamp + ((block - currentHeight) * chainParams.TargetTimePerBlock));
+    const blockTimestampFromNow = sel.blockTimestampFromNow(getState());
     const defaultVoteStatus = { status: 0, totalvotes: 0, optionsresult: null };
 
     // aux maps
@@ -168,16 +158,10 @@ export const getVettedProposals = () => async (dispatch, getState) => {
       m[r.token] = r;
       return m;
     }, {}) : [];
-    const activeVotesByToken = activeVotes.data.votes ? activeVotes.data.votes.reduce((m, p) => {
-      m[p.proposal.censorshiprecord.token] = p;
-      return m;
-    }, {}) : [];
 
     for (let p of vetted.data.proposals) {
       const voteStatus = statusByToken[p.censorshiprecord.token] || defaultVoteStatus;
       const voteData = parseOptionsResult(voteStatus.optionsresult);
-      const voteInfo = activeVotesByToken[p.censorshiprecord.token];
-      const voteDetails = parseVoteInfo(voteInfo, blockTimestampFromNow);
       const oldProposal = oldProposals[p.censorshiprecord.token];
 
       const proposal = {
@@ -192,14 +176,13 @@ export const getVettedProposals = () => async (dispatch, getState) => {
         voteStatus: voteStatus.status,
         totalVotes: voteStatus.totalvotes,
         files: [],
-        voteMask: voteInfo ? voteInfo.startvote.vote.mask : 0,
         hasEligibleTickets: 0,
         eligibleTickets: [],
-        voteDetails,
-        voteInfo,
+        modifiedSinceLastAccess: (p.timestamp*1000) > lastAccessTime,
+        votingSinceLastAccess: false,
         ...voteData,
       };
-      fillVoteStatus(proposal, voteStatus);
+      fillVoteStatus(proposal, voteStatus, blockTimestampFromNow);
       proposals.push(proposal);
     }
     proposals.sort((a, b) => a.timestamp - b.timestamp);
@@ -238,8 +221,16 @@ export const getVettedProposals = () => async (dispatch, getState) => {
 
     votedWithVotes.forEach(p => {
       switch (p.voteStatus) {
-      case VOTESTATUS_ACTIVEVOTE: activeVote.push(p); break;
-      case VOTESTATUS_VOTED: voted.push(p); break;
+      case VOTESTATUS_ACTIVEVOTE:
+        var startVoteBh = p.startBlockHeight || 0;
+        p.votingSinceLastAccess = startVoteBh >= (lastAccessBlock - chainParams.TicketMaturity);
+        activeVote.push(p);
+        break;
+
+      case VOTESTATUS_VOTED:
+        voted.push(p);
+        break;
+
       default:
         voted.push(p); break;
       }
@@ -251,14 +242,18 @@ export const getVettedProposals = () => async (dispatch, getState) => {
     dispatch({ proposals: byToken, activeVote, voted, type: GETVETTED_UPDATEDVOTERESULTS_SUCCESS });
   } catch (error) {
     dispatch({ error, type: GETVETTED_UPDATEDVOTERESULTS_FAILED });
+    return;
   }
+
+  cfg.set("politeia_last_access_time", (new Date()).getTime());
+  cfg.set("politeia_last_access_block", currentBlockHeight);
 };
 
 export const GETPROPOSAL_ATTEMPT = "GETPROPOSAL_ATTEMPT";
 export const GETPROPOSAL_FAILED = "GETPROPOSAL_FAILED";
 export const GETPROPOSAL_SUCCESS = "GETPROPOSAL_SUCCESS";
 
-export const getProposalDetails = (token) => async (dispatch, getState) => {
+export const getProposalDetails = (token, markViewed) => async (dispatch, getState) => {
 
   const decodeFilePayload = (f) => {
     switch (f.mime) {
@@ -271,6 +266,7 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
 
   dispatch({ type: GETPROPOSAL_ATTEMPT });
   const piURL = sel.politeiaURL(getState());
+  const blockTimestampFromNow = sel.blockTimestampFromNow(getState());
 
   try {
     const resp = await pi.getProposal(piURL, token);
@@ -303,11 +299,21 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
       eligibleTickets: []
     };
 
-    if ([ VOTESTATUS_VOTED, VOTESTATUS_ACTIVEVOTE ].includes(proposal.voteStatus)) {
-      await getProposalVoteResults(proposal, piURL, walletService);
+    if (markViewed) {
+      proposal.modifiedSinceLastAccess = false;
+      proposal.votingSinceLastAccess = false;
     }
 
-    dispatch({ token, proposal, type: GETPROPOSAL_SUCCESS });
+    if ([ VOTESTATUS_VOTED, VOTESTATUS_ACTIVEVOTE ].includes(proposal.voteStatus)) {
+      await getProposalVoteResults(proposal, piURL, walletService, blockTimestampFromNow);
+    }
+
+    let { preVote, activeVote, voted } = getState().governance;
+    preVote = replace(preVote, p => p.token === token, proposal);
+    activeVote = replace(activeVote, p => p.token === token, proposal);
+    voted = replace(voted, p => p.token === token, proposal);
+
+    dispatch({ token, proposal, preVote, activeVote, voted, type: GETPROPOSAL_SUCCESS });
   } catch (error) {
     dispatch({ error, type: GETPROPOSAL_FAILED });
     throw error;
@@ -317,7 +323,7 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
 export const viewProposalDetails = (token) => (dispatch, getState) => {
   const details = sel.proposalsDetails(getState());
   if (!details[token] || !details[token].hasDetails) {
-    dispatch(getProposalDetails(token));
+    dispatch(getProposalDetails(token, true));
   }
   dispatch(pushHistory("/governance/proposals/details/" + token));
 };
@@ -329,6 +335,7 @@ export const UPDATEVOTECHOICE_FAILED = "UPDATEVOTECHOICE_FAILED";
 export const updateVoteChoice = (proposal, newVoteChoiceID, passphrase) =>
   async (dispatch, getState) => {
     const { walletService } = getState().grpc;
+    const blockTimestampFromNow = sel.blockTimestampFromNow(getState());
 
     const voteChoice = proposal.voteOptions.find(o => o.id === newVoteChoiceID);
     if (!voteChoice) throw "Unknown vote choice for proposal";
@@ -363,7 +370,7 @@ export const updateVoteChoice = (proposal, newVoteChoiceID, passphrase) =>
       // update the vote count for the proposal from pi, so we can see our
       // vote counting towards the totals
       const newProposal = { ...proposal };
-      await getProposalVoteResults(newProposal, piURL, walletService);
+      await getProposalVoteResults(newProposal, piURL, walletService, blockTimestampFromNow);
 
       const existProposals = getState().governance.proposals;
       const proposals = {

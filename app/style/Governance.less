@@ -115,6 +115,10 @@
     background-origin: content-box;
     background-size: 5px 10px;
 
+    &.proposal-modified-since-last-access {
+      background-color: var(--background-hovered);
+    }
+
     &:hover {
       background-image: @arrow-right-blue-icon;
 
@@ -138,7 +142,7 @@
         text-overflow: ellipsis;
         width: 100px;
       }
-       
+
       > .proposal-timestamp {
         font-size: 11px;
         line-height: 14px;
@@ -235,7 +239,7 @@
     line-height: 24px;
     color: var(--input-color-default);
   }
-  
+
   .proposal-details-token {
     overflow: hidden;
     white-space: nowrap;
@@ -422,7 +426,7 @@
 
 .proposal-vote-option {
   margin-bottom: 10px;
-  
+
   input[type="radio"] {
     position: absolute;
     opacity: 0;
@@ -460,7 +464,7 @@
       border: 1px solid var(--vote-no-color);
       }
     }
-    
+
     &:checked {
       + .radio-label.yes {
         &:before {
@@ -499,4 +503,14 @@
       }
     }
   }
+}
+
+.proposal-list-link-count {
+  position: absolute;
+  display: inline-block;
+  border: 1px solid var(--disabled-color);
+  border-radius: 50%;
+  width: 1.5em;
+  line-height: 1.5em;
+  font-size: 9px;
 }

@@ -1,5 +1,5 @@
 import MenuLink from "./MenuLink";
-import { routing, theming } from "connectors";
+import { routing, theming, newProposalCounts } from "connectors";
 import { FormattedMessage as T } from "react-intl";
 import { spring, Motion } from "react-motion";
 import theme from "theme";
@@ -7,7 +7,7 @@ import theme from "theme";
 const linkList = [
   { path: "/home",          link: <T id="sidebar.link.home" m="Overview" />,             icon:"overview" },
   { path: "/transactions",  link: <T id="sidebar.link.transactions" m="Transactions" />, icon:"transactions" },
-  { path: "/governance",    link: <T id="sidebar.link.governance" m="Governance" />,     icon:"governance" },
+  { path: "/governance",    link: <T id="sidebar.link.governance" m="Governance" />,     icon:"governance",      notifProp: "newProposalsStartedVoting" },
   { path: "/tickets",       link: <T id="sidebar.link.tickets" m="Tickets" /> ,          icon:"tickets" },
   { path: "/accounts",      link: <T id="sidebar.link.accounts" m="Accounts" />,         icon:"accounts" },
   { path: "/security",      link: <T id="activesidebar.link.security" m="Security" />,   icon:"securitycntr" },
@@ -65,20 +65,33 @@ class MenuLinks extends React.Component {
     return <div className="menu-caret" style={ { top: this.state.top.val } } />;
   }
 
+  getMenuLink(linkItem) {
+    const { path, link, icon, notifProp } = linkItem;
+    const hasNotif = notifProp ? this.props[notifProp] : false;
+
+    return (
+      <MenuLink
+        icon={ icon }
+        to={ path }
+        key={ path }
+        hasNotification={ hasNotif }
+        linkRef={ ref => this._nodes.set(path, ref) }
+      >
+        {link}
+      </MenuLink>
+    );
+  }
+
   render () {
     const caret = this.props.uiAnimations ? this.getAnimatedCaret() : this.getStaticCaret();
 
     return (
       <Aux>
-        { linkList.map(({ path, link, icon }) =>
-          <MenuLink icon={icon} to={ path } linkRef={ ref => this._nodes.set(path, ref) } key={ path }>
-            {link}
-          </MenuLink>
-        )}
+        {linkList.map(link => this.getMenuLink(link))}
         {caret}
       </Aux>
     );
   }
 }
 
-export default routing(theming(MenuLinks));
+export default routing(theming(newProposalCounts(MenuLinks)));

@@ -3,6 +3,7 @@ import { PoliteiaLink as PiLink } from "shared";
 import { ActiveVoteProposals, PreVoteProposals, VotedProposals } from "./ProposalList";
 import { shell } from "electron";
 import { TabbedPage, TabbedPageTab as Tab } from "layout";
+import { newProposalCounts } from "connectors";
 
 const PageHeader = () => (
   <div className="proposals-community-header">
@@ -16,12 +17,22 @@ const PageHeader = () => (
   </div>
 );
 
-const Page = () => (
+const ListLink = ({ count, children }) => (
+  <>
+    {children}
+    { count ? <span className="proposal-list-link-count">{count}</span> : null }
+  </>
+);
+
+const Page = ({ newActiveVoteProposalsCount, newPreVoteProposalsCount }) => (
   <TabbedPage header={<PageHeader />} >
-    <Tab path="/governance/proposals/prevote" component={PreVoteProposals} link={<T id="proposals.statusLinks.preVote" m="Under Discussion" />}/>
-    <Tab path="/governance/proposals/activevote" component={ActiveVoteProposals} link={<T id="proposals.statusLinks.underVote" m="Under Vote" />} />
-    <Tab path="/governance/proposals/voted" component={VotedProposals} link={<T id="proposals.statusLinks.voted" m="Finished voting" />}/>
+    <Tab path="/governance/proposals/prevote" component={PreVoteProposals}
+      link={<ListLink count={newPreVoteProposalsCount}><T id="proposals.statusLinks.preVote" m="Under Discussion" /></ListLink>}/>
+    <Tab path="/governance/proposals/activevote" component={ActiveVoteProposals}
+      link={<ListLink count={newActiveVoteProposalsCount}><T id="proposals.statusLinks.underVote" m="Under Vote" /></ListLink>}/>
+    <Tab path="/governance/proposals/voted" component={VotedProposals}
+      link={<T id="proposals.statusLinks.voted" m="Finished voting" />}/>
   </TabbedPage>
 );
 
-export default Page;
+export default newProposalCounts(Page);

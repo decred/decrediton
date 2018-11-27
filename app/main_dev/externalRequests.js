@@ -46,8 +46,9 @@ export const installSessionHandlers = (mainLogger) => {
   // This MUST NOT go enabled into production, as it's a possible security
   // vulnerability, so any PRs enabling this by default will be rejected.
   // if (process.env.NODE_ENV === "development") {
+  //   const app = require("electron").app;
   //   app.on("certificate-error", (event, webContents, url, error, certificate, callback) => {
-  //     if (url.match(/^https:\/\/localhost:4443\/v1\/.*$/)) {
+  //     if (url.match(/^https:\/\/localhost:4443\/.*$/)) {
   //       event.preventDefault();
   //       callback(true);
   //     } else {

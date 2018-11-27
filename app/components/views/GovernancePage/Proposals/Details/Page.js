@@ -16,7 +16,7 @@ export default ({ viewedProposalDetails,
   newVoteChoice, updateVoteChoiceAttempt, tsDate }) =>
 {
   const { name, token, hasEligibleTickets, voteStatus, voteOptions,
-    voteCounts, creator, timestamp, voteDetails, currentVoteChoice,
+    voteCounts, creator, timestamp, endTimestamp, currentVoteChoice,
     version } = viewedProposalDetails;
   const eligibleTicketCount = viewedProposalDetails.eligibleTickets.length;
 
@@ -57,9 +57,9 @@ export default ({ viewedProposalDetails,
               label={<T id="proposal.overview.lastUpdated.label" m="Last Updated" />}
               value={<TimeValue timestamp={timestamp} tsDate={tsDate} />} />
             <OverviewField
-              show={voting && voteDetails && voteDetails.endTimestamp}
+              show={voting && endTimestamp}
               label={<T id="proposal.overview.deadline.label" m="Voting Deadline" />}
-              value={voting ? <TimeValue timestamp={voteDetails.endTimestamp} tsDate={tsDate} /> : null } />
+              value={voting ? <TimeValue timestamp={endTimestamp} tsDate={tsDate} /> : null } />
           </div>
         </div>
         <div className="proposal-details-overview-voting">

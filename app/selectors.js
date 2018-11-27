@@ -1,5 +1,5 @@
 import {
-  compose, reduce, filter, get, not, or, and, eq, find, bool, map, apply,
+  compose, reduce, filter, get, not, or, and, eq, find, bool, map, apply, some,
   createSelectorEager as createSelector
 } from "./fp";
 import { appLocaleFromElectronLocale } from "./i18n/locales";
@@ -855,6 +855,20 @@ export const blocksNumberToNextTicket = createSelector(
   }
 );
 
+// blockTimestampFromNow is a selector that returns a function that can be used
+// to estimate when a given future block will be received. This is isn't super
+// accurate, and depends on the fact that blocks will take on average the
+// TargetTimePerBlock of their chain, but is sufficient for most display
+// purposes.
+export const blockTimestampFromNow = createSelector(
+  [ chainParams, currentBlockHeight ],
+  ( chainParams, currentHeight ) => {
+    const currentTimestamp = new Date().getTime() / 1000;
+    return (block) => {
+      return Math.trunc(currentTimestamp + ((block - currentHeight) * chainParams.TargetTimePerBlock));
+    };
+  }
+);
 export const exportingData = get([ "control", "exportingData" ]);
 
 export const voteTimeStats = get([ "statistics", "voteTime" ]);
@@ -947,6 +961,15 @@ export const getVettedProposalsAttempt = get([ "governance", "getVettedAttempt" 
 export const preVoteProposals = get([ "governance", "preVote" ]);
 export const votedProposals = get([ "governance", "voted" ]);
 export const lastVettedFetchTime = get([ "governance", "lastVettedFetchTime" ]);
+export const newActiveVoteProposalsCount = compose(
+  reduce((acc, p) => p.votingSinceLastAccess ? acc + 1 : acc, 0),
+  activeVoteProposals
+);
+export const newPreVoteProposalsCount = compose(
+  reduce((acc, p) => p.modifiedSinceLastAccess ? acc + 1 : acc, 0),
+  preVoteProposals
+);
+export const newProposalsStartedVoting = compose(some(p => p.votingSinceLastAccess), activeVoteProposals);
 
 export const getProposalAttempt = get([ "governance", "getProposalAttempt" ]);
 export const getProposalError = get([ "governance", "getProposalError" ]);

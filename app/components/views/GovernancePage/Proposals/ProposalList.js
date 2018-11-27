@@ -31,26 +31,38 @@ const VoteResults = ({ currentVoteChoice, quorumPass, voteResult }) => (
   </div>
 );
 
-const ProposalListItem = ({ name, timestamp, token, voteCounts, tsDate, onClick, voteStatus, currentVoteChoice, quorumPass, voteResult }) => (
-  <div className={"proposal-list-item " + voteResult} onClick={() => onClick(token)}>
-    <div className="info">
-      <div className="proposal-name">{ name }</div>
-      <div className="proposal-token">{ token }</div>
-      {voteStatus !== VOTESTATUS_VOTED &&
-      <div className="proposal-timestamp">
-        <T id="proposalItem.lastUpdatedAt" m="Last Updated {reldate}" values={{
-          reldate: <FormattedRelative  value={ tsDate(timestamp) } /> }} />
-      </div>}
+const ProposalListItem = ({ name, timestamp, token, voteCounts, tsDate, onClick,
+  voteStatus, currentVoteChoice, quorumPass, voteResult, modifiedSinceLastAccess,
+  votingSinceLastAccess }) => {
+
+  const isVoting = voteStatus == VOTESTATUS_ACTIVEVOTE;
+  const modifiedClassName =
+    (!isVoting && modifiedSinceLastAccess) || (isVoting && votingSinceLastAccess)
+      ? "proposal-modified-since-last-access"
+      : null;
+  const className = [ "proposal-list-item", voteResult, modifiedClassName ].join(" ");
+
+  return (
+    <div className={className} onClick={() => onClick(token)}>
+      <div className="info">
+        <div className="proposal-name">{ name }</div>
+        <div className="proposal-token">{ token }</div>
+        {voteStatus !== VOTESTATUS_VOTED &&
+        <div className="proposal-timestamp">
+          <T id="proposalItem.lastUpdatedAt" m="Last Updated {reldate}" values={{
+            reldate: <FormattedRelative  value={ tsDate(timestamp) } /> }} />
+        </div>}
+      </div>
+      {voteStatus == VOTESTATUS_ACTIVEVOTE &&
+        <Aux>
+          <VoteChoice currentVoteChoice={currentVoteChoice} />
+          <VotingProgress voteCounts={voteCounts} />
+        </Aux>}
+      {voteStatus == VOTESTATUS_VOTED &&
+        <VoteResults  {...{ currentVoteChoice, quorumPass, voteResult }}/>}
     </div>
-    {voteStatus == VOTESTATUS_ACTIVEVOTE &&
-      <Aux>
-        <VoteChoice currentVoteChoice={currentVoteChoice} />
-        <VotingProgress voteCounts={voteCounts} />
-      </Aux>}
-    {voteStatus == VOTESTATUS_VOTED &&
-      <VoteResults  {...{ currentVoteChoice, quorumPass, voteResult }}/>}
-  </div>
-);
+  );
+};
 
 const ProposalList = ({ proposals, loading, viewProposalDetails, tsDate, voteEnded }) => (
   <Aux>
