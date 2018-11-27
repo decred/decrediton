@@ -358,6 +358,7 @@ var initialState = {
 
     exportingData: false,
     modalVisible: false,
+    aboutModalMacOSVisible: false
   },
   snackbar: {
     messages: Array()

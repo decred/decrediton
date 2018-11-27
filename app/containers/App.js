@@ -9,10 +9,13 @@ import WalletContainer from "./Wallet";
 import ShutdownAppPage from "components/views/ShutdownAppPage";
 import FatalErrorPage from "components/views/FatalErrorPage";
 import Snackbar from "components/Snackbar";
+import AboutModal from "../components/modals/AboutModal/AboutModal";
 import { log } from "wallet";
-import "style/Layout.less";
 import "style/Themes.less";
+import "style/Layout.less";
+import { ipcRenderer } from "electron";
 const topLevelAnimation = { atEnter: { opacity: 0 }, atLeave: { opacity: 0 }, atActive: { opacity: 1 } };
+
 
 @autobind
 class App extends React.Component {
@@ -41,6 +44,13 @@ class App extends React.Component {
 
   componentDidMount() {
     log("info", "Main app container mounted");
+
+    ipcRenderer.on("show-about-modal", () => {
+      // Ignore click if a modal is already shown
+      if (this.props.modalVisible == false) {
+        this.props.showAboutModalMacOS();
+      }
+    });
   }
 
   beforeWindowUnload(event) {
@@ -85,7 +95,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { locale, theme } = this.props;
+    const { locale, theme, aboutModalMacOSVisible, hideAboutModalMacOS } = this.props;
     const MainSwitch = this.props.uiAnimations ? AnimatedSwitch : StaticSwitch;
 
     return (
@@ -104,7 +114,12 @@ class App extends React.Component {
             <Route path="/error"       component={FatalErrorPage} />
             <Route path="/"            component={WalletContainer} />
           </MainSwitch>
+
           <div id="modal-portal" />
+          <div id="modal-portal-macos" >
+            <AboutModal show={aboutModalMacOSVisible} onCancelModal={hideAboutModalMacOS}></AboutModal>
+          </div>
+
         </div>
       </IntlProvider>
     );

@@ -9,7 +9,10 @@ const darwinTemplate = (mainWindow, locale) => [
     label: locale.messages["appMenu.decrediton"],
     submenu: [ {
       label: locale.messages["appMenu.aboutDecrediton"],
-      selector: "orderFrontStandardAboutPanel:"
+      selector: "orderFrontStandardAboutPanel:",
+      click() {
+        mainWindow.webContents.send("show-about-modal");
+      }
     }, {
       type: "separator"
     }, {
