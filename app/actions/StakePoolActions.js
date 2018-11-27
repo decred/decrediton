@@ -1,10 +1,7 @@
 // @flow
 import Promise from "promise";
-import {
-  getPurchaseInfo, setStakePoolAddress, setVoteChoices, getNextAddress, getStakePoolInfo, getAllStakePoolStats,
-} from "wallet";
 import { getWalletCfg, updateStakePoolConfig } from "../config";
-import { importScriptAttempt } from "./ControlActions";
+import { importScriptAttempt, rescanAttempt } from "./ControlActions";
 import * as sel from "../selectors";
 import * as wallet from "wallet";
 
@@ -14,7 +11,7 @@ export const GETSTAKEPOOLSTATS_SUCCESS = "GETSTAKEPOOLSTATS_SUCCESS";
 
 export const getStakepoolStats = () => (dispatch) => {
   dispatch({ type: GETSTAKEPOOLSTATS_ATTEMPT });
-  getAllStakePoolStats()
+  wallet.getAllStakePoolStats()
     .then((allStakePoolStats) =>
       dispatch({ type: GETSTAKEPOOLSTATS_SUCCESS, allStakePoolStats })
       // TODO: add error notification after global snackbar is merged
@@ -43,83 +40,101 @@ const updateSavedConfig = (newPoolInfo, poolHost, apiKey, accountNum) =>
     const { daemon: { walletName } } = getState();
     const walletCfg = getWalletCfg(sel.isTestNet(getState()), walletName);
     walletCfg.set("stakepools", stakePoolConfigs);
-    let selectedStakePool = stakePoolConfigs.filter(p => p.Host === poolHost)[0] || null;
-    dispatch({
-      selectedStakePool,
-      currentStakePoolConfig: stakePoolConfigs,
-      type: UPDATESTAKEPOOLCONFIG_SUCCESS
-    });
+    return stakePoolConfigs;
   };
 
-const setStakePoolAddressAction = (privpass, poolHost, apiKey, accountNum) =>
-  (dispatch, getState) => {
+// setStakePoolAddressAction links the local wallet to a remote stakepool by
+// deriving a new address from a given account, then requesting that the
+// stakepool create the multisig script.
+const setStakePoolAddressAction = (poolHost, apiKey, accountNum) =>
+  async (dispatch, getState) => {
     const walletService = sel.walletService(getState());
-    getNextAddress(walletService, accountNum)
-      .then(({ publicKey }) => {
-        wallet.allowStakePoolHost(poolHost);
-        setStakePoolAddress({ apiUrl: poolHost, apiToken: apiKey, pKAddress: publicKey })
-          .then(response => {
-            if (response.data.status == "success") {
-              dispatch(setStakePoolInformation(privpass, poolHost, apiKey, accountNum, true));
-            } else if (response.data.status == "error") {
-              dispatch({ error: response.data.message, type: UPDATESTAKEPOOLCONFIG_FAILED });
-            } else {
-              dispatch({ error:"shouldn't be here set address:", type: UPDATESTAKEPOOLCONFIG_FAILED });
-            }
-          })
-          .catch(error => dispatch({ error, type: UPDATESTAKEPOOLCONFIG_FAILED }));
-      })
-      .catch(error => dispatch({
-        error: `${error}. Error setting stakepool address, please try again later.`,
-        type: UPDATESTAKEPOOLCONFIG_FAILED
-      }));
+    const { publicKey } = await wallet.getNextAddress(walletService, accountNum);
+    wallet.allowStakePoolHost(poolHost);
+    const response = await wallet.setStakePoolAddress({ apiUrl: poolHost, apiToken: apiKey, pKAddress: publicKey });
+    if (response.data.status == "success") {
+      return response.data;
+    } else {
+      throw new Error(response.data.message);
+    }
   };
 
-export const updateStakepoolPurchaseInformation = () => (dispatch, getState) =>
+export const REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED = "REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED";
+
+// refreshStakepoolPurchaseInformation is used during wallet startup to grab
+// fresh information (eg: latest pool fee) from all configured stakepools.
+export const refreshStakepoolPurchaseInformation = () => (dispatch, getState) =>
   Promise.all(sel.configuredStakePools(getState()).map(
     ({ Host, ApiKey }) => {
       wallet.allowStakePoolHost(Host);
-      getPurchaseInfo({ apiUrl: Host, apiToken: ApiKey })
+      wallet.getPurchaseInfo({ apiUrl: Host, apiToken: ApiKey })
         .then( response =>
           response.data.status === "success"
             ? dispatch(updateSavedConfig(response.data.data, Host))
             : null)
         .catch(error => dispatch({
-          error: `Unable to contact stakepool: ${error} please try again later`,
-          type: UPDATESTAKEPOOLCONFIG_FAILED
+          error, host: Host, type: REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED
         }));
     }
   ));
 
-export const setStakePoolInformation = (privpass, poolHost, apiKey, accountNum, internal, creatingWallet) =>
-  (dispatch) => {
+// setStakePoolInformation links a new stakepool to the wallet. This
+// will contact the given stakepool, link it with an address from the wallet in
+// the given account (if it hasn't already), import the multisig script and
+// rescan the wallet for old transactions.
+//
+// This is meant to be used when setting up a new stakepool.
+export const setStakePoolInformation = (privpass, poolHost, apiKey, rescan) =>
+  async (dispatch) => {
+    let extraErrorData;
+
+    // we currently only support linking to new stakepools from the default
+    // account for address discovery reasons.
+    const accountNum = 0;
+
     wallet.allowStakePoolHost(poolHost);
-    if (!internal) dispatch({ type: UPDATESTAKEPOOLCONFIG_ATTEMPT });
-    getPurchaseInfo({ apiUrl:poolHost, apiToken: apiKey })
-      .then( response => {
-        if (response.data.status === "success") {
-          dispatch(
-            importScriptAttempt(
-              privpass, response.data.data.Script, !creatingWallet, 0, response.data.data.TicketAddress, false,
-              (error) => error
-                ? dispatch({ error, type: UPDATESTAKEPOOLCONFIG_FAILED })
-                : dispatch(updateSavedConfig(response.data.data, poolHost, apiKey, accountNum))
-            )
-          );
-        } else if (response.data.status === "error") {
-          if (response.data.message == "purchaseinfo error - no address submitted") {
-            dispatch(setStakePoolAddressAction(privpass, poolHost, apiKey, accountNum));
-          } else {
-            dispatch({ error: response.data.message, type: UPDATESTAKEPOOLCONFIG_FAILED });
-          }
+    dispatch({ type: UPDATESTAKEPOOLCONFIG_ATTEMPT });
+    try {
+      let response = await wallet.getPurchaseInfo({ apiUrl: poolHost, apiToken: apiKey });
+
+      if (response.data.status == "error" && response.data.message === "purchaseinfo error - no address submitted") {
+        // this error happens when setting up a pool connection for the first
+        // time. We need to generate and send a wallet address to the stakepool,
+        // so that it will bind it with a stakepool address and create the
+        // multisig voting script.
+        await dispatch(setStakePoolAddressAction(poolHost, apiKey, accountNum));
+
+        // remake the remote getPurchaseInfo call to get the newly configured
+        // script
+        // TODO: this should really be returned in the setStakePoolAddress call
+        response = await wallet.getPurchaseInfo({ apiUrl: poolHost, apiToken: apiKey });
+        if (response.data.status !== "success") {
+          // there shouldn't be any errors at this stage anymore
+          throw new Error(response.data.message);
         }
-      })
-      .catch(error =>
-        dispatch({
-          error: `Unable to contact stakepool: ${error} please try again later`,
-          type: UPDATESTAKEPOOLCONFIG_FAILED
-        })
-      );
+      } else if (response.data.status != "success") {
+        throw new Error(response.data.message);
+      }
+
+      // import the script and verify whether the imported address matches what the
+      // stakepool has sent us
+      const importScriptResponse = await dispatch(importScriptAttempt(privpass, response.data.data.Script));
+      if (importScriptResponse.getP2shAddress() !== response.data.data.TicketAddress) {
+        extraErrorData = { incongruentP2shAddress: true,
+          poolP2shAddress: importScriptResponse.getP2shAddress(),
+          scriptAddress: response.data.data.TicketAddress };
+        throw new Error("Incongruent p2sh address returned by stakepool");
+      }
+
+      // All set. Update the config, dispatch the success and start a rescan.
+      const currentStakePoolConfig = await dispatch(updateSavedConfig(response.data.data, poolHost, apiKey, accountNum));
+      let selectedStakePool = currentStakePoolConfig.filter(p => p.Host === poolHost)[0] || null;
+      dispatch({ selectedStakePool, currentStakePoolConfig, type: UPDATESTAKEPOOLCONFIG_SUCCESS });
+      rescan && dispatch(rescanAttempt(0));
+    } catch (error) {
+      dispatch({ error, ...extraErrorData, type: UPDATESTAKEPOOLCONFIG_FAILED });
+      throw (error);
+    }
   };
 
 export const SETSTAKEPOOLVOTECHOICES_ATTEMPT = "SETSTAKEPOOLVOTECHOICES_ATTEMPT";
@@ -150,7 +165,7 @@ const updateStakePoolVoteChoicesConfig = (stakePool, voteChoices) => (dispatch, 
 
 export const setStakePoolVoteChoices = (stakePool, voteChoices) => (dispatch) => {
   wallet.allowStakePoolHost(stakePool.Host);
-  setVoteChoices({
+  wallet.setVoteChoices({
     apiUrl: stakePool.Host, apiToken: stakePool.ApiKey, voteChoices: voteChoices.getVotebits(),
   })
     .then(response => {
@@ -168,7 +183,7 @@ export const setStakePoolVoteChoices = (stakePool, voteChoices) => (dispatch) =>
 
 export const DISCOVERAVAILABLESTAKEPOOLS_SUCCESS = "DISCOVERAVAILABLESTAKEPOOLS_SUCCESS";
 export const discoverAvailableStakepools = () => (dispatch, getState) =>
-  getStakePoolInfo()
+  wallet.getStakePoolInfo()
     .then((foundStakepoolConfigs) => {
       if (foundStakepoolConfigs) {
         const { daemon: { walletName } } = getState();
@@ -190,7 +205,7 @@ export const removeStakePoolConfig = (host) => (dispatch, getState) => {
   let pool = existingPools.filter(p => p.Host === host)[0];
   if (!pool) { return; }
 
-  // Instead of simply deleting from exstingPools we blank all non-default
+  // Instead of simply deleting from exsting pools we blank all non-default
   // fields so the stakepool can be reconfigured without needing to re-fetch
   // the stakepool list from the remote api.
 

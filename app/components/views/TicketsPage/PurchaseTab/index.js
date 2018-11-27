@@ -93,7 +93,7 @@ class Purchase extends React.Component {
 
   onImportScript(privpass, script) {
     const { onImportScript } = this.props;
-    onImportScript && onImportScript(privpass, script, true, 0, false, null);
+    onImportScript && onImportScript(privpass, script);
   }
 
   onRevokeTickets(privpass) {

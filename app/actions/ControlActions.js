@@ -120,45 +120,43 @@ export const importPrivateKeyAttempt = (...args) => (dispatch, getState) => {
 export const IMPORTSCRIPT_ATTEMPT = "IMPORTSCRIPT_ATTEMPT";
 export const IMPORTSCRIPT_FAILED = "IMPORTSCRIPT_FAILED";
 export const IMPORTSCRIPT_SUCCESS = "IMPORTSCRIPT_SUCCESS";
-export const IMPORTSCRIPT_SUCCESS_PURCHASE_TICKETS = "IMPORTSCRIPT_SUCCESS_PURCHASE_TICKETS";
 
-const importScriptSuccess = (importScriptResponse, votingAddress, purchaseTickets, cb, willRescan) => (dispatch) => {
-  const importScriptSuccess = "Script successfully imported, rescanning now";
-  if (purchaseTickets) {
-    dispatch({ importScriptSuccess, importScriptResponse, willRescan, type: IMPORTSCRIPT_SUCCESS_PURCHASE_TICKETS });
-  } else {
-    dispatch({ importScriptSuccess, importScriptResponse, willRescan, type: IMPORTSCRIPT_SUCCESS });
-  }
-  if (votingAddress) {
-    if (importScriptResponse.getP2shAddress() == votingAddress) {
-      dispatch(() => cb());
-    } else {
-      const error = "The stakepool voting address is not the P2SH address of the voting redeem script. This could be due to trying to use a stakepool that is configured for a different wallet. If this is not the case, please report this to the stakepool administrator and the Decred devs.";
-      dispatch(() => cb(error));
-    }
-  }
-};
-
-export const importScriptAttempt = (passphrase, script, rescan, scanFrom, votingAddress, purchaseTickets, cb) =>
-  (dispatch, getState) => {
+// importScriptAttempt tries to import the given script into the wallet. It will
+// throw an exception in case of errors.
+export const importScriptAttempt = (passphrase, script) =>
+  async (dispatch, getState) => {
     dispatch({ type: IMPORTSCRIPT_ATTEMPT });
-    return wallet.importScript(sel.walletService(getState()), passphrase, script, false, 0)
-      .then(importScriptResponse => {
-        if (rescan) dispatch(rescanAttempt(0));
-        dispatch(importScriptSuccess(importScriptResponse, votingAddress, purchaseTickets, cb));
-        if (!votingAddress && !cb) setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 1000);
-      })
-      .catch(error => {
-        dispatch({ error, type: IMPORTSCRIPT_FAILED });
-        if (votingAddress || cb) {
-          if (String(error).indexOf("master private key") !== -1) {
-            dispatch(() => cb(error));
-          } else {
-            error = error + ". This probably means you are trying to use a stakepool account that is already associated with another wallet.  If you have previously used a voting account, please create a new account and try again.  Otherwise, please set up a new stakepool account for this wallet.";
-            dispatch(() => cb(error));
-          }
-        }
-      });
+    const walletService = sel.walletService(getState());
+    try {
+      const importScriptResponse = await wallet.importScript(walletService, passphrase, script, false, 0);
+      dispatch({ importScriptResponse, type: IMPORTSCRIPT_SUCCESS });
+      return importScriptResponse;
+    } catch (error) {
+      dispatch({ error, type: IMPORTSCRIPT_FAILED });
+      if (error instanceof Error) {
+        throw error;
+      }
+      throw new Error(error);
+    }
+  };
+
+export const IMPORTSCRIPT_MANUAL_SUCCESS = "IMPORTSCRIPT_MANUAL_SUCCESS";
+export const IMPORTSCRIPT_MANUAL_FAILED = "IMPORTSCRIPT_MANUAL_FAILED";
+
+// manualImportScriptAttempt imports a script from a "manual" (ie,
+// user-initiated) entry. This is in contrast of importScriptAttempt which is
+// meant as a step during some other operation (eg: linking to a stakepool).
+//
+// This function always initiates a complete wallet rescan in case of success.
+export const manualImportScriptAttempt = (passphrase, script) =>
+  async (dispatch) => {
+    try {
+      await dispatch(importScriptAttempt(passphrase, script));
+      dispatch({ type: IMPORTSCRIPT_MANUAL_SUCCESS });
+      dispatch(rescanAttempt(0));
+    } catch (error) {
+      dispatch({ error, type: IMPORTSCRIPT_MANUAL_FAILED });
+    }
   };
 
 export const CHANGEPASSPHRASE_ATTEMPT = "CHANGEPASSPHRASE_ATTEMPT";
@@ -237,26 +235,32 @@ export const PURCHASETICKETS_FAILED = "PURCHASETICKETS_FAILED";
 export const PURCHASETICKETS_SUCCESS = "PURCHASETICKETS_SUCCESS";
 
 export const purchaseTicketsAttempt = (
-  passphrase, accountNum, spendLimit, requiredConf, numTickets, expiry, ticketFee, txFee, stakepool
-) => (dispatch, getState) => {
-  const state = getState();
-  const currentBlockHeight = sel.currentBlockHeight(state);
-  expiry = expiry === 0 ? expiry : currentBlockHeight + expiry;
-  txFee = txFee * 1e8;
-  ticketFee = ticketFee * 1e8;
-  dispatch({ numTicketsToBuy: numTickets, type: PURCHASETICKETS_ATTEMPT });
-  dispatch(importScriptAttempt(passphrase, stakepool.Script, false, 0, stakepool.TicketAddress, true,
-    error => error
-      ? dispatch({ error, type: PURCHASETICKETS_FAILED })
-      : wallet.purchaseTickets(
-        sel.walletService(state), passphrase, accountNum, spendLimit, requiredConf, numTickets,
-        expiry, ticketFee, txFee, stakepool
-      )
-        .then(purchaseTicketsResponse => {
-          dispatch({ purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
-        })
-        .catch(error => dispatch({ error, type: PURCHASETICKETS_FAILED }))
-  ));
+  passphrase, accountNum, spendLimit, requiredConf, numTickets, expiry,
+  ticketFee, txFee, stakepool
+) => async (dispatch, getState) => {
+  try {
+    dispatch({ numTicketsToBuy: numTickets, type: PURCHASETICKETS_ATTEMPT });
+
+    // re-import the script to ensure the wallet will control the ticket.
+    const importScriptResponse = await dispatch(importScriptAttempt(passphrase, stakepool.Script));
+    if (importScriptResponse.getP2shAddress() !== stakepool.TicketAddress) {
+      throw new Error("Trying to use a ticket address not corresponding to script");
+    }
+
+    const state = getState();
+    const currentBlockHeight = sel.currentBlockHeight(state);
+    expiry = expiry === 0 ? expiry : currentBlockHeight + expiry;
+    txFee = txFee * 1e8;
+    ticketFee = ticketFee * 1e8;
+
+    const purchaseTicketsResponse = await wallet.purchaseTickets(
+      sel.walletService(state), passphrase, accountNum, spendLimit, requiredConf, numTickets,
+      expiry, ticketFee, txFee, stakepool
+    );
+    dispatch({ purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
+  } catch (error) {
+    dispatch({ error, type: PURCHASETICKETS_FAILED });
+  }
 };
 
 export const REVOKETICKETS_ATTEMPT = "REVOKETICKETS_ATTEMPT";

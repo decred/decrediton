@@ -21,6 +21,19 @@ class StakePools extends React.Component {
     }
   }
 
+  componentDidUpdate() {
+    const hasUnconfigured = this.props.unconfiguredStakePools.some(p => p.Host === this.state.selectedUnconfigured.Host );
+    if (!hasUnconfigured && this.props.unconfiguredStakePools.length) {
+      // We just added a stakepool, so it has been removed from the list of
+      // unconfigured. Select the next one on the list.
+      this.setState({
+        selectedUnconfigured: this.props.unconfiguredStakePools[0],
+        apiKey: "",
+        hasFailedAttempt: false
+      });
+    }
+  }
+
   componentDidMount() {
     if(!this.state.selectedUnconfigured) {
       this.setState({ selectedUnconfigured: this.props.unconfiguredStakePools[0] });
@@ -137,7 +150,12 @@ class StakePools extends React.Component {
   onSetStakePoolInfo(privpass) {
     const { apiKey } = this.state;
     const onSetInfo = this.props.onSetStakePoolInfo;
-    apiKey ? (onSetInfo && onSetInfo(privpass, this.getSelectedUnconfigured().Host, apiKey, 0)) : this.setState({ hasFailedAttempt: true });
+    if (!onSetInfo) return;
+    if (!apiKey) {
+      this.setState({ hasFailedAttempt: true });
+      return;
+    }
+    onSetInfo(privpass, this.getSelectedUnconfigured().Host, apiKey, true);
   }
 
   onRemoveStakePool(host) {

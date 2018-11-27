@@ -35,7 +35,7 @@ const mapStateToProps = selectorMap({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   onRevokeTickets: ca.revokeTicketsAttempt,
-  onImportScript: ca.importScriptAttempt,
+  onImportScript: ca.manualImportScriptAttempt,
   onClearRevokeTicketsError: ca.clearRevokeTicketsError,
   onClearRevokeTicketsSuccess: ca.clearRevokeTicketsSuccess,
   onClearImportScriptError: ca.clearImportScriptError,
