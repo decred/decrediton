@@ -76,11 +76,11 @@ export function diffBetweenTwoTs(date1, date2) {
 // day/month/yeah, false otherwise.
 export function isSameDate(d1,d2) {
   if (
-      (!d1) || (!d2) ||
+    (!d1) || (!d2) ||
       (d1.getYear() !== d2.getYear()) ||
       (d1.getMonth() !== d2.getMonth()) ||
       (d1.getDate() !== d2.getDate())
-    ) {
+  ) {
     return false;
   }
   return true;

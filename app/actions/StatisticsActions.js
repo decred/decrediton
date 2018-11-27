@@ -114,7 +114,7 @@ export const EXPORT_COMPLETED = "EXPORT_COMPLETED";
 export const EXPORT_ERROR = "EXPORT_ERROR";
 
 export const exportStatToCSV = (opts) => (dispatch, getState) => {
-  console.log(opts)
+  console.log(opts);
   const { calcFunction, csvFilename } = opts;
 
   var fd;
@@ -185,7 +185,7 @@ export const exportStatToCSV = (opts) => (dispatch, getState) => {
       fd = null;
     }
   };
-console.log(calcFunction)
+  console.log(calcFunction);
   dispatch(calcFunction({ opts, startFunction, progressFunction, endFunction, errorFunction }));
 };
 
@@ -369,10 +369,10 @@ const voteRevokeInfo = async (tx, liveTickets, walletService) => {
 
 const turnFieldsNegative = (delta) => {
   const fields = [ "spendable", "locked", "lockedNonWallet", "stakeFees",
-  "stakeRewards", "totalStake", "immature", "immatureNonWallet" ];
+    "stakeRewards", "totalStake", "immature", "immatureNonWallet" ];
   fields.forEach(f => delta[f] = -delta[f]);
   return delta;
-}
+};
 
 // closure that calcs how much each tx affects each balance type.
 // Ticket and vote/revoke delta calculation assumes *a lot* about how tickets
@@ -448,7 +448,7 @@ const addDelta = (delta, progressFunction, currentBalance, tsDate) => {
 // the txs by collecting the maturing transactions that might affect tx `i`,
 // processing them first, then processing tx i.
 const txDataCbBackwards = async ({ mined, maturingTxs, liveTickets,
-    walletService, chainParams, progressFunction, currentBlockHeight, currentBalance, tsDate }) => {
+  walletService, chainParams, progressFunction, currentBlockHeight, currentBalance, tsDate }) => {
   let now = new Date();
   let toAddDeltas = {};
   let lastTxHeight = currentBlockHeight;
@@ -458,7 +458,7 @@ const txDataCbBackwards = async ({ mined, maturingTxs, liveTickets,
   for (let i = 0; i < mined.length; i++) {
     const tx = mined[i];
     const delta = toAddDeltas[i] ? toAddDeltas[i] : await txBalancesDelta(tx, maturingTxs, liveTickets, walletService, chainParams);
-    delta = turnFieldsNegative(delta);
+    turnFieldsNegative(delta);
 
     let j = i+1;
     while ((j < mined.length) && (mined[j].height >= tx.height - maturityBlocks)) {
@@ -469,12 +469,12 @@ const txDataCbBackwards = async ({ mined, maturingTxs, liveTickets,
       }
       j++;
     }
-    toAddDeltas = turnFieldsNegative(toAddDeltas);
+    turnFieldsNegative(toAddDeltas);
 
     const maturedDeltas = findMaturingDeltas(maturingTxs, tx.height+1, lastTxHeight,
       tx.timestamp, lastTxTimestamp, chainParams, true);
     maturedDeltas.forEach((delta) => {
-      currentBalance = addDelta(delta, progressFunction, { ...currentBalance, delta }, tsDate)
+      currentBalance = addDelta(delta, progressFunction, { ...currentBalance, delta }, tsDate);
     });
     currentBalance = addDelta(delta, progressFunction, { ...currentBalance, delta }, tsDate);
 
@@ -491,11 +491,11 @@ const txDataCb = async ({ mined, maturingTxs, liveTickets, currentBalance, tsDat
     const maturedDeltas = findMaturingDeltas(maturingTxs, lastTxHeight+1, tx.height,
       lastTxTimestamp, tx.timestamp, chainParams);
     maturedDeltas.forEach((delta) => {
-      currentBalance = addDelta(delta, progressFunction, currentBalance, tsDate)
+      currentBalance = addDelta(delta, progressFunction, currentBalance, tsDate);
     });
 
     const delta = await txBalancesDelta(tx, maturingTxs, liveTickets, walletService, chainParams);
-    currentBalance = addDelta(delta, progressFunction, currentBalance, tsDate)
+    currentBalance = addDelta(delta, progressFunction, currentBalance, tsDate);
 
     lastTxHeight = tx.height;
     lastTxTimestamp = delta.timestamp;
@@ -505,7 +505,7 @@ const txDataCb = async ({ mined, maturingTxs, liveTickets, currentBalance, tsDat
   const maturedDeltas = findMaturingDeltas(maturingTxs, lastTxHeight+1, currentBlockHeight,
     lastTxTimestamp, recentBlockTimestamp || Date.now(), chainParams);
   maturedDeltas.forEach( delta => {
-    currentBalance = addDelta(delta, progressFunction, currentBalance, tsDate)
+    currentBalance = addDelta(delta, progressFunction, currentBalance, tsDate);
   });
 };
 
@@ -608,13 +608,13 @@ const balancesStatsBackwards = (opts) => async (dispatch, getState) => {
       }
     });
 
-    await txDataCbBackwards({ mined: toProcess, maturingTxs,
-        liveTickets, walletService, chainParams, currentBlockHeight, currentBalance, tsDate, progressFunction, walletService, recentBlockTimestamp });
+    await txDataCbBackwards({ mined: toProcess, maturingTxs, liveTickets, walletService,
+      chainParams, currentBlockHeight, currentBalance, tsDate, progressFunction, recentBlockTimestamp });
     endFunction();
   } catch (err) {
     errorFunction(err);
   }
-}
+};
 
 export const balancesStats = (opts) => async (dispatch, getState) => {
   const { progressFunction, startFunction, endFunction, errorFunction, endDate } = opts;
@@ -690,8 +690,8 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
       }
     }
 
-    await txDataCb({ mined: toProcess, maturingTxs,
-        liveTickets, walletService, chainParams, currentBlockHeight, currentBalance, tsDate, progressFunction, walletService, recentBlockTimestamp });
+    await txDataCb({ mined: toProcess, maturingTxs, liveTickets, walletService,
+      chainParams, currentBlockHeight, currentBalance, tsDate, progressFunction, recentBlockTimestamp });
     endFunction();
   } catch (err) {
     errorFunction(err);
