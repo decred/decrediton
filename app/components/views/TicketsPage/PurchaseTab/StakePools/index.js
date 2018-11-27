@@ -30,22 +30,30 @@ class StakePools extends React.Component {
     }
   }
 
-  render() {
-    return this.getNoAvailableStakepools() && !this.getStakepoolListingEnabled() ? (
+  renderStakepoolListingDisabled() {
+    return (
       <div>
         <p><T id="stake.enableStakePoolListing.description" m="StakePool listing from external API endpoint is currently disabled. Please enable the access to this third party service or manually configure the stakepool." /></p>
         <EnableExternalRequestButton requestType={EXTERNALREQUEST_STAKEPOOL_LISTING}>
           <T id="stake.enableStakePoolListing.button" m="Enable StakePool Listing" />
         </EnableExternalRequestButton>
       </div>
-    ) : this.getNoAvailableStakepools() ? (
+    );
+  }
+
+  renderNoAvailableStakepools() {
+    return (
       <T
         id="stake.noAvailableStakepools"
         m="No stakepool found. Check your internet connection or {link} to see if the StakePool API is down."
         values={{
           link: (<a className="stakepool-link" onClick={() => shell.openExternal("https://api.decred.org/?c=gsd")}><T id="stake.discoverStakeOoolsAPILink" m="this link" /></a>)
         }} />
-    ) : this.getIsAdding() ? (
+    );
+  }
+
+  renderAddForm() {
+    return (
       <StakePoolsAddForm
         {...{
           ...this.props,
@@ -62,7 +70,21 @@ class StakePools extends React.Component {
           }, this),
         }}
       />
-    ) : (
+    );
+  }
+
+  render() {
+    if (this.getNoAvailableStakepools() && !this.getStakepoolListingEnabled()) {
+      return this.renderStakepoolListingDisabled();
+    }
+    if (this.getNoAvailableStakepools()) {
+      return this.renderNoAvailableStakepools();
+    }
+    if (this.getIsAdding()) {
+      return this.renderAddForm();
+    }
+
+    return (
       <StakePoolsList
         {...{
           ...this.props,
@@ -75,7 +97,9 @@ class StakePools extends React.Component {
   }
 
   getIsAdding() {
-    return this.state.isAdding || this.props.configuredStakePools.length <= 0;
+    return this.state.isAdding
+      || this.props.configuredStakePools.length <= 0
+      || this.props.isImportingScript;
   }
 
   getNoAvailableStakepools() {
