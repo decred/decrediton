@@ -24,6 +24,7 @@ const StakePoolsAddForm = ({
   unconfiguredStakePools,
   configuredStakePools,
   apiKey,
+  isSavingStakePoolConfig,
   intl,
   onChangeSelectedUnconfigured,
   onChangeApiKey,
@@ -86,7 +87,8 @@ const StakePoolsAddForm = ({
     <div className="stakepool-add-toolbar">
       <PassphraseModalButton
         modalTitle={<T id="stake.addPoolConfirmation" m="Stakepool Confirmation" />}
-        disabled={!apiKey}
+        loading={isSavingStakePoolConfig}
+        disabled={!apiKey || isSavingStakePoolConfig}
         className="stakepool-confirm-button"
         onSubmit={onSetStakePoolInfo}
         buttonLabel={<T id="stake.addPool.addBtn" m="Continue" />}

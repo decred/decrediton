@@ -73,7 +73,7 @@ class StakePoolsBody extends React.Component {
     const host = pool.Host;
     const privPass = passPhrase ? passPhrase : walletPrivatePassphrase;
 
-    onSetStakePoolInfo(privPass, host, apiKey, 0, false, true);
+    onSetStakePoolInfo(privPass, host, apiKey, false);
     this.setState({ apiKey: "" });
   }
 

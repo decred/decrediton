@@ -12,7 +12,7 @@ import {
   STARTTICKETBUYERV2_SUCCESS, STARTTICKETBUYERV2_FAILED,
   STOPTICKETBUYERV2_SUCCESS,
   REVOKETICKETS_SUCCESS, REVOKETICKETS_FAILED,
-  IMPORTSCRIPT_SUCCESS, IMPORTSCRIPT_FAILED,
+  IMPORTSCRIPT_MANUAL_SUCCESS, IMPORTSCRIPT_MANUAL_FAILED,
   RENAMEACCOUNT_SUCCESS, RENAMEACCOUNT_FAILED,
   GETNEXTACCOUNT_SUCCESS, GETNEXTACCOUNT_FAILED,
   CHANGEPASSPHRASE_SUCCESS, CHANGEPASSPHRASE_FAILED,
@@ -26,6 +26,7 @@ import {
   SETSTAKEPOOLVOTECHOICES_SUCCESS, SETSTAKEPOOLVOTECHOICES_FAILED,
   REMOVESTAKEPOOLCONFIG,
   ADDCUSTOMSTAKEPOOL_SUCCESS, ADDCUSTOMSTAKEPOOL_FAILED,
+  REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED
 } from "../actions/StakePoolActions";
 import {
   NEW_TRANSACTIONS_RECEIVED,
@@ -49,6 +50,8 @@ import {
   GETACTIVEVOTE_FAILED, GETVETTED_FAILED, GETPROPOSAL_FAILED,
   UPDATEVOTECHOICE_FAILED, GETVETTED_UPDATEDVOTERESULTS_FAILED
 } from "actions/GovernanceActions";
+
+const WRONG_PASSPHRASE_MSG = "WRONG_PASSPHRASE_MSG";
 
 const messages = defineMessages({
   defaultSuccessMessage: {
@@ -99,11 +102,11 @@ const messages = defineMessages({
     id: "tickets.errors.revokeTicketsFailed",
     defaultMessage: "{originalError}"
   },
-  IMPORTSCRIPT_SUCCESS: {
+  IMPORTSCRIPT_MANUAL_SUCCESS: {
     id: "tickets.importScriptHeader",
     defaultMessage: "You successfully imported a script"
   },
-  IMPORTSCRIPT_FAILED: {
+  IMPORTSCRIPT_MANUAL_FAILED: {
     id: "tickets.errors.importScriptFailed",
     defaultMessage: "{originalError}"
   },
@@ -126,6 +129,10 @@ const messages = defineMessages({
   UPDATESTAKEPOOLCONFIG_FAILED: {
     id: "tickets.errors.updateStakePoolConfigFailed",
     defaultMessage: "{originalError}"
+  },
+  REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED: {
+    id: "tickets.errors.refreshStakePoolInfo",
+    defaultMessage: "Error refreshing stakepool data from {host}: {originalError}"
   },
   SETSTAKEPOOLVOTECHOICES_SUCCESS: {
     id: "tickets.setStakePoolVoteChoices",
@@ -214,6 +221,10 @@ const messages = defineMessages({
   STOPTICKETBUYERV2_SUCCESS: {
     id: "stopTicketBuyer.Success",
     defaultMessage: "Ticket Buyer successfully stopped."
+  },
+  WRONG_PASSPHRASE_MSG: {
+    id: "errors.wrongPassphrase",
+    defaultMessage: "Wrong private passphrase entered. Please verify you have typed the correct private passphrase for the wallet."
   }
 });
 
@@ -260,9 +271,7 @@ export default function snackbar(state = {}, action) {
   case GETNEXTACCOUNT_SUCCESS:
   case CHANGEPASSPHRASE_SUCCESS:
   case REVOKETICKETS_SUCCESS:
-  case IMPORTSCRIPT_SUCCESS:
-    // willRescan will be false when importing just prior to a ticket purchase
-    if (action.willRescan === false) break;
+  case IMPORTSCRIPT_MANUAL_SUCCESS:
   case STARTTICKETBUYERV2_SUCCESS:
   case STOPTICKETBUYERV2_SUCCESS:
   case UPDATESTAKEPOOLCONFIG_SUCCESS:
@@ -285,8 +294,10 @@ export default function snackbar(state = {}, action) {
   case PUBLISHTX_FAILED:
   case PURCHASETICKETS_FAILED:
   case REVOKETICKETS_FAILED:
-  case IMPORTSCRIPT_FAILED:
+  case IMPORTSCRIPT_MANUAL_FAILED:
   case UPDATESTAKEPOOLCONFIG_FAILED:
+  case REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED:
+    values = { host: action.host };
   case SETSTAKEPOOLVOTECHOICES_FAILED:
   case ADDCUSTOMSTAKEPOOL_FAILED:
   case DECODERAWTXS_FAILED:
@@ -306,9 +317,15 @@ export default function snackbar(state = {}, action) {
   case UPDATEVOTECHOICE_FAILED:
   case GETACCOUNTEXTENDEDKEY_FAILED:
   case STARTTICKETBUYERV2_FAILED:
+    if (action.error && String(action.error).indexOf("wallet.Unlock: invalid passphrase:: secretkey.DeriveKey") > -1) {
+      // intercepting all wrong passphrase errors, independently of which error
+      // state was triggered. Not terribly pretty.
+      message = messages[WRONG_PASSPHRASE_MSG];
+    } else {
+      message = messages[action.type] || messages.defaultErrorMessage;
+    }
     type = "Error";
-    message = messages[action.type] || messages.defaultErrorMessage;
-    values = { originalError: String(action.error) };
+    values = { ...values, originalError: String(action.error) };
     break;
 
   // success messages that add some context/interpolation/values.

@@ -4,7 +4,7 @@ import * as sel from "selectors";
 import eq from "lodash/fp/eq";
 import { getNextAddressAttempt, publishUnminedTransactionsAttempt } from "./ControlActions";
 import { transactionNtfnsStart, accountNtfnsStart } from "./NotificationActions";
-import { updateStakepoolPurchaseInformation, setStakePoolVoteChoices, getStakepoolStats } from "./StakePoolActions";
+import { refreshStakepoolPurchaseInformation, setStakePoolVoteChoices, getStakepoolStats } from "./StakePoolActions";
 import { getDecodeMessageServiceAttempt, decodeRawTransactions } from "./DecodeMessageActions";
 import { push as pushHistory, goBack } from "react-router-redux";
 import { getWalletCfg, getGlobalCfg } from "../config";
@@ -52,7 +52,7 @@ const startWalletServicesTrigger = () => (dispatch, getState) => new Promise((re
       await dispatch(getTicketPriceAttempt());
       await dispatch(getPingAttempt());
       await dispatch(getNetworkAttempt());
-      await dispatch(updateStakepoolPurchaseInformation());
+      await dispatch(refreshStakepoolPurchaseInformation());
       await dispatch(getDecodeMessageServiceAttempt());
       await dispatch(getVotingServiceAttempt());
       await dispatch(getAgendaServiceAttempt());
