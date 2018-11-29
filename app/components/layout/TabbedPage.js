@@ -127,7 +127,7 @@ class TabbedPage extends React.Component {
         <div className="tabbed-page-header">
           {header}
           <Switch>{headers}</Switch>
-          <RoutedTabsHeader tabs={tabHeaders} />
+          <RoutedTabsHeader tabs={tabHeaders} noCaret={this.props.noCaret}/>
         </div>
 
         <div className={"tabbed-page-body" + (this.props.governancePage ? " governance" : "")}>

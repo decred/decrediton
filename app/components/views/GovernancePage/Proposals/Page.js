@@ -25,7 +25,7 @@ const ListLink = ({ count, children }) => (
 );
 
 const Page = ({ newActiveVoteProposalsCount, newPreVoteProposalsCount }) => (
-  <TabbedPage header={<PageHeader />} >
+  <TabbedPage noCaret header={<PageHeader />} >
     <Tab path="/governance/proposals/prevote" component={PreVoteProposals}
       link={<ListLink count={newPreVoteProposalsCount}><T id="proposals.statusLinks.preVote" m="Under Discussion" /></ListLink>}/>
     <Tab path="/governance/proposals/activevote" component={ActiveVoteProposals}

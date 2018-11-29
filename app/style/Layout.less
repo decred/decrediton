@@ -160,6 +160,24 @@
   min-width: 76px;
 }
 
+.tabbed-page-body.governance .tabbed-page-header > .tabs {
+  left: unset;
+  padding-left: 100px;
+  margin-left: -63px;
+  width: 100%;
+  background-color: var(--disabled-background-color-lighter);
+  > .tab {
+    margin-right: 20px;
+    > a {
+      padding: 3px 10px 3px 10px;
+      border-radius: 5px;
+      &.active {
+        background-color: var(--background-back-color);
+      }
+    }
+  }
+}
+
 .tabbed-page-header > .tabs {
   position: absolute;
   bottom: 0px;
