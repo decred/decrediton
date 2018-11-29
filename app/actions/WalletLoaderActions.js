@@ -241,12 +241,9 @@ export const startRpcRequestFunc = (isRetry, privPass) =>
     return new Promise(() => {
       if (!isRetry) dispatch({ type: SYNC_ATTEMPT });
       const { loader } = getState().walletLoader;
-      var rpcSyncCall = loader.rpcSync(request);
+      const rpcSyncCall = loader.rpcSync(request);
+      dispatch({ syncCall: rpcSyncCall, type: SYNC_UPDATE });
       rpcSyncCall.on("data", function(response) {
-        const { syncCall } = getState().walletLoader;
-        if (!syncCall) {
-          dispatch({ syncCall: rpcSyncCall, type: SYNC_UPDATE });
-        }
         dispatch(syncConsumer(response));
       });
       rpcSyncCall.on("end", function() {
@@ -386,12 +383,9 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
   }
   return new Promise(() => {
     const { loader } = getState().walletLoader;
-    var spvSyncCall = loader.spvSync(request);
+    const spvSyncCall = loader.spvSync(request);
+    dispatch({ syncCall: spvSyncCall, type: SYNC_UPDATE });
     spvSyncCall.on("data", function(response) {
-      const { syncCall } = getState().walletLoader;
-      if (!syncCall) {
-        dispatch({ syncCall: spvSyncCall, type: SYNC_UPDATE });
-      }
       dispatch(syncConsumer(response));
     });
     spvSyncCall.on("end", function() {
