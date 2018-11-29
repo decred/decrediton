@@ -119,17 +119,7 @@ export const sortedAvailableWallets = createSelector(
 export const previousWallet = get([ "daemon", "previousWallet" ]);
 export const getWalletName = get([ "daemon", "walletName" ]);
 
-const openWalletInputRequest = get([ "walletLoader", "openWalletInputRequest" ]);
-const createWalletInputRequest = get([ "walletLoader", "createWalletInputRequest" ]);
-const advancedDaemonInputRequest = get([ "walletLoader", "advancedDaemonInputRequest" ]);
-const selectCreateWalletInputRequest = get([ "daemon", "selectCreateWalletInputRequest" ]);
-
-export const isInputRequest = or(
-  openWalletInputRequest,
-  createWalletInputRequest,
-  and(openForm, isAdvancedDaemon, advancedDaemonInputRequest),
-  selectCreateWalletInputRequest
-);
+export const openWalletInputRequest = get([ "walletLoader", "openWalletInputRequest" ]);
 
 export const balances = or(get([ "grpc", "balances" ]), () => []);
 export const walletService = get([ "grpc", "walletService" ]);

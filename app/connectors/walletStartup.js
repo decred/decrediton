@@ -13,7 +13,7 @@ const mapStateToProps = selectorMap({
   showSpvChoice: sel.showSpvChoice,
   showPrivacy: sel.showPrivacy,
   startStepIndex: sel.startStepIndex,
-  isInputRequest: sel.isInputRequest,
+  openWalletInputRequest: sel.openWalletInputRequest,
   startupError: sel.startupError,
   confirmNewSeed: sel.confirmNewSeed,
   existingOrNew: sel.existingOrNew,

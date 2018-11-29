@@ -11,7 +11,7 @@ const DaemonLoadingBody = ({
   Form,
   text,
   animationType,
-  isInputRequest,
+  openWalletInputRequest,
   getCurrentBlockCount,
   getWalletReady,
   getDaemonStarted,
@@ -101,7 +101,7 @@ const DaemonLoadingBody = ({
             </div>
           }
         </div>
-        { Form && <Form {...{ ...props, isInputRequest, startupError, getCurrentBlockCount, getDaemonSynced, isSPV }}/> }
+        { Form && <Form {...{ ...props, openWalletInputRequest, startupError, getCurrentBlockCount, getDaemonSynced, isSPV }}/> }
         {syncInput ?
           <div className="advanced-page-form">
             <div className="advanced-daemon-row">
