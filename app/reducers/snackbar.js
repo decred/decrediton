@@ -347,6 +347,13 @@ export default function snackbar(state = {}, action) {
       values = { ...values, host: action.host };
     }
 
+    if ((process.env.NODE_ENV === "development") && action.error) {
+      // in development mode, log failures as errors in the console which helps
+      // in determining where the failure came from when it's being correctly
+      // handled in an action.
+      console.error(action.type, "\n", action.error);
+    }
+
     break;
   }
 
