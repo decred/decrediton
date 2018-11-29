@@ -184,7 +184,6 @@ export const exportStatToCSV = (opts) => (dispatch, getState) => {
       fd = null;
     }
   };
-  console.log(calcFunction);
   dispatch(calcFunction({ opts, startFunction, progressFunction, endFunction, errorFunction }));
 };
 
@@ -501,6 +500,44 @@ const txDataCb = async ({ mined, maturingTxs, liveTickets, currentBalance, tsDat
   });
 };
 
+const prepDataToCalcStats = async (startBlock, endBlock, currentDate, endDate, pageDir, data) => {
+  let continueGetting = true;
+  let currentBlock = startBlock;
+  const toProcess = [];
+  const { maxMaturity, currentBlockHeight, pageSize, tsDate, walletService } = data;
+  // grab transactions in batches of (roughly) `pageSize`
+  // transactions, so that if we can stop in the middle of the process
+  // (say, because we're interested in only the first 10 days worth of
+  // balances)
+  while (continueGetting) {
+    const { mined } = await wallet.getTransactions(walletService, currentBlock,
+      endBlock, pageSize);
+    if (mined.length > 0) {
+      const lastTx = mined[mined.length-1];
+      currentBlock = lastTx.height + pageDir;
+      currentDate = tsDate(lastTx.timestamp);
+      toProcess.push(...mined);
+    }
+    continueGetting =
+      (mined.length > 0) &&
+      (currentBlock > 0) &&
+      (currentBlock < currentBlockHeight) &&
+      ((!endDate) || (endDate && currentDate < endDate)) ;
+  }
+
+  // grab all txs that are ticket/coinbase maturity blocks from the last tx
+  // so that we can account for tickets and votes maturing
+  endBlock = currentBlock + maxMaturity * pageDir;
+  if ((currentBlock > 0) && (currentBlock < currentBlockHeight)) {
+    const { mined } = await wallet.getTransactions(walletService, currentBlock,
+      endBlock, 0);
+    if (mined && mined.length > 0) {
+      toProcess.push(...mined);
+    }
+  }
+  return toProcess;
+};
+
 const balancesStatsBackwards = (opts) => async (dispatch, getState) => {
   const { progressFunction, endFunction, errorFunction, endDate } = opts;
 
@@ -525,56 +562,22 @@ const balancesStatsBackwards = (opts) => async (dispatch, getState) => {
 
   const tsDate = sel.tsDate(getState());
 
-  let startBlock = currentBlockHeight;
-  let endBlock = 1;
   const pageSize = 200;
-  const pageDir = -1;
   const maxMaturity = Math.max(chainParams.CoinbaseMaturity, chainParams.TicketMaturity);
   let currentDate = new Date();
-  let currentBlock = startBlock;
-  let continueGetting = true;
-  const toProcess = [];
 
   try {
+    const data = { maxMaturity, currentBlockHeight, pageSize, tsDate, walletService };
+    const toProcess = await prepDataToCalcStats(currentBlockHeight, 1, currentDate, endDate, -1, data);
+
     // when calculating backwards, we need to account for unmined txs, because
     // the account balances for locked tickets include them. To simplify the
     // logic, we modify the unmined transactions to simulate as if it had been
     // just mined in the last block.
     const { unmined } = await wallet.getTransactions(walletService, -1, -1, 0);
     const fixedUnmined = unmined.map(tx => ({ ...tx, timestamp: currentDate.getTime(),
-      height: currentBlock }));
+      height: currentBlockHeight }));
     toProcess.push(...fixedUnmined);
-
-    // now, grab transactions in batches of (roughly) `pageSize`
-    // transactions, so that if we can stop in the middle of the process
-    // (say, because we're interested in only the first 10 days worth of
-    // balances)
-    while (continueGetting) {
-      const { mined } = await wallet.getTransactions(walletService, currentBlock,
-        endBlock, pageSize);
-      if (mined.length > 0) {
-        const lastTx = mined[mined.length-1];
-        currentBlock = lastTx.height + pageDir;
-        currentDate = tsDate(lastTx.timestamp);
-        toProcess.push(...mined);
-      }
-      continueGetting =
-        (mined.length > 0) &&
-        (currentBlock > 0) &&
-        (currentBlock < currentBlockHeight) &&
-        ((!endDate) || (endDate &&  currentDate > endDate)) ;
-    }
-
-    // grab all txs that are ticket/coinbase maturity blocks from the last tx
-    // so that we can account for tickets and votes maturing
-    endBlock = currentBlock + maxMaturity * pageDir;
-    if ((currentBlock > 0) && (currentBlock < currentBlockHeight)) {
-      const { mined } = await wallet.getTransactions(walletService, currentBlock,
-        endBlock, 0);
-      if (mined && mined.length > 0) {
-        toProcess.push(...mined);
-      }
-    }
 
     // on backwards stats, we find vote txs before finding ticket txs, so
     // pre-process tickets from all grabbed txs to avoid making the separate
@@ -612,15 +615,9 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
 
   const tsDate = sel.tsDate(getState());
 
-  let startBlock = 1;
-  let endBlock = currentBlockHeight;
   const pageSize = 200;
-  const pageDir = 1;
   const maxMaturity = Math.max(chainParams.CoinbaseMaturity, chainParams.TicketMaturity);
   let currentDate = new Date();
-  let currentBlock = startBlock;
-  let continueGetting = true;
-  const toProcess = [];
 
   startFunction({
     series: [
@@ -637,37 +634,8 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
   });
 
   try {
-    // grab transactions in batches of (roughly) `pageSize`
-    // transactions, so that if we can stop in the middle of the process
-    // (say, because we're interested in only the first 10 days worth of
-    // balances)
-    while (continueGetting) {
-      const { mined } = await wallet.getTransactions(walletService, currentBlock,
-        endBlock, pageSize);
-      if (mined.length > 0) {
-        const lastTx = mined[mined.length-1];
-        currentBlock = lastTx.height + pageDir;
-        currentDate = tsDate(lastTx.timestamp);
-        toProcess.push(...mined);
-      }
-      continueGetting =
-        (mined.length > 0) &&
-        (currentBlock > 0) &&
-        (currentBlock < currentBlockHeight) &&
-        ((!endDate) || (endDate && currentDate < endDate)) ;
-    }
-
-    // grab all txs that are ticket/coinbase maturity blocks from the last tx
-    // so that we can account for tickets and votes maturing
-    endBlock = currentBlock + maxMaturity * pageDir;
-    if ((currentBlock > 0) && (currentBlock < currentBlockHeight)) {
-      const { mined } = await wallet.getTransactions(walletService, currentBlock,
-        endBlock, 0);
-      if (mined && mined.length > 0) {
-        toProcess.push(...mined);
-      }
-    }
-
+    const data = { maxMaturity, currentBlockHeight, pageSize, tsDate, walletService };
+    const toProcess = await prepDataToCalcStats(1, currentBlockHeight, currentDate, endDate, 1, data);
     await txDataCb({ mined: toProcess, maturingTxs, liveTickets, walletService,
       chainParams, currentBlockHeight, currentBalance, tsDate, progressFunction, recentBlockTimestamp });
     endFunction();
