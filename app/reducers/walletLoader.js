@@ -15,7 +15,7 @@ import {
   SYNC_PEER_CONNECTED, SYNC_PEER_DISCONNECTED, SYNC_FETCHED_MISSING_CFILTERS_STARTED,
   SYNC_FETCHED_MISSING_CFILTERS_PROGRESS, SYNC_FETCHED_MISSING_CFILTERS_FINISHED,
   SYNC_DISCOVER_ADDRESSES_STARTED, SYNC_DISCOVER_ADDRESSES_FINISHED,
-  SYNC_RESCAN_STARTED, SYNC_RESCAN_PROGRESS, SYNC_RESCAN_FINISHED,
+  SYNC_RESCAN_STARTED, SYNC_RESCAN_PROGRESS, SYNC_RESCAN_FINISHED, SYNC_CANCEL,
   GENERATESEED_ATTEMPT
 } from "actions/WalletLoaderActions";
 import {
@@ -274,11 +274,18 @@ export default function walletLoader(state = {}, action) {
       syncInput: false,
       syncAttemptRequest: false,
       synced: false,
+      syncCall: null,
     };
   case SYNC_UPDATE:
     return { ...state,
       syncError: null,
       syncCall: action.syncCall,
+    };
+  case SYNC_CANCEL:
+    return { ...state,
+      syncError: null,
+      synced: false,
+      syncCall: null,
     };
   case SYNC_SUCCESS:
     return { ...state,
