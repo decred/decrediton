@@ -95,7 +95,7 @@ class GetStartedPage extends React.Component {
       appVersion,
       updateAvailable,
       isSPV,
-      isInputRequest,
+      openWalletInputRequest,
       syncFetchMissingCfiltersAttempt,
       syncFetchHeadersAttempt,
       syncDiscoverAddressesAttempt,
@@ -238,7 +238,7 @@ class GetStartedPage extends React.Component {
         appVersion,
         updateAvailable,
         isSPV,
-        isInputRequest,
+        openWalletInputRequest,
         syncFetchHeadersAttempt,
       }} />;
   }
