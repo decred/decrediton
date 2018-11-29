@@ -122,7 +122,6 @@ class TabbedPage extends React.Component {
     );
 
     const tabContents = this.props.uiAnimations ? this.animatedStyles() : this.staticStyles();
-
     return (
       <div className="tabbed-page">
         <div className="tabbed-page-header">
@@ -131,7 +130,7 @@ class TabbedPage extends React.Component {
           <RoutedTabsHeader tabs={tabHeaders} />
         </div>
 
-        <div className="tabbed-page-body">
+        <div className={"tabbed-page-body" + (this.props.governancePage ? " governance" : "")}>
           {tabContents}
           {nonTabs}
         </div>

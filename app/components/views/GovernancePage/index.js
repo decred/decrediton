@@ -28,7 +28,7 @@ const TabHeader = treasuryInfo(({ treasuryBalance }) =>
 );
 
 export default () => (
-  <TabbedPage header={<PageHeader />} >
+  <TabbedPage governancePage header={<PageHeader />} >
     <Switch>
       <Redirect from="/governance" exact to="/governance/proposals" />
       <Redirect from="/governance/proposals" exact to="/governance/proposals/prevote" />
