@@ -262,11 +262,9 @@ export default function snackbar(state = {}, action) {
     break;
   }
 
-  // all simple success notifications. Just add the type below and the message
-  // on the messages variable above if you need a simple message, without extra
-  // data.
+  // Success messages
+
   case EXPORT_COMPLETED:
-    values = { filename: action.filename };
   case RENAMEACCOUNT_SUCCESS:
   case GETNEXTACCOUNT_SUCCESS:
   case CHANGEPASSPHRASE_SUCCESS:
@@ -279,12 +277,28 @@ export default function snackbar(state = {}, action) {
   case REMOVESTAKEPOOLCONFIG:
   case SEEDCOPIEDTOCLIPBOARD:
   case PUBLISHUNMINEDTRANSACTIONS_SUCCESS:
+  case PURCHASETICKETS_SUCCESS:
+  case ADDCUSTOMSTAKEPOOL_SUCCESS:
+  case PUBLISHTX_SUCCESS:
     type = "Success";
     message = messages[action.type] || messages.defaultSuccessMessage;
+
+    // custom values for some success messages
+    switch (action.type) {
+    case EXPORT_COMPLETED:
+      values = { filename: action.filename };
+      break;
+    case PURCHASETICKETS_SUCCESS:
+      values = { numTickets: action.purchaseTicketsResponse.getTicketHashesList().length };
+      break;
+    case PUBLISHTX_SUCCESS:
+      values = { hash: action.hash };
+      break;
+    }
+
     break;
 
-  // all simple error messages. Note that the action *must* have an action.error
-  // attribute.
+  // Error messages
   case WALLETREMOVED_FAILED:
   case RENAMEACCOUNT_FAILED:
   case GETNEXTACCOUNT_FAILED:
@@ -297,7 +311,6 @@ export default function snackbar(state = {}, action) {
   case IMPORTSCRIPT_MANUAL_FAILED:
   case UPDATESTAKEPOOLCONFIG_FAILED:
   case REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED:
-    values = { host: action.host };
   case SETSTAKEPOOLVOTECHOICES_FAILED:
   case ADDCUSTOMSTAKEPOOL_FAILED:
   case DECODERAWTXS_FAILED:
@@ -324,27 +337,23 @@ export default function snackbar(state = {}, action) {
     } else {
       message = messages[action.type] || messages.defaultErrorMessage;
     }
+
     type = "Error";
-    values = { ...values, originalError: String(action.error) };
-    break;
+    values = { originalError: String(action.error) };
 
-  // success messages that add some context/interpolation/values.
-  case PURCHASETICKETS_SUCCESS:
-    type = "Success";
-    message = messages[PURCHASETICKETS_SUCCESS];
-    values = { numTickets: action.purchaseTicketsResponse.getTicketHashesList().length };
-    break;
+    // custom values for some error messages
+    switch (action.type) {
+    case REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED:
+      values = { ...values, host: action.host };
+    }
 
-  case ADDCUSTOMSTAKEPOOL_SUCCESS:
-    type = "Success";
-    message = messages[ADDCUSTOMSTAKEPOOL_SUCCESS];
-    values = { host: action.poolInfo.Host };
-    break;
+    if ((process.env.NODE_ENV === "development") && action.error) {
+      // in development mode, log failures as errors in the console which helps
+      // in determining where the failure came from when it's being correctly
+      // handled in an action.
+      console.error(action.type, "\n", action.error);
+    }
 
-  case PUBLISHTX_SUCCESS:
-    type = "Success";
-    message = messages[PUBLISHTX_SUCCESS];
-    values = { hash: action.hash };
     break;
   }
 
