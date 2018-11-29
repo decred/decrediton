@@ -101,7 +101,15 @@
     >.proposal-list-item.declined {
       border-left: 2px solid var(--vote-no-color);
     }
+    > .proposal-list-item {
+      > .info {
+        > .proposal-name {
+          color: var(--stroke-color-hovered);
+        }
+      }
+    }
   }
+  
   > .proposal-list-item {
     padding: 21px 20px 2px 20px;
     display: flex;
@@ -161,7 +169,6 @@
       position: absolute;
       right: 280px;
       margin-top: 3px;
-
       &.yes {
         background-color: var(--vote-yes-color);
       }
@@ -195,7 +202,7 @@
           background-color: var(--vote-no-color);
         }
       }
-      > .proposal-vote-choice-text {
+      .proposal-vote-choice-text {
         color: var(--stroke-color-hovered);
       }
       > .proposal-vote-passage {
