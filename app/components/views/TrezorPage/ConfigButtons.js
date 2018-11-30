@@ -6,6 +6,11 @@ import { KeyBlueButton } from "buttons";
 class ConfigButtons extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { show: false };
+  }
+
+  onToggleAccordion() {
+    this.setState({ show: !this.state.show });
   }
 
   render() {
@@ -21,8 +26,10 @@ class ConfigButtons extends React.Component {
 
     return (
       <VerticalAccordion
-        height={75}
+        height={105}
         header={ConfigButtonsHeader}
+        show={this.state.show}
+        onToggleAccordion={this.onToggleAccordion}
         className="trezor-config-accordion trezor-config-regular-buttons"
       >
         <KeyBlueButton onClick={onTogglePinProtection} loading={loading} disabled={loading}>

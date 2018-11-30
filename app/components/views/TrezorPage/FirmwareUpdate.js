@@ -8,7 +8,7 @@ import { PathBrowseInput } from "inputs";
 class FirmwareUpdate extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { path: "" };
+    this.state = { path: "", show: false };
   }
 
   onChangePath(path) {
@@ -17,6 +17,10 @@ class FirmwareUpdate extends React.Component {
 
   onUpdateFirmware() {
     this.props.onUpdateFirmware(this.state.path);
+  }
+
+  onToggleAccordion() {
+    this.setState({ show: !this.state.show });
   }
 
   render() {
@@ -33,6 +37,8 @@ class FirmwareUpdate extends React.Component {
       <VerticalAccordion
         height={250}
         header={header}
+        show={this.state.show}
+        onToggleAccordion={this.onToggleAccordion}
         className="trezor-config-accordion trezor-config-regular-buttons"
       >
         <div className="trezor-wipe-warning">

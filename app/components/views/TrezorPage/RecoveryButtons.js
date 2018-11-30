@@ -7,6 +7,11 @@ import { Documentation } from "shared";
 class RecoveryButtons extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { show: false };
+  }
+
+  onToggleAccordion() {
+    this.setState({ show: !this.state.show });
   }
 
   render() {
@@ -23,6 +28,8 @@ class RecoveryButtons extends React.Component {
       <VerticalAccordion
         height={250}
         header={header}
+        show={this.state.show}
+        onToggleAccordion={this.onToggleAccordion}
         className="trezor-config-accordion trezor-config-regular-buttons"
       >
         <div className="trezor-wipe-warning">

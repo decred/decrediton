@@ -92,7 +92,7 @@ class MenuLinks extends React.Component {
 
     return (
       <Aux>
-        {linkList.map(link => this.getMenuLink(link))}
+        {this.links.map(link => this.getMenuLink(link))}
         {caret}
       </Aux>
     );
