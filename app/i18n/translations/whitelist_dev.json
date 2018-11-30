@@ -17,6 +17,5 @@
   "tickets.errors.setStakePoolVoteChoicesFailed",
   "accounts.errors.renameAccountFailed",
   "accounts.errors.getNextAccountFailed",
-  "settings.errors.changePassphraseFailed",
   "decodeRawTx.errors.decodeFailed"
 ]
