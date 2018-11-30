@@ -59,7 +59,7 @@ class Snackbar extends React.Component {
     this.hideTimer = this.props.setInterval(() => {
       this.setState({ progress: this.state.progress + 10 });
       if (this.state.progress >= 100) {
-        this.onDismissMessage();
+        this.props.setTimeout(() => this.onDismissMessage(), 500); //wait for the CSS transition to finish
         if (this.props.messages.length === 0)
           this.clearHideTimer();
       }

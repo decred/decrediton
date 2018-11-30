@@ -28,6 +28,14 @@ class ProgressRing extends React.Component {
           cx={ radius }
           cy={ radius }
         />
+        <circle
+          fill="transparent"
+          strokeWidth={ stroke + 0.5 }
+          strokeDasharray="2.5, 3"
+          r={ this.normalizedRadius }
+          cx={ radius }
+          cy={ radius }
+        />
       </svg>
     );
   }
