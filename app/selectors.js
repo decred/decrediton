@@ -401,8 +401,8 @@ const transactionNormalizer = createSelector(
         txNumericType: type,
         rawTx: Buffer.from(tx.getTransaction()).toString("hex"),
         originalTx: origTx,
+        ...txDetails,
         ...stakeInfo,
-        ...txDetails
       };
     };
   }
@@ -499,13 +499,13 @@ export const homeHistoryTickets = createSelector(
         // the filter for the moment.
         return null;
       }
-      tx.ticketPrice = ticketDecoded.ticketPrice;
+      if (ticketDecoded.ticketPrice) tx.ticketPrice = ticketDecoded.ticketPrice;
       if (ticketDecoded.status != "voted") {
         tx.status = ticketDecoded.status;
       }
-      tx.enterTimestamp = ticketDecoded.enterTimestamp;
-      tx.leaveTimestamp = ticketDecoded.leaveTimestamp;
-      tx.ticketReward = ticketDecoded.ticketReward;
+      if (ticketDecoded.enterTimestamp) tx.enterTimestamp = ticketDecoded.enterTimestamp;
+      if (ticketDecoded.leaveTimestamp) tx.leaveTimestamp = ticketDecoded.leaveTimestamp;
+      if (ticketDecoded.ticketReward) tx.ticketReward = ticketDecoded.ticketReward;
 
       return tx;
     }).filter(v => !!v);
@@ -522,13 +522,13 @@ export const viewedTransaction = createSelector(
     const ticketDecoded = txHashToTicket[txHash];
     const tx = find({ txHash }, transactions);
     if (ticketDecoded) {
-      tx.ticketPrice = ticketDecoded.ticketPrice;
+      if (ticketDecoded.ticketPrice) tx.ticketPrice = ticketDecoded.ticketPrice;
       if (ticketDecoded.status != "voted") {
         tx.status = ticketDecoded.status;
       }
-      tx.enterTimestamp = ticketDecoded.enterTimestamp;
-      tx.leaveTimestamp = ticketDecoded.leaveTimestamp;
-      tx.ticketReward = ticketDecoded.ticketReward;
+      if (ticketDecoded.enterTimestamp) tx.enterTimestamp = ticketDecoded.enterTimestamp;
+      if (ticketDecoded.leaveTimestamp) tx.leaveTimestamp = ticketDecoded.leaveTimestamp;
+      if (ticketDecoded.ticketReward) tx.ticketReward = ticketDecoded.ticketReward;
     }
     return tx;
   }

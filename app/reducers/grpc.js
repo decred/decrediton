@@ -401,7 +401,8 @@ export default function grpc(state = {}, action) {
   case FETCHMISSINGSTAKETXDATA_SUCCESS:
     return {
       ...state,
-      transactions: action.transactions,
+      transactions: action.transactions || state.transactions,
+      recentStakeTransactions: action.recentStakeTransactions || state.recentStakeTransactions,
       fetchMissingStakeTxDataAttempt: {
         ...state.fetchMissingStakeTxDataAttempt,
         [action.txHash]: false,

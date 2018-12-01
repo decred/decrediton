@@ -113,11 +113,6 @@ const TxDetails = ({
 
   var subtitle = <div/>;
 
-  if (((txType == "Ticket") && (!ticketPrice)) || ((txType == "Vote") && (!leaveTimestamp))) {
-    // don't have the extended stake info for this transaction yet. Request it.
-    fetchMissingStakeTxData(tx);
-  }
-
   switch (txType) {
   case "Ticket":
   case "Vote":
