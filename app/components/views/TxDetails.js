@@ -56,7 +56,6 @@ const TxDetails = ({
   goBackHistory,
   tsDate,
   publishUnminedTransactions,
-  fetchMissingStakeTxData,
 }) => {
   const {
     txHash,
