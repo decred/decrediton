@@ -72,7 +72,7 @@ const DaemonLoadingBody = ({
           <Aux>
             <LinearProgressFull
               animationType={animationType}
-              text={isSPV ? <T id="getStarted.isSPV.loadingText" m="SPV mode activated, wallet ready to launch"/> : text}
+              text={!text && isSPV ? <T id="getStarted.isSPV.loadingText" m="SPV mode activated, wallet ready to launch"/> : text}
               error={startupError}
               getDaemonSynced={getDaemonSynced}
               disabled={(!getDaemonStarted || getCurrentBlockCount == null) && !isSPV}
