@@ -109,7 +109,7 @@ class TabbedPage extends React.Component {
   }
 
   render() {
-    let { children, header } = this.props;
+    let { children, header, className } = this.props;
     if (!isArray(children)) children = [ children ];
 
     const tabs = children.filter(c => c.type === TabbedPageTab);
@@ -122,16 +122,15 @@ class TabbedPage extends React.Component {
     );
 
     const tabContents = this.props.uiAnimations ? this.animatedStyles() : this.staticStyles();
-
     return (
       <div className="tabbed-page">
         <div className="tabbed-page-header">
           {header}
           <Switch>{headers}</Switch>
-          <RoutedTabsHeader tabs={tabHeaders} />
+          <RoutedTabsHeader tabs={tabHeaders} caret={this.props.caret}/>
         </div>
 
-        <div className="tabbed-page-body">
+        <div className={"tabbed-page-body" + (className ? (" " + className) : "")}>
           {tabContents}
           {nonTabs}
         </div>

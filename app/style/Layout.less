@@ -89,7 +89,7 @@
 .tabbed-page-header,
 .standalone-page-header {
   background-color: var(--background-back-color);
-  padding: 42px 60px 0px 63px;
+  padding: 43px 60px 0px 63px;
   position: absolute;
   top: 0px;
   right: 0px;
@@ -160,6 +160,24 @@
   min-width: 76px;
 }
 
+.tabbed-page-body.governance .tabbed-page-header > .tabs {
+  left: unset;
+  padding-left: 100px;
+  margin-left: -63px;
+  width: 100%;
+  background-color: var(--disabled-background-color-lighter);
+  > .tab {
+    margin-right: 20px;
+    > a {
+      padding: 3px 10px 3px 10px;
+      border-radius: 5px;
+      &.active {
+        background-color: var(--background-back-color);
+      }
+    }
+  }
+}
+
 .tabbed-page-header > .tabs {
   position: absolute;
   bottom: 0px;
@@ -181,6 +199,10 @@
   background-color: var(--accent-color);
   position: absolute;
   height: 5px;
+}
+
+.tabbed-page-body.governance>.tab-content {
+  overflow-y: hidden;
 }
 
 .tabbed-page .tab-content {
