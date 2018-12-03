@@ -462,7 +462,7 @@ export const totalValueOfLiveTickets = createSelector(
     if (!balances) return 0;
     const lastBalance = balances[balances.length-1];
     if (!lastBalance) return 0;
-    return lastBalance.series.locked + lastBalance.series.lockedNonWallet;
+    return lastBalance.series.locked;
   }
 );
 
@@ -473,8 +473,8 @@ export const ticketDataChart = createSelector(
     voted: s.series.voted / unitDivisor,
     revoked: s.series.revoked / unitDivisor,
     ticket: s.series.ticket / unitDivisor,
-    locked: (s.series.locked + s.series.lockedNonWallet) / unitDivisor,
-    immature: (s.series.immature + s.series.immatureNonWallet) / unitDivisor,
+    locked: (s.series.locked + s.series.immature) / unitDivisor,
+    immature: s.series.immature / unitDivisor,
   })));
 
 export const viewedDecodedTransaction = createSelector(
