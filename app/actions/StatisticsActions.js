@@ -114,7 +114,6 @@ export const EXPORT_COMPLETED = "EXPORT_COMPLETED";
 export const EXPORT_ERROR = "EXPORT_ERROR";
 
 export const exportStatToCSV = (opts) => (dispatch, getState) => {
-  console.log(opts);
   const { calcFunction, csvFilename } = opts;
 
   var fd;
@@ -297,10 +296,8 @@ const findMaturingDeltas = (maturingTxs, fromHeight, toHeight, fromTimestamp, to
 
     const maturedThisHeight = {
       spendable: 0, immature: 0, immatureNonWallet: 0, locked: 0,
-      lockedNonWallet: 0,
-      voted: 0, revoked: 0, sent: 0, received: 0, ticket: 0,
-      stakeRewards: 0, stakeFees: 0, totalStake: 0,
-      timestamp: timestamp, tx: null
+      lockedNonWallet: 0, voted: 0, revoked: 0, sent: 0, received: 0, ticket: 0,
+      stakeRewards: 0, stakeFees: 0, totalStake: 0, timestamp: timestamp, tx: null
     };
 
     // console.log(maturingTxs)
@@ -365,13 +362,6 @@ const voteRevokeInfo = async (tx, liveTickets, walletService) => {
   const wasWallet = ticket.isWallet;
   const stakeResult = returnAmount - ticketCommitAmount;
   return { wasWallet, isVote, returnAmount, stakeResult, ticketCommitAmount };
-};
-
-const turnFieldsNegative = (delta) => {
-  const fields = [ "spendable", "locked", "lockedNonWallet", "stakeFees",
-    "stakeRewards", "totalStake", "immature", "immatureNonWallet" ];
-  fields.forEach(f => delta[f] = -delta[f]);
-  return delta;
 };
 
 // closure that calcs how much each tx affects each balance type.
@@ -454,6 +444,8 @@ const txDataCbBackwards = async ({ mined, maturingTxs, liveTickets,
   let lastTxHeight = currentBlockHeight;
   let lastTxTimestamp = now.getTime() / 1000;
   const maturityBlocks = Math.max(chainParams.CoinbaseMaturity, chainParams.TicketMaturity);
+  const fields = [ "spendable", "locked", "stakeFees", "stakeRewards", "totalStake", "immature" ];
+  const turnFieldsNegative = (delta) => fields.forEach(f => delta[f] = -delta[f]);
 
   for (let i = 0; i < mined.length; i++) {
     const tx = mined[i];
@@ -510,7 +502,7 @@ const txDataCb = async ({ mined, maturingTxs, liveTickets, currentBalance, tsDat
 };
 
 const balancesStatsBackwards = (opts) => async (dispatch, getState) => {
-  const { progressFunction, startFunction, endFunction, errorFunction, endDate } = opts;
+  const { progressFunction, endFunction, errorFunction, endDate } = opts;
 
   const { currentBlockHeight, walletService,
     recentBlockTimestamp, balances } = getState().grpc;
@@ -542,20 +534,6 @@ const balancesStatsBackwards = (opts) => async (dispatch, getState) => {
   let currentBlock = startBlock;
   let continueGetting = true;
   const toProcess = [];
-
-  startFunction({
-    series: [
-      { name: "spendable", type: VALUE_TYPE_ATOMAMOUNT },
-      { name: "immature", type: VALUE_TYPE_ATOMAMOUNT },
-      { name: "locked", type: VALUE_TYPE_ATOMAMOUNT },
-      { name: "immatureNonWallet", type: VALUE_TYPE_ATOMAMOUNT },
-      { name: "lockedNonWallet", type: VALUE_TYPE_ATOMAMOUNT },
-      { name: "total", type: VALUE_TYPE_ATOMAMOUNT },
-      { name: "stakeRewards", type: VALUE_TYPE_ATOMAMOUNT },
-      { name: "stakeFees", type: VALUE_TYPE_ATOMAMOUNT },
-      { name: "totalStake", type: VALUE_TYPE_ATOMAMOUNT },
-    ],
-  });
 
   try {
     // when calculating backwards, we need to account for unmined txs, because
