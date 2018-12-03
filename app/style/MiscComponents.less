@@ -368,6 +368,18 @@
   background-image: @menu-animation-governance;
 }
 
+.menu-link-active.menu-link.trezorIcon {
+  background-image: @menu-trezor-active;
+}
+
+.menu-link.trezorIcon:not(.menu-link-active):hover {
+  background-image: @menu-trezor-hover;
+}
+
+.menu-link.trezorIcon {
+  background-image: @menu-trezor-default;
+}
+
 .menu-caret {
   position: absolute;
   height: 52px;

@@ -23,6 +23,11 @@ class MenuLinks extends React.Component {
 
   constructor (props) {
     super(props);
+
+    this.links = [ ...linkList ];
+    if (props.isTrezor) {
+      this.links.push({ path: "/trezor", link: <T id="sidebar.link.trezor" m="Trezor Setup" />, icon:"trezor" });
+    }
   }
 
   componentDidMount() {
@@ -87,7 +92,7 @@ class MenuLinks extends React.Component {
 
     return (
       <Aux>
-        {linkList.map(link => this.getMenuLink(link))}
+        {this.links.map(link => this.getMenuLink(link))}
         {caret}
       </Aux>
     );

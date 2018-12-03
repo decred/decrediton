@@ -3,6 +3,7 @@ import { bindActionCreators } from "redux";
 import { selectorMap } from "../fp";
 import * as sel from "../selectors";
 import * as ca from "../actions/ControlActions";
+import * as tza from "../actions/TrezorActions";
 
 const mapStateToProps = selectorMap({
   defaultSpendingAccount: sel.defaultSpendingAccount,
@@ -17,6 +18,8 @@ const mapStateToProps = selectorMap({
   unitDivisor: sel.unitDivisor,
   constructTxLowBalance: sel.constructTxLowBalance,
   isTransactionsSendTabDisabled: sel.isTransactionsSendTabDisabled,
+  constructTxResponse: sel.constructTxResponse,
+  isTrezor: sel.isTrezor,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -25,6 +28,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onClearTransaction: ca.clearTransaction,
   getNextAddressAttempt: ca.getNextAddressAttempt,
   validateAddress: ca.validateAddress,
+  onAttemptSignTransactionTrezor: tza.signTransactionAttemptTrezor,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

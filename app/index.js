@@ -385,6 +385,24 @@ var initialState = {
     proposals: {}, // map from proposal token (id) to proposal details
     lastVettedFetchTime: new Date(0), // time when vetted proposals were requested
   },
+  trezor: {
+    enabled: false,
+    debug: globalCfg.get("trezor_debug"),
+    deviceList: null,
+    getDeviceListAttempt: false,
+    transportError: false,
+    device: null,
+    performingOperation: false,
+    waitingForPin: false,
+    waitingForPassPhrase: false,
+    waitingForWord: false,
+    pinCallBack: null,
+    passPhraseCallBack: null,
+    pinMessage: null,
+    passPhraseMessage: null,
+    wordCallBack: null,
+    walletCreationMasterPubkeyAttempt: false,
+  },
   locales: locales
 };
 

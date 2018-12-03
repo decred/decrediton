@@ -1,6 +1,5 @@
 import { WalletSelectionFormBody } from "./Form";
 import { createWallet } from "connectors";
-
 @autobind
 class WalletSelectionBody extends React.Component {
   constructor(props) {
@@ -20,6 +19,7 @@ class WalletSelectionBody extends React.Component {
       walletMasterPubKey: "",
       masterPubKeyError: false,
       walletNameError: null,
+      isTrezor: false,
     };
   }
   componentDidUpdate(prevProps) {
@@ -55,6 +55,7 @@ class WalletSelectionBody extends React.Component {
       onCloseEditWallets,
       toggleWatchOnly,
       onChangeCreateWalletMasterPubKey,
+      toggleTrezor,
     } = this;
     const {
       selectedWallet,
@@ -101,6 +102,7 @@ class WalletSelectionBody extends React.Component {
           walletNameError,
           maxWalletCount,
           isSPV,
+          toggleTrezor,
           ...this.props,
           ...this.state,
         }}
@@ -139,7 +141,8 @@ class WalletSelectionBody extends React.Component {
   }
   createWallet() {
     const { newWalletName, createNewWallet,
-      isWatchingOnly, masterPubKeyError, walletMasterPubKey, walletNameError } = this.state;
+      isWatchingOnly, masterPubKeyError, walletMasterPubKey, walletNameError,
+      isTrezor } = this.state;
     if (newWalletName == "" || walletNameError) {
       this.setState({ hasFailedAttemptName: true });
       return;
@@ -150,13 +153,35 @@ class WalletSelectionBody extends React.Component {
         return;
       }
     }
-    this.props.onCreateWallet(
-      createNewWallet,
-      { label: newWalletName, value: { wallet: newWalletName, watchingOnly: isWatchingOnly } });
+    if (isTrezor && !this.props.trezorDevice) {
+      this.props.trezorAlertNoConnectedDevice();
+      return;
+    }
+    if (isTrezor) {
+      this.props.trezorGetWalletCreationMasterPubKey()
+        .then(() => {
+          this.props.onCreateWallet(
+            createNewWallet,
+            { label: newWalletName, value: { wallet: newWalletName,
+              watchingOnly: true, isTrezor } } );
+        });
+    } else {
+      this.props.onCreateWallet(
+        createNewWallet,
+        { label: newWalletName, value: { wallet: newWalletName,
+          watchingOnly: isWatchingOnly, isTrezor } } );
+    }
   }
   toggleWatchOnly() {
     const { isWatchingOnly } = this.state;
-    this.setState({ isWatchingOnly : !isWatchingOnly });
+    this.setState({ isWatchingOnly : !isWatchingOnly, isTrezor: false });
+  }
+  toggleTrezor() {
+    const isTrezor = !this.state.isTrezor;
+    this.setState({ isTrezor, isWatchingOnly: false });
+    if (isTrezor) {
+      this.props.trezorEnable();
+    }
   }
   async onChangeCreateWalletMasterPubKey(walletMasterPubKey) {
     if (walletMasterPubKey === "") {

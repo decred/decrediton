@@ -14,6 +14,7 @@ import sidebar from "./sidebar";
 import snackbar from "./snackbar";
 import statistics from "./statistics";
 import governance from "./governance";
+import trezor from "./trezor";
 
 const rootReducer = combineReducers({
   grpc,
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
   snackbar,
   statistics,
   governance,
+  trezor,
 });
 
 export default rootReducer;

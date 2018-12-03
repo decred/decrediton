@@ -44,6 +44,9 @@ export function initWalletCfg(testnet, walletPath) {
   if (!config.has("politeia_last_access_block")) {
     config.set("politeia_last_access_block", 0);
   }
+  if (!config.has("trezor")) {
+    config.set("trezor", false);
+  }
   stakePoolInfo(function(foundStakePoolConfigs) {
     if (foundStakePoolConfigs !== null) {
       updateStakePoolConfig(config, foundStakePoolConfigs);

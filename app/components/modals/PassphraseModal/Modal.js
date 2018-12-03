@@ -12,6 +12,7 @@ const propTypes = {
 
 const StandardPassphraseModal = (props) => {
   const {
+    modalClassName,
     show,
     modalDescription,
     modalTitle,
@@ -29,7 +30,7 @@ const StandardPassphraseModal = (props) => {
     />;
 
   return (
-    <Modal className="passphrase-modal" {...{ show, onCancelModal }}>
+    <Modal className={"passphrase-modal " + (modalClassName || "")} {...{ show, onCancelModal }}>
       <div className="passphrase-modal-header">
         <div className="passphrase-modal-header-title">
           {modalTitle ? modalTitle :

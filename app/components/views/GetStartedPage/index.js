@@ -7,6 +7,7 @@ import ReleaseNotes from "./ReleaseNotes";
 import WalletSelectionBody from "./WalletSelection";
 import StartRPCBody from "./StartRPC";
 import SpvSync from "./SpvSync";
+import TrezorConfig from "./TrezorConfig";
 import { AdvancedStartupBody, RemoteAppdataError } from "./AdvancedStartup";
 import { RescanWalletBody } from "./RescanWallet/index";
 import StakePoolsBody from "./StakePools";
@@ -19,7 +20,7 @@ class GetStartedPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = { showSettings: false, showLogs: false, showReleaseNotes: false,
-      walletPrivatePassphrase: "" };
+      walletPrivatePassphrase: "", showTrezorConfig: false };
   }
 
   componentDidMount() {
@@ -78,6 +79,14 @@ class GetStartedPage extends React.Component {
     this.setState({ showLogs: false });
   }
 
+  onShowTrezorConfig() {
+    this.setState({ showTrezorConfig: true });
+  }
+
+  onHideTrezorConfig() {
+    this.setState({ showTrezorConfig: false });
+  }
+
   onSetWalletPrivatePassphrase(walletPrivatePassphrase) {
     this.setState({ walletPrivatePassphrase });
   }
@@ -107,6 +116,7 @@ class GetStartedPage extends React.Component {
       showSettings,
       showLogs,
       showReleaseNotes,
+      showTrezorConfig,
       ...state
     } = this.state;
 
@@ -117,7 +127,9 @@ class GetStartedPage extends React.Component {
       onHideSettings,
       onShowLogs,
       onHideLogs,
-      onSetWalletPrivatePassphrase
+      onSetWalletPrivatePassphrase,
+      onShowTrezorConfig,
+      onHideTrezorConfig,
     } = this;
 
     const blockChainLoading = "blockchain-syncing";
@@ -135,6 +147,8 @@ class GetStartedPage extends React.Component {
       return <Logs {...{ onShowSettings, onHideLogs, getWalletReady, appVersion, updateAvailable,  ...props }} />;
     } else if (showReleaseNotes) {
       return <ReleaseNotes {...{ onShowSettings, onShowLogs, appVersion, onHideReleaseNotes, getWalletReady, ...props }} />;
+    } else if (showTrezorConfig) {
+      return <TrezorConfig {...{ onHideTrezorConfig, ...props }} />;
     } else if (isAdvancedDaemon && openForm && !remoteAppdataError && !isPrepared && !getWalletReady && !isSPV) {
       Form = AdvancedStartupBody;
     } else if (remoteAppdataError && !isPrepared && !getWalletReady && !isSPV) {
@@ -235,6 +249,8 @@ class GetStartedPage extends React.Component {
         onShowLogs,
         onHideLogs,
         onSetWalletPrivatePassphrase,
+        onShowTrezorConfig,
+        onHideTrezorConfig,
         appVersion,
         updateAvailable,
         isSPV,

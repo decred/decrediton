@@ -12,6 +12,7 @@ import { isTestNet } from "selectors";
 import axios from "axios";
 import { STANDARD_EXTERNAL_REQUESTS } from "main_dev/externalRequests";
 import { DIFF_CONNECTION_ERROR } from "main_dev/constants";
+import { enableTrezor } from "./TrezorActions";
 
 export const DECREDITON_VERSION = "DECREDITON_VERSION";
 export const SELECT_LANGUAGE = "SELECT_LANGUAGE";
@@ -294,6 +295,7 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => {
       dispatch({ type: WALLET_SETTINGS, currencyDisplay, gapLimit });
       dispatch({ type: WALLET_STAKEPOOL_SETTINGS, activeStakePoolConfig, selectedStakePool, currentStakePoolConfig });
       dispatch({ type: WALLET_LOADER_SETTINGS, discoverAccountsComplete });
+      selectedWallet.value.isTrezor && dispatch(enableTrezor());
       setTimeout(()=>dispatch(versionCheckAction()), 2000);
     })
     .catch((err) => {

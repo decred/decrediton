@@ -7,7 +7,7 @@ import { createLogger, lastLogLine, GetDcrdLogs, GetDcrwalletLogs } from "./main
 import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, BOTH_CONNECTION_ERR_MESSAGE, MAX_LOG_LENGTH } from "./main_dev/constants";
 import { getWalletsDirectoryPath, getWalletsDirectoryPathNetwork, appDataDirectory } from "./main_dev/paths";
 import { getGlobalCfgPath, checkAndInitWalletCfg } from "./main_dev/paths";
-import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRequests } from "./main_dev/externalRequests";
+import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRequests, allowExternalRequest } from "./main_dev/externalRequests";
 import { setupProxy } from "./main_dev/proxy";
 import { cleanShutdown, GetDcrdPID, GetDcrwPID } from "./main_dev/launch";
 import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopDaemon, stopWallet, startWallet, checkDaemon, deleteDaemon, setWatchingOnlyWallet, getWatchingOnlyWallet, getDaemonInfo } from "./main_dev/ipc";
@@ -114,8 +114,14 @@ ipcMain.on("reload-allowed-external-request", (event) => {
   reloadAllowedExternalRequests();
   event.returnValue = true;
 });
+
 ipcMain.on("allow-stakepool-host", (event, host) => {
   allowStakepoolRequests(host);
+  event.returnValue = true;
+});
+
+ipcMain.on("allow-external-request", (event, requestType) => {
+  allowExternalRequest(requestType);
   event.returnValue = true;
 });
 

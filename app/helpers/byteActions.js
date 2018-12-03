@@ -77,3 +77,12 @@ export function readFileBackward(path, maxSize, end) {
     }
   );
 }
+
+// str2utf8hex converts a (js, utf-16) string into (utf-8 encoded) hex.
+export function str2utf8hex(str) {
+  return Buffer.from(str).toString("hex");
+}
+
+export function hex2b64(hex) {
+  return new Buffer(hex, "hex").toString("base64");
+}

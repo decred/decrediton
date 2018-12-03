@@ -1,0 +1,66 @@
+@import (reference) "./main.less";
+
+.trezor-pin-modal {
+  h1 {
+    margin: 0;
+  }
+
+  .pin-pad {
+    display: grid;
+    grid-template-columns: 2em 2em 2em;
+    text-align: center;
+    font-size: 150%;
+
+    .pin-pad-button {
+      padding: 0.5em 0em;
+      border: 1px solid transparent;
+      cursor: pointer;
+
+      &:hover {
+        border: 1px solid #6397ff;
+      }
+    }
+  }
+}
+
+.trezor-word-modal {
+  h1 {
+    margin: 0;
+  }
+}
+
+.trezor-pin-modal.get-started,
+.trezor-word-modal.get-started,
+.trezor-passphrase-modal.get-started {
+  margin: 10%;
+  padding: 2em;
+}
+
+.trezor-label {
+  font-family: @font-family-monospaced;
+}
+
+.trezor-config-regular-buttons .button {
+  margin-right: 1em;
+  margin-top: 1em;
+}
+
+.trezor-config-accordion {
+  border-bottom: 1px solid #dadfe2;
+  border-radius: 4px;
+  padding: 1.5em 1em 1em;
+  background-color: #fff;
+
+  .vertical-accordion-header {
+    font-size: 22px;
+    margin-bottom: 0.5em;
+  }
+
+  .input-and-unit {
+    margin-bottom: 0.5em;
+  }
+}
+
+.trezor-word-select {
+  min-height: 10em;
+}

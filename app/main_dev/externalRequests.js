@@ -16,6 +16,7 @@ export const EXTERNALREQUEST_STAKEPOOL_LISTING = "EXTERNALREQUEST_STAKEPOOL_LIST
 export const EXTERNALREQUEST_UPDATE_CHECK = "EXTERNALREQUEST_UPDATE_CHECK";
 export const EXTERNALREQUEST_POLITEIA = "EXTERNALREQUEST_POLITEIA";
 export const EXTERNALREQUEST_DCRDATA = "EXTERNALREQUEST_DCRDATA";
+export const EXTERNALREQUEST_TREZOR_BRIDGE = "EXTERNALREQUEST_TREZOR_BRIDGE";
 
 // These are the requests allowed when the standard privacy mode is selected.
 export const STANDARD_EXTERNAL_REQUESTS = [
@@ -67,6 +68,11 @@ export const installSessionHandlers = (mainLogger) => {
       callback({ cancel: true, requestHeaders: details.requestHeaders });
     } else {
       logger.log("verbose", details.method + " " + details.url);
+      if (allowedExternalRequests[EXTERNALREQUEST_TREZOR_BRIDGE] && /^http:\/\/127.0.0.1:21325\//.test(details.url)) {
+        // trezor bridge requires this as an origin to prevent unwanted access.
+        details.requestHeaders["Origin"] = "https://dummy-origin-to-fool-trezor-bridge.trezor.io";
+      }
+
       callback({ cancel: false, requestHeaders: details.requestHeaders });
     }
   });
@@ -98,6 +104,17 @@ export const allowExternalRequest = (externalReqType) => {
   case EXTERNALREQUEST_DCRDATA:
     addAllowedURL(DCRDATA_URL_TESTNET);
     addAllowedURL(DCRDATA_URL_MAINNET);
+    break;
+  case EXTERNALREQUEST_TREZOR_BRIDGE:
+    addAllowedURL(/^http:\/\/127.0.0.1:21324\//);
+    addAllowedURL(/^http:\/\/127.0.0.1:21325\//);
+
+    // TODO: decide whether we want to provide our own signed config
+    addAllowedURL(/^https:\/\/wallet.trezor.io\/data\/config_signed.bin\?[\d]+$/);
+
+    // TODO: decide if we wanna block this
+    addAllowedURL(/^https:\/\/wallet.trezor.io\/data\/bridge\/latest.txt\?[\d]+$/);
+
     break;
   default:
     logger.log("error", "Unknown external request type: " + externalReqType);
