@@ -1096,11 +1096,23 @@ export const fetchMissingStakeTxData = tx => async (dispatch, getState) => {
   }
 
   const oldTxs = getState().grpc.transactions;
+  const oldStakeTxs = getState().grpc.recentStakeTransactions;
   const txIdx = oldTxs.findIndex(t => t.txHash === tx.txHash);
-  if (txIdx > -1) {
-    const newTxs = [ ...oldTxs ];
-    newTxs.splice(txIdx, 1, newTx);
-    dispatch({ transactions: newTxs, txHash: tx.txHash, type: FETCHMISSINGSTAKETXDATA_SUCCESS });
+  const stakeTxIdx = oldStakeTxs.findIndex(t => t.txHash === tx.txHash);
+
+  if ((txIdx > -1) || (stakeTxIdx > -1)) {
+    const dispatchState = { txHash: tx.txHash, type: FETCHMISSINGSTAKETXDATA_SUCCESS };
+    if (txIdx > -1) {
+      const newTxs = [ ...oldTxs ];
+      newTxs[txIdx] = newTx;
+      dispatchState["transactions"] = newTxs;
+    }
+    if (stakeTxIdx > -1) {
+      const newStakeTxs = [ ...oldStakeTxs ];
+      newStakeTxs[stakeTxIdx] = newTx;
+      dispatchState["recentStakeTransactions"] = newStakeTxs;
+    }
+    dispatch(dispatchState);
   } else {
     // not supposed to happen in normal usage; this function  should only be
     // entered from a transaction already in the transaction list
