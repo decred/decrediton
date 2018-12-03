@@ -106,6 +106,8 @@ export const GetDcrwalletLogs = () => dcrwalletLogs;
 
 const logError = "[ERR]";
 
+const panicErr = "panic";
+
 export function lastLogLine(log) {
   let lastLineIdx = log.lastIndexOf(os.EOL, log.length - os.EOL.length -1);
   let lastLineBuff = log.slice(lastLineIdx).toString("utf-8");
@@ -117,6 +119,13 @@ export function lastErrorLine(log) {
   let endOfErrorLineIdx = log.indexOf(os.EOL, lastLineIdx);
   let lastLineBuff = log.slice(lastLineIdx, endOfErrorLineIdx).toString("utf-8");
   return lastLineBuff.trim();
+}
+
+export function lastPanicLine(log) {
+  let lastLineIdx = log.indexOf(panicErr);
+  if (lastLineIdx < 0) lastLineIdx = log.indexOf("goroutine");
+  let lastLineBuff = log.slice(lastLineIdx).toString("utf-8");
+  return lastLineBuff;
 }
 
 export function ClearDcrwalletLogs() {
