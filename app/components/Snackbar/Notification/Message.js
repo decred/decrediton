@@ -12,8 +12,8 @@ class Message extends React.Component {
         {topNotification &&
         <div className="snackbar-close-button-top" onClick={onDismissMessage}>
           <ProgressRing
-            radius={ 12 }
-            stroke={ 1 }
+            radius={ 13 }
+            stroke={ 2 }
             progress={ progress }
           />
         </div>}
