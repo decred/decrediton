@@ -1,6 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
 import { fatalErrorPage } from "connectors";
 import { KeyBlueButton, RemoveDaemonButton } from "buttons";
+import { CopyToClipboard } from "shared";
 import { DIFF_CONNECTION_ERROR } from "main_dev/constants";
 import "style/Layout.less";
 
@@ -22,13 +23,15 @@ class FatalErrorPage extends React.Component {
               { daemonError &&
                 <Aux>
                   <div className="fatal-error"><T id="fatal.daemon.title" m="Daemon Error" /></div>
-                  <textarea rows="30" value={daemonError} disabled />
+                  <textarea rows="10" value={daemonError} disabled />
+                  <CopyToClipboard textToCopy={daemonError} />
                 </Aux>
               }
               { walletError &&
                 <Aux>
                   <div className="fatal-error"><T id="fatal.wallet.title" m="Wallet Error" /></div>
-                  <textarea rows="30" value={walletError} disabled />
+                  <CopyToClipboard textToCopy={walletError} />
+                  <textarea rows="10" value={walletError} disabled />
                 </Aux>
               }
             </div>
