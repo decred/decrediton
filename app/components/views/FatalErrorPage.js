@@ -31,7 +31,6 @@ class FatalErrorPage extends React.Component {
                   <textarea rows="30" value={walletError} disabled />
                 </Aux>
               }
-              <textarea rows="30" value={daemonError} disabled />
             </div>
           </div>
           <div className="fatal-error-title"><T id="fatal.suggestion.title" m="Suggested action to resolve error" />:</div>
