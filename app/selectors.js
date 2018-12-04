@@ -633,6 +633,8 @@ export const unsignedTransaction = createSelector(
   res => res ? res.getUnsignedTransaction() : null
 );
 
+export const unsignedRawTx = createSelector([ constructTxResponse ], res => res && res.rawTx);
+
 export const estimatedFee = compose(
   bytes => (bytes / 1000) * (0.001 * 100000000), estimatedSignedSize
 );
@@ -923,7 +925,7 @@ export const isTrezor = get([ "trezor", "enabled" ]);
 export const isSignMessageDisabled = and(isWatchingOnly, not(isTrezor));
 export const isCreateAccountDisabled = isWatchingOnly;
 export const isChangePassPhraseDisabled = isWatchingOnly;
-export const isTransactionsSendTabDisabled = and(isWatchingOnly, not(isTrezor));
+export const isTransactionsSendTabDisabled = not(isTrezor);
 export const isTicketPurchaseTabDisabled = isWatchingOnly;
 
 export const politeiaURL = createSelector(

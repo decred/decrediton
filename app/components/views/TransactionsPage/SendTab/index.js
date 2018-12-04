@@ -36,6 +36,7 @@ class Send extends React.Component {
       lowBalanceError: false,
       canEnterPassphrase: false,
       sendAllAmount: this.props.totalSpent,
+      unsignedRawTx: null,
     };
   }
 
@@ -48,6 +49,9 @@ class Send extends React.Component {
     }
     if ( constructTxLowBalance !== this.props.constructTxLowBalance ) {
       this.setState({ lowBalanceError: this.props.constructTxLowBalance });
+    }
+    if (this.props.unsignedRawTx !== prevProps.unsignedRawTx && this.props.isWatchingOnly) {
+      this.setState({ unsignedRawTx: this.props.unsignedRawTx });
     }
   }
 
@@ -85,14 +89,10 @@ class Send extends React.Component {
     } = this;
     const isValid = this.getIsValid();
     const showPassphraseModal = this.getShowPassphraseModal();
-    const { isTransactionsSendTabDisabled } = this.props;
 
     return (
       <Aux>
-        {
-          isTransactionsSendTabDisabled && <WatchingOnlyWarnModal />
-        }
-        <div className={ isTransactionsSendTabDisabled ? "pseudo-modal-wrapper blur" : null }>
+        <div>
           <SendPage
             {...{ ...this.props, ...this.state }}
             {...{

@@ -2,6 +2,7 @@ import { AccountsSelect } from "inputs";
 import { FormattedMessage as T } from "react-intl";
 import { Balance, Tooltip, TransitionMotionWrapper } from "shared";
 import { SendTransactionButton } from "buttons";
+import { CopyToClipboard } from "shared";
 import OutputAccountRow from "./OutputAccountRow";
 import "style/SendPage.less";
 import "style/MiscComponents.less";
@@ -31,6 +32,8 @@ const SendPage = ({
   onKeyDown,
   showPassphraseModal,
   resetShowPassphraseModal,
+  unsignedRawTx,
+  isWatchingOnly,
   ...props
 }) => (
   <Aux>
@@ -70,30 +73,32 @@ const SendPage = ({
       </div>
     </div>
     <div className="send-button-area">
-      <SendTransactionButton
-        disabled={!isValid}
-        showModal={showPassphraseModal}
-        onShow={resetShowPassphraseModal}
-        onSubmit={onAttemptSignTransaction} >
-        <div className="passphrase-modal-confirm-send">
-          {!isSendSelf ?
-            <Aux>
-              <div className="passphrase-modal-confirm-send-label">{outputs.length > 1 ? <T id="send.confirmAmountAddresses" m="Destination addresses" /> : <T id="send.confirmAmountAddress" m="Destination address" /> }:</div>
-              {outputs.map((output, index) => {
-                return (
-                  <div className="passphrase-modal-confirm-send-address" key={"confirm-" + index}>{output.data.destination}</div>
-                );}
-              )}
-            </Aux> :
-            <Aux>
-              <div className="passphrase-modal-confirm-send-label"><T id="send.confirmAmountAccount" m="Destination account" />:</div>
-              <div className="passphrase-modal-confirm-send-address">{nextAddressAccount.name}</div>
-            </Aux>
-          }
-          <div className="passphrase-modal-confirm-send-label"><T id="send.confirmAmountLabelFor" m="Total Spent" />:</div>
-          <div className="passphrase-modal-confirm-send-balance"><Balance amount={totalSpent} /></div>
-        </div>
-      </SendTransactionButton>
+      { !isWatchingOnly &&
+        <SendTransactionButton
+          disabled={!isValid}
+          showModal={showPassphraseModal}
+          onShow={resetShowPassphraseModal}
+          onSubmit={onAttemptSignTransaction} >
+          <div className="passphrase-modal-confirm-send">
+            {!isSendSelf ?
+              <Aux>
+                <div className="passphrase-modal-confirm-send-label">{outputs.length > 1 ? <T id="send.confirmAmountAddresses" m="Destination addresses" /> : <T id="send.confirmAmountAddress" m="Destination address" /> }:</div>
+                {outputs.map((output, index) => {
+                  return (
+                    <div className="passphrase-modal-confirm-send-address" key={"confirm-" + index}>{output.data.destination}</div>
+                  );}
+                )}
+              </Aux> :
+              <Aux>
+                <div className="passphrase-modal-confirm-send-label"><T id="send.confirmAmountAccount" m="Destination account" />:</div>
+                <div className="passphrase-modal-confirm-send-address">{nextAddressAccount.name}</div>
+              </Aux>
+            }
+            <div className="passphrase-modal-confirm-send-label"><T id="send.confirmAmountLabelFor" m="Total Spent" />:</div>
+            <div className="passphrase-modal-confirm-send-balance"><Balance amount={totalSpent} /></div>
+          </div>
+        </SendTransactionButton>
+      }
       <div className="estimation-area-send">
         <div className="total-amount-send">
           <div className="total-amount-send-text">
@@ -122,6 +127,18 @@ const SendPage = ({
         </div>
       </div>
     </div>
+    {
+        unsignedRawTx && 
+        (
+          <div className="unsigned-raw-tx-area">
+            <div className="unsigned-raw-tx-title"><T id="send.unsignedRawTxTite" m="Unsigned Raw Transaction:" /></div>
+            <div className="unsigned-raw-tx">
+              {unsignedRawTx}
+            </div>
+            <CopyToClipboard textToCopy={unsignedRawTx} className="unsigned-raw-tx-copy-to-clipboard-icon" />
+          </div>
+        )
+      }
   </Aux>
 );
 
