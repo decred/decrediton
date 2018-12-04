@@ -408,9 +408,9 @@ export const getPingAttempt = () => (dispatch, getState) =>
       dispatch({ pingTimer, type: GETPING_SUCCESS });
     })
     .catch(error => {
-      const { daemon: { shutdownRequested } } = getState();
+      const { daemon: { shutdownRequested, walletError } } = getState();
       dispatch({ error, type: GETPING_FAILED });
-      if (!shutdownRequested) setTimeout(() => { dispatch(pushHistory("/walletError")); }, 1000);
+      if (!shutdownRequested && !walletError) setTimeout(() => { dispatch(pushHistory("/walletError")); }, 1000);
     });
 
 export const cancelPingAttempt = () => (dispatch, getState) => {

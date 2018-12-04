@@ -17,13 +17,21 @@ class FatalErrorPage extends React.Component {
       <div className="page-body getstarted">
         <div className="fatal-error-page">
           <div className="fatal-error-title"><T id="fatal.header.title" m="Fatal error" />:</div>
-          <div className="fatal-error-area">
-            { daemonError &&
-              <div className="fatal-error"><T id="fatal.daemon.title" m="Daemon Error" /> {daemonError}</div>
-            }
-            { walletError &&
-              <div className="fatal-error"><T id="fatal.wallet.title" m="Wallet Error" /> {walletError}</div>
-            }
+          <div className="log-area">
+            <div className="log-area-logs">
+              { daemonError &&
+                <Aux>
+                  <div className="fatal-error"><T id="fatal.daemon.title" m="Daemon Error" /></div>
+                  <textarea rows="30" value={daemonError} disabled />
+                </Aux>
+              }
+              { walletError &&
+                <Aux>
+                  <div className="fatal-error"><T id="fatal.wallet.title" m="Wallet Error" /></div>
+                  <textarea rows="30" value={walletError} disabled />
+                </Aux>
+              }
+            </div>
           </div>
           <div className="fatal-error-title"><T id="fatal.suggestion.title" m="Suggested action to resolve error" />:</div>
           <div className="fatal-error-suggestion">
@@ -31,7 +39,7 @@ class FatalErrorPage extends React.Component {
               <T id="fatal.suggestion.resources" m="This error typically means you have another instance of daemon running.  You should check your taskmanager or profiler to shutdown any still running daemon and then try again." /> :
               daemonError && daemonError.indexOf(DIFF_CONNECTION_ERROR) !== -1 ?
                 <T id="fatal.suggestion.diffConnection" m="This error typically means you have the testnet flag in your dcrd.conf file. You should check your dcrd.conf file and remove the testnet=1." /> :
-                daemonError && (daemonError.indexOf(corruptedError) > 0  || daemonError.indexOf(checkSumError)) ?
+                daemonError && (daemonError.indexOf(corruptedError) > 0  || daemonError.indexOf(checkSumError) > 0) ?
                   <Aux>
                     <div className="fatal-error-reset-blockchain">
                       <T id="fatal.suggestion.corrupted" m="This error means your blockchain data has somehow become corrupted.  Typically, this is caused by a sector on the HDD/SDD that went bad and its built-in SMART didn't repair it, or the more likely case, there was a memory issue which corrupted the data.  To resolve, you must delete your blockchain data and re-download.  Press the button below to complete the process. When you restart Decrediton, it will automatically begin your blockchain download. Please come to our support channel on slack/matrix/discord/rocketchat to get advice about running disk utilities. " />
@@ -48,7 +56,7 @@ class FatalErrorPage extends React.Component {
           </div>
           <div className="fatal-error-toolbar">
             <KeyBlueButton onClick={shutdownApp}>
-              <T id="fatal.button" m="Close Wallet"/>
+              <T id="fatal.button" m="Close Decrediton"/>
             </KeyBlueButton>
           </div>
         </div>

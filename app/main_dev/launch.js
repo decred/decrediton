@@ -1,7 +1,7 @@
 import { dcrwalletCfg, getWalletPath, getExecutablePath, dcrdCfg, getDcrdRpcCert } from "./paths";
 import { getWalletCfg, readDcrdConfig } from "../config";
 import { createLogger, AddToDcrdLog, AddToDcrwalletLog, GetDcrdLogs,
-  GetDcrwalletLogs, lastErrorLine, ClearDcrwalletLogs } from "./logging";
+  GetDcrwalletLogs, lastErrorLine, lastPanicLine, ClearDcrwalletLogs } from "./logging";
 import parseArgs from "minimist";
 import { OPTIONS } from "./constants";
 import os from "os";
@@ -152,7 +152,11 @@ export const launchDCRD = (mainWindow, daemonIsAdvanced, daemonPath, appdata, te
     if (daemonIsAdvanced)
       return;
     if (code !== 0) {
-      const lastDcrdErr = lastErrorLine(GetDcrdLogs());
+      var lastDcrdErr = lastErrorLine(GetDcrdLogs());
+      if (!lastDcrdErr || lastDcrdErr == "") {
+        lastDcrdErr = lastPanicLine(GetDcrdLogs());
+        console.log("panic error", lastDcrdErr);
+      }
       logger.log("error", "dcrd closed due to an error: ", lastDcrdErr);
       reactIPC.send("error-received", true, lastDcrdErr);
     } else {
@@ -257,16 +261,19 @@ export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
   });
 
   dcrwallet.on("close", (code) => {
-    ClearDcrwalletLogs();
     if (daemonIsAdvanced)
       return;
     if (code !== 0) {
-      const lastDcrwalletErr = lastErrorLine(GetDcrwalletLogs());
+      var lastDcrwalletErr = lastErrorLine(GetDcrwalletLogs());
+      if (!lastDcrwalletErr || lastDcrwalletErr == "") {
+        lastDcrwalletErr = lastPanicLine(GetDcrwalletLogs());
+      }
       logger.log("error", "dcrwallet closed due to an error: ", lastDcrwalletErr);
-      reactIPC.sendSync("error-received", false, lastDcrwalletErr);
+      reactIPC.send("error-received", false, lastDcrwalletErr);
     } else {
       logger.log("info", `dcrwallet exited with code ${code}`);
     }
+    ClearDcrwalletLogs();
   });
 
   const addStdoutToLogListener = (data) => AddToDcrwalletLog(process.stdout, data, debug);
