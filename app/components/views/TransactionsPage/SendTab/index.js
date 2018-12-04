@@ -6,7 +6,6 @@ import { FormattedMessage as T } from "react-intl";
 import { spring, presets } from "react-motion";
 import OutputRow from "./OutputRow";
 import { DescriptionHeader } from "layout";
-import WatchingOnlyWarnModal from "PseudoModal/WatchingOnlyWarn";
 
 const BASE_OUTPUT = { destination: "", amount: null };
 

@@ -128,7 +128,7 @@ const SendPage = ({
       </div>
     </div>
     {
-        unsignedRawTx && 
+      unsignedRawTx &&
         (
           <div className="unsigned-raw-tx-area">
             <div className="unsigned-raw-tx-title"><T id="send.unsignedRawTxTite" m="Unsigned Raw Transaction:" /></div>
@@ -138,7 +138,7 @@ const SendPage = ({
             <CopyToClipboard textToCopy={unsignedRawTx} className="unsigned-raw-tx-copy-to-clipboard-icon" />
           </div>
         )
-      }
+    }
   </Aux>
 );
 
