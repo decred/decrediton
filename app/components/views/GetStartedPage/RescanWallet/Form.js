@@ -9,8 +9,9 @@ const RescanWalletFormBody = ({
   showLongWaitMessage,
   isSPV,
 }) => (
-  (!isSPV ?
-    showLongWaitMessage &&
+  rescanCurrentBlock && rescanCurrentBlock > 0 ?
+    (!isSPV ?
+      showLongWaitMessage &&
       <Aux>
         <LinearProgressSmall
           min={rescanStartBlock}
@@ -28,15 +29,16 @@ const RescanWalletFormBody = ({
           }}
         />
       </Aux> :
-    <Aux>
-      <T
-        id="getStarted.walletRescanSPV.progress"
-        m="Scanned through {rescanCurrentBlock}"
-        values={{
-          rescanCurrentBlock: rescanCurrentBlock
-        }}
-      />
-    </Aux>)
+      <Aux>
+        <T
+          id="getStarted.walletRescanSPV.progress"
+          m="Scanned through {rescanCurrentBlock}"
+          values={{
+            rescanCurrentBlock: rescanCurrentBlock
+          }}
+        />
+      </Aux>) :
+    <div/>
 );
 
 export { RescanWalletFormBody };
