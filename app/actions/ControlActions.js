@@ -5,7 +5,7 @@ import { isValidAddress, isValidMasterPubKey } from "helpers";
 import { getStakeInfoAttempt, startWalletServices,
   getStartupWalletInfo } from "./ClientActions";
 import { RescanRequest, ConstructTransactionRequest, RunTicketBuyerRequest } from "../middleware/walletrpc/api_pb";
-import { reverseRawHash } from "../helpers/byteActions";
+import { reverseRawHash, rawToHex } from "helpers/byteActions";
 
 export const GETNEXTADDRESS_ATTEMPT = "GETNEXTADDRESS_ATTEMPT";
 export const GETNEXTADDRESS_FAILED = "GETNEXTADDRESS_FAILED";
@@ -383,14 +383,16 @@ export function constructTransactionAttempt(account, confirmations, outputs, all
           } else {
             dispatch({ error, type: CONSTRUCTTX_FAILED });
           }
-        } else {
-          if (!all) {
-            constructTxResponse.totalAmount = totalAmount;
-          } else {
-            constructTxResponse.totalAmount = constructTxResponse.getTotalOutputAmount();
-          }
-          dispatch({ constructTxResponse: constructTxResponse, type: CONSTRUCTTX_SUCCESS });
+          return;
         }
+
+        if (!all) {
+          constructTxResponse.totalAmount = totalAmount;
+        } else {
+          constructTxResponse.totalAmount = constructTxResponse.getTotalOutputAmount();
+        }
+        constructTxResponse.rawTx = rawToHex(constructTxResponse.getUnsignedTransaction());
+        dispatch({ constructTxResponse: constructTxResponse, type: CONSTRUCTTX_SUCCESS });
       });
   };
 }
