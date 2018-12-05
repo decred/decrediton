@@ -34,6 +34,7 @@ const SendPage = ({
   resetShowPassphraseModal,
   unsignedRawTx,
   isWatchingOnly,
+  isTrezor,
   ...props
 }) => (
   <Aux>
@@ -73,7 +74,7 @@ const SendPage = ({
       </div>
     </div>
     <div className="send-button-area">
-      { !isWatchingOnly &&
+      { ( (isTrezor && isWatchingOnly) || !isWatchingOnly ) &&
         <SendTransactionButton
           disabled={!isValid}
           showModal={showPassphraseModal}
@@ -128,7 +129,7 @@ const SendPage = ({
       </div>
     </div>
     {
-      unsignedRawTx &&
+      unsignedRawTx && isWatchingOnly && !isTrezor &&
         (
           <div className="unsigned-raw-tx-area">
             <div className="unsigned-raw-tx-title"><T id="send.unsignedRawTxTite" m="Unsigned Raw Transaction:" /></div>
