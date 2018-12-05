@@ -518,7 +518,6 @@ const prepDataToCalcStats = async (startBlock, endBlock, currentDate, endDate, p
   // grab transactions in batches of (roughly) `pageSize` transactions, so
   // that if we can stop in the middle of the process (say, because we're
   // interested in only the first 10 days worth of balances)
-  let i = 0;
   while (continueGetting) {
     const { mined } = await wallet.getTransactions(walletService, currentBlock,
       endBlock, pageSize);
@@ -537,11 +536,6 @@ const prepDataToCalcStats = async (startBlock, endBlock, currentDate, endDate, p
         (endDate && !backwards && currentDate < endDate) ||
         (endDate && backwards && currentDate > endDate )
       ) ;
-    i++;
-    if (i % 10 === 0) {
-      console.log("getting txs on range", currentBlock, endBlock, toProcess.length,
-        endDate, currentDate);
-    }
   }
 
   // grab all txs that are ticket/coinbase maturity blocks from the last tx
@@ -555,7 +549,6 @@ const prepDataToCalcStats = async (startBlock, endBlock, currentDate, endDate, p
     }
   }
 
-  console.log("finished preparing");
   return toProcess;
 };
 
@@ -577,7 +570,7 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
 
   const tsDate = sel.tsDate(getState());
 
-  const pageSize = 20;
+  const pageSize = 200;
   const maxMaturity = Math.max(chainParams.CoinbaseMaturity, chainParams.TicketMaturity);
   let currentDate = new Date();
   let toProcess = [];
@@ -609,8 +602,6 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
         height: currentBlockHeight }));
       toProcess.push(...fixedUnmined);
 
-      console.log("got unmined");
-
       // on backwards stats, we find vote txs before finding ticket txs, so
       // pre-process tickets from all grabbed txs to avoid making the separate
       // getTransaction calls in voteRevokeInfo()
@@ -620,8 +611,6 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
           recordTicket(maturingTxs, liveTickets, tx, commitAmount, isWallet, chainParams);
         }
       });
-
-      console.log("recorded tickets");
 
       await txDataCbBackwards({ mined: toProcess, maturingTxs, liveTickets, walletService, currentBalance,
         chainParams, currentBlockHeight, tsDate, progressFunction, recentBlockTimestamp, balances, maxMaturity });
