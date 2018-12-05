@@ -1,5 +1,6 @@
 import { ExternalLink } from "shared";
-import { PassphraseModalButton, ScriptRedeemableButton, SlateGrayButton } from "buttons";
+import { PassphraseModalButton, ScriptRedeemableButton, SlateGrayButton,
+  ImportScriptIconButton } from "buttons";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { TextInput, StakePoolSelect } from "inputs";
 import { Documentation } from "shared";
@@ -81,6 +82,7 @@ const StakePoolsAddForm = ({
             className="stakepool-add-not-redeemable"
             buttonLabel={<T id="stake.notRedeemed" m={"Script not redeemable?"} />}
           />
+          <ImportScriptIconButton />
         </div>
       </div>
     </div>

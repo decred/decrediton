@@ -1,9 +1,7 @@
-import { ImportScriptModal } from "modals";
 import { TicketsCogs, InfoDocModalButton, PassphraseModalButton,
-  InvisiblePassphraseModalButton } from "buttons";
+  ImportScriptIconButton } from "buttons";
 import { AccountsSelect, NumTicketsInput } from "inputs";
 import { FormattedMessage as T } from "react-intl";
-import { Tooltip } from "shared";
 import { TransitionMotionWrapper } from "shared";
 
 import "style/StakePool.less";
@@ -17,13 +15,11 @@ const PurchaseTicketsForm = ({
   hasTicketsToRevoke,
   numTicketsToBuy,
   canAffordTickets,
-  rescanRequest,
   onIncrementNumTickets,
   onDecrementNumTickets,
   onChangeNumTickets,
   onChangeAccount,
   onPurchaseTickets,
-  onImportScript,
   onRevokeTickets,
   onToggleShowAdvanced,
   account,
@@ -68,21 +64,7 @@ const PurchaseTicketsForm = ({
         <div className="stakepool-purchase-ticket-info">
           <div className="stakepool-purchase-ticket-action-buttons">
             <TicketsCogs opened={!isShowingAdvanced} onClick={onToggleShowAdvanced} />
-
-            <Tooltip className="stakepool-content-import-script-button-tooltip-container"
-              warning={!!rescanRequest}
-              text={!rescanRequest
-                ? <T id="purchaseTickets.import" m="Manually import a redeem script for tickets." />
-                : <T id="purchaseTickets.importDisabledRescan" m="Importing scripts is disabled during a rescan." />}
-            >
-              <InvisiblePassphraseModalButton
-                className="stakepool-content-import-script-button"
-                modalTitle={<T id="tickets.importScriptConfirmation" m="Import Script Confirmation" />}
-                modalComponent={ImportScriptModal}
-                disabled={rescanRequest}
-                onSubmit={onImportScript}
-              />
-            </Tooltip>
+            <ImportScriptIconButton />
           </div>
           <TransitionMotionWrapper {...{
             styles: !isShowingAdvanced ? getQuickBarComponent : getAdvancedComponent,
