@@ -497,10 +497,13 @@ const prepDataToCalcStats = async (startBlock, endBlock, currentDate, endDate, p
   let continueGetting = true;
   let currentBlock = startBlock;
   const toProcess = [];
-  const { maxMaturity, currentBlockHeight, pageSize, tsDate, walletService } = data;
+  const { maxMaturity, currentBlockHeight, pageSize, tsDate, walletService,
+    backwards } = data;
+
   // grab transactions in batches of (roughly) `pageSize` transactions, so
   // that if we can stop in the middle of the process (say, because we're
   // interested in only the first 10 days worth of balances)
+  let i = 0;
   while (continueGetting) {
     const { mined } = await wallet.getTransactions(walletService, currentBlock,
       endBlock, pageSize);
@@ -514,7 +517,16 @@ const prepDataToCalcStats = async (startBlock, endBlock, currentDate, endDate, p
       (mined.length > 0) &&
       (currentBlock > 0) &&
       (currentBlock < currentBlockHeight) &&
-      ((!endDate) || (endDate && currentDate < endDate)) ;
+      (
+        (!endDate) ||
+        (endDate && !backwards && currentDate < endDate) ||
+        (endDate && backwards && currentDate > endDate )
+      ) ;
+    i++;
+    if (i % 10 === 0) {
+      console.log("getting txs on range", currentBlock, endBlock, toProcess.length,
+        endDate, currentDate);
+    }
   }
 
   // grab all txs that are ticket/coinbase maturity blocks from the last tx
@@ -527,6 +539,8 @@ const prepDataToCalcStats = async (startBlock, endBlock, currentDate, endDate, p
       toProcess.push(...mined);
     }
   }
+
+  console.log("finished preparing");
   return toProcess;
 };
 
@@ -567,7 +581,8 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
   });
 
   try {
-    const data = { maxMaturity, currentBlockHeight, pageSize, tsDate, walletService };
+    const data = { maxMaturity, currentBlockHeight, pageSize, tsDate, walletService,
+      backwards };
     if (backwards) {
       toProcess = await prepDataToCalcStats(currentBlockHeight, 1, currentDate, endDate, -1, data);
       // when calculating backwards, we need to account for unmined txs, because
