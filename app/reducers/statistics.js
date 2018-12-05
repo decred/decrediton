@@ -47,12 +47,10 @@ export default function statistics(state = {}, action) {
   case CLOSEWALLET_SUCCESS:
     return {
       ...state,
-      statistics: {
-        dailyBalances: Array(),
-        fullDailyBalances: Array(),
-        voteTime: null,
-        getMyTicketsStatsRequest: false,
-      },
+      dailyBalances: Array(),
+      fullDailyBalances: Array(),
+      voteTime: null,
+      getMyTicketsStatsRequest: false,
     };
   default:
     return state;
