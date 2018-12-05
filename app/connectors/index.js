@@ -55,3 +55,4 @@ export { default as newProposalCounts } from "./newProposalCounts";
 export { default as network } from "./network";
 export { default as treasuryInfo } from "./treasuryInfo";
 export { default as trezor } from "./trezor";
+export { default as importScript } from "./importScript";

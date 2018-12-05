@@ -235,11 +235,19 @@
   background-size: 25px;
   background-position: center;
   background-image: @importscript-icon;
-  margin-top: 8px;
   width: 20px;
   height: 25px;
   padding: 0px;
-  display: block;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 10px;
+}
+
+.stakepool-content-import-script-button.loading {
+  background-image: none;
+  > .spinner > div {
+    background-color: var(--title-text-and-button-background-hovered);
+  }
 }
 
 .stakepool-content-import-script-button:hover {
@@ -247,7 +255,7 @@
 }
 
 .stakepool-content-import-script-button-tooltip-container {
-  display: block;
+  display: inline-block;
 }
 
 .stakepool-content-revoke-button {
@@ -1198,6 +1206,7 @@ textarea.stakepool-content-nest-content-settings {
 }
 
 .stakepool-add-not-redeemable {
+  display: inline-block;
   margin-top: 5px;
   font-family: @font-family-monospaced;
   font-size: 11px;
