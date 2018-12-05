@@ -339,11 +339,26 @@ const voteRevokeInfo = async (tx, liveTickets, walletService) => {
 
   let ticket = liveTickets[ticketHash];
   if (!ticket) {
-    const ticketTx = await wallet.getTransaction(walletService, ticketHash);
-    if (!ticketTx) {
-      throw "Previous live ticket not found: " + ticketHash;
+    let ticketTx;
+    try{
+      ticketTx = await wallet.getTransaction(walletService, ticketHash);
+      if (!ticketTx) {
+        // shouldn't really happen on new wallets, given that getTransaction
+        // throws an error when the ticket is not found
+        throw "Previous live ticket not found: " + ticketHash;
+      }
+      ticket = ticketInfo(ticketTx);
+    } catch (error) {
+      if (error.code === 5) { // 5 === grpc/codes.NotFound
+        // we may not have the ticket transaction if this wallet only recorded
+        // the vote/revocation (eg: pool fee wallet). In this case, we consider
+        // that the ticket wasn't ours and zero all applicable values.
+        ticket = { isWallet: false, commitAmount: 0, spentAmount: 0,
+          purchaseFees: 0, poolFee: 0 };
+      } else {
+        throw error;
+      }
     }
-    ticket = ticketInfo(ticketTx);
   }
   const ticketCommitAmount = ticket.commitAmount;
   const returnAmount = tx.tx.getCreditsList().reduce((s, c) => s + c.getAmount(), 0);
@@ -562,7 +577,7 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
 
   const tsDate = sel.tsDate(getState());
 
-  const pageSize = 200;
+  const pageSize = 20;
   const maxMaturity = Math.max(chainParams.CoinbaseMaturity, chainParams.TicketMaturity);
   let currentDate = new Date();
   let toProcess = [];
@@ -594,6 +609,8 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
         height: currentBlockHeight }));
       toProcess.push(...fixedUnmined);
 
+      console.log("got unmined");
+
       // on backwards stats, we find vote txs before finding ticket txs, so
       // pre-process tickets from all grabbed txs to avoid making the separate
       // getTransaction calls in voteRevokeInfo()
@@ -603,6 +620,8 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
           recordTicket(maturingTxs, liveTickets, tx, commitAmount, isWallet, chainParams);
         }
       });
+
+      console.log("recorded tickets");
 
       await txDataCbBackwards({ mined: toProcess, maturingTxs, liveTickets, walletService, currentBalance,
         chainParams, currentBlockHeight, tsDate, progressFunction, recentBlockTimestamp, balances, maxMaturity });
