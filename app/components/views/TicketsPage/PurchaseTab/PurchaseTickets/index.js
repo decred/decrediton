@@ -8,8 +8,8 @@ import PurchaseTicketsAdvanced from "./PurchaseTicketsAdvanced";
 import PurchaseTicketsQuickBar from "./PurchaseTicketsQuickBar";
 import { injectIntl } from "react-intl";
 import { isNullOrUndefined } from "util";
+import { MIN_RELAY_FEE, MAX_POSSIBLE_FEE_INPUT } from "main_dev/constants";
 
-const MAX_POSSIBLE_FEE_INPUT = 0.1;
 
 @autobind
 class PurchaseTickets extends React.Component {
@@ -21,8 +21,8 @@ class PurchaseTickets extends React.Component {
       expiryError: false,
       isShowingAdvanced: false,
       numTicketsToBuy: this.props.numTicketsToBuy,
-      ticketFee: 0.001, // DCR/kB
-      txFee: 0.001, // DCR/kB
+      ticketFee: MIN_RELAY_FEE,
+      txFee: MIN_RELAY_FEE,
       conf: 0,
       expiry: 16
     };
