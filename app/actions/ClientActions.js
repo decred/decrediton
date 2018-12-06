@@ -14,7 +14,7 @@ import { TransactionDetails } from "middleware/walletrpc/api_pb";
 import { clipboard } from "electron";
 import { getStartupStats } from "./StatisticsActions";
 import { getVettedProposals } from "./GovernanceActions";
-import { rawHashToHex } from "../helpers/byteActions";
+import { rawHashToHex, reverseRawHash } from "helpers";
 import * as da from "../middleware/dcrdataapi";
 import { EXTERNALREQUEST_DCRDATA, EXTERNALREQUEST_POLITEIA } from "main_dev/externalRequests";
 
@@ -97,12 +97,15 @@ export const getStartupWalletInfo = () => (dispatch) => {
       try {
         await dispatch(getStakeInfoAttempt());
         await dispatch(reloadTickets());
-        await dispatch(getMostRecentRegularTransactions());
-        await dispatch(getTransactionsSinceLastOppened());
-        await dispatch(getMostRecentStakeTransactions());
-        await dispatch(getMostRecentTransactions());
+
+        await dispatch(getStartupTransactions());
+        // await dispatch(getMostRecentRegularTransactions());
+        // await dispatch(getTransactionsSinceLastOppened());
+        // await dispatch(getMostRecentStakeTransactions());
+        // await dispatch(getMostRecentTransactions());
+        // await dispatch(findImmatureTransactions());
+
         await dispatch(publishUnminedTransactionsAttempt());
-        await dispatch(findImmatureTransactions());
         await dispatch(getAccountsAttempt(true));
         await dispatch(getStartupStats());
         if (dcrdataEnabled) {
@@ -889,6 +892,131 @@ export function changeTransactionsFilter(newFilter) {
     return dispatch(getTransactions());
   };
 }
+
+export const GETSTARTUPTRANSACTIONS_ATTEMPT = "GETSTARTUPTRANSACTIONS_ATTEMPT";
+export const GETSTARTUPTRANSACTIONS_SUCCESS = "GETSTARTUPTRANSACTIONS_SUCCESS";
+
+// getStartupTransactions fetches all recent transaction data needed for display
+// and updates. This includes:
+// - Recent regular tx data
+// - Recent stake tx data
+// - Immature future blocks (when we should update balances)
+// - Transactions since last start
+export const getStartupTransactions = () => async (dispatch, getState) => {
+
+  dispatch({ type: GETSTARTUPTRANSACTIONS_ATTEMPT });
+
+  // return the default transaction filter to zero it.
+  const defaultFilter = {
+    search: null,
+    listDirection: "desc",
+    types: [],
+    direction: null,
+    maxAmount: null,
+    minAmount: null,
+  };
+  await dispatch(changeTransactionsFilter(defaultFilter));
+
+  const { currentBlockHeight, walletService, recentTransactionCount } = getState().grpc;
+  const chainParams = sel.chainParams(getState());
+  let startRequestHeight = currentBlockHeight;
+  const pageSize = 50;
+  const voteTypes = [ TransactionDetails.TransactionType.VOTE,
+    TransactionDetails.TransactionType.REVOCATION ];
+  const checkHeightDeltas = [
+    chainParams.TicketMaturity,
+    chainParams.CoinbaseMaturity,
+    chainParams.SStxChangeMaturity
+  ];
+  const immatureHeight = currentBlockHeight - Math.max(...checkHeightDeltas);
+
+  console.log("starting", startRequestHeight);
+
+  let foundNeededTransactions = false;
+  let recentRegularTxs = [];
+  let recentStakeTxs = [];
+  const maturingBlockHeights = {};
+  const votedTickets = {}; // aux map of ticket hash => true
+
+  // the mergeXXX functions pick a list of transactions returned from
+  // getTransactions and fills the appropriate result variables
+
+  const mergeRegularTxs = txs =>
+    (recentRegularTxs.length < recentTransactionCount) &&
+    (recentRegularTxs.push( ...txs.filter(
+      tx => tx.type === TransactionDetails.TransactionType.REGULAR )));
+
+  const mergeStakeTxs = txs =>
+    (recentStakeTxs.length < recentTransactionCount) &&
+    (recentStakeTxs.push( ...txs.filter(
+      tx => {
+        if (voteTypes.indexOf(tx.type) > -1) {
+          // always include vote or revocation and mark ticket as voted so we
+          // don't include it in the recent list
+          const decodedSpender = wallet.decodeRawTransaction(Buffer.from(tx.tx.getTransaction()));
+          const spenderInputs = decodedSpender.inputs;
+          const ticketHash = reverseRawHash(spenderInputs[spenderInputs.length-1].prevTxId);
+          votedTickets[ticketHash] = true;
+          return true;
+        } else if (tx.type === TransactionDetails.TransactionType.TICKET_PURCHASE) {
+          // tickets are only added to the recent list if they haven't voted yet
+          return !votedTickets[tx.txHash];
+        } else {
+          return false;
+        }
+      }
+    )));
+
+  const mergeImmatureHeights = txs => {
+    if (startRequestHeight < immatureHeight) return;
+    const txHeights = transactionsMaturingHeights(txs, chainParams);
+    Object.keys(txHeights).forEach(h => {
+      if (h < currentBlockHeight) return;
+      const accounts = maturingBlockHeights[h] || [];
+      txHeights[h].forEach(a => accounts.indexOf(a) === -1 ? accounts.push(a) : null);
+      maturingBlockHeights[h] = accounts;
+    });
+  };
+
+  // get any unmined transactions
+  const { unmined } = await wallet.getTransactions(walletService,
+    -1, -1, pageSize);
+  mergeRegularTxs(unmined);
+  mergeStakeTxs(unmined);
+  mergeImmatureHeights(unmined);
+
+  while (!foundNeededTransactions) {
+    const { mined } = await wallet.getTransactions(walletService,
+      startRequestHeight, 1, pageSize);
+
+    if (mined.length === 0) break; // no more transactions
+
+    mergeRegularTxs(mined);
+    mergeStakeTxs(mined);
+    mergeImmatureHeights(mined);
+
+    foundNeededTransactions =
+      (recentRegularTxs.length >= recentTransactionCount) &&
+      (recentStakeTxs.length >= recentTransactionCount) &&
+      (startRequestHeight < immatureHeight);
+
+    const lastTransaction = mined[mined.length-1];
+    startRequestHeight = lastTransaction.height-1;
+    if (startRequestHeight <= 1) break; // reached genesis
+    console.log("continuing from ", startRequestHeight);
+  }
+
+  console.log("done up to", startRequestHeight);
+  console.log("recent regular", recentRegularTxs, "recent stake", recentStakeTxs,
+    "maturing heights", maturingBlockHeights);
+
+  recentRegularTxs = recentRegularTxs.slice(0, recentTransactionCount);
+  recentStakeTxs = recentStakeTxs.slice(0, recentTransactionCount);
+
+  dispatch({ recentRegularTxs, recentStakeTxs, maturingBlockHeights,
+    type: GETSTARTUPTRANSACTIONS_SUCCESS });
+
+};
 
 export const UPDATETIMESINCEBLOCK = "UPDATETIMESINCEBLOCK";
 export function updateBlockTimeSince() {

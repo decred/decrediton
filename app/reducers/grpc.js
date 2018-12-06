@@ -24,6 +24,7 @@ import {
   GETTRANSACTIONSSINCELASTOPPENED_SUCCESS, STARTWALLETSERVICE_ATTEMPT,
   STARTWALLETSERVICE_FAILED, STARTWALLETSERVICE_SUCCESS, GETTREASURY_BALANCE_SUCCESS, RESET_TREASURY_BALANCE,
   FETCHMISSINGSTAKETXDATA_ATTEMPT, FETCHMISSINGSTAKETXDATA_SUCCESS, FETCHMISSINGSTAKETXDATA_FAILED,
+  GETSTARTUPTRANSACTIONS_SUCCESS
 } from "../actions/ClientActions";
 import { STARTUPBLOCK, WALLETREADY } from "../actions/DaemonActions";
 import { NEWBLOCKCONNECTED } from "../actions/NotificationActions";
@@ -364,12 +365,6 @@ export default function grpc(state = {}, action) {
       lastTransaction: action.lastTransaction,
       getTransactionsRequestError: "",
       getTransactionsRequestAttempt: false,
-      recentRegularTransactions: action.recentRegularTransactions
-        ? action.recentRegularTransactions
-        : state.recentRegularTransactions,
-      recentStakeTransactions: action.recentStakeTransactions
-        ? action.recentStakeTransactions
-        : state.recentStakeTransactions
     };
   case NEW_TRANSACTIONS_RECEIVED:
     return {
@@ -607,6 +602,13 @@ export default function grpc(state = {}, action) {
         ...action.transactions
       }
     };
+  case GETSTARTUPTRANSACTIONS_SUCCESS:
+    return {
+      ...state,
+      maturingBlockHeights: action.maturingBlockHeights,
+      recentRegularTransactions: action.recentRegularTxs,
+      recentStakeTransactions: action.recentStakeTxs,
+    };
   case MATURINGHEIGHTS_CHANGED:
     return {
       ...state,
@@ -643,7 +645,7 @@ export default function grpc(state = {}, action) {
         types: [],
         direction: null,
       },
-      recentTransactions: Array(),
+      recentRegularTransactions: Array(),
       recentStakeTransactions: Array(),
       ticketBuyerService: null,
       transactionsSinceLastOpened: null,
