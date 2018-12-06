@@ -339,11 +339,26 @@ const voteRevokeInfo = async (tx, liveTickets, walletService) => {
 
   let ticket = liveTickets[ticketHash];
   if (!ticket) {
-    const ticketTx = await wallet.getTransaction(walletService, ticketHash);
-    if (!ticketTx) {
-      throw "Previous live ticket not found: " + ticketHash;
+    let ticketTx;
+    try{
+      ticketTx = await wallet.getTransaction(walletService, ticketHash);
+      if (!ticketTx) {
+        // shouldn't really happen on new wallets, given that getTransaction
+        // throws an error when the ticket is not found
+        throw "Previous live ticket not found: " + ticketHash;
+      }
+      ticket = ticketInfo(ticketTx);
+    } catch (error) {
+      if (error.code === 5) { // 5 === grpc/codes.NotFound
+        // we may not have the ticket transaction if this wallet only recorded
+        // the vote/revocation (eg: pool fee wallet). In this case, we consider
+        // that the ticket wasn't ours and zero all applicable values.
+        ticket = { isWallet: false, commitAmount: 0, spentAmount: 0,
+          purchaseFees: 0, poolFee: 0 };
+      } else {
+        throw error;
+      }
     }
-    ticket = ticketInfo(ticketTx);
   }
   const ticketCommitAmount = ticket.commitAmount;
   const returnAmount = tx.tx.getCreditsList().reduce((s, c) => s + c.getAmount(), 0);
@@ -497,7 +512,9 @@ const prepDataToCalcStats = async (startBlock, endBlock, currentDate, endDate, p
   let continueGetting = true;
   let currentBlock = startBlock;
   const toProcess = [];
-  const { maxMaturity, currentBlockHeight, pageSize, tsDate, walletService } = data;
+  const { maxMaturity, currentBlockHeight, pageSize, tsDate, walletService,
+    backwards } = data;
+
   // grab transactions in batches of (roughly) `pageSize` transactions, so
   // that if we can stop in the middle of the process (say, because we're
   // interested in only the first 10 days worth of balances)
@@ -514,7 +531,11 @@ const prepDataToCalcStats = async (startBlock, endBlock, currentDate, endDate, p
       (mined.length > 0) &&
       (currentBlock > 0) &&
       (currentBlock < currentBlockHeight) &&
-      ((!endDate) || (endDate && currentDate < endDate)) ;
+      (
+        (!endDate) ||
+        (endDate && !backwards && currentDate < endDate) ||
+        (endDate && backwards && currentDate > endDate )
+      ) ;
   }
 
   // grab all txs that are ticket/coinbase maturity blocks from the last tx
@@ -527,6 +548,7 @@ const prepDataToCalcStats = async (startBlock, endBlock, currentDate, endDate, p
       toProcess.push(...mined);
     }
   }
+
   return toProcess;
 };
 
@@ -567,7 +589,8 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
   });
 
   try {
-    const data = { maxMaturity, currentBlockHeight, pageSize, tsDate, walletService };
+    const data = { maxMaturity, currentBlockHeight, pageSize, tsDate, walletService,
+      backwards };
     if (backwards) {
       toProcess = await prepDataToCalcStats(currentBlockHeight, 1, currentDate, endDate, -1, data);
       // when calculating backwards, we need to account for unmined txs, because
