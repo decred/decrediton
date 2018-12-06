@@ -4,6 +4,23 @@ import { RemoveWalletButton } from "buttons";
 import { NewSeedTabMsg, RestoreTabMsg } from "../messages";
 import { Tooltip } from "shared";
 
+const CreateRestoreButtons = ({ showCreateWalletForm }) => (
+  <Aux>
+    <div className="display-wallet new" onClick={()=>showCreateWalletForm(false)}>
+      <div className="wallet-icon createnew" />
+      <div className="display-wallet-name">
+        <NewSeedTabMsg />
+      </div>
+    </div>
+    <div className="display-wallet new" onClick={()=>showCreateWalletForm(true)}>
+      <div className="wallet-icon restore" />
+      <div className="display-wallet-name">
+        <RestoreTabMsg />
+      </div>
+    </div>
+  </Aux>
+);
+
 const WalletSelectionBodyBase = ({
   availableWallets,
   createWallet,
@@ -29,7 +46,7 @@ const WalletSelectionBodyBase = ({
 }) => {
   return (
     availableWallets.length > 0 && selectedWallet && !createWalletForm ?
-      <div className="advanced-page">
+      (<div className="advanced-page">
         <div className="advanced-page-form">
           <div className="advanced-daemon-row">
             {availableWallets.map(wallet => {
@@ -75,42 +92,26 @@ const WalletSelectionBodyBase = ({
                 </div>
               );
             })}
-            {availableWallets.length > 0 ?
-              editWallets ?
-                <Tooltip text={<T id="walletselection.closeEditWallets" m="Close"/>}>
-                  <div className="edit-wallets-button close" onClick={onCloseEditWallets}/>
-                </Tooltip> :
-                <Tooltip text={<T id="walletselection.editWallets" m="Edit Wallets"/>}>
-                  <div className="edit-wallets-button" onClick={onEditWallets}/>
-                </Tooltip> :
-              <div/>
+            {editWallets ?
+              <Tooltip text={<T id="walletselection.closeEditWallets" m="Close"/>}>
+                <div className="edit-wallets-button close" onClick={onCloseEditWallets}/>
+              </Tooltip> :
+              <Tooltip text={<T id="walletselection.editWallets" m="Edit Wallets"/>}>
+                <div className="edit-wallets-button" onClick={onEditWallets}/>
+              </Tooltip>
             }
-            {availableWallets.length < maxWalletCount &&
-            <Aux>
-              <div className="display-wallet new" onClick={()=>showCreateWalletForm(false)}>
-                <div className="wallet-icon createnew" />
-                <div className="display-wallet-name">
-                  <NewSeedTabMsg />
-                </div>
-              </div>
-              <div className="display-wallet new" onClick={()=>showCreateWalletForm(true)}>
-                <div className="wallet-icon restore" />
-                <div className="display-wallet-name">
-                  <RestoreTabMsg />
-                </div>
-              </div>
-            </Aux>
-            }
+            {availableWallets.length < maxWalletCount && <CreateRestoreButtons {...{ showCreateWalletForm }}/>}
           </div>
         </div>
-      </div> :
-      <div className="advanced-page">
-        <div className="advanced-page-form">
-          <CreateWalletForm {...{ ...props, intl, availableWallets,
-            hideCreateWalletForm, createWallet, createNewWallet, isWatchingOnly,
-            toggleWatchOnly, masterPubKeyError }} />
+      </div>) :
+      availableWallets.length == 0 && !createWalletForm ? <CreateRestoreButtons {...{ showCreateWalletForm }}/> :
+        <div className="advanced-page">
+          <div className="advanced-page-form">
+            <CreateWalletForm {...{ ...props, intl, availableWallets,
+              hideCreateWalletForm, createWallet, createNewWallet, isWatchingOnly,
+              toggleWatchOnly, masterPubKeyError }} />
+          </div>
         </div>
-      </div>
   );
 };
 
