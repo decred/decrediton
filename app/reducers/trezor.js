@@ -21,6 +21,9 @@ import {
 import {
   SIGNTX_ATTEMPT, SIGNTX_FAILED, SIGNTX_SUCCESS
 } from "actions/ControlActions";
+import {
+  CLOSEWALLET_SUCCESS,
+} from "actions/WalletLoaderActions";
 
 export default function trezor(state = {}, action) {
   switch (action.type) {
@@ -157,6 +160,10 @@ export default function trezor(state = {}, action) {
   case TRZ_UPDATEFIRMWARE_SUCCESS:
     return { ...state,
       performingOperation: false,
+    };
+  case CLOSEWALLET_SUCCESS:
+    return { ...state,
+      enabled: false,
     };
   default:
     return state;
