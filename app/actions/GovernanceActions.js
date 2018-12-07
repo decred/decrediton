@@ -9,7 +9,7 @@ import { hexReversedHashToArray, reverseRawHash } from "helpers";
 // enum values from politeiawww's v1.PropVoteStatusT
 export const VOTESTATUS_ACTIVEVOTE = 3;
 export const VOTESTATUS_VOTED = 4;
-export const VOTESTATUS_ABANDONED = 0;
+export const VOTESTATUS_ABANDONED = 6;
 
 // Aux function to parse the optionsresult member of a votestatus call into
 // structures to use within a proposal data.
@@ -159,9 +159,9 @@ export const getVettedProposals = () => async (dispatch, getState) => {
       m[r.token] = r;
       return m;
     }, {}) : [];
-
     for (let p of vetted.data.proposals) {
       const voteStatus = statusByToken[p.censorshiprecord.token] || defaultVoteStatus;
+      if (p.status == VOTESTATUS_ABANDONED) voteStatus.status = VOTESTATUS_ABANDONED;
       const voteData = parseOptionsResult(voteStatus.optionsresult);
       const oldProposal = oldProposals[p.censorshiprecord.token];
 
