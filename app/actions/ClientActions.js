@@ -14,7 +14,7 @@ import { TransactionDetails } from "middleware/walletrpc/api_pb";
 import { clipboard } from "electron";
 import { getStartupStats } from "./StatisticsActions";
 import { getVettedProposals } from "./GovernanceActions";
-import { rawHashToHex, reverseRawHash } from "helpers";
+import { rawHashToHex, reverseRawHash, strHashToRaw } from "helpers";
 import * as da from "../middleware/dcrdataapi";
 import { EXTERNALREQUEST_DCRDATA, EXTERNALREQUEST_POLITEIA } from "main_dev/externalRequests";
 
@@ -447,6 +447,105 @@ function filterTickets(tickets, filter) {
     .filter(v => filter.status.length ? filter.status.indexOf(v.status) > -1 : true );
 }
 
+// getTicketsFromTransactions issues multiple wallet.getTransactions call, as
+// many as needed to fetch maxCount stake transactions from the wallet, which
+// are then converted to tickets via individual wallet.getTicket calls.
+//
+// The purpose of this function is to allow iteration over the tickets in the
+// order of last relevant transaction, as oposed to the native GetTickets call
+// from the wallet, which always iterates in ticket purchase order.
+//
+// This is not suitable to be called when attempting to fetch very large lists
+// of tickets, given that the individual getTicket calls are somewhat expensive
+// to make.
+const getTicketsFromTransactions = async (walletService, startIdx, endIdx, maxCount,
+  currentBlockHeight) => {
+
+  let tickets = [];
+  const pageSize = maxCount*4;
+  const stakeTypes = [ TransactionDetails.TransactionType.VOTE,
+    TransactionDetails.TransactionType.REVOCATION,
+    TransactionDetails.TransactionType.TICKET_PURCHASE ];
+  const desc = endIdx > startIdx;
+
+  // filter the list of transactions, returning the ticket information for stake
+  // transactions of the list.
+  const txsToTickets = async txs => {
+    const hashes = [];
+    for (let i = 0; i < txs.length; i++) {
+      if (stakeTypes.indexOf(txs[i].type) === -1) continue; // not a stake tx
+
+      let txHash = txs[i].txHash;
+      if (txs[i].type !== TransactionDetails.TransactionType.TICKET_PURCHASE) {
+        // in asc mode we see tickets before votes/revocations, so we can
+        // ignore those here (given we'll have added the ticket already)
+        if (!desc) continue;
+
+        // for votes/revocations, we need to grab the prevOutpoint to figure
+        // out the ticket hash
+        const decodedSpender = wallet.decodeRawTransaction(Buffer.from(txs[i].tx.getTransaction()));
+        const spenderInputs = decodedSpender.inputs;
+        txHash = reverseRawHash(spenderInputs[spenderInputs.length-1].prevTxId);
+      } else {
+        // in desc mode we see votes/revocations before tickets, so we can
+        // ignore those here (given we'll have added the ticket already).
+        if (desc) continue;
+      }
+
+      hashes.push(txHash);
+    }
+
+    console.log("xxxxx hashes", hashes);
+
+    // got hashes of all tickets. Now fetch their info
+    const res = await Promise.all(hashes.map(h => (async () => {
+      try {
+        return await wallet.getTicket(walletService, strHashToRaw(h));
+      } catch (error) {
+        console.log("xxxxxx error", error);
+        if (error.code === 5) { // 5 === grpc/codes.NotFound
+          // might happen if we didn't participate in the ticket (eg: pool fee wallets)
+          return null;
+        }
+        throw error;
+      }
+    })()));
+
+    console.log("xxxx res", res);
+
+    return res.filter(t => t);
+  };
+
+  if (endIdx === -1) {
+    // grabbing unmined list. Perform a single call and return
+    const { unmined } = await wallet.getTransactions(walletService, -1, -1);
+    const infos = await txsToTickets(unmined);
+    console.log("xxxx infos unmined", infos);
+    tickets.push(...infos);
+  }
+
+  // iterate mined until enough mined transactions were fetched
+  while (tickets.length < maxCount) {
+    const { mined } = await wallet.getTransactions(walletService, startIdx, endIdx, pageSize);
+
+    console.log("xxxxxx got further mined");
+
+    if (mined.length === 0) break; // no more transactions in the wallet
+    if (desc && startIdx <= 1) break; // reached genesis
+    if (!desc && mined[0].height > currentBlockHeight) break; // transactions exceded limit
+
+    const infos = await txsToTickets(mined);
+    tickets.push(...infos);
+
+    const lastTx = mined[mined.length-1];
+    startIdx = desc ? lastTx.height -1 : lastTx.height + 1;
+  }
+
+  console.log("got tickets",tickets);
+
+  return tickets;
+};
+
 export const getTickets = () => async (dispatch, getState) => {
   const { getTicketsRequestAttempt } = getState().grpc;
   if (getTicketsRequestAttempt) return;
@@ -464,7 +563,7 @@ export const getTickets = () => async (dispatch, getState) => {
 
   // always request unmined tickets as new ones may be available or some may
   // have been mined
-  tickets = await wallet.getTickets(walletService, -1, -1, 0);
+  tickets = await getTicketsFromTransactions(walletService, -1, -1, 0, currentBlockHeight);
   const unminedFiltered = filterTickets(tickets, ticketsFilter);
   const unminedTickets = sel.ticketsNormalizer(getState())(unminedFiltered);
 
@@ -482,8 +581,8 @@ export const getTickets = () => async (dispatch, getState) => {
     }
 
     try {
-      tickets = await wallet.getTickets(walletService,
-        startRequestHeight, endRequestHeight, pageCount);
+      tickets = await getTicketsFromTransactions(walletService,
+        startRequestHeight, endRequestHeight, pageCount, currentBlockHeight);
       noMoreTickets = tickets.length === 0;
       lastTicket = tickets.length ? tickets[tickets.length -1] : lastTicket;
       filterTickets(tickets, ticketsFilter)

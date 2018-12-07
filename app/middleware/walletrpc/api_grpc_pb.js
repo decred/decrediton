@@ -510,6 +510,17 @@ function deserialize_walletrpc_GetAccountExtendedPubKeyResponse(buffer_arg) {
   return api_pb.GetAccountExtendedPubKeyResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_walletrpc_GetTicketRequest(arg) {
+  if (!(arg instanceof api_pb.GetTicketRequest)) {
+    throw new Error('Expected argument of type walletrpc.GetTicketRequest');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_GetTicketRequest(buffer_arg) {
+  return api_pb.GetTicketRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_walletrpc_GetTicketsRequest(arg) {
   if (!(arg instanceof api_pb.GetTicketsRequest)) {
     throw new Error('Expected argument of type walletrpc.GetTicketsRequest');
@@ -1390,6 +1401,28 @@ function deserialize_walletrpc_SubscribeToBlockNotificationsResponse(buffer_arg)
   return api_pb.SubscribeToBlockNotificationsResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_walletrpc_SweepAccountRequest(arg) {
+  if (!(arg instanceof api_pb.SweepAccountRequest)) {
+    throw new Error('Expected argument of type walletrpc.SweepAccountRequest');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_SweepAccountRequest(buffer_arg) {
+  return api_pb.SweepAccountRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_SweepAccountResponse(arg) {
+  if (!(arg instanceof api_pb.SweepAccountResponse)) {
+    throw new Error('Expected argument of type walletrpc.SweepAccountResponse');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_SweepAccountResponse(buffer_arg) {
+  return api_pb.SweepAccountResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_walletrpc_TicketBuyerConfigRequest(arg) {
   if (!(arg instanceof api_pb.TicketBuyerConfigRequest)) {
     throw new Error('Expected argument of type walletrpc.TicketBuyerConfigRequest');
@@ -1693,6 +1726,17 @@ var WalletServiceService = exports.WalletServiceService = {
     requestDeserialize: deserialize_walletrpc_GetTransactionsRequest,
     responseSerialize: serialize_walletrpc_GetTransactionsResponse,
     responseDeserialize: deserialize_walletrpc_GetTransactionsResponse,
+  },
+  getTicket: {
+    path: '/walletrpc.WalletService/GetTicket',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.GetTicketRequest,
+    responseType: api_pb.GetTicketsResponse,
+    requestSerialize: serialize_walletrpc_GetTicketRequest,
+    requestDeserialize: deserialize_walletrpc_GetTicketRequest,
+    responseSerialize: serialize_walletrpc_GetTicketsResponse,
+    responseDeserialize: deserialize_walletrpc_GetTicketsResponse,
   },
   getTickets: {
     path: '/walletrpc.WalletService/GetTickets',
@@ -2025,6 +2069,17 @@ var WalletServiceService = exports.WalletServiceService = {
     requestDeserialize: deserialize_walletrpc_CommittedTicketsRequest,
     responseSerialize: serialize_walletrpc_CommittedTicketsResponse,
     responseDeserialize: deserialize_walletrpc_CommittedTicketsResponse,
+  },
+  sweepAccount: {
+    path: '/walletrpc.WalletService/SweepAccount',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.SweepAccountRequest,
+    responseType: api_pb.SweepAccountResponse,
+    requestSerialize: serialize_walletrpc_SweepAccountRequest,
+    requestDeserialize: deserialize_walletrpc_SweepAccountRequest,
+    responseSerialize: serialize_walletrpc_SweepAccountResponse,
+    responseDeserialize: deserialize_walletrpc_SweepAccountResponse,
   },
 };
 
