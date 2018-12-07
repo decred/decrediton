@@ -22,6 +22,7 @@ export default function governance(state = {}, action) {
       activeVote: action.activeVote,
       voted: action.voted,
       lastVettedFetchTime: new Date(),
+      abandoned: action.abandoned,
     };
   case GETVETTED_UPDATEDVOTERESULTS_SUCCESS:
     return { ...state,
@@ -39,6 +40,7 @@ export default function governance(state = {}, action) {
       preVote: action.preVote,
       activeVote: action.activeVote,
       voted: action.voted,
+      abandoned: action.abandoned,
       proposals: { ...state.proposals, [action.token]: action.proposal }
     };
   case UPDATEVOTECHOICE_ATTEMPT:

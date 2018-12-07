@@ -9,6 +9,7 @@ import { hexReversedHashToArray, reverseRawHash } from "helpers";
 // enum values from politeiawww's v1.PropVoteStatusT
 export const VOTESTATUS_ACTIVEVOTE = 3;
 export const VOTESTATUS_VOTED = 4;
+export const VOTESTATUS_ABANDONED = 0;
 
 // Aux function to parse the optionsresult member of a votestatus call into
 // structures to use within a proposal data.
@@ -143,7 +144,7 @@ export const getVettedProposals = () => async (dispatch, getState) => {
   const lastAccessBlock = cfg.get("politeia_last_access_block") || 0;
 
   // resulting data
-  let proposals = [], preVote = [], activeVote = [], voted = [], byToken = {};
+  let proposals = [], preVote = [], activeVote = [], voted = [], abandoned = [], byToken = {};
 
   try {
     const [ vetted, votesStatus ] = await Promise.all(
@@ -189,6 +190,7 @@ export const getVettedProposals = () => async (dispatch, getState) => {
 
     proposals.forEach(p => {
       switch (p.voteStatus) {
+      case VOTESTATUS_ABANDONED: abandoned.push(p); break;
       case VOTESTATUS_ACTIVEVOTE: activeVote.push(p); break;
       case VOTESTATUS_VOTED: voted.push(p); break;
       default:
@@ -198,7 +200,7 @@ export const getVettedProposals = () => async (dispatch, getState) => {
       byToken[p.token] = p;
     });
 
-    dispatch({ proposals: byToken, preVote, activeVote, voted, type: GETVETTED_SUCCESS });
+    dispatch({ proposals: byToken, preVote, activeVote, abandoned, voted, type: GETVETTED_SUCCESS });
   } catch (error) {
     dispatch({ error, type: GETVETTED_FAILED });
     return;
@@ -308,12 +310,14 @@ export const getProposalDetails = (token, markViewed) => async (dispatch, getSta
       await getProposalVoteResults(proposal, piURL, walletService, blockTimestampFromNow);
     }
 
-    let { preVote, activeVote, voted } = getState().governance;
+    let { preVote, activeVote, voted, abandoned } = getState().governance;
     preVote = replace(preVote, p => p.token === token, proposal);
     activeVote = replace(activeVote, p => p.token === token, proposal);
     voted = replace(voted, p => p.token === token, proposal);
+    abandoned = replace(abandoned, p => p.token === token, proposal);
 
-    dispatch({ token, proposal, preVote, activeVote, voted, type: GETPROPOSAL_SUCCESS });
+
+    dispatch({ token, proposal, preVote, activeVote, voted, abandoned, type: GETPROPOSAL_SUCCESS });
   } catch (error) {
     dispatch({ error, type: GETPROPOSAL_FAILED });
     throw error;

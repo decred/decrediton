@@ -11,6 +11,9 @@ export const LoadingProposal = () => (
 
 export const ProposalError = ( { error } ) => <div><T id="proposalDetails.loadingError" m="Error loading Proposal: {error}" values={{ error }} /></div>;
 
+export const ProposalAbandoned = () =>
+  <div className="proposal-details-voting-not-voting"><T id="proposalDetails.votingInfo.abandoned" m="Proposal has been abandoned" /></div>;
+
 export const ProposalNotVoting = () =>
   <div className="proposal-details-voting-not-voting"><T id="proposalDetails.votingInfo.notVoting" m="Proposal not yet on voting stage" /></div>;
 
