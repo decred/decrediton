@@ -128,6 +128,8 @@ class WalletSelectionBody extends React.Component {
     const { availableWallets } = this.props;
     this.setState({ hasFailedAttemptName: true });
     var nameAvailable = true;
+    // replace all special path symbols
+    newWalletName = newWalletName.replace(/[/\\.;:~]/g, "");
     for (var i = 0; i < availableWallets.length; i++) {
       if (newWalletName == availableWallets[i].value.wallet) {
         nameAvailable = false;
