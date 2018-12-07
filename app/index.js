@@ -155,10 +155,6 @@ var initialState = {
     recentTransactions: Array(),
     recentStakeTransactions: Array(),
 
-    // Transactions since last opened
-    recentTxSinceLastOpenedCount: 10,
-    transactionsSinceLastOpened: null,
-
     // GetTransactions
     minedTransactions: Array(),
     unminedTransactions: Array(),

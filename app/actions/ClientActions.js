@@ -14,7 +14,7 @@ import { TransactionDetails } from "middleware/walletrpc/api_pb";
 import { clipboard } from "electron";
 import { getStartupStats } from "./StatisticsActions";
 import { getVettedProposals } from "./GovernanceActions";
-import { rawHashToHex } from "../helpers/byteActions";
+import { rawHashToHex, reverseRawHash } from "helpers";
 import * as da from "../middleware/dcrdataapi";
 import { EXTERNALREQUEST_DCRDATA, EXTERNALREQUEST_POLITEIA } from "main_dev/externalRequests";
 
@@ -97,12 +97,8 @@ export const getStartupWalletInfo = () => (dispatch) => {
       try {
         await dispatch(getStakeInfoAttempt());
         await dispatch(reloadTickets());
-        await dispatch(getMostRecentRegularTransactions());
-        await dispatch(getTransactionsSinceLastOppened());
-        await dispatch(getMostRecentStakeTransactions());
-        await dispatch(getMostRecentTransactions());
+        await dispatch(getStartupTransactions());
         await dispatch(publishUnminedTransactionsAttempt());
-        await dispatch(findImmatureTransactions());
         await dispatch(getAccountsAttempt(true));
         await dispatch(getStartupStats());
         if (dcrdataEnabled) {
@@ -155,53 +151,6 @@ function transactionsMaturingHeights(txs, chainParams) {
   return res;
 }
 
-export const findImmatureTransactions = () => async (dispatch, getState) => {
-  const { currentBlockHeight, walletService } = getState().grpc;
-  const chainParams = sel.chainParams(getState());
-
-  const pageSize = 30;
-  const checkHeightDeltas = [
-    chainParams.TicketMaturity,
-    chainParams.CoinbaseMaturity,
-    chainParams.SStxChangeMaturity
-  ];
-  const immatureHeight = currentBlockHeight - Math.max(...checkHeightDeltas);
-
-  let checkHeights = {};
-  const mergeCheckHeights = (hs) => Object.keys(hs).forEach(h => {
-    if (h < currentBlockHeight) return;
-    const accounts = checkHeights[h] || [];
-    hs[h].forEach(a => accounts.indexOf(a) === -1 ? accounts.push(a) : null);
-    checkHeights[h] = accounts;
-  });
-
-  dispatch({ immatureHeight, type: "FINDIMMATURETRANSACTIONS_START" });
-
-  let txs = await walletGetTransactions(walletService, immatureHeight,
-    currentBlockHeight, pageSize);
-
-  while (txs.mined.length > 0) {
-    let lastTx = txs.mined[txs.mined.length-1];
-    mergeCheckHeights(transactionsMaturingHeights(txs.mined, chainParams));
-
-    if (lastTx && lastTx.height >= currentBlockHeight) {
-      // this may happen on wallets that take a long time to start up (eg: large
-      // wallet left closed for a long time performing a rescan). If a new
-      // block comes in with wallet transactions then the height of the new
-      // transaction will exceed the currentBlockHeight (which is fetched at
-      // the beginning of the startup procedure).
-      break;
-    }
-
-    txs = await walletGetTransactions(walletService, lastTx.height+1,
-      currentBlockHeight+1, pageSize);
-  }
-
-  dispatch({ type: "FINDIMMATURETRANSACTIONS_FINISHED" });
-
-  dispatch({ maturingBlockHeights: checkHeights, type: MATURINGHEIGHTS_CHANGED });
-};
-
 export const getWalletServiceAttempt = () => (dispatch, getState) => {
   const { grpc: { address, port } } = getState();
   const { daemon: { walletName } } = getState();
@@ -209,49 +158,6 @@ export const getWalletServiceAttempt = () => (dispatch, getState) => {
   wallet.getWalletService(sel.isTestNet(getState()), walletName, address, port)
     .then(walletService => dispatch(getWalletServiceSuccess(walletService)))
     .catch(error => dispatch({ error, type: GETWALLETSERVICE_FAILED }));
-};
-
-export const GETTRANSACTIONSSINCELASTOPPENED_ATTEMPT = "GETTRANSACTIONSSINCELASTOPPENED_ATTEMPT";
-export const GETTRANSACTIONSSINCELASTOPPENED_FAILED = "GETTRANSACTIONSSINCELASTOPPENED_FAILED";
-export const GETTRANSACTIONSSINCELASTOPPENED_SUCCESS = "GETTRANSACTIONSSINCELASTOPPENED_SUCCESS";
-
-export const getTransactionsSinceLastOppened = () => async (dispatch, getState) => {
-  dispatch({ type: GETTRANSACTIONSSINCELASTOPPENED_ATTEMPT });
-  const transactionsSinceLastOpenedInfo = {
-    transactionsReceived: [],
-    ticketsVoted:         [],
-    ticketsRevoked:       [],
-    totalReward:           0,
-    totalDCR:              0,
-  };
-  const config = getGlobalCfg();
-  const lastBlockHeightSeen = config.get("last_height");
-  const { currentBlockHeight, walletService, recentTxSinceLastOpenedCount } = getState().grpc;
-
-  try {
-    const { mined, unmined } =
-      await walletGetTransactions(walletService, lastBlockHeightSeen, currentBlockHeight, recentTxSinceLastOpenedCount);
-    const transactions = [ ...mined, ...unmined ];
-
-    transactions.forEach( tx => {
-      switch (tx.type) {
-      case TransactionDetails.TransactionType.REGULAR:
-        transactionsSinceLastOpenedInfo.totalDCR += tx.amount;
-        transactionsSinceLastOpenedInfo.transactionsReceived.push(tx);
-        break;
-      case TransactionDetails.TransactionType.VOTE:
-        transactionsSinceLastOpenedInfo.totalReward += tx.amount;
-        transactionsSinceLastOpenedInfo.ticketsVoted.push(tx);
-        break;
-      case TransactionDetails.TransactionType.REVOCATION:
-        transactionsSinceLastOpenedInfo.ticketsRevoked.push(tx);
-        break;
-      }
-    });
-    dispatch({ transactionsSinceLastOpened: transactionsSinceLastOpenedInfo, type: GETTRANSACTIONSSINCELASTOPPENED_SUCCESS });
-  } catch (error) {
-    dispatch({ error, type: GETTRANSACTIONSSINCELASTOPPENED_FAILED });
-  }
 };
 
 export const GETTICKETBUYERSERVICE_ATTEMPT = "GETTICKETBUYERSERVICE_ATTEMPT";
@@ -843,34 +749,28 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
   }
 };
 
-// getMostRecentRegularTransactions clears the transaction filter and refetches
-// the first page of transactions. This is used to get and store the initial
-// list of recent transactions.
-export const getMostRecentRegularTransactions = () => dispatch => {
-  const defaultFilter = {
-    search: null,
-    listDirection: "desc",
-    types: [ TransactionDetails.TransactionType.REGULAR ],
-    direction: null,
-    maxAmount: null,
-    minAmount: null,
+export const CHANGE_TRANSACTIONS_FILTER = "CHANGE_TRANSACTIONS_FILTER";
+export function changeTransactionsFilter(newFilter) {
+  return (dispatch) => {
+    dispatch({ transactionsFilter: newFilter, type: CHANGE_TRANSACTIONS_FILTER });
+    return dispatch(getTransactions());
   };
-  return dispatch(changeTransactionsFilter(defaultFilter));
-};
+}
 
-export const getMostRecentStakeTransactions = () => dispatch => {
-  const defaultFilter = {
-    search: null,
-    listDirection: "desc",
-    types: [ TransactionDetails.TransactionType.TICKET_PURCHASE, TransactionDetails.TransactionType.VOTE, TransactionDetails.TransactionType.REVOCATION ],
-    direction: null,
-    maxAmount: null,
-    minAmount: null,
-  };
-  return dispatch(changeTransactionsFilter(defaultFilter));
-};
+export const GETSTARTUPTRANSACTIONS_ATTEMPT = "GETSTARTUPTRANSACTIONS_ATTEMPT";
+export const GETSTARTUPTRANSACTIONS_SUCCESS = "GETSTARTUPTRANSACTIONS_SUCCESS";
 
-export const getMostRecentTransactions = () => dispatch => {
+// getStartupTransactions fetches all recent transaction data needed for display
+// and updates. This includes:
+// - Recent regular tx data
+// - Recent stake tx data
+// - Immature future blocks (when we should update balances)
+// - Transactions since last start
+export const getStartupTransactions = () => async (dispatch, getState) => {
+
+  dispatch({ type: GETSTARTUPTRANSACTIONS_ATTEMPT });
+
+  // return the default transaction filter to zero it.
   const defaultFilter = {
     search: null,
     listDirection: "desc",
@@ -879,16 +779,101 @@ export const getMostRecentTransactions = () => dispatch => {
     maxAmount: null,
     minAmount: null,
   };
-  return dispatch(changeTransactionsFilter(defaultFilter));
-};
+  await dispatch(changeTransactionsFilter(defaultFilter));
 
-export const CHANGE_TRANSACTIONS_FILTER = "CHANGE_TRANSACTIONS_FILTER";
-export function changeTransactionsFilter(newFilter) {
-  return (dispatch) => {
-    dispatch({ transactionsFilter: newFilter, type: CHANGE_TRANSACTIONS_FILTER });
-    return dispatch(getTransactions());
+  const { currentBlockHeight, walletService, recentTransactionCount } = getState().grpc;
+  const chainParams = sel.chainParams(getState());
+  let startRequestHeight = currentBlockHeight;
+  const pageSize = 50;
+  const voteTypes = [ TransactionDetails.TransactionType.VOTE,
+    TransactionDetails.TransactionType.REVOCATION ];
+  const checkHeightDeltas = [
+    chainParams.TicketMaturity,
+    chainParams.CoinbaseMaturity,
+    chainParams.SStxChangeMaturity
+  ];
+  const immatureHeight = currentBlockHeight - Math.max(...checkHeightDeltas);
+
+  let foundNeededTransactions = false;
+  let recentRegularTxs = [];
+  let recentStakeTxs = [];
+  const maturingBlockHeights = {};
+  const votedTickets = {}; // aux map of ticket hash => true
+
+  // the mergeXXX functions pick a list of transactions returned from
+  // getTransactions and fills the appropriate result variables
+
+  const mergeRegularTxs = txs =>
+    (recentRegularTxs.length < recentTransactionCount) &&
+    (recentRegularTxs.push( ...txs.filter(
+      tx => tx.type === TransactionDetails.TransactionType.REGULAR )));
+
+  const mergeStakeTxs = txs =>
+    (recentStakeTxs.length < recentTransactionCount) &&
+    (recentStakeTxs.push( ...txs.filter(
+      tx => {
+        if (voteTypes.indexOf(tx.type) > -1) {
+          // always include vote or revocation and mark ticket as voted so we
+          // don't include it in the recent list
+          const decodedSpender = wallet.decodeRawTransaction(Buffer.from(tx.tx.getTransaction()));
+          const spenderInputs = decodedSpender.inputs;
+          const ticketHash = reverseRawHash(spenderInputs[spenderInputs.length-1].prevTxId);
+          votedTickets[ticketHash] = true;
+          return true;
+        } else if (tx.type === TransactionDetails.TransactionType.TICKET_PURCHASE) {
+          // tickets are only added to the recent list if they haven't voted yet
+          return !votedTickets[tx.txHash];
+        } else {
+          return false;
+        }
+      }
+    )));
+
+  const mergeImmatureHeights = txs => {
+    if (startRequestHeight < immatureHeight) return;
+    const txHeights = transactionsMaturingHeights(txs, chainParams);
+    Object.keys(txHeights).forEach(h => {
+      if (h < currentBlockHeight) return;
+      const accounts = maturingBlockHeights[h] || [];
+      txHeights[h].forEach(a => accounts.indexOf(a) === -1 ? accounts.push(a) : null);
+      maturingBlockHeights[h] = accounts;
+    });
   };
-}
+
+  // get any unmined transactions
+  const { unmined } = await wallet.getTransactions(walletService,
+    -1, -1, pageSize);
+  mergeRegularTxs(unmined);
+  mergeStakeTxs(unmined);
+  mergeImmatureHeights(unmined);
+
+  while (!foundNeededTransactions) {
+    const { mined } = await wallet.getTransactions(walletService,
+      startRequestHeight, 1, pageSize);
+
+    if (mined.length === 0) break; // no more transactions
+
+    mergeRegularTxs(mined);
+    mergeStakeTxs(mined);
+    mergeImmatureHeights(mined);
+
+    foundNeededTransactions =
+      (recentRegularTxs.length >= recentTransactionCount) &&
+      (recentStakeTxs.length >= recentTransactionCount) &&
+      (startRequestHeight < immatureHeight);
+
+    const lastTransaction = mined[mined.length-1];
+    startRequestHeight = lastTransaction.height-1;
+    if (startRequestHeight <= 1) break; // reached genesis
+  }
+
+  recentRegularTxs = recentRegularTxs.slice(0, recentTransactionCount);
+  recentStakeTxs = recentStakeTxs.slice(0, recentTransactionCount);
+
+  dispatch({ recentRegularTxs, recentStakeTxs, maturingBlockHeights,
+    type: GETSTARTUPTRANSACTIONS_SUCCESS });
+
+};
 
 export const UPDATETIMESINCEBLOCK = "UPDATETIMESINCEBLOCK";
 export function updateBlockTimeSince() {

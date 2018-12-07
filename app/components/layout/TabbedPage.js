@@ -92,7 +92,7 @@ class TabbedPage extends React.Component {
             {interpolatedStyles.map(s => {
               return (
                 <div
-                  className={"tab-content"}
+                  className={[ "tab-content", Math.abs(s.style.left) < 0.1 ? "visible" : "" ].join(" ")}
                   style={{ left: s.style.left, right: -s.style.left,
                     opacity: s.style.opacity,
                     visibility: Math.abs(s.style.left) > 990 ? "hidden" : "" }}

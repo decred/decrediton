@@ -255,7 +255,7 @@ export const committedTickets = withLogNoData((walletService, ticketHashes) => n
   walletService.committedTickets(req, (err, tickets) => err ? reject(err) : resolve(tickets));
 }), "Committed Tickets");
 
-const decodeRawTransaction = (rawTx) => {
+export const decodeRawTransaction = (rawTx) => {
   var position = 0;
 
   var tx = {};
