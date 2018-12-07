@@ -97,14 +97,7 @@ export const getStartupWalletInfo = () => (dispatch) => {
       try {
         await dispatch(getStakeInfoAttempt());
         await dispatch(reloadTickets());
-
         await dispatch(getStartupTransactions());
-        // await dispatch(getMostRecentRegularTransactions());
-        // await dispatch(getTransactionsSinceLastOppened());
-        // await dispatch(getMostRecentStakeTransactions());
-        // await dispatch(getMostRecentTransactions());
-        // await dispatch(findImmatureTransactions());
-
         await dispatch(publishUnminedTransactionsAttempt());
         await dispatch(getAccountsAttempt(true));
         await dispatch(getStartupStats());
@@ -158,53 +151,6 @@ function transactionsMaturingHeights(txs, chainParams) {
   return res;
 }
 
-export const findImmatureTransactions = () => async (dispatch, getState) => {
-  const { currentBlockHeight, walletService } = getState().grpc;
-  const chainParams = sel.chainParams(getState());
-
-  const pageSize = 30;
-  const checkHeightDeltas = [
-    chainParams.TicketMaturity,
-    chainParams.CoinbaseMaturity,
-    chainParams.SStxChangeMaturity
-  ];
-  const immatureHeight = currentBlockHeight - Math.max(...checkHeightDeltas);
-
-  let checkHeights = {};
-  const mergeCheckHeights = (hs) => Object.keys(hs).forEach(h => {
-    if (h < currentBlockHeight) return;
-    const accounts = checkHeights[h] || [];
-    hs[h].forEach(a => accounts.indexOf(a) === -1 ? accounts.push(a) : null);
-    checkHeights[h] = accounts;
-  });
-
-  dispatch({ immatureHeight, type: "FINDIMMATURETRANSACTIONS_START" });
-
-  let txs = await walletGetTransactions(walletService, immatureHeight,
-    currentBlockHeight, pageSize);
-
-  while (txs.mined.length > 0) {
-    let lastTx = txs.mined[txs.mined.length-1];
-    mergeCheckHeights(transactionsMaturingHeights(txs.mined, chainParams));
-
-    if (lastTx && lastTx.height >= currentBlockHeight) {
-      // this may happen on wallets that take a long time to start up (eg: large
-      // wallet left closed for a long time performing a rescan). If a new
-      // block comes in with wallet transactions then the height of the new
-      // transaction will exceed the currentBlockHeight (which is fetched at
-      // the beginning of the startup procedure).
-      break;
-    }
-
-    txs = await walletGetTransactions(walletService, lastTx.height+1,
-      currentBlockHeight+1, pageSize);
-  }
-
-  dispatch({ type: "FINDIMMATURETRANSACTIONS_FINISHED" });
-
-  dispatch({ maturingBlockHeights: checkHeights, type: MATURINGHEIGHTS_CHANGED });
-};
-
 export const getWalletServiceAttempt = () => (dispatch, getState) => {
   const { grpc: { address, port } } = getState();
   const { daemon: { walletName } } = getState();
@@ -212,49 +158,6 @@ export const getWalletServiceAttempt = () => (dispatch, getState) => {
   wallet.getWalletService(sel.isTestNet(getState()), walletName, address, port)
     .then(walletService => dispatch(getWalletServiceSuccess(walletService)))
     .catch(error => dispatch({ error, type: GETWALLETSERVICE_FAILED }));
-};
-
-export const GETTRANSACTIONSSINCELASTOPPENED_ATTEMPT = "GETTRANSACTIONSSINCELASTOPPENED_ATTEMPT";
-export const GETTRANSACTIONSSINCELASTOPPENED_FAILED = "GETTRANSACTIONSSINCELASTOPPENED_FAILED";
-export const GETTRANSACTIONSSINCELASTOPPENED_SUCCESS = "GETTRANSACTIONSSINCELASTOPPENED_SUCCESS";
-
-export const getTransactionsSinceLastOppened = () => async (dispatch, getState) => {
-  dispatch({ type: GETTRANSACTIONSSINCELASTOPPENED_ATTEMPT });
-  const transactionsSinceLastOpenedInfo = {
-    transactionsReceived: [],
-    ticketsVoted:         [],
-    ticketsRevoked:       [],
-    totalReward:           0,
-    totalDCR:              0,
-  };
-  const config = getGlobalCfg();
-  const lastBlockHeightSeen = config.get("last_height");
-  const { currentBlockHeight, walletService, recentTxSinceLastOpenedCount } = getState().grpc;
-
-  try {
-    const { mined, unmined } =
-      await walletGetTransactions(walletService, lastBlockHeightSeen, currentBlockHeight, recentTxSinceLastOpenedCount);
-    const transactions = [ ...mined, ...unmined ];
-
-    transactions.forEach( tx => {
-      switch (tx.type) {
-      case TransactionDetails.TransactionType.REGULAR:
-        transactionsSinceLastOpenedInfo.totalDCR += tx.amount;
-        transactionsSinceLastOpenedInfo.transactionsReceived.push(tx);
-        break;
-      case TransactionDetails.TransactionType.VOTE:
-        transactionsSinceLastOpenedInfo.totalReward += tx.amount;
-        transactionsSinceLastOpenedInfo.ticketsVoted.push(tx);
-        break;
-      case TransactionDetails.TransactionType.REVOCATION:
-        transactionsSinceLastOpenedInfo.ticketsRevoked.push(tx);
-        break;
-      }
-    });
-    dispatch({ transactionsSinceLastOpened: transactionsSinceLastOpenedInfo, type: GETTRANSACTIONSSINCELASTOPPENED_SUCCESS });
-  } catch (error) {
-    dispatch({ error, type: GETTRANSACTIONSSINCELASTOPPENED_FAILED });
-  }
 };
 
 export const GETTICKETBUYERSERVICE_ATTEMPT = "GETTICKETBUYERSERVICE_ATTEMPT";
@@ -844,45 +747,6 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
       dispatch(getStartupStats());
     }
   }
-};
-
-// getMostRecentRegularTransactions clears the transaction filter and refetches
-// the first page of transactions. This is used to get and store the initial
-// list of recent transactions.
-export const getMostRecentRegularTransactions = () => dispatch => {
-  const defaultFilter = {
-    search: null,
-    listDirection: "desc",
-    types: [ TransactionDetails.TransactionType.REGULAR ],
-    direction: null,
-    maxAmount: null,
-    minAmount: null,
-  };
-  return dispatch(changeTransactionsFilter(defaultFilter));
-};
-
-export const getMostRecentStakeTransactions = () => dispatch => {
-  const defaultFilter = {
-    search: null,
-    listDirection: "desc",
-    types: [ TransactionDetails.TransactionType.TICKET_PURCHASE, TransactionDetails.TransactionType.VOTE, TransactionDetails.TransactionType.REVOCATION ],
-    direction: null,
-    maxAmount: null,
-    minAmount: null,
-  };
-  return dispatch(changeTransactionsFilter(defaultFilter));
-};
-
-export const getMostRecentTransactions = () => dispatch => {
-  const defaultFilter = {
-    search: null,
-    listDirection: "desc",
-    types: [],
-    direction: null,
-    maxAmount: null,
-    minAmount: null,
-  };
-  return dispatch(changeTransactionsFilter(defaultFilter));
 };
 
 export const CHANGE_TRANSACTIONS_FILTER = "CHANGE_TRANSACTIONS_FILTER";
