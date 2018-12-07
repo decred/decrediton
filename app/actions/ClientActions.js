@@ -794,8 +794,6 @@ export const getStartupTransactions = () => async (dispatch, getState) => {
   ];
   const immatureHeight = currentBlockHeight - Math.max(...checkHeightDeltas);
 
-  console.log("starting", startRequestHeight);
-
   let foundNeededTransactions = false;
   let recentRegularTxs = [];
   let recentStakeTxs = [];
@@ -867,12 +865,7 @@ export const getStartupTransactions = () => async (dispatch, getState) => {
     const lastTransaction = mined[mined.length-1];
     startRequestHeight = lastTransaction.height-1;
     if (startRequestHeight <= 1) break; // reached genesis
-    console.log("continuing from ", startRequestHeight);
   }
-
-  console.log("done up to", startRequestHeight);
-  console.log("recent regular", recentRegularTxs, "recent stake", recentStakeTxs,
-    "maturing heights", maturingBlockHeights);
 
   recentRegularTxs = recentRegularTxs.slice(0, recentTransactionCount);
   recentStakeTxs = recentStakeTxs.slice(0, recentTransactionCount);
