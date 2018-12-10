@@ -37,6 +37,7 @@ const DaemonLoadingBody = ({
   hasAttemptedDiscover,
   syncFetchHeadersLastHeaderTime,
   syncFetchHeadersAttempt,
+  daemonWarning,
   ...props,
 }) => (
   <div className="page-body getstarted">
@@ -101,7 +102,18 @@ const DaemonLoadingBody = ({
             </div>
           }
         </div>
-        { Form && <Form {...{ ...props, openWalletInputRequest, startupError, getCurrentBlockCount, getDaemonSynced, isSPV }}/> }
+        {daemonWarning && getCurrentBlockCount <= 0 ?
+          <Aux>
+            <div className="get-started-last-log-lines">
+              <div className="last-dcrwallet-log-line">{daemonWarning}</div>
+            </div>
+            <div className="advanced-page-form">
+              <div className="advanced-daemon-row">
+                <T id="getStarted.longWaitWarning" m="You are currently upgrading to dcrd version 1.4.0.  Typically this reindexing take 30-45mins on an average machine."/>
+              </div>
+            </div>
+          </Aux>:
+          Form && <Form {...{ ...props, openWalletInputRequest, startupError, getCurrentBlockCount, getDaemonSynced, isSPV }}/> }
         {syncInput ?
           <div className="advanced-page-form">
             <div className="advanced-daemon-row">

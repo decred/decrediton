@@ -44,6 +44,7 @@ export const setLanguage = get([ "daemon", "setLanguage" ]);
 export const showTutorial = get([ "daemon", "tutorial" ]);
 export const showPrivacy = get([ "daemon", "showPrivacy" ]);
 export const showSpvChoice = get([ "daemon", "showSpvChoice" ]);
+export const daemonWarning = get([ "daemon", "daemonWarning" ]);
 export const versionInvalid = get([ "version", "versionInvalid" ]);
 export const requiredWalletRPCVersion = get([ "version", "requiredVersion" ]);
 export const walletRPCVersion = createSelector(

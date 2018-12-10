@@ -1,7 +1,7 @@
 import { dcrwalletCfg, getWalletPath, getExecutablePath, dcrdCfg, getDcrdRpcCert } from "./paths";
 import { getWalletCfg, readDcrdConfig } from "../config";
 import { createLogger, AddToDcrdLog, AddToDcrwalletLog, GetDcrdLogs,
-  GetDcrwalletLogs, lastErrorLine, lastPanicLine, ClearDcrwalletLogs } from "./logging";
+  GetDcrwalletLogs, lastErrorLine, lastPanicLine, ClearDcrwalletLogs, CheckDaemonLogs } from "./logging";
 import parseArgs from "minimist";
 import { OPTIONS } from "./constants";
 import os from "os";
@@ -164,7 +164,12 @@ export const launchDCRD = (mainWindow, daemonIsAdvanced, daemonPath, appdata, te
     }
   });
 
-  dcrd.stdout.on("data", (data) => AddToDcrdLog(process.stdout, data, debug));
+  dcrd.stdout.on("data", (data) => {
+    AddToDcrdLog(process.stdout, data, debug);
+    if (CheckDaemonLogs(data)) {
+      reactIPC.send("warning-received", true, data.toString("utf-8"));
+    }
+  });
   dcrd.stderr.on("data", (data) => AddToDcrdLog(process.stderr, data, debug));
 
   newConfig.pid = dcrd.pid;
