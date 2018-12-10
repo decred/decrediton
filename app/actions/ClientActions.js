@@ -17,7 +17,6 @@ import { getVettedProposals } from "./GovernanceActions";
 import { rawHashToHex, reverseRawHash, strHashToRaw } from "helpers";
 import * as da from "../middleware/dcrdataapi";
 import { EXTERNALREQUEST_DCRDATA, EXTERNALREQUEST_POLITEIA } from "main_dev/externalRequests";
-import { DECODERAWTXS_SUCCESS } from "./DecodeMessageActions";
 
 export const goToTransactionHistory = () => (dispatch) => {
   dispatch(pushHistory("/transactions/history"));
@@ -604,37 +603,12 @@ export const getTickets = () => async (dispatch, getState) => {
     }
   }
 
-  console.log("got tickets", filtered);
-
   const normalized = sel.ticketsNormalizer(getState())(filtered);
-
-  console.log("normalized", normalized);
-
   minedTickets = [ ...minedTickets, ...normalized ];
 
   dispatch({ unminedTickets, minedTickets, noMoreTickets,
     getTicketsStartRequestHeight: startRequestHeight,
     type: GETTICKETS_COMPLETE });
-};
-
-export const RAWTICKETTRANSACTIONS_DECODED = "RAWTICKETTRANSACTIONS_DECODED";
-export const decodeRawTicketTransactions = (ticket) => async (dispatch, getState) => {
-  const toDecode = [];
-  if (!ticket.decodedTicketTx) {
-    toDecode.push(ticket.ticketRawTx);
-    if (ticket.spenderHash) {
-      toDecode.push(ticket.spenderRawTx);
-    }
-  }
-  if (!toDecode.length) return;
-
-  try {
-    await dispatch(decodeRawTransactions(toDecode));
-    const newTicket = sel.ticketNormalizer(getState())(ticket.originalTicket);
-    dispatch({ ticket, newTicket, type: RAWTICKETTRANSACTIONS_DECODED });
-  } catch (error) {
-    console.log("xxxxx error in decodeRawTicketTransactions", error);
-  }
 };
 
 export const CLEAR_TICKETS = "CLEAR_TICKETS";

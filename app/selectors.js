@@ -214,101 +214,92 @@ export const ticketNormalizer = createSelector(
   [ network ],
   (network) => {
     return ticket => {
-      try {
-        const hasSpender = ticket.spender && ticket.spender.getHash();
-        const isVote = ticket.status === "voted";
-        const ticketTx = ticket.ticket;
-        const spenderTx = hasSpender ? ticket.spender : null;
-        const hash = reverseHash(Buffer.from(ticketTx.getHash()).toString("hex"));
-        const spenderHash = hasSpender ? reverseHash(Buffer.from(spenderTx.getHash()).toString("hex")) : null;
-        const hasCredits = ticketTx.getCreditsList().length > 0;
-        console.log("normalizing", hash, ticket);
+      const hasSpender = ticket.spender && ticket.spender.getHash();
+      const isVote = ticket.status === "voted";
+      const ticketTx = ticket.ticket;
+      const spenderTx = hasSpender ? ticket.spender : null;
+      const hash = reverseHash(Buffer.from(ticketTx.getHash()).toString("hex"));
+      const spenderHash = hasSpender ? reverseHash(Buffer.from(spenderTx.getHash()).toString("hex")) : null;
+      const hasCredits = ticketTx.getCreditsList().length > 0;
 
-        let ticketPrice = 0;
-        if (hasCredits) {
-          ticketPrice = ticketTx.getCreditsList()[0].getAmount();
-        } else {
-          // we don't have a credit when we don't have the voting rights (unimported
-          // stakepool script, solo voting ticket, split ticket, etc)
-          const decodedTicketTx = wallet.decodeRawTransaction(Buffer.from(ticketTx.getTransaction()));
-          ticketPrice = decodedTicketTx.outputs[0].value;
-        }
-
-        // ticket tx fee is the fee for the transaction where the ticket was bought
-        const ticketTxFee = ticketTx.getFee();
-
-        // revocations have a tx fee that influences the stake rewards calc
-        const spenderTxFee = hasSpender ? spenderTx.getFee() : 0;
-
-        // ticket change is anything returned to the wallet on ticket purchase.
-        const isTicketChange = (c) => (c.getIndex() > 0) && (c.getIndex() % 2) === 0;
-        const ticketChange = ticketTx.getCreditsList().reduce((s, c) => s + isTicketChange(c) ? c.getAmount() : 0, 0);
-
-        // ticket investment is the full amount paid by the wallet on the ticket purchase
-        const ticketInvestment = ticketTx.getDebitsList().reduce((a, v) => a+v.getPreviousAmount(), 0)
-          - ticketChange;
-
-        let ticketReward, ticketStakeRewards, ticketReturnAmount, ticketPoolFee, voteChoices;
-        if (hasSpender) {
-          // everything returned to the wallet after voting/revoking
-          ticketReturnAmount = spenderTx.getCreditsList().reduce((a, v) => a+v.getAmount(), 0);
-
-          // this is liquid from applicable fees (i.e, what the wallet actually made)
-          ticketReward = ticketReturnAmount - ticketInvestment;
-
-          ticketStakeRewards = ticketReward / ticketInvestment;
-
-          const decodedSpenderTx = wallet.decodeRawTransaction(Buffer.from(spenderTx.getTransaction()));
-
-          // Check pool fee. If there is a debit at index=0 of the ticket but not
-          // a corresponding credit at the expected index on the spender, then
-          // that was a pool fee.
-          const hasIndex0Debit = ticketTx.getDebitsList().some(d => d.getIndex() === 0);
-          const hasIndex0Credit = spenderTx.getCreditsList().some(c => {
-            // In votes, the first 2 outputs are voting block and vote bits
-            // OP_RETURNs, so ignore those.
-            return (isVote && c.getIndex() === 2) || (!isVote && c.getIndex() === 0);
-          });
-          if (hasIndex0Debit && !hasIndex0Credit) {
-            const poolFeeDebit = ticketTx.getDebitsList().find(d => d.getIndex() === 0);
-            ticketPoolFee = poolFeeDebit.getPreviousAmount();
-          }
-
-          if (isVote) {
-            let voteScript = decodedSpenderTx.outputs[1].script;
-            voteChoices = decodeVoteScript(network, voteScript);
-          }
-        }
-
-        const res = {
-          hash,
-          spenderHash,
-          ticketTx,
-          spenderTx,
-          ticketPrice,
-          ticketReward,
-          ticketChange,
-          ticketInvestment,
-          ticketTxFee,
-          ticketPoolFee,
-          ticketStakeRewards,
-          ticketReturnAmount,
-          voteChoices,
-          spenderTxFee,
-          enterTimestamp: ticketTx.getTimestamp(),
-          leaveTimestamp: hasSpender ? spenderTx.getTimestamp() : null,
-          status: ticket.status,
-          ticketRawTx: Buffer.from(ticketTx.getTransaction()).toString("hex"),
-          spenderRawTx: hasSpender ? Buffer.from(spenderTx.getTransaction()).toString("hex") : null,
-          originalTicket: ticket,
-        };
-
-        console.log("normalized", res);
-
-        return res;
-      } catch (error) {
-        console.error(error);
+      let ticketPrice = 0;
+      if (hasCredits) {
+        ticketPrice = ticketTx.getCreditsList()[0].getAmount();
+      } else {
+        // we don't have a credit when we don't have the voting rights (unimported
+        // stakepool script, solo voting ticket, split ticket, etc)
+        const decodedTicketTx = wallet.decodeRawTransaction(Buffer.from(ticketTx.getTransaction()));
+        ticketPrice = decodedTicketTx.outputs[0].value;
       }
+
+      // ticket tx fee is the fee for the transaction where the ticket was bought
+      const ticketTxFee = ticketTx.getFee();
+
+      // revocations have a tx fee that influences the stake rewards calc
+      const spenderTxFee = hasSpender ? spenderTx.getFee() : 0;
+
+      // ticket change is anything returned to the wallet on ticket purchase.
+      const isTicketChange = (c) => (c.getIndex() > 0) && (c.getIndex() % 2) === 0;
+      const ticketChange = ticketTx.getCreditsList().reduce((s, c) => s + isTicketChange(c) ? c.getAmount() : 0, 0);
+
+      // ticket investment is the full amount paid by the wallet on the ticket purchase
+      const ticketInvestment = ticketTx.getDebitsList().reduce((a, v) => a+v.getPreviousAmount(), 0)
+        - ticketChange;
+
+      let ticketReward, ticketStakeRewards, ticketReturnAmount, ticketPoolFee, voteChoices;
+      if (hasSpender) {
+        // everything returned to the wallet after voting/revoking
+        ticketReturnAmount = spenderTx.getCreditsList().reduce((a, v) => a+v.getAmount(), 0);
+
+        // this is liquid from applicable fees (i.e, what the wallet actually made)
+        ticketReward = ticketReturnAmount - ticketInvestment;
+
+        ticketStakeRewards = ticketReward / ticketInvestment;
+
+        const decodedSpenderTx = wallet.decodeRawTransaction(Buffer.from(spenderTx.getTransaction()));
+
+        // Check pool fee. If there is a debit at index=0 of the ticket but not
+        // a corresponding credit at the expected index on the spender, then
+        // that was a pool fee.
+        const hasIndex0Debit = ticketTx.getDebitsList().some(d => d.getIndex() === 0);
+        const hasIndex0Credit = spenderTx.getCreditsList().some(c => {
+          // In votes, the first 2 outputs are voting block and vote bits
+          // OP_RETURNs, so ignore those.
+          return (isVote && c.getIndex() === 2) || (!isVote && c.getIndex() === 0);
+        });
+        if (hasIndex0Debit && !hasIndex0Credit) {
+          const poolFeeDebit = ticketTx.getDebitsList().find(d => d.getIndex() === 0);
+          ticketPoolFee = poolFeeDebit.getPreviousAmount();
+        }
+
+        if (isVote) {
+          let voteScript = decodedSpenderTx.outputs[1].script;
+          voteChoices = decodeVoteScript(network, voteScript);
+        }
+      }
+
+      return {
+        hash,
+        spenderHash,
+        ticketTx,
+        spenderTx,
+        ticketPrice,
+        ticketReward,
+        ticketChange,
+        ticketInvestment,
+        ticketTxFee,
+        ticketPoolFee,
+        ticketStakeRewards,
+        ticketReturnAmount,
+        voteChoices,
+        spenderTxFee,
+        enterTimestamp: ticketTx.getTimestamp(),
+        leaveTimestamp: hasSpender ? spenderTx.getTimestamp() : null,
+        status: ticket.status,
+        ticketRawTx: Buffer.from(ticketTx.getTransaction()).toString("hex"),
+        spenderRawTx: hasSpender ? Buffer.from(spenderTx.getTransaction()).toString("hex") : null,
+        originalTicket: ticket,
+      };
     };
   }
 );
