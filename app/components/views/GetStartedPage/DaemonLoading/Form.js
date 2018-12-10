@@ -109,11 +109,13 @@ const DaemonLoadingBody = ({
             </div>
             <div className="advanced-page-form">
               <div className="advanced-daemon-row">
-                <T id="getStarted.longWaitWarning" m="You are currently upgrading to dcrd version 1.4.0.  Typically this reindexing take 30-45mins on an average machine."/>
+                <T id="getStarted.longWaitWarning" m="You are currently upgrading to dcrd version 1.4.0.  Typically, this one-time reindexing take 30-45mins on an average machine."/>
               </div>
             </div>
           </Aux>:
-          Form && <Form {...{ ...props, openWalletInputRequest, startupError, getCurrentBlockCount, getDaemonSynced, isSPV }}/> }
+          <div/>
+        }
+        { Form && <Form {...{ ...props, openWalletInputRequest, startupError, getCurrentBlockCount, getDaemonSynced, isSPV }}/> }
         {syncInput ?
           <div className="advanced-page-form">
             <div className="advanced-daemon-row">
