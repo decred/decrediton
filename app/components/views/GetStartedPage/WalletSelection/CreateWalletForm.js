@@ -2,6 +2,7 @@ import { FormattedMessage as T, defineMessages } from "react-intl";
 import { TextInput } from "inputs";
 import { KeyBlueButton, InvisibleButton, WatchOnlyWalletSwitch } from "buttons";
 import { NewSeedTabMsg, RestoreTabMsg } from "../messages";
+import TrezorWalletSwitch from "../../../buttons/TrezorWalletSwitch";
 
 const messages = defineMessages({
   messageWalletNamePlaceholder: {
@@ -88,7 +89,7 @@ const CreateWalletForm = ({
               <T id="createwallet.isTrezor.label" m="Trezor" />
             </div>
             <div className="advanced-daemon-input">
-              <WatchOnlyWalletSwitch className="wallet-switch" enabled={ isTrezor } onClick={ toggleTrezor } />
+              <TrezorWalletSwitch className="wallet-switch" enabled={ isTrezor } onClick={ toggleTrezor } />
               <span onClick={onShowTrezorConfig} className="whatsnew"><T id="createWallet.isTrezor.setupLink" m="(setup device)" /></span>
             </div>
           </div>
