@@ -11,6 +11,8 @@ import { EXTERNALREQUEST_STAKEPOOL_LISTING, EXTERNALREQUEST_POLITEIA, EXTERNALRE
 import { POLITEIA_URL_TESTNET, POLITEIA_URL_MAINNET } from "./middleware/politeiaapi";
 import { DCRDATA_URL_TESTNET, DCRDATA_URL_MAINNET } from "./middleware/dcrdataapi";
 import { dateToLocal, dateToUTC } from "./helpers/dateFormat";
+import * as wallet from "wallet";
+
 const EMPTY_ARRAY = [];  // Maintaining identity (will) improve performance;
 
 export const theme = get([ "settings", "theme" ]);
@@ -218,15 +220,18 @@ export const ticketNormalizer = createSelector(
       const spenderTx = hasSpender ? ticket.spender : null;
       const hash = reverseHash(Buffer.from(ticketTx.getHash()).toString("hex"));
       const spenderHash = hasSpender ? reverseHash(Buffer.from(spenderTx.getHash()).toString("hex")) : null;
-      const decodedTicketTx = decodedTransactions[hash] || null;
       const decodedSpenderTx = hasSpender ? (decodedTransactions[spenderHash] || null) : null;
       const hasCredits = ticketTx.getCreditsList().length > 0;
 
-      // effective ticket price is the output 0 for the ticket transaction
-      // (stakesubmission script class)
-      const ticketPrice = decodedTicketTx
-        ? decodedTicketTx.transaction.getOutputsList()[0].getValue()
-        : hasCredits ? ticketTx.getCreditsList()[0].getAmount() : 0;
+      let ticketPrice = 0;
+      if (hasCredits) {
+        ticketPrice = ticketTx.getCreditsList()[0].getAmount();
+      } else {
+        // we don't have a credit when we don't have the voting rights (unimported
+        // stakepool script, solo voting ticket, split ticket, etc)
+        const decodedTicketTx = wallet.decodeRawTransaction(ticketTx.getTransaction());
+        ticketPrice = decodedTicketTx.outputs[0].value;
+      }
 
       // ticket tx fee is the fee for the transaction where the ticket was bought
       const ticketTxFee = ticketTx.getFee();
@@ -278,7 +283,6 @@ export const ticketNormalizer = createSelector(
         ticketTx,
         spenderTx,
         decodedSpenderTx,
-        decodedTicketTx,
         ticketPrice,
         ticketReward,
         ticketChange,

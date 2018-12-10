@@ -289,9 +289,9 @@ export default function grpc(state = {}, action) {
       unminedTickets: action.unminedTickets,
       minedTickets: action.minedTickets,
       noMoreTickets: action.noMoreTickets,
-      lastTicket: action.lastTicket,
       getTicketsRequestError: "",
       getTicketsRequestAttempt: false,
+      getTicketsStartRequestHeight: action.getTicketsStartRequestHeight,
     };
   case CLEAR_TICKETS:
     return { ...state,
@@ -300,6 +300,7 @@ export default function grpc(state = {}, action) {
       minedTickets: [],
       noMoreTickets: false,
       lastTicket: null,
+      getTicketsStartRequestHeight: null,
     };
   case RAWTICKETTRANSACTIONS_DECODED:
     var idxOldTicket = state.tickets.indexOf(action.ticket);
@@ -324,6 +325,7 @@ export default function grpc(state = {}, action) {
       lastTicket: null,
       getTicketsRequestError: "",
       getTicketsRequestAttempt: false,
+      getTicketsStartRequestHeight: null,
     };
   case GETTRANSACTIONS_ATTEMPT:
     return {

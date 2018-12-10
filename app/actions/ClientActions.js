@@ -17,6 +17,7 @@ import { getVettedProposals } from "./GovernanceActions";
 import { rawHashToHex, reverseRawHash, strHashToRaw } from "helpers";
 import * as da from "../middleware/dcrdataapi";
 import { EXTERNALREQUEST_DCRDATA, EXTERNALREQUEST_POLITEIA } from "main_dev/externalRequests";
+import { DECODERAWTXS_SUCCESS } from "./DecodeMessageActions";
 
 export const goToTransactionHistory = () => (dispatch) => {
   dispatch(pushHistory("/transactions/history"));
@@ -466,7 +467,7 @@ const getTicketsFromTransactions = async (walletService, startIdx, endIdx, maxCo
   const stakeTypes = [ TransactionDetails.TransactionType.VOTE,
     TransactionDetails.TransactionType.REVOCATION,
     TransactionDetails.TransactionType.TICKET_PURCHASE ];
-  const desc = endIdx > startIdx;
+  const desc = endIdx < startIdx;
 
   // filter the list of transactions, returning the ticket information for stake
   // transactions of the list.
@@ -495,14 +496,11 @@ const getTicketsFromTransactions = async (walletService, startIdx, endIdx, maxCo
       hashes.push(txHash);
     }
 
-    console.log("xxxxx hashes", hashes);
-
     // got hashes of all tickets. Now fetch their info
     const res = await Promise.all(hashes.map(h => (async () => {
       try {
         return await wallet.getTicket(walletService, strHashToRaw(h));
       } catch (error) {
-        console.log("xxxxxx error", error);
         if (error.code === 5) { // 5 === grpc/codes.NotFound
           // might happen if we didn't participate in the ticket (eg: pool fee wallets)
           return null;
@@ -511,8 +509,6 @@ const getTicketsFromTransactions = async (walletService, startIdx, endIdx, maxCo
       }
     })()));
 
-    console.log("xxxx res", res);
-
     return res.filter(t => t);
   };
 
@@ -520,15 +516,12 @@ const getTicketsFromTransactions = async (walletService, startIdx, endIdx, maxCo
     // grabbing unmined list. Perform a single call and return
     const { unmined } = await wallet.getTransactions(walletService, -1, -1);
     const infos = await txsToTickets(unmined);
-    console.log("xxxx infos unmined", infos);
     tickets.push(...infos);
   }
 
   // iterate mined until enough mined transactions were fetched
   while (tickets.length < maxCount) {
     const { mined } = await wallet.getTransactions(walletService, startIdx, endIdx, pageSize);
-
-    console.log("xxxxxx got further mined");
 
     if (mined.length === 0) break; // no more transactions in the wallet
     if (desc && startIdx <= 1) break; // reached genesis
@@ -541,9 +534,7 @@ const getTicketsFromTransactions = async (walletService, startIdx, endIdx, maxCo
     startIdx = desc ? lastTx.height -1 : lastTx.height + 1;
   }
 
-  console.log("got tickets",tickets);
-
-  return tickets;
+  return { tickets, startIdx };
 };
 
 export const getTickets = () => async (dispatch, getState) => {
@@ -554,51 +545,72 @@ export const getTickets = () => async (dispatch, getState) => {
 
   const { ticketsFilter, maximumTransactionCount, walletService,
     currentBlockHeight } = getState().grpc;
-  let { noMoreTickets, lastTicket, minedTickets } = getState().grpc;
+  let { noMoreTickets, getTicketsStartRequestHeight, minedTickets } = getState().grpc;
   const pageCount = maximumTransactionCount;
 
   // List of transactions found after filtering
   let filtered = [];
-  let tickets;
 
   // always request unmined tickets as new ones may be available or some may
   // have been mined
-  tickets = await getTicketsFromTransactions(walletService, -1, -1, 0, currentBlockHeight);
+  let { tickets } = await getTicketsFromTransactions(walletService, -1, -1, 0, currentBlockHeight);
   const unminedFiltered = filterTickets(tickets, ticketsFilter);
   const unminedTickets = sel.ticketsNormalizer(getState())(unminedFiltered);
+
+  let startRequestHeight, endRequestHeight, desc;
+  if ( ticketsFilter.listDirection === "desc" ) {
+    startRequestHeight = getTicketsStartRequestHeight ? getTicketsStartRequestHeight : currentBlockHeight;
+    endRequestHeight = 1;
+    desc = true;
+  } else {
+    startRequestHeight = getTicketsStartRequestHeight ? getTicketsStartRequestHeight : 1;
+    endRequestHeight = currentBlockHeight;
+    desc = false;
+  }
 
   // now, request a batch of mined transactions until `maximumTransactionCount`
   // transactions have been obtained (after filtering)
   while (!noMoreTickets && (filtered.length < maximumTransactionCount)) {
-    let startRequestHeight, endRequestHeight;
-
-    if ( ticketsFilter.listDirection === "desc" ) {
-      startRequestHeight = lastTicket ? lastTicket.block.getHeight() -1 : currentBlockHeight;
-      endRequestHeight = 1;
-    } else {
-      startRequestHeight = lastTicket ? lastTicket.block.getHeight() +1 : 1;
-      endRequestHeight = currentBlockHeight;
-    }
-
     try {
-      tickets = await getTicketsFromTransactions(walletService,
+      let { tickets, startIdx } = await getTicketsFromTransactions(walletService,
         startRequestHeight, endRequestHeight, pageCount, currentBlockHeight);
-      noMoreTickets = tickets.length === 0;
-      lastTicket = tickets.length ? tickets[tickets.length -1] : lastTicket;
-      filterTickets(tickets, ticketsFilter)
-        .forEach(v => filtered.push(v));
+
+      noMoreTickets =
+        (tickets.length === 0) ||
+        (desc && startIdx <= 1) ||
+        (desc && startIdx >= currentBlockHeight);
+
+      startRequestHeight = startIdx;
+
+      filtered.push(...filterTickets(tickets, ticketsFilter));
     } catch (error) {
       dispatch({ error, type: GETTICKETS_FAILED });
       return;
     }
   }
 
+  console.log("got tickets", tickets);
+
+  // Grab and update the state with decoded ticket txs.
+  // TODO: the ticket tx decoding logic should be reworked throughout the app
+  // now that we have an internal decoding function...
+  const decodedTxs = {};
+  filtered.forEach(ticket => {
+    const rawTx = Buffer.from(ticket.ticket.getTransaction());
+    const hash = reverseRawHash(ticket.ticket.getHash());
+    console.log("gonna decode", hash, rawTx);
+    decodedTxs[hash] = wallet.decodeRawTransaction(rawTx);
+  });
+  console.log("xxxxx got decoded", decodedTxs);
+  dispatch({ transactions: decodedTxs, type: DECODERAWTXS_SUCCESS });
+
   const normalized = sel.ticketsNormalizer(getState())(filtered);
 
   minedTickets = [ ...minedTickets, ...normalized ];
 
-  dispatch({ unminedTickets, minedTickets,
-    noMoreTickets, lastTicket, type: GETTICKETS_COMPLETE });
+  dispatch({ unminedTickets, minedTickets, noMoreTickets,
+    getTicketsStartRequestHeight: startRequestHeight,
+    type: GETTICKETS_COMPLETE });
 };
 
 export const RAWTICKETTRANSACTIONS_DECODED = "RAWTICKETTRANSACTIONS_DECODED";

@@ -186,7 +186,7 @@ var initialState = {
       listDirection: "desc", // asc = oldest -> newest, desc => newest -> oldest
       status: [], // desired ticket status (code). All if blank.
     },
-    lastTicket: null, //last ticket obtained
+    getTicketsStartRequestHeight: null,
 
     // Agenda/VoteChoices
     getAgendasResponse: null,

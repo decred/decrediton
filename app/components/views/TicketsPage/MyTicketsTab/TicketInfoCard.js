@@ -18,11 +18,6 @@ class TicketInfoCard extends React.Component {
   }
 
   onMouseEnter() {
-    const { ticket, decodeRawTicketTransactions } = this.props;
-    if (!ticket.decodedTicketTx) {
-      decodeRawTicketTransactions(ticket);
-    }
-
     this.setState({ hasMouse: true });
   }
 
