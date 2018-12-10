@@ -66,8 +66,8 @@ const StakeTxRow = ({ status,  ...props }) => {
             {daysToVote !== null && !isNaN(daysToVote) && (
               <Tooltip text={daysToVoteMessage}>
                 <div className="transaction-info-overview-days-to-vote">
-                  <span className="transaction-info-overview-days-to-vote-number">{daysToVote}</span>
-                  <T id="statusSmall.daysToVote" m="days" />
+                  <T id="statusSmall.daysToVotePlural" m="{days, plural, one {# day} other {# days}}"
+                    values={{ days: daysToVote }}/>
                 </div>
               </Tooltip>
             )}
