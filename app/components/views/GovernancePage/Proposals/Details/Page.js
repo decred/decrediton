@@ -4,11 +4,11 @@ import { PoliteiaLink } from "shared";
 import {
   ProposalNotVoting, NoTicketsVotingInfo, OverviewField, OverviewVotingProgressInfo,
   NoElligibleTicketsVotingInfo, UpdatingVoteChoice, TimeValue,
-  ChosenVoteOption, ProposalText,
+  ChosenVoteOption, ProposalText, ProposalAbandoned
 } from "./helpers";
 import { politeiaMarkdownIndexMd } from "helpers";
 import {
-  VOTESTATUS_ACTIVEVOTE, VOTESTATUS_VOTED
+  VOTESTATUS_ACTIVEVOTE, VOTESTATUS_VOTED, VOTESTATUS_ABANDONED
 } from "actions/GovernanceActions";
 
 export default ({ viewedProposalDetails,
@@ -29,9 +29,12 @@ export default ({ viewedProposalDetails,
 
   const voted = voteStatus === VOTESTATUS_VOTED;
   const voting = voteStatus === VOTESTATUS_ACTIVEVOTE;
+  const abandoned = voteStatus === VOTESTATUS_ABANDONED;
+
 
   let voteInfo = null;
   if (updateVoteChoiceAttempt) voteInfo = <UpdatingVoteChoice />;
+  else if (abandoned) voteInfo = <ProposalAbandoned />;
   else if (voted) voteInfo = <ChosenVoteOption {...{ voteOptions, currentVoteChoice, votingComplete: true }} />;
   else if (!voting) voteInfo = <ProposalNotVoting />;
   else if (!hasTickets) voteInfo = <NoTicketsVotingInfo {...{ showPurchaseTicketsPage }} />;

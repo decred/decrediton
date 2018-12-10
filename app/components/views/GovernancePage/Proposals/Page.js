@@ -1,6 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import { PoliteiaLink as PiLink } from "shared";
-import { ActiveVoteProposals, PreVoteProposals, VotedProposals } from "./ProposalList";
+import { ActiveVoteProposals, PreVoteProposals, VotedProposals, AbandonedProposals } from "./ProposalList";
 import { shell } from "electron";
 import { TabbedPage, TabbedPageTab as Tab } from "layout";
 import { newProposalCounts } from "connectors";
@@ -32,6 +32,8 @@ const Page = ({ newActiveVoteProposalsCount, newPreVoteProposalsCount }) => (
       link={<ListLink count={newActiveVoteProposalsCount}><T id="proposals.statusLinks.underVote" m="Under Vote" /></ListLink>}/>
     <Tab path="/governance/proposals/voted" component={VotedProposals}
       link={<T id="proposals.statusLinks.voted" m="Finished voting" />}/>
+    <Tab path="/governance/proposals/abandoned" component={AbandonedProposals}
+      link={<T id="proposals.statusLinks.abandoned" m="Abandoned" />}/>
   </TabbedPage>
 );
 
