@@ -131,7 +131,7 @@ export const getNetworkResponse = get([ "grpc", "getNetworkResponse" ]);
 export const getNetworkError = get([ "grpc", "getNetworkError" ]);
 const accounts = createSelector([ getAccountsResponse ], r => r ? r.getAccountsList() : []);
 
-export const isWatchingOnly = get([ "walletLoader", "isWatchingOnly" ]);
+export const isWatchingOnly = bool(get([ "walletLoader", "isWatchingOnly" ]));
 export const accountExtendedKey = createSelector(
   [ get([ "control", "getAccountExtendedKeyResponse" ]) ],
   (response) => response ? response.getAccExtendedPubKey() : null
