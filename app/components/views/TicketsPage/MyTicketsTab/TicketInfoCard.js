@@ -76,12 +76,13 @@ class TicketInfoCard extends React.Component {
     const { ticket } = this.props;
     const { hasMouse } = this.state;
 
+    const timestamp = ticket.leaveTimestamp ? ticket.leaveTimestamp : ticket.enterTimestamp;
     const timestampDiv = (
       <div className="ticket-timestamp">
         <T
           id="ticket.timestamp"
           m="{timestamp, date, medium} {timestamp, time, medium}"
-          values={{ timestamp: this.props.tsDate(ticket.enterTimestamp) }} />
+          values={{ timestamp: this.props.tsDate(timestamp) }} />
       </div>
     );
 

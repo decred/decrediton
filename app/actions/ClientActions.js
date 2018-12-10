@@ -473,33 +473,48 @@ const getTicketsFromTransactions = async (walletService, startIdx, endIdx, maxCo
   // transactions of the list.
   const txsToTickets = async txs => {
     const hashes = [];
+    const txByTicketHash = {}; // needed to determine when to ignore duplicate elements
+
     for (let i = 0; i < txs.length; i++) {
       if (stakeTypes.indexOf(txs[i].type) === -1) continue; // not a stake tx
 
       let txHash = txs[i].txHash;
       if (txs[i].type !== TransactionDetails.TransactionType.TICKET_PURCHASE) {
-        // in asc mode we see tickets before votes/revocations, so we can
-        // ignore those here (given we'll have added the ticket already)
-        if (!desc) continue;
-
         // for votes/revocations, we need to grab the prevOutpoint to figure
         // out the ticket hash
         const decodedSpender = wallet.decodeRawTransaction(Buffer.from(txs[i].tx.getTransaction()));
         const spenderInputs = decodedSpender.inputs;
         txHash = reverseRawHash(spenderInputs[spenderInputs.length-1].prevTxId);
-      } else {
-        // in desc mode we see votes/revocations before tickets, so we can
-        // ignore those here (given we'll have added the ticket already).
-        if (desc) continue;
       }
+      if (txByTicketHash[txHash]) continue; // only add first occurrence in resulting list
 
       hashes.push(txHash);
+      txByTicketHash[txHash] = txs[i];
     }
 
     // got hashes of all tickets. Now fetch their info
     const res = await Promise.all(hashes.map(h => (async () => {
       try {
-        return await wallet.getTicket(walletService, strHashToRaw(h));
+        const ticket = await wallet.getTicket(walletService, strHashToRaw(h));
+        const tx = txByTicketHash[h];
+        const txIsTicket = tx.type === TransactionDetails.TransactionType.TICKET_PURCHASE;
+        const ticketWasSpent = [ "voted", "revoked" ].indexOf(ticket.status) > -1;
+
+        if (desc && txIsTicket && ticketWasSpent) {
+          // fetching backwards, we ignore data from voted/revoked tickets given
+          // that we should have seen the spender tx already, so this ticket has
+          // already been added to the list.
+          return null;
+        }
+
+        if (!desc && !txIsTicket && ticketWasSpent) {
+          // fetching forwards, we ignore data from voted/revoked tickets given
+          // that we should have seen the ticket tx already, so this ticket has
+          // already been added to the list.
+          return null;
+        }
+
+        return ticket;
       } catch (error) {
         if (error.code === 5) { // 5 === grpc/codes.NotFound
           // might happen if we didn't participate in the ticket (eg: pool fee wallets)
@@ -589,22 +604,11 @@ export const getTickets = () => async (dispatch, getState) => {
     }
   }
 
-  console.log("got tickets", tickets);
-
-  // Grab and update the state with decoded ticket txs.
-  // TODO: the ticket tx decoding logic should be reworked throughout the app
-  // now that we have an internal decoding function...
-  const decodedTxs = {};
-  filtered.forEach(ticket => {
-    const rawTx = Buffer.from(ticket.ticket.getTransaction());
-    const hash = reverseRawHash(ticket.ticket.getHash());
-    console.log("gonna decode", hash, rawTx);
-    decodedTxs[hash] = wallet.decodeRawTransaction(rawTx);
-  });
-  console.log("xxxxx got decoded", decodedTxs);
-  dispatch({ transactions: decodedTxs, type: DECODERAWTXS_SUCCESS });
+  console.log("got tickets", filtered);
 
   const normalized = sel.ticketsNormalizer(getState())(filtered);
+
+  console.log("normalized", normalized);
 
   minedTickets = [ ...minedTickets, ...normalized ];
 
