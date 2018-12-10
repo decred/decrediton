@@ -120,7 +120,7 @@ export const launchDCRD = (mainWindow, daemonIsAdvanced, daemonPath, appdata, te
 
   const dcrdExe = getExecutablePath("dcrd", argv.customBinPath);
   if (!fs.existsSync(dcrdExe)) {
-    logger.log("error", "The dcrd file does not exists");
+    logger.log("error", "The dcrd executable does not exist. Expected to find it at " + dcrdExe);
     return;
   }
 
@@ -206,7 +206,7 @@ export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
 
   const dcrwExe = getExecutablePath("dcrwallet", argv.customBinPath);
   if (!fs.existsSync(dcrwExe)) {
-    logger.log("error", "The dcrwallet file does not exists");
+    logger.log("error", "The dcrwallet executable does not exist. Expected to find it at " + dcrwExe);
     return;
   }
 
@@ -324,7 +324,7 @@ export const readExesVersion = (app, grpcVersions) => {
   for (let exe of exes) {
     let exePath = getExecutablePath("dcrd", argv.customBinPath);
     if (!fs.existsSync(exePath)) {
-      logger.log("error", "The dcrd file does not exists");
+      logger.log("error", "The dcrd executable does not exist. Expected to find it at " + exePath);
     }
 
     let proc = spawn(exePath, args, { encoding: "utf8" });
