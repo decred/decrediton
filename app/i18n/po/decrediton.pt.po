@@ -3,7 +3,7 @@
 # 
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2018-12-07T11:25:28.463Z\n"
+"POT-Creation-Date: 2018-12-11T19:51:18.184Z\n"
 "Last-Translator: Matheus Degiovani, 2018\n"
 "Language-Team: Portuguese (https://www.transifex.com/decred/teams/79156/pt/)\n"
 "MIME-Version: 1.0\n"
@@ -120,6 +120,14 @@ msgstr "Chave de API"
 msgctxt "stakepool.apikey"
 msgid "API Key"
 msgstr "Chave de API"
+
+#. [proposals.statusLinks.abandoned]
+#. defaultMessage is:
+#. Abandoned
+#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Page.json
+msgctxt "proposals.statusLinks.abandoned"
+msgid "Abandoned"
+msgstr "Abandonadas"
 
 #. [appMenu.about]
 #. defaultMessage is:
@@ -3648,6 +3656,14 @@ msgctxt "txDetails.properties"
 msgid "Properties"
 msgstr "Propriedades"
 
+#. [proposalDetails.votingInfo.abandoned]
+#. defaultMessage is:
+#. Proposal has been abandoned
+#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Details/helpers.json
+msgctxt "proposalDetails.votingInfo.abandoned"
+msgid "Proposal has been abandoned"
+msgstr "Proposta abandonada"
+
 #. [proposalDetails.votingInfo.notVoting]
 #. defaultMessage is:
 #. Proposal not yet on voting stage
@@ -6153,6 +6169,14 @@ msgctxt "transaction.type.unmined"
 msgid "Unmined"
 msgstr "Não Minerada"
 
+#. [send.unsignedRawTxTite]
+#. defaultMessage is:
+#. Unsigned Raw Transaction:
+#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/Page.json
+msgctxt "send.unsignedRawTxTite"
+msgid "Unsigned Raw Transaction:"
+msgstr "Transação não assinada:"
+
 #. [stake.unspentTickets]
 #. defaultMessage is:
 #. Unspent Tickets
@@ -6682,6 +6706,19 @@ msgstr ""
 "Senha privada errada digitada. Por favor verifique se você digitou "
 "corretamente a senha privada da carteira."
 
+#. [getStarted.longWaitWarning]
+#. defaultMessage is:
+#. You are currently upgrading to a new dcrd version.  Typically, this one-
+#. time reindexing will take 30-45 minutes on an average machine.
+#: app/i18n/extracted/app/components/views/GetStartedPage/DaemonLoading/Form.json
+msgctxt "getStarted.longWaitWarning"
+msgid ""
+"You are currently upgrading to a new dcrd version.  Typically, this one-time"
+" reindexing will take 30-45 minutes on an average machine."
+msgstr ""
+"Você está atualizando para uma nova versão do dcrd. Normalmente, essa "
+"atualização vai levar de 30 a 45 minutos em um computador comum."
+
 #. [tickets.purchaseTicketsHeader]
 #. defaultMessage is:
 #. You bought {numTickets, plural, one {# ticket } other {# tickets }}
@@ -6771,14 +6808,6 @@ msgstr "blocos"
 msgctxt "trezor.pinModal.clear"
 msgid "clear"
 msgstr "limpar"
-
-#. [statusSmall.daysToVote]
-#. defaultMessage is:
-#. days
-#: app/i18n/extracted/app/components/TxHistory/TxHistoryRow/StakeTxRow.json
-msgctxt "statusSmall.daysToVote"
-msgid "days"
-msgstr "dias"
 
 #. [help.logs.dcrd]
 #. defaultMessage is:
@@ -7064,6 +7093,22 @@ msgstr ""
 "{count, plural, =0 {zero tickets votaram} one {# ticket votou} other {# "
 "tickets votaram}} {days, plural, =0 {no mesmo dia} one {em até um dia} other"
 " {em até # dias}} da compra"
+
+#. [statusSmall.daysToVotePlural]
+#. defaultMessage is:
+#. {days, plural, one {# day} other {# days}}
+#: app/i18n/extracted/app/components/TxHistory/TxHistoryRow/StakeTxRow.json
+msgctxt "statusSmall.daysToVotePlural"
+msgid "{days, plural, one {# day} other {# days}}"
+msgstr "{days, plural, one {# dia} other {# dias}}"
+
+#. [ticket.daysToVote]
+#. defaultMessage is:
+#. {days, plural, one {# day} other {# days}}
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketInfoCard.json
+msgctxt "ticket.daysToVote"
+msgid "{days, plural, one {# day} other {# days}}"
+msgstr "{days, plural, one {# dia} other {# dias}}"
 
 #. [ticket.daysToVoteMessage]
 #. defaultMessage is:

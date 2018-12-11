@@ -1,12 +1,13 @@
 # Translators:
 # tx_e2f_ja t17 <tx_e2f_ja_t17@e2f.com>, 2018
-# e2f_ja r1 <tx_e2f_ja_r1@e2f.com>, 2018
 # tx_e2f_ja t16 <tx_e2f_ja_t16@e2f.com>, 2018
+# e2f_ja r1 <tx_e2f_ja_r1@e2f.com>, 2018
+# e2f_ja r5 <tx_e2f_ja_r5@e2f.com>, 2018
 # 
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2018-12-07T11:25:28.463Z\n"
-"Last-Translator: tx_e2f_ja t16 <tx_e2f_ja_t16@e2f.com>, 2018\n"
+"POT-Creation-Date: 2018-12-11T19:51:18.184Z\n"
+"Last-Translator: e2f_ja r5 <tx_e2f_ja_r5@e2f.com>, 2018\n"
 "Language-Team: Japanese (https://www.transifex.com/decred/teams/79156/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -45,7 +46,7 @@ msgstr "&表示"
 #: app/i18n/extracted/app/components/views/GetStartedPage/WalletSelection/CreateWalletForm.json
 msgctxt "createWallet.isTrezor.setupLink"
 msgid "(setup device)"
-msgstr ""
+msgstr "（デバイスを設定）"
 
 #. [confirmSeed.warnings.pasteExistingError]
 #. defaultMessage is:
@@ -121,6 +122,14 @@ msgctxt "stakepool.apikey"
 msgid "API Key"
 msgstr "APIキー"
 
+#. [proposals.statusLinks.abandoned]
+#. defaultMessage is:
+#. Abandoned
+#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Page.json
+msgctxt "proposals.statusLinks.abandoned"
+msgid "Abandoned"
+msgstr ""
+
 #. [appMenu.about]
 #. defaultMessage is:
 #. About
@@ -167,7 +176,7 @@ msgstr "同意する"
 #: app/i18n/extracted/app/components/views/SettingsPage/PrivacySettings.json
 msgctxt "settings.privacy.dcrdata.description"
 msgid "Access chain information from explorer.dcrdata.org"
-msgstr ""
+msgstr "explorer.dcrdata.orgからチェーン情報にアクセス"
 
 #. [accounts.number]
 #. defaultMessage is:
@@ -435,7 +444,7 @@ msgstr "金額"
 #: app/i18n/extracted/app/components/buttons/EyeFilterMenuWithSlider/index.json
 msgctxt "history.amount.range"
 msgid "Amount Range"
-msgstr ""
+msgstr "金額範囲"
 
 #. [export.tickets.fields.returnedAmount]
 #. defaultMessage is:
@@ -461,7 +470,7 @@ msgstr "チケット取引へウォレットにより送信された金額。"
 msgctxt "settings.closeWalletModalContent"
 msgid ""
 "Are you sure you want to close {walletName} and return to the launcher?"
-msgstr ""
+msgstr "{walletName} を閉じてランチャーに戻りますか？"
 
 #. [tickets.startAutoBuyerConfirmation.attention]
 #. defaultMessage is:
@@ -477,7 +486,7 @@ msgstr "注意!"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/Form.json
 msgctxt "automatictickets.subtitle"
 msgid "Automatic Ticket Purchases"
-msgstr ""
+msgstr "自動チケット購入"
 
 #. [charts.keys.available]
 #. defaultMessage is:
@@ -501,7 +510,7 @@ msgstr "利用可能"
 #: app/i18n/extracted/app/components/views/GovernancePage/index.json
 msgctxt "governance.treasury_balance"
 msgid "Available Treasury Balance: {treasuryBalance}"
-msgstr ""
+msgstr "利用可能な資金残高: {treasuryBalance}"
 
 #. [export.dailyBalances.fields.spendable]
 #. defaultMessage is:
@@ -557,7 +566,7 @@ msgstr "残高"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/Form.json
 msgctxt "autobuyer.modal.balanceToMaintain"
 msgid "Balance To Maintain"
-msgstr ""
+msgstr "維持に必要な残高"
 
 #. [export.dailyBalances.fields.lockedNonWallet]
 #. defaultMessage is:
@@ -775,7 +784,7 @@ msgstr "すべての資金送信をキャンセル"
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Details/UpdateVoteChoiceModalButton.json
 msgctxt "proposals.updateVoteChoiceModal.btnLabel"
 msgid "Cast Vote"
-msgstr ""
+msgstr "投票する"
 
 #. [trezor.changeLabel.changeButton]
 #. defaultMessage is:
@@ -783,7 +792,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TrezorPage/ChangeLabel.json
 msgctxt "trezor.changeLabel.changeButton"
 msgid "Change"
-msgstr ""
+msgstr "変更"
 
 #. [trezorPage.changeHomeScreen]
 #. defaultMessage is:
@@ -791,7 +800,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TrezorPage/ConfigButtons.json
 msgctxt "trezorPage.changeHomeScreen"
 msgid "Change Home Screen"
-msgstr ""
+msgstr "ホーム画面の変更"
 
 #. [trezor.changeLabel.header]
 #. defaultMessage is:
@@ -799,7 +808,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TrezorPage/ChangeLabel.json
 msgctxt "trezor.changeLabel.header"
 msgid "Change Label"
-msgstr ""
+msgstr "ラベルの変更"
 
 #. [settings.changeConfirmation]
 #. defaultMessage is:
@@ -815,7 +824,7 @@ msgstr "パスフレーズを変更"
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "trezor.changeLabel.success"
 msgid "Changed label on selected trezor to '{label}'"
-msgstr ""
+msgstr "選択したtrezorのラベルを '{label}' に変更"
 
 #. [settings.description]
 #. defaultMessage is:
@@ -855,7 +864,7 @@ msgstr "言語を選択"
 #: app/i18n/extracted/app/components/views/TrezorPage/ConfigButtons.json
 msgctxt "trezorPage.clearSession"
 msgid "Clear Session"
-msgstr ""
+msgstr "セッションをクリア"
 
 #. [trezor.pinModal.description]
 #. defaultMessage is:
@@ -863,7 +872,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/modals/trezor/PinModal.json
 msgctxt "trezor.pinModal.description"
 msgid "Click button sequence that corresponds to your pin on trezor {label}"
-msgstr ""
+msgstr "Trezor {label} 上のPINに対応するボタンシーケンスをクリック"
 
 #. [infoConfirmModal.btnClose]
 #. defaultMessage is:
@@ -887,7 +896,7 @@ msgstr "閉じる"
 #: app/i18n/extracted/app/components/views/FatalErrorPage.json
 msgctxt "fatal.button"
 msgid "Close Decrediton"
-msgstr ""
+msgstr "Decreditonを閉じる"
 
 #. [settings.closeWalletModalOk]
 #. defaultMessage is:
@@ -895,7 +904,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/SettingsPage/Page.json
 msgctxt "settings.closeWalletModalOk"
 msgid "Close Wallet"
-msgstr ""
+msgstr "ウォレットを閉じる"
 
 #. [txDetails.type.coinbase]
 #. defaultMessage is:
@@ -927,7 +936,7 @@ msgstr "コミュニティディスカッション"
 #: app/i18n/extracted/app/components/views/TrezorPage/ConfigButtons.json
 msgctxt "trezor.configButtons.header"
 msgid "Config Trezor"
-msgstr ""
+msgstr "Trezorの設定"
 
 #. [stakepools.list.title]
 #. defaultMessage is:
@@ -983,7 +992,7 @@ msgstr "シードのコピーを確認"
 #: app/i18n/extracted/app/components/modals/trezor/WalletCreationPassPhraseModal.json
 msgctxt "trezor.walltCreationPrivatePassphraseConfirm"
 msgid "Confirm Wallet PassPhrase"
-msgstr ""
+msgstr "ウォレットのパスフレーズを確認"
 
 #. [proposals.updateVoteChoiceModal.title]
 #. defaultMessage is:
@@ -991,7 +1000,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Details/UpdateVoteChoiceModalButton.json
 msgctxt "proposals.updateVoteChoiceModal.title"
 msgid "Confirm Your Vote"
-msgstr ""
+msgstr "投票を確認"
 
 #. [passphraseModal.confirmationRequired]
 #. defaultMessage is:
@@ -1007,7 +1016,7 @@ msgstr "承認が必要です"
 #: app/i18n/extracted/app/components/views/SettingsPage/Page.json
 msgctxt "settings.closeWalletModalTitle"
 msgid "Confirmation Required"
-msgstr ""
+msgstr "確認が必要です"
 
 #. [transaction.indicatorConfirmed]
 #. defaultMessage is:
@@ -1031,7 +1040,7 @@ msgstr "承認済み"
 #: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/Page.json
 msgctxt "votingPreferences.title"
 msgid "Consensus Changes"
-msgstr ""
+msgstr "コンセンサスの変更"
 
 #. [governance.tab.consensusChanges]
 #. defaultMessage is:
@@ -1039,7 +1048,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GovernancePage/index.json
 msgctxt "governance.tab.consensusChanges"
 msgid "Consensus Changes"
-msgstr ""
+msgstr "コンセンサスの変更"
 
 #. [votingPreferences.description]
 #. defaultMessage is:
@@ -1053,6 +1062,8 @@ msgid ""
 "means deciding whether to adopt changes to the consensus rules of the "
 "network. Participation in voting requires (PoS) tickets."
 msgstr ""
+"コンセンサスの変更とは、Decredのチェーン上のガバナンスを指します。つまり、ネットワークのコンセンサスルールへの変更を適用するかどうかを決定します。投票に参加するには"
+" (PoS) チケットが必要です。"
 
 #. [help.constitution]
 #. defaultMessage is:
@@ -1333,7 +1344,7 @@ msgstr "日"
 #: app/i18n/extracted/app/components/views/SettingsPage/PrivacySettings.json
 msgctxt "settings.privacy.dcrdata.label"
 msgid "Decred Block Explorer"
-msgstr ""
+msgstr "Decredブロックエクスプローラー"
 
 #. [help.constitution.modal.title]
 #. defaultMessage is:
@@ -1476,7 +1487,7 @@ msgstr "検知された取引タイプ（通常、チケット購入、投票な
 #: app/i18n/extracted/app/components/views/TrezorPage/RecoveryButtons.json
 msgctxt "trezor.recoveryButtons.header"
 msgid "Device Recovery"
-msgstr ""
+msgstr "デバイスの復元"
 
 #. [advancedDaemon.toggle.remote]
 #. defaultMessage is:
@@ -1492,7 +1503,7 @@ msgstr "ローカルデーモンのさまざまなロケーション"
 #: app/i18n/extracted/app/components/views/GetStartedPage/SpvChoicePage/TopLevelOptions.json
 msgctxt "spv.options.disable.title"
 msgid "Disable SPV"
-msgstr ""
+msgstr "SPVを無効化"
 
 #. [settings.spv.false]
 #. defaultMessage is:
@@ -1500,7 +1511,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/SettingsPage/GeneralSettings.json
 msgctxt "settings.spv.false"
 msgid "Disabled"
-msgstr ""
+msgstr "無効"
 
 #. [settings.advancedDaemon.false]
 #. defaultMessage is:
@@ -1592,7 +1603,7 @@ msgstr "支払いリクエストの際は、プライバシー保護のため毎
 #: app/i18n/extracted/app/components/views/HomePage/tabs/Tickets.json
 msgctxt "home.earned"
 msgid "Earned"
-msgstr ""
+msgstr "獲得済み"
 
 #. [appMenu.edit]
 #. defaultMessage is:
@@ -1624,7 +1635,7 @@ msgstr "Politeiaの統合を有効にする"
 #: app/i18n/extracted/app/components/views/GetStartedPage/SpvChoicePage/TopLevelOptions.json
 msgctxt "spv.options.enable.title"
 msgid "Enable SPV"
-msgstr ""
+msgstr "SPVを有効化"
 
 #. [stake.enableStakePoolListing.button]
 #. defaultMessage is:
@@ -1640,7 +1651,7 @@ msgstr "ステークプールのリストを有効化"
 #: app/i18n/extracted/app/components/views/SettingsPage/GeneralSettings.json
 msgctxt "settings.spv.true"
 msgid "Enabled"
-msgstr ""
+msgstr "有効"
 
 #. [settings.advancedDaemon.true]
 #. defaultMessage is:
@@ -1678,7 +1689,7 @@ msgstr "パスフレーズを入力してチケットを取り消します"
 #: app/i18n/extracted/app/components/modals/trezor/PinModal.json
 msgctxt "trezor.pinModal.title"
 msgid "Enter Pin"
-msgstr ""
+msgstr "PINを入力"
 
 #. [trezor.passphraseModal.title]
 #. defaultMessage is:
@@ -1686,7 +1697,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/modals/trezor/PassPhraseModal.json
 msgctxt "trezor.passphraseModal.title"
 msgid "Enter Trezor Passphrase"
-msgstr ""
+msgstr "Trezorパスフレーズを入力"
 
 #. [securitycenter.signMessage.field.address.placeholder]
 #. defaultMessage is:
@@ -1791,7 +1802,7 @@ msgstr "提案の読み込みエラー: {error}"
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "tickets.errors.refreshStakePoolInfo"
 msgid "Error refreshing stakepool data from {host}: {originalError}"
-msgstr ""
+msgstr "{host}からのステークプールデータ再読み込みエラー: {originalError}"
 
 #. [spvSync.Failed]
 #. defaultMessage is:
@@ -1874,7 +1885,7 @@ msgstr "期限切れチケット"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfoDetailsSPV.json
 msgctxt "stakeSPV.expiredTickets"
 msgid "Expired Tickets"
-msgstr ""
+msgstr "期限切れチケット"
 
 #. [purchaseTickets.expiryPlaceholder]
 #. defaultMessage is:
@@ -2015,7 +2026,7 @@ msgstr "延長公開キー"
 msgctxt "trezor.getWalletCreationMasterPubKey.failed"
 msgid ""
 "Failed to obtain master extended pubkey from trezor device: {originalError}"
-msgstr ""
+msgstr "Trezorデバイスからマスター拡張公開鍵を取得できませんでした: {originalError}"
 
 #. [fatal.header.title]
 #. defaultMessage is:
@@ -2095,7 +2106,7 @@ msgstr "完了"
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Page.json
 msgctxt "proposals.statusLinks.voted"
 msgid "Finished voting"
-msgstr ""
+msgstr "投票完了済み"
 
 #. [trezor.firmwareUpdate.header]
 #. defaultMessage is:
@@ -2103,7 +2114,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TrezorPage/FirmwareUpdate.json
 msgctxt "trezor.firmwareUpdate.header"
 msgid "Firmware Update"
-msgstr ""
+msgstr "ファームウェアアップデート"
 
 #. [trezor.updateFirmware.success]
 #. defaultMessage is:
@@ -2111,7 +2122,7 @@ msgstr ""
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "trezor.updateFirmware.success"
 msgid "Firmware updated on trezor device"
-msgstr ""
+msgstr "Trezorデバイスでファームウェアがアップデートされました"
 
 #. [help.forum]
 #. defaultMessage is:
@@ -2135,7 +2146,7 @@ msgstr "送信元"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/Form.json
 msgctxt "autobuyer.accountFrom"
 msgid "From"
-msgstr ""
+msgstr "送信元"
 
 #. [send.from]
 #. defaultMessage is:
@@ -2455,7 +2466,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TrezorPage/RecoveryButtons.json
 msgctxt "trezorPage.initDeviceBtn"
 msgid "Init Device"
-msgstr ""
+msgstr "Initデバイス"
 
 #. [sidebar.rescanBtn.tip]
 #. defaultMessage is:
@@ -2509,7 +2520,7 @@ msgstr "無効な期限です"
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "runTicketBuyer.Failed"
 msgid "Invalid private password.  Please try again."
-msgstr ""
+msgstr "無効なプライベートパスワードです。もう一度試してください。"
 
 #. [securitycenter.verify.result.invalid]
 #. defaultMessage is:
@@ -2667,7 +2678,7 @@ msgstr "ライセンス情報"
 #: app/i18n/extracted/app/components/views/SettingsPage/PrivacySettings.json
 msgctxt "settings.privacy.politeia.description"
 msgid "List and vote on proposals on proposals.decred.org"
-msgstr ""
+msgstr "proposals.decred.orgにおけるリストと提案の投票"
 
 #. [settings.privacy.stakepoolListing.description]
 #. defaultMessage is:
@@ -2779,7 +2790,7 @@ msgstr "ログ"
 #: app/i18n/extracted/app/components/views/SettingsPage/GeneralSettings.json
 msgctxt "settings.network.mainnet"
 msgid "Mainnet"
-msgstr ""
+msgstr "メインネット"
 
 #. [transactions.description.send.mainnet]
 #. defaultMessage is:
@@ -2908,7 +2919,7 @@ msgstr "この取引でウォレットに送受信された正味額（手数料
 #: app/i18n/extracted/app/components/views/SettingsPage/GeneralSettings.json
 msgctxt "settings.network"
 msgid "Network"
-msgstr ""
+msgstr "ネットワーク"
 
 #. [settings.privacy.networkStatus.label]
 #. defaultMessage is:
@@ -2948,7 +2959,7 @@ msgstr "新規アカウント名"
 #: app/i18n/extracted/app/components/views/TrezorPage/ChangeLabel.json
 msgctxt "trezor.changeLabel.description"
 msgid "New Label"
-msgstr ""
+msgstr "新しいラベル"
 
 #. [changePassModal.newPassphrase]
 #. defaultMessage is:
@@ -2964,7 +2975,7 @@ msgstr "新しいプライベートパスフレーズ"
 #: app/i18n/extracted/app/components/Snackbar/Notification/Transaction.json
 msgctxt "notification.new"
 msgid "New Transaction"
-msgstr ""
+msgstr "新規取引"
 
 #. [changePassModal.confirmMismatch]
 #. defaultMessage is:
@@ -2988,7 +2999,7 @@ msgstr "新バージョン{version}をご利用いただけます"
 #: app/i18n/extracted/app/components/views/GetStartedPage/ReleaseNotes/Form.json
 msgctxt "getStarted.releaseNotes.NewerVersion"
 msgid "Newer Version"
-msgstr ""
+msgstr "新バージョン"
 
 #. [tickets.sortby.newest]
 #. defaultMessage is:
@@ -3128,7 +3139,7 @@ msgstr "取引がありません"
 msgctxt "trezor.noConnectedDevice"
 msgid ""
 "No trezor device connected. Check the device connection and trezor bridge."
-msgstr ""
+msgstr "接続されたTrezorデバイスはありません。接続およびTrezor Bridgeを確認してください。"
 
 #. [trezor.noDevice.message]
 #. defaultMessage is:
@@ -3139,7 +3150,7 @@ msgctxt "trezor.noDevice.message"
 msgid ""
 "No trezor device detected. Connect the device and check if trezor bridge is "
 "installed and running."
-msgstr ""
+msgstr "Trezorデバイスを検出できません。デバイスを接続し、Trezor Bridgeがインストールされ実行中であることを確認してください。"
 
 #. [trezor.getStartedConfig.noDeviceFound]
 #. defaultMessage is:
@@ -3149,7 +3160,7 @@ msgstr ""
 msgctxt "trezor.getStartedConfig.noDeviceFound"
 msgid ""
 "No trezor device found. Check the connection and the trezor bridge software."
-msgstr ""
+msgstr "Trezorデバイスが見つかりません。接続およびTrezor Bridgeソフトウェアを確認してください。"
 
 #. [proposal.noVote]
 #. defaultMessage is:
@@ -3157,7 +3168,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalList.json
 msgctxt "proposal.noVote"
 msgid "No vote cast"
-msgstr ""
+msgstr "無投票"
 
 #. [txDetails.nonWalletInputs]
 #. defaultMessage is:
@@ -3205,7 +3216,7 @@ msgstr "充分な資金がありません"
 #: app/i18n/extracted/app/components/views/GetStartedPage/ReleaseNotes/Form.json
 msgctxt "getStarted.releaseNotes.OlderVersion"
 msgid "Older Version"
-msgstr ""
+msgstr "旧バージョン"
 
 #. [tickets.sortby.oldest]
 #. defaultMessage is:
@@ -3285,7 +3296,7 @@ msgstr "所有アドレス"
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "trezor.passphraseProtectionSuccess.disabled"
 msgid "Passphrase protection has been disabled in trezor '{label}'"
-msgstr ""
+msgstr "Trezor '{label}' でパスフレーズによる保護を無効にしました"
 
 #. [trezor.passphraseProtectionSuccess.enabled]
 #. defaultMessage is:
@@ -3293,7 +3304,7 @@ msgstr ""
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "trezor.passphraseProtectionSuccess.enabled"
 msgid "Passphrase protection has been enabled in trezor '{label}'"
-msgstr ""
+msgstr "Trezor '{label}' でパスフレーズによる保護を有効にしました"
 
 #. [trezor.walletCreationPassphrasesMismatched]
 #. defaultMessage is:
@@ -3301,7 +3312,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/modals/trezor/WalletCreationPassPhraseModal.json
 msgctxt "trezor.walletCreationPassphrasesMismatched"
 msgid "Passphrases are different"
-msgstr ""
+msgstr "パスフレーズが一致しません"
 
 #. [appMenu.paste]
 #. defaultMessage is:
@@ -3317,7 +3328,7 @@ msgstr "貼り付け"
 #: app/i18n/extracted/app/components/views/TrezorPage/FirmwareUpdate.json
 msgctxt "trezorPage.updateFirmwarePah"
 msgid "Path to firmware file"
-msgstr ""
+msgstr "ファームウェアファイルへのパス"
 
 #. [transaction.indicatorPending]
 #. defaultMessage is:
@@ -3349,7 +3360,7 @@ msgstr "保留"
 #: app/i18n/extracted/app/components/views/TrezorPage/Header.json
 msgctxt "trezorPage.description"
 msgid "Perform several trezor-related actions."
-msgstr ""
+msgstr "Trezor関連のアクションを実行します。"
 
 #. [trezor.pinProtectionSuccess.disabled]
 #. defaultMessage is:
@@ -3357,7 +3368,7 @@ msgstr ""
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "trezor.pinProtectionSuccess.disabled"
 msgid "Pin protection has been disabled in trezor '{label}'"
-msgstr ""
+msgstr "Trezor '{label}' でPINによる保護を無効にしました"
 
 #. [trezor.pinProtectionSuccess.enabled]
 #. defaultMessage is:
@@ -3365,7 +3376,7 @@ msgstr ""
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "trezor.pinProtectionSuccess.enabled"
 msgid "Pin protection has been enabled in trezor '{label}'"
-msgstr ""
+msgstr "Trezor '{label}' でPINによる保護を有効にしました"
 
 #. [createwallet.dupeWalletName.error]
 #. defaultMessage is:
@@ -3435,7 +3446,7 @@ msgstr "シードをコピーするには{confirmationPhrase}と入力してく�
 #: app/i18n/extracted/app/components/views/SettingsPage/PrivacySettings.json
 msgctxt "settings.privacy.politeia.label"
 msgid "Politeia"
-msgstr ""
+msgstr "Politeia"
 
 #. [proposals.enablePoliteia.description]
 #. defaultMessage is:
@@ -3584,6 +3595,14 @@ msgctxt "txDetails.properties"
 msgid "Properties"
 msgstr "プロパティ"
 
+#. [proposalDetails.votingInfo.abandoned]
+#. defaultMessage is:
+#. Proposal has been abandoned
+#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Details/helpers.json
+msgctxt "proposalDetails.votingInfo.abandoned"
+msgid "Proposal has been abandoned"
+msgstr ""
+
 #. [proposalDetails.votingInfo.notVoting]
 #. defaultMessage is:
 #. Proposal not yet on voting stage
@@ -3606,7 +3625,7 @@ msgstr "提案"
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Page.json
 msgctxt "proposals.community.title"
 msgid "Proposals"
-msgstr ""
+msgstr "提案"
 
 #. [settings.proxy.title]
 #. defaultMessage is:
@@ -3721,7 +3740,7 @@ msgstr "終了"
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalList.json
 msgctxt "proposals.quorumNotMet"
 msgid "Quorum not met"
-msgstr ""
+msgstr "定足数に達していません"
 
 #. [advanced.remote.rpccert]
 #. defaultMessage is:
@@ -3849,7 +3868,7 @@ msgstr "受領済み"
 #: app/i18n/extracted/app/components/Snackbar/Notification/Transaction.json
 msgctxt "notifications.type.receive"
 msgid "Received"
-msgstr ""
+msgstr "受領済み"
 
 #. [home.receivedBalanceLabel]
 #. defaultMessage is:
@@ -3881,7 +3900,7 @@ msgstr "最近の取引"
 #: app/i18n/extracted/app/components/views/TrezorPage/RecoveryButtons.json
 msgctxt "trezorPage.recoverDeviceBtn"
 msgid "Recover Device"
-msgstr ""
+msgstr "デバイスを復元"
 
 #. [importScriptModal.redeemScript]
 #. defaultMessage is:
@@ -3913,7 +3932,7 @@ msgstr "通常"
 #: app/i18n/extracted/app/components/views/GetStartedPage/TrezorConfig/index.json
 msgctxt "trezor.getStartedConfig.btnReloadDeviceList"
 msgid "Reload Device List"
-msgstr ""
+msgstr "デバイスリストを再読み込み"
 
 #. [trezor.noDevice.btnReloadDeviceList]
 #. defaultMessage is:
@@ -3921,7 +3940,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TrezorPage/NoDevicePage.json
 msgctxt "trezor.noDevice.btnReloadDeviceList"
 msgid "Reload Device List"
-msgstr ""
+msgstr "デバイスリストを更新"
 
 #. [appMenu.reloadUI]
 #. defaultMessage is:
@@ -4041,7 +4060,7 @@ msgstr "{blockProgress}の再スキャン（{progressPercent}）"
 #: app/i18n/extracted/app/components/views/SettingsPage/Page.json
 msgctxt "settings.resetNetworkTitle"
 msgid "Reset required"
-msgstr ""
+msgstr "リセットする必要があります"
 
 #. [getStarted.restore]
 #. defaultMessage is:
@@ -4113,7 +4132,7 @@ msgstr "チケットの確認取消"
 #: app/i18n/extracted/app/components/Snackbar/Notification/Transaction.json
 msgctxt "notifications.type.revocation"
 msgid "Revoked"
-msgstr ""
+msgstr "取消済み"
 
 #. [transaction.type.revocation]
 #. defaultMessage is:
@@ -4145,7 +4164,7 @@ msgstr "取消済みチケット"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfoDetailsSPV.json
 msgctxt "stakeSPV.revokedTickets"
 msgid "Revoked Tickets"
-msgstr ""
+msgstr "取消済みチケット"
 
 #. [txFilter.type.revokes]
 #. defaultMessage is:
@@ -4177,7 +4196,7 @@ msgstr "RocketChat"
 #: app/i18n/extracted/app/components/views/SettingsPage/GeneralSettings.json
 msgctxt "settings.SPV"
 msgid "SPV"
-msgstr ""
+msgstr "SPV"
 
 #. [settings.SPVConnect]
 #. defaultMessage is:
@@ -4185,7 +4204,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/SettingsPage/GeneralSettings.json
 msgctxt "settings.SPVConnect"
 msgid "SPV Connect"
-msgstr ""
+msgstr "SPVの接続"
 
 #. [getStarted.isSPV.loadingText]
 #. defaultMessage is:
@@ -4193,7 +4212,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GetStartedPage/DaemonLoading/Form.json
 msgctxt "getStarted.isSPV.loadingText"
 msgid "SPV mode activated, wallet ready to launch"
-msgstr ""
+msgstr "SPVモードが有効になり、ウォレットを起動する準備ができました"
 
 #. [spv.options.enable.description]
 #. defaultMessage is:
@@ -4207,6 +4226,7 @@ msgid ""
 " speed comes at cost, with blocks not being fully verified.  It's 'less "
 "secure' but very unlikely that there will be any problems."
 msgstr ""
+"SPVを利用すると、よりスピーディにウォレットを復元して使用できます。ただし、各ブロックが完全に確認されないという代償があります。理論上は安全性が低くなりますが、実際に問題が生じることは非常にまれです。"
 
 #. [getStarted.settings.save]
 #. defaultMessage is:
@@ -4310,7 +4330,7 @@ msgstr "セキュリティセンター"
 #: app/i18n/extracted/app/components/Snackbar/Notification/Transaction.json
 msgctxt "notification.seeTransactionDetails"
 msgid "See Transaction Details"
-msgstr ""
+msgstr "取引の詳細を表示"
 
 #. [home.recentTransactionsHistory]
 #. defaultMessage is:
@@ -4388,7 +4408,7 @@ msgctxt "spv.titleSub"
 msgid ""
 "Select how Decrediton wallet's should connect to the network. You can change"
 " this in the application settings later."
-msgstr ""
+msgstr "Decreditonウォレットをネットワークに接続する方法を選択してください。後からアプリケーション設定で変更することが可能です。"
 
 #. [privacy.custom.titleSub]
 #. defaultMessage is:
@@ -4463,7 +4483,7 @@ msgstr "送信済み"
 #: app/i18n/extracted/app/components/Snackbar/Notification/Transaction.json
 msgctxt "notifications.type.send"
 msgid "Sent"
-msgstr ""
+msgstr "送信済み"
 
 #. [home.sentBalanceLabel]
 #. defaultMessage is:
@@ -4519,7 +4539,7 @@ msgstr "設定"
 #: app/i18n/extracted/app/components/views/GetStartedPage/Settings/Form.json
 msgctxt "settings.subtitle"
 msgid "Settings"
-msgstr ""
+msgstr "設定"
 
 #. [settings.title]
 #. defaultMessage is:
@@ -4615,7 +4635,7 @@ msgstr "署名"
 #: app/i18n/extracted/app/components/views/GetStartedPage/SpvChoicePage/TopLevelOptions.json
 msgctxt "spv.title"
 msgid "Simple Payment Verification (SPV)"
-msgstr ""
+msgstr "簡易支払確認 (SPV)"
 
 #. [advancedStartup.skip]
 #. defaultMessage is:
@@ -4647,7 +4667,7 @@ msgstr "Slack"
 #: app/i18n/extracted/app/components/buttons/EyeFilterMenuWithSlider/index.json
 msgctxt "history.max.value"
 msgid "Slider max"
-msgstr ""
+msgstr "スライダーの最大値"
 
 #. [history.min.value]
 #. defaultMessage is:
@@ -4655,7 +4675,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/buttons/EyeFilterMenuWithSlider/index.json
 msgctxt "history.min.value"
 msgid "Slider min"
-msgstr ""
+msgstr "スライダーの最小値"
 
 #. [help.about.decrediton.subtitle]
 #. defaultMessage is:
@@ -4743,7 +4763,7 @@ msgstr "ステークプール"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/Form.json
 msgctxt "autobuyer.stakePoolLabel"
 msgid "Stake Pool"
-msgstr ""
+msgstr "ステークプール"
 
 #. [mytickets.statistics.stakepool.title]
 #. defaultMessage is:
@@ -4821,7 +4841,7 @@ msgstr "ステークプール"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/Form.json
 msgctxt "autobuyer.modal.stakepool"
 msgid "Stakepool"
-msgstr ""
+msgstr "ステークプール"
 
 #. [stake.addPoolConfirmation]
 #. defaultMessage is:
@@ -4893,7 +4913,7 @@ msgstr "AppDataデーモンの開始"
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Details/helpers.json
 msgctxt "proposalDetails.votingInfo.startStakingBtn"
 msgid "Start Staking"
-msgstr ""
+msgstr "ステーキングを開始"
 
 #. [tickets.startAutoBuyerConfirmation]
 #. defaultMessage is:
@@ -4909,7 +4929,7 @@ msgstr "チケットバイヤーの確認を開始"
 #: app/i18n/extracted/app/components/modals/trezor/WordModal.json
 msgctxt "trezor.wordModal.selectPlaceholder"
 msgid "Start typing word..."
-msgstr ""
+msgstr "入力を開始..."
 
 #. [tickets.tab.statistics]
 #. defaultMessage is:
@@ -5051,7 +5071,7 @@ msgstr "テレグラム"
 #: app/i18n/extracted/app/components/views/SettingsPage/GeneralSettings.json
 msgctxt "settings.network.testnet"
 msgid "Testnet"
-msgstr ""
+msgstr "テストネット"
 
 #. [transactions.description.send.testnet]
 #. defaultMessage is:
@@ -5080,6 +5100,9 @@ msgid ""
 "\n"
 "        Please update the daemon (dcrd) and wallet (dcrwallet) to the latest version, then try again."
 msgstr ""
+"現在稼働しているウォレットのAPI（{walletRPCVersion}）はDecreditonと互換性がありません（必要なバージョン: {requiredWalletRPCVersion}）。\n"
+"\n"
+"デーモン（dcrd）およびウォレット（dcrwallet）を最新版にアップデートして、もう一度お試しください。"
 
 #. [settings.resetNetworkContent]
 #. defaultMessage is:
@@ -5090,7 +5113,7 @@ msgctxt "settings.resetNetworkContent"
 msgid ""
 "The setting you have chosen to change requires Decrediton to be restarted.  "
 "Please confirm this action before proceeding."
-msgstr ""
+msgstr "選択した設定に変更するには、Decreditionを再起動する必要があります。続行する前にこのアクションを確認してください。"
 
 #. [votingPreferences.noAgenda]
 #. defaultMessage is:
@@ -5167,6 +5190,7 @@ msgid ""
 "This error typically means you have the testnet flag in your dcrd.conf file."
 " You should check your dcrd.conf file and remove the testnet=1."
 msgstr ""
+"このエラーは通常、dcrd.confファイルにtestnetフラグが含まれていることを意味します。dcrd.confファイルを確認してtestnet=1を削除してください。"
 
 #. [input.requiredInput]
 #. defaultMessage is:
@@ -5229,6 +5253,7 @@ msgid ""
 "take longer, but is fully secure.  Any block or mined transaction can be "
 "fully trusted."
 msgstr ""
+"これは通常のDecredデーモンを使用し、ブロックを完全に確認します。時間はかかりますが、確実に安全です。すべてのブロックおよび採掘した取引を完全に信頼できます。"
 
 #. [notifications.type.ticket]
 #. defaultMessage is:
@@ -5284,7 +5309,7 @@ msgstr "SPV使用中は、チケットの自動バイヤーを使用できませ
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "runTicketBuyer.Success"
 msgid "Ticket Buyer successfully started."
-msgstr ""
+msgstr "チケットバイヤーが開始しました。"
 
 #. [stopTicketBuyer.Success]
 #. defaultMessage is:
@@ -5292,7 +5317,7 @@ msgstr ""
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "stopTicketBuyer.Success"
 msgid "Ticket Buyer successfully stopped."
-msgstr ""
+msgstr "チケットバイヤーを停止しました。"
 
 #. [txDetails.ticketCost]
 #. defaultMessage is:
@@ -5516,7 +5541,7 @@ msgstr "開発者ツールの切り替え"
 #: app/i18n/extracted/app/components/views/TrezorPage/ConfigButtons.json
 msgctxt "trezorPage.togglePassPhraseProtectionBtn"
 msgid "Toggle Passphrase Protection"
-msgstr ""
+msgstr "パスフレーズ保護の切り替え"
 
 #. [trezorPage.togglePinProtectionBtn]
 #. defaultMessage is:
@@ -5524,7 +5549,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TrezorPage/ConfigButtons.json
 msgctxt "trezorPage.togglePinProtectionBtn"
 msgid "Toggle Pin Protection"
-msgstr ""
+msgstr "PIN保護の切り替え"
 
 #. [settings.toggleTheme]
 #. defaultMessage is:
@@ -5532,7 +5557,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/SettingsPage/Page.json
 msgctxt "settings.toggleTheme"
 msgid "Toggle Theme"
-msgstr ""
+msgstr "テーマの切り替え"
 
 #. [accounts.total]
 #. defaultMessage is:
@@ -5588,7 +5613,7 @@ msgstr "報酬総額"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfoDetailsSPV.json
 msgctxt "stakeSPV.totalRewards"
 msgid "Total Rewards"
-msgstr ""
+msgstr "報酬総額"
 
 #. [send.confirmAmountLabelFor]
 #. defaultMessage is:
@@ -5708,7 +5733,7 @@ msgstr "取引の承認"
 #: app/i18n/extracted/app/components/Snackbar/Notification/Transaction.json
 msgctxt "notification.transfer.fee"
 msgid "Transaction Fee"
-msgstr ""
+msgstr "取引手数料"
 
 #. [history.title]
 #. defaultMessage is:
@@ -5780,7 +5805,7 @@ msgstr "転送済"
 #: app/i18n/extracted/app/components/Snackbar/Notification/Transaction.json
 msgctxt "notifications.type.transfer"
 msgid "Transferred"
-msgstr ""
+msgstr "転送済"
 
 #. [createwallet.isTrezor.label]
 #. defaultMessage is:
@@ -5788,7 +5813,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GetStartedPage/WalletSelection/CreateWalletForm.json
 msgctxt "createwallet.isTrezor.label"
 msgid "Trezor"
-msgstr ""
+msgstr "Trezor"
 
 #. [sidebar.link.trezor]
 #. defaultMessage is:
@@ -5796,7 +5821,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/SideBar/MenuLinks/index.json
 msgctxt "sidebar.link.trezor"
 msgid "Trezor Setup"
-msgstr ""
+msgstr "Trezorの設定"
 
 #. [trezorPage.title]
 #. defaultMessage is:
@@ -5804,7 +5829,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TrezorPage/Header.json
 msgctxt "trezorPage.title"
 msgid "Trezor Setup"
-msgstr ""
+msgstr "Trezorの設定"
 
 #. [trezor.initDevice.success]
 #. defaultMessage is:
@@ -5812,7 +5837,7 @@ msgstr ""
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "trezor.initDevice.success"
 msgid "Trezor device initialized with new seed"
-msgstr ""
+msgstr "Trezorデバイスを新しいシードで初期化しました"
 
 #. [trezor.recoverDevice.success]
 #. defaultMessage is:
@@ -5820,7 +5845,7 @@ msgstr ""
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "trezor.recoverDevice.success"
 msgid "Trezor device recovered"
-msgstr ""
+msgstr "Trezorデバイスを復元しました"
 
 #. [trezor.wipeDevice.success]
 #. defaultMessage is:
@@ -5828,7 +5853,7 @@ msgstr ""
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "trezor.wipeDevice.success"
 msgid "Trezor device wiped"
-msgstr ""
+msgstr "Trezorデバイスをワイプしました"
 
 #. [trezor.changeHomeScreen.success]
 #. defaultMessage is:
@@ -5836,7 +5861,7 @@ msgstr ""
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "trezor.changeHomeScreen.success"
 msgid "Trezor home screen successfully changed"
-msgstr ""
+msgstr "Trezorホーム画面を変更しました"
 
 #. [autobuyer.enabled]
 #. defaultMessage is:
@@ -5924,7 +5949,7 @@ msgstr "チケット取引の取引ID。"
 #: app/i18n/extracted/app/components/modals/trezor/WalletCreationPassPhraseModal.json
 msgctxt "trezor.walletCreationPassPhraseModal.title"
 msgid "Type Wallet Creation PassPhrase"
-msgstr ""
+msgstr "ウォレット作成のパスフレーズを入力"
 
 #. [trezor.wordModal.title]
 #. defaultMessage is:
@@ -5932,7 +5957,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/modals/trezor/WordModal.json
 msgctxt "trezor.wordModal.title"
 msgid "Type the requested word"
-msgstr ""
+msgstr "要求された語句を入力"
 
 #. [trezor.passphraseModal.description]
 #. defaultMessage is:
@@ -5940,7 +5965,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/modals/trezor/PassPhraseModal.json
 msgctxt "trezor.passphraseModal.description"
 msgid "Type the secret passphrase for the wallet stored in trezor {label}"
-msgstr ""
+msgstr "Trezor '{label}' に保存されたウォレットのパスフレーズを入力"
 
 #. [trezor.walletCreationpassphraseModal.description]
 #. defaultMessage is:
@@ -5951,7 +5976,7 @@ msgctxt "trezor.walletCreationpassphraseModal.description"
 msgid ""
 "Type the secret passphrase of the wallet to restore from the trezor device "
 "{label}"
-msgstr ""
+msgstr "Trezorデバイス{label}から復元するウォレットのシークレットパスフレーズを入力"
 
 #. [trezor.wordModal.description]
 #. defaultMessage is:
@@ -5959,7 +5984,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/modals/trezor/WordModal.json
 msgctxt "trezor.wordModal.description"
 msgid "Type the word requested in the trezor device."
-msgstr ""
+msgstr "要求された語句をTrezorデバイスに入力します。"
 
 #. [stakePoolSelect.addNewPromptEmpty]
 #. defaultMessage is:
@@ -6041,13 +6066,21 @@ msgctxt "transaction.type.unmined"
 msgid "Unmined"
 msgstr "未マイニング"
 
+#. [send.unsignedRawTxTite]
+#. defaultMessage is:
+#. Unsigned Raw Transaction:
+#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/Page.json
+msgctxt "send.unsignedRawTxTite"
+msgid "Unsigned Raw Transaction:"
+msgstr ""
+
 #. [stake.unspentTickets]
 #. defaultMessage is:
 #. Unspent Tickets
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfoRow.json
 msgctxt "stake.unspentTickets"
 msgid "Unspent Tickets"
-msgstr ""
+msgstr "未使用のチケット"
 
 #. [getStarted.updateAvailable]
 #. defaultMessage is:
@@ -6071,7 +6104,7 @@ msgstr "アップデートの確認"
 #: app/i18n/extracted/app/components/views/TrezorPage/FirmwareUpdate.json
 msgctxt "trezorPage.updateFirmwareBtn"
 msgid "Update Firmware"
-msgstr ""
+msgstr "ファームウェアのアップデート"
 
 #. [agenda.updatePreference]
 #. defaultMessage is:
@@ -6096,7 +6129,7 @@ msgstr "プライベートパスフレーズを更新"
 msgctxt "settings.errors.changePassphraseFailed"
 msgid ""
 "Update passphrase failed. Incorrect private passphrase, please try again."
-msgstr ""
+msgstr "パスフレーズを更新できませんでした。プライベートパスフレーズが不正確です。もう一度試してください。"
 
 #. [proposalDetails.votingInfo.updatingVoteChoice]
 #. defaultMessage is:
@@ -6243,7 +6276,7 @@ msgstr "投票時間"
 #: app/i18n/extracted/app/components/Snackbar/Notification/Transaction.json
 msgctxt "notifications.type.vote"
 msgid "Voted"
-msgstr ""
+msgstr "投票済み"
 
 #. [transaction.type.vote]
 #. defaultMessage is:
@@ -6267,7 +6300,7 @@ msgstr "投票済み"
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalList.json
 msgctxt "proposal.voted"
 msgid "Voted"
-msgstr ""
+msgstr "投票済み"
 
 #. [txDetails.votedOn]
 #. defaultMessage is:
@@ -6291,7 +6324,7 @@ msgstr "投票済みチケット"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfoDetailsSPV.json
 msgctxt "stakeSPV.votedTickets"
 msgid "Voted Tickets"
-msgstr ""
+msgstr "投票済みチケット"
 
 #. [charts.keys.voted]
 #. defaultMessage is:
@@ -6323,7 +6356,7 @@ msgstr "投票権限"
 #: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/Page.json
 msgctxt "votingPreferences.dashboard"
 msgid "Voting Dashboard"
-msgstr ""
+msgstr "投票ダッシュボード"
 
 #. [proposal.overview.deadline.label]
 #. defaultMessage is:
@@ -6369,6 +6402,8 @@ msgid ""
 "Voting on community proposals allows you to have a say on how the project treasury is spent.\n"
 "        Participation in voting requires (PoS) tickets. Proposal creation, discussions and other features are available at"
 msgstr ""
+"コミュニティの提案に投票することで、プロジェクト資金の使い方に対する発言権を得られます。\n"
+"投票に参加するには (PoS) チケットが必要です。提案の作成、ディスカッション、その他の機能はこちらにあります:"
 
 #. [loaderBar.Waiting]
 #. defaultMessage is:
@@ -6416,7 +6451,7 @@ msgstr "ウォレットへのアウトプット"
 #: app/i18n/extracted/app/components/modals/trezor/WalletCreationPassPhraseModal.json
 msgctxt "trezor.walltCreationPrivatePassphrase"
 msgid "Wallet PassPhrase"
-msgstr ""
+msgstr "ウォレットのパスフレーズ"
 
 #. [aboutModal.paragraph3]
 #. defaultMessage is:
@@ -6538,7 +6573,7 @@ msgstr "ウィンドウ"
 #: app/i18n/extracted/app/components/views/TrezorPage/RecoveryButtons.json
 msgctxt "trezorPage.wipeDeviceBtn"
 msgid "Wipe Device"
-msgstr ""
+msgstr "デバイスをワイプ"
 
 #. [home.totalValueOfLiveTickets]
 #. defaultMessage is:
@@ -6546,7 +6581,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/HomePage/tabs/Tickets.json
 msgctxt "home.totalValueOfLiveTickets"
 msgid "With a total value of"
-msgstr ""
+msgstr "総価値"
 
 #. [errors.wrongPassphrase]
 #. defaultMessage is:
@@ -6557,6 +6592,17 @@ msgctxt "errors.wrongPassphrase"
 msgid ""
 "Wrong private passphrase entered. Please verify you have typed the correct "
 "private passphrase for the wallet."
+msgstr "入力されたプライベートパスフレーズは間違っています。このウォレットの正しいプライベートパスフレーズを入力してください。"
+
+#. [getStarted.longWaitWarning]
+#. defaultMessage is:
+#. You are currently upgrading to a new dcrd version.  Typically, this one-
+#. time reindexing will take 30-45 minutes on an average machine.
+#: app/i18n/extracted/app/components/views/GetStartedPage/DaemonLoading/Form.json
+msgctxt "getStarted.longWaitWarning"
+msgid ""
+"You are currently upgrading to a new dcrd version.  Typically, this one-time"
+" reindexing will take 30-45 minutes on an average machine."
 msgstr ""
 
 #. [tickets.purchaseTicketsHeader]
@@ -6603,7 +6649,7 @@ msgstr "投票に有効なチケットが{count, plural, one {1枚} other {#枚}
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "tickets.importScriptHeader"
 msgid "You successfully imported a script"
-msgstr ""
+msgstr "スクリプトをインポートしました"
 
 #. [tickets.revokeTicketsHeader]
 #. defaultMessage is:
@@ -6627,7 +6673,7 @@ msgstr "維持に必要な残高が無効です"
 #: app/i18n/extracted/app/components/views/HomePage/tabs/Tickets.json
 msgctxt "home.liveTicketsCount"
 msgid "active tickets"
-msgstr ""
+msgstr "アクティブなチケット"
 
 #. [blocksInput.blocks]
 #. defaultMessage is:
@@ -6643,15 +6689,7 @@ msgstr "ブロック"
 #: app/i18n/extracted/app/components/modals/trezor/PinModal.json
 msgctxt "trezor.pinModal.clear"
 msgid "clear"
-msgstr ""
-
-#. [statusSmall.daysToVote]
-#. defaultMessage is:
-#. days
-#: app/i18n/extracted/app/components/TxHistory/TxHistoryRow/StakeTxRow.json
-msgctxt "statusSmall.daysToVote"
-msgid "days"
-msgstr "日"
+msgstr "クリア"
 
 #. [help.logs.dcrd]
 #. defaultMessage is:
@@ -6683,7 +6721,7 @@ msgstr "decred.org/stakepools"
 #: app/i18n/extracted/app/components/views/HelpPage/LogsTab/Page.json
 msgctxt "help.logs.decrediton"
 msgid "decrediton"
-msgstr ""
+msgstr "decrediton"
 
 #. [help.documentation.subtitle]
 #. defaultMessage is:
@@ -6755,7 +6793,7 @@ msgstr "未完成"
 #: app/i18n/extracted/app/components/views/HomePage/tabs/Tickets.json
 msgctxt "home.stakingRewards"
 msgid "in staking rewards"
-msgstr ""
+msgstr "ステーキング報酬"
 
 #. [ticket.status.live]
 #. defaultMessage is:
@@ -6907,7 +6945,7 @@ msgstr "投票済み"
 #: app/i18n/extracted/app/components/views/HomePage/tabs/Tickets.json
 msgctxt "home.votedTicketsCount"
 msgid "voted tickets"
-msgstr ""
+msgstr "投票済みチケット"
 
 #. [transaction.confirmationHeight]
 #. defaultMessage is:
@@ -6934,6 +6972,22 @@ msgid ""
 msgstr ""
 "購入日の{days, plural, =0 {同日} one {1日以内} other {#日以内}}に{count, plural, =0 "
 "{0枚のチケット} one {#枚のチケット} other {#枚のチケット}}に投票"
+
+#. [statusSmall.daysToVotePlural]
+#. defaultMessage is:
+#. {days, plural, one {# day} other {# days}}
+#: app/i18n/extracted/app/components/TxHistory/TxHistoryRow/StakeTxRow.json
+msgctxt "statusSmall.daysToVotePlural"
+msgid "{days, plural, one {# day} other {# days}}"
+msgstr ""
+
+#. [ticket.daysToVote]
+#. defaultMessage is:
+#. {days, plural, one {# day} other {# days}}
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketInfoCard.json
+msgctxt "ticket.daysToVote"
+msgid "{days, plural, one {# day} other {# days}}"
+msgstr ""
 
 #. [ticket.daysToVoteMessage]
 #. defaultMessage is:
