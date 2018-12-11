@@ -256,6 +256,9 @@ export const committedTickets = withLogNoData((walletService, ticketHashes) => n
 }), "Committed Tickets");
 
 export const decodeRawTransaction = (rawTx) => {
+  if (!(rawTx instanceof Buffer)) {
+    throw new Error("rawtx requested for decoding is not a Buffer object");
+  }
   var position = 0;
 
   var tx = {};

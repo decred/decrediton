@@ -16,7 +16,7 @@ class TicketsCardList extends React.Component {
   }
 
   render() {
-    const { tickets, decodeRawTicketTransactions, tsDate } = this.props;
+    const { tickets, tsDate } = this.props;
     const { expandedTicket } = this.state;
     const onClick = this.onInfoCardClick;
 
@@ -24,8 +24,7 @@ class TicketsCardList extends React.Component {
       {tickets.map(ticket => {
         const key = ticket.hash;
         const expanded = ticket === expandedTicket;
-        return <TicketCard {...{ key, ticket, expanded, onClick, tsDate,
-          decodeRawTicketTransactions }}  />;
+        return <TicketCard {...{ key, ticket, expanded, onClick, tsDate }}  />;
       })}
     </div>);
     return res;
