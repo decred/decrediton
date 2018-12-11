@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2018-12-07T11:25:28.463Z\n"
+"POT-Creation-Date: 2018-12-11T19:51:18.184Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -109,6 +109,14 @@ msgstr ""
 #. API Key
 msgctxt "stakepool.apikey"
 msgid "API Key"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Page.json
+#. [proposals.statusLinks.abandoned]
+#. defaultMessage is:
+#. Abandoned
+msgctxt "proposals.statusLinks.abandoned"
+msgid "Abandoned"
 msgstr ""
 
 #: app/i18n/extracted/static/menus.json
@@ -3446,6 +3454,14 @@ msgid "Properties"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Details/helpers.json
+#. [proposalDetails.votingInfo.abandoned]
+#. defaultMessage is:
+#. Proposal has been abandoned
+msgctxt "proposalDetails.votingInfo.abandoned"
+msgid "Proposal has been abandoned"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Details/helpers.json
 #. [proposalDetails.votingInfo.notVoting]
 #. defaultMessage is:
 #. Proposal not yet on voting stage
@@ -5824,6 +5840,14 @@ msgctxt "transaction.type.unmined"
 msgid "Unmined"
 msgstr ""
 
+#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/Page.json
+#. [send.unsignedRawTxTite]
+#. defaultMessage is:
+#. Unsigned Raw Transaction:
+msgctxt "send.unsignedRawTxTite"
+msgid "Unsigned Raw Transaction:"
+msgstr ""
+
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfoRow.json
 #. [stake.unspentTickets]
 #. defaultMessage is:
@@ -6321,6 +6345,14 @@ msgctxt "errors.wrongPassphrase"
 msgid "Wrong private passphrase entered. Please verify you have typed the correct private passphrase for the wallet."
 msgstr ""
 
+#: app/i18n/extracted/app/components/views/GetStartedPage/DaemonLoading/Form.json
+#. [getStarted.longWaitWarning]
+#. defaultMessage is:
+#. You are currently upgrading to a new dcrd version.  Typically, this one-time reindexing will take 30-45 minutes on an average machine.
+msgctxt "getStarted.longWaitWarning"
+msgid "You are currently upgrading to a new dcrd version.  Typically, this one-time reindexing will take 30-45 minutes on an average machine."
+msgstr ""
+
 #: app/i18n/extracted/app/reducers/snackbar.json
 #. [tickets.purchaseTicketsHeader]
 #. defaultMessage is:
@@ -6399,14 +6431,6 @@ msgstr ""
 #. clear
 msgctxt "trezor.pinModal.clear"
 msgid "clear"
-msgstr ""
-
-#: app/i18n/extracted/app/components/TxHistory/TxHistoryRow/StakeTxRow.json
-#. [statusSmall.daysToVote]
-#. defaultMessage is:
-#. days
-msgctxt "statusSmall.daysToVote"
-msgid "days"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/HelpPage/LogsTab/Page.json
@@ -6679,6 +6703,22 @@ msgstr ""
 #. {count, plural, =0 {zero tickets} one {# ticket} other {# tickets}} voted {days, plural, =0 {in the same day} one {within one day} other {within # days}} of purchase
 msgctxt "charts.voteTime.daysToVoteCount"
 msgid "{count, plural, =0 {zero tickets} one {# ticket} other {# tickets}} voted {days, plural, =0 {in the same day} one {within one day} other {within # days}} of purchase"
+msgstr ""
+
+#: app/i18n/extracted/app/components/TxHistory/TxHistoryRow/StakeTxRow.json
+#. [statusSmall.daysToVotePlural]
+#. defaultMessage is:
+#. {days, plural, one {# day} other {# days}}
+msgctxt "statusSmall.daysToVotePlural"
+msgid "{days, plural, one {# day} other {# days}}"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketInfoCard.json
+#. [ticket.daysToVote]
+#. defaultMessage is:
+#. {days, plural, one {# day} other {# days}}
+msgctxt "ticket.daysToVote"
+msgid "{days, plural, one {# day} other {# days}}"
 msgstr ""
 
 #: app/i18n/extracted/app/components/TxHistory/TxHistoryRow/StakeTxRow.json
