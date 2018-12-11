@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2018-11-30T12:57:21.312Z\n"
+"POT-Creation-Date: 2018-12-11T19:51:18.184Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -29,6 +29,14 @@ msgstr ""
 #. &View
 msgctxt "appMenu.view"
 msgid "&View"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/GetStartedPage/WalletSelection/CreateWalletForm.json
+#. [createWallet.isTrezor.setupLink]
+#. defaultMessage is:
+#. (setup device)
+msgctxt "createWallet.isTrezor.setupLink"
+msgid "(setup device)"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/GetStartedPage/CreateWallet/CreateWalletForm/ExistingSeed/Form.json
@@ -101,6 +109,14 @@ msgstr ""
 #. API Key
 msgctxt "stakepool.apikey"
 msgid "API Key"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Page.json
+#. [proposals.statusLinks.abandoned]
+#. defaultMessage is:
+#. Abandoned
+msgctxt "proposals.statusLinks.abandoned"
+msgid "Abandoned"
 msgstr ""
 
 #: app/i18n/extracted/static/menus.json
@@ -744,12 +760,44 @@ msgctxt "proposals.updateVoteChoiceModal.btnLabel"
 msgid "Cast Vote"
 msgstr ""
 
+#: app/i18n/extracted/app/components/views/TrezorPage/ChangeLabel.json
+#. [trezor.changeLabel.changeButton]
+#. defaultMessage is:
+#. Change
+msgctxt "trezor.changeLabel.changeButton"
+msgid "Change"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/TrezorPage/ConfigButtons.json
+#. [trezorPage.changeHomeScreen]
+#. defaultMessage is:
+#. Change Home Screen
+msgctxt "trezorPage.changeHomeScreen"
+msgid "Change Home Screen"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/TrezorPage/ChangeLabel.json
+#. [trezor.changeLabel.header]
+#. defaultMessage is:
+#. Change Label
+msgctxt "trezor.changeLabel.header"
+msgid "Change Label"
+msgstr ""
+
 #: app/i18n/extracted/app/components/views/SettingsPage/Page.json
 #. [settings.changeConfirmation]
 #. defaultMessage is:
 #. Change your passphrase
 msgctxt "settings.changeConfirmation"
 msgid "Change your passphrase"
+msgstr ""
+
+#: app/i18n/extracted/app/reducers/snackbar.json
+#. [trezor.changeLabel.success]
+#. defaultMessage is:
+#. Changed label on selected trezor to '{label}'
+msgctxt "trezor.changeLabel.success"
+msgid "Changed label on selected trezor to '{label}'"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/SettingsPage/Page.json
@@ -784,6 +832,22 @@ msgctxt "selectLang.titleSub"
 msgid "Choose your language"
 msgstr ""
 
+#: app/i18n/extracted/app/components/views/TrezorPage/ConfigButtons.json
+#. [trezorPage.clearSession]
+#. defaultMessage is:
+#. Clear Session
+msgctxt "trezorPage.clearSession"
+msgid "Clear Session"
+msgstr ""
+
+#: app/i18n/extracted/app/components/modals/trezor/PinModal.json
+#. [trezor.pinModal.description]
+#. defaultMessage is:
+#. Click button sequence that corresponds to your pin on trezor {label}
+msgctxt "trezor.pinModal.description"
+msgid "Click button sequence that corresponds to your pin on trezor {label}"
+msgstr ""
+
 #: app/i18n/extracted/app/components/modals/InfoConfirmModal/index.json
 #. [infoConfirmModal.btnClose]
 #. defaultMessage is:
@@ -803,9 +867,9 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/FatalErrorPage.json
 #. [fatal.button]
 #. defaultMessage is:
-#. Close Wallet
+#. Close Decrediton
 msgctxt "fatal.button"
-msgid "Close Wallet"
+msgid "Close Decrediton"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/SettingsPage/Page.json
@@ -838,6 +902,14 @@ msgstr ""
 #. Community Discussions
 msgctxt "appMenu.communityDiscussions"
 msgid "Community Discussions"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/TrezorPage/ConfigButtons.json
+#. [trezor.configButtons.header]
+#. defaultMessage is:
+#. Config Trezor
+msgctxt "trezor.configButtons.header"
+msgid "Config Trezor"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakePools/List.json
@@ -886,6 +958,14 @@ msgstr ""
 #. Confirm Seed Copy
 msgctxt "seedCopyConfirm.btnConfirm"
 msgid "Confirm Seed Copy"
+msgstr ""
+
+#: app/i18n/extracted/app/components/modals/trezor/WalletCreationPassPhraseModal.json
+#. [trezor.walltCreationPrivatePassphraseConfirm]
+#. defaultMessage is:
+#. Confirm Wallet PassPhrase
+msgctxt "trezor.walltCreationPrivatePassphraseConfirm"
+msgid "Confirm Wallet PassPhrase"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Details/UpdateVoteChoiceModalButton.json
@@ -1352,6 +1432,14 @@ msgctxt "export.transactions.fields.type"
 msgid "Detected transaction type (regular, ticket purchase, vote, etc)"
 msgstr ""
 
+#: app/i18n/extracted/app/components/views/TrezorPage/RecoveryButtons.json
+#. [trezor.recoveryButtons.header]
+#. defaultMessage is:
+#. Device Recovery
+msgctxt "trezor.recoveryButtons.header"
+msgid "Device Recovery"
+msgstr ""
+
 #: app/i18n/extracted/app/components/views/GetStartedPage/AdvancedStartup/Form.json
 #. [advancedDaemon.toggle.remote]
 #. defaultMessage is:
@@ -1526,6 +1614,22 @@ msgstr ""
 #. Enter Passphrase to Revoke Tickets
 msgctxt "stake.revokeTicketsPassphrase"
 msgid "Enter Passphrase to Revoke Tickets"
+msgstr ""
+
+#: app/i18n/extracted/app/components/modals/trezor/PinModal.json
+#. [trezor.pinModal.title]
+#. defaultMessage is:
+#. Enter Pin
+msgctxt "trezor.pinModal.title"
+msgid "Enter Pin"
+msgstr ""
+
+#: app/i18n/extracted/app/components/modals/trezor/PassPhraseModal.json
+#. [trezor.passphraseModal.title]
+#. defaultMessage is:
+#. Enter Trezor Passphrase
+msgctxt "trezor.passphraseModal.title"
+msgid "Enter Trezor Passphrase"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/SecurityPage/SignMessage/Form.json
@@ -1834,6 +1938,14 @@ msgctxt "account.pubKey"
 msgid "Extended Public Key"
 msgstr ""
 
+#: app/i18n/extracted/app/reducers/snackbar.json
+#. [trezor.getWalletCreationMasterPubKey.failed]
+#. defaultMessage is:
+#. Failed to obtain master extended pubkey from trezor device: {originalError}
+msgctxt "trezor.getWalletCreationMasterPubKey.failed"
+msgid "Failed to obtain master extended pubkey from trezor device: {originalError}"
+msgstr ""
+
 #: app/i18n/extracted/app/components/views/FatalErrorPage.json
 #. [fatal.header.title]
 #. defaultMessage is:
@@ -1912,6 +2024,22 @@ msgstr ""
 #. Finished voting
 msgctxt "proposals.statusLinks.voted"
 msgid "Finished voting"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/TrezorPage/FirmwareUpdate.json
+#. [trezor.firmwareUpdate.header]
+#. defaultMessage is:
+#. Firmware Update
+msgctxt "trezor.firmwareUpdate.header"
+msgid "Firmware Update"
+msgstr ""
+
+#: app/i18n/extracted/app/reducers/snackbar.json
+#. [trezor.updateFirmware.success]
+#. defaultMessage is:
+#. Firmware updated on trezor device
+msgctxt "trezor.updateFirmware.success"
+msgid "Firmware updated on trezor device"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
@@ -2210,7 +2338,7 @@ msgctxt "stake.immatureTickets"
 msgid "Immature Tickets"
 msgstr ""
 
-#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/Form.json
+#: app/i18n/extracted/app/components/buttons/ImportScriptIconButton.json
 #. [tickets.importScriptConfirmation]
 #. defaultMessage is:
 #. Import Script Confirmation
@@ -2226,7 +2354,7 @@ msgctxt "getStarted.header.stakePools.meta"
 msgid "Import StakePools"
 msgstr ""
 
-#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/Form.json
+#: app/i18n/extracted/app/components/buttons/ImportScriptIconButton.json
 #. [purchaseTickets.importDisabledRescan]
 #. defaultMessage is:
 #. Importing scripts is disabled during a rescan.
@@ -2241,6 +2369,14 @@ msgstr ""
 #.           please re-create your Wallet with the watch-only option disabled.
 msgctxt "watchingOnlyPseudoModal.description"
 msgid "In order to gain full access to your Wallets functionalities,\n          please re-create your Wallet with the watch-only option disabled."
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/TrezorPage/RecoveryButtons.json
+#. [trezorPage.initDeviceBtn]
+#. defaultMessage is:
+#. Init Device
+msgctxt "trezorPage.initDeviceBtn"
+msgid "Init Device"
 msgstr ""
 
 #: app/i18n/extracted/app/components/buttons/RescanButton.json
@@ -2557,7 +2693,7 @@ msgctxt "transactions.description.send.mainnet"
 msgid "Mainnet Decred addresses always begin with letter D and contain 26-35 alphanumeric characters\n(e.g. DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)."
 msgstr ""
 
-#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/Form.json
+#: app/i18n/extracted/app/components/buttons/ImportScriptIconButton.json
 #. [purchaseTickets.import]
 #. defaultMessage is:
 #. Manually import a redeem script for tickets.
@@ -2701,6 +2837,14 @@ msgctxt "accounts.newName"
 msgid "New Account Name"
 msgstr ""
 
+#: app/i18n/extracted/app/components/views/TrezorPage/ChangeLabel.json
+#. [trezor.changeLabel.description]
+#. defaultMessage is:
+#. New Label
+msgctxt "trezor.changeLabel.description"
+msgid "New Label"
+msgstr ""
+
 #: app/i18n/extracted/app/components/modals/ChangePassphraseModal/Modal.json
 #. [changePassModal.newPassphrase]
 #. defaultMessage is:
@@ -2731,6 +2875,14 @@ msgstr ""
 #. New version {version} available
 msgctxt "getStarted.updateAvailableTooltip"
 msgid "New version {version} available"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/GetStartedPage/ReleaseNotes/Form.json
+#. [getStarted.releaseNotes.NewerVersion]
+#. defaultMessage is:
+#. Newer Version
+msgctxt "getStarted.releaseNotes.NewerVersion"
+msgid "Newer Version"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/index.json
@@ -2861,6 +3013,30 @@ msgctxt "home.noTransactions.title"
 msgid "No transactions yet"
 msgstr ""
 
+#: app/i18n/extracted/app/reducers/snackbar.json
+#. [trezor.noConnectedDevice]
+#. defaultMessage is:
+#. No trezor device connected. Check the device connection and trezor bridge.
+msgctxt "trezor.noConnectedDevice"
+msgid "No trezor device connected. Check the device connection and trezor bridge."
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/TrezorPage/NoDevicePage.json
+#. [trezor.noDevice.message]
+#. defaultMessage is:
+#. No trezor device detected. Connect the device and check if trezor bridge is installed and running.
+msgctxt "trezor.noDevice.message"
+msgid "No trezor device detected. Connect the device and check if trezor bridge is installed and running."
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/GetStartedPage/TrezorConfig/index.json
+#. [trezor.getStartedConfig.noDeviceFound]
+#. defaultMessage is:
+#. No trezor device found. Check the connection and the trezor bridge software.
+msgctxt "trezor.getStartedConfig.noDeviceFound"
+msgid "No trezor device found. Check the connection and the trezor bridge software."
+msgstr ""
+
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalList.json
 #. [proposal.noVote]
 #. defaultMessage is:
@@ -2907,6 +3083,14 @@ msgstr ""
 #. Not enough funds
 msgctxt "purchaseTickets.errors.insufficientBalance"
 msgid "Not enough funds"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/GetStartedPage/ReleaseNotes/Form.json
+#. [getStarted.releaseNotes.OlderVersion]
+#. defaultMessage is:
+#. Older Version
+msgctxt "getStarted.releaseNotes.OlderVersion"
+msgid "Older Version"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/index.json
@@ -2973,12 +3157,44 @@ msgctxt "securitycenter.validate.result.owned"
 msgid "Owned address"
 msgstr ""
 
+#: app/i18n/extracted/app/reducers/snackbar.json
+#. [trezor.passphraseProtectionSuccess.disabled]
+#. defaultMessage is:
+#. Passphrase protection has been disabled in trezor '{label}'
+msgctxt "trezor.passphraseProtectionSuccess.disabled"
+msgid "Passphrase protection has been disabled in trezor '{label}'"
+msgstr ""
+
+#: app/i18n/extracted/app/reducers/snackbar.json
+#. [trezor.passphraseProtectionSuccess.enabled]
+#. defaultMessage is:
+#. Passphrase protection has been enabled in trezor '{label}'
+msgctxt "trezor.passphraseProtectionSuccess.enabled"
+msgid "Passphrase protection has been enabled in trezor '{label}'"
+msgstr ""
+
+#: app/i18n/extracted/app/components/modals/trezor/WalletCreationPassPhraseModal.json
+#. [trezor.walletCreationPassphrasesMismatched]
+#. defaultMessage is:
+#. Passphrases are different
+msgctxt "trezor.walletCreationPassphrasesMismatched"
+msgid "Passphrases are different"
+msgstr ""
+
 #: app/i18n/extracted/static/menus.json
 #. [appMenu.paste]
 #. defaultMessage is:
 #. Paste
 msgctxt "appMenu.paste"
 msgid "Paste"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/TrezorPage/FirmwareUpdate.json
+#. [trezorPage.updateFirmwarePah]
+#. defaultMessage is:
+#. Path to firmware file
+msgctxt "trezorPage.updateFirmwarePah"
+msgid "Path to firmware file"
 msgstr ""
 
 #: app/i18n/extracted/app/components/TxHistory/TxHistoryRow/Status.json
@@ -3003,6 +3219,30 @@ msgstr ""
 #. Pending
 msgctxt "txDetails.indicatorPending"
 msgid "Pending"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/TrezorPage/Header.json
+#. [trezorPage.description]
+#. defaultMessage is:
+#. Perform several trezor-related actions.
+msgctxt "trezorPage.description"
+msgid "Perform several trezor-related actions."
+msgstr ""
+
+#: app/i18n/extracted/app/reducers/snackbar.json
+#. [trezor.pinProtectionSuccess.disabled]
+#. defaultMessage is:
+#. Pin protection has been disabled in trezor '{label}'
+msgctxt "trezor.pinProtectionSuccess.disabled"
+msgid "Pin protection has been disabled in trezor '{label}'"
+msgstr ""
+
+#: app/i18n/extracted/app/reducers/snackbar.json
+#. [trezor.pinProtectionSuccess.enabled]
+#. defaultMessage is:
+#. Pin protection has been enabled in trezor '{label}'
+msgctxt "trezor.pinProtectionSuccess.enabled"
+msgid "Pin protection has been enabled in trezor '{label}'"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/GetStartedPage/WalletSelection/CreateWalletForm.json
@@ -3211,6 +3451,14 @@ msgstr ""
 #. Properties
 msgctxt "txDetails.properties"
 msgid "Properties"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Details/helpers.json
+#. [proposalDetails.votingInfo.abandoned]
+#. defaultMessage is:
+#. Proposal has been abandoned
+msgctxt "proposalDetails.votingInfo.abandoned"
+msgid "Proposal has been abandoned"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Details/helpers.json
@@ -3501,6 +3749,14 @@ msgctxt "home.recentTransactionsTitle"
 msgid "Recent Transactions"
 msgstr ""
 
+#: app/i18n/extracted/app/components/views/TrezorPage/RecoveryButtons.json
+#. [trezorPage.recoverDeviceBtn]
+#. defaultMessage is:
+#. Recover Device
+msgctxt "trezorPage.recoverDeviceBtn"
+msgid "Recover Device"
+msgstr ""
+
 #: app/i18n/extracted/app/components/modals/ImportScriptModal/Modal.json
 #. [importScriptModal.redeemScript]
 #. defaultMessage is:
@@ -3523,6 +3779,22 @@ msgstr ""
 #. Regular
 msgctxt "txFilter.type.regular"
 msgid "Regular"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/GetStartedPage/TrezorConfig/index.json
+#. [trezor.getStartedConfig.btnReloadDeviceList]
+#. defaultMessage is:
+#. Reload Device List
+msgctxt "trezor.getStartedConfig.btnReloadDeviceList"
+msgid "Reload Device List"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/TrezorPage/NoDevicePage.json
+#. [trezor.noDevice.btnReloadDeviceList]
+#. defaultMessage is:
+#. Reload Device List
+msgctxt "trezor.noDevice.btnReloadDeviceList"
+msgid "Reload Device List"
 msgstr ""
 
 #: app/i18n/extracted/static/menus.json
@@ -3787,6 +4059,14 @@ msgstr ""
 #. SPV Connect
 msgctxt "settings.SPVConnect"
 msgid "SPV Connect"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/GetStartedPage/DaemonLoading/Form.json
+#. [getStarted.isSPV.loadingText]
+#. defaultMessage is:
+#. SPV mode activated, wallet ready to launch
+msgctxt "getStarted.isSPV.loadingText"
+msgid "SPV mode activated, wallet ready to launch"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/GetStartedPage/SpvChoicePage/TopLevelOptions.json
@@ -4158,18 +4438,18 @@ msgid "Shutting down Decrediton"
 msgstr ""
 
 #: app/i18n/extracted/app/components/buttons/SignMessageButton.json
-#. [securitycenter.signMessageModal]
-#. defaultMessage is:
-#. Sign Message
-msgctxt "securitycenter.signMessageModal"
-msgid "Sign Message"
-msgstr ""
-
-#: app/i18n/extracted/app/components/buttons/SignMessageButton.json
 #. [securitycenter.signMessageBtn]
 #. defaultMessage is:
 #. Sign Message
 msgctxt "securitycenter.signMessageBtn"
+msgid "Sign Message"
+msgstr ""
+
+#: app/i18n/extracted/app/components/buttons/SignMessageButton.json
+#. [securitycenter.signMessageModal]
+#. defaultMessage is:
+#. Sign Message
+msgctxt "securitycenter.signMessageModal"
 msgid "Sign Message"
 msgstr ""
 
@@ -4475,6 +4755,14 @@ msgstr ""
 #. Start Ticket Buyer Confirmation
 msgctxt "tickets.startAutoBuyerConfirmation"
 msgid "Start Ticket Buyer Confirmation"
+msgstr ""
+
+#: app/i18n/extracted/app/components/modals/trezor/WordModal.json
+#. [trezor.wordModal.selectPlaceholder]
+#. defaultMessage is:
+#. Start typing word...
+msgctxt "trezor.wordModal.selectPlaceholder"
+msgid "Start typing word..."
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/TicketsPage/index.json
@@ -5024,6 +5312,22 @@ msgctxt "appMenu.developerTools"
 msgid "Toggle Developer Tools"
 msgstr ""
 
+#: app/i18n/extracted/app/components/views/TrezorPage/ConfigButtons.json
+#. [trezorPage.togglePassPhraseProtectionBtn]
+#. defaultMessage is:
+#. Toggle Passphrase Protection
+msgctxt "trezorPage.togglePassPhraseProtectionBtn"
+msgid "Toggle Passphrase Protection"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/TrezorPage/ConfigButtons.json
+#. [trezorPage.togglePinProtectionBtn]
+#. defaultMessage is:
+#. Toggle Pin Protection
+msgctxt "trezorPage.togglePinProtectionBtn"
+msgid "Toggle Pin Protection"
+msgstr ""
+
 #: app/i18n/extracted/app/components/views/SettingsPage/Page.json
 #. [settings.toggleTheme]
 #. defaultMessage is:
@@ -5280,6 +5584,62 @@ msgctxt "notifications.type.transfer"
 msgid "Transferred"
 msgstr ""
 
+#: app/i18n/extracted/app/components/views/GetStartedPage/WalletSelection/CreateWalletForm.json
+#. [createwallet.isTrezor.label]
+#. defaultMessage is:
+#. Trezor
+msgctxt "createwallet.isTrezor.label"
+msgid "Trezor"
+msgstr ""
+
+#: app/i18n/extracted/app/components/SideBar/MenuLinks/index.json
+#. [sidebar.link.trezor]
+#. defaultMessage is:
+#. Trezor Setup
+msgctxt "sidebar.link.trezor"
+msgid "Trezor Setup"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/TrezorPage/Header.json
+#. [trezorPage.title]
+#. defaultMessage is:
+#. Trezor Setup
+msgctxt "trezorPage.title"
+msgid "Trezor Setup"
+msgstr ""
+
+#: app/i18n/extracted/app/reducers/snackbar.json
+#. [trezor.initDevice.success]
+#. defaultMessage is:
+#. Trezor device initialized with new seed
+msgctxt "trezor.initDevice.success"
+msgid "Trezor device initialized with new seed"
+msgstr ""
+
+#: app/i18n/extracted/app/reducers/snackbar.json
+#. [trezor.recoverDevice.success]
+#. defaultMessage is:
+#. Trezor device recovered
+msgctxt "trezor.recoverDevice.success"
+msgid "Trezor device recovered"
+msgstr ""
+
+#: app/i18n/extracted/app/reducers/snackbar.json
+#. [trezor.wipeDevice.success]
+#. defaultMessage is:
+#. Trezor device wiped
+msgctxt "trezor.wipeDevice.success"
+msgid "Trezor device wiped"
+msgstr ""
+
+#: app/i18n/extracted/app/reducers/snackbar.json
+#. [trezor.changeHomeScreen.success]
+#. defaultMessage is:
+#. Trezor home screen successfully changed
+msgctxt "trezor.changeHomeScreen.success"
+msgid "Trezor home screen successfully changed"
+msgstr ""
+
 #: app/i18n/extracted/app/components/buttons/AutoBuyerSwitch.json
 #. [autobuyer.enabled]
 #. defaultMessage is:
@@ -5358,6 +5718,46 @@ msgstr ""
 #. Txid of the ticket transaction.
 msgctxt "export.tickets.fields.ticketStatus"
 msgid "Txid of the ticket transaction."
+msgstr ""
+
+#: app/i18n/extracted/app/components/modals/trezor/WalletCreationPassPhraseModal.json
+#. [trezor.walletCreationPassPhraseModal.title]
+#. defaultMessage is:
+#. Type Wallet Creation PassPhrase
+msgctxt "trezor.walletCreationPassPhraseModal.title"
+msgid "Type Wallet Creation PassPhrase"
+msgstr ""
+
+#: app/i18n/extracted/app/components/modals/trezor/WordModal.json
+#. [trezor.wordModal.title]
+#. defaultMessage is:
+#. Type the requested word
+msgctxt "trezor.wordModal.title"
+msgid "Type the requested word"
+msgstr ""
+
+#: app/i18n/extracted/app/components/modals/trezor/PassPhraseModal.json
+#. [trezor.passphraseModal.description]
+#. defaultMessage is:
+#. Type the secret passphrase for the wallet stored in trezor {label}
+msgctxt "trezor.passphraseModal.description"
+msgid "Type the secret passphrase for the wallet stored in trezor {label}"
+msgstr ""
+
+#: app/i18n/extracted/app/components/modals/trezor/WalletCreationPassPhraseModal.json
+#. [trezor.walletCreationpassphraseModal.description]
+#. defaultMessage is:
+#. Type the secret passphrase of the wallet to restore from the trezor device {label}
+msgctxt "trezor.walletCreationpassphraseModal.description"
+msgid "Type the secret passphrase of the wallet to restore from the trezor device {label}"
+msgstr ""
+
+#: app/i18n/extracted/app/components/modals/trezor/WordModal.json
+#. [trezor.wordModal.description]
+#. defaultMessage is:
+#. Type the word requested in the trezor device.
+msgctxt "trezor.wordModal.description"
+msgid "Type the word requested in the trezor device."
 msgstr ""
 
 #: app/i18n/extracted/app/components/inputs/StakePoolSelect.json
@@ -5440,6 +5840,14 @@ msgctxt "transaction.type.unmined"
 msgid "Unmined"
 msgstr ""
 
+#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/Page.json
+#. [send.unsignedRawTxTite]
+#. defaultMessage is:
+#. Unsigned Raw Transaction:
+msgctxt "send.unsignedRawTxTite"
+msgid "Unsigned Raw Transaction:"
+msgstr ""
+
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfoRow.json
 #. [stake.unspentTickets]
 #. defaultMessage is:
@@ -5462,6 +5870,14 @@ msgstr ""
 #. Update Check
 msgctxt "settings.privacy.updateCheck.label"
 msgid "Update Check"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/TrezorPage/FirmwareUpdate.json
+#. [trezorPage.updateFirmwareBtn]
+#. defaultMessage is:
+#. Update Firmware
+msgctxt "trezorPage.updateFirmwareBtn"
+msgid "Update Firmware"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/AgendaOverview/Overview.json
@@ -5793,6 +6209,14 @@ msgctxt "txDetails.walletOutputs"
 msgid "Wallet Outputs"
 msgstr ""
 
+#: app/i18n/extracted/app/components/modals/trezor/WalletCreationPassPhraseModal.json
+#. [trezor.walltCreationPrivatePassphrase]
+#. defaultMessage is:
+#. Wallet PassPhrase
+msgctxt "trezor.walltCreationPrivatePassphrase"
+msgid "Wallet PassPhrase"
+msgstr ""
+
 #: app/i18n/extracted/app/components/modals/AboutModal/AboutModal.json
 #. [aboutModal.paragraph3]
 #. defaultMessage is:
@@ -5897,6 +6321,14 @@ msgctxt "appMenu.window"
 msgid "Window"
 msgstr ""
 
+#: app/i18n/extracted/app/components/views/TrezorPage/RecoveryButtons.json
+#. [trezorPage.wipeDeviceBtn]
+#. defaultMessage is:
+#. Wipe Device
+msgctxt "trezorPage.wipeDeviceBtn"
+msgid "Wipe Device"
+msgstr ""
+
 #: app/i18n/extracted/app/components/views/HomePage/tabs/Tickets.json
 #. [home.totalValueOfLiveTickets]
 #. defaultMessage is:
@@ -5911,6 +6343,14 @@ msgstr ""
 #. Wrong private passphrase entered. Please verify you have typed the correct private passphrase for the wallet.
 msgctxt "errors.wrongPassphrase"
 msgid "Wrong private passphrase entered. Please verify you have typed the correct private passphrase for the wallet."
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/GetStartedPage/DaemonLoading/Form.json
+#. [getStarted.longWaitWarning]
+#. defaultMessage is:
+#. You are currently upgrading to a new dcrd version.  Typically, this one-time reindexing will take 30-45 minutes on an average machine.
+msgctxt "getStarted.longWaitWarning"
+msgid "You are currently upgrading to a new dcrd version.  Typically, this one-time reindexing will take 30-45 minutes on an average machine."
 msgstr ""
 
 #: app/i18n/extracted/app/reducers/snackbar.json
@@ -5985,12 +6425,12 @@ msgctxt "blocksInput.blocks"
 msgid "blocks"
 msgstr ""
 
-#: app/i18n/extracted/app/components/TxHistory/TxHistoryRow/StakeTxRow.json
-#. [statusSmall.daysToVote]
+#: app/i18n/extracted/app/components/modals/trezor/PinModal.json
+#. [trezor.pinModal.clear]
 #. defaultMessage is:
-#. days
-msgctxt "statusSmall.daysToVote"
-msgid "days"
+#. clear
+msgctxt "trezor.pinModal.clear"
+msgid "clear"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/HelpPage/LogsTab/Page.json
@@ -6263,6 +6703,22 @@ msgstr ""
 #. {count, plural, =0 {zero tickets} one {# ticket} other {# tickets}} voted {days, plural, =0 {in the same day} one {within one day} other {within # days}} of purchase
 msgctxt "charts.voteTime.daysToVoteCount"
 msgid "{count, plural, =0 {zero tickets} one {# ticket} other {# tickets}} voted {days, plural, =0 {in the same day} one {within one day} other {within # days}} of purchase"
+msgstr ""
+
+#: app/i18n/extracted/app/components/TxHistory/TxHistoryRow/StakeTxRow.json
+#. [statusSmall.daysToVotePlural]
+#. defaultMessage is:
+#. {days, plural, one {# day} other {# days}}
+msgctxt "statusSmall.daysToVotePlural"
+msgid "{days, plural, one {# day} other {# days}}"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketInfoCard.json
+#. [ticket.daysToVote]
+#. defaultMessage is:
+#. {days, plural, one {# day} other {# days}}
+msgctxt "ticket.daysToVote"
+msgid "{days, plural, one {# day} other {# days}}"
 msgstr ""
 
 #: app/i18n/extracted/app/components/TxHistory/TxHistoryRow/StakeTxRow.json

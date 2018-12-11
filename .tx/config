@@ -25,3 +25,21 @@ file_filter = app/i18n/docs/<lang>/Warnings/WalletCreation.md
 source_lang = en
 minimum_perc = 80
 type = GITHUBMARKDOWN
+
+[decrediton.trezorfirmwareupdatemd]
+file_filter = app/i18n/docs/<lang>/Warnings/TrezorFirmwareUpdate.md
+source_lang = en
+minimum_perc = 80
+type = GITHUBMARKDOWN
+
+[decrediton.trezorwalletcreationpassphrasemd]
+file_filter = app/i18n/docs/<lang>/Warnings/TrezorWalletCreationPassPhrase.md
+source_lang = en
+minimum_perc = 80
+type = GITHUBMARKDOWN
+
+[decrediton.trezorwipemd]
+file_filter = app/i18n/docs/<lang>/Warnings/TrezorWipe.md
+source_lang = en
+minimum_perc = 80
+type = GITHUBMARKDOWN

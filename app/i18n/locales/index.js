@@ -99,7 +99,7 @@ const zh = {
   key: "zh",
   language: "zh",
   description: "中文",
-  messages: require("../translations/ja.json"),
+  messages: require("../translations/zh.json"),
   formats: defaultFormats
 };
 

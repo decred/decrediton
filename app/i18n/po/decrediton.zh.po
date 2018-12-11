@@ -1,9 +1,12 @@
 # Translators:
 # e2f_cn c3 <tx_e2f_cn_c3@e2f.com>, 2018
+# Matheus Degiovani, 2018
+# Guang Guang <guang.dcr@gmail.com>, 2018
+# 
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2018-10-03T19:39:55.113Z\n"
-"Last-Translator: e2f_cn c3 <tx_e2f_cn_c3@e2f.com>, 2018\n"
+"POT-Creation-Date: 2018-12-11T19:51:18.184Z\n"
+"Last-Translator: Guang Guang <guang.dcr@gmail.com>, 2018\n"
 "Language-Team: Chinese (https://www.transifex.com/decred/teams/79156/zh/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -36,21 +39,21 @@ msgctxt "appMenu.view"
 msgid "&View"
 msgstr "&查看"
 
+#. [createWallet.isTrezor.setupLink]
+#. defaultMessage is:
+#. (setup device)
+#: app/i18n/extracted/app/components/views/GetStartedPage/WalletSelection/CreateWalletForm.json
+msgctxt "createWallet.isTrezor.setupLink"
+msgid "(setup device)"
+msgstr "(设置设备)"
+
 #. [confirmSeed.warnings.pasteExistingError]
 #. defaultMessage is:
 #. * Please paste a valid 33 word seed.
 #: app/i18n/extracted/app/components/views/GetStartedPage/CreateWallet/CreateWalletForm/ExistingSeed/Form.json
 msgctxt "confirmSeed.warnings.pasteExistingError"
 msgid "* Please paste a valid 33 word seed."
-msgstr "* 请粘贴有效位数为 33 字的种子。"
-
-#. [autobuyer.invalidMaxFee]
-#. defaultMessage is:
-#. *Invalid max fee (0 - 0.1 DCR/KB)
-#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/Details.json
-msgctxt "autobuyer.invalidMaxFee"
-msgid "*Invalid max fee (0 - 0.1 DCR/KB)"
-msgstr "*无效的最高收费（0-0.1DCR/KB）"
+msgstr "*请粘贴一个有效的33个单词的种子。"
 
 #. [createWallet.passphraseInput.errors.noMatch]
 #. defaultMessage is:
@@ -66,15 +69,7 @@ msgstr "*密码不匹配"
 #: app/i18n/extracted/app/components/views/GetStartedPage/CreateWallet/CreateWalletForm/CreatePassPhrase/PassPhraseInputs.json
 msgctxt "createWallet.passphraseInput.errors.noPassPhrase"
 msgid "*Please enter your private passphrase"
-msgstr "*请输入您的私人密码"
-
-#. [autobuyer.canNotEnableAutobuyer]
-#. defaultMessage is:
-#. *Please fix fields with errors
-#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/Details.json
-msgctxt "autobuyer.canNotEnableAutobuyer"
-msgid "*Please fix fields with errors"
-msgstr "*请修正含有错误的字段"
+msgstr "*请输入您的钱包密码"
 
 #. [confirmSeed.warnings.pasteExistingSeed]
 #. defaultMessage is:
@@ -91,12 +86,12 @@ msgstr "*请确保您还有种子的实体书面副本。"
 #: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/charts/VoteTime.json
 msgctxt "mytickets.statistics.votetime.ninetyfifthpercentile.label"
 msgid "95% of tickets voted:"
-msgstr "95% 的投票率"
+msgstr "95%的投票："
 
 #. [sidebar.lastBlockIsRecent]
 #. defaultMessage is:
 #. < 1 minute ago
-#: app/i18n/extracted/app/components/SideBar/Bar.json
+#: app/i18n/extracted/app/components/SideBar/LastBlockTime.json
 msgctxt "sidebar.lastBlockIsRecent"
 msgid "< 1 minute ago"
 msgstr "< 1 分钟前"
@@ -104,7 +99,7 @@ msgstr "< 1 分钟前"
 #. [aboutModal.paragraph1]
 #. defaultMessage is:
 #. A cross platform GUI Wallet for Decred written in node.js using Electron
-#: app/i18n/extracted/app/components/modals/AboutModal/Modal.json
+#: app/i18n/extracted/app/components/modals/AboutModal/AboutModal.json
 msgctxt "aboutModal.paragraph1"
 msgid ""
 "A cross platform GUI Wallet for Decred written in node.js using Electron"
@@ -116,7 +111,7 @@ msgstr "使用 Electron 在 node.js 上编写的跨平台 GUI 钱包"
 #: app/i18n/extracted/app/components/views/GetStartedPage/StakePools/Form.json
 msgctxt "getStarted.stakepool.apikey"
 msgid "API Key"
-msgstr "API 密钥"
+msgstr "API Key"
 
 #. [stakepool.apikey]
 #. defaultMessage is:
@@ -124,7 +119,15 @@ msgstr "API 密钥"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakePools/AddForm.json
 msgctxt "stakepool.apikey"
 msgid "API Key"
-msgstr "API 密钥"
+msgstr "API Key"
+
+#. [proposals.statusLinks.abandoned]
+#. defaultMessage is:
+#. Abandoned
+#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Page.json
+msgctxt "proposals.statusLinks.abandoned"
+msgid "Abandoned"
+msgstr ""
 
 #. [appMenu.about]
 #. defaultMessage is:
@@ -158,14 +161,6 @@ msgctxt "appMenu.aboutDecrediton"
 msgid "About Decrediton"
 msgstr "关于 Decrediton"
 
-#. [proposal.currentChoice.abstain]
-#. defaultMessage is:
-#. Abstain
-#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Details/helpers.json
-msgctxt "proposal.currentChoice.abstain"
-msgid "Abstain"
-msgstr "弃权"
-
 #. [privacy.custom.accept]
 #. defaultMessage is:
 #. Accept
@@ -173,6 +168,14 @@ msgstr "弃权"
 msgctxt "privacy.custom.accept"
 msgid "Accept"
 msgstr "接受"
+
+#. [settings.privacy.dcrdata.description]
+#. defaultMessage is:
+#. Access chain information from explorer.dcrdata.org
+#: app/i18n/extracted/app/components/views/SettingsPage/PrivacySettings.json
+msgctxt "settings.privacy.dcrdata.description"
+msgid "Access chain information from explorer.dcrdata.org"
+msgstr "从explorer.dcrdata.org获取区块链信息"
 
 #. [accounts.number]
 #. defaultMessage is:
@@ -219,7 +222,7 @@ msgid ""
 msgstr ""
 "账户允许您单独保存您的 DCR 资金记录。\n"
 "\n"
-"跨账户转账的 DCR 将在区块链上进行交易。"
+"通过DCR账户间的转账将会在区块链中创建一笔交易。"
 
 #. [getStarted.stakePools.addBtn]
 #. defaultMessage is:
@@ -235,7 +238,7 @@ msgstr "添加"
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/List.json
 msgctxt "accounts.addNewButton"
 msgid "Add New"
-msgstr "添加新"
+msgstr "添加"
 
 #. [stakePoolSelect.addNewPrompt]
 #. defaultMessage is:
@@ -243,7 +246,7 @@ msgstr "添加新"
 #: app/i18n/extracted/app/components/inputs/StakePoolSelect.json
 msgctxt "stakePoolSelect.addNewPrompt"
 msgid "Add StakePool {host}"
-msgstr "添加 StakePool {host}"
+msgstr "添加选票矿池 {host}"
 
 #. [stakepool.addPoolTitle]
 #. defaultMessage is:
@@ -251,7 +254,7 @@ msgstr "添加 StakePool {host}"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakePools/AddForm.json
 msgctxt "stakepool.addPoolTitle"
 msgid "Add a Stakepool"
-msgstr "添加一个 Stakepool"
+msgstr "添加一个选票矿池"
 
 #. [stakepools.list.form.submit]
 #. defaultMessage is:
@@ -259,7 +262,7 @@ msgstr "添加一个 Stakepool"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakePools/List.json
 msgctxt "stakepools.list.form.submit"
 msgid "Add stakepool"
-msgstr "添加 Stakepool"
+msgstr "添加选票矿池"
 
 #. [getStarted.stakePools.info]
 #. defaultMessage is:
@@ -270,7 +273,7 @@ msgctxt "getStarted.stakePools.info"
 msgid ""
 "Add your existing stakepools APIs here. You can always add them later if you"
 " want. After you're done, you can press 'continue'."
-msgstr "在此处添加现有的 Stakepools APIs。如果您愿意，也可以稍后添加。完成后，您可以按‘继续’。"
+msgstr "在此处添加您已有的选票矿池APIs。您也可以稍后随时添加。完成后，您可以按‘继续’。"
 
 #. [securitycenter.signMessage.field.address.label]
 #. defaultMessage is:
@@ -310,7 +313,7 @@ msgstr "地址"
 #: app/i18n/extracted/app/components/views/SecurityPage/ValidateAddress/index.json
 msgctxt "securitycenter.validate.result.notOwned"
 msgid "Address Valid, Not Owned"
-msgstr "地址有效，无所有权"
+msgstr "地址有效，但没有所有权"
 
 #. [appMenu.advanced]
 #. defaultMessage is:
@@ -331,7 +334,7 @@ msgstr "启动高级守护进程"
 #. [agenda.overview.idLabel]
 #. defaultMessage is:
 #. Agenda ID
-#: app/i18n/extracted/app/components/views/TicketsPage/GovernanceTab/AgendaCard.json
+#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/AgendaCard.json
 msgctxt "agenda.overview.idLabel"
 msgid "Agenda ID"
 msgstr "议程 ID"
@@ -339,7 +342,7 @@ msgstr "议程 ID"
 #. [agenda.card.idLabel]
 #. defaultMessage is:
 #. Agenda ID
-#: app/i18n/extracted/app/components/views/TicketsPage/GovernanceTab/AgendaOverview/Overview.json
+#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/AgendaOverview/Overview.json
 msgctxt "agenda.card.idLabel"
 msgid "Agenda ID"
 msgstr "议程 ID"
@@ -374,7 +377,7 @@ msgstr "所有文件"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfoDetails.json
 msgctxt "stake.mempoolTickets"
 msgid "All Mempool Tickets"
-msgstr "所有 Mempool 票"
+msgstr "所有内存池中的票"
 
 #. [mytickets.statistics.stakepool.networkTickets]
 #. defaultMessage is:
@@ -382,15 +385,7 @@ msgstr "所有 Mempool 票"
 #: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/charts/StakePoolStats.json
 msgctxt "mytickets.statistics.stakepool.networkTickets"
 msgid "All Network Tickets"
-msgstr "所有网络票"
-
-#. [proposals.community.allLink]
-#. defaultMessage is:
-#. All Proposals
-#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Page.json
-msgctxt "proposals.community.allLink"
-msgid "All Proposals"
-msgstr "所有提案"
+msgstr "全网票数"
 
 #. [privacy.options.custom.description]
 #. defaultMessage is:
@@ -401,15 +396,7 @@ msgctxt "privacy.options.custom.description"
 msgid ""
 "Allows you to choose exactly which third party services can be accessed by "
 "the app."
-msgstr "允许您选择哪个第三方服务可以通过应用访问。"
-
-#. [notification.transfer.amount]
-#. defaultMessage is:
-#. Amount
-#: app/i18n/extracted/app/components/Snackbar/Notification/Transaction.json
-msgctxt "notification.transfer.amount"
-msgid "Amount"
-msgstr "金额"
+msgstr "允许您选择指定的第三方服务访问此程序。"
 
 #. [purchaseTickets.ticketAmount]
 #. defaultMessage is:
@@ -451,6 +438,14 @@ msgctxt "send.amount"
 msgid "Amount"
 msgstr "金额"
 
+#. [history.amount.range]
+#. defaultMessage is:
+#. Amount Range
+#: app/i18n/extracted/app/components/buttons/EyeFilterMenuWithSlider/index.json
+msgctxt "history.amount.range"
+msgid "Amount Range"
+msgstr "金额范围"
+
 #. [export.tickets.fields.returnedAmount]
 #. defaultMessage is:
 #. Amount returned to the wallet by the spender (vote/revocation) transaction.
@@ -466,7 +461,16 @@ msgstr "支出（投票/取消）交易退回钱包的金额。"
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
 msgctxt "export.tickets.fields.sentAmount"
 msgid "Amount sent by the wallet into the ticket transaction."
-msgstr "钱包发送至票务交易中的金额。"
+msgstr "从钱包发送至选票交易的金额。"
+
+#. [settings.closeWalletModalContent]
+#. defaultMessage is:
+#. Are you sure you want to close {walletName} and return to the launcher?
+#: app/i18n/extracted/app/components/views/SettingsPage/Page.json
+msgctxt "settings.closeWalletModalContent"
+msgid ""
+"Are you sure you want to close {walletName} and return to the launcher?"
+msgstr "您是否确定要关闭{walletName}回到首页？"
 
 #. [tickets.startAutoBuyerConfirmation.attention]
 #. defaultMessage is:
@@ -476,13 +480,13 @@ msgctxt "tickets.startAutoBuyerConfirmation.attention"
 msgid "Attention!"
 msgstr "注意！"
 
-#. [autobuyer.title2]
+#. [automatictickets.subtitle]
 #. defaultMessage is:
-#. Automatic Ticket Buyer
+#. Automatic Ticket Purchases
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/Form.json
-msgctxt "autobuyer.title2"
-msgid "Automatic Ticket Buyer"
-msgstr "自动购票器"
+msgctxt "automatictickets.subtitle"
+msgid "Automatic Ticket Purchases"
+msgstr "自动购票"
 
 #. [charts.keys.available]
 #. defaultMessage is:
@@ -498,7 +502,15 @@ msgstr "可用"
 #: app/i18n/extracted/app/components/views/HomePage/tabs/Balance.json
 msgctxt "home.currentTotalSpendableBalanceLabel"
 msgid "Available"
-msgstr "用于"
+msgstr "可用"
+
+#. [governance.treasury_balance]
+#. defaultMessage is:
+#. Available Treasury Balance: {treasuryBalance}
+#: app/i18n/extracted/app/components/views/GovernancePage/index.json
+msgctxt "governance.treasury_balance"
+msgid "Available Treasury Balance: {treasuryBalance}"
+msgstr "基金会余额：{treasuryBalance}"
 
 #. [export.dailyBalances.fields.spendable]
 #. defaultMessage is:
@@ -506,7 +518,7 @@ msgstr "用于"
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
 msgctxt "export.dailyBalances.fields.spendable"
 msgid "Available balance for spending in regular transactions."
-msgstr "用于正常交易的可用余额。"
+msgstr "常规交易可用余额。"
 
 #. [export.balances.fields.spendable]
 #. defaultMessage is:
@@ -514,7 +526,7 @@ msgstr "用于正常交易的可用余额。"
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
 msgctxt "export.balances.fields.spendable"
 msgid "Available balance for spending in regular transactions."
-msgstr "用于正常交易的可用余额。"
+msgstr "常规交易可用余额。"
 
 #. [mytickets.statistics.votetime.average.label]
 #. defaultMessage is:
@@ -548,6 +560,14 @@ msgctxt "home.tab.balance"
 msgid "Balance"
 msgstr "余额"
 
+#. [autobuyer.modal.balanceToMaintain]
+#. defaultMessage is:
+#. Balance To Maintain
+#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/Form.json
+msgctxt "autobuyer.modal.balanceToMaintain"
+msgid "Balance To Maintain"
+msgstr "保留余额"
+
 #. [export.dailyBalances.fields.lockedNonWallet]
 #. defaultMessage is:
 #. Balance locked in immature and live tickets not controlled by the wallet.
@@ -555,7 +575,7 @@ msgstr "余额"
 msgctxt "export.dailyBalances.fields.lockedNonWallet"
 msgid ""
 "Balance locked in immature and live tickets not controlled by the wallet."
-msgstr "锁定于准选票或现场票的余额不由钱包控制。"
+msgstr "钱包不能控制锁定在未成熟票和成熟票中的余额。"
 
 #. [export.balances.fields.lockedNonWallet]
 #. defaultMessage is:
@@ -564,7 +584,7 @@ msgstr "锁定于准选票或现场票的余额不由钱包控制。"
 msgctxt "export.balances.fields.lockedNonWallet"
 msgid ""
 "Balance locked in immature and live tickets not controlled by the wallet."
-msgstr "锁定于准选票或现场票的余额不由钱包控制。"
+msgstr "钱包不能控制锁定在未成熟票和成熟票中的余额。"
 
 #. [export.dailyBalances.fields.locked]
 #. defaultMessage is:
@@ -572,7 +592,7 @@ msgstr "锁定于准选票或现场票的余额不由钱包控制。"
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
 msgctxt "export.dailyBalances.fields.locked"
 msgid "Balance locked in immature and live tickets."
-msgstr "锁定于准选票或现场票的余额。"
+msgstr "锁定在未成熟票和成熟票中的余额。"
 
 #. [export.balances.fields.locked]
 #. defaultMessage is:
@@ -580,12 +600,12 @@ msgstr "锁定于准选票或现场票的余额。"
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
 msgctxt "export.balances.fields.locked"
 msgid "Balance locked in immature and live tickets."
-msgstr "锁定于准选票或现场票的余额。"
+msgstr "锁定在未成熟票和成熟票中的余额。"
 
 #. [autobuyer.balanceToMaintain]
 #. defaultMessage is:
 #. Balance to Maintain
-#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/Details.json
+#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/Form.json
 msgctxt "autobuyer.balanceToMaintain"
 msgid "Balance to Maintain"
 msgstr "保留余额"
@@ -620,7 +640,7 @@ msgstr "块"
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.blockchain"
 msgid "Blockchain Explorer"
-msgstr "区块链管理器"
+msgstr "区块链浏览器"
 
 #. [loaderBar.Loaded]
 #. defaultMessage is:
@@ -628,7 +648,7 @@ msgstr "区块链管理器"
 #: app/i18n/extracted/app/components/indicators/LinearProgressFull.json
 msgctxt "loaderBar.Loaded"
 msgid "Blockchain loaded"
-msgstr "已加载区块链"
+msgstr "区块链已加载"
 
 #. [loaderBar.Loading]
 #. defaultMessage is:
@@ -758,6 +778,38 @@ msgctxt "send.cancelSendAllTitle"
 msgid "Cancel sending all funds"
 msgstr "取消发送所有资金"
 
+#. [proposals.updateVoteChoiceModal.btnLabel]
+#. defaultMessage is:
+#. Cast Vote
+#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Details/UpdateVoteChoiceModalButton.json
+msgctxt "proposals.updateVoteChoiceModal.btnLabel"
+msgid "Cast Vote"
+msgstr "投票"
+
+#. [trezor.changeLabel.changeButton]
+#. defaultMessage is:
+#. Change
+#: app/i18n/extracted/app/components/views/TrezorPage/ChangeLabel.json
+msgctxt "trezor.changeLabel.changeButton"
+msgid "Change"
+msgstr "更改"
+
+#. [trezorPage.changeHomeScreen]
+#. defaultMessage is:
+#. Change Home Screen
+#: app/i18n/extracted/app/components/views/TrezorPage/ConfigButtons.json
+msgctxt "trezorPage.changeHomeScreen"
+msgid "Change Home Screen"
+msgstr "更换主屏幕"
+
+#. [trezor.changeLabel.header]
+#. defaultMessage is:
+#. Change Label
+#: app/i18n/extracted/app/components/views/TrezorPage/ChangeLabel.json
+msgctxt "trezor.changeLabel.header"
+msgid "Change Label"
+msgstr "更改标签"
+
 #. [settings.changeConfirmation]
 #. defaultMessage is:
 #. Change your passphrase
@@ -765,6 +817,14 @@ msgstr "取消发送所有资金"
 msgctxt "settings.changeConfirmation"
 msgid "Change your passphrase"
 msgstr "更改密码"
+
+#. [trezor.changeLabel.success]
+#. defaultMessage is:
+#. Changed label on selected trezor to '{label}'
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "trezor.changeLabel.success"
+msgid "Changed label on selected trezor to '{label}'"
+msgstr "已选择trezor的标签改为'{label}'"
 
 #. [settings.description]
 #. defaultMessage is:
@@ -798,6 +858,22 @@ msgctxt "selectLang.titleSub"
 msgid "Choose your language"
 msgstr "选择语言"
 
+#. [trezorPage.clearSession]
+#. defaultMessage is:
+#. Clear Session
+#: app/i18n/extracted/app/components/views/TrezorPage/ConfigButtons.json
+msgctxt "trezorPage.clearSession"
+msgid "Clear Session"
+msgstr "清除会话"
+
+#. [trezor.pinModal.description]
+#. defaultMessage is:
+#. Click button sequence that corresponds to your pin on trezor {label}
+#: app/i18n/extracted/app/components/modals/trezor/PinModal.json
+msgctxt "trezor.pinModal.description"
+msgid "Click button sequence that corresponds to your pin on trezor {label}"
+msgstr "点击与trezor {label}上的图钉对应的按钮序列"
+
 #. [infoConfirmModal.btnClose]
 #. defaultMessage is:
 #. Close
@@ -816,17 +892,17 @@ msgstr "关闭"
 
 #. [fatal.button]
 #. defaultMessage is:
-#. Close Wallet
+#. Close Decrediton
 #: app/i18n/extracted/app/components/views/FatalErrorPage.json
 msgctxt "fatal.button"
-msgid "Close Wallet"
-msgstr "关闭钱包"
+msgid "Close Decrediton"
+msgstr "关闭Decrediton"
 
-#. [settings.closeWallet]
+#. [settings.closeWalletModalOk]
 #. defaultMessage is:
 #. Close Wallet
 #: app/i18n/extracted/app/components/views/SettingsPage/Page.json
-msgctxt "settings.closeWallet"
+msgctxt "settings.closeWalletModalOk"
 msgid "Close Wallet"
 msgstr "关闭钱包"
 
@@ -854,13 +930,13 @@ msgctxt "appMenu.communityDiscussions"
 msgid "Community Discussions"
 msgstr "社区讨论"
 
-#. [proposals.community.title]
+#. [trezor.configButtons.header]
 #. defaultMessage is:
-#. Community Proposals
-#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Page.json
-msgctxt "proposals.community.title"
-msgid "Community Proposals"
-msgstr "社区提案"
+#. Config Trezor
+#: app/i18n/extracted/app/components/views/TrezorPage/ConfigButtons.json
+msgctxt "trezor.configButtons.header"
+msgid "Config Trezor"
+msgstr "配置Trezor"
 
 #. [stakepools.list.title]
 #. defaultMessage is:
@@ -868,7 +944,7 @@ msgstr "社区提案"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakePools/List.json
 msgctxt "stakepools.list.title"
 msgid "Configured stake pools:"
-msgstr "已配置选票池："
+msgstr "已配置选票矿池："
 
 #. [changePassModal.confirm]
 #. defaultMessage is:
@@ -892,7 +968,7 @@ msgstr "确认"
 #: app/i18n/extracted/app/components/views/GetStartedPage/CreateWallet/CreateWalletForm/CreatePassPhrase/PassPhraseInputs.json
 msgctxt "createWallet.verifyPassphrasePlaceholder"
 msgid "Confirm Private Passphrase"
-msgstr "确认私人密码"
+msgstr "确认钱包密码"
 
 #. [confirmSeed.label]
 #. defaultMessage is:
@@ -910,13 +986,37 @@ msgctxt "seedCopyConfirm.btnConfirm"
 msgid "Confirm Seed Copy"
 msgstr "确认复制种子"
 
+#. [trezor.walltCreationPrivatePassphraseConfirm]
+#. defaultMessage is:
+#. Confirm Wallet PassPhrase
+#: app/i18n/extracted/app/components/modals/trezor/WalletCreationPassPhraseModal.json
+msgctxt "trezor.walltCreationPrivatePassphraseConfirm"
+msgid "Confirm Wallet PassPhrase"
+msgstr "确认钱包密码"
+
+#. [proposals.updateVoteChoiceModal.title]
+#. defaultMessage is:
+#. Confirm Your Vote
+#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Details/UpdateVoteChoiceModalButton.json
+msgctxt "proposals.updateVoteChoiceModal.title"
+msgid "Confirm Your Vote"
+msgstr "确认您的投票"
+
 #. [passphraseModal.confirmationRequired]
 #. defaultMessage is:
 #. Confirmation Required
 #: app/i18n/extracted/app/components/modals/PassphraseModal/Modal.json
 msgctxt "passphraseModal.confirmationRequired"
 msgid "Confirmation Required"
-msgstr "需要的确认信息"
+msgstr "需要确认密码"
+
+#. [settings.closeWalletModalTitle]
+#. defaultMessage is:
+#. Confirmation Required
+#: app/i18n/extracted/app/components/views/SettingsPage/Page.json
+msgctxt "settings.closeWalletModalTitle"
+msgid "Confirmation Required"
+msgstr "请确认"
 
 #. [transaction.indicatorConfirmed]
 #. defaultMessage is:
@@ -934,13 +1034,42 @@ msgctxt "txDetails.indicatorConfirmed"
 msgid "Confirmed"
 msgstr "已确认"
 
+#. [votingPreferences.title]
+#. defaultMessage is:
+#. Consensus Changes
+#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/Page.json
+msgctxt "votingPreferences.title"
+msgid "Consensus Changes"
+msgstr "共识更改"
+
+#. [governance.tab.consensusChanges]
+#. defaultMessage is:
+#. Consensus Changes
+#: app/i18n/extracted/app/components/views/GovernancePage/index.json
+msgctxt "governance.tab.consensusChanges"
+msgid "Consensus Changes"
+msgstr "共识更改"
+
+#. [votingPreferences.description]
+#. defaultMessage is:
+#. Consensus changes refer to the on-chain governance aspect of Decred. This
+#. means deciding whether to adopt changes to the consensus rules of the
+#. network. Participation in voting requires (PoS) tickets.
+#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/Page.json
+msgctxt "votingPreferences.description"
+msgid ""
+"Consensus changes refer to the on-chain governance aspect of Decred. This "
+"means deciding whether to adopt changes to the consensus rules of the "
+"network. Participation in voting requires (PoS) tickets."
+msgstr "共识更改指的是Decred的链上治理方面。这表示决定是否采用对于网络共识规则的更改。参与投票需要(PoS)选票。"
+
 #. [help.constitution]
 #. defaultMessage is:
 #. Constitution
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.constitution"
 msgid "Constitution"
-msgstr "组成"
+msgstr "宪法"
 
 #. [passphraseModal.continue]
 #. defaultMessage is:
@@ -1012,7 +1141,7 @@ msgstr "复制"
 #: app/i18n/extracted/app/components/views/GetStartedPage/CreateWallet/CreateWalletForm/CreateWallet.json
 msgctxt "createWallet.copy"
 msgid "Copy seed words to clipboard"
-msgstr "将种子词复制到剪贴板"
+msgstr "将种子单词复制到粘贴板"
 
 #. [createWallet.createWalletBtn]
 #. defaultMessage is:
@@ -1057,7 +1186,7 @@ msgid ""
 "Create an account or login to your existing account at {stakePoolLink} Once "
 "logged in, select the ‘Settings’ tab, copy and paste your API KEY into the "
 "field."
-msgstr "创建账户或登录 {stakePoolLink} 的现有账户。登陆后，请选择‘设置’选项卡，将您的 API 密钥复制和粘贴到该字段。"
+msgstr "创建一个账户或者登录您在{stakePoolLink} 已有账户。登录后，选择‘设置’选项卡，将您的 API KEY 复制和粘贴到该字段。"
 
 #. [accounts.newAccountConfirmations]
 #. defaultMessage is:
@@ -1073,15 +1202,7 @@ msgstr "创建新账户"
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Details/Page.json
 msgctxt "proposal.overview.created.label"
 msgid "Created by"
-msgstr "创建人"
-
-#. [home.liveTicketsCount]
-#. defaultMessage is:
-#. Current Live Tickets
-#: app/i18n/extracted/app/components/views/HomePage/tabs/Tickets.json
-msgctxt "home.liveTicketsCount"
-msgid "Current Live Tickets"
-msgstr "当前的现场票"
+msgstr "创建者"
 
 #. [tickets.description]
 #. defaultMessage is:
@@ -1097,7 +1218,7 @@ msgstr "当前价格： {ticketPrice}"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/PurchaseTicketsQuickBar.json
 msgctxt "purchaseTickets.currentStakepool"
 msgid "Current StakePool"
-msgstr "当前的 StakePool"
+msgstr "当前的选票矿池"
 
 #. [home.currentTotalBalanceLabel]
 #. defaultMessage is:
@@ -1137,7 +1258,7 @@ msgstr "剪切"
 #: app/i18n/extracted/app/components/views/GetStartedPage/AdvancedStartup/AppDataForm.json
 msgctxt "login.form.appdata.placeholder"
 msgid "Daemon Data Directory"
-msgstr "Daemon 数据目录"
+msgstr "守护进程数据目录"
 
 #. [login.form.appdata.label]
 #. defaultMessage is:
@@ -1145,7 +1266,7 @@ msgstr "Daemon 数据目录"
 #: app/i18n/extracted/app/components/views/GetStartedPage/AdvancedStartup/AppDataForm.json
 msgctxt "login.form.appdata.label"
 msgid "Daemon Data Directory"
-msgstr "Daemon 数据目录"
+msgstr "守护进程数据目录"
 
 #. [fatal.daemon.title]
 #. defaultMessage is:
@@ -1153,7 +1274,7 @@ msgstr "Daemon 数据目录"
 #: app/i18n/extracted/app/components/views/FatalErrorPage.json
 msgctxt "fatal.daemon.title"
 msgid "Daemon Error"
-msgstr "Daemon 错误"
+msgstr "守护进程错误"
 
 #. [export.dailyBalances.name]
 #. defaultMessage is:
@@ -1180,7 +1301,7 @@ msgstr "余额的日期。时间总是固定为每天的最后一秒（表示当
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
 msgctxt "export.tickets.fields.spenderTimestamp"
 msgid "Date/Time of vote/revocation."
-msgstr "投票/取消日期/时间。"
+msgstr "投票/撤销的日期/时间"
 
 #. [export.transactions.fields.time]
 #. defaultMessage is:
@@ -1188,7 +1309,7 @@ msgstr "投票/取消日期/时间。"
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
 msgctxt "export.transactions.fields.time"
 msgid "Date/time of the transaction"
-msgstr "交易日期/时间"
+msgstr "交易的日期/时间"
 
 #. [export.balances.fields.time]
 #. defaultMessage is:
@@ -1214,13 +1335,21 @@ msgctxt "charts.keys.day"
 msgid "Days"
 msgstr "天数"
 
+#. [settings.privacy.dcrdata.label]
+#. defaultMessage is:
+#. Decred Block Explorer
+#: app/i18n/extracted/app/components/views/SettingsPage/PrivacySettings.json
+msgctxt "settings.privacy.dcrdata.label"
+msgid "Decred Block Explorer"
+msgstr "Decred区块浏览器"
+
 #. [help.constitution.modal.title]
 #. defaultMessage is:
 #. Decred Constitution
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.constitution.modal.title"
 msgid "Decred Constitution"
-msgstr "Decred 组成"
+msgstr "Decred 宪法"
 
 #. [help.constitution.subtitle]
 #. defaultMessage is:
@@ -1228,12 +1357,12 @@ msgstr "Decred 组成"
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.constitution.subtitle"
 msgid "Decred Project Constitution"
-msgstr "Decred 项目组成"
+msgstr "Decred 项目宪法"
 
 #. [aboutModal.paragraph2b]
 #. defaultMessage is:
 #. Decred contributors
-#: app/i18n/extracted/app/components/modals/AboutModal/Modal.json
+#: app/i18n/extracted/app/components/modals/AboutModal/AboutModal.json
 msgctxt "aboutModal.paragraph2b"
 msgid "Decred contributors"
 msgstr "Decred 贡献者"
@@ -1241,7 +1370,7 @@ msgstr "Decred 贡献者"
 #. [aboutModal.decrediton]
 #. defaultMessage is:
 #. Decrediton
-#: app/i18n/extracted/app/components/modals/AboutModal/Modal.json
+#: app/i18n/extracted/app/components/modals/AboutModal/AboutModal.json
 msgctxt "aboutModal.decrediton"
 msgid "Decrediton"
 msgstr "Decrediton"
@@ -1258,12 +1387,12 @@ msgstr "Decrediton"
 #. defaultMessage is:
 #. Decrediton is free and open source software, developed and designed by the
 #. global team of
-#: app/i18n/extracted/app/components/modals/AboutModal/Modal.json
+#: app/i18n/extracted/app/components/modals/AboutModal/AboutModal.json
 msgctxt "aboutModal.paragraph2a"
 msgid ""
 "Decrediton is free and open source software, developed and designed by the "
 "global team of"
-msgstr "Decrediton 是开放资源的免费软件，由全球小组开发和设计。"
+msgstr "Decrediton 是免费的开源软件，由全球的团队设计和开发。"
 
 #. [tickets.startAutoBuyerConfirmation.description]
 #. defaultMessage is:
@@ -1272,7 +1401,7 @@ msgstr "Decrediton 是开放资源的免费软件，由全球小组开发和设�
 msgctxt "tickets.startAutoBuyerConfirmation.description"
 msgid ""
 "Decrediton must remain running for tickets to be automatically purchased."
-msgstr "Decrediton 必须继续运行以提供自动购票。"
+msgstr "Decrediton 必须持续运行以进行自动购票。"
 
 #. [getStarted.releaseNotesTitle]
 #. defaultMessage is:
@@ -1288,7 +1417,7 @@ msgstr "Decrediton v{version} 已发布"
 #: app/i18n/extracted/app/components/views/GetStartedPage/OpenWallet/DecryptForm.json
 msgctxt "getStarted.decrypt.label"
 msgid "Decrypt Wallet"
-msgstr "Decrypt 钱包"
+msgstr "解密钱包"
 
 #. [fatal.button.delete]
 #. defaultMessage is:
@@ -1347,7 +1476,15 @@ msgstr "检测到与钱包有关的常规交易的方向（发送/接收/转账�
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
 msgctxt "export.transactions.fields.type"
 msgid "Detected transaction type (regular, ticket purchase, vote, etc)"
-msgstr "检测到票券类型（常规、购票、投票等）"
+msgstr "检测到的交易类型（常规、购票、投票等）"
+
+#. [trezor.recoveryButtons.header]
+#. defaultMessage is:
+#. Device Recovery
+#: app/i18n/extracted/app/components/views/TrezorPage/RecoveryButtons.json
+msgctxt "trezor.recoveryButtons.header"
+msgid "Device Recovery"
+msgstr "设备恢复"
 
 #. [advancedDaemon.toggle.remote]
 #. defaultMessage is:
@@ -1355,7 +1492,23 @@ msgstr "检测到票券类型（常规、购票、投票等）"
 #: app/i18n/extracted/app/components/views/GetStartedPage/AdvancedStartup/Form.json
 msgctxt "advancedDaemon.toggle.remote"
 msgid "Different Local Daemon Location"
-msgstr "本地 Daemon 的不同位置"
+msgstr "不同的本地守护进程位置"
+
+#. [spv.options.disable.title]
+#. defaultMessage is:
+#. Disable SPV
+#: app/i18n/extracted/app/components/views/GetStartedPage/SpvChoicePage/TopLevelOptions.json
+msgctxt "spv.options.disable.title"
+msgid "Disable SPV"
+msgstr "关闭SPV"
+
+#. [settings.spv.false]
+#. defaultMessage is:
+#. Disabled
+#: app/i18n/extracted/app/components/views/SettingsPage/GeneralSettings.json
+msgctxt "settings.spv.false"
+msgid "Disabled"
+msgstr "关闭"
 
 #. [settings.advancedDaemon.false]
 #. defaultMessage is:
@@ -1376,7 +1529,7 @@ msgid ""
 "Disables all connections to third party (non-dcrd/non-dcrwallet) services. "
 "This may prevent you from using certain features of the app. Recommended for"
 " advanced users."
-msgstr "禁用与第三方（非 dcrd/非-dcr钱包）服务的所有连接。这可能使您无法使用应用的某些功能。已推荐给高级用户。"
+msgstr "禁用与第三方（非 dcrd/非-dcr钱包）服务的所有连接。这可能使您无法使用应用的某些功能。建议高级用户使用。"
 
 #. [getStarted.header.discoveringAddresses.meta]
 #. defaultMessage is:
@@ -1384,7 +1537,7 @@ msgstr "禁用与第三方（非 dcrd/非-dcr钱包）服务的所有连接。�
 #: app/i18n/extracted/app/components/views/GetStartedPage/index.json
 msgctxt "getStarted.header.discoveringAddresses.meta"
 msgid "Discovering addresses"
-msgstr "正在发现地址"
+msgstr "正在探索地址"
 
 #. [settings.displayedUnits]
 #. defaultMessage is:
@@ -1392,7 +1545,7 @@ msgstr "正在发现地址"
 #: app/i18n/extracted/app/components/views/SettingsPage/GeneralSettings.json
 msgctxt "settings.displayedUnits"
 msgid "Displayed Units"
-msgstr "显示的组件"
+msgstr "显示的单位"
 
 #. [stakepools.list.confirmRemove]
 #. defaultMessage is:
@@ -1400,7 +1553,7 @@ msgstr "显示的组件"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakePools/List.json
 msgctxt "stakepools.list.confirmRemove"
 msgid "Do you confirm removal of stakepool {stakepool}?"
-msgstr "您确认删除了Stakepool {stakepool}？"
+msgstr "您确认要移除选票矿池 {stakepool}？"
 
 #. [docs.unavailable]
 #. defaultMessage is:
@@ -1440,13 +1593,13 @@ msgid ""
 "privacy."
 msgstr "每次您要求付款时，创建一个新的地址以保护您的隐私。"
 
-#. [home.earnedStakingReward]
+#. [home.earned]
 #. defaultMessage is:
-#. Earned Staking Reward
+#. Earned
 #: app/i18n/extracted/app/components/views/HomePage/tabs/Tickets.json
-msgctxt "home.earnedStakingReward"
-msgid "Earned Staking Reward"
-msgstr "赢得下注奖励"
+msgctxt "home.earned"
+msgid "Earned"
+msgstr "收益"
 
 #. [appMenu.edit]
 #. defaultMessage is:
@@ -1472,13 +1625,29 @@ msgctxt "proposals.enablePoliteia.button"
 msgid "Enable Politeia Integration"
 msgstr "启用 Politeia 集成"
 
+#. [spv.options.enable.title]
+#. defaultMessage is:
+#. Enable SPV
+#: app/i18n/extracted/app/components/views/GetStartedPage/SpvChoicePage/TopLevelOptions.json
+msgctxt "spv.options.enable.title"
+msgid "Enable SPV"
+msgstr "开启SPV"
+
 #. [stake.enableStakePoolListing.button]
 #. defaultMessage is:
 #. Enable StakePool Listing
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakePools/index.json
 msgctxt "stake.enableStakePoolListing.button"
 msgid "Enable StakePool Listing"
-msgstr "启用 StakePool 列表"
+msgstr "启用选票矿池列表"
+
+#. [settings.spv.true]
+#. defaultMessage is:
+#. Enabled
+#: app/i18n/extracted/app/components/views/SettingsPage/GeneralSettings.json
+msgctxt "settings.spv.true"
+msgid "Enabled"
+msgstr "开启"
 
 #. [settings.advancedDaemon.true]
 #. defaultMessage is:
@@ -1499,8 +1668,7 @@ msgid ""
 "Enables connections to most services for a better user experience and full "
 "access to features (such as version update, stakepool listing, politeia, "
 "etc). Recommended for most users."
-msgstr ""
-"启用与大多数服务的连接，以获得更好的用户体验和对功能的全面访问（如版本更新、stakepool列表、Politeia 等）。已推荐给大多数用户。"
+msgstr "启用与大多数服务的连接，以获得更好的用户体验和对功能的全面访问（如版本更新、选票矿池列表、Politeia 等）。建议大多数用户开启。"
 
 #. [stake.revokeTicketsPassphrase]
 #. defaultMessage is:
@@ -1508,7 +1676,23 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/index.json
 msgctxt "stake.revokeTicketsPassphrase"
 msgid "Enter Passphrase to Revoke Tickets"
-msgstr "输入密码以取消票券"
+msgstr "输入密码以撤销选票"
+
+#. [trezor.pinModal.title]
+#. defaultMessage is:
+#. Enter Pin
+#: app/i18n/extracted/app/components/modals/trezor/PinModal.json
+msgctxt "trezor.pinModal.title"
+msgid "Enter Pin"
+msgstr "输入密码"
+
+#. [trezor.passphraseModal.title]
+#. defaultMessage is:
+#. Enter Trezor Passphrase
+#: app/i18n/extracted/app/components/modals/trezor/PassPhraseModal.json
+msgctxt "trezor.passphraseModal.title"
+msgid "Enter Trezor Passphrase"
+msgstr "输入Trezor密码"
 
 #. [securitycenter.signMessage.field.address.placeholder]
 #. defaultMessage is:
@@ -1516,7 +1700,7 @@ msgstr "输入密码以取消票券"
 #: app/i18n/extracted/app/components/views/SecurityPage/SignMessage/Form.json
 msgctxt "securitycenter.signMessage.field.address.placeholder"
 msgid "Enter an address"
-msgstr "输入地址"
+msgstr "输入一个地址"
 
 #. [securitycenter.verify.field.address.placeholder]
 #. defaultMessage is:
@@ -1524,7 +1708,7 @@ msgstr "输入地址"
 #: app/i18n/extracted/app/components/views/SecurityPage/VerifyMessage/Form.json
 msgctxt "securitycenter.verify.field.address.placeholder"
 msgid "Enter an address"
-msgstr "输入地址"
+msgstr "输入一个地址"
 
 #. [securitycenter.validate.field.address.placeholder]
 #. defaultMessage is:
@@ -1540,7 +1724,7 @@ msgstr "输入验证的地址"
 #: app/i18n/extracted/app/components/views/GetStartedPage/CreateWallet/CreateWalletForm/ExistingSeed/SeedHexEntry.json
 msgctxt "createWallet.enterHexSeed.placeholder"
 msgid "Enter the hex representation of your seed..."
-msgstr "输入您种子的十六进制表示..."
+msgstr "输入您十六进制表示的种子"
 
 #. [getStarted.discoverAccountsInfo]
 #. defaultMessage is:
@@ -1607,6 +1791,14 @@ msgctxt "proposalDetails.loadingError"
 msgid "Error loading Proposal: {error}"
 msgstr "加载提案时出错：{error}"
 
+#. [tickets.errors.refreshStakePoolInfo]
+#. defaultMessage is:
+#. Error refreshing stakepool data from {host}: {originalError}
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "tickets.errors.refreshStakePoolInfo"
+msgid "Error refreshing stakepool data from {host}: {originalError}"
+msgstr "从{host}刷新选票矿池错误{originalError}"
+
 #. [spvSync.Failed]
 #. defaultMessage is:
 #. Error syncing SPV wallet: {originalError}
@@ -1621,7 +1813,7 @@ msgstr "同步 SPV 钱包时出现错误： {originalError}"
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "addCustomStakePool.failed"
 msgid "Error trying to add custom stakepool: {originalError}"
-msgstr "尝试添加自定义 Stakepool 时出错： {originalError}"
+msgstr "尝试添加自定义选票矿池时出错： {originalError}"
 
 #. [confirmSeed.errors.hexNot32Bytes]
 #. defaultMessage is:
@@ -1632,7 +1824,7 @@ msgctxt "confirmSeed.errors.hexNot32Bytes"
 msgid ""
 "Error: seed is not 32 bytes, such comes from a non-supported software and "
 "may have unintended consequences."
-msgstr "错误：种子不是32个字节，该种子来自一个不支持的软件，可能会产生意想不到的后果。"
+msgstr "错误：种子不是32字节，该种子来自一个不支持的软件，可能会产生未知的后果。"
 
 #. [getStarted.header.startrpc.meta]
 #. defaultMessage is:
@@ -1656,7 +1848,7 @@ msgstr "预计费用"
 #: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/Page.json
 msgctxt "send.sizeEstimation"
 msgid "Estimated Size"
-msgstr "预计费用"
+msgstr "预计大小"
 
 #. [getStarted.chainLoading.syncEstimation]
 #. defaultMessage is:
@@ -1680,7 +1872,15 @@ msgstr "已过期"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfoDetails.json
 msgctxt "stake.expiredTickets"
 msgid "Expired Tickets"
-msgstr "已过期票券"
+msgstr "过期选票"
+
+#. [stakeSPV.expiredTickets]
+#. defaultMessage is:
+#. Expired Tickets
+#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfoDetailsSPV.json
+msgctxt "stakeSPV.expiredTickets"
+msgid "Expired Tickets"
+msgstr "过期选票"
 
 #. [purchaseTickets.expiryPlaceholder]
 #. defaultMessage is:
@@ -1720,7 +1920,7 @@ msgstr "导出"
 #: app/i18n/extracted/app/components/views/TransactionsPage/index.json
 msgctxt "transactions.tab.export"
 msgid "Export"
-msgstr "导出交易"
+msgstr "导出"
 
 #. [export.subtitle]
 #. defaultMessage is:
@@ -1747,7 +1947,7 @@ msgctxt "export.votetime.descr"
 msgid ""
 "Export a time-to-vote histogram in days (how many days from ticket purchase "
 "until the ticket was selected for voting)."
-msgstr "导出投票时间柱状图，以天数为单位（从买票到票选为止的天数）。"
+msgstr "以天数为单位导出投票时间柱状图（从买票开始到票被选中投出为止的天数）。"
 
 #. [transactions.description.export]
 #. defaultMessage is:
@@ -1755,7 +1955,7 @@ msgstr "导出投票时间柱状图，以天数为单位（从买票到票选为
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/index.json
 msgctxt "transactions.description.export"
 msgid "Export different types of statistics from your wallet."
-msgstr "从钱包导出不同类型的数据。"
+msgstr "从钱包导出不同类型的统计数据。"
 
 #. [export.completed]
 #. defaultMessage is:
@@ -1788,7 +1988,7 @@ msgstr "导出不同类型的余额，并进行每日汇总。"
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
 msgctxt "export.tickets.descr"
 msgid "Export ticket and vote information."
-msgstr "导出票券和投票信息。"
+msgstr "导出选票和投票信息。"
 
 #. [export.infoFieldsHeader]
 #. defaultMessage is:
@@ -1804,7 +2004,7 @@ msgstr "导出的字段"
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
 msgctxt "export.transactions.descr"
 msgid "Exports all transactions recorded in the wallet."
-msgstr "导出钱包中记录的所有交易。"
+msgstr "导出钱包中所有交易的记录。"
 
 #. [account.pubKey]
 #. defaultMessage is:
@@ -1812,7 +2012,16 @@ msgstr "导出钱包中记录的所有交易。"
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/AccountDetails.json
 msgctxt "account.pubKey"
 msgid "Extended Public Key"
-msgstr "扩展的公共密钥"
+msgstr "扩展的公钥"
+
+#. [trezor.getWalletCreationMasterPubKey.failed]
+#. defaultMessage is:
+#. Failed to obtain master extended pubkey from trezor device: {originalError}
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "trezor.getWalletCreationMasterPubKey.failed"
+msgid ""
+"Failed to obtain master extended pubkey from trezor device: {originalError}"
+msgstr "无法从trezor设备获取主扩展公钥：{originalError}"
 
 #. [fatal.header.title]
 #. defaultMessage is:
@@ -1821,14 +2030,6 @@ msgstr "扩展的公共密钥"
 msgctxt "fatal.header.title"
 msgid "Fatal error"
 msgstr "致命错误"
-
-#. [notification.transfer.fee]
-#. defaultMessage is:
-#. Fee
-#: app/i18n/extracted/app/components/Snackbar/Notification/Transaction.json
-msgctxt "notification.transfer.fee"
-msgid "Fee"
-msgstr "费用"
 
 #. [export.transactions.fields.fee]
 #. defaultMessage is:
@@ -1844,7 +2045,7 @@ msgstr "钱包为本次交易支付的费用"
 #: app/i18n/extracted/app/components/views/GetStartedPage/index.json
 msgctxt "getStarted.header.fetchingBlockHeaders.meta"
 msgid "Fetching block headers"
-msgstr "正在获取块标题"
+msgstr "正在获取区块头"
 
 #. [getStarted.header.fetchingMissing.meta]
 #. defaultMessage is:
@@ -1868,7 +2069,7 @@ msgstr "按地址筛选"
 #: app/i18n/extracted/app/components/views/GetStartedPage/index.json
 msgctxt "getStarted.header.finalizingSetup.meta"
 msgid "Finalizing setup"
-msgstr "正在完成设置"
+msgstr "正在完成安装"
 
 #. [tutorial.finishBtn]
 #. defaultMessage is:
@@ -1889,10 +2090,34 @@ msgstr "完成"
 #. [agenda.card.finishedIndicator]
 #. defaultMessage is:
 #. Finished
-#: app/i18n/extracted/app/components/views/TicketsPage/GovernanceTab/helpers.json
+#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/helpers.json
 msgctxt "agenda.card.finishedIndicator"
 msgid "Finished"
 msgstr "已完成"
+
+#. [proposals.statusLinks.voted]
+#. defaultMessage is:
+#. Finished voting
+#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Page.json
+msgctxt "proposals.statusLinks.voted"
+msgid "Finished voting"
+msgstr "完成投票"
+
+#. [trezor.firmwareUpdate.header]
+#. defaultMessage is:
+#. Firmware Update
+#: app/i18n/extracted/app/components/views/TrezorPage/FirmwareUpdate.json
+msgctxt "trezor.firmwareUpdate.header"
+msgid "Firmware Update"
+msgstr "固件升级"
+
+#. [trezor.updateFirmware.success]
+#. defaultMessage is:
+#. Firmware updated on trezor device
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "trezor.updateFirmware.success"
+msgid "Firmware updated on trezor device"
+msgstr "Trezor设备固件已升级"
 
 #. [help.forum]
 #. defaultMessage is:
@@ -1907,6 +2132,14 @@ msgstr "论坛"
 #. From
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/Form.json
 msgctxt "purchaseTickets.accountFrom"
+msgid "From"
+msgstr "来自"
+
+#. [autobuyer.accountFrom]
+#. defaultMessage is:
+#. From
+#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/Form.json
+msgctxt "autobuyer.accountFrom"
 msgid "From"
 msgstr "来自"
 
@@ -1940,7 +2173,7 @@ msgstr "通用"
 #: app/i18n/extracted/app/components/views/SettingsPage/PrivacySettings.json
 msgctxt "settings.privacy.networkStatus.description"
 msgid "General network information (block height, etc) from decred.org"
-msgstr "decred.org的一般网络信息（块高度等）"
+msgstr "来自decred.org的一般网络信息（区块高度等）"
 
 #. [home.noTransactions.receiveLink]
 #. defaultMessage is:
@@ -2012,7 +2245,7 @@ msgstr "明白"
 #: app/i18n/extracted/app/components/SideBar/MenuLinks/index.json
 msgctxt "sidebar.link.governance"
 msgid "Governance"
-msgstr "管理"
+msgstr "治理"
 
 #. [governance.title]
 #. defaultMessage is:
@@ -2020,15 +2253,7 @@ msgstr "管理"
 #: app/i18n/extracted/app/components/views/GovernancePage/index.json
 msgctxt "governance.title"
 msgid "Governance"
-msgstr "管理"
-
-#. [tickets.tab.governance]
-#. defaultMessage is:
-#. Governance
-#: app/i18n/extracted/app/components/views/TicketsPage/index.json
-msgctxt "tickets.tab.governance"
-msgid "Governance"
-msgstr "管理"
+msgstr "治理"
 
 #. [governance.description]
 #. defaultMessage is:
@@ -2036,7 +2261,7 @@ msgstr "管理"
 #: app/i18n/extracted/app/components/views/GovernancePage/index.json
 msgctxt "governance.description"
 msgid "Governance aspects of Decred."
-msgstr "Decred管理方面的问题。"
+msgstr "Decred治理方面。"
 
 #. [accounts.hdPath]
 #. defaultMessage is:
@@ -2044,7 +2269,7 @@ msgstr "Decred管理方面的问题。"
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/AccountDetails.json
 msgctxt "accounts.hdPath"
 msgid "HD Path"
-msgstr "高清路径"
+msgstr "HD路径"
 
 #. [export.transactions.fields.hash]
 #. defaultMessage is:
@@ -2052,7 +2277,7 @@ msgstr "高清路径"
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
 msgctxt "export.transactions.fields.hash"
 msgid "Hash of the transaction (txid)"
-msgstr "交易的散列（txid）"
+msgstr "交易的哈希（txid）"
 
 #. [txDetails.blockHeightLabel]
 #. defaultMessage is:
@@ -2116,7 +2341,7 @@ msgstr "隐藏其它"
 #: app/i18n/extracted/app/components/views/TransactionsPage/index.json
 msgctxt "transactions.tab.history"
 msgid "History"
-msgstr "历史"
+msgstr "历史记录"
 
 #. [export.votetime.fields.count]
 #. defaultMessage is:
@@ -2124,7 +2349,7 @@ msgstr "历史"
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
 msgctxt "export.votetime.fields.count"
 msgid "How many tickets voted in this day bucket"
-msgstr "今天投了多少张票"
+msgstr "有几张选票是这天数投出的"
 
 #. [seedCopyConfirmModal.copyConfirmationPhrase]
 #. defaultMessage is:
@@ -2151,7 +2376,7 @@ msgctxt "help.description.links"
 msgid ""
 "If you have any difficulty with decrediton, please use the following links "
 "to help find a solution."
-msgstr "如果您对decrediton有任何困难，请使用以下链接来帮助找到解决方案。"
+msgstr "如果您对decrediton有任何不清楚的，请使用以下链接来帮助寻找解决方案。"
 
 #. [charts.keys.immature]
 #. defaultMessage is:
@@ -2159,7 +2384,7 @@ msgstr "如果您对decrediton有任何困难，请使用以下链接来帮助�
 #: app/i18n/extracted/app/components/charts/messages.json
 msgctxt "charts.keys.immature"
 msgid "Immature"
-msgstr "准选票"
+msgstr "未成熟"
 
 #. [transaction.type.immature]
 #. defaultMessage is:
@@ -2167,7 +2392,7 @@ msgstr "准选票"
 #: app/i18n/extracted/app/components/TxHistory/TxHistoryRow/StakeTxRow.json
 msgctxt "transaction.type.immature"
 msgid "Immature"
-msgstr "准选票"
+msgstr "未成熟"
 
 #. [accounts.immatureRewards]
 #. defaultMessage is:
@@ -2175,7 +2400,7 @@ msgstr "准选票"
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/AccountDetails.json
 msgctxt "accounts.immatureRewards"
 msgid "Immature Rewards"
-msgstr "Immature Rewards"
+msgstr "未成熟的奖励"
 
 #. [accounts.immatureStake]
 #. defaultMessage is:
@@ -2183,7 +2408,7 @@ msgstr "Immature Rewards"
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/AccountDetails.json
 msgctxt "accounts.immatureStake"
 msgid "Immature Stake Gen"
-msgstr "准选票下注"
+msgstr "生成未成熟票"
 
 #. [stake.immatureTickets]
 #. defaultMessage is:
@@ -2191,12 +2416,12 @@ msgstr "准选票下注"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfoRow.json
 msgctxt "stake.immatureTickets"
 msgid "Immature Tickets"
-msgstr "准选票"
+msgstr "未成熟票"
 
 #. [tickets.importScriptConfirmation]
 #. defaultMessage is:
 #. Import Script Confirmation
-#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/Form.json
+#: app/i18n/extracted/app/components/buttons/ImportScriptIconButton.json
 msgctxt "tickets.importScriptConfirmation"
 msgid "Import Script Confirmation"
 msgstr "导入脚本确认"
@@ -2207,15 +2432,15 @@ msgstr "导入脚本确认"
 #: app/i18n/extracted/app/components/views/GetStartedPage/index.json
 msgctxt "getStarted.header.stakePools.meta"
 msgid "Import StakePools"
-msgstr "导入StakePools"
+msgstr "导入选票矿池"
 
 #. [purchaseTickets.importDisabledRescan]
 #. defaultMessage is:
 #. Importing scripts is disabled during a rescan.
-#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/Form.json
+#: app/i18n/extracted/app/components/buttons/ImportScriptIconButton.json
 msgctxt "purchaseTickets.importDisabledRescan"
 msgid "Importing scripts is disabled during a rescan."
-msgstr "重新扫描期间禁用导入脚本。"
+msgstr "在重新扫描区块期间禁止导入脚本。"
 
 #. [watchingOnlyPseudoModal.description]
 #. defaultMessage is:
@@ -2228,20 +2453,15 @@ msgid ""
 "          please re-create your Wallet with the watch-only option disabled."
 msgstr ""
 "为了获得对钱包功能的完全访问权限，\n"
-"请在禁用仅限观看选项的情况下重新创建您的电子钱包。"
+"请禁用只读选项，重新创建您的电子钱包。"
 
-#. [proposals.community.descr]
+#. [trezorPage.initDeviceBtn]
 #. defaultMessage is:
-#. In this section, you can review community proposals currently under
-#. consideration and voting. If you have elligible tickets, you can also vote
-#. for these proposals.
-#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Page.json
-msgctxt "proposals.community.descr"
-msgid ""
-"In this section, you can review community proposals currently under "
-"consideration and voting. If you have elligible tickets, you can also vote "
-"for these proposals."
-msgstr "在本节中，您可以查看当前正在考虑和投票的社区提案。 如果您有合格的门票，您也可以投票支持这些建议。"
+#. Init Device
+#: app/i18n/extracted/app/components/views/TrezorPage/RecoveryButtons.json
+msgctxt "trezorPage.initDeviceBtn"
+msgid "Init Device"
+msgstr "初始化设备"
 
 #. [sidebar.rescanBtn.tip]
 #. defaultMessage is:
@@ -2261,9 +2481,9 @@ msgid ""
 msgstr ""
 "启动事务重新扫描。\n"
 "\n"
-"重新扫描可能有助于解决一些平衡错误。\n"
+"重新扫描可能帮忙解决一些余额错误。\n"
 "\n"
-"注意：这会扫描整个区块链以进行交易，\n"
+"注意：这会扫描整个区块链，\n"
 "但不会重新下载它。"
 
 #. [createwallet.walletWatchOnly.error]
@@ -2272,7 +2492,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GetStartedPage/WalletSelection/CreateWalletForm.json
 msgctxt "createwallet.walletWatchOnly.error"
 msgid "Invalid Master Pubkey"
-msgstr "无效的主Pubkey"
+msgstr "无效的主公钥"
 
 #. [securitycenter.validate.result.invalid]
 #. defaultMessage is:
@@ -2290,6 +2510,14 @@ msgctxt "purchaseTickets.errors.expiryRequred"
 msgid "Invalid expiry"
 msgstr "到期无效"
 
+#. [runTicketBuyer.Failed]
+#. defaultMessage is:
+#. Invalid private password.  Please try again.
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "runTicketBuyer.Failed"
+msgid "Invalid private password.  Please try again."
+msgstr "密码不正确。请重试。"
+
 #. [securitycenter.verify.result.invalid]
 #. defaultMessage is:
 #. Invalid signature!
@@ -2304,7 +2532,7 @@ msgstr "签名无效！"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/PurchaseTicketsAdvanced.json
 msgctxt "purchaseTickets.errors.invalidTicketFee"
 msgid "Invalid ticket fee"
-msgstr "门票费用无效"
+msgstr "选票费用无效"
 
 #. [purchaseTickets.errors.invalidTxFee]
 #. defaultMessage is:
@@ -2332,9 +2560,9 @@ msgid ""
 msgstr ""
 "投资：{investment}\n"
 " 交易费用：{txFee}\n"
-"泳池费用：{poolFee}\n"
+"票池费用：{poolFee}\n"
 "{rewardLabel}：{reward}\n"
-"股权奖励：{stakeRewards, number, exact-percent}"
+"权益奖励：{stakeRewards, number, exact-percent}"
 
 #. [accounts.keys]
 #. defaultMessage is:
@@ -2374,7 +2602,7 @@ msgstr "上次访问"
 #: app/i18n/extracted/app/components/SideBar/Bar.json
 msgctxt "sidebar.latestBlock"
 msgid "Latest Block"
-msgstr "最新块"
+msgstr "最新区块"
 
 #. [export.tickets.fields.status]
 #. defaultMessage is:
@@ -2382,7 +2610,7 @@ msgstr "最新块"
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
 msgctxt "export.tickets.fields.status"
 msgid "Latest status for the ticket (live, voted, missed, revoked)."
-msgstr "门票的最新状态（现场、投票、错过、取消）。"
+msgstr "选票的最新状态（成熟、投票、错过、撤销）。"
 
 #. [walletselection.launchWallet]
 #. defaultMessage is:
@@ -2398,7 +2626,7 @@ msgstr "启动钱包"
 #: app/i18n/extracted/app/components/views/HelpPage/TutorialsTab/index.json
 msgctxt "tutorials.ticketLifecycle"
 msgid "Learn About the Ticket Lifecycle"
-msgstr "了解票的生命周期"
+msgstr "了解选票的生命周期"
 
 #. [home.noTickets.lifecycle]
 #. defaultMessage is:
@@ -2406,7 +2634,7 @@ msgstr "了解票的生命周期"
 #: app/i18n/extracted/app/components/views/HomePage/tables/NoTicketsLinks.json
 msgctxt "home.noTickets.lifecycle"
 msgid "Learn About the Ticket Lifecycle"
-msgstr "了解票的生命周期"
+msgstr "了解选票的生命周期"
 
 #. [appMenu.learnMore]
 #. defaultMessage is:
@@ -2435,10 +2663,18 @@ msgstr "学习基础知识"
 #. [aboutModal.licensing]
 #. defaultMessage is:
 #. Licensing information
-#: app/i18n/extracted/app/components/modals/AboutModal/Modal.json
+#: app/i18n/extracted/app/components/modals/AboutModal/AboutModal.json
 msgctxt "aboutModal.licensing"
 msgid "Licensing information"
 msgstr "许可信息"
+
+#. [settings.privacy.politeia.description]
+#. defaultMessage is:
+#. List and vote on proposals on proposals.decred.org
+#: app/i18n/extracted/app/components/views/SettingsPage/PrivacySettings.json
+msgctxt "settings.privacy.politeia.description"
+msgid "List and vote on proposals on proposals.decred.org"
+msgstr "列出proposals.decred.org里的提案并且对提案投票"
 
 #. [settings.privacy.stakepoolListing.description]
 #. defaultMessage is:
@@ -2446,7 +2682,7 @@ msgstr "许可信息"
 #: app/i18n/extracted/app/components/views/SettingsPage/PrivacySettings.json
 msgctxt "settings.privacy.stakepoolListing.description"
 msgid "List of currently available stakepools from decred.org"
-msgstr "decred.org当前可用利益池列表"
+msgstr "来自decred.org的当前可用选票矿池列表"
 
 #. [transaction.type.live]
 #. defaultMessage is:
@@ -2454,7 +2690,7 @@ msgstr "decred.org当前可用利益池列表"
 #: app/i18n/extracted/app/components/TxHistory/TxHistoryRow/StakeTxRow.json
 msgctxt "transaction.type.live"
 msgid "Live"
-msgstr "现场"
+msgstr "成熟"
 
 #. [stake.liveTickets]
 #. defaultMessage is:
@@ -2462,7 +2698,7 @@ msgstr "现场"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfoRow.json
 msgctxt "stake.liveTickets"
 msgid "Live Tickets"
-msgstr "现场票"
+msgstr "成熟票"
 
 #. [getStarted.chainLoading.syncEstimation.small]
 #. defaultMessage is:
@@ -2478,7 +2714,7 @@ msgstr "正在加载Decred区块链，预计剩余时间"
 #: app/i18n/extracted/app/components/indicators/LoadingMoreTickets.json
 msgctxt "myTickets.loadingMoreTickets"
 msgid "Loading more tickets..."
-msgstr "正在加载更多门票......"
+msgstr "正在加载更多选票……"
 
 #. [history.loadingMoreTransactions]
 #. defaultMessage is:
@@ -2526,15 +2762,7 @@ msgstr "已锁定"
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/AccountDetails.json
 msgctxt "accounts.lockedByTickets"
 msgid "Locked By Tickets"
-msgstr "已锁定门票"
-
-#. [getStarted.logsTitle]
-#. defaultMessage is:
-#. Logs
-#: app/i18n/extracted/app/components/views/GetStartedPage/Logs/Form.json
-msgctxt "getStarted.logsTitle"
-msgid "Logs"
-msgstr "日志"
+msgstr "选票锁定"
 
 #. [getStarted.btnLogs]
 #. defaultMessage is:
@@ -2552,6 +2780,14 @@ msgctxt "help.tab.logs"
 msgid "Logs"
 msgstr "日志"
 
+#. [settings.network.mainnet]
+#. defaultMessage is:
+#. Mainnet
+#: app/i18n/extracted/app/components/views/SettingsPage/GeneralSettings.json
+msgctxt "settings.network.mainnet"
+msgid "Mainnet"
+msgstr "主网"
+
 #. [transactions.description.send.mainnet]
 #. defaultMessage is:
 #. Mainnet Decred addresses always begin with letter D and contain 26-35
@@ -2563,16 +2799,16 @@ msgid ""
 "Mainnet Decred addresses always begin with letter D and contain 26-35 alphanumeric characters\n"
 "(e.g. DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)."
 msgstr ""
-"Mainnet Decred地址始终以字母D开头，包含26-35个字母数字字符\n"
+"Decred主网地址始终以字母D开头，包含26-35个字母数字字符\n"
 "（例如DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X）。"
 
 #. [purchaseTickets.import]
 #. defaultMessage is:
 #. Manually import a redeem script for tickets.
-#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/Form.json
+#: app/i18n/extracted/app/components/buttons/ImportScriptIconButton.json
 msgctxt "purchaseTickets.import"
 msgid "Manually import a redeem script for tickets."
-msgstr "手动导入故障单的兑换脚本。"
+msgstr "手动为选票导入一个赎回脚本。"
 
 #. [createwallet.walletpubkey.placeholder]
 #. defaultMessage is:
@@ -2580,7 +2816,7 @@ msgstr "手动导入故障单的兑换脚本。"
 #: app/i18n/extracted/app/components/views/GetStartedPage/WalletSelection/CreateWalletForm.json
 msgctxt "createwallet.walletpubkey.placeholder"
 msgid "Master Pub Key"
-msgstr "主公共密钥"
+msgstr "主公钥"
 
 #. [createwallet.walletmasterpubkey.label]
 #. defaultMessage is:
@@ -2588,7 +2824,7 @@ msgstr "主公共密钥"
 #: app/i18n/extracted/app/components/views/GetStartedPage/WalletSelection/CreateWalletForm.json
 msgctxt "createwallet.walletmasterpubkey.label"
 msgid "Master Pub Key"
-msgstr "主公共密钥"
+msgstr "主公钥"
 
 #. [help.matrix]
 #. defaultMessage is:
@@ -2596,39 +2832,7 @@ msgstr "主公共密钥"
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.matrix"
 msgid "Matrix Chat"
-msgstr "矩阵聊天"
-
-#. [autobuyer.maxFee]
-#. defaultMessage is:
-#. Max Fee
-#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/Details.json
-msgctxt "autobuyer.maxFee"
-msgid "Max Fee"
-msgstr "最高费用"
-
-#. [autobuyer.maxPerBlock]
-#. defaultMessage is:
-#. Max Per Block
-#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/Details.json
-msgctxt "autobuyer.maxPerBlock"
-msgid "Max Per Block"
-msgstr "每块最大值"
-
-#. [autobuyer.maxPriceAbsolute]
-#. defaultMessage is:
-#. Max Price Absolute
-#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/Details.json
-msgctxt "autobuyer.maxPriceAbsolute"
-msgid "Max Price Absolute"
-msgstr "绝对最高价格"
-
-#. [autobuyer.maxPriceRelative]
-#. defaultMessage is:
-#. Max Price Relative
-#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/Details.json
-msgctxt "autobuyer.maxPriceRelative"
-msgid "Max Price Relative"
-msgstr "相对最高价格"
+msgstr "Matrix 聊天室"
 
 #. [mytickets.statistics.votetime.median.label]
 #. defaultMessage is:
@@ -2668,7 +2872,7 @@ msgstr "最小化"
 #: app/i18n/extracted/app/components/TxHistory/TxHistoryRow/StakeTxRow.json
 msgctxt "transaction.type.missed"
 msgid "Missed"
-msgstr "忽略的票"
+msgstr "错过的票"
 
 #. [stake.missedTickets]
 #. defaultMessage is:
@@ -2676,7 +2880,7 @@ msgstr "忽略的票"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfoDetails.json
 msgctxt "stake.missedTickets"
 msgid "Missed Tickets"
-msgstr "已错过的门票"
+msgstr "错过的选票"
 
 #. [tickets.tab.mytickets]
 #. defaultMessage is:
@@ -2684,7 +2888,7 @@ msgstr "已错过的门票"
 #: app/i18n/extracted/app/components/views/TicketsPage/index.json
 msgctxt "tickets.tab.mytickets"
 msgid "My Tickets"
-msgstr "我的门票"
+msgstr "我的选票"
 
 #. [proposalDetails.votingInfo.votingPreferenceTitle]
 #. defaultMessage is:
@@ -2703,7 +2907,15 @@ msgctxt "export.transactions.fields.amount"
 msgid ""
 "Net amount sent (including fees) or received by the wallet on this "
 "transaction."
-msgstr "发送的净金额（包括费用）或钱包在此次交易中收到的金额。"
+msgstr "在此次交易中钱包发送（包含费用）或接收的的净金额。"
+
+#. [settings.network]
+#. defaultMessage is:
+#. Network
+#: app/i18n/extracted/app/components/views/SettingsPage/GeneralSettings.json
+msgctxt "settings.network"
+msgid "Network"
+msgstr "网络"
 
 #. [settings.privacy.networkStatus.label]
 #. defaultMessage is:
@@ -2737,13 +2949,29 @@ msgctxt "accounts.newName"
 msgid "New Account Name"
 msgstr "新账户名称"
 
+#. [trezor.changeLabel.description]
+#. defaultMessage is:
+#. New Label
+#: app/i18n/extracted/app/components/views/TrezorPage/ChangeLabel.json
+msgctxt "trezor.changeLabel.description"
+msgid "New Label"
+msgstr "新标签"
+
 #. [changePassModal.newPassphrase]
 #. defaultMessage is:
 #. New Private Passphrase
 #: app/i18n/extracted/app/components/modals/ChangePassphraseModal/Modal.json
 msgctxt "changePassModal.newPassphrase"
 msgid "New Private Passphrase"
-msgstr "新私人密码"
+msgstr "新钱包密码"
+
+#. [notification.new]
+#. defaultMessage is:
+#. New Transaction
+#: app/i18n/extracted/app/components/Snackbar/Notification/Transaction.json
+msgctxt "notification.new"
+msgid "New Transaction"
+msgstr "新交易"
 
 #. [changePassModal.confirmMismatch]
 #. defaultMessage is:
@@ -2751,7 +2979,7 @@ msgstr "新私人密码"
 #: app/i18n/extracted/app/components/modals/ChangePassphraseModal/Modal.json
 msgctxt "changePassModal.confirmMismatch"
 msgid "New passphrase and confirmation don't match"
-msgstr "新密码和确认不匹配"
+msgstr "新密码和确认密码不匹配"
 
 #. [getStarted.updateAvailableTooltip]
 #. defaultMessage is:
@@ -2760,6 +2988,14 @@ msgstr "新密码和确认不匹配"
 msgctxt "getStarted.updateAvailableTooltip"
 msgid "New version {version} available"
 msgstr "新版本{version}可用"
+
+#. [getStarted.releaseNotes.NewerVersion]
+#. defaultMessage is:
+#. Newer Version
+#: app/i18n/extracted/app/components/views/GetStartedPage/ReleaseNotes/Form.json
+msgctxt "getStarted.releaseNotes.NewerVersion"
+msgid "Newer Version"
+msgstr "新版本"
 
 #. [tickets.sortby.newest]
 #. defaultMessage is:
@@ -2793,14 +3029,6 @@ msgctxt "tutorial.standardPage.nextPage"
 msgid "Next"
 msgstr "下一步"
 
-#. [proposal.currentChoice.no]
-#. defaultMessage is:
-#. No
-#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Details/helpers.json
-msgctxt "proposal.currentChoice.no"
-msgid "No"
-msgstr "否"
-
 #. [privacy.options.disabled.title]
 #. defaultMessage is:
 #. No Outbound Connections
@@ -2823,7 +3051,7 @@ msgstr "没有可用的提案"
 #: app/i18n/extracted/app/components/views/SettingsPage/ProxySettings.json
 msgctxt "settings.proxy.type.none"
 msgid "No Proxy"
-msgstr "没有代理人"
+msgstr "无代理"
 
 #. [noStats.description]
 #. defaultMessage is:
@@ -2839,7 +3067,7 @@ msgstr "没有统计数据"
 #: app/i18n/extracted/app/components/indicators/NoTickets.json
 msgctxt "noTickets.description"
 msgid "No Tickets Found"
-msgstr "未发现门票"
+msgstr "未发现选票"
 
 #. [noTransactions.description]
 #. defaultMessage is:
@@ -2855,7 +3083,7 @@ msgstr "未发现交易"
 #: app/i18n/extracted/app/components/indicators/NoMoreTickets.json
 msgctxt "myTickets.noMoreTickets"
 msgid "No more tickets."
-msgstr "没有门票。"
+msgstr "没有更多选票。"
 
 #. [history.noMoreTransactions]
 #. defaultMessage is:
@@ -2863,7 +3091,7 @@ msgstr "没有门票。"
 #: app/i18n/extracted/app/components/indicators/NoMoreTransactions.json
 msgctxt "history.noMoreTransactions"
 msgid "No more transactions."
-msgstr "未发现交易。"
+msgstr "没有更多的交易。"
 
 #. [stake.noAvailableStakepools]
 #. defaultMessage is:
@@ -2874,7 +3102,7 @@ msgctxt "stake.noAvailableStakepools"
 msgid ""
 "No stakepool found. Check your internet connection or {link} to see if the "
 "StakePool API is down."
-msgstr "找不到利益池。 检查您的互联网连接或{link}以查看StakePool API是否已关闭。"
+msgstr "未发现选票矿池。检查您的网络连接或者{link}以查看选票矿池 API是否已松绑。"
 
 #. [charts.voteTime.noVotesDay]
 #. defaultMessage is:
@@ -2882,7 +3110,7 @@ msgstr "找不到利益池。 检查您的互联网连接或{link}以查看Stake
 #: app/i18n/extracted/app/components/charts/VoteTimeChart.json
 msgctxt "charts.voteTime.noVotesDay"
 msgid "No tickets voted in this range"
-msgstr "没有在此范围内投票的门票"
+msgstr "没有在此范围内投票的选票"
 
 #. [home.noTickets.title]
 #. defaultMessage is:
@@ -2890,7 +3118,7 @@ msgstr "没有在此范围内投票的门票"
 #: app/i18n/extracted/app/components/views/HomePage/tables/TicketActivity.json
 msgctxt "home.noTickets.title"
 msgid "No tickets yet"
-msgstr "还没有门票"
+msgstr "还没有选票"
 
 #. [home.noTransactions.title]
 #. defaultMessage is:
@@ -2899,6 +3127,44 @@ msgstr "还没有门票"
 msgctxt "home.noTransactions.title"
 msgid "No transactions yet"
 msgstr "还没有交易"
+
+#. [trezor.noConnectedDevice]
+#. defaultMessage is:
+#. No trezor device connected. Check the device connection and trezor bridge.
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "trezor.noConnectedDevice"
+msgid ""
+"No trezor device connected. Check the device connection and trezor bridge."
+msgstr "未连接Trezor设备。请检查设备连接及trezor bridge"
+
+#. [trezor.noDevice.message]
+#. defaultMessage is:
+#. No trezor device detected. Connect the device and check if trezor bridge is
+#. installed and running.
+#: app/i18n/extracted/app/components/views/TrezorPage/NoDevicePage.json
+msgctxt "trezor.noDevice.message"
+msgid ""
+"No trezor device detected. Connect the device and check if trezor bridge is "
+"installed and running."
+msgstr "未检测到Trezor设备。请连接设备及检测已安装及运行trezor bridge。"
+
+#. [trezor.getStartedConfig.noDeviceFound]
+#. defaultMessage is:
+#. No trezor device found. Check the connection and the trezor bridge
+#. software.
+#: app/i18n/extracted/app/components/views/GetStartedPage/TrezorConfig/index.json
+msgctxt "trezor.getStartedConfig.noDeviceFound"
+msgid ""
+"No trezor device found. Check the connection and the trezor bridge software."
+msgstr "未发现trezor设备。请检查连接及trezor bridge软件。"
+
+#. [proposal.noVote]
+#. defaultMessage is:
+#. No vote cast
+#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalList.json
+msgctxt "proposal.noVote"
+msgid "No vote cast"
+msgstr "没有投票"
 
 #. [txDetails.nonWalletInputs]
 #. defaultMessage is:
@@ -2930,7 +3196,7 @@ msgstr "正常"
 #: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/index.json
 msgctxt "send.errors.insufficientFunds"
 msgid "Not Enough Funds"
-msgstr "没有足够的资金"
+msgstr "资金不足"
 
 #. [purchaseTickets.errors.insufficientBalance]
 #. defaultMessage is:
@@ -2940,13 +3206,21 @@ msgctxt "purchaseTickets.errors.insufficientBalance"
 msgid "Not enough funds"
 msgstr "资金不足"
 
+#. [getStarted.releaseNotes.OlderVersion]
+#. defaultMessage is:
+#. Older Version
+#: app/i18n/extracted/app/components/views/GetStartedPage/ReleaseNotes/Form.json
+msgctxt "getStarted.releaseNotes.OlderVersion"
+msgid "Older Version"
+msgstr "旧版本"
+
 #. [tickets.sortby.oldest]
 #. defaultMessage is:
 #. Oldest
 #: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/index.json
 msgctxt "tickets.sortby.oldest"
 msgid "Oldest"
-msgstr "最旧的"
+msgstr "最初的"
 
 #. [transaction.sortby.oldest]
 #. defaultMessage is:
@@ -2954,7 +3228,7 @@ msgstr "最旧的"
 #: app/i18n/extracted/app/components/views/TransactionsPage/HistoryTab/index.json
 msgctxt "transaction.sortby.oldest"
 msgid "Oldest"
-msgstr "最旧的"
+msgstr "最初的"
 
 #. [agenda.overviewDescription]
 #. defaultMessage is:
@@ -2962,7 +3236,7 @@ msgstr "最旧的"
 #. recent blocks are at the latest version) and the majority of the PoS miners
 #. have upgraded (75% of the votes in a 2016 block interval), the voting
 #. process begins.
-#: app/i18n/extracted/app/components/views/TicketsPage/GovernanceTab/AgendaOverview/Overview.json
+#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/AgendaOverview/Overview.json
 msgctxt "agenda.overviewDescription"
 msgid ""
 "Once the majority of the PoW miners have upgraded (75% of the 100 most "
@@ -2970,8 +3244,8 @@ msgid ""
 "have upgraded (75% of the votes in a 2016 block interval), the voting "
 "process begins."
 msgstr ""
-"如果大多数 PoW 开采者已升级（最近100个区块中的75%是最新版本），大多数 PoS "
-"开采者也已经升级（在2016年的区块中，75%的选票已更新），则投票程序开始。"
+"如果大多数 PoW 矿工已升级（最近100个区块中的75%是最新版本），大多数 PoS "
+"选民也已经升级（在2016个区块间隔中，75%的选民已更新），则投票程序开始。"
 
 #. [decryptWalletForm.openBtn]
 #. defaultMessage is:
@@ -3003,7 +3277,7 @@ msgstr "概览"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfoRow.json
 msgctxt "stake.ownMempoolTickets"
 msgid "Own Mempool Tickets"
-msgstr "拥有 Mempool 票"
+msgstr "自己的内存池票"
 
 #. [securitycenter.validate.result.owned]
 #. defaultMessage is:
@@ -3013,6 +3287,30 @@ msgctxt "securitycenter.validate.result.owned"
 msgid "Owned address"
 msgstr "拥有的地址"
 
+#. [trezor.passphraseProtectionSuccess.disabled]
+#. defaultMessage is:
+#. Passphrase protection has been disabled in trezor '{label}'
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "trezor.passphraseProtectionSuccess.disabled"
+msgid "Passphrase protection has been disabled in trezor '{label}'"
+msgstr "已禁用trezor‘{label}’ 中的密码保护。"
+
+#. [trezor.passphraseProtectionSuccess.enabled]
+#. defaultMessage is:
+#. Passphrase protection has been enabled in trezor '{label}'
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "trezor.passphraseProtectionSuccess.enabled"
+msgid "Passphrase protection has been enabled in trezor '{label}'"
+msgstr "已启用trezor‘{label}’ 中的密码保护。"
+
+#. [trezor.walletCreationPassphrasesMismatched]
+#. defaultMessage is:
+#. Passphrases are different
+#: app/i18n/extracted/app/components/modals/trezor/WalletCreationPassPhraseModal.json
+msgctxt "trezor.walletCreationPassphrasesMismatched"
+msgid "Passphrases are different"
+msgstr "密码不匹配"
+
 #. [appMenu.paste]
 #. defaultMessage is:
 #. Paste
@@ -3020,6 +3318,14 @@ msgstr "拥有的地址"
 msgctxt "appMenu.paste"
 msgid "Paste"
 msgstr "粘贴"
+
+#. [trezorPage.updateFirmwarePah]
+#. defaultMessage is:
+#. Path to firmware file
+#: app/i18n/extracted/app/components/views/TrezorPage/FirmwareUpdate.json
+msgctxt "trezorPage.updateFirmwarePah"
+msgid "Path to firmware file"
+msgstr "固件文件路径"
 
 #. [transaction.indicatorPending]
 #. defaultMessage is:
@@ -3044,6 +3350,30 @@ msgstr "正在处理"
 msgctxt "txDetails.indicatorPending"
 msgid "Pending"
 msgstr "正在处理"
+
+#. [trezorPage.description]
+#. defaultMessage is:
+#. Perform several trezor-related actions.
+#: app/i18n/extracted/app/components/views/TrezorPage/Header.json
+msgctxt "trezorPage.description"
+msgid "Perform several trezor-related actions."
+msgstr "执行几项与trezor相关的操作。"
+
+#. [trezor.pinProtectionSuccess.disabled]
+#. defaultMessage is:
+#. Pin protection has been disabled in trezor '{label}'
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "trezor.pinProtectionSuccess.disabled"
+msgid "Pin protection has been disabled in trezor '{label}'"
+msgstr "已禁用trezor‘{label}’ 中的密码保护。"
+
+#. [trezor.pinProtectionSuccess.enabled]
+#. defaultMessage is:
+#. Pin protection has been enabled in trezor '{label}'
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "trezor.pinProtectionSuccess.enabled"
+msgid "Pin protection has been enabled in trezor '{label}'"
+msgstr "已启用trezor‘{label}’ 中的密码保护。"
 
 #. [createwallet.dupeWalletName.error]
 #. defaultMessage is:
@@ -3086,7 +3416,7 @@ msgctxt "help.description.logs"
 msgid ""
 "Please find your current logs below to look for any issue or error you are "
 "having."
-msgstr "请在下方找到您的当前登录，查找当前问题或错误。"
+msgstr "请在您最近的登录日志里，查找您碰到的任何问题或者错误。"
 
 #. [fatal.suggestion.fallthrough]
 #. defaultMessage is:
@@ -3097,7 +3427,7 @@ msgctxt "fatal.suggestion.fallthrough"
 msgid ""
 "Please note the error above and go to the support channel on "
 "slack/matrix/rockchat for help resolving the issue."
-msgstr "请在上方对错误进行标记，并登陆 slack/matrix/rockchat寻求技术支持以解决问题。"
+msgstr "请留意上面的错误，并且登录slack/matrix/rockchat寻求技术支持以帮忙解决问题。"
 
 #. [seedCopyConfirmModal.confirmPhraseInstruction]
 #. defaultMessage is:
@@ -3105,7 +3435,15 @@ msgstr "请在上方对错误进行标记，并登陆 slack/matrix/rockchat寻�
 #: app/i18n/extracted/app/components/modals/SeedCopyConfirmModal/Modal.json
 msgctxt "seedCopyConfirmModal.confirmPhraseInstruction"
 msgid "Please type {confirmationPhrase} to copy the seed."
-msgstr "请输入{confirmationPhrase}复制种子文件。"
+msgstr "请输入{confirmationPhrase}来复制种子。"
+
+#. [settings.privacy.politeia.label]
+#. defaultMessage is:
+#. Politeia
+#: app/i18n/extracted/app/components/views/SettingsPage/PrivacySettings.json
+msgctxt "settings.privacy.politeia.label"
+msgid "Politeia"
+msgstr "Politeia"
 
 #. [proposals.enablePoliteia.description]
 #. defaultMessage is:
@@ -3116,7 +3454,7 @@ msgctxt "proposals.enablePoliteia.description"
 msgid ""
 "Politeia integration is currently disabled in your privacy settings. Please "
 "enable it if you want to be able to access the proposal system."
-msgstr "Politeia集成当前无法进行私人设置，如果想登陆投票系统，请授权允许。"
+msgstr "Politeia集成在您的私人设置中当前是被禁用的，如果您想登录投票系统，请授权允许。"
 
 #. [purchaseTickets.advanced.poolAddress]
 #. defaultMessage is:
@@ -3124,7 +3462,7 @@ msgstr "Politeia集成当前无法进行私人设置，如果想登陆投票系�
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/PurchaseTicketsAdvanced.json
 msgctxt "purchaseTickets.advanced.poolAddress"
 msgid "Pool Address"
-msgstr "池的地址"
+msgstr "票池地址"
 
 #. [purchaseTickets.poolAddress]
 #. defaultMessage is:
@@ -3132,7 +3470,7 @@ msgstr "池的地址"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/PurchaseTicketsQuickBar.json
 msgctxt "purchaseTickets.poolAddress"
 msgid "Pool Address"
-msgstr "池的地址"
+msgstr "票池地址"
 
 #. [purchaseTickets.poolFee]
 #. defaultMessage is:
@@ -3140,7 +3478,7 @@ msgstr "池的地址"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/PurchaseTicketsQuickBar.json
 msgctxt "purchaseTickets.poolFee"
 msgid "Pool Fee"
-msgstr "池的费用"
+msgstr "票池费用"
 
 #. [purchaseTickets.poolFees]
 #. defaultMessage is:
@@ -3148,7 +3486,7 @@ msgstr "池的费用"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/PurchaseTicketsAdvanced.json
 msgctxt "purchaseTickets.poolFees"
 msgid "Pool Fees"
-msgstr "池的费用"
+msgstr "票池费用"
 
 #. [stakepools.list.form.field.poolfees]
 #. defaultMessage is:
@@ -3156,7 +3494,7 @@ msgstr "池的费用"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakePools/List.json
 msgctxt "stakepools.list.form.field.poolfees"
 msgid "Pool Fees:"
-msgstr "池的费用："
+msgstr "票池费用："
 
 #. [stake.poolSize]
 #. defaultMessage is:
@@ -3164,7 +3502,7 @@ msgstr "池的费用："
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfoDetails.json
 msgctxt "stake.poolSize"
 msgid "Pool Size"
-msgstr "池的大小"
+msgstr "全网票数"
 
 #. [tutorial.standardPage.previousPage]
 #. defaultMessage is:
@@ -3244,7 +3582,7 @@ msgstr "相关项目"
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/AccountDetails.json
 msgctxt "accounts.properties"
 msgid "Properties"
-msgstr "性能"
+msgstr "属性"
 
 #. [txDetails.properties]
 #. defaultMessage is:
@@ -3252,7 +3590,15 @@ msgstr "性能"
 #: app/i18n/extracted/app/components/views/TxDetails.json
 msgctxt "txDetails.properties"
 msgid "Properties"
-msgstr "性能"
+msgstr "属性"
+
+#. [proposalDetails.votingInfo.abandoned]
+#. defaultMessage is:
+#. Proposal has been abandoned
+#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Details/helpers.json
+msgctxt "proposalDetails.votingInfo.abandoned"
+msgid "Proposal has been abandoned"
+msgstr ""
 
 #. [proposalDetails.votingInfo.notVoting]
 #. defaultMessage is:
@@ -3260,13 +3606,21 @@ msgstr "性能"
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Details/helpers.json
 msgctxt "proposalDetails.votingInfo.notVoting"
 msgid "Proposal not yet on voting stage"
-msgstr "非投票平台上的提案"
+msgstr "非投票阶段的提案"
 
 #. [governance.tab.proposals]
 #. defaultMessage is:
 #. Proposals
 #: app/i18n/extracted/app/components/views/GovernancePage/index.json
 msgctxt "governance.tab.proposals"
+msgid "Proposals"
+msgstr "提案"
+
+#. [proposals.community.title]
+#. defaultMessage is:
+#. Proposals
+#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Page.json
+msgctxt "proposals.community.title"
 msgid "Proposals"
 msgstr "提案"
 
@@ -3284,7 +3638,7 @@ msgstr "代理"
 #: app/i18n/extracted/app/components/views/SettingsPage/ProxySettings.json
 msgctxt "settings.proxy.location"
 msgid "Proxy Location"
-msgstr "代理地点"
+msgstr "代理定位"
 
 #. [settings.proxy.type]
 #. defaultMessage is:
@@ -3332,7 +3686,7 @@ msgstr "购买"
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Details/helpers.json
 msgctxt "proposalDetails.votingInfo.purchaseTicketsBtn"
 msgid "Purchase Tickets"
-msgstr "购买票券"
+msgstr "购买选票"
 
 #. [purchase.subtitle]
 #. defaultMessage is:
@@ -3340,7 +3694,7 @@ msgstr "购买票券"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/Tickets.json
 msgctxt "purchase.subtitle"
 msgid "Purchase Tickets"
-msgstr "购买票券"
+msgstr "购买选票"
 
 #. [spv.purchase.warn]
 #. defaultMessage is:
@@ -3351,7 +3705,7 @@ msgctxt "spv.purchase.warn"
 msgid ""
 "Purchase Tickets is not available right now, because we are at the end of a "
 "ticket interval. After one block it will be available again."
-msgstr "现在无法购买票券，因为我们在售票间隔后期。一节后将可以再次购票。"
+msgstr "现在无法购买选票，因为我们处于一个购票间隔的尾期。在一个区块后，将可以重新购票。"
 
 #. [transaction.type.ticket]
 #. defaultMessage is:
@@ -3376,6 +3730,14 @@ msgstr "购买于"
 msgctxt "appMenu.quit"
 msgid "Quit"
 msgstr "退出"
+
+#. [proposals.quorumNotMet]
+#. defaultMessage is:
+#. Quorum not met
+#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalList.json
+msgctxt "proposals.quorumNotMet"
+msgid "Quorum not met"
+msgstr "未达到法定票数"
 
 #. [advanced.remote.rpccert]
 #. defaultMessage is:
@@ -3471,15 +3833,7 @@ msgstr "原始交易"
 #: app/i18n/extracted/app/components/views/TxDetails.json
 msgctxt "txDetails.rebroadcastTransactions"
 msgid "Rebroadcast Transaction"
-msgstr "重复交易"
-
-#. [notifications.type.receive]
-#. defaultMessage is:
-#. Receive
-#: app/i18n/extracted/app/components/Snackbar/Notification/Transaction.json
-msgctxt "notifications.type.receive"
-msgid "Receive"
-msgstr "接收"
+msgstr "重播交易"
 
 #. [transactions.tab.receive]
 #. defaultMessage is:
@@ -3502,6 +3856,14 @@ msgstr "接收DCR"
 #. Received
 #: app/i18n/extracted/app/components/charts/messages.json
 msgctxt "charts.keys.received"
+msgid "Received"
+msgstr "已接收"
+
+#. [notifications.type.receive]
+#. defaultMessage is:
+#. Received
+#: app/i18n/extracted/app/components/Snackbar/Notification/Transaction.json
+msgctxt "notifications.type.receive"
 msgid "Received"
 msgstr "已接收"
 
@@ -3529,6 +3891,14 @@ msgctxt "home.recentTransactionsTitle"
 msgid "Recent Transactions"
 msgstr "近期交易"
 
+#. [trezorPage.recoverDeviceBtn]
+#. defaultMessage is:
+#. Recover Device
+#: app/i18n/extracted/app/components/views/TrezorPage/RecoveryButtons.json
+msgctxt "trezorPage.recoverDeviceBtn"
+msgid "Recover Device"
+msgstr "恢复设备"
+
 #. [importScriptModal.redeemScript]
 #. defaultMessage is:
 #. Redeem Script
@@ -3553,6 +3923,22 @@ msgctxt "txFilter.type.regular"
 msgid "Regular"
 msgstr "常规"
 
+#. [trezor.getStartedConfig.btnReloadDeviceList]
+#. defaultMessage is:
+#. Reload Device List
+#: app/i18n/extracted/app/components/views/GetStartedPage/TrezorConfig/index.json
+msgctxt "trezor.getStartedConfig.btnReloadDeviceList"
+msgid "Reload Device List"
+msgstr "重新加载设备列表"
+
+#. [trezor.noDevice.btnReloadDeviceList]
+#. defaultMessage is:
+#. Reload Device List
+#: app/i18n/extracted/app/components/views/TrezorPage/NoDevicePage.json
+msgctxt "trezor.noDevice.btnReloadDeviceList"
+msgid "Reload Device List"
+msgstr "重新加载设备列表"
+
 #. [appMenu.reloadUI]
 #. defaultMessage is:
 #. Reload UI
@@ -3567,7 +3953,7 @@ msgstr "重新加载UI"
 #: app/i18n/extracted/app/components/views/GetStartedPage/AdvancedStartup/Form.json
 msgctxt "advancedDaemon.toggle.appdata"
 msgid "Remote Daemon"
-msgstr "远程 Daemon"
+msgstr "远程守护进程"
 
 #. [stakepools.list.btnRemove]
 #. defaultMessage is:
@@ -3583,7 +3969,7 @@ msgstr "删除"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakePools/List.json
 msgctxt "stakepools.list.removeConfirmTitle"
 msgid "Remove StakePool"
-msgstr "删除 StakePool"
+msgstr "删除选票矿池"
 
 #. [walletselection.removeWalletButton]
 #. defaultMessage is:
@@ -3599,7 +3985,7 @@ msgstr "删除钱包"
 #: app/i18n/extracted/app/components/views/FatalErrorPage.json
 msgctxt "fatal.removeConfirmModal.title"
 msgid "Remove daemon data"
-msgstr "删除 Daemon 数据"
+msgstr "删除守护进程数据"
 
 #. [walletselection.removeConfirmModal.title]
 #. defaultMessage is:
@@ -3647,7 +4033,7 @@ msgstr "再次输入私人密码"
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "send.publishUnminedTransactions.success"
 msgid "Republished unmined transactions to the decred network."
-msgstr "将已发布的未定义事务重新发布到decred网络。"
+msgstr "将未打包的交易重新发布到decred网络。"
 
 #. [getStarted.walletRescan.progress]
 #. defaultMessage is:
@@ -3664,6 +4050,14 @@ msgstr "重新扫描进度（{rescanCurrentBlock} / {rescanEndBlock}）"
 msgctxt "rescan.rescanning"
 msgid "Rescanning {blockProgress} ({progressPercent})"
 msgstr "重新扫描中 {blockProgress} （{progressPercent}）"
+
+#. [settings.resetNetworkTitle]
+#. defaultMessage is:
+#. Reset required
+#: app/i18n/extracted/app/components/views/SettingsPage/Page.json
+msgctxt "settings.resetNetworkTitle"
+msgid "Reset required"
+msgstr "请重置"
 
 #. [getStarted.restore]
 #. defaultMessage is:
@@ -3697,21 +4091,13 @@ msgctxt "account.reveal"
 msgid "Reveal"
 msgstr "显示"
 
-#. [notifications.type.revocation]
-#. defaultMessage is:
-#. Revocation
-#: app/i18n/extracted/app/components/Snackbar/Notification/Transaction.json
-msgctxt "notifications.type.revocation"
-msgid "Revocation"
-msgstr "取消"
-
 #. [charts.keys.revoked]
 #. defaultMessage is:
 #. Revocations
 #: app/i18n/extracted/app/components/charts/messages.json
 msgctxt "charts.keys.revoked"
 msgid "Revocations"
-msgstr "取消"
+msgstr "撤销"
 
 #. [purchaseTickets.revokeBtn]
 #. defaultMessage is:
@@ -3719,7 +4105,7 @@ msgstr "取消"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/Form.json
 msgctxt "purchaseTickets.revokeBtn"
 msgid "Revoke"
-msgstr "取消"
+msgstr "撤销"
 
 #. [txDetails.type.revoke]
 #. defaultMessage is:
@@ -3727,7 +4113,7 @@ msgstr "取消"
 #: app/i18n/extracted/app/components/views/TxDetails.json
 msgctxt "txDetails.type.revoke"
 msgid "Revoke"
-msgstr "取消"
+msgstr "撤销"
 
 #. [tickets.revokeConfirmations]
 #. defaultMessage is:
@@ -3735,7 +4121,15 @@ msgstr "取消"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/Form.json
 msgctxt "tickets.revokeConfirmations"
 msgid "Revoke Tickets Confirmation"
-msgstr "取消票券确认"
+msgstr "撤销选票确认"
+
+#. [notifications.type.revocation]
+#. defaultMessage is:
+#. Revoked
+#: app/i18n/extracted/app/components/Snackbar/Notification/Transaction.json
+msgctxt "notifications.type.revocation"
+msgid "Revoked"
+msgstr "已撤销"
 
 #. [transaction.type.revocation]
 #. defaultMessage is:
@@ -3743,7 +4137,7 @@ msgstr "取消票券确认"
 #: app/i18n/extracted/app/components/TxHistory/TxHistoryRow/StakeTxRow.json
 msgctxt "transaction.type.revocation"
 msgid "Revoked"
-msgstr "已取消"
+msgstr "已撤销"
 
 #. [transaction.type.revoked]
 #. defaultMessage is:
@@ -3751,7 +4145,7 @@ msgstr "已取消"
 #: app/i18n/extracted/app/components/TxHistory/TxHistoryRow/StakeTxRow.json
 msgctxt "transaction.type.revoked"
 msgid "Revoked"
-msgstr "已取消"
+msgstr "已撤销"
 
 #. [stake.revokedTickets]
 #. defaultMessage is:
@@ -3759,7 +4153,15 @@ msgstr "已取消"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfoDetails.json
 msgctxt "stake.revokedTickets"
 msgid "Revoked Tickets"
-msgstr "已取消票券"
+msgstr "已撤销选票"
+
+#. [stakeSPV.revokedTickets]
+#. defaultMessage is:
+#. Revoked Tickets
+#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfoDetailsSPV.json
+msgctxt "stakeSPV.revokedTickets"
+msgid "Revoked Tickets"
+msgstr "已撤销选票"
 
 #. [txFilter.type.revokes]
 #. defaultMessage is:
@@ -3767,7 +4169,7 @@ msgstr "已取消票券"
 #: app/i18n/extracted/app/components/views/TransactionsPage/HistoryTab/index.json
 msgctxt "txFilter.type.revokes"
 msgid "Revokes"
-msgstr "取消"
+msgstr "撤销"
 
 #. [txDetails.reward]
 #. defaultMessage is:
@@ -3784,6 +4186,43 @@ msgstr "奖励"
 msgctxt "help.rocketchat"
 msgid "RocketChat"
 msgstr "RocketChat"
+
+#. [settings.SPV]
+#. defaultMessage is:
+#. SPV
+#: app/i18n/extracted/app/components/views/SettingsPage/GeneralSettings.json
+msgctxt "settings.SPV"
+msgid "SPV"
+msgstr "SPV"
+
+#. [settings.SPVConnect]
+#. defaultMessage is:
+#. SPV Connect
+#: app/i18n/extracted/app/components/views/SettingsPage/GeneralSettings.json
+msgctxt "settings.SPVConnect"
+msgid "SPV Connect"
+msgstr "链接SPV"
+
+#. [getStarted.isSPV.loadingText]
+#. defaultMessage is:
+#. SPV mode activated, wallet ready to launch
+#: app/i18n/extracted/app/components/views/GetStartedPage/DaemonLoading/Form.json
+msgctxt "getStarted.isSPV.loadingText"
+msgid "SPV mode activated, wallet ready to launch"
+msgstr "SPV模式已启用，钱包准备启动"
+
+#. [spv.options.enable.description]
+#. defaultMessage is:
+#. SPV will allow your wallets to be restored and used much more quickly.
+#. This speed comes at cost, with blocks not being fully verified.  It's 'less
+#. secure' but very unlikely that there will be any problems.
+#: app/i18n/extracted/app/components/views/GetStartedPage/SpvChoicePage/TopLevelOptions.json
+msgctxt "spv.options.enable.description"
+msgid ""
+"SPV will allow your wallets to be restored and used much more quickly.  This"
+" speed comes at cost, with blocks not being fully verified.  It's 'less "
+"secure' but very unlikely that there will be any problems."
+msgstr "SPV将使您的钱包得以更快速地恢复和使用。 这个加快速度是有缺点的，区块还没有完全验证。它“安全性较低”，但不太可能出现任何问题。"
 
 #. [getStarted.settings.save]
 #. defaultMessage is:
@@ -3881,6 +4320,14 @@ msgctxt "security.title"
 msgid "Security Center"
 msgstr "安全中心"
 
+#. [notification.seeTransactionDetails]
+#. defaultMessage is:
+#. See Transaction Details
+#: app/i18n/extracted/app/components/Snackbar/Notification/Transaction.json
+msgctxt "notification.seeTransactionDetails"
+msgid "See Transaction Details"
+msgstr "显示交易细节"
+
 #. [home.recentTransactionsHistory]
 #. defaultMessage is:
 #. See all
@@ -3919,7 +4366,7 @@ msgstr "选择全部"
 #: app/i18n/extracted/app/components/inputs/StakePoolSelect.json
 msgctxt "selectStakepool.placeholder"
 msgid "Select Stakepool..."
-msgstr "选择 Stakepool..."
+msgstr "选择选票矿池..."
 
 #. [startup.dataDir.tip]
 #. defaultMessage is:
@@ -3948,6 +4395,17 @@ msgid ""
 "this in the application settings later."
 msgstr "选择 Decrediton 连接至外部服务的方式。您可以稍后在应用设置中更改此设置。"
 
+#. [spv.titleSub]
+#. defaultMessage is:
+#. Select how Decrediton wallet's should connect to the network. You can
+#. change this in the application settings later.
+#: app/i18n/extracted/app/components/views/GetStartedPage/SpvChoicePage/TopLevelOptions.json
+msgctxt "spv.titleSub"
+msgid ""
+"Select how Decrediton wallet's should connect to the network. You can change"
+" this in the application settings later."
+msgstr "选择Decrediton钱包应如何连接网络。 您可以稍后在应用程序设置中更改此设置。"
+
 #. [privacy.custom.titleSub]
 #. defaultMessage is:
 #. Select which external requests Decrediton is allowed to make. You can
@@ -3964,14 +4422,6 @@ msgstr "选择允许 Decrediton 进行外部请求的内容。您可以稍后在
 #. Send
 #: app/i18n/extracted/app/components/buttons/SendTransactionButton.json
 msgctxt "send.sendBtn"
-msgid "Send"
-msgstr "发送"
-
-#. [notifications.type.send]
-#. defaultMessage is:
-#. Send
-#: app/i18n/extracted/app/components/Snackbar/Notification/Transaction.json
-msgctxt "notifications.type.send"
 msgid "Send"
 msgstr "发送"
 
@@ -4023,6 +4473,14 @@ msgctxt "charts.keys.sent"
 msgid "Sent"
 msgstr "已发送"
 
+#. [notifications.type.send]
+#. defaultMessage is:
+#. Sent
+#: app/i18n/extracted/app/components/Snackbar/Notification/Transaction.json
+msgctxt "notifications.type.send"
+msgid "Sent"
+msgstr "已发送"
+
 #. [home.sentBalanceLabel]
 #. defaultMessage is:
 #. Sent
@@ -4045,7 +4503,7 @@ msgstr "已发送"
 #: app/i18n/extracted/app/components/views/TxDetails.json
 msgctxt "txDetails.sentFrom"
 msgid "Sent From"
-msgstr "已发送"
+msgstr "发送自"
 
 #. [appMenu.services]
 #. defaultMessage is:
@@ -4068,6 +4526,14 @@ msgstr "设置"
 #. Settings
 #: app/i18n/extracted/app/components/views/GetStartedPage/messages.json
 msgctxt "getStarted.btnSettings"
+msgid "Settings"
+msgstr "设置"
+
+#. [settings.subtitle]
+#. defaultMessage is:
+#. Settings
+#: app/i18n/extracted/app/components/views/GetStartedPage/Settings/Form.json
+msgctxt "settings.subtitle"
 msgid "Settings"
 msgstr "设置"
 
@@ -4109,7 +4575,7 @@ msgstr "显示全部"
 #: app/i18n/extracted/static/menus.json
 msgctxt "appMenu.showDaemonLog"
 msgid "Show Daemon Log Files"
-msgstr "显示 Daemon 日志文件"
+msgstr "显示守护进程日志文件"
 
 #. [appMenu.showWalletLog]
 #. defaultMessage is:
@@ -4127,21 +4593,21 @@ msgctxt "shutdown.header.title"
 msgid "Shutting down Decrediton"
 msgstr "正在关闭Decrediton"
 
-#. [securitycenter.signMessageModal]
-#. defaultMessage is:
-#. Sign Message
-#: app/i18n/extracted/app/components/buttons/SignMessageButton.json
-msgctxt "securitycenter.signMessageModal"
-msgid "Sign Message"
-msgstr "签署消息"
-
 #. [securitycenter.signMessageBtn]
 #. defaultMessage is:
 #. Sign Message
 #: app/i18n/extracted/app/components/buttons/SignMessageButton.json
 msgctxt "securitycenter.signMessageBtn"
 msgid "Sign Message"
-msgstr "签署消息"
+msgstr "签名消息"
+
+#. [securitycenter.signMessageModal]
+#. defaultMessage is:
+#. Sign Message
+#: app/i18n/extracted/app/components/buttons/SignMessageButton.json
+msgctxt "securitycenter.signMessageModal"
+msgid "Sign Message"
+msgstr "签名消息"
 
 #. [security.signTitle]
 #. defaultMessage is:
@@ -4149,7 +4615,7 @@ msgstr "签署消息"
 #: app/i18n/extracted/app/components/views/SecurityPage/index.json
 msgctxt "security.signTitle"
 msgid "Sign Message"
-msgstr "签署消息"
+msgstr "签名消息"
 
 #. [securitycenter.verify.field.signature.label]
 #. defaultMessage is:
@@ -4158,6 +4624,14 @@ msgstr "签署消息"
 msgctxt "securitycenter.verify.field.signature.label"
 msgid "Signature"
 msgstr "签名"
+
+#. [spv.title]
+#. defaultMessage is:
+#. Simple Payment Verification (SPV)
+#: app/i18n/extracted/app/components/views/GetStartedPage/SpvChoicePage/TopLevelOptions.json
+msgctxt "spv.title"
+msgid "Simple Payment Verification (SPV)"
+msgstr "简单支付验证(SPV)"
 
 #. [advancedStartup.skip]
 #. defaultMessage is:
@@ -4183,13 +4657,29 @@ msgctxt "help.slack"
 msgid "Slack"
 msgstr "Slack"
 
+#. [history.max.value]
+#. defaultMessage is:
+#. Slider max
+#: app/i18n/extracted/app/components/buttons/EyeFilterMenuWithSlider/index.json
+msgctxt "history.max.value"
+msgid "Slider max"
+msgstr "滑块最大值"
+
+#. [history.min.value]
+#. defaultMessage is:
+#. Slider min
+#: app/i18n/extracted/app/components/buttons/EyeFilterMenuWithSlider/index.json
+msgctxt "history.min.value"
+msgid "Slider min"
+msgstr "滑块最小值"
+
 #. [help.about.decrediton.subtitle]
 #. defaultMessage is:
 #. Software Summary
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.about.decrediton.subtitle"
 msgid "Software Summary"
-msgstr "软件梗概"
+msgstr "软件概要"
 
 #. [errors.general]
 #. defaultMessage is:
@@ -4229,7 +4719,7 @@ msgstr "来源"
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/AccountDetails.json
 msgctxt "accounts.details.spendable"
 msgid "Spendable"
-msgstr "可使用的"
+msgstr "可花费的"
 
 #. [accounts.row.spendable]
 #. defaultMessage is:
@@ -4237,7 +4727,7 @@ msgstr "可使用的"
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
 msgctxt "accounts.row.spendable"
 msgid "Spendable"
-msgstr "可使用的"
+msgstr "可花费的"
 
 #. [myTickets.spenderTx]
 #. defaultMessage is:
@@ -4253,7 +4743,7 @@ msgstr "支出"
 #: app/i18n/extracted/app/components/charts/messages.json
 msgctxt "charts.keys.stakeFees"
 msgid "Stake Fees"
-msgstr "下注费用"
+msgstr "投票费用"
 
 #. [purchaseTickets.stakePoolLabel]
 #. defaultMessage is:
@@ -4261,7 +4751,15 @@ msgstr "下注费用"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/PurchaseTicketsAdvanced.json
 msgctxt "purchaseTickets.stakePoolLabel"
 msgid "Stake Pool"
-msgstr "Stake Pool"
+msgstr "选票矿池"
+
+#. [autobuyer.stakePoolLabel]
+#. defaultMessage is:
+#. Stake Pool
+#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/Form.json
+msgctxt "autobuyer.stakePoolLabel"
+msgid "Stake Pool"
+msgstr "选票矿池"
 
 #. [mytickets.statistics.stakepool.title]
 #. defaultMessage is:
@@ -4269,7 +4767,7 @@ msgstr "Stake Pool"
 #: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/charts/StakePoolStats.json
 msgctxt "mytickets.statistics.stakepool.title"
 msgid "Stake Pool"
-msgstr "Stake Pool"
+msgstr "选票矿池"
 
 #. [mytickets.statistics.stakepoolstats.title]
 #. defaultMessage is:
@@ -4277,7 +4775,7 @@ msgstr "Stake Pool"
 #: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/Page.json
 msgctxt "mytickets.statistics.stakepoolstats.title"
 msgid "Stake Pool"
-msgstr "Stake Pool"
+msgstr "选票矿池"
 
 #. [charts.keys.stakeRewards]
 #. defaultMessage is:
@@ -4285,7 +4783,7 @@ msgstr "Stake Pool"
 #: app/i18n/extracted/app/components/charts/messages.json
 msgctxt "charts.keys.stakeRewards"
 msgid "Stake Rewards"
-msgstr "下注奖励"
+msgstr "投票奖励"
 
 #. [mytickets.statistics.stakerewards.title]
 #. defaultMessage is:
@@ -4293,7 +4791,7 @@ msgstr "下注奖励"
 #: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/charts/StakeRewards.json
 msgctxt "mytickets.statistics.stakerewards.title"
 msgid "Stake Rewards"
-msgstr "下注奖励"
+msgstr "投票奖励"
 
 #. [mytickets.statistics.stakerewards.link]
 #. defaultMessage is:
@@ -4301,7 +4799,7 @@ msgstr "下注奖励"
 #: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/Page.json
 msgctxt "mytickets.statistics.stakerewards.link"
 msgid "Stake Rewards"
-msgstr "下注奖励"
+msgstr "投票奖励"
 
 #. [stake.enableStakePoolListing.description]
 #. defaultMessage is:
@@ -4314,7 +4812,7 @@ msgid ""
 "StakePool listing from external API endpoint is currently disabled. Please "
 "enable the access to this third party service or manually configure the "
 "stakepool."
-msgstr "来自外部API端点的“StakePool”列表目前已被禁用。请启用对该第三方服务的访问或手动配置stakepool。"
+msgstr "来自外部API端点的选票矿池列表目前已被禁用。请启用对该第三方服务的访问或手动配置选票矿池。"
 
 #. [getStarted.stakepool.label]
 #. defaultMessage is:
@@ -4322,7 +4820,7 @@ msgstr "来自外部API端点的“StakePool”列表目前已被禁用。请启
 #: app/i18n/extracted/app/components/views/GetStartedPage/StakePools/Form.json
 msgctxt "getStarted.stakepool.label"
 msgid "Stakepool"
-msgstr "Stakepool"
+msgstr "选票矿池"
 
 #. [stakepool.label]
 #. defaultMessage is:
@@ -4330,7 +4828,15 @@ msgstr "Stakepool"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakePools/AddForm.json
 msgctxt "stakepool.label"
 msgid "Stakepool"
-msgstr "Stakepool"
+msgstr "选票矿池"
+
+#. [autobuyer.modal.stakepool]
+#. defaultMessage is:
+#. Stakepool
+#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/Form.json
+msgctxt "autobuyer.modal.stakepool"
+msgid "Stakepool"
+msgstr "选票矿池"
 
 #. [stake.addPoolConfirmation]
 #. defaultMessage is:
@@ -4338,7 +4844,7 @@ msgstr "Stakepool"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakePools/AddForm.json
 msgctxt "stake.addPoolConfirmation"
 msgid "Stakepool Confirmation"
-msgstr "Stakepool 确认"
+msgstr "选票矿池确认"
 
 #. [settings.privacy.stakepoolListing.label]
 #. defaultMessage is:
@@ -4346,7 +4852,7 @@ msgstr "Stakepool 确认"
 #: app/i18n/extracted/app/components/views/SettingsPage/PrivacySettings.json
 msgctxt "settings.privacy.stakepoolListing.label"
 msgid "Stakepool Listing"
-msgstr "Stakepool列表"
+msgstr "选票矿池列表"
 
 #. [mytickets.statistics.stakepool.stakepoolTickets]
 #. defaultMessage is:
@@ -4354,7 +4860,7 @@ msgstr "Stakepool列表"
 #: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/charts/StakePoolStats.json
 msgctxt "mytickets.statistics.stakepool.stakepoolTickets"
 msgid "Stakepool Tickets"
-msgstr "Stakepool票券"
+msgstr "该票池选票数"
 
 #. [help.stakepools]
 #. defaultMessage is:
@@ -4362,7 +4868,7 @@ msgstr "Stakepool票券"
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.stakepools"
 msgid "Stakepools"
-msgstr "Stakepools"
+msgstr "选票矿池"
 
 #. [tutorial.staking.title]
 #. defaultMessage is:
@@ -4370,7 +4876,7 @@ msgstr "Stakepools"
 #: app/i18n/extracted/app/components/views/TutorialsPage/Staking/index.json
 msgctxt "tutorial.staking.title"
 msgid "Staking"
-msgstr "下注 "
+msgstr "投票"
 
 #. [home.ticketActivityTitle]
 #. defaultMessage is:
@@ -4378,7 +4884,7 @@ msgstr "下注 "
 #: app/i18n/extracted/app/components/views/HomePage/tables/TicketActivity.json
 msgctxt "home.ticketActivityTitle"
 msgid "Staking Activity"
-msgstr "下注活动"
+msgstr "投票活动"
 
 #. [privacy.options.standard.title]
 #. defaultMessage is:
@@ -4394,15 +4900,15 @@ msgstr "标准"
 #: app/i18n/extracted/app/components/views/GetStartedPage/AdvancedStartup/Form.json
 msgctxt "login.form.appdata.button"
 msgid "Start AppData Daemon"
-msgstr "启动 Deamon 应用数据"
+msgstr "启动守护进程应用数据"
 
 #. [proposalDetails.votingInfo.startStakingBtn]
 #. defaultMessage is:
-#. Start Staking DCR
+#. Start Staking
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Details/helpers.json
 msgctxt "proposalDetails.votingInfo.startStakingBtn"
-msgid "Start Staking DCR"
-msgstr "启动 Staking DCR"
+msgid "Start Staking"
+msgstr "开始投票"
 
 #. [tickets.startAutoBuyerConfirmation]
 #. defaultMessage is:
@@ -4410,7 +4916,15 @@ msgstr "启动 Staking DCR"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/Form.json
 msgctxt "tickets.startAutoBuyerConfirmation"
 msgid "Start Ticket Buyer Confirmation"
-msgstr "开启购票确认"
+msgstr "启动购票确认"
+
+#. [trezor.wordModal.selectPlaceholder]
+#. defaultMessage is:
+#. Start typing word...
+#: app/i18n/extracted/app/components/modals/trezor/WordModal.json
+msgctxt "trezor.wordModal.selectPlaceholder"
+msgid "Start typing word..."
+msgstr "开始输入..."
 
 #. [tickets.tab.statistics]
 #. defaultMessage is:
@@ -4418,7 +4932,7 @@ msgstr "开启购票确认"
 #: app/i18n/extracted/app/components/views/TicketsPage/index.json
 msgctxt "tickets.tab.statistics"
 msgid "Statistics"
-msgstr "数据"
+msgstr "统计数据"
 
 #. [statistics.subtitle]
 #. defaultMessage is:
@@ -4426,7 +4940,7 @@ msgstr "数据"
 #: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/Page.json
 msgctxt "statistics.subtitle"
 msgid "Statistics"
-msgstr "数据"
+msgstr "统计数据"
 
 #. [snackbar.defaults.success]
 #. defaultMessage is:
@@ -4442,7 +4956,7 @@ msgstr "成功！"
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "addCustomStakePool.success"
 msgid "Successfully added stakepool {host}!"
-msgstr "已成功添加stakepool{host}！"
+msgstr "已成功添加选票矿池{host}！"
 
 #. [settings.changePassphrase]
 #. defaultMessage is:
@@ -4466,7 +4980,7 @@ msgstr "已成功创建新账户。"
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "stakepools.removedStakePoolConfig"
 msgid "Successfully removed StakePool config"
-msgstr "已成功删除StakePool配置"
+msgstr "已成功删除选票矿池配置"
 
 #. [accounts.renameAccount]
 #. defaultMessage is:
@@ -4501,7 +5015,7 @@ msgctxt "export.transactions.fields.credits"
 msgid ""
 "Sum of credits (transaction outputs) of the wallet included in this "
 "transaction."
-msgstr "此交易中包括的钱包总信用额（交易输出）。"
+msgstr "包含此次交易的钱包总信用额（交易输出）。"
 
 #. [export.transactions.fields.debits]
 #. defaultMessage is:
@@ -4512,7 +5026,7 @@ msgctxt "export.transactions.fields.debits"
 msgid ""
 "Sum of debits (transaction inputs) of the wallet included in this "
 "transaction."
-msgstr "此交易中包括的钱包总借贷额（交易输入）。"
+msgstr "包含此次交易的钱包总借贷额（交易输入）。"
 
 #. [getStarted.header.syncSpv.meta]
 #. defaultMessage is:
@@ -4544,7 +5058,15 @@ msgstr "系统日志"
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.telegram"
 msgid "Telegram"
-msgstr "电报"
+msgstr "Telegram"
+
+#. [settings.network.testnet]
+#. defaultMessage is:
+#. Testnet
+#: app/i18n/extracted/app/components/views/SettingsPage/GeneralSettings.json
+msgctxt "settings.network.testnet"
+msgid "Testnet"
+msgstr "测试网"
 
 #. [transactions.description.send.testnet]
 #. defaultMessage is:
@@ -4557,7 +5079,7 @@ msgid ""
 "Testnet Decred addresses always begin with letter T and contain 26-35 alphanumeric characters\n"
 "(e.g. TxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0)."
 msgstr ""
-"测试网附加地址总是以字母T开头，包含26-35个字母数字字符。\n"
+"Decred测试网地址总是以字母T开头，包含26-35个字母数字字符。\n"
 "\n"
 "（例如，TxxXXXXXxXXXxx0XxXXXxxXxXxXxX0）。"
 
@@ -4567,27 +5089,32 @@ msgstr ""
 #. compatible with Decrediton (required version {requiredWalletRPCVersion}).
 #.         Please update the daemon (dcrd) and wallet (dcrwallet) to the
 #. latest version, then try again.
-#.         See the "Help ⮕ About" menu for the current version of the
-#. executables.
 #: app/i18n/extracted/app/components/views/InvalidRPCVersion.json
 msgctxt "invalidRPCVersion.info"
 msgid ""
 "The API of the currently running wallet ({walletRPCVersion}) is not compatible with Decrediton (required version {requiredWalletRPCVersion}).\n"
 "\n"
-"        Please update the daemon (dcrd) and wallet (dcrwallet) to the latest version, then try again.\n"
-"\n"
-"        See the \"Help ⮕ About\" menu for the current version of the executables."
+"        Please update the daemon (dcrd) and wallet (dcrwallet) to the latest version, then try again."
 msgstr ""
-"当前正在运行的钱包（{walletRPCVersion}）的 API 与 Decrediton 不兼容（所需版本{requdWalletRPCVersion}）。\n"
+"当前运行的钱包（{walletRPCVersion}）的API与Decrediton（必需的版本{requiredWalletRPCVersion}）不兼容。\n"
 "\n"
-"请将 daemon（Dcrd）和钱包（Dcrile）更新为最新版本，然后再试一次。\n"
-"\n"
-"有关可执行文件的当前版本，请参见“帮助⮕关于”菜单。"
+"请将守护程序（dcrd）和钱包（dcrwallet）更新到最新版本，然后重试。"
+
+#. [settings.resetNetworkContent]
+#. defaultMessage is:
+#. The setting you have chosen to change requires Decrediton to be restarted.
+#. Please confirm this action before proceeding.
+#: app/i18n/extracted/app/components/views/SettingsPage/Page.json
+msgctxt "settings.resetNetworkContent"
+msgid ""
+"The setting you have chosen to change requires Decrediton to be restarted.  "
+"Please confirm this action before proceeding."
+msgstr "您选择更改的设置需要重新启动Decrediton。 请在继续之前确认此操作。"
 
 #. [votingPreferences.noAgenda]
 #. defaultMessage is:
 #. There are currently no agendas for voting.
-#: app/i18n/extracted/app/components/views/TicketsPage/GovernanceTab/Page.json
+#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/Page.json
 msgctxt "votingPreferences.noAgenda"
 msgid "There are currently no agendas for voting."
 msgstr "目前无投票议程"
@@ -4604,12 +5131,12 @@ msgstr "本地址为"
 #. defaultMessage is:
 #. This agenda has finished voting and PASSED.  You may still toggle your vote
 #. choices, but they will no longer be tallied.
-#: app/i18n/extracted/app/components/views/TicketsPage/GovernanceTab/helpers.json
+#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/helpers.json
 msgctxt "agenda.card.finishedTooltip"
 msgid ""
 "This agenda has finished voting and PASSED.  You may still toggle your vote "
 "choices, but they will no longer be tallied."
-msgstr "该议程已经完成投票并通过。您仍然可以切换选择，但票数将不会被清点。"
+msgstr "该议程已经完成投票并通过。您仍然可以切换您的投票选择，但他们将不会被统计。"
 
 #. [fatal.suggestion.corrupted]
 #. defaultMessage is:
@@ -4633,7 +5160,7 @@ msgid ""
 "blockchain download. Please come to our support channel on "
 "slack/matrix/discord/rocketchat to get advice about running disk utilities."
 msgstr ""
-"该错误表示您区块链数据一定程度上已被损毁。通常情况下，这是由于HDD/SDD部分组件恶化并且其内嵌式SMART并未修复它，或其他相似情况如记忆问题造成数据损毁。为解决该问题，您必须删除区块链数据并重新下载。按下下方按钮完成整个过程。当你重启Decrediton，它将自动开始区块链下载。请点击网址slack/matrix/discord/rocketchat进入技术支持获取硬盘驱动的相关建议。"
+"该错误表示您区块链数据一定程度上已被损坏。通常情况下，这是由于HDD/SDD上的扇区有坏道并且其内嵌的SMART方式未能修复它，或更可能的事，内存问题造成数据损毁。为解决该问题，您必须删除区块链数据并重新下载。按下下方按钮完成整个过程。当你重启Decrediton，它将自动开始区块链下载。请登录我们在slack/matrix/discord/rocketchat上的支持渠道来获取运行磁盘程序的相关建议。"
 
 #. [fatal.suggestion.resources]
 #. defaultMessage is:
@@ -4646,7 +5173,18 @@ msgid ""
 "This error typically means you have another instance of daemon running.  You"
 " should check your taskmanager or profiler to shutdown any still running "
 "daemon and then try again."
-msgstr "该错误通常表示您有其他守护程序正在运行，您应当检查桌面管理器或文件夹以关闭正在运行的守护程序，之后重试。"
+msgstr "该错误通常表示您有其他守护进程实体正在运行，您应当检查任务管理器或分析器以关闭正在运行的守护程序，之后重试。"
+
+#. [fatal.suggestion.diffConnection]
+#. defaultMessage is:
+#. This error typically means you have the testnet flag in your dcrd.conf
+#. file. You should check your dcrd.conf file and remove the testnet=1.
+#: app/i18n/extracted/app/components/views/FatalErrorPage.json
+msgctxt "fatal.suggestion.diffConnection"
+msgid ""
+"This error typically means you have the testnet flag in your dcrd.conf file."
+" You should check your dcrd.conf file and remove the testnet=1."
+msgstr "此错误通常表示您在dcrd.conf文件中具有测试网标志。 您应检查dcrd.conf文件并删除testnet = 1。"
 
 #. [input.requiredInput]
 #. defaultMessage is:
@@ -4654,7 +5192,7 @@ msgstr "该错误通常表示您有其他守护程序正在运行，您应当检
 #: app/i18n/extracted/app/components/inputs/Input.json
 msgctxt "input.requiredInput"
 msgid "This field is required"
-msgstr "需要域名"
+msgstr "需要字段"
 
 #. [input.invalidInput]
 #. defaultMessage is:
@@ -4662,7 +5200,7 @@ msgstr "需要域名"
 #: app/i18n/extracted/app/components/inputs/Input.json
 msgctxt "input.invalidInput"
 msgid "This field is wrong"
-msgstr "域名错误"
+msgstr "字段错误"
 
 #. [watchingOnlyPseudoModal.title]
 #. defaultMessage is:
@@ -4670,7 +5208,7 @@ msgstr "域名错误"
 #: app/i18n/extracted/app/components/PseudoModal/WatchingOnlyWarn.json
 msgctxt "watchingOnlyPseudoModal.title"
 msgid "This function is disabled for watch-only Wallets"
-msgstr "只读的钱包不可使用此功能"
+msgstr "只读模式的钱包禁用此功能"
 
 #. [watchOnly.warn]
 #. defaultMessage is:
@@ -4678,7 +5216,7 @@ msgstr "只读的钱包不可使用此功能"
 #: app/i18n/extracted/app/components/shared/WatchOnlyWarnNotification.json
 msgctxt "watchOnly.warn"
 msgid "This functionality is disabled for watch-only Wallets"
-msgstr "只读的钱包不可使用此功能"
+msgstr "只读模式的钱包禁用此功能"
 
 #. [sidebar.isWatchingOnlyTooltip]
 #. defaultMessage is:
@@ -4686,7 +5224,7 @@ msgstr "只读的钱包不可使用此功能"
 #: app/i18n/extracted/app/components/SideBar/Logo.json
 msgctxt "sidebar.isWatchingOnlyTooltip"
 msgid "This is a watch-only wallet with limited functionality."
-msgstr "此只读的钱包功能有限"
+msgstr "这是只读模式钱包功能有限"
 
 #. [getStarted.decrypt.info]
 #. defaultMessage is:
@@ -4695,7 +5233,20 @@ msgstr "此只读的钱包功能有限"
 msgctxt "getStarted.decrypt.info"
 msgid ""
 "This wallet is encrypted, please enter the public passphrase to decrypt it."
-msgstr "这个钱包已加密，请输入公开密码来解密它。"
+msgstr "这个钱包已加密，请输入公共密码来解密它。"
+
+#. [spv.options.disable.description]
+#. defaultMessage is:
+#. This will use the regular Decred Daemon and fully verify blocks.  This will
+#. take longer, but is fully secure.  Any block or mined transaction can be
+#. fully trusted.
+#: app/i18n/extracted/app/components/views/GetStartedPage/SpvChoicePage/TopLevelOptions.json
+msgctxt "spv.options.disable.description"
+msgid ""
+"This will use the regular Decred Daemon and fully verify blocks.  This will "
+"take longer, but is fully secure.  Any block or mined transaction can be "
+"fully trusted."
+msgstr "这选项会使用正规的Decred守护进程及完全验证区块。这会需要稍长时间，但是将会完全安全。任何区块或被打包交易都可以完全信任。"
 
 #. [notifications.type.ticket]
 #. defaultMessage is:
@@ -4703,7 +5254,7 @@ msgstr "这个钱包已加密，请输入公开密码来解密它。"
 #: app/i18n/extracted/app/components/Snackbar/Notification/Transaction.json
 msgctxt "notifications.type.ticket"
 msgid "Ticket"
-msgstr "票券"
+msgstr "选票"
 
 #. [txDetails.type.ticket]
 #. defaultMessage is:
@@ -4711,7 +5262,7 @@ msgstr "票券"
 #: app/i18n/extracted/app/components/views/TxDetails.json
 msgctxt "txDetails.type.ticket"
 msgid "Ticket"
-msgstr "票券"
+msgstr "选票"
 
 #. [purchaseTickets.advanced.ticketAddress]
 #. defaultMessage is:
@@ -4719,7 +5270,7 @@ msgstr "票券"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/PurchaseTicketsAdvanced.json
 msgctxt "purchaseTickets.advanced.ticketAddress"
 msgid "Ticket Address"
-msgstr "票券地址"
+msgstr "选票地址"
 
 #. [purchaseTickets.ticketAddress]
 #. defaultMessage is:
@@ -4727,7 +5278,7 @@ msgstr "票券地址"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/PurchaseTicketsQuickBar.json
 msgctxt "purchaseTickets.ticketAddress"
 msgid "Ticket Address"
-msgstr "票券地址"
+msgstr "选票地址"
 
 #. [stakepools.list.form.field.ticketaddress]
 #. defaultMessage is:
@@ -4735,7 +5286,7 @@ msgstr "票券地址"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakePools/List.json
 msgctxt "stakepools.list.form.field.ticketaddress"
 msgid "Ticket Address:"
-msgstr "票券地址："
+msgstr "选票地址："
 
 #. [spv.auto.buyer.warn]
 #. defaultMessage is:
@@ -4745,13 +5296,29 @@ msgctxt "spv.auto.buyer.warn"
 msgid "Ticket Auto Buyer not available while using SPV"
 msgstr "使用 SPV时不可使用自动购票器"
 
+#. [runTicketBuyer.Success]
+#. defaultMessage is:
+#. Ticket Buyer successfully started.
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "runTicketBuyer.Success"
+msgid "Ticket Buyer successfully started."
+msgstr "购票器成功开启。"
+
+#. [stopTicketBuyer.Success]
+#. defaultMessage is:
+#. Ticket Buyer successfully stopped.
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "stopTicketBuyer.Success"
+msgid "Ticket Buyer successfully stopped."
+msgstr "购票器成功停止。"
+
 #. [txDetails.ticketCost]
 #. defaultMessage is:
 #. Ticket Cost
 #: app/i18n/extracted/app/components/views/TxDetails.json
 msgctxt "txDetails.ticketCost"
 msgid "Ticket Cost"
-msgstr "票券成本"
+msgstr "选票成本"
 
 #. [ticket.daysToVoteLabel]
 #. defaultMessage is:
@@ -4767,7 +5334,7 @@ msgstr "投票日期"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/PurchaseTicketsAdvanced.json
 msgctxt "purchaseTickets.ticketFeePlaceholder"
 msgid "Ticket Fee"
-msgstr "票券费用"
+msgstr "选票费用"
 
 #. [purchaseTickets.ticketFee]
 #. defaultMessage is:
@@ -4775,7 +5342,7 @@ msgstr "票券费用"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/PurchaseTicketsAdvanced.json
 msgctxt "purchaseTickets.ticketFee"
 msgid "Ticket Fee"
-msgstr "票券费用"
+msgstr "选票费用"
 
 #. [purchaseTickets.ticketFeeTip]
 #. defaultMessage is:
@@ -4783,7 +5350,7 @@ msgstr "票券费用"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/PurchaseTicketsQuickBar.json
 msgctxt "purchaseTickets.ticketFeeTip"
 msgid "Ticket Fee"
-msgstr "票券费用"
+msgstr "选票费用"
 
 #. [tutorial.ticketLifecycle.title]
 #. defaultMessage is:
@@ -4791,7 +5358,7 @@ msgstr "票券费用"
 #: app/i18n/extracted/app/components/views/TutorialsPage/TicketLifecycle/index.json
 msgctxt "tutorial.ticketLifecycle.title"
 msgid "Ticket Lifecycle"
-msgstr "票券生命周期"
+msgstr "选票生命周期"
 
 #. [ticket.lossLabel]
 #. defaultMessage is:
@@ -4799,7 +5366,7 @@ msgstr "票券生命周期"
 #: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketInfoCard.json
 msgctxt "ticket.lossLabel"
 msgid "Ticket Loss"
-msgstr "票券损失"
+msgstr "选票损失"
 
 #. [ticket.priceLabel]
 #. defaultMessage is:
@@ -4831,7 +5398,7 @@ msgstr "购票"
 #: app/i18n/extracted/app/components/TxHistory/TxHistoryRow/StakeTxRow.json
 msgctxt "history.ticket.rewardLabel"
 msgid "Ticket Reward"
-msgstr "票券奖励"
+msgstr "选票奖励"
 
 #. [ticket.rewardLabel]
 #. defaultMessage is:
@@ -4839,7 +5406,7 @@ msgstr "票券奖励"
 #: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketInfoCard.json
 msgctxt "ticket.rewardLabel"
 msgid "Ticket Reward"
-msgstr "票券奖励"
+msgstr "选票奖励"
 
 #. [tickets.tickettypes.tooltip]
 #. defaultMessage is:
@@ -4847,7 +5414,7 @@ msgstr "票券奖励"
 #: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/Page.json
 msgctxt "tickets.tickettypes.tooltip"
 msgid "Ticket Status"
-msgstr "票券状态"
+msgstr "选票状态"
 
 #. [tickets.startAutoBuyerHeader]
 #. defaultMessage is:
@@ -4871,7 +5438,7 @@ msgstr "购票器已停止运行。"
 #: app/i18n/extracted/app/components/charts/messages.json
 msgctxt "charts.keys.ticketCountByDay"
 msgid "Tickets"
-msgstr "票券"
+msgstr "选票"
 
 #. [sidebar.link.tickets]
 #. defaultMessage is:
@@ -4879,7 +5446,7 @@ msgstr "票券"
 #: app/i18n/extracted/app/components/SideBar/MenuLinks/index.json
 msgctxt "sidebar.link.tickets"
 msgid "Tickets"
-msgstr "票券"
+msgstr "选票"
 
 #. [home.tab.tickets]
 #. defaultMessage is:
@@ -4887,7 +5454,7 @@ msgstr "票券"
 #: app/i18n/extracted/app/components/views/HomePage/Page.json
 msgctxt "home.tab.tickets"
 msgid "Tickets"
-msgstr "票券"
+msgstr "选票"
 
 #. [tickets.title]
 #. defaultMessage is:
@@ -4895,7 +5462,7 @@ msgstr "票券"
 #: app/i18n/extracted/app/components/views/TicketsPage/index.json
 msgctxt "tickets.title"
 msgid "Tickets"
-msgstr "票券"
+msgstr "选票"
 
 #. [export.tickets.name]
 #. defaultMessage is:
@@ -4903,7 +5470,7 @@ msgstr "票券"
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
 msgctxt "export.tickets.name"
 msgid "Tickets"
-msgstr "票券"
+msgstr "选票"
 
 #. [txFilter.type.tickets]
 #. defaultMessage is:
@@ -4911,7 +5478,7 @@ msgstr "票券"
 #: app/i18n/extracted/app/components/views/TransactionsPage/HistoryTab/index.json
 msgctxt "txFilter.type.tickets"
 msgid "Tickets"
-msgstr "票券"
+msgstr "选票"
 
 #. [getStarted.chainLoading.headerTime]
 #. defaultMessage is:
@@ -4919,7 +5486,7 @@ msgstr "票券"
 #: app/i18n/extracted/app/components/views/GetStartedPage/messages.json
 msgctxt "getStarted.chainLoading.headerTime"
 msgid "Time from last fetched header:"
-msgstr "上次获取标题的时间："
+msgstr "上次获取区块头的时间："
 
 #. [settings.timezone.title]
 #. defaultMessage is:
@@ -4960,6 +5527,30 @@ msgstr "切换全屏"
 msgctxt "appMenu.developerTools"
 msgid "Toggle Developer Tools"
 msgstr "切换开发工具"
+
+#. [trezorPage.togglePassPhraseProtectionBtn]
+#. defaultMessage is:
+#. Toggle Passphrase Protection
+#: app/i18n/extracted/app/components/views/TrezorPage/ConfigButtons.json
+msgctxt "trezorPage.togglePassPhraseProtectionBtn"
+msgid "Toggle Passphrase Protection"
+msgstr "切换密码保护"
+
+#. [trezorPage.togglePinProtectionBtn]
+#. defaultMessage is:
+#. Toggle Pin Protection
+#: app/i18n/extracted/app/components/views/TrezorPage/ConfigButtons.json
+msgctxt "trezorPage.togglePinProtectionBtn"
+msgid "Toggle Pin Protection"
+msgstr "切换密码保护"
+
+#. [settings.toggleTheme]
+#. defaultMessage is:
+#. Toggle Theme
+#: app/i18n/extracted/app/components/views/SettingsPage/Page.json
+msgctxt "settings.toggleTheme"
+msgid "Toggle Theme"
+msgstr "切换主题"
 
 #. [accounts.total]
 #. defaultMessage is:
@@ -5009,6 +5600,14 @@ msgctxt "stake.totalRewards"
 msgid "Total Rewards"
 msgstr "总奖励"
 
+#. [stakeSPV.totalRewards]
+#. defaultMessage is:
+#. Total Rewards
+#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfoDetailsSPV.json
+msgctxt "stakeSPV.totalRewards"
+msgid "Total Rewards"
+msgstr "总奖励"
+
 #. [send.confirmAmountLabelFor]
 #. defaultMessage is:
 #. Total Spent
@@ -5023,7 +5622,7 @@ msgstr "总花费"
 #: app/i18n/extracted/app/components/charts/messages.json
 msgctxt "charts.keys.totalStake"
 msgid "Total Stake"
-msgstr "总金额"
+msgstr "总投票金额"
 
 #. [mytickets.statistics.stakerewards.totalStake]
 #. defaultMessage is:
@@ -5031,15 +5630,7 @@ msgstr "总金额"
 #: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/charts/StakeRewards.json
 msgctxt "mytickets.statistics.stakerewards.totalStake"
 msgid "Total Stake:"
-msgstr "总金额："
-
-#. [home.totalValueOfLiveTickets]
-#. defaultMessage is:
-#. Total Value Of Live Tickets
-#: app/i18n/extracted/app/components/views/HomePage/tabs/Tickets.json
-msgctxt "home.totalValueOfLiveTickets"
-msgid "Total Value Of Live Tickets"
-msgstr "现场票的总价值"
+msgstr "总投票金额："
 
 #. [export.balances.fields.totalStake]
 #. defaultMessage is:
@@ -5047,7 +5638,7 @@ msgstr "现场票的总价值"
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
 msgctxt "export.balances.fields.totalStake"
 msgid "Total amount of DCR used on staking."
-msgstr "下注所用的总 DCR 金额。"
+msgstr "投票所用的总 DCR 金额。"
 
 #. [export.dailyBalances.fields.received]
 #. defaultMessage is:
@@ -5055,7 +5646,7 @@ msgstr "下注所用的总 DCR 金额。"
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
 msgctxt "export.dailyBalances.fields.received"
 msgid "Total amount received from addresses not on the wallet."
-msgstr "从不在钱包上的地址收到的总金额。"
+msgstr "从钱包外地址收到的总金额。"
 
 #. [send.totalAmountEstimation]
 #. defaultMessage is:
@@ -5063,7 +5654,7 @@ msgstr "从不在钱包上的地址收到的总金额。"
 #: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/Page.json
 msgctxt "send.totalAmountEstimation"
 msgid "Total amount sending"
-msgstr "发送的总金额"
+msgstr "发送到钱包外地址的总金额。"
 
 #. [export.dailyBalances.fields.sent]
 #. defaultMessage is:
@@ -5079,7 +5670,7 @@ msgstr "发送到不在钱包上地址的总金额。"
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
 msgctxt "export.dailyBalances.fields.total"
 msgid "Total available balance."
-msgstr "总可用余额。"
+msgstr "可用总余额。"
 
 #. [export.balances.fields.total]
 #. defaultMessage is:
@@ -5087,7 +5678,7 @@ msgstr "总可用余额。"
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
 msgctxt "export.balances.fields.total"
 msgid "Total available balance."
-msgstr "总可用余额。"
+msgstr "可用总余额。"
 
 #. [export.balances.fields.stakeFees]
 #. defaultMessage is:
@@ -5095,7 +5686,7 @@ msgstr "总可用余额。"
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
 msgctxt "export.balances.fields.stakeFees"
 msgid "Total stake fees paid."
-msgstr "总下注费用已支付。"
+msgstr "权益投票总费用。"
 
 #. [export.balances.fields.stakeRewards]
 #. defaultMessage is:
@@ -5103,7 +5694,7 @@ msgstr "总下注费用已支付。"
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
 msgctxt "export.balances.fields.stakeRewards"
 msgid "Total stake rewards received."
-msgstr "收到的总利益回报。"
+msgstr "权益投票总回报。"
 
 #. [myTickets.ticketTx]
 #. defaultMessage is:
@@ -5128,6 +5719,14 @@ msgstr "交易"
 msgctxt "send.sendConfirmations"
 msgid "Transaction Confirmation"
 msgstr "交易确认"
+
+#. [notification.transfer.fee]
+#. defaultMessage is:
+#. Transaction Fee
+#: app/i18n/extracted/app/components/Snackbar/Notification/Transaction.json
+msgctxt "notification.transfer.fee"
+msgid "Transaction Fee"
+msgstr "交易费"
 
 #. [history.title]
 #. defaultMessage is:
@@ -5185,14 +5784,6 @@ msgctxt "transactions.title"
 msgid "Transactions"
 msgstr "交易"
 
-#. [notifications.type.transfer]
-#. defaultMessage is:
-#. Transfer
-#: app/i18n/extracted/app/components/Snackbar/Notification/Transaction.json
-msgctxt "notifications.type.transfer"
-msgid "Transfer"
-msgstr "转账"
-
 #. [txFilter.type.transfered]
 #. defaultMessage is:
 #. Transfered
@@ -5200,6 +5791,70 @@ msgstr "转账"
 msgctxt "txFilter.type.transfered"
 msgid "Transfered"
 msgstr "已转账"
+
+#. [notifications.type.transfer]
+#. defaultMessage is:
+#. Transferred
+#: app/i18n/extracted/app/components/Snackbar/Notification/Transaction.json
+msgctxt "notifications.type.transfer"
+msgid "Transferred"
+msgstr "已转账"
+
+#. [createwallet.isTrezor.label]
+#. defaultMessage is:
+#. Trezor
+#: app/i18n/extracted/app/components/views/GetStartedPage/WalletSelection/CreateWalletForm.json
+msgctxt "createwallet.isTrezor.label"
+msgid "Trezor"
+msgstr "Trezor"
+
+#. [sidebar.link.trezor]
+#. defaultMessage is:
+#. Trezor Setup
+#: app/i18n/extracted/app/components/SideBar/MenuLinks/index.json
+msgctxt "sidebar.link.trezor"
+msgid "Trezor Setup"
+msgstr "设置Trezor"
+
+#. [trezorPage.title]
+#. defaultMessage is:
+#. Trezor Setup
+#: app/i18n/extracted/app/components/views/TrezorPage/Header.json
+msgctxt "trezorPage.title"
+msgid "Trezor Setup"
+msgstr "设置Trezor"
+
+#. [trezor.initDevice.success]
+#. defaultMessage is:
+#. Trezor device initialized with new seed
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "trezor.initDevice.success"
+msgid "Trezor device initialized with new seed"
+msgstr "已用新种子初始化Trezor设备"
+
+#. [trezor.recoverDevice.success]
+#. defaultMessage is:
+#. Trezor device recovered
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "trezor.recoverDevice.success"
+msgid "Trezor device recovered"
+msgstr "已恢复Trezor设备"
+
+#. [trezor.wipeDevice.success]
+#. defaultMessage is:
+#. Trezor device wiped
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "trezor.wipeDevice.success"
+msgid "Trezor device wiped"
+msgstr "已抹除Trezor设备"
+
+#. [trezor.changeHomeScreen.success]
+#. defaultMessage is:
+#. Trezor home screen successfully changed
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "trezor.changeHomeScreen.success"
+msgid "Trezor home screen successfully changed"
+msgstr "已成功更换Trezor主屏幕"
 
 #. [autobuyer.enabled]
 #. defaultMessage is:
@@ -5271,7 +5926,7 @@ msgstr "交易费"
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
 msgctxt "export.tickets.fields.spenderHash"
 msgid "Txid of the spender (vote/revocation) transaction."
-msgstr "支出（投票/取消）交易的 Txid。"
+msgstr "支出（投票/撤销）交易的 Txid。"
 
 #. [export.tickets.fields.ticketStatus]
 #. defaultMessage is:
@@ -5279,7 +5934,50 @@ msgstr "支出（投票/取消）交易的 Txid。"
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
 msgctxt "export.tickets.fields.ticketStatus"
 msgid "Txid of the ticket transaction."
-msgstr "票券交易的 Txid。"
+msgstr "选票交易的 Txid。"
+
+#. [trezor.walletCreationPassPhraseModal.title]
+#. defaultMessage is:
+#. Type Wallet Creation PassPhrase
+#: app/i18n/extracted/app/components/modals/trezor/WalletCreationPassPhraseModal.json
+msgctxt "trezor.walletCreationPassPhraseModal.title"
+msgid "Type Wallet Creation PassPhrase"
+msgstr "输入创建钱包密码"
+
+#. [trezor.wordModal.title]
+#. defaultMessage is:
+#. Type the requested word
+#: app/i18n/extracted/app/components/modals/trezor/WordModal.json
+msgctxt "trezor.wordModal.title"
+msgid "Type the requested word"
+msgstr "输入被要求的单词"
+
+#. [trezor.passphraseModal.description]
+#. defaultMessage is:
+#. Type the secret passphrase for the wallet stored in trezor {label}
+#: app/i18n/extracted/app/components/modals/trezor/PassPhraseModal.json
+msgctxt "trezor.passphraseModal.description"
+msgid "Type the secret passphrase for the wallet stored in trezor {label}"
+msgstr "输入在trezor设备{label}保存的钱包密码"
+
+#. [trezor.walletCreationpassphraseModal.description]
+#. defaultMessage is:
+#. Type the secret passphrase of the wallet to restore from the trezor device
+#. {label}
+#: app/i18n/extracted/app/components/modals/trezor/WalletCreationPassPhraseModal.json
+msgctxt "trezor.walletCreationpassphraseModal.description"
+msgid ""
+"Type the secret passphrase of the wallet to restore from the trezor device "
+"{label}"
+msgstr "输入要从trezor设备{label}恢复的钱包密码"
+
+#. [trezor.wordModal.description]
+#. defaultMessage is:
+#. Type the word requested in the trezor device.
+#: app/i18n/extracted/app/components/modals/trezor/WordModal.json
+msgctxt "trezor.wordModal.description"
+msgid "Type the word requested in the trezor device."
+msgstr "在trezor设备中输入单词。"
 
 #. [stakePoolSelect.addNewPromptEmpty]
 #. defaultMessage is:
@@ -5287,7 +5985,7 @@ msgstr "票券交易的 Txid。"
 #: app/i18n/extracted/app/components/inputs/StakePoolSelect.json
 msgctxt "stakePoolSelect.addNewPromptEmpty"
 msgid "Type to add new Stake Pool"
-msgstr "输入以添加新 Stake Pool"
+msgstr "输入以添加新的选票矿池"
 
 #. [getStartedStake.apiKeyPlaceholder]
 #. defaultMessage is:
@@ -5295,7 +5993,7 @@ msgstr "输入以添加新 Stake Pool"
 #: app/i18n/extracted/app/components/views/GetStartedPage/StakePools/Form.json
 msgctxt "getStartedStake.apiKeyPlaceholder"
 msgid "Typically starts with ‘eyJhb…’"
-msgstr "通常以 ‘eyJhb…’开始"
+msgstr "首字母通常是 ‘eyJhb…’"
 
 #. [stake.apiKeyPlaceholder]
 #. defaultMessage is:
@@ -5303,7 +6001,7 @@ msgstr "通常以 ‘eyJhb…’开始"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakePools/AddForm.json
 msgctxt "stake.apiKeyPlaceholder"
 msgid "Typically starts with ‘eyJhb…’"
-msgstr "通常以 ‘eyJhb…’开始"
+msgstr "首字母通常是 ‘eyJhb…’"
 
 #. [stakepools.list.form.field.url]
 #. defaultMessage is:
@@ -5353,21 +6051,29 @@ msgctxt "appMenu.undo"
 msgid "Undo"
 msgstr "取消"
 
-#. [proposal.currentChoice.unknown]
-#. defaultMessage is:
-#. Unknown
-#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Details/helpers.json
-msgctxt "proposal.currentChoice.unknown"
-msgid "Unknown"
-msgstr "未知"
-
 #. [transaction.type.unmined]
 #. defaultMessage is:
 #. Unmined
 #: app/i18n/extracted/app/components/TxHistory/TxHistoryRow/StakeTxRow.json
 msgctxt "transaction.type.unmined"
 msgid "Unmined"
-msgstr "未开发"
+msgstr "未打包"
+
+#. [send.unsignedRawTxTite]
+#. defaultMessage is:
+#. Unsigned Raw Transaction:
+#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/Page.json
+msgctxt "send.unsignedRawTxTite"
+msgid "Unsigned Raw Transaction:"
+msgstr ""
+
+#. [stake.unspentTickets]
+#. defaultMessage is:
+#. Unspent Tickets
+#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfoRow.json
+msgctxt "stake.unspentTickets"
+msgid "Unspent Tickets"
+msgstr "未投出选票"
 
 #. [getStarted.updateAvailable]
 #. defaultMessage is:
@@ -5385,18 +6091,18 @@ msgctxt "settings.privacy.updateCheck.label"
 msgid "Update Check"
 msgstr "更新检查"
 
-#. [autobuyer.updateConfigBtn]
+#. [trezorPage.updateFirmwareBtn]
 #. defaultMessage is:
-#. Update Config
-#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/Details.json
-msgctxt "autobuyer.updateConfigBtn"
-msgid "Update Config"
-msgstr "更新配置"
+#. Update Firmware
+#: app/i18n/extracted/app/components/views/TrezorPage/FirmwareUpdate.json
+msgctxt "trezorPage.updateFirmwareBtn"
+msgid "Update Firmware"
+msgstr "更新固件"
 
 #. [agenda.updatePreference]
 #. defaultMessage is:
 #. Update Preference
-#: app/i18n/extracted/app/components/views/TicketsPage/GovernanceTab/AgendaOverview/Overview.json
+#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/AgendaOverview/Overview.json
 msgctxt "agenda.updatePreference"
 msgid "Update Preference"
 msgstr "更新偏好"
@@ -5409,13 +6115,14 @@ msgctxt "settings.updatePrivatePassphrase"
 msgid "Update Private Passphrase"
 msgstr "更新私人密码"
 
-#. [proposals.updateVoteChoiceModal.title]
+#. [settings.errors.changePassphraseFailed]
 #. defaultMessage is:
-#. Update Vote Choice
-#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Details/UpdateVoteChoiceModalButton.json
-msgctxt "proposals.updateVoteChoiceModal.title"
-msgid "Update Vote Choice"
-msgstr "更新投票选择"
+#. Update passphrase failed. Incorrect private passphrase, please try again.
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "settings.errors.changePassphraseFailed"
+msgid ""
+"Update passphrase failed. Incorrect private passphrase, please try again."
+msgstr "更新密码失败。错误密码，请重试。"
 
 #. [proposalDetails.votingInfo.updatingVoteChoice]
 #. defaultMessage is:
@@ -5428,7 +6135,7 @@ msgstr "正在更新投票选择"
 #. [aboutModal.upgradeAvailable]
 #. defaultMessage is:
 #. Upgrade Available
-#: app/i18n/extracted/app/components/modals/AboutModal/Modal.json
+#: app/i18n/extracted/app/components/modals/AboutModal/AboutModal.json
 msgctxt "aboutModal.upgradeAvailable"
 msgid "Upgrade Available"
 msgstr "有可用升级"
@@ -5439,7 +6146,7 @@ msgstr "有可用升级"
 #: app/i18n/extracted/app/components/views/GetStartedPage/AdvancedStartup/Form.json
 msgctxt "login.form.connect.button"
 msgid "Use Remote Daemon"
-msgstr "使用远程 Daemon"
+msgstr "使用远程守护进程"
 
 #. [settings.timezone.utx.description]
 #. defaultMessage is:
@@ -5447,7 +6154,7 @@ msgstr "使用远程 Daemon"
 #: app/i18n/extracted/app/components/views/SettingsPage/TimezoneSettings.json
 msgctxt "settings.timezone.utx.description"
 msgid "Use Universal Coordinated Time"
-msgstr "使用通用协调时间"
+msgstr "使用世界标准时间"
 
 #. [settings.timezone.local.description]
 #. defaultMessage is:
@@ -5455,7 +6162,7 @@ msgstr "使用通用协调时间"
 #: app/i18n/extracted/app/components/views/SettingsPage/TimezoneSettings.json
 msgctxt "settings.timezone.local.description"
 msgid "Use your local timezone"
-msgstr "使用您的当地时区"
+msgstr "使用本地时区"
 
 #. [securitycenter.verify.result.valid]
 #. defaultMessage is:
@@ -5482,7 +6189,7 @@ msgctxt "security.description"
 msgid ""
 "Various tools that help in different aspects of crypto currency security "
 "will be located here."
-msgstr "此处将显示在不同方面帮助密码货币安全的各种工具。"
+msgstr "此处显示提高加密货币安全不同方面的各种工具。"
 
 #. [security.verifyTitle]
 #. defaultMessage is:
@@ -5503,7 +6210,7 @@ msgstr "验证消息"
 #. [aboutModal.version]
 #. defaultMessage is:
 #. Version
-#: app/i18n/extracted/app/components/modals/AboutModal/Modal.json
+#: app/i18n/extracted/app/components/modals/AboutModal/AboutModal.json
 msgctxt "aboutModal.version"
 msgid "Version"
 msgstr "版本"
@@ -5515,22 +6222,6 @@ msgstr "版本"
 msgctxt "proposal.overview.version.label"
 msgid "Version"
 msgstr "版本"
-
-#. [notifications.type.vote]
-#. defaultMessage is:
-#. Vote
-#: app/i18n/extracted/app/components/Snackbar/Notification/Transaction.json
-msgctxt "notifications.type.vote"
-msgid "Vote"
-msgstr "投票"
-
-#. [proposals.updateVoteChoiceModal.btnLabel]
-#. defaultMessage is:
-#. Vote
-#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Details/UpdateVoteChoiceModalButton.json
-msgctxt "proposals.updateVoteChoiceModal.btnLabel"
-msgid "Vote"
-msgstr "投票"
 
 #. [myTickets.voteChoices]
 #. defaultMessage is:
@@ -5547,14 +6238,6 @@ msgstr "投票"
 msgctxt "txDetails.type.vote"
 msgid "Vote"
 msgstr "投票"
-
-#. [proposals.statusLinks.voted]
-#. defaultMessage is:
-#. Vote Ended
-#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Page.json
-msgctxt "proposals.statusLinks.voted"
-msgid "Vote Ended"
-msgstr "投票已结束"
 
 #. [mytickets.statistics.votetime.title]
 #. defaultMessage is:
@@ -5580,13 +6263,13 @@ msgctxt "export.votetime.name"
 msgid "Vote Time"
 msgstr "投票时间"
 
-#. [proposalDetails.votingInfo.vote]
+#. [notifications.type.vote]
 #. defaultMessage is:
-#. Vote on this proposal
-#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Details/helpers.json
-msgctxt "proposalDetails.votingInfo.vote"
-msgid "Vote on this proposal"
-msgstr "为此提案投票"
+#. Voted
+#: app/i18n/extracted/app/components/Snackbar/Notification/Transaction.json
+msgctxt "notifications.type.vote"
+msgid "Voted"
+msgstr "已投票"
 
 #. [transaction.type.vote]
 #. defaultMessage is:
@@ -5604,6 +6287,14 @@ msgctxt "transaction.type.voted"
 msgid "Voted"
 msgstr "已投票"
 
+#. [proposal.voted]
+#. defaultMessage is:
+#. Voted
+#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalList.json
+msgctxt "proposal.voted"
+msgid "Voted"
+msgstr "已投票"
+
 #. [txDetails.votedOn]
 #. defaultMessage is:
 #. Voted On
@@ -5612,19 +6303,19 @@ msgctxt "txDetails.votedOn"
 msgid "Voted On"
 msgstr "投票于"
 
-#. [home.votedTicketsCount]
-#. defaultMessage is:
-#. Voted Tickets
-#: app/i18n/extracted/app/components/views/HomePage/tabs/Tickets.json
-msgctxt "home.votedTicketsCount"
-msgid "Voted Tickets"
-msgstr "已投的票"
-
 #. [stake.votedTickets]
 #. defaultMessage is:
 #. Voted Tickets
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfoDetails.json
 msgctxt "stake.votedTickets"
+msgid "Voted Tickets"
+msgstr "已投的票"
+
+#. [stakeSPV.votedTickets]
+#. defaultMessage is:
+#. Voted Tickets
+#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfoDetailsSPV.json
+msgctxt "stakeSPV.votedTickets"
 msgid "Voted Tickets"
 msgstr "已投的票"
 
@@ -5652,6 +6343,14 @@ msgctxt "accounts.votingAuthority"
 msgid "Voting Authority"
 msgstr "投票权利"
 
+#. [votingPreferences.dashboard]
+#. defaultMessage is:
+#. Voting Dashboard
+#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/Page.json
+msgctxt "votingPreferences.dashboard"
+msgid "Voting Dashboard"
+msgstr "投票面板"
+
 #. [proposal.overview.deadline.label]
 #. defaultMessage is:
 #. Voting Deadline
@@ -5660,18 +6359,10 @@ msgctxt "proposal.overview.deadline.label"
 msgid "Voting Deadline"
 msgstr "投票截止日期"
 
-#. [votingPreferences.title]
-#. defaultMessage is:
-#. Voting Preferences
-#: app/i18n/extracted/app/components/views/TicketsPage/GovernanceTab/Page.json
-msgctxt "votingPreferences.title"
-msgid "Voting Preferences"
-msgstr "投票偏好"
-
 #. [agenda.votingFor]
 #. defaultMessage is:
 #. Voting for
-#: app/i18n/extracted/app/components/views/TicketsPage/GovernanceTab/AgendaOverview/Overview.json
+#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/AgendaOverview/Overview.json
 msgctxt "agenda.votingFor"
 msgid "Voting for"
 msgstr "正在投票"
@@ -5690,7 +6381,22 @@ msgstr "此提案的投票已结束"
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Details/helpers.json
 msgctxt "proposalDetails.votingInfo.noTickets"
 msgid "Voting is only available upon participation in Staking."
-msgstr "只有在参与下注时才能进行投票。"
+msgstr "只有参与权益时才能投票。"
+
+#. [proposals.community.descr]
+#. defaultMessage is:
+#. Voting on community proposals allows you to have a say on how the project
+#. treasury is spent.
+#.         Participation in voting requires (PoS) tickets. Proposal creation,
+#. discussions and other features are available at
+#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Page.json
+msgctxt "proposals.community.descr"
+msgid ""
+"Voting on community proposals allows you to have a say on how the project treasury is spent.\n"
+"        Participation in voting requires (PoS) tickets. Proposal creation, discussions and other features are available at"
+msgstr ""
+"社区提案投票让您对基金会资金的使用发表意见。\n"
+"参与投票需要(PoS)选票。创建提案，讨论及其他功能可以到一下网址"
 
 #. [loaderBar.Waiting]
 #. defaultMessage is:
@@ -5698,7 +6404,7 @@ msgstr "只有在参与下注时才能进行投票。"
 #: app/i18n/extracted/app/components/indicators/LinearProgressFull.json
 msgctxt "loaderBar.Waiting"
 msgid "Waiting for daemon connection..."
-msgstr "正在等待 daemon 连接..."
+msgstr "正在等待守护进程连接..."
 
 #. [fatal.wallet.title]
 #. defaultMessage is:
@@ -5732,10 +6438,18 @@ msgctxt "txDetails.walletOutputs"
 msgid "Wallet Outputs"
 msgstr "钱包输出"
 
+#. [trezor.walltCreationPrivatePassphrase]
+#. defaultMessage is:
+#. Wallet PassPhrase
+#: app/i18n/extracted/app/components/modals/trezor/WalletCreationPassPhraseModal.json
+msgctxt "trezor.walltCreationPrivatePassphrase"
+msgid "Wallet PassPhrase"
+msgstr "钱包密码"
+
 #. [aboutModal.paragraph3]
 #. defaultMessage is:
 #. Want to help or get involved, check out
-#: app/i18n/extracted/app/components/modals/AboutModal/Modal.json
+#: app/i18n/extracted/app/components/modals/AboutModal/AboutModal.json
 msgctxt "aboutModal.paragraph3"
 msgid "Want to help or get involved, check out"
 msgstr "想要帮助或参与、查看"
@@ -5762,7 +6476,7 @@ msgid ""
 "Warning this action is permanent! Please make sure you want to remove your "
 "blockchain data before proceeding. Decrediton will automatically shutdown "
 "after deleting the folder. Please manually restart it afterwards."
-msgstr "警告此操作为永久性操作！继续之前，请确保删除区块链数据。删除文件夹后，Decrediton 将自动关闭。请稍后手动重启。"
+msgstr "警告此操作为永久性操作！继续之前，请确保您想删除区块链数据。删除文件夹后，Decrediton 将自动关闭。请稍后手动重启。"
 
 #. [watchOnly.enabled]
 #. defaultMessage is:
@@ -5770,7 +6484,7 @@ msgstr "警告此操作为永久性操作！继续之前，请确保删除区块
 #: app/i18n/extracted/app/components/buttons/WatchOnlyWalletSwitch.json
 msgctxt "watchOnly.enabled"
 msgid "Watch Only"
-msgstr "仅观看"
+msgstr "只读"
 
 #. [walletselection.watchOnly]
 #. defaultMessage is:
@@ -5778,7 +6492,7 @@ msgstr "仅观看"
 #: app/i18n/extracted/app/components/views/GetStartedPage/WalletSelection/Form.json
 msgctxt "walletselection.watchOnly"
 msgid "Watch Only"
-msgstr "仅观看"
+msgstr "只读"
 
 #. [createwallet.walletOnly.label]
 #. defaultMessage is:
@@ -5810,7 +6524,7 @@ msgstr "欢迎使用 Decrediton 钱包"
 #: app/i18n/extracted/app/components/views/HelpPage/TutorialsTab/index.json
 msgctxt "tutorials.staking"
 msgid "What is Staking (Proof-of-Stake)?"
-msgstr "立标是什么 （权益证明）？"
+msgstr "什么是POS（权益证明）？"
 
 #. [home.noTickets.staking]
 #. defaultMessage is:
@@ -5818,7 +6532,7 @@ msgstr "立标是什么 （权益证明）？"
 #: app/i18n/extracted/app/components/views/HomePage/tables/NoTicketsLinks.json
 msgctxt "home.noTickets.staking"
 msgid "What is Staking (Proof-of-Stake)?"
-msgstr "立标是什么 （权益证明）？"
+msgstr "什么是POS（权益证明）？"
 
 #. [getStarted.whatsNew]
 #. defaultMessage is:
@@ -5826,15 +6540,15 @@ msgstr "立标是什么 （权益证明）？"
 #: app/i18n/extracted/app/components/views/GetStartedPage/messages.json
 msgctxt "getStarted.whatsNew"
 msgid "What's New in v{version}"
-msgstr "v{version} 中有何新内容"
+msgstr "v{version} 中有何更新"
 
 #. [aboutModal.whatsNew]
 #. defaultMessage is:
 #. What's New?
-#: app/i18n/extracted/app/components/modals/AboutModal/Modal.json
+#: app/i18n/extracted/app/components/modals/AboutModal/AboutModal.json
 msgctxt "aboutModal.whatsNew"
 msgid "What's New?"
-msgstr "有何新增内容？"
+msgstr "有何更新？"
 
 #. [appMenu.window]
 #. defaultMessage is:
@@ -5844,13 +6558,43 @@ msgctxt "appMenu.window"
 msgid "Window"
 msgstr "窗口"
 
-#. [proposal.currentChoice.yes]
+#. [trezorPage.wipeDeviceBtn]
 #. defaultMessage is:
-#. Yes
-#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Details/helpers.json
-msgctxt "proposal.currentChoice.yes"
-msgid "Yes"
-msgstr "是"
+#. Wipe Device
+#: app/i18n/extracted/app/components/views/TrezorPage/RecoveryButtons.json
+msgctxt "trezorPage.wipeDeviceBtn"
+msgid "Wipe Device"
+msgstr "抹除设备"
+
+#. [home.totalValueOfLiveTickets]
+#. defaultMessage is:
+#. With a total value of
+#: app/i18n/extracted/app/components/views/HomePage/tabs/Tickets.json
+msgctxt "home.totalValueOfLiveTickets"
+msgid "With a total value of"
+msgstr "总值"
+
+#. [errors.wrongPassphrase]
+#. defaultMessage is:
+#. Wrong private passphrase entered. Please verify you have typed the correct
+#. private passphrase for the wallet.
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "errors.wrongPassphrase"
+msgid ""
+"Wrong private passphrase entered. Please verify you have typed the correct "
+"private passphrase for the wallet."
+msgstr "输入密码错误。请确认您已输入正确的钱包密码。"
+
+#. [getStarted.longWaitWarning]
+#. defaultMessage is:
+#. You are currently upgrading to a new dcrd version.  Typically, this one-
+#. time reindexing will take 30-45 minutes on an average machine.
+#: app/i18n/extracted/app/components/views/GetStartedPage/DaemonLoading/Form.json
+msgctxt "getStarted.longWaitWarning"
+msgid ""
+"You are currently upgrading to a new dcrd version.  Typically, this one-time"
+" reindexing will take 30-45 minutes on an average machine."
+msgstr ""
 
 #. [tickets.purchaseTicketsHeader]
 #. defaultMessage is:
@@ -5869,7 +6613,7 @@ msgctxt "proposalDetails.votingInfo.noElligibleTickets"
 msgid ""
 "You don't have tickets elligible for voting on this proposal. Purchase "
 "tickets to vote on future proposals."
-msgstr "您没有可以投此提案的票。购票以对未来的提案进行投票。"
+msgstr "您没有可以投此提案的选票，请为未来的提案购票。"
 
 #. [tickets.updateStakePoolConfigHeader]
 #. defaultMessage is:
@@ -5877,13 +6621,13 @@ msgstr "您没有可以投此提案的票。购票以对未来的提案进行投
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "tickets.updateStakePoolConfigHeader"
 msgid "You have successfully updated your stakepool settings."
-msgstr "您的成功更新 Stakepool 设置。"
+msgstr "您已成功更新选票矿池设置。"
 
 #. [proposalDetails.votingInfo.eligibleCount]
 #. defaultMessage is:
 #. You have {count, plural, one {one ticket} other {# tickets}} eligible for
 #. voting
-#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Details/helpers.json
+#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Details/UpdateVoteChoiceModalButton.json
 msgctxt "proposalDetails.votingInfo.eligibleCount"
 msgid ""
 "You have {count, plural, one {one ticket} other {# tickets}} eligible for "
@@ -5892,11 +6636,11 @@ msgstr "您有资格投票 {count, plural, one {one ticket} other {# tickets}} "
 
 #. [tickets.importScriptHeader]
 #. defaultMessage is:
-#. You successfully imported a script tickets
+#. You successfully imported a script
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "tickets.importScriptHeader"
-msgid "You successfully imported a script tickets"
-msgstr "您已成功导入脚本票券。"
+msgid "You successfully imported a script"
+msgstr "您已成功导入脚本。"
 
 #. [tickets.revokeTicketsHeader]
 #. defaultMessage is:
@@ -5904,15 +6648,23 @@ msgstr "您已成功导入脚本票券。"
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "tickets.revokeTicketsHeader"
 msgid "You successfully revoked tickets"
-msgstr "您已成功取消票券"
+msgstr "您已成功撤销选票"
 
 #. [autobuyer.balanceToMaintainError]
 #. defaultMessage is:
 #. Your balance to mantain is invalid
-#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/Details.json
+#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/Form.json
 msgctxt "autobuyer.balanceToMaintainError"
 msgid "Your balance to mantain is invalid"
 msgstr "您要保留的余额无效"
+
+#. [home.liveTicketsCount]
+#. defaultMessage is:
+#. active tickets
+#: app/i18n/extracted/app/components/views/HomePage/tabs/Tickets.json
+msgctxt "home.liveTicketsCount"
+msgid "active tickets"
+msgstr "成熟票"
 
 #. [blocksInput.blocks]
 #. defaultMessage is:
@@ -5920,15 +6672,15 @@ msgstr "您要保留的余额无效"
 #: app/i18n/extracted/app/components/inputs/BlocksInput.json
 msgctxt "blocksInput.blocks"
 msgid "blocks"
-msgstr "块"
+msgstr "区块"
 
-#. [statusSmall.daysToVote]
+#. [trezor.pinModal.clear]
 #. defaultMessage is:
-#. days
-#: app/i18n/extracted/app/components/TxHistory/TxHistoryRow/StakeTxRow.json
-msgctxt "statusSmall.daysToVote"
-msgid "days"
-msgstr "天数"
+#. clear
+#: app/i18n/extracted/app/components/modals/trezor/PinModal.json
+msgctxt "trezor.pinModal.clear"
+msgid "clear"
+msgstr "清除"
 
 #. [help.logs.dcrd]
 #. defaultMessage is:
@@ -5954,6 +6706,14 @@ msgctxt "help.stakepools.subtitle"
 msgid "decred.org/stakepools"
 msgstr "decred.org/stakepools"
 
+#. [help.logs.decrediton]
+#. defaultMessage is:
+#. decrediton
+#: app/i18n/extracted/app/components/views/HelpPage/LogsTab/Page.json
+msgctxt "help.logs.decrediton"
+msgid "decrediton"
+msgstr "decrediton"
+
 #. [help.documentation.subtitle]
 #. defaultMessage is:
 #. docs.decred.org
@@ -5968,7 +6728,7 @@ msgstr "docs.decred.org"
 #: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
 msgctxt "ticket.status.expired"
 msgid "expired"
-msgstr "已过期"
+msgstr "过期"
 
 #. [ticket.status.multiple.expired]
 #. defaultMessage is:
@@ -5976,7 +6736,7 @@ msgstr "已过期"
 #: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
 msgctxt "ticket.status.multiple.expired"
 msgid "expired"
-msgstr "已过期"
+msgstr "过期"
 
 #. [help.blockchain.subtitle]
 #. defaultMessage is:
@@ -6008,7 +6768,7 @@ msgstr "github.com/decred/decrediton"
 #: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
 msgctxt "ticket.status.immature"
 msgid "immature"
-msgstr "准选票"
+msgstr "未成熟"
 
 #. [ticket.status.multiple.immature]
 #. defaultMessage is:
@@ -6016,7 +6776,15 @@ msgstr "准选票"
 #: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
 msgctxt "ticket.status.multiple.immature"
 msgid "immature"
-msgstr "准选票"
+msgstr "未成熟"
+
+#. [home.stakingRewards]
+#. defaultMessage is:
+#. in staking rewards
+#: app/i18n/extracted/app/components/views/HomePage/tabs/Tickets.json
+msgctxt "home.stakingRewards"
+msgid "in staking rewards"
+msgstr "投票奖励"
 
 #. [ticket.status.live]
 #. defaultMessage is:
@@ -6024,7 +6792,7 @@ msgstr "准选票"
 #: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
 msgctxt "ticket.status.live"
 msgid "live"
-msgstr "现场"
+msgstr "成熟"
 
 #. [ticket.status.multiple.live]
 #. defaultMessage is:
@@ -6032,7 +6800,7 @@ msgstr "现场"
 #: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
 msgctxt "ticket.status.multiple.live"
 msgid "live"
-msgstr "现场"
+msgstr "成熟"
 
 #. [ticket.status.missed]
 #. defaultMessage is:
@@ -6040,7 +6808,7 @@ msgstr "现场"
 #: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
 msgctxt "ticket.status.missed"
 msgid "missed"
-msgstr "已错过"
+msgstr "错过"
 
 #. [ticket.status.multiple.missed]
 #. defaultMessage is:
@@ -6048,7 +6816,7 @@ msgstr "已错过"
 #: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
 msgctxt "ticket.status.multiple.missed"
 msgid "missed"
-msgstr "已错过"
+msgstr "错过"
 
 #. [ticket.status.revoked]
 #. defaultMessage is:
@@ -6056,7 +6824,7 @@ msgstr "已错过"
 #: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
 msgctxt "ticket.status.revoked"
 msgid "revoked"
-msgstr "已取消"
+msgstr "撤销"
 
 #. [ticket.status.multiple.revoked]
 #. defaultMessage is:
@@ -6064,7 +6832,7 @@ msgstr "已取消"
 #: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
 msgctxt "ticket.status.multiple.revoked"
 msgid "revoked"
-msgstr "已取消"
+msgstr "撤销"
 
 #. [help.matrix.subtitle]
 #. defaultMessage is:
@@ -6112,15 +6880,7 @@ msgstr "此链接"
 #: app/i18n/extracted/app/components/inputs/NumTicketsInput.json
 msgctxt "numTicketsInput.unit"
 msgid "tickets"
-msgstr "票券"
-
-#. [autobuyer.maxPerBlock.units]
-#. defaultMessage is:
-#. tickets
-#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/Details.json
-msgctxt "autobuyer.maxPerBlock.units"
-msgid "tickets"
-msgstr "票券"
+msgstr "选票"
 
 #. [ticket.status.unknown]
 #. defaultMessage is:
@@ -6144,7 +6904,7 @@ msgstr "未知"
 #: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
 msgctxt "ticket.status.unmined"
 msgid "unmined"
-msgstr "未开采"
+msgstr "未打包"
 
 #. [ticket.status.multiple.unmined]
 #. defaultMessage is:
@@ -6152,7 +6912,7 @@ msgstr "未开采"
 #: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
 msgctxt "ticket.status.multiple.unmined"
 msgid "unmined"
-msgstr "未开采"
+msgstr "未打包"
 
 #. [ticket.status.voted]
 #. defaultMessage is:
@@ -6169,6 +6929,14 @@ msgstr "已投票"
 msgctxt "ticket.status.multiple.voted"
 msgid "voted"
 msgstr "已投票"
+
+#. [home.votedTicketsCount]
+#. defaultMessage is:
+#. voted tickets
+#: app/i18n/extracted/app/components/views/HomePage/tabs/Tickets.json
+msgctxt "home.votedTicketsCount"
+msgid "voted tickets"
+msgstr "已投的票"
 
 #. [transaction.confirmationHeight]
 #. defaultMessage is:
@@ -6197,21 +6965,21 @@ msgstr ""
 "{days, plural, =0 {in the same day} one {within one day} other {within # "
 "days}} 购买"
 
-#. [proposal.progressCount.no]
+#. [statusSmall.daysToVotePlural]
 #. defaultMessage is:
-#. {count} No
-#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Details/helpers.json
-msgctxt "proposal.progressCount.no"
-msgid "{count} No"
-msgstr "{count} 否"
+#. {days, plural, one {# day} other {# days}}
+#: app/i18n/extracted/app/components/TxHistory/TxHistoryRow/StakeTxRow.json
+msgctxt "statusSmall.daysToVotePlural"
+msgid "{days, plural, one {# day} other {# days}}"
+msgstr ""
 
-#. [proposal.progressCount.yes]
+#. [ticket.daysToVote]
 #. defaultMessage is:
-#. {count} Yes
-#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Details/helpers.json
-msgctxt "proposal.progressCount.yes"
-msgid "{count} Yes"
-msgstr "{count} 是"
+#. {days, plural, one {# day} other {# days}}
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketInfoCard.json
+msgctxt "ticket.daysToVote"
+msgid "{days, plural, one {# day} other {# days}}"
+msgstr ""
 
 #. [ticket.daysToVoteMessage]
 #. defaultMessage is:
@@ -6357,14 +7125,6 @@ msgctxt "accounts.errors.getNextAccountFailed"
 msgid "{originalError}"
 msgstr "{originalError}"
 
-#. [settings.errors.changePassphraseFailed]
-#. defaultMessage is:
-#. {originalError}
-#: app/i18n/extracted/app/reducers/snackbar.json
-msgctxt "settings.errors.changePassphraseFailed"
-msgid "{originalError}"
-msgstr "{originalError}"
-
 #. [decodeRawTx.errors.decodeFailed]
 #. defaultMessage is:
 #. {originalError}
@@ -6395,7 +7155,7 @@ msgstr "{originalError}"
 #: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/charts/StakePoolStats.json
 msgctxt "mytickets.statistics.stakepool.votedTip"
 msgid "{percentage}% of tickets missed"
-msgstr "错过票券的{percentage}%"
+msgstr "{percentage}% 错过的选票"
 
 #. [mytickets.statistics.stakepool.ticketsTip]
 #. defaultMessage is:
@@ -6403,7 +7163,7 @@ msgstr "错过票券的{percentage}%"
 #: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/charts/StakePoolStats.json
 msgctxt "mytickets.statistics.stakepool.ticketsTip"
 msgid "{percentage}% proportion of network tickets"
-msgstr "{percentage}% 网络门票所占比例"
+msgstr "{percentage}% 全网选票占比"
 
 #. [rescan.progressPercent]
 #. defaultMessage is:
@@ -6513,7 +7273,7 @@ msgid ""
 "{value, plural, =0 {in the same day} one {within one day } other {within # "
 "days}}"
 msgstr ""
-"{value, plural, =0 {in the same day} 一个 {within one day } 其他 {within # "
+"{value, plural, =0 {in the same day} one {within one day } other {within # "
 "days}}"
 
 #. [ticket.daysToLeave]
