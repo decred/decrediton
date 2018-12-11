@@ -59,6 +59,15 @@ export const enableTrezor = () => (dispatch, getState) => {
   }
 };
 
+export const TRZ_TREZOR_DISABLED = "TRZ_TREZOR_DISABLED";
+// disableTrezor disables trezor integration for the current wallet. Note
+// that it does **not** disable in the config, so the wallet will restart as a
+// trezor wallet next time it's opened.
+export const disableTrezor = () => (dispatch) => {
+  dispatch(clearDeviceSession());
+  dispatch({ type: TRZ_TREZOR_DISABLED });
+};
+
 export const TRZ_CLEAR_DEVICELIST = "TRZ_CLEAR_DEVICELIST";
 
 export const reloadTrezorDeviceList = () => (dispatch) => {

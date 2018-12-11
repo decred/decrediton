@@ -118,8 +118,19 @@ class WalletSelectionBody extends React.Component {
   showCreateWalletForm(createNewWallet) {
     this.setState({ createNewWallet, createWalletForm: true });
   }
-  hideCreateWalletForm(createNewWallet) {
-    this.setState({ hasFailedAttemptName: false, hasFailedAttemptPubKey: false, createNewWallet, createWalletForm: false });
+  hideCreateWalletForm() {
+    if (this.state.isTrezor) {
+      this.props.trezorDisable();
+    }
+
+    this.setState({ hasFailedAttemptName: false,
+      hasFailedAttemptPubKey: false,
+      createWalletForm: false,
+      newWalletName: "",
+      isWatchingOnly: false,
+      isTrezor: false,
+      walletMasterPubKey: "",
+    });
   }
   onChangeAvailableWallets(selectedWallet) {
     this.setState({ selectedWallet });
@@ -183,6 +194,8 @@ class WalletSelectionBody extends React.Component {
     this.setState({ isTrezor, isWatchingOnly: false });
     if (isTrezor) {
       this.props.trezorEnable();
+    } else {
+      this.props.trezorDisable();
     }
   }
   async onChangeCreateWalletMasterPubKey(walletMasterPubKey) {

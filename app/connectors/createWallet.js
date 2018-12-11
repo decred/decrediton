@@ -29,6 +29,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   decodeSeed: wla.decodeSeed,
   trezorLoadDeviceList: trza.loadDeviceList,
   trezorEnable: trza.enableTrezor,
+  trezorDisable: trza.disableTrezor,
   trezorAlertNoConnectedDevice: trza.alertNoConnectedDevice,
   trezorGetWalletCreationMasterPubKey: trza.getWalletCreationMasterPubKey
 }, dispatch);
