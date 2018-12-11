@@ -18,6 +18,8 @@ import {
   DECREDITON_VERSION,
   FATAL_DAEMON_ERROR,
   FATAL_WALLET_ERROR,
+  DAEMON_WARNING,
+  WALLET_WARNING,
   CLOSEDAEMON_ATTEMPT, CLOSEDAEMON_FAILED, CLOSEDAEMON_SUCCESS, NOT_SAME_CONNECTION,
   NETWORK_MATCH
 } from "../actions/DaemonActions";
@@ -170,6 +172,16 @@ export default function version(state = {}, action) {
     return {
       ...state,
       walletError: action.error,
+    };
+  case DAEMON_WARNING:
+    return {
+      ...state,
+      daemonWarning: action.warning,
+    };
+  case WALLET_WARNING:
+    return {
+      ...state,
+      walletWarning: action.warning,
     };
   case CLOSEWALLET_SUCCESS:
     return {

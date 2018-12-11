@@ -131,3 +131,12 @@ export function lastPanicLine(log) {
 export function ClearDcrwalletLogs() {
   dcrwalletLogs = Buffer.from("");
 }
+
+const reindexCheck = "Reindexing to height";
+
+export function CheckDaemonLogs(data) {
+  if (data.indexOf(reindexCheck) > 0) {
+    return true;
+  }
+  return false;
+}
