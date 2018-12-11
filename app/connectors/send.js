@@ -20,6 +20,8 @@ const mapStateToProps = selectorMap({
   isTransactionsSendTabDisabled: sel.isTransactionsSendTabDisabled,
   constructTxResponse: sel.constructTxResponse,
   isTrezor: sel.isTrezor,
+  unsignedRawTx: sel.unsignedRawTx,
+  isWatchingOnly: sel.isWatchingOnly,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
