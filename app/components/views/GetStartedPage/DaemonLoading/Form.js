@@ -109,7 +109,7 @@ const DaemonLoadingBody = ({
             </div>
             <div className="advanced-page-form">
               <div className="advanced-daemon-row">
-                <T id="getStarted.longWaitWarning" m="You are currently upgrading to dcrd version 1.4.0.  Typically, this one-time reindexing take 30-45mins on an average machine."/>
+                <T id="getStarted.longWaitWarning" m="You are currently upgrading to a new dcrd version.  Typically, this one-time reindexing will take 30-45mins on an average machine."/>
               </div>
             </div>
           </Aux>:
