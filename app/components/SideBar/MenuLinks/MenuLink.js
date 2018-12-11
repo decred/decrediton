@@ -1,10 +1,42 @@
 import { NavLink as Link } from "react-router-dom";
+import { Lottie } from "shared";
 
-const MenuLink = ({ icon, linkRef, hasNotification, ...props }) => (
-  <div ref={ linkRef }>
-    { hasNotification ? <span className="sidebar-menu-link-notification-icon"></span> : null}
-    <Link className={"menu-link " +icon+"Icon"} activeClassName={"menu-link-active "+icon+"Icon"} { ...props } />
-  </div>
-);
+@autobind
+class MenuLink extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { animationStopped: true };
+  }
+
+  onEnter() {
+    this.setState({ animationStopped: false });
+  }
+
+  onLeave() {
+    this.setState({ animationStopped: true });
+  }
+
+  render() {
+    const { onEnter, onLeave } = this;
+    const { linkRef, hasNotification, animationData, link, to } = this.props;
+    const { animationStopped } = this.state;
+
+    return (
+      <div ref={linkRef} onMouseEnter={onEnter} onMouseLeave={onLeave}>
+        { hasNotification ? <span className="sidebar-menu-link-notification-icon"></span> : null}
+
+        <Link to={to} className="menu-link" activeClassName="menu-link-active">
+          <Lottie
+            animationData={animationData}
+            stopped={animationStopped}
+            autoplay={false}
+            className="sidebar-menu-nav-icon"
+          />
+          {link}
+        </Link>
+      </div>
+    );
+  }
+}
 
 export default MenuLink;
