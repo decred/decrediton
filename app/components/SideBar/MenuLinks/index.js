@@ -81,12 +81,14 @@ class MenuLinks extends React.Component {
   getMenuLink(linkItem) {
     const { path, link, icon, notifProp, animationData } = linkItem;
     const hasNotif = notifProp ? this.props[notifProp] : false;
+    const { selectedTab } = this.state;
 
     return (
       <MenuLink
         icon={ icon }
         to={ path }
         key={ path }
+        active={ path === selectedTab }
         hasNotification={ hasNotif }
         linkRef={ ref => this._nodes.set(path, ref) }
         animationData={animationData}

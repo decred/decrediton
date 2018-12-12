@@ -8,8 +8,14 @@ class MenuLink extends React.Component {
     this.state = { animationStopped: true };
   }
 
+  componentDidUpdate(prevProps) {
+    if (!prevProps.active && this.props.active && !this.state.animationStopped) {
+      this.setState({ animationStopped: true });
+    }
+  }
+
   onEnter() {
-    this.setState({ animationStopped: false });
+    this.setState({ animationStopped: this.props.active });
   }
 
   onLeave() {
