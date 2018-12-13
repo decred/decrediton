@@ -127,7 +127,7 @@ msgstr "API Key"
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Page.json
 msgctxt "proposals.statusLinks.abandoned"
 msgid "Abandoned"
-msgstr ""
+msgstr "被废弃"
 
 #. [appMenu.about]
 #. defaultMessage is:
@@ -3598,7 +3598,7 @@ msgstr "属性"
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Details/helpers.json
 msgctxt "proposalDetails.votingInfo.abandoned"
 msgid "Proposal has been abandoned"
-msgstr ""
+msgstr "提案已被废弃"
 
 #. [proposalDetails.votingInfo.notVoting]
 #. defaultMessage is:
@@ -5486,7 +5486,7 @@ msgstr "选票"
 #: app/i18n/extracted/app/components/views/GetStartedPage/messages.json
 msgctxt "getStarted.chainLoading.headerTime"
 msgid "Time from last fetched header:"
-msgstr "上次获取区块头的时间："
+msgstr "最后获取的区块头显示时间为："
 
 #. [settings.timezone.title]
 #. defaultMessage is:
@@ -6065,7 +6065,7 @@ msgstr "未打包"
 #: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/Page.json
 msgctxt "send.unsignedRawTxTite"
 msgid "Unsigned Raw Transaction:"
-msgstr ""
+msgstr "未签名的原始交易"
 
 #. [stake.unspentTickets]
 #. defaultMessage is:
@@ -6594,7 +6594,7 @@ msgctxt "getStarted.longWaitWarning"
 msgid ""
 "You are currently upgrading to a new dcrd version.  Typically, this one-time"
 " reindexing will take 30-45 minutes on an average machine."
-msgstr ""
+msgstr "您正在升级到新的dcrd版本。通常这种一次性重建索引在一般机器上需要30-45分钟。"
 
 #. [tickets.purchaseTicketsHeader]
 #. defaultMessage is:
@@ -6971,7 +6971,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/TxHistory/TxHistoryRow/StakeTxRow.json
 msgctxt "statusSmall.daysToVotePlural"
 msgid "{days, plural, one {# day} other {# days}}"
-msgstr ""
+msgstr "{days, plural, one {# 天} other {# 天}}"
 
 #. [ticket.daysToVote]
 #. defaultMessage is:
@@ -6979,7 +6979,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketInfoCard.json
 msgctxt "ticket.daysToVote"
 msgid "{days, plural, one {# day} other {# days}}"
-msgstr ""
+msgstr "{days, plural, one {# 天} other {# 天}}"
 
 #. [ticket.daysToVoteMessage]
 #. defaultMessage is:
