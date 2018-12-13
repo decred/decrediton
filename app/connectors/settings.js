@@ -23,6 +23,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onChangeTempSettings: sa.updateStateSettingsChanged,
   onSaveSettings: sa.saveSettings,
   onCloseWallet: wla.closeWalletRequest,
+  onAddAllowedRequestType: sa.addAllowedExternalRequest,
   toggleTheme: sa.toggleTheme,
 }, dispatch);
 
