@@ -89,8 +89,8 @@ const DaemonLoadingBody = ({
               </div>
               :
               <div className="loader-bar-estimation">
-                <T id="getStarted.chainLoading.syncEstimation" m="Estimated time left"/>
-                <span className="bold"> {finishDateEstimation ? <FormattedRelative value={finishDateEstimation}/> : "--"} ({getCurrentBlockCount} / {getNeededBlocks})</span>
+                { finishDateEstimation ? <T id="getStarted.chainLoading.syncEstimation" m="Blockchain download estimated complete"/> : null }
+                <span className="bold"> {finishDateEstimation ? <FormattedRelative value={finishDateEstimation}/> : null} ({getCurrentBlockCount} / {getNeededBlocks})</span>
               </div>
             }
           </Aux>
