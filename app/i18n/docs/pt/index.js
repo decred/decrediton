@@ -18,6 +18,8 @@ export { default as GetStartedTutorialPage02 } from "./GetStarted/TutorialPage02
 export { default as GetStartedTutorialPage03 } from "./GetStarted/TutorialPage03.md";
 export { default as GetStartedTutorialPage04 } from "./GetStarted/TutorialPage04.md";
 
+export { default as ReleaseNote1_4_0 } from "./ReleaseNotes/v1.4.0.md";
+
 export { default as StakingTutorialPage01 } from "./StakingTutorial/Page01.md";
 export { default as StakingTutorialPage02 } from "./StakingTutorial/Page02.md";
 
