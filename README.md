@@ -67,39 +67,68 @@ To pass additional arguments to dcrwallet (such as to increase the logging level
 decrediton --extrawalletargs='-d=debug'
 ```
 
-## Developing
+## Development Instructions and Tips
 
-Due to potential compatibility issues, for now, all work should be
-done with electron 2.0.0.
+### Node and Electron Versions
 
-You need to install dcrd, dcrwallet and dcrctl.
+You need to use compatible node and electron versions to build native modules
+and in general to ensure the code you're working on will behave correctly in
+production.
+
+The current recommended versions for the main tools are:
+
+  - Node: 10.2+
+  - Npm: 6.4+
+  - Yarn: 1.12+
+  - Electron: 3.0.6
+
+To ease node version management, install all top-level tools (node/npm/yarn) using nvm ([linux/mac](https://github.com/creationix/nvm), [windows](https://github.com/creationix/nvm)).
+
+
+### Decred binaries
+
+Development using the master version of decrediton usually requires using a
+corresponding master version of dcrd/dcrwallet.
+
+Follow the instructions to install dcrd, dcrwallet and dcrctl from source from
+their respective repos:
 
 - [dcrd/dcrctl installation instructions](https://github.com/decred/dcrd#updating)
 - [dcrwallet installation instructions](https://github.com/decred/dcrwallet#installation-and-updating)
 
-This has been tested on Linux and OSX.
 
-Adjust the following steps for the paths you want to use.
+### Basic Development Setup
 
-``` bash
-mkdir code
-cd code
+These steps are usually the only ones required for basic development on
+linux/macOS (after compiling dcrd/dcrwallet/dcrctl from source).
+
+For Windows users, it's usually a good idea to use
+[MSYS2](https://www.msys2.org/) instead of the standard cmd.exe (see below for
+more Windows tips).
+
+```bash
 git clone https://github.com/decred/decrediton.git
 cd decrediton
-yarn
 mkdir bin/
 cp $GOPATH/bin/dcr* bin/
+yarn
 yarn dev
 ```
 
-## Setting up your development environment
-The following steps will help you configure your decrediton development environment and reduce future startup times.
+### Advanced Daemon Mode
 
-### Wallet
-When you launch decrediton, you will be prompted to select a wallet to use. Select your wallet or create a new one using the in-app wizard. Be sure to save your seed and make your password memorable.
+This step is only recommended if you're constantly restarting decrediton. If
+you're not developing on a daily basis, you can safely ignore this for the
+moment.
 
-### Decred Node
-It will be helpful to you to run the Decred node in a separate process and simply attach to it between decrediton restarts. In order to see the advanced daemon configuration options you open your ```config.json``` and set the ```daemon_start_advanced``` flag to ```true``` as follows:
+When starting decrediton in rpc (or "normal") mode, it automatically runs dcrd
+in the backgound to gather blockchain data. If you need to constantly restart
+decrediton, loading the node every time may be time consuming.
+
+In that case, it's helpful to run the dcrd node in a separate process and simply
+attach to it between decrediton restarts. In order to see the advanced daemon
+configuration options you open your ```config.json``` and set the
+```daemon_start_advanced``` flag to ```true``` as follows:
 
 ```"daemon_start_advanced": true,```
 
@@ -119,54 +148,121 @@ OSX - ```dcrd --testnet -u USER -P PASSWORD --rpclisten=127.0.0.1:19119 --rpccer
 
 Linux - ```dcrd --testnet -u USER -P PASSWORD --rpclisten=127.0.0.1:19119 --rpccert=~/.dcrd/rpc.cert```
 
-You can connect to this daemon in ```Advanced Startup => Different Local Daemon Location``` and input the parameters requested. Note that all the parameters needed are present in the command you used to start the node for your respective system.
+Once you restart decrediton, you should be presented with a screen to specify
+the node parameters. Note that all of them are present in the command you used
+to start the node for your respective system.
+
 
 ### Windows
 
-On windows you will need some extra steps to build grpc.  This assumes
-you are using msys2 with various development tools (compilers, make,
-etc) all installed.
+Windows is tricky, due to some things working better on MSYS2, while some things
+only working on cmd.exe, and native module building being very tough to get
+right.
 
-Install node from the official package https://nodejs.org/en/download/
-and add it to your msys2 path.  You must install the same version of node as required for Linux and OSX (8.6.0+).
+On a day-to-day basis, for development and testing (of general decrediton
+functionality) MSYS2 is fine, and usually useful for providing GNU-like CLI
+tools.
 
-Install openssl from the following site:
-https://slproweb.com/products/Win32OpenSSL.html
+However, for building native modules, you'll need to use the cmd.exe prompt.
 
-From an admin shell:
+First, from an *administrative prompt* (cmd.exe), install `windows-build-tools`:
 
 ```bash
 npm install --global --production windows-build-tools
 ```
 
-Then build grpc as described above.
+This _usually_ works, but sometimes bugs out. If it does, try manually
+installing the vs tools by going opening an explorer window to
+`c:\users\[user]\.windows-build-tools`, then running `vs_BuildTools.exe`.
 
-## Building the package
-
-You need to install dcrd, dcrwallet and dcrctl.
-
-- [dcrd/dcrctl installation instructions](https://github.com/decred/dcrd#updating)
-- [dcrwallet installation instructions](https://github.com/decred/dcrwallet#installation-and-updating)
-
-To build a packaged version of decrediton (including a dmg on OSX and
-exe on Windows), follow the development steps above.  Then build the
-dcr command line tools:
+After installing windows-build-tools, open a *non-administrative* prompt
+(cmd.exe) and then try recompiling the native modules:
 
 ```bash
-cd code/decrediton
-mkdir bin
-cp `which dcrd` bin/
-cp `which dcrctl` bin/
-cp `which dcrwallet` bin/
 yarn
-yarn package
+yarn rebuild-natives
+```
+
+If you have multiple versions of VS Build Tools installed, you may need to
+configure which version to use:
+
+```bash
+npm config set msvs_version 2015 -g
+```
+
+Sometimes you have to nuke `/node_modules` and `/app/node_modules` for the
+native modules to be forced to rebuild.
+
+You might also run into trouble when compiling or trying to use modules compiled
+with a different version of node than the one that electron internally uses. In
+that case, switch to the same version of node from electron (check the
+electron/node version [here](https://github.com/electron/node)) then try
+everything again.
+
+The end result for module compilation should be the following files:
+
+- `app/node_modules/blake-hash/bin/win32-x64-64/blake-hash.node`
+- `app/node_modules/win32ipc/build/Release/win32ipc.node`
+- `app/node_modules/grpc/src/node/extension_binary/electron-v3.0-win32-x64/grpc_node.node`
+
+*Note*: `yarn start` does _not_ currently correctly load the win32ipc module, so
+testing with yarn build/start will fail to correctly unload dcrd/dcrwallet when
+closing.
+
+
+### Raspberry Pi & Other Platforms
+
+Building on a Raspberry Pi (and other less common platforms) requires rebuilding
+the native modules, given that most of them (specially grpc) do not come with
+precompiled binaries for them.
+
+Do note that for the moment, support for this platform is experimental, so you
+might need to tweak stuff (in particular, you'll need to disable hardware
+acceleration and ui animations) to run decrediton on it.
+
+```bash
+yarn rebuild-natives
+```
+
+### Keeping up with dcrd/dcrwallet changes
+
+If you're developing decrediton improvements on a daily basis, you need to also keep up to date with dcrd/dcrwallet changes (specially when developing things like new grpc calls).
+
+In that case, instead of copying the binaries to `/bin` it's better to symlink
+them so that you only need a single step (go install) to run newer versions of
+these tools:
+
+```bash
+cd bin
+ln -s `which dcrd` dcrd
+ln -s `which dcrctl` dcrctl
+ln -s `which dcrwallet` dcrwallet
 ```
 
 ## Building release versions
 
+You need the binaries _copied_ into the `bin/` directly (note that symlinks
+don't work for production builds: you need to actually copy the executables).
+
+You can test the production version (without most of the debugging info and with
+compiled and minified code) by using:
+
+```bash
+yarn build
+yarn start
+```
+
+And finally, a packaged version (including the final standalone electron
+binaries) for the current platform can be built with:
+
+```bash
+yarn package
+```
+
 ### Linux
 
 You need to make sure you have the following packages installed for the building to work:
+
 - icns2png
 - graphicsmagick
 - rpm-build
