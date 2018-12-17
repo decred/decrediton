@@ -25,7 +25,9 @@ const Modal = ({ show, onCancelModal, onSubmit, copyConfirmationPhrase,
       <TextInput
         autoFocus
         value={typedConfirmationPhrase}
-        onChange={(e) => onTypedConfirmationPhraseChanged(e.target.value)}/>
+        onChange={(e) => onTypedConfirmationPhraseChanged(e.target.value)}
+        onKeyDownSubmit={() => typedConfirmationPhrase.toLowerCase() === copyConfirmationPhrase.toLowerCase() && onSubmit() }
+      />
     </div>
     <div className="confirm-seed-copy-modal-toolbar">
       <DangerButton className="confirm-modal-confirm-button" onClick={onSubmit} disabled={typedConfirmationPhrase.toLowerCase() !== copyConfirmationPhrase.toLowerCase()}>
