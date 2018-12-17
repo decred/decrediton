@@ -14,7 +14,7 @@ import { Balance } from "shared";
 export const HistoryTabHeader = historyPage(({ totalBalance }) =>
   <DescriptionHeader
     description={<T id="transactions.description.history" m="Total Balance: {totalBalance}"
-      values={{ totalBalance: <Balance amount={totalBalance} classNameWrapper="header-small-balance"/> }} />
+      values={{ totalBalance: <Balance flat amount={totalBalance} classNameWrapper="header-small-balance"/> }} />
     }
   />
 );
