@@ -112,6 +112,7 @@ export default function version(state = {}, action) {
       timeStart: action.timeStart,
       blockStart: action.blockStart,
       neededBlocks: action.syncHeight,
+      daemonWarning: null,
     };
   case DAEMONSYNCING_PROGRESS:
     return { ...state,
@@ -121,6 +122,7 @@ export default function version(state = {}, action) {
   case DAEMONSYNCED:
     return { ...state,
       daemonSynced: true,
+      daemonWarning: null,
     };
   case WALLETREADY:
     return { ...state,
@@ -189,6 +191,7 @@ export default function version(state = {}, action) {
       hiddenAccounts: [],
       walletReady: false,
       walletName: null,
+      daemonWarning: null,
     };
   case CLOSEWALLET_FAILED:
     return {
