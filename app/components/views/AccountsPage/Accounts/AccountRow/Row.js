@@ -36,7 +36,7 @@ const Row = ({
 }) => (
   <VerticalAccordion
     header={<Header {...{ account, hidden }} />}
-    height={isShowingRenameAccount ? 175 : 275}
+    height={isShowingRenameAccount ? 175 : 280}
     onToggleAccordion={onToggleShowDetails}
     show={isShowingDetails}
     className={"account-row-details-bottom"}
