@@ -14,7 +14,7 @@ import { TransactionDetails } from "middleware/walletrpc/api_pb";
 import { clipboard } from "electron";
 import { getStartupStats } from "./StatisticsActions";
 import { getVettedProposals } from "./GovernanceActions";
-import { rawHashToHex, reverseRawHash } from "helpers";
+import { rawHashToHex, reverseRawHash, strHashToRaw } from "helpers";
 import * as da from "../middleware/dcrdataapi";
 import { EXTERNALREQUEST_DCRDATA, EXTERNALREQUEST_POLITEIA } from "main_dev/externalRequests";
 
@@ -447,6 +447,110 @@ function filterTickets(tickets, filter) {
     .filter(v => filter.status.length ? filter.status.indexOf(v.status) > -1 : true );
 }
 
+// getTicketsFromTransactions issues multiple wallet.getTransactions call, as
+// many as needed to fetch maxCount stake transactions from the wallet, which
+// are then converted to tickets via individual wallet.getTicket calls.
+//
+// The purpose of this function is to allow iteration over the tickets in the
+// order of last relevant transaction, as oposed to the native GetTickets call
+// from the wallet, which always iterates in ticket purchase order.
+//
+// This is not suitable to be called when attempting to fetch very large lists
+// of tickets, given that the individual getTicket calls are somewhat expensive
+// to make.
+const getTicketsFromTransactions = async (walletService, startIdx, endIdx, maxCount,
+  currentBlockHeight) => {
+
+  let tickets = [];
+  const pageSize = maxCount*4;
+  const stakeTypes = [ TransactionDetails.TransactionType.VOTE,
+    TransactionDetails.TransactionType.REVOCATION,
+    TransactionDetails.TransactionType.TICKET_PURCHASE ];
+  const desc = endIdx < startIdx;
+
+  // filter the list of transactions, returning the ticket information for stake
+  // transactions of the list.
+  const txsToTickets = async txs => {
+    const hashes = [];
+    const txByTicketHash = {}; // needed to determine when to ignore duplicate elements
+
+    for (let i = 0; i < txs.length; i++) {
+      if (stakeTypes.indexOf(txs[i].type) === -1) continue; // not a stake tx
+
+      let txHash = txs[i].txHash;
+      if (txs[i].type !== TransactionDetails.TransactionType.TICKET_PURCHASE) {
+        // for votes/revocations, we need to grab the prevOutpoint to figure
+        // out the ticket hash
+        const decodedSpender = wallet.decodeRawTransaction(Buffer.from(txs[i].tx.getTransaction()));
+        const spenderInputs = decodedSpender.inputs;
+        txHash = reverseRawHash(spenderInputs[spenderInputs.length-1].prevTxId);
+      }
+      if (txByTicketHash[txHash]) continue; // only add first occurrence in resulting list
+
+      hashes.push(txHash);
+      txByTicketHash[txHash] = txs[i];
+    }
+
+    // got hashes of all tickets. Now fetch their info
+    const res = await Promise.all(hashes.map(h => (async () => {
+      try {
+        const ticket = await wallet.getTicket(walletService, strHashToRaw(h));
+        const tx = txByTicketHash[h];
+        const txIsTicket = tx.type === TransactionDetails.TransactionType.TICKET_PURCHASE;
+        const ticketWasSpent = [ "voted", "revoked" ].indexOf(ticket.status) > -1;
+
+        if (desc && txIsTicket && ticketWasSpent) {
+          // fetching backwards, we ignore data from voted/revoked tickets given
+          // that we should have seen the spender tx already, so this ticket has
+          // already been added to the list.
+          return null;
+        }
+
+        if (!desc && !txIsTicket && ticketWasSpent) {
+          // fetching forwards, we ignore data from voted/revoked tickets given
+          // that we should have seen the ticket tx already, so this ticket has
+          // already been added to the list.
+          return null;
+        }
+
+        return ticket;
+      } catch (error) {
+        if (error.code === 5) { // 5 === grpc/codes.NotFound
+          // might happen if we didn't participate in the ticket (eg: pool fee wallets)
+          return null;
+        }
+        throw error;
+      }
+    })()));
+
+    return res.filter(t => t);
+  };
+
+  if (endIdx === -1) {
+    // grabbing unmined list. Perform a single call and return
+    const { unmined } = await wallet.getTransactions(walletService, -1, -1);
+    const infos = await txsToTickets(unmined);
+    tickets.push(...infos);
+  }
+
+  // iterate mined until enough mined transactions were fetched
+  while (tickets.length < maxCount) {
+    const { mined } = await wallet.getTransactions(walletService, startIdx, endIdx, pageSize);
+
+    if (mined.length === 0) break; // no more transactions in the wallet
+    if (desc && startIdx <= 1) break; // reached genesis
+    if (!desc && mined[0].height > currentBlockHeight) break; // transactions exceded limit
+
+    const infos = await txsToTickets(mined);
+    tickets.push(...infos);
+
+    const lastTx = mined[mined.length-1];
+    startIdx = desc ? lastTx.height -1 : lastTx.height + 1;
+  }
+
+  return { tickets, startIdx };
+};
+
 export const getTickets = () => async (dispatch, getState) => {
   const { getTicketsRequestAttempt } = getState().grpc;
   if (getTicketsRequestAttempt) return;
@@ -455,39 +559,44 @@ export const getTickets = () => async (dispatch, getState) => {
 
   const { ticketsFilter, maximumTransactionCount, walletService,
     currentBlockHeight } = getState().grpc;
-  let { noMoreTickets, lastTicket, minedTickets } = getState().grpc;
+  let { noMoreTickets, getTicketsStartRequestHeight, minedTickets } = getState().grpc;
   const pageCount = maximumTransactionCount;
 
   // List of transactions found after filtering
   let filtered = [];
-  let tickets;
 
   // always request unmined tickets as new ones may be available or some may
   // have been mined
-  tickets = await wallet.getTickets(walletService, -1, -1, 0);
+  let { tickets } = await getTicketsFromTransactions(walletService, -1, -1, 0, currentBlockHeight);
   const unminedFiltered = filterTickets(tickets, ticketsFilter);
   const unminedTickets = sel.ticketsNormalizer(getState())(unminedFiltered);
+
+  let startRequestHeight, endRequestHeight, desc;
+  if ( ticketsFilter.listDirection === "desc" ) {
+    startRequestHeight = getTicketsStartRequestHeight ? getTicketsStartRequestHeight : currentBlockHeight;
+    endRequestHeight = 1;
+    desc = true;
+  } else {
+    startRequestHeight = getTicketsStartRequestHeight ? getTicketsStartRequestHeight : 1;
+    endRequestHeight = currentBlockHeight;
+    desc = false;
+  }
 
   // now, request a batch of mined transactions until `maximumTransactionCount`
   // transactions have been obtained (after filtering)
   while (!noMoreTickets && (filtered.length < maximumTransactionCount)) {
-    let startRequestHeight, endRequestHeight;
-
-    if ( ticketsFilter.listDirection === "desc" ) {
-      startRequestHeight = lastTicket ? lastTicket.block.getHeight() -1 : currentBlockHeight;
-      endRequestHeight = 1;
-    } else {
-      startRequestHeight = lastTicket ? lastTicket.block.getHeight() +1 : 1;
-      endRequestHeight = currentBlockHeight;
-    }
-
     try {
-      tickets = await wallet.getTickets(walletService,
-        startRequestHeight, endRequestHeight, pageCount);
-      noMoreTickets = tickets.length === 0;
-      lastTicket = tickets.length ? tickets[tickets.length -1] : lastTicket;
-      filterTickets(tickets, ticketsFilter)
-        .forEach(v => filtered.push(v));
+      let { tickets, startIdx } = await getTicketsFromTransactions(walletService,
+        startRequestHeight, endRequestHeight, pageCount, currentBlockHeight);
+
+      noMoreTickets =
+        (tickets.length === 0) ||
+        (desc && startIdx <= 1) ||
+        (desc && startIdx >= currentBlockHeight);
+
+      startRequestHeight = startIdx;
+
+      filtered.push(...filterTickets(tickets, ticketsFilter));
     } catch (error) {
       dispatch({ error, type: GETTICKETS_FAILED });
       return;
@@ -495,31 +604,11 @@ export const getTickets = () => async (dispatch, getState) => {
   }
 
   const normalized = sel.ticketsNormalizer(getState())(filtered);
-
   minedTickets = [ ...minedTickets, ...normalized ];
 
-  dispatch({ unminedTickets, minedTickets,
-    noMoreTickets, lastTicket, type: GETTICKETS_COMPLETE });
-};
-
-export const RAWTICKETTRANSACTIONS_DECODED = "RAWTICKETTRANSACTIONS_DECODED";
-export const decodeRawTicketTransactions = (ticket) => async (dispatch, getState) => {
-  const toDecode = [];
-  if (!ticket.decodedTicketTx) {
-    toDecode.push(ticket.ticketRawTx);
-    if (ticket.spenderHash) {
-      toDecode.push(ticket.spenderRawTx);
-    }
-  }
-  if (!toDecode.length) return;
-
-  try {
-    await dispatch(decodeRawTransactions(toDecode));
-    const newTicket = sel.ticketNormalizer(getState())(ticket.originalTicket);
-    dispatch({ ticket, newTicket, type: RAWTICKETTRANSACTIONS_DECODED });
-  } catch (error) {
-    console.log("xxxxx error in decodeRawTicketTransactions", error);
-  }
+  dispatch({ unminedTickets, minedTickets, noMoreTickets,
+    getTicketsStartRequestHeight: startRequestHeight,
+    type: GETTICKETS_COMPLETE });
 };
 
 export const CLEAR_TICKETS = "CLEAR_TICKETS";

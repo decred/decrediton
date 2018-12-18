@@ -1,7 +1,7 @@
 import { dcrwalletCfg, getWalletPath, getExecutablePath, dcrdCfg, getDcrdRpcCert } from "./paths";
 import { getWalletCfg, readDcrdConfig } from "../config";
 import { createLogger, AddToDcrdLog, AddToDcrwalletLog, GetDcrdLogs,
-  GetDcrwalletLogs, lastErrorLine, lastPanicLine, ClearDcrwalletLogs } from "./logging";
+  GetDcrwalletLogs, lastErrorLine, lastPanicLine, ClearDcrwalletLogs, CheckDaemonLogs } from "./logging";
 import parseArgs from "minimist";
 import { OPTIONS } from "./constants";
 import os from "os";
@@ -120,7 +120,7 @@ export const launchDCRD = (mainWindow, daemonIsAdvanced, daemonPath, appdata, te
 
   const dcrdExe = getExecutablePath("dcrd", argv.customBinPath);
   if (!fs.existsSync(dcrdExe)) {
-    logger.log("error", "The dcrd file does not exists");
+    logger.log("error", "The dcrd executable does not exist. Expected to find it at " + dcrdExe);
     return;
   }
 
@@ -164,7 +164,12 @@ export const launchDCRD = (mainWindow, daemonIsAdvanced, daemonPath, appdata, te
     }
   });
 
-  dcrd.stdout.on("data", (data) => AddToDcrdLog(process.stdout, data, debug));
+  dcrd.stdout.on("data", (data) => {
+    AddToDcrdLog(process.stdout, data, debug);
+    if (CheckDaemonLogs(data)) {
+      reactIPC.send("warning-received", true, data.toString("utf-8"));
+    }
+  });
   dcrd.stderr.on("data", (data) => AddToDcrdLog(process.stderr, data, debug));
 
   newConfig.pid = dcrd.pid;
@@ -206,7 +211,7 @@ export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
 
   const dcrwExe = getExecutablePath("dcrwallet", argv.customBinPath);
   if (!fs.existsSync(dcrwExe)) {
-    logger.log("error", "The dcrwallet file does not exists");
+    logger.log("error", "The dcrwallet executable does not exist. Expected to find it at " + dcrwExe);
     return;
   }
 
@@ -324,7 +329,7 @@ export const readExesVersion = (app, grpcVersions) => {
   for (let exe of exes) {
     let exePath = getExecutablePath("dcrd", argv.customBinPath);
     if (!fs.existsSync(exePath)) {
-      logger.log("error", "The dcrd file does not exists");
+      logger.log("error", "The dcrd executable does not exist. Expected to find it at " + exePath);
     }
 
     let proc = spawn(exePath, args, { encoding: "utf8" });

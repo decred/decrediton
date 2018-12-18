@@ -1,16 +1,10 @@
 import { settings } from "connectors";
 import KeyBlueButton from "./KeyBlueButton";
 
-const EnableExternalRequestButton = ({ children, requestType, tempSettings,
-  onSaveSettings }) => {
+const EnableExternalRequestButton = ({ children, requestType,
+  onAddAllowedRequestType }) => {
 
-  const onClick = () => {
-    const allowedExternalRequests = [ ...tempSettings.allowedExternalRequests ];
-    if (allowedExternalRequests.indexOf(requestType) === -1) {
-      allowedExternalRequests.push(requestType);
-      onSaveSettings({ ...tempSettings, allowedExternalRequests });
-    }
-  };
+  const onClick = () => onAddAllowedRequestType(requestType);
 
   return <KeyBlueButton onClick={onClick}>{children}</KeyBlueButton>;
 };

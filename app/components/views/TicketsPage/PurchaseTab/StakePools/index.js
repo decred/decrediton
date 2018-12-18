@@ -22,7 +22,8 @@ class StakePools extends React.Component {
   }
 
   componentDidUpdate() {
-    const hasUnconfigured = this.props.unconfiguredStakePools.some(p => p.Host === this.state.selectedUnconfigured.Host );
+    const configuredHost = this.state.selectedUnconfigured ? this.state.selectedUnconfigured.Host : "";
+    const hasUnconfigured = this.props.unconfiguredStakePools.some(p => p.Host ===  configuredHost);
     if (!hasUnconfigured && this.props.unconfiguredStakePools.length) {
       // We just added a stakepool, so it has been removed from the list of
       // unconfigured. Select the next one on the list.

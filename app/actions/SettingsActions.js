@@ -64,6 +64,31 @@ export const saveSettings = (settings) => (dispatch, getState) => {
 
 };
 
+export const ALLOWEDEXTERNALREQUESTS_ADDED = "ALLOWEDEXTERNALREQUESTS_ADDED";
+export const addAllowedExternalRequest = (requestType) => (dispatch, getState) => {
+  const config = getGlobalCfg();
+  const allowed = config.get("allowed_external_requests");
+  if (allowed.indexOf(requestType) > -1) return;
+
+  allowed.push(requestType);
+  config.set("allowed_external_requests", allowed);
+  wallet.allowExternalRequest(requestType);
+
+  const { settings: { currentSettings, tempSettings } } = getState();
+  const newSettings = { ...currentSettings };
+  newSettings.allowedExternalRequests = allowed;
+
+  // Also modify temp settings, given that it may be different than the current
+  // settings.
+  const newTempSettings = { ...tempSettings };
+  newTempSettings.allowedExternalRequests = [ ...newTempSettings.allowedExternalRequests ];
+  if (newTempSettings.allowedExternalRequests.indexOf(requestType) === -1) {
+    newTempSettings.allowedExternalRequests.push(requestType);
+  }
+
+  dispatch({ newSettings, newTempSettings, type: ALLOWEDEXTERNALREQUESTS_ADDED });
+};
+
 export function updateStateSettingsChanged(settings, norestart) {
   return (dispatch, getState) => {
     const { tempSettings, currentSettings } = getState().settings;

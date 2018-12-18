@@ -61,6 +61,11 @@
   color: var(--disabled-color);
   border-right: 1px solid var(--input-color-disabled);
   padding-right: 0.5em;
+  padding-left: 15px;
+  background-image: @ticket-reward-icon;
+  background-repeat: no-repeat;
+  background-size: 11px 11px;
+  background-position: 0px 5px;
 }
 
 .ticket-info-card-return-balance {
@@ -72,6 +77,20 @@
 
   color: var(--disabled-color);
   font-family: @font-family-monospaced;
+  border-right: 1px solid var(--input-color-disabled);
+  padding-right: 0.5em;
+}
+
+.ticket-days-to-vote {
+  .inline-block-mixin;
+
+  color: var(--disabled-color);
+  font-family: @font-family-monospaced;
+  background-image: @time-lock-icon;
+  background-repeat: no-repeat;
+  background-size: 12px 12px;
+  background-position: 0px 4px;
+  padding-left: 15px;
 }
 
 .ticket-info-expanded-indicator {

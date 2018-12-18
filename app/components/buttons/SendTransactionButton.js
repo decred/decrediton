@@ -5,7 +5,6 @@ import { FormattedMessage as T } from "react-intl";
 
 @autobind
 class SendTransactionButton extends React.Component {
-
   constructor(props) {
     super(props);
   }

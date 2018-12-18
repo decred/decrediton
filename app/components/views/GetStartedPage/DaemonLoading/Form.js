@@ -37,6 +37,7 @@ const DaemonLoadingBody = ({
   hasAttemptedDiscover,
   syncFetchHeadersLastHeaderTime,
   syncFetchHeadersAttempt,
+  daemonWarning,
   ...props,
 }) => (
   <div className="page-body getstarted">
@@ -88,8 +89,8 @@ const DaemonLoadingBody = ({
               </div>
               :
               <div className="loader-bar-estimation">
-                <T id="getStarted.chainLoading.syncEstimation" m="Estimated time left"/>
-                <span className="bold"> {finishDateEstimation ? <FormattedRelative value={finishDateEstimation}/> : "--"} ({getCurrentBlockCount} / {getNeededBlocks})</span>
+                { finishDateEstimation ? <T id="getStarted.chainLoading.syncEstimation" m="Blockchain download estimated complete"/> : null }
+                <span className="bold"> {finishDateEstimation ? <FormattedRelative value={finishDateEstimation}/> : null} ({getCurrentBlockCount} / {getNeededBlocks})</span>
               </div>
             }
           </Aux>
@@ -101,6 +102,19 @@ const DaemonLoadingBody = ({
             </div>
           }
         </div>
+        {daemonWarning && getCurrentBlockCount <= 0 ?
+          <Aux>
+            <div className="get-started-last-log-lines">
+              <div className="last-dcrwallet-log-line">{daemonWarning}</div>
+            </div>
+            <div className="advanced-page-form">
+              <div className="advanced-daemon-row">
+                <T id="getStarted.longWaitWarning" m="You are currently upgrading to a new dcrd version.  Typically, this one-time reindexing will take 30-45 minutes on an average machine."/>
+              </div>
+            </div>
+          </Aux>:
+          <div/>
+        }
         { Form && <Form {...{ ...props, openWalletInputRequest, startupError, getCurrentBlockCount, getDaemonSynced, isSPV }}/> }
         {syncInput ?
           <div className="advanced-page-form">

@@ -12,7 +12,6 @@ const mapStateToProps = selectorMap({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  decodeRawTicketTransactions: ca.decodeRawTicketTransactions,
   goBackHistory: ca.goBackHistory,
   getTickets: ca.getTickets,
   changeTicketsFilter: ca.changeTicketsFilter,

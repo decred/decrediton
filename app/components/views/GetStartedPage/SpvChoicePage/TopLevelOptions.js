@@ -1,4 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
+import { ExternalLink } from "shared";
 
 const PrivacyOption = ({ title, description, icon, onClick }) => (
   <div className="privacy-option" onClick={onClick}>
@@ -18,7 +19,8 @@ export default ({ enableSpv, disableSpv }) => (
       <T id="spv.title" m={"Simple Payment Verification (SPV)"}/>
     </div>
     <div className="language-select-title-sub">
-      <T id="spv.titleSub" m={"Select how Decrediton wallet's should connect to the network. You can change this in the application settings later."}/>
+      <T id="spv.titleSub" m={"Select how Decrediton wallet's should connect to the network. You can change this in the application settings later. For more in-depth information about SPV and how it works, you can go "}/>
+      <ExternalLink href={"https://docs.decred.org/wallets/spv/"}><T id="spv.titleSub.here" m="here"/></ExternalLink>.
     </div>
     <div className="privacy-options">
       <PrivacyOption

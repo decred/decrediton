@@ -18,6 +18,8 @@ import {
   DECREDITON_VERSION,
   FATAL_DAEMON_ERROR,
   FATAL_WALLET_ERROR,
+  DAEMON_WARNING,
+  WALLET_WARNING,
   CLOSEDAEMON_ATTEMPT, CLOSEDAEMON_FAILED, CLOSEDAEMON_SUCCESS, NOT_SAME_CONNECTION,
   NETWORK_MATCH
 } from "../actions/DaemonActions";
@@ -110,6 +112,7 @@ export default function version(state = {}, action) {
       timeStart: action.timeStart,
       blockStart: action.blockStart,
       neededBlocks: action.syncHeight,
+      daemonWarning: null,
     };
   case DAEMONSYNCING_PROGRESS:
     return { ...state,
@@ -119,6 +122,7 @@ export default function version(state = {}, action) {
   case DAEMONSYNCED:
     return { ...state,
       daemonSynced: true,
+      daemonWarning: null,
     };
   case WALLETREADY:
     return { ...state,
@@ -171,12 +175,23 @@ export default function version(state = {}, action) {
       ...state,
       walletError: action.error,
     };
+  case DAEMON_WARNING:
+    return {
+      ...state,
+      daemonWarning: action.warning,
+    };
+  case WALLET_WARNING:
+    return {
+      ...state,
+      walletWarning: action.warning,
+    };
   case CLOSEWALLET_SUCCESS:
     return {
       ...state,
       hiddenAccounts: [],
       walletReady: false,
       walletName: null,
+      daemonWarning: null,
     };
   case CLOSEWALLET_FAILED:
     return {

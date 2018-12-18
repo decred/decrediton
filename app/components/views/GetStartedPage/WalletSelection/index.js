@@ -23,12 +23,15 @@ class WalletSelectionBody extends React.Component {
     };
   }
   componentDidUpdate(prevProps) {
-    if (this.props.availableWallets.length > 0 && prevProps.availableWallets.length !== this.props.availableWallets.length) {
+    if (this.props.selectedWallet && this.props.availableWallets.length === 0) {
+      this.setState({ selectedWallet: null });
+    } else if (prevProps.availableWallets.length !== this.props.availableWallets.length) {
       this.setState({ selectedWallet: this.props.availableWallets[0] });
     } else {
       for (var i = 0; i < prevProps.availableWallets.length; i++) {
         if (this.props.availableWallets[i].label !== prevProps.availableWallets[i].label) {
           this.setState({ selectedWallet: this.props.availableWallets[0] });
+          break;
         }
       }
     }
@@ -118,8 +121,19 @@ class WalletSelectionBody extends React.Component {
   showCreateWalletForm(createNewWallet) {
     this.setState({ createNewWallet, createWalletForm: true });
   }
-  hideCreateWalletForm(createNewWallet) {
-    this.setState({ hasFailedAttemptName: false, hasFailedAttemptPubKey: false, createNewWallet, createWalletForm: false });
+  hideCreateWalletForm() {
+    if (this.state.isTrezor) {
+      this.props.trezorDisable();
+    }
+
+    this.setState({ hasFailedAttemptName: false,
+      hasFailedAttemptPubKey: false,
+      createWalletForm: false,
+      newWalletName: "",
+      isWatchingOnly: false,
+      isTrezor: false,
+      walletMasterPubKey: "",
+    });
   }
   onChangeAvailableWallets(selectedWallet) {
     this.setState({ selectedWallet });
@@ -183,6 +197,8 @@ class WalletSelectionBody extends React.Component {
     this.setState({ isTrezor, isWatchingOnly: false });
     if (isTrezor) {
       this.props.trezorEnable();
+    } else {
+      this.props.trezorDisable();
     }
   }
   async onChangeCreateWalletMasterPubKey(walletMasterPubKey) {

@@ -18,11 +18,6 @@ class TicketInfoCard extends React.Component {
   }
 
   onMouseEnter() {
-    const { ticket, decodeRawTicketTransactions } = this.props;
-    if (!ticket.decodedTicketTx) {
-      decodeRawTicketTransactions(ticket);
-    }
-
     this.setState({ hasMouse: true });
   }
 
@@ -74,25 +69,39 @@ class TicketInfoCard extends React.Component {
     );
   }
 
-  // getTimestampDiv returns the div to be used on the timestamp spot. Could be:
-  // with toolTip if card div has reward and mouse over it
-  // without toolTip if card div doesn't have mouse
+  // getTimestampDiv returns the div to be used on the timestamp slot
   getTimestampDiv() {
     const { ticket } = this.props;
-    const { hasMouse } = this.state;
 
-    const timestampDiv = (
+    const timestamp = ticket.leaveTimestamp ? ticket.leaveTimestamp : ticket.enterTimestamp;
+    return (
       <div className="ticket-timestamp">
         <T
           id="ticket.timestamp"
           m="{timestamp, date, medium} {timestamp, time, medium}"
-          values={{ timestamp: this.props.tsDate(ticket.enterTimestamp) }} />
+          values={{ timestamp: this.props.tsDate(timestamp) }} />
+      </div>
+    );
+  }
+
+  // getDaysToVoteDiv returns the div to be used on the daysToVote slot.
+  getDaysToVoteDiv() {
+    const { ticket } = this.props;
+    const { hasMouse } = this.state;
+
+    if (!ticket.leaveTimestamp) return null;
+
+    const days = Math.ceil((ticket.leaveTimestamp - ticket.enterTimestamp) / (24 * 60 * 60));
+
+    const daysToVoteDiv = (
+      <div className="ticket-days-to-vote">
+        <T id="ticket.daysToVote" m="{days, plural, one {# day} other {# days}}"
+          values={{ days: days }} />
       </div>
     );
 
-    if (!hasMouse || !ticket.leaveTimestamp) return timestampDiv;
+    if (!hasMouse) return daysToVoteDiv;
 
-    const days = Math.ceil((ticket.leaveTimestamp - ticket.enterTimestamp) / (24 * 60 * 60));
     const timeToLeaveTipText = (
       <T id="ticket.daysToLeave"
         m="~ {days, plural, one {# day} other {# days}} from buying until {status}"
@@ -101,7 +110,7 @@ class TicketInfoCard extends React.Component {
 
     return (
       <Tooltip tipWidth={200} text={timeToLeaveTipText}>
-        {timestampDiv}
+        {daysToVoteDiv}
       </Tooltip>
     );
   }
@@ -112,6 +121,7 @@ class TicketInfoCard extends React.Component {
 
     const rewardDiv = this.getTicketRewardDiv();
     const timestampDiv = this.getTimestampDiv();
+    const daysToVoteDiv = this.getDaysToVoteDiv();
 
     return (
       <div
@@ -123,6 +133,7 @@ class TicketInfoCard extends React.Component {
         <div className="ticket-info-price"><Balance amount={ticket.ticketPrice} /></div>
         {rewardDiv}
         {timestampDiv}
+        {daysToVoteDiv}
         {expanded ? <ExpandedInfo ticket={ticket} /> : null}
       </div>
     );

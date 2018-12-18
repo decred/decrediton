@@ -17,7 +17,7 @@ const TabHeader = purchaseTickets(({ ticketPrice }) =>
   <DescriptionHeader
     description={
       <T id="tickets.description" m="Current Price: {ticketPrice}"
-        values={{ ticketPrice: <Balance amount={ticketPrice} classNameWrapper="header-small-balance"/> }} />
+        values={{ ticketPrice: <Balance flat amount={ticketPrice} classNameWrapper="header-small-balance"/> }} />
     }
   />
 );

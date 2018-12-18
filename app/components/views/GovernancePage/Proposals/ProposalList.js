@@ -1,5 +1,5 @@
 import { FormattedMessage as T, FormattedRelative } from "react-intl";
-import { activeVoteProposals, preVoteProposals, votedProposals, proposals } from "connectors";
+import { activeVoteProposals, preVoteProposals, votedProposals, proposals, abandonedProposals } from "connectors";
 import { VotingProgress } from "indicators";
 import { PoliteiaLoading, NoProposals } from "indicators";
 import { VOTESTATUS_ACTIVEVOTE, VOTESTATUS_VOTED } from "actions/GovernanceActions";
@@ -64,13 +64,13 @@ const ProposalListItem = ({ name, timestamp, token, voteCounts, tsDate, onClick,
   );
 };
 
-const ProposalList = ({ proposals, loading, viewProposalDetails, tsDate, voteEnded }) => (
+const ProposalList = ({ proposals, loading, viewProposalDetails, tsDate, voteEnded, abandonedProposals }) => (
   <Aux>
     { loading
       ? <div className="proposal-loading-page"><PoliteiaLoading center /></div>
       : proposals && proposals.length
         ? (
-          <div className={voteEnded ? "proposal-list ended" : "proposal-list"}>
+          <div className={voteEnded || abandonedProposals ? "proposal-list ended" : "proposal-list"}>
             {proposals.map(v => (
               <ProposalListItem key={v.token} {...v} tsDate={tsDate} onClick={viewProposalDetails} />
             ))}
@@ -84,3 +84,4 @@ const ProposalList = ({ proposals, loading, viewProposalDetails, tsDate, voteEnd
 export const ActiveVoteProposals = activeVoteProposals(proposals(ProposalList));
 export const PreVoteProposals = preVoteProposals(proposals(ProposalList));
 export const VotedProposals = votedProposals(proposals(ProposalList));
+export const AbandonedProposals = abandonedProposals(proposals(ProposalList));

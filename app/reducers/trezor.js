@@ -1,5 +1,5 @@
 import {
-  TRZ_TREZOR_ENABLED,
+  TRZ_TREZOR_ENABLED, TRZ_TREZOR_DISABLED,
   TRZ_LOADDEVICELIST_ATTEMPT, TRZ_LOADDEVICELIST_FAILED, TRZ_LOADDEVICELIST_SUCCESS,
   TRZ_DEVICELISTTRANSPORT_LOST,
   TRZ_SELECTEDDEVICE_CHANGED,
@@ -30,6 +30,10 @@ export default function trezor(state = {}, action) {
   case TRZ_TREZOR_ENABLED:
     return { ...state,
       enabled: true,
+    };
+  case TRZ_TREZOR_DISABLED:
+    return { ...state,
+      enabled: false,
     };
   case TRZ_CLEAR_DEVICELIST:
     return { ...state,

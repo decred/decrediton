@@ -11,6 +11,8 @@ import { EXTERNALREQUEST_STAKEPOOL_LISTING, EXTERNALREQUEST_POLITEIA, EXTERNALRE
 import { POLITEIA_URL_TESTNET, POLITEIA_URL_MAINNET } from "./middleware/politeiaapi";
 import { DCRDATA_URL_TESTNET, DCRDATA_URL_MAINNET } from "./middleware/dcrdataapi";
 import { dateToLocal, dateToUTC } from "./helpers/dateFormat";
+import * as wallet from "wallet";
+
 const EMPTY_ARRAY = [];  // Maintaining identity (will) improve performance;
 
 export const theme = get([ "settings", "theme" ]);
@@ -44,6 +46,7 @@ export const setLanguage = get([ "daemon", "setLanguage" ]);
 export const showTutorial = get([ "daemon", "tutorial" ]);
 export const showPrivacy = get([ "daemon", "showPrivacy" ]);
 export const showSpvChoice = get([ "daemon", "showSpvChoice" ]);
+export const daemonWarning = get([ "daemon", "daemonWarning" ]);
 export const versionInvalid = get([ "version", "versionInvalid" ]);
 export const requiredWalletRPCVersion = get([ "version", "requiredVersion" ]);
 export const walletRPCVersion = createSelector(
@@ -131,7 +134,7 @@ export const getNetworkResponse = get([ "grpc", "getNetworkResponse" ]);
 export const getNetworkError = get([ "grpc", "getNetworkError" ]);
 const accounts = createSelector([ getAccountsResponse ], r => r ? r.getAccountsList() : []);
 
-export const isWatchingOnly = get([ "walletLoader", "isWatchingOnly" ]);
+export const isWatchingOnly = bool(get([ "walletLoader", "isWatchingOnly" ]));
 export const accountExtendedKey = createSelector(
   [ get([ "control", "getAccountExtendedKeyResponse" ]) ],
   (response) => response ? response.getAccExtendedPubKey() : null
@@ -209,8 +212,8 @@ export const blockURLBuilder= createSelector(
 export const decodedTransactions = get([ "grpc", "decodedTransactions" ]);
 
 export const ticketNormalizer = createSelector(
-  [ decodedTransactions, network ],
-  (decodedTransactions, network) => {
+  [ network ],
+  (network) => {
     return ticket => {
       const hasSpender = ticket.spender && ticket.spender.getHash();
       const isVote = ticket.status === "voted";
@@ -218,15 +221,17 @@ export const ticketNormalizer = createSelector(
       const spenderTx = hasSpender ? ticket.spender : null;
       const hash = reverseHash(Buffer.from(ticketTx.getHash()).toString("hex"));
       const spenderHash = hasSpender ? reverseHash(Buffer.from(spenderTx.getHash()).toString("hex")) : null;
-      const decodedTicketTx = decodedTransactions[hash] || null;
-      const decodedSpenderTx = hasSpender ? (decodedTransactions[spenderHash] || null) : null;
       const hasCredits = ticketTx.getCreditsList().length > 0;
 
-      // effective ticket price is the output 0 for the ticket transaction
-      // (stakesubmission script class)
-      const ticketPrice = decodedTicketTx
-        ? decodedTicketTx.transaction.getOutputsList()[0].getValue()
-        : hasCredits ? ticketTx.getCreditsList()[0].getAmount() : 0;
+      let ticketPrice = 0;
+      if (hasCredits) {
+        ticketPrice = ticketTx.getCreditsList()[0].getAmount();
+      } else {
+        // we don't have a credit when we don't have the voting rights (unimported
+        // stakepool script, solo voting ticket, split ticket, etc)
+        const decodedTicketTx = wallet.decodeRawTransaction(Buffer.from(ticketTx.getTransaction()));
+        ticketPrice = decodedTicketTx.outputs[0].value;
+      }
 
       // ticket tx fee is the fee for the transaction where the ticket was bought
       const ticketTxFee = ticketTx.getFee();
@@ -242,7 +247,7 @@ export const ticketNormalizer = createSelector(
       const ticketInvestment = ticketTx.getDebitsList().reduce((a, v) => a+v.getPreviousAmount(), 0)
         - ticketChange;
 
-      let ticketReward, ticketStakeRewards, ticketReturnAmount;
+      let ticketReward, ticketStakeRewards, ticketReturnAmount, ticketPoolFee, voteChoices;
       if (hasSpender) {
         // everything returned to the wallet after voting/revoking
         ticketReturnAmount = spenderTx.getCreditsList().reduce((a, v) => a+v.getAmount(), 0);
@@ -251,23 +256,25 @@ export const ticketNormalizer = createSelector(
         ticketReward = ticketReturnAmount - ticketInvestment;
 
         ticketStakeRewards = ticketReward / ticketInvestment;
-      }
 
-      let ticketPoolFee, voteChoices;
-      if (decodedSpenderTx) {
-        // pool fees are all (OP_SSGEN/OP_SSRTX) txo that have not made it into our own wallet.
-        // the match to know whether an output is directed to our wallet
-        // is made between fields "index" (on creditsList) and "index" (on outputsList).
-        const scriptTag = isVote ? /^OP_SSGEN / : /^OP_SSRTX /;
+        const decodedSpenderTx = wallet.decodeRawTransaction(Buffer.from(spenderTx.getTransaction()));
 
-        const walletOutputIndices = spenderTx.getCreditsList().reduce((a, v) => [ ...a, v.getIndex() ], []);
-        ticketPoolFee = decodedSpenderTx.transaction.getOutputsList().reduce((a, v) => {
-          if (!v.getScriptAsm().match(scriptTag)) return a;
-          return walletOutputIndices.indexOf(v.getIndex()) > -1 ? a : a + v.getValue();
-        }, 0);
+        // Check pool fee. If there is a debit at index=0 of the ticket but not
+        // a corresponding credit at the expected index on the spender, then
+        // that was a pool fee.
+        const hasIndex0Debit = ticketTx.getDebitsList().some(d => d.getIndex() === 0);
+        const hasIndex0Credit = spenderTx.getCreditsList().some(c => {
+          // In votes, the first 2 outputs are voting block and vote bits
+          // OP_RETURNs, so ignore those.
+          return (isVote && c.getIndex() === 2) || (!isVote && c.getIndex() === 0);
+        });
+        if (hasIndex0Debit && !hasIndex0Credit) {
+          const poolFeeDebit = ticketTx.getDebitsList().find(d => d.getIndex() === 0);
+          ticketPoolFee = poolFeeDebit.getPreviousAmount();
+        }
 
         if (isVote) {
-          let voteScript = decodedSpenderTx.transaction.getOutputsList()[1].getScript();
+          let voteScript = decodedSpenderTx.outputs[1].script;
           voteChoices = decodeVoteScript(network, voteScript);
         }
       }
@@ -277,8 +284,6 @@ export const ticketNormalizer = createSelector(
         spenderHash,
         ticketTx,
         spenderTx,
-        decodedSpenderTx,
-        decodedTicketTx,
         ticketPrice,
         ticketReward,
         ticketChange,
@@ -626,6 +631,8 @@ export const unsignedTransaction = createSelector(
   res => res ? res.getUnsignedTransaction() : null
 );
 
+export const unsignedRawTx = createSelector([ constructTxResponse ], res => res && res.rawTx);
+
 export const estimatedFee = compose(
   bytes => (bytes / 1000) * (0.001 * 100000000), estimatedSignedSize
 );
@@ -916,7 +923,7 @@ export const isTrezor = get([ "trezor", "enabled" ]);
 export const isSignMessageDisabled = and(isWatchingOnly, not(isTrezor));
 export const isCreateAccountDisabled = isWatchingOnly;
 export const isChangePassPhraseDisabled = isWatchingOnly;
-export const isTransactionsSendTabDisabled = and(isWatchingOnly, not(isTrezor));
+export const isTransactionsSendTabDisabled = not(isTrezor);
 export const isTicketPurchaseTabDisabled = isWatchingOnly;
 
 export const politeiaURL = createSelector(
@@ -946,6 +953,7 @@ export const activeVoteProposals = get([ "governance", "activeVote" ]);
 export const getVettedProposalsAttempt = get([ "governance", "getVettedAttempt" ]);
 export const preVoteProposals = get([ "governance", "preVote" ]);
 export const votedProposals = get([ "governance", "voted" ]);
+export const abandonedProposals = get([ "governance", "abandoned" ]);
 export const lastVettedFetchTime = get([ "governance", "lastVettedFetchTime" ]);
 export const newActiveVoteProposalsCount = compose(
   reduce((acc, p) => p.votingSinceLastAccess ? acc + 1 : acc, 0),

@@ -36,6 +36,8 @@ export const SET_CREDENTIALS_APPDATA_ERROR = "SET_CREDENTIALS_APPDATA_ERROR";
 export const REGISTERFORERRORS = "REGISTERFORERRORS";
 export const FATAL_DAEMON_ERROR = "FATAL_DAEMON_ERROR";
 export const FATAL_WALLET_ERROR = "FATAL_WALLET_ERROR";
+export const DAEMON_WARNING = "DAEMON_WARNING";
+export const WALLET_WARNING = "WALLET_WARNING";
 export const WALLETCREATED = "WALLETCREATED";
 export const WALLET_AUTOBUYER_SETTINGS = "WALLET_AUTOBUYER_SETTINGS";
 export const WALLET_STAKEPOOL_SETTINGS = "WALLET_STAKEPOOL_SETTINGS";
@@ -178,6 +180,13 @@ export const registerForErrors = () => (dispatch) => {
       dispatch({ error, type: FATAL_WALLET_ERROR });
     }
     dispatch(pushHistory("/error"));
+  });
+  ipcRenderer.on("warning-received", (event, daemon, warning) => {
+    if (daemon) {
+      dispatch({ warning, type: DAEMON_WARNING });
+    } else {
+      dispatch({ warning, type: WALLET_WARNING });
+    }
   });
 };
 

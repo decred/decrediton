@@ -11,7 +11,7 @@ class TicketListPage extends React.Component {
 
   render() {
     const {
-      tickets, noMoreTickets, decodeRawTicketTransactions,
+      tickets, noMoreTickets,
       onLoadMoreTickets, onChangeSortType, onChangeSelectedType,
       selectedSortOrderKey, selectedTicketTypeKey,
       sortTypes, ticketTypes, tsDate,
@@ -49,7 +49,7 @@ class TicketListPage extends React.Component {
           </div>
 
           {tickets.length > 0
-            ? <TicketsCardList {...{ tickets, tsDate, decodeRawTicketTransactions }} />
+            ? <TicketsCardList {...{ tickets, tsDate }} />
             : null}
           {!noMoreTickets
             ? <LoadingMoreTicketsIndicator />

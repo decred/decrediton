@@ -53,6 +53,27 @@ export const getTickets = log((walletService, startHeight, endHeight, targetCoun
   getTx.on("error", fail);
 }), "Get Tickets", logOptionNoResponseData());
 
+export const getTicket = log((walletService, ticketHash) =>
+  new Promise((ok, fail) => {
+    const request = new api.GetTicketRequest();
+    request.setTicketHash(ticketHash);
+    walletService.getTicket(request, (err, res) => {
+      if (err) {
+        fail(err);
+        return;
+      }
+
+      const ticket = {
+        status: TicketTypes.get(res.getTicket().getTicketStatus()),
+        ticket: res.getTicket().getTicket(),
+        spender: res.getTicket().getSpender(),
+        block: res.getBlock(),
+      };
+
+      ok(ticket);
+    });
+  }), "Get Ticket", logOptionNoResponseData());
+
 export const setAgendaVote = log((votingService, agendaId, choiceId) =>
   new Promise((ok, fail) => {
     const request = new api.SetVoteChoicesRequest();
