@@ -90,100 +90,38 @@
   border: 1px solid var(--vote-yes-color);
 }
 
-.message {
-  .message-content-nest {
-    background-color: var(--background-back-color);
-    padding: 1em;
-    padding-top: 40px;
-    height: 172px;
+.security-center-message-result {
+  padding: 2.5em 1em;
+  border-radius: 5px;
+  font-family: @font-family-regular;
+  font-size: 23px;
+  font-weight: 700;
+  display: flex;
+  margin-top: 1em;
+  text-align: center;
+  border: 1px solid;
+
+  &.sign {
+    border-color: var(--input-color);
   }
 
-  .error {
-    font-size: 14px;
-    text-align: left;
+  &.verify-invalid {
+    border-color: var(--error-text-color);
+    color: var(--error-text-color);
   }
 
-  .message-form-group {
-    float: left;
-    width: 100%;
-    padding-bottom: 32px;
-
-    .message-label {
-      float: left;
-      width: 150px;
-      font-size: 19px;
-      text-transform: capitalize;
-      text-align: right;
-      padding-right: 20px;
-    }
-
-    input {
-      float: left;
-      width: 540px;
-    }
-
-    .error {
-      color: var(--error-red);
-    }
+  &.verify-valid {
+    border-color: var(--vote-yes-color);
+    color: var(--vote-yes-color);
   }
 
-  .message-nest {
-    text-align: center;
-    margin-top: 1em;
-
-    .message-content {
-      &.invalid,
-      &.valid {
-        color: var(--stroke-color-default);
-        text-align: center;
-      }
-
-      &.invalid {
-        background-color: var(--error-text-color);
-      }
-
-      &.valid {
-        background-color: var(--vote-yes-color);
-      }
-
-      display: flex;
-      padding: 2.5em 1em 2.5em 1em;
-      border: 1px solid var(--cyan-bold);
-      border-radius: 5px;
-      background-color: var(--disabled-background-color);
-      font-family: @font-family-regular;
-      color: var(--input-color-default);
-      font-size: 23px;
-      font-weight: 700;
-      word-break: break-all;
-
-      & > div {
-        display: flex;
-        width: 100%;
-      }
-
-      .message-content-nest-copy-to-clipboard-icon {
-        display: flex;
-        width: 4%;
-      }
-    }
+  .message-signature {
+    word-break: break-all;
   }
 
-  .message-toolbar {
-    margin-top: 27px;
-  }
-
-  .message-header-title {
-    height: 54px;
-    line-height: 49px;
-    color: var(--stroke-color-hovered);
-    font-size: 27px;
-    text-transform: capitalize;
-    padding-left: 50px;
-    background-image: @tickets-cogs-opened-icon;
-    background-position: 0px 50%;
-    background-size: 30px;
-    background-repeat: no-repeat;
+  .message-content-nest-copy-to-clipboard-icon {
+    width: 20px;
+    margin-left: 1em;
   }
 }
 
