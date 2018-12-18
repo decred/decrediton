@@ -2,7 +2,10 @@
   "targets": [
     {
       "target_name": "win32ipc",
-      "sources": [ "module.cc", "pipe_wrapper.cc" ],
+      "sources": [],
+      "conditions": [
+        ["OS=='win'", {"sources": ["module.cc", "pipe_wrapper.cc"]}]
+      ]
     }
   ]
 }
