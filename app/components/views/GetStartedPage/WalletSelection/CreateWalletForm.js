@@ -1,8 +1,7 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { TextInput } from "inputs";
-import { KeyBlueButton, InvisibleButton, WatchOnlyWalletSwitch } from "buttons";
+import { KeyBlueButton, InvisibleButton, WatchOnlyWalletSwitch, TrezorWalletSwitch } from "buttons";
 import { NewSeedTabMsg, RestoreTabMsg } from "../messages";
-import TrezorWalletSwitch from "../../../buttons/TrezorWalletSwitch";
 
 const messages = defineMessages({
   messageWalletNamePlaceholder: {
