@@ -11,6 +11,12 @@ class PassphraseModal extends React.Component {
     this.state = this.getInitialState();
   }
 
+  componentDidUpdate(prevProps) {
+    if ((prevProps.triggerSubmit !== this.props.triggerSubmit) && this.props.triggerSubmit) {
+      this.onSubmit();
+    }
+  }
+
   onCancelModal() {
     this.resetState();
     this.props.onCancelModal && this.props.onCancelModal();
