@@ -14,6 +14,7 @@ export { default as SendTransactionButton } from "./SendTransactionButton";
 export { default as SignMessageButton } from "./SignMessageButton";
 export { default as GoBackIconButton } from "./GoBackIconButton";
 export { default as ImportScriptIconButton } from "./ImportScriptIconButton";
+export { default as TrezorWalletSwitch } from "./TrezorWalletSwitch";
 
 import ModalButton from "./ModalButton";
 import KeyBlueButton from "./KeyBlueButton";

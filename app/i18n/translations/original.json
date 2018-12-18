@@ -144,6 +144,8 @@
   "createWallet.passphraseInput.verifyLabel": "Repeat Private Passphrase",
   "createWallet.passphrasePlaceholder": "Private Passphrase",
   "createWallet.restore.title": "Restore existing wallet",
+  "createWallet.restore.trezor.enabled": "Enabled",
+  "createWallet.restore.trezor.disabled": "Disabled",
   "createWallet.seedCopiedToClipboard": "Seed copied to clipboard!",
   "createWallet.title": "Create a new wallet",
   "createWallet.verifyPassphrasePlaceholder": "Confirm Private Passphrase",
