@@ -65,20 +65,20 @@ const GeneralSettings = ({
           ]}
         />
       </div>
-
-      <div className="settings-row">
-        <div className="settings-label">
-          <T id="settings.displayedUnits" m="Displayed Units" />
+      {walletReady &&
+        <div className="settings-row">
+          <div className="settings-label">
+            <T id="settings.displayedUnits" m="Displayed Units" />
+          </div>
+          <SettingsInput
+            className="settings-input"
+            value={tempSettings.currencyDisplay}
+            onChange={(newCurrency) => onChangeTempSettings({ currencyDisplay: newCurrency.name })}
+            valueKey="name" labelKey="name"
+            options={currencies}
+          />
         </div>
-        <SettingsInput
-          className="settings-input"
-          value={tempSettings.currencyDisplay}
-          onChange={(newCurrency) => onChangeTempSettings({ currencyDisplay: newCurrency.name })}
-          valueKey="name" labelKey="name"
-          options={currencies}
-        />
-      </div>
-
+      }
       <div className="settings-row">
         <div className="settings-label">
           <T id="settings.locale" m="Locale" />
