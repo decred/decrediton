@@ -52,7 +52,7 @@ export default ({
         disabled={!areSettingsDirty}
         size="large"
         block={false}
-        onClick={() => onSaveSettings(tempSettings)}>
+        onClick={() => {onSaveSettings(tempSettings); onHideSettings();}}>
         <T id="getStarted.settings.save" m="Save" />
       </KeyBlueButton>
       <LoaderBarBottom  {...{ getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft }}  />
