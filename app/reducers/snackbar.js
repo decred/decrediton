@@ -351,6 +351,9 @@ export default function snackbar(state = {}, action) {
 
     // custom values for some success messages
     switch (action.type) {
+    case ADDCUSTOMSTAKEPOOL_SUCCESS:
+      values = { host: action.poolInfo.Host };
+      break;
     case EXPORT_COMPLETED:
       values = { filename: action.filename };
       break;
