@@ -43,15 +43,13 @@ const SpvSyncBody = ({
             <Aux>
               <AboutModalButton { ...{ appVersion, updateAvailable } } />
               {getWalletReady &&
-                <Aux>
-                  <InvisibleButton onClick={onShowSettings}>
-                    <SettingsLinkMsg />
-                  </InvisibleButton>
-                  <InvisibleButton onClick={onShowLogs}>
-                    <LogsLinkMsg />
-                  </InvisibleButton>
-                </Aux>
+                <InvisibleButton onClick={onShowSettings}>
+                  <SettingsLinkMsg />
+                </InvisibleButton>
               }
+              <InvisibleButton onClick={onShowLogs}>
+                <LogsLinkMsg />
+              </InvisibleButton>
             </Aux>
           </div>
           <LoaderTitleMsg />
