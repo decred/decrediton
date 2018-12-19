@@ -16,7 +16,8 @@ const GeneralSettings = ({
   tempSettings,
   currencies,
   locales,
-  onChangeTempSettings
+  onChangeTempSettings,
+  walletReady,
 }) => (
   <div className="settings-general">
     <div className="settings-column-title"><T id="settings.general.title" m="General" /></div>
@@ -107,20 +108,22 @@ const GeneralSettings = ({
           ]}
         />
       </div>
-      <div className="settings-row">
-        <div className="settings-label">
-          <div className="info-label">
-            <T id="settings.gapLimit.label" m="Gap Limit" />
+      {walletReady &&
+        <div className="settings-row">
+          <div className="settings-label">
+            <div className="info-label">
+              <T id="settings.gapLimit.label" m="Gap Limit" />
+            </div>
+            <InfoDocFieldModalButton document="GapLimitInfo" modalClassName="has-warning" double/>
           </div>
-          <InfoDocFieldModalButton document="GapLimitInfo" modalClassName="has-warning" double/>
+          <div className="settings-input">
+            <NumericInput
+              value={tempSettings.gapLimit}
+              onChange={(e) => onChangeTempSettings({ gapLimit: e.target.value })}
+            />
+          </div>
         </div>
-        <div className="settings-input">
-          <NumericInput
-            value={tempSettings.gapLimit}
-            onChange={(e) => onChangeTempSettings({ gapLimit: e.target.value })}
-          />
-        </div>
-      </div>
+      }
     </div>
   </div>
 );
