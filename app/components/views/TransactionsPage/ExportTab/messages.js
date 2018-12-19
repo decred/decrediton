@@ -26,6 +26,12 @@ export default {
       { name: "total", description: <T id="export.dailyBalances.fields.total" m="Total available balance." /> },
       { name: "sent", description: <T id="export.dailyBalances.fields.sent" m="Total amount sent to addresses not on the wallet." /> },
       { name: "received", description: <T id="export.dailyBalances.fields.received" m="Total amount received from addresses not on the wallet." /> },
+      { name: "voted", description: <T id="export.dailyBalances.fields.voted" m="Total amount, in DCR, of tickets voted" /> },
+      { name: "revoked", description: <T id="export.dailyBalances.fields.revoked" m="Total amount, in DCR, of tickets revoked" /> },
+      { name: "ticket", description: <T id="export.dailyBalances.fields.ticket" m="Total amount, in DCR, spent in tickets" /> },
+      { name: "stakeRewards", description: <T id="export.balances.fields.stakeRewards" m="Total stake rewards received." /> },
+      { name: "stakeFees", description: <T id="export.balances.fields.stakeFees" m="Total stake fees paid." /> },
+      { name: "totalStake", description: <T id="export.balances.fields.totalStake" m="Total amount of DCR used on staking." /> },
     ]
   },
   balances: {
@@ -34,8 +40,10 @@ export default {
     fields: [
       { name: "time", description: <T id="export.balances.fields.time" m="Date/time that the balance changed" /> },
       { name: "spendable", description: <T id="export.balances.fields.spendable" m="Available balance for spending in regular transactions." /> },
-      { name: "locked", description: <T id="export.balances.fields.locked" m="Balance locked in immature and live tickets." /> },
-      { name: "lockedNonWallet", description: <T id="export.balances.fields.lockedNonWallet" m="Balance locked in immature and live tickets not controlled by the wallet." /> },
+      { name: "locked", description: <T id="export.balances.fields.locked" m="Balance locked in live tickets." /> },
+      { name: "immature", description: <T id="export.dailyBalances.fields.immature" m="Balance locked in immature tickets." />},      
+      { name: "lockedNonWallet", description: <T id="export.balances.fields.lockedNonWallet" m="Balance locked in live tickets not controlled by the wallet." /> },
+      { name: "immatureNonWallet", description: <T id="export.dailyBalances.fields.immatureNonWallet" m="Balance locked in immature tickets not controlled by the wallet." /> },      
       { name: "total", description: <T id="export.balances.fields.total" m="Total available balance." /> },
       { name: "stakeRewards", description: <T id="export.balances.fields.stakeRewards" m="Total stake rewards received." /> },
       { name: "stakeFees", description: <T id="export.balances.fields.stakeFees" m="Total stake fees paid." /> },

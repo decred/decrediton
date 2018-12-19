@@ -24,12 +24,8 @@ export const getStartupStats = () => (dispatch, getState) => {
   const endDate = new Date();
   endDate.setDate(endDate.getDate()-16);
 
-  const startupStats = [
-    { calcFunction: dailyBalancesStats, backwards: true, endDate },
-  ];
-
-  return Promise.all(startupStats.map(s => dispatch(generateStat(s))))
-    .then(([ dailyBalances ]) => {
+  return dispatch(generateStat({ calcFunction: dailyBalancesStats, backwards: true, endDate }))
+    .then( dailyBalances => {
 
       // the `dailyBalances` returns only days when there was a change in
       // some of the balances, so we need to fill the gaps of days without
@@ -633,18 +629,23 @@ export const dailyBalancesStats = (opts) => {
   let balance = { spendable: 0, locked: 0, total: 0, sent: 0, received: 0,
     voted: 0, revoked: 0, ticket: 0 };
 
-  const aggStartFunction = (opts) => {
-    opts.series = [ ...opts.series,
-      { name: "sent", type: VALUE_TYPE_ATOMAMOUNT },
-      { name: "received", type: VALUE_TYPE_ATOMAMOUNT },
-      { name: "voted", type: VALUE_TYPE_ATOMAMOUNT },
-      { name: "revoked", type: VALUE_TYPE_ATOMAMOUNT },
-      { name: "ticket", type: VALUE_TYPE_ATOMAMOUNT },
-      { name: "stakeRewards", type: VALUE_TYPE_ATOMAMOUNT },
-      { name: "stakeFees", type: VALUE_TYPE_ATOMAMOUNT },
-      { name: "totalStake", type: VALUE_TYPE_ATOMAMOUNT },
-    ];
-    startFunction(opts);
+  const aggStartFunction = () => {
+    startFunction({
+      series : [
+        { name: "spendable", type: VALUE_TYPE_ATOMAMOUNT },
+        { name: "locked", type: VALUE_TYPE_ATOMAMOUNT },
+        { name: "lockedNonWallet", type: VALUE_TYPE_ATOMAMOUNT },
+        { name: "total", type: VALUE_TYPE_ATOMAMOUNT },
+        { name: "sent", type: VALUE_TYPE_ATOMAMOUNT },
+        { name: "received", type: VALUE_TYPE_ATOMAMOUNT },
+        { name: "voted", type: VALUE_TYPE_ATOMAMOUNT },
+        { name: "revoked", type: VALUE_TYPE_ATOMAMOUNT },
+        { name: "ticket", type: VALUE_TYPE_ATOMAMOUNT },
+        { name: "stakeRewards", type: VALUE_TYPE_ATOMAMOUNT },
+        { name: "stakeFees", type: VALUE_TYPE_ATOMAMOUNT },
+        { name: "totalStake", type: VALUE_TYPE_ATOMAMOUNT },
+      ]
+    });
   };
 
   const aggProgressFunction = (time, series) => {
