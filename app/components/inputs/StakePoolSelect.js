@@ -27,7 +27,8 @@ class StakePoolSelect extends React.Component {
     if (value.newOption) {
       if (!addCustomStakePool) return;
 
-      addCustomStakePool(value.Host).then(poolInfo => {
+      const formattedHost = value.Host.replace(/\/$/, "");
+      addCustomStakePool(formattedHost).then(poolInfo => {
         if (!poolInfo) return;
         const opt = { ...poolInfo, label: poolInfo.Host, value: poolInfo,
           isVersionValid: true };
