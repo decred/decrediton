@@ -25,7 +25,6 @@ const DaemonLoadingBody = ({
   startupError,
   updateAvailable,
   appVersion,
-  isDaemonRemote,
   isSPV,
   syncInput,
   passPhrase,
@@ -51,12 +50,9 @@ const DaemonLoadingBody = ({
               <SettingsLinkMsg />
             </InvisibleButton>
           }
-          {(getDaemonStarted && !isDaemonRemote) || getWalletReady ?
-            <InvisibleButton onClick={onShowLogs}>
-              <LogsLinkMsg />
-            </InvisibleButton> :
-            <div/>
-          }
+          <InvisibleButton onClick={onShowLogs}>
+            <LogsLinkMsg />
+          </InvisibleButton>
         </Aux>
       </div>
       <Aux>
