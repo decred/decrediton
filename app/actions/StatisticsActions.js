@@ -629,21 +629,15 @@ export const dailyBalancesStats = (opts) => {
   let balance = { spendable: 0, locked: 0, total: 0, sent: 0, received: 0,
     voted: 0, revoked: 0, ticket: 0 };
 
-  const aggStartFunction = () => {
+  const aggStartFunction = (opts) => {
     startFunction({
       series : [
-        { name: "spendable", type: VALUE_TYPE_ATOMAMOUNT },
-        { name: "locked", type: VALUE_TYPE_ATOMAMOUNT },
-        { name: "lockedNonWallet", type: VALUE_TYPE_ATOMAMOUNT },
-        { name: "total", type: VALUE_TYPE_ATOMAMOUNT },
+        ...opts.series,
         { name: "sent", type: VALUE_TYPE_ATOMAMOUNT },
         { name: "received", type: VALUE_TYPE_ATOMAMOUNT },
         { name: "voted", type: VALUE_TYPE_ATOMAMOUNT },
         { name: "revoked", type: VALUE_TYPE_ATOMAMOUNT },
         { name: "ticket", type: VALUE_TYPE_ATOMAMOUNT },
-        { name: "stakeRewards", type: VALUE_TYPE_ATOMAMOUNT },
-        { name: "stakeFees", type: VALUE_TYPE_ATOMAMOUNT },
-        { name: "totalStake", type: VALUE_TYPE_ATOMAMOUNT },
       ]
     });
   };
