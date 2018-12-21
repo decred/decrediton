@@ -21,7 +21,8 @@ export default ({
   getNeededBlocks,
   getEstimatedTimeLeft,
   appVersion,
-  updateAvailable
+  updateAvailable,
+  getWalletReady
 }) => (
   <div className="page-body getstarted">
     <div className="getstarted loader logs">
@@ -40,8 +41,7 @@ export default ({
       <div className="tabbed-page-subtitle"><T id="settings.subtitle" m="Settings"/></div>
       <div className="settings-wrapper">
         <div className="settings-columns">
-          <GeneralSettings {...{ tempSettings, networks, currencies, locales,
-            onChangeTempSettings }} />
+          <GeneralSettings {...{ tempSettings, networks, currencies, locales, onChangeTempSettings }} walletReady={getWalletReady}/>
           <ProxySettings {...{ tempSettings, onChangeTempSettings }} />
         </div>
         <div className="settings-columns">
