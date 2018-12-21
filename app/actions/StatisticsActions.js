@@ -600,7 +600,7 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
       const { unmined } = await wallet.getTransactions(walletService, -1, -1, 0);
       const fixedUnmined = unmined.map(tx => ({ ...tx, timestamp: currentDate.getTime(),
         height: currentBlockHeight }));
-      toProcess.push(...fixedUnmined);
+      toProcess.unshift(...fixedUnmined);
 
       // on backwards stats, we find vote txs before finding ticket txs, so
       // pre-process tickets from all grabbed txs to avoid making the separate
