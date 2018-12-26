@@ -12,6 +12,7 @@ import {
   NEW_TRANSACTIONS_RECEIVED, CHANGE_TRANSACTIONS_FILTER,
   UPDATETIMESINCEBLOCK,
   GETTICKETS_ATTEMPT, GETTICKETS_FAILED, GETTICKETS_COMPLETE, CLEAR_TICKETS,
+  GETTICKETS_PROGRESS, GETTICKETS_CANCEL,
   GETAGENDASERVICE_ATTEMPT, GETAGENDASERVICE_FAILED, GETAGENDASERVICE_SUCCESS,
   RAWTICKETTRANSACTIONS_DECODED, CHANGE_TICKETS_FILTER,
   GETMESSAGEVERIFICATIONSERVICE_ATTEMPT, GETMESSAGEVERIFICATIONSERVICE_FAILED, GETMESSAGEVERIFICATIONSERVICE_SUCCESS,
@@ -274,12 +275,15 @@ export default function grpc(state = {}, action) {
     return {
       ...state,
       getTicketsRequestAttempt: true,
+      getTicketsCancel: false,
     };
   case GETTICKETS_FAILED:
     return {
       ...state,
       getTicketsRequestError: String(action.error),
       getTicketsRequestAttempt: false,
+      getTicketsCancel: false,
+      getTicketsProgressStartRequestHeight: null,
     };
   case GETTICKETS_COMPLETE:
     var tickets = [ ...action.unminedTickets, ...action.minedTickets ];
@@ -292,6 +296,18 @@ export default function grpc(state = {}, action) {
       getTicketsRequestError: "",
       getTicketsRequestAttempt: false,
       getTicketsStartRequestHeight: action.getTicketsStartRequestHeight,
+      getTicketsCancel: false,
+      getTicketsProgressStartRequestHeight: null,
+    };
+  case GETTICKETS_PROGRESS:
+    return {
+      ...state,
+      getTicketsProgressStartRequestHeight: action.startRequestHeight,
+    };
+  case GETTICKETS_CANCEL:
+    return {
+      ...state,
+      getTicketsCancel: true
     };
   case CLEAR_TICKETS:
     return { ...state,

@@ -441,6 +441,8 @@ export function showAccount(accountNumber) {
 export const GETTICKETS_ATTEMPT = "GETTICKETS_ATTEMPT";
 export const GETTICKETS_FAILED = "GETTICKETS_FAILED";
 export const GETTICKETS_COMPLETE = "GETTICKETS_COMPLETE";
+export const GETTICKETS_PROGRESS = "GETTICKETS_PROGRESS";
+export const GETTICKETS_CANCEL = "GETTICKETS_CANCEL";
 
 function filterTickets(tickets, filter) {
   return tickets
@@ -582,6 +584,8 @@ export const getTickets = () => async (dispatch, getState) => {
     desc = false;
   }
 
+  let lastReportedHeight = startRequestHeight;
+
   // now, request a batch of mined transactions until `maximumTransactionCount`
   // transactions have been obtained (after filtering)
   while (!noMoreTickets && (filtered.length < maximumTransactionCount)) {
@@ -596,7 +600,16 @@ export const getTickets = () => async (dispatch, getState) => {
 
       startRequestHeight = startIdx;
 
+      if (Math.abs(lastReportedHeight - startRequestHeight) > 1000) {
+        dispatch({ startRequestHeight, type: GETTICKETS_PROGRESS });
+        lastReportedHeight = startRequestHeight;
+      }
+
       filtered.push(...filterTickets(tickets, ticketsFilter));
+
+      if (getState().grpc.getTicketsCancel) {
+        noMoreTickets = true;
+      }
     } catch (error) {
       dispatch({ error, type: GETTICKETS_FAILED });
       return;
@@ -624,6 +637,8 @@ export function changeTicketsFilter(newFilter) {
     dispatch(getTickets());
   };
 }
+
+export const cancelGetTickets = () => dispatch => dispatch({ type: GETTICKETS_CANCEL });
 
 export const GETTRANSACTIONS_ATTEMPT = "GETTRANSACTIONS_ATTEMPT";
 export const GETTRANSACTIONS_FAILED = "GETTRANSACTIONS_FAILED";
