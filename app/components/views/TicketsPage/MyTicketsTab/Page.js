@@ -9,6 +9,14 @@ import "style/MyTickets.less";
 @autobind
 class TicketListPage extends React.Component {
 
+  componentDidMount() {
+    if ((window.innerWidth > 1500) && (!this.props.noMoreTickets)) {
+      // hack to load more items in large-width displays, so that the scroll
+      // doesn't get stuck and can actually get triggered.
+      this.props.onLoadMoreTickets();
+    }
+  }
+
   render() {
     const {
       tickets, noMoreTickets,

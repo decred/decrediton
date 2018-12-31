@@ -187,6 +187,8 @@ var initialState = {
       status: [], // desired ticket status (code). All if blank.
     },
     getTicketsStartRequestHeight: null,
+    getTicketsCancel: false, // user requested cancelation (but it hasn't happened yet)
+    getTicketsProgressStartRequestHeight: null,
 
     // Agenda/VoteChoices
     getAgendasResponse: null,
