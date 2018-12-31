@@ -129,6 +129,7 @@ const getProposalVoteResults = async (proposal, piURL, walletService, blockTimes
 export const GETVETTED_ATTEMPT = "GETVETTED_ATTEMPT";
 export const GETVETTED_FAILED = "GETVETTED_FAILED";
 export const GETVETTED_SUCCESS = "GETVETTED_SUCCESS";
+export const GETVETTED_CANCELED = "GETVETTED_CANCELED";
 export const GETVETTED_UPDATEDVOTERESULTS_SUCCESS = "GETVETTED_UPDATEDVOTERESULTS_SUCCESS";
 export const GETVETTED_UPDATEDVOTERESULTS_FAILED = "GETVETTED_UPDATEDVOTERESULTS_FAILED";
 
@@ -143,12 +144,22 @@ export const getVettedProposals = () => async (dispatch, getState) => {
   const lastAccessTime = cfg.get("politeia_last_access_time") || 0;
   const lastAccessBlock = cfg.get("politeia_last_access_block") || 0;
 
+  const originalWalletService = getState().grpc.walletService;
+
   // resulting data
   let proposals = [], preVote = [], activeVote = [], voted = [], abandoned = [], byToken = {};
 
   try {
     const [ vetted, votesStatus ] = await Promise.all(
       [ pi.getVetted(piURL), pi.getVotesStatus(piURL) ]);
+
+    const { walletService } = getState().grpc;
+    if (walletService !== originalWalletService) {
+      // wallet has shutdown/changed and the request took too long to complete.
+      // just ignore it.
+      dispatch({ type: GETVETTED_CANCELED });
+      return;
+    }
 
     // helpers
     const blockTimestampFromNow = sel.blockTimestampFromNow(getState());
@@ -243,6 +254,13 @@ export const getVettedProposals = () => async (dispatch, getState) => {
 
     dispatch({ proposals: byToken, activeVote, voted, type: GETVETTED_UPDATEDVOTERESULTS_SUCCESS });
   } catch (error) {
+    const { walletService } = getState().grpc;
+    if (walletService !== originalWalletService) {
+      // wallet has shutdown/changed and the request took too long to complete.
+      // just ignore the error here in this case.
+      return;
+    }
+
     dispatch({ error, type: GETVETTED_UPDATEDVOTERESULTS_FAILED });
     return;
   }
@@ -315,7 +333,6 @@ export const getProposalDetails = (token, markViewed) => async (dispatch, getSta
     activeVote = replace(activeVote, p => p.token === token, proposal);
     voted = replace(voted, p => p.token === token, proposal);
     abandoned = replace(abandoned, p => p.token === token, proposal);
-
 
     dispatch({ token, proposal, preVote, activeVote, voted, abandoned, type: GETPROPOSAL_SUCCESS });
   } catch (error) {
