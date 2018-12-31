@@ -142,7 +142,7 @@ class GetStartedPage extends React.Component {
 
     let text, Form, animationType;
     if (showSettings) {
-      return <Settings {...{ onShowLogs, onHideSettings, appVersion, updateAvailable, ...props }} />;
+      return <Settings {...{ onShowLogs, onHideSettings, appVersion, updateAvailable, getWalletReady, ...props }} />;
     } else if (showLogs) {
       return <Logs {...{ onShowSettings, onHideLogs, getWalletReady, appVersion, updateAvailable,  ...props }} />;
     } else if (showReleaseNotes) {
