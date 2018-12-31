@@ -307,6 +307,7 @@ export const ticketNormalizer = createSelector(
 
 export const noMoreTickets = get([ "grpc", "noMoreTickets" ]);
 export const ticketsFilter = get([ "grpc", "ticketsFilter" ]);
+export const getTicketsProgressStartRequestHeight = get([ "grpc", "getTicketsProgressStartRequestHeight" ]);
 export const ticketsNormalizer = createSelector([ ticketNormalizer ], map);
 export const tickets = get([ "grpc", "tickets" ]);
 export const numTicketsToBuy = get([ "control", "numTicketsToBuy" ]);
