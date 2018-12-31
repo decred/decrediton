@@ -24,7 +24,6 @@ const DaemonLoadingBody = ({
   startupError,
   updateAvailable,
   appVersion,
-  isDaemonRemote,
   isSPV,
   syncInput,
   passPhrase,
