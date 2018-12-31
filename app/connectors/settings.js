@@ -16,6 +16,7 @@ const mapStateToProps = selectorMap({
   changePassphraseRequestAttempt: sel.changePassphraseRequestAttempt,
   needNetworkReset: sel.needNetworkReset,
   walletName: sel.getWalletName,
+  walletReady: sel.getWalletReady,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

@@ -10,7 +10,6 @@ import "style/GetStarted.less";
 const SpvSyncBody = ({
   text,
   animationType,
-  getWalletReady,
   onShowSettings,
   onShowLogs,
   onShowTutorial,
@@ -42,16 +41,12 @@ const SpvSyncBody = ({
             {updateAvailable && <UpdateAvailableLink updateAvailable={updateAvailable} /> }
             <Aux>
               <AboutModalButton { ...{ appVersion, updateAvailable } } />
-              {getWalletReady &&
-                <Aux>
-                  <InvisibleButton onClick={onShowSettings}>
-                    <SettingsLinkMsg />
-                  </InvisibleButton>
-                  <InvisibleButton onClick={onShowLogs}>
-                    <LogsLinkMsg />
-                  </InvisibleButton>
-                </Aux>
-              }
+              <InvisibleButton onClick={onShowSettings}>
+                <SettingsLinkMsg />
+              </InvisibleButton>
+              <InvisibleButton onClick={onShowLogs}>
+                <LogsLinkMsg />
+              </InvisibleButton>
             </Aux>
           </div>
           <LoaderTitleMsg />

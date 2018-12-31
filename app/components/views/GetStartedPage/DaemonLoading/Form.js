@@ -13,7 +13,6 @@ const DaemonLoadingBody = ({
   animationType,
   openWalletInputRequest,
   getCurrentBlockCount,
-  getWalletReady,
   getDaemonStarted,
   getDaemonSynced,
   getNeededBlocks,
@@ -46,17 +45,12 @@ const DaemonLoadingBody = ({
         {updateAvailable && <UpdateAvailableLink updateAvailable={updateAvailable} /> }
         <Aux>
           <AboutModalButton { ...{ appVersion, updateAvailable } } />
-          {getWalletReady &&
-            <InvisibleButton onClick={onShowSettings}>
-              <SettingsLinkMsg />
-            </InvisibleButton>
-          }
-          {(getDaemonStarted && !isDaemonRemote) || getWalletReady ?
-            <InvisibleButton onClick={onShowLogs}>
-              <LogsLinkMsg />
-            </InvisibleButton> :
-            <div/>
-          }
+          <InvisibleButton onClick={onShowSettings}>
+            <SettingsLinkMsg />
+          </InvisibleButton>
+          <InvisibleButton onClick={onShowLogs}>
+            <LogsLinkMsg />
+          </InvisibleButton>
         </Aux>
       </div>
       <Aux>
