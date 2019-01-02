@@ -1,11 +1,19 @@
 import { SETTINGS_SAVE, SETTINGS_CHANGED, SETTINGS_UNCHANGED, SETTINGS_TOGGLE_THEME,
-  ALLOWEDEXTERNALREQUESTS_ADDED } from "../actions/SettingsActions";
+  ALLOWEDEXTERNALREQUESTS_ADDED, SET_MAINNET } from "../actions/SettingsActions";
 import { WALLET_SETTINGS, SELECT_LANGUAGE } from "actions/DaemonActions";
+
 export default function settings(state = {}, action) {
   switch (action.type) {
   case SELECT_LANGUAGE:
     var currentSettings = state.currentSettings;
     currentSettings.locale = action.language;
+    return { ...state,
+      currentSettings: currentSettings,
+      tempSettings: currentSettings,
+    };
+  case SET_MAINNET:
+    currentSettings = state.currentSettings;
+    currentSettings.network = "mainnet";
     return { ...state,
       currentSettings: currentSettings,
       tempSettings: currentSettings,

@@ -13,7 +13,11 @@ export const OPTIONS = {
   boolean: [ "debug", "testnet", "mainnet", "help", "version" ],
   string: [ "extrawalletargs", "customBinPath" ],
   default: { debug: false },
-  alias: { d: "debug" },
+  alias: {
+    d: "debug",
+    h: "help",
+    v: "version"
+  },
   unknown: unknownFn
 };
 

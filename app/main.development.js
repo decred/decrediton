@@ -13,13 +13,24 @@ import { cleanShutdown, GetDcrdPID, GetDcrwPID } from "./main_dev/launch";
 import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopDaemon, stopWallet, startWallet, checkDaemon, deleteDaemon, setWatchingOnlyWallet, getWatchingOnlyWallet, getDaemonInfo } from "./main_dev/ipc";
 import { initTemplate, getVersionWin, setGrpcVersions, getGrpcVersions, inputMenu, selectionMenu } from "./main_dev/templates";
 import { readFileBackward } from "./helpers/byteActions";
+import store from "./store/configureStore";
 
 // setPath as decrediton
 app.setPath("userData", appDataDirectory());
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
+console.log("args are ");
+console.log(argv);
+console.log("argv original are");
+console.log(process.argv);
+
+// console.log("dispatching");
+// console.log(store);
+// store.dispatch({ type: "SET_MAINNET" });
+
 const debug = argv.debug || process.env.NODE_ENV === "development";
 const logger = createLogger(debug);
+
 
 // Verify that config.json is valid JSON before fetching it, because
 // it will silently fail when fetching.
@@ -55,7 +66,7 @@ if (argv.version) {
   app.exit(0);
 }
 
-// Check if network was set on command line (but only allow one!).
+// Allow at most one network to be specified
 if (argv.testnet && argv.mainnet) {
   logger.log(BOTH_CONNECTION_ERR_MESSAGE);
   app.quit();

@@ -48,6 +48,7 @@ export const DELETE_DCRD_FAILED = "DELETE_DCRD_FAILED";
 export const DELETE_DCRD_SUCCESS = "DELETE_DCRD_SUCCESS";
 export const NOT_SAME_CONNECTION = "NOT_SAME_CONNECTION";
 export const NETWORK_MATCH = "NETWORK_MATCH";
+export const SET_MAINNET = "SET_MAINNET";
 
 export const checkDecreditonVersion = () => (dispatch, getState) =>{
   const detectedVersion = getState().daemon.appVersion;
