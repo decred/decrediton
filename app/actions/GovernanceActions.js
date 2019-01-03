@@ -176,6 +176,8 @@ export const getVettedProposals = () => async (dispatch, getState) => {
       const voteData = parseOptionsResult(voteStatus.optionsresult);
       const oldProposal = oldProposals[p.censorshiprecord.token];
 
+      const publishedTimestamp = p.publishedat || p.timestamp || 0;
+
       const proposal = {
         hasDetails: false,
         ...oldProposal,
@@ -190,7 +192,7 @@ export const getVettedProposals = () => async (dispatch, getState) => {
         files: [],
         hasEligibleTickets: 0,
         eligibleTickets: [],
-        modifiedSinceLastAccess: (p.timestamp*1000) > lastAccessTime,
+        modifiedSinceLastAccess: (publishedTimestamp*1000) > lastAccessTime,
         votingSinceLastAccess: false,
         ...voteData,
       };
