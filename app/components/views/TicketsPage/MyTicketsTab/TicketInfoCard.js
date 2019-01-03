@@ -116,7 +116,7 @@ class TicketInfoCard extends React.Component {
   }
 
   render() {
-    const { ticket, onClick, expanded } = this.props;
+    const { ticket, expanded } = this.props;
     const { onMouseEnter, onMouseLeave } = this;
 
     const rewardDiv = this.getTicketRewardDiv();
@@ -125,7 +125,6 @@ class TicketInfoCard extends React.Component {
 
     return (
       <div
-        onClick={() => onClick(ticket)}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
       >
