@@ -1,5 +1,5 @@
 import {
-  GETVETTED_ATTEMPT, GETVETTED_FAILED, GETVETTED_SUCCESS,
+  GETVETTED_ATTEMPT, GETVETTED_FAILED, GETVETTED_SUCCESS, GETVETTED_CANCELED,
   GETVETTED_UPDATEDVOTERESULTS_SUCCESS,
   GETPROPOSAL_ATTEMPT, GETPROPOSAL_FAILED, GETPROPOSAL_SUCCESS,
   UPDATEVOTECHOICE_ATTEMPT, UPDATEVOTECHOICE_SUCCESS, UPDATEVOTECHOICE_FAILED,
@@ -13,6 +13,8 @@ export default function governance(state = {}, action) {
   case GETVETTED_ATTEMPT:
     return { ...state, getVettedAttempt: true };
   case GETVETTED_FAILED:
+    return { ...state, getVettedAttempt: false };
+  case GETVETTED_CANCELED:
     return { ...state, getVettedAttempt: false };
   case GETVETTED_SUCCESS:
     return { ...state,

@@ -307,6 +307,7 @@ export const ticketNormalizer = createSelector(
 
 export const noMoreTickets = get([ "grpc", "noMoreTickets" ]);
 export const ticketsFilter = get([ "grpc", "ticketsFilter" ]);
+export const getTicketsProgressStartRequestHeight = get([ "grpc", "getTicketsProgressStartRequestHeight" ]);
 export const ticketsNormalizer = createSelector([ ticketNormalizer ], map);
 export const tickets = get([ "grpc", "tickets" ]);
 export const numTicketsToBuy = get([ "control", "numTicketsToBuy" ]);
@@ -867,6 +868,7 @@ export const averageVoteTime = createSelector(
   (voteTimeStats) => {
     if (!voteTimeStats || !voteTimeStats.data.length) return 0;
     const ticketCount = voteTimeStats.data.reduce((s, v) => s + v.series.count, 0);
+    if (ticketCount === 0) return 0;
     let sum = 0;
     for (let i = 0; i < voteTimeStats.data.length; i++) {
       sum += voteTimeStats.data[i].series.count * i;
@@ -879,6 +881,7 @@ export const medianVoteTime = createSelector(
   (voteTimeStats) => {
     if (!voteTimeStats || !voteTimeStats.data.length) return 0;
     const ticketCount = voteTimeStats.data.reduce((s, v) => s + v.series.count, 0);
+    if (ticketCount === 0) return 0;
     const ticketLimit = ticketCount * 0.5;
     let sum = 0;
     for (let i = 0; i < voteTimeStats.data.length; i++) {
@@ -892,6 +895,7 @@ export const ninetyFifthPercentileVoteTime = createSelector(
   (voteTimeStats) => {
     if (!voteTimeStats || !voteTimeStats.data.length) return 0;
     const ticketCount = voteTimeStats.data.reduce((s, v) => s + v.series.count, 0);
+    if (ticketCount === 0) return 0;
     const ticketLimit = ticketCount * 0.95;
     let sum = 0;
     for (let i = 0; i < voteTimeStats.data.length; i++) {
@@ -911,8 +915,8 @@ export const stakeRewardsStats = createSelector(
     stakeRewards: s.series.stakeRewards / unitDivisor,
     stakeFees: s.series.stakeFees / unitDivisor,
     totalStake: s.series.totalStake / unitDivisor,
-    stakeRewardPerc: (s.series.stakeRewards / s.series.totalStake),
-    stakeFeesPerc: (s.series.stakeFees / s.series.totalStake),
+    stakeRewardPerc: (s.series.stakeRewards / (s.series.totalStake || 1)),
+    stakeFeesPerc: (s.series.stakeFees / (s.series.totalStake || 1)),
   })));
 
 export const modalVisible = get([ "control", "modalVisible" ]);

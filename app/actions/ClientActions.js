@@ -441,6 +441,8 @@ export function showAccount(accountNumber) {
 export const GETTICKETS_ATTEMPT = "GETTICKETS_ATTEMPT";
 export const GETTICKETS_FAILED = "GETTICKETS_FAILED";
 export const GETTICKETS_COMPLETE = "GETTICKETS_COMPLETE";
+export const GETTICKETS_PROGRESS = "GETTICKETS_PROGRESS";
+export const GETTICKETS_CANCEL = "GETTICKETS_CANCEL";
 
 function filterTickets(tickets, filter) {
   return tickets
@@ -498,6 +500,24 @@ const getTicketsFromTransactions = async (walletService, startIdx, endIdx, maxCo
         const tx = txByTicketHash[h];
         const txIsTicket = tx.type === TransactionDetails.TransactionType.TICKET_PURCHASE;
         const ticketWasSpent = [ "voted", "revoked" ].indexOf(ticket.status) > -1;
+
+        if (!txIsTicket && !ticketWasSpent) {
+          // This is a limitation in wallet.getTicket() when the wallet does not
+          // have the voting rights (output 0) for the ticket. The status of the
+          // original ticket is obviously bogus, given that it doesn't return
+          // the ticket's status as voted/revoked, even though we have found its
+          // corresponding vote/revocation tx. For the moment, we hack around
+          // the returned data to simulate as if the ticket's spend status was
+          // actually returned correctly, but we need to be careful to filter
+          // for duplicate occurrences of the ticket later on the code flow.
+          const statusByTxType = {
+            [TransactionDetails.TransactionType.VOTE]: "voted",
+            [TransactionDetails.TransactionType.REVOCATION]: "revoked",
+          };
+          ticket.status = statusByTxType[tx.type];
+          ticket.spender = tx.tx;
+          return ticket;
+        }
 
         if (desc && txIsTicket && ticketWasSpent) {
           // fetching backwards, we ignore data from voted/revoked tickets given
@@ -561,6 +581,7 @@ export const getTickets = () => async (dispatch, getState) => {
     currentBlockHeight } = getState().grpc;
   let { noMoreTickets, getTicketsStartRequestHeight, minedTickets } = getState().grpc;
   const pageCount = maximumTransactionCount;
+  const ticketsNormalizer = sel.ticketsNormalizer(getState());
 
   // List of transactions found after filtering
   let filtered = [];
@@ -569,7 +590,7 @@ export const getTickets = () => async (dispatch, getState) => {
   // have been mined
   let { tickets } = await getTicketsFromTransactions(walletService, -1, -1, 0, currentBlockHeight);
   const unminedFiltered = filterTickets(tickets, ticketsFilter);
-  const unminedTickets = sel.ticketsNormalizer(getState())(unminedFiltered);
+  const unminedTickets = ticketsNormalizer(unminedFiltered);
 
   let startRequestHeight, endRequestHeight, desc;
   if ( ticketsFilter.listDirection === "desc" ) {
@@ -581,6 +602,8 @@ export const getTickets = () => async (dispatch, getState) => {
     endRequestHeight = currentBlockHeight;
     desc = false;
   }
+
+  let lastReportedHeight = startRequestHeight;
 
   // now, request a batch of mined transactions until `maximumTransactionCount`
   // transactions have been obtained (after filtering)
@@ -596,17 +619,50 @@ export const getTickets = () => async (dispatch, getState) => {
 
       startRequestHeight = startIdx;
 
-      filtered.push(...filterTickets(tickets, ticketsFilter));
+      if (Math.abs(lastReportedHeight - startRequestHeight) > 1000) {
+        dispatch({ startRequestHeight, type: GETTICKETS_PROGRESS });
+        lastReportedHeight = startRequestHeight;
+      }
+
+      const thisFiltered = filterTickets(tickets, ticketsFilter);
+      const normalized = ticketsNormalizer(thisFiltered);
+      filtered.push(...normalized);
+
+      if (getState().grpc.getTicketsCancel) {
+        noMoreTickets = true;
+      }
     } catch (error) {
       dispatch({ error, type: GETTICKETS_FAILED });
       return;
     }
   }
 
-  const normalized = sel.ticketsNormalizer(getState())(filtered);
-  minedTickets = [ ...minedTickets, ...normalized ];
+  // This next bit is required due to wallet.getTicket() not correctly showing
+  // the status of tickets when the wallet doesn't have the voting rights for
+  // it. Without this duplicate filtering, we'd see two transactions (the ticket
+  // and a vote/revocation) shown as the same expired or missed status.
+  const newMinedTickets = [];
 
-  dispatch({ unminedTickets, minedTickets, noMoreTickets,
+  if (desc) {
+    // When iterating in desc mode, we add the first found (most recent) ticket
+    // tx (which should have the correct status) and ignore the next one (the
+    // purchase, which would show as missed/expired)
+    newMinedTickets.push(...minedTickets);
+    const ticketsMap = minedTickets.reduce((m, t) => { m[t.hash] = t; return m; }, {});
+    newMinedTickets.push(...filtered.filter(t => !ticketsMap[t.hash]));
+  } else {
+    // When iterating in asc mode, we unshift the newly found (most recent)
+    // tickets first, then ignore the previous (older) one, as the most recent
+    // one will have the correct status.
+    // This provokes a small UI issue in that the older ticket disappears from
+    // the list, causing a "jump" and if the user backtracks it won't be
+    // there anymore.
+    newMinedTickets.push(...filtered);
+    const ticketsMap = filtered.reduce((m, t) => { m[t.hash] = t; return m; }, {});
+    newMinedTickets.unshift(...minedTickets.filter(t => !ticketsMap[t.hash]));
+  }
+
+  dispatch({ unminedTickets, minedTickets: newMinedTickets, noMoreTickets,
     getTicketsStartRequestHeight: startRequestHeight,
     type: GETTICKETS_COMPLETE });
 };
@@ -624,6 +680,8 @@ export function changeTicketsFilter(newFilter) {
     dispatch(getTickets());
   };
 }
+
+export const cancelGetTickets = () => dispatch => dispatch({ type: GETTICKETS_CANCEL });
 
 export const GETTRANSACTIONS_ATTEMPT = "GETTRANSACTIONS_ATTEMPT";
 export const GETTRANSACTIONS_FAILED = "GETTRANSACTIONS_FAILED";

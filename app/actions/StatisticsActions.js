@@ -24,12 +24,8 @@ export const getStartupStats = () => (dispatch, getState) => {
   const endDate = new Date();
   endDate.setDate(endDate.getDate()-16);
 
-  const startupStats = [
-    { calcFunction: dailyBalancesStats, backwards: true, endDate },
-  ];
-
-  return Promise.all(startupStats.map(s => dispatch(generateStat(s))))
-    .then(([ dailyBalances ]) => {
+  return dispatch(generateStat({ calcFunction: dailyBalancesStats, backwards: true, endDate }))
+    .then( dailyBalances => {
 
       // the `dailyBalances` returns only days when there was a change in
       // some of the balances, so we need to fill the gaps of days without
@@ -600,7 +596,7 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
       const { unmined } = await wallet.getTransactions(walletService, -1, -1, 0);
       const fixedUnmined = unmined.map(tx => ({ ...tx, timestamp: currentDate.getTime(),
         height: currentBlockHeight }));
-      toProcess.push(...fixedUnmined);
+      toProcess.unshift(...fixedUnmined);
 
       // on backwards stats, we find vote txs before finding ticket txs, so
       // pre-process tickets from all grabbed txs to avoid making the separate
@@ -634,17 +630,16 @@ export const dailyBalancesStats = (opts) => {
     voted: 0, revoked: 0, ticket: 0 };
 
   const aggStartFunction = (opts) => {
-    opts.series = [ ...opts.series,
-      { name: "sent", type: VALUE_TYPE_ATOMAMOUNT },
-      { name: "received", type: VALUE_TYPE_ATOMAMOUNT },
-      { name: "voted", type: VALUE_TYPE_ATOMAMOUNT },
-      { name: "revoked", type: VALUE_TYPE_ATOMAMOUNT },
-      { name: "ticket", type: VALUE_TYPE_ATOMAMOUNT },
-      { name: "stakeRewards", type: VALUE_TYPE_ATOMAMOUNT },
-      { name: "stakeFees", type: VALUE_TYPE_ATOMAMOUNT },
-      { name: "totalStake", type: VALUE_TYPE_ATOMAMOUNT },
-    ];
-    startFunction(opts);
+    startFunction({
+      series : [
+        ...opts.series,
+        { name: "sent", type: VALUE_TYPE_ATOMAMOUNT },
+        { name: "received", type: VALUE_TYPE_ATOMAMOUNT },
+        { name: "voted", type: VALUE_TYPE_ATOMAMOUNT },
+        { name: "revoked", type: VALUE_TYPE_ATOMAMOUNT },
+        { name: "ticket", type: VALUE_TYPE_ATOMAMOUNT },
+      ]
+    });
   };
 
   const aggProgressFunction = (time, series) => {

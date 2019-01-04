@@ -177,6 +177,7 @@ export const CLOSEWALLET_FAILED = "CLOSEWALLET_FAILED";
 export const CLOSEWALLET_SUCCESS = "CLOSEWALLET_SUCCESS";
 
 export const closeWalletRequest = () => async(dispatch, getState) => {
+  const { walletReady } = getState().daemon;
   dispatch({ type: CLOSEWALLET_ATTEMPT });
   try {
     await dispatch(cancelPingAttempt());
@@ -184,7 +185,9 @@ export const closeWalletRequest = () => async(dispatch, getState) => {
     await dispatch(syncCancel());
     await dispatch(rescanCancel());
     await dispatch(trezorClearDeviceSession());
-    await closeWallet(getState().walletLoader.loader);
+    if (walletReady) {
+      await closeWallet(getState().walletLoader.loader);
+    }
     await wallet.stopWallet();
     dispatch({ type: CLOSEWALLET_SUCCESS });
     dispatch(pushHistory("/getstarted/initial"));

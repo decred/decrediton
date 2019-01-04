@@ -40,11 +40,12 @@ const SettingsPage = ({
   needNetworkReset,
   toggleTheme,
   walletName,
+  walletReady,
 }) => (
   <StandalonePage header={<SettingsPageHeader {...{ onCloseWallet, walletName }}/>} >
     <div className="settings-wrapper">
       <div className="settings-columns">
-        <GeneralSettings {...{ tempSettings, networks, currencies, locales,
+        <GeneralSettings {...{ tempSettings, networks, currencies, locales, walletReady,
           onChangeTempSettings }} />
         <ProxySettings {...{ tempSettings, onChangeTempSettings }} />
         <div className="toggle-theme-button-wrapper">
