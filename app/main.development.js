@@ -18,7 +18,6 @@ import { readFileBackward } from "./helpers/byteActions";
 app.setPath("userData", appDataDirectory());
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
-
 const debug = argv.debug || process.env.NODE_ENV === "development";
 const logger = createLogger(debug);
 
