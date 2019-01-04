@@ -15,8 +15,11 @@ import "./style/ReactSelectGlobal.less";
 import pkg from "./package.json";
 import { log } from "./wallet";
 
+const electron = require("electron");
+
 var globalCfg = getGlobalCfg();
 const locale = globalCfg.get("locale");
+const cliOptions = electron.remote.getGlobal("cliOptions");
 
 log("info", "Starting main react app");
 
@@ -30,7 +33,7 @@ const currentSettings = {
   spvConnect: globalCfg.get("spv_connect"),
   timezone: globalCfg.get("timezone"),
   currencyDisplay: "DCR",
-  network: globalCfg.get("network"),
+  network: (cliOptions && cliOptions.network) || globalCfg.get("network")
 };
 var initialState = {
   settings: {
