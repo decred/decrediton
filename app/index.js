@@ -24,11 +24,11 @@ const cliOptions = electron.remote.getGlobal("cliOptions");
 log("info", "Starting main react app");
 
 log("info", "daemonstartadnvaced isss");
-log("info", ((cliOptions && cliOptions.daemon_start_advanced) || globalCfg.get("daemon_start_advanced")));
+log("info", ((cliOptions && cliOptions.daemonStartAdvanced) || globalCfg.get("daemon_start_advanced")));
 
 const currentSettings = {
   locale: locale,
-  daemonStartAdvanced: (cliOptions && cliOptions.daemon_start_advanced) || globalCfg.get("daemon_start_advanced"),
+  daemonStartAdvanced: (cliOptions && cliOptions.daemonStartAdvanced) || globalCfg.get("daemon_start_advanced"),
   allowedExternalRequests: globalCfg.get("allowed_external_requests"),
   proxyType: globalCfg.get("proxy_type"),
   proxyLocation: globalCfg.get("proxy_location"),
@@ -74,7 +74,7 @@ var initialState = {
     timeLeftEstimate: null,
     timeStart: 0,
     blockStart: 0,
-    daemonAdvanced: (cliOptions && cliOptions.daemon_start_advanced) || globalCfg.get("daemon_start_advanced"),
+    daemonAdvanced: (cliOptions && cliOptions.daemonStartAdvanced) || globalCfg.get("daemon_start_advanced"),
     credentials: null,
     appData: null,
     shutdownRequested: false,

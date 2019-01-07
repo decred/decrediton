@@ -74,7 +74,7 @@ if (argv.testnet) {
 
 if (argv.advanced) {
   global.cliOptions = {
-    daemon_start_advanced: true
+    daemonStartAdvanced: true
   };
 }
 
