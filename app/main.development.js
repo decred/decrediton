@@ -59,12 +59,12 @@ if (argv.version) {
 
 // Allow at most one network to be specified
 if (argv.testnet && argv.mainnet) {
-  logger.log(BOTH_CONNECTION_ERR_MESSAGE);
+  logger.log("error", BOTH_CONNECTION_ERR_MESSAGE);
   app.quit();
 }
 
-if (argv.spv && argv.spvConnect !== undefined) {
-  logger.log(SPV_CONNECT_WITHOUT_SPV);
+if (!argv.spv && argv.spvConnect !== undefined) {
+  logger.log("error", SPV_CONNECT_WITHOUT_SPV);
   app.quit();
 }
 

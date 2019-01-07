@@ -27,6 +27,8 @@ export const VERSION_MESSAGE = app ? `${app.getName()} version ${app.getVersion(
 
 export const BOTH_CONNECTION_ERR_MESSAGE = "Cannot use both --testnet and --mainnet.";
 
+export const SPV_CONNECT_WITHOUT_SPV = "Launch with the --spv option in order to use --spvConnect";
+
 export const MAX_POSSIBLE_FEE_INPUT = 0.1;
 
 export const MIN_RELAY_FEE = 0.0001;
