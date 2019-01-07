@@ -61,7 +61,7 @@ if (argv.testnet && argv.mainnet) {
   app.quit();
 }
 
-// Signal to renderer process that the CLI option should determine network instead of global config
+// Signal to renderer process that any given CLI options should override the global config
 if (argv.testnet) {
   global.cliOptions = {
     network: "testnet"
@@ -71,10 +71,14 @@ if (argv.testnet) {
     network: "mainnet"
   };
 }
-
 if (argv.advanced) {
   global.cliOptions = {
     daemonStartAdvanced: true
+  };
+}
+if (argv.spv) {
+  global.cliOptions = {
+    spvMode: true
   };
 }
 

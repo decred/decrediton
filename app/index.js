@@ -32,7 +32,7 @@ const currentSettings = {
   allowedExternalRequests: globalCfg.get("allowed_external_requests"),
   proxyType: globalCfg.get("proxy_type"),
   proxyLocation: globalCfg.get("proxy_location"),
-  spvMode: globalCfg.get("spv_mode"),
+  spvMode: (cliOptions && cliOptions.spvMode) || globalCfg.get("spv_mode"),
   spvConnect: globalCfg.get("spv_connect"),
   timezone: globalCfg.get("timezone"),
   currencyDisplay: "DCR",
