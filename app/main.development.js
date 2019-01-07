@@ -4,7 +4,7 @@ import { app, BrowserWindow, Menu, dialog } from "electron";
 import { initGlobalCfg, validateGlobalCfgFile, setMustOpenForm } from "./config";
 import { appLocaleFromElectronLocale, default as locales } from "./i18n/locales";
 import { createLogger, lastLogLine, GetDcrdLogs, GetDcrwalletLogs } from "./main_dev/logging";
-import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, BOTH_CONNECTION_ERR_MESSAGE, MAX_LOG_LENGTH } from "./main_dev/constants";
+import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, BOTH_CONNECTION_ERR_MESSAGE, MAX_LOG_LENGTH, SPV_CONNECT_WITHOUT_SPV } from "./main_dev/constants";
 import { getWalletsDirectoryPath, getWalletsDirectoryPathNetwork, appDataDirectory } from "./main_dev/paths";
 import { getGlobalCfgPath, checkAndInitWalletCfg } from "./main_dev/paths";
 import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRequests, allowExternalRequest } from "./main_dev/externalRequests";
@@ -13,6 +13,7 @@ import { cleanShutdown, GetDcrdPID, GetDcrwPID } from "./main_dev/launch";
 import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopDaemon, stopWallet, startWallet, checkDaemon, deleteDaemon, setWatchingOnlyWallet, getWatchingOnlyWallet, getDaemonInfo } from "./main_dev/ipc";
 import { initTemplate, getVersionWin, setGrpcVersions, getGrpcVersions, inputMenu, selectionMenu } from "./main_dev/templates";
 import { readFileBackward } from "./helpers/byteActions";
+import { isString } from "lodash";
 
 // setPath as decrediton
 app.setPath("userData", appDataDirectory());
@@ -20,6 +21,7 @@ app.setPath("userData", appDataDirectory());
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const debug = argv.debug || process.env.NODE_ENV === "development";
 const logger = createLogger(debug);
+global.cliOptions = {};
 
 // Verify that config.json is valid JSON before fetching it, because
 // it will silently fail when fetching.
@@ -61,25 +63,25 @@ if (argv.testnet && argv.mainnet) {
   app.quit();
 }
 
+if (argv.spv && argv.spvConnect !== undefined) {
+  logger.log(SPV_CONNECT_WITHOUT_SPV);
+  app.quit();
+}
+
 // Signal to renderer process that any given CLI options should override the global config
 if (argv.testnet) {
-  global.cliOptions = {
-    network: "testnet"
-  };
+  global.cliOptions.network = "testnet";
 } else if (argv.mainnet) {
-  global.cliOptions = {
-    network: "mainnet"
-  };
+  global.cliOptions.network = "mainnet";
 }
 if (argv.advanced) {
-  global.cliOptions = {
-    daemonStartAdvanced: true
-  };
+  global.cliOptions.daemonStartAdvanced = true;
 }
 if (argv.spv) {
-  global.cliOptions = {
-    spvMode: true
-  };
+  global.cliOptions.spvMode = true;
+}
+if (argv.spvConnect !== undefined && isString(argv.spvConnect)) {
+  global.cliOptions.spvConnect = argv.spvConnect;
 }
 
 if (process.env.NODE_ENV === "production") {

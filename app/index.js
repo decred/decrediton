@@ -23,9 +23,6 @@ const cliOptions = electron.remote.getGlobal("cliOptions");
 
 log("info", "Starting main react app");
 
-log("info", "daemonstartadnvaced isss");
-log("info", ((cliOptions && cliOptions.daemonStartAdvanced) || globalCfg.get("daemon_start_advanced")));
-
 const currentSettings = {
   locale: locale,
   daemonStartAdvanced: (cliOptions && cliOptions.daemonStartAdvanced) || globalCfg.get("daemon_start_advanced"),
@@ -33,7 +30,7 @@ const currentSettings = {
   proxyType: globalCfg.get("proxy_type"),
   proxyLocation: globalCfg.get("proxy_location"),
   spvMode: (cliOptions && cliOptions.spvMode) || globalCfg.get("spv_mode"),
-  spvConnect: globalCfg.get("spv_connect"),
+  spvConnect: (cliOptions && cliOptions.spvConnect) || globalCfg.get("spv_connect"),
   timezone: globalCfg.get("timezone"),
   currencyDisplay: "DCR",
   network: (cliOptions && cliOptions.network) || globalCfg.get("network")
