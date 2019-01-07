@@ -10,7 +10,7 @@ function unknownFn(arg) {
 
 // Allowed cmd line options are defined here.
 export const OPTIONS = {
-  boolean: [ "debug", "testnet", "mainnet", "help", "version" ],
+  boolean: [ "debug", "testnet", "mainnet", "help", "version", "advanced" ],
   string: [ "extrawalletargs", "customBinPath" ],
   default: { debug: false },
   alias: {

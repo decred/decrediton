@@ -36,7 +36,7 @@ let previousWallet = null;
 let primaryInstance;
 
 const globalCfg = initGlobalCfg();
-const daemonIsAdvanced = globalCfg.get("daemon_start_advanced");
+const daemonIsAdvanced = argv.advanced || globalCfg.get("daemon_start_advanced");
 const walletsDirectory = getWalletsDirectoryPath();
 const mainnetWalletsPath = getWalletsDirectoryPathNetwork(false);
 const testnetWalletsPath = getWalletsDirectoryPathNetwork(true);
@@ -69,6 +69,12 @@ if (argv.testnet) {
 } else if (argv.mainnet) {
   global.cliOptions = {
     network: "mainnet"
+  };
+}
+
+if (argv.advanced) {
+  global.cliOptions = {
+    daemon_start_advanced: true
   };
 }
 
