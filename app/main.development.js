@@ -1,4 +1,4 @@
-import fs from "fs-extra";
+import fs, { copyFileSync } from "fs-extra";
 import parseArgs from "minimist";
 import { app, BrowserWindow, Menu, dialog } from "electron";
 import { initGlobalCfg, validateGlobalCfgFile, setMustOpenForm } from "./config";
@@ -21,7 +21,7 @@ app.setPath("userData", appDataDirectory());
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const debug = argv.debug || process.env.NODE_ENV === "development";
 const logger = createLogger(debug);
-global.cliOptions = {};
+let cliOptions = {};
 
 // Verify that config.json is valid JSON before fetching it, because
 // it will silently fail when fetching.
@@ -70,18 +70,18 @@ if (!argv.spv && argv.spvConnect !== undefined) {
 
 // Signal to renderer process that any given CLI options should override the global config
 if (argv.testnet) {
-  global.cliOptions.network = "testnet";
+  cliOptions.network = "testnet";
 } else if (argv.mainnet) {
-  global.cliOptions.network = "mainnet";
+  cliOptions.network = "mainnet";
 }
 if (argv.advanced) {
-  global.cliOptions.daemonStartAdvanced = true;
+  cliOptions.daemonStartAdvanced = true;
 }
 if (argv.spv) {
-  global.cliOptions.spvMode = true;
+  cliOptions.spvMode = true;
 }
 if (argv.spvConnect !== undefined && isString(argv.spvConnect)) {
-  global.cliOptions.spvConnect = argv.spvConnect;
+  cliOptions.spvConnect = argv.spvConnect.split(",");
 }
 
 if (process.env.NODE_ENV === "production") {
@@ -259,6 +259,10 @@ ipcMain.on("set-is-watching-only", (event, isWatchingOnly) => {
 
 ipcMain.on("get-is-watching-only", (event) => {
   event.returnValue = getWatchingOnlyWallet();
+});
+
+ipcMain.on("get-cli-options", (event) => {
+  event.returnValue = cliOptions;
 });
 
 primaryInstance = app.requestSingleInstanceLock();
