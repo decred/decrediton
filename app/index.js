@@ -30,7 +30,7 @@ const currentSettings = {
   proxyType: globalCfg.get("proxy_type"),
   proxyLocation: globalCfg.get("proxy_location"),
   spvMode: (cliOptions && cliOptions.spvMode) || globalCfg.get("spv_mode"),
-  spvConnect: (cliOptions && cliOptions.spvConnect) || globalCfg.get("spv_connect"),
+  spvConnect: (cliOptions && cliOptions.spvConnect.split(",")) || globalCfg.get("spv_connect"),
   timezone: globalCfg.get("timezone"),
   currencyDisplay: "DCR",
   network: (cliOptions && cliOptions.network) || globalCfg.get("network")
