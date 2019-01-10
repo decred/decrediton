@@ -4,13 +4,15 @@ import { app, BrowserWindow, Menu, dialog } from "electron";
 import { initGlobalCfg, validateGlobalCfgFile, setMustOpenForm } from "./config";
 import { appLocaleFromElectronLocale, default as locales } from "./i18n/locales";
 import { createLogger, lastLogLine, GetDcrdLogs, GetDcrwalletLogs } from "./main_dev/logging";
-import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, BOTH_CONNECTION_ERR_MESSAGE, MAX_LOG_LENGTH, SPV_CONNECT_WITHOUT_SPV } from "./main_dev/constants";
+import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, BOTH_CONNECTION_ERR_MESSAGE, MAX_LOG_LENGTH, SPV_CONNECT_WITHOUT_SPV, 
+  RPC_WITHOUT_ADVANCED_MODE, RPCCONNECT_INVALID_FORMAT, RPC_MISSING_OPTIONS, SPV_WITH_ADVANCED_MODE } from "./main_dev/constants";
 import { getWalletsDirectoryPath, getWalletsDirectoryPathNetwork, appDataDirectory } from "./main_dev/paths";
 import { getGlobalCfgPath, checkAndInitWalletCfg } from "./main_dev/paths";
 import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRequests, allowExternalRequest } from "./main_dev/externalRequests";
 import { setupProxy } from "./main_dev/proxy";
 import { cleanShutdown, GetDcrdPID, GetDcrwPID } from "./main_dev/launch";
-import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopDaemon, stopWallet, startWallet, checkDaemon, deleteDaemon, setWatchingOnlyWallet, getWatchingOnlyWallet, getDaemonInfo } from "./main_dev/ipc";
+import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopDaemon, stopWallet, startWallet,
+  checkDaemon, deleteDaemon, setWatchingOnlyWallet, getWatchingOnlyWallet, getDaemonInfo } from "./main_dev/ipc";
 import { initTemplate, getVersionWin, setGrpcVersions, getGrpcVersions, inputMenu, selectionMenu } from "./main_dev/templates";
 import { readFileBackward } from "./helpers/byteActions";
 import { isString } from "lodash";
@@ -57,18 +59,31 @@ if (argv.version) {
   app.exit(0);
 }
 
+let rpcOptionsCount = 0;
+rpcOptionsCount += argv.rpcuser ? 1 : 0;
+rpcOptionsCount += argv.rpcpass ? 1 : 0;
+rpcOptionsCount += argv.rpccert ? 1 : 0;
+rpcOptionsCount += argv.rpcconnect ? 1 : 0;
+
 // Allow at most one network to be specified
 if (argv.testnet && argv.mainnet) {
   logger.log("error", BOTH_CONNECTION_ERR_MESSAGE);
   app.quit();
-}
-
-if (!argv.spv && argv.spvConnect !== undefined) {
+} else if (!argv.spv && argv.spvConnect !== undefined) {
   logger.log("error", SPV_CONNECT_WITHOUT_SPV);
+  app.quit();
+} else if (argv.spv && argv.advanced) {
+  logger.log("error", SPV_WITH_ADVANCED_MODE);
+  app.quit();
+} else if (!argv.advanced && (argv.rpcuser || argv.rpcpass || argv.rpccert || argv.rpcconnect)) {
+  logger.log("error", RPC_WITHOUT_ADVANCED_MODE);
+  app.quit();
+} else if (rpcOptionsCount > 0 && rpcOptionsCount < 4) {
+  logger.log("error", RPC_MISSING_OPTIONS);
   app.quit();
 }
 
-// Signal to renderer process that any given CLI options should override the global config
+// Signal to renderer process that CLI options should override the global config
 if (argv.testnet) {
   cliOptions.network = "testnet";
 } else if (argv.mainnet) {
@@ -83,6 +98,36 @@ if (argv.spv) {
 if (argv.spvConnect !== undefined && isString(argv.spvConnect)) {
   cliOptions.spvConnect = argv.spvConnect.split(",");
 }
+if (argv.rpcuser !== undefined && isString(argv.rpcuser)) {
+  cliOptions.rpcUser = argv.rpcuser;
+}
+if (argv.rpcpass !== undefined && isString(argv.rpcpass)) {
+  cliOptions.rpcPass = argv.rpcpass;
+}
+if (argv.rpccert !== undefined && isString(argv.rpccert)) {
+  cliOptions.rpcCert = argv.rpccert;
+}
+if (argv.rpcconnect !== undefined && isString(argv.rpcconnect)) {
+  const parts = argv.rpcconnect.split(":");
+  // Allowed formats: "127.0.0.1" or "127.0.0.1:19109"
+  if (parts.length !== 1 && parts.length !== 2) {
+    logger.log("error", RPCCONNECT_INVALID_FORMAT);
+    app.quit();
+  }
+  cliOptions.rpcHost = parts[0];
+  cliOptions.rpcPort = parts[1];
+}
+cliOptions.rpcPresent = rpcOptionsCount > 0 ? true : false;
+
+//////////////////////////////
+// TODO remove
+cliOptions.rpcUser = "USER1";
+cliOptions.rpcPass = "PASSWORD1";
+cliOptions.rpcCert = "/Users/sab/Library/Application Support/Dcrd/rpc.cert";
+cliOptions.rpcHost = "127.0.0.1";
+cliOptions.rpcPort = "19100";
+cliOptions.rpcPresent = true;
+cliOptions.daemonStartAdvanced = true;
 
 if (process.env.NODE_ENV === "production") {
   const sourceMapSupport = require('source-map-support'); // eslint-disable-line

@@ -11,7 +11,7 @@ function unknownFn(arg) {
 // Allowed cmd line options are defined here.
 export const OPTIONS = {
   boolean: [ "debug", "testnet", "mainnet", "help", "version", "advanced", "spv" ],
-  string: [ "extrawalletargs", "custombinpath", "spvconnect" ],
+  string: [ "extrawalletargs", "custombinpath", "spvconnect", "rpcuser", "rpcpass", "rpccert", "rpcconnect" ],
   default: { debug: false },
   alias: {
     d: "debug",
@@ -26,8 +26,11 @@ export const MAX_LOG_LENGTH = 50000;
 export const VERSION_MESSAGE = app ? `${app.getName()} version ${app.getVersion()}` : null;
 
 export const BOTH_CONNECTION_ERR_MESSAGE = "Cannot use both --testnet and --mainnet.";
-
-export const SPV_CONNECT_WITHOUT_SPV = "Launch with the --spv option in order to use --spvConnect";
+export const SPV_CONNECT_WITHOUT_SPV = "Launch with the --spv option in order to use --spvconnect";
+export const RPC_WITHOUT_ADVANCED_MODE = "Use --advanced to connect to a dcrd instance manually via PRC";
+export const RPCCONNECT_INVALID_FORMAT = "Please provide a valid host and port for --rpcconnect, eg. --rpcconnect=\"127.0.0.1:19109\"";
+export const RPC_MISSING_OPTIONS = "Missing RPC connection params. Did you include all of the following: --rpcuser, --rpcpass, --rpccert, --rpcconnect?";
+export const SPV_WITH_ADVANCED_MODE = "Cannot use SPV mode and advanced daemon mode at the same time";
 
 export const MAX_POSSIBLE_FEE_INPUT = 0.1;
 

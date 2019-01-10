@@ -314,7 +314,10 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => {
 };
 
 export const prepStartDaemon = () => (dispatch, getState) => {
+  console.log("prepstartdaemon");
   const { daemon: { daemonAdvanced, openForm, walletName } } = getState();
+  console.log(daemonAdvanced);
+  const cliOptions = ipcRenderer.sendSync("get-cli-options");
   dispatch(registerForErrors());
   dispatch(checkDecreditonVersion());
   if (!daemonAdvanced) {
@@ -322,9 +325,23 @@ export const prepStartDaemon = () => (dispatch, getState) => {
     return;
   }
   if (!walletName) {
+    console.log("no wallet name");
     return;
   }
-  const { rpc_password, rpc_user, rpc_cert, rpc_host, rpc_port } = getRemoteCredentials();
+
+  let rpc_user, rpc_password, rpc_cert, rpc_host, rpc_port;
+  console.log(cliOptions);
+  if (cliOptions.rpcPresent) {
+    console.log("using rpc");
+    rpc_user = cliOptions.rpcUser;
+    rpc_password = cliOptions.rpcPass;
+    rpc_cert = cliOptions.rpcCert;
+    rpc_host = cliOptions.rpcHost;
+    rpc_port = cliOptions.rpcPort;
+  } else {
+    ({ rpc_user, rpc_password, rpc_cert, rpc_host, rpc_port } = getRemoteCredentials());
+  }
+  const credentials = { rpc_user, rpc_password, rpc_cert, rpc_host, rpc_port };
   const hasAllCredentials = rpc_password && rpc_user && rpc_password.length > 0 && rpc_user.length > 0 && rpc_cert.length > 0 && rpc_host.length > 0 && rpc_port.length > 0;
   const hasAppData = getAppdataPath() && getAppdataPath().length > 0;
 
@@ -334,7 +351,7 @@ export const prepStartDaemon = () => (dispatch, getState) => {
   if (!openForm && hasAppData) {
     dispatch(startDaemon(null, getAppdataPath()));
   } else if (!openForm && hasAllCredentials) {
-    dispatch(startDaemon(getRemoteCredentials()));
+    dispatch(startDaemon(credentials));
   }
 };
 

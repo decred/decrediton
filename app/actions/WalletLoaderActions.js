@@ -15,9 +15,11 @@ import { SpvSyncRequest, SyncNotificationType, RpcSyncRequest } from "../middlew
 import { push as pushHistory } from "react-router-redux";
 import { stopNotifcations } from "./NotificationActions";
 import { clearDeviceSession as trezorClearDeviceSession } from "./TrezorActions";
+import { ipcRenderer } from "electron";
 
 const MAX_RPC_RETRIES = 5;
 const RPC_RETRY_DELAY = 5000;
+const cliOptions = ipcRenderer.sendSync("get-cli-options");
 
 export const versionCheckAction = () => (dispatch) =>
   setTimeout(() => dispatch(getVersionServiceAttempt()), 2000);
@@ -212,7 +214,15 @@ export const startRpcRequestFunc = (isRetry, privPass) =>
     const cfg = getWalletCfg(isTestNet(getState()), walletName);
     let rpcuser, rpccertPath, rpcpass, daemonhost, rpcport;
 
-    if(credentials) {
+    console.log(cliOptions);
+    if (cliOptions.rpcPresent) {
+      console.log("USING CLI OPTIONS");
+      rpcuser = cliOptions.rpcUser;
+      rpcpass = cliOptions.rpcpass;
+      rpccertPath = cliOptions.rpcCert;
+      daemonhost = cliOptions.rpcHost;
+      rpcport = cliOptions.rpcPort;
+    } else if (credentials) {
       rpcuser = credentials.rpc_user;
       rpccertPath = credentials.rpc_cert;
       rpcpass = credentials.rpc_password;

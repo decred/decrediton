@@ -149,7 +149,7 @@ class GetStartedPage extends React.Component {
       return <ReleaseNotes {...{ onShowSettings, onShowLogs, appVersion, onHideReleaseNotes, getWalletReady, ...props }} />;
     } else if (showTrezorConfig) {
       return <TrezorConfig {...{ onHideTrezorConfig, ...props }} />;
-    } else if (isAdvancedDaemon && openForm && !remoteAppdataError && !isPrepared && !getWalletReady && !isSPV) {
+    } else if (false && isAdvancedDaemon && openForm && !remoteAppdataError && !isPrepared && !getWalletReady && !isSPV) {
       Form = AdvancedStartupBody;
     } else if (remoteAppdataError && !isPrepared && !getWalletReady && !isSPV) {
       Form = RemoteAppdataError;
