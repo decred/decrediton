@@ -121,11 +121,11 @@ cliOptions.rpcPresent = rpcOptionsCount > 0 ? true : false;
 
 //////////////////////////////
 // TODO remove
-cliOptions.rpcUser = "USER1";
-cliOptions.rpcPass = "PASSWORD1";
+cliOptions.rpcUser = "USER";
+cliOptions.rpcPass = "PASSWORD";
 cliOptions.rpcCert = "/Users/sab/Library/Application Support/Dcrd/rpc.cert";
 cliOptions.rpcHost = "127.0.0.1";
-cliOptions.rpcPort = "19100";
+cliOptions.rpcPort = "19109";
 cliOptions.rpcPresent = true;
 cliOptions.daemonStartAdvanced = true;
 

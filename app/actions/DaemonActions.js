@@ -324,10 +324,10 @@ export const prepStartDaemon = () => (dispatch, getState) => {
     dispatch(startDaemon());
     return;
   }
-  if (!walletName) {
-    console.log("no wallet name");
-    return;
-  }
+  // if (!walletName) {
+  //   console.log("no wallet name");
+  //   return;
+  // }
 
   let rpc_user, rpc_password, rpc_cert, rpc_host, rpc_port;
   console.log(cliOptions);
@@ -348,7 +348,13 @@ export const prepStartDaemon = () => (dispatch, getState) => {
   if(hasAllCredentials && hasAppData)
     this.props.setCredentialsAppdataError();
 
-  if (!openForm && hasAppData) {
+
+  console.log("openform");
+  console.log(openForm);
+
+  if (cliOptions.rpcPresent) {
+    dispatch(startDaemon(credentials));
+  } else if (!openForm && hasAppData) {
     dispatch(startDaemon(null, getAppdataPath()));
   } else if (!openForm && hasAllCredentials) {
     dispatch(startDaemon(credentials));
