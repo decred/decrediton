@@ -7,7 +7,7 @@ import { OPTIONS } from "./constants";
 import os from "os";
 import fs from "fs-extra";
 import stringArgv from "string-argv";
-import { concat, isString } from "lodash";
+import { concat, isString } from "../fp";
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const debug = argv.debug || process.env.NODE_ENV === "development";
