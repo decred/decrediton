@@ -218,7 +218,7 @@ export const startRpcRequestFunc = (isRetry, privPass) =>
     if (cliOptions.rpcPresent) {
       console.log("USING CLI OPTIONS");
       rpcuser = cliOptions.rpcUser;
-      rpcpass = cliOptions.rpcpass;
+      rpcpass = cliOptions.rpcPass;
       rpccertPath = cliOptions.rpcCert;
       daemonhost = cliOptions.rpcHost;
       rpcport = cliOptions.rpcPort;

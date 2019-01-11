@@ -1,4 +1,4 @@
-import fs, { copyFileSync } from "fs-extra";
+import fs from "fs-extra";
 import parseArgs from "minimist";
 import { app, BrowserWindow, Menu, dialog } from "electron";
 import { initGlobalCfg, validateGlobalCfgFile, setMustOpenForm } from "./config";
