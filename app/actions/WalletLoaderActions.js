@@ -214,9 +214,7 @@ export const startRpcRequestFunc = (isRetry, privPass) =>
     const cfg = getWalletCfg(isTestNet(getState()), walletName);
     let rpcuser, rpccertPath, rpcpass, daemonhost, rpcport;
 
-    console.log(cliOptions);
     if (cliOptions.rpcPresent) {
-      console.log("USING CLI OPTIONS");
       rpcuser = cliOptions.rpcUser;
       rpcpass = cliOptions.rpcPass;
       rpccertPath = cliOptions.rpcCert;

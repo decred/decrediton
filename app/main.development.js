@@ -119,16 +119,6 @@ if (argv.rpcconnect !== undefined && isString(argv.rpcconnect)) {
 }
 cliOptions.rpcPresent = rpcOptionsCount > 0 ? true : false;
 
-//////////////////////////////
-// TODO remove
-cliOptions.rpcUser = "USER";
-cliOptions.rpcPass = "PASSWORD";
-cliOptions.rpcCert = "/Users/sab/Library/Application Support/Dcrd/rpc.cert";
-cliOptions.rpcHost = "127.0.0.1";
-cliOptions.rpcPort = "19109";
-cliOptions.rpcPresent = true;
-cliOptions.daemonStartAdvanced = true;
-
 if (process.env.NODE_ENV === "production") {
   const sourceMapSupport = require('source-map-support'); // eslint-disable-line
   sourceMapSupport.install();

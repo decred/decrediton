@@ -314,9 +314,7 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => {
 };
 
 export const prepStartDaemon = () => (dispatch, getState) => {
-  console.log("prepstartdaemon");
-  const { daemon: { daemonAdvanced, openForm, walletName } } = getState();
-  console.log(daemonAdvanced);
+  const { daemon: { daemonAdvanced, openForm } } = getState();
   const cliOptions = ipcRenderer.sendSync("get-cli-options");
   dispatch(registerForErrors());
   dispatch(checkDecreditonVersion());
@@ -324,15 +322,9 @@ export const prepStartDaemon = () => (dispatch, getState) => {
     dispatch(startDaemon());
     return;
   }
-  // if (!walletName) {
-  //   console.log("no wallet name");
-  //   return;
-  // }
 
   let rpc_user, rpc_password, rpc_cert, rpc_host, rpc_port;
-  console.log(cliOptions);
   if (cliOptions.rpcPresent) {
-    console.log("using rpc");
     rpc_user = cliOptions.rpcUser;
     rpc_password = cliOptions.rpcPass;
     rpc_cert = cliOptions.rpcCert;
@@ -349,8 +341,6 @@ export const prepStartDaemon = () => (dispatch, getState) => {
     this.props.setCredentialsAppdataError();
 
 
-  console.log("openform");
-  console.log(openForm);
 
   if (cliOptions.rpcPresent) {
     dispatch(startDaemon(credentials));
