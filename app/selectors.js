@@ -989,3 +989,5 @@ export const trezorPerformingOperation = get([ "trezor", "performingOperation" ]
 export const trezorDevice = get([ "trezor", "device" ]);
 export const trezorDeviceList = get([ "trezor", "deviceList" ]);
 export const trezorWalletCreationMasterPubkeyAttempt = get([ "trezor", "walletCreationMasterPubkeyAttempt" ]);
+
+export const fetchCliOptions = get([ "daemon", "cliOptions" ]);

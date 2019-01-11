@@ -21,7 +21,8 @@ import {
   DAEMON_WARNING,
   WALLET_WARNING,
   CLOSEDAEMON_ATTEMPT, CLOSEDAEMON_FAILED, CLOSEDAEMON_SUCCESS, NOT_SAME_CONNECTION,
-  NETWORK_MATCH
+  NETWORK_MATCH,
+  RECEIVED_CLI_OPTIONS
 } from "../actions/DaemonActions";
 import {
   CREATEWALLET_GOBACK,
@@ -202,6 +203,11 @@ export default function version(state = {}, action) {
     return {
       ...state,
       daemonError: action.error,
+    };
+  case RECEIVED_CLI_OPTIONS: 
+    return {
+      ...state,
+      cliOptions: action.cliOptions,
     };
   default:
     return state;

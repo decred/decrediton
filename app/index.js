@@ -15,13 +15,19 @@ import "./style/ReactSelectGlobal.less";
 import pkg from "./package.json";
 import { log } from "./wallet";
 import { ipcRenderer } from "electron";
+import { receivedCliOptions } from "./actions/DaemonActions";
+import { fetchCliOptions } from "./selectors";
 
+
+log("info", "Starting main react app");
 
 var globalCfg = getGlobalCfg();
 const locale = globalCfg.get("locale");
-const cliOptions = ipcRenderer.sendSync("get-cli-options");
-
-log("info", "Starting main react app");
+// const cliOptions = ipcRenderer.sendSync("get-cli-options");
+receivedCliOptions(ipcRenderer.sendSync("get-cli-options"));
+const cliOptions = fetchCliOptions();
+console.log("cliOptions via redux:");
+console.log(cliOptions);
 
 const currentSettings = {
   locale: locale,
@@ -86,6 +92,7 @@ var initialState = {
     hiddenAccounts: Array(),
     walletName: null,
     neededBlocks: 0,
+    cliOptions: null
   },
   version: {
     // RequiredVersion

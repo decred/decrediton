@@ -48,6 +48,7 @@ export const DELETE_DCRD_FAILED = "DELETE_DCRD_FAILED";
 export const DELETE_DCRD_SUCCESS = "DELETE_DCRD_SUCCESS";
 export const NOT_SAME_CONNECTION = "NOT_SAME_CONNECTION";
 export const NETWORK_MATCH = "NETWORK_MATCH";
+export const RECEIVED_CLI_OPTIONS = "RECEIVED_CLI_OPTIONS";
 
 export const checkDecreditonVersion = () => (dispatch, getState) =>{
   const detectedVersion = getState().daemon.appVersion;
@@ -398,6 +399,10 @@ export const syncDaemon = () =>
     };
     updateBlockCount();
   };
+
+export const receivedCliOptions = (cliOptions) => (dispatch) => {
+  dispatch({ type: RECEIVED_CLI_OPTIONS, cliOptions });
+};
 
 export const getDcrdLogs = () => {
   wallet.getDcrdLogs()
