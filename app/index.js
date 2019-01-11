@@ -16,7 +16,6 @@ import pkg from "./package.json";
 import { log } from "./wallet";
 import { ipcRenderer } from "electron";
 
-
 var globalCfg = getGlobalCfg();
 const locale = globalCfg.get("locale");
 const cliOptions = ipcRenderer.sendSync("get-cli-options");

@@ -340,8 +340,6 @@ export const prepStartDaemon = () => (dispatch, getState) => {
   if(hasAllCredentials && hasAppData)
     this.props.setCredentialsAppdataError();
 
-
-
   if (cliOptions.rpcPresent) {
     dispatch(startDaemon(credentials));
   } else if (!openForm && hasAppData) {
