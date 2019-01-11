@@ -69,7 +69,7 @@ rpcOptionsCount += argv.rpcconnect ? 1 : 0;
 if (argv.testnet && argv.mainnet) {
   logger.log("error", BOTH_CONNECTION_ERR_MESSAGE);
   app.quit();
-} else if (!argv.spv && argv.spvConnect !== undefined) {
+} else if (!argv.spv && argv.spvconnect !== undefined) {
   logger.log("error", SPV_CONNECT_WITHOUT_SPV);
   app.quit();
 } else if (argv.spv && argv.advanced) {
@@ -95,8 +95,8 @@ if (argv.advanced) {
 if (argv.spv) {
   cliOptions.spvMode = true;
 }
-if (argv.spvConnect !== undefined && isString(argv.spvConnect)) {
-  cliOptions.spvConnect = argv.spvConnect.split(",");
+if (argv.spvconnect !== undefined && isString(argv.spvconnect)) {
+  cliOptions.spvConnect = argv.spvconnect.split(",");
 }
 if (argv.rpcuser !== undefined && isString(argv.rpcuser)) {
   cliOptions.rpcUser = argv.rpcuser;
