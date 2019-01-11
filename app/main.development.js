@@ -67,19 +67,19 @@ rpcOptionsCount += argv.rpcconnect ? 1 : 0;
 
 // Allow at most one network to be specified
 if (argv.testnet && argv.mainnet) {
-  logger.log("error", BOTH_CONNECTION_ERR_MESSAGE);
+  console.log(BOTH_CONNECTION_ERR_MESSAGE);
   app.quit();
 } else if (!argv.spv && argv.spvconnect !== undefined) {
-  logger.log("error", SPV_CONNECT_WITHOUT_SPV);
+  console.log(SPV_CONNECT_WITHOUT_SPV);
   app.quit();
 } else if (argv.spv && argv.advanced) {
-  logger.log("error", SPV_WITH_ADVANCED_MODE);
+  console.log(SPV_WITH_ADVANCED_MODE);
   app.quit();
 } else if (!argv.advanced && (argv.rpcuser || argv.rpcpass || argv.rpccert || argv.rpcconnect)) {
-  logger.log("error", RPC_WITHOUT_ADVANCED_MODE);
+  console.log(RPC_WITHOUT_ADVANCED_MODE);
   app.quit();
 } else if (rpcOptionsCount > 0 && rpcOptionsCount < 4) {
-  logger.log("error", RPC_MISSING_OPTIONS);
+  console.log(RPC_MISSING_OPTIONS);
   app.quit();
 }
 
