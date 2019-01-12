@@ -70,6 +70,10 @@ export const closeDCRW = () => {
   }
 };
 
+export async function darwinShutdown(mainWindow) {
+  mainWindow.webContents.send("darwin-shutdown");
+}
+
 export async function cleanShutdown(mainWindow, app) {
   // Attempt a clean shutdown.
   return new Promise(resolve => {

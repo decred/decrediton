@@ -1,5 +1,5 @@
 import { app } from "electron";
-import { cleanShutdown, GetDcrdPID, GetDcrwPID } from "./launch";
+import { darwinShutdown } from "./launch";
 
 let versionWin = null;
 let grpcVersions = { requiredVersion: null, walletVersion: null };
@@ -37,7 +37,7 @@ const darwinTemplate = (mainWindow, locale) => [
       label: locale.messages["appMenu.quit"],
       accelerator: "Command+Q",
       click() {
-        cleanShutdown(mainWindow, app, GetDcrdPID(), GetDcrwPID());
+        darwinShutdown(mainWindow);
       }
     } ]
   }, {
