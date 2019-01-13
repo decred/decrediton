@@ -29,10 +29,9 @@ export function dateToUTC(timestamp) {
 export function endOfDay(dt) {
   const res = new Date(dt);
   res.setMilliseconds(0);
-  res.setSeconds(0);
+  res.setSeconds(-1);
   res.setMinutes(0);
   res.setHours(0);
-  res.setSeconds(-1);
   res.setDate(res.getDate()+1);
   return res;
 }
