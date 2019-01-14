@@ -555,7 +555,6 @@
   "sendToAccount.to": "To",
   "settings.SPV": "SPV",
   "settings.SPVConnect": "SPV Connect",
-  "settings.alreadySetFromCli": "This was set as a command-line option when launching decrediton.",
   "settings.advancedDaemon.false": "Disabled",
   "settings.advancedDaemon.label": "Advanced Daemon Startup",
   "settings.advancedDaemon.true": "Enabled",
