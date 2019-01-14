@@ -11,7 +11,7 @@ const propTypes = {
   onChangeTempSettings: PropTypes.func.isRequired,
 };
 
-const ALREADY_SET_FROM_CLI = "This was set as a command-line option when launching decrediton.";
+const AlreadySetMessage = () => <T id="settings.alreadySetFromCli" m="This was set as a command-line option when launching decrediton"/>;
 
 // Do **not** add stuff that depends on the wallet here, as this is also used
 // for startup config.
@@ -30,7 +30,7 @@ const GeneralSettings = ({
         <div className="settings-label">
           <T id="settings.SPV" m="SPV" />
         </div>
-        <Tooltip text={ <T id="settings.alreadySetFromCli" m={ALREADY_SET_FROM_CLI} /> } disabled={!tempSettings.spvModeFromCli}>
+        <Tooltip text={ <AlreadySetMessage/> } disabled={!tempSettings.spvModeFromCli}>
           <SettingsInput
             className="settings-input"
             value={tempSettings.spvMode ? "true" : "false"}
@@ -50,7 +50,7 @@ const GeneralSettings = ({
         <div className="settings-label">
           <T id="settings.SPVConnect" m="SPV Connect" />
         </div>
-        <Tooltip text={ <T id="settings.alreadySetFromCli" m={ALREADY_SET_FROM_CLI} /> } disabled={!tempSettings.spvConnectFromCli}>
+        <Tooltip text={ <AlreadySetMessage/> } disabled={!tempSettings.spvConnectFromCli}>
           <SettingsTextInput
             value={tempSettings.spvConnect}
             disabled={tempSettings.spvConnectFromCli}
@@ -62,7 +62,7 @@ const GeneralSettings = ({
         <div className="settings-label">
           <T id="settings.network" m="Network" />
         </div>
-        <Tooltip text={ <T id="settings.alreadySetFromCli" m={ALREADY_SET_FROM_CLI} /> } disabled={!tempSettings.networkFromCli}>
+        <Tooltip text={ <AlreadySetMessage/> } disabled={!tempSettings.networkFromCli}>
           <SettingsInput
             className="settings-input"
             value={tempSettings.network}
@@ -108,7 +108,7 @@ const GeneralSettings = ({
         <div className="settings-label">
           <T id="settings.advancedDaemon.label" m="Advanced Daemon Startup" />
         </div>
-        <Tooltip text={ <T id="settings.alreadySetFromCli" m={ALREADY_SET_FROM_CLI} /> } disabled={!tempSettings.daemonStartAdvancedFromCli}>
+        <Tooltip text={ <AlreadySetMessage/> } disabled={!tempSettings.daemonStartAdvancedFromCli}>
           <SettingsInput
             className="settings-input"
             value={tempSettings.daemonStartAdvanced ? "true" : "false"}

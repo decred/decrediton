@@ -4,7 +4,7 @@ import { app, BrowserWindow, Menu, dialog } from "electron";
 import { initGlobalCfg, validateGlobalCfgFile, setMustOpenForm } from "./config";
 import { appLocaleFromElectronLocale, default as locales } from "./i18n/locales";
 import { createLogger, lastLogLine, GetDcrdLogs, GetDcrwalletLogs } from "./main_dev/logging";
-import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, BOTH_CONNECTION_ERR_MESSAGE, MAX_LOG_LENGTH, SPV_CONNECT_WITHOUT_SPV, 
+import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, BOTH_CONNECTION_ERR_MESSAGE, MAX_LOG_LENGTH, SPV_CONNECT_WITHOUT_SPV,
   RPC_WITHOUT_ADVANCED_MODE, RPCCONNECT_INVALID_FORMAT, RPC_MISSING_OPTIONS, SPV_WITH_ADVANCED_MODE } from "./main_dev/constants";
 import { getWalletsDirectoryPath, getWalletsDirectoryPathNetwork, appDataDirectory } from "./main_dev/paths";
 import { getGlobalCfgPath, checkAndInitWalletCfg } from "./main_dev/paths";
@@ -95,19 +95,19 @@ if (argv.advanced) {
 if (argv.spv) {
   cliOptions.spvMode = true;
 }
-if (argv.spvconnect !== undefined && isString(argv.spvconnect)) {
+if (isString(argv.spvconnect)) {
   cliOptions.spvConnect = argv.spvconnect.split(",");
 }
-if (argv.rpcuser !== undefined && isString(argv.rpcuser)) {
+if (isString(argv.rpcuser)) {
   cliOptions.rpcUser = argv.rpcuser;
 }
-if (argv.rpcpass !== undefined && isString(argv.rpcpass)) {
+if (isString(argv.rpcpass)) {
   cliOptions.rpcPass = argv.rpcpass;
 }
-if (argv.rpccert !== undefined && isString(argv.rpccert)) {
+if (isString(argv.rpccert)) {
   cliOptions.rpcCert = argv.rpccert;
 }
-if (argv.rpcconnect !== undefined && isString(argv.rpcconnect)) {
+if (isString(argv.rpcconnect)) {
   const parts = argv.rpcconnect.split(":");
   // Allowed formats: "127.0.0.1" or "127.0.0.1:19109"
   if (parts.length !== 1 && parts.length !== 2) {
@@ -117,7 +117,7 @@ if (argv.rpcconnect !== undefined && isString(argv.rpcconnect)) {
   cliOptions.rpcHost = parts[0];
   cliOptions.rpcPort = parts[1];
 }
-cliOptions.rpcPresent = rpcOptionsCount > 0 ? true : false;
+cliOptions.rpcPresent = rpcOptionsCount == 4 ? true : false;
 
 if (process.env.NODE_ENV === "production") {
   const sourceMapSupport = require('source-map-support'); // eslint-disable-line
