@@ -1,4 +1,3 @@
-import { app } from "electron";
 import { darwinShutdown } from "./launch";
 
 let versionWin = null;
