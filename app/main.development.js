@@ -115,7 +115,7 @@ if (isString(argv.rpcconnect)) {
     app.quit();
   }
   cliOptions.rpcHost = parts[0];
-  cliOptions.rpcPort = parts[1];
+  cliOptions.rpcPort = parts[1] || "9109";
 }
 cliOptions.rpcPresent = rpcOptionsCount == 4 ? true : false;
 
