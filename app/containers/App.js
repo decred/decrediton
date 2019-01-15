@@ -10,11 +10,13 @@ import ShutdownAppPage from "components/views/ShutdownAppPage";
 import FatalErrorPage from "components/views/FatalErrorPage";
 import Snackbar from "components/Snackbar";
 import AboutModal from "../components/modals/AboutModal/AboutModal";
+import AutobuyerRunningModal from "../components/modals/AutobuyerRunningModal/AutobuyerRunningModal";
 import { log } from "wallet";
 import { TrezorModals } from "components/modals/trezor";
 import "style/Themes.less";
 import "style/Layout.less";
 import { ipcRenderer } from "electron";
+import { FormattedMessage as T } from "react-intl";
 const topLevelAnimation = { atEnter: { opacity: 0 }, atLeave: { opacity: 0 }, atActive: { opacity: 1 } };
 
 @autobind
@@ -120,6 +122,9 @@ class App extends React.Component {
             <AboutModal show={aboutModalMacOSVisible} onCancelModal={hideAboutModalMacOS}></AboutModal>
           </div>
           <TrezorModals />
+          <div id="modal-portal-autobuyer-running">
+            <AutobuyerRunningModal modalTitle={<T id="tickets.ticketAutoBuyerRunning" m="Ticket buyer still running" />} show={aboutModalMacOSVisible} />
+          </div>
         </div>
       </IntlProvider>
     );
