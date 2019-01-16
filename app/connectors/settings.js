@@ -14,6 +14,7 @@ const mapStateToProps = selectorMap({
   areSettingsDirty: sel.settingsChanged,
   isChangePassPhraseDisabled: sel.isChangePassPhraseDisabled,
   changePassphraseRequestAttempt: sel.changePassphraseRequestAttempt,
+  isTicketAutoBuyerEnabled: sel.isTicketAutoBuyerEnabled,
   needNetworkReset: sel.needNetworkReset,
   walletName: sel.getWalletName,
   walletReady: sel.getWalletReady,
