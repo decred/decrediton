@@ -37,7 +37,7 @@ const darwinTemplate = (mainWindow, locale) => [
       label: locale.messages["appMenu.quit"],
       accelerator: "Command+Q",
       click() {
-        cleanShutdown(mainWindow, app, GetDcrdPID(), GetDcrwPID());
+        mainWindow.webContents.send("check-auto-buyer-running");
       }
     } ]
   }, {

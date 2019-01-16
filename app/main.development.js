@@ -290,6 +290,12 @@ app.on("ready", async () => {
     mainWindow.show();
     mainWindow.focus();
   });
+
+  mainWindow.on("close", (e) => {
+    mainWindow.webContents.send("check-auto-buyer-running");
+    e.preventDefault();
+  });
+
   mainWindow.on("closed", () => {
     mainWindow = null;
     if (getVersionWin() !== null) {

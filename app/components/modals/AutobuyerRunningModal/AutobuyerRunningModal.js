@@ -3,23 +3,20 @@ import { FormattedMessage as T } from "react-intl";
 import { InvisibleButton, KeyBlueButton, DangerButton } from "buttons";
 
 const propTypes = {
-  modalTitle: PropTypes.object.isRequired,
   show: PropTypes.bool.isRequired,
-  // modalContent: PropTypes.object.isRequired,
-  // onCancelModal: PropTypes.func.isRequired,
-  // onSubmit: PropTypes.func.isRequired
+  onCancelModal: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired
 };
 
-const AutobuyerRunningModal = ({ modalTitle, modalContent, show, onCancelModal, onSubmit,
-  confirmLabel, danger }) => (
+const AutobuyerRunningModal = ({ show, onCancelModal, onSubmit, confirmLabel, danger }) => (
   <Modal className="confirm-modal" {...{ show, onCancelModal }}>
     <div className="confirm-modal-header">
       <div className="confirm-modal-header-title">
-        {modalTitle}
+        <T id="tickets.alerts.ticketAutoBuyerRunning" m="Auto Ticket Buyer Still Running" />
       </div>
     </div>
     <div className="confirm-modal-content">
-      {modalContent}
+      <T id="tickets.alerts.ticketAutoBuyerStillRunning" m="If you proceed, it will be closed and no more tickets will be purchased."/>
     </div>
     <div className="confirm-modal-toolbar">
       { danger ?

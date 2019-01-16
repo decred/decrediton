@@ -17,6 +17,8 @@ import "style/Themes.less";
 import "style/Layout.less";
 import { ipcRenderer } from "electron";
 import { FormattedMessage as T } from "react-intl";
+import { hideAutobuyerRunningModal } from "../actions/ControlActions";
+import { checkAutobuyerRunning } from "../actions/ClientActions";
 const topLevelAnimation = { atEnter: { opacity: 0 }, atLeave: { opacity: 0 }, atActive: { opacity: 1 } };
 
 @autobind
@@ -27,6 +29,7 @@ class App extends React.Component {
     shutdownApp: PropTypes.func.isRequired,
     shutdownRequested: PropTypes.bool.isRequired,
     daemonStopped: PropTypes.bool.isRequired,
+    // TODO add props
   };
 
   constructor (props) {
@@ -53,23 +56,13 @@ class App extends React.Component {
         this.props.showAboutModalMacOS();
       }
     });
-  }
-
-  beforeWindowUnload(event) {
-    if (this.refreshing) {
-      return;
-    }
-
-    const { shutdownRequested, daemonStopped } = this.props;
-    if (!daemonStopped) {
-      event.preventDefault();
-      event.returnValue = false;
-    }
-
-    if (!shutdownRequested) {
-      log("info", "Main app received shutdown request");
-      this.props.shutdownApp();
-    }
+    ipcRenderer.on("check-auto-buyer-running", () => {
+      if (this.props.isTicketAutoBuyerEnabled) {
+        this.props.showAutobuyerRunningModal();
+      } else {
+        this.props.shutdownApp();
+      }
+    });
   }
 
   onClick(event) {
@@ -97,7 +90,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { locale, theme, aboutModalMacOSVisible, hideAboutModalMacOS } = this.props;
+    const { locale, theme, aboutModalMacOSVisible, hideAboutModalMacOS, autobuyerRunningModalVisible, hideAutobuyerRunningModal } = this.props;
     const MainSwitch = this.props.uiAnimations ? AnimatedSwitch : StaticSwitch;
 
     return (
@@ -123,7 +116,7 @@ class App extends React.Component {
           </div>
           <TrezorModals />
           <div id="modal-portal-autobuyer-running">
-            <AutobuyerRunningModal modalTitle={<T id="tickets.ticketAutoBuyerRunning" m="Ticket buyer still running" />} show={aboutModalMacOSVisible} />
+            <AutobuyerRunningModal show={autobuyerRunningModalVisible} onSubmit={() => { hideAutobuyerRunningModal(); this.props.shutdownApp(); }} onCancelModal={hideAutobuyerRunningModal} />
           </div>
         </div>
       </IntlProvider>
