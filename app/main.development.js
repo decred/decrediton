@@ -108,7 +108,27 @@ const installExtensions = async () => {
   }
 };
 
-const { ipcMain } = require("electron");
+const { ipcMain, systemPreferences } = require("electron");
+
+const changeDarkMode = (newAppearance) => {
+  if (newAppearance === "light" || newAppearance === "dark") {
+    globalCfg.set("theme", newAppearance === "light" ? "theme-light" : "theme-dark");
+  }
+};
+
+// Set dark / light mode on app launch
+// isDarkMode() return true or false (true when dark, false when light) so we need to convert it to 'light' or 'dark'
+if (process.platform === "darwin") {
+  changeDarkMode(systemPreferences.isDarkMode() ? "dark" : "light");
+
+  // listen to dark / light mode theme changes
+  systemPreferences.subscribeNotification(
+    "AppleInterfaceThemeChangedNotification",
+    () => {
+      mainWindow.webContents.send("toggle-theme", systemPreferences.isDarkMode() === true ? "theme-dark" : "theme-light");
+    }
+  );
+}
 
 ipcMain.on("reload-allowed-external-request", (event) => {
   reloadAllowedExternalRequests();

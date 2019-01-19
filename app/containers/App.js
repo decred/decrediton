@@ -1,6 +1,6 @@
 import { IntlProvider } from "react-intl";
 import { defaultFormats } from "i18n/locales";
-import { app, theming } from "connectors";
+import { app, theming, settings } from "connectors";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { AnimatedSwitch } from "react-router-transition";
 import { StaticSwitch } from "shared";
@@ -50,6 +50,10 @@ class App extends React.Component {
       if (this.props.modalVisible == false) {
         this.props.showAboutModalMacOS();
       }
+    });
+
+    ipcRenderer.on("toggle-theme", (event, theme) => {
+      this.props.toggleTheme(theme);
     });
   }
 
@@ -126,4 +130,4 @@ class App extends React.Component {
   }
 }
 
-export default app(theming(App));
+export default app(settings(theming(App)));

@@ -128,15 +128,18 @@ export const updateStateVoteSettingsChanged = (settings) => (dispatch, getState)
 };
 
 export const SETTINGS_TOGGLE_THEME = "SETTINGS_TOGGLE_THEME";
-export const toggleTheme = () => (dispatch, getState) => {
-  const { settings: { theme } } = getState();
-  const config = getGlobalCfg();
-  if (theme == "theme-light") {
-    dispatch({ theme: "theme-dark", type: SETTINGS_TOGGLE_THEME });
-    config.set("theme", "theme-dark");
-  } else if (theme == "theme-dark") {
-    dispatch({ theme: "theme-light", type: SETTINGS_TOGGLE_THEME });
-    config.set("theme", "theme-light");
+export const toggleTheme = (toTheme = null) => (dispatch, getState) => {
+  if (toTheme === null) {
+    const { settings: { theme } } = getState();
+    const config = getGlobalCfg();
+    if (theme === "theme-light") {
+      dispatch({ theme: "theme-dark", type: SETTINGS_TOGGLE_THEME });
+      config.set("theme", "theme-dark");
+    } else if (theme === "theme-dark") {
+      dispatch({ theme: "theme-light", type: SETTINGS_TOGGLE_THEME });
+      config.set("theme", "theme-light");
+    }
+  } else {
+    dispatch({ theme: toTheme, type: SETTINGS_TOGGLE_THEME });
   }
-
 };
