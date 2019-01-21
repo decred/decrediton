@@ -13,19 +13,19 @@
 .settings-columns,
 .get-started-custom-privacy-settings {
   flex: 50%;
-  
+
   input[type="checkbox"],
   input[type="radio"] {
     display: none;
   }
-  
+
   input[type="checkbox"]:disabled + label,
   input[type="radio"]:disabled + label {
     display: inline-block;
     background-color: var(--disabled-background-color);
     border: 1px solid var(--disabled-color);
   }
-  
+
   input[type="checkbox"]:checked:disabled + label,
   input[type="radio"]:checked:disabled + label {
     display: inline-block;
@@ -35,14 +35,14 @@
     background-repeat: no-repeat;
     background-size: 10px;
   }
-  
+
   input[type="checkbox"] + label,
   input[type="radio"] + label {
     display: inline-block;
     border: 1px solid var(--disabled-color);
     background-color: none;
   }
-  
+
   input[type="checkbox"]:checked + label,
   input[type="radio"]:checked + label {
     display: inline-block;
@@ -52,14 +52,14 @@
     background-repeat: no-repeat;
     background-size: 10px;
   }
-  
+
   input[type="radio"] + label {
     border-radius: 50%;
     width: 14px;
     height: 14px;
     background-position: 2px;
   }
-  
+
   input[type="checkbox"] + label {
     width: 12px;
     height: 12px;
@@ -99,6 +99,7 @@
 
 .settings-row {
   display: flex;
+  margin-bottom: 18px;
   justify-content: flex-end;
 }
 
@@ -109,7 +110,7 @@
 .settings-checklist-description {
   font-style: italic;
   text-align: right;
-  margin: -16px 28px 10px 0px;
+  margin-right: 28px;
   color: var(--disabled-color);
   font-size: 11px;
   line-height: 15px;
@@ -118,9 +119,8 @@
 
 .settings-label {
   .inline-block-mixin;
-
+  margin-right: 14px;
   text-align: right;
-  margin: -1px 10px 20px 0;
   width: 125px;
 }
 
