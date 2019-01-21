@@ -661,7 +661,6 @@ export const stakePoolListingEnabled = compose(
   l => l.indexOf(EXTERNALREQUEST_STAKEPOOL_LISTING) > -1,
   allowedExternalRequests
 );
-export const spvMode = get([ "settings", "currentSettings", "spvMode" ]);
 
 export const isSigningMessage = get([ "grpc", "getSignMessageRequestAttempt" ]);
 export const signMessageError = get([ "grpc", "getSignMessageError" ]);
