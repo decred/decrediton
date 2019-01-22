@@ -51,6 +51,10 @@ class App extends React.Component {
         this.props.showAboutModalMacOS();
       }
     });
+
+    ipcRenderer.on("darwin-shutdown", () => {
+      this.props.shutdownApp();
+    });
   }
 
   beforeWindowUnload(event) {
