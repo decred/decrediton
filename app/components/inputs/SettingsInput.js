@@ -26,7 +26,7 @@ class SettingsInput extends React.Component {
 
   render() {
     const {
-      className, valueKey, labelKey, options
+      className, valueKey, labelKey, options, disabled
     } = this.props;
 
     return (
@@ -40,6 +40,7 @@ class SettingsInput extends React.Component {
           options={options}
           onChange={this.onChangeSelect}
           onInputKeyDown={this.selectKeyDown}
+          disabled={disabled}
         />
       </div>
     );

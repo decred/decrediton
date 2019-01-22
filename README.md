@@ -67,7 +67,7 @@ To pass additional arguments to dcrwallet (such as to increase the logging level
 decrediton --extrawalletargs='-d=debug'
 ```
 
-## Development Instructions and Tips
+## Development Setup
 
 ### Node and Electron Versions
 
@@ -115,28 +115,43 @@ yarn
 yarn dev
 ```
 
+### Keeping up with dcrd/dcrwallet changes
+
+If you're developing decrediton improvements on a daily basis, you need to also keep up to date with dcrd/dcrwallet changes (specially when developing things like new grpc calls).
+
+In that case, instead of copying the binaries to `/bin` it's better to symlink
+them so that you only need a single step (go install) to run newer versions of
+these tools:
+
+```bash
+cd bin
+ln -s `which dcrd` dcrd
+ln -s `which dcrctl` dcrctl
+ln -s `which dcrwallet` dcrwallet
+```
+
 ### Advanced Daemon Mode
 
 This step is only recommended if you're constantly restarting decrediton. If
 you're not developing on a daily basis, you can safely ignore this for the
 moment.
 
-When starting decrediton in rpc (or "normal") mode, it automatically runs dcrd
+When starting decrediton in RPC (or "normal") mode, it automatically runs dcrd
 in the backgound to gather blockchain data. If you need to constantly restart
 decrediton, loading the node every time may be time consuming.
 
 In that case, it's helpful to run the dcrd node in a separate process and simply
 attach to it between decrediton restarts. In order to see the advanced daemon
-configuration options you open your ```config.json``` and set the
+configuration options either start decrediton with the ```--advanced``` option or open ```config.json``` and set the
 ```daemon_start_advanced``` flag to ```true``` as follows:
 
 ```"daemon_start_advanced": true,```
 
-Note: Your config.json file is located in the following directory(s)
+Note: Your config.json file is located in the following directories:
 
 Windows - ```C:\Users\<your-username>\AppData\Local\Decrediton\config.json```
 
-OSX - ```$HOME/Library/Application\ Support/Decrediton/config.json```
+macOS - ```$HOME/Library/Application\ Support/Decrediton/config.json```
 
 Linux - ```~/.config/decrediton/config.json```
 
@@ -144,13 +159,23 @@ Run the following to start the Decred daemon in a standalone terminal window:
 
 Windows - ```dcrd --testnet -u USER -P PASSWORD --rpclisten=127.0.0.1:19119 --rpccert=C:\Users\<username>\AppData\Local\Dcrd\rpc.cert```
 
-OSX - ```dcrd --testnet -u USER -P PASSWORD --rpclisten=127.0.0.1:19119 --rpccert=$HOME/Library/Application\ Support/Dcrd/rpc.cert```
+macOS - ```dcrd --testnet -u USER -P PASSWORD --rpclisten=127.0.0.1:19119 --rpccert=$HOME/Library/Application\ Support/Dcrd/rpc.cert```
 
 Linux - ```dcrd --testnet -u USER -P PASSWORD --rpclisten=127.0.0.1:19119 --rpccert=~/.dcrd/rpc.cert```
 
 Once you restart decrediton, you should be presented with a screen to specify
 the node parameters. Note that all of them are present in the command you used
 to start the node for your respective system.
+
+CLI options (including ```--advanced```) when running `yarn dev` are currently not supported.
+
+## Platform-specific instructions
+
+### macOS 
+
+To start decrediton from command-line (assuming it is installed in `/Applications`):
+
+```$ /Applications/decrediton.app/Contents/MacOS/decrediton```
 
 
 ### Windows
@@ -224,20 +249,6 @@ acceleration and ui animations) to run decrediton on it.
 yarn rebuild-natives
 ```
 
-### Keeping up with dcrd/dcrwallet changes
-
-If you're developing decrediton improvements on a daily basis, you need to also keep up to date with dcrd/dcrwallet changes (specially when developing things like new grpc calls).
-
-In that case, instead of copying the binaries to `/bin` it's better to symlink
-them so that you only need a single step (go install) to run newer versions of
-these tools:
-
-```bash
-cd bin
-ln -s `which dcrd` dcrd
-ln -s `which dcrctl` dcrctl
-ln -s `which dcrwallet` dcrwallet
-```
 
 ## Building release versions
 

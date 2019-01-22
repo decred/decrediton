@@ -1,6 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
 import { SettingsInput, SettingsTextInput, LanguageSelect, NumericInput } from "inputs";
 import { InfoDocFieldModalButton } from "buttons";
+import { Tooltip } from "shared";
 import "style/LanguageSelect.less";
 
 const propTypes = {
@@ -9,6 +10,8 @@ const propTypes = {
   locales: PropTypes.array.isRequired,
   onChangeTempSettings: PropTypes.func.isRequired,
 };
+
+const AlreadySetMessage = () => <T id="settings.alreadySetFromCli" m="This was set as a command-line option when launching decrediton"/>;
 
 // Do **not** add stuff that depends on the wallet here, as this is also used
 // for startup config.
@@ -27,43 +30,52 @@ const GeneralSettings = ({
         <div className="settings-label">
           <T id="settings.SPV" m="SPV" />
         </div>
-        <SettingsInput
-          className="settings-input"
-          value={tempSettings.spvMode ? "true" : "false"}
-          onChange={(opt) => onChangeTempSettings({ spvMode: opt.value })}
-          valueKey="key"
-          labelKey="description"
-          options={[
-            { key: "true", value: true, description: <T id="settings.spv.true" m="Enabled" /> },
-            { key: "false", value: false, description: <T id="settings.spv.false" m="Disabled" /> },
-          ]}
-        />
+        <Tooltip text={ <AlreadySetMessage/> } disabled={!tempSettings.spvModeFromCli}>
+          <SettingsInput
+            className="settings-input"
+            value={tempSettings.spvMode ? "true" : "false"}
+            onChange={(opt) => onChangeTempSettings({ spvMode: opt.value })}
+            valueKey="key"
+            labelKey="description"
+            disabled={tempSettings.spvModeFromCli}
+            options={[
+              { key: "true", value: true, description: <T id="settings.spv.true" m="Enabled" /> },
+              { key: "false", value: false, description: <T id="settings.spv.false" m="Disabled" /> },
+            ]}
+          />
+        </Tooltip>
       </div>
 
       <div className="settings-row">
         <div className="settings-label">
           <T id="settings.SPVConnect" m="SPV Connect" />
         </div>
-        <SettingsTextInput
-          value={tempSettings.spvConnect}
-          onChange={(e) => onChangeTempSettings({ spvConnect: e.target.value.split(",") })}
-        />
+        <Tooltip text={ <AlreadySetMessage/> } disabled={!tempSettings.spvConnectFromCli}>
+          <SettingsTextInput
+            value={tempSettings.spvConnect}
+            disabled={tempSettings.spvConnectFromCli}
+            onChange={(e) => onChangeTempSettings({ spvConnect: e.target.value.split(",") })}
+          />
+        </Tooltip>
       </div>
       <div className="settings-row">
         <div className="settings-label">
           <T id="settings.network" m="Network" />
         </div>
-        <SettingsInput
-          className="settings-input"
-          value={tempSettings.network}
-          onChange={(opt) => onChangeTempSettings({ network: opt.value })}
-          valueKey="value"
-          labelKey="description"
-          options={[
-            { key: "true", value: "mainnet", description: <T id="settings.network.mainnet" m="Mainnet" /> },
-            { key: "false", value: "testnet", description: <T id="settings.network.testnet" m="Testnet" /> },
-          ]}
-        />
+        <Tooltip text={ <AlreadySetMessage/> } disabled={!tempSettings.networkFromCli}>
+          <SettingsInput
+            className="settings-input"
+            value={tempSettings.network}
+            onChange={(opt) => onChangeTempSettings({ network: opt.value })}
+            valueKey="value"
+            labelKey="description"
+            disabled={tempSettings.networkFromCli}
+            options={[
+              { key: "true", value: "mainnet", description: <T id="settings.network.mainnet" m="Mainnet" /> },
+              { key: "false", value: "testnet", description: <T id="settings.network.testnet" m="Testnet" /> },
+            ]}
+          />
+        </Tooltip>
       </div>
       {walletReady &&
         <div className="settings-row">
@@ -96,17 +108,20 @@ const GeneralSettings = ({
         <div className="settings-label">
           <T id="settings.advancedDaemon.label" m="Advanced Daemon Startup" />
         </div>
-        <SettingsInput
-          className="settings-input"
-          value={tempSettings.daemonStartAdvanced ? "true" : "false"}
-          onChange={(opt) => onChangeTempSettings({ daemonStartAdvanced: opt.value })}
-          valueKey="key"
-          labelKey="description"
-          options={[
-            { key: "true", value: true, description: <T id="settings.advancedDaemon.true" m="Enabled" /> },
-            { key: "false", value: false, description: <T id="settings.advancedDaemon.false" m="Disabled" /> },
-          ]}
-        />
+        <Tooltip text={ <AlreadySetMessage/> } disabled={!tempSettings.daemonStartAdvancedFromCli}>
+          <SettingsInput
+            className="settings-input"
+            value={tempSettings.daemonStartAdvanced ? "true" : "false"}
+            onChange={(opt) => onChangeTempSettings({ daemonStartAdvanced: opt.value })}
+            valueKey="key"
+            labelKey="description"
+            disabled={tempSettings.daemonStartAdvancedFromCli}
+            options={[
+              { key: "true", value: true, description: <T id="settings.advancedDaemon.true" m="Enabled" /> },
+              { key: "false", value: false, description: <T id="settings.advancedDaemon.false" m="Disabled" /> },
+            ]}
+          />
+        </Tooltip>
       </div>
       {walletReady &&
         <div className="settings-row">

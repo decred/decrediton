@@ -14,23 +14,29 @@ import "./style/Global.less";
 import "./style/ReactSelectGlobal.less";
 import pkg from "./package.json";
 import { log } from "./wallet";
+import { ipcRenderer } from "electron";
 
 var globalCfg = getGlobalCfg();
 const locale = globalCfg.get("locale");
+const cliOptions = ipcRenderer.sendSync("get-cli-options");
 
 log("info", "Starting main react app");
 
 const currentSettings = {
   locale: locale,
-  daemonStartAdvanced: globalCfg.get("daemon_start_advanced"),
+  daemonStartAdvanced: (cliOptions && cliOptions.daemonStartAdvanced) || globalCfg.get("daemon_start_advanced"),
+  daemonStartAdvancedFromCli: !!(cliOptions && cliOptions.daemonStartAdvanced),
   allowedExternalRequests: globalCfg.get("allowed_external_requests"),
   proxyType: globalCfg.get("proxy_type"),
   proxyLocation: globalCfg.get("proxy_location"),
-  spvMode: globalCfg.get("spv_mode"),
-  spvConnect: globalCfg.get("spv_connect"),
+  spvMode: (cliOptions && cliOptions.spvMode) || globalCfg.get("spv_mode"),
+  spvModeFromCli: !!(cliOptions && cliOptions.spvMode),
+  spvConnect: (cliOptions && cliOptions.spvConnect) || globalCfg.get("spv_connect"),
+  spvConnectFromCli: !!(cliOptions && cliOptions.spvConnect),
   timezone: globalCfg.get("timezone"),
   currencyDisplay: "DCR",
-  network: globalCfg.get("network"),
+  network: (cliOptions && cliOptions.network) || globalCfg.get("network"),
+  networkFromCli: !!(cliOptions && cliOptions.network),
 };
 var initialState = {
   settings: {
@@ -68,7 +74,7 @@ var initialState = {
     timeLeftEstimate: null,
     timeStart: 0,
     blockStart: 0,
-    daemonAdvanced: globalCfg.get("daemon_start_advanced"),
+    daemonAdvanced: (cliOptions && cliOptions.daemonStartAdvanced) || globalCfg.get("daemon_start_advanced"),
     credentials: null,
     appData: null,
     shutdownRequested: false,

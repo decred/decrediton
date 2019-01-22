@@ -160,7 +160,7 @@ export const getDaemonInfo = (mainWindow, rpcCreds, isRetry) => {
     args.push("--testnet");
   }
 
-  const dcrctlExe = getExecutablePath("dcrctl", argv.customBinPath);
+  const dcrctlExe = getExecutablePath("dcrctl", argv.custombinpath);
   if (!fs.existsSync(dcrctlExe)) {
     logger.log("error", "The dcrctl executable does not exist. Expected to find it at " + dcrctlExe);
   }
@@ -214,7 +214,7 @@ export const checkDaemon = (mainWindow, rpcCreds, testnet) => {
     args.push("--testnet");
   }
 
-  const dcrctlExe = getExecutablePath("dcrctl", argv.customBinPath);
+  const dcrctlExe = getExecutablePath("dcrctl", argv.custombinpath);
   if (!fs.existsSync(dcrctlExe)) {
     logger.log("error", "The dcrctl executable does not exist. Expected to find it at " + dcrctlExe);
   }
