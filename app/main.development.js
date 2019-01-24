@@ -378,9 +378,6 @@ app.on("ready", async () => {
 
   if (stopSecondInstance) return;
 
-  const id = powerSaveBlocker.start("prevent-display-sleep");
-  console.log("Power blocker started: " + powerSaveBlocker.isStarted(id));
-
   mainWindow.webContents.on("context-menu", (e, props) => {
     const { selectionText, isEditable, x, y } = props;
     const inptMenu = inputMenu(process.env.NODE_ENV === "development", mainWindow, x, y);
