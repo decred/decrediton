@@ -228,7 +228,7 @@ const messages = defineMessages({
   },
   STARTTICKETBUYERV2_FAILED: {
     id: "runTicketBuyer.Failed",
-    defaultMessage: "Invalid private password.  Please try again."
+    defaultMessage: "Invalid private password. Please try again."
   },
   STOPTICKETBUYERV2_SUCCESS: {
     id: "stopTicketBuyer.Success",

@@ -58,6 +58,7 @@ class App extends React.Component {
     });
     ipcRenderer.on("check-auto-buyer-running", () => {
       if (this.props.isTicketAutoBuyerEnabled) {
+        log("warning", "Auto buyer is still running, preventing shutdown");
         this.props.showAutobuyerRunningModal();
       } else {
         this.props.shutdownApp();

@@ -13,7 +13,7 @@ import { cleanShutdown, GetDcrdPID, GetDcrwPID } from "./main_dev/launch";
 import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopDaemon, stopWallet, startWallet, checkDaemon, deleteDaemon, setWatchingOnlyWallet, getWatchingOnlyWallet, getDaemonInfo } from "./main_dev/ipc";
 import { initTemplate, getVersionWin, setGrpcVersions, getGrpcVersions, inputMenu, selectionMenu } from "./main_dev/templates";
 import { readFileBackward } from "./helpers/byteActions";
-import { powerSaveBlocker } from "electron";
+import electron, { powerSaveBlocker } from "electron";
 
 // setPath as decrediton
 app.setPath("userData", appDataDirectory());
@@ -246,6 +246,12 @@ if (stopSecondInstance) {
 }
 
 app.on("ready", async () => {
+  electron.powerMonitor.on("shutdown", (e) => {
+    console.log("Received system shutdown request, checking if auto buyer is running");
+    mainWindow.webContents.send("check-auto-buyer-running");
+    e.preventDefault();
+  });
+
   // when installing (on first run) locale will be empty. Determine the user's
   // OS locale and set that as decrediton's locale.
   const cfgLocale = globalCfg.get("locale", "");
