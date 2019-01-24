@@ -14,6 +14,8 @@ import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopDaemo
 import { initTemplate, getVersionWin, setGrpcVersions, getGrpcVersions, inputMenu, selectionMenu } from "./main_dev/templates";
 import { readFileBackward } from "./helpers/byteActions";
 
+const { powerSaveBlocker } = require("electron");
+
 // setPath as decrediton
 app.setPath("userData", appDataDirectory());
 
@@ -308,6 +310,9 @@ app.on("ready", async () => {
   });
 
   if (stopSecondInstance) return;
+
+  const id = powerSaveBlocker.start("prevent-display-sleep");
+  console.log("Power blocker started: " + powerSaveBlocker.isStarted(id));
 
   mainWindow.webContents.on("context-menu", (e, props) => {
     const { selectionText, isEditable, x, y } = props;
