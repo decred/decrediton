@@ -7,7 +7,7 @@ import { OPTIONS } from "./constants";
 import os from "os";
 import fs from "fs-extra";
 import stringArgv from "string-argv";
-import { concat, isString } from "lodash";
+import { concat, isString } from "../fp";
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const debug = argv.debug || process.env.NODE_ENV === "development";
@@ -70,6 +70,10 @@ export const closeDCRW = () => {
   }
 };
 
+export async function darwinShutdown(mainWindow) {
+  mainWindow.webContents.send("darwin-shutdown");
+}
+
 export async function cleanShutdown(mainWindow, app) {
   // Attempt a clean shutdown.
   return new Promise(resolve => {
@@ -118,7 +122,7 @@ export const launchDCRD = (mainWindow, daemonIsAdvanced, daemonPath, appdata, te
     args.push("--testnet");
   }
 
-  const dcrdExe = getExecutablePath("dcrd", argv.customBinPath);
+  const dcrdExe = getExecutablePath("dcrd", argv.custombinpath);
   if (!fs.existsSync(dcrdExe)) {
     logger.log("error", "The dcrd executable does not exist. Expected to find it at " + dcrdExe);
     return;
@@ -209,7 +213,7 @@ export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
   args.push("--ticketbuyer.balancetomaintainabsolute=" + cfg.get("balancetomaintain"));
   args.push("--addridxscanlen=" + cfg.get("gaplimit"));
 
-  const dcrwExe = getExecutablePath("dcrwallet", argv.customBinPath);
+  const dcrwExe = getExecutablePath("dcrwallet", argv.custombinpath);
   if (!fs.existsSync(dcrwExe)) {
     logger.log("error", "The dcrwallet executable does not exist. Expected to find it at " + dcrwExe);
     return;
@@ -327,7 +331,7 @@ export const readExesVersion = (app, grpcVersions) => {
   };
 
   for (let exe of exes) {
-    let exePath = getExecutablePath("dcrd", argv.customBinPath);
+    let exePath = getExecutablePath("dcrd", argv.custombinpath);
     if (!fs.existsSync(exePath)) {
       logger.log("error", "The dcrd executable does not exist. Expected to find it at " + exePath);
     }

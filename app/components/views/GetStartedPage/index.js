@@ -13,6 +13,9 @@ import { RescanWalletBody } from "./RescanWallet/index";
 import StakePoolsBody from "./StakePools";
 import { walletStartup } from "connectors";
 import { FormattedMessage as T } from "react-intl";
+import { ipcRenderer } from "electron";
+
+const cliOptions = ipcRenderer.sendSync("get-cli-options");
 
 @autobind
 class GetStartedPage extends React.Component {
@@ -149,7 +152,7 @@ class GetStartedPage extends React.Component {
       return <ReleaseNotes {...{ onShowSettings, onShowLogs, appVersion, onHideReleaseNotes, getWalletReady, ...props }} />;
     } else if (showTrezorConfig) {
       return <TrezorConfig {...{ onHideTrezorConfig, ...props }} />;
-    } else if (isAdvancedDaemon && openForm && !remoteAppdataError && !isPrepared && !getWalletReady && !isSPV) {
+    } else if (!cliOptions.rpcPresent && isAdvancedDaemon && openForm && !remoteAppdataError && !isPrepared && !getWalletReady && !isSPV) {
       Form = AdvancedStartupBody;
     } else if (remoteAppdataError && !isPrepared && !getWalletReady && !isSPV) {
       Form = RemoteAppdataError;

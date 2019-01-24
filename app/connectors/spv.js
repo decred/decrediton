@@ -3,7 +3,7 @@ import { selectorMap } from "../fp";
 import * as sel from "../selectors";
 
 const mapStateToProps = selectorMap({
-  spvMode: sel.spvMode,
+  spvMode: sel.isSpv,
   blocksNumberToNextTicket: sel.blocksNumberToNextTicket,
 });
 

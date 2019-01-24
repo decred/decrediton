@@ -4,16 +4,19 @@ import { app, BrowserWindow, Menu, dialog } from "electron";
 import { initGlobalCfg, validateGlobalCfgFile, setMustOpenForm } from "./config";
 import { appLocaleFromElectronLocale, default as locales } from "./i18n/locales";
 import { createLogger, lastLogLine, GetDcrdLogs, GetDcrwalletLogs } from "./main_dev/logging";
-import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, BOTH_CONNECTION_ERR_MESSAGE, MAX_LOG_LENGTH } from "./main_dev/constants";
+import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, BOTH_CONNECTION_ERR_MESSAGE, MAX_LOG_LENGTH, SPV_CONNECT_WITHOUT_SPV,
+  RPC_WITHOUT_ADVANCED_MODE, RPCCONNECT_INVALID_FORMAT, RPC_MISSING_OPTIONS, SPV_WITH_ADVANCED_MODE } from "./main_dev/constants";
 import { getWalletsDirectoryPath, getWalletsDirectoryPathNetwork, appDataDirectory } from "./main_dev/paths";
 import { getGlobalCfgPath, checkAndInitWalletCfg } from "./main_dev/paths";
 import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRequests, allowExternalRequest } from "./main_dev/externalRequests";
 import { setupProxy } from "./main_dev/proxy";
 import { cleanShutdown, GetDcrdPID, GetDcrwPID } from "./main_dev/launch";
-import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopDaemon, stopWallet, startWallet, checkDaemon, deleteDaemon, setWatchingOnlyWallet, getWatchingOnlyWallet, getDaemonInfo } from "./main_dev/ipc";
+import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopDaemon, stopWallet, startWallet,
+  checkDaemon, deleteDaemon, setWatchingOnlyWallet, getWatchingOnlyWallet, getDaemonInfo } from "./main_dev/ipc";
 import { initTemplate, getVersionWin, setGrpcVersions, getGrpcVersions, inputMenu, selectionMenu } from "./main_dev/templates";
 import { readFileBackward } from "./helpers/byteActions";
 import electron, { powerSaveBlocker } from "electron";
+import { isString } from "./fp";
 
 // setPath as decrediton
 app.setPath("userData", appDataDirectory());
@@ -21,6 +24,7 @@ app.setPath("userData", appDataDirectory());
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const debug = argv.debug || process.env.NODE_ENV === "development";
 const logger = createLogger(debug);
+let cliOptions = {};
 
 // Verify that config.json is valid JSON before fetching it, because
 // it will silently fail when fetching.
@@ -37,7 +41,7 @@ let previousWallet = null;
 let primaryInstance;
 
 const globalCfg = initGlobalCfg();
-const daemonIsAdvanced = globalCfg.get("daemon_start_advanced");
+const daemonIsAdvanced = argv.advanced || globalCfg.get("daemon_start_advanced");
 const walletsDirectory = getWalletsDirectoryPath();
 const mainnetWalletsPath = getWalletsDirectoryPathNetwork(false);
 const testnetWalletsPath = getWalletsDirectoryPathNetwork(true);
@@ -56,11 +60,65 @@ if (argv.version) {
   app.exit(0);
 }
 
-// Check if network was set on command line (but only allow one!).
+let rpcOptionsCount = 0;
+rpcOptionsCount += argv.rpcuser ? 1 : 0;
+rpcOptionsCount += argv.rpcpass ? 1 : 0;
+rpcOptionsCount += argv.rpccert ? 1 : 0;
+rpcOptionsCount += argv.rpcconnect ? 1 : 0;
+
+// Allow at most one network to be specified
 if (argv.testnet && argv.mainnet) {
-  logger.log(BOTH_CONNECTION_ERR_MESSAGE);
+  console.log(BOTH_CONNECTION_ERR_MESSAGE);
+  app.quit();
+} else if (!argv.spv && argv.spvconnect !== undefined) {
+  console.log(SPV_CONNECT_WITHOUT_SPV);
+  app.quit();
+} else if (argv.spv && argv.advanced) {
+  console.log(SPV_WITH_ADVANCED_MODE);
+  app.quit();
+} else if (!argv.advanced && (argv.rpcuser || argv.rpcpass || argv.rpccert || argv.rpcconnect)) {
+  console.log(RPC_WITHOUT_ADVANCED_MODE);
+  app.quit();
+} else if (rpcOptionsCount > 0 && rpcOptionsCount < 4) {
+  console.log(RPC_MISSING_OPTIONS);
   app.quit();
 }
+
+// Signal to renderer process that CLI options should override the global config
+if (argv.testnet) {
+  cliOptions.network = "testnet";
+} else if (argv.mainnet) {
+  cliOptions.network = "mainnet";
+}
+if (argv.advanced) {
+  cliOptions.daemonStartAdvanced = true;
+}
+if (argv.spv) {
+  cliOptions.spvMode = true;
+}
+if (isString(argv.spvconnect)) {
+  cliOptions.spvConnect = argv.spvconnect.split(",");
+}
+if (isString(argv.rpcuser)) {
+  cliOptions.rpcUser = argv.rpcuser;
+}
+if (isString(argv.rpcpass)) {
+  cliOptions.rpcPass = argv.rpcpass;
+}
+if (isString(argv.rpccert)) {
+  cliOptions.rpcCert = argv.rpccert;
+}
+if (isString(argv.rpcconnect)) {
+  const parts = argv.rpcconnect.split(":");
+  // Allowed formats: "127.0.0.1" or "127.0.0.1:19109"
+  if (parts.length !== 1 && parts.length !== 2) {
+    logger.log("error", RPCCONNECT_INVALID_FORMAT);
+    app.quit();
+  }
+  cliOptions.rpcHost = parts[0];
+  cliOptions.rpcPort = parts[1] || "9109";
+}
+cliOptions.rpcPresent = rpcOptionsCount == 4 ? true : false;
 
 if (process.env.NODE_ENV === "production") {
   const sourceMapSupport = require('source-map-support'); // eslint-disable-line
@@ -237,6 +295,10 @@ ipcMain.on("set-is-watching-only", (event, isWatchingOnly) => {
 
 ipcMain.on("get-is-watching-only", (event) => {
   event.returnValue = getWatchingOnlyWallet();
+});
+
+ipcMain.on("get-cli-options", (event) => {
+  event.returnValue = cliOptions;
 });
 
 primaryInstance = app.requestSingleInstanceLock();

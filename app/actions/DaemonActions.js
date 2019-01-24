@@ -314,27 +314,38 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => {
 };
 
 export const prepStartDaemon = () => (dispatch, getState) => {
-  const { daemon: { daemonAdvanced, openForm, walletName } } = getState();
+  const { daemon: { daemonAdvanced, openForm } } = getState();
+  const cliOptions = ipcRenderer.sendSync("get-cli-options");
   dispatch(registerForErrors());
   dispatch(checkDecreditonVersion());
   if (!daemonAdvanced) {
     dispatch(startDaemon());
     return;
   }
-  if (!walletName) {
-    return;
+
+  let rpc_user, rpc_password, rpc_cert, rpc_host, rpc_port;
+  if (cliOptions.rpcPresent) {
+    rpc_user = cliOptions.rpcUser;
+    rpc_password = cliOptions.rpcPass;
+    rpc_cert = cliOptions.rpcCert;
+    rpc_host = cliOptions.rpcHost;
+    rpc_port = cliOptions.rpcPort;
+  } else {
+    ({ rpc_user, rpc_password, rpc_cert, rpc_host, rpc_port } = getRemoteCredentials());
   }
-  const { rpc_password, rpc_user, rpc_cert, rpc_host, rpc_port } = getRemoteCredentials();
+  const credentials = { rpc_user, rpc_password, rpc_cert, rpc_host, rpc_port };
   const hasAllCredentials = rpc_password && rpc_user && rpc_password.length > 0 && rpc_user.length > 0 && rpc_cert.length > 0 && rpc_host.length > 0 && rpc_port.length > 0;
   const hasAppData = getAppdataPath() && getAppdataPath().length > 0;
 
   if(hasAllCredentials && hasAppData)
     this.props.setCredentialsAppdataError();
 
-  if (!openForm && hasAppData) {
+  if (cliOptions.rpcPresent) {
+    dispatch(startDaemon(credentials));
+  } else if (!openForm && hasAppData) {
     dispatch(startDaemon(null, getAppdataPath()));
   } else if (!openForm && hasAllCredentials) {
-    dispatch(startDaemon(getRemoteCredentials()));
+    dispatch(startDaemon(credentials));
   }
 };
 

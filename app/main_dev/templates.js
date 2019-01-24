@@ -1,5 +1,4 @@
-import { app } from "electron";
-import { cleanShutdown, GetDcrdPID, GetDcrwPID } from "./launch";
+import { darwinShutdown } from "./launch";
 
 let versionWin = null;
 let grpcVersions = { requiredVersion: null, walletVersion: null };
