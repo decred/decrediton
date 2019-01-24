@@ -8,7 +8,7 @@ const propTypes = {
   onSubmit: PropTypes.func.isRequired
 };
 
-const AutobuyerRunningModal = ({ show, onCancelModal, onSubmit, confirmLabel, danger }) => (
+const AutobuyerRunningModal = ({ show, onCancelModal, onSubmit }) => (
   <Modal className="confirm-modal" {...{ show, onCancelModal }}>
     <div className="confirm-modal-header">
       <div className="confirm-modal-header-title">
@@ -19,14 +19,9 @@ const AutobuyerRunningModal = ({ show, onCancelModal, onSubmit, confirmLabel, da
       <T id="tickets.alerts.ticketAutoBuyerStillRunning" m="If you proceed, it will be closed and no more tickets will be purchased."/>
     </div>
     <div className="confirm-modal-toolbar">
-      { danger ?
-        <DangerButton className="confirm-modal-confirm-button" onClick={onSubmit}>
-          {confirmLabel || <T id="infoModal.btnConfirm" m="Confirm" />}
-        </DangerButton> :
-        <KeyBlueButton className="confirm-modal-confirm-button" onClick={onSubmit}>
-          {confirmLabel || <T id="infoModal.btnConfirm" m="Confirm" />}
-        </KeyBlueButton>
-      }
+      <DangerButton className="confirm-modal-confirm-button" onClick={onSubmit}>
+        {<T id="infoModal.btnConfirm" m="Confirm" />}
+      </DangerButton>
       <InvisibleButton className="confirm-modal-close-button" onClick={onCancelModal}>
         <T id="confirmModal.btnCancel" m="Cancel" />
       </InvisibleButton>
