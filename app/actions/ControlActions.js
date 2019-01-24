@@ -310,7 +310,7 @@ export const startTicketBuyerV2Attempt = ( passphrase, account, balanceToMaintai
     ticketBuyer.on("error", function(status) {
       status = status + "";
       if (status.indexOf("Cancelled") < 0) {
-        if (status.indexOf("invalid passphrase") > 0 || status.indexOf("Stream removed") > 0) {
+        if (status.indexOf("invalid passphrase") > 0) {
           dispatch({ error: status, type: STARTTICKETBUYERV2_FAILED });
         }
       } else {
