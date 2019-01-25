@@ -2,7 +2,7 @@
  * This is a babel plugin to alias the defaultMessage attribute of react-intl's
  * FormattedMessage component. It allows us to change
  *
- * <T id="an.id" m="the default message" />
+ * <T id="an.id" defaultMessage="the default message" />
  *
  * into this
  *
