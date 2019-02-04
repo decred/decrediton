@@ -105,7 +105,7 @@ class App extends React.Component {
         formats={locale.formats}
         defaultFormats={defaultFormats}
         key={locale.key}>
-        <div className={theme}>
+        <main className={theme}>
           <Switch><Redirect from="/" exact to="/getstarted" /></Switch>
           <Snackbar/>
           <MainSwitch {...topLevelAnimation} className="top-level-container">
@@ -120,7 +120,7 @@ class App extends React.Component {
             <AboutModal show={aboutModalMacOSVisible} onCancelModal={hideAboutModalMacOS}></AboutModal>
           </div>
           <TrezorModals />
-        </div>
+        </main>
       </IntlProvider>
     );
   }
