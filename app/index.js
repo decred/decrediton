@@ -10,7 +10,6 @@ import configureStore from "./store/configureStore";
 import { getGlobalCfg } from "./config";
 import locales from "./i18n/locales";
 import "./style/main.less";
-import "./style/Global.less";
 import "./style/ReactSelectGlobal.less";
 import pkg from "./package.json";
 import { log } from "./wallet";

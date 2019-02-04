@@ -52,6 +52,37 @@
 //  Global classes
 ////////////////////////////////////
 
+body {
+  font-family: @font-family-regular;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  margin: 0px;
+  box-sizing: border-box;
+  font-variant-ligatures: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+main {
+  color: var(--input-color-default);
+  background-color: var(--background-back-color);
+  text-shadow: rgba(0, 0, 0, 0.01) 0 0 1px;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.mono {
+  font-family: Inconsolata, monospace;
+}
+
+.shutdown-text {
+  font-size: 30px;
+  text-align: center;
+}
+
 .error {
   color: var(--error-text-color);
 }
