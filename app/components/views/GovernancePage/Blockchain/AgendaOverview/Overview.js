@@ -4,6 +4,7 @@ import { AgendaFinishedIndicator } from "../helpers";
 import "style/AgendaOverview.less";
 
 const Overview = ({
+  isFinished,
   agendaId,
   agendaDescription,
   choices,
@@ -62,7 +63,13 @@ const Overview = ({
     </div>
     <div className="agenda-bottom">
       <div className="agenda-bottom-overview">
-        <AgendaFinishedIndicator />
+        {isFinished ? (
+          <AgendaFinishedIndicator />
+        ) : (
+          <div className="agenda-card-indicator-pending">
+            <T id="agenda.card.inProgressIndicator" m="In Progress" />
+          </div>
+        )}
       </div>
       <div className="agenda-bottom-options">
         <KeyBlueButton
