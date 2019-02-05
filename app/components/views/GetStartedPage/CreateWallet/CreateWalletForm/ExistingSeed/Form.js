@@ -53,6 +53,7 @@ const ExistingSeedForm = ({
           </div> :
           <div className="seedArea hex">
             <SeedHexEntry
+            // needs implementing
               onChange={setSeedWords}
             />
           </div>}

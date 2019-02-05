@@ -5,12 +5,15 @@ import { FormattedMessage as T } from "react-intl";
 const shouldShowNonSupportSeedSize = (seedWords, seedType) =>
   seedType === "hex" && seedWords.length !== 64 && seedWords.length > SEED_LENGTH.HEX_MIN;
 
+const POSITION_ERROR = "not valid at position";
+
 @autobind
 class ExistingSeed extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       seedWords: this.getEmptySeedWords(),
+      mnemonic: null,
       seedError: null,
       showPasteWarning: false,
       showPasteError: false,
@@ -44,8 +47,8 @@ class ExistingSeed extends React.Component {
       .map((w, i) => ({ index: i, word: w }));
 
     if (words.length === 33) {
-      this.setSeedWords(words);
       this.setState({
+        seedWords: words,
         showPasteWarning : true,
         showPasteError: false
       });
@@ -87,46 +90,9 @@ class ExistingSeed extends React.Component {
     this.setState({ seedWords: this.getEmptySeedWords() });
   }
 
-  setSeedWords(seedWords) {
-    const onError = (seedError) => {
-      this.setState({ mnemonic: "", seedError: seedError+"" });
-      this.props.onChange(null);
-
-      const seedErrorStr = seedError + "";
-      const position = "position";
-      const positionLoc = seedErrorStr.indexOf(position);
-      if (positionLoc > 0) {
-        const { seedWords } = this.state;
-        var updatedSeedWords = seedWords;
-        const locatedErrPosition = seedErrorStr.slice(positionLoc+position.length+1, positionLoc+position.length+1+3).split(",")[0];
-        updatedSeedWords[locatedErrPosition] = { word: updatedSeedWords[locatedErrPosition].word, index: updatedSeedWords[locatedErrPosition].index, error: true };
-        this.setState({ seedWords: updatedSeedWords });
-      }
-    };
-    this.setState({ seedWords }, () => {
-      const mnemonic = this.getSeedWordsStr();
-      if (this.props.mnemonic && this.isMatch()) {
-        this.props
-          .decodeSeed(mnemonic)
-          .then(response => this.props.onChange(response.getDecodedSeed()))
-          .then(() => this.setState({ seedError: null }))
-          .catch(onError);
-      } else {
-        this.props.onChange(null);
-        this.props
-          .decodeSeed(mnemonic)
-          .then(response => {
-            this.setState({ mnemonic, seedError: null });
-            this.props.onChange(response.getDecodedSeed());
-          })
-          .catch(onError);
-      }
-    });
-  }
-
   onChangeSeedWord(seedWord, update) {
     const { seedWords } = this.state;
-    var updatedSeedWords = seedWords;
+    const updatedSeedWords = seedWords;
     updatedSeedWords[seedWord.index] = { word: update, index: seedWord.index, error: false };
 
     const onError = (seedError) => {
@@ -134,25 +100,9 @@ class ExistingSeed extends React.Component {
       this.props.onChange(null);
 
       const seedErrorStr = seedError + "";
-      const position = "position";
-      const positionLoc = seedErrorStr.indexOf(position);
-      if (positionLoc > 0) {
-        const locatedErrPosition = seedErrorStr.slice(positionLoc+position.length+1, positionLoc+position.length+1+3).split(",")[0];
-        if (locatedErrPosition == seedWord.index) {
-          updatedSeedWords[locatedErrPosition] = { word: update, index: seedWord.index, error: true };
-          this.setState({ seedWords: updatedSeedWords });
-        } else {
-          var empty = false;
-          for (var i = 0; i < locatedErrPosition; i++) {
-            if (updatedSeedWords[i].word == "") {
-              empty = true;
-            }
-          }
-          if (!empty) {
-            updatedSeedWords[locatedErrPosition] = { word: updatedSeedWords[locatedErrPosition].word, index: locatedErrPosition, error: true };
-            this.setState({ seedWords: updatedSeedWords });
-          }
-        }
+      if (seedErrorStr.includes(POSITION_ERROR)) {
+        updatedSeedWords[seedWord.index] = { word: update, index: seedWord.index, error: true };
+        this.setState({ seedWords: updatedSeedWords });
       }
     };
     this.setState({ seedWords: updatedSeedWords }, () => {
@@ -187,12 +137,12 @@ class ExistingSeed extends React.Component {
   }
 
   render() {
-    const { onChangeSeedWord, setSeedWords, resetSeedWords, handleOnPaste, handleToggle, mountSeedErrors, pasteFromClipboard } = this;
+    const { onChangeSeedWord, resetSeedWords, handleOnPaste, handleToggle, mountSeedErrors, pasteFromClipboard } = this;
     const { seedWords, seedError } = this.state;
     return (
       <ExistingSeedForm {...{
         ...this.state,
-        seedWords, setSeedWords, onChangeSeedWord, resetSeedWords, seedError,
+        seedWords, onChangeSeedWord, resetSeedWords, seedError,
         handleOnPaste, mountSeedErrors, pasteFromClipboard, handleToggle
       }} />
     );
