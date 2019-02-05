@@ -3,132 +3,65 @@ import SeedHexEntry from "./SeedHexEntry";
 import { TextToggle } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import "style/CreateWalletForm.less";
-import { SEED_LENGTH, SEED_WORDS } from "wallet/seed";
 import { ConfirmSeedMsg } from "../../../messages";
 
-const shoudShowNonSupportSeedSize = (seedWords, seedType) =>
-  seedType === "hex" && seedWords.length !== 64 && seedWords.length > SEED_LENGTH.HEX_MIN;
-
-class ExistingSeedForm extends React.Component{
-  constructor(props){
-    super(props);
-    this.state = {
-      showPasteWarning : false,
-      showPasteError: false,
-      seedType: "words",
-    };
-  }
-
-  handleOnPaste = (e) => {
-    e.preventDefault();
-    const clipboardData = e.clipboardData.getData("text");
-    this.pasteFromClipboard(clipboardData);
-  }
-
-  pasteFromClipboard = (wordsFromClipboard) => {
-    const lowercaseSeedWords = SEED_WORDS.map(w => w.toLowerCase());
-    const words = wordsFromClipboard.split(/\b/)
-      .filter(w => /^[\w]+$/.test(w))
-      .filter(w => lowercaseSeedWords.indexOf(w.toLowerCase()) > -1)
-      .map((w, i) => ({ index: i, word: w }));
-
-    if (words.length == 33) {
-      this.props.setSeedWords(words);
-      this.setState({
-        showPasteWarning : true,
-        showPasteError: false
-      });
-      return true;
-    } else {
-      this.setState({
-        showPasteWarning : false,
-        showPasteError : true
-      });
-      return false;
-    }
-  }
-
-  handleToggle = (side) => {
-    this.props.resetSeedWords();
-    this.setState({ seedType: side === "left" ? "words" : "hex" });
-  }
-
-  mountSeedErrors = () => {
-    const errors = [];
-    if(this.props.seedError) {
-      errors.push(
-        <div key={this.props.seedError}>
-          {this.props.seedError}
+const ExistingSeedForm = ({
+  onChangeSeedWord, seedWords, setSeedWords, mountSeedErrors, handleOnPaste,
+  seedType, pasteFromClipboard, handleToggle, showPasteWarning, showPasteError,
+}) => {
+  const errors = mountSeedErrors();
+  return (
+    <Aux>
+      <div className="content-title">
+        <T id="createWallet.restore.title" m={"Restore existing wallet"}/>
+      </div>
+      <div className="seed-type-label">
+        <TextToggle
+          activeButton={"left"}
+          leftText={"words"}
+          rightText={"hex"}
+          toggleAction={handleToggle}
+        />
+      </div>
+      <div className="confirm-seed-row seed">
+        <div className="confirm-seed-label-text seed">
+          <ConfirmSeedMsg />
         </div>
-      );
-    }
-    if(shoudShowNonSupportSeedSize(this.props.seedWords, this.state.seedType)) {
-      errors.push(
-        <div key='confirmSeed.errors.hexNot32Bytes'>
-          <T id="confirmSeed.errors.hexNot32Bytes" m="Error: seed is not 32 bytes, such comes from a non-supported software and may have unintended consequences." />
-        </div>
-      );
-    }
-    return errors;
-  }
-
-  render(){
-    const { onChangeSeedWord, seedWords, setSeedWords } = this.props;
-    const { seedType } = this.state;
-    const errors = this.mountSeedErrors();
-    return (
-      <Aux>
-        <div className="content-title">
-          <T id="createWallet.restore.title" m={"Restore existing wallet"}/>
-        </div>
-        <div className="seed-type-label">
-          <TextToggle
-            activeButton={"left"}
-            leftText={"words"}
-            rightText={"hex"}
-            toggleAction={this.handleToggle}
-          />
-        </div>
-        <div className="confirm-seed-row seed">
-          <div className="confirm-seed-label-text seed">
-            <ConfirmSeedMsg />
-          </div>
-          {seedType == "words" && Array.isArray(seedWords) ?
-            <div className="seedArea">
-              {this.state.showPasteWarning &&
-              <div className="orange-warning">
-                <T id="confirmSeed.warnings.pasteExistingSeed" m="*Please make sure you also have a physical, written down copy of your seed." />
-              </div>}
-              {this.state.showPasteError &&
-              <div className="seedError">
-                <T id="confirmSeed.warnings.pasteExistingError" m="* Please paste a valid 33 word seed."/>
-              </div>}
-              {seedWords.map((seedWord) => {
-                const className = seedWord.word ? seedWord.error ? "seedWord error" : "seedWord populated" : "seedWord restore";
-                return (
-                  <SingleSeedWordEntry
-                    className={className}
-                    onChange={onChangeSeedWord}
-                    onPaste={this.handleOnPaste}
-                    seedWord={seedWord}
-                    value={{ name: seedWord.word }}
-                    key={seedWord.index}
-                    onPasteFromClipboard={this.pasteFromClipboard}
-                  />);
-              })}
-            </div> :
-            <div className="seedArea hex">
-              <SeedHexEntry
-                onChange={setSeedWords}
-              />
+        {seedType == "words" && Array.isArray(seedWords) ?
+          <div className="seedArea">
+            {showPasteWarning &&
+            <div className="orange-warning">
+              <T id="confirmSeed.warnings.pasteExistingSeed" m="*Please make sure you also have a physical, written down copy of your seed." />
             </div>}
-          <div className="input-form-error">
-            {errors.length > 0 && <div>{errors}</div>}
-          </div>
+            {showPasteError &&
+            <div className="seedError">
+              <T id="confirmSeed.warnings.pasteExistingError" m="* Please paste a valid 33 word seed."/>
+            </div>}
+            {seedWords.map((seedWord) => {
+              const className = seedWord.word ? seedWord.error ? "seedWord error" : "seedWord populated" : "seedWord restore";
+              return (
+                <SingleSeedWordEntry
+                  className={className}
+                  onChange={onChangeSeedWord}
+                  onPaste={handleOnPaste}
+                  seedWord={seedWord}
+                  value={{ name: seedWord.word }}
+                  key={seedWord.index}
+                  onPasteFromClipboard={pasteFromClipboard}
+                />);
+            })}
+          </div> :
+          <div className="seedArea hex">
+            <SeedHexEntry
+              onChange={setSeedWords}
+            />
+          </div>}
+        <div className="input-form-error">
+          {errors.length > 0 && <div>{errors}</div>}
         </div>
-      </Aux>
-    );
-  }
+      </div>
+    </Aux>
+  );
 }
 
 export default ExistingSeedForm;

@@ -1,14 +1,25 @@
 import ExistingSeedForm from "./Form";
+import { SEED_LENGTH, SEED_WORDS } from "wallet/seed";
+import { FormattedMessage as T } from "react-intl";
+
+const shouldShowNonSupportSeedSize = (seedWords, seedType) =>
+  seedType === "hex" && seedWords.length !== 64 && seedWords.length > SEED_LENGTH.HEX_MIN;
 
 @autobind
 class ExistingSeed extends React.Component {
   constructor(props) {
     super(props);
-    this.state = this.getInitialState();
+    this.state = {
+      seedWords: this.getEmptySeedWords(),
+      seedError: null,
+      showPasteWarning: false,
+      showPasteError: false,
+      seedType: "words",
+    }
   }
 
-  getInitialState() {
-    var seedWords = [];
+  getEmptySeedWords() {
+    const seedWords = [];
     for (var i = 0; i < 33; i++) {
       seedWords.push({
         word: "",
@@ -16,26 +27,64 @@ class ExistingSeed extends React.Component {
         error: false,
       });
     }
-    return { seedWords: seedWords, seedError: null };
+    return seedWords;
   }
 
-  componentWillUnmount() {
-    this.state = this.getInitialState();
+  handleOnPaste = (e) => {
+    e.preventDefault();
+    const clipboardData = e.clipboardData.getData("text");
+    this.pasteFromClipboard(clipboardData);
   }
 
-  render() {
-    const { onChangeSeedWord, setSeedWords, resetSeedWords } = this;
-    const isMatch = this.isMatch();
-    const { seedWords } = this.state;
-    const isEmpty = this.state.seedWords.length <= 1; // Weird errors with one word, better to count as empty
-    const seedError = isEmpty ? null : this.state.seedError;
-    return (
-      <ExistingSeedForm {...{ seedWords, setSeedWords, onChangeSeedWord, resetSeedWords, isMatch, seedError, isEmpty }} />
-    );
+  pasteFromClipboard = (wordsFromClipboard) => {
+    const lowercaseSeedWords = SEED_WORDS.map(w => w.toLowerCase());
+    const words = wordsFromClipboard.split(/\b/)
+      .filter(w => /^[\w]+$/.test(w))
+      .filter(w => lowercaseSeedWords.indexOf(w.toLowerCase()) > -1)
+      .map((w, i) => ({ index: i, word: w }));
+
+    if (words.length === 33) {
+      this.setSeedWords(words);
+      this.setState({
+        showPasteWarning : true,
+        showPasteError: false
+      });
+      return true;
+    } else {
+      this.setState({
+        showPasteWarning : false,
+        showPasteError : true
+      });
+      return false;
+    }
+  }
+
+  handleToggle = (side) => {
+    this.resetSeedWords();
+    this.setState({ seedType: side === "left" ? "words" : "hex" });
+  }
+
+  mountSeedErrors = () => {
+    const errors = [];
+    if(this.state.seedError) {
+      errors.push(
+        <div key={this.state.seedError}>
+          {this.state.seedError}
+        </div>
+      );
+    }
+    if(shouldShowNonSupportSeedSize(this.state.seedWords, this.state.seedType)) {
+      errors.push(
+        <div key='confirmSeed.errors.hexNot32Bytes'>
+          <T id="confirmSeed.errors.hexNot32Bytes" m="Error: seed is not 32 bytes, such comes from a non-supported software and may have unintended consequences." />
+        </div>
+      );
+    }
+    return errors;
   }
 
   resetSeedWords() {
-    this.setState(this.getInitialState());
+    this.setState({ seedWords: this.getEmptySeedWords() });
   }
 
   setSeedWords(seedWords) {
@@ -136,6 +185,19 @@ class ExistingSeed extends React.Component {
     const mnemonic = this.state.mnemonic || this.props.mnemonic;
     return !!(mnemonic && (this.getSeedWordsStr() === mnemonic));
   }
+
+  render() {
+    const { onChangeSeedWord, setSeedWords, resetSeedWords, handleOnPaste, handleToggle, mountSeedErrors, pasteFromClipboard } = this;
+    const { seedWords, seedError } = this.state;
+    return (
+      <ExistingSeedForm {...{
+        ...this.state,
+        seedWords, setSeedWords, onChangeSeedWord, resetSeedWords, seedError,
+        handleOnPaste, mountSeedErrors, pasteFromClipboard, handleToggle
+      }} />
+    );
+  }
+
 }
 
 export default ExistingSeed;
