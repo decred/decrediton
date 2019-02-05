@@ -67,7 +67,7 @@ const Overview = ({
           <AgendaFinishedIndicator />
         ) : (
           <div className="agenda-card-indicator-pending">
-            <T id="agenda.card.inProgressIndicator" m="In Progress" />
+            <T id="agenda.overview.inProgressIndicator" m="In Progress" />
           </div>
         )}
       </div>
