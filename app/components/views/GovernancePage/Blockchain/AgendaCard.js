@@ -14,7 +14,13 @@ const AgendaCard = ({
       : ({ className: "agenda-card", onClick })
   )}>
     <div className="agenda-card-bottom">
-      <AgendaFinishedIndicator />
+      {agenda.finished ? (
+        <AgendaFinishedIndicator />
+      ) : (
+        <div className="agenda-card-indicator-pending">
+          <T id="agenda.card.inProgressIndicator" m="In Progress" />
+        </div>
+      )}
       <div className="agenda-card-bottom-cfg">
         {agenda.getDescription()} <span className="agenda-card-bottom-cfg-last">
           <T id="agenda.overview.idLabel" m="Agenda ID" />:
