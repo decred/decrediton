@@ -21,6 +21,7 @@ class AgendaOverview extends React.Component {
     const { selectedChoiceId, disabled } = this.state;
     const { setSelecedChoiceId, updatePreferences } = this;
     const activeChoiceId = this.props.selectedChoice;
+    const isFinished = agenda.finished;
     const agendaId = agenda.getId();
     const agendaDescription = agenda.getDescription();
     const choices = agenda.getChoicesList().map(choice => ({
@@ -31,6 +32,7 @@ class AgendaOverview extends React.Component {
     return (
       <Overview
         {...{
+          isFinished,
           agendaId,
           agendaDescription,
           selectedChoiceId,
