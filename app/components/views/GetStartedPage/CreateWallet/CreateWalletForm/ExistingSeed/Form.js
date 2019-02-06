@@ -63,6 +63,6 @@ const ExistingSeedForm = ({
       </div>
     </Aux>
   );
-}
+};
 
 export default ExistingSeedForm;

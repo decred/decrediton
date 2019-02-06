@@ -19,7 +19,7 @@ class ExistingSeed extends React.Component {
       showPasteWarning: false,
       showPasteError: false,
       seedType: "words",
-    }
+    };
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -30,7 +30,7 @@ class ExistingSeed extends React.Component {
         }
       }
       return true;
-    }
+    };
     if (isEqual(prevState.seedWords, this.state.seedWords)) {
       return;
     }
@@ -130,7 +130,7 @@ class ExistingSeed extends React.Component {
       });
 
       return count;
-    }
+    };
     const onError = (seedError) => {
       const seedErrorStr = seedError + "";
       if (countWords() <= 1) { // Weird errors with one word, better to avoid them.
