@@ -6,6 +6,7 @@ const shouldShowNonSupportSeedSize = (seedWords, seedType) =>
   seedType === "hex" && seedWords.length !== 64 && seedWords.length > SEED_LENGTH.HEX_MIN;
 
 const POSITION_ERROR = "not valid at position";
+const MISMATCH_ERROR = "checksum mismatch";
 
 @autobind
 class ExistingSeed extends React.Component {
@@ -120,12 +121,26 @@ class ExistingSeed extends React.Component {
     const { seedWords } = this.state;
     const updatedSeedWords = seedWords;
     updatedSeedWords[seedWord.index] = { word: update, index: seedWord.index, error: false };
+    const countWords = () => {
+      let count = 0;
+      seedWords.forEach((wordObj) => {
+        if(wordObj.word.length > 0) {
+          count++;
+        }
+      });
 
+      return count;
+    }
     const onError = (seedError) => {
-      this.setState({ seedError: seedError+"" });
-      this.props.onChange(null);
-
       const seedErrorStr = seedError + "";
+      if (countWords() <= 1) { // Weird errors with one word, better to avoid them.
+        return;
+      }
+      if (seedErrorStr.includes(MISMATCH_ERROR) && countWords() < 33) {
+        return;
+      }
+      this.setState({ seedError: seedErrorStr });
+      this.props.onChange(null);
       if (seedErrorStr.includes(POSITION_ERROR)) {
         updatedSeedWords[seedWord.index] = { word: update, index: seedWord.index, error: true };
         this.setState({ seedWords: updatedSeedWords });
