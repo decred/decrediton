@@ -21,6 +21,32 @@ class ExistingSeed extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    const isEqual = (prevSeedWords, seedWords) => {
+      for(let i = 0; i < 33; i++) {
+        if (prevSeedWords[i].word !== seedWords[i].word) {
+          return false;
+        }
+      }
+      return true;
+    }
+    if (isEqual(prevState.seedWords, this.state.seedWords)) {
+      return;
+    }
+
+    const mnemonic = this.getSeedWordsStr();
+    this.props
+      .decodeSeed(mnemonic)
+      .then(response => {
+        this.setState({ mnemonic, seedError: null });
+        this.props.onChange(response.getDecodedSeed());
+      })
+      .catch(error => {
+        this.setState({ mnemonic: "", seedError: error+"" });
+        this.props.onChange(null);
+      });
+  }
+
   getEmptySeedWords() {
     const seedWords = [];
     for (var i = 0; i < 33; i++) {
@@ -50,7 +76,7 @@ class ExistingSeed extends React.Component {
       this.setState({
         seedWords: words,
         showPasteWarning : true,
-        showPasteError: false
+        showPasteError: false,
       });
       return true;
     } else {
@@ -96,7 +122,7 @@ class ExistingSeed extends React.Component {
     updatedSeedWords[seedWord.index] = { word: update, index: seedWord.index, error: false };
 
     const onError = (seedError) => {
-      this.setState({ mnemonic: "", seedError: seedError+"" });
+      this.setState({ seedError: seedError+"" });
       this.props.onChange(null);
 
       const seedErrorStr = seedError + "";
