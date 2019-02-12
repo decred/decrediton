@@ -1,6 +1,6 @@
 import tzmock from "timezone-mock";
 import { dateToLocal } from "helpers";
-import { dateToUTC } from "../../../app/helpers/dateFormat";
+import { dateToUTC, endOfDay } from "../../../app/helpers/dateFormat";
 
 afterEach(() => tzmock.unregister());
 
@@ -8,6 +8,18 @@ function localTime(d) {
   return [ d.getFullYear(), d.getMonth()+1, d.getDate(), d.getHours(),
     d.getMinutes(), d.getSeconds(), d.getMilliseconds() ];
 }
+
+test("endOfDay works as expected", () => {
+  expect(localTime(endOfDay("2019-02-10 12:23"))).toEqual([ 2019, 2, 10, 23, 59, 59, 999 ]);
+  expect(localTime(endOfDay("2019-02-01 23:59:40"))).toEqual([ 2019, 2, 1, 23, 59, 59, 999 ]);
+  expect(localTime(endOfDay("2019-02-01 23:59:59"))).toEqual([ 2019, 2, 1, 23, 59, 59, 999 ]);
+  expect(localTime(endOfDay("2019-02-02 00:00"))).toEqual([ 2019, 2, 2, 23, 59, 59, 999 ]);
+
+  expect(localTime(endOfDay(new Date("2019-02-10 12:23")))).toEqual([ 2019, 2, 10, 23, 59, 59, 999 ]);
+  expect(localTime(endOfDay(new Date("2019-02-01 23:59:40")))).toEqual([ 2019, 2, 1, 23, 59, 59, 999 ]);
+  expect(localTime(endOfDay(new Date("2019-02-01 23:59:59")))).toEqual([ 2019, 2, 1, 23, 59, 59, 999 ]);
+  expect(localTime(endOfDay(new Date("2019-02-02 00:00")))).toEqual([ 2019, 2, 2, 23, 59, 59, 999 ]);
+});
 
 test("dateToLocal works as expected", () => {
   tzmock.register("UTC");

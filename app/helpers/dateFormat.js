@@ -24,7 +24,7 @@ export function dateToUTC(timestamp) {
     date.getUTCHours(), date.getUTCMinutes(),  date.getUTCSeconds());
 }
 
-// Returns a new date pointing to the last microsecond of the day of the given date
+// Returns a new date pointing to the last millisecond of the day of the given date
 export function endOfDay(date) {
   const result = new Date(date);
   result.setHours(23,59,59,999);
