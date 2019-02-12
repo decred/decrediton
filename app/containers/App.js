@@ -17,8 +17,6 @@ import "style/Themes.less";
 import "style/Layout.less";
 import { ipcRenderer } from "electron";
 import { FormattedMessage as T } from "react-intl";
-import { hideAutobuyerRunningModal } from "../actions/ControlActions";
-import { checkAutobuyerRunning } from "../actions/ClientActions";
 const topLevelAnimation = { atEnter: { opacity: 0 }, atLeave: { opacity: 0 }, atActive: { opacity: 1 } };
 
 @autobind
@@ -29,7 +27,8 @@ class App extends React.Component {
     shutdownApp: PropTypes.func.isRequired,
     shutdownRequested: PropTypes.bool.isRequired,
     daemonStopped: PropTypes.bool.isRequired,
-    // TODO add props
+    autobuyerRunningModalVisible: PropTypes.bool.isRequired,
+    hideAutobuyerRunningModal: PropTypes.func.isRequired
   };
 
   constructor (props) {
@@ -91,7 +90,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { locale, theme, aboutModalMacOSVisible, hideAboutModalMacOS, autobuyerRunningModalVisible, hideAutobuyerRunningModal } = this.props;
+    const { locale, theme, aboutModalMacOSVisible, hideAboutModalMacOS, autobuyerRunningModalVisible, hideAutobuyerRunningModal, shutdownApp } = this.props;
     const MainSwitch = this.props.uiAnimations ? AnimatedSwitch : StaticSwitch;
 
     return (
@@ -117,7 +116,7 @@ class App extends React.Component {
           </div>
           <TrezorModals />
           <div id="modal-portal-autobuyer-running">
-            <AutobuyerRunningModal show={autobuyerRunningModalVisible} onSubmit={() => { hideAutobuyerRunningModal(); this.props.shutdownApp(); }} onCancelModal={hideAutobuyerRunningModal} />
+            <AutobuyerRunningModal show={autobuyerRunningModalVisible} onSubmit={() => { hideAutobuyerRunningModal(); shutdownApp(); }} onCancelModal={hideAutobuyerRunningModal} />
           </div>
         </div>
       </IntlProvider>
