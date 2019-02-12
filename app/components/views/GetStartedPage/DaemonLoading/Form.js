@@ -36,6 +36,7 @@ const DaemonLoadingBody = ({
   syncFetchHeadersLastHeaderTime,
   syncFetchHeadersAttempt,
   daemonWarning,
+  walletName,
   ...props,
 }) => (
   <div className="page-body getstarted">
@@ -135,10 +136,12 @@ const DaemonLoadingBody = ({
                 <ScanBtnMsg />
               </KeyBlueButton>
             </div>
-          </div> :
-          <div className="get-started-last-log-lines">
-            <div className="last-dcrwallet-log-line">{lastDcrwalletLogLine}</div>
-          </div>
+          </div> : (
+            walletName &&
+            <div className="get-started-last-log-lines">
+              <div className="last-dcrwallet-log-line">{lastDcrwalletLogLine}</div>
+            </div>
+          )
         }
       </Aux>
     </div>
