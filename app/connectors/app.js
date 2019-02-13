@@ -6,7 +6,6 @@ import * as sel from "../selectors";
 import * as da from "actions/DaemonActions";
 import * as cla from "actions/ClientActions";
 import * as ca from "actions/ControlActions";
-import { showAutobuyerRunningModal, hideAutobuyerRunningModal } from "../actions/ControlActions";
 
 const mapStateToProps = selectorMap({
   locale: sel.locale,

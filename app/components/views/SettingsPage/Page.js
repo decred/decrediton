@@ -9,9 +9,9 @@ import TimezoneSettings from "./TimezoneSettings";
 import "style/StakePool.less";
 import "style/Settings.less";
 
-const closeWalletModalContent = (walletName) => 
-  <T 
-    id="settings.closeWalletModalContent" 
+const closeWalletModalContent = (walletName) =>
+  <T
+    id="settings.closeWalletModalContent"
     m="Are you sure you want to close {walletName} and return to the launcher?"
     values={{ walletName }}
   />;

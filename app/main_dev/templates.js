@@ -1,4 +1,3 @@
-import { darwinShutdown } from "./launch";
 
 let versionWin = null;
 let grpcVersions = { requiredVersion: null, walletVersion: null };

@@ -15,7 +15,7 @@ import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopDaemo
   checkDaemon, deleteDaemon, setWatchingOnlyWallet, getWatchingOnlyWallet, getDaemonInfo } from "./main_dev/ipc";
 import { initTemplate, getVersionWin, setGrpcVersions, getGrpcVersions, inputMenu, selectionMenu } from "./main_dev/templates";
 import { readFileBackward } from "./helpers/byteActions";
-import electron, { powerSaveBlocker } from "electron";
+import electron from "electron";
 import { isString } from "./fp";
 
 // setPath as decrediton

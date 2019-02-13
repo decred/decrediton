@@ -16,7 +16,6 @@ import { TrezorModals } from "components/modals/trezor";
 import "style/Themes.less";
 import "style/Layout.less";
 import { ipcRenderer } from "electron";
-import { FormattedMessage as T } from "react-intl";
 const topLevelAnimation = { atEnter: { opacity: 0 }, atLeave: { opacity: 0 }, atActive: { opacity: 1 } };
 
 @autobind

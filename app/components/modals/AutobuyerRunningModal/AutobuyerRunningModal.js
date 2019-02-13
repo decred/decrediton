@@ -1,6 +1,6 @@
 import Modal from "../Modal";
 import { FormattedMessage as T } from "react-intl";
-import { InvisibleButton, KeyBlueButton, DangerButton } from "buttons";
+import { InvisibleButton, KeyBlueButton } from "buttons";
 
 const propTypes = {
   show: PropTypes.bool.isRequired,
@@ -19,9 +19,9 @@ const AutobuyerRunningModal = ({ show, onCancelModal, onSubmit }) => (
       <T id="tickets.alerts.ticketAutoBuyerStillRunning" m="If you proceed, it will be closed and no more tickets will be purchased."/>
     </div>
     <div className="confirm-modal-toolbar">
-      <DangerButton className="confirm-modal-confirm-button" onClick={onSubmit}>
+      <KeyBlueButton className="confirm-modal-confirm-button" onClick={onSubmit}>
         {<T id="infoModal.btnConfirm" m="Confirm" />}
-      </DangerButton>
+      </KeyBlueButton>
       <InvisibleButton className="confirm-modal-close-button" onClick={onCancelModal}>
         <T id="confirmModal.btnCancel" m="Cancel" />
       </InvisibleButton>
