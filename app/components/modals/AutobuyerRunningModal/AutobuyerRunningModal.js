@@ -12,11 +12,11 @@ const AutobuyerRunningModal = ({ show, onCancelModal, onSubmit }) => (
   <Modal className="confirm-modal" {...{ show, onCancelModal }}>
     <div className="confirm-modal-header">
       <div className="confirm-modal-header-title">
-        <T id="tickets.autobuyerRunning" m="Auto Ticket Buyer Still Running" />
+        <T id="tickets.autobuyerRunning.title" m="Auto Ticket Buyer Still Running" />
       </div>
     </div>
     <div className="confirm-modal-content">
-      <T id="tickets.autobuyerRunning" m="If you proceed, it will be closed and no more tickets will be purchased."/>
+      <T id="tickets.autobuyerRunning.message" m="If you proceed, it will be closed and no more tickets will be purchased."/>
     </div>
     <div className="confirm-modal-toolbar">
       <KeyBlueButton className="confirm-modal-confirm-button" onClick={onSubmit}>
