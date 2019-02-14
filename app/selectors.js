@@ -11,6 +11,7 @@ import { EXTERNALREQUEST_STAKEPOOL_LISTING, EXTERNALREQUEST_POLITEIA, EXTERNALRE
 import { POLITEIA_URL_TESTNET, POLITEIA_URL_MAINNET } from "./middleware/politeiaapi";
 import { DCRDATA_URL_TESTNET, DCRDATA_URL_MAINNET } from "./middleware/dcrdataapi";
 import { dateToLocal, dateToUTC } from "./helpers/dateFormat";
+import { MIN_RELAY_FEE } from "main_dev/constants";
 import * as wallet from "wallet";
 
 const EMPTY_ARRAY = [];  // Maintaining identity (will) improve performance;
@@ -635,7 +636,7 @@ export const unsignedTransaction = createSelector(
 export const unsignedRawTx = createSelector([ constructTxResponse ], res => res && res.rawTx);
 
 export const estimatedFee = compose(
-  bytes => (bytes / 1000) * (0.001 * 100000000), estimatedSignedSize
+  bytes => (bytes / 1000) * (MIN_RELAY_FEE * 100000000), estimatedSignedSize
 );
 
 export const totalSpent = createSelector(
