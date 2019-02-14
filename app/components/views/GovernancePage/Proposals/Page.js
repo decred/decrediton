@@ -31,7 +31,7 @@ const Page = ({ newActiveVoteProposalsCount, newPreVoteProposalsCount }) => (
     <Tab path="/governance/proposals/activevote" component={ActiveVoteProposals}
       link={<ListLink count={newActiveVoteProposalsCount}><T id="proposals.statusLinks.underVote" m="Under Vote" /></ListLink>}/>
     <Tab path="/governance/proposals/voted" component={VotedProposals}
-      link={<T id="proposals.statusLinks.voted" m="Finished voting" />}/>
+      link={<T id="proposals.statusLinks.voted" m="Finished Voting" />}/>
     <Tab path="/governance/proposals/abandoned" component={AbandonedProposals}
       link={<T id="proposals.statusLinks.abandoned" m="Abandoned" />}/>
   </TabbedPage>
