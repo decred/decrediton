@@ -1,14 +1,55 @@
 import ExistingSeedForm from "./Form";
+import { SEED_LENGTH, SEED_WORDS } from "wallet/seed";
+import { FormattedMessage as T } from "react-intl";
+
+const shouldShowNonSupportSeedSize = (seedWords, seedType) =>
+  seedType === "hex" && seedWords.length !== 64 && seedWords.length > SEED_LENGTH.HEX_MIN;
+
+const POSITION_ERROR = "not valid at position";
+const MISMATCH_ERROR = "checksum mismatch";
 
 @autobind
 class ExistingSeed extends React.Component {
   constructor(props) {
     super(props);
-    this.state = this.getInitialState();
+    this.state = {
+      seedWords: this.getEmptySeedWords(),
+      mnemonic: null,
+      seedError: null,
+      showPasteWarning: false,
+      showPasteError: false,
+      seedType: "words",
+    };
   }
 
-  getInitialState() {
-    var seedWords = [];
+  componentDidUpdate(prevProps, prevState) {
+    const isEqual = (prevSeedWords, seedWords) => {
+      for(let i = 0; i < 33; i++) {
+        if (prevSeedWords[i].word !== seedWords[i].word) {
+          return false;
+        }
+      }
+      return true;
+    };
+    if (isEqual(prevState.seedWords, this.state.seedWords)) {
+      return;
+    }
+
+    const mnemonic = this.getSeedWordsStr();
+    this.props
+      .decodeSeed(mnemonic)
+      .then(response => {
+        this.setState({ mnemonic, seedError: null });
+        this.props.onChange(response.getDecodedSeed());
+      })
+      .catch(error => {
+        this.setState({ mnemonic: "", seedError: error+"" });
+        this.props.onChange(null);
+      });
+  }
+
+  getEmptySeedWords() {
+    const seedWords = [];
     for (var i = 0; i < 33; i++) {
       seedWords.push({
         word: "",
@@ -16,94 +57,93 @@ class ExistingSeed extends React.Component {
         error: false,
       });
     }
-    return { seedWords: seedWords, seedError: null };
+    return seedWords;
   }
 
-  componentWillUnmount() {
-    this.state = this.getInitialState();
+  handleOnPaste = (e) => {
+    e.preventDefault();
+    const clipboardData = e.clipboardData.getData("text");
+    this.pasteFromClipboard(clipboardData);
   }
 
-  render() {
-    const { onChangeSeedWord, setSeedWords, resetSeedWords } = this;
-    const isMatch = this.isMatch();
-    const { seedWords } = this.state;
-    const isEmpty = this.state.seedWords.length <= 1; // Weird errors with one word, better to count as empty
-    const seedError = isEmpty ? null : this.state.seedError;
-    return (
-      <ExistingSeedForm {...{ seedWords, setSeedWords, onChangeSeedWord, resetSeedWords, isMatch, seedError, isEmpty }} />
-    );
+  pasteFromClipboard = (wordsFromClipboard) => {
+    const lowercaseSeedWords = SEED_WORDS.map(w => w.toLowerCase());
+    const words = wordsFromClipboard.split(/\b/)
+      .filter(w => /^[\w]+$/.test(w))
+      .filter(w => lowercaseSeedWords.indexOf(w.toLowerCase()) > -1)
+      .map((w, i) => ({ index: i, word: w }));
+
+    if (words.length === 33) {
+      this.setState({
+        seedWords: words,
+        showPasteWarning : true,
+        showPasteError: false,
+      });
+      return true;
+    } else {
+      this.setState({
+        showPasteWarning : false,
+        showPasteError : true
+      });
+      return false;
+    }
+  }
+
+  handleToggle = (side) => {
+    this.resetSeedWords();
+    this.setState({ seedType: side === "left" ? "words" : "hex" });
+  }
+
+  mountSeedErrors = () => {
+    const errors = [];
+    if(this.state.seedError) {
+      errors.push(
+        <div key={this.state.seedError}>
+          {this.state.seedError}
+        </div>
+      );
+    }
+    if(shouldShowNonSupportSeedSize(this.state.seedWords, this.state.seedType)) {
+      errors.push(
+        <div key='confirmSeed.errors.hexNot32Bytes'>
+          <T id="confirmSeed.errors.hexNot32Bytes" m="Error: seed is not 32 bytes, such comes from a non-supported software and may have unintended consequences." />
+        </div>
+      );
+    }
+    return errors;
   }
 
   resetSeedWords() {
-    this.setState(this.getInitialState());
-  }
-
-  setSeedWords(seedWords) {
-    const onError = (seedError) => {
-      this.setState({ mnemonic: "", seedError: seedError+"" });
-      this.props.onChange(null);
-
-      const seedErrorStr = seedError + "";
-      const position = "position";
-      const positionLoc = seedErrorStr.indexOf(position);
-      if (positionLoc > 0) {
-        const { seedWords } = this.state;
-        var updatedSeedWords = seedWords;
-        const locatedErrPosition = seedErrorStr.slice(positionLoc+position.length+1, positionLoc+position.length+1+3).split(",")[0];
-        updatedSeedWords[locatedErrPosition] = { word: updatedSeedWords[locatedErrPosition].word, index: updatedSeedWords[locatedErrPosition].index, error: true };
-        this.setState({ seedWords: updatedSeedWords });
-      }
-    };
-    this.setState({ seedWords }, () => {
-      const mnemonic = this.getSeedWordsStr();
-      if (this.props.mnemonic && this.isMatch()) {
-        this.props
-          .decodeSeed(mnemonic)
-          .then(response => this.props.onChange(response.getDecodedSeed()))
-          .then(() => this.setState({ seedError: null }))
-          .catch(onError);
-      } else {
-        this.props.onChange(null);
-        this.props
-          .decodeSeed(mnemonic)
-          .then(response => {
-            this.setState({ mnemonic, seedError: null });
-            this.props.onChange(response.getDecodedSeed());
-          })
-          .catch(onError);
-      }
-    });
+    this.setState({ seedWords: this.getEmptySeedWords() });
   }
 
   onChangeSeedWord(seedWord, update) {
     const { seedWords } = this.state;
-    var updatedSeedWords = seedWords;
+    const updatedSeedWords = seedWords;
     updatedSeedWords[seedWord.index] = { word: update, index: seedWord.index, error: false };
-
-    const onError = (seedError) => {
-      this.setState({ mnemonic: "", seedError: seedError+"" });
-      this.props.onChange(null);
-
-      const seedErrorStr = seedError + "";
-      const position = "position";
-      const positionLoc = seedErrorStr.indexOf(position);
-      if (positionLoc > 0) {
-        const locatedErrPosition = seedErrorStr.slice(positionLoc+position.length+1, positionLoc+position.length+1+3).split(",")[0];
-        if (locatedErrPosition == seedWord.index) {
-          updatedSeedWords[locatedErrPosition] = { word: update, index: seedWord.index, error: true };
-          this.setState({ seedWords: updatedSeedWords });
-        } else {
-          var empty = false;
-          for (var i = 0; i < locatedErrPosition; i++) {
-            if (updatedSeedWords[i].word == "") {
-              empty = true;
-            }
-          }
-          if (!empty) {
-            updatedSeedWords[locatedErrPosition] = { word: updatedSeedWords[locatedErrPosition].word, index: locatedErrPosition, error: true };
-            this.setState({ seedWords: updatedSeedWords });
-          }
+    const countWords = () => {
+      let count = 0;
+      seedWords.forEach((wordObj) => {
+        if(wordObj.word.length > 0) {
+          count++;
         }
+      });
+
+      return count;
+    };
+    const onError = (seedError) => {
+      const seedErrorStr = seedError + "";
+      if (countWords() <= 1) { // Weird errors with one word, better to avoid them.
+        return;
+      }
+      if (seedErrorStr.includes(MISMATCH_ERROR) && countWords() < 33) {
+        return;
+      }
+      this.setState({ seedError: seedErrorStr });
+      this.props.onChange(null);
+      if (seedErrorStr.includes(POSITION_ERROR)) {
+        updatedSeedWords[seedWord.index] = { word: update, index: seedWord.index, error: true };
+        this.setState({ seedWords: updatedSeedWords });
       }
     };
     this.setState({ seedWords: updatedSeedWords }, () => {
@@ -136,6 +176,19 @@ class ExistingSeed extends React.Component {
     const mnemonic = this.state.mnemonic || this.props.mnemonic;
     return !!(mnemonic && (this.getSeedWordsStr() === mnemonic));
   }
+
+  render() {
+    const { onChangeSeedWord, resetSeedWords, handleOnPaste, handleToggle, mountSeedErrors, pasteFromClipboard } = this;
+    const { seedWords, seedError } = this.state;
+    return (
+      <ExistingSeedForm {...{
+        ...this.state,
+        seedWords, onChangeSeedWord, resetSeedWords, seedError,
+        handleOnPaste, mountSeedErrors, pasteFromClipboard, handleToggle
+      }} />
+    );
+  }
+
 }
 
 export default ExistingSeed;
