@@ -126,6 +126,7 @@ export const finishSpvChoice = () => (dispatch) => {
   const config = getGlobalCfg();
   config.set("show_spvchoice", false);
   dispatch({ type: FINISH_SPVCHOICE });
+  dispatch(startDaemon());
   dispatch(goBack());
 };
 
