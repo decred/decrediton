@@ -24,17 +24,11 @@ export function dateToUTC(timestamp) {
     date.getUTCHours(), date.getUTCMinutes(),  date.getUTCSeconds());
 }
 
-// endOfDay returns a new date pointing to the end of the day (last second)
-// of the day stored in the given date.
-export function endOfDay(dt) {
-  const res = new Date(dt);
-  res.setMilliseconds(0);
-  res.setSeconds(0);
-  res.setMinutes(0);
-  res.setHours(0);
-  res.setSeconds(-1);
-  res.setDate(res.getDate()+1);
-  return res;
+// Returns a new date pointing to the last millisecond of the day of the given date
+export function endOfDay(date) {
+  const result = new Date(date);
+  result.setHours(23,59,59,999);
+  return result;
 }
 
 // formatLocalISODate formats the given Date object d in an ISO8601 format, using
