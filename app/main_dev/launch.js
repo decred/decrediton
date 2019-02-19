@@ -209,7 +209,6 @@ export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
 
   const cfg = getWalletCfg(testnet, walletPath);
 
-  args.push("--ticketbuyer.nospreadticketpurchases");
   args.push("--ticketbuyer.balancetomaintainabsolute=" + cfg.get("balancetomaintain"));
   args.push("--addridxscanlen=" + cfg.get("gaplimit"));
 
