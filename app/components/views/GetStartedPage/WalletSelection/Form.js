@@ -92,6 +92,7 @@ const WalletSelectionBodyBase = ({
                 </div>
               );
             })}
+            {availableWallets.length < maxWalletCount && <CreateRestoreButtons {...{ showCreateWalletForm }}/>}
             {editWallets ?
               <Tooltip text={<T id="walletselection.closeEditWallets" m="Close"/>}>
                 <div className="edit-wallets-button close" onClick={onCloseEditWallets}/>
@@ -100,7 +101,6 @@ const WalletSelectionBodyBase = ({
                 <div className="edit-wallets-button" onClick={onEditWallets}/>
               </Tooltip>
             }
-            {availableWallets.length < maxWalletCount && <CreateRestoreButtons {...{ showCreateWalletForm }}/>}
           </div>
         </div>
       </div>) :
