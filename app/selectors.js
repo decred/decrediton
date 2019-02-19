@@ -921,6 +921,7 @@ export const stakeRewardsStats = createSelector(
 
 export const modalVisible = get([ "control", "modalVisible" ]);
 export const aboutModalMacOSVisible = get([ "control", "aboutModalMacOSVisible" ]);
+export const autobuyerRunningModalVisible = get([ "control", "autobuyerRunningModalVisible" ]);
 
 export const isTrezor = get([ "trezor", "enabled" ]);
 

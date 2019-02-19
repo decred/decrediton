@@ -10,6 +10,7 @@ import ShutdownAppPage from "components/views/ShutdownAppPage";
 import FatalErrorPage from "components/views/FatalErrorPage";
 import Snackbar from "components/Snackbar";
 import AboutModal from "../components/modals/AboutModal/AboutModal";
+import AutobuyerRunningModal from "../components/modals/AutobuyerRunningModal/AutobuyerRunningModal";
 import { log } from "wallet";
 import { TrezorModals } from "components/modals/trezor";
 import "style/Themes.less";
@@ -25,6 +26,8 @@ class App extends React.Component {
     shutdownApp: PropTypes.func.isRequired,
     shutdownRequested: PropTypes.bool.isRequired,
     daemonStopped: PropTypes.bool.isRequired,
+    autobuyerRunningModalVisible: PropTypes.bool.isRequired,
+    hideAutobuyerRunningModal: PropTypes.func.isRequired
   };
 
   constructor (props) {
@@ -51,27 +54,14 @@ class App extends React.Component {
         this.props.showAboutModalMacOS();
       }
     });
-
-    ipcRenderer.on("darwin-shutdown", () => {
-      this.props.shutdownApp();
+    ipcRenderer.on("check-auto-buyer-running", () => {
+      if (this.props.isTicketAutoBuyerEnabled) {
+        log("warning", "Auto buyer is still running, preventing shutdown");
+        this.props.showAutobuyerRunningModal();
+      } else {
+        this.props.shutdownApp();
+      }
     });
-  }
-
-  beforeWindowUnload(event) {
-    if (this.refreshing) {
-      return;
-    }
-
-    const { shutdownRequested, daemonStopped } = this.props;
-    if (!daemonStopped) {
-      event.preventDefault();
-      event.returnValue = false;
-    }
-
-    if (!shutdownRequested) {
-      log("info", "Main app received shutdown request");
-      this.props.shutdownApp();
-    }
   }
 
   onClick(event) {
@@ -99,7 +89,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { locale, theme, aboutModalMacOSVisible, hideAboutModalMacOS } = this.props;
+    const { locale, theme, aboutModalMacOSVisible, hideAboutModalMacOS, autobuyerRunningModalVisible, hideAutobuyerRunningModal, shutdownApp } = this.props;
     const MainSwitch = this.props.uiAnimations ? AnimatedSwitch : StaticSwitch;
 
     return (
@@ -124,6 +114,9 @@ class App extends React.Component {
             <AboutModal show={aboutModalMacOSVisible} onCancelModal={hideAboutModalMacOS}></AboutModal>
           </div>
           <TrezorModals />
+          <div id="modal-portal-autobuyer-running">
+            <AutobuyerRunningModal show={autobuyerRunningModalVisible} onSubmit={() => { hideAutobuyerRunningModal(); shutdownApp(); }} onCancelModal={hideAutobuyerRunningModal} />
+          </div>
         </div>
       </IntlProvider>
     );

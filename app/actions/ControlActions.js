@@ -310,7 +310,7 @@ export const startTicketBuyerV2Attempt = ( passphrase, account, balanceToMaintai
     ticketBuyer.on("error", function(status) {
       status = status + "";
       if (status.indexOf("Cancelled") < 0) {
-        if (status.indexOf("invalid passphrase") > 0 || status.indexOf("Stream removed") > 0) {
+        if (status.indexOf("invalid passphrase") > 0) {
           dispatch({ error: status, type: STARTTICKETBUYERV2_FAILED });
         }
       } else {
@@ -502,6 +502,12 @@ export const showAboutModalMacOS = () => (dispatch) => dispatch({ type: SHOW_ABO
 
 export const HIDE_ABOUT_MODAL_MACOS = "HIDE_ABOUT_MODAL_MACOS";
 export const hideAboutModalMacOS = () => (dispatch) => dispatch({ type: HIDE_ABOUT_MODAL_MACOS });
+
+export const SHOW_AUTOBUYER_RUNNING_MODAL = "SHOW_AUTOBUYER_RUNNING_MODAL";
+export const showAutobuyerRunningModal = () => (dispatch) => dispatch({ type: SHOW_AUTOBUYER_RUNNING_MODAL });
+
+export const HIDE_AUTOBUYER_RUNNING_MODAL = "HIDE_AUTOBUYER_RUNNING_MODAL";
+export const hideAutobuyerRunningModal = () => (dispatch) => dispatch({ type: HIDE_AUTOBUYER_RUNNING_MODAL });
 
 export const GETACCOUNTEXTENDEDKEY_ATTEMPT = "GETACCOUNTEXTENDEDKEY_ATTEMPT";
 export const GETACCOUNTEXTENDEDKEY_FAILED = "GETACCOUNTEXTENDEDKEY_FAILED";

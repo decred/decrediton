@@ -9,7 +9,21 @@ import TimezoneSettings from "./TimezoneSettings";
 import "style/StakePool.less";
 import "style/Settings.less";
 
-const SettingsPageHeader = ({ onCloseWallet, walletName }) =>
+const closeWalletModalContent = (walletName) =>
+  <T
+    id="settings.closeWalletModalContent"
+    m="Are you sure you want to close {walletName} and return to the launcher?"
+    values={{ walletName }}
+  />;
+
+const closeWalletWithAutobuyerModal = (walletName) =>
+  <T
+    id="settings.closeWalletModalWithAutobuyerModal"
+    m="Are you sure you want to close {walletName} and return to the launcher? The auto ticket buyer is still running. If you proceed, it will be closed and no more tickets will be purchased."
+    values={{ walletName }}
+  />;
+
+const SettingsPageHeader = ({ onCloseWallet, walletName, isTicketAutoBuyerEnabled }) =>
   <StandaloneHeader
     title={<T id="settings.title" m="Settings"/>}
     iconClassName="settings"
@@ -18,10 +32,7 @@ const SettingsPageHeader = ({ onCloseWallet, walletName }) =>
       <CloseWalletModalButton
         modalTitle={<T id="settings.closeWalletModalTitle" m="Confirmation Required" />}
         buttonLabel={<T id="settings.closeWalletModalOk" m="Close Wallet" />}
-        modalContent={
-          <T id="settings.closeWalletModalContent"
-            m="Are you sure you want to close {walletName} and return to the launcher?"
-            values={{ walletName }}/>}
+        modalContent={ isTicketAutoBuyerEnabled ? closeWalletWithAutobuyerModal(walletName) : closeWalletModalContent(walletName) }
         onSubmit={onCloseWallet}/>}
   />;
 
@@ -41,8 +52,9 @@ const SettingsPage = ({
   toggleTheme,
   walletName,
   walletReady,
+  isTicketAutoBuyerEnabled
 }) => (
-  <StandalonePage header={<SettingsPageHeader {...{ onCloseWallet, walletName }}/>} >
+  <StandalonePage header={<SettingsPageHeader {...{ onCloseWallet, walletName, isTicketAutoBuyerEnabled }}/>} >
     <div className="settings-wrapper">
       <div className="settings-columns">
         <GeneralSettings {...{ tempSettings, networks, currencies, locales, walletReady,

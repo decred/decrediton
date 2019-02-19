@@ -1,4 +1,3 @@
-import { darwinShutdown } from "./launch";
 
 let versionWin = null;
 let grpcVersions = { requiredVersion: null, walletVersion: null };
@@ -36,7 +35,7 @@ const darwinTemplate = (mainWindow, locale) => [
       label: locale.messages["appMenu.quit"],
       accelerator: "Command+Q",
       click() {
-        darwinShutdown(mainWindow);
+        mainWindow.webContents.send("check-auto-buyer-running");
       }
     } ]
   }, {
