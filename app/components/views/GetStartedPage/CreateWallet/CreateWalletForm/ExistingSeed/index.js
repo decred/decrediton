@@ -189,6 +189,10 @@ class ExistingSeed extends React.Component {
       this.setState({
         hexSeed: trimmedSeed, showPasteError: false, showPasteWarning: false,
       });
+    } else {
+      this.setState({
+        seedError: <T id="confirmSeed.errors.invalidHex" m="Please paste a valid hex seed" />
+      });
     }
   }
 
