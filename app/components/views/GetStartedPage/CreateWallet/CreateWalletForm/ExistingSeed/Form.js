@@ -7,7 +7,7 @@ import { ConfirmSeedMsg } from "../../../messages";
 import { WORDS, HEX } from "./constants";
 
 const ExistingSeedForm = ({
-  onChangeSeedWord, seedWords, setSeedWords, mountSeedErrors, handleOnPaste,
+  onChangeSeedWord, seedWords, setSeedHex, mountSeedErrors, handleOnPaste, hexSeed,
   seedType, pasteFromClipboard, handleToggle, showPasteWarning, showPasteError,
 }) => {
   const errors = mountSeedErrors();
@@ -54,7 +54,8 @@ const ExistingSeedForm = ({
           </div> :
           <div className="seedArea hex">
             <SeedHexEntry
-              onChange={(seed) => console.log(seed)}
+              onChange={(e) => setSeedHex(e.target.value)}
+              seed={hexSeed}
             />
           </div>}
         <div className="input-form-error">

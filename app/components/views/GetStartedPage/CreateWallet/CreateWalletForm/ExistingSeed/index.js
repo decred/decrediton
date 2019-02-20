@@ -1,13 +1,10 @@
 import ExistingSeedForm from "./Form";
 import { SEED_LENGTH, SEED_WORDS } from "wallet/seed";
 import { FormattedMessage as T } from "react-intl";
-import { WORDS, HEX } from "./constants";
+import { WORDS, HEX, POSITION_ERROR, MISMATCH_ERROR } from "./constants";
 
-const shouldShowNonSupportSeedSize = (seedWords, seedType) =>
-  seedType === HEX && seedWords.length !== 64 && seedWords.length > SEED_LENGTH.HEX_MIN;
-
-const POSITION_ERROR = "not valid at position";
-const MISMATCH_ERROR = "checksum mismatch";
+const shouldShowNonSupportSeedSize = (hexSeed, seedType) =>
+  hexSeed && seedType === HEX && hexSeed.length !== 64 && hexSeed.length > SEED_LENGTH.HEX_MIN;
 
 @autobind
 class ExistingSeed extends React.Component {
@@ -15,6 +12,7 @@ class ExistingSeed extends React.Component {
     super(props);
     this.state = {
       seedWords: this.getEmptySeedWords(),
+      hexSeed: null,
       mnemonic: null,
       seedError: null,
       showPasteWarning: false,
@@ -24,15 +22,23 @@ class ExistingSeed extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    const { seedType, hexSeed, seedWords } = this.state;
     const isEqual = (prevSeedWords, seedWords) => {
-      for(let i = 0; i < 33; i++) {
-        if (prevSeedWords[i].word !== seedWords[i].word) {
-          return false;
+      if (seedType === WORDS) {
+        for(let i = 0; i < 33; i++) {
+          if (prevSeedWords[i].word !== seedWords[i].word) {
+            return false;
+          }
         }
+        return true;
+      } else {
+        if (prevState.hexSeed === hexSeed) {
+          return true;
+        }
+        return false;
       }
-      return true;
     };
-    if (isEqual(prevState.seedWords, this.state.seedWords)) {
+    if (isEqual(prevState.seedWords, seedWords)) {
       return;
     }
 
@@ -51,7 +57,7 @@ class ExistingSeed extends React.Component {
 
   getEmptySeedWords() {
     const seedWords = [];
-    for (var i = 0; i < 33; i++) {
+    for (let i = 0; i < 33; i++) {
       seedWords.push({
         word: "",
         index: i,
@@ -67,9 +73,9 @@ class ExistingSeed extends React.Component {
     this.pasteFromClipboard(clipboardData);
   }
 
-  pasteFromClipboard = (textFromClipboard) => {
+  pasteFromClipboard = (wordsFromClipboard) => {
     const lowercaseSeedWords = SEED_WORDS.map(w => w.toLowerCase());
-    const words = textFromClipboard.split(/\b/)
+    const words = wordsFromClipboard.split(/\b/)
       .filter(w => /^[\w]+$/.test(w))
       .filter(w => lowercaseSeedWords.indexOf(w.toLowerCase()) > -1)
       .map((w, i) => ({ index: i, word: w }));
@@ -91,7 +97,7 @@ class ExistingSeed extends React.Component {
   }
 
   handleToggle = (side) => {
-    this.resetSeedWords();
+    this.setState({ seedError: null })
     this.setState({ seedType: side === "left" ? WORDS : HEX });
   }
 
@@ -104,7 +110,7 @@ class ExistingSeed extends React.Component {
         </div>
       );
     }
-    if(shouldShowNonSupportSeedSize(this.state.seedWords, this.state.seedType)) {
+    if(shouldShowNonSupportSeedSize(this.state.hexSeed, this.state.seedType)) {
       errors.push(
         <div key='confirmSeed.errors.hexNot32Bytes'>
           <T id="confirmSeed.errors.hexNot32Bytes" m="Error: seed is not 32 bytes, such comes from a non-supported software and may have unintended consequences." />
@@ -168,9 +174,18 @@ class ExistingSeed extends React.Component {
     });
   }
 
+  setSeedHex(seed) {
+    const trimmedSeed = seed.trim();
+    if (this.isHexValid(trimmedSeed)) {
+      this.setState({
+        hexSeed: trimmedSeed, showPasteError: false, showPasteWarning: false,
+      });
+    }
+  }
+
   getSeedWordsStr() {
-    const { seedWords } = this.state;
-    return Array.isArray(seedWords) ? seedWords.map(({ word }) => word).join(" ") : seedWords;
+    const { seedWords, hexSeed, seedType } = this.state;
+    return seedType === HEX ? hexSeed : seedWords.map(({ word }) => word).join(" ");
   }
 
   isMatch() {
@@ -183,13 +198,14 @@ class ExistingSeed extends React.Component {
   }
 
   render() {
-    const { onChangeSeedWord, resetSeedWords, handleOnPaste, handleToggle, mountSeedErrors, pasteFromClipboard } = this;
-    const { seedWords, seedError } = this.state;
+    const {
+      onChangeSeedWord, resetSeedWords, handleOnPaste, handleToggle, mountSeedErrors, pasteFromClipboard, setSeedHex,
+    } = this;
+    const { seedWords, seedError, hexSeed } = this.state;
     return (
       <ExistingSeedForm {...{
-        ...this.state,
-        seedWords, onChangeSeedWord, resetSeedWords, seedError,
-        handleOnPaste, mountSeedErrors, pasteFromClipboard, handleToggle
+        ...this.state, seedWords, onChangeSeedWord, resetSeedWords, seedError, setSeedHex,
+        hexSeed, handleOnPaste, mountSeedErrors, pasteFromClipboard, handleToggle,
       }} />
     );
   }

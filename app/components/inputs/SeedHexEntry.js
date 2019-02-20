@@ -12,9 +12,9 @@ const messages = defineMessages({
   }
 });
 
-const SeedHexEntry = ({onChange, seedWord, ...props }) => <Input
+const SeedHexEntry = ({ onChange, seed, ...props }) => <Input
   onChange={onChange}
-  value={seedWord}
+  value={seed}
   name='hexInput'
   placeholder={props.intl.formatMessage(messages.enterHexSeedPlaceholder)}
 />
