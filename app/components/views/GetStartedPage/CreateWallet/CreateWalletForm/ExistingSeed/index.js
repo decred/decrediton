@@ -1,14 +1,13 @@
 import ExistingSeedForm from "./Form";
 import { SEED_LENGTH, SEED_WORDS } from "wallet/seed";
 import { FormattedMessage as T } from "react-intl";
+import { WORDS, HEX } from "./constants";
 
 const shouldShowNonSupportSeedSize = (seedWords, seedType) =>
   seedType === HEX && seedWords.length !== 64 && seedWords.length > SEED_LENGTH.HEX_MIN;
 
 const POSITION_ERROR = "not valid at position";
 const MISMATCH_ERROR = "checksum mismatch";
-const WORDS = "WORDS";
-const HEX = "HEX";
 
 @autobind
 class ExistingSeed extends React.Component {
@@ -93,7 +92,7 @@ class ExistingSeed extends React.Component {
 
   handleToggle = (side) => {
     this.resetSeedWords();
-    this.setState({ seedType: side === "left" ? "words" : "hex" });
+    this.setState({ seedType: side === "left" ? WORDS : HEX });
   }
 
   mountSeedErrors = () => {

@@ -4,6 +4,7 @@ import { TextToggle } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import "style/CreateWalletForm.less";
 import { ConfirmSeedMsg } from "../../../messages";
+import { WORDS, HEX } from "./constants";
 
 const ExistingSeedForm = ({
   onChangeSeedWord, seedWords, setSeedWords, mountSeedErrors, handleOnPaste,
@@ -18,8 +19,8 @@ const ExistingSeedForm = ({
       <div className="seed-type-label">
         <TextToggle
           activeButton={"left"}
-          leftText={"words"}
-          rightText={"hex"}
+          leftText={WORDS}
+          rightText={HEX}
           toggleAction={handleToggle}
         />
       </div>
@@ -27,7 +28,7 @@ const ExistingSeedForm = ({
         <div className="confirm-seed-label-text seed">
           <ConfirmSeedMsg />
         </div>
-        {seedType == "words" && Array.isArray(seedWords) ?
+        {seedType === WORDS && Array.isArray(seedWords) ?
           <div className="seedArea">
             {showPasteWarning &&
             <div className="orange-warning">
