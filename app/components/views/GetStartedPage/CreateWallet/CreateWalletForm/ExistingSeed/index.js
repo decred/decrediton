@@ -3,10 +3,12 @@ import { SEED_LENGTH, SEED_WORDS } from "wallet/seed";
 import { FormattedMessage as T } from "react-intl";
 
 const shouldShowNonSupportSeedSize = (seedWords, seedType) =>
-  seedType === "hex" && seedWords.length !== 64 && seedWords.length > SEED_LENGTH.HEX_MIN;
+  seedType === HEX && seedWords.length !== 64 && seedWords.length > SEED_LENGTH.HEX_MIN;
 
 const POSITION_ERROR = "not valid at position";
 const MISMATCH_ERROR = "checksum mismatch";
+const WORDS = "WORDS";
+const HEX = "HEX";
 
 @autobind
 class ExistingSeed extends React.Component {
@@ -18,7 +20,7 @@ class ExistingSeed extends React.Component {
       seedError: null,
       showPasteWarning: false,
       showPasteError: false,
-      seedType: "words",
+      seedType: WORDS,
     };
   }
 
@@ -66,9 +68,9 @@ class ExistingSeed extends React.Component {
     this.pasteFromClipboard(clipboardData);
   }
 
-  pasteFromClipboard = (wordsFromClipboard) => {
+  pasteFromClipboard = (textFromClipboard) => {
     const lowercaseSeedWords = SEED_WORDS.map(w => w.toLowerCase());
-    const words = wordsFromClipboard.split(/\b/)
+    const words = textFromClipboard.split(/\b/)
       .filter(w => /^[\w]+$/.test(w))
       .filter(w => lowercaseSeedWords.indexOf(w.toLowerCase()) > -1)
       .map((w, i) => ({ index: i, word: w }));
@@ -177,6 +179,10 @@ class ExistingSeed extends React.Component {
     return !!(mnemonic && (this.getSeedWordsStr() === mnemonic));
   }
 
+  isHexValid(seed) {
+    return /^[0-9a-fA-F]*$/.test(seed) && seed.length <= SEED_LENGTH.HEX_MAX;
+  }
+
   render() {
     const { onChangeSeedWord, resetSeedWords, handleOnPaste, handleToggle, mountSeedErrors, pasteFromClipboard } = this;
     const { seedWords, seedError } = this.state;
@@ -188,7 +194,6 @@ class ExistingSeed extends React.Component {
       }} />
     );
   }
-
 }
 
 export default ExistingSeed;

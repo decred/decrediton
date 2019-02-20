@@ -1,5 +1,5 @@
 import SingleSeedWordEntry from "../SingleSeedWordEntry";
-import SeedHexEntry from "./SeedHexEntry";
+import SeedHexEntry from "inputs/SeedHexEntry";
 import { TextToggle } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import "style/CreateWalletForm.less";
@@ -53,8 +53,7 @@ const ExistingSeedForm = ({
           </div> :
           <div className="seedArea hex">
             <SeedHexEntry
-            // needs implementing
-              onChange={setSeedWords}
+              onChange={(seed) => console.log(seed)}
             />
           </div>}
         <div className="input-form-error">
