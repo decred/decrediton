@@ -97,7 +97,7 @@ class ExistingSeed extends React.Component {
   }
 
   handleToggle = (side) => {
-    this.setState({ seedError: null })
+    this.setState({ seedError: null });
     this.setState({ seedType: side === "left" ? WORDS : HEX });
   }
 
@@ -139,12 +139,12 @@ class ExistingSeed extends React.Component {
       return count;
     };
     const fixPositionError = (errorStr) => {
-      const index = errorStr.indexOf(POSITION_ERROR)
+      const index = errorStr.indexOf(POSITION_ERROR);
       const numberPosition = index + POSITION_ERROR.length + 1;
       const endErrorStr = errorStr.slice(numberPosition + 1);
-      const beginErrorStr = errorStr.slice(0, numberPosition)
+      const beginErrorStr = errorStr.slice(0, numberPosition);
       return beginErrorStr + (seedWord.index + 1) + endErrorStr;
-    }
+    };
     const onError = (seedError) => {
       const seedErrorStr = seedError + "";
       if (countWords() <= 1) { // Weird errors with one word, better to avoid them.

@@ -17,6 +17,6 @@ const SeedHexEntry = ({ onChange, seed, ...props }) => <Input
   value={seed}
   name='hexInput'
   placeholder={props.intl.formatMessage(messages.enterHexSeedPlaceholder)}
-/>
+/>;
 
 export default injectIntl(SeedHexEntry);
