@@ -138,6 +138,13 @@ class ExistingSeed extends React.Component {
 
       return count;
     };
+    const fixPositionError = (errorStr) => {
+      const index = errorStr.indexOf(POSITION_ERROR)
+      const numberPosition = index + POSITION_ERROR.length + 1;
+      const endErrorStr = errorStr.slice(numberPosition + 1);
+      const beginErrorStr = errorStr.slice(0, numberPosition)
+      return beginErrorStr + (seedWord.index + 1) + endErrorStr;
+    }
     const onError = (seedError) => {
       const seedErrorStr = seedError + "";
       if (countWords() <= 1) { // Weird errors with one word, better to avoid them.
@@ -149,8 +156,10 @@ class ExistingSeed extends React.Component {
       this.setState({ seedError: seedErrorStr });
       this.props.onChange(null);
       if (seedErrorStr.includes(POSITION_ERROR)) {
+        const positionErr = fixPositionError(seedErrorStr);
+
         updatedSeedWords[seedWord.index] = { word: update, index: seedWord.index, error: true };
-        this.setState({ seedWords: updatedSeedWords });
+        this.setState({ seedWords: updatedSeedWords, seedError: positionErr });
       }
     };
     this.setState({ seedWords: updatedSeedWords }, () => {
