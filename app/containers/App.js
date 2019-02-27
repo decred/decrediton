@@ -99,7 +99,7 @@ class App extends React.Component {
         formats={locale.formats}
         defaultFormats={defaultFormats}
         key={locale.key}>
-        <div className={theme}>
+        <main className={theme}>
           <Switch><Redirect from="/" exact to="/getstarted" /></Switch>
           <Snackbar/>
           <MainSwitch {...topLevelAnimation} className="top-level-container">
@@ -117,7 +117,7 @@ class App extends React.Component {
           <div id="modal-portal-autobuyer-running">
             <AutobuyerRunningModal show={autobuyerRunningModalVisible} onSubmit={() => { hideAutobuyerRunningModal(); shutdownApp(); }} onCancelModal={hideAutobuyerRunningModal} />
           </div>
-        </div>
+        </main>
       </IntlProvider>
     );
   }
