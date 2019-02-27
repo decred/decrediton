@@ -2,6 +2,15 @@
 
 #include <cstdint>
 
+#ifdef IN
+#undef IN
+#endif
+
+#ifdef OUT
+#undef OUT
+#endif
+
+
 namespace pipe_wrapper {
 
 template <typename T>

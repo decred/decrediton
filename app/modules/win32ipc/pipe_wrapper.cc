@@ -50,13 +50,20 @@ err:
 }
 
 char const* close_pipe_end(uintptr_t read_end_handle, uintptr_t write_end_handle) {
-    if (!CloseHandle((HANDLE) read_end_handle)) {
-        return "Close(read_end_handle)";
+    HANDLE h_rd = (HANDLE) read_end_handle;
+    HANDLE h_wr = (HANDLE) write_end_handle;
+    
+    if (h_rd != INVALID_HANDLE_VALUE) {
+        if (!CloseHandle(h_rd)) {
+            return "Close(read_end_handle)";
+        }
     }
 
 
-    if (!CloseHandle((HANDLE) write_end_handle)) {
-        return "Close(write_end_handle)";
+    if (h_wr != INVALID_HANDLE_VALUE) {
+        if (!CloseHandle(h_wr)) {
+            return "Close(write_end_handle)";
+        }
     }
 
     return nullptr;
