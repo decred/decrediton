@@ -51,3 +51,5 @@ export const AboutModalButton = ({ appVersion, updateAvailable }) => (
     buttonLabel={<T id="help.about" m="About Decrediton" />}
   />
 );
+
+export const daemonTimeoutMessage = () => <T id="getStarted.daemonTimeout" m="Daemon connection timeout exceded."/>

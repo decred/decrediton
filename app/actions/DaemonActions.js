@@ -26,6 +26,7 @@ export const DAEMONSTARTED_ERROR = "DAEMONSTARTED_ERROR";
 export const DAEMONSTOPPED = "DAEMONSTOPPED";
 export const DAEMONSYNCING_START = "DAEMONSYNCING_START";
 export const DAEMONSYNCING_PROGRESS = "DAEMONSYNCING_PROGRESS";
+export const DAEMONSYNCING_TIMEOUT = "DAEMONSYNCING_TIMEOUT";
 export const DAEMONSYNCED = "DAEMONSYNCED";
 export const WALLETREADY = "WALLETREADY";
 export const WALLETREMOVED = "WALLETREMOVED";
@@ -350,11 +351,20 @@ export const prepStartDaemon = () => (dispatch, getState) => {
   }
 };
 
+const TIME_TO_TIMEOUT = 0.1 * 60 * 1000; // 5 min
+
 export const STARTUPBLOCK = "STARTUPBLOCK";
 export const syncDaemon = () =>
   (dispatch, getState) => {
+    let timeStartBeforeSync = new Date();
     const updateBlockCount = async () => {
       const { daemon: { daemonSynced, timeStart, blockStart, credentials, daemonError, neededBlocks, networkMatch } } = getState();
+      const timeNow = new Date();
+      const timeElapsed = timeNow - timeStartBeforeSync;
+      if (timeElapsed >= TIME_TO_TIMEOUT) {
+        dispatch({ type: DAEMONSYNCING_TIMEOUT });
+        return;
+      }
       // check to see if user skipped;
       if (daemonSynced || daemonError) return;
       if (!networkMatch) {
@@ -389,7 +399,7 @@ export const syncDaemon = () =>
                 timeLeftEstimate: secondsLeft,
                 type: DAEMONSYNCING_PROGRESS });
             }
-          } else if (blockCount && syncHeight && blockCount !== 0 && syncHeight !== 0) {
+          } else if (blockCount !== 0 && syncHeight !== 0) {
             dispatch({ syncHeight: syncHeight, currentBlockCount: blockCount, timeStart: new Date(), blockStart: blockCount, type: DAEMONSYNCING_START });
           }
           setTimeout(updateBlockCount, 1000);

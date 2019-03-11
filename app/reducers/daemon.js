@@ -10,6 +10,7 @@ import {
   DAEMONSYNCING_PROGRESS,
   DAEMONSYNCED,
   DAEMONSTOPPED,
+  DAEMONSYNCING_TIMEOUT,
   WALLETREADY,
   WALLETCREATED,
   SHUTDOWN_REQUESTED,
@@ -68,7 +69,6 @@ export default function version(state = {}, action) {
   case DAEMONSTARTED_REMOTE:
     return { ...state,
       daemonStarted: true,
-      daemonAdvanced: false,
       daemonStopped: false,
       credentials: action.credentials,
       daemonRemote: true,
@@ -119,6 +119,12 @@ export default function version(state = {}, action) {
       currentBlockCount: action.currentBlockCount,
       timeLeftEstimate: action.timeLeftEstimate,
     };
+  case DAEMONSYNCING_TIMEOUT:
+    return { ...state,
+      daemonTimeout: true,
+      remoteAppdataError: true,
+      daemonStarted: false,
+    }
   case DAEMONSYNCED:
     return { ...state,
       daemonSynced: true,
