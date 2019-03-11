@@ -32,7 +32,7 @@ class AboutModal extends React.Component {
               <a className="about-modal-upgrade" onClick={() => shell.openExternal("https://github.com/decred/decred-binaries/releases/tag/v"+`${version}`)}><T id="aboutModal.whatsNew" m="What's New?"/></a> }
           </div>
           <div className="about-modal-bottom-area-middle">
-            Copyright &copy; 2018 <a onClick={() => shell.openExternal("https://decred.org")}>Decred</a>
+            Copyright &copy; 2019 <a onClick={() => shell.openExternal("https://decred.org")}>Decred</a>
           </div>
           <div className="about-modal-bottom-area-right">
             <a onClick={() => shell.openExternal("https://github.com/decred/decrediton/blob/master/LICENSE")}><T id="aboutModal.licensing" m="Licensing information"/></a>
