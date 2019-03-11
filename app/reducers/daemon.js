@@ -123,7 +123,7 @@ export default function version(state = {}, action) {
     return { ...state,
       daemonTimeout: true,
       daemonStarted: false,
-    }
+    };
   case DAEMONSYNCED:
     return { ...state,
       daemonSynced: true,

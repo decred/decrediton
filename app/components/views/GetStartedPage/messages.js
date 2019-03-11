@@ -53,4 +53,4 @@ export const AboutModalButton = ({ appVersion, updateAvailable }) => (
 );
 
 export const daemonTimeoutMessage = () => <T id="getStarted.daemonTimeout" m={
-  `Daemon connection timeout exceded. That Probably means you filled your parameters wrong. Please review it.`} />
+  "Daemon connection timeout exceded. That Probably means you filled your parameters wrong. Please review it."} />;
