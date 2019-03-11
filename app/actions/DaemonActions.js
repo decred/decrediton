@@ -351,7 +351,7 @@ export const prepStartDaemon = () => (dispatch, getState) => {
   }
 };
 
-const TIME_TO_TIMEOUT = 0.1 * 60 * 1000; // 5 min
+const TIME_TO_TIMEOUT = 2 * 60 * 1000; // 2 min
 
 export const STARTUPBLOCK = "STARTUPBLOCK";
 export const syncDaemon = () =>
@@ -361,7 +361,7 @@ export const syncDaemon = () =>
       const { daemon: { daemonSynced, timeStart, blockStart, credentials, daemonError, neededBlocks, networkMatch } } = getState();
       const timeNow = new Date();
       const timeElapsed = timeNow - timeStartBeforeSync;
-      if (timeElapsed >= TIME_TO_TIMEOUT) {
+      if (timeStart === 0 && timeElapsed >= TIME_TO_TIMEOUT) {
         dispatch({ type: DAEMONSYNCING_TIMEOUT });
         return;
       }
