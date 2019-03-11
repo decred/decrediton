@@ -122,7 +122,6 @@ export default function version(state = {}, action) {
   case DAEMONSYNCING_TIMEOUT:
     return { ...state,
       daemonTimeout: true,
-      remoteAppdataError: true,
       daemonStarted: false,
     }
   case DAEMONSYNCED:
