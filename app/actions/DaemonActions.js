@@ -351,7 +351,7 @@ export const prepStartDaemon = () => (dispatch, getState) => {
   }
 };
 
-const TIME_TO_TIMEOUT = 2 * 60 * 1000; // 2 min
+const TIME_TO_TIMEOUT = 0.1 * 60 * 1000; // 2 min
 
 export const STARTUPBLOCK = "STARTUPBLOCK";
 export const syncDaemon = () =>
