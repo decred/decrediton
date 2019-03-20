@@ -2,6 +2,7 @@ import { NavLink as Link, Switch, Route, Redirect } from "react-router-dom";
 import { FormattedMessage as T } from "react-intl";
 import VoteTimeChartPage from "./charts/VoteTime";
 import StakeRewardsChartPage from "./charts/StakeRewards";
+import HeatmapStats from "./charts/HeatmapStats";
 import StakePoolStats from "./charts/StakePoolStats";
 import { DecredLoading, NoStats } from "indicators";
 import { Tooltip } from "shared";
@@ -25,6 +26,9 @@ const TicketsStatsPage = ({ getMyTicketsStatsRequest, hasStats, hasTickets, allS
               <Tooltip text={<T id="mytickets.statistics.votetime.link" m="Vote Time" />}>
                 <Link to="/tickets/statistics/voteTime" activeClassName="my-tickets-active-chart-link vote-time" className="vote-time"/>
               </Tooltip>
+              <Tooltip text={<T id="mytickets.statistics.heatmap.link" m="Heatmap" />}>
+                <Link to="/tickets/statistics/heatmap" activeClassName="my-tickets-active-chart-link vote-time" className="heatmap"/>
+              </Tooltip>
             </>
           }
         </div>
@@ -35,6 +39,7 @@ const TicketsStatsPage = ({ getMyTicketsStatsRequest, hasStats, hasTickets, allS
             <Route path="/tickets/statistics/voteTime" component={VoteTimeChartPage} />
             <Route path="/tickets/statistics/stakerewards" component={StakeRewardsChartPage} />
             <Route path="/tickets/statistics/stakepool" component={StakePoolStats} />
+            <Route path="/tickets/statistics/heatmap" component={HeatmapStats} />
             {hasStats || allStakePoolStats.length > 0 ? <Redirect from="/tickets/statistics" exact to={allStakePoolStats.length > 0 ? "/tickets/statistics/stakepool" : hasStats ? "/tickets/statistics/stakerewards" : ""}/> : null}
           </Switch>
         }
