@@ -20,7 +20,6 @@ const mapStateToProps = selectorMap({
   hasExistingWallet: sel.hasExistingWallet,
   getDaemonStarted: sel.getDaemonStarted,
   getDaemonSynced: sel.getDaemonSynced,
-  getDaemonTimeout: sel.getDaemonTimeout,
   getCurrentBlockCount: sel.getCurrentBlockCount,
   getNeededBlocks: sel.getNeededBlocks,
   getWalletReady: sel.getWalletReady,
