@@ -40,7 +40,7 @@ import {
   GETSTARTUPSTATS_FAILED,
   GETMYTICKETSSTATS_FAILED,
 } from "actions/StatisticsActions";
-import { WALLETREMOVED_FAILED } from "actions/DaemonActions";
+import { WALLETREMOVED_FAILED, DAEMONSYNCING_TIMEOUT } from "actions/DaemonActions";
 import {
   GETWALLETSEEDSVC_FAILED,
   SPVSYNC_FAILED,
@@ -181,6 +181,10 @@ const messages = defineMessages({
   DECODERAWTXS_FAILED: {
     id: "decodeRawTx.errors.decodeFailed",
     defaultMessage: "{originalError}"
+  },
+  DAEMONSYNCING_TIMEOUT: {
+    id: "daemonSyncingTimeout.errors",
+    defaultMessage: "Daemon connection timeout exceded.\n That Probably means you filled your parameters wrong. Please review it."
   },
   REMOVESTAKEPOOLCONFIG: {
     id: "stakepools.removedStakePoolConfig",
@@ -388,6 +392,7 @@ export default function snackbar(state = {}, action) {
   case SETSTAKEPOOLVOTECHOICES_FAILED:
   case ADDCUSTOMSTAKEPOOL_FAILED:
   case DECODERAWTXS_FAILED:
+  case DAEMONSYNCING_TIMEOUT:
   case SIGNMESSAGE_FAILED:
   case VERIFYMESSAGE_FAILED:
   case GETSTARTUPWALLETINFO_FAILED:
@@ -437,9 +442,7 @@ export default function snackbar(state = {}, action) {
       // handled in an action.
       console.error(action.type, "\n", action.error);
     }
-
     break;
-
   case TRZ_TOGGLEPINPROTECTION_SUCCESS:
     type = "Success";
     message = messages["TRZ_TOGGLEPINPROTECTION_SUCCESS_" + (action.clearProtection ? "DISABLED" : "ENABLED")];

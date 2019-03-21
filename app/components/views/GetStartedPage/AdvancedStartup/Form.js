@@ -2,7 +2,6 @@ import { KeyBlueButton, InvisibleButton } from "buttons";
 import RemoteDaemonForm from "./RemoteDaemonForm";
 import AppDataForm from "./AppDataForm";
 import { FormattedMessage as T, injectIntl } from "react-intl";
-import { daemonTimeoutMessage } from "../messages";
 
 const AdvancedBodyBase = ({
   onShowRemote,
@@ -32,7 +31,6 @@ const AdvancedBodyBase = ({
   intl,
   remoteValid,
   appDataValid,
-  getDaemonTimeout,
   ...props,
 }) => {
   return (
@@ -77,7 +75,6 @@ const AdvancedBodyBase = ({
             intl
           }} />
         }
-        { getDaemonTimeout && <div className="warning">{daemonTimeoutMessage()}</div> }
         <div className="loader-bar-buttons">
           <InvisibleButton onClick={skipAdvancedDaemon}>
             <T id="advancedStartup.skip" m="Skip"/>
