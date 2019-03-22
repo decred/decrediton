@@ -34,7 +34,7 @@ const TicketsStatsPage = ({ getMyTicketsStatsRequest, hasStats, hasTickets, allS
         </div>
       </div>
       <div className="my-tickets-charts">
-        {getMyTicketsStatsRequest ? <DecredLoading /> :
+        {getMyTicketsStatsRequest ? <HeatmapStats /> :
           <Switch>
             <Route path="/tickets/statistics/voteTime" component={VoteTimeChartPage} />
             <Route path="/tickets/statistics/stakerewards" component={StakeRewardsChartPage} />

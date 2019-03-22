@@ -4,8 +4,9 @@ import { FormattedMessage as T } from "react-intl";
 import { StakePoolSelect } from "inputs";
 import { Tooltip } from "shared";
 import { createCanvas } from "canvas"
-import { drawContributions } from "drawCanvas";
+import { drawContributions } from "./drawCanvas";
 import jsonData from "./mock.json";
+import ticketData from "./mockTicketData.json"
 
 @autobind
 class HeatmapStats extends React.Component {
@@ -19,13 +20,14 @@ class HeatmapStats extends React.Component {
   componentDidMount() {
     const canvas = this.refs.canvas
     this.setState({ canvas });
-    this.props.getTicketsHeatmapStats();
+    // this.props.getTicketsHeatmapStats();
   }
 
   render() {
     const contributionData = jsonData;
     const { canvas } = this.state;
-    // console.log(contributionData)
+    console.log(contributionData)
+    console.log(ticketData)
     return (
       <div>
         <canvas ref="canvas" width="200" height="200"></canvas>
@@ -35,6 +37,13 @@ class HeatmapStats extends React.Component {
           themeName: "standard",
           footerText: "Made by @sallar - github-contributions.now.sh"
         })}
+        <canvas ref="canvas" width="200" height="200"></canvas>
+        {/* {canvas && drawContributions(canvas, {
+          data: ticketData,
+          username: "myusername",
+          themeName: "standard",
+          footerText: "Made by @sallar - github-contributions.now.sh"
+        })} */}
       </div>)
   }
 }
