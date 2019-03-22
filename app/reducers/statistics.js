@@ -1,7 +1,8 @@
 
 import {
   GETSTARTUPSTATS_ATTEMPT, GETSTARTUPSTATS_FAILED, GETSTARTUPSTATS_SUCCESS,
-  GETMYTICKETSSTATS_ATTEMPT, GETMYTICKETSSTATS_SUCCESS, GETMYTICKETSSTATS_FAILED
+  GETMYTICKETSSTATS_ATTEMPT, GETMYTICKETSSTATS_SUCCESS, GETMYTICKETSSTATS_FAILED,
+  GETTICKETSHEATMAPSTATS_ATTEMPT, GETTICKETSHEATMAPSTATS_SUCCESS, GETTICKETSHEATMAPSTATS_FAILED
 } from "actions/StatisticsActions";
 import {
   CLOSEWALLET_SUCCESS,
@@ -26,6 +27,23 @@ export default function statistics(state = {}, action) {
       getStartupStatsAttempt: false,
       startupStatsCalcSeconds: action.startupStatsCalcSeconds,
       startupStatsEndCalcTime: action.startupStatsEndCalcTime,
+    };
+  case GETTICKETSHEATMAPSTATS_ATTEMPT:
+    return {
+      ...state,
+      getTicketHeatmapStatsAttempt: true,
+    };
+  case GETTICKETSHEATMAPSTATS_SUCCESS:
+    return {
+      ...state,
+      getTicketHeatmapStatsAttempt: false,
+      ticketDataHeatmap: action.ticketDataHeatmap
+    };
+  case GETTICKETSHEATMAPSTATS_FAILED:
+    return {
+      ...state,
+      getTicketHeatmapStatsAttempt: false,
+      ticketDataHeatmap: null,
     };
   case GETMYTICKETSSTATS_ATTEMPT:
     return {

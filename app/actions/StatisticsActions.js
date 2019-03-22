@@ -73,45 +73,34 @@ export const GETTICKETSHEATMAPSTATS_FAILED = "GETTICKETSHEATMAPSTATS_FAILED";
 export const getTicketsHeatmapStats = () => (dispatch, getState) => {
   dispatch({ type: GETTICKETSHEATMAPSTATS_ATTEMPT });
 
-  const startCalcTime = new Date();
+  const numberOfDays = 100;
   const endDate = new Date();
-  endDate.setDate(endDate.getDate()-100);
+  endDate.setDate(endDate.getDate()-numberOfDays);
 
   return dispatch(getHeatmapStats({ endDate, backwards: true }))
-    .then( dailyBalances => {
-
-      // the `dailyBalances` returns only days when there was a change in
-      // some of the balances, so we need to fill the gaps of days without
-      // changes with the previous balance, taking care to set sent/received
-      // balances to 0
-      dailyBalances = dailyBalances.data.slice(0, 15).reverse();
-      const lastBalances = [];
+    .then( dailyTicketsCounter => {
+      // the `dailyTicketsCounter` returns only days when there was a change in
+      // some of the tickets, so we need to fill the gaps of days without
+      // changes
+      const resp = [];
 
       const date = endOfDay(new Date());
-      date.setDate(date.getDate()-14);
-
+      date.setDate(date.getDate()-numberOfDays);
       let idx = 0;
-      for (let i = 0; i < 15; i++) {
-        while (idx < dailyBalances.length-1 && dailyBalances[idx+1].time <= date) idx++;
-        if (dailyBalances[idx].time.getTime() === date.getTime()) {
-          lastBalances.push(dailyBalances[idx]);
-        } else if (dailyBalances[idx].time.getTime() > date.getTime()) {
-          // newish wallet without balance
-          lastBalances.push({ series: { locked: 0, lockedNonWallet: 0, available: 0,
-            total: 0, sent: 0, received: 0, voted: 0, revoked: 0, ticket: 0 },
-          time: new Date(date) });
+      for (let i = 0; i <= numberOfDays; i++) {
+        const endOfDayDate = endOfDay(date);
+        const dailyTicketCounter = dailyTicketsCounter[endOfDayDate];
+        if (dailyTicketCounter) {
+          const sum = Object.keys(dailyTicketCounter).reduce((s, k) => {
+              return s + dailyTicketCounter[k];
+            }, 0);
+          resp.push({...dailyTicketCounter, date, count: sum })
         } else {
-          lastBalances.push({ series: { ...dailyBalances[idx].series, sent: 0,
-            received: 0, voted: 0, revoked: 0, ticket: 0 },
-          time: new Date(date) });
+          resp.push({ date, count: 0 });
         }
-        date.setDate(date.getDate()+1);
+        date.setDate(endOfDayDate.getDate()+1);
       }
-
-      const endCalcTime = new Date();
-      const startupStatsCalcSeconds = (endCalcTime.getTime() - startCalcTime.getTime()) / 1000;
-      dispatch({ dailyBalances: lastBalances, startupStatsCalcSeconds,
-        startupStatsEndCalcTime: endCalcTime, type: GETTICKETSHEATMAPSTATS_SUCCESS });
+      dispatch({ ticketDataHeatmap: resp, type: GETTICKETSHEATMAPSTATS_SUCCESS });
     })
     .catch(error => {
       console.error("getTicketsHeatmapStats errored", error);
