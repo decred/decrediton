@@ -467,20 +467,7 @@ export const totalValueOfLiveTickets = createSelector(
   }
 );
 
-export const ticketDataHeatmap = createSelector(
-  [ dailyBalancesStats, unitDivisor ],
-  ( stats, unitDivisor ) => {
-    // {"date":"2018-01-02","count":28,"color":"#239a3b","intensity":3}
-    return stats.map(s => ({
-      date: s.time,
-      voted: s.series.voted / unitDivisor,
-      revoked: s.series.revoked / unitDivisor,
-      ticket: s.series.ticket / unitDivisor,
-      locked: (s.series.locked + s.series.immature) / unitDivisor,
-      immature: s.series.immature / unitDivisor,
-    }))
-  });
-  
+export const ticketDataHeatmap = get(["statistics", "ticketDataHeatmap"]);
 
 export const ticketDataChart = createSelector(
   [ dailyBalancesStats, unitDivisor ],
