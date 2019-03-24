@@ -1,27 +1,40 @@
-import moment from "moment";
 import { themes } from "./themes";
+import { endOfDay } from "helpers";
 
 function getTheme(opts = {}) {
-  const { themeName } = opts;
-  if (themeName in themes) {
-    return themes[themeName];
-  }
   return themes.standard;
 }
 
-function getDateInfo(data, date) {
-  return data.contributions.find(contrib => contrib.date === date);
+const getBiggestCount = (graphEntries) => {
+  let biggest = 0;
+  for(let i = 0; i < graphEntries.length; i++) {
+    if (graphEntries[i].count > biggest) {
+      biggest = graphEntries[i].count;
+    }
+  }
+  return biggest;
 }
 
-function getTicketActivityCount(graphEntries) {
-  return graphEntries.reduce((rowTotal, row) => {
-    return (
-      rowTotal +
-      row.reduce((colTotal, col) => {
-        return colTotal + (col.info ? col.info.count : 0);
-      }, 0)
-    );
-  }, 0);
+const getIntensity = (indicator) => {
+  if(indicator >= 0 && indicator < 20) {
+    return 0;
+  } else if (indicator >= 20 && indicator < 40){
+    return 1;
+  } else if (indicator >= 40 && indicator < 60) {
+    return 2;
+  } else if (indicator >= 60 && indicator < 80) {
+    return 3;
+  } else if (indicator >= 80 && indicator <= 100) {
+    return 4;
+  }
+}
+
+const addIntensityInfo = (graphEntries) => {
+  const biggestCount = getBiggestCount(graphEntries);
+  for(let i = 0; i < graphEntries.length; i++) {
+    const ind = 100 * graphEntries[i].count / biggestCount;
+    graphEntries[i].intensity = getIntensity(ind);    
+  }
 }
 
 const DATE_FORMAT = "YYYY-MM-DD";
@@ -34,78 +47,35 @@ const canvasMargin = 20;
 const yearHeight = textHeight + (boxWidth + boxMargin) * 8 + canvasMargin;
 const scaleFactor = window.devicePixelRatio || 1;
 
-function drawYear(ctx, opts = {}) {
+function drawInfo(ctx, opts = {}) {
   const {
-    date,
     offsetX = 0,
     offsetY = 0,
-    data,
+    graphEntries,
     fontFace = defaultFontFace
   } = opts;
-  const thisYear = moment().format("YYYY");
-  const today = date.year === thisYear ? moment() : moment(date.range.end);
-  const start = moment(`${date.year}-01-01`);
-  const firstDate = start.clone();
-  const theme = getTheme(opts);
-
-  if (firstDate.day() !== 6) {
-    firstDate.day(-(firstDate.day() + 1 % 7));
-  }
-
-  const nextDate = firstDate.clone();
-  const firstRowDates = [];
-  const graphEntries = [];
-
-  while (nextDate <= today && nextDate.day(7) <= today) {
-    const date = nextDate.format(DATE_FORMAT);
-    firstRowDates.push({
-      date,
-      info: getDateInfo(data, date)
-    });
-  }
-
-  graphEntries.push(firstRowDates);
-
-  for (let i = 1; i < 7; i += 1) {
-    graphEntries.push(
-      firstRowDates.map(dateObj => {
-        const date = moment(dateObj.date)
-          .day(i)
-          .format(DATE_FORMAT);
-        return {
-          date,
-          info: getDateInfo(data, date)
-        };
-      })
-    );
-  }
-
-  const count = new Intl.NumberFormat().format(
-    getTicketActivityCount(graphEntries)
-  );
+  const theme = getTheme();
 
   ctx.textBaseline = "hanging";
   ctx.fillStyle = theme.text;
   ctx.font = `10px '${fontFace}'`;
   ctx.fillText(
-    `${date.year}: ${count} Contribution${date.total === 1 ? "" : "s"}${
-      thisYear === date.year ? " (so far)" : ""
-    }`,
+    `${graphEntries[0].date}`,
     offsetX,
     offsetY - 17
   );
 
-  for (let y = 0; y < graphEntries.length; y += 1) {
-    for (let x = 0; x < graphEntries[y].length; x += 1) {
-      const day = graphEntries[y][x];
-      if (moment(day.date) > today || !day.info) {
-        continue;
-      }    
-      const color = theme[`grade${day.info.intensity}`];
+  for (let i = 0; i < graphEntries.length / 7; i++) {
+    for (let j = 0; j < 7; j++) {
+      const dayIndex = i+j + j*7;
+      const day = graphEntries[dayIndex];
+      const color = theme[`grade${day.intensity}`];
       ctx.fillStyle = color;
+
       ctx.fillRect(
-        offsetX + (boxWidth + boxMargin) * x,
-        offsetY + textHeight + (boxWidth + boxMargin) * y,
+        offsetX + (boxWidth + boxMargin) * i ,
+        // offsetY + textHeight + (boxWidth + boxMargin) * j,
+        50+textHeight + (boxWidth + boxMargin) * j,
         10,
         10
       );
@@ -170,9 +140,8 @@ function drawMetaData(ctx, opts = {}) {
 }
 
 export function drawContributions(canvas, opts) {
-  const { data, username } = opts;
-  const height =
-    data.years.length * yearHeight + canvasMargin + headerHeight + 10;
+  const { data } = opts;
+  const height = yearHeight + canvasMargin + headerHeight + 10;
   const width = 53 * (boxWidth + boxMargin) + canvasMargin * 2;
 
   canvas.width = width * scaleFactor;
@@ -188,15 +157,19 @@ export function drawContributions(canvas, opts) {
     height
   });
 
-  data.years.forEach((date, i) => {
-    const offsetY = yearHeight * i + canvasMargin + headerHeight;
-    const offsetX = canvasMargin;
-    drawYear(ctx, {
-      ...opts,
-      date,
-      offsetX,
-      offsetY,
-      data
-    });
+  const graphEntries = [];
+  for (let i = 0; i < data.length; i++) {
+    graphEntries.push({ ...data[i] });
+  }
+
+  addIntensityInfo(graphEntries);
+
+  const offsetY = yearHeight + canvasMargin + headerHeight;
+  const offsetX = canvasMargin;
+  drawInfo(ctx, {
+    ...opts,
+    offsetX,
+    offsetY,
+    graphEntries,
   });
 }
