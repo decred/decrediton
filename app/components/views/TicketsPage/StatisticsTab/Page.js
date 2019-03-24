@@ -2,7 +2,7 @@ import { NavLink as Link, Switch, Route, Redirect } from "react-router-dom";
 import { FormattedMessage as T } from "react-intl";
 import VoteTimeChartPage from "./charts/VoteTime";
 import StakeRewardsChartPage from "./charts/StakeRewards";
-import HeatmapStats from "./charts/HeatmapStats";
+import HeatmapStats from "./Heatmap";
 import StakePoolStats from "./charts/StakePoolStats";
 import { DecredLoading, NoStats } from "indicators";
 import { Tooltip } from "shared";
