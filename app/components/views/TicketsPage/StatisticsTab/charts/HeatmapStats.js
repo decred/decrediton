@@ -26,24 +26,15 @@ class HeatmapStats extends React.Component {
   render() {
     const contributionData = jsonData;
     const { canvas } = this.state;
-    console.log(contributionData)
-    console.log(ticketData)
     return (
       <div>
         <canvas ref="canvas" width="200" height="200"></canvas>
         {canvas && drawContributions(canvas, {
-          data: contributionData,
-          username: "myusername",
-          themeName: "standard",
-          footerText: "Made by @sallar - github-contributions.now.sh"
-        })}
-        <canvas ref="canvas" width="200" height="200"></canvas>
-        {/* {canvas && drawContributions(canvas, {
           data: ticketData,
           username: "myusername",
           themeName: "standard",
           footerText: "Made by @sallar - github-contributions.now.sh"
-        })} */}
+        })}
       </div>)
   }
 }

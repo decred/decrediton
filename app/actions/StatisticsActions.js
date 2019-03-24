@@ -94,9 +94,9 @@ export const getTicketsHeatmapStats = () => (dispatch, getState) => {
           const sum = Object.keys(dailyTicketCounter).reduce((s, k) => {
               return s + dailyTicketCounter[k];
             }, 0);
-          resp.push({...dailyTicketCounter, date, count: sum })
+          resp.push({...dailyTicketCounter, date: endOfDayDate, count: sum })
         } else {
-          resp.push({ date, count: 0 });
+          resp.push({ date: endOfDayDate, count: 0 });
         }
         date.setDate(endOfDayDate.getDate()+1);
       }
