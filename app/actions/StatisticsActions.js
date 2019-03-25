@@ -70,7 +70,7 @@ export const GETTICKETSHEATMAPSTATS_ATTEMPT = "GETTICKETSHEATMAPSTATS_ATTEMPT";
 export const GETTICKETSHEATMAPSTATS_SUCCESS = "GETTICKETSHEATMAPSTATS_SUCCESS";
 export const GETTICKETSHEATMAPSTATS_FAILED = "GETTICKETSHEATMAPSTATS_FAILED";
 
-export const getTicketsHeatmapStats = () => (dispatch, getState) => {
+export const getTicketsHeatmapStats = () => (dispatch) => {
   dispatch({ type: GETTICKETSHEATMAPSTATS_ATTEMPT });
 
   const numberOfDays = 181;
@@ -86,15 +86,14 @@ export const getTicketsHeatmapStats = () => (dispatch, getState) => {
 
       const date = endOfDay(new Date());
       date.setDate(date.getDate()-numberOfDays);
-      let idx = 0;
       for (let i = 0; i <= numberOfDays; i++) {
         const endOfDayDate = endOfDay(date);
         const dailyTicketCounter = dailyTicketsCounter[endOfDayDate];
         if (dailyTicketCounter) {
           const sum = Object.keys(dailyTicketCounter).reduce((s, k) => {
-              return s + dailyTicketCounter[k];
-            }, 0);
-          resp.push({...dailyTicketCounter, date: endOfDayDate, count: sum })
+            return s + dailyTicketCounter[k];
+          }, 0);
+          resp.push({ ...dailyTicketCounter, date: endOfDayDate, count: sum });
         } else {
           resp.push({ date: endOfDayDate, count: 0 });
         }
@@ -150,55 +149,55 @@ export const getHeatmapStats = (opts) => async (dispatch, getState) => new Promi
 
     const ticketsCounter = await countTicketsBackwards({ mined: toProcess, maturingTxs, liveTickets, tsDate, chainParams });
 
-    resolve(ticketsCounter)
+    resolve(ticketsCounter);
 
   } catch (err) {
     reject(err);
   }
 });
 
-const countTicketsBackwards = async ({ mined, chainParams, currentBlockHeight, tsDate }) => {
+const countTicketsBackwards = async ({ mined, chainParams, tsDate }) => {
   let now = new Date();
   let lastTxTimestamp = now.getTime() / 1000;
   let lastDate = tsDate(lastTxTimestamp);
   const values = {};
-  
+
   let ticketsCounter = { live: 0, maturing: 0, vote: 0, revoke: 0 };
 
   for (let i = 0; i < mined.length; i++) {
     const tx = mined[i];
-    const lastTxDate = endOfDay(tsDate(tx.timestamp))
+    const lastTxDate = endOfDay(tsDate(tx.timestamp));
+    const tsWillMature = tx.timestamp + chainParams.TicketMaturity * chainParams.TargetTimePerBlock;
+    const tsWillMatureDate = endOfDay(tsDate(tsWillMature));
 
     switch (tx.txType) {
-      case wallet.TRANSACTION_TYPE_TICKET_PURCHASE:
-        ticketsCounter.maturing++;
-        const tsWillMature = tx.timestamp + chainParams.TicketMaturity * chainParams.TargetTimePerBlock;
-        const tsWillMatureDate = endOfDay(tsDate(tsWillMature))
-        values[tsWillMatureDate] = values[tsWillMatureDate] ?
-          {...values[tsWillMatureDate], live: values[tsWillMatureDate].live + 1 } : { live: 1, maturing: 0, vote: 0, revoke: 0 };
-        break;
-      case wallet.TRANSACTION_TYPE_VOTE:
-        ticketsCounter.vote++;
-        break;
-      case wallet.TRANSACTION_TYPE_REVOCATION:
-        ticketsCounter.revoke++;
-        break;
-      case wallet.TRANSACTION_TYPE_COINBASE:
-        break;
-      case wallet.TRANSACTION_TYPE_REGULAR:
-        break;
-      default: throw "Unknown tx type: " + tx.txType;
-      }
+    case wallet.TRANSACTION_TYPE_TICKET_PURCHASE:
+      ticketsCounter.maturing++;
+      values[tsWillMatureDate] = values[tsWillMatureDate] ?
+        { ...values[tsWillMatureDate], live: values[tsWillMatureDate].live + 1 } : { live: 1, maturing: 0, vote: 0, revoke: 0 };
+      break;
+    case wallet.TRANSACTION_TYPE_VOTE:
+      ticketsCounter.vote++;
+      break;
+    case wallet.TRANSACTION_TYPE_REVOCATION:
+      ticketsCounter.revoke++;
+      break;
+    case wallet.TRANSACTION_TYPE_COINBASE:
+      break;
+    case wallet.TRANSACTION_TYPE_REGULAR:
+      break;
+    default: throw "Unknown tx type: " + tx.txType;
+    }
 
-      if (lastTxDate.getTime() !== lastDate.getTime()) {
-        values[lastTxDate] ?
-          Object.keys(ticketsCounter).forEach((k, v) => values[lastTxDate][k] += ticketsCounter[k]) :
-          values[lastTxDate] = Object.assign({}, ticketsCounter);
-        Object.keys(ticketsCounter).forEach( k => ticketsCounter[k] = 0 );
-        lastDate = lastTxDate;
-      }
+    if (lastTxDate.getTime() !== lastDate.getTime()) {
+      values[lastTxDate] ?
+        Object.keys(ticketsCounter).forEach( k => values[lastTxDate][k] += ticketsCounter[k]) :
+        values[lastTxDate] = Object.assign({}, ticketsCounter);
+      Object.keys(ticketsCounter).forEach( k => ticketsCounter[k] = 0 );
+      lastDate = lastTxDate;
+    }
 
-      lastTxTimestamp = tx.timestamp;
+    lastTxTimestamp = tx.timestamp;
   }
 
   return values;
@@ -404,7 +403,7 @@ const findTimestampByBlockHeight = (fromHeight, toHeight, fromTimestamp, toTimes
   }
 
   return timestamp;
-}
+};
 
 // return the balance deltas from recorded tickets/votes/revokes that matured
 // in the interval fromHeight..toHeight
@@ -417,7 +416,7 @@ const findMaturingDeltas = (maturingTxs, fromHeight, toHeight, fromTimestamp, to
   const res = [];
   for (let h = start; test(h); h += inc) {
     if (!maturingTxs[h]) continue;
-    const timestamp = findTimestampByBlockHeight(fromHeight, toHeight, fromTimestamp, toTimestamp, h-fromHeight, chainParams)
+    const timestamp = findTimestampByBlockHeight(fromHeight, toHeight, fromTimestamp, toTimestamp, h-fromHeight, chainParams);
 
     const maturedThisHeight = {
       spendable: 0, immature: 0, immatureNonWallet: 0, locked: 0, ticket: 0,

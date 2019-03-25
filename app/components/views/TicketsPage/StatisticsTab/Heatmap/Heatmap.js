@@ -26,7 +26,7 @@ const MONTHS = [
   <T id="heatmap.month.11" m="Dec" />,
 ];
 
-function getTheme(opts = {}) {
+function getTheme() {
   return themes.standard;
 }
 
@@ -38,7 +38,7 @@ const getBiggestCount = (graphEntries) => {
     }
   }
   return biggest;
-}
+};
 
 const getIntensity = (indicator) => {
   if (indicator === 0) {
@@ -52,15 +52,15 @@ const getIntensity = (indicator) => {
   } else if (indicator >= 75 && indicator <= 100) {
     return 4;
   }
-}
+};
 
 const addIntensityInfo = (graphEntries) => {
   const biggestCount = getBiggestCount(graphEntries);
   for(let i = 0; i < graphEntries.length; i++) {
     const ind = 100 * graphEntries[i].count / biggestCount;
-    graphEntries[i].intensity = getIntensity(ind);    
+    graphEntries[i].intensity = getIntensity(ind);
   }
-}
+};
 
 function drawInfo(opts = {}) {
   const {
@@ -85,10 +85,10 @@ function drawInfo(opts = {}) {
         <Tooltip
           text={<TooltipInfo {...{ dayDate, month: MONTHS[dayDate.getMonth()],  ...day }} /> } key={ "index"+dayIndex }>
           <div style={{ background: color, width: boxWidth, height: boxWidth, cursor: "pointer",
-          position: "absolute", left: offsetX + (boxWidth + boxMargin) * col,
-          top: offsetY + (boxWidth + boxMargin) * row }} />
+            position: "absolute", left: offsetX + (boxWidth + boxMargin) * col,
+            top: offsetY + (boxWidth + boxMargin) * row }} />
         </Tooltip>);
-      squares.push(divEl)
+      squares.push(divEl);
     }
   }
 
@@ -101,10 +101,10 @@ function drawInfo(opts = {}) {
       const divEl = (
         <Tooltip text={date.getMonth()} key={ "month"+i }>
           <div style={{ position: "absolute", fontSize: 10,
-          left: graphEntries[i].left,
-          top: offsetY - boxMargin - boxWidth - monthLabelSize }} >{MONTHS[date.getMonth()]}</div>
+            left: graphEntries[i].left,
+            top: offsetY - boxMargin - boxWidth - monthLabelSize }} >{MONTHS[date.getMonth()]}</div>
         </Tooltip>);
-      squares.push(divEl)
+      squares.push(divEl);
     }
   }
 
@@ -122,15 +122,15 @@ function drawLegend(opts) {
   const legendStarts = offsetX - legendWidth - legendMargin;
 
   legend.push(<span key="legend-first" style={{
-      fontSize: legendFontSize, position: "absolute",
-      top: offsetY - legendFontSize/2, left: legendStarts }}>
+    fontSize: legendFontSize, position: "absolute",
+    top: offsetY - legendFontSize/2, left: legendStarts }}>
       Less
-    </span>);
+  </span>);
   for (let i = 0; i < themeColorNumber; i++) {
     const color = theme[`grade${i}`];
     const divEl = <div style={{ background: color, width: boxWidth, height: boxWidth,
-        position: "absolute", left: legendStarts + 25 + totalBoxWidth * i,
-        top: offsetY }} key={"legend"+i} />
+      position: "absolute", left: legendStarts + 25 + totalBoxWidth * i,
+      top: offsetY }} key={"legend"+i} />;
 
     legend.push(divEl);
   }
@@ -138,7 +138,7 @@ function drawLegend(opts) {
     position: "absolute", top: offsetY - legendFontSize/2, fontSize: legendFontSize,
     left: legendStarts + 25 + totalBoxWidth * themeColorNumber }}>
     More
-    </span>);
+  </span>);
 
   return legend;
 }
@@ -159,7 +159,7 @@ const Heatmap = ({ data, ...opts }) => {
         {drawLegend({ offsetY: totalOffsetY, offsetX: totalOffsetX })}
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Heatmap;
