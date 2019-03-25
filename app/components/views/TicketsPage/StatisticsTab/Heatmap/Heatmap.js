@@ -4,6 +4,13 @@ import { Tooltip } from "shared";
 import { FormattedMessage as T } from "react-intl";
 import "style/Heatmap.less";
 
+const boxWidth = 10;
+const boxMargin = 3;
+const canvasMargin = 20;
+const rowNumber = 7;
+const monthLabelSize = 5;
+const legendMargin = 10;
+const headerHeight = 50;
 const MONTHS = [
   <T id="heatmap.month.0" m="Jan" />,
   <T id="heatmap.month.1" m="Feb" />,
@@ -17,7 +24,7 @@ const MONTHS = [
   <T id="heatmap.month.9" m="Oct" />,
   <T id="heatmap.month.10" m="Nov" />,
   <T id="heatmap.month.11" m="Dec" />,
-]
+];
 
 function getTheme(opts = {}) {
   return themes.standard;
@@ -55,40 +62,31 @@ const addIntensityInfo = (graphEntries) => {
   }
 }
 
-const DATE_FORMAT = "YYYY-MM-DD";
-const boxWidth = 20;
-const boxMargin = 2;
-const textHeight = 15;
-const defaultFontFace = "IBM Plex Mono";
-const headerHeight = 60;
-const canvasMargin = 20;
-const scaleFactor = window.devicePixelRatio || 1;
-
 function drawInfo(opts = {}) {
   const {
     offsetX = 0,
     offsetY = 0,
     graphEntries,
+    columnNumber,
   } = opts;
   const theme = getTheme();
   const squares = [];
-  const numberOfRows = Math.ceil(graphEntries.length/7);
-  for (let j = 0; j < 7; j++) {
-    for (let i = 0; i < numberOfRows ; i++) {
-      const dayIndex = j + i*7;
+  for (let row = 0; row < rowNumber; row++) {
+    for (let col = 0; col < columnNumber ; col++) {
+      const dayIndex = row + col * rowNumber;
       if (dayIndex >= graphEntries.length) {
         continue;
       }
-      graphEntries[dayIndex].left = offsetX + (boxWidth + 5) * i;
+      graphEntries[dayIndex].left = offsetX + (boxWidth + boxMargin) * col;
       const day = graphEntries[dayIndex];
       const dayDate = new Date(day.date);
       const color = theme[`grade${day.intensity}`];
       const divEl = (
         <Tooltip
           text={<TooltipInfo {...{ dayDate, month: MONTHS[dayDate.getMonth()],  ...day }} /> } key={ "index"+dayIndex }>
-          <div style={{ background: color, width: boxWidth, height: boxWidth,
-          position: "absolute", left: offsetX + (boxWidth + 5) * i,
-          top: offsetY + textHeight + (boxWidth + 5) * j }} />
+          <div style={{ background: color, width: boxWidth, height: boxWidth, cursor: "pointer",
+          position: "absolute", left: offsetX + (boxWidth + boxMargin) * col,
+          top: offsetY + (boxWidth + boxMargin) * row }} />
         </Tooltip>);
       squares.push(divEl)
     }
@@ -104,7 +102,7 @@ function drawInfo(opts = {}) {
         <Tooltip text={date.getMonth()} key={ "month"+i }>
           <div style={{ position: "absolute", fontSize: 10,
           left: graphEntries[i].left,
-          top: offsetY - 5 }} >{MONTHS[date.getMonth()]}</div>
+          top: offsetY - boxMargin - boxWidth - monthLabelSize }} >{MONTHS[date.getMonth()]}</div>
         </Tooltip>);
       squares.push(divEl)
     }
@@ -113,57 +111,53 @@ function drawInfo(opts = {}) {
   return squares;
 }
 
-function drawMetaData(ctx, opts = {}) {
-  const {
-    username,
-    width,
-    height,
-    footerText,
-    fontFace = defaultFontFace
-  } = opts;
-  const theme = getTheme(opts);
-  ctx.fillStyle = theme.background;
-  ctx.fillRect(0, 0, width, height);
+function drawLegend(opts) {
+  const { offsetY, offsetX } = opts;
+  const legendFontSize = 10;
+  const theme = getTheme();
+  const legend = [];
+  const themeColorNumber = 5;
+  const totalBoxWidth = boxWidth + boxMargin;
+  const legendWidth = 4*legendFontSize + themeColorNumber*totalBoxWidth;
+  const legendStarts = offsetX - legendWidth - legendMargin;
 
-  if (footerText) {
-    ctx.fillStyle = theme.meta;
-    ctx.textBaseline = "bottom";
-    ctx.font = `10px '${fontFace}'`;
-    ctx.fillText(footerText, canvasMargin, height - 5);
+  legend.push(<span key="legend-first" style={{
+      fontSize: legendFontSize, position: "absolute",
+      top: offsetY - legendFontSize/2, left: legendStarts }}>
+      Less
+    </span>);
+  for (let i = 0; i < themeColorNumber; i++) {
+    const color = theme[`grade${i}`];
+    const divEl = <div style={{ background: color, width: boxWidth, height: boxWidth,
+        position: "absolute", left: legendStarts + 25 + totalBoxWidth * i,
+        top: offsetY }} key={"legend"+i} />
+
+    legend.push(divEl);
   }
+  legend.push(<span key="legend-last" style={{
+    position: "absolute", top: offsetY - legendFontSize/2, fontSize: legendFontSize,
+    left: legendStarts + 25 + totalBoxWidth * themeColorNumber }}>
+    More
+    </span>);
 
-  // chart legend
-  let themeGrades = 5;
-  ctx.fillStyle = theme.text;
-  ctx.fillText('Less', width - canvasMargin - (boxWidth + boxMargin) * (themeGrades) - 55, 37);
-  ctx.fillText('More', (width - canvasMargin) - 25, 37);
-  for (let x = 0; x < 5; x += 1) {
-    ctx.fillStyle = theme[`grade${x}`];
-    ctx.fillRect(width - canvasMargin - (boxWidth + boxMargin) * (themeGrades) - 27,textHeight + boxWidth,10,10);
-    themeGrades -= 1;
-  }
-
-  ctx.fillStyle = theme.text;
-  ctx.textBaseline = "hanging";
-  ctx.font = `20px '${fontFace}'`;
-  ctx.fillText(`@${username} on GitHub`, canvasMargin, canvasMargin);
-
-  ctx.beginPath();
-  ctx.moveTo(canvasMargin, 55);
-  ctx.lineTo(width - canvasMargin, 55);
-  ctx.strokeStyle = theme.grade0;
-  ctx.stroke();
+  return legend;
 }
 
 const Heatmap = ({ data, ...opts }) => {
-  addIntensityInfo(data);
-
+  const columnNumber =  Math.ceil(data.length/rowNumber);
   const offsetY = canvasMargin + headerHeight;
-  const offsetX = canvasMargin;
+  const offsetX = 0;
+  const totalOffsetY = offsetY + rowNumber * (boxMargin + boxWidth) + monthLabelSize + legendMargin;
+  const totalOffsetX = canvasMargin + columnNumber * (boxMargin + boxWidth);
 
+  addIntensityInfo(data);
   return (
-    <div className="heatmap-wrapper">
-      {drawInfo({ graphEntries: data, offsetX, offsetY, ...opts })}
+    <div className = "ticket-activity-wrapper">
+      <span className="my-tickets-stats-indicators-title">Ticket Activity</span>
+      <div className="heatmap-wrapper">
+        {drawInfo({ graphEntries: data, offsetX, offsetY, columnNumber, ...opts })}
+        {drawLegend({ offsetY: totalOffsetY, offsetX: totalOffsetX })}
+      </div>
     </div>
   )
 }
