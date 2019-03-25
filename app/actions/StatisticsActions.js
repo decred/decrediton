@@ -73,7 +73,7 @@ export const GETTICKETSHEATMAPSTATS_FAILED = "GETTICKETSHEATMAPSTATS_FAILED";
 export const getTicketsHeatmapStats = () => (dispatch, getState) => {
   dispatch({ type: GETTICKETSHEATMAPSTATS_ATTEMPT });
 
-  const numberOfDays = 100;
+  const numberOfDays = 181;
   const endDate = new Date();
   endDate.setDate(endDate.getDate()-numberOfDays);
 
