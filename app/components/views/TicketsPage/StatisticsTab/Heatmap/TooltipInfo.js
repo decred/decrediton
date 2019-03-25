@@ -6,6 +6,6 @@ const TooltipInfo = ({ live, maturing, vote, revoke, dayDate, month }) => <>
   <div>
     <span>{` on ${dayDate.getDate()}. `}</span><span>{month}</span><span>{` ${dayDate.getFullYear()}`}</span>
   </div>
-</>
+</>;
 
 export default TooltipInfo;

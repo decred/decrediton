@@ -467,7 +467,7 @@ export const totalValueOfLiveTickets = createSelector(
   }
 );
 
-export const ticketDataHeatmap = get(["statistics", "ticketDataHeatmap"]);
+export const ticketDataHeatmap = get([ "statistics", "ticketDataHeatmap" ]);
 
 export const ticketDataChart = createSelector(
   [ dailyBalancesStats, unitDivisor ],

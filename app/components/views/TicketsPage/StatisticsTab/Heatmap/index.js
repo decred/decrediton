@@ -1,17 +1,20 @@
-// import StatisticsPage from "./Page";
 import Page from "./Heatmap";
 import { myTicketsCharts } from "connectors";
-import ticketData from "./mockTicketData.json";
+import { DecredLoading } from "indicators";
 
 @autobind
 class Heatmap extends React.Component{
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
     this.props.getTicketsHeatmapStats();
   }
 
   render() {
-    return <Page {...{ data: this.props.ticketDataHeatmap }}/>
+    const { ticketDataHeatmap } = this.props;
+    return ticketDataHeatmap.length > 0 ? <Page {...{ data: this.props.ticketDataHeatmap }}/> : <DecredLoading />;
   }
 }
 
