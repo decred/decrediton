@@ -17,7 +17,6 @@ const mapStateToProps = selectorMap({
   hasTickets: sel.hasTickets,
   selectedStakePool: sel.selectedStakePool,
   ticketDataHeatmap: sel.ticketDataHeatmap,
-  timezone: sel.timezone,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

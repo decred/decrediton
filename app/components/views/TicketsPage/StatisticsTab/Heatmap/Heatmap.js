@@ -1,7 +1,23 @@
 import { themes } from "./themes";
-import { formatLocalISODate } from "helpers";
+import TooltipInfo from "./TooltipInfo";
 import { Tooltip } from "shared";
+import { FormattedMessage as T } from "react-intl";
 import "style/Heatmap.less";
+
+const MONTHS = [
+  <T id="heatmap.month.0" m="Jan" />,
+  <T id="heatmap.month.1" m="Feb" />,
+  <T id="heatmap.month.2" m="Mar" />,
+  <T id="heatmap.month.3" m="Apr" />,
+  <T id="heatmap.month.4" m="May" />,
+  <T id="heatmap.month.5" m="Jun" />,
+  <T id="heatmap.month.6" m="Jul" />,
+  <T id="heatmap.month.7" m="Aug" />,
+  <T id="heatmap.month.8" m="Sep" />,
+  <T id="heatmap.month.9" m="Oct" />,
+  <T id="heatmap.month.10" m="Nov" />,
+  <T id="heatmap.month.11" m="Dec" />,
+]
 
 function getTheme(opts = {}) {
   return themes.standard;
@@ -53,28 +69,42 @@ function drawInfo(opts = {}) {
     offsetX = 0,
     offsetY = 0,
     graphEntries,
-    timezone,
   } = opts;
   const theme = getTheme();
   const squares = [];
   const numberOfRows = Math.ceil(graphEntries.length/7);
-  
   for (let j = 0; j < 7; j++) {
     for (let i = 0; i < numberOfRows ; i++) {
       const dayIndex = j + i*7;
       if (dayIndex >= graphEntries.length) {
         continue;
       }
+      graphEntries[dayIndex].left = offsetX + (boxWidth + 5) * i;
       const day = graphEntries[dayIndex];
       const dayDate = new Date(day.date);
-
       const color = theme[`grade${day.intensity}`];
       const divEl = (
-        <Tooltip text={JSON.stringify(formatLocalISODate(dayDate, timezone))} key={ dayIndex }>
+        <Tooltip
+          text={<TooltipInfo {...{ dayDate, month: MONTHS[dayDate.getMonth()],  ...day }} /> } key={ "index"+dayIndex }>
           <div style={{ background: color, width: boxWidth, height: boxWidth,
-          position: "absolute", fontSize: 8,
-          left: offsetX + (boxWidth + 5) * i,
+          position: "absolute", left: offsetX + (boxWidth + 5) * i,
           top: offsetY + textHeight + (boxWidth + 5) * j }} />
+        </Tooltip>);
+      squares.push(divEl)
+    }
+  }
+
+  // add month label
+  let lastDateCounted = graphEntries[0] && new Date(graphEntries[0].date);
+  for(let i = 0; i < graphEntries.length; i++) {
+    const date = new Date(graphEntries[i].date);
+    if (lastDateCounted.getMonth() !== date.getMonth()) {
+      lastDateCounted = date;
+      const divEl = (
+        <Tooltip text={date.getMonth()} key={ "month"+i }>
+          <div style={{ position: "absolute", fontSize: 10,
+          left: graphEntries[i].left,
+          top: offsetY - 5 }} >{MONTHS[date.getMonth()]}</div>
         </Tooltip>);
       squares.push(divEl)
     }
