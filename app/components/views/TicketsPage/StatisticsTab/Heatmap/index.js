@@ -7,10 +7,12 @@ import ticketData from "./mockTicketData.json";
 class Heatmap extends React.Component{
   constructor(props) {
     super(props);
+    this.props.getTicketsHeatmapStats();
   }
 
   render() {
-    return <Page {...{ data: ticketData }}/>
+    const { timezone, ticketDataHeatmap } = this.props;
+    return <Page {...{ data: ticketDataHeatmap, timezone }}/>
   }
 }
 

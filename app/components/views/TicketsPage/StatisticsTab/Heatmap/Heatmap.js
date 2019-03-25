@@ -1,5 +1,5 @@
 import { themes } from "./themes";
-import { endOfDay } from "helpers";
+import { formatLocalISODate } from "helpers";
 import { Tooltip } from "shared";
 import "style/Heatmap.less";
 
@@ -53,27 +53,29 @@ function drawInfo(opts = {}) {
     offsetX = 0,
     offsetY = 0,
     graphEntries,
+    timezone,
   } = opts;
   const theme = getTheme();
-  let squares = [];
+  const squares = [];
   const numberOfRows = Math.ceil(graphEntries.length/7);
-
+  
   for (let j = 0; j < 7; j++) {
     for (let i = 0; i < numberOfRows ; i++) {
       const dayIndex = j + i*7;
-
       if (dayIndex >= graphEntries.length) {
         continue;
       }
       const day = graphEntries[dayIndex];
+      const dayDate = new Date(day.date);
+
       const color = theme[`grade${day.intensity}`];
       const divEl = (
-        <Tooltip text={JSON.stringify(day)}>
+        <Tooltip text={JSON.stringify(formatLocalISODate(dayDate, timezone))} key={ dayIndex }>
           <div style={{ background: color, width: boxWidth, height: boxWidth,
           position: "absolute", fontSize: 8,
           left: offsetX + (boxWidth + 5) * i,
-          top: offsetY + textHeight + (boxWidth + 5) * j }} />  
-        </Tooltip>); 
+          top: offsetY + textHeight + (boxWidth + 5) * j }} />
+        </Tooltip>);
       squares.push(divEl)
     }
   }
@@ -124,19 +126,14 @@ function drawMetaData(ctx, opts = {}) {
 }
 
 const Heatmap = ({ data, ...opts }) => {
-  const graphEntries = [];
-  for (let i = 0; i < data.length; i++) {
-    graphEntries.push({ ...data[i] });
-  }
-
-  addIntensityInfo(graphEntries);
+  addIntensityInfo(data);
 
   const offsetY = canvasMargin + headerHeight;
   const offsetX = canvasMargin;
 
   return (
     <div className="heatmap-wrapper">
-      {drawInfo({graphEntries, offsetX, offsetY, ...opts })}
+      {drawInfo({ graphEntries: data, offsetX, offsetY, ...opts })}
     </div>
   )
 }
