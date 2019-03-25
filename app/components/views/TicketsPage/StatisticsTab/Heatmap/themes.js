@@ -13,6 +13,16 @@ export const themes = {
     background: "#ffffff",
     text: "#000000",
     meta: "#666666",
+    grade4: "#1B41B3",
+    grade3: "#2970FF",
+    grade2: "#66A9FF",
+    grade1: "#70CBFF",
+    grade0: "#ebedf0"
+  },
+  github: {
+    background: "#ffffff",
+    text: "#000000",
+    meta: "#666666",
     grade4: "#196127",
     grade3: "#239a3b",
     grade2: "#7bc96f",
