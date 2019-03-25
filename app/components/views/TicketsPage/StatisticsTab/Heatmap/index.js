@@ -11,8 +11,7 @@ class Heatmap extends React.Component{
   }
 
   render() {
-    const { timezone, ticketDataHeatmap } = this.props;
-    return <Page {...{ data: ticketDataHeatmap, timezone }}/>
+    return <Page {...{ data: this.props.ticketDataHeatmap }}/>
   }
 }
 
