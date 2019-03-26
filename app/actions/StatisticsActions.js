@@ -657,7 +657,7 @@ const prepDataToCalcStats = async (startBlock, endBlock, currentDate, endDate, p
   // grab transactions in batches of (roughly) `pageSize` transactions, so
   // that if we can stop in the middle of the process (say, because we're
   // interested in only the first 10 days worth of balances)
-  while (continueGetting !== false) {
+  while (continueGetting) {
     const { mined } = await wallet.getTransactions(walletService, currentBlock,
       endBlock, pageSize);
     if (mined.length > 0) {

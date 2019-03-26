@@ -32,7 +32,7 @@ function getTheme() {
 
 const getBiggestCount = (graphEntries) => {
   let biggest = 0;
-  for(let i = 0; i < graphEntries.length; i++) {
+  for (let i = 0; i < graphEntries.length; i++) {
     if (graphEntries[i].count > biggest) {
       biggest = graphEntries[i].count;
     }
@@ -56,7 +56,7 @@ const getIntensity = (indicator) => {
 
 const addIntensityInfo = (graphEntries) => {
   const biggestCount = getBiggestCount(graphEntries);
-  for(let i = 0; i < graphEntries.length; i++) {
+  for (let i = 0; i < graphEntries.length; i++) {
     const ind = 100 * graphEntries[i].count / biggestCount;
     graphEntries[i].intensity = getIntensity(ind);
   }
@@ -94,7 +94,7 @@ function drawInfo(opts = {}) {
 
   // add month label
   let lastDateCounted = graphEntries[0] && new Date(graphEntries[0].date);
-  for(let i = 0; i < graphEntries.length; i++) {
+  for (let i = 0; i < graphEntries.length; i++) {
     const date = new Date(graphEntries[i].date);
     if (lastDateCounted.getMonth() !== date.getMonth()) {
       lastDateCounted = date;
