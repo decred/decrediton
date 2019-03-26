@@ -37,6 +37,7 @@ const DaemonLoadingBody = ({
   syncFetchHeadersAttempt,
   daemonWarning,
   walletName,
+  daemonTimeout,
   ...props,
 }) => (
   <div className="page-body getstarted">
@@ -75,6 +76,9 @@ const DaemonLoadingBody = ({
               max={getNeededBlocks}
               value={getCurrentBlockCount}
             />
+            {daemonTimeout &&
+              <span className="warning"><T id="getStarted.daemon.isTimeout" m="Daemon connection timeout exceded."/></span>
+            }
             {!getDaemonStarted || getCurrentBlockCount == null || getDaemonSynced ?
               syncFetchHeadersAttempt &&
               <div className="loader-bar-estimation">

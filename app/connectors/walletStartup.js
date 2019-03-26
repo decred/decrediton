@@ -48,6 +48,7 @@ const mapStateToProps = selectorMap({
   isSPV: sel.isSPV,
   syncInput: sel.syncInput,
   daemonWarning: sel.daemonWarning,
+  daemonTimeout: sel.getDaemonTimeout,
 
   peerCount: sel.peerCount,
   synced: sel.synced,
