@@ -27,7 +27,7 @@ const TicketsStatsPage = ({ getMyTicketsStatsRequest, hasStats, hasTickets, allS
                 <Link to="/tickets/statistics/voteTime" activeClassName="my-tickets-active-chart-link vote-time" className="vote-time"/>
               </Tooltip>
               <Tooltip text={<T id="mytickets.statistics.heatmap.link" m="Heatmap" />}>
-                <Link to="/tickets/statistics/heatmap" activeClassName="my-tickets-active-chart-link vote-time" className="heatmap"/>
+                <Link to="/tickets/statistics/heatmap" activeClassName="my-tickets-active-chart-link heatmap-icon" className="heatmap-icon"/>
               </Tooltip>
             </>
           }
