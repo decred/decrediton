@@ -12,7 +12,7 @@ const ExistingSeedForm = ({
 }) => {
   const errors = mountSeedErrors();
   return (
-    <Aux>
+    <>
       <div className="content-title">
         <T id="createWallet.restore.title" m={"Restore existing wallet"}/>
       </div>
@@ -62,7 +62,7 @@ const ExistingSeedForm = ({
           {errors.length > 0 && <div>{errors}</div>}
         </div>
       </div>
-    </Aux>
+    </>
   );
 };
 

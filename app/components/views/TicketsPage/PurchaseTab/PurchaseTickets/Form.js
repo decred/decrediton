@@ -28,7 +28,7 @@ const PurchaseTicketsForm = ({
 }) => {
 
   return (
-    <Aux>
+    <>
       <div className="stakepool-voting-title-area">
         <div className="stakepool-purchase-ticket-input-buttons">
           <InfoDocModalButton document="PurchaseTicketsInfo" modalClassName="info-modal-fields" double/>
@@ -91,7 +91,7 @@ const PurchaseTicketsForm = ({
           />
         }
       </div>
-    </Aux>);
+    </>);
 };
 
 export default PurchaseTicketsForm;

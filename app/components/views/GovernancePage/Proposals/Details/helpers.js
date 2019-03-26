@@ -21,17 +21,17 @@ export const ProposalVoted = () =>
   <div className="proposal-details-voting-voted"><T id="proposalDetails.votingInfo.voted" m="Voting has ended for this proposal" /></div>;
 
 export const NoTicketsVotingInfo = ({ showPurchaseTicketsPage }) => (
-  <Aux>
+  <>
     <div className="proposal-details-no-tickets"><T id="proposalDetails.votingInfo.noTickets" m="Voting is only available upon participation in Staking." /></div>
     <KeyBlueButton onClick={showPurchaseTicketsPage}><T id="proposalDetails.votingInfo.startStakingBtn" m="Start Staking" /></KeyBlueButton>
-  </Aux>
+  </>
 );
 
 export const NoElligibleTicketsVotingInfo = ({ showPurchaseTicketsPage }) => (
-  <Aux>
+  <>
     <div className="proposal-details-no-tickets"><T id="proposalDetails.votingInfo.noElligibleTickets" m="You don't have tickets elligible for voting on this proposal. Purchase tickets to vote on future proposals." /></div>
     <KeyBlueButton onClick={showPurchaseTicketsPage}><T id="proposalDetails.votingInfo.purchaseTicketsBtn" m="Purchase Tickets" /></KeyBlueButton>
-  </Aux>
+  </>
 );
 
 const VoteOption = ({ value, description, onClick, checked }) => (
@@ -43,7 +43,7 @@ const VoteOption = ({ value, description, onClick, checked }) => (
 );
 
 export const ChosenVoteOption = ({ voteOptions, onUpdateVoteChoice, onVoteOptionSelected, newVoteChoice, currentVoteChoice, votingComplete, eligibleTicketCount }) => (
-  <Aux>
+  <>
     <div className="proposal-details-voting-preference">
       <div className="proposal-details-voting-preference-title"><T id="proposalDetails.votingInfo.votingPreferenceTitle" m="My Voting Preference" /></div>
       <div className="proposal-details-current-choice-box">
@@ -54,7 +54,7 @@ export const ChosenVoteOption = ({ voteOptions, onUpdateVoteChoice, onVoteOption
       </div>
     </div>
     {!votingComplete && <UpdateVoteChoiceModalButton {...{ newVoteChoice, onUpdateVoteChoice, eligibleTicketCount }} />}
-  </Aux>
+  </>
 );
 
 export const UpdatingVoteChoice = () => (
@@ -85,10 +85,10 @@ export const OverviewVotingProgressInfo = ({ voteCounts }) => (
 );
 
 export const TimeValue = ({ timestamp, tsDate }) => (
-  <Aux>
+  <>
     <span className="time-value"><FormattedRelative  value={ tsDate(timestamp) } /></span>
     (<T id="proposal.overview.fullTime" m="{timestamp, date, medium} {timestamp, time, short}" values={{ timestamp: tsDate(timestamp) }} />)
-  </Aux>
+  </>
 );
 
 // This changes links to never open. Debatable whether we want to

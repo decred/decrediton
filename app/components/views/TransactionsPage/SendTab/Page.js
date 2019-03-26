@@ -37,7 +37,7 @@ const SendPage = ({
   isTrezor,
   ...props
 }) => (
-  <Aux>
+  <>
     <div className="tabbed-page-subtitle"><T id="send.subtitle" m="Send DCR"/></div>
     <div className="send-flex-height">
       <div className="send-select-account-area">
@@ -82,18 +82,18 @@ const SendPage = ({
           onSubmit={onAttemptSignTransaction} >
           <div className="passphrase-modal-confirm-send">
             {!isSendSelf ?
-              <Aux>
+              <>
                 <div className="passphrase-modal-confirm-send-label">{outputs.length > 1 ? <T id="send.confirmAmountAddresses" m="Destination addresses" /> : <T id="send.confirmAmountAddress" m="Destination address" /> }:</div>
                 {outputs.map((output, index) => {
                   return (
                     <div className="passphrase-modal-confirm-send-address" key={"confirm-" + index}>{output.data.destination}</div>
                   );}
                 )}
-              </Aux> :
-              <Aux>
+              </> :
+              <>
                 <div className="passphrase-modal-confirm-send-label"><T id="send.confirmAmountAccount" m="Destination account" />:</div>
                 <div className="passphrase-modal-confirm-send-address">{nextAddressAccount.name}</div>
-              </Aux>
+              </>
             }
             <div className="passphrase-modal-confirm-send-label"><T id="send.confirmAmountLabelFor" m="Total Spent" />:</div>
             <div className="passphrase-modal-confirm-send-balance"><Balance amount={totalSpent} /></div>
@@ -140,7 +140,7 @@ const SendPage = ({
           </div>
         )
     }
-  </Aux>
+  </>
 );
 
 export default SendPage;

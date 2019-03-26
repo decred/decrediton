@@ -5,7 +5,7 @@ import { Tooltip } from "shared";
 const StatusSmall = ({ pending, txTimestamp, onClick, tsDate }) => {
 
   return (
-    <Aux>
+    <>
       {!pending ? (
         <div className="transaction-time-date-spacer">
           <T
@@ -23,7 +23,7 @@ const StatusSmall = ({ pending, txTimestamp, onClick, tsDate }) => {
           <div className="pending-overview-details" onClick={onClick}/>
         </Tooltip>
       )}
-    </Aux>
+    </>
   );
 };
 

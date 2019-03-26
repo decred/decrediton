@@ -33,7 +33,7 @@ const StakePoolsAddForm = ({
   onCancelAddStakePool,
   hasFailedAttempt
 }) => (
-  <Aux>
+  <>
     <div className="stakepool-add-title">
       <T id="stakepool.addPoolTitle" m="Add a Stakepool" />
     </div>
@@ -102,7 +102,7 @@ const StakePoolsAddForm = ({
         ><T id="stake.addPool.cancelBtn" m="Cancel" /></SlateGrayButton>
       ) : null}
     </div>
-  </Aux>
+  </>
 );
 
 export default injectIntl(StakePoolsAddForm);

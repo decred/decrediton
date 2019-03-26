@@ -29,14 +29,14 @@ const Documentation = ({ currentLocaleName, name, className }) => {
   }
 
   return (
-    <Aux>
+    <>
       <ReactMarkdown
         source={content}
         className={className}
         renderers={{ link: renderDocLink }}
       />
       {unavailable}
-    </Aux>
+    </>
   );
 };
 

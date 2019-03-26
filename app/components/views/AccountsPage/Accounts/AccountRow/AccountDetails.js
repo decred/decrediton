@@ -111,12 +111,12 @@ const AccountsList = ({
             <T id="account.pubKey" m="Extended Public Key"/>
           </div>
           {showPubKey && accountExtendedKey?
-            <Aux>
+            <>
               <div className="account-actions-pubkey-area">
                 {accountExtendedKey}
               </div>
               <CopyToClipboard textToCopy={accountExtendedKey} className="account-actions-pubkey-clipboard" />
-            </Aux> :
+            </> :
             <SlateGrayButton className="account-actions-pubkey-button" onClick={onShowPubKey}><T id="account.reveal" m="Reveal"/></SlateGrayButton>
           }
         </div>

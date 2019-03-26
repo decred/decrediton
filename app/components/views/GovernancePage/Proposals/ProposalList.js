@@ -54,10 +54,10 @@ const ProposalListItem = ({ name, timestamp, token, voteCounts, tsDate, onClick,
         </div>}
       </div>
       {voteStatus == VOTESTATUS_ACTIVEVOTE &&
-        <Aux>
+        <>
           <VoteChoice currentVoteChoice={currentVoteChoice} />
           <VotingProgress voteCounts={voteCounts} />
-        </Aux>}
+        </>}
       {voteStatus == VOTESTATUS_VOTED &&
         <VoteResults  {...{ currentVoteChoice, quorumPass, voteResult }}/>}
     </div>
@@ -65,7 +65,7 @@ const ProposalListItem = ({ name, timestamp, token, voteCounts, tsDate, onClick,
 };
 
 const ProposalList = ({ proposals, loading, viewProposalDetails, tsDate, voteEnded, abandonedProposals }) => (
-  <Aux>
+  <>
     { loading
       ? <div className="proposal-loading-page"><PoliteiaLoading center /></div>
       : proposals && proposals.length
@@ -78,7 +78,7 @@ const ProposalList = ({ proposals, loading, viewProposalDetails, tsDate, voteEnd
         )
         : <NoProposals />
     }
-  </Aux>
+  </>
 );
 
 export const ActiveVoteProposals = activeVoteProposals(proposals(ProposalList));

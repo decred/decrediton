@@ -16,7 +16,7 @@ const StakeInfoDisplay = ({
   onShowStakeInfo,
   onHideStakeInfo
 }) => (
-  <Aux>
+  <>
     <StakeInfoRow
       {...{
         isShowingDetails,
@@ -36,6 +36,6 @@ const StakeInfoDisplay = ({
         wrapperComponent,
       }}
     />
-  </Aux>);
+  </>);
 
 export default StakeInfoDisplay;

@@ -10,7 +10,7 @@ const StakePoolsList = ({
   onRemoveStakePool,
   rescanRequest,
 }) => (
-  <Aux>
+  <>
     <div className="stakepool-flex-height">
       <div className="stakepool-content-nest-from-address">
         <div className="stakepool-content-nest-prefix-configured"><T id="stakepools.list.title" m="Configured stake pools:" /></div>
@@ -60,7 +60,7 @@ const StakePoolsList = ({
       className="stakepool-hide-config"
       onClick={onHideStakePoolConfig}
     ><T id="stakepools.list.form.cancel" m="Cancel" /></SlateGrayButton>
-  </Aux>
+  </>
 );
 
 StakePoolsList.propTypes = {

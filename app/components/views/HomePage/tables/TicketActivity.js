@@ -18,7 +18,7 @@ const RecentTickets = ({
   const hasTickets = tickets.length > 0;
   return (
     getTransactionsRequestAttempt ? <DecredLoading /> :
-      <Aux>
+      <>
         <div className="home-content-title">
           {hasTickets
             ? <T id="home.ticketActivityTitle" m="Staking Activity" />
@@ -34,7 +34,7 @@ const RecentTickets = ({
             ? <TxHistory overview limit={rowNumber} {...{ getAccountsResponse, transactions: tickets, tsDate }} />
             : <NoTicketsLinks />}
         </div>
-      </Aux>
+      </>
   );
 };
 

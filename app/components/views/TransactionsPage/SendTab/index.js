@@ -90,7 +90,7 @@ class Send extends React.Component {
     const showPassphraseModal = this.getShowPassphraseModal();
 
     return (
-      <Aux>
+      <>
         <div>
           <SendPage
             {...{ ...this.props, ...this.state }}
@@ -121,7 +121,7 @@ class Send extends React.Component {
             }}
           />
         </div>
-      </Aux>
+      </>
     );
   }
 

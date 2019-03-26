@@ -20,7 +20,7 @@ const CreateWallet = ({
   getEstimatedTimeLeft,
   getDaemonSynced,
 }) => (
-  <Aux>
+  <>
     <div className="getstarted content">
       <div className="go-back-screen-button-area">
         <Tooltip text={ <T id="createWallet.goBack" m="Go back" /> }><div className="go-back-screen-button" onClick={onReturnToWalletSelection}/></Tooltip>
@@ -58,7 +58,7 @@ const CreateWallet = ({
       onSubmit={onSubmitCopySeedConfirm}
       onCancelModal={onCancelCopySeedConfirm}
     />
-  </Aux>
+  </>
 );
 
 export default CreateWallet;

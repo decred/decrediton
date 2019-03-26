@@ -35,11 +35,11 @@ const SpvSyncBody = ({
 }) => (
   <div className="page-body getstarted">
     <div className="getstarted loader">
-      <Aux>
+      <>
         <div className="content-title">
           <div className="loader-settings-logs">
             {updateAvailable && <UpdateAvailableLink updateAvailable={updateAvailable} /> }
-            <Aux>
+            <>
               <AboutModalButton { ...{ appVersion, updateAvailable } } />
               <InvisibleButton onClick={onShowSettings}>
                 <SettingsLinkMsg />
@@ -47,7 +47,7 @@ const SpvSyncBody = ({
               <InvisibleButton onClick={onShowLogs}>
                 <LogsLinkMsg />
               </InvisibleButton>
-            </Aux>
+            </>
           </div>
           <LoaderTitleMsg />
         </div>
@@ -58,7 +58,7 @@ const SpvSyncBody = ({
           <WhatsNewLink {...{ onShowReleaseNotes, appVersion }} />
         </div>
         <div className="loader-bar">
-          <Aux>
+          <>
             <AnimatedLinearProgressFull
               text={text}
               animationType={animationType}
@@ -75,7 +75,7 @@ const SpvSyncBody = ({
                 <span className="bold"> {syncFetchHeadersLastHeaderTime ? <FormattedRelative value={syncFetchHeadersLastHeaderTime}/> : "--" }</span>
               </div>
             }
-          </Aux>
+          </>
         </div>
         <div className="loader-bar-icon">
           {startupError &&
@@ -116,7 +116,7 @@ const SpvSyncBody = ({
             <div className="last-dcrwallet-log-line">{lastDcrwalletLogLine}</div>
           </div>
         }
-      </Aux>
+      </>
     </div>
   </div>
 );

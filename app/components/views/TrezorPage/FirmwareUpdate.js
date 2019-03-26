@@ -26,9 +26,9 @@ class FirmwareUpdate extends React.Component {
   render() {
 
     const header = (
-      <Aux>
+      <>
         <T id="trezor.firmwareUpdate.header" m="Firmware Update" />
-      </Aux>
+      </>
     );
 
     const { loading } = this.props;

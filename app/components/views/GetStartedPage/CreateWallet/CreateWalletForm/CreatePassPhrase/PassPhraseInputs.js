@@ -29,7 +29,7 @@ const PassPhraseInputs = ({
   onKeyDown,
   hasFailedAttempt
 }) => (
-  <Aux>
+  <>
     <div className="confirm-seed-row passphrase">
       <div className="confirm-seed-label-text passphrase">
         <div className="info-label">
@@ -73,7 +73,7 @@ const PassPhraseInputs = ({
         </div>
       </div>
     </div>
-  </Aux>
+  </>
 );
 
 export default injectIntl(PassPhraseInputs);

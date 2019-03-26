@@ -30,7 +30,7 @@ class Purchase extends React.Component {
   render() {
     const { isTicketPurchaseTabDisabled } = this.props;
     return (
-      <Aux>
+      <>
         {
           isTicketPurchaseTabDisabled && <WatchingOnlyWarnModal />
         }
@@ -56,7 +56,7 @@ class Purchase extends React.Component {
             }}
           />
         </div>
-      </Aux>
+      </>
     );
   }
 

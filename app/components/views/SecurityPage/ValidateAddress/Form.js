@@ -14,7 +14,7 @@ const ValidateAddressForm = ({
   address,
   intl
 }) => (
-  <Aux>
+  <>
     <div className="tabbed-page-subtitle"><T id="security.validate.title" m="Validate Addresses"/></div>
     <div className="validate-address-form">
       <div className="validate-address-form-label">
@@ -28,11 +28,11 @@ const ValidateAddressForm = ({
         />
       </div>
       {result && address !== "" ?
-        <Aux>{ result }</Aux> :
+        <>{ result }</> :
         <div/>
       }
     </div>
-  </Aux>
+  </>
 );
 
 export default injectIntl(ValidateAddressForm);

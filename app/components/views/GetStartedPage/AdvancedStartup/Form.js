@@ -34,7 +34,7 @@ const AdvancedBodyBase = ({
   ...props,
 }) => {
   return (
-    <Aux>
+    <>
       <div className="advanced-page-toggle">
         <div className="text-toggle">
           <div className={"text-toggle-button-left " + (sideActive && "text-toggle-button-active")} onClick={!sideActive ? onShowAppData : null}>
@@ -89,7 +89,7 @@ const AdvancedBodyBase = ({
           }
         </div>
       </div>
-    </Aux>
+    </>
   );
 };
 

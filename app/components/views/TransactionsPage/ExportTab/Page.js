@@ -23,7 +23,7 @@ const ExportPage =
     expanded,
     expandFields
   }) => (
-    <Aux>
+    <>
       <div className="tabbed-page-subtitle export"><T id="export.subtitle" m="Export Transactions"/></div>
       <div className="export-area">
         <div className="export-area-left">
@@ -70,7 +70,7 @@ const ExportPage =
           }
         </div>
       </div>
-    </Aux>
+    </>
   );
 
 export default ExportPage;

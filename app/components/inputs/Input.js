@@ -62,7 +62,7 @@ class Input extends React.Component{
     } = this.props;
     return (
       hidden ? null :
-        <Aux>
+        <>
           <div className={showErrors && (invalid && value || required && !value) ? this.state.divClassName + " error" : this.state.divClassName} ref={div => { this.state.inputUnitDiv = div; }}>
             <input
               ref={input => { this.input = input; }}
@@ -95,7 +95,7 @@ class Input extends React.Component{
               ) : null}
             </div>
           ) : null}
-        </Aux>
+        </>
     );
   }
 }

@@ -11,7 +11,7 @@ const Tickets = ({
   blocksNumberToNextTicket,
   ...props,
 }) => (
-  <Aux>
+  <>
     <div className="tabbed-page-subtitle"><T id="purchase.subtitle" m="Purchase Tickets"/></div>
     <StakeInfo />
     {
@@ -23,7 +23,7 @@ const Tickets = ({
     {
       spvMode ? <div className="spv-autobuyer-warning"><T id="spv.auto.buyer.warn" m="Ticket Auto Buyer not available while using SPV" /></div>  : <TicketAutoBuyer {...{ ...props }} />
     }
-  </Aux>
+  </>
 );
 
 export default spv(Tickets);

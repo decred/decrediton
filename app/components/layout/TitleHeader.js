@@ -1,5 +1,5 @@
 const TitleHeader = ({ title, iconClassName, optionalButton }) => (
-  <Aux>
+  <>
     <div className="title-header-icon">
       <div className={iconClassName} />
     </div>
@@ -11,7 +11,7 @@ const TitleHeader = ({ title, iconClassName, optionalButton }) => (
       {optionalButton}
     </div>
     }
-  </Aux>
+  </>
 );
 
 export default TitleHeader;

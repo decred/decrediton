@@ -44,7 +44,7 @@ const Transaction = ({
   topNotification,
   progress
 }) => (
-  <Aux>
+  <>
     {topNotification &&
       <div className="snackbar-close-button-top" onClick={onDismissMessage}>
         <ProgressRing
@@ -73,7 +73,7 @@ const Transaction = ({
         <Tooltip width={300} text={`${message.txHash}`}><Link onClick={onDismissMessage} to={`/transactions/history/${message.txHash}`}>{message.txHash}</Link></Tooltip>
       </div>
     </div>
-  </Aux>
+  </>
 );
 
 export default injectIntl(Transaction);

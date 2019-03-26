@@ -14,7 +14,7 @@ const PrivacyOption = ({ title, description, icon, onClick }) => (
 );
 
 export default ({ enableSpv, disableSpv }) => (
-  <Aux>
+  <>
     <div className="language-select-title">
       <T id="spv.title" m={"Simple Payment Verification (SPV)"}/>
     </div>
@@ -38,5 +38,5 @@ export default ({ enableSpv, disableSpv }) => (
       />
 
     </div>
-  </Aux>
+  </>
 );

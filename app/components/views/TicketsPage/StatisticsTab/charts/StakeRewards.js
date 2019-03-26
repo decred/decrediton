@@ -12,7 +12,7 @@ const StakeRewardsChartPage = ({ stakeRewardsStats, dailyBalancesStats }) => {
   const totalFees = lastBalance.series.stakeFees;
 
   return (
-    <Aux>
+    <>
       <div className="my-tickets-stats-indicators">
         <div className="my-tickets-stats-indicators-row">
           <span className="my-tickets-stats-indicators-title">
@@ -47,7 +47,7 @@ const StakeRewardsChartPage = ({ stakeRewardsStats, dailyBalancesStats }) => {
       <div className="my-tickets-stats-chart">
         <StakeRewardsChart data={stakeRewardsStats}  />
       </div>
-    </Aux>
+    </>
   );
 };
 

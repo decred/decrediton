@@ -43,7 +43,7 @@ class ModalButton extends React.Component {
     const { onSubmit } = this;
     const Modal = modalComponent;
 
-    return <Aux>
+    return <>
       <ButtonComponent {...this.props} onClick={!isDisabled ? this.showModal : null}>
         {buttonLabel}
       </ButtonComponent>
@@ -56,7 +56,7 @@ class ModalButton extends React.Component {
           onCancelModal: this.hideModal
         }}
       />
-    </Aux>;
+    </>;
   }
 }
 

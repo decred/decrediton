@@ -17,9 +17,9 @@ class RecoveryButtons extends React.Component {
   render() {
 
     const header = (
-      <Aux>
+      <>
         <T id="trezor.recoveryButtons.header" m="Device Recovery" />
-      </Aux>
+      </>
     );
 
     const { loading, onWipeDevice, onRecoverDevice, onInitDevice } = this.props;

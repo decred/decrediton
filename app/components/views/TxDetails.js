@@ -136,7 +136,7 @@ const TxDetails = ({
   default:
     subtitle =
     <div className="tx-details-subtitle">
-      {txDirection == "out" ? <Aux><div className="tx-details-subtitle-sentfrom"><T id="txDetails.sentFrom" m="Sent From" /></div><div className="tx-details-subtitle-account">{sentFromAccount}</div></Aux>: <div/>}
+      {txDirection == "out" ? <><div className="tx-details-subtitle-sentfrom"><T id="txDetails.sentFrom" m="Sent From" /></div><div className="tx-details-subtitle-account">{sentFromAccount}</div></>: <div/>}
       <div className="tx-details-subtitle-date">{isConfirmed ? <T id="txDetails.timestamp" m="{timestamp, date, medium} {timestamp, time, medium}" values={{ timestamp: tsDate(txTimestamp) }}/> : <T id="txDetails.unConfirmed" m="Unconfirmed"/> }</div>
     </div>;
   }
@@ -240,7 +240,7 @@ const TxDetails = ({
       <div className="txdetails-details">
         <div className="txdetails-title"><T id="txDetails.properties" m="Properties" /></div>
         {isConfirmed &&
-          <Aux>
+          <>
             <div className="txdetails-top-row">
               <div className="txdetails-name"><T id="txDetails.blockLabel" m="Block" /></div>
               <div className="txdetails-value">
@@ -251,7 +251,7 @@ const TxDetails = ({
               <div className="txdetails-name"><T id="txDetails.blockHeightLabel" m="Height" /></div>
               <div className="txdetails-value">{txHeight}</div>
             </div>
-          </Aux>
+          </>
         }
         <div className="txdetails-top-row">
           <div className="txdetails-name"><T id="txDetails.rawTransactionLabel" m="Raw Transaction" /></div>

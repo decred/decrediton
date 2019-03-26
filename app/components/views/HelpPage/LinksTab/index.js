@@ -10,7 +10,7 @@ export const LinksTabHeader = () =>
   />;
 
 export const LinksTab = () => (
-  <Aux>
+  <>
     <div className="tabbed-page-subtitle"><T id="help.subtitle.project" m="Project Related"/></div>
     <div className="help-icons-list">
       <HelpLink className={"help-github-icon"} href="https://github.com/decred/decrediton" title={<T id="help.github.title" m="Github"/>} subtitle={<T id="help.github.subtitle" m="github.com/decred/decrediton"/>} />
@@ -37,5 +37,5 @@ export const LinksTab = () => (
       <HelpLink className={"help-forum-icon"} href="https://t.me/decred" title={<T id="help.telegram" m="Telegram" />} subtitle={<T id="help.telegram.subtitle" m="t.me/decred"/>}/>
       <HelpLink className={"help-forum-icon"} href="https://forum.decred.org" title={<T id="help.forum" m="Forum" />} subtitle={<T id="help.forum.subtitle" m="forum.decred.org"/>}/>
     </div>
-  </Aux>
+  </>
 );

@@ -16,9 +16,9 @@ class ConfigButtons extends React.Component {
   render() {
 
     const ConfigButtonsHeader = (
-      <Aux>
+      <>
         <T id="trezor.configButtons.header" m="Config Trezor" />
-      </Aux>
+      </>
     );
 
     const { loading, onTogglePinProtection, onTogglePassPhraseProtection,

@@ -12,7 +12,7 @@ const VotingPrefsPage = ({
   onCloseAgenda,
   onUpdateVotePreference,
 }) => (
-  <Aux>
+  <>
     <div className="consensus-changes-header">
       <div className="proposals-community-header-title"><T id="votingPreferences.title" m="Consensus Changes" /></div>
       <p className="proposals-community-header-description">
@@ -49,7 +49,7 @@ const VotingPrefsPage = ({
           </div>
         )}
     </div>
-  </Aux>
+  </>
 );
 
 export default VotingPrefsPage;
