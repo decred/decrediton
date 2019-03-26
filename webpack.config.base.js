@@ -70,7 +70,6 @@ export default {
     React:     "react",
     PropTypes: "prop-types",
     autobind: [ "core-decorators", "autobind" ],
-    Aux:      [ "shared/EmptyHandler",      "default" ]
   }) ],
 
   externals: Object.keys(dependencies || {}).concat(Object.keys(optionalDependencies || {}))

@@ -54,18 +54,19 @@ const Bar = ({
         </div>
         <div className="sidebar-menu-bottom-latest-block">
           { rescanRequest ? <RescanProgress/> : null }
-          <Aux show={ currentHeight && !rescanRequest }>
-            <div className="rescan-button-area">
-              <RescanButton {...{ rescanRequest, rescanAttempt }} />
-            </div>
-            <a className="sidebar-menu-bottom-latest-block-name">
-              <T id="sidebar.latestBlock" m="Latest Block" />
-              <span className="sidebar-menu-bottom-latest-block-number"> {currentHeight}</span>
-            </a>
-            <div className="sidebar-menu-bottom-latest-block-time">
-              <LastBlockTime lastBlockTimestamp={lastBlockTimestamp} />
-            </div>
-          </Aux>
+          {(currentHeight && !rescanRequest) &&
+            <>
+              <div className="rescan-button-area">
+                <RescanButton {...{ rescanRequest, rescanAttempt }} />
+              </div>
+              <a className="sidebar-menu-bottom-latest-block-name">
+                <T id="sidebar.latestBlock" m="Latest Block" />
+                <span className="sidebar-menu-bottom-latest-block-number"> {currentHeight}</span>
+              </a>
+              <div className="sidebar-menu-bottom-latest-block-time">
+                <LastBlockTime lastBlockTimestamp={lastBlockTimestamp} />
+              </div>
+            </>}
         </div>
       </div> :
       <div className="sidebar-menu-bottom-latest-block">
