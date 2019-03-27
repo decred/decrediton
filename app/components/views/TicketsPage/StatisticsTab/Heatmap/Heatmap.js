@@ -70,7 +70,7 @@ function drawInfo(opts = {}) {
       const color = theme[`grade${day.intensity}`];
       const divEl = (
         <Tooltip
-          text={<TooltipInfo {...{ dayDate }} /> } key={ "index"+dayIndex }>
+          text={<TooltipInfo {...{ dayDate, ...day }} /> } key={ "index"+dayIndex }>
           <div style={{ background: color, width: boxWidth, height: boxWidth, cursor: "pointer",
             position: "absolute", left: offsetX + (boxWidth + boxMargin) * col,
             top: offsetY + (boxWidth + boxMargin) * row }} />
