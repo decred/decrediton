@@ -65,8 +65,9 @@ export default function statistics(state = {}, action) {
   case CLOSEWALLET_SUCCESS:
     return {
       ...state,
-      dailyBalances: Array(),
-      fullDailyBalances: Array(),
+      dailyBalances: [],
+      fullDailyBalances: [],
+      ticketDataHeatmap: [],
       voteTime: null,
       getMyTicketsStatsRequest: false,
     };

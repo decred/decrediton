@@ -27,6 +27,9 @@ export const defaultFormats = {
     "day-short-month": {
       day: "numeric",
       month: "short"
+    },
+    "short-month": {
+      month: "short"
     }
   }
 };

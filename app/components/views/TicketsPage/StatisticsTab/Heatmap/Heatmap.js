@@ -11,20 +11,7 @@ const rowNumber = 7;
 const monthLabelSize = 5;
 const legendMargin = 10;
 const headerHeight = 50;
-const MONTHS = [
-  <T id="heatmap.month.0" m="Jan" />,
-  <T id="heatmap.month.1" m="Feb" />,
-  <T id="heatmap.month.2" m="Mar" />,
-  <T id="heatmap.month.3" m="Apr" />,
-  <T id="heatmap.month.4" m="May" />,
-  <T id="heatmap.month.5" m="Jun" />,
-  <T id="heatmap.month.6" m="Jul" />,
-  <T id="heatmap.month.7" m="Aug" />,
-  <T id="heatmap.month.8" m="Sep" />,
-  <T id="heatmap.month.9" m="Oct" />,
-  <T id="heatmap.month.10" m="Nov" />,
-  <T id="heatmap.month.11" m="Dec" />,
-];
+const Month = ({ date }) => <T id="heatmap.month" m="{date, date, short-month}" values={{ date }} />;
 
 function getTheme() {
   return themes.standard;
@@ -83,7 +70,7 @@ function drawInfo(opts = {}) {
       const color = theme[`grade${day.intensity}`];
       const divEl = (
         <Tooltip
-          text={<TooltipInfo {...{ dayDate, month: MONTHS[dayDate.getMonth()],  ...day }} /> } key={ "index"+dayIndex }>
+          text={<TooltipInfo {...{ dayDate }} /> } key={ "index"+dayIndex }>
           <div style={{ background: color, width: boxWidth, height: boxWidth, cursor: "pointer",
             position: "absolute", left: offsetX + (boxWidth + boxMargin) * col,
             top: offsetY + (boxWidth + boxMargin) * row }} />
@@ -99,11 +86,10 @@ function drawInfo(opts = {}) {
     if (lastDateCounted.getMonth() !== date.getMonth()) {
       lastDateCounted = date;
       const divEl = (
-        <Tooltip text={date.getMonth()} key={ "month"+i }>
-          <div style={{ position: "absolute", fontSize: 10,
-            left: graphEntries[i].left,
-            top: offsetY - boxMargin - boxWidth - monthLabelSize }} >{MONTHS[date.getMonth()]}</div>
-        </Tooltip>);
+        <div  key={ "month"+i } style={{ position: "absolute", fontSize: 10,
+          left: graphEntries[i].left,
+          top: offsetY - boxMargin - boxWidth - monthLabelSize }} >{Month({ date })}
+        </div>);
       squares.push(divEl);
     }
   }
