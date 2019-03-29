@@ -25,9 +25,9 @@ class ChangeLabel extends React.Component {
   render() {
 
     const changeLabelHeader = (
-      <Aux>
+      <>
         <T id="trezor.changeLabel.header" m="Change Label" />
-      </Aux>
+      </>
     );
 
     const { loading } = this.props;

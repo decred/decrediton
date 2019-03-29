@@ -14,7 +14,7 @@ const PageHeader = () =>
   />;
 
 const TabHeader = treasuryInfo(({ treasuryBalance }) =>
-  <Aux>
+  <>
     <DescriptionHeader
       description={<T id="governance.description" m="Governance aspects of Decred." />}
     />
@@ -24,7 +24,7 @@ const TabHeader = treasuryInfo(({ treasuryBalance }) =>
           values={{ treasuryBalance: <Balance flat amount={treasuryBalance} classNameWrapper="header-small-balance"/> }} />
       }
     />}
-  </Aux>
+  </>
 );
 
 export default () => (

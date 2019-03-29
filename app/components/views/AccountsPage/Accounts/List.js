@@ -39,7 +39,7 @@ const AccountsList = ({
 }) => (
   <StandalonePage header={<AccountsListHeader {...{ onGetNextAccountAttempt, isCreateAccountDisabled }} />}>
     { isLoading ? <DecredLoading/> :
-      <Aux>
+      <>
         <div className="account-content-title-buttons-area">
           <InfoDocModalButton document="BalanceOverviewInfo" modalClassName="info-modal-fields" double/>
         </div>
@@ -59,7 +59,7 @@ const AccountsList = ({
             />
           ))}
         </div>
-      </Aux> }
+      </> }
   </StandalonePage>
 );
 

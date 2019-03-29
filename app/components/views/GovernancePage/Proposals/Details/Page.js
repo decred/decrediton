@@ -42,7 +42,7 @@ export default ({ viewedProposalDetails,
   else voteInfo = <ChosenVoteOption {...{ voteOptions, onUpdateVoteChoice, onVoteOptionSelected, newVoteChoice, eligibleTicketCount, currentVoteChoice, votingComplete: currentVoteChoice !== "abstain" }} />;
 
   return (
-    <Aux>
+    <>
       <div className="proposal-details-overview">
         <div className="proposal-details-overview-info">
           <div className="proposal-details-title">{name}</div>
@@ -74,6 +74,6 @@ export default ({ viewedProposalDetails,
       <div className="proposal-details-text">
         <ProposalText text={text} />
       </div>
-    </Aux>
+    </>
   );
 };

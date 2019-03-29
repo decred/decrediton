@@ -25,7 +25,7 @@ export default ({
     <div className="getstarted loader logs">
       <div className="content-title">
         <div className="loader-settings-logs">
-          <Aux>
+          <>
             {getWalletReady &&
               <InvisibleButton onClick={onShowSettings}>
                 <SettingsLinkMsg />
@@ -37,7 +37,7 @@ export default ({
               </InvisibleButton> :
               <div/>
             }
-          </Aux>
+          </>
         </div>
         <div className="go-back-screen-button-area">
           <Tooltip text={ <T id="releaseNotes.goBack" m="Go back" /> }><div className="go-back-screen-button" onClick={onHideReleaseNotes}/></Tooltip>

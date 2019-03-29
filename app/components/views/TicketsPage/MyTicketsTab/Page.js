@@ -33,7 +33,7 @@ class TicketListPage extends React.Component {
         useWindow={false}
         threshold={180}
       >
-        <Aux>
+        <>
           <div className="tickets-buttons-area">
             <Tooltip tipWidth={300} text={<T id="tickets.sortby.tooltip" m="Sort By" />}>
               <EyeFilterMenu
@@ -62,7 +62,7 @@ class TicketListPage extends React.Component {
           {!noMoreTickets
             ? <LoadingMoreTicketsIndicator />
             : <NoMoreTicketsIndicator />}
-        </Aux>
+        </>
       </InfiniteScroll>
     );
   }

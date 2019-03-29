@@ -8,7 +8,7 @@ const indicators = {
 };
 
 const Status = ({ txAccountName, pending, txTimestamp, tsDate }) => (
-  <Aux>
+  <>
     <div className="transaction-status">
       <span className="transaction-account-name">{txAccountName}</span>
       {indicators[!!pending]}
@@ -20,7 +20,7 @@ const Status = ({ txAccountName, pending, txTimestamp, tsDate }) => (
           values={{ timestamp: tsDate(txTimestamp) }}/>
       </div>
     )}
-  </Aux>
+  </>
 );
 
 export default Status;

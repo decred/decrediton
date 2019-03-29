@@ -38,7 +38,7 @@ class StakePoolStats extends React.Component{
     const votedPercentage = stakePool ? stakePool.ProportionMissed * 100 : 0;
 
     return (
-      <Aux>
+      <>
         <div className="my-tickets-stats-indicators">
           <div className="my-tickets-stats-indicators-row">
             <span className="my-tickets-stats-indicators-title">
@@ -86,7 +86,7 @@ class StakePoolStats extends React.Component{
             />
           </div>
         </div>
-      </Aux>
+      </>
     );
   }
 }

@@ -26,7 +26,7 @@ const SignMessageForm = ({
   isSignMessageDisabled,
 }) => {
   return (
-    <Aux>
+    <>
       <div className="security-center-form">
         <div className="button-right">
           <InfoDocModalButton document="SignMessageInfo" />
@@ -76,7 +76,7 @@ const SignMessageForm = ({
         message={message}
         disabled={isSigningMessage || address == "" || message == "" || addressError || messageError || isSignMessageDisabled}
       />
-    </Aux>
+    </>
   );
 };
 

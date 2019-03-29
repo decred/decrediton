@@ -20,7 +20,7 @@ const HomePage = ({
   rowNumber
 }) => {
   return (
-    <Aux>
+    <>
       <div className="overview-header">
         <div className="overview-balance-wrapper">
           <Balance
@@ -54,7 +54,7 @@ const HomePage = ({
           <TicketActivity {...{ tickets, getTransactionsRequestAttempt, getAccountsResponse, rowNumber }} />
         </div>
       </div>
-    </Aux>
+    </>
   );
 };
 

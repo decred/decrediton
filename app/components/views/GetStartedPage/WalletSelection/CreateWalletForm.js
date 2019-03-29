@@ -42,7 +42,7 @@ const CreateWalletForm = ({
   onShowTrezorConfig,
 }) => {
   return (
-    <Aux>
+    <>
       {!createNewWallet ?
         <div className="new-wallet-title-area">
           <div className="wallet-icon-small createnew" />
@@ -74,7 +74,7 @@ const CreateWalletForm = ({
         </div>
       </div>
       {createNewWallet &&
-        <Aux>
+        <>
           <div className="advanced-daemon-row">
             <div className="advanced-daemon-label">
               <T id="createwallet.walletOnly.label" m="Watch only" />
@@ -109,7 +109,7 @@ const CreateWalletForm = ({
                 />
               </div>
             </div>}
-        </Aux>}
+        </>}
       <div className="advanced-daemon-row">
         <KeyBlueButton onClick={createWallet}>
           <T id="wallet.create.button" m="Continue" />
@@ -118,7 +118,7 @@ const CreateWalletForm = ({
           <T id="advancedStartup.cancel" m="Cancel"/>
         </InvisibleButton>
       </div>
-    </Aux>
+    </>
   );
 };
 

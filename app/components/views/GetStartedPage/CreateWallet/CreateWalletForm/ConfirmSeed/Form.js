@@ -5,7 +5,7 @@ import { CreateWalletTitleMsg, ConfirmSeedMsg } from "../../../messages";
 
 export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord }) =>
   (
-    <Aux>
+    <>
       <div className="content-title">
         <CreateWalletTitleMsg />
       </div>
@@ -32,7 +32,7 @@ export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord }) =>
           })}
         </div>
       </div>
-    </Aux>
+    </>
   );
 
 export default ConfirmSeedForm;

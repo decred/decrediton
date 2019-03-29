@@ -22,7 +22,7 @@ export default class MeteredChart extends React.Component {
   render() {
     const { additive, blueLabel, blueValue, blackLabel, blackValue } = this.props;
     return (
-      <Aux>
+      <>
         <div className="metered-ticks-area">
           {this.createTicks(additive, blueValue, blackValue)}
         </div>
@@ -36,7 +36,7 @@ export default class MeteredChart extends React.Component {
             <div className="legend-label">{blackLabel}</div>
           </div>
         </div>
-      </Aux>
+      </>
     );
   }
 }

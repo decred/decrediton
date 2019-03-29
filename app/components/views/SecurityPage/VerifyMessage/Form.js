@@ -32,7 +32,7 @@ const VerifyMessageForm = ({
   formatMessage
 }) => {
   return (
-    <Aux>
+    <>
       <div className="security-center-form">
         <div className="button-right">
           <InfoDocModalButton document="VerifyMessageInfo" />
@@ -93,7 +93,7 @@ const VerifyMessageForm = ({
         loading={isVerifyingMessage}>
         <T id="securitycenter.verify.form.submit" m="Verify Message" />
       </KeyBlueButton>
-    </Aux>
+    </>
   );
 };
 

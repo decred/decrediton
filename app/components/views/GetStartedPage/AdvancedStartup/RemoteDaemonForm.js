@@ -43,7 +43,7 @@ const RemoteDaemonForm = ({
   intl
 }) => {
   return (
-    <Aux>
+    <>
       <div className="advanced-daemon-row">
         <div className="advanced-daemon-label">
           <T id="advanced.remote.rpcuser" m="RPC User" />:
@@ -115,7 +115,7 @@ const RemoteDaemonForm = ({
           />
         </div>
       </div>
-    </Aux>
+    </>
   );
 };
 

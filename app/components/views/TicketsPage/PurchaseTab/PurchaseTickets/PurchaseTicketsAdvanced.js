@@ -33,7 +33,7 @@ const PurchaseTicketsAdvanced = ({
   formatMessage,
   ...props,
 }) => (
-  <Aux>
+  <>
     <div className="stakepool-purchase-ticket-row">
       <div className="stakepool-purchase-ticket-label">
         <T id="purchaseTickets.stakePoolLabel" m="Stake Pool" />:
@@ -144,6 +144,6 @@ const PurchaseTicketsAdvanced = ({
         </div>
       </div>
     </div>
-  </Aux>);
+  </>);
 
 export default PurchaseTicketsAdvanced;

@@ -37,7 +37,7 @@ class SecurityPage extends React.Component {
     const { onShowSign, onShowVerify } = this;
     return (
       <StandalonePage header={<SecurityHeader />}>
-        <Aux>
+        <>
           <div className="advanced-page-toggle security-page">
             <div className="text-toggle">
               <div className={"text-toggle-button-left " + (sideActive && "text-toggle-button-active")} onClick={!sideActive ? onShowVerify : null}>
@@ -53,7 +53,7 @@ class SecurityPage extends React.Component {
               <SignTab /> : <VerifyMessageTab />
             }
           </div>
-        </Aux>
+        </>
         <ValidateAddressTab />
       </StandalonePage>
     );

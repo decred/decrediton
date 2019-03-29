@@ -8,7 +8,7 @@ export const TutorialsTabHeader = () =>
   />;
 
 export const TutorialsTab = () => (
-  <Aux>
+  <>
     <div className="tabbed-page-subtitle"><T id="tutorials.subtitle" m="Tutorials"/></div>
     <div className="overview-no-tickets">
       {/* <Link to="/mytickets/purchase" className="purchaseTickets">
@@ -21,5 +21,5 @@ export const TutorialsTab = () => (
         <T id="tutorials.ticketLifecycle" m="Learn About the Ticket Lifecycle" /> →
       </Link>
     </div>
-  </Aux>
+  </>
 );

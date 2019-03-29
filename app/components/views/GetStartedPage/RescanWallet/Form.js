@@ -12,7 +12,7 @@ const RescanWalletFormBody = ({
   rescanCurrentBlock && rescanCurrentBlock > 0 ?
     (!isSPV ?
       showLongWaitMessage &&
-      <Aux>
+      <>
         <LinearProgressSmall
           min={rescanStartBlock}
           max={rescanEndBlock}
@@ -28,8 +28,8 @@ const RescanWalletFormBody = ({
             rescanEndBlock: rescanEndBlock
           }}
         />
-      </Aux> :
-      <Aux>
+      </> :
+      <>
         <T
           id="getStarted.walletRescanSPV.progress"
           m="Scanned through {rescanCurrentBlock}"
@@ -37,7 +37,7 @@ const RescanWalletFormBody = ({
             rescanCurrentBlock: rescanCurrentBlock
           }}
         />
-      </Aux>) :
+      </>) :
     <div/>
 );
 

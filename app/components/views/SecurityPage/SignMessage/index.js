@@ -46,14 +46,14 @@ class SignMessage extends React.Component {
     }
 
     return (
-      <Aux>
+      <>
         <SignMessageForm {...{
           onChangeAddress, onChangeMessage, address, addressError, message,
           messageError, formatMessage: intl.formatMessage, isSigningMessage,
           isSignMessageDisabled,
         } }/>
         {result}
-      </Aux>
+      </>
     );
   }
 

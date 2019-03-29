@@ -16,7 +16,7 @@ const TicketAutoBuyerForm = ({
   stakePool,
   changeStakePool
 }) => (
-  <Aux>
+  <>
     <div className="tabbed-page-subtitle"><T id="automatictickets.subtitle" m="Automatic Ticket Purchases"/></div>
     <div className="stakepool-flex-height-auto-buyer-wrapper">
       <div className="stakepool-auto-buyer-row">
@@ -74,7 +74,7 @@ const TicketAutoBuyerForm = ({
         </div>
       </div>
     </div>
-  </Aux>
+  </>
 );
 
 export default TicketAutoBuyerForm;

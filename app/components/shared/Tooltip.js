@@ -15,7 +15,7 @@ const Tooltip = ({ text, warning, disabled, className, children, md }) => {
   const widthClass = md ? "tooltip-width-md" : "";
   const container = [ "tooltipContainer", className, widthClass ].join(" ");
   const tip = [ "tip", warning ? "warning" : null ].join(" ");
-  const Wrapper = className ? "div" : Aux;
+  const Wrapper = "div";
 
   return disabled ? <Wrapper className={ className }>{ children }</Wrapper> : (
     <div className={ container } onMouseMove={ onMouseMove }>

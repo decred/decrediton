@@ -58,10 +58,10 @@ class StartRPCBody extends React.Component {
     const { startupError, getCurrentBlockCount } = this.props;
 
     return (
-      <Aux>
+      <>
         {!getCurrentBlockCount && <LastLogLinesFragment {...this.state} />}
         {startupError && <StartupErrorFragment {...this.props} />}
-      </Aux>
+      </>
     );
   }
 }

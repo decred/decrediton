@@ -69,13 +69,13 @@ class TabbedPage extends React.Component {
   // returns the state.styles in a static container, without animations.
   staticStyles() {
     return (
-      <Aux>
+      <>
         {this.state.styles.map(s =>
           <div className="tab-content visible" key={s.key}>
             {s.data.element}
           </div>
         )}
-      </Aux>
+      </>
     );
   }
 
@@ -88,7 +88,7 @@ class TabbedPage extends React.Component {
         willEnter={this.willEnter}
       >
         {interpolatedStyles => {
-          return (<Aux>
+          return (<>
             {interpolatedStyles.map(s => {
               return (
                 <div
@@ -102,7 +102,7 @@ class TabbedPage extends React.Component {
                 </div>
               );
             })}
-          </Aux>);
+          </>);
         }}
       </TransitionMotion>
     );

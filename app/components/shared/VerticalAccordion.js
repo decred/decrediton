@@ -50,7 +50,7 @@ class VerticalAccordion extends React.Component {
   // changing due to caller changing eg content of body.
   getShownStyles(props) {
     return [ {
-      data: React.isValidElement(props.children) ? props.children : <Aux>{props.children}</Aux>,
+      data: React.isValidElement(props.children) ? props.children : <>{props.children}</>,
       key: "body",
       style: {
         height: spring(props.height || 100, { stiffness: 110, damping: 14 }),

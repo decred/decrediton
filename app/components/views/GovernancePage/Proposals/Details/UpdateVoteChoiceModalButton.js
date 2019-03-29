@@ -5,13 +5,13 @@ import { PassphraseModalButton } from "buttons";
 export default ({ onUpdateVoteChoice, newVoteChoice, eligibleTicketCount }) => (
   <PassphraseModalButton
     modalTitle={
-      <Aux>
+      <>
         <T id="proposals.updateVoteChoiceModal.title" m="Confirm Your Vote" />
         <div className="proposal-vote-confirmation">
           <div className={newVoteChoice+"-proposal"}/>
           {newVoteChoice}
         </div>
-      </Aux>}
+      </>}
     modalDescription={
       <T
         id="proposalDetails.votingInfo.eligibleCount"

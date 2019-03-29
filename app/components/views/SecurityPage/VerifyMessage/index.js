@@ -56,10 +56,10 @@ class VerifyMessage extends React.Component {
     }
 
     return (
-      <Aux>
+      <>
         <VerifyMessageForm {...{ onSubmit, address, message, signature, addressError, messageError, signatureError, onChangeAddress, onChangeMessage, onChangeSignature, formatMessage: intl.formatMessage, isVerifyingMessage }} />
         {result}
-      </Aux>
+      </>
     );
   }
 

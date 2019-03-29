@@ -19,7 +19,7 @@ const Logs = ({
   onHideDecreditonLogs,
 }
 ) => (
-  <Aux>
+  <>
     <div className="tabbed-page-subtitle"><T id="logs.subtitle" m="System Logs"/></div>
     {!isDaemonRemote && isDaemonStarted ?
       !showDcrdLogs ?
@@ -68,7 +68,7 @@ const Logs = ({
         </div>
       </div>
     }
-  </Aux>
+  </>
 );
 
 export default Logs;

@@ -1,7 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
 
 const WatchingOnlyWarnModal = () => (
-  <Aux>
+  <>
     <div className={"pseudo-modal-overlay"}></div>
     <div className={"pseudo-modal info-modal"}>
       <div className={"watch-only-modal-title"}>
@@ -14,7 +14,7 @@ const WatchingOnlyWarnModal = () => (
         `}/>
       </div>
     </div>
-  </Aux>
+  </>
 );
 
 export default WatchingOnlyWarnModal;

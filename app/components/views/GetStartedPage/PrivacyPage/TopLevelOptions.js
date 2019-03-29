@@ -13,7 +13,7 @@ const PrivacyOption = ({ title, description, icon, onClick }) => (
 );
 
 export default ({ setupStandardPrivacy, setupDisabledPrivacy, setupCustomPrivacy }) => (
-  <Aux>
+  <>
     <div className="language-select-title">
       <T id="privacy.title" m={"Privacy Options"}/>
     </div>
@@ -42,5 +42,5 @@ export default ({ setupStandardPrivacy, setupDisabledPrivacy, setupCustomPrivacy
         onClick={setupCustomPrivacy}
       />
     </div>
-  </Aux>
+  </>
 );

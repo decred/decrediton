@@ -45,7 +45,7 @@ class PagedTutorial extends React.Component {
     const { onNextPage, onPreviousPage, onGoBack, onGotoPage, onFinish } = this;
 
     return (
-      <Aux>
+      <>
         <InvisibleButton className="tutorial-close-button" onClick={onGoBack} />
         <div className="tutorial-title">{title}</div>
         <div className="tutorial-subtitle">
@@ -61,7 +61,7 @@ class PagedTutorial extends React.Component {
             onFinish={onFinish}
           />
         </div>
-      </Aux>
+      </>
     );
   }
 }

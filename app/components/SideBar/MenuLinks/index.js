@@ -91,10 +91,10 @@ class MenuLinks extends React.Component {
     const caret = this.props.uiAnimations ? this.getAnimatedCaret() : this.getStaticCaret();
 
     return (
-      <Aux>
+      <>
         {this.links.map(link => this.getMenuLink(link))}
         {caret}
-      </Aux>
+      </>
     );
   }
 }

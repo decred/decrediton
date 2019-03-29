@@ -3,7 +3,7 @@ import PrivacySettings from "views/SettingsPage/PrivacySettings";
 import { InvisibleButton, KeyBlueButton } from "buttons";
 
 export default ({ cancelCustomPrivacy, acceptCustomPrivacy, ...props }) => (
-  <Aux>
+  <>
     <div className="language-select-title">
       <T id="privacy.custom.title" m={"Custom Privacy Options"}/>
     </div>
@@ -21,5 +21,5 @@ export default ({ cancelCustomPrivacy, acceptCustomPrivacy, ...props }) => (
         </KeyBlueButton>
       </div>
     </div>
-  </Aux>
+  </>
 );

@@ -5,7 +5,7 @@ import { NewSeedTabMsg, RestoreTabMsg } from "../messages";
 import { Tooltip } from "shared";
 
 const CreateRestoreButtons = ({ showCreateWalletForm }) => (
-  <Aux>
+  <>
     <div className="display-wallet new" onClick={()=>showCreateWalletForm(false)}>
       <div className="wallet-icon createnew" />
       <div className="display-wallet-name">
@@ -18,7 +18,7 @@ const CreateRestoreButtons = ({ showCreateWalletForm }) => (
         <RestoreTabMsg />
       </div>
     </div>
-  </Aux>
+  </>
 );
 
 const WalletSelectionBodyBase = ({
@@ -73,7 +73,7 @@ const WalletSelectionBodyBase = ({
                     {wallet.value.wallet}
                   </div>
                   <div className={selected && !editWallets ? "display-wallet-last-access selected" : "display-wallet-last-access"}>
-                    {wallet.lastAccess && <Aux><T id="walletselection.lastAccess" m="Last accessed"/>: <FormattedRelative value={wallet.lastAccess} updateInterval={1*1000}/></Aux>}
+                    {wallet.lastAccess && <><T id="walletselection.lastAccess" m="Last accessed"/>: <FormattedRelative value={wallet.lastAccess} updateInterval={1*1000}/></>}
                   </div>
                   {editWallets &&
                     <div className={"display-wallet-cancel-changes"} onClick={onCloseEditWallets}>
@@ -81,12 +81,12 @@ const WalletSelectionBodyBase = ({
                     </div>
                   }
                   {!editWallets && (getDaemonSynced || isSPV) && selected ?
-                    <Aux>
+                    <>
                       <div className={"display-wallet-launch"} onClick={startWallet}>
                         <T id="walletselection.launchWallet" m="Launch Wallet "/>
                       </div>
                       <span className="launch-arrow-bounce">&#8594;</span>
-                    </Aux> :
+                    </> :
                     <div/>
                   }
                 </div>
