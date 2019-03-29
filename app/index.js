@@ -372,12 +372,13 @@ var initialState = {
     expandSideBar: true,
   },
   statistics: {
-    dailyBalances: Array(),
-    fullDailyBalances: Array(),
+    dailyBalances: [],
+    fullDailyBalances: [],
     voteTime: null,
     getMyTicketsStatsRequest: false,
     getStartupStatsAttempt: false,
     startupStatsEndCalcTime: new Date(0),
+    ticketDataHeatmap: [],
   },
   governance: {
     getVettedAttempt: false,
