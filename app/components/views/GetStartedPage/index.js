@@ -100,6 +100,7 @@ class GetStartedPage extends React.Component {
       isPrepared,
       isAdvancedDaemon,
       openForm,
+      getDaemonStarted,
       getWalletReady,
       remoteAppdataError,
       startupError,
@@ -152,7 +153,7 @@ class GetStartedPage extends React.Component {
       return <ReleaseNotes {...{ onShowSettings, onShowLogs, appVersion, onHideReleaseNotes, getWalletReady, ...props }} />;
     } else if (showTrezorConfig) {
       return <TrezorConfig {...{ onHideTrezorConfig, ...props }} />;
-    } else if (!cliOptions.rpcPresent && isAdvancedDaemon && openForm && !remoteAppdataError && !isPrepared && !getWalletReady && !isSPV) {
+    } else if (!cliOptions.rpcPresent && isAdvancedDaemon && !getDaemonStarted && openForm && !isPrepared && !getWalletReady && !isSPV) {
       Form = AdvancedStartupBody;
     } else if (remoteAppdataError && !isPrepared && !getWalletReady && !isSPV) {
       Form = RemoteAppdataError;
