@@ -1,13 +1,13 @@
 import { FormattedMessage as T } from "react-intl";
 
-const Votes = ({ vote }) => <T
-  id="heatmap.tooltip.votes"
+const Vote = ({ vote }) => <T
+  id="heatmap.tooltip.vote"
   m={"{vote, plural, =0 {No tickets voted} one {One ticket voted} other {# tickets voted} }"}
   values={{ vote: vote || 0 }}
 />;
 
-const Lives = ({ live }) => <T
-  id="heatmap.tooltip.lives"
+const Live = ({ live }) => <T
+  id="heatmap.tooltip.live"
   m={"{live, plural, =0 {No tickets live} one {One ticket live} other {# tickets live} }"}
   values={{ live: live || 0 }}
 />;
@@ -28,8 +28,8 @@ const Maturing = ({ maturing }) =>
 
 
 const TooltipInfo = ({ live, maturing, vote, revoke, dayDate }) => <>
-  <div>{ Votes({ vote }) }</div>
-  <div>{ Lives({ live }) }</div>
+  <div>{ Vote({ vote }) }</div>
+  <div>{ Live({ live }) }</div>
   <div>{ Maturing({ maturing }) }</div>
   <div>{ Revoked({ revoke }) }</div>
   <div>
