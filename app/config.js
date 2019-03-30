@@ -209,32 +209,28 @@ export function getWalletCert(certPath) {
 export function readDcrdConfig(configPath, testnet) {
   try {
     let readCfg;
+    let newCfg = {};
+    newCfg.rpc_host = "127.0.0.1";
+    newCfg.rpc_port = testnet ? "19109" : "9109";
     if (fs.existsSync(dcrdCfg(configPath))) {
       readCfg = ini.parse(Buffer.from(fs.readFileSync(dcrdCfg(configPath))).toString());
     } else if (fs.existsSync(dcrdCfg(appDataDirectory()))) {
       readCfg = ini.parse(Buffer.from(fs.readFileSync(dcrdCfg(appDataDirectory()))).toString());
     } else {
-      return;
-    }
-    let newCfg = {};
-    newCfg.rpc_host = "127.0.0.1";
-    if (testnet) {
-      newCfg.rpc_port = "19109";
-    } else {
-      newCfg.rpc_port = "9109";
+      return newCfg;
     }
     let userFound, passFound = false;
     // Look through all top level config entries
     for (let [ key, value ] of Object.entries(readCfg)) {
-      if (key == "rpcuser") {
+      if (key === "rpcuser") {
         newCfg.rpc_user = value;
         userFound = true;
       }
-      if (key == "rpcpass") {
+      if (key === "rpcpass") {
         newCfg.rpc_password = value;
         passFound = true;
       }
-      if (key == "rpclisten") {
+      if (key === "rpclisten") {
         const splitListen = value.split(":");
         if (splitListen.length >= 2) {
           newCfg.rpc_host = splitListen[0];
@@ -245,15 +241,15 @@ export function readDcrdConfig(configPath, testnet) {
         // If user and pass aren't found on the top level, look through all
         // next level config entries
         for (let [ key2, value2 ] of Object.entries(value)) {
-          if (key2 == "rpcuser") {
+          if (key2 === "rpcuser") {
             newCfg.rpc_user = value2;
             userFound = true;
           }
-          if (key2 == "rpcpass") {
+          if (key2 === "rpcpass") {
             newCfg.rpc_password = value2;
             passFound = true;
           }
-          if (key2 == "rpclisten") {
+          if (key2 === "rpclisten") {
             const splitListen = value2.split(":");
             if (splitListen.length >= 2) {
               newCfg.rpc_host = splitListen[0];
@@ -353,17 +349,17 @@ function makeRandomString(length) {
   return text;
 }
 
-export function createTempDcrdConf() {
+export function createTempDcrdConf(testnet) {
   if (!fs.existsSync(dcrdCfg(appDataDirectory()))) {
-    var rpcUser = makeRandomString(10);
-    var rpcPass = makeRandomString(10);
+    const port = testnet ? "19109" : "9109";
 
-    var dcrdConf = {
+    const dcrdConf = {
       "Application Options":
       {
-        rpcuser: rpcUser,
-        rpcpass: rpcPass,
-        rpclisten: "127.0.0.1:9109"
+        rpcuser: makeRandomString(10),
+        rpcpass: makeRandomString(10),
+        rpclisten: `127.0.0.1:${port}`,
+        network: testnet ? "testnet" : "mainnet",
       }
     };
     fs.writeFileSync(dcrdCfg(appDataDirectory()), ini.stringify(dcrdConf));

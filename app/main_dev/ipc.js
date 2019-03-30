@@ -71,14 +71,14 @@ export const startDaemon = (mainWindow, daemonIsAdvanced, primaryInstance, appDa
     logger.log("info", "Running on secondary instance. Assuming dcrd is already running.");
     let dcrdConfPath = getDcrdPath();
     if (!fs.existsSync(dcrdCfg(dcrdConfPath))) {
-      dcrdConfPath = createTempDcrdConf();
+      dcrdConfPath = createTempDcrdConf(testnet);
     }
     return -1;
   }
   try {
-    let dcrdConfPath = getDcrdPath();
+    let dcrdConfPath = appData ? appData : getDcrdPath();
     if (!fs.existsSync(dcrdCfg(dcrdConfPath))) {
-      dcrdConfPath = createTempDcrdConf();
+      dcrdConfPath = createTempDcrdConf(testnet);
     }
     return launchDCRD(mainWindow, daemonIsAdvanced, dcrdConfPath, appData, testnet, reactIPC);
   } catch (e) {
