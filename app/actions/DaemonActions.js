@@ -358,10 +358,10 @@ export const syncDaemon = () =>
   (dispatch, getState) => {
     let timeStartBeforeSync = new Date();
     const updateBlockCount = async () => {
-      const { daemon: { daemonSynced, timeStart, blockStart, credentials, daemonError, neededBlocks, networkMatch } } = getState();
+      const { daemon: { daemonSynced, timeStart, blockStart, credentials, daemonError, neededBlocks, networkMatch, daemonRemote } } = getState();
       const timeNow = new Date();
       const timeElapsed = timeNow - timeStartBeforeSync;
-      if (timeStart === 0 && timeElapsed >= TIME_TO_TIMEOUT) {
+      if (timeStart === 0 && timeElapsed >= TIME_TO_TIMEOUT && daemonRemote) {
         dispatch({ type: DAEMONSYNCING_TIMEOUT });
         return;
       }
