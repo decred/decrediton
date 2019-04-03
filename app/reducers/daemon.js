@@ -6,6 +6,9 @@ import {
   DAEMONSTARTED,
   DAEMONSTARTED_REMOTE,
   DAEMONSTARTED_APPDATA,
+  CONNECTDAEMON_ATTEMPT,
+  CONNECTDAEMON_SUCCESS,
+  CONNECTDAEMON_FAILURE,
   DAEMONSYNCING_START,
   DAEMONSYNCING_PROGRESS,
   DAEMONSYNCED,
@@ -58,6 +61,21 @@ export default function version(state = {}, action) {
   case FINISH_PRIVACY:
     return { ...state,
       showPrivacy: false,
+    };
+  case CONNECTDAEMON_ATTEMPT:
+    return { ...state,
+      daemonConnected: false,
+      daemonError: null,
+    };
+  case CONNECTDAEMON_SUCCESS:
+    return { ...state,
+      daemonConnected: true,
+      daemonError: null,
+    };
+  case CONNECTDAEMON_FAILURE:
+    return { ...state,
+      daemonConnected: false,
+      daemonError: action.error,
     };
   case DAEMONSTARTED:
     return { ...state,

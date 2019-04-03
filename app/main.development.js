@@ -12,7 +12,7 @@ import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRe
 import { setupProxy } from "./main_dev/proxy";
 import { cleanShutdown, GetDcrdPID, GetDcrwPID } from "./main_dev/launch";
 import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopDaemon, stopWallet, startWallet,
-  checkDaemon, deleteDaemon, setWatchingOnlyWallet, getWatchingOnlyWallet, getDaemonInfo } from "./main_dev/ipc";
+  checkDaemon, deleteDaemon, setWatchingOnlyWallet, getWatchingOnlyWallet, getDaemonInfo, connectDaemon } from "./main_dev/ipc";
 import { initTemplate, getVersionWin, setGrpcVersions, getGrpcVersions, inputMenu, selectionMenu } from "./main_dev/templates";
 import { readFileBackward } from "./helpers/byteActions";
 import electron from "electron";
@@ -194,6 +194,10 @@ ipcMain.on("get-available-wallets", (event, network) => {
 
 ipcMain.on("start-daemon", (event, appData, testnet) => {
   event.returnValue = startDaemon(mainWindow, daemonIsAdvanced, primaryInstance, appData, testnet, reactIPC);
+});
+
+ipcMain.on("connect-daemon", (event, appData, testnet) => {
+  event.returnValue = connectDaemon(mainWindow, appData, testnet, reactIPC);
 });
 
 ipcMain.on("delete-daemon", (event, appData, testnet) => {

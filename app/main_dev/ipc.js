@@ -5,7 +5,7 @@ import { OPTIONS } from "./constants";
 import { createLogger } from "./logging";
 import { getWalletPath, getWalletDBPathFromWallets, getDcrdPath, dcrdCfg, dcrctlCfg, appDataDirectory, getExecutablePath, getDcrdRpcCert } from "./paths";
 import { createTempDcrdConf, initWalletCfg, newWalletConfigCreation, getWalletCfg, readDcrdConfig } from "../config";
-import { launchDCRD, launchDCRWallet, GetDcrdPID, GetDcrwPID, closeDCRD, closeDCRW, GetDcrwPort } from "./launch";
+import { launchDCRD, launchDCRWallet, GetDcrdPID, GetDcrwPID, closeDCRD, closeDCRW, GetDcrwPort, connectRpcDaemon } from "./launch";
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const logger = createLogger();
@@ -84,6 +84,10 @@ export const startDaemon = (mainWindow, daemonIsAdvanced, primaryInstance, appDa
   } catch (e) {
     logger.log("error", "error launching dcrd: " + e);
   }
+};
+
+export const connectDaemon = (mainWindow, appData, testnet, reactIPC) => {
+  return connectRpcDaemon(mainWindow, appData, testnet, reactIPC);
 };
 
 export const createWallet = (testnet, walletPath) => {

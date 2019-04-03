@@ -150,3 +150,15 @@ export const getDcrdLastLogLine = () => Promise
 
 export const getDcrwalletLastLogLine = () => Promise
   .resolve(ipcRenderer.sendSync("get-last-log-line-dcrwallet"));
+
+export const connectDaemon = log((appData, testnet) => new Promise((resolve, reject) => {
+  ipcRenderer.once("connectRpcDaemon-response", (e, info) => {
+    if (info.connected) {
+      resolve({ connected: true });
+    }
+    if (info.error) {
+      reject({ connected: false, error: info.error })
+    }
+  });
+  ipcRenderer.send("connect-daemon", appData, testnet)
+}), "Connect Daemon");

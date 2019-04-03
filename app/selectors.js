@@ -24,6 +24,7 @@ export const updateAvailable = get([ "daemon", "updateAvailable" ]);
 export const openForm = get([ "daemon", "openForm" ]);
 export const isDaemonRemote = get([ "daemon", "daemonRemote" ]);
 export const getDaemonStarted = get([ "daemon", "daemonStarted" ]);
+export const getDaemonConnected = get([ "daemon", "daemonConnected"]);
 export const getRemoteAppdataError = get([ "daemon", "remoteAppdataError" ]);
 export const getCurrentBlockCount = get([ "daemon", "currentBlockCount" ]);
 export const getNeededBlocks = get([ "daemon", "neededBlocks" ]);

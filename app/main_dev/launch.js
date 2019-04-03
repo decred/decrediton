@@ -11,21 +11,21 @@ import { spawn } from "child_process";
 import isRunning from "is-running";
 import stringArgv from "string-argv";
 import { concat, isString } from "../fp";
+import webSocket from "ws";
+import { reverseRawHash, hexToRaw } from "../helpers";
+import { Uint64LE } from "int64-buffer";
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const debug = argv.debug || process.env.NODE_ENV === "development";
 const logger = createLogger(debug);
 
-let dcrdPID;
-let dcrwPID;
+let dcrdPID, dcrwPID;
 
 // windows-only stuff
-let dcrwPipeRx;
-let dcrwPipeTx;
-let dcrdPipeRx;
-let dcrwTxStream;
+let dcrwPipeRx, dcrwPipeTx, dcrdPipeRx, dcrwTxStream;
 
 let dcrwPort;
+let rpcuser, rpcpass, rpccert, rpchost, rpcport;
 
 function closeClis() {
   // shutdown daemon and wallet.
@@ -129,6 +129,11 @@ export const launchDCRD = (mainWindow, daemonIsAdvanced, daemonPath, appdata, te
   if (testnet) {
     args.push("--testnet");
   }
+  rpcuser = newConfig.rpc_user;
+  rpcpass = newConfig.rpc_password;
+  rpccert = newConfig.rpc_cert;
+  rpchost = newConfig.rpc_host;
+  rpcport = newConfig.rpc_port;
 
   const dcrdExe = getExecutablePath("dcrd", argv.custombinpath);
   if (!fs.existsSync(dcrdExe)) {
@@ -358,4 +363,91 @@ export const readExesVersion = (app, grpcVersions) => {
   }
 
   return versions;
+};
+
+// connectDaemon starts a new rpc connection to dcrd
+export const connectRpcDaemon = (mainWindow) => {
+  var cert = fs.readFileSync(rpccert);
+  const url = `${rpchost}:${rpcport}`;
+  let ws = new webSocket(`wss://${url}/ws`, {
+    headers: {
+      'Authorization': 'Basic '+Buffer.from(rpcuser+':'+rpcpass).toString('base64')
+    },
+    cert: cert,
+    ecdhCurve: 'secp521r1',
+    ca: [cert]
+  });
+
+  ws.on('open', function() {
+    console.log('**********************************************************************');
+    console.log('CONNECTED');
+    // Send a JSON-RPC command to be notified when blocks are connected and
+    // disconnected from the chain.
+    ws.send('{"jsonrpc":"2.0","id":"0","method":"notifyblocks","params":[]}');
+    mainWindow.webContents.send("connectRpcDaemon-response", { connected: true });
+  });
+  ws.on('error', function(error) {
+    console.log('ERROR:' + error);
+    mainWindow.webContents.send("connectRpcDaemon-response", { connected: false, error });
+  })
+  ws.on('message', function(data, flags) {
+    const parsedData = JSON.parse(data);
+    const method = parsedData ? parsedData.method : "";
+    switch (method) {
+      case "blockconnected": {
+        const hex = hexToRaw(parsedData.params[0]);
+        const newBlock = decodeConnectedBlockHeader(Buffer.from(hex));
+        console.log(newBlock);
+      }
+    }
+  });
+  ws.on('close', function(data) {
+    console.log('DISCONNECTED');
+  })
+};
+
+const decodeConnectedBlockHeader = (headerBytes) => {
+  if (!(headerBytes instanceof Buffer)) {
+    throw new Error("header requested for decoding is not a Buffer object");
+  }
+  let position = 0;
+  const blockHeader = {};
+  blockHeader.version = headerBytes.readUInt32LE(position);
+  position += 4;
+  blockHeader.prevBlockHash = reverseRawHash(headerBytes.slice(position, position + 32));
+  position += 32;
+  blockHeader.merkleRoot = reverseRawHash(headerBytes.slice(position, position + 32));
+  position += 32;
+  blockHeader.stakeRoot = reverseRawHash(headerBytes.slice(position, position + 32));
+  position += 32;
+  blockHeader.voteBits = headerBytes.readUInt16LE(position);
+  position += 2;
+  blockHeader.finalState = headerBytes.slice(position, position + 6);
+  position += 6;
+  blockHeader.voters = headerBytes.readUInt16LE(position);
+  position += 2;
+  blockHeader.FreshStake = headerBytes.readUInt8(position);
+  position += 1;
+  blockHeader.revocations = headerBytes.readUInt8(position);
+  position += 1;
+  blockHeader.poolSize = headerBytes.readUInt32LE(position);
+  position += 4;
+  blockHeader.bits = headerBytes.readUInt32LE(position);
+  position += 4;
+  blockHeader.sBits = Uint64LE(headerBytes.slice(position, position+8)).toNumber();
+  position += 8;
+  blockHeader.height = headerBytes.readUInt32LE(position);
+  position += 4;
+  blockHeader.size = headerBytes.readUInt32LE(position);
+  position += 4;
+  blockHeader.time = headerBytes.readUInt32LE(position);
+  position += 4;
+  blockHeader.nonce = headerBytes.readUInt32LE(position);
+  position += 4;
+  blockHeader.extraData = headerBytes.slice(position, position + 32);
+  position += 32;
+  blockHeader.stakeVersion = headerBytes.readUInt32LE(position);
+  position += 4;
+
+  return blockHeader;
 };

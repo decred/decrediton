@@ -162,7 +162,7 @@ export const startDaemon = (rpcCreds, appData) => (dispatch, getState) => {
     wallet.startDaemon(null, isTestNet(getState()))
       .then(rpcCreds => {
         dispatch({ type: DAEMONSTARTED, credentials: rpcCreds });
-        dispatch(syncDaemon());
+        dispatch(connectDaemon());
       })
       .catch(() => dispatch({ type: DAEMONSTARTED_ERROR }));
   }
@@ -407,6 +407,46 @@ export const syncDaemon = () =>
     };
     updateBlockCount();
   };
+
+export const CONNECTDAEMON_ATTEMPT = "CONNECTDAEMON_ATTEMPT";
+export const CONNECTDAEMON_SUCCESS = "CONNECTDAEMON_SUCCESS";
+export const CONNECTDAEMON_FAILURE = "CONNECTDAEMON_FAILURE";
+
+export const connectDaemon = () => async (dispatch, getState) => {
+  dispatch({ type: CONNECTDAEMON_ATTEMPT });
+  const timeBeforeConnect = new Date();
+  const updateBlockCount = async () => {
+    const { daemonConnected, credentials, daemonError, networkMatch } = getState().daemon;
+    // const timeNow = new Date();
+    // const timeElapsed = timeNow - timeBeforeConnect;
+    // if (timeStart === 0 && timeElapsed >= TIME_TO_TIMEOUT) {
+    //   dispatch({ type: DAEMONSYNCING_TIMEOUT });
+    //   return;
+    // }
+    if (daemonConnected || daemonError) return;
+    // if (!networkMatch) {
+    //   const daemonInfo = await wallet.getDaemonInfo(credentials);
+    //   if (daemonInfo.isTestNet !== null &&
+    //       daemonInfo.isTestNet !== isTestNet(getState())) {
+    //     dispatch({ error: DIFF_CONNECTION_ERROR, type: NOT_SAME_CONNECTION });
+    //     return dispatch(pushHistory("/error"));
+    //   } else if (daemonInfo.isTestNet !== null && daemonInfo.isTestNet == isTestNet(getState())) {
+    //     dispatch({ type: NETWORK_MATCH });
+    //   }
+    // }
+    return wallet
+      .connectDaemon({ credentials, isTestnet: isTestNet(getState()) })
+      .then(( resp ) => {
+        console.log(resp)
+        dispatch({ type: CONNECTDAEMON_SUCCESS });
+        setTimeout(updateBlockCount, 1000);
+      }).catch( err => {
+        console.log(err)
+        setTimeout(updateBlockCount, 1000);
+      });
+  };
+  updateBlockCount();
+}
 
 export const getDcrdLogs = () => {
   wallet.getDcrdLogs()
