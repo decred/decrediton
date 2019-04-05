@@ -216,7 +216,6 @@
     font-size: 27px;
     line-height: 34px;
     margin-bottom: 42px;
-    margin-left: 10px;
     width: 100%;
   }
 
@@ -242,8 +241,8 @@
     border-radius: 3px;
     color: var(--background-back-color);
     margin: 5px;
-    float: left;
     text-align: center;
+    display: inline-block;
   }
 
   .seedWord.error {
@@ -274,7 +273,7 @@
     }
   }
 
-  .seedWord.restore, {
+  .seedWord.restore {
     background-color: transparent;
 
     .Select-control {
@@ -290,12 +289,12 @@
   }
 
   .toolbar {
-    width: 100%;
-    float: left;
+    display: flex;
+    flex-direction: row-reverse;
+    width: 692px;
   }
 
   .wallet-key-blue-button:not(.key-blue-button-disabled) {
-    float: left;
     box-shadow: 0px 5px 13px rgba(0, 0, 0, 0.21);
   }
 
@@ -304,7 +303,7 @@
   }
 
   .copy {
-    float: left;
+    float: right;
     padding-top: 2px;
     padding-left: 33px;
     height: 21px;
@@ -326,11 +325,6 @@
     opacity: 0.8;
   }
 
-  .go-back-screen-button-area {
-    position: fixed;
-    left: 971px;
-  }
-
   .go-back-screen-button {
     height: 12px;
     width: 12px;
@@ -338,6 +332,7 @@
     background-size: 12px;
     background-image: @x-grey;
     opacity: 1;
+    cursor: pointer;
   }
 
   .go-back-screen-button:hover {

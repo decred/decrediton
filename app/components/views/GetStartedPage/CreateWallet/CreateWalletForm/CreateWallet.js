@@ -22,11 +22,11 @@ const CreateWallet = ({
 }) => (
   <>
     <div className="getstarted content">
-      <div className="go-back-screen-button-area">
+      <div className="content-tittle-wrapper">
         <Tooltip text={ <T id="createWallet.goBack" m="Go back" /> }><div className="go-back-screen-button" onClick={onReturnToWalletSelection}/></Tooltip>
-      </div>
-      <div className="content-title">
-        <CreateWalletTitleMsg />
+        <div className="content-title">
+          <CreateWalletTitleMsg />
+        </div>
       </div>
       <Documentation name="WalletCreationWarning" className="create-wallet-warning" />
       <div className="seedArea">
