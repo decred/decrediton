@@ -29,6 +29,22 @@
   text-align: right;
 }
 
+.create-wallet-warning {
+  column-count: 2;
+  max-width: 48em;
+  font-size: 13px;
+  line-height: 16px;
+  margin-bottom: 1em;
+
+  p {
+    margin-top: 0px;
+  }
+
+  em {
+    color: var(--error-text-color);
+  }
+}
+
 .advanced-daemon-input {
   padding-left: 20px;
   float: left;
@@ -730,68 +746,52 @@
   float: left;
 }
 
-@media screen and (max-width: 676px) {
-  .loader-settings-logs {
-    position: fixed;
-    top: 100px;
-  }
-
-  .getstarted.loader .loader-bar {
-    margin-left: -30px;
-  }
-
-  .linear-progress-text {
-    position: relative;
-  }
-
-  .display-wallet .wallet-icon {
-    position: relative;
-  }
-
-  // .display-wallet-name {
-  // }
-
-  .getstarted.loader {
-    margin-left: 0px;
-  }
-
-  .page-body.getstarted {
-    background-position: 80px 20px;
-    background-color: var(--background-container) !important;
-    z-index: 5;
-  }
-
-  .getstarted.loader .loader-settings-logs {
-    background-color: var(--background-container);
-  }
-
-  .display-wallet.new {
-    background-color: inherit;
-  }
-
-  .display-wallet.new .display-wallet-name {
-    margin-top: 0px;
-  }
-
-  .display-wallet-launch {
-    color: indigo;
-  }
-
-  .getstarted.loader.logs .settings-privacy {
-    float: inherit;
-  }
-
-  .advanced-daemon-row {
-    margin-top: 25px;
-  }
-}
-
-@media screen and (max-width: 400px) {
-  .whatsnew {
-    display: none;
-  }
-}
-
 .getstarted-trezor-config-sections {
   margin-top: 14em;
+}
+
+@media screen and (max-width: 1179px) {
+  .getstarted.content {
+    margin-left: 10px;
+  }
+  .page-body.getstarted {
+    background-position: 50px 40px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .page-body.getstarted {
+    padding: 20px !important;
+    background-position: 20px 20px;
+  }
+
+  .getstarted.content {
+    .content-tittle-wrapper {
+      width: 355px;
+    }
+
+    .toolbar {
+      width: 315px !important;
+    }
+
+    .copy {
+      background-position: 80px;
+      padding-left: 0;
+      float: none;
+      text-align: center;
+      width: 355px;
+      margin-left: -10px;
+    }
+  }
+
+  .create-wallet-warning {
+    column-count: 1;
+    width: 315px;
+    margin-left: 10px;
+  }
+
+  .seedArea {
+    width: 353px !important;
+    margin-left: -10px;
+  }
 }
