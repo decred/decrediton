@@ -14,6 +14,7 @@ const propTypes = {
 const Modal = ({ show, onCancelModal, onSubmit, copyConfirmationPhrase,
   typedConfirmationPhrase, onTypedConfirmationPhraseChanged }) => (
   <DefaultModal className="confirm-seed-copy-modal" {...{ show }}>
+    <div className="title-warning-copy-modal"><T id="seedCopyConfirm.titleWarning" m="Seed Clipboard Copy Warning" /></div>
     <div className="confirm-seed-copy-modal-content">
       <div className="confirm-seed-copy-warning-text">
         <Documentation name="SeedCopyWarning" />

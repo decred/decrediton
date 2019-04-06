@@ -404,6 +404,16 @@
   margin-top: 2em;
 }
 
+.title-warning-copy-modal {
+  font-size: 27px;
+  margin-bottom: 10px;
+  background-image: @info-warning;
+  background-repeat: no-repeat;
+  background-size: 30px;
+  padding-left: 35px;
+  background-position: 0 center;
+}
+
 .confirm-seed-copy-modal-toolbar > .confirm-modal-confirm-button {
   float: right;
 }
@@ -523,6 +533,15 @@
 .confirm-seed-copy-warning-text {
   white-space: pre-line;
   margin-bottom: 20px;
+  column-count: 2;
+
+  strong {
+    text-decoration: underline;
+  }
+
+  em {
+    color: var(--error-text-color);
+  }
 }
 
 .confirm-seed-copy-phrase {
@@ -556,4 +575,10 @@
   z-index: 99;
   height: 100%;
   width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .confirm-seed-copy-warning-text {
+    column-count: 1;
+  }
 }
