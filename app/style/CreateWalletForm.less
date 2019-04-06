@@ -55,7 +55,8 @@
 .confirm-seed-row {
   margin-right: 10px;
   width: 100%;
-  float: left;
+  display: flex;
+  margin-left: -105px;
 }
 
 .confirm-seed-row.seed {
@@ -69,19 +70,14 @@
 }
 
 .confirm-seed-label-text.passphrase {
-  float: left;
+  display: flex;
+  flex-direction: row-reverse;
 }
 
 .confirm-seed-label-text {
-  width: 200px;
-  text-align: right;
-  margin-left: -205px;
+  margin-top: 5px;
   font-size: 13px;
   line-height: 17px;
-}
-
-.confirm-seed-label-text.seed {
-  margin-top: 5px;
 }
 
 .confirm-seed .input-and-unit.input-private-password {
@@ -216,7 +212,7 @@
 }
 
 .confirm-seed-row > .seedArea {
-  margin: -28px 5px 5px 5px;
+  margin-left: 5px;
 }
 
 .seedArea {
@@ -372,4 +368,10 @@
   display: flex;
   flex-direction: row-reverse;
   width: 692px;
+}
+
+@media screen and (max-width: 1179px) {
+  .confirm-seed-row {
+    margin-left: 0;
+  }
 }

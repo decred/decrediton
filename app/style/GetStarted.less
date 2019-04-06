@@ -257,8 +257,8 @@
     border-radius: 3px;
     color: var(--background-back-color);
     margin: 5px;
+    float: left;
     text-align: center;
-    display: inline-block;
   }
 
   .seedWord.error {
@@ -763,6 +763,8 @@
   .page-body.getstarted {
     padding: 20px !important;
     background-position: 20px 20px;
+    display: flex;
+    flex-direction: column;
   }
 
   .getstarted.content {
@@ -771,13 +773,13 @@
     }
 
     .toolbar {
-      width: 315px !important;
+      width: 380px !important;
+      margin-left: -20px;
     }
-
+    
     .copy {
       background-position: 80px;
       padding-left: 0;
-      float: none;
       text-align: center;
       width: 355px;
       margin-left: -10px;
