@@ -1,4 +1,5 @@
 import Row from "./Row";
+import Status from "./Status";
 import { createElement as h } from "react";
 import { FormattedMessage as T } from "react-intl";
 import { Balance, Tooltip } from "shared";
@@ -18,7 +19,7 @@ const messageByType = { // TODO: use constants instead of string
 };
 
 const StakeTxRow = ({ status,  ...props }) => {
-  const { overview, ticketPrice, ticketReward, leaveTimestamp, enterTimestamp } = props;
+  const { overview, ticketPrice, ticketReward, leaveTimestamp, enterTimestamp, pending, txAccountName, txTimestamp, tsDate  } = props;
 
   const rewardLabel = <T id="history.ticket.rewardLabel" m="Ticket Reward" />;
   const ticketRewardMessage = <T id="history.ticket.rewardMesage"
@@ -53,10 +54,12 @@ const StakeTxRow = ({ status,  ...props }) => {
   return overview ?
     (
       <Row {...{ className: status, ...props }}>
-        <div className="transaction-info transaction-stake-info-overview">
+        <div>
           <span className="icon" />
           <span className="transaction-stake-type-overview">{typeMsg}</span>
-          <div className="transaction-info-price-reward">
+          {!pending && <Status {...{ overview, txAccountName, pending, txTimestamp, tsDate }} />}
+        </div>
+        <div className="transaction-info-price-reward">
             <Tooltip text={ticketPriceMessage}>
               <Balance classNameWrapper="stake-transaction-ticket-price" amount={ticketPrice} />
             </Tooltip>
@@ -71,7 +74,6 @@ const StakeTxRow = ({ status,  ...props }) => {
                 </div>
               </Tooltip>
             )}
-          </div>
         </div>
       </Row>
     ) : (

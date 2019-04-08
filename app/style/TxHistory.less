@@ -44,13 +44,11 @@
 }
 
 .tx-history-row-wrapper {
-  float: left;
-  width: 100%;
+  display: flex;
 }
 
 .is-overview-pending {
   display: flex;
-  flex-direction: row !important;
 }
 
 .is-row-pending {
@@ -58,12 +56,13 @@
 }
 
 .tx-history-row {
-  padding: 18px 15px 9px 16px;
+  padding: 16px 20px 9px 10px;
   border-bottom: 1px solid var(--disabled-background-color);
   background-color: var(--background-back-color);
   cursor: pointer;
   transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s;
-  height: 30px;
+  height: 32px;
+  width: 287px;
 }
 
 .tx-history-row:hover {
@@ -76,7 +75,6 @@
   height: 20px;
   background-repeat: no-repeat;
   background-size: 20px 20px;
-  margin-right: 15px;
 }
 
 .tx-history-row.Send .icon {
@@ -187,31 +185,22 @@
   margin: 22px 0px 0px 35px;
 }
 
-.stake-transaction-ticket-price {
-  margin-right: 20px;
-  color: var(--disabled-color);
-}
 
 .transaction-stake-type-overview {
-  float: left;
   font-family: @font-family-regular;
   color: var(--input-color-default);
   font-size: 15px;
   font-weight: 600;
-}
-
-.transaction-stake-info-overview {
-  float: left;
+  margin-left: 22px;
 }
 
 .transaction-info-price-reward {
-  position: absolute;
+  display: flex;
   font-family: @font-family-monospaced;
-  color: var(--stroke-color-hovered);
+  color: var(--disabled-color);
   font-size: 12px;
-  margin-top: 16px;
-  margin-left: 35px;
-  width: 290px;
+  margin-left: 42px;
+  width: 270px;
 }
 
 .stake-transaction-ticket-reward {
@@ -220,7 +209,7 @@
   background-size: 11px 11px;
   background-position: 0px 4px;
   padding-left: 16px;
-  color: var(--disabled-color);
+  margin-left: 50px;
 }
 
 .transaction-info-overview-days-to-vote {
@@ -228,11 +217,8 @@
   background-repeat: no-repeat;
   background-size: 12px 12px;
   background-position: 0px 4px;
-  position: fixed;
-  right: 121px;
-  margin-top: -15px;
-  text-align: right;
   padding-left: 14px;
+  margin-left: 10px;
 }
 
 .history-content-nest {
