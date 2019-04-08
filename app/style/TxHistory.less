@@ -43,10 +43,6 @@
   padding-top: 12px;
 }
 
-.tx-history-row-wrapper {
-  display: flex;
-}
-
 .is-overview-pending {
   display: flex;
 }
@@ -130,8 +126,9 @@
 }
 
 .transaction-status {
-  padding: 1px 0px 0px 0px;
+  padding-top: 1px;
   text-align: right;
+  flex-grow: 2;
 }
 
 .transaction-time-date {
@@ -167,10 +164,8 @@
 }
 
 .transaction-stake-type {
-  display: inline-block;
-  min-width: 120px;
-  vertical-align: top;
-  padding: 4px 0px 0px 0px;
+  margin-left: 10px;
+  padding-top: 4px;
 }
 
 .transaction-amount-hash {
@@ -223,23 +218,12 @@
 }
 
 .history-content-nest {
-  .tx-history-row-wrapper {
-    display: flex;
-    flex-direction: column;
-    float: none;
-  }
-
   .tx-history-row {
-    display: flex;
     flex-basis: 80%;
     justify-content: space-between;
     line-height: 12px;
     height: 32px;
     width: 100%;
-  }
-
-  .transaction-info {
-    flex-grow: 2;
   }
 
   .transaction-time.date-spacer {
@@ -251,6 +235,7 @@
   }
 }
 
-.transaction-info-column {
+.transaction-info-row {
   display: flex;
+  flex-grow: 2;
 }
