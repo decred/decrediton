@@ -13,14 +13,6 @@
   .clearfloat-mixin;
 }
 
-.left {
-  float: left;
-}
-
-.right {
-  float: right;
-}
-
 .cyan-bold {
   color: var(--cyan-bold);
   font-weight: 700;
@@ -56,7 +48,6 @@
   margin-right: 10px;
   width: 100%;
   display: flex;
-  margin-left: -105px;
 }
 
 .confirm-seed-row.seed {
@@ -65,7 +56,6 @@
 
 .confirm-seed-row.passphrase {
   height: 50px;
-  float: left;
   margin-bottom: 25px;
 }
 
@@ -153,7 +143,6 @@
   width: 100%;
   float: left;
   clear: right;
-  margin-left: 10px;
 }
 
 .input-private-password {
@@ -218,6 +207,8 @@
 .seedArea {
   margin: 0px 5px 5px -5px;
   width: 560px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); 
 
   &.hex {
     width: 90%;
