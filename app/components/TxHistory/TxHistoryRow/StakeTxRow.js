@@ -60,20 +60,20 @@ const StakeTxRow = ({ status,  ...props }) => {
           {!pending && <Status {...{ overview, txAccountName, pending, txTimestamp, tsDate }} />}
         </div>
         <div className="transaction-info-price-reward">
-            <Tooltip text={ticketPriceMessage}>
-              <Balance classNameWrapper="stake-transaction-ticket-price" amount={ticketPrice} />
+          <Tooltip text={ticketPriceMessage}>
+            <Balance classNameWrapper="stake-transaction-ticket-price" amount={ticketPrice} />
+          </Tooltip>
+          <Tooltip text={ticketRewardMessage}>
+            <Balance classNameWrapper="stake-transaction-ticket-reward" amount={ticketReward} noSmallAmount />
+          </Tooltip>
+          {daysToVote !== null && !isNaN(daysToVote) && (
+            <Tooltip text={daysToVoteMessage}>
+              <div className="transaction-info-overview-days-to-vote">
+                <T id="statusSmall.daysToVotePlural" m="{days, plural, one {# day} other {# days}}"
+                  values={{ days: daysToVote }}/>
+              </div>
             </Tooltip>
-            <Tooltip text={ticketRewardMessage}>
-              <Balance classNameWrapper="stake-transaction-ticket-reward" amount={ticketReward} noSmallAmount />
-            </Tooltip>
-            {daysToVote !== null && !isNaN(daysToVote) && (
-              <Tooltip text={daysToVoteMessage}>
-                <div className="transaction-info-overview-days-to-vote">
-                  <T id="statusSmall.daysToVotePlural" m="{days, plural, one {# day} other {# days}}"
-                    values={{ days: daysToVote }}/>
-                </div>
-              </Tooltip>
-            )}
+          )}
         </div>
       </Row>
     ) : (
