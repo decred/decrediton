@@ -55,7 +55,7 @@ const PassPhraseInputs = ({
       </div>
     </div>
     <div className="confirm-seed-row passphrase">
-      <div className="confirm-seed-label-text passphrase">{passPhraseLabel}</div>
+      <div className="confirm-seed-label-text passphrase">{passPhraseVerificationLabel}</div>
       <div className="create-wallet-field">
         <form>
           <PasswordInput
