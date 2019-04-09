@@ -45,27 +45,32 @@
 }
 
 .confirm-seed-row {
-  margin-right: 10px;
-  width: 100%;
   display: flex;
 }
 
 .confirm-seed-row.seed {
   margin-bottom: 30px;
+  margin-left: -140px;
 }
 
 .confirm-seed-row.passphrase {
   height: 50px;
-  margin-bottom: 25px;
+  margin-left: -140px;
 }
 
 .confirm-seed-label-text.passphrase {
+  display: flex;
+  width: 130px;
+}
+
+.confirm-seed-label-text.seed {
   display: flex;
   flex-direction: row-reverse;
 }
 
 .confirm-seed-label-text {
   margin-top: 5px;
+  margin-right: 10px;
   font-size: 13px;
   line-height: 17px;
 }
@@ -150,13 +155,6 @@
   padding-bottom: 3px;
 }
 
-.input-form {
-  -moz-appearance: none !important;
-  position: relative;
-  width: 100%;
-  height: auto;
-}
-
 .input-form-confirm-seed {
   -moz-appearance: none !important;
   position: relative;
@@ -196,8 +194,8 @@
   height: 202px;
 }
 
-.info-label {
-  float: right;
+.passphrase-info-wrapper {
+  margin-left: -20px;
 }
 
 .confirm-seed-row > .seedArea {
@@ -363,6 +361,13 @@
 
 @media screen and (max-width: 1179px) {
   .confirm-seed-row {
+    margin-left: 0;
+  }
+  .confirm-seed-row.seed {
+    margin-left: 0;
+  }
+
+  .confirm-seed-row.passphrase {
     margin-left: 0;
   }
 }
