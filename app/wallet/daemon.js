@@ -88,13 +88,13 @@ export const getPreviousWallet = log(() => Promise
   .resolve(ipcRenderer.sendSync("get-previous-wallet"))
 , "Get Previous Wallet", logOptionNoResponseData());
 
-export const getBlockCount = log((rpcCreds, testnet) => new Promise(resolve => {
+export const getBlockCount = log(() => new Promise(resolve => {
   ipcRenderer.once("check-daemon-response", (e, info) => {
     const blockCount = isString(info.blockCount) ? parseInt(info.blockCount.trim()) : info.blockCount;
     const syncHeight = isString(info.syncHeight) ? parseInt(info.syncHeight.trim()) : info.syncHeight;
     resolve({ blockCount, syncHeight });
   });
-  ipcRenderer.send("check-daemon", rpcCreds, testnet);
+  ipcRenderer.send("check-daemon");
 }), "Get Block Count");
 
 export const getDaemonInfo = log((rpcCreds) => new Promise(resolve => {
@@ -151,7 +151,7 @@ export const getDcrdLastLogLine = () => Promise
 export const getDcrwalletLastLogLine = () => Promise
   .resolve(ipcRenderer.sendSync("get-last-log-line-dcrwallet"));
 
-export const connectDaemon = log((appData, testnet) => new Promise((resolve, reject) => {
+export const connectDaemon = log(() => new Promise((resolve, reject) => {
   ipcRenderer.once("connectRpcDaemon-response", (e, info) => {
     if (info.connected) {
       resolve({ connected: true });
@@ -160,5 +160,5 @@ export const connectDaemon = log((appData, testnet) => new Promise((resolve, rej
       reject({ connected: false, error: info.error })
     }
   });
-  ipcRenderer.send("connect-daemon", appData, testnet)
+  ipcRenderer.send("connect-daemon")
 }), "Connect Daemon");

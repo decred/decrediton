@@ -19,6 +19,9 @@ export const SELECT_LANGUAGE = "SELECT_LANGUAGE";
 export const CHECK_NETWORKMATCH_ATTEMPT = "CHECK_NETWORKMATCH_ATTEMPT";
 export const CHECK_NETWORKMATCH_SUCCESS = "CHECK_NETWORKMATCH_SUCCESS";
 export const CHECK_NETWORKMATCH_FAILED = "CHECK_NETWORKMATCH_FAILED";
+export const CONNECTDAEMON_ATTEMPT = "CONNECTDAEMON_ATTEMPT";
+export const CONNECTDAEMON_SUCCESS = "CONNECTDAEMON_SUCCESS";
+export const CONNECTDAEMON_FAILURE = "CONNECTDAEMON_FAILURE";
 export const DAEMONSTARTED = "DAEMONSTARTED";
 export const DAEMONSTARTED_APPDATA = "DAEMONSTARTED_APPDATA";
 export const DAEMONSTARTED_REMOTE = "DAEMONSTARTED_REMOTE";
@@ -26,7 +29,7 @@ export const DAEMONSTARTED_ERROR = "DAEMONSTARTED_ERROR";
 export const DAEMONSTOPPED = "DAEMONSTOPPED";
 export const DAEMONSYNCING_START = "DAEMONSYNCING_START";
 export const DAEMONSYNCING_PROGRESS = "DAEMONSYNCING_PROGRESS";
-export const DAEMONSYNCING_TIMEOUT = "DAEMONSYNCING_TIMEOUT";
+export const DAEMONCONNECTING_TIMEOUT = "DAEMONCONNECTING_TIMEOUT";
 export const DAEMONSYNCED = "DAEMONSYNCED";
 export const WALLETREADY = "WALLETREADY";
 export const WALLETREMOVED = "WALLETREMOVED";
@@ -50,6 +53,9 @@ export const WALLET_LOADER_SETTINGS = "WALLET_LOADER_SETTINGS";
 export const DELETE_DCRD_ATTEMPT = "DELETE_DCRD_ATTEMPT";
 export const DELETE_DCRD_FAILED = "DELETE_DCRD_FAILED";
 export const DELETE_DCRD_SUCCESS = "DELETE_DCRD_SUCCESS";
+export const SYNC_DAEMON_ATTEMPT = "SYNC_DAEMON_ATTEMPT";
+export const STARTUPBLOCK = "STARTUPBLOCK";
+export const SYNC_DAEMON_FAILED = "SYNC_DAEMON_FAILED";
 
 export const checkDecreditonVersion = () => (dispatch, getState) =>{
   const detectedVersion = getState().daemon.appVersion;
@@ -353,62 +359,6 @@ export const prepStartDaemon = () => (dispatch, getState) => {
 };
 
 const TIME_TO_TIMEOUT = 30 * 1000; // 30 sec
-
-export const STARTUPBLOCK = "STARTUPBLOCK";
-export const syncDaemon = () =>
-  (dispatch, getState) => {
-    let timeStartBeforeSync = new Date();
-    const updateBlockCount = async () => {
-      const { daemon: { daemonSynced, timeStart, blockStart, credentials, daemonError, neededBlocks, networkMatch, daemonRemote } } = getState();
-      const timeNow = new Date();
-      const timeElapsed = timeNow - timeStartBeforeSync;
-      if (timeStart === 0 && timeElapsed >= TIME_TO_TIMEOUT && daemonRemote) {
-        dispatch({ type: DAEMONSYNCING_TIMEOUT });
-        return;
-      }
-      // check to see if user skipped;
-      if (daemonSynced || daemonError) return;
-      if (!networkMatch) {
-        const daemonInfo = await wallet.getDaemonInfo(credentials);
-        if (daemonInfo.isTestNet !== null &&
-            daemonInfo.isTestNet !== isTestNet(getState())) {
-          dispatch({ error: DIFF_CONNECTION_ERROR, type: NOT_SAME_CONNECTION });
-          return dispatch(pushHistory("/error"));
-        } else if (daemonInfo.isTestNet !== null && daemonInfo.isTestNet == isTestNet(getState())) {
-          dispatch({ type: NETWORK_MATCH });
-        }
-      }
-      return wallet
-        .getBlockCount(credentials, isTestNet(getState()))
-        .then(( blockChainInfo ) => {
-          const blockCount = blockChainInfo.blockCount;
-          const syncHeight = blockChainInfo.syncHeight;
-          if (neededBlocks != 0 && blockCount >= syncHeight) {
-            dispatch({ type: DAEMONSYNCED });
-            dispatch({ currentBlockHeight: blockCount, type: STARTUPBLOCK });
-            setMustOpenForm(false);
-            return;
-          } else if (neededBlocks !== 0 && blockCount !== 0 && syncHeight !== 0) {
-            const blocksLeft = syncHeight - blockCount;
-            const blocksDiff = blockCount - blockStart;
-            if (timeStart !== 0 && blockStart !== 0 && blocksDiff !== 0) {
-              const currentTime = new Date();
-              const timeSyncing = (currentTime - timeStart) / 1000;
-              const secondsLeft = Math.round(blocksLeft / blocksDiff * timeSyncing);
-              dispatch({
-                currentBlockCount: blockCount,
-                timeLeftEstimate: secondsLeft,
-                type: DAEMONSYNCING_PROGRESS });
-            }
-          } else if (blockCount !== 0 && syncHeight !== 0) {
-            dispatch({ syncHeight: syncHeight, currentBlockCount: blockCount, timeStart: new Date(), blockStart: blockCount, type: DAEMONSYNCING_START });
-          }
-          setTimeout(updateBlockCount, 1000);
-        }).catch(err=>console.log(err));
-    };
-    updateBlockCount();
-  };
-
 export const CONNECTDAEMON_ATTEMPT = "CONNECTDAEMON_ATTEMPT";
 export const CONNECTDAEMON_SUCCESS = "CONNECTDAEMON_SUCCESS";
 export const CONNECTDAEMON_FAILURE = "CONNECTDAEMON_FAILURE";
@@ -417,13 +367,13 @@ export const connectDaemon = () => async (dispatch, getState) => {
   dispatch({ type: CONNECTDAEMON_ATTEMPT });
   const timeBeforeConnect = new Date();
   const tryConnect = async () => {
-    const { daemonConnected, credentials, daemonError, networkMatch } = getState().daemon;
-    // const timeNow = new Date();
-    // const timeElapsed = timeNow - timeBeforeConnect;
-    // if (timeStart === 0 && timeElapsed >= TIME_TO_TIMEOUT) {
-    //   dispatch({ type: DAEMONSYNCING_TIMEOUT });
-    //   return;
-    // }
+    const { daemonConnected, credentials, daemonError, timeStart } = getState().daemon;
+    const timeNow = new Date();
+    const timeElapsed = timeNow - timeBeforeConnect;
+    if (timeStart === 0 && timeElapsed >= TIME_TO_TIMEOUT) {
+      dispatch({ type: DAEMONCONNECTING_TIMEOUT });
+      return;
+    }
     if (daemonConnected || daemonError) return;
     return wallet
       .connectDaemon({ credentials, isTestnet: isTestNet(getState()) })
@@ -447,7 +397,45 @@ export const checkNetworkMatch = () => async (dispatch, getState) => {
     return dispatch(pushHistory("/error"));
   }
   dispatch({ type: CHECK_NETWORKMATCH_SUCCESS, daemonInfo });
+  dispatch(syncDaemon());
 }
+
+export const syncDaemon = () => (dispatch, getState) => {
+  dispatch({ type: SYNC_DAEMON_ATTEMPT })
+  const { daemon: { daemonSynced, timeStart, blockStart, daemonError } } = getState();
+  if (daemonSynced || daemonError) return;
+  return wallet.getBlockCount()
+    .then(( blockChainInfo ) => {
+      const { blockCount, syncHeight } = blockChainInfo;
+      if (syncHeight !== 0 && blockCount >= syncHeight) {
+        dispatch({ type: DAEMONSYNCED });
+        dispatch({ currentBlockHeight: blockCount, type: STARTUPBLOCK });
+        setMustOpenForm(false);
+        return;
+      }
+
+      if (blockCount !== 0 && syncHeight !== 0) {
+        dispatch({
+          syncHeight, currentBlockCount: blockCount, timeStart: new Date(), blockStart: blockCount, type: DAEMONSYNCING_START
+        });
+        const blocksLeft = syncHeight - blockCount;
+        const blocksDiff = blockCount - blockStart;
+        if (timeStart !== 0 && blockStart !== 0 && blocksDiff !== 0) {          
+          const currentTime = new Date();
+          const timeSyncing = (currentTime - timeStart) / 1000;
+          const secondsLeft = Math.round(blocksLeft / blocksDiff * timeSyncing);
+          dispatch({
+            currentBlockCount: blockCount,
+            timeLeftEstimate: secondsLeft,
+            type: DAEMONSYNCING_PROGRESS });
+        }
+      }
+      setTimeout(updateBlockCount, 1000);
+    }).catch( error => {
+      console.log(error);
+      dispatch({ error, type: SYNC_DAEMON_FAILED });
+    });
+};
 
 export const getDcrdLogs = () => {
   wallet.getDcrdLogs()

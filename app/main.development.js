@@ -226,8 +226,8 @@ ipcMain.on("start-wallet", (event, walletPath, testnet) => {
   event.returnValue = startWallet(mainWindow, daemonIsAdvanced, testnet, walletPath, reactIPC);
 });
 
-ipcMain.on("check-daemon", (event, rpcCreds, testnet) => {
-  checkDaemon(mainWindow, rpcCreds, testnet);
+ipcMain.on("check-daemon", () => {
+  checkDaemon(dcrdSocket, mainWindow);
 });
 
 ipcMain.on("daemon-getinfo", () => {

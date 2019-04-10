@@ -146,59 +146,20 @@ export const getDaemonInfo = (ws, mainWindow) => {
   ws.send('{"jsonrpc":"1.0","id":"0","method":"getinfo","params":[]}');
   ws.on('message', (data) => {
     const parsedData = JSON.parse(data);
+    logger.log("info", parsedData.result);
     mainWindow.webContents.send("check-getinfo-response", parsedData.result );
   });
 };
 
-export const checkDaemon = (mainWindow, rpcCreds, testnet) => {
-  let args = [ "getblockchaininfo" ];
-  let host, port;
-
-  if (!rpcCreds){
-    args.push(`--configfile=${dcrctlCfg(appDataDirectory())}`);
-  } else if (rpcCreds) {
-    if (rpcCreds.rpc_user) {
-      args.push(`--rpcuser=${rpcCreds.rpc_user}`);
-    }
-    if (rpcCreds.rpc_password) {
-      args.push(`--rpcpass=${rpcCreds.rpc_password}`);
-    }
-    if (rpcCreds.rpc_cert) {
-      args.push(`--rpccert=${rpcCreds.rpc_cert}`);
-    }
-    if (rpcCreds.rpc_host) {
-      host = rpcCreds.rpc_host;
-    }
-    if (rpcCreds.rpc_port) {
-      port = rpcCreds.rpc_port;
-    }
-    args.push("--rpcserver=" + host + ":" + port);
-  }
-
-  if (testnet) {
-    args.push("--testnet");
-  }
-
-  const dcrctlExe = getExecutablePath("dcrctl", argv.custombinpath);
-  if (!fs.existsSync(dcrctlExe)) {
-    logger.log("error", "The dcrctl executable does not exist. Expected to find it at " + dcrctlExe);
-  }
-
-  logger.log("info", `checking if daemon is ready  with dcrctl ${args}`);
-
-  const spawn = require("child_process").spawn;
-  const dcrctl = spawn(dcrctlExe, args, { detached: false, stdio: [ "ignore", "pipe", "pipe", "pipe" ] });
-
-  dcrctl.stdout.on("data", (data) => {
+export const checkDaemon = (ws, mainWindow) => {
+  ws.send('{"jsonrpc":"1.0","id":"getblockchaininfo","method":"getblockchaininfo","params":[]}');
+  ws.on('message', (data) => {
     const parsedData = JSON.parse(data);
-    const blockCount = parsedData.blocks;
-    const syncHeight = parsedData.syncheight;
-    logger.log("info", parsedData.blocks, parsedData.syncheight, parsedData.verificationprogress);
+    const dataResults = parsedData.result || {};
+    const blockCount = dataResults.blocks;
+    const syncHeight = dataResults.syncheight;
+    logger.log("info", dataResults.blocks, dataResults.syncheight, dataResults.verificationprogress);
     mainWindow.webContents.send("check-daemon-response", { blockCount, syncHeight });
-  });
-  dcrctl.stderr.on("data", (data) => {
-    logger.log("error", data.toString());
-    mainWindow.webContents.send("check-daemon-response", { blockCount: 0, syncHeight: 0 });
   });
 };
 

@@ -13,7 +13,7 @@ import {
   DAEMONSYNCING_PROGRESS,
   DAEMONSYNCED,
   DAEMONSTOPPED,
-  DAEMONSYNCING_TIMEOUT,
+  DAEMONCONNECTING_TIMEOUT,
   WALLETREADY,
   WALLETCREATED,
   SHUTDOWN_REQUESTED,
@@ -131,7 +131,7 @@ export default function version(state = {}, action) {
       currentBlockCount: action.currentBlockCount,
       timeLeftEstimate: action.timeLeftEstimate,
     };
-  case DAEMONSYNCING_TIMEOUT:
+  case DAEMONCONNECTING_TIMEOUT:
     return { ...state,
       daemonTimeout: true,
       daemonStarted: false,

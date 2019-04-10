@@ -40,7 +40,7 @@ import {
   GETSTARTUPSTATS_FAILED,
   GETMYTICKETSSTATS_FAILED,
 } from "actions/StatisticsActions";
-import { WALLETREMOVED_FAILED, DAEMONSYNCING_TIMEOUT } from "actions/DaemonActions";
+import { WALLETREMOVED_FAILED, DAEMONCONNECTING_TIMEOUT } from "actions/DaemonActions";
 import {
   GETWALLETSEEDSVC_FAILED,
   SPVSYNC_FAILED,
@@ -182,7 +182,7 @@ const messages = defineMessages({
     id: "decodeRawTx.errors.decodeFailed",
     defaultMessage: "{originalError}"
   },
-  DAEMONSYNCING_TIMEOUT: {
+  DAEMONCONNECTING_TIMEOUT: {
     id: "daemonSyncingTimeout.errors",
     defaultMessage: "Daemon connection timeout exceded.\n That Probably means you filled your parameters wrong. Please review it."
   },
@@ -392,7 +392,7 @@ export default function snackbar(state = {}, action) {
   case SETSTAKEPOOLVOTECHOICES_FAILED:
   case ADDCUSTOMSTAKEPOOL_FAILED:
   case DECODERAWTXS_FAILED:
-  case DAEMONSYNCING_TIMEOUT:
+  case DAEMONCONNECTING_TIMEOUT:
   case SIGNMESSAGE_FAILED:
   case VERIFYMESSAGE_FAILED:
   case GETSTARTUPWALLETINFO_FAILED:
