@@ -38,6 +38,7 @@ if (err !== null) {
 let menu;
 let mainWindow = null;
 let previousWallet = null;
+let dcrdSocket = null;
 let primaryInstance;
 
 const globalCfg = initGlobalCfg();
@@ -196,8 +197,8 @@ ipcMain.on("start-daemon", (event, appData, testnet) => {
   event.returnValue = startDaemon(mainWindow, daemonIsAdvanced, primaryInstance, appData, testnet, reactIPC);
 });
 
-ipcMain.on("connect-daemon", (event, appData, testnet) => {
-  event.returnValue = connectDaemon(mainWindow, appData, testnet, reactIPC);
+ipcMain.on("connect-daemon", (event) => {
+  dcrdSocket = connectDaemon(mainWindow);
 });
 
 ipcMain.on("delete-daemon", (event, appData, testnet) => {
@@ -229,8 +230,8 @@ ipcMain.on("check-daemon", (event, rpcCreds, testnet) => {
   checkDaemon(mainWindow, rpcCreds, testnet);
 });
 
-ipcMain.on("get-info", (event, rpcCreds) => {
-  getDaemonInfo(mainWindow, rpcCreds, false);
+ipcMain.on("daemon-getinfo", () => {
+  getDaemonInfo(dcrdSocket, mainWindow);
 });
 
 ipcMain.on("clean-shutdown", async function(event){

@@ -86,8 +86,8 @@ export const startDaemon = (mainWindow, daemonIsAdvanced, primaryInstance, appDa
   }
 };
 
-export const connectDaemon = (mainWindow, appData, testnet, reactIPC) => {
-  return connectRpcDaemon(mainWindow, appData, testnet, reactIPC);
+export const connectDaemon = (mainWindow) => {
+  return connectRpcDaemon(mainWindow);
 };
 
 export const createWallet = (testnet, walletPath) => {
@@ -142,50 +142,11 @@ export const stopWallet = () => {
   return closeDCRW(GetDcrwPID());
 };
 
-export const getDaemonInfo = (mainWindow, rpcCreds, isRetry) => {
-  let args = [ "getinfo" ];
-
-  if (!rpcCreds){
-    args.push(`--configfile=${dcrctlCfg(appDataDirectory())}`);
-  } else if (rpcCreds) {
-    if (rpcCreds.rpc_user) {
-      args.push(`--rpcuser=${rpcCreds.rpc_user}`);
-    }
-    if (rpcCreds.rpc_password) {
-      args.push(`--rpcpass=${rpcCreds.rpc_password}`);
-    }
-    if (rpcCreds.rpc_cert) {
-      args.push(`--rpccert=${rpcCreds.rpc_cert}`);
-    }
-  }
-
-  // retry using testnet to check connection
-  if (isRetry) {
-    args.push("--testnet");
-  }
-
-  const dcrctlExe = getExecutablePath("dcrctl", argv.custombinpath);
-  if (!fs.existsSync(dcrctlExe)) {
-    logger.log("error", "The dcrctl executable does not exist. Expected to find it at " + dcrctlExe);
-  }
-
-  logger.log("info", `checking daemon network with dcrctl ${args}`);
-
-  const spawn = require("child_process").spawn;
-  const dcrctl = spawn(dcrctlExe, args, { detached: false, stdio: [ "ignore", "pipe", "pipe", "pipe" ] });
-
-  dcrctl.stdout.on("data", (data) => {
+export const getDaemonInfo = (ws, mainWindow) => {
+  ws.send('{"jsonrpc":"1.0","id":"0","method":"getinfo","params":[]}');
+  ws.on('message', (data) => {
     const parsedData = JSON.parse(data);
-    logger.log("info", "is daemon testnet: " + parsedData.testnet);
-    mainWindow.webContents.send("check-getinfo-response", parsedData);
-  });
-  dcrctl.stderr.on("data", (data) => {
-    logger.log("error", data.toString());
-    if (isRetry) {
-      mainWindow.webContents.send("check-getinfo-response", null );
-    } else {
-      getDaemonInfo(mainWindow, rpcCreds, true);
-    }
+    mainWindow.webContents.send("check-getinfo-response", parsedData.result );
   });
 };
 

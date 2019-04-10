@@ -99,10 +99,10 @@ export const getBlockCount = log((rpcCreds, testnet) => new Promise(resolve => {
 
 export const getDaemonInfo = log((rpcCreds) => new Promise(resolve => {
   ipcRenderer.once("check-getinfo-response", (e, info) => {
-    const isTestNet = info ? info.testnet : null;
-    resolve({ isTestNet });
+    const isTestnet = info ? info.testnet : null;
+    resolve({ isTestnet });
   });
-  ipcRenderer.send("get-info", rpcCreds);
+  ipcRenderer.send("daemon-getinfo", rpcCreds);
 }), "Get Daemon network info");
 
 export const getDcrdLogs = () => Promise

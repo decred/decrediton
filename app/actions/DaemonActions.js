@@ -16,9 +16,9 @@ import { enableTrezor } from "./TrezorActions";
 
 export const DECREDITON_VERSION = "DECREDITON_VERSION";
 export const SELECT_LANGUAGE = "SELECT_LANGUAGE";
-export const FINISH_TUTORIAL = "FINISH_TUTORIAL";
-export const FINISH_PRIVACY = "FINISH_PRIVACY";
-export const FINISH_SPVCHOICE = "FINISH_SPVCHOICE";
+export const CHECK_NETWORKMATCH_ATTEMPT = "CHECK_NETWORKMATCH_ATTEMPT";
+export const CHECK_NETWORKMATCH_SUCCESS = "CHECK_NETWORKMATCH_SUCCESS";
+export const CHECK_NETWORKMATCH_FAILED = "CHECK_NETWORKMATCH_FAILED";
 export const DAEMONSTARTED = "DAEMONSTARTED";
 export const DAEMONSTARTED_APPDATA = "DAEMONSTARTED_APPDATA";
 export const DAEMONSTARTED_REMOTE = "DAEMONSTARTED_REMOTE";
@@ -37,6 +37,9 @@ export const SET_CREDENTIALS_APPDATA_ERROR = "SET_CREDENTIALS_APPDATA_ERROR";
 export const REGISTERFORERRORS = "REGISTERFORERRORS";
 export const FATAL_DAEMON_ERROR = "FATAL_DAEMON_ERROR";
 export const FATAL_WALLET_ERROR = "FATAL_WALLET_ERROR";
+export const FINISH_TUTORIAL = "FINISH_TUTORIAL";
+export const FINISH_PRIVACY = "FINISH_PRIVACY";
+export const FINISH_SPVCHOICE = "FINISH_SPVCHOICE";
 export const DAEMON_WARNING = "DAEMON_WARNING";
 export const WALLET_WARNING = "WALLET_WARNING";
 export const WALLETCREATED = "WALLETCREATED";
@@ -47,8 +50,6 @@ export const WALLET_LOADER_SETTINGS = "WALLET_LOADER_SETTINGS";
 export const DELETE_DCRD_ATTEMPT = "DELETE_DCRD_ATTEMPT";
 export const DELETE_DCRD_FAILED = "DELETE_DCRD_FAILED";
 export const DELETE_DCRD_SUCCESS = "DELETE_DCRD_SUCCESS";
-export const NOT_SAME_CONNECTION = "NOT_SAME_CONNECTION";
-export const NETWORK_MATCH = "NETWORK_MATCH";
 
 export const checkDecreditonVersion = () => (dispatch, getState) =>{
   const detectedVersion = getState().daemon.appVersion;
@@ -415,7 +416,7 @@ export const CONNECTDAEMON_FAILURE = "CONNECTDAEMON_FAILURE";
 export const connectDaemon = () => async (dispatch, getState) => {
   dispatch({ type: CONNECTDAEMON_ATTEMPT });
   const timeBeforeConnect = new Date();
-  const updateBlockCount = async () => {
+  const tryConnect = async () => {
     const { daemonConnected, credentials, daemonError, networkMatch } = getState().daemon;
     // const timeNow = new Date();
     // const timeElapsed = timeNow - timeBeforeConnect;
@@ -424,28 +425,28 @@ export const connectDaemon = () => async (dispatch, getState) => {
     //   return;
     // }
     if (daemonConnected || daemonError) return;
-    // if (!networkMatch) {
-    //   const daemonInfo = await wallet.getDaemonInfo(credentials);
-    //   if (daemonInfo.isTestNet !== null &&
-    //       daemonInfo.isTestNet !== isTestNet(getState())) {
-    //     dispatch({ error: DIFF_CONNECTION_ERROR, type: NOT_SAME_CONNECTION });
-    //     return dispatch(pushHistory("/error"));
-    //   } else if (daemonInfo.isTestNet !== null && daemonInfo.isTestNet == isTestNet(getState())) {
-    //     dispatch({ type: NETWORK_MATCH });
-    //   }
-    // }
     return wallet
       .connectDaemon({ credentials, isTestnet: isTestNet(getState()) })
-      .then(( resp ) => {
-        console.log(resp)
+      .then(() => {
         dispatch({ type: CONNECTDAEMON_SUCCESS });
-        setTimeout(updateBlockCount, 1000);
+        dispatch(checkNetworkMatch());
       }).catch( err => {
         console.log(err)
-        setTimeout(updateBlockCount, 1000);
+        setTimeout(tryConnect, 1000);
       });
   };
-  updateBlockCount();
+  tryConnect();
+}
+
+export const checkNetworkMatch = () => async (dispatch, getState) => {
+  dispatch({ type: CHECK_NETWORKMATCH_ATTEMPT });
+  const daemonInfo = await wallet.getDaemonInfo();
+  if (daemonInfo.isTestnet !== null &&
+      daemonInfo.isTestnet !== isTestNet(getState())) {
+    dispatch({ error: DIFF_CONNECTION_ERROR, type: CHECK_NETWORKMATCH_FAILED });
+    return dispatch(pushHistory("/error"));
+  }
+  dispatch({ type: CHECK_NETWORKMATCH_SUCCESS, daemonInfo });
 }
 
 export const getDcrdLogs = () => {

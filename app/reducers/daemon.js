@@ -23,9 +23,8 @@ import {
   FATAL_DAEMON_ERROR,
   FATAL_WALLET_ERROR,
   DAEMON_WARNING,
-  WALLET_WARNING,
-  CLOSEDAEMON_ATTEMPT, CLOSEDAEMON_FAILED, CLOSEDAEMON_SUCCESS, NOT_SAME_CONNECTION,
-  NETWORK_MATCH
+  WALLET_WARNING, CLOSEDAEMON_ATTEMPT, CLOSEDAEMON_FAILED, CLOSEDAEMON_SUCCESS,
+  CHECK_NETWORKMATCH_ATTEMPT, CHECK_NETWORKMATCH_SUCCESS, CHECK_NETWORKMATCH_FAILED,
 } from "../actions/DaemonActions";
 import {
   CREATEWALLET_GOBACK,
@@ -37,10 +36,6 @@ import {
 
 export default function version(state = {}, action) {
   switch (action.type) {
-  case NETWORK_MATCH:
-    return { ... state,
-      networkMatch: true,
-    };
   case DECREDITON_VERSION:
     return { ...state,
       updateAvailable: action.msg,
@@ -220,9 +215,18 @@ export default function version(state = {}, action) {
       ...state,
       walletError: action.error,
     };
-  case NOT_SAME_CONNECTION:
-    return {
-      ...state,
+  case CHECK_NETWORKMATCH_ATTEMPT:
+    return {...state,
+      daemonError: null,
+      networkMatch: null,
+    }
+  case CHECK_NETWORKMATCH_SUCCESS:
+    return {...state,
+      networkMatch: true,
+      daemonError: null,
+    }
+  case CHECK_NETWORKMATCH_FAILED:
+    return {...state,
       daemonError: action.error,
     };
   default:

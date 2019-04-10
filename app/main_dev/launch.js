@@ -383,7 +383,7 @@ export const connectRpcDaemon = (mainWindow) => {
     console.log('CONNECTED');
     // Send a JSON-RPC command to be notified when blocks are connected and
     // disconnected from the chain.
-    ws.send('{"jsonrpc":"2.0","id":"0","method":"notifyblocks","params":[]}');
+    ws.send('{"jsonrpc":"1.0","id":"0","method":"notifyblocks","params":[]}');
     mainWindow.webContents.send("connectRpcDaemon-response", { connected: true });
   });
   ws.on('error', function(error) {
@@ -394,16 +394,17 @@ export const connectRpcDaemon = (mainWindow) => {
     const parsedData = JSON.parse(data);
     const method = parsedData ? parsedData.method : "";
     switch (method) {
-      case "blockconnected": {
+      case "blockconnected":
         const hex = hexToRaw(parsedData.params[0]);
         const newBlock = decodeConnectedBlockHeader(Buffer.from(hex));
-        console.log(newBlock);
-      }
+        break;
     }
   });
   ws.on('close', function(data) {
     console.log('DISCONNECTED');
   })
+
+  return ws;
 };
 
 const decodeConnectedBlockHeader = (headerBytes) => {
