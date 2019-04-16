@@ -38,7 +38,6 @@ if (err !== null) {
 let menu;
 let mainWindow = null;
 let previousWallet = null;
-let dcrdSocket = null;
 let primaryInstance;
 
 const globalCfg = initGlobalCfg();
@@ -198,7 +197,7 @@ ipcMain.on("start-daemon", (event, appData, testnet) => {
 });
 
 ipcMain.on("connect-daemon", (event) => {
-  dcrdSocket = connectDaemon(mainWindow);
+  event.returnValue = connectDaemon(mainWindow);
 });
 
 ipcMain.on("delete-daemon", (event, appData, testnet) => {
@@ -227,11 +226,11 @@ ipcMain.on("start-wallet", (event, walletPath, testnet) => {
 });
 
 ipcMain.on("check-daemon", () => {
-  checkDaemon(dcrdSocket, mainWindow);
+  checkDaemon(mainWindow);
 });
 
 ipcMain.on("daemon-getinfo", () => {
-  getDaemonInfo(dcrdSocket, mainWindow);
+  getDaemonInfo(mainWindow);
 });
 
 ipcMain.on("clean-shutdown", async function(event){

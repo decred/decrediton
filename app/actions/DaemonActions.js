@@ -402,39 +402,43 @@ export const checkNetworkMatch = () => async (dispatch, getState) => {
 
 export const syncDaemon = () => (dispatch, getState) => {
   dispatch({ type: SYNC_DAEMON_ATTEMPT })
-  const { daemon: { daemonSynced, timeStart, blockStart, daemonError } } = getState();
-  if (daemonSynced || daemonError) return;
-  return wallet.getBlockCount()
-    .then(( blockChainInfo ) => {
-      const { blockCount, syncHeight } = blockChainInfo;
-      if (syncHeight !== 0 && blockCount >= syncHeight) {
-        dispatch({ type: DAEMONSYNCED });
-        dispatch({ currentBlockHeight: blockCount, type: STARTUPBLOCK });
-        setMustOpenForm(false);
-        return;
-      }
-
-      if (blockCount !== 0 && syncHeight !== 0) {
-        dispatch({
-          syncHeight, currentBlockCount: blockCount, timeStart: new Date(), blockStart: blockCount, type: DAEMONSYNCING_START
-        });
-        const blocksLeft = syncHeight - blockCount;
-        const blocksDiff = blockCount - blockStart;
-        if (timeStart !== 0 && blockStart !== 0 && blocksDiff !== 0) {          
-          const currentTime = new Date();
-          const timeSyncing = (currentTime - timeStart) / 1000;
-          const secondsLeft = Math.round(blocksLeft / blocksDiff * timeSyncing);
-          dispatch({
-            currentBlockCount: blockCount,
-            timeLeftEstimate: secondsLeft,
-            type: DAEMONSYNCING_PROGRESS });
+  const updateBlockCount = () => {
+    const { daemon: { daemonSynced, timeStart, blockStart, daemonError } } = getState();
+    if (daemonSynced || daemonError) return;
+    return wallet.getBlockCount()
+      .then(( blockChainInfo ) => {
+        const { blockCount, syncHeight } = blockChainInfo;
+        if (syncHeight !== 0 && blockCount >= syncHeight) {
+          dispatch({ type: DAEMONSYNCED });
+          dispatch({ currentBlockHeight: blockCount, type: STARTUPBLOCK });
+          setMustOpenForm(false);
+          return;
         }
-      }
-      setTimeout(updateBlockCount, 1000);
-    }).catch( error => {
+  
+        if (blockCount !== 0 && syncHeight !== 0) {
+          dispatch({
+            syncHeight, currentBlockCount: blockCount, timeStart: new Date(), blockStart: blockCount, type: DAEMONSYNCING_START
+          });
+          const blocksLeft = syncHeight - blockCount;
+          const blocksDiff = blockCount - blockStart;
+          if (timeStart !== 0 && blockStart !== 0 && blocksDiff !== 0) {          
+            const currentTime = new Date();
+            const timeSyncing = (currentTime - timeStart) / 1000;
+            const secondsLeft = Math.round(blocksLeft / blocksDiff * timeSyncing);
+            dispatch({
+              currentBlockCount: blockCount,
+              timeLeftEstimate: secondsLeft,
+              type: DAEMONSYNCING_PROGRESS });
+          }
+        }
+        setTimeout(updateBlockCount, 1000);
+    })
+    .catch( error => {
       console.log(error);
       dispatch({ error, type: SYNC_DAEMON_FAILED });
     });
+  }
+  updateBlockCount();
 };
 
 export const getDcrdLogs = () => {

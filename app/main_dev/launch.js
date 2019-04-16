@@ -27,6 +27,8 @@ let dcrwPipeRx, dcrwPipeTx, dcrdPipeRx, dcrwTxStream;
 let dcrwPort;
 let rpcuser, rpcpass, rpccert, rpchost, rpcport;
 
+let dcrdSocket = null;
+
 function closeClis() {
   // shutdown daemon and wallet.
   // Don't try to close if not running.
@@ -76,10 +78,6 @@ export const closeDCRW = () => {
     return false;
   }
 };
-
-export async function darwinShutdown(mainWindow) {
-  mainWindow.webContents.send("darwin-shutdown");
-}
 
 export async function cleanShutdown(mainWindow, app) {
   // Attempt a clean shutdown.
@@ -366,10 +364,13 @@ export const readExesVersion = (app, grpcVersions) => {
 };
 
 // connectDaemon starts a new rpc connection to dcrd
-export const connectRpcDaemon = (mainWindow) => {
+export const connectRpcDaemon = () => new Promise((resolve,reject) => {
   var cert = fs.readFileSync(rpccert);
   const url = `${rpchost}:${rpcport}`;
-  let ws = new webSocket(`wss://${url}/ws`, {
+  if (dcrdSocket && dcrdSocket.readyState === dcrdSocket.OPEN) {
+    return resolve(true);
+  }
+  dcrdSocket = new webSocket(`wss://${url}/ws`, {
     headers: {
       'Authorization': 'Basic '+Buffer.from(rpcuser+':'+rpcpass).toString('base64')
     },
@@ -377,20 +378,20 @@ export const connectRpcDaemon = (mainWindow) => {
     ecdhCurve: 'secp521r1',
     ca: [cert]
   });
-
-  ws.on('open', function() {
+  dcrdSocket.on('open', function() {
     console.log('**********************************************************************');
     console.log('CONNECTED');
     // Send a JSON-RPC command to be notified when blocks are connected and
     // disconnected from the chain.
-    ws.send('{"jsonrpc":"1.0","id":"0","method":"notifyblocks","params":[]}');
-    mainWindow.webContents.send("connectRpcDaemon-response", { connected: true });
+    dcrdSocket.send('{"jsonrpc":"1.0","id":"0","method":"notifyblocks","params":[]}');
+
+    resolve(true);
   });
-  ws.on('error', function(error) {
+  dcrdSocket.on('error', function(error) {
     console.log('ERROR:' + error);
-    mainWindow.webContents.send("connectRpcDaemon-response", { connected: false, error });
+    reject(error);
   })
-  ws.on('message', function(data, flags) {
+  dcrdSocket.on('message', function(data, flags) {
     const parsedData = JSON.parse(data);
     const method = parsedData ? parsedData.method : "";
     switch (method) {
@@ -400,12 +401,31 @@ export const connectRpcDaemon = (mainWindow) => {
         break;
     }
   });
-  ws.on('close', function(data) {
+  dcrdSocket.on('close', function(data) {
     console.log('DISCONNECTED');
-  })
+  });
+})
 
-  return ws;
-};
+export const getInfo = () => new Promise((resolve, reject) => {
+  dcrdSocket.send('{"jsonrpc":"1.0","id":"0","method":"getinfo","params":[]}');
+  dcrdSocket.on('message', (data) => {
+    const parsedData = JSON.parse(data);
+    logger.log("info", parsedData.result);
+    resolve(parsedData.result)
+  });
+});
+
+export const getBlockChainInfo = () => new Promise((resolve, reject) => {
+  dcrdSocket.send('{"jsonrpc":"1.0","id":"getblockchaininfo","method":"getblockchaininfo","params":[]}');
+  dcrdSocket.on('message', (data) => {
+    const parsedData = JSON.parse(data);
+    const dataResults = parsedData.result || {};
+    const blockCount = dataResults.blocks;
+    const syncHeight = dataResults.syncheight;
+    logger.log("info", dataResults.blocks, dataResults.syncheight, dataResults.verificationprogress);
+    resolve({ blockCount, syncHeight })
+  });
+});
 
 const decodeConnectedBlockHeader = (headerBytes) => {
   if (!(headerBytes instanceof Buffer)) {

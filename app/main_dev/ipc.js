@@ -1,13 +1,10 @@
 import fs from "fs-extra";
 import path from "path";
-import parseArgs from "minimist";
-import { OPTIONS } from "./constants";
 import { createLogger } from "./logging";
 import { getWalletPath, getWalletDBPathFromWallets, getDcrdPath, dcrdCfg, dcrctlCfg, appDataDirectory, getExecutablePath, getDcrdRpcCert } from "./paths";
 import { createTempDcrdConf, initWalletCfg, newWalletConfigCreation, getWalletCfg, readDcrdConfig } from "../config";
-import { launchDCRD, launchDCRWallet, GetDcrdPID, GetDcrwPID, closeDCRD, closeDCRW, GetDcrwPort, connectRpcDaemon } from "./launch";
+import { launchDCRD, launchDCRWallet, GetDcrdPID, GetDcrwPID, closeDCRD, closeDCRW, GetDcrwPort, connectRpcDaemon, getInfo, getBlockChainInfo } from "./launch";
 
-const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const logger = createLogger();
 let watchingOnlyWallet;
 
@@ -86,8 +83,13 @@ export const startDaemon = (mainWindow, daemonIsAdvanced, primaryInstance, appDa
   }
 };
 
-export const connectDaemon = (mainWindow) => {
-  return connectRpcDaemon(mainWindow);
+export const connectDaemon = async (mainWindow) => {
+  try {
+    await connectRpcDaemon(mainWindow);
+    return mainWindow.webContents.send("connectRpcDaemon-response", { connected: true });
+  } catch (error) {
+    return mainWindow.webContents.send("connectRpcDaemon-response", { connected: false, error });
+  }
 };
 
 export const createWallet = (testnet, walletPath) => {
@@ -142,25 +144,15 @@ export const stopWallet = () => {
   return closeDCRW(GetDcrwPID());
 };
 
-export const getDaemonInfo = (ws, mainWindow) => {
-  ws.send('{"jsonrpc":"1.0","id":"0","method":"getinfo","params":[]}');
-  ws.on('message', (data) => {
-    const parsedData = JSON.parse(data);
-    logger.log("info", parsedData.result);
-    mainWindow.webContents.send("check-getinfo-response", parsedData.result );
-  });
+export const getDaemonInfo = async (mainWindow) => {
+  const info = await getInfo();
+  mainWindow.webContents.send("check-getinfo-response", info );
 };
 
-export const checkDaemon = (ws, mainWindow) => {
-  ws.send('{"jsonrpc":"1.0","id":"getblockchaininfo","method":"getblockchaininfo","params":[]}');
-  ws.on('message', (data) => {
-    const parsedData = JSON.parse(data);
-    const dataResults = parsedData.result || {};
-    const blockCount = dataResults.blocks;
-    const syncHeight = dataResults.syncheight;
-    logger.log("info", dataResults.blocks, dataResults.syncheight, dataResults.verificationprogress);
-    mainWindow.webContents.send("check-daemon-response", { blockCount, syncHeight });
-  });
+export const checkDaemon = async (mainWindow) => {
+  const info = await getBlockChainInfo();
+  const { blockCount, syncHeight } = info;
+  mainWindow.webContents.send("check-daemon-response", { blockCount, syncHeight });
 };
 
 export const setWatchingOnlyWallet = (isWatchingOnly) => {
