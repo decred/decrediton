@@ -29,6 +29,22 @@
   text-align: right;
 }
 
+.create-wallet-warning {
+  column-count: 2;
+  max-width: 48em;
+  font-size: 13px;
+  line-height: 16px;
+  margin-bottom: 1em;
+
+  p {
+    margin-top: 0px;
+  }
+
+  em {
+    color: var(--error-text-color);
+  }
+}
+
 .advanced-daemon-input {
   padding-left: 20px;
   float: left;
@@ -216,7 +232,6 @@
     font-size: 27px;
     line-height: 34px;
     margin-bottom: 42px;
-    margin-left: 10px;
     width: 100%;
   }
 
@@ -236,13 +251,11 @@
 
   .seedWord {
     user-select: none;
-    width: 100px;
     height: 23px;
     background-color: var(--title-text-and-button-background);
     border-radius: 3px;
     color: var(--background-back-color);
     margin: 5px;
-    float: left;
     text-align: center;
   }
 
@@ -274,7 +287,7 @@
     }
   }
 
-  .seedWord.restore, {
+  .seedWord.restore {
     background-color: transparent;
 
     .Select-control {
@@ -290,12 +303,12 @@
   }
 
   .toolbar {
-    width: 100%;
-    float: left;
+    display: flex;
+    flex-direction: row-reverse;
+    width: 692px;
   }
 
   .wallet-key-blue-button:not(.key-blue-button-disabled) {
-    float: left;
     box-shadow: 0px 5px 13px rgba(0, 0, 0, 0.21);
   }
 
@@ -304,14 +317,13 @@
   }
 
   .copy {
-    float: left;
+    grid-column: 4 / 6;
     padding-top: 2px;
     padding-left: 33px;
     height: 21px;
     color: var(--input-color);
     border: 1px solid var(--input-color);
     border-radius: 3px;
-    width: 177px;
     margin: 4px;
     font-size: 13px;
     background-image: @copy-to-clipboard-icon;
@@ -326,11 +338,6 @@
     opacity: 0.8;
   }
 
-  .go-back-screen-button-area {
-    position: fixed;
-    left: 971px;
-  }
-
   .go-back-screen-button {
     height: 12px;
     width: 12px;
@@ -338,6 +345,7 @@
     background-size: 12px;
     background-image: @x-grey;
     opacity: 1;
+    cursor: pointer;
   }
 
   .go-back-screen-button:hover {
@@ -735,68 +743,52 @@
   float: left;
 }
 
-@media screen and (max-width: 676px) {
-  .loader-settings-logs {
-    position: fixed;
-    top: 100px;
-  }
-
-  .getstarted.loader .loader-bar {
-    margin-left: -30px;
-  }
-
-  .linear-progress-text {
-    position: relative;
-  }
-
-  .display-wallet .wallet-icon {
-    position: relative;
-  }
-
-  // .display-wallet-name {
-  // }
-
-  .getstarted.loader {
-    margin-left: 0px;
-  }
-
-  .page-body.getstarted {
-    background-position: 80px 20px;
-    background-color: var(--background-container) !important;
-    z-index: 5;
-  }
-
-  .getstarted.loader .loader-settings-logs {
-    background-color: var(--background-container);
-  }
-
-  .display-wallet.new {
-    background-color: inherit;
-  }
-
-  .display-wallet.new .display-wallet-name {
-    margin-top: 0px;
-  }
-
-  .display-wallet-launch {
-    color: indigo;
-  }
-
-  .getstarted.loader.logs .settings-privacy {
-    float: inherit;
-  }
-
-  .advanced-daemon-row {
-    margin-top: 25px;
-  }
-}
-
-@media screen and (max-width: 400px) {
-  .whatsnew {
-    display: none;
-  }
-}
-
 .getstarted-trezor-config-sections {
   margin-top: 14em;
+}
+
+@media screen and (max-width: 1179px) {
+  .getstarted.content {
+    margin-left: 10px;
+  }
+  .page-body.getstarted {
+    background-position: 50px 40px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .page-body.getstarted {
+    padding: 20px !important;
+    background-position: 20px 20px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .getstarted.content {
+    .content-tittle-wrapper {
+      width: 355px;
+    }
+
+    .toolbar {
+      width: 380px !important;
+      margin-left: -20px;
+    }
+    
+    .copy {
+      grid-column: 1 / 4;
+      background-position: 80px;
+      text-align: center;
+    }
+  }
+
+  .create-wallet-warning {
+    column-count: 1;
+    width: 315px;
+    margin-left: 10px;
+  }
+
+  .seedArea {
+    grid-template-columns: repeat(3, 1fr) !important;
+    width: 353px !important;
+  }
 }

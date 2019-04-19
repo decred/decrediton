@@ -8,7 +8,7 @@ export const HeaderTimeMsg = () => <T id="getStarted.chainLoading.headerTime" m=
 export const BackBtnMsg = () => <T id="getStarted.backBtn" m="Cancel" />;
 export const GoBackMsg = () => <T id="logs.goBack" m="Go back" />;
 export const CreateWalletTitleMsg = () => <T id="createWallet.title" m={"Create a new wallet"}/>;
-export const ConfirmSeedMsg = () => <T id="confirmSeed.label" m="Confirm Seed" />;
+export const ConfirmSeedMsg = () => <T id="confirmSeed.label" m="Confirm Seed Key" />;
 export const DiscoverLabelMsg = () => <T id="getStarted.discover.label" m="Scan for accounts" />;
 export const LoaderTitleMsg = () => <T id="loader.title" m={"Welcome to Decrediton Wallet"}/>;
 export const DiscoverAccountsInfoMsg = () =>

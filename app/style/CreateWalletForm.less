@@ -13,14 +13,6 @@
   .clearfloat-mixin;
 }
 
-.left {
-  float: left;
-}
-
-.right {
-  float: right;
-}
-
 .cyan-bold {
   color: var(--cyan-bold);
   font-weight: 700;
@@ -53,35 +45,34 @@
 }
 
 .confirm-seed-row {
-  margin-right: 10px;
-  width: 100%;
-  float: left;
+  display: flex;
 }
 
 .confirm-seed-row.seed {
   margin-bottom: 30px;
+  margin-left: -140px;
 }
 
 .confirm-seed-row.passphrase {
   height: 50px;
-  float: left;
-  margin-bottom: 25px;
+  margin-left: -130px;
 }
 
 .confirm-seed-label-text.passphrase {
-  float: left;
-}
-
-.confirm-seed-label-text {
-  width: 200px;
-  text-align: right;
-  margin-left: -205px;
-  font-size: 13px;
-  line-height: 17px;
+  display: flex;
+  width: 130px;
 }
 
 .confirm-seed-label-text.seed {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.confirm-seed-label-text {
   margin-top: 5px;
+  margin-right: 10px;
+  font-size: 13px;
+  line-height: 17px;
 }
 
 .confirm-seed .input-and-unit.input-private-password {
@@ -157,19 +148,11 @@
   width: 100%;
   float: left;
   clear: right;
-  margin-left: 10px;
 }
 
 .input-private-password {
   width: 300px;
   padding-bottom: 3px;
-}
-
-.input-form {
-  -moz-appearance: none !important;
-  position: relative;
-  width: 100%;
-  height: auto;
 }
 
 .input-form-confirm-seed {
@@ -211,34 +194,19 @@
   height: 202px;
 }
 
-.info-label {
-  float: right;
-}
-
-.create-wallet-warning {
-  column-count: 2;
-  max-width: 48em;
-  font-size: 13px;
-  line-height: 16px;
-  margin-bottom: 1em;
-
-  p {
-    margin-top: 0px;
-  }
-
-  em {
-    color: var(--error-text-color);
-  }
+.passphrase-info-wrapper {
+  margin-left: -20px;
 }
 
 .confirm-seed-row > .seedArea {
-  margin: -28px 5px 5px 5px;
+  margin-left: 5px;
 }
 
 .seedArea {
-  float: left;
   margin: 0px 5px 5px -5px;
   width: 560px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); 
 
   &.hex {
     width: 90%;
@@ -359,7 +327,7 @@
 }
 
 .createwallet-button:hover,
-.createwallet-button:focus, {
+.createwallet-button:focus {
   border-color: var(--input-color);
 }
 
@@ -382,4 +350,24 @@
 
 .wallet-switch {
   padding-right: 5px;
+}
+
+.content-tittle-wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: row-reverse;
+  width: 692px;
+}
+
+@media screen and (max-width: 1179px) {
+  .confirm-seed-row {
+    margin-left: 0;
+  }
+  .confirm-seed-row.seed {
+    margin-left: 0;
+  }
+
+  .confirm-seed-row.passphrase {
+    margin-left: 0;
+  }
 }
