@@ -243,6 +243,7 @@ class GetStartedPage extends React.Component {
         text,
         animationType,
         getWalletReady,
+        getDaemonStarted,
         startupError,
         showSettings,
         showLogs,

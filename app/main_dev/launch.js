@@ -116,9 +116,11 @@ export const launchDCRD = (mainWindow, daemonIsAdvanced, daemonPath, appdata, te
   let args = [ "--nolisten" ];
   let newConfig = {};
   if (appdata) {
-    args.push(`--appdata=${appdata}`);
     newConfig = readDcrdConfig(appdata, testnet);
     newConfig.rpc_cert = getDcrdRpcCert(appdata);
+    args.push(`--appdata=${appdata}`);
+    args.push(`--rpcuser=${newConfig.rpc_user}`);
+    args.push(`--rpcpass=${newConfig.rpc_password}`);
   } else {
     args.push(`--configfile=${dcrdCfg(daemonPath)}`);
     newConfig = readDcrdConfig(daemonPath, testnet);
