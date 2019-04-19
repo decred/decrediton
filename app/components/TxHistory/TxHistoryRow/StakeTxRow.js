@@ -1,4 +1,5 @@
 import Row from "./Row";
+import Status from "./Status";
 import { createElement as h } from "react";
 import { FormattedMessage as T } from "react-intl";
 import { Balance, Tooltip } from "shared";
@@ -18,7 +19,7 @@ const messageByType = { // TODO: use constants instead of string
 };
 
 const StakeTxRow = ({ status,  ...props }) => {
-  const { overview, ticketPrice, ticketReward, leaveTimestamp, enterTimestamp } = props;
+  const { overview, ticketPrice, ticketReward, leaveTimestamp, enterTimestamp, pending, txAccountName, txTimestamp, tsDate  } = props;
 
   const rewardLabel = <T id="history.ticket.rewardLabel" m="Ticket Reward" />;
   const ticketRewardMessage = <T id="history.ticket.rewardMesage"
@@ -53,32 +54,34 @@ const StakeTxRow = ({ status,  ...props }) => {
   return overview ?
     (
       <Row {...{ className: status, ...props }}>
-        <div className="transaction-info transaction-stake-info-overview">
+        <div>
           <span className="icon" />
           <span className="transaction-stake-type-overview">{typeMsg}</span>
-          <div className="transaction-info-price-reward">
-            <Tooltip text={ticketPriceMessage}>
-              <Balance classNameWrapper="stake-transaction-ticket-price" amount={ticketPrice} />
+          {!pending && <Status {...{ overview, txAccountName, pending, txTimestamp, tsDate }} />}
+        </div>
+        <div className="transaction-info-price-reward">
+          <Tooltip text={ticketPriceMessage}>
+            <Balance classNameWrapper="stake-transaction-ticket-price" amount={ticketPrice} />
+          </Tooltip>
+          <Tooltip text={ticketRewardMessage}>
+            <Balance classNameWrapper="stake-transaction-ticket-reward" amount={ticketReward} noSmallAmount />
+          </Tooltip>
+          {daysToVote !== null && !isNaN(daysToVote) && (
+            <Tooltip text={daysToVoteMessage}>
+              <div className="transaction-info-overview-days-to-vote">
+                <T id="statusSmall.daysToVotePlural" m="{days, plural, one {# day} other {# days}}"
+                  values={{ days: daysToVote }}/>
+              </div>
             </Tooltip>
-            <Tooltip text={ticketRewardMessage}>
-              <Balance classNameWrapper="stake-transaction-ticket-reward" amount={ticketReward} noSmallAmount />
-            </Tooltip>
-            {daysToVote !== null && !isNaN(daysToVote) && (
-              <Tooltip text={daysToVoteMessage}>
-                <div className="transaction-info-overview-days-to-vote">
-                  <T id="statusSmall.daysToVotePlural" m="{days, plural, one {# day} other {# days}}"
-                    values={{ days: daysToVote }}/>
-                </div>
-              </Tooltip>
-            )}
-          </div>
+          )}
         </div>
       </Row>
     ) : (
       <Row {...{ className: status , ...props }}>
-        <div className="transaction-info">
+        <div className="transaction-info-row">
           <span className="icon" />
           <span className="transaction-stake-type">{typeMsg}</span>
+          <Status {...{ overview, txAccountName, pending, txTimestamp, tsDate }} />
         </div>
       </Row>
     );
