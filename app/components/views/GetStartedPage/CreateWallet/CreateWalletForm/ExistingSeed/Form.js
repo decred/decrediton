@@ -31,7 +31,7 @@ const ExistingSeedForm = ({
         {seedType === WORDS && Array.isArray(seedWords) ?
           <div className="seedArea">
             {showPasteWarning &&
-            <div className="orange-warning">
+            <div className="orange-warning seed-warning-message">
               <T id="confirmSeed.warnings.pasteExistingSeed" m="*Please make sure you also have a physical, written down copy of your seed." />
             </div>}
             {showPasteError &&
@@ -58,9 +58,9 @@ const ExistingSeedForm = ({
               seed={hexSeed}
             />
           </div>}
-        <div className="input-form-error">
-          {errors.length > 0 && <div>{errors}</div>}
-        </div>
+      </div>
+      <div className="orange-warning">
+        {errors.length > 0 && <div>{errors}</div>}
       </div>
     </>
   );

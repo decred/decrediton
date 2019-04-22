@@ -1,33 +1,11 @@
 @import (reference) "./main.less";
 @import (reference) "./Icons.less";
 
-.new-seed {
-  background-color: var(--input-color-default);
-}
-
-.help-text {
-  margin-bottom: 30px;
-}
-
-.help-text::after {
-  .clearfloat-mixin;
-}
-
-.cyan-bold {
-  color: var(--cyan-bold);
-  font-weight: 700;
-}
-
-.cyan-regular {
-  color: var(--cyan-bold);
-}
-
-.orange {
-  color: var(--error-text-color);
-}
-
 .orange-warning {
   color: var(--error-text-color);
+}
+
+.seed-warning-message {
   position: fixed;
   top: 122px;
   margin-right: 5px;
@@ -83,10 +61,6 @@
   height: 60px;
 }
 
-.input-form-error.confirm-seed {
-  float: left;
-}
-
 .create-wallet-label {
   float: left;
   color: var(--title-text-and-button-background);
@@ -95,11 +69,6 @@
   height: 17px;
   width: 100px;
   text-align: right;
-}
-
-.create-wallet-header {
-  display: flex;
-  justify-content: space-between;
 }
 
 .seed-type-label {
@@ -155,51 +124,12 @@
   padding-bottom: 3px;
 }
 
-.input-form-confirm-seed {
-  -moz-appearance: none !important;
-  position: relative;
-  width: 100%;
-
-  .words-input {
-    height: 200px;
-    min-height: 44px;
-    border-bottom: 1px solid var(--input-color);
-  }
-
-  .Select-control {
-    border: 0px;
-
-    input,
-    .Select-value-label,
-    .Select-value-icon {
-      color: var(--background-back-color);
-    }
-
-    .Select-arrow {
-      border-style: none;
-    }
-  }
-}
-
 .go-back-button {
   margin-top: 8px;
 }
 
-.input-form-error {
-  color: var(--error-text-color);
-  float: left;
-}
-
-.passphrase-info-modal {
-  height: 202px;
-}
-
 .passphrase-info-wrapper {
   margin-left: -20px;
-}
-
-.confirm-seed-row > .seedArea {
-  margin-left: 5px;
 }
 
 .seedArea {
@@ -210,10 +140,6 @@
 
   &.hex {
     width: 90%;
-  }
-
-  .Select-arrow-zone {
-    width: 0px;
   }
 
   .Select-arrow {
@@ -337,15 +263,6 @@
   font-size: 15px;
   color: var(--title-text-and-button-background);
   line-height: 19px;
-}
-
-.watch-only-wallet-switch {
-  margin-top: 10px;
-}
-
-.wallet-switch-wrapper {
-  margin-left: 165px;
-  display: flex;
 }
 
 .wallet-switch {
