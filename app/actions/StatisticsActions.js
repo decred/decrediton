@@ -566,8 +566,8 @@ const addDelta = (delta, progressFunction, currentBalance, tsDate) => {
     totalStake: currentBalance.totalStake + delta.totalStake,
     delta,
   };
-  balance.total = currentBalance.spendable + currentBalance.locked +
-    currentBalance.immature;
+  balance.total = balance.spendable + balance.locked +
+    balance.immature;
 
   return balance;
 };
