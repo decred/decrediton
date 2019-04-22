@@ -2,17 +2,16 @@ import "style/CreateWalletForm.less";
 import { InfoDocFieldModalButton } from "buttons";
 import SingleSeedWordEntry from "../SingleSeedWordEntry";
 import { CreateWalletTitleMsg, ConfirmSeedMsg } from "../../../messages";
+import WalletHeader from "../createWalletHeader";
 
-export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord }) => (
+export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord, onReturnToWalletSelection }) => (
   <>
-    <div className="content-title">
-        <CreateWalletTitleMsg />
-      </div>
-      <div className="confirm-seed-row seed">
-        <div className="confirm-seed-label-text seed">
-          <div className="info-label">
-            <ConfirmSeedMsg />
-          </div>
+    <WalletHeader {...{ onReturnToWalletSelection }} />
+    <div className="confirm-seed-row seed">
+      <div className="confirm-seed-label-text seed">
+        <div className="info-label">
+          <ConfirmSeedMsg />
+        </div>
         <InfoDocFieldModalButton document="SeedInfo" />
       </div>
       <div className="seedArea">

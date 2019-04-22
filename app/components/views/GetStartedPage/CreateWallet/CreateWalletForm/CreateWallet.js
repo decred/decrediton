@@ -1,10 +1,10 @@
 import { KeyBlueButton, InvisibleButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import { SeedCopyConfirmModal } from "modals";
-import { Tooltip } from "shared";
 import { LoaderBarBottom } from "indicators";
 import { Documentation } from "shared";
-import { BackBtnMsg, CreateWalletTitleMsg } from "../../messages";
+import { BackBtnMsg } from "../../messages";
+import WalletHeader from "./createWalletHeader";
 import "style/CreateWalletForm.less";
 
 const CreateWallet = ({
@@ -22,12 +22,7 @@ const CreateWallet = ({
 }) => (
   <>
     <div className="getstarted content">
-      <div className="content-tittle-wrapper">
-        <Tooltip text={ <T id="createWallet.goBack" m="Go back" /> }><div className="go-back-screen-button" onClick={onReturnToWalletSelection}/></Tooltip>
-        <div className="content-title">
-          <CreateWalletTitleMsg />
-        </div>
-      </div>
+      <WalletHeader {...{ onReturnToWalletSelection }} />
       <Documentation name="WalletCreationWarning" className="create-wallet-warning" />
       <div className="seedArea">
         {mnemonic.split(" ").map((word, i) => {
