@@ -36,9 +36,9 @@ class ConfirmSeed extends React.Component {
     const { seedWords } = this.state;
     const isEmpty = this.state.seedWords.length <= 1; // Weird errors with one word, better to count as empty
     const seedError = isEmpty ? null : this.state.seedError;
-    const { onReturnToWalletSelection } = this.props;
+    const { onReturnToNewSeed } = this.props;
     return (
-      <ConfirmSeedForm {...{ seedWords, seedError, isEmpty, onChangeSeedWord, onReturnToWalletSelection }} />
+      <ConfirmSeedForm {...{ seedWords, seedError, isEmpty, onChangeSeedWord, onReturnToNewSeed }} />
     );
   }
 

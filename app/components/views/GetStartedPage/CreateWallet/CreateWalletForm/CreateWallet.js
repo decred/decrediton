@@ -22,7 +22,7 @@ const CreateWallet = ({
 }) => (
   <>
     <div className="getstarted content">
-      <WalletHeader {...{ onReturnToWalletSelection }} />
+      <WalletHeader {...{ onBack: onReturnToWalletSelection }} />
       <Documentation name="WalletCreationWarning" className="create-wallet-warning" />
       <div className="seedArea">
         {mnemonic.split(" ").map((word, i) => {

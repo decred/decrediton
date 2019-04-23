@@ -27,7 +27,7 @@ const ContinueWalletCreation = ({
   <div className="getstarted content">
     {createWalletExisting ?
       <ExistingSeed {...props} onChange={setSeed} /> :
-      <ConfirmSeed  {...props} onChange={setSeed} /> }
+      <ConfirmSeed  {...{ ...props, onReturnToNewSeed }} onChange={setSeed} /> }
     <CreatePassPhrase onChange={setPassPhrase} onSubmit={onCreateWallet} />
 
     <div className="create-wallet-button-container">

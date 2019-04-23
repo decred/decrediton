@@ -4,9 +4,9 @@ import SingleSeedWordEntry from "../SingleSeedWordEntry";
 import WalletHeader from "../createWalletHeader";
 import { FormattedMessage as T } from "react-intl";
 
-export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord, onReturnToWalletSelection }) => (
+export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord, onReturnToNewSeed }) => (
   <>
-    <WalletHeader {...{ onReturnToWalletSelection }} />
+    <WalletHeader {...{ onBack: onReturnToNewSeed }} />
     <div className="seed is-row">
       <div className="is-row confirm-seed-label-text seed">
         <InfoDocFieldModalButton document="SeedInfo" />
