@@ -3,7 +3,8 @@ import path from "path";
 import { createLogger } from "./logging";
 import { getWalletPath, getWalletDBPathFromWallets, getDcrdPath } from "./paths";
 import { initWalletCfg, newWalletConfigCreation, getWalletCfg, readDcrdConfig } from "config";
-import { launchDCRD, launchDCRWallet, GetDcrdPID, GetDcrwPID, closeDCRD, closeDCRW, GetDcrwPort } from "./launch";
+import { launchDCRD, launchDCRWallet, GetDcrdPID, GetDcrwPID, closeDCRD, closeDCRW, GetDcrwPort,
+  launchDCRLnd, GetDcrlndPID, GetDcrlndCreds, closeDcrlnd } from "./launch";
 import { MAINNET } from "constants";
 
 const logger = createLogger();
@@ -110,12 +111,34 @@ export const startWallet = (mainWindow, daemonIsAdvanced, testnet, walletPath, r
   }
 };
 
+export const startDcrlnd = async (walletAccount, walletPort, rpcCreds,
+  walletPath, testnet, autopilotEnabled) => {
+
+  if (GetDcrlndPID() && GetDcrlndPID() !== -1) {
+    logger.log("info", "Skipping restart of dcrlnd as it is already running " + GetDcrlndPID());
+    const creds = GetDcrlndCreds();
+    return { wasRunning: true, ...creds };
+  }
+
+  try {
+    const started = await launchDCRLnd(walletAccount, walletPort, rpcCreds,
+      walletPath, testnet, autopilotEnabled);
+    return started;
+  } catch (e) {
+    logger.log("error", "error launching dcrlnd: " + e);
+  }
+};
+
 export const stopDaemon = () => {
   return closeDCRD();
 };
 
 export const stopWallet = () => {
   return closeDCRW();
+};
+
+export const stopDcrlnd = () => {
+  return closeDcrlnd();
 };
 
 export const setWatchingOnlyWallet = (isWatchingOnly) => {

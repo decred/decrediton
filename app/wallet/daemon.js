@@ -119,6 +119,14 @@ export const getDcrwalletLogs = () => Promise
     throw "Error getting dcrwallet logs";
   });
 
+export const getDcrlndLogs = () => Promise
+  .resolve(ipcRenderer.sendSync("get-dcrlnd-logs"))
+  .then(logs => {
+    if (logs) return logs;
+    throw "Error getting dcrlnd logs";
+  });
+
+
 export const getDecreditonLogs = () => Promise
   .resolve(ipcRenderer.sendSync("get-decrediton-logs"))
   .then(logs => {

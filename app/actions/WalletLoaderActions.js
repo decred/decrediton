@@ -15,6 +15,7 @@ import { SpvSyncRequest, SyncNotificationType, RpcSyncRequest } from "../middlew
 import { push as pushHistory } from "react-router-redux";
 import { stopNotifcations } from "./NotificationActions";
 import { clearDeviceSession as trezorClearDeviceSession } from "./TrezorActions";
+import { stopDcrlnd } from "./LNActions";
 import { ipcRenderer } from "electron";
 import { TESTNET } from "constants";
 
@@ -188,6 +189,7 @@ export const closeWalletRequest = () => async(dispatch, getState) => {
     await dispatch(syncCancel());
     await dispatch(rescanCancel());
     await dispatch(trezorClearDeviceSession());
+    await dispatch(stopDcrlnd());
     if (walletReady) {
       await closeWallet(getState().walletLoader.loader);
     }

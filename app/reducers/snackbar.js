@@ -63,6 +63,19 @@ import {
   UPDATEVOTECHOICE_FAILED, GETVETTED_UPDATEDVOTERESULTS_FAILED
 } from "actions/GovernanceActions";
 
+import {
+  LNWALLET_CONNECT_FAILED,
+  LNWALLET_INVOICE_SETTLED,
+  LNWALLET_SENDPAYMENT_FAILED, LNWALLET_SENDPAYMENT_SUCCESS,
+  LNWALLET_OPENCHANNEL_CHANPENDING, LNWALLET_OPENCHANNEL_CHANOPEN,
+  LNWALLET_OPENCHANNEL_FAILED,
+  LNWALLET_CLOSECHANNEL_CLOSEPENDING, LNWALLET_CLOSECHANNEL_CHANCLOSE,
+  LNWALLET_CLOSECHANNEL_FAILED,
+  LNWALLET_FUNDWALLET_FAILED, LNWALLET_WITHDRAWWALLET_FAILED,
+  LNWALLET_FUNDWALLET_SUCCESS, LNWALLET_WITHDRAWWALLET_SUCCESS,
+  LNWALLET_STARTDCRLND_FAILED,
+} from "actions/LNActions";
+
 const WRONG_PASSPHRASE_MSG = "WRONG_PASSPHRASE_MSG";
 const ERROR_IS_OBJECT = "ERROR_IS_OBJECT";
 
@@ -298,7 +311,67 @@ const messages = defineMessages({
   ERROR_IS_OBJECT: {
     id: "snackbar.errorObject",
     defaultMessage: "The following error happened: {error}"
-  }
+  },
+  LNWALLET_CONNECT_FAILED: {
+    id: "ln.ntf.connectFailed",
+    defaultMessage: "Failed to connect to LN wallet: {originalError}"
+  },
+  LNWALLET_INVOICE_SETTLED: {
+    id: "ln.ntf.invoiceSettled",
+    defaultMessage: "Invoice '{memo}' settled!"
+  },
+  LNWALLET_SENDPAYMENT_FAILED: {
+    id: "ln.ntf.sendPaymentFailed",
+    defaultMessage: "Error sending payment: {originalError}"
+  },
+  LNWALLET_SENDPAYMENT_SUCCESS: {
+    id: "ln.ntf.sendPaymentSuccess",
+    defaultMessage: "Payment sent successfully!"
+  },
+  LNWALLET_OPENCHANNEL_CHANPENDING: {
+    id: "ln.ntf.openchannelChanPending",
+    defaultMessage: "New channel in pending state",
+  },
+  LNWALLET_OPENCHANNEL_CHANOPEN: {
+    id: "ln.ntf.openchannelChanOpen",
+    defaultMessage: "New channel successfully opened and confirmed"
+  },
+  LNWALLET_OPENCHANNEL_FAILED: {
+    id: "ln.ntf.openchannelFailed",
+    defaultMessage: "Unable to open channel: {originalError}"
+  },
+  LNWALLET_CLOSECHANNEL_CLOSEPENDING: {
+    id: "ln.ntf.closechannelClosepending",
+    defaultMessage: "Channel close procedures started",
+  },
+  LNWALLET_CLOSECHANNEL_CHANCLOSE: {
+    id: "ln.ntf.closechannelChanclose",
+    defaultMessage: "Channel closed"
+  },
+  LNWALLET_CLOSECHANNEL_FAILED: {
+    id: "ln.ntf.closechannelFailed",
+    defaultMessage: "Unable to close channel: {originalError}"
+  },
+  LNWALLET_FUNDWALLET_FAILED: {
+    id: "ln.ntf.fundWalletFailed",
+    defaultMessage: "Funding LN Wallet failed: {originalError}"
+  },
+  LNWALLET_FUNDWALLET_SUCCESS: {
+    id: "ln.ntf.fundWalletSucces",
+    defaultMessage: "Sent LN Wallet fund transaction",
+  },
+  LNWALLET_WITHDRAWWALLET_FAILED: {
+    id: "ln.ntf.withdrawWalletFailed",
+    defaultMessage: "Withdrawing from LN Wallet failed: {originalError}"
+  },
+  LNWALLET_WITHDRAWWALLET_SUCCESS: {
+    id: "ln.ntf.withdrawWalletSuccess",
+    defaultMessage: "Sent withdraw transaction for LN Wallet"
+  },
+  LNWALLET_STARTDCRLND_FAILED: {
+    id: "ln.ntf.startDcrlndFailed",
+    defaultMessage: "{originalError}"
+  },
 });
 
 export default function snackbar(state = {}, action) {
@@ -359,6 +432,14 @@ export default function snackbar(state = {}, action) {
   case TRZ_INITDEVICE_SUCCESS:
   case TRZ_UPDATEFIRMWARE_SUCCESS:
   case TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS:
+  case LNWALLET_INVOICE_SETTLED:
+  case LNWALLET_SENDPAYMENT_SUCCESS:
+  case LNWALLET_OPENCHANNEL_CHANPENDING:
+  case LNWALLET_OPENCHANNEL_CHANOPEN:
+  case LNWALLET_CLOSECHANNEL_CLOSEPENDING:
+  case LNWALLET_CLOSECHANNEL_CHANCLOSE:
+  case LNWALLET_FUNDWALLET_SUCCESS:
+  case LNWALLET_WITHDRAWWALLET_SUCCESS:
     type = "Success";
     message = messages[action.type] || messages.defaultSuccessMessage;
 
@@ -381,6 +462,8 @@ export default function snackbar(state = {}, action) {
     case TRZ_CHANGELABEL_SUCCESS:
       values = { label: action.deviceLabel };
       break;
+    case LNWALLET_INVOICE_SETTLED:
+      values = { memo: action.invoice.memo };
     }
 
     break;
@@ -427,6 +510,13 @@ export default function snackbar(state = {}, action) {
   case TRZ_UPDATEFIRMWARE_FAILED:
   case TRZ_NOCONNECTEDDEVICE:
   case TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED:
+  case LNWALLET_CONNECT_FAILED:
+  case LNWALLET_SENDPAYMENT_FAILED:
+  case LNWALLET_OPENCHANNEL_FAILED:
+  case LNWALLET_CLOSECHANNEL_FAILED:
+  case LNWALLET_FUNDWALLET_FAILED:
+  case LNWALLET_WITHDRAWWALLET_FAILED:
+  case LNWALLET_STARTDCRLND_FAILED:
     type = "Error";
     if (action.error && String(action.error).indexOf("wallet.Unlock: invalid passphrase:: secretkey.DeriveKey") > -1) {
       // intercepting all wrong passphrase errors, independently of which error

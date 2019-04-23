@@ -38,7 +38,10 @@ module.exports = function (api) {
       } ],
     ],
     "ignore": [
-      "app/middleware/walletrpc/*.js"
-    ],
+      "app/middleware/walletrpc/*.js",
+      "app/middleware/ln/google/api/*.js",
+      "app/middleware/ln/rpc_grpc_pb.js",
+      "app/middleware/ln/rpc_pb.js"
+    ]
   };
 };

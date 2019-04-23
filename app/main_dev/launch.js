@@ -1,6 +1,6 @@
 import { dcrwalletCfg, getWalletPath, getExecutablePath, dcrdCfg, getDcrdPath } from "./paths";
 import { getWalletCfg, readDcrdConfig } from "config";
-import { createLogger, AddToDcrdLog, AddToDcrwalletLog, GetDcrdLogs,
+import { createLogger, AddToDcrdLog, AddToDcrwalletLog, AddToDcrlndLog, GetDcrdLogs,
   GetDcrwalletLogs, lastErrorLine, lastPanicLine, ClearDcrwalletLogs } from "./logging";
 import parseArgs from "minimist";
 import { OPTIONS } from "constants";
@@ -12,18 +12,20 @@ import isRunning from "is-running";
 import stringArgv from "string-argv";
 import { concat, isString } from "../fp";
 import webSocket from "ws";
+import path from "path";
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const debug = argv.debug || process.env.NODE_ENV === "development";
 const logger = createLogger(debug);
 
-let dcrdPID, dcrwPID;
+let dcrdPID, dcrwPID, dcrlndPID;
 
 // windows-only stuff
 let dcrwPipeRx, dcrwPipeTx, dcrdPipeRx, dcrwTxStream;
 
 let dcrwPort;
 let rpcuser, rpcpass, rpccert, rpchost, rpcport;
+let dcrlndCreds;
 
 let dcrdSocket = null;
 
@@ -34,6 +36,8 @@ function closeClis() {
     closeDCRD();
   if(dcrwPID && dcrwPID !== -1)
     closeDCRW();
+  if(dcrlndPID && dcrlndPID !== -1)
+    closeDcrlnd();
 }
 
 export function closeDCRD() {
@@ -83,6 +87,33 @@ export const closeDCRW = () => {
     logger.log("error", "error closing wallet: " + e);
     return false;
   }
+};
+
+export const closeDcrlnd = () => {
+  if (dcrlndPID === -1) {
+    // process is not started by decrediton
+    return true;
+  }
+  if (isRunning(dcrlndPID) && os.platform() != "win32") {
+    logger.log("info", "Sending SIGINT to dcrd at pid:" + dcrlndPID);
+    process.kill(dcrlndPID, "SIGINT");
+    dcrlndPID = null;
+    dcrlndCreds = null;
+  } else if (require("is-running")(dcrlndPID)) {
+    // TODO: needs piperx (and ideally pipetx) in dcrlnd
+    /*
+    try {
+      const win32ipc = require("../node_modules/win32ipc/build/Release/win32ipc.node");
+      win32ipc.closePipe(dcrlndPipeRx);
+      dcrlndPID = null;
+      dcrlndCreds = null;
+    } catch (e) {
+      logger.log("error", "Error closing dcrlnd piperx: " + e);
+      return false;
+    }
+    */
+  }
+  return true;
 };
 
 export async function cleanShutdown(mainWindow, app) {
@@ -145,7 +176,7 @@ export const launchDCRD = (params, testnet) => new Promise((resolve,reject) => {
 
   if (!appdata) appdata = getDcrdPath();
 
-  let args = [ "--nolisten" ];
+  let args = [ "--nolisten", "--txindex" ];
   const newConfig = readDcrdConfig(appdata, testnet);
 
   args.push(`--configfile=${dcrdCfg(appdata)}`);
@@ -344,11 +375,124 @@ export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
   return dcrwPID;
 };
 
+export const launchDCRLnd = (walletAccount, walletPort, rpcCreds, walletPath,
+  testnet, autopilotEnabled) => new Promise((resolve,reject) => {
+
+  if (dcrlndPID === -1) {
+    return resolve();
+  }
+
+  let dcrlndRoot = path.join(walletPath, "dcrlnd");
+  let tlsCertPath = path.join(dcrlndRoot, "tls.cert");
+  let adminMacaroonPath = path.join(dcrlndRoot, "admin.macaroon");
+
+  // if (!rpcCreds) {
+  //   rpcCreds = readDcrdConfig(appdata, testnet);
+  // }
+
+  let args = [
+    "--nolisten",
+    "--logdir="+path.join(dcrlndRoot, "logs"),
+    "--datadir="+path.join(dcrlndRoot, "data"),
+    "--tlscertpath="+tlsCertPath,
+    "--tlskeypath="+path.join(dcrlndRoot, "tls.key"),
+    "--configfile="+path.join(dcrlndRoot,"dcrlnd.conf"),
+    "--adminmacaroonpath="+adminMacaroonPath,
+    "--decred.node=dcrd",
+    "--dcrd.rpchost="+rpcCreds.rpc_host+":"+rpcCreds.rpc_port,
+    "--dcrd.rpcuser="+rpcCreds.rpc_user,
+    "--dcrd.rpcpass="+rpcCreds.rpc_pass,
+    "--dcrwallet.grpchost=localhost:"+walletPort,
+    "--dcrwallet.certpath="+path.join(walletPath, "rpc.cert"),
+    "--dcrwallet.accountnumber="+walletAccount,
+  ];
+
+  if (testnet) {
+    args.push("--decred.testnet");
+  }
+
+  if (autopilotEnabled) {
+    args.push("--autopilot.active");
+  }
+
+  const dcrlndExe = getExecutablePath("dcrlnd", argv.custombinpath);
+  if (!fs.existsSync(dcrlndExe)) {
+    logger.log("error", "The dcrlnd executable does not exist. Expected to find it at " + dcrlndExe);
+    return;
+  }
+
+  /*
+  if (os.platform() == "win32") {
+    try {
+      const win32ipc = require("../node_modules/win32ipc/build/Release/win32ipc.node");
+      dcrdPipeRx = win32ipc.createPipe("out");
+      args.push(util.format("--piperx=%d", dcrdPipeRx.readEnd));
+    } catch (e) {
+      logger.log("error", "can't find proper module to launch dcrd: " + e);
+    }
+  }
+  */
+
+  const fullArgs = args.join(" ");
+  logger.log("info", `Starting ${dcrlndExe} with ${fullArgs}`);
+
+  const dcrlnd = spawn(dcrlndExe, args, {
+    detached: os.platform() === "win32",
+    stdio: [ "ignore", "pipe", "pipe" ]
+  });
+
+  dcrlnd.on("error", function (err) {
+    reject(err);
+  });
+
+  dcrlnd.on("close", (code) => {
+    /*
+    if (code !== 0) {
+      let lastDcrdErr = lastErrorLine(GetDcrdLogs());
+      if (!lastDcrdErr || lastDcrdErr === "") {
+        lastDcrdErr = lastPanicLine(GetDcrdLogs());
+      }
+      logger.log("error", "dcrd closed due to an error: ", lastDcrdErr);
+      return reject(lastDcrdErr);
+    }
+    */
+
+    logger.log("info", `dcrlnd exited with code ${code}`);
+  });
+
+  dcrlnd.stdout.on("data", (data) => {
+    AddToDcrlndLog(process.stdout, data, debug);
+    resolve(data.toString("utf-8"));
+  });
+
+  dcrlnd.stderr.on("data", (data) => {
+    AddToDcrlndLog(process.stderr, data, debug);
+    reject(data.toString("utf-8"));
+  });
+
+  dcrlndPID = dcrlnd.pid;
+  logger.log("info", "dcrlnd started with pid:" + dcrlndPID);
+
+  dcrlnd.unref();
+
+  dcrlndCreds = {
+    address: "localhost",
+    port: 10009,
+    certPath: tlsCertPath,
+    macaroonPath: adminMacaroonPath,
+  };
+  return resolve(dcrlndCreds);
+});
+
+
 export const GetDcrwPort = () => dcrwPort;
 
 export const GetDcrdPID = () => dcrdPID;
 
 export const GetDcrwPID = () => dcrwPID;
+
+export const GetDcrlndPID = () => dcrlndPID;
+export const GetDcrlndCreds = () => dcrlndCreds;
 
 export const readExesVersion = (app, grpcVersions) => {
   let args = [ "--version" ];

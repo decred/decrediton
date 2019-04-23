@@ -1,0 +1,309 @@
+@import (reference) "./main.less";
+@import (reference) "./Icons.less";
+
+.ln-wallet-balances {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+}
+
+.ln-wallet-actions {
+  margin-top: 1em;
+}
+
+.ln-open-channel {
+  margin-top: 1em;
+  background-color: var(--background-back-color);
+  padding: 1em 1em 1em 3em;
+
+  .data-wrapper {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    margin-right: 2em;
+  }
+
+  .capacity {
+    font-size: 32px;
+    padding-top: 10px;
+  }
+
+  .remote-pubkey {
+    color: var(--input-color-disabled);
+    margin-top: -15px;
+  }
+
+  &.channel-active { border-left: 10px solid var(--accent-color); }
+  &.channel-inactive { border-left: 10px solid var(--error-red); }
+  &.pending-open { border-left: 10px solid var(--cyan-bold); }
+  &.pending-close { border-left: 10px solid var(--disabled-color); }
+  &.pending-forceclose { border-left: 10px solid var(--error-text-color); }
+  &.pending-waitclose { border-left: 10px solid var(--input-color-disabled); }
+  &.channel-closed { border-left: 10px solid var(--disabled-background-color); }
+
+  .peer-balances {
+    text-align: right;
+    padding-top: 10px;
+
+    > div > div {
+      display: inline;
+      margin-left: 10px;
+    }
+  }
+}
+
+.ln-wallet-open-channels-list {
+  .openchannel-header-wrapper {
+    position: relative;
+  }
+
+  .close-channel-btn {
+    position: absolute;
+    z-index: 10;
+    right: 10px;
+    top: 10px;
+  }
+}
+
+.ln-open-channel-details,
+.ln-pending-channel-details,
+.ln-closed-channel-details {
+  background-color: var(--background-back-color);
+  padding: 1em;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+
+  a {
+    color: var(--link-color);
+    cursor: pointer;
+  }
+  a:hover {
+    color: var(--link-color-hovered);
+  }
+}
+
+.ln-open-new-channel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+  background-color: var(--background-back-color);
+  padding: 1em 2em;
+  margin-bottom: 4em;
+  min-height: 10em;
+
+  .node {
+    grid-column: 1 / 3;
+  }
+
+  .open-btn {
+    max-width: 3em;
+    margin-top: 2em;
+  }
+}
+
+.ln-add-invoice {
+  display: grid;
+  grid-template-columns: 23fr 8fr 50px;
+  grid-column-gap: 20px;
+  background-color: var(--background-back-color);
+  padding: 1em 2em 3em;
+  margin-bottom: 4em;
+
+  .button {
+    font-size: 30px;
+    padding: 12px;
+    height: 18px;
+  }
+
+  .last-pay-request {
+    word-break: break-all;
+    grid-column: 1 / 3;
+    padding: 1em 2em;
+    color: var(--stroke-color-hovered);
+  }
+
+  .clipboard-box {
+    padding-top: 2em;
+  }
+
+  .last-error {
+    color: var(--error-red);
+    padding: 1em 2em;
+    grid-column: 1 / 3;
+  }
+
+  .input-and-unit {
+    height: 20px;
+  }
+}
+
+.ln-send-payment {
+  background-color: var(--background-back-color);
+  padding: 1em 2em;
+  margin-bottom: 4em;
+  min-height: 18em;
+
+  .decoding-error {
+    margin-top: 2em;
+    color: var(--error-red);
+  }
+
+  .decoded-payreq {
+    margin-top: 2em;
+    margin-bottom: 2em;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-column-gap: 10px;
+
+    .description {
+      max-width: 100%;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    .dest-details {
+      grid-column: 1 / 4;
+      display: grid;
+      grid-template-columns: 1fr 4fr;
+      margin-top: 1em;
+      color: var(--stroke-color-hovered);
+    }
+
+    .num-atoms {
+      font-size: 32px;
+      align-self: center;
+    }
+
+    .expiry {
+      align-self: center;
+    }
+
+    .dest,
+    .rhash {
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+
+}
+
+.ln-invoice-subheader,
+.ln-payments-subheader {
+  color: var(--stroke-color-hovered);
+}
+
+.ln-invoice-list {
+  .ln-invoice {
+    margin-top: 1em;
+    background-color: var(--background-back-color);
+    padding: 1em 1em 1em 3em;
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr;
+    min-height: 40px;
+
+    &.status-expired { border-left: 10px solid var(--vote-no-color); }
+    &.status-settled { border-left: 10px solid var(--accent-color); }
+    &.status-open { border-left: 10px solid var(--blue-highlight-background); }
+
+    .value { font-size: 32px; }
+
+    .memo {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      max-width: 18em;
+    }
+
+    .rhash {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      width: 18em;
+      color: var(--stroke-color-default);
+    }
+  }
+}
+
+.ln-payments-list {
+  .ln-payment {
+    margin-top: 1em;
+    background-color: var(--background-back-color);
+    padding: 1em 1em 1em 3em;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    min-height: 40px;
+  }
+
+  .value { font-size: 32px; }
+
+  .rhash {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 10em;
+    color: var(--stroke-color-default);
+  }
+
+}
+
+.ln-closechannelmodal-chaninfo {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+}
+
+.ln-wallet-form {
+  background-color: var(--background-back-color);
+  padding: 1em;
+  margin: 1em 0em;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+}
+
+.ln-withdrawwallet-modalcontent,
+.ln-fundwallet-modalcontent {
+  margin-bottom: 2em;
+
+  div {
+    display: inline-block;
+  }
+}
+
+.ln-connect-form {
+  background-color: var(--background-back-color);
+  padding: 1em;
+  margin: 1em 0em;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+}
+
+.ln-connect-opts .ln-connect-opt {
+  flex-wrap: wrap;
+  display: flex;
+  margin-bottom: 18px;
+
+  .label {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 14px;
+    text-align: right;
+    width: 125px;
+  }
+
+  .checkbox {
+    margin-top: 2px;
+  }
+
+  .account-list {
+    width: 255px;
+  }
+
+  .description {
+    font-style: italic;
+    text-align: right;
+    margin-right: 28px;
+    color: var(--disabled-color);
+    font-size: 11px;
+    line-height: 15px;
+    width: 175px;
+  }
+}
