@@ -1,15 +1,24 @@
-import CreateForm from "./CreateForm";
+import CreateWalletForm from "./CreateWalletForm";
+import "style/GetStarted.less";
 
-@autobind
-class CreateWallet extends React.Component {
-
-  render() {
-    return (
-      <div className="page-body getstarted">
-        <CreateForm {...{ ...this.props }}/>
-      </div>);
-  }
-
-}
+const CreateWallet = ({
+  onReturnToNewSeed,
+  onReturnToWalletSelection,
+  onSetWalletPrivatePassphrase,
+  getCurrentBlockCount,
+  getNeededBlocks,
+  getEstimatedTimeLeft,
+}) => (
+  <div className="page-body getstarted">
+    <CreateWalletForm {...{
+      onReturnToNewSeed,
+      onReturnToWalletSelection,
+      getCurrentBlockCount,
+      getNeededBlocks,
+      getEstimatedTimeLeft,
+      onSetWalletPrivatePassphrase
+    } }/>
+  </div>
+);
 
 export default CreateWallet;
