@@ -3,7 +3,6 @@ import { FormattedMessage as T } from "react-intl";
 import { SeedCopyConfirmModal } from "modals";
 import { LoaderBarBottom } from "indicators";
 import { Documentation } from "shared";
-import { BackBtnMsg } from "../../messages";
 import WalletHeader from "./createWalletHeader";
 import "style/CreateWalletForm.less";
 
@@ -43,7 +42,7 @@ const CreateWallet = ({
         <InvisibleButton
           className="go-back-button"
           onClick={onReturnToWalletSelection}>
-          <BackBtnMsg />
+          <T id="getStarted.backBtn" m="Cancel" />
         </InvisibleButton>
       </div>
       <LoaderBarBottom  {...{ getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft, getDaemonSynced }}  />
