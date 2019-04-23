@@ -1,18 +1,18 @@
 import "style/CreateWalletForm.less";
 import { InfoDocFieldModalButton } from "buttons";
 import SingleSeedWordEntry from "../SingleSeedWordEntry";
-import { CreateWalletTitleMsg, ConfirmSeedMsg } from "../../../messages";
 import WalletHeader from "../createWalletHeader";
+import { FormattedMessage as T } from "react-intl";
 
 export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord, onReturnToWalletSelection }) => (
   <>
     <WalletHeader {...{ onReturnToWalletSelection }} />
-    <div className="confirm-seed-row seed">
-      <div className="confirm-seed-label-text seed">
-        <div className="info-label">
-          <ConfirmSeedMsg />
-        </div>
+    <div className="seed is-row">
+      <div className="is-row confirm-seed-label-text seed">
         <InfoDocFieldModalButton document="SeedInfo" />
+        <div className="info-label">
+          <T id="confirmSeed.label" m="Confirm Seed Key" />
+        </div>
       </div>
       <div className="seedArea">
         {seedWords.map((seedWord) => {

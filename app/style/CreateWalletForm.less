@@ -1,20 +1,12 @@
 @import (reference) "./main.less";
 @import (reference) "./Icons.less";
 
-.orange-warning {
-  color: var(--error-text-color);
-}
-
 .seed-warning-message {
-  position: fixed;
-  top: 122px;
   margin-right: 5px;
 }
 
-.seedArea > .seedError {
+.seedError {
   color: var(--error-red);
-  position: fixed;
-  top: 122px;
 }
 
 .wallet-key-blue-button {
@@ -22,28 +14,12 @@
   float: left;
 }
 
-.confirm-seed-row {
-  display: flex;
-}
-
-.confirm-seed-row.seed {
+.seed {
   margin-bottom: 30px;
-  margin-left: -140px;
 }
 
-.confirm-seed-row.passphrase {
+.passphrase {
   height: 50px;
-  margin-left: -130px;
-}
-
-.confirm-seed-label-text.passphrase {
-  display: flex;
-  width: 130px;
-}
-
-.confirm-seed-label-text.seed {
-  display: flex;
-  flex-direction: row-reverse;
 }
 
 .confirm-seed-label-text {
@@ -51,24 +27,12 @@
   margin-right: 10px;
   font-size: 13px;
   line-height: 17px;
-}
-
-.confirm-seed .input-and-unit.input-private-password {
-  min-height: auto;
+  width: 150px;
+  margin-left: -160px;
 }
 
 .create-wallet-button-container {
   height: 60px;
-}
-
-.create-wallet-label {
-  float: left;
-  color: var(--title-text-and-button-background);
-  font-size: 13px;
-  line-height: 17px;
-  height: 17px;
-  width: 100px;
-  text-align: right;
 }
 
 .seed-type-label {
@@ -113,12 +77,6 @@
   }
 }
 
-.create-wallet-field {
-  width: 100%;
-  float: left;
-  clear: right;
-}
-
 .input-private-password {
   width: 300px;
   padding-bottom: 3px;
@@ -126,10 +84,6 @@
 
 .go-back-button {
   margin-top: 8px;
-}
-
-.passphrase-info-wrapper {
-  margin-left: -20px;
 }
 
 .seedArea {
@@ -277,14 +231,11 @@
 }
 
 @media screen and (max-width: 1179px) {
-  .confirm-seed-row {
-    margin-left: 0;
-  }
-  .confirm-seed-row.seed {
+  .seed {
     margin-left: 0;
   }
 
-  .confirm-seed-row.passphrase {
+  .passphrase {
     margin-left: 0;
   }
 }
