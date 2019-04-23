@@ -2,6 +2,7 @@ import SingleSeedWordEntry from "../SingleSeedWordEntry";
 import SeedHexEntry from "inputs/SeedHexEntry";
 import { TextToggle } from "buttons";
 import { FormattedMessage as T } from "react-intl";
+import { ConfirmSeedMsg } from "../../../messages";
 import "style/CreateWalletForm.less";
 import { WORDS, HEX } from "./constants";
 
@@ -25,7 +26,7 @@ const ExistingSeedForm = ({
       </div>
       <div className="is-row seed">
         <div className="confirm-seed-label-text seed">
-          <T id="confirmSeed.label" m="Confirm Seed Key" />
+          <ConfirmSeedMsg />
         </div>
         {seedType === WORDS && Array.isArray(seedWords) ?
           <div className="seedArea">

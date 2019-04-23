@@ -4,6 +4,7 @@ import CreatePassPhrase from "./CreatePassPhrase";
 import { FormattedMessage as T } from "react-intl";
 import { LoaderBarBottom } from "indicators";
 import { KeyBlueButton, InvisibleButton } from "buttons";
+import { BackBtnMsg } from "../../messages";
 import "style/CreateWalletForm.less";
 
 const ContinueWalletCreation = ({
@@ -41,7 +42,7 @@ const ContinueWalletCreation = ({
       <InvisibleButton
         className="go-back-button"
         onClick={createWalletExisting ? !createNewWallet ? onReturnToWalletSelection : onReturnToExistingOrNewScreen : onReturnToNewSeed}
-      ><T id="getStarted.backBtn" m="Cancel" /></InvisibleButton>
+      ><BackBtnMsg /></InvisibleButton>
     </div>
     <LoaderBarBottom  {...{ getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft, getDaemonSynced }}  />
   </div>

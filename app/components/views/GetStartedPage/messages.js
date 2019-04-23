@@ -5,7 +5,9 @@ import { AboutModalButtonInvisible } from "buttons";
 export const LogsLinkMsg = () => <T id="getStarted.btnLogs" m="Logs" />;
 export const SettingsLinkMsg = () => <T id="getStarted.btnSettings" m="Settings" />;
 export const HeaderTimeMsg = () => <T id="getStarted.chainLoading.headerTime" m="Time from last fetched header:"/>;
+export const BackBtnMsg = () => <T id="getStarted.backBtn" m="Cancel" />;
 export const GoBackMsg = () => <T id="logs.goBack" m="Go back" />;
+export const ConfirmSeedMsg = () => <T id="confirmSeed.label" m="Confirm Seed Key" />;
 export const DiscoverLabelMsg = () => <T id="getStarted.discover.label" m="Scan for accounts" />;
 export const LoaderTitleMsg = () => <T id="loader.title" m={"Welcome to Decrediton Wallet"}/>;
 export const DiscoverAccountsInfoMsg = () =>

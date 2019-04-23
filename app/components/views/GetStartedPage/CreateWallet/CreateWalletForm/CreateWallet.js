@@ -4,6 +4,7 @@ import { SeedCopyConfirmModal } from "modals";
 import { LoaderBarBottom } from "indicators";
 import { Documentation } from "shared";
 import WalletHeader from "./createWalletHeader";
+import { BackBtnMsg } from "../../messages";
 import "style/CreateWalletForm.less";
 
 const CreateWallet = ({
@@ -42,7 +43,7 @@ const CreateWallet = ({
         <InvisibleButton
           className="go-back-button"
           onClick={onReturnToWalletSelection}>
-          <T id="getStarted.backBtn" m="Cancel" />
+          <BackBtnMsg />
         </InvisibleButton>
       </div>
       <LoaderBarBottom  {...{ getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft, getDaemonSynced }}  />

@@ -2,7 +2,7 @@ import "style/CreateWalletForm.less";
 import { InfoDocFieldModalButton } from "buttons";
 import SingleSeedWordEntry from "../SingleSeedWordEntry";
 import WalletHeader from "../createWalletHeader";
-import { FormattedMessage as T } from "react-intl";
+import { ConfirmSeedMsg } from "../../../messages";
 
 export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord, onReturnToNewSeed }) => (
   <>
@@ -11,7 +11,7 @@ export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord, onReturnToNewSeed
       <div className="is-row confirm-seed-label-text seed">
         <InfoDocFieldModalButton document="SeedInfo" />
         <div className="info-label">
-          <T id="confirmSeed.label" m="Confirm Seed Key" />
+          <ConfirmSeedMsg />
         </div>
       </div>
       <div className="seedArea">
