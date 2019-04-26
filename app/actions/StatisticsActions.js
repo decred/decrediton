@@ -552,8 +552,8 @@ const txBalancesDelta = async (tx, maturingTxs, liveTickets, walletService, chai
 };
 
 // account for this delta in the balances and call the progress function
-const addDelta = (delta, progressFunction, currentBalance, tsDate) => {
-  progressFunction(tsDate(delta.timestamp), currentBalance);
+const addDelta = (delta, progressFunction, currentBalance, tsDate, backwards) => {
+  backwards && progressFunction(tsDate(delta.timestamp), currentBalance);
 
   let balance = {
     spendable: currentBalance.spendable + delta.spendable,
@@ -569,6 +569,7 @@ const addDelta = (delta, progressFunction, currentBalance, tsDate) => {
   balance.total = balance.spendable + balance.locked +
     balance.immature;
 
+  !backwards && progressFunction(tsDate(delta.timestamp), balance);
   return balance;
 };
 
@@ -612,9 +613,9 @@ const txDataCbBackwards = async ({ mined, maturingTxs, liveTickets,
     const maturedDeltas = findMaturingDeltas(maturingTxs, tx.height+1, lastTxHeight,
       tx.timestamp, lastTxTimestamp, chainParams, true);
     maturedDeltas.forEach((delta) => {
-      currentBalance = addDelta(delta, progressFunction, { ...currentBalance, delta }, tsDate);
+      currentBalance = addDelta(delta, progressFunction, { ...currentBalance, delta }, tsDate, true);
     });
-    currentBalance = addDelta(delta, progressFunction, { ...currentBalance, delta }, tsDate);
+    currentBalance = addDelta(delta, progressFunction, { ...currentBalance, delta }, tsDate, true);
 
     lastTxHeight = tx.height;
     lastTxTimestamp = delta.timestamp;
