@@ -43,14 +43,6 @@
   padding-top: 12px;
 }
 
-.is-overview-pending {
-  display: flex;
-}
-
-.is-row-pending {
-  width: 100%;
-}
-
 .tx-history-row {
   padding: 16px 20px 9px 10px;
   border-bottom: 1px solid var(--disabled-background-color);
@@ -63,6 +55,10 @@
 
 .tx-history-row:hover {
   background-color: var(--tx-history-background-hover);
+}
+
+.transaction-info {
+  width: 270px;
 }
 
 .tx-history-row .icon {
@@ -233,9 +229,4 @@
   .transaction-time-date-spacer {
     width: 20%;
   }
-}
-
-.transaction-info-row {
-  display: flex;
-  flex-grow: 2;
 }

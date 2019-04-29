@@ -4,13 +4,12 @@ import { createElement as h } from "react";
 import Status from "./Status";
 
 const RegularTxRow = ({ txAmount, txDescription, txDirection, txAccountName, pending, txTimestamp, overview, onClick, tsDate, ...props }) => (
-  <Row {...{ onClick, ...props, }}>
-    <div className="transaction-info-row">
+  <Row {...{ onClick, ...props, overview, pending }}>
+    <div className="transaction-info is-row">
       <span className="icon" />
       <span className="transaction-amount-number"><Balance amount={txDirection !== "in" ? -txAmount : txAmount} /></span>
-      <Status {...{ txAccountName, pending, txTimestamp, overview, onClick, tsDate }} />
     </div>
-    <div className="transaction-info-row transaction-amount-hash">{(txDescription.addressStr || []).join(", ")}</div>
+    <div className="transaction-amount-hash">{(txDescription.addressStr || []).join(", ")}</div>
   </Row>
 );
 

@@ -78,11 +78,8 @@ const StakeTxRow = ({ status,  ...props }) => {
       </Row>
     ) : (
       <Row {...{ className: status , ...props }}>
-        <div className="transaction-info-row">
-          <span className="icon" />
-          <span className="transaction-stake-type">{typeMsg}</span>
-          <Status {...{ overview, txAccountName, pending, txTimestamp, tsDate }} />
-        </div>
+        <span className="icon" />
+        <span className="transaction-stake-type">{typeMsg}</span>
       </Row>
     );
 };
