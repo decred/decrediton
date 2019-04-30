@@ -54,7 +54,7 @@ const StakeTxRow = ({ status,  ...props }) => {
   return overview ?
     (
       <Row {...{ className: status, ...props }}>
-        <div>
+        <div className="is-row">
           <span className="icon" />
           <span className="transaction-stake-type-overview">{typeMsg}</span>
           {!pending && <Status {...{ overview, txAccountName, pending, txTimestamp, tsDate }} />}

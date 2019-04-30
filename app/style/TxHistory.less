@@ -31,16 +31,16 @@
 }
 
 .pending-overview-details {
-  background-color: rgba(12, 30, 62, 0.0296);
+  background-color: #edeff1;
   background-image: @pending-animation;
   background-size: 14px;
   background-position: 50%;
   background-repeat: no-repeat;
   width: 32px;
-  height: 46px;
+  height: 54px;
   cursor: pointer;
   text-align: center;
-  padding-top: 12px;
+  margin-left: -32px;
 }
 
 .tx-history-row {
@@ -57,6 +57,12 @@
 
 .tx-history-row:hover {
   background-color: var(--tx-history-background-hover);
+}
+
+.tx-overview-pending {
+  .tx-info {
+    width: 100%;
+  }
 }
 
 .tx-overview-row {
@@ -146,8 +152,7 @@
 }
 
 .transaction-time-date-spacer {
-  float: right;
-  margin-left: 53px;
+  margin-left: auto;
   font-size: 11px;
 }
 
