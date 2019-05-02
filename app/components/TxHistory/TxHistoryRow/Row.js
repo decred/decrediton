@@ -5,7 +5,7 @@ const Row = ({
   txAccountName, pending, txTimestamp, onClick, className, children, overview, tsDate
 }) => {
   const overviewTxIsPending = overview && pending;
-  
+
   return (
     <div className={[ overview ? "tx-overview-row" : "tx-history-row", overviewTxIsPending ? "is-row tx-overview-pending" : null ].join(" ")}>
       <div className={[ "tx-info", className ].join(" ")} {...{ onClick }}>

@@ -15,7 +15,7 @@ const tabMessages = [
   <T id="home.tab.balance" m="Balance" />,
   <T id="home.tab.tickets" m="Tickets" />,
   <T id="home.tab.transactions" m="Transactions" />,
-]
+];
 
 const tabLink = (i) => {
   const m = [
@@ -47,9 +47,9 @@ const tabLink = (i) => {
         </span>
       </Tooltip>
     ),
-  ]
-  return m[i];  
-}
+  ];
+  return m[i];
+};
 
 const HomePage = ({
   totalBalance,

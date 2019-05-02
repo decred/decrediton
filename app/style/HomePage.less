@@ -6,6 +6,18 @@
   padding-top: 47px; 
   justify-content: space-between;
   background-color: var(--background-back-color);
+
+  .tabs > .tab > a {
+    margin: 0px 8px 0px 0px;
+    font-size: 11px;
+    padding: 5px 10px 5px 10px;
+  }
+
+  .tabs > .tab > a.active {
+    border: 1px solid var(--tab-text-active-hover);
+    border-radius: 3px;
+    padding: 5px 9px 5px 9px;
+  }
 }
 
 .overview-content-wrapper {
@@ -21,20 +33,6 @@
 
 .overview-transactions-ticket {
   padding: 30px 56px;
-}
-
-.overview-header {
-  .tabs > .tab > a {
-    margin: 0px 8px 0px 0px;
-    font-size: 11px;
-    padding: 5px 10px 5px 10px;
-  }
-
-  .tabs > .tab > a.active {
-    border: 1px solid var(--tab-text-active-hover);
-    border-radius: 3px;
-    padding: 5px 9px 5px 9px;
-  }
 }
 
 .overview-balance {
@@ -235,8 +233,10 @@
     font-size: 11px;
   }
   
-
   .overview-header {
+    padding-left: 11px;
+    padding-top: 40px;
+
     .tabs {
       width: 150px;
     }
@@ -257,10 +257,6 @@
     font-size: 27px;
   }
 
-  .overview-header {
-    padding-left: 11px;
-    padding-top: 40px
-  }
 
   .overview-content-wrapper {
     padding-left: 11px;
