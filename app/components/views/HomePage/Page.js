@@ -21,7 +21,7 @@ const HomePage = ({
 }) => {
   return (
     <>
-      <div className="overview-header">
+      <div className="overview-header is-row">
         <div className="overview-balance-wrapper">
           <Balance
             classNameWrapper="overview-balance"
@@ -46,13 +46,9 @@ const HomePage = ({
         <Redirect from="/home" exact to="/home/balance" />
       </Switch>
 
-      <div className="overview-transactions-ticket-wrapper">
-        <div className={"recent-transactions"}>
-          <RecentTransactions {...{ transactions, getTransactionsRequestAttempt, getAccountsResponse, rowNumber }} />
-        </div>
-        <div className="recent-transactions">
-          <TicketActivity {...{ tickets, getTransactionsRequestAttempt, getAccountsResponse, rowNumber }} />
-        </div>
+      <div className="overview-transactions-ticket is-row">
+        <RecentTransactions {...{ transactions, getTransactionsRequestAttempt, getAccountsResponse, rowNumber }} />
+        <TicketActivity {...{ tickets, getTransactionsRequestAttempt, getAccountsResponse, rowNumber }} />
       </div>
     </>
   );

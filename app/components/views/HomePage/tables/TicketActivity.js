@@ -18,8 +18,8 @@ const RecentTickets = ({
   const hasTickets = tickets.length > 0;
   return (
     getTransactionsRequestAttempt ? <DecredLoading /> :
-      <>
-        <div className="home-content-title">
+      <div className="ticket-tx-wrapper">
+        <div className="home-content-title is-row">
           {hasTickets
             ? <T id="home.ticketActivityTitle" m="Staking Activity" />
             : <T id="home.noTickets.title" m="No tickets yet" /> }
@@ -29,12 +29,10 @@ const RecentTickets = ({
           </div>
           }
         </div>
-        <div className="home-content-nest">
-          {hasTickets
-            ? <TxHistory overview limit={rowNumber} {...{ getAccountsResponse, transactions: tickets, tsDate }} />
-            : <NoTicketsLinks />}
-        </div>
-      </>
+        {hasTickets
+          ? <TxHistory overview limit={rowNumber} {...{ getAccountsResponse, transactions: tickets, tsDate }} />
+          : <NoTicketsLinks />}
+      </div>
   );
 };
 

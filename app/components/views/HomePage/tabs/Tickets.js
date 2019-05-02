@@ -16,13 +16,13 @@ const HomePage = ({
     <div className="overview-content-wrapper">
       <div className="overview-spendable-locked-wrapper">
         <div className="overview-spendable-locked-wrapper-area tickets">
-          <div className="overview-spendable-locked-wrapper-row">
+          <div className="is-row">
             <div className="overview-balance-spendable-locked active">{liveTicketsCount}</div>
             <div className="overview-balance-spendable-locked-top-label">
               <T id="home.liveTicketsCount" m="active tickets" />
             </div>
           </div>
-          <div className="overview-spendable-locked-wrapper-row">
+          <div className="is-row">
             <div className="overview-balance-spendable-locked-text">
               <T id="home.totalValueOfLiveTickets" m="With a total value of" />
             </div>
@@ -34,13 +34,13 @@ const HomePage = ({
           </div>
         </div>
         <div className="overview-spendable-locked-wrapper-area">
-          <div className="overview-spendable-locked-wrapper-row">
+          <div className="is-row">
             <div className="overview-balance-spendable-locked voted">{votedTicketsCount}</div>
             <div className="overview-balance-spendable-locked-top-label">
               <T id="home.votedTicketsCount" m="voted tickets" />
             </div>
           </div>
-          <div className="overview-spendable-locked-wrapper-row">
+          <div className="is-row">
             <div className="overview-balance-spendable-locked-text">
               <T id="home.earned" m="Earned" />
             </div>

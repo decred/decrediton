@@ -3,7 +3,6 @@
 
 .overview-header {
   padding: 56px 30px 10px 72px;
-  display: flex;
   justify-content: space-between;
   background-color: var(--background-back-color);
 }
@@ -26,8 +25,8 @@
 }
 
 .overview-content-wrapper {
-  display: flex;
   justify-content: space-between;
+  display: flex;
   background-color: var(--background-back-color);
 }
 
@@ -37,29 +36,8 @@
   margin-top: 117px;
 }
 
-.overview-ticket-column {
-  float: left;
-  width: 48%;
-  margin-right: 43px;
-}
-
-.overview-ticket-column-right {
-  float: left;
-  width: 35%;
-}
-
-.overview-transactions-ticket-wrapper {
-  overflow-x: hidden;
-  overflow-y: scroll;
-  position: absolute;
-  right: 0px;
-  top: 364px;
-  bottom: 0px;
-  left: 0px;
-  padding: 16px 60px 30px 60px;
-  background-color: var(--background-container);
-  display: flex;
-  flex-direction: row;
+.overview-transactions-ticket {
+  padding: 30px 56px;
 }
 
 .overview-spendable-locked-wrapper-area {
@@ -67,11 +45,6 @@
   &.tickets {
     margin-bottom: 8px;
   }
-}
-
-.overview-spendable-locked-wrapper-row {
-  display: flex;
-  flex-direction: row;
 }
 
 .overview-balance-spendable-locked {
@@ -110,18 +83,6 @@
   }
 }
 
-.overview-balance-spendable-locked-top-label {
-  font-size: 11px;
-  color: var(--input-color-default);
-}
-
-.overview-balance-spendable-locked-unit {
-  font-size: 11px;
-  color: var(--input-color-default);
-  font-family: @font-family-monospaced;
-  line-height: 1;
-}
-
 .overview-balance-spendable-locked-text {
   font-size: 11px;
   color: var(--stroke-color-hovered);
@@ -143,28 +104,23 @@
   margin-top: 4px;
 }
 
-.recent-transactions {
-  margin-right: 41px;
-  margin-top: 27px;
-  width: 50%;
-}
-
 .home-content-title {
-  border-bottom: 1px solid transparent;
   color: var(--stroke-color-hovered);
   font-size: 13px;
   font-family: @font-family-regular;
-  margin-bottom: 8px;
-  width: 313px;
+  margin-bottom: 10px;
+  justify-content: space-between;
+}
+
+.ticket-tx-wrapper {
+  margin-left: 40px;
 }
 
 .home-content-link {
-  margin-right: 5px;
   color: var(--disabled-color);
   font-size: 9px;
   font-family: @font-family-regular;
   cursor: pointer;
-  float: right;
 }
 
 .home-content-link > a:hover {
@@ -185,24 +141,25 @@
   cursor: pointer;
 }
 
-.overview-no-transactions > a.receive {
-  background-image: @generate-addr-icon;
+.overview-no-transactions {
+  a.receive {
+    background-image: @generate-addr-icon;
+  }
+  a.buy {
+    background-image: @buy-decred-icon;
+  }
 }
 
-.overview-no-transactions > a.buy {
-  background-image: @buy-decred-icon;
-}
-
-.overview-no-tickets > a.purchaseTickets {
-  background-image: @dummy-icon;
-}
-
-.overview-no-tickets > a.whatIsStaking {
-  background-image: @what-is-staking-icon;
-}
-
-.overview-no-tickets > a.ticketLifeCycle {
-  background-image: @ticket-lifecycle-icon;
+.overview-no-tickets {
+  a.purchaseTickets {
+    background-image: @dummy-icon;
+  }
+  a.whatIsStaking {
+    background-image: @what-is-staking-icon;
+  }
+  a.ticketLifeCycle {
+    background-image: @ticket-lifecycle-icon;
+  }
 }
 
 @media screen and (max-width: 676px) {
