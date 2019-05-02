@@ -23,6 +23,20 @@
   padding: 30px 56px;
 }
 
+.overview-header {
+  .tabs > .tab > a {
+    margin: 0px 8px 0px 0px;
+    font-size: 11px;
+    padding: 5px 10px 5px 10px;
+  }
+
+  .tabs > .tab > a.active {
+    border: 1px solid var(--tab-text-active-hover);
+    border-radius: 3px;
+    padding: 5px 9px 5px 9px;
+  }
+}
+
 .overview-balance {
   font-size: 42px;
   color: var(--input-color-default);
@@ -162,6 +176,18 @@
   }
 }
 
+.overview-tab-balance {
+  font-size: 0;
+}
+
+.overview-tab-tickets {
+  font-size: 0;
+}
+
+.overview-tab-tx {
+  font-size: 0;
+}
+
 @media screen and (max-width: 1179px) {
   .overview-transactions-ticket {
     padding: 30px 20px;
@@ -182,6 +208,51 @@
 }
 
 @media screen and (max-width: 768px) {
+  .overview-tab-label {
+    font-size: 0;
+  }
+  .overview-tab-balance {
+    background-image: @balanceTabIcon;
+    background-size: 16px;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    font-size: 11px;
+  }
+
+  .overview-tab-tickets {
+    background-image: @menu-tickets-default;
+    background-size: 16px;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    font-size: 11px;
+  }
+
+  .overview-tab-tx {
+    background-image: @menu-transactions-default;
+    background-size: 16px;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    font-size: 11px;
+  }
+  
+
+  .overview-header {
+    .tabs {
+      width: 150px;
+    }
+
+    .tabs > .tab > a {
+      padding: 0;
+      color: transparent;
+    }
+  
+    .tabs > .tab > a.active {
+      width: 20px;
+      padding: 0;
+      border: 1px solid #8997A6;
+    }
+  }
+
   .overview-balance {
     font-size: 27px;
   }
