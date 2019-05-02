@@ -2,9 +2,25 @@
 @import (reference) "./Icons.less";
 
 .overview-header {
-  padding: 56px 30px 10px 72px;
+  padding-left: 72px;
+  padding-top: 47px; 
   justify-content: space-between;
   background-color: var(--background-back-color);
+}
+
+.overview-content-wrapper {
+  justify-content: space-between;
+  display: flex;
+  background-color: var(--background-back-color);
+  padding-left: 72px;
+}
+
+.overview-spendable-locked-wrapper {
+  padding-top: 132px;
+}
+
+.overview-transactions-ticket {
+  padding: 30px 56px;
 }
 
 .overview-balance {
@@ -22,22 +38,6 @@
 .overview-balance-unit {
   font-size: 17px;
   color: var(--input-color-default);
-}
-
-.overview-content-wrapper {
-  justify-content: space-between;
-  display: flex;
-  background-color: var(--background-back-color);
-}
-
-.overview-spendable-locked-wrapper {
-  width: 300px;
-  margin-left: 72px;
-  margin-top: 117px;
-}
-
-.overview-transactions-ticket {
-  padding: 30px 56px;
 }
 
 .overview-spendable-locked-wrapper-area {
@@ -162,10 +162,59 @@
   }
 }
 
-@media screen and (max-width: 676px) {
+@media screen and (max-width: 1179px) {
+  .overview-transactions-ticket {
+    padding: 30px 20px;
+  }
+  
+  .overview-header {
+    padding-top: 60px;
+    padding-left: 60px;
+  }
+
+  .overview-content-wrapper {
+    padding-left: 60px;
+  }
+
   .overview-spendable-locked-wrapper {
-    width: 0px;
-    margin-left: 22px;
-    margin-top: 0px;
+    padding-top: 114px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .overview-balance {
+    font-size: 27px;
+  }
+
+  .overview-header {
+    padding-left: 11px;
+    padding-top: 40px
+  }
+
+  .overview-content-wrapper {
+    padding-left: 11px;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .overview-transactions-ticket.is-row {
+    flex-direction: column;
+  }
+
+  .ticket-tx-wrapper {
+    margin-left: 0;
+    margin-top: 25px;
+  }
+
+  .home-content-title {
+    width: 315px;
+  }
+
+  .overview-spendable-locked-wrapper {
+    padding-top: 0;
+    display: flex;
+    justify-content: space-between;
+    width: 315px;
+    padding-left: 9px;
   }
 }
