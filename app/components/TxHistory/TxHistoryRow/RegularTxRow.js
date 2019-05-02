@@ -4,7 +4,7 @@ import { createElement as h } from "react";
 import Status from "./Status";
 
 const RegularTxRow = ({ txAmount, txDescription, txDirection, overview, txAccountName, pending, txTimestamp, tsDate, ...props }) => (
-  <Row {...{ ...props, txAmount, txDescription, txDirection, overview, txAccountName, pending, txTimestamp, tsDate }}>
+  <Row {...{ ...props, txAccountName, pending, overview, tsDate }}>
     <div className="is-row">
       <span className="icon" />
       <span className="transaction-amount-number"><Balance amount={txDirection !== "in" ? -txAmount : txAmount} /></span>
