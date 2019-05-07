@@ -21,7 +21,7 @@ const tabLink = (i) => {
   const m = [
     (
       <Tooltip text={tabMessages[i]}>
-        <span className="overview-tab-balance">&amp;nbsp;</span>
+        <span className="overview-tab balance" />
         <span className="overview-tab-label">
           {tabMessages[i]}
         </span>
@@ -29,9 +29,7 @@ const tabLink = (i) => {
     ),
     (
       <Tooltip text={tabMessages[i]}>
-        <span className="overview-tab-tickets">
-          &amp;nbsp;
-        </span>
+        <span className="overview-tab tickets" />
         <span className="overview-tab-label">
           {tabMessages[i]}
         </span>
@@ -39,9 +37,7 @@ const tabLink = (i) => {
     ),
     (
       <Tooltip text={tabMessages[i]}>
-        <span className="overview-tab-tx">
-          &amp;nbsp;
-        </span>
+        <span className="overview-tab tx" />
         <span className="overview-tab-label">
           {tabMessages[i]}
         </span>

@@ -8,15 +8,14 @@
   background-color: var(--background-back-color);
 
   .tabs > .tab > a {
-    margin: 0px 8px 0px 0px;
+    margin-right: 8px;
     font-size: 11px;
     padding: 5px 10px 5px 10px;
   }
 
   .tabs > .tab > a.active {
-    border: 1px solid var(--tab-text-active-hover);
+    border: 1px solid var(--disabled-color);
     border-radius: 3px;
-    padding: 5px 9px 5px 9px;
   }
 }
 
@@ -174,18 +173,6 @@
   }
 }
 
-.overview-tab-balance {
-  font-size: 0;
-}
-
-.overview-tab-tickets {
-  font-size: 0;
-}
-
-.overview-tab-tx {
-  font-size: 0;
-}
-
 @media screen and (max-width: 1179px) {
   .overview-transactions-ticket {
     padding: 30px 20px;
@@ -209,47 +196,40 @@
   .overview-tab-label {
     font-size: 0;
   }
-  .overview-tab-balance {
-    background-image: @balanceTabIcon;
+
+  .overview-tab {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
     background-size: 16px;
     background-position: 50% 50%;
     background-repeat: no-repeat;
-    font-size: 11px;
+    &.balance {
+      background-image: @balanceTabIcon;
+    }
+    &.tickets {
+      background-image: @menu-tickets-default;
+    }
+    &.tx {
+      background-image: @menu-transactions-default;
+    }
   }
 
-  .overview-tab-tickets {
-    background-image: @menu-tickets-default;
-    background-size: 16px;
-    background-position: 50% 50%;
-    background-repeat: no-repeat;
-    font-size: 11px;
-  }
-
-  .overview-tab-tx {
-    background-image: @menu-transactions-default;
-    background-size: 16px;
-    background-position: 50% 50%;
-    background-repeat: no-repeat;
-    font-size: 11px;
-  }
-  
   .overview-header {
     padding-left: 11px;
     padding-top: 40px;
 
-    .tabs {
-      width: 150px;
-    }
-
     .tabs > .tab > a {
       padding: 0;
-      color: transparent;
     }
-  
+
     .tabs > .tab > a.active {
-      width: 20px;
-      padding: 0;
-      border: 1px solid #8997A6;
+      border: 0;
+
+      .overview-tab {
+        border: 1px solid var(--disabled-color);
+        border-radius: 3px;        
+      }
     }
   }
 
