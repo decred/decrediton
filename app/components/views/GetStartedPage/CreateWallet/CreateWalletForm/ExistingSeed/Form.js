@@ -13,10 +13,10 @@ const ExistingSeedForm = ({
   const errors = mountSeedErrors();
   return (
     <>
-      <div className="content-title">
-        <T id="createWallet.restore.title" m={"Restore existing wallet"}/>
-      </div>
-      <div className="seed-type-label">
+      <div className="is-row content-title-wrapper">
+        <div className="content-title">
+          <T id="createWallet.restore.title" m={"Restore existing wallet"}/>
+        </div>
         <TextToggle
           activeButton={"left"}
           leftText={WORDS}

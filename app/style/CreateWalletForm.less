@@ -35,45 +35,39 @@
   height: 60px;
 }
 
-.seed-type-label {
-  position: fixed;
-  left: 793px;
-  top: 95px;
+.text-toggle {
+  height: 29px;
 
-  .text-toggle {
-    height: 29px;
+  .text-toggle-button-left {
+    color: var(--disabled-color);
+    background-color: var(--background-container);
+    border: 1px solid var(--disabled-background-color);
+    border-radius: 3px 0px 0px 3px;
+    min-width: 0px;
+    padding: 6px 20px 6px 20px;
+  }
 
-    .text-toggle-button-left {
-      color: var(--disabled-color);
-      background-color: var(--background-container);
-      border: 1px solid var(--disabled-background-color);
-      border-radius: 3px 0px 0px 3px;
-      min-width: 0px;
-      padding: 6px 20px 6px 20px;
-    }
+  .text-toggle-button-right {
+    color: var(--disabled-color);
+    background-color: var(--background-container);
+    border: 1px solid var(--disabled-background-color);
+    border-radius: 0px 3px 3px 0px;
+    min-width: 0px;
+    padding: 6px 20px 6px 20px;
+  }
 
-    .text-toggle-button-right {
-      color: var(--disabled-color);
-      background-color: var(--background-container);
-      border: 1px solid var(--disabled-background-color);
-      border-radius: 0px 3px 3px 0px;
-      min-width: 0px;
-      padding: 6px 20px 6px 20px;
-    }
+  .text-toggle-button-left.text-toggle-button-active {
+    color: var(--input-color-default);
+    background-color: var(--background-back-color);
+    border: 1px solid var(--disabled-background-color);
+    font-weight: 400;
+  }
 
-    .text-toggle-button-left.text-toggle-button-active {
-      color: var(--input-color-default);
-      background-color: var(--background-back-color);
-      border: 1px solid var(--disabled-background-color);
-      font-weight: 400;
-    }
-
-    .text-toggle-button-right.text-toggle-button-active {
-      color: var(--input-color-default);
-      background-color: var(--background-back-color);
-      border: 1px solid var(--disabled-background-color);
-      font-weight: 400;
-    }
+  .text-toggle-button-right.text-toggle-button-active {
+    color: var(--input-color-default);
+    background-color: var(--background-back-color);
+    border: 1px solid var(--disabled-background-color);
+    font-weight: 400;
   }
 }
 
@@ -94,6 +88,7 @@
 
   &.hex {
     width: 90%;
+    display: block;
   }
 
   .Select-arrow {
@@ -223,10 +218,7 @@
   padding-right: 5px;
 }
 
-.content-tittle-wrapper {
-  height: 100%;
-  display: flex;
-  flex-direction: row-reverse;
+.content-title-wrapper {
   width: 692px;
 }
 
@@ -237,5 +229,27 @@
 
   .passphrase {
     margin-left: 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .is-row.seed {
+    flex-direction: column;
+  }
+
+  .seedArea {
+    grid-template-columns: repeat(3, 1fr);
+    width: 353px;
+  }
+
+  .create-wallet-button-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 365px;
+  }
+
+  .is-row.content-title-wrapper {
+    flex-direction: column;
+    margin-bottom: 20px;
   }
 }

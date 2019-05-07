@@ -762,6 +762,9 @@
     background-position: 20px 20px;
     display: flex;
     flex-direction: column;
+    background-repeat: no-repeat;
+    background-image: @small-logo;
+    background-size: 50px;
   }
 
   .getstarted.content {
@@ -775,16 +778,15 @@
       background-position: 80px;
       text-align: center;
     }
+
+    .content-title {
+      margin-bottom: 20px;
+    }  
   }
 
   .create-wallet-warning {
     column-count: 1;
     width: 315px;
     margin-left: 10px;
-  }
-
-  .seedArea {
-    grid-template-columns: repeat(3, 1fr) !important;
-    width: 353px !important;
   }
 }
