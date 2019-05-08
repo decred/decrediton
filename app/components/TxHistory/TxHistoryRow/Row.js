@@ -2,16 +2,16 @@ import Status from "./Status";
 import "style/TxHistory.less";
 
 const Row = ({
-  txAccountName, pending, txTimestamp, onClick, className, children, overview, tsDate
+  txAccountName, pending, onClick, className, children, overview, tsDate
 }) => {
   const overviewTxIsPending = overview && pending;
 
   return (
-    <div className={[ "tx-history-row-wrapper", overviewTxIsPending && "is-overview-pending" ].join(" ")}>
-      <div className={[ "tx-history-row", className,overviewTxIsPending && "is-row-pending" ].join(" ")} {...{ onClick }}>
+    <div className={[ overview ? "tx-overview-row" : "tx-history-row", overviewTxIsPending ? "is-row tx-overview-pending" : null ].join(" ")}>
+      <div className={[ "tx-info", className ].join(" ")} {...{ onClick }}>
         {children}
       </div>
-      {overviewTxIsPending && <Status {...{ txAccountName, pending, txTimestamp, overview, onClick, tsDate }} />}
+      {overviewTxIsPending && <Status {...{ txAccountName, pending, overview, onClick, tsDate }} />}
     </div>
   );
 };

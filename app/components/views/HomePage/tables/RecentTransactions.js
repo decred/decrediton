@@ -18,8 +18,8 @@ const RecentTransactions = ({
   const hasTxs = (transactions.length > 0);
   return (
     getTransactionsRequestAttempt ? <DecredLoading /> :
-      <>
-        <div className="home-content-title">
+      <div>
+        <div className="home-content-title is-row">
           {hasTxs
             ? <T id="home.recentTransactionsTitle" m="Recent Transactions" />
             : <T id="home.noTransactions.title" m="No transactions yet" /> }
@@ -34,7 +34,7 @@ const RecentTransactions = ({
             <TxHistory overview limit={rowNumber} {...{ getAccountsResponse, transactions, tsDate }} /> :
             <NoTransactionsLinks />}
         </div>
-      </>
+      </div>
   );
 };
 

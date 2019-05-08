@@ -54,7 +54,7 @@ const StakeTxRow = ({ status,  ...props }) => {
   return overview ?
     (
       <Row {...{ className: status, ...props }}>
-        <div>
+        <div className="is-row">
           <span className="icon" />
           <span className="transaction-stake-type-overview">{typeMsg}</span>
           {!pending && <Status {...{ overview, txAccountName, pending, txTimestamp, tsDate }} />}
@@ -78,11 +78,8 @@ const StakeTxRow = ({ status,  ...props }) => {
       </Row>
     ) : (
       <Row {...{ className: status , ...props }}>
-        <div className="transaction-info-row">
-          <span className="icon" />
-          <span className="transaction-stake-type">{typeMsg}</span>
-          <Status {...{ overview, txAccountName, pending, txTimestamp, tsDate }} />
-        </div>
+        <span className="icon" />
+        <span className="transaction-stake-type">{typeMsg}</span>
       </Row>
     );
 };
