@@ -215,7 +215,7 @@ export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
 
   const cfg = getWalletCfg(testnet, walletPath);
 
-  args.push("--addridxscanlen=" + cfg.get("gaplimit"));
+  args.push("--gaplimit=" + cfg.get("gaplimit"));
 
   const dcrwExe = getExecutablePath("dcrwallet", argv.custombinpath);
   if (!fs.existsSync(dcrwExe)) {
