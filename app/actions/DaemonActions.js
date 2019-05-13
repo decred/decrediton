@@ -359,10 +359,6 @@ export const prepStartDaemon = () => (dispatch, getState) => {
 };
 
 const TIME_TO_TIMEOUT = 30 * 1000; // 30 sec
-export const CONNECTDAEMON_ATTEMPT = "CONNECTDAEMON_ATTEMPT";
-export const CONNECTDAEMON_SUCCESS = "CONNECTDAEMON_SUCCESS";
-export const CONNECTDAEMON_FAILURE = "CONNECTDAEMON_FAILURE";
-
 export const connectDaemon = () => async (dispatch, getState) => {
   dispatch({ type: CONNECTDAEMON_ATTEMPT });
   const timeBeforeConnect = new Date();
@@ -408,27 +404,30 @@ export const syncDaemon = () => (dispatch, getState) => {
     return wallet.getBlockCount()
       .then(( blockChainInfo ) => {
         const { blockCount, syncHeight } = blockChainInfo;
-        if (syncHeight !== 0 && blockCount >= syncHeight) {
-          dispatch({ type: DAEMONSYNCED });
-          dispatch({ currentBlockHeight: blockCount, type: STARTUPBLOCK });
-          setMustOpenForm(false);
-          return;
-        }
-  
-        if (blockCount !== 0 && syncHeight !== 0) {
-          dispatch({
-            syncHeight, currentBlockCount: blockCount, timeStart: new Date(), blockStart: blockCount, type: DAEMONSYNCING_START
-          });
-          const blocksLeft = syncHeight - blockCount;
-          const blocksDiff = blockCount - blockStart;
-          if (timeStart !== 0 && blockStart !== 0 && blocksDiff !== 0) {          
-            const currentTime = new Date();
-            const timeSyncing = (currentTime - timeStart) / 1000;
-            const secondsLeft = Math.round(blocksLeft / blocksDiff * timeSyncing);
+        if (blockCount && syncHeight) {
+          if (blockCount >= syncHeight) {
+            dispatch({ type: DAEMONSYNCED });
+            dispatch({ currentBlockHeight: blockCount, type: STARTUPBLOCK });
+            setMustOpenForm(false);
+            return;
+          }
+
+          if (blockStart === 0) {
             dispatch({
-              currentBlockCount: blockCount,
-              timeLeftEstimate: secondsLeft,
-              type: DAEMONSYNCING_PROGRESS });
+              syncHeight, currentBlockCount: blockCount, timeStart: new Date(), blockStart: blockCount, type: DAEMONSYNCING_START
+            });
+          } else {
+            const blocksLeft = syncHeight - blockCount;
+            const blocksDiff = blockCount - blockStart;
+            if (blocksDiff !== 0) {
+              const currentTime = new Date();
+              const timeSyncing = (currentTime - timeStart) / 1000;
+              const secondsLeft = Math.round(blocksLeft / blocksDiff * timeSyncing);
+              dispatch({
+                currentBlockCount: blockCount,
+                timeLeftEstimate: secondsLeft,
+                type: DAEMONSYNCING_PROGRESS });
+            }
           }
         }
         setTimeout(updateBlockCount, 1000);

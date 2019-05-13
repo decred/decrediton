@@ -120,6 +120,7 @@ export default function version(state = {}, action) {
     };
   case DAEMONSYNCING_START:
     return { ...state,
+      daemonStarted: true,
       currentBlockCount: action.currentBlockCount,
       timeStart: action.timeStart,
       blockStart: action.blockStart,

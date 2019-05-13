@@ -240,6 +240,7 @@ class GetStartedPage extends React.Component {
       {...{
         ...props,
         ...state,
+        getDaemonStarted,
         text,
         animationType,
         getWalletReady,

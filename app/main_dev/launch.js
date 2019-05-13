@@ -410,20 +410,23 @@ export const getInfo = () => new Promise((resolve, reject) => {
   dcrdSocket.send('{"jsonrpc":"1.0","id":"0","method":"getinfo","params":[]}');
   dcrdSocket.on('message', (data) => {
     const parsedData = JSON.parse(data);
-    logger.log("info", parsedData.result);
     resolve(parsedData.result)
   });
 });
 
 export const getBlockChainInfo = () => new Promise((resolve, reject) => {
-  dcrdSocket.send('{"jsonrpc":"1.0","id":"getblockchaininfo","method":"getblockchaininfo","params":[]}');
+  if (dcrdSocket && dcrdSocket.readyState === dcrdSocket.CLOSED) {
+    return resolve({})
+  }
+  setTimeout(() => dcrdSocket.send('{"jsonrpc":"1.0","id":"getblockchaininfo","method":"getblockchaininfo","params":[]}'), 500);
   dcrdSocket.on('message', (data) => {
     const parsedData = JSON.parse(data);
-    const dataResults = parsedData.result || {};
-    const blockCount = dataResults.blocks;
-    const syncHeight = dataResults.syncheight;
-    logger.log("info", dataResults.blocks, dataResults.syncheight, dataResults.verificationprogress);
-    resolve({ blockCount, syncHeight })
+    if (parsedData.id === "getblockchaininfo") {
+      const dataResults = parsedData.result || {};
+      const blockCount = dataResults.blocks;
+      const syncHeight = dataResults.syncheight;
+      resolve({ blockCount, syncHeight })
+    }
   });
 });
 

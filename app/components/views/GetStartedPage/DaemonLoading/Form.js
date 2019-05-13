@@ -71,7 +71,7 @@ const DaemonLoadingBody = ({
               text={!text && isSPV ? <T id="getStarted.isSPV.loadingText" m="SPV mode activated, wallet ready to launch"/> : text}
               error={startupError}
               getDaemonSynced={getDaemonSynced}
-              disabled={(!getDaemonStarted || getCurrentBlockCount == null) && !isSPV}
+              disabled={(!getDaemonStarted || getCurrentBlockCount === null) && !isSPV}
               min={0}
               max={getNeededBlocks}
               value={getCurrentBlockCount}
