@@ -21,9 +21,9 @@ export const CHECK_NETWORKMATCH_FAILED = "CHECK_NETWORKMATCH_FAILED";
 export const CONNECTDAEMON_ATTEMPT = "CONNECTDAEMON_ATTEMPT";
 export const CONNECTDAEMON_SUCCESS = "CONNECTDAEMON_SUCCESS";
 export const CONNECTDAEMON_FAILURE = "CONNECTDAEMON_FAILURE";
-export const DAEMONSTARTED = "DAEMONSTARTED";
-export const DAEMONSTARTED_APPDATA = "DAEMONSTARTED_APPDATA";
-export const DAEMONSTARTED_REMOTE = "DAEMONSTARTED_REMOTE";
+export const DAEMONSTART_ATTEMPT = "DAEMONSTART_ATTEMPT";
+export const DAEMONSTART_SUCCESS = "DAEMONSTART_SUCCESS";
+export const DAEMONSTART_FAILURE = "DAEMONSTART_FAILURE"
 export const DAEMONSTARTED_ERROR = "DAEMONSTARTED_ERROR";
 export const DAEMONSTOPPED = "DAEMONSTOPPED";
 export const DAEMONSYNCING_START = "DAEMONSYNCING_START";
@@ -152,27 +152,20 @@ export const finishPrivacy = () => (dispatch) => {
   dispatch(goBack());
 };
 
-export const startDaemon = (rpcCreds, appData) => (dispatch, getState) => {
+export const startDaemon = (params) => (dispatch, getState) => {
+  const { appdata } = params;
+  dispatch({ type: DAEMONSTART_ATTEMPT })
   const { daemonStarted } = getState().daemon;
-  if (daemonStarted) return;
-  if (rpcCreds) {
-    dispatch({ type: DAEMONSTARTED_REMOTE, credentials: rpcCreds, pid: -1 });
-    dispatch(syncDaemon());
-  } else if (appData) {
-    wallet.startDaemon(appData, isTestNet(getState()))
-      .then(rpcCreds => {
-        dispatch({ type: DAEMONSTARTED_APPDATA, appData: appData, credentials: rpcCreds });
-        dispatch(syncDaemon(null, appData));
-      })
-      .catch((err) => dispatch({ err, type: DAEMONSTARTED_ERROR }));
-  } else {
-    wallet.startDaemon(null, isTestNet(getState()))
-      .then(rpcCreds => {
-        dispatch({ type: DAEMONSTARTED, credentials: rpcCreds });
-        dispatch(connectDaemon());
-      })
-      .catch(() => dispatch({ type: DAEMONSTARTED_ERROR }));
+  if (daemonStarted) {
+    return dispatch({ type: DAEMONSTART_SUCCESS });
   }
+
+  wallet.startDaemon(params, isTestNet(getState()))
+    .then(rpcCreds => {
+      dispatch({ type: DAEMONSTART_SUCCESS, credentials: rpcCreds, appdata });
+      dispatch(connectDaemon(rpcCreds, appdata));
+    })
+    .catch((err) => dispatch({ err, type: DAEMONSTART_FAILURE }));  
 };
 
 export const setCredentialsAppdataError = () => (dispatch) => {
@@ -332,18 +325,18 @@ export const prepStartDaemon = () => (dispatch, getState) => {
     return;
   }
 
-  let rpc_user, rpc_password, rpc_cert, rpc_host, rpc_port;
+  let rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port;
   if (cliOptions.rpcPresent) {
     rpc_user = cliOptions.rpcUser;
-    rpc_password = cliOptions.rpcPass;
+    rpc_pass = cliOptions.rpcPass;
     rpc_cert = cliOptions.rpcCert;
     rpc_host = cliOptions.rpcHost;
     rpc_port = cliOptions.rpcPort;
   } else {
-    ({ rpc_user, rpc_password, rpc_cert, rpc_host, rpc_port } = getRemoteCredentials());
+    ({ rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port } = getRemoteCredentials());
   }
-  const credentials = { rpc_user, rpc_password, rpc_cert, rpc_host, rpc_port };
-  const hasAllCredentials = rpc_password && rpc_user && rpc_password.length > 0 && rpc_user.length > 0 && rpc_cert.length > 0 && rpc_host.length > 0 && rpc_port.length > 0;
+  const credentials = { rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port };
+  const hasAllCredentials = rpc_pass && rpc_user && rpc_pass.length > 0 && rpc_user.length > 0 && rpc_cert.length > 0 && rpc_host.length > 0 && rpc_port.length > 0;
   const hasAppData = getAppdataPath() && getAppdataPath().length > 0;
 
   if(hasAllCredentials && hasAppData)
@@ -359,11 +352,12 @@ export const prepStartDaemon = () => (dispatch, getState) => {
 };
 
 const TIME_TO_TIMEOUT = 30 * 1000; // 30 sec
-export const connectDaemon = () => async (dispatch, getState) => {
+export const connectDaemon = (rpcCreds, appdata) => async (dispatch, getState) => {
   dispatch({ type: CONNECTDAEMON_ATTEMPT });
   const timeBeforeConnect = new Date();
   const tryConnect = async () => {
     const { daemonConnected, credentials, daemonError, timeStart } = getState().daemon;
+    const creds = rpcCreds ? rpcCreds : credentials;
     const timeNow = new Date();
     const timeElapsed = timeNow - timeBeforeConnect;
     if (timeStart === 0 && timeElapsed >= TIME_TO_TIMEOUT) {
@@ -372,7 +366,7 @@ export const connectDaemon = () => async (dispatch, getState) => {
     }
     if (daemonConnected || daemonError) return;
     return wallet
-      .connectDaemon({ credentials, isTestnet: isTestNet(getState()) })
+      .connectDaemon({ rpcCreds: creds, testnet: isTestNet(getState()) })
       .then(() => {
         dispatch({ type: CONNECTDAEMON_SUCCESS });
         dispatch(checkNetworkMatch());

@@ -3,9 +3,7 @@ import {
   FINISH_TUTORIAL,
   FINISH_PRIVACY,
   FINISH_SPVCHOICE,
-  DAEMONSTARTED,
-  DAEMONSTARTED_REMOTE,
-  DAEMONSTARTED_APPDATA,
+  DAEMONSTART_SUCCESS,
   CONNECTDAEMON_ATTEMPT,
   CONNECTDAEMON_SUCCESS,
   CONNECTDAEMON_FAILURE,
@@ -57,6 +55,16 @@ export default function version(state = {}, action) {
     return { ...state,
       showPrivacy: false,
     };
+  case DAEMONSTART_SUCCESS:
+    return { ...state,
+      daemonStarted: true,
+      daemonStopped: false,
+      daemonAdvanced: action.daemonAdvanced,
+      credentials: action.credentials,
+      daemonRemote: action.daemonRemote,
+      appData: action.appData,
+      daemonError: null,
+    };
   case CONNECTDAEMON_ATTEMPT:
     return { ...state,
       daemonConnected: false,
@@ -71,27 +79,6 @@ export default function version(state = {}, action) {
     return { ...state,
       daemonConnected: false,
       daemonError: action.error,
-    };
-  case DAEMONSTARTED:
-    return { ...state,
-      daemonStarted: true,
-      daemonAdvanced: false,
-      daemonStopped: false,
-      credentials: action.credentials,
-    };
-  case DAEMONSTARTED_REMOTE:
-    return { ...state,
-      daemonStarted: true,
-      daemonStopped: false,
-      credentials: action.credentials,
-      daemonRemote: true,
-    };
-  case DAEMONSTARTED_APPDATA:
-    return { ...state,
-      daemonStarted: true,
-      daemonStopped: false,
-      appData: action.appData,
-      credentials: action.credentials,
     };
   case CLOSEDAEMON_ATTEMPT:
     return { ...state,

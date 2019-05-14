@@ -118,7 +118,7 @@ export function initGlobalCfg() {
   if (!config.has("remote_credentials")) {
     const credentialKeys = {
       rpc_user : "",
-      rpc_password : "",
+      rpc_pass : "",
       rpc_cert : "",
       rpc_host : "",
       rpc_port : "",
@@ -212,6 +212,8 @@ export function readDcrdConfig(configPath, testnet) {
     let newCfg = {};
     newCfg.rpc_host = "127.0.0.1";
     newCfg.rpc_port = testnet ? "19109" : "9109";
+    newCfg.rpc_cert = getDcrdRpcCert(configPath);
+
     if (fs.existsSync(dcrdCfg(configPath))) {
       readCfg = ini.parse(Buffer.from(fs.readFileSync(dcrdCfg(configPath))).toString());
     } else if (fs.existsSync(dcrdCfg(appDataDirectory()))) {
@@ -227,7 +229,7 @@ export function readDcrdConfig(configPath, testnet) {
         userFound = true;
       }
       if (key === "rpcpass") {
-        newCfg.rpc_password = value;
+        newCfg.rpc_pass = value;
         passFound = true;
       }
       if (key === "rpclisten") {
@@ -246,7 +248,7 @@ export function readDcrdConfig(configPath, testnet) {
             userFound = true;
           }
           if (key2 === "rpcpass") {
-            newCfg.rpc_password = value2;
+            newCfg.rpc_pass = value2;
             passFound = true;
           }
           if (key2 === "rpclisten") {
@@ -307,7 +309,7 @@ export function setAppdataPath(appdataPath) {
   const config = getGlobalCfg();
   const credentialKeys = {
     rpc_user : "",
-    rpc_password : "",
+    rpc_pass : "",
     rpc_cert : "",
     rpc_host : "",
     rpc_port : "",

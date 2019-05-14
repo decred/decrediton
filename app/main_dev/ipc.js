@@ -47,45 +47,26 @@ export const deleteDaemon = (appData, testnet) => {
   }
 };
 
-export const startDaemon = (mainWindow, daemonIsAdvanced, primaryInstance, appData, testnet, reactIPC) => {
+export const startDaemon = async (params, testnet) => {
   if (GetDcrdPID() && GetDcrdPID() !== -1) {
     logger.log("info", "Skipping restart of daemon as it is already running " + GetDcrdPID());
-    var newConfig = {};
-    if (appData) {
-      newConfig = readDcrdConfig(appData, testnet);
-      newConfig.rpc_cert = getDcrdRpcCert(appData);
-    } else {
-      newConfig = readDcrdConfig(getDcrdPath(), testnet);
-      newConfig.rpc_cert = getDcrdRpcCert();
-    }
+    const newConfig = readDcrdConfig(params.appdata, testnet);
+
     newConfig.pid =  GetDcrdPID();
     return newConfig;
   }
-  if(appData){
-    logger.log("info", "launching dcrd with different appdata directory");
-  }
-  if (!daemonIsAdvanced && !primaryInstance) {
-    logger.log("info", "Running on secondary instance. Assuming dcrd is already running.");
-    let dcrdConfPath = getDcrdPath();
-    if (!fs.existsSync(dcrdCfg(dcrdConfPath))) {
-      dcrdConfPath = createTempDcrdConf(testnet);
-    }
-    return -1;
-  }
+
   try {
-    let dcrdConfPath = appData ? appData : getDcrdPath();
-    if (!fs.existsSync(dcrdCfg(dcrdConfPath))) {
-      dcrdConfPath = createTempDcrdConf(testnet);
-    }
-    return launchDCRD(mainWindow, daemonIsAdvanced, dcrdConfPath, appData, testnet, reactIPC);
+    const started = await launchDCRD(params, testnet)
+    return started;
   } catch (e) {
     logger.log("error", "error launching dcrd: " + e);
   }
 };
 
-export const connectDaemon = async (mainWindow) => {
+export const connectDaemon = async (mainWindow, rpcCreds) => {
   try {
-    await connectRpcDaemon(mainWindow);
+    await connectRpcDaemon(rpcCreds);
     return mainWindow.webContents.send("connectRpcDaemon-response", { connected: true });
   } catch (error) {
     return mainWindow.webContents.send("connectRpcDaemon-response", { connected: false, error });

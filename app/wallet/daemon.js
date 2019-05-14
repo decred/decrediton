@@ -7,11 +7,11 @@ export const checkDecreditonVersion = log(() => Promise
   .resolve(ipcRenderer.sendSync("check-version"))
 , "Check Decrediton release version");
 
-export const startDaemon = log((appData, testnet) => Promise
-  .resolve(ipcRenderer.sendSync("start-daemon", appData, testnet))
-  .then(pid => {
-    if (pid) return pid;
-    throw "Error starting daemon";
+export const startDaemon = log((params, testnet) => Promise
+  .resolve(ipcRenderer.sendSync("start-daemon", params, testnet))
+  .then(started => {
+    if (!started) throw "Error starting daemon";
+    return started;
   }), "Start Daemon");
 
 export const deleteDaemonData = log((appData, testnet) => Promise
@@ -151,7 +151,7 @@ export const getDcrdLastLogLine = () => Promise
 export const getDcrwalletLastLogLine = () => Promise
   .resolve(ipcRenderer.sendSync("get-last-log-line-dcrwallet"));
 
-export const connectDaemon = log(() => new Promise((resolve, reject) => {
+export const connectDaemon = log( params => new Promise((resolve, reject) => {
   ipcRenderer.once("connectRpcDaemon-response", (e, info) => {
     if (info.connected) {
       resolve({ connected: true });
@@ -160,5 +160,5 @@ export const connectDaemon = log(() => new Promise((resolve, reject) => {
       reject({ connected: false, error: info.error })
     }
   });
-  ipcRenderer.send("connect-daemon")
+  ipcRenderer.send("connect-daemon", params)
 }), "Connect Daemon");

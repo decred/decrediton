@@ -169,6 +169,7 @@ export const openWalletAttempt = (pubPass, retryAttempt) => (dispatch, getState)
           dispatch({ type: OPENWALLET_INPUT });
         }
       } else {
+        console.log(error)
         dispatch({ error, type: OPENWALLET_FAILED });
       }
     });
@@ -223,7 +224,7 @@ export const startRpcRequestFunc = (isRetry, privPass) =>
     } else if (credentials) {
       rpcuser = credentials.rpc_user;
       rpccertPath = credentials.rpc_cert;
-      rpcpass = credentials.rpc_password;
+      rpcpass = credentials.rpc_pass;
       daemonhost = credentials.rpc_host;
       rpcport = credentials.rpc_port;
     } else if (appData) {

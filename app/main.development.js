@@ -192,12 +192,13 @@ ipcMain.on("get-available-wallets", (event, network) => {
   event.returnValue = getAvailableWallets(network);
 });
 
-ipcMain.on("start-daemon", (event, appData, testnet) => {
-  event.returnValue = startDaemon(mainWindow, daemonIsAdvanced, primaryInstance, appData, testnet, reactIPC);
+ipcMain.on("start-daemon", async (event, params, testnet) => {
+  const startedCredentials = await startDaemon(params, testnet);
+  event.returnValue = startedCredentials;
 });
 
-ipcMain.on("connect-daemon", (event) => {
-  event.returnValue = connectDaemon(mainWindow);
+ipcMain.on("connect-daemon", (event, { rpcCreds }) => {
+  event.returnValue = connectDaemon(mainWindow, rpcCreds);
 });
 
 ipcMain.on("delete-daemon", (event, appData, testnet) => {

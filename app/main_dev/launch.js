@@ -91,7 +91,7 @@ export async function cleanShutdown(mainWindow, app) {
     logger.log("info", "Closing decrediton.");
 
     let shutdownTimer = setInterval(function () {
-      const stillRunning = (isRunning(dcrdPID) && os.platform() != "win32");
+      const stillRunning = dcrdPID !== -1 && (isRunning(dcrdPID) && os.platform() != "win32");
 
       if (!stillRunning) {
         logger.log("info", "Final shutdown pause. Quitting app.");
@@ -110,25 +110,39 @@ export async function cleanShutdown(mainWindow, app) {
   });
 }
 
-export const launchDCRD = (mainWindow, daemonIsAdvanced, daemonPath, appdata, testnet, reactIPC) => {
-  let args = [ "--nolisten" ];
-  let newConfig = {};
-  if (appdata) {
-    newConfig = readDcrdConfig(appdata, testnet);
-    newConfig.rpc_cert = getDcrdRpcCert(appdata);
-    args.push(`--appdata=${appdata}`);
-    args.push(`--rpcuser=${newConfig.rpc_user}`);
-    args.push(`--rpcpass=${newConfig.rpc_password}`);
-  } else {
-    args.push(`--configfile=${dcrdCfg(daemonPath)}`);
-    newConfig = readDcrdConfig(daemonPath, testnet);
-    newConfig.rpc_cert = getDcrdRpcCert();
+export const launchDCRD = (params, testnet) => new Promise((resolve,reject) => {
+  const { rpcCreds, appdata } = params;
+  if (rpcCreds) {
+    rpcuser = rpcCreds.rpc_user;
+    rpcpass = rpcCreds.rpc_pass;
+    rpccert = rpcCreds.rpc_cert;
+    rpchost = rpcCreds.rpc_host;
+    rpcport = rpcCreds.rpc_port;
+    dcrdPID = -1;
+    return resolve(rpcCreds);
   }
+  if (dcrdPID === -1) {
+    const creds = {
+      rpc_user: rpcuser,
+      rpc_pass: rpcpass,
+      rpc_cert: rpccert,
+      rpc_host: rpchost,
+      rpc_port: rpcport,
+    }
+    return resolve(creds);
+  }
+
+  let args = [ "--nolisten" ];
+  const newConfig = readDcrdConfig(appdata, testnet);
+
+  args.push(`--configfile=${dcrdCfg(appdata)}`);
+  args.push(`--appdata=${appdata}`);
+
   if (testnet) {
     args.push("--testnet");
   }
   rpcuser = newConfig.rpc_user;
-  rpcpass = newConfig.rpc_password;
+  rpcpass = newConfig.rpc_pass;
   rpccert = newConfig.rpc_cert;
   rpchost = newConfig.rpc_host;
   rpcport = newConfig.rpc_port;
@@ -139,7 +153,7 @@ export const launchDCRD = (mainWindow, daemonIsAdvanced, daemonPath, appdata, te
     return;
   }
 
-  if (os.platform() == "win32") {
+  if (os.platform() === "win32") {
     try {
       const win32ipc = require("../node_modules/win32ipc/build/Release/win32ipc.node");
       dcrdPipeRx = win32ipc.createPipe("out");
@@ -152,39 +166,36 @@ export const launchDCRD = (mainWindow, daemonIsAdvanced, daemonPath, appdata, te
   logger.log("info", `Starting ${dcrdExe} with ${args}`);
 
   const dcrd = spawn(dcrdExe, args, {
-    detached: os.platform() == "win32",
+    detached: os.platform() === "win32",
     stdio: [ "ignore", "pipe", "pipe" ]
   });
 
   dcrd.on("error", function (err) {
-    logger.log("error", "Error running dcrd.  Check logs and restart! " + err);
-    mainWindow.webContents.executeJavaScript("alert(\"Error running dcrd.  Check logs and restart! " + err + "\");");
-    mainWindow.webContents.executeJavaScript("window.close();");
+    reject(err);
   });
 
   dcrd.on("close", (code) => {
-    if (daemonIsAdvanced)
-      return;
     if (code !== 0) {
-      var lastDcrdErr = lastErrorLine(GetDcrdLogs());
-      if (!lastDcrdErr || lastDcrdErr == "") {
+      const lastDcrdErr = lastErrorLine(GetDcrdLogs());
+      if (!lastDcrdErr || lastDcrdErr === "") {
         lastDcrdErr = lastPanicLine(GetDcrdLogs());
-        console.log("panic error", lastDcrdErr);
       }
       logger.log("error", "dcrd closed due to an error: ", lastDcrdErr);
-      reactIPC.send("error-received", true, lastDcrdErr);
-    } else {
-      logger.log("info", `dcrd exited with code ${code}`);
+      return reject(lastDcrdErr);
     }
+
+    logger.log("info", `dcrd exited with code ${code}`);
   });
 
   dcrd.stdout.on("data", (data) => {
     AddToDcrdLog(process.stdout, data, debug);
-    if (CheckDaemonLogs(data)) {
-      reactIPC.send("warning-received", true, data.toString("utf-8"));
-    }
+    resolve(data);
   });
-  dcrd.stderr.on("data", (data) => AddToDcrdLog(process.stderr, data, debug));
+
+  dcrd.stderr.on("data", (data) => {
+    AddToDcrdLog(process.stderr, data, debug)
+    reject(data);
+  });
 
   newConfig.pid = dcrd.pid;
   dcrdPID = dcrd.pid;
@@ -192,7 +203,7 @@ export const launchDCRD = (mainWindow, daemonIsAdvanced, daemonPath, appdata, te
 
   dcrd.unref();
   return newConfig;
-};
+});
 
 // DecodeDaemonIPCData decodes messages from an IPC message received from dcrd/
 // dcrwallet using their internal IPC protocol.
@@ -364,15 +375,21 @@ export const readExesVersion = (app, grpcVersions) => {
 };
 
 // connectDaemon starts a new rpc connection to dcrd
-export const connectRpcDaemon = () => new Promise((resolve,reject) => {
-  var cert = fs.readFileSync(rpccert);
-  const url = `${rpchost}:${rpcport}`;
+export const connectRpcDaemon = (rpcCreds) => new Promise((resolve,reject) => {
+  const rpc_host = rpcCreds ? rpcCreds.rpc_host : rpchost;
+  const rpc_port = rpcCreds ? rpcCreds.rpc_port : rpcport;
+  const rpc_user = rpcCreds ? rpcCreds.rpc_user : rpcuser;
+  const rpc_pass = rpcCreds ? rpcCreds.rpc_pass : rpcpass;
+  const rpc_cert = rpcCreds ? rpcCreds.rpc_cert : rpccert;
+
+  var cert = fs.readFileSync(rpc_cert);
+  const url = `${rpc_host}:${rpc_port}`;
   if (dcrdSocket && dcrdSocket.readyState === dcrdSocket.OPEN) {
     return resolve(true);
   }
   dcrdSocket = new webSocket(`wss://${url}/ws`, {
     headers: {
-      'Authorization': 'Basic '+Buffer.from(rpcuser+':'+rpcpass).toString('base64')
+      'Authorization': 'Basic '+Buffer.from(rpc_user+':'+rpc_pass).toString('base64')
     },
     cert: cert,
     ecdhCurve: 'secp521r1',
