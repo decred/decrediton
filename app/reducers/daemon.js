@@ -204,17 +204,17 @@ export default function version(state = {}, action) {
       walletError: action.error,
     };
   case CHECK_NETWORKMATCH_ATTEMPT:
-    return {...state,
+    return { ...state,
       daemonError: null,
       networkMatch: null,
-    }
+    };
   case CHECK_NETWORKMATCH_SUCCESS:
-    return {...state,
+    return { ...state,
       networkMatch: true,
       daemonError: null,
-    }
+    };
   case CHECK_NETWORKMATCH_FAILED:
-    return {...state,
+    return { ...state,
       daemonError: action.error,
     };
   default:

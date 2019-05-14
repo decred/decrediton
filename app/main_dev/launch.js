@@ -1,7 +1,7 @@
 import { dcrwalletCfg, getWalletPath, getExecutablePath, dcrdCfg, getDcrdPath } from "./paths";
 import { getWalletCfg, readDcrdConfig } from "../config";
 import { createLogger, AddToDcrdLog, AddToDcrwalletLog, GetDcrdLogs,
-  GetDcrwalletLogs, lastErrorLine, lastPanicLine, ClearDcrwalletLogs, CheckDaemonLogs } from "./logging";
+  GetDcrwalletLogs, lastErrorLine, lastPanicLine, ClearDcrwalletLogs } from "./logging";
 import parseArgs from "minimist";
 import { OPTIONS } from "./constants";
 import os from "os";
@@ -12,8 +12,6 @@ import isRunning from "is-running";
 import stringArgv from "string-argv";
 import { concat, isString } from "../fp";
 import webSocket from "ws";
-import { reverseRawHash, hexToRaw } from "../helpers";
-import { Uint64LE } from "int64-buffer";
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const debug = argv.debug || process.env.NODE_ENV === "development";
@@ -132,7 +130,7 @@ export const launchDCRD = (params, testnet) => new Promise((resolve,reject) => {
       rpc_cert: rpccert,
       rpc_host: rpchost,
       rpc_port: rpcport,
-    }
+    };
     return resolve(creds);
   }
 
@@ -182,7 +180,7 @@ export const launchDCRD = (params, testnet) => new Promise((resolve,reject) => {
 
   dcrd.on("close", (code) => {
     if (code !== 0) {
-      const lastDcrdErr = lastErrorLine(GetDcrdLogs());
+      let lastDcrdErr = lastErrorLine(GetDcrdLogs());
       if (!lastDcrdErr || lastDcrdErr === "") {
         lastDcrdErr = lastPanicLine(GetDcrdLogs());
       }
@@ -199,7 +197,7 @@ export const launchDCRD = (params, testnet) => new Promise((resolve,reject) => {
   });
 
   dcrd.stderr.on("data", (data) => {
-    AddToDcrdLog(process.stderr, data, debug)
+    AddToDcrdLog(process.stderr, data, debug);
     reject(data.toString("utf-8"));
   });
 
@@ -395,106 +393,60 @@ export const connectRpcDaemon = (rpcCreds) => new Promise((resolve,reject) => {
   }
   dcrdSocket = new webSocket(`wss://${url}/ws`, {
     headers: {
-      'Authorization': 'Basic '+Buffer.from(rpc_user+':'+rpc_pass).toString('base64')
+      "Authorization": "Basic "+Buffer.from(rpc_user+":"+rpc_pass).toString("base64")
     },
     cert: cert,
-    ecdhCurve: 'secp521r1',
-    ca: [cert]
+    ecdhCurve: "secp521r1",
+    ca: [ cert ]
   });
-  dcrdSocket.on('open', function() {
-    console.log('**********************************************************************');
-    console.log('CONNECTED');
+  dcrdSocket.on("open", function() {
+    console.log("**********************************************************************");
+    console.log("CONNECTED");
     // Send a JSON-RPC command to be notified when blocks are connected and
     // disconnected from the chain.
-    dcrdSocket.send('{"jsonrpc":"1.0","id":"0","method":"notifyblocks","params":[]}');
+    dcrdSocket.send("{\"jsonrpc\":\"1.0\",\"id\":\"0\",\"method\":\"notifyblocks\",\"params\":[]}");
 
     resolve(true);
   });
-  dcrdSocket.on('error', function(error) {
-    console.log('ERROR:' + error);
+  dcrdSocket.on("error", function(error) {
+    console.log("ERROR:" + error);
     reject(error);
-  })
-  dcrdSocket.on('message', function(data, flags) {
+  });
+  dcrdSocket.on("message", function(data) {
     const parsedData = JSON.parse(data);
     const method = parsedData ? parsedData.method : "";
     switch (method) {
-      case "blockconnected":
-        const hex = hexToRaw(parsedData.params[0]);
-        const newBlock = decodeConnectedBlockHeader(Buffer.from(hex));
-        break;
+    case "blockconnected":
+      // const hex = hexToRaw(parsedData.params[0]);
+      // const newBlock = decodeConnectedBlockHeader(Buffer.from(hex));
+      break;
     }
   });
-  dcrdSocket.on('close', function(data) {
-    console.log('DISCONNECTED');
-  });
-})
-
-export const getInfo = () => new Promise((resolve, reject) => {
-  dcrdSocket.send('{"jsonrpc":"1.0","id":"0","method":"getinfo","params":[]}');
-  dcrdSocket.on('message', (data) => {
-    const parsedData = JSON.parse(data);
-    resolve(parsedData.result)
+  dcrdSocket.on("close", () => {
+    console.log("DISCONNECTED");
   });
 });
 
-export const getBlockChainInfo = () => new Promise((resolve, reject) => {
+export const getInfo = () => new Promise((resolve) => {
+  dcrdSocket.send("{\"jsonrpc\":\"1.0\",\"id\":\"0\",\"method\":\"getinfo\",\"params\":[]}");
+  dcrdSocket.on("message", (data) => {
+    const parsedData = JSON.parse(data);
+    resolve(parsedData.result);
+  });
+});
+
+export const getBlockChainInfo = () => new Promise((resolve) => {
   if (dcrdSocket && dcrdSocket.readyState === dcrdSocket.CLOSED) {
-    return resolve({})
+    return resolve({});
   }
-  setTimeout(() => dcrdSocket.send('{"jsonrpc":"1.0","id":"getblockchaininfo","method":"getblockchaininfo","params":[]}'), 500);
-  dcrdSocket.on('message', (data) => {
+  setTimeout(() => dcrdSocket.send("{\"jsonrpc\":\"1.0\",\"id\":\"getblockchaininfo\",\"method\":\"getblockchaininfo\",\"params\":[]}"), 500);
+  dcrdSocket.on("message", (data) => {
     const parsedData = JSON.parse(data);
     if (parsedData.id === "getblockchaininfo") {
       const dataResults = parsedData.result || {};
       const blockCount = dataResults.blocks;
       const syncHeight = dataResults.syncheight;
-      resolve({ blockCount, syncHeight })
+      resolve({ blockCount, syncHeight });
     }
   });
 });
-
-const decodeConnectedBlockHeader = (headerBytes) => {
-  if (!(headerBytes instanceof Buffer)) {
-    throw new Error("header requested for decoding is not a Buffer object");
-  }
-  let position = 0;
-  const blockHeader = {};
-  blockHeader.version = headerBytes.readUInt32LE(position);
-  position += 4;
-  blockHeader.prevBlockHash = reverseRawHash(headerBytes.slice(position, position + 32));
-  position += 32;
-  blockHeader.merkleRoot = reverseRawHash(headerBytes.slice(position, position + 32));
-  position += 32;
-  blockHeader.stakeRoot = reverseRawHash(headerBytes.slice(position, position + 32));
-  position += 32;
-  blockHeader.voteBits = headerBytes.readUInt16LE(position);
-  position += 2;
-  blockHeader.finalState = headerBytes.slice(position, position + 6);
-  position += 6;
-  blockHeader.voters = headerBytes.readUInt16LE(position);
-  position += 2;
-  blockHeader.FreshStake = headerBytes.readUInt8(position);
-  position += 1;
-  blockHeader.revocations = headerBytes.readUInt8(position);
-  position += 1;
-  blockHeader.poolSize = headerBytes.readUInt32LE(position);
-  position += 4;
-  blockHeader.bits = headerBytes.readUInt32LE(position);
-  position += 4;
-  blockHeader.sBits = Uint64LE(headerBytes.slice(position, position+8)).toNumber();
-  position += 8;
-  blockHeader.height = headerBytes.readUInt32LE(position);
-  position += 4;
-  blockHeader.size = headerBytes.readUInt32LE(position);
-  position += 4;
-  blockHeader.time = headerBytes.readUInt32LE(position);
-  position += 4;
-  blockHeader.nonce = headerBytes.readUInt32LE(position);
-  position += 4;
-  blockHeader.extraData = headerBytes.slice(position, position + 32);
-  position += 32;
-  blockHeader.stakeVersion = headerBytes.readUInt32LE(position);
-  position += 4;
-
-  return blockHeader;
-};

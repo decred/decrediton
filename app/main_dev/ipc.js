@@ -1,8 +1,8 @@
 import fs from "fs-extra";
 import path from "path";
 import { createLogger } from "./logging";
-import { getWalletPath, getWalletDBPathFromWallets, getDcrdPath, dcrdCfg, dcrctlCfg, appDataDirectory, getExecutablePath, getDcrdRpcCert } from "./paths";
-import { createTempDcrdConf, initWalletCfg, newWalletConfigCreation, getWalletCfg, readDcrdConfig } from "../config";
+import { getWalletPath, getWalletDBPathFromWallets, getDcrdPath } from "./paths";
+import { initWalletCfg, newWalletConfigCreation, getWalletCfg, readDcrdConfig } from "../config";
 import { launchDCRD, launchDCRWallet, GetDcrdPID, GetDcrwPID, closeDCRD, closeDCRW, GetDcrwPort, connectRpcDaemon, getInfo, getBlockChainInfo } from "./launch";
 
 const logger = createLogger();
@@ -58,7 +58,7 @@ export const startDaemon = async (params, testnet) => {
   }
 
   try {
-    const started = await launchDCRD(params, testnet)
+    const started = await launchDCRD(params, testnet);
     return started;
   } catch (e) {
     logger.log("error", "error launching dcrd: " + e);

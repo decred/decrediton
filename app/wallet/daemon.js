@@ -157,8 +157,8 @@ export const connectDaemon = log( params => new Promise((resolve, reject) => {
       resolve({ connected: true });
     }
     if (info.error) {
-      reject({ connected: false, error: info.error })
+      reject({ connected: false, error: info.error });
     }
   });
-  ipcRenderer.send("connect-daemon", params)
+  ipcRenderer.send("connect-daemon", params);
 }), "Connect Daemon");

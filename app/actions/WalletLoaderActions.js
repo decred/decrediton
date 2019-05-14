@@ -169,7 +169,7 @@ export const openWalletAttempt = (pubPass, retryAttempt) => (dispatch, getState)
           dispatch({ type: OPENWALLET_INPUT });
         }
       } else {
-        console.log(error)
+        console.log(error);
         dispatch({ error, type: OPENWALLET_FAILED });
       }
     });

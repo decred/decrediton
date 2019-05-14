@@ -23,7 +23,7 @@ export const CONNECTDAEMON_SUCCESS = "CONNECTDAEMON_SUCCESS";
 export const CONNECTDAEMON_FAILURE = "CONNECTDAEMON_FAILURE";
 export const DAEMONSTART_ATTEMPT = "DAEMONSTART_ATTEMPT";
 export const DAEMONSTART_SUCCESS = "DAEMONSTART_SUCCESS";
-export const DAEMONSTART_FAILURE = "DAEMONSTART_FAILURE"
+export const DAEMONSTART_FAILURE = "DAEMONSTART_FAILURE";
 export const DAEMONSTARTED_ERROR = "DAEMONSTARTED_ERROR";
 export const DAEMONSTOPPED = "DAEMONSTOPPED";
 export const DAEMONSYNCING_START = "DAEMONSYNCING_START";
@@ -154,7 +154,7 @@ export const finishPrivacy = () => (dispatch) => {
 
 export const startDaemon = (params) => (dispatch, getState) => {
   const appdata = params && params.appdata;
-  dispatch({ type: DAEMONSTART_ATTEMPT })
+  dispatch({ type: DAEMONSTART_ATTEMPT });
   const { daemonStarted } = getState().daemon;
   if (daemonStarted) {
     return dispatch({ type: DAEMONSTART_SUCCESS });
@@ -165,7 +165,7 @@ export const startDaemon = (params) => (dispatch, getState) => {
       dispatch({ type: DAEMONSTART_SUCCESS, credentials: rpcCreds, appdata });
       dispatch(connectDaemon(rpcCreds, appdata));
     })
-    .catch((err) => dispatch({ err, type: DAEMONSTART_FAILURE }));  
+    .catch((err) => dispatch({ err, type: DAEMONSTART_FAILURE }));
 };
 
 export const setCredentialsAppdataError = () => (dispatch) => {
@@ -352,7 +352,7 @@ export const prepStartDaemon = () => (dispatch, getState) => {
 };
 
 const TIME_TO_TIMEOUT = 30 * 1000; // 30 sec
-export const connectDaemon = (rpcCreds, appdata) => async (dispatch, getState) => {
+export const connectDaemon = (rpcCreds) => async (dispatch, getState) => {
   dispatch({ type: CONNECTDAEMON_ATTEMPT });
   const timeBeforeConnect = new Date();
   const tryConnect = async () => {
@@ -371,12 +371,12 @@ export const connectDaemon = (rpcCreds, appdata) => async (dispatch, getState) =
         dispatch({ type: CONNECTDAEMON_SUCCESS });
         dispatch(checkNetworkMatch());
       }).catch( err => {
-        console.log(err)
+        console.log(err);
         setTimeout(tryConnect, 1000);
       });
   };
   tryConnect();
-}
+};
 
 export const checkNetworkMatch = () => async (dispatch, getState) => {
   dispatch({ type: CHECK_NETWORKMATCH_ATTEMPT });
@@ -388,10 +388,10 @@ export const checkNetworkMatch = () => async (dispatch, getState) => {
   }
   dispatch({ type: CHECK_NETWORKMATCH_SUCCESS, daemonInfo });
   dispatch(syncDaemon());
-}
+};
 
 export const syncDaemon = () => (dispatch, getState) => {
-  dispatch({ type: SYNC_DAEMON_ATTEMPT })
+  dispatch({ type: SYNC_DAEMON_ATTEMPT });
   const updateBlockCount = () => {
     const { daemon: { daemonSynced, timeStart, blockStart, daemonError } } = getState();
     if (daemonSynced || daemonError) return;
@@ -425,12 +425,12 @@ export const syncDaemon = () => (dispatch, getState) => {
           }
         }
         setTimeout(updateBlockCount, 1000);
-    })
-    .catch( error => {
-      console.log(error);
-      dispatch({ error, type: SYNC_DAEMON_FAILED });
-    });
-  }
+      })
+      .catch( error => {
+        console.log(error);
+        dispatch({ error, type: SYNC_DAEMON_FAILED });
+      });
+  };
   updateBlockCount();
 };
 
