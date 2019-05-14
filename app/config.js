@@ -2,7 +2,7 @@ import fs from "fs";
 import Store from "electron-store";
 import ini from "ini";
 import { stakePoolInfo } from "./middleware/stakepoolapi";
-import { appDataDirectory, getGlobalCfgPath, dcrdCfg, getWalletPath, dcrwalletCfg, getDcrdRpcCert } from "./main_dev/paths";
+import { appDataDirectory, getGlobalCfgPath, dcrdCfg, getWalletPath, dcrwalletCfg, getDcrdRpcCert, getDcrdPath } from "./main_dev/paths";
 
 export function getGlobalCfg() {
   const config = new Store();
@@ -210,6 +210,7 @@ export function readDcrdConfig(configPath, testnet) {
   try {
     let readCfg;
     let newCfg = {};
+    if (!configPath) configPath = getDcrdPath();
     newCfg.rpc_host = "127.0.0.1";
     newCfg.rpc_port = testnet ? "19109" : "9109";
     newCfg.rpc_cert = getDcrdRpcCert(configPath);

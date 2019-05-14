@@ -153,7 +153,7 @@ export const finishPrivacy = () => (dispatch) => {
 };
 
 export const startDaemon = (params) => (dispatch, getState) => {
-  const { appdata } = params;
+  const appdata = params && params.appdata;
   dispatch({ type: DAEMONSTART_ATTEMPT })
   const { daemonStarted } = getState().daemon;
   if (daemonStarted) {

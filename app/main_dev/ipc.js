@@ -50,7 +50,8 @@ export const deleteDaemon = (appData, testnet) => {
 export const startDaemon = async (params, testnet) => {
   if (GetDcrdPID() && GetDcrdPID() !== -1) {
     logger.log("info", "Skipping restart of daemon as it is already running " + GetDcrdPID());
-    const newConfig = readDcrdConfig(params.appdata, testnet);
+    const appdata = params ? params.appData : null;
+    const newConfig = readDcrdConfig(appdata, testnet);
 
     newConfig.pid =  GetDcrdPID();
     return newConfig;

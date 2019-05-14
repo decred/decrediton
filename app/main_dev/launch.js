@@ -1,4 +1,4 @@
-import { dcrwalletCfg, getWalletPath, getExecutablePath, dcrdCfg, getDcrdRpcCert } from "./paths";
+import { dcrwalletCfg, getWalletPath, getExecutablePath, dcrdCfg, getDcrdPath } from "./paths";
 import { getWalletCfg, readDcrdConfig } from "../config";
 import { createLogger, AddToDcrdLog, AddToDcrwalletLog, GetDcrdLogs,
   GetDcrwalletLogs, lastErrorLine, lastPanicLine, ClearDcrwalletLogs, CheckDaemonLogs } from "./logging";
@@ -111,7 +111,11 @@ export async function cleanShutdown(mainWindow, app) {
 }
 
 export const launchDCRD = (params, testnet) => new Promise((resolve,reject) => {
-  const { rpcCreds, appdata } = params;
+  let rpcCreds, appdata;
+
+  rpcCreds = params && params.rpcCreds;
+  appdata = params && params.appdata;
+
   if (rpcCreds) {
     rpcuser = rpcCreds.rpc_user;
     rpcpass = rpcCreds.rpc_pass;
@@ -131,6 +135,8 @@ export const launchDCRD = (params, testnet) => new Promise((resolve,reject) => {
     }
     return resolve(creds);
   }
+
+  if (!appdata) appdata = getDcrdPath();
 
   let args = [ "--nolisten" ];
   const newConfig = readDcrdConfig(appdata, testnet);
@@ -189,12 +195,12 @@ export const launchDCRD = (params, testnet) => new Promise((resolve,reject) => {
 
   dcrd.stdout.on("data", (data) => {
     AddToDcrdLog(process.stdout, data, debug);
-    resolve(data);
+    resolve(data.toString("utf-8"));
   });
 
   dcrd.stderr.on("data", (data) => {
     AddToDcrdLog(process.stderr, data, debug)
-    reject(data);
+    reject(data.toString("utf-8"));
   });
 
   newConfig.pid = dcrd.pid;
@@ -202,7 +208,7 @@ export const launchDCRD = (params, testnet) => new Promise((resolve,reject) => {
   logger.log("info", "dcrd started with pid:" + newConfig.pid);
 
   dcrd.unref();
-  return newConfig;
+  return resolve(newConfig);
 });
 
 // DecodeDaemonIPCData decodes messages from an IPC message received from dcrd/
