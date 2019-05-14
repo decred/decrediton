@@ -10,7 +10,7 @@ const messages = defineMessages({
 
 const AppDataForm = ({
   setAppData,
-  appData,
+  appdata,
   appDataHasFailedAttempt,
   intl
 }) => {
@@ -25,7 +25,7 @@ const AppDataForm = ({
           <PathBrowseInput
             required
             type="directory"
-            value={appData}
+            value={appdata}
             onChange={(value) => setAppData(value)}
             placeholder={intl.formatMessage(messages.appdataFieldPlaceholder)}
             showErrors={appDataHasFailedAttempt}

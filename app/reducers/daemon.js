@@ -61,7 +61,7 @@ export default function version(state = {}, action) {
       daemonAdvanced: action.daemonAdvanced,
       credentials: action.credentials,
       daemonRemote: action.daemonRemote,
-      appData: action.appData,
+      appdata: action.appdata,
       daemonError: null,
     };
   case CONNECTDAEMON_ATTEMPT:
@@ -98,7 +98,7 @@ export default function version(state = {}, action) {
       daemonAdvanced: action.advanced,
       daemonStopped: true,
       credentials: null,
-      appData: null,
+      appdata: null,
       daemonSynced: false,
       currentBlockCount: null,
       timeLeftEstimate: null,

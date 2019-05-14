@@ -76,7 +76,7 @@ var initialState = {
     blockStart: 0,
     daemonAdvanced: (cliOptions && cliOptions.daemonStartAdvanced) || globalCfg.get("daemon_start_advanced"),
     credentials: null,
-    appData: null,
+    appdata: null,
     shutdownRequested: false,
     openForm: globalCfg.get("must_open_form"),
     remoteAppdataError: false,

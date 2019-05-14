@@ -27,7 +27,7 @@ const AdvancedBodyBase = ({
   rpcPortHasFailedAttempt,
   rpcCertHasFailedAttempt,
   appDataHasFailedAttempt,
-  appData,
+  appdata,
   intl,
   remoteValid,
   appDataValid,
@@ -70,7 +70,7 @@ const AdvancedBodyBase = ({
           <AppDataForm {...{
             ...props,
             setAppData,
-            appData,
+            appdata,
             appDataHasFailedAttempt,
             intl
           }} />

@@ -36,7 +36,7 @@ class AdvancedStartupBody extends React.Component {
       rpcPortHasFailedAttempt: false,
       rpcCertHasFailedAttempt: false,
       appDataHasFailedAttempt: false,
-      appData: getAppdataPath(),
+      appdata: getAppdataPath(),
     };
   }
 
@@ -124,11 +124,11 @@ class AdvancedStartupBody extends React.Component {
     this.setState({ rpc_cert });
   }
 
-  setAppData(appData) {
-    if (appData == "") {
+  setAppData(appdata) {
+    if (appdata == "") {
       this.setState({ appDataHasFailedAttempt: true });
     }
-    this.setState({ appData });
+    this.setState({ appdata });
   }
 
   onSubmitRemoteForm() {
@@ -147,13 +147,13 @@ class AdvancedStartupBody extends React.Component {
   }
 
   onSubmitAppDataForm() {
-    const { appData } = this.state;
+    const { appdata } = this.state;
     if (!this.isAppDataValid()) {
       this.setState({ appDataHasFailedAttempt: true });
       return;
     }
-    setAppdataPath(appData);
-    this.props.onStartDaemon(null, appData);
+    setAppdataPath(appdata);
+    this.props.onStartDaemon({ appdata });
   }
 
   isRemoteValid() {
@@ -162,7 +162,7 @@ class AdvancedStartupBody extends React.Component {
   }
 
   isAppDataValid() {
-    return !!(this.state.appData);
+    return !!(this.state.appdata);
   }
 
   skipAdvancedDaemon(){

@@ -400,7 +400,6 @@ export const connectRpcDaemon = (rpcCreds) => new Promise((resolve,reject) => {
     ca: [ cert ]
   });
   dcrdSocket.on("open", function() {
-    console.log("**********************************************************************");
     console.log("CONNECTED");
     // Send a JSON-RPC command to be notified when blocks are connected and
     // disconnected from the chain.
@@ -417,6 +416,7 @@ export const connectRpcDaemon = (rpcCreds) => new Promise((resolve,reject) => {
     const method = parsedData ? parsedData.method : "";
     switch (method) {
     case "blockconnected":
+      // ToDo move NEWBLOCKCONNECTED ntfs to here
       // const hex = hexToRaw(parsedData.params[0]);
       // const newBlock = decodeConnectedBlockHeader(Buffer.from(hex));
       break;
