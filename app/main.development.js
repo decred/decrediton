@@ -10,9 +10,9 @@ import { getWalletsDirectoryPath, getWalletsDirectoryPathNetwork, appDataDirecto
 import { getGlobalCfgPath, checkAndInitWalletCfg } from "./main_dev/paths";
 import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRequests, allowExternalRequest } from "./main_dev/externalRequests";
 import { setupProxy } from "./main_dev/proxy";
-import { cleanShutdown, GetDcrdPID, GetDcrwPID } from "./main_dev/launch";
+import { getDaemonInfo, cleanShutdown, GetDcrdPID, GetDcrwPID, getBlockChainInfo, connectRpcDaemon } from "./main_dev/launch";
 import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopDaemon, stopWallet, startWallet,
-  checkDaemon, deleteDaemon, setWatchingOnlyWallet, getWatchingOnlyWallet, getDaemonInfo, connectDaemon } from "./main_dev/ipc";
+  deleteDaemon, setWatchingOnlyWallet, getWatchingOnlyWallet } from "./main_dev/ipc";
 import { initTemplate, getVersionWin, setGrpcVersions, getGrpcVersions, inputMenu, selectionMenu } from "./main_dev/templates";
 import { readFileBackward } from "./helpers/byteActions";
 import electron from "electron";
@@ -198,7 +198,7 @@ ipcMain.on("start-daemon", async (event, params, testnet) => {
 });
 
 ipcMain.on("connect-daemon", (event, { rpcCreds }) => {
-  event.returnValue = connectDaemon(mainWindow, rpcCreds);
+  event.returnValue = connectRpcDaemon(mainWindow, rpcCreds);
 });
 
 ipcMain.on("delete-daemon", (event, appData, testnet) => {
@@ -227,11 +227,11 @@ ipcMain.on("start-wallet", (event, walletPath, testnet) => {
 });
 
 ipcMain.on("check-daemon", () => {
-  checkDaemon(mainWindow);
+  getBlockChainInfo();
 });
 
 ipcMain.on("daemon-getinfo", () => {
-  getDaemonInfo(mainWindow);
+  getDaemonInfo();
 });
 
 ipcMain.on("clean-shutdown", async function(event){

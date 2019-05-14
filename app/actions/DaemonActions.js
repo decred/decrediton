@@ -352,10 +352,10 @@ export const prepStartDaemon = () => (dispatch, getState) => {
 };
 
 const TIME_TO_TIMEOUT = 30 * 1000; // 30 sec
-export const connectDaemon = (rpcCreds) => async (dispatch, getState) => {
+export const connectDaemon = (rpcCreds) => (dispatch, getState) => {
   dispatch({ type: CONNECTDAEMON_ATTEMPT });
   const timeBeforeConnect = new Date();
-  const tryConnect = async () => {
+  const tryConnect = () => {
     const { daemonConnected, credentials, daemonError, timeStart } = getState().daemon;
     const creds = rpcCreds ? rpcCreds : credentials;
     const timeNow = new Date();

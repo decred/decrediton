@@ -379,7 +379,7 @@ export const readExesVersion = (app, grpcVersions) => {
 };
 
 // connectDaemon starts a new rpc connection to dcrd
-export const connectRpcDaemon = (rpcCreds) => new Promise((resolve,reject) => {
+export const connectRpcDaemon = (mainWindow, rpcCreds) => {
   const rpc_host = rpcCreds ? rpcCreds.rpc_host : rpchost;
   const rpc_port = rpcCreds ? rpcCreds.rpc_port : rpcport;
   const rpc_user = rpcCreds ? rpcCreds.rpc_user : rpcuser;
@@ -389,7 +389,7 @@ export const connectRpcDaemon = (rpcCreds) => new Promise((resolve,reject) => {
   var cert = fs.readFileSync(rpc_cert);
   const url = `${rpc_host}:${rpc_port}`;
   if (dcrdSocket && dcrdSocket.readyState === dcrdSocket.OPEN) {
-    return resolve(true);
+    return mainWindow.webContents.send("connectRpcDaemon-response", { connected: true });
   }
   dcrdSocket = new webSocket(`wss://${url}/ws`, {
     headers: {
@@ -403,50 +403,44 @@ export const connectRpcDaemon = (rpcCreds) => new Promise((resolve,reject) => {
     console.log("CONNECTED");
     // Send a JSON-RPC command to be notified when blocks are connected and
     // disconnected from the chain.
-    dcrdSocket.send("{\"jsonrpc\":\"1.0\",\"id\":\"0\",\"method\":\"notifyblocks\",\"params\":[]}");
-
-    resolve(true);
+    dcrdSocket.send("{\"jsonrpc\":\"1.0\",\"id\":\"blockconnected\",\"method\":\"notifyblocks\",\"params\":[]}");
+    return mainWindow.webContents.send("connectRpcDaemon-response", { connected: true });
   });
   dcrdSocket.on("error", function(error) {
     console.log("ERROR:" + error);
-    reject(error);
+    return mainWindow.webContents.send("connectRpcDaemon-response", { connected: false, error });
   });
   dcrdSocket.on("message", function(data) {
     const parsedData = JSON.parse(data);
-    const method = parsedData ? parsedData.method : "";
-    switch (method) {
+    const id = parsedData ? parsedData.id : "";
+    switch (id) {
     case "blockconnected":
-      // ToDo move NEWBLOCKCONNECTED ntfs to here
+      // ToDo move NEWBLOCKCONNECTED ntfs for here
       // const hex = hexToRaw(parsedData.params[0]);
       // const newBlock = decodeConnectedBlockHeader(Buffer.from(hex));
       break;
+    case "getinfo":
+      mainWindow.webContents.send("check-getinfo-response", parsedData.result );
+      break;
+    case "getblockchaininfo": {
+      const dataResults = parsedData.result || {};
+      const blockCount = dataResults.blocks;
+      const syncHeight = dataResults.syncheight;
+      mainWindow.webContents.send("check-daemon-response", { blockCount, syncHeight });
+      break;
+    }
     }
   });
   dcrdSocket.on("close", () => {
     console.log("DISCONNECTED");
   });
-});
+};
 
-export const getInfo = () => new Promise((resolve) => {
-  dcrdSocket.send("{\"jsonrpc\":\"1.0\",\"id\":\"0\",\"method\":\"getinfo\",\"params\":[]}");
-  dcrdSocket.on("message", (data) => {
-    const parsedData = JSON.parse(data);
-    resolve(parsedData.result);
-  });
-});
+export const getDaemonInfo = () => dcrdSocket.send("{\"jsonrpc\":\"1.0\",\"id\":\"getinfo\",\"method\":\"getinfo\",\"params\":[]}");
 
 export const getBlockChainInfo = () => new Promise((resolve) => {
   if (dcrdSocket && dcrdSocket.readyState === dcrdSocket.CLOSED) {
     return resolve({});
   }
-  setTimeout(() => dcrdSocket.send("{\"jsonrpc\":\"1.0\",\"id\":\"getblockchaininfo\",\"method\":\"getblockchaininfo\",\"params\":[]}"), 500);
-  dcrdSocket.on("message", (data) => {
-    const parsedData = JSON.parse(data);
-    if (parsedData.id === "getblockchaininfo") {
-      const dataResults = parsedData.result || {};
-      const blockCount = dataResults.blocks;
-      const syncHeight = dataResults.syncheight;
-      resolve({ blockCount, syncHeight });
-    }
-  });
+  dcrdSocket.send("{\"jsonrpc\":\"1.0\",\"id\":\"getblockchaininfo\",\"method\":\"getblockchaininfo\",\"params\":[]}");
 });

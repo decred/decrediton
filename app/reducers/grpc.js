@@ -416,7 +416,7 @@ export default function grpc(state = {}, action) {
       ...state,
       recentBlockTimestamp: action.recentBlockTimestamp,
     };
-    case DAEMONSYNCED:
+  case DAEMONSYNCED:
     return {
       ...state,
       currentBlockHeight: action.currentBlockHeight,

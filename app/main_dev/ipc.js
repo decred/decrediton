@@ -3,7 +3,7 @@ import path from "path";
 import { createLogger } from "./logging";
 import { getWalletPath, getWalletDBPathFromWallets, getDcrdPath } from "./paths";
 import { initWalletCfg, newWalletConfigCreation, getWalletCfg, readDcrdConfig } from "../config";
-import { launchDCRD, launchDCRWallet, GetDcrdPID, GetDcrwPID, closeDCRD, closeDCRW, GetDcrwPort, connectRpcDaemon, getInfo, getBlockChainInfo } from "./launch";
+import { launchDCRD, launchDCRWallet, GetDcrdPID, GetDcrwPID, closeDCRD, closeDCRW, GetDcrwPort } from "./launch";
 
 const logger = createLogger();
 let watchingOnlyWallet;
@@ -65,15 +65,6 @@ export const startDaemon = async (params, testnet) => {
   }
 };
 
-export const connectDaemon = async (mainWindow, rpcCreds) => {
-  try {
-    await connectRpcDaemon(rpcCreds);
-    return mainWindow.webContents.send("connectRpcDaemon-response", { connected: true });
-  } catch (error) {
-    return mainWindow.webContents.send("connectRpcDaemon-response", { connected: false, error });
-  }
-};
-
 export const createWallet = (testnet, walletPath) => {
   const newWalletDirectory = getWalletPath(testnet, walletPath);
   try {
@@ -124,17 +115,6 @@ export const stopDaemon = () => {
 
 export const stopWallet = () => {
   return closeDCRW(GetDcrwPID());
-};
-
-export const getDaemonInfo = async (mainWindow) => {
-  const info = await getInfo();
-  mainWindow.webContents.send("check-getinfo-response", info );
-};
-
-export const checkDaemon = async (mainWindow) => {
-  const info = await getBlockChainInfo();
-  const { blockCount, syncHeight } = info;
-  mainWindow.webContents.send("check-daemon-response", { blockCount, syncHeight });
 };
 
 export const setWatchingOnlyWallet = (isWatchingOnly) => {
