@@ -40,7 +40,7 @@ import {
   GETSTARTUPSTATS_FAILED,
   GETMYTICKETSSTATS_FAILED,
 } from "actions/StatisticsActions";
-import { WALLETREMOVED_FAILED, DAEMONCONNECTING_TIMEOUT } from "actions/DaemonActions";
+import { WALLETREMOVED_FAILED, CONNECTDAEMON_FAILURE } from "actions/DaemonActions";
 import {
   GETWALLETSEEDSVC_FAILED,
   SPVSYNC_FAILED,
@@ -392,7 +392,6 @@ export default function snackbar(state = {}, action) {
   case SETSTAKEPOOLVOTECHOICES_FAILED:
   case ADDCUSTOMSTAKEPOOL_FAILED:
   case DECODERAWTXS_FAILED:
-  case DAEMONCONNECTING_TIMEOUT:
   case SIGNMESSAGE_FAILED:
   case VERIFYMESSAGE_FAILED:
   case GETSTARTUPWALLETINFO_FAILED:
@@ -447,6 +446,11 @@ export default function snackbar(state = {}, action) {
     type = "Success";
     message = messages["TRZ_TOGGLEPINPROTECTION_SUCCESS_" + (action.clearProtection ? "DISABLED" : "ENABLED")];
     values = { label: action.deviceLabel };
+    break;
+  case CONNECTDAEMON_FAILURE:
+    type = "Error";
+    action.daemonTimeout ? message = messages["DAEMONCONNECTING_TIMEOUT"] : message = action.error;
+    // values = { originalError: String(action.error) };
     break;
   }
 

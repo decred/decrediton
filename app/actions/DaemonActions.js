@@ -14,13 +14,11 @@ import { STANDARD_EXTERNAL_REQUESTS } from "main_dev/externalRequests";
 import { DIFF_CONNECTION_ERROR } from "main_dev/constants";
 import { enableTrezor } from "./TrezorActions";
 
-export const AVAILABLE_WALLETS = "AVAILABLE_WALLETS";
-export const CHECK_NETWORKMATCH_ATTEMPT = "CHECK_NETWORKMATCH_ATTEMPT";
-export const CHECK_NETWORKMATCH_SUCCESS = "CHECK_NETWORKMATCH_SUCCESS";
-export const CHECK_NETWORKMATCH_FAILED = "CHECK_NETWORKMATCH_FAILED";
-export const CONNECTDAEMON_ATTEMPT = "CONNECTDAEMON_ATTEMPT";
-export const CONNECTDAEMON_SUCCESS = "CONNECTDAEMON_SUCCESS";
-export const CONNECTDAEMON_FAILURE = "CONNECTDAEMON_FAILURE";
+export const DECREDITON_VERSION = "DECREDITON_VERSION";
+export const SELECT_LANGUAGE = "SELECT_LANGUAGE";
+export const FINISH_TUTORIAL = "FINISH_TUTORIAL";
+export const FINISH_PRIVACY = "FINISH_PRIVACY";
+export const FINISH_SPVCHOICE = "FINISH_SPVCHOICE";
 export const DAEMONSTART_ATTEMPT = "DAEMONSTART_ATTEMPT";
 export const DAEMONSTART_SUCCESS = "DAEMONSTART_SUCCESS";
 export const DAEMONSTART_FAILURE = "DAEMONSTART_FAILURE";
@@ -28,34 +26,36 @@ export const DAEMONSTARTED_ERROR = "DAEMONSTARTED_ERROR";
 export const DAEMONSTOPPED = "DAEMONSTOPPED";
 export const DAEMONSYNCING_START = "DAEMONSYNCING_START";
 export const DAEMONSYNCING_PROGRESS = "DAEMONSYNCING_PROGRESS";
-export const DAEMONCONNECTING_TIMEOUT = "DAEMONCONNECTING_TIMEOUT";
 export const DAEMONSYNCED = "DAEMONSYNCED";
-export const DAEMON_WARNING = "DAEMON_WARNING";
-export const DECREDITON_VERSION = "DECREDITON_VERSION";
-export const DELETE_DCRD_ATTEMPT = "DELETE_DCRD_ATTEMPT";
-export const DELETE_DCRD_FAILED = "DELETE_DCRD_FAILED";
-export const DELETE_DCRD_SUCCESS = "DELETE_DCRD_SUCCESS";
-export const FATAL_DAEMON_ERROR = "FATAL_DAEMON_ERROR";
-export const FATAL_WALLET_ERROR = "FATAL_WALLET_ERROR";
-export const FINISH_TUTORIAL = "FINISH_TUTORIAL";
-export const FINISH_PRIVACY = "FINISH_PRIVACY";
-export const FINISH_SPVCHOICE = "FINISH_SPVCHOICE";
-export const REGISTERFORERRORS = "REGISTERFORERRORS";
-export const SELECT_LANGUAGE = "SELECT_LANGUAGE";
-export const SYNC_DAEMON_ATTEMPT = "SYNC_DAEMON_ATTEMPT";
-export const STARTUPBLOCK = "STARTUPBLOCK";
-export const SYNC_DAEMON_FAILED = "SYNC_DAEMON_FAILED";
-export const SHUTDOWN_REQUESTED = "SHUTDOWN_REQUESTED";
-export const SET_CREDENTIALS_APPDATA_ERROR = "SET_CREDENTIALS_APPDATA_ERROR";
 export const WALLETREADY = "WALLETREADY";
 export const WALLETREMOVED = "WALLETREMOVED";
 export const WALLETREMOVED_FAILED= "WALLETREMOVED_FAILED";
+export const AVAILABLE_WALLETS = "AVAILABLE_WALLETS";
+export const SHUTDOWN_REQUESTED = "SHUTDOWN_REQUESTED";
+export const SET_CREDENTIALS_APPDATA_ERROR = "SET_CREDENTIALS_APPDATA_ERROR";
+export const REGISTERFORERRORS = "REGISTERFORERRORS";
+export const FATAL_DAEMON_ERROR = "FATAL_DAEMON_ERROR";
+export const FATAL_WALLET_ERROR = "FATAL_WALLET_ERROR";
+export const DAEMON_WARNING = "DAEMON_WARNING";
 export const WALLET_WARNING = "WALLET_WARNING";
 export const WALLETCREATED = "WALLETCREATED";
 export const WALLET_AUTOBUYER_SETTINGS = "WALLET_AUTOBUYER_SETTINGS";
 export const WALLET_STAKEPOOL_SETTINGS = "WALLET_STAKEPOOL_SETTINGS";
 export const WALLET_SETTINGS = "WALLET_SETTINGS";
 export const WALLET_LOADER_SETTINGS = "WALLET_LOADER_SETTINGS";
+export const DELETE_DCRD_ATTEMPT = "DELETE_DCRD_ATTEMPT";
+export const DELETE_DCRD_FAILED = "DELETE_DCRD_FAILED";
+export const DELETE_DCRD_SUCCESS = "DELETE_DCRD_SUCCESS";
+export const NOT_SAME_CONNECTION = "NOT_SAME_CONNECTION";
+export const NETWORK_MATCH = "NETWORK_MATCH";
+export const CHECK_NETWORKMATCH_ATTEMPT = "CHECK_NETWORKMATCH_ATTEMPT";
+export const CHECK_NETWORKMATCH_SUCCESS = "CHECK_NETWORKMATCH_SUCCESS";
+export const CHECK_NETWORKMATCH_FAILED = "CHECK_NETWORKMATCH_FAILED";
+export const CONNECTDAEMON_ATTEMPT = "CONNECTDAEMON_ATTEMPT";
+export const CONNECTDAEMON_SUCCESS = "CONNECTDAEMON_SUCCESS";
+export const CONNECTDAEMON_FAILURE = "CONNECTDAEMON_FAILURE";
+export const SYNC_DAEMON_ATTEMPT = "SYNC_DAEMON_ATTEMPT";
+export const SYNC_DAEMON_FAILED = "SYNC_DAEMON_FAILED";
 
 export const checkDecreditonVersion = () => (dispatch, getState) =>{
   const detectedVersion = getState().daemon.appVersion;
@@ -361,7 +361,7 @@ export const connectDaemon = (rpcCreds) => async (dispatch, getState) => {
     const timeNow = new Date();
     const timeElapsed = timeNow - timeBeforeConnect;
     if (timeStart === 0 && timeElapsed >= TIME_TO_TIMEOUT) {
-      dispatch({ type: DAEMONCONNECTING_TIMEOUT });
+      dispatch({ type: CONNECTDAEMON_FAILURE, daemonTimeout: true, error: "timeout exceed" });
       return;
     }
     if (daemonConnected || daemonError) return;
@@ -371,8 +371,12 @@ export const connectDaemon = (rpcCreds) => async (dispatch, getState) => {
         dispatch({ type: CONNECTDAEMON_SUCCESS });
         dispatch(checkNetworkMatch());
       }).catch( err => {
-        console.log(err);
-        setTimeout(tryConnect, 1000);
+        const { error } = err;
+        if (error.code === "ECONNREFUSED") {
+          setTimeout(tryConnect, 1000);
+        } else {
+          dispatch({ type: CONNECTDAEMON_FAILURE, error });
+        }
       });
   };
   tryConnect();
@@ -400,8 +404,7 @@ export const syncDaemon = () => (dispatch, getState) => {
         const { blockCount, syncHeight } = blockChainInfo;
         if (blockCount && syncHeight) {
           if (blockCount >= syncHeight) {
-            dispatch({ type: DAEMONSYNCED });
-            dispatch({ currentBlockHeight: blockCount, type: STARTUPBLOCK });
+            dispatch({ type: DAEMONSYNCED, currentBlockHeight: blockCount });
             setMustOpenForm(false);
             return;
           }
