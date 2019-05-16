@@ -55,13 +55,10 @@ class TicketListPage extends React.Component {
               />
             </Tooltip>
           </div>
-
           {tickets.length > 0
             ? <TicketsCardList {...{ tickets, tsDate }} />
-            : null}
-          {!noMoreTickets
-            ? <LoadingMoreTicketsIndicator />
             : <NoMoreTicketsIndicator />}
+          {!noMoreTickets ? <LoadingMoreTicketsIndicator /> : tickets.length > 0 && <NoMoreTicketsIndicator />}
         </>
       </InfiniteScroll>
     );
