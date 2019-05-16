@@ -157,7 +157,7 @@ export const launchDCRD = (params, testnet) => new Promise((resolve,reject) => {
     return;
   }
 
-  if (os.platform() === "win32") {
+  if (os.platform() == "win32") {
     try {
       const win32ipc = require("../node_modules/win32ipc/build/Release/win32ipc.node");
       dcrdPipeRx = win32ipc.createPipe("out");
@@ -400,14 +400,14 @@ export const connectRpcDaemon = (mainWindow, rpcCreds) => {
     ca: [ cert ]
   });
   dcrdSocket.on("open", function() {
-    console.log("CONNECTED");
+    logger.log("info","decrediton has connected to dcrd instance");
     // Send a JSON-RPC command to be notified when blocks are connected and
     // disconnected from the chain.
     dcrdSocket.send("{\"jsonrpc\":\"1.0\",\"id\":\"blockconnected\",\"method\":\"notifyblocks\",\"params\":[]}");
     return mainWindow.webContents.send("connectRpcDaemon-response", { connected: true });
   });
   dcrdSocket.on("error", function(error) {
-    console.log("ERROR:" + error);
+    logger.log("error",`Error: ${error}`);
     return mainWindow.webContents.send("connectRpcDaemon-response", { connected: false, error });
   });
   dcrdSocket.on("message", function(data) {
@@ -432,7 +432,7 @@ export const connectRpcDaemon = (mainWindow, rpcCreds) => {
     }
   });
   dcrdSocket.on("close", () => {
-    console.log("DISCONNECTED");
+    logger.log("info","decrediton has disconnected to dcrd instance");
   });
 };
 

@@ -450,7 +450,6 @@ export default function snackbar(state = {}, action) {
   case CONNECTDAEMON_FAILURE:
     type = "Error";
     action.daemonTimeout ? message = messages["DAEMONCONNECTING_TIMEOUT"] : message = action.error;
-    // values = { originalError: String(action.error) };
     break;
   }
 
