@@ -64,6 +64,7 @@ import {
 } from "actions/GovernanceActions";
 
 const WRONG_PASSPHRASE_MSG = "WRONG_PASSPHRASE_MSG";
+const ERROR_IS_OBJECT = "ERROR_IS_OBJECT";
 
 const messages = defineMessages({
   defaultSuccessMessage: {
@@ -289,11 +290,15 @@ const messages = defineMessages({
   TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED: {
     id: "trezor.getWalletCreationMasterPubKey.failed",
     defaultMessage: "Failed to obtain master extended pubkey from trezor device: {originalError}"
+  },
+  ERROR_IS_OBJECT: {
+    id: "snackbar.errorObject",
+    defaultMessage: "The following error happened: {error}"
   }
 });
 
 export default function snackbar(state = {}, action) {
-  let values, type, message;
+  let values, type, message, error;
 
   const oldMessages = state.messages || [];
 
@@ -419,15 +424,21 @@ export default function snackbar(state = {}, action) {
   case TRZ_UPDATEFIRMWARE_FAILED:
   case TRZ_NOCONNECTEDDEVICE:
   case TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED:
+    type = "Error";
     if (action.error && String(action.error).indexOf("wallet.Unlock: invalid passphrase:: secretkey.DeriveKey") > -1) {
       // intercepting all wrong passphrase errors, independently of which error
       // state was triggered. Not terribly pretty.
       message = messages[WRONG_PASSPHRASE_MSG];
+    } else if (String(action.error).indexOf("[object Object]") > -1) {
+      const keys = Object.keys(action.error);
+      error = keys.map(key => `${key}: ${action.error[key]}`);
+      message = messages[ERROR_IS_OBJECT];
+      values = { error };
+      break;
     } else {
       message = messages[action.type] || messages.defaultErrorMessage;
     }
 
-    type = "Error";
     values = { originalError: String(action.error) };
 
     // custom values for some error messages
