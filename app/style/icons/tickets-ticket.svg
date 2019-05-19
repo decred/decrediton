@@ -1,14 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="60px" height="60px" viewBox="0 0 60 60" enable-background="new 0 0 60 60" xml:space="preserve">
-<g>
-	<g id="XMLID_1_">
-		<path id="XMLID_4_" fill="#96EBD1" d="M59.932,41.434c-6.313,0-11.43-5.115-11.43-11.432c0-6.313,5.118-11.432,11.43-11.432
-			c0.022,0,0.045,0.004,0.068,0.004V8.54H0v10.03c6.313,0,11.432,5.119,11.432,11.432c0,6.314-5.119,11.432-11.432,11.432V51.46h60
-			V41.432C59.977,41.434,59.954,41.434,59.932,41.434z"/>
-		<circle id="XMLID_3_" fill="#2ED8A3" cx="29.957" cy="30" r="12.844"/>
-	</g>
-</g>
-</svg>
+<svg enable-background="new 0 0 60 60" height="60" viewBox="0 0 60 60" width="60" xmlns="http://www.w3.org/2000/svg"><path d="m59.932 41.434c-6.313 0-11.43-5.115-11.43-11.432 0-6.313 5.118-11.432 11.43-11.432.022 0 .045.004.068.004v-10.034h-60v10.03c6.313 0 11.432 5.119 11.432 11.432 0 6.314-5.119 11.432-11.432 11.432v10.026h60v-10.028c-.023.002-.046.002-.068.002z" fill="#96ebd1"/><circle cx="29.957" cy="30" fill="#2ed8a3" r="12.844"/></svg>
