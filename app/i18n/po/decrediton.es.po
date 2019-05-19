@@ -2260,11 +2260,11 @@ msgstr "Obtener la versión más reciente de github.org"
 
 #. [help.github.title]
 #. defaultMessage is:
-#. Github
+#. GitHub
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.github.title"
-msgid "Github"
-msgstr "Github"
+msgid "GitHub"
+msgstr "GitHub"
 
 #. [createWallet.goBack]
 #. defaultMessage is:

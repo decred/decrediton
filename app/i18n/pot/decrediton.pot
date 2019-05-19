@@ -2125,9 +2125,9 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 #. [help.github.title]
 #. defaultMessage is:
-#. Github
+#. GitHub
 msgctxt "help.github.title"
-msgid "Github"
+msgid "GitHub"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/GetStartedPage/CreateWallet/CreateWalletForm/CreateWallet.json
