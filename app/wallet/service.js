@@ -1,6 +1,6 @@
 import Promise from "promise";
 import * as client from "middleware/grpc/client";
-import { reverseHash, strHashToRaw, rawHashToHex, reverseRawHash } from "../helpers/byteActions";
+import { reverseHash, strHashToRaw, rawHashToHex } from "../helpers/byteActions";
 import { Uint64LE } from "int64-buffer";
 import { CommittedTicketsRequest, DecodeRawTransactionRequest } from "middleware/walletrpc/api_pb";
 import { withLog as log, withLogNoData, logOptionNoResponseData } from "./index";
@@ -340,51 +340,4 @@ export const decodeRawTransaction = (rawTx) => {
   tx.expiry = rawTx.readUInt32LE(position);
   position += 4;
   return tx;
-};
-
-
-export const decodeConnectedBlockHeader = (headerBytes) => {
-  if (!(headerBytes instanceof Buffer)) {
-    throw new Error("header requested for decoding is not a Buffer object");
-  }
-  let position = 0;
-  const blockHeader = {};
-  blockHeader.version = headerBytes.readUInt32LE(position);
-  position += 4;
-  blockHeader.prevBlockHash = reverseRawHash(headerBytes.slice(position, position + 32));
-  position += 32;
-  blockHeader.merkleRoot = reverseRawHash(headerBytes.slice(position, position + 32));
-  position += 32;
-  blockHeader.stakeRoot = reverseRawHash(headerBytes.slice(position, position + 32));
-  position += 32;
-  blockHeader.voteBits = headerBytes.readUInt16LE(position);
-  position += 2;
-  blockHeader.finalState = headerBytes.slice(position, position + 6);
-  position += 6;
-  blockHeader.voters = headerBytes.readUInt16LE(position);
-  position += 2;
-  blockHeader.FreshStake = headerBytes.readUInt8(position);
-  position += 1;
-  blockHeader.revocations = headerBytes.readUInt8(position);
-  position += 1;
-  blockHeader.poolSize = headerBytes.readUInt32LE(position);
-  position += 4;
-  blockHeader.bits = headerBytes.readUInt32LE(position);
-  position += 4;
-  blockHeader.sBits = Uint64LE(headerBytes.slice(position, position+8)).toNumber();
-  position += 8;
-  blockHeader.height = headerBytes.readUInt32LE(position);
-  position += 4;
-  blockHeader.size = headerBytes.readUInt32LE(position);
-  position += 4;
-  blockHeader.time = headerBytes.readUInt32LE(position);
-  position += 4;
-  blockHeader.nonce = headerBytes.readUInt32LE(position);
-  position += 4;
-  blockHeader.extraData = headerBytes.slice(position, position + 32);
-  position += 32;
-  blockHeader.stakeVersion = headerBytes.readUInt32LE(position);
-  position += 4;
-
-  return blockHeader;
 };

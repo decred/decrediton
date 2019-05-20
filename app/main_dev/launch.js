@@ -401,9 +401,6 @@ export const connectRpcDaemon = (mainWindow, rpcCreds) => {
   });
   dcrdSocket.on("open", function() {
     logger.log("info","decrediton has connected to dcrd instance");
-    // Send a JSON-RPC command to be notified when blocks are connected and
-    // disconnected from the chain.
-    dcrdSocket.send("{\"jsonrpc\":\"1.0\",\"id\":\"blockconnected\",\"method\":\"notifyblocks\",\"params\":[]}");
     return mainWindow.webContents.send("connectRpcDaemon-response", { connected: true });
   });
   dcrdSocket.on("error", function(error) {
@@ -414,11 +411,6 @@ export const connectRpcDaemon = (mainWindow, rpcCreds) => {
     const parsedData = JSON.parse(data);
     const id = parsedData ? parsedData.id : "";
     switch (id) {
-    case "blockconnected":
-      // ToDo move NEWBLOCKCONNECTED ntfs for here
-      // const hex = hexToRaw(parsedData.params[0]);
-      // const newBlock = decodeConnectedBlockHeader(Buffer.from(hex));
-      break;
     case "getinfo":
       mainWindow.webContents.send("check-getinfo-response", parsedData.result );
       break;
