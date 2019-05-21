@@ -44,6 +44,10 @@
 }
 
 .tx-history-row {
+  background-image: @arrow-right-gray-icon;
+  background-position: 715px;
+  background-size: 5px;
+  background-repeat: no-repeat;
   border-bottom: 1px solid var(--disabled-background-color);
   background-color: var(--background-back-color);
   cursor: pointer;
@@ -56,6 +60,7 @@
 }
 
 .tx-history-row:hover {
+  background-image: @arrow-right-blue-icon;
   background-color: var(--tx-history-background-hover);
 }
 
@@ -127,34 +132,14 @@
   flex-grow: 2;
 }
 
-.transaction-time-date {
-  color: var(--input-color-default);
-  font-size: 13px;
-  text-align: right;
-  width: 20%;
-  padding: 5px 0px 0px 0px;
-}
-
 .transaction-time-date-spacer {
   margin-left: auto;
   font-size: 11px;
 }
 
-.transaction-account-name {
-  font-size: 11px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  margin-right: 20px;
-  display: inline-block;
-  width: 9em;
-}
-
 .transaction-amount-number {
   font-size: 18px;
   font-weight: 600;
-  min-width: 120px;
-  vertical-align: top;
   margin-left: 10px;
 }
 
@@ -171,11 +156,9 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  position: absolute;
   max-width: 100px;
   margin-left: 34px;
 }
-
 
 .transaction-stake-type-overview {
   font-family: @font-family-regular;
@@ -209,6 +192,24 @@
   background-position: 0px 4px;
   padding-left: 14px;
   margin-left: 10px;
+}
+
+// styles exclusives from history page
+.history-page-content-wrapper {
+  .transaction-account-name {
+    background-color: #E9F8FE;
+    padding: 2px 4px;
+    border-radius: 5px;
+    font-size: 11px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-right: 20px;
+  }
+
+  .transaction-time-date-spacer {
+    margin-right: 20px;
+  }
 }
 
 @media screen and (max-width: 1179px) {

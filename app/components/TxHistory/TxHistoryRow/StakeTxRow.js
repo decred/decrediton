@@ -1,7 +1,6 @@
 import Row from "./Row";
-import Status from "./Status";
+import { FormattedDate, FormattedTime, FormattedMessage as T } from "react-intl";
 import { createElement as h } from "react";
-import { FormattedMessage as T } from "react-intl";
 import { Balance, Tooltip } from "shared";
 import { diffBetweenTwoTs } from "helpers/dateFormat";
 
@@ -18,8 +17,19 @@ const messageByType = { // TODO: use constants instead of string
   "live": <T id="transaction.type.live" m="Live" />,
 };
 
+const timeMessage = (txTimestamp) => <T
+  id="txHistory.statusSmall.date"
+  defaultMessage="{day} {month} {year} {time}"
+  values={{
+    day: <FormattedDate value={txTimestamp} day="2-digit" />,
+    month: <FormattedDate value={txTimestamp} month="short" />,
+    year: <FormattedDate value={txTimestamp} year="numeric" />,
+    time: <FormattedTime value={txTimestamp} hour12={false} />,
+  }}
+/>
+
 const StakeTxRow = ({ status,  ...props }) => {
-  const { overview, ticketPrice, ticketReward, leaveTimestamp, enterTimestamp, pending, txAccountName, txTimestamp, tsDate  } = props;
+  const { ticketPrice, ticketReward, leaveTimestamp, enterTimestamp, pending, txTimestamp, tsDate  } = props;
 
   const rewardLabel = <T id="history.ticket.rewardLabel" m="Ticket Reward" />;
   const ticketRewardMessage = <T id="history.ticket.rewardMesage"
@@ -51,13 +61,15 @@ const StakeTxRow = ({ status,  ...props }) => {
   const statusLower = status ? status.toLowerCase() : "";
   const typeMsg = messageByType[statusLower] || "(unknown type)";
 
-  return overview ?
-    (
+  return (
       <Row {...{ className: status, ...props }}>
         <div className="is-row">
           <span className="icon" />
           <span className="transaction-stake-type-overview">{typeMsg}</span>
-          {!pending && <Status {...{ overview, txAccountName, pending, txTimestamp, tsDate }} />}
+          {!pending &&
+            <div className="transaction-time-date-spacer">
+              {timeMessage(tsDate(txTimestamp))}
+            </div>}
         </div>
         <div className="transaction-info-price-reward">
           <Tooltip text={ticketPriceMessage}>
@@ -75,11 +87,6 @@ const StakeTxRow = ({ status,  ...props }) => {
             </Tooltip>
           )}
         </div>
-      </Row>
-    ) : (
-      <Row {...{ className: status , ...props }}>
-        <span className="icon" />
-        <span className="transaction-stake-type">{typeMsg}</span>
       </Row>
     );
 };

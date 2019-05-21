@@ -79,8 +79,7 @@ const Page = ({
         </Tooltip>
       </div>
     </div>
-    <div className="history-content-nest"
-      style = {{ display: transactions.length == 0 ? "none" : "initial" }} >
+    <div className="history-page-content-wrapper">
       {transactions.length > 0
         ? <TxHistory {...{ transactions, tsDate }} />
         : null }
