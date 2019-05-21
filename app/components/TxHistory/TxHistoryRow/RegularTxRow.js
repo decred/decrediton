@@ -12,7 +12,7 @@ const timeMessage = (txTimestamp) => <T
     year: <FormattedDate value={txTimestamp} year="numeric" />,
     time: <FormattedTime value={txTimestamp} hour12={false} />,
   }}
-/>
+/>;
 
 const RegularTxRow = ({ txAmount, txDescription, txDirection, overview, txAccountName, pending, txTimestamp, tsDate, ...props }) => (
   <Row {...{ ...props, txAccountName, pending, overview, tsDate, txTimestamp }}>

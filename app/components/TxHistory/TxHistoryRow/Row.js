@@ -8,7 +8,7 @@ const Row = ({
   const overviewTxIsPending = overview && pending ? "is-row tx-overview-pending" : null;
 
   return (
-    <div className={[ overview ? "tx-overview-row" : "tx-history-row is-row", overviewTxIsPending].join(" ")}>
+    <div className={[ overview ? "tx-overview-row" : "tx-history-row is-row", overviewTxIsPending ].join(" ")}>
       <div className={[ "tx-info", className ].join(" ")} {...{ onClick }}>
         {children}
       </div>

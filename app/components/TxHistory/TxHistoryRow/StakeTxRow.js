@@ -26,7 +26,7 @@ const timeMessage = (txTimestamp) => <T
     year: <FormattedDate value={txTimestamp} year="numeric" />,
     time: <FormattedTime value={txTimestamp} hour12={false} />,
   }}
-/>
+/>;
 
 const StakeTxRow = ({ status,  ...props }) => {
   const { ticketPrice, ticketReward, leaveTimestamp, enterTimestamp, pending, txTimestamp, tsDate  } = props;
@@ -62,33 +62,33 @@ const StakeTxRow = ({ status,  ...props }) => {
   const typeMsg = messageByType[statusLower] || "(unknown type)";
 
   return (
-      <Row {...{ className: status, ...props }}>
-        <div className="is-row">
-          <span className="icon" />
-          <span className="transaction-stake-type-overview">{typeMsg}</span>
-          {!pending &&
+    <Row {...{ className: status, ...props }}>
+      <div className="is-row">
+        <span className="icon" />
+        <span className="transaction-stake-type-overview">{typeMsg}</span>
+        {!pending &&
             <div className="transaction-time-date-spacer">
               {timeMessage(tsDate(txTimestamp))}
             </div>}
-        </div>
-        <div className="transaction-info-price-reward">
-          <Tooltip text={ticketPriceMessage}>
-            <Balance classNameWrapper="stake-transaction-ticket-price" amount={ticketPrice} />
+      </div>
+      <div className="transaction-info-price-reward">
+        <Tooltip text={ticketPriceMessage}>
+          <Balance classNameWrapper="stake-transaction-ticket-price" amount={ticketPrice} />
+        </Tooltip>
+        <Tooltip text={ticketRewardMessage}>
+          <Balance classNameWrapper="stake-transaction-ticket-reward" amount={ticketReward} noSmallAmount />
+        </Tooltip>
+        {daysToVote !== null && !isNaN(daysToVote) && (
+          <Tooltip text={daysToVoteMessage}>
+            <div className="transaction-info-overview-days-to-vote">
+              <T id="statusSmall.daysToVotePlural" m="{days, plural, one {# day} other {# days}}"
+                values={{ days: daysToVote }}/>
+            </div>
           </Tooltip>
-          <Tooltip text={ticketRewardMessage}>
-            <Balance classNameWrapper="stake-transaction-ticket-reward" amount={ticketReward} noSmallAmount />
-          </Tooltip>
-          {daysToVote !== null && !isNaN(daysToVote) && (
-            <Tooltip text={daysToVoteMessage}>
-              <div className="transaction-info-overview-days-to-vote">
-                <T id="statusSmall.daysToVotePlural" m="{days, plural, one {# day} other {# days}}"
-                  values={{ days: daysToVote }}/>
-              </div>
-            </Tooltip>
-          )}
-        </div>
-      </Row>
-    );
+        )}
+      </div>
+    </Row>
+  );
 };
 
 export const StakeTxRowOfType = (status) => {
