@@ -43,27 +43,6 @@
   margin-left: -32px;
 }
 
-.tx-history-row {
-  background-image: @arrow-right-gray-icon;
-  background-position: 715px;
-  background-size: 5px;
-  background-repeat: no-repeat;
-  border-bottom: 1px solid var(--disabled-background-color);
-  background-color: var(--background-back-color);
-  cursor: pointer;
-  width: 740px;
-  height: 54px;
-
-  .tx-info {
-    padding: 16px 20px 9px 10px;
-  }
-}
-
-.tx-history-row:hover {
-  background-image: @arrow-right-blue-icon;
-  background-color: var(--tx-history-background-hover);
-}
-
 .tx-overview-pending {
   .tx-info {
     width: 100%;
@@ -192,24 +171,6 @@
   background-position: 0px 4px;
   padding-left: 14px;
   margin-left: 10px;
-}
-
-// styles exclusives from history page
-.history-page-content-wrapper {
-  .transaction-account-name {
-    background-color: #E9F8FE;
-    padding: 2px 4px;
-    border-radius: 5px;
-    font-size: 11px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    margin-right: 20px;
-  }
-
-  .transaction-time-date-spacer {
-    margin-right: 20px;
-  }
 }
 
 @media screen and (max-width: 1179px) {
