@@ -85,56 +85,40 @@
   background-size: 20px 20px;
 }
 
-.tx-info.Send .icon {
-  background-image: @minus-small-icon;
-}
-
-.tx-info.Receive .icon {
-  background-image: @plus-small-icon;
-}
-
-.tx-info.Transfer .icon {
-  background-image: @transfer-transaction;
-}
-
-.tx-info.Ticket .icon {
-  background-image: @ticket-live-icon;
-}
-
-.tx-info.Vote .icon {
-  background-image: @ticket-voted-icon;
-}
-
-.tx-info.Revocation .icon {
-  background-image: @ticket-revoked-icon;
-}
-
-.tx-info.revoked .icon {
-  background-image: @ticket-revoked-icon;
-}
-
-.tx-info.live .icon {
-  background-image: @ticket-live-icon;
-}
-
-.tx-info.voted .icon {
-  background-image: @ticket-voted-icon;
-}
-
-.tx-info.immature .icon {
-  background-image: @ticket-immature-icon;
-}
-
-.tx-info.missed .icon {
-  background-image: @ticket-missed-icon;
-}
-
-.tx-info.expired .icon {
-  background-image: @ticket-expired-icon;
-}
-
-.tx-info.unmined .icon {
-  background-image: @ticket-unmined-icon;
+.tx-info {
+  &.Send .icon {
+    background-image: @minus-small-icon;
+  }
+  &.Receive .icon {
+    background-image: @plus-small-icon;
+  }
+  &.Transfer .icon {
+    background-image: @transfer-transaction;
+  }
+  &.Ticket .icon {
+    background-image: @ticket-live-icon;
+  }
+  &.live .icon {
+    background-image: @ticket-live-icon;
+  }
+  &.Vote .icon {
+    background-image: @ticket-voted-icon;
+  }
+  &.Revocation .icon {
+    background-image: @ticket-revoked-icon;
+  }
+  &.immature .icon {
+    background-image: @ticket-immature-icon;
+  }
+  &.missed .icon {
+    background-image: @ticket-missed-icon;
+  }
+  &.expired .icon {
+    background-image: @ticket-expired-icon;
+  }
+  &.unmined .icon {
+    background-image: @ticket-unmined-icon;
+  }
 }
 
 .transaction-status {
@@ -225,17 +209,6 @@
   background-position: 0px 4px;
   padding-left: 14px;
   margin-left: 10px;
-}
-
-.history-content-nest {
-
-  .transaction-time.date-spacer {
-    flex-grow: 1;
-  }
-
-  .transaction-time-date-spacer {
-    width: 20%;
-  }
 }
 
 @media screen and (max-width: 1179px) {
