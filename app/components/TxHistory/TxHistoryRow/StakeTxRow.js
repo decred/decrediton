@@ -58,7 +58,7 @@ const StakeTxRow = ({ status,  ...props }) => {
         <span className="transaction-stake-type-overview">{typeMsg}</span>
         {!pending &&
             <div className="transaction-time-date-spacer">
-              {timeMessage(txTs)}
+              {timeMessage(txTs, props.intl)}
             </div>}
       </div>
       <div className="transaction-info-price-reward">

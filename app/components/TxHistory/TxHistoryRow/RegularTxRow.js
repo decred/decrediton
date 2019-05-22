@@ -14,7 +14,7 @@ const RegularTxRow = ({ txAmount, txDescription, txDirection, overview, txAccoun
         </div>}
       {!pending &&
         <div className="transaction-time-date-spacer">
-          {timeMessage(txTs)}
+          {timeMessage(txTs, props.intl)}
         </div>}
     </div>
     <div className="transaction-amount-hash">{(txDescription.addressStr || []).join(", ")}</div>
