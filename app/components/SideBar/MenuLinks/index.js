@@ -82,7 +82,7 @@ class MenuLinks extends React.Component {
         hasNotification={ hasNotif }
         linkRef={ ref => this._nodes.set(path, ref) }
       >
-        {link}
+        {!this.props.sidebarOnBottom && link}
       </MenuLink>
     );
   }

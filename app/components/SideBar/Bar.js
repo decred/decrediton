@@ -21,6 +21,7 @@ const Bar = ({
   rescanRequest,
   rescanAttempt,
   expandSideBar,
+  sidebarOnBottom,
   onExpandSideBar,
   onReduceSideBar,
   isWatchingOnly,
@@ -29,7 +30,7 @@ const Bar = ({
     <Logo {...{ isTestNet, expandSideBar, onReduceSideBar, onExpandSideBar, isWatchingOnly }} />
     <div className="sidebar-main">
       <div className="sidebar-scroll">
-        <MenuLinks {...{ expandSideBar }}/>
+        <MenuLinks {...{ expandSideBar, sidebarOnBottom }}/>
       </div>
       <div className="sidebar-menu-total-balance-extended" style={{ display: isShowingAccounts ? "flex" : "none" }}>
         <div className="sidebar-menu-total-balance-extended-bottom">

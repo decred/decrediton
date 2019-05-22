@@ -18,8 +18,10 @@ import "style/Layout.less";
 import { ipcRenderer } from "electron";
 const topLevelAnimation = { atEnter: { opacity: 0 }, atLeave: { opacity: 0 }, atActive: { opacity: 1 } };
 
-// minimum size to reduce the sidebar in px
-const MINIMUM_SIZE_TO_REDUCE_SIDEBAR = 768;
+// minimum size to reduce the sidebar in px.
+const MINIMUM_SIZE_TO_REDUCE_SIDEBAR = 1179;
+// minimum size to sidebar goes to bottom in px.
+const MINIMUM_SIZE_BOTTOM_SIDEBAR = 768;
 
 @autobind
 class App extends React.Component {
@@ -87,7 +89,9 @@ class App extends React.Component {
     }
     const updateWindow = () => {
       this.isWaiting = false;
-      if (window.innerWidth <= MINIMUM_SIZE_TO_REDUCE_SIDEBAR) {
+      if (window.innerWidth <= MINIMUM_SIZE_BOTTOM_SIDEBAR) {
+        this.props.onSidebarToBottom();
+      } else if (window.innerWidth <= MINIMUM_SIZE_TO_REDUCE_SIDEBAR) {
         this.props.onReduceSideBar();
       } else {
         this.props.onExpandSideBar();
