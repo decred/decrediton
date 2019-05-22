@@ -18,6 +18,9 @@ import "style/Layout.less";
 import { ipcRenderer } from "electron";
 const topLevelAnimation = { atEnter: { opacity: 0 }, atLeave: { opacity: 0 }, atActive: { opacity: 1 } };
 
+// minimum size to reduce the sidebar in px
+const MINIMUM_SIZE_TO_REDUCE_SIDEBAR = 768;
+
 @autobind
 class App extends React.Component {
   static propTypes = {
@@ -36,6 +39,9 @@ class App extends React.Component {
     window.addEventListener("beforeunload", this.beforeWindowUnload);
     window.addEventListener("click", this.onClick);
     window.addEventListener("auxclick", this.onAuxClick);
+    this.isWaiting = false;
+    window.addEventListener('resize', this.updateWindowDimensions);
+    this.updateWindowDimensions();
     this.refreshing = false;
 
     props.listenForAppReloadRequest(this.onReloadRequested);
@@ -73,6 +79,22 @@ class App extends React.Component {
       event.preventDefault();
       return false;
     }
+  }
+
+  updateWindowDimensions() {
+    if (this.isWaiting) {
+      return;
+    }
+    const updateWindow = () => {
+      this.isWaiting = false;
+      if (window.innerWidth <= MINIMUM_SIZE_TO_REDUCE_SIDEBAR) {
+        this.props.onReduceSideBar();
+      } else {
+        this.props.onExpandSideBar();
+      }
+    }
+    this.isWaiting = true;
+    setTimeout(updateWindow, 200);
   }
 
   // Prevent middle click from opening new electron window
