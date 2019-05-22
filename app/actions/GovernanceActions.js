@@ -77,7 +77,7 @@ const fillVotes = async (proposal, propVotes, walletService) => {
   // This assumes the wallet will cast all available votes the same way.
   propVotes.data.castvotes.some(vote => {
     const choiceID = voteBitToChoice[parseInt(vote.votebit)];
-    if (!choiceID) { throw "ERRRRR: choiceID not found on vote", vote; }
+    if (!choiceID) { throw "Error: choiceID not found on vote when getting proposal votes" };
     // proposal.voteCounts.abstain -= 1; // TODO: support abstain
     if (eligibleTicketsByHash[vote.ticket]) {
       proposal.currentVoteChoice = choiceID;
