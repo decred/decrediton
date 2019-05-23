@@ -27,7 +27,7 @@ import {
   FETCHMISSINGSTAKETXDATA_ATTEMPT, FETCHMISSINGSTAKETXDATA_SUCCESS, FETCHMISSINGSTAKETXDATA_FAILED,
   GETSTARTUPTRANSACTIONS_SUCCESS
 } from "../actions/ClientActions";
-import { STARTUPBLOCK, WALLETREADY } from "../actions/DaemonActions";
+import { DAEMONSYNCED, WALLETREADY } from "../actions/DaemonActions";
 import { NEWBLOCKCONNECTED } from "../actions/NotificationActions";
 import {
   GETDECODEMESSAGESERVICE_ATTEMPT, GETDECODEMESSAGESERVICE_FAILED, GETDECODEMESSAGESERVICE_SUCCESS,
@@ -416,7 +416,7 @@ export default function grpc(state = {}, action) {
       ...state,
       recentBlockTimestamp: action.recentBlockTimestamp,
     };
-  case STARTUPBLOCK:
+  case DAEMONSYNCED:
     return {
       ...state,
       currentBlockHeight: action.currentBlockHeight,

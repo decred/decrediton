@@ -19,14 +19,13 @@ export const SELECT_LANGUAGE = "SELECT_LANGUAGE";
 export const FINISH_TUTORIAL = "FINISH_TUTORIAL";
 export const FINISH_PRIVACY = "FINISH_PRIVACY";
 export const FINISH_SPVCHOICE = "FINISH_SPVCHOICE";
-export const DAEMONSTARTED = "DAEMONSTARTED";
-export const DAEMONSTARTED_APPDATA = "DAEMONSTARTED_APPDATA";
-export const DAEMONSTARTED_REMOTE = "DAEMONSTARTED_REMOTE";
+export const DAEMONSTART_ATTEMPT = "DAEMONSTART_ATTEMPT";
+export const DAEMONSTART_SUCCESS = "DAEMONSTART_SUCCESS";
+export const DAEMONSTART_FAILURE = "DAEMONSTART_FAILURE";
 export const DAEMONSTARTED_ERROR = "DAEMONSTARTED_ERROR";
 export const DAEMONSTOPPED = "DAEMONSTOPPED";
 export const DAEMONSYNCING_START = "DAEMONSYNCING_START";
 export const DAEMONSYNCING_PROGRESS = "DAEMONSYNCING_PROGRESS";
-export const DAEMONSYNCING_TIMEOUT = "DAEMONSYNCING_TIMEOUT";
 export const DAEMONSYNCED = "DAEMONSYNCED";
 export const WALLETREADY = "WALLETREADY";
 export const WALLETREMOVED = "WALLETREMOVED";
@@ -49,6 +48,14 @@ export const DELETE_DCRD_FAILED = "DELETE_DCRD_FAILED";
 export const DELETE_DCRD_SUCCESS = "DELETE_DCRD_SUCCESS";
 export const NOT_SAME_CONNECTION = "NOT_SAME_CONNECTION";
 export const NETWORK_MATCH = "NETWORK_MATCH";
+export const CHECK_NETWORKMATCH_ATTEMPT = "CHECK_NETWORKMATCH_ATTEMPT";
+export const CHECK_NETWORKMATCH_SUCCESS = "CHECK_NETWORKMATCH_SUCCESS";
+export const CHECK_NETWORKMATCH_FAILED = "CHECK_NETWORKMATCH_FAILED";
+export const CONNECTDAEMON_ATTEMPT = "CONNECTDAEMON_ATTEMPT";
+export const CONNECTDAEMON_SUCCESS = "CONNECTDAEMON_SUCCESS";
+export const CONNECTDAEMON_FAILURE = "CONNECTDAEMON_FAILURE";
+export const SYNC_DAEMON_ATTEMPT = "SYNC_DAEMON_ATTEMPT";
+export const SYNC_DAEMON_FAILED = "SYNC_DAEMON_FAILED";
 
 export const checkDecreditonVersion = () => (dispatch, getState) =>{
   const detectedVersion = getState().daemon.appVersion;
@@ -145,27 +152,20 @@ export const finishPrivacy = () => (dispatch) => {
   dispatch(goBack());
 };
 
-export const startDaemon = (rpcCreds, appData) => (dispatch, getState) => {
+export const startDaemon = (params) => (dispatch, getState) => {
+  const appdata = params && params.appdata;
+  dispatch({ type: DAEMONSTART_ATTEMPT });
   const { daemonStarted } = getState().daemon;
-  if (daemonStarted) return;
-  if (rpcCreds) {
-    dispatch({ type: DAEMONSTARTED_REMOTE, credentials: rpcCreds, pid: -1 });
-    dispatch(syncDaemon());
-  } else if (appData) {
-    wallet.startDaemon(appData, isTestNet(getState()))
-      .then(rpcCreds => {
-        dispatch({ type: DAEMONSTARTED_APPDATA, appData: appData, credentials: rpcCreds });
-        dispatch(syncDaemon(null, appData));
-      })
-      .catch((err) => dispatch({ err, type: DAEMONSTARTED_ERROR }));
-  } else {
-    wallet.startDaemon(null, isTestNet(getState()))
-      .then(rpcCreds => {
-        dispatch({ type: DAEMONSTARTED, credentials: rpcCreds });
-        dispatch(syncDaemon());
-      })
-      .catch(() => dispatch({ type: DAEMONSTARTED_ERROR }));
+  if (daemonStarted) {
+    return dispatch({ type: DAEMONSTART_SUCCESS });
   }
+
+  wallet.startDaemon(params, isTestNet(getState()))
+    .then(rpcCreds => {
+      dispatch({ type: DAEMONSTART_SUCCESS, credentials: rpcCreds, appdata });
+      dispatch(connectDaemon(rpcCreds, appdata));
+    })
+    .catch((err) => dispatch({ err, type: DAEMONSTART_FAILURE }));
 };
 
 export const setCredentialsAppdataError = () => (dispatch) => {
@@ -325,18 +325,18 @@ export const prepStartDaemon = () => (dispatch, getState) => {
     return;
   }
 
-  let rpc_user, rpc_password, rpc_cert, rpc_host, rpc_port;
+  let rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port;
   if (cliOptions.rpcPresent) {
     rpc_user = cliOptions.rpcUser;
-    rpc_password = cliOptions.rpcPass;
+    rpc_pass = cliOptions.rpcPass;
     rpc_cert = cliOptions.rpcCert;
     rpc_host = cliOptions.rpcHost;
     rpc_port = cliOptions.rpcPort;
   } else {
-    ({ rpc_user, rpc_password, rpc_cert, rpc_host, rpc_port } = getRemoteCredentials());
+    ({ rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port } = getRemoteCredentials());
   }
-  const credentials = { rpc_user, rpc_password, rpc_cert, rpc_host, rpc_port };
-  const hasAllCredentials = rpc_password && rpc_user && rpc_password.length > 0 && rpc_user.length > 0 && rpc_cert.length > 0 && rpc_host.length > 0 && rpc_port.length > 0;
+  const credentials = { rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port };
+  const hasAllCredentials = rpc_pass && rpc_user && rpc_pass.length > 0 && rpc_user.length > 0 && rpc_cert.length > 0 && rpc_host.length > 0 && rpc_port.length > 0;
   const hasAppData = getAppdataPath() && getAppdataPath().length > 0;
 
   if(hasAllCredentials && hasAppData)
@@ -352,45 +352,71 @@ export const prepStartDaemon = () => (dispatch, getState) => {
 };
 
 const TIME_TO_TIMEOUT = 30 * 1000; // 30 sec
-
-export const STARTUPBLOCK = "STARTUPBLOCK";
-export const syncDaemon = () =>
-  (dispatch, getState) => {
-    let timeStartBeforeSync = new Date();
-    const updateBlockCount = async () => {
-      const { daemon: { daemonSynced, timeStart, blockStart, credentials, daemonError, neededBlocks, networkMatch, daemonRemote } } = getState();
-      const timeNow = new Date();
-      const timeElapsed = timeNow - timeStartBeforeSync;
-      if (timeStart === 0 && timeElapsed >= TIME_TO_TIMEOUT && daemonRemote) {
-        dispatch({ type: DAEMONSYNCING_TIMEOUT });
-        return;
-      }
-      // check to see if user skipped;
-      if (daemonSynced || daemonError) return;
-      if (!networkMatch) {
-        const daemonInfo = await wallet.getDaemonInfo(credentials);
-        if (daemonInfo.isTestNet !== null &&
-            daemonInfo.isTestNet !== isTestNet(getState())) {
-          dispatch({ error: DIFF_CONNECTION_ERROR, type: NOT_SAME_CONNECTION });
-          return dispatch(pushHistory("/error"));
-        } else if (daemonInfo.isTestNet !== null && daemonInfo.isTestNet == isTestNet(getState())) {
-          dispatch({ type: NETWORK_MATCH });
+export const connectDaemon = (rpcCreds) => (dispatch, getState) => {
+  dispatch({ type: CONNECTDAEMON_ATTEMPT });
+  const timeBeforeConnect = new Date();
+  const tryConnect = () => {
+    const { daemonConnected, credentials, daemonError, timeStart } = getState().daemon;
+    const creds = rpcCreds ? rpcCreds : credentials;
+    const timeNow = new Date();
+    const timeElapsed = timeNow - timeBeforeConnect;
+    if (timeStart === 0 && timeElapsed >= TIME_TO_TIMEOUT) {
+      dispatch({ type: CONNECTDAEMON_FAILURE, daemonTimeout: true, error: "timeout exceed" });
+      return;
+    }
+    if (daemonConnected || daemonError) return;
+    return wallet
+      .connectDaemon({ rpcCreds: creds, testnet: isTestNet(getState()) })
+      .then(() => {
+        dispatch({ type: CONNECTDAEMON_SUCCESS });
+        dispatch(checkNetworkMatch());
+      }).catch( err => {
+        const { error } = err;
+        if (error.code === "ECONNREFUSED") {
+          setTimeout(tryConnect, 1000);
+        } else {
+          dispatch({ type: CONNECTDAEMON_FAILURE, error });
         }
-      }
-      return wallet
-        .getBlockCount(credentials, isTestNet(getState()))
-        .then(( blockChainInfo ) => {
-          const blockCount = blockChainInfo.blockCount;
-          const syncHeight = blockChainInfo.syncHeight;
-          if (neededBlocks != 0 && blockCount >= syncHeight) {
-            dispatch({ type: DAEMONSYNCED });
-            dispatch({ currentBlockHeight: blockCount, type: STARTUPBLOCK });
+      });
+  };
+  tryConnect();
+};
+
+export const checkNetworkMatch = () => async (dispatch, getState) => {
+  dispatch({ type: CHECK_NETWORKMATCH_ATTEMPT });
+  const daemonInfo = await wallet.getDaemonInfo();
+  if (daemonInfo.isTestnet !== null &&
+      daemonInfo.isTestnet !== isTestNet(getState())) {
+    dispatch({ error: DIFF_CONNECTION_ERROR, type: CHECK_NETWORKMATCH_FAILED });
+    return dispatch(pushHistory("/error"));
+  }
+  dispatch({ type: CHECK_NETWORKMATCH_SUCCESS, daemonInfo });
+  dispatch(syncDaemon());
+};
+
+export const syncDaemon = () => (dispatch, getState) => {
+  dispatch({ type: SYNC_DAEMON_ATTEMPT });
+  const updateBlockCount = () => {
+    const { daemon: { daemonSynced, timeStart, blockStart, daemonError } } = getState();
+    if (daemonSynced || daemonError) return;
+    return wallet.getBlockCount()
+      .then(( blockChainInfo ) => {
+        const { blockCount, syncHeight } = blockChainInfo;
+        if (blockCount && syncHeight) {
+          if (blockCount >= syncHeight) {
+            dispatch({ type: DAEMONSYNCED, currentBlockHeight: blockCount });
             setMustOpenForm(false);
             return;
-          } else if (neededBlocks !== 0 && blockCount !== 0 && syncHeight !== 0) {
+          }
+
+          if (blockStart === 0) {
+            dispatch({
+              syncHeight, currentBlockCount: blockCount, timeStart: new Date(), blockStart: blockCount, type: DAEMONSYNCING_START
+            });
+          } else {
             const blocksLeft = syncHeight - blockCount;
             const blocksDiff = blockCount - blockStart;
-            if (timeStart !== 0 && blockStart !== 0 && blocksDiff !== 0) {
+            if (blocksDiff !== 0) {
               const currentTime = new Date();
               const timeSyncing = (currentTime - timeStart) / 1000;
               const secondsLeft = Math.round(blocksLeft / blocksDiff * timeSyncing);
@@ -399,14 +425,17 @@ export const syncDaemon = () =>
                 timeLeftEstimate: secondsLeft,
                 type: DAEMONSYNCING_PROGRESS });
             }
-          } else if (blockCount !== 0 && syncHeight !== 0) {
-            dispatch({ syncHeight: syncHeight, currentBlockCount: blockCount, timeStart: new Date(), blockStart: blockCount, type: DAEMONSYNCING_START });
           }
-          setTimeout(updateBlockCount, 1000);
-        }).catch(err=>console.log(err));
-    };
-    updateBlockCount();
+        }
+        setTimeout(updateBlockCount, 1000);
+      })
+      .catch( error => {
+        console.log(error);
+        dispatch({ error, type: SYNC_DAEMON_FAILED });
+      });
   };
+  updateBlockCount();
+};
 
 export const getDcrdLogs = () => {
   wallet.getDcrdLogs()

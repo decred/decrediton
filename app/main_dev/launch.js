@@ -1,7 +1,7 @@
-import { dcrwalletCfg, getWalletPath, getExecutablePath, dcrdCfg, getDcrdRpcCert } from "./paths";
+import { dcrwalletCfg, getWalletPath, getExecutablePath, dcrdCfg, getDcrdPath } from "./paths";
 import { getWalletCfg, readDcrdConfig } from "../config";
 import { createLogger, AddToDcrdLog, AddToDcrwalletLog, GetDcrdLogs,
-  GetDcrwalletLogs, lastErrorLine, lastPanicLine, ClearDcrwalletLogs, CheckDaemonLogs } from "./logging";
+  GetDcrwalletLogs, lastErrorLine, lastPanicLine, ClearDcrwalletLogs } from "./logging";
 import parseArgs from "minimist";
 import { OPTIONS } from "./constants";
 import os from "os";
@@ -11,21 +11,21 @@ import { spawn } from "child_process";
 import isRunning from "is-running";
 import stringArgv from "string-argv";
 import { concat, isString } from "../fp";
+import webSocket from "ws";
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const debug = argv.debug || process.env.NODE_ENV === "development";
 const logger = createLogger(debug);
 
-let dcrdPID;
-let dcrwPID;
+let dcrdPID, dcrwPID;
 
 // windows-only stuff
-let dcrwPipeRx;
-let dcrwPipeTx;
-let dcrdPipeRx;
-let dcrwTxStream;
+let dcrwPipeRx, dcrwPipeTx, dcrdPipeRx, dcrwTxStream;
 
 let dcrwPort;
+let rpcuser, rpcpass, rpccert, rpchost, rpcport;
+
+let dcrdSocket = null;
 
 function closeClis() {
   // shutdown daemon and wallet.
@@ -77,10 +77,6 @@ export const closeDCRW = () => {
   }
 };
 
-export async function darwinShutdown(mainWindow) {
-  mainWindow.webContents.send("darwin-shutdown");
-}
-
 export async function cleanShutdown(mainWindow, app) {
   // Attempt a clean shutdown.
   return new Promise(resolve => {
@@ -93,7 +89,7 @@ export async function cleanShutdown(mainWindow, app) {
     logger.log("info", "Closing decrediton.");
 
     let shutdownTimer = setInterval(function () {
-      const stillRunning = (isRunning(dcrdPID) && os.platform() != "win32");
+      const stillRunning = dcrdPID !== -1 && (isRunning(dcrdPID) && os.platform() != "win32");
 
       if (!stillRunning) {
         logger.log("info", "Final shutdown pause. Quitting app.");
@@ -112,23 +108,48 @@ export async function cleanShutdown(mainWindow, app) {
   });
 }
 
-export const launchDCRD = (mainWindow, daemonIsAdvanced, daemonPath, appdata, testnet, reactIPC) => {
-  let args = [ "--nolisten" ];
-  let newConfig = {};
-  if (appdata) {
-    newConfig = readDcrdConfig(appdata, testnet);
-    newConfig.rpc_cert = getDcrdRpcCert(appdata);
-    args.push(`--appdata=${appdata}`);
-    args.push(`--rpcuser=${newConfig.rpc_user}`);
-    args.push(`--rpcpass=${newConfig.rpc_password}`);
-  } else {
-    args.push(`--configfile=${dcrdCfg(daemonPath)}`);
-    newConfig = readDcrdConfig(daemonPath, testnet);
-    newConfig.rpc_cert = getDcrdRpcCert();
+export const launchDCRD = (params, testnet) => new Promise((resolve,reject) => {
+  let rpcCreds, appdata;
+
+  rpcCreds = params && params.rpcCreds;
+  appdata = params && params.appdata;
+
+  if (rpcCreds) {
+    rpcuser = rpcCreds.rpc_user;
+    rpcpass = rpcCreds.rpc_pass;
+    rpccert = rpcCreds.rpc_cert;
+    rpchost = rpcCreds.rpc_host;
+    rpcport = rpcCreds.rpc_port;
+    dcrdPID = -1;
+    return resolve(rpcCreds);
   }
+  if (dcrdPID === -1) {
+    const creds = {
+      rpc_user: rpcuser,
+      rpc_pass: rpcpass,
+      rpc_cert: rpccert,
+      rpc_host: rpchost,
+      rpc_port: rpcport,
+    };
+    return resolve(creds);
+  }
+
+  if (!appdata) appdata = getDcrdPath();
+
+  let args = [ "--nolisten" ];
+  const newConfig = readDcrdConfig(appdata, testnet);
+
+  args.push(`--configfile=${dcrdCfg(appdata)}`);
+  args.push(`--appdata=${appdata}`);
+
   if (testnet) {
     args.push("--testnet");
   }
+  rpcuser = newConfig.rpc_user;
+  rpcpass = newConfig.rpc_pass;
+  rpccert = newConfig.rpc_cert;
+  rpchost = newConfig.rpc_host;
+  rpcport = newConfig.rpc_port;
 
   const dcrdExe = getExecutablePath("dcrd", argv.custombinpath);
   if (!fs.existsSync(dcrdExe)) {
@@ -149,47 +170,44 @@ export const launchDCRD = (mainWindow, daemonIsAdvanced, daemonPath, appdata, te
   logger.log("info", `Starting ${dcrdExe} with ${args}`);
 
   const dcrd = spawn(dcrdExe, args, {
-    detached: os.platform() == "win32",
+    detached: os.platform() === "win32",
     stdio: [ "ignore", "pipe", "pipe" ]
   });
 
   dcrd.on("error", function (err) {
-    logger.log("error", "Error running dcrd.  Check logs and restart! " + err);
-    mainWindow.webContents.executeJavaScript("alert(\"Error running dcrd.  Check logs and restart! " + err + "\");");
-    mainWindow.webContents.executeJavaScript("window.close();");
+    reject(err);
   });
 
   dcrd.on("close", (code) => {
-    if (daemonIsAdvanced)
-      return;
     if (code !== 0) {
-      var lastDcrdErr = lastErrorLine(GetDcrdLogs());
-      if (!lastDcrdErr || lastDcrdErr == "") {
+      let lastDcrdErr = lastErrorLine(GetDcrdLogs());
+      if (!lastDcrdErr || lastDcrdErr === "") {
         lastDcrdErr = lastPanicLine(GetDcrdLogs());
-        console.log("panic error", lastDcrdErr);
       }
       logger.log("error", "dcrd closed due to an error: ", lastDcrdErr);
-      reactIPC.send("error-received", true, lastDcrdErr);
-    } else {
-      logger.log("info", `dcrd exited with code ${code}`);
+      return reject(lastDcrdErr);
     }
+
+    logger.log("info", `dcrd exited with code ${code}`);
   });
 
   dcrd.stdout.on("data", (data) => {
     AddToDcrdLog(process.stdout, data, debug);
-    if (CheckDaemonLogs(data)) {
-      reactIPC.send("warning-received", true, data.toString("utf-8"));
-    }
+    resolve(data.toString("utf-8"));
   });
-  dcrd.stderr.on("data", (data) => AddToDcrdLog(process.stderr, data, debug));
+
+  dcrd.stderr.on("data", (data) => {
+    AddToDcrdLog(process.stderr, data, debug);
+    reject(data.toString("utf-8"));
+  });
 
   newConfig.pid = dcrd.pid;
   dcrdPID = dcrd.pid;
   logger.log("info", "dcrd started with pid:" + newConfig.pid);
 
   dcrd.unref();
-  return newConfig;
-};
+  return resolve(newConfig);
+});
 
 // DecodeDaemonIPCData decodes messages from an IPC message received from dcrd/
 // dcrwallet using their internal IPC protocol.
@@ -359,3 +377,62 @@ export const readExesVersion = (app, grpcVersions) => {
 
   return versions;
 };
+
+// connectDaemon starts a new rpc connection to dcrd
+export const connectRpcDaemon = (mainWindow, rpcCreds) => {
+  const rpc_host = rpcCreds ? rpcCreds.rpc_host : rpchost;
+  const rpc_port = rpcCreds ? rpcCreds.rpc_port : rpcport;
+  const rpc_user = rpcCreds ? rpcCreds.rpc_user : rpcuser;
+  const rpc_pass = rpcCreds ? rpcCreds.rpc_pass : rpcpass;
+  const rpc_cert = rpcCreds ? rpcCreds.rpc_cert : rpccert;
+
+  var cert = fs.readFileSync(rpc_cert);
+  const url = `${rpc_host}:${rpc_port}`;
+  if (dcrdSocket && dcrdSocket.readyState === dcrdSocket.OPEN) {
+    return mainWindow.webContents.send("connectRpcDaemon-response", { connected: true });
+  }
+  dcrdSocket = new webSocket(`wss://${url}/ws`, {
+    headers: {
+      "Authorization": "Basic "+Buffer.from(rpc_user+":"+rpc_pass).toString("base64")
+    },
+    cert: cert,
+    ecdhCurve: "secp521r1",
+    ca: [ cert ]
+  });
+  dcrdSocket.on("open", function() {
+    logger.log("info","decrediton has connected to dcrd instance");
+    return mainWindow.webContents.send("connectRpcDaemon-response", { connected: true });
+  });
+  dcrdSocket.on("error", function(error) {
+    logger.log("error",`Error: ${error}`);
+    return mainWindow.webContents.send("connectRpcDaemon-response", { connected: false, error });
+  });
+  dcrdSocket.on("message", function(data) {
+    const parsedData = JSON.parse(data);
+    const id = parsedData ? parsedData.id : "";
+    switch (id) {
+    case "getinfo":
+      mainWindow.webContents.send("check-getinfo-response", parsedData.result );
+      break;
+    case "getblockchaininfo": {
+      const dataResults = parsedData.result || {};
+      const blockCount = dataResults.blocks;
+      const syncHeight = dataResults.syncheight;
+      mainWindow.webContents.send("check-daemon-response", { blockCount, syncHeight });
+      break;
+    }
+    }
+  });
+  dcrdSocket.on("close", () => {
+    logger.log("info","decrediton has disconnected to dcrd instance");
+  });
+};
+
+export const getDaemonInfo = () => dcrdSocket.send("{\"jsonrpc\":\"1.0\",\"id\":\"getinfo\",\"method\":\"getinfo\",\"params\":[]}");
+
+export const getBlockChainInfo = () => new Promise((resolve) => {
+  if (dcrdSocket && dcrdSocket.readyState === dcrdSocket.CLOSED) {
+    return resolve({});
+  }
+  dcrdSocket.send("{\"jsonrpc\":\"1.0\",\"id\":\"getblockchaininfo\",\"method\":\"getblockchaininfo\",\"params\":[]}");
+});

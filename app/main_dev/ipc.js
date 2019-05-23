@@ -1,13 +1,10 @@
 import fs from "fs-extra";
 import path from "path";
-import parseArgs from "minimist";
-import { OPTIONS } from "./constants";
 import { createLogger } from "./logging";
-import { getWalletPath, getWalletDBPathFromWallets, getDcrdPath, dcrdCfg, dcrctlCfg, appDataDirectory, getExecutablePath, getDcrdRpcCert } from "./paths";
-import { createTempDcrdConf, initWalletCfg, newWalletConfigCreation, getWalletCfg, readDcrdConfig } from "../config";
+import { getWalletPath, getWalletDBPathFromWallets, getDcrdPath } from "./paths";
+import { initWalletCfg, newWalletConfigCreation, getWalletCfg, readDcrdConfig } from "../config";
 import { launchDCRD, launchDCRWallet, GetDcrdPID, GetDcrwPID, closeDCRD, closeDCRW, GetDcrwPort } from "./launch";
 
-const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const logger = createLogger();
 let watchingOnlyWallet;
 
@@ -50,37 +47,19 @@ export const deleteDaemon = (appData, testnet) => {
   }
 };
 
-export const startDaemon = (mainWindow, daemonIsAdvanced, primaryInstance, appData, testnet, reactIPC) => {
+export const startDaemon = async (params, testnet) => {
   if (GetDcrdPID() && GetDcrdPID() !== -1) {
     logger.log("info", "Skipping restart of daemon as it is already running " + GetDcrdPID());
-    var newConfig = {};
-    if (appData) {
-      newConfig = readDcrdConfig(appData, testnet);
-      newConfig.rpc_cert = getDcrdRpcCert(appData);
-    } else {
-      newConfig = readDcrdConfig(getDcrdPath(), testnet);
-      newConfig.rpc_cert = getDcrdRpcCert();
-    }
+    const appdata = params ? params.appdata : null;
+    const newConfig = readDcrdConfig(appdata, testnet);
+
     newConfig.pid =  GetDcrdPID();
     return newConfig;
   }
-  if(appData){
-    logger.log("info", "launching dcrd with different appdata directory");
-  }
-  if (!daemonIsAdvanced && !primaryInstance) {
-    logger.log("info", "Running on secondary instance. Assuming dcrd is already running.");
-    let dcrdConfPath = getDcrdPath();
-    if (!fs.existsSync(dcrdCfg(dcrdConfPath))) {
-      dcrdConfPath = createTempDcrdConf(testnet);
-    }
-    return -1;
-  }
+
   try {
-    let dcrdConfPath = appData ? appData : getDcrdPath();
-    if (!fs.existsSync(dcrdCfg(dcrdConfPath))) {
-      dcrdConfPath = createTempDcrdConf(testnet);
-    }
-    return launchDCRD(mainWindow, daemonIsAdvanced, dcrdConfPath, appData, testnet, reactIPC);
+    const started = await launchDCRD(params, testnet);
+    return started;
   } catch (e) {
     logger.log("error", "error launching dcrd: " + e);
   }
@@ -136,105 +115,6 @@ export const stopDaemon = () => {
 
 export const stopWallet = () => {
   return closeDCRW(GetDcrwPID());
-};
-
-export const getDaemonInfo = (mainWindow, rpcCreds, isRetry) => {
-  let args = [ "getinfo" ];
-
-  if (!rpcCreds){
-    args.push(`--configfile=${dcrctlCfg(appDataDirectory())}`);
-  } else if (rpcCreds) {
-    if (rpcCreds.rpc_user) {
-      args.push(`--rpcuser=${rpcCreds.rpc_user}`);
-    }
-    if (rpcCreds.rpc_password) {
-      args.push(`--rpcpass=${rpcCreds.rpc_password}`);
-    }
-    if (rpcCreds.rpc_cert) {
-      args.push(`--rpccert=${rpcCreds.rpc_cert}`);
-    }
-  }
-
-  // retry using testnet to check connection
-  if (isRetry) {
-    args.push("--testnet");
-  }
-
-  const dcrctlExe = getExecutablePath("dcrctl", argv.custombinpath);
-  if (!fs.existsSync(dcrctlExe)) {
-    logger.log("error", "The dcrctl executable does not exist. Expected to find it at " + dcrctlExe);
-  }
-
-  logger.log("info", `checking daemon network with dcrctl ${args}`);
-
-  const spawn = require("child_process").spawn;
-  const dcrctl = spawn(dcrctlExe, args, { detached: false, stdio: [ "ignore", "pipe", "pipe", "pipe" ] });
-
-  dcrctl.stdout.on("data", (data) => {
-    const parsedData = JSON.parse(data);
-    logger.log("info", "is daemon testnet: " + parsedData.testnet);
-    mainWindow.webContents.send("check-getinfo-response", parsedData);
-  });
-  dcrctl.stderr.on("data", (data) => {
-    logger.log("error", data.toString());
-    if (isRetry) {
-      mainWindow.webContents.send("check-getinfo-response", null );
-    } else {
-      getDaemonInfo(mainWindow, rpcCreds, true);
-    }
-  });
-};
-
-export const checkDaemon = (mainWindow, rpcCreds, testnet) => {
-  let args = [ "getblockchaininfo" ];
-  let host, port;
-
-  if (!rpcCreds){
-    args.push(`--configfile=${dcrctlCfg(appDataDirectory())}`);
-  } else if (rpcCreds) {
-    if (rpcCreds.rpc_user) {
-      args.push(`--rpcuser=${rpcCreds.rpc_user}`);
-    }
-    if (rpcCreds.rpc_password) {
-      args.push(`--rpcpass=${rpcCreds.rpc_password}`);
-    }
-    if (rpcCreds.rpc_cert) {
-      args.push(`--rpccert=${rpcCreds.rpc_cert}`);
-    }
-    if (rpcCreds.rpc_host) {
-      host = rpcCreds.rpc_host;
-    }
-    if (rpcCreds.rpc_port) {
-      port = rpcCreds.rpc_port;
-    }
-    args.push("--rpcserver=" + host + ":" + port);
-  }
-
-  if (testnet) {
-    args.push("--testnet");
-  }
-
-  const dcrctlExe = getExecutablePath("dcrctl", argv.custombinpath);
-  if (!fs.existsSync(dcrctlExe)) {
-    logger.log("error", "The dcrctl executable does not exist. Expected to find it at " + dcrctlExe);
-  }
-
-  logger.log("info", `checking if daemon is ready  with dcrctl ${args}`);
-
-  const spawn = require("child_process").spawn;
-  const dcrctl = spawn(dcrctlExe, args, { detached: false, stdio: [ "ignore", "pipe", "pipe", "pipe" ] });
-
-  dcrctl.stdout.on("data", (data) => {
-    const parsedData = JSON.parse(data);
-    const blockCount = parsedData.blocks;
-    const syncHeight = parsedData.syncheight;
-    logger.log("info", parsedData.blocks, parsedData.syncheight, parsedData.verificationprogress);
-    mainWindow.webContents.send("check-daemon-response", { blockCount, syncHeight });
-  });
-  dcrctl.stderr.on("data", (data) => {
-    logger.log("error", data.toString());
-    mainWindow.webContents.send("check-daemon-response", { blockCount: 0, syncHeight: 0 });
-  });
 };
 
 export const setWatchingOnlyWallet = (isWatchingOnly) => {

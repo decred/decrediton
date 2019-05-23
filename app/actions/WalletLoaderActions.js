@@ -210,7 +210,7 @@ export const startRpcRequestFunc = (isRetry, privPass) =>
     if (syncAttemptRequest) {
       return;
     }
-    const { daemon: { credentials, appData, walletName }, walletLoader: { discoverAccountsComplete,isWatchingOnly } }= getState();
+    const { daemon: { credentials, appdata, walletName }, walletLoader: { discoverAccountsComplete,isWatchingOnly } }= getState();
     const cfg = getWalletCfg(isTestNet(getState()), walletName);
     let rpcuser, rpccertPath, rpcpass, daemonhost, rpcport;
 
@@ -223,13 +223,13 @@ export const startRpcRequestFunc = (isRetry, privPass) =>
     } else if (credentials) {
       rpcuser = credentials.rpc_user;
       rpccertPath = credentials.rpc_cert;
-      rpcpass = credentials.rpc_password;
+      rpcpass = credentials.rpc_pass;
       daemonhost = credentials.rpc_host;
       rpcport = credentials.rpc_port;
-    } else if (appData) {
+    } else if (appdata) {
       rpcuser = cfg.get("rpc_user");
       rpcpass = cfg.get("rpc_pass");
-      rpccertPath = `${appData}/rpc.cert`;
+      rpccertPath = `${appdata}/rpc.cert`;
       daemonhost = cfg.get("rpc_host");
       rpcport = cfg.get("rpc_port");
     } else {
