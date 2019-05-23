@@ -1,5 +1,6 @@
 import { RegularTxRowOfClass as regular } from "./RegularTxRow";
 import { StakeTxRowOfType as stake } from "./StakeTxRow";
+import { defineMessages, injectIntl } from "react-intl";
 import "style/TxHistory.less";
 
 const TxRowByType = { // TODO: use constants instead of string
@@ -20,7 +21,16 @@ const TxRowByType = { // TODO: use constants instead of string
   "Coinbase": regular("Receive", true),
 };
 
-const TxRow = ({ tx, overview, tsDate }, { router }) => {
+export const timeMessageDefine = defineMessages({
+  dayMonthHourDisplay: {
+    id: "txHistory.dayMonthHourDisplay",
+    defaultMessage: "{value, date, short-month-24hour}"
+  },
+});
+
+export const timeMessage = (txTimestamp, intl) => intl.formatMessage(timeMessageDefine.dayMonthHourDisplay, { value: txTimestamp });
+
+const TxRow = ({ tx, overview, tsDate, intl }, { router }) => {
   const rowType = tx.status ? tx.status :
     tx.txType ? tx.txType : tx.txDirection;
   const Component = TxRowByType[rowType];
@@ -29,7 +39,8 @@ const TxRow = ({ tx, overview, tsDate }, { router }) => {
     <Component
       {...{
         ...tx,
-        tsDate,
+        intl,
+        txTs: tsDate(tx.txTimestamp),
         overview,
         pending: !tx.txTimestamp,
         onClick: () => router.history.push(`/transactions/history/${tx.txHash}`)
@@ -42,4 +53,4 @@ TxRow.contextTypes = {
   router: PropTypes.object.isRequired,
 };
 
-export default TxRow;
+export default injectIntl(TxRow);

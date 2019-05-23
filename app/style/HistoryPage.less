@@ -3,73 +3,62 @@
 @import "~nouislider/distribute/nouislider.min.css";
 
 .history-content-title {
-  border-bottom: 1px solid transparent;
   color: var(--stroke-color-hovered);
   font-size: 20px;
-  line-height: 25px;
   margin-left: 43px;
-  margin-bottom: 13px;
-  float: left;
-  width: 100%;
+  margin-bottom: 19px;
+  line-height: 25px;
+  width: 697px;
 }
 
-.history-content-nest {
-  padding-top: 1px;
-  margin-bottom: 2em;
-  float: left;
-  width: 100%;
+.history-page-content-wrapper {
+  width: 740px;
+  height: 100%;
+
+  .tx-info {
+    padding: 16px 20px;
+    width: 100%;
+  }
+
+  .transaction-account-name {
+    background-color: #E9F8FE;
+    padding: 2px 4px;
+    border-radius: 5px;
+    font-size: 11px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-right: 20px;
+  }
+
+  .transaction-time-date-spacer {
+    margin-right: 20px;
+  }
 }
 
-.history-content-title-text {
-  display: inline-block;
-  vertical-align: middle;
-  width: 40%;
+.tx-history-row {
+  background-image: @arrow-right-gray-icon;
+  background-position: 715px;
+  background-size: 5px;
+  background-repeat: no-repeat;
+  border-bottom: 1px solid var(--disabled-background-color);
+  background-color: var(--background-back-color);
+  cursor: pointer;
+  width: 740px;
+  height: 54px;
+
+  .tx-info {
+    padding: 16px 20px 9px 10px;
+  }
 }
 
-.history-content-title-buttons-area {
-  text-align: right;
-  margin-bottom: 2em;
-}
-
-.history-content-title-buttons-text {
-  padding: 0px 10px 0px 10px;
-}
-
-.history-content-title-buttons-left {
-  margin-top: 3px;
-  display: block;
-  float: left;
-  font-family: Inconsolata, monospace;
-}
-
-.history-content-title-buttons-right {
-  margin-top: 3px;
-  display: block;
-  float: right;
-  font-family: Inconsolata, monospace;
+.tx-history-row:hover {
+  background-image: @arrow-right-blue-icon;
+  background-color: var(--tx-history-background-hover);
 }
 
 .history-select-tx-types-area {
-  width: 40%;
-  float: right;
-  margin-right: 40px;
-}
-
-.history-select-tx-types-area:hover {
-  background-size: 10px;
-}
-
-.history-select-tx-types-label {
-  display: inline-block;
-  width: 50%;
-}
-
-.history-select-tx-types {
-  display: inline-block;
-  width: 100%;
-  vertical-align: middle;
-  font-size: 19px;
-  text-align: right;
+  margin-left: auto;
 }
 
 .history-search-tx {
@@ -178,4 +167,50 @@
 
 .history-slider-wrapper {
   border-top: 1px solid #f3f5f6;
+}
+
+@media screen and (max-width: 1179px) {
+  .history-page-content-wrapper {
+    width: 649px;
+  }
+
+  .tx-history-row {
+    width: 649px;
+    background-position: 624px;
+  }
+
+  .history-content-title {
+    width: 608px
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .transaction-account-name {
+    display: none;
+  }
+
+  .history-page-content-wrapper {
+    width: 355px;
+  }
+
+  .tx-history-row {
+    width: 355px;
+  }
+
+  .history-content-title {
+    width: 355px;
+    margin-left: 0;
+  }
+
+  .history-content-title.is-row {
+    flex-direction: column;
+  }
+
+  .history-select-tx-types-area {
+    margin-left: 0;
+  }
+
+  .history-search-tx {
+    width: 250px;
+  }
 }

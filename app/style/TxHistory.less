@@ -43,22 +43,6 @@
   margin-left: -32px;
 }
 
-.tx-history-row {
-  border-bottom: 1px solid var(--disabled-background-color);
-  background-color: var(--background-back-color);
-  cursor: pointer;
-  width: 740px;
-  height: 54px;
-
-  .tx-info {
-    padding: 16px 20px 9px 10px;
-  }
-}
-
-.tx-history-row:hover {
-  background-color: var(--tx-history-background-hover);
-}
-
 .tx-overview-pending {
   .tx-info {
     width: 100%;
@@ -85,56 +69,40 @@
   background-size: 20px 20px;
 }
 
-.tx-info.Send .icon {
-  background-image: @minus-small-icon;
-}
-
-.tx-info.Receive .icon {
-  background-image: @plus-small-icon;
-}
-
-.tx-info.Transfer .icon {
-  background-image: @transfer-transaction;
-}
-
-.tx-info.Ticket .icon {
-  background-image: @ticket-live-icon;
-}
-
-.tx-info.Vote .icon {
-  background-image: @ticket-voted-icon;
-}
-
-.tx-info.Revocation .icon {
-  background-image: @ticket-revoked-icon;
-}
-
-.tx-info.revoked .icon {
-  background-image: @ticket-revoked-icon;
-}
-
-.tx-info.live .icon {
-  background-image: @ticket-live-icon;
-}
-
-.tx-info.voted .icon {
-  background-image: @ticket-voted-icon;
-}
-
-.tx-info.immature .icon {
-  background-image: @ticket-immature-icon;
-}
-
-.tx-info.missed .icon {
-  background-image: @ticket-missed-icon;
-}
-
-.tx-info.expired .icon {
-  background-image: @ticket-expired-icon;
-}
-
-.tx-info.unmined .icon {
-  background-image: @ticket-unmined-icon;
+.tx-info {
+  &.Send .icon {
+    background-image: @minus-small-icon;
+  }
+  &.Receive .icon {
+    background-image: @plus-small-icon;
+  }
+  &.Transfer .icon {
+    background-image: @transfer-transaction;
+  }
+  &.Ticket .icon {
+    background-image: @ticket-live-icon;
+  }
+  &.live .icon {
+    background-image: @ticket-live-icon;
+  }
+  &.Vote .icon {
+    background-image: @ticket-voted-icon;
+  }
+  &.Revocation .icon {
+    background-image: @ticket-revoked-icon;
+  }
+  &.immature .icon {
+    background-image: @ticket-immature-icon;
+  }
+  &.missed .icon {
+    background-image: @ticket-missed-icon;
+  }
+  &.expired .icon {
+    background-image: @ticket-expired-icon;
+  }
+  &.unmined .icon {
+    background-image: @ticket-unmined-icon;
+  }
 }
 
 .transaction-status {
@@ -143,34 +111,14 @@
   flex-grow: 2;
 }
 
-.transaction-time-date {
-  color: var(--input-color-default);
-  font-size: 13px;
-  text-align: right;
-  width: 20%;
-  padding: 5px 0px 0px 0px;
-}
-
 .transaction-time-date-spacer {
   margin-left: auto;
   font-size: 11px;
 }
 
-.transaction-account-name {
-  font-size: 11px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  margin-right: 20px;
-  display: inline-block;
-  width: 9em;
-}
-
 .transaction-amount-number {
   font-size: 18px;
   font-weight: 600;
-  min-width: 120px;
-  vertical-align: top;
   margin-left: 10px;
 }
 
@@ -187,11 +135,9 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  position: absolute;
   max-width: 100px;
   margin-left: 34px;
 }
-
 
 .transaction-stake-type-overview {
   font-family: @font-family-regular;
@@ -225,17 +171,6 @@
   background-position: 0px 4px;
   padding-left: 14px;
   margin-left: 10px;
-}
-
-.history-content-nest {
-
-  .transaction-time.date-spacer {
-    flex-grow: 1;
-  }
-
-  .transaction-time-date-spacer {
-    width: 20%;
-  }
 }
 
 @media screen and (max-width: 1179px) {

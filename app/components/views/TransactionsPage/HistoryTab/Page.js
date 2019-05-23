@@ -41,48 +41,45 @@ const Page = ({
     useWindow={false}
     threshold={loadMoreThreshold}
   >
-    <div className="history-content-title">
-      <div className="history-content-title-text">
+    <div className="history-content-title is-row">
+      <div>
         <T id="history.title" m="Transaction History" />
       </div>
       <div className="history-select-tx-types-area">
-        <div className="history-select-tx-types">
-          <div className="history-search-tx">
-            <TextInput
-              type="text"
-              placeholder={intl.formatMessage(messages.filterByAddrPlaceholder)}
-              value={searchText}
-              onChange={(e) => onChangeSearchText(e.target.value)}
-            />
-          </div>
-          <Tooltip tipWidth={ 300 } text={<T id="transactions.sortby.tooltip" m="Sort By" />}>
-            <EyeFilterMenuWithSlider
-              {...{ unitDivisor, currencyDisplay }}
-              labelKey="label"
-              keyField="value"
-              options={sortTypes}
-              selected={selectedSortOrderKey}
-              onChange={onChangeSortType}
-              className="sort-by"
-              onChangeSlider={onChangeSliderValue}
-              minFilterValue={transactionsFilter.minAmount}
-              maxFilterValue={transactionsFilter.maxAmount}
-            />
-          </Tooltip>
-          <Tooltip tipWidth={ 300 } text={<T id="transactions.txtypes.tooltip" m="Transaction Type" />}>
-            <EyeFilterMenu
-              labelKey="label"
-              keyField="key"
-              options={txTypes}
-              selected={selectedTxTypeKey}
-              onChange={onChangeSelectedType}
-            />
-          </Tooltip>
+        <div className="history-search-tx">
+          <TextInput
+            type="text"
+            placeholder={intl.formatMessage(messages.filterByAddrPlaceholder)}
+            value={searchText}
+            onChange={(e) => onChangeSearchText(e.target.value)}
+          />
         </div>
+        <Tooltip tipWidth={ 300 } text={<T id="transactions.sortby.tooltip" m="Sort By" />}>
+          <EyeFilterMenuWithSlider
+            {...{ unitDivisor, currencyDisplay }}
+            labelKey="label"
+            keyField="value"
+            options={sortTypes}
+            selected={selectedSortOrderKey}
+            onChange={onChangeSortType}
+            className="sort-by"
+            onChangeSlider={onChangeSliderValue}
+            minFilterValue={transactionsFilter.minAmount}
+            maxFilterValue={transactionsFilter.maxAmount}
+          />
+        </Tooltip>
+        <Tooltip tipWidth={ 300 } text={<T id="transactions.txtypes.tooltip" m="Transaction Type" />}>
+          <EyeFilterMenu
+            labelKey="label"
+            keyField="key"
+            options={txTypes}
+            selected={selectedTxTypeKey}
+            onChange={onChangeSelectedType}
+          />
+        </Tooltip>
       </div>
     </div>
-    <div className="history-content-nest"
-      style = {{ display: transactions.length == 0 ? "none" : "initial" }} >
+    <div className="history-page-content-wrapper">
       {transactions.length > 0
         ? <TxHistory {...{ transactions, tsDate }} />
         : null }
