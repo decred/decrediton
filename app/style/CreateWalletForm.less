@@ -1,42 +1,12 @@
 @import (reference) "./main.less";
 @import (reference) "./Icons.less";
 
-.new-seed {
-  background-color: var(--input-color-default);
-}
-
-.help-text {
-  margin-bottom: 30px;
-}
-
-.help-text::after {
-  .clearfloat-mixin;
-}
-
-.cyan-bold {
-  color: var(--cyan-bold);
-  font-weight: 700;
-}
-
-.cyan-regular {
-  color: var(--cyan-bold);
-}
-
-.orange {
-  color: var(--error-text-color);
-}
-
-.orange-warning {
-  color: var(--error-text-color);
-  position: fixed;
-  top: 122px;
+.seed-warning-message {
   margin-right: 5px;
 }
 
-.seedArea > .seedError {
+.seedError {
   color: var(--error-red);
-  position: fixed;
-  top: 122px;
 }
 
 .wallet-key-blue-button {
@@ -44,28 +14,12 @@
   float: left;
 }
 
-.confirm-seed-row {
-  display: flex;
-}
-
-.confirm-seed-row.seed {
+.seed {
   margin-bottom: 30px;
-  margin-left: -140px;
 }
 
-.confirm-seed-row.passphrase {
+.passphrase {
   height: 50px;
-  margin-left: -130px;
-}
-
-.confirm-seed-label-text.passphrase {
-  display: flex;
-  width: 130px;
-}
-
-.confirm-seed-label-text.seed {
-  display: flex;
-  flex-direction: row-reverse;
 }
 
 .confirm-seed-label-text {
@@ -73,81 +27,48 @@
   margin-right: 10px;
   font-size: 13px;
   line-height: 17px;
-}
-
-.confirm-seed .input-and-unit.input-private-password {
-  min-height: auto;
+  width: 150px;
+  margin-left: -160px;
 }
 
 .create-wallet-button-container {
   height: 60px;
 }
 
-.input-form-error.confirm-seed {
-  float: left;
-}
+.text-toggle {
+  height: 29px;
 
-.create-wallet-label {
-  float: left;
-  color: var(--title-text-and-button-background);
-  font-size: 13px;
-  line-height: 17px;
-  height: 17px;
-  width: 100px;
-  text-align: right;
-}
-
-.create-wallet-header {
-  display: flex;
-  justify-content: space-between;
-}
-
-.seed-type-label {
-  position: fixed;
-  left: 793px;
-  top: 95px;
-
-  .text-toggle {
-    height: 29px;
-
-    .text-toggle-button-left {
-      color: var(--disabled-color);
-      background-color: var(--background-container);
-      border: 1px solid var(--disabled-background-color);
-      border-radius: 3px 0px 0px 3px;
-      min-width: 0px;
-      padding: 6px 20px 6px 20px;
-    }
-
-    .text-toggle-button-right {
-      color: var(--disabled-color);
-      background-color: var(--background-container);
-      border: 1px solid var(--disabled-background-color);
-      border-radius: 0px 3px 3px 0px;
-      min-width: 0px;
-      padding: 6px 20px 6px 20px;
-    }
-
-    .text-toggle-button-left.text-toggle-button-active {
-      color: var(--input-color-default);
-      background-color: var(--background-back-color);
-      border: 1px solid var(--disabled-background-color);
-      font-weight: 400;
-    }
-
-    .text-toggle-button-right.text-toggle-button-active {
-      color: var(--input-color-default);
-      background-color: var(--background-back-color);
-      border: 1px solid var(--disabled-background-color);
-      font-weight: 400;
-    }
+  .text-toggle-button-left {
+    color: var(--disabled-color);
+    background-color: var(--background-container);
+    border: 1px solid var(--disabled-background-color);
+    border-radius: 3px 0px 0px 3px;
+    min-width: 0px;
+    padding: 6px 20px 6px 20px;
   }
-}
 
-.create-wallet-field {
-  width: 100%;
-  float: left;
-  clear: right;
+  .text-toggle-button-right {
+    color: var(--disabled-color);
+    background-color: var(--background-container);
+    border: 1px solid var(--disabled-background-color);
+    border-radius: 0px 3px 3px 0px;
+    min-width: 0px;
+    padding: 6px 20px 6px 20px;
+  }
+
+  .text-toggle-button-left.text-toggle-button-active {
+    color: var(--input-color-default);
+    background-color: var(--background-back-color);
+    border: 1px solid var(--disabled-background-color);
+    font-weight: 400;
+  }
+
+  .text-toggle-button-right.text-toggle-button-active {
+    color: var(--input-color-default);
+    background-color: var(--background-back-color);
+    border: 1px solid var(--disabled-background-color);
+    font-weight: 400;
+  }
 }
 
 .input-private-password {
@@ -155,51 +76,8 @@
   padding-bottom: 3px;
 }
 
-.input-form-confirm-seed {
-  -moz-appearance: none !important;
-  position: relative;
-  width: 100%;
-
-  .words-input {
-    height: 200px;
-    min-height: 44px;
-    border-bottom: 1px solid var(--input-color);
-  }
-
-  .Select-control {
-    border: 0px;
-
-    input,
-    .Select-value-label,
-    .Select-value-icon {
-      color: var(--background-back-color);
-    }
-
-    .Select-arrow {
-      border-style: none;
-    }
-  }
-}
-
 .go-back-button {
   margin-top: 8px;
-}
-
-.input-form-error {
-  color: var(--error-text-color);
-  float: left;
-}
-
-.passphrase-info-modal {
-  height: 202px;
-}
-
-.passphrase-info-wrapper {
-  margin-left: -20px;
-}
-
-.confirm-seed-row > .seedArea {
-  margin-left: 5px;
 }
 
 .seedArea {
@@ -210,10 +88,7 @@
 
   &.hex {
     width: 90%;
-  }
-
-  .Select-arrow-zone {
-    width: 0px;
+    display: block;
   }
 
   .Select-arrow {
@@ -339,35 +214,42 @@
   line-height: 19px;
 }
 
-.watch-only-wallet-switch {
-  margin-top: 10px;
-}
-
-.wallet-switch-wrapper {
-  margin-left: 165px;
-  display: flex;
-}
-
 .wallet-switch {
   padding-right: 5px;
 }
 
-.content-tittle-wrapper {
-  height: 100%;
-  display: flex;
-  flex-direction: row-reverse;
+.content-title-wrapper {
   width: 692px;
 }
 
 @media screen and (max-width: 1179px) {
-  .confirm-seed-row {
-    margin-left: 0;
-  }
-  .confirm-seed-row.seed {
+  .seed {
     margin-left: 0;
   }
 
-  .confirm-seed-row.passphrase {
+  .passphrase {
     margin-left: 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .is-row.seed {
+    flex-direction: column;
+  }
+
+  .seedArea {
+    grid-template-columns: repeat(3, 1fr);
+    width: 353px;
+  }
+
+  .create-wallet-button-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 365px;
+  }
+
+  .is-row.content-title-wrapper {
+    flex-direction: column;
+    margin-bottom: 20px;
   }
 }

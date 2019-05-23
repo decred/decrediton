@@ -5,9 +5,8 @@ const Toggle = ({
   rightText,
   activeButton,
   onClick,
-  type,
 }) => (
-  <div className={`text-toggle text-toggle-${type}`}>
+  <div className="text-toggle is-row">
     <div
       className={"text-toggle-button-left" + (activeButton === "left" ? " text-toggle-button-active" : "")}
       onClick={activeButton == "right" ? () => onClick("left") : null}

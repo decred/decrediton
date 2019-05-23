@@ -2,8 +2,8 @@ import SingleSeedWordEntry from "../SingleSeedWordEntry";
 import SeedHexEntry from "inputs/SeedHexEntry";
 import { TextToggle } from "buttons";
 import { FormattedMessage as T } from "react-intl";
-import "style/CreateWalletForm.less";
 import { ConfirmSeedMsg } from "../../../messages";
+import "style/CreateWalletForm.less";
 import { WORDS, HEX } from "./constants";
 
 const ExistingSeedForm = ({
@@ -13,10 +13,10 @@ const ExistingSeedForm = ({
   const errors = mountSeedErrors();
   return (
     <>
-      <div className="content-title">
-        <T id="createWallet.restore.title" m={"Restore existing wallet"}/>
-      </div>
-      <div className="seed-type-label">
+      <div className="is-row content-title-wrapper">
+        <div className="content-title">
+          <T id="createWallet.restore.title" m={"Restore existing wallet"}/>
+        </div>
         <TextToggle
           activeButton={"left"}
           leftText={WORDS}
@@ -24,20 +24,12 @@ const ExistingSeedForm = ({
           toggleAction={handleToggle}
         />
       </div>
-      <div className="confirm-seed-row seed">
+      <div className="is-row seed">
         <div className="confirm-seed-label-text seed">
           <ConfirmSeedMsg />
         </div>
         {seedType === WORDS && Array.isArray(seedWords) ?
           <div className="seedArea">
-            {showPasteWarning &&
-            <div className="orange-warning">
-              <T id="confirmSeed.warnings.pasteExistingSeed" m="*Please make sure you also have a physical, written down copy of your seed." />
-            </div>}
-            {showPasteError &&
-            <div className="seedError">
-              <T id="confirmSeed.warnings.pasteExistingError" m="* Please paste a valid 33 word seed."/>
-            </div>}
             {seedWords.map((seedWord) => {
               const className = seedWord.word ? seedWord.error ? "seedWord error" : "seedWord populated" : "seedWord restore";
               return (
@@ -58,10 +50,19 @@ const ExistingSeedForm = ({
               seed={hexSeed}
             />
           </div>}
-        <div className="input-form-error">
-          {errors.length > 0 && <div>{errors}</div>}
-        </div>
       </div>
+      {showPasteError &&
+        <div className="seedError">
+          <T id="confirmSeed.warnings.pasteExistingError" m="* Please paste a valid 33 word seed."/>
+        </div>}
+      {errors.length > 0 &&
+        <div className="warning">
+          <div>{errors}</div>
+        </div>}
+      {showPasteWarning &&
+        <div className="warning seed-warning-message">
+          <T id="confirmSeed.warnings.pasteExistingSeed" m="*Please make sure you also have a physical, written down copy of your seed." />
+        </div>}
     </>
   );
 };
