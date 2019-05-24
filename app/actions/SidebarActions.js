@@ -14,4 +14,4 @@ export const reduceSideBar = () => (dispatch) => {
 
 export const sidebarToBottom = () => (dispatch) => {
   dispatch({ type: SIDEBAR_TO_BOTTOM });
-}
+};

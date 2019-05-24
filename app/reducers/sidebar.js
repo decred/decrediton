@@ -23,7 +23,7 @@ export default function sidebar(state = {}, action) {
       ...state,
       expandSideBar: false,
       sidebarOnBottom: true,
-    }
+    };
   default:
     return state;
   }

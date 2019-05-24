@@ -312,7 +312,7 @@
     background-image: @menu-governance-active;
     cursor: default;
   }
-  &.menu-link.trezorIcon {
+  &.trezorIcon {
     background-image: @menu-trezor-active;
   }
 }
@@ -325,10 +325,6 @@
   background-color: var(--background-back-color);
 }
 
-@media screen and (max-width: 1179px) {
-
-}
-
 @media screen and (max-width: 768px) {
   .sidebar {
     display: flex;
@@ -339,6 +335,13 @@
 
   .sidebar-scroll {
     display: flex;
+  }
+
+  .menu-link {
+    height: 70px;
+    width: 76px;
+    padding-left: 0;
+    background-position: 50%;
   }
 
   .menu-caret {

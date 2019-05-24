@@ -42,7 +42,7 @@ class App extends React.Component {
     window.addEventListener("click", this.onClick);
     window.addEventListener("auxclick", this.onAuxClick);
     this.isWaiting = false;
-    window.addEventListener('resize', this.updateWindowDimensions);
+    window.addEventListener("resize", this.updateWindowDimensions);
     this.updateWindowDimensions();
     this.refreshing = false;
 
@@ -96,7 +96,7 @@ class App extends React.Component {
       } else {
         this.props.onExpandSideBar();
       }
-    }
+    };
     this.isWaiting = true;
     setTimeout(updateWindow, 200);
   }
