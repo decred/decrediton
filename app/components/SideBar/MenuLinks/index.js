@@ -19,7 +19,7 @@ const linkList = [
 class MenuLinks extends React.Component {
 
   _nodes = new Map();
-  state = { top: 0, selectedTab: null };
+  state = { top: 0, left: 0, selectedTab: null };
 
   constructor (props) {
     super(props);
@@ -34,11 +34,11 @@ class MenuLinks extends React.Component {
     this.updateCaretPosition();
   }
 
-  componentDidUpdate() {
-    const { location } = this.props;
+  componentDidUpdate(prevProps) {
+    const { location, sidebarOnBottom } = this.props;
     const tabbedPageCheck = location.pathname.indexOf("/", 1);
     const selectedTab = tabbedPageCheck > 0 ? location.pathname.substring(0, tabbedPageCheck) : location.pathname;
-    if (this.state.selectedTab != selectedTab) {
+    if (this.state.selectedTab !== selectedTab || sidebarOnBottom !== prevProps.sidebarOnBottom) {
       this.updateCaretPosition();
     }
   }
@@ -54,20 +54,26 @@ class MenuLinks extends React.Component {
   neededCaretPosition(path) {
     const tabForRoute = this._nodes.get(path);
     if (!tabForRoute) return null;
+    if (this.props.sidebarOnBottom) {
+      const newLeft = tabForRoute.offsetLeft;
+      return { left: spring(newLeft, theme("springs.sideBar")), top: 0 };
+    }
     const newTop = tabForRoute.offsetTop;
-    return { top: spring(newTop, theme("springs.sideBar")) };
+    return { top: spring(newTop, theme("springs.sideBar")), left: 0 };
   }
 
   getAnimatedCaret() {
+    const style = this.props.sidebarOnBottom ? { left: this.state.left } : { top: this.state.top };
     return (
-      <Motion style={ { top: this.state.top } }>
+      <Motion style={ style }>
         { style => <div className="menu-caret" {...{ style }}/> }
       </Motion>
     );
   }
 
   getStaticCaret() {
-    return <div className="menu-caret" style={ { top: this.state.top.val } } />;
+    const style = this.props.sidebarOnBottom ? { left: this.state.left.val } : { top: this.state.top.val };
+    return <div className="menu-caret" style={ style } />;
   }
 
   getMenuLink(linkItem) {
