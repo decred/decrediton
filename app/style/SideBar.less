@@ -198,6 +198,125 @@
   background-color: var(--stroke-color-focused);
 }
 
+.menu-link {
+  display: flex;
+  position: relative;
+  z-index: 1;
+  align-items: center;
+  cursor: pointer;
+  height: 52px;
+  padding-left: 65px;
+  color: var(--disabled-color);
+  font-size: 15px;
+  text-decoration: none;
+  transition: color 0.13s ease-in-out;
+  background-position: 20px 50%;
+  background-size: 20px;
+  background-repeat: no-repeat;
+  user-select: none;
+
+  &.settingsIcon {
+    background-image: @menu-settings-default;
+  }
+  &.settingsIcon:not(.menu-link-active):hover {
+    background-image: @menu-animation-settings;
+  }
+  &.helpIcon {
+    background-image: @menu-help-default;
+  }
+  &.helpIcon:not(.menu-link-active):hover {
+    background-image: @menu-animation-help;
+  }
+  &.ticketsIcon {
+    background-image: @menu-tickets-default;
+  }
+  &.ticketsIcon:not(.menu-link-active):hover {
+    background-image: @menu-animation-tickets;
+  }
+  &.transactionsIcon {
+    background-image: @menu-transactions-default;
+  }
+  &.trezorIcon {
+    background-image: @menu-trezor-default;
+  }
+  &.trezorIcon:not(.menu-link-active):hover {
+    background-image: @menu-trezor-hover;
+  }
+  &.transactionsIcon:not(.menu-link-active):hover {
+    background-image: @menu-animation-transactions;
+  }
+  &.accountsIcon {
+    background-image: @menu-accounts-default;
+  }
+  &.accountsIcon:not(.menu-link-active):hover {
+    background-image: @menu-animation-accounts;
+    background-size: 22px;
+    background-position: 19px 50%;
+  }
+  &.securitycntrIcon {
+    background-image: @menu-securitycntr-default;
+  }
+  &.securitycntrIcon:not(.menu-link-active):hover {
+    background-image: @menu-animation-security;
+  }
+  &.overviewIcon {
+    background-image: @menu-overview-default;
+  }
+  &.overviewIcon:not(.menu-link-active):hover {
+    background-image: @menu-animation-overview;
+  }
+  &.governanceIcon {
+    background-image: @menu-governance-default;
+  }
+  &.governanceIcon:not(.menu-link-active):hover {
+    background-image: @menu-animation-governance;
+  }
+}
+
+.menu-link:hover {
+  color: var(--input-color-default);
+}
+
+.menu-link-active {
+  color: var(--input-color-default);
+
+  &.settingsIcon {
+    background-image: @menu-settings-active;
+    cursor: default;
+  }
+  &.helpIcon {
+    background-image: @menu-help-active;
+    cursor: default;
+  }
+  &.ticketsIcon {
+    background-image: @menu-tickets-active;
+    cursor: default;
+  }
+  &.transactionsIcon {
+    background-image: @menu-transactions-active;
+    cursor: default;
+  }
+  &.accountsIcon {
+    background-image: @menu-accounts-active;
+    cursor: default;
+  }
+  &.securitycntrIcon {
+    background-image: @menu-securitycntr-active;
+    cursor: default;
+  }
+  &.overviewIcon {
+    background-image: @menu-overview-active;
+    cursor: default;
+  }
+  &.governanceIcon {
+    background-image: @menu-governance-active;
+    cursor: default;
+  }
+  &.menu-link.trezorIcon {
+    background-image: @menu-trezor-active;
+  }
+}
+
 .menu-caret {
   position: absolute;
   height: 52px;
@@ -220,5 +339,12 @@
 
   .sidebar-scroll {
     display: flex;
+  }
+
+  .menu-caret {
+    width: 76px;
+    height: 65px;
+    border-left: 0;
+    border-bottom: 5px solid var(--accent-color);
   }
 }
