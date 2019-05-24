@@ -26,7 +26,7 @@ const Bar = ({
   onReduceSideBar,
   isWatchingOnly,
 }) => (
-  <div className={"sidebar " + (expandSideBar ? null : "sidebar-reduced ") + (isTestNet ? "sidebar-testnet" : "sidebar-mainnet")}>
+  <div className={"sidebar " + (!expandSideBar && "sidebar-reduced ")}>
     <Logo {...{ isTestNet, expandSideBar, onReduceSideBar, onExpandSideBar, isWatchingOnly }} />
     <div className="sidebar-main">
       <div className="sidebar-scroll">
