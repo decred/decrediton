@@ -3,6 +3,7 @@ import { routing, theming, newProposalCounts } from "connectors";
 import { FormattedMessage as T } from "react-intl";
 import { spring, Motion } from "react-motion";
 import theme from "theme";
+import { createElement as h } from "react";
 
 const linkList = [
   { path: "/home",          link: <T id="sidebar.link.home" m="Overview" />,             icon:"overview" },
@@ -14,6 +15,10 @@ const linkList = [
   { path: "/help",          link: <T id="sidebar.link.help" m="Help" />,                 icon:"help" },
   { path: "/settings",      link: <T id="sidebar.link.settings" m="Settings" />,         icon:"settings" },
 ];
+
+
+// number of link in a row when sidebar is at bottom.
+const LINK_PER_ROW = 4;
 
 @autobind
 class MenuLinks extends React.Component {
@@ -56,14 +61,15 @@ class MenuLinks extends React.Component {
     if (!tabForRoute) return null;
     if (this.props.sidebarOnBottom) {
       const newLeft = tabForRoute.offsetLeft;
-      return { left: spring(newLeft, theme("springs.sideBar")), top: 0 };
+      const newTop = tabForRoute.offsetTop;
+      return { left: spring(newLeft, theme("springs.sideBar")), top: newTop };
     }
     const newTop = tabForRoute.offsetTop;
     return { top: spring(newTop, theme("springs.sideBar")), left: 0 };
   }
 
   getAnimatedCaret() {
-    const style = this.props.sidebarOnBottom ? { left: this.state.left } : { top: this.state.top };
+    const style = this.props.sidebarOnBottom ? { left: this.state.left, top: this.state.top } : { top: this.state.top };
     return (
       <Motion style={ style }>
         { style => <div className="menu-caret" {...{ style }}/> }
@@ -72,7 +78,7 @@ class MenuLinks extends React.Component {
   }
 
   getStaticCaret() {
-    const style = this.props.sidebarOnBottom ? { left: this.state.left.val } : { top: this.state.top.val };
+    const style = this.props.sidebarOnBottom ? { left: this.state.left.val, top: this.state.top.val } : { top: this.state.top.val };
     return <div className="menu-caret" style={ style } />;
   }
 
@@ -93,12 +99,33 @@ class MenuLinks extends React.Component {
     );
   }
 
+  getLinks() {
+    const { sidebarOnBottom } = this.props;
+
+    let linksComponent = [];
+    if (sidebarOnBottom) {
+      const numberOfRows = this.links.length / LINK_PER_ROW;
+      let n = 0;
+      for (let i = 0; i < numberOfRows; i++) {
+        linksComponent[i] = [];
+        for (let j = 0; j < LINK_PER_ROW; j++) {
+          linksComponent[i].push(this.getMenuLink(this.links[n]));
+          n++;
+        }
+        linksComponent[i] = h("div", { className: "is-row", key: i }, linksComponent[i]);
+      }
+      return linksComponent;
+    }
+
+    return linksComponent = this.links.map(link => this.getMenuLink(link));
+  }
+
   render () {
     const caret = this.props.uiAnimations ? this.getAnimatedCaret() : this.getStaticCaret();
 
     return (
       <>
-        {this.links.map(link => this.getMenuLink(link))}
+        {this.getLinks()}
         {caret}
       </>
     );

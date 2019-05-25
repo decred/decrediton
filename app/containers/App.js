@@ -92,6 +92,7 @@ class App extends React.Component {
       if (window.innerWidth <= MINIMUM_SIZE_BOTTOM_SIDEBAR) {
         this.props.onSidebarToBottom();
       } else if (window.innerWidth <= MINIMUM_SIZE_TO_REDUCE_SIDEBAR) {
+        this.props.onSidebarLeaveBottom();
         this.props.onReduceSideBar();
       } else {
         this.props.onExpandSideBar();

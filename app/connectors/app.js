@@ -29,7 +29,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   hideAutobuyerRunningModal: ca.hideAutobuyerRunningModal,
   onExpandSideBar: sba.expandSideBar,
   onReduceSideBar: sba.reduceSideBar,
-  onSidebarToBottom: sba.sidebarToBottom
+  onSidebarToBottom: sba.sidebarToBottom,
+  onSidebarLeaveBottom: sba.onSidebarLeaveBottom,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

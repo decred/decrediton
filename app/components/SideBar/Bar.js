@@ -26,8 +26,9 @@ const Bar = ({
   onReduceSideBar,
   isWatchingOnly,
 }) => (
-  <div className={"sidebar " + (!expandSideBar && "sidebar-reduced ")}>
-    <Logo {...{ isTestNet, expandSideBar, onReduceSideBar, onExpandSideBar, isWatchingOnly }} />
+  <div className={"sidebar " + (!expandSideBar && "sidebar-reduced ")}
+      style={!expandSideBar && sidebarOnBottom ? { height: 70, flexDirection: "row" } : null}>
+    <Logo {...{ isTestNet, expandSideBar, sidebarOnBottom, onReduceSideBar, onExpandSideBar, isWatchingOnly }} />
     <div className="sidebar-main">
       <div className="sidebar-scroll">
         <MenuLinks {...{ expandSideBar, sidebarOnBottom }}/>
