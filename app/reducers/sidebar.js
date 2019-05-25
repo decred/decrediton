@@ -27,7 +27,7 @@ export default function sidebar(state = {}, action) {
     return {
       ...state,
       sidebarOnBottom: false,
-    }
+    };
   default:
     return state;
   }

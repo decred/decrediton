@@ -27,7 +27,7 @@ const Bar = ({
   isWatchingOnly,
 }) => (
   <div className={"sidebar " + (!expandSideBar && "sidebar-reduced ")}
-      style={!expandSideBar && sidebarOnBottom ? { height: 70, flexDirection: "row" } : null}>
+    style={!expandSideBar && sidebarOnBottom ? { height: 70, flexDirection: "row" } : null}>
     <Logo {...{ isTestNet, expandSideBar, sidebarOnBottom, onReduceSideBar, onExpandSideBar, isWatchingOnly }} />
     <div className="sidebar-main">
       <div className="sidebar-scroll">
