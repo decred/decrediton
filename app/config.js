@@ -242,11 +242,11 @@ export function getConfigData(configKey) {
 }
 
 export function getRemoteCredentials() {
-  return getConfigData(cfgConstants.REMOTE_CREDENTIALS)
+  return getConfigData(cfgConstants.REMOTE_CREDENTIALS);
 }
 
 export function getAppdataPath() {
-  return getConfigData(cfgConstants.APPDATA)
+  return getConfigData(cfgConstants.APPDATA);
 }
 
 export function getDaemonIsAdvanced() {
@@ -265,7 +265,7 @@ export function setAppdataPath(appdataPath) {
 }
 
 export function setRemoteCredentials(rpcuser, rpcpass, rpccert, rpchost, rpcport) {
-  setConfigData(cfgConstants.APPDATA, "")
+  setConfigData(cfgConstants.APPDATA, "");
   const credentials = cfgConstants.setDaemonRemoteCredentials(rpcuser, rpcpass, rpccert, rpchost, rpcport);
   return setConfigData(cfgConstants.REMOTE_CREDENTIALS, credentials);
 }

@@ -193,10 +193,10 @@ export const registerForErrors = () => (dispatch) => {
   });
 };
 
-export const backToCredentials = () => (dispatch, getState) => {
+export const backToCredentials = () => (dispatch) => {
   dispatch({ type: BACK_TO_CREDENTIALS  });
   dispatch(pushHistory("/getstarted"));
-}
+};
 
 export const deleteDaemonData = () => (dispatch, getState) => {
   const { appData } = getState().daemon;
