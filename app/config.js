@@ -3,6 +3,7 @@ import Store from "electron-store";
 import ini from "ini";
 import { stakePoolInfo } from "./middleware/stakepoolapi";
 import { appDataDirectory, getGlobalCfgPath, dcrdCfg, getWalletPath, dcrwalletCfg, getDcrdRpcCert, getDcrdPath } from "./main_dev/paths";
+import * as cfgConstants from "./main_dev/configConstants.js";
 
 export function getGlobalCfg() {
   const config = new Store();
@@ -76,90 +77,24 @@ function cleanWalletCfg(config) {
 
 export function initGlobalCfg() {
   const config = new Store();
-  if (!config.has("theme")) {
-    config.set("theme", "theme-light");
-  }
-  if (!config.has("daemon_start_advanced")) {
-    config.set("daemon_start_advanced", false);
-  }
-  if (!config.has("must_open_form")) {
-    config.set("must_open_form",true);
-  }
-  if (!config.has("locale")) {
-    config.set("locale","");
-  }
-  if (!config.has("network")) {
-    config.set("network","mainnet");
-  }
-  if (!config.has("set_language")) {
-    config.set("set_language","true");
-  }
-  if (!config.has("ui_animations")) {
-    config.set("ui_animations", true);
-  }
-  if (!config.has("show_tutorial")) {
-    config.set("show_tutorial","true");
-  }
-  if (!config.has("show_privacy")) {
-    config.set("show_privacy", true);
-  }
-  if (!config.has("show_spvchoice")) {
-    config.set("show_spvchoice", true);
-  }
-  if (!config.has("allowed_external_requests")) {
-    config.set("allowed_external_requests", []);
-  }
-  if (!config.has("proxy_type")) {
-    config.set("proxy_type", null);
-  }
-  if (!config.has("proxy_location")) {
-    config.set("proxy_location", null);
-  }
-  if (!config.has("remote_credentials")) {
-    const credentialKeys = {
-      rpc_user : "",
-      rpc_pass : "",
-      rpc_cert : "",
-      rpc_host : "",
-      rpc_port : "",
-    };
-    config.set("remote_credentials",credentialKeys);
-  }
-  if (!config.has("appdata_path")) {
-    config.set("appdata_path", "");
-  }
-  if (!config.has("spv_mode")) {
-    config.set("spv_mode", false);
-  }
-  if (!config.has("spv_connect")) {
-    config.set("spv_connect", []);
-  }
-  if (!config.has("max_wallet_count")) {
-    config.set("max_wallet_count", 3);
-  }
-  if (!config.has("timezone")) {
-    config.set("timezone", "local");
-  }
-  if (!config.has("disable_hardware_accel")) {
-    config.set("disable_hardware_accel", false);
-  }
+  Object.keys(cfgConstants.INITIAL_VALUES).map(key => {
+    if(!config.has(key)) {
+      config.set(key, cfgConstants.INITIAL_VALUES[key]);
+    }
+  });
   cleanGlobalCfg(config);
   return(config);
 }
 
 function cleanGlobalCfg(config) {
-  var key;
-  const globalCfgFields = [ "theme", "daemon_start_advanced", "must_open_form",
-    "locale", "network", "set_language", "ui_animations", "show_spvchoice",
-    "show_tutorial", "show_privacy", "allowed_external_requests", "proxy_type",
-    "proxy_location", "remote_credentials", "spv_mode", "spv_connect",
-    "max_wallet_count", "timezone", "last_height", "appdata_path",
-    "disable_hardware_accel" ];
-  for (key in config.store) {
-    var found = false;
-    for (var i = 0; i < globalCfgFields.length; i++) {
-      if (key == globalCfgFields[i]) {
+  const globalCfgFields = Object.keys(cfgConstants.INITIAL_VALUES);
+
+  for (let key in config.store) {
+    let found = false;
+    for (let i = 0; i < globalCfgFields.length; i++) {
+      if (key === globalCfgFields[i]) {
         found = true;
+        break;
       }
     }
     if (!found) {
@@ -169,7 +104,7 @@ function cleanGlobalCfg(config) {
 }
 
 export function validateGlobalCfgFile() {
-  var fileContents;
+  let fileContents;
   try {
     fileContents = fs.readFileSync(getGlobalCfgPath(), "utf8");
   }
@@ -301,45 +236,42 @@ export function updateStakePoolConfig(config, foundStakePoolConfigs) {
   }
 }
 
-export function getAppdataPath() {
+export function getConfigData(configKey) {
   const config = getGlobalCfg();
-  return config.get("appdata_path");
-}
-
-export function setAppdataPath(appdataPath) {
-  const config = getGlobalCfg();
-  const credentialKeys = {
-    rpc_user : "",
-    rpc_pass : "",
-    rpc_cert : "",
-    rpc_host : "",
-    rpc_port : "",
-  };
-  config.set("remote_credentials",credentialKeys);
-  return config.set("appdata_path",appdataPath);
+  return config.get(configKey);
 }
 
 export function getRemoteCredentials() {
-  const config = getGlobalCfg();
-  return config.get("remote_credentials");
+  return getConfigData(cfgConstants.REMOTE_CREDENTIALS)
 }
 
-export function setRemoteCredentials(key, value) {
+export function getAppdataPath() {
+  return getConfigData(cfgConstants.APPDATA)
+}
+
+export function setConfigData(key, value) {
   const config = getGlobalCfg();
-  config.set("appdata_path","");
-  let credentials = config.get("remote_credentials");
-  credentials[key] = value;
-  return config.set("remote_credentials",credentials);
+  return config.set(key, value);
+}
+
+export function setAppdataPath(appdataPath) {
+  const credentialKeys = cfgConstants.setDaemonRemoteCredentials("", "", "", "", "");
+  setConfigData(cfgConstants.REMOTE_CREDENTIALS, credentialKeys);
+  return setConfigData(cfgConstants.APPDATA, appdataPath);
+}
+
+export function setRemoteCredentials(rpcuser, rpcpass, rpccert, rpchost, rpcport) {
+  setConfigData(cfgConstants.APPDATA, "")
+  const credentials = cfgConstants.setDaemonRemoteCredentials(rpcuser, rpcpass, rpccert, rpchost, rpcport);
+  return setConfigData(cfgConstants.REMOTE_CREDENTIALS, credentials);
 }
 
 export function setMustOpenForm(openForm) {
-  const config = getGlobalCfg();
-  return config.set("must_open_form", openForm);
+  return setConfigData(cfgConstants.OPEN_FORM, openForm);
 }
 
 export function setLastHeight(height) {
-  const config = getGlobalCfg();
-  return config.set("last_height", height);
+  return setConfigData(cfgConstants.LAST_HEIGHT, height);
 }
 
 function makeRandomString(length) {
