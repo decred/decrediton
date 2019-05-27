@@ -37,6 +37,10 @@ function closeClis() {
 }
 
 export function closeDCRD() {
+  if (dcrdPID === -1) {
+    // process is not started by decrediton
+    return true;
+  }
   if (isRunning(dcrdPID) && os.platform() != "win32") {
     logger.log("info", "Sending SIGINT to dcrd at pid:" + dcrdPID);
     process.kill(dcrdPID, "SIGINT");
@@ -55,6 +59,10 @@ export function closeDCRD() {
 }
 
 export const closeDCRW = () => {
+  if (dcrwPID === -1) {
+    // process is not started by decrediton
+    return true;
+  }
   try {
     if (isRunning(dcrwPID) && os.platform() != "win32") {
       logger.log("info", "Sending SIGINT to dcrwallet at pid:" + dcrwPID);
