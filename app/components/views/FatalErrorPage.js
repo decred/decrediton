@@ -12,8 +12,41 @@ const corruptedError = "corrupted";
 const checkSumError = "checksum does not match";
 class FatalErrorPage extends React.Component {
 
+  getErrorAaction() {
+    const { daemonError, deleteDaemonData } = this.props;
+    let errorMessage;
+
+    switch (true) {
+      case (daemonError.indexOf(resourcesUnavailableError) !== -1): 
+        errorMessage = <T id="fatal.suggestion.resources" m="This error typically means you have another instance of daemon running.  You should check your taskmanager or profiler to shutdown any still running daemon and then try again." />
+        break;
+      case (daemonError.indexOf(DIFF_CONNECTION_ERROR) !== -1):
+        errorMessage = <T id="fatal.suggestion.diffConnection" m="This error typically means you have the testnet flag in your dcrd.conf file. You should check your dcrd.conf file and remove the testnet=1." />
+         break;
+      case ((daemonError.indexOf(corruptedError) !== -1  || daemonError.indexOf(checkSumError) !== -1 )):
+        errorMessage = (
+          <>
+            <div className="fatal-error-reset-blockchain">
+              <T id="fatal.suggestion.corrupted" m="This error means your blockchain data has somehow become corrupted.  Typically, this is caused by a sector on the HDD/SDD that went bad and its built-in SMART didn't repair it, or the more likely case, there was a memory issue which corrupted the data.  To resolve, you must delete your blockchain data and re-download.  Press the button below to complete the process. When you restart Decrediton, it will automatically begin your blockchain download. Please come to our support channel on slack/matrix/discord/rocketchat to get advice about running disk utilities. " />
+            </div>
+            <RemoveDaemonButton
+              className="fatal-remove-button"
+              modalTitle={<T id="fatal.removeConfirmModal.title" m="Remove daemon data"/>}
+              modalContent={<T id="fatal.removeConfirmModal.content" m="Warning this action is permanent! Please make sure you want to remove your blockchain data before proceeding. Decrediton will automatically shutdown after deleting the folder. Please manually restart it afterwards."/>}
+              onSubmit={deleteDaemonData}
+              buttonLabel={ <T id="fatal.button.delete" m="Delete and Shutdown"/>}/>
+          </>);
+        break;
+      default:
+        errorMessage = <T id="fatal.suggestion.fallthrough" m="Please note the error above and go to the support channel on slack/matrix/rockchat for help resolving the issue." />
+        break;
+    }
+
+    return errorMessage;
+  }
+
   render() {
-    const { daemonError, walletError, shutdownApp, deleteDaemonData } = this.props;
+    const { daemonError, walletError, shutdownApp, isAdvancedDaemon, backToCredentials } = this.props;
     return (
       <div className="page-body getstarted">
         <div className="fatal-error-page">
@@ -38,26 +71,13 @@ class FatalErrorPage extends React.Component {
           </div>
           <div className="fatal-error-title"><T id="fatal.suggestion.title" m="Suggested action to resolve error" />:</div>
           <div className="fatal-error-suggestion">
-            {daemonError && daemonError.indexOf(resourcesUnavailableError) > 0 ?
-              <T id="fatal.suggestion.resources" m="This error typically means you have another instance of daemon running.  You should check your taskmanager or profiler to shutdown any still running daemon and then try again." /> :
-              daemonError && daemonError.indexOf(DIFF_CONNECTION_ERROR) !== -1 ?
-                <T id="fatal.suggestion.diffConnection" m="This error typically means you have the testnet flag in your dcrd.conf file. You should check your dcrd.conf file and remove the testnet=1." /> :
-                daemonError && (daemonError.indexOf(corruptedError) > 0  || daemonError.indexOf(checkSumError) > 0) ?
-                  <>
-                    <div className="fatal-error-reset-blockchain">
-                      <T id="fatal.suggestion.corrupted" m="This error means your blockchain data has somehow become corrupted.  Typically, this is caused by a sector on the HDD/SDD that went bad and its built-in SMART didn't repair it, or the more likely case, there was a memory issue which corrupted the data.  To resolve, you must delete your blockchain data and re-download.  Press the button below to complete the process. When you restart Decrediton, it will automatically begin your blockchain download. Please come to our support channel on slack/matrix/discord/rocketchat to get advice about running disk utilities. " />
-                    </div>
-                    <RemoveDaemonButton
-                      className="fatal-remove-button"
-                      modalTitle={<T id="fatal.removeConfirmModal.title" m="Remove daemon data"/>}
-                      modalContent={<T id="fatal.removeConfirmModal.content" m="Warning this action is permanent! Please make sure you want to remove your blockchain data before proceeding. Decrediton will automatically shutdown after deleting the folder. Please manually restart it afterwards."/>}
-                      onSubmit={deleteDaemonData}
-                      buttonLabel={ <T id="fatal.button.delete" m="Delete and Shutdown"/>}/>
-                  </> :
-                  <T id="fatal.suggestion.fallthrough" m="Please note the error above and go to the support channel on slack/matrix/rockchat for help resolving the issue." />
-            }
+            {daemonError && this.getErrorAaction()}
           </div>
           <div className="fatal-error-toolbar">
+            { isAdvancedDaemon &&
+              <KeyBlueButton onClick={backToCredentials}>
+                <T id="fatal.retry.connection.button" m="Return to Daemon Connection"/>
+              </KeyBlueButton>}
             <KeyBlueButton onClick={shutdownApp}>
               <T id="fatal.button" m="Close Decrediton"/>
             </KeyBlueButton>

@@ -249,6 +249,10 @@ export function getAppdataPath() {
   return getConfigData(cfgConstants.APPDATA)
 }
 
+export function getDaemonIsAdvanced() {
+  return getConfigData(cfgConstants.DAEMON_ADVANCED);
+}
+
 export function setConfigData(key, value) {
   const config = getGlobalCfg();
   return config.set(key, value);

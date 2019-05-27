@@ -22,6 +22,7 @@ import {
   DAEMON_WARNING,
   WALLET_WARNING, CLOSEDAEMON_ATTEMPT, CLOSEDAEMON_FAILED, CLOSEDAEMON_SUCCESS,
   CHECK_NETWORKMATCH_ATTEMPT, CHECK_NETWORKMATCH_SUCCESS, CHECK_NETWORKMATCH_FAILED,
+  BACK_TO_CREDENTIALS,
 } from "../actions/DaemonActions";
 import {
   CREATEWALLET_GOBACK,
@@ -104,6 +105,11 @@ export default function version(state = {}, action) {
       timeLeftEstimate: null,
       timeStart: null,
       blockStart: null,
+    };
+  case BACK_TO_CREDENTIALS:
+    return {
+      ...state,
+      daemonStarted: false,
     };
   case DAEMONSYNCING_START:
     return { ...state,
