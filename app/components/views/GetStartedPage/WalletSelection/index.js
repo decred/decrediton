@@ -1,5 +1,4 @@
 import { WalletSelectionFormBody } from "./Form";
-import { createWallet } from "connectors";
 import { StartDecrediton } from "views/GetStartedPage/context";
 
 @autobind
@@ -26,8 +25,6 @@ class WalletSelectionBody extends React.Component {
 
   componentDidMount() {
     this.context.selectedWallet =  this.context.availableWallets[0];
-  }
-  componentDidUpdate(prevProps) {
   }
 
   componentWillUnmount() {

@@ -8,7 +8,7 @@ import { semverCompatible } from "./VersionActions";
 import * as wallet from "wallet";
 import { push as pushHistory, goBack } from "react-router-redux";
 import { ipcRenderer } from "electron";
-import { setMustOpenForm, getWalletCfg, getAppdataPath, getRemoteCredentials, getGlobalCfg, setLastHeight, getDaemonIsAdvanced } from "../config";
+import { setMustOpenForm, getWalletCfg, getAppdataPath, getRemoteCredentials, getGlobalCfg, setLastHeight } from "../config";
 import { isTestNet } from "selectors";
 import axios from "axios";
 import { STANDARD_EXTERNAL_REQUESTS } from "main_dev/externalRequests";
@@ -228,14 +228,14 @@ export const shutdownApp = () => (dispatch, getState) => {
 
 export const cleanShutdown = () => () => wallet.cleanShutdown();
 
-export const getAvailableWallets = () => async (dispatch, getState) => new Promise (async (resolve, reject) => {
+export const getAvailableWallets = () => async (dispatch, getState) => new Promise (async (resolve) => {
   const { currentSettings } = getState().settings;
   const network = currentSettings.network;
   const availableWallets = await wallet.getAvailableWallets(network);
   const previousWallet = await wallet.getPreviousWallet();
   dispatch({ availableWallets, previousWallet, type: AVAILABLE_WALLETS });
-  
-  resolve({ availableWallets, previousWallet })
+
+  resolve({ availableWallets, previousWallet });
   // return {;
 });
 
@@ -287,7 +287,7 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => new Promi
   const network = currentSettings.network;
 
   try {
-    const walletStarted = await wallet.startWallet(selectedWallet.value.wallet, network == "testnet")
+    const walletStarted = await wallet.startWallet(selectedWallet.value.wallet, network == "testnet");
     const { port } = walletStarted;
     const walletCfg = getWalletCfg(network == "testnet", selectedWallet.value.wallet);
     wallet.setPreviousWallet(selectedWallet);
@@ -318,16 +318,16 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => new Promi
     dispatch({ type: WALLET_STAKEPOOL_SETTINGS, activeStakePoolConfig, selectedStakePool, currentStakePoolConfig });
     dispatch({ type: WALLET_LOADER_SETTINGS, discoverAccountsComplete });
     selectedWallet.value.isTrezor && dispatch(enableTrezor());
-    await dispatch(getVersionServiceAttempt())
-    resolve(discoverAccountsComplete)
+    await dispatch(getVersionServiceAttempt());
+    resolve(discoverAccountsComplete);
   } catch (err) {
-    console.log(err);
+    reject(err);
     dispatch({ type: DAEMONSTARTED_ERROR });
   }
 });
 
 export const prepStartDaemon = () => (dispatch, getState) => {
-  const { daemon: { daemonAdvanced, openForm } } = getState();
+  const { daemon: { daemonAdvanced } } = getState();
   const cliOptions = ipcRenderer.sendSync("get-cli-options");
   dispatch(registerForErrors());
   dispatch(checkDecreditonVersion());
@@ -346,7 +346,6 @@ export const prepStartDaemon = () => (dispatch, getState) => {
   } else {
     ({ rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port } = getRemoteCredentials());
   }
-  const credentials = { rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port };
   const hasAllCredentials = rpc_pass && rpc_user && rpc_pass.length > 0 && rpc_user.length > 0 && rpc_cert.length > 0 && rpc_host.length > 0 && rpc_port.length > 0;
   const hasAppData = getAppdataPath() && getAppdataPath().length > 0;
 
@@ -377,22 +376,23 @@ export const connectDaemon = (rpcCreds) => (dispatch, getState) => new Promise((
     }
     if (daemonConnected || daemonError) return;
     try {
-      const connected = await wallet.connectDaemon({ rpcCreds: creds, testnet: isTestNet(getState()) })
-      dispatch({ type: CONNECTDAEMON_SUCCESS });      
-      resolve(connected)
+      const connected = await wallet.connectDaemon({ rpcCreds: creds, testnet: isTestNet(getState()) });
+      dispatch({ type: CONNECTDAEMON_SUCCESS });
+      resolve(connected);
     } catch(err) {
       const { error } = err;
       if (error && error.code === "ECONNREFUSED") {
         setTimeout(tryConnect, 1000);
       } else {
         dispatch({ type: CONNECTDAEMON_FAILURE, error });
+        reject(err);
       }
     }
   };
   tryConnect();
 });
 
-export const checkNetworkMatch = () => async (dispatch, getState) => new Promise(async (resolve,reject) => {
+export const checkNetworkMatch = () => async (dispatch, getState) => new Promise(async (resolve) => {
   dispatch({ type: CHECK_NETWORKMATCH_ATTEMPT });
   const daemonInfo = await wallet.getDaemonInfo();
   if (daemonInfo.isTestnet !== null &&
@@ -400,10 +400,10 @@ export const checkNetworkMatch = () => async (dispatch, getState) => new Promise
     dispatch({ error: DIFF_CONNECTION_ERROR, type: CHECK_NETWORKMATCH_FAILED });
     return dispatch(pushHistory("/error"));
   }
-  resolve(daemonInfo)
+  resolve(daemonInfo);
 });
 
-export const syncDaemon = () => (dispatch, getState) => new Promise((resolve,reject) => {
+export const syncDaemon = () => (dispatch, getState) => new Promise((resolve) => {
   dispatch({ type: SYNC_DAEMON_ATTEMPT });
   const updateBlockCount = () => {
     const { daemon: { daemonSynced, timeStart, blockStart, daemonError } } = getState();
@@ -415,7 +415,7 @@ export const syncDaemon = () => (dispatch, getState) => new Promise((resolve,rej
           if (blockCount >= syncHeight) {
             dispatch({ type: DAEMONSYNCED, currentBlockHeight: blockCount });
             setMustOpenForm(false);
-            resolve({ type: DAEMONSYNCED, currentBlockHeight: blockCount })
+            resolve({ type: DAEMONSYNCED, currentBlockHeight: blockCount });
             return;
           }
 

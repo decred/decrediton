@@ -5,7 +5,6 @@ import * as sel from "../selectors";
 import * as wla from "../actions/WalletLoaderActions";
 import * as da from "../actions/DaemonActions";
 import * as ca from "../actions/ControlActions";
-import * as va from "../actions/VersionActions";
 
 const mapStateToProps = selectorMap({
   appVersion: sel.appVersion,

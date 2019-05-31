@@ -1,10 +1,9 @@
 import { daemonStartup } from "connectors";
-import { interpret } from 'xstate';
+import { interpret } from "xstate";
 import { getStartedMachine, submitRemoteCredentials } from "./GetStartedStateMachine";
 import GetStartedPage from "./Page";
 import { StartDecrediton } from "./context";
-import { AdvancedStartupBody, RemoteAppdataError } from "./AdvancedStartup";
-import WalletSelectionBody from "./WalletSelection";
+import { AdvancedStartupBody } from "./AdvancedStartup";
 import { injectIntl } from "react-intl";
 import WalletSelection from "./WalletSelection";
 
@@ -35,7 +34,7 @@ class GetStarted extends React.Component {
     const { current } = this.state;
     if (prevState.current.value !== current.value) {
       const StateComponent = this.getStateComponent();
-      this.setState({ StateComponent })
+      this.setState({ StateComponent });
     }
   }
 
@@ -45,66 +44,66 @@ class GetStarted extends React.Component {
     let component;
     
     switch(current.value) {
-      case "prepStartDaemon": {
-        this.props.prepStartDaemon();
+    case "prepStartDaemon": {
+      this.props.prepStartDaemon();
       break;
-      }
-      case "startAdvancedDaemon": {
-        component = AdvancedStartupBody;
+    }
+    case "startAdvancedDaemon": {
+      component = AdvancedStartupBody;
       break;
-      }
-      case "connectingDaemon": {
-        const { remoteCredentials } = current.event;
-        this.props.onConnectDaemon(remoteCredentials)
-          .then(connected => {
-            console.log(connected)
-             send({ type: "CHECK_NETWORK_MATCH", connected })
-          })
-          .catch(e => console.log(e))
-      break;
-      }
-      case "checkingNetworkMatch": {
-        this.props.checkNetworkMatch()
-          .then(checked => send({ type: "SYNC_DAEMON", checked }))
-      break;
-      }
-      case "syncingDaemon": {
-        this.props.syncDaemon().then( synced => {
-          this.props.onGetAvailableWallets().
-            then(w => send({ type: "CHOOSE_WALLET", synced, w }));
+    }
+    case "connectingDaemon": {
+      const { remoteCredentials } = current.event;
+      this.props.onConnectDaemon(remoteCredentials)
+        .then(connected => {
+          console.log(connected);
+          send({ type: "CHECK_NETWORK_MATCH", connected });
         })
+        .catch(e => console.log(e));
       break;
-      }
-      case "choosingWallet": {
-        component = WalletSelection;
+    }
+    case "checkingNetworkMatch": {
+      this.props.checkNetworkMatch()
+        .then(checked => send({ type: "SYNC_DAEMON", checked }));
       break;
-      }
-      case "startingWallet": {
-        this.props.onStartWallet(machine.context.selectedWallet).then(r => {
-          console.log("aqui")
-          console.log(r)
-          send({ type: "SYNC_RPC", r })
-        })
-        break;
-      }
-      case "syncingRPC": {
-        this.props.onRetryStartRPC(machine.context.credentials)
-         
+    }
+    case "syncingDaemon": {
+      this.props.syncDaemon().then( synced => {
+        this.props.onGetAvailableWallets().
+          then(w => send({ type: "CHOOSE_WALLET", synced, w }));
+      });
       break;
-      }
+    }
+    case "choosingWallet": {
+      component = WalletSelection;
+      break;
+    }
+    case "startingWallet": {
+      this.props.onStartWallet(machine.context.selectedWallet).then(r => {
+        console.log("aqui");
+        console.log(r);
+        send({ type: "SYNC_RPC", r });
+      });
+      break;
+    }
+    case "syncingRPC": {
+      this.props.onRetryStartRPC(machine.context.credentials);
+
+      break;
+    }
     }
 
     return component;
   }
 
   submitChosenWallet(selectedWallet) {
-    return this.service.send({ type: "SUBMIT_CHOOSE_WALLET", selectedWallet })
+    return this.service.send({ type: "SUBMIT_CHOOSE_WALLET", selectedWallet });
   }
 
   render() {
-    const { current, StateComponent } = this.state;
+    const { StateComponent } = this.state;
     const { service, submitChosenWallet } = this;
-    
+
     return (
       <StartDecrediton.Provider value={{ ...this.state, ...this.props, submitRemoteCredentials, submitChosenWallet, service }}>
         <GetStartedPage StateComponent = {StateComponent}/>

@@ -1,11 +1,8 @@
 import { LinearProgressFull } from "indicators";
-import { FormattedMessage as T, FormattedRelative } from "react-intl";
-import { SlateGrayButton, InvisibleButton, KeyBlueButton } from "buttons";
-import { PasswordInput } from "inputs";
+import { SlateGrayButton, InvisibleButton } from "buttons";
 import "style/GetStarted.less";
-import { LogsLinkMsg, SettingsLinkMsg, HeaderTimeMsg, DiscoverLabelMsg,
-  DiscoverAccountsInfoMsg, ScanBtnMsg, LearnBasicsMsg, UpdateAvailableLink,
-  WhatsNewLink, LoaderTitleMsg, AboutModalButton, messages } from "./messages";
+import { LogsLinkMsg, SettingsLinkMsg, LearnBasicsMsg, UpdateAvailableLink,
+  WhatsNewLink, LoaderTitleMsg, AboutModalButton } from "./messages";
 import { StartDecrediton } from "./context";
 
 const DaemonLoadingBody = ({
@@ -14,6 +11,7 @@ const DaemonLoadingBody = ({
   <StartDecrediton.Consumer>
     {
       value => {
+        const { getDaemonSynced } = value;
         return (
           <div className="page-body getstarted">
             <div className="getstarted loader">
@@ -40,14 +38,14 @@ const DaemonLoadingBody = ({
                   <WhatsNewLink />
                 </div>
                 <div className="loader-bar">
-                  <LinearProgressFull />
+                  <LinearProgressFull {...{ getDaemonSynced }} />
                 </div>
                 { StateComponent && <StateComponent /> }
 
               </>
             </div>
           </div>
-        )
+        );
       }
     }
   </StartDecrediton.Consumer>
