@@ -1,4 +1,4 @@
-import { walletStartup } from "connectors";
+import { daemonStartup } from "connectors";
 import { interpret } from 'xstate';
 import { getStartedMachine, submitRemoteCredentials } from "./GetStartedStateMachine";
 import GetStartedPage from "./Page";
@@ -114,4 +114,4 @@ class GetStarted extends React.Component {
   }
 }
 
-export default injectIntl(walletStartup(GetStarted));
+export default injectIntl(daemonStartup(GetStarted));
