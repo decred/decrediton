@@ -1,6 +1,6 @@
 import { daemonStartup } from "connectors";
 import { interpret } from "xstate";
-import { getStartedMachine, submitRemoteCredentials } from "./GetStartedStateMachine";
+import { getStartedMachine } from "./GetStartedStateMachine";
 import GetStartedPage from "./Page";
 import { StartDecrediton } from "./context";
 import { AdvancedStartupBody } from "./AdvancedStartup";
@@ -42,7 +42,7 @@ class GetStarted extends React.Component {
     const { current } = this.state;
     const { send, machine } = this.service;
     let component;
-    
+
     switch(current.value) {
     case "prepStartDaemon": {
       this.props.prepStartDaemon();
@@ -80,8 +80,6 @@ class GetStarted extends React.Component {
     }
     case "startingWallet": {
       this.props.onStartWallet(machine.context.selectedWallet).then(r => {
-        console.log("aqui");
-        console.log(r);
         send({ type: "SYNC_RPC", r });
       });
       break;
@@ -100,9 +98,13 @@ class GetStarted extends React.Component {
     return this.service.send({ type: "SUBMIT_CHOOSE_WALLET", selectedWallet });
   }
 
+  submitRemoteCredentials(remoteCredentials) {
+    return this.service.send({ type: "SUBMIT_REMOTE", remoteCredentials });
+  }
+
   render() {
     const { StateComponent } = this.state;
-    const { service, submitChosenWallet } = this;
+    const { service, submitChosenWallet, submitRemoteCredentials } = this;
 
     return (
       <StartDecrediton.Provider value={{ ...this.state, ...this.props, submitRemoteCredentials, submitChosenWallet, service }}>

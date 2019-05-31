@@ -1,7 +1,5 @@
 import { Machine } from "xstate";
 
-export const submitRemoteCredentials = (mService, remoteCredentials) => mService.send({ type: "SUBMIT_REMOTE", remoteCredentials });
-
 export const getStartedMachine = Machine({
   id: "getStarted",
   initial: "preStart",

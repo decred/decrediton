@@ -132,7 +132,7 @@ class AdvancedStartupBody extends React.Component {
   }
 
   onSubmitRemoteForm() {
-    const { service, submitRemoteCredentials } = this.context;
+    const { submitRemoteCredentials } = this.context;
     if (!this.isRemoteValid()) {
       this.setState({ rpcUserHasFailedAttempt: true, rpcPasswordHasFailedAttempt: true, rpcHostHasFailedAttempt: true, rpcPortHasFailedAttempt: true, rpcCertHasFailedAttempt: true });
       return;
@@ -140,7 +140,7 @@ class AdvancedStartupBody extends React.Component {
     const { rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port } = this.state;
     setRemoteCredentials(rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port);
     let args = { rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port };
-    submitRemoteCredentials(service, args);
+    submitRemoteCredentials(args);
   }
 
   onSubmitAppDataForm() {
