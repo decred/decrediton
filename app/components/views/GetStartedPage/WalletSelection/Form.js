@@ -42,6 +42,7 @@ const WalletSelectionBodyBase = ({
   masterPubKeyError,
   maxWalletCount,
   isSPV,
+  submitChosenWallet,
   ...props,
 }) => {
   return (
@@ -82,7 +83,7 @@ const WalletSelectionBodyBase = ({
                   }
                   {!editWallets && (getDaemonSynced || isSPV) && selected ?
                     <>
-                      <div className={"display-wallet-launch"} onClick={startWallet}>
+                      <div className={"display-wallet-launch"} onClick={() => submitChosenWallet(selectedWallet)}>
                         <T id="walletselection.launchWallet" m="Launch Wallet "/>
                       </div>
                       <span className="launch-arrow-bounce">&#8594;</span>

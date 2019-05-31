@@ -1,5 +1,7 @@
 import { WalletSelectionFormBody } from "./Form";
 import { createWallet } from "connectors";
+import { StartDecrediton } from "views/GetStartedPage/context";
+
 @autobind
 class WalletSelectionBody extends React.Component {
   constructor(props) {
@@ -13,7 +15,6 @@ class WalletSelectionBody extends React.Component {
       createNewWallet: true,
       createWalletForm: false,
       newWalletName: "",
-      selectedWallet: this.props.availableWallets ? this.props.availableWallets[0] : null,
       hasFailedAttempt: false,
       isWatchingOnly: false,
       walletMasterPubKey: "",
@@ -22,19 +23,11 @@ class WalletSelectionBody extends React.Component {
       isTrezor: false,
     };
   }
+
+  componentDidMount() {
+    this.context.selectedWallet =  this.context.availableWallets[0];
+  }
   componentDidUpdate(prevProps) {
-    if (this.props.selectedWallet && this.props.availableWallets.length === 0) {
-      this.setState({ selectedWallet: null });
-    } else if (prevProps.availableWallets.length !== this.props.availableWallets.length) {
-      this.setState({ selectedWallet: this.props.availableWallets[0] });
-    } else {
-      for (var i = 0; i < prevProps.availableWallets.length; i++) {
-        if (this.props.availableWallets[i].label !== prevProps.availableWallets[i].label) {
-          this.setState({ selectedWallet: this.props.availableWallets[0] });
-          break;
-        }
-      }
-    }
   }
 
   componentWillUnmount() {
@@ -43,7 +36,6 @@ class WalletSelectionBody extends React.Component {
 
   render() {
     const {
-      getDaemonSynced,
       maxWalletCount,
       isSPV
     } = this.props;
@@ -61,7 +53,6 @@ class WalletSelectionBody extends React.Component {
       toggleTrezor,
     } = this;
     const {
-      selectedWallet,
       sideActive,
       newWalletName,
       newWalletNetwork,
@@ -75,19 +66,22 @@ class WalletSelectionBody extends React.Component {
       masterPubKeyError,
       walletNameError,
     } = this.state;
+    const { availableWallets, getDaemonSynced, submitChosenWallet } = this.context;
     return (
       <WalletSelectionFormBody
         {...{
           sideActive,
           onChangeAvailableWallets,
           onChangeCreateWalletName,
+          selectedWallet: availableWallets[0],
+          submitChosenWallet,
+          availableWallets,
           startWallet,
           createWallet,
           createWalletForm,
           createNewWallet,
           showCreateWalletForm,
           hideCreateWalletForm,
-          selectedWallet,
           newWalletName,
           hasFailedAttemptName,
           hasFailedAttemptPubKey,
@@ -214,12 +208,12 @@ class WalletSelectionBody extends React.Component {
     this.setState({ walletMasterPubKey });
   }
   startWallet() {
-    this.props.onStartWallet(this.state.selectedWallet);
+    this.context.onStartWallet(this.context.selectedWallet);
   }
   resetState() {
     this.setState(this.getInitialState());
   }
-
 }
+WalletSelectionBody.contextType = StartDecrediton;
 
-export default createWallet(WalletSelectionBody);
+export default (WalletSelectionBody);

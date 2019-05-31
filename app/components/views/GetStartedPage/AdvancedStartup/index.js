@@ -1,6 +1,7 @@
 import { AdvancedHeader, AdvancedBody } from "./Form";
 import Error from "./Error";
 import { setAppdataPath, getAppdataPath, getRemoteCredentials, setRemoteCredentials } from "config.js";
+import { StartDecrediton } from "views/GetStartedPage/context";
 
 @autobind
 class AdvancedStartupHeader extends React.Component {
@@ -11,7 +12,6 @@ class AdvancedStartupHeader extends React.Component {
       }}
     />);
   }
-
 }
 
 @autobind
@@ -132,6 +132,7 @@ class AdvancedStartupBody extends React.Component {
   }
 
   onSubmitRemoteForm() {
+    const { service, submitRemoteCredentials } = this.context;
     if (!this.isRemoteValid()) {
       this.setState({ rpcUserHasFailedAttempt: true, rpcPasswordHasFailedAttempt: true, rpcHostHasFailedAttempt: true, rpcPortHasFailedAttempt: true, rpcCertHasFailedAttempt: true });
       return;
@@ -139,7 +140,7 @@ class AdvancedStartupBody extends React.Component {
     const { rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port } = this.state;
     setRemoteCredentials(rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port);
     let args = { rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port };
-    this.props.onStartDaemon({ rpcCreds: args });
+    submitRemoteCredentials(service, args)
   }
 
   onSubmitAppDataForm() {
@@ -172,5 +173,6 @@ class AdvancedStartupBody extends React.Component {
     this.setState({ sideActive: true });
   }
 }
+AdvancedStartupBody.contextType = StartDecrediton;
 
 export { AdvancedStartupHeader, AdvancedStartupBody, Error as RemoteAppdataError };

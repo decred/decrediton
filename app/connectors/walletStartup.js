@@ -5,6 +5,7 @@ import * as sel from "../selectors";
 import * as wla from "../actions/WalletLoaderActions";
 import * as da from "../actions/DaemonActions";
 import * as ca from "../actions/ControlActions";
+import * as va from "../actions/VersionActions";
 
 const mapStateToProps = selectorMap({
   appVersion: sel.appVersion,
@@ -86,8 +87,11 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onSetCreateWalletFromExisting: wla.createWalletExistingToggle,
   onOpenWallet: wla.openWalletAttempt,
   onRetryStartRPC: wla.startRpcRequestFunc,
-  doVersionCheck: wla.versionCheckAction,
+  doVersionCheck: va.getVersionServiceAttempt,
   onStartDaemon: da.startDaemon,
+  onConnectDaemon: da.connectDaemon,
+  checkNetworkMatch: da.checkNetworkMatch,
+  syncDaemon: da.syncDaemon,
   onStartWallet: da.startWallet,
   startSPVSync: wla.spvSyncAttempt,
   onCreateWallet: da.createWallet,
