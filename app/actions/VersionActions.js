@@ -21,7 +21,8 @@ export const getVersionServiceAttempt = () => (dispatch, getState) => new Promis
       resolve(true);
     }, 500);
   } catch (error) {
-    dispatch({ error, type: GETVERSIONSERVICE_FAILED })
+    reject(error);
+    dispatch({ error, type: GETVERSIONSERVICE_FAILED });
   }
 });
 
@@ -35,7 +36,7 @@ export const getWalletRPCVersionAttempt = () => (dispatch, getState) => new Prom
   const { version: { versionService } } = getState();
 
   try {
-    const getWalletRPCVersionResponse = await getVersionResponse(versionService)
+    const getWalletRPCVersionResponse = await getVersionResponse(versionService);
     dispatch({ getWalletRPCVersionResponse, type: WALLETRPCVERSION_SUCCESS });
     const { version: { requiredVersion } } = getState();
     let versionErr = null;
@@ -56,11 +57,12 @@ export const getWalletRPCVersionAttempt = () => (dispatch, getState) => new Prom
       dispatch(pushHistory("/invalidRPCVersion"));
     } else {
       const { address, port } = getState().grpc;
-      await dispatch(loaderRequest(address,port))
+      await dispatch(loaderRequest(address,port));
       dispatch(getWalletSeedService(address, port));
-      resolve(true)
+      resolve(true);
     }
   } catch (error) {
+    reject(error);
     dispatch({ error, type: WALLETRPCVERSION_FAILED });
   }
 });

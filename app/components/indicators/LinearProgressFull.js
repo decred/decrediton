@@ -1,6 +1,6 @@
 import "style/Loading.less";
 import { FormattedMessage as T } from "react-intl";
-import { StartDecrediton } from "views/GetStartedPage/context"
+import { StartDecrediton } from "views/GetStartedPage/context";
 
 export const LinearProgressFull = () => (
   <StartDecrediton.Consumer>
@@ -33,10 +33,10 @@ export const LinearProgressFull = () => (
                     <T id="loaderBar.Loading" m="Blockchain syncing" />}
             </div>
           </div>
-        )
+        );
       }
     }
   </StartDecrediton.Consumer>
-)
+);
 
 export default LinearProgressFull;

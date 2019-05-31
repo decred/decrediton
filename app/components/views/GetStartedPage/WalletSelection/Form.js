@@ -29,7 +29,6 @@ const WalletSelectionBodyBase = ({
   hideCreateWalletForm,
   createWalletForm,
   getDaemonSynced,
-  startWallet,
   onRemoveWallet,
   selectedWallet,
   onChangeAvailableWallets,

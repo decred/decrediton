@@ -14,28 +14,27 @@ import { SpvSyncRequest, SyncNotificationType, RpcSyncRequest } from "../middlew
 import { push as pushHistory } from "react-router-redux";
 import { stopNotifcations } from "./NotificationActions";
 import { clearDeviceSession as trezorClearDeviceSession } from "./TrezorActions";
-import { ipcRenderer } from "electron";
 
 const MAX_RPC_RETRIES = 5;
 const RPC_RETRY_DELAY = 5000;
-const cliOptions = ipcRenderer.sendSync("get-cli-options");
+// const cliOptions = ipcRenderer.sendSync("get-cli-options");
 
 export const LOADER_ATTEMPT = "LOADER_ATTEMPT";
 export const LOADER_FAILED = "LOADER_FAILED";
 export const LOADER_SUCCESS = "LOADER_SUCCESS";
 
-export const loaderRequest = () => (dispatch, getState) => new Promise(async (resolve,reject) => {
+export const loaderRequest = () => (dispatch, getState) => new Promise(async (resolve) => {
   const { grpc: { address, port } } = getState();
   const { daemon: { walletName } } = getState();
   const request = { isTestNet: isTestNet(getState()), walletName, address, port };
   dispatch({ request, type: LOADER_ATTEMPT });
   try {
-    const loader = await getLoader(request)
+    const loader = await getLoader(request);
     dispatch({ loader, type: LOADER_SUCCESS });
     dispatch(walletExistRequest());
-    resolve(true)
+    resolve(true);
   } catch (error) {
-    dispatch({ error, type: LOADER_FAILED })
+    dispatch({ error, type: LOADER_FAILED });
   }
 });
 
@@ -208,7 +207,7 @@ export const startRpcRequestFunc = (credentials, privPass, isRetry) =>
     if (syncAttemptRequest) {
       return;
     }
-    const { daemon: { appdata, walletName }, walletLoader: { discoverAccountsComplete,isWatchingOnly } }= getState();
+    const { daemon: { walletName }, walletLoader: { discoverAccountsComplete,isWatchingOnly } }= getState();
     // const cfg = getWalletCfg(isTestNet(getState()), walletName);
     let rpcuser, rpccertPath, rpcpass, daemonhost, rpcport;
 
@@ -233,7 +232,7 @@ export const startRpcRequestFunc = (credentials, privPass, isRetry) =>
     //   daemonhost = credentials.rpc_host;
     //   rpcport = credentials.rpc_port;
     // } else if (appdata) {
-      
+
     // } else {
     //   rpcuser = cfg.get("rpc_user");
     //   rpcpass = cfg.get("rpc_pass");
@@ -257,7 +256,7 @@ export const startRpcRequestFunc = (credentials, privPass, isRetry) =>
       if (!isRetry) dispatch({ type: SYNC_ATTEMPT });
       const { loader } = getState().walletLoader;
       setTimeout(async () => {
-        const rpcSyncCall = await loader.rpcSync(request)
+        const rpcSyncCall = await loader.rpcSync(request);
         dispatch({ syncCall: rpcSyncCall, type: SYNC_UPDATE });
         rpcSyncCall.on("data", function(response) {
           dispatch(syncConsumer(response));

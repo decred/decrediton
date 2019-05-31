@@ -1,9 +1,9 @@
-import { Machine } from 'xstate';
+import { Machine } from "xstate";
 
-export const submitRemoteCredentials = (mService, remoteCredentials) => mService.send({ type: "SUBMIT_REMOTE", remoteCredentials })
+export const submitRemoteCredentials = (mService, remoteCredentials) => mService.send({ type: "SUBMIT_REMOTE", remoteCredentials });
 
 export const getStartedMachine = Machine({
-  id: 'getStarted',
+  id: "getStarted",
   initial: "preStart",
   context: {
     credentials: {},
@@ -90,47 +90,43 @@ export const getStartedMachine = Machine({
 },
 {
   actions: {
-    isAtPreStart: (context, event) => {
+    isAtPreStart: () => {
       console.log("is at pre start");
     },
-    isAtStartAdvancedDaemon: (context, event) => {
+    isAtStartAdvancedDaemon: () => {
       console.log("is at start advanced daemon");
     },
-    isAtStartSPV: (context, event) => {
+    isAtStartSPV: () => {
       console.log("is at start SPV");
     },
-    isAtStartingDaemon: (context, event) => {
+    isAtStartingDaemon: () => {
       console.log("is at start  At Starting Daemonn");
     },
-    isStartedDaemon: (context, event) => {
+    isStartedDaemon: () => {
       console.log("is at started daemon");
     },
-    isAtStartAdvancedDaemon: (context, event) => {
-      console.log("is at start advanced daemon");
-    },
     isAtConnectDaemon: (context, event) => {
-      context.credentials = event.remoteCredentials
-      console.log(" is at connect daemon ")
+      context.credentials = event.remoteCredentials;
+      console.log(" is at connect daemon ");
     },
-    isAtCheckNetworkMatch: (context, event) => {
-      console.log(context)
-      console.log(" is at check network ")
+    isAtCheckNetworkMatch: () => {
+      console.log(" is at check network ");
     },
-    isAtSyncingDaemon: (context, event) => {
-      console.log(" is at syncing daemon ")
+    isAtSyncingDaemon: () => {
+      console.log(" is at syncing daemon ");
     },
     isAtLeavingChoosingWallet: (context, event) => {
-      console.log("is leaving choosing wallet")
+      console.log("is leaving choosing wallet");
       context.selectedWallet = event.selectedWallet;
     },
-    isAtChoosingWallet: (context, event) => {
-      console.log("is At Choose Wallet")
+    isAtChoosingWallet: () => {
+      console.log("is At Choose Wallet");
     },
-    isAtStartWallet: (context, event) => {
-      console.log("is At Start Wallet")
+    isAtStartWallet: () => {
+      console.log("is At Start Wallet");
     },
-    isSyncingRPC: (context, event) => {
-      console.log("is at syncing rpc")
-    },    
+    isSyncingRPC: () => {
+      console.log("is at syncing rpc");
+    },
   },
 });
