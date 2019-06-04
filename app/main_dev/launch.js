@@ -31,9 +31,9 @@ function closeClis() {
   // shutdown daemon and wallet.
   // Don't try to close if not running.
   if(dcrdPID && dcrdPID !== -1)
-    closeDCRD(dcrdPID);
+    closeDCRD();
   if(dcrwPID && dcrwPID !== -1)
-    closeDCRW(dcrwPID);
+    closeDCRW();
 }
 
 export function closeDCRD() {
