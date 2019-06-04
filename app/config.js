@@ -78,7 +78,7 @@ function cleanWalletCfg(config) {
 export function initGlobalCfg() {
   const config = new Store();
   Object.keys(cfgConstants.INITIAL_VALUES).map(key => {
-    if(!config.has(key)) {
+    if (!config.has(key)) {
       config.set(key, cfgConstants.INITIAL_VALUES[key]);
     }
   });

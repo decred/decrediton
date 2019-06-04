@@ -12,7 +12,7 @@ const corruptedError = "corrupted";
 const checkSumError = "checksum does not match";
 class FatalErrorPage extends React.Component {
 
-  getErrorAaction() {
+  getErrorAction() {
     const { daemonError, deleteDaemonData } = this.props;
     let errorMessage;
 
@@ -71,7 +71,7 @@ class FatalErrorPage extends React.Component {
           </div>
           <div className="fatal-error-title"><T id="fatal.suggestion.title" m="Suggested action to resolve error" />:</div>
           <div className="fatal-error-suggestion">
-            {daemonError && this.getErrorAaction()}
+            {daemonError && this.getErrorAction()}
           </div>
           <div className="fatal-error-toolbar">
             { isAdvancedDaemon &&
