@@ -12,7 +12,7 @@ import "style/SideBar.less";
 const Bar = ({
   isTestNet,
   balances,
-  currentHeight,
+  currentBlockHeight,
   lastBlockTimestamp,
   totalBalance,
   isShowingAccounts,
@@ -57,14 +57,14 @@ const Bar = ({
         </div>
         <div className="sidebar-menu-bottom-latest-block">
           { rescanRequest ? <RescanProgress/> : null }
-          {(currentHeight && !rescanRequest) &&
+          {(currentBlockHeight && !rescanRequest) &&
             <>
               <div className="rescan-button-area">
                 <RescanButton {...{ rescanRequest, rescanAttempt }} />
               </div>
               <a className="sidebar-menu-bottom-latest-block-name">
                 <T id="sidebar.latestBlock" m="Latest Block" />
-                <span className="sidebar-menu-bottom-latest-block-number"> {currentHeight}</span>
+                <span className="sidebar-menu-bottom-latest-block-number"> {currentBlockHeight}</span>
               </a>
               <div className="sidebar-menu-bottom-latest-block-time">
                 <LastBlockTime lastBlockTimestamp={lastBlockTimestamp} />
