@@ -5,7 +5,7 @@ import MenuLinks from "./MenuLinks";
 import Logo from "./Logo";
 import LastBlockTime from "./LastBlockTime";
 import { Balance } from "shared";
-import { RescanButton } from "buttons";
+import { RescanButton, RescanCancelButton } from "buttons";
 import "style/Fonts.less";
 import "style/SideBar.less";
 
@@ -25,6 +25,7 @@ const Bar = ({
   onExpandSideBar,
   onReduceSideBar,
   isWatchingOnly,
+  rescanCancel,
 }) => (
   <div className={"sidebar " + (!expandSideBar && "sidebar-reduced ")}
     style={!expandSideBar && sidebarOnBottom ? { height: 70, flexDirection: "row" } : null}>
@@ -74,6 +75,7 @@ const Bar = ({
       <div className="sidebar-menu-bottom-latest-block">
         <div className="rescan-button-area">
           <RescanButton {...{ rescanRequest, rescanAttempt }} />
+          {rescanRequest &&  <RescanCancelButton {...{ rescanRequest, rescanCancel }} />}        
         </div>
       </div>
     }

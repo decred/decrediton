@@ -144,10 +144,7 @@
 
 .sidebar-menu-bottom-latest-block {
   position: relative;
-  height: 30px;
-  padding-top: 14px;
-  padding-right: 18px;
-  padding-left: 20px;
+  padding: 14px 18px 10px 20px;
   background-color: var(--background-back-color);
   font-size: 13px;
 }
@@ -361,5 +358,13 @@
 
   .sidebar-menu-bottom-latest-block {
     background-color: var(--sidebar-color);
+  }
+
+  .sidebar-menu-bottom-latest-block {
+    .tooltipContainer {
+      span {
+        visibility: hidden;
+      }
+    }
   }
 }
