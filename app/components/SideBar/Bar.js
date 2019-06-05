@@ -75,7 +75,7 @@ const Bar = ({
       <div className="sidebar-menu-bottom-latest-block">
         <div className="rescan-button-area">
           <RescanButton {...{ rescanRequest, rescanAttempt }} />
-          {rescanRequest &&  <RescanCancelButton {...{ rescanRequest, rescanCancel }} />}        
+          {rescanRequest &&  <RescanCancelButton {...{ rescanRequest, rescanCancel }} />}
         </div>
       </div>
     }
