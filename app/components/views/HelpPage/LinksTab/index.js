@@ -2,7 +2,7 @@ import { FormattedMessage as T } from "react-intl";
 import { HelpLink, HelpLinkInfoModal, HelpLinkAboutModal } from "buttons";
 import { ConstitutionModalContent } from "modals";
 import { DescriptionHeader } from "layout";
-import { TabbedSubtitle } from "shared";
+import { Subtitle } from "shared";
 import "style/Help.less";
 
 export const LinksTabHeader = () =>
@@ -12,7 +12,7 @@ export const LinksTabHeader = () =>
 
 export const LinksTab = () => (
   <>
-    <TabbedSubtitle title={<T id="help.subtitle.project" m="Project Related"/>} />
+    <Subtitle title={<T id="help.subtitle.project" m="Project Related"/>} />
     <div className="help-icons-list">
       <HelpLink className={"help-github-icon"} href="https://github.com/decred/decrediton" title={<T id="help.github.title" m="GitHub"/>} subtitle={<T id="help.github.subtitle" m="github.com/decred/decrediton"/>} />
       <HelpLink className={"help-docs-icon"} href="https://docs.decred.org/" title={<T id="help.documentation" m="Documentation" />} subtitle={<T id="help.documentation.subtitle" m="docs.decred.org"/>}/>
@@ -30,7 +30,7 @@ export const LinksTab = () => (
         subtitle={<T id="help.about.decrediton.subtitle" m="Software Summary"/>}
       />
     </div>
-    <TabbedSubtitle title={<T id="help.subtitle.communications" m="Communications"/>} />
+    <Subtitle title={<T id="help.subtitle.communications" m="Communications"/>} />
     <div className="help-icons-list">
       <HelpLink className={"help-slack-icon"} href="https://slack.decred.org" title={<T id="help.slack" m="Slack" />} subtitle={<T id="help.slack.subtitle" m="slack.decred.org"/>}/>
       <HelpLink className={"help-rocketchat-icon"} href="https://rocketchat.decred.org" title={<T id="help.rocketchat" m="RocketChat" />} subtitle={<T id="help.rocketchat.subtitle" m="rocketchat.decred.org"/>}/>

@@ -1,6 +1,6 @@
 import { AccountsSelect } from "inputs";
 import { FormattedMessage as T } from "react-intl";
-import { Balance, Tooltip, TransitionMotionWrapper, TabbedSubtitle } from "shared";
+import { Balance, Tooltip, TransitionMotionWrapper, Subtitle } from "shared";
 import { SendTransactionButton } from "buttons";
 import { CopyToClipboard } from "shared";
 import OutputAccountRow from "./OutputAccountRow";
@@ -38,7 +38,7 @@ const SendPage = ({
   ...props
 }) => (
   <>
-    <TabbedSubtitle title={<T id="send.subtitle" m="Send DCR"/>} />
+    <Subtitle title={<T id="send.subtitle" m="Send DCR"/>} />
     <div className="send-flex-height">
       <div className="send-select-account-area">
         <div className="send-label"><T id="send.from" m="From" />:</div>

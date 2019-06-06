@@ -1,5 +1,5 @@
 import { ReceiveAccountsSelect } from "inputs";
-import { CopyToClipboard, TabbedSubtitle } from "shared";
+import { CopyToClipboard, Subtitle } from "shared";
 import { KeyBlueButton } from "buttons";
 import QRCode from "./QRCode";
 import { FormattedMessage as T } from "react-intl";
@@ -11,7 +11,7 @@ const ReceivePage = ({
   onRequestAddress,
 }) => (
   <>
-    <TabbedSubtitle title={<T id="receive.subtitle" m="Receive DCR"/>} />
+    <Subtitle title={<T id="receive.subtitle" m="Receive DCR"/>} />
     <div className="receive-content-nest">
       <div className="receive-content-nest-for-address">
         <div className="receive-content-nest-prefix">

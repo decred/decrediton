@@ -1,6 +1,6 @@
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { TextInput } from "inputs";
-import { TabbedSubtitle } from "shared";
+import { Subtitle } from "shared";
 
 const messages = defineMessages({
   addressFieldPlaceholder: {
@@ -16,7 +16,7 @@ const ValidateAddressForm = ({
   intl
 }) => (
   <>
-    <TabbedSubtitle title={<T id="security.validate.title" m="Validate Addresses"/>} />
+    <Subtitle title={<T id="security.validate.title" m="Validate Addresses"/>} />
     <div className="validate-address-form">
       <div className="validate-address-form-label">
         <T id="securitycenter.validate.field.address.label" m="Address"/>

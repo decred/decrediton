@@ -1,6 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import { DescriptionHeader } from "layout";
-import { TabbedSubtitle } from "shared";
+import { Subtitle } from "shared";
 import { Link } from "react-router-dom";
 
 export const TutorialsTabHeader = () =>
@@ -10,7 +10,7 @@ export const TutorialsTabHeader = () =>
 
 export const TutorialsTab = () => (
   <>
-    <TabbedSubtitle title={<T id="tutorials.subtitle" m="Tutorials"/>} />
+    <Subtitle title={<T id="tutorials.subtitle" m="Tutorials"/>} />
     <div className="overview-no-tickets">
       {/* <Link to="/mytickets/purchase" className="purchaseTickets">
         <T id="home.noTickets.purchase" m="Stake Your Idle DCR and Earn Rewards" /> →

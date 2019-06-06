@@ -1,5 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
-import { TabbedSubtitle } from "shared";
+import { Subtitle } from "shared";
 import "style/Logs.less";
 
 const Logs = ({
@@ -21,7 +21,7 @@ const Logs = ({
 }
 ) => (
   <>
-    <TabbedSubtitle title={<T id="logs.subtitle" m="System Logs"/>} />
+    <Subtitle title={<T id="logs.subtitle" m="System Logs"/>} />
     {!isDaemonRemote && isDaemonStarted ?
       !showDcrdLogs ?
         <div className="log-area hidden">

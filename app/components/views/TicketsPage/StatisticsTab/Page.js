@@ -5,7 +5,7 @@ import StakeRewardsChartPage from "./charts/StakeRewards";
 import HeatmapStats from "./Heatmap";
 import StakePoolStats from "./charts/StakePoolStats";
 import { DecredLoading, NoStats } from "indicators";
-import { Tooltip, TabbedSubtitle } from "shared";
+import { Tooltip, Subtitle } from "shared";
 
 
 const subtitleMenu = ({ allStakePoolStats, hasStats }) => (
@@ -35,7 +35,7 @@ const TicketsStatsPage = ({ getMyTicketsStatsRequest, hasStats, hasTickets, allS
   if (!hasTickets && allStakePoolStats.length === 0) return <NoStats />;
   return (
     <>
-      <TabbedSubtitle title={<T id="statistics.subtitle" m="Statistics"/>} className={"is-row"} children={subtitleMenu({ allStakePoolStats, hasStats })} />
+      <Subtitle title={<T id="statistics.subtitle" m="Statistics"/>} className={"is-row"} children={subtitleMenu({ allStakePoolStats, hasStats })} />
       <div className="my-tickets-charts">
         {getMyTicketsStatsRequest ? <DecredLoading /> :
           <Switch>

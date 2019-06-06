@@ -13,5 +13,5 @@ export { default as StaticSwitch } from "./StaticSwitch";
 export { default as VerticalAccordion } from "./VerticalAccordion";
 export { default as PoliteiaLink } from "./PoliteiaLink";
 export { default as WatchOnlyWarnNotification } from "./WatchOnlyWarnNotification";
-export { default as TabbedSubtitle } from "./TabbedSubtitle";
+export { default as Subtitle } from "./Subtitle";
 export * from "./RoutedTabsHeader";
