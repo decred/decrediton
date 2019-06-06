@@ -46,7 +46,7 @@ const AccountsList = ({
   <StandalonePage header={<AccountsListHeader {...{ onGetNextAccountAttempt, isCreateAccountDisabled }} />}>
     { isLoading ? <DecredLoading/> :
       <>
-        <Subtitle title={<T id="logs.subtitle" m="Accounts"/>} className={"is-row"} children={subtitleInfoIcon()} />
+        <Subtitle title={<T id="accounts.subtitle" m="Accounts"/>} className={"is-row"} children={subtitleInfoIcon()} />
         <div className="account-content-nest">
           {accounts.map(account => (
             <AccountRow

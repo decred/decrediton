@@ -1,6 +1,6 @@
 import { EyeFilterMenu, EyeFilterMenuWithSlider } from "buttons";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
-import { Tooltip, TabbedSubtitle } from "shared";
+import { Tooltip, Subtitle } from "shared";
 import { TextInput } from "inputs";
 import TxHistory from "TxHistory";
 import { LoadingMoreTransactionsIndicator, NoMoreTransactionsIndicator, NoTransactions } from "indicators";
@@ -79,7 +79,7 @@ const Page = ({
     useWindow={false}
     threshold={loadMoreThreshold}
   >
-    <TabbedSubtitle title={<T id="send.subtitle" m="Send DCR"/>} className={"is-row"}
+    <Subtitle title={<T id="history.subtitle" m="Transaction History"/>} className={"is-row"}
       children={subtitleMenu({ sortTypes, txTypes, selectedSortOrderKey, selectedTxTypeKey,
         searchText, intl, onChangeSelectedType, onChangeSortType, onChangeSearchText, onChangeSliderValue,
         currencyDisplay, transactionsFilter, unitDivisor })} />
