@@ -3,7 +3,7 @@ import TicketAutoBuyer from "./TicketAutoBuyer";
 import { FormattedMessage as T } from "react-intl";
 import StakeInfo from "./StakeInfo";
 import { spv } from "connectors";
-import { ShowWarning } from "shared";
+import { ShowWarning, TabbedSubtitle } from "shared";
 import "style/StakePool.less";
 
 const Tickets = ({
@@ -12,7 +12,7 @@ const Tickets = ({
   ...props,
 }) => (
   <>
-    <div className="tabbed-page-subtitle"><T id="purchase.subtitle" m="Purchase Tickets"/></div>
+    <TabbedSubtitle title={<T id="purchase.subtitle" m="Purchase Tickets"/>} />
     <StakeInfo />
     {
       spvMode && blocksNumberToNextTicket == 2  ?

@@ -2,6 +2,7 @@ import Select from "react-select";
 import { FormattedMessage as T } from "react-intl";
 import { KeyBlueButton } from "buttons";
 import { InlineField, PathBrowseInput, FileBrowserFilters } from "inputs";
+import { TabbedSubtitle } from "shared";
 import "style/ExportPage.less";
 
 const FieldDescription = ({ name, description }) => (
@@ -24,7 +25,7 @@ const ExportPage =
     expandFields
   }) => (
     <>
-      <div className="tabbed-page-subtitle export"><T id="export.subtitle" m="Export Transactions"/></div>
+      <TabbedSubtitle title={<T id="export.subtitle" m="Export Transactions"/>} />
       <div className="export-area">
         <div className="export-area-left">
           <InlineField label={<T id="export.select" m="Export Type" />}>

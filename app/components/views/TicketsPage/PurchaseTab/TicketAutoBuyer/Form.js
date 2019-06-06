@@ -1,7 +1,7 @@
 import { AutoBuyerSwitch, PassphraseModalSwitch } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import { DcrInput, AccountsSelect, StakePoolSelect } from "inputs";
-import { Balance } from "shared";
+import { Balance, TabbedSubtitle } from "shared";
 
 const TicketAutoBuyerForm = ({
   onStartAutoBuyer,
@@ -17,7 +17,7 @@ const TicketAutoBuyerForm = ({
   changeStakePool
 }) => (
   <>
-    <div className="tabbed-page-subtitle"><T id="automatictickets.subtitle" m="Automatic Ticket Purchases"/></div>
+    <TabbedSubtitle title={<T id="automatictickets.subtitle" m="Automatic Ticket Purchases"/>} />
     <div className="stakepool-flex-height-auto-buyer-wrapper">
       <div className="stakepool-auto-buyer-row">
         {isTicketAutoBuyerEnabled ?
