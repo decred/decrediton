@@ -27,7 +27,7 @@ const subtitleInfoIcon = () => (
   <div className="account-content-title-buttons-area">
     <InfoDocModalButton document="BalanceOverviewInfo" modalClassName="info-modal-fields" double/>
   </div>
-)
+);
 
 const AccountsList = ({
   accounts,
