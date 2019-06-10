@@ -167,6 +167,15 @@ const countTicketsBackwards = async ({ mined, chainParams, tsDate }) => {
   for (let i = 0; i < mined.length; i++) {
     const tx = mined[i];
     const lastTxDate = endOfDay(tsDate(tx.timestamp));
+    // Checks if passed the day. Add the data to values and clean the ticketscounter
+    if (lastTxDate.getTime() !== lastDate.getTime()) {
+      values[lastDate] ?
+        Object.keys(ticketsCounter).forEach( k => values[lastDate][k] += ticketsCounter[k]) :
+        values[lastDate] = Object.assign({}, ticketsCounter);
+      Object.keys(ticketsCounter).forEach( k => ticketsCounter[k] = 0 );
+      lastDate = lastTxDate;
+    }
+
     const tsWillMature = tx.timestamp + chainParams.TicketMaturity * chainParams.TargetTimePerBlock;
     const tsWillMatureDate = endOfDay(tsDate(tsWillMature));
 
@@ -187,14 +196,6 @@ const countTicketsBackwards = async ({ mined, chainParams, tsDate }) => {
     case wallet.TRANSACTION_TYPE_REGULAR:
       break;
     default: throw "Unknown tx type: " + tx.txType;
-    }
-
-    if (lastTxDate.getTime() !== lastDate.getTime()) {
-      values[lastTxDate] ?
-        Object.keys(ticketsCounter).forEach( k => values[lastTxDate][k] += ticketsCounter[k]) :
-        values[lastTxDate] = Object.assign({}, ticketsCounter);
-      Object.keys(ticketsCounter).forEach( k => ticketsCounter[k] = 0 );
-      lastDate = lastTxDate;
     }
 
     lastTxTimestamp = tx.timestamp;
