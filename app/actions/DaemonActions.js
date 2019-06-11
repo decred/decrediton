@@ -7,7 +7,7 @@ import { semverCompatible } from "./VersionActions";
 import * as wallet from "wallet";
 import { push as pushHistory, goBack } from "react-router-redux";
 import { ipcRenderer } from "electron";
-import { setMustOpenForm, getWalletCfg, getAppdataPath, getRemoteCredentials, getGlobalCfg, setLastHeight } from "../config";
+import { setMustOpenForm, getWalletCfg, getAppdataPath, getRemoteCredentials, getGlobalCfg, setLastHeight, getDaemonIsAdvanced } from "../config";
 import { isTestNet } from "selectors";
 import axios from "axios";
 import { STANDARD_EXTERNAL_REQUESTS } from "main_dev/externalRequests";
@@ -56,6 +56,7 @@ export const CONNECTDAEMON_SUCCESS = "CONNECTDAEMON_SUCCESS";
 export const CONNECTDAEMON_FAILURE = "CONNECTDAEMON_FAILURE";
 export const SYNC_DAEMON_ATTEMPT = "SYNC_DAEMON_ATTEMPT";
 export const SYNC_DAEMON_FAILED = "SYNC_DAEMON_FAILED";
+export const BACK_TO_CREDENTIALS = "BACK_TO_CREDENTIALS";
 
 export const checkDecreditonVersion = () => (dispatch, getState) =>{
   const detectedVersion = getState().daemon.appVersion;
@@ -157,12 +158,12 @@ export const startDaemon = (params) => (dispatch, getState) => {
   dispatch({ type: DAEMONSTART_ATTEMPT });
   const { daemonStarted } = getState().daemon;
   if (daemonStarted) {
-    return dispatch({ type: DAEMONSTART_SUCCESS });
+    return dispatch({ type: DAEMONSTART_SUCCESS, daemonAdvanced: getDaemonIsAdvanced() });
   }
 
   wallet.startDaemon(params, isTestNet(getState()))
     .then(rpcCreds => {
-      dispatch({ type: DAEMONSTART_SUCCESS, credentials: rpcCreds, appdata });
+      dispatch({ type: DAEMONSTART_SUCCESS, credentials: rpcCreds, appdata, daemonAdvanced: getDaemonIsAdvanced() });
       dispatch(connectDaemon(rpcCreds, appdata));
     })
     .catch((err) => dispatch({ err, type: DAEMONSTART_FAILURE }));
@@ -190,6 +191,11 @@ export const registerForErrors = () => (dispatch) => {
       dispatch({ warning, type: WALLET_WARNING });
     }
   });
+};
+
+export const backToCredentials = () => (dispatch) => {
+  dispatch({ type: BACK_TO_CREDENTIALS  });
+  dispatch(pushHistory("/getstarted"));
 };
 
 export const deleteDaemonData = () => (dispatch, getState) => {

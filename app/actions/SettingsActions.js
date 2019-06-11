@@ -106,7 +106,7 @@ export function updateStateSettingsChanged(settings, norestart) {
     if (newDiffersFromTemp) {
       const newDiffersFromCurrent = settingsFields
         .reduce((d, f) => (d || newSettings[f] !== currentSettings[f]), false);
-      const needNetworkReset =  !norestart && Object.keys(networkChange)
+      const needNetworkReset = !norestart && Object.keys(networkChange)
         .reduce((d, f) => (d || newSettings[f] !== currentSettings[f]), false);
       newDiffersFromCurrent
         ? dispatch({ tempSettings: newSettings, needNetworkReset, type: SETTINGS_CHANGED })
