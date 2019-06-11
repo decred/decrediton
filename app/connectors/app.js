@@ -6,6 +6,7 @@ import * as sel from "../selectors";
 import * as da from "actions/DaemonActions";
 import * as cla from "actions/ClientActions";
 import * as ca from "actions/ControlActions";
+import * as sba from "actions/SidebarActions";
 
 const mapStateToProps = selectorMap({
   locale: sel.locale,
@@ -26,6 +27,10 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   hideAboutModalMacOS: ca.hideAboutModalMacOS,
   showAutobuyerRunningModal: ca.showAutobuyerRunningModal,
   hideAutobuyerRunningModal: ca.hideAutobuyerRunningModal,
+  onExpandSideBar: sba.expandSideBar,
+  onReduceSideBar: sba.reduceSideBar,
+  onSidebarToBottom: sba.sidebarToBottom,
+  onSidebarLeaveBottom: sba.onSidebarLeaveBottom,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

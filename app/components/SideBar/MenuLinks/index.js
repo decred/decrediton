@@ -3,6 +3,7 @@ import { routing, theming, newProposalCounts } from "connectors";
 import { FormattedMessage as T } from "react-intl";
 import { spring, Motion } from "react-motion";
 import theme from "theme";
+import { createElement as h } from "react";
 
 const linkList = [
   { path: "/home",          link: <T id="sidebar.link.home" m="Overview" />,             icon:"overview" },
@@ -15,11 +16,15 @@ const linkList = [
   { path: "/settings",      link: <T id="sidebar.link.settings" m="Settings" />,         icon:"settings" },
 ];
 
+
+// number of link in a row when sidebar is at bottom.
+const LINK_PER_ROW = 4;
+
 @autobind
 class MenuLinks extends React.Component {
 
   _nodes = new Map();
-  state = { top: 0, selectedTab: null };
+  state = { top: 0, left: 0, selectedTab: null };
 
   constructor (props) {
     super(props);
@@ -34,11 +39,11 @@ class MenuLinks extends React.Component {
     this.updateCaretPosition();
   }
 
-  componentDidUpdate() {
-    const { location } = this.props;
+  componentDidUpdate(prevProps) {
+    const { location, sidebarOnBottom } = this.props;
     const tabbedPageCheck = location.pathname.indexOf("/", 1);
     const selectedTab = tabbedPageCheck > 0 ? location.pathname.substring(0, tabbedPageCheck) : location.pathname;
-    if (this.state.selectedTab != selectedTab) {
+    if (this.state.selectedTab !== selectedTab || sidebarOnBottom !== prevProps.sidebarOnBottom) {
       this.updateCaretPosition();
     }
   }
@@ -54,20 +59,27 @@ class MenuLinks extends React.Component {
   neededCaretPosition(path) {
     const tabForRoute = this._nodes.get(path);
     if (!tabForRoute) return null;
+    if (this.props.sidebarOnBottom) {
+      const newLeft = tabForRoute.offsetLeft;
+      const newTop = tabForRoute.offsetTop;
+      return { left: spring(newLeft, theme("springs.sideBar")), top: newTop };
+    }
     const newTop = tabForRoute.offsetTop;
-    return { top: spring(newTop, theme("springs.sideBar")) };
+    return { top: spring(newTop, theme("springs.sideBar")), left: 0 };
   }
 
   getAnimatedCaret() {
+    const style = this.props.sidebarOnBottom ? { left: this.state.left, top: this.state.top } : { top: this.state.top };
     return (
-      <Motion style={ { top: this.state.top } }>
+      <Motion style={ style }>
         { style => <div className="menu-caret" {...{ style }}/> }
       </Motion>
     );
   }
 
   getStaticCaret() {
-    return <div className="menu-caret" style={ { top: this.state.top.val } } />;
+    const style = this.props.sidebarOnBottom ? { left: this.state.left.val, top: this.state.top.val } : { top: this.state.top.val };
+    return <div className="menu-caret" style={ style } />;
   }
 
   getMenuLink(linkItem) {
@@ -82,9 +94,30 @@ class MenuLinks extends React.Component {
         hasNotification={ hasNotif }
         linkRef={ ref => this._nodes.set(path, ref) }
       >
-        {link}
+        {!this.props.sidebarOnBottom && link}
       </MenuLink>
     );
+  }
+
+  getLinks() {
+    const { sidebarOnBottom } = this.props;
+
+    let linksComponent = [];
+    if (sidebarOnBottom) {
+      const numberOfRows = this.links.length / LINK_PER_ROW;
+      let n = 0;
+      for (let i = 0; i < numberOfRows; i++) {
+        linksComponent[i] = [];
+        for (let j = 0; j < LINK_PER_ROW; j++) {
+          linksComponent[i].push(this.getMenuLink(this.links[n]));
+          n++;
+        }
+        linksComponent[i] = h("div", { className: "is-row", key: i }, linksComponent[i]);
+      }
+      return linksComponent;
+    }
+
+    return linksComponent = this.links.map(link => this.getMenuLink(link));
   }
 
   render () {
@@ -92,7 +125,7 @@ class MenuLinks extends React.Component {
 
     return (
       <>
-        {this.links.map(link => this.getMenuLink(link))}
+        {this.getLinks()}
         {caret}
       </>
     );

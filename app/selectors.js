@@ -823,6 +823,7 @@ export const isGetStarted = compose(l => /^\/getstarted\//.test(l.pathname), loc
 
 export const showingSidebarMenu = not(isGetStarted);
 export const expandSideBar = get([ "sidebar", "expandSideBar" ]);
+export const sidebarOnBottom = get([ "sidebar", "sidebarOnBottom" ]);
 
 export const snackbarMessages = get([ "snackbar", "messages" ]);
 

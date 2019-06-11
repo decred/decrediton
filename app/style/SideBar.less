@@ -1,14 +1,6 @@
 @import (reference) "./main.less";
 @import (reference) "./Icons.less";
 
-.sidebar-mainnet {
-  background-color: var(--background-container);
-}
-
-.sidebar-testnet {
-  background-color: var(--background-container);
-}
-
 .hamburger {
   height: 20px;
   width: 20px;
@@ -34,26 +26,22 @@
   opacity: 0.7;
 }
 
-.sidebar-menu {
+.sidebar {
+  display: flex;
+  flex-direction: column;
   width: @sidebar-width;
-  display: flex;
-  flex-direction: column;
   z-index: 99;
   transition: width 100ms cubic-bezier(0.86, 0, 0.07, 1);
   box-shadow: 5px 0 21px rgba(9, 20, 64, 0.21);
-}
+  background-color: var(--sidebar-color);
 
-.sidebar-menu-reduced {
-  width: @sidebar-width-reduced;
-  display: flex;
-  flex-direction: column;
-  z-index: 99;
-  transition: width 100ms cubic-bezier(0.86, 0, 0.07, 1);
-  box-shadow: 5px 0 21px rgba(9, 20, 64, 0.21);
+  &.sidebar-reduced {
+    width: @sidebar-width-reduced;
+  }
 }
 
 .sidebar-logo,
-.reduced-sidebar-logo, {
+.reduced-sidebar-logo {
   display: flex;
   position: relative;
   z-index: 3;
@@ -156,10 +144,7 @@
 
 .sidebar-menu-bottom-latest-block {
   position: relative;
-  height: 30px;
-  padding-top: 14px;
-  padding-right: 18px;
-  padding-left: 20px;
+  padding: 14px 18px 10px 20px;
   background-color: var(--background-back-color);
   font-size: 13px;
 }
@@ -185,19 +170,6 @@
   text-decoration: none;
 }
 
-.sidebar-scroll::-webkit-scrollbar {
-  width: 5px;
-  background-color: var(--input-color-default);
-}
-
-.sidebar-testnet .sidebar-scroll::-webkit-scrollbar {
-  background-color: var(--disabled-background-color);
-}
-
-.sidebar-scroll::-webkit-scrollbar-thumb {
-  background-color: var(--disabled-color);
-}
-
 .sidebar-watch-only-icon {
   width: 16px;
   height: 16px;
@@ -221,4 +193,176 @@
   z-index: 10;
   border-radius: 50%;
   background-color: var(--stroke-color-focused);
+}
+
+.menu-link {
+  display: flex;
+  position: relative;
+  z-index: 1;
+  align-items: center;
+  cursor: pointer;
+  height: 52px;
+  padding-left: 65px;
+  color: var(--disabled-color);
+  font-size: 15px;
+  text-decoration: none;
+  transition: color 0.13s ease-in-out;
+  background-position: 20px 50%;
+  background-size: 20px;
+  background-repeat: no-repeat;
+  user-select: none;
+
+  &.settingsIcon {
+    background-image: @menu-settings-default;
+  }
+  &.settingsIcon:not(.menu-link-active):hover {
+    background-image: @menu-animation-settings;
+  }
+  &.helpIcon {
+    background-image: @menu-help-default;
+  }
+  &.helpIcon:not(.menu-link-active):hover {
+    background-image: @menu-animation-help;
+  }
+  &.ticketsIcon {
+    background-image: @menu-tickets-default;
+  }
+  &.ticketsIcon:not(.menu-link-active):hover {
+    background-image: @menu-animation-tickets;
+  }
+  &.transactionsIcon {
+    background-image: @menu-transactions-default;
+  }
+  &.trezorIcon {
+    background-image: @menu-trezor-default;
+  }
+  &.trezorIcon:not(.menu-link-active):hover {
+    background-image: @menu-trezor-hover;
+  }
+  &.transactionsIcon:not(.menu-link-active):hover {
+    background-image: @menu-animation-transactions;
+  }
+  &.accountsIcon {
+    background-image: @menu-accounts-default;
+  }
+  &.accountsIcon:not(.menu-link-active):hover {
+    background-image: @menu-animation-accounts;
+    background-size: 22px;
+    background-position: 19px 50%;
+  }
+  &.securitycntrIcon {
+    background-image: @menu-securitycntr-default;
+  }
+  &.securitycntrIcon:not(.menu-link-active):hover {
+    background-image: @menu-animation-security;
+  }
+  &.overviewIcon {
+    background-image: @menu-overview-default;
+  }
+  &.overviewIcon:not(.menu-link-active):hover {
+    background-image: @menu-animation-overview;
+  }
+  &.governanceIcon {
+    background-image: @menu-governance-default;
+  }
+  &.governanceIcon:not(.menu-link-active):hover {
+    background-image: @menu-animation-governance;
+  }
+}
+
+.menu-link:hover {
+  color: var(--input-color-default);
+}
+
+.menu-link-active {
+  color: var(--input-color-default);
+
+  &.settingsIcon {
+    background-image: @menu-settings-active;
+    cursor: default;
+  }
+  &.helpIcon {
+    background-image: @menu-help-active;
+    cursor: default;
+  }
+  &.ticketsIcon {
+    background-image: @menu-tickets-active;
+    cursor: default;
+  }
+  &.transactionsIcon {
+    background-image: @menu-transactions-active;
+    cursor: default;
+  }
+  &.accountsIcon {
+    background-image: @menu-accounts-active;
+    cursor: default;
+  }
+  &.securitycntrIcon {
+    background-image: @menu-securitycntr-active;
+    cursor: default;
+  }
+  &.overviewIcon {
+    background-image: @menu-overview-active;
+    cursor: default;
+  }
+  &.governanceIcon {
+    background-image: @menu-governance-active;
+    cursor: default;
+  }
+  &.trezorIcon {
+    background-image: @menu-trezor-active;
+  }
+}
+
+.menu-caret {
+  position: absolute;
+  height: 52px;
+  width: 100%;
+  border-left: 5px solid var(--accent-color);
+  background-color: var(--background-back-color);
+}
+
+@media screen and (max-width: 768px) {
+  .sidebar {
+    display: flex;
+    width: 100% !important;
+  }
+
+  .sidebar-scroll {
+    overflow: hidden;
+    margin: 0 auto;
+  }
+
+  .sidebar-logo {
+    flex-direction: row-reverse;
+  }
+
+  .menu-link {
+    height: 70px;
+    width: 76px;
+    padding-left: 0;
+    background-position: 50%;
+  }
+
+  .menu-caret {
+    width: 76px;
+    height: 65px;
+    border-left: 0;
+    border-bottom: 5px solid var(--accent-color);
+  }
+  
+  .sidebar-reduce-arrow {
+    margin-left: 0;
+    margin-right: auto;
+  }
+
+  .sidebar-menu-bottom-latest-block {
+    background-color: var(--sidebar-color);
+
+    .tooltipContainer {
+      span {
+        visibility: hidden;
+      }
+    }
+  }
 }

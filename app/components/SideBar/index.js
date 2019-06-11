@@ -15,21 +15,10 @@ class SideBar extends React.Component {
     return (
       <Bar
         {...{
-          isTestNet: this.props.isTestNet,
-          balances: this.props.balances,
-          synced: this.props.synced,
-          currentHeight: this.props.currentBlockHeight,
-          lastBlockTimestamp: this.props.lastBlockTimestamp,
-          totalBalance: this.props.totalBalance,
+          ...this.props,
           isShowingAccounts: this.state.isShowingAccounts,
           onShowAccounts: this.onShowAccounts,
           onHideAccounts: this.onHideAccounts,
-          rescanRequest: this.props.rescanRequest,
-          rescanAttempt: this.props.rescanAttempt,
-          expandSideBar: this.props.expandSideBar,
-          onExpandSideBar: this.props.onExpandSideBar,
-          onReduceSideBar: this.props.onReduceSideBar,
-          isWatchingOnly: this.props.isWatchingOnly,
         }}
       />
     );
