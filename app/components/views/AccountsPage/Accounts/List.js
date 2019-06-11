@@ -4,7 +4,7 @@ import AccountRow from "./AccountRow";
 import { DecredLoading } from "indicators";
 import { InfoDocModalButton, PassphraseModalButton } from "buttons";
 import { AddAccountModal } from "modals";
-import { WatchOnlyWarnNotification } from "shared";
+import { WatchOnlyWarnNotification, Subtitle } from "shared";
 
 const AccountsListHeader = ({ onGetNextAccountAttempt, isCreateAccountDisabled }) => <StandaloneHeader
   title={<T id="accounts.title" m="Accounts" />}
@@ -23,6 +23,12 @@ const AccountsListHeader = ({ onGetNextAccountAttempt, isCreateAccountDisabled }
   }
 />;
 
+const subtitleInfoIcon = () => (
+  <div className="account-content-title-buttons-area">
+    <InfoDocModalButton document="BalanceOverviewInfo" modalClassName="info-modal-fields" double/>
+  </div>
+);
+
 const AccountsList = ({
   accounts,
   isLoading,
@@ -40,9 +46,7 @@ const AccountsList = ({
   <StandalonePage header={<AccountsListHeader {...{ onGetNextAccountAttempt, isCreateAccountDisabled }} />}>
     { isLoading ? <DecredLoading/> :
       <>
-        <div className="account-content-title-buttons-area">
-          <InfoDocModalButton document="BalanceOverviewInfo" modalClassName="info-modal-fields" double/>
-        </div>
+        <Subtitle title={<T id="accounts.subtitle" m="Accounts"/>} className={"is-row"} children={subtitleInfoIcon()} />
         <div className="account-content-nest">
           {accounts.map(account => (
             <AccountRow

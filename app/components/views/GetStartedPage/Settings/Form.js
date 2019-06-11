@@ -1,7 +1,7 @@
 import GeneralSettings from "views/SettingsPage/GeneralSettings";
 import PrivacySettings from "views/SettingsPage/PrivacySettings";
 import ProxySettings from "views/SettingsPage/ProxySettings";
-import { Tooltip } from "shared";
+import { Tooltip, Subtitle } from "shared";
 import { FormattedMessage as T } from "react-intl";
 import { LoaderBarBottom } from "indicators";
 import { KeyBlueButton, InvisibleButton } from "buttons";
@@ -38,7 +38,7 @@ export default ({
       <div className="go-back-screen-button-area">
         <Tooltip text={ <GoBackMsg /> }><div className="go-back-screen-button" onClick={onHideSettings}/></Tooltip>
       </div>
-      <div className="tabbed-page-subtitle"><T id="settings.subtitle" m="Settings"/></div>
+      <Subtitle title={<T id="settings.subtitle" m="Settings"/>} />
       <div className="settings-wrapper">
         <div className="settings-columns">
           <GeneralSettings {...{ tempSettings, networks, currencies, locales, onChangeTempSettings }} walletReady={getWalletReady}/>

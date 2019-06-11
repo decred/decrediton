@@ -1,4 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
+import { Subtitle } from "shared";
 import "style/Logs.less";
 
 const Logs = ({
@@ -20,7 +21,7 @@ const Logs = ({
 }
 ) => (
   <>
-    <div className="tabbed-page-subtitle"><T id="logs.subtitle" m="System Logs"/></div>
+    <Subtitle title={<T id="logs.subtitle" m="System Logs"/>} />
     {!isDaemonRemote && isDaemonStarted ?
       !showDcrdLogs ?
         <div className="log-area hidden">
