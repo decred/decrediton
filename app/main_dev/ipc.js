@@ -110,11 +110,11 @@ export const startWallet = (mainWindow, daemonIsAdvanced, testnet, walletPath, r
 };
 
 export const stopDaemon = () => {
-  return closeDCRD(GetDcrdPID());
+  return closeDCRD();
 };
 
 export const stopWallet = () => {
-  return closeDCRW(GetDcrwPID());
+  return closeDCRW();
 };
 
 export const setWatchingOnlyWallet = (isWatchingOnly) => {
