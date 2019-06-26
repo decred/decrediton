@@ -1,46 +1,22 @@
 @import (reference) "./main.less";
 @import (reference) "./Icons.less";
 
-.send-select-account-area {
-  margin-bottom: 20px;
-}
-
 .send-select-account-input {
-  margin-right: 1em;
   display: inline-block;
   vertical-align: middle;
 
   .accounts-select {
     width: 300px;
-    margin-right: 20px;
   }
-}
-
-.send-select-account-area .accounts-button-icon {
-  vertical-align: middle;
-  margin-top: 0px;
 }
 
 .send-send-all-input {
   float: right;
 }
 
-.send-amount-area {
-  margin-bottom: 10px;
-}
-
-.send-row {
-  height: 40px;
-}
-
 .send-label {
-  .inline-block-mixin;
-
-  vertical-align: top;
   font-size: 19px;
   line-height: 24px;
-  width: 46px;
-  text-align: right;
 }
 
 .send-address {
@@ -135,29 +111,12 @@
   opacity: 0.85;
 }
 
-.send-amount {
-  .inline-block-mixin;
-
-  vertical-align: top;
-  margin-top: -2px;
-  float: right;
-}
-
 .send-amount-label {
   .inline-block-mixin;
 
   font-size: 20px;
   min-width: 3.5em;
   margin-top: -1px;
-}
-
-.send-address-amount-sum-and-currency {
-  .inline-block-mixin;
-
-  color: var(--input-color-default);
-  height: 19px;
-  padding-top: 4px;
-  width: 150px;
 }
 
 .send-address-amount-sum-gradient {
@@ -208,10 +167,6 @@
 
 .send-address-delete-icon:hover {
   opacity: 0.7;
-}
-
-.send-button-area {
-  margin-top: 1em;
 }
 
 .content-send {
@@ -289,17 +244,21 @@
   font-weight: 700;
 }
 
-.send-flex-height {
-  padding: 14px 10px 0px 40px;
+.send-wrapper {
+  padding: 14px 0px 0px 40px;
   background-color: var(--background-back-color);
-  display: flex;
-  flex-direction: column;
   margin-bottom: 20px;
+  width: 428px;
+  min-height: 160px;
 }
 
 .output-row {
   display: flex;
   flex-direction: column;
+}
+
+.send-row {
+  margin-bottom: 20px;
 }
 
 .unsigned-raw-tx-title {

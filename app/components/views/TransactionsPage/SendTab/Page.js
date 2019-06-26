@@ -7,8 +7,6 @@ import OutputAccountRow from "./OutputAccountRow";
 import "style/SendPage.less";
 import "style/MiscComponents.less";
 
-const wrapperComponent = props => <div className="output-row" { ...props } />;
-
 const SendPage = ({
   account,
   isSendAll,
@@ -41,12 +39,12 @@ const SendPage = ({
   <>
     <Subtitle title={<T id="send.subtitle" m="Send DCR"/>} />
     <div className="is-row">
-      <div className="send-flex-height">
-        <div className="send-select-account-area">
+      <div className="send-wrapper">
+        <div className="send-row is-row">
           <div className="send-label"><T id="send.from" m="From" />:</div>
           <AccountsSelect className="send-select-account-input"
-            {...{ account }} onChange={onChangeAccount} showAccountsButton={true} onKeyDown={onKeyDown}/>
-          <div className="send-send-all-input">
+            {...{ account }} onChange={onChangeAccount} onKeyDown={onKeyDown}/>
+          <div>
             {!isSendSelf ?
               <Tooltip text={<T id="send.sendSelfTitle" m="Send funds to another account"/>}>
                 <a className="send-self-wallet-icon" onClick={onShowSendSelf}/>
@@ -55,25 +53,15 @@ const SendPage = ({
                 <a className="send-others-wallet-icon" onClick={onShowSendOthers}/>
               </Tooltip>
             }
-            {!isSendAll ?
-              <Tooltip text={<T id="send.sendAllTitle" m="Send all funds from selected account"/>}>
-                <a className="send-all-wallet-icon" onClick={onShowSendAll}/>
-              </Tooltip> :
-              <Tooltip text={<T id="send.cancelSendAllTitle" m="Cancel sending all funds"/>}>
-                <a className="send-all-cancel-wallet-icon" onClick={onHideSendAll}/>
-              </Tooltip>
-            }
           </div>
         </div>
-        <div className="send-amount-area">
-          {
-            !isSendSelf
-              ? <TransitionMotionWrapper {...{ styles: getStyles(), willLeave, willEnter, wrapperComponent }} />
-              : <OutputAccountRow
-                {...{ index: 0, ...props, ...outputs[0].data, isSendAll, totalSpent, onKeyDown }}
-                amountError={getAmountError(0)} />
-          }
-        </div>
+        {
+          !isSendSelf
+            ? <TransitionMotionWrapper {...{ styles: getStyles(), willLeave, willEnter }} />
+            : <OutputAccountRow
+              {...{ index: 0, ...props, ...outputs[0].data, isSendAll, totalSpent, onKeyDown }}
+              amountError={getAmountError(0)} />
+        }
         {
           insuficientFunds && <div>insuficientFunds</div>
         }
@@ -106,34 +94,32 @@ const SendPage = ({
           </div>
       </div>
     </div>
-    <div className="send-button-area">
-      { ( (isTrezor && isWatchingOnly) || !isWatchingOnly ) &&
-        <SendTransactionButton
-          disabled={!isValid}
-          showModal={showPassphraseModal}
-          onShow={resetShowPassphraseModal}
-          onSubmit={onAttemptSignTransaction} >
-          <div className="passphrase-modal-confirm-send">
-            {!isSendSelf ?
-              <>
-                <div className="passphrase-modal-confirm-send-label">{outputs.length > 1 ? <T id="send.confirmAmountAddresses" m="Destination addresses" /> : <T id="send.confirmAmountAddress" m="Destination address" /> }:</div>
-                {outputs.map((output, index) => {
-                  return (
-                    <div className="passphrase-modal-confirm-send-address" key={"confirm-" + index}>{output.data.destination}</div>
-                  );}
-                )}
-              </> :
-              <>
-                <div className="passphrase-modal-confirm-send-label"><T id="send.confirmAmountAccount" m="Destination account" />:</div>
-                <div className="passphrase-modal-confirm-send-address">{nextAddressAccount.name}</div>
-              </>
-            }
-            <div className="passphrase-modal-confirm-send-label"><T id="send.confirmAmountLabelFor" m="Total Spent" />:</div>
-            <div className="passphrase-modal-confirm-send-balance"><Balance amount={totalSpent} /></div>
-          </div>
-        </SendTransactionButton>
-      }
-    </div>
+    { ( (isTrezor && isWatchingOnly) || !isWatchingOnly ) &&
+      <SendTransactionButton
+        disabled={!isValid}
+        showModal={showPassphraseModal}
+        onShow={resetShowPassphraseModal}
+        onSubmit={onAttemptSignTransaction} >
+        <div className="passphrase-modal-confirm-send">
+          {!isSendSelf ?
+            <>
+              <div className="passphrase-modal-confirm-send-label">{outputs.length > 1 ? <T id="send.confirmAmountAddresses" m="Destination addresses" /> : <T id="send.confirmAmountAddress" m="Destination address" /> }:</div>
+              {outputs.map((output, index) => {
+                return (
+                  <div className="passphrase-modal-confirm-send-address" key={"confirm-" + index}>{output.data.destination}</div>
+                );}
+              )}
+            </> :
+            <>
+              <div className="passphrase-modal-confirm-send-label"><T id="send.confirmAmountAccount" m="Destination account" />:</div>
+              <div className="passphrase-modal-confirm-send-address">{nextAddressAccount.name}</div>
+            </>
+          }
+          <div className="passphrase-modal-confirm-send-label"><T id="send.confirmAmountLabelFor" m="Total Spent" />:</div>
+          <div className="passphrase-modal-confirm-send-balance"><Balance amount={totalSpent} /></div>
+        </div>
+      </SendTransactionButton>
+    }
     {
       unsignedRawTx && isWatchingOnly && !isTrezor &&
         (
