@@ -1,17 +1,20 @@
 @import (reference) "./main.less";
 @import (reference) "./Icons.less";
 
-.send-select-account-input {
-  display: inline-block;
-  vertical-align: middle;
+.send-wrapper-area { 
+  width: 740px;
+}
 
+.details-area {
+  width: 312px;
+  background-color: #edeff1;
+  padding: 14px 0 0 27px;
+}
+
+.send-select-account-input {
   .accounts-select {
     width: 300px;
   }
-}
-
-.send-send-all-input {
-  float: right;
 }
 
 .send-label {
@@ -19,24 +22,7 @@
   line-height: 24px;
 }
 
-.send-address {
-  .inline-block-mixin;
-
-  font-size: 13px;
-  line-height: 17px;
-
-  .accounts-select {
-    width: 300px;
-    margin-right: 20px;
-    margin-bottom: 2em;
-  }
-}
-
-.send-address.send-output-address {
-  width: 33%;
-}
-
-.send-address-wallet-icon {
+.send-add-output-icon {
   .inline-block-mixin;
 
   vertical-align: top;
@@ -47,7 +33,6 @@
   background-size: 19px;
   background-repeat: no-repeat;
   cursor: pointer;
-  // margin-top: -1em;
 }
 
 .send-all-wallet-icon {
@@ -107,7 +92,7 @@
 }
 
 .send-to-others-wallet-icon:hover,
-.send-address-wallet-icon:hover {
+.send-add-output-icon:hover {
   opacity: 0.85;
 }
 
@@ -140,13 +125,6 @@
 
 .send-address-input-amount[hidden] {
   display: none;
-}
-
-.send-address-icon-spacer {
-  .inline-block-mixin;
-
-  width: 20px;
-  height: 20px;
 }
 
 .send-address-amount-spacer {
@@ -244,7 +222,7 @@
   font-weight: 700;
 }
 
-.send-wrapper {
+.send-area {
   padding: 14px 0px 0px 40px;
   background-color: var(--background-back-color);
   margin-bottom: 20px;

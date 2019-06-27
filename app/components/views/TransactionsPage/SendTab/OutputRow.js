@@ -1,6 +1,6 @@
 import { compose } from "fp";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
-import { AddressInput, DcrInput } from "inputs";
+import { AddressInput, DcrInput, ReceiveAccountsSelect } from "inputs";
 import { Tooltip } from "shared";
 import "style/SendPage.less";
 
@@ -18,33 +18,36 @@ const messages = defineMessages({
 const SendOutputRow = ({
   index, outputs, destination, value, addressError, onAddOutput, getOnRemoveOutput,
   onValidateAmount, onValidateAddress, isSendAll, onKeyDown, sendAllAmount, error, intl,
-  onShowSendAll, onHideSendAll,
+  onShowSendAll, onHideSendAll, isSendSelf
 }) => (
   <>
     <div className="send-row is-row">
       <div className="send-label">{index === 0 && <span><T id="send.to" m="To" />:</span>}</div>
-      <div className="send-address">
-        <div className="send-input-form">
-          <AddressInput
-            autoFocus={index == 0}
-            showErrors={true}
-            invalid={!!addressError}
-            invalidMessage={addressError}
-            value={destination}
-            className="send-address-hash-to"
-            placeholder={intl.formatMessage(messages.destinationAddrPlaceholder)}
-            onChange={(e) => onValidateAddress({ address: e.target.value , index })}
-            onKeyDown={onKeyDown}
-          />
-        </div>
-        {(index === 0 && isSendAll) ? (
-          <div className="send-address-icon-spacer"></div>
-        ) : (index === (outputs.length - 1)) && !isSendAll ? (
-          <div className="send-address-delete-icon" onClick={getOnRemoveOutput}></div>
-        ) : ( null ) }
+      <div className="send-input-form">
+        {
+          isSendSelf ? 
+            <ReceiveAccountsSelect
+              getAddressForSelected={true}
+              showAccountsButton={false}
+              onKeyDown={onKeyDown}
+            /> : <AddressInput
+              autoFocus={index == 0}
+              showErrors={true}
+              invalid={!!addressError}
+              invalidMessage={addressError}
+              value={destination}
+              className="send-address-hash-to"
+              placeholder={intl.formatMessage(messages.destinationAddrPlaceholder)}
+              onChange={(e) => onValidateAddress({ address: e.target.value , index })}
+              onKeyDown={onKeyDown}
+            />
+        }        
       </div>
-      {index === 0 && !isSendAll && 
-        <div className="send-address-wallet-icon" onClick={onAddOutput}></div>}
+      {/* {(index === (outputs.length - 1)) && !isSendAll ? (
+        <div className="send-address-delete-icon" onClick={getOnRemoveOutput}></div>
+      ) : ( null ) } */}
+      {index === 0 && !isSendAll &&
+        <div className="send-add-output-icon" onClick={onAddOutput}></div>}
     </div>
     <div className="send-row is-row">
       <div className="send-label">

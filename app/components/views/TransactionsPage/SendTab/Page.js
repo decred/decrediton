@@ -3,7 +3,6 @@ import { FormattedMessage as T } from "react-intl";
 import { Balance, Tooltip, TransitionMotionWrapper, Subtitle } from "shared";
 import { SendTransactionButton } from "buttons";
 import { CopyToClipboard } from "shared";
-import OutputAccountRow from "./OutputAccountRow";
 import "style/SendPage.less";
 import "style/MiscComponents.less";
 
@@ -22,7 +21,6 @@ const SendPage = ({
   onHideSendAll,
   onShowSendSelf,
   onShowSendOthers,
-  getAmountError,
   getStyles,
   willLeave,
   willEnter,
@@ -34,12 +32,13 @@ const SendPage = ({
   isWatchingOnly,
   isTrezor,
   insuficientFunds,
+  onValidateAmount,
   ...props
 }) => (
   <>
     <Subtitle title={<T id="send.subtitle" m="Send DCR"/>} />
-    <div className="is-row">
-      <div className="send-wrapper">
+    <div className="send-wrapper-area is-row">
+      <div className="send-area">
         <div className="send-row is-row">
           <div className="send-label"><T id="send.from" m="From" />:</div>
           <AccountsSelect className="send-select-account-input"
@@ -55,13 +54,7 @@ const SendPage = ({
             }
           </div>
         </div>
-        {
-          !isSendSelf
-            ? <TransitionMotionWrapper {...{ styles: getStyles(), willLeave, willEnter }} />
-            : <OutputAccountRow
-              {...{ index: 0, ...props, ...outputs[0].data, isSendAll, totalSpent, onKeyDown }}
-              amountError={getAmountError(0)} />
-        }
+        <TransitionMotionWrapper {...{ styles: getStyles(), willLeave, willEnter }} />
         {
           insuficientFunds && <div>insuficientFunds</div>
         }

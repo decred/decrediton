@@ -107,13 +107,13 @@ class Send extends React.Component {
   }
 
   getStyles() {
-    const { outputs, isSendAll, sendAllAmount } = this.state;
+    const { outputs, isSendAll, sendAllAmount, isSendSelf } = this.state;
     const { totalSpent } = this.props;
     const { onValidateAddress, onValidateAmount, getOnRemoveOutput } = this;
     return outputs.map((output, index) => {
       return {
         data: <OutputRow
-          {...{ ...this.props, index, outputs, ...output.data, isSendAll, totalSpent, sendAllAmount,
+          {...{ ...this.props, index, outputs, ...output.data, isSendAll, isSendSelf, totalSpent, sendAllAmount,
           onValidateAddress, onValidateAmount, }}
           onAddOutput={this.onAddOutput}
           getOnRemoveOutput={getOnRemoveOutput(index)}
