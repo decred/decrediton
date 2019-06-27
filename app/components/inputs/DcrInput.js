@@ -49,7 +49,7 @@ class DcrInput extends React.Component {
     const { unitDivisor, currencyDisplay, onChange } = this.props;
     let amount;
     const value = e.target.value;
-    this.setState({ value })
+    this.setState({ value });
     if (value) {
       // pre-validate if <= max supply
       amount = currencyDisplay === "DCR" ? value*unitDivisor : strToDcrAtoms(value, unitDivisor);

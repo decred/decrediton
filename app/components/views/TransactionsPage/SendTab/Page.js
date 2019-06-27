@@ -60,7 +60,7 @@ const SendPage = ({
         <div className="is-row">
           <div className="details-label-column">
             <div className="total-amount-sending-text">
-                <T id="send.totalAmountEstimation" m="Total amount sending" />:
+              <T id="send.totalAmountEstimation" m="Total amount sending" />:
             </div>
             <div className="estimated-fee-send-text">
               <T id="send.feeEstimation" m="Estimated Fee" />:
@@ -105,7 +105,6 @@ const SendPage = ({
         </SendTransactionButton>
       }
     </div>
-
     {
       unsignedRawTx && isWatchingOnly && !isTrezor &&
         (

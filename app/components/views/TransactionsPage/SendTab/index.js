@@ -38,7 +38,7 @@ class Send extends React.Component {
       this.setState({ outputs: newOutputs }, this.onAttemptConstructTransaction);
     }
     if (constructTxLowBalance !== prevProps.constructTxLowBalance && constructTxLowBalance) {
-      this.setState({ insuficientFunds: true })    
+      this.setState({ insuficientFunds: true });
     }
     if (unsignedRawTx !== prevProps.unsignedRawTx && isWatchingOnly) {
       this.setState({ unsignedRawTx });
@@ -116,7 +116,7 @@ class Send extends React.Component {
       return {
         data: <OutputRow
           {...{ ...this.props, index, outputs, ...output.data, isSendAll, isSendSelf, totalSpent, sendAllAmount,
-          onValidateAddress, onValidateAmount, onShowSendAll, onHideSendAll, }}
+            onValidateAddress, onValidateAmount, onShowSendAll, onHideSendAll, }}
           onAddOutput={this.onAddOutput}
           getOnRemoveOutput={getOnRemoveOutput(index)}
           onKeyDown={this.onKeyDown}
@@ -178,7 +178,7 @@ class Send extends React.Component {
 
   onAttemptConstructTransaction() {
     const { onAttemptConstructTransaction } = this.props;
-    const { isSendAll, outputs, account } = this.state
+    const { isSendAll, outputs, account } = this.state;
     const confirmations = 0;
 
     this.setState({ sendAllAmount: account.spendable });
@@ -245,7 +245,7 @@ class Send extends React.Component {
 
     ref.data.error.amount = error;
 
-    this.setState({ [ref]: ref }, this.onAttemptConstructTransaction())
+    this.setState({ [ref]: ref }, this.onAttemptConstructTransaction());
   }
 
   async onValidateAddress(data) {
@@ -257,7 +257,7 @@ class Send extends React.Component {
       error = <T id="send.errors.invalidAddress" m="Please enter a valid address" />;
     }
     try {
-      const validated = await this.props.validateAddress(address)
+      const validated = await this.props.validateAddress(address);
       if(!validated.getIsValid()) {
         error = <T id="send.errors.invalidAddress" m="Please enter a valid address" />;
       }
@@ -265,7 +265,7 @@ class Send extends React.Component {
 
       this.setState({ [ref]: ref }, this.onAttemptConstructTransaction());
     } catch (err) {
-      this.setState({ [ref]: ref })
+      this.setState({ [ref]: ref });
       return err;
     }
   }

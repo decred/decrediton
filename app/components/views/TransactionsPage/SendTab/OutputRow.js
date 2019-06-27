@@ -25,7 +25,7 @@ const SendOutputRow = ({
       <div className="send-label to-label">{index === 0 && <span><T id="send.to" m="To" />:</span>}</div>
       <div className="send-input">
         {
-          isSendSelf ? 
+          isSendSelf ?
             <ReceiveAccountsSelect
               getAddressForSelected={true}
               showAccountsButton={false}
@@ -40,7 +40,7 @@ const SendOutputRow = ({
               onChange={(e) => onValidateAddress({ address: e.target.value , index })}
               onKeyDown={onKeyDown}
             />
-        }        
+        }
       </div>
       {/* {(index === (outputs.length - 1)) && !isSendAll ? (
         <div className="send-address-delete-icon" onClick={getOnRemoveOutput}></div>
