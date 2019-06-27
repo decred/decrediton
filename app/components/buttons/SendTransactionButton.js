@@ -13,7 +13,6 @@ class SendTransactionButton extends React.Component {
     const { unsignedTransaction, onAttemptSignTransaction, disabled, onSubmit } = this.props;
     if (!privpass || disabled || !onAttemptSignTransaction) return;
     await onAttemptSignTransaction(privpass, unsignedTransaction);
-    onSubmit && onSubmit();
   }
 
   async onAttemptSignTransactionTrezor() {
