@@ -1,4 +1,3 @@
-import { compose } from "fp";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { AddressInput, DcrInput, ReceiveAccountsSelect } from "inputs";
 import { Tooltip } from "shared";
@@ -16,7 +15,7 @@ const messages = defineMessages({
 });
 
 const SendOutputRow = ({
-  index, destination, value, addressError, onAddOutput, onRemoveOutput,
+  index, destination, value, onAddOutput, onRemoveOutput,
   onValidateAmount, onValidateAddress, isSendAll, onKeyDown, sendAllAmount, error, intl,
   onShowSendAll, onHideSendAll, isSendSelf
 }) => (
@@ -44,8 +43,8 @@ const SendOutputRow = ({
         }
       </div>
       { !isSendAll && (index === 0 ?
-          <div className="send-add-output-icon" onClick={onAddOutput}></div> :
-          <div className="send-address-delete-icon" onClick={() => onRemoveOutput(index)}></div> )}
+        <div className="send-add-output-icon" onClick={onAddOutput}></div> :
+        <div className="send-address-delete-icon" onClick={() => onRemoveOutput(index)}></div> )}
     </div>
     <div className="send-row is-row">
       <div className="send-label amount-label">

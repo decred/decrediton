@@ -1,4 +1,3 @@
-import { compose, not, eq, get } from "fp";
 import { service, settings, send } from "connectors";
 import SendPage from "./Page";
 import ErrorScreen from "ErrorScreen";
@@ -271,7 +270,7 @@ class Send extends React.Component {
 
   getIsInvalid() {
     let hasError = false;
-    this.state.outputs.forEach((o, index) => {
+    this.state.outputs.forEach( o => {
       if (!o.data.amount || o.data.destination.length === 0 ||
           o.data.error.amount || o.data.error.address) {
         hasError = true;

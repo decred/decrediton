@@ -10,7 +10,6 @@ const wrapperComponent = props => <div className="output-row" { ...props } />;
 
 const SendPage = ({
   account,
-  isSendAll,
   isSendSelf,
   outputs,
   totalSpent,
