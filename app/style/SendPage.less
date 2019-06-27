@@ -11,6 +11,7 @@
   padding-top: 14px;
   background-color: var(--background-back-color);
   width: 428px;
+  min-height: 145px;
 }
 
 .details-area {
@@ -19,6 +20,11 @@
   padding: 14px 20px 0 0;
   font-size: 11px;
   color: var(--disabled-color);
+}
+
+.output-row {
+  background-color: var(--background-back-color);
+  padding-bottom: 14px;
 }
 
 // accounts-select is a class from AccountsSelect input component
@@ -72,6 +78,10 @@
 
   &.cancel-icon {
     background-image: @indicator-invalid-icon;
+
+    &:hover {
+      opacity: 0.85;
+    }
   }
 
   &.self-account-icon {
@@ -79,14 +89,6 @@
 
     &:hover {
       background-image: @send-self-hover;
-    }
-  }
-
-  &.other-address-icon {
-    background-image: @send-to-others-icon;
-
-    &:hover {
-      opacity: 0.85;
     }
   }
 }

@@ -6,6 +6,8 @@ import { CopyToClipboard } from "shared";
 import "style/SendPage.less";
 import "style/MiscComponents.less";
 
+const wrapperComponent = props => <div className="output-row" { ...props } />;
+
 const SendPage = ({
   account,
   isSendAll,
@@ -45,12 +47,12 @@ const SendPage = ({
                 <a className="send-icon-wrapper self-account-icon" onClick={onShowSendSelf}/>
               </Tooltip> :
               <Tooltip text={<T id="send.sendOthersTitle" m="Send funds to another wallet"/>} >
-                <a className="send-icon-wrapper other-address-icon " onClick={onShowSendOthers}/>
+                <a className="send-icon-wrapper cancel-icon " onClick={onShowSendOthers}/>
               </Tooltip>
             }
           </div>
         </div>
-        <TransitionMotionWrapper {...{ styles: getStyles(), willLeave, willEnter }} />
+        <TransitionMotionWrapper {...{ styles: getStyles(), willLeave, willEnter, wrapperComponent }} />
         {
           insuficientFunds && <div>insuficientFunds</div>
         }

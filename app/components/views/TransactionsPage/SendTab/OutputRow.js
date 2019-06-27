@@ -16,13 +16,13 @@ const messages = defineMessages({
 });
 
 const SendOutputRow = ({
-  index, outputs, destination, value, addressError, onAddOutput, getOnRemoveOutput,
+  index, destination, value, addressError, onAddOutput, onRemoveOutput,
   onValidateAmount, onValidateAddress, isSendAll, onKeyDown, sendAllAmount, error, intl,
   onShowSendAll, onHideSendAll, isSendSelf
 }) => (
   <>
     <div className="send-row is-row">
-      <div className="send-label to-label">{index === 0 && <span><T id="send.to" m="To" />:</span>}</div>
+      <div className="send-label to-label"><span><T id="send.to" m="To" />:</span></div>
       <div className="send-input">
         {
           isSendSelf ?
@@ -42,15 +42,13 @@ const SendOutputRow = ({
             />
         }
       </div>
-      {/* {(index === (outputs.length - 1)) && !isSendAll ? (
-        <div className="send-address-delete-icon" onClick={getOnRemoveOutput}></div>
-      ) : ( null ) } */}
-      {index === 0 && !isSendAll &&
-        <div className="send-add-output-icon" onClick={onAddOutput}></div>}
+      { !isSendAll && (index === 0 ?
+          <div className="send-add-output-icon" onClick={onAddOutput}></div> :
+          <div className="send-address-delete-icon" onClick={() => onRemoveOutput(index)}></div> )}
     </div>
     <div className="send-row is-row">
       <div className="send-label amount-label">
-        {index === 0 ? <span><T id="send.amount" m="Amount" />:</span> : null}
+        <span><T id="send.amount" m="Amount" />:</span>
       </div>
       {
         isSendAll ? <DcrInput
@@ -72,14 +70,14 @@ const SendOutputRow = ({
           onKeyDown={onKeyDown}
         />
       }
-      {!isSendAll ?
+      {index===0 && (!isSendAll ?
         <Tooltip text={<T id="send.sendAllTitle" m="Send all funds from selected account"/>}>
           <a className="send-icon-wrapper wallet-icon" onClick={onShowSendAll}/>
         </Tooltip> :
         <Tooltip text={<T id="send.cancelSendAllTitle" m="Cancel sending all funds"/>}>
           <a className="send-icon-wrapper cancel-icon" onClick={onHideSendAll}/>
         </Tooltip>
-      }
+      )}
     </div>
   </>
 );

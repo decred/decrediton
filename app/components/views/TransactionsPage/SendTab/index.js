@@ -59,7 +59,6 @@ class Send extends React.Component {
       onShowSendOthers,
       onAttemptConstructTransaction,
       onAddOutput,
-      getOnRemoveOutput,
       onValidateAmount,
       willEnter,
       willLeave,
@@ -85,7 +84,6 @@ class Send extends React.Component {
           onShowSendOthers,
           onAttemptConstructTransaction,
           onAddOutput,
-          getOnRemoveOutput,
           onValidateAmount,
           willEnter,
           willLeave,
@@ -110,20 +108,18 @@ class Send extends React.Component {
     const { outputs, isSendAll, sendAllAmount, isSendSelf } = this.state;
     const { totalSpent } = this.props;
     const {
-      onValidateAddress, onValidateAmount, getOnRemoveOutput, onShowSendAll, onHideSendAll,
+      onValidateAddress, onValidateAmount, onRemoveOutput, onShowSendAll, onHideSendAll,
     } = this;
     return outputs.map((output, index) => {
       return {
         data: <OutputRow
-          {...{ ...this.props, index, outputs, ...output.data, isSendAll, isSendSelf, totalSpent, sendAllAmount,
-            onValidateAddress, onValidateAmount, onShowSendAll, onHideSendAll, }}
+          {...{ ...this.props, index, ...output.data, isSendAll, isSendSelf, totalSpent, sendAllAmount,
+            onValidateAddress, onValidateAmount, onShowSendAll, onHideSendAll, onRemoveOutput }}
           onAddOutput={this.onAddOutput}
-          getOnRemoveOutput={getOnRemoveOutput(index)}
           onKeyDown={this.onKeyDown}
         />,
         key: "output_" + index,
         style: {
-          height: spring(40, presets.gentle),
           opacity: spring(1, presets.gentle),
         }
       };
@@ -132,14 +128,12 @@ class Send extends React.Component {
 
   willEnter() {
     return {
-      height: 0,
       opacity: 0,
     };
   }
 
   willLeave() {
     return {
-      height: spring(0),
       opacity: spring(0, { stiffness: 210, damping: 20 }),
     };
   }
@@ -208,6 +202,12 @@ class Send extends React.Component {
     this.setState({ outputs: [ ...outputs, { key: "output_"+outputs.length, data: this.getBaseOutput() } ] });
   }
 
+  onRemoveOutput(index) {
+    const { outputs } = this.state;
+    outputs.splice(index, 1);
+    this.setState({ outputs }, this.onAttemptConstructTransaction);
+  }
+
   onKeyDown(e) {
     if (e.keyCode === 13 && this.getIsValid()) {
       this.setState({ showPassphraseModal: true });
@@ -220,13 +220,6 @@ class Send extends React.Component {
 
   resetShowPassphraseModal() {
     this.setState({ showPassphraseModal: false });
-  }
-
-  getOnRemoveOutput(key) {
-    return () => this.setState(
-      { outputs: this.state.outputs.filter(compose(not(eq(`output_${key}`)), get("key"))) },
-      this.onAttemptConstructTransaction
-    );
   }
 
   onValidateAmount(data) {
