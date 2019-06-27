@@ -54,12 +54,14 @@ const SendOutputRow = ({
       </div>
       {
         isSendAll ? <DcrInput
+          className = "send-input"
           showErrors={true}
           disabled={true}
           amount={sendAllAmount}
           onKeyDown={onKeyDown}
           onChange={ (e) => onValidateAmount(e.target.value, index) }
         /> : <DcrInput
+          className = "send-input"
           required={true}
           showErrors={error && error.amount}
           invalid={error && error.amount}
