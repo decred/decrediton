@@ -184,7 +184,7 @@ class Send extends React.Component {
         account.value,
         confirmations,
         outputs.map(({ data }) =>
-          ({ amount: data.amount, destination: data.destination })
+          ({ amount: data.atomAmount, destination: data.destination })
         )
       );
     } else {
@@ -235,6 +235,7 @@ class Send extends React.Component {
     }
     const ref = this.state.outputs[index];
     ref.data.amount = value;
+    ref.data.atomAmount = atomValue;
 
     ref.data.error.amount = error;
 

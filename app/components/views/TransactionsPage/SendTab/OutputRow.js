@@ -31,10 +31,11 @@ const SendOutputRow = ({
               showAccountsButton={false}
               onKeyDown={onKeyDown}
             /> : <AddressInput
-              autoFocus={index == 0}
-              showErrors={true}
-              invalid={!!addressError}
-              invalidMessage={addressError}
+              required = {true}
+              autoFocus={index === 0}
+              showErrors={ error && error.address }
+              invalid={error && error.address}
+              invalidMessage={error && error.address}
               value={destination}
               placeholder={intl.formatMessage(messages.destinationAddrPlaceholder)}
               onChange={(e) => onValidateAddress({ address: e.target.value , index })}
@@ -50,26 +51,28 @@ const SendOutputRow = ({
       <div className="send-label amount-label">
         <span><T id="send.amount" m="Amount" />:</span>
       </div>
-      {
-        isSendAll ? <DcrInput
-          className = "send-input"
-          showErrors={true}
-          disabled={true}
-          amount={sendAllAmount}
-          onKeyDown={onKeyDown}
-          onChange={ (e) => onValidateAmount(e.target.value, index) }
-        /> : <DcrInput
-          className = "send-input"
-          required={true}
-          showErrors={error && error.amount}
-          invalid={error && error.amount}
-          invalidMessage={error && error.amount}
-          amount={value}
-          placeholder={intl.formatMessage(messages.amountPlaceholder)}
-          onChange={ e => onValidateAmount({ value: e.value , index, atomValue: e.atomValue })}
-          onKeyDown={onKeyDown}
-        />
-      }
+      <div className="is-column">
+        {
+          isSendAll ? <DcrInput
+            className = "send-input"
+            showErrors={true}
+            disabled={true}
+            amount={sendAllAmount}
+            onKeyDown={onKeyDown}
+            onChange={ (e) => onValidateAmount(e.target.value, index) }
+          /> : <DcrInput
+            className = "send-input"
+            required={true}
+            showErrors={error && error.amount}
+            invalid={error && error.amount}
+            invalidMessage={error && error.amount}
+            amount={value}
+            placeholder={intl.formatMessage(messages.amountPlaceholder)}
+            onChange={ e => onValidateAmount({ value: e.value , index, atomValue: e.atomValue })}
+            onKeyDown={onKeyDown}
+          />
+        }
+      </div>
       {index===0 && (!isSendAll ?
         <Tooltip text={<T id="send.sendAllTitle" m="Send all funds from selected account"/>}>
           <a className="send-icon-wrapper wallet-icon" onClick={onShowSendAll}/>
