@@ -23,7 +23,7 @@ const SendOutputRow = ({
   <>
     <div className="send-row is-row">
       <div className="send-label">{index === 0 && <span><T id="send.to" m="To" />:</span>}</div>
-      <div className="send-input-form">
+      <div className="send-input">
         {
           isSendSelf ? 
             <ReceiveAccountsSelect
@@ -36,7 +36,6 @@ const SendOutputRow = ({
               invalid={!!addressError}
               invalidMessage={addressError}
               value={destination}
-              className="send-address-hash-to"
               placeholder={intl.formatMessage(messages.destinationAddrPlaceholder)}
               onChange={(e) => onValidateAddress({ address: e.target.value , index })}
               onKeyDown={onKeyDown}
@@ -56,7 +55,6 @@ const SendOutputRow = ({
       {
         isSendAll ? <DcrInput
           showErrors={true}
-          className="send-address-input-amount"
           disabled={true}
           amount={sendAllAmount}
           onKeyDown={onKeyDown}
@@ -67,7 +65,6 @@ const SendOutputRow = ({
           invalid={error && error.amount}
           invalidMessage={error && error.amount}
           amount={value}
-          className="send-address-input-amount"
           placeholder={intl.formatMessage(messages.amountPlaceholder)}
           onChange={ e => onValidateAmount({ value: e.value , index, atomValue: e.atomValue })}
           onKeyDown={onKeyDown}
@@ -75,10 +72,10 @@ const SendOutputRow = ({
       }
       {!isSendAll ?
         <Tooltip text={<T id="send.sendAllTitle" m="Send all funds from selected account"/>}>
-          <a className="send-all-wallet-icon" onClick={onShowSendAll}/>
+          <a className="send-icon-wrapper wallet-icon" onClick={onShowSendAll}/>
         </Tooltip> :
         <Tooltip text={<T id="send.cancelSendAllTitle" m="Cancel sending all funds"/>}>
-          <a className="send-all-cancel-wallet-icon" onClick={onHideSendAll}/>
+          <a className="send-icon-wrapper cancel-icon" onClick={onHideSendAll}/>
         </Tooltip>
       }
     </div>

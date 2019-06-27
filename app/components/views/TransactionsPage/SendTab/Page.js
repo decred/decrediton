@@ -17,8 +17,6 @@ const SendPage = ({
   isValid,
   onChangeAccount,
   onAttemptSignTransaction,
-  onShowSendAll,
-  onHideSendAll,
   onShowSendSelf,
   onShowSendOthers,
   getStyles,
@@ -32,8 +30,6 @@ const SendPage = ({
   isWatchingOnly,
   isTrezor,
   insuficientFunds,
-  onValidateAmount,
-  ...props
 }) => (
   <>
     <Subtitle title={<T id="send.subtitle" m="Send DCR"/>} />
@@ -41,15 +37,15 @@ const SendPage = ({
       <div className="send-area">
         <div className="send-row is-row">
           <div className="send-label"><T id="send.from" m="From" />:</div>
-          <AccountsSelect className="send-select-account-input"
+          <AccountsSelect className="send-input"
             {...{ account }} onChange={onChangeAccount} onKeyDown={onKeyDown}/>
           <div>
             {!isSendSelf ?
               <Tooltip text={<T id="send.sendSelfTitle" m="Send funds to another account"/>}>
-                <a className="send-self-wallet-icon" onClick={onShowSendSelf}/>
+                <a className="send-icon-wrapper self-account-icon" onClick={onShowSendSelf}/>
               </Tooltip> :
               <Tooltip text={<T id="send.sendOthersTitle" m="Send funds to another wallet"/>} >
-                <a className="send-others-wallet-icon" onClick={onShowSendOthers}/>
+                <a className="send-icon-wrapper other-address-icon " onClick={onShowSendOthers}/>
               </Tooltip>
             }
           </div>
