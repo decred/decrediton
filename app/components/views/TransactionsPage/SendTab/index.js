@@ -37,8 +37,12 @@ class Send extends React.Component {
       let newOutputs = outputs.map(o => ({ ...o, data:{ ...o.data, destination: nextAddress } }));
       this.setState({ outputs: newOutputs }, this.onAttemptConstructTransaction);
     }
-    if (constructTxLowBalance !== prevProps.constructTxLowBalance && constructTxLowBalance) {
-      this.setState({ insuficientFunds: true });
+    if (constructTxLowBalance !== prevProps.constructTxLowBalance) {
+      if (constructTxLowBalance) {
+        this.setState({ insuficientFunds: true });
+      } else {
+        this.setState({ insuficientFunds: false });
+      }
     }
     if (unsignedRawTx !== prevProps.unsignedRawTx && isWatchingOnly) {
       this.setState({ unsignedRawTx });

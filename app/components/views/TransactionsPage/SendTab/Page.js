@@ -53,9 +53,6 @@ const SendPage = ({
           </div>
         </div>
         <TransitionMotionWrapper {...{ styles: getStyles(), willLeave, willEnter, wrapperComponent }} />
-        {
-          insuficientFunds && <div>insuficientFunds</div>
-        }
       </div>
       <div className="details-area">
         <div className="details-title">Details</div>
@@ -80,6 +77,10 @@ const SendPage = ({
       </div>
     </div>
     <div className = "send-button-area">
+      {
+        insuficientFunds &&
+          <div className="error"><T id="send.insuficient.funds" m="Insuficient funds" /></div>
+      }
       { ( (isTrezor && isWatchingOnly) || !isWatchingOnly ) &&
         <SendTransactionButton
           disabled={!isValid}
