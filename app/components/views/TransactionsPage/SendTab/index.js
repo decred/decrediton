@@ -199,7 +199,8 @@ class Send extends React.Component {
 
   onAddOutput() {
     const { outputs } = this.state;
-    this.setState({ outputs: [ ...outputs, { key: "output_"+outputs.length, data: this.getBaseOutput() } ] });
+    outputs.push({ key: "output_"+outputs.length, data: this.getBaseOutput() });
+    this.setState({ outputs });
   }
 
   onRemoveOutput(index) {
