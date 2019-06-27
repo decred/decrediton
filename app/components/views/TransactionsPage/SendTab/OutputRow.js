@@ -59,7 +59,7 @@ const SendOutputRow = ({
             disabled={true}
             amount={sendAllAmount}
             onKeyDown={onKeyDown}
-            onChange={ (e) => onValidateAmount(e.target.value, index) }
+            onChange={ (e) => onValidateAmount({ value: e.value , index, atomValue: e.atomValue }) }
           /> : <DcrInput
             className = "send-input"
             required={true}

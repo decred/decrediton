@@ -161,8 +161,8 @@ class Send extends React.Component {
   }
   onShowSendSelf() {
     const { outputs } = this.state;
-    let newOutputs = [ { ...outputs[0], data:{ destination: this.props.nextAddress, amount: null } } ];
-    this.setState({ isSendSelf: true, outputs:newOutputs }, this.onAttemptConstructTransaction);
+    let newOutputs = [ { ...outputs[0], data: this.getBaseOutput() } ];
+    this.setState({ isSendSelf: true, outputs: newOutputs }, this.onAttemptConstructTransaction);
   }
   onShowSendOthers() {
     const { outputs } = this.state;
