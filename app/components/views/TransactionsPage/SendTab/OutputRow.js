@@ -22,7 +22,7 @@ const SendOutputRow = ({
 }) => (
   <>
     <div className="send-row is-row">
-      <div className="send-label">{index === 0 && <span><T id="send.to" m="To" />:</span>}</div>
+      <div className="send-label to-label">{index === 0 && <span><T id="send.to" m="To" />:</span>}</div>
       <div className="send-input">
         {
           isSendSelf ? 
@@ -49,7 +49,7 @@ const SendOutputRow = ({
         <div className="send-add-output-icon" onClick={onAddOutput}></div>}
     </div>
     <div className="send-row is-row">
-      <div className="send-label">
+      <div className="send-label amount-label">
         {index === 0 ? <span><T id="send.amount" m="Amount" />:</span> : null}
       </div>
       {

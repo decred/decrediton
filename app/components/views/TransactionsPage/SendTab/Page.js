@@ -36,7 +36,7 @@ const SendPage = ({
     <div className="send-wrapper-area is-row">
       <div className="send-area">
         <div className="send-row is-row">
-          <div className="send-label"><T id="send.from" m="From" />:</div>
+          <div className="send-label from-label"><T id="send.from" m="From" />:</div>
           <AccountsSelect className="send-input"
             {...{ account }} onChange={onChangeAccount} onKeyDown={onKeyDown}/>
           <div>
@@ -56,59 +56,56 @@ const SendPage = ({
         }
       </div>
       <div className="details-area">
-        <div className="total-amount-send">
-            <div className="total-amount-send-text">
-              <T id="send.totalAmountEstimation" m="Total amount sending" />
-                  :
+        <div className="details-title">Details</div>
+        <div className="is-row">
+          <div className="details-label-column">
+            <div className="total-amount-sending-text">
+                <T id="send.totalAmountEstimation" m="Total amount sending" />:
             </div>
-            <div className="total-amount-send-amount">
-              <Balance flat amount={totalSpent} />
+            <div className="estimated-fee-send-text">
+              <T id="send.feeEstimation" m="Estimated Fee" />:
             </div>
-          </div>
-          <div className="total-amount-send">
-            <div className="total-amount-send-text">
-              <T id="send.feeEstimation" m="Estimated Fee" />
-                  :
-            </div>
-            <div className="total-amount-send-amount">
-              <Balance flat amount={estimatedFee} />
+            <div className="estimated-size-send-text">
+              <T id="send.sizeEstimation" m="Estimated Size" />:
             </div>
           </div>
-          <div className="total-amount-send">
-            <div className="total-amount-send-text">
-              <T id="send.sizeEstimation" m="Estimated Size" />
-                  :
-            </div>
-            <div className="total-amount-send-amount">{estimatedSignedSize}<span className="total-amount-send-amount-bytes"> bytes</span></div>
+          <div className = "details-value-column">
+            <Balance flat amount={totalSpent} />
+            <Balance flat amount={estimatedFee} />
+            <div>{estimatedSignedSize}<span className="total-amount-send-amount-bytes"> Bytes</span></div>
           </div>
+        </div>
       </div>
     </div>
-    { ( (isTrezor && isWatchingOnly) || !isWatchingOnly ) &&
-      <SendTransactionButton
-        disabled={!isValid}
-        showModal={showPassphraseModal}
-        onShow={resetShowPassphraseModal}
-        onSubmit={onAttemptSignTransaction} >
-        <div className="passphrase-modal-confirm-send">
-          {!isSendSelf ?
-            <>
-              <div className="passphrase-modal-confirm-send-label">{outputs.length > 1 ? <T id="send.confirmAmountAddresses" m="Destination addresses" /> : <T id="send.confirmAmountAddress" m="Destination address" /> }:</div>
-              {outputs.map((output, index) => {
-                return (
-                  <div className="passphrase-modal-confirm-send-address" key={"confirm-" + index}>{output.data.destination}</div>
-                );}
-              )}
-            </> :
-            <>
-              <div className="passphrase-modal-confirm-send-label"><T id="send.confirmAmountAccount" m="Destination account" />:</div>
-              <div className="passphrase-modal-confirm-send-address">{nextAddressAccount.name}</div>
-            </>
-          }
-          <div className="passphrase-modal-confirm-send-label"><T id="send.confirmAmountLabelFor" m="Total Spent" />:</div>
-          <div className="passphrase-modal-confirm-send-balance"><Balance amount={totalSpent} /></div>
-        </div>
-      </SendTransactionButton>
-    }
+    <div className = "send-button-area">
+      { ( (isTrezor && isWatchingOnly) || !isWatchingOnly ) &&
+        <SendTransactionButton
+          disabled={!isValid}
+          showModal={showPassphraseModal}
+          onShow={resetShowPassphraseModal}
+          onSubmit={onAttemptSignTransaction} >
+          <div className="passphrase-modal-confirm-send">
+            {!isSendSelf ?
+              <>
+                <div className="passphrase-modal-confirm-send-label">{outputs.length > 1 ? <T id="send.confirmAmountAddresses" m="Destination addresses" /> : <T id="send.confirmAmountAddress" m="Destination address" /> }:</div>
+                {outputs.map((output, index) => {
+                  return (
+                    <div className="passphrase-modal-confirm-send-address" key={"confirm-" + index}>{output.data.destination}</div>
+                  );}
+                )}
+              </> :
+              <>
+                <div className="passphrase-modal-confirm-send-label"><T id="send.confirmAmountAccount" m="Destination account" />:</div>
+                <div className="passphrase-modal-confirm-send-address">{nextAddressAccount.name}</div>
+              </>
+            }
+            <div className="passphrase-modal-confirm-send-label"><T id="send.confirmAmountLabelFor" m="Total Spent" />:</div>
+            <div className="passphrase-modal-confirm-send-balance"><Balance amount={totalSpent} /></div>
+          </div>
+        </SendTransactionButton>
+      }
+    </div>
+
     {
       unsignedRawTx && isWatchingOnly && !isTrezor &&
         (

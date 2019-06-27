@@ -8,15 +8,17 @@
 }
 
 .send-area {
-  padding: 14px 0px 0px 40px;
+  padding-top: 14px;
   background-color: var(--background-back-color);
   width: 428px;
 }
 
 .details-area {
-  width: 312px;
+  width: 298px;
   background-color: #edeff1;
-  padding: 14px 0 0 27px;
+  padding: 14px 20px 0 0;
+  font-size: 11px;
+  color: var(--disabled-color);
 }
 
 // accounts-select is a class from AccountsSelect input component
@@ -27,6 +29,18 @@
 .send-label {
   font-size: 19px;
   line-height: 24px;
+
+  &.from-label {
+    margin-left: 40px;
+  }
+
+  &.to-label {
+    margin-left: 62px;
+  }
+
+  &.amount-label {
+    margin-left: 16px;
+  }
 }
 
 .send-add-output-icon {
@@ -93,33 +107,29 @@
   opacity: 0.7;
 }
 
-.total-amount-send {
-  font-size: 11px;
-  color: var(--disabled-color);
-  line-height: 14px;
-  margin-bottom: 0.3em;
-}
+.details-label-column {
+  white-space: nowrap; 
+  .total-amount-sending-text {
+    margin-left: 27px;
+  }
 
-.total-amount-send-text {
-  .inline-block-mixin;
+  .estimated-fee-send-text {
+    margin-left: 64px;
+  }
 
-  width: 20vw;
-}
-
-.total-amount-send-amount {
-  .inline-block-mixin;
-
-  color: var(--input-color-default);
-  width: 14vw;
-  font-family: Inconsolata, monospace;
-
-  .balance-base {
-    color: var(--disabled-color);
+  .estimated-size-send-text {
+    margin-left: 61px;
   }
 }
 
-.total-amount-send-amount-bytes {
-  color: var(--disabled-color);
+.details-value-column {
+  text-align: right;
+  flex-grow: 1;
+}
+
+.details-title {
+  text-align: right;
+  margin-bottom: 45px;
 }
 
 .send-select-account {
@@ -138,6 +148,7 @@
 .send-input {
   width: 260px;
   margin-left: 10px;
+  margin-right: 10px;
 }
 
 .send-address-input {
@@ -150,6 +161,11 @@
 
 .send-row {
   margin-bottom: 20px;
+}
+
+.send-button-area {
+  width: 740px;
+  text-align: right;
 }
 
 .unsigned-raw-tx-title {
