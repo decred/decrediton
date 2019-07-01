@@ -2,7 +2,6 @@ import { daemonStartup } from "connectors";
 import { interpret } from "xstate";
 import { getStartedMachine } from "./GetStartedStateMachine";
 import GetStartedPage from "./Page";
-import { StartDecrediton } from "./context";
 import { AdvancedStartupBody } from "./AdvancedStartup";
 import { injectIntl } from "react-intl";
 import WalletSelection from "./WalletSelection";
@@ -107,9 +106,9 @@ class GetStarted extends React.Component {
     const { service, submitChosenWallet, submitRemoteCredentials } = this;
 
     return (
-      <StartDecrediton.Provider value={{ ...this.state, ...this.props, submitRemoteCredentials, submitChosenWallet, service }}>
-        <GetStartedPage StateComponent = {StateComponent}/>
-      </StartDecrediton.Provider>
+      <GetStartedPage
+        {...{ ...this.state, ...this.props, submitRemoteCredentials, submitChosenWallet, service }}
+        StateComponent={StateComponent} />
     );
   }
 }
