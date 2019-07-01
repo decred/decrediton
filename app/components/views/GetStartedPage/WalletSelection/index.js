@@ -1,5 +1,4 @@
 import { WalletSelectionFormBody } from "./Form";
-import { StartDecrediton } from "views/GetStartedPage/context";
 
 @autobind
 class WalletSelectionBody extends React.Component {
@@ -20,11 +19,8 @@ class WalletSelectionBody extends React.Component {
       masterPubKeyError: false,
       walletNameError: null,
       isTrezor: false,
+      selectedWallet: this.props.availableWallets[0],
     };
-  }
-
-  componentDidMount() {
-    this.context.selectedWallet =  this.context.availableWallets[0];
   }
 
   componentWillUnmount() {
@@ -33,8 +29,7 @@ class WalletSelectionBody extends React.Component {
 
   render() {
     const {
-      maxWalletCount,
-      isSPV
+      maxWalletCount, isSPV, availableWallets, getDaemonSynced, submitChosenWallet
     } = this.props;
     const {
       onChangeAvailableWallets,
@@ -63,7 +58,6 @@ class WalletSelectionBody extends React.Component {
       masterPubKeyError,
       walletNameError,
     } = this.state;
-    const { availableWallets, getDaemonSynced, submitChosenWallet } = this.context;
     return (
       <WalletSelectionFormBody
         {...{
@@ -205,12 +199,11 @@ class WalletSelectionBody extends React.Component {
     this.setState({ walletMasterPubKey });
   }
   startWallet() {
-    this.context.onStartWallet(this.context.selectedWallet);
+    this.props.onStartWallet(this.props.selectedWallet);
   }
   resetState() {
     this.setState(this.getInitialState());
   }
 }
-WalletSelectionBody.contextType = StartDecrediton;
 
 export default (WalletSelectionBody);
