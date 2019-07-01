@@ -129,6 +129,7 @@ export const launchDCRD = (params, testnet) => new Promise((resolve,reject) => {
     rpchost = rpcCreds.rpc_host;
     rpcport = rpcCreds.rpc_port;
     dcrdPID = -1;
+    AddToDcrdLog(process.stdout, "dcrd is connected as remote", debug);
     return resolve(rpcCreds);
   }
   if (dcrdPID === -1) {
