@@ -187,6 +187,10 @@ const messages = defineMessages({
     id: "daemonSyncingTimeout.errors",
     defaultMessage: "Daemon connection timeout exceded.\n That Probably means you filled your parameters wrong. Please review it."
   },
+  DAEMONCONNECTING_ERROR: {
+    id: "daemon.connect.error",
+    defaultMessage: "Error connecting to daemon",
+  },
   REMOVESTAKEPOOLCONFIG: {
     id: "stakepools.removedStakePoolConfig",
     defaultMessage: "Successfully removed StakePool config"
@@ -460,7 +464,8 @@ export default function snackbar(state = {}, action) {
     break;
   case CONNECTDAEMON_FAILURE:
     type = "Error";
-    action.daemonTimeout ? message = messages["DAEMONCONNECTING_TIMEOUT"] : message = action.error;
+    action.daemonTimeout ? message = messages["DAEMONCONNECTING_TIMEOUT"] : message = messages["DAEMONCONNECTING_ERROR"];
+    action.error && action.error.code ? message.defaultMessage = action.error.code : null;
     break;
   }
 
