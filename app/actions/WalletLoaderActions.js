@@ -208,7 +208,6 @@ export const startRpcRequestFunc = (credentials, privPass, isRetry) =>
       return;
     }
     const { daemon: { walletName }, walletLoader: { discoverAccountsComplete,isWatchingOnly } }= getState();
-    // const cfg = getWalletCfg(isTestNet(getState()), walletName);
     let rpcuser, rpccertPath, rpcpass, daemonhost, rpcport;
 
     if (credentials) {
@@ -219,26 +218,6 @@ export const startRpcRequestFunc = (credentials, privPass, isRetry) =>
       rpcport = credentials.rpc_port;
     }
 
-    // if (cliOptions.rpcPresent) {
-    //   rpcuser = cliOptions.rpcUser;
-    //   rpcpass = cliOptions.rpcPass;
-    //   rpccertPath = cliOptions.rpcCert;
-    //   daemonhost = cliOptions.rpcHost;
-    //   rpcport = cliOptions.rpcPort;
-    // } else if (credentials) {
-    //   rpcuser = credentials.rpc_user;
-    //   rpccertPath = credentials.rpc_cert;
-    //   rpcpass = credentials.rpc_pass;
-    //   daemonhost = credentials.rpc_host;
-    //   rpcport = credentials.rpc_port;
-    // } else if (appdata) {
-
-    // } else {
-    //   rpcuser = cfg.get("rpc_user");
-    //   rpcpass = cfg.get("rpc_pass");
-    //   daemonhost = cfg.get("rpc_host");
-    //   rpcport = cfg.get("rpc_port");
-    // }
     var request = new RpcSyncRequest();
     const cert = getDcrdCert(rpccertPath);
     request.setNetworkAddress(daemonhost + ":" + rpcport);
