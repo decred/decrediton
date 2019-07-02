@@ -8,14 +8,23 @@ import WalletSelection from "./WalletSelection";
 
 @autobind
 class GetStarted extends React.Component {
-  state = {
-    current: getStartedMachine.initialState,
-    StateComponent: null,
-  };
+  service;
 
-  service = interpret(getStartedMachine).onTransition(current =>
-    this.setState({ current })
-  );
+  constructor(props) {
+    super(props);
+    const { prepStartDaemon, onConnectDaemon, checkNetworkMatch, syncDaemon, onStartWallet, onRetryStartRPC, onGetAvailableWallets } = this.props;
+    const { sendEvent } = this;
+    this.service = interpret(getStartedMachine({
+      prepStartDaemon, onConnectDaemon, checkNetworkMatch, syncDaemon, onStartWallet, onRetryStartRPC, sendEvent, onGetAvailableWallets
+    })).onTransition(current => {
+      this.setState({ current });
+    });
+    this.state = {
+      current: getStartedMachine().initialState,
+      StateComponent: null,
+    };
+  }
+
 
   componentDidMount() {
     const { isSPV, isAdvancedDaemon } = this.props;
@@ -30,8 +39,8 @@ class GetStarted extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { current } = this.state;
-    if (prevState.current.value !== current.value) {
+    const { current } = prevState;
+    if (current && current.value !== this.state.current.value) {
       const StateComponent = this.getStateComponent();
       this.setState({ StateComponent });
     }
@@ -39,59 +48,36 @@ class GetStarted extends React.Component {
 
   getStateComponent() {
     const { current } = this.state;
-    const { send, machine } = this.service;
     let component;
 
     switch(current.value) {
-    case "prepStartDaemon": {
-      this.props.prepStartDaemon();
-      break;
-    }
-    case "startAdvancedDaemon": {
+    case "startAdvancedDaemon":
       component = AdvancedStartupBody;
       break;
-    }
-    case "connectingDaemon": {
-      const { remoteCredentials } = current.event;
-      this.props.onConnectDaemon(remoteCredentials)
-        .then(connected => {
-          console.log(connected);
-          send({ type: "CHECK_NETWORK_MATCH", connected });
-        })
-        .catch(e => console.log(e));
+    case "connectingDaemon":
       break;
-    }
-    case "checkingNetworkMatch": {
-      this.props.checkNetworkMatch()
-        .then(checked => send({ type: "SYNC_DAEMON", checked }));
+    case "checkingNetworkMatch":
       break;
-    }
-    case "syncingDaemon": {
-      this.props.syncDaemon().then( synced => {
-        this.props.onGetAvailableWallets().
-          then(w => send({ type: "CHOOSE_WALLET", synced, w }));
-      });
+    case "syncingDaemon":
       break;
-    }
-    case "choosingWallet": {
+    case "choosingWallet":
       component = WalletSelection;
       break;
-    }
-    case "startingWallet": {
-      this.props.onStartWallet(machine.context.selectedWallet).then(r => {
-        send({ type: "SYNC_RPC", r });
-      });
+    case "startingWallet":
       break;
-    }
-    case "syncingRPC": {
-      this.props.onRetryStartRPC(machine.context.credentials);
-
+    case "syncingRPC":
       break;
-    }
     }
 
     return component;
   }
+
+  sendEvent(data) {
+    const { send } = this.service;
+    const { type, payload } = data;
+    send({ type, payload });
+  }
+
 
   submitChosenWallet(selectedWallet) {
     return this.service.send({ type: "SUBMIT_CHOOSE_WALLET", selectedWallet });
