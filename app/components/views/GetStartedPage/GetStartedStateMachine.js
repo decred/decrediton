@@ -1,6 +1,6 @@
 import { Machine } from "xstate";
 
-export const getStartedMachine = Machine({
+export const getStartedMachine = (a) => Machine({
   id: "getStarted",
   initial: "preStart",
   context: {
@@ -89,7 +89,10 @@ export const getStartedMachine = Machine({
 {
   actions: {
     isAtPreStart: () => {
+      // console.log(e)
       console.log("is at pre start");
+      console.log(a);
+      return a.prepStartDaemon();
     },
     isAtStartAdvancedDaemon: () => {
       console.log("is at start advanced daemon");
@@ -104,14 +107,29 @@ export const getStartedMachine = Machine({
       console.log("is at started daemon");
     },
     isAtConnectDaemon: (context, event) => {
-      context.credentials = event.remoteCredentials;
       console.log(" is at connect daemon ");
+      const { remoteCredentials } = event;
+      context.credentials = remoteCredentials;
+      return a.onConnectDaemon(remoteCredentials)
+        .then(connected => {
+          console.log(context);
+          console.log(event);
+          a.sendEvent({ type: "CHECK_NETWORK_MATCH", payload: connected });
+        })
+        .catch(e => console.log(e));
     },
     isAtCheckNetworkMatch: () => {
       console.log(" is at check network ");
+      return a.checkNetworkMatch()
+        .then(checked => a.sendEvent({ type: "SYNC_DAEMON", payload: checked }))
+        .catch(e => console.log(e));
     },
     isAtSyncingDaemon: () => {
       console.log(" is at syncing daemon ");
+      a.syncDaemon().then( synced => {
+        a.onGetAvailableWallets().
+          then(w => a.sendEvent({ type: "CHOOSE_WALLET", payload: { synced, w } }));
+      });
     },
     isAtLeavingChoosingWallet: (context, event) => {
       console.log("is leaving choosing wallet");
@@ -120,11 +138,15 @@ export const getStartedMachine = Machine({
     isAtChoosingWallet: () => {
       console.log("is At Choose Wallet");
     },
-    isAtStartWallet: () => {
+    isAtStartWallet: (context) => {
       console.log("is At Start Wallet");
+      a.onStartWallet(context.selectedWallet).then(r => {
+        a.sendEvent({ type: "SYNC_RPC", r });
+      });
     },
-    isSyncingRPC: () => {
+    isSyncingRPC: (context, ) => {
       console.log("is at syncing rpc");
+      a.onRetryStartRPC(context.credentials);
     },
   },
 });
