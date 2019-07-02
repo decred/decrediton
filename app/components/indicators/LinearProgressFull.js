@@ -31,6 +31,6 @@ export const LinearProgressFull = ({
       </div>
     </div>
   );
-}
+};
 
 export default LinearProgressFull;
