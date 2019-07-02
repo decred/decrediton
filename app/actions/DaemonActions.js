@@ -236,7 +236,6 @@ export const getAvailableWallets = () => async (dispatch, getState) => new Promi
   dispatch({ availableWallets, previousWallet, type: AVAILABLE_WALLETS });
 
   resolve({ availableWallets, previousWallet });
-  // return {;
 });
 
 export const removeWallet = (selectedWallet) => (dispatch) => {
@@ -332,7 +331,6 @@ export const prepStartDaemon = () => (dispatch, getState) => {
   dispatch(registerForErrors());
   dispatch(checkDecreditonVersion());
   if (!daemonAdvanced) {
-    // dispatch(startDaemon());
     return;
   }
 
@@ -352,13 +350,6 @@ export const prepStartDaemon = () => (dispatch, getState) => {
   if(hasAllCredentials && hasAppData)
     this.props.setCredentialsAppdataError();
 
-  // if (cliOptions.rpcPresent) {
-  //   dispatch(startDaemon(credentials));
-  // } else if (!openForm && hasAppData) {
-  //   dispatch(startDaemon(null, getAppdataPath()));
-  // } else if (!openForm && hasAllCredentials) {
-  //   dispatch(startDaemon(credentials));
-  // }
 };
 
 const TIME_TO_TIMEOUT = 30 * 1000; // 30 sec
