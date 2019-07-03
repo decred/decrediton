@@ -30,26 +30,12 @@ export const FixedDcrInput = ({ currencyDisplay, ...props }) =>
 class DcrInput extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      value: this.props.amount,
-    };
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if (this.state.value !== nextState.value) {
-      return true;
-    }
-    if (this.props.amount === nextProps.amount) {
-      return false;
-    }
-    return true;
   }
 
   onChange(e) {
     const { unitDivisor, currencyDisplay, onChange } = this.props;
     let amount;
     const value = e.target.value;
-    this.setState({ value });
     if (value) {
       // pre-validate if <= max supply
       amount = currencyDisplay === "DCR" ? value*unitDivisor : strToDcrAtoms(value, unitDivisor);
@@ -61,14 +47,13 @@ class DcrInput extends React.Component {
 
   render() {
     const { unitDivisor, currencyDisplay } = this.props;
-    const { value } = this.state;
     const maxFracDigits = Math.log10(unitDivisor);
 
     const Comp = unitDivisor !== 1 ? FloatInput : IntegerInput;
     return <Comp
       {...this.props}
       unit={currencyDisplay}
-      value={value}
+      value={this.props.amount}
       onChange={this.onChange}
       maxFracDigits={maxFracDigits}
     />;

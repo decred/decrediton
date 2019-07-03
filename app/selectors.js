@@ -628,6 +628,8 @@ const totalPreviousOutputAmount = compose(
   res => res ? res.getTotalPreviousOutputAmount() : 0, constructTxResponse
 );
 
+export const publishTxResponse = get([ "control", "publishTransactionResponse" ]);
+
 export const estimatedSignedSize = compose(
   res => res ? res.getEstimatedSignedSize() : 0, constructTxResponse
 );

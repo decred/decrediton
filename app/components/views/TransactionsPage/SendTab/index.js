@@ -30,8 +30,11 @@ class Send extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { constructTxLowBalance, unsignedRawTx, isWatchingOnly, nextAddress } = this.props;
+    const { constructTxLowBalance, unsignedRawTx, isWatchingOnly, nextAddress, publishTxResponse } = this.props;
     const { isSendSelf, outputs } = prevState;
+    if (publishTxResponse && publishTxResponse !== prevProps.publishTxResponse) {
+      this.setState({ outputs: [ { key: "output_0", data: this.getBaseOutput() }] });
+    }
     if (isSendSelf && (prevProps.nextAddress != nextAddress)) {
       let newOutputs = outputs.map(o => ({ ...o, data:{ ...o.data, destination: nextAddress } }));
       this.setState({ outputs: newOutputs }, this.onAttemptConstructTransaction);
@@ -113,8 +116,7 @@ class Send extends React.Component {
     const {
       onValidateAddress, onValidateAmount, onRemoveOutput, onShowSendAll, onHideSendAll,
     } = this;
-    return outputs.map((output, index) => {
-      return {
+    return outputs.map((output, index) => ({
         data: <OutputRow
           {...{ ...this.props, index, ...output.data, isSendAll, isSendSelf, totalSpent, sendAllAmount,
             onValidateAddress, onValidateAmount, onShowSendAll, onHideSendAll, onRemoveOutput }}
@@ -125,9 +127,8 @@ class Send extends React.Component {
         style: {
           opacity: spring(1, presets.gentle),
         }
-      };
-    });
-  }
+    }));
+}
 
   willEnter() {
     return {
@@ -187,7 +188,7 @@ class Send extends React.Component {
         account.value,
         confirmations,
         outputs.map(({ data }) =>
-          ({ amount: data.atomAmount, destination: data.destination })
+          ({ amount: data.amount, destination: data.destination })
         )
       );
     } else {
@@ -201,7 +202,8 @@ class Send extends React.Component {
   }
 
   onAddOutput() {
-    const { outputs } = this.state;
+    const { outputs, isSendSelf } = this.state;
+    if (isSendSelf) return;
     outputs.push({ key: "output_"+outputs.length, data: this.getBaseOutput() });
     this.setState({ outputs });
   }
@@ -238,8 +240,8 @@ class Send extends React.Component {
       error = <T id="send.errors.negativeAmount" m="Please enter a valid amount (> 0)" />;
     }
     const ref = this.state.outputs[index];
-    ref.data.amount = value;
-    ref.data.atomAmount = atomValue;
+    ref.data.value = value;
+    ref.data.amount = atomValue;
 
     ref.data.error.amount = error;
 

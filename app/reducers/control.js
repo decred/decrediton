@@ -230,7 +230,7 @@ export default function control(state = {}, action) {
   case PUBLISHTX_SUCCESS:
     return { ...state,
       publishTransactionRequestAttempt: false,
-      publishTransactionResponse: action.publishTransactionResponse,
+      publishTransactionResponse: action.hash,
       constructTxResponse: null,
       signTxResponse: null,
     };
