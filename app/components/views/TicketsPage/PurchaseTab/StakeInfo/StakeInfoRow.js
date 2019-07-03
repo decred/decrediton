@@ -1,6 +1,6 @@
 import { VerticalExpand } from "buttons";
 import { FormattedNumber, FormattedMessage as T } from "react-intl";
-import { Row, Column } from "./helpers";
+import { Column } from "./helpers";
 import "style/StakePool.less";
 
 const StakeInfoDisplay = ({
@@ -19,7 +19,7 @@ const StakeInfoDisplay = ({
         expanded={!!isShowingDetails}
       />
     </div>
-    <Row>
+    <div className="stakepool-stake-info-row">
       <Column
         label={<T id="stake.ownMempoolTickets" m="Own Mempool Tickets" />}
         value={<FormattedNumber value={ownMempoolTicketsCount} />} />
@@ -34,7 +34,7 @@ const StakeInfoDisplay = ({
           label={<T id="stake.liveTickets" m="Live Tickets" />}
           value={<FormattedNumber value={liveTicketsCount} />} />
       }
-    </Row>
+    </div>
   </div>
 );
 

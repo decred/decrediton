@@ -1,6 +1,6 @@
 import { Balance } from "shared";
 import { FormattedNumber, FormattedMessage as T } from "react-intl";
-import { Row, LastRow, Column } from "./helpers";
+import { Column } from "./helpers";
 import "style/StakePool.less";
 
 const StakeInfoDisplay = ({
@@ -13,7 +13,7 @@ const StakeInfoDisplay = ({
   totalSubsidy,
 }) => (
   <div className="stakepool-stake-info-area">
-    <Row>
+    <div className="stakepool-stake-info-row">
       <Column
         label={<T id="stake.mempoolTickets" m="All Mempool Tickets" />}
         value={<FormattedNumber value={allMempoolTicketsCount}/> }
@@ -26,9 +26,8 @@ const StakeInfoDisplay = ({
         label={<T id="stake.missedTickets" m="Missed Tickets" />}
         value={<FormattedNumber value={missedTicketsCount}/>}
       />
-    </Row>
-
-    <Row>
+    </div>
+    <div className="stakepool-stake-info-row">
       <Column
         label={<T id="stake.poolSize" m="Pool Size" />}
         value={<FormattedNumber value={ticketPoolSize} />}
@@ -41,14 +40,13 @@ const StakeInfoDisplay = ({
         label={<T id="stake.revokedTickets" m="Revoked Tickets" />}
         value={<FormattedNumber value={revokedTicketsCount} />}
       />
-    </Row>
-
-    <LastRow>
+    </div>
+    <div className="stakepool-stake-info-row">
       <Column
         label={<T id="stake.totalRewards" m="Total Rewards" />}
         value={<Balance amount={totalSubsidy}/>}
       />
-    </LastRow>
+    </div>
   </div>
 );
 

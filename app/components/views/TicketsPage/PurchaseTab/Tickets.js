@@ -5,14 +5,21 @@ import StakeInfo from "./StakeInfo";
 import { spv } from "connectors";
 import { ShowWarning, Subtitle } from "shared";
 import "style/StakePool.less";
+import { InfoDocModalButton } from "buttons";
 
+const getTitleIcon = () => (
+  <div className="stakepool-purchase-ticket-input-buttons">
+    <InfoDocModalButton document="PurchaseTicketsInfo" modalClassName="info-modal-fields" double/>
+  </div>
+)
 const Tickets = ({
   spvMode,
   blocksNumberToNextTicket,
   ...props,
 }) => (
   <>
-    <Subtitle title={<T id="purchase.subtitle" m="Purchase Tickets"/>} />
+    <Subtitle title={<T id="purchase.subtitle" m="Purchase Tickets"/>}
+      children={getTitleIcon()} />
     <StakeInfo />
     {
       spvMode && blocksNumberToNextTicket == 2  ?
