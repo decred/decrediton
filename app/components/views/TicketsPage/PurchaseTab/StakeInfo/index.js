@@ -31,23 +31,23 @@ class StakeInfo extends React.Component {
     const { isSPV } = this.props;
     return [ {
       data: <StakeInfoDetails
-          {...{
-            isSPV,
-            isShowingDetails,
-            ticketPoolSize,
-            votedTicketsCount,
-            allMempoolTicketsCount,
-            missedTicketsCount,
-            ownMempoolTicketsCount,
-            revokedTicketsCount,
-            immatureTicketsCount,
-            expiredTicketsCount,
-            totalSubsidy,
-            liveTicketsCount,
-            onHideStakeInfo,
-            onShowStakeInfo,
-          }}
-        />,
+        {...{
+          isSPV,
+          isShowingDetails,
+          ticketPoolSize,
+          votedTicketsCount,
+          allMempoolTicketsCount,
+          missedTicketsCount,
+          ownMempoolTicketsCount,
+          revokedTicketsCount,
+          immatureTicketsCount,
+          expiredTicketsCount,
+          totalSubsidy,
+          liveTicketsCount,
+          onHideStakeInfo,
+          onShowStakeInfo,
+        }}
+      />,
       key: "output_0",
       style: {
         height: spring(140, { stiffness: 170, damping: 15 }),

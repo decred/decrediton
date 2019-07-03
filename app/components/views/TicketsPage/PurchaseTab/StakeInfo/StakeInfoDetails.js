@@ -1,6 +1,6 @@
 import { Balance } from "shared";
 import { FormattedNumber, FormattedMessage as T } from "react-intl";
-import { Column } from "./Display"
+import { Column } from "./Display";
 import "style/StakePool.less";
 
 const StakeInfoDisplay = ({
@@ -44,7 +44,7 @@ const StakeInfoDisplay = ({
             value={<FormattedNumber value={missedTicketsCount}/>}
           />
         </div>
-    )}
+      )}
     <div className="stakepool-stake-info-row">
       <Column
         label={<T id="stake.totalRewards" m="Total Rewards" />}

@@ -11,7 +11,7 @@ const getTitleIcon = () => (
   <div className="stakepool-purchase-ticket-input-buttons">
     <InfoDocModalButton document="PurchaseTicketsInfo" modalClassName="info-modal-fields" double/>
   </div>
-)
+);
 const Tickets = ({
   spvMode,
   blocksNumberToNextTicket,
