@@ -118,7 +118,7 @@ class Send extends React.Component {
     } = this;
     return outputs.map((output, index) => ({
       data: <OutputRow
-        {...{ ...this.props, index, ...output.data, isSendAll, isSendSelf, totalSpent, sendAllAmount,
+        {...{ ...this.props, index, outputs, ...output.data, isSendAll, isSendSelf, totalSpent, sendAllAmount,
           onValidateAddress, onValidateAmount, onShowSendAll, onHideSendAll, onRemoveOutput }}
         onAddOutput={this.onAddOutput}
         onKeyDown={this.onKeyDown}

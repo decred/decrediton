@@ -51,11 +51,21 @@
 
 .send-add-output-icon {
   width: 20px;
+  height: 20px;
   background-image: @add-icon;
   background-position: 50% 50%;
-  background-size: 19px;
+  background-size: 6px;
   background-repeat: no-repeat;
   cursor: pointer;
+  background-color: var(--disabled-color);
+  box-shadow: 0 1px 8px #091440;
+  border-radius: 5px;
+
+  &.disabled {
+    background-image: @add-icon-disabled;
+    background-color: #E7EAED;
+    cursor: auto;
+  }
 }
 
 .send-icon-wrapper {
@@ -70,6 +80,15 @@
 
   &.wallet-icon {
     background-image: @send-all-default;
+
+    &.disabled {
+      background-image: @send-all-disabled;
+      cursor: auto;
+
+      &:hover {
+        background-image: @send-all-disabled;
+      }
+    }
   
     &:hover {
       background-image: @send-all-hover;

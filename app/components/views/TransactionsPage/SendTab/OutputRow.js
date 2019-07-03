@@ -17,7 +17,7 @@ const messages = defineMessages({
 const SendOutputRow = ({
   index, destination, value, onAddOutput, onRemoveOutput,
   onValidateAmount, onValidateAddress, isSendAll, onKeyDown, sendAllAmount, error, intl,
-  onShowSendAll, onHideSendAll, isSendSelf
+  onShowSendAll, onHideSendAll, isSendSelf, outputs
 }) => (
   <>
     <div className="send-row is-row">
@@ -42,9 +42,14 @@ const SendOutputRow = ({
             />
         }
       </div>
-      { !isSendAll && (index === 0 ?
-        <div className="send-add-output-icon" onClick={onAddOutput}></div> :
-        <div className="send-address-delete-icon" onClick={() => onRemoveOutput(index)}></div> )}
+      {
+        isSendSelf ? <div className="send-add-output-icon disabled"></div> :
+          (
+            !isSendAll && (index === 0 ?
+              <div className="send-add-output-icon" onClick={onAddOutput}></div> :
+              <div className="send-address-delete-icon" onClick={() => onRemoveOutput(index)}></div> )
+          )
+      }
     </div>
     <div className="send-row is-row">
       <div className="send-label amount-label">
@@ -72,14 +77,17 @@ const SendOutputRow = ({
           />
         }
       </div>
-      {index===0 && (!isSendAll ?
-        <Tooltip text={<T id="send.sendAllTitle" m="Send all funds from selected account"/>}>
-          <a className="send-icon-wrapper wallet-icon" onClick={onShowSendAll}/>
-        </Tooltip> :
-        <Tooltip text={<T id="send.cancelSendAllTitle" m="Cancel sending all funds"/>}>
-          <a className="send-icon-wrapper cancel-icon" onClick={onHideSendAll}/>
-        </Tooltip>
-      )}
+      {
+        index===0 && (outputs.length > 1 ? <Tooltip text={<T id="send.sendAllTitle.disabled" m="Send all funds from selected account - Disabled"/>}>
+          <a className="send-icon-wrapper wallet-icon disabled" />
+        </Tooltip> : (!isSendAll ?
+          <Tooltip text={<T id="send.sendAllTitle" m="Send all funds from selected account"/>}>
+            <a className="send-icon-wrapper wallet-icon" onClick={onShowSendAll}/>
+          </Tooltip> :
+          <Tooltip text={<T id="send.cancelSendAllTitle" m="Cancel sending all funds"/>}>
+            <a className="send-icon-wrapper cancel-icon" onClick={onHideSendAll}/>
+          </Tooltip>
+        ))}
     </div>
   </>
 );
