@@ -63,7 +63,7 @@ class AccountsSelect extends React.Component {
     const { formatMessage } = this.props.intl;
     const { className, showAccountsButton, disabled } = this.props;
     return (
-      <div className={className}>
+      <div className={"is-row " + className}>
         <Select
           disabled={disabled}
           clearable={false}
