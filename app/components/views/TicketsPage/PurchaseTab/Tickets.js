@@ -17,9 +17,8 @@ const Tickets = ({
   blocksNumberToNextTicket,
   ...props,
 }) => (
-  <>
-    <Subtitle title={<T id="purchase.subtitle" m="Purchase Tickets"/>}
-      children={getTitleIcon()} />
+  <div className="purchase-ticket-area">
+    <Subtitle title={<T id="purchase.subtitle" m="Purchase Tickets"/>} children={getTitleIcon()} />
     <StakeInfo />
     {
       spvMode && blocksNumberToNextTicket == 2  ?
@@ -30,7 +29,7 @@ const Tickets = ({
     {
       spvMode ? <div className="spv-autobuyer-warning"><T id="spv.auto.buyer.warn" m="Ticket Auto Buyer not available while using SPV" /></div>  : <TicketAutoBuyer {...{ ...props }} />
     }
-  </>
+  </div>
 );
 
 export default spv(Tickets);

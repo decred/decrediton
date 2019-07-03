@@ -15,37 +15,20 @@ class StakeInfo extends React.Component {
 
   getStakeInfoDetailsComponent () {
     const {
-      ticketPoolSize,
-      votedTicketsCount,
-      allMempoolTicketsCount,
-      missedTicketsCount,
-      ownMempoolTicketsCount,
-      revokedTicketsCount,
-      immatureTicketsCount,
-      expiredTicketsCount,
-      totalSubsidy,
-      liveTicketsCount,
+      ticketPoolSize, votedTicketsCount, allMempoolTicketsCount, missedTicketsCount,
+      revokedTicketsCount, expiredTicketsCount, totalSubsidy, isSPV
     } = this.props;
-    const { onHideStakeInfo, onShowStakeInfo } = this;
-    const { isShowingDetails } = this.state;
-    const { isSPV } = this.props;
     return [ {
       data: <StakeInfoDetails
         {...{
-          isSPV,
-          isShowingDetails,
           ticketPoolSize,
           votedTicketsCount,
           allMempoolTicketsCount,
           missedTicketsCount,
-          ownMempoolTicketsCount,
           revokedTicketsCount,
-          immatureTicketsCount,
           expiredTicketsCount,
           totalSubsidy,
-          liveTicketsCount,
-          onHideStakeInfo,
-          onShowStakeInfo,
+          isSPV,
         }}
       />,
       key: "output_0",
