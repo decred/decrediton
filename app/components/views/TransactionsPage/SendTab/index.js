@@ -33,7 +33,7 @@ class Send extends React.Component {
     const { constructTxLowBalance, unsignedRawTx, isWatchingOnly, nextAddress, publishTxResponse } = this.props;
     const { isSendSelf, outputs } = prevState;
     if (publishTxResponse && publishTxResponse !== prevProps.publishTxResponse) {
-      this.setState({ outputs: [ { key: "output_0", data: this.getBaseOutput() }] });
+      this.setState({ outputs: [ { key: "output_0", data: this.getBaseOutput() } ] });
     }
     if (isSendSelf && (prevProps.nextAddress != nextAddress)) {
       let newOutputs = outputs.map(o => ({ ...o, data:{ ...o.data, destination: nextAddress } }));
@@ -117,18 +117,18 @@ class Send extends React.Component {
       onValidateAddress, onValidateAmount, onRemoveOutput, onShowSendAll, onHideSendAll,
     } = this;
     return outputs.map((output, index) => ({
-        data: <OutputRow
-          {...{ ...this.props, index, ...output.data, isSendAll, isSendSelf, totalSpent, sendAllAmount,
-            onValidateAddress, onValidateAmount, onShowSendAll, onHideSendAll, onRemoveOutput }}
-          onAddOutput={this.onAddOutput}
-          onKeyDown={this.onKeyDown}
-        />,
-        key: "output_" + index,
-        style: {
-          opacity: spring(1, presets.gentle),
-        }
+      data: <OutputRow
+        {...{ ...this.props, index, ...output.data, isSendAll, isSendSelf, totalSpent, sendAllAmount,
+          onValidateAddress, onValidateAmount, onShowSendAll, onHideSendAll, onRemoveOutput }}
+        onAddOutput={this.onAddOutput}
+        onKeyDown={this.onKeyDown}
+      />,
+      key: "output_" + index,
+      style: {
+        opacity: spring(1, presets.gentle),
+      }
     }));
-}
+  }
 
   willEnter() {
     return {
