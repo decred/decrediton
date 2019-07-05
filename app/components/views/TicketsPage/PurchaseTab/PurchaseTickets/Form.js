@@ -47,7 +47,7 @@ const PurchaseTicketsForm = ({
         onKeyDown={handleOnKeyDown}
         showErrors={true}
       />
-    </div>    
+    </div>
   </div>
   <div className="stakepool-purchase-ticket-info">
     <div className="purchase-ticket-action-buttons is-column">
@@ -62,14 +62,14 @@ const PurchaseTicketsForm = ({
     />
   </div>
   <div className="stakepool-purchase-ticket-buttons-area">
-  {hasTicketsToRevoke &&
+    {hasTicketsToRevoke &&
     <PassphraseModalButton
       modalTitle={<T id="tickets.revokeConfirmations" m="Revoke Tickets Confirmation" />}
       className="stakepool-content-revoke-button"
       onSubmit={onRevokeTickets}
       buttonLabel={<T id="purchaseTickets.revokeBtn" m="Revoke" />}
     />
-  }
+    }
     <PassphraseModalButton
       modalTitle={<T id="tickets.purchaseConfirmation" m="Ticket Purchase Confirmation" />}
       disabled={getIsValid && !getIsValid()}
