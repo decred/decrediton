@@ -40,7 +40,7 @@ const PurchaseTicketsAdvanced = ({
         options={configuredStakePools}
         value={stakePool}
         onChange={onChangeStakePool}
-        className="stakepool-purchase-ticket-input-select" 
+        className="stakepool-purchase-ticket-input-select"
       />
       <div className="manage-pools-button" onClick={onShowStakePoolConfig} />
     </div>
@@ -78,15 +78,15 @@ const PurchaseTicketsAdvanced = ({
         <div className="stakepool-purchase-ticket-label">
           <T id="purchaseTickets.advanced.expiry" m="Expiry" />:
         </div>
-          <BlocksInput
-            required
-            invalid={expiryError}
-            invalidMessage={<T id="purchaseTickets.errors.expiryRequred" m="Invalid expiry" />}
-            placeholder={formatMessage(messages.expiryPlaceholder)}
-            value={expiry}
-            onChange={onChangeExpiry}
-            showErrors={true}
-          />
+        <BlocksInput
+          required
+          invalid={expiryError}
+          invalidMessage={<T id="purchaseTickets.errors.expiryRequred" m="Invalid expiry" />}
+          placeholder={formatMessage(messages.expiryPlaceholder)}
+          value={expiry}
+          onChange={onChangeExpiry}
+          showErrors={true}
+        />
       </div>
     </div>
     <div className="is-row">
