@@ -96,10 +96,15 @@
 
 .purchase-advanced-input {
   margin-right: 50px;
+  margin-bottom: 10px;
 }
 
+.purchase-ticket-advanced-labels {
+  margin-right: 10px;
+  text-align: right;
+}
 .purchase-ticket-advanced-info-area {
-  padding: 30px 0 0 40px;
+  padding: 30px 0 0 20px;
 }
 
 // list e outros css
@@ -126,20 +131,28 @@
 }
 
 .stakepool-purchase-ticket-input-select {
-  margin-right: 100px;
-  margin-left: 6px;
-  width: 300px;
   font-size: 16px;
   text-align: left;
 }
 
 .stakepool-purchase-ticket-label {
-  .inline-block-mixin;
+  white-space: nowrap;
+  margin-bottom: 25px;
+  height: 20px;
+}
 
-  text-align: right;
-  width: 8em;
-  font-size: 14px;
-  vertical-align: top;
+.stakepool-purchase-ticket-input {
+  margin-bottom: 20px;
+  height: 20px;
+}
+
+.advanced-small-input {
+  width: 100px;
+}
+
+.stakepool-advanced-big-input {
+  width: 295px;
+  margin-right: 10px;
 }
 
 .stakepool-purchase-ticket-num-select {
@@ -193,7 +206,6 @@
   padding: 10px 20px 0px 20px;
   flex-direction: column;
   display: flex;
-  width: 100%;
 }
 
 .stakepool-auto-buyer-row {
@@ -386,14 +398,6 @@ textarea.stakepool-content-nest-content-settings {
   .stakepool-info-icon-mixin;
 
   background-image: @pool-fee-icon;
-}
-
-.stakepool-purchase-ticket-input {
-  width: 283px;
-  float: left;
-  height: 100%;
-  font-size: 19px;
-  text-align: right;
 }
 
 .stakepool-voting-agenda-area {
