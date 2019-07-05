@@ -78,7 +78,7 @@ class PurchaseTickets extends React.Component {
       />,
       key: "output_1",
       style: {
-        height: spring(258, { stiffness: 170, damping: 17 }),
+        height: spring(298, { stiffness: 170, damping: 17 }),
         opacity: spring(1, { stiffness: 120, damping: 17 }),
       }
     } ];
