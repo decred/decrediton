@@ -32,6 +32,11 @@
   margin-bottom: 10px;
 }
 
+.purchase-ticket-area-row-label {
+  font-size: 19px;
+  color: #091440;
+}
+
 .stakepool-flex-height {
   background-color: var(--background-back-color);
   padding: 1em;
@@ -39,6 +44,31 @@
 
 .stakepool-content-nest-from-address {
   margin-bottom: 2em;
+}
+
+.num-tickets-icon {
+  width: 20px;
+  background-size: 10px;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  border-bottom: 1px var(--stroke-color-default) solid;
+
+
+  &.more {
+    background-image: @arrow-up-key-blue-icon;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+
+  &.less {
+    background-image: @arrow-down-key-blue-icon;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
 }
 
 .stakepool-unconfigured-select {
@@ -69,39 +99,20 @@
   margin-left: 1em;
 }
 
-.purchase-ticket {
-  padding: 0.7em 0em 0.7em 0em;
+.purchase-ticket-area-row {
+  padding: 29px 0 0 40px;
+  height: 56px;
   border-bottom: 1px var(--disabled-background-color) solid;
   background-color: var(--background-back-color);
   margin-top: 10px;
 }
 
-.stakepool-purchase-ticket-row-account-select {
-  .inline-block-mixin;
-
-  width: 53%;
-  text-align: right;
-}
-
-.stakepool-purchase-ticket-account-select-label {
-  .inline-block-mixin;
-
-  font-size: 16px;
-  padding-bottom: 3px;
-}
-
 .stakepool-purchase-ticket-input-select {
-  .inline-block-mixin;
-
-  width: 68%;
+  margin-right: 100px;
+  margin-left: 6px;
+  width: 300px;
   font-size: 16px;
   text-align: left;
-}
-
-.stakepool-purchase-ticket-row-num-tickets {
-  .inline-block-mixin;
-
-  width: 40%;
 }
 
 .stakepool-purchase-ticket-label {
@@ -113,14 +124,6 @@
   vertical-align: top;
 }
 
-.stakepool-purchase-num-tickets-label {
-  .inline-block-mixin;
-
-  text-align: right;
-  width: 9em;
-  font-size: 16px;
-}
-
 .stakepool-purchase-ticket-label-second {
   .inline-block-mixin;
 
@@ -130,9 +133,9 @@
 }
 
 .stakepool-purchase-ticket-num-select {
-  .inline-block-mixin;
-
-  font-size: 19px;
+  width: 120px;
+  height: 22px;
+  margin-left: 6px;
 }
 
 .stakepool-manage-pool-button-area {
