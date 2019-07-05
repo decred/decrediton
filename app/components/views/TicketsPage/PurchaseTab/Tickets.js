@@ -13,11 +13,12 @@ const getTitleIcon = () => (
 const Tickets = ({
   spvMode,
   blocksNumberToNextTicket,
+  sidebarOnBottom,
   ...props,
 }) => (
   <div className="purchase-ticket-area">
     <Subtitle title={<T id="purchase.subtitle" m="Purchase Tickets"/>} children={getTitleIcon()} className="is-row" />
-    <StakeInfo />
+    <StakeInfo  {...{ sidebarOnBottom }}/>
     {
       spvMode && blocksNumberToNextTicket === 2  ?
         <ShowWarning warn={<T id="spv.purchase.warn" m="Purchase Tickets is not available right now, because we are at the end of a ticket interval. After one block it will be available again."/>}/> :

@@ -27,23 +27,27 @@ const PurchaseTicketsForm = ({
 }) => (
 <>
   <div className="purchase-ticket-area-row is-row">
-    <div className="purchase-ticket-area-row-label"><T id="purchaseTickets.accountFrom" m="From" />:</div>
-    <AccountsSelect className="stakepool-purchase-ticket-input-select"
-      {...{ account, onChange: onChangeAccount }}/>
-    <div className="purchase-ticket-area-row-label">
-      <T id="purchaseTickets.ticketAmount" m="Amount" />:</div>
-    <NumTicketsInput
-      required
-      className="stakepool-purchase-ticket-num-select"
-      invalid={!canAffordTickets}
-      invalidMessage={<T id="purchaseTickets.errors.insufficientBalance" m="Not enough funds" />}
-      numTickets={numTicketsToBuy}
-      incrementNumTickets={onIncrementNumTickets}
-      decrementNumTickets={onDecrementNumTickets}
-      onChangeNumTickets={onChangeNumTickets}
-      onKeyDown={handleOnKeyDown}
-      showErrors={true}
-    />
+    <div className="is-row">
+      <div className="purchase-ticket-area-row-label"><T id="purchaseTickets.accountFrom" m="From" />:</div>
+      <AccountsSelect className="stakepool-purchase-ticket-input-select"
+        {...{ account, onChange: onChangeAccount }}/>
+    </div>
+    <div className="is-row purchase-ticket-input-amount">
+      <div className="purchase-ticket-area-row-label">
+        <T id="purchaseTickets.ticketAmount" m="Amount" />:</div>
+      <NumTicketsInput
+        required
+        className="stakepool-purchase-ticket-num-select"
+        invalid={!canAffordTickets}
+        invalidMessage={<T id="purchaseTickets.errors.insufficientBalance" m="Not enough funds" />}
+        numTickets={numTicketsToBuy}
+        incrementNumTickets={onIncrementNumTickets}
+        decrementNumTickets={onDecrementNumTickets}
+        onChangeNumTickets={onChangeNumTickets}
+        onKeyDown={handleOnKeyDown}
+        showErrors={true}
+      />
+    </div>    
   </div>
   <div className="stakepool-purchase-ticket-info">
     <div className="purchase-ticket-action-buttons is-column">

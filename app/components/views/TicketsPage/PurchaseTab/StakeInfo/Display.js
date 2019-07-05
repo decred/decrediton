@@ -21,7 +21,8 @@ const StakeInfoDisplay = ({
   liveTicketsCount,
   isSPV,
   onShowStakeInfo,
-  onHideStakeInfo
+  onHideStakeInfo,
+  sidebarOnBottom,
 }) => (
   <div className="stake-info-area">
     <div className="is-row stake-info-row-area" onClick={isShowingDetails ? onHideStakeInfo : onShowStakeInfo}>
@@ -30,10 +31,12 @@ const StakeInfoDisplay = ({
           className={"stake-info"}
           label={<T id="stake.ownMempoolTickets" m="Own Mempool Tickets" />}
           value={<FormattedNumber value={ownMempoolTicketsCount} />} />
-        <Column
-          className={"stake-info"}
-          label={<T id="stake.immatureTickets" m="Immature Tickets" />}
-          value={<FormattedNumber value={immatureTicketsCount} />} />
+        {!sidebarOnBottom &&
+          <Column
+            className={"stake-info"}
+            label={<T id="stake.immatureTickets" m="Immature Tickets" />}
+            value={<FormattedNumber value={immatureTicketsCount} />} />
+        }
         {isSPV ?
           <Column
             className={"stake-info"}
