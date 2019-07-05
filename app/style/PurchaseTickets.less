@@ -1,0 +1,308 @@
+@import (reference) "./main.less";
+@import (reference) "./Icons.less";
+
+.purchase-ticket-area {
+  width: 740px;
+}
+
+.stake-info-area {
+  background-color: var(--background-back-color);
+}
+
+.stake-info-row-area {
+  height: 18px;
+  padding: 21px 0 23px 29px;
+  border-radius: 5px;
+}
+
+.stake-info-show-details {
+  margin-left: auto;
+  margin-right: 25px;
+}
+
+.stake-info {
+  margin-right: 100px;
+}
+
+.stake-info-details {
+  padding: 21px 0 23px 29px;
+}
+
+.stake-info-details-row {
+  margin-bottom: 10px;
+}
+
+.purchase-ticket-area-row-label {
+  font-size: 19px;
+  color: #091440;
+}
+
+.stakepool-purchase-ticket-buttons-area {
+  text-align: right;
+}
+
+.num-tickets-icon {
+  width: 20px;
+  background-size: 10px;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  border-bottom: 1px var(--stroke-color-default) solid;
+
+
+  &.more {
+    background-image: @arrow-up-key-blue-icon;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+
+  &.less {
+    background-image: @arrow-down-key-blue-icon;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}
+
+.stakepool-purchase-ticket-quick-bar {
+  padding: 20px 0 0 20px;
+  height: 64px;
+}
+
+.purchase-ticket-advanced-labels {
+  margin-right: 10px;
+  text-align: right;
+}
+
+.purchase-ticket-advanced-info-area {
+  padding: 30px 0 0 20px;
+}
+
+.stakepool-purchase-ticket-title-info-icon {
+  margin-left: auto;
+}
+
+.info-title-icon {
+  margin-left: auto;
+}
+
+.purchase-ticket-area-row {
+  padding: 29px 0 0 40px;
+  height: 56px;
+  border-bottom: 1px var(--disabled-background-color) solid;
+  background-color: var(--background-back-color);
+  margin-top: 10px;
+}
+
+.stakepool-purchase-ticket-num-select {
+  width: 120px;
+  height: 22px;
+  margin-left: 6px;
+}
+
+.stakepool-purchase-ticket-input-select {
+  font-size: 16px;
+  text-align: left;
+  width: 300px;
+  margin-right: 100px;
+}
+
+.stakepool-purchase-ticket-label {
+  white-space: nowrap;
+  margin-bottom: 25px;
+  height: 20px;
+}
+
+.stakepool-purchase-ticket-input {
+  margin-bottom: 20px;
+  height: 20px;
+}
+
+.advanced-small-input {
+  width: 100px;
+}
+
+.stakepool-advanced-big-input {
+  width: 295px;
+  margin-right: 10px;
+}
+
+.stakepool-content-import-script-button {
+  background-repeat: no-repeat;
+  background-size: 25px;
+  background-position: center;
+  background-image: @importscript-icon;
+  width: 20px;
+  height: 25px;
+  padding: 0px;
+  margin-top: 10px;
+}
+
+.stakepool-content-import-script-button.loading {
+  background-image: none;
+  > .spinner > div {
+    background-color: var(--title-text-and-button-background-hovered);
+  }
+}
+
+.stakepool-content-import-script-button:hover {
+  opacity: 0.7;
+}
+
+.stakepool-content-revoke-button {
+  margin-right: 10px;
+}
+
+.stakepool-flex-height-auto-buyer-wrapper {
+  background-color: var(--background-back-color);
+  padding: 10px 20px 0px 20px;
+  flex-direction: column;
+  display: flex;
+}
+
+.stakepool-auto-buyer-row {
+  display: flex;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.stakepool-auto-buyer-row-portion-full {
+  width: 100%;
+  text-align: center;
+
+  .stakepool-autobuyer-input {
+    width: 100px;
+  }
+}
+
+.stakepool-auto-buyer-row-portion-half {
+  width: 50%;
+
+  .stakepool-autobuyer-input {
+    width: 230px;
+  }
+}
+
+.stakepool-autobuyer-label {
+  .inline-block-mixin;
+
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.stakepool-autobuyer-input {
+  .inline-block-mixin;
+
+  width: 200px;
+}
+
+.autobuyer-switch {
+  .inline-block-mixin;
+
+  width: 85px;
+}
+
+.autobuyer-switch-enabled,
+.autobuyer-switch-disabled {
+  display: block;
+  width: 50px;
+  height: 20px;
+  border-radius: 3px;
+  transition: all 200ms ease-in-out;
+  background-color: var(--white-border);
+  float: left;
+}
+
+.autobuyer-switch-enabled:hover {
+  width: 47px;
+  padding-left: 3px;
+}
+
+.autobuyer-switch-disabled:hover {
+  width: 47px;
+  padding-right: 3px;
+}
+
+.autobuyer-switch-knob-enabled,
+.autobuyer-switch-knob-disabled {
+  width: 25px;
+  height: 100%;
+  border-radius: 3px;
+  box-shadow: 0 3px 8px rgba(12, 30, 62, 0.21);
+  transition: all 200ms ease-in-out;
+}
+
+.autobuyer-switch-knob-enabled {
+  background-color: var(--input-color);
+}
+
+.autobuyer-switch-knob-disabled {
+  float: right;
+  background-color: var(--disabled-color);
+}
+
+.stakepool-auto-buyer-show-advanced-area {
+  .inline-block-mixin;
+
+  float: right;
+}
+
+.stakepool-info-icon-mixin {
+  background-position: 0px 50%;
+  background-size: 16px;
+  background-repeat: no-repeat;
+  padding-left: 20px;
+  margin: 0 40px 15px 0;
+  width: 100%;
+  font-family: inconsolata, monospace;
+  color: var(--input-color-default);
+  font-size: 11px;
+}
+
+.stakepool-icon {
+  .stakepool-info-icon-mixin;
+
+  background-image: @stake-pool-icon;
+}
+
+.stakepool-expiry-icon {
+  .stakepool-info-icon-mixin;
+
+  background-image: @expiry-icon;
+}
+
+.stakepool-fee-icon {
+  .stakepool-info-icon-mixin;
+
+  background-image: @split-fee-icon;
+}
+
+.stakepool-ticket-address-icon {
+  .stakepool-info-icon-mixin;
+
+  background-image: @ticket-address-icon;
+}
+
+.stakepool-fee-address-icon {
+  .stakepool-info-icon-mixin;
+  margin-left: -18px;
+  background-image: @fee-address-icon;
+}
+
+.stakepool-pool-fee-icon {
+  .stakepool-info-icon-mixin;
+
+  background-image: @pool-fee-icon;
+}
+
+.purchase-ticket-action-buttons {
+  float: right;
+  margin: 15px 19px 0 0;
+}
+
+.stakepool-purchase-ticket-info {
+  margin-bottom: 10px;
+  background-color: #EDEFF1;
+}

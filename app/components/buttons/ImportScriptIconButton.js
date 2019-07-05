@@ -7,8 +7,7 @@ import { FormattedMessage as T } from "react-intl";
 import { SimpleLoading } from "indicators";
 
 const ImportScriptIconButton = ({ rescanRequest, isImportingScript, onImportScript }) => (
-  <Tooltip className="stakepool-content-import-script-button-tooltip-container"
-    warning={!!rescanRequest}
+  <Tooltip warning={!!rescanRequest}
     text={!rescanRequest
       ? <T id="purchaseTickets.import" m="Manually import a redeem script for tickets." />
       : <T id="purchaseTickets.importDisabledRescan" m="Importing scripts is disabled during a rescan." />}

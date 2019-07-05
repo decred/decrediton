@@ -4,13 +4,11 @@ import { FormattedMessage as T } from "react-intl";
 import StakeInfo from "./StakeInfo";
 import { spv } from "connectors";
 import { ShowWarning, Subtitle } from "shared";
-import "style/StakePool.less";
+import "style/PurchaseTickets.less";
 import { InfoDocModalButton } from "buttons";
 
 const getTitleIcon = () => (
-  <div className="stakepool-purchase-ticket-input-buttons">
-    <InfoDocModalButton document="PurchaseTicketsInfo" modalClassName="info-modal-fields" double/>
-  </div>
+  <InfoDocModalButton document="PurchaseTicketsInfo" modalClassName="info-modal-fields" className="info-title-icon" />
 );
 const Tickets = ({
   spvMode,
@@ -18,7 +16,7 @@ const Tickets = ({
   ...props,
 }) => (
   <div className="purchase-ticket-area">
-    <Subtitle title={<T id="purchase.subtitle" m="Purchase Tickets"/>} children={getTitleIcon()} />
+    <Subtitle title={<T id="purchase.subtitle" m="Purchase Tickets"/>} children={getTitleIcon()} className="is-row" />
     <StakeInfo />
     {
       spvMode && blocksNumberToNextTicket === 2  ?

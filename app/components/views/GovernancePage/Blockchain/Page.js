@@ -23,7 +23,7 @@ const VotingPrefsPage = ({
         <ExternalLink href="https://voting.decred.org"><T id="votingPreferences.dashboard" m="Voting Dashboard" /></ExternalLink>
       </div>
     </div>
-    <div className="stakepool-voting-agenda-area">
+    <div>
       {selectedAgenda ? (
         <AgendaOverview
           agenda={selectedAgenda}
@@ -44,7 +44,7 @@ const VotingPrefsPage = ({
             />
         )
         : (
-          <div className="stakepool-no-agendas-message">
+          <div>
             <T id="votingPreferences.noAgenda" m="There are currently no agendas for voting." />
           </div>
         )}
