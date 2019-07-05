@@ -37,13 +37,8 @@
   color: #091440;
 }
 
-.stakepool-flex-height {
-  background-color: var(--background-back-color);
-  padding: 1em;
-}
-
-.stakepool-content-nest-from-address {
-  margin-bottom: 2em;
+.stakepool-purchase-ticket-buttons-area {
+  text-align: right;
 }
 
 .num-tickets-icon {
@@ -69,6 +64,20 @@
       opacity: 0.7;
     }
   }
+}
+
+.stakepool-purchase-ticket-quick-bar {
+  padding: 20px 0 0 20px;
+  height: 64px;
+}
+
+.stakepool-flex-height {
+  background-color: var(--background-back-color);
+  padding: 1em;
+}
+
+.stakepool-content-nest-from-address {
+  margin-bottom: 2em;
 }
 
 .stakepool-unconfigured-select {
@@ -172,17 +181,6 @@
   text-align: right;
 }
 
-.stakepool-purchase-ticket-quick-bar-row {
-  padding: 1em;
-  display: flex;
-  flex-wrap: wrap;
-  margin-right: 50px;
-}
-
-.stakepool-content-purchase-button {
-  .inline-block-mixin;
-}
-
 .stakepool-content-import-script-button {
   background-repeat: no-repeat;
   background-size: 25px;
@@ -191,9 +189,7 @@
   width: 20px;
   height: 25px;
   padding: 0px;
-  display: inline-block;
-  vertical-align: middle;
-  margin-left: 10px;
+  margin-top: 10px;
 }
 
 .stakepool-content-import-script-button.loading {
@@ -391,14 +387,12 @@ textarea.stakepool-content-nest-content-settings {
 }
 
 .stakepool-info-icon-mixin {
-  .inline-block-mixin;
-
   background-position: 0px 50%;
   background-size: 16px;
   background-repeat: no-repeat;
-  padding-left: 25px;
-  margin-right: 4em;
-  margin-bottom: 5px;
+  padding-left: 20px;
+  margin: 0 40px 15px 0;
+  width: 100%;
   font-family: inconsolata, monospace;
   color: var(--input-color-default);
   font-size: 11px;
@@ -430,7 +424,7 @@ textarea.stakepool-content-nest-content-settings {
 
 .stakepool-fee-address-icon {
   .stakepool-info-icon-mixin;
-
+  margin-left: -18px;
   background-image: @fee-address-icon;
 }
 
@@ -446,12 +440,6 @@ textarea.stakepool-content-nest-content-settings {
   height: 100%;
   font-size: 19px;
   text-align: right;
-}
-
-.stakepool-area-spacing {
-  float: left;
-  height: 25px;
-  width: 100%;
 }
 
 .stakepool-voting-agenda-area {
@@ -544,10 +532,11 @@ textarea.stakepool-content-nest-content-settings {
 }
 
 .stakepool-purchase-ticket-info {
+  margin-bottom: 10px;
   background-color: var(--disabled-background-color);
 }
 
-.stakepool-purchase-ticket-action-buttons {
+.purchase-ticket-action-buttons {
   float: right;
-  margin: 10px 15px;
+  margin: 15px 19px 0 0;
 }

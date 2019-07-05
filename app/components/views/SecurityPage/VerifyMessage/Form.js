@@ -87,7 +87,6 @@ const VerifyMessageForm = ({
         </div>
       </div>
       <KeyBlueButton
-        className="stakepool-content-purchase-button"
         disabled={isVerifyingMessage || address == "" || message == "" || signature == "" || addressError || messageError || signatureError}
         onClick={onSubmit}
         loading={isVerifyingMessage}>

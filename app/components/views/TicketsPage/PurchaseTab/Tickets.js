@@ -21,14 +21,14 @@ const Tickets = ({
     <Subtitle title={<T id="purchase.subtitle" m="Purchase Tickets"/>} children={getTitleIcon()} />
     <StakeInfo />
     {
-      spvMode && blocksNumberToNextTicket == 2  ?
+      spvMode && blocksNumberToNextTicket === 2  ?
         <ShowWarning warn={<T id="spv.purchase.warn" m="Purchase Tickets is not available right now, because we are at the end of a ticket interval. After one block it will be available again."/>}/> :
-        <PurchaseTickets {...{ ...props }} />
-    }
-    <div className="stakepool-area-spacing"></div>
+        <PurchaseTickets {...{ ...props }} />}
     {
-      spvMode ? <div className="spv-autobuyer-warning"><T id="spv.auto.buyer.warn" m="Ticket Auto Buyer not available while using SPV" /></div>  : <TicketAutoBuyer {...{ ...props }} />
-    }
+      spvMode ?
+        <div className="spv-autobuyer-warning">
+          <T id="spv.auto.buyer.warn" m="Ticket Auto Buyer not available while using SPV" />
+        </div> : <TicketAutoBuyer {...{ ...props }} />}
   </div>
 );
 

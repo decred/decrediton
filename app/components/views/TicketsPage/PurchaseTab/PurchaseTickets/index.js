@@ -40,7 +40,7 @@ class PurchaseTickets extends React.Component {
       }}/>,
       key: "output_0",
       style: {
-        height: spring(73),
+        height: spring(84),
         opacity: 1,
       }
     } ];

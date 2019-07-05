@@ -46,7 +46,7 @@ const PurchaseTicketsForm = ({
       />
     </div>
     <div className="stakepool-purchase-ticket-info">
-      <div className="stakepool-purchase-ticket-action-buttons">
+      <div className="purchase-ticket-action-buttons is-column">
         <TicketsCogs opened={!isShowingAdvanced} onClick={onToggleShowAdvanced} />
         <ImportScriptIconButton />
       </div>
@@ -60,7 +60,6 @@ const PurchaseTicketsForm = ({
     <div className="stakepool-purchase-ticket-buttons-area">
       <PassphraseModalButton
         modalTitle={<T id="tickets.purchaseConfirmation" m="Ticket Purchase Confirmation" />}
-        className="stakepool-content-purchase-button"
         disabled={getIsValid && !getIsValid()}
         onSubmit={onPurchaseTickets}
         buttonLabel={<T id="purchaseTickets.purchaseBtn" m="Purchase" />}
