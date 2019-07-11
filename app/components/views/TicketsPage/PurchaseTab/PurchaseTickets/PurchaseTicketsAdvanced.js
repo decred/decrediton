@@ -38,7 +38,7 @@ const PurchaseTicketsAdvanced = ({
       <div className="stakepool-purchase-ticket-label">
         <T id="purchaseTickets.stakePoolLabel" m="Stake Pool" />:
       </div>
-      <div className="stakepool-purchase-ticket-label">
+      <div className="stakepool-purchase-ticket-label inputs-row-label">
         <T id="purchaseTickets.ticketFee" m="Ticket Fee" />:
       </div>
       <div className="stakepool-purchase-ticket-label">
@@ -61,7 +61,7 @@ const PurchaseTicketsAdvanced = ({
         />
         <div className="manage-pools-button" onClick={onShowStakePoolConfig} />
       </div>
-      <div className="is-row">
+      <div className="is-row inputs-row">
         <FeeInput {...{ ...props }}
           name={"ticketFee"}
           required
@@ -73,32 +73,36 @@ const PurchaseTicketsAdvanced = ({
           showErrors={true}
           className="stakepool-purchase-ticket-input advanced-small-input"
         />
-        <div className="stakepool-purchase-ticket-label">
-          <T id="purchaseTickets.txFee" m="Tx Fee" />:
+        <div className="is-row">
+          <div className="stakepool-purchase-ticket-label">
+            <T id="purchaseTickets.txFee" m="Tx Fee" />:
+          </div>
+          <FeeInput
+            required
+            invalid={txFeeError}
+            invalidMessage={<T id="purchaseTickets.errors.invalidTxFee" m="Invalid tx fee" />}
+            placeholder={formatMessage(messages.txFeePlaceholder)}
+            value={txFee}
+            onChange={onChangeTxFee}
+            showErrors={true}
+            className="stakepool-purchase-ticket-input advanced-small-input"
+          />
         </div>
-        <FeeInput
-          required
-          invalid={txFeeError}
-          invalidMessage={<T id="purchaseTickets.errors.invalidTxFee" m="Invalid tx fee" />}
-          placeholder={formatMessage(messages.txFeePlaceholder)}
-          value={txFee}
-          onChange={onChangeTxFee}
-          showErrors={true}
-          className="stakepool-purchase-ticket-input advanced-small-input"
-        />
-        <div className="stakepool-purchase-ticket-label">
-          <T id="purchaseTickets.advanced.expiry" m="Expiry" />:
+        <div className="is-row">
+          <div className="stakepool-purchase-ticket-label">
+            <T id="purchaseTickets.advanced.expiry" m="Expiry" />:
+          </div>
+          <BlocksInput
+            required
+            invalid={expiryError}
+            invalidMessage={<T id="purchaseTickets.errors.expiryRequred" m="Invalid expiry" />}
+            placeholder={formatMessage(messages.expiryPlaceholder)}
+            value={expiry}
+            onChange={onChangeExpiry}
+            showErrors={true}
+            className="stakepool-purchase-ticket-input advanced-small-input"
+          />
         </div>
-        <BlocksInput
-          required
-          invalid={expiryError}
-          invalidMessage={<T id="purchaseTickets.errors.expiryRequred" m="Invalid expiry" />}
-          placeholder={formatMessage(messages.expiryPlaceholder)}
-          value={expiry}
-          onChange={onChangeExpiry}
-          showErrors={true}
-          className="stakepool-purchase-ticket-input advanced-small-input"
-        />
       </div>
       <AddressInput
         disabled readOnly

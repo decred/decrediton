@@ -33,7 +33,6 @@ class StakeInfo extends React.Component {
       />,
       key: "output_0",
       style: {
-        height: spring(140, { stiffness: 170, damping: 15 }),
         opacity: spring(1, { stiffness: 100, damping: 20 }),
       }
     } ];

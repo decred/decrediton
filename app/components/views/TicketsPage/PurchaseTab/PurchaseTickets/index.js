@@ -36,7 +36,7 @@ class PurchaseTickets extends React.Component {
       }}/>,
       key: "output_0",
       style: {
-        opacity: 1,
+        opacity: spring(1, { stiffness: 120, damping: 17 }),
       }
     } ];
   }
@@ -73,7 +73,6 @@ class PurchaseTickets extends React.Component {
       />,
       key: "output_1",
       style: {
-        height: spring(298, { stiffness: 170, damping: 17 }),
         opacity: spring(1, { stiffness: 120, damping: 17 }),
       }
     } ];
