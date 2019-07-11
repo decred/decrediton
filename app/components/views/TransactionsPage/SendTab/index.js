@@ -1,4 +1,4 @@
-import { service, settings, send } from "connectors";
+import { service, send } from "connectors";
 import SendPage from "./Page";
 import ErrorScreen from "ErrorScreen";
 import { FormattedMessage as T } from "react-intl";
@@ -29,9 +29,9 @@ class Send extends React.Component {
     };
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     const { constructTxLowBalance, unsignedRawTx, isWatchingOnly, nextAddress, publishTxResponse } = this.props;
-    const { isSendSelf, outputs } = prevState;
+    const { isSendSelf, outputs } = this.state;
     if (publishTxResponse && publishTxResponse !== prevProps.publishTxResponse) {
       this.setState({ outputs: [ { key: "output_0", data: this.getBaseOutput() } ] });
     }
@@ -292,4 +292,4 @@ class Send extends React.Component {
   }
 }
 
-export default service(settings(send(Send)));
+export default service(send(Send));

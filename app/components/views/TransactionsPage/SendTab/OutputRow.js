@@ -1,6 +1,6 @@
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { AddressInput, DcrInput, ReceiveAccountsSelect } from "inputs";
-import { Tooltip } from "shared";
+import { Tooltip, Balance } from "shared";
 import "style/SendPage.less";
 
 const messages = defineMessages({
@@ -57,24 +57,19 @@ const SendOutputRow = ({
       </div>
       <div className="is-column">
         {
-          isSendAll ? <DcrInput
-            className = "send-input"
-            showErrors={true}
-            disabled={true}
-            amount={sendAllAmount}
-            onKeyDown={onKeyDown}
-            onChange={ (e) => onValidateAmount({ value: e.value , index, atomValue: e.atomValue }) }
-          /> : <DcrInput
-            className = "send-input"
-            required={true}
-            showErrors={error && error.amount}
-            invalid={error && error.amount}
-            invalidMessage={error && error.amount}
-            amount={value}
-            placeholder={intl.formatMessage(messages.amountPlaceholder)}
-            onChange={ e => onValidateAmount({ value: e.value , index, atomValue: e.atomValue })}
-            onKeyDown={onKeyDown}
-          />
+          isSendAll ?
+            <Balance flat amount={sendAllAmount} classNameWrapper="send-input send-all" />
+            : <DcrInput
+              className = "send-input"
+              required={true}
+              showErrors={error && error.amount}
+              invalid={error && error.amount}
+              invalidMessage={error && error.amount}
+              amount={value}
+              placeholder={intl.formatMessage(messages.amountPlaceholder)}
+              onChange={ e => onValidateAmount({ value: e.value , index, atomValue: e.atomValue })}
+              onKeyDown={onKeyDown}
+            />
         }
       </div>
       {
