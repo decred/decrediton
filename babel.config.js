@@ -3,7 +3,7 @@ module.exports = function (api) {
 
   return {
     "presets": [
-      "@babel/preset-env",
+      [ "@babel/preset-env", { targets: { node: 'current', } } ],
       "@babel/preset-react",
       "@babel/preset-flow"
     ],
@@ -13,6 +13,7 @@ module.exports = function (api) {
       "@babel/plugin-proposal-object-rest-spread",
       "@babel/plugin-syntax-dynamic-import",
       "@babel/plugin-syntax-import-meta",
+      [ "@babel/plugin-proposal-decorators", { "legacy": true } ],
       "@babel/plugin-proposal-class-properties",
       "@babel/plugin-proposal-do-expressions",
       "@babel/plugin-proposal-export-default-from",
@@ -25,7 +26,6 @@ module.exports = function (api) {
       "@babel/plugin-proposal-numeric-separator",
       "@babel/plugin-proposal-optional-chaining",
       "@babel/plugin-proposal-throw-expressions",
-      [ "@babel/plugin-proposal-decorators", { "legacy": true } ],
       "./scripts/aliasDefaultMessage.js",
       [ "react-intl", { "messagesDir": "app/i18n/extracted" } ]
     ],
