@@ -48,11 +48,9 @@ const StakeInfoDisplay = ({
             value={<FormattedNumber value={liveTicketsCount} />} />
         }
       </div>
-      <div className="stake-info-show-details">
-        <VerticalExpand
-          expanded={!!isShowingDetails}
-        />
-      </div>
+      <VerticalExpand
+        expanded={!!isShowingDetails}
+      />
     </div>
     <TransitionMotionWrapper {...{
       styles: !isShowingDetails ? getNullStyles() : getStakeInfoDetailsComponent(),
