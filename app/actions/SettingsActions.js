@@ -11,6 +11,7 @@ import { EXTERNALREQUEST_DCRDATA } from "main_dev/externalRequests";
 export const SETTINGS_SAVE = "SETTINGS_SAVE";
 export const SETTINGS_CHANGED = "SETTINGS_CHANGED";
 export const SETTINGS_UNCHANGED = "SETTINGS_UNCHANGED";
+export const SETTINGS_TOGGLE_THEME = "SETTINGS_TOGGLE_THEME";
 
 export const saveSettings = (settings) => (dispatch, getState) => {
   const { settings: { needNetworkReset } } = getState();
@@ -31,6 +32,7 @@ export const saveSettings = (settings) => (dispatch, getState) => {
   config.set("spv_mode", settings.spvMode);
   config.set("spv_connect", settings.spvConnect);
   config.set("network", settings.network);
+  config.set("theme", settings.theme);
 
   if (walletName) {
     const walletConfig = getWalletCfg(isTestNet(getState()), walletName);
@@ -100,6 +102,8 @@ export function updateStateSettingsChanged(settings, norestart) {
       spvMode: true,
       daemonStartAdvanced: true,
     };
+    dispatch({ theme: newSettings.theme, type: SETTINGS_TOGGLE_THEME });
+
     const newDiffersFromTemp = settingsFields
       .reduce((d, f) => (d || newSettings[f] !== tempSettings[f]), false);
 
@@ -125,18 +129,4 @@ export const updateStateVoteSettingsChanged = (settings) => (dispatch, getState)
   } else {
     dispatch({ tempSettings: currentSettings, type: SETTINGS_UNCHANGED });
   }
-};
-
-export const SETTINGS_TOGGLE_THEME = "SETTINGS_TOGGLE_THEME";
-export const toggleTheme = () => (dispatch, getState) => {
-  const { settings: { theme } } = getState();
-  const config = getGlobalCfg();
-  if (theme == "theme-light") {
-    dispatch({ theme: "theme-dark", type: SETTINGS_TOGGLE_THEME });
-    config.set("theme", "theme-dark");
-  } else if (theme == "theme-dark") {
-    dispatch({ theme: "theme-light", type: SETTINGS_TOGGLE_THEME });
-    config.set("theme", "theme-light");
-  }
-
 };

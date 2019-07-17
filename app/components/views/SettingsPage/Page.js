@@ -8,6 +8,7 @@ import ProxySettings from "./ProxySettings";
 import TimezoneSettings from "./TimezoneSettings";
 import "style/StakePool.less";
 import "style/Settings.less";
+import UIThemeSettings from "./UIThemeSettings";
 
 const closeWalletModalContent = (walletName) =>
   <T
@@ -49,7 +50,6 @@ const SettingsPage = ({
   isChangePassPhraseDisabled,
   changePassphraseRequestAttempt,
   needNetworkReset,
-  toggleTheme,
   walletName,
   walletReady,
   isTicketAutoBuyerEnabled
@@ -60,9 +60,7 @@ const SettingsPage = ({
         <GeneralSettings {...{ tempSettings, networks, currencies, locales, walletReady,
           onChangeTempSettings }} />
         <ProxySettings {...{ tempSettings, onChangeTempSettings }} />
-        <div className="toggle-theme-button-wrapper">
-          <KeyBlueButton onClick={toggleTheme}><T id="settings.toggleTheme" m="Toggle Theme" /></KeyBlueButton>
-        </div>
+        <UIThemeSettings {...{ tempSettings, onChangeTempSettings }} />
       </div>
       <div className="settings-columns">
         <div className="settings-security">
