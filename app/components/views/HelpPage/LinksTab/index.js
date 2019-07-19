@@ -16,7 +16,7 @@ export const LinksTab = () => (
     <div className="help-icons-list">
       <HelpLink className={"help-docs-icon"} href="https://docs.decred.org/" title={<T id="help.documentation" m="Documentation" />} subtitle={<T id="help.documentation.subtitle" m="docs.decred.org"/>}/>
       <HelpLink className={"help-stakepools-icon"} href="https://decred.org/stakepools" title={<T id="help.stakepools" m=" Stakepools" />} subtitle={<T id="help.stakepools.subtitle" m="decred.org/stakepools"/>}/>
-      <HelpLink className={"help-blockchain-explorer-icon"} href="https://explorer.dcrdata.org" title={<T id="help.blockchain" m=" Blockchain Explorer" />} subtitle={<T id="help.blockchain.subtitle" m="explorer.dcrdata.org"/>}/>
+      <HelpLink className={"help-blockchain-explorer-icon"} href="https://dcrdata.decred.org" title={<T id="help.blockchain" m=" Blockchain Explorer" />} subtitle={<T id="help.blockchain.subtitle" m="dcrdata.decred.org"/>}/>
       <HelpLink className={"help-github-icon"} href="https://github.com/decred/decrediton" title={<T id="help.github.title" m="GitHub"/>} subtitle={<T id="help.github.subtitle" m="github.com/decred/decrediton"/>} />
       <HelpLinkInfoModal className={"help-constitution-icon"}
         title={<T id="help.constitution" m="Constitution"/>}

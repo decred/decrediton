@@ -71,7 +71,7 @@ const PrivacySettings = ({
         <AllowableRequestType
           label={<T id="settings.privacy.dcrdata.label" m="Decred Block Explorer" />}
           id="dcrdata"
-          description={<T id="settings.privacy.dcrdata.description" m="Access chain information from explorer.dcrdata.org" />}
+          description={<T id="settings.privacy.dcrdata.description" m="Access chain information from dcrdata.decred.org" />}
           checked={tempSettings.allowedExternalRequests.indexOf(EXTERNALREQUEST_DCRDATA) > -1}
           onChange={toggle(EXTERNALREQUEST_DCRDATA)}
         />

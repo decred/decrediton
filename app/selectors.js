@@ -203,13 +203,13 @@ const getTxTypeStr = type => (TRANSACTION_TYPES)[type];
 export const txURLBuilder= createSelector(
   [ network ],
   (network) =>
-    (txHash) => `https://${network !== "testnet" ? "explorer" : network}.dcrdata.org/${network == "testnet" ? "explorer/" : ""}tx/${txHash}`
+    (txHash) => `https://${network !== "testnet" ? "dcrdata" : "testnet"}.decred.org/tx/${txHash}`
 );
 
 export const blockURLBuilder= createSelector(
   [ network ],
   (network) =>
-    (txHash) => `https://${network !== "testnet" ? "explorer" : network}.dcrdata.org/${network == "testnet" ? "explorer/" : ""}block/${txHash}`
+    (txHash) => `https://${network !== "testnet" ? "dcrdata" : "testnet"}.decred.org/block/${txHash}`
 );
 
 export const decodedTransactions = get([ "grpc", "decodedTransactions" ]);
