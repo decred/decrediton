@@ -164,6 +164,7 @@
     "babel-jest": "^24.8.0",
     "babel-loader": "^8.0.5",
     "babel-plugin-react-intl": "^3.5.1",
+    "babel-runtime": "^6.26.0",
     "clipboard-copy": "^2.0.1",
     "concurrently": "^4.1.1",
     "core-decorators": "^0.20.0",
@@ -201,7 +202,6 @@
   "dependencies": {
     "autobind-decorator": "^2.1.0",
     "axios": "^0.18.1",
-    "babel-runtime": "^6.26.0",
     "css-loader": "^1.0.1",
     "dom-helpers": "^3.4.0",
     "electron-builder": "^20.44.4",
