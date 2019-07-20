@@ -6,26 +6,18 @@ import {
   NoElligibleTicketsVotingInfo, UpdatingVoteChoice, TimeValue,
   ChosenVoteOption, ProposalText, ProposalAbandoned
 } from "./helpers";
-import { politeiaMarkdownIndexMd } from "helpers";
 import {
   VOTESTATUS_ACTIVEVOTE, VOTESTATUS_VOTED, VOTESTATUS_ABANDONED
 } from "actions/GovernanceActions";
 
 export default ({ viewedProposalDetails,
   showPurchaseTicketsPage, hasTickets, onVoteOptionSelected, onUpdateVoteChoice,
-  newVoteChoice, updateVoteChoiceAttempt, tsDate }) =>
+  newVoteChoice, updateVoteChoiceAttempt, tsDate, text }) =>
 {
   const { name, token, hasEligibleTickets, voteStatus, voteOptions,
     voteCounts, creator, timestamp, endTimestamp, currentVoteChoice,
     version } = viewedProposalDetails;
   const eligibleTicketCount = viewedProposalDetails.eligibleTickets.length;
-
-  let text = "";
-  viewedProposalDetails.files.forEach(f => {
-    if (f.name === "index.md") {
-      text = politeiaMarkdownIndexMd(f.payload);
-    }
-  });
 
   const voted = voteStatus === VOTESTATUS_VOTED;
   const voting = voteStatus === VOTESTATUS_ACTIVEVOTE;

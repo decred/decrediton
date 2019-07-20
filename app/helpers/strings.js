@@ -55,12 +55,3 @@ export function limitFractionalDigits(s, maxFracDigits) {
   if (match[2].length <= maxFracDigits) return s;
   return match[1] + "." + match[2].substr(0, maxFracDigits);
 }
-
-// politeiaMarkdownIndexMd returns markdown text from the payload of a politeia
-// proposal file that corresponds to its index.md). This was extracted from the
-// helpers.js file of politeia. Assumes the payload has been converted from
-// base64 into bytes.
-export function politeiaMarkdownIndexMd(payload) {
-  let text = decodeURIComponent(escape(payload));
-  return text.substring(text.indexOf("\n") + 1);
-}
