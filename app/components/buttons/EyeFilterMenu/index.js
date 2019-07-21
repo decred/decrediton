@@ -65,9 +65,9 @@ class EyeFilterMenu extends React.Component {
   }
 
   render() {
+    const { menuOpen } = this.state;
     const className = [ "eye-filter-menu", this.props.className || "",
       (menuOpen ? "menu-open" : "") ].join(" ");
-    const { menuOpen } = this.state;
 
     const menu = menuOpen ? this.getOpenedMenu() : null;
 
