@@ -42,8 +42,6 @@
   background-size: 10px;
   background-position: 50% 50%;
   background-repeat: no-repeat;
-  border-bottom: 1px var(--stroke-color-default) solid;
-
 
   &.more {
     background-image: @arrow-up-key-blue-icon;
@@ -93,9 +91,9 @@
 }
 
 .stakepool-purchase-ticket-num-select {
-  width: 120px;
   height: 22px;
   margin-left: 6px;
+  border-bottom: 1px var(--stroke-color-default) solid;
 }
 
 .stakepool-purchase-ticket-input-select {
@@ -289,6 +287,22 @@
 .stakepool-purchase-ticket-info {
   margin-bottom: 10px;
   background-color: #EDEFF1;
+}
+
+.ticket-numeric-input {
+  border: 0;
+
+  .input {
+    width: 15px;
+  }
+
+  .unit-area {
+    color: var(--stroke-color-default);
+  }
+  
+  &.input-and-unit:hover {
+    border: 0 !important;
+  }
 }
 
 @media screen and (max-width: 1179px) {

@@ -37,7 +37,6 @@ const PurchaseTicketsForm = ({
         <T id="purchaseTickets.ticketAmount" m="Amount" />:</div>
       <NumTicketsInput
         required
-        className="stakepool-purchase-ticket-num-select"
         invalid={!canAffordTickets}
         invalidMessage={<T id="purchaseTickets.errors.insufficientBalance" m="Not enough funds" />}
         numTickets={numTicketsToBuy}

@@ -11,25 +11,22 @@ const NumTicketsInput = ({
   invalidMessage,
   showErrors,
   onKeyDown,
-  className
-}) => (
-  <div className={"is-row " + className} >
-    <div>
-      <IntegerInput
-        required={required}
-        onKeyDown={onKeyDown}
-        showErrors={showErrors}
-        invalid={invalid}
-        invalidMessage={invalidMessage}
-        value={numTickets}
-        onChange={e => onChangeNumTickets && onChangeNumTickets(e.target.value)}
-        data-max-width="70"
-        unit={<T id="numTicketsInput.unit" m="tickets" />}
-      />
-    </div>
-    <div key="more" className="num-tickets-icon more" onClick={incrementNumTickets} />
-    <div key="less" className="num-tickets-icon less" onClick={decrementNumTickets} />
-  </div>
-);
+}) => {
+  const ticketUnitLabel = numTickets === 1 ? <T id="numTicketInput.unit" m="ticket" /> : <T id="numTicketsInput.unit" m="tickets" />;
+  return (
+   <div className={"is-row stakepool-purchase-ticket-num-select"} >
+     <IntegerInput
+       {...{ required, onKeyDown, showErrors, invalid, invalidMessage, 
+       value: numTickets }}
+       className="ticket-numeric-input"
+       onChange={e => onChangeNumTickets && onChangeNumTickets(e.target.value)}
+       data-max-width="70"
+       unit={ticketUnitLabel}
+     />
+     <div key="more" className="num-tickets-icon more" onClick={incrementNumTickets} />
+     <div key="less" className="num-tickets-icon less" onClick={decrementNumTickets} />
+   </div>
+ );
+}
 
 export default NumTicketsInput;
