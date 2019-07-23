@@ -1,13 +1,29 @@
 import { proposals } from "connectors";
 import Page from "./Page";
-import { LoadingProposal, ProposalError } from "./helpers";
+import { LoadingProposal, ProposalError, politeiaMarkdownIndexMd } from "./helpers";
 
 @autobind
 class ProposalDetails extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { newVoteChoice: null };
+    this.state = {
+      newVoteChoice: null,
+      text: null,
+    };
+  }
+
+  componentDidUpdate(prevProps) {
+    const { viewedProposalDetails } = this.props;
+    let text = "";
+    if (prevProps.viewedProposalDetails !== viewedProposalDetails && viewedProposalDetails.files.length) {
+      viewedProposalDetails.files.forEach(f => {
+        if (f.name === "index.md") {
+          text = politeiaMarkdownIndexMd(f.payload);
+        }
+      });
+      this.setState({ text });
+    }
   }
 
   onVoteOptionSelected(opt) {
