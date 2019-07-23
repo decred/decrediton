@@ -36,6 +36,7 @@ const currentSettings = {
   currencyDisplay: "DCR",
   network: (cliOptions && cliOptions.network) || globalCfg.get("network"),
   networkFromCli: !!(cliOptions && cliOptions.network),
+  theme: globalCfg.get("theme"),
 };
 var initialState = {
   settings: {
