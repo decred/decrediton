@@ -1,6 +1,6 @@
-import { compose } from "fp";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
-import { AddressInput, DcrInput } from "inputs";
+import { AddressInput, DcrInput, ReceiveAccountsSelect } from "inputs";
+import { Tooltip, Balance } from "shared";
 import "style/SendPage.less";
 
 const messages = defineMessages({
@@ -15,74 +15,76 @@ const messages = defineMessages({
 });
 
 const SendOutputRow = ({
-  index,
-  outputs,
-  destination,
-  amount,
-  addressError,
-  amountError,
-  onAddOutput,
-  getOnRemoveOutput,
-  getOnChangeOutputDestination,
-  getOnChangeOutputAmount,
-  isSendAll,
-  onKeyDown,
-  sendAllAmount,
-  intl
+  index, destination, value, onAddOutput, onRemoveOutput,
+  onValidateAmount, onValidateAddress, isSendAll, onKeyDown, sendAllAmount, error, intl,
+  onShowSendAll, onHideSendAll, isSendSelf, outputs
 }) => (
-  <div className="send-row">
-    <div className="send-output-row">
-      <div className="send-label">{index === 0 && <span><T id="send.to" m="To" />:</span>}</div>
-      <div className="send-address">
-        <div className="send-input-form">
-          <AddressInput
-            autoFocus={index == 0}
-            showErrors={true}
-            invalid={!!addressError}
-            invalidMessage={addressError}
-            value={destination}
-            className="send-address-hash-to"
-            placeholder={intl.formatMessage(messages.destinationAddrPlaceholder)}
-            onChange={compose(getOnChangeOutputDestination(index), e => e.target.value)}
-            onKeyDown={onKeyDown}
-          />
-        </div>
-        {index === 0 && !isSendAll ? (
-          <div className="send-address-wallet-icon" onClick={onAddOutput}></div>
-        ) : (index === 0 && isSendAll) ? (
-          <div className="send-address-icon-spacer"></div>
-        ) : (index === (outputs.length - 1)) && !isSendAll ? (
-          <div className="send-address-delete-icon" onClick={getOnRemoveOutput}></div>
-        ) : ( null ) }
+  <>
+    <div className="send-row is-row">
+      <div className="send-label to-label"><span><T id="send.to" m="To" />:</span></div>
+      <div className="send-input">
+        {
+          isSendSelf ?
+            <ReceiveAccountsSelect
+              getAddressForSelected={true}
+              showAccountsButton={false}
+              onKeyDown={onKeyDown}
+            /> : <AddressInput
+              required = {true}
+              autoFocus={index === 0}
+              showErrors={ error && error.address }
+              invalid={error && error.address}
+              invalidMessage={error && error.address}
+              value={destination}
+              placeholder={intl.formatMessage(messages.destinationAddrPlaceholder)}
+              onChange={(e) => onValidateAddress({ address: e.target.value , index })}
+              onKeyDown={onKeyDown}
+            />
+        }
       </div>
-      <div className="send-amount">
-        <div className="send-amount-label">
-          {index === 0 ? <span><T id="send.amount" m="Amount" />:</span> : null}
-        </div>
-        <div className="send-address-amount-sum-and-currency">
-          <DcrInput
-            showErrors={true}
-            hidden={!isSendAll}
-            className="send-address-input-amount"
-            disabled={true}
-            amount={sendAllAmount}
-            onKeyDown={onKeyDown}
-          />
-          <DcrInput
-            showErrors={true}
-            invalid={!!amountError}
-            invalidMessage={amountError}
-            hidden={isSendAll}
-            amount={amount}
-            className="send-address-input-amount"
-            placeholder={intl.formatMessage(messages.amountPlaceholder)}
-            onChangeAmount={getOnChangeOutputAmount(index)}
-            onKeyDown={onKeyDown}
-          />
-        </div>
-      </div>
+      {
+        isSendSelf ? <div className="send-add-output-icon disabled"></div> :
+          (
+            !isSendAll && (index === 0 ?
+              <div className="send-add-output-icon" onClick={onAddOutput}></div> :
+              <div className="send-address-delete-icon" onClick={() => onRemoveOutput(index)}></div> )
+          )
+      }
     </div>
-  </div>
+    <div className="send-row is-row">
+      <div className="send-label amount-label">
+        <span><T id="send.amount" m="Amount" />:</span>
+      </div>
+      <div className="is-column">
+        {
+          isSendAll ?
+            <Balance flat amount={sendAllAmount} classNameWrapper="send-input send-all" />
+            : <DcrInput
+              className = "send-input"
+              required={true}
+              showErrors={error && error.amount}
+              invalid={error && error.amount}
+              invalidMessage={error && error.amount}
+              amount={value}
+              placeholder={intl.formatMessage(messages.amountPlaceholder)}
+              onChange={ e => onValidateAmount({ value: e.value , index, atomValue: e.atomValue })}
+              onKeyDown={onKeyDown}
+            />
+        }
+      </div>
+      {
+        index===0 && (outputs.length > 1 ? <Tooltip text={<T id="send.sendAllTitle.disabled" m="Send all funds from selected account - Disabled"/>}>
+          <a className="send-icon-wrapper wallet-icon disabled" />
+        </Tooltip> : (!isSendAll ?
+          <Tooltip text={<T id="send.sendAllTitle" m="Send all funds from selected account"/>}>
+            <a className="send-icon-wrapper wallet-icon" onClick={onShowSendAll}/>
+          </Tooltip> :
+          <Tooltip text={<T id="send.cancelSendAllTitle" m="Cancel sending all funds"/>}>
+            <a className="send-icon-wrapper cancel-icon" onClick={onHideSendAll}/>
+          </Tooltip>
+        ))}
+    </div>
+  </>
 );
 
 export default injectIntl(SendOutputRow);

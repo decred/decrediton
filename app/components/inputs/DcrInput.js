@@ -28,64 +28,33 @@ export const FixedDcrInput = ({ currencyDisplay, ...props }) =>
  */
 @autobind
 class DcrInput extends React.Component {
-
   constructor(props) {
     super(props);
-    this.state = { value: this.amountToDisplayStr(props.amount) };
-  }
-
-  componentDidUpdate(prevProps) {
-    if (!this.props.amount && !this.state.value) {
-      //ignore when emptying or setting to 0
-      return;
-    }
-
-    if (this.props.amount !== prevProps.amount) {
-      this.setState({ value: this.amountToDisplayStr(this.props.amount) });
-    }
-  }
-
-  amountToDisplayStr(amount) {
-    if (!amount) return amount;
-    const { unitDivisor } = this.props;
-    return amount / unitDivisor;
-  }
-
-  changeAmount(value) {
-    const { unitDivisor } = this.props;
-    const amount = !value ? 0 : strToDcrAtoms(value, unitDivisor);
-    if (amount !== this.props.amount) {
-      this.props.onChangeAmount && this.props.onChangeAmount(amount);
-    }
   }
 
   onChange(e) {
+    const { unitDivisor, currencyDisplay, onChange } = this.props;
+    let amount;
     const value = e.target.value;
     if (value) {
       // pre-validate if <= max supply
-      const { unitDivisor } = this.props;
-      const amount = strToDcrAtoms(value, unitDivisor);
+      amount = currencyDisplay === "DCR" ? value*unitDivisor : strToDcrAtoms(value, unitDivisor);
       // TODO: move to a global constant
       if (amount > 21e14) return;
     }
-
-    if (value !== this.state.value) {
-      this.setState({ value }, () => this.changeAmount(value));
-    }
+    if (onChange) onChange({ ...e, value, atomValue: amount });
   }
 
   render() {
     const { unitDivisor, currencyDisplay } = this.props;
-    const { value } = this.state;
-    const { onChange } = this;
     const maxFracDigits = Math.log10(unitDivisor);
 
     const Comp = unitDivisor !== 1 ? FloatInput : IntegerInput;
     return <Comp
       {...this.props}
       unit={currencyDisplay}
-      value={value}
-      onChange={onChange}
+      value={this.props.amount}
+      onChange={this.onChange}
       maxFracDigits={maxFracDigits}
     />;
   }

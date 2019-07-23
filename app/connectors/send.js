@@ -22,6 +22,7 @@ const mapStateToProps = selectorMap({
   isTrezor: sel.isTrezor,
   unsignedRawTx: sel.unsignedRawTx,
   isWatchingOnly: sel.isWatchingOnly,
+  publishTxResponse: sel.publishTxResponse,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

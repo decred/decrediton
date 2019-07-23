@@ -1,13 +1,10 @@
-import { compose, not, eq, get } from "fp";
-import { service, settings, send } from "connectors";
+import { service, send } from "connectors";
 import SendPage from "./Page";
 import ErrorScreen from "ErrorScreen";
 import { FormattedMessage as T } from "react-intl";
 import { spring, presets } from "react-motion";
 import OutputRow from "./OutputRow";
 import { DescriptionHeader } from "layout";
-
-const BASE_OUTPUT = { destination: "", amount: null };
 
 export const SendTabHeader = service(({ isTestNet }) =>
   <DescriptionHeader
@@ -20,42 +17,38 @@ export const SendTabHeader = service(({ isTestNet }) =>
 class Send extends React.Component {
   constructor(props) {
     super(props);
-    this.state = this.getInitialState();
-    this.state.account = this.props.defaultSpendingAccount;
-  }
-
-  getInitialState() {
-    return {
+    this.state = {
       isShowingConfirm: false,
       isSendAll: false,
       isSendSelf: false,
-      hastAttemptedConstruct: false,
-      outputs: [ { key: "output_0", data:{ ...BASE_OUTPUT } } ],
-      outputAccount: this.props.defaultSpendingAccount,
-      lowBalanceError: false,
-      canEnterPassphrase: false,
+      outputs: [ { key: "output_0", data: this.getBaseOutput() } ],
       sendAllAmount: this.props.totalSpent,
       unsignedRawTx: null,
+      account: this.props.defaultSpendingAccount,
+      insuficientFunds: false,
     };
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    const { nextAddress, constructTxLowBalance } = prevProps;
-    const { isSendSelf, outputs } = prevState;
-    if (isSendSelf && (nextAddress != this.props.nextAddress)) {
-      let newOutputs = outputs.map(o => ({ ...o, data:{ ...o.data, destination: this.props.nextAddress } }));
+  componentDidUpdate(prevProps) {
+    const { constructTxLowBalance, unsignedRawTx, isWatchingOnly, nextAddress, publishTxResponse } = this.props;
+    const { isSendSelf, outputs } = this.state;
+    if (publishTxResponse && publishTxResponse !== prevProps.publishTxResponse) {
+      this.setState({ outputs: [ { key: "output_0", data: this.getBaseOutput() } ] });
+    }
+    if (isSendSelf && (prevProps.nextAddress != nextAddress)) {
+      let newOutputs = outputs.map(o => ({ ...o, data:{ ...o.data, destination: nextAddress } }));
       this.setState({ outputs: newOutputs }, this.onAttemptConstructTransaction);
     }
-    if ( constructTxLowBalance !== this.props.constructTxLowBalance ) {
-      this.setState({ lowBalanceError: this.props.constructTxLowBalance });
+    if (constructTxLowBalance !== prevProps.constructTxLowBalance) {
+      if (constructTxLowBalance) {
+        this.setState({ insuficientFunds: true });
+      } else {
+        this.setState({ insuficientFunds: false });
+      }
     }
-    if (this.props.unsignedRawTx !== prevProps.unsignedRawTx && this.props.isWatchingOnly) {
-      this.setState({ unsignedRawTx: this.props.unsignedRawTx });
+    if (unsignedRawTx !== prevProps.unsignedRawTx && isWatchingOnly) {
+      this.setState({ unsignedRawTx });
     }
-  }
-
-  componentWillUnmount() {
-    this.onClearTransaction();
   }
 
   render() {
@@ -65,8 +58,6 @@ class Send extends React.Component {
 
     const {
       onChangeAccount,
-      onAttemptSignTransaction,
-      onClearTransaction,
       onShowConfirm,
       onShowSendAll,
       onHideSendAll,
@@ -74,11 +65,7 @@ class Send extends React.Component {
       onShowSendOthers,
       onAttemptConstructTransaction,
       onAddOutput,
-      getOnRemoveOutput,
-      getOnChangeOutputDestination,
-      getOnChangeOutputAmount,
-      getAddressError,
-      getAmountError,
+      onValidateAmount,
       willEnter,
       willLeave,
       getStyles,
@@ -90,39 +77,33 @@ class Send extends React.Component {
     const showPassphraseModal = this.getShowPassphraseModal();
 
     return (
-      <>
-        <div>
-          <SendPage
-            {...{ ...this.props, ...this.state }}
-            {...{
-              isValid,
-              onKeyDown,
-              onChangeAccount,
-              onAttemptSignTransaction,
-              onClearTransaction,
-              onShowConfirm,
-              onShowSendAll,
-              onHideSendAll,
-              onShowSendSelf,
-              onShowSendOthers,
-              onAttemptConstructTransaction,
-              onAddOutput,
-              getOnRemoveOutput,
-              getOnChangeOutputDestination,
-              getOnChangeOutputAmount,
-              getAddressError,
-              getAmountError,
-              willEnter,
-              willLeave,
-              getStyles,
-              getDefaultStyles,
-              showPassphraseModal,
-              resetShowPassphraseModal,
-            }}
-          />
-        </div>
-      </>
+      <SendPage
+        {...{ ...this.props, ...this.state }}
+        {...{
+          isValid,
+          onKeyDown,
+          onChangeAccount,
+          onShowConfirm,
+          onShowSendAll,
+          onHideSendAll,
+          onShowSendSelf,
+          onShowSendOthers,
+          onAttemptConstructTransaction,
+          onAddOutput,
+          onValidateAmount,
+          willEnter,
+          willLeave,
+          getStyles,
+          getDefaultStyles,
+          showPassphraseModal,
+          resetShowPassphraseModal,
+        }}
+      />
     );
+  }
+
+  getBaseOutput() {
+    return { destination: "", amount: null, value: null, error: { address: null, amount: null } };
   }
 
   getDefaultStyles() {
@@ -130,39 +111,33 @@ class Send extends React.Component {
   }
 
   getStyles() {
-    const { outputs, isSendAll, sendAllAmount } = this.state;
+    const { outputs, isSendAll, sendAllAmount, isSendSelf } = this.state;
     const { totalSpent } = this.props;
-    return outputs.map((output, index) => {
-      return {
-        data: <OutputRow
-          {...{ index, outputs, ...this.props, ...output.data, isSendAll, totalSpent, sendAllAmount }}
-          addressError={this.getAddressError(index)}
-          amountError={this.getAmountError(index)}
-          getOnChangeOutputDestination={this.getOnChangeOutputDestination}
-          getOnChangeOutputAmount={this.getOnChangeOutputAmount}
-          onAddOutput={this.onAddOutput}
-          getOnRemoveOutput={this.getOnRemoveOutput(index)}
-          onKeyDown={this.onKeyDown}
-        />,
-        key: "output_" + index,
-        style: {
-          height: spring(40, presets.gentle),
-          opacity: spring(1, presets.gentle),
-        }
-      };
-    });
+    const {
+      onValidateAddress, onValidateAmount, onRemoveOutput, onShowSendAll, onHideSendAll,
+    } = this;
+    return outputs.map((output, index) => ({
+      data: <OutputRow
+        {...{ ...this.props, index, outputs, ...output.data, isSendAll, isSendSelf, totalSpent, sendAllAmount,
+          onValidateAddress, onValidateAmount, onShowSendAll, onHideSendAll, onRemoveOutput }}
+        onAddOutput={this.onAddOutput}
+        onKeyDown={this.onKeyDown}
+      />,
+      key: "output_" + index,
+      style: {
+        opacity: spring(1, presets.gentle),
+      }
+    }));
   }
 
   willEnter() {
     return {
-      height: 0,
       opacity: 0,
     };
   }
 
   willLeave() {
     return {
-      height: spring(0),
       opacity: spring(0, { stiffness: 210, damping: 20 }),
     };
   }
@@ -171,14 +146,7 @@ class Send extends React.Component {
     this.setState({ account }, this.onAttemptConstructTransaction);
   }
 
-  onAttemptSignTransaction() {
-    const { getNextAddressAttempt, nextAddressAccount } = this.props;
-    getNextAddressAttempt && nextAddressAccount && getNextAddressAttempt(nextAddressAccount.value);
-    this.onClearTransaction();
-  }
-
   onClearTransaction() {
-    this.setState(this.getInitialState());
     this.props.onClearTransaction();
   }
   onShowSendAll() {
@@ -197,46 +165,53 @@ class Send extends React.Component {
   }
   onShowSendSelf() {
     const { outputs } = this.state;
-    let newOutputs = [ { ...outputs[0], data:{ destination: this.props.nextAddress, amount: null } } ];
-    this.setState({ isSendSelf: true, outputs:newOutputs }, this.onAttemptConstructTransaction);
+    let newOutputs = [ { ...outputs[0], data: this.getBaseOutput() } ];
+    this.setState({ isSendSelf: true, outputs: newOutputs }, this.onAttemptConstructTransaction);
   }
   onShowSendOthers() {
     const { outputs } = this.state;
-    let newOutputs = [ { ...outputs[0], data:{ ...BASE_OUTPUT } } ];
+    let newOutputs = [ { ...outputs[0], data: this.getBaseOutput() } ];
     this.setState({ isSendSelf: false, outputs: newOutputs }, this.onAttemptConstructTransaction);
   }
 
   onAttemptConstructTransaction() {
     const { onAttemptConstructTransaction } = this.props;
+    const { isSendAll, outputs, account } = this.state;
     const confirmations = 0;
 
-    this.setState({ sendAllAmount: this.state.account.spendable });
+    this.setState({ sendAllAmount: account.spendable });
 
-    if (this.getHasEmptyFields()) return;
-    this.setState({ hastAttemptedConstruct: true });
     if (this.getIsInvalid()) return;
 
-    if (!this.getIsSendAll()) {
+    if (!isSendAll) {
       onAttemptConstructTransaction && onAttemptConstructTransaction(
-        this.state.account.value,
+        account.value,
         confirmations,
-        this.state.outputs.map(({ data }) =>
+        outputs.map(({ data }) =>
           ({ amount: data.amount, destination: data.destination })
         )
       );
     } else {
       onAttemptConstructTransaction && onAttemptConstructTransaction(
-        this.state.account.value,
+        account.value,
         confirmations,
-        this.state.outputs,
+        outputs,
         true
       );
     }
   }
 
   onAddOutput() {
+    const { outputs, isSendSelf } = this.state;
+    if (isSendSelf) return;
+    outputs.push({ key: "output_"+outputs.length, data: this.getBaseOutput() });
+    this.setState({ outputs });
+  }
+
+  onRemoveOutput(index) {
     const { outputs } = this.state;
-    this.setState({ outputs: [ ...outputs, { key: "output_"+outputs.length, data: { ...BASE_OUTPUT } } ] });
+    outputs.splice(index, 1);
+    this.setState({ outputs }, this.onAttemptConstructTransaction);
   }
 
   onKeyDown(e) {
@@ -253,71 +228,59 @@ class Send extends React.Component {
     this.setState({ showPassphraseModal: false });
   }
 
-  getOnRemoveOutput(key) {
-    return () => this.setState(
-      { outputs: this.state.outputs.filter(compose(not(eq(`output_${key}`)), get("key"))) },
-      this.onAttemptConstructTransaction
-    );
+  onValidateAmount(data) {
+    // value represents the value to be showed on the component and amount
+    // represents its value in atoms so we can calculate transaction data.
+    const { value, atomValue, index } = data;
+    let error;
+    if (!value || isNaN(value)) {
+      error = <T id="send.errors.invalidAmount" m="Please enter a valid amount" />;
+    }
+    if (value <= 0) {
+      error = <T id="send.errors.negativeAmount" m="Please enter a valid amount (> 0)" />;
+    }
+    const ref = this.state.outputs[index];
+    ref.data.value = value;
+    ref.data.amount = atomValue;
+
+    ref.data.error.amount = error;
+
+    this.setState({ [ref]: ref }, this.onAttemptConstructTransaction());
   }
 
-  getOnChangeOutputDestination(key) {
-    return destination => {
-      let destinationInvalid = false;
-      let updateDestinationState = () => {
-        this.setState({
-          outputs: this.state.outputs.map(o => (o.key === `output_${key}`) ? {
-            ...o,
-            data: {
-              ...o.data,
-              destination, destinationInvalid
-            }
-          } : o)
-        }, this.onAttemptConstructTransaction);
-      };
+  async onValidateAddress(data) {
+    const { address, index } = data;
+    let error;
+    const ref = this.state.outputs[index];
+    ref.data.destination = address;
+    if (!address) {
+      error = <T id="send.errors.invalidAddress" m="Please enter a valid address" />;
+    }
+    try {
+      const validated = await this.props.validateAddress(address);
+      if(!validated.getIsValid()) {
+        error = <T id="send.errors.invalidAddress" m="Please enter a valid address" />;
+      }
+      ref.data.error.address = error;
 
-      this.props.validateAddress(destination)
-        .then( resp => {
-          destinationInvalid = !resp.getIsValid();
-          updateDestinationState();
-        })
-        .catch( () => {
-          destinationInvalid = false;
-          updateDestinationState();
-        });
-    };
-  }
-
-  getOnChangeOutputAmount(key) {
-    return newAmount => {
-      let reconstruct = false;
-      return this.setState({
-        outputs: this.state.outputs.map(o => {
-          if (o.key !== `output_${key}`) return o;
-          reconstruct = newAmount !== o.data.amount;
-          return {
-            ...o,
-            data:{
-              ...o.data,
-              amount: newAmount
-            },
-          };
-        }),
-        lowBalanceError: false,
-      }, () => reconstruct && this.onAttemptConstructTransaction());
-    };
+      this.setState({ [ref]: ref }, this.onAttemptConstructTransaction());
+    } catch (err) {
+      this.setState({ [ref]: ref });
+      return err;
+    }
   }
 
   getIsInvalid() {
-    return !!this.state.outputs.find((o, index) => (
-      this.getAddressError(index) || this.getAmountError(index)
-    ));
-  }
-
-  getHasEmptyFields() {
-    return !!this.state.outputs.find(({ data }) => {
-      const { destination, amount } = data;
-      return !destination || (!amount && !this.state.isSendAll);
+    let hasError = false;
+    this.state.outputs.forEach( o => {
+      if (!o.data.amount || o.data.destination.length === 0 ||
+          o.data.error.amount || o.data.error.address) {
+        hasError = true;
+        return;
+      }
     });
+
+    return hasError;
   }
 
   getIsValid() {
@@ -327,25 +290,6 @@ class Send extends React.Component {
       !this.props.isConstructingTransaction
     );
   }
-  getIsSendAll() {
-    return this.state.isSendAll;
-  }
-  getIsSendSelf() {
-    return this.state.isSendSelf;
-  }
-  getAddressError(key) {
-    const { outputs } = this.state;
-    const { destination, destinationInvalid } = outputs[key].data;
-    if (!destination || destinationInvalid) return <T id="send.errors.invalidAddress" m="Please enter a valid address" />;
-  }
-
-  getAmountError(key) {
-    const { outputs, isSendAll, lowBalanceError } = this.state;
-    const { amount } = outputs[key].data;
-    if (isNaN(amount) && !isSendAll) return <T id="send.errors.invalidAmount" m="Please enter a valid amount" /> ;
-    if (amount <= 0 && !isSendAll) return <T id="send.errors.negativeAmount" m="Please enter a valid amount (> 0)" />;
-    if (lowBalanceError) return <T id="send.errors.insufficientFunds" m="Not Enough Funds" />;
-  }
 }
 
-export default service(settings(send(Send)));
+export default service(send(Send));
