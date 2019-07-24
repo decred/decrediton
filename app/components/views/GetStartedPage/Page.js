@@ -5,7 +5,7 @@ import { LogsLinkMsg, SettingsLinkMsg, LearnBasicsMsg, UpdateAvailableLink,
   WhatsNewLink, LoaderTitleMsg, AboutModalButton } from "./messages";
 
 const DaemonLoadingBody = ({
-  updateAvailable, appVersion, onShowSettings, onShowLogs, StateComponent, getDaemonSynced, submitRemoteCredentials, ...props
+  updateAvailable, appVersion, onShowSettings, onShowLogs, StateComponent, getDaemonSynced, ...props
 }) => (
   <div className="page-body getstarted">
     <div className="getstarted loader">
@@ -34,7 +34,7 @@ const DaemonLoadingBody = ({
         <div className="loader-bar">
           <LinearProgressFull {...{ getDaemonSynced }} />
         </div>
-        { StateComponent && <StateComponent {...{ ...props, submitRemoteCredentials, getDaemonSynced }} /> }
+        { StateComponent && <StateComponent {...{ ...props, getDaemonSynced }} /> }
 
       </>
     </div>

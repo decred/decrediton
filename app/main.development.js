@@ -193,8 +193,8 @@ ipcMain.on("get-available-wallets", (event, network) => {
 });
 
 ipcMain.on("start-daemon", async (event, params, testnet) => {
-  const startedCredentials = await startDaemon(params, testnet);
-  event.returnValue = startedCredentials;
+  const startedValues = await startDaemon(params, testnet);
+  event.returnValue = startedValues;
 });
 
 ipcMain.on("connect-daemon", (event, { rpcCreds }) => {
