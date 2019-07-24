@@ -12,10 +12,14 @@ class GetStarted extends React.Component {
 
   constructor(props) {
     super(props);
-    const { prepStartDaemon, onConnectDaemon, checkNetworkMatch, syncDaemon, onStartWallet, onRetryStartRPC, onGetAvailableWallets } = this.props;
+    const {
+      prepStartDaemon, onConnectDaemon, checkNetworkMatch, syncDaemon, onStartWallet, onRetryStartRPC, onGetAvailableWallets,
+      onStartDaemon,
+    } = this.props;
     const { sendEvent } = this;
     this.service = interpret(getStartedMachine({
-      prepStartDaemon, onConnectDaemon, checkNetworkMatch, syncDaemon, onStartWallet, onRetryStartRPC, sendEvent, onGetAvailableWallets
+      prepStartDaemon, onConnectDaemon, checkNetworkMatch, syncDaemon, onStartWallet, onRetryStartRPC, sendEvent, onGetAvailableWallets,
+      onStartDaemon,
     })).onTransition(current => {
       this.setState({ current });
     });
@@ -87,13 +91,17 @@ class GetStarted extends React.Component {
     return this.service.send({ type: "SUBMIT_REMOTE", remoteCredentials });
   }
 
+  submitAppdata(appdata) {
+    return this.service.send({ type: "SUBMIT_APPDATA", appdata });
+  }
+
   render() {
     const { StateComponent } = this.state;
-    const { service, submitChosenWallet, submitRemoteCredentials } = this;
+    const { service, submitChosenWallet, submitRemoteCredentials, submitAppdata } = this;
 
     return (
       <GetStartedPage
-        {...{ ...this.state, ...this.props, submitRemoteCredentials, submitChosenWallet, service }}
+        {...{ ...this.state, ...this.props, submitRemoteCredentials, submitAppdata, submitChosenWallet, service }}
         StateComponent={StateComponent} />
     );
   }

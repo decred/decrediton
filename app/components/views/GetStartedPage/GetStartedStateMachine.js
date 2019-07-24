@@ -6,6 +6,7 @@ export const getStartedMachine = (a) => Machine({
   context: {
     credentials: {},
     selectedWallet: null,
+    appdata: null,
   },
   states: {
     preStart: {
@@ -33,6 +34,7 @@ export const getStartedMachine = (a) => Machine({
       on: {
         STARTED_DAEMON: "startedDaemon",
         START_ADVANCED_DAEMON: "startAdvancedDaemon",
+        CONNECT_DAEMON: "connectingDaemon",
       }
     },
     startedDaemon: {
@@ -100,8 +102,18 @@ export const getStartedMachine = (a) => Machine({
     isAtStartSPV: () => {
       console.log("is at start SPV");
     },
-    isAtStartingDaemon: () => {
+    isAtStartingDaemon: (context, event) => {
       console.log("is at start  At Starting Daemonn");
+      const { appdata } = event;
+      context.appdata = appdata;
+      return a.onStartDaemon({ appdata })
+        .then(started => {
+          const { credentials, appdata } = started;
+          context.credentials = credentials;
+          context.appdata = appdata;
+          a.sendEvent({ type: "CONNECT_DAEMON", payload: started });
+        })
+        .catch(e => console.log(e));
     },
     isStartedDaemon: () => {
       console.log("is at started daemon");
@@ -109,11 +121,9 @@ export const getStartedMachine = (a) => Machine({
     isAtConnectDaemon: (context, event) => {
       console.log(" is at connect daemon ");
       const { remoteCredentials } = event;
-      context.credentials = remoteCredentials;
+      remoteCredentials && (context.credentials = remoteCredentials);
       return a.onConnectDaemon(remoteCredentials)
         .then(connected => {
-          console.log(context);
-          console.log(event);
           a.sendEvent({ type: "CHECK_NETWORK_MATCH", payload: connected });
         })
         .catch(e => console.log(e));
@@ -144,7 +154,7 @@ export const getStartedMachine = (a) => Machine({
         a.sendEvent({ type: "SYNC_RPC", r });
       });
     },
-    isSyncingRPC: (context, ) => {
+    isSyncingRPC: (context) => {
       console.log("is at syncing rpc");
       a.onRetryStartRPC(context.credentials);
     },

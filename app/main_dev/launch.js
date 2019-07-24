@@ -116,7 +116,7 @@ export async function cleanShutdown(mainWindow, app) {
   });
 }
 
-export const launchDCRD = (params, testnet) => new Promise((resolve,reject) => {
+export const launchDCRD = (params, testnet) => new Promise(async (resolve,reject) => {
   let rpcCreds, appdata;
 
   rpcCreds = params && params.rpcCreds;
@@ -147,6 +147,7 @@ export const launchDCRD = (params, testnet) => new Promise((resolve,reject) => {
 
   let args = [ "--nolisten" ];
   const newConfig = readDcrdConfig(appdata, testnet);
+  newConfig.appdata = appdata;
 
   args.push(`--configfile=${dcrdCfg(appdata)}`);
   args.push(`--appdata=${appdata}`);
@@ -194,7 +195,7 @@ export const launchDCRD = (params, testnet) => new Promise((resolve,reject) => {
         lastDcrdErr = lastPanicLine(GetDcrdLogs());
       }
       logger.log("error", "dcrd closed due to an error: ", lastDcrdErr);
-      return reject(lastDcrdErr);
+      reject(lastDcrdErr);
     }
 
     logger.log("info", `dcrd exited with code ${code}`);
@@ -202,20 +203,21 @@ export const launchDCRD = (params, testnet) => new Promise((resolve,reject) => {
 
   dcrd.stdout.on("data", (data) => {
     AddToDcrdLog(process.stdout, data, debug);
-    resolve(data.toString("utf-8"));
+    const dataString = data.toString("utf-8");
+    if (dataString.includes("RPC server listening on")) {
+      newConfig.pid = dcrd.pid;
+      dcrdPID = dcrd.pid;
+      logger.log("info", "dcrd started with pid:" + newConfig.pid);
+
+      dcrd.unref();
+      return resolve(newConfig);
+    }
   });
 
   dcrd.stderr.on("data", (data) => {
     AddToDcrdLog(process.stderr, data, debug);
     reject(data.toString("utf-8"));
   });
-
-  newConfig.pid = dcrd.pid;
-  dcrdPID = dcrd.pid;
-  logger.log("info", "dcrd started with pid:" + newConfig.pid);
-
-  dcrd.unref();
-  return resolve(newConfig);
 });
 
 // DecodeDaemonIPCData decodes messages from an IPC message received from dcrd/
