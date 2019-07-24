@@ -2,7 +2,6 @@ import { spring } from "react-motion";
 import { substruct } from "fp";
 import StakeInfoDisplay from "./Display";
 import StakeInfoDetails from "./StakeInfoDetails";
-import StakeInfoDetailsSPV from "./StakeInfoDetailsSPV";
 import stakeInfo from "connectors/stakeInfo";
 
 @autobind
@@ -16,57 +15,24 @@ class StakeInfo extends React.Component {
 
   getStakeInfoDetailsComponent () {
     const {
-      ticketPoolSize,
-      votedTicketsCount,
-      allMempoolTicketsCount,
-      missedTicketsCount,
-      ownMempoolTicketsCount,
-      revokedTicketsCount,
-      immatureTicketsCount,
-      expiredTicketsCount,
-      totalSubsidy,
-      liveTicketsCount,
-      unspentTicketsCount,
+      ticketPoolSize, votedTicketsCount, allMempoolTicketsCount, missedTicketsCount,
+      revokedTicketsCount, expiredTicketsCount, totalSubsidy, isSPV
     } = this.props;
-    const { onHideStakeInfo, onShowStakeInfo } = this;
-    const { isShowingDetails } = this.state;
-    const { isSPV } = this.props;
     return [ {
-      data: isSPV ?
-        <StakeInfoDetailsSPV
-          {...{
-            isShowingDetails,
-            votedTicketsCount,
-            ownMempoolTicketsCount,
-            revokedTicketsCount,
-            immatureTicketsCount,
-            expiredTicketsCount,
-            totalSubsidy,
-            unspentTicketsCount,
-            onHideStakeInfo,
-            onShowStakeInfo,
-          }}
-        /> :
-        <StakeInfoDetails
-          {...{
-            isShowingDetails,
-            ticketPoolSize,
-            votedTicketsCount,
-            allMempoolTicketsCount,
-            missedTicketsCount,
-            ownMempoolTicketsCount,
-            revokedTicketsCount,
-            immatureTicketsCount,
-            expiredTicketsCount,
-            totalSubsidy,
-            liveTicketsCount,
-            onHideStakeInfo,
-            onShowStakeInfo,
-          }}
-        />,
+      data: <StakeInfoDetails
+        {...{
+          ticketPoolSize,
+          votedTicketsCount,
+          allMempoolTicketsCount,
+          missedTicketsCount,
+          revokedTicketsCount,
+          expiredTicketsCount,
+          totalSubsidy,
+          isSPV,
+        }}
+      />,
       key: "output_0",
       style: {
-        height: spring(150, { stiffness: 170, damping: 15 }),
         opacity: spring(1, { stiffness: 100, damping: 20 }),
       }
     } ];

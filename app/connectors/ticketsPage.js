@@ -31,6 +31,7 @@ const mapStateToProps = selectorMap({
   isTestNet: sel.isTestNet,
   isTicketPurchaseTabDisabled: sel.isTicketPurchaseTabDisabled,
   numTicketsToBuy: sel.numTicketsToBuy,
+  sidebarOnBottom: sel.sidebarOnBottom,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

@@ -1,8 +1,15 @@
 import { TransitionMotionWrapper } from "shared";
-import StakeInfoRow from "./StakeInfoRow";
+import { VerticalExpand } from "buttons";
+import { FormattedNumber, FormattedMessage as T } from "react-intl";
 import "style/StakePool.less";
 
 const wrapperComponent = props => <div { ...props } />;
+
+export const Column = ({ label, value, className }) =>
+  <div className={className}>
+    <span>{label}{label ? ": " : ""}</span>
+    <span>{value}</span>
+  </div>;
 
 const StakeInfoDisplay = ({
   getNullStyles,
@@ -14,28 +21,40 @@ const StakeInfoDisplay = ({
   liveTicketsCount,
   isSPV,
   onShowStakeInfo,
-  onHideStakeInfo
+  onHideStakeInfo,
+  sidebarOnBottom,
 }) => (
-  <>
-    <StakeInfoRow
-      {...{
-        isShowingDetails,
-        ownMempoolTicketsCount,
-        immatureTicketsCount,
-        liveTicketsCount,
-        unspentTicketsCount,
-        isSPV,
-        onShowStakeInfo,
-        onHideStakeInfo
-      }}
-    />
-    <TransitionMotionWrapper
-      {
-      ...{
-        styles: !isShowingDetails ? getNullStyles() : getStakeInfoDetailsComponent(),
-        wrapperComponent,
-      }}
-    />
-  </>);
+  <div className="stake-info-area">
+    <div className="is-row stake-info-row-area" onClick={isShowingDetails ? onHideStakeInfo : onShowStakeInfo}>
+      <div className="is-row">
+        <Column
+          className={"stake-info"}
+          label={<T id="stake.ownMempoolTickets" m="Own Mempool Tickets" />}
+          value={<FormattedNumber value={ownMempoolTicketsCount} />} />
+        {!sidebarOnBottom &&
+          <Column
+            className={"stake-info"}
+            label={<T id="stake.immatureTickets" m="Immature Tickets" />}
+            value={<FormattedNumber value={immatureTicketsCount} />} />
+        }
+        {isSPV ?
+          <Column
+            className={"stake-info"}
+            label={<T id="stake.unspentTickets" m="Unspent Tickets" />}
+            value={<FormattedNumber value={unspentTicketsCount} />} /> :
+          <Column
+            className={"stake-info"}
+            label={<T id="stake.liveTickets" m="Live Tickets" />}
+            value={<FormattedNumber value={liveTicketsCount} />} />
+        }
+      </div>
+      <VerticalExpand
+        expanded={!!isShowingDetails}
+      />
+    </div>
+    <TransitionMotionWrapper {...{
+      styles: !isShowingDetails ? getNullStyles() : getStakeInfoDetailsComponent(),
+      wrapperComponent, }} />
+  </div>);
 
 export default StakeInfoDisplay;

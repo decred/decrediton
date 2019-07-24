@@ -10,7 +10,6 @@ import { injectIntl } from "react-intl";
 import { isNullOrUndefined } from "util";
 import { MIN_RELAY_FEE, MAX_POSSIBLE_FEE_INPUT } from "main_dev/constants";
 
-
 @autobind
 class PurchaseTickets extends React.Component {
   constructor(props) {
@@ -32,16 +31,12 @@ class PurchaseTickets extends React.Component {
     const { getStakePool } = this;
     const { ticketFee, txFee, expiry } = this.state;
     return [ {
-      data: <PurchaseTicketsQuickBar {...{
-        stakePool: getStakePool(),
-        ticketFee,
-        txFee,
-        expiry,
+      data: <PurchaseTicketsQuickBar {...{ stakePool: getStakePool(),
+        ticketFee, txFee, expiry,
       }}/>,
       key: "output_0",
       style: {
-        height: spring(73),
-        opacity: 1,
+        opacity: spring(1, { stiffness: 120, damping: 17 }),
       }
     } ];
   }
@@ -78,7 +73,6 @@ class PurchaseTickets extends React.Component {
       />,
       key: "output_1",
       style: {
-        height: spring(258, { stiffness: 170, damping: 17 }),
         opacity: spring(1, { stiffness: 120, damping: 17 }),
       }
     } ];

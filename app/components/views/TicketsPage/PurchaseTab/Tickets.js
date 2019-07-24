@@ -4,26 +4,31 @@ import { FormattedMessage as T } from "react-intl";
 import StakeInfo from "./StakeInfo";
 import { spv } from "connectors";
 import { ShowWarning, Subtitle } from "shared";
-import "style/StakePool.less";
+import "style/PurchaseTickets.less";
+import { InfoDocModalButton } from "buttons";
 
+const getTitleIcon = () => (
+  <InfoDocModalButton document="PurchaseTicketsInfo" modalClassName="info-modal-fields" className="info-title-icon" />
+);
 const Tickets = ({
   spvMode,
   blocksNumberToNextTicket,
+  sidebarOnBottom,
   ...props,
 }) => (
-  <>
-    <Subtitle title={<T id="purchase.subtitle" m="Purchase Tickets"/>} />
-    <StakeInfo />
+  <div className="purchase-ticket-area">
+    <Subtitle title={<T id="purchase.subtitle" m="Purchase Tickets"/>} children={getTitleIcon()} className="is-row" />
+    <StakeInfo  {...{ sidebarOnBottom }}/>
     {
-      spvMode && blocksNumberToNextTicket == 2  ?
+      spvMode && blocksNumberToNextTicket === 2  ?
         <ShowWarning warn={<T id="spv.purchase.warn" m="Purchase Tickets is not available right now, because we are at the end of a ticket interval. After one block it will be available again."/>}/> :
-        <PurchaseTickets {...{ ...props }} />
-    }
-    <div className="stakepool-area-spacing"></div>
+        <PurchaseTickets {...{ ...props }} />}
     {
-      spvMode ? <div className="spv-autobuyer-warning"><T id="spv.auto.buyer.warn" m="Ticket Auto Buyer not available while using SPV" /></div>  : <TicketAutoBuyer {...{ ...props }} />
-    }
-  </>
+      spvMode ?
+        <div className="spv-autobuyer-warning">
+          <T id="spv.auto.buyer.warn" m="Ticket Auto Buyer not available while using SPV" />
+        </div> : <TicketAutoBuyer {...{ ...props }} />}
+  </div>
 );
 
 export default spv(Tickets);

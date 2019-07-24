@@ -71,7 +71,6 @@ const SignMessageForm = ({
         </div>
       </div>
       <SignMessageButton
-        className="stakepool-content-purchase-button"
         address={address}
         message={message}
         disabled={isSigningMessage || address == "" || message == "" || addressError || messageError || isSignMessageDisabled}
