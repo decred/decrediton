@@ -35,6 +35,7 @@ export const getStartedMachine = (a) => Machine({
         STARTED_DAEMON: "startedDaemon",
         START_ADVANCED_DAEMON: "startAdvancedDaemon",
         CONNECT_DAEMON: "connectingDaemon",
+        ERROR_START_DAEMON: "startAdvancedDaemon"
       }
     },
     startedDaemon: {
@@ -93,7 +94,6 @@ export const getStartedMachine = (a) => Machine({
     isAtPreStart: () => {
       // console.log(e)
       console.log("is at pre start");
-      console.log(a);
       return a.prepStartDaemon();
     },
     isAtStartAdvancedDaemon: () => {
@@ -113,7 +113,9 @@ export const getStartedMachine = (a) => Machine({
           context.appdata = appdata;
           a.sendEvent({ type: "CONNECT_DAEMON", payload: started });
         })
-        .catch(e => console.log(e));
+        .catch(
+          e => a.sendEvent({ type: "ERROR_START_DAEMON", payload: e })
+        );
     },
     isStartedDaemon: () => {
       console.log("is at started daemon");

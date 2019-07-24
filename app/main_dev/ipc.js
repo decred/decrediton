@@ -62,6 +62,7 @@ export const startDaemon = async (params, testnet) => {
     return started;
   } catch (e) {
     logger.log("error", "error launching dcrd: " + e);
+    return;
   }
 };
 

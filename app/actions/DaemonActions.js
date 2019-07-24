@@ -154,7 +154,7 @@ export const finishPrivacy = () => (dispatch) => {
   dispatch(goBack());
 };
 
-export const startDaemon = (params) => (dispatch, getState) => new Promise (async (resolve) => {
+export const startDaemon = (params) => (dispatch, getState) => new Promise (async (resolve, reject) => {
   const appdata = params && params.appdata;
   dispatch({ type: DAEMONSTART_ATTEMPT });
   const { daemonStarted } = getState().daemon;
@@ -167,7 +167,10 @@ export const startDaemon = (params) => (dispatch, getState) => new Promise (asyn
       dispatch({ type: DAEMONSTART_SUCCESS, credentials: rpcCreds, appdata });
       resolve({ appdata, credentials: rpcCreds });
     })
-    .catch((err) => dispatch({ err, type: DAEMONSTART_FAILURE }));
+    .catch((err) => {
+      dispatch({ err, type: DAEMONSTART_FAILURE });
+      reject(err);
+    });
 });
 
 export const setCredentialsAppdataError = () => (dispatch) => {
