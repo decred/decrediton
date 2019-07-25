@@ -5,7 +5,7 @@ import { LogsLinkMsg, SettingsLinkMsg, LearnBasicsMsg, UpdateAvailableLink,
   WhatsNewLink, LoaderTitleMsg, AboutModalButton } from "./messages";
 
 const DaemonLoadingBody = ({
-  updateAvailable, appVersion, onShowSettings, onShowLogs, StateComponent, getDaemonSynced, ...props
+  updateAvailable, appVersion, onShowSettings, onShowLogs, StateComponent, getDaemonSynced, error, ...props
 }) => (
   <div className="page-body getstarted">
     <div className="getstarted loader">
@@ -34,6 +34,12 @@ const DaemonLoadingBody = ({
         <div className="loader-bar">
           <LinearProgressFull {...{ getDaemonSynced }} />
         </div>
+        {
+          error && 
+          <div className="error launch-error">
+            {error}
+          </div>
+        }
         { StateComponent && <StateComponent {...{ ...props, getDaemonSynced }} /> }
 
       </>

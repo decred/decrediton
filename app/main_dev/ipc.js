@@ -61,9 +61,9 @@ export const startDaemon = async (params, testnet) => {
   try {
     const started = await launchDCRD(params, testnet);
     return started;
-  } catch (e) {
-    logger.log("error", "error launching dcrd: " + e);
-    return;
+  } catch (err) {
+    logger.log("error", "error launching dcrd: " + err);
+    return { err };
   }
 };
 
