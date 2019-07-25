@@ -162,7 +162,7 @@ export const startDaemon = (params) => (dispatch, getState) => new Promise (asyn
     return dispatch({ type: DAEMONSTART_SUCCESS });
   }
 
-  wallet.startDaemon(params, isTestNet(getState()))
+  return wallet.startDaemon(params, isTestNet(getState()))
     .then(rpcCreds => {
       dispatch({ type: DAEMONSTART_SUCCESS, credentials: rpcCreds, appdata });
       resolve({ appdata, credentials: rpcCreds });

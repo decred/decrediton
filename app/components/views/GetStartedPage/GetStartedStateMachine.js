@@ -7,6 +7,7 @@ export const getStartedMachine = (a) => Machine({
     credentials: {},
     selectedWallet: null,
     appdata: null,
+    error: null,
   },
   states: {
     preStart: {
@@ -96,8 +97,10 @@ export const getStartedMachine = (a) => Machine({
       console.log("is at pre start");
       return a.prepStartDaemon();
     },
-    isAtStartAdvancedDaemon: () => {
+    isAtStartAdvancedDaemon: (context, event) => {
       console.log("is at start advanced daemon");
+      const error = event.payload && event.payload.error;
+      context.error = error;
     },
     isAtStartSPV: () => {
       console.log("is at start SPV");
@@ -114,7 +117,7 @@ export const getStartedMachine = (a) => Machine({
           a.sendEvent({ type: "CONNECT_DAEMON", payload: started });
         })
         .catch(
-          e => a.sendEvent({ type: "ERROR_START_DAEMON", payload: e })
+          error => a.sendEvent({ type: "ERROR_START_DAEMON", payload: { error } })
         );
     },
     isStartedDaemon: () => {

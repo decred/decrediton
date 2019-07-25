@@ -98,10 +98,12 @@ class GetStarted extends React.Component {
   render() {
     const { StateComponent } = this.state;
     const { service, submitChosenWallet, submitRemoteCredentials, submitAppdata } = this;
+    const { machine } = service;
+    const { error } = machine.context;
 
     return (
       <GetStartedPage
-        {...{ ...this.state, ...this.props, submitRemoteCredentials, submitAppdata, submitChosenWallet, service }}
+        {...{ ...this.state, ...this.props, submitRemoteCredentials, submitAppdata, submitChosenWallet, service, machine, error }}
         StateComponent={StateComponent} />
     );
   }

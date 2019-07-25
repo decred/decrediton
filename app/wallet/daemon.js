@@ -10,7 +10,7 @@ export const checkDecreditonVersion = log(() => Promise
 export const startDaemon = log((params, testnet) => Promise
   .resolve(ipcRenderer.sendSync("start-daemon", params, testnet))
   .then(started => {
-    if (!started) throw "Error starting daemon";
+    if (started && started.err) throw started.err;
     return started;
   }), "Start Daemon");
 
