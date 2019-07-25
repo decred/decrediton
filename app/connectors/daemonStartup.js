@@ -9,6 +9,22 @@ const mapStateToProps = selectorMap({
   isAdvancedDaemon: sel.isAdvancedDaemon,
   availableWallets: sel.sortedAvailableWallets,
   getDaemonSynced: sel.getDaemonSynced,
+  getCurrentBlockCount: sel.getCurrentBlockCount,
+
+  peerCount: sel.peerCount,
+  synced: sel.synced,
+  syncFetchMissingCfiltersAttempt: sel.syncFetchMissingCfiltersAttempt,
+  syncFetchMissingCfiltersStart: sel.syncFetchMissingCfiltersStart,
+  syncFetchMissingCfiltersEnd: sel.syncFetchMissingCfiltersEnd,
+  syncFetchHeadersAttempt: sel.syncFetchHeadersAttempt,
+  syncFetchHeadersCount: sel.syncFetchHeadersCount,
+  syncFetchHeadersLastHeaderTime: sel.syncFetchHeadersLastHeaderTime,
+  syncDiscoverAddressesAttempt: sel.syncDiscoverAddressesAttempt,
+  syncRescanAttempt: sel.syncRescanAttempt,
+  syncRescanProgress: sel.syncRescanProgress,
+  syncFetchHeadersComplete: sel.syncFetchHeadersComplete,
+  syncFetchTimeStart: sel.syncFetchTimeStart,
+  firstBlockTime: sel.firstBlockTime,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

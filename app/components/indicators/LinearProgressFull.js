@@ -23,6 +23,9 @@ export const LinearProgressFull = ({
         </div>
       }
       <div className={(getDaemonSynced || !disabled) ? "linear-progress-text loading " + animationType: "linear-progress-text " + animationType}>
+        {
+          console.log(text)
+        }
         {text ? text :
           disabled && !getDaemonSynced ?
             <T id="loaderBar.Waiting" m="Waiting for daemon connection..." /> :
