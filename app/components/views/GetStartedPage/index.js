@@ -5,11 +5,41 @@ import GetStartedPage from "./Page";
 import { AdvancedStartupBody } from "./AdvancedStartup";
 import { injectIntl } from "react-intl";
 import WalletSelection from "./WalletSelection";
+import { FormattedMessage as T } from "react-intl";
 
 @autobind
 class GetStarted extends React.Component {
   service;
 
+// } else {
+//   switch (startStepIndex || 0) {
+//   case 0:
+//   case 1:
+//     animationType = discoveringAddresses;
+//     text = startupError ? startupError :
+//       <T id="getStarted.header.checkingWalletState.meta" m="Checking wallet state" />;
+//     break;
+//   case 2:
+//     animationType = discoveringAddresses;
+//     text = <T id="getStarted.header.openingwallet.meta" m="Opening Wallet" />;
+//     if (hasExistingWallet) {
+//       Form = OpenWallet;
+//     } else {
+//       return <CreateWallet {...{ ...props, onSetWalletPrivatePassphrase }} />;
+//     }
+//     break;
+//   case 3:
+//     animationType = establishingRpc;
+//     text = <T id="getStarted.header.startrpc.meta" m="Establishing RPC connection" />;
+//     Form = StartRPCBody;
+//     break;
+//   case 7:
+//     text = <T id="getStarted.header.stakePools.meta" m="Import StakePools" />;
+//     Form = StakePoolsBody;
+//     break;
+//   default:
+//     animationType = finalizingSetup;
+//     text = <T id="getStarted.header.finalizingSetup.meta" m="Finalizing setup" />;
   constructor(props) {
     super(props);
     const {
@@ -26,6 +56,8 @@ class GetStarted extends React.Component {
     this.state = {
       current: getStartedMachine().initialState,
       StateComponent: null,
+      text: <T id="getStarted.header.discoveringAddresses.meta" m="Discovering addresses" />,
+      animationType: "blockchain-syncing",
     };
   }
 
@@ -43,11 +75,50 @@ class GetStarted extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    const blockChainLoading = "blockchain-syncing";
+    const daemonWaiting = "daemon-waiting";
+    const discoveringAddresses = "discovering-addresses";
+    const scanningBlocks = "scanning-blocks";
+    const finalizingSetup = "finalizing-setup";
+    const fetchingHeaders = "fetching-headers";
+    const establishingRpc = "establishing-rpc";
     const { current } = prevState;
+    const { syncFetchMissingCfiltersAttempt, syncFetchHeadersAttempt, syncRescanAttempt, syncDiscoverAddressesAttempt} = this.props;
     if (current && current.value !== this.state.current.value) {
       const StateComponent = this.getStateComponent();
       this.setState({ StateComponent });
     }
+    if (prevProps.syncFetchMissingCfiltersAttempt !== syncFetchMissingCfiltersAttempt && syncFetchMissingCfiltersAttempt) {
+      this.setState({ animationType: daemonWaiting });
+    this.setState({ text: <T id="getStarted.header.fetchingMissing.meta" m="Fetching missing committed filters" /> });
+    } else if (prevProps.syncFetchHeadersAttempt !== syncFetchHeadersAttempt && syncFetchHeadersAttempt) {
+      this.setState({ animationType: fetchingHeaders });
+      this.setState({ text: <T id="getStarted.header.fetchingBlockHeaders.meta" m="Fetching block headers" /> });
+    } else if (syncDiscoverAddressesAttempt !== prevProps.syncDiscoverAddressesAttempt && syncDiscoverAddressesAttempt) {
+      this.setState({ animationType: discoveringAddresses });
+      this.setState({ text: <T id="getStarted.header.discoveringAddresses.meta" m="Discovering addresses" /> });
+    } else if (prevProps.syncRescanAttempt !== syncRescanAttempt && syncRescanAttempt) {
+      this.setState({ animationType: scanningBlocks });
+    this.setState({ text:<T id="getStarted.header.rescanWallet.meta" m="Scanning blocks for transactions" /> });
+      // Form = RescanWalletBody;
+    }
+  // else if (!isSPV && startStepIndex > 2) {
+  //   animationType = blockChainLoading;
+  //   text = <T id="getStarted.header.sync.meta" m="Syncing Wallet" />;
+  //   if (syncFetchMissingCfiltersAttempt) {
+  //     animationType = daemonWaiting;
+  //     text = <T id="getStarted.header.fetchingMissing.meta" m="Fetching missing committed filters" />;
+  //   } else if (syncFetchHeadersAttempt) {
+  //     animationType = fetchingHeaders;
+  //     text = <T id="getStarted.header.fetchingBlockHeaders.meta" m="Fetching block headers" />;
+  //   } else if (syncDiscoverAddressesAttempt) {
+  //     animationType = discoveringAddresses;
+  //     text = <T id="getStarted.header.discoveringAddresses.meta" m="Discovering addresses" />;
+  //   } else if (syncRescanAttempt) {
+  //     animationType = scanningBlocks;
+  //     text = <T id="getStarted.header.rescanWallet.meta" m="Scanning blocks for transactions" />;
+  //     Form = RescanWalletBody;
+  //   }
   }
 
   getStateComponent() {
@@ -96,14 +167,15 @@ class GetStarted extends React.Component {
   }
 
   render() {
-    const { StateComponent } = this.state;
+    const { StateComponent, text } = this.state;
     const { service, submitChosenWallet, submitRemoteCredentials, submitAppdata } = this;
     const { machine } = service;
     const { error } = machine.context;
 
     return (
       <GetStartedPage
-        {...{ ...this.state, ...this.props, submitRemoteCredentials, submitAppdata, submitChosenWallet, service, machine, error }}
+        {...{ ...this.state, ...this.props, submitRemoteCredentials, submitAppdata,
+          submitChosenWallet, service, machine, error, text }}
         StateComponent={StateComponent} />
     );
   }
