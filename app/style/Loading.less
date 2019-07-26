@@ -18,7 +18,7 @@
   display: inline-block;
   height: 300px;
   width: 300px;
-  background-image: @logo;
+  background-image: var(--mainnet-logo);
   background-position: 0px 0px;
   background-repeat: no-repeat;
 }
@@ -64,7 +64,7 @@
   height: 55px;
   width: 100%;
   border-radius: 8px;
-  background-color: var(--white-border);
+  background-color: var(--loader-bg);
 }
 
 .linear-progress.small {
@@ -127,13 +127,13 @@
 .linear-progress-text {
   height: 100%;
   text-align: left;
-  color: var(--white-button-text);
+  color: var(--linear-progress-text);
   font-size: 11px;
   font-weight: 600;
   padding-left: 46px;
   padding-top: 19px;
   font-family: @font-family-monospaced;
-  background-image: @blockchain;
+  background-image: var(--blockchain);
   background-position: 20px 20px;
   background-size: 16px;
   background-repeat: no-repeat;

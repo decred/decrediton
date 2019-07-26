@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+  <g id="documentation" transform="translate(-760 -262)">
+    <g id="Group_2242" data-name="Group 2242" transform="translate(765.556 264.222)">
+      <rect id="XMLID_10_" width="24.444" height="2.222" transform="translate(2.222 17.778)" fill="#436ec3"/>
+      <rect id="XMLID_9_" width="12.178" height="2.222" transform="translate(2.222 22.222)" fill="#436ec3"/>
+      <g id="Group_2241" data-name="Group 2241">
+        <g id="XMLID_3_">
+          <g id="Group_2240" data-name="Group 2240">
+            <path id="Path_769" data-name="Path 769" d="M62.5,52.858v7.7H91.389V25H62.5Zm2.222-18.969H89.167v2.222H64.722Zm0,4.444H89.167v2.222H64.722Zm0,4.444H89.167V45H64.722Zm0,4.444H76.9v2.222H64.722Z" transform="translate(-62.5 -25)" fill="#99c1e3"/>
+          </g>
+        </g>
+        <rect id="XMLID_2_" width="24.444" height="2.222" transform="translate(2.222 13.333)" fill="#436ec3"/>
+        <rect id="XMLID_1_" width="24.444" height="2.222" transform="translate(2.222 8.889)" fill="#436ec3"/>
+      </g>
+    </g>
+    <rect id="Rectangle_1602" data-name="Rectangle 1602" width="40" height="40" transform="translate(760 262)" fill="none"/>
+  </g>
+</svg>

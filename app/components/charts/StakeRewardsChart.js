@@ -49,8 +49,8 @@ const VoteTimeChart = ({ data, intl }) => {
 
   return (
     <LineChart stackOffset="sign" width={myTicketsChartSize.width} height={myTicketsChartSize.height} data={displayData}>
-      <XAxis tickLine={false} dataKey="name" style={yAxisStyle} />
-      <YAxis tickLine={false} orientation="right" style={xAxisStyle} padding={padding} />
+      <XAxis tickLine={false} dataKey="name" style={yAxisStyle} className="xAxis"/>
+      <YAxis tickLine={false} orientation="right" style={xAxisStyle} padding={padding} className="yAxis"/>
       <Tooltip cursor={hoverFill} content={<ChartTooltip />} />
       <Line barSize={8} dataKey={stakeRewardsKey} stackId="a" fill="#0c1e3e" radius={radiusBottom} />
       <Line barSize={8} dataKey={stakeFeesKey} stackId="a" fill="#69d5f7" radius={radiusTop} />

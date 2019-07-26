@@ -31,8 +31,8 @@
   height: 20px;
   border-radius: 4px;
   padding: 0px;
-  background-image: @contextbutton-eye-default-icon;
-  background-color: var(--disabled-color);
+  background-image: var(--contextbutton-eye-default-icon);
+  background-color: var(--text-toggle-button-inactive-text);
 }
 
 .eye-filter-menu-button-icon-disabled {
@@ -43,18 +43,18 @@
 
 .eye-filter-menu-button-icon::after {
   content: "";
-  border-color: var(--background-back-color) transparent transparent;
+  border-color: var(--filter-menu-arrow) transparent transparent;
   border-style: solid;
   border-width: 5px 5px 2.5px;
   height: 0;
   width: 0;
-  top: 11px;
+  top: 13px;
   left: 10px;
   position: relative;
 }
 
 .eye-filter-menu-button-icon:hover {
-  background-color: var(--stroke-color-hovered);
+  background-color: var(--filter-menu-bg-hover);
 }
 
 .eye-filter-menu-button-icon-disabled:hover {
@@ -66,7 +66,7 @@
 }
 
 .sort-by .eye-filter-menu-button-icon {
-  background-image: @sort-by-icon;
+  background-image: var(--sort-by-icon);
 }
 
 .eye-filter-menu-items {

@@ -14,7 +14,7 @@
   }
 
   .tabs > .tab > a.active {
-    border: 1px solid var(--disabled-color);
+    border: 1px solid var(--home-content-link);
     border-radius: 3px;
   }
 }
@@ -43,7 +43,7 @@
 .overview-balance-label {
   font-family: @font-family-regular;
   font-size: 11px;
-  color: var(--stroke-color-hovered);
+  color: var(--overview-balance-label);
 }
 
 .overview-balance-unit {
@@ -96,7 +96,7 @@
 
 .overview-balance-spendable-locked-text {
   font-size: 11px;
-  color: var(--stroke-color-hovered);
+  color: var(--agenda-card-bottom-cfg);
   font-family: @font-family-regular;
   line-height: 13px;
   padding-top: 3px;
@@ -108,7 +108,7 @@
 
 .overview-balance-spendable-locked-label {
   font-size: 11px;
-  color: var(--stroke-color-hovered);
+  color: var(--agenda-card-bottom-cfg);
   font-family: @font-family-regular;
   line-height: 13px;
   margin-left: 10px;
@@ -128,7 +128,7 @@
 }
 
 .home-content-link {
-  color: var(--disabled-color);
+  color: var(--home-content-link);
   font-size: 9px;
   font-family: @font-family-regular;
   cursor: pointer;
@@ -208,10 +208,10 @@
       background-image: @balanceTabIcon;
     }
     &.tickets {
-      background-image: @menu-tickets-default;
+      background-image: var(--menu-tickets-default);
     }
     &.tx {
-      background-image: @menu-transactions-default;
+      background-image: var(--menu-transactions-default);
     }
   }
 
@@ -227,7 +227,7 @@
       border: 0;
 
       .overview-tab {
-        border: 1px solid var(--disabled-color);
+        border: 1px solid var(--home-content-link);
         border-radius: 3px;        
       }
     }

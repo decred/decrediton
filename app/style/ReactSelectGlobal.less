@@ -41,7 +41,7 @@
   border: 0px;
   border-radius: 0px;
   background-color: inherit;
-  border-bottom: 1px solid var(--stroke-color-default);
+  border-bottom: 1px solid var(--select-stroke-color);
   box-shadow: none;
   color: var(--input-color-default);
   cursor: default;
@@ -92,6 +92,9 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.Select-placeholder {
+  color: var(--select-placeholder);
+}
 
 .has-value.Select--single > .Select-control .Select-value a.Select-value-label,
 .has-value.is-pseudo-focused.Select--single > .Select-control .Select-value a.Select-value-label {
@@ -126,6 +129,7 @@
 
   /* For IE 8 compatibility */
   -webkit-appearance: none;
+  color:var(--input-color-default);
 }
 
 .is-focused .Select-input > input {
@@ -265,7 +269,7 @@
   background-color: var(--background-back-color);
   border: 1px solid var(--background-container);
   border-top-color: var(--white-border);
-  border-bottom-color: var(--stroke-color-focused);
+  border-bottom-color: var(--combobox-outer-bottom-border);
   box-shadow: 0 3px 6px rgba(9, 20, 64, 0.21);
   box-sizing: border-box;
   margin-top: -1px;

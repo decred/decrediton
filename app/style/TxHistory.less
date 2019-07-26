@@ -129,7 +129,7 @@
 
 .transaction-amount-hash {
   font-family: Inconsolata, monospace;
-  color: var(--stroke-color-hovered);
+  color: var(--overview-balance-label);
   font-size: 11px;
   line-height: 11px;
   overflow: hidden;
@@ -150,13 +150,13 @@
 .transaction-info-price-reward {
   display: flex;
   font-family: @font-family-monospaced;
-  color: var(--disabled-color);
+  color: var(--settings-desc);
   font-size: 12px;
   margin-left: 30px;
 }
 
 .stake-transaction-ticket-reward {
-  background-image: @ticket-reward-icon;
+  background-image: var(--ticket-reward-icon);
   background-repeat: no-repeat;
   background-size: 11px 11px;
   background-position: 0px 4px;
@@ -165,7 +165,7 @@
 }
 
 .transaction-info-overview-days-to-vote {
-  background-image: @time-lock-icon;
+  background-image: var(--time-lock-icon);
   background-repeat: no-repeat;
   background-size: 12px 12px;
   background-position: 0px 4px;

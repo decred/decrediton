@@ -16,10 +16,19 @@
 
 .details-area {
   width: 298px;
-  background-color: #edeff1;
+  background-color: var(--transfer-details-bg);
   padding: 14px 20px 0 0;
   font-size: 11px;
-  color: var(--disabled-color);
+  color: var(--account-text);
+
+  .details-value-column {
+    color: var(--sidebar-bottom-light-text-color);
+
+    .total-amount-send-amount-bytes {
+      color: var(--account-text);
+    }    
+  }
+
 }
 
 .output-row {
@@ -57,7 +66,7 @@
   background-size: 6px;
   background-repeat: no-repeat;
   cursor: pointer;
-  background-color: var(--disabled-color);
+  background-color: var(--account-pubkey-text);
   box-shadow: 0 1px 8px #091440;
   border-radius: 5px;
 
@@ -79,7 +88,7 @@
   cursor: pointer;
 
   &.wallet-icon {
-    background-image: @send-all-default;
+    background-image: var(--send-all-default);
 
     &.disabled {
       background-image: @send-all-disabled;
@@ -91,7 +100,7 @@
     }
   
     &:hover {
-      background-image: @send-all-hover;
+      background-image: var(--send-all-hover);
     }
   }
 
@@ -104,10 +113,10 @@
   }
 
   &.self-account-icon {
-    background-image: @send-self-default;
+    background-image: var(--send-self-default);
 
     &:hover {
-      background-image: @send-self-hover;
+      background-image: var(--send-self-hover);
     }
   }
 }

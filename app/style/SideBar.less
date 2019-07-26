@@ -5,7 +5,7 @@
   height: 20px;
   width: 20px;
   background-repeat: no-repeat;
-  background-image: @menu-hamburger;
+  background-image: var(--menu-hamburger);
   cursor: pointer;
 }
 
@@ -17,7 +17,7 @@
   height: 20px;
   width: 20px;
   background-repeat: no-repeat;
-  background-image: @menu-arrow;
+  background-image: var(--menu-arrow);
   cursor: pointer;
   margin-left: 85px;
 }
@@ -115,8 +115,8 @@
 .sidebar-menu-bottom-total-balance-short-separator {
   height: 7px;
   margin-bottom: 15px;
-  border-bottom: 1px solid var(--input-color-default);
-  background-image: @menu-arrow-up;
+  border-bottom: 1px solid var(--short-separator-border);
+  background-image: var(--menu-arrow-up);
   background-position: 50% 0px;
   background-repeat: no-repeat;
 }
@@ -129,7 +129,7 @@
   text-decoration: none;
   padding-left: 20px;
   margin-left: 4px;
-  background-image: @sidebar-balance-icon;
+  background-image: var(--sidebar-balance-icon);
   background-repeat: no-repeat;
   background-size: 16px 16px;
 }
@@ -137,7 +137,7 @@
 .sidebar-menu-bottom-total-balance-short-value {
   float: right;
   font-family: Inconsolata, monospace;
-  color: var(--input-color-default);
+  color: var(--sidebar-bottom-light-text-color);
   font-size: 13px;
   text-align: right;
 }
@@ -145,7 +145,7 @@
 .sidebar-menu-bottom-latest-block {
   position: relative;
   padding: 14px 18px 10px 20px;
-  background-color: var(--background-back-color);
+  background-color: var(--info-modal-button-text);
   font-size: 13px;
 }
 
@@ -159,7 +159,7 @@
 
 .sidebar-menu-bottom-latest-block-number {
   font-family: Inconsolata, monospace;
-  color: var(--title-text-and-button-background);
+  color: var(--sidebar-bottom-light-text-color);
 }
 
 .sidebar-menu-bottom-latest-block-time {
@@ -203,7 +203,7 @@
   cursor: pointer;
   height: 52px;
   padding-left: 65px;
-  color: var(--disabled-color);
+  color: var(--sidebar-menu-link);
   font-size: 15px;
   text-decoration: none;
   transition: color 0.13s ease-in-out;
@@ -213,28 +213,28 @@
   user-select: none;
 
   &.settingsIcon {
-    background-image: @menu-settings-default;
+    background-image: var(--menu-settings-default);
   }
   &.settingsIcon:not(.menu-link-active):hover {
     background-image: @menu-animation-settings;
   }
   &.helpIcon {
-    background-image: @menu-help-default;
+    background-image: var(--menu-help-default);
   }
   &.helpIcon:not(.menu-link-active):hover {
     background-image: @menu-animation-help;
   }
   &.ticketsIcon {
-    background-image: @menu-tickets-default;
+    background-image: var(--menu-tickets-default);
   }
   &.ticketsIcon:not(.menu-link-active):hover {
     background-image: @menu-animation-tickets;
   }
   &.transactionsIcon {
-    background-image: @menu-transactions-default;
+    background-image: var(--menu-transactions-default);
   }
   &.trezorIcon {
-    background-image: @menu-trezor-default;
+    background-image: var(--menu-trezor-default);
   }
   &.trezorIcon:not(.menu-link-active):hover {
     background-image: @menu-trezor-hover;
@@ -243,7 +243,7 @@
     background-image: @menu-animation-transactions;
   }
   &.accountsIcon {
-    background-image: @menu-accounts-default;
+    background-image: var(--menu-accounts-default);
   }
   &.accountsIcon:not(.menu-link-active):hover {
     background-image: @menu-animation-accounts;
@@ -251,19 +251,19 @@
     background-position: 19px 50%;
   }
   &.securitycntrIcon {
-    background-image: @menu-securitycntr-default;
+    background-image: var(--menu-securitycntr-default);
   }
   &.securitycntrIcon:not(.menu-link-active):hover {
     background-image: @menu-animation-security;
   }
   &.overviewIcon {
-    background-image: @menu-overview-default;
+    background-image: var(--menu-overview-default);
   }
   &.overviewIcon:not(.menu-link-active):hover {
     background-image: @menu-animation-overview;
   }
   &.governanceIcon {
-    background-image: @menu-governance-default;
+    background-image: var(--menu-governance-default);
   }
   &.governanceIcon:not(.menu-link-active):hover {
     background-image: @menu-animation-governance;
@@ -278,39 +278,39 @@
   color: var(--input-color-default);
 
   &.settingsIcon {
-    background-image: @menu-settings-active;
+    background-image: var(--menu-settings-active);
     cursor: default;
   }
   &.helpIcon {
-    background-image: @menu-help-active;
+    background-image: var(--menu-help-active);
     cursor: default;
   }
   &.ticketsIcon {
-    background-image: @menu-tickets-active;
+    background-image: var(--menu-tickets-active);
     cursor: default;
   }
   &.transactionsIcon {
-    background-image: @menu-transactions-active;
+    background-image: var(--menu-transactions-active);
     cursor: default;
   }
   &.accountsIcon {
-    background-image: @menu-accounts-active;
+    background-image: var(--menu-accounts-active);
     cursor: default;
   }
   &.securitycntrIcon {
-    background-image: @menu-securitycntr-active;
+    background-image: var(--menu-securitycntr-active);
     cursor: default;
   }
   &.overviewIcon {
-    background-image: @menu-overview-active;
+    background-image: var(--menu-overview-active);
     cursor: default;
   }
   &.governanceIcon {
-    background-image: @menu-governance-active;
+    background-image: var(--menu-governance-active);
     cursor: default;
   }
   &.trezorIcon {
-    background-image: @menu-trezor-active;
+    background-image: var(--menu-trezor-active);
   }
 }
 
