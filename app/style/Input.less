@@ -13,11 +13,17 @@
 }
 
 .input-and-unit.error {
+  height: 100%;
+  width: 100%;
   border-bottom: 1px var(--error-text-color) solid;
   background-size: 16px 16px;
   background-position: 100% 50%;
   background-repeat: no-repeat;
   background-image: @warning-input;
+
+  &:hover {
+    border-bottom: 1px var(--error-text-color) solid;
+  }
 }
 
 .input-and-unit.numeric-input {
@@ -31,7 +37,6 @@
 
 .input-and-unit.active:not(.disabled) {
   color: var(--input-color-focused);
-  border-bottom: 1px var(--stroke-color-focused) solid;
   outline: none;
 }
 
@@ -43,8 +48,6 @@
   border-style: none;
   cursor: text;
   background: transparent;
-  flex-grow: 1;
-  width: 100%;
   outline: none;
 }
 

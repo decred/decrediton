@@ -45,6 +45,7 @@
 
   &.more {
     background-image: @arrow-up-key-blue-icon;
+    margin-left: 5px;
 
     &:hover {
       opacity: 0.7;
@@ -94,6 +95,10 @@
   height: 22px;
   margin-left: 6px;
   border-bottom: 1px var(--stroke-color-default) solid;
+
+  &.error {
+    border-bottom: 1px var(--error-text-color) solid;
+  }
 }
 
 .stakepool-purchase-ticket-input-select {
@@ -402,5 +407,9 @@
 
   .stakepool-auto-buyer-row-portion-full {
     text-align: start
+  }
+
+  .num-tickets-icon.more {
+    margin-left: auto;
   }
 }
