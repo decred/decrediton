@@ -44,12 +44,12 @@ class GetStarted extends React.Component {
     super(props);
     const {
       prepStartDaemon, onConnectDaemon, checkNetworkMatch, syncDaemon, onStartWallet, onRetryStartRPC, onGetAvailableWallets,
-      onStartDaemon,
+      onStartDaemon, setSelectedWallet, getSelectedWallet,
     } = this.props;
     const { sendEvent } = this;
     this.service = interpret(getStartedMachine({
       prepStartDaemon, onConnectDaemon, checkNetworkMatch, syncDaemon, onStartWallet, onRetryStartRPC, sendEvent, onGetAvailableWallets,
-      onStartDaemon,
+      onStartDaemon, setSelectedWallet, getSelectedWallet
     })).onTransition(current => {
       this.setState({ current });
     });
@@ -63,8 +63,11 @@ class GetStarted extends React.Component {
 
 
   componentDidMount() {
-    const { isSPV, isAdvancedDaemon } = this.props;
+    const { isSPV, isAdvancedDaemon, openForm } = this.props;
     this.service.start();
+    if (!openForm) {
+      return this.service.send({ type: "START_SELECTED_WALLET" });
+    }
     this.service.send({ type: "START_SPV", isSPV, isAdvancedDaemon });
     this.service.send({ type: "START_ADVANCED_DAEMON", isSPV, isAdvancedDaemon });
     this.service.send({ type: "START_DAEMON", isSPV, isAdvancedDaemon });

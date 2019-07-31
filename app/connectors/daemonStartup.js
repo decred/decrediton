@@ -12,6 +12,8 @@ const mapStateToProps = selectorMap({
   getCurrentBlockCount: sel.getCurrentBlockCount,
   getNeededBlocks: sel.getNeededBlocks,
 
+  openForm: sel.openForm,
+
   peerCount: sel.peerCount,
   synced: sel.synced,
   syncFetchMissingCfiltersAttempt: sel.syncFetchMissingCfiltersAttempt,
@@ -31,6 +33,8 @@ const mapStateToProps = selectorMap({
 const mapDispatchToProps = dispatch => bindActionCreators({
   prepStartDaemon: da.prepStartDaemon,
   onRetryStartRPC: wla.startRpcRequestFunc,
+  setSelectedWallet: wla.setSelectedWallet,
+  getSelectedWallet: wla.getSelectedWallet,
   onStartDaemon: da.startDaemon,
   onConnectDaemon: da.connectDaemon,
   checkNetworkMatch: da.checkNetworkMatch,

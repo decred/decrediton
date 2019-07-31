@@ -24,6 +24,9 @@ export const getStartedMachine = (a) => Machine({
         START_DAEMON: {
           target: "startingDaemon",
           cond: (c, event) => !event.isAdvancedDaemon && !event.isSPV
+        },
+        START_SELECTED_WALLET: {
+          target: "startingWallet",
         }
       },
     },
@@ -146,20 +149,25 @@ export const getStartedMachine = (a) => Machine({
     },
     isAtLeavingChoosingWallet: (context, event) => {
       console.log("is leaving choosing wallet");
-      context.selectedWallet = event.selectedWallet;
+      context.selectedWallet = event.selectedWallet
     },
     isAtChoosingWallet: () => {
       console.log("is At Choose Wallet");
     },
     isAtStartWallet: (context) => {
       console.log("is At Start Wallet");
-      a.onStartWallet(context.selectedWallet).then(r => {
-        a.sendEvent({ type: "SYNC_RPC", r });
-      });
+      const { selectedWallet } = context;
+      a.setSelectedWallet(selectedWallet);
+
+      a.onStartWallet(selectedWallet)
+        .then(r => {
+          a.sendEvent({ type: "SYNC_RPC", r });
+        })
+        .catch(err => console.log(err));
     },
     isSyncingRPC: (context) => {
       console.log("is at syncing rpc");
-      a.onRetryStartRPC(context.credentials);
+      a.onRetryStartRPC();
     },
   },
 });

@@ -79,7 +79,7 @@ var initialState = {
     credentials: null,
     appdata: null,
     shutdownRequested: false,
-    openForm: globalCfg.get("must_open_form"),
+    openForm: !ipcRenderer.sendSync("get-height-synced"),
     remoteAppdataError: false,
     previousWallet: null,
     selectCreateWalletInputRequest: true,
