@@ -8,7 +8,7 @@ import { semverCompatible } from "./VersionActions";
 import * as wallet from "wallet";
 import { push as pushHistory, goBack } from "react-router-redux";
 import { ipcRenderer } from "electron";
-import { setMustOpenForm, getWalletCfg, getAppdataPath, getRemoteCredentials, getGlobalCfg, setLastHeight } from "config";
+import { getWalletCfg, getAppdataPath, getRemoteCredentials, getGlobalCfg, setLastHeight } from "config";
 import { isTestNet } from "selectors";
 import axios from "axios";
 import { STANDARD_EXTERNAL_REQUESTS } from "main_dev/externalRequests";
@@ -296,6 +296,12 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => new Promi
     const { currentSettings } = getState().settings;
     const network = currentSettings.network;
 
+    // if selected wallet is not send in the call of the method,
+    // it probably means it is a refresh, so we get the selected wallet
+    // stored in ipc memory.
+    if (!selectedWallet) {
+      selectedWallet = ipcRenderer.sendSync("get-selected-wallet");
+    }
     const walletStarted = await wallet.startWallet(selectedWallet.value.wallet, network == "testnet");
     const { port } = walletStarted;
     const walletCfg = getWalletCfg(network == "testnet", selectedWallet.value.wallet);
@@ -329,7 +335,7 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => new Promi
     selectedWallet.value.isTrezor && dispatch(enableTrezor());
     await dispatch(getVersionServiceAttempt());
     return discoverAccountsComplete;
-  };
+  }
 
   start()
     .then(discoverAccountsComplete => {
@@ -426,7 +432,9 @@ export const syncDaemon = () => (dispatch, getState) => new Promise((resolve) =>
         if (blockCount && syncHeight) {
           if (blockCount >= syncHeight) {
             dispatch({ type: DAEMONSYNCED, blockCount, syncHeight });
-            setMustOpenForm(false);
+            // After this points the refresh will load directly instead of
+            // starting, connecting and syncing daemon.
+            wallet.setHeightSynced(true);
             resolve({ type: DAEMONSYNCED, currentBlockHeight: blockCount });
             return;
           }

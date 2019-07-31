@@ -1,14 +1,17 @@
 import fs from "fs-extra";
 import parseArgs from "minimist";
 import { app, BrowserWindow, Menu, dialog } from "electron";
-import { initGlobalCfg, validateGlobalCfgFile, setMustOpenForm } from "./config";
+import { initGlobalCfg, validateGlobalCfgFile } from "./config";
 import { appLocaleFromElectronLocale, default as locales } from "./i18n/locales";
 import { createLogger, lastLogLine, GetDcrdLogs, GetDcrwalletLogs } from "./main_dev/logging";
 import { getWalletsDirectoryPath, getWalletsDirectoryPathNetwork, appDataDirectory } from "./main_dev/paths";
 import { getGlobalCfgPath, checkAndInitWalletCfg } from "./main_dev/paths";
 import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRequests, allowExternalRequest } from "./main_dev/externalRequests";
 import { setupProxy } from "./main_dev/proxy";
-import { getDaemonInfo, cleanShutdown, GetDcrdPID, GetDcrwPID, getBlockChainInfo, connectRpcDaemon } from "./main_dev/launch";
+import {
+  getDaemonInfo, cleanShutdown, GetDcrdPID, GetDcrwPID, getBlockChainInfo, connectRpcDaemon,
+  setHeightSynced, getHeightSynced, getDaemonCredentials, setSelectedWallet, getSelectedWallet,
+} from "./main_dev/launch";
 import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopDaemon, stopWallet, startWallet,
   deleteDaemon, setWatchingOnlyWallet, getWatchingOnlyWallet } from "./main_dev/ipc";
 import { initTemplate, getVersionWin, setGrpcVersions, getGrpcVersions, inputMenu, selectionMenu } from "./main_dev/templates";
@@ -289,6 +292,31 @@ ipcMain.on("get-previous-wallet", (event) => {
   event.returnValue = previousWallet;
 });
 
+ipcMain.on("get-height-synced", (event) => {
+  event.returnValue = getHeightSynced();
+});
+
+ipcMain.on("set-height-synced", (event, isHeightSynced) => {
+  event.returnValue = setHeightSynced(isHeightSynced);
+});
+
+ipcMain.on("get-selected-wallet", (event) => {
+  event.returnValue = getSelectedWallet();
+});
+
+ipcMain.on("set-selected-wallet", (event, wallet) => {
+  setSelectedWallet(wallet)
+  event.returnValue = wallet;
+});
+
+ipcMain.on("get-daemon-credentials", (event) => {
+  event.returnValue = getDaemonCredentials();
+});
+
+ipcMain.on("set-daemon-credentials", (event, credentials) => {
+  setDaemonCredentials(credentials);
+});
+
 ipcMain.on("set-previous-wallet", (event, cfg) => {
   previousWallet = cfg;
   event.returnValue = true;
@@ -411,6 +439,5 @@ app.on("before-quit", (event) => {
   logger.log("info","Caught before-quit. Set decredition as was closed");
   event.preventDefault();
   cleanShutdown(mainWindow, app, GetDcrdPID(), GetDcrwPID());
-  setMustOpenForm(true);
   app.exit(0);
 });

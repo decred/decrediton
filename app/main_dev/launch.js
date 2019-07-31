@@ -25,7 +25,7 @@ let dcrwPipeRx, dcrwPipeTx, dcrdPipeRx, dcrwTxStream;
 let dcrwPort;
 let rpcuser, rpcpass, rpccert, rpchost, rpcport;
 
-let dcrdSocket = null;
+let dcrdSocket, heightIsSynced, selectedWallet = null;
 
 function closeClis() {
   // shutdown daemon and wallet.
@@ -35,6 +35,38 @@ function closeClis() {
   if(dcrwPID && dcrwPID !== -1)
     closeDCRW();
 }
+
+export const setHeightSynced = (isSynced) => {
+  heightIsSynced = isSynced;
+  return true;
+}
+
+export const getHeightSynced = () => heightIsSynced;
+
+export const setDaemonCredentials = ({ rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port }) => {
+  rpcuser = rpc_user;
+  rpcpass = rpc_pass;
+  rpccert = rpc_cert;
+  rpchost = rpc_host;
+  rpcport = rpc_port;
+  return true;
+}
+
+export const getDaemonCredentials = () => ({
+  rpc_user: rpcuser,
+  rpc_pass: rpcpass,
+  rpc_cert: rpccert,
+  rpc_host: rpchost,
+  rpc_port: rpcport,
+});
+
+export const setSelectedWallet = (w) => {
+  if (!w) return;
+  selectedWallet = w;
+  return true;
+}
+
+export const getSelectedWallet = () => selectedWallet;
 
 export function closeDCRD() {
   if (dcrdPID === -1) {
@@ -123,24 +155,13 @@ export const launchDCRD = (params, testnet) => new Promise(async (resolve,reject
   appdata = params && params.appdata;
 
   if (rpcCreds) {
-    rpcuser = rpcCreds.rpc_user;
-    rpcpass = rpcCreds.rpc_pass;
-    rpccert = rpcCreds.rpc_cert;
-    rpchost = rpcCreds.rpc_host;
-    rpcport = rpcCreds.rpc_port;
+    setDaemonCredentials(rpcCreds)
     dcrdPID = -1;
     AddToDcrdLog(process.stdout, "dcrd is connected as remote", debug);
     return resolve(rpcCreds);
   }
   if (dcrdPID === -1) {
-    const creds = {
-      rpc_user: rpcuser,
-      rpc_pass: rpcpass,
-      rpc_cert: rpccert,
-      rpc_host: rpchost,
-      rpc_port: rpcport,
-    };
-    return resolve(creds);
+    return resolve(getDaemonCredentials());
   }
 
   if (!appdata) appdata = getDcrdPath();
@@ -155,11 +176,7 @@ export const launchDCRD = (params, testnet) => new Promise(async (resolve,reject
   if (testnet) {
     args.push("--testnet");
   }
-  rpcuser = newConfig.rpc_user;
-  rpcpass = newConfig.rpc_pass;
-  rpccert = newConfig.rpc_cert;
-  rpchost = newConfig.rpc_host;
-  rpcport = newConfig.rpc_port;
+  setDaemonCredentials(newConfig)
 
   const dcrdExe = getExecutablePath("dcrd", argv.custombinpath);
   if (!fs.existsSync(dcrdExe)) {
@@ -391,11 +408,22 @@ export const readExesVersion = (app, grpcVersions) => {
 
 // connectDaemon starts a new rpc connection to dcrd
 export const connectRpcDaemon = (mainWindow, rpcCreds) => {
-  const rpc_host = rpcCreds ? rpcCreds.rpc_host : rpchost;
-  const rpc_port = rpcCreds ? rpcCreds.rpc_port : rpcport;
-  const rpc_user = rpcCreds ? rpcCreds.rpc_user : rpcuser;
-  const rpc_pass = rpcCreds ? rpcCreds.rpc_pass : rpcpass;
-  const rpc_cert = rpcCreds ? rpcCreds.rpc_cert : rpccert;
+  let rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port;
+
+  if (rpcCreds) {
+    setDaemonCredentials(rpcCreds);
+    rpc_user = rpcCreds.rpc_user;
+    rpc_pass = rpcCreds.rpc_pass;
+    rpc_cert = rpcCreds.rpc_cert;
+    rpc_host = rpcCreds.rpc_host;
+    rpc_port = rpcCreds.rpc_port;
+  } else {
+    rpc_user = rpcuser;
+    rpc_pass = rpcpass;
+    rpc_cert = rpccert;
+    rpc_host = rpchost;
+    rpc_port = rpcport;
+  }
 
   var cert = fs.readFileSync(rpc_cert);
   const url = `${rpc_host}:${rpc_port}`;
