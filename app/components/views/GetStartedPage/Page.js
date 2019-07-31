@@ -6,8 +6,7 @@ import { LogsLinkMsg, SettingsLinkMsg, LearnBasicsMsg, UpdateAvailableLink,
 
 const DaemonLoadingBody = ({
   updateAvailable, appVersion, onShowSettings, onShowLogs, StateComponent, getDaemonSynced,
-  error, text, getCurrentBlockCount, animationType, syncFetchHeadersComplete,
-  getNeededBlocks, ...props
+  error, text, getCurrentBlockCount, animationType, getNeededBlocks, ...props
 }) => (
   <div className="page-body getstarted">
     <div className="getstarted loader">
@@ -35,10 +34,10 @@ const DaemonLoadingBody = ({
         </div>
         <div className="loader-bar">
           <AnimatedLinearProgressFull {...{ getDaemonSynced, text, value: getCurrentBlockCount, animationType, min: 0,
-              max: getNeededBlocks, disabled: false }} />
+            max: getNeededBlocks, disabled: false }} />
         </div>
         {
-          error && 
+          error &&
           <div className="error launch-error">
             {error}
           </div>

@@ -8,8 +8,6 @@ import { LogsLinkMsg, SettingsLinkMsg, HeaderTimeMsg, DiscoverLabelMsg,
 
 const DaemonLoadingBody = ({
   Form,
-  text,
-  animationType,
   openWalletInputRequest,
   getCurrentBlockCount,
   getDaemonStarted,

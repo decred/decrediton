@@ -11,35 +11,35 @@ import { FormattedMessage as T } from "react-intl";
 class GetStarted extends React.Component {
   service;
 
-// } else {
-//   switch (startStepIndex || 0) {
-//   case 0:
-//   case 1:
-//     animationType = discoveringAddresses;
-//     text = startupError ? startupError :
-//       <T id="getStarted.header.checkingWalletState.meta" m="Checking wallet state" />;
-//     break;
-//   case 2:
-//     animationType = discoveringAddresses;
-//     text = <T id="getStarted.header.openingwallet.meta" m="Opening Wallet" />;
-//     if (hasExistingWallet) {
-//       Form = OpenWallet;
-//     } else {
-//       return <CreateWallet {...{ ...props, onSetWalletPrivatePassphrase }} />;
-//     }
-//     break;
-//   case 3:
-//     animationType = establishingRpc;
-//     text = <T id="getStarted.header.startrpc.meta" m="Establishing RPC connection" />;
-//     Form = StartRPCBody;
-//     break;
-//   case 7:
-//     text = <T id="getStarted.header.stakePools.meta" m="Import StakePools" />;
-//     Form = StakePoolsBody;
-//     break;
-//   default:
-//     animationType = finalizingSetup;
-//     text = <T id="getStarted.header.finalizingSetup.meta" m="Finalizing setup" />;
+  // } else {
+  //   switch (startStepIndex || 0) {
+  //   case 0:
+  //   case 1:
+  //     animationType = discoveringAddresses;
+  //     text = startupError ? startupError :
+  //       <T id="getStarted.header.checkingWalletState.meta" m="Checking wallet state" />;
+  //     break;
+  //   case 2:
+  //     animationType = discoveringAddresses;
+  //     text = <T id="getStarted.header.openingwallet.meta" m="Opening Wallet" />;
+  //     if (hasExistingWallet) {
+  //       Form = OpenWallet;
+  //     } else {
+  //       return <CreateWallet {...{ ...props, onSetWalletPrivatePassphrase }} />;
+  //     }
+  //     break;
+  //   case 3:
+  //     animationType = establishingRpc;
+  //     text = <T id="getStarted.header.startrpc.meta" m="Establishing RPC connection" />;
+  //     Form = StartRPCBody;
+  //     break;
+  //   case 7:
+  //     text = <T id="getStarted.header.stakePools.meta" m="Import StakePools" />;
+  //     Form = StakePoolsBody;
+  //     break;
+  //   default:
+  //     animationType = finalizingSetup;
+  //     text = <T id="getStarted.header.finalizingSetup.meta" m="Finalizing setup" />;
   constructor(props) {
     super(props);
     const {
@@ -78,15 +78,15 @@ class GetStarted extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const blockChainLoading = "blockchain-syncing";
+    // const blockChainLoading = "blockchain-syncing";
     const daemonWaiting = "daemon-waiting";
     const discoveringAddresses = "discovering-addresses";
     const scanningBlocks = "scanning-blocks";
-    const finalizingSetup = "finalizing-setup";
+    // const finalizingSetup = "finalizing-setup";
     const fetchingHeaders = "fetching-headers";
-    const establishingRpc = "establishing-rpc";
+    // const establishingRpc = "establishing-rpc";
     const { current } = prevState;
-    const { syncFetchMissingCfiltersAttempt, syncFetchHeadersAttempt, syncRescanAttempt, syncDiscoverAddressesAttempt} = this.props;
+    const { syncFetchMissingCfiltersAttempt, syncFetchHeadersAttempt, syncRescanAttempt, syncDiscoverAddressesAttempt } = this.props;
     if (current && current.value !== this.state.current.value) {
       const StateComponent = this.getStateComponent();
       this.setState({ StateComponent });

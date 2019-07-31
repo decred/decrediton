@@ -266,14 +266,17 @@ export const startRpcRequestFunc = (privPass, isRetry) =>
     });
   };
 
+export const WALLET_SELECTED = "WALLET_SELECTED";
+
 export const setSelectedWallet = (selectedWallet) => (dispatch) => {
+  dispatch({ type: WALLET_SELECTED });
   ipcRenderer.sendSync("set-selected-wallet", selectedWallet);
-}
+};
 
 export const getSelectedWallet = () => {
   const wallet = ipcRenderer.sendSync("get-selected-wallet");
   return wallet;
-}
+};
 
 export const UPDATEDISCOVERACCOUNTS = "UPDATEDISCOVERACCOUNTS";
 export const CLEARSTAKEPOOLCONFIG = "CLEARSTAKEPOOLCONFIG";

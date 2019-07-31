@@ -138,8 +138,8 @@ export const getStartedMachine = (a) => Machine({
     isAtCheckNetworkMatch: () => {
       console.log(" is at check network ");
       return a.checkNetworkMatch().then( checked => a.onGetAvailableWallets()
-          .then(w => a.sendEvent({ type: "CHOOSE_WALLET", payload: { checked, w } }) ))
-          .catch(e => console.log(e));
+        .then(w => a.sendEvent({ type: "CHOOSE_WALLET", payload: { checked, w } }) ))
+        .catch(e => console.log(e));
     },
     isAtSyncingDaemon: () => {
       console.log(" is at syncing daemon ");
@@ -149,7 +149,7 @@ export const getStartedMachine = (a) => Machine({
     },
     isAtLeavingChoosingWallet: (context, event) => {
       console.log("is leaving choosing wallet");
-      context.selectedWallet = event.selectedWallet
+      context.selectedWallet = event.selectedWallet;
     },
     isAtChoosingWallet: () => {
       console.log("is At Choose Wallet");
@@ -165,7 +165,7 @@ export const getStartedMachine = (a) => Machine({
         })
         .catch(err => console.log(err));
     },
-    isSyncingRPC: (context) => {
+    isSyncingRPC: () => {
       console.log("is at syncing rpc");
       a.onRetryStartRPC();
     },

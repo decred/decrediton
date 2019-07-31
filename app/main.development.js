@@ -12,7 +12,7 @@ import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRe
 import { setupProxy } from "./main_dev/proxy";
 import {
   getDaemonInfo, cleanShutdown, GetDcrdPID, GetDcrwPID, getBlockChainInfo, connectRpcDaemon,
-  setHeightSynced, getHeightSynced, getDaemonCredentials, setSelectedWallet, getSelectedWallet,
+  setHeightSynced, getHeightSynced, getDaemonCredentials, setSelectedWallet, getSelectedWallet, setDaemonCredentials
 } from "./main_dev/launch";
 import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopDaemon, stopWallet, startWallet,
   deleteDaemon, setWatchingOnlyWallet, getWatchingOnlyWallet } from "./main_dev/ipc";
@@ -304,7 +304,7 @@ ipcMain.on("get-selected-wallet", (event) => {
 });
 
 ipcMain.on("set-selected-wallet", (event, wallet) => {
-  setSelectedWallet(wallet)
+  setSelectedWallet(wallet);
   event.returnValue = wallet;
 });
 
