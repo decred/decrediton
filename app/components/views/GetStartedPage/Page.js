@@ -6,7 +6,8 @@ import { LogsLinkMsg, SettingsLinkMsg, LearnBasicsMsg, UpdateAvailableLink,
 
 const DaemonLoadingBody = ({
   updateAvailable, appVersion, onShowSettings, onShowLogs, StateComponent, getDaemonSynced,
-  error, text, getCurrentBlockCount, animationType, ...props
+  error, text, getCurrentBlockCount, animationType, syncFetchHeadersComplete,
+  getNeededBlocks, ...props
 }) => (
   <div className="page-body getstarted">
     <div className="getstarted loader">
@@ -33,7 +34,8 @@ const DaemonLoadingBody = ({
           <WhatsNewLink />
         </div>
         <div className="loader-bar">
-          <AnimatedLinearProgressFull {...{ getDaemonSynced: syncFetchHeadersComplete, text, value: getCurrentBlockCount, animationType }} />
+          <AnimatedLinearProgressFull {...{ getDaemonSynced, text, value: getCurrentBlockCount, animationType, min: 0,
+              max: getNeededBlocks, disabled: false }} />
         </div>
         {
           error && 
@@ -42,7 +44,6 @@ const DaemonLoadingBody = ({
           </div>
         }
         { StateComponent && <StateComponent {...{ ...props, getDaemonSynced }} /> }
-
       </>
     </div>
   </div>

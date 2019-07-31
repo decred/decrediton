@@ -10,6 +10,7 @@ const mapStateToProps = selectorMap({
   availableWallets: sel.sortedAvailableWallets,
   getDaemonSynced: sel.getDaemonSynced,
   getCurrentBlockCount: sel.getCurrentBlockCount,
+  getNeededBlocks: sel.getNeededBlocks,
 
   peerCount: sel.peerCount,
   synced: sel.synced,
