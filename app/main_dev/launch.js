@@ -39,7 +39,7 @@ function closeClis() {
 export const setHeightSynced = (isSynced) => {
   heightIsSynced = isSynced;
   return true;
-}
+};
 
 export const getHeightSynced = () => heightIsSynced;
 
@@ -50,7 +50,7 @@ export const setDaemonCredentials = ({ rpc_user, rpc_pass, rpc_cert, rpc_host, r
   rpchost = rpc_host;
   rpcport = rpc_port;
   return true;
-}
+};
 
 export const getDaemonCredentials = () => ({
   rpc_user: rpcuser,
@@ -64,7 +64,7 @@ export const setSelectedWallet = (w) => {
   if (!w) return;
   selectedWallet = w;
   return true;
-}
+};
 
 export const getSelectedWallet = () => selectedWallet;
 
@@ -155,7 +155,7 @@ export const launchDCRD = (params, testnet) => new Promise(async (resolve,reject
   appdata = params && params.appdata;
 
   if (rpcCreds) {
-    setDaemonCredentials(rpcCreds)
+    setDaemonCredentials(rpcCreds);
     dcrdPID = -1;
     AddToDcrdLog(process.stdout, "dcrd is connected as remote", debug);
     return resolve(rpcCreds);
@@ -176,7 +176,7 @@ export const launchDCRD = (params, testnet) => new Promise(async (resolve,reject
   if (testnet) {
     args.push("--testnet");
   }
-  setDaemonCredentials(newConfig)
+  setDaemonCredentials(newConfig);
 
   const dcrdExe = getExecutablePath("dcrd", argv.custombinpath);
   if (!fs.existsSync(dcrdExe)) {

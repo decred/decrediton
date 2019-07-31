@@ -9,8 +9,6 @@ import { FormattedRelative } from "shared";
 
 const DaemonLoadingBody = ({
   Form,
-  text,
-  animationType,
   openWalletInputRequest,
   getCurrentBlockCount,
   getDaemonStarted,

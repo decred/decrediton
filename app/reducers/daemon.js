@@ -123,7 +123,7 @@ export default function version(state = {}, action) {
       currentBlockCount: action.currentBlockCount,
       timeLeftEstimate: action.timeLeftEstimate,
     };
-  case DAEMONSYNCED: 
+  case DAEMONSYNCED:
     return { ...state,
       neededBlocks: action.syncHeight,
       currentBlockCount: action.blockCount,

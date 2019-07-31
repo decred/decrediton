@@ -11,7 +11,7 @@ class AnimatedLinearProgressFull extends React.Component {
         { getDaemonSynced ?
           <div className={"linear-progress-bar " + (error ? "error" : null)}
             style={error || getDaemonSynced ? {} : { width: `${perComplete*100}` + "%" }}>
-          </div> : 
+          </div> :
           <>
             { perComplete > 0.1  && perComplete < 1 && <div className="linear-progress-box one"    style={{ left: leftStartingPoint }}/> }
             { perComplete > 0.25 && perComplete < 1 && <div className="linear-progress-box two"    style={{ left: leftStartingPoint }}/> }

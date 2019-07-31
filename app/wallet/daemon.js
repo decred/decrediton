@@ -98,11 +98,11 @@ export const getBlockCount = log(() => new Promise(resolve => {
 }), "Get Block Count");
 
 export const setHeightSynced = log(() => Promise
-.resolve(ipcRenderer.sendSync("set-height-synced", true))
-.then( saved => {
-  if (!saved) throw "Error set height saved";
-  return;
-}), "set height is synced");
+  .resolve(ipcRenderer.sendSync("set-height-synced", true))
+  .then( saved => {
+    if (!saved) throw "Error set height saved";
+    return;
+  }), "set height is synced");
 
 export const getDaemonInfo = log((rpcCreds) => new Promise(resolve => {
   ipcRenderer.once("check-getinfo-response", (e, info) => {
