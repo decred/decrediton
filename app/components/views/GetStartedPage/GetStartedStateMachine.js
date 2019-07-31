@@ -53,21 +53,21 @@ export const getStartedMachine = (a) => Machine({
       }
     },
     connectingDaemon: {
-      onEntry: "isAtConnectDaemon",
+      onEntry: "isAtConnectingDaemon",
       on: {
-        CHECK_NETWORK_MATCH: "checkingNetworkMatch",
+        SYNC_DAEMON: "syncingDaemon",
       }
     },
     checkingNetworkMatch: {
       onEntry: "isAtCheckNetworkMatch",
       on: {
-        SYNC_DAEMON: "syncingDaemon",
+        CHOOSE_WALLET: "choosingWallet",
       }
     },
     syncingDaemon: {
       onEntry: "isAtSyncingDaemon",
       on: {
-        CHOOSE_WALLET: "choosingWallet",
+        CHECK_NETWORK_MATCH: "checkingNetworkMatch",
       }
     },
     choosingWallet: {
@@ -93,7 +93,6 @@ export const getStartedMachine = (a) => Machine({
 {
   actions: {
     isAtPreStart: () => {
-      // console.log(e)
       console.log("is at pre start");
       return a.prepStartDaemon();
     },
@@ -106,7 +105,7 @@ export const getStartedMachine = (a) => Machine({
       console.log("is at start SPV");
     },
     isAtStartingDaemon: (context, event) => {
-      console.log("is at start  At Starting Daemonn");
+      console.log("is at Starting Daemonn");
       const { appdata } = event;
       context.appdata = appdata;
       return a.onStartDaemon({ appdata })
@@ -123,28 +122,27 @@ export const getStartedMachine = (a) => Machine({
     isStartedDaemon: () => {
       console.log("is at started daemon");
     },
-    isAtConnectDaemon: (context, event) => {
+    isAtConnectingDaemon: (context, event) => {
       console.log(" is at connect daemon ");
       const { remoteCredentials } = event;
       remoteCredentials && (context.credentials = remoteCredentials);
       return a.onConnectDaemon(remoteCredentials)
         .then(connected => {
-          a.sendEvent({ type: "CHECK_NETWORK_MATCH", payload: connected });
+          a.sendEvent({ type: "SYNC_DAEMON", payload: connected });
         })
         .catch(e => console.log(e));
     },
     isAtCheckNetworkMatch: () => {
       console.log(" is at check network ");
-      return a.checkNetworkMatch()
-        .then(checked => a.sendEvent({ type: "SYNC_DAEMON", payload: checked }))
-        .catch(e => console.log(e));
+      return a.checkNetworkMatch().then( checked => a.onGetAvailableWallets()
+          .then(w => a.sendEvent({ type: "CHOOSE_WALLET", payload: { checked, w } }) ))
+          .catch(e => console.log(e));
     },
     isAtSyncingDaemon: () => {
       console.log(" is at syncing daemon ");
-      a.syncDaemon().then( synced => {
-        a.onGetAvailableWallets().
-          then(w => a.sendEvent({ type: "CHOOSE_WALLET", payload: { synced, w } }));
-      });
+      a.syncDaemon()
+        .then(synced => a.sendEvent({ type: "CHECK_NETWORK_MATCH", payload: synced }))
+        .catch(e => console.log(e));
     },
     isAtLeavingChoosingWallet: (context, event) => {
       console.log("is leaving choosing wallet");

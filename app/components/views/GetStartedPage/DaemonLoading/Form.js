@@ -1,4 +1,3 @@
-import { LinearProgressFull } from "indicators";
 import { FormattedMessage as T, injectIntl } from "react-intl";
 import { SlateGrayButton, InvisibleButton, KeyBlueButton } from "buttons";
 import { PasswordInput } from "inputs";
@@ -67,16 +66,6 @@ const DaemonLoadingBody = ({
         </div>
         <div className="loader-bar">
           <>
-            <LinearProgressFull
-              animationType={animationType}
-              text={!text && isSPV ? <T id="getStarted.isSPV.loadingText" m="SPV mode activated, wallet ready to launch"/> : text}
-              error={startupError}
-              getDaemonSynced={getDaemonSynced}
-              disabled={(!getDaemonStarted || getCurrentBlockCount === null) && !isSPV}
-              min={0}
-              max={getNeededBlocks}
-              value={getCurrentBlockCount}
-            />
             {daemonTimeout &&
               <span className="warning"><T id="getStarted.daemon.isTimeout" m="Daemon connection timeout exceded."/></span>
             }

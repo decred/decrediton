@@ -57,7 +57,7 @@ class GetStarted extends React.Component {
       current: getStartedMachine().initialState,
       StateComponent: null,
       text: <T id="getStarted.header.discoveringAddresses.meta" m="Discovering addresses" />,
-      animationType: "blockchain-syncing",
+      animationType: null,
     };
   }
 
@@ -90,7 +90,7 @@ class GetStarted extends React.Component {
     }
     if (prevProps.syncFetchMissingCfiltersAttempt !== syncFetchMissingCfiltersAttempt && syncFetchMissingCfiltersAttempt) {
       this.setState({ animationType: daemonWaiting });
-    this.setState({ text: <T id="getStarted.header.fetchingMissing.meta" m="Fetching missing committed filters" /> });
+      this.setState({ text: <T id="getStarted.header.fetchingMissing.meta" m="Fetching missing committed filters" /> });
     } else if (prevProps.syncFetchHeadersAttempt !== syncFetchHeadersAttempt && syncFetchHeadersAttempt) {
       this.setState({ animationType: fetchingHeaders });
       this.setState({ text: <T id="getStarted.header.fetchingBlockHeaders.meta" m="Fetching block headers" /> });
@@ -99,7 +99,7 @@ class GetStarted extends React.Component {
       this.setState({ text: <T id="getStarted.header.discoveringAddresses.meta" m="Discovering addresses" /> });
     } else if (prevProps.syncRescanAttempt !== syncRescanAttempt && syncRescanAttempt) {
       this.setState({ animationType: scanningBlocks });
-    this.setState({ text:<T id="getStarted.header.rescanWallet.meta" m="Scanning blocks for transactions" /> });
+      this.setState({ text:<T id="getStarted.header.rescanWallet.meta" m="Scanning blocks for transactions" /> });
       // Form = RescanWalletBody;
     }
   // else if (!isSPV && startStepIndex > 2) {
@@ -128,19 +128,26 @@ class GetStarted extends React.Component {
     switch(current.value) {
     case "startAdvancedDaemon":
       component = AdvancedStartupBody;
+      this.setState({ text: <T id="loaderBar.WaitingDaemon" m="Waiting for daemon connection..." /> });
       break;
     case "connectingDaemon":
+      this.setState({ text: <T id="loaderBar.WaitingConnection" m="connecting to daemon..." /> });
       break;
     case "checkingNetworkMatch":
+      this.setState({ text: <T id="loaderBar.checkingNetwork" m="Checking if network matches..." /> });
       break;
     case "syncingDaemon":
+      this.setState({ text: <T id="loaderBar.syncingDaemon" m="syncing Daemon..." /> });
       break;
     case "choosingWallet":
+      this.setState({ text: <T id="loaderBar.choosingWallet" m="Choose a wallet to open" /> });
       component = WalletSelection;
       break;
     case "startingWallet":
+      this.setState({ text: <T id="loaderBar.startingWallet" m="Starting wallet..." /> });
       break;
     case "syncingRPC":
+      this.setState({ text: <T id="loaderBar.syncingRPC" m="Syncing RPC connection..." /> });
       break;
     }
 

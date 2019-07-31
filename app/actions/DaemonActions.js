@@ -425,7 +425,7 @@ export const syncDaemon = () => (dispatch, getState) => new Promise((resolve) =>
         const { blockCount, syncHeight } = blockChainInfo;
         if (blockCount && syncHeight) {
           if (blockCount >= syncHeight) {
-            dispatch({ type: DAEMONSYNCED, currentBlockHeight: blockCount });
+            dispatch({ type: DAEMONSYNCED, blockCount, syncHeight });
             setMustOpenForm(false);
             resolve({ type: DAEMONSYNCED, currentBlockHeight: blockCount });
             return;
