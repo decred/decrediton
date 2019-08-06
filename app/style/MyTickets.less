@@ -1,11 +1,14 @@
 @import (reference) "./main.less";
 @import (reference) "./Icons.less";
 
+.ticket-list-wrapper {
+  width: 740px;
+}
+
 .tickets-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin-left: 42px;
 }
 
 .tickets-buttons-area {
@@ -280,4 +283,28 @@
   line-height: 19px;
   float: right;
   text-align: right;
+}
+
+.tickets-list-bottom {
+  width: calc(100% - 20px);
+  background-color: #E6EAED;
+}
+
+.loading-more-tickets {
+  height: 50px;
+  color: #3D5873;
+}
+
+.loading-more-tickets-icon {
+  background-image: @tickets-loading-more-icon;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 32px;
+  width: 50px;
+  height: 50px;
+}
+
+.loading-more-tickets-info {
+  flex: 1;
+  justify-content: center;
 }

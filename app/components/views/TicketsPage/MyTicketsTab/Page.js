@@ -1,7 +1,7 @@
 import TicketsCardList from "./TicketsCardList";
 import { FormattedMessage as T } from "react-intl";
 import InfiniteScroll from "react-infinite-scroller";
-import { LoadingMoreTicketsIndicator, NoMoreTicketsIndicator } from "indicators";
+import { LoadingMoreTicketsIndicator, NoMoreTicketsIndicator, NoTicketsIndicator } from "indicators";
 import { Tooltip } from "shared";
 import { EyeFilterMenu } from "buttons";
 import "style/MyTickets.less";
@@ -10,9 +10,9 @@ import "style/MyTickets.less";
 class TicketListPage extends React.Component {
 
   componentDidMount() {
-    if ((window.innerWidth > 1500) && (!this.props.noMoreTickets)) {
-      // hack to load more items in large-width displays, so that the scroll
-      // doesn't get stuck and can actually get triggered.
+    if (!this.props.noMoreTickets) {
+      // hack to load more items, so that the scroll doesn't get stuck and
+      // can actually get triggered.
       this.props.onLoadMoreTickets();
     }
   }
@@ -33,7 +33,7 @@ class TicketListPage extends React.Component {
         useWindow={false}
         threshold={180}
       >
-        <>
+      <>
           <div className="tickets-buttons-area">
             <Tooltip tipWidth={300} text={<T id="tickets.sortby.tooltip" m="Sort By" />}>
               <EyeFilterMenu
@@ -55,10 +55,10 @@ class TicketListPage extends React.Component {
               />
             </Tooltip>
           </div>
-          {tickets.length > 0
-            ? <TicketsCardList {...{ tickets, tsDate }} />
-            : <NoMoreTicketsIndicator />}
-          {!noMoreTickets ? <LoadingMoreTicketsIndicator /> : tickets.length > 0 && <NoMoreTicketsIndicator />}
+        {tickets.length === 0 ? <NoTicketsIndicator /> :
+          <TicketsCardList {...{ tickets, tsDate }} />
+        }
+        {noMoreTickets ? tickets.length > 0 && <NoMoreTicketsIndicator /> : <LoadingMoreTicketsIndicator className="tickets-list-bottom" />}
         </>
       </InfiniteScroll>
     );
