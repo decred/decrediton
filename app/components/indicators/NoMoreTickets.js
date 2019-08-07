@@ -3,6 +3,6 @@ import "style/Loading.less";
 
 export default () => (
   <div className="no-more-tickets-indicator">
-    <T id="noTickets.description" m="No More Tickets" />
+    <T id="noMoreTickets.description" m="No More Tickets" />
   </div>
 );
