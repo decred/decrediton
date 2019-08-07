@@ -20,6 +20,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   syncDaemon: da.syncDaemon,
   onGetAvailableWallets: da.getAvailableWallets,
   onStartWallet: da.startWallet,
+  onRemoveWallet: da.removeWallet,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);
