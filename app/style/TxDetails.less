@@ -62,7 +62,7 @@
 }
 
 .txdetails-name {
-  color: var(--stroke-color-hovered);
+  color: var(--tx-detail-text);
   margin-right: 22px;
   min-width: 93px;
   text-align: right;
@@ -116,7 +116,7 @@
 }
 
 .txdetails-input-arrow {
-  background-image: @txDetailsArrowLeft;
+  background-image: var(--txDetailsArrowLeft);
   background-position: 100% 50%;
   background-size: 37px;
   background-repeat: no-repeat;
@@ -175,6 +175,7 @@
   padding: 2px 10px 2px 10px;
   border-radius: 3px;
   background-color: var(--blue-highlight-background);
+  color: var(--input-color-default);
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;

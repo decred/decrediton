@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+  <g id="constitution" transform="translate(-420 -480)">
+    <rect id="XMLID_13_" width="35.556" height="2.222" transform="translate(422.222 515.556)" fill="#436ec3"/>
+    <rect id="XMLID_12_" width="26.756" height="2.222" transform="translate(426.667 511.111)" fill="#436ec3"/>
+    <rect id="XMLID_11_" width="3.289" height="9.351" transform="translate(426.667 495.556)" fill="#436ec3"/>
+    <rect id="XMLID_10_" width="3.378" height="8.809" transform="translate(449.956 495.556)" fill="#436ec3"/>
+    <rect id="XMLID_9_" width="3.289" height="4.444" transform="translate(444.178 495.556)" fill="#436ec3"/>
+    <rect id="XMLID_8_" width="3.289" height="9.733" transform="translate(438.311 495.556)" fill="#436ec3"/>
+    <rect id="XMLID_7_" width="3.378" height="4.444" transform="translate(432.444 495.556)" fill="#436ec3"/>
+    <g id="XMLID_6_" transform="translate(426.667 504.364)">
+      <rect id="Rectangle_1605" data-name="Rectangle 1605" width="3.289" height="4.524" fill="#99c1e3"/>
+    </g>
+    <g id="XMLID_5_" transform="translate(449.956 503.822)">
+      <rect id="Rectangle_1606" data-name="Rectangle 1606" width="3.378" height="5.067" fill="#99c1e3"/>
+    </g>
+    <g id="XMLID_4_" transform="translate(444.178 498.249)">
+      <rect id="Rectangle_1607" data-name="Rectangle 1607" width="3.289" height="10.64" fill="#99c1e3"/>
+    </g>
+    <g id="XMLID_3_" transform="translate(438.311 504.489)">
+      <rect id="Rectangle_1608" data-name="Rectangle 1608" width="3.289" height="4.4" fill="#99c1e3"/>
+    </g>
+    <g id="XMLID_2_" transform="translate(432.444 498.729)">
+      <rect id="Rectangle_1609" data-name="Rectangle 1609" width="3.378" height="10.16" fill="#99c1e3"/>
+    </g>
+    <g id="Group_2251" data-name="Group 2251" transform="translate(420 480)">
+      <path id="XMLID_1_" d="M25,33.889v2.222H60.556V33.889L42.778,25Z" transform="translate(-22.778 -22.778)" fill="#436ec3"/>
+      <rect id="Rectangle_1610" data-name="Rectangle 1610" width="40" height="40" fill="none"/>
+    </g>
+  </g>
+</svg>

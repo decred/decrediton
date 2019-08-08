@@ -1,13 +1,11 @@
 export const yAxisStyle = {
   fontFamily: "Source Sans Pro",
-  fontSize: 10,
-  fill: "#a4afba",
+  fontSize: 10
 };
 
 export const xAxisStyle = {
   fontFamily: "Source Sans Pro",
-  fontSize: 10,
-  fill: "#a4afba",
+  fontSize: 10
 };
 
 export const homeChartSize = {

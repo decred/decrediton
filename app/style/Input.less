@@ -5,7 +5,7 @@
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
-  border-bottom: 1px var(--stroke-color-default) solid;
+  border-bottom: 1px var(--select-stroke-color) solid;
   font-family: @font-family-regular;
   font-size: 13px;
   color: var(--input-color-default);
@@ -22,6 +22,10 @@
 
 .input-and-unit.numeric-input {
   font-family: @font-family-monospaced;
+
+  .unit-area {
+    color:var(--select-placeholder);
+  }
 }
 
 .input-and-unit:hover:not(.disabled):not(.active):not(.error) {
@@ -46,6 +50,7 @@
   flex-grow: 1;
   width: 100%;
   outline: none;
+  color: var(--input-color-default);
 }
 
 .input::placeholder {

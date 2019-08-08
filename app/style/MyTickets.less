@@ -62,7 +62,7 @@
   border-right: 1px solid var(--input-color-disabled);
   padding-right: 0.5em;
   padding-left: 15px;
-  background-image: @ticket-reward-icon;
+  background-image: var(--ticket-reward-icon);
   background-repeat: no-repeat;
   background-size: 11px 11px;
   background-position: 0px 5px;
@@ -86,7 +86,7 @@
 
   color: var(--disabled-color);
   font-family: @font-family-monospaced;
-  background-image: @time-lock-icon;
+  background-image: var(--time-lock-icon);
   background-repeat: no-repeat;
   background-size: 12px 12px;
   background-position: 0px 4px;
@@ -186,7 +186,7 @@
 }
 
 .heatmap-icon {
-  background-image: @menu-tickets-default;
+  background-image: var(--menu-tickets-default);
 }
 
 .my-tickets-stats-links {
@@ -208,27 +208,27 @@
 }
 
 .my-tickets-stats-links a.vote-time {
-  background-image: @vote-time-stats-icon;
+  background-image: var(--vote-time-stats-icon);
 }
 
 .my-tickets-stats-links a.my-tickets-active-chart-link.vote-time {
-  background-image: @vote-time-stats-active-icon;
+  background-image: var(--vote-time-stats-active-icon);
 }
 
 .my-tickets-stats-links a.stakepool {
-  background-image: @stakepool-stats-icon;
+  background-image: var(--stakepool-stats-icon);
 }
 
 .my-tickets-stats-links a.my-tickets-active-chart-link.stakepool {
-  background-image: @stakepool-stats-active-icon;
+  background-image: var(--stakepool-stats-active-icon);
 }
 
 .my-tickets-stats-links a.stakerewards {
-  background-image: @stakerewards-stats-icon;
+  background-image: var(--stakerewards-stats-icon);
 }
 
 .my-tickets-stats-links a.my-tickets-active-chart-link.stakerewards {
-  background-image: @stakerewards-stats-active-icon;
+  background-image: var(--stakerewards-stats-active-icon);
 }
 
 .my-tickets-stats-links a.my-tickets-active-chart-link {
@@ -240,6 +240,9 @@
 .my-tickets-stats-links a:hover {
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.16);
   background-color: var(--disabled-background-color);
+}
+.my-tickets-stats-links a.my-tickets-active-chart-link.heatmap-icon {
+  background-image: var(--menu-tickets-active);
 }
 
 .my-tickets-stats-chart {

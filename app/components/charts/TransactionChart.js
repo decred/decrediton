@@ -18,8 +18,8 @@ const BalanceChart = ({ data, intl }) => {
 
   return (
     <BarChart stackOffset="sign" width={homeChartSize.width} height={homeChartSize.height} data={displayData}>
-      <XAxis tickLine={false} dataKey="name" style={xAxisStyle}/>
-      <YAxis tickLine={false} orientation="right" style={yAxisStyle} padding={padding}/>
+      <XAxis tickLine={false} dataKey="name" style={xAxisStyle} className="xAxis"/>
+      <YAxis tickLine={false} orientation="right" style={yAxisStyle} padding={padding} className="yAxis"/>
       <Tooltip cursor={hoverFill} content={<ChartTooltip />} />
       <ReferenceLine y={0} stroke="#f3f6f6" />
       <Bar dataKey={sentKey} stackId="a" fill="#fd704a" barSize={8} radius={radiusFull} />

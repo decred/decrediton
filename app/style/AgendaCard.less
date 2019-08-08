@@ -11,7 +11,7 @@
   padding: 20px;
   float: left;
   background-color: var(--background-back-color);
-  background-image: @agenda-card-kebab;
+  background-image: var(--agenda-card-kebab);
   background-position: 93% 27px;
   background-size: 10px;
   background-repeat: no-repeat;
@@ -100,7 +100,7 @@
   height: 80px;
   margin-bottom: 55px;
   float: left;
-  color: var(--stroke-color-hovered);
+  color: var(--agenda-card-bottom-cfg);
 }
 
 .agenda-card-bottom-cfg-last {
@@ -153,6 +153,10 @@
   margin-top: 6px;
   float: left;
   width: 186px;
+  color:var(--header-desc-lighter-color);
+  span {
+    color:var(--input-color-default);
+  }
 }
 
 .agenda-card-text-highlight-small {
@@ -172,7 +176,7 @@
   width: 11px;
   height: 11px;
   float: right;
-  background-image: @agenda-close-icon;
+  background-image: var(--agenda-close-icon);
   background-position: 50% 50%;
   background-size: 11px;
   background-repeat: no-repeat;

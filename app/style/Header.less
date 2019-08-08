@@ -63,13 +63,13 @@
   background-size: 30px;
   background-repeat: no-repeat;
 
-  &.accounts { background-image: @header-accounts; }
-  &.help { background-image: @header-help; }
-  &.security { background-image: @header-security; }
-  &.settings { background-image: @header-settings; }
-  &.tickets { background-image: @header-tickets; }
-  &.transactions { background-image: @header-transactions; }
-  &.governance { background-image: @header-governance; }
+  &.accounts { background-image: var(--header-accounts); }
+  &.help { background-image: var(--header-help); }
+  &.security { background-image: var(--header-security); }
+  &.settings { background-image: var(--header-settings); }
+  &.tickets { background-image: var(--header-tickets); }
+  &.transactions { background-image: var(--header-transactions); }
+  &.governance { background-image: var(--header-governance); }
   &.trezor { background-image: @menu-trezor-active; }
 
   &.tx-detail-icon-ticket { background-image: @ticket-live-icon; }
@@ -92,7 +92,7 @@
   width: 150px;
   background-position: left center;
   background-repeat: no-repeat;
-  background-image: @logo;
+  background-image: var(--mainnet-logo);
 }
 
 .testnet {
@@ -100,5 +100,5 @@
   width: 150px;
   background-position: left center;
   background-repeat: no-repeat;
-  background-image: @testnet-logo;
+  background-image: var(--testnet-logo);
 }

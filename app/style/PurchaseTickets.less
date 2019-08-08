@@ -30,7 +30,7 @@
 
 .purchase-ticket-area-row-label {
   font-size: 19px;
-  color: #091440;
+  color: var(--input-color-default);
 }
 
 .stakepool-purchase-ticket-buttons-area {
@@ -127,7 +127,7 @@
   background-repeat: no-repeat;
   background-size: 25px;
   background-position: center;
-  background-image: @importscript-icon;
+  background-image: var(--importscript-icon);
   width: 20px;
   height: 25px;
   padding: 0px;
@@ -205,7 +205,7 @@
   height: 20px;
   border-radius: 3px;
   transition: all 200ms ease-in-out;
-  background-color: var(--white-border);
+  background-color: var(--autobuyer-switch-bg);
   float: left;
 }
 
@@ -234,7 +234,7 @@
 
 .autobuyer-switch-knob-disabled {
   float: right;
-  background-color: var(--disabled-color);
+  background-color: var(--autobuyer-switch-knob-bg);
 }
 
 .stakepool-auto-buyer-show-advanced-area {
@@ -251,31 +251,31 @@
   margin: 0 20px 15px 0;
   width: 100%;
   font-family: inconsolata, monospace;
-  color: var(--input-color-default);
+  color: var(--header-desc-lighter-color);
   font-size: 11px;
 
   &.stakepool-icon {
-    background-image: @stake-pool-icon;
+    background-image: var(--stake-pool-icon);
   }
 
   &.stakepool-expiry-icon {  
-    background-image: @expiry-icon;
+    background-image: var(--expiry-icon);
   }
   
   &.stakepool-fee-icon {
-    background-image: @split-fee-icon;
+    background-image: var(--split-fee-icon);
   }
   
   &.stakepool-ticket-address-icon {
-    background-image: @ticket-address-icon;
+    background-image: var(--ticket-address-icon);
   }
   
   &.stakepool-fee-address-icon {
-    background-image: @fee-address-icon;
+    background-image: var(--fee-address-icon);
   }
   
   &.stakepool-pool-fee-icon {
-    background-image: @pool-fee-icon;
+    background-image: var(--pool-fee-icon);
   }  
 }
 
@@ -286,7 +286,7 @@
 
 .stakepool-purchase-ticket-info {
   margin-bottom: 10px;
-  background-color: #EDEFF1;
+  background-color: var(--transfer-details-bg);
 }
 
 .ticket-numeric-input {

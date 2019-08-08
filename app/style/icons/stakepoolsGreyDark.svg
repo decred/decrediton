@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+  <g id="stakepools" transform="translate(-420 -372)">
+    <path id="XMLID_5_" d="M27.307,331.667H55.129v-.018l.782.009L60.373,325H53.707v3.289H47.5a5.924,5.924,0,0,0-9.813,0h-6.2V325H29.262L24.8,331.676l2.507-.009Z" transform="translate(397.404 75.889)" fill="#436ec3"/>
+    <g id="Group_2249" data-name="Group 2249" transform="translate(420 372)">
+      <g id="XMLID_2_" transform="translate(8.889 4.444)">
+        <g id="Group_2248" data-name="Group 2248">
+          <path id="Path_787" data-name="Path 787" d="M106.2,77.733a5.924,5.924,0,0,1,9.813,0h6.2V50h-5.191v.036a5.92,5.92,0,1,1-11.84,0V50H100V77.733Zm4.907-18.827a6.649,6.649,0,1,1-6.649,6.649A6.65,6.65,0,0,1,111.111,58.907Z" transform="translate(-100 -50)" fill="#99c1e3"/>
+        </g>
+      </g>
+      <circle id="XMLID_1_" cx="6.649" cy="6.649" r="6.649" transform="translate(10.595 20.001) rotate(-45)" fill="#436ec3"/>
+      <rect id="Rectangle_1604" data-name="Rectangle 1604" width="40" height="40" fill="none"/>
+    </g>
+  </g>
+</svg>

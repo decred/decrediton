@@ -29,6 +29,7 @@
   line-height: 17px;
   width: 150px;
   margin-left: -160px;
+  color: var(--wallet-tutorial-text);
 }
 
 .create-wallet-button-container {
@@ -39,18 +40,18 @@
   height: 29px;
 
   .text-toggle-button-left {
-    color: var(--disabled-color);
-    background-color: var(--background-container);
-    border: 1px solid var(--disabled-background-color);
+    color: var(--text-toggle-button-inactive-text);
+    background-color: var(--text-toggle-button-bg);
+    border: 1px solid var(--text-toggle-button-border);
     border-radius: 3px 0px 0px 3px;
     min-width: 0px;
     padding: 6px 20px 6px 20px;
   }
 
   .text-toggle-button-right {
-    color: var(--disabled-color);
-    background-color: var(--background-container);
-    border: 1px solid var(--disabled-background-color);
+    color: var(--text-toggle-button-inactive-text);
+    background-color: var(--text-toggle-button-bg);
+    border: 1px solid var(--text-toggle-button-border);
     border-radius: 0px 3px 3px 0px;
     min-width: 0px;
     padding: 6px 20px 6px 20px;
@@ -58,15 +59,15 @@
 
   .text-toggle-button-left.text-toggle-button-active {
     color: var(--input-color-default);
-    background-color: var(--background-back-color);
-    border: 1px solid var(--disabled-background-color);
+    background-color: var(--text-toggle-button-active-bg);
+    border: 1px solid var(--text-toggle-button-border);
     font-weight: 400;
   }
 
   .text-toggle-button-right.text-toggle-button-active {
     color: var(--input-color-default);
-    background-color: var(--background-back-color);
-    border: 1px solid var(--disabled-background-color);
+    background-color: var(--text-toggle-button-active-bg);
+    border: 1px solid var(--text-toggle-button-border);
     font-weight: 400;
   }
 }
@@ -78,6 +79,10 @@
 
 .go-back-button {
   margin-top: 8px;
+  color: var(--home-content-link);
+}
+.go-back-button:hover {
+  color: var(--title-text-and-button-background-hovered);
 }
 
 .seedArea {
@@ -119,7 +124,7 @@
     padding-left: 2px;
     border-radius: 3px;
     border: 1px solid var(--white-border);
-    background-color: var(--background-back-color);
+    background-color: var(--linear-progress-text);
     color: var(--title-text-and-button-background);
   }
 
@@ -171,7 +176,7 @@
     float: right;
     background-repeat: no-repeat;
     background-size: 10px;
-    background-image: @x-grey;
+    background-image: var(--x-grey);
     opacity: 1;
   }
 
@@ -194,7 +199,7 @@
 }
 
 .createwallet-button.new {
-  background-image: @createnewwallet;
+  background-image: var(--createnewwallet);
 }
 
 .createwallet-button.restore {

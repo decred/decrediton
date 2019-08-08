@@ -38,8 +38,8 @@ const VoteTimeChart = ({ data, intl }) => {
 
   return (
     <BarChart stackOffset="sign" width={myTicketsChartSize.width} height={myTicketsChartSize.height} data={displayData}>
-      <XAxis tickLine={false} dataKey="name" style={yAxisStyle} />
-      <YAxis tickLine={false} orientation="right" style={xAxisStyle} padding={padding} />
+      <XAxis tickLine={false} dataKey="name" style={yAxisStyle} className="xAxis"/>
+      <YAxis tickLine={false} orientation="right" style={xAxisStyle} padding={padding} className="yAxis"/>
       <Tooltip cursor={hoverFill} content={<ChartTooltip />} />
       <Bar barSize={8} dataKey={countKey} stackId="a" fill="#2971ff" radius={radiusFull} />
     </BarChart>

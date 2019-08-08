@@ -8,7 +8,7 @@
   display: flex;
   flex-direction: column;
   background-color: var(--disabled-background-color);
-  color: var(--title-text-and-button-background);
+  color: var(--modal-text);
   min-height: 110px;
 
 
@@ -16,7 +16,7 @@
     font-size: 21px;
     line-height: 27px;
     margin-bottom: 10px;
-
+    color:var(--title-text-and-button-background);
   }
 
   .proposals-community-header-description {
@@ -43,8 +43,8 @@
       padding: 6px 15px;
       margin: 4px;
       text-decoration: none;
-      color: var(--background-back-color);
-      background-color: var(--title-text-and-button-background);
+      color: var(--info-modal-button-text);
+      background-color: var(--info-modal-button-bg);
       cursor: pointer;
 
       &:hover {
@@ -59,7 +59,7 @@
 }
 
 .consensus-changes-header {
-  background-color: var(--disabled-background-color-lighter);
+  background-color: var(--disabled-background-color);
 }
 
 .proposals-status-links {
@@ -122,7 +122,7 @@
     border-bottom: 2px solid var(--background-container);
     cursor: pointer;
     height: 31px;
-    background-image: @arrow-right-gray-icon;
+    background-image: var(--arrow-right-gray-icon);
     background-repeat: no-repeat;
     background-position: top right;
     background-origin: content-box;
@@ -250,7 +250,7 @@
   .proposal-details-title {
     font-size: 19px;
     line-height: 24px;
-    color: var(--input-color-default);
+    color: var(--tutorial-header);
   }
 
   .proposal-details-token {
@@ -258,12 +258,13 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     width: 100px;
+    color: var(--overview-balance-label);
   }
 
   .proposal-details-token a {
     font-size: 13px;
     line-height: 19px;
-    color: var(--stroke-color-hovered);
+    color: var(--overview-balance-label);
     text-decoration: none;
     cursor: pointer;
   }
@@ -273,7 +274,7 @@
   }
 
   .proposal-details-overview-voting {
-    background-color: var(--disabled-background-color-lighter);
+    background-color: var(--transfer-details-bg);
     padding: 30px 20px;
     width: 284px;
     height: 60px;
@@ -330,7 +331,7 @@
 
   .proposal-details-overview-field {
     .label {
-      color: var(--stroke-color-hovered);
+      color: var(--agenda-card-bottom-cfg);
       display: inline-block;
       margin-right: 0.5em;
       width: 100px;
@@ -369,6 +370,9 @@
   p {
     word-wrap: break-word;
   }
+  a {
+    color:var(--link-color);
+  }  
 }
 
 .proposal-details-voting-progress-counts {
@@ -527,7 +531,8 @@
 .proposal-list-link-count {
   position: absolute;
   display: inline-block;
-  border: 1px solid var(--disabled-color);
+  border: 1px solid var(--settings-desc);
+  background-color: var(--tabbed-page-header-bg);
   border-radius: 50%;
   width: 1.5em;
   line-height: 1.5em;

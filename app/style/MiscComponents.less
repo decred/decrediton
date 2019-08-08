@@ -30,7 +30,7 @@
   display: inline-block;
   width: 20px;
   height: 18px;
-  background-image: @copy-to-clipboard-icon;
+  background-image: var(--copy-to-clipboard-icon);
   background-position: 0 0;
   background-size: 20px auto;
   background-repeat: no-repeat;
@@ -111,9 +111,9 @@
   display: inline-block;
   padding: 12px 30px 14px 30px;
   border-radius: 5px;
-  background-color: var(--title-text-and-button-background);
+  background-color: var(--back-button-bg);
   box-shadow: 0 5px 13px rgba(0, 0, 0, 0.21);
-  color: var(--background-container);
+  color: var(--back-button-text);
   font-size: 13px;
   line-height: 17px;
   text-align: center;
@@ -150,6 +150,13 @@
 
 .invisible-button:hover {
   color: var(--stroke-color-hovered);
+}
+
+.loader-settings-logs .invisible-button {
+  color: var(--getstarted-menu-color);
+}
+.loader-settings-logs .invisible-button:hover {
+  color: var(--menutab-hover);
 }
 
 .update-available-button {
@@ -234,7 +241,7 @@
 .info-field-modal-button {
   float: right;
   border-radius: 0px;
-  background-image: @menu-help-active;
+  background-image: var(--help-getstared);
   background-position: 50% 50%;
   background-size: 20px;
   background-repeat: no-repeat;
@@ -251,7 +258,7 @@
 
 .info-modal-button {
   border-radius: 0px;
-  background-image: @tickets-info-icon;
+  background-image: var(--tickets-info-icon);
   background-position: 50% 50%;
   background-size: 20px;
   background-repeat: no-repeat;
@@ -291,7 +298,7 @@
   border: none;
   outline: none;
   background-color: transparent;
-  background-image: @search-icon;
+  background-image: var(--search-icon);
   background-size: 16px 16px;
 }
 
@@ -337,7 +344,7 @@
 }
 
 .ticket-cogs-opened {
-  background-image: @tickets-cogs-opened-icon;
+  background-image: var(--tickets-cogs-opened-icon);
 }
 
 .ticket-cogs-closed {
@@ -390,7 +397,7 @@
   border: none;
   outline: none;
   background-color: transparent;
-  background-image: @menu-rescan-icon;
+  background-image: var(--menu-rescan-icon);
   background-size: 16px 16px;
   cursor: pointer;
 }
@@ -497,7 +504,7 @@
 }
 
 .no-transactions-indicator-img {
-  background-image: @no-tx-icon;
+  background-image: var(--no-tx-icon);
   height: 100px;
   background-repeat: no-repeat;
   background-size: 80px;
@@ -513,7 +520,7 @@
 }
 
 .vertical-expand {
-  background-image: @arrow-right-gray-icon;
+  background-image: var(--arrow-right-gray-icon);
   background-repeat: no-repeat;
   background-size: 20px 10px;
   display: inline-block;
@@ -534,7 +541,7 @@
     margin: 12px;
     height: 14px;
     width: 14px;
-    border: 2px solid var(--white-border);
+    border: 2px solid var(--step-indicator);
     border-radius: 10px;
   }
 
@@ -542,7 +549,7 @@
     margin: 16px;
     height: 10px;
     width: 10px;
-    background-image: @onboarding-checkcircle;
+    background-image: var(--onboarding-checkcircle);
     background-position: 50% 0px;
     background-repeat: no-repeat;
   }
@@ -551,9 +558,22 @@
     margin: 16px;
     height: 10px;
     width: 10px;
-    background-color: var(--white-border);
+    background-color: var(--step-indicator);
     border-radius: 10px;
   }
+}
+
+
+.tutorial-page-indicator .step-indicator {
+  .step.current {
+    border: 2px solid var(--wallet-tutorial-step-indicator);
+  }
+  .step.checked {
+    background-image: var(--wallet-tutorial-check-circle);
+  }
+   .step.unchecked {
+    background-color: var(--wallet-tutorial-step-indicator);
+  }   
 }
 
 .doc-unavailable-alert {
@@ -656,9 +676,13 @@
   position: relative;
 }
 
+.vertical-accordion-body {
+  background-color: var(--disabled-background-color);
+}
+
 .vertical-accordion-arrow {
   content: "";
-  background-image: @arrow-right-gray-icon;
+  background-image: var(--arrow-right-gray-icon);
   background-repeat: no-repeat;
   background-position: center right;
   background-size: contain;
@@ -685,7 +709,7 @@
   width: 12px;
   background-repeat: no-repeat;
   background-size: 12px;
-  background-image: @x-grey;
+  background-image: var(--x-grey);
   padding: 0px;
 }
 

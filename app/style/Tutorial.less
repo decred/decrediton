@@ -4,6 +4,7 @@
 /** GetStarted tutorial classes **/
 .getstarted-tutorial {
   display: flex;
+  background-color: var(--background-container);
 
   .tutorial-side {
     width: 47%;
@@ -41,7 +42,7 @@
   }
 
   .tutorial-main-text {
-    color: var(--title-text-and-button-background);
+    color: var(--modal-text);
     font-size: 13px;
     column-count: 2;
     margin-bottom: 2em;
@@ -49,7 +50,7 @@
     line-height: 19px;
 
     h1 {
-      color: var(--input-color-default);
+      color: var(--tutorial-header);
       font-size: 35px;
       line-height: 35px;
       column-span: all;
@@ -98,6 +99,7 @@
   .tutorial-subtitle {
     font-size: 11px;
     margin-bottom: 20px;
+    color:var(--new_wallet-label);
   }
 
   .tutorial-close-button {
@@ -105,7 +107,7 @@
     width: 12px;
     background-repeat: no-repeat;
     background-size: 12px;
-    background-image: @x-grey;
+    background-image: var(--x-grey);
     float: right;
   }
 
@@ -119,10 +121,12 @@
     width: 40%;
     margin-right: 30px;
     white-space: pre-line;
+    color: var(--wallet-tutorial-text);
   }
 
   .tutorial-page-indicator a {
     cursor: pointer;
+    color: var(--wallet-tutorial-link);
   }
 
   .tutorial-image-and-indicator {
