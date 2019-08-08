@@ -37,7 +37,7 @@ const PurchaseTicketsForm = ({
         <T id="purchaseTickets.ticketAmount" m="Amount" />:</div>
       <NumTicketsInput
         required
-        invalid={!canAffordTickets}
+        invalid={!getIsValid()}
         invalidMessage={<T id="purchaseTickets.errors.insufficientBalance" m="Not enough funds" />}
         numTickets={numTicketsToBuy}
         incrementNumTickets={onIncrementNumTickets}

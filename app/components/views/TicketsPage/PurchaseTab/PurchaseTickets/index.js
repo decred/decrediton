@@ -234,8 +234,8 @@ class PurchaseTickets extends React.Component {
   }
 
   getErrors() {
-    const { ticketFeeError, txFeeError, expiryError } = this.state;
-    return ticketFeeError || txFeeError || expiryError;
+    const { ticketFeeError, txFeeError, expiryError, numTicketsToBuy } = this.state;
+    return ticketFeeError || txFeeError || expiryError || !numTicketsToBuy;
   }
 }
 
