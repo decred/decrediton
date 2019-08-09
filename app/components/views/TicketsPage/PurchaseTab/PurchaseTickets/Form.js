@@ -13,7 +13,6 @@ const PurchaseTicketsForm = ({
   handleOnKeyDown,
   hasTicketsToRevoke,
   numTicketsToBuy,
-  canAffordTickets,
   onIncrementNumTickets,
   onDecrementNumTickets,
   onChangeNumTickets,
