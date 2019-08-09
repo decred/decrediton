@@ -1,5 +1,3 @@
-export { default as ConstitutionModalContent } from "./ConstitutionModalContent";
-
 export { default as ImportScriptModal } from "./ImportScriptModal";
 export { default as AddAccountModal } from "./AddAccountModal";
 export { default as ChangePassphraseModal } from "./ChangePassphraseModal";
