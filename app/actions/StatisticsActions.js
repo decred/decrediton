@@ -107,56 +107,52 @@ export const getTicketsHeatmapStats = () => (dispatch) => {
     });
 };
 
-export const getHeatmapStats = (opts) => async (dispatch, getState) => new Promise(async (resolve, reject) => {
+export const getHeatmapStats = (opts) => (dispatch, getState) => new Promise((resolve, reject) => {
+  const countTickets = async () => {
+    const { endDate, backwards } = opts;
+    const { currentBlockHeight, walletService } = getState().grpc;
+    const chainParams = sel.chainParams(getState());
+    let liveTickets = {}; // live by hash
+    let maturingTxs = {}; // maturing by height
+    const tsDate = sel.tsDate(getState());
+    const pageSize = 200;
+    const maxMaturity = Math.max(chainParams.CoinbaseMaturity, chainParams.TicketMaturity);
+    const currentDate = new Date();
+    let toProcess = [];
 
-  const { endDate, backwards } = opts;
+    try {
+      const data = { maxMaturity, currentBlockHeight, pageSize, tsDate, backwards, walletService };
+      toProcess = await prepDataToCalcStats(currentBlockHeight, 1, currentDate, endDate, -1, data);
+      // when calculating backwards, we need to account for unmined txs, because
+      // the account balances for locked tickets include them. To simplify the
+      // logic, we modify the unmined transactions to simulate as if it had been
+      // just mined in the last block.
+      const { unmined } = await wallet.getTransactions(walletService, -1, -1, 0);
+      const fixedUnmined = unmined.map(tx => ({ ...tx, timestamp: currentDate.getTime(),
+        height: currentBlockHeight }));
+      toProcess.unshift(...fixedUnmined);
 
-  const { currentBlockHeight, walletService } = getState().grpc;
+      // on backwards stats, we find vote txs before finding ticket txs, so
+      // pre-process tickets from all grabbed txs to avoid making the separate
+      // getTransaction calls in voteRevokeInfo()
+      toProcess.forEach(tx => {
+        if (tx.txType === wallet.TRANSACTION_TYPE_TICKET_PURCHASE) {
+          var { isWallet, commitAmount } = ticketInfo(tx);
+          recordTicket(maturingTxs, liveTickets, tx, commitAmount, isWallet, chainParams);
+        }
+      });
 
-  const chainParams = sel.chainParams(getState());
+      const ticketsCounter = await countTicketsBackwards({ mined: toProcess, maturingTxs, liveTickets, tsDate, chainParams });
 
-  let liveTickets = {}; // live by hash
-  let maturingTxs = {}; // maturing by height
-
-  const tsDate = sel.tsDate(getState());
-
-  const pageSize = 200;
-  const maxMaturity = Math.max(chainParams.CoinbaseMaturity, chainParams.TicketMaturity);
-  const currentDate = new Date();
-  let toProcess = [];
-
-  try {
-    const data = { maxMaturity, currentBlockHeight, pageSize, tsDate, backwards, walletService };
-    toProcess = await prepDataToCalcStats(currentBlockHeight, 1, currentDate, endDate, -1, data);
-    // when calculating backwards, we need to account for unmined txs, because
-    // the account balances for locked tickets include them. To simplify the
-    // logic, we modify the unmined transactions to simulate as if it had been
-    // just mined in the last block.
-    const { unmined } = await wallet.getTransactions(walletService, -1, -1, 0);
-    const fixedUnmined = unmined.map(tx => ({ ...tx, timestamp: currentDate.getTime(),
-      height: currentBlockHeight }));
-    toProcess.unshift(...fixedUnmined);
-
-    // on backwards stats, we find vote txs before finding ticket txs, so
-    // pre-process tickets from all grabbed txs to avoid making the separate
-    // getTransaction calls in voteRevokeInfo()
-    toProcess.forEach(tx => {
-      if (tx.txType === wallet.TRANSACTION_TYPE_TICKET_PURCHASE) {
-        var { isWallet, commitAmount } = ticketInfo(tx);
-        recordTicket(maturingTxs, liveTickets, tx, commitAmount, isWallet, chainParams);
-      }
-    });
-
-    const ticketsCounter = await countTicketsBackwards({ mined: toProcess, maturingTxs, liveTickets, tsDate, chainParams });
-
-    resolve(ticketsCounter);
-
-  } catch (err) {
-    reject(err);
-  }
+      resolve(ticketsCounter);
+    } catch (err) {
+      reject(err);
+    }
+  };
+  return countTickets();
 });
 
-const countTicketsBackwards = async ({ mined, chainParams, tsDate }) => {
+const countTicketsBackwards = ({ mined, chainParams, tsDate }) => {
   let now = new Date();
   let lastTxTimestamp = now.getTime() / 1000;
   let lastDate = tsDate(lastTxTimestamp);
@@ -588,13 +584,14 @@ const txDataCbBackwards = async ({ mined, maturingTxs, liveTickets,
   const fields = [ "spendable", "locked", "stakeFees", "stakeRewards", "totalStake", "immature" ];
   const turnFieldsNegative = (delta) => fields.forEach(f => delta[f] = -delta[f]);
 
-  currentBalance = balances.reduce((cb, acct) => {
+  currentBalance = await balances.reduce((cb, acct) => {
     cb.spendable += acct.spendable;
     cb.immature += acct.immatureStakeGeneration + acct.immatureReward;
     cb.locked += acct.lockedByTickets;
     return cb;
   }, currentBalance);
 
+  let balance = currentBalance;
   for (let i = 0; i < mined.length; i++) {
     const tx = mined[i];
     const delta = toAddDeltas[i] ? toAddDeltas[i] : await txBalancesDelta(tx, maturingTxs, liveTickets, walletService, chainParams);
@@ -614,9 +611,9 @@ const txDataCbBackwards = async ({ mined, maturingTxs, liveTickets,
     const maturedDeltas = findMaturingDeltas(maturingTxs, tx.height+1, lastTxHeight,
       tx.timestamp, lastTxTimestamp, chainParams, true);
     maturedDeltas.forEach((delta) => {
-      currentBalance = addDelta(delta, progressFunction, { ...currentBalance, delta }, tsDate, true);
+      balance = addDelta(delta, progressFunction, { ...balance, delta }, tsDate, true);
     });
-    currentBalance = addDelta(delta, progressFunction, { ...currentBalance, delta }, tsDate, true);
+    balance = addDelta(delta, progressFunction, { ...balance, delta }, tsDate, true);
 
     lastTxHeight = tx.height;
     lastTxTimestamp = delta.timestamp;
