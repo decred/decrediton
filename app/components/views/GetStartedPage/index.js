@@ -185,6 +185,7 @@ class GetStartedPage extends React.Component {
           text,
           animationType,
           Form,
+          onShowLogs,
           syncFetchHeadersAttempt,
         }}/>;
     } else if (!isSPV && startStepIndex > 2) {
