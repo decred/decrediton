@@ -18,20 +18,19 @@ import TrezorPage from "components/views/TrezorPage";
 import SideBar from "components/SideBar";
 import { BlurableContainer } from "layout";
 import { walletContainer, theming } from "connectors";
-import cx from "classnames";
 
 const pageAnimation = { atEnter: { opacity: 0 }, atLeave: { opacity: 0 }, atActive: { opacity: 1 } };
 
 @autobind
 class Wallet extends React.Component {
   render() {
-    const { expandSideBar, sidebarOnBottom } = this.props;
+    const { expandSideBar } = this.props;
     const MainSwitch = this.props.uiAnimations ? AnimatedSwitch : StaticSwitch;
 
     return (
       <div className={"page-body"}>
         <SideBar />
-        <BlurableContainer className={cx(expandSideBar ? "page-view" : "page-view-reduced-bar", sidebarOnBottom && "sidebar-on-bottom")}>
+        <BlurableContainer className={expandSideBar ? "page-view" : "page-view-reduced-bar"}>
           <MainSwitch {...pageAnimation}>
             <Route path="/home"                           component={HomePage} />
             <Route path="/accounts"                       component={AccountsPage} />
