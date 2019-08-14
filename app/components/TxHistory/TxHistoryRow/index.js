@@ -30,7 +30,7 @@ export const timeMessageDefine = defineMessages({
 
 export const timeMessage = (txTimestamp, intl) => intl.formatMessage(timeMessageDefine.dayMonthHourDisplay, { value: txTimestamp });
 
-const TxRow = ({ tx, overview, tsDate, intl }, { router }) => {
+const TxRow = ({ tx, overview, tsDate, intl, useModalForDetails }, { router }) => {
   const rowType = tx.status ? tx.status :
     tx.txType ? tx.txType : tx.txDirection;
   const Component = TxRowByType[rowType];
@@ -43,7 +43,7 @@ const TxRow = ({ tx, overview, tsDate, intl }, { router }) => {
         txTs: tsDate(tx.txTimestamp),
         overview,
         pending: !tx.txTimestamp,
-        onClick: () => router.history.push(`/transactions/history/${tx.txHash}`)
+        onClick: () => router.history.push({ pathname: `/transactions/history/${tx.txHash}`, modal: useModalForDetails || false })
       }}
     />
   ) : null;

@@ -9,6 +9,7 @@ import { DecodedTransaction }  from "middleware/walletrpc/api_pb";
 import "style/TxDetails.less";
 import "style/Fonts.less";
 import KeyBlueButton from "../buttons/KeyBlueButton";
+import cx from "classnames";
 
 const messages = defineMessages({
   Ticket:     { id: "txDetails.type.ticket", defaultMessage: "Ticket" },
@@ -56,6 +57,7 @@ const TxDetails = ({
   goBackHistory,
   tsDate,
   publishUnminedTransactions,
+  modal
 }) => {
   const {
     txHash,
@@ -150,7 +152,7 @@ const TxDetails = ({
     />;
 
   return (
-    <StandalonePage header={header} className="txdetails-standalone-page">
+    <StandalonePage header={header} className={cx("txdetails-standalone-page", modal && "modal")}>
       <div className="txdetails-top">
         <div className="txdetails-top-row">
           <div className="txdetails-name">

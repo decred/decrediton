@@ -1,9 +1,9 @@
 import TxDetails from "../TxDetails";
 
-const Page = ({ transactionDetails, decodedTransaction, tsDate }) => (
+const Page = ({ transactionDetails, decodedTransaction, tsDate, modal }) => (
   <>
     { transactionDetails ?
-      <TxDetails tx={transactionDetails} {...{ decodedTransaction, tsDate }}/> :
+      <TxDetails tx={transactionDetails} {...{ decodedTransaction, tsDate, modal }}/> :
       <p>Transaction not found</p> }
   </>
 );

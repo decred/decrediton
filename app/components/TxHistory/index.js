@@ -1,11 +1,11 @@
 import TxHistoryRow from "./TxHistoryRow";
 
-const TxHistory = ({ transactions = [], limit, overview, tsDate }) => (
+const TxHistory = ({ transactions = [], limit, overview, tsDate, useModalForDetails }) => (
   <>
     {transactions.map( (tx, index) => {
       if(limit && index >= limit) return;
       return (
-        <TxHistoryRow {...{ key: tx.txHash, overview, tx, tsDate }} />
+        <TxHistoryRow {...{ key: tx.txHash, overview, tx, tsDate, useModalForDetails }} />
       );
     })}
   </>
