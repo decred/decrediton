@@ -25,8 +25,7 @@ const pageAnimation = { atEnter: { opacity: 0 }, atLeave: { opacity: 0 }, atActi
 @autobind
 class Wallet extends React.Component {
   render() {
-    const { expandSideBar, sidebarOnBottom, location } = this.props;
-    let isModal = location && location.modal;
+    const { expandSideBar, sidebarOnBottom } = this.props;
     const MainSwitch = this.props.uiAnimations ? AnimatedSwitch : StaticSwitch;
 
     return (
@@ -42,14 +41,13 @@ class Wallet extends React.Component {
             <Route path="/invalidRPCVersion"              component={InvalidRPCVersion} />
             <Route path="/help"                           component={HelpPage} />
             <Route path="/security"                       component={SecurityPage} />
-            {!isModal ? <Route path="/transactions/history/:txHash" component={TransactionPage} /> : null}
             <Route path="/transactions"                   component={TransactionsPage} />
             <Route path="/tickets"                        component={TicketsPage} />
             <Route path="/tutorial"                       component={TutorialsPage} />
             <Route path="/governance"                     component={GovernancePage} />
             <Route path="/trezor"                         component={TrezorPage} />
           </MainSwitch>
-          {isModal ? <Route path="/transactions/history/:txHash" component={TransactionPage} /> : null }
+          <Route path="/transactions/history/:txHash" component={TransactionPage} />
         </BlurableContainer>
       </div>
     );

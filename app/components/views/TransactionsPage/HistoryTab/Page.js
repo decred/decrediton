@@ -52,8 +52,6 @@ const subtitleMenu = ({ sortTypes, txTypes, selectedSortOrderKey, selectedTxType
   </div>
 );
 
-const useModalForDetails = true;
-
 const Page = ({
   sortTypes,
   txTypes,
@@ -87,7 +85,7 @@ const Page = ({
         currencyDisplay, transactionsFilter, unitDivisor })} />
     <div className="history-page-content-wrapper">
       {transactions.length > 0
-        ? <TxHistory {...{ transactions, tsDate, useModalForDetails }} />
+        ? <TxHistory {...{ transactions, tsDate }} />
         : null }
     </div>
     {!noMoreTransactions
