@@ -68,14 +68,14 @@ const fillVotes = async (proposal, propVotes, walletService) => {
     : [];
   const eligibleTicketsByHash = eligibleTickets.reduce( (m, t) => { m[t.ticket] = true; return m; }, {});
 
-  proposal.eligibleTickets = eligibleTickets;
-  proposal.hasEligibleTickets = eligibleTickets.length > 0;
-  proposal.currentVoteChoice = "abstain";
-  proposal.startBlockHeight = propVotes.data.startvotereply ? parseInt(propVotes.data.startvotereply.startblockheight) : null;
-
   // Find out if this wallet has voted in this prop and what was the choice.
   // This assumes the wallet will cast all available votes the same way.
   propVotes.data.castvotes.some(vote => {
+    proposal.eligibleTickets = eligibleTickets;
+    proposal.hasEligibleTickets = eligibleTickets.length > 0;
+    proposal.currentVoteChoice = "abstain";
+    proposal.startBlockHeight = propVotes.data.startvotereply ? parseInt(propVotes.data.startvotereply.startblockheight) : null;
+
     const choiceID = voteBitToChoice[parseInt(vote.votebit)];
     if (!choiceID) { throw "Error: choiceID not found on vote when getting proposal votes"; }
     // proposal.voteCounts.abstain -= 1; // TODO: support abstain
@@ -130,19 +130,15 @@ export const GETVETTED_ATTEMPT = "GETVETTED_ATTEMPT";
 export const GETVETTED_FAILED = "GETVETTED_FAILED";
 export const GETVETTED_SUCCESS = "GETVETTED_SUCCESS";
 export const GETVETTED_CANCELED = "GETVETTED_CANCELED";
-export const GETVETTED_UPDATEDVOTERESULTS_SUCCESS = "GETVETTED_UPDATEDVOTERESULTS_SUCCESS";
-export const GETVETTED_UPDATEDVOTERESULTS_FAILED = "GETVETTED_UPDATEDVOTERESULTS_FAILED";
 
 export const getVettedProposals = () => async (dispatch, getState) => {
   dispatch({ type: GETVETTED_ATTEMPT });
   const piURL = sel.politeiaURL(getState());
   const oldProposals = sel.proposalsDetails(getState());
   const currentBlockHeight = sel.currentBlockHeight(getState());
-  const chainParams = sel.chainParams(getState());
 
   const cfg = getWalletCfg(sel.isTestNet(getState()), sel.getWalletName(getState()));
   const lastAccessTime = cfg.get("politeia_last_access_time") || 0;
-  const lastAccessBlock = cfg.get("politeia_last_access_block") || 0;
 
   const originalWalletService = getState().grpc.walletService;
 
@@ -213,11 +209,22 @@ export const getVettedProposals = () => async (dispatch, getState) => {
       byToken[p.token] = p;
     });
 
+    cfg.set("politeia_last_access_time", (new Date()).getTime());
+    cfg.set("politeia_last_access_block", currentBlockHeight);
     dispatch({ proposals: byToken, preVote, activeVote, abandoned, voted, type: GETVETTED_SUCCESS });
+    dispatch(getVettedUpdateVoteResults({ activeVote, voted, byToken, originalWalletService, cfg, piURL }));
   } catch (error) {
     dispatch({ error, type: GETVETTED_FAILED });
     return;
   }
+};
+
+export const GETVETTED_UPDATEDVOTERESULTS_ATTEMPT = "GETVETTED_UPDATEDVOTERESULTS_ATTEMPT";
+export const GETVETTED_UPDATEDVOTERESULTS_SUCCESS = "GETVETTED_UPDATEDVOTERESULTS_SUCCESS";
+export const GETVETTED_UPDATEDVOTERESULTS_FAILED = "GETVETTED_UPDATEDVOTERESULTS_FAILED";
+
+export const getVettedUpdateVoteResults = ({ activeVote, voted, byToken, originalWalletService, cfg, piURL }) => async (dispatch, getState) => {
+  dispatch({ type: GETVETTED_UPDATEDVOTERESULTS_ATTEMPT });
 
   // grab the votes (including the wallet's voted choice) for voted/voting
   // proposals asynchronously so we don't block the user from viewing the
@@ -226,35 +233,36 @@ export const getVettedProposals = () => async (dispatch, getState) => {
   // processed.
 
   try {
+    const chainParams = sel.chainParams(getState());
+    const lastAccessBlock = cfg.get("politeia_last_access_block") || 0;
     const { walletService } = getState().grpc;
 
     const votedWithVotes = await Promise.all([ ...activeVote, ...voted ]
       .map(prop => getProposalVotes({ ...prop }, piURL, walletService)));
-    activeVote = [];
-    voted = [];
-    byToken = { ...byToken };
+    const newActiveVote = [];
+    const newVoted = [];
 
     votedWithVotes.forEach(p => {
       switch (p.voteStatus) {
       case VOTESTATUS_ACTIVEVOTE:
         var startVoteBh = p.startBlockHeight || 0;
         p.votingSinceLastAccess = startVoteBh >= (lastAccessBlock - chainParams.TicketMaturity);
-        activeVote.push(p);
+        newActiveVote.push(p);
         break;
 
       case VOTESTATUS_VOTED:
-        voted.push(p);
+        newVoted.push(p);
         break;
 
       default:
-        voted.push(p); break;
+        newVoted.push(p); break;
       }
       byToken[p.token] = p;
     });
-    voted.sort((a, b) => a.timestamp - b.timestamp);
-    activeVote.sort((a, b) => a.timestamp - b.timestamp);
+    newVoted.sort((a, b) => a.timestamp - b.timestamp);
+    newActiveVote.sort((a, b) => a.timestamp - b.timestamp);
 
-    dispatch({ proposals: byToken, activeVote, voted, type: GETVETTED_UPDATEDVOTERESULTS_SUCCESS });
+    dispatch({ proposals: byToken, activeVote: newActiveVote, voted: newVoted, type: GETVETTED_UPDATEDVOTERESULTS_SUCCESS });
   } catch (error) {
     const { walletService } = getState().grpc;
     if (walletService !== originalWalletService) {
@@ -262,13 +270,9 @@ export const getVettedProposals = () => async (dispatch, getState) => {
       // just ignore the error here in this case.
       return;
     }
-
     dispatch({ error, type: GETVETTED_UPDATEDVOTERESULTS_FAILED });
     return;
   }
-
-  cfg.set("politeia_last_access_time", (new Date()).getTime());
-  cfg.set("politeia_last_access_block", currentBlockHeight);
 };
 
 export const GETPROPOSAL_ATTEMPT = "GETPROPOSAL_ATTEMPT";
