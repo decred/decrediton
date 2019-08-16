@@ -17,8 +17,8 @@ const Header = ({
       <div className="account-row-top-total-value">
         <Balance amount={account.total} />
       </div>
-      <div className="account-row-top-spendable">
-        <T id="accounts.row.spendable" m="Spendable" />
+      <div className="account-row-top-spendable is-row">
+        <T id="accounts.row.spendable" m="Spendable:" />
         <Balance classNameWrapper="account-row-top-spendable-value" flat amount={account.spendable} />
       </div>
     </div>
@@ -41,10 +41,8 @@ const Row = ({
     show={isShowingDetails}
     className={"account-row-details-bottom"}
   >
-    {isShowingRenameAccount
-      ? getRenameAccountStyles()
-      : getAccountDetailsStyles()
-    }
+    {isShowingRenameAccount ?
+      getRenameAccountStyles() : getAccountDetailsStyles()}
   </VerticalAccordion>
 );
 

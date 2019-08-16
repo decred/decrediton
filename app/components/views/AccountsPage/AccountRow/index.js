@@ -7,7 +7,6 @@ import { injectIntl } from "react-intl";
 class AccountRow extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       isShowingRenameAccount: false,
       renameAccountName: null,
