@@ -14,7 +14,8 @@ const mapStateToProps = selectorMap({
     sel.getNextAccountRequestAttempt,
     sel.renameAccountRequestAttempt
   )),
-  accountExtendedKey: sel.accountExtendedKey
+  accountExtendedKey: sel.accountExtendedKey,
+  walletName: sel.getWalletName,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

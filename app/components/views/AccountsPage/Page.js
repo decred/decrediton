@@ -7,7 +7,7 @@ import { AddAccountModal } from "modals";
 import { WatchOnlyWarnNotification, Subtitle } from "shared";
 
 const AccountsListHeader = ({ onGetNextAccountAttempt, isCreateAccountDisabled }) => <StandaloneHeader
-  title={<T id="accounts.title" m="Accounts" />}
+  title={<T id="accounts.title" m=" Accounts" />}
   description={<T id="accounts.description" m={"Accounts allow you to keep separate records of your DCR funds.\nTransferring DCR across accounts will create a transaction on the blockchain."}/>}
   iconClassName="accounts"
   actionButton={
@@ -29,6 +29,13 @@ const subtitleInfoIcon = () => (
   </div>
 );
 
+const subtitleWalletName = ({ walletName }) => (
+  <span>
+    {walletName}
+    <T id="accounts.subtitle" m=" Accounts"/>
+  </span>
+);
+
 const AccountsList = ({
   accounts,
   isLoading,
@@ -42,11 +49,12 @@ const AccountsList = ({
   onHideAccountDetails,
   accountNumDetailsShown,
   isCreateAccountDisabled,
+  walletName,
 }) => (
   <StandalonePage header={<AccountsListHeader {...{ onGetNextAccountAttempt, isCreateAccountDisabled }} />}>
     { isLoading ? <DecredLoading/> :
       <>
-        <Subtitle title={<T id="accounts.subtitle" m="Accounts"/>} className={"is-row"} children={subtitleInfoIcon()} />
+        <Subtitle title={subtitleWalletName({ walletName })} className={"is-row"} children={subtitleInfoIcon()} />
         <div className="account-content-nest">
           {accounts.map(account => (
             <AccountRow

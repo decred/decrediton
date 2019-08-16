@@ -31,7 +31,7 @@ class AccountsPage extends React.Component {
     const {
       walletService, isCreateAccountDisabled, onGetNextAccountAttempt, accounts,
       onGetAccountExtendedKey, onHideAccount, onShowAccount, onRenameAccount,
-      accountExtendedKey, isLoading,
+      accountExtendedKey, isLoading, walletName,
     } = this.props;
     const { accountNumDetailsShown } = this.state;
     const { onShowAccountDetails, onHideAccountDetails } = this;
@@ -40,7 +40,7 @@ class AccountsPage extends React.Component {
         isCreateAccountDisabled, onGetNextAccountAttempt, accounts, isLoading,
         onGetAccountExtendedKey, onHideAccount, onShowAccount, onRenameAccount,
         accountExtendedKey, accountNumDetailsShown, onShowAccountDetails,
-        onHideAccountDetails,
+        onHideAccountDetails, walletName
       }}/>;
   }
 }
