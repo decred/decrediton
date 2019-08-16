@@ -388,6 +388,27 @@
     &.release-image-v130 { background-image: @release-image-v130; }
     &.release-image-v140 { background-image: @release-image-v140; }
   }
+
+  @media screen and (max-width: 1140px) {
+    .release-notes-image {
+      flex:1;
+      margin-top: 14px;
+      background-repeat: no-repeat;
+      width: 100%;
+      height: 0;
+      background-size: contain;
+      padding-bottom: 50%; 
+    }
+  }
+
+  @media screen and (max-width: 890px) {
+    .release-notes-text {
+      max-width: inherit;
+    }
+    .release-notes-image {
+      order: -1;
+    }
+  }  
 }
 
 .release-notes-version-navigation {
@@ -659,6 +680,7 @@
 
 .privacy-option {
   width: 296px;
+  min-width: 296px;
   height: 342px;
   border-radius: 5px;
   margin-right: 20px;
@@ -666,6 +688,9 @@
   background-color: var(--background-back-color);
   color: var(--modal-text);
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .privacy-option:hover {
@@ -677,26 +702,79 @@
   }
 }
 
+.privacy-text-container {
+  margin: 0 30px;
+  flex:1;
+}
+
 .privacy-option-title {
   font-size: 15px;
-  line-height: 19px;
-  margin-left: 30px;
+  line-height: 19px;  
   margin-bottom: 8px;
 }
 
 .privacy-option-description {
-  margin-left: 30px;
-  margin-right: 30px;
   font-size: 13px;
   line-height: 17px;
 }
 
 .privacy-option-icon {
-  margin: 30px 73px 20px 73px;
+  margin: 30px 0 20px 0;
   background-repeat: no-repeat;
   background-size: 150px;
   width: 150px;
   height: 150px;
+  background-position: center;
+  align-self: center;
+}
+@media screen and (max-width: 978px) {
+    .privacy-options.wide {
+      .privacy-option {
+        width: 209px;
+        min-width: 209px;
+
+        .privacy-option-icon
+        {
+          background-size: 114px;
+          width: 114;
+          height: 114px;
+        }
+
+        .privacy-text-container {
+          margin: 0 20px;
+        }      
+      }
+    }
+}
+
+@media screen and (max-width: 670px) {
+  .privacy-options.wide,
+  .privacy-options {
+    flex-direction:column;
+    margin: 0;
+    padding: 0;
+
+    .privacy-option {
+      width: 100%;
+      margin: 0 0 10px 0;
+      padding: 0;  
+      flex-direction: row;  
+      align-items: flex-start;
+      min-height: 137px;
+      height: inherit;
+      
+      .privacy-option-icon {
+        margin: 20px 0px;
+        background-size: 40px;
+        width: 80px;
+        height: 40px;
+        align-self: flex-start;
+      }
+      .privacy-text-container {
+        margin:20px 20px 20px 0;
+      }
+    }
+  }
 }
 
 .privacy-option-icon.standard {
@@ -762,16 +840,37 @@
   margin-top: 14em;
 }
 
-@media screen and (max-width: 1179px) {
+@media screen and (max-width: 768px) {
+  .release-notes {
+    height: 70vh;
+  }    
   .getstarted.content {
     margin-left: 10px;
   }
-  .page-body.getstarted {
-    background-position: 50px 40px;
+  .getstarted.loader.logs {
+    margin-left: 0;
+    margin-top: 87px;
+  }
+  .getstarted.loader .go-back-screen-button-area {
+    top:131px;
+    right:60px;
+  }  
+}
+@media screen and (max-width: 430px) {
+  .getstarted.loader .go-back-screen-button-area {
+    top:155px;
+    right:59px;
   }
 }
+@media screen and (max-width: 375px) {
+  .release-notes {
+    height: 77vh;
+  }  
 
-@media screen and (max-width: 768px) {
+  .privacy-options {
+    margin: 0 -10px;
+  }
+
   .page-body.getstarted {
     padding: 20px !important;
     background-position: 20px 20px;
@@ -779,7 +878,7 @@
     flex-direction: column;
     background-repeat: no-repeat;
     background-image: var(--small-logo);
-    background-size: 50px;
+    background-size: 30px;
   }
 
   .getstarted.content {
@@ -804,4 +903,17 @@
     width: 315px;
     margin-left: 10px;
   }
+
+  .getstarted.loader.logs {
+    margin-top: 56px;
+
+    .content-title {
+      font-size:23px;
+    }
+  }
+  
+  .getstarted.loader .go-back-screen-button-area {
+    top:107px;
+    right:40px;
+  }  
 }

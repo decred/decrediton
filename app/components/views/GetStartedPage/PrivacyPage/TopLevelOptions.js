@@ -3,11 +3,13 @@ import { FormattedMessage as T } from "react-intl";
 const PrivacyOption = ({ title, description, icon, onClick }) => (
   <div className="privacy-option" onClick={onClick}>
     <div className={[ "privacy-option-icon", icon ].join(" ")} />
-    <div className="privacy-option-title">
-      {title}
-    </div>
-    <div className="privacy-option-description">
-      {description}
+    <div className="privacy-text-container">
+      <div className="privacy-option-title">
+        {title}
+      </div>
+      <div className="privacy-option-description">
+        {description}
+      </div>
     </div>
   </div>
 );
@@ -20,7 +22,7 @@ export default ({ setupStandardPrivacy, setupDisabledPrivacy, setupCustomPrivacy
     <div className="language-select-title-sub">
       <T id="privacy.titleSub" m={"Select how Decrediton should connect to external services. You can change this in the application settings later."}/>
     </div>
-    <div className="privacy-options">
+    <div className="privacy-options wide">
       <PrivacyOption
         title={<T id="privacy.options.standard.title" m="Standard" />}
         icon="standard"
