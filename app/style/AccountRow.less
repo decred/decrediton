@@ -132,7 +132,8 @@
 
 .rename-account-button,
 .show-account-button,
-.hide-account-button {
+.hide-account-button,
+.reveal-account-pubkey-button {
   .inline-block-mixin;
 
   border-radius: 5px;
@@ -152,6 +153,10 @@
   cursor: pointer;
   float: right;
   margin-top: 17px;
+}
+
+.reveal-account-pubkey-button {
+    background-image: @watch-only-icon;
 }
 
 .rename-account-button {
@@ -205,21 +210,25 @@
     padding: 2px 20px 3px 20px;
     box-shadow: none;
     transition: all 131ms @easeInOutQuart;
-  }
-
-  .account-actions-pubkey-button:hover {
-    color: var(--background-back-color);
-    background-color: var(--disabled-color);
+    cursor: auto;
   }
 
   .account-actions-pubkey-area {
+<<<<<<< HEAD
     color: var(--account-pubkey-text);
+=======
+    color: var(--input-color);
+>>>>>>> 5e8a1021... Fix some style from account details view
     font-size: 13px;
     line-height: 17px;
     font-weight: 400;
     padding: 2px 20px 3px 20px;
     border-radius: 3px;
+<<<<<<< HEAD
     background-color: var(--linear-progress-text);
+=======
+    background-color: var(--background-copy-color);
+>>>>>>> 5e8a1021... Fix some style from account details view
     height: 32px;
     width: 390px;
     word-break: break-all;

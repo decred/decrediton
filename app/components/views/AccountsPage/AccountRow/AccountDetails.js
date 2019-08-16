@@ -10,24 +10,6 @@ function isHidable(account) {
   );
 }
 
-const HideAccountBtn = ({ hideAccount }) => (
-  <Tooltip text={<T id="accounts.hide.tip" m="Hide" />}>
-    <div className="hide-account-button" onClick={hideAccount} />
-  </Tooltip>
-);
-
-const ShowAccountBtn = ({ showAccount }) => (
-  <Tooltip text={<T id="accounts.show.tip" m="Show" />}>
-    <div className="show-account-button" onClick={showAccount} />
-  </Tooltip>
-);
-
-const RenameAccountBtn = ({ showRenameAccount }) => (
-  <Tooltip text={<T id="accounts.rename.tip" m="Rename Account" />}>
-    <div className="rename-account-button" onClick={showRenameAccount} />
-  </Tooltip>
-);
-
 const DataLine = ({ children }) => (
   <div className="account-row-details-bottom-spec">
     <div className="account-row-details-bottom-spec-name">
@@ -117,14 +99,27 @@ const AccountsList = ({
               </div>
               <CopyToClipboard textToCopy={accountExtendedKey} className="account-actions-pubkey-clipboard" />
             </> :
-            <SlateGrayButton className="account-actions-pubkey-button" onClick={onShowPubKey}><T id="account.reveal" m="Reveal"/></SlateGrayButton>
+            <SlateGrayButton className="account-actions-pubkey-button"><T id="account.Hided" m="Hided"/></SlateGrayButton>
           }
         </div>
       }
       <div className="account-actions-buttons">
-        {account.accountName !== "imported" && <RenameAccountBtn {...{ showRenameAccount }} /> }
-        {isHidable(account) && !hidden && <HideAccountBtn {...{ hideAccount }} /> }
-        {hidden && <ShowAccountBtn {...{ showAccount }} /> }
+        {account.accountName !== "imported" &&
+          <Tooltip text={<T id="accounts.rename.tip" m="Rename Account" />}>
+            <div className="rename-account-button" onClick={showRenameAccount} />
+          </Tooltip> }
+        {account.accountName !== "imported" &&
+          <Tooltip text={<T id="accounts.reveal.tip" m="Reveal Pubkey" />}>
+            <div className="reveal-account-pubkey-button" onClick={onShowPubKey} />
+          </Tooltip> }
+        {isHidable(account) && !hidden &&
+          <Tooltip text={<T id="accounts.hide.tip" m="Hide" />}>
+            <div className="hide-account-button" onClick={hideAccount} />
+          </Tooltip> }
+        {hidden && 
+            <Tooltip text={<T id="accounts.show.tip" m="Show" />}>
+              <div className="show-account-button" onClick={showAccount} />
+            </Tooltip> }
       </div>
     </div>
   </div>
