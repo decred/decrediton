@@ -1,5 +1,4 @@
 export { default as accountsPage } from "./accountsPage";
-export { default as accountsPageAccounts } from "./accountsPageAccounts";
 export { default as accountsSelect } from "./accountsSelect";
 export { default as app } from "./app";
 export { default as balance } from "./balance";
