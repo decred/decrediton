@@ -116,7 +116,7 @@ const AccountsList = ({
           <Tooltip text={<T id="accounts.hide.tip" m="Hide" />}>
             <div className="hide-account-button" onClick={hideAccount} />
           </Tooltip> }
-        {hidden && 
+        {hidden &&
             <Tooltip text={<T id="accounts.show.tip" m="Show" />}>
               <div className="show-account-button" onClick={showAccount} />
             </Tooltip> }

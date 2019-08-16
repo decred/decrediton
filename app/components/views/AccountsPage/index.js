@@ -8,8 +8,8 @@ class AccountsPage extends React.Component {
   constructor(props)  {
     super(props);
     this.state = {
-      isShowingAddAccount: false, 
-      accountNumDetailsShown: null,  
+      isShowingAddAccount: false,
+      accountNumDetailsShown: null,
     };
   }
 
@@ -37,11 +37,11 @@ class AccountsPage extends React.Component {
     const { onShowAccountDetails, onHideAccountDetails } = this;
     return !walletService ?
       <ErrorScreen/> : <AccountsList {...{
-          isCreateAccountDisabled, onGetNextAccountAttempt, accounts, isLoading,
-          onGetAccountExtendedKey, onHideAccount, onShowAccount, onRenameAccount,
-          accountExtendedKey, accountNumDetailsShown, onShowAccountDetails,
-          onHideAccountDetails,
-      }}/>
+        isCreateAccountDisabled, onGetNextAccountAttempt, accounts, isLoading,
+        onGetAccountExtendedKey, onHideAccount, onShowAccount, onRenameAccount,
+        accountExtendedKey, accountNumDetailsShown, onShowAccountDetails,
+        onHideAccountDetails,
+      }}/>;
   }
 }
 
