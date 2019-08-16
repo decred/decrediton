@@ -3,16 +3,22 @@ import { Balance, VerticalAccordion } from "shared";
 import "style/Fonts.less";
 import "style/AccountRow.less";
 
+const isImported = (accountName) => accountName === "imported"; 
 const Header = ({
   account,
   hidden
 }) => (
   <div className={"account-row-details-top" + (hidden ? " account-hidden" : "") + (account.accountName == "imported" ? " imported" : "")} >
-    <div className="account-row-top-account-name">{account.accountName}{
-      hidden
+    <div className="account-row-top-account-name">
+      {account.accountName === "default" ?
+         <T id="accounts.name.default" m="Primary Account" /> :
+        isImported(account.accountName) ?
+          <T id="accounts.name.imported" m="Locked for Staking" /> :
+          account.accountName}
+      {hidden
         ? <span> (hidden)</span>
-        : <span></span>
-    }</div>
+        : <span></span>}
+    </div>
     <div className="account-row-top-account-funds">
       <div className="account-row-top-total-value">
         <Balance amount={account.total} />
