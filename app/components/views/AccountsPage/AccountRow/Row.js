@@ -3,7 +3,8 @@ import { Balance, VerticalAccordion } from "shared";
 import "style/Fonts.less";
 import "style/AccountRow.less";
 
-const isImported = ({ accountName }) => accountName === "imported";
+// default account number equals max int number
+const isImported = ({ accountNumber }) => accountNumber === 2147483647;
 const Header = ({
   account,
   hidden,
@@ -17,11 +18,9 @@ const Header = ({
     <div className="account-row-top-account-name">
       {account.accountName === "default" ?
         <T id="accounts.name.default" m="Primary Account" /> :
-        isImported(account.accountName) ?
-          <T id="accounts.name.imported" m="Locked for Staking" /> :
           account.accountName}
       {hidden
-        ? <span> (hidden)</span>
+        ? <span>(hidden)</span>
         : null}
     </div>
     <div className="account-row-top-account-funds">

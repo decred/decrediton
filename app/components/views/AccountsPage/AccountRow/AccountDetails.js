@@ -99,7 +99,7 @@ const AccountsList = ({
               </div>
               <CopyToClipboard textToCopy={accountExtendedKey} className="account-actions-pubkey-clipboard" />
             </> :
-            <SlateGrayButton className="account-actions-pubkey-button"><T id="account.Hided" m="Hided"/></SlateGrayButton>
+            <SlateGrayButton className="account-actions-pubkey-button"><T id="account.Hidden" m="Hidden"/></SlateGrayButton>
           }
         </div>
       }
