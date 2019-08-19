@@ -18,7 +18,7 @@ const Header = ({
     <div className="account-row-top-account-name">
       {account.accountName === "default" ?
         <T id="accounts.name.default" m="Primary Account" /> :
-          account.accountName}
+        account.accountName}
       {hidden
         ? <span>(hidden)</span>
         : null}
