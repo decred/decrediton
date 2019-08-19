@@ -33,7 +33,6 @@
   background-size: 20px auto;
   background-repeat: no-repeat;
   background-position: 15px center;
-  background-color: var(--background-back-color);
   border-top: 1px solid var(--background-container-hover);
 
   &.imported {
@@ -44,18 +43,16 @@
 .account-row-details-top:hover {
   background-color: var(--background-container-hover);
 
-  &.deactivated {
+  &.disabled {
     background-color: var(--disabled-background-color);
   }
 }
 
 .account-row-details-bottom {
-  background-color: var(--background-container);
+  background-color: var(--background-back-color);
 
   &.active {
-    .account-row-details-top {
-      background-color: var(--disabled-background-color);
-    }
+    background-color: var(--sidebar-color);
   }
 }
 
@@ -236,7 +233,6 @@
   }
 }
 
-.deactivated {
+.disabled {
   background-color: var(--disabled-background-color);
-  cursor: not-allowed;
 }

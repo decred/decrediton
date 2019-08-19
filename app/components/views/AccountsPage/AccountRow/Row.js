@@ -13,7 +13,7 @@ const Header = ({
   // we deactivate the imported account.
   <div className={[ "account-row-details-top", hidden && "account-hidden",
     isImported(account) &&  "imported",
-    (isImported(account) && !hasTickets) && "deactivated" ].join(" ")} >
+    (isImported(account) && !hasTickets) && "disabled" ].join(" ")} >
     <div className="account-row-top-account-name">
       {account.accountName === "default" ?
         <T id="accounts.name.default" m="Primary Account" /> :
