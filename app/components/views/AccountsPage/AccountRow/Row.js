@@ -3,21 +3,26 @@ import { Balance, VerticalAccordion } from "shared";
 import "style/Fonts.less";
 import "style/AccountRow.less";
 
-const isImported = (accountName) => accountName === "imported"; 
+const isImported = ({ accountName }) => accountName === "imported";
 const Header = ({
   account,
-  hidden
+  hidden,
+  hasTickets,
 }) => (
-  <div className={"account-row-details-top" + (hidden ? " account-hidden" : "") + (account.accountName == "imported" ? " imported" : "")} >
+  // hasTickets shows if the account had ticket EVER. When the account had no tickets
+  // we deactivate the imported account.
+  <div className={[ "account-row-details-top", hidden && "account-hidden",
+    isImported(account) &&  "imported",
+    (isImported(account) && !hasTickets) && "deactivated" ].join(" ")} >
     <div className="account-row-top-account-name">
       {account.accountName === "default" ?
-         <T id="accounts.name.default" m="Primary Account" /> :
+        <T id="accounts.name.default" m="Primary Account" /> :
         isImported(account.accountName) ?
           <T id="accounts.name.imported" m="Locked for Staking" /> :
           account.accountName}
       {hidden
         ? <span> (hidden)</span>
-        : <span></span>}
+        : null}
     </div>
     <div className="account-row-top-account-funds">
       <div className="account-row-top-total-value">
@@ -39,17 +44,18 @@ const Row = ({
   getAccountDetailsStyles,
   getRenameAccountStyles,
   isShowingDetails,
-}) => (
-  <VerticalAccordion
-    header={<Header {...{ account, hidden }} />}
-    height={isShowingRenameAccount ? 175 : 280}
-    onToggleAccordion={onToggleShowDetails}
-    show={isShowingDetails}
-    className={"account-row-details-bottom"}
-  >
-    {isShowingRenameAccount ?
-      getRenameAccountStyles() : getAccountDetailsStyles()}
-  </VerticalAccordion>
+  hasTickets,
+}) => (<VerticalAccordion
+  header={<Header {...{ account, hidden, hasTickets }} />}
+  height={isShowingRenameAccount ? 175 : 280}
+  disabled={isImported(account) && !hasTickets}
+  onToggleAccordion={onToggleShowDetails}
+  show={isShowingDetails}
+  className={"account-row-details-bottom"}
+>
+  {isShowingRenameAccount ?
+    getRenameAccountStyles() : getAccountDetailsStyles()}
+</VerticalAccordion>
 );
 
 export default Row;

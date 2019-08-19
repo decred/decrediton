@@ -16,6 +16,7 @@ const mapStateToProps = selectorMap({
   )),
   accountExtendedKey: sel.accountExtendedKey,
   walletName: sel.getWalletName,
+  hasTickets: sel.hasTickets,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

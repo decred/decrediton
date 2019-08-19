@@ -42,7 +42,11 @@
 }
 
 .account-row-details-top:hover {
-  background-color: var(--account-row-hover);
+  background-color: var(--background-container-hover);
+
+  &.deactivated {
+    background-color: var(--disabled-background-color);
+  }
 }
 
 .account-row-details-bottom {
@@ -214,21 +218,13 @@
   }
 
   .account-actions-pubkey-area {
-<<<<<<< HEAD
-    color: var(--account-pubkey-text);
-=======
     color: var(--input-color);
->>>>>>> 5e8a1021... Fix some style from account details view
     font-size: 13px;
     line-height: 17px;
     font-weight: 400;
     padding: 2px 20px 3px 20px;
     border-radius: 3px;
-<<<<<<< HEAD
-    background-color: var(--linear-progress-text);
-=======
     background-color: var(--background-copy-color);
->>>>>>> 5e8a1021... Fix some style from account details view
     height: 32px;
     width: 390px;
     word-break: break-all;
@@ -238,4 +234,9 @@
   .account-actions-pubkey-clipboard {
     margin-left: 10px;
   }
+}
+
+.deactivated {
+  background-color: var(--disabled-background-color);
+  cursor: not-allowed;
 }

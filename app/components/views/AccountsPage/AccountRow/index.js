@@ -134,6 +134,7 @@ class AccountRow extends React.Component {
     const {
       account,
       accountNumDetailsShown,
+      hasTickets,
     } = this.props;
     const {
       isShowingRenameAccount,
@@ -152,6 +153,7 @@ class AccountRow extends React.Component {
           getAccountDetailsStyles,
           onToggleShowDetails,
           isShowingDetails,
+          hasTickets,
         }}
       />
     );

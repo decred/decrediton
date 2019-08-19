@@ -50,6 +50,7 @@ const AccountsList = ({
   accountNumDetailsShown,
   isCreateAccountDisabled,
   walletName,
+  hasTickets,
 }) => (
   <StandalonePage header={<AccountsListHeader {...{ onGetNextAccountAttempt, isCreateAccountDisabled }} />}>
     { isLoading ? <DecredLoading/> :
@@ -57,17 +58,15 @@ const AccountsList = ({
         <Subtitle title={subtitleWalletName({ walletName })} className={"is-row"} children={subtitleInfoIcon()} />
         <div className="account-content-nest">
           {accounts.map(account => (
-            <AccountRow
-              key={account.accountName}
-              account={account}
-              accountNumDetailsShown={accountNumDetailsShown}
-              renameAccount={onRenameAccount}
-              hideAccount={onHideAccount}
-              showAccount={onShowAccount}
-              showAccountDetails={onShowAccountDetails}
-              hideAccountDetails={onHideAccountDetails}
-              onGetAccountExtendedKey={onGetAccountExtendedKey}
-              accountExtendedKey={accountExtendedKey}
+            <AccountRow {...{
+              hasTickets, account, accountNumDetailsShown, onGetAccountExtendedKey, accountExtendedKey
+            }}
+            key={account.accountName}
+            renameAccount={onRenameAccount}
+            hideAccount={onHideAccount}
+            showAccount={onShowAccount}
+            showAccountDetails={onShowAccountDetails}
+            hideAccountDetails={onHideAccountDetails}
             />
           ))}
         </div>

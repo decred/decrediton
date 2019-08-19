@@ -697,7 +697,9 @@
 }
 
 .vertical-accordion-header:hover .vertical-accordion-arrow {
-  background-image: @arrow-right-blue-icon;
+  &:not(".disabled") {
+    background-image: @arrow-right-blue-icon;
+  }
 }
 
 .vertical-accordion.active .vertical-accordion-arrow {
