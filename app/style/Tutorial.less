@@ -30,17 +30,18 @@
     display: flex;
 
     .next-button {
-      margin-right: 52px;
-      margin-top: 5px;
+      margin-left: 40px;
+      margin-top: 8px;
       height: 16px;
       padding: 5px 20px 6px 20px;
     }
 
     .skip-button {
-      margin-left: 10px;
+      margin-right: 10px;
       margin-top: 8px;
       height: 16px;
-      padding: 5px 20px 6px 20px;
+      padding: 5px 20px 6px 0px;
+      width: 34px;
     }
   }
 
@@ -175,9 +176,9 @@
   }
 }
 
-@media screen and (max-width: 816px) {
+@media screen and (max-width: 670px) {
   .getstarted-tutorial .tutorial-main-text {
-    max-height: 550px;
+    max-height: 650px;
   }
 
   .tutorial-main-toolbar {
@@ -185,9 +186,10 @@
       flex-wrap: nowrap;
 
       .next-button {
-        margin-right: 10px !important;
+        margin-left: 10px !important;
         height: 16px;
         padding: 5px 20px 6px 20px;
+        margin-top: 0px !important;
       }
       
       .step-indicator {
@@ -205,17 +207,12 @@
           }
       }    
       
-      .getstarted-tutorial .tutorial-main-toolbar .skip-button {
-          margin: 0;
-          height: inherit;
-          padding: 0px;
-          width: 72px;
-      }      
-
       .skip-button {
-        margin: 0;        
-        padding: 0;
-      }
+          margin-top: 0 !important;
+          height: inherit;
+          width: 26px;
+          padding: 0;
+      }      
   }  
 }
 @media screen and (max-width: 916px) {
@@ -225,9 +222,25 @@
   }
 }
 
+@media screen and (max-width: 768px) {
+  .getstarted-tutorial .tutorial-main {
+    padding-top: 10vh;
+  }
+  .getstarted-tutorial .tutorial-main-text {
+    column-count: 1;
+    padding-right: 55px;
+  }
+}
+
 @media screen and (max-width: 541px) {
   .tutorial-main {
     top: 8px;
+  }
+  .getstarted-tutorial .tutorial-main-text {
+    padding-right: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    min-height: inherit;
   }
 }
 
@@ -270,11 +283,11 @@
       box-shadow: 0px -5px 21px 0px var(--onboard-toolbar-shadow);
 
       .next-button {
-        margin: 0 0 0 30px;
+        margin: 0 30px 0 0;
       }
       
       .skip-button {
-        margin: 0 10px;
+        margin: 0 0 0 30px;
       }
     }
   }
