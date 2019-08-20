@@ -30,3 +30,20 @@ export const HEX = "hex";
 
 export const TESTNET = "testnet";
 export const MAINNET = "mainnet";
+
+// tx types
+export const TICKET = "ticket";
+export const VOTE = "vote";
+export const REVOCATION = "revocation";
+export const UNKNOWN = "unknown";
+export const VOTED = "voted";
+export const UNMINED = "unmined";
+export const IMMATURE = "immature";
+export const MISSED = "missed";
+export const EXPIRED = "expired";
+export const REVOKED = "revoked";
+export const LIVE = "live";
+export const OUT = "out";
+export const IN = "in";
+export const TRANSFER = "transfer";
+export const COINBASE = "coinbase";
