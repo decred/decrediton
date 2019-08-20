@@ -4,11 +4,13 @@ import { ExternalLink } from "shared";
 const PrivacyOption = ({ title, description, icon, onClick }) => (
   <div className="privacy-option" onClick={onClick}>
     <div className={[ "privacy-option-icon", icon ].join(" ")} />
-    <div className="privacy-option-title">
-      {title}
-    </div>
-    <div className="privacy-option-description">
-      {description}
+    <div className="privacy-text-container">
+      <div className="privacy-option-title">
+        {title}
+      </div>
+      <div className="privacy-option-description">
+        {description}
+      </div>
     </div>
   </div>
 );
