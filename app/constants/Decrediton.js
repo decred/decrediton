@@ -7,20 +7,23 @@ function unknownFn(arg) {
     return;
   }
   
-  // Allowed cmd line options are defined here.
-  export const OPTIONS = {
-    boolean: [ "debug", "testnet", "mainnet", "help", "version", "advanced", "spv" ],
-    string: [ "extrawalletargs", "custombinpath", "spvconnect", "rpcuser", "rpcpass", "rpccert", "rpcconnect" ],
-    default: { debug: false },
-    alias: {
-      d: "debug",
-      h: "help",
-      v: "version"
-    },
-    unknown: unknownFn
-  };
-  
-  export const MAX_LOG_LENGTH = 50000;
+// Allowed cmd line options are defined here.
+export const OPTIONS = {
+boolean: [ "debug", "testnet", "mainnet", "help", "version", "advanced", "spv" ],
+string: [ "extrawalletargs", "custombinpath", "spvconnect", "rpcuser", "rpcpass", "rpccert", "rpcconnect" ],
+default: { debug: false },
+alias: {
+    d: "debug",
+    h: "help",
+    v: "version"
+},
+unknown: unknownFn
+};
+
+export const MAX_LOG_LENGTH = 50000;
+
+export const DCR = "DCR";
+export const ATOMS = "atoms";
 
 export const WORDS = "words";
 export const HEX = "hex";

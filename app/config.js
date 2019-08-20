@@ -4,6 +4,7 @@ import ini from "ini";
 import { stakePoolInfo } from "./middleware/stakepoolapi";
 import { appDataDirectory, getGlobalCfgPath, dcrdCfg, getWalletPath, dcrwalletCfg, getDcrdRpcCert, getDcrdPath } from "./main_dev/paths";
 import * as cfgConstants from "./main_dev/configConstants.js";
+import { DCR } from "constants";
 
 export function getGlobalCfg() {
   const config = new Store();
@@ -24,7 +25,7 @@ export function initWalletCfg(testnet, walletPath) {
     config.set("balancetomaintain","0");
   }
   if (!config.has("currency_display")) {
-    config.set("currency_display","DCR");
+    config.set("currency_display", DCR);
   }
   if (!config.has("hiddenaccounts")) {
     var hiddenAccounts = Array();

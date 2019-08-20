@@ -11,7 +11,7 @@ import { EXTERNALREQUEST_STAKEPOOL_LISTING, EXTERNALREQUEST_POLITEIA, EXTERNALRE
 import { POLITEIA_URL_TESTNET, POLITEIA_URL_MAINNET } from "./middleware/politeiaapi";
 import { DCRDATA_URL_TESTNET, DCRDATA_URL_MAINNET } from "./middleware/dcrdataapi";
 import { dateToLocal, dateToUTC } from "./helpers/dateFormat";
-import { MIN_RELAY_FEE } from "constants";
+import { MIN_RELAY_FEE, DCR, ATOMS, UNIT_DIVISOR } from "constants";
 import * as wallet from "wallet";
 
 const EMPTY_ARRAY = [];  // Maintaining identity (will) improve performance;
@@ -170,10 +170,10 @@ export const network = get([ "settings", "currentSettings", "network" ]);
 export const isTestNet = compose(eq("testnet"), network);
 export const isMainNet = not(isTestNet);
 export const firstBlockTime = compose(isMainNet => isMainNet ? new Date("2016-02-08 18:00:00 UTC") : new Date("2018-08-06 00:00:00 UTC"), isMainNet);
-export const currencies = () => [ { name: "DCR" }, { name: "atoms" } ];
+export const currencies = () => [ { name: DCR }, { name: ATOMS } ];
 export const needNetworkReset = get([ "settings", "needNetworkReset" ]);
 export const currencyDisplay = get([ "settings", "currentSettings", "currencyDisplay" ]);
-export const unitDivisor = compose(disp => disp === "DCR" ? 100000000 : 1, currencyDisplay);
+export const unitDivisor = compose(disp => disp === DCR ? UNIT_DIVISOR : 1, currencyDisplay);
 export const currentLocaleName = get([ "settings", "currentSettings", "locale" ]);
 export const timezone = get([ "settings", "currentSettings", "timezone" ]);
 export const defaultLocaleName = createSelector(
@@ -642,7 +642,7 @@ export const unsignedTransaction = createSelector(
 export const unsignedRawTx = createSelector([ constructTxResponse ], res => res && res.rawTx);
 
 export const estimatedFee = compose(
-  bytes => (bytes / 1000) * (MIN_RELAY_FEE * 100000000), estimatedSignedSize
+  bytes => (bytes / 1000) * (MIN_RELAY_FEE * UNIT_DIVISOR), estimatedSignedSize
 );
 
 export const totalSpent = createSelector(

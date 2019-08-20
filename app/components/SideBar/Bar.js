@@ -6,6 +6,7 @@ import Logo from "./Logo";
 import LastBlockTime from "./LastBlockTime";
 import { Balance } from "shared";
 import { RescanButton, RescanCancelButton } from "buttons";
+import { UNIT_DIVISOR } from "constants";
 import "style/Fonts.less";
 import "style/SideBar.less";
 
@@ -39,7 +40,7 @@ const Bar = ({
           { balances.map(({ hidden, total, accountName }) => !hidden &&
           <div className="sidebar-menu-total-balance-extended-bottom-account" key={accountName}>
             <div className="sidebar-menu-total-balance-extended-bottom-account-name">{accountName}</div>
-            <div className="sidebar-menu-total-balance-extended-bottom-account-number">{total ? total / 100000000 : 0}</div>
+            <div className="sidebar-menu-total-balance-extended-bottom-account-number">{total ? total / UNIT_DIVISOR : 0}</div>
           </div> )}
         </div>
       </div>

@@ -14,6 +14,7 @@ import "./style/ReactSelectGlobal.less";
 import pkg from "./package.json";
 import { log } from "./wallet";
 import { ipcRenderer } from "electron";
+import { DCR } from "constants";
 
 var globalCfg = getGlobalCfg();
 const locale = globalCfg.get("locale");
@@ -33,7 +34,7 @@ const currentSettings = {
   spvConnect: (cliOptions && cliOptions.spvConnect) || globalCfg.get("spv_connect"),
   spvConnectFromCli: !!(cliOptions && cliOptions.spvConnect),
   timezone: globalCfg.get("timezone"),
-  currencyDisplay: "DCR",
+  currencyDisplay: DCR,
   network: (cliOptions && cliOptions.network) || globalCfg.get("network"),
   networkFromCli: !!(cliOptions && cliOptions.network),
   theme: globalCfg.get("theme"),
