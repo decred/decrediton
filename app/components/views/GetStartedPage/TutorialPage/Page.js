@@ -32,9 +32,11 @@ const TutorialPage = ({ tutorialStep, onNextTutorialStep, onGoToStep, finishTuto
         </div>
 
         <div className="tutorial-main-toolbar">
-          <KeyBlueButton className="next-button" onClick={tutorialStep < 3 ? onNextTutorialStep : finishTutorial} >
-            <T id="tutorial.nextBtn" m={"Next"}/>
-          </KeyBlueButton>
+          <InvisibleButton className="skip-button" onClick={finishTutorial}>
+            {tutorialStep < 3
+              ? <T id="tutorial.skipBtn" m={"Skip"} />
+              : <T id="tutorial.finishBtn" m={"Finish"} />}
+          </InvisibleButton>
 
           <StepIndicator
             currentPageIndex={tutorialStep}
@@ -42,11 +44,9 @@ const TutorialPage = ({ tutorialStep, onNextTutorialStep, onGoToStep, finishTuto
             onGotoPage={onGoToStep}
           />
 
-          <InvisibleButton className="skip-button" onClick={finishTutorial}>
-            { tutorialStep < 3
-              ? <T id="tutorial.skipBtn" m={"Skip"}/>
-              : <T id="tutorial.finishBtn" m={"Finish"}/> }
-          </InvisibleButton>
+          <KeyBlueButton className="next-button" onClick={tutorialStep < 3 ? onNextTutorialStep : finishTutorial} >
+            <T id="tutorial.nextBtn" m={"Next"} />
+          </KeyBlueButton>
         </div>
       </div>
     </div>

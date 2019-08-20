@@ -9,10 +9,13 @@
   .tutorial-side {
     width: 47%;
     height: 100vh;
+    overflow: hidden;
+
 
     video {
       vertical-align: middle;
       height: 100%;
+      object-fit: cover;
     }
   }
 
@@ -27,17 +30,18 @@
     display: flex;
 
     .next-button {
-      margin-right: 52px;
-      margin-top: 5px;
+      margin-left: 40px;
+      margin-top: 8px;
       height: 16px;
       padding: 5px 20px 6px 20px;
     }
 
     .skip-button {
-      margin-left: 10px;
+      margin-right: 10px;
       margin-top: 8px;
       height: 16px;
-      padding: 5px 20px 6px 20px;
+      padding: 5px 20px 6px 0px;
+      width: 34px;
     }
   }
 
@@ -172,34 +176,59 @@
   }
 }
 
+@media screen and (max-width: 670px) {
+  .getstarted-tutorial .tutorial-main-text {
+    max-height: 650px;
+  }
+
+  .tutorial-main-toolbar {
+      justify-content: space-between;
+      flex-wrap: nowrap;
+
+      .next-button {
+        margin-left: 10px !important;
+        height: 16px;
+        padding: 5px 20px 6px 20px;
+        margin-top: 0px !important;
+      }
+      
+      .step-indicator {
+          display: flex;
+          flex: 1;
+          align-items: center;
+          justify-content: space-between;
+          flex-wrap: nowrap;
+          max-width: 100px;
+
+          .step.unchecked,
+          .step.current,
+          .step.checked {
+            margin:0;
+          }
+      }    
+      
+      .skip-button {
+          margin-top: 0 !important;
+          height: inherit;
+          width: 26px;
+          padding: 0;
+      }      
+  }  
+}
 @media screen and (max-width: 916px) {
   .getstarted-tutorial .tutorial-main {
     top: 88px;
     left: 21px;
   }
+}
 
-  .getstarted-tutorial .tutorial-side.step-0 {
-    display: none;
+@media screen and (max-width: 768px) {
+  .getstarted-tutorial .tutorial-main {
+    padding-top: 10vh;
   }
-
-  .getstarted-tutorial .tutorial-side.step-1 {
-    display: none;
-  }
-
-  .getstarted-tutorial .tutorial-side.step-2 {
-    display: none;
-  }
-
-  .getstarted-tutorial .tutorial-side.step-3 {
-    display: none;
-  }
-
-  .getstarted-tutorial .tutorial-side.step-4 {
-    display: none;
-  }
-
-  .getstarted-tutorial .tutorial-side.step-5 {
-    display: none;
+  .getstarted-tutorial .tutorial-main-text {
+    column-count: 1;
+    padding-right: 55px;
   }
 }
 
@@ -207,15 +236,59 @@
   .tutorial-main {
     top: 8px;
   }
+  .getstarted-tutorial .tutorial-main-text {
+    padding-right: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    min-height: inherit;
+  }
 }
 
-@media screen and (max-width: 493px) {
-  .getstarted-tutorial .tutorial-main-toolbar {
-    position: fixed;
-    bottom: 18px;
-  }
+@media screen and (max-width: 500px) {
+  .getstarted-tutorial {
+    flex-direction: column;
 
-  .getstarted-tutorial .tutorial-main {
-    top: 25px;
+    .tutorial-main-text {
+      max-height: inherit;
+      h1 {
+        font-size: 21px;
+      }
+    }
+
+    .tutorial-side {
+      height: 42vh;
+      width: 100%;
+      
+      video {
+        height: 336px;
+      }
+    }
+
+    .tutorial-main {
+      top: 25px;
+      width: inherit;
+      padding: 30px;
+      height: 42vh;
+    }
+    
+    .tutorial-main-toolbar {
+      position: fixed;
+      bottom: 0px;
+      background-color: var(--onboard-toolbar-background);
+      left: 0;
+      height: 70px;
+      align-items: center;
+      padding: 0;
+      width: 100%;
+      box-shadow: 0px -5px 21px 0px var(--onboard-toolbar-shadow);
+
+      .next-button {
+        margin: 0 30px 0 0;
+      }
+      
+      .skip-button {
+        margin: 0 0 0 30px;
+      }
+    }
   }
 }
