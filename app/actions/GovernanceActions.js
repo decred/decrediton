@@ -2,7 +2,7 @@ import * as sel from "selectors";
 import * as pi from "middleware/politeiaapi";
 import * as wallet from "wallet";
 import { replace } from "fp";
-import { getWalletCfg } from "../config";
+import { getWalletCfg } from "config";
 import { push as pushHistory } from "react-router-redux";
 import { hexReversedHashToArray, reverseRawHash } from "helpers";
 

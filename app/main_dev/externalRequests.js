@@ -7,7 +7,7 @@
  */
 import { session } from "electron";
 import { isRegExp } from "util";
-import { getGlobalCfg } from "../config";
+import { getGlobalCfg } from "config";
 import { POLITEIA_URL_TESTNET, POLITEIA_URL_MAINNET } from "../middleware/politeiaapi";
 import { DCRDATA_URL_TESTNET, DCRDATA_URL_MAINNET } from "../middleware/dcrdataapi";
 

@@ -27,10 +27,18 @@ module.exports = function (api) {
       "@babel/plugin-proposal-optional-chaining",
       "@babel/plugin-proposal-throw-expressions",
       "./scripts/aliasDefaultMessage.js",
-      [ "react-intl", { "messagesDir": "app/i18n/extracted" } ]
+      [ "react-intl", { "messagesDir": "app/i18n/extracted" } ],
+      ["module-resolver", {
+        "root": ["./app"],
+        "extensions": [".js"],
+        "alias": {
+          "constants": "./app/constants",
+          "config": "./app/config",
+        },
+      }],
     ],
     "ignore": [
       "app/middleware/walletrpc/*.js"
-    ]
+    ],
   };
 };

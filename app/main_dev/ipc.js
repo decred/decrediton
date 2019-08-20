@@ -2,7 +2,7 @@ import fs from "fs-extra";
 import path from "path";
 import { createLogger } from "./logging";
 import { getWalletPath, getWalletDBPathFromWallets, getDcrdPath } from "./paths";
-import { initWalletCfg, newWalletConfigCreation, getWalletCfg, readDcrdConfig } from "../config";
+import { initWalletCfg, newWalletConfigCreation, getWalletCfg, readDcrdConfig } from "config";
 import { launchDCRD, launchDCRWallet, GetDcrdPID, GetDcrwPID, closeDCRD, closeDCRW, GetDcrwPort } from "./launch";
 
 const logger = createLogger();

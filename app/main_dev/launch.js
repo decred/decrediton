@@ -1,9 +1,9 @@
 import { dcrwalletCfg, getWalletPath, getExecutablePath, dcrdCfg, getDcrdPath } from "./paths";
-import { getWalletCfg, readDcrdConfig } from "../config";
+import { getWalletCfg, readDcrdConfig } from "config";
 import { createLogger, AddToDcrdLog, AddToDcrwalletLog, GetDcrdLogs,
   GetDcrwalletLogs, lastErrorLine, lastPanicLine, ClearDcrwalletLogs } from "./logging";
 import parseArgs from "minimist";
-import { OPTIONS } from "./constants";
+import { OPTIONS } from "constants/Decrediton";
 import os from "os";
 import fs from "fs-extra";
 import util from "util";

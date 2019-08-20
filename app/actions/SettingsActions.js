@@ -1,5 +1,5 @@
 // @flow
-import { getWalletCfg, getGlobalCfg } from "../config";
+import { getWalletCfg, getGlobalCfg } from "config";
 import { isTestNet } from "selectors";
 import { equalElements } from "helpers";
 import * as wallet from "wallet";

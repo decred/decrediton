@@ -1,6 +1,6 @@
 // @flow
 import Promise from "promise";
-import { getWalletCfg, updateStakePoolConfig } from "../config";
+import { getWalletCfg, updateStakePoolConfig } from "config";
 import { importScriptAttempt, rescanAttempt } from "./ControlActions";
 import * as sel from "../selectors";
 import * as wallet from "wallet";
