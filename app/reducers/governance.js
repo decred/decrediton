@@ -1,6 +1,6 @@
 import {
   GETVETTED_ATTEMPT, GETVETTED_FAILED, GETVETTED_SUCCESS, GETVETTED_CANCELED,
-  GETVETTED_UPDATEDVOTERESULTS_SUCCESS,
+  GETVETTED_UPDATEDVOTERESULTS_SUCCESS, GETVETTED_UPDATEDVOTERESULTS_ATTEMPT,
   GETPROPOSAL_ATTEMPT, GETPROPOSAL_FAILED, GETPROPOSAL_SUCCESS,
   UPDATEVOTECHOICE_ATTEMPT, UPDATEVOTECHOICE_SUCCESS, UPDATEVOTECHOICE_FAILED,
 } from "actions/GovernanceActions";
@@ -26,8 +26,13 @@ export default function governance(state = {}, action) {
       lastVettedFetchTime: new Date(),
       abandoned: action.abandoned,
     };
+  case GETVETTED_UPDATEDVOTERESULTS_ATTEMPT:
+    return { ...state,
+      getVettedUpdateVoteResultsAttempt: true,
+    };
   case GETVETTED_UPDATEDVOTERESULTS_SUCCESS:
     return { ...state,
+      getVettedUpdateVoteResultsAttempt: false,
       proposals: { ...state.proposals, ...action.proposals },
       activeVote: action.activeVote,
       voted: action.voted,

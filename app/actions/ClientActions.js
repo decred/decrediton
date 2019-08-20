@@ -994,10 +994,10 @@ export const getStartupTransactions = () => async (dispatch, getState) => {
   mergeStakeTxs(unmined);
   mergeImmatureHeights(unmined);
 
+  let requestHeight = startRequestHeight;
   while (!foundNeededTransactions) {
     const { mined } = await wallet.getTransactions(walletService,
-      startRequestHeight, 1, pageSize);
-
+      requestHeight, 1, pageSize);
     if (mined.length === 0) break; // no more transactions
 
     mergeRegularTxs(mined);
@@ -1007,11 +1007,11 @@ export const getStartupTransactions = () => async (dispatch, getState) => {
     foundNeededTransactions =
       (recentRegularTxs.length >= recentTransactionCount) &&
       (recentStakeTxs.length >= recentTransactionCount) &&
-      (startRequestHeight < immatureHeight);
+      (requestHeight < immatureHeight);
 
     const lastTransaction = mined[mined.length-1];
-    startRequestHeight = lastTransaction.height-1;
-    if (startRequestHeight <= 1) break; // reached genesis
+    requestHeight = lastTransaction.height - 1;
+    if (requestHeight < 1) break; // reached genesis
   }
 
   recentRegularTxs = recentRegularTxs.slice(0, recentTransactionCount);
