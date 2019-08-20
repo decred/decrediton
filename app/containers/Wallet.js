@@ -40,13 +40,13 @@ class Wallet extends React.Component {
             <Route path="/invalidRPCVersion"              component={InvalidRPCVersion} />
             <Route path="/help"                           component={HelpPage} />
             <Route path="/security"                       component={SecurityPage} />
-            <Route path="/transactions/history/:txHash"   component={TransactionPage} />
             <Route path="/transactions"                   component={TransactionsPage} />
             <Route path="/tickets"                        component={TicketsPage} />
             <Route path="/tutorial"                       component={TutorialsPage} />
             <Route path="/governance"                     component={GovernancePage} />
             <Route path="/trezor"                         component={TrezorPage} />
           </MainSwitch>
+          <Route path="/transactions/history/:txHash" component={TransactionPage} />
         </BlurableContainer>
       </div>
     );
