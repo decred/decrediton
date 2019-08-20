@@ -1,6 +1,6 @@
 import Select from "react-select";
 import { accountsSelect } from "connectors";
-import { injectIntl, defineMessages, intlShape } from "react-intl";
+import { injectIntl, defineMessages } from "react-intl";
 import { Balance, LinkToAccounts } from "shared";
 
 const messages = defineMessages({
@@ -15,7 +15,6 @@ class AccountsSelect extends React.Component {
 
   static propTypes = {
     accountsType: PropTypes.oneOf([ "spending", "visible" ]),
-    intl: intlShape.isRequired,
     className: PropTypes.string,
     showAccountsButton: PropTypes.bool,
     getAddressForSelected: PropTypes.bool

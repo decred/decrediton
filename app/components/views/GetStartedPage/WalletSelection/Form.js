@@ -1,8 +1,8 @@
 import CreateWalletForm from "./CreateWalletForm";
-import { FormattedMessage as T, injectIntl, FormattedRelative } from "react-intl";
+import { FormattedMessage as T, injectIntl } from "react-intl";
 import { RemoveWalletButton } from "buttons";
 import { NewSeedTabMsg, RestoreTabMsg } from "../messages";
-import { Tooltip } from "shared";
+import { Tooltip, FormattedRelative } from "shared";
 
 const CreateRestoreButtons = ({ showCreateWalletForm }) => (
   <>

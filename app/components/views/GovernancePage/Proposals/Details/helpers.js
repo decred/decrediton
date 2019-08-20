@@ -1,9 +1,10 @@
 import { KeyBlueButton } from "buttons";
-import { FormattedMessage as T, FormattedRelative } from "react-intl";
+import { FormattedMessage as T } from "react-intl";
 import { StakeyBounceXs, VotingProgress, PoliteiaLoading } from "indicators";
 import { showCheck } from "helpers";
 import UpdateVoteChoiceModalButton from "./UpdateVoteChoiceModalButton";
 import { default as ReactMarkdown }  from "react-markdown";
+import { FormattedRelative } from "shared";
 
 export const LoadingProposal = () => (
   <div className="proposal-loading-page"><PoliteiaLoading /></div>

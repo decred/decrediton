@@ -1,11 +1,12 @@
 import { LinearProgressFull } from "indicators";
-import { FormattedMessage as T, FormattedRelative, injectIntl } from "react-intl";
+import { FormattedMessage as T, injectIntl } from "react-intl";
 import { SlateGrayButton, InvisibleButton, KeyBlueButton } from "buttons";
 import { PasswordInput } from "inputs";
 import "style/GetStarted.less";
 import { LogsLinkMsg, SettingsLinkMsg, HeaderTimeMsg, DiscoverLabelMsg,
   DiscoverAccountsInfoMsg, ScanBtnMsg, LearnBasicsMsg, UpdateAvailableLink,
   WhatsNewLink, LoaderTitleMsg, AboutModalButton, messages } from "../messages";
+import { FormattedRelative } from "shared";
 
 const DaemonLoadingBody = ({
   Form,

@@ -1,5 +1,6 @@
 import { AnimatedLinearProgressFull } from "indicators";
-import { FormattedRelative, injectIntl } from "react-intl";
+import { injectIntl } from "react-intl";
+import { FormattedRelative } from "shared";
 import { KeyBlueButton, SlateGrayButton, InvisibleButton } from "buttons";
 import { PasswordInput } from "inputs";
 import { LogsLinkMsg, SettingsLinkMsg, HeaderTimeMsg, DiscoverLabelMsg,

@@ -1,16 +1,16 @@
 import staticDefaults from "../extracted/static";
-import { addLocaleData } from "react-intl";
 
-import de_data from "react-intl/locale-data/de";
-import en_data from "react-intl/locale-data/en";
-import es_data from "react-intl/locale-data/es";
-import fr_data from "react-intl/locale-data/fr";
-import ja_data from "react-intl/locale-data/ja";
-import pt_data from "react-intl/locale-data/pt";
-import zh_data from "react-intl/locale-data/zh";
+// TODO: This polyfill can probably be removed after we update to a version of
+// electron with support to Intl.RelativeTimeFormat.
+import "@formatjs/intl-relativetimeformat/polyfill";
+import "@formatjs/intl-relativetimeformat/dist/locale-data/de";
+import "@formatjs/intl-relativetimeformat/dist/locale-data/en";
+import "@formatjs/intl-relativetimeformat/dist/locale-data/es";
+import "@formatjs/intl-relativetimeformat/dist/locale-data/fr";
+import "@formatjs/intl-relativetimeformat/dist/locale-data/ja";
+import "@formatjs/intl-relativetimeformat/dist/locale-data/pt";
+import "@formatjs/intl-relativetimeformat/dist/locale-data/zh";
 
-addLocaleData([ ...de_data, ...en_data, ...es_data, ...fr_data, ...ja_data,
-  ...pt_data, ...zh_data ]);
 
 // Extra formats. May be customized by each locale.
 export const defaultFormats = {

@@ -1,12 +1,11 @@
 import Select from "react-select";
-import { injectIntl, intlShape } from "react-intl";
+import { injectIntl } from "react-intl";
 import "style/Input.less";
 
 @autobind
 class SettingsInput extends React.Component {
 
   static propTypes = {
-    intl: intlShape.isRequired,
     className: PropTypes.string,
   };
 
