@@ -19,9 +19,10 @@ class Input extends React.Component{
       this.input.focus();
     }
   }
-  componentWillReceiveProps(nextProps) {
-    if (this.props.disabled != nextProps.disabled) {
-      this.setState({ divClassName: nextProps.disabled ? this.state.divClassName + " disabled" : "input-and-unit " + (this.props.className || "") });
+  componentDidUpdate(prevProps) {
+    const { className, disabled, } = this.props;
+    if (prevProps.disabled != disabled) {
+      this.setState({ divClassName: disabled ? this.state.divClassName + " disabled" : "input-and-unit " + (className || "") });
     }
   }
   onInputFocus = (e) => {
