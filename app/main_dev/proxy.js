@@ -1,4 +1,4 @@
-import { getGlobalCfg } from "../config";
+import { getGlobalCfg } from "config";
 import { session } from "electron";
 
 export const PROXYTYPE_PAC = "PROXYTYPE_PAC";

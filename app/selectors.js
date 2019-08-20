@@ -11,7 +11,7 @@ import { EXTERNALREQUEST_STAKEPOOL_LISTING, EXTERNALREQUEST_POLITEIA, EXTERNALRE
 import { POLITEIA_URL_TESTNET, POLITEIA_URL_MAINNET } from "./middleware/politeiaapi";
 import { DCRDATA_URL_TESTNET, DCRDATA_URL_MAINNET } from "./middleware/dcrdataapi";
 import { dateToLocal, dateToUTC } from "./helpers/dateFormat";
-import { MIN_RELAY_FEE } from "main_dev/constants";
+import { MIN_RELAY_FEE } from "constants/Decred";
 import * as wallet from "wallet";
 
 const EMPTY_ARRAY = [];  // Maintaining identity (will) improve performance;

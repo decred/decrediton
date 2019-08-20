@@ -4,8 +4,6 @@ import { app, BrowserWindow, Menu, dialog } from "electron";
 import { initGlobalCfg, validateGlobalCfgFile, setMustOpenForm } from "./config";
 import { appLocaleFromElectronLocale, default as locales } from "./i18n/locales";
 import { createLogger, lastLogLine, GetDcrdLogs, GetDcrwalletLogs } from "./main_dev/logging";
-import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, BOTH_CONNECTION_ERR_MESSAGE, MAX_LOG_LENGTH, SPV_CONNECT_WITHOUT_SPV,
-  RPC_WITHOUT_ADVANCED_MODE, RPCCONNECT_INVALID_FORMAT, RPC_MISSING_OPTIONS, SPV_WITH_ADVANCED_MODE } from "./main_dev/constants";
 import { getWalletsDirectoryPath, getWalletsDirectoryPathNetwork, appDataDirectory } from "./main_dev/paths";
 import { getGlobalCfgPath, checkAndInitWalletCfg } from "./main_dev/paths";
 import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRequests, allowExternalRequest } from "./main_dev/externalRequests";
@@ -17,6 +15,8 @@ import { initTemplate, getVersionWin, setGrpcVersions, getGrpcVersions, inputMen
 import { readFileBackward } from "./helpers/byteActions";
 import electron from "electron";
 import { isString } from "./fp";
+import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, BOTH_CONNECTION_ERR_MESSAGE, MAX_LOG_LENGTH, SPV_CONNECT_WITHOUT_SPV,
+  RPC_WITHOUT_ADVANCED_MODE, RPCCONNECT_INVALID_FORMAT, RPC_MISSING_OPTIONS, SPV_WITH_ADVANCED_MODE } from "constants/Decrediton";
 
 // setPath as decrediton
 app.setPath("userData", appDataDirectory());
