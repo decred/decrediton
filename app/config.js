@@ -3,7 +3,7 @@ import Store from "electron-store";
 import ini from "ini";
 import { stakePoolInfo } from "./middleware/stakepoolapi";
 import { appDataDirectory, getGlobalCfgPath, dcrdCfg, getWalletPath, dcrwalletCfg, getDcrdRpcCert, getDcrdPath } from "./main_dev/paths";
-import * as cfgConstants from "./main_dev/configConstants.js";
+import * as cfgConstants from "constants/config";
 import { DCR } from "constants";
 
 export function getGlobalCfg() {

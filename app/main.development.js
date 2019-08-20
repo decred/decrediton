@@ -17,6 +17,7 @@ import electron from "electron";
 import { isString } from "./fp";
 import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, BOTH_CONNECTION_ERR_MESSAGE, MAX_LOG_LENGTH, SPV_CONNECT_WITHOUT_SPV,
   RPC_WITHOUT_ADVANCED_MODE, RPCCONNECT_INVALID_FORMAT, RPC_MISSING_OPTIONS, SPV_WITH_ADVANCED_MODE } from "constants";
+import { DAEMON_ADVANCED, LOCALE } from "constants/config";
 
 // setPath as decrediton
 app.setPath("userData", appDataDirectory());
@@ -41,7 +42,7 @@ let previousWallet = null;
 let primaryInstance;
 
 const globalCfg = initGlobalCfg();
-const daemonIsAdvanced = argv.advanced || globalCfg.get("daemon_start_advanced");
+const daemonIsAdvanced = argv.advanced || globalCfg.get(DAEMON_ADVANCED);
 const walletsDirectory = getWalletsDirectoryPath();
 const mainnetWalletsPath = getWalletsDirectoryPathNetwork(false);
 const testnetWalletsPath = getWalletsDirectoryPathNetwork(true);
@@ -321,12 +322,12 @@ app.on("ready", async () => {
 
   // when installing (on first run) locale will be empty. Determine the user's
   // OS locale and set that as decrediton's locale.
-  const cfgLocale = globalCfg.get("locale", "");
+  const cfgLocale = globalCfg.get(LOCALE, "");
   let locale = locales.find(value => value.key === cfgLocale);
   if (!locale) {
     const newCfgLocale = appLocaleFromElectronLocale(app.getLocale());
     logger.log("error", `Locale ${cfgLocale} not found. Switching to locale ${newCfgLocale}.`);
-    globalCfg.set("locale", newCfgLocale);
+    globalCfg.set(LOCALE, newCfgLocale);
     locale = locales.find(value => value.key === newCfgLocale);
   }
 

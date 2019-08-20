@@ -11,7 +11,7 @@ import { setMustOpenForm, getWalletCfg, getAppdataPath, getRemoteCredentials, ge
 import { isTestNet } from "selectors";
 import axios from "axios";
 import { STANDARD_EXTERNAL_REQUESTS } from "main_dev/externalRequests";
-import { DIFF_CONNECTION_ERROR } from "constants";
+import { DIFF_CONNECTION_ERROR, LOCALE } from "constants";
 import { enableTrezor } from "./TrezorActions";
 
 export const DECREDITON_VERSION = "DECREDITON_VERSION";
@@ -125,7 +125,7 @@ export const setupDisabledPrivacy = () => (dispatch, getState) => {
 
 export const selectLanguage = (selectedLanguage) => (dispatch) => {
   const config = getGlobalCfg();
-  config.set("locale", selectedLanguage.language);
+  config.set(LOCALE, selectedLanguage.language);
   config.set("set_language", false);
   dispatch({ language: selectedLanguage.language, type: SELECT_LANGUAGE });
   dispatch(pushHistory("/getstarted"));
