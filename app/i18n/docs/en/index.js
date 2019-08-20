@@ -7,6 +7,7 @@ export { default as PurchaseTicketsInfo } from "./InfoModals/PurchaseTickets.md"
 export { default as BalanceOverviewInfo } from "./InfoModals/BalanceOverview.md";
 export { default as TicketAutoBuyerInfo } from "./InfoModals/TicketAutoBuyer.md";
 export { default as ScriptNotRedeemableInfo } from "./InfoModals/ScriptNotRedeemable.md";
+export { default as DecredConstitution } from "./InfoModals/DecredConstitution.md";
 
 export { default as SeedCopyWarning } from "./Warnings/SeedCopy.md";
 export { default as WalletCreationWarning } from "./Warnings/WalletCreation.md";

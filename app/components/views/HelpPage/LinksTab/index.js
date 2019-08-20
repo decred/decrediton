@@ -1,8 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
 import { HelpLink, HelpLinkInfoModal, HelpLinkAboutModal } from "buttons";
-import { ConstitutionModalContent } from "modals";
 import { DescriptionHeader } from "layout";
-import { Subtitle } from "shared";
+import { Subtitle, Documentation } from "shared";
 import "style/Help.less";
 
 export const LinksTabHeader = () =>
@@ -22,7 +21,7 @@ export const LinksTab = () => (
         title={<T id="help.constitution" m="Constitution"/>}
         subtitle={<T id="help.constitution.subtitle" m="Decred Project Constitution"/>}
         modalTitle={<h1><T id="help.constitution.modal.title" m="Decred Constitution" /></h1>}
-        modalContent={<ConstitutionModalContent />}
+        modalContent={<Documentation name="DecredConstitution" />}
         double
       />
       <HelpLinkAboutModal className={"help-star-icon"}
