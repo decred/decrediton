@@ -4,6 +4,7 @@ import { getWalletCfg, updateStakePoolConfig } from "config";
 import { importScriptAttempt, rescanAttempt } from "./ControlActions";
 import * as sel from "../selectors";
 import * as wallet from "wallet";
+import { TESTNET, MAINNET } from "constants";
 
 export const GETSTAKEPOOLSTATS_ATTEMPT = "GETSTAKEPOOLSTATS_ATTEMPT";
 export const GETSTAKEPOOLSTATS_FAILED = "GETSTAKEPOOLSTATS_FAILED";
@@ -238,7 +239,7 @@ export const addCustomStakePool = host => async (dispatch, getState) => {
     const data = resp.data.data;
     const poolInfo = {
       Host: host,
-      Network: data.Network === "mainnet" ? "mainnet" : "testnet", // needed because may return testnet2, testnet3, etc
+      Network: data.Network === MAINNET ? MAINNET : TESTNET, // needed because may return testnet2, testnet3, etc
       APIVersionsSupported: data.APIVersionsSupported
     };
 

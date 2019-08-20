@@ -11,7 +11,7 @@ import { EXTERNALREQUEST_STAKEPOOL_LISTING, EXTERNALREQUEST_POLITEIA, EXTERNALRE
 import { POLITEIA_URL_TESTNET, POLITEIA_URL_MAINNET } from "./middleware/politeiaapi";
 import { DCRDATA_URL_TESTNET, DCRDATA_URL_MAINNET } from "./middleware/dcrdataapi";
 import { dateToLocal, dateToUTC } from "./helpers/dateFormat";
-import { MIN_RELAY_FEE, DCR, ATOMS, UNIT_DIVISOR } from "constants";
+import { MIN_RELAY_FEE, DCR, ATOMS, UNIT_DIVISOR, TESTNET, MAINNET } from "constants";
 import * as wallet from "wallet";
 
 const EMPTY_ARRAY = [];  // Maintaining identity (will) improve performance;
@@ -165,9 +165,9 @@ export const lockedBalance = createSelector(
   reduce((atoms, { lockedByTickets }) => atoms + lockedByTickets, 0)
 );
 
-export const networks = () => [ { name: "testnet" }, { name: "mainnet" } ];
+export const networks = () => [ { name: TESTNET }, { name: MAINNET } ];
 export const network = get([ "settings", "currentSettings", "network" ]);
-export const isTestNet = compose(eq("testnet"), network);
+export const isTestNet = compose(eq(TESTNET), network);
 export const isMainNet = not(isTestNet);
 export const firstBlockTime = compose(isMainNet => isMainNet ? new Date("2016-02-08 18:00:00 UTC") : new Date("2018-08-06 00:00:00 UTC"), isMainNet);
 export const currencies = () => [ { name: DCR }, { name: ATOMS } ];
@@ -203,13 +203,13 @@ const getTxTypeStr = type => (TRANSACTION_TYPES)[type];
 export const txURLBuilder= createSelector(
   [ network ],
   (network) =>
-    (txHash) => `https://${network !== "testnet" ? "dcrdata" : "testnet"}.decred.org/tx/${txHash}`
+    (txHash) => `https://${network !== TESTNET ? "dcrdata" : "testnet"}.decred.org/tx/${txHash}`
 );
 
 export const blockURLBuilder= createSelector(
   [ network ],
   (network) =>
-    (txHash) => `https://${network !== "testnet" ? "dcrdata" : "testnet"}.decred.org/block/${txHash}`
+    (txHash) => `https://${network !== TESTNET ? "dcrdata" : "testnet"}.decred.org/block/${txHash}`
 );
 
 export const decodedTransactions = get([ "grpc", "decodedTransactions" ]);

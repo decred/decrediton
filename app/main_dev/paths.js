@@ -2,6 +2,7 @@ import path from "path";
 import os from "os";
 import fs from "fs-extra";
 import { initWalletCfg, newWalletConfigCreation } from "config";
+import { TESTNET, MAINNET } from "constants";
 
 // In all the functions below the Windows path is constructed based on
 // os.homedir() rather than using process.env.LOCALAPPDATA because in my tests
@@ -26,12 +27,12 @@ export function getWalletsDirectoryPath() {
 }
 
 export function getWalletsDirectoryPathNetwork(testnet) {
-  return path.join(appDataDirectory(), "wallets", testnet ? "testnet" : "mainnet");
+  return path.join(appDataDirectory(), "wallets", testnet ? TESTNET : MAINNET);
 }
 
 export function getWalletPath(testnet, walletPath = "", testnet3) {
-  const testnetStr = testnet ? "testnet" : "mainnet";
-  const testnet3Str = testnet3 === true ? "testnet3" : testnet3 === false ? "mainnet" : "";
+  const testnetStr = testnet ? TESTNET : MAINNET;
+  const testnet3Str = testnet3 === true ? "testnet3" : testnet3 === false ? MAINNET : "";
   return path.join(getWalletsDirectoryPath(), testnetStr, walletPath, testnet3Str);
 }
 
@@ -44,13 +45,13 @@ export function getDefaultWalletFilesPath(testnet, filePath = "") {
 }
 
 export function getWalletDBPathFromWallets(testnet, walletPath) {
-  const network = testnet ? "testnet" : "mainnet";
-  const networkFolder = testnet ? "testnet3" : "mainnet";
+  const network = testnet ? TESTNET : MAINNET;
+  const networkFolder = testnet ? "testnet3" : MAINNET;
   return path.join(getWalletsDirectoryPath(), network, walletPath, networkFolder, "wallet.db");
 }
 
 export function getDecreditonWalletDBPath(testnet) {
-  return path.join(appDataDirectory(), testnet ? "testnet3" : "mainnet", "wallet.db");
+  return path.join(appDataDirectory(), testnet ? "testnet3" : MAINNET, "wallet.db");
 }
 
 export function dcrctlCfg(configPath) {

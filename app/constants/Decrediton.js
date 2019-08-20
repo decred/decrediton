@@ -27,3 +27,6 @@ export const ATOMS = "atoms";
 
 export const WORDS = "words";
 export const HEX = "hex";
+
+export const TESTNET = "testnet";
+export const MAINNET = "mainnet";

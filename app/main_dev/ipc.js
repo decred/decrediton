@@ -4,6 +4,7 @@ import { createLogger } from "./logging";
 import { getWalletPath, getWalletDBPathFromWallets, getDcrdPath } from "./paths";
 import { initWalletCfg, newWalletConfigCreation, getWalletCfg, readDcrdConfig } from "config";
 import { launchDCRD, launchDCRWallet, GetDcrdPID, GetDcrwPID, closeDCRD, closeDCRW, GetDcrwPort } from "./launch";
+import { MAINNET } from "constants";
 
 const logger = createLogger();
 let watchingOnlyWallet;
@@ -11,7 +12,7 @@ let watchingOnlyWallet;
 export const getAvailableWallets = (network) => {
   // Attempt to find all currently available wallet.db's in the respective network direction in each wallets data dir
   const availableWallets = [];
-  const isTestNet = network !== "mainnet";
+  const isTestNet = network !== MAINNET;
 
   const walletsBasePath = getWalletPath(isTestNet);
   const walletDirs = fs.readdirSync(walletsBasePath);
@@ -34,7 +35,7 @@ export const getAvailableWallets = (network) => {
 export const deleteDaemon = (appData, testnet) => {
   let removeDaemonDirectory = getDcrdPath();
   if (appData) removeDaemonDirectory = appData;
-  let removeDaemonDirectoryData = path.join(removeDaemonDirectory, "data", testnet ? "testnet3" : "mainnet");
+  let removeDaemonDirectoryData = path.join(removeDaemonDirectory, "data", testnet ? "testnet3" : MAINNET);
   try {
     if (fs.pathExistsSync(removeDaemonDirectoryData)) {
       fs.removeSync(removeDaemonDirectoryData);

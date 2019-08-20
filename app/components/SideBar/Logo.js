@@ -1,5 +1,6 @@
 import { Tooltip } from "shared";
 import { FormattedMessage as T } from "react-intl";
+import { TESTNET, MAINNET } from "constants";
 
 const Logo = ({ isTestNet, expandSideBar, onReduceSideBar, onExpandSideBar, isWatchingOnly, }) => (
   <div className={expandSideBar ? "sidebar-logo" : "reduced-sidebar-logo"} onClick={!expandSideBar ? onExpandSideBar : null}>
@@ -9,7 +10,7 @@ const Logo = ({ isTestNet, expandSideBar, onReduceSideBar, onExpandSideBar, isWa
         <div className="sidebar-watch-only-icon"/>
       </Tooltip>
     }
-    <div className={!expandSideBar ? "hamburger" : isTestNet ? "testnet" : "mainnet"} />
+    <div className={!expandSideBar ? "hamburger" : isTestNet ? TESTNET : MAINNET} />
     {expandSideBar &&
       <div className="sidebar-reduce-arrow" onClick={expandSideBar ? onReduceSideBar : null}>
       </div>

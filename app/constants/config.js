@@ -1,3 +1,5 @@
+import { MAINNET } from "./Decrediton";
+
 export const DAEMON_ADVANCED = "daemon_start_advanced";
 export const THEME = "theme";
 export const OPEN_FORM = "must_open_form";
@@ -41,7 +43,7 @@ export const INITIAL_VALUES = {
   [THEME]: "theme-light",
   [OPEN_FORM]: true,
   [LOCALE]: "",
-  [NETWORK]: "mainnet",
+  [NETWORK]: MAINNET,
   [SET_LANGUAGE]: true,
   [UI_ANIMATION]: true,
   [SHOW_SPV_CHOICE]: true,

@@ -16,6 +16,7 @@ import { push as pushHistory } from "react-router-redux";
 import { stopNotifcations } from "./NotificationActions";
 import { clearDeviceSession as trezorClearDeviceSession } from "./TrezorActions";
 import { ipcRenderer } from "electron";
+import { TESTNET } from "constants";
 
 const MAX_RPC_RETRIES = 5;
 const RPC_RETRY_DELAY = 5000;
@@ -87,7 +88,7 @@ export const createWalletGoBackWalletSelection = () => (dispatch, getState) => {
   const { currentSettings } = getState().settings;
   const network = currentSettings.network;
   wallet.stopWallet().then(() => {
-    wallet.removeWallet(walletName, network == "testnet")
+    wallet.removeWallet(walletName, network == TESTNET)
       .then(() => {
         dispatch({ type: CREATEWALLET_GOBACK });
         dispatch(getAvailableWallets());

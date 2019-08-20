@@ -11,7 +11,7 @@ import { setMustOpenForm, getWalletCfg, getAppdataPath, getRemoteCredentials, ge
 import { isTestNet } from "selectors";
 import axios from "axios";
 import { STANDARD_EXTERNAL_REQUESTS } from "main_dev/externalRequests";
-import { DIFF_CONNECTION_ERROR, LOCALE } from "constants";
+import { DIFF_CONNECTION_ERROR, LOCALE, TESTNET } from "constants";
 import { enableTrezor } from "./TrezorActions";
 
 export const DECREDITON_VERSION = "DECREDITON_VERSION";
@@ -237,7 +237,7 @@ export const getAvailableWallets = () => async (dispatch, getState) => {
 };
 
 export const removeWallet = (selectedWallet) => (dispatch) => {
-  wallet.removeWallet(selectedWallet.value.wallet, selectedWallet.network == "testnet")
+  wallet.removeWallet(selectedWallet.value.wallet, selectedWallet.network == TESTNET)
     .then(() => {
       dispatch({ type: WALLETREMOVED });
       dispatch(getAvailableWallets());
@@ -251,7 +251,7 @@ export const removeWallet = (selectedWallet) => (dispatch) => {
 export const createWallet = (createNewWallet, selectedWallet) => (dispatch, getState) => {
   const { currentSettings } = getState().settings;
   const network = currentSettings.network;
-  wallet.createNewWallet(selectedWallet.value.wallet, network == "testnet")
+  wallet.createNewWallet(selectedWallet.value.wallet, network == TESTNET)
     .then(() => {
       dispatch({ createNewWallet, isWatchingOnly: selectedWallet.value.watchingOnly,
         type: WALLETCREATED });
@@ -282,9 +282,9 @@ export const closeDaemonRequest = () => async(dispatch, getState) => {
 export const startWallet = (selectedWallet) => (dispatch, getState) => {
   const { currentSettings } = getState().settings;
   const network = currentSettings.network;
-  wallet.startWallet(selectedWallet.value.wallet, network == "testnet")
+  wallet.startWallet(selectedWallet.value.wallet, network == TESTNET)
     .then(({ port }) => {
-      const walletCfg = getWalletCfg(network == "testnet", selectedWallet.value.wallet);
+      const walletCfg = getWalletCfg(network == TESTNET, selectedWallet.value.wallet);
       wallet.setPreviousWallet(selectedWallet);
 
       var currentStakePoolConfig = walletCfg.get("stakepools");

@@ -16,7 +16,7 @@ import { readFileBackward } from "./helpers/byteActions";
 import electron from "electron";
 import { isString } from "./fp";
 import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, BOTH_CONNECTION_ERR_MESSAGE, MAX_LOG_LENGTH, SPV_CONNECT_WITHOUT_SPV,
-  RPC_WITHOUT_ADVANCED_MODE, RPCCONNECT_INVALID_FORMAT, RPC_MISSING_OPTIONS, SPV_WITH_ADVANCED_MODE } from "constants";
+  RPC_WITHOUT_ADVANCED_MODE, RPCCONNECT_INVALID_FORMAT, RPC_MISSING_OPTIONS, SPV_WITH_ADVANCED_MODE, TESTNET } from "constants";
 import { DAEMON_ADVANCED, LOCALE } from "constants/config";
 
 // setPath as decrediton
@@ -87,9 +87,9 @@ if (argv.testnet && argv.mainnet) {
 
 // Signal to renderer process that CLI options should override the global config
 if (argv.testnet) {
-  cliOptions.network = "testnet";
+  cliOptions.network = TESTNET;
 } else if (argv.mainnet) {
-  cliOptions.network = "mainnet";
+  cliOptions.network = MAINNET;
 }
 if (argv.advanced) {
   cliOptions.daemonStartAdvanced = true;

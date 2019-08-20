@@ -1,3 +1,5 @@
+import { TESTNET, MAINNET } from "constants";
+
 var createBlakeHash;
 if (process.env.NODE_ENV === "test") {
   // Node 10.x errors when trying to import the native blake-hash during unit
@@ -44,8 +46,8 @@ export function isValidAddress(addr, network) {
   if (addr.length < 25) return ERR_INVALID_ADDR_TOOSHORT;
   if (addr.length > 36) return ERR_INVALID_ADDR_TOOLONG;
 
-  if (network === "testnet" && addr[0] !== "T") return ERR_INVALID_ADDR_NETWORKPREFIX;
-  if (network === "mainnet" && addr[0] !== "D") return ERR_INVALID_ADDR_NETWORKPREFIX;
+  if (network === TESTNET && addr[0] !== "T") return ERR_INVALID_ADDR_NETWORKPREFIX;
+  if (network === MAINNET && addr[0] !== "D") return ERR_INVALID_ADDR_NETWORKPREFIX;
 
   try {
     var bs58check = bs58checkBase(_blake256x2);
