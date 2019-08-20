@@ -60,10 +60,11 @@ class Input extends React.Component{
       hidden,
       type,
     } = this.props;
+    const hasErrorToShow = showErrors && (invalid && value || required && !value);
     return (
       hidden ? null :
         <>
-          <div className={showErrors && (invalid && value || required && !value) ? this.state.divClassName + " error" : this.state.divClassName} ref={div => { this.state.inputUnitDiv = div; }}>
+          <div className={hasErrorToShow ? this.state.divClassName + " error" : this.state.divClassName} ref={div => { this.state.inputUnitDiv = div; }}>
             <input
               ref={input => { this.input = input; }}
               type={type||"text"}
@@ -77,7 +78,7 @@ class Input extends React.Component{
               onBlur={this.onInputBlur}
               onKeyDown={this.onKeyDown}
             />
-            {unit && !(showErrors && ((invalid && value) || (required && !value))) ? <div className="unit-area">{unit}</div> : null}
+            {unit && <div className={"unit-area " + (hasErrorToShow && "error")}>{unit}</div>}
           </div>
           {showErrors ? (
             <div className="input-errors-area">
