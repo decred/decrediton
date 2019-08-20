@@ -37,3 +37,8 @@ Options
 
 
 export const VERSION_MESSAGE = app ? `${app.getName()} version ${app.getVersion()}` : null;
+
+// POSITION_ERROR and MISMATCH_ERROR represent errors when creating or
+// restoring wallet with seed.
+export const POSITION_ERROR = "not valid at position";
+export const MISMATCH_ERROR = "checksum mismatch";

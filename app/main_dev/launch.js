@@ -3,7 +3,7 @@ import { getWalletCfg, readDcrdConfig } from "config";
 import { createLogger, AddToDcrdLog, AddToDcrwalletLog, GetDcrdLogs,
   GetDcrwalletLogs, lastErrorLine, lastPanicLine, ClearDcrwalletLogs } from "./logging";
 import parseArgs from "minimist";
-import { OPTIONS } from "constants/Decrediton";
+import { OPTIONS } from "constants";
 import os from "os";
 import fs from "fs-extra";
 import util from "util";

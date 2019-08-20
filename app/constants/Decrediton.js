@@ -21,3 +21,6 @@ function unknownFn(arg) {
   };
   
   export const MAX_LOG_LENGTH = 50000;
+
+export const WORDS = "words";
+export const HEX = "hex";

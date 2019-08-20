@@ -2,7 +2,7 @@ import { FormattedMessage as T } from "react-intl";
 import { fatalErrorPage } from "connectors";
 import { KeyBlueButton, RemoveDaemonButton } from "buttons";
 import { CopyToClipboard } from "shared";
-import { DIFF_CONNECTION_ERROR } from "constants/Messages";
+import { DIFF_CONNECTION_ERROR } from "constants";
 import "style/Layout.less";
 
 const resourcesUnavailableError = "resource temporarily unavailable";
