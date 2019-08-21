@@ -16,7 +16,7 @@ import { readFileBackward } from "./helpers/byteActions";
 import electron from "electron";
 import { isString } from "./fp";
 import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, BOTH_CONNECTION_ERR_MESSAGE, MAX_LOG_LENGTH, SPV_CONNECT_WITHOUT_SPV,
-  RPC_WITHOUT_ADVANCED_MODE, RPCCONNECT_INVALID_FORMAT, RPC_MISSING_OPTIONS, SPV_WITH_ADVANCED_MODE, TESTNET } from "constants";
+  RPC_WITHOUT_ADVANCED_MODE, RPCCONNECT_INVALID_FORMAT, RPC_MISSING_OPTIONS, SPV_WITH_ADVANCED_MODE, TESTNET, MAINNET } from "constants";
 import { DAEMON_ADVANCED, LOCALE } from "constants/config";
 
 // setPath as decrediton
