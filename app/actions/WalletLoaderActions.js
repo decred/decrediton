@@ -23,19 +23,23 @@ export const LOADER_ATTEMPT = "LOADER_ATTEMPT";
 export const LOADER_FAILED = "LOADER_FAILED";
 export const LOADER_SUCCESS = "LOADER_SUCCESS";
 
-export const loaderRequest = () => (dispatch, getState) => new Promise(async (resolve) => {
-  const { grpc: { address, port } } = getState();
-  const { daemon: { walletName } } = getState();
-  const request = { isTestNet: isTestNet(getState()), walletName, address, port };
-  dispatch({ request, type: LOADER_ATTEMPT });
-  try {
-    const loader = await getLoader(request);
-    dispatch({ loader, type: LOADER_SUCCESS });
-    dispatch(walletExistRequest());
-    resolve(true);
-  } catch (error) {
-    dispatch({ error, type: LOADER_FAILED });
-  }
+export const loaderRequest = () => (dispatch, getState) => new Promise((resolve) => {
+  const get = async () => {
+    const { grpc: { address, port } } = getState();
+    const { daemon: { walletName } } = getState();
+    const request = { isTestNet: isTestNet(getState()), walletName, address, port };
+    dispatch({ request, type: LOADER_ATTEMPT });
+    try {
+      const loader = await getLoader(request);
+      dispatch({ loader, type: LOADER_SUCCESS });
+      dispatch(walletExistRequest());
+      resolve(true);
+    } catch (error) {
+      dispatch({ error, type: LOADER_FAILED });
+    }
+  };
+
+  get();
 });
 
 export const GETWALLETSEEDSVC_ATTEMPT = "GETWALLETSEEDSVC_ATTEMPT";

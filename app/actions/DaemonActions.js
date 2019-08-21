@@ -228,14 +228,21 @@ export const shutdownApp = () => (dispatch, getState) => {
 
 export const cleanShutdown = () => () => wallet.cleanShutdown();
 
-export const getAvailableWallets = () => async (dispatch, getState) => new Promise (async (resolve) => {
-  const { currentSettings } = getState().settings;
-  const network = currentSettings.network;
-  const availableWallets = await wallet.getAvailableWallets(network);
-  const previousWallet = await wallet.getPreviousWallet();
-  dispatch({ availableWallets, previousWallet, type: AVAILABLE_WALLETS });
+export const getAvailableWallets = () => async (dispatch, getState) => new Promise ((resolve, reject) => {
+  const get = async () => {
+    const { currentSettings } = getState().settings;
+    const network = currentSettings.network;
+    const availableWallets = await wallet.getAvailableWallets(network);
+    const previousWallet = await wallet.getPreviousWallet();
+    return { availableWallets, previousWallet };
+  };
 
-  resolve({ availableWallets, previousWallet });
+  get()
+    .then(({ availableWallets, previousWallet }) => {
+      dispatch({ availableWallets, previousWallet, type: AVAILABLE_WALLETS });
+      resolve({ availableWallets, previousWallet });
+    })
+    .catch(err => reject(err));
 });
 
 export const removeWallet = (selectedWallet) => (dispatch) => {
@@ -281,11 +288,11 @@ export const closeDaemonRequest = () => async(dispatch, getState) => {
   }
 };
 
-export const startWallet = (selectedWallet) => (dispatch, getState) => new Promise(async (resolve,reject) => {
-  const { currentSettings } = getState().settings;
-  const network = currentSettings.network;
+export const startWallet = (selectedWallet) => (dispatch, getState) => new Promise((resolve,reject) => {
+  const start = async () => {
+    const { currentSettings } = getState().settings;
+    const network = currentSettings.network;
 
-  try {
     const walletStarted = await wallet.startWallet(selectedWallet.value.wallet, network == "testnet");
     const { port } = walletStarted;
     const walletCfg = getWalletCfg(network == "testnet", selectedWallet.value.wallet);
@@ -318,11 +325,17 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => new Promi
     dispatch({ type: WALLET_LOADER_SETTINGS, discoverAccountsComplete });
     selectedWallet.value.isTrezor && dispatch(enableTrezor());
     await dispatch(getVersionServiceAttempt());
-    resolve(discoverAccountsComplete);
-  } catch (err) {
-    reject(err);
-    dispatch({ type: DAEMONSTARTED_ERROR });
-  }
+    return discoverAccountsComplete;
+  };
+
+  start()
+    .then(discoverAccountsComplete => {
+      resolve (discoverAccountsComplete);
+    })
+    .catch(err => {
+      dispatch({ type: DAEMONSTARTED_ERROR });
+      reject(err);
+    });
 });
 
 export const prepStartDaemon = () => (dispatch, getState) => {
@@ -349,7 +362,6 @@ export const prepStartDaemon = () => (dispatch, getState) => {
 
   if(hasAllCredentials && hasAppData)
     this.props.setCredentialsAppdataError();
-
 };
 
 const TIME_TO_TIMEOUT = 30 * 1000; // 30 sec
@@ -383,15 +395,21 @@ export const connectDaemon = (rpcCreds) => (dispatch, getState) => new Promise((
   tryConnect();
 });
 
-export const checkNetworkMatch = () => async (dispatch, getState) => new Promise(async (resolve) => {
+export const checkNetworkMatch = () => async (dispatch, getState) => new Promise((resolve, reject) => {
   dispatch({ type: CHECK_NETWORKMATCH_ATTEMPT });
-  const daemonInfo = await wallet.getDaemonInfo();
-  if (daemonInfo.isTestnet !== null &&
+  wallet.getDaemonInfo()
+    .then(daemonInfo => {
+      if (daemonInfo.isTestnet !== null &&
       daemonInfo.isTestnet !== isTestNet(getState())) {
-    dispatch({ error: DIFF_CONNECTION_ERROR, type: CHECK_NETWORKMATCH_FAILED });
-    return dispatch(pushHistory("/error"));
-  }
-  resolve(daemonInfo);
+        dispatch({ error: DIFF_CONNECTION_ERROR, type: CHECK_NETWORKMATCH_FAILED });
+        return dispatch(pushHistory("/error"));
+      }
+      resolve(daemonInfo);
+    })
+    .catch(error => {
+      dispatch({ error, type: CHECK_NETWORKMATCH_FAILED });
+      reject(error);
+    });
 });
 
 export const syncDaemon = () => (dispatch, getState) => new Promise((resolve) => {
