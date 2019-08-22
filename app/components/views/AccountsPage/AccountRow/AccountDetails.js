@@ -28,7 +28,7 @@ const AccountsList = ({
   hideAccount,
   showAccount,
   showPubKey,
-  onShowPubKey,
+  onTogglePubkey,
   accountExtendedKey
 }) => (
   <div key={"details" + account.accountNumber}>
@@ -109,8 +109,11 @@ const AccountsList = ({
             <div className="rename-account-button" onClick={showRenameAccount} />
           </Tooltip> }
         {account.accountName !== "imported" &&
-          <Tooltip text={<T id="accounts.reveal.tip" m="Reveal Pubkey" />}>
-            <div className="reveal-account-pubkey-button" onClick={onShowPubKey} />
+          <Tooltip text={showPubKey ?
+            <T id="accounts.hide.pubkey" m="Hide Pubkey" /> : 
+            <T id="accounts.reveal.pubkey" m="Reveal Pubkey" />}>
+            <div className={"reveal-account-pubkey-button " + (showPubKey ? "hide" : "show") }
+              onClick={onTogglePubkey} />
           </Tooltip> }
         {isHidable(account) && !hidden &&
           <Tooltip text={<T id="accounts.hide.tip" m="Hide" />}>

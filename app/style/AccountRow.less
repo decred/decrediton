@@ -157,7 +157,12 @@
 }
 
 .reveal-account-pubkey-button {
-    background-image: @watch-only-icon;
+  &.show {
+    background-image: @show-pubkey-icon;
+  }
+  &.hide {
+    background-image: @hide-pubkey-icon;
+  }
 }
 
 .rename-account-button {
