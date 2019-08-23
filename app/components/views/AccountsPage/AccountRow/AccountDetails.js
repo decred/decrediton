@@ -33,7 +33,7 @@ const AccountsList = ({
   setAccountDetailsRef
 }) => (
     <div key={"details" + account.accountNumber}
-      ref={el => setAccountDetailsRef(el)}>
+      ref={ el => el && setAccountDetailsRef(el) }>
       <div className="account-row-details-bottom-columns">
         <div className="account-row-details-bottom-column-left">
           <div className="account-row-details-bottom-title">

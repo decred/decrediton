@@ -21,10 +21,7 @@ class AccountRow extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     const { account, accountNumDetailsShown } = prevProps;
-    if (this.state.accountDetailsRef === prevState.accountDetailsRef) {
-      return;
-    }
-    if (accountNumDetailsShown === this.props.accountNumDetailsShown) {
+    if (this.state.accountDetailsRef === prevState.accountDetailsRef || accountNumDetailsShown === this.props.accountNumDetailsShown) {
       return;
     }
     if (account.accountNumber !== this.props.accountNumDetailsShown) {

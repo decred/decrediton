@@ -12,8 +12,9 @@ class VerticalAccordion extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.children.ref) {
-      console.log(this.props.children.ref.clientHeight)
+    const { children } = this.props;
+    if (children.ref && prevProps.children.ref !== children.ref) {
+      this.childRef = children.ref;
     }
 
     const needUpdate =
@@ -55,17 +56,11 @@ class VerticalAccordion extends React.Component {
   // changing due to caller changing eg content of body.
   getShownStyles(props) {
     return [ {
-      // data: React.isValidElement(props.children) ?
-      //   <ChildrenRef ref={this.childRef}>{props.children}</ChildrenRef> :
-      //     <>{k(props.children, { ref: el => {
-      //   console.log(el)
-      // } })}</>,
-      
       data: props.children,
       key: "body",
       style: {
-        height: spring(props.height || 100, { stiffness: 110, damping: 14 }),
-        opacity: spring(1, { stiffness: 65, damping: 35 }),
+        height: spring(this.childRef && this.childRef.clientHeight),
+        opacity: spring(1),
       }
     } ];
   }
