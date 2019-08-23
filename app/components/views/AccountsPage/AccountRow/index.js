@@ -15,11 +15,15 @@ class AccountRow extends React.Component {
       hasFailedAttempt: false,
       showPubKey: false,
       isShowingDetails: false,
+      accountDetailsRef: null,
     };
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     const { account, accountNumDetailsShown } = prevProps;
+    if (this.state.accountDetailsRef === prevState.accountDetailsRef) {
+      return;
+    }
     if (accountNumDetailsShown === this.props.accountNumDetailsShown) {
       return;
     }
@@ -101,6 +105,14 @@ class AccountRow extends React.Component {
     );
   }
 
+  setAccountDetailsRef (ref) {
+    const { accountDetailsRef } = this.state;
+    if (ref === accountDetailsRef || !ref) {
+      return;
+    }
+    this.setState({ accountDetailsRef: ref });
+  }
+
   getAccountDetailsStyles() {
     const { account, accountExtendedKey } = this.props;
     const {
@@ -108,10 +120,12 @@ class AccountRow extends React.Component {
       showAccount,
       hideAccount,
       onTogglePubkey,
+      setAccountDetailsRef,
     } = this;
     const { hidden, showPubKey } = this.state;
     return (
       <AccountDetails
+        ref={ this.state.accountDetailsRef }
         {...{
           account,
           showRenameAccount,
@@ -121,6 +135,7 @@ class AccountRow extends React.Component {
           onTogglePubkey,
           showPubKey,
           accountExtendedKey,
+          setAccountDetailsRef,
         }}
       />
     );
