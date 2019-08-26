@@ -8,13 +8,13 @@ class VerticalAccordion extends React.Component {
     super(props);
     this.state = {
       childHeight: null,
-    }
+    };
     this.childRef = null;
   }
 
   componentDidUpdate() {
     if (this.childRef && this.childRef.clientHeight !== this.state.childHeight) {
-      this.setState({ childHeight: this.childRef.clientHeight })
+      this.setState({ childHeight: this.childRef.clientHeight });
     }
   }
 
@@ -54,8 +54,7 @@ class VerticalAccordion extends React.Component {
   }
 
   onToggleAccordion() {
-    this.setState({ show: !this.state.show },
-      this.props.onToggleAccordion && this.props.onToggleAccordion());
+    this.props.onToggleAccordion && this.props.onToggleAccordion();
   }
 
   render() {

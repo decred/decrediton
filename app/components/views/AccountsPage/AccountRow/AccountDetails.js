@@ -30,10 +30,8 @@ const AccountsList = ({
   showPubKey,
   onTogglePubkey,
   accountExtendedKey,
-  setAccountDetailsRef
 }) => (
-  <div key={"details" + account.accountNumber}
-    ref={ el => el && setAccountDetailsRef(el) }>
+  <div key={"details" + account.accountNumber}>
     <div className="account-row-details-bottom-columns">
       <div className="account-row-details-bottom-column-left">
         <div className="account-row-details-bottom-title">
