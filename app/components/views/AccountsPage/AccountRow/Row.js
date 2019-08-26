@@ -47,7 +47,6 @@ const Row = ({
   hasTickets,
 }) => (<VerticalAccordion
   header={<Header {...{ account, hidden, hasTickets }} />}
-  height={isShowingRenameAccount ? 175 : 280}
   disabled={isImported(account) && !hasTickets}
   onToggleAccordion={onToggleShowDetails}
   show={isShowingDetails}

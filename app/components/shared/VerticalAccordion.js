@@ -6,7 +6,16 @@ import { spring } from "react-motion";
 class VerticalAccordion extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      childHeight: null,
+    }
     this.childRef = null;
+  }
+
+  componentDidUpdate() {
+    if (this.childRef && this.childRef.clientHeight !== this.state.childHeight) {
+      this.setState({ childHeight: this.childRef.clientHeight })
+    }
   }
 
   // "default" style when initializing the component
@@ -23,29 +32,30 @@ class VerticalAccordion extends React.Component {
   // this returns the chosen style based on the passed props
   chosenStyles() {
     const { show, children } = this.props;
-    if (show && children) {
+    if (show && this.childRef) {
       return [ {
         data: children,
         key: "body",
         style: {
-          height: spring(this.childRef && this.childRef.clientHeight),
+          height: spring(this.childRef.clientHeight),
           opacity: spring(1),
         }
       } ];
-    } else {
-      return [ {
-        data: <div />,
-        key: "body",
-        style: {
-          height: spring(0),
-          opacity: spring(0),
-        }
-      } ];
     }
+    // if we do not return the children we return an empty div.
+    return [ {
+      data: <div />,
+      key: "body",
+      style: {
+        height: spring(0),
+        opacity: spring(0),
+      }
+    } ];
   }
 
   onToggleAccordion() {
-    this.props.onToggleAccordion && this.props.onToggleAccordion();
+    this.setState({ show: !this.state.show },
+      this.props.onToggleAccordion && this.props.onToggleAccordion());
   }
 
   render() {

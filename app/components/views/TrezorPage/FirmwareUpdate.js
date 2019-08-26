@@ -35,7 +35,6 @@ class FirmwareUpdate extends React.Component {
 
     return (
       <VerticalAccordion
-        height={250}
         header={header}
         show={this.state.show}
         onToggleAccordion={this.onToggleAccordion}
