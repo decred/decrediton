@@ -3,8 +3,9 @@ import { Balance, VerticalAccordion } from "shared";
 import "style/Fonts.less";
 import "style/AccountRow.less";
 
-// default account number equals max int number
-const isImported = ({ accountNumber }) => accountNumber === 2147483647;
+// default account's number equals 2^31-1.
+// source https://github.com/decred/dcrwallet/blob/master/wallet/udb/addressmanager.go#L43
+const isImported = ({ accountNumber }) => accountNumber === Math.pow(2, 31)-1;
 const Header = ({
   account,
   hidden,
