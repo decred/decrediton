@@ -19,19 +19,33 @@ export default ({ viewedProposalDetails,
     version } = viewedProposalDetails;
   const eligibleTicketCount = viewedProposalDetails.eligibleTickets.length;
 
-  const voted = voteStatus === VOTESTATUS_VOTED;
-  const voting = voteStatus === VOTESTATUS_ACTIVEVOTE;
-  const abandoned = voteStatus === VOTESTATUS_ABANDONED;
-
+  const isVoting = voteStatus === VOTESTATUS_ACTIVEVOTE;
 
   let voteInfo = null;
+  let votingProgress = null;
+  switch (voteStatus) {
+    case VOTESTATUS_VOTED:
+        voteInfo = <ChosenVoteOption {...{ voteOptions, currentVoteChoice, votingComplete: true }} />;
+        votingProgress = <OverviewVotingProgressInfo {...{ voteCounts }} /> ;
+    break;
+    case VOTESTATUS_ACTIVEVOTE:
+      voteInfo = <ProposalNotVoting />;
+      votingProgress = <OverviewVotingProgressInfo {...{ voteCounts }} /> 
+      break;
+    case VOTESTATUS_ABANDONED:
+      voteInfo = <ProposalAbandoned />;
+      break;
+    default:
+      voteInfo = <ChosenVoteOption {...{
+        voteOptions, onUpdateVoteChoice, onVoteOptionSelected, newVoteChoice,
+        eligibleTicketCount, currentVoteChoice, votingComplete: currentVoteChoice !== "abstain",
+      }} />;
+    break;
+  }
+
   if (updateVoteChoiceAttempt) voteInfo = <UpdatingVoteChoice />;
-  else if (abandoned) voteInfo = <ProposalAbandoned />;
-  else if (voted) voteInfo = <ChosenVoteOption {...{ voteOptions, currentVoteChoice, votingComplete: true }} />;
-  else if (!voting) voteInfo = <ProposalNotVoting />;
   else if (!hasTickets) voteInfo = <NoTicketsVotingInfo {...{ showPurchaseTicketsPage }} />;
   else if (!hasEligibleTickets) voteInfo = <NoElligibleTicketsVotingInfo {...{ showPurchaseTicketsPage }} />;
-  else voteInfo = <ChosenVoteOption {...{ voteOptions, onUpdateVoteChoice, onVoteOptionSelected, newVoteChoice, eligibleTicketCount, currentVoteChoice, votingComplete: currentVoteChoice !== "abstain" }} />;
 
   return (
     <>
@@ -52,16 +66,16 @@ export default ({ viewedProposalDetails,
               label={<T id="proposal.overview.lastUpdated.label" m="Last Updated" />}
               value={<TimeValue timestamp={timestamp} tsDate={tsDate} />} />
             <OverviewField
-              show={voting && endTimestamp}
+              show={isVoting && endTimestamp}
               label={<T id="proposal.overview.deadline.label" m="Voting Deadline" />}
-              value={voting ? <TimeValue timestamp={endTimestamp} tsDate={tsDate} /> : null } />
+              value={isVoting ? <TimeValue timestamp={endTimestamp} tsDate={tsDate} /> : null } />
           </div>
         </div>
         <div className="proposal-details-overview-voting">
           <GoBackIconButton />
           {voteInfo}
         </div>
-        { voting || voted ? <OverviewVotingProgressInfo {...{ voteCounts }} /> : null }
+        { votingProgress }
       </div>
       <div className="proposal-details-text">
         <ProposalText text={text} />

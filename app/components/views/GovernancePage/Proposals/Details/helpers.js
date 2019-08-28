@@ -102,30 +102,37 @@ const renderProposalImage = ({ alt }) => {
   return <span>{alt}</span>;
 };
 
-export const ProposalText = ({ text }) => (
-  <ReactMarkdown
-    source={text}
+export const ProposalText = ({ text, token }) => (
+  <>
+    <div className="links">
+      <PoliteiaLink path={"/proposals/"+token}>
+        <T id="proposals.community.goToProposal" m="See proposal comments on Politeia" />
+      </PoliteiaLink>
+    </div>
+    <ReactMarkdown
+      source={text}
 
-    // NEVER set to false
-    escapeHtml={true}
+      // NEVER set to false
+      escapeHtml={true}
 
-    // debatable whether we wanna allow the embedded html sections to be
-    // shown. Theoretically, escapeHtml=true should suffice, but playing it
-    // safe for the moment and also setting this as true.
-    skipHtml={true}
+      // debatable whether we wanna allow the embedded html sections to be
+      // shown. Theoretically, escapeHtml=true should suffice, but playing it
+      // safe for the moment and also setting this as true.
+      skipHtml={true}
 
-    renderers={{
-      link: renderInternalProposalLink,
-      linkReference: renderInternalProposalLink,
+      renderers={{
+        link: renderInternalProposalLink,
+        linkReference: renderInternalProposalLink,
 
-      // debatable whether we wanna allow inline image references in proposals
-      // in decrediton.
-      imageReference: () => renderProposalImage,
-      image: () => renderProposalImage,
+        // debatable whether we wanna allow inline image references in proposals
+        // in decrediton.
+        imageReference: () => renderProposalImage,
+        image: () => renderProposalImage,
 
-      html: () => null,
-    }}
-  />
+        html: () => null,
+      }}
+    />
+  </>
 );
 
 // politeiaMarkdownIndexMd returns markdown text from the payload of a politeia
