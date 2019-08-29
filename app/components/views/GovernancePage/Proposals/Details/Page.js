@@ -23,6 +23,7 @@ export default ({ viewedProposalDetails,
 
   let voteInfo = null;
   let votingProgress = null;
+  console.log(voteStatus)
   switch (voteStatus) {
     case VOTESTATUS_VOTED:
         voteInfo = <ChosenVoteOption {...{ voteOptions, currentVoteChoice, votingComplete: true }} />;
@@ -36,16 +37,17 @@ export default ({ viewedProposalDetails,
       voteInfo = <ProposalAbandoned />;
       break;
     default:
-      voteInfo = <ChosenVoteOption {...{
-        voteOptions, onUpdateVoteChoice, onVoteOptionSelected, newVoteChoice,
-        eligibleTicketCount, currentVoteChoice, votingComplete: currentVoteChoice !== "abstain",
-      }} />;
+      voteInfo = <ProposalNotVoting />;
+      // voteInfo = <ChosenVoteOption {...{
+      //   voteOptions, onUpdateVoteChoice, onVoteOptionSelected, newVoteChoice,
+      //   eligibleTicketCount, currentVoteChoice, votingComplete: currentVoteChoice !== "abstain",
+      // }} />;
     break;
   }
 
   if (updateVoteChoiceAttempt) voteInfo = <UpdatingVoteChoice />;
   else if (!hasTickets) voteInfo = <NoTicketsVotingInfo {...{ showPurchaseTicketsPage }} />;
-  else if (!hasEligibleTickets) voteInfo = <NoElligibleTicketsVotingInfo {...{ showPurchaseTicketsPage }} />;
+  // else if (!hasEligibleTickets) voteInfo = <NoElligibleTicketsVotingInfo {...{ showPurchaseTicketsPage }} />;
 
   return (
     <>

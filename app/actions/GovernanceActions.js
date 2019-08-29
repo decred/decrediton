@@ -6,7 +6,14 @@ import { getWalletCfg } from "config";
 import { push as pushHistory } from "react-router-redux";
 import { hexReversedHashToArray, reverseRawHash } from "helpers";
 
-// enum values from politeiawww's v1.PropVoteStatusT
+// Proposal vote status codes from politeiawww's v1.PropVoteStatusT
+// source: https://github.com/decred/politeia/blob/master/politeiawww/api/www/v1/v1.go
+// PropVoteStatusInvalid       PropVoteStatusT = 0 // Invalid vote status
+// PropVoteStatusNotAuthorized PropVoteStatusT = 1 // Vote has not been authorized by author
+// PropVoteStatusAuthorized    PropVoteStatusT = 2 // Vote has been authorized by author
+// PropVoteStatusStarted       PropVoteStatusT = 3 // Proposal vote has been started
+// PropVoteStatusFinished      PropVoteStatusT = 4 // Proposal vote has been finished
+// PropVoteStatusDoesntExist   PropVoteStatusT = 5 // Proposal doesn't exist
 export const VOTESTATUS_ACTIVEVOTE = 3;
 export const VOTESTATUS_VOTED = 4;
 export const VOTESTATUS_ABANDONED = 6;
