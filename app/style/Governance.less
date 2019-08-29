@@ -11,6 +11,10 @@
   color: var(--modal-text);
   min-height: 110px;
 
+  .links {
+    position: absolute;
+    right: 100px;
+  }
 
   .proposals-community-header-title {
     font-size: 21px;
@@ -219,6 +223,7 @@
   flex-wrap: wrap;
   margin-top: 22px;
   min-height: 200px;
+  width: 740px;
 
   .proposal-details-overview-info {
     padding: 20px 10px 15px 40px;
@@ -349,12 +354,19 @@
   background-color: var(--background-back-color);
   margin-bottom: 80px;
   border-top: 1px solid var(--tabbed-page-header-bg);
+  width: 700px;
+
+  .links {
+    float: right;
+    margin-right: 20px;
+    margin-top: -10px;
+  }
   p {
     word-wrap: break-word;
   }
   a {
     color:var(--link-color);
-  }  
+  }
 }
 
 .proposal-details-voting-progress-counts {
@@ -522,9 +534,6 @@
 }
 
 .links {
-  position: absolute;
-  right: 100px;
-
   > a:not(.info-modal-button) {
     font-size: 13px;
     line-height: 17px;
