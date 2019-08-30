@@ -967,6 +967,7 @@ export const preVoteProposals = get([ "governance", "preVote" ]);
 export const votedProposals = get([ "governance", "voted" ]);
 export const abandonedProposals = get([ "governance", "abandoned" ]);
 export const lastVettedFetchTime = get([ "governance", "lastVettedFetchTime" ]);
+export const inventory = get([ "governance", "inventory" ]);
 export const newActiveVoteProposalsCount = compose(
   reduce((acc, p) => p.votingSinceLastAccess ? acc + 1 : acc, 0),
   activeVoteProposals

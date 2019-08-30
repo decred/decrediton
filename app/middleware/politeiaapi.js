@@ -45,6 +45,10 @@ export const getVotesStatus = (piURL) => GET(piURL, "/v1/proposals/votestatus");
 export const getProposal = (piURL, token) => GET(piURL, "/v1/proposals/" + token);
 export const getProposalVotes = (piURL, token) => GET(piURL, "/v1/proposals/" + token + "/votes");
 export const getProposalVoteStatus = (piURL, token) => GET(piURL, "/v1/proposals/" + token + "/votestatus");
+export const getTokenInventory = (piURL) => GET(piURL, "/v1/proposals/tokeninventory");
 
 // votes must be an array of Vote()-produced objects.
 export const castVotes = (piURL, votes) => POST(piURL, "/v1/proposals/castvotes", { votes });
+
+// batch is an array of tokens to be fetched.
+export const getProposalsBatch = (piURL, batch) => POST(piURL, "/v1/proposals/batch", { batch })

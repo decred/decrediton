@@ -133,6 +133,38 @@ const getProposalVoteResults = async (proposal, piURL, walletService, blockTimes
   return proposal;
 };
 
+export const GETTOKEN_INVENTORY_ATTEMPT = "GETTOKEN_INVENTORY_ATTEMPT";
+export const GETTOKEN_INVENTORY_SUCCESS = "GETTOKEN_INVENTORY_SUCCESS";
+export const GETTOKEN_INVENTORY_FAILED = "GETTOKEN_INVENTORY_FAILED";
+
+export const getTokenInventory = () => async (dispatch, getState) => {
+  dispatch({ type: GETTOKEN_INVENTORY_ATTEMPT });
+  const piURL = sel.politeiaURL(getState());
+  try {
+    const { data } = await pi.getTokenInventory(piURL);
+    dispatch({ type: GETTOKEN_INVENTORY_SUCCESS, inventory: data });
+  } catch (error) {
+    dispatch({ error, GETTOKEN_INVENTORY_FAILED})
+  }
+}
+
+export const GET_PROPOSAL_BATCH_ATTEMPT = "GET_PROPOSAL_BATCH_ATTEMPT";
+export const GET_PROPOSAL_BATCH_SUCCESS = "GET_PROPOSAL_BATCH_SUCCESS";
+export const GET_PROPOSAL_BATCH_FAILED = "GET_PROPOSAL_BATCH_FAILED";
+
+export const getProposalsBatch = (tokensBatch) => async (dispatch, getState) => {
+  dispatch({ type: GET_PROPOSAL_BATCH_ATTEMPT });
+  console.log(tokensBatch)
+  const piURL = sel.politeiaURL(getState());
+  try {
+    const batch = await pi.getProposalsBatch(piURL, tokensBatch);
+    console.log(batch)
+    dispatch({ type: GET_PROPOSAL_BATCH_SUCCESS, inventory: batch });
+  } catch (error) {
+    dispatch({ error, GET_PROPOSAL_BATCH_FAILED})
+  }
+};
+
 export const GETVETTED_ATTEMPT = "GETVETTED_ATTEMPT";
 export const GETVETTED_FAILED = "GETVETTED_FAILED";
 export const GETVETTED_SUCCESS = "GETVETTED_SUCCESS";

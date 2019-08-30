@@ -16,10 +16,12 @@ const mapStateToProps = selectorMap({
   updateVoteChoiceAttempt: sel.updateVoteChoiceAttempt,
   lastVettedFetchTime: sel.lastVettedFetchTime,
   tsDate: sel.tsDate,
+  inventory: sel.inventory,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   getVettedProposals: ga.getVettedProposals,
+  getProposalsBatch: ga.getProposalsBatch,
   getProposalDetails: ga.getProposalDetails,
   viewProposalDetails: ga.viewProposalDetails,
   showPurchaseTicketsPage: ca.showPurchaseTicketsPage,
