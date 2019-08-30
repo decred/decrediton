@@ -16,7 +16,7 @@ import { log } from "./wallet";
 import { ipcRenderer } from "electron";
 import { DCR, DAEMON_ADVANCED, THEME, OPEN_FORM, LOCALE, NETWORK } from "constants";
 
-var globalCfg = getGlobalCfg();
+const globalCfg = getGlobalCfg();
 const locale = globalCfg.get(LOCALE);
 const cliOptions = ipcRenderer.sendSync("get-cli-options");
 

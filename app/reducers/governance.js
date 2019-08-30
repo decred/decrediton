@@ -7,6 +7,7 @@ import {
 import {
   CLOSEWALLET_SUCCESS
 } from "actions/WalletLoaderActions";
+import { WALLETREADY } from "actions/DaemonActions";
 
 export default function governance(state = {}, action) {
   switch (action.type) {
@@ -70,6 +71,12 @@ export default function governance(state = {}, action) {
       proposals: {},
       lastVettedFetchTime: new Date(0),
     };
+  case WALLETREADY:
+    return { ...state,
+      lastPoliteiaAccessTime: action.lastPoliteiaAccessTime,
+      lastPoliteiaAccessBlock: action.lastPoliteiaAccessBlock,
+    }
+    break;
   default:
     return state;
   }

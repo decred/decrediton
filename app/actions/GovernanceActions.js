@@ -145,7 +145,8 @@ export const getVettedProposals = () => async (dispatch, getState) => {
   const currentBlockHeight = sel.currentBlockHeight(getState());
 
   const cfg = getWalletCfg(sel.isTestNet(getState()), sel.getWalletName(getState()));
-  const lastAccessTime = cfg.get("politeia_last_access_time") || 0;
+  const lastAccessTime = sel.lastPoliteiaAccessTime(getState());
+  console.log(lastAccessTime)
 
   const originalWalletService = getState().grpc.walletService;
 
@@ -215,9 +216,9 @@ export const getVettedProposals = () => async (dispatch, getState) => {
 
       byToken[p.token] = p;
     });
-
-    cfg.set("politeia_last_access_time", (new Date()).getTime());
-    cfg.set("politeia_last_access_block", currentBlockHeight);
+    console.log(byToken)
+    cfg.set("politeia_last_access_time", (new Date()).getTime() - 1561898475);
+    cfg.set("politeia_last_access_block", 100000);
     dispatch({ proposals: byToken, preVote, activeVote, abandoned, voted, type: GETVETTED_SUCCESS });
     dispatch(getVettedUpdateVoteResults({ activeVote, voted, byToken, originalWalletService, cfg, piURL }));
   } catch (error) {
@@ -241,7 +242,8 @@ export const getVettedUpdateVoteResults = ({ activeVote, voted, byToken, origina
 
   try {
     const chainParams = sel.chainParams(getState());
-    const lastAccessBlock = cfg.get("politeia_last_access_block") || 0;
+    const lastAccessBlock = sel.lastPoliteiaAccessBlock(getState());
+    console.log(lastAccessBlock)
     const { walletService } = getState().grpc;
 
     const votedWithVotes = await Promise.all([ ...activeVote, ...voted ]
@@ -253,6 +255,10 @@ export const getVettedUpdateVoteResults = ({ activeVote, voted, byToken, origina
       switch (p.voteStatus) {
       case VOTESTATUS_ACTIVEVOTE:
         var startVoteBh = p.startBlockHeight || 0;
+        console.log(p)
+        console.log(lastAccessBlock)
+        // console.log(startVoteBh)
+        // console.log(lastAccessBlock - chainParams.TicketMaturity)
         p.votingSinceLastAccess = startVoteBh >= (lastAccessBlock - chainParams.TicketMaturity);
         newActiveVote.push(p);
         break;
