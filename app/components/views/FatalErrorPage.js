@@ -27,7 +27,7 @@ class FatalErrorPage extends React.Component {
       errorMessage = (
           <>
             <div className="fatal-error-reset-blockchain">
-              <T id="fatal.suggestion.corrupted" m="This error means your blockchain data has somehow become corrupted.  Typically, this is caused by a sector on the HDD/SDD that went bad and its built-in SMART didn't repair it, or the more likely case, there was a memory issue which corrupted the data.  To resolve, you must delete your blockchain data and re-download.  Press the button below to complete the process. When you restart Decrediton, it will automatically begin your blockchain download. Please come to our support channel on slack/matrix/discord/rocketchat to get advice about running disk utilities. " />
+              <T id="fatal.suggestion.corrupted" m="This error means your blockchain data has somehow become corrupted.  Typically, this is caused by a sector on the HDD/SDD that went bad and its built-in SMART didn't repair it, or the more likely case, there was a memory issue which corrupted the data.  To resolve, you must delete your blockchain data and re-download.  Press the button below to complete the process. When you restart Decrediton, it will automatically begin your blockchain download. Please come to our support channel on slack/matrix/discord to get advice about running disk utilities. " />
             </div>
             <RemoveDaemonButton
               className="fatal-remove-button"
