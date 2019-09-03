@@ -37,7 +37,7 @@ class ProposalsPage extends React.Component {
 
   componentDidMount() {
     const preProposalsBatch = this.props.inventory && this.props.inventory.pre;
-    this.props.getProposalsBatch(preProposalsBatch)
+    this.props.getProposalsAndUpdateVoteStatus(preProposalsBatch)
   }
 
   componentDidUpdate(prevProps, prevState) {

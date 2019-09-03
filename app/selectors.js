@@ -961,6 +961,7 @@ export const dcrdataEnabled = compose(
 export const treasuryBalance = get([ "grpc", "treasuryBalance" ]);
 
 export const updateVoteChoiceAttempt = get([ "governance", "updateVoteChoiceAttempt" ]);
+export const proposals = get([ "governance", "proposals" ]);
 export const activeVoteProposals = get([ "governance", "activeVote" ]);
 export const getVettedProposalsAttempt = get([ "governance", "getVettedAttempt" ]);
 export const preVoteProposals = get([ "governance", "preVote" ]);

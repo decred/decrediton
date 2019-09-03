@@ -152,18 +152,74 @@ export const GET_PROPOSAL_BATCH_ATTEMPT = "GET_PROPOSAL_BATCH_ATTEMPT";
 export const GET_PROPOSAL_BATCH_SUCCESS = "GET_PROPOSAL_BATCH_SUCCESS";
 export const GET_PROPOSAL_BATCH_FAILED = "GET_PROPOSAL_BATCH_FAILED";
 
-export const getProposalsBatch = (tokensBatch) => async (dispatch, getState) => {
-  dispatch({ type: GET_PROPOSAL_BATCH_ATTEMPT });
-  console.log(tokensBatch)
-  const piURL = sel.politeiaURL(getState());
+const getProposalsBatch = async (tokensBatch, piURL) => {
   try {
-    const batch = await pi.getProposalsBatch(piURL, tokensBatch);
-    console.log(batch)
-    dispatch({ type: GET_PROPOSAL_BATCH_SUCCESS, inventory: batch });
+    const requestResponse = await pi.getProposalsBatch(piURL, tokensBatch);
+    const { data } = requestResponse;
+    return data;
   } catch (error) {
-    dispatch({ error, GET_PROPOSAL_BATCH_FAILED})
+    throw error;
   }
 };
+
+export const GET_PROPOSALS_VOTESTATUS_BATCH_ATTEMPT = "GET_PROPOSALS_VOTESTATUS_BATCH_ATTEMPT";
+export const GET_PROPOSALS_VOTESTATUS_BATCH_SUCCESS = "GET_PROPOSALS_VOTESTATUS_BATCH_SUCCESS";
+export const GET_PROPOSALS_VOTESTATUS_BATCH_FAILED = "GET_PROPOSALS_VOTESTATUS_BATCH_FAILED";
+
+const getProposalsVotestatusBatch = async (tokensBatch, piURL) => {
+  try {
+    const requestResponse = await pi.getProposalsVoteStatusBatch(piURL, tokensBatch);
+    return requestResponse.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const findProposal = (proposals, token) =>
+  proposals.find( proposal => proposal.censorshiprecord.token === token ? proposal : null );
+
+export const GETPROPROSAL_UPDATEVOTESTATUS_ATTEMPT = "GETPROPROSAL_UPDATEVOTESTATUS_ATTEMPT";
+export const GETPROPROSAL_UPDATEVOTESTATUS_SUCCESS = "GETPROPROSAL_UPDATEVOTESTATUS_SUCCESS";
+export const GETPROPROSAL_UPDATEVOTESTATUS_FAILED = "GETPROPROSAL_UPDATEVOTESTATUS_FAILED";
+
+export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch, getState) => {
+  dispatch({ type: GETPROPROSAL_UPDATEVOTESTATUS_ATTEMPT });
+  const proposalsUpdated = {
+    activeVote: [],
+    preVote: [],
+    finishedVote: [],
+  }
+  const piURL = sel.politeiaURL(getState());
+
+  try {
+    const { proposals } = await getProposalsBatch(tokensBatch,piURL);
+    const { summaries, bestBlock } = await getProposalsVotestatusBatch(tokensBatch, piURL);
+    tokensBatch.forEach( token => {
+      const prop = findProposal(proposals, token);
+      const { status } = summaries[token];
+      prop.voteStatus = status;
+      
+      switch (status) {
+        case VOTESTATUS_ABANDONED:
+          proposalsUpdated.finishedVote.push(prop);
+          break;
+        case VOTESTATUS_ACTIVEVOTE:
+          proposalsUpdated.activeVote.push(prop);
+          break;
+        case VOTESTATUS_VOTED:
+          proposalsUpdated.finishedVote.push(prop);
+          break;
+        default:
+          proposalsUpdated.preVote.push(prop);
+          break;
+      }
+    });
+
+    return dispatch({ type: GETPROPROSAL_UPDATEVOTESTATUS_SUCCESS, proposals: proposalsUpdated, bestBlock } );
+  } catch (error) {
+    dispatch({ type: GETPROPROSAL_UPDATEVOTESTATUS_FAILED, error });
+  }
+}
 
 export const GETVETTED_ATTEMPT = "GETVETTED_ATTEMPT";
 export const GETVETTED_FAILED = "GETVETTED_FAILED";

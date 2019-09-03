@@ -384,13 +384,14 @@ var initialState = {
   },
   governance: {
     getVettedAttempt: false,
-    activeVote: [],
-    preVote: [],
-    voted: [],
-
+    inventory: [],
+    proposals: {
+      activeVote: [],
+      preVote: [],
+      finishedVote: [],
+    },
     getProposalAttempt: false,
     getProposalError: null,
-    proposals: {}, // map from proposal token (id) to proposal details
     lastVettedFetchTime: new Date(0), // time when vetted proposals were requested
   },
   trezor: {

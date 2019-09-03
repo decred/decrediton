@@ -4,7 +4,7 @@ import axios from "axios";
 // Uncomment this and comment the following definition to test locally.
 // export const POLITEIA_URL_TESTNET = "https://localhost:4443";
 
-export const POLITEIA_URL_TESTNET = "https://test-proposals.decred.org/api";
+export const POLITEIA_URL_TESTNET = "https://pi-redesign.authit.co/api";
 export const POLITEIA_URL_MAINNET = "https://proposals.decred.org/api";
 
 const CSRF_TOKEN_HEADER = "x-csrf-token"; // must always be lowercase
@@ -50,5 +50,6 @@ export const getTokenInventory = (piURL) => GET(piURL, "/v1/proposals/tokeninven
 // votes must be an array of Vote()-produced objects.
 export const castVotes = (piURL, votes) => POST(piURL, "/v1/proposals/castvotes", { votes });
 
-// batch is an array of tokens to be fetched.
-export const getProposalsBatch = (piURL, batch) => POST(piURL, "/v1/proposals/batch", { batch })
+// tokens is an array of tokens to be fetched.
+export const getProposalsBatch = (piURL, tokens) => POST(piURL, "/v1/proposals/batch", { tokens });
+export const getProposalsVoteStatusBatch = (piURL, tokens) => POST(piURL, "/v1/proposals/batchvotesummary", { tokens });
