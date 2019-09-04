@@ -1,6 +1,7 @@
+import { cloneElement as k, createElement as h } from "react";
 import { FormattedMessage as T } from "react-intl";
 import { PoliteiaLink as PiLink } from "shared";
-import { ActiveVoteProposals, PreVoteProposals, VotedProposals, AbandonedProposals } from "./ProposalList";
+import ProposalList from "./ProposalList";
 import { shell } from "electron";
 import { TabbedPage, TabbedPageTab as Tab } from "layout";
 import { newProposalCounts, proposals } from "connectors";
@@ -30,56 +31,54 @@ class ProposalsPage extends React.Component {
 
   constructor(props) {
     super(props);
+    const {loading, viewProposalDetails, tsDate, finishedProposal } = props
     this.state = {
-      proposalTab: this.getTab(),
+      component: h(ProposalList, { proposals: this.getProposalsTab(), loading, viewProposalDetails, tsDate, finishedProposal }),
     }
   }
 
   componentDidMount() {
+    const { loading, viewProposalDetails, tsDate, finishedProposal } = this.props;
     const preProposalsBatch = this.props.inventory && this.props.inventory.pre;
+    this.setState({
+      component: h(ProposalList, { proposals: this.getProposalsTab(), loading, viewProposalDetails, tsDate, finishedProposal }),
+    }),
     this.props.getProposalsAndUpdateVoteStatus(preProposalsBatch)
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log(this.props)
-    const { pathname } = this.props.location;
-    const { proposalTab } = this.state;
-    if (proposalTab === prevState.proposalTab) {
-      return;
-    }
-    if (pathname !== prevProps.location.pathname) {
-      this.setState({ proposalTab: this.getTab() });
+    const { proposals, loading, viewProposalDetails, tsDate, finishedProposal, } = this.props;
+    if (proposals !== prevProps.proposals || loading != prevProps.loading ) {
+      this.setState({ component: h(ProposalList, { proposals: this.getProposalsTab(), loading, viewProposalDetails, tsDate, finishedProposal, }) });
     }
   }
 
-  getTab() {
-    const { pathname } = this.props.location;
+  getProposalsTab() {
+    const { proposals, location } = this.props;
+    const { pathname } = location;
     if (pathname.includes("prevote")) {
-      return "prevote";
+      return proposals.preVote;
     }
     if (pathname.includes("activevote")) {
-      return "activevote";
+      return proposals.activeVote;
     }
     if (pathname.includes("voted")) {
-      return "voted";
-    }
-    if (ppathname.includes("abandoned")) {
-      return "abandoned";
+      return proposals.finishedVote
     }
   }
 
   render() {
     const { newActiveVoteProposalsCount, newPreVoteProposalsCount } = this.props;
+    const { component } = this.state;
+
     return (
       <TabbedPage caret={<div/>} header={<PageHeader />} >
-        <Tab path="/governance/proposals/prevote" component={PreVoteProposals}
-          link={<ListLink count={newPreVoteProposalsCount}><T id="proposals.statusLinks.preVote" m="Under Discussion" /></ListLink>}/>
-        <Tab path="/governance/proposals/activevote" component={ActiveVoteProposals}
+        <Tab path="/governance/proposals/prevote" component={component}
+          link={<ListLink count={newPreVoteProposalsCount}><T id="proposals.statusLinks.preVote" m="Under Discussion" /></ListLink>} />
+        <Tab path="/governance/proposals/activevote" component={component}
           link={<ListLink count={newActiveVoteProposalsCount}><T id="proposals.statusLinks.underVote" m="Under Vote" /></ListLink>}/>
-        <Tab path="/governance/proposals/voted" component={VotedProposals}
+        <Tab path="/governance/proposals/voted" component={component}
           link={<T id="proposals.statusLinks.voted" m="Finished Voting" />}/>
-        <Tab path="/governance/proposals/abandoned" component={AbandonedProposals}
-          link={<T id="proposals.statusLinks.abandoned" m="Abandoned" />}/>
       </TabbedPage>
     );
   }

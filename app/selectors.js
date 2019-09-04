@@ -964,6 +964,7 @@ export const updateVoteChoiceAttempt = get([ "governance", "updateVoteChoiceAtte
 export const proposals = get([ "governance", "proposals" ]);
 export const activeVoteProposals = get([ "governance", "activeVote" ]);
 export const getVettedProposalsAttempt = get([ "governance", "getVettedAttempt" ]);
+export const getProposalsAttempt = get([ "governance", "getProposalsAttempt" ]);
 export const preVoteProposals = get([ "governance", "preVote" ]);
 export const votedProposals = get([ "governance", "voted" ]);
 export const abandonedProposals = get([ "governance", "abandoned" ]);
@@ -988,8 +989,8 @@ export const viewedProposalDetails = createSelector(
   (proposals, token) => proposals[token]
 );
 export const initialProposalLoading = createSelector(
-  [ proposalsDetails, getVettedProposalsAttempt ],
-  ( proposals, getVettedAttempt ) => (Object.keys(proposals).length === 0) && getVettedAttempt
+  [ proposalsDetails, getProposalsAttempt ],
+  ( proposals, getProposalsAttempt ) => (Object.keys(proposals).length === 0) && getProposalsAttempt
 );
 export const lastPoliteiaAccessBlock = get([ "governance", "lastPoliteiaAccessBlock" ]);
 export const lastPoliteiaAccessTime = get([ "governance", "lastPoliteiaAccessTime" ]);

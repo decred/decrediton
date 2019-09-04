@@ -384,6 +384,7 @@ var initialState = {
   },
   governance: {
     getVettedAttempt: false,
+    getProposalsAttempt: false,
     inventory: [],
     proposals: {
       activeVote: [],

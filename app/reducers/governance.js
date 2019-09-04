@@ -3,7 +3,8 @@ import {
   GETVETTED_UPDATEDVOTERESULTS_SUCCESS, GETVETTED_UPDATEDVOTERESULTS_ATTEMPT,
   GETPROPOSAL_ATTEMPT, GETPROPOSAL_FAILED, GETPROPOSAL_SUCCESS,
   UPDATEVOTECHOICE_ATTEMPT, UPDATEVOTECHOICE_SUCCESS, UPDATEVOTECHOICE_FAILED,
-  GETTOKEN_INVENTORY_SUCCESS,
+  GETTOKEN_INVENTORY_SUCCESS, GETPROPROSAL_UPDATEVOTESTATUS_ATTEMPT,
+  GETPROPROSAL_UPDATEVOTESTATUS_SUCCESS, GETPROPROSAL_UPDATEVOTESTATUS_FAILED,
 } from "actions/GovernanceActions";
 import {
   CLOSEWALLET_SUCCESS
@@ -75,6 +76,20 @@ export default function governance(state = {}, action) {
       getProposalError: null,
       proposals: {},
       lastVettedFetchTime: new Date(0),
+    };
+  case GETPROPROSAL_UPDATEVOTESTATUS_ATTEMPT:
+    return { ...state,
+      getProposalsAttempt: true,
+    };
+  case GETPROPROSAL_UPDATEVOTESTATUS_SUCCESS:
+    return { ...state,
+      proposals: action.proposals,
+      getProposalsAttempt: false,
+    };
+  case GETPROPROSAL_UPDATEVOTESTATUS_FAILED:
+    return { ...state,
+      getProposalsAttempt: false,
+      getProposalError: state.error
     };
   case WALLETREADY:
     return { ...state,
