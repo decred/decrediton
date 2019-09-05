@@ -54,6 +54,7 @@ const DaemonLoadingBody = ({
           </InvisibleButton>
         </>
       </div>
+      <InvisibleButton onClick={onShowSettings} className="settings-button-mobile" />
       <>
         <div className="content-title">
           <LoaderTitleMsg />

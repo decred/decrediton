@@ -27,6 +27,7 @@ export default ({
           <LogsLinkMsg />
         </InvisibleButton>
       </div>
+      <InvisibleButton onClick={onShowSettings} className="settings-button-mobile" />
       <div className="go-back-screen-button-area">
         <Tooltip text={ <GoBackMsg /> }><div className="go-back-screen-button" onClick={onHideLogs}/></Tooltip>
       </div>

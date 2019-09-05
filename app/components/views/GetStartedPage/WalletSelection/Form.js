@@ -48,7 +48,7 @@ const WalletSelectionBodyBase = ({
     availableWallets.length > 0 && selectedWallet && !createWalletForm ?
       (<div className="advanced-page">
         <div className="advanced-page-form">
-          <div className="advanced-daemon-row">
+          <div className={(availableWallets.length > 1) ? "advanced-daemon-row multiple-row" : "advanced-daemon-row"}>
             {availableWallets.map(wallet => {
               const selected = wallet.value.wallet == selectedWallet.value.wallet && wallet.network == selectedWallet.network;
               return (

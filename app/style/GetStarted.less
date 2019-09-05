@@ -2,6 +2,20 @@
 @import (reference) "./Layout.less";
 @import (reference) "./Icons.less";
 
+.settings-button-mobile{
+  display: none;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background-image: var(--menu-settings-default);
+  width: 22px;
+  height: 22px;
+  background-position: 10px;
+  background-repeat: no-repeat;
+  background-size: 22px;
+  padding: 10px;
+}
+
 .advanced-page-form {
   width: 100%;
   float: left;
@@ -850,13 +864,38 @@
   .getstarted.content {
     margin-left: 10px;
   }
-  .getstarted.loader.logs {
-    margin-left: 0;
+  .getstarted.loader{
     margin-top: 87px;
+    margin-left: 0;
+
+    .go-back-screen-button-area {
+      top:131px;
+      right:60px;
+    }      
+    &.logs {
+      margin-left: -10px;
+      margin-right: -10px;
+      margin-top: 87px;
+      
+      .log-container .tabbed-page-subtitle{
+        margin-left:10px;
+      }
+      .go-back-screen-button-area{
+        right:40px;
+      }
+    }  
+    .loader-settings-logs{
+      right:10px !important;
+    }          
   }
-  .getstarted.loader .go-back-screen-button-area {
-    top:131px;
-    right:60px;
+  .advanced-daemon-row.multiple-row{
+    width: 78%;
+  }
+
+}
+@media screen and (max-width: 600px) {
+ .advanced-daemon-row.multiple-row{
+    width: 100%;
   }  
 }
 @media screen and (max-width: 430px) {
@@ -907,16 +946,95 @@
     margin-left: 10px;
   }
 
-  .getstarted.loader.logs {
-    margin-top: 56px;
-
+  .getstarted.loader{
+    margin-top: 63px;    
     .content-title {
       font-size:23px;
     }
+    .loader-bar{
+      margin-bottom: 0;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;    
+      
+      .linear-progress{
+        border-radius: 0;
+
+        .linear-progress-bar{
+          border-radius: 0;
+        }
+      }
+      .loader-bar-estimation{
+        padding: 0px 20px;
+        order: -1;
+      }
+    }
+    .loader-buttons{
+          margin-bottom: 50px;
+    }
+    .edit-wallets-button{
+      margin:5px 0;
+    }   
+    
+    &.logs {
+      margin-left: -10px;
+      margin-right: -10px;
+      .log-area .log-area-logs{
+        margin: 20px;
+      }
+      .log-container .tabbed-page-subtitle{
+        margin-left:10px;
+      }
+      .go-back-screen-button-area{
+        top:107px;
+        right:20px;
+      }    
+    }    
+    .loader-settings-logs{
+      display: none;
+    }        
   }
-  
-  .getstarted.loader .go-back-screen-button-area {
-    top:107px;
-    right:40px;
-  }  
+
+
+  .settings-button-mobile
+  {
+    display: inherit;
+  }
+
+  .display-wallet{
+    width: 136px;
+    height: 131px;
+    font-size: 12px;
+    
+    .wallet-icon{
+      width: 50px;
+      height: 50px;
+      margin-left: 43px;
+      background-size: 40px 40px;
+      background-position: 6px 6px;
+
+
+      &.createnew{
+        background-size: 49px 49px;
+        background-position: 0px 0px;
+      }    
+      
+      &.restore{
+        background-size: 49px 49px;
+        background-position: 0px 0px;
+      }          
+    }
+    .display-wallet-complete{
+      min-height: 12px;
+    }
+    .display-wallet-last-access{
+      font-size: 9px;
+    }
+    .display-wallet-launch{
+      font-size: 11px;
+      margin-left: 34px;
+    }
+  }
 }
