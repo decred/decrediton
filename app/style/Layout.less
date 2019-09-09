@@ -198,6 +198,10 @@
   margin-right: 55px;
 }
 
+.tabbed-page-header > .tabs > .tab:last-of-type {
+  margin-right: 0;
+}
+
 .tabbed-page-header > .tabs > .tabs-caret > {
   position: absolute;
   bottom: 0px;
@@ -222,7 +226,7 @@
   top: 0px;
   bottom: 0px;
   left: 0px;
-  padding: 38px 80px 30px 63px;
+  padding: 38px 80px 30px 80px;
   background-color: var(--background-container);
 }
 
@@ -319,8 +323,15 @@
 
 @media screen and (max-width: 1179px) {
   .tabbed-page .tab-content {
-    padding: 38px 40px 30px 20px;
+    padding: 38px 40px 30px 40px;
   }
+  .tabbed-page-header > .tabs{
+    left:60px;
+  }
+  .tabbed-page-header,
+  .standalone-page-header {
+    padding-left: 20px;
+  }  
 }
 
 @media screen and (max-width: 768px) {
@@ -339,4 +350,30 @@
   .page-view-reduced-bar {
     width: 100%;
   }
+}
+
+@media screen and (max-width: 375px) {
+  .tabbed-page-body{
+    top: 133px;
+  }
+  .tabbed-page .tab-content
+  {
+    padding: 0 10px 20px 10px;
+  }
+  .description-header{
+    display: none;
+  }
+  .tabbed-page-header > .tabs{
+    font-size: 13px;
+    left: 20px;
+    right: 20px;
+    .tab{
+      margin-right:45px;
+    }
+  }
+  .tabbed-page-header,
+  .standalone-page-header {
+    height: 82px;
+    padding-top: 30px;
+  }    
 }

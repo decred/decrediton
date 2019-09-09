@@ -70,12 +70,14 @@ const StakePoolsAddForm = ({
       </div>
       <div className="stakepool-add-area-right">
         <div className="stakepool-add-instructions">
-          <T id="stake.addPool.info" m={
-            "Create an account or login to your existing account at {stakePoolLink} Once logged in, select the ‘Settings’ tab, copy and paste your API KEY into the field."
-          }
-          values={{
-            stakePoolLink: <UnconfiguedStakepoolLink { ...{ selectedUnconfigured } } />
-          }}/>
+          <div>
+            <T id="stake.addPool.info" m={
+              "Create an account or login to your existing account at {stakePoolLink} Once logged in, select the ‘Settings’ tab, copy and paste your API KEY into the field."
+            }
+            values={{
+              stakePoolLink: <UnconfiguedStakepoolLink { ...{ selectedUnconfigured } } />
+            }}/>
+          </div>
           <ScriptRedeemableButton
             modalTitle={<T id="stake.notRedeemed" m="Script not redeemable?" />}
             modalContent={<Documentation name="ScriptNotRedeemableInfo" />}
