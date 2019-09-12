@@ -1,269 +1,102 @@
-import OpenWallet from "./OpenWallet";
-import CreateWallet from "./CreateWallet";
-import DaemonLoading from "./DaemonLoading";
-import Logs from "./Logs";
-import Settings from "./Settings";
-import ReleaseNotes from "./ReleaseNotes";
-import WalletSelectionBody from "./WalletSelection";
-import StartRPCBody from "./StartRPC";
-import SpvSync from "./SpvSync";
-import TrezorConfig from "./TrezorConfig";
-import { AdvancedStartupBody, RemoteAppdataError } from "./AdvancedStartup";
-import { RescanWalletBody } from "./RescanWallet/index";
-import StakePoolsBody from "./StakePools";
-import { walletStartup } from "connectors";
-import { FormattedMessage as T } from "react-intl";
-import { ipcRenderer } from "electron";
-
-const cliOptions = ipcRenderer.sendSync("get-cli-options");
+import { daemonStartup } from "connectors";
+import { interpret } from "xstate";
+import { getStartedMachine } from "./GetStartedStateMachine";
+import GetStartedPage from "./Page";
+import { AdvancedStartupBody } from "./AdvancedStartup";
+import { injectIntl } from "react-intl";
+import WalletSelection from "./WalletSelection";
 
 @autobind
-class GetStartedPage extends React.Component {
+class GetStarted extends React.Component {
+  service;
 
   constructor(props) {
     super(props);
-    this.state = { showSettings: false, showLogs: false, showReleaseNotes: false,
-      walletPrivatePassphrase: "", showTrezorConfig: false };
+    const { prepStartDaemon, onConnectDaemon, checkNetworkMatch, syncDaemon, onStartWallet, onRetryStartRPC, onGetAvailableWallets } = this.props;
+    const { sendEvent } = this;
+    this.service = interpret(getStartedMachine({
+      prepStartDaemon, onConnectDaemon, checkNetworkMatch, syncDaemon, onStartWallet, onRetryStartRPC, sendEvent, onGetAvailableWallets
+    })).onTransition(current => {
+      this.setState({ current });
+    });
+    this.state = {
+      current: getStartedMachine().initialState,
+      StateComponent: null,
+    };
   }
+
 
   componentDidMount() {
-    const { getWalletReady, getDaemonStarted, onGetAvailableWallets, onStartWallet, prepStartDaemon, isSPV } = this.props;
-    if (!getWalletReady) {
-      onGetAvailableWallets()
-        .then(({ previousWallet }) => {
-          previousWallet && onStartWallet(previousWallet);
-        });
-    }
-    if (!getDaemonStarted && !isSPV) {
-      setTimeout(()=>prepStartDaemon(), 1000);
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    const { startStepIndex, getDaemonSynced, onRetryStartRPC, isSPV, startSPVSync } = prevProps;
-    if (!isSPV) {
-      if (startStepIndex != this.props.startStepIndex || getDaemonSynced != this.props.getDaemonSynced ){
-        if (this.props.startStepIndex == 3 && this.props.getDaemonSynced)
-          onRetryStartRPC(false, this.state.walletPrivatePassphrase);
-      }
-    } else {
-      if (startStepIndex != this.props.startStepIndex ){
-        if (this.props.startStepIndex == 3)
-          startSPVSync(this.state.walletPrivatePassphrase);
-      }
-    }
+    const { isSPV, isAdvancedDaemon } = this.props;
+    this.service.start();
+    this.service.send({ type: "START_SPV", isSPV, isAdvancedDaemon });
+    this.service.send({ type: "START_ADVANCED_DAEMON", isSPV, isAdvancedDaemon });
+    this.service.send({ type: "START_DAEMON", isSPV, isAdvancedDaemon });
   }
 
   componentWillUnmount() {
-    this.setState({ walletPrivatePassphrase: "" });
+    this.service.stop();
   }
 
-  onShowReleaseNotes() {
-    this.setState({ showSettings: false, showLogs: false, showReleaseNotes: true });
+  componentDidUpdate(prevProps, prevState) {
+    const { current } = prevState;
+    if (current && current.value !== this.state.current.value) {
+      const StateComponent = this.getStateComponent();
+      this.setState({ StateComponent });
+    }
   }
 
-  onHideReleaseNotes() {
-    this.setState({ showReleaseNotes: false });
+  getStateComponent() {
+    const { current } = this.state;
+    let component;
+
+    switch(current.value) {
+    case "startAdvancedDaemon":
+      component = AdvancedStartupBody;
+      break;
+    case "connectingDaemon":
+      break;
+    case "checkingNetworkMatch":
+      break;
+    case "syncingDaemon":
+      break;
+    case "choosingWallet":
+      component = WalletSelection;
+      break;
+    case "startingWallet":
+      break;
+    case "syncingRPC":
+      break;
+    }
+
+    return component;
   }
 
-  onShowSettings() {
-    this.setState({ showSettings: true, showLogs: false, showReleaseNotes: false   });
+  sendEvent(data) {
+    const { send } = this.service;
+    const { type, payload } = data;
+    send({ type, payload });
   }
 
-  onHideSettings() {
-    this.setState({ showSettings: false });
+
+  submitChosenWallet(selectedWallet) {
+    return this.service.send({ type: "SUBMIT_CHOOSE_WALLET", selectedWallet });
   }
 
-  onShowLogs() {
-    this.setState({ showLogs: true, showSettings: false, showReleaseNotes: false  });
-  }
-
-  onHideLogs() {
-    this.setState({ showLogs: false });
-  }
-
-  onShowTrezorConfig() {
-    this.setState({ showTrezorConfig: true });
-  }
-
-  onHideTrezorConfig() {
-    this.setState({ showTrezorConfig: false });
-  }
-
-  onSetWalletPrivatePassphrase(walletPrivatePassphrase) {
-    this.setState({ walletPrivatePassphrase });
+  submitRemoteCredentials(remoteCredentials) {
+    return this.service.send({ type: "SUBMIT_REMOTE", remoteCredentials });
   }
 
   render() {
-    const {
-      startStepIndex,
-      isPrepared,
-      isAdvancedDaemon,
-      openForm,
-      getDaemonStarted,
-      getWalletReady,
-      remoteAppdataError,
-      startupError,
-      hasExistingWallet,
-      appVersion,
-      updateAvailable,
-      isSPV,
-      openWalletInputRequest,
-      syncFetchMissingCfiltersAttempt,
-      syncFetchHeadersAttempt,
-      syncDiscoverAddressesAttempt,
-      syncRescanAttempt,
-      ...props
-    } = this.props;
+    const { StateComponent } = this.state;
+    const { service, submitChosenWallet, submitRemoteCredentials } = this;
 
-    const {
-      showSettings,
-      showLogs,
-      showReleaseNotes,
-      showTrezorConfig,
-      ...state
-    } = this.state;
-
-    const {
-      onShowReleaseNotes,
-      onHideReleaseNotes,
-      onShowSettings,
-      onHideSettings,
-      onShowLogs,
-      onHideLogs,
-      onSetWalletPrivatePassphrase,
-      onShowTrezorConfig,
-      onHideTrezorConfig,
-    } = this;
-
-    const blockChainLoading = "blockchain-syncing";
-    const daemonWaiting = "daemon-waiting";
-    const discoveringAddresses = "discovering-addresses";
-    const scanningBlocks = "scanning-blocks";
-    const finalizingSetup = "finalizing-setup";
-    const fetchingHeaders = "fetching-headers";
-    const establishingRpc = "establishing-rpc";
-
-    let text, Form, animationType;
-    if (showSettings) {
-      return <Settings {...{ onShowLogs, onHideSettings, appVersion, updateAvailable, getWalletReady, ...props }} />;
-    } else if (showLogs) {
-      return <Logs {...{ onShowSettings, onHideLogs, getWalletReady, appVersion, updateAvailable,  ...props }} />;
-    } else if (showReleaseNotes) {
-      return <ReleaseNotes {...{ onShowSettings, onShowLogs, appVersion, onHideReleaseNotes, getWalletReady, ...props }} />;
-    } else if (showTrezorConfig) {
-      return <TrezorConfig {...{ onHideTrezorConfig, ...props }} />;
-    } else if (!cliOptions.rpcPresent && isAdvancedDaemon && !getDaemonStarted && openForm && !isPrepared && !getWalletReady && !isSPV) {
-      Form = AdvancedStartupBody;
-    } else if (remoteAppdataError && !isPrepared && !getWalletReady && !isSPV) {
-      Form = RemoteAppdataError;
-    } else if (!getWalletReady) {
-      Form = WalletSelectionBody;
-    } else if (isSPV && startStepIndex > 2) {
-      animationType = blockChainLoading;
-      text = <T id="getStarted.header.syncSpv.meta" m="Syncing SPV Wallet" />;
-      if (syncFetchMissingCfiltersAttempt) {
-        animationType = daemonWaiting;
-        text = <T id="getStarted.header.fetchingMissing.meta" m="Fetching missing committed filters" />;
-      } else if (syncFetchHeadersAttempt) {
-        animationType = fetchingHeaders;
-        text = <T id="getStarted.header.fetchingBlockHeaders.meta" m="Fetching block headers" />;
-      } else if (syncDiscoverAddressesAttempt) {
-        animationType = discoveringAddresses;
-        text = <T id="getStarted.header.discoveringAddresses.meta" m="Discovering addresses" />;
-      } else if (syncRescanAttempt) {
-        animationType = scanningBlocks;
-        text = <T id="getStarted.header.rescanWallet.meta" m="Scanning blocks for transactions" />;
-        Form = RescanWalletBody;
-      }
-      return <SpvSync
-        {...{
-          ...props,
-          ...state,
-          appVersion,
-          isSPV,
-          text,
-          animationType,
-          Form,
-          onShowLogs,
-          syncFetchHeadersAttempt,
-        }}/>;
-    } else if (!isSPV && startStepIndex > 2) {
-      animationType = blockChainLoading;
-      text = <T id="getStarted.header.sync.meta" m="Syncing Wallet" />;
-      if (syncFetchMissingCfiltersAttempt) {
-        animationType = daemonWaiting;
-        text = <T id="getStarted.header.fetchingMissing.meta" m="Fetching missing committed filters" />;
-      } else if (syncFetchHeadersAttempt) {
-        animationType = fetchingHeaders;
-        text = <T id="getStarted.header.fetchingBlockHeaders.meta" m="Fetching block headers" />;
-      } else if (syncDiscoverAddressesAttempt) {
-        animationType = discoveringAddresses;
-        text = <T id="getStarted.header.discoveringAddresses.meta" m="Discovering addresses" />;
-      } else if (syncRescanAttempt) {
-        animationType = scanningBlocks;
-        text = <T id="getStarted.header.rescanWallet.meta" m="Scanning blocks for transactions" />;
-        Form = RescanWalletBody;
-      }
-    } else {
-      switch (startStepIndex || 0) {
-      case 0:
-      case 1:
-        animationType = discoveringAddresses;
-        text = startupError ? startupError :
-          <T id="getStarted.header.checkingWalletState.meta" m="Checking wallet state" />;
-        break;
-      case 2:
-        animationType = discoveringAddresses;
-        text = <T id="getStarted.header.openingwallet.meta" m="Opening Wallet" />;
-        if (hasExistingWallet) {
-          Form = OpenWallet;
-        } else {
-          return <CreateWallet {...{ ...props, onSetWalletPrivatePassphrase }} />;
-        }
-        break;
-      case 3:
-        animationType = establishingRpc;
-        text = <T id="getStarted.header.startrpc.meta" m="Establishing RPC connection" />;
-        Form = StartRPCBody;
-        break;
-      case 7:
-        text = <T id="getStarted.header.stakePools.meta" m="Import StakePools" />;
-        Form = StakePoolsBody;
-        break;
-      default:
-        animationType = finalizingSetup;
-        text = <T id="getStarted.header.finalizingSetup.meta" m="Finalizing setup" />;
-      }
-    }
-
-    return <DaemonLoading Form={Form}
-      {...{
-        ...props,
-        ...state,
-        text,
-        animationType,
-        getWalletReady,
-        getDaemonStarted,
-        startupError,
-        showSettings,
-        showLogs,
-        onShowReleaseNotes,
-        onHideReleaseNotes,
-        onShowSettings,
-        onHideSettings,
-        onShowLogs,
-        onHideLogs,
-        onSetWalletPrivatePassphrase,
-        onShowTrezorConfig,
-        onHideTrezorConfig,
-        appVersion,
-        updateAvailable,
-        isSPV,
-        openWalletInputRequest,
-        syncFetchHeadersAttempt,
-      }} />;
+    return (
+      <GetStartedPage
+        {...{ ...this.state, ...this.props, submitRemoteCredentials, submitChosenWallet, service }}
+        StateComponent={StateComponent} />
+    );
   }
 }
 
-export default walletStartup(GetStartedPage);
+export default injectIntl(daemonStartup(GetStarted));

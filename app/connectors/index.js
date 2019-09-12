@@ -3,6 +3,7 @@ export { default as accountsSelect } from "./accountsSelect";
 export { default as app } from "./app";
 export { default as balance } from "./balance";
 export { default as createWallet } from "./createWallet";
+export { default as daemonStartup } from "./daemonStartup";
 export { default as historyPage } from "./historyPage";
 export { default as home } from "./home";
 export { default as invalidRPCVersion } from "./invalidRPCVersion";

@@ -1,4 +1,5 @@
-import { versionCheckAction, syncCancel } from "./WalletLoaderActions";
+import { syncCancel } from "./WalletLoaderActions";
+import { getVersionServiceAttempt } from "./VersionActions";
 import { stopNotifcations } from "./NotificationActions";
 import { saveSettings, updateStateSettingsChanged } from "./SettingsActions";
 import { rescanCancel } from "./ControlActions";
@@ -7,7 +8,7 @@ import { semverCompatible } from "./VersionActions";
 import * as wallet from "wallet";
 import { push as pushHistory, goBack } from "react-router-redux";
 import { ipcRenderer } from "electron";
-import { setMustOpenForm, getWalletCfg, getAppdataPath, getRemoteCredentials, getGlobalCfg, setLastHeight, getDaemonIsAdvanced } from "config";
+import { setMustOpenForm, getWalletCfg, getAppdataPath, getRemoteCredentials, getGlobalCfg, setLastHeight } from "config";
 import { isTestNet } from "selectors";
 import axios from "axios";
 import { STANDARD_EXTERNAL_REQUESTS } from "main_dev/externalRequests";
@@ -158,12 +159,12 @@ export const startDaemon = (params) => (dispatch, getState) => {
   dispatch({ type: DAEMONSTART_ATTEMPT });
   const { daemonStarted } = getState().daemon;
   if (daemonStarted) {
-    return dispatch({ type: DAEMONSTART_SUCCESS, daemonAdvanced: getDaemonIsAdvanced() });
+    return dispatch({ type: DAEMONSTART_SUCCESS });
   }
 
   wallet.startDaemon(params, isTestNet(getState()))
     .then(rpcCreds => {
-      dispatch({ type: DAEMONSTART_SUCCESS, credentials: rpcCreds, appdata, daemonAdvanced: getDaemonIsAdvanced() });
+      dispatch({ type: DAEMONSTART_SUCCESS, credentials: rpcCreds, appdata });
       dispatch(connectDaemon(rpcCreds, appdata));
     })
     .catch((err) => dispatch({ err, type: DAEMONSTART_FAILURE }));
@@ -227,14 +228,22 @@ export const shutdownApp = () => (dispatch, getState) => {
 
 export const cleanShutdown = () => () => wallet.cleanShutdown();
 
-export const getAvailableWallets = () => async (dispatch, getState) => {
-  const { currentSettings } = getState().settings;
-  const network = currentSettings.network;
-  const availableWallets = await wallet.getAvailableWallets(network);
-  const previousWallet = await wallet.getPreviousWallet();
-  dispatch({ availableWallets, previousWallet, type: AVAILABLE_WALLETS });
-  return { availableWallets, previousWallet };
-};
+export const getAvailableWallets = () => async (dispatch, getState) => new Promise ((resolve, reject) => {
+  const get = async () => {
+    const { currentSettings } = getState().settings;
+    const network = currentSettings.network;
+    const availableWallets = await wallet.getAvailableWallets(network);
+    const previousWallet = await wallet.getPreviousWallet();
+    return { availableWallets, previousWallet };
+  };
+
+  get()
+    .then(({ availableWallets, previousWallet }) => {
+      dispatch({ availableWallets, previousWallet, type: AVAILABLE_WALLETS });
+      resolve({ availableWallets, previousWallet });
+    })
+    .catch(err => reject(err));
+});
 
 export const removeWallet = (selectedWallet) => (dispatch) => {
   wallet.removeWallet(selectedWallet.value.wallet, selectedWallet.network == TESTNET)
@@ -279,55 +288,62 @@ export const closeDaemonRequest = () => async(dispatch, getState) => {
   }
 };
 
-export const startWallet = (selectedWallet) => (dispatch, getState) => {
-  const { currentSettings } = getState().settings;
-  const network = currentSettings.network;
-  wallet.startWallet(selectedWallet.value.wallet, network == TESTNET)
-    .then(({ port }) => {
-      const walletCfg = getWalletCfg(network == TESTNET, selectedWallet.value.wallet);
-      wallet.setPreviousWallet(selectedWallet);
+export const startWallet = (selectedWallet) => (dispatch, getState) => new Promise((resolve,reject) => {
+  const start = async () => {
+    const { currentSettings } = getState().settings;
+    const network = currentSettings.network;
 
-      var currentStakePoolConfig = walletCfg.get("stakepools");
-      var foundStakePoolConfig = false;
-      var firstConfiguredStakePool = null;
-      if (currentStakePoolConfig !== undefined) {
-        for (var i = 0; i < currentStakePoolConfig.length; i++) {
-          if (currentStakePoolConfig[i].ApiKey && currentStakePoolConfig[i].Network == network) {
-            foundStakePoolConfig = true;
-            firstConfiguredStakePool = currentStakePoolConfig[i];
-            break;
-          }
+    const walletStarted = await wallet.startWallet(selectedWallet.value.wallet, network == "testnet");
+    const { port } = walletStarted;
+    const walletCfg = getWalletCfg(network == "testnet", selectedWallet.value.wallet);
+    wallet.setPreviousWallet(selectedWallet);
+
+    var currentStakePoolConfig = walletCfg.get("stakepools");
+    var foundStakePoolConfig = false;
+    var firstConfiguredStakePool = null;
+    if (currentStakePoolConfig !== undefined) {
+      for (var i = 0; i < currentStakePoolConfig.length; i++) {
+        if (currentStakePoolConfig[i].ApiKey && currentStakePoolConfig[i].Network == network) {
+          foundStakePoolConfig = true;
+          firstConfiguredStakePool = currentStakePoolConfig[i];
+          break;
         }
       }
-      var gapLimit = walletCfg.get("gaplimit");
-      var hiddenAccounts = walletCfg.get("hiddenaccounts");
-      var currencyDisplay = walletCfg.get("currency_display");
-      var balanceToMaintain = walletCfg.get("balancetomaintain");
-      var discoverAccountsComplete = walletCfg.get("discoveraccounts");
-      var activeStakePoolConfig = foundStakePoolConfig;
-      var selectedStakePool = firstConfiguredStakePool;
-      walletCfg.set("lastaccess", Date.now());
-      dispatch({ type: WALLETREADY, walletName: selectedWallet.value.wallet, network: network, hiddenAccounts, port });
-      dispatch({ type: WALLET_AUTOBUYER_SETTINGS, balanceToMaintain });
-      dispatch({ type: WALLET_SETTINGS, currencyDisplay, gapLimit });
-      dispatch({ type: WALLET_STAKEPOOL_SETTINGS, activeStakePoolConfig, selectedStakePool, currentStakePoolConfig });
-      dispatch({ type: WALLET_LOADER_SETTINGS, discoverAccountsComplete });
-      selectedWallet.value.isTrezor && dispatch(enableTrezor());
-      setTimeout(()=>dispatch(versionCheckAction()), 2000);
+    }
+    var gapLimit = walletCfg.get("gaplimit");
+    var hiddenAccounts = walletCfg.get("hiddenaccounts");
+    var currencyDisplay = walletCfg.get("currency_display");
+    var balanceToMaintain = walletCfg.get("balancetomaintain");
+    var discoverAccountsComplete = walletCfg.get("discoveraccounts");
+    var activeStakePoolConfig = foundStakePoolConfig;
+    var selectedStakePool = firstConfiguredStakePool;
+    walletCfg.set("lastaccess", Date.now());
+    dispatch({ type: WALLETREADY, walletName: selectedWallet.value.wallet, network: network, hiddenAccounts, port });
+    dispatch({ type: WALLET_AUTOBUYER_SETTINGS, balanceToMaintain });
+    dispatch({ type: WALLET_SETTINGS, currencyDisplay, gapLimit });
+    dispatch({ type: WALLET_STAKEPOOL_SETTINGS, activeStakePoolConfig, selectedStakePool, currentStakePoolConfig });
+    dispatch({ type: WALLET_LOADER_SETTINGS, discoverAccountsComplete });
+    selectedWallet.value.isTrezor && dispatch(enableTrezor());
+    await dispatch(getVersionServiceAttempt());
+    return discoverAccountsComplete;
+  };
+
+  start()
+    .then(discoverAccountsComplete => {
+      resolve (discoverAccountsComplete);
     })
-    .catch((err) => {
-      console.log(err);
+    .catch(err => {
       dispatch({ type: DAEMONSTARTED_ERROR });
+      reject(err);
     });
-};
+});
 
 export const prepStartDaemon = () => (dispatch, getState) => {
-  const { daemon: { daemonAdvanced, openForm } } = getState();
+  const { daemon: { daemonAdvanced } } = getState();
   const cliOptions = ipcRenderer.sendSync("get-cli-options");
   dispatch(registerForErrors());
   dispatch(checkDecreditonVersion());
   if (!daemonAdvanced) {
-    dispatch(startDaemon());
     return;
   }
 
@@ -341,27 +357,18 @@ export const prepStartDaemon = () => (dispatch, getState) => {
   } else {
     ({ rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port } = getRemoteCredentials());
   }
-  const credentials = { rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port };
   const hasAllCredentials = rpc_pass && rpc_user && rpc_pass.length > 0 && rpc_user.length > 0 && rpc_cert.length > 0 && rpc_host.length > 0 && rpc_port.length > 0;
   const hasAppData = getAppdataPath() && getAppdataPath().length > 0;
 
   if(hasAllCredentials && hasAppData)
     this.props.setCredentialsAppdataError();
-
-  if (cliOptions.rpcPresent) {
-    dispatch(startDaemon(credentials));
-  } else if (!openForm && hasAppData) {
-    dispatch(startDaemon(null, getAppdataPath()));
-  } else if (!openForm && hasAllCredentials) {
-    dispatch(startDaemon(credentials));
-  }
 };
 
 const TIME_TO_TIMEOUT = 30 * 1000; // 30 sec
-export const connectDaemon = (rpcCreds) => (dispatch, getState) => {
+export const connectDaemon = (rpcCreds) => (dispatch, getState) => new Promise((resolve,reject) => {
   dispatch({ type: CONNECTDAEMON_ATTEMPT });
   const timeBeforeConnect = new Date();
-  const tryConnect = () => {
+  const tryConnect = async () => {
     const { daemonConnected, credentials, daemonError, timeStart } = getState().daemon;
     const creds = rpcCreds ? rpcCreds : credentials;
     const timeNow = new Date();
@@ -371,36 +378,41 @@ export const connectDaemon = (rpcCreds) => (dispatch, getState) => {
       return;
     }
     if (daemonConnected || daemonError) return;
-    return wallet
-      .connectDaemon({ rpcCreds: creds, testnet: isTestNet(getState()) })
-      .then(() => {
-        dispatch({ type: CONNECTDAEMON_SUCCESS });
-        dispatch(checkNetworkMatch());
-      }).catch( err => {
-        const { error } = err;
-        if (error.code === "ECONNREFUSED") {
-          setTimeout(tryConnect, 1000);
-        } else {
-          dispatch({ type: CONNECTDAEMON_FAILURE, error });
-        }
-      });
+    try {
+      const connected = await wallet.connectDaemon({ rpcCreds: creds, testnet: isTestNet(getState()) });
+      dispatch({ type: CONNECTDAEMON_SUCCESS });
+      resolve(connected);
+    } catch(err) {
+      const { error } = err;
+      if (error && error.code === "ECONNREFUSED") {
+        setTimeout(tryConnect, 1000);
+      } else {
+        dispatch({ type: CONNECTDAEMON_FAILURE, error });
+        reject(err);
+      }
+    }
   };
   tryConnect();
-};
+});
 
-export const checkNetworkMatch = () => async (dispatch, getState) => {
+export const checkNetworkMatch = () => async (dispatch, getState) => new Promise((resolve, reject) => {
   dispatch({ type: CHECK_NETWORKMATCH_ATTEMPT });
-  const daemonInfo = await wallet.getDaemonInfo();
-  if (daemonInfo.isTestnet !== null &&
+  wallet.getDaemonInfo()
+    .then(daemonInfo => {
+      if (daemonInfo.isTestnet !== null &&
       daemonInfo.isTestnet !== isTestNet(getState())) {
-    dispatch({ error: DIFF_CONNECTION_ERROR, type: CHECK_NETWORKMATCH_FAILED });
-    return dispatch(pushHistory("/error"));
-  }
-  dispatch({ type: CHECK_NETWORKMATCH_SUCCESS, daemonInfo });
-  dispatch(syncDaemon());
-};
+        dispatch({ error: DIFF_CONNECTION_ERROR, type: CHECK_NETWORKMATCH_FAILED });
+        return dispatch(pushHistory("/error"));
+      }
+      resolve(daemonInfo);
+    })
+    .catch(error => {
+      dispatch({ error, type: CHECK_NETWORKMATCH_FAILED });
+      reject(error);
+    });
+});
 
-export const syncDaemon = () => (dispatch, getState) => {
+export const syncDaemon = () => (dispatch, getState) => new Promise((resolve) => {
   dispatch({ type: SYNC_DAEMON_ATTEMPT });
   const updateBlockCount = () => {
     const { daemon: { daemonSynced, timeStart, blockStart, daemonError } } = getState();
@@ -412,6 +424,7 @@ export const syncDaemon = () => (dispatch, getState) => {
           if (blockCount >= syncHeight) {
             dispatch({ type: DAEMONSYNCED, currentBlockHeight: blockCount });
             setMustOpenForm(false);
+            resolve({ type: DAEMONSYNCED, currentBlockHeight: blockCount });
             return;
           }
 
@@ -441,7 +454,7 @@ export const syncDaemon = () => (dispatch, getState) => {
       });
   };
   updateBlockCount();
-};
+});
 
 export const getDcrdLogs = () => {
   wallet.getDcrdLogs()

@@ -7,7 +7,7 @@ import { Switch, Route } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import { App } from "containers";
 import configureStore from "./store/configureStore";
-import { getGlobalCfg } from "./config";
+import { getGlobalCfg, getDaemonIsAdvanced } from "./config";
 import locales from "./i18n/locales";
 import "./style/main.less";
 import "./style/ReactSelectGlobal.less";
@@ -76,7 +76,7 @@ var initialState = {
     timeLeftEstimate: null,
     timeStart: 0,
     blockStart: 0,
-    daemonAdvanced: (cliOptions && cliOptions.daemonStartAdvanced) || globalCfg.get(DAEMON_ADVANCED),
+    daemonAdvanced: (cliOptions && cliOptions.daemonStartAdvanced) || getDaemonIsAdvanced(),
     credentials: null,
     appdata: null,
     shutdownRequested: false,

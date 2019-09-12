@@ -1,6 +1,6 @@
 import { WalletSelectionFormBody } from "./Form";
-import { createWallet } from "connectors";
 import { MAINNET } from "constants";
+
 @autobind
 class WalletSelectionBody extends React.Component {
   constructor(props) {
@@ -14,28 +14,14 @@ class WalletSelectionBody extends React.Component {
       createNewWallet: true,
       createWalletForm: false,
       newWalletName: "",
-      selectedWallet: this.props.availableWallets ? this.props.availableWallets[0] : null,
       hasFailedAttempt: false,
       isWatchingOnly: false,
       walletMasterPubKey: "",
       masterPubKeyError: false,
       walletNameError: null,
       isTrezor: false,
+      selectedWallet: this.props.availableWallets[0],
     };
-  }
-  componentDidUpdate(prevProps) {
-    if (this.props.selectedWallet && this.props.availableWallets.length === 0) {
-      this.setState({ selectedWallet: null });
-    } else if (prevProps.availableWallets.length !== this.props.availableWallets.length) {
-      this.setState({ selectedWallet: this.props.availableWallets[0] });
-    } else {
-      for (var i = 0; i < prevProps.availableWallets.length; i++) {
-        if (this.props.availableWallets[i].label !== prevProps.availableWallets[i].label) {
-          this.setState({ selectedWallet: this.props.availableWallets[0] });
-          break;
-        }
-      }
-    }
   }
 
   componentWillUnmount() {
@@ -44,9 +30,7 @@ class WalletSelectionBody extends React.Component {
 
   render() {
     const {
-      getDaemonSynced,
-      maxWalletCount,
-      isSPV
+      maxWalletCount, isSPV, availableWallets, getDaemonSynced, submitChosenWallet
     } = this.props;
     const {
       onChangeAvailableWallets,
@@ -62,7 +46,6 @@ class WalletSelectionBody extends React.Component {
       toggleTrezor,
     } = this;
     const {
-      selectedWallet,
       sideActive,
       newWalletName,
       newWalletNetwork,
@@ -82,13 +65,15 @@ class WalletSelectionBody extends React.Component {
           sideActive,
           onChangeAvailableWallets,
           onChangeCreateWalletName,
+          selectedWallet: availableWallets[0],
+          submitChosenWallet,
+          availableWallets,
           startWallet,
           createWallet,
           createWalletForm,
           createNewWallet,
           showCreateWalletForm,
           hideCreateWalletForm,
-          selectedWallet,
           newWalletName,
           hasFailedAttemptName,
           hasFailedAttemptPubKey,
@@ -215,12 +200,11 @@ class WalletSelectionBody extends React.Component {
     this.setState({ walletMasterPubKey });
   }
   startWallet() {
-    this.props.onStartWallet(this.state.selectedWallet);
+    this.props.onStartWallet(this.props.selectedWallet);
   }
   resetState() {
     this.setState(this.getInitialState());
   }
-
 }
 
-export default createWallet(WalletSelectionBody);
+export default (WalletSelectionBody);
