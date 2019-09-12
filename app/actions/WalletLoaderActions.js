@@ -6,7 +6,6 @@ import * as wallet from "wallet";
 import { rescanCancel, ticketBuyerCancel } from "./ControlActions";
 import { getWalletServiceAttempt, startWalletServices, getBestBlockHeightAttempt,
   cancelPingAttempt } from "./ClientActions";
-import { getVersionServiceAttempt } from "./VersionActions";
 import { getAvailableWallets, WALLETREMOVED_FAILED } from "./DaemonActions";
 import { getWalletCfg, getDcrdCert } from "config";
 import { getWalletPath } from "main_dev/paths";
@@ -16,32 +15,34 @@ import { push as pushHistory } from "react-router-redux";
 import { stopNotifcations } from "./NotificationActions";
 import { clearDeviceSession as trezorClearDeviceSession } from "./TrezorActions";
 import { stopDcrlnd } from "./LNActions";
-import { ipcRenderer } from "electron";
 import { TESTNET } from "constants";
 
 const MAX_RPC_RETRIES = 5;
 const RPC_RETRY_DELAY = 5000;
-const cliOptions = ipcRenderer.sendSync("get-cli-options");
-
-export const versionCheckAction = () => (dispatch) =>
-  setTimeout(() => dispatch(getVersionServiceAttempt()), 2000);
+// const cliOptions = ipcRenderer.sendSync("get-cli-options");
 
 export const LOADER_ATTEMPT = "LOADER_ATTEMPT";
 export const LOADER_FAILED = "LOADER_FAILED";
 export const LOADER_SUCCESS = "LOADER_SUCCESS";
 
-export const loaderRequest = () => (dispatch, getState) => {
-  const { grpc: { address, port } } = getState();
-  const { daemon: { walletName } } = getState();
-  const request = { isTestNet: isTestNet(getState()), walletName, address, port };
-  dispatch({ request, type: LOADER_ATTEMPT });
-  return getLoader(request)
-    .then(loader => {
+export const loaderRequest = () => (dispatch, getState) => new Promise((resolve) => {
+  const get = async () => {
+    const { grpc: { address, port } } = getState();
+    const { daemon: { walletName } } = getState();
+    const request = { isTestNet: isTestNet(getState()), walletName, address, port };
+    dispatch({ request, type: LOADER_ATTEMPT });
+    try {
+      const loader = await getLoader(request);
       dispatch({ loader, type: LOADER_SUCCESS });
       dispatch(walletExistRequest());
-    })
-    .catch(error => dispatch({ error, type: LOADER_FAILED }));
-};
+      resolve(true);
+    } catch (error) {
+      dispatch({ error, type: LOADER_FAILED });
+    }
+  };
+
+  get();
+});
 
 export const GETWALLETSEEDSVC_ATTEMPT = "GETWALLETSEEDSVC_ATTEMPT";
 export const GETWALLETSEEDSVC_FAILED = "GETWALLETSEEDSVC_FAILED";
@@ -212,40 +213,23 @@ export const STARTRPC_FAILED = "STARTRPC_FAILED";
 export const STARTRPC_SUCCESS = "STARTRPC_SUCCESS";
 export const STARTRPC_RETRY = "STARTRPC_RETRY";
 
-export const startRpcRequestFunc = (isRetry, privPass) =>
+export const startRpcRequestFunc = (credentials, privPass, isRetry) =>
   (dispatch, getState) => {
     const { syncAttemptRequest } =  getState().walletLoader;
     if (syncAttemptRequest) {
       return;
     }
-    const { daemon: { credentials, appdata, walletName }, walletLoader: { discoverAccountsComplete,isWatchingOnly } }= getState();
-    const cfg = getWalletCfg(isTestNet(getState()), walletName);
+    const { daemon: { walletName }, walletLoader: { discoverAccountsComplete,isWatchingOnly } }= getState();
     let rpcuser, rpccertPath, rpcpass, daemonhost, rpcport;
 
-    if (cliOptions.rpcPresent) {
-      rpcuser = cliOptions.rpcUser;
-      rpcpass = cliOptions.rpcPass;
-      rpccertPath = cliOptions.rpcCert;
-      daemonhost = cliOptions.rpcHost;
-      rpcport = cliOptions.rpcPort;
-    } else if (credentials) {
+    if (credentials) {
       rpcuser = credentials.rpc_user;
       rpccertPath = credentials.rpc_cert;
       rpcpass = credentials.rpc_pass;
       daemonhost = credentials.rpc_host;
       rpcport = credentials.rpc_port;
-    } else if (appdata) {
-      rpcuser = cfg.get("rpc_user");
-      rpcpass = cfg.get("rpc_pass");
-      rpccertPath = `${appdata}/rpc.cert`;
-      daemonhost = cfg.get("rpc_host");
-      rpcport = cfg.get("rpc_port");
-    } else {
-      rpcuser = cfg.get("rpc_user");
-      rpcpass = cfg.get("rpc_pass");
-      daemonhost = cfg.get("rpc_host");
-      rpcport = cfg.get("rpc_port");
     }
+
     var request = new RpcSyncRequest();
     const cert = getDcrdCert(rpccertPath);
     request.setNetworkAddress(daemonhost + ":" + rpcport);
@@ -262,38 +246,40 @@ export const startRpcRequestFunc = (isRetry, privPass) =>
     return new Promise(() => {
       if (!isRetry) dispatch({ type: SYNC_ATTEMPT });
       const { loader } = getState().walletLoader;
-      const rpcSyncCall = loader.rpcSync(request);
-      dispatch({ syncCall: rpcSyncCall, type: SYNC_UPDATE });
-      rpcSyncCall.on("data", function(response) {
-        dispatch(syncConsumer(response));
-      });
-      rpcSyncCall.on("end", function() {
-        dispatch({ type: SYNC_SUCCESS });
-      });
-      rpcSyncCall.on("error", function(status) {
-        status = status + "";
-        if (status.indexOf("Cancelled") < 0) {
-          console.error(status);
-          if (isRetry) {
-            const { rpcRetryAttempts } = getState().walletLoader;
-            if (rpcRetryAttempts < MAX_RPC_RETRIES) {
-              dispatch({ rpcRetryAttempts: rpcRetryAttempts+1, type: STARTRPC_RETRY });
-              setTimeout(() => dispatch(startRpcRequestFunc(isRetry, privPass)), RPC_RETRY_DELAY);
+      setTimeout(async () => {
+        const rpcSyncCall = await loader.rpcSync(request);
+        dispatch({ syncCall: rpcSyncCall, type: SYNC_UPDATE });
+        rpcSyncCall.on("data", function(response) {
+          dispatch(syncConsumer(response));
+        });
+        rpcSyncCall.on("end", function() {
+          dispatch({ type: SYNC_SUCCESS });
+        });
+        rpcSyncCall.on("error", function(status) {
+          status = status + "";
+          if (status.indexOf("Cancelled") < 0) {
+            console.error(status);
+            if (isRetry) {
+              const { rpcRetryAttempts } = getState().walletLoader;
+              if (rpcRetryAttempts < MAX_RPC_RETRIES) {
+                dispatch({ rpcRetryAttempts: rpcRetryAttempts+1, type: STARTRPC_RETRY });
+                setTimeout(() => dispatch(startRpcRequestFunc(isRetry, privPass)), RPC_RETRY_DELAY);
+              } else {
+                dispatch({
+                  error: `${status}.  You may need to edit ${getWalletPath(isTestNet(getState()), walletName)} and try again`,
+                  type: STARTRPC_FAILED
+                });
+              }
             } else {
-              dispatch({
-                error: `${status}.  You may need to edit ${getWalletPath(isTestNet(getState()), walletName)} and try again`,
-                type: STARTRPC_FAILED
-              });
-            }
-          } else {
-            if (status.indexOf("invalid passphrase") > 0 || status.indexOf("Stream removed")) {
-              dispatch({ error: status, type: SYNC_FAILED });
-            } else {
-              dispatch(startRpcRequestFunc(true, privPass));
+              if (status.indexOf("invalid passphrase") > 0 || status.indexOf("Stream removed")) {
+                dispatch({ error: status, type: SYNC_FAILED });
+              } else {
+                dispatch(startRpcRequestFunc(true, privPass));
+              }
             }
           }
-        }
-      });
+        });
+      }, 500);
     });
   };
 
