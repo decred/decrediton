@@ -440,6 +440,8 @@
   background-image: @menu-cancel-rescan-icon;
   background-size: 16px 16px;
   cursor: pointer;
+  margin: 10px;
+  background-repeat: no-repeat;
 }
 
 .gettickets-cancel-button:hover,
@@ -490,6 +492,7 @@
 
 .no-transactions-indicator,
 .no-tickets-indicator,
+.no-more-tickets-indicator,
 .no-stats-indicator {
   text-align: center;
   color: var(--title-text-and-button-background);
@@ -509,6 +512,12 @@
   background-repeat: no-repeat;
   background-size: 80px;
   background-position: center 30px;
+}
+
+.no-more-tickets-indicator {
+  height: 35px;
+  background-color: #E6EAED;
+  line-height: 35px;
 }
 
 .no-tickets-indicator {
