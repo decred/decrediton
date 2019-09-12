@@ -9,9 +9,47 @@ const messages = defineMessages({
   },
 });
 
+const InvalidAddress = () => (
+  <div className={"validate-address-form-address-response invalid"}>
+    <T id="securitycenter.validate.result.invalid" m="Invalid address" />
+  </div>
+);
+
+const OwnedAddress = () => (
+  <div className="validate-address-form-address-response owned valid">
+    <T id="securitycenter.validate.result.owned" m="Owned address" />
+  </div>
+);
+
+const NotOwnedAddress = () => (
+  <div className="validate-address-form-address-response not-owned valid">
+    <T id="securitycenter.validate.result.notOwned" m="Address Valid, Not Owned" />
+  </div>
+);
+
+const Result = ({ validateAddressSuccess, error }) => {
+  if (error || !validateAddressSuccess || !validateAddressSuccess.isValid) return <InvalidAddress />;
+  if (!validateAddressSuccess.isMine) return <NotOwnedAddress />;
+  return <OwnedAddress/>;
+};
+
+const OwnedData = ({ validateAddressSuccess }) => (
+  <div className="validate-address-owned-form">
+    <div className="validate-address-owned-data">
+      <T id="securitycenter.validate.owned.accountNumber" m="Account Number"/>
+      <div>{validateAddressSuccess.accountNumber}</div>
+      <T id="securitycenter.validate.owned.branch" m="Branch"/>
+      <div>{validateAddressSuccess.isInternal ? 1 : 0}</div>
+      <T id="securitycenter.validate.owned.index" m="Index"/>
+      <div>{validateAddressSuccess.index}</div>
+    </div>
+  </div>
+);
+
 const ValidateAddressForm = ({
   onAddressChange,
-  result,
+  validateAddressSuccess,
+  error,
   address,
   intl
 }) => (
@@ -28,11 +66,10 @@ const ValidateAddressForm = ({
           onChange={(e) => onAddressChange(e.target.value)}
         />
       </div>
-      {result && address !== "" ?
-        <>{ result }</> :
-        <div/>
-      }
+      { address && <Result validateAddressSuccess={validateAddressSuccess} error={error} /> }
     </div>
+    { validateAddressSuccess && validateAddressSuccess.isMine &&
+      <OwnedData validateAddressSuccess={validateAddressSuccess} /> }
   </>
 );
 
