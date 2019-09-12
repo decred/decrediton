@@ -264,7 +264,8 @@
     "stylelint": "^10.1.0",
     "timezone-mock": "^1.0.5",
     "trezor.js": "^8.1.0",
-    "winston": "^2.3.1"
+    "winston": "^2.3.1",
+    "xstate": "^4.6.0"
   },
   "optionalDependencies": {
     "google-proto-files": "^1.0.3",
