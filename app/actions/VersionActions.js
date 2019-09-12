@@ -9,28 +9,39 @@ export const GETVERSIONSERVICE_ATTEMPT = "GETVERSIONSERVICE_ATTEMPT";
 export const GETVERSIONSERVICE_FAILED = "GETVERSIONSERVICE_FAILED";
 export const GETVERSIONSERVICE_SUCCESS = "GETVERSIONSERVICE_SUCCESS";
 
-export const getVersionServiceAttempt = () => (dispatch, getState) => {
-  dispatch({ type: GETVERSIONSERVICE_ATTEMPT });
-  const { grpc: { address, port } } = getState();
-  const { daemon: { walletName } } = getState();
-  return getVersionService(isTestNet(getState()), walletName, address, port)
-    .then(versionService => {
+export const getVersionServiceAttempt = () => (dispatch, getState) => new Promise((resolve, reject) => {
+  const getVersion = async () => {
+    dispatch({ type: GETVERSIONSERVICE_ATTEMPT });
+    const { grpc: { address, port } } = getState();
+    const { daemon: { walletName } } = getState();
+    try {
+      const versionService = await getVersionService(isTestNet(getState()), walletName, address, port);
       dispatch({ versionService, type: GETVERSIONSERVICE_SUCCESS });
-      dispatch(getWalletRPCVersionAttempt());
-    })
-    .catch(error => dispatch({ error, type: GETVERSIONSERVICE_FAILED }));
-};
+      await setTimeout(async () => {
+        await dispatch(getWalletRPCVersionAttempt());
+        resolve(true);
+      }, 500);
+    } catch (error) {
+      reject(error);
+      dispatch({ error, type: GETVERSIONSERVICE_FAILED });
+    }
+  };
+
+  getVersion();
+});
 
 export const WALLETRPCVERSION_ATTEMPT = "WALLETRPCVERSION_ATTEMPT";
 export const WALLETRPCVERSION_FAILED = "WALLETRPCVERSION_FAILED";
 export const WALLETRPCVERSION_SUCCESS = "WALLETRPCVERSION_SUCCESS";
 export const VERSION_NOT_VALID = "VERSION_NOT_VALID";
 
-export const getWalletRPCVersionAttempt = () => (dispatch, getState) => {
-  dispatch({ type: WALLETRPCVERSION_ATTEMPT });
-  const { version: { versionService } }= getState();
-  return getVersionResponse(versionService)
-    .then(getWalletRPCVersionResponse => {
+export const getWalletRPCVersionAttempt = () => (dispatch, getState) => new Promise((resolve,reject) => {
+  const getVersion = async () => {
+    dispatch({ type: WALLETRPCVERSION_ATTEMPT });
+    const { version: { versionService } } = getState();
+
+    try {
+      const getWalletRPCVersionResponse = await getVersionResponse(versionService);
       dispatch({ getWalletRPCVersionResponse, type: WALLETRPCVERSION_SUCCESS });
       const { version: { requiredVersion } } = getState();
       let versionErr = null;
@@ -51,12 +62,18 @@ export const getWalletRPCVersionAttempt = () => (dispatch, getState) => {
         dispatch(pushHistory("/invalidRPCVersion"));
       } else {
         const { address, port } = getState().grpc;
-        dispatch(loaderRequest(address,port));
+        await dispatch(loaderRequest(address,port));
         dispatch(getWalletSeedService(address, port));
+        resolve(true);
       }
-    })
-    .catch(error => dispatch({ error, type: WALLETRPCVERSION_FAILED }));
-};
+    } catch (error) {
+      reject(error);
+      dispatch({ error, type: WALLETRPCVERSION_FAILED });
+    }
+  };
+
+  getVersion();
+});
 
 export function semverCompatible(req, act) {
   var required = req.split("."), actual = act.split(".");
