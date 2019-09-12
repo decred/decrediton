@@ -86,7 +86,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onSetCreateWalletFromExisting: wla.createWalletExistingToggle,
   onOpenWallet: wla.openWalletAttempt,
   onRetryStartRPC: wla.startRpcRequestFunc,
-  doVersionCheck: wla.versionCheckAction,
   onStartDaemon: da.startDaemon,
   onStartWallet: da.startWallet,
   startSPVSync: wla.spvSyncAttempt,
