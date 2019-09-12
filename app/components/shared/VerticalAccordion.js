@@ -78,12 +78,12 @@ class VerticalAccordion extends React.Component {
       this.props.show ? "active" : "",
       this.props.className || "",
     ].join(" ");
-
+    const { disabled } = this.props;
     return (
       <div className={classNames}>
-        <div className="vertical-accordion-header" onClick={this.onToggleAccordion} >
+        <div className="vertical-accordion-header" onClick={ !disabled ? this.onToggleAccordion : null } >
           {this.props.header}
-          <div className="vertical-accordion-arrow" />
+          <div className={(disabled && "disabled") + " vertical-accordion-arrow"} />
         </div>
 
         <div className="vertical-accordion-body">

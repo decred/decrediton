@@ -685,10 +685,6 @@
   position: relative;
 }
 
-.vertical-accordion-body {
-  background-color: var(--disabled-background-color);
-}
-
 .vertical-accordion-arrow {
   content: "";
   background-image: var(--arrow-right-gray-icon);
@@ -707,6 +703,10 @@
 
 .vertical-accordion-header:hover .vertical-accordion-arrow {
   background-image: @arrow-right-blue-icon;
+
+  &.disabled {
+    background-image: var(--arrow-right-gray-icon);
+  }
 }
 
 .vertical-accordion.active .vertical-accordion-arrow {

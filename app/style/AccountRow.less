@@ -4,19 +4,16 @@
 .account-row-top-spendable {
   color: var(--account-text);
   font-size: 13px;
-  line-height: 17px;
 }
 
 .account-row-top-spendable-value {
   color: var(--tutorial-header);
-  display: inline-block;
-  width: 140px;
+  margin-left: 5px;
 }
 
 .account-row-top-account-name {
   color: var(--tutorial-header);
   font-size: 19px;
-  line-height: 24px;
 }
 
 .account-row-top-account-funds {
@@ -36,7 +33,6 @@
   background-size: 20px auto;
   background-repeat: no-repeat;
   background-position: 15px center;
-  background-color: var(--background-back-color);
   border-top: 1px solid var(--background-container-hover);
 
   &.imported {
@@ -45,16 +41,18 @@
 }
 
 .account-row-details-top:hover {
-  background-color: var(--account-row-hover);
+  background-color: var(--background-container-hover);
+
+  &.disabled {
+    background-color: var(--disabled-background-color);
+  }
 }
 
 .account-row-details-bottom {
-  background-color: var(--background-container);
+  background-color: var(--background-back-color);
 
   &.active {
-    .account-row-details-top {
-      background-color: var(--disabled-background-color);
-    }
+    background-color: var(--sidebar-color);
   }
 }
 
@@ -135,7 +133,8 @@
 
 .rename-account-button,
 .show-account-button,
-.hide-account-button {
+.hide-account-button,
+.reveal-account-pubkey-button {
   .inline-block-mixin;
 
   border-radius: 5px;
@@ -155,6 +154,10 @@
   cursor: pointer;
   float: right;
   margin-top: 17px;
+}
+
+.reveal-account-pubkey-button {
+    background-image: @watch-only-icon;
 }
 
 .rename-account-button {
@@ -208,21 +211,17 @@
     padding: 2px 20px 3px 20px;
     box-shadow: none;
     transition: all 131ms @easeInOutQuart;
-  }
-
-  .account-actions-pubkey-button:hover {
-    color: var(--background-back-color);
-    background-color: var(--disabled-color);
+    cursor: auto;
   }
 
   .account-actions-pubkey-area {
-    color: var(--account-pubkey-text);
+    color: var(--input-color);
     font-size: 13px;
     line-height: 17px;
     font-weight: 400;
     padding: 2px 20px 3px 20px;
     border-radius: 3px;
-    background-color: var(--linear-progress-text);
+    background-color: var(--background-copy-color);
     height: 32px;
     width: 390px;
     word-break: break-all;
@@ -232,4 +231,8 @@
   .account-actions-pubkey-clipboard {
     margin-left: 10px;
   }
+}
+
+.disabled {
+  background-color: var(--disabled-background-color);
 }

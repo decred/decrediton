@@ -7,7 +7,6 @@ import { injectIntl } from "react-intl";
 class AccountRow extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       isShowingRenameAccount: false,
       renameAccountName: null,
@@ -135,6 +134,7 @@ class AccountRow extends React.Component {
     const {
       account,
       accountNumDetailsShown,
+      hasTickets,
     } = this.props;
     const {
       isShowingRenameAccount,
@@ -153,6 +153,7 @@ class AccountRow extends React.Component {
           getAccountDetailsStyles,
           onToggleShowDetails,
           isShowingDetails,
+          hasTickets,
         }}
       />
     );
