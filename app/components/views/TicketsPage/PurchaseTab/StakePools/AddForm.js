@@ -78,31 +78,33 @@ const StakePoolsAddForm = ({
               stakePoolLink: <UnconfiguedStakepoolLink { ...{ selectedUnconfigured } } />
             }}/>
           </div>
-          <ScriptRedeemableButton
-            modalTitle={<T id="stake.notRedeemed" m="Script not redeemable?" />}
-            modalContent={<Documentation name="ScriptNotRedeemableInfo" />}
-            className="stakepool-add-not-redeemable"
-            buttonLabel={<T id="stake.notRedeemed" m={"Script not redeemable?"} />}
-          />
-          <ImportScriptIconButton />
+          <div className="stakepool-link-button-container">
+            <ScriptRedeemableButton
+              modalTitle={<T id="stake.notRedeemed" m="Script not redeemable?" />}
+              modalContent={<Documentation name="ScriptNotRedeemableInfo" />}
+              className="stakepool-add-not-redeemable"
+              buttonLabel={<T id="stake.notRedeemed" m={"Script not redeemable?"} />}
+            />
+            <ImportScriptIconButton />
+          </div>
         </div>
       </div>
-    </div>
-    <div className="stakepool-add-toolbar">
-      <PassphraseModalButton
-        modalTitle={<T id="stake.addPoolConfirmation" m="Stakepool Confirmation" />}
-        loading={isSavingStakePoolConfig}
-        disabled={!apiKey || isSavingStakePoolConfig}
-        className="stakepool-confirm-button"
-        onSubmit={onSetStakePoolInfo}
-        buttonLabel={<T id="stake.addPool.addBtn" m="Continue" />}
-      />
-      {configuredStakePools.length ? (
-        <SlateGrayButton
-          className="stakepool-hide-config"
-          onClick={onCancelAddStakePool}
-        ><T id="stake.addPool.cancelBtn" m="Cancel" /></SlateGrayButton>
-      ) : null}
+      <div className="stakepool-add-toolbar">
+        <PassphraseModalButton
+          modalTitle={<T id="stake.addPoolConfirmation" m="Stakepool Confirmation" />}
+          loading={isSavingStakePoolConfig}
+          disabled={!apiKey || isSavingStakePoolConfig}
+          className="stakepool-confirm-button"
+          onSubmit={onSetStakePoolInfo}
+          buttonLabel={<T id="stake.addPool.addBtn" m="Continue" />}
+        />
+        {configuredStakePools.length ? (
+          <SlateGrayButton
+            className="stakepool-hide-config"
+            onClick={onCancelAddStakePool}
+          ><T id="stake.addPool.cancelBtn" m="Cancel" /></SlateGrayButton>
+        ) : null}
+      </div>
     </div>
   </>
 );

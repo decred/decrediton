@@ -57,7 +57,7 @@ textarea.stakepool-content-nest-content-settings {
 }
 
 .stakepool-add-title {
-  margin-left: 27px;
+  margin-left: 20px;
   margin-bottom: 15px;
   font-size: 20px;
   color: var(--stroke-color-hovered);
@@ -65,24 +65,24 @@ textarea.stakepool-content-nest-content-settings {
 
 .stakepool-add-area {
   min-height: 150px;
-  width: 100%;
+  width: 740px;
   display:grid;
-  grid-template-columns: 50% 50%;
-  background-color: var(--background-back-color);
+  grid-template-columns: auto 326px;
   max-width: 740px;
 }
 
 .stakepool-add-area-left {
   color: var(--title-text-and-button-background);
+  background-color: var(--background-back-color);
   font-size: 13px;
-  padding: 30px 20px 0 20px;
+  padding: 30px 30px 0 20px;
 }
 
 .stakepool-add-area-right {
   font-size: 13px;
   background-color: var(--disabled-background-color-dark);
   color:var(--wallet-label);
-  padding: 30px 20px 30px 20px;
+  padding: 30px 64px 10px 20px;
 
   a {
     color:var(--link-color);
@@ -110,9 +110,16 @@ textarea.stakepool-content-nest-content-settings {
 .stakepool-add-toolbar {
   text-align: right;
   margin-top: 20px;
-  float: left;
-  width: 100%;
-  max-width: 740px;
+  grid-column: 2;  
+}
+
+.stakepool-link-button-container{
+  display: flex;
+  align-items: center;
+  margin-left:10px;
+  .tooltipContainer{
+    margin-left: 5px;
+  }
 }
 
 .stakepool-add-not-redeemable {
@@ -168,23 +175,41 @@ textarea.stakepool-content-nest-content-settings {
 }
 
 @media screen and (max-width: 1179px) {
-  .stakepool-add-title{
-    margin-left: 20px;
-  }  
+  .stakepool-add-area{
+    width: 634px;
+    grid-template-columns: auto 316px;
+  }     
+  .stakepool-link-button-container{
+    margin-left:0;
+  }
+  .stakepool-add-area-left{
+    padding-right: 24px;
+  }
+  .stakepool-add-area-right{
+     padding: 30px 44px 10px 30px;
+  }
 }
+
 
 @media screen and (max-width: 768px) {
   .stakepool-add-area {
     grid-template-columns: 1fr;
+    width: 355px;
   }  
-  .stakepool-add-toolbar {
-    text-align: center;
-  }
-}
-
-@media screen and (max-width: 375px) {
   .stakepool-add-title{
     margin-left:16px;
     margin-bottom:20px;
   }
+  .stakepool-add-toolbar {
+    grid-column: 1;
+    text-align: center; 
+  }
+  .stakepool-add-area-left{
+    padding-right: 20px;
+    padding-left: 38px;
+  }
+  .stakepool-add-area-right{
+    padding: 30px 70px 10px 30px;
+  }
+
 }
