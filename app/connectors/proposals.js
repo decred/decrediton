@@ -17,7 +17,6 @@ const mapStateToProps = selectorMap({
   lastVettedFetchTime: sel.lastVettedFetchTime,
   tsDate: sel.tsDate,
   inventory: sel.inventory,
-  proposals: sel.proposals,
   loading: sel.initialProposalLoading,
 });
 

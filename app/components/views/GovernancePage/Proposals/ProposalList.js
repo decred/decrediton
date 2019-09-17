@@ -65,32 +65,25 @@ const ProposalListItem = ({ name, timestamp, token, voteCounts, tsDate, onClick,
   );
 };
 
-@autobind
-class ProposalList extends React.Component {
-  constructor (props) {
-    super(props);
-  }
+const ProposalList = ({
+  proposals, loading, viewProposalDetails, tsDate, finishedProposal
+}) => (
+  <>
+    { loading
+      ? <div className="proposal-loading-page"><PoliteiaLoading center /></div>
+      : proposals && proposals.length
+        ? (
+          <div className={finishedProposal ? "proposal-list ended" : "proposal-list"}>
+            {proposals.map(v => (
+              <ProposalListItem key={v.token} {...v} tsDate={tsDate} onClick={viewProposalDetails} />
+            ))}
+          </div>
+        )
+        : <NoProposals />
+    }
+  </>
+);
 
-  render () {
-    const {
-      proposals, loading, viewProposalDetails, tsDate, finishedProposal,
-    } = this.props;
-    return (
-    <>
-      { loading
-        ? <div className="proposal-loading-page"><PoliteiaLoading center /></div>
-        : proposals && proposals.length
-          ? (
-            <div className={finishedProposal ? "proposal-list ended" : "proposal-list"}>
-              {proposals.map(v => (
-                <ProposalListItem key={v.token} {...v} tsDate={tsDate} onClick={viewProposalDetails} />
-              ))}
-            </div>
-          )
-          : <NoProposals />
-      }
-    </>);
-  }
-}
-
-export default (ProposalList);
+export const ActiveVoteProposals = activeVoteProposals(proposals(ProposalList));
+export const PreVoteProposals = preVoteProposals(proposals(ProposalList));
+export const FinishedProposal = votedProposals(ProposalList);

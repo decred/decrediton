@@ -4,7 +4,7 @@ import { RoutedTabsHeader, RoutedTab } from "shared";
 import { routing, theming } from "connectors";
 import { TransitionMotion, spring } from "react-motion";
 import theme from "theme";
-import { createElement as h, cloneElement as k } from "react";
+import { createElement } from "react";
 
 export const TabbedPageTab = ({ children }) => children;
 TabbedPageTab.propTypes = {
@@ -23,18 +23,8 @@ class TabbedPage extends React.Component {
     super(props);
     this._tabs = getTabs(props.children);
     const matchedTab = this.matchedTab(props.location);
-    this.state = {
-      matchedTab,
-      dir: "l2r",
-      styles: [],
-      component: null,
-    };
-  }
-
-  componentDidMount() {
-    const matchedTab = this.matchedTab(this.props.location);
     const styles = this.getStyles(matchedTab);
-    this.setState({ styles });
+    this.state = { matchedTab, dir: "l2r", styles };
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -58,11 +48,7 @@ class TabbedPage extends React.Component {
       return [];
     }
 
-    const comp = matchedTab.tab.props.component;
-    const element = React.isValidElement(comp) ? comp : h(comp, matchedTab.tab.props, null);
-    if (this.state.component !== comp) {
-      this.setState({ component: element });
-    }    
+    const element = createElement(matchedTab.tab.props.component, matchedTab.tab.props, null);
     return [ {
       key: matchedTab.tab.props.path,
       data: { matchedTab, element },
@@ -95,7 +81,6 @@ class TabbedPage extends React.Component {
 
   // returns the state.styles wrapped in a TransitionMotion, to show the animations
   animatedStyles() {
-    const { component } = this.state;
     return (
       <TransitionMotion
         styles={this.state.styles}
@@ -113,7 +98,7 @@ class TabbedPage extends React.Component {
                     visibility: Math.abs(s.style.left) > 990 ? "hidden" : "" }}
                   key={s.key}
                 >
-                  {component}
+                  {s.data.element}
                 </div>
               );
             })}

@@ -183,6 +183,10 @@ export const GETPROPROSAL_UPDATEVOTESTATUS_SUCCESS = "GETPROPROSAL_UPDATEVOTESTA
 export const GETPROPROSAL_UPDATEVOTESTATUS_FAILED = "GETPROPROSAL_UPDATEVOTESTATUS_FAILED";
 
 export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch, getState) => {
+  // proposalsLength is needed otherwise politeia can return ErrorStatusMaxProposalsExceededPolicy
+  let proposalsLength = tokensBatch.length;
+  proposalsLength = proposalsLength > 20 ? 20 : proposalsLength;
+  tokensBatch = tokensBatch.slice(0, proposalsLength);
   dispatch({ type: GETPROPROSAL_UPDATEVOTESTATUS_ATTEMPT });
   const proposalsUpdated = {
     activeVote: [],
@@ -195,10 +199,11 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
     const { proposals } = await getProposalsBatch(tokensBatch,piURL);
     const { summaries, bestBlock } = await getProposalsVotestatusBatch(tokensBatch, piURL);
     tokensBatch.forEach( token => {
-      const prop = findProposal(proposals, token);
       const { status } = summaries[token];
+      const prop = findProposal(proposals, token);
       prop.voteStatus = status;
-      
+      prop.token = prop.censorshiprecord.token;
+
       switch (status) {
         case VOTESTATUS_ABANDONED:
           proposalsUpdated.finishedVote.push(prop);
@@ -234,7 +239,6 @@ export const getVettedProposals = () => async (dispatch, getState) => {
 
   const cfg = getWalletCfg(sel.isTestNet(getState()), sel.getWalletName(getState()));
   const lastAccessTime = sel.lastPoliteiaAccessTime(getState());
-  console.log(lastAccessTime)
 
   const originalWalletService = getState().grpc.walletService;
 
