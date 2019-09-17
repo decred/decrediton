@@ -1,8 +1,8 @@
 import * as sel from "selectors";
 import * as pi from "middleware/politeiaapi";
 import * as wallet from "wallet";
-import { replace } from "fp";
-import { getWalletCfg } from "config";
+// import { replace } from "fp";
+// import { getWalletCfg } from "../config";
 import { push as pushHistory } from "react-router-redux";
 import { hexReversedHashToArray, reverseRawHash } from "helpers";
 
@@ -20,18 +20,18 @@ export const VOTESTATUS_ABANDONED = 6;
 
 // Aux function to parse the optionsresult member of a votestatus call into
 // structures to use within a proposal data.
-const parseOptionsResult = optionsresult => {
-  if (!optionsresult) return null;
+// const parseOptionsResult = optionsresult => {
+//   if (!optionsresult) return null;
 
-  const voteOptions = [];
-  const voteCounts = {};
-  optionsresult.forEach(o => {
-    voteOptions.push(o.option);
-    voteCounts[o.option.id] = o.votesreceived;
-  });
+//   const voteOptions = [];
+//   const voteCounts = {};
+//   optionsresult.forEach(o => {
+//     voteOptions.push(o.option);
+//     voteCounts[o.option.id] = o.votesreceived;
+//   });
 
-  return { voteOptions, voteCounts };
-};
+//   return { voteOptions, voteCounts };
+// };
 
 // Aux function to parse the vote status of a single proposal, given a response
 // for the /votesStatus or /proposal/P/voteStatus api calls, then fill the
@@ -107,14 +107,6 @@ const getWalletCommittedTickets = async (eligibleTickets, walletService) => {
     ticket: reverseRawHash(t.getTicket()),
     address: t.getAddress(),
   }));
-};
-
-const getProposalVotes = async (proposal, piURL, walletService) => {
-  const propVotes = await pi.getProposalVotes(piURL, proposal.token);
-  if (propVotes && propVotes.data) {
-    await fillVotes(proposal, propVotes, walletService);
-  }
-  return proposal;
 };
 
 // Aux function to fill the vote result information on a given proposal.
@@ -432,13 +424,7 @@ export const getProposalDetails = (token, markViewed) => async (dispatch, getSta
       await getProposalVoteResults(proposal, piURL, walletService, blockTimestampFromNow);
     }
 
-    let { preVote, activeVote, voted, abandoned } = getState().governance;
-    preVote = replace(preVote, p => p.token === token, proposal);
-    activeVote = replace(activeVote, p => p.token === token, proposal);
-    voted = replace(voted, p => p.token === token, proposal);
-    abandoned = replace(abandoned, p => p.token === token, proposal);
-
-    dispatch({ token, proposal, preVote, activeVote, voted, abandoned, type: GETPROPOSAL_SUCCESS });
+    dispatch({ token, proposal, type: GETPROPOSAL_SUCCESS });
   } catch (error) {
     dispatch({ error, type: GETPROPOSAL_FAILED });
     throw error;

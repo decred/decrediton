@@ -51,11 +51,7 @@ export default function governance(state = {}, action) {
   case GETPROPOSAL_SUCCESS:
     return { ...state,
       getProposalAttempt: false,
-      preVote: action.preVote,
-      activeVote: action.activeVote,
-      voted: action.voted,
-      abandoned: action.abandoned,
-      proposals: { ...state.proposals, [action.token]: action.proposal }
+      proposals: action.proposal,
     };
   case UPDATEVOTECHOICE_ATTEMPT:
     return { ...state, updateVoteChoiceAttempt: true };
