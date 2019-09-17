@@ -2,20 +2,6 @@
 @import (reference) "./Layout.less";
 @import (reference) "./Icons.less";
 
-.settings-button-mobile{
-  display: none;
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  background-image: var(--menu-settings-default);
-  width: 22px;
-  height: 22px;
-  background-position: 10px;
-  background-repeat: no-repeat;
-  background-size: 22px;
-  padding: 10px;
-}
-
 .advanced-page-form {
   width: 100%;
   float: left;
@@ -901,6 +887,11 @@
     width: 100%;
   }  
 }
+@media screen and (max-width: 540px) {
+  .getstarted.loader .about-modal-button{
+      display: none;
+  }  
+}
 @media screen and (max-width: 430px) {
   .getstarted.loader .go-back-screen-button-area {
     top:155px;
@@ -950,7 +941,11 @@
   }
 
   .getstarted.loader{
-    margin-top: 63px;    
+    margin-top: 63px; 
+    .loader-settings-logs{
+      right:0 !important;
+      top:13px !important;
+    }        
     .content-title {
       font-size:23px;
     }
@@ -997,16 +992,8 @@
         right:20px;
       }    
     }    
-    .loader-settings-logs{
-      display: none;
-    }        
   }
 
-
-  .settings-button-mobile
-  {
-    display: inherit;
-  }
 
   .display-wallet{
     width: 136px;

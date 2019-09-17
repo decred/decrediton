@@ -47,6 +47,7 @@ export const AboutModalButton = ({ appVersion, updateAvailable }) => (
   <AboutModalButtonInvisible
     version={appVersion}
     updateAvailable={updateAvailable}
+    className="about-modal-button"
     buttonLabel={<T id="help.about" m="About Decrediton" />}
   />
 );
