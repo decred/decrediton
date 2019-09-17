@@ -83,7 +83,7 @@ export default function governance(state = {}, action) {
     };
   case GETPROPROSAL_UPDATEVOTESTATUS_SUCCESS:
     return { ...state,
-      proposals: action.proposals,
+      proposals: { ...state.proposals, ...action.proposals },
       getProposalsAttempt: false,
     };
   case GETPROPROSAL_UPDATEVOTESTATUS_FAILED:
@@ -95,8 +95,7 @@ export default function governance(state = {}, action) {
     return { ...state,
       lastPoliteiaAccessTime: action.lastPoliteiaAccessTime,
       lastPoliteiaAccessBlock: action.lastPoliteiaAccessBlock,
-    }
-    break;
+    };
   default:
     return state;
   }

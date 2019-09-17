@@ -1,4 +1,3 @@
-import { cloneElement as k, createElement as h } from "react";
 import { FormattedMessage as T } from "react-intl";
 import { PoliteiaLink as PiLink } from "shared";
 import { PreVoteProposals, ActiveVoteProposals, FinishedProposal } from "./ProposalList";
@@ -34,13 +33,7 @@ class ProposalsPage extends React.Component {
 
   componentDidMount() {
     const preProposalsBatch = this.props.inventory && this.props.inventory.pre;
-    this.props.getProposalsAndUpdateVoteStatus(preProposalsBatch)
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    const { proposals, loading, viewProposalDetails, tsDate, finishedProposal, } = this.props;
-    if (proposals !== prevProps.proposals || loading != prevProps.loading ) {
-    }
+    this.props.getProposalsAndUpdateVoteStatus(preProposalsBatch);
   }
 
   getProposalsTab() {
@@ -56,7 +49,7 @@ class ProposalsPage extends React.Component {
       return proposals.activeVote;
     }
     if (pathname.includes("voted")) {
-      return proposals.finishedVote
+      return proposals.finishedVote;
     }
   }
 

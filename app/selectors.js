@@ -966,9 +966,9 @@ export const activeVoteProposals = get([ "governance", "activeVote" ]);
 export const getVettedProposalsAttempt = get([ "governance", "getVettedAttempt" ]);
 export const getProposalsAttempt = get([ "governance", "getProposalsAttempt" ]);
 export const preVoteProposals = createSelector(
-  [proposals],
+  [ proposals ],
   (proposals) => proposals && proposals.preVote
-)
+);
 export const votedProposals = get([ "governance", "voted" ]);
 export const abandonedProposals = get([ "governance", "abandoned" ]);
 export const lastVettedFetchTime = get([ "governance", "lastVettedFetchTime" ]);

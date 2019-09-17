@@ -144,22 +144,17 @@ export const getTokenInventory = () => async (dispatch, getState) => {
     const { data } = await pi.getTokenInventory(piURL);
     dispatch({ type: GETTOKEN_INVENTORY_SUCCESS, inventory: data });
   } catch (error) {
-    dispatch({ error, GETTOKEN_INVENTORY_FAILED})
+    dispatch({ error, GETTOKEN_INVENTORY_FAILED });
   }
-}
+};
 
 export const GET_PROPOSAL_BATCH_ATTEMPT = "GET_PROPOSAL_BATCH_ATTEMPT";
 export const GET_PROPOSAL_BATCH_SUCCESS = "GET_PROPOSAL_BATCH_SUCCESS";
 export const GET_PROPOSAL_BATCH_FAILED = "GET_PROPOSAL_BATCH_FAILED";
 
 const getProposalsBatch = async (tokensBatch, piURL) => {
-  try {
-    const requestResponse = await pi.getProposalsBatch(piURL, tokensBatch);
-    const { data } = requestResponse;
-    return data;
-  } catch (error) {
-    throw error;
-  }
+  const requestResponse = await pi.getProposalsBatch(piURL, tokensBatch);
+  return requestResponse.data;
 };
 
 export const GET_PROPOSALS_VOTESTATUS_BATCH_ATTEMPT = "GET_PROPOSALS_VOTESTATUS_BATCH_ATTEMPT";
@@ -167,12 +162,8 @@ export const GET_PROPOSALS_VOTESTATUS_BATCH_SUCCESS = "GET_PROPOSALS_VOTESTATUS_
 export const GET_PROPOSALS_VOTESTATUS_BATCH_FAILED = "GET_PROPOSALS_VOTESTATUS_BATCH_FAILED";
 
 const getProposalsVotestatusBatch = async (tokensBatch, piURL) => {
-  try {
-    const requestResponse = await pi.getProposalsVoteStatusBatch(piURL, tokensBatch);
-    return requestResponse.data;
-  } catch (error) {
-    throw error;
-  }
+  const requestResponse = await pi.getProposalsVoteStatusBatch(piURL, tokensBatch);
+  return requestResponse.data;
 };
 
 const findProposal = (proposals, token) =>
@@ -192,7 +183,7 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
     activeVote: [],
     preVote: [],
     finishedVote: [],
-  }
+  };
   const piURL = sel.politeiaURL(getState());
 
   try {
@@ -205,18 +196,18 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
       prop.token = prop.censorshiprecord.token;
 
       switch (status) {
-        case VOTESTATUS_ABANDONED:
-          proposalsUpdated.finishedVote.push(prop);
-          break;
-        case VOTESTATUS_ACTIVEVOTE:
-          proposalsUpdated.activeVote.push(prop);
-          break;
-        case VOTESTATUS_VOTED:
-          proposalsUpdated.finishedVote.push(prop);
-          break;
-        default:
-          proposalsUpdated.preVote.push(prop);
-          break;
+      case VOTESTATUS_ABANDONED:
+        proposalsUpdated.finishedVote.push(prop);
+        break;
+      case VOTESTATUS_ACTIVEVOTE:
+        proposalsUpdated.activeVote.push(prop);
+        break;
+      case VOTESTATUS_VOTED:
+        proposalsUpdated.finishedVote.push(prop);
+        break;
+      default:
+        proposalsUpdated.preVote.push(prop);
+        break;
       }
     });
 
@@ -224,168 +215,170 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
   } catch (error) {
     dispatch({ type: GETPROPROSAL_UPDATEVOTESTATUS_FAILED, error });
   }
-}
-
-export const GETVETTED_ATTEMPT = "GETVETTED_ATTEMPT";
-export const GETVETTED_FAILED = "GETVETTED_FAILED";
-export const GETVETTED_SUCCESS = "GETVETTED_SUCCESS";
-export const GETVETTED_CANCELED = "GETVETTED_CANCELED";
-
-export const getVettedProposals = () => async (dispatch, getState) => {
-  dispatch({ type: GETVETTED_ATTEMPT });
-  const piURL = sel.politeiaURL(getState());
-  const oldProposals = sel.proposalsDetails(getState());
-  const currentBlockHeight = sel.currentBlockHeight(getState());
-
-  const cfg = getWalletCfg(sel.isTestNet(getState()), sel.getWalletName(getState()));
-  const lastAccessTime = sel.lastPoliteiaAccessTime(getState());
-
-  const originalWalletService = getState().grpc.walletService;
-
-  // resulting data
-  let proposals = [], preVote = [], activeVote = [], voted = [], abandoned = [], byToken = {};
-
-  try {
-    const [ vetted, votesStatus ] = await Promise.all(
-      [ pi.getVetted(piURL), pi.getVotesStatus(piURL) ]);
-
-    const { walletService } = getState().grpc;
-    if (walletService !== originalWalletService) {
-      // wallet has shutdown/changed and the request took too long to complete.
-      // just ignore it.
-      dispatch({ type: GETVETTED_CANCELED });
-      return;
-    }
-
-    // helpers
-    const blockTimestampFromNow = sel.blockTimestampFromNow(getState());
-    const defaultVoteStatus = { status: 0, totalvotes: 0, optionsresult: null };
-
-    // aux maps
-    const statusByToken = votesStatus.data.votesstatus ? votesStatus.data.votesstatus.reduce((m, r) => {
-      m[r.token] = r;
-      return m;
-    }, {}) : [];
-    for (let p of vetted.data.proposals) {
-      const voteStatus = statusByToken[p.censorshiprecord.token] || defaultVoteStatus;
-      if (p.status == VOTESTATUS_ABANDONED) voteStatus.status = VOTESTATUS_ABANDONED;
-      const voteData = parseOptionsResult(voteStatus.optionsresult);
-      const oldProposal = oldProposals[p.censorshiprecord.token];
-
-      const publishedTimestamp = p.publishedat || p.timestamp || 0;
-
-      const proposal = {
-        hasDetails: false,
-        ...oldProposal,
-        creator: p.username,
-        name: p.name,
-        version: p.version,
-        token: p.censorshiprecord.token,
-        numComments: p.numcomments,
-        timestamp: p.timestamp,
-        voteStatus: voteStatus.status,
-        totalVotes: voteStatus.totalvotes,
-        files: [],
-        hasEligibleTickets: 0,
-        eligibleTickets: [],
-        modifiedSinceLastAccess: (publishedTimestamp*1000) > lastAccessTime,
-        votingSinceLastAccess: false,
-        ...voteData,
-      };
-      fillVoteStatus(proposal, voteStatus, blockTimestampFromNow);
-      proposals.push(proposal);
-    }
-    proposals.sort((a, b) => a.timestamp - b.timestamp);
-
-    proposals.forEach(p => {
-      switch (p.voteStatus) {
-      case VOTESTATUS_ABANDONED: abandoned.push(p); break;
-      case VOTESTATUS_ACTIVEVOTE: activeVote.push(p); break;
-      case VOTESTATUS_VOTED: voted.push(p); break;
-      default:
-        preVote.push(p); break;
-      }
-
-      byToken[p.token] = p;
-    });
-    console.log(byToken)
-    cfg.set("politeia_last_access_time", (new Date()).getTime() - 1561898475);
-    cfg.set("politeia_last_access_block", 100000);
-    dispatch({ proposals: byToken, preVote, activeVote, abandoned, voted, type: GETVETTED_SUCCESS });
-    dispatch(getVettedUpdateVoteResults({ activeVote, voted, byToken, originalWalletService, cfg, piURL }));
-  } catch (error) {
-    dispatch({ error, type: GETVETTED_FAILED });
-    return;
-  }
 };
 
-export const GETVETTED_UPDATEDVOTERESULTS_ATTEMPT = "GETVETTED_UPDATEDVOTERESULTS_ATTEMPT";
-export const GETVETTED_UPDATEDVOTERESULTS_SUCCESS = "GETVETTED_UPDATEDVOTERESULTS_SUCCESS";
-export const GETVETTED_UPDATEDVOTERESULTS_FAILED = "GETVETTED_UPDATEDVOTERESULTS_FAILED";
+/**
+ * REMOVE DEPRECATED CODE
+ */
+// export const GETVETTED_ATTEMPT = "GETVETTED_ATTEMPT";
+// export const GETVETTED_FAILED = "GETVETTED_FAILED";
+// export const GETVETTED_SUCCESS = "GETVETTED_SUCCESS";
+// export const GETVETTED_CANCELED = "GETVETTED_CANCELED";
 
-export const getVettedUpdateVoteResults = ({ activeVote, voted, byToken, originalWalletService, cfg, piURL }) => async (dispatch, getState) => {
-  dispatch({ type: GETVETTED_UPDATEDVOTERESULTS_ATTEMPT });
+// export const getVettedProposals = () => async (dispatch, getState) => {
+//   dispatch({ type: GETVETTED_ATTEMPT });
+//   const piURL = sel.politeiaURL(getState());
+//   const oldProposals = sel.proposalsDetails(getState());
+//   const currentBlockHeight = sel.currentBlockHeight(getState());
 
-  // grab the votes (including the wallet's voted choice) for voted/voting
-  // proposals asynchronously so we don't block the user from viewing the
-  // tentative proposal lists. We need to recreate all lists after this, due to
-  // (possibly) this being a long time after the GETVETTED_SUCCESS has been
-  // processed.
+//   const cfg = getWalletCfg(sel.isTestNet(getState()), sel.getWalletName(getState()));
+//   const lastAccessTime = sel.lastPoliteiaAccessTime(getState());
 
-  try {
-    const chainParams = sel.chainParams(getState());
-    const lastAccessBlock = sel.lastPoliteiaAccessBlock(getState());
-    console.log(lastAccessBlock)
-    const { walletService } = getState().grpc;
+//   const originalWalletService = getState().grpc.walletService;
 
-    const votedWithVotes = await Promise.all([ ...activeVote, ...voted ]
-      .map(prop => getProposalVotes({ ...prop }, piURL, walletService)));
-    const newActiveVote = [];
-    const newVoted = [];
+//   // resulting data
+//   let proposals = [], preVote = [], activeVote = [], voted = [], abandoned = [], byToken = {};
 
-    votedWithVotes.forEach(p => {
-      switch (p.voteStatus) {
-      case VOTESTATUS_ACTIVEVOTE:
-        var startVoteBh = p.startBlockHeight || 0;
-        console.log(p)
-        console.log(lastAccessBlock)
-        // console.log(startVoteBh)
-        // console.log(lastAccessBlock - chainParams.TicketMaturity)
-        p.votingSinceLastAccess = startVoteBh >= (lastAccessBlock - chainParams.TicketMaturity);
-        newActiveVote.push(p);
-        break;
+//   try {
+//     const [ vetted, votesStatus ] = await Promise.all(
+//       [ pi.getVetted(piURL), pi.getVotesStatus(piURL) ]);
 
-      case VOTESTATUS_VOTED:
-        newVoted.push(p);
-        break;
+//     const { walletService } = getState().grpc;
+//     if (walletService !== originalWalletService) {
+//       // wallet has shutdown/changed and the request took too long to complete.
+//       // just ignore it.
+//       dispatch({ type: GETVETTED_CANCELED });
+//       return;
+//     }
 
-      default:
-        newVoted.push(p); break;
-      }
-      byToken[p.token] = p;
-    });
-    newVoted.sort((a, b) => a.timestamp - b.timestamp);
-    newActiveVote.sort((a, b) => a.timestamp - b.timestamp);
+//     // helpers
+//     const blockTimestampFromNow = sel.blockTimestampFromNow(getState());
+//     const defaultVoteStatus = { status: 0, totalvotes: 0, optionsresult: null };
 
-    dispatch({ proposals: byToken, activeVote: newActiveVote, voted: newVoted, type: GETVETTED_UPDATEDVOTERESULTS_SUCCESS });
-  } catch (error) {
-    const { walletService } = getState().grpc;
-    if (walletService !== originalWalletService) {
-      // wallet has shutdown/changed and the request took too long to complete.
-      // just ignore the error here in this case.
-      return;
-    }
-    dispatch({ error, type: GETVETTED_UPDATEDVOTERESULTS_FAILED });
-    return;
-  }
-};
+//     // aux maps
+//     const statusByToken = votesStatus.data.votesstatus ? votesStatus.data.votesstatus.reduce((m, r) => {
+//       m[r.token] = r;
+//       return m;
+//     }, {}) : [];
+//     for (let p of vetted.data.proposals) {
+//       const voteStatus = statusByToken[p.censorshiprecord.token] || defaultVoteStatus;
+//       if (p.status == VOTESTATUS_ABANDONED) voteStatus.status = VOTESTATUS_ABANDONED;
+//       const voteData = parseOptionsResult(voteStatus.optionsresult);
+//       const oldProposal = oldProposals[p.censorshiprecord.token];
+
+//       const publishedTimestamp = p.publishedat || p.timestamp || 0;
+
+//       const proposal = {
+//         hasDetails: false,
+//         ...oldProposal,
+//         creator: p.username,
+//         name: p.name,
+//         version: p.version,
+//         token: p.censorshiprecord.token,
+//         numComments: p.numcomments,
+//         timestamp: p.timestamp,
+//         voteStatus: voteStatus.status,
+//         totalVotes: voteStatus.totalvotes,
+//         files: [],
+//         hasEligibleTickets: 0,
+//         eligibleTickets: [],
+//         modifiedSinceLastAccess: (publishedTimestamp*1000) > lastAccessTime,
+//         votingSinceLastAccess: false,
+//         ...voteData,
+//       };
+//       fillVoteStatus(proposal, voteStatus, blockTimestampFromNow);
+//       proposals.push(proposal);
+//     }
+//     proposals.sort((a, b) => a.timestamp - b.timestamp);
+
+//     proposals.forEach(p => {
+//       switch (p.voteStatus) {
+//       case VOTESTATUS_ABANDONED: abandoned.push(p); break;
+//       case VOTESTATUS_ACTIVEVOTE: activeVote.push(p); break;
+//       case VOTESTATUS_VOTED: voted.push(p); break;
+//       default:
+//         preVote.push(p); break;
+//       }
+
+//       byToken[p.token] = p;
+//     });
+//     console.log(byToken);
+//     cfg.set("politeia_last_access_time", (new Date()).getTime() - 1561898475);
+//     cfg.set("politeia_last_access_block", 100000);
+//     dispatch({ proposals: byToken, preVote, activeVote, abandoned, voted, type: GETVETTED_SUCCESS });
+//     dispatch(getVettedUpdateVoteResults({ activeVote, voted, byToken, originalWalletService, cfg, piURL }));
+//   } catch (error) {
+//     dispatch({ error, type: GETVETTED_FAILED });
+//     return;
+//   }
+// };
+
+// export const GETVETTED_UPDATEDVOTERESULTS_ATTEMPT = "GETVETTED_UPDATEDVOTERESULTS_ATTEMPT";
+// export const GETVETTED_UPDATEDVOTERESULTS_SUCCESS = "GETVETTED_UPDATEDVOTERESULTS_SUCCESS";
+// export const GETVETTED_UPDATEDVOTERESULTS_FAILED = "GETVETTED_UPDATEDVOTERESULTS_FAILED";
+
+// export const getVettedUpdateVoteResults = ({ activeVote, voted, byToken, originalWalletService, cfg, piURL }) => async (dispatch, getState) => {
+//   dispatch({ type: GETVETTED_UPDATEDVOTERESULTS_ATTEMPT });
+
+//   // grab the votes (including the wallet's voted choice) for voted/voting
+//   // proposals asynchronously so we don't block the user from viewing the
+//   // tentative proposal lists. We need to recreate all lists after this, due to
+//   // (possibly) this being a long time after the GETVETTED_SUCCESS has been
+//   // processed.
+
+//   try {
+//     const chainParams = sel.chainParams(getState());
+//     const lastAccessBlock = sel.lastPoliteiaAccessBlock(getState());
+//     console.log(lastAccessBlock);
+//     const { walletService } = getState().grpc;
+
+//     const votedWithVotes = await Promise.all([ ...activeVote, ...voted ]
+//       .map(prop => getProposalVotes({ ...prop }, piURL, walletService)));
+//     const newActiveVote = [];
+//     const newVoted = [];
+
+//     votedWithVotes.forEach(p => {
+//       switch (p.voteStatus) {
+//       case VOTESTATUS_ACTIVEVOTE:
+//         var startVoteBh = p.startBlockHeight || 0;
+//         console.log(p);
+//         console.log(lastAccessBlock);
+//         // console.log(startVoteBh)
+//         // console.log(lastAccessBlock - chainParams.TicketMaturity)
+//         p.votingSinceLastAccess = startVoteBh >= (lastAccessBlock - chainParams.TicketMaturity);
+//         newActiveVote.push(p);
+//         break;
+
+//       case VOTESTATUS_VOTED:
+//         newVoted.push(p);
+//         break;
+
+//       default:
+//         newVoted.push(p); break;
+//       }
+//       byToken[p.token] = p;
+//     });
+//     newVoted.sort((a, b) => a.timestamp - b.timestamp);
+//     newActiveVote.sort((a, b) => a.timestamp - b.timestamp);
+
+//     dispatch({ proposals: byToken, activeVote: newActiveVote, voted: newVoted, type: GETVETTED_UPDATEDVOTERESULTS_SUCCESS });
+//   } catch (error) {
+//     const { walletService } = getState().grpc;
+//     if (walletService !== originalWalletService) {
+//       // wallet has shutdown/changed and the request took too long to complete.
+//       // just ignore the error here in this case.
+//       return;
+//     }
+//     dispatch({ error, type: GETVETTED_UPDATEDVOTERESULTS_FAILED });
+//     return;
+//   }
+// };
 
 export const GETPROPOSAL_ATTEMPT = "GETPROPOSAL_ATTEMPT";
 export const GETPROPOSAL_FAILED = "GETPROPOSAL_FAILED";
 export const GETPROPOSAL_SUCCESS = "GETPROPOSAL_SUCCESS";
 
 export const getProposalDetails = (token, markViewed) => async (dispatch, getState) => {
-
   const decodeFilePayload = (f) => {
     switch (f.mime) {
     case "text/plain; charset=utf-8":
