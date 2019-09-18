@@ -32,24 +32,35 @@ class ProposalsPage extends React.Component {
   }
 
   componentDidMount() {
-    const preProposalsBatch = this.props.inventory && this.props.inventory.pre;
+    if (!this.props.inventory) {
+      return;
+    }
+    const preProposalsBatch = this.props.inventory.pre;
     this.props.getProposalsAndUpdateVoteStatus(preProposalsBatch);
+  }
+
+  componentDidUpdate(prevProps) {
+
+    const { inventory, location } = this.props;
+    if (prevProps.location === location) {
+      return;
+    }
+    const proposalBatch = this.getProposalsTab().reduce( (accumulator, p) =>
+      accumulator.concat(inventory[p]), [] );
+    this.props.getProposalsAndUpdateVoteStatus(proposalBatch);
   }
 
   getProposalsTab() {
     const { proposals, location } = this.props;
     const { pathname } = location;
-    if (!proposals) {
-      return;
-    }
     if (pathname.includes("prevote")) {
-      return proposals.preVote;
+      return ["pre"];
     }
     if (pathname.includes("activevote")) {
-      return proposals.activeVote;
+      return ["active"];
     }
     if (pathname.includes("voted")) {
-      return proposals.finishedVote;
+      return ["approved", "rejected"]
     }
   }
 

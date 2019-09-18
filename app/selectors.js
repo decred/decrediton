@@ -962,12 +962,15 @@ export const treasuryBalance = get([ "grpc", "treasuryBalance" ]);
 
 export const updateVoteChoiceAttempt = get([ "governance", "updateVoteChoiceAttempt" ]);
 export const proposals = get([ "governance", "proposals" ]);
-export const activeVoteProposals = get([ "governance", "activeVote" ]);
 export const getVettedProposalsAttempt = get([ "governance", "getVettedAttempt" ]);
 export const getProposalsAttempt = get([ "governance", "getProposalsAttempt" ]);
 export const preVoteProposals = createSelector(
   [ proposals ],
   (proposals) => proposals && proposals.preVote
+);
+export const activeVoteProposals = createSelector(
+  [ proposals ],
+  (proposals) => proposals && proposals.activeVote
 );
 export const votedProposals = get([ "governance", "voted" ]);
 export const abandonedProposals = get([ "governance", "abandoned" ]);

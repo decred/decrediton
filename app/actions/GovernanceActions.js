@@ -18,38 +18,28 @@ export const VOTESTATUS_ACTIVEVOTE = 3;
 export const VOTESTATUS_VOTED = 4;
 export const VOTESTATUS_ABANDONED = 6;
 
-// Aux function to parse the optionsresult member of a votestatus call into
-// structures to use within a proposal data.
-// const parseOptionsResult = optionsresult => {
-//   if (!optionsresult) return null;
-
-//   const voteOptions = [];
-//   const voteCounts = {};
-//   optionsresult.forEach(o => {
-//     voteOptions.push(o.option);
-//     voteCounts[o.option.id] = o.votesreceived;
-//   });
-
-//   return { voteOptions, voteCounts };
-// };
-
 // Aux function to parse the vote status of a single proposal, given a response
 // for the /votesStatus or /proposal/P/voteStatus api calls, then fill the
 // proposal object with the results.
-const fillVoteStatus = (proposal, voteStatus, blockTimestampFromNow) => {
+const fillVoteSummary = (proposal, voteSummary, blockTimestampFromNow) => {
   proposal.quorumPass = false;
   proposal.voteResult = "declined";
-  proposal.endTimestamp = blockTimestampFromNow(parseInt(voteStatus.endheight));
+  proposal.endTimestamp = blockTimestampFromNow(parseInt(voteSummary.endheight));
+  proposal.voteCounts = [];
+  proposal.voteOptions = [];
 
-  proposal.voteCounts = voteStatus.optionsresult ? voteStatus.optionsresult.reduce((counts, opt) => {
-    counts[opt.option.id] = opt.votesreceived;
-    return counts;
-  }, {}) : {};
+  let totalVotes = 0;
+  if (voteSummary.results) {
+    voteSummary.results.forEach(o => {
+      proposal.voteOptions.push(o.option);
+      proposal.voteCounts[o.option.id] = o.votesreceived;
+      totalVotes += o.votesreceived;
+    });
+  }
 
-  const quorum = voteStatus.quorumpercentage ? voteStatus.quorumpercentage : 20;
-  const totalVotes = voteStatus.totalvotes;
-  const eligibleVotes = voteStatus.numofeligiblevotes;
-  const passPercentage = voteStatus.passPercentage ? voteStatus.passPercentage : 60;
+  const quorum = voteSummary.quorumpercentage ? voteSummary.quorumpercentage : 20;
+  const eligibleVotes = voteSummary.eligibletickets;
+  const passPercentage = voteSummary.passpercentage ? voteSummary.passpercentage : 60;
 
   if (totalVotes / eligibleVotes > quorum / 100) {
     proposal.quorumPass = true;
@@ -63,7 +53,6 @@ const fillVoteStatus = (proposal, voteStatus, blockTimestampFromNow) => {
 // Aux function to parse the votes information of a single proposal, given a
 // response to that proposal's /votes api call and fill the proposal object.
 const fillVotes = async (proposal, propVotes, walletService) => {
-
   // aux map from bit to vote choice id
   const voteBitToChoice = proposal.voteOptions.reduce((m, o) => {
     m[o.bits] = o.id;
@@ -115,11 +104,6 @@ const getProposalVoteResults = async (proposal, piURL, walletService, blockTimes
   const propVotes = await pi.getProposalVotes(piURL, proposal.token);
   if (propVotes && propVotes.data) {
     await fillVotes(proposal, propVotes, walletService);
-  }
-
-  const propVoteStatus = await pi.getProposalVoteStatus(piURL, proposal.token);
-  if (propVoteStatus && propVoteStatus.data) {
-    fillVoteStatus(proposal, propVoteStatus.data, blockTimestampFromNow);
   }
 
   return proposal;
@@ -176,14 +160,20 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
     preVote: [],
     finishedVote: [],
   };
+  const blockTimestampFromNow = sel.blockTimestampFromNow(getState());
   const piURL = sel.politeiaURL(getState());
 
   try {
     const { proposals } = await getProposalsBatch(tokensBatch,piURL);
-    const { summaries, bestBlock } = await getProposalsVotestatusBatch(tokensBatch, piURL);
+    const { summaries } = await getProposalsVotestatusBatch(tokensBatch, piURL);
+    const { bestBlock } = summaries;
     tokensBatch.forEach( token => {
-      const { status } = summaries[token];
+      const proposalSummary = summaries[token];
+      const { status, results } = proposalSummary;
       const prop = findProposal(proposals, token);
+      
+      fillVoteSummary(prop, proposalSummary, blockTimestampFromNow)
+
       prop.voteStatus = status;
       prop.token = prop.censorshiprecord.token;
 

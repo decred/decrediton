@@ -1,5 +1,8 @@
 export default ({ voteCounts }) => {
 
+  if (!voteCounts)
+  return <></>;
+
   // TODO: support options other than yes/no/abstain (currently not used on
   // politeia)
   // TODO: support quorum/total ticket count/abstain (not currently returned by
