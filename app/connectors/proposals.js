@@ -10,6 +10,7 @@ const mapStateToProps = selectorMap({
   getVettedProposalsAttempt: sel.getVettedProposalsAttempt,
   politeiaEnabled: sel.politeiaEnabled,
   viewedProposalDetails: sel.viewedProposalDetails,
+  proposalsDetails: sel.proposalsDetails,
   getProposalAttempt: sel.getProposalAttempt,
   getProposalError: sel.getProposalError,
   hasTickets: sel.hasTickets,

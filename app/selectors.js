@@ -988,15 +988,15 @@ export const newProposalsStartedVoting = compose(some(p => p.votingSinceLastAcce
 
 export const getProposalAttempt = get([ "governance", "getProposalAttempt" ]);
 export const getProposalError = get([ "governance", "getProposalError" ]);
-export const proposalsDetails = get([ "governance", "proposals" ]);
+export const proposalsDetails = get(["governance", "proposalsDetails"]);
 export const viewedProposalToken = (state, ctx) => ctx.match && ctx.match.params && ctx.match.params.token ? ctx.match.params.token : null;
 export const viewedProposalDetails = createSelector(
   [ proposalsDetails, viewedProposalToken ],
   (proposals, token) => proposals[token]
 );
 export const initialProposalLoading = createSelector(
-  [ proposalsDetails, getProposalsAttempt ],
-  ( proposals, getProposalsAttempt ) => (Object.keys(proposals).length === 0) || getProposalsAttempt
+  [ getProposalsAttempt ],
+  ( getProposalsAttempt ) => getProposalsAttempt
 );
 export const lastPoliteiaAccessBlock = get([ "governance", "lastPoliteiaAccessBlock" ]);
 export const lastPoliteiaAccessTime = get([ "governance", "lastPoliteiaAccessTime" ]);

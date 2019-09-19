@@ -391,6 +391,7 @@ var initialState = {
       preVote: [],
       finishedVote: [],
     },
+    proposalsDetails: {},
     getProposalAttempt: false,
     getProposalError: null,
     lastVettedFetchTime: new Date(0), // time when vetted proposals were requested
