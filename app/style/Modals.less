@@ -458,10 +458,12 @@
 }
 
 .app-modal-standalone.confirm-modal {
-  left: 446px;
   width: 289px;
-  top: 243px;
   height: 239px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);  
   box-shadow: 0 15px 34px 0 rgba(12, 30, 62, 0.34);
   border-radius: 5px;
   overflow-y: auto;
@@ -492,24 +494,6 @@
   .app-modal-reduced-bar.about-modal,
   .app-modal-standalone.about-modal {
     width: inherit;
-  }
-}
-
-@media screen and (min-width: 768px) {
-  .app-modal-standalone.confirm-modal {
-    left: 446px;
-    width: 289px;
-    top: 243px;
-    height: 239px;
-  }
-}
-
-@media screen and (max-height: 420px) {
-  .app-modal-standalone.confirm-modal {
-    left: 446px;
-    width: 289px;
-    top: 243px;
-    height: 239px;
   }
 }
 
