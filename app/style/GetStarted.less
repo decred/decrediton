@@ -68,7 +68,7 @@
   background-color: var(--background-container);
   z-index: 3;
   height: 100%;
-
+  
   &::before{
     content: "";
     width: 100%;
@@ -89,14 +89,7 @@
 
 .getstarted.loader.logs {
   margin-left: 42px;
-  margin-top: 107px;
-
-  .loader-settings-logs {
-    position: fixed;
-    right: 55px;
-    top: 60px;
-    user-select: none;
-  }
+  padding-top: 107px;
 
   .active {
     color: var(--input-color);
@@ -117,8 +110,9 @@
 }
 
 .getstarted.loader {
-  margin-top: 107px;
+  padding-top: 107px;
   margin-left: 60px;
+  position: relative;
 
   .tutorial-button {
     background-color: var(--info-modal-button-bg);
@@ -149,9 +143,10 @@
   }
 
   .loader-settings-logs {
-    position: fixed;
-    right: 55px;
-    top: 60px;
+    position: absolute;
+    right: 15px;
+    top: -25px;    
+    margin: inherit;
     user-select: none;
   }
 
@@ -863,17 +858,20 @@
     margin-left: 10px;
   }
   .getstarted.loader{
-    margin-top: 56px;
+    padding-top: 56px;
     margin-left: 0;
 
     .go-back-screen-button-area {
       top:131px;
       right:60px;
     }      
+    .loader-settings-logs{
+      right:-30px !important;
+    }              
     &.logs {
       margin-left: -10px;
       margin-right: -10px;
-      margin-top: 87px;
+      padding-top: 87px;
       
       .log-container .tabbed-page-subtitle{
         margin-left:10px;
@@ -881,10 +879,10 @@
       .go-back-screen-button-area{
         right:40px;
       }
+      .loader-settings-logs{
+        right:-10px !important;
+      }               
     }  
-    .loader-settings-logs{
-      right:10px !important;
-    }          
   }
   .advanced-daemon-row.multiple-row{
     width: 78%;
@@ -951,17 +949,16 @@
   }
 
   .getstarted.loader{
-    margin-top: 23px; 
+    padding-top: 23px; 
     .loader-settings-logs{
-      right:0 !important;
-      top:13px !important;
+      top:-40px !important;
     }        
     .content-title {
       font-size:23px;
     }
     .loader-bar{
       margin-bottom: 0;
-      position: absolute;
+      position: fixed;
       bottom: 0;
       left: 0;
       display: flex;
@@ -989,7 +986,7 @@
     &.logs {
       margin-left: -10px;
       margin-right: -10px;
-      margin-top:60px;
+      padding-top:60px;
 
       .log-area .log-area-logs{
         margin: 20px;
