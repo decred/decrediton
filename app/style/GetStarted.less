@@ -66,12 +66,21 @@
   padding: 40px;
   display: block;
   background-color: var(--background-container);
-  background-repeat: no-repeat;
-  background-image: var(--launcher-logo);
-  background-size: 173px;
-  background-position: 40px 40px;
   z-index: 3;
   height: 100%;
+
+  &::before{
+    content: "";
+    width: 100%;
+    height: 33px;
+    top: 0;
+    left: 0;
+    display: block;
+    background-repeat: no-repeat;
+    background-image: var(--launcher-logo);
+    background-size: 173px;
+    background-position: 0 0;
+  }
 }
 
 .getstarted {
@@ -80,7 +89,7 @@
 
 .getstarted.loader.logs {
   margin-left: 42px;
-  margin-top: 138px;
+  margin-top: 107px;
 
   .loader-settings-logs {
     position: fixed;
@@ -108,7 +117,7 @@
 }
 
 .getstarted.loader {
-  margin-top: 138px;
+  margin-top: 107px;
   margin-left: 60px;
 
   .tutorial-button {
@@ -854,7 +863,7 @@
     margin-left: 10px;
   }
   .getstarted.loader{
-    margin-top: 87px;
+    margin-top: 56px;
     margin-left: 0;
 
     .go-back-screen-button-area {
@@ -909,12 +918,13 @@
 
   .page-body.getstarted {
     padding: 20px !important;
-    background-position: 20px 20px;
     display: flex;
     flex-direction: column;
-    background-repeat: no-repeat;
-    background-image: var(--small-logo);
-    background-size: 30px;
+
+    &::before{
+      background-image: var(--small-logo);
+      background-size: 30px;
+    }    
   }
 
   .getstarted.content {
@@ -941,7 +951,7 @@
   }
 
   .getstarted.loader{
-    margin-top: 63px; 
+    margin-top: 23px; 
     .loader-settings-logs{
       right:0 !important;
       top:13px !important;
