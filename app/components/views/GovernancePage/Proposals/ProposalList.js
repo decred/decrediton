@@ -34,7 +34,7 @@ const VoteResults = ({ currentVoteChoice, quorumPass, voteResult }) => (
 
 const ProposalListItem = ({ name, timestamp, token, voteCounts, tsDate, onClick,
   voteStatus, currentVoteChoice, quorumPass, voteResult, modifiedSinceLastAccess,
-  votingSinceLastAccess }) => {
+  votingSinceLastAccess, quorumMinimumVotes }) => {
 
   const isVoting = voteStatus == VOTESTATUS_ACTIVEVOTE;
   const modifiedClassName =
@@ -57,7 +57,7 @@ const ProposalListItem = ({ name, timestamp, token, voteCounts, tsDate, onClick,
       {voteStatus == VOTESTATUS_ACTIVEVOTE &&
         <>
           <VoteChoice currentVoteChoice={currentVoteChoice} />
-          <VotingProgress voteCounts={voteCounts} />
+          <VotingProgress {...{ voteCounts, quorumMinimumVotes } }  />
         </>}
       {voteStatus == VOTESTATUS_VOTED &&
         <VoteResults  {...{ currentVoteChoice, quorumPass, voteResult }}/>}

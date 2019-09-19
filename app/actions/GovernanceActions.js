@@ -25,7 +25,7 @@ const fillVoteSummary = (proposal, voteSummary, blockTimestampFromNow) => {
   proposal.quorumPass = false;
   proposal.voteResult = "declined";
   proposal.endTimestamp = blockTimestampFromNow(parseInt(voteSummary.endheight));
-  proposal.voteCounts = [];
+  proposal.voteCounts = {};
   proposal.voteOptions = [];
 
   let totalVotes = 0;
@@ -40,8 +40,9 @@ const fillVoteSummary = (proposal, voteSummary, blockTimestampFromNow) => {
   const quorum = voteSummary.quorumpercentage ? voteSummary.quorumpercentage : 20;
   const eligibleVotes = voteSummary.eligibletickets;
   const passPercentage = voteSummary.passpercentage ? voteSummary.passpercentage : 60;
+  proposal.quorumMinimumVotes = eligibleVotes * (quorum / 100);
 
-  if (totalVotes / eligibleVotes > quorum / 100) {
+  if (totalVotes > proposal.quorumMinimumVotes) {
     proposal.quorumPass = true;
   }
 

@@ -1,4 +1,4 @@
-export default ({ voteCounts }) => {
+export default ({ voteCounts, quorumMinimumVotes }) => {
 
   if (!voteCounts)
   return <></>;
@@ -13,8 +13,11 @@ export default ({ voteCounts }) => {
   // const abstainCount = voteCounts.abstain;
 
   const totalCount = yesCount + noCount; // + abstainCount;
-  const yesPerc = (yesCount / totalCount) * 100;
-  const noPerc = (noCount / totalCount) * 100;
+  let yesPerc = 0;
+  let noPerc = 0;
+
+  yesPerc = (yesCount / quorumMinimumVotes) * 100;
+  noPerc = (noCount / quorumMinimumVotes) * 100;
   // const abstainPerc = (abstainCount / totalCount) * 100;
 
   return (
