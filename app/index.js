@@ -387,6 +387,7 @@ var initialState = {
     inventory: [],
     proposals: {
       activeVote: [],
+      abandonedVote: [],
       preVote: [],
       finishedVote: [],
     },

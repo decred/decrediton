@@ -2,7 +2,7 @@ import { FormattedMessage as T } from "react-intl";
 import { activeVoteProposals, preVoteProposals, votedProposals, proposals, abandonedProposals } from "connectors";
 import { VotingProgress } from "indicators";
 import { PoliteiaLoading, NoProposals } from "indicators";
-import { VOTESTATUS_ACTIVEVOTE, VOTESTATUS_VOTED } from "actions/GovernanceActions";
+import { VOTESTATUS_ACTIVEVOTE, VOTESTATUS_FINISHEDVOTE } from "actions/GovernanceActions";
 import { FormattedRelative } from "shared";
 
 const VoteChoiceText = ({ currentVoteChoice }) => {
@@ -48,7 +48,7 @@ const ProposalListItem = ({ name, timestamp, token, voteCounts, tsDate, onClick,
       <div className="info">
         <div className="proposal-name">{ name }</div>
         <div className="proposal-token">{ token }</div>
-        {voteStatus !== VOTESTATUS_VOTED &&
+        {voteStatus !== VOTESTATUS_FINISHEDVOTE &&
         <div className="proposal-timestamp">
           <T id="proposalItem.lastUpdatedAt" m="Last Updated {reldate}" values={{
             reldate: <FormattedRelative  value={ tsDate(timestamp) } /> }} />
@@ -59,15 +59,16 @@ const ProposalListItem = ({ name, timestamp, token, voteCounts, tsDate, onClick,
           <VoteChoice currentVoteChoice={currentVoteChoice} />
           <VotingProgress {...{ voteCounts, quorumMinimumVotes } }  />
         </>}
-      {voteStatus == VOTESTATUS_VOTED &&
+      {voteStatus == VOTESTATUS_FINISHEDVOTE &&
         <VoteResults  {...{ currentVoteChoice, quorumPass, voteResult }}/>}
     </div>
   );
 };
 
 const ProposalList = ({
-  proposals, loading, viewProposalDetails, tsDate, finishedProposal
-}) => (
+  proposals, loading, viewProposalDetails, tsDate, finishedProposal, ...props
+}) => {
+  return (
   <>
     { loading
       ? <div className="proposal-loading-page"><PoliteiaLoading center /></div>
@@ -82,8 +83,8 @@ const ProposalList = ({
         : <NoProposals />
     }
   </>
-);
+);}
 
-export const ActiveVoteProposals = activeVoteProposals(proposals(ProposalList));
-export const PreVoteProposals = preVoteProposals(proposals(ProposalList));
-export const FinishedProposal = finishedProposals(proposals(ProposalList));
+export const ActiveVoteProposals = activeVoteProposals(ProposalList);
+export const PreVoteProposals = preVoteProposals(ProposalList);
+export const FinishedProposal = finishedProposals(ProposalList);

@@ -1,6 +1,6 @@
 import { proposals } from "connectors";
 import { Route, Switch } from "react-router-dom";
-import Page from "./Page";
+import ProposalList from "./ProposalList";
 import ProposalDetails from "./Details";
 import PoliteiaDisabled from "./PoliteiaDisabled";
 
@@ -8,6 +8,10 @@ import PoliteiaDisabled from "./PoliteiaDisabled";
 class Proposals extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidUpdate() {
+    console.log(this.props)
   }
 
   render() {
@@ -18,7 +22,7 @@ class Proposals extends React.Component {
     return (
       <Switch>
         <Route path="/governance/proposals/details/:token" component={ProposalDetails}/>
-        <Route path="/governance/proposals" component={Page} />
+        <Route path="/governance/proposals" component={ProposalList} />
       </Switch>
     );
   }

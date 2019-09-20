@@ -1,6 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import { PoliteiaLink as PiLink } from "shared";
-import { PreVoteProposals, ActiveVoteProposals, FinishedProposal } from "./ProposalList";
+import { PreVoteProposals, ActiveVoteProposals, FinishedProposal } from "./Page";
 import { shell } from "electron";
 import { TabbedPage, TabbedPageTab as Tab } from "layout";
 import { newProposalCounts, proposals } from "connectors";
@@ -26,12 +26,14 @@ const ListLink = ({ count, children }) => (
 
 
 @autobind
-class ProposalsPage extends React.Component {
+class ProposalsList extends React.Component {
   constructor(props) {
     super(props);
   }
 
   componentDidMount() {
+    console.log("aqui")
+    console.log(this.props)
     if (!this.props.inventory) {
       return;
     }
@@ -69,15 +71,15 @@ class ProposalsPage extends React.Component {
 
     return (
       <TabbedPage caret={<div/>} header={<PageHeader />} >
-        <Tab path="/governance/proposals/prevote" component={PreVoteProposals}
+        <Tab path="/governance/proposals/prevote" component={proposals(PreVoteProposals)}
           link={<ListLink count={newPreVoteProposalsCount}><T id="proposals.statusLinks.preVote" m="Under Discussion" /></ListLink>} />
-        <Tab path="/governance/proposals/activevote" component={ActiveVoteProposals}
+        <Tab path="/governance/proposals/activevote" component={proposals(ActiveVoteProposals)}
           link={<ListLink count={newActiveVoteProposalsCount}><T id="proposals.statusLinks.underVote" m="Under Vote" /></ListLink>}/>
-        <Tab path="/governance/proposals/voted" component={FinishedProposal}
+        <Tab path="/governance/proposals/voted" component={proposals(FinishedProposal)}
           link={<T id="proposals.statusLinks.voted" m="Finished Voting" />}/>
       </TabbedPage>
     );
   }
 }
 
-export default proposals(newProposalCounts(ProposalsPage));
+export default proposals(newProposalCounts(ProposalsList));

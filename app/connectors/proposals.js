@@ -6,7 +6,6 @@ import * as ga from "actions/GovernanceActions";
 import * as ca from "actions/ClientActions";
 
 const mapStateToProps = selectorMap({
-  activeVoteProposals: sel.activeVoteProposals,
   politeiaEnabled: sel.politeiaEnabled,
   viewedProposalDetails: sel.viewedProposalDetails,
   proposalsDetails: sel.proposalsDetails,
@@ -18,6 +17,7 @@ const mapStateToProps = selectorMap({
   tsDate: sel.tsDate,
   inventory: sel.inventory,
   loading: sel.initialProposalLoading,
+  proposalsList: sel.proposals,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

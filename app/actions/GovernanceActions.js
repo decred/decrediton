@@ -156,14 +156,16 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
   proposalsLength = proposalsLength > 20 ? 20 : proposalsLength;
   tokensBatch = tokensBatch.slice(0, proposalsLength);
   dispatch({ type: GETPROPROSAL_UPDATEVOTESTATUS_ATTEMPT });
-  const proposalsUpdated = {
+  let proposalsUpdated = {
     activeVote: [],
-    preVote: [],
+    abandonedVote: [],
     finishedVote: [],
-    abandoned: [],
+    preVote: [],
   };
   const blockTimestampFromNow = sel.blockTimestampFromNow(getState());
   const piURL = sel.politeiaURL(getState());
+  const oldProposals = sel.proposals(getState());
+  console.log(oldProposals)
 
   try {
     const { proposals } = await getProposalsBatch(tokensBatch,piURL);
@@ -195,9 +197,14 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
       }
     });
 
+    proposalsUpdated = 
+      Object.keys(proposalsUpdated)
+        .map((key) => oldProposals[key] = oldProposals[key].concat(proposalsUpdated[key]));
+    console.log(proposalsUpdated)
     return dispatch({ type: GETPROPROSAL_UPDATEVOTESTATUS_SUCCESS, proposals: proposalsUpdated, bestBlock } );
   } catch (error) {
     dispatch({ type: GETPROPROSAL_UPDATEVOTESTATUS_FAILED, error });
+    throw error;
   }
 };
 
