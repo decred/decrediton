@@ -255,7 +255,7 @@ export const getProposalDetails = (token, markViewed) => async (dispatch, getSta
       proposal.votingSinceLastAccess = false;
     }
 
-    if ([ VOTESTATUS_VOTED, VOTESTATUS_ACTIVEVOTE ].includes(proposal.voteStatus)) {
+    if ([ VOTESTATUS_FINISHEDVOTE, VOTESTATUS_ACTIVEVOTE ].includes(proposal.voteStatus)) {
       await getProposalVoteResults(proposal, piURL, walletService, blockTimestampFromNow);
     }
 

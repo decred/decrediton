@@ -1,5 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
-import { GoBackIconButton } from "buttons";
+import { InvisibleButton } from "buttons";
 import { PoliteiaLink } from "shared";
 import {
   ProposalNotVoting, NoTicketsVotingInfo, OverviewField, OverviewVotingProgressInfo,
@@ -7,10 +7,10 @@ import {
   ChosenVoteOption, ProposalText, ProposalAbandoned
 } from "./helpers";
 import {
-  VOTESTATUS_ACTIVEVOTE, VOTESTATUS_VOTED, VOTESTATUS_ABANDONED
+  VOTESTATUS_ACTIVEVOTE, VOTESTATUS_FINISHEDVOTE, VOTESTATUS_ABANDONED
 } from "actions/GovernanceActions";
 
-export default ({ viewedProposalDetails,
+export default ({ viewedProposalDetails, goBackHistory,
   showPurchaseTicketsPage, hasTickets, onVoteOptionSelected, onUpdateVoteChoice,
   newVoteChoice, updateVoteChoiceAttempt, tsDate, text }) =>
 {
@@ -19,7 +19,7 @@ export default ({ viewedProposalDetails,
     version } = viewedProposalDetails;
   const eligibleTicketCount = viewedProposalDetails.eligibleTickets.length;
 
-  const voted = voteStatus === VOTESTATUS_VOTED;
+  const voted = voteStatus === VOTESTATUS_FINISHEDVOTE;
   const voting = voteStatus === VOTESTATUS_ACTIVEVOTE;
   const abandoned = voteStatus === VOTESTATUS_ABANDONED;
 
@@ -57,7 +57,7 @@ export default ({ viewedProposalDetails,
           </div>
         </div>
         <div className="proposal-details-overview-voting">
-          <GoBackIconButton />
+          <InvisibleButton className="go-back-icon-button" onClick={goBackHistory} />
           {voteInfo}
         </div>
         { voting || voted ? <OverviewVotingProgressInfo {...{ voteCounts }} /> : null }
