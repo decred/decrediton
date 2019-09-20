@@ -23,7 +23,6 @@ export default ({ viewedProposalDetails,
   const voting = voteStatus === VOTESTATUS_ACTIVEVOTE;
   const abandoned = voteStatus === VOTESTATUS_ABANDONED;
 
-
   let voteInfo = null;
   if (updateVoteChoiceAttempt) voteInfo = <UpdatingVoteChoice />;
   else if (abandoned) voteInfo = <ProposalAbandoned />;

@@ -11,12 +11,6 @@ class Proposals extends React.Component {
     super(props);
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.politeiaEnabled && !prevProps.politeiaEnabled) {
-      this.props.getVettedProposals();
-    }
-  }
-
   render() {
     if (!this.props.politeiaEnabled) {
       return <PoliteiaDisabled />;
