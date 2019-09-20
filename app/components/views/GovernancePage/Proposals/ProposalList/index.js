@@ -32,37 +32,40 @@ class ProposalsList extends React.Component {
   }
 
   componentDidMount() {
-    console.log("aqui")
-    console.log(this.props)
     if (!this.props.inventory) {
       return;
     }
-    const preProposalsBatch = this.props.inventory.pre;
+    const preProposalsBatch = this.props.inventory.preVote;
     this.props.getProposalsAndUpdateVoteStatus(preProposalsBatch);
   }
 
   componentDidUpdate(prevProps) {
-
-    const { inventory, location } = this.props;
+    const { inventory, proposalsList, location, proposallistpagesize } = this.props;
     if (prevProps.location === location) {
       return;
     }
-    const proposalBatch = this.getProposalsTab().reduce( (accumulator, p) =>
-      accumulator.concat(inventory[p]), [] );
-    this.props.getProposalsAndUpdateVoteStatus(proposalBatch);
+    const tab = this.getProposalsTab();
+    const proposalsLength = proposalsList[tab].length;
+    if (proposalsLength >= inventory[tab].length) {
+      return;
+    }
+    const proposalBatch = inventory[tab].slice(proposalsLength + 1, proposallistpagesize);
+    console.log(inventory[tab])
+    console.log(proposalBatch)
+    this.props.getProposalsAndUpdateVoteStatus(proposalBatch, proposalsLength);
   }
 
   getProposalsTab() {
     const { location } = this.props;
     const { pathname } = location;
     if (pathname.includes("prevote")) {
-      return [ "pre" ];
+      return "preVote";
     }
     if (pathname.includes("activevote")) {
-      return [ "active" ];
+      return "activeVote";
     }
     if (pathname.includes("voted")) {
-      return [ "approved", "rejected" ];
+      return "finishedVote";
     }
   }
 

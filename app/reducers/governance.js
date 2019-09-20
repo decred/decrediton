@@ -35,10 +35,8 @@ export default function governance(state = {}, action) {
     return { ...state, updateVoteChoiceAttempt: false };
   case CLOSEWALLET_SUCCESS:
     return { ...state,
-      activeVote: [],
-      preVote: [],
-      voted: [],
       getProposalAttempt: false,
+      getProposalsAttempt: false,
       getProposalError: null,
       proposals: {},
     };
@@ -48,7 +46,7 @@ export default function governance(state = {}, action) {
     };
   case GETPROPROSAL_UPDATEVOTESTATUS_SUCCESS:
     return { ...state,
-      proposals: { ...state.proposals, ...action.proposals },
+      proposals: { ...action.proposals },
       getProposalsAttempt: false,
     };
   case GETPROPROSAL_UPDATEVOTESTATUS_FAILED:

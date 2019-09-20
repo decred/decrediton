@@ -119,7 +119,19 @@ export const getTokenInventory = () => async (dispatch, getState) => {
   const piURL = sel.politeiaURL(getState());
   try {
     const { data } = await pi.getTokenInventory(piURL);
-    dispatch({ type: GETTOKEN_INVENTORY_SUCCESS, inventory: data });
+    const inventoryTabs = {
+      activeVote: [],
+      abandonedVote: [],
+      finishedVote: [],
+      preVote: [],
+    };
+  
+    inventoryTabs.preVote = data.pre;
+    inventoryTabs.activeVote = data.active;
+    inventoryTabs.finishedVote = [...data.approved, ...data.rejected];
+    inventoryTabs.abandonedVote = data.abandoned;
+
+    dispatch({ type: GETTOKEN_INVENTORY_SUCCESS, inventory: inventoryTabs });
   } catch (error) {
     dispatch({ error, GETTOKEN_INVENTORY_FAILED });
   }
@@ -150,11 +162,8 @@ export const GETPROPROSAL_UPDATEVOTESTATUS_ATTEMPT = "GETPROPROSAL_UPDATEVOTESTA
 export const GETPROPROSAL_UPDATEVOTESTATUS_SUCCESS = "GETPROPROSAL_UPDATEVOTESTATUS_SUCCESS";
 export const GETPROPROSAL_UPDATEVOTESTATUS_FAILED = "GETPROPROSAL_UPDATEVOTESTATUS_FAILED";
 
-export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch, getState) => {
+export const getProposalsAndUpdateVoteStatus = (tokensBatch, size) => async (dispatch, getState) => {
   // proposalsLength is needed otherwise politeia can return ErrorStatusMaxProposalsExceededPolicy
-  let proposalsLength = tokensBatch.length;
-  proposalsLength = proposalsLength > 20 ? 20 : proposalsLength;
-  tokensBatch = tokensBatch.slice(0, proposalsLength);
   dispatch({ type: GETPROPROSAL_UPDATEVOTESTATUS_ATTEMPT });
   let proposalsUpdated = {
     activeVote: [],
@@ -162,10 +171,10 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
     finishedVote: [],
     preVote: [],
   };
+  
   const blockTimestampFromNow = sel.blockTimestampFromNow(getState());
   const piURL = sel.politeiaURL(getState());
   const oldProposals = sel.proposals(getState());
-  console.log(oldProposals)
 
   try {
     const { proposals } = await getProposalsBatch(tokensBatch,piURL);
@@ -197,10 +206,9 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
       }
     });
 
-    proposalsUpdated = 
-      Object.keys(proposalsUpdated)
-        .map((key) => oldProposals[key] = oldProposals[key].concat(proposalsUpdated[key]));
-    console.log(proposalsUpdated)
+    Object.keys(proposalsUpdated).forEach( key =>
+      proposalsUpdated[key] = oldProposals[key].concat(proposalsUpdated[key])
+    );
     return dispatch({ type: GETPROPROSAL_UPDATEVOTESTATUS_SUCCESS, proposals: proposalsUpdated, bestBlock } );
   } catch (error) {
     dispatch({ type: GETPROPROSAL_UPDATEVOTESTATUS_FAILED, error });

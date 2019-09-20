@@ -395,6 +395,8 @@ var initialState = {
     getProposalAttempt: false,
     getProposalError: null,
     lastVettedFetchTime: new Date(0), // time when vetted proposals were requested
+    // TODO: Get proposallistpagesize from politeia's request: /v1/policy
+    proposallistpagesize: 20,
   },
   trezor: {
     enabled: false,

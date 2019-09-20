@@ -4,6 +4,9 @@ import axios from "axios";
 // Uncomment this and comment the following definition to test locally.
 // export const POLITEIA_URL_TESTNET = "https://localhost:4443";
 
+// Politeia doc source:
+// https://github.com/decred/politeia/blob/master/politeiawww/api/www/v1/api.md
+
 export const POLITEIA_URL_TESTNET = "https://test-proposals.decred.org/api";
 export const POLITEIA_URL_MAINNET = "https://proposals.decred.org/api";
 

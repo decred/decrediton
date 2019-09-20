@@ -18,6 +18,7 @@ const mapStateToProps = selectorMap({
   inventory: sel.inventory,
   loading: sel.initialProposalLoading,
   proposalsList: sel.proposals,
+  proposallistpagesize: sel.proposallistpagesize
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

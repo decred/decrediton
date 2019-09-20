@@ -962,6 +962,7 @@ export const treasuryBalance = get([ "grpc", "treasuryBalance" ]);
 
 export const updateVoteChoiceAttempt = get([ "governance", "updateVoteChoiceAttempt" ]);
 export const proposals = get([ "governance", "proposals" ]);
+export const proposallistpagesize = get(["governance", "proposallistpagesize"]);
 export const getProposalsAttempt = get([ "governance", "getProposalsAttempt" ]);
 export const preVoteProposals = createSelector(
   [ proposals ],
@@ -973,10 +974,7 @@ export const activeVoteProposals = createSelector(
 );
 export const finishedProposals = createSelector(
   [ proposals ],
-  (proposals) => {
-    console.log(proposals)
-    return proposals && proposals.finishedVote
-  }
+  (proposals) => proposals && proposals.finishedVote
 );
 export const abandonedProposals = get([ "governance", "abandoned" ]);
 export const lastVettedFetchTime = get([ "governance", "lastVettedFetchTime" ]);
