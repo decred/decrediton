@@ -15,7 +15,7 @@ import { hexReversedHashToArray, reverseRawHash } from "helpers";
 // PropVoteStatusFinished      PropVoteStatusT = 4 // Proposal vote has been finished
 // PropVoteStatusDoesntExist   PropVoteStatusT = 5 // Proposal doesn't exist
 export const VOTESTATUS_ACTIVEVOTE = 3;
-export const VOTESTATUS_VOTED = 4;
+export const VOTESTATUS_FINISHEDVOTE = 4;
 export const VOTESTATUS_ABANDONED = 6;
 
 // Aux function to parse the vote status of a single proposal, given a response
@@ -160,6 +160,7 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
     activeVote: [],
     preVote: [],
     finishedVote: [],
+    abandoned: [],
   };
   const blockTimestampFromNow = sel.blockTimestampFromNow(getState());
   const piURL = sel.politeiaURL(getState());
@@ -180,12 +181,12 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
 
       switch (status) {
       case VOTESTATUS_ABANDONED:
-        proposalsUpdated.finishedVote.push(prop);
+        proposalsUpdated.abandoned.push(prop);
         break;
       case VOTESTATUS_ACTIVEVOTE:
         proposalsUpdated.activeVote.push(prop);
         break;
-      case VOTESTATUS_VOTED:
+      case VOTESTATUS_FINISHEDVOTE:
         proposalsUpdated.finishedVote.push(prop);
         break;
       default:

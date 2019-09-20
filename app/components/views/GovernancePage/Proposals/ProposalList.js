@@ -86,4 +86,4 @@ const ProposalList = ({
 
 export const ActiveVoteProposals = activeVoteProposals(proposals(ProposalList));
 export const PreVoteProposals = preVoteProposals(proposals(ProposalList));
-export const FinishedProposal = votedProposals(ProposalList);
+export const FinishedProposal = finishedProposals(proposals(ProposalList));
