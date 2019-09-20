@@ -6,7 +6,6 @@ import PoliteiaDisabled from "./PoliteiaDisabled";
 
 @autobind
 class Proposals extends React.Component {
-
   constructor(props) {
     super(props);
   }

@@ -51,16 +51,16 @@ class ProposalsPage extends React.Component {
   }
 
   getProposalsTab() {
-    const { proposals, location } = this.props;
+    const { location } = this.props;
     const { pathname } = location;
     if (pathname.includes("prevote")) {
-      return ["pre"];
+      return [ "pre" ];
     }
     if (pathname.includes("activevote")) {
-      return ["active"];
+      return [ "active" ];
     }
     if (pathname.includes("voted")) {
-      return ["approved", "rejected"]
+      return [ "approved", "rejected" ];
     }
   }
 

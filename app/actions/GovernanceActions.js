@@ -100,7 +100,7 @@ const getWalletCommittedTickets = async (eligibleTickets, walletService) => {
 };
 
 // Aux function to fill the vote result information on a given proposal.
-const getProposalVoteResults = async (proposal, piURL, walletService, blockTimestampFromNow) => {
+const getProposalVoteResults = async (proposal, piURL, walletService) => {
 
   const propVotes = await pi.getProposalVotes(piURL, proposal.token);
   if (propVotes && propVotes.data) {
@@ -170,10 +170,10 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
     const { bestBlock } = summaries;
     tokensBatch.forEach( token => {
       const proposalSummary = summaries[token];
-      const { status, results } = proposalSummary;
+      const { status } = proposalSummary;
       const prop = findProposal(proposals, token);
-      
-      fillVoteSummary(prop, proposalSummary, blockTimestampFromNow)
+
+      fillVoteSummary(prop, proposalSummary, blockTimestampFromNow);
 
       prop.voteStatus = status;
       prop.token = prop.censorshiprecord.token;

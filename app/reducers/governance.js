@@ -1,6 +1,4 @@
 import {
-  GETVETTED_ATTEMPT, GETVETTED_FAILED, GETVETTED_SUCCESS, GETVETTED_CANCELED,
-  GETVETTED_UPDATEDVOTERESULTS_SUCCESS, GETVETTED_UPDATEDVOTERESULTS_ATTEMPT,
   GETPROPOSAL_ATTEMPT, GETPROPOSAL_FAILED, GETPROPOSAL_SUCCESS,
   UPDATEVOTECHOICE_ATTEMPT, UPDATEVOTECHOICE_SUCCESS, UPDATEVOTECHOICE_FAILED,
   GETTOKEN_INVENTORY_SUCCESS, GETPROPROSAL_UPDATEVOTESTATUS_ATTEMPT,
@@ -16,33 +14,6 @@ export default function governance(state = {}, action) {
   case GETTOKEN_INVENTORY_SUCCESS:
     return { ...state,
       inventory: action.inventory,
-    };
-  case GETVETTED_ATTEMPT:
-    return { ...state, getVettedAttempt: true };
-  case GETVETTED_FAILED:
-    return { ...state, getVettedAttempt: false };
-  case GETVETTED_CANCELED:
-    return { ...state, getVettedAttempt: false };
-  case GETVETTED_SUCCESS:
-    return { ...state,
-      proposals: { ...state.proposals, ...action.proposals },
-      getVettedAttempt: false,
-      preVote: action.preVote,
-      activeVote: action.activeVote,
-      voted: action.voted,
-      lastVettedFetchTime: new Date(),
-      abandoned: action.abandoned,
-    };
-  case GETVETTED_UPDATEDVOTERESULTS_ATTEMPT:
-    return { ...state,
-      getVettedUpdateVoteResultsAttempt: true,
-    };
-  case GETVETTED_UPDATEDVOTERESULTS_SUCCESS:
-    return { ...state,
-      getVettedUpdateVoteResultsAttempt: false,
-      proposals: { ...state.proposals, ...action.proposals },
-      activeVote: action.activeVote,
-      voted: action.voted,
     };
   case GETPROPOSAL_ATTEMPT:
     return { ...state, getProposalAttempt: true, getProposalError: null };
@@ -64,14 +35,12 @@ export default function governance(state = {}, action) {
     return { ...state, updateVoteChoiceAttempt: false };
   case CLOSEWALLET_SUCCESS:
     return { ...state,
-      getVettedAttempt: false,
       activeVote: [],
       preVote: [],
       voted: [],
       getProposalAttempt: false,
       getProposalError: null,
       proposals: {},
-      lastVettedFetchTime: new Date(0),
     };
   case GETPROPROSAL_UPDATEVOTESTATUS_ATTEMPT:
     return { ...state,

@@ -383,7 +383,6 @@ var initialState = {
     ticketDataHeatmap: [],
   },
   governance: {
-    getVettedAttempt: false,
     getProposalsAttempt: false,
     inventory: [],
     proposals: {

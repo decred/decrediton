@@ -7,7 +7,6 @@ import * as ca from "actions/ClientActions";
 
 const mapStateToProps = selectorMap({
   activeVoteProposals: sel.activeVoteProposals,
-  getVettedProposalsAttempt: sel.getVettedProposalsAttempt,
   politeiaEnabled: sel.politeiaEnabled,
   viewedProposalDetails: sel.viewedProposalDetails,
   proposalsDetails: sel.proposalsDetails,
