@@ -848,19 +848,22 @@
 }
 
 @media screen and (max-width: 768px) {
-  .getstarted.loader .loader-bar-estimation{
-    display: none;
-  }
   .release-notes {
     height: 70vh;
   }    
   .getstarted.content {
     margin-left: 10px;
   }
+  .page-body.getstarted {
+    height: calc(100% - 80px);
+  }  
+
   .getstarted.loader{
     padding-top: 56px;
     margin-left: 0;
-
+    .loader-bar-estimation{
+        display: none;
+    }
     .go-back-screen-button-area {
       top:131px;
       right:60px;
