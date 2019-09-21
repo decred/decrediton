@@ -53,34 +53,28 @@ const fillVoteSummary = (proposal, voteSummary, blockTimestampFromNow) => {
 
 // Aux function to parse the votes information of a single proposal, given a
 // response to that proposal's /votes api call and fill the proposal object.
-const fillVotes = async (proposal, propVotes, walletService) => {
-  // aux map from bit to vote choice id
-  const voteBitToChoice = proposal.voteOptions.reduce((m, o) => {
-    m[o.bits] = o.id;
-    return m;
-  }, {});
+const fillVotes = async (data, walletService) => {
+  if (!data) {
+    return;
+  }
 
-  const eligibleTickets = propVotes && propVotes.data && propVotes.data.startvotereply
-    ? await getWalletCommittedTickets(propVotes.data.startvotereply.eligibletickets, walletService)
-    : [];
-  const eligibleTicketsByHash = eligibleTickets.reduce( (m, t) => { m[t.ticket] = true; return m; }, {});
+  const proposal = {};
+  const eligibleTickets = data.startvotereply && await getWalletCommittedTickets(data.startvotereply.eligibletickets, walletService);
+  const eligibleTicketsByHash = eligibleTickets && eligibleTickets.reduce( (m, t) => { m[t.ticket] = true; return m; }, {});
+  
+  proposal.eligibleTickets = eligibleTickets;
+  proposal.hasEligibleTickets = eligibleTickets && eligibleTickets.length > 0;
+  proposal.currentVoteChoice = "abstain";
+  proposal.startBlockHeight = data.startvotereply ? parseInt(data.startvotereply.startblockheight) : null;
 
   // Find out if this wallet has voted in this prop and what was the choice.
   // This assumes the wallet will cast all available votes the same way.
-  propVotes.data.castvotes.some(vote => {
-    proposal.eligibleTickets = eligibleTickets;
-    proposal.hasEligibleTickets = eligibleTickets.length > 0;
-    proposal.currentVoteChoice = "abstain";
-    proposal.startBlockHeight = propVotes.data.startvotereply ? parseInt(propVotes.data.startvotereply.startblockheight) : null;
-
-    const choiceID = voteBitToChoice[parseInt(vote.votebit)];
-    if (!choiceID) { throw "Error: choiceID not found on vote when getting proposal votes"; }
+  data.castvotes && data.castvotes.some(vote => {
+    proposal.voteBit = parseInt(vote.votebit);
     // proposal.voteCounts.abstain -= 1; // TODO: support abstain
-    if (eligibleTicketsByHash[vote.ticket]) {
-      proposal.currentVoteChoice = choiceID;
-      return true;
-    }
   });
+
+  return proposal;
 };
 
 // Aux function to get the tickets from the wallet that are eligible to vote
@@ -99,15 +93,16 @@ const getWalletCommittedTickets = async (eligibleTickets, walletService) => {
   }));
 };
 
+// TODO call this function only once and cache result
 // Aux function to fill the vote result information on a given proposal.
 const getProposalVoteResults = async (proposal, piURL, walletService) => {
-
-  const propVotes = await pi.getProposalVotes(piURL, proposal.token);
-  if (propVotes && propVotes.data) {
-    await fillVotes(proposal, propVotes, walletService);
+  const request = await pi.getProposalVotes(piURL, proposal.token);
+  let results;
+  if (request && request.data) {
+    results = await fillVotes(request.data, walletService);
   }
 
-  return proposal;
+  return results;
 };
 
 export const GETTOKEN_INVENTORY_ATTEMPT = "GETTOKEN_INVENTORY_ATTEMPT";
@@ -237,13 +232,16 @@ export const getProposalDetails = (token, markViewed) => async (dispatch, getSta
   const blockTimestampFromNow = sel.blockTimestampFromNow(getState());
 
   try {
-    const resp = await pi.getProposal(piURL, token);
+    const request = await pi.getProposal(piURL, token);
 
     const { walletService } = getState().grpc;
     const proposals = getState().governance.proposals;
-    let proposal = proposals[token];
+    let proposal;
 
-    const p = resp.data.proposal;
+    Object.keys(proposals).forEach(key =>
+      proposals[key].find( p => p.token === token ? proposal = p : null ));
+
+    const p = request.data.proposal;
     const files = p.files.map(f => {
       return {
         digest: f.digest,
@@ -266,6 +264,14 @@ export const getProposalDetails = (token, markViewed) => async (dispatch, getSta
       hasEligibleTickets: false,
       eligibleTickets: []
     };
+    
+    // // aux map from bit to vote choice id
+    // const voteBitToChoice = proposal.voteOptions.reduce((m, o) => {
+    //   m[o.bits] = o.id;
+    //   return m;
+    // }, {});
+    // const choiceID = voteBitToChoice[parseInt(vote.votebit)];
+    // if (!choiceID) { throw "Error: choiceID not found on vote when getting proposal votes"; }
 
     if (markViewed) {
       proposal.modifiedSinceLastAccess = false;
@@ -273,7 +279,11 @@ export const getProposalDetails = (token, markViewed) => async (dispatch, getSta
     }
 
     if ([ VOTESTATUS_FINISHEDVOTE, VOTESTATUS_ACTIVEVOTE ].includes(proposal.voteStatus)) {
-      await getProposalVoteResults(proposal, piURL, walletService, blockTimestampFromNow);
+      const voteResult = await getProposalVoteResults(proposal, piURL, walletService, blockTimestampFromNow);
+      proposal = {
+        ...proposal,
+        ...voteResult,
+      }
     }
 
     dispatch({ token, proposal, type: GETPROPOSAL_SUCCESS });
