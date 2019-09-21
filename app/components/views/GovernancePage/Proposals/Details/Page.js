@@ -21,32 +21,32 @@ export default ({ viewedProposalDetails, goBackHistory,
 
   const voted = voteStatus === VOTESTATUS_FINISHEDVOTE;
   const voting = voteStatus === VOTESTATUS_ACTIVEVOTE;
-  
+
   let voteInfo = null;
 
   switch(voteStatus) {
-    case VOTESTATUS_ACTIVEVOTE:
-      if (updateVoteChoiceAttempt) voteInfo = <UpdatingVoteChoice />;
-      else if (!hasTickets) voteInfo = <NoTicketsVotingInfo {...{ showPurchaseTicketsPage }} />;
-      else if (!hasEligibleTickets) voteInfo = <NoElligibleTicketsVotingInfo {...{ showPurchaseTicketsPage }} />;
-      else {
-        voteInfo =
+  case VOTESTATUS_ACTIVEVOTE:
+    if (updateVoteChoiceAttempt) voteInfo = <UpdatingVoteChoice />;
+    else if (!hasTickets) voteInfo = <NoTicketsVotingInfo {...{ showPurchaseTicketsPage }} />;
+    else if (!hasEligibleTickets) voteInfo = <NoElligibleTicketsVotingInfo {...{ showPurchaseTicketsPage }} />;
+    else {
+      voteInfo =
         <ChosenVoteOption
           {...{ voteOptions, onUpdateVoteChoice,
             onVoteOptionSelected, newVoteChoice, eligibleTicketCount,
             currentVoteChoice, votingComplete: false }}
         />;
-      }
-      break;
-    case VOTESTATUS_FINISHEDVOTE:
-      voteInfo = <ChosenVoteOption {...{ voteOptions, currentVoteChoice, votingComplete: true }} />;
-      break;
-    case VOTESTATUS_ABANDONED:
-      voteInfo = <ProposalAbandoned />;
-      break;
-    default:
-      voteInfo = <ProposalNotVoting />
-      break;
+    }
+    break;
+  case VOTESTATUS_FINISHEDVOTE:
+    voteInfo = <ChosenVoteOption {...{ voteOptions, currentVoteChoice, votingComplete: true }} />;
+    break;
+  case VOTESTATUS_ABANDONED:
+    voteInfo = <ProposalAbandoned />;
+    break;
+  default:
+    voteInfo = <ProposalNotVoting />;
+    break;
   }
 
   return (

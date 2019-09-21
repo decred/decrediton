@@ -40,7 +40,7 @@ class ProposalsList extends React.Component {
 
   componentDidMount() {
     const { inventory, proposalsList, proposallistpagesize } = this.props;
-    if (!inventory && (!inventory.preVote.length || proposalsList.preVote.length > 0)) {
+    if (!inventory || !inventory.preVote.length || proposalsList.preVote.length > 0) {
       return;
     }
     const preProposalsBatch = inventory.preVote.slice(0, proposallistpagesize);

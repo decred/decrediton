@@ -76,13 +76,13 @@ const getProposalVoteResults = async (token, piURL, walletService) => {
   if (data) {
     const eligibleTickets = data.startvotereply && await getWalletCommittedTickets(data.startvotereply.eligibletickets, walletService);
     const eligibleTicketsByHash = eligibleTickets && eligibleTickets.reduce( (m, t) => { m[t.ticket] = true; return m; }, {});
-  
+
     proposal.eligibleTickets = eligibleTickets;
     proposal.eligibleTicketsByHash = eligibleTicketsByHash;
     proposal.hasEligibleTickets = eligibleTickets && eligibleTickets.length > 0;
     proposal.currentVoteChoice = "abstain";
     proposal.startBlockHeight = data.startvotereply ? parseInt(data.startvotereply.startblockheight) : null;
-  
+
     // Find out if this wallet has voted in this prop and what was the choice.
     // This assumes the wallet will cast all available votes the same way.
     data.castvotes && data.castvotes.some(vote => {
@@ -262,19 +262,17 @@ export const getProposalDetails = (token, markViewed) => async (dispatch, getSta
       proposal.votingSinceLastAccess = false;
     }
 
+    let voteResult;
     if ([ VOTESTATUS_FINISHEDVOTE, VOTESTATUS_ACTIVEVOTE ].includes(proposal.voteStatus)) {
-      const voteResult = await getProposalVoteResults(proposal.token, piURL, walletService, blockTimestampFromNow);
+      voteResult = await getProposalVoteResults(proposal.token, piURL, walletService, blockTimestampFromNow);
       const voteOptions = proposal.voteOptions;
-      proposal = {
-        ...proposal,
-        ...voteResult,
-      }
+
       if (voteResult.voteBit) {
-        proposal.currentVoteChoice = voteOptions.find( option => voteResult.voteBit === option.bits);
+        voteResult.currentVoteChoice = voteOptions.find( option => voteResult.voteBit === option.bits);
       }
     }
 
-    dispatch({ token, proposal, type: GETPROPOSAL_SUCCESS });
+    dispatch({ token, proposal, voteResult, type: GETPROPOSAL_SUCCESS });
   } catch (error) {
     dispatch({ error, type: GETPROPOSAL_FAILED });
     throw error;
