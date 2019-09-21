@@ -26,12 +26,17 @@ export default ({ viewedProposalDetails, goBackHistory,
 
   switch(voteStatus) {
     case VOTESTATUS_ACTIVEVOTE:
-      voteInfo =
+      if (updateVoteChoiceAttempt) voteInfo = <UpdatingVoteChoice />;
+      else if (!hasTickets) voteInfo = <NoTicketsVotingInfo {...{ showPurchaseTicketsPage }} />;
+      else if (!hasEligibleTickets) voteInfo = <NoElligibleTicketsVotingInfo {...{ showPurchaseTicketsPage }} />;
+      else {
+        voteInfo =
         <ChosenVoteOption
           {...{ voteOptions, onUpdateVoteChoice,
             onVoteOptionSelected, newVoteChoice, eligibleTicketCount,
             currentVoteChoice, votingComplete: false }}
         />;
+      }
       break;
     case VOTESTATUS_FINISHEDVOTE:
       voteInfo = <ChosenVoteOption {...{ voteOptions, currentVoteChoice, votingComplete: true }} />;
@@ -43,10 +48,6 @@ export default ({ viewedProposalDetails, goBackHistory,
       voteInfo = <ProposalNotVoting />
       break;
   }
-
-  if (updateVoteChoiceAttempt) voteInfo = <UpdatingVoteChoice />;
-  else if (!hasTickets) voteInfo = <NoTicketsVotingInfo {...{ showPurchaseTicketsPage }} />;
-  else if (!hasEligibleTickets) voteInfo = <NoElligibleTicketsVotingInfo {...{ showPurchaseTicketsPage }} />;
 
   return (
     <>
