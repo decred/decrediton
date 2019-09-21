@@ -72,7 +72,7 @@ export const OverviewField = showCheck(( { label, value } ) => (
   </div>
 ));
 
-export const OverviewVotingProgressInfo = ({ voteCounts }) => (
+export const OverviewVotingProgressInfo = ({ voteCounts, quorumMinimumVotes }) => (
   <div className="proposal-details-voting-progress">
     <div className="proposal-details-voting-progress-counts">
       <div className="yes-count-box" />{voteCounts.yes}
@@ -81,7 +81,7 @@ export const OverviewVotingProgressInfo = ({ voteCounts }) => (
       <div className="abstain-count-box" /><T id="proposal.progressCount.abstain" m="{count} Abstain" values={{ count: voteCounts.abstain }} /> */}
     </div>
 
-    <VotingProgress voteCounts={voteCounts} />
+    <VotingProgress  {...{ voteCounts, quorumMinimumVotes }} />
   </div>
 );
 

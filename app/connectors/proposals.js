@@ -4,6 +4,7 @@ import { bindActionCreators } from "redux";
 import * as sel from "selectors";
 import * as ga from "actions/GovernanceActions";
 import * as ca from "actions/ClientActions";
+import * as wa from "actions/WalletLoaderActions";
 
 const mapStateToProps = selectorMap({
   politeiaEnabled: sel.politeiaEnabled,
@@ -18,7 +19,7 @@ const mapStateToProps = selectorMap({
   inventory: sel.inventory,
   loading: sel.initialProposalLoading,
   proposalsList: sel.proposals,
-  proposallistpagesize: sel.proposallistpagesize
+  proposallistpagesize: sel.proposallistpagesize,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -29,6 +30,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   showPurchaseTicketsPage: ca.showPurchaseTicketsPage,
   updateVoteChoice: ga.updateVoteChoice,
   goBackHistory: ca.goBackHistory,
+  setLastPoliteiaAccessTime: wa.setLastPoliteiaAccessTime,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

@@ -517,3 +517,15 @@ export const rescanPointAttempt = () => (dispatch, getState) => {
       dispatch({ error, type: RESCANPOINT_FAILED });
     });
 };
+
+export const SET_POLITEIA_LAST_ACCESS_SUCCESS = "SET_POLITEIA_LAST_ACCESS_SUCCESS";
+
+export const setLastPoliteiaAccessTime = () => (dispatch, getState) => {
+  const { daemon: { walletName } } = getState();
+  const { grpc: { currentBlockHeight } } = getState();
+  const config = getWalletCfg(isTestNet(getState()), walletName);
+  const timestamp = (new Date()).getTime();
+  config.set("politeia_last_access_time", timestamp)
+  config.set("politeia_last_access_block", currentBlockHeight)
+  dispatch({ type: SET_POLITEIA_LAST_ACCESS_SUCCESS, currentBlockHeight, timestamp })
+};

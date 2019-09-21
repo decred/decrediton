@@ -54,12 +54,12 @@ const ProposalListItem = ({ name, timestamp, token, voteCounts, tsDate, onClick,
             reldate: <FormattedRelative  value={ tsDate(timestamp) } /> }} />
         </div>}
       </div>
-      {voteStatus == VOTESTATUS_ACTIVEVOTE &&
+      {( voteStatus === VOTESTATUS_ACTIVEVOTE || voteStatus === VOTESTATUS_FINISHEDVOTE) &&
         <>
           <VoteChoice currentVoteChoice={currentVoteChoice} />
           <VotingProgress {...{ voteCounts, quorumMinimumVotes } }  />
         </>}
-      {voteStatus == VOTESTATUS_FINISHEDVOTE &&
+      { voteStatus === VOTESTATUS_FINISHEDVOTE &&
         <VoteResults  {...{ currentVoteChoice, quorumPass, voteResult }}/>}
     </div>
   );

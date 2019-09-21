@@ -1,8 +1,6 @@
 import * as sel from "selectors";
 import * as pi from "middleware/politeiaapi";
 import * as wallet from "wallet";
-// import { replace } from "fp";
-// import { getWalletCfg } from "../config";
 import { push as pushHistory } from "react-router-redux";
 import { hexReversedHashToArray, reverseRawHash } from "helpers";
 
@@ -161,7 +159,10 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
   const blockTimestampFromNow = sel.blockTimestampFromNow(getState());
   const piURL = sel.politeiaURL(getState());
   const oldProposals = sel.proposals(getState());
+  const lastPoliteiaAccessTime = sel.lastPoliteiaAccessTime(getState());
 
+  // TODO need to call getProposalVoteResults
+  const lastPoliteiaAccessBlock = sel.lastPoliteiaAccessBlock(getState());
   try {
     const { proposals } = await getProposalsBatch(tokensBatch,piURL);
     const { summaries } = await getProposalsVotestatusBatch(tokensBatch, piURL);
@@ -175,6 +176,9 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
 
       prop.voteStatus = status;
       prop.token = prop.censorshiprecord.token;
+      if (prop.timestamp > lastPoliteiaAccessTime) {
+        prop.modifiedSinceLastAccess = true;
+      }
 
       switch (status) {
       case VOTESTATUS_ABANDONED:
@@ -192,6 +196,7 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
       }
     });
 
+    // concat new proposals list array to old proposals list array
     Object.keys(proposalsUpdated).forEach( key =>
       proposalsUpdated[key] = oldProposals[key].concat(proposalsUpdated[key])
     );
@@ -206,7 +211,7 @@ export const GETPROPOSAL_ATTEMPT = "GETPROPOSAL_ATTEMPT";
 export const GETPROPOSAL_FAILED = "GETPROPOSAL_FAILED";
 export const GETPROPOSAL_SUCCESS = "GETPROPOSAL_SUCCESS";
 
-export const getProposalDetails = (token, markViewed) => async (dispatch, getState) => {
+export const getProposalDetails = (token) => async (dispatch, getState) => {
   const decodeFilePayload = (f) => {
     switch (f.mime) {
     case "text/plain; charset=utf-8":
@@ -228,7 +233,14 @@ export const getProposalDetails = (token, markViewed) => async (dispatch, getSta
     let proposal;
 
     Object.keys(proposals).forEach(key =>
-      proposals[key].find( p => p.token === token ? proposal = p : null ));
+      proposals[key].find( (p, i) => {
+        if (p.token === token) {
+          p.modifiedSinceLastAccess = false;
+          p.votingSinceLastAccess = false;
+          proposal = p;
+          return;
+        }
+      }));
 
     const p = request.data.proposal;
     const files = p.files.map(f => {
@@ -257,11 +269,6 @@ export const getProposalDetails = (token, markViewed) => async (dispatch, getSta
     // const choiceID = voteBitToChoice[parseInt(vote.votebit)];
     // if (!choiceID) { throw "Error: choiceID not found on vote when getting proposal votes"; }
 
-    if (markViewed) {
-      proposal.modifiedSinceLastAccess = false;
-      proposal.votingSinceLastAccess = false;
-    }
-
     let voteResult;
     if ([ VOTESTATUS_FINISHEDVOTE, VOTESTATUS_ACTIVEVOTE ].includes(proposal.voteStatus)) {
       voteResult = await getProposalVoteResults(proposal.token, piURL, walletService, blockTimestampFromNow);
@@ -272,7 +279,7 @@ export const getProposalDetails = (token, markViewed) => async (dispatch, getSta
       }
     }
 
-    dispatch({ token, proposal, voteResult, type: GETPROPOSAL_SUCCESS });
+    dispatch({ token, proposal, proposals, voteResult, type: GETPROPOSAL_SUCCESS });
   } catch (error) {
     dispatch({ error, type: GETPROPOSAL_FAILED });
     throw error;
@@ -282,7 +289,7 @@ export const getProposalDetails = (token, markViewed) => async (dispatch, getSta
 export const viewProposalDetails = (token) => (dispatch, getState) => {
   const details = sel.proposalsDetails(getState());
   if (!details[token] || !details[token].hasDetails) {
-    dispatch(getProposalDetails(token, true));
+    dispatch(getProposalDetails(token));
   }
   dispatch(pushHistory("/governance/proposals/details/" + token));
 };

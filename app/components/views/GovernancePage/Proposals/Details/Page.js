@@ -16,14 +16,13 @@ export default ({ viewedProposalDetails, goBackHistory,
 {
   const { name, token, hasEligibleTickets, voteStatus, voteOptions,
     voteCounts, creator, timestamp, endTimestamp, currentVoteChoice,
-    version } = viewedProposalDetails;
+    version, quorumMinimumVotes } = viewedProposalDetails;
   const eligibleTicketCount = viewedProposalDetails.eligibleTickets.length;
 
   const voted = voteStatus === VOTESTATUS_FINISHEDVOTE;
   const voting = voteStatus === VOTESTATUS_ACTIVEVOTE;
 
   let voteInfo = null;
-
   switch(voteStatus) {
   case VOTESTATUS_ACTIVEVOTE:
     if (updateVoteChoiceAttempt) voteInfo = <UpdatingVoteChoice />;
@@ -77,7 +76,8 @@ export default ({ viewedProposalDetails, goBackHistory,
           <InvisibleButton className="go-back-icon-button" onClick={goBackHistory} />
           {voteInfo}
         </div>
-        { voting || voted ? <OverviewVotingProgressInfo {...{ voteCounts }} /> : null }
+        {(voting || voted )  &&
+          <OverviewVotingProgressInfo {...{ voteCounts, quorumMinimumVotes }} /> }
       </div>
       <div className="proposal-details-text">
         <ProposalText text={text} />
