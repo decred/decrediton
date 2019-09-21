@@ -125,10 +125,10 @@ export const getTokenInventory = () => async (dispatch, getState) => {
       finishedVote: [],
       preVote: [],
     };
-  
+
     inventoryTabs.preVote = data.pre;
     inventoryTabs.activeVote = data.active;
-    inventoryTabs.finishedVote = [...data.approved, ...data.rejected];
+    inventoryTabs.finishedVote = [ ...data.approved, ...data.rejected ];
     inventoryTabs.abandonedVote = data.abandoned;
 
     dispatch({ type: GETTOKEN_INVENTORY_SUCCESS, inventory: inventoryTabs });
@@ -162,8 +162,10 @@ export const GETPROPROSAL_UPDATEVOTESTATUS_ATTEMPT = "GETPROPROSAL_UPDATEVOTESTA
 export const GETPROPROSAL_UPDATEVOTESTATUS_SUCCESS = "GETPROPROSAL_UPDATEVOTESTATUS_SUCCESS";
 export const GETPROPROSAL_UPDATEVOTESTATUS_FAILED = "GETPROPROSAL_UPDATEVOTESTATUS_FAILED";
 
-export const getProposalsAndUpdateVoteStatus = (tokensBatch, size) => async (dispatch, getState) => {
-  // proposalsLength is needed otherwise politeia can return ErrorStatusMaxProposalsExceededPolicy
+export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch, getState) => {
+  // tokensBatch batch legnth can not exceed politeia's proposallistpagesize limit
+  // otherwise it will return ErrorStatusMaxProposalsExceededPolicy
+
   dispatch({ type: GETPROPROSAL_UPDATEVOTESTATUS_ATTEMPT });
   let proposalsUpdated = {
     activeVote: [],
@@ -171,7 +173,7 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch, size) => async (dis
     finishedVote: [],
     preVote: [],
   };
-  
+
   const blockTimestampFromNow = sel.blockTimestampFromNow(getState());
   const piURL = sel.politeiaURL(getState());
   const oldProposals = sel.proposals(getState());

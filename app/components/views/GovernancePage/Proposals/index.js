@@ -10,10 +10,6 @@ class Proposals extends React.Component {
     super(props);
   }
 
-  componentDidUpdate() {
-    console.log(this.props)
-  }
-
   render() {
     if (!this.props.politeiaEnabled) {
       return <PoliteiaDisabled />;

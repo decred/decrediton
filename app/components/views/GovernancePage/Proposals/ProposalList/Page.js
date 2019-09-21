@@ -1,5 +1,5 @@
-import { FormattedMessage as T } from "react-intl";
-import { activeVoteProposals, preVoteProposals, votedProposals, proposals, abandonedProposals } from "connectors";
+import { FormattedMessage as T, FormattedRelative } from "react-intl";
+import { activeVoteProposals, preVoteProposals, finishedProposals } from "connectors";
 import { VotingProgress } from "indicators";
 import { PoliteiaLoading, NoProposals } from "indicators";
 import { VOTESTATUS_ACTIVEVOTE, VOTESTATUS_FINISHEDVOTE } from "actions/GovernanceActions";
@@ -91,7 +91,7 @@ const ProposalList = ({
         : <NoProposals />
     }
   </>
-);}
+  );};
 
 export const ActiveVoteProposals = activeVoteProposals(ProposalList);
 export const PreVoteProposals = preVoteProposals(ProposalList);

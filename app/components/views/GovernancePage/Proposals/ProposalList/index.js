@@ -25,7 +25,6 @@ const ListLink = ({ count, children }) => (
   </>
 );
 
-
 @autobind
 class ProposalsList extends React.Component {
   constructor(props) {
@@ -36,7 +35,7 @@ class ProposalsList extends React.Component {
         finishedVote: false,
         preVote: false,
       }
-    }
+    };
   }
 
   componentDidMount() {
@@ -49,7 +48,7 @@ class ProposalsList extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { inventory, proposalsList, location, proposallistpagesize } = this.props;
+    const { location } = this.props;
     const { noMoreProposals } = this.state;
     const tab = this.getProposalsTab();
 
@@ -77,7 +76,7 @@ class ProposalsList extends React.Component {
   }
 
   onLoadMoreProposals() {
-    const { inventory, proposalsList, proposallistpagesize } = this.props
+    const { inventory, proposalsList, proposallistpagesize } = this.props;
     const tab = this.getProposalsTab();
     const proposalLength = proposalsList[tab].length;
 
@@ -100,7 +99,7 @@ class ProposalsList extends React.Component {
 
     return (
       <TabbedPage caret={<div/>} header={<PageHeader />} >
-        <Tab path="/governance/proposals/prevote" 
+        <Tab path="/governance/proposals/prevote"
           component={ h(proposals(PreVoteProposals), { onLoadMoreProposals, noMoreProposals: noMoreProposals.preVote }) }
           link={<ListLink count={newPreVoteProposalsCount}><T id="proposals.statusLinks.preVote" m="Under Discussion" /></ListLink> }
         />
