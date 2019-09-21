@@ -3,7 +3,7 @@ import { activeVoteProposals, preVoteProposals, votedProposals, proposals, aband
 import { VotingProgress } from "indicators";
 import { PoliteiaLoading, NoProposals } from "indicators";
 import { VOTESTATUS_ACTIVEVOTE, VOTESTATUS_FINISHEDVOTE } from "actions/GovernanceActions";
-import { FormattedRelative } from "shared";
+import InfiniteScroll from "react-infinite-scroller";
 
 const VoteChoiceText = ({ currentVoteChoice }) => {
   if (!currentVoteChoice) {
@@ -66,7 +66,7 @@ const ProposalListItem = ({ name, timestamp, token, voteCounts, tsDate, onClick,
 };
 
 const ProposalList = ({
-  proposals, loading, viewProposalDetails, tsDate, finishedProposal, ...props
+  proposals, loading, viewProposalDetails, tsDate, finishedProposal, noMoreProposals, onLoadMoreProposals
 }) => {
   return (
   <>
@@ -74,11 +74,19 @@ const ProposalList = ({
       ? <div className="proposal-loading-page"><PoliteiaLoading center /></div>
       : proposals && proposals.length
         ? (
-          <div className={finishedProposal ? "proposal-list ended" : "proposal-list"}>
-            {proposals.map(v => (
-              <ProposalListItem key={v.token} {...v} tsDate={tsDate} onClick={viewProposalDetails} />
-            ))}
-          </div>
+          <InfiniteScroll
+            hasMore={!noMoreProposals}
+            loadMore={onLoadMoreProposals}
+            initialLoad={false}
+            useWindow={false}
+            threshold={0}
+          >
+            <div className={finishedProposal ? "proposal-list ended" : "proposal-list"}>
+              {proposals.map(v => (
+                <ProposalListItem key={v.token} {...v} tsDate={tsDate} onClick={viewProposalDetails} />
+              ))}
+            </div>
+          </InfiniteScroll>
         )
         : <NoProposals />
     }
