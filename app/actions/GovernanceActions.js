@@ -122,7 +122,7 @@ export const getTokenInventory = () => async (dispatch, getState) => {
   }
 };
 
-// getInitialBatch Gets the first pre and active proposals batch 
+// getInitialBatch Gets the first pre and active proposals batch
 export const getInitialBatch = () => async (dispatch, getState) => {
   const inventory = sel.inventory(getState());
   const proposallistpagesize = sel.proposallistpagesize(getState());
@@ -135,13 +135,10 @@ export const getInitialBatch = () => async (dispatch, getState) => {
     inventory.preVote.length : proposallistpagesize;
   const activeVoteBatch = inventory.activeVote.slice(0, activeVoteProposalNumber);
   const preVoteBatch = inventory.preVote.slice(0, preVoteProposalNumber);
+  await dispatch(getProposalsAndUpdateVoteStatus(activeVoteBatch));
+  await dispatch(getProposalsAndUpdateVoteStatus(preVoteBatch));
+};
 
-  return Promise.all([
-    await dispatch(getProposalsAndUpdateVoteStatus(activeVoteBatch)),
-    await dispatch(getProposalsAndUpdateVoteStatus(preVoteBatch)),
-  ]);
-}
- 
 export const GET_PROPOSAL_BATCH_ATTEMPT = "GET_PROPOSAL_BATCH_ATTEMPT";
 export const GET_PROPOSAL_BATCH_SUCCESS = "GET_PROPOSAL_BATCH_SUCCESS";
 export const GET_PROPOSAL_BATCH_FAILED = "GET_PROPOSAL_BATCH_FAILED";
@@ -258,7 +255,7 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
     let proposal;
 
     Object.keys(proposals).forEach(key =>
-      proposals[key].find( (p, i) => {
+      proposals[key].find( p => {
         if (p.token === token) {
           p.modifiedSinceLastAccess = false;
           p.votingSinceLastAccess = false;

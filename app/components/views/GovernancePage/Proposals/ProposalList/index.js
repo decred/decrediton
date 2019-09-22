@@ -38,18 +38,6 @@ class ProposalsList extends React.Component {
     };
   }
 
-  componentDidMount() {
-    const { inventory, proposalsList, proposallistpagesize } = this.props;
-    if (!inventory || !inventory.preVote) {
-      return;
-    }
-    if (!inventory.preVote.length || proposalsList.preVote.length > 0) {
-      return;
-    }
-    const preProposalsBatch = inventory.preVote.slice(0, proposallistpagesize);
-    this.props.getProposalsAndUpdateVoteStatus(preProposalsBatch, proposallistpagesize);
-  }
-
   componentDidUpdate(prevProps, prevState) {
     const { location } = this.props;
     const { noMoreProposals } = this.state;

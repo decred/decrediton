@@ -14,7 +14,7 @@ class Proposals extends React.Component {
     if (!this.props.politeiaEnabled) {
       return;
     }
-    this.props.setLastPoliteiaAccessTime()
+    this.props.setLastPoliteiaAccessTime();
   }
 
   render() {

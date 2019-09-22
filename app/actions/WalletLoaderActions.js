@@ -525,7 +525,7 @@ export const setLastPoliteiaAccessTime = () => (dispatch, getState) => {
   const { grpc: { currentBlockHeight } } = getState();
   const config = getWalletCfg(isTestNet(getState()), walletName);
   const timestamp = (new Date()).getTime();
-  config.set("politeia_last_access_time", timestamp)
-  config.set("politeia_last_access_block", currentBlockHeight)
-  dispatch({ type: SET_POLITEIA_LAST_ACCESS_SUCCESS, currentBlockHeight, timestamp })
+  config.set("politeia_last_access_time", timestamp);
+  config.set("politeia_last_access_block", currentBlockHeight);
+  dispatch({ type: SET_POLITEIA_LAST_ACCESS_SUCCESS, currentBlockHeight, timestamp });
 };
