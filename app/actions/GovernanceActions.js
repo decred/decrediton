@@ -25,6 +25,8 @@ const fillVoteSummary = (proposal, voteSummary, blockTimestampFromNow) => {
   proposal.endTimestamp = blockTimestampFromNow(parseInt(voteSummary.endheight));
   proposal.voteCounts = {};
   proposal.voteOptions = [];
+  // TODO support startVoteHeight when votesummary brings it
+  // proposal.startVoteHeight = voteSummary.startheight;
 
   let totalVotes = 0;
   if (voteSummary.results) {
@@ -39,6 +41,7 @@ const fillVoteSummary = (proposal, voteSummary, blockTimestampFromNow) => {
   const eligibleVotes = voteSummary.eligibletickets;
   const passPercentage = voteSummary.passpercentage ? voteSummary.passpercentage : 60;
   proposal.quorumMinimumVotes = eligibleVotes * (quorum / 100);
+  proposal.voteStatus = voteSummary.status;
 
   if (totalVotes > proposal.quorumMinimumVotes) {
     proposal.quorumPass = true;
@@ -119,6 +122,26 @@ export const getTokenInventory = () => async (dispatch, getState) => {
   }
 };
 
+// getInitialBatch Gets the first pre and active proposals batch 
+export const getInitialBatch = () => async (dispatch, getState) => {
+  const inventory = sel.inventory(getState());
+  const proposallistpagesize = sel.proposallistpagesize(getState());
+  if (!inventory) return;
+  if (!inventory.activeVote && !inventory.preVote) return;
+
+  const activeVoteProposalNumber = proposallistpagesize > inventory.activeVote.length ?
+    inventory.activeVote.length : proposallistpagesize;
+  const preVoteProposalNumber = proposallistpagesize > inventory.preVote.length ?
+    inventory.preVote.length : proposallistpagesize;
+  const activeVoteBatch = inventory.activeVote.slice(0, activeVoteProposalNumber);
+  const preVoteBatch = inventory.preVote.slice(0, preVoteProposalNumber);
+
+  return Promise.all([
+    await dispatch(getProposalsAndUpdateVoteStatus(activeVoteBatch)),
+    await dispatch(getProposalsAndUpdateVoteStatus(preVoteBatch)),
+  ]);
+}
+ 
 export const GET_PROPOSAL_BATCH_ATTEMPT = "GET_PROPOSAL_BATCH_ATTEMPT";
 export const GET_PROPOSAL_BATCH_SUCCESS = "GET_PROPOSAL_BATCH_SUCCESS";
 export const GET_PROPOSAL_BATCH_FAILED = "GET_PROPOSAL_BATCH_FAILED";
@@ -171,13 +194,15 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
       const proposalSummary = summaries[token];
       const { status } = proposalSummary;
       const prop = findProposal(proposals, token);
+      prop.token = token;
 
       fillVoteSummary(prop, proposalSummary, blockTimestampFromNow);
 
-      prop.voteStatus = status;
-      prop.token = prop.censorshiprecord.token;
       if (prop.timestamp > lastPoliteiaAccessTime) {
         prop.modifiedSinceLastAccess = true;
+      }
+      if (prop.startVoteHeight > lastPoliteiaAccessBlock) {
+        prop.votingSinceLastAccess = true;
       }
 
       switch (status) {
