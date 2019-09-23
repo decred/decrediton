@@ -7,7 +7,7 @@ import {
   ChosenVoteOption, ProposalText, ProposalAbandoned
 } from "./helpers";
 import {
-  VOTESTATUS_ACTIVEVOTE, VOTESTATUS_FINISHEDVOTE, VOTESTATUS_ABANDONED
+  VOTESTATUS_ACTIVEVOTE, VOTESTATUS_FINISHEDVOTE, PROPOSALSTATUS_ABANDONED
 } from "actions/GovernanceActions";
 
 export default ({ viewedProposalDetails, goBackHistory,
@@ -40,7 +40,7 @@ export default ({ viewedProposalDetails, goBackHistory,
   case VOTESTATUS_FINISHEDVOTE:
     voteInfo = <ChosenVoteOption {...{ voteOptions, currentVoteChoice, votingComplete: true }} />;
     break;
-  case VOTESTATUS_ABANDONED:
+  case PROPOSALSTATUS_ABANDONED:
     voteInfo = <ProposalAbandoned />;
     break;
   default:

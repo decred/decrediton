@@ -14,7 +14,7 @@ import { hexReversedHashToArray, reverseRawHash } from "helpers";
 // PropVoteStatusDoesntExist   PropVoteStatusT = 5 // Proposal doesn't exist
 export const VOTESTATUS_ACTIVEVOTE = 3;
 export const VOTESTATUS_FINISHEDVOTE = 4;
-export const VOTESTATUS_ABANDONED = 6;
+export const PROPOSALSTATUS_ABANDONED = 6;
 
 // Aux function to parse the vote status of a single proposal, given a response
 // for the /votesStatus or /proposal/P/voteStatus api calls, then fill the
@@ -157,9 +157,6 @@ const getProposalsVotestatusBatch = async (tokensBatch, piURL) => {
   return requestResponse.data;
 };
 
-const findProposal = (proposals, token) =>
-  proposals.find( proposal => proposal.censorshiprecord.token === token ? proposal : null );
-
 export const GETPROPROSAL_UPDATEVOTESTATUS_ATTEMPT = "GETPROPROSAL_UPDATEVOTESTATUS_ATTEMPT";
 export const GETPROPROSAL_UPDATEVOTESTATUS_SUCCESS = "GETPROPROSAL_UPDATEVOTESTATUS_SUCCESS";
 export const GETPROPROSAL_UPDATEVOTESTATUS_FAILED = "GETPROPROSAL_UPDATEVOTESTATUS_FAILED";
@@ -168,6 +165,9 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
   // tokensBatch batch legnth can not exceed politeia's proposallistpagesize limit
   // otherwise it will return ErrorStatusMaxProposalsExceededPolicy
 
+  const findProposal = (proposals, token) =>
+    proposals.find( proposal => proposal.censorshiprecord.token === token ? proposal : null );
+  
   dispatch({ type: GETPROPROSAL_UPDATEVOTESTATUS_ATTEMPT });
   let proposalsUpdated = {
     activeVote: [],
@@ -192,6 +192,7 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
       const { status } = proposalSummary;
       const prop = findProposal(proposals, token);
       prop.token = token;
+      const proposalStatus = prop.status;
 
       fillVoteSummary(prop, proposalSummary, blockTimestampFromNow);
 
@@ -202,19 +203,21 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
         prop.votingSinceLastAccess = true;
       }
 
-      switch (status) {
-      case VOTESTATUS_ABANDONED:
-        proposalsUpdated.abandoned.push(prop);
-        break;
-      case VOTESTATUS_ACTIVEVOTE:
-        proposalsUpdated.activeVote.push(prop);
-        break;
-      case VOTESTATUS_FINISHEDVOTE:
-        proposalsUpdated.finishedVote.push(prop);
-        break;
-      default:
-        proposalsUpdated.preVote.push(prop);
-        break;
+      if (proposalStatus === PROPOSALSTATUS_ABANDONED) {
+        proposalsUpdated.abandonedVote.push(prop);
+      } else {
+        // if proposal is not abandoned we check its votestatus
+        switch (status) {
+          case VOTESTATUS_ACTIVEVOTE:
+            proposalsUpdated.activeVote.push(prop);
+            break;
+          case VOTESTATUS_FINISHEDVOTE:
+            proposalsUpdated.finishedVote.push(prop);
+            break;
+          default:
+            proposalsUpdated.preVote.push(prop);
+            break;
+          }
       }
     });
 

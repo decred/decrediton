@@ -976,7 +976,10 @@ export const finishedProposals = createSelector(
   [ proposals ],
   (proposals) => proposals && proposals.finishedVote
 );
-export const abandonedProposals = get([ "governance", "abandoned" ]);
+export const abandonedProposals = createSelector(
+  [ proposals ],
+  (proposals) => proposals && proposals.abandonedVote
+);
 export const lastVettedFetchTime = get([ "governance", "lastVettedFetchTime" ]);
 export const inventory = get([ "governance", "inventory" ]);
 export const newActiveVoteProposalsCount = compose(

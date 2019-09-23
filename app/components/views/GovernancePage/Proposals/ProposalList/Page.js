@@ -1,5 +1,5 @@
 import { FormattedMessage as T, FormattedRelative } from "react-intl";
-import { activeVoteProposals, preVoteProposals, finishedProposals } from "connectors";
+import { activeVoteProposals, preVoteProposals, finishedProposals, abandonedProposals } from "connectors";
 import { VotingProgress } from "indicators";
 import { PoliteiaLoading, NoProposals } from "indicators";
 import { VOTESTATUS_ACTIVEVOTE, VOTESTATUS_FINISHEDVOTE } from "actions/GovernanceActions";
@@ -96,3 +96,4 @@ const ProposalList = ({
 export const ActiveVoteProposals = activeVoteProposals(ProposalList);
 export const PreVoteProposals = preVoteProposals(ProposalList);
 export const FinishedProposal = finishedProposals(ProposalList);
+export const AbandonedProposals = abandonedProposals(ProposalList);
