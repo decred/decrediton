@@ -154,7 +154,7 @@ export const finishPrivacy = () => (dispatch) => {
   dispatch(goBack());
 };
 
-export const startDaemon = (params) => (dispatch, getState) => new Promise (async (resolve, reject) => {
+export const startDaemon = (params) => (dispatch, getState) => new Promise ((resolve, reject) => {
   const appdata = params && params.appdata;
   dispatch({ type: DAEMONSTART_ATTEMPT });
   const { daemonStarted } = getState().daemon;
@@ -335,7 +335,7 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => new Promi
     selectedWallet.value.isTrezor && dispatch(enableTrezor());
     await dispatch(getVersionServiceAttempt());
     return discoverAccountsComplete;
-  }
+  };
 
   start()
     .then(discoverAccountsComplete => {

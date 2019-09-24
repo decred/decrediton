@@ -7,12 +7,13 @@ export const checkDecreditonVersion = log(() => Promise
   .resolve(ipcRenderer.sendSync("check-version"))
 , "Check Decrediton release version");
 
-export const startDaemon = log((params, testnet) => Promise
-  .resolve(ipcRenderer.sendSync("start-daemon", params, testnet))
-  .then(started => {
+export const startDaemon = log((params, testnet) => new Promise(resolve => {
+  ipcRenderer.send("start-daemon", params, testnet);
+  ipcRenderer.on("start-daemon-response", (event, started) => {
     if (started && started.err) throw started.err;
-    return started;
-  }), "Start Daemon");
+    resolve(started);
+  });
+}), "Start Daemon");
 
 export const deleteDaemonData = log((appData, testnet) => Promise
   .resolve(ipcRenderer.sendSync("delete-daemon", appData, testnet)), "Delete Daemon Data");

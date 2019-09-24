@@ -148,7 +148,7 @@ export async function cleanShutdown(mainWindow, app) {
   });
 }
 
-export const launchDCRD = (params, testnet) => new Promise(async (resolve,reject) => {
+export const launchDCRD = (params, testnet) => new Promise((resolve,reject) => {
   let rpcCreds, appdata;
 
   rpcCreds = params && params.rpcCreds;
@@ -221,7 +221,7 @@ export const launchDCRD = (params, testnet) => new Promise(async (resolve,reject
   dcrd.stdout.on("data", (data) => {
     AddToDcrdLog(process.stdout, data, debug);
     const dataString = data.toString("utf-8");
-    if (dataString.includes("RPC server listening on")) {
+    if (dataString.includes("New valid peer")) {
       newConfig.pid = dcrd.pid;
       dcrdPID = dcrd.pid;
       logger.log("info", "dcrd started with pid:" + newConfig.pid);

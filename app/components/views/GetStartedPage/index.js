@@ -139,6 +139,9 @@ class GetStarted extends React.Component {
     case "checkingNetworkMatch":
       this.setState({ text: <T id="loaderBar.checkingNetwork" m="Checking if network matches..." /> });
       break;
+    case "startingDaemon":
+      this.setState({ text: <T id="loaderBar.StartingDaemon" m="Starting Daemon..." /> });
+      break;
     case "syncingDaemon":
       this.setState({ text: <T id="loaderBar.syncingDaemon" m="syncing Daemon..." /> });
       break;
