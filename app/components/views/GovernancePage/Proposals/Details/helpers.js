@@ -102,13 +102,8 @@ const renderProposalImage = ({ alt }) => {
   return <span>{alt}</span>;
 };
 
-export const ProposalText = ({ text, token }) => (
+export const ProposalText = ({ text }) => (
   <>
-    <div className="links">
-      <PoliteiaLink path={"/proposals/"+token}>
-        <T id="proposals.community.goToProposal" m="See proposal comments on Politeia" />
-      </PoliteiaLink>
-    </div>
     <ReactMarkdown
       source={text}
 
