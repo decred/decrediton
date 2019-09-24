@@ -37,7 +37,7 @@ class VerticalAccordion extends React.Component {
         data: children,
         key: "body",
         style: {
-          height: spring(this.childRef.clientHeight),
+          height: spring(this.childRef.clientHeight, { stiffness: 180, damping: 20 }),
           opacity: spring(1),
         }
       } ];
@@ -47,7 +47,7 @@ class VerticalAccordion extends React.Component {
       data: <div />,
       key: "body",
       style: {
-        height: spring(0),
+        height: spring(0, { stiffness: 180, damping: 20 }),
         opacity: spring(0),
       }
     } ];

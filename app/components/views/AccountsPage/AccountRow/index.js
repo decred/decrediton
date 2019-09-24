@@ -15,13 +15,12 @@ class AccountRow extends React.Component {
       hasFailedAttempt: false,
       showPubKey: false,
       isShowingDetails: false,
-      accountDetailsRef: null,
     };
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     const { account, accountNumDetailsShown } = prevProps;
-    if (this.state.accountDetailsRef === prevState.accountDetailsRef || accountNumDetailsShown === this.props.accountNumDetailsShown) {
+    if (accountNumDetailsShown === this.props.accountNumDetailsShown) {
       return;
     }
     if (account.accountNumber !== this.props.accountNumDetailsShown) {

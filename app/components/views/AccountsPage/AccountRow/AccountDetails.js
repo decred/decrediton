@@ -86,7 +86,7 @@ const AccountsList = ({
       </div>
     </div>
 
-    <div className="account-actions">
+    <div className="account-actions is-row">
       {account.accountName !== "imported" &&
           <div className="account-actions-pubkey">
             <div className="account-actions-pubkey-label">
@@ -103,7 +103,7 @@ const AccountsList = ({
             }
           </div>
       }
-      <div className="account-actions-buttons">
+      <div className="account-actions-buttons is-row">
         {account.accountName !== "imported" &&
             <Tooltip text={<T id="accounts.rename.tip" m="Rename Account" />}>
               <div className="rename-account-button" onClick={showRenameAccount} />
