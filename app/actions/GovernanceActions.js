@@ -42,6 +42,8 @@ const fillVoteSummary = (proposal, voteSummary, blockTimestampFromNow) => {
   const passPercentage = voteSummary.passpercentage ? voteSummary.passpercentage : 60;
   proposal.quorumMinimumVotes = eligibleVotes * (quorum / 100);
   proposal.voteStatus = voteSummary.status;
+  // TODO support startvoteheight when duration is added to votesummary
+  // proposal.startVoteHeight = voteSummary.endheight - voteSummary.duration;
 
   if (totalVotes > proposal.quorumMinimumVotes) {
     proposal.quorumPass = true;
@@ -68,7 +70,8 @@ const getWalletCommittedTickets = async (eligibleTickets, walletService) => {
   }));
 };
 
-// TODO call this function only once and cache result
+// TODO call getProposalVoteResults only once and cache result so we can know
+// the eligibletickets and how a user has voted in a proposal.
 // Aux function to fill the vote result information on a given proposal.
 const getProposalVoteResults = async (token, piURL, walletService) => {
   const request = await pi.getProposalVotes(piURL, token);
@@ -167,7 +170,7 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
 
   const findProposal = (proposals, token) =>
     proposals.find( proposal => proposal.censorshiprecord.token === token ? proposal : null );
-  
+
   dispatch({ type: GETPROPROSAL_UPDATEVOTESTATUS_ATTEMPT });
   let proposalsUpdated = {
     activeVote: [],
@@ -208,16 +211,16 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
       } else {
         // if proposal is not abandoned we check its votestatus
         switch (status) {
-          case VOTESTATUS_ACTIVEVOTE:
-            proposalsUpdated.activeVote.push(prop);
-            break;
-          case VOTESTATUS_FINISHEDVOTE:
-            proposalsUpdated.finishedVote.push(prop);
-            break;
-          default:
-            proposalsUpdated.preVote.push(prop);
-            break;
-          }
+        case VOTESTATUS_ACTIVEVOTE:
+          proposalsUpdated.activeVote.push(prop);
+          break;
+        case VOTESTATUS_FINISHEDVOTE:
+          proposalsUpdated.finishedVote.push(prop);
+          break;
+        default:
+          proposalsUpdated.preVote.push(prop);
+          break;
+        }
       }
     });
 
@@ -248,7 +251,6 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
 
   dispatch({ type: GETPROPOSAL_ATTEMPT });
   const piURL = sel.politeiaURL(getState());
-  const blockTimestampFromNow = sel.blockTimestampFromNow(getState());
 
   try {
     const request = await pi.getProposal(piURL, token);
@@ -296,7 +298,7 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
 
     let voteResult;
     if ([ VOTESTATUS_FINISHEDVOTE, VOTESTATUS_ACTIVEVOTE ].includes(proposal.voteStatus)) {
-      voteResult = await getProposalVoteResults(proposal.token, piURL, walletService, blockTimestampFromNow);
+      voteResult = await getProposalVoteResults(proposal.token, piURL, walletService);
       const voteOptions = proposal.voteOptions;
 
       if (voteResult.voteBit) {
