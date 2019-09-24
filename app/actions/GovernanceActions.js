@@ -145,7 +145,7 @@ const getInitialBatch = () => async (dispatch, getState) => {
 export const getTokenAndInitialBatch = () => async (dispatch) => {
   await dispatch(getTokenInventory());
   await dispatch(getInitialBatch());
-}
+};
 
 export const GET_PROPOSAL_BATCH_ATTEMPT = "GET_PROPOSAL_BATCH_ATTEMPT";
 export const GET_PROPOSAL_BATCH_SUCCESS = "GET_PROPOSAL_BATCH_SUCCESS";

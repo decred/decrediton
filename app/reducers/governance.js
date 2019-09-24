@@ -15,7 +15,7 @@ export default function governance(state = {}, action) {
   case GETTOKEN_INVENTORY_ATTEMPT:
     return { ...state,
       getProposalsAttempt: true,
-    }
+    };
   case GETTOKEN_INVENTORY_SUCCESS:
     return { ...state,
       inventory: action.inventory,
