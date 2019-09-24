@@ -102,7 +102,7 @@ export const GETTOKEN_INVENTORY_ATTEMPT = "GETTOKEN_INVENTORY_ATTEMPT";
 export const GETTOKEN_INVENTORY_SUCCESS = "GETTOKEN_INVENTORY_SUCCESS";
 export const GETTOKEN_INVENTORY_FAILED = "GETTOKEN_INVENTORY_FAILED";
 
-export const getTokenInventory = () => async (dispatch, getState) => {
+const getTokenInventory = () => async (dispatch, getState) => {
   dispatch({ type: GETTOKEN_INVENTORY_ATTEMPT });
   const piURL = sel.politeiaURL(getState());
   try {
@@ -126,7 +126,7 @@ export const getTokenInventory = () => async (dispatch, getState) => {
 };
 
 // getInitialBatch Gets the first pre and active proposals batch
-export const getInitialBatch = () => async (dispatch, getState) => {
+const getInitialBatch = () => async (dispatch, getState) => {
   const inventory = sel.inventory(getState());
   const proposallistpagesize = sel.proposallistpagesize(getState());
   if (!inventory) return;
@@ -141,6 +141,11 @@ export const getInitialBatch = () => async (dispatch, getState) => {
   await dispatch(getProposalsAndUpdateVoteStatus(activeVoteBatch));
   await dispatch(getProposalsAndUpdateVoteStatus(preVoteBatch));
 };
+
+export const getTokenAndInitialBatch = () => async (dispatch) => {
+  await dispatch(getTokenInventory());
+  await dispatch(getInitialBatch());
+}
 
 export const GET_PROPOSAL_BATCH_ATTEMPT = "GET_PROPOSAL_BATCH_ATTEMPT";
 export const GET_PROPOSAL_BATCH_SUCCESS = "GET_PROPOSAL_BATCH_SUCCESS";

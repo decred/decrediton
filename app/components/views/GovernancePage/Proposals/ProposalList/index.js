@@ -73,8 +73,11 @@ class ProposalsList extends React.Component {
   onLoadMoreProposals() {
     const { inventory, proposalsList, proposallistpagesize } = this.props;
     const tab = this.getProposalsTab();
-    const proposalLength = proposalsList[tab].length;
+    if (!proposalsList[tab] || !inventory[tab]) {
+      return;
+    }
 
+    const proposalLength = proposalsList[tab].length;
     if (proposalLength === inventory[tab].length) {
       this.setState({
         noMoreProposals: { ...this.state.noMoreProposals, [tab]: true }
