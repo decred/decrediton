@@ -86,5 +86,3 @@ const Overview = ({
 //  <div className="agenda-percent"><span className="agenda-percent-number">XX</span>%</div>
 // needs to go below div.agenda-indicator-pending
 export default Overview;
-
-//<a target="_blank" href="http://decred.org" className="agenda-overview-read-more">Read more »</a>
