@@ -136,11 +136,20 @@ class GetStarted extends React.Component {
     return this.service.send({ type: "SUBMIT_APPDATA", appdata });
   }
 
+  getError() {
+    const { error } = this.service.machine.context;
+    if (!error) return;
+    if (typeof error  === "object") {
+      return JSON.stringify(error);
+    }
+    return error;
+  }
+
   render() {
     const { StateComponent, text } = this.state;
     const { service, submitChosenWallet, submitRemoteCredentials, submitAppdata } = this;
     const { machine } = service;
-    const { error } = machine.context;
+    const error = this.getError();
 
     return (
       <GetStartedPage

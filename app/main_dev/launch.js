@@ -170,7 +170,9 @@ export const launchDCRD = (params, testnet) => new Promise((resolve,reject) => {
   const newConfig = readDcrdConfig(appdata, testnet);
   newConfig.appdata = appdata;
 
-  args.push(`--configfile=${dcrdCfg(appdata)}`);
+  if (fs.existsSync(dcrdCfg(appdata))) {
+    args.push(`--configfile=${dcrdCfg(appdata)}`);
+  }
   args.push(`--appdata=${appdata}`);
 
   if (testnet) {
@@ -425,46 +427,50 @@ export const connectRpcDaemon = (mainWindow, rpcCreds) => {
     rpc_port = rpcport;
   }
 
-  var cert = fs.readFileSync(rpc_cert);
-  const url = `${rpc_host}:${rpc_port}`;
-  if (dcrdSocket && dcrdSocket.readyState === dcrdSocket.OPEN) {
-    return mainWindow.webContents.send("connectRpcDaemon-response", { connected: true });
-  }
-  dcrdSocket = new webSocket(`wss://${url}/ws`, {
-    headers: {
-      "Authorization": "Basic "+Buffer.from(rpc_user+":"+rpc_pass).toString("base64")
-    },
-    cert: cert,
-    ecdhCurve: "secp521r1",
-    ca: [ cert ]
-  });
-  dcrdSocket.on("open", function() {
-    logger.log("info","decrediton has connected to dcrd instance");
-    return mainWindow.webContents.send("connectRpcDaemon-response", { connected: true });
-  });
-  dcrdSocket.on("error", function(error) {
-    logger.log("error",`Error: ${error}`);
+  try {
+    var cert = fs.readFileSync(rpc_cert);
+    const url = `${rpc_host}:${rpc_port}`;
+    if (dcrdSocket && dcrdSocket.readyState === dcrdSocket.OPEN) {
+      return mainWindow.webContents.send("connectRpcDaemon-response", { connected: true });
+    }
+    dcrdSocket = new webSocket(`wss://${url}/ws`, {
+      headers: {
+        "Authorization": "Basic "+Buffer.from(rpc_user+":"+rpc_pass).toString("base64")
+      },
+      cert: cert,
+      ecdhCurve: "secp521r1",
+      ca: [ cert ]
+    });
+    dcrdSocket.on("open", function() {
+      logger.log("info","decrediton has connected to dcrd instance");
+      return mainWindow.webContents.send("connectRpcDaemon-response", { connected: true });
+    });
+    dcrdSocket.on("error", function(error) {
+      logger.log("error",`Error: ${error}`);
+      return mainWindow.webContents.send("connectRpcDaemon-response", { connected: false, error });
+    });
+    dcrdSocket.on("message", function(data) {
+      const parsedData = JSON.parse(data);
+      const id = parsedData ? parsedData.id : "";
+      switch (id) {
+      case "getinfo":
+        mainWindow.webContents.send("check-getinfo-response", parsedData.result );
+        break;
+      case "getblockchaininfo": {
+        const dataResults = parsedData.result || {};
+        const blockCount = dataResults.blocks;
+        const syncHeight = dataResults.syncheight;
+        mainWindow.webContents.send("check-daemon-response", { blockCount, syncHeight });
+        break;
+      }
+      }
+    });
+    dcrdSocket.on("close", () => {
+      logger.log("info","decrediton has disconnected to dcrd instance");
+    });
+  } catch (error) {
     return mainWindow.webContents.send("connectRpcDaemon-response", { connected: false, error });
-  });
-  dcrdSocket.on("message", function(data) {
-    const parsedData = JSON.parse(data);
-    const id = parsedData ? parsedData.id : "";
-    switch (id) {
-    case "getinfo":
-      mainWindow.webContents.send("check-getinfo-response", parsedData.result );
-      break;
-    case "getblockchaininfo": {
-      const dataResults = parsedData.result || {};
-      const blockCount = dataResults.blocks;
-      const syncHeight = dataResults.syncheight;
-      mainWindow.webContents.send("check-daemon-response", { blockCount, syncHeight });
-      break;
-    }
-    }
-  });
-  dcrdSocket.on("close", () => {
-    logger.log("info","decrediton has disconnected to dcrd instance");
-  });
+  }
 };
 
 export const getDaemonInfo = () => dcrdSocket.send("{\"jsonrpc\":\"1.0\",\"id\":\"getinfo\",\"method\":\"getinfo\",\"params\":[]}");
