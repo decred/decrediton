@@ -373,7 +373,7 @@ export const prepStartDaemon = () => (dispatch, getState) => {
     this.props.setCredentialsAppdataError();
 };
 
-const TIME_TO_TIMEOUT = 30 * 1000; // 30 sec
+const TIME_TO_TIMEOUT = 15 * 1000; // 15 sec
 export const connectDaemon = (rpcCreds) => (dispatch, getState) => new Promise((resolve,reject) => {
   dispatch({ type: CONNECTDAEMON_ATTEMPT });
   const timeBeforeConnect = new Date();
@@ -383,8 +383,10 @@ export const connectDaemon = (rpcCreds) => (dispatch, getState) => new Promise((
     const timeNow = new Date();
     const timeElapsed = timeNow - timeBeforeConnect;
     if (timeStart === 0 && timeElapsed >= TIME_TO_TIMEOUT) {
-      dispatch({ type: CONNECTDAEMON_FAILURE, daemonTimeout: true, error: "timeout exceed" });
-      return;
+      // TODO use constant to throw timeout error
+      const error = "Timeout Exceed";
+      dispatch({ type: CONNECTDAEMON_FAILURE, daemonTimeout: true, error });
+      return reject(error);
     }
     if (daemonConnected || daemonError) return;
     try {

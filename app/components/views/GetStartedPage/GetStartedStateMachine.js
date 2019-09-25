@@ -59,6 +59,7 @@ export const getStartedMachine = (a) => Machine({
       onEntry: "isAtConnectingDaemon",
       on: {
         SYNC_DAEMON: "syncingDaemon",
+        ERROR_CONNECTING_DAEMON: "startAdvancedDaemon",
       }
     },
     checkingNetworkMatch: {
@@ -132,7 +133,9 @@ export const getStartedMachine = (a) => Machine({
         .then(connected => {
           a.sendEvent({ type: "SYNC_DAEMON", payload: connected });
         })
-        .catch(e => console.log(e));
+        .catch(error =>
+          a.sendEvent({ type: "ERROR_CONNECTING_DAEMON", payload: { error } })
+        );
     },
     isAtCheckNetworkMatch: () => {
       console.log(" is at check network ");
