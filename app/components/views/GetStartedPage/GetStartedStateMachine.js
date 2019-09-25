@@ -101,8 +101,7 @@ export const getStartedMachine = (a) => Machine({
     },
     isAtStartAdvancedDaemon: (context, event) => {
       console.log("is at start advanced daemon");
-      const error = event.payload && event.payload.error;
-      context.error = error;
+      context.error = event.payload && event.payload.error;
     },
     isAtStartSPV: () => {
       console.log("is at start SPV");

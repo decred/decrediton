@@ -12,8 +12,6 @@ const mapStateToProps = selectorMap({
   getCurrentBlockCount: sel.getCurrentBlockCount,
   getNeededBlocks: sel.getNeededBlocks,
 
-  openForm: sel.openForm,
-
   peerCount: sel.peerCount,
   synced: sel.synced,
   syncFetchMissingCfiltersAttempt: sel.syncFetchMissingCfiltersAttempt,

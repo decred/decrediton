@@ -10,36 +10,6 @@ import { FormattedMessage as T } from "react-intl";
 @autobind
 class GetStarted extends React.Component {
   service;
-
-  // } else {
-  //   switch (startStepIndex || 0) {
-  //   case 0:
-  //   case 1:
-  //     animationType = discoveringAddresses;
-  //     text = startupError ? startupError :
-  //       <T id="getStarted.header.checkingWalletState.meta" m="Checking wallet state" />;
-  //     break;
-  //   case 2:
-  //     animationType = discoveringAddresses;
-  //     text = <T id="getStarted.header.openingwallet.meta" m="Opening Wallet" />;
-  //     if (hasExistingWallet) {
-  //       Form = OpenWallet;
-  //     } else {
-  //       return <CreateWallet {...{ ...props, onSetWalletPrivatePassphrase }} />;
-  //     }
-  //     break;
-  //   case 3:
-  //     animationType = establishingRpc;
-  //     text = <T id="getStarted.header.startrpc.meta" m="Establishing RPC connection" />;
-  //     Form = StartRPCBody;
-  //     break;
-  //   case 7:
-  //     text = <T id="getStarted.header.stakePools.meta" m="Import StakePools" />;
-  //     Form = StakePoolsBody;
-  //     break;
-  //   default:
-  //     animationType = finalizingSetup;
-  //     text = <T id="getStarted.header.finalizingSetup.meta" m="Finalizing setup" />;
   constructor(props) {
     super(props);
     const {
@@ -63,9 +33,9 @@ class GetStarted extends React.Component {
 
 
   componentDidMount() {
-    const { isSPV, isAdvancedDaemon, openForm } = this.props;
+    const { isSPV, isAdvancedDaemon, getDaemonSynced } = this.props;
     this.service.start();
-    if (!openForm) {
+    if (getDaemonSynced === true) {
       return this.service.send({ type: "START_SELECTED_WALLET" });
     }
     this.service.send({ type: "START_SPV", isSPV, isAdvancedDaemon });
@@ -85,6 +55,10 @@ class GetStarted extends React.Component {
     // const finalizingSetup = "finalizing-setup";
     const fetchingHeaders = "fetching-headers";
     // const establishingRpc = "establishing-rpc";
+    //     text = <T id="getStarted.header.stakePools.meta" m="Import StakePools" />;
+    //     text = <T id="getStarted.header.startrpc.meta" m="Establishing RPC connection" />;
+    //     animationType = establishingRpc;
+
     const { current } = prevState;
     const { syncFetchMissingCfiltersAttempt, syncFetchHeadersAttempt, syncRescanAttempt, syncDiscoverAddressesAttempt } = this.props;
     if (current && current.value !== this.state.current.value) {
@@ -105,23 +79,6 @@ class GetStarted extends React.Component {
       this.setState({ text:<T id="getStarted.header.rescanWallet.meta" m="Scanning blocks for transactions" /> });
       // Form = RescanWalletBody;
     }
-  // else if (!isSPV && startStepIndex > 2) {
-  //   animationType = blockChainLoading;
-  //   text = <T id="getStarted.header.sync.meta" m="Syncing Wallet" />;
-  //   if (syncFetchMissingCfiltersAttempt) {
-  //     animationType = daemonWaiting;
-  //     text = <T id="getStarted.header.fetchingMissing.meta" m="Fetching missing committed filters" />;
-  //   } else if (syncFetchHeadersAttempt) {
-  //     animationType = fetchingHeaders;
-  //     text = <T id="getStarted.header.fetchingBlockHeaders.meta" m="Fetching block headers" />;
-  //   } else if (syncDiscoverAddressesAttempt) {
-  //     animationType = discoveringAddresses;
-  //     text = <T id="getStarted.header.discoveringAddresses.meta" m="Discovering addresses" />;
-  //   } else if (syncRescanAttempt) {
-  //     animationType = scanningBlocks;
-  //     text = <T id="getStarted.header.rescanWallet.meta" m="Scanning blocks for transactions" />;
-  //     Form = RescanWalletBody;
-  //   }
   }
 
   getStateComponent() {
