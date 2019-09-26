@@ -148,7 +148,7 @@ export async function cleanShutdown(mainWindow, app) {
   });
 }
 
-export const launchDCRD = (params, testnet) => new Promise((resolve,reject) => {
+export const launchDCRD = (params, testnet, reactIPC) => new Promise((resolve,reject) => {
   let rpcCreds, appdata;
 
   rpcCreds = params && params.rpcCreds;
@@ -204,6 +204,7 @@ export const launchDCRD = (params, testnet) => new Promise((resolve,reject) => {
   });
 
   dcrd.on("error", function (err) {
+    reactIPC.send("error-received", true, err);
     reject(err);
   });
 
@@ -214,6 +215,7 @@ export const launchDCRD = (params, testnet) => new Promise((resolve,reject) => {
         lastDcrdErr = lastPanicLine(GetDcrdLogs());
       }
       logger.log("error", "dcrd closed due to an error: ", lastDcrdErr);
+      reactIPC.send("error-received", true, lastDcrdErr);
       reject(lastDcrdErr);
     }
 
@@ -235,6 +237,7 @@ export const launchDCRD = (params, testnet) => new Promise((resolve,reject) => {
 
   dcrd.stderr.on("data", (data) => {
     AddToDcrdLog(process.stderr, data, debug);
+    reactIPC.send("error-received", true, data.toString("utf-8"));
     reject(data.toString("utf-8"));
   });
 });

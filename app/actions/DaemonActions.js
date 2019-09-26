@@ -35,7 +35,7 @@ export const AVAILABLE_WALLETS = "AVAILABLE_WALLETS";
 export const SHUTDOWN_REQUESTED = "SHUTDOWN_REQUESTED";
 export const SET_CREDENTIALS_APPDATA_ERROR = "SET_CREDENTIALS_APPDATA_ERROR";
 export const REGISTERFORERRORS = "REGISTERFORERRORS";
-export const FATAL_DAEMON_ERROR = "FATAL_DAEMON_ERROR";
+export const DAEMON_ERROR = "DAEMON_ERROR";
 export const FATAL_WALLET_ERROR = "FATAL_WALLET_ERROR";
 export const DAEMON_WARNING = "DAEMON_WARNING";
 export const WALLET_WARNING = "WALLET_WARNING";
@@ -173,18 +173,15 @@ export const startDaemon = (params) => (dispatch, getState) => new Promise ((res
     });
 });
 
-export const setCredentialsAppdataError = () => (dispatch) => {
-  dispatch({ type: SET_CREDENTIALS_APPDATA_ERROR });
-};
 
 export const registerForErrors = () => (dispatch) => {
   dispatch({ type: REGISTERFORERRORS });
-  ipcRenderer.sendSync("register-for-errors");
+  ipcRenderer.send("register-for-errors");
   ipcRenderer.on("error-received", (event, daemon, error) => {
     if (daemon) {
-      dispatch({ error, type: FATAL_DAEMON_ERROR });
+      dispatch({ error, type: DAEMON_ERROR });
     } else {
-      dispatch({ error, type: FATAL_WALLET_ERROR });
+      dispatch({ error, type: WALLET_ERROR });
     }
     dispatch(pushHistory("/error"));
   });
@@ -347,11 +344,10 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => new Promi
     });
 });
 
-export const prepStartDaemon = () => (dispatch, getState) => {
+const prepStartDaemon = () => (dispatch, getState) => {
   const { daemon: { daemonAdvanced } } = getState();
   const cliOptions = ipcRenderer.sendSync("get-cli-options");
-  dispatch(registerForErrors());
-  dispatch(checkDecreditonVersion());
+  // console.log(cliOptions)
   if (!daemonAdvanced) {
     return;
   }
@@ -366,11 +362,12 @@ export const prepStartDaemon = () => (dispatch, getState) => {
   } else {
     ({ rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port } = getRemoteCredentials());
   }
-  const hasAllCredentials = rpc_pass && rpc_user && rpc_pass.length > 0 && rpc_user.length > 0 && rpc_cert.length > 0 && rpc_host.length > 0 && rpc_port.length > 0;
-  const hasAppData = getAppdataPath() && getAppdataPath().length > 0;
+};
 
-  if(hasAllCredentials && hasAppData)
-    this.props.setCredentialsAppdataError();
+export const decreditonInit = () => async (dispatch, getState) => {
+  dispatch(registerForErrors());
+  dispatch(checkDecreditonVersion());
+  await dispatch(prepStartDaemon());
 };
 
 const TIME_TO_TIMEOUT = 15 * 1000; // 15 sec
@@ -378,7 +375,7 @@ export const connectDaemon = (rpcCreds) => (dispatch, getState) => new Promise((
   dispatch({ type: CONNECTDAEMON_ATTEMPT });
   const timeBeforeConnect = new Date();
   const tryConnect = async () => {
-    const { daemonConnected, credentials, daemonError, timeStart } = getState().daemon;
+    const { daemonConnected, credentials, timeStart } = getState().daemon;
     const creds = rpcCreds ? rpcCreds : credentials;
     const timeNow = new Date();
     const timeElapsed = timeNow - timeBeforeConnect;
@@ -388,7 +385,7 @@ export const connectDaemon = (rpcCreds) => (dispatch, getState) => new Promise((
       dispatch({ type: CONNECTDAEMON_FAILURE, daemonTimeout: true, error });
       return reject(error);
     }
-    if (daemonConnected || daemonError) return;
+    if (daemonConnected) return;
     try {
       const connected = await wallet.connectDaemon({ rpcCreds: creds, testnet: isTestNet(getState()) });
       dispatch({ type: CONNECTDAEMON_SUCCESS });
@@ -426,8 +423,8 @@ export const checkNetworkMatch = () => async (dispatch, getState) => new Promise
 export const syncDaemon = () => (dispatch, getState) => new Promise((resolve) => {
   dispatch({ type: SYNC_DAEMON_ATTEMPT });
   const updateBlockCount = () => {
-    const { daemon: { daemonSynced, timeStart, blockStart, daemonError } } = getState();
-    if (daemonSynced || daemonError) return;
+    const { daemon: { daemonSynced, timeStart, blockStart } } = getState();
+    if (daemonSynced) return;
     return wallet.getBlockCount()
       .then(( blockChainInfo ) => {
         const { blockCount, syncHeight } = blockChainInfo;

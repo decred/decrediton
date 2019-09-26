@@ -4,6 +4,7 @@ import { selectorMap } from "../fp";
 import * as sel from "../selectors";
 import * as wla from "../actions/WalletLoaderActions";
 import * as da from "../actions/DaemonActions";
+import * as ca from "../actions/ClientActions";
 
 const mapStateToProps = selectorMap({
   isAdvancedDaemon: sel.isAdvancedDaemon,
@@ -29,7 +30,7 @@ const mapStateToProps = selectorMap({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  prepStartDaemon: da.prepStartDaemon,
+  decreditonInit: da.decreditonInit,
   onRetryStartRPC: wla.startRpcRequestFunc,
   setSelectedWallet: wla.setSelectedWallet,
   getSelectedWallet: wla.getSelectedWallet,
@@ -40,6 +41,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onGetAvailableWallets: da.getAvailableWallets,
   onStartWallet: da.startWallet,
   onRemoveWallet: da.removeWallet,
+  goToError: ca.goToError,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

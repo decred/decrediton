@@ -17,7 +17,7 @@ import {
   SET_CREDENTIALS_APPDATA_ERROR,
   AVAILABLE_WALLETS,
   DECREDITON_VERSION,
-  FATAL_DAEMON_ERROR,
+  DAEMON_ERROR,
   FATAL_WALLET_ERROR,
   DAEMON_WARNING,
   WALLET_WARNING, CLOSEDAEMON_ATTEMPT, CLOSEDAEMON_FAILED, CLOSEDAEMON_SUCCESS,
@@ -171,7 +171,7 @@ export default function version(state = {}, action) {
       ...state,
       hiddenAccounts: action.hiddenAccounts,
     };
-  case FATAL_DAEMON_ERROR:
+  case DAEMON_ERROR:
     return {
       ...state,
       daemonError: action.error,

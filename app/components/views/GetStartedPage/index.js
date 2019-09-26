@@ -13,13 +13,13 @@ class GetStarted extends React.Component {
   constructor(props) {
     super(props);
     const {
-      prepStartDaemon, onConnectDaemon, checkNetworkMatch, syncDaemon, onStartWallet, onRetryStartRPC, onGetAvailableWallets,
-      onStartDaemon, setSelectedWallet, getSelectedWallet,
+      onConnectDaemon, checkNetworkMatch, syncDaemon, onStartWallet, onRetryStartRPC, onGetAvailableWallets,
+      onStartDaemon, setSelectedWallet, getSelectedWallet, goToError,
     } = this.props;
-    const { sendEvent } = this;
+    const { sendEvent, preStartDaemon } = this;
     this.machine = getStartedMachine({
-      prepStartDaemon, onConnectDaemon, checkNetworkMatch, syncDaemon, onStartWallet, onRetryStartRPC, sendEvent, onGetAvailableWallets,
-      onStartDaemon, setSelectedWallet, getSelectedWallet
+      onConnectDaemon, checkNetworkMatch, syncDaemon, onStartWallet, onRetryStartRPC, sendEvent, onGetAvailableWallets,
+      onStartDaemon, setSelectedWallet, getSelectedWallet, preStartDaemon, goToError
     })
     this.service = interpret(this.machine).onTransition(current => {
       this.setState({ current });
@@ -33,11 +33,12 @@ class GetStarted extends React.Component {
   }
 
   preStartDaemon () {
+    const { isSPV, isAdvancedDaemon } = this.props;
     this.service.start();
     this.service.send({ type: "START_SPV", isSPV, isAdvancedDaemon });
     this.service.send({ type: "START_ADVANCED_DAEMON", isSPV, isAdvancedDaemon });
     this.service.send({ type: "START_REGULAR_DAEMON", isSPV, isAdvancedDaemon });
-    this.props.prepStartDaemon && this.props.prepStartDaemon();
+    this.props.decreditonInit();
   }
 
   componentDidMount() {
