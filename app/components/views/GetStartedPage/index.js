@@ -17,10 +17,11 @@ class GetStarted extends React.Component {
       onStartDaemon, setSelectedWallet, getSelectedWallet,
     } = this.props;
     const { sendEvent } = this;
-    this.service = interpret(getStartedMachine({
+    this.machine = getStartedMachine({
       prepStartDaemon, onConnectDaemon, checkNetworkMatch, syncDaemon, onStartWallet, onRetryStartRPC, sendEvent, onGetAvailableWallets,
       onStartDaemon, setSelectedWallet, getSelectedWallet
-    })).onTransition(current => {
+    })
+    this.service = interpret(this.machine).onTransition(current => {
       this.setState({ current });
     });
     this.state = {
@@ -31,6 +32,13 @@ class GetStarted extends React.Component {
     };
   }
 
+  preStartDaemon () {
+    this.service.start();
+    this.service.send({ type: "START_SPV", isSPV, isAdvancedDaemon });
+    this.service.send({ type: "START_ADVANCED_DAEMON", isSPV, isAdvancedDaemon });
+    this.service.send({ type: "START_REGULAR_DAEMON", isSPV, isAdvancedDaemon });
+    this.props.prepStartDaemon && this.props.prepStartDaemon();
+  }
 
   componentDidMount() {
     const { isSPV, isAdvancedDaemon, getDaemonSynced } = this.props;
@@ -38,9 +46,6 @@ class GetStarted extends React.Component {
     if (getDaemonSynced === true) {
       return this.service.send({ type: "START_SELECTED_WALLET" });
     }
-    this.service.send({ type: "START_SPV", isSPV, isAdvancedDaemon });
-    this.service.send({ type: "START_ADVANCED_DAEMON", isSPV, isAdvancedDaemon });
-    this.service.send({ type: "START_DAEMON", isSPV, isAdvancedDaemon });
   }
 
   componentWillUnmount() {
@@ -122,7 +127,6 @@ class GetStarted extends React.Component {
     const { type, payload } = data;
     send({ type, payload });
   }
-
 
   submitChosenWallet(selectedWallet) {
     return this.service.send({ type: "SUBMIT_CHOOSE_WALLET", selectedWallet });

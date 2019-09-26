@@ -21,7 +21,7 @@ export const getStartedMachine = (a) => Machine({
           target: "startAdvancedDaemon",
           cond: (c, event) => !!event.isAdvancedDaemon
         },
-        START_DAEMON: {
+        START_REGULAR_DAEMON: {
           target: "startingDaemon",
           cond: (c, event) => !event.isAdvancedDaemon && !event.isSPV
         },
@@ -36,10 +36,10 @@ export const getStartedMachine = (a) => Machine({
     startingDaemon: {
       onEntry: "isAtStartingDaemon",
       on: {
-        STARTED_DAEMON: "startedDaemon",
         START_ADVANCED_DAEMON: "startAdvancedDaemon",
+        START_REGULAR_DAEMON: "startRegularDaemon",
         CONNECT_DAEMON: "connectingDaemon",
-        ERROR_START_DAEMON: "startAdvancedDaemon"
+        ERROR_STARTING_DAEMON: "preStart"
       }
     },
     startedDaemon: {
@@ -53,6 +53,12 @@ export const getStartedMachine = (a) => Machine({
       on: {
         SUBMIT_REMOTE: "connectingDaemon",
         SUBMIT_APPDATA: "startingDaemon",
+      }
+    },
+    startRegularDaemon: {
+      onEntry: "isAtStartRegularDaemon",
+      on: {
+        TESTE: "startRegularDaemon"
       }
     },
     connectingDaemon: {
@@ -109,8 +115,13 @@ export const getStartedMachine = (a) => Machine({
     },
     isAtStartingDaemon: (context, event) => {
       console.log("is at Starting Daemonn");
-      const { appdata } = event;
+      const { appdata, payload } = event;
       context.appdata = appdata;
+      console.log(payload)
+      if (payload && payload.error) {
+        context.error = payload.error;
+        return a.sendEvent({ type: "START_REGULAR_DAEMON", payload })
+      }
       return a.onStartDaemon({ appdata })
         .then(started => {
           const { credentials, appdata } = started;
@@ -119,8 +130,11 @@ export const getStartedMachine = (a) => Machine({
           a.sendEvent({ type: "CONNECT_DAEMON", payload: started });
         })
         .catch(
-          error => a.sendEvent({ type: "ERROR_START_DAEMON", payload: { error } })
+          error => a.sendEvent({ type: "ERROR_STARTING_DAEMON", payload: { error } })
         );
+    },
+    isAtStartRegularDaemon: (context, event) => {
+      console.log("is at startRegularDaemon");
     },
     isStartedDaemon: () => {
       console.log("is at started daemon");
