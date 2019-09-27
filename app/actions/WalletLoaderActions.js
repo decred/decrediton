@@ -278,8 +278,11 @@ export const setSelectedWallet = (selectedWallet) => (dispatch) => {
   ipcRenderer.sendSync("set-selected-wallet", selectedWallet);
 };
 
-export const getSelectedWallet = () => {
+export const GET_SELECTED_WALLET = "GET_SELECTED_WALLET";
+
+export const getSelectedWallet = () => (dispatch) => {
   const wallet = ipcRenderer.sendSync("get-selected-wallet");
+  dispatch({ type: GET_SELECTED_WALLET })
   return wallet;
 };
 

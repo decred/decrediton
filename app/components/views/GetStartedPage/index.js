@@ -14,12 +14,12 @@ class GetStarted extends React.Component {
     super(props);
     const {
       onConnectDaemon, checkNetworkMatch, syncDaemon, onStartWallet, onRetryStartRPC, onGetAvailableWallets,
-      onStartDaemon, setSelectedWallet, getSelectedWallet, goToError,
+      onStartDaemon, setSelectedWallet, goToError,
     } = this.props;
     const { sendEvent, preStartDaemon } = this;
     this.machine = getStartedMachine({
       onConnectDaemon, checkNetworkMatch, syncDaemon, onStartWallet, onRetryStartRPC, sendEvent, onGetAvailableWallets,
-      onStartDaemon, setSelectedWallet, getSelectedWallet, preStartDaemon, goToError
+      onStartDaemon, setSelectedWallet, preStartDaemon, goToError
     })
     this.service = interpret(this.machine).onTransition(current => {
       this.setState({ current });
@@ -33,20 +33,19 @@ class GetStarted extends React.Component {
   }
 
   preStartDaemon () {
-    const { isSPV, isAdvancedDaemon } = this.props;
-    this.service.start();
+    const { isSPV, isAdvancedDaemon, getDaemonSynced, getSelectedWallet } = this.props;
+    this.props.decreditonInit();
+    if (getDaemonSynced) {
+      const selectedWallet = getSelectedWallet()
+      return this.service.send({ type: "CHOOSE_WALLET", selectedWallet });
+    }
     this.service.send({ type: "START_SPV", isSPV, isAdvancedDaemon });
     this.service.send({ type: "START_ADVANCED_DAEMON", isSPV, isAdvancedDaemon });
     this.service.send({ type: "START_REGULAR_DAEMON", isSPV, isAdvancedDaemon });
-    this.props.decreditonInit();
   }
 
   componentDidMount() {
-    const { isSPV, isAdvancedDaemon, getDaemonSynced } = this.props;
-    this.service.start();
-    if (getDaemonSynced === true) {
-      return this.service.send({ type: "START_SELECTED_WALLET" });
-    }
+    this.service.start();    
   }
 
   componentWillUnmount() {

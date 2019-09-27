@@ -25,9 +25,7 @@ export const getStartedMachine = (a) => Machine({
           target: "startingDaemon",
           cond: (c, event) => !event.isAdvancedDaemon && !event.isSPV
         },
-        START_SELECTED_WALLET: {
-          target: "startingWallet",
-        }
+        CHOOSE_WALLET: "choosingWallet",
       },
     },
     startSpv: {
@@ -80,6 +78,7 @@ export const getStartedMachine = (a) => Machine({
       }
     },
     choosingWallet: {
+      onEntry: "isAtChoosingWallet",
       onExit: "isAtLeavingChoosingWallet",
       on: {
         SUBMIT_CHOOSE_WALLET: "startingWallet",
@@ -162,12 +161,20 @@ export const getStartedMachine = (a) => Machine({
         .then(synced => a.sendEvent({ type: "CHECK_NETWORK_MATCH", payload: synced }))
         .catch(e => console.log(e));
     },
+    isAtChoosingWallet: (context, event) => {
+      console.log("is at choosingWallet");
+      const { selectedWallet } = event;
+      if (selectedWallet) {
+        context.selectedWallet = selectedWallet;
+        a.sendEvent({ type: "SUBMIT_CHOOSE_WALLET" });
+      }
+    },
     isAtLeavingChoosingWallet: (context, event) => {
       console.log("is leaving choosing wallet");
+      if (!event.selectedWallet) {
+        return;
+      }
       context.selectedWallet = event.selectedWallet;
-    },
-    isAtChoosingWallet: () => {
-      console.log("is At Choose Wallet");
     },
     isAtStartWallet: (context) => {
       console.log("is At Start Wallet");
