@@ -412,6 +412,7 @@ export const checkNetworkMatch = () => async (dispatch, getState) => new Promise
         dispatch({ error: DIFF_CONNECTION_ERROR, type: CHECK_NETWORKMATCH_FAILED });
         return dispatch(pushHistory("/error"));
       }
+      dispatch({ type: CHECK_NETWORKMATCH_SUCCESS });
       resolve(daemonInfo);
     })
     .catch(error => {

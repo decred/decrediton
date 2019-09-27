@@ -190,6 +190,7 @@ export const closeWalletRequest = () => async(dispatch, getState) => {
     await dispatch(syncCancel());
     await dispatch(rescanCancel());
     await dispatch(trezorClearDeviceSession());
+    await dispatch(setSelectedWallet(null));
     if (walletReady) {
       await closeWallet(getState().walletLoader.loader);
     }

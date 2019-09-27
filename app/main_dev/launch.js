@@ -61,9 +61,7 @@ export const getDaemonCredentials = () => ({
 });
 
 export const setSelectedWallet = (w) => {
-  if (!w) return;
-  selectedWallet = w;
-  return true;
+  return selectedWallet = w;
 };
 
 export const getSelectedWallet = () => selectedWallet;

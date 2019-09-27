@@ -20,7 +20,6 @@ class WalletSelectionBody extends React.Component {
       masterPubKeyError: false,
       walletNameError: null,
       isTrezor: false,
-      selectedWallet: this.props.availableWallets[0],
     };
   }
 
@@ -200,6 +199,7 @@ class WalletSelectionBody extends React.Component {
     this.setState({ walletMasterPubKey });
   }
   startWallet() {
+    console.log(this.props.selectedWallet)
     this.props.onStartWallet(this.props.selectedWallet);
   }
   resetState() {

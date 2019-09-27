@@ -151,8 +151,8 @@ export const getStartedMachine = (a) => Machine({
     },
     isAtCheckNetworkMatch: () => {
       console.log(" is at check network ");
-      return a.checkNetworkMatch().then( checked => a.onGetAvailableWallets()
-        .then(w => a.sendEvent({ type: "CHOOSE_WALLET", payload: { checked, w } }) ))
+      return a.checkNetworkMatch()
+        .then( checked => a.sendEvent({ type: "CHOOSE_WALLET", payload: { checked } }))
         .catch(e => console.log(e));
     },
     isAtSyncingDaemon: () => {
@@ -163,10 +163,13 @@ export const getStartedMachine = (a) => Machine({
     },
     isAtChoosingWallet: (context, event) => {
       console.log("is at choosingWallet");
+      a.onGetAvailableWallets()
+        .then(w => a.sendEvent({ type: "CHOOSE_WALLET", payload: { w } }) )
+        .catch(e => console.log(e))
       const { selectedWallet } = event;
       if (selectedWallet) {
         context.selectedWallet = selectedWallet;
-        a.sendEvent({ type: "SUBMIT_CHOOSE_WALLET" });
+        return a.sendEvent({ type: "SUBMIT_CHOOSE_WALLET" });
       }
     },
     isAtLeavingChoosingWallet: (context, event) => {

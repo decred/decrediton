@@ -306,7 +306,7 @@ ipcMain.on("get-selected-wallet", (event) => {
 
 ipcMain.on("set-selected-wallet", (event, wallet) => {
   setSelectedWallet(wallet);
-  event.returnValue = wallet;
+  event.returnValue = true;
 });
 
 ipcMain.on("get-daemon-credentials", (event) => {
