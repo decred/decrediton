@@ -1,5 +1,5 @@
 // @flow
-import { getWalletCfg, getGlobalCfg } from "../config";
+import { getWalletCfg, getGlobalCfg } from "config";
 import { isTestNet } from "selectors";
 import { equalElements } from "helpers";
 import * as wallet from "wallet";
@@ -7,6 +7,7 @@ import { closeWalletRequest } from "actions/WalletLoaderActions";
 import { closeDaemonRequest, getAvailableWallets, startDaemon } from "actions/DaemonActions";
 import { getTreasuryBalance, resetTreasuryBalance } from "actions/ClientActions";
 import { EXTERNALREQUEST_DCRDATA } from "main_dev/externalRequests";
+import * as configConstants from "constants/config";
 
 export const SETTINGS_SAVE = "SETTINGS_SAVE";
 export const SETTINGS_CHANGED = "SETTINGS_CHANGED";
@@ -18,21 +19,21 @@ export const saveSettings = (settings) => (dispatch, getState) => {
   const { daemon: { walletName } } = getState();
 
   const config = getGlobalCfg();
-  const oldAllowedExternalRequests = config.get("allowed_external_requests");
+  const oldAllowedExternalRequests = config.get(configConstants.ALLOW_EXTERNAL_REQUEST);
   const updatedProxy =
     (config.get("proxy_type") !== settings.proxyType) ||
     (config.get("proxy_location") !== settings.proxyLocation);
 
-  config.set("locale", settings.locale);
-  config.set("daemon_start_advanced", settings.daemonStartAdvanced);
-  config.set("allowed_external_requests", settings.allowedExternalRequests);
-  config.set("proxy_type", settings.proxyType);
-  config.set("proxy_location", settings.proxyLocation);
-  config.set("timezone", settings.timezone);
-  config.set("spv_mode", settings.spvMode);
-  config.set("spv_connect", settings.spvConnect);
-  config.set("network", settings.network);
-  config.set("theme", settings.theme);
+  config.set(configConstants.LOCALE, settings.locale);
+  config.set(configConstants.DAEMON_ADVANCED, settings.daemonStartAdvanced);
+  config.set(configConstants.ALLOW_EXTERNAL_REQUEST, settings.allowedExternalRequests);
+  config.set(configConstants.PROXY_TYPE, settings.proxyType);
+  config.set(configConstants.PROXY_LOCATION, settings.proxyLocation);
+  config.set(configConstants.TIMEZONE, settings.timezone);
+  config.set(configConstants.SPV_MODE, settings.spvMode);
+  config.set(configConstants.SPV_CONNECT, settings.spvConnect);
+  config.set(configConstants.NETWORK, settings.network);
+  config.set(configConstants.THEME, settings.theme);
 
   if (walletName) {
     const walletConfig = getWalletCfg(isTestNet(getState()), walletName);
@@ -70,11 +71,11 @@ export const saveSettings = (settings) => (dispatch, getState) => {
 export const ALLOWEDEXTERNALREQUESTS_ADDED = "ALLOWEDEXTERNALREQUESTS_ADDED";
 export const addAllowedExternalRequest = (requestType) => (dispatch, getState) => {
   const config = getGlobalCfg();
-  const allowed = config.get("allowed_external_requests");
+  const allowed = config.get(configConstants.ALLOW_EXTERNAL_REQUEST);
   if (allowed.indexOf(requestType) > -1) return;
 
   allowed.push(requestType);
-  config.set("allowed_external_requests", allowed);
+  config.set(configConstants.ALLOW_EXTERNAL_REQUEST, allowed);
   wallet.allowExternalRequest(requestType);
 
   const { settings: { currentSettings, tempSettings } } = getState();

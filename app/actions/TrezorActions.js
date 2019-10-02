@@ -7,7 +7,7 @@ import { sprintf } from "sprintf-js";
 import { rawHashToHex, rawToHex, hexToRaw, str2utf8hex, hex2b64 } from "helpers";
 import { publishTransactionAttempt } from "./ControlActions";
 import { model1_decred_homescreen } from "helpers/trezor";
-import { getWalletCfg } from "../config";
+import { getWalletCfg } from "config";
 
 import { EXTERNALREQUEST_TREZOR_BRIDGE } from "main_dev/externalRequests";
 import {

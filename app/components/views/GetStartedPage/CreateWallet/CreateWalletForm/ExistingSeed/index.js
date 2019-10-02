@@ -1,7 +1,7 @@
 import ExistingSeedForm from "./Form";
 import { SEED_LENGTH, SEED_WORDS } from "wallet/seed";
 import { FormattedMessage as T } from "react-intl";
-import { WORDS, HEX, POSITION_ERROR, MISMATCH_ERROR } from "./constants";
+import { WORDS, HEX, POSITION_ERROR, MISMATCH_ERROR } from "constants";
 
 const shouldShowNonSupportSeedSize = (hexSeed, seedType) =>
   hexSeed && seedType === HEX && hexSeed.length !== 64 && hexSeed.length > SEED_LENGTH.HEX_MIN;

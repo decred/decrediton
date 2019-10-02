@@ -1,24 +1,25 @@
 import { RegularTxRowOfClass as regular } from "./RegularTxRow";
 import { StakeTxRowOfType as stake } from "./StakeTxRow";
 import { defineMessages, injectIntl } from "react-intl";
+import * as txTypes from "constants/Decrediton";
 import "style/TxHistory.less";
 
-const TxRowByType = { // TODO: use constants instead of string
-  "Ticket": stake("Ticket"),
-  "Vote": stake("Vote"),
-  "Revocation": stake("Revocation"),
-  "unknown": stake("Ticket"),
-  "voted": stake("Voted"),
-  "unmined": stake("Unmined"),
-  "immature": stake("Immature"),
-  "missed": stake("Missed"),
-  "expired": stake("Expired"),
-  "revoked": stake("Revoked"),
-  "live": stake("Live"),
-  "out": regular("Send", true),
-  "in": regular("Receive", false),
-  "transfer": regular("Transfer", true),
-  "Coinbase": regular("Receive", true),
+const TxRowByType = {
+  [txTypes.TICKET]: stake,
+  [txTypes.VOTE] : stake,
+  [txTypes.REVOCATION] : stake,
+  [txTypes.UNKNOWN] : stake,
+  [txTypes.VOTED] : stake,
+  [txTypes.UNMINED] : stake,
+  [txTypes.IMMATURE] : stake,
+  [txTypes.MISSED] : stake,
+  [txTypes.EXPIRED] : stake,
+  [txTypes.REVOKED] : stake,
+  [txTypes.LIVE] : stake,
+  [txTypes.OUT] : regular,
+  [txTypes.IN] : regular,
+  [txTypes.TRANSFER] : regular,
+  [txTypes.COINBASE] : regular,
 };
 
 export const timeMessageDefine = defineMessages({
@@ -31,9 +32,12 @@ export const timeMessageDefine = defineMessages({
 export const timeMessage = (txTimestamp, intl) => intl.formatMessage(timeMessageDefine.dayMonthHourDisplay, { value: txTimestamp });
 
 const TxRow = ({ tx, overview, tsDate, intl }, { router }) => {
-  const rowType = tx.status ? tx.status :
+  let rowType = tx.status ? tx.status :
     tx.txType ? tx.txType : tx.txDirection;
-  const Component = TxRowByType[rowType];
+
+  rowType = rowType.toLowerCase();
+  // calls the component we defined above at TxRowByType.
+  const Component = TxRowByType[rowType](rowType);
 
   return Component ? (
     <Component

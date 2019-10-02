@@ -1,15 +1,16 @@
 import "style/Balance.less";
 import { FormattedNumber } from "react-intl";
 import { balance } from "connectors";
+import { DCR, ATOMS, UNIT_DIVISOR } from "constants";
 
 export const Balance = ({ currencyDisplay, amount, onClick, bold, large,
   flat, title, noSmallAmount, classNameWrapper, classNameUnit, preScaled
 }) => {
   const secondary = large ? "balance-tiny" : flat ? "balance-base" : title ? "balance-title" : "balance-small";
-  if (currencyDisplay === "DCR") {
+  if (currencyDisplay === DCR) {
     var totalDcr = 0;
     if (typeof amount !== "undefined" && amount !== 0 && !isNaN(amount)) {
-      totalDcr = preScaled ? parseFloat(amount) : parseInt(amount) / 100000000;
+      totalDcr = preScaled ? parseFloat(amount) : parseInt(amount) / UNIT_DIVISOR;
     }
     const split = totalDcr.toFixed(8).toString().split(".");
     const head = [ split[0], split[1].slice(0,2) ].join(".");
@@ -31,7 +32,7 @@ export const Balance = ({ currencyDisplay, amount, onClick, bold, large,
         </span>
       </div>
     );
-  } else if (currencyDisplay === "atoms") {
+  } else if (currencyDisplay === ATOMS) {
     return (
       <div className={classNameWrapper}>
         <span className="mono" {...{ onClick }}>

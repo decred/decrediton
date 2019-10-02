@@ -1,6 +1,6 @@
 import winston from "winston";
 import path from "path";
-import { MAX_LOG_LENGTH } from "./constants";
+import { MAX_LOG_LENGTH } from "constants";
 import { appDataDirectory } from "./paths";
 import os from "os";
 

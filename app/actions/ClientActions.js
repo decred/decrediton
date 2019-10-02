@@ -7,7 +7,7 @@ import { transactionNtfnsStart, accountNtfnsStart } from "./NotificationActions"
 import { refreshStakepoolPurchaseInformation, setStakePoolVoteChoices, getStakepoolStats } from "./StakePoolActions";
 import { getDecodeMessageServiceAttempt, decodeRawTransactions } from "./DecodeMessageActions";
 import { push as pushHistory, goBack } from "react-router-redux";
-import { getWalletCfg, getGlobalCfg } from "../config";
+import { getWalletCfg, getGlobalCfg } from "config";
 import { onAppReloadRequested } from "wallet";
 import { getTransactions as walletGetTransactions } from "wallet/service";
 import { TransactionDetails } from "middleware/walletrpc/api_pb";
@@ -17,6 +17,7 @@ import { getVettedProposals } from "./GovernanceActions";
 import { rawHashToHex, reverseRawHash, strHashToRaw } from "helpers";
 import * as da from "../middleware/dcrdataapi";
 import { EXTERNALREQUEST_DCRDATA, EXTERNALREQUEST_POLITEIA } from "main_dev/externalRequests";
+import { TESTNET, MAINNET } from "constants";
 
 export const goToTransactionHistory = () => (dispatch) => {
   dispatch(pushHistory("/transactions/history"));
@@ -280,8 +281,8 @@ function getNetworkSuccess(getNetworkResponse) {
     var currentNetwork = getNetworkResponse.getActiveNetwork();
     // XXX remove network magic numbers here
     var networkStr = "";
-    if ((currentNetwork == testnet && network == "testnet") ||
-      (currentNetwork == mainnet && network == "mainnet")) {
+    if ((currentNetwork == testnet && network == TESTNET) ||
+      (currentNetwork == mainnet && network == MAINNET)) {
       networkStr = network;
       getNetworkResponse.networkStr = networkStr;
       dispatch({ getNetworkResponse: getNetworkResponse, type: GETNETWORK_SUCCESS });

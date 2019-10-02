@@ -7,11 +7,11 @@ import { semverCompatible } from "./VersionActions";
 import * as wallet from "wallet";
 import { push as pushHistory, goBack } from "react-router-redux";
 import { ipcRenderer } from "electron";
-import { setMustOpenForm, getWalletCfg, getAppdataPath, getRemoteCredentials, getGlobalCfg, setLastHeight, getDaemonIsAdvanced } from "../config";
+import { setMustOpenForm, getWalletCfg, getAppdataPath, getRemoteCredentials, getGlobalCfg, setLastHeight, getDaemonIsAdvanced } from "config";
 import { isTestNet } from "selectors";
 import axios from "axios";
 import { STANDARD_EXTERNAL_REQUESTS } from "main_dev/externalRequests";
-import { DIFF_CONNECTION_ERROR } from "main_dev/constants";
+import { DIFF_CONNECTION_ERROR, LOCALE, TESTNET } from "constants";
 import { enableTrezor } from "./TrezorActions";
 
 export const DECREDITON_VERSION = "DECREDITON_VERSION";
@@ -125,7 +125,7 @@ export const setupDisabledPrivacy = () => (dispatch, getState) => {
 
 export const selectLanguage = (selectedLanguage) => (dispatch) => {
   const config = getGlobalCfg();
-  config.set("locale", selectedLanguage.language);
+  config.set(LOCALE, selectedLanguage.language);
   config.set("set_language", false);
   dispatch({ language: selectedLanguage.language, type: SELECT_LANGUAGE });
   dispatch(pushHistory("/getstarted"));
@@ -237,7 +237,7 @@ export const getAvailableWallets = () => async (dispatch, getState) => {
 };
 
 export const removeWallet = (selectedWallet) => (dispatch) => {
-  wallet.removeWallet(selectedWallet.value.wallet, selectedWallet.network == "testnet")
+  wallet.removeWallet(selectedWallet.value.wallet, selectedWallet.network == TESTNET)
     .then(() => {
       dispatch({ type: WALLETREMOVED });
       dispatch(getAvailableWallets());
@@ -251,7 +251,7 @@ export const removeWallet = (selectedWallet) => (dispatch) => {
 export const createWallet = (createNewWallet, selectedWallet) => (dispatch, getState) => {
   const { currentSettings } = getState().settings;
   const network = currentSettings.network;
-  wallet.createNewWallet(selectedWallet.value.wallet, network == "testnet")
+  wallet.createNewWallet(selectedWallet.value.wallet, network == TESTNET)
     .then(() => {
       dispatch({ createNewWallet, isWatchingOnly: selectedWallet.value.watchingOnly,
         type: WALLETCREATED });
@@ -282,9 +282,9 @@ export const closeDaemonRequest = () => async(dispatch, getState) => {
 export const startWallet = (selectedWallet) => (dispatch, getState) => {
   const { currentSettings } = getState().settings;
   const network = currentSettings.network;
-  wallet.startWallet(selectedWallet.value.wallet, network == "testnet")
+  wallet.startWallet(selectedWallet.value.wallet, network == TESTNET)
     .then(({ port }) => {
-      const walletCfg = getWalletCfg(network == "testnet", selectedWallet.value.wallet);
+      const walletCfg = getWalletCfg(network == TESTNET, selectedWallet.value.wallet);
       wallet.setPreviousWallet(selectedWallet);
 
       var currentStakePoolConfig = walletCfg.get("stakepools");

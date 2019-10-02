@@ -10,6 +10,7 @@ import { TRANSACTION_DIR_SENT, TRANSACTION_DIR_RECEIVED,
 } from "wallet/service";
 import { DescriptionHeader } from "layout";
 import { Balance } from "shared";
+import { DCR } from "constants";
 
 export const HistoryTabHeader = historyPage(({ totalBalance }) =>
   <DescriptionHeader
@@ -125,7 +126,7 @@ class History extends React.Component {
   onChangeSliderValue(value, minOrMax) {
     const { unitDivisor, currencyDisplay } = this.props;
     // this is needed because transactions at filter are all at atoms
-    const amount = currencyDisplay === "DCR" ? value*unitDivisor : value;
+    const amount = currencyDisplay === DCR ? value*unitDivisor : value;
 
     if(minOrMax === "min") {
       this.onChangeFilter({ minAmount: amount });

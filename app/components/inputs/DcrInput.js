@@ -2,6 +2,7 @@ import FloatInput from "./FloatInput";
 import IntegerInput from "./IntegerInput";
 import { strToDcrAtoms } from "helpers/strings";
 import balanceConnector from "connectors/balance";
+import { DCR, MAX_DCR_AMOUNT } from "constants";
 
 /**
  * FixedDcrInput is a simple numeric input that is assumed to **always** hold
@@ -38,9 +39,9 @@ class DcrInput extends React.Component {
     const value = e.target.value;
     if (value) {
       // pre-validate if <= max supply
-      amount = currencyDisplay === "DCR" ? value*unitDivisor : strToDcrAtoms(value, unitDivisor);
-      // TODO: move to a global constant
-      if (amount > 21e14) return;
+      amount = currencyDisplay === DCR ? value*unitDivisor : strToDcrAtoms(value, unitDivisor);
+
+      if (amount > MAX_DCR_AMOUNT) return;
     }
     if (onChange) onChange({ ...e, value, atomValue: amount });
   }

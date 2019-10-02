@@ -2,6 +2,7 @@ import ticketAutoBuyer from "connectors/ticketAutoBuyer";
 import { substruct, compose, eq, get } from "fp";
 import { injectIntl } from "react-intl";
 import TicketAutoBuyerForm from "./Form";
+import { DCR, UNIT_DIVISOR } from "constants";
 
 @autobind
 class TicketAutoBuyer extends React.Component {
@@ -79,8 +80,8 @@ class TicketAutoBuyer extends React.Component {
 
   getValueInAtoms(value) {
     const { currencyDisplay } = this.props;
-    if (currencyDisplay === "DCR")
-      return value * 100000000;
+    if (currencyDisplay === DCR)
+      return value * UNIT_DIVISOR;
     return value;
   }
 

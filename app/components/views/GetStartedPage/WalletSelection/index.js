@@ -1,5 +1,6 @@
 import { WalletSelectionFormBody } from "./Form";
 import { createWallet } from "connectors";
+import { MAINNET } from "constants";
 @autobind
 class WalletSelectionBody extends React.Component {
   constructor(props) {
@@ -95,7 +96,7 @@ class WalletSelectionBody extends React.Component {
           onEditWallets,
           onCloseEditWallets,
           editWallets,
-          networkSelected: newWalletNetwork == "mainnet",
+          networkSelected: newWalletNetwork == MAINNET,
           getDaemonSynced,
           toggleWatchOnly,
           isWatchingOnly,

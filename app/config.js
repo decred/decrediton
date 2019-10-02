@@ -3,7 +3,8 @@ import Store from "electron-store";
 import ini from "ini";
 import { stakePoolInfo } from "./middleware/stakepoolapi";
 import { appDataDirectory, getGlobalCfgPath, dcrdCfg, getWalletPath, dcrwalletCfg, getDcrdRpcCert, getDcrdPath } from "./main_dev/paths";
-import * as cfgConstants from "./main_dev/configConstants.js";
+import * as cfgConstants from "constants/config";
+import { DCR, TESTNET, MAINNET } from "constants";
 
 export function getGlobalCfg() {
   const config = new Store();
@@ -24,7 +25,7 @@ export function initWalletCfg(testnet, walletPath) {
     config.set("balancetomaintain","0");
   }
   if (!config.has("currency_display")) {
-    config.set("currency_display","DCR");
+    config.set("currency_display", DCR);
   }
   if (!config.has("hiddenaccounts")) {
     var hiddenAccounts = Array();
@@ -298,7 +299,7 @@ export function createTempDcrdConf(testnet) {
         rpcuser: makeRandomString(10),
         rpcpass: makeRandomString(10),
         rpclisten: `127.0.0.1:${port}`,
-        network: testnet ? "testnet" : "mainnet",
+        network: testnet ? TESTNET : MAINNET,
       }
     };
     fs.writeFileSync(dcrdCfg(appDataDirectory()), ini.stringify(dcrdConf));

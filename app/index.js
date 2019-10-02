@@ -14,16 +14,17 @@ import "./style/ReactSelectGlobal.less";
 import pkg from "./package.json";
 import { log } from "./wallet";
 import { ipcRenderer } from "electron";
+import { DCR, DAEMON_ADVANCED, THEME, OPEN_FORM, LOCALE, NETWORK } from "constants";
 
 var globalCfg = getGlobalCfg();
-const locale = globalCfg.get("locale");
+const locale = globalCfg.get(LOCALE);
 const cliOptions = ipcRenderer.sendSync("get-cli-options");
 
 log("info", "Starting main react app");
 
 const currentSettings = {
   locale: locale,
-  daemonStartAdvanced: (cliOptions && cliOptions.daemonStartAdvanced) || globalCfg.get("daemon_start_advanced"),
+  daemonStartAdvanced: (cliOptions && cliOptions.daemonStartAdvanced) || globalCfg.get(DAEMON_ADVANCED),
   daemonStartAdvancedFromCli: !!(cliOptions && cliOptions.daemonStartAdvanced),
   allowedExternalRequests: globalCfg.get("allowed_external_requests"),
   proxyType: globalCfg.get("proxy_type"),
@@ -33,10 +34,10 @@ const currentSettings = {
   spvConnect: (cliOptions && cliOptions.spvConnect) || globalCfg.get("spv_connect"),
   spvConnectFromCli: !!(cliOptions && cliOptions.spvConnect),
   timezone: globalCfg.get("timezone"),
-  currencyDisplay: "DCR",
-  network: (cliOptions && cliOptions.network) || globalCfg.get("network"),
+  currencyDisplay: DCR,
+  network: (cliOptions && cliOptions.network) || globalCfg.get(NETWORK),
   networkFromCli: !!(cliOptions && cliOptions.network),
-  theme: globalCfg.get("theme"),
+  theme: globalCfg.get(THEME),
 };
 var initialState = {
   settings: {
@@ -45,7 +46,7 @@ var initialState = {
     settingsChanged: false,
     uiAnimations: globalCfg.get("ui_animations"),
     needNetworkReset: false,
-    theme: globalCfg.get("theme"),
+    theme: globalCfg.get(THEME),
   },
   stakepool: {
     currentStakePoolConfig: null,
@@ -75,11 +76,11 @@ var initialState = {
     timeLeftEstimate: null,
     timeStart: 0,
     blockStart: 0,
-    daemonAdvanced: (cliOptions && cliOptions.daemonStartAdvanced) || globalCfg.get("daemon_start_advanced"),
+    daemonAdvanced: (cliOptions && cliOptions.daemonStartAdvanced) || globalCfg.get(DAEMON_ADVANCED),
     credentials: null,
     appdata: null,
     shutdownRequested: false,
-    openForm: globalCfg.get("must_open_form"),
+    openForm: globalCfg.get(OPEN_FORM),
     remoteAppdataError: false,
     previousWallet: null,
     selectCreateWalletInputRequest: true,

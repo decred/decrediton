@@ -4,18 +4,19 @@ import { createElement as h } from "react";
 import { Balance, Tooltip } from "shared";
 import { diffBetweenTwoTs } from "helpers/dateFormat";
 import { timeMessage } from "./index";
+import * as txTypes from "constants/Decrediton";
 
-const messageByType = { // TODO: use constants instead of string
-  "vote": <T id="transaction.type.vote" m="Voted" />,
-  "ticket": <T id="transaction.type.ticket" m="Purchased" />,
-  "revocation": <T id="transaction.type.revocation" m="Revoked" />,
-  "voted": <T id="transaction.type.voted" m="Voted" />,
-  "unmined": <T id="transaction.type.unmined" m="Unmined" />,
-  "immature": <T id="transaction.type.immature" m="Immature" />,
-  "missed": <T id="transaction.type.missed" m="Missed" />,
-  "expired": <T id="transaction.type.expired" m="Expired" />,
-  "revoked": <T id="transaction.type.revoked" m="Revoked" />,
-  "live": <T id="transaction.type.live" m="Live" />,
+const messageByType = {
+  [txTypes.TICKET] : <T id="transaction.type.ticket" m="Purchased" />,
+  [txTypes.VOTE] : <T id="transaction.type.vote" m="Voted" />,
+  [txTypes.VOTED] : <T id="transaction.type.voted" m="Voted" />,
+  [txTypes.REVOCATION] : <T id="transaction.type.revocation" m="Revoked" />,
+  [txTypes.UNMINED] : <T id="transaction.type.unmined" m="Unmined" />,
+  [txTypes.IMMATURE] : <T id="transaction.type.immature" m="Immature" />,
+  [txTypes.MISSED] : <T id="transaction.type.missed" m="Missed" />,
+  [txTypes.EXPIRED] : <T id="transaction.type.expired" m="Expired" />,
+  [txTypes.REVOKED] : <T id="transaction.type.revoked" m="Revoked" />,
+  [txTypes.LIVE] : <T id="transaction.type.live" m="Live" />,
 };
 
 const StakeTxRow = ({ status,  ...props }) => {
@@ -48,8 +49,7 @@ const StakeTxRow = ({ status,  ...props }) => {
       daysToVote: daysToVote || 0,
     }} />;
 
-  const statusLower = status ? status.toLowerCase() : "";
-  const typeMsg = messageByType[statusLower] || "(unknown type)";
+  const typeMsg = messageByType[status] || "(unknown type)";
 
   return (
     <Row {...{ className: status, ...props }}>

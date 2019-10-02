@@ -3,6 +3,7 @@ import { SettingsInput, SettingsTextInput, LanguageSelect, NumericInput } from "
 import { InfoDocFieldModalButton } from "buttons";
 import { Tooltip } from "shared";
 import "style/LanguageSelect.less";
+import { TESTNET, MAINNET } from "constants";
 
 const propTypes = {
   tempSettings: PropTypes.object.isRequired,
@@ -71,8 +72,8 @@ const GeneralSettings = ({
             labelKey="description"
             disabled={tempSettings.networkFromCli}
             options={[
-              { key: "true", value: "mainnet", description: <T id="settings.network.mainnet" m="Mainnet" /> },
-              { key: "false", value: "testnet", description: <T id="settings.network.testnet" m="Testnet" /> },
+              { key: "true", value: MAINNET, description: <T id="settings.network.mainnet" m="Mainnet" /> },
+              { key: "false", value: TESTNET, description: <T id="settings.network.testnet" m="Testnet" /> },
             ]}
           />
         </Tooltip>

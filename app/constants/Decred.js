@@ -1,3 +1,7 @@
+export const MAX_POSSIBLE_FEE_INPUT = 0.1;
+
+export const MIN_RELAY_FEE = 0.0001;
+
 // Constants copied from dcrd/chaincfg/params.go
 
 export const TestNetParams = {
@@ -35,3 +39,9 @@ export const MainNetParams = {
   TreasuryAddress: "Dcur2mcGjmENx4DhNqDctW5wJCVyT3Qeqkx",
   trezorCoinName: "Decred",
 };
+
+// MAX_DCR_AMOUNT represents the maximum decred amount in atoms.
+export const MAX_DCR_AMOUNT = 21e14;
+
+// UNIT_DIVISOR represents the minimum value one decred can have in atoms.
+export const UNIT_DIVISOR = 100000000;

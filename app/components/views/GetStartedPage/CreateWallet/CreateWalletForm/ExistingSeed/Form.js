@@ -4,7 +4,7 @@ import { TextToggle } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import { ConfirmSeedMsg } from "../../../messages";
 import "style/CreateWalletForm.less";
-import { WORDS, HEX } from "./constants";
+import { WORDS, HEX } from "constants";
 
 const ExistingSeedForm = ({
   onChangeSeedWord, seedWords, setSeedHex, mountSeedErrors, handleOnPaste, hexSeed,
