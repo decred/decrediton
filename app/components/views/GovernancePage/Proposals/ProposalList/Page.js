@@ -1,9 +1,10 @@
-import { FormattedMessage as T, FormattedRelative } from "react-intl";
+import { FormattedMessage as T } from "react-intl";
 import { activeVoteProposals, preVoteProposals, finishedProposals, abandonedProposals } from "connectors";
 import { VotingProgress } from "indicators";
 import { PoliteiaLoading, NoProposals } from "indicators";
 import { VOTESTATUS_ACTIVEVOTE, VOTESTATUS_FINISHEDVOTE } from "actions/GovernanceActions";
 import InfiniteScroll from "react-infinite-scroller";
+import { FormattedRelative } from "shared";
 
 const VoteChoiceText = ({ currentVoteChoice }) => {
   if (!currentVoteChoice) {
@@ -69,28 +70,28 @@ const ProposalList = ({
   proposals, loading, viewProposalDetails, tsDate, finishedProposal, noMoreProposals, onLoadMoreProposals
 }) => {
   return (
-  <>
-    { loading
-      ? <div className="proposal-loading-page"><PoliteiaLoading center /></div>
-      : proposals && proposals.length
-        ? (
-          <InfiniteScroll
-            hasMore={!noMoreProposals}
-            loadMore={onLoadMoreProposals}
-            initialLoad={false}
-            useWindow={false}
-            threshold={0}
-          >
-            <div className={finishedProposal ? "proposal-list ended" : "proposal-list"}>
-              {proposals.map(v => (
-                <ProposalListItem key={v.token} {...v} tsDate={tsDate} onClick={viewProposalDetails} />
-              ))}
-            </div>
-          </InfiniteScroll>
-        )
-        : <NoProposals />
-    }
-  </>
+    <>
+      { loading
+        ? <div className="proposal-loading-page"><PoliteiaLoading center /></div>
+        : proposals && proposals.length
+          ? (
+            <InfiniteScroll
+              hasMore={!noMoreProposals}
+              loadMore={onLoadMoreProposals}
+              initialLoad={false}
+              useWindow={false}
+              threshold={0}
+            >
+              <div className={finishedProposal ? "proposal-list ended" : "proposal-list"}>
+                {proposals.map(v => (
+                  <ProposalListItem key={v.token} {...v} tsDate={tsDate} onClick={viewProposalDetails} />
+                ))}
+              </div>
+            </InfiniteScroll>
+          )
+          : <NoProposals />
+      }
+    </>
   );};
 
 export const ActiveVoteProposals = activeVoteProposals(ProposalList);
