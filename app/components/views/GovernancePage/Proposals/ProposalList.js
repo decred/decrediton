@@ -1,8 +1,9 @@
-import { FormattedMessage as T, FormattedRelative } from "react-intl";
+import { FormattedMessage as T } from "react-intl";
 import { activeVoteProposals, preVoteProposals, votedProposals, proposals, abandonedProposals } from "connectors";
 import { VotingProgress } from "indicators";
 import { PoliteiaLoading, NoProposals } from "indicators";
 import { VOTESTATUS_ACTIVEVOTE, VOTESTATUS_VOTED } from "actions/GovernanceActions";
+import { FormattedRelative } from "shared";
 
 const VoteChoiceText = ({ currentVoteChoice }) => {
   if (!currentVoteChoice) {

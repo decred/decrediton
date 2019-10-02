@@ -1,5 +1,6 @@
-import { FormattedMessage as T, FormattedRelative } from "react-intl";
+import { FormattedMessage as T } from "react-intl";
 import { LinearProgressSmall } from "indicators";
+import { FormattedRelative } from "shared";
 
 @autobind
 class LoaderBarBottom extends React.Component {
