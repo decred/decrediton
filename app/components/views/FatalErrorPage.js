@@ -25,17 +25,17 @@ class FatalErrorPage extends React.Component {
       break;
     case ((daemonError.indexOf(corruptedError) !== -1  || daemonError.indexOf(checkSumError) !== -1 )):
       errorMessage = (
-          <>
-            <div className="fatal-error-reset-blockchain">
-              <T id="fatal.suggestion.corrupted" m="This error means your blockchain data has somehow become corrupted.  Typically, this is caused by a sector on the HDD/SDD that went bad and its built-in SMART didn't repair it, or the more likely case, there was a memory issue which corrupted the data.  To resolve, you must delete your blockchain data and re-download.  Press the button below to complete the process. When you restart Decrediton, it will automatically begin your blockchain download. Please come to our support channel on slack/matrix/discord to get advice about running disk utilities. " />
-            </div>
-            <RemoveDaemonButton
-              className="fatal-remove-button"
-              modalTitle={<T id="fatal.removeConfirmModal.title" m="Remove daemon data"/>}
-              modalContent={<T id="fatal.removeConfirmModal.content" m="Warning this action is permanent! Please make sure you want to remove your blockchain data before proceeding. Decrediton will automatically shutdown after deleting the folder. Please manually restart it afterwards."/>}
-              onSubmit={deleteDaemonData}
-              buttonLabel={ <T id="fatal.button.delete" m="Delete and Shutdown"/>}/>
-          </>);
+        <>
+          <div className="fatal-error-reset-blockchain">
+            <T id="fatal.suggestion.corrupted" m="This error means your blockchain data has somehow become corrupted.  Typically, this is caused by a sector on the HDD/SDD that went bad and its built-in SMART didn't repair it, or the more likely case, there was a memory issue which corrupted the data.  To resolve, you must delete your blockchain data and re-download.  Press the button below to complete the process. When you restart Decrediton, it will automatically begin your blockchain download. Please come to our support channel on slack/matrix/discord to get advice about running disk utilities. " />
+          </div>
+          <RemoveDaemonButton
+            className="fatal-remove-button"
+            modalTitle={<T id="fatal.removeConfirmModal.title" m="Remove daemon data"/>}
+            modalContent={<T id="fatal.removeConfirmModal.content" m="Warning this action is permanent! Please make sure you want to remove your blockchain data before proceeding. Decrediton will automatically shutdown after deleting the folder. Please manually restart it afterwards."/>}
+            onSubmit={deleteDaemonData}
+            buttonLabel={ <T id="fatal.button.delete" m="Delete and Shutdown"/>}/>
+        </>);
       break;
     default:
       errorMessage = <T id="fatal.suggestion.fallthrough" m="Please note the error above and go to the support channel on slack/matrix/rockchat for help resolving the issue." />;
