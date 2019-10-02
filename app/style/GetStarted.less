@@ -66,12 +66,21 @@
   padding: 40px;
   display: block;
   background-color: var(--background-container);
-  background-repeat: no-repeat;
-  background-image: var(--launcher-logo);
-  background-size: 173px;
-  background-position: 40px 40px;
   z-index: 3;
   height: 100%;
+  
+  &::before{
+    content: "";
+    width: 100%;
+    height: 33px;
+    top: 0;
+    left: 0;
+    display: block;
+    background-repeat: no-repeat;
+    background-image: var(--launcher-logo);
+    background-size: 173px;
+    background-position: 0 0;
+  }
 }
 
 .getstarted {
@@ -80,14 +89,7 @@
 
 .getstarted.loader.logs {
   margin-left: 42px;
-  margin-top: 138px;
-
-  .loader-settings-logs {
-    position: fixed;
-    right: 55px;
-    top: 60px;
-    user-select: none;
-  }
+  padding-top: 107px;
 
   .active {
     color: var(--input-color);
@@ -108,8 +110,9 @@
 }
 
 .getstarted.loader {
-  margin-top: 138px;
+  padding-top: 107px;
   margin-left: 60px;
+  position: relative;
 
   .tutorial-button {
     background-color: var(--info-modal-button-bg);
@@ -140,9 +143,10 @@
   }
 
   .loader-settings-logs {
-    position: fixed;
-    right: 55px;
-    top: 60px;
+    position: absolute;
+    right: 15px;
+    top: -25px;    
+    margin: inherit;
     user-select: none;
   }
 
@@ -218,7 +222,7 @@
 
 .loader-bar-bottom {
   float: left;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
@@ -850,13 +854,52 @@
   .getstarted.content {
     margin-left: 10px;
   }
-  .getstarted.loader.logs {
+  .page-body.getstarted {
+    height: calc(100% - 80px);
+  }  
+
+  .getstarted.loader{
+    padding-top: 56px;
     margin-left: 0;
-    margin-top: 87px;
+    .loader-bar-estimation{
+        display: none;
+    }
+    .go-back-screen-button-area {
+      top:131px;
+      right:60px;
+    }      
+    .loader-settings-logs{
+      right:-30px !important;
+    }              
+    &.logs {
+      margin-left: -10px;
+      margin-right: -10px;
+      padding-top: 87px;
+      
+      .log-container .tabbed-page-subtitle{
+        margin-left:10px;
+      }
+      .go-back-screen-button-area{
+        right:40px;
+      }
+      .loader-settings-logs{
+        right:-10px !important;
+      }               
+    }  
   }
-  .getstarted.loader .go-back-screen-button-area {
-    top:131px;
-    right:60px;
+  .advanced-daemon-row.multiple-row{
+    width: 78%;
+  }
+
+}
+@media screen and (max-width: 600px) {
+ .advanced-daemon-row.multiple-row{
+    width: 100%;
+  }  
+}
+@media screen and (max-width: 540px) {
+  .getstarted.loader .about-modal-button{
+      display: none;
   }  
 }
 @media screen and (max-width: 430px) {
@@ -876,12 +919,13 @@
 
   .page-body.getstarted {
     padding: 20px !important;
-    background-position: 20px 20px;
     display: flex;
     flex-direction: column;
-    background-repeat: no-repeat;
-    background-image: var(--small-logo);
-    background-size: 30px;
+
+    &::before{
+      background-image: var(--small-logo);
+      background-size: 30px;
+    }    
   }
 
   .getstarted.content {
@@ -907,16 +951,92 @@
     margin-left: 10px;
   }
 
-  .getstarted.loader.logs {
-    margin-top: 56px;
-
+  .getstarted.loader{
+    padding-top: 23px; 
+    .loader-settings-logs{
+      top:-40px !important;
+    }        
     .content-title {
       font-size:23px;
     }
+    .loader-bar{
+      margin-bottom: 0;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;    
+      
+      .linear-progress{
+        border-radius: 0;
+
+        .linear-progress-bar{
+          border-radius: 0;
+        }
+      }
+      .loader-bar-estimation{
+        padding: 0px 20px;
+        order: -1;
+      }
+    }
+    .loader-buttons{
+          margin-bottom: 50px;
+    }
+    .edit-wallets-button{
+      margin:5px 0;
+    }   
+    
+    &.logs {
+      margin-left: -10px;
+      margin-right: -10px;
+      padding-top:60px;
+
+      .log-area .log-area-logs{
+        margin: 20px;
+      }
+      .log-container .tabbed-page-subtitle{
+        margin-left:10px;
+      }
+      .go-back-screen-button-area{
+        top:85px;
+        right:20px;
+      }    
+    }    
   }
-  
-  .getstarted.loader .go-back-screen-button-area {
-    top:107px;
-    right:40px;
-  }  
+
+
+  .display-wallet{
+    width: 136px;
+    height: 131px;
+    font-size: 12px;
+    
+    .wallet-icon{
+      width: 50px;
+      height: 50px;
+      margin-left: 43px;
+      background-size: 40px 40px;
+      background-position: 6px 6px;
+
+
+      &.createnew{
+        background-size: 49px 49px;
+        background-position: 0px 0px;
+      }    
+      
+      &.restore{
+        background-size: 49px 49px;
+        background-position: 0px 0px;
+      }          
+    }
+    .display-wallet-complete{
+      min-height: 12px;
+    }
+    .display-wallet-last-access{
+      font-size: 9px;
+    }
+    .display-wallet-launch{
+      font-size: 11px;
+      margin-left: 34px;
+    }
+  }
 }
