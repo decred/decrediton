@@ -70,37 +70,41 @@ const StakePoolsAddForm = ({
       </div>
       <div className="stakepool-add-area-right">
         <div className="stakepool-add-instructions">
-          <T id="stake.addPool.info" m={
-            "Create an account or login to your existing account at {stakePoolLink} Once logged in, select the ‘Settings’ tab, copy and paste your API KEY into the field."
-          }
-          values={{
-            stakePoolLink: <UnconfiguedStakepoolLink { ...{ selectedUnconfigured } } />
-          }}/>
-          <ScriptRedeemableButton
-            modalTitle={<T id="stake.notRedeemed" m="Script not redeemable?" />}
-            modalContent={<Documentation name="ScriptNotRedeemableInfo" />}
-            className="stakepool-add-not-redeemable"
-            buttonLabel={<T id="stake.notRedeemed" m={"Script not redeemable?"} />}
-          />
-          <ImportScriptIconButton />
+          <div>
+            <T id="stake.addPool.info" m={
+              "Create an account or login to your existing account at {stakePoolLink} Once logged in, select the ‘Settings’ tab, copy and paste your API KEY into the field."
+            }
+            values={{
+              stakePoolLink: <UnconfiguedStakepoolLink { ...{ selectedUnconfigured } } />
+            }}/>
+          </div>
+          <div className="stakepool-link-button-container">
+            <ScriptRedeemableButton
+              modalTitle={<T id="stake.notRedeemed" m="Script not redeemable?" />}
+              modalContent={<Documentation name="ScriptNotRedeemableInfo" />}
+              className="stakepool-add-not-redeemable"
+              buttonLabel={<T id="stake.notRedeemed" m={"Script not redeemable?"} />}
+            />
+            <ImportScriptIconButton />
+          </div>
         </div>
       </div>
-    </div>
-    <div className="stakepool-add-toolbar">
-      <PassphraseModalButton
-        modalTitle={<T id="stake.addPoolConfirmation" m="Stakepool Confirmation" />}
-        loading={isSavingStakePoolConfig}
-        disabled={!apiKey || isSavingStakePoolConfig}
-        className="stakepool-confirm-button"
-        onSubmit={onSetStakePoolInfo}
-        buttonLabel={<T id="stake.addPool.addBtn" m="Continue" />}
-      />
-      {configuredStakePools.length ? (
-        <SlateGrayButton
-          className="stakepool-hide-config"
-          onClick={onCancelAddStakePool}
-        ><T id="stake.addPool.cancelBtn" m="Cancel" /></SlateGrayButton>
-      ) : null}
+      <div className="stakepool-add-toolbar">
+        <PassphraseModalButton
+          modalTitle={<T id="stake.addPoolConfirmation" m="Stakepool Confirmation" />}
+          loading={isSavingStakePoolConfig}
+          disabled={!apiKey || isSavingStakePoolConfig}
+          className="stakepool-confirm-button"
+          onSubmit={onSetStakePoolInfo}
+          buttonLabel={<T id="stake.addPool.addBtn" m="Continue" />}
+        />
+        {configuredStakePools.length ? (
+          <SlateGrayButton
+            className="stakepool-hide-config"
+            onClick={onCancelAddStakePool}
+          ><T id="stake.addPool.cancelBtn" m="Cancel" /></SlateGrayButton>
+        ) : null}
+      </div>
     </div>
   </>
 );
