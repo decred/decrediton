@@ -26,7 +26,6 @@ class ConfigButtons extends React.Component {
 
     return (
       <VerticalAccordion
-        height={105}
         header={ConfigButtonsHeader}
         show={this.state.show}
         onToggleAccordion={this.onToggleAccordion}

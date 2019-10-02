@@ -34,7 +34,6 @@ class ChangeLabel extends React.Component {
 
     return (
       <VerticalAccordion
-        height={100}
         header={changeLabelHeader}
         show={this.state.show}
         onToggleAccordion={this.onToggleAccordion}

@@ -66,9 +66,10 @@ class AccountRow extends React.Component {
     this.setState({ hidden: true });
   }
 
-  onShowPubKey() {
+  onTogglePubkey() {
     this.props.onGetAccountExtendedKey(this.props.account.accountNumber);
-    this.setState({ showPubKey: true });
+    const { showPubKey } = this.state;
+    this.setState({ showPubKey: !showPubKey });
   }
 
   onToggleShowDetails() {
@@ -106,7 +107,7 @@ class AccountRow extends React.Component {
       showRenameAccount,
       showAccount,
       hideAccount,
-      onShowPubKey,
+      onTogglePubkey,
     } = this;
     const { hidden, showPubKey } = this.state;
     return (
@@ -117,7 +118,7 @@ class AccountRow extends React.Component {
           hidden,
           hideAccount,
           showAccount,
-          onShowPubKey,
+          onTogglePubkey,
           showPubKey,
           accountExtendedKey,
         }}
