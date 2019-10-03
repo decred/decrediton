@@ -113,7 +113,7 @@ export const getStartedMachine = (a) => Machine({
     },
     isAtStartingDaemon: (context, event) => {
       console.log("is at Starting Daemonn");
-      const { appdata, payload } = event;
+      const { appdata } = event;
       context.appdata = appdata;
       return a.onStartDaemon({ appdata })
         .then(started => {
@@ -126,8 +126,8 @@ export const getStartedMachine = (a) => Machine({
           error => a.sendEvent({ type: "ERROR_STARTING_DAEMON", payload: { error } })
         );
     },
-    isAtErrorStartingDaemon: (context, event) => {
-      console.log("is at error starting daemon")
+    isAtErrorStartingDaemon: (context) => {
+      console.log("is at error starting daemon");
       const { appdata } = context;
       if (appdata) {
         a.sendEvent({ type: "START_ADVANCED_DAEMON" });
@@ -165,7 +165,7 @@ export const getStartedMachine = (a) => Machine({
       console.log("is at choosingWallet");
       a.onGetAvailableWallets()
         .then(w => a.sendEvent({ type: "CHOOSE_WALLET", payload: { w } }) )
-        .catch(e => console.log(e))
+        .catch(e => console.log(e));
       const { selectedWallet } = event;
       if (selectedWallet) {
         context.selectedWallet = selectedWallet;

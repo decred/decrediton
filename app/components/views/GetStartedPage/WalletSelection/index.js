@@ -199,7 +199,7 @@ class WalletSelectionBody extends React.Component {
     this.setState({ walletMasterPubKey });
   }
   startWallet() {
-    console.log(this.props.selectedWallet)
+    console.log(this.props.selectedWallet);
     this.props.onStartWallet(this.props.selectedWallet);
   }
   resetState() {

@@ -8,7 +8,7 @@ import { semverCompatible } from "./VersionActions";
 import * as wallet from "wallet";
 import { push as pushHistory, goBack } from "react-router-redux";
 import { ipcRenderer } from "electron";
-import { getWalletCfg, getAppdataPath, getRemoteCredentials, getGlobalCfg, setLastHeight } from "config";
+import { getWalletCfg, getGlobalCfg, setLastHeight } from "config";
 import { isTestNet } from "selectors";
 import axios from "axios";
 import { STANDARD_EXTERNAL_REQUESTS } from "main_dev/externalRequests";
@@ -38,6 +38,7 @@ export const REGISTERFORERRORS = "REGISTERFORERRORS";
 export const DAEMON_ERROR = "DAEMON_ERROR";
 export const FATAL_WALLET_ERROR = "FATAL_WALLET_ERROR";
 export const DAEMON_WARNING = "DAEMON_WARNING";
+export const WALLET_ERROR = "WALLET_ERROR";
 export const WALLET_WARNING = "WALLET_WARNING";
 export const WALLETCREATED = "WALLETCREATED";
 export const WALLET_AUTOBUYER_SETTINGS = "WALLET_AUTOBUYER_SETTINGS";
@@ -346,25 +347,25 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => new Promi
 
 const prepStartDaemon = () => (dispatch, getState) => {
   const { daemon: { daemonAdvanced } } = getState();
-  const cliOptions = ipcRenderer.sendSync("get-cli-options");
+  // const cliOptions = ipcRenderer.sendSync("get-cli-options");
   // console.log(cliOptions)
   if (!daemonAdvanced) {
     return;
   }
 
-  let rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port;
-  if (cliOptions.rpcPresent) {
-    rpc_user = cliOptions.rpcUser;
-    rpc_pass = cliOptions.rpcPass;
-    rpc_cert = cliOptions.rpcCert;
-    rpc_host = cliOptions.rpcHost;
-    rpc_port = cliOptions.rpcPort;
-  } else {
-    ({ rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port } = getRemoteCredentials());
-  }
+  // let rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port;
+  // if (cliOptions.rpcPresent) {
+  //   rpc_user = cliOptions.rpcUser;
+  //   rpc_pass = cliOptions.rpcPass;
+  //   rpc_cert = cliOptions.rpcCert;
+  //   rpc_host = cliOptions.rpcHost;
+  //   rpc_port = cliOptions.rpcPort;
+  // } else {
+  //   ({ rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port } = getRemoteCredentials());
+  // }
 };
 
-export const decreditonInit = () => async (dispatch, getState) => {
+export const decreditonInit = () => async (dispatch) => {
   dispatch(registerForErrors());
   dispatch(checkDecreditonVersion());
   await dispatch(prepStartDaemon());
