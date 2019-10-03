@@ -5,7 +5,8 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  margin-left: 42px;
+  margin-left: 25px;
+  max-width: 700px;
 }
 
 .help-icon {
@@ -133,4 +134,25 @@
 
 .help-external-icon-hover {
   background-image: var(--help-external-hover);
+}
+
+@media screen and (max-width: 1179px) {
+  .help-icons-list {
+    margin-left: -20px;
+  }  
+  .help-icon {
+    margin-right:10px;
+    margin-bottom:10px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .help-icons-list {
+    margin-left: 0;
+    flex-direction: column;
+  }
+  .help-icon{
+    margin-right: 0;
+    width: 355px;
+  }
 }
