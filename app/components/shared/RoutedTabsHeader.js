@@ -17,6 +17,11 @@ class RoutedTabsHeader extends React.Component {
 
   componentDidMount() {
     this.updateCaretPosition();
+    window.addEventListener("resize", this.updateCaretPosition);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateCaretPosition);
   }
 
   componentDidUpdate() {

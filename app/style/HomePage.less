@@ -162,6 +162,7 @@
 }
 
 .overview-no-tickets {
+  width: 352px;
   a.purchaseTickets {
     background-image: @dummy-icon;
   }
@@ -264,4 +265,15 @@
     width: 315px;
     padding-left: 9px;
   }
+}
+
+@media screen and (max-width: 1179px) {
+  .overview-no-tickets{
+    margin-left: -20px;
+  }  
+}
+@media screen and (max-width: 768px) {
+  .overview-no-tickets{
+    margin-left: 0;
+  }    
 }
