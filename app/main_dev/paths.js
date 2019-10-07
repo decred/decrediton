@@ -115,3 +115,65 @@ export function checkAndInitWalletCfg (testnet) {
     newWalletConfigCreation(testnet, "default-wallet");
   }
 }
+
+// getPoliteiaPath gets the politeia path which proposals are cached.
+export function getPoliteiaPath () {
+  return path.join(getAppDataDirectory(), "politeia");
+}
+
+// setPoliteiaPath sets the politeia path which proposals are cached.
+export function setPoliteiaPath () {
+  try {
+    const politeiaPath = getPoliteiaPath();
+    if (fs.pathExistsSync(politeiaPath)) {
+      return;
+    }
+    fs.mkdirSync(politeiaPath);
+  } catch (err) {
+    throw err;
+  }  
+}
+
+// getProposalPathFromPoliteia gets a proposal by its token or return empty string
+// if proposal is not foud.
+export function getProposalPathFromPoliteia (token) {
+  const proposalPath = path.join(getPoliteiaPath(), token);
+  if (fs.pathExistsSync(proposalPath)) {
+    return proposalPath;
+  }
+  return "";
+}
+
+// setPoliteiaProposalPath mkdir if directory of proposal does not exists.
+export function setPoliteiaProposalPath (token) {
+  try {
+    let proposalPath = getProposalPathFromPoliteia(token);
+    if (fs.pathExistsSync(proposalPath)) {
+      return;
+    }
+    proposalPath = path.join(getPoliteiaPath(), token)
+    fs.mkdirSync(proposalPath);
+    return proposalPath;
+  } catch (err) {
+    throw err;
+  }
+}
+
+// saveEligibleTickets receives a proposal token and its eligible tickets object.
+// it checks if proposal path exists, creates it if it does not exist.
+// and write a eligibletickets.json file, with { eligibleTickets: [tickets]) }
+export function saveEligibleTickets (token, eligibleTickets) {
+  let proposalPath = getProposalPathFromPoliteia(token);
+  if (!fs.pathExistsSync(proposalPath)) {
+    proposalPath = setPoliteiaProposalPath(token);
+  }
+  const fullPath = path.join(proposalPath, "eligibletickets.json");
+  fs.writeFile(fullPath, JSON.stringify(eligibleTickets));
+}
+
+// getEligibleTickets get the eligibletickets.json from the proposal Path
+export function getEligibleTickets (proposalPath) {
+  const fullPath = path.join(proposalPath, "eligibletickets.json")
+  const eligibleTickets = fs.readFileSync(fullPath);
+  return JSON.parse(eligibleTickets);
+}

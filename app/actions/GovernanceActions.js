@@ -3,6 +3,7 @@ import * as pi from "middleware/politeiaapi";
 import * as wallet from "wallet";
 import { push as pushHistory } from "react-router-redux";
 import { hexReversedHashToArray, reverseRawHash } from "helpers";
+import { setPoliteiaPath, getProposalPathFromPoliteia, getEligibleTickets, saveEligibleTickets } from "main_dev/paths";
 
 // Proposal vote status codes from politeiawww's v1.PropVoteStatusT
 // source: https://github.com/decred/politeia/blob/master/politeiawww/api/www/v1/v1.go
@@ -70,32 +71,30 @@ const getWalletCommittedTickets = async (eligibleTickets, walletService) => {
   }));
 };
 
-// TODO call getProposalVoteResults only once and cache result so we can know
-// the eligibletickets and how a user has voted in a proposal.
-// Aux function to fill the vote result information on a given proposal.
-const getProposalVoteResults = async (token, piURL, walletService) => {
-  const request = await pi.getProposalVotes(piURL, token);
-  const data = request && request.data;
-  const proposal = {};
-  if (data) {
-    const eligibleTickets = data.startvotereply && await getWalletCommittedTickets(data.startvotereply.eligibletickets, walletService);
-    const eligibleTicketsByHash = eligibleTickets && eligibleTickets.reduce( (m, t) => { m[t.ticket] = true; return m; }, {});
+// getProposalEligibleTickets gets the eligible tickets from a specific proposal.
+// if the proposal directory already exists it only return the cached information.
+// Otherwise it gets the eligible tickets from politeia and caches it. 
+const getProposalEligibleTickets = async (token, piURL, walletService) => {
+  try {
+    const proposalPath = getProposalPathFromPoliteia(token);
+    if (proposalPath) {
+      return getEligibleTickets(proposalPath);
+    }
+    const request = await pi.getProposalVotes(piURL, token);
+    if (!request || !request.data) {
+      return;
+    }
+    const { data } = request;
+    const { startvotereply } = data;
+    if (!startvotereply) {
+      return;
+    }
+    saveEligibleTickets(token, { eligibleTickets: startvotereply.eligibletickets });
 
-    proposal.eligibleTickets = eligibleTickets;
-    proposal.eligibleTicketsByHash = eligibleTicketsByHash;
-    proposal.hasEligibleTickets = eligibleTickets && eligibleTickets.length > 0;
-    proposal.currentVoteChoice = "abstain";
-    proposal.startBlockHeight = data.startvotereply ? parseInt(data.startvotereply.startblockheight) : null;
-
-    // Find out if this wallet has voted in this prop and what was the choice.
-    // This assumes the wallet will cast all available votes the same way.
-    data.castvotes && data.castvotes.some(vote => {
-      proposal.voteBit = parseInt(vote.votebit);
-      // proposal.voteCounts.abstain -= 1; // TODO: support abstain
-    });
+    return { eligibleTickets: startvotereply.eligibletickets };
+  } catch (err) {
+    throw err;
   }
-
-  return proposal;
 };
 
 export const GETTOKEN_INVENTORY_ATTEMPT = "GETTOKEN_INVENTORY_ATTEMPT";
@@ -142,9 +141,12 @@ const getInitialBatch = () => async (dispatch, getState) => {
   await dispatch(getProposalsAndUpdateVoteStatus(preVoteBatch));
 };
 
-export const getTokenAndInitialBatch = () => async (dispatch) => {
+export const getTokenAndInitialBatch = () => async (dispatch, getState) => {
+  setPoliteiaPath()
   await dispatch(getTokenInventory());
-  await dispatch(getInitialBatch());
+  const inventory = sel.inventory(getState());
+  dispatch(checkProposalsEligibleTickets(inventory.finishedVote));
+  dispatch(getInitialBatch());
 };
 
 export const DISABLE_POLITEIA_SUCCESS = "DISABLE_POLITEIA_SUCCESS";
@@ -195,7 +197,6 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
   const oldProposals = sel.proposals(getState());
   const lastPoliteiaAccessTime = sel.lastPoliteiaAccessTime(getState());
 
-  // TODO need to call getProposalVoteResults
   const lastPoliteiaAccessBlock = sel.lastPoliteiaAccessBlock(getState());
   try {
     const { proposals } = await getProposalsBatch(tokensBatch,piURL);
@@ -309,7 +310,7 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
 
     let voteResult;
     if ([ VOTESTATUS_FINISHEDVOTE, VOTESTATUS_ACTIVEVOTE ].includes(proposal.voteStatus)) {
-      voteResult = await getProposalVoteResults(proposal.token, piURL, walletService);
+      voteResult = await getProposalEligibleTickets(proposal.token, piURL, walletService);
       const voteOptions = proposal.voteOptions;
 
       if (voteResult.voteBit) {
@@ -336,54 +337,60 @@ export const UPDATEVOTECHOICE_ATTEMPT = "UPDATEVOTECHOICE_ATTEMPT";
 export const UPDATEVOTECHOICE_SUCCESS = "UPDATEVOTECHOICE_SUCCESS";
 export const UPDATEVOTECHOICE_FAILED = "UPDATEVOTECHOICE_FAILED";
 
-export const updateVoteChoice = (proposal, newVoteChoiceID, passphrase) =>
-  async (dispatch, getState) => {
-    const { walletService } = getState().grpc;
-    const blockTimestampFromNow = sel.blockTimestampFromNow(getState());
+export const updateVoteChoice = (proposal, newVoteChoiceID, passphrase) => async (dispatch, getState) => {
+  const { walletService } = getState().grpc;
+  const blockTimestampFromNow = sel.blockTimestampFromNow(getState());
 
-    const voteChoice = proposal.voteOptions.find(o => o.id === newVoteChoiceID);
-    if (!voteChoice) throw "Unknown vote choice for proposal";
+  const voteChoice = proposal.voteOptions.find(o => o.id === newVoteChoiceID);
+  if (!voteChoice) throw "Unknown vote choice for proposal";
 
-    dispatch({ type: UPDATEVOTECHOICE_ATTEMPT });
+  dispatch({ type: UPDATEVOTECHOICE_ATTEMPT });
 
-    const messages = proposal.eligibleTickets.map(t => {
-      // msg here needs to follow the same syntax as what is defined on
-      // politeiavoter.
-      const msg = proposal.token + t.ticket + voteChoice.bits.toString(16);
-      return { address: t.address, message: msg };
+  const messages = proposal.eligibleTickets.map(t => {
+    // msg here needs to follow the same syntax as what is defined on
+    // politeiavoter.
+    const msg = proposal.token + t.ticket + voteChoice.bits.toString(16);
+    return { address: t.address, message: msg };
+  });
+
+  try {
+    const signed = await wallet.signMessages(walletService, passphrase, messages);
+
+    const votes = [];
+    const sigs = signed.getRepliesList();
+    proposal.eligibleTickets.forEach((t, i) => {
+      const signature = sigs[i];
+      if (signature.getError() != "") {
+        return;
+      }
+      const hexSig = Buffer.from(signature.getSignature()).toString("hex");
+
+      votes.push(pi.Vote(proposal.token, t.ticket, voteChoice.bits, hexSig));
     });
 
-    try {
-      const signed = await wallet.signMessages(walletService, passphrase, messages);
+    const piURL = sel.politeiaURL(getState());
+    await pi.castVotes(piURL, votes);
 
-      const votes = [];
-      const sigs = signed.getRepliesList();
-      proposal.eligibleTickets.forEach((t, i) => {
-        const signature = sigs[i];
-        if (signature.getError() != "") {
-          return;
-        }
-        const hexSig = Buffer.from(signature.getSignature()).toString("hex");
+    // update the vote count for the proposal from pi, so we can see our
+    // vote counting towards the totals
+    const newProposal = { ...proposal };
+    await getProposalEligibleTickets(newProposal, piURL, walletService, blockTimestampFromNow);
 
-        votes.push(pi.Vote(proposal.token, t.ticket, voteChoice.bits, hexSig));
-      });
+    const existProposals = getState().governance.proposals;
+    const proposals = {
+      ...existProposals,
+      [proposal.token]: newProposal
+    };
 
-      const piURL = sel.politeiaURL(getState());
-      await pi.castVotes(piURL, votes);
+    dispatch({ votes, proposals, type: UPDATEVOTECHOICE_SUCCESS });
+  } catch (error) {
+    dispatch({ error, type: UPDATEVOTECHOICE_FAILED });
+  }
+};
 
-      // update the vote count for the proposal from pi, so we can see our
-      // vote counting towards the totals
-      const newProposal = { ...proposal };
-      await getProposalVoteResults(newProposal, piURL, walletService, blockTimestampFromNow);
-
-      const existProposals = getState().governance.proposals;
-      const proposals = {
-        ...existProposals,
-        [proposal.token]: newProposal
-      };
-
-      dispatch({ votes, proposals, type: UPDATEVOTECHOICE_SUCCESS });
-    } catch (error) {
-      dispatch({ error, type: UPDATEVOTECHOICE_FAILED });
-    }
-  };
+const checkProposalsEligibleTickets = (proposalsBatch) => (dispatch, getState) => {
+  const piURL = sel.politeiaURL(getState());
+  proposalsBatch.forEach(async token => {
+    const eligibleTickets = await getProposalEligibleTickets(token, piURL);
+  })
+}
