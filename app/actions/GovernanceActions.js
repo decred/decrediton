@@ -147,6 +147,12 @@ export const getTokenAndInitialBatch = () => async (dispatch) => {
   await dispatch(getInitialBatch());
 };
 
+export const DISABLE_POLITEIA_SUCCESS = "DISABLE_POLITEIA_SUCCESS";
+
+export const resetInventoryAndProposals = () => dispatch => {
+  dispatch({ type: DISABLE_POLITEIA_SUCCESS });
+};
+
 export const GET_PROPOSAL_BATCH_ATTEMPT = "GET_PROPOSAL_BATCH_ATTEMPT";
 export const GET_PROPOSAL_BATCH_SUCCESS = "GET_PROPOSAL_BATCH_SUCCESS";
 export const GET_PROPOSAL_BATCH_FAILED = "GET_PROPOSAL_BATCH_FAILED";
@@ -231,7 +237,7 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
 
     // concat new proposals list array to old proposals list array
     Object.keys(proposalsUpdated).forEach( key =>
-      proposalsUpdated[key] = oldProposals[key].concat(proposalsUpdated[key])
+      proposalsUpdated[key] = oldProposals[key] ? oldProposals[key].concat(proposalsUpdated[key]) : proposalsUpdated[key]
     );
     return dispatch({ type: GETPROPROSAL_UPDATEVOTESTATUS_SUCCESS, proposals: proposalsUpdated, bestBlock } );
   } catch (error) {
