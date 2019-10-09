@@ -37,7 +37,7 @@ export default function governance(state = {}, action) {
   case UPDATEVOTECHOICE_SUCCESS:
     return {
       ...state,
-      proposals: action.proposals,
+      proposals: { ...action.proposals },
       updateVoteChoiceAttempt: false };
   case UPDATEVOTECHOICE_FAILED:
     return { ...state, updateVoteChoiceAttempt: false };
