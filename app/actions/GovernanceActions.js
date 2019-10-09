@@ -3,7 +3,7 @@ import * as pi from "middleware/politeiaapi";
 import * as wallet from "wallet";
 import { push as pushHistory } from "react-router-redux";
 import { hexReversedHashToArray, reverseRawHash } from "helpers";
-import { setPoliteiaPath, getEligibleTickets, saveEligibleTickets } from "main_dev/paths";
+import { setPoliteiaPath, getEligibleTickets, saveEligibleTickets, savePiVote, getProposalWalletVote } from "main_dev/paths";
 
 // Proposal vote status codes from politeiawww's v1.PropVoteStatusT
 // source: https://github.com/decred/politeia/blob/master/politeiawww/api/www/v1/v1.go
@@ -274,6 +274,8 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
 
   dispatch({ type: GETPROPOSAL_ATTEMPT });
   const piURL = sel.politeiaURL(getState());
+  const walletName = sel.getWalletName(getState());
+  const testnet = sel.isTestNet(getState());
 
   try {
     const request = await pi.getProposal(piURL, token);
@@ -326,13 +328,24 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
       proposal.walletEligibleTickets = walletEligibleTickets;
       proposal.hasEligibleTickets = walletEligibleTickets.length > 0;
 
-      // TODO add vote option getting it from cached information
-      // const voteOptions = proposal.voteOptions;
+      const vote = getProposalWalletVote(token, testnet, walletName);
 
-      // if (voteResult.voteBit) {
-      //   voteResult.currentVoteChoice = voteOptions.find( option => voteResult.voteBit === option.bits);
-      // }
+      if (vote && vote.length > 0) {
+        // We assume all tickets have vote the same bit
+        proposal.currentVoteChoice = proposal.voteOptions.find(option =>
+          // we need to concat string as votes is stringfied before cached.
+          vote[0].voteBit === "" + option.bits
+        );
+      }
     }
+
+    // update proposal reference from proposals state
+    Object.keys(proposals).forEach(key =>
+    proposals[key].find( (p, i) => {
+      if (p.token === token) {
+        return proposals[key][i] = { ...proposal };
+      }
+    }));
 
     dispatch({ token, proposal, proposals, voteResult, type: GETPROPOSAL_SUCCESS });
   } catch (error) {
@@ -357,12 +370,15 @@ export const updateVoteChoice = (proposal, newVoteChoiceID, passphrase) => async
   const { walletService } = getState().grpc;
   const blockTimestampFromNow = sel.blockTimestampFromNow(getState());
   const piURL = sel.politeiaURL(getState());
+  const walletName = sel.getWalletName(getState());
+  const testnet = sel.isTestNet(getState());
   const { token } = proposal;
 
   const voteChoice = proposal.voteOptions.find(o => o.id === newVoteChoiceID);
   if (!voteChoice) throw "Unknown vote choice for proposal";
-
+  
   dispatch({ type: UPDATEVOTECHOICE_ATTEMPT });
+  proposal.currentVoteChoice = voteChoice;
 
   const messages = proposal.walletEligibleTickets.map(t => {
     // msg here needs to follow the same syntax as what is defined on
@@ -387,6 +403,7 @@ export const updateVoteChoice = (proposal, newVoteChoiceID, passphrase) => async
     });
 
     // await pi.castVotes(piURL, votes);
+    savePiVote(votes, token, testnet, walletName);
 
     // update the vote count for the proposal from pi, so we can see our
     // vote counting towards the totals
