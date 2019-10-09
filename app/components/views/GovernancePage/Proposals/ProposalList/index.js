@@ -84,8 +84,13 @@ class ProposalsList extends React.Component {
       });
       return;
     }
-    const proposalNumber = proposallistpagesize + proposalLength > inventory[tab].length ?
-      inventory[tab].length : proposallistpagesize;
+    let proposalNumber;
+    if (inventory[tab].length <= proposallistpagesize) {
+      proposalNumber = inventory[tab].length;
+    } else {
+      proposalNumber = proposallistpagesize + proposalLength;
+    }
+
     const proposalBatch = inventory[tab].slice(proposalLength, proposalNumber);
     this.props.getProposalsAndUpdateVoteStatus(proposalBatch);
   }
