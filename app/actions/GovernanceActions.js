@@ -3,7 +3,7 @@ import * as pi from "middleware/politeiaapi";
 import * as wallet from "wallet";
 import { push as pushHistory } from "react-router-redux";
 import { hexReversedHashToArray, reverseRawHash } from "helpers";
-import { setPoliteiaPath, getProposalPathFromPoliteia, getEligibleTickets, saveEligibleTickets } from "main_dev/paths";
+import { setPoliteiaPath, getEligibleTickets, saveEligibleTickets } from "main_dev/paths";
 
 // Proposal vote status codes from politeiawww's v1.PropVoteStatusT
 // source: https://github.com/decred/politeia/blob/master/politeiawww/api/www/v1/v1.go
@@ -82,12 +82,15 @@ const getProposalEligibleTickets = async (token, piURL, walletService) => {
   }
 
   try {
-    const proposalPath = getProposalPathFromPoliteia(token);
-    if (proposalPath) {
-      const { eligibleTickets } = getEligibleTickets(proposalPath);
-      const walletEligibleTickets = await getWalletEligibleTickets(eligibleTickets, walletService);
+    let eligibleTicketCount, walletEligibleTickets;
+    const eligibleTicketsObj = getEligibleTickets(token);
+    if (eligibleTicketsObj) {
+      const { eligibleTickets } = eligibleTicketsObj;
+      eligibleTicketCount = eligibleTickets.length;
+      
+      walletEligibleTickets = await getWalletEligibleTickets(eligibleTickets, walletService);
 
-      return walletEligibleTickets;
+      return { walletEligibleTickets, eligibleTicketCount };
     }
     const request = await pi.getProposalVotes(piURL, token);
     if (!request || !request.data) {
@@ -98,10 +101,12 @@ const getProposalEligibleTickets = async (token, piURL, walletService) => {
       return;
     }
     const { startvotereply } = data;
-    saveEligibleTickets(token, { eligibleTickets: startvotereply.eligibletickets });
-    walletEligibleTickets = getWalletEligibleTickets(startvotereply.eligibletickets);
+    const eligibleTickets = startvotereply.eligibletickets;
+    eligibleTicketCount = eligibleTickets.length;
+    saveEligibleTickets(token, { eligibleTickets });
+    walletEligibleTickets = await getWalletEligibleTickets(eligibleTickets, walletService);
 
-    return walletEligibleTickets;
+    return { walletEligibleTickets, eligibleTicketCount };
   } catch (err) {
     throw err;
   }
@@ -318,10 +323,11 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
 
     let voteResult;
     if ([ VOTESTATUS_FINISHEDVOTE, VOTESTATUS_ACTIVEVOTE ].includes(proposal.voteStatus)) {
-      const walletEligibleTickets = await getProposalEligibleTickets(proposal.token, piURL, walletService);
+      const { walletEligibleTickets, eligibleTicketCount } = await getProposalEligibleTickets(proposal.token, piURL, walletService);
 
       proposal.walletEligibleTickets = walletEligibleTickets;
       proposal.hasEligibleTickets = walletEligibleTickets.length > 0;
+      proposal.eligibleTicketCount = eligibleTicketCount;
 
       // TODO add vote option getting it from cached information
       // const voteOptions = proposal.voteOptions;

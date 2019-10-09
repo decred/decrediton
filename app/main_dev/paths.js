@@ -136,7 +136,7 @@ export function setPoliteiaPath () {
 
 // getProposalPathFromPoliteia gets a proposal by its token or return empty string
 // if proposal is not foud.
-export function getProposalPathFromPoliteia (token) {
+function getProposalPathFromPoliteia (token) {
   const proposalPath = path.join(getPoliteiaPath(), token);
   if (fs.pathExistsSync(proposalPath)) {
     return proposalPath;
@@ -172,8 +172,16 @@ export function saveEligibleTickets (token, eligibleTickets) {
 }
 
 // getEligibleTickets get the eligibletickets.json from the proposal Path
-export function getEligibleTickets (proposalPath) {
+// return null if proposal directory or eligibletickets.json is not found.
+export function getEligibleTickets (token) {
+  const proposalPath = getProposalPathFromPoliteia(token);
+  if (!proposalPath) {
+    return null;
+  }
   const fullPath = path.join(proposalPath, "eligibletickets.json")
+  if (!fs.pathExistsSync(fullPath)) {
+    return null;
+  }
   const eligibleTickets = fs.readFileSync(fullPath);
   return JSON.parse(eligibleTickets);
 }
