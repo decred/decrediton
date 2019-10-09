@@ -102,7 +102,7 @@ export function checkAndInitWalletCfg (testnet) {
 
   if (!fs.pathExistsSync(walletDirectory) && fs.pathExistsSync(oldWalletDbPath)) {
     fs.mkdirsSync(walletDirectory);
-    fs.copySync(getDecreditonWalletDBPath(testnet), path.join(walletDirectory, testnet ? "testnet3" : MAINNET, "wallet.db"));
+    fs.copySync(path.join(oldWalletDbPath, "wallet.db"), path.join(walletDirectory, testnet ? "testnet3" : MAINNET, "wallet.db"));
 
     // copy over existing config.json if it exists
     if (fs.pathExistsSync(getGlobalCfgPath())) {
@@ -122,15 +122,11 @@ export function getPoliteiaPath () {
 
 // setPoliteiaPath sets the politeia path which proposals are cached.
 export function setPoliteiaPath () {
-  try {
-    const politeiaPath = getPoliteiaPath();
-    if (fs.pathExistsSync(politeiaPath)) {
-      return;
-    }
-    fs.mkdirSync(politeiaPath);
-  } catch (err) {
-    throw err;
-  }  
+  const politeiaPath = getPoliteiaPath();
+  if (fs.pathExistsSync(politeiaPath)) {
+    return;
+  }
+  fs.mkdirSync(politeiaPath);
 }
 
 // getProposalPathFromPoliteia gets a proposal by its token or return empty string
@@ -145,17 +141,13 @@ function getProposalPathFromPoliteia (token) {
 
 // setPoliteiaProposalPath mkdir if directory of proposal does not exists.
 export function setPoliteiaProposalPath (token) {
-  try {
-    let proposalPath = getProposalPathFromPoliteia(token);
-    if (fs.pathExistsSync(proposalPath)) {
-      return;
-    }
-    proposalPath = path.join(getPoliteiaPath(), token)
-    fs.mkdirSync(proposalPath);
-    return proposalPath;
-  } catch (err) {
-    throw err;
+  let proposalPath = getProposalPathFromPoliteia(token);
+  if (fs.pathExistsSync(proposalPath)) {
+    return;
   }
+  proposalPath = path.join(getPoliteiaPath(), token);
+  fs.mkdirSync(proposalPath);
+  return proposalPath;
 }
 
 // saveEligibleTickets receives a proposal token and its eligible tickets object.
@@ -177,7 +169,7 @@ export function getEligibleTickets (token) {
   if (!proposalPath) {
     return null;
   }
-  const fullPath = path.join(proposalPath, "eligibletickets.json")
+  const fullPath = path.join(proposalPath, "eligibletickets.json");
   if (!fs.pathExistsSync(fullPath)) {
     return null;
   }
@@ -188,16 +180,12 @@ export function getEligibleTickets (token) {
 // getWalletPiPath gets the wallet politeia path if it exists, otherwise
 // it creates its path and returns it.
 function getWalletPiPath (testnet, walletName) {
-  try {
-    const walletPiPath = path.join(getWalletPath(testnet, walletName), "politeia")
-    if (fs.pathExistsSync(walletPiPath)) {
-      return walletPiPath;
-    }
-    fs.mkdirSync(walletPiPath);
+  const walletPiPath = path.join(getWalletPath(testnet, walletName), "politeia");
+  if (fs.pathExistsSync(walletPiPath)) {
     return walletPiPath;
-  } catch (err) {
-    throw err;
   }
+  fs.mkdirSync(walletPiPath);
+  return walletPiPath;
 }
 
 // savePiVote checks if proposal directory exists, creates it, otherwise and
@@ -205,31 +193,23 @@ function getWalletPiPath (testnet, walletName) {
 // we do not delete this directory after, as we use it to check for finished
 // votings with the wallet.
 export function savePiVote (vote, token, testnet, walletName) {
-  try {
-    const walletPath = getWalletPiPath(testnet, walletName);
-    const proposalPath = path.join(walletPath, token);
-    if (!fs.pathExistsSync(proposalPath)) {
-      fs.mkdirSync(proposalPath);
-    }
-    const fullPath = path.join(proposalPath, "vote.json");
-    fs.writeFile(fullPath, JSON.stringify(vote));
-  } catch (error) {
-    throw error;
+  const walletPath = getWalletPiPath(testnet, walletName);
+  const proposalPath = path.join(walletPath, token);
+  if (!fs.pathExistsSync(proposalPath)) {
+    fs.mkdirSync(proposalPath);
   }
+  const fullPath = path.join(proposalPath, "vote.json");
+  fs.writeFile(fullPath, JSON.stringify(vote));
 }
 
 // getProposalWalletVote returns vote.json file if found or return null
 export function getProposalWalletVote (token, testnet, walletName) {
-  try {
-    const walletPath = getWalletPiPath(testnet, walletName);
-    const proposalPath = path.join(walletPath, token);
-    if (!fs.pathExistsSync(proposalPath)) {
-      return null;
-    }
-    const fullPath = path.join(proposalPath, "vote.json");
-    const vote = fs.readFileSync(fullPath);
-    return JSON.parse(vote);
-  } catch (error) {
-    throw error;
+  const walletPath = getWalletPiPath(testnet, walletName);
+  const proposalPath = path.join(walletPath, token);
+  if (!fs.pathExistsSync(proposalPath)) {
+    return null;
   }
+  const fullPath = path.join(proposalPath, "vote.json");
+  const vote = fs.readFileSync(fullPath);
+  return JSON.parse(vote);
 }
