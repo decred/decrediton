@@ -1,4 +1,4 @@
-import { routing, theming } from "connectors";
+import { routing, theming, routedTabsHeader } from "connectors";
 import { NavLink as Link } from "react-router-dom";
 import { spring, Motion } from "react-motion";
 import theme from "theme";
@@ -9,7 +9,7 @@ export const RoutedTab = (path, link) => ({ path, link });
 class RoutedTabsHeader extends React.Component {
 
   _nodes = new Map();
-  state = { caretLeft: null, caretWidth: null, selectedTab: null };
+  state = { caretLeft: null, caretWidth: null, selectedTab: null, actSidebarOnBottom: null };
 
   constructor(props) {
     super(props);
@@ -17,26 +17,22 @@ class RoutedTabsHeader extends React.Component {
 
   componentDidMount() {
     this.updateCaretPosition();
-    window.addEventListener("resize", this.updateCaretPosition);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.updateCaretPosition);
   }
 
   componentDidUpdate() {
-    const { location } = this.props;
+    const { location, sidebarOnBottom } = this.props;
     const selectedTab = location.pathname;
-    if (this.state.selectedTab != selectedTab) {
+    if (this.state.selectedTab != selectedTab || this.state.actSidebarOnBottom != sidebarOnBottom){
       this.updateCaretPosition();
     }
   }
 
   updateCaretPosition() {
-    const { location } = this.props;
+    const { location, sidebarOnBottom } = this.props;
     const selectedTab = location.pathname;
     const caretPosition = this.neededCaretPosition(selectedTab);
-    if (caretPosition) this.setState({ ...caretPosition, selectedTab });
+    const actSidebarOnBottom = sidebarOnBottom;
+    if (caretPosition) this.setState({ ...caretPosition, selectedTab, actSidebarOnBottom });
   }
 
   neededCaretPosition(path) {
@@ -96,4 +92,4 @@ RoutedTabsHeader.propTypes = {
   tabs: PropTypes.array.isRequired,
 };
 
-export default routing(theming(RoutedTabsHeader));
+export default routing(theming(routedTabsHeader(RoutedTabsHeader)));
