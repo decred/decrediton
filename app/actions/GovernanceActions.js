@@ -55,43 +55,53 @@ const fillVoteSummary = (proposal, voteSummary, blockTimestampFromNow) => {
   }
 };
 
-// Aux function to get the tickets from the wallet that are eligible to vote
-// (committed tickets) for a given proposal (given a list of eligible tickets
-// returned from an activevotes call)
-const getWalletCommittedTickets = async (eligibleTickets, walletService) => {
-  const ticketHashesToByte = (hashes) => hashes.map(hexReversedHashToArray);
-
-  const commitedTicketsResp = await wallet.committedTickets(walletService,
-    ticketHashesToByte(eligibleTickets));
-  const tickets = commitedTicketsResp.getTicketaddressesList();
-
-  return tickets.map(t => ({
-    ticket: reverseRawHash(t.getTicket()),
-    address: t.getAddress(),
-  }));
-};
-
-// getProposalEligibleTickets gets the eligible tickets from a specific proposal.
-// if the proposal directory already exists it only return the cached information.
-// Otherwise it gets the eligible tickets from politeia and caches it. 
+// getProposalEligibleTickets gets the wallet eligible tickets from a specific proposal.
+// if the proposal directory already exists it only returns the cached information,
+// otherwise it gets the eligible tickets from politeia and caches it.
 const getProposalEligibleTickets = async (token, piURL, walletService) => {
+  // Aux function to get the tickets from the wallet that are eligible to vote
+  // (committed tickets) for a given proposal (given a list of eligible tickets
+  // returned from an activevotes call)
+  const getWalletEligibleTickets = async (eligibleTickets, walletService) => {
+    const ticketHashesToByte = (hashes) => hashes.map(hexReversedHashToArray);
+    const commitedTicketsResp = await wallet.committedTickets(
+      walletService, ticketHashesToByte(eligibleTickets)
+    );
+    let tickets = commitedTicketsResp.getTicketaddressesList();
+
+    tickets = tickets.map(t => ({
+      ticket: reverseRawHash(t.getTicket()),
+      address: t.getAddress(),
+    }));
+
+    const ticketsHash = tickets.reduce((ticketsHash, t) => {
+      ticketsHash.push(t.ticket);
+      return ticketsHash;
+    }, []);
+    return ticketsHash;
+  }
+
   try {
     const proposalPath = getProposalPathFromPoliteia(token);
     if (proposalPath) {
-      return getEligibleTickets(proposalPath);
+      const { eligibleTickets } = getEligibleTickets(proposalPath);
+      const walletEligibleTickets = await getWalletEligibleTickets(eligibleTickets, walletService);
+
+      return walletEligibleTickets;
     }
     const request = await pi.getProposalVotes(piURL, token);
     if (!request || !request.data) {
       return;
     }
     const { data } = request;
-    const { startvotereply } = data;
-    if (!startvotereply) {
+    if (!data.startvotereply) {
       return;
     }
+    const { startvotereply } = data;
     saveEligibleTickets(token, { eligibleTickets: startvotereply.eligibletickets });
+    walletEligibleTickets = getWalletEligibleTickets(startvotereply.eligibletickets);
 
-    return { eligibleTickets: startvotereply.eligibletickets };
+    return walletEligibleTickets;
   } catch (err) {
     throw err;
   }
@@ -144,8 +154,6 @@ const getInitialBatch = () => async (dispatch, getState) => {
 export const getTokenAndInitialBatch = () => async (dispatch, getState) => {
   setPoliteiaPath()
   await dispatch(getTokenInventory());
-  const inventory = sel.inventory(getState());
-  dispatch(checkProposalsEligibleTickets(inventory.finishedVote));
   dispatch(getInitialBatch());
 };
 
@@ -302,7 +310,7 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
       files: files,
       hasDetails: true,
       hasEligibleTickets: false,
-      eligibleTickets: []
+      currentVoteChoice: "abstain",
     };
 
     // const choiceID = voteBitToChoice[parseInt(vote.votebit)];
@@ -310,12 +318,17 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
 
     let voteResult;
     if ([ VOTESTATUS_FINISHEDVOTE, VOTESTATUS_ACTIVEVOTE ].includes(proposal.voteStatus)) {
-      voteResult = await getProposalEligibleTickets(proposal.token, piURL, walletService);
-      const voteOptions = proposal.voteOptions;
+      const walletEligibleTickets = await getProposalEligibleTickets(proposal.token, piURL, walletService);
 
-      if (voteResult.voteBit) {
-        voteResult.currentVoteChoice = voteOptions.find( option => voteResult.voteBit === option.bits);
-      }
+      proposal.walletEligibleTickets = walletEligibleTickets;
+      proposal.hasEligibleTickets = walletEligibleTickets.length > 0;
+
+      // TODO add vote option getting it from cached information
+      // const voteOptions = proposal.voteOptions;
+
+      // if (voteResult.voteBit) {
+      //   voteResult.currentVoteChoice = voteOptions.find( option => voteResult.voteBit === option.bits);
+      // }
     }
 
     dispatch({ token, proposal, proposals, voteResult, type: GETPROPOSAL_SUCCESS });
@@ -387,10 +400,3 @@ export const updateVoteChoice = (proposal, newVoteChoiceID, passphrase) => async
     dispatch({ error, type: UPDATEVOTECHOICE_FAILED });
   }
 };
-
-const checkProposalsEligibleTickets = (proposalsBatch) => (dispatch, getState) => {
-  const piURL = sel.politeiaURL(getState());
-  proposalsBatch.forEach(async token => {
-    const eligibleTickets = await getProposalEligibleTickets(token, piURL);
-  })
-}
