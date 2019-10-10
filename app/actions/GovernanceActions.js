@@ -218,8 +218,10 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
   const piURL = sel.politeiaURL(getState());
   const oldProposals = sel.proposals(getState());
   const lastPoliteiaAccessTime = sel.lastPoliteiaAccessTime(getState());
-
+  const walletName = sel.getWalletName(getState());
+  const testnet = sel.isTestNet(getState());
   const lastPoliteiaAccessBlock = sel.lastPoliteiaAccessBlock(getState());
+
   try {
     const { proposals } = await getProposalsBatch(tokensBatch,piURL);
     const { summaries } = await getProposalsVotestatusBatch(tokensBatch, piURL);
@@ -229,9 +231,10 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
       const { status } = proposalSummary;
       const prop = findProposal(proposals, token);
       prop.token = token;
-      const proposalStatus = prop.status;
+      prop.proposalStatus = prop.status;
 
       fillVoteSummary(prop, proposalSummary, blockTimestampFromNow);
+      prop.currentVoteChoice = getVoteOption(token, prop, testnet, walletName);
 
       if (prop.timestamp > lastPoliteiaAccessTime) {
         prop.modifiedSinceLastAccess = true;
@@ -241,7 +244,7 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
       }
 
       // if proposal is not abandoned we check its votestatus
-      if (proposalStatus === PROPOSALSTATUS_ABANDONED) {
+      if (prop.proposalStatus === PROPOSALSTATUS_ABANDONED) {
         proposalsUpdated.abandonedVote.push(prop);
       } else {
         switch (status) {
@@ -265,6 +268,22 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
     dispatch({ type: GETPROPROSAL_UPDATEVOTESTATUS_FAILED, error });
     throw error;
   }
+};
+
+// getVoteOption gets the wallet vote if cached or return abstain.
+const getVoteOption = (token, proposal, testnet, walletName) => {
+  const vote = getProposalWalletVote(token, testnet, walletName);
+
+  let currentVoteChoice = "abstain";
+  if (vote && vote.length > 0) {
+    // We assume all tickets have vote the same bit
+    currentVoteChoice = proposal.voteOptions.find(option =>
+      // we need to concat string as votes is stringfied before cached.
+      vote[0].voteBit === "" + option.bits
+    );
+  }
+
+  return currentVoteChoice;
 };
 
 export const GETPROPOSAL_ATTEMPT = "GETPROPOSAL_ATTEMPT";
@@ -329,21 +348,12 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
       hasEligibleTickets: false,
     };
 
-    // const choiceID = voteBitToChoice[parseInt(vote.votebit)];
-    // if (!choiceID) { throw "Error: choiceID not found on vote when getting proposal votes"; }
     if ([ VOTESTATUS_FINISHEDVOTE, VOTESTATUS_ACTIVEVOTE ].includes(proposal.voteStatus)) {
       walletEligibleTickets = await getProposalEligibleTickets(proposal.token, piURL, walletService);
       hasEligibleTickets = walletEligibleTickets.length > 0;
 
-      const vote = getProposalWalletVote(token, testnet, walletName);
-
-      if (vote && vote.length > 0) {
-        // We assume all tickets have vote the same bit
-        currentVoteChoice = proposal.voteOptions.find(option =>
-          // we need to concat string as votes is stringfied before cached.
-          vote[0].voteBit === "" + option.bits
-        );
-      }
+      // update vote choice if exists
+      currentVoteChoice = getVoteOption(token, proposal, testnet, walletName);
     }
 
     // update proposal reference from proposals state
@@ -387,8 +397,6 @@ export const updateVoteChoice = (proposal, newVoteChoiceID, passphrase) => async
 
   const voteChoice = proposal.voteOptions.find(o => o.id === newVoteChoiceID);
   if (!voteChoice) throw "Unknown vote choice for proposal";
-
-  dispatch({ type: UPDATEVOTECHOICE_ATTEMPT });
   proposal.currentVoteChoice = voteChoice;
 
   const messages = proposal.walletEligibleTickets.map(t => {
@@ -413,6 +421,7 @@ export const updateVoteChoice = (proposal, newVoteChoiceID, passphrase) => async
     }
   };
 
+  dispatch({ type: UPDATEVOTECHOICE_ATTEMPT });
   try {
     const signed = await wallet.signMessages(walletService, passphrase, messages);
 

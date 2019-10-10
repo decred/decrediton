@@ -14,8 +14,8 @@ export default ({ viewedProposalDetails, goBackHistory,
   showPurchaseTicketsPage, hasTickets, onVoteOptionSelected, onUpdateVoteChoice,
   newVoteChoice, updateVoteChoiceAttempt, tsDate, text }) =>
 {
-  const { name, token, hasEligibleTickets, voteStatus, voteOptions,
-    voteCounts, creator, timestamp, endTimestamp, currentVoteChoice,
+  const { name, token, voteStatus, proposalStatus, voteOptions, voteCounts,
+    creator, timestamp, endTimestamp, currentVoteChoice, hasEligibleTickets,
     version, quorumMinimumVotes } = viewedProposalDetails;
   const eligibleTicketCount = viewedProposalDetails.eligibleTicketCount;
   const voted = voteStatus === VOTESTATUS_FINISHEDVOTE;
@@ -39,11 +39,9 @@ export default ({ viewedProposalDetails, goBackHistory,
   case VOTESTATUS_FINISHEDVOTE:
     voteInfo = <ChosenVoteOption {...{ voteOptions, currentVoteChoice, votingComplete: true }} />;
     break;
-  case PROPOSALSTATUS_ABANDONED:
-    voteInfo = <ProposalAbandoned />;
-    break;
   default:
-    voteInfo = <ProposalNotVoting />;
+    if (proposalStatus === PROPOSALSTATUS_ABANDONED) voteInfo = <ProposalAbandoned />;
+    else voteInfo = <ProposalNotVoting />;
     break;
   }
 
