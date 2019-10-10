@@ -29,7 +29,8 @@ export default function governance(state = {}, action) {
     return { ...state,
       getProposalAttempt: false,
       proposalsDetails: { ...state.proposalsDetails,
-        [action.token]: { ...action.proposal, ...action.voteResult } },
+        [action.token]: { ...action.proposal }
+      },
       proposals: { ...action.proposals },
     };
   case UPDATEVOTECHOICE_ATTEMPT:
@@ -38,7 +39,12 @@ export default function governance(state = {}, action) {
     return {
       ...state,
       proposals: { ...action.proposals },
-      updateVoteChoiceAttempt: false };
+      updateVoteChoiceAttempt: false,
+      proposalsDetails: { ...state.proposalsDetails,
+        [action.token]: { ...action.proposal },
+      },
+    };
+
   case UPDATEVOTECHOICE_FAILED:
     return { ...state, updateVoteChoiceAttempt: false };
   case CLOSEWALLET_SUCCESS:
