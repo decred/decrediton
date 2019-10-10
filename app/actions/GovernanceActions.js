@@ -190,6 +190,13 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
 
   const findProposal = (proposals, token) =>
     proposals.find( proposal => proposal.censorshiprecord.token === token ? proposal : null );
+  
+  const concatProposals = async (oldProposals, newProposals) => {
+    Object.keys(newProposals).forEach( key =>
+      newProposals[key] = oldProposals[key] ? oldProposals[key].concat(newProposals[key]) : newProposals[key]
+    );
+    return newProposals;
+  }
 
   dispatch({ type: GETPROPROSAL_UPDATEVOTESTATUS_ATTEMPT });
   let proposalsUpdated = {
@@ -244,9 +251,7 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
     });
 
     // concat new proposals list array to old proposals list array
-    Object.keys(proposalsUpdated).forEach( key =>
-      proposalsUpdated[key] = oldProposals[key] ? oldProposals[key].concat(proposalsUpdated[key]) : proposalsUpdated[key]
-    );
+    proposalsUpdated = await concatProposals(oldProposals, proposalsUpdated)
     return dispatch({ type: GETPROPROSAL_UPDATEVOTESTATUS_SUCCESS, proposals: proposalsUpdated, bestBlock } );
   } catch (error) {
     dispatch({ type: GETPROPROSAL_UPDATEVOTESTATUS_FAILED, error });
@@ -268,6 +273,16 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
     }
   };
 
+  const getProposal = async (proposals, token) => {
+    let proposal;
+    const keys = Object.keys(proposals);
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i];
+      proposal = proposals[key].find(p => p.token === token);
+      if (proposal) return proposal;
+    }
+  }
+
   dispatch({ type: GETPROPOSAL_ATTEMPT });
   const piURL = sel.politeiaURL(getState());
   const walletName = sel.getWalletName(getState());
@@ -275,13 +290,13 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
   let walletEligibleTickets;
   let hasEligibleTickets = false;
   let currentVoteChoice = "abstain";
-
+    
   try {
     const request = await pi.getProposal(piURL, token);
 
     const { walletService } = getState().grpc;
     const proposals = getState().governance.proposals;
-    let proposal;
+    let proposal = await getProposal(proposals, token);
 
     const p = request.data.proposal;
     const files = p.files.map(f => {
