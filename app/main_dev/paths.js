@@ -213,3 +213,33 @@ export function getProposalWalletVote (token, testnet, walletName) {
   const vote = fs.readFileSync(fullPath);
   return JSON.parse(vote);
 }
+
+// removeCachedProposals gets a batch of proposal's token, makes a diff with
+// the values in the directory, and remove the ones that are not in the inventory.
+// We use this method to remove cached proposals from proposals which have finished
+// voting.
+export function removeCachedProposals (inventoryProposals) {
+  const politeiaPath = getPoliteiaPath();
+  const dirProposals = fs.readdirSync(politeiaPath);
+  // we get all values that are in the directory but are not in the inventory
+  // and remove them as the vote has finished.
+  const difference = dirProposals.filter(x => !inventoryProposals.includes(x));
+  difference.forEach(token => {
+    const proposalPath = path.join(politeiaPath, token);
+    deleteFolderRecursive(proposalPath);
+  });
+}
+
+function deleteFolderRecursive (path) {
+  if (fs.existsSync(path)) {
+    fs.readdirSync(path).forEach( file => {
+      const curPath = path + "/" + file;
+      if (fs.lstatSync(curPath).isDirectory()) { // recurse
+        deleteFolderRecursive(curPath);
+      } else { // delete file
+        fs.unlinkSync(curPath);
+      }
+    });
+    fs.rmdirSync(path);
+  }
+}

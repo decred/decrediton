@@ -3,7 +3,7 @@ import * as pi from "middleware/politeiaapi";
 import * as wallet from "wallet";
 import { push as pushHistory } from "react-router-redux";
 import { hexReversedHashToArray, reverseRawHash } from "helpers";
-import { setPoliteiaPath, getEligibleTickets, saveEligibleTickets, savePiVote, getProposalWalletVote } from "main_dev/paths";
+import { setPoliteiaPath, getEligibleTickets, saveEligibleTickets, savePiVote, getProposalWalletVote, removeCachedProposals } from "main_dev/paths";
 
 // Proposal vote status codes from politeiawww's v1.PropVoteStatusT
 // PropVoteStatusInvalid       PropVoteStatusT = 0 // Invalid vote status
@@ -156,10 +156,13 @@ const getInitialBatch = () => async (dispatch, getState) => {
   await dispatch(getProposalsAndUpdateVoteStatus(preVoteBatch));
 };
 
-export const getTokenAndInitialBatch = () => async (dispatch) => {
+export const getTokenAndInitialBatch = () => async (dispatch, getState) => {
   setPoliteiaPath();
   await dispatch(getTokenInventory());
-  dispatch(getInitialBatch());
+  const inventory = sel.inventory(getState());
+  // remove proposals cache which are not in the inventory activeVote
+  removeCachedProposals(inventory.activeVote);
+  await dispatch(getInitialBatch());
 };
 
 export const DISABLE_POLITEIA_SUCCESS = "DISABLE_POLITEIA_SUCCESS";
