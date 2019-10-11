@@ -1004,7 +1004,7 @@ export const trezorDevice = get([ "trezor", "device" ]);
 export const trezorDeviceList = get([ "trezor", "deviceList" ]);
 export const trezorWalletCreationMasterPubkeyAttempt = get([ "trezor", "walletCreationMasterPubkeyAttempt" ]);
 
-export const lnEnabled = bool(get([ "ln", "enabled" ]));
+export const lnEnabled = bool(and(get([ "ln", "enabled" ]), not(isWatchingOnly), not(isTrezor)));
 export const lnActive = bool(get([ "ln", "active" ]));
 export const lnWalletExists = bool(get([ "ln", "exists" ]));
 export const lnInfo = get([ "ln", "info" ]);
