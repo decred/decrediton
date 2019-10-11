@@ -40,9 +40,9 @@ export const OpenChannelDetails = ({ channel }) => (
     <T id="ln.openChannelDetails.numUpdates" m="Number of Updates" />
     <span>{channel.numUpdates}</span>
     <T id="ln.openChannelDetails.localChannelReserve" m="Local Reserve" />
-    <Balance amount={channel.localChannelReserve} />
+    <Balance amount={channel.localChanReserveAtoms} />
     <T id="ln.openChannelDetails.remoteChannelReserve" m="Remote Reserve" />
-    <Balance amount={channel.remoteChannelReserve} />
+    <Balance amount={channel.remoteChanReserveAtoms} />
     <T id="ln.openChannelDetails.unsettledBalance" m="Unsettled Balance" />
     <Balance amount={channel.unsettledBalance} />
     <T id="ln.openChannelDetails.totalSent" m="Total Sent" />
