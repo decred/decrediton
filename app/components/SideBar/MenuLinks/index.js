@@ -110,9 +110,10 @@ class MenuLinks extends React.Component {
     if (sidebarOnBottom) {
       const numberOfRows = this.links.length / LINK_PER_ROW;
       let n = 0;
-      for (let i = 0; i < numberOfRows; i++) {
+      const totalLinks = this.links.length;
+      for (let i = 0; (i < numberOfRows) && (n < totalLinks); i++) {
         linksComponent[i] = [];
-        for (let j = 0; j < LINK_PER_ROW; j++) {
+        for (let j = 0; (j < LINK_PER_ROW) && (n < totalLinks); j++) {
           linksComponent[i].push(this.getMenuLink(this.links[n]));
           n++;
         }
