@@ -70,15 +70,17 @@
 }
 
 .tx-info {
-  &.send .icon {
+  &.out .icon {
     background-image: @minus-small-icon;
   }
-  &.receive .icon {
+  &.in .icon,
+  &.coinbase .icon {
     background-image: @plus-small-icon;
   }
   &.transfer .icon {
     background-image: @transfer-transaction;
   }
+  &.unknown .icon,
   &.ticket .icon {
     background-image: @ticket-live-icon;
   }

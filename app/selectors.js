@@ -371,7 +371,7 @@ const transactionNormalizer = createSelector(
 
       const txDetails = ((totalFundsReceived + totalChange + fee) < totalDebit)
         ? {
-          txDescription: { direction: "Sent", addressStr: null },
+          txDescription: { direction: "Sent", addressStr: addressStr },
           txAmount: totalDebit - fee - totalChange - totalFundsReceived,
           txDirection: "out",
           txAccountName: getAccountName(debitedAccount)
