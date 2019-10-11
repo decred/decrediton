@@ -46,7 +46,6 @@ export { default as fatalErrorPage } from "./fatalErrorPage";
 export { default as theming } from "./theming";
 export { default as newStakePool } from "./newStakePool";
 export { default as helpPage } from "./helpPage";
-export { default as routedTabsHeader } from "./routedTabsHeader";
 export { default as activeVoteProposals } from "./activeVoteProposals";
 export { default as preVoteProposals } from "./preVoteProposals";
 export { default as votedProposals } from "./votedProposals";
