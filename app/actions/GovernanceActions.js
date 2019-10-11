@@ -156,6 +156,22 @@ const getInitialBatch = () => async (dispatch, getState) => {
   await dispatch(getProposalsAndUpdateVoteStatus(preVoteBatch));
 };
 
+// getVoteOption gets the wallet vote if cached or return abstain.
+const getVoteOption = (token, proposal, testnet, walletName) => {
+  const vote = getProposalWalletVote(token, testnet, walletName);
+
+  let currentVoteChoice = "abstain";
+  if (vote && vote.length > 0) {
+    // We assume all tickets have vote the same bit
+    currentVoteChoice = proposal.voteOptions.find(option =>
+      // we need to concat string as votes is stringfied before cached.
+      vote[0].voteBit === "" + option.bits
+    );
+  }
+
+  return currentVoteChoice;
+};
+
 export const getTokenAndInitialBatch = () => async (dispatch, getState) => {
   setPoliteiaPath();
   await dispatch(getTokenInventory());
@@ -273,22 +289,6 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
   }
 };
 
-// getVoteOption gets the wallet vote if cached or return abstain.
-const getVoteOption = (token, proposal, testnet, walletName) => {
-  const vote = getProposalWalletVote(token, testnet, walletName);
-
-  let currentVoteChoice = "abstain";
-  if (vote && vote.length > 0) {
-    // We assume all tickets have vote the same bit
-    currentVoteChoice = proposal.voteOptions.find(option =>
-      // we need to concat string as votes is stringfied before cached.
-      vote[0].voteBit === "" + option.bits
-    );
-  }
-
-  return currentVoteChoice;
-};
-
 export const GETPROPOSAL_ATTEMPT = "GETPROPOSAL_ATTEMPT";
 export const GETPROPOSAL_FAILED = "GETPROPOSAL_FAILED";
 export const GETPROPOSAL_SUCCESS = "GETPROPOSAL_SUCCESS";
@@ -390,6 +390,8 @@ export const UPDATEVOTECHOICE_ATTEMPT = "UPDATEVOTECHOICE_ATTEMPT";
 export const UPDATEVOTECHOICE_SUCCESS = "UPDATEVOTECHOICE_SUCCESS";
 export const UPDATEVOTECHOICE_FAILED = "UPDATEVOTECHOICE_FAILED";
 
+// updateVoteChoice cast vote into pi server, if success we cache the vote information
+// updates the proposal vote summary and dispatch it with its new result.
 export const updateVoteChoice = (proposal, newVoteChoiceID, passphrase) => async (dispatch, getState) => {
   const { walletService } = getState().grpc;
   const blockTimestampFromNow = sel.blockTimestampFromNow(getState());
@@ -440,13 +442,15 @@ export const updateVoteChoice = (proposal, newVoteChoiceID, passphrase) => async
       votes.push(pi.Vote(token, t.ticket, voteChoice.bits, hexSig));
     });
 
-    // await pi.castVotes(piURL, votes);
+    // cast vote into pi server
+    await pi.castVotes(piURL, votes);
+    // cache information locally so we can show them without querying from
+    // pi server.
     savePiVote(votes, token, testnet, walletName);
 
-    // update the vote count for the proposal from pi, so we can see our
-    // vote counting towards the totals
+    // update proposal vote status, so we can see our vote counting towards
+    // the totals.
     const newProposal = { ...proposal };
-
     const { summaries } = await getProposalsVotestatusBatch([ token ], piURL);
     fillVoteSummary(newProposal, summaries[token], blockTimestampFromNow);
 
