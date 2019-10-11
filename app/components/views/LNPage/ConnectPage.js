@@ -18,8 +18,7 @@ class ConnectPage extends React.Component {
       connecting: false,
       launching: false,
       autopilotEnabled: false,
-      account: this.props.account,
-      ...props.getWalletConfig()
+      account: this.props.defaultAccount,
     };
   }
 
