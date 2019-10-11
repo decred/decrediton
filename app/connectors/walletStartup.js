@@ -29,7 +29,6 @@ const mapStateToProps = selectorMap({
   network: sel.network,
   isAdvancedDaemon: sel.isAdvancedDaemon,
   isDaemonRemote: sel.isDaemonRemote,
-  openForm: sel.openForm,
   isOpeningWallet: sel.isOpeningWallet,
   remoteAppdataError: sel.getRemoteAppdataError,
   rescanEndBlock: sel.rescanEndBlock,
@@ -48,7 +47,6 @@ const mapStateToProps = selectorMap({
   isSPV: sel.isSPV,
   syncInput: sel.syncInput,
   daemonWarning: sel.daemonWarning,
-  daemonTimeout: sel.getDaemonTimeout,
 
   peerCount: sel.peerCount,
   synced: sel.synced,
