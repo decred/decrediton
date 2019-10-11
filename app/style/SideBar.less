@@ -38,6 +38,11 @@
   &.sidebar-reduced {
     width: @sidebar-width-reduced;
   }
+  
+  &.sidebar-on-bottom {
+    height: 70px;
+    flex-direction: row;
+  }  
 }
 
 .sidebar-logo,
@@ -147,6 +152,19 @@
   padding: 14px 18px 10px 20px;
   background-color: var(--info-modal-button-text);
   font-size: 13px;
+}
+
+.sidebar.sidebar-reduced .sidebar-menu-bottom-latest-block {
+   padding: 14px 0 10px 0;
+    .rescan-button-area{
+      text-align: center;
+      padding-right: 0;
+      float: none;
+    }
+}
+
+.sidebar.sidebar-reduced.sidebar-on-bottom .sidebar-menu-bottom-latest-block {
+    display:none;
 }
 
 .sidebar-menu-bottom-latest-block-name {
