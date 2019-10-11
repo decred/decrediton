@@ -13,15 +13,15 @@ const closeTypes = {
 
 export const ClosedChannelDetails = ({ channel }) => (
   <div className="ln-closed-channel-details">
-    <T id="ln.closedChannelDetails.chanId" m="Channel ID" />
+    <div><T id="ln.closedChannelDetails.chanId" m="Channel ID" /></div>
     <span>{channel.chanId}</span>
     <T id="ln.closedChannelDetails.closeType" m="Close Type" />
-    { closeTypes[channel.closeType] }
-    <T id="ln.closedChannelDetails.channelPoint" m="Channel Point"/>
+    <span>{ closeTypes[channel.closeType] }</span>
+    <span><T id="ln.closedChannelDetails.channelPoint" m="Channel Point"/></span>
     <ExternalLink href={channel.channelPointURL}>{channel.channelPoint}</ExternalLink>
-    <T id="ln.closedChannelDetails.closingTx" m="Closing Tx" />
+    <span><T id="ln.closedChannelDetails.closingTx" m="Closing Tx" /></span>
     <ExternalLink href={channel.closingTxidURL}>{channel.closingTxHash}</ExternalLink>
-    <T id="ln.closedChannelDetails.remotePubKey" m="Remote PubKey" />
+    <span><T id="ln.closedChannelDetails.remotePubKey" m="Remote PubKey" /></span>
     <span>{channel.remotePubkey}</span>
   </div>
 );

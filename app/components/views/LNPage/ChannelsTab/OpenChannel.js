@@ -33,9 +33,9 @@ export const OpenChannelDetails = ({ channel }) => (
     <ExternalLink href={channel.channelPointURL}>{channel.channelPoint}</ExternalLink>
     <T id="ln.openChannelDetails.commitFee" m="Commit Fee" />
     <Balance amount={channel.commitFee} />
-    <T id="ln.openChannelDetails.csvDelay" m="CSV Delay" />
-    <T id="ln.openChannelDetails.csvDelayValue" m="{csvDelay} blocks" values={ { csvDelay: channel.csvDelay } } />
-    <T id="ln.openChannelDetails.remotePubKey" m="Remote PubKey" />
+    <span><T id="ln.openChannelDetails.csvDelay" m="CSV Delay" /></span>
+    <span><T id="ln.openChannelDetails.csvDelayValue" m="{csvDelay} blocks" values={ { csvDelay: channel.csvDelay } } /></span>
+    <span><T id="ln.openChannelDetails.remotePubKey" m="Remote PubKey" /></span>
     <span>{channel.remotePubkey}</span>
     <T id="ln.openChannelDetails.numUpdates" m="Number of Updates" />
     <span>{channel.numUpdates}</span>

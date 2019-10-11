@@ -3,9 +3,9 @@ import { FormattedMessage as T } from "react-intl";
 
 const PendingOpenChannelDetails = ({ channel }) => (
   <>
-    <T id="ln.pendingOpenDetails.commitFee" m="Commit Fee" />
+    <span><T id="ln.pendingOpenDetails.commitFee" m="Commit Fee" /></span>
     <Balance amount={channel.commitFee} />
-    <T id="ln.pendingOpenDetails.confirmationHeight" m="Confirmation Height" />
+    <span><T id="ln.pendingOpenDetails.confirmationHeight" m="Confirmation Height" /></span>
     <span>{channel.confirmationHeight}</span>
   </>
 );
@@ -16,20 +16,20 @@ const PendingCloseChannelDetails = () => (
 
 const PendingForceCloseChannelDetails = ({ channel }) => (
   <>
-    <T id="ln.pendingForceCloseDetails.closingTx" m="Closing Tx" />
+    <span><T id="ln.pendingForceCloseDetails.closingTx" m="Closing Tx" /></span>
     <ExternalLink href={channel.closingTxidURL}>{channel.closingTxid}</ExternalLink>
-    <T id="ln.pendingForceCloseDetails.limboBalance" m="Limbo Balance" />
+    <span><T id="ln.pendingForceCloseDetails.limboBalance" m="Limbo Balance" /></span>
     <Balance amount={channel.limboBalance} />
-    <T id="ln.pendingForceCloseDetails.recoveredBalance" m="Recovered Balance" />
+    <span><T id="ln.pendingForceCloseDetails.recoveredBalance" m="Recovered Balance" /></span>
     <Balance amount={channel.recoveredBalance} />
-    <T id="ln.pendingForceCloseDetails.maturityHeight" m="Maturity Height" />
+    <span><T id="ln.pendingForceCloseDetails.maturityHeight" m="Maturity Height" /></span>
     <span>{channel.maturityHeight}</span>
   </>
 );
 
 const PendingWaitCloseChannelDetails = ({ channel }) => (
   <>
-    <T id="ln.waitCloseDetails.limboBalance" m="Limbo Balance" />
+    <span><T id="ln.waitCloseDetails.limboBalance" m="Limbo Balance" /></span>
     <Balance amount={channel.limboBalance} />
   </>
 );
@@ -66,12 +66,12 @@ export const PendingChannelDetails = ({ channel }) => {
 
   return (
     <div className="ln-pending-channel-details">
-      <T id="ln.pendingChannelDetails.type" m="Type" />
-      {detailsType}
-      <T id="ln.pendingChannelDetials.channelPoint" m="Channel Point" />
+      <span><T id="ln.pendingChannelDetails.type" m="Type" /></span>
+      <span>{detailsType}</span>
+      <span><T id="ln.pendingChannelDetials.channelPoint" m="Channel Point" /></span>
       <ExternalLink href={channel.channelPointURL}>{channel.channelPoint}</ExternalLink>
-      <T id="ln.pendingChannelDetails.remotePubKey" m="Remote Pubkey" />
-      {channel.remotePubkey}
+      <span><T id="ln.pendingChannelDetails.remotePubKey" m="Remote Pubkey" /></span>
+      <span>{channel.remotePubkey}</span>
       <DetailsCompo channel={channel} />
     </div>
   );
