@@ -171,7 +171,7 @@ export const connectPeer = (client, node, address) => {
   addr.setPubkey(node);
   addr.setHost(address);
   request.setAddr(addr);
-  request.setPerm(true);
+  request.setPerm(false);
 
   return new Promise((resolve, reject) => client.connectPeer(request,
     (err, resp) => err ? reject(err) : resolve(resp)));
