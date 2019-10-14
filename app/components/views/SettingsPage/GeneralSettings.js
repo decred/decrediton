@@ -107,7 +107,7 @@ const GeneralSettings = ({
 
       <div className="settings-row">
         <div className="settings-label">
-          <T id="settings.advancedDaemon.label" m="Advanced Daemon Startup" />
+          <T id="settings.advancedDaemon.label" m="Adv. Daemon Startup" />
         </div>
         <Tooltip text={ <AlreadySetMessage/> } disabled={!tempSettings.daemonStartAdvancedFromCli}>
           <SettingsInput
@@ -127,10 +127,10 @@ const GeneralSettings = ({
       {walletReady &&
         <div className="settings-row">
           <div className="settings-label">
+            <InfoDocFieldModalButton document="GapLimitInfo" modalClassName="has-warning" double />
             <div className="info-label">
               <T id="settings.gapLimit.label" m="Gap Limit" />
             </div>
-            <InfoDocFieldModalButton document="GapLimitInfo" modalClassName="has-warning" double/>
           </div>
           <div className="settings-input">
             <NumericInput

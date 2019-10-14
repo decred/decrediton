@@ -556,7 +556,7 @@
   "settings.SPV": "SPV",
   "settings.SPVConnect": "SPV Connect",
   "settings.advancedDaemon.false": "Disabled",
-  "settings.advancedDaemon.label": "Advanced Daemon Startup",
+  "settings.advancedDaemon.label": "Adv. Daemon Startup",
   "settings.advancedDaemon.true": "Enabled",
   "settings.changeConfirmation": "Change your passphrase",
   "settings.changePassphrase": "Successfully changed private passphrase.",

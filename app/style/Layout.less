@@ -94,7 +94,12 @@
   top: 0px;
   right: 0px;
   left: 0px;
-  height: 120px;
+  height: 114px;
+}
+
+.standalone-page-header-container {
+  width: 740px;
+  position: relative;
 }
 
 .tabbed-page-body {
@@ -112,34 +117,33 @@
   overflow-y: scroll;
   position: absolute;
   right: 0px;
-  top: 163px;
+  top: 157px;
   bottom: 0px;
   left: 0px;
-  padding: 60px 60px 30px 60px;
+  padding: 58px 60px 30px 63px;
   background-color: var(--background-container);
-  min-height: 100%;
 }
 
-.tabbed-page-header > .title-header-title,
-.standalone-page-header > .title-header-title {
+.tabbed-page-header > .standalone-page-header-container > .title-header-title,
+.standalone-page-header > .standalone-page-header-container > .title-header-title {
   margin-bottom: 3px;
   color: var(--stroke-color-hovered);
   font-size: 27px;
-  line-height: 34px;
+  line-height: 30px;
   float: left;
 }
 
-.tabbed-page-header > .title-header-icon,
-.standalone-page-header > .title-header-icon {
+.tabbed-page-header > .standalone-page-header-container > .title-header-icon,
+.standalone-page-header > .standalone-page-header-container > .title-header-icon {
   float: left;
   margin-right: 10px;
   margin-top: 1px;
 }
 
-.tabbed-page-header > .title-header-button,
-.standalone-page-header > .title-header-button {
+.tabbed-page-header > .standalone-page-header-container > .title-header-button,
+.standalone-page-header > .standalone-page-header-container > .title-header-button {
   position: absolute;
-  right: 80px;
+  right: 0;
 }
 
 .tabbed-page-header > .description-header,
@@ -331,13 +335,20 @@
     left: 55px;
   }
   .tabbed-page-header,
-  .standalone-page-header {
+  .standalone-page-header,
+  .standalone-page-body {
     padding-left: 20px;
   }  
   .tabbed-page-subtitle {
     margin-left: 20px;
     width: 630px;
   }
+}
+
+@media screen and (max-width: 1106px) {
+  .standalone-page-header-container {
+    width: 649px;
+  }  
 }
 
 @media screen and (max-width: 768px) {
@@ -380,5 +391,15 @@
   .standalone-page-header {
     height: 82px;
     padding-top: 30px;
-  }
+  }    
+
+  .standalone-page-header .title-header-button {
+    display: none;
+  }  
+  
+  .standalone-page-body {
+    padding: 30px 10px;
+    top: 113px;
+    bottom: 60px;
+  }      
 }
