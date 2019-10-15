@@ -54,7 +54,7 @@ const SettingsPage = ({
   walletReady,
   isTicketAutoBuyerEnabled
 }) => (
-  <StandalonePage header={<SettingsPageHeader {...{ onCloseWallet, walletName, isTicketAutoBuyerEnabled }}/>} >
+  <StandalonePage header={<SettingsPageHeader {...{ onCloseWallet, walletName, isTicketAutoBuyerEnabled }} />} className="settings-standalone-page">
     <div className="settings-wrapper">
       <div className="settings-columns">
         <GeneralSettings {...{ tempSettings, networks, currencies, locales, walletReady,

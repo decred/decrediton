@@ -311,24 +311,10 @@
   .settings-security .settings-column-title {
     text-align: left;
   }
-}
 
-@media screen and (max-width: 768px) {
-  .settings-wrapper {
-    margin-top:0;
-    width: 315px;
-    padding: 20px ;
-    flex-direction: column;
-    
-    .settings-columns:nth-of-type(2){
-      width: 300px;
-    }    
-  }
-
-  .settings-save-button-wrapper {
-    width:355px;  
-    text-align: center;
-  } 
+  .close-modal-button {
+    display: none;
+  }  
 }
 
 .close-modal-button {
@@ -349,4 +335,20 @@
   text-align: right;
 }
 
+@media screen and (max-width: 768px) {
+  .settings-wrapper {
+    margin-top:0;
+    width: 315px;
+    padding: 20px ;
+    flex-direction: column;
+    
+    .settings-columns:nth-of-type(2){
+      width: 300px;
+    }    
+  }
 
+  .settings-save-button-wrapper {
+    width:355px;  
+    text-align: center;
+  } 
+}

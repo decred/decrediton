@@ -751,6 +751,9 @@
   }
 }
 
+.rebroadcast-button-container {
+  width: 815px;
+}
 .rebroadcast-button {
   background-image: @rebroadcastTransaction;
   background-position: 20px 12px;
@@ -759,5 +762,30 @@
   padding-left: 48px;
   float: right;
   margin-top: -22px;
-  margin-right: 68px;
+}
+
+@media screen and (max-width: 1179px) { 
+  .rebroadcast-button-container {
+    width: 770px;
+  } 
+}
+
+@media screen and (max-width: 1106px) { 
+  .rebroadcast-button-container {
+    width: 670px;
+  } 
+}
+
+@media screen and (max-width: 768px) {
+  .rebroadcast-button-container {
+    width: 375px;
+    text-align: center;
+    display: block;
+    margin-top: -22px;
+    .rebroadcast-button {
+      float: none;
+      padding: 12px 30px 14px 48px;
+      margin-top: 0;
+    }
+  }  
 }
