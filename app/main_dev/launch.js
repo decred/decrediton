@@ -379,7 +379,7 @@ export const launchDCRLnd = (walletAccount, walletPort, rpcCreds, walletPath,
   testnet, autopilotEnabled) => new Promise((resolve,reject) => {
 
   if (dcrlndPID === -1) {
-    return resolve();
+    resolve();
   }
 
   let dcrlndRoot = path.join(walletPath, "dcrlnd");
@@ -418,7 +418,7 @@ export const launchDCRLnd = (walletAccount, walletPort, rpcCreds, walletPath,
   const dcrlndExe = getExecutablePath("dcrlnd", argv.custombinpath);
   if (!fs.existsSync(dcrlndExe)) {
     logger.log("error", "The dcrlnd executable does not exist. Expected to find it at " + dcrlndExe);
-    return;
+    reject("The dcrlnd executable does not exist at " + dcrlndExe);
   }
 
   /*

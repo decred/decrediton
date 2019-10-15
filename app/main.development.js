@@ -8,7 +8,8 @@ import { getWalletsDirectoryPath, getWalletsDirectoryPathNetwork, appDataDirecto
 import { getGlobalCfgPath, checkAndInitWalletCfg } from "./main_dev/paths";
 import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRequests, allowExternalRequest } from "./main_dev/externalRequests";
 import { setupProxy } from "./main_dev/proxy";
-import { getDaemonInfo, cleanShutdown, GetDcrdPID, GetDcrwPID, getBlockChainInfo, connectRpcDaemon } from "./main_dev/launch";
+import { getDaemonInfo, cleanShutdown, GetDcrdPID, GetDcrwPID, getBlockChainInfo, connectRpcDaemon,
+  GetDcrlndPID, GetDcrlndCreds } from "./main_dev/launch";
 import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopDaemon, stopWallet, startWallet,
   deleteDaemon, setWatchingOnlyWallet, getWatchingOnlyWallet, startDcrlnd, stopDcrlnd } from "./main_dev/ipc";
 import { initTemplate, getVersionWin, setGrpcVersions, getGrpcVersions, inputMenu, selectionMenu } from "./main_dev/templates";
@@ -229,12 +230,28 @@ ipcMain.on("start-wallet", (event, walletPath, testnet) => {
 
 ipcMain.on("start-dcrlnd", async (event, walletAccount, walletPort, rpcCreds,
   walletPath, testnet, autopilotEnabled) => {
-  event.returnValue = await startDcrlnd(walletAccount, walletPort, rpcCreds,
-    walletPath, testnet, autopilotEnabled);
+  try {
+    event.returnValue = await startDcrlnd(walletAccount, walletPort, rpcCreds,
+      walletPath, testnet, autopilotEnabled);
+  } catch (error) {
+    if (!(error instanceof Error)) {
+      event.returnValue = new Error(error);
+    } else {
+      event.returnValue = error;
+    }
+  }
 });
 
 ipcMain.on("stop-dcrlnd", async (event) => {
   event.returnValue = await stopDcrlnd();
+});
+
+ipcMain.on("dcrlnd-creds", event => {
+  if (GetDcrlndPID() && GetDcrlndPID() !== -1) {
+    event.returnValue = GetDcrlndCreds();
+  } else {
+    event.returnValue = null;
+  }
 });
 
 ipcMain.on("check-daemon", () => {

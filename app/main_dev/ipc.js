@@ -126,6 +126,7 @@ export const startDcrlnd = async (walletAccount, walletPort, rpcCreds,
     return started;
   } catch (e) {
     logger.log("error", "error launching dcrlnd: " + e);
+    return e;
   }
 };
 

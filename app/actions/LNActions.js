@@ -63,6 +63,9 @@ export const startDcrlnd = (passphrase, autopilotEnabled, walletAccount) => asyn
   try {
     const res = ipcRenderer.sendSync("start-dcrlnd", walletAccount, walletPort,
       rpcCreds, walletPath, isTestnet, autopilotEnabled);
+    if (typeof res === "string" || res instanceof Error) {
+      throw res;
+    }
 
     try {
       const wuClient = await ln.getWalletUnlockerClient(res.address, res.port, res.certPath, null);
@@ -96,9 +99,27 @@ export const stopDcrlnd = () => (dispatch, getState) => {
 
 export const LNWALLET_CHECKED = "LNWALLET_CHECKED";
 
-export const checkLnWallet = () => (dispatch) => {
+export const checkLnWallet = () => async (dispatch) => {
   const cfg = dispatch(getLNWalletConfig());
   dispatch({ exists: cfg.walletExists, type: LNWALLET_CHECKED });
+
+  if (!cfg.walletExists) {
+    return;
+  }
+
+  // Check whether the app knows of a previously running dcrlnd instance.
+  const creds = ipcRenderer.sendSync("dcrlnd-creds");
+  if (!creds) {
+    return;
+  }
+
+  // Try to connect to it.
+  try {
+    await dispatch(connectToLNWallet(creds.address, creds.port, creds.certPath, creds.macaroonPath, cfg.account));
+    dispatch({ type: LNWALLET_STARTDCRLND_SUCCESS });
+  } catch (error) {
+    // Ignore the errors since this is just an early attempt.
+  }
 };
 
 export const LNWALLET_CONNECT_ATTEMPT = "LNWALLET_CONNECT_ATTEMPT";
@@ -114,6 +135,28 @@ export const connectToLNWallet = (address, port, certPath, macaroonPath, account
   dispatch({ type: LNWALLET_CONNECT_ATTEMPT });
   try {
     let lnClient = await ln.getLightningClient(address, port, certPath, macaroonPath);
+
+    // Ensure the dcrlnd instance and decrediton are connected to the same(ish)
+    // wallet. For this test to fail the user would have had to manually change
+    // a lot of config files and it should only happen when reconnecting to a
+    // running instance, but we'll err on the side of being safe. We generate an
+    // address on the lnwallet and check if this is also an address owned by the
+    // wallet. This can still not completely ensure they are the same wallet (since
+    // this would also pass in the case of different running wallets using the same seed)
+    // but is good enough for our purposes.
+    const lnWalletAddr = await ln.newAddress(lnClient);
+    const validResp = await wallet.validateAddress(sel.walletService(getState()), lnWalletAddr);
+    if (!validResp.getIsValid()) {
+      throw new Error("Invalid address returned by lnwallet: " + lnWalletAddr);
+    }
+    if (!validResp.getIsMine()) {
+      throw new Error("Wallet returned that address from lnwallet is not owned");
+    }
+    const addrAccount = validResp.getAccountNumber();
+    if (addrAccount != account) {
+      throw new Error("Wallet returned that address is not from the ln account; account=" + addrAccount);
+    }
+
     dispatch({ lnClient, type: LNWALLET_CONNECT_SUCCESS });
     dispatch(setLNWalletConfig(account));
     dispatch(loadLNStartupInfo());
