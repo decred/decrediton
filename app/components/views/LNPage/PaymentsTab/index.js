@@ -54,7 +54,7 @@ class PaymentsTab extends React.Component {
   }
 
   onPayRequestChanged(e) {
-    this.setState({ payRequest: e.target.value, decodedPayRequest: null,
+    this.setState({ payRequest: (""+e.target.value).trim(), decodedPayRequest: null,
       expired: false });
     if (this.lastDecodeTimer) {
       this.props.clearTimeout(this.lastDecodeTimer);

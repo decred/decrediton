@@ -25,7 +25,7 @@ class ChannelsTab extends React.Component {
 
   onNodeChanged(e) {
     const canOpen = e.target.value && this.state.localAmt > 0;
-    this.setState({ node: e.target.value, canOpen });
+    this.setState({ node: (""+e.target.value).trim(), canOpen });
   }
 
   onLocalAmtChanged({ value, atomValue }) {
