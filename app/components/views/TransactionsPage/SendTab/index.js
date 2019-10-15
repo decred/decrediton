@@ -114,14 +114,16 @@ class Send extends React.Component {
     const { outputs, isSendAll, sendAllAmount, isSendSelf } = this.state;
     const { totalSpent } = this.props;
     const {
+      onChangeAccount, onShowSendSelf, onShowSendOthers, onKeyDown, onAddOutput,
+    } = this;
+    const {
       onValidateAddress, onValidateAmount, onRemoveOutput, onShowSendAll, onHideSendAll,
     } = this;
     return outputs.map((output, index) => ({
       data: <OutputRow
         {...{ ...this.props, index, outputs, ...output.data, isSendAll, isSendSelf, totalSpent, sendAllAmount,
-          onValidateAddress, onValidateAmount, onShowSendAll, onHideSendAll, onRemoveOutput }}
-        onAddOutput={this.onAddOutput}
-        onKeyDown={this.onKeyDown}
+          onValidateAddress, onValidateAmount, onShowSendAll, onHideSendAll, onRemoveOutput,   onChangeAccount,
+          onShowSendSelf, onShowSendOthers, onAddOutput, onKeyDown, }}
       />,
       key: "output_" + index,
       style: {

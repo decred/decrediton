@@ -1,4 +1,3 @@
-import { AccountsSelect } from "inputs";
 import { FormattedMessage as T } from "react-intl";
 import { Balance, Tooltip, TransitionMotionWrapper, Subtitle } from "shared";
 import { SendTransactionButton } from "buttons";
@@ -9,22 +8,17 @@ import "style/MiscComponents.less";
 const wrapperComponent = props => <div className="output-row" { ...props } />;
 
 const SendPage = ({
-  account,
   isSendSelf,
   outputs,
   totalSpent,
   estimatedFee,
   estimatedSignedSize,
   isValid,
-  onChangeAccount,
   onAttemptSignTransaction,
-  onShowSendSelf,
-  onShowSendOthers,
   getStyles,
   willLeave,
   willEnter,
   nextAddressAccount,
-  onKeyDown,
   showPassphraseModal,
   resetShowPassphraseModal,
   unsignedRawTx,
@@ -36,21 +30,6 @@ const SendPage = ({
     <Subtitle title={<T id="send.subtitle" m="Send DCR"/>} />
     <div className="send-wrapper-area is-row">
       <div className="send-area">
-        <div className="send-row is-row">
-          <div className="send-label from-label"><T id="send.from" m="From" />:</div>
-          <AccountsSelect className="send-input"
-            {...{ account }} onChange={onChangeAccount} onKeyDown={onKeyDown}/>
-          <div>
-            {!isSendSelf ?
-              <Tooltip text={<T id="send.sendSelfTitle" m="Send funds to another account"/>}>
-                <a className="send-icon-wrapper self-account-icon" onClick={onShowSendSelf}/>
-              </Tooltip> :
-              <Tooltip text={<T id="send.sendOthersTitle" m="Send funds to another wallet"/>} >
-                <a className="send-icon-wrapper cancel-icon " onClick={onShowSendOthers}/>
-              </Tooltip>
-            }
-          </div>
-        </div>
         <TransitionMotionWrapper {...{ styles: getStyles(), willLeave, willEnter, wrapperComponent }} />
       </div>
       <div className="details-area">
