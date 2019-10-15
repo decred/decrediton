@@ -32,7 +32,6 @@ class ConnectPage extends React.Component {
       ? this.state.account.value
       : null;
     this.props.startDcrlnd(passphrase, this.state.autopilotEnabled, account)
-      .then(() => this.setState({ launching: false }))
       .catch(() => this.setState({ launching: false }));
   }
 
