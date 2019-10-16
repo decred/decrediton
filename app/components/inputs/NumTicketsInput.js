@@ -22,11 +22,11 @@ const NumTicketsInput = ({
           className="ticket-numeric-input"
           onChange={e => onChangeNumTickets && onChangeNumTickets(e.target.value)}
           data-max-width="70"
-          unit={ticketUnitLabel}
+          unit={!invalid && ticketUnitLabel}
         />
       </div>
-      <div key="more" className="num-tickets-icon more" onClick={incrementNumTickets} />
       <div key="less" className="num-tickets-icon less" onClick={decrementNumTickets} />
+      <div key="more" className="num-tickets-icon more" onClick={incrementNumTickets} />
     </div>
   );
 };

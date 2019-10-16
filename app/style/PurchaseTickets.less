@@ -39,13 +39,17 @@
 
 .num-tickets-icon {
   width: 20px;
-  background-size: 10px;
+  height: 20px;
+  background-size: 6px;
   background-position: 50% 50%;
   background-repeat: no-repeat;
+  background-color: #8997A5;
+  box-shadow: 0px 3px 8px #09144036;
+  margin-left: 3px;
+  border-radius: 5px;
 
   &.more {
-    background-image: @arrow-up-key-blue-icon;
-    margin-left: 5px;
+    background-image: @tickets-plus-icon;
 
     &:hover {
       opacity: 0.7;
@@ -53,7 +57,7 @@
   }
 
   &.less {
-    background-image: @arrow-down-key-blue-icon;
+    background-image: @tickets-minus-icon;
 
     &:hover {
       opacity: 0.7;
@@ -95,6 +99,7 @@
   height: 22px;
   margin-left: 6px;
   border-bottom: 1px var(--stroke-color-default) solid;
+  width: 120px;
 
   &.error {
     border-bottom: 1px var(--error-text-color) solid;
@@ -298,7 +303,7 @@
   border: 0;
 
   .input {
-    width: 15px;
+    max-width: 30px;
   }
 
   .unit-area {

@@ -79,7 +79,7 @@ class Input extends React.Component{
               onBlur={this.onInputBlur}
               onKeyDown={this.onKeyDown}
             />
-            {unit && <div className={"unit-area " + (hasErrorToShow && "error")}>{unit}</div>}
+            {unit && <span className={"unit-area " + (hasErrorToShow && "error")}>{unit}</span>}
           </div>
           {showErrors ? (
             <div className="input-errors-area">
