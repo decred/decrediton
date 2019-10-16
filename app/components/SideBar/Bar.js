@@ -9,6 +9,7 @@ import { RescanButton, RescanCancelButton } from "buttons";
 import { UNIT_DIVISOR } from "constants";
 import "style/Fonts.less";
 import "style/SideBar.less";
+import cx from "classnames";
 
 const Bar = ({
   isTestNet,
@@ -28,8 +29,7 @@ const Bar = ({
   isWatchingOnly,
   rescanCancel,
 }) => (
-  <div className={"sidebar " + (!expandSideBar && "sidebar-reduced ")}
-    style={!expandSideBar && sidebarOnBottom ? { height: 70, flexDirection: "row" } : null}>
+  <div className={cx("sidebar", !expandSideBar && "sidebar-reduced", !expandSideBar && sidebarOnBottom && "sidebar-on-bottom")}>
     <Logo {...{ isTestNet, expandSideBar, sidebarOnBottom, onReduceSideBar, onExpandSideBar, isWatchingOnly }} />
     <div className="sidebar-main">
       <div className="sidebar-scroll">
