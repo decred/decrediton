@@ -1,5 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
-import { Balance, Tooltip, TransitionMotionWrapper, Subtitle } from "shared";
+import { Balance, TransitionMotionWrapper, Subtitle } from "shared";
 import { SendTransactionButton } from "buttons";
 import { CopyToClipboard } from "shared";
 import "style/SendPage.less";
@@ -66,7 +66,7 @@ const SendPage = ({
           onShow={resetShowPassphraseModal}
           onSubmit={onAttemptSignTransaction} >
           <div className="passphrase-modal-confirm-send">
-            {!isSendSelf ?
+            { !isSendSelf ?
               <>
                 <div className="passphrase-modal-confirm-send-label">{outputs.length > 1 ? <T id="send.confirmAmountAddresses" m="Destination addresses" /> : <T id="send.confirmAmountAddress" m="Destination address" /> }:</div>
                 {outputs.map((output, index) => {
@@ -86,18 +86,15 @@ const SendPage = ({
         </SendTransactionButton>
       }
     </div>
-    {
-      unsignedRawTx && isWatchingOnly && !isTrezor &&
-        (
-          <div className="unsigned-raw-tx-area">
-            <div className="unsigned-raw-tx-title"><T id="send.unsignedRawTxTite" m="Unsigned Raw Transaction:" /></div>
-            <div className="unsigned-raw-tx">
-              {unsignedRawTx}
-            </div>
-            <CopyToClipboard textToCopy={unsignedRawTx} className="unsigned-raw-tx-copy-to-clipboard-icon" />
-          </div>
-        )
-    }
+    { unsignedRawTx && isWatchingOnly && !isTrezor && (
+      <div className="unsigned-raw-tx-area">
+        <div className="unsigned-raw-tx-title"><T id="send.unsignedRawTxTite" m="Unsigned Raw Transaction:" /></div>
+        <div className="unsigned-raw-tx">
+          {unsignedRawTx}
+        </div>
+        <CopyToClipboard textToCopy={unsignedRawTx} className="unsigned-raw-tx-copy-to-clipboard-icon" />
+      </div>
+    )}
   </>
 );
 
