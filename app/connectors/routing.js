@@ -7,6 +7,7 @@ import * as ca from "../actions/ClientActions";
 const mapStateToProps = selectorMap({
   location: sel.location,
   isTrezor: sel.isTrezor,
+  sidebarOnBottom: sel.sidebarOnBottom,
   lnEnabled: sel.lnEnabled,
 });
 

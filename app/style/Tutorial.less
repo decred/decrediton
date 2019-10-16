@@ -113,6 +113,7 @@
     background-size: 12px;
     background-image: var(--x-grey);
     float: right;
+    padding: 0;
   }
 
   .tutorial-standard-page {
@@ -137,6 +138,8 @@
     text-align: center;
     height: 35vw;
     width: 35vw;
+    min-width: 340px;
+    min-height: 340px;
   }
 
   .tutorial-image {
@@ -176,6 +179,31 @@
   }
 }
 
+@media screen and (max-width: 800px) {
+  .wallet-tutorial {
+    padding: 30px 0;
+
+    .tutorial-close-button {
+      margin-right:20px;
+    }
+    .tutorial-title,
+    .tutorial-subtitle{
+      margin-left:20px;
+    }
+
+    .tutorial-text {
+      width: 100%;
+      margin-right: 20px;
+    }
+    .tutorial-page {
+      padding: 0 20px 125px 20px;
+      background-color: var(--background-back-color);
+    }
+    .tutorial-standard-page {
+      flex-direction: column;
+    }    
+  }  
+}
 @media screen and (max-width: 670px) {
   .getstarted-tutorial .tutorial-main-text {
     max-height: 650px;

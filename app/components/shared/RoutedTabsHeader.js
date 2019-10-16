@@ -19,10 +19,10 @@ class RoutedTabsHeader extends React.Component {
     this.updateCaretPosition();
   }
 
-  componentDidUpdate() {
-    const { location } = this.props;
+  componentDidUpdate(prevProps) {
+    const { location, sidebarOnBottom } = this.props;
     const selectedTab = location.pathname;
-    if (this.state.selectedTab != selectedTab) {
+    if (this.state.selectedTab != selectedTab || prevProps.sidebarOnBottom != sidebarOnBottom){
       this.updateCaretPosition();
     }
   }
