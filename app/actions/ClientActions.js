@@ -14,7 +14,7 @@ import { getTransactions as walletGetTransactions } from "wallet/service";
 import { TransactionDetails } from "middleware/walletrpc/api_pb";
 import { clipboard } from "electron";
 import { getStartupStats } from "./StatisticsActions";
-import { getVettedProposals } from "./GovernanceActions";
+import { getTokenAndInitialBatch } from "./GovernanceActions";
 import { rawHashToHex, reverseRawHash, strHashToRaw } from "helpers";
 import * as da from "../middleware/dcrdataapi";
 import { EXTERNALREQUEST_DCRDATA, EXTERNALREQUEST_POLITEIA } from "main_dev/externalRequests";
@@ -109,7 +109,7 @@ export const getStartupWalletInfo = () => (dispatch) => {
           dispatch(getTreasuryBalance());
         }
         if (politeiaEnabled) {
-          dispatch(getVettedProposals());
+          await dispatch(getTokenAndInitialBatch());
         }
         if (lnEnabled) {
           dispatch(checkLnWallet());

@@ -299,15 +299,21 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => {
           }
         }
       }
-      var gapLimit = walletCfg.get("gaplimit");
-      var hiddenAccounts = walletCfg.get("hiddenaccounts");
-      var currencyDisplay = walletCfg.get("currency_display");
-      var balanceToMaintain = walletCfg.get("balancetomaintain");
-      var discoverAccountsComplete = walletCfg.get("discoveraccounts");
-      var activeStakePoolConfig = foundStakePoolConfig;
-      var selectedStakePool = firstConfiguredStakePool;
+      const walletName = selectedWallet.value.wallet;
+      const gapLimit = walletCfg.get("gaplimit");
+      const hiddenAccounts = walletCfg.get("hiddenaccounts");
+      const currencyDisplay = walletCfg.get("currency_display");
+      const balanceToMaintain = walletCfg.get("balancetomaintain");
+      const discoverAccountsComplete = walletCfg.get("discoveraccounts");
+      const activeStakePoolConfig = foundStakePoolConfig;
+      const selectedStakePool = firstConfiguredStakePool;
+      const lastPoliteiaAccessTime = walletCfg.get("politeia_last_access_time");
+      const lastPoliteiaAccessBlock = walletCfg.get("politeia_last_access_block");
+
       walletCfg.set("lastaccess", Date.now());
-      dispatch({ type: WALLETREADY, walletName: selectedWallet.value.wallet, network: network, hiddenAccounts, port });
+      dispatch({ type: WALLETREADY,
+        walletName, network, hiddenAccounts, port, lastPoliteiaAccessTime, lastPoliteiaAccessBlock
+      });
       dispatch({ type: WALLET_AUTOBUYER_SETTINGS, balanceToMaintain });
       dispatch({ type: WALLET_SETTINGS, currencyDisplay, gapLimit });
       dispatch({ type: WALLET_STAKEPOOL_SETTINGS, activeStakePoolConfig, selectedStakePool, currentStakePoolConfig });

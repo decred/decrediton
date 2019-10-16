@@ -6,7 +6,8 @@ import * as wallet from "wallet";
 import { closeWalletRequest } from "actions/WalletLoaderActions";
 import { closeDaemonRequest, getAvailableWallets, startDaemon } from "actions/DaemonActions";
 import { getTreasuryBalance, resetTreasuryBalance } from "actions/ClientActions";
-import { EXTERNALREQUEST_DCRDATA } from "main_dev/externalRequests";
+import { EXTERNALREQUEST_DCRDATA, EXTERNALREQUEST_POLITEIA } from "main_dev/externalRequests";
+import { getTokenAndInitialBatch, resetInventoryAndProposals } from "actions/GovernanceActions";
 import * as configConstants from "constants/config";
 
 export const SETTINGS_SAVE = "SETTINGS_SAVE";
@@ -21,8 +22,8 @@ export const saveSettings = (settings) => (dispatch, getState) => {
   const config = getGlobalCfg();
   const oldAllowedExternalRequests = config.get(configConstants.ALLOW_EXTERNAL_REQUEST);
   const updatedProxy =
-    (config.get("proxy_type") !== settings.proxyType) ||
-    (config.get("proxy_location") !== settings.proxyLocation);
+    (config.get(configConstants.PROXY_TYPE,) !== settings.proxyType) ||
+    (config.get(configConstants.PROXY_LOCATION) !== settings.proxyLocation);
 
   config.set(configConstants.LOCALE, settings.locale);
   config.set(configConstants.DAEMON_ADVANCED, settings.daemonStartAdvanced);
@@ -45,15 +46,21 @@ export const saveSettings = (settings) => (dispatch, getState) => {
     wallet.reloadAllowedExternalRequests();
   }
 
-  const oldDcrdataEnabled = oldAllowedExternalRequests.indexOf(EXTERNALREQUEST_DCRDATA) > -1;
   const newDcrdataEnabled = settings.allowedExternalRequests.indexOf(EXTERNALREQUEST_DCRDATA) > -1;
-  if (newDcrdataEnabled === true && oldDcrdataEnabled === false) {
+  if (newDcrdataEnabled === true) {
     dispatch(getTreasuryBalance());
   }
-  if (newDcrdataEnabled === false && oldDcrdataEnabled === true) {
+  if (newDcrdataEnabled === false) {
     dispatch(resetTreasuryBalance());
   }
 
+  const newPoliteiaEnabled = settings.allowedExternalRequests.indexOf(EXTERNALREQUEST_POLITEIA) > -1;
+  if (newPoliteiaEnabled === true) {
+    dispatch(getTokenAndInitialBatch());
+  }
+  if (newPoliteiaEnabled === false) {
+    dispatch(resetInventoryAndProposals());
+  }
   dispatch({ settings, type: SETTINGS_SAVE });
 
   if (updatedProxy) {
@@ -69,10 +76,11 @@ export const saveSettings = (settings) => (dispatch, getState) => {
 };
 
 export const ALLOWEDEXTERNALREQUESTS_ADDED = "ALLOWEDEXTERNALREQUESTS_ADDED";
-export const addAllowedExternalRequest = (requestType) => (dispatch, getState) => {
+export const addAllowedExternalRequest = (requestType) => (dispatch, getState) => new Promise( (resolve, reject) => {
   const config = getGlobalCfg();
   const allowed = config.get(configConstants.ALLOW_EXTERNAL_REQUEST);
-  if (allowed.indexOf(requestType) > -1) return;
+
+  if (allowed.indexOf(requestType) > -1) return reject(false);
 
   allowed.push(requestType);
   config.set(configConstants.ALLOW_EXTERNAL_REQUEST, allowed);
@@ -90,8 +98,9 @@ export const addAllowedExternalRequest = (requestType) => (dispatch, getState) =
     newTempSettings.allowedExternalRequests.push(requestType);
   }
 
-  dispatch({ newSettings, newTempSettings, type: ALLOWEDEXTERNALREQUESTS_ADDED });
-};
+  dispatch({ newSettings, newTempSettings, type: ALLOWEDEXTERNALREQUESTS_ADDED, requestType });
+  resolve(true);
+});
 
 export function updateStateSettingsChanged(settings, norestart) {
   return (dispatch, getState) => {

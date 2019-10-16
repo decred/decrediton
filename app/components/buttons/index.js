@@ -12,7 +12,6 @@ export { default as VerticalExpand } from "./VerticalExpand";
 export { default as EnableExternalRequestButton } from "./EnableExternalRequestButton";
 export { default as SendTransactionButton } from "./SendTransactionButton";
 export { default as SignMessageButton } from "./SignMessageButton";
-export { default as GoBackIconButton } from "./GoBackIconButton";
 export { default as ImportScriptIconButton } from "./ImportScriptIconButton";
 export { default as TrezorWalletSwitch } from "./TrezorWalletSwitch";
 

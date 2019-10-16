@@ -9,21 +9,7 @@ class ProposalDetails extends React.Component {
     super(props);
     this.state = {
       newVoteChoice: null,
-      text: null,
     };
-  }
-
-  componentDidUpdate(prevProps) {
-    const { viewedProposalDetails } = this.props;
-    let text = "";
-    if (prevProps.viewedProposalDetails !== viewedProposalDetails && viewedProposalDetails.files.length) {
-      viewedProposalDetails.files.forEach(f => {
-        if (f.name === "index.md") {
-          text = politeiaMarkdownIndexMd(f.payload);
-        }
-      });
-      this.setState({ text });
-    }
   }
 
   onVoteOptionSelected(opt) {
@@ -40,13 +26,20 @@ class ProposalDetails extends React.Component {
   }
 
   render() {
-    const { getProposalAttempt, getProposalError } = this.props;
+    const { getProposalAttempt, getProposalError, viewedProposalDetails } = this.props;
 
     if (getProposalAttempt) return <LoadingProposal />;
     if (getProposalError) return <ProposalError error={getProposalError} />;
 
+    let text = "";
+    viewedProposalDetails.files.forEach(f => {
+      if (f.name === "index.md") {
+        text += politeiaMarkdownIndexMd(f.payload);
+      }
+    });
     return (
       <Page
+        text= {text}
         {...this.props}
         {...this.state}
         onVoteOptionSelected={this.onVoteOptionSelected}

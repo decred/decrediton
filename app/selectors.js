@@ -967,12 +967,27 @@ export const dcrdataEnabled = compose(
 export const treasuryBalance = get([ "grpc", "treasuryBalance" ]);
 
 export const updateVoteChoiceAttempt = get([ "governance", "updateVoteChoiceAttempt" ]);
-export const activeVoteProposals = get([ "governance", "activeVote" ]);
-export const getVettedProposalsAttempt = get([ "governance", "getVettedAttempt" ]);
-export const preVoteProposals = get([ "governance", "preVote" ]);
-export const votedProposals = get([ "governance", "voted" ]);
-export const abandonedProposals = get([ "governance", "abandoned" ]);
+export const proposals = get([ "governance", "proposals" ]);
+export const proposallistpagesize = get([ "governance", "proposallistpagesize" ]);
+export const getProposalsAttempt = get([ "governance", "getProposalsAttempt" ]);
+export const preVoteProposals = createSelector(
+  [ proposals ],
+  (proposals) => proposals && proposals.preVote
+);
+export const activeVoteProposals = createSelector(
+  [ proposals ],
+  (proposals) => proposals && proposals.activeVote
+);
+export const finishedProposals = createSelector(
+  [ proposals ],
+  (proposals) => proposals && proposals.finishedVote
+);
+export const abandonedProposals = createSelector(
+  [ proposals ],
+  (proposals) => proposals && proposals.abandonedVote
+);
 export const lastVettedFetchTime = get([ "governance", "lastVettedFetchTime" ]);
+export const inventory = get([ "governance", "inventory" ]);
 export const newActiveVoteProposalsCount = compose(
   reduce((acc, p) => p.votingSinceLastAccess ? acc + 1 : acc, 0),
   activeVoteProposals
@@ -985,16 +1000,18 @@ export const newProposalsStartedVoting = compose(some(p => p.votingSinceLastAcce
 
 export const getProposalAttempt = get([ "governance", "getProposalAttempt" ]);
 export const getProposalError = get([ "governance", "getProposalError" ]);
-export const proposalsDetails = get([ "governance", "proposals" ]);
+export const proposalsDetails = get([ "governance", "proposalsDetails" ]);
 export const viewedProposalToken = (state, ctx) => ctx.match && ctx.match.params && ctx.match.params.token ? ctx.match.params.token : null;
 export const viewedProposalDetails = createSelector(
   [ proposalsDetails, viewedProposalToken ],
   (proposals, token) => proposals[token]
 );
-export const initialProposalLoading = createSelector(
-  [ proposalsDetails, getVettedProposalsAttempt ],
-  ( proposals, getVettedAttempt ) => (Object.keys(proposals).length === 0) && getVettedAttempt
+export const initialProposalLoading = or(
+  getProposalsAttempt,
+  getProposalAttempt
 );
+export const lastPoliteiaAccessBlock = get([ "governance", "lastPoliteiaAccessBlock" ]);
+export const lastPoliteiaAccessTime = get([ "governance", "lastPoliteiaAccessTime" ]);
 
 export const trezorWaitingForPin = get([ "trezor", "waitingForPin" ]);
 export const trezorWaitingForPassPhrase = get([ "trezor", "waitingForPassPhrase" ]);

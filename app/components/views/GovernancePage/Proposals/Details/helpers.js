@@ -49,7 +49,7 @@ export const ChosenVoteOption = ({ voteOptions, onUpdateVoteChoice, onVoteOption
       <div className="proposal-details-voting-preference-title"><T id="proposalDetails.votingInfo.votingPreferenceTitle" m="My Voting Preference" /></div>
       <div className="proposal-details-current-choice-box">
         {voteOptions.map(o => (
-          <VoteOption value={o.id} description={o.id.charAt(0).toUpperCase()+o.id.slice(1)} key={o.id} checked={currentVoteChoice !== "abstain" ? o.id === currentVoteChoice : o.id === newVoteChoice}
+          <VoteOption value={o.id} description={o.id.charAt(0).toUpperCase()+o.id.slice(1)} key={o.id} checked={currentVoteChoice !== "abstain" ? o.id === currentVoteChoice.id : null }
             onClick={!votingComplete ? onVoteOptionSelected : null}/>
         ))}
       </div>
@@ -72,7 +72,7 @@ export const OverviewField = showCheck(( { label, value } ) => (
   </div>
 ));
 
-export const OverviewVotingProgressInfo = ({ voteCounts }) => (
+export const OverviewVotingProgressInfo = ({ voteCounts, quorumMinimumVotes }) => (
   <div className="proposal-details-voting-progress">
     <div className="proposal-details-voting-progress-counts">
       <div className="yes-count-box" />{voteCounts.yes}
@@ -81,7 +81,7 @@ export const OverviewVotingProgressInfo = ({ voteCounts }) => (
       <div className="abstain-count-box" /><T id="proposal.progressCount.abstain" m="{count} Abstain" values={{ count: voteCounts.abstain }} /> */}
     </div>
 
-    <VotingProgress voteCounts={voteCounts} />
+    <VotingProgress  {...{ voteCounts, quorumMinimumVotes }} />
   </div>
 );
 
@@ -103,29 +103,31 @@ const renderProposalImage = ({ alt }) => {
 };
 
 export const ProposalText = ({ text }) => (
-  <ReactMarkdown
-    source={text}
+  <>
+    <ReactMarkdown
+      source={text}
 
-    // NEVER set to false
-    escapeHtml={true}
+      // NEVER set to false
+      escapeHtml={true}
 
-    // debatable whether we wanna allow the embedded html sections to be
-    // shown. Theoretically, escapeHtml=true should suffice, but playing it
-    // safe for the moment and also setting this as true.
-    skipHtml={true}
+      // debatable whether we wanna allow the embedded html sections to be
+      // shown. Theoretically, escapeHtml=true should suffice, but playing it
+      // safe for the moment and also setting this as true.
+      skipHtml={true}
 
-    renderers={{
-      link: renderInternalProposalLink,
-      linkReference: renderInternalProposalLink,
+      renderers={{
+        link: renderInternalProposalLink,
+        linkReference: renderInternalProposalLink,
 
-      // debatable whether we wanna allow inline image references in proposals
-      // in decrediton.
-      imageReference: () => renderProposalImage,
-      image: () => renderProposalImage,
+        // debatable whether we wanna allow inline image references in proposals
+        // in decrediton.
+        imageReference: () => renderProposalImage,
+        image: () => renderProposalImage,
 
-      html: () => null,
-    }}
-  />
+        html: () => null,
+      }}
+    />
+  </>
 );
 
 // politeiaMarkdownIndexMd returns markdown text from the payload of a politeia

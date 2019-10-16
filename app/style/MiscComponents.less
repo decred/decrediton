@@ -725,28 +725,22 @@
 }
 
 .voting-progress-indicator {
-  > div {
-    height: 100%;
-    border-radius: 50px;
-    display: inline-block;
-    margin-right: -10px;
-    position: relative;
-  }
+  width: 150px;
+  height: 5px;
+  position: relative;
+  display: flex;
+  margin-top: 2px;
+  border: 1px solid var(--white-border);
+  margin-left: auto;
+  margin-right: 20px;
+  border-radius: 10rem;
 
   .voting-progress-yes {
     background-color: var(--vote-yes-color);
-    z-index: 10;
-    min-width: 10px;
   }
 
   .voting-progress-no {
     background-color: var(--vote-no-color);
-    z-index: 5;
-    min-width: 15px;
-  }
-
-  .voting-progress-abstain {
-    background-color: var(--vote-abstain-color);
   }
 }
 

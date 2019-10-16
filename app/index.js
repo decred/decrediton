@@ -16,7 +16,7 @@ import { log } from "./wallet";
 import { ipcRenderer } from "electron";
 import { DCR, DAEMON_ADVANCED, THEME, OPEN_FORM, LOCALE, NETWORK } from "constants";
 
-var globalCfg = getGlobalCfg();
+const globalCfg = getGlobalCfg();
 const locale = globalCfg.get(LOCALE);
 const cliOptions = ipcRenderer.sendSync("get-cli-options");
 
@@ -383,15 +383,20 @@ var initialState = {
     ticketDataHeatmap: [],
   },
   governance: {
-    getVettedAttempt: false,
-    activeVote: [],
-    preVote: [],
-    voted: [],
-
+    getProposalsAttempt: false,
+    inventory: [],
+    proposals: {
+      activeVote: [],
+      abandonedVote: [],
+      preVote: [],
+      finishedVote: [],
+    },
+    proposalsDetails: {},
     getProposalAttempt: false,
     getProposalError: null,
-    proposals: {}, // map from proposal token (id) to proposal details
     lastVettedFetchTime: new Date(0), // time when vetted proposals were requested
+    // TODO: Get proposallistpagesize from politeia's request: /v1/policy
+    proposallistpagesize: 20,
   },
   trezor: {
     enabled: false,
