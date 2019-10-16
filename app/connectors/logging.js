@@ -7,6 +7,7 @@ const mapStateToProps = selectorMap({
   walletReady: sel.getWalletReady,
   isDaemonRemote: sel.isDaemonRemote,
   isDaemonStarted: sel.getDaemonStarted,
+  lnActive: sel.lnActive,
 });
 
 export default connect(mapStateToProps);

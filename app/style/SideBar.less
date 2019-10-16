@@ -268,6 +268,12 @@
   &.governanceIcon:not(.menu-link-active):hover {
     background-image: @menu-animation-governance;
   }
+  &.lnIcon {
+    background-image: @menu-ln-default;
+  }
+  &.lnIcon:not(.menu-link-active):hover {
+    background-image: @menu-ln-hover;
+  }
 }
 
 .menu-link:hover {
@@ -312,6 +318,9 @@
   &.trezorIcon {
     background-image: var(--menu-trezor-active);
   }
+  &.lnIcon {
+    background-image: @menu-ln-active;
+  }
 }
 
 .menu-caret {
@@ -350,7 +359,7 @@
     border-left: 0;
     border-bottom: 5px solid var(--accent-color);
   }
-  
+
   .sidebar-reduce-arrow {
     margin-left: 0;
     margin-right: auto;

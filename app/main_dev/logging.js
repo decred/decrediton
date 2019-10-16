@@ -6,6 +6,7 @@ import os from "os";
 
 let dcrdLogs = Buffer.from("");
 let dcrwalletLogs = Buffer.from("");
+let dcrlndLogs = Buffer.from("");
 
 let logger;
 
@@ -100,9 +101,15 @@ export const AddToDcrwalletLog = (destIO, data, debug) => {
   dcrwalletLogs = AddToLog(destIO, dcrwalletLogs, data, debug);
 };
 
+export const AddToDcrlndLog = (destIO, data, debug) => {
+  dcrlndLogs = AddToLog(destIO, dcrlndLogs, data, debug);
+};
+
 export const GetDcrdLogs = () => dcrdLogs;
 
 export const GetDcrwalletLogs = () => dcrwalletLogs;
+
+export const GetDcrlndLogs = () => dcrlndLogs;
 
 const logError = "[ERR]";
 
@@ -130,6 +137,7 @@ export function lastPanicLine(log) {
 
 export function ClearDcrwalletLogs() {
   dcrwalletLogs = Buffer.from("");
+  dcrlndLogs = Buffer.from("");
 }
 
 const reindexCheck = "Reindexing to height";

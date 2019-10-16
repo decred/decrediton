@@ -6,6 +6,7 @@ import { getNextAddressAttempt, publishUnminedTransactionsAttempt } from "./Cont
 import { transactionNtfnsStart, accountNtfnsStart } from "./NotificationActions";
 import { refreshStakepoolPurchaseInformation, setStakePoolVoteChoices, getStakepoolStats } from "./StakePoolActions";
 import { getDecodeMessageServiceAttempt, decodeRawTransactions } from "./DecodeMessageActions";
+import { checkLnWallet } from "./LNActions";
 import { push as pushHistory, goBack } from "react-router-redux";
 import { getWalletCfg, getGlobalCfg } from "config";
 import { onAppReloadRequested } from "wallet";
@@ -92,10 +93,12 @@ export const getStartupWalletInfo = () => (dispatch) => {
   const config = getGlobalCfg();
   const dcrdataEnabled = config.get("allowed_external_requests").indexOf(EXTERNALREQUEST_DCRDATA) > -1;
   const politeiaEnabled = config.get("allowed_external_requests").indexOf(EXTERNALREQUEST_POLITEIA) > -1;
+  const lnEnabled = config.get("ln_enabled");
 
   return new Promise((resolve, reject) => {
     setTimeout( async () => {
       try {
+        await dispatch(checkLnWallet());
         await dispatch(getStakeInfoAttempt());
         await dispatch(reloadTickets());
         await dispatch(getStartupTransactions());
@@ -107,6 +110,9 @@ export const getStartupWalletInfo = () => (dispatch) => {
         }
         if (politeiaEnabled) {
           dispatch(getVettedProposals());
+        }
+        if (lnEnabled) {
+          dispatch(checkLnWallet());
         }
         dispatch({ type: GETSTARTUPWALLETINFO_SUCCESS });
         resolve();
