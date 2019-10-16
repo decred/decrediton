@@ -14,11 +14,38 @@ const messages = defineMessages({
   }
 });
 
+const getSendAllFundsIcon = ({ isSendAll, onShowSendAll, onHideSendAll, outputs }) => outputs.length > 1 ?
+  (<Tooltip text={<T id="send.sendAllTitle.disabled" m="Send all funds from selected account - Disabled"/>}>
+    <a className="send-icon-wrapper wallet-icon disabled" />
+  </Tooltip>) :
+  (!isSendAll ?
+    <Tooltip text={<T id="send.sendAllTitle" m="Send all funds from selected account"/>}>
+      <a className="send-icon-wrapper wallet-icon" onClick={onShowSendAll}/>
+    </Tooltip> :
+    <Tooltip text={<T id="send.cancelSendAllTitle" m="Cancel sending all funds"/>}>
+      <a className="send-icon-wrapper cancel-icon" onClick={onHideSendAll}/>
+    </Tooltip>);
+
+const getAddInputIcon = ({ isSendSelf, onAddOutput, onRemoveOutput, index, isSendAll }) => isSendSelf ?
+  <div className="send-icon-wrapper add disabled"></div> :
+  (!isSendAll && (index === 0 ?
+    <div className="send-icon-wrapper add" onClick={onAddOutput}></div> :
+    <div className="send-icon-wrapper delete" onClick={() => onRemoveOutput(index)}></div>
+  ));
+
+const getSendSelfIcon = ({ isSendSelf, onShowSendSelf, onShowSendOthers }) => !isSendSelf ?
+  <Tooltip text={<T id="send.sendSelfTitle" m="Send funds to another account"/>}>
+    <a className="send-icon-wrapper self-account-icon" onClick={onShowSendSelf}/>
+  </Tooltip> :
+  <Tooltip text={<T id="send.sendOthersTitle" m="Send funds to another wallet"/>} >
+    <a className="send-icon-wrapper cancel-icon " onClick={onShowSendOthers}/>
+  </Tooltip>;
+
 const SendOutputRow = ({
   index, destination, value, onAddOutput, onRemoveOutput,
   onValidateAmount, onValidateAddress, isSendAll, onKeyDown, sendAllAmount, error, intl,
   onShowSendAll, onHideSendAll, isSendSelf, outputs, onChangeAccount, onShowSendSelf,
-  account, onShowSendOthers, 
+  account, onShowSendOthers,
 }) => (
   <div className="is-row">
     <div>
@@ -34,64 +61,43 @@ const SendOutputRow = ({
           {...{ account }} onChange={onChangeAccount} onKeyDown={onKeyDown}/>
       }
       { isSendSelf ?
-          <ReceiveAccountsSelect
-            getAddressForSelected={true}
-            showAccountsButton={false}
-            onKeyDown={onKeyDown}
-            className="send-input"
-          /> : <AddressInput
-            required = {true}
-            autoFocus={index === 0}
-            showErrors={ error && error.address }
-            invalid={error && error.address}
-            invalidMessage={error && error.address}
-            value={destination}
-            placeholder={intl.formatMessage(messages.destinationAddrPlaceholder)}
-            onChange={(e) => onValidateAddress({ address: e.target.value , index })}
-            onKeyDown={onKeyDown}
-            className="send-input"
-          />
+        <ReceiveAccountsSelect
+          getAddressForSelected={true}
+          showAccountsButton={false}
+          onKeyDown={onKeyDown}
+          className="send-input"
+        /> : <AddressInput
+          required = {true}
+          autoFocus={index === 0}
+          showErrors={ error && error.address }
+          invalid={error && error.address}
+          invalidMessage={error && error.address}
+          value={destination}
+          placeholder={intl.formatMessage(messages.destinationAddrPlaceholder)}
+          onChange={(e) => onValidateAddress({ address: e.target.value , index })}
+          onKeyDown={onKeyDown}
+          className="send-input"
+        />
       }
       { isSendAll ?
         <Balance flat amount={sendAllAmount} classNameWrapper="send-input send-all" />
         : <DcrInput
-            className = "send-input"
-            required={true}
-            showErrors={error && error.amount}
-            invalid={error && error.amount}
-            invalidMessage={error && error.amount}
-            amount={value}
-            placeholder={intl.formatMessage(messages.amountPlaceholder)}
-            onChange={ e => onValidateAmount({ value: e.value , index, atomValue: e.atomValue })}
-            onKeyDown={onKeyDown}
-          />
+          className = "send-input"
+          required={true}
+          showErrors={error && error.amount}
+          invalid={error && error.amount}
+          invalidMessage={error && error.amount}
+          amount={value}
+          placeholder={intl.formatMessage(messages.amountPlaceholder)}
+          onChange={ e => onValidateAmount({ value: e.value , index, atomValue: e.atomValue })}
+          onKeyDown={onKeyDown}
+        />
       }
     </div>
     <div>
-      { index === 0  && (!isSendSelf ?
-        <Tooltip text={<T id="send.sendSelfTitle" m="Send funds to another account"/>}>
-          <a className="send-icon-wrapper self-account-icon" onClick={onShowSendSelf}/>
-        </Tooltip> :
-        <Tooltip text={<T id="send.sendOthersTitle" m="Send funds to another wallet"/>} >
-          <a className="send-icon-wrapper cancel-icon " onClick={onShowSendOthers}/>
-        </Tooltip>)
-      }
-      { isSendSelf ? <div className="send-icon-wrapper add disabled"></div> :
-      (!isSendAll && (index === 0 ?
-        <div className="send-icon-wrapper add" onClick={onAddOutput}></div> :
-        <div className="send-icon-wrapper delete" onClick={() => onRemoveOutput(index)}></div> 
-      ))}
-      { index===0 && (outputs.length > 1 ?
-        <Tooltip text={<T id="send.sendAllTitle.disabled" m="Send all funds from selected account - Disabled"/>}>
-          <a className="send-icon-wrapper wallet-icon disabled" />
-        </Tooltip> : (!isSendAll ?
-        <Tooltip text={<T id="send.sendAllTitle" m="Send all funds from selected account"/>}>
-          <a className="send-icon-wrapper wallet-icon" onClick={onShowSendAll}/>
-        </Tooltip> :
-        <Tooltip text={<T id="send.cancelSendAllTitle" m="Cancel sending all funds"/>}>
-          <a className="send-icon-wrapper cancel-icon" onClick={onHideSendAll}/>
-        </Tooltip>
-      ))}
+      { index === 0 && getSendSelfIcon({ isSendSelf, onShowSendSelf, onShowSendOthers }) }
+      { getAddInputIcon({ isSendSelf, onAddOutput, onRemoveOutput, index, isSendAll }) }
+      { index===0 && getSendAllFundsIcon({ isSendAll, onShowSendAll, onHideSendAll, outputs })}
     </div>
   </div>
 );
