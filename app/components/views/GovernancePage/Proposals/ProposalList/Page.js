@@ -1,8 +1,9 @@
 import { FormattedMessage as T } from "react-intl";
-import { activeVoteProposals, preVoteProposals, votedProposals, proposals, abandonedProposals } from "connectors";
+import { activeVoteProposals, preVoteProposals, finishedProposals, abandonedProposals } from "connectors";
 import { VotingProgress } from "indicators";
 import { PoliteiaLoading, NoProposals } from "indicators";
-import { VOTESTATUS_ACTIVEVOTE, VOTESTATUS_VOTED } from "actions/GovernanceActions";
+import { VOTESTATUS_ACTIVEVOTE, VOTESTATUS_FINISHEDVOTE } from "actions/GovernanceActions";
+import InfiniteScroll from "react-infinite-scroller";
 import { FormattedRelative } from "shared";
 
 const VoteChoiceText = ({ currentVoteChoice }) => {
@@ -34,7 +35,7 @@ const VoteResults = ({ currentVoteChoice, quorumPass, voteResult }) => (
 
 const ProposalListItem = ({ name, timestamp, token, voteCounts, tsDate, onClick,
   voteStatus, currentVoteChoice, quorumPass, voteResult, modifiedSinceLastAccess,
-  votingSinceLastAccess }) => {
+  votingSinceLastAccess, quorumMinimumVotes }) => {
 
   const isVoting = voteStatus == VOTESTATUS_ACTIVEVOTE;
   const modifiedClassName =
@@ -48,41 +49,52 @@ const ProposalListItem = ({ name, timestamp, token, voteCounts, tsDate, onClick,
       <div className="info">
         <div className="proposal-name">{ name }</div>
         <div className="proposal-token">{ token }</div>
-        {voteStatus !== VOTESTATUS_VOTED &&
+        {voteStatus !== VOTESTATUS_FINISHEDVOTE &&
         <div className="proposal-timestamp">
           <T id="proposalItem.lastUpdatedAt" m="Last Updated {reldate}" values={{
             reldate: <FormattedRelative  value={ tsDate(timestamp) } /> }} />
         </div>}
       </div>
-      {voteStatus == VOTESTATUS_ACTIVEVOTE &&
+      {( voteStatus === VOTESTATUS_ACTIVEVOTE || voteStatus === VOTESTATUS_FINISHEDVOTE) &&
         <>
           <VoteChoice currentVoteChoice={currentVoteChoice} />
-          <VotingProgress voteCounts={voteCounts} />
+          <VotingProgress {...{ voteCounts, quorumMinimumVotes } }  />
         </>}
-      {voteStatus == VOTESTATUS_VOTED &&
+      { voteStatus === VOTESTATUS_FINISHEDVOTE &&
         <VoteResults  {...{ currentVoteChoice, quorumPass, voteResult }}/>}
     </div>
   );
 };
 
-const ProposalList = ({ proposals, loading, viewProposalDetails, tsDate, voteEnded, abandonedProposals }) => (
-  <>
-    { loading
-      ? <div className="proposal-loading-page"><PoliteiaLoading center /></div>
-      : proposals && proposals.length
-        ? (
-          <div className={voteEnded || abandonedProposals ? "proposal-list ended" : "proposal-list"}>
-            {proposals.map(v => (
-              <ProposalListItem key={v.token} {...v} tsDate={tsDate} onClick={viewProposalDetails} />
-            ))}
-          </div>
-        )
-        : <NoProposals />
-    }
-  </>
-);
+const ProposalList = ({
+  proposals, loading, viewProposalDetails, tsDate, finishedProposal, noMoreProposals, onLoadMoreProposals
+}) => {
+  return (
+    <>
+      { loading
+        ? <div className="proposal-loading-page"><PoliteiaLoading center /></div>
+        : proposals && proposals.length
+          ? (
+            <InfiniteScroll
+              hasMore={!noMoreProposals}
+              loadMore={onLoadMoreProposals}
+              initialLoad={false}
+              useWindow={false}
+              threshold={0}
+            >
+              <div className={finishedProposal ? "proposal-list ended" : "proposal-list"}>
+                {proposals.map(v => (
+                  <ProposalListItem key={v.token} {...v} tsDate={tsDate} onClick={viewProposalDetails} />
+                ))}
+              </div>
+            </InfiniteScroll>
+          )
+          : <NoProposals />
+      }
+    </>
+  );};
 
-export const ActiveVoteProposals = activeVoteProposals(proposals(ProposalList));
-export const PreVoteProposals = preVoteProposals(proposals(ProposalList));
-export const VotedProposals = votedProposals(proposals(ProposalList));
-export const AbandonedProposals = abandonedProposals(proposals(ProposalList));
+export const ActiveVoteProposals = activeVoteProposals(ProposalList);
+export const PreVoteProposals = preVoteProposals(ProposalList);
+export const FinishedProposal = finishedProposals(ProposalList);
+export const AbandonedProposals = abandonedProposals(ProposalList);

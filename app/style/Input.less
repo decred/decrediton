@@ -10,7 +10,6 @@
   font-size: 13px;
   color: var(--input-color-default);
   padding-left: 5px;
-  height: 100%;
 }
 
 .input-and-unit.error {
@@ -53,7 +52,7 @@
   background: transparent;
   outline: none;
   color: var(--input-color-default);
-  width: 100%;
+  width: calc(100% - 20px);
 }
 
 .input::placeholder {
@@ -73,7 +72,7 @@
 
 .unit-area {
   margin-left: auto;
-  
+
   &.error {
     color: var(--error-text-color) !important;
     margin-right: 20px;

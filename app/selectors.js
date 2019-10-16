@@ -212,6 +212,12 @@ export const blockURLBuilder= createSelector(
     (txHash) => `https://${network !== TESTNET ? "dcrdata" : "testnet"}.decred.org/block/${txHash}`
 );
 
+export const txOutURLBuilder = createSelector(
+  [ network ],
+  (network) =>
+    (txHash, outputIdx) => `https://${network !== "testnet" ? "explorer" : network}.dcrdata.org/tx/${txHash}/out/${outputIdx}`
+);
+
 export const decodedTransactions = get([ "grpc", "decodedTransactions" ]);
 
 export const ticketNormalizer = createSelector(
@@ -371,7 +377,7 @@ const transactionNormalizer = createSelector(
 
       const txDetails = ((totalFundsReceived + totalChange + fee) < totalDebit)
         ? {
-          txDescription: { direction: "Sent", addressStr: null },
+          txDescription: { direction: "Sent", addressStr: addressStr },
           txAmount: totalDebit - fee - totalChange - totalFundsReceived,
           txDirection: "out",
           txAccountName: getAccountName(debitedAccount)
@@ -961,12 +967,27 @@ export const dcrdataEnabled = compose(
 export const treasuryBalance = get([ "grpc", "treasuryBalance" ]);
 
 export const updateVoteChoiceAttempt = get([ "governance", "updateVoteChoiceAttempt" ]);
-export const activeVoteProposals = get([ "governance", "activeVote" ]);
-export const getVettedProposalsAttempt = get([ "governance", "getVettedAttempt" ]);
-export const preVoteProposals = get([ "governance", "preVote" ]);
-export const votedProposals = get([ "governance", "voted" ]);
-export const abandonedProposals = get([ "governance", "abandoned" ]);
+export const proposals = get([ "governance", "proposals" ]);
+export const proposallistpagesize = get([ "governance", "proposallistpagesize" ]);
+export const getProposalsAttempt = get([ "governance", "getProposalsAttempt" ]);
+export const preVoteProposals = createSelector(
+  [ proposals ],
+  (proposals) => proposals && proposals.preVote
+);
+export const activeVoteProposals = createSelector(
+  [ proposals ],
+  (proposals) => proposals && proposals.activeVote
+);
+export const finishedProposals = createSelector(
+  [ proposals ],
+  (proposals) => proposals && proposals.finishedVote
+);
+export const abandonedProposals = createSelector(
+  [ proposals ],
+  (proposals) => proposals && proposals.abandonedVote
+);
 export const lastVettedFetchTime = get([ "governance", "lastVettedFetchTime" ]);
+export const inventory = get([ "governance", "inventory" ]);
 export const newActiveVoteProposalsCount = compose(
   reduce((acc, p) => p.votingSinceLastAccess ? acc + 1 : acc, 0),
   activeVoteProposals
@@ -979,16 +1000,18 @@ export const newProposalsStartedVoting = compose(some(p => p.votingSinceLastAcce
 
 export const getProposalAttempt = get([ "governance", "getProposalAttempt" ]);
 export const getProposalError = get([ "governance", "getProposalError" ]);
-export const proposalsDetails = get([ "governance", "proposals" ]);
+export const proposalsDetails = get([ "governance", "proposalsDetails" ]);
 export const viewedProposalToken = (state, ctx) => ctx.match && ctx.match.params && ctx.match.params.token ? ctx.match.params.token : null;
 export const viewedProposalDetails = createSelector(
   [ proposalsDetails, viewedProposalToken ],
   (proposals, token) => proposals[token]
 );
-export const initialProposalLoading = createSelector(
-  [ proposalsDetails, getVettedProposalsAttempt ],
-  ( proposals, getVettedAttempt ) => (Object.keys(proposals).length === 0) && getVettedAttempt
+export const initialProposalLoading = or(
+  getProposalsAttempt,
+  getProposalAttempt
 );
+export const lastPoliteiaAccessBlock = get([ "governance", "lastPoliteiaAccessBlock" ]);
+export const lastPoliteiaAccessTime = get([ "governance", "lastPoliteiaAccessTime" ]);
 
 export const trezorWaitingForPin = get([ "trezor", "waitingForPin" ]);
 export const trezorWaitingForPassPhrase = get([ "trezor", "waitingForPassPhrase" ]);
@@ -997,3 +1020,16 @@ export const trezorPerformingOperation = get([ "trezor", "performingOperation" ]
 export const trezorDevice = get([ "trezor", "device" ]);
 export const trezorDeviceList = get([ "trezor", "deviceList" ]);
 export const trezorWalletCreationMasterPubkeyAttempt = get([ "trezor", "walletCreationMasterPubkeyAttempt" ]);
+
+export const lnEnabled = bool(and(get([ "ln", "enabled" ]), not(isWatchingOnly), not(isTrezor)));
+export const lnActive = bool(get([ "ln", "active" ]));
+export const lnWalletExists = bool(get([ "ln", "exists" ]));
+export const lnInfo = get([ "ln", "info" ]);
+export const lnWalletBalances = get([ "ln", "walletBalances" ]);
+export const lnChannelBalances = get([ "ln", "channelBalances" ]);
+export const lnChannels = get([ "ln", "channels" ]);
+export const lnPendingChannels = get([ "ln", "pendingChannels" ]);
+export const lnClosedChannels = get([ "ln", "closedChannels" ]);
+export const lnInvoices = get([ "ln", "invoices" ]);
+export const lnPayments = get([ "ln", "payments" ]);
+export const lnAddInvoiceAttempt = get([ "ln", "addInvoiceAttempt" ]);

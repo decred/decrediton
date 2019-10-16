@@ -12,7 +12,6 @@ export { default as VerticalExpand } from "./VerticalExpand";
 export { default as EnableExternalRequestButton } from "./EnableExternalRequestButton";
 export { default as SendTransactionButton } from "./SendTransactionButton";
 export { default as SignMessageButton } from "./SignMessageButton";
-export { default as GoBackIconButton } from "./GoBackIconButton";
 export { default as ImportScriptIconButton } from "./ImportScriptIconButton";
 export { default as TrezorWalletSwitch } from "./TrezorWalletSwitch";
 
@@ -71,3 +70,5 @@ export const ScriptRedeemableButton = mbb(null, InfoModal, helpLinkButton);
 export const AboutModalButton = mbb(null, AboutModal, KeyBlueButton);
 export const AboutModalButtonInvisible = mbb(null, AboutModal, InvisibleButton);
 export const CloseWalletModalButton = mbb("close-modal-button", ConfirmModal, InvisibleButton);
+export const CloseChannelModalButton = mbb("go-back-icon-button", ConfirmModal, InvisibleButton);
+export const InvisibleConfirmModalButton = mbb(null, ConfirmModal, InvisibleButton);

@@ -21,6 +21,7 @@ export const TIMEZONE = "timezone";
 export const LAST_HEIGHT = "last_height";
 export const APPDATA = "appdata_path";
 export const DISABLE_HARDWARE_ACCEL = "disable_hardware_accel";
+export const LN_ENABLED = "ln_enabled";
 
 export const RPCUSER = "rpc_user";
 export const RPCPASS = "rpc_pass";
@@ -60,5 +61,6 @@ export const INITIAL_VALUES = {
   [LAST_HEIGHT]: 0,
   [APPDATA]: "",
   [DISABLE_HARDWARE_ACCEL]: false,
+  [LN_ENABLED]: false,
 };
 

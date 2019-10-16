@@ -48,7 +48,9 @@ class TabbedPage extends React.Component {
       return [];
     }
 
-    const element = createElement(matchedTab.tab.props.component, matchedTab.tab.props, null);
+    const element = React.isValidElement(matchedTab.tab.props.component) ?
+      matchedTab.tab.props.component :
+      createElement(matchedTab.tab.props.component, matchedTab.tab.props, null);
     return [ {
       key: matchedTab.tab.props.path,
       data: { matchedTab, element },

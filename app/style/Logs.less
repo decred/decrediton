@@ -4,16 +4,17 @@
 .log-area {
   background-color: var(--background-back-color);
   color: var(--title-text-and-button-background);
-  width: 100%;
+  width: 740px;
   margin-top: 15px;
-  float: left;
+  margin-left: -15px;
+  padding-bottom: 5px;
 
   &:nth-of-type(1n){
     margin-top:8px;
   }
 
   .log-area-logs {
-    margin: 30px 42px 30px 42px;
+    margin: 30px 42px 30px 40px;
 
     textarea {
       font-family: Inconsolata, monospace;
@@ -28,10 +29,10 @@
   }
 
   .log-area-title {
-    padding: 0.5em;
+    padding: 15px 0 15px 40px;
+    margin-right: 20px;
     font-size: 18px;
-    border-bottom: 1px solid var(--background-container-hover);
-    background-position: 95px 15px;
+    background-position: right center;
     background-size: 10px;
     background-repeat: no-repeat;
     cursor: pointer;
@@ -43,18 +44,50 @@
 
   .log-area-title.expanded:hover {
     background-image: @arrow-down-key-blue-icon;
-    background-size: 10px;
   }
 
   .log-area-title.hidden {
     background-image: var(--arrow-right-gray-icon);
-    background-position: 98px 15px;
     background-size: 5px;
   }
 
   .log-area-title.hidden:hover {
     background-image: @arrow-right-key-blue-icon;
-    background-position: 98px 15px;
     background-size: 5px;
+  }
+
+}
+
+@media screen and (max-width: 1179px) {
+  .log-area {
+    width: 634px;
+    .log-area-title {
+      padding-left: 35px;
+    }  
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .log-area {
+    width: 355px;
+    margin-left: 0;
+    .log-area-title {
+      padding-left: 20px;
+    }  
+    .log-area-logs {
+      margin: 30px 20px;
+    }
+  }
+}  
+
+@media screen and (max-width: 375px) {
+  .log-area {
+    width: 100%;
+  }
+}    
+
+.getstarted {
+  .log-area {
+    width: 100%;
   }
 }

@@ -359,6 +359,8 @@
 .rescan-progress-area {
   color: var(--disabled-color);
   font-size: 13px;
+  display: flex;
+  align-items: center;  
 }
 
 .rescan-progress-percent {
@@ -371,8 +373,10 @@
 }
 
 .rescan-progress-indicator {
-  margin: -14px 0px 10px -20px;
-  width: @sidebar-width;
+  width: 100%;
+  position: absolute;
+  top:0;
+  left:0;
 
   .linear-progress.small {
     border-radius: 0px;
@@ -387,7 +391,7 @@
 
 .rescan-button-area {
   padding-top: 2px;
-  padding-right: 10px;
+  padding-right: 5px;
   float: left;
 }
 
@@ -426,8 +430,7 @@
 }
 
 .rescan-cancel-button-area {
-  padding-top: 2px;
-  float: right;
+  margin: 0 -12px 0 auto;
 }
 
 .gettickets-cancel-button,
@@ -725,28 +728,22 @@
 }
 
 .voting-progress-indicator {
-  > div {
-    height: 100%;
-    border-radius: 50px;
-    display: inline-block;
-    margin-right: -10px;
-    position: relative;
-  }
+  width: 150px;
+  height: 5px;
+  position: relative;
+  display: flex;
+  margin-top: 2px;
+  border: 1px solid var(--white-border);
+  margin-left: auto;
+  margin-right: 20px;
+  border-radius: 10rem;
 
   .voting-progress-yes {
     background-color: var(--vote-yes-color);
-    z-index: 10;
-    min-width: 10px;
   }
 
   .voting-progress-no {
     background-color: var(--vote-no-color);
-    z-index: 5;
-    min-width: 15px;
-  }
-
-  .voting-progress-abstain {
-    background-color: var(--vote-abstain-color);
   }
 }
 

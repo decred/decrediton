@@ -15,6 +15,7 @@ import { SpvSyncRequest, SyncNotificationType, RpcSyncRequest } from "../middlew
 import { push as pushHistory } from "react-router-redux";
 import { stopNotifcations } from "./NotificationActions";
 import { clearDeviceSession as trezorClearDeviceSession } from "./TrezorActions";
+import { stopDcrlnd } from "./LNActions";
 import { ipcRenderer } from "electron";
 import { TESTNET } from "constants";
 
@@ -188,6 +189,7 @@ export const closeWalletRequest = () => async(dispatch, getState) => {
     await dispatch(syncCancel());
     await dispatch(rescanCancel());
     await dispatch(trezorClearDeviceSession());
+    await dispatch(stopDcrlnd());
     if (walletReady) {
       await closeWallet(getState().walletLoader.loader);
     }
@@ -516,4 +518,16 @@ export const rescanPointAttempt = () => (dispatch, getState) => {
     .catch(async error => {
       dispatch({ error, type: RESCANPOINT_FAILED });
     });
+};
+
+export const SET_POLITEIA_LAST_ACCESS_SUCCESS = "SET_POLITEIA_LAST_ACCESS_SUCCESS";
+
+export const setLastPoliteiaAccessTime = () => (dispatch, getState) => {
+  const { daemon: { walletName } } = getState();
+  const { grpc: { currentBlockHeight } } = getState();
+  const config = getWalletCfg(isTestNet(getState()), walletName);
+  const timestamp = (new Date()).getTime();
+  config.set("politeia_last_access_time", timestamp);
+  config.set("politeia_last_access_block", currentBlockHeight);
+  dispatch({ type: SET_POLITEIA_LAST_ACCESS_SUCCESS, currentBlockHeight, timestamp });
 };

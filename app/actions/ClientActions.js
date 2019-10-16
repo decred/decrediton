@@ -6,6 +6,7 @@ import { getNextAddressAttempt, publishUnminedTransactionsAttempt } from "./Cont
 import { transactionNtfnsStart, accountNtfnsStart } from "./NotificationActions";
 import { refreshStakepoolPurchaseInformation, setStakePoolVoteChoices, getStakepoolStats } from "./StakePoolActions";
 import { getDecodeMessageServiceAttempt, decodeRawTransactions } from "./DecodeMessageActions";
+import { checkLnWallet } from "./LNActions";
 import { push as pushHistory, goBack } from "react-router-redux";
 import { getWalletCfg, getGlobalCfg } from "config";
 import { onAppReloadRequested } from "wallet";
@@ -13,7 +14,7 @@ import { getTransactions as walletGetTransactions } from "wallet/service";
 import { TransactionDetails } from "middleware/walletrpc/api_pb";
 import { clipboard } from "electron";
 import { getStartupStats } from "./StatisticsActions";
-import { getVettedProposals } from "./GovernanceActions";
+import { getTokenAndInitialBatch } from "./GovernanceActions";
 import { rawHashToHex, reverseRawHash, strHashToRaw } from "helpers";
 import * as da from "../middleware/dcrdataapi";
 import { EXTERNALREQUEST_DCRDATA, EXTERNALREQUEST_POLITEIA } from "main_dev/externalRequests";
@@ -92,10 +93,12 @@ export const getStartupWalletInfo = () => (dispatch) => {
   const config = getGlobalCfg();
   const dcrdataEnabled = config.get("allowed_external_requests").indexOf(EXTERNALREQUEST_DCRDATA) > -1;
   const politeiaEnabled = config.get("allowed_external_requests").indexOf(EXTERNALREQUEST_POLITEIA) > -1;
+  const lnEnabled = config.get("ln_enabled");
 
   return new Promise((resolve, reject) => {
     setTimeout( async () => {
       try {
+        await dispatch(checkLnWallet());
         await dispatch(getStakeInfoAttempt());
         await dispatch(reloadTickets());
         await dispatch(getStartupTransactions());
@@ -106,7 +109,10 @@ export const getStartupWalletInfo = () => (dispatch) => {
           dispatch(getTreasuryBalance());
         }
         if (politeiaEnabled) {
-          dispatch(getVettedProposals());
+          await dispatch(getTokenAndInitialBatch());
+        }
+        if (lnEnabled) {
+          dispatch(checkLnWallet());
         }
         dispatch({ type: GETSTARTUPWALLETINFO_SUCCESS });
         resolve();

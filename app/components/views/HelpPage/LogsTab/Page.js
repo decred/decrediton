@@ -18,6 +18,11 @@ const Logs = ({
   showDecreditonLogs,
   onShowDecreditonLogs,
   onHideDecreditonLogs,
+  lnActive,
+  dcrlndLogs,
+  showDcrlndLogs,
+  onShowDcrlndLogs,
+  onHideDcrlndLogs,
 }
 ) => (
   <>
@@ -69,6 +74,22 @@ const Logs = ({
         </div>
       </div>
     }
+    {!lnActive ? null : !showDcrlndLogs ?
+      <div className="log-area hidden">
+        <div className="log-area-title hidden" onClick={onShowDcrlndLogs}>
+          <T id="help.logs.dcrlnd" m="dcrlnd" />
+        </div>
+      </div>:
+      <div className="log-area expanded">
+        <div className="log-area-title expanded" onClick={onHideDcrlndLogs}>
+          <T id="help.logs.dcrlnd" m="dcrlnd" />
+        </div>
+        <div className="log-area-logs">
+          <textarea rows="30" value={dcrlndLogs} disabled />
+        </div>
+      </div>
+    }
+
   </>
 );
 

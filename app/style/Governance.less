@@ -11,6 +11,10 @@
   color: var(--modal-text);
   min-height: 110px;
 
+  .links {
+    position: absolute;
+    right: 100px;
+  }
 
   .proposals-community-header-title {
     font-size: 21px;
@@ -28,28 +32,6 @@
     > a:hover {
       color: var(--title-text-and-button-background-hovered);
       cursor: pointer;
-    }
-  }
-
-  .links {
-    position: absolute;
-    right: 80px;
-
-    > a:not(.info-modal-button) {
-      font-size: 13px;
-      line-height: 17px;
-      display: inline-block;
-      border-radius: 5px;
-      padding: 6px 15px;
-      margin: 4px;
-      text-decoration: none;
-      color: var(--info-modal-button-text);
-      background-color: var(--info-modal-button-bg);
-      cursor: pointer;
-
-      &:hover {
-        background-color: var(--title-text-and-button-background-hovered);
-      }
     }
   }
 
@@ -129,7 +111,7 @@
     background-size: 5px 10px;
 
     &.proposal-modified-since-last-access {
-      background-color: var(--background-hovered);
+      border-left: 5px solid #66A9FF;
     }
 
     &:hover {
@@ -216,21 +198,6 @@
         margin-top: 2px;
       }
     }
-    > .voting-progress-indicator {
-      width: 150px;
-      height: 5px;
-      position: absolute;
-      right: 120px;
-      margin-top: -7px;
-
-      > .voting-progress-yes,
-      > .voting-progress-no {
-        min-width: 10px;
-      }
-      > div {
-        margin-right: -5px;
-      }
-    }
   }
 }
 
@@ -241,6 +208,7 @@
   flex-wrap: wrap;
   margin-top: 22px;
   min-height: 200px;
+  width: 740px;
 
   .proposal-details-overview-info {
     padding: 20px 10px 15px 40px;
@@ -305,6 +273,14 @@
       height: 64px;
     }
 
+    .proposal-details-voting-not-voting {
+      background-image: @chatBubbles;
+      background-repeat: no-repeat;
+      background-size: 30px;
+      padding-left: 38px;
+      padding-top: 7px;
+    }
+
     .proposal-details-updating-vote-choice {
       margin-top: 15px;
       height: 64px;
@@ -364,15 +340,26 @@
 }
 
 .proposal-details-text {
+  font-family: @font-family-regular-semi-bold;
   min-height:100%;
-  margin-top: 20px;
+  padding-top: 30px;
+  padding-left: 40px;
+  background-color: var(--background-back-color);
   margin-bottom: 80px;
+  border-top: 1px solid var(--tabbed-page-header-bg);
+  width: 700px;
+
+  .links {
+    float: right;
+    margin-right: 20px;
+    margin-top: -10px;
+  }
   p {
     word-wrap: break-word;
   }
   a {
     color:var(--link-color);
-  }  
+  }
 }
 
 .proposal-details-voting-progress-counts {
@@ -530,11 +517,30 @@
 
 .proposal-list-link-count {
   position: absolute;
-  display: inline-block;
   border: 1px solid var(--settings-desc);
-  background-color: var(--tabbed-page-header-bg);
+  background-color: var(--tooltip-container);
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
-  width: 1.5em;
-  line-height: 1.5em;
-  font-size: 9px;
+  line-height: 14px;
+  font-size: 9pt;
+}
+
+.links {
+  > a:not(.info-modal-button) {
+    font-size: 13px;
+    line-height: 17px;
+    display: inline-block;
+    border-radius: 5px;
+    padding: 6px 15px;
+    margin: 4px;
+    text-decoration: none;
+    color: var(--info-modal-button-text);
+    background-color: var(--info-modal-button-bg);
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--title-text-and-button-background-hovered);
+    }
+  }
 }

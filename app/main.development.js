@@ -3,14 +3,15 @@ import parseArgs from "minimist";
 import { app, BrowserWindow, Menu, dialog } from "electron";
 import { initGlobalCfg, validateGlobalCfgFile, setMustOpenForm } from "./config";
 import { appLocaleFromElectronLocale, default as locales } from "./i18n/locales";
-import { createLogger, lastLogLine, GetDcrdLogs, GetDcrwalletLogs } from "./main_dev/logging";
+import { createLogger, lastLogLine, GetDcrdLogs, GetDcrwalletLogs, GetDcrlndLogs } from "./main_dev/logging";
 import { getWalletsDirectoryPath, getWalletsDirectoryPathNetwork, appDataDirectory } from "./main_dev/paths";
 import { getGlobalCfgPath, checkAndInitWalletCfg } from "./main_dev/paths";
 import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRequests, allowExternalRequest } from "./main_dev/externalRequests";
 import { setupProxy } from "./main_dev/proxy";
-import { getDaemonInfo, cleanShutdown, GetDcrdPID, GetDcrwPID, getBlockChainInfo, connectRpcDaemon } from "./main_dev/launch";
+import { getDaemonInfo, cleanShutdown, GetDcrdPID, GetDcrwPID, getBlockChainInfo, connectRpcDaemon,
+  GetDcrlndPID, GetDcrlndCreds } from "./main_dev/launch";
 import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopDaemon, stopWallet, startWallet,
-  deleteDaemon, setWatchingOnlyWallet, getWatchingOnlyWallet } from "./main_dev/ipc";
+  deleteDaemon, setWatchingOnlyWallet, getWatchingOnlyWallet, startDcrlnd, stopDcrlnd } from "./main_dev/ipc";
 import { initTemplate, getVersionWin, setGrpcVersions, getGrpcVersions, inputMenu, selectionMenu } from "./main_dev/templates";
 import { readFileBackward } from "./helpers/byteActions";
 import electron from "electron";
@@ -227,6 +228,32 @@ ipcMain.on("start-wallet", (event, walletPath, testnet) => {
   event.returnValue = startWallet(mainWindow, daemonIsAdvanced, testnet, walletPath, reactIPC);
 });
 
+ipcMain.on("start-dcrlnd", async (event, walletAccount, walletPort, rpcCreds,
+  walletPath, testnet, autopilotEnabled) => {
+  try {
+    event.returnValue = await startDcrlnd(walletAccount, walletPort, rpcCreds,
+      walletPath, testnet, autopilotEnabled);
+  } catch (error) {
+    if (!(error instanceof Error)) {
+      event.returnValue = new Error(error);
+    } else {
+      event.returnValue = error;
+    }
+  }
+});
+
+ipcMain.on("stop-dcrlnd", async (event) => {
+  event.returnValue = await stopDcrlnd();
+});
+
+ipcMain.on("dcrlnd-creds", event => {
+  if (GetDcrlndPID() && GetDcrlndPID() !== -1) {
+    event.returnValue = GetDcrlndCreds();
+  } else {
+    event.returnValue = null;
+  }
+});
+
 ipcMain.on("check-daemon", () => {
   getBlockChainInfo();
 });
@@ -264,6 +291,10 @@ ipcMain.on("get-dcrd-logs", (event) => {
 
 ipcMain.on("get-dcrwallet-logs", (event) => {
   event.returnValue = GetDcrwalletLogs();
+});
+
+ipcMain.on("get-dcrlnd-logs", (event) => {
+  event.returnValue = GetDcrlndLogs();
 });
 
 ipcMain.on("get-decrediton-logs", (event) => {
@@ -334,7 +365,7 @@ app.on("ready", async () => {
   let windowOpts = {
     show: false,
     minWidth: 350,
-    width: 1178,
+    width: 1192,
     minHeight: 299,
     height: 790,
     page: "app.html"
