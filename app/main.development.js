@@ -3,7 +3,7 @@ import parseArgs from "minimist";
 import { app, BrowserWindow, Menu, dialog } from "electron";
 import { initGlobalCfg, validateGlobalCfgFile, setMustOpenForm } from "./config";
 import { appLocaleFromElectronLocale, default as locales } from "./i18n/locales";
-import { createLogger, lastLogLine, GetDcrdLogs, GetDcrwalletLogs } from "./main_dev/logging";
+import { createLogger, lastLogLine, GetDcrdLogs, GetDcrwalletLogs, GetDcrlndLogs } from "./main_dev/logging";
 import { getWalletsDirectoryPath, getWalletsDirectoryPathNetwork, getAppDataDirectory } from "./main_dev/paths";
 import { getGlobalCfgPath, checkAndInitWalletCfg } from "./main_dev/paths";
 import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRequests, allowExternalRequest } from "./main_dev/externalRequests";
