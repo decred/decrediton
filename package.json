@@ -44,7 +44,10 @@
     "transformIgnorePatterns": [
       "/node_modules/",
       "app/middleware/walletrpc/api_grpc_pb.js",
-      "app/middleware/walletrpc/api_pb.js"
+      "app/middleware/walletrpc/api_pb.js",
+      "app/middleware/ln/rpc_grpc_pb.js",
+      "app/middleware/ln/rpc_pb.js",
+      "app/middleware/ln/google/"
     ],
     "transform": {
       "^.+\\.js?$": "babel-jest"
@@ -250,6 +253,7 @@
     "winston": "^2.3.1"
   },
   "optionalDependencies": {
+    "google-proto-files": "^1.0.3",
     "grpc-tools": "^1.7.3"
   },
   "devEngines": {

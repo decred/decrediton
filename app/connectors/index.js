@@ -57,3 +57,4 @@ export { default as treasuryInfo } from "./treasuryInfo";
 export { default as trezor } from "./trezor";
 export { default as importScript } from "./importScript";
 export { default as loadingTickets } from "./loadingTickets";
+export { default as lnPage } from "./lnPage";

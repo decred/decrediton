@@ -71,3 +71,5 @@ export const ScriptRedeemableButton = mbb(null, InfoModal, helpLinkButton);
 export const AboutModalButton = mbb(null, AboutModal, KeyBlueButton);
 export const AboutModalButtonInvisible = mbb(null, AboutModal, InvisibleButton);
 export const CloseWalletModalButton = mbb("close-modal-button", ConfirmModal, InvisibleButton);
+export const CloseChannelModalButton = mbb("go-back-icon-button", ConfirmModal, InvisibleButton);
+export const InvisibleConfirmModalButton = mbb(null, ConfirmModal, InvisibleButton);

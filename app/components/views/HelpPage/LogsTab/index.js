@@ -1,5 +1,5 @@
 import Logs from "./Page";
-import { getDcrdLogs, getDcrwalletLogs, getDecreditonLogs } from "wallet";
+import { getDcrdLogs, getDcrwalletLogs, getDecreditonLogs, getDcrlndLogs } from "wallet";
 import { logging } from "connectors";
 import { DescriptionHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
@@ -40,15 +40,18 @@ class LogsTabBody extends React.Component {
       dcrdLogs: "",
       dcrwalletLogs: "",
       decreditonLogs: "",
+      dcrlndLogs: "",
       showDcrdLogs: false,
       showDcrwalletLogs: false,
-      showDecreditonLogs: false
+      showDecreditonLogs: false,
+      showDcrlndLogs: false
     };
   }
 
   render() {
     const { onShowDecreditonLogs, onShowDcrdLogs, onShowDcrwalletLogs,
-      onHideDecreditonLogs, onHideDcrdLogs, onHideDcrwalletLogs
+      onHideDecreditonLogs, onHideDcrdLogs, onHideDcrwalletLogs, onShowDcrlndLogs,
+      onHideDcrlndLogs,
     } = this;
     return (
       <Logs
@@ -58,9 +61,11 @@ class LogsTabBody extends React.Component {
           onShowDecreditonLogs,
           onShowDcrdLogs,
           onShowDcrwalletLogs,
+          onShowDcrlndLogs,
           onHideDecreditonLogs,
           onHideDcrdLogs,
           onHideDcrwalletLogs,
+          onHideDcrlndLogs,
         }}
       />
     );
@@ -68,8 +73,8 @@ class LogsTabBody extends React.Component {
 
   getLogs() {
     return Promise
-      .all([ getDcrdLogs(), getDcrwalletLogs(), getDecreditonLogs() ])
-      .then(([ rawDcrdLogs, rawDcrwalletLogs, decreditonLogs ]) => {
+      .all([ getDcrdLogs(), getDcrwalletLogs(), getDecreditonLogs(), getDcrlndLogs() ])
+      .then(([ rawDcrdLogs, rawDcrwalletLogs, decreditonLogs, dcrlndLogs ]) => {
         const dcrdLogs = Buffer.from(rawDcrdLogs).toString("utf8");
         const dcrwalletLogs = Buffer.from(rawDcrwalletLogs).toString("utf8");
         if ( dcrdLogs !== this.state.dcrdLogs ) {
@@ -80,6 +85,9 @@ class LogsTabBody extends React.Component {
         }
         if ( decreditonLogs !== this.state.decreditonLogs ) {
           this.setState({ decreditonLogs });
+        }
+        if ( dcrlndLogs !== this.state.dcrlndLogs ) {
+          this.setState({ dcrlndLogs });
         }
       });
   }
@@ -106,6 +114,14 @@ class LogsTabBody extends React.Component {
 
   onHideDcrwalletLogs() {
     this.setState({ showDcrwalletLogs: false });
+  }
+
+  onShowDcrlndLogs() {
+    this.setState({ showDcrlndLogs: true });
+  }
+
+  onHideDcrlndLogs() {
+    this.setState({ showDcrlndLogs: false });
   }
 }
 

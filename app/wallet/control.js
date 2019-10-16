@@ -121,8 +121,14 @@ export const constructTransaction = (walletService, accountNum, confirmations, o
       output.setAmount(parseInt(amount));
       request.addNonChangeOutputs(output);
     });
-    walletService.constructTransaction(request, (err, res) =>
-      err ? fail(err) : ok({ ...res, totalAmount }));
+    walletService.constructTransaction(request, (err, res) => {
+      if (err) {
+        fail(err);
+        return;
+      }
+      res.totalAmount = totalAmount;
+      ok(res);
+    });
   });
 
 export const constructSendAllTransaction = (walletService, accountNum, confirmations, outputs) =>

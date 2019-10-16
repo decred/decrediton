@@ -475,3 +475,14 @@ export const getDecreditonLogs = () => {
         return (null, err);
       });
 };
+
+export const getDcrlndLogs = () => {
+  wallet.getDcrlndLogs()
+    .then(logs => {
+      return(logs);
+    }).catch(
+      err=>{
+        console.log(err);
+        return (null, err);
+      });
+};

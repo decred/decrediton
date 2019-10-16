@@ -411,6 +411,34 @@ var initialState = {
     wordCallBack: null,
     walletCreationMasterPubkeyAttempt: false,
   },
+  ln: {
+    enabled: globalCfg.get("ln_enabled"),
+    active: false,
+    exists: false,
+    info: {
+      version: null,
+      identityPubkey: null,
+      alias: null,
+    },
+    walletBalances: {
+      totalBalance: 0,
+      confirmedBalance: 0,
+      unconfirmedBalance: 0,
+    },
+    channelBalances: {
+      balance: 0,
+      pendingOpenBalance: 0,
+      maxInboundAmount: 0,
+      maxOutboundAmount: 0,
+    },
+    channels: Array(),
+    pendingChannels: Array(),
+    closedChannels: Array(),
+    invoices: Array(),
+    payments: Array(),
+    addInvoiceAttempt: false,
+    sendPaymentAttempt: false,
+  },
   locales: locales
 };
 

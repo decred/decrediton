@@ -7,6 +7,7 @@ import * as ca from "../actions/ClientActions";
 const mapStateToProps = selectorMap({
   location: sel.location,
   isTrezor: sel.isTrezor,
+  lnEnabled: sel.lnEnabled,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

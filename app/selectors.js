@@ -212,6 +212,12 @@ export const blockURLBuilder= createSelector(
     (txHash) => `https://${network !== TESTNET ? "dcrdata" : "testnet"}.decred.org/block/${txHash}`
 );
 
+export const txOutURLBuilder = createSelector(
+  [ network ],
+  (network) =>
+    (txHash, outputIdx) => `https://${network !== "testnet" ? "explorer" : network}.dcrdata.org/tx/${txHash}/out/${outputIdx}`
+);
+
 export const decodedTransactions = get([ "grpc", "decodedTransactions" ]);
 
 export const ticketNormalizer = createSelector(
@@ -997,3 +1003,16 @@ export const trezorPerformingOperation = get([ "trezor", "performingOperation" ]
 export const trezorDevice = get([ "trezor", "device" ]);
 export const trezorDeviceList = get([ "trezor", "deviceList" ]);
 export const trezorWalletCreationMasterPubkeyAttempt = get([ "trezor", "walletCreationMasterPubkeyAttempt" ]);
+
+export const lnEnabled = bool(and(get([ "ln", "enabled" ]), not(isWatchingOnly), not(isTrezor)));
+export const lnActive = bool(get([ "ln", "active" ]));
+export const lnWalletExists = bool(get([ "ln", "exists" ]));
+export const lnInfo = get([ "ln", "info" ]);
+export const lnWalletBalances = get([ "ln", "walletBalances" ]);
+export const lnChannelBalances = get([ "ln", "channelBalances" ]);
+export const lnChannels = get([ "ln", "channels" ]);
+export const lnPendingChannels = get([ "ln", "pendingChannels" ]);
+export const lnClosedChannels = get([ "ln", "closedChannels" ]);
+export const lnInvoices = get([ "ln", "invoices" ]);
+export const lnPayments = get([ "ln", "payments" ]);
+export const lnAddInvoiceAttempt = get([ "ln", "addInvoiceAttempt" ]);

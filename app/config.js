@@ -49,6 +49,18 @@ export function initWalletCfg(testnet, walletPath) {
   if (!config.has("trezor")) {
     config.set("trezor", false);
   }
+  if (!config.has("ln_address")) {
+    config.set("ln_address", "");
+  }
+  if (!config.has("ln_port")) {
+    config.set("ln_port", 10009);
+  }
+  if (!config.has("ln_certpath")) {
+    config.set("ln_certpath", "");
+  }
+  if (!config.has("ln_macaroonpath")) {
+    config.set("ln_macaroonpath", "");
+  }
   stakePoolInfo(function(foundStakePoolConfigs) {
     if (foundStakePoolConfigs !== null) {
       updateStakePoolConfig(config, foundStakePoolConfigs);
@@ -62,7 +74,8 @@ function cleanWalletCfg(config) {
   var key;
   const walletCfgFields = [ "enableticketbuyer", "balancetomaintain", "currency_display",
     "hiddenaccounts", "discoveraccounts", "gaplimit", "iswatchonly", "stakepools",
-    "lastaccess", "politeia_last_access_time", "politeia_last_access_block" ];
+    "lastaccess", "politeia_last_access_time", "politeia_last_access_block",
+    "ln_wallet_exists", "ln_account" ];
   for (key in config.store) {
     var found = false;
     for (var i = 0; i < walletCfgFields.length; i++) {
