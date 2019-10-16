@@ -395,32 +395,60 @@
       margin-right:45px;
     }
   }
-  .tabbed-page-header,
-  .standalone-page-header {
+  .tabbed-page-header {
     height: 82px;
+    padding-top:30px;
+  }
+  
+  .standalone-page-header {
+    height: initial;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+    padding-bottom: 48px;
     padding-top: 30px;
   }    
 
-  .standalone-page.settings-standalone-page .title-header-button {
-    display: none;
-  }  
-
-  .standalone-page.txdetails-standalone-page .description-header{
-    display: block;
-    margin-left: 30px;
-    .tx-details-subtitle {
-      margin-top: 10px;
+  .standalone-page.settings-standalone-page {
+    .title-header-button {
+      display: none;
     }
+    .standalone-page-body {
+      position: relative;
+      padding: 30px 10px 90px 10px;
+      top:initial;
+      overflow-y: initial;
+    }      
   }
 
-  .standalone-page-body {
-    padding: 30px 10px;
-    top: 113px;
-    bottom: 60px;
-  }  
+  .standalone-page.txdetails-standalone-page {
+    .standalone-page-header {
+      padding-bottom:10px;
+    }
 
+    .description-header{
+      display: block;
+      margin-left: 30px;
+      .tx-details-subtitle {
+        margin-top: 10px;
+      }
+    }
+    .standalone-page-body {
+      padding: 0 0 40px 0;
+      position: relative;
+      top:initial;
+      overflow-y: initial;
+    }    
+
+    .tx-details-subtitle {
+      width: 355px;
+    }   
+    
   .standalone-page-header > .standalone-page-header-container > .title-header-button {
     position: absolute;
     right: 20px;
+  }    
   }
+
 }
