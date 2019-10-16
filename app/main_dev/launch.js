@@ -176,7 +176,7 @@ export const launchDCRD = (params, testnet) => new Promise((resolve,reject) => {
 
   if (!appdata) appdata = getDcrdPath();
 
-  let args = [ "--nolisten", "--txindex" ];
+  let args = [ "--nolisten" ];
   const newConfig = readDcrdConfig(appdata, testnet);
 
   args.push(`--configfile=${dcrdCfg(appdata)}`);
