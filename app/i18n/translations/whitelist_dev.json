@@ -1,7 +1,16 @@
 [
   "rescan.progressPercent",
-  "transaction.timestamp",
+  "txHistory.dayMonthHourDisplay",
+  "ln.invoicesTab.invoice.creationDate",
+  "ln.invoicesTab.invoice.settleDate",
+  "ln.paymentsTab.payment.creationDate",
   "ticket.timestamp",
+  "heatmap.month",
+  "heatmap.tooltip.vote",
+  "heatmap.tooltip.live",
+  "heatmap.tooltip.revoked",
+  "heatmap.tooltip.maturing",
+  "heatmap.tooltip.date",
   "txDetails.timestamp",
   "snackbar.defaults.error",
   "createwallet.errors.walletRemoveFailed",
@@ -17,5 +26,6 @@
   "tickets.errors.setStakePoolVoteChoicesFailed",
   "accounts.errors.renameAccountFailed",
   "accounts.errors.getNextAccountFailed",
-  "decodeRawTx.errors.decodeFailed"
+  "decodeRawTx.errors.decodeFailed",
+  "ln.ntf.startDcrlndFailed"
 ]
