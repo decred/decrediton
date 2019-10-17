@@ -355,12 +355,17 @@ export const transactionStats = (opts) => (dispatch, getState) => {
     .catch(errorFunction);
 };
 
-const recordTicket = (maturingTxs, liveTickets, tx, commitAmount, isWallet, chainParams) => {
+const recordTicket = (maturingTxs, liveTickets, tx, commitAmount, isWallet) => {
   liveTickets[tx.txHash] = { tx, commitAmount, isWallet };
+  // The below let's us track the immature ticket balance, but given the wallet
+  // currently doesn't differentiate between locked+immature and locked+mature
+  // we ignore this for now.
+  /*
   let ticketMatureHeight = tx.height + chainParams.TicketMaturity;
   maturingTxs[ticketMatureHeight] = maturingTxs[ticketMatureHeight] || [];
   maturingTxs[ticketMatureHeight].push({ tx, amount: commitAmount, isWallet,
     isTicket: true, fromHeight: tx.height, toHeight: ticketMatureHeight });
+    */
 };
 
 const recordVoteRevoke = (maturingTxs, tx, amount, isWallet, chainParams) => {
@@ -514,9 +519,11 @@ const txBalancesDelta = async (tx, maturingTxs, liveTickets, walletService, chai
   case wallet.TRANSACTION_TYPE_TICKET_PURCHASE:
     var { isWallet, commitAmount, spentAmount, purchaseFees } = ticketInfo(tx);
     recordTicket(maturingTxs, liveTickets, tx, commitAmount, isWallet, chainParams);
-    delta = { spendable: -spentAmount, immature: isWallet ? commitAmount : 0,
-      immatureNonWallet: isWallet ? 0 : commitAmount, voted: 0, revoked: 0,
-      sent: 0, received: 0, ticket: commitAmount, locked: 0, lockedNonWallet: 0,
+    delta = { spendable: -spentAmount, immature: 0,
+      immatureNonWallet: 0, voted: 0, revoked: 0,
+      sent: 0, received: 0, ticket: commitAmount,
+      locked: isWallet ? commitAmount : 0,
+      lockedNonWallet: isWallet ? 0 : commitAmount,
       stakeRewards: 0, stakeFees: purchaseFees, totalStake: spentAmount,
       timestamp: tx.timestamp, tx };
     break;
@@ -556,8 +563,8 @@ const addDelta = (delta, progressFunction, currentBalance, tsDate, backwards) =>
     spendable: currentBalance.spendable + delta.spendable,
     immature: currentBalance.immature + delta.immature,
     immatureNonWallet: currentBalance.immatureNonWallet + delta.immatureNonWallet,
-    locked: currentBalance.locked + delta.locked,
-    lockedNonWallet: currentBalance.lockedNonWallet + delta.lockedNonWallet,
+    locked: currentBalance.locked + delta.locked + delta.lockedNonWallet,
+    lockedNonWallet: 0,
     stakeRewards: currentBalance.stakeRewards + delta.stakeRewards,
     stakeFees: currentBalance.stakeFees + delta.stakeFees,
     totalStake: currentBalance.totalStake + delta.totalStake,
@@ -581,7 +588,8 @@ const txDataCbBackwards = async ({ mined, maturingTxs, liveTickets,
   let toAddDeltas = {};
   let lastTxHeight = currentBlockHeight;
   let lastTxTimestamp = now.getTime() / 1000;
-  const fields = [ "spendable", "locked", "stakeFees", "stakeRewards", "totalStake", "immature" ];
+  const fields = [ "spendable", "locked", "stakeFees", "stakeRewards",
+    "totalStake", "immature", "lockedNonWallet", "immatureNonWallet" ];
   const turnFieldsNegative = (delta) => fields.forEach(f => delta[f] = -delta[f]);
 
   currentBalance = await balances.reduce((cb, acct) => {
