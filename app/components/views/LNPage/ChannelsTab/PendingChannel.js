@@ -5,8 +5,9 @@ const PendingOpenChannelDetails = ({ channel }) => (
   <>
     <span><T id="ln.pendingOpenDetails.commitFee" m="Commit Fee" /></span>
     <Balance amount={channel.commitFee} />
-    <span><T id="ln.pendingOpenDetails.confirmationHeight" m="Confirmation Height" /></span>
+    {/*     <span><T id="ln.pendingOpenDetails.confirmationHeight" m="Confirmation Height" /></span>
     <span>{channel.confirmationHeight}</span>
+    */}
   </>
 );
 
@@ -22,8 +23,9 @@ const PendingForceCloseChannelDetails = ({ channel }) => (
     <Balance amount={channel.limboBalance} />
     <span><T id="ln.pendingForceCloseDetails.recoveredBalance" m="Recovered Balance" /></span>
     <Balance amount={channel.recoveredBalance} />
-    <span><T id="ln.pendingForceCloseDetails.maturityHeight" m="Maturity Height" /></span>
+    {/*    <span><T id="ln.pendingForceCloseDetails.maturityHeight" m="Maturity Height" /></span>
     <span>{channel.maturityHeight}</span>
+    */}
   </>
 );
 
@@ -68,7 +70,7 @@ export const PendingChannelDetails = ({ channel }) => {
     <div className="ln-pending-channel-details">
       <span><T id="ln.pendingChannelDetails.type" m="Type" /></span>
       <span>{detailsType}</span>
-      <span><T id="ln.pendingChannelDetials.channelPoint" m="Channel Point" /></span>
+      <span><T id="ln.pendingChannelDetails.channelPoint" m="Channel Point" /></span>
       <ExternalLink href={channel.channelPointURL}>{channel.channelPoint}</ExternalLink>
       <span><T id="ln.pendingChannelDetails.remotePubKey" m="Remote Pubkey" /></span>
       <span>{channel.remotePubkey}</span>

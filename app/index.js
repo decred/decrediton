@@ -420,6 +420,7 @@ var initialState = {
     enabled: globalCfg.get("ln_enabled"),
     active: false,
     exists: false,
+    connectAttempt: false,
     info: {
       version: null,
       identityPubkey: null,

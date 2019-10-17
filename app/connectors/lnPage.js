@@ -6,6 +6,7 @@ import * as sel from "selectors";
 
 const mapStateToProps = selectorMap({
   lnActive: sel.lnActive,
+  connectAttempt: sel.lnConnectAttempt,
   walletBalances: sel.lnWalletBalances,
   channelBalances: sel.lnChannelBalances,
   channels: sel.lnChannels,
