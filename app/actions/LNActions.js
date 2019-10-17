@@ -157,6 +157,9 @@ export const connectToLNWallet = (address, port, certPath, macaroonPath, account
       throw new Error("Wallet returned that address is not from the ln account; account=" + addrAccount);
     }
 
+    // Wait until the dcrlnd daemon is synced to the wallet.
+    await dispatch(waitForDcrlndSynced(lnClient));
+
     dispatch({ lnClient, type: LNWALLET_CONNECT_SUCCESS });
     dispatch(setLNWalletConfig(account));
     dispatch(loadLNStartupInfo());
@@ -164,6 +167,24 @@ export const connectToLNWallet = (address, port, certPath, macaroonPath, account
     dispatch({ error, type: LNWALLET_CONNECT_FAILED });
     throw error;
   }
+};
+
+export const waitForDcrlndSynced = (lnClient) => async () => {
+
+  const sleepMs = 3000;
+  const sleepCount = 60 / (sleepMs/1000);
+  const sleep = () => new Promise(resolve => setTimeout(resolve, sleepMs));
+
+  for (let i = 0; i < sleepCount; i++) {
+    const info = await ln.getInfo(lnClient);
+    if (info.syncedToChain) {
+      sleep(); // Final sleep to let subsystems catch up.
+      return;
+    }
+    await sleep();
+  }
+
+  throw new Error("dcrlnd wallet not synced after 60 seconds");
 };
 
 export const loadLNStartupInfo = () => async (dispatch) => {

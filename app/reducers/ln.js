@@ -1,6 +1,6 @@
 import {
   LNWALLET_INFO_UPDATED,
-  LNWALLET_CONNECT_ATTEMPT, LNWALLET_CONNECT_SUCCESS,
+  LNWALLET_CONNECT_ATTEMPT, LNWALLET_CONNECT_SUCCESS, LNWALLET_CONNECT_FAILED,
   LNWALLET_BALANCE_UPDATED, LNWALLET_CHANNELBALANCE_UPDATED, LNWALLET_CHANNELLIST_UPDATED,
   LNWALLET_LATESTINVOICES_UPDATED, LNWALLET_LATESTPAYMENTS_UPDATED,
   LNWALLET_ADDINVOICE_ATTEMPT, LNWALLET_ADDINVOICE_SUCCESS, LNWALLET_ADDINVOICE_FAILED,
@@ -39,12 +39,19 @@ export default function ln(state = {}, action) {
       ...state,
       active: false,
       client: null,
+      connectAttempt: true,
+    };
+  case LNWALLET_CONNECT_FAILED:
+    return {
+      ...state,
+      connectAttempt: false,
     };
   case LNWALLET_CONNECT_SUCCESS:
     return {
       ...state,
       active: true,
       client: action.lnClient,
+      connectAttempt: false,
     };
   case LNWALLET_BALANCE_UPDATED:
     return {
