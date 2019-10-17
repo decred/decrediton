@@ -95,6 +95,7 @@ class App extends React.Component {
         this.props.onSidebarLeaveBottom();
         this.props.onReduceSideBar();
       } else {
+        this.props.onSidebarLeaveBottom();
         this.props.onExpandSideBar();
       }
     };
