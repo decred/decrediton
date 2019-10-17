@@ -43,3 +43,9 @@ file_filter = app/i18n/docs/<lang>/Warnings/TrezorWipe.md
 source_lang = en
 minimum_perc = 80
 type = GITHUBMARKDOWN
+
+[decrediton.lnforceclosechannelmd]
+file_filter = app/i18n/docs/<lang>/Warnings/LNForceCloseChannel.md
+source_lang = en
+minimum_perc = 80
+type = GITHUBMARKDOWN
