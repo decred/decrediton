@@ -61,7 +61,7 @@ export default ({ viewedProposalDetails, goBackHistory,
         <div className="proposal-details-overview-info">
           <div className="proposal-details-title">{name}</div>
           <div className="proposal-details-token">
-            <PoliteiaLink path={"/proposals/"+token}>{token}</PoliteiaLink>
+            <PoliteiaLink path={"/proposal/"+token}>{token}</PoliteiaLink>
           </div>
           <div className="proposal-details-overview-fields">
             <OverviewField
@@ -88,7 +88,7 @@ export default ({ viewedProposalDetails, goBackHistory,
       </div>
       <div className="proposal-details-text">
         <div className="links">
-          <PoliteiaLink path={"/proposals/"+token}>
+          <PoliteiaLink path={"/proposal/"+token}>
             <T id="proposals.community.goToProposal" m="See proposal comments on Politeia" />
           </PoliteiaLink>
         </div>

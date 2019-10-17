@@ -417,8 +417,8 @@ export const updateVoteChoice = (proposal, newVoteChoiceID, passphrase) => async
       const key = keys[i];
       let proposal, j;
       proposal = proposals[key].find( (p, ind) => {
-        p.token === token;
         j = ind;
+        return p.token === token;
       });
       if (proposal) {
         return proposals[key][j] = { ...newProposal };
