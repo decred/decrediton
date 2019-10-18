@@ -835,6 +835,7 @@
   "txDetails.ticketCost": "Ticket Cost",
   "txDetails.timestamp": "{timestamp, date, medium} {timestamp, time, medium}",
   "txDetails.transactionFeeLabel": "Transaction fee",
+  "txDetails.toAddress": "To address",
   "txDetails.transactionLabel": "Transaction",
   "txDetails.type.coinbase": "Coinbase",
   "txDetails.type.revoke": "Revoke",

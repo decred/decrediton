@@ -154,7 +154,7 @@ const TxDetails = ({
       <div className="txdetails-top">
         <div className="txdetails-top-row">
           <div className="txdetails-name">
-            <T id="txDetails.transactionLabel" m="Transaction" />
+            <T id="txDetails.transactionLabel" m="Transaction" />:
           </div>
           <div className="txdetails-value">
             <a onClick={ openTxUrl } style={{ cursor: "pointer" }}>{txHash}</a>
@@ -176,9 +176,21 @@ const TxDetails = ({
             }
           </div>
         </div>
+        {txDirection === "out" && txType !== "Vote" &&
+          <div className="txdetails-top-row">
+            <div className="txdetails-name"><T id="txDetails.toAddress" m="To address" />:</div>
+            <div className="txdetails-value non-flex">
+              {txOutputs.map(({ address }) => (
+                <div>{addSpacingAroundText(address)}</div>
+              ))}
+              {nonWalletOutputs.map(({ address }) => (
+                <div>{addSpacingAroundText(address)}</div>
+              ))}
+            </div>
+          </div>}
         {txDirection !== "in" && txType !== "Vote" &&
         <div className="txdetails-top-row">
-          <div className="txdetails-name"><T id="txDetails.transactionFeeLabel" m="Transaction fee" /></div>
+          <div className="txdetails-name"><T id="txDetails.transactionFeeLabel" m="Transaction fee" />:</div>
           <div className="txdetails-value"><Balance amount={txFee} /></div>
         </div> }
       </div>

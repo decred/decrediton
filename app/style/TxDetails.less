@@ -46,7 +46,7 @@
 .txdetails-top {
   padding-left: 80px;
   padding-top: 25px;
-  padding-bottom: 33px;
+  padding-bottom: 28px;
   font-size: 13px;
   background-color: var(--txdetails-top-bg);
 }
@@ -73,6 +73,10 @@
 .txdetails-value {
   word-wrap: break-word;
   display: flex;
+
+  &.non-flex {
+    display: block;
+  }
 }
 
 .txdetails-value-rawtx {
