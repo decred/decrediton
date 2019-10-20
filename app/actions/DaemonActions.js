@@ -368,11 +368,13 @@ export const connectDaemon = (rpcCreds) => (dispatch, getState) => {
   dispatch({ type: CONNECTDAEMON_ATTEMPT });
   const timeBeforeConnect = new Date();
   const tryConnect = () => {
-    const { daemonConnected, credentials, daemonError, timeStart } = getState().daemon;
+    const { daemonConnected, credentials, daemonError, daemonWarning, timeStart } = getState().daemon;
     const creds = rpcCreds ? rpcCreds : credentials;
     const timeNow = new Date();
     const timeElapsed = timeNow - timeBeforeConnect;
-    if (timeStart === 0 && timeElapsed >= TIME_TO_TIMEOUT) {
+    // We do not consider timeout if has a warning as it probably means dcrd
+    // is reindexing or upgrading its database.
+    if (!daemonWarning && (timeStart === 0 && timeElapsed >= TIME_TO_TIMEOUT)) {
       dispatch({ type: CONNECTDAEMON_FAILURE, daemonTimeout: true, error: "timeout exceed" });
       return;
     }
@@ -386,6 +388,10 @@ export const connectDaemon = (rpcCreds) => (dispatch, getState) => {
         const { error } = err;
         if (error.code === "ECONNREFUSED") {
           setTimeout(tryConnect, 1000);
+        } else if (daemonWarning) {
+          // If we have a warning we wait 3 seconds instead of 1 to retry
+          // connecting.
+          setTimeout(tryConnect, 3000);
         } else {
           dispatch({ type: CONNECTDAEMON_FAILURE, error });
         }

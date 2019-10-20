@@ -49,7 +49,7 @@ export const deleteDaemon = (appData, testnet) => {
   }
 };
 
-export const startDaemon = async (params, testnet) => {
+export const startDaemon = async (params, testnet, reactIPC) => {
   if (GetDcrdPID() && GetDcrdPID() !== -1) {
     logger.log("info", "Skipping restart of daemon as it is already running " + GetDcrdPID());
     const appdata = params ? params.appdata : null;
@@ -60,7 +60,7 @@ export const startDaemon = async (params, testnet) => {
   }
 
   try {
-    const started = await launchDCRD(params, testnet);
+    const started = await launchDCRD(params, testnet, reactIPC);
     return started;
   } catch (e) {
     logger.log("error", "error launching dcrd: " + e);
