@@ -176,7 +176,7 @@ const TxDetails = ({
             }
           </div>
         </div>
-        {txDirection === "out" && txType !== "Vote" &&
+        {txType !== "Vote" &&
           <div className="txdetails-top-row">
             <div className="txdetails-name"><T id="txDetails.toAddress" m="To address" />:</div>
             <div className="txdetails-value non-flex">
