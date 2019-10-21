@@ -309,9 +309,18 @@
   .unit-area {
     color: var(--stroke-color-default);
   }
-  
-  &.input-and-unit:hover {
-    border: 0 !important;
+
+  &.input-and-unit.error {
+    border-bottom: 0;
+
+    &:hover {
+      border-bottom: 0;
+    }
+  }
+
+  .input-errors-area {
+    margin-top: 4px;
+    width: 100%;  
   }
 }
 
