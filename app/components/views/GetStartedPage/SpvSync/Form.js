@@ -7,6 +7,7 @@ import { LogsLinkMsg, SettingsLinkMsg, HeaderTimeMsg, DiscoverLabelMsg,
   DiscoverAccountsInfoMsg, ScanBtnMsg, LearnBasicsMsg, UpdateAvailableLink,
   WhatsNewLink, LoaderTitleMsg, AboutModalButton, messages } from "../messages";
 import "style/GetStarted.less";
+import cx from "classnames";
 
 const SpvSyncBody = ({
   text,
@@ -32,9 +33,10 @@ const SpvSyncBody = ({
   Form,
   syncFetchHeadersAttempt,
   syncFetchHeadersComplete,
+  isTestNet,
   ...props,
 }) => (
-  <div className="page-body getstarted">
+  <div className={cx("page-body getstarted", isTestNet && "testnet-body")}>
     <div className="getstarted loader">
       <>
         <div className="content-title">

@@ -7,6 +7,7 @@ import { FormattedMessage as T } from "react-intl";
 import { LoaderBarBottom } from "indicators";
 import { KeyBlueButton, InvisibleButton } from "buttons";
 import { LogsLinkMsg, SettingsLinkMsg, GoBackMsg, AboutModalButton } from "../messages";
+import cx from "classnames";
 
 export default ({
   areSettingsDirty,
@@ -23,9 +24,10 @@ export default ({
   getEstimatedTimeLeft,
   appVersion,
   updateAvailable,
-  getWalletReady
+  getWalletReady,
+  isTestNet
 }) => (
-  <div className="page-body getstarted">
+  <div className={cx("page-body getstarted", isTestNet && "testnet-body")}>
     <div className="getstarted loader logs">
       <div className="loader-settings-logs">
         <AboutModalButton { ...{ appVersion, updateAvailable } } />

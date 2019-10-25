@@ -19,14 +19,15 @@ class LanguageSelect extends React.Component{
   render() {
     const { selectedLang } = this.state;
     const { onChangeSelectedLang, onSelectLang } = this;
-    const { availableLanguages } = this.props;
+    const { availableLanguages, isTestNet } = this.props;
     return (
       <LanguageSelectPage
         {...{
           selectedLang,
           availableLanguages,
           onChangeSelectedLang,
-          onSelectLang
+          onSelectLang,
+          isTestNet
         }
         }/>);
   }

@@ -7,6 +7,7 @@ import { LogsLinkMsg, SettingsLinkMsg, HeaderTimeMsg, DiscoverLabelMsg,
   DiscoverAccountsInfoMsg, ScanBtnMsg, LearnBasicsMsg, UpdateAvailableLink,
   WhatsNewLink, LoaderTitleMsg, AboutModalButton, messages } from "../messages";
 import { FormattedRelative } from "shared";
+import cx from "classnames";
 
 const DaemonLoadingBody = ({
   Form,
@@ -39,9 +40,10 @@ const DaemonLoadingBody = ({
   daemonWarning,
   walletName,
   daemonTimeout,
+  isTestNet,
   ...props,
 }) => (
-  <div className="page-body getstarted">
+  <div className={cx("page-body getstarted", isTestNet && "testnet-body")}>
     <div className="getstarted loader">
       <div className="loader-settings-logs">
         {updateAvailable && <UpdateAvailableLink updateAvailable={updateAvailable} /> }
