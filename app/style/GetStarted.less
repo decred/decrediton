@@ -317,7 +317,6 @@
     }
 
     .Select-menu-outer {
-      padding:5px 0;
       left: -27px;
       width: calc(100% + 28px);
     }
@@ -328,9 +327,14 @@
 
     &.empty,
     &.restore {
-      border: 1px solid var(--seedword-select-border-default-hover-border-color);
+      border: 1px solid var(--seedword-select-border-default-border-color);
       background-color: initial !important;
       
+      .number {
+        border-right: 1px solid var(--seedword-select-border-default-border-color);
+        color: var(--seedword-select-border-default-text-color);
+      }
+
       &:hover {
         border: 1px solid var(--seedword-select-border-default-hover-border-color);
         .number {
