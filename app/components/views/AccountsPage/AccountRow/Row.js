@@ -19,7 +19,8 @@ const Header = ({
     <div className="account-row-top-account-name">
       {account.accountName === "default" ?
         <T id="accounts.name.default" m="Primary Account" /> :
-        account.accountName}
+        isImported(account) ? <T id="accounts.name.timelocked" m="Time-locked" /> :
+          account.accountName}
       {hidden
         ? <span>(hidden)</span>
         : null}
