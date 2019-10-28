@@ -16,17 +16,23 @@ export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord, onReturnToNewSeed
       </div>
       <div className="seedArea">
         {seedWords.map((seedWord) => {
-          const className = "seedWord " + (!seedWord.show ? seedWord.match ? "match" : "no-match" : "");
-          return ( seedWord.show ?
-            <div key={seedWord.index} className="seedWord">{seedWord.word}</div> :
-            <SingleSeedWordEntry
-              className={className}
-              disabled={seedWord.show}
-              onChange={onChangeSeedWord}
-              seedWord={seedWord}
-              value={{ name: seedWord.word }}
-              key={seedWord.index}
-            />);
+          const className = "seedWord " + ((!seedWord.show && seedWord.word != "") ? seedWord.match ? "match" : "no-match" : seedWord.show ? "filled" : "empty" );
+          return <>
+            <div key={seedWord.index} className={className}>
+              <span className="number">{seedWord.index + 1}.</span>
+              <span className="word">
+                { seedWord.show ? seedWord.word :
+                  <SingleSeedWordEntry
+                    disabled={seedWord.show}
+                    onChange={onChangeSeedWord}
+                    seedWord={seedWord}
+                    value={{ name: seedWord.word }}
+                    key={seedWord.index}
+                  />
+                }
+              </span>
+            </div>
+          </>;
         })}
       </div>
     </div>

@@ -280,60 +280,99 @@
   .seedWord {
     user-select: none;
     height: 23px;
-    background-color: var(--info-modal-button-bg);
     border-radius: 3px;
     color: var(--info-modal-button-text);
     margin: 5px;
     text-align: center;
-  }
-
-  .seedWord.error {
-    background-color: transparent;
-
+    display: flex;
+    align-items: center;
+    
+    .number {
+      width: 20px;
+      border-right: 1px solid var(--seedword-number-color);
+      color: var(--seedword-number-color);
+      font-size: 10px;
+      height:23px;
+      line-height: 23px;
+    }
+    .word {
+      text-align: left;
+      padding-left: 5px;
+      width: 85px;
+      font-size: 13px;
+      line-height: 23px;
+    }      
+    
     .Select-control {
-      border: 1px solid var(--error-text-color);
-      color: var(--title-text-and-button-background);
+      padding-left:0;
+      .Select-value {
+        padding-left:0;
+      }
     }
 
-    .Select-control:hover,
-    .Select-control:focus {
-      border: 1px solid var(--eror-text-color);
-    }
-  }
-
-  .seedWord.populated {
-    background-color: transparent;
-
-    .Select-control {
-      border: 1px solid var(--title-text-and-button-background);
-      color: var(--title-text-and-button-background);
+    .Select-input {
+      height:23px;
+      line-height: 23px;
+      vertical-align: initial;
     }
 
-    .Select-control:hover,
-    .Select-control:focus {
-      border: 1px solid var(--disabled-color);
-    }
-  }
-
-  .seedWord.restore {
-    background-color: transparent;
-
-    .Select-control {
-      border: 1px solid var(--combobox-restore-border);
-      color: var(--title-text-and-button-background);
+    .Select-menu-outer {
+      padding:5px 0;
+      left: -27px;
+      width: calc(100% + 28px);
     }
 
-    .Select-control:hover,
-    .Select-control:focus {
-      color: var(--input-color-default);
-      border: 1px solid var(--disabled-color);
+    &.filled {
+      background-color: var(--info-modal-button-bg);
     }
-  }
+
+    &.empty,
+    &.restore {
+      border: 1px solid var(--seedword-select-border-default-hover-border-color);
+      background-color: initial !important;
+      
+      &:hover {
+        border: 1px solid var(--seedword-select-border-default-hover-border-color);
+        .number {
+          border-right: 1px solid var(--seedword-select-border-default-hover-border-color);
+          color:var(--seedword-select-border-default-hover-text-color);
+        }
+      }
+    }
+
+    &.populated {
+      border: 1px solid var(--seedword-select-border-default-hover-text-color);
+      background-color: initial !important;      
+      .number {
+          border-right: 1px solid var(--seedword-select-border-default-hover-text-color);
+          color: var(--seedword-select-border-default-hover-text-color);
+      }
+    }
+
+    &.no-match,
+    &.error {
+      border: 1px solid var(--error-red);
+      .number {
+        border-right: 1px solid var(--error-red);
+        color: var(--error-red); 
+      }
+    }   
+    
+    &.match {
+      border: 1px solid var(--accent-color);
+      .number {
+        border-right: 1px solid var(--accent-color);
+        color: var(--accent-color); 
+      }
+    }    
+}
 
   .toolbar {
     display: flex;
     flex-direction: row-reverse;
-    width: 692px;
+    width: 596px;
+    margin-top: 20px;
+    align-items: center;
   }
 
   .wallet-key-blue-button:not(.key-blue-button-disabled) {
