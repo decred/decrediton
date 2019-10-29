@@ -126,7 +126,7 @@ export function setPoliteiaPath () {
   if (fs.pathExistsSync(politeiaPath)) {
     return;
   }
-  fs.mkdirSync(politeiaPath);
+  fs.mkdirSync(politeiaPath, { mode: 0o700 });
 }
 
 // getProposalPathFromPoliteia gets a proposal by its token or return empty string
@@ -146,7 +146,7 @@ export function setPoliteiaProposalPath (token) {
     return;
   }
   proposalPath = path.join(getPoliteiaPath(), token);
-  fs.mkdirSync(proposalPath);
+  fs.mkdirSync(proposalPath, { mode: 0o700 });
   return proposalPath;
 }
 
@@ -159,7 +159,7 @@ export function saveEligibleTickets (token, eligibleTickets) {
     proposalPath = setPoliteiaProposalPath(token);
   }
   const fullPath = path.join(proposalPath, "eligibletickets.json");
-  fs.writeFile(fullPath, JSON.stringify(eligibleTickets));
+  fs.writeFile(fullPath, JSON.stringify(eligibleTickets), { mode: 0o600 });
 }
 
 // getEligibleTickets get the eligibletickets.json from the proposal Path
@@ -184,7 +184,7 @@ function getWalletPiPath (testnet, walletName) {
   if (fs.pathExistsSync(walletPiPath)) {
     return walletPiPath;
   }
-  fs.mkdirSync(walletPiPath);
+  fs.mkdirSync(walletPiPath, { mode: 0o700 });
   return walletPiPath;
 }
 
@@ -196,10 +196,10 @@ export function savePiVote (vote, token, testnet, walletName) {
   const walletPath = getWalletPiPath(testnet, walletName);
   const proposalPath = path.join(walletPath, token);
   if (!fs.pathExistsSync(proposalPath)) {
-    fs.mkdirSync(proposalPath);
+    fs.mkdirSync(proposalPath, { mode: 0o700 });
   }
   const fullPath = path.join(proposalPath, "vote.json");
-  fs.writeFile(fullPath, JSON.stringify(vote));
+  fs.writeFile(fullPath, JSON.stringify(vote), { mode: 0o600 });
 }
 
 // getProposalWalletVote returns vote.json file if found or return null
