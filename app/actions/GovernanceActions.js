@@ -45,7 +45,6 @@ const fillVoteSummary = (proposal, voteSummary, blockTimestampFromNow) => {
   const quorum = voteSummary.quorumpercentage ? voteSummary.quorumpercentage : 20;
   const eligibleVotes = voteSummary.eligibletickets;
   const passPercentage = voteSummary.passpercentage ? voteSummary.passpercentage : 60;
-  proposal.eligibleTicketCount = eligibleVotes;
   proposal.quorumMinimumVotes = eligibleVotes * (quorum / 100);
   proposal.voteStatus = voteSummary.status;
 
