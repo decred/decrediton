@@ -6,9 +6,8 @@ import UpdateVoteChoiceModalButton from "./UpdateVoteChoiceModalButton";
 import { default as ReactMarkdown }  from "react-markdown";
 import { FormattedRelative } from "shared";
 
-export const LoadingProposal = () => (
-  <div className="proposal-loading-page"><PoliteiaLoading /></div>
-);
+export const LoadingProposal = () =>
+  <div className="proposal-loading-page"><PoliteiaLoading /></div>;
 
 export const ProposalError = ( { error } ) => <div><T id="proposalDetails.loadingError" m="Error loading Proposal: {error}" values={{ error }} /></div>;
 
@@ -98,9 +97,9 @@ const renderInternalProposalLink = ({ children }) => {
   return <a onClick={() => {} } href="#">{children}</a>;
 };
 
-const renderProposalImage = ({ alt }) => {
-  return <span>{alt}</span>;
-};
+// This changes images to never open. Debatable whether we want to
+// allow proposals to open images directly from decrediton.
+const renderProposalImage = ({ alt }) => <span>{alt}</span>;
 
 export const ProposalText = ({ text }) => (
   <>
@@ -121,8 +120,8 @@ export const ProposalText = ({ text }) => (
 
         // debatable whether we wanna allow inline image references in proposals
         // in decrediton.
-        imageReference: () => renderProposalImage,
-        image: () => renderProposalImage,
+        imageReference: renderProposalImage,
+        image: renderProposalImage,
 
         html: () => null,
       }}
