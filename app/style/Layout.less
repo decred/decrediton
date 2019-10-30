@@ -237,6 +237,7 @@
   line-height: 25px;
   margin-bottom: 17px;
   margin-left: 25px;
+  width: 715px;
 }
 
 .tabbed-page-subtitle.export {
@@ -335,12 +336,18 @@
   }  
   .tabbed-page-subtitle {
     margin-left: 20px;
-  }  
+    width: 630px;
+  }
 }
 
 @media screen and (max-width: 768px) {
   .page-body {
     flex-direction: column-reverse;
+  }
+
+  .tabbed-page-subtitle {
+    width: 300px;
+    margin-left: 20px;
   }
 
   .page-view {
@@ -373,9 +380,5 @@
   .standalone-page-header {
     height: 82px;
     padding-top: 30px;
-  }    
-
-  .tabbed-page-subtitle {
-      margin-left: 20px;
-  }    
+  }
 }
