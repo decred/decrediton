@@ -532,12 +532,21 @@ export const readExesVersion = (app, grpcVersions) => {
 };
 
 // connectDaemon starts a new rpc connection to dcrd
-export const connectRpcDaemon = (mainWindow, rpcCreds) => {
+export const connectRpcDaemon = async (mainWindow, rpcCreds) => {
   const rpc_host = rpcCreds ? rpcCreds.rpc_host : rpchost;
   const rpc_port = rpcCreds ? rpcCreds.rpc_port : rpcport;
   const rpc_user = rpcCreds ? rpcCreds.rpc_user : rpcuser;
   const rpc_pass = rpcCreds ? rpcCreds.rpc_pass : rpcpass;
   const rpc_cert = rpcCreds ? rpcCreds.rpc_cert : rpccert;
+
+  // During the first startup, the rpc.cert file might not exist for a few
+  // seconds. In that case, we wait up to 30s before failing this call.
+  let tries = 0;
+  let sleep = ms => new Promise(ok => setTimeout(ok, ms));
+  while (tries++ < 30 && !fs.existsSync(rpc_cert)) await sleep(1000);
+  if (!fs.existsSync(rpc_cert)) {
+    return mainWindow.webContents.send("connectRpcDaemon-response", { error: new Error("rpc cert '"+rpc_cert+"' does not exist") });
+  }
 
   var cert = fs.readFileSync(rpc_cert);
   const url = `${rpc_host}:${rpc_port}`;
