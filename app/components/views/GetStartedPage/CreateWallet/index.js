@@ -1,5 +1,6 @@
 import CreateWalletForm from "./CreateWalletForm";
 import "style/GetStarted.less";
+import cx from "classnames";
 
 const CreateWallet = ({
   onReturnToNewSeed,
@@ -8,8 +9,9 @@ const CreateWallet = ({
   getCurrentBlockCount,
   getNeededBlocks,
   getEstimatedTimeLeft,
+  isTestNet
 }) => (
-  <div className="page-body getstarted">
+  <div className={cx("page-body getstarted", isTestNet && "testnet-body")}>
     <CreateWalletForm {...{
       onReturnToNewSeed,
       onReturnToWalletSelection,

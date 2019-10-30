@@ -1,6 +1,7 @@
 import { Tooltip } from "shared";
 import { LoaderBarBottom } from "indicators";
 import { AboutModalButton, GoBackMsg } from "../messages";
+import cx from "classnames";
 
 export default ({
   onHideTrezorConfig,
@@ -10,8 +11,9 @@ export default ({
   appVersion,
   updateAvailable,
   children,
+  isTestNet
 }) => (
-  <div className="page-body getstarted">
+  <div className={cx("page-body getstarted", isTestNet && "testnet-body")}>
     <div className="getstarted loader">
       <div className="content-title">
         <div className="loader-settings-logs">

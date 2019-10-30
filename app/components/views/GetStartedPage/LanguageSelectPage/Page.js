@@ -2,10 +2,11 @@ import { KeyBlueButton } from "buttons";
 import "style/LanguageSelect.less";
 import { LanguageSelect } from "inputs";
 import { FormattedMessage as T } from "react-intl";
+import cx from "classnames";
 
-const LanguageSelectPage = ({ availableLanguages, selectedLang, onChangeSelectedLang, onSelectLang }) => {
+const LanguageSelectPage = ({ availableLanguages, selectedLang, onChangeSelectedLang, onSelectLang, isTestNet }) => {
   return (
-    <div className="page-body getstarted">
+    <div className={cx("page-body getstarted", isTestNet && "testnet-body")}>
       <div className="getstarted-new">
         <div className="language-select-title">
           <T id="selectLang.title" m={"Welcome to Decrediton Wallet"}/>

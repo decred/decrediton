@@ -4,6 +4,7 @@ import { LoaderBarBottom } from "indicators";
 import { InvisibleButton } from "buttons";
 import { LogsLinkMsg, SettingsLinkMsg } from "../messages";
 import { Documentation } from "shared";
+import cx from "classnames";
 
 export default ({
   onHideReleaseNotes,
@@ -20,8 +21,9 @@ export default ({
   imgClassName,
   onNewerVersion,
   onOlderVersion,
+  isTestNet
 }) => (
-  <div className="page-body getstarted">
+  <div className={cx("page-body getstarted", isTestNet && "testnet-body")}>
     <div className="getstarted loader logs">
       <div className="content-title">
         <div className="loader-settings-logs">

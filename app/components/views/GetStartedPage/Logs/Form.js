@@ -3,6 +3,7 @@ import { Tooltip } from "shared";
 import { LoaderBarBottom } from "indicators";
 import { InvisibleButton } from "buttons";
 import { LogsLinkMsg, SettingsLinkMsg, GoBackMsg, AboutModalButton } from "../messages";
+import cx from "classnames";
 
 export default ({
   onHideLogs,
@@ -13,8 +14,9 @@ export default ({
   getWalletReady,
   appVersion,
   updateAvailable,
+  isTestNet
 }) => (
-  <div className="page-body getstarted">
+  <div className={cx("page-body getstarted", isTestNet && "testnet-body")}>
     <div className="getstarted loader logs">
       <div className="loader-settings-logs">
         <AboutModalButton { ...{ appVersion, updateAvailable } } />
