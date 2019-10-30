@@ -16,7 +16,16 @@ export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord, onReturnToNewSeed
       </div>
       <div className="seedArea">
         {seedWords.map((seedWord) => {
-          const className = "seedWord " + ((!seedWord.show && seedWord.word != "") ? seedWord.match ? "match" : "no-match" : seedWord.show ? "filled" : "empty" );
+
+          var className = "seedWord ";
+          if (seedWord.show){
+            className += "filled";
+          } else if (seedWord.word != ""){
+            className += seedWord.match ? "match" : "no-match";
+          } else {
+            className += "empty";
+          }
+
           return <>
             <div key={seedWord.index} className={className}>
               <span className="number">{seedWord.index + 1}.</span>
