@@ -27,7 +27,7 @@ export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord, onReturnToNewSeed
           }
 
           return <>
-            <div key={seedWord.index} className={className}>
+            <div key={`seeditem-${seedWord.index}`} className={className}>
               <span className="number">{seedWord.index + 1}.</span>
               <span className="word">
                 { seedWord.show ? seedWord.word :
@@ -36,7 +36,6 @@ export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord, onReturnToNewSeed
                     onChange={onChangeSeedWord}
                     seedWord={seedWord}
                     value={{ name: seedWord.word }}
-                    key={seedWord.index}
                   />
                 }
               </span>
