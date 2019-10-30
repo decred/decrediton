@@ -1,7 +1,7 @@
 import { dcrwalletCfg, getWalletPath, getExecutablePath, dcrdCfg, getDcrdPath } from "./paths";
 import { getWalletCfg, readDcrdConfig } from "config";
 import { createLogger, AddToDcrdLog, AddToDcrwalletLog, AddToDcrlndLog, GetDcrdLogs,
-  GetDcrwalletLogs, lastErrorLine, lastPanicLine, ClearDcrwalletLogs } from "./logging";
+  GetDcrwalletLogs, lastErrorLine, lastPanicLine, ClearDcrwalletLogs, CheckDaemonLogs } from "./logging";
 import parseArgs from "minimist";
 import { OPTIONS } from "constants";
 import os from "os";
@@ -147,7 +147,7 @@ export async function cleanShutdown(mainWindow, app) {
   });
 }
 
-export const launchDCRD = (params, testnet) => new Promise((resolve,reject) => {
+export const launchDCRD = (params, testnet, reactIPC) => new Promise((resolve,reject) => {
   let rpcCreds, appdata;
 
   rpcCreds = params && params.rpcCreds;
@@ -233,6 +233,9 @@ export const launchDCRD = (params, testnet) => new Promise((resolve,reject) => {
 
   dcrd.stdout.on("data", (data) => {
     AddToDcrdLog(process.stdout, data, debug);
+    if (CheckDaemonLogs(data.toString("utf-8"))) {
+      reactIPC.send("warning-received", true, data.toString("utf-8"));
+    }
     resolve(data.toString("utf-8"));
   });
 

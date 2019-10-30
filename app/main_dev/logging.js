@@ -141,10 +141,15 @@ export function ClearDcrwalletLogs() {
 }
 
 const reindexCheck = "Reindexing to height";
+const upgradeDatabase = "Upgrading database to version 6";
 
 export function CheckDaemonLogs(data) {
   if (data.indexOf(reindexCheck) > 0) {
     return true;
   }
+  if (data.indexOf(upgradeDatabase) > 0) {
+    return true;
+  }
+
   return false;
 }
