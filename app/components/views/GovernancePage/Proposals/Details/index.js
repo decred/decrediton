@@ -9,6 +9,7 @@ class ProposalDetails extends React.Component {
     super(props);
     this.state = {
       newVoteChoice: null,
+      showWalletEligibleTickets: false,
     };
   }
 
@@ -23,6 +24,10 @@ class ProposalDetails extends React.Component {
     this.props.updateVoteChoice(this.props.viewedProposalDetails,
       this.state.newVoteChoice, privatePassphrase);
     this.setState( { newVoteChoice: null } );
+  }
+
+  onToggleWalletEligibleTickets() {
+    this.setState({ showWalletEligibleTickets: !this.state.showWalletEligibleTickets });
   }
 
   render() {
@@ -44,6 +49,7 @@ class ProposalDetails extends React.Component {
         {...this.state}
         onVoteOptionSelected={this.onVoteOptionSelected}
         onUpdateVoteChoice={this.onUpdateVoteChoice}
+        onToggleWalletEligibleTickets={this.onToggleWalletEligibleTickets}
       />
     );
   }

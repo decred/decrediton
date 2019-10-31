@@ -364,7 +364,7 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
         walletEligibleTickets = await getProposalEligibleTickets(proposal.token, startvotereply.eligibletickets, false, walletService);
       }
       currentVoteChoice = getVoteOption(token, proposal, castvotes, walletEligibleTickets, testnet, walletName) || "abstain";
-      hasEligibleTickets = walletEligibleTickets.length > 0;
+      hasEligibleTickets = walletEligibleTickets && walletEligibleTickets.length > 0;
       if (currentVoteChoice !== "abstain") {
         const votesToCache = { token, walletEligibleTickets, voteChoice: currentVoteChoice };
         savePiVote(votesToCache, token, testnet, walletName);

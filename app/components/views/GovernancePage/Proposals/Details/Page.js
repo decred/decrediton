@@ -1,6 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import { InvisibleButton } from "buttons";
-import { PoliteiaLink } from "shared";
+import { PoliteiaLink, VerticalAccordion } from "shared";
 import {
   ProposalNotVoting, NoTicketsVotingInfo, OverviewField, OverviewVotingProgressInfo,
   NoElligibleTicketsVotingInfo, UpdatingVoteChoice, TimeValue,
@@ -12,13 +12,13 @@ import {
 
 export default ({ viewedProposalDetails, goBackHistory,
   showPurchaseTicketsPage, hasTickets, onVoteOptionSelected, onUpdateVoteChoice,
-  newVoteChoice, updateVoteChoiceAttempt, tsDate, text }) =>
+  newVoteChoice, updateVoteChoiceAttempt, tsDate, text, showWalletEligibleTickets,
+  onToggleWalletEligibleTickets }) =>
 {
   const { name, token, voteStatus, proposalStatus, voteOptions, voteCounts,
     creator, timestamp, endTimestamp, currentVoteChoice, hasEligibleTickets,
     version, quorumMinimumVotes, walletEligibleTickets } = viewedProposalDetails;
 
-  console.log(walletEligibleTickets)
   const getVoteInfo = ({
     voteStatus, voteOptions, onUpdateVoteChoice, onVoteOptionSelected, newVoteChoice,
     eligibleTicketCount,currentVoteChoice, showPurchaseTicketsPage
@@ -85,8 +85,30 @@ export default ({ viewedProposalDetails, goBackHistory,
           <InvisibleButton className="go-back-icon-button" onClick={goBackHistory} />
           {voteInfo}
         </div>
-        {(voteStatus === VOTESTATUS_ACTIVEVOTE || voteStatus === VOTESTATUS_FINISHEDVOTE ) &&
+        { (voteStatus === VOTESTATUS_ACTIVEVOTE || voteStatus === VOTESTATUS_FINISHEDVOTE ) &&
           <OverviewVotingProgressInfo {...{ voteCounts, quorumMinimumVotes }} /> }
+        { walletEligibleTickets &&
+          <VerticalAccordion
+            header = {
+              <div className="proposal-details-wallet-eligible-tickets-header">
+                <T id="proposals.detail.wallet.eligible.header" m="Wallet Eligible Tickets " />
+              </div>
+            }
+            show={showWalletEligibleTickets}
+            onToggleAccordion={onToggleWalletEligibleTickets}
+            className="proposal-details-wallet-eligible-tickets"
+          >
+            {walletEligibleTickets.map((t, i) => (
+              <div className="is-row proposal-details-wallet-eligible-tickets-row" key={`ticket-${i+1}`}>
+                <div className="row proposal-details-wallet-eligible-tickets-label">
+                  <T id="proposals.detail.tickets" m="Ticket " />{i+1}: </div>
+                <div>
+                  {t.ticket}
+                </div>
+              </div>
+            ))}
+          </VerticalAccordion>
+        }
       </div>
       <div className="proposal-details-text">
         <div className="links">
