@@ -16,7 +16,9 @@ export default ({ viewedProposalDetails, goBackHistory,
 {
   const { name, token, voteStatus, proposalStatus, voteOptions, voteCounts,
     creator, timestamp, endTimestamp, currentVoteChoice, hasEligibleTickets,
-    version, quorumMinimumVotes } = viewedProposalDetails;
+    version, quorumMinimumVotes, walletEligibleTickets } = viewedProposalDetails;
+
+  console.log(walletEligibleTickets)
   const getVoteInfo = ({
     voteStatus, voteOptions, onUpdateVoteChoice, onVoteOptionSelected, newVoteChoice,
     eligibleTicketCount,currentVoteChoice, showPurchaseTicketsPage

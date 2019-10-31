@@ -60,7 +60,7 @@ const fillVoteSummary = (proposal, voteSummary, blockTimestampFromNow) => {
 // getProposalEligibleTickets gets the wallet eligible tickets from a specific proposal.
 // if the proposal directory already exists it only returns the cached information,
 // otherwise it gets the eligible tickets from politeia and caches it.
-const getProposalEligibleTickets = async (token, shouldCache, piURL, walletService) => {
+const getProposalEligibleTickets = async (token, allEligibleTickets, shouldCache, walletService) => {
   // Aux function to get the tickets from the wallet that are eligible to vote
   // (committed tickets) for a given proposal (given a list of eligible tickets
   // returned from an activevotes call)
@@ -83,39 +83,17 @@ const getProposalEligibleTickets = async (token, shouldCache, piURL, walletServi
     return ticketsArray;
   };
 
-  let walletEligibleTickets;
   const eligibleTicketsObj = getEligibleTickets(token);
   if (eligibleTicketsObj) {
     const { eligibleTickets } = eligibleTicketsObj;
-    walletEligibleTickets = await getWalletEligibleTickets(eligibleTickets, walletService);
-
-    return { eligibleTickets: walletEligibleTickets };
+    return await getWalletEligibleTickets(eligibleTickets, walletService);
   }
 
-  const request = await pi.getProposalVotes(piURL, token);
-  if (!request || !request.data) {
-    return;
-  }
-  const { data } = request;
-  if (!data.startvotereply) {
-    return;
-  }
-  const { startvotereply, castvotes } = data;
-  const eligibleTickets = startvotereply.eligibletickets;
   if (shouldCache) {
-    saveEligibleTickets(token, { eligibleTickets });
+    saveEligibleTickets(token, { eligibleTickets: allEligibleTickets });
   }
-  walletEligibleTickets = await getWalletEligibleTickets(eligibleTickets, walletService);
-  // now we check if the wallet already have casted votes. We assume all tickets
-  // have voted the same.
-  const voteChoice = castvotes.find((vote) => {
-    if(vote.ticket === walletEligibleTickets[0].ticket) {
-      return true;
-    }
-    return false;
-  });
 
-  return { eligibleTickets: walletEligibleTickets, voteChoice };
+  return await getWalletEligibleTickets(allEligibleTickets, walletService);
 };
 
 export const GETTOKEN_INVENTORY_ATTEMPT = "GETTOKEN_INVENTORY_ATTEMPT";
@@ -167,25 +145,28 @@ const getInitialBatch = () => async (dispatch, getState) => {
 };
 
 // getVoteOption gets the wallet vote if cached or return abstain.
-const getVoteOption = (token, proposal, voteBit, testnet, walletName) => {
-  if (voteBit) {
-    // We assume all tickets have vote the same bit
-    const currentVoteChoice = proposal.voteOptions.find(option =>
-      // we need to concat string as votes is stringfied before cached.
-      voteBit === "" + option.bits
-    );
-
-    if (currentVoteChoice) {
-      return currentVoteChoice;
-    }
-  }
-
-  let currentVoteChoice = "abstain";
+const getVoteOption = (token, proposal, castVotes, walletEligibleTickets, testnet, walletName) => {
+  // We assume all tickets have vote the same bit
   const vote = getProposalWalletVote(token, testnet, walletName);
   if (vote) {
-    // We assume all tickets have vote the same bit
-    currentVoteChoice = vote.voteChoice;
+    return vote.voteChoice;
   }
+
+  if (!castVotes || !walletEligibleTickets) return;
+
+  const voteChoice = castVotes.find((vote) => {
+    if(vote.ticket === walletEligibleTickets[0].ticket) {
+      return true;
+    }
+    return false;
+  });
+
+  if (!voteChoice) return;
+
+  const currentVoteChoice = proposal.voteOptions.find(option =>
+    // votebit is all lowercase as it comes from pi api.
+    voteChoice.votebit === "" + option.bits
+  );
 
   return currentVoteChoice;
 };
@@ -271,7 +252,7 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
       prop.proposalStatus = prop.status;
 
       fillVoteSummary(prop, proposalSummary, blockTimestampFromNow);
-      prop.currentVoteChoice = getVoteOption(token, prop, null, testnet, walletName);
+      prop.currentVoteChoice = getVoteOption(token, prop, null, null, testnet, walletName);
 
       if (prop.timestamp > lastPoliteiaAccessTime) {
         prop.modifiedSinceLastAccess = true;
@@ -337,7 +318,7 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
   const testnet = sel.isTestNet(getState());
   let walletEligibleTickets;
   let hasEligibleTickets = false;
-  let currentVoteChoice = "abstain";
+  let currentVoteChoice;
 
   try {
     const request = await pi.getProposal(piURL, token);
@@ -369,18 +350,25 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
       hasEligibleTickets: false,
     };
 
-    if (proposal.voteStatus === VOTESTATUS_ACTIVEVOTE) {
-      const { eligibleTickets, voteChoice } = await getProposalEligibleTickets(proposal.token, true, piURL, walletService);
-      const votebit = voteChoice && voteChoice.votebit;
-      currentVoteChoice = getVoteOption(token, proposal, votebit, testnet, walletName);
-      walletEligibleTickets = eligibleTickets
-      hasEligibleTickets = eligibleTickets.length > 0;
-    } else if (proposal.voteStatus === VOTESTATUS_FINISHEDVOTE) {
-      const { eligibleTickets, voteChoice } = await getProposalEligibleTickets(proposal.token, false, piURL, walletService);
-      const votebit = voteChoice && voteChoice.votebit;
-      currentVoteChoice = getVoteOption(token, proposal, votebit, testnet, walletName);
-      walletEligibleTickets = eligibleTickets
-      hasEligibleTickets = eligibleTickets.length > 0;
+    const voteAndEligibleTickets = getProposalWalletVote(token, testnet, walletName);
+    if (voteAndEligibleTickets) {
+      walletEligibleTickets = voteAndEligibleTickets.walletEligibleTickets;
+      currentVoteChoice = voteAndEligibleTickets.voteChoice;
+      hasEligibleTickets = walletEligibleTickets.length > 0;
+    } else {
+      const voteReq = await pi.getProposalVotes(piURL, token);
+      const { startvotereply, castvotes  } = voteReq.data;
+      if (proposal.voteStatus === VOTESTATUS_ACTIVEVOTE) {
+        walletEligibleTickets = await getProposalEligibleTickets(proposal.token, startvotereply.eligibletickets, true, walletService);
+      } else if (proposal.voteStatus === VOTESTATUS_FINISHEDVOTE) {
+        walletEligibleTickets = await getProposalEligibleTickets(proposal.token, startvotereply.eligibletickets, false, walletService);
+      }
+      currentVoteChoice = getVoteOption(token, proposal, castvotes, walletEligibleTickets, testnet, walletName) || "abstain";
+      hasEligibleTickets = walletEligibleTickets.length > 0;
+      if (currentVoteChoice !== "abstain") {
+        const votesToCache = { token, walletEligibleTickets, voteChoice: currentVoteChoice };
+        savePiVote(votesToCache, token, testnet, walletName);
+      }
     }
 
     // update proposal reference from proposals state
@@ -466,7 +454,7 @@ export const updateVoteChoice = (proposal, newVoteChoiceID, passphrase) => async
       const hexSig = Buffer.from(signature.getSignature()).toString("hex");
 
       const voteBit = voteChoice.bits.toString(16);
-      const vote = { token, ticket: t.ticket, voteBit, signature: hexSig }
+      const vote = { token, ticket: t.ticket, voteBit, signature: hexSig };
       votes.push(vote);
     });
 
