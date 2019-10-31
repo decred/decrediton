@@ -354,7 +354,7 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
     if (voteAndEligibleTickets) {
       walletEligibleTickets = voteAndEligibleTickets.walletEligibleTickets;
       currentVoteChoice = voteAndEligibleTickets.voteChoice;
-      hasEligibleTickets = walletEligibleTickets.length > 0;
+      hasEligibleTickets = walletEligibleTickets && walletEligibleTickets.length > 0;
     } else {
       const voteReq = await pi.getProposalVotes(piURL, token);
       const { startvotereply, castvotes  } = voteReq.data;
