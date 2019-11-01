@@ -17,9 +17,9 @@ const AppDataForm = ({
 
   return (
     <>
-      <div className="advanced-daemon-row">
+      <div className="advanced-daemon-row appdataform">
         <div className="advanced-daemon-label">
-          <T id="login.form.appdata.label" m="Daemon Data Directory" />:
+          <T id="login.form.appdata.label" m="Daemon Data Directory" />
         </div>
         <div className="advanced-daemon-input">
           <PathBrowseInput

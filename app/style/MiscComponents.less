@@ -287,12 +287,17 @@
   border-bottom: 1px var(--stroke-color-default) solid;
 }
 
+.path-input-and-button:hover {
+  border-bottom: 1px var(--stroke-color-hovered) solid;
+}
+
 .path-input-area {
   width: 100%;
   margin-right: 15px;
 }
 
 .path-button {
+  cursor: pointer;
   width: 16px;
   height: 16px;
   border: none;
@@ -315,10 +320,13 @@
   align-items: center;
   font-family: @font-family-regular;
   font-size: 13px;
-  padding: 3px 4px 1px 10px;
   display: flex;
   flex: auto;
   flex-grow: 1;
+
+  > input {
+    width: 100%;
+  }
 }
 
 .path-input:hover {
