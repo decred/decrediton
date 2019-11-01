@@ -1,5 +1,5 @@
 const TitleHeader = ({ title, iconClassName, optionalButton }) => (
-  <>
+  <div className="standalone-page-header-container">
     <div className="title-header-icon">
       <div className={iconClassName} />
     </div>
@@ -11,7 +11,7 @@ const TitleHeader = ({ title, iconClassName, optionalButton }) => (
       {optionalButton}
     </div>
     }
-  </>
+  </div>
 );
 
 export default TitleHeader;

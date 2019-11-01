@@ -81,9 +81,12 @@
     background-size: 173px;
     background-position: 0 0;
   }
-
   &.testnet-body::before{
     background-image: var(--testnet-logo);
+  }
+  .tabbed-page-subtitle {
+    font-size: 27px;
+    margin-left: 10px;
   }
 }
 
@@ -104,12 +107,6 @@
     max-height: 600px;
     width: 100%;
     overflow-y: auto;
-  }
-
-  .settings-privacy {
-    width: 50%;
-    float: right;
-    margin-right: 40px;
   }
 }
 
@@ -222,6 +219,23 @@
   .linear-progress.small {
     float: left;
   }
+
+  &.settings {
+    .go-back-screen-button-area {
+      position: absolute;
+      left: 710px;
+      top: 112px;
+      right: initial;
+    }
+    .save-button-wrapper {
+        width: 740px;
+        text-align: right;
+        .key-blue-button {
+          margin-top: 0;
+          padding: 12px 30px 14px 30px;
+        }
+    } 
+  }  
 }
 
 .loader-bar-bottom {
@@ -851,6 +865,18 @@
   margin-top: 14em;
 }
 
+@media screen and (max-width: 1106px) {
+  .getstarted.loader.settings {
+    .go-back-screen-button-area {
+      left: 620px;
+      top: 112px;
+    }
+    .save-button-wrapper {
+      width: 650px;
+    } 
+  }            
+}
+
 @media screen and (max-width: 768px) {
   .release-notes {
     height: 70vh;
@@ -865,11 +891,9 @@
   .getstarted.loader{
     padding-top: 56px;
     margin-left: 0;
-    
-    .go-back-screen-button-area {
-      top:175px;
-      right:60px;
-    }      
+    .loader-bar-estimation{
+        display: none;
+    }
     .loader-settings-logs{
       right:-30px !important;
     }              
@@ -886,12 +910,27 @@
       }
       .go-back-screen-button-area{
         right:40px;
+        top:180px;        
       }
       .loader-settings-logs{
         right:-10px !important;
       }               
     }  
+    &.settings {
+      .tabbed-page-subtitle {
+        margin-left:20px;
+      }
+      .go-back-screen-button-area {
+        top: 94px;
+        left: 325px;
+      }      
+      .save-button-wrapper {
+        text-align: center;
+        width: 355px;
+      } 
+    } 
   }
+
   .advanced-daemon-row.multiple-row{
     width: 78%;
   }
@@ -925,6 +964,7 @@
     padding: 20px !important;
     display: flex;
     flex-direction: column;
+    height: calc(100% - 40px);
 
     &::before{
       background-image: var(--small-logo);
@@ -993,7 +1033,7 @@
     &.logs {
       margin-left: -10px;
       margin-right: -10px;
-      padding-top:60px;
+      padding-top: 30px;
 
       .log-area .log-area-logs{
         margin: 20px;
@@ -1002,9 +1042,15 @@
         margin-left:10px;
       }
       .go-back-screen-button-area{
-        top:130px;
+        top:85px;
         right:20px;
       }    
+    }    
+    &.settings {
+      .go-back-screen-button-area {
+        top: 40px;
+        left: 325px;
+      }  
     }    
   }
 

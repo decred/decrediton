@@ -4,10 +4,26 @@
 .settings-wrapper {
   display: flex;
   background: var(--background-back-color);
-  margin-top: 10px;
   margin-bottom: 20px;
-  padding: 26px 26px 26px 40px;
+  padding: 20px 40px;
   justify-content: space-between;
+  width: 660px;
+
+  .language-select-input {
+    width: 150px;
+    margin-right: 0;
+    .language-label .flag {
+      margin: 5px 5px 0 0;
+    }
+  }
+  .settings-columns:nth-of-type(1){
+    width: 300px;
+    flex: inherit;
+  }
+  .settings-columns:nth-of-type(2){
+    width: 260px;
+    flex: inherit;
+  }
 }
 
 .settings-columns,
@@ -53,6 +69,21 @@
     background-size: 10px;
   }
 
+  input[type="radio"]:checked + label {
+    background-image: none;
+    position: relative;
+    &:before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background-color: var(--input-color);
+      border-radius: 3px;
+      position: absolute;
+      top: 4px;
+      left: 4px;
+    }
+  }
+
   input[type="radio"] + label {
     border-radius: 50%;
     width: 14px;
@@ -68,7 +99,18 @@
 }
 
 .settings-wrapper .settings-label {
-  width: 200px;
+  width: 140px;
+
+  .info-label,
+  .info-field-modal-button {
+    display: inline;
+  }
+  .info-field-modal-button {
+    float: initial;
+    background-image: var(--info-icon);
+    background-size: 16px;
+    margin-right: 5px;
+  }
 }
 
 .settings-column-title {
@@ -89,8 +131,7 @@
 .settings-privacy .settings-column-title,
 .settings-security .settings-column-title,
 .settings-timezone .settings-column-title {
-  text-align: right;
-  margin-right: 145px;
+  text-align: left;
 }
 
 .settings-restart {
@@ -105,12 +146,24 @@
 
 .settings-row-checklist {
   flex-wrap: wrap;
+  justify-content: flex-start;
+
+  .settings-label {
+    text-align: left;
+    margin-left: 8px;
+    margin-right: 0;
+  }
+  .timezone-radio {
+    order: -1;
+    margin-top: 3px;
+    height: 12px;    
+  }
 }
 
 .settings-checklist-description {
   font-style: italic;
-  text-align: right;
-  margin-right: 28px;
+  text-align: left;
+  margin-left: 22px;
   color: var(--settings-desc);
   font-size: 11px;
   line-height: 15px;
@@ -160,11 +213,12 @@
 .settings-input {
   .inline-block-mixin;
 
-  width: 200px;
+  width: 150px;
+  margin-right: 0;
 }
 
 .settings-text-input {
-  width: 194px;
+  width: 136px;
   height: 23px;
   padding: 0px 4px 1px 10px;
 }
@@ -182,8 +236,15 @@
   margin-top: 1em;
 }
 
+.settings-save-button-wrapper {
+  width:740px;  
+  text-align: right;
+}
+
 .settings-save-button {
   .inline-block-mixin;
+
+  margin-right: 0;
 }
 
 .settings-close-wallet-button {
@@ -193,7 +254,13 @@
 }
 
 .settings-update-passphrase-button {
-  float: right;
+  font-size: 13px;
+  float: left;
+  line-height: 23px;
+  button {
+    margin-left:0;
+    margin-right:10px;
+  }
 }
 
 .settings-update-passphrase-button span {
@@ -209,6 +276,7 @@
 
 .privacy-checkbox {
   margin-top: 2px;
+  order: -1;
 }
 
 
@@ -222,10 +290,16 @@
 
 @media screen and (max-width: 1106px) {
   .settings-wrapper {
-    display: inherit;
-    margin-top: -50px;
-    height: 680px;
+    width: 569px;
+
+    .settings-columns:nth-of-type(2){
+      width: 190px;
+    }    
   }
+
+  .settings-save-button-wrapper {
+    width:649px;  
+  }  
 
   .app-modal.about-modal,
   .app-modal-reduced-bar.about-modal,
@@ -237,6 +311,10 @@
   .settings-security .settings-column-title {
     text-align: left;
   }
+
+  .close-modal-button {
+    display: none;
+  }  
 }
 
 .close-modal-button {
@@ -255,4 +333,22 @@
 
 .privacy-buttons {
   text-align: right;
+}
+
+@media screen and (max-width: 768px) {
+  .settings-wrapper {
+    margin-top:0;
+    width: 330px;
+    padding: 20px ;
+    flex-direction: column;
+    
+    .settings-columns:nth-of-type(2){
+      width: 300px;
+    }    
+  }
+
+  .settings-save-button-wrapper {
+    width:355px;  
+    text-align: center;
+  } 
 }

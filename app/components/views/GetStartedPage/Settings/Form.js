@@ -28,7 +28,7 @@ export default ({
   isTestNet
 }) => (
   <div className={cx("page-body getstarted", isTestNet && "testnet-body")}>
-    <div className="getstarted loader logs">
+    <div className="getstarted loader logs settings">
       <div className="loader-settings-logs">
         <AboutModalButton { ...{ appVersion, updateAvailable } } />
         <InvisibleButton className="active">
@@ -52,13 +52,15 @@ export default ({
           <PrivacySettings {...{ tempSettings, onChangeTempSettings }} />
         </div>
       </div>
-      <KeyBlueButton
-        disabled={!areSettingsDirty}
-        size="large"
-        block={false}
-        onClick={() => {onSaveSettings(tempSettings); onHideSettings();}}>
-        <T id="getStarted.settings.save" m="Save" />
-      </KeyBlueButton>
+      <div className="save-button-wrapper">
+        <KeyBlueButton
+          disabled={!areSettingsDirty}
+          size="large"
+          block={false}
+          onClick={() => {onSaveSettings(tempSettings); onHideSettings();}}>
+          <T id="getStarted.settings.save" m="Save" />
+        </KeyBlueButton>
+      </div>
       <LoaderBarBottom  {...{ getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft }}  />
     </div>
   </div>

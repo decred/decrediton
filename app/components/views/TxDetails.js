@@ -154,7 +154,7 @@ const TxDetails = ({
       <div className="txdetails-top">
         <div className="txdetails-top-row">
           <div className="txdetails-name">
-            <T id="txDetails.transactionLabel" m="Transaction" />
+            <T id="txDetails.transactionLabel" m="Transaction" />:
           </div>
           <div className="txdetails-value">
             <a onClick={ openTxUrl } style={{ cursor: "pointer" }}>{txHash}</a>
@@ -176,13 +176,25 @@ const TxDetails = ({
             }
           </div>
         </div>
+        {txType !== "Vote" &&
+          <div className="txdetails-top-row">
+            <div className="txdetails-name"><T id="txDetails.toAddress" m="To address" />:</div>
+            <div className="txdetails-value non-flex">
+              {txOutputs.map(({ address }) => (
+                <div>{addSpacingAroundText(address)}</div>
+              ))}
+              {nonWalletOutputs.map(({ address }) => (
+                <div>{addSpacingAroundText(address)}</div>
+              ))}
+            </div>
+          </div>}
         {txDirection !== "in" && txType !== "Vote" &&
         <div className="txdetails-top-row">
-          <div className="txdetails-name"><T id="txDetails.transactionFeeLabel" m="Transaction fee" /></div>
+          <div className="txdetails-name"><T id="txDetails.transactionFeeLabel" m="Transaction fee" />:</div>
           <div className="txdetails-value"><Balance amount={txFee} /></div>
         </div> }
       </div>
-      {!isConfirmed && <KeyBlueButton className="rebroadcast-button" onClick={publishUnminedTransactions}><T id="txDetails.rebroadcastTransactions" m="Rebroadcast Transaction"/></KeyBlueButton> }
+      {!isConfirmed && <div className="rebroadcast-button-container"><KeyBlueButton className="rebroadcast-button" onClick={publishUnminedTransactions}><T id="txDetails.rebroadcastTransactions" m="Rebroadcast Transaction" /></KeyBlueButton></div> }
       <div className="txdetails-io">
         <div className="txdetails-title"><T id="txDetails.io.title" m="I/O Details" /></div>
         <div className="txdetails-overview">
@@ -253,7 +265,7 @@ const TxDetails = ({
             </div>
           </>
         }
-        <div className="txdetails-top-row">
+        <div className="txdetails-top-row row-transaction">
           <div className="txdetails-name"><T id="txDetails.rawTransactionLabel" m="Raw Transaction" /></div>
           <div className="txdetails-value"><div className="txdetails-value-rawtx">{rawTx}</div><CopyToClipboard textToCopy={rawTx} className="receive-content-nest-copy-to-clipboard-icon" /></div>
         </div>
