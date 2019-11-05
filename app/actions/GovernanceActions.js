@@ -28,10 +28,7 @@ const fillVoteSummary = (proposal, voteSummary, blockTimestampFromNow) => {
   proposal.endTimestamp = blockTimestampFromNow(parseInt(voteSummary.endheight));
   proposal.voteCounts = {};
   proposal.voteOptions = [];
-  // TODO support startVoteHeight when votesummary brings it.
-  // We need this information to know if vote has started while decrediton was
-  // offline.
-  // proposal.startVoteHeight = voteSummary.startheight;
+  proposal.startVoteHeight = voteSummary.endheight - voteSummary.duration;
 
   let totalVotes = 0;
   if (voteSummary.results) {
