@@ -149,7 +149,7 @@ const getVoteOption = (token, proposal, castVotes, walletEligibleTickets, testne
     return vote.voteChoice;
   }
 
-  if (!castVotes || !walletEligibleTickets) return;
+  if (!castVotes || (!walletEligibleTickets || walletEligibleTickets.length === 0)) return;
 
   const voteChoice = castVotes.find((vote) => {
     if(vote.ticket === walletEligibleTickets[0].ticket) {
