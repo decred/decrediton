@@ -33,15 +33,19 @@ const ExistingSeedForm = ({
             {seedWords.map((seedWord) => {
               const className = seedWord.word ? seedWord.error ? "seedWord error" : "seedWord populated" : "seedWord restore";
               return (
-                <SingleSeedWordEntry
-                  className={className}
-                  onChange={onChangeSeedWord}
-                  onPaste={handleOnPaste}
-                  seedWord={seedWord}
-                  value={{ name: seedWord.word }}
-                  key={seedWord.index}
-                  onPasteFromClipboard={pasteFromClipboard}
-                />);
+                <div key={seedWord.index} className={className}>
+                  <span className="number">{seedWord.index + 1}.</span>
+                  <span className="word">
+                    <SingleSeedWordEntry
+                      onChange={onChangeSeedWord}
+                      onPaste={handleOnPaste}
+                      seedWord={seedWord}
+                      value={{ name: seedWord.word }}
+                      key={seedWord.index}
+                      onPasteFromClipboard={pasteFromClipboard}
+                    />
+                  </span>
+                </div>);
             })}
           </div> :
           <div className="seedArea hex">

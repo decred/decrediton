@@ -30,7 +30,6 @@ class SingleSeedWordEntry extends React.Component {
     const value = { name: this.props.value.name };
     return (
       <div
-        className={this.props.className}
         onKeyDown={this.handleKeyDown}
         onPaste={this.props.onPaste}
       >

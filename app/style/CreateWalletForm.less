@@ -10,7 +10,6 @@
 }
 
 .wallet-key-blue-button {
-  margin-top: 12px;
   float: left;
 }
 
@@ -78,7 +77,6 @@
 }
 
 .go-back-button {
-  margin-top: 8px;
   color: var(--home-content-link);
 }
 .go-back-button:hover {
@@ -106,7 +104,6 @@
   }
 
   .Select-control:hover:not(:disabled) {
-    color: inherit;
     border: inherit;
   }
 
@@ -123,9 +120,8 @@
   .Select-control {
     padding-left: 2px;
     border-radius: 3px;
-    border: 1px solid var(--white-border);
-    background-color: var(--linear-progress-text);
-    color: var(--title-text-and-button-background);
+    color: var(--modal-bottom);
+    border-bottom: none; 
   }
 
   .Select-control:hover,
@@ -134,29 +130,6 @@
   }
 }
 
-.seedWord.match {
-  .Select-control {
-    color: var(--input-color-default);
-    border: 1px solid var(--accent-color);
-  }
-
-  .Select-control:hover {
-    color: var(--input-color-default);
-    border: 1px solid var(--accent-color);
-  }
-}
-
-.seedWord.no-match {
-  .Select-control {
-    color: var(--input-color-default);
-    border: 1px solid var(--error-red);
-  }
-
-  .Select-control:hover {
-    color: var(--input-color-default);
-    border: 1px solid var(--error-red);
-  }
-}
 
 .createwallet-button-area {
   margin-left: 22px;
