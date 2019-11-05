@@ -35,6 +35,7 @@ const AdvancedBodyBase = ({
 }) => {
   return (
     <>
+      <div className="advanced-desc"><T id="login.form.advanced.desc" m="Complete one of the following forms to start Decrediton according to your local setup." /></div>
       <div className="advanced-page-toggle">
         <div className="text-toggle">
           <div className={"text-toggle-button-left " + (sideActive && "text-toggle-button-active")} onClick={!sideActive ? onShowAppData : null}>

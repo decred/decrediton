@@ -9,6 +9,7 @@
 
 .advanced-page-form.toggle {
   padding-top: 25px;
+  height: 258px;
 }
 
 .advanced-daemon-network {
@@ -25,9 +26,10 @@
 
 .advanced-daemon-label {
   float: left;
-  width: 150px;
+  width: 130px;
   text-align: right;
   color:var(--wallet-tutorial-text);
+  font-size: 13px;
 }
 
 .create-wallet-warning {
@@ -51,9 +53,18 @@
 }
 
 .advanced-daemon-input {
-  padding-left: 20px;
+  padding-left: 10px;
   float: left;
   width: 295px;
+
+  .input-and-unit > input {
+    line-height: 17px;
+    font-size: 13px;
+
+    &::placeholder {
+      color: #C4CBD2;
+    }
+  }
 }
 
 .advanced-daemon-long-input {
@@ -67,7 +78,7 @@
   display: block;
   background-color: var(--background-container);
   z-index: 3;
-  height: 100%;
+  height: calc(100% - 60px);
   
   &::before{
     content: "";
@@ -141,7 +152,17 @@
     > .button:not(:last-child) {
       margin-right: 10px;
     }
+
+    .invisible-button {
+      font-weight: 400;
+    }
   }
+
+  .advanced-page-form .loader-bar-buttons {
+    position: absolute;
+    top: 365px;
+    right: 0px;
+  }  
 
   .loader-settings-logs {
     position: absolute;
@@ -422,6 +443,14 @@
   .go-back-screen-button:hover {
     opacity: 0.7;
   }
+}
+.advanced-desc{
+  font-size: 19px;  
+  color: var(--modal-text);
+  margin-bottom: 43px;
+  margin-top: 60px;
+  width: 444px;
+  float:left; 
 }
 
 .release-notes {
@@ -994,7 +1023,7 @@
     right:59px;
   }
 }
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 768px) {
   .release-notes {
     height: 77vh;
   }  
@@ -1009,6 +1038,7 @@
     flex-direction: column;
     height: calc(100% - 40px);
 
+    &.testnet-body::before,
     &::before{
       background-image: var(--small-logo);
       background-size: 30px;
@@ -1065,6 +1095,45 @@
         padding: 0px 20px;
         order: -1;
       }
+    }
+
+    .advanced-desc {
+      width: 315px;
+      margin-top: 0;
+      margin-bottom: 30px;
+    }
+    .advanced-page-form {
+      .loader-bar-buttons    
+      {
+        position: fixed;
+        margin-left: 115px;
+        bottom: 75px;
+        right: 20px;
+        top: initial;
+
+        .invisible-button,
+        .button {
+          padding: 6px 20px;
+        }
+      }
+      .advanced-daemon-label {
+        width: 77px;
+      }
+      .advanced-daemon-input {
+        width: 243px;
+      }
+      
+      .advanced-daemon-row.appdataform {
+        .advanced-daemon-label {
+          width: 130px;
+        }
+        .advanced-daemon-input {
+          width: 190px;
+        }        
+      }
+    }
+    .text-toggle-button-right {
+      padding: 6px 10px;
     }
     .loader-buttons{
           margin-bottom: 50px;
