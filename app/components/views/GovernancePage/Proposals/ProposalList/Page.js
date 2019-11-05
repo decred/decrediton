@@ -15,35 +15,41 @@ const ProposalListItem = ({ name, timestamp, token, voteCounts, tsDate, onClick,
     (!isVoting && modifiedSinceLastAccess) || (isVoting && votingSinceLastAccess)
       ? "proposal-modified-since-last-access"
       : null;
-  const className = [ "proposal-list-item", voteResult, modifiedClassName ].join(" ");
 
   return (
-    <div className={className} onClick={() => onClick(token)}>
+    <div onClick={() => onClick(token)}
+      className={[ "is-row", "proposal-list-item", voteResult, modifiedClassName ].join(" ")}
+    >
       <div className="info">
         <div className="proposal-name">{ name }</div>
         <div className="proposal-token">{ token }</div>
-        {voteStatus !== VOTESTATUS_FINISHEDVOTE &&
-        <div className="proposal-timestamp">
-          <T id="proposalItem.lastUpdatedAt" m="Last Updated {reldate}" values={{
-            reldate: <FormattedRelative  value={ tsDate(timestamp) } /> }} />
-        </div>}
       </div>
-      {( voteStatus === VOTESTATUS_ACTIVEVOTE || voteStatus === VOTESTATUS_FINISHEDVOTE) &&
-        <>
-          <div className={"proposal-vote-choice " + (currentVoteChoice && currentVoteChoice.id)}/>
-          <VotingProgress {...{ voteCounts, quorumMinimumVotes } }  />
-        </>}
-      { voteStatus === VOTESTATUS_FINISHEDVOTE && (
-        <div className="proposal-vote-result">
-          <div className="proposal-vote-passage">{quorumPass ? voteResult : <T id="proposals.quorumNotMet" m="Quorum not met"/>}</div>
-        </div>
-      )}
+
+      <div className="proposal-results-area">
+        { voteStatus !== VOTESTATUS_FINISHEDVOTE &&
+          <div className="proposal-timestamp">
+            <T id="proposalItem.lastUpdatedAt" m="Last Updated {reldate}" values={{
+              reldate: <FormattedRelative  value={ tsDate(timestamp) } /> }} />
+          </div>
+        }
+        {( voteStatus === VOTESTATUS_ACTIVEVOTE || voteStatus === VOTESTATUS_FINISHEDVOTE) &&
+          <div className="is-row voting-indicator">
+            <div className={"vote-choice " + (currentVoteChoice && currentVoteChoice.id)}/>
+            <VotingProgress {...{ voteCounts, quorumMinimumVotes } }  />
+          </div>
+        }
+        { voteStatus === VOTESTATUS_FINISHEDVOTE && (
+          <div className="vote-result">
+            {quorumPass ? voteResult : <T id="proposals.quorumNotMet" m="Quorum not met"/>}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
 
 const ProposalList = ({
-  proposals, loading, viewProposalDetails, tsDate, finishedProposal, noMoreProposals, onLoadMoreProposals
+  proposals, loading, viewProposalDetails, tsDate, finishedVote, noMoreProposals, onLoadMoreProposals
 }) => (
   <>
     { loading
@@ -57,7 +63,7 @@ const ProposalList = ({
             useWindow={false}
             threshold={0}
           >
-            <div className={finishedProposal ? "proposal-list ended" : "proposal-list"}>
+            <div className={"proposal-list " + (finishedVote && "ended")}>
               {proposals.map(v => (
                 <ProposalListItem key={v.token} {...v} tsDate={tsDate} onClick={viewProposalDetails} />
               ))}
