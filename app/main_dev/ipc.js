@@ -1,7 +1,7 @@
 import fs from "fs-extra";
 import path from "path";
 import { createLogger } from "./logging";
-import { getWalletPath, getWalletDBPathFromWallets, getDcrdPath } from "./paths";
+import { getWalletPath, getWalletDb, getDcrdPath } from "./paths";
 import { initWalletCfg, newWalletConfigCreation, getWalletCfg, readDcrdConfig } from "config";
 import { launchDCRD, launchDCRWallet, GetDcrdPID, GetDcrwPID, closeDCRD, closeDCRW, GetDcrwPort,
   launchDCRLnd, GetDcrlndPID, GetDcrlndCreds, closeDcrlnd } from "./launch";
@@ -25,7 +25,7 @@ export const getAvailableWallets = (network) => {
     const lastAccess = cfg.get("lastaccess");
     const watchingOnly = cfg.get("iswatchonly");
     const isTrezor = cfg.get("trezor");
-    const walletDbFilePath = getWalletDBPathFromWallets(isTestNet, wallet);
+    const walletDbFilePath = getWalletDb(isTestNet, wallet);
     const finished = fs.pathExistsSync(walletDbFilePath);
     availableWallets.push({ network, wallet, finished, lastAccess, watchingOnly, isTrezor });
   });

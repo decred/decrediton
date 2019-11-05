@@ -4,7 +4,7 @@ import { PoliteiaLink } from "shared";
 import {
   ProposalNotVoting, NoTicketsVotingInfo, OverviewField, OverviewVotingProgressInfo,
   NoElligibleTicketsVotingInfo, UpdatingVoteChoice, TimeValue,
-  ChosenVoteOption, ProposalText, ProposalAbandoned
+  ChooseVoteOption, ProposalText, ProposalAbandoned
 } from "./helpers";
 import {
   VOTESTATUS_ACTIVEVOTE, VOTESTATUS_FINISHEDVOTE, PROPOSALSTATUS_ABANDONED
@@ -14,38 +14,45 @@ export default ({ viewedProposalDetails, goBackHistory,
   showPurchaseTicketsPage, hasTickets, onVoteOptionSelected, onUpdateVoteChoice,
   newVoteChoice, updateVoteChoiceAttempt, tsDate, text }) =>
 {
-  const { name, token, hasEligibleTickets, voteStatus, voteOptions,
-    voteCounts, creator, timestamp, endTimestamp, currentVoteChoice,
+  const { name, token, voteStatus, proposalStatus, voteOptions, voteCounts,
+    creator, timestamp, endTimestamp, currentVoteChoice, hasEligibleTickets,
     version, quorumMinimumVotes } = viewedProposalDetails;
-  const eligibleTicketCount = viewedProposalDetails.eligibleTickets.length;
-
-  const voted = voteStatus === VOTESTATUS_FINISHEDVOTE;
-  const voting = voteStatus === VOTESTATUS_ACTIVEVOTE;
-
-  let voteInfo = null;
-  switch(voteStatus) {
-  case VOTESTATUS_ACTIVEVOTE:
-    if (updateVoteChoiceAttempt) voteInfo = <UpdatingVoteChoice />;
-    else if (!hasTickets) voteInfo = <NoTicketsVotingInfo {...{ showPurchaseTicketsPage }} />;
-    else if (!hasEligibleTickets) voteInfo = <NoElligibleTicketsVotingInfo {...{ showPurchaseTicketsPage }} />;
-    else {
-      voteInfo =
-        <ChosenVoteOption
-          {...{ voteOptions, onUpdateVoteChoice,
-            onVoteOptionSelected, newVoteChoice, eligibleTicketCount,
-            currentVoteChoice, votingComplete: false }}
-        />;
+  const getVoteInfo = ({
+    voteStatus, voteOptions, onUpdateVoteChoice, onVoteOptionSelected, newVoteChoice,
+    eligibleTicketCount,currentVoteChoice, showPurchaseTicketsPage
+  }) => {
+    if (voteStatus === VOTESTATUS_FINISHEDVOTE) {
+      return <ChooseVoteOption {...{ voteOptions, currentVoteChoice, votingComplete: true }} />;
     }
-    break;
-  case VOTESTATUS_FINISHEDVOTE:
-    voteInfo = <ChosenVoteOption {...{ voteOptions, currentVoteChoice, votingComplete: true }} />;
-    break;
-  case PROPOSALSTATUS_ABANDONED:
+    if (voteStatus === VOTESTATUS_ACTIVEVOTE) {
+      if (updateVoteChoiceAttempt) {
+        return <UpdatingVoteChoice />;
+      }
+      if (!hasTickets) {
+        return <NoTicketsVotingInfo {...{ showPurchaseTicketsPage }} />;
+      }
+      if (!hasEligibleTickets) {
+        return <NoElligibleTicketsVotingInfo {...{ showPurchaseTicketsPage }} />;
+      }
+
+      return <ChooseVoteOption {...{ voteOptions, onUpdateVoteChoice,
+        onVoteOptionSelected, newVoteChoice, eligibleTicketCount,
+        currentVoteChoice, votingComplete: false }} />;
+    }
+    return <ProposalNotVoting />;
+  };
+
+  const eligibleTicketCount = viewedProposalDetails.walletEligibleTickets && viewedProposalDetails.walletEligibleTickets.length;
+  let voteInfo = null;
+
+  // Check if proposal is abandoned. If it is not we check its vote status
+  if (proposalStatus === PROPOSALSTATUS_ABANDONED) {
     voteInfo = <ProposalAbandoned />;
-    break;
-  default:
-    voteInfo = <ProposalNotVoting />;
-    break;
+  } else {
+    voteInfo = getVoteInfo({
+      voteStatus, voteOptions, onUpdateVoteChoice, onVoteOptionSelected, newVoteChoice,
+      eligibleTicketCount,currentVoteChoice, showPurchaseTicketsPage
+    });
   }
 
   return (
@@ -54,7 +61,7 @@ export default ({ viewedProposalDetails, goBackHistory,
         <div className="proposal-details-overview-info">
           <div className="proposal-details-title">{name}</div>
           <div className="proposal-details-token">
-            <PoliteiaLink path={"/proposals/"+token}>{token}</PoliteiaLink>
+            <PoliteiaLink path={"/proposal/"+token}>{token}</PoliteiaLink>
           </div>
           <div className="proposal-details-overview-fields">
             <OverviewField
@@ -67,21 +74,21 @@ export default ({ viewedProposalDetails, goBackHistory,
               label={<T id="proposal.overview.lastUpdated.label" m="Last Updated" />}
               value={<TimeValue timestamp={timestamp} tsDate={tsDate} />} />
             <OverviewField
-              show={voting && endTimestamp}
+              show={voteStatus === VOTESTATUS_ACTIVEVOTE && endTimestamp}
               label={<T id="proposal.overview.deadline.label" m="Voting Deadline" />}
-              value={voting ? <TimeValue timestamp={endTimestamp} tsDate={tsDate} /> : null } />
+              value={<TimeValue timestamp={endTimestamp} tsDate={tsDate} /> } />
           </div>
         </div>
         <div className="proposal-details-overview-voting">
           <InvisibleButton className="go-back-icon-button" onClick={goBackHistory} />
           {voteInfo}
         </div>
-        {(voting || voted )  &&
+        {(voteStatus === VOTESTATUS_ACTIVEVOTE || voteStatus === VOTESTATUS_FINISHEDVOTE ) &&
           <OverviewVotingProgressInfo {...{ voteCounts, quorumMinimumVotes }} /> }
       </div>
       <div className="proposal-details-text">
         <div className="links">
-          <PoliteiaLink path={"/proposals/"+token}>
+          <PoliteiaLink path={"/proposal/"+token}>
             <T id="proposals.community.goToProposal" m="See proposal comments on Politeia" />
           </PoliteiaLink>
         </div>

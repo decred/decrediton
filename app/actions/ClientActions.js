@@ -109,7 +109,7 @@ export const getStartupWalletInfo = () => (dispatch) => {
           dispatch(getTreasuryBalance());
         }
         if (politeiaEnabled) {
-          await dispatch(getTokenAndInitialBatch());
+          dispatch(getTokenAndInitialBatch());
         }
         if (lnEnabled) {
           dispatch(checkLnWallet());

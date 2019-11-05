@@ -2,7 +2,7 @@ import fs from "fs";
 import Store from "electron-store";
 import ini from "ini";
 import { stakePoolInfo } from "./middleware/stakepoolapi";
-import { appDataDirectory, getGlobalCfgPath, dcrdCfg, getWalletPath, dcrwalletCfg, getDcrdRpcCert, getDcrdPath } from "./main_dev/paths";
+import { getAppDataDirectory, getGlobalCfgPath, dcrdCfg, getWalletPath, dcrwalletCfg, getDcrdRpcCert, getDcrdPath } from "./main_dev/paths";
 import * as cfgConstants from "constants/config";
 import { DCR, TESTNET, MAINNET } from "constants";
 
@@ -166,8 +166,8 @@ export function readDcrdConfig(configPath, testnet) {
 
     if (fs.existsSync(dcrdCfg(configPath))) {
       readCfg = ini.parse(Buffer.from(fs.readFileSync(dcrdCfg(configPath))).toString());
-    } else if (fs.existsSync(dcrdCfg(appDataDirectory()))) {
-      readCfg = ini.parse(Buffer.from(fs.readFileSync(dcrdCfg(appDataDirectory()))).toString());
+    } else if (fs.existsSync(dcrdCfg(getAppDataDirectory()))) {
+      readCfg = ini.parse(Buffer.from(fs.readFileSync(dcrdCfg(getAppDataDirectory()))).toString());
     } else {
       return newCfg;
     }
@@ -303,7 +303,7 @@ function makeRandomString(length) {
 }
 
 export function createTempDcrdConf(testnet) {
-  if (!fs.existsSync(dcrdCfg(appDataDirectory()))) {
+  if (!fs.existsSync(dcrdCfg(getAppDataDirectory()))) {
     const port = testnet ? "19109" : "9109";
 
     const dcrdConf = {
@@ -315,9 +315,9 @@ export function createTempDcrdConf(testnet) {
         network: testnet ? TESTNET : MAINNET,
       }
     };
-    fs.writeFileSync(dcrdCfg(appDataDirectory()), ini.stringify(dcrdConf));
+    fs.writeFileSync(dcrdCfg(getAppDataDirectory()), ini.stringify(dcrdConf));
   }
-  return appDataDirectory();
+  return getAppDataDirectory();
 }
 
 export function newWalletConfigCreation(testnet, walletPath) {

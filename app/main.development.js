@@ -4,7 +4,7 @@ import { app, BrowserWindow, Menu, dialog } from "electron";
 import { initGlobalCfg, validateGlobalCfgFile, setMustOpenForm } from "./config";
 import { appLocaleFromElectronLocale, default as locales } from "./i18n/locales";
 import { createLogger, lastLogLine, GetDcrdLogs, GetDcrwalletLogs, GetDcrlndLogs } from "./main_dev/logging";
-import { getWalletsDirectoryPath, getWalletsDirectoryPathNetwork, appDataDirectory } from "./main_dev/paths";
+import { getWalletsDirectoryPath, getWalletsDirectoryPathNetwork, getAppDataDirectory } from "./main_dev/paths";
 import { getGlobalCfgPath, checkAndInitWalletCfg } from "./main_dev/paths";
 import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRequests, allowExternalRequest } from "./main_dev/externalRequests";
 import { setupProxy } from "./main_dev/proxy";
@@ -21,7 +21,7 @@ import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, BOTH_CONNECTION_ERR_MESSAGE, M
 import { DAEMON_ADVANCED, LOCALE } from "constants/config";
 
 // setPath as decrediton
-app.setPath("userData", appDataDirectory());
+app.setPath("userData", getAppDataDirectory());
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const debug = argv.debug || process.env.NODE_ENV === "development";

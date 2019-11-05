@@ -6,33 +6,6 @@ import { VOTESTATUS_ACTIVEVOTE, VOTESTATUS_FINISHEDVOTE } from "actions/Governan
 import InfiniteScroll from "react-infinite-scroller";
 import { FormattedRelative } from "shared";
 
-const VoteChoiceText = ({ currentVoteChoice }) => {
-  if (!currentVoteChoice) {
-    return <div>&nbsp;</div>;
-  }
-
-  let voteChoiceString =
-    (currentVoteChoice !== "abstain")
-      ? (<><T id="proposal.voted" m="Voted"/> {currentVoteChoice}</>)
-      : <T id="proposal.noVote" m="No vote cast"/>;
-
-  return <>
-    <div className={"proposal-vote-choice " + currentVoteChoice}/>
-    <div className="proposal-vote-choice-text">{voteChoiceString}</div>
-  </>;
-};
-
-const VoteChoice = ({ currentVoteChoice }) =>
-  <div className={"proposal-vote-choice " + currentVoteChoice}/>;
-const VoteResults = ({ currentVoteChoice, quorumPass, voteResult }) => (
-  <div className="proposal-vote-result">
-    <div className="proposal-vote-choice-area">
-      <VoteChoiceText currentVoteChoice={currentVoteChoice}/>
-    </div>
-    <div className="proposal-vote-passage">{quorumPass ? voteResult : <T id="proposals.quorumNotMet" m="Quorum not met"/>}</div>
-  </div>
-);
-
 const ProposalListItem = ({ name, timestamp, token, voteCounts, tsDate, onClick,
   voteStatus, currentVoteChoice, quorumPass, voteResult, modifiedSinceLastAccess,
   votingSinceLastAccess, quorumMinimumVotes }) => {
@@ -57,42 +30,44 @@ const ProposalListItem = ({ name, timestamp, token, voteCounts, tsDate, onClick,
       </div>
       {( voteStatus === VOTESTATUS_ACTIVEVOTE || voteStatus === VOTESTATUS_FINISHEDVOTE) &&
         <>
-          <VoteChoice currentVoteChoice={currentVoteChoice} />
+          <div className={"proposal-vote-choice " + (currentVoteChoice && currentVoteChoice.id)}/>
           <VotingProgress {...{ voteCounts, quorumMinimumVotes } }  />
         </>}
-      { voteStatus === VOTESTATUS_FINISHEDVOTE &&
-        <VoteResults  {...{ currentVoteChoice, quorumPass, voteResult }}/>}
+      { voteStatus === VOTESTATUS_FINISHEDVOTE && (
+        <div className="proposal-vote-result">
+          <div className="proposal-vote-passage">{quorumPass ? voteResult : <T id="proposals.quorumNotMet" m="Quorum not met"/>}</div>
+        </div>
+      )}
     </div>
   );
 };
 
 const ProposalList = ({
   proposals, loading, viewProposalDetails, tsDate, finishedProposal, noMoreProposals, onLoadMoreProposals
-}) => {
-  return (
-    <>
-      { loading
-        ? <div className="proposal-loading-page"><PoliteiaLoading center /></div>
-        : proposals && proposals.length
-          ? (
-            <InfiniteScroll
-              hasMore={!noMoreProposals}
-              loadMore={onLoadMoreProposals}
-              initialLoad={false}
-              useWindow={false}
-              threshold={0}
-            >
-              <div className={finishedProposal ? "proposal-list ended" : "proposal-list"}>
-                {proposals.map(v => (
-                  <ProposalListItem key={v.token} {...v} tsDate={tsDate} onClick={viewProposalDetails} />
-                ))}
-              </div>
-            </InfiniteScroll>
-          )
-          : <NoProposals />
-      }
-    </>
-  );};
+}) => (
+  <>
+    { loading
+      ? <div className="proposal-loading-page"><PoliteiaLoading center /></div>
+      : proposals && proposals.length
+        ? (
+          <InfiniteScroll
+            hasMore={!noMoreProposals}
+            loadMore={onLoadMoreProposals}
+            initialLoad={false}
+            useWindow={false}
+            threshold={0}
+          >
+            <div className={finishedProposal ? "proposal-list ended" : "proposal-list"}>
+              {proposals.map(v => (
+                <ProposalListItem key={v.token} {...v} tsDate={tsDate} onClick={viewProposalDetails} />
+              ))}
+            </div>
+          </InfiniteScroll>
+        )
+        : <NoProposals />
+    }
+  </>
+);
 
 export const ActiveVoteProposals = activeVoteProposals(ProposalList);
 export const PreVoteProposals = preVoteProposals(ProposalList);
