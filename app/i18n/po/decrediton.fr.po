@@ -1,12 +1,13 @@
 # Translators:
-# e2f_fr r10 <tx_e2f_fr_r10@e2f.com>, 2018
-# e2f_fr t1 <tx_e2f_fr_t1@e2f.com>, 2018
-# e2f_fr r18 <tx_e2f_fr_r18@e2f.com>, 2018
+# e2f_fr t1 <tx_e2f_fr_t1@ate2f.com>, 2018
+# e2f_fr r10 <tx_e2f_fr_r10@ate2f.com>, 2018
+# e2f_fr r18 <tx_e2f_fr_r18@ate2f.com>, 2018
+# a270031086f2a0d3514bc0cb507b48f6, 2019
 # 
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2018-12-11T19:51:18.184Z\n"
-"Last-Translator: e2f_fr r18 <tx_e2f_fr_r18@e2f.com>, 2018\n"
+"POT-Creation-Date: 2019-10-17T13:25:05.536Z\n"
+"Last-Translator: a270031086f2a0d3514bc0cb507b48f6, 2019\n"
 "Language-Team: French (https://www.transifex.com/decred/teams/79156/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -38,6 +39,14 @@ msgstr "&Fichier"
 msgctxt "appMenu.view"
 msgid "&View"
 msgstr "&Afficher"
+
+#. [ln.paymentsTab.emptyDescr]
+#. defaultMessage is:
+#. (empty description)
+#: app/i18n/extracted/app/components/views/LNPage/PaymentsTab/Page.json
+msgctxt "ln.paymentsTab.emptyDescr"
+msgid "(empty description)"
+msgstr ""
 
 #. [createWallet.isTrezor.setupLink]
 #. defaultMessage is:
@@ -128,8 +137,16 @@ msgstr "Clé d'API"
 #. [proposals.statusLinks.abandoned]
 #. defaultMessage is:
 #. Abandoned
-#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Page.json
+#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalList/index.json
 msgctxt "proposals.statusLinks.abandoned"
+msgid "Abandoned"
+msgstr "Abandonné"
+
+#. [ln.closeTypeAbandoned]
+#. defaultMessage is:
+#. Abandoned
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/ClosedChannel.json
+msgctxt "ln.closeTypeAbandoned"
 msgid "Abandoned"
 msgstr ""
 
@@ -175,19 +192,35 @@ msgstr "Accepter"
 
 #. [settings.privacy.dcrdata.description]
 #. defaultMessage is:
-#. Access chain information from explorer.dcrdata.org
+#. Access chain information from dcrdata.decred.org
 #: app/i18n/extracted/app/components/views/SettingsPage/PrivacySettings.json
 msgctxt "settings.privacy.dcrdata.description"
-msgid "Access chain information from explorer.dcrdata.org"
-msgstr "Accéder aux informations de chaînes d’explorer.dcrdata.org"
+msgid "Access chain information from dcrdata.decred.org"
+msgstr ""
+
+#. [securitycenter.validate.owned.accountNumber]
+#. defaultMessage is:
+#. Account Number
+#: app/i18n/extracted/app/components/views/SecurityPage/ValidateAddress/Form.json
+msgctxt "securitycenter.validate.owned.accountNumber"
+msgid "Account Number"
+msgstr ""
 
 #. [accounts.number]
 #. defaultMessage is:
 #. Account number
-#: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/AccountDetails.json
+#: app/i18n/extracted/app/components/views/AccountsPage/AccountRow/AccountDetails.json
 msgctxt "accounts.number"
 msgid "Account number"
 msgstr "Numéro de compte"
+
+#. [ln.connectPage.account]
+#. defaultMessage is:
+#. Account to use
+#: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
+msgctxt "ln.connectPage.account"
+msgid "Account to use"
+msgstr ""
 
 #. [accountsButton.tip]
 #. defaultMessage is:
@@ -208,17 +241,25 @@ msgstr "Comptes"
 #. [accounts.title]
 #. defaultMessage is:
 #. Accounts
-#: app/i18n/extracted/app/components/views/AccountsPage/Accounts/List.json
+#: app/i18n/extracted/app/components/views/AccountsPage/Page.json
 msgctxt "accounts.title"
 msgid "Accounts"
 msgstr "Comptes"
+
+#. [accounts.subtitle]
+#. defaultMessage is:
+#. Accounts
+#: app/i18n/extracted/app/components/views/AccountsPage/Page.json
+msgctxt "accounts.subtitle"
+msgid "Accounts"
+msgstr ""
 
 #. [accounts.description]
 #. defaultMessage is:
 #. Accounts allow you to keep separate records of your DCR funds.
 #. Transferring DCR across accounts will create a transaction on the
 #. blockchain.
-#: app/i18n/extracted/app/components/views/AccountsPage/Accounts/List.json
+#: app/i18n/extracted/app/components/views/AccountsPage/Page.json
 msgctxt "accounts.description"
 msgid ""
 "Accounts allow you to keep separate records of your DCR funds.\n"
@@ -235,10 +276,18 @@ msgctxt "getStarted.stakePools.addBtn"
 msgid "Add"
 msgstr "Ajouter"
 
+#. [ln.invoicesTab.addInvoiceHeader]
+#. defaultMessage is:
+#. Add Invoice
+#: app/i18n/extracted/app/components/views/LNPage/InvoicesTab/Page.json
+msgctxt "ln.invoicesTab.addInvoiceHeader"
+msgid "Add Invoice"
+msgstr ""
+
 #. [accounts.addNewButton]
 #. defaultMessage is:
 #. Add New
-#: app/i18n/extracted/app/components/views/AccountsPage/Accounts/List.json
+#: app/i18n/extracted/app/components/views/AccountsPage/Page.json
 msgctxt "accounts.addNewButton"
 msgid "Add New"
 msgstr "Ajouter"
@@ -316,7 +365,7 @@ msgstr "Adresse"
 #. [securitycenter.validate.result.notOwned]
 #. defaultMessage is:
 #. Address Valid, Not Owned
-#: app/i18n/extracted/app/components/views/SecurityPage/ValidateAddress/index.json
+#: app/i18n/extracted/app/components/views/SecurityPage/ValidateAddress/Form.json
 msgctxt "securitycenter.validate.result.notOwned"
 msgid "Address Valid, Not Owned"
 msgstr "Adresse non valide, non détenue"
@@ -414,22 +463,6 @@ msgctxt "purchaseTickets.ticketAmount"
 msgid "Amount"
 msgstr "Montant"
 
-#. [sendToAccount.amountPlaceholder]
-#. defaultMessage is:
-#. Amount
-#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/OutputAccountRow.json
-msgctxt "sendToAccount.amountPlaceholder"
-msgid "Amount"
-msgstr "Montant"
-
-#. [sendToAccount.amount]
-#. defaultMessage is:
-#. Amount
-#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/OutputAccountRow.json
-msgctxt "sendToAccount.amount"
-msgid "Amount"
-msgstr "Montant"
-
 #. [send.amountPlaceholder]
 #. defaultMessage is:
 #. Amount
@@ -482,6 +515,35 @@ msgid ""
 "Are you sure you want to close {walletName} and return to the launcher?"
 msgstr "Voulez-vous vraiment fermer {walletName} et revenir au lanceur ?"
 
+#. [settings.closeWalletModalWithAutobuyerModal]
+#. defaultMessage is:
+#. Are you sure you want to close {walletName} and return to the launcher? The
+#. auto ticket buyer is still running. If you proceed, it will be closed and
+#. no more tickets will be purchased.
+#: app/i18n/extracted/app/components/views/SettingsPage/Page.json
+msgctxt "settings.closeWalletModalWithAutobuyerModal"
+msgid ""
+"Are you sure you want to close {walletName} and return to the launcher? The "
+"auto ticket buyer is still running. If you proceed, it will be closed and no"
+" more tickets will be purchased."
+msgstr ""
+
+#. [ln.closeChannelModal.descr]
+#. defaultMessage is:
+#. Attempt cooperative close of channel?
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/OpenChannel.json
+msgctxt "ln.closeChannelModal.descr"
+msgid "Attempt cooperative close of channel?"
+msgstr ""
+
+#. [ln.closeChannelModa.descrForce]
+#. defaultMessage is:
+#. Attempt forced close of the channel?
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/OpenChannel.json
+msgctxt "ln.closeChannelModa.descrForce"
+msgid "Attempt forced close of the channel?"
+msgstr ""
+
 #. [tickets.startAutoBuyerConfirmation.attention]
 #. defaultMessage is:
 #. Attention!
@@ -489,6 +551,14 @@ msgstr "Voulez-vous vraiment fermer {walletName} et revenir au lanceur ?"
 msgctxt "tickets.startAutoBuyerConfirmation.attention"
 msgid "Attention!"
 msgstr "Attention !"
+
+#. [tickets.autobuyerRunning.title]
+#. defaultMessage is:
+#. Auto Ticket Buyer Still Running
+#: app/i18n/extracted/app/components/modals/AutobuyerRunningModal/AutobuyerRunningModal.json
+msgctxt "tickets.autobuyerRunning.title"
+msgid "Auto Ticket Buyer Still Running"
+msgstr ""
 
 #. [automatictickets.subtitle]
 #. defaultMessage is:
@@ -570,6 +640,14 @@ msgctxt "home.tab.balance"
 msgid "Balance"
 msgstr "Solde"
 
+#. [ln.channelsTab.balance]
+#. defaultMessage is:
+#. Balance
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/Page.json
+msgctxt "ln.channelsTab.balance"
+msgid "Balance"
+msgstr ""
+
 #. [autobuyer.modal.balanceToMaintain]
 #. defaultMessage is:
 #. Balance To Maintain
@@ -577,28 +655,6 @@ msgstr "Solde"
 msgctxt "autobuyer.modal.balanceToMaintain"
 msgid "Balance To Maintain"
 msgstr "Solde à maintenir"
-
-#. [export.dailyBalances.fields.lockedNonWallet]
-#. defaultMessage is:
-#. Balance locked in immature and live tickets not controlled by the wallet.
-#: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
-msgctxt "export.dailyBalances.fields.lockedNonWallet"
-msgid ""
-"Balance locked in immature and live tickets not controlled by the wallet."
-msgstr ""
-"Solde verrouillé dans des tickets immatures et en direct non contrôlés par "
-"le portefeuille."
-
-#. [export.balances.fields.lockedNonWallet]
-#. defaultMessage is:
-#. Balance locked in immature and live tickets not controlled by the wallet.
-#: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
-msgctxt "export.balances.fields.lockedNonWallet"
-msgid ""
-"Balance locked in immature and live tickets not controlled by the wallet."
-msgstr ""
-"Solde verrouillé dans des tickets immatures et en direct non contrôlés par "
-"le portefeuille."
 
 #. [export.dailyBalances.fields.locked]
 #. defaultMessage is:
@@ -608,13 +664,37 @@ msgctxt "export.dailyBalances.fields.locked"
 msgid "Balance locked in immature and live tickets."
 msgstr "Solde verrouillé dans des tickets immatures et en direct."
 
+#. [export.dailyBalances.fields.immatureNonWallet]
+#. defaultMessage is:
+#. Balance locked in immature tickets not controlled by the wallet.
+#: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
+msgctxt "export.dailyBalances.fields.immatureNonWallet"
+msgid "Balance locked in immature tickets not controlled by the wallet."
+msgstr ""
+
+#. [export.dailyBalances.fields.immature]
+#. defaultMessage is:
+#. Balance locked in immature tickets.
+#: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
+msgctxt "export.dailyBalances.fields.immature"
+msgid "Balance locked in immature tickets."
+msgstr ""
+
+#. [export.balances.fields.lockedNonWallet]
+#. defaultMessage is:
+#. Balance locked in live tickets not controlled by the wallet.
+#: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
+msgctxt "export.balances.fields.lockedNonWallet"
+msgid "Balance locked in live tickets not controlled by the wallet."
+msgstr ""
+
 #. [export.balances.fields.locked]
 #. defaultMessage is:
-#. Balance locked in immature and live tickets.
+#. Balance locked in live tickets.
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
 msgctxt "export.balances.fields.locked"
-msgid "Balance locked in immature and live tickets."
-msgstr "Solde verrouillé dans des tickets immatures et en direct."
+msgid "Balance locked in live tickets."
+msgstr ""
 
 #. [autobuyer.balanceToMaintain]
 #. defaultMessage is:
@@ -627,7 +707,7 @@ msgstr "Solde à maintenir"
 #. [accounts.balances]
 #. defaultMessage is:
 #. Balances
-#: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/AccountDetails.json
+#: app/i18n/extracted/app/components/views/AccountsPage/AccountRow/AccountDetails.json
 msgctxt "accounts.balances"
 msgid "Balances"
 msgstr "Soldes"
@@ -656,6 +736,14 @@ msgctxt "help.blockchain"
 msgid "Blockchain Explorer"
 msgstr "Explorateur de chaînes de blocs"
 
+#. [getStarted.chainLoading.syncEstimation]
+#. defaultMessage is:
+#. Blockchain download estimated complete
+#: app/i18n/extracted/app/components/views/GetStartedPage/DaemonLoading/Form.json
+msgctxt "getStarted.chainLoading.syncEstimation"
+msgid "Blockchain download estimated complete"
+msgstr ""
+
 #. [loaderBar.Loaded]
 #. defaultMessage is:
 #. Blockchain loaded
@@ -671,6 +759,22 @@ msgstr "Chaîne de blocs chargée"
 msgctxt "loaderBar.Loading"
 msgid "Blockchain syncing"
 msgstr "Synchronisation de la chaîne de blocs"
+
+#. [securitycenter.validate.owned.branch]
+#. defaultMessage is:
+#. Branch
+#: app/i18n/extracted/app/components/views/SecurityPage/ValidateAddress/Form.json
+msgctxt "securitycenter.validate.owned.branch"
+msgid "Branch"
+msgstr ""
+
+#. [ln.closeTypeBreach]
+#. defaultMessage is:
+#. Breach Force-close
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/ClosedChannel.json
+msgctxt "ln.closeTypeBreach"
+msgid "Breach Force-close"
+msgstr ""
 
 #. [appMenu.bringAllFront]
 #. defaultMessage is:
@@ -688,6 +792,14 @@ msgctxt "home.noTransactions.buyFromExchanges"
 msgid "Buy Decred from Exchanges"
 msgstr "Acheter des Decred à partir d'échanges"
 
+#. [ln.openChannelDetails.csvDelay]
+#. defaultMessage is:
+#. CSV Delay
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/OpenChannel.json
+msgctxt "ln.openChannelDetails.csvDelay"
+msgid "CSV Delay"
+msgstr ""
+
 #. [fileBrowserTypes.csv.name]
 #. defaultMessage is:
 #. CSV Files
@@ -695,6 +807,14 @@ msgstr "Acheter des Decred à partir d'échanges"
 msgctxt "fileBrowserTypes.csv.name"
 msgid "CSV Files"
 msgstr "Fichiers CSV"
+
+#. [tickets.autobuyerRunning.confirmModal.btnCancel]
+#. defaultMessage is:
+#. Cancel
+#: app/i18n/extracted/app/components/modals/AutobuyerRunningModal/AutobuyerRunningModal.json
+msgctxt "tickets.autobuyerRunning.confirmModal.btnCancel"
+msgid "Cancel"
+msgstr ""
 
 #. [confirmModal.btnCancel]
 #. defaultMessage is:
@@ -723,7 +843,7 @@ msgstr "Annuler"
 #. [accounts.cancelRenameBtn]
 #. defaultMessage is:
 #. Cancel
-#: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/RenameAccount.json
+#: app/i18n/extracted/app/components/views/AccountsPage/AccountRow/RenameAccount.json
 msgctxt "accounts.cancelRenameBtn"
 msgid "Cancel"
 msgstr "Annuler"
@@ -776,6 +896,14 @@ msgctxt "walletselection.canelChanges"
 msgid "Cancel Changes"
 msgstr "Annuler les modifications"
 
+#. [mytickets.loadingMoreTickets.cancelBtn]
+#. defaultMessage is:
+#. Cancel listing tickets
+#: app/i18n/extracted/app/components/indicators/LoadingMoreTickets.json
+msgctxt "mytickets.loadingMoreTickets.cancelBtn"
+msgid "Cancel listing tickets"
+msgstr ""
+
 #. [sidebar.rescanCancelBtn.tip]
 #. defaultMessage is:
 #. Cancel rescan
@@ -787,10 +915,18 @@ msgstr "Annuler la réanalyse"
 #. [send.cancelSendAllTitle]
 #. defaultMessage is:
 #. Cancel sending all funds
-#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/Page.json
+#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/OutputRow.json
 msgctxt "send.cancelSendAllTitle"
 msgid "Cancel sending all funds"
 msgstr "Annuler l'envoi de tous les fonds"
+
+#. [ln.closeChannelModal.capacity]
+#. defaultMessage is:
+#. Capacity
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/OpenChannel.json
+msgctxt "ln.closeChannelModal.capacity"
+msgid "Capacity"
+msgstr ""
 
 #. [proposals.updateVoteChoiceModal.btnLabel]
 #. defaultMessage is:
@@ -847,6 +983,78 @@ msgstr "Modification de l’étiquette sur le trezor sélectionné : '{label}'"
 msgctxt "settings.description"
 msgid "Changing network settings requires a restart"
 msgstr "La modification des paramètres réseau nécessite un redémarrage"
+
+#. [ln.closedChannelDetails.chanId]
+#. defaultMessage is:
+#. Channel ID
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/ClosedChannel.json
+msgctxt "ln.closedChannelDetails.chanId"
+msgid "Channel ID"
+msgstr ""
+
+#. [ln.openChannelDetails.chanId]
+#. defaultMessage is:
+#. Channel ID
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/OpenChannel.json
+msgctxt "ln.openChannelDetails.chanId"
+msgid "Channel ID"
+msgstr ""
+
+#. [ln.closedChannelDetails.channelPoint]
+#. defaultMessage is:
+#. Channel Point
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/ClosedChannel.json
+msgctxt "ln.closedChannelDetails.channelPoint"
+msgid "Channel Point"
+msgstr ""
+
+#. [ln.closeChannelModal.channelPoint]
+#. defaultMessage is:
+#. Channel Point
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/OpenChannel.json
+msgctxt "ln.closeChannelModal.channelPoint"
+msgid "Channel Point"
+msgstr ""
+
+#. [ln.openChannelDetails.channelPoint]
+#. defaultMessage is:
+#. Channel Point
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/OpenChannel.json
+msgctxt "ln.openChannelDetails.channelPoint"
+msgid "Channel Point"
+msgstr ""
+
+#. [ln.pendingChannelDetials.channelPoint]
+#. defaultMessage is:
+#. Channel Point
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/PendingChannel.json
+msgctxt "ln.pendingChannelDetials.channelPoint"
+msgid "Channel Point"
+msgstr ""
+
+#. [ln.ntf.closechannelClosepending]
+#. defaultMessage is:
+#. Channel close procedures started
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "ln.ntf.closechannelClosepending"
+msgid "Channel close procedures started"
+msgstr ""
+
+#. [ln.ntf.closechannelChanclose]
+#. defaultMessage is:
+#. Channel closed
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "ln.ntf.closechannelChanclose"
+msgid "Channel closed"
+msgstr ""
+
+#. [ln.tab.channels]
+#. defaultMessage is:
+#. Channels
+#: app/i18n/extracted/app/components/views/LNPage/index.json
+msgctxt "ln.tab.channels"
+msgid "Channels"
+msgstr ""
 
 #. [getStarted.header.checkingWalletState.meta]
 #. defaultMessage is:
@@ -906,6 +1114,22 @@ msgctxt "walletselection.closeEditWallets"
 msgid "Close"
 msgstr "Fermer"
 
+#. [ln.pendingChannelDetails.typeClose]
+#. defaultMessage is:
+#. Close
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/PendingChannel.json
+msgctxt "ln.pendingChannelDetails.typeClose"
+msgid "Close"
+msgstr ""
+
+#. [ln.channelsTab.closeChannelModalTitle]
+#. defaultMessage is:
+#. Close Channel
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/Page.json
+msgctxt "ln.channelsTab.closeChannelModalTitle"
+msgid "Close Channel"
+msgstr ""
+
 #. [fatal.button]
 #. defaultMessage is:
 #. Close Decrediton
@@ -913,6 +1137,14 @@ msgstr "Fermer"
 msgctxt "fatal.button"
 msgid "Close Decrediton"
 msgstr "Fermer Decrediton"
+
+#. [ln.closedChannelDetails.closeType]
+#. defaultMessage is:
+#. Close Type
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/ClosedChannel.json
+msgctxt "ln.closedChannelDetails.closeType"
+msgid "Close Type"
+msgstr ""
 
 #. [settings.closeWalletModalOk]
 #. defaultMessage is:
@@ -922,6 +1154,38 @@ msgctxt "settings.closeWalletModalOk"
 msgid "Close Wallet"
 msgstr "Fermer le portefeuille"
 
+#. [ln.channelsTab.closeChannelBtn]
+#. defaultMessage is:
+#. Close the channel
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/Page.json
+msgctxt "ln.channelsTab.closeChannelBtn"
+msgid "Close the channel"
+msgstr ""
+
+#. [ln.channelsTab.closedList]
+#. defaultMessage is:
+#. Closed Channels
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/Page.json
+msgctxt "ln.channelsTab.closedList"
+msgid "Closed Channels"
+msgstr ""
+
+#. [ln.closedChannelDetails.closingTx]
+#. defaultMessage is:
+#. Closing Tx
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/ClosedChannel.json
+msgctxt "ln.closedChannelDetails.closingTx"
+msgid "Closing Tx"
+msgstr ""
+
+#. [ln.pendingForceCloseDetails.closingTx]
+#. defaultMessage is:
+#. Closing Tx
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/PendingChannel.json
+msgctxt "ln.pendingForceCloseDetails.closingTx"
+msgid "Closing Tx"
+msgstr ""
+
 #. [txDetails.type.coinbase]
 #. defaultMessage is:
 #. Coinbase
@@ -929,6 +1193,22 @@ msgstr "Fermer le portefeuille"
 msgctxt "txDetails.type.coinbase"
 msgid "Coinbase"
 msgstr "Coinbase"
+
+#. [ln.openChannelDetails.commitFee]
+#. defaultMessage is:
+#. Commit Fee
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/OpenChannel.json
+msgctxt "ln.openChannelDetails.commitFee"
+msgid "Commit Fee"
+msgstr ""
+
+#. [ln.pendingOpenDetails.commitFee]
+#. defaultMessage is:
+#. Commit Fee
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/PendingChannel.json
+msgctxt "ln.pendingOpenDetails.commitFee"
+msgid "Commit Fee"
+msgstr ""
 
 #. [help.subtitle.communications]
 #. defaultMessage is:
@@ -962,6 +1242,14 @@ msgctxt "stakepools.list.title"
 msgid "Configured stake pools:"
 msgstr "Pools d'enjeu configurés :"
 
+#. [tickets.autobuyerRunning.confirmModal.btnConfirm]
+#. defaultMessage is:
+#. Confirm
+#: app/i18n/extracted/app/components/modals/AutobuyerRunningModal/AutobuyerRunningModal.json
+msgctxt "tickets.autobuyerRunning.confirmModal.btnConfirm"
+msgid "Confirm"
+msgstr ""
+
 #. [changePassModal.confirm]
 #. defaultMessage is:
 #. Confirm
@@ -986,14 +1274,6 @@ msgctxt "createWallet.verifyPassphrasePlaceholder"
 msgid "Confirm Private Passphrase"
 msgstr "Confirmer la phrase secrète privée"
 
-#. [confirmSeed.label]
-#. defaultMessage is:
-#. Confirm Seed
-#: app/i18n/extracted/app/components/views/GetStartedPage/messages.json
-msgctxt "confirmSeed.label"
-msgid "Confirm Seed"
-msgstr "Confirmer la graine"
-
 #. [seedCopyConfirm.btnConfirm]
 #. defaultMessage is:
 #. Confirm Seed Copy
@@ -1001,6 +1281,14 @@ msgstr "Confirmer la graine"
 msgctxt "seedCopyConfirm.btnConfirm"
 msgid "Confirm Seed Copy"
 msgstr "Confirmer la copie de la graine"
+
+#. [confirmSeed.label]
+#. defaultMessage is:
+#. Confirm Seed Key
+#: app/i18n/extracted/app/components/views/GetStartedPage/messages.json
+msgctxt "confirmSeed.label"
+msgid "Confirm Seed Key"
+msgstr ""
 
 #. [trezor.walltCreationPrivatePassphraseConfirm]
 #. defaultMessage is:
@@ -1018,6 +1306,14 @@ msgctxt "proposals.updateVoteChoiceModal.title"
 msgid "Confirm Your Vote"
 msgstr "Confirmez votre vote"
 
+#. [ln.pendingOpenDetails.confirmationHeight]
+#. defaultMessage is:
+#. Confirmation Height
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/PendingChannel.json
+msgctxt "ln.pendingOpenDetails.confirmationHeight"
+msgid "Confirmation Height"
+msgstr ""
+
 #. [passphraseModal.confirmationRequired]
 #. defaultMessage is:
 #. Confirmation Required
@@ -1034,13 +1330,13 @@ msgctxt "settings.closeWalletModalTitle"
 msgid "Confirmation Required"
 msgstr "Confirmation requise"
 
-#. [transaction.indicatorConfirmed]
+#. [ln.walletTab.confirmedBalance]
 #. defaultMessage is:
 #. Confirmed
-#: app/i18n/extracted/app/components/TxHistory/TxHistoryRow/Status.json
-msgctxt "transaction.indicatorConfirmed"
+#: app/i18n/extracted/app/components/views/LNPage/WalletTab/Page.json
+msgctxt "ln.walletTab.confirmedBalance"
 msgid "Confirmed"
-msgstr "Confirmé"
+msgstr ""
 
 #. [txDetails.indicatorConfirmed]
 #. defaultMessage is:
@@ -1049,6 +1345,22 @@ msgstr "Confirmé"
 msgctxt "txDetails.indicatorConfirmed"
 msgid "Confirmed"
 msgstr "Confirmé"
+
+#. [ln.connectPage.title]
+#. defaultMessage is:
+#. Connect
+#: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
+msgctxt "ln.connectPage.title"
+msgid "Connect"
+msgstr ""
+
+#. [ln.connectPage.description]
+#. defaultMessage is:
+#. Connect to an unlocked DCRLND wallet.
+#: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
+msgctxt "ln.connectPage.description"
+msgid "Connect to an unlocked DCRLND wallet."
+msgstr ""
 
 #. [votingPreferences.title]
 #. defaultMessage is:
@@ -1139,6 +1451,14 @@ msgctxt "stake.addPool.addBtn"
 msgid "Continue"
 msgstr "Continuer"
 
+#. [ln.closeTypeCooperative]
+#. defaultMessage is:
+#. Cooperative
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/ClosedChannel.json
+msgctxt "ln.closeTypeCooperative"
+msgid "Cooperative"
+msgstr ""
+
 #. [clipboard.copied]
 #. defaultMessage is:
 #. Copied
@@ -1163,6 +1483,22 @@ msgctxt "createWallet.copy"
 msgid "Copy seed words to clipboard"
 msgstr "Copier les mots de graine dans le presse-papiers"
 
+#. [ln.closeChannelModal.node]
+#. defaultMessage is:
+#. Counterparty
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/OpenChannel.json
+msgctxt "ln.closeChannelModal.node"
+msgid "Counterparty"
+msgstr ""
+
+#. [ln.openChannel.node]
+#. defaultMessage is:
+#. Counterparty (node@ip:port)
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/Page.json
+msgctxt "ln.openChannel.node"
+msgid "Counterparty (node@ip:port)"
+msgstr ""
+
 #. [createWallet.createWalletBtn]
 #. defaultMessage is:
 #. Create Wallet
@@ -1182,7 +1518,7 @@ msgstr "Créer un portefeuille"
 #. [proposals.community.createLink]
 #. defaultMessage is:
 #. Create a Proposal
-#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Page.json
+#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalList/index.json
 msgctxt "proposals.community.createLink"
 msgid "Create a Proposal"
 msgstr "Créer une proposition"
@@ -1190,7 +1526,7 @@ msgstr "Créer une proposition"
 #. [createWallet.title]
 #. defaultMessage is:
 #. Create a new wallet
-#: app/i18n/extracted/app/components/views/GetStartedPage/messages.json
+#: app/i18n/extracted/app/components/views/GetStartedPage/CreateWallet/CreateWalletForm/createWalletHeader.json
 msgctxt "createWallet.title"
 msgid "Create a new wallet"
 msgstr "Créer un portefeuille"
@@ -1214,7 +1550,7 @@ msgstr ""
 #. [accounts.newAccountConfirmations]
 #. defaultMessage is:
 #. Create new account
-#: app/i18n/extracted/app/components/views/AccountsPage/Accounts/List.json
+#: app/i18n/extracted/app/components/views/AccountsPage/Page.json
 msgctxt "accounts.newAccountConfirmations"
 msgid "Create new account"
 msgstr "Créer un compte"
@@ -1299,6 +1635,25 @@ msgctxt "fatal.daemon.title"
 msgid "Daemon Error"
 msgstr "Erreur de Daemon"
 
+#. [getStarted.daemon.isTimeout]
+#. defaultMessage is:
+#. Daemon connection timeout exceded.
+#: app/i18n/extracted/app/components/views/GetStartedPage/DaemonLoading/Form.json
+msgctxt "getStarted.daemon.isTimeout"
+msgid "Daemon connection timeout exceded."
+msgstr ""
+
+#. [daemonSyncingTimeout.errors]
+#. defaultMessage is:
+#. Daemon connection timeout exceded.
+#.  That Probably means you filled your parameters wrong. Please review it.
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "daemonSyncingTimeout.errors"
+msgid ""
+"Daemon connection timeout exceded.\n"
+" That Probably means you filled your parameters wrong. Please review it."
+msgstr ""
+
 #. [export.dailyBalances.name]
 #. defaultMessage is:
 #. Daily Balances
@@ -1306,6 +1661,14 @@ msgstr "Erreur de Daemon"
 msgctxt "export.dailyBalances.name"
 msgid "Daily Balances"
 msgstr "Soldes quotidiens"
+
+#. [settings.uitheme.type.dark]
+#. defaultMessage is:
+#. Dark
+#: app/i18n/extracted/app/components/views/SettingsPage/UIThemeSettings.json
+msgctxt "settings.uitheme.type.dark"
+msgid "Dark"
+msgstr ""
 
 #. [export.dailyBalances.fields.time]
 #. defaultMessage is:
@@ -1456,6 +1819,22 @@ msgctxt "fatal.button.delete"
 msgid "Delete and Shutdown"
 msgstr "Supprimer et fermer"
 
+#. [ln.invoicesTab.addInvoice.memo]
+#. defaultMessage is:
+#. Description
+#: app/i18n/extracted/app/components/views/LNPage/InvoicesTab/Page.json
+msgctxt "ln.invoicesTab.addInvoice.memo"
+msgid "Description"
+msgstr ""
+
+#. [ln.paymentsTab.destLabel]
+#. defaultMessage is:
+#. Destination
+#: app/i18n/extracted/app/components/views/LNPage/PaymentsTab/Page.json
+msgctxt "ln.paymentsTab.destLabel"
+msgid "Destination"
+msgstr ""
+
 #. [export.destination]
 #. defaultMessage is:
 #. Destination
@@ -1532,6 +1911,14 @@ msgstr "Emplacement de Daemon local différent"
 msgctxt "spv.options.disable.title"
 msgid "Disable SPV"
 msgstr "Désactiver SPV"
+
+#. [createWallet.restore.trezor.disabled]
+#. defaultMessage is:
+#. Disabled
+#: app/i18n/extracted/app/components/buttons/TrezorWalletSwitch.json
+msgctxt "createWallet.restore.trezor.disabled"
+msgid "Disabled"
+msgstr ""
 
 #. [settings.spv.false]
 #. defaultMessage is:
@@ -1618,6 +2005,14 @@ msgctxt "appMenu.documentation"
 msgid "Documentation"
 msgstr "Documentation"
 
+#. [myTickets.loadingMoreTicketsProgressDesc]
+#. defaultMessage is:
+#. Down to block {block} ({blockPerc, number, percent})
+#: app/i18n/extracted/app/components/indicators/LoadingMoreTickets.json
+msgctxt "myTickets.loadingMoreTicketsProgressDesc"
+msgid "Down to block {block} ({blockPerc, number, percent})"
+msgstr ""
+
 #. [transactions.description.receive]
 #. defaultMessage is:
 #. Each time you request a payment, create a new address to protect your
@@ -1655,6 +2050,14 @@ msgctxt "walletselection.editWallets"
 msgid "Edit Wallets"
 msgstr "Modifier les portefeuilles"
 
+#. [ln.connectPage.enableAutopilot]
+#. defaultMessage is:
+#. Enable Automatic Channel Creation
+#: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
+msgctxt "ln.connectPage.enableAutopilot"
+msgid "Enable Automatic Channel Creation"
+msgstr ""
+
 #. [proposals.enablePoliteia.button]
 #. defaultMessage is:
 #. Enable Politeia Integration
@@ -1678,6 +2081,14 @@ msgstr "Activer SPV"
 msgctxt "stake.enableStakePoolListing.button"
 msgid "Enable StakePool Listing"
 msgstr "Activer la liste de pools d'enjeu"
+
+#. [createWallet.restore.trezor.enabled]
+#. defaultMessage is:
+#. Enabled
+#: app/i18n/extracted/app/components/buttons/TrezorWalletSwitch.json
+msgctxt "createWallet.restore.trezor.enabled"
+msgid "Enabled"
+msgstr ""
 
 #. [settings.spv.true]
 #. defaultMessage is:
@@ -1763,7 +2174,7 @@ msgstr "Saisir une adresse pour valider"
 #. [createWallet.enterHexSeed.placeholder]
 #. defaultMessage is:
 #. Enter the hex representation of your seed...
-#: app/i18n/extracted/app/components/views/GetStartedPage/CreateWallet/CreateWalletForm/ExistingSeed/SeedHexEntry.json
+#: app/i18n/extracted/app/components/inputs/SeedHexEntry.json
 msgctxt "createWallet.enterHexSeed.placeholder"
 msgid "Enter the hex representation of your seed..."
 msgstr "Saisir la représentation hexadécimale de votre graine…"
@@ -1804,7 +2215,7 @@ msgstr "Saisir votre message"
 #. [createWallet.enterSeed.placeholder]
 #. defaultMessage is:
 #. Enter your seed...
-#: app/i18n/extracted/app/components/views/GetStartedPage/CreateWallet/CreateWalletForm/ExistingSeed/SeedHexEntry.json
+#: app/i18n/extracted/app/components/inputs/SeedHexEntry.json
 msgctxt "createWallet.enterSeed.placeholder"
 msgid "Enter your seed..."
 msgstr "Saisir votre graine…"
@@ -1816,6 +2227,14 @@ msgstr "Saisir votre graine…"
 msgctxt "securitycenter.verify.field.signature.placeholder"
 msgid "Enter your signature"
 msgstr "Saisir votre signature"
+
+#. [daemon.connect.error]
+#. defaultMessage is:
+#. Error connecting to daemon
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "daemon.connect.error"
+msgid "Error connecting to daemon"
+msgstr ""
 
 #. [accountExtendedKey.failed]
 #. defaultMessage is:
@@ -1844,6 +2263,14 @@ msgstr ""
 "Erreur d’actualisation des données du pool d’enjeu de {host} : "
 "{originalError}"
 
+#. [ln.ntf.sendPaymentFailed]
+#. defaultMessage is:
+#. Error sending payment: {originalError}
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "ln.ntf.sendPaymentFailed"
+msgid "Error sending payment: {originalError}"
+msgstr ""
+
 #. [spvSync.Failed]
 #. defaultMessage is:
 #. Error syncing SPV wallet: {originalError}
@@ -1867,7 +2294,7 @@ msgstr ""
 #. defaultMessage is:
 #. Error: seed is not 32 bytes, such comes from a non-supported software and
 #. may have unintended consequences.
-#: app/i18n/extracted/app/components/views/GetStartedPage/CreateWallet/CreateWalletForm/ExistingSeed/Form.json
+#: app/i18n/extracted/app/components/views/GetStartedPage/CreateWallet/CreateWalletForm/ExistingSeed/index.json
 msgctxt "confirmSeed.errors.hexNot32Bytes"
 msgid ""
 "Error: seed is not 32 bytes, such comes from a non-supported software and "
@@ -1900,14 +2327,6 @@ msgctxt "send.sizeEstimation"
 msgid "Estimated Size"
 msgstr "Taille estimée"
 
-#. [getStarted.chainLoading.syncEstimation]
-#. defaultMessage is:
-#. Estimated time left
-#: app/i18n/extracted/app/components/views/GetStartedPage/DaemonLoading/Form.json
-msgctxt "getStarted.chainLoading.syncEstimation"
-msgid "Estimated time left"
-msgstr "Temps restant estimé"
-
 #. [transaction.type.expired]
 #. defaultMessage is:
 #. Expired
@@ -1916,21 +2335,29 @@ msgctxt "transaction.type.expired"
 msgid "Expired"
 msgstr "Expiré"
 
-#. [stake.expiredTickets]
-#. defaultMessage is:
-#. Expired Tickets
-#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfoDetails.json
-msgctxt "stake.expiredTickets"
-msgid "Expired Tickets"
-msgstr "Tickets expirés"
-
 #. [stakeSPV.expiredTickets]
 #. defaultMessage is:
 #. Expired Tickets
-#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfoDetailsSPV.json
+#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfoDetails.json
 msgctxt "stakeSPV.expiredTickets"
 msgid "Expired Tickets"
 msgstr "Tickets expirés"
+
+#. [ln.paymentsTab.expired]
+#. defaultMessage is:
+#. Expired {relTime}
+#: app/i18n/extracted/app/components/views/LNPage/PaymentsTab/Page.json
+msgctxt "ln.paymentsTab.expired"
+msgid "Expired {relTime}"
+msgstr ""
+
+#. [ln.paymentsTab.expires]
+#. defaultMessage is:
+#. Expires {relTime}
+#: app/i18n/extracted/app/components/views/LNPage/PaymentsTab/Page.json
+msgctxt "ln.paymentsTab.expires"
+msgid "Expires {relTime}"
+msgstr ""
 
 #. [purchaseTickets.expiryPlaceholder]
 #. defaultMessage is:
@@ -2066,10 +2493,18 @@ msgstr "Exporte toutes les transactions enregistrées dans le portefeuille."
 #. [account.pubKey]
 #. defaultMessage is:
 #. Extended Public Key
-#: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/AccountDetails.json
+#: app/i18n/extracted/app/components/views/AccountsPage/AccountRow/AccountDetails.json
 msgctxt "account.pubKey"
 msgid "Extended Public Key"
 msgstr "Clé publique étendue"
+
+#. [ln.ntf.connectFailed]
+#. defaultMessage is:
+#. Failed to connect to LN wallet: {originalError}
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "ln.ntf.connectFailed"
+msgid "Failed to connect to LN wallet: {originalError}"
+msgstr ""
 
 #. [trezor.getWalletCreationMasterPubKey.failed]
 #. defaultMessage is:
@@ -2156,11 +2591,11 @@ msgstr "Terminé"
 
 #. [proposals.statusLinks.voted]
 #. defaultMessage is:
-#. Finished voting
-#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Page.json
+#. Finished Voting
+#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalList/index.json
 msgctxt "proposals.statusLinks.voted"
-msgid "Finished voting"
-msgstr "Vote terminé"
+msgid "Finished Voting"
+msgstr ""
 
 #. [trezor.firmwareUpdate.header]
 #. defaultMessage is:
@@ -2178,13 +2613,13 @@ msgctxt "trezor.updateFirmware.success"
 msgid "Firmware updated on trezor device"
 msgstr "Microprogramme mis à jour sur le périphérique trezor"
 
-#. [help.forum]
+#. [ln.pendingChannelDetails.typeForceclose]
 #. defaultMessage is:
-#. Forum
-#: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
-msgctxt "help.forum"
-msgid "Forum"
-msgstr "Forum"
+#. Force Close
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/PendingChannel.json
+msgctxt "ln.pendingChannelDetails.typeForceclose"
+msgid "Force Close"
+msgstr ""
 
 #. [purchaseTickets.accountFrom]
 #. defaultMessage is:
@@ -2205,10 +2640,26 @@ msgstr "De"
 #. [send.from]
 #. defaultMessage is:
 #. From
-#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/Page.json
+#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/OutputRow.json
 msgctxt "send.from"
 msgid "From"
 msgstr "De"
+
+#. [ln.closeTypeFundingCanceled]
+#. defaultMessage is:
+#. Funding Canceled
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/ClosedChannel.json
+msgctxt "ln.closeTypeFundingCanceled"
+msgid "Funding Canceled"
+msgstr ""
+
+#. [ln.ntf.fundWalletFailed]
+#. defaultMessage is:
+#. Funding LN Wallet failed: {originalError}
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "ln.ntf.fundWalletFailed"
+msgid "Funding LN Wallet failed: {originalError}"
+msgstr ""
 
 #. [settings.gapLimit.label]
 #. defaultMessage is:
@@ -2263,16 +2714,16 @@ msgstr ""
 
 #. [help.github.title]
 #. defaultMessage is:
-#. Github
+#. GitHub
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.github.title"
-msgid "Github"
-msgstr "Github"
+msgid "GitHub"
+msgstr ""
 
 #. [createWallet.goBack]
 #. defaultMessage is:
 #. Go back
-#: app/i18n/extracted/app/components/views/GetStartedPage/CreateWallet/CreateWalletForm/CreateWallet.json
+#: app/i18n/extracted/app/components/views/GetStartedPage/CreateWallet/CreateWalletForm/createWalletHeader.json
 msgctxt "createWallet.goBack"
 msgid "Go back"
 msgstr "Retour"
@@ -2328,7 +2779,7 @@ msgstr "Aspects de la gouvernance de Decred."
 #. [accounts.hdPath]
 #. defaultMessage is:
 #. HD Path
-#: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/AccountDetails.json
+#: app/i18n/extracted/app/components/views/AccountsPage/AccountRow/AccountDetails.json
 msgctxt "accounts.hdPath"
 msgid "HD Path"
 msgstr "Chemin HD"
@@ -2340,6 +2791,14 @@ msgstr "Chemin HD"
 msgctxt "export.transactions.fields.hash"
 msgid "Hash of the transaction (txid)"
 msgstr "Hachage de la transaction (txid)"
+
+#. [mytickets.statistics.heatmap.link]
+#. defaultMessage is:
+#. Heatmap
+#: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/Page.json
+msgctxt "mytickets.statistics.heatmap.link"
+msgid "Heatmap"
+msgstr ""
 
 #. [txDetails.blockHeightLabel]
 #. defaultMessage is:
@@ -2373,10 +2832,18 @@ msgctxt "appMenu.help"
 msgid "Help"
 msgstr "Aide"
 
+#. [account.Hidden]
+#. defaultMessage is:
+#. Hidden
+#: app/i18n/extracted/app/components/views/AccountsPage/AccountRow/AccountDetails.json
+msgctxt "account.Hidden"
+msgid "Hidden"
+msgstr ""
+
 #. [accounts.hide.tip]
 #. defaultMessage is:
 #. Hide
-#: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/AccountDetails.json
+#: app/i18n/extracted/app/components/views/AccountsPage/AccountRow/AccountDetails.json
 msgctxt "accounts.hide.tip"
 msgid "Hide"
 msgstr "Masquer"
@@ -2396,6 +2863,14 @@ msgstr "Masquer Decrediton"
 msgctxt "appMenu.hideOthers"
 msgid "Hide Others"
 msgstr "Masquer les autres"
+
+#. [accounts.hide.pubkey]
+#. defaultMessage is:
+#. Hide Pubkey
+#: app/i18n/extracted/app/components/views/AccountsPage/AccountRow/AccountDetails.json
+msgctxt "accounts.hide.pubkey"
+msgid "Hide Pubkey"
+msgstr ""
 
 #. [transactions.tab.history]
 #. defaultMessage is:
@@ -2442,6 +2917,15 @@ msgstr ""
 "En cas de difficultés avec Decrediton, veuillez utiliser les liens suivants "
 "pour vous aider à trouver une solution."
 
+#. [tickets.autobuyerRunning.message]
+#. defaultMessage is:
+#. If you proceed, it will be closed and no more tickets will be purchased.
+#: app/i18n/extracted/app/components/modals/AutobuyerRunningModal/AutobuyerRunningModal.json
+msgctxt "tickets.autobuyerRunning.message"
+msgid ""
+"If you proceed, it will be closed and no more tickets will be purchased."
+msgstr ""
+
 #. [charts.keys.immature]
 #. defaultMessage is:
 #. Immature
@@ -2461,7 +2945,7 @@ msgstr "Immature"
 #. [accounts.immatureRewards]
 #. defaultMessage is:
 #. Immature Rewards
-#: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/AccountDetails.json
+#: app/i18n/extracted/app/components/views/AccountsPage/AccountRow/AccountDetails.json
 msgctxt "accounts.immatureRewards"
 msgid "Immature Rewards"
 msgstr "Immature Rewards"
@@ -2469,7 +2953,7 @@ msgstr "Immature Rewards"
 #. [accounts.immatureStake]
 #. defaultMessage is:
 #. Immature Stake Gen
-#: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/AccountDetails.json
+#: app/i18n/extracted/app/components/views/AccountsPage/AccountRow/AccountDetails.json
 msgctxt "accounts.immatureStake"
 msgid "Immature Stake Gen"
 msgstr "Immature Stake Gen"
@@ -2477,7 +2961,7 @@ msgstr "Immature Stake Gen"
 #. [stake.immatureTickets]
 #. defaultMessage is:
 #. Immature Tickets
-#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfoRow.json
+#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/Display.json
 msgctxt "stake.immatureTickets"
 msgid "Immature Tickets"
 msgstr "Tickets immatures"
@@ -2506,6 +2990,30 @@ msgctxt "purchaseTickets.importDisabledRescan"
 msgid "Importing scripts is disabled during a rescan."
 msgstr "L'importation de scripts est désactivée lors d'une réanalyse."
 
+#. [proposals.statusLinks.preVote]
+#. defaultMessage is:
+#. In Discussion
+#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalList/index.json
+msgctxt "proposals.statusLinks.preVote"
+msgid "In Discussion"
+msgstr ""
+
+#. [agenda.card.inProgressIndicator]
+#. defaultMessage is:
+#. In Progress
+#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/AgendaCard.json
+msgctxt "agenda.card.inProgressIndicator"
+msgid "In Progress"
+msgstr ""
+
+#. [agenda.overview.inProgressIndicator]
+#. defaultMessage is:
+#. In Progress
+#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/AgendaOverview/Overview.json
+msgctxt "agenda.overview.inProgressIndicator"
+msgid "In Progress"
+msgstr ""
+
 #. [watchingOnlyPseudoModal.description]
 #. defaultMessage is:
 #. In order to gain full access to your Wallets functionalities,
@@ -2518,6 +3026,14 @@ msgid ""
 msgstr ""
 "Pour obtenir un accès complet aux fonctionnalités de vos portefeuilles,\n"
 "          veuillez recréer votre portefeuille avec l'option de lecture seule désactivée."
+
+#. [securitycenter.validate.owned.index]
+#. defaultMessage is:
+#. Index
+#: app/i18n/extracted/app/components/views/SecurityPage/ValidateAddress/Form.json
+msgctxt "securitycenter.validate.owned.index"
+msgid "Index"
+msgstr ""
 
 #. [trezorPage.initDeviceBtn]
 #. defaultMessage is:
@@ -2550,6 +3066,14 @@ msgstr ""
 "Remarque : Cela permet d'analyser l'ensemble de la chaîne de blocs pour rechercher des transactions,\n"
 "mais ne la retélécharge pas."
 
+#. [send.insuficient.funds]
+#. defaultMessage is:
+#. Insuficient funds
+#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/Page.json
+msgctxt "send.insuficient.funds"
+msgid "Insuficient funds"
+msgstr ""
+
 #. [createwallet.walletWatchOnly.error]
 #. defaultMessage is:
 #. Invalid Master Pubkey
@@ -2561,7 +3085,7 @@ msgstr "Clé publique principale non valide"
 #. [securitycenter.validate.result.invalid]
 #. defaultMessage is:
 #. Invalid address
-#: app/i18n/extracted/app/components/views/SecurityPage/ValidateAddress/index.json
+#: app/i18n/extracted/app/components/views/SecurityPage/ValidateAddress/Form.json
 msgctxt "securitycenter.validate.result.invalid"
 msgid "Invalid address"
 msgstr "Adresse non valide"
@@ -2576,11 +3100,11 @@ msgstr "Expiration non valide"
 
 #. [runTicketBuyer.Failed]
 #. defaultMessage is:
-#. Invalid private password.  Please try again.
+#. Invalid private password. Please try again.
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "runTicketBuyer.Failed"
-msgid "Invalid private password.  Please try again."
-msgstr "Mot de passe privé non valide. Réessayez."
+msgid "Invalid private password. Please try again."
+msgstr ""
 
 #. [securitycenter.verify.result.invalid]
 #. defaultMessage is:
@@ -2628,10 +3152,34 @@ msgstr ""
 "      {rewardLabel} : {reward}\n"
 "      Récompenses d'enjeu : {stakeRewards, number, precise-percent}"
 
+#. [ln.ntf.invoiceSettled]
+#. defaultMessage is:
+#. Invoice '{memo}' settled!
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "ln.ntf.invoiceSettled"
+msgid "Invoice '{memo}' settled!"
+msgstr ""
+
+#. [ln.tab.invoices]
+#. defaultMessage is:
+#. Invoices
+#: app/i18n/extracted/app/components/views/LNPage/index.json
+msgctxt "ln.tab.invoices"
+msgid "Invoices"
+msgstr ""
+
+#. [ln.description.invoices]
+#. defaultMessage is:
+#. Invoices (payment requests) created by this LN wallet.
+#: app/i18n/extracted/app/components/views/LNPage/InvoicesTab/index.json
+msgctxt "ln.description.invoices"
+msgid "Invoices (payment requests) created by this LN wallet."
+msgstr ""
+
 #. [accounts.keys]
 #. defaultMessage is:
 #. Keys
-#: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/AccountDetails.json
+#: app/i18n/extracted/app/components/views/AccountsPage/AccountRow/AccountDetails.json
 msgctxt "accounts.keys"
 msgid "Keys"
 msgstr "Clés"
@@ -2647,7 +3195,7 @@ msgstr "Dernière mise à jour"
 #. [proposalItem.lastUpdatedAt]
 #. defaultMessage is:
 #. Last Updated {reldate}
-#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalList.json
+#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalList/Page.json
 msgctxt "proposalItem.lastUpdatedAt"
 msgid "Last Updated {reldate}"
 msgstr "Dernière mise à jour {reldate}"
@@ -2667,6 +3215,22 @@ msgstr "Dernière consultation"
 msgctxt "sidebar.latestBlock"
 msgid "Latest Block"
 msgstr "Bloc le plus récent"
+
+#. [ln.invoicesTab.invoicesHeader]
+#. defaultMessage is:
+#. Latest Invoices
+#: app/i18n/extracted/app/components/views/LNPage/InvoicesTab/Page.json
+msgctxt "ln.invoicesTab.invoicesHeader"
+msgid "Latest Invoices"
+msgstr ""
+
+#. [ln.paymentsTab.latestPayments]
+#. defaultMessage is:
+#. Latest Payments
+#: app/i18n/extracted/app/components/views/LNPage/PaymentsTab/Page.json
+msgctxt "ln.paymentsTab.latestPayments"
+msgid "Latest Payments"
+msgstr ""
 
 #. [export.tickets.fields.status]
 #. defaultMessage is:
@@ -2732,6 +3296,46 @@ msgctxt "aboutModal.licensing"
 msgid "Licensing information"
 msgstr "Informations sur la licence"
 
+#. [settings.uitheme.type.light]
+#. defaultMessage is:
+#. Light
+#: app/i18n/extracted/app/components/views/SettingsPage/UIThemeSettings.json
+msgctxt "settings.uitheme.type.light"
+msgid "Light"
+msgstr ""
+
+#. [sidebar.link.ln]
+#. defaultMessage is:
+#. Lightning Network
+#: app/i18n/extracted/app/components/SideBar/MenuLinks/index.json
+msgctxt "sidebar.link.ln"
+msgid "Lightning Network"
+msgstr ""
+
+#. [ln.title]
+#. defaultMessage is:
+#. Lightning Network
+#: app/i18n/extracted/app/components/views/LNPage/index.json
+msgctxt "ln.title"
+msgid "Lightning Network"
+msgstr ""
+
+#. [ln.pendingForceCloseDetails.limboBalance]
+#. defaultMessage is:
+#. Limbo Balance
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/PendingChannel.json
+msgctxt "ln.pendingForceCloseDetails.limboBalance"
+msgid "Limbo Balance"
+msgstr ""
+
+#. [ln.waitCloseDetails.limboBalance]
+#. defaultMessage is:
+#. Limbo Balance
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/PendingChannel.json
+msgctxt "ln.waitCloseDetails.limboBalance"
+msgid "Limbo Balance"
+msgstr ""
+
 #. [settings.privacy.politeia.description]
 #. defaultMessage is:
 #. List and vote on proposals on proposals.decred.org
@@ -2760,18 +3364,18 @@ msgstr "En direct"
 #. [stake.liveTickets]
 #. defaultMessage is:
 #. Live Tickets
-#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfoRow.json
+#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/Display.json
 msgctxt "stake.liveTickets"
 msgid "Live Tickets"
 msgstr "Tickets en direct"
 
 #. [getStarted.chainLoading.syncEstimation.small]
 #. defaultMessage is:
-#. Loading Decred blockchain, estimated time left
+#. Loading Decred blockchain, completion estimated
 #: app/i18n/extracted/app/components/indicators/LoaderBarBottom.json
 msgctxt "getStarted.chainLoading.syncEstimation.small"
-msgid "Loading Decred blockchain, estimated time left"
-msgstr "Chargement de la chaîne de blocs Decred, temps restant estimé"
+msgid "Loading Decred blockchain, completion estimated"
+msgstr ""
 
 #. [myTickets.loadingMoreTickets]
 #. defaultMessage is:
@@ -2789,6 +3393,22 @@ msgctxt "history.loadingMoreTransactions"
 msgid "Loading more transactions..."
 msgstr "Chargement d'autres transactions…"
 
+#. [ln.channelsTab.openChannel.localBalance]
+#. defaultMessage is:
+#. Local
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/OpenChannel.json
+msgctxt "ln.channelsTab.openChannel.localBalance"
+msgid "Local"
+msgstr ""
+
+#. [ln.channelsTab.pendingChannel.localBalance]
+#. defaultMessage is:
+#. Local
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/PendingChannel.json
+msgctxt "ln.channelsTab.pendingChannel.localBalance"
+msgid "Local"
+msgstr ""
+
 #. [settings.timezone.local.label]
 #. defaultMessage is:
 #. Local
@@ -2796,6 +3416,30 @@ msgstr "Chargement d'autres transactions…"
 msgctxt "settings.timezone.local.label"
 msgid "Local"
 msgstr "Local"
+
+#. [ln.closeChannelModal.localBalance]
+#. defaultMessage is:
+#. Local Balance
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/OpenChannel.json
+msgctxt "ln.closeChannelModal.localBalance"
+msgid "Local Balance"
+msgstr ""
+
+#. [ln.closeTypeLocalForce]
+#. defaultMessage is:
+#. Local Force-close
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/ClosedChannel.json
+msgctxt "ln.closeTypeLocalForce"
+msgid "Local Force-close"
+msgstr ""
+
+#. [ln.openChannelDetails.localChannelReserve]
+#. defaultMessage is:
+#. Local Reserve
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/OpenChannel.json
+msgctxt "ln.openChannelDetails.localChannelReserve"
+msgid "Local Reserve"
+msgstr ""
 
 #. [settings.locale]
 #. defaultMessage is:
@@ -2824,7 +3468,7 @@ msgstr "Verrouillé"
 #. [accounts.lockedByTickets]
 #. defaultMessage is:
 #. Locked By Tickets
-#: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/AccountDetails.json
+#: app/i18n/extracted/app/components/views/AccountsPage/AccountRow/AccountDetails.json
 msgctxt "accounts.lockedByTickets"
 msgid "Locked By Tickets"
 msgstr "Tickets verrouillés par"
@@ -2898,6 +3542,30 @@ msgstr "Clé publique principale"
 msgctxt "help.matrix"
 msgid "Matrix Chat"
 msgstr "Discussion Matrix"
+
+#. [ln.pendingForceCloseDetails.maturityHeight]
+#. defaultMessage is:
+#. Maturity Height
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/PendingChannel.json
+msgctxt "ln.pendingForceCloseDetails.maturityHeight"
+msgid "Maturity Height"
+msgstr ""
+
+#. [ln.walletTab.maxOutboundAmt]
+#. defaultMessage is:
+#. Max. Payable
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/Page.json
+msgctxt "ln.walletTab.maxOutboundAmt"
+msgid "Max. Payable"
+msgstr ""
+
+#. [ln.walletTab.maxInboundAmt]
+#. defaultMessage is:
+#. Max. Receivable
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/Page.json
+msgctxt "ln.walletTab.maxInboundAmt"
+msgid "Max. Receivable"
+msgstr ""
 
 #. [mytickets.statistics.votetime.median.label]
 #. defaultMessage is:
@@ -3003,7 +3671,7 @@ msgstr "Nouveau nom de compte"
 #. [accounts.rename.newNamePlaceholder]
 #. defaultMessage is:
 #. New Account Name
-#: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/RenameAccount.json
+#: app/i18n/extracted/app/components/views/AccountsPage/AccountRow/RenameAccount.json
 msgctxt "accounts.rename.newNamePlaceholder"
 msgid "New Account Name"
 msgstr "Nouveau nom de compte"
@@ -3011,7 +3679,7 @@ msgstr "Nouveau nom de compte"
 #. [accounts.newName]
 #. defaultMessage is:
 #. New Account Name
-#: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/RenameAccount.json
+#: app/i18n/extracted/app/components/views/AccountsPage/AccountRow/RenameAccount.json
 msgctxt "accounts.newName"
 msgid "New Account Name"
 msgstr "Nouveau nom de compte"
@@ -3039,6 +3707,22 @@ msgstr "Nouvelle phrase secrète privée"
 msgctxt "notification.new"
 msgid "New Transaction"
 msgstr "Nouvelle transaction"
+
+#. [ln.ntf.openchannelChanPending]
+#. defaultMessage is:
+#. New channel in pending state
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "ln.ntf.openchannelChanPending"
+msgid "New channel in pending state"
+msgstr ""
+
+#. [ln.ntf.openchannelChanOpen]
+#. defaultMessage is:
+#. New channel successfully opened and confirmed
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "ln.ntf.openchannelChanOpen"
+msgid "New channel successfully opened and confirmed"
+msgstr ""
 
 #. [changePassModal.confirmMismatch]
 #. defaultMessage is:
@@ -3097,6 +3781,14 @@ msgctxt "tutorial.standardPage.nextPage"
 msgid "Next"
 msgstr "Suivant"
 
+#. [noMoreTickets.description]
+#. defaultMessage is:
+#. No More Tickets
+#: app/i18n/extracted/app/components/indicators/NoMoreTickets.json
+msgctxt "noMoreTickets.description"
+msgid "No More Tickets"
+msgstr ""
+
 #. [privacy.options.disabled.title]
 #. defaultMessage is:
 #. No Outbound Connections
@@ -3144,14 +3836,6 @@ msgstr "Aucun ticket n'a été trouvé"
 msgctxt "noTransactions.description"
 msgid "No Transactions Found"
 msgstr "Aucune transaction n'a été trouvée"
-
-#. [myTickets.noMoreTickets]
-#. defaultMessage is:
-#. No more tickets.
-#: app/i18n/extracted/app/components/indicators/NoMoreTickets.json
-msgctxt "myTickets.noMoreTickets"
-msgid "No more tickets."
-msgstr "Aucun autre ticket."
 
 #. [history.noMoreTransactions]
 #. defaultMessage is:
@@ -3237,10 +3921,26 @@ msgstr ""
 #. [proposal.noVote]
 #. defaultMessage is:
 #. No vote cast
-#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalList.json
+#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalList/Page.json
 msgctxt "proposal.noVote"
 msgid "No vote cast"
 msgstr "Aucun vote exprimé"
+
+#. [ln.walletTab.alias]
+#. defaultMessage is:
+#. Node Alias
+#: app/i18n/extracted/app/components/views/LNPage/WalletTab/Page.json
+msgctxt "ln.walletTab.alias"
+msgid "Node Alias"
+msgstr ""
+
+#. [ln.walletTab.pubkey]
+#. defaultMessage is:
+#. Node Pubkey
+#: app/i18n/extracted/app/components/views/LNPage/WalletTab/Page.json
+msgctxt "ln.walletTab.pubkey"
+msgid "Node Pubkey"
+msgstr ""
 
 #. [txDetails.nonWalletInputs]
 #. defaultMessage is:
@@ -3266,14 +3966,6 @@ msgctxt "watchOnly.disabled"
 msgid "Normal"
 msgstr "Normal"
 
-#. [send.errors.insufficientFunds]
-#. defaultMessage is:
-#. Not Enough Funds
-#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/index.json
-msgctxt "send.errors.insufficientFunds"
-msgid "Not Enough Funds"
-msgstr "Fonds insuffisants"
-
 #. [purchaseTickets.errors.insufficientBalance]
 #. defaultMessage is:
 #. Not enough funds
@@ -3281,6 +3973,14 @@ msgstr "Fonds insuffisants"
 msgctxt "purchaseTickets.errors.insufficientBalance"
 msgid "Not enough funds"
 msgstr "Fonds insuffisants"
+
+#. [ln.openChannelDetails.numUpdates]
+#. defaultMessage is:
+#. Number of Updates
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/OpenChannel.json
+msgctxt "ln.openChannelDetails.numUpdates"
+msgid "Number of Updates"
+msgstr ""
 
 #. [getStarted.releaseNotes.OlderVersion]
 #. defaultMessage is:
@@ -3306,6 +4006,14 @@ msgctxt "transaction.sortby.oldest"
 msgid "Oldest"
 msgstr "Plus ancien"
 
+#. [ln.description.wallet]
+#. defaultMessage is:
+#. On-chain balance and actions of the LN Wallet
+#: app/i18n/extracted/app/components/views/LNPage/WalletTab/index.json
+msgctxt "ln.description.wallet"
+msgid "On-chain balance and actions of the LN Wallet"
+msgstr ""
+
 #. [agenda.overviewDescription]
 #. defaultMessage is:
 #. Once the majority of the PoW miners have upgraded (75% of the 100 most
@@ -3325,6 +4033,38 @@ msgstr ""
 "des mineurs PdE ont été mis à jour (75 % des votes dans un intervalle de "
 "bloc 2016), le processus de vote commence."
 
+#. [ln.openChannel.openBtn]
+#. defaultMessage is:
+#. Open
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/Page.json
+msgctxt "ln.openChannel.openBtn"
+msgid "Open"
+msgstr ""
+
+#. [ln.pendingChannelDetails.typeOpen]
+#. defaultMessage is:
+#. Open
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/PendingChannel.json
+msgctxt "ln.pendingChannelDetails.typeOpen"
+msgid "Open"
+msgstr ""
+
+#. [ln.channelsTab.openChannel]
+#. defaultMessage is:
+#. Open Channel
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/Page.json
+msgctxt "ln.channelsTab.openChannel"
+msgid "Open Channel"
+msgstr ""
+
+#. [ln.channelsTab.channelList]
+#. defaultMessage is:
+#. Open Channels
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/Page.json
+msgctxt "ln.channelsTab.channelList"
+msgid "Open Channels"
+msgstr ""
+
 #. [decryptWalletForm.openBtn]
 #. defaultMessage is:
 #. Open Wallet
@@ -3332,6 +4072,14 @@ msgstr ""
 msgctxt "decryptWalletForm.openBtn"
 msgid "Open Wallet"
 msgstr "Ouvrir le portefeuille"
+
+#. [ln.description.channels]
+#. defaultMessage is:
+#. Open and pending channels of this LN Wallet
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/index.json
+msgctxt "ln.description.channels"
+msgid "Open and pending channels of this LN Wallet"
+msgstr ""
 
 #. [getStarted.header.openingwallet.meta]
 #. defaultMessage is:
@@ -3352,7 +4100,7 @@ msgstr "Aperçu"
 #. [stake.ownMempoolTickets]
 #. defaultMessage is:
 #. Own Mempool Tickets
-#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfoRow.json
+#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/Display.json
 msgctxt "stake.ownMempoolTickets"
 msgid "Own Mempool Tickets"
 msgstr "Posséder des tickets Mempool"
@@ -3360,7 +4108,7 @@ msgstr "Posséder des tickets Mempool"
 #. [securitycenter.validate.result.owned]
 #. defaultMessage is:
 #. Owned address
-#: app/i18n/extracted/app/components/views/SecurityPage/ValidateAddress/index.json
+#: app/i18n/extracted/app/components/views/SecurityPage/ValidateAddress/Form.json
 msgctxt "securitycenter.validate.result.owned"
 msgid "Owned address"
 msgstr "Adresse détenue"
@@ -3407,18 +4155,50 @@ msgctxt "trezorPage.updateFirmwarePah"
 msgid "Path to firmware file"
 msgstr "Chemin vers fichier de microprogramme"
 
-#. [transaction.indicatorPending]
+#. [ln.paymentsTab.hashLabel]
 #. defaultMessage is:
-#. Pending
-#: app/i18n/extracted/app/components/TxHistory/TxHistoryRow/Status.json
-msgctxt "transaction.indicatorPending"
-msgid "Pending"
-msgstr "En attente"
+#. Payment Hash
+#: app/i18n/extracted/app/components/views/LNPage/PaymentsTab/Page.json
+msgctxt "ln.paymentsTab.hashLabel"
+msgid "Payment Hash"
+msgstr ""
+
+#. [ln.paymentsTab.payReq]
+#. defaultMessage is:
+#. Payment Request
+#: app/i18n/extracted/app/components/views/LNPage/PaymentsTab/Page.json
+msgctxt "ln.paymentsTab.payReq"
+msgid "Payment Request"
+msgstr ""
+
+#. [ln.ntf.sendPaymentSuccess]
+#. defaultMessage is:
+#. Payment sent successfully!
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "ln.ntf.sendPaymentSuccess"
+msgid "Payment sent successfully!"
+msgstr ""
+
+#. [ln.tab.payments]
+#. defaultMessage is:
+#. Payments
+#: app/i18n/extracted/app/components/views/LNPage/index.json
+msgctxt "ln.tab.payments"
+msgid "Payments"
+msgstr ""
+
+#. [ln.description.payments]
+#. defaultMessage is:
+#. Payments sent from this LN wallet.
+#: app/i18n/extracted/app/components/views/LNPage/PaymentsTab/index.json
+msgctxt "ln.description.payments"
+msgid "Payments sent from this LN wallet."
+msgstr ""
 
 #. [txHistory.Pending]
 #. defaultMessage is:
 #. Pending
-#: app/i18n/extracted/app/components/TxHistory/TxHistoryRow/StatusSmall.json
+#: app/i18n/extracted/app/components/TxHistory/TxHistoryRow/Row.json
 msgctxt "txHistory.Pending"
 msgid "Pending"
 msgstr "En attente"
@@ -3430,6 +4210,22 @@ msgstr "En attente"
 msgctxt "txDetails.indicatorPending"
 msgid "Pending"
 msgstr "En attente"
+
+#. [ln.channelsTab.pendingList]
+#. defaultMessage is:
+#. Pending Channels
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/Page.json
+msgctxt "ln.channelsTab.pendingList"
+msgid "Pending Channels"
+msgstr ""
+
+#. [ln.channelsTab.pendingOpenBalance]
+#. defaultMessage is:
+#. Pending Open
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/Page.json
+msgctxt "ln.channelsTab.pendingOpenBalance"
+msgid "Pending Open"
+msgstr ""
 
 #. [trezorPage.description]
 #. defaultMessage is:
@@ -3513,6 +4309,14 @@ msgstr ""
 "Veuillez noter l'erreur ci-dessus et accéder à la chaîne d'assistance sur "
 "slack/matrix/rocketchat pour obtenir de l'aide dans la résolution du "
 "problème."
+
+#. [confirmSeed.errors.invalidHex]
+#. defaultMessage is:
+#. Please paste a valid hex seed
+#: app/i18n/extracted/app/components/views/GetStartedPage/CreateWallet/CreateWalletForm/ExistingSeed/index.json
+msgctxt "confirmSeed.errors.invalidHex"
+msgid "Please paste a valid hex seed"
+msgstr ""
 
 #. [seedCopyConfirmModal.confirmPhraseInstruction]
 #. defaultMessage is:
@@ -3600,6 +4404,14 @@ msgctxt "tutorial.standardPage.previousPage"
 msgid "Previous"
 msgstr "Précédent"
 
+#. [accounts.name.default]
+#. defaultMessage is:
+#. Primary Account
+#: app/i18n/extracted/app/components/views/AccountsPage/AccountRow/Row.json
+msgctxt "accounts.name.default"
+msgid "Primary Account"
+msgstr ""
+
 #. [settings.privacy.title]
 #. defaultMessage is:
 #. Privacy
@@ -3667,7 +4479,7 @@ msgstr "Projet associé"
 #. [accounts.properties]
 #. defaultMessage is:
 #. Properties
-#: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/AccountDetails.json
+#: app/i18n/extracted/app/components/views/AccountsPage/AccountRow/AccountDetails.json
 msgctxt "accounts.properties"
 msgid "Properties"
 msgstr "Propriétés"
@@ -3686,7 +4498,7 @@ msgstr "Propriétés"
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Details/helpers.json
 msgctxt "proposalDetails.votingInfo.abandoned"
 msgid "Proposal has been abandoned"
-msgstr ""
+msgstr "La proposition a été abandonnée"
 
 #. [proposalDetails.votingInfo.notVoting]
 #. defaultMessage is:
@@ -3707,7 +4519,7 @@ msgstr "Propositions"
 #. [proposals.community.title]
 #. defaultMessage is:
 #. Proposals
-#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Page.json
+#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalList/index.json
 msgctxt "proposals.community.title"
 msgid "Proposals"
 msgstr "Propositions"
@@ -3814,6 +4626,14 @@ msgctxt "txDetails.purchasedOn"
 msgid "Purchased On"
 msgstr "Acheté le"
 
+#. [ln.openChannel.pushAmt]
+#. defaultMessage is:
+#. Push Amount (optional)
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/Page.json
+msgctxt "ln.openChannel.pushAmt"
+msgid "Push Amount (optional)"
+msgstr ""
+
 #. [appMenu.quit]
 #. defaultMessage is:
 #. Quit
@@ -3825,7 +4645,7 @@ msgstr "Quitter"
 #. [proposals.quorumNotMet]
 #. defaultMessage is:
 #. Quorum not met
-#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalList.json
+#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalList/Page.json
 msgctxt "proposals.quorumNotMet"
 msgid "Quorum not met"
 msgstr "Quorum non atteint"
@@ -3990,6 +4810,14 @@ msgctxt "trezorPage.recoverDeviceBtn"
 msgid "Recover Device"
 msgstr "Récupérer le périphérique"
 
+#. [ln.pendingForceCloseDetails.recoveredBalance]
+#. defaultMessage is:
+#. Recovered Balance
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/PendingChannel.json
+msgctxt "ln.pendingForceCloseDetails.recoveredBalance"
+msgid "Recovered Balance"
+msgstr ""
+
 #. [importScriptModal.redeemScript]
 #. defaultMessage is:
 #. Redeem Script
@@ -4038,6 +4866,22 @@ msgctxt "appMenu.reloadUI"
 msgid "Reload UI"
 msgstr "Recharger l'interface utilisateur"
 
+#. [ln.channelsTab.openChannel.remoteBalance]
+#. defaultMessage is:
+#. Remote
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/OpenChannel.json
+msgctxt "ln.channelsTab.openChannel.remoteBalance"
+msgid "Remote"
+msgstr ""
+
+#. [ln.channelsTab.pendingChannel.remoteBalance]
+#. defaultMessage is:
+#. Remote
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/PendingChannel.json
+msgctxt "ln.channelsTab.pendingChannel.remoteBalance"
+msgid "Remote"
+msgstr ""
+
 #. [advancedDaemon.toggle.appdata]
 #. defaultMessage is:
 #. Remote Daemon
@@ -4045,6 +4889,46 @@ msgstr "Recharger l'interface utilisateur"
 msgctxt "advancedDaemon.toggle.appdata"
 msgid "Remote Daemon"
 msgstr "Daemon distant"
+
+#. [ln.closeTypeRemoteForce]
+#. defaultMessage is:
+#. Remote Force-close
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/ClosedChannel.json
+msgctxt "ln.closeTypeRemoteForce"
+msgid "Remote Force-close"
+msgstr ""
+
+#. [ln.closedChannelDetails.remotePubKey]
+#. defaultMessage is:
+#. Remote PubKey
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/ClosedChannel.json
+msgctxt "ln.closedChannelDetails.remotePubKey"
+msgid "Remote PubKey"
+msgstr ""
+
+#. [ln.openChannelDetails.remotePubKey]
+#. defaultMessage is:
+#. Remote PubKey
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/OpenChannel.json
+msgctxt "ln.openChannelDetails.remotePubKey"
+msgid "Remote PubKey"
+msgstr ""
+
+#. [ln.pendingChannelDetails.remotePubKey]
+#. defaultMessage is:
+#. Remote Pubkey
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/PendingChannel.json
+msgctxt "ln.pendingChannelDetails.remotePubKey"
+msgid "Remote Pubkey"
+msgstr ""
+
+#. [ln.openChannelDetails.remoteChannelReserve]
+#. defaultMessage is:
+#. Remote Reserve
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/OpenChannel.json
+msgctxt "ln.openChannelDetails.remoteChannelReserve"
+msgid "Remote Reserve"
+msgstr ""
 
 #. [stakepools.list.btnRemove]
 #. defaultMessage is:
@@ -4089,7 +4973,7 @@ msgstr "Supprimer {wallet}"
 #. [accounts.renameBtn]
 #. defaultMessage is:
 #. Rename
-#: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/RenameAccount.json
+#: app/i18n/extracted/app/components/views/AccountsPage/AccountRow/RenameAccount.json
 msgctxt "accounts.renameBtn"
 msgid "Rename"
 msgstr "Renommer"
@@ -4097,7 +4981,7 @@ msgstr "Renommer"
 #. [accounts.rename.tip]
 #. defaultMessage is:
 #. Rename Account
-#: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/AccountDetails.json
+#: app/i18n/extracted/app/components/views/AccountsPage/AccountRow/AccountDetails.json
 msgctxt "accounts.rename.tip"
 msgid "Rename Account"
 msgstr "Renommer le compte"
@@ -4105,7 +4989,7 @@ msgstr "Renommer le compte"
 #. [accounts.rename]
 #. defaultMessage is:
 #. Rename Account
-#: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/RenameAccount.json
+#: app/i18n/extracted/app/components/views/AccountsPage/AccountRow/RenameAccount.json
 msgctxt "accounts.rename"
 msgid "Rename Account"
 msgstr "Renommer le compte"
@@ -4175,13 +5059,21 @@ msgctxt "getStarted.retryBtn"
 msgid "Retry"
 msgstr "Réessayer"
 
-#. [account.reveal]
+#. [fatal.retry.connection.button]
 #. defaultMessage is:
-#. Reveal
-#: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/AccountDetails.json
-msgctxt "account.reveal"
-msgid "Reveal"
-msgstr "Révéler"
+#. Return to Daemon Connection
+#: app/i18n/extracted/app/components/views/FatalErrorPage.json
+msgctxt "fatal.retry.connection.button"
+msgid "Return to Daemon Connection"
+msgstr ""
+
+#. [accounts.reveal.pubkey]
+#. defaultMessage is:
+#. Reveal Pubkey
+#: app/i18n/extracted/app/components/views/AccountsPage/AccountRow/AccountDetails.json
+msgctxt "accounts.reveal.pubkey"
+msgid "Reveal Pubkey"
+msgstr ""
 
 #. [charts.keys.revoked]
 #. defaultMessage is:
@@ -4239,18 +5131,10 @@ msgctxt "transaction.type.revoked"
 msgid "Revoked"
 msgstr "Révoqué"
 
-#. [stake.revokedTickets]
-#. defaultMessage is:
-#. Revoked Tickets
-#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfoDetails.json
-msgctxt "stake.revokedTickets"
-msgid "Revoked Tickets"
-msgstr "Tickets révoqués"
-
 #. [stakeSPV.revokedTickets]
 #. defaultMessage is:
 #. Revoked Tickets
-#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfoDetailsSPV.json
+#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfoDetails.json
 msgctxt "stakeSPV.revokedTickets"
 msgid "Revoked Tickets"
 msgstr "Tickets révoqués"
@@ -4270,14 +5154,6 @@ msgstr "Révocations"
 msgctxt "txDetails.reward"
 msgid "Reward"
 msgstr "Récompense"
-
-#. [help.rocketchat]
-#. defaultMessage is:
-#. RocketChat
-#: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
-msgctxt "help.rocketchat"
-msgid "RocketChat"
-msgstr "RocketChat"
 
 #. [settings.SPV]
 #. defaultMessage is:
@@ -4440,6 +5316,22 @@ msgctxt "home.ticketActivityHistory"
 msgid "See all"
 msgstr "Tout afficher"
 
+#. [proposals.community.goToProposal]
+#. defaultMessage is:
+#. See proposal comments on Politeia
+#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Details/Page.json
+msgctxt "proposals.community.goToProposal"
+msgid "See proposal comments on Politeia"
+msgstr ""
+
+#. [seedCopyConfirm.titleWarning]
+#. defaultMessage is:
+#. Seed Clipboard Copy Warning
+#: app/i18n/extracted/app/components/modals/SeedCopyConfirmModal/Modal.json
+msgctxt "seedCopyConfirm.titleWarning"
+msgid "Seed Clipboard Copy Warning"
+msgstr ""
+
 #. [createWallet.seedCopiedToClipboard]
 #. defaultMessage is:
 #. Seed copied to clipboard!
@@ -4497,16 +5389,15 @@ msgstr ""
 #. [spv.titleSub]
 #. defaultMessage is:
 #. Select how Decrediton wallet's should connect to the network. You can
-#. change this in the application settings later.
+#. change this in the application settings later. For more in-depth
+#. information about SPV and how it works, you can go
 #: app/i18n/extracted/app/components/views/GetStartedPage/SpvChoicePage/TopLevelOptions.json
 msgctxt "spv.titleSub"
 msgid ""
 "Select how Decrediton wallet's should connect to the network. You can change"
-" this in the application settings later."
+" this in the application settings later. For more in-depth information about"
+" SPV and how it works, you can go"
 msgstr ""
-"Sélectionnez la manière dont le portefeuille Decrediton se connecte au "
-"réseau. Vous pourrez modifier cela ultérieurement dans les paramètres de "
-"l’application."
 
 #. [privacy.custom.titleSub]
 #. defaultMessage is:
@@ -4530,6 +5421,14 @@ msgctxt "send.sendBtn"
 msgid "Send"
 msgstr "Envoyer"
 
+#. [ln.paymentsTab.sendBtn]
+#. defaultMessage is:
+#. Send
+#: app/i18n/extracted/app/components/views/LNPage/PaymentsTab/Page.json
+msgctxt "ln.paymentsTab.sendBtn"
+msgid "Send"
+msgstr ""
+
 #. [transactions.tab.send]
 #. defaultMessage is:
 #. Send
@@ -4546,18 +5445,34 @@ msgctxt "send.subtitle"
 msgid "Send DCR"
 msgstr "Envoyer DCR"
 
+#. [ln.paymentsTab.sendPayment]
+#. defaultMessage is:
+#. Send Payment
+#: app/i18n/extracted/app/components/views/LNPage/PaymentsTab/Page.json
+msgctxt "ln.paymentsTab.sendPayment"
+msgid "Send Payment"
+msgstr ""
+
 #. [send.sendAllTitle]
 #. defaultMessage is:
 #. Send all funds from selected account
-#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/Page.json
+#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/OutputRow.json
 msgctxt "send.sendAllTitle"
 msgid "Send all funds from selected account"
 msgstr "Envoyer tous les fonds à partir du compte sélectionné"
 
+#. [send.sendAllTitle.disabled]
+#. defaultMessage is:
+#. Send all funds from selected account - Disabled
+#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/OutputRow.json
+msgctxt "send.sendAllTitle.disabled"
+msgid "Send all funds from selected account - Disabled"
+msgstr ""
+
 #. [send.sendSelfTitle]
 #. defaultMessage is:
 #. Send funds to another account
-#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/Page.json
+#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/OutputRow.json
 msgctxt "send.sendSelfTitle"
 msgid "Send funds to another account"
 msgstr "Envoyer des fonds vers un autre compte"
@@ -4565,7 +5480,7 @@ msgstr "Envoyer des fonds vers un autre compte"
 #. [send.sendOthersTitle]
 #. defaultMessage is:
 #. Send funds to another wallet
-#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/Page.json
+#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/OutputRow.json
 msgctxt "send.sendOthersTitle"
 msgid "Send funds to another wallet"
 msgstr "Envoyer les fonds vers un autre portefeuille"
@@ -4610,6 +5525,22 @@ msgctxt "txDetails.sentFrom"
 msgid "Sent From"
 msgstr "Envoyé à partir de"
 
+#. [ln.ntf.fundWalletSucces]
+#. defaultMessage is:
+#. Sent LN Wallet fund transaction
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "ln.ntf.fundWalletSucces"
+msgid "Sent LN Wallet fund transaction"
+msgstr ""
+
+#. [ln.ntf.withdrawWalletSuccess]
+#. defaultMessage is:
+#. Sent withdraw transaction for LN Wallet
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "ln.ntf.withdrawWalletSuccess"
+msgid "Sent withdraw transaction for LN Wallet"
+msgstr ""
+
 #. [appMenu.services]
 #. defaultMessage is:
 #. Services
@@ -4650,6 +5581,14 @@ msgctxt "settings.title"
 msgid "Settings"
 msgstr "Paramètres"
 
+#. [ln.channelsTab.closedChannel.settledBalance]
+#. defaultMessage is:
+#. Settled
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/ClosedChannel.json
+msgctxt "ln.channelsTab.closedChannel.settledBalance"
+msgid "Settled"
+msgstr ""
+
 #. [walletselection.setupIncomplete]
 #. defaultMessage is:
 #. Setup incomplete
@@ -4661,7 +5600,7 @@ msgstr "Configuration inachevée"
 #. [accounts.show.tip]
 #. defaultMessage is:
 #. Show
-#: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/AccountDetails.json
+#: app/i18n/extracted/app/components/views/AccountsPage/AccountRow/AccountDetails.json
 msgctxt "accounts.show.tip"
 msgid "Show"
 msgstr "Afficher"
@@ -4821,18 +5760,18 @@ msgstr "Sources"
 #. [accounts.details.spendable]
 #. defaultMessage is:
 #. Spendable
-#: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/AccountDetails.json
+#: app/i18n/extracted/app/components/views/AccountsPage/AccountRow/AccountDetails.json
 msgctxt "accounts.details.spendable"
 msgid "Spendable"
 msgstr "Disponible"
 
 #. [accounts.row.spendable]
 #. defaultMessage is:
-#. Spendable
-#: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
+#. Spendable:
+#: app/i18n/extracted/app/components/views/AccountsPage/AccountRow/Row.json
 msgctxt "accounts.row.spendable"
-msgid "Spendable"
-msgstr "Disponible"
+msgid "Spendable:"
+msgstr ""
 
 #. [myTickets.spenderTx]
 #. defaultMessage is:
@@ -5026,6 +5965,14 @@ msgctxt "tickets.startAutoBuyerConfirmation"
 msgid "Start Ticket Buyer Confirmation"
 msgstr "Démarrer la confirmation de l'acheteur de tickets"
 
+#. [ln.connectPage.launchBtn]
+#. defaultMessage is:
+#. Start and Unlock LN Wallet
+#: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
+msgctxt "ln.connectPage.launchBtn"
+msgid "Start and Unlock LN Wallet"
+msgstr ""
+
 #. [trezor.wordModal.selectPlaceholder]
 #. defaultMessage is:
 #. Start typing word...
@@ -5211,6 +6158,22 @@ msgstr ""
 "\n"
 "        Veuillez mettre à jour Daemon (dcrd) et le portefeuille (dcrwallet) avec la version la plus récente, puis réessayer."
 
+#. [ln.connectPage.accountDescr]
+#. defaultMessage is:
+#. The account to use for LN operations.
+#: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
+msgctxt "ln.connectPage.accountDescr"
+msgid "The account to use for LN operations."
+msgstr ""
+
+#. [snackbar.errorObject]
+#. defaultMessage is:
+#. The following error happened: {error}
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "snackbar.errorObject"
+msgid "The following error happened: {error}"
+msgstr ""
+
 #. [settings.resetNetworkContent]
 #. defaultMessage is:
 #. The setting you have chosen to change requires Decrediton to be restarted.
@@ -5254,6 +6217,17 @@ msgstr ""
 "encore modifier vos choix pour le vote, mais ils ne seront plus "
 "comptabilisés."
 
+#. [ln.connectPage.enableAutopilotDescr]
+#. defaultMessage is:
+#. This enables the 'autopilot' feature, which tries to automatically open
+#. channels for up to 60% of the account's spendable amounts.
+#: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
+msgctxt "ln.connectPage.enableAutopilotDescr"
+msgid ""
+"This enables the 'autopilot' feature, which tries to automatically open "
+"channels for up to 60% of the account's spendable amounts."
+msgstr ""
+
 #. [fatal.suggestion.corrupted]
 #. defaultMessage is:
 #. This error means your blockchain data has somehow become corrupted.
@@ -5263,7 +6237,7 @@ msgstr ""
 #. blockchain data and re-download.  Press the button below to complete the
 #. process. When you restart Decrediton, it will automatically begin your
 #. blockchain download. Please come to our support channel on
-#. slack/matrix/discord/rocketchat to get advice about running disk utilities.
+#. slack/matrix/discord to get advice about running disk utilities.
 #: app/i18n/extracted/app/components/views/FatalErrorPage.json
 msgctxt "fatal.suggestion.corrupted"
 msgid ""
@@ -5274,19 +6248,8 @@ msgid ""
 "blockchain data and re-download.  Press the button below to complete the "
 "process. When you restart Decrediton, it will automatically begin your "
 "blockchain download. Please come to our support channel on "
-"slack/matrix/discord/rocketchat to get advice about running disk utilities."
+"slack/matrix/discord to get advice about running disk utilities."
 msgstr ""
-"Cette erreur signifie que les données de votre chaîne de blocs ont été en "
-"quelque sorte corrompues.  Cela est généralement dû à un dysfonctionnement "
-"d'un secteur du disque HDD/SDD qui n'a pas été réparé par l'élément SMART "
-"intégré ou encore, cas le plus probable, à un problème de mémoire qui a "
-"corrompu les données. Pour corriger l'erreur, vous devez supprimer les "
-"données de votre chaîne de blocs et les télécharger à nouveau. Appuyez sur "
-"le bouton ci-dessous pour terminer le processus. Lorsque vous redémarrez "
-"Decrediton, celle-ci lance automatiquement le téléchargement de votre chaîne"
-" de blocs. Veuillez consulter notre chaîne d'assistance sur "
-"slack/matrix/discord/rocketchat pour obtenir des conseils sur l'exécution "
-"d'utilitaires de disque."
 
 #. [fatal.suggestion.resources]
 #. defaultMessage is:
@@ -5371,6 +6334,14 @@ msgid ""
 msgstr ""
 "Ce portefeuille est chiffré. Veuillez saisir la phrase secrète publique pour"
 " le déchiffrer."
+
+#. [settings.alreadySetFromCli]
+#. defaultMessage is:
+#. This was set as a command-line option when launching decrediton
+#: app/i18n/extracted/app/components/views/SettingsPage/GeneralSettings.json
+msgctxt "settings.alreadySetFromCli"
+msgid "This was set as a command-line option when launching decrediton"
+msgstr ""
 
 #. [spv.options.disable.description]
 #. defaultMessage is:
@@ -5629,6 +6600,14 @@ msgctxt "getStarted.chainLoading.headerTime"
 msgid "Time from last fetched header:"
 msgstr "Délai écoulé après le dernier en-tête récupéré :"
 
+#. [ln.channelsTab.closedChannel.timeLockedBalance]
+#. defaultMessage is:
+#. Timelocked
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/ClosedChannel.json
+msgctxt "ln.channelsTab.closedChannel.timeLockedBalance"
+msgid "Timelocked"
+msgstr ""
+
 #. [settings.timezone.title]
 #. defaultMessage is:
 #. Timezone
@@ -5636,14 +6615,6 @@ msgstr "Délai écoulé après le dernier en-tête récupéré :"
 msgctxt "settings.timezone.title"
 msgid "Timezone"
 msgstr "Fuseau horaire"
-
-#. [sendToAccount.to]
-#. defaultMessage is:
-#. To
-#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/OutputAccountRow.json
-msgctxt "sendToAccount.to"
-msgid "To"
-msgstr "À"
 
 #. [send.to]
 #. defaultMessage is:
@@ -5685,21 +6656,29 @@ msgctxt "trezorPage.togglePinProtectionBtn"
 msgid "Toggle Pin Protection"
 msgstr "Activer/désactiver la protection par code PIN"
 
-#. [settings.toggleTheme]
+#. [settings.uitheme.type]
 #. defaultMessage is:
-#. Toggle Theme
-#: app/i18n/extracted/app/components/views/SettingsPage/Page.json
-msgctxt "settings.toggleTheme"
-msgid "Toggle Theme"
-msgstr "Activer/désactiver le thème"
+#. Tonality
+#: app/i18n/extracted/app/components/views/SettingsPage/UIThemeSettings.json
+msgctxt "settings.uitheme.type"
+msgid "Tonality"
+msgstr ""
 
 #. [accounts.total]
 #. defaultMessage is:
 #. Total
-#: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/AccountDetails.json
+#: app/i18n/extracted/app/components/views/AccountsPage/AccountRow/AccountDetails.json
 msgctxt "accounts.total"
 msgid "Total"
 msgstr "Total"
+
+#. [ln.walletTab.totalBalance]
+#. defaultMessage is:
+#. Total
+#: app/i18n/extracted/app/components/views/LNPage/WalletTab/Page.json
+msgctxt "ln.walletTab.totalBalance"
+msgid "Total"
+msgstr ""
 
 #. [sidebar.totalBalance]
 #. defaultMessage is:
@@ -5725,6 +6704,22 @@ msgctxt "mytickets.statistics.stakerewards.totalFees"
 msgid "Total Fees"
 msgstr "Total des frais"
 
+#. [ln.openChannel.localAmt]
+#. defaultMessage is:
+#. Total Funding Amount
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/Page.json
+msgctxt "ln.openChannel.localAmt"
+msgid "Total Funding Amount"
+msgstr ""
+
+#. [ln.openChannelDetails.totalReceived]
+#. defaultMessage is:
+#. Total Received
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/OpenChannel.json
+msgctxt "ln.openChannelDetails.totalReceived"
+msgid "Total Received"
+msgstr ""
+
 #. [mytickets.statistics.stakerewards.totalReward]
 #. defaultMessage is:
 #. Total Reward:
@@ -5741,13 +6736,13 @@ msgctxt "stake.totalRewards"
 msgid "Total Rewards"
 msgstr "Total des récompenses"
 
-#. [stakeSPV.totalRewards]
+#. [ln.openChannelDetails.totalSent]
 #. defaultMessage is:
-#. Total Rewards
-#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfoDetailsSPV.json
-msgctxt "stakeSPV.totalRewards"
-msgid "Total Rewards"
-msgstr "Total des récompenses"
+#. Total Sent
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/OpenChannel.json
+msgctxt "ln.openChannelDetails.totalSent"
+msgid "Total Sent"
+msgstr ""
 
 #. [send.confirmAmountLabelFor]
 #. defaultMessage is:
@@ -5805,6 +6800,30 @@ msgctxt "export.dailyBalances.fields.sent"
 msgid "Total amount sent to addresses not on the wallet."
 msgstr ""
 "Montant total envoyé aux adresses ne figurant pas dans le portefeuille."
+
+#. [export.dailyBalances.fields.revoked]
+#. defaultMessage is:
+#. Total amount, in DCR, of tickets revoked
+#: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
+msgctxt "export.dailyBalances.fields.revoked"
+msgid "Total amount, in DCR, of tickets revoked"
+msgstr ""
+
+#. [export.dailyBalances.fields.voted]
+#. defaultMessage is:
+#. Total amount, in DCR, of tickets voted
+#: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
+msgctxt "export.dailyBalances.fields.voted"
+msgid "Total amount, in DCR, of tickets voted"
+msgstr ""
+
+#. [export.dailyBalances.fields.ticket]
+#. defaultMessage is:
+#. Total amount, in DCR, spent in tickets
+#: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
+msgctxt "export.dailyBalances.fields.ticket"
+msgid "Total amount, in DCR, spent in tickets"
+msgstr ""
 
 #. [export.dailyBalances.fields.total]
 #. defaultMessage is:
@@ -5870,13 +6889,13 @@ msgctxt "notification.transfer.fee"
 msgid "Transaction Fee"
 msgstr "Frais de transaction"
 
-#. [history.title]
+#. [history.subtitle]
 #. defaultMessage is:
 #. Transaction History
 #: app/i18n/extracted/app/components/views/TransactionsPage/HistoryTab/Page.json
-msgctxt "history.title"
+msgctxt "history.subtitle"
 msgid "Transaction History"
-msgstr "Historique des transactions"
+msgstr ""
 
 #. [transactions.txtypes.tooltip]
 #. defaultMessage is:
@@ -6078,6 +7097,14 @@ msgctxt "export.tickets.fields.ticketStatus"
 msgid "Txid of the ticket transaction."
 msgstr "ID de transaction de ticket."
 
+#. [ln.pendingChannelDetails.type]
+#. defaultMessage is:
+#. Type
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/PendingChannel.json
+msgctxt "ln.pendingChannelDetails.type"
+msgid "Type"
+msgstr ""
+
 #. [trezor.walletCreationPassPhraseModal.title]
 #. defaultMessage is:
 #. Type Wallet Creation PassPhrase
@@ -6149,6 +7176,14 @@ msgctxt "stake.apiKeyPlaceholder"
 msgid "Typically starts with ‘eyJhb…’"
 msgstr "Commence généralement par « eyJhb… »"
 
+#. [settings.uitheme.title]
+#. defaultMessage is:
+#. UI theme
+#: app/i18n/extracted/app/components/views/SettingsPage/UIThemeSettings.json
+msgctxt "settings.uitheme.title"
+msgid "UI theme"
+msgstr ""
+
 #. [stakepools.list.form.field.url]
 #. defaultMessage is:
 #. URL:
@@ -6165,6 +7200,30 @@ msgctxt "settings.timezone.utc.label"
 msgid "UTC"
 msgstr "UTC"
 
+#. [ln.ntf.closechannelFailed]
+#. defaultMessage is:
+#. Unable to close channel: {originalError}
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "ln.ntf.closechannelFailed"
+msgid "Unable to close channel: {originalError}"
+msgstr ""
+
+#. [ln.ntf.openchannelFailed]
+#. defaultMessage is:
+#. Unable to open channel: {originalError}
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "ln.ntf.openchannelFailed"
+msgid "Unable to open channel: {originalError}"
+msgstr ""
+
+#. [ln.walletTab.unconfirmedBalance]
+#. defaultMessage is:
+#. Unconfirmed
+#: app/i18n/extracted/app/components/views/LNPage/WalletTab/Page.json
+msgctxt "ln.walletTab.unconfirmedBalance"
+msgid "Unconfirmed"
+msgstr ""
+
 #. [txDetails.unConfirmed]
 #. defaultMessage is:
 #. Unconfirmed
@@ -6172,22 +7231,6 @@ msgstr "UTC"
 msgctxt "txDetails.unConfirmed"
 msgid "Unconfirmed"
 msgstr "Non confirmé"
-
-#. [proposals.statusLinks.preVote]
-#. defaultMessage is:
-#. Under Discussion
-#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Page.json
-msgctxt "proposals.statusLinks.preVote"
-msgid "Under Discussion"
-msgstr "En cours de discussion"
-
-#. [proposals.statusLinks.underVote]
-#. defaultMessage is:
-#. Under Vote
-#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Page.json
-msgctxt "proposals.statusLinks.underVote"
-msgid "Under Vote"
-msgstr "En cours de vote"
 
 #. [appMenu.undo]
 #. defaultMessage is:
@@ -6197,6 +7240,14 @@ msgctxt "appMenu.undo"
 msgid "Undo"
 msgstr "Annuler"
 
+#. [ln.connectPage.unlockWalletModal]
+#. defaultMessage is:
+#. Unlock LN Wallet
+#: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
+msgctxt "ln.connectPage.unlockWalletModal"
+msgid "Unlock LN Wallet"
+msgstr ""
+
 #. [transaction.type.unmined]
 #. defaultMessage is:
 #. Unmined
@@ -6205,21 +7256,37 @@ msgctxt "transaction.type.unmined"
 msgid "Unmined"
 msgstr "Non miné"
 
+#. [ln.openChannelDetails.unsettledBalance]
+#. defaultMessage is:
+#. Unsettled Balance
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/OpenChannel.json
+msgctxt "ln.openChannelDetails.unsettledBalance"
+msgid "Unsettled Balance"
+msgstr ""
+
 #. [send.unsignedRawTxTite]
 #. defaultMessage is:
 #. Unsigned Raw Transaction:
 #: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/Page.json
 msgctxt "send.unsignedRawTxTite"
 msgid "Unsigned Raw Transaction:"
-msgstr ""
+msgstr "Transaction brute non signée:"
 
 #. [stake.unspentTickets]
 #. defaultMessage is:
 #. Unspent Tickets
-#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfoRow.json
+#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/Display.json
 msgctxt "stake.unspentTickets"
 msgid "Unspent Tickets"
 msgstr "Tickets non utilisés"
+
+#. [myTickets.loadingMoreTicketsProgressAsc]
+#. defaultMessage is:
+#. Up to block {block} ({blockPerc, number, percent})
+#: app/i18n/extracted/app/components/indicators/LoadingMoreTickets.json
+msgctxt "myTickets.loadingMoreTicketsProgressAsc"
+msgid "Up to block {block} ({blockPerc, number, percent})"
+msgstr ""
 
 #. [getStarted.updateAvailable]
 #. defaultMessage is:
@@ -6327,6 +7394,14 @@ msgstr "Signature valide !"
 msgctxt "security.validate.title"
 msgid "Validate Addresses"
 msgstr "Valider les adresses"
+
+#. [ln.invoicesTab.addInvoice.value]
+#. defaultMessage is:
+#. Value
+#: app/i18n/extracted/app/components/views/LNPage/InvoicesTab/Page.json
+msgctxt "ln.invoicesTab.addInvoice.value"
+msgid "Value"
+msgstr ""
 
 #. [security.description]
 #. defaultMessage is:
@@ -6440,7 +7515,7 @@ msgstr "Voté"
 #. [proposal.voted]
 #. defaultMessage is:
 #. Voted
-#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalList.json
+#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalList/Page.json
 msgctxt "proposal.voted"
 msgid "Voted"
 msgstr "Voté"
@@ -6453,18 +7528,10 @@ msgctxt "txDetails.votedOn"
 msgid "Voted On"
 msgstr "Voté le"
 
-#. [stake.votedTickets]
-#. defaultMessage is:
-#. Voted Tickets
-#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfoDetails.json
-msgctxt "stake.votedTickets"
-msgid "Voted Tickets"
-msgstr "Tickets votés"
-
 #. [stakeSPV.votedTickets]
 #. defaultMessage is:
 #. Voted Tickets
-#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfoDetailsSPV.json
+#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfoDetails.json
 msgctxt "stakeSPV.votedTickets"
 msgid "Voted Tickets"
 msgstr "Tickets votés"
@@ -6485,10 +7552,18 @@ msgctxt "txFilter.type.votes"
 msgid "Votes"
 msgstr "Votes"
 
+#. [proposals.statusLinks.underVote]
+#. defaultMessage is:
+#. Voting
+#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalList/index.json
+msgctxt "proposals.statusLinks.underVote"
+msgid "Voting"
+msgstr ""
+
 #. [accounts.votingAuthority]
 #. defaultMessage is:
 #. Voting Authority
-#: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/AccountDetails.json
+#: app/i18n/extracted/app/components/views/AccountsPage/AccountRow/AccountDetails.json
 msgctxt "accounts.votingAuthority"
 msgid "Voting Authority"
 msgstr "Pouvoir de vote"
@@ -6541,7 +7616,7 @@ msgstr ""
 #. treasury is spent.
 #.         Participation in voting requires (PoS) tickets. Proposal creation,
 #. discussions and other features are available at
-#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Page.json
+#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalList/index.json
 msgctxt "proposals.community.descr"
 msgid ""
 "Voting on community proposals allows you to have a say on how the project treasury is spent.\n"
@@ -6550,6 +7625,14 @@ msgstr ""
 "En votant pour des propositions de la communauté, vous pouvez influer sur la façon dont la trésorerie est dépensée.\n"
 "        La participation aux votes requiert des tickets (PdE). Vous pouvez créer des propositions, discuter et accéder à d’autres fonctionnalités sur"
 
+#. [ln.pendingChannelDetails.typeWaitclose]
+#. defaultMessage is:
+#. Waiting Close
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/PendingChannel.json
+msgctxt "ln.pendingChannelDetails.typeWaitclose"
+msgid "Waiting Close"
+msgstr ""
+
 #. [loaderBar.Waiting]
 #. defaultMessage is:
 #. Waiting for daemon connection...
@@ -6557,6 +7640,14 @@ msgstr ""
 msgctxt "loaderBar.Waiting"
 msgid "Waiting for daemon connection..."
 msgstr "En attente de la connexion à Daemon…"
+
+#. [ln.tab.wallet]
+#. defaultMessage is:
+#. Wallet
+#: app/i18n/extracted/app/components/views/LNPage/index.json
+msgctxt "ln.tab.wallet"
+msgid "Wallet"
+msgstr ""
 
 #. [fatal.wallet.title]
 #. defaultMessage is:
@@ -6733,6 +7824,14 @@ msgctxt "home.totalValueOfLiveTickets"
 msgid "With a total value of"
 msgstr "Avec une valeur totale de"
 
+#. [ln.ntf.withdrawWalletFailed]
+#. defaultMessage is:
+#. Withdrawing from LN Wallet failed: {originalError}
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "ln.ntf.withdrawWalletFailed"
+msgid "Withdrawing from LN Wallet failed: {originalError}"
+msgstr ""
+
 #. [errors.wrongPassphrase]
 #. defaultMessage is:
 #. Wrong private passphrase entered. Please verify you have typed the correct
@@ -6756,15 +7855,17 @@ msgid ""
 "You are currently upgrading to a new dcrd version.  Typically, this one-time"
 " reindexing will take 30-45 minutes on an average machine."
 msgstr ""
+"Vous effectuez actuellement une mise à niveau vers une nouvelle version de "
+"dcrd. En règle générale, cette réindexation unique prend entre 30-45 minutes"
+" sur une machine moyenne."
 
 #. [tickets.purchaseTicketsHeader]
 #. defaultMessage is:
-#. You bought {numTickets, plural, one {# ticket } other {# tickets }}
+#. You bought {numTickets, plural, one { # ticket } other { # tickets }}
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "tickets.purchaseTicketsHeader"
-msgid "You bought {numTickets, plural, one {# ticket } other {# tickets }}"
+msgid "You bought {numTickets, plural, one { # ticket } other { # tickets }}"
 msgstr ""
-"Vous avez acheté {numTickets, plural, one {# ticket } other {# tickets }}"
 
 #. [proposalDetails.votingInfo.noElligibleTickets]
 #. defaultMessage is:
@@ -6856,6 +7957,22 @@ msgctxt "help.logs.dcrd"
 msgid "dcrd"
 msgstr "dcrd"
 
+#. [help.blockchain.subtitle]
+#. defaultMessage is:
+#. dcrdata.decred.org
+#: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
+msgctxt "help.blockchain.subtitle"
+msgid "dcrdata.decred.org"
+msgstr ""
+
+#. [help.logs.dcrlnd]
+#. defaultMessage is:
+#. dcrlnd
+#: app/i18n/extracted/app/components/views/HelpPage/LogsTab/Page.json
+msgctxt "help.logs.dcrlnd"
+msgid "dcrlnd"
+msgstr ""
+
 #. [help.logs.dcrwallet]
 #. defaultMessage is:
 #. dcrwallet
@@ -6904,22 +8021,6 @@ msgctxt "ticket.status.multiple.expired"
 msgid "expired"
 msgstr "expiré"
 
-#. [help.blockchain.subtitle]
-#. defaultMessage is:
-#. explorer.dcrdata.org
-#: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
-msgctxt "help.blockchain.subtitle"
-msgid "explorer.dcrdata.org"
-msgstr "explorer.dcrdata.org"
-
-#. [help.forum.subtitle]
-#. defaultMessage is:
-#. forum.decred.org
-#: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
-msgctxt "help.forum.subtitle"
-msgid "forum.decred.org"
-msgstr "forum.decred.org"
-
 #. [help.github.subtitle]
 #. defaultMessage is:
 #. github.com/decred/decrediton
@@ -6927,6 +8028,14 @@ msgstr "forum.decred.org"
 msgctxt "help.github.subtitle"
 msgid "github.com/decred/decrediton"
 msgstr "github.com/decred/decrediton"
+
+#. [spv.titleSub.here]
+#. defaultMessage is:
+#. here
+#: app/i18n/extracted/app/components/views/GetStartedPage/SpvChoicePage/TopLevelOptions.json
+msgctxt "spv.titleSub.here"
+msgid "here"
+msgstr ""
 
 #. [ticket.status.immature]
 #. defaultMessage is:
@@ -7008,14 +8117,6 @@ msgctxt "help.matrix.subtitle"
 msgid "riot.im"
 msgstr "riot.im"
 
-#. [help.rocketchat.subtitle]
-#. defaultMessage is:
-#. rocketchat.decred.org
-#: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
-msgctxt "help.rocketchat.subtitle"
-msgid "rocketchat.decred.org"
-msgstr "rocketchat.decred.org"
-
 #. [help.slack.subtitle]
 #. defaultMessage is:
 #. slack.decred.org
@@ -7039,6 +8140,14 @@ msgstr "t.me/decred"
 msgctxt "stake.discoverStakeOoolsAPILink"
 msgid "this link"
 msgstr "ce lien"
+
+#. [numTicketInput.unit]
+#. defaultMessage is:
+#. ticket
+#: app/i18n/extracted/app/components/inputs/NumTicketsInput.json
+msgctxt "numTicketInput.unit"
+msgid "ticket"
+msgstr ""
 
 #. [numTicketsInput.unit]
 #. defaultMessage is:
@@ -7133,13 +8242,53 @@ msgstr ""
 "{days, plural, =0 {le même jour} one {en un jour} other {en # jours}} "
 "d'achat"
 
+#. [ln.invoicesTab.invoice.creationDate]
+#. defaultMessage is:
+#. {creationDate, date, medium} {creationDate, time, short}
+#: app/i18n/extracted/app/components/views/LNPage/InvoicesTab/Page.json
+msgctxt "ln.invoicesTab.invoice.creationDate"
+msgid "{creationDate, date, medium} {creationDate, time, short}"
+msgstr ""
+
+#. [ln.paymentsTab.payment.creationDate]
+#. defaultMessage is:
+#. {creationDate, date, medium} {creationDate, time, short}
+#: app/i18n/extracted/app/components/views/LNPage/PaymentsTab/Page.json
+msgctxt "ln.paymentsTab.payment.creationDate"
+msgid "{creationDate, date, medium} {creationDate, time, short}"
+msgstr ""
+
+#. [ln.openChannelDetails.csvDelayValue]
+#. defaultMessage is:
+#. {csvDelay} blocks
+#: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/OpenChannel.json
+msgctxt "ln.openChannelDetails.csvDelayValue"
+msgid "{csvDelay} blocks"
+msgstr ""
+
+#. [heatmap.month]
+#. defaultMessage is:
+#. {date, date, short-month}
+#: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/Heatmap/Heatmap.json
+msgctxt "heatmap.month"
+msgid "{date, date, short-month}"
+msgstr ""
+
+#. [heatmap.tooltip.date]
+#. defaultMessage is:
+#. {dayDate, date, medium}
+#: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/Heatmap/TooltipInfo.json
+msgctxt "heatmap.tooltip.date"
+msgid "{dayDate, date, medium}"
+msgstr ""
+
 #. [statusSmall.daysToVotePlural]
 #. defaultMessage is:
 #. {days, plural, one {# day} other {# days}}
 #: app/i18n/extracted/app/components/TxHistory/TxHistoryRow/StakeTxRow.json
 msgctxt "statusSmall.daysToVotePlural"
 msgid "{days, plural, one {# day} other {# days}}"
-msgstr ""
+msgstr "{days, plural, one {# day} other {# days}}"
 
 #. [ticket.daysToVote]
 #. defaultMessage is:
@@ -7147,7 +8296,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketInfoCard.json
 msgctxt "ticket.daysToVote"
 msgid "{days, plural, one {# day} other {# days}}"
-msgstr ""
+msgstr "{days, plural, one {# day} other {# days}}"
 
 #. [ticket.daysToVoteMessage]
 #. defaultMessage is:
@@ -7157,18 +8306,10 @@ msgctxt "ticket.daysToVoteMessage"
 msgid "{daysToVoteLabel}: {daysToVote}"
 msgstr "{daysToVoteLabel} : {daysToVote}"
 
-#. [txHistory.statusSmall.date]
-#. defaultMessage is:
-#. {day} {month} {year} {time}
-#: app/i18n/extracted/app/components/TxHistory/TxHistoryRow/StatusSmall.json
-msgctxt "txHistory.statusSmall.date"
-msgid "{day} {month} {year} {time}"
-msgstr "{day} {month} {year} {time}"
-
 #. [accounts.keys.counts]
 #. defaultMessage is:
 #. {external} external, {internal} internal, {imported} imported
-#: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/AccountDetails.json
+#: app/i18n/extracted/app/components/views/AccountsPage/AccountRow/AccountDetails.json
 msgctxt "accounts.keys.counts"
 msgid "{external} external, {internal} internal, {imported} imported"
 msgstr "{external} externe, {internal} interne, {imported} importé"
@@ -7180,6 +8321,28 @@ msgstr "{external} externe, {internal} interne, {imported} importé"
 msgctxt "charts.tooltip.value"
 msgid "{key}: {value, number, precise-percent}"
 msgstr "{key} : {value, number, precise-percent}"
+
+#. [heatmap.tooltip.live]
+#. defaultMessage is:
+#. {live, plural, =0 {No tickets live} one {One ticket live} other {# tickets
+#. live}}
+#: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/Heatmap/TooltipInfo.json
+msgctxt "heatmap.tooltip.live"
+msgid ""
+"{live, plural, =0 {No tickets live} one {One ticket live} other {# tickets "
+"live}}"
+msgstr ""
+
+#. [heatmap.tooltip.maturing]
+#. defaultMessage is:
+#. {maturing, plural, =0 {No tickets maturing} one {One ticket maturing} other
+#. {# tickets maturing}}
+#: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/Heatmap/TooltipInfo.json
+msgctxt "heatmap.tooltip.maturing"
+msgid ""
+"{maturing, plural, =0 {No tickets maturing} one {One ticket maturing} other "
+"{# tickets maturing}}"
+msgstr ""
 
 #. [snackbar.defaults.error]
 #. defaultMessage is:
@@ -7317,6 +8480,14 @@ msgctxt "security.verify.failed"
 msgid "{originalError}"
 msgstr "{originalError}"
 
+#. [ln.ntf.startDcrlndFailed]
+#. defaultMessage is:
+#. {originalError}
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "ln.ntf.startDcrlndFailed"
+msgid "{originalError}"
+msgstr ""
+
 #. [mytickets.statistics.stakepool.votedTip]
 #. defaultMessage is:
 #. {percentage}% of tickets missed
@@ -7341,6 +8512,17 @@ msgctxt "rescan.progressPercent"
 msgid "{progress, number, percent}"
 msgstr "{progress, number, percent}"
 
+#. [heatmap.tooltip.revoked]
+#. defaultMessage is:
+#. {revoke, plural, =0 {No tickets revoked} one {One ticket revoked} other {#
+#. tickets revoked}}
+#: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/Heatmap/TooltipInfo.json
+msgctxt "heatmap.tooltip.revoked"
+msgid ""
+"{revoke, plural, =0 {No tickets revoked} one {One ticket revoked} other {# "
+"tickets revoked}}"
+msgstr ""
+
 #. [history.ticket.rewardMesage]
 #. defaultMessage is:
 #. {rewardLabel}: {reward}
@@ -7349,6 +8531,14 @@ msgctxt "history.ticket.rewardMesage"
 msgid "{rewardLabel}: {reward}"
 msgstr "{rewardLabel} : {reward}"
 
+#. [ln.invoicesTab.invoice.settleDate]
+#. defaultMessage is:
+#. {settleDate, date, medium} {settleDate, time, short}
+#: app/i18n/extracted/app/components/views/LNPage/InvoicesTab/Page.json
+msgctxt "ln.invoicesTab.invoice.settleDate"
+msgid "{settleDate, date, medium} {settleDate, time, short}"
+msgstr ""
+
 #. [ticket.priceMessage]
 #. defaultMessage is:
 #. {ticketPriceLabel}: {ticketPrice}
@@ -7356,14 +8546,6 @@ msgstr "{rewardLabel} : {reward}"
 msgctxt "ticket.priceMessage"
 msgid "{ticketPriceLabel}: {ticketPrice}"
 msgstr "{ticketPriceLabel} : {ticketPrice}"
-
-#. [transaction.timestamp]
-#. defaultMessage is:
-#. {timestamp, date, medium} {timestamp, time, medium}
-#: app/i18n/extracted/app/components/TxHistory/TxHistoryRow/Status.json
-msgctxt "transaction.timestamp"
-msgid "{timestamp, date, medium} {timestamp, time, medium}"
-msgstr "{timestamp, date, medium} {timestamp, time, medium}"
 
 #. [ticket.timestamp]
 #. defaultMessage is:
@@ -7397,6 +8579,14 @@ msgctxt "charts.dayMonthDisplay"
 msgid "{value, date, day-short-month}"
 msgstr "{value, date, day-short-month}"
 
+#. [txHistory.dayMonthHourDisplay]
+#. defaultMessage is:
+#. {value, date, short-month-24hour}
+#: app/i18n/extracted/app/components/TxHistory/TxHistoryRow/index.json
+msgctxt "txHistory.dayMonthHourDisplay"
+msgid "{value, date, short-month-24hour}"
+msgstr ""
+
 #. [charts.fullDayDisplay]
 #. defaultMessage is:
 #. {value, date}
@@ -7407,39 +8597,47 @@ msgstr "{value, date}"
 
 #. [mytickets.statistics.votetime.average.value]
 #. defaultMessage is:
-#. {value, plural, =0 {in the same day} one {within one day } other {within #
+#. {value, plural, =0 {in the same day} one { within one day } other {within #
 #. days}}
 #: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/charts/VoteTime.json
 msgctxt "mytickets.statistics.votetime.average.value"
 msgid ""
-"{value, plural, =0 {in the same day} one {within one day } other {within # "
+"{value, plural, =0 {in the same day} one { within one day } other {within # "
 "days}}"
 msgstr ""
-"{value, plural, =0 {le même jour} one {en un jour } other {en # jours}}"
 
 #. [mytickets.statistics.votetime.median.value]
 #. defaultMessage is:
-#. {value, plural, =0 {in the same day} one {within one day } other {within #
+#. {value, plural, =0 {in the same day} one { within one day } other {within #
 #. days}}
 #: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/charts/VoteTime.json
 msgctxt "mytickets.statistics.votetime.median.value"
 msgid ""
-"{value, plural, =0 {in the same day} one {within one day } other {within # "
+"{value, plural, =0 {in the same day} one { within one day } other {within # "
 "days}}"
 msgstr ""
-"{value, plural, =0 {le même jour} one {en un jour } other {en # jours}}"
 
 #. [mytickets.statistics.votetime.ninetyfifthpercentile.value]
 #. defaultMessage is:
-#. {value, plural, =0 {in the same day} one {within one day } other {within #
+#. {value, plural, =0 {in the same day} one { within one day } other {within #
 #. days}}
 #: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/charts/VoteTime.json
 msgctxt "mytickets.statistics.votetime.ninetyfifthpercentile.value"
 msgid ""
-"{value, plural, =0 {in the same day} one {within one day } other {within # "
+"{value, plural, =0 {in the same day} one { within one day } other {within # "
 "days}}"
 msgstr ""
-"{value, plural, =0 {le même jour} one {en un jour } other {en # jours}}"
+
+#. [heatmap.tooltip.vote]
+#. defaultMessage is:
+#. {vote, plural, =0 {No tickets voted} one {One ticket voted} other {#
+#. tickets voted}}
+#: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/Heatmap/TooltipInfo.json
+msgctxt "heatmap.tooltip.vote"
+msgid ""
+"{vote, plural, =0 {No tickets voted} one {One ticket voted} other {# tickets"
+" voted}}"
+msgstr ""
 
 #. [ticket.daysToLeave]
 #. defaultMessage is:
