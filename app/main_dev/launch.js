@@ -1,5 +1,5 @@
 import { dcrwalletCfg, getWalletPath, getExecutablePath, dcrdCfg, getDcrdPath } from "./paths";
-import { getWalletCfg, readDcrdConfig, getGlobalCfg } from "config";
+import { getWalletCfg, readDcrdConfig } from "config";
 import { createLogger, AddToDcrdLog, AddToDcrwalletLog, AddToDcrlndLog, GetDcrdLogs,
   GetDcrwalletLogs, lastErrorLine, lastPanicLine, ClearDcrwalletLogs, CheckDaemonLogs } from "./logging";
 import parseArgs from "minimist";
@@ -181,11 +181,6 @@ export const launchDCRD = (params, testnet, reactIPC) => new Promise((resolve,re
 
   args.push(`--configfile=${dcrdCfg(appdata)}`);
   args.push(`--appdata=${appdata}`);
-
-  const globalCfg = getGlobalCfg();
-  if (globalCfg.get("ln_enabled")) {
-    args.push("--txindex");
-  }
 
   if (testnet) {
     args.push("--testnet");
