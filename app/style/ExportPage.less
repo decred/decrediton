@@ -17,12 +17,13 @@
 
 .export-area {
   display: flex;
+  width: 740px;
 }
 
 .export-area-button-wrapper {
-  margin-top: 90px;
-  width: 100%;
-  margin-left: -30px;
+  margin-top: 20px;
+  width: 740px;
+  text-align: right;
 }
 
 .export-area-left {
@@ -30,14 +31,9 @@
   font-size: 13px;
   line-height: 17px;
   padding: 30px 30px 0px 30px;
-  width: 414px;
-  margin-bottom: 37px;
+  width: 354px;
   height: 128px;
   background-color: var(--background-back-color);
-}
-
-.export-area-right.export-info-not-expanded {
-  height: 128px;
 }
 
 .export-area-right {
@@ -46,15 +42,21 @@
   width: 40%;
   font-size: 13px;
   line-height: 19px;
-  margin-bottom: 22px;
   cursor: pointer;
   padding-bottom: 10px;
-  height: 100% !important;
   color: var(--wallet-label);
-  
+  position: relative;
+
   .vertical-expand {
-    float: right;
+    position: absolute;
+    right: 20px;
+    top: 20px;
   }
+
+  .export-info-not-expanded {
+    font-weight: 600;
+    display: inline;
+  }  
 }
 
 ul.export-info-fields {
