@@ -24,25 +24,22 @@ const ProposalListItem = ({ name, timestamp, token, voteCounts, tsDate, onClick,
         <div className="proposal-name">{ name }</div>
         <div className="proposal-token">{ token }</div>
       </div>
-
       <div className="proposal-results-area">
-        { voteStatus !== VOTESTATUS_FINISHEDVOTE &&
-          <div className="proposal-timestamp">
-            <T id="proposalItem.lastUpdatedAt" m="Last Updated {reldate}" values={{
-              reldate: <FormattedRelative  value={ tsDate(timestamp) } /> }} />
-          </div>
-        }
         {( voteStatus === VOTESTATUS_ACTIVEVOTE || voteStatus === VOTESTATUS_FINISHEDVOTE) &&
           <div className="is-row voting-indicator">
             <div className={"vote-choice " + (currentVoteChoice && currentVoteChoice.id)}/>
             <VotingProgress {...{ voteCounts, quorumMinimumVotes } }  />
           </div>
         }
-        { voteStatus === VOTESTATUS_FINISHEDVOTE && (
+        { voteStatus !== VOTESTATUS_FINISHEDVOTE ?
+          <div className="proposal-timestamp">
+            <T id="proposalItem.lastUpdatedAt" m="Last Updated {reldate}" values={{
+              reldate: <FormattedRelative  value={ tsDate(timestamp) } /> }} />
+          </div> :
           <div className="vote-result">
             {quorumPass ? voteResult : <T id="proposals.quorumNotMet" m="Quorum not met"/>}
           </div>
-        )}
+        }
       </div>
     </div>
   );

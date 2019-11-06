@@ -14,7 +14,7 @@ const PageHeader = () => (
         <T id="proposals.community.descr"
           m="Voting on community proposals allows you to have a say on how the project treasury is spent.
           Participation in voting requires (PoS) tickets. Proposal creation, discussions and other features are available at" />
-          <a onClick={() => shell.openExternal("https://proposals.decred.org")}>proposals.decred.org</a>
+        <a onClick={() => shell.openExternal("https://proposals.decred.org")}>proposals.decred.org</a>
       </div>
     </div>
     <div className="links">
