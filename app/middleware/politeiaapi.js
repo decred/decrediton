@@ -36,12 +36,6 @@ function POST(piURL, path, payload) {
   });
 }
 
-// Return an object to be sent as vote information.
-export function Vote(token, ticket, voteBitInt, signature) {
-  const voteBit = voteBitInt.toString(16);
-  return { token, ticket, voteBit, signature };
-}
-
 export const getActiveVotes = (piURL) => GET(piURL, "/v1/proposals/activevote");
 export const getVetted = (piURL) => GET(piURL, "/v1/proposals/vetted");
 export const getVotesStatus = (piURL) => GET(piURL, "/v1/proposals/votestatus");

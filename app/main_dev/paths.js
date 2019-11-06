@@ -199,7 +199,9 @@ export function savePiVote (vote, token, testnet, walletName) {
     fs.mkdirSync(proposalPath, { mode: 0o700 });
   }
   const fullPath = path.join(proposalPath, "vote.json");
-  fs.writeFile(fullPath, JSON.stringify(vote), { mode: 0o600 });
+  if (!fs.pathExistsSync(fullPath)) {
+    fs.writeFile(fullPath, JSON.stringify(vote), { mode: 0o600 });
+  }
 }
 
 // getProposalWalletVote returns vote.json file if found or return null
