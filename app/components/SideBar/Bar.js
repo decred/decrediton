@@ -40,7 +40,7 @@ const Bar = ({
           { balances.map(({ hidden, total, accountName, accountNumber }) => !hidden &&
           <div className={cx("sidebar-menu-total-balance-extended-bottom-account", isImported(accountNumber) && "imported")} key={accountName}>
             <div className="sidebar-menu-total-balance-extended-bottom-account-name">
-              {accountName === "default" ? <T id="accounts.name.default" m="Primary Account" /> : accountName}:
+              {accountName === "default" ? <T id="sidebar.accounts.name.default" m="Primary Account" /> : accountName}:
             </div>
             <div className="sidebar-menu-total-balance-extended-bottom-account-number">{total ? <Balance hideCurrency amount={total}/> : 0}</div>
           </div> )}
