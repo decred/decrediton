@@ -6,11 +6,11 @@ import Logo from "./Logo";
 import LastBlockTime from "./LastBlockTime";
 import { Balance } from "shared";
 import { RescanButton, RescanCancelButton } from "buttons";
-import { UNIT_DIVISOR } from "constants";
 import "style/Fonts.less";
 import "style/SideBar.less";
 import cx from "classnames";
 
+const isImported = (accountNumber) => accountNumber === Math.pow(2, 31) - 1;
 const Bar = ({
   isTestNet,
   balances,
@@ -37,10 +37,12 @@ const Bar = ({
       </div>
       <div className="sidebar-menu-total-balance-extended" style={{ display: isShowingAccounts ? "flex" : "none" }}>
         <div className="sidebar-menu-total-balance-extended-bottom">
-          { balances.map(({ hidden, total, accountName }) => !hidden &&
-          <div className="sidebar-menu-total-balance-extended-bottom-account" key={accountName}>
-            <div className="sidebar-menu-total-balance-extended-bottom-account-name">{accountName}</div>
-            <div className="sidebar-menu-total-balance-extended-bottom-account-number">{total ? total / UNIT_DIVISOR : 0}</div>
+          { balances.map(({ hidden, total, accountName, accountNumber }) => !hidden &&
+          <div className={cx("sidebar-menu-total-balance-extended-bottom-account", isImported(accountNumber) && "imported")} key={accountName}>
+            <div className="sidebar-menu-total-balance-extended-bottom-account-name">
+              {accountName === "default" ? <T id="accounts.name.default" m="Primary Account" /> : accountName}:
+            </div>
+            <div className="sidebar-menu-total-balance-extended-bottom-account-number">{total ? <Balance hideCurrency amount={total}/> : 0}</div>
           </div> )}
         </div>
       </div>
@@ -52,7 +54,7 @@ const Bar = ({
           onMouseEnter={rescanRequest ? null : onShowAccounts}
           onMouseLeave={rescanRequest ? null : onHideAccounts}
         >
-          <div className="sidebar-menu-bottom-total-balance-short-separator"></div>
+          <div className={cx("sidebar-menu-bottom-total-balance-short-separator", isShowingAccounts && "showAccounts")}></div>
           <div className="sidebar-menu-bottom-total-balance-short-name"><T id="sidebar.totalBalance" m="Total Balance"/>:</div>
           <div className="sidebar-menu-bottom-total-balance-short-value"><Balance amount={totalBalance} /></div>
         </div>
