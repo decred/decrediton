@@ -13,23 +13,28 @@ const ReceivePage = ({
   <>
     <Subtitle title={<T id="receive.subtitle" m="Receive DCR"/>} />
     <div className="receive-content-nest">
-      <div className="receive-content-nest-for-address">
-        <div className="receive-content-nest-prefix">
-          <T id="receive.accountLabel" m="This address is for" />:
+      <div className="receive-content-nest-address-and-qr">
+        <div className="receive-content-nest-for-address">
+          <div className="receive-content-nest-prefix prefix-long">
+            <T id="receive.accountLabel" m="This address is for"/>:
+          </div>
+          <div className="receive-content-nest-prefix prefix-short">
+            <T id="receive.shortAccountLabel" m="Address is for"/>:
+          </div>
+          <div className="receive-select-account-input">
+            <ReceiveAccountsSelect showAccountsButton />
+          </div>
+          <div style={{ clear: "both" }}></div>
         </div>
-        <div className="receive-select-account-input">
-          <ReceiveAccountsSelect showAccountsButton />
+        <div className="receive-content-nest-qr">
+          <div className="receive-content-nest-qrhash">
+            <div>{nextAddress}</div>
+          </div>
+          <CopyToClipboard textToCopy={nextAddress} className="receive-content-nest-copy-to-clipboard-icon" />
+          <div style={{ clear: "both" }}></div>
         </div>
-        <div style={{ clear: "both" }}></div>
       </div>
       <QRCode addr={nextAddress} />
-      <div className="receive-content-nest-qr">
-        <div className="receive-content-nest-qrhash">
-          <div>{nextAddress}</div>
-        </div>
-        <CopyToClipboard textToCopy={nextAddress} className="receive-content-nest-copy-to-clipboard-icon" />
-        <div style={{ clear: "both" }}></div>
-      </div>
     </div>
     <div className="receive-toolbar">
       <KeyBlueButton size="large" block={false} onClick={onRequestAddress}>
