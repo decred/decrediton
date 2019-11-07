@@ -4,7 +4,7 @@ import { balance } from "connectors";
 import { DCR, ATOMS, UNIT_DIVISOR } from "constants";
 
 export const Balance = ({ currencyDisplay, amount, onClick, bold, large,
-  flat, title, noSmallAmount, classNameWrapper, classNameUnit, preScaled, hideCurrency
+  flat, title, noSmallAmount, classNameWrapper, classNameUnit, preScaled
 }) => {
   const secondary = large ? "balance-tiny" : flat ? "balance-base" : title ? "balance-title" : "balance-small";
   if (currencyDisplay === DCR) {
@@ -26,9 +26,9 @@ export const Balance = ({ currencyDisplay, amount, onClick, bold, large,
           { !noSmallAmount && <span className={[ secondary, classNameUnit, bold ? "bold" : null ].join(" ") }>
             { tail + " " }
           </span> }
-          {!hideCurrency && <span className={ [ secondary,classNameUnit ].join(" ") }>
+          <span className={ [ secondary,classNameUnit ].join(" ") }>
             DCR
-          </span> }
+          </span>
         </span>
       </div>
     );
@@ -39,9 +39,9 @@ export const Balance = ({ currencyDisplay, amount, onClick, bold, large,
           <span className={[ secondary, bold ? "bold" : null ].join(" ") }>
             { amount + " " }
           </span>
-          {!hideCurrency && <span className={ [ secondary, classNameUnit ].join(" ") }>
+          <span className={ [ secondary, classNameUnit ].join(" ") }>
             atoms
-          </span> }
+          </span>
         </span>
       </div>
     );

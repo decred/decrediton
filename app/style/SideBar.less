@@ -87,21 +87,13 @@
 
 .sidebar-menu-total-balance-extended-bottom {
   padding-right: 18px;
+  padding-left: 18px;
 }
 
 .sidebar-menu-total-balance-extended-bottom-account {
   height: 44px;
   display: flex;
-  padding-left: 52px;
   justify-content: space-between;
-  background-image: var(--accounts-default);
-  background-size: 20px auto;
-  background-repeat: no-repeat;
-  background-position: 19px 0;
-  
-  &.imported {
-    background-image: var(--accounts-imported);
-  }  
 }
 
 .sidebar-menu-total-balance-extended-bottom-account-name {
@@ -113,53 +105,25 @@
 }
 
 .sidebar-menu-total-balance-extended-bottom-account-number {
-  font-family: 'Source Sans Pro', Inconsolata, monospace;
+  font-family: Inconsolata, monospace;
   color: var(--input-color-default);
   font-size: 15px;
-
-  div {
-    font-weight: 600;
-
-    .balance-small {
-      font-weight: 400;
-      font-size: 15px;
-    }
-
-    .currency {
-      display: none;
-    }
-  }
 }
 
 .sidebar-menu-bottom-total-balance-short {
   position: relative;
   height: 56px;
-  padding: 0;
+  padding: 14px 16px 0px 16px;
   cursor: pointer;
 }
 
 .sidebar-menu-bottom-total-balance-short-separator {
   height: 7px;
   margin-bottom: 15px;
+  border-bottom: 1px solid var(--short-separator-border);
   background-image: var(--menu-arrow-up);
-  background-position: 50% 8px;
+  background-position: 50% 0px;
   background-repeat: no-repeat;
-  padding: 7px 16px 0 16px;
-  background-size: 12px 6px;
-  position: relative;
-
-  &::before {
-    content: "";
-    border-bottom: 1px solid var(--short-separator-border);
-    position: absolute;
-    bottom:0;
-    left:19px;
-    right:16px;
-  }
-
-  &.showAccounts {
-    background-color: var(--background-container-opaque);
-  }
 }
 
 .sidebar-menu-bottom-total-balance-short-name {
@@ -168,26 +132,19 @@
   font-size: 13px;
   text-align: left;
   text-decoration: none;
-  padding-left: 36px;
+  padding-left: 20px;
   margin-left: 4px;
   background-image: var(--sidebar-balance-icon);
   background-repeat: no-repeat;
   background-size: 16px 16px;
-  background-position: 16px 50%;
 }
 
 .sidebar-menu-bottom-total-balance-short-value {
   float: right;
-  font-family: 'Source Sans Pro', Inconsolata, monospace;
+  font-family: Inconsolata, monospace;
   color: var(--sidebar-bottom-light-text-color);
   font-size: 13px;
   text-align: right;
-  font-weight: 600;
-  padding-right: 16px;
-
-  .balance-small {
-    font-size: 13px;
-  }
 }
 
 .sidebar-menu-bottom-latest-block {
