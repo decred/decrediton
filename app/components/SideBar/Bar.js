@@ -42,8 +42,8 @@ const Bar = ({
           <div className="sidebar-menu-total-balance-extended-bottom-account" key={accountName}>
             <div className="sidebar-menu-total-balance-extended-bottom-account-name">
               {accountName === "default" ?
-                <T id="accounts.name.default" m="Primary Account" /> :
-                isImported(accountNumber) ? <T id="accounts.name.timelocked" m="Time-locked" /> :
+                <T id="sidebar.accounts.name.default" m="Primary Account" /> :
+                isImported(accountNumber) ? <T id="sidebar.accounts.name.timelocked" m="Time-locked" /> :
                   accountName}:
             </div>
             <div className="sidebar-menu-total-balance-extended-bottom-account-number">{total ? total / UNIT_DIVISOR : 0}</div>
