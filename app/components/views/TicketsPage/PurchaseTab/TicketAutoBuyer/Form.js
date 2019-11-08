@@ -49,7 +49,7 @@ const TicketAutoBuyerForm = ({
               {...{ account }} disabled={isTicketAutoBuyerEnabled} onChange={changeAccount} showAccountsButton={false} hideSpendable={true}/>
           </div>
         </div>
-        <div className="stakepool-auto-buyer-row-portion-half">
+        <div className="stakepool-auto-buyer-row-portion-half is-row">
           <div className="stakepool-autobuyer-label"><T id="autobuyer.stakePoolLabel" m="Stake Pool" />:</div>
           <div className="stakepool-autobuyer-input">
             <StakePoolSelect
