@@ -21,6 +21,7 @@ export const saveSettings = (settings) => (dispatch, getState) => {
 
   const config = getGlobalCfg();
   const oldAllowedExternalRequests = config.get(configConstants.ALLOW_EXTERNAL_REQUEST);
+  const oldTheme = config.get(configConstants.THEME);
   const updatedProxy =
     (config.get(configConstants.PROXY_TYPE,) !== settings.proxyType) ||
     (config.get(configConstants.PROXY_LOCATION) !== settings.proxyLocation);
@@ -44,6 +45,10 @@ export const saveSettings = (settings) => (dispatch, getState) => {
 
   if (!equalElements(oldAllowedExternalRequests, settings.allowedExternalRequests)) {
     wallet.reloadAllowedExternalRequests();
+  }
+
+  if (!equalElements(oldTheme, settings.theme)) {
+    dispatch({ theme: settings.theme, type: SETTINGS_TOGGLE_THEME });
   }
 
   const newDcrdataEnabled = settings.allowedExternalRequests.indexOf(EXTERNALREQUEST_DCRDATA) > -1;
@@ -112,7 +117,6 @@ export function updateStateSettingsChanged(settings, norestart) {
       spvMode: true,
       daemonStartAdvanced: true,
     };
-    dispatch({ theme: newSettings.theme, type: SETTINGS_TOGGLE_THEME });
 
     const newDiffersFromTemp = settingsFields
       .reduce((d, f) => (d || newSettings[f] !== tempSettings[f]), false);
