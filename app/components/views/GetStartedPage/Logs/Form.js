@@ -25,6 +25,9 @@ export default ({
             <SettingsLinkMsg />
           </InvisibleButton>
         }
+        <InvisibleButton onClick={onShowSettings}>
+          <SettingsLinkMsg />
+        </InvisibleButton>
         <InvisibleButton className="active">
           <LogsLinkMsg />
         </InvisibleButton>
