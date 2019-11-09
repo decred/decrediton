@@ -9,7 +9,7 @@ const PurchaseTicketsAdvanced = ({
   expiry,
 }) => (
   <div className="stakepool-purchase-ticket-quick-bar">
-    <Tooltip text={<T id="purchaseTickets.currentStakepool" m="Current StakePool" />}>
+    <Tooltip text={<T id="purchaseTickets.currentStakepool" m="Current VSP" />}>
       <div className="stakepool-info-icon stakepool-icon">{stakePool && stakePool.value.Host}</div>
     </Tooltip>
     <Tooltip text={<T id="purchaseTickets.expiry" m="Expiry" />}>

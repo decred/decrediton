@@ -6,7 +6,7 @@ import { newStakePool } from "connectors";
 const messages = defineMessages({
   placeholder: {
     id: "selectStakepool.placeholder",
-    defaultMessage: "Select Stakepool..."
+    defaultMessage: "Select VSP..."
   }
 });
 
@@ -40,7 +40,7 @@ class StakePoolSelect extends React.Component {
   }
 
   addStakePoolLabel() {
-    return <T id="stakePoolSelect.addNewPrompt" m="Add StakePool {host}"
+    return <T id="stakePoolSelect.addNewPrompt" m="Add VSP {host}"
       values={{ host: this.lastInput }} />;
   }
 
@@ -58,7 +58,7 @@ class StakePoolSelect extends React.Component {
     if (!this.props.creatable || this.lastInput) return this.props.options;
     const options = [ ...this.props.options ];
     options.unshift({
-      label: <T id="stakePoolSelect.addNewPromptEmpty" m="Type to add new Stake Pool" />,
+      label: <T id="stakePoolSelect.addNewPromptEmpty" m="Type to add new VSP" />,
       Host: null
     });
     return options;

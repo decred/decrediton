@@ -34,7 +34,7 @@ const TicketAutoBuyerForm = ({
                     <div className="auto-buyer-modal-confirm-value"><Balance flat amount={balanceToMaintain} /></div>
                   </div>
                   <div className="auto-buyer-modal-confirm-row">
-                    <div className="auto-buyer-modal-confirm-label"><T id="autobuyer.modal.stakepool" m="Stakepool" />:</div>
+                    <div className="auto-buyer-modal-confirm-label"><T id="autobuyer.modal.stakepool" m="VSP" />:</div>
                     <div className="auto-buyer-modal-confirm-value">{stakePool.Host}</div>
                   </div>
                 </div>
@@ -50,7 +50,7 @@ const TicketAutoBuyerForm = ({
           </div>
         </div>
         <div className="stakepool-auto-buyer-row-portion-half is-row">
-          <div className="stakepool-autobuyer-label"><T id="autobuyer.stakePoolLabel" m="Stake Pool" />:</div>
+          <div className="stakepool-autobuyer-label"><T id="autobuyer.stakePoolLabel" m="VSP" />:</div>
           <div className="stakepool-autobuyer-input">
             <StakePoolSelect
               options={configuredStakePools} disabled={isTicketAutoBuyerEnabled} value={stakePool} onChange={changeStakePool} />

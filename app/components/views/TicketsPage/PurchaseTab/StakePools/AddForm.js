@@ -35,13 +35,13 @@ const StakePoolsAddForm = ({
 }) => (
   <>
     <div className="stakepool-add-title">
-      <T id="stakepool.addPoolTitle" m="Add a Stakepool" />
+      <T id="stakepool.addPoolTitle" m="Add a VSP" />
     </div>
     <div className="stakepool-add-area">
       <div className="stakepool-add-area-left">
         <div className="stakepool-field">
           <div className="stakepool-field-label">
-            <T id="stakepool.label" m="Stakepool" />:
+            <T id="stakepool.label" m="VSP" />:
           </div>
           <div className="stakepool-field-value">
             <StakePoolSelect
@@ -91,7 +91,7 @@ const StakePoolsAddForm = ({
       </div>
       <div className="stakepool-add-toolbar">
         <PassphraseModalButton
-          modalTitle={<T id="stake.addPoolConfirmation" m="Stakepool Confirmation" />}
+          modalTitle={<T id="stake.addPoolConfirmation" m="VSP Confirmation" />}
           loading={isSavingStakePoolConfig}
           disabled={!apiKey || isSavingStakePoolConfig}
           className="stakepool-confirm-button"

@@ -42,7 +42,7 @@ class StakePoolStats extends React.Component{
         <div className="my-tickets-stats-indicators">
           <div className="my-tickets-stats-indicators-row">
             <span className="my-tickets-stats-indicators-title">
-              <T id="mytickets.statistics.stakepool.title" m="Stake Pool" />
+              <T id="mytickets.statistics.stakepool.title" m="VSP" />
             </span>
           </div>
           <div className="my-tickets-stakepool-stats-selector-row">
@@ -61,7 +61,7 @@ class StakePoolStats extends React.Component{
                 blueValue={ticketPoolSize}
                 blueLabel={<T id="mytickets.statistics.stakepool.networkTickets" m="All Network Tickets"/>}
                 blackValue={stakePool.Live}
-                blackLabel={<T id="mytickets.statistics.stakepool.stakepoolTickets" m="Stakepool Tickets"/>}
+                blackLabel={<T id="mytickets.statistics.stakepool.stakepoolTickets" m="VSP Tickets"/>}
               />
             </Tooltip>
           </div>

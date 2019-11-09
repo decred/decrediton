@@ -36,7 +36,7 @@ const PurchaseTicketsAdvanced = ({
   <div className="is-row purchase-ticket-advanced-info-area">
     <div className="purchase-ticket-advanced-labels">
       <div className="stakepool-purchase-ticket-label">
-        <T id="purchaseTickets.stakePoolLabel" m="Stake Pool" />:
+        <T id="purchaseTickets.stakePoolLabel" m="VSP" />:
       </div>
       <div className="stakepool-purchase-ticket-label inputs-row-label">
         <T id="purchaseTickets.ticketFee" m="Ticket Fee" />:

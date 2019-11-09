@@ -28,7 +28,7 @@ const Form = ({
       <div className="getstarted-stakepool-add-col left">
         <div className="field">
           <div className="label">
-            <T id="getStarted.stakepool.label" m="Stakepool" />:
+            <T id="getStarted.stakepool.label" m="VSP" />:
           </div>
           <div className="value">
             <StakePoolSelect
@@ -68,7 +68,7 @@ const Form = ({
       </div>
 
       <div className="getstarted-stakepool-add-col right">
-        <T id="getStarted.stakePools.info" m="Add your existing stakepools APIs here. You can always add them later if you want. After you're done, you can press 'continue'." />
+        <T id="getStarted.stakePools.info" m="Add your existing VSP APIs here. You can always add them later if you want. After you're done, you can press 'continue'." />
       </div>
     </div>
 
