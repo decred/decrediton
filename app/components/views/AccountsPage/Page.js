@@ -31,8 +31,8 @@ const subtitleInfoIcon = () => (
 
 const subtitleWalletName = ({ walletName }) => (
   <span>
-    {walletName}
-    <T id="accounts.subtitle" m=" Accounts"/>
+    <span className="wallet-name">{walletName}</span>
+    <T id="accounts.subtitle" m="Accounts"/>
   </span>
 );
 
