@@ -4,7 +4,7 @@ import { isTestNet } from "selectors";
 import { equalElements } from "helpers";
 import * as wallet from "wallet";
 import { closeWalletRequest } from "actions/WalletLoaderActions";
-import { closeDaemonRequest, getAvailableWallets, startDaemon } from "actions/DaemonActions";
+import { closeDaemonRequest, getAvailableWallets, prepStartDaemon } from "actions/DaemonActions";
 import { getTreasuryBalance, resetTreasuryBalance } from "actions/ClientActions";
 import { EXTERNALREQUEST_DCRDATA, EXTERNALREQUEST_POLITEIA } from "main_dev/externalRequests";
 import { getTokenAndInitialBatch, resetInventoryAndProposals } from "actions/GovernanceActions";
@@ -15,7 +15,7 @@ export const SETTINGS_CHANGED = "SETTINGS_CHANGED";
 export const SETTINGS_UNCHANGED = "SETTINGS_UNCHANGED";
 export const SETTINGS_TOGGLE_THEME = "SETTINGS_TOGGLE_THEME";
 
-export const saveSettings = (settings) => (dispatch, getState) => {
+export const saveSettings = (settings) => async (dispatch, getState) => {
   const { settings: { needNetworkReset } } = getState();
   const { daemon: { walletName } } = getState();
 
@@ -40,6 +40,15 @@ export const saveSettings = (settings) => (dispatch, getState) => {
     const walletConfig = getWalletCfg(isTestNet(getState()), walletName);
     walletConfig.set("currency_display", settings.currencyDisplay);
     walletConfig.set("gaplimit", settings.gapLimit);
+
+    // We can not enable politeia without wallet name as we need it to check for cached votes.
+    const newPoliteiaEnabled = settings.allowedExternalRequests.indexOf(EXTERNALREQUEST_POLITEIA) > -1;
+    if (newPoliteiaEnabled === true) {
+      dispatch(getTokenAndInitialBatch());
+    }
+    if (newPoliteiaEnabled === false) {
+      dispatch(resetInventoryAndProposals());
+    }
   }
 
   if (!equalElements(oldAllowedExternalRequests, settings.allowedExternalRequests)) {
@@ -54,13 +63,6 @@ export const saveSettings = (settings) => (dispatch, getState) => {
     dispatch(resetTreasuryBalance());
   }
 
-  const newPoliteiaEnabled = settings.allowedExternalRequests.indexOf(EXTERNALREQUEST_POLITEIA) > -1;
-  if (newPoliteiaEnabled === true) {
-    dispatch(getTokenAndInitialBatch());
-  }
-  if (newPoliteiaEnabled === false) {
-    dispatch(resetInventoryAndProposals());
-  }
   dispatch({ settings, type: SETTINGS_SAVE });
 
   if (updatedProxy) {
@@ -69,7 +71,8 @@ export const saveSettings = (settings) => (dispatch, getState) => {
 
   if (needNetworkReset) {
     dispatch(closeWalletRequest());
-    dispatch(closeDaemonRequest()).then(() => dispatch(startDaemon()));
+    await dispatch(closeDaemonRequest());
+    await dispatch(prepStartDaemon());
     dispatch(getAvailableWallets());
   }
 

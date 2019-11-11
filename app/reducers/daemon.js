@@ -124,6 +124,7 @@ export default function version(state = {}, action) {
     return { ...state,
       currentBlockCount: action.currentBlockCount,
       timeLeftEstimate: action.timeLeftEstimate,
+      neededBlocks: action.syncHeight,
     };
   case DAEMONSYNCED:
     return { ...state,

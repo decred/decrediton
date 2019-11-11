@@ -441,6 +441,7 @@ export const syncDaemon = () => (dispatch, getState) => {
               dispatch({
                 currentBlockCount: blockCount,
                 timeLeftEstimate: secondsLeft,
+                syncHeight,
                 type: DAEMONSYNCING_PROGRESS });
             }
           }
