@@ -185,6 +185,7 @@ class GetStartedPage extends React.Component {
           text,
           animationType,
           Form,
+          onShowSettings,
           onShowLogs,
           syncFetchHeadersAttempt,
         }}/>;
