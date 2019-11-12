@@ -421,6 +421,7 @@ var initialState = {
     active: false,
     exists: false,
     connectAttempt: false,
+    startAttempt: false,
     info: {
       version: null,
       identityPubkey: null,

@@ -15,7 +15,7 @@ class ConnectPage extends React.Component {
   constructor(props)  {
     super(props);
     this.state = {
-      launching: this.props.connectAttempt,
+      launching: this.props.connectAttempt || this.props.startAttempt,
       autopilotEnabled: false,
       account: this.props.defaultAccount,
     };
