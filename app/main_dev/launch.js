@@ -1,4 +1,4 @@
-import { dcrwalletCfg, getWalletPath, getExecutablePath, dcrdCfg, getDcrdPath } from "./paths";
+import { dcrwalletCfg, getWalletPath, getExecutablePath, dcrdCfg, getAppDataDirectory } from "./paths";
 import { getWalletCfg, readDcrdConfig } from "config";
 import { createLogger, AddToDcrdLog, AddToDcrwalletLog, AddToDcrlndLog, GetDcrdLogs,
   GetDcrwalletLogs, lastErrorLine, lastPanicLine, ClearDcrwalletLogs, CheckDaemonLogs } from "./logging";
@@ -174,7 +174,7 @@ export const launchDCRD = (params, testnet, reactIPC) => new Promise((resolve,re
     return resolve(creds);
   }
 
-  if (!appdata) appdata = getDcrdPath();
+  if (!appdata) appdata = getAppDataDirectory();
 
   let args = [ "--nolisten" ];
   const newConfig = readDcrdConfig(appdata, testnet);

@@ -169,7 +169,7 @@ export function readDcrdConfig(configPath, testnet) {
     } else if (fs.existsSync(dcrdCfg(getAppDataDirectory()))) {
       readCfg = ini.parse(Buffer.from(fs.readFileSync(dcrdCfg(getAppDataDirectory()))).toString());
     } else {
-      return newCfg;
+      readCfg = newCfg;
     }
     let userFound, passFound = false;
     // Look through all top level config entries
