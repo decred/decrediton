@@ -425,6 +425,8 @@ export const launchDCRLnd = (walletAccount, walletPort, rpcCreds, walletPath,
 
   if (testnet) {
     args.push("--decred.testnet");
+  } else {
+    args.push("--decred.mainnet");
   }
 
   if (autopilotEnabled) {
