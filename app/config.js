@@ -162,7 +162,6 @@ export function readDcrdConfig(configPath, testnet) {
     if (!configPath) configPath = getDcrdPath();
     newCfg.rpc_host = "127.0.0.1";
     newCfg.rpc_port = testnet ? "19109" : "9109";
-    newCfg.rpc_cert = getDcrdRpcCert(configPath);
 
     if (fs.existsSync(dcrdCfg(configPath))) {
       readCfg = ini.parse(Buffer.from(fs.readFileSync(dcrdCfg(configPath))).toString());

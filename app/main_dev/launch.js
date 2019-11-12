@@ -1,4 +1,4 @@
-import { dcrwalletCfg, getWalletPath, getExecutablePath, dcrdCfg, getAppDataDirectory } from "./paths";
+import { dcrwalletCfg, getWalletPath, getExecutablePath, dcrdCfg, getAppDataDirectory, getDcrdRpcCert, getDcrdPath } from "./paths";
 import { getWalletCfg, readDcrdConfig } from "config";
 import { createLogger, AddToDcrdLog, AddToDcrwalletLog, AddToDcrlndLog, GetDcrdLogs,
   GetDcrwalletLogs, lastErrorLine, lastPanicLine, ClearDcrwalletLogs, CheckDaemonLogs } from "./logging";
@@ -174,19 +174,22 @@ export const launchDCRD = (params, testnet, reactIPC) => new Promise((resolve,re
     return resolve(creds);
   }
 
-  if (!appdata) appdata = getAppDataDirectory();
+  if (!appdata) appdata = getDcrdPath();
 
   let args = [ "--nolisten" ];
-  const newConfig = readDcrdConfig(appdata, testnet);
+  const newConfig = readDcrdConfig(getAppDataDirectory(), testnet);
 
-  args.push(`--configfile=${dcrdCfg(appdata)}`);
+  args.push(`--configfile=${dcrdCfg(getAppDataDirectory())}`);
   args.push(`--appdata=${appdata}`);
 
   if (testnet) {
     args.push("--testnet");
   }
+
+
   rpcuser = newConfig.rpc_user;
   rpcpass = newConfig.rpc_pass;
+  newConfig.rpc_cert = getDcrdRpcCert(appdata);
   rpccert = newConfig.rpc_cert;
   rpchost = newConfig.rpc_host;
   rpcport = newConfig.rpc_port;
