@@ -1,4 +1,5 @@
-import { KeyBlueButton } from "buttons";
+import { shell } from "electron";
+import { KeyBlueButton, InvisibleConfirmModalButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import { StakeyBounceXs, VotingProgress, PoliteiaLoading } from "indicators";
 import { showCheck } from "helpers";
@@ -93,9 +94,20 @@ export const TimeValue = ({ timestamp, tsDate }) => (
 
 // This changes links to never open. Debatable whether we want to
 // allow proposals to link somewhere directly from decrediton.
-const renderInternalProposalLink = ({ children }) => {
-  return <a onClick={() => {} } href="#">{children}</a>;
-};
+const renderInternalProposalLink = ({ children, href }) => (
+  <InvisibleConfirmModalButton
+    modalTitle={<T id="politeia.details.openLinkModal" m="Open Link in External Browser"/>}
+    modalContent={<>
+      <T id="politeia.details.openLinkModalDesc1"
+        m="Click Confirm to open the link:  " />
+      <span className="prop-details-modal-link">{href}</span>
+      <T id="politeia.details.openLinkDesc2" m="in an external browser." />
+    </>}
+    buttonComponent={<span>{children}</span>}
+    buttonLabel={<a onClick={() => {} } href="#">{children}</a>}
+    onSubmit={() => shell.openExternal(href)}
+  />
+);
 
 // This changes images to never open. Debatable whether we want to
 // allow proposals to open images directly from decrediton.

@@ -53,6 +53,8 @@ const helpLinkButtonNew = ({ className, onClick, title, subtitle }) =>
 const helpLinkButton = ({ className, onClick, buttonLabel }) =>
   <div className={className} onClick={onClick}>{buttonLabel}</div>;
 
+const PoliteiaLinkButton = ({ children, onClick, }) => (<span onClick={onClick}>{children}</span>);
+
 export const HelpLinkInfoModal = mbb(null, InfoModal, helpLinkButtonNew);
 export const HelpLinkAboutModal = mbb(null, AboutModal, helpLinkButtonNew);
 export const InfoModalButton = mbb("info-modal-button", InfoModal);
@@ -71,4 +73,4 @@ export const AboutModalButton = mbb(null, AboutModal, KeyBlueButton);
 export const AboutModalButtonInvisible = mbb(null, AboutModal, InvisibleButton);
 export const CloseWalletModalButton = mbb("close-modal-button", ConfirmModal, InvisibleButton);
 export const CloseChannelModalButton = mbb("go-back-icon-button", ConfirmModal, InvisibleButton);
-export const InvisibleConfirmModalButton = mbb(null, ConfirmModal, InvisibleButton);
+export const InvisibleConfirmModalButton = mbb(null, ConfirmModal, PoliteiaLinkButton);
