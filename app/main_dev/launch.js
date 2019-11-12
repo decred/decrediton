@@ -177,7 +177,7 @@ export const launchDCRD = (params, testnet, reactIPC) => new Promise((resolve,re
   if (!appdata) appdata = getDcrdPath();
 
   let args = [ "--nolisten" ];
-  const newConfig = readDcrdConfig(getAppDataDirectory(), testnet);
+  const newConfig = readDcrdConfig(testnet);
 
   args.push(`--configfile=${dcrdCfg(getAppDataDirectory())}`);
   args.push(`--appdata=${appdata}`);
@@ -391,10 +391,6 @@ export const launchDCRLnd = (walletAccount, walletPort, rpcCreds, walletPath,
   let dcrlndRoot = path.join(walletPath, "dcrlnd");
   let tlsCertPath = path.join(dcrlndRoot, "tls.cert");
   let adminMacaroonPath = path.join(dcrlndRoot, "admin.macaroon");
-
-  // if (!rpcCreds) {
-  //   rpcCreds = readDcrdConfig(appdata, testnet);
-  // }
 
   let args = [
     "--nolisten",

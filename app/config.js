@@ -2,9 +2,9 @@ import fs from "fs";
 import Store from "electron-store";
 import ini from "ini";
 import { stakePoolInfo } from "./middleware/stakepoolapi";
-import { getAppDataDirectory, getGlobalCfgPath, dcrdCfg, getWalletPath, dcrwalletCfg, getDcrdRpcCert, getDcrdPath } from "./main_dev/paths";
+import { getAppDataDirectory, getGlobalCfgPath, dcrdCfg, getWalletPath, dcrwalletCfg, getDcrdRpcCert } from "./main_dev/paths";
 import * as cfgConstants from "constants/config";
-import { DCR, TESTNET, MAINNET } from "constants";
+import { DCR  } from "constants";
 
 export function getGlobalCfg() {
   const config = new Store();
@@ -155,21 +155,20 @@ export function getWalletCert(certPath) {
   return(cert);
 }
 
-export function readDcrdConfig(configPath, testnet) {
+export function readDcrdConfig(testnet) {
   try {
     let readCfg;
     let newCfg = {};
-    if (!configPath) configPath = getDcrdPath();
     newCfg.rpc_host = "127.0.0.1";
     newCfg.rpc_port = testnet ? "19109" : "9109";
 
-    if (fs.existsSync(dcrdCfg(configPath))) {
-      readCfg = ini.parse(Buffer.from(fs.readFileSync(dcrdCfg(configPath))).toString());
-    } else if (fs.existsSync(dcrdCfg(getAppDataDirectory()))) {
+    if (fs.existsSync(dcrdCfg(getAppDataDirectory()))) {
       readCfg = ini.parse(Buffer.from(fs.readFileSync(dcrdCfg(getAppDataDirectory()))).toString());
     } else {
-      readCfg = newCfg;
+      var newCfgPath = createTempDcrdConf(testnet);
+      readCfg = ini.parse(Buffer.from(fs.readFileSync(dcrdCfg(newCfgPath))).toString());
     }
+
     let userFound, passFound = false;
     // Look through all top level config entries
     for (let [ key, value ] of Object.entries(readCfg)) {
@@ -302,16 +301,16 @@ function makeRandomString(length) {
 }
 
 export function createTempDcrdConf(testnet) {
+  var dcrdConf = {};
   if (!fs.existsSync(dcrdCfg(getAppDataDirectory()))) {
     const port = testnet ? "19109" : "9109";
 
-    const dcrdConf = {
+    dcrdConf = {
       "Application Options":
       {
         rpcuser: makeRandomString(10),
         rpcpass: makeRandomString(10),
-        rpclisten: `127.0.0.1:${port}`,
-        network: testnet ? TESTNET : MAINNET,
+        rpclisten: `127.0.0.1:${port}`
       }
     };
     fs.writeFileSync(dcrdCfg(getAppDataDirectory()), ini.stringify(dcrdConf));
