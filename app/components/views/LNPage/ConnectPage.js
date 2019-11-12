@@ -1,6 +1,6 @@
 import { StandalonePage, StandaloneHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
-import { AccountsSelect } from "inputs";
+import { ReceiveAccountsSelect } from "inputs";
 import { PassphraseModalButton } from "buttons";
 import { lnPage } from "connectors";
 
@@ -65,7 +65,7 @@ class ConnectPage extends React.Component {
                   <T id="ln.connectPage.account" m="Account to use" />
                 </div>
                 <div className="account-list">
-                  <AccountsSelect
+                  <ReceiveAccountsSelect
                     account={account}
                     onChange={onChangeAccount}
                     showAccountsButton={false}
