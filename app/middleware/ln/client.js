@@ -10,7 +10,7 @@ const getServiceClient = (clientClass) => async (address, port, certPath, macaro
 
   const readFile = fname => new Promise((resolve, reject) => {
     var tries = 0;
-    var maxTries = 5;
+    var maxTries = 30;
     var wait = 1000;
 
     const readIfExists = () => {
