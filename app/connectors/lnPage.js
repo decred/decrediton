@@ -20,6 +20,7 @@ const mapStateToProps = selectorMap({
   info: sel.lnInfo,
   defaultAccount: sel.defaultSpendingAccount,
   lightningWalletExists: sel.lnWalletExists,
+  isMainNet: sel.isMainNet,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
