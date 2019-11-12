@@ -11,6 +11,7 @@ import { spawn } from "child_process";
 import isRunning from "is-running";
 import stringArgv from "string-argv";
 import { concat, isString } from "../fp";
+import * as ln from "wallet/ln";
 import webSocket from "ws";
 import path from "path";
 
@@ -89,18 +90,27 @@ export const closeDCRW = () => {
   }
 };
 
+// Send a shutdown request to the dcrlnd daemon. Only used in windows while
+// we don't have piperx/pipetx to command it.
+const rpcStopDcrlnd = async (creds) => {
+  logger.log("info", "Stopping dcrlnd daemon via RPC call");
+  let lnClient = await ln.getLightningClient(creds.address, creds.port, creds.certPath, creds. macaroonPath);
+  await ln.stopDaemon(lnClient);
+};
+
 export const closeDcrlnd = () => {
   if (dcrlndPID === -1) {
     // process is not started by decrediton
     return true;
   }
   if (isRunning(dcrlndPID) && os.platform() != "win32") {
-    logger.log("info", "Sending SIGINT to dcrd at pid:" + dcrlndPID);
+    logger.log("info", "Sending SIGINT to dcrlnd at pid:" + dcrlndPID);
     process.kill(dcrlndPID, "SIGINT");
     dcrlndPID = null;
     dcrlndCreds = null;
   } else if (require("is-running")(dcrlndPID)) {
     // TODO: needs piperx (and ideally pipetx) in dcrlnd
+    // For the moment we'll use the StopDaemon() rpc call in dcrlnd.
     /*
     try {
       const win32ipc = require("../node_modules/win32ipc/build/Release/win32ipc.node");
@@ -112,6 +122,9 @@ export const closeDcrlnd = () => {
       return false;
     }
     */
+    rpcStopDcrlnd(dcrlndCreds);
+    dcrlndPID = null;
+    dcrlndCreds = null;
   }
   return true;
 };
