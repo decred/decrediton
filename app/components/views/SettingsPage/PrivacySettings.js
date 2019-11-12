@@ -48,9 +48,9 @@ const PrivacySettings = ({
           onChange={toggle(EXTERNALREQUEST_NETWORK_STATUS)}
         />
         <AllowableRequestType
-          label={<T id="settings.privacy.stakepoolListing.label" m="Stakepool Listing" />}
+          label={<T id="settings.privacy.stakepoolListing.label" m="VSP Listing" />}
           id="stakepool"
-          description={<T id="settings.privacy.stakepoolListing.description" m="List of currently available stakepools from decred.org" />}
+          description={<T id="settings.privacy.stakepoolListing.description" m="List of currently available VSPs from decred.org" />}
           checked={tempSettings.allowedExternalRequests.indexOf(EXTERNALREQUEST_STAKEPOOL_LISTING) > -1}
           onChange={toggle(EXTERNALREQUEST_STAKEPOOL_LISTING)}
         />

@@ -13,7 +13,7 @@ const StakePoolsList = ({
   <>
     <div className="stakepool-flex-height">
       <div className="stakepool-content-nest-from-address">
-        <div className="stakepool-content-nest-prefix-configured"><T id="stakepools.list.title" m="Configured stake pools:" /></div>
+        <div className="stakepool-content-nest-prefix-configured"><T id="stakepools.list.title" m="Configured VSP:" /></div>
       </div>
       <div id="dynamicInput">
         {configuredStakePools.map(({
@@ -40,10 +40,10 @@ const StakePoolsList = ({
               <div className="stakepool-content-nest-prefix-settings"></div>
               <div className="stakepool-content-nest-content-settings">
                 <RemoveStakePoolButton
-                  modalTitle={<T id="stakepools.list.removeConfirmTitle" m="Remove StakePool" />}
+                  modalTitle={<T id="stakepools.list.removeConfirmTitle" m="Remove VSP" />}
                   buttonLabel={<T id="stakepools.list.btnRemove" m="Remove"/>}
                   modalContent={
-                    <T id="stakepools.list.confirmRemove" m="Do you confirm removal of stakepool {stakepool}?"
+                    <T id="stakepools.list.confirmRemove" m="Do you confirm removal of VSP {stakepool}?"
                       values={{ stakepool: (<span className="mono">{Host}</span>) }}/>}
                   onSubmit={() => onRemoveStakePool(Host)}
                 />
@@ -54,7 +54,7 @@ const StakePoolsList = ({
       </div>
     </div>
     <KeyBlueButton className="stakepool-content-send" disabled={rescanRequest} onClick={onShowAddStakePool}>
-      <T id="stakepools.list.form.submit" m="Add stakepool" />
+      <T id="stakepools.list.form.submit" m="Add VSP" />
     </KeyBlueButton>
     <SlateGrayButton
       className="stakepool-hide-config"

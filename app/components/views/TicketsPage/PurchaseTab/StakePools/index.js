@@ -47,9 +47,9 @@ class StakePools extends React.Component {
   renderStakepoolListingDisabled() {
     return (
       <div>
-        <p><T id="stake.enableStakePoolListing.description" m="StakePool listing from external API endpoint is currently disabled. Please enable the access to this third party service or manually configure the stakepool." /></p>
+        <p><T id="stake.enableStakePoolListing.description" m="VSP listing from external API endpoint is currently disabled. Please enable the access to this third party service or manually configure the VSP." /></p>
         <EnableExternalRequestButton requestType={EXTERNALREQUEST_STAKEPOOL_LISTING}>
-          <T id="stake.enableStakePoolListing.button" m="Enable StakePool Listing" />
+          <T id="stake.enableStakePoolListing.button" m="Enable VSP Listing" />
         </EnableExternalRequestButton>
       </div>
     );
@@ -59,7 +59,7 @@ class StakePools extends React.Component {
     return (
       <T
         id="stake.noAvailableStakepools"
-        m="No stakepool found. Check your internet connection or {link} to see if the StakePool API is down."
+        m="No VSP found. Check your internet connection or {link} to see if the VSP API is down."
         values={{
           link: (<a className="stakepool-link" onClick={() => shell.openExternal("https://api.decred.org/?c=gsd")}><T id="stake.discoverStakeOoolsAPILink" m="this link" /></a>)
         }} />

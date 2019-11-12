@@ -26,7 +26,7 @@ export default ({ setupStandardPrivacy, setupDisabledPrivacy, setupCustomPrivacy
       <PrivacyOption
         title={<T id="privacy.options.standard.title" m="Standard" />}
         icon="standard"
-        description={<T id="privacy.options.standard.description" m="Enables connections to most services for a better user experience and full access to features (such as version update, stakepool listing, politeia, etc). Recommended for most users." />}
+        description={<T id="privacy.options.standard.description" m="Enables connections to most services for a better user experience and full access to features (such as version update, VSP listing, politeia, etc). Recommended for most users." />}
         onClick={setupStandardPrivacy}
       />
 

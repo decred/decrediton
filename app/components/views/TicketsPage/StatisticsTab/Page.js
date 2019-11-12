@@ -11,7 +11,7 @@ import { Tooltip, Subtitle } from "shared";
 const subtitleMenu = ({ allStakePoolStats, hasStats }) => (
   <div className="my-tickets-stats-links">
     { allStakePoolStats.length > 0 &&
-      <Tooltip text={<T id="mytickets.statistics.stakepoolstats.title" m="Stake Pool" />}>
+      <Tooltip text={<T id="mytickets.statistics.stakepoolstats.title" m="VSP" />}>
         <Link to="/tickets/statistics/stakepool" activeClassName="my-tickets-active-chart-link stakepool" className="stakepool"/>
       </Tooltip>
     }

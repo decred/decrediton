@@ -81,9 +81,9 @@ class StakePoolsBody extends React.Component {
     if (this.getNoAvailableStakepools() && !this.getStakepoolListingEnabled()) {
       return (
         <div>
-          <p><T id="stake.enableStakePoolListing.description" m="StakePool listing from external API endpoint is currently disabled. Please enable the access to this third party service or manually configure the stakepool." /></p>
+          <p><T id="stake.enableStakePoolListing.description" m="VSP listing from external API endpoint is currently disabled. Please enable the access to this third party service or manually configure the VSP." /></p>
           <EnableExternalRequestButton requestType={EXTERNALREQUEST_STAKEPOOL_LISTING}>
-            <T id="stake.enableStakePoolListing.button" m="Enable StakePool Listing" />
+            <T id="stake.enableStakePoolListing.button" m="Enable VSP Listing" />
           </EnableExternalRequestButton>
         </div>
       );

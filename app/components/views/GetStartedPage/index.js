@@ -229,7 +229,7 @@ class GetStartedPage extends React.Component {
         Form = StartRPCBody;
         break;
       case 7:
-        text = <T id="getStarted.header.stakePools.meta" m="Import StakePools" />;
+        text = <T id="getStarted.header.stakePools.meta" m="Import VSP" />;
         Form = StakePoolsBody;
         break;
       default:
