@@ -26,28 +26,26 @@ const StakeInfoDisplay = ({
 }) => (
   <div className="stake-info-area">
     <div className="is-row stake-info-row-area" onClick={isShowingDetails ? onHideStakeInfo : onShowStakeInfo}>
-      <div className="is-row">
+      <Column
+        className={"stake-info"}
+        label={<T id="stake.ownMempoolTickets" m="Own Mempool Tickets" />}
+        value={<FormattedNumber value={ownMempoolTicketsCount} />} />
+      {!sidebarOnBottom &&
         <Column
           className={"stake-info"}
-          label={<T id="stake.ownMempoolTickets" m="Own Mempool Tickets" />}
-          value={<FormattedNumber value={ownMempoolTicketsCount} />} />
-        {!sidebarOnBottom &&
-          <Column
-            className={"stake-info"}
-            label={<T id="stake.immatureTickets" m="Immature Tickets" />}
-            value={<FormattedNumber value={immatureTicketsCount} />} />
-        }
-        {isSPV ?
-          <Column
-            className={"stake-info"}
-            label={<T id="stake.unspentTickets" m="Unspent Tickets" />}
-            value={<FormattedNumber value={unspentTicketsCount} />} /> :
-          <Column
-            className={"stake-info"}
-            label={<T id="stake.liveTickets" m="Live Tickets" />}
-            value={<FormattedNumber value={liveTicketsCount} />} />
-        }
-      </div>
+          label={<T id="stake.immatureTickets" m="Immature Tickets" />}
+          value={<FormattedNumber value={immatureTicketsCount} />} />
+      }
+      {isSPV ?
+        <Column
+          className={"stake-info"}
+          label={<T id="stake.unspentTickets" m="Unspent Tickets" />}
+          value={<FormattedNumber value={unspentTicketsCount} />} /> :
+        <Column
+          className={"stake-info"}
+          label={<T id="stake.liveTickets" m="Live Tickets" />}
+          value={<FormattedNumber value={liveTicketsCount} />} />
+      }
       <VerticalExpand
         expanded={!!isShowingDetails}
       />
