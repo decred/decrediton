@@ -35,6 +35,7 @@ export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord, onReturnToNewSeed
                     disabled={seedWord.show}
                     onChange={onChangeSeedWord}
                     seedWord={seedWord}
+                    className="Select-menu-with-arrow"
                     value={{ name: seedWord.word }}
                   />
                 }

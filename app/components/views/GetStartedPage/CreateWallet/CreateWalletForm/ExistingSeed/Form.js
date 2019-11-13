@@ -42,6 +42,7 @@ const ExistingSeedForm = ({
                       seedWord={seedWord}
                       value={{ name: seedWord.word }}
                       key={seedWord.index}
+                      className="Select-menu-with-arrow"
                       onPasteFromClipboard={pasteFromClipboard}
                     />
                   </span>
