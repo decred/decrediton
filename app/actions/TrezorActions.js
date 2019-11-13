@@ -472,7 +472,7 @@ export const walletTxToBtcjsTx = (tx, changeIndex, inputTxs) => async (dispatch,
     if (!addrValidResp.getIsValid()) throw "Not a valid address: " + addr;
     let address_n = null;
 
-    if (outp.getIndex() === changeIndex) {
+    if (outp.getIndex() === changeIndex && addrValidResp.getIsMine()) {
       const addrIndex = addrValidResp.getIndex();
       const addrBranch = addrValidResp.getIsInternal() ? 1 : 0;
       address_n = addressPath(addrIndex, addrBranch, WALLET_ACCOUNT,
