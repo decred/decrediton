@@ -65,10 +65,11 @@ class VerticalAccordion extends React.Component {
       show ? "active" : "",
       className || "",
     ].join(" ");
+    const childrenClassNames = show ? "active" : "";
     const defaultStyles = this.getDefaultStyles();
     const styles = this.chosenStyles();
     const tmProps = { defaultStyles, styles };
-    const childrenMotion = children => h("div", { className: classNames, }, children.map(({ key, style, data }) => {
+    const childrenMotion = children => h("div", { className: childrenClassNames, }, children.map(({ key, style, data }) => {
       const childProps = { ...{ key }, style };
       return h("div", childProps,
         h("div", { ref: el => el && (this.childRef = el) }, data)
