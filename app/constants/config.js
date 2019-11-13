@@ -22,6 +22,7 @@ export const LAST_HEIGHT = "last_height";
 export const APPDATA = "appdata_path";
 export const DISABLE_HARDWARE_ACCEL = "disable_hardware_accel";
 export const LN_ENABLED = "ln_enabled";
+export const TREZOR_DEBUG = "trezor_debug";
 
 export const RPCUSER = "rpc_user";
 export const RPCPASS = "rpc_pass";
@@ -60,7 +61,7 @@ export const INITIAL_VALUES = {
   [TIMEZONE]: "local",
   [LAST_HEIGHT]: 0,
   [APPDATA]: "",
+  [TREZOR_DEBUG]: false,
   [DISABLE_HARDWARE_ACCEL]: false,
   [LN_ENABLED]: false,
 };
-
