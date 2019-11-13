@@ -2,17 +2,19 @@
 //  Global variables
 ////////////////////////////////////
 
-@sidebar-width: 296px;
-@sidebar-width-reduced: 60px;
-@disabled-box-shadow-color: rgba(0, 0, 0, 0.1);
-@disabled-box-shadow: 0px 1px 1px @disabled-box-shadow-color;
+:root {
+  --sidebar-width: 296px;
+  --sidebar-width-reduced: 60px;
+  --disabled-box-shadow-color: rgba(0, 0, 0, 0.1);
+  --disabled-box-shadow: 0px 1px 1px var(--disabled-box-shadow-color);
 
-@font-family-monospaced: "Inconsolata", monospace;
-@font-family-regular: "Source Sans Pro", sans-serif;
-@font-family-regular-semi-bold: "Source Sans Pro Semi Bold", sans-serif;
+  --font-family-monospaced: "Inconsolata", monospace;
+  --font-family-regular: "Source Sans Pro", sans-serif;
+  --font-family-regular-semi-bold: "Source Sans Pro Semi Bold", sans-serif;
 
-@input-transition-time: 230ms;
-@input-timing-function: ease-in-out;
+  --input-transition-time: 230ms;
+  --input-timing-function: ease-in-out;
+}
 
 ////////////////////////////////////
 //  Global mixin classes
@@ -54,7 +56,7 @@
 ////////////////////////////////////
 
 body {
-  font-family: @font-family-regular;
+  font-family: var(--font-family-regular);
   font-size: 14px;
   line-height: 20px;
   font-weight: 400;
@@ -76,7 +78,7 @@ main {
 }
 
 .mono {
-  font-family: Inconsolata, monospace;
+  font-family: var(--font-family-monospace);
 }
 
 .shutdown-text {

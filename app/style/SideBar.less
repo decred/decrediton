@@ -29,14 +29,14 @@
 .sidebar {
   display: flex;
   flex-direction: column;
-  width: @sidebar-width;
+  width: var(--sidebar-width);
   z-index: 99;
   transition: width 100ms cubic-bezier(0.86, 0, 0.07, 1);
   box-shadow: 5px 0 21px rgba(9, 20, 64, 0.21);
   background-color: var(--sidebar-color);
 
   &.sidebar-reduced {
-    width: @sidebar-width-reduced;
+    width: var(--sidebar-width-reduced);
   }
   
   &.sidebar-on-bottom {
@@ -105,7 +105,7 @@
 }
 
 .sidebar-menu-total-balance-extended-bottom-account-number {
-  font-family: Inconsolata, monospace;
+  font-family: var(--font-family-monospace);
   color: var(--input-color-default);
   font-size: 15px;
 }
@@ -141,7 +141,7 @@
 
 .sidebar-menu-bottom-total-balance-short-value {
   float: right;
-  font-family: Inconsolata, monospace;
+  font-family: var(--font-family-monospace);
   color: var(--sidebar-bottom-light-text-color);
   font-size: 13px;
   text-align: right;
@@ -176,7 +176,7 @@
 }
 
 .sidebar-menu-bottom-latest-block-number {
-  font-family: Inconsolata, monospace;
+  font-family: var(--font-family-monospace);
   color: var(--sidebar-bottom-light-text-color);
 }
 
