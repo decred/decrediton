@@ -58,21 +58,23 @@ const HomePage = ({
   return (
     <>
       <div className="overview-header is-row">
-        <div className="overview-balance-wrapper">
-          <Balance
-            classNameWrapper="overview-balance"
-            classNameUnit="overview-balance-unit"
-            amount={totalBalance} />
-          <div className="overview-balance-label">
-            <T id="home.currentTotalBalanceLabel" m="Current Total Balance" />
+        <div className="overview-header-wrapper">
+          <div className="overview-balance-wrapper">
+            <Balance
+              classNameWrapper="overview-balance"
+              classNameUnit="overview-balance-unit"
+              amount={totalBalance} />
+            <div className="overview-balance-label">
+              <T id="home.currentTotalBalanceLabel" m="Current Total Balance" />
+            </div>
           </div>
-        </div>
 
-        <RoutedTabsHeader tabs={[
-          RoutedTab("/home/balance", tabLink(0)),
-          RoutedTab("/home/tickets", tabLink(1)),
-          RoutedTab("/home/transactions", tabLink(2)),
-        ]} />
+          <RoutedTabsHeader tabs={[
+            RoutedTab("/home/balance", tabLink(0)),
+            RoutedTab("/home/tickets", tabLink(1)),
+            RoutedTab("/home/transactions", tabLink(2)),
+          ]} />
+        </div>
       </div>
 
       <Switch>
