@@ -14,7 +14,6 @@ const SendPage = ({
   estimatedFee,
   estimatedSignedSize,
   isValid,
-  onAttemptSignTransaction,
   getStyles,
   willLeave,
   willEnter,
@@ -63,8 +62,7 @@ const SendPage = ({
         <SendTransactionButton
           disabled={!isValid}
           showModal={showPassphraseModal}
-          onShow={resetShowPassphraseModal}
-          onSubmit={onAttemptSignTransaction} >
+          onShow={resetShowPassphraseModal} >
           <div className="passphrase-modal-confirm-send">
             { !isSendSelf ?
               <>

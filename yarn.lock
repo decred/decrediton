@@ -2309,7 +2309,7 @@ bitcoin-script@^0.1.1:
     sha1 "^1.1.0"
     sha256 "^0.1.1"
 
-bitcoinjs-lib-zcash@^3.5.2:
+bitcoinjs-lib-zcash@^3.6.1:
   version "3.6.1"
   resolved "https://registry.yarnpkg.com/bitcoinjs-lib-zcash/-/bitcoinjs-lib-zcash-3.6.1.tgz#563fe1a4c7255aa1bf07bb0904ec1de072cbc098"
   integrity sha512-p09YKY2l0sNf1LjJOO82s4tgxLNdNTwOMN1yRzFm3ozGC87Odx1iq8vD6XTBs/g3nAOsXlmD2VJc2hHCHyH7xg==
@@ -10436,13 +10436,13 @@ trezor-link@1.6.0:
     semver-compare "^1.0.0"
     whatwg-fetch "0.11.0"
 
-trezor.js@^6.19.4:
-  version "6.19.4"
-  resolved "https://registry.yarnpkg.com/trezor.js/-/trezor.js-6.19.4.tgz#d9a0a79afddccca6758173c38e6983cf0be2fbd7"
-  integrity sha512-p1WPTk6dvmmVKWCw7a1n3mSjq6Tv+s/GFatIHw9xsVhKnc4LfKR3YibS7S/QLhwaf1V/0BU4zFEpRf1BSau1NA==
+trezor.js@^8.1.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/trezor.js/-/trezor.js-8.1.0.tgz#c93386ff170825d172a729dca82ea928511288c2"
+  integrity sha512-yDpY3hHHFw8b0yFot3hsYKGWPdghrm28Ztz6nwqnKifFojvNh2FaBDJEG6xrr7ef0nhUutmR3SXWca+9V5JPGg==
   dependencies:
     bchaddrjs "^0.2.1"
-    bitcoinjs-lib-zcash "^3.5.2"
+    bitcoinjs-lib-zcash "^3.6.1"
     ecurve "^1.0.2"
     node-fetch "^1.6.0"
     randombytes "^2.0.1"

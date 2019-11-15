@@ -10,7 +10,7 @@ import { getVersionServiceAttempt } from "./VersionActions";
 import { getAvailableWallets, WALLETREMOVED_FAILED } from "./DaemonActions";
 import { getWalletCfg, getDcrdCert } from "config";
 import { getWalletPath } from "main_dev/paths";
-import { isTestNet } from "selectors";
+import { isTestNet, isSPV } from "selectors";
 import { SpvSyncRequest, SyncNotificationType, RpcSyncRequest } from "../middleware/walletrpc/api_pb";
 import { push as pushHistory } from "react-router-redux";
 import { stopNotifcations } from "./NotificationActions";
@@ -140,7 +140,11 @@ export const createWatchOnlyWalletRequest = (extendedPubKey, pubPass ="") => (di
       config.delete("discoveraccounts");
       dispatch({ response: {}, type: CREATEWATCHONLYWALLET_SUCCESS });
       dispatch(getWalletServiceAttempt());
-      dispatch(startRpcRequestFunc());
+      if (isSPV(getState())) {
+        dispatch(spvSyncAttempt());
+      } else {
+        dispatch(startRpcRequestFunc());
+      }
     })
     .catch(error => dispatch({ error, type: CREATEWATCHONLYWALLET_FAILED }));
 };

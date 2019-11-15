@@ -249,7 +249,7 @@
     "string-argv": "0.1.1",
     "stylelint": "^10.1.0",
     "timezone-mock": "^1.0.5",
-    "trezor.js": "^6.19.4",
+    "trezor.js": "^8.1.0",
     "winston": "^2.3.1"
   },
   "optionalDependencies": {
