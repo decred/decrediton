@@ -4,6 +4,7 @@
 .overview-header {
   padding-left: 63px;
   padding-top: 47px; 
+  padding-right: 56px;
   justify-content: space-between;
   background-color: var(--background-back-color);
 
@@ -16,6 +17,12 @@
   .tabs > .tab > a.active {
     border: 1px solid var(--home-content-link);
     border-radius: 3px;
+  }
+
+  .overview-header-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
   }
 }
 
@@ -219,6 +226,12 @@
   .overview-header {
     padding-left: 11px;
     padding-top: 40px;
+    padding-right: 0;
+
+    .overview-header-wrapper {
+      width: 394px;  
+      min-width: 394px;  
+    }
 
     .tabs > .tab > a {
       padding: 0;
