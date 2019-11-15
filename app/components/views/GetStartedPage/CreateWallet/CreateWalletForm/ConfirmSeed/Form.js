@@ -4,9 +4,9 @@ import SingleSeedWordEntry from "../SingleSeedWordEntry";
 import WalletHeader from "../createWalletHeader";
 import { ConfirmSeedMsg } from "../../../messages";
 
-export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord, onReturnToNewSeed }) => (
+export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord }) => (
   <>
-    <WalletHeader {...{ onBack: onReturnToNewSeed }} />
+    <WalletHeader />
     <div className="seed is-row">
       <div className="is-row confirm-seed-label-text seed">
         <InfoDocFieldModalButton document="SeedInfo" />
