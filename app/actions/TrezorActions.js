@@ -6,7 +6,7 @@ import fs from "fs";
 import { sprintf } from "sprintf-js";
 import { rawHashToHex, rawToHex, hexToRaw, str2utf8hex, hex2b64 } from "helpers";
 import { publishTransactionAttempt } from "./ControlActions";
-import { model1_decred_homescreen } from "helpers/trezor";
+import { model1_decred_homescreen, messages } from "helpers/trezor";
 import { getWalletCfg } from "config";
 
 import { EXTERNALREQUEST_TREZOR_BRIDGE } from "main_dev/externalRequests";
@@ -92,12 +92,14 @@ export const loadDeviceList = () => (dispatch, getState) => {
     dispatch({ type: TRZ_LOADDEVICELIST_ATTEMPT });
     const debug = getState().trezor.debug;
 
-    // TODO: decide whether we want to provide our own config blob.
-    const configUrl = "https://wallet.trezor.io/data/config_signed.bin?"
-      + Date.now();
+    // Convert the protocol buffers definition (i.e. the messages of the comm
+    // protocol to the bridge/device) to a string so that the transport can be
+    // configured with it.
+    const config = JSON.stringify(messages);
 
-    const opts = { debug, debugInfo: debug, configUrl,
-      transport: new trezorTransports.BridgeV2() };
+    trezorTransports.BridgeV2.setFetch(fetch, true);
+    const transport = new trezorTransports.BridgeV2(null, null, null);
+    const opts = { debug, debugInfo: debug, config, transport };
     const devList = new trezorjs.DeviceList(opts);
     let resolvedTransport = false;
 
