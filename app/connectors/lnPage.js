@@ -6,6 +6,7 @@ import * as sel from "selectors";
 
 const mapStateToProps = selectorMap({
   lnActive: sel.lnActive,
+  startAttempt: sel.lnStartAttempt,
   connectAttempt: sel.lnConnectAttempt,
   walletBalances: sel.lnWalletBalances,
   channelBalances: sel.lnChannelBalances,
@@ -19,6 +20,7 @@ const mapStateToProps = selectorMap({
   info: sel.lnInfo,
   defaultAccount: sel.defaultSpendingAccount,
   lightningWalletExists: sel.lnWalletExists,
+  isMainNet: sel.isMainNet,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

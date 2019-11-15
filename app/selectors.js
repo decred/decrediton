@@ -1023,6 +1023,7 @@ export const trezorWalletCreationMasterPubkeyAttempt = get([ "trezor", "walletCr
 
 export const lnEnabled = bool(and(get([ "ln", "enabled" ]), not(isWatchingOnly), not(isTrezor), not(isSPV)));
 export const lnActive = bool(get([ "ln", "active" ]));
+export const lnStartAttempt = bool(get([ "ln", "startAttempt" ]));
 export const lnConnectAttempt = bool(get([ "ln", "connectAttempt" ]));
 export const lnWalletExists = bool(get([ "ln", "exists" ]));
 export const lnInfo = get([ "ln", "info" ]);

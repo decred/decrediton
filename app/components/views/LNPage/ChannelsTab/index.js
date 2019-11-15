@@ -67,7 +67,7 @@ class ChannelsTab extends React.Component {
     const { balance, pendingOpenBalance, maxInboundAmount,
       maxOutboundAmount } = this.props.channelBalances;
 
-    const { channels, pendingChannels, closedChannels } = this.props;
+    const { channels, pendingChannels, closedChannels, isMainNet } = this.props;
     const { node, localAmt, pushAmt, opening, canOpen,
       detailedChannel } = this.state;
     const { onNodeChanged, onLocalAmtChanged, onPushAmtChanged,
@@ -88,6 +88,7 @@ class ChannelsTab extends React.Component {
         opening={opening}
         canOpen={canOpen}
         detailedChannel={detailedChannel}
+        testnet={isMainNet}
         onNodeChanged={onNodeChanged}
         onLocalAmtChanged={onLocalAmtChanged}
         onPushAmtChanged={onPushAmtChanged}

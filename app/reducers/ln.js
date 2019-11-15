@@ -1,4 +1,5 @@
 import {
+  LNWALLET_STARTDCRLND_ATTEMPT, LNWALLET_STARTDCRLND_FAILED, LNWALLET_STARTDCRLND_SUCCESS,
   LNWALLET_INFO_UPDATED,
   LNWALLET_CONNECT_ATTEMPT, LNWALLET_CONNECT_SUCCESS, LNWALLET_CONNECT_FAILED,
   LNWALLET_BALANCE_UPDATED, LNWALLET_CHANNELBALANCE_UPDATED, LNWALLET_CHANNELLIST_UPDATED,
@@ -25,6 +26,21 @@ function delOutstandingPayment(oldOut, rhashHex) {
 
 export default function ln(state = {}, action) {
   switch (action.type) {
+  case LNWALLET_STARTDCRLND_ATTEMPT:
+    return {
+      ...state,
+      startAttempt: true,
+    };
+  case LNWALLET_STARTDCRLND_FAILED:
+    return {
+      ...state,
+      startAttempt: false,
+    };
+  case LNWALLET_STARTDCRLND_SUCCESS:
+    return {
+      ...state,
+      startAttempt: false,
+    };
   case LNWALLET_INFO_UPDATED:
     return {
       ...state,

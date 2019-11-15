@@ -219,3 +219,9 @@ export const unlockWallet = (wuClient, passphrase) => {
   return new Promise((resolve, reject) => wuClient.unlockWallet(request,
     (err, resp) => err ? reject(err) : resolve(resp)));
 };
+
+export const stopDaemon = (client) => {
+  const request = new pb.StopRequest();
+  return new Promise((resolve, reject) => client.stopDaemon(request,
+    (err, resp) => err ? reject(err) : resolve(resp)));
+};

@@ -19,6 +19,8 @@ const Logs = ({
   onShowDecreditonLogs,
   onHideDecreditonLogs,
   lnActive,
+  lnConnectAttempt,
+  lnStartAttempt,
   dcrlndLogs,
   showDcrlndLogs,
   onShowDcrlndLogs,
@@ -74,7 +76,7 @@ const Logs = ({
         </div>
       </div>
     }
-    {!lnActive ? null : !showDcrlndLogs ?
+    {(!lnActive && !lnConnectAttempt && !lnStartAttempt) ? null : !showDcrlndLogs ?
       <div className="log-area hidden">
         <div className="log-area-title hidden" onClick={onShowDcrlndLogs}>
           <T id="help.logs.dcrlnd" m="dcrlnd" />

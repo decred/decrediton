@@ -19,6 +19,7 @@ export default ({
   pushAmt,
   opening,
   canOpen,
+  isMainNet,
   detailedChannel,
   onNodeChanged,
   onLocalAmtChanged,
@@ -50,10 +51,12 @@ export default ({
         <T id="ln.openChannel.localAmt" m="Total Funding Amount" />
         <DcrInput amount={localAmt} onChange={onLocalAmtChanged} />
       </div>
-      <div className="push-amt">
-        <T id="ln.openChannel.pushAmt" m="Push Amount (optional)" />
-        <DcrInput amount={pushAmt} onChange={onPushAmtChanged} />
-      </div>
+      { isMainNet ? null : // Not allowing to push atoms in mainnet as a precaution from inadvertent user action for the moment.
+        <div className="push-amt">
+          <T id="ln.openChannel.pushAmt" m="Push Amount (optional)" />
+          <DcrInput amount={pushAmt} onChange={onPushAmtChanged} />
+        </div>
+      }
       <KeyBlueButton className="open-btn" onClick={onOpenChannel} loading={opening} disabled={opening || !canOpen}>
         <T id="ln.openChannel.openBtn" m="Open" />
       </KeyBlueButton>
