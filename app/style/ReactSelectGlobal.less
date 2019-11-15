@@ -52,7 +52,7 @@
   overflow: hidden;
   position: relative;
   width: 100%;
-  transition: all @input-transition-time @input-timing-function;
+  transition: all var(--input-transition-time) var(--input-timing-function);
 }
 
 .is-open .Select-control .Select-input:focus {
@@ -212,7 +212,7 @@
   height: 0;
   width: 0;
   position: relative;
-  transition: all @input-transition-time @input-timing-function;
+  transition: all var(--input-transition-time) var(--input-timing-function);
 }
 
 .Select-control:hover:not(:disabled) {
@@ -278,7 +278,7 @@
   width: 100%;
   z-index: 101;
   -webkit-overflow-scrolling: touch;
-  transition: all @input-transition-time @input-timing-function;
+  transition: all var(--input-transition-time) var(--input-timing-function);
 }
 
 .Select-menu-with-arrow .Select-menu-outer {
@@ -413,7 +413,7 @@
 
 .Select--multi.is-disabled .Select-value {
   background-color: var(--disabled-background-color);
-  box-shadow: @disabled-box-shadow;
+  box-shadow: var(--disabled-box-shadow);
   color: var(--disabled-color);
 }
 
@@ -465,7 +465,7 @@
 }
 
 .accounts-select-value .balance-small {
-  transition: all @input-transition-time @input-timing-function;
+  transition: all var(--input-transition-time) var(--input-timing-function);
   color: var(--input-color-default);
 }
 
