@@ -102,6 +102,7 @@ export const getNextAccountAttempt = (passphrase, accountName) => (dispatch, get
       setTimeout( () => dispatch({
         getNextAccountResponse, type: GETNEXTACCOUNT_SUCCESS
       }), 1000);
+      return getNextAccountResponse;
     })
     .catch(error => dispatch({ error, type: GETNEXTACCOUNT_FAILED }));
 };
@@ -525,4 +526,3 @@ export const getAccountExtendedKeyAttempt = (accountNumber) => (dispatch, getSta
     })
     .catch(error => dispatch({ error, type: GETACCOUNTEXTENDEDKEY_FAILED }));
 };
-

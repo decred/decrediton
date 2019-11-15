@@ -4,6 +4,7 @@ import * as wallet from "wallet";
 import { ipcRenderer } from "electron";
 import { getWalletCfg } from "../config";
 import { getWalletPath } from "main_dev/paths";
+import { getNextAccountAttempt } from "./ControlActions";
 
 export const CLOSETYPE_COOPERATIVE_CLOSE = 0;
 export const CLOSETYPE_LOCAL_FORCE_CLOSE = 1;
@@ -15,6 +16,10 @@ export const CLOSETYPE_ABANDONED = 5;
 export const LNWALLET_STARTDCRLND_ATTEMPT = "LNWALLET_STARTDCRLND_ATTEMPT";
 export const LNWALLET_STARTDCRLND_FAILED = "LNWALLET_STARTDCRLND_FAILED";
 export const LNWALLET_STARTDCRLND_SUCCESS = "LNWALLET_STARTDCRLND_SUCCESS";
+
+// Meant to be used in the walletAccount parameter as a guard to signal we should
+// create a new wallet account for LN operations.
+export const CREATE_LN_ACCOUNT = "**create ln account**";
 
 export const startDcrlnd = (passphrase, autopilotEnabled, walletAccount) => async (dispatch, getState) => {
 
@@ -31,8 +36,24 @@ export const startDcrlnd = (passphrase, autopilotEnabled, walletAccount) => asyn
   const lnCfg = dispatch(getLNWalletConfig());
   const cliOptions = ipcRenderer.sendSync("get-cli-options");
 
-  if (typeof walletAccount != "number") {
-    walletAccount = lnCfg.account;
+  // Use the stored account if it exists, the specified account if it's a number
+  // or create an account specifically for LN usage.
+  let lnAccount = lnCfg.account;
+  if (walletAccount === CREATE_LN_ACCOUNT) {
+    try {
+      const acctResp = await dispatch(getNextAccountAttempt(passphrase, "LN Account"));
+      if (acctResp instanceof Error) {
+        throw acctResp;
+      } else if (acctResp.error) {
+        throw acctResp.error;
+      }
+      lnAccount = acctResp.getAccountNumber();
+    } catch (error) {
+      dispatch({ error, type: LNWALLET_STARTDCRLND_FAILED });
+      throw error;
+    }
+  } else if (typeof walletAccount === "number") {
+    lnAccount = walletAccount;
   }
 
   if (cliOptions.rpcPresent) {
@@ -61,7 +82,7 @@ export const startDcrlnd = (passphrase, autopilotEnabled, walletAccount) => asyn
   }
 
   try {
-    const res = ipcRenderer.sendSync("start-dcrlnd", walletAccount, walletPort,
+    const res = ipcRenderer.sendSync("start-dcrlnd", lnAccount, walletPort,
       rpcCreds, walletPath, isTestnet, autopilotEnabled);
     if (typeof res === "string" || res instanceof Error) {
       throw res;
@@ -79,7 +100,7 @@ export const startDcrlnd = (passphrase, autopilotEnabled, walletAccount) => asyn
       }
     }
 
-    await dispatch(connectToLNWallet(res.address, res.port, res.certPath, res.macaroonPath, walletAccount));
+    await dispatch(connectToLNWallet(res.address, res.port, res.certPath, res.macaroonPath, lnAccount));
     dispatch({ type: LNWALLET_STARTDCRLND_SUCCESS });
   } catch (error) {
     dispatch({ error, type: LNWALLET_STARTDCRLND_FAILED });
