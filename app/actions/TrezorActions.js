@@ -756,6 +756,24 @@ export const getWalletCreationMasterPubKey = () => async (dispatch, getState) =>
   const chainParams = selectors.chainParams(getState());
 
   try {
+    // Check that the firmware running in this trezor has the seed constant fix.
+    const features = await deviceRun(dispatch, getState, device, async session => {
+      const resp = await session.getFeatures();
+      return resp.message;
+    });
+    const versionLessThan = (wantMajor, wantMinor) =>
+      (features.major_version < wantMajor) ||
+      (features.major_version == wantMajor && features.minor_version < wantMinor);
+    if (features.model == 1 && versionLessThan(1, 8)) {
+      throw new Error("Trezor Model One needs to run on firmware >= 1.8.0. Found " +
+        features.major_version + "." + features.minor_version + "." + features.patch_version);
+    } else if (features.model == "T" && versionLessThan(2, 1)) {
+      throw new Error("Trezor Model T needs to run on firmware >= 2.1.0. Found "+
+        features.major_version + "." + features.minor_version + "." + features.patch_version);
+    } else if (!features.model) {
+      throw new Error("Unknown firmware model/version");
+    }
+
     const path = accountPath(WALLET_ACCOUNT, chainParams.HDCoinType);
 
     const masterPubKey = await deviceRun(dispatch, getState, device, async session => {
