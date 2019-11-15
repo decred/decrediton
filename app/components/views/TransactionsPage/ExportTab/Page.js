@@ -49,11 +49,6 @@ const ExportPage =
               onChange={(value) => setDestinationFile(value)}
             />
           </InlineField>
-          <div className="export-area-button-wrapper">
-            <KeyBlueButton onClick={exportCSV} disabled={exportingData || !destinationFile} loading={exportingData}>
-              <T id="export.btnExport" m="Export" />
-            </KeyBlueButton>
-          </div>
         </div>
         <div  className={[ "export-area-right",!expanded && "export-info-not-expanded " ].join(" ")} onClick={expandFields}>
           <div className={expanded ? "vertical-expand expanded" : "vertical-expand"}/>
@@ -70,6 +65,11 @@ const ExportPage =
             </div>
           }
         </div>
+      </div>
+      <div className="export-area-button-wrapper">
+        <KeyBlueButton onClick={exportCSV} disabled={exportingData || !destinationFile} loading={exportingData}>
+          <T id="export.btnExport" m="Export" />
+        </KeyBlueButton>
       </div>
     </>
   );
