@@ -1,6 +1,7 @@
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { TextInput } from "inputs";
 import { Subtitle } from "shared";
+import cx from "classnames";
 
 const messages = defineMessages({
   addressFieldPlaceholder: {
@@ -59,7 +60,7 @@ const ValidateAddressForm = ({
       <div className="validate-address-form-label">
         <T id="securitycenter.validate.field.address.label" m="Address"/>
       </div>
-      <div className="validate-address-form-address">
+      <div className={cx("validate-address-form-address", address && validateAddressSuccess && "valid-address")}>
         <TextInput
           value={address}
           placeholder={intl.formatMessage(messages.addressFieldPlaceholder)}
