@@ -3,9 +3,11 @@
 
 .receive-content-nest {
   background-color: var(--background-back-color);
-  padding: 14px 20px 20px 40px;
+  padding: 14px 20px 20px 35px;
   float: left;
-  width: 680px;
+  width: 685px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .receive-content-nest-prefix {
@@ -16,16 +18,21 @@
   font-size: 19px;
   line-height: 24px;
   text-transform: capitalize;
+
+  &.prefix-short {
+    display:none;
+  }
 }
 
-.receive-content-nest-for-address {
-  float: left;
+.receive-content-nest-address-and-qr {
+  display: flex;
+  flex-direction: column;
 }
 
 .receive-select-account-input {
   .inline-block-mixin;
 
-  width: 315px;
+  width: 308px;
   .accounts-select {
     width: 285px;
     margin-right: 20px;
@@ -34,28 +41,29 @@
 
 .receive-content-nest-qr {
   margin-top: 20px;
-  float: left;
+  display: flex;
+  background-color: var(--background-copy-color);
+  border-radius: 5px;
+  align-items: center;
+  height: 50px;
+  width: 490px;
+  justify-content: flex-end;
 }
 
 .receive-content-nest-qrhash {
-  float: left;
-  padding: 10px 32px 13px 40px;
-  border-radius: 5px;
   background-color: var(--disabled-background-cover);
   color: var(--input-color-default);
   font-size: 21px;
-  line-height: 17px;
-  width: 395px;
 }
 
 .receive-content-nest-qrimage {
   width: 90px;
   height: 90px;
-  float: right;
   background-position: 50% 50%;
   background-size: contain;
   background-repeat: no-repeat;
   background-color: white;
+  margin-top:4px;
 }
 
 .receive-toolbar {
@@ -63,20 +71,84 @@
   float: left;
   width: 740px;
   text-align: right;
+  clear: both;
 }
 
 .receive-content-nest-copy-to-clipboard-icon {
-  float: left;
-  margin-left: 10px;
+  margin: 0 10px 0 17px;
+  height: 20px;
 }
 
-@media screen and (max-width: 409px) {
+@media screen and (max-width: 1180px) {
   .receive-content-nest {
-    width: 90%;
+    width: 595px;
   }
 
-  .receive-content-nest-qrhash {
-    width: 80%;
+  .receive-content-nest-qr {
+    width: 475px;
+  }
+
+  .receive-select-account-input {
+    width: 293px;
+  }
+  
+  .receive-toolbar {
+    width: 649px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .receive-content-nest {
+    padding: 23px 20px 30px 20px;
+    width: 315px;
+    flex-direction: column;
+  }
+
+  .receive-toolbar {
+    width: 355px;
+    text-align: center;
+  }
+
+  .receive-content-nest-qrimage {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+  }
+  
+  .receive-select-account-input {
+    width: 226px;
+    margin-right:0;
+    
+    .accounts-select {
+      margin-right:0;
+    }
+  }
+
+  .receive-content-nest-qr {
+    height: 35px;
+    width: 316px;
+    margin-bottom: 20px;
+
+    .receive-content-nest-qrhash {
+      font-size: 13px;
+    }
+  }
+
+  .receive-content-nest-prefix {
+    margin-left: 0px;
+    margin-right:  10px;
     font-size: 13px;
+
+    &.prefix-long {
+      display: none;
+    }
+
+    &.prefix-short {
+      display:inline;
+    }
+  }
+
+  .receive-select-account-input .is-row .tooltipContainer {
+      display: none;
   }
 }
