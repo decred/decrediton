@@ -97,12 +97,11 @@ export const TimeValue = ({ timestamp, tsDate }) => (
 const renderInternalProposalLink = ({ children, href }) => (
   <InvisibleConfirmModalButton
     modalTitle={<T id="politeia.details.openLinkModal" m="Open Link in External Browser"/>}
-    modalContent={<>
-      <T id="politeia.details.openLinkModalDesc1"
-        m="Click Confirm to open the link:  " />
-      <span className="prop-details-modal-link">{href}</span>
-      <T id="politeia.details.openLinkDesc2" m="in an external browser." />
-    </>}
+    modalContent={
+      <T id="politeia.details.openLinkModalDesc"
+        m="Click Confirm to open the link: {link} in an external browser."
+        values={{ link: <span className="prop-details-modal-link">{href}</span>
+        }} />}
     buttonComponent={<span>{children}</span>}
     buttonLabel={<a onClick={() => {} } href="#">{children}</a>}
     onSubmit={() => shell.openExternal(href)}
