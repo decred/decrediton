@@ -1,7 +1,7 @@
 import fs from "fs-extra";
 import path from "path";
 import { createLogger } from "./logging";
-import { getWalletPath, getWalletDb, getDcrdPath } from "./paths";
+import { getWalletPath, getWalletDb, getDcrdPath, getDcrdRpcCert } from "./paths";
 import { initWalletCfg, newWalletConfigCreation, getWalletCfg, readDcrdConfig } from "config";
 import { launchDCRD, launchDCRWallet, GetDcrdPID, GetDcrwPID, closeDCRD, closeDCRW, GetDcrwPort,
   launchDCRLnd, GetDcrlndPID, GetDcrlndCreds, closeDcrlnd } from "./launch";
@@ -56,6 +56,7 @@ export const startDaemon = async (params, testnet, reactIPC) => {
     const newConfig = readDcrdConfig(appdata, testnet);
 
     newConfig.pid =  GetDcrdPID();
+    newConfig.rpc_cert = getDcrdRpcCert(appdata);
     return newConfig;
   }
 
