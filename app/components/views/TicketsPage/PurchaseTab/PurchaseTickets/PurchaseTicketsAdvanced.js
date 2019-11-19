@@ -19,14 +19,13 @@ const messages = defineMessages({
 
 const PurchaseTicketAdvancedInfo = ({
   label, className, onIconClick, children
-}) => (
-  <div className={cx("purchase-ticket-advanced-info-element", className)}>
-    <div className="purchase-ticket-advanced-info-label">{label}:</div>
-    <div className="purchase-ticket-advanced-info-value">
-      {children}
-    </div>
-    <div className="stakepool-info-icon" onClick={onIconClick} />
-  </div>);
+}) => (<>
+  <div className={cx("purchase-ticket-advanced-info-label", className)}>{label}:</div>
+  <div className={cx("purchase-ticket-advanced-info-value", className)}>
+    {children}
+    <div className={cx("stakepool-info-icon", className)} onClick={onIconClick} />
+  </div>
+</>);
 
 
 const PurchaseTicketsAdvanced = ({

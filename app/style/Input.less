@@ -29,7 +29,7 @@
 
   .unit-area {
     color:var(--select-placeholder);
-  }
+    line-height: 13px;
 }
 
 .input-and-unit:hover:not(.disabled):not(.active):not(.error) {
@@ -48,6 +48,7 @@
 }
 
 .input {
+  font-family: @font-family-regular;
   border-style: none;
   cursor: text;
   background: transparent;
@@ -55,6 +56,7 @@
   color: var(--input-color-default);
   width: calc(100% - 20px);
   font-size: 13px;
+  line-height: 13px;
 }
 
 .input::placeholder {
