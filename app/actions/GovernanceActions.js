@@ -216,17 +216,19 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
 
   const concatProposals = (oldProposals, newProposals) => {
     const response = {};
-    Object.keys(oldProposals).forEach( key => {
-      if (oldProposals[key] && oldProposals[key].length > 0) {
+    // We copy oldProposals in order to avoid modifying it triggering render
+    const oldProposalsCopy = Object.assign({}, oldProposals)
+    Object.keys(oldProposalsCopy).forEach( key => {
+      if (oldProposalsCopy[key] && oldProposalsCopy[key].length > 0) {
         for (let i = 0; i < newProposals[key].length; i++) {
           const newProp = newProposals[key][i];
-          if (findProposal(oldProposals[key], newProp.token)) {
-            oldProposals[key][i] = newProp;
+          if (findProposal(oldProposalsCopy[key], newProp.token)) {
+            oldProposalsCopy[key][i] = newProp;
             continue;
           }
-          oldProposals[key].push(newProp);
+          oldProposalsCopy[key].push(newProp);
         }
-        response[key] = oldProposals[key];
+        response[key] = oldProposalsCopy[key];
       } else {
         response[key] = newProposals[key];
       }
