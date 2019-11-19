@@ -1,7 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import { PoliteiaLink as PiLink } from "shared";
 import { PreVoteProposals, ActiveVoteProposals, FinishedProposal, AbandonedProposals } from "./Page";
-import { shell } from "electron";
 import { TabbedPage, TabbedPageTab as Tab } from "layout";
 import { newProposalCounts, proposals } from "connectors";
 import { createElement as h } from "react";
@@ -13,8 +12,8 @@ const PageHeader = () => (
       <div className="proposals-community-header-description">
         <T id="proposals.community.descr"
           m="Voting on community proposals allows you to have a say on how the project treasury is spent.
-          Participation in voting requires (PoS) tickets. Proposal creation, discussions and other features are available at" />
-        <a onClick={() => shell.openExternal("https://proposals.decred.org")}>proposals.decred.org</a>
+          Participation in voting requires (PoS) tickets. Proposal creation, discussions and other features are available at {link}"
+          values={{ link: <PiLink className="proposals-link">proposals.decred.org</PiLink> }} />
       </div>
     </div>
     <div className="links">
