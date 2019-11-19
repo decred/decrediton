@@ -14,7 +14,7 @@ const StakeInfoDisplay = ({
   isSPV,
 }) => (
   <div className="stake-info-details">
-    <div className="is-row stake-info-details-row">
+    <div className="stake-info-details-row">
       <Column
         className={"stake-info"}
         label={<T id="stakeSPV.votedTickets" m="Voted Tickets" />}
@@ -33,7 +33,7 @@ const StakeInfoDisplay = ({
     </div>
     {
       !isSPV && (
-        <div className="is-row stake-info-details-row">
+        <div className="stake-info-details-row">
           <Column
             className={"stake-info"}
             label={<T id="stake.mempoolTickets" m="All Mempool Tickets" />}
@@ -51,7 +51,7 @@ const StakeInfoDisplay = ({
           />
         </div>
       )}
-    <div className="is-row stake-info-details-row">
+    <div className="stake-info-details-row">
       <Column
         className={"stake-info"}
         label={<T id="stake.totalRewards" m="Total Rewards" />}

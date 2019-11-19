@@ -25,7 +25,7 @@ const StakeInfoDisplay = ({
   sidebarOnBottom,
 }) => (
   <div className="stake-info-area">
-    <div className="is-row stake-info-row-area" onClick={isShowingDetails ? onHideStakeInfo : onShowStakeInfo}>
+    <div className="stake-info-row-area" onClick={isShowingDetails ? onHideStakeInfo : onShowStakeInfo}>
       <Column
         className={"stake-info"}
         label={<T id="stake.ownMempoolTickets" m="Own Mempool Tickets" />}

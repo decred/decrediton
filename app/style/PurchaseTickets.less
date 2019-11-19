@@ -15,11 +15,12 @@
   padding: 21px 0 23px 29px;
   border-radius: 5px;
   position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .stake-info {
   white-space: nowrap;
-  width: 33%;
 }
 
 .stake-info-details {
@@ -28,16 +29,24 @@
 
 .stake-info-details-row {
   margin-bottom: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .purchase-ticket-area-row-label {
   font-size: 19px;
   color: var(--input-color-default);
+}
 
-  &:nth-of-type(1n){
+.purchase-ticket-input-address {
+  .purchase-ticket-area-row-label {
     width: 82px;
     text-align: right;
-  }    
+  }
+}
+
+.purchase-ticket-input-amount .purchase-ticket-area-row-label{
+  padding-left: 72px;
 }
 
 .stakepool-purchase-ticket-buttons-area {
@@ -475,7 +484,7 @@
   }
   .stakepool-purchase-ticket-quick-bar {
     grid-template-columns: repeat(4, 1fr);
-    grid-column-gap: 15px;
+    grid-column-gap: 25px;
   }
 }
 
@@ -501,7 +510,7 @@
   }
 
   .stake-info-details-row {
-    flex-direction: column !important;
+    grid-template-columns: 1fr;
   }
 
   .stakepool-advanced-big-input {
@@ -543,6 +552,7 @@
   .stake-info-details,
   .stake-info-row-area {
     padding-left: 20px;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .stake-info {
@@ -559,7 +569,7 @@
   }
 
   .stakepool-purchase-ticket-num-select {
-    width: 242px;
+    width: 231px;
   }
 
   .stakepool-purchase-ticket-input-select {
@@ -569,15 +579,22 @@
 
   .purchase-ticket-area-row-label {
     font-size: 13px;
-    &:nth-of-type(1n){
+  }
+
+  .purchase-ticket-input-address {
+    .purchase-ticket-area-row-label {
       width: inherit;
       text-align: left;
-    }        
+    }
   }
 
   .purchase-ticket-input-amount {
     margin-left: -10px;
     margin-top: 25px;
+
+    .purchase-ticket-area-row-label {
+      padding-left: 0;
+    }  
   }
 
   .stakepool-auto-buyer-row {
