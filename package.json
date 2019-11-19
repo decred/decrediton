@@ -126,7 +126,8 @@
         "deb",
         "rpm",
         "tar.gz"
-      ]
+      ],
+      "icon": "./build/icon/"
     },
     "directories": {
       "output": "release"

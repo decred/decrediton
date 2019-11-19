@@ -498,7 +498,8 @@ app.on("ready", async () => {
     webPreferences: {
       nodeIntegration: true,
       devTools: true
-    }
+    },
+    icon: __dirname + "/icon.png"
   };
   if (stopSecondInstance) {
     windowOpts = {
