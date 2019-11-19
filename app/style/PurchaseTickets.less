@@ -76,8 +76,9 @@
   padding: 14px 0 14px 18px;
   height: 56px;
   display: grid;
-  grid-template-columns: minmax(252px,auto) minmax(130px,auto) minmax(123px,auto) auto;
+  grid-template-columns: repeat(4, max-content);
   align-items: center;
+  grid-column-gap: 29px;
 
   .tooltipContainer {
     height: 25px;
@@ -90,11 +91,12 @@
       grid-row-start: 1;
     }    
     &.ticket_expiry {
-      grid-column-start: 4;
+      grid-column-start: 4; 
       grid-row-start: 1;
     }        
     &.ticket_pool_address {
       grid-column-start: 2;
+      grid-column-end: span 2;
     }
     &.ticket_pool_fee {
       grid-row-start: 2;
@@ -280,11 +282,14 @@
   background-size: 16px;
   background-repeat: no-repeat;
   padding-left: 20px;
-  margin: 0 20px 0 0;
   width: 100%;
   font-family: var(--font-family-monospace);
   color: var(--header-desc-lighter-color);
   font-size: 11px;
+  line-height: 11px;
+  display: flex;
+  align-items: center;
+  height: 25px;
 
   &.stakepool-icon {
     background-image: var(--stake-pool-icon);
@@ -469,7 +474,8 @@
     width: 220px;
   }
   .stakepool-purchase-ticket-quick-bar {
-    grid-template-columns: 235px 110px 123px auto;
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: 15px;
   }
 }
 
@@ -508,6 +514,7 @@
 
   .stakepool-purchase-ticket-quick-bar {
     grid-template-columns: 103px 106px auto;
+    grid-column-gap: 0;
     height: initial;
     .tooltipContainer {
       &.ticket_expiry,
