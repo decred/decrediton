@@ -14,7 +14,7 @@ const Tickets = ({
   spvMode,
   blocksNumberToNextTicket,
   sidebarOnBottom,
-  ...props,
+  ...props
 }) => (
   <div className="purchase-ticket-area">
     <Subtitle title={<T id="purchase.subtitle" m="Purchase Tickets"/>} children={getTitleIcon()} className="is-row" />
