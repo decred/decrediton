@@ -31,7 +31,7 @@ const AdvancedBodyBase = ({
   intl,
   remoteValid,
   appDataValid,
-  ...props,
+  ...props
 }) => {
   return (
     <>

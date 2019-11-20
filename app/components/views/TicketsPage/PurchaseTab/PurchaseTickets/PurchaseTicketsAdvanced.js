@@ -31,7 +31,7 @@ const PurchaseTicketsAdvanced = ({
   onChangeTxFee,
   onChangeExpiry,
   formatMessage,
-  ...props,
+  ...props
 }) => (
   <div className="is-row purchase-ticket-advanced-info-area">
     <div className="purchase-ticket-advanced-labels">

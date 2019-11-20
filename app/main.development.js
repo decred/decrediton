@@ -362,13 +362,15 @@ app.on("ready", async () => {
     locale = locales.find(value => value.key === newCfgLocale);
   }
 
+  const path = require('path'); // eslint-disable-line
   let windowOpts = {
     show: false,
     minWidth: 350,
     width: 1192,
     minHeight: 299,
     height: 790,
-    page: "app.html"
+    page: "app.html",
+    icon: path.join(__dirname, "/icons/512x512.png"),
   };
   if (stopSecondInstance) {
     windowOpts = {

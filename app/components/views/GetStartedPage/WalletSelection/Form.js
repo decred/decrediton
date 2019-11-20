@@ -42,7 +42,7 @@ const WalletSelectionBodyBase = ({
   masterPubKeyError,
   maxWalletCount,
   isSPV,
-  ...props,
+  ...props
 }) => {
   return (
     availableWallets.length > 0 && selectedWallet && !createWalletForm ?
