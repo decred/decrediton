@@ -50,7 +50,7 @@ const AccountsList = ({
   accountNumDetailsShown,
   isCreateAccountDisabled,
   walletName,
-  hasTickets,
+  hasTickets
 }) => (
   <StandalonePage header={<AccountsListHeader {...{ onGetNextAccountAttempt, isCreateAccountDisabled }} />}>
     { isLoading ? <DecredLoading/> :
@@ -84,7 +84,7 @@ AccountsList.propTypes = {
   onShowAccountDetails: PropTypes.func.isRequired,
   onHideAccountDetails: PropTypes.func.isRequired,
   accountNumDetailsShown: PropTypes.number,
-  isCreateAccountDisabled: PropTypes.bool.isRequired,
+  isCreateAccountDisabled: PropTypes.bool.isRequired
 };
 
 export default AccountsList;

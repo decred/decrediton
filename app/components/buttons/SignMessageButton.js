@@ -55,7 +55,7 @@ class SignMessageButton extends React.Component {
 SignMessageButton.propTypes = {
   message: PropTypes.string.isRequired,
   address: PropTypes.string.isRequired,
-  signMessageAttempt: PropTypes.func.isRequired,
+  signMessageAttempt: PropTypes.func.isRequired
 };
 
 export default signMessagePage(SignMessageButton);

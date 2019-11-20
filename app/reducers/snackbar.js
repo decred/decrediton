@@ -19,7 +19,7 @@ import {
   SIGNMESSAGE_FAILED, VERIFYMESSAGE_FAILED,
   PUBLISHUNMINEDTRANSACTIONS_SUCCESS, PUBLISHUNMINEDTRANSACTIONS_FAILED,
   GETACCOUNTEXTENDEDKEY_FAILED,
-  PUBLISHTX_SUCCESS,
+  PUBLISHTX_SUCCESS
 } from "../actions/ControlActions";
 import {
   UPDATESTAKEPOOLCONFIG_SUCCESS, UPDATESTAKEPOOLCONFIG_FAILED,
@@ -31,19 +31,19 @@ import {
 import {
   NEW_TRANSACTIONS_RECEIVED,
   GETSTARTUPWALLETINFO_FAILED,
-  SEEDCOPIEDTOCLIPBOARD,
+  SEEDCOPIEDTOCLIPBOARD
 } from "../actions/ClientActions";
 import { SNACKBAR_DISMISS_MESSAGES, SNACKBAR_SIMPLE_MESSAGE } from "../actions/SnackbarActions";
 import {
   EXPORT_ERROR,
   EXPORT_COMPLETED,
   GETSTARTUPSTATS_FAILED,
-  GETMYTICKETSSTATS_FAILED,
+  GETMYTICKETSSTATS_FAILED
 } from "actions/StatisticsActions";
 import { WALLETREMOVED_FAILED, CONNECTDAEMON_FAILURE } from "actions/DaemonActions";
 import {
   GETWALLETSEEDSVC_FAILED,
-  SPVSYNC_FAILED,
+  SPVSYNC_FAILED
 } from "actions/WalletLoaderActions";
 import {
   TRZ_TOGGLEPINPROTECTION_SUCCESS, TRZ_TOGGLEPINPROTECTION_FAILED,
@@ -55,7 +55,7 @@ import {
   TRZ_INITDEVICE_SUCCESS, TRZ_INITDEVICE_FAILED,
   TRZ_UPDATEFIRMWARE_SUCCESS, TRZ_UPDATEFIRMWARE_FAILED,
   TRZ_NOCONNECTEDDEVICE,
-  TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED,
+  TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED
 } from "actions/TrezorActions";
 
 import {
@@ -73,7 +73,7 @@ import {
   LNWALLET_CLOSECHANNEL_FAILED,
   LNWALLET_FUNDWALLET_FAILED, LNWALLET_WITHDRAWWALLET_FAILED,
   LNWALLET_FUNDWALLET_SUCCESS, LNWALLET_WITHDRAWWALLET_SUCCESS,
-  LNWALLET_STARTDCRLND_FAILED,
+  LNWALLET_STARTDCRLND_FAILED
 } from "actions/LNActions";
 
 const WRONG_PASSPHRASE_MSG = "WRONG_PASSPHRASE_MSG";
@@ -202,7 +202,7 @@ const messages = defineMessages({
   },
   DAEMONCONNECTING_ERROR: {
     id: "daemon.connect.error",
-    defaultMessage: "Error connecting to daemon",
+    defaultMessage: "Error connecting to daemon"
   },
   REMOVESTAKEPOOLCONFIG: {
     id: "stakepools.removedStakePoolConfig",
@@ -330,7 +330,7 @@ const messages = defineMessages({
   },
   LNWALLET_OPENCHANNEL_CHANPENDING: {
     id: "ln.ntf.openchannelChanPending",
-    defaultMessage: "New channel in pending state",
+    defaultMessage: "New channel in pending state"
   },
   LNWALLET_OPENCHANNEL_CHANOPEN: {
     id: "ln.ntf.openchannelChanOpen",
@@ -342,7 +342,7 @@ const messages = defineMessages({
   },
   LNWALLET_CLOSECHANNEL_CLOSEPENDING: {
     id: "ln.ntf.closechannelClosepending",
-    defaultMessage: "Channel close procedures started",
+    defaultMessage: "Channel close procedures started"
   },
   LNWALLET_CLOSECHANNEL_CHANCLOSE: {
     id: "ln.ntf.closechannelChanclose",
@@ -358,7 +358,7 @@ const messages = defineMessages({
   },
   LNWALLET_FUNDWALLET_SUCCESS: {
     id: "ln.ntf.fundWalletSucces",
-    defaultMessage: "Sent LN Wallet fund transaction",
+    defaultMessage: "Sent LN Wallet fund transaction"
   },
   LNWALLET_WITHDRAWWALLET_FAILED: {
     id: "ln.ntf.withdrawWalletFailed",
@@ -371,7 +371,7 @@ const messages = defineMessages({
   LNWALLET_STARTDCRLND_FAILED: {
     id: "ln.ntf.startDcrlndFailed",
     defaultMessage: "{originalError}"
-  },
+  }
 });
 
 export default function snackbar(state = {}, action) {
@@ -383,7 +383,7 @@ export default function snackbar(state = {}, action) {
   case SNACKBAR_SIMPLE_MESSAGE: {
     return {
       ...state,
-      messages: [ action ],
+      messages: [ action ]
     };
   }
   // snackbar management events

@@ -14,7 +14,7 @@ class AccountRow extends React.Component {
       hidden: this.props.account.hidden,
       hasFailedAttempt: false,
       showPubKey: false,
-      isShowingDetails: false,
+      isShowingDetails: false
     };
   }
 
@@ -83,7 +83,7 @@ class AccountRow extends React.Component {
     const {
       updateRenameAccountName,
       renameAccount,
-      hideRenameAccount,
+      hideRenameAccount
     } = this;
     const { hasFailedAttempt, renameAccountName } = this.state;
     return (
@@ -95,7 +95,7 @@ class AccountRow extends React.Component {
           renameAccount,
           hideRenameAccount,
           intl,
-          hasFailedAttempt,
+          hasFailedAttempt
         }}
       />
     );
@@ -107,7 +107,7 @@ class AccountRow extends React.Component {
       showRenameAccount,
       showAccount,
       hideAccount,
-      onTogglePubkey,
+      onTogglePubkey
     } = this;
     const { hidden, showPubKey } = this.state;
     return (
@@ -120,7 +120,7 @@ class AccountRow extends React.Component {
           showAccount,
           onTogglePubkey,
           showPubKey,
-          accountExtendedKey,
+          accountExtendedKey
         }}
       />
     );
@@ -130,17 +130,17 @@ class AccountRow extends React.Component {
     const {
       getAccountDetailsStyles,
       getRenameAccountStyles,
-      onToggleShowDetails,
+      onToggleShowDetails
     } = this;
     const {
       account,
       accountNumDetailsShown,
-      hasTickets,
+      hasTickets
     } = this.props;
     const {
       isShowingRenameAccount,
       hidden,
-      isShowingDetails,
+      isShowingDetails
     } = this.state;
 
     return (
@@ -154,7 +154,7 @@ class AccountRow extends React.Component {
           getAccountDetailsStyles,
           onToggleShowDetails,
           isShowingDetails,
-          hasTickets,
+          hasTickets
         }}
       />
     );

@@ -51,7 +51,7 @@ class LogsTabBody extends React.Component {
   render() {
     const { onShowDecreditonLogs, onShowDcrdLogs, onShowDcrwalletLogs,
       onHideDecreditonLogs, onHideDcrdLogs, onHideDcrwalletLogs, onShowDcrlndLogs,
-      onHideDcrlndLogs,
+      onHideDcrlndLogs
     } = this;
     return (
       <Logs
@@ -65,7 +65,7 @@ class LogsTabBody extends React.Component {
           onHideDecreditonLogs,
           onHideDcrdLogs,
           onHideDcrwalletLogs,
-          onHideDcrlndLogs,
+          onHideDcrlndLogs
         }}
       />
     );

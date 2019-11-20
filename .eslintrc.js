@@ -47,6 +47,7 @@ module.exports = {
     ],
     "react/jsx-uses-vars":1,
     "react/jsx-uses-react":1,
+    "comma-dangle": ["error", "never"]
   },
   "globals": {
     "Uint8Array": true,
@@ -55,5 +56,5 @@ module.exports = {
     "PropTypes": true,
     "autobind": true,
     "Aux": true,
-  }
+  },
 };

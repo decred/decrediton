@@ -3,7 +3,7 @@ import {
   EXTERNALREQUEST_NETWORK_STATUS, EXTERNALREQUEST_STAKEPOOL_LISTING,
   EXTERNALREQUEST_UPDATE_CHECK,
   EXTERNALREQUEST_POLITEIA,
-  EXTERNALREQUEST_DCRDATA,
+  EXTERNALREQUEST_DCRDATA
 } from "main_dev/externalRequests";
 
 const AllowableRequestType = ({ id, label, description, checked, onChange }) => (

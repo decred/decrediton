@@ -281,14 +281,14 @@ export const updateChannelList = () => async (dispatch, getState) => {
   const results = await Promise.all([
     ln.listChannels(client),
     ln.listPendingChannels(client),
-    ln.listClosedChannels(client),
+    ln.listClosedChannels(client)
   ]);
 
   const channels = results[0].getChannelsList().map(c => {
     const channel = c.toObject();
     return {
       ...channel,
-      channelPointURL: chanpointURL(channel.channelPoint),
+      channelPointURL: chanpointURL(channel.channelPoint)
     };
   });
 
@@ -299,7 +299,7 @@ export const updateChannelList = () => async (dispatch, getState) => {
       ...extra.channel,
       pendingStatus: "open",
       remotePubkey: extra.channel.remoteNodePub,
-      channelPointURL: chanpointURL(extra.channel.channelPoint),
+      channelPointURL: chanpointURL(extra.channel.channelPoint)
     };
   });
   const pendingClose = results[1].getPendingClosingChannelsList().map(pc => {
@@ -309,7 +309,7 @@ export const updateChannelList = () => async (dispatch, getState) => {
       ...extra.channel,
       pendingStatus: "close",
       remotePubkey: extra.channel.remoteNodePub,
-      channelPointURL: chanpointURL(extra.channel.channelPoint),
+      channelPointURL: chanpointURL(extra.channel.channelPoint)
     };
   });
   const pendingForceClose = results[1].getPendingForceClosingChannelsList().map(pc => {
@@ -320,7 +320,7 @@ export const updateChannelList = () => async (dispatch, getState) => {
       pendingStatus: "forceclose",
       remotePubkey: extra.channel.remoteNodePub,
       channelPointURL: chanpointURL(extra.channel.channelPoint),
-      closingTxidURL: txURLBuilder(extra.closingTxid),
+      closingTxidURL: txURLBuilder(extra.closingTxid)
     };
   });
   const pendingWaitClose = results[1].getWaitingCloseChannelsList().map(pc => {
@@ -330,7 +330,7 @@ export const updateChannelList = () => async (dispatch, getState) => {
       ...extra.channel,
       pendingStatus: "waitclose",
       remotePubkey: extra.channel.remoteNodePub,
-      channelPointURL: chanpointURL(extra.channel.channelPoint),
+      channelPointURL: chanpointURL(extra.channel.channelPoint)
     };
   });
 
@@ -339,7 +339,7 @@ export const updateChannelList = () => async (dispatch, getState) => {
     return {
       ...channel,
       channelPointURL: chanpointURL(channel.channelPoint),
-      closingTxidURL: txURLBuilder(channel.closingTxHash),
+      closingTxidURL: txURLBuilder(channel.closingTxHash)
     };
   });
 
@@ -685,7 +685,7 @@ export const getLNWalletConfig = () => (dispatch, getState) =>  {
   const cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
   return {
     walletExists: cfg.get("ln_wallet_exists"),
-    account: cfg.get("ln_account"),
+    account: cfg.get("ln_account")
   };
 };
 

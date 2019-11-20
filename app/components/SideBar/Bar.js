@@ -27,7 +27,7 @@ const Bar = ({
   onExpandSideBar,
   onReduceSideBar,
   isWatchingOnly,
-  rescanCancel,
+  rescanCancel
 }) => (
   <div className={cx("sidebar", !expandSideBar && "sidebar-reduced", !expandSideBar && sidebarOnBottom && "sidebar-on-bottom")}>
     <Logo {...{ isTestNet, expandSideBar, sidebarOnBottom, onReduceSideBar, onExpandSideBar, isWatchingOnly }} />
@@ -84,7 +84,7 @@ const Bar = ({
 );
 
 Bar.propTypes = {
-  expandSideBar: PropTypes.bool.isRequired,
+  expandSideBar: PropTypes.bool.isRequired
 };
 
 export default Bar;

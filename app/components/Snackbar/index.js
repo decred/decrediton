@@ -14,7 +14,7 @@ import "style/Snackbar.less";
 
 const propTypes = {
   messages: PropTypes.array.isRequired,
-  onDismissAllMessages: PropTypes.func.isRequired,
+  onDismissAllMessages: PropTypes.func.isRequired
 };
 
 const snackbarClasses = ({ type }) => ({
@@ -26,7 +26,7 @@ const snackbarClasses = ({ type }) => ({
   [TRANSACTION_DIR_TRANSFERRED]: "snackbar snackbar-transfer",
   "Warning": "snackbar snackbar-warning",
   "Error": "snackbar snackbar-error",
-  "Success": "snackbar snackbar-success",
+  "Success": "snackbar snackbar-success"
 })[type] || "snackbar";
 
 @autobind
@@ -36,7 +36,7 @@ class Snackbar extends React.Component {
     this.hideTimer = null;
     this.state = {
       messages: new Array(),
-      progress: 0,
+      progress: 0
     };
   }
 

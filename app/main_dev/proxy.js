@@ -15,7 +15,7 @@ export const setupProxy = (logger) => new Promise( (resolve, reject) => {
   let proxyConfig = {
     pacScript: null,
     proxyRules: null,
-    proxyBypassRules: null,
+    proxyBypassRules: null
   };
 
   if (process.env.NODE_ENV === "development") {

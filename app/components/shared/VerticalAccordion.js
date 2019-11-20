@@ -7,7 +7,7 @@ class VerticalAccordion extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      childHeight: null,
+      childHeight: null
     };
     this.childRef = null;
   }
@@ -38,7 +38,7 @@ class VerticalAccordion extends React.Component {
         key: "body",
         style: {
           height: spring(this.childRef.clientHeight, { stiffness: 180, damping: 20 }),
-          opacity: spring(1),
+          opacity: spring(1)
         }
       } ];
     }
@@ -48,7 +48,7 @@ class VerticalAccordion extends React.Component {
       key: "body",
       style: {
         height: spring(0, { stiffness: 180, damping: 20 }),
-        opacity: spring(0),
+        opacity: spring(0)
       }
     } ];
   }
@@ -63,13 +63,13 @@ class VerticalAccordion extends React.Component {
     const classNames = [
       "vertical-accordion",
       show ? "active" : "",
-      className || "",
+      className || ""
     ].join(" ");
     const childrenClassNames = show ? "active" : "";
     const defaultStyles = this.getDefaultStyles();
     const styles = this.chosenStyles();
     const tmProps = { defaultStyles, styles };
-    const childrenMotion = children => h("div", { className: childrenClassNames, }, children.map(({ key, style, data }) => {
+    const childrenMotion = children => h("div", { className: childrenClassNames }, children.map(({ key, style, data }) => {
       const childProps = { ...{ key }, style };
       return h("div", childProps,
         h("div", { ref: el => el && (this.childRef = el) }, data)

@@ -2,7 +2,7 @@ import { Tooltip } from "shared";
 import { FormattedMessage as T } from "react-intl";
 import { TESTNET, MAINNET } from "constants";
 
-const Logo = ({ isTestNet, expandSideBar, onReduceSideBar, onExpandSideBar, isWatchingOnly, }) => (
+const Logo = ({ isTestNet, expandSideBar, onReduceSideBar, onExpandSideBar, isWatchingOnly }) => (
   <div className={expandSideBar ? "sidebar-logo" : "reduced-sidebar-logo"} onClick={!expandSideBar ? onExpandSideBar : null}>
     {
       isWatchingOnly &&

@@ -33,7 +33,7 @@ const rootReducer = combineReducers({
   statistics,
   governance,
   trezor,
-  ln,
+  ln
 });
 
 export default rootReducer;

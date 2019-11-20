@@ -5,7 +5,7 @@ const messages = defineMessages({
   copyConfirmationPhrase: {
     id: "seedCopyConfirmModal.copyConfirmationPhrase",
     defaultMessage: "I understand the risks"
-  },
+  }
 });
 
 @autobind

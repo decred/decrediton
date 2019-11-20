@@ -6,7 +6,7 @@ class AgendaOverview extends React.Component {
     super(props);
     this.state = {
       selectedChoiceId: this.props.selectedChoice,
-      disabled: this.props.disabled,
+      disabled: this.props.disabled
     };
   }
 
@@ -25,7 +25,7 @@ class AgendaOverview extends React.Component {
     const agendaId = agenda.getId();
     const agendaDescription = agenda.getDescription();
     const choices = agenda.getChoicesList().map(choice => ({
-      choiceId: choice.getId(),
+      choiceId: choice.getId()
     }));
     const hasModifiedChoice = this.hasModifiedChoice();
 

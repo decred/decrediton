@@ -18,7 +18,7 @@ class VerifyMessage extends React.Component {
       message: "",
       messageError: null,
       signature: "",
-      signatureError: null,
+      signatureError: null
     };
   }
 
@@ -100,8 +100,8 @@ VerifyMessage.propTypes = {
   verifyMessageCleanStore: PropTypes.func.isRequired,
   verifyMessageError: PropTypes.string,
   verifyMessageSuccess: PropTypes.shape({
-    signature: PropTypes.string,
-  }),
+    signature: PropTypes.string
+  })
 };
 
 export default verifyMessagePage(injectIntl(VerifyMessage));

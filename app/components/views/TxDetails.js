@@ -14,7 +14,7 @@ const messages = defineMessages({
   Ticket:     { id: "txDetails.type.ticket", defaultMessage: "Ticket" },
   Vote:       { id: "txDetails.type.vote",   defaultMessage: "Vote" },
   Revocation: { id: "txDetails.type.revoke", defaultMessage: "Revoke" },
-  Coinbase:   { id: "txDetails.type.coinbase", defaultMessage: "Coinbase" },
+  Coinbase:   { id: "txDetails.type.coinbase", defaultMessage: "Coinbase" }
 });
 
 const headerIcons = {
@@ -24,7 +24,7 @@ const headerIcons = {
   transfer:   "tx-detail-icon-transfer",
   Ticket:     "tx-detail-icon-ticket",
   Vote:       "tx-detail-icon-vote",
-  Revocation: "tx-detail-icon-revocation",
+  Revocation: "tx-detail-icon-revocation"
 };
 
 function mapNonWalletOutput(output) {
@@ -55,7 +55,7 @@ const TxDetails = ({
   intl,
   goBackHistory,
   tsDate,
-  publishUnminedTransactions,
+  publishUnminedTransactions
 }) => {
   const {
     txHash,
@@ -74,7 +74,7 @@ const TxDetails = ({
     ticketReward,
     ticketPrice,
     enterTimestamp,
-    leaveTimestamp,
+    leaveTimestamp
   } = tx;
 
   const isConfirmed = !!txTimestamp;

@@ -7,7 +7,7 @@ const RescanWalletFormBody = ({
   rescanStartBlock,
   rescanCurrentBlock,
   showLongWaitMessage,
-  isSPV,
+  isSPV
 }) => (
   rescanCurrentBlock && rescanCurrentBlock > 0 ?
     (!isSPV ?

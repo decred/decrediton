@@ -9,7 +9,7 @@ class ProposalDetails extends React.Component {
     super(props);
     this.state = {
       newVoteChoice: null,
-      showWalletEligibleTickets: false,
+      showWalletEligibleTickets: false
     };
   }
 

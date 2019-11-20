@@ -45,7 +45,7 @@ const SendOutputRow = ({
   index, destination, value, onAddOutput, onRemoveOutput,
   onValidateAmount, onValidateAddress, isSendAll, onKeyDown, sendAllAmount, error, intl,
   onShowSendAll, onHideSendAll, isSendSelf, outputs, onChangeAccount, onShowSendSelf,
-  account, onShowSendOthers,
+  account, onShowSendOthers
 }) => (
   <div className="is-row">
     <div>

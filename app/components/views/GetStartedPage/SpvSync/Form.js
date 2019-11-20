@@ -34,7 +34,7 @@ const SpvSyncBody = ({
   syncFetchHeadersAttempt,
   syncFetchHeadersComplete,
   isTestNet,
-  ...props,
+  ...props
 }) => (
   <div className={cx("page-body getstarted", isTestNet && "testnet-body")}>
     <div className="getstarted loader">

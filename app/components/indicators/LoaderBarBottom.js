@@ -12,7 +12,7 @@ class LoaderBarBottom extends React.Component {
   getInitialState() {
     return {
       showLongWaitMessage: false,
-      neededBlocksDeterminedAt: new Date(),
+      neededBlocksDeterminedAt: new Date()
     };
   }
 

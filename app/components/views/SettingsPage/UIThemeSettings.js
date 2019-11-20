@@ -3,7 +3,7 @@ import { FormattedMessage as T } from "react-intl";
 
 const availableUIThemeTypes = [
   { name: <T id="settings.uitheme.type.light" m="Light" />, value: "theme-light" },
-  { name: <T id="settings.uitheme.type.dark" m="Dark" />, value: "theme-dark" },
+  { name: <T id="settings.uitheme.type.dark" m="Dark" />, value: "theme-dark" }
 ];
 
 const UIThemeSettings = ({

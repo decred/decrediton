@@ -22,7 +22,7 @@ class TicketListPage extends React.Component {
       tickets, noMoreTickets,
       onLoadMoreTickets, onChangeSortType, onChangeSelectedType,
       selectedSortOrderKey, selectedTicketTypeKey,
-      sortTypes, ticketTypes, tsDate,
+      sortTypes, ticketTypes, tsDate
     } = this.props;
 
     return (

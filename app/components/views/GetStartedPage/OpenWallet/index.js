@@ -13,7 +13,7 @@ class OpenWallet extends React.Component {
 
   getInitialState() {
     return {
-      publicPassPhrase: "",
+      publicPassPhrase: ""
     };
   }
 

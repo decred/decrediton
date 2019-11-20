@@ -17,7 +17,7 @@ class InvoicesTab extends React.Component {
       value: 0,
       atomValue: 0,
       memo: "",
-      lastPayRequest: "",
+      lastPayRequest: ""
     };
   }
 

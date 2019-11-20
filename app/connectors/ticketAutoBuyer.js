@@ -8,7 +8,7 @@ const mapStateToProps = selectorMap({
   balanceToMaintain: sel.balanceToMaintain,
   isTicketAutoBuyerEnabled: sel.isTicketAutoBuyerEnabled,
   currencyDisplay: sel.currencyDisplay,
-  ticketBuyerSettings: sel.ticketBuyerConfig,
+  ticketBuyerSettings: sel.ticketBuyerConfig
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -17,7 +17,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   clearStopAutoBuyerSuccess: ca.clearStopAutoBuyerSuccess,
   clearStopAutoBuyerError: ca.clearStopAutoBuyerError,
   onEnableTicketAutoBuyer: ca.startTicketBuyerV2Attempt,
-  onDisableTicketAutoBuyer: ca.ticketBuyerCancel,
+  onDisableTicketAutoBuyer: ca.ticketBuyerCancel
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

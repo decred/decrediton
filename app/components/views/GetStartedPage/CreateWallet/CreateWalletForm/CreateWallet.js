@@ -18,7 +18,7 @@ const CreateWallet = ({
   getCurrentBlockCount,
   getNeededBlocks,
   getEstimatedTimeLeft,
-  getDaemonSynced,
+  getDaemonSynced
 }) => (
   <>
     <div className="getstarted content">

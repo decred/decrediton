@@ -133,7 +133,7 @@ class GetStartedPage extends React.Component {
       onHideLogs,
       onSetWalletPrivatePassphrase,
       onShowTrezorConfig,
-      onHideTrezorConfig,
+      onHideTrezorConfig
     } = this;
 
     const blockChainLoading = "blockchain-syncing";
@@ -187,7 +187,7 @@ class GetStartedPage extends React.Component {
           Form,
           onShowSettings,
           onShowLogs,
-          syncFetchHeadersAttempt,
+          syncFetchHeadersAttempt
         }}/>;
     } else if (!isSPV && startStepIndex > 2) {
       animationType = blockChainLoading;
@@ -262,7 +262,7 @@ class GetStartedPage extends React.Component {
         updateAvailable,
         isSPV,
         openWalletInputRequest,
-        syncFetchHeadersAttempt,
+        syncFetchHeadersAttempt
       }} />;
   }
 }

@@ -11,7 +11,7 @@ const messages = defineMessages({
   filterByAddrPlaceholder: {
     id: "txhistory.filterByAddrPlaceholder",
     defaultMessage: "Filter by Address"
-  },
+  }
 });
 
 const subtitleMenu = ({ sortTypes, txTypes, selectedSortOrderKey, selectedTxTypeKey,
@@ -70,7 +70,7 @@ const Page = ({
   onChangeSliderValue,
   currencyDisplay,
   transactionsFilter,
-  unitDivisor,
+  unitDivisor
 }) => (
   <InfiniteScroll
     hasMore={!noMoreTransactions}

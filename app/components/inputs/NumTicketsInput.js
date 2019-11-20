@@ -10,7 +10,7 @@ const NumTicketsInput = ({
   invalid,
   invalidMessage,
   showErrors,
-  onKeyDown,
+  onKeyDown
 }) => {
   const ticketUnitLabel = numTickets === 1 ? <T id="numTicketInput.unit" m="ticket" /> : <T id="numTicketsInput.unit" m="tickets" />;
   return (

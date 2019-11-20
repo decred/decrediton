@@ -6,8 +6,8 @@ import cx from "classnames";
 const messages = defineMessages({
   addressFieldPlaceholder: {
     id: "securitycenter.validate.field.address.placeholder",
-    defaultMessage: "Enter an address to validate",
-  },
+    defaultMessage: "Enter an address to validate"
+  }
 });
 
 const InvalidAddress = () => (

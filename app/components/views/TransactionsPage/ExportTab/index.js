@@ -1,7 +1,7 @@
 import exportPage from "connectors/exportPage";
 import {
   transactionStats, dailyBalancesStats, balancesStats, voteTimeStats,
-  ticketStats,
+  ticketStats
 } from "actions/StatisticsActions";
 import Page from "./Page";
 import messages from "./messages";
@@ -16,23 +16,23 @@ export const ExportTabHeader = () =>
 const AvailableExports = [
   { ...messages.transactions,
     key: "transactions",
-    calcFunction: transactionStats,
+    calcFunction: transactionStats
   },
   { ...messages.dailyBalances,
     key: "dailyBalances",
-    calcFunction: dailyBalancesStats,
+    calcFunction: dailyBalancesStats
   },
   { ...messages.balances,
     key: "balances",
-    calcFunction: balancesStats,
+    calcFunction: balancesStats
   },
   { ...messages.voteTime,
     key: "votetime",
-    calcFunction: voteTimeStats,
+    calcFunction: voteTimeStats
   },
   { ...messages.tickets,
     key: "tickets",
-    calcFunction: ticketStats,
+    calcFunction: ticketStats
   }
 ];
 @autobind
@@ -60,7 +60,7 @@ class ExportTab extends React.Component {
     const { selectedExport, destinationFile } = this.state;
     const opts = {
       calcFunction: selectedExport.calcFunction,
-      csvFilename: destinationFile,
+      csvFilename: destinationFile
     };
     this.props.exportStatToCSV(opts);
   }

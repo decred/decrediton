@@ -20,7 +20,7 @@ const mapStateToProps = selectorMap({
   info: sel.lnInfo,
   defaultAccount: sel.defaultSpendingAccount,
   lightningWalletExists: sel.lnWalletExists,
-  isMainNet: sel.isMainNet,
+  isMainNet: sel.isMainNet
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -34,7 +34,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   fundWallet: lna.fundWallet,
   withdrawWallet: lna.withdrawWallet,
   getWalletConfig: lna.getLNWalletConfig,
-  startDcrlnd: lna.startDcrlnd,
+  startDcrlnd: lna.startDcrlnd
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

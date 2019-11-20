@@ -16,7 +16,7 @@ const mapStateToProps = selectorMap({
   revokeTicketsSuccess: sel.revokeTicketsSuccess,
   hasTicketsToRevoke: sel.hasTicketsToRevoke,
   totalBalance: sel.totalBalance,
-  tsDate: sel.tsDate,
+  tsDate: sel.tsDate
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -24,7 +24,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onClearRevokeTicketsError: ca.clearRevokeTicketsError,
   onClearRevokeTicketsSuccess: ca.clearRevokeTicketsSuccess,
   goToMyTickets: cla.goToMyTickets,
-  goToTransactionHistory: cla.goToTransactionHistory,
+  goToTransactionHistory: cla.goToTransactionHistory
 }, dispatch);
 
 export default connect(mapStateToProps,mapDispatchToProps);

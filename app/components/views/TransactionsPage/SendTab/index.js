@@ -25,7 +25,7 @@ class Send extends React.Component {
       sendAllAmount: this.props.totalSpent,
       unsignedRawTx: null,
       account: this.props.defaultSpendingAccount,
-      insuficientFunds: false,
+      insuficientFunds: false
     };
   }
 
@@ -71,7 +71,7 @@ class Send extends React.Component {
       getStyles,
       getDefaultStyles,
       onKeyDown,
-      resetShowPassphraseModal,
+      resetShowPassphraseModal
     } = this;
     const isValid = this.getIsValid();
     const showPassphraseModal = this.getShowPassphraseModal();
@@ -96,7 +96,7 @@ class Send extends React.Component {
           getStyles,
           getDefaultStyles,
           showPassphraseModal,
-          resetShowPassphraseModal,
+          resetShowPassphraseModal
         }}
       />
     );
@@ -114,34 +114,34 @@ class Send extends React.Component {
     const { outputs, isSendAll, sendAllAmount, isSendSelf, account } = this.state;
     const { totalSpent } = this.props;
     const {
-      onChangeAccount, onShowSendSelf, onShowSendOthers, onKeyDown, onAddOutput,
+      onChangeAccount, onShowSendSelf, onShowSendOthers, onKeyDown, onAddOutput
     } = this;
     const {
-      onValidateAddress, onValidateAmount, onRemoveOutput, onShowSendAll, onHideSendAll,
+      onValidateAddress, onValidateAmount, onRemoveOutput, onShowSendAll, onHideSendAll
     } = this;
     return outputs.map((output, index) => ({
       data: <OutputRow
         {...{
           ...this.props, index, outputs, account, ...output.data, isSendAll, isSendSelf, totalSpent, sendAllAmount,
           onValidateAddress, onValidateAmount, onShowSendAll, onHideSendAll, onRemoveOutput,   onChangeAccount,
-          onShowSendSelf, onShowSendOthers, onAddOutput, onKeyDown, }}
+          onShowSendSelf, onShowSendOthers, onAddOutput, onKeyDown }}
       />,
       key: "output_" + index,
       style: {
-        opacity: spring(1, presets.gentle),
+        opacity: spring(1, presets.gentle)
       }
     }));
   }
 
   willEnter() {
     return {
-      opacity: 0,
+      opacity: 0
     };
   }
 
   willLeave() {
     return {
-      opacity: spring(0, { stiffness: 210, damping: 20 }),
+      opacity: spring(0, { stiffness: 210, damping: 20 })
     };
   }
 

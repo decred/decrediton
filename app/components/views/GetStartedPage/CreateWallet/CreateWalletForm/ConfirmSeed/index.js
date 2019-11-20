@@ -23,7 +23,7 @@ class ConfirmSeed extends React.Component {
     return {
       seedWords: seedWords,
       seedError: "*Please confirm the missing words",
-      splitMnemoic: splitMnemonic,
+      splitMnemoic: splitMnemonic
     };
   }
 

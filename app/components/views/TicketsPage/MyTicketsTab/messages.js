@@ -9,7 +9,7 @@ export const statusTxt = {
   "voted": <T id="ticket.status.voted" m="voted" />,
   "missed": <T id="ticket.status.missed" m="missed" />,
   "expired": <T id="ticket.status.expired" m="expired" />,
-  "revoked": <T id="ticket.status.revoked" m="revoked" />,
+  "revoked": <T id="ticket.status.revoked" m="revoked" />
 };
 
 // status for (possibly) multiple tickets
@@ -21,5 +21,5 @@ export const statusMultipleTxt = {
   "voted": <T id="ticket.status.multiple.voted" m="voted" />,
   "missed": <T id="ticket.status.multiple.missed" m="missed" />,
   "expired": <T id="ticket.status.multiple.expired" m="expired" />,
-  "revoked": <T id="ticket.status.multiple.revoked" m="revoked" />,
+  "revoked": <T id="ticket.status.multiple.revoked" m="revoked" />
 };

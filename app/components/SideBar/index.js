@@ -6,7 +6,7 @@ class SideBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isShowingAccounts: false,
+      isShowingAccounts: false
     };
   }
 
@@ -18,7 +18,7 @@ class SideBar extends React.Component {
           ...this.props,
           isShowingAccounts: this.state.isShowingAccounts,
           onShowAccounts: this.onShowAccounts,
-          onHideAccounts: this.onHideAccounts,
+          onHideAccounts: this.onHideAccounts
         }}
       />
     );
@@ -34,7 +34,7 @@ class SideBar extends React.Component {
 }
 
 SideBar.propTypes = {
-  expandSideBar: PropTypes.bool.isRequired,
+  expandSideBar: PropTypes.bool.isRequired
 };
 
 export default sideBar(rescan(SideBar));

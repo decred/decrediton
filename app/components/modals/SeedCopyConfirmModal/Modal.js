@@ -8,7 +8,7 @@ const propTypes = {
   show: PropTypes.bool.isRequired,
   onCancelModal: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  copyConfirmationPhrase: PropTypes.string.isRequired,
+  copyConfirmationPhrase: PropTypes.string.isRequired
 };
 
 const Modal = ({ show, onCancelModal, onSubmit, copyConfirmationPhrase,

@@ -26,7 +26,7 @@ export default ({
   onPushAmtChanged,
   onOpenChannel,
   onCloseChannel,
-  onToggleChannelDetails,
+  onToggleChannelDetails
 }) => (
   <>
     <div className="ln-wallet-balances">

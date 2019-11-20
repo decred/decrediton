@@ -16,7 +16,7 @@ class WalletTab extends React.Component {
     this.state = {
       amount: 0,
       account: props.defaultAccount,
-      actionsEnabled: false,
+      actionsEnabled: false
     };
   }
 

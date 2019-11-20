@@ -6,11 +6,11 @@ import { WatchOnlyWarnNotification } from "shared";
 const messages = defineMessages({
   addressFieldPlaceholder: {
     id: "securitycenter.signMessage.field.address.placeholder",
-    defaultMessage: "Enter an address",
+    defaultMessage: "Enter an address"
   },
   messageFieldPlaceholder: {
     id: "securitycenter.signMessage.field.message.placeholder",
-    defaultMessage: "Enter your message",
+    defaultMessage: "Enter your message"
   }
 });
 
@@ -23,7 +23,7 @@ const SignMessageForm = ({
   messageError,
   isSigningMessage,
   formatMessage,
-  isSignMessageDisabled,
+  isSignMessageDisabled
 }) => {
   return (
     <>
@@ -81,7 +81,7 @@ const SignMessageForm = ({
 
 SignMessageForm.propTypes = {
   formatMessage: PropTypes.func.isRequired,
-  error: PropTypes.string,
+  error: PropTypes.string
 };
 
 export default SignMessageForm;

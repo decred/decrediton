@@ -7,7 +7,7 @@ const defaultOpts = {
   translationsDirectory: "app/i18n/translations/",
   jsonOptions: {
     space: 2,
-    trailingNewline: true,
+    trailingNewline: true
   }
 };
 
@@ -17,7 +17,7 @@ manageTranslations({
   // dev lang is used during development to test translated strings (can
   // be freely modified)
   // all other production languages are translated at transifex
-  languages: [ "dev" ],
+  languages: [ "dev" ]
 });
 
 // Remove original.json because react-intl-translations-manager doesn't update
@@ -36,6 +36,6 @@ manageTranslations({
   overridePrinters: {
     printLanguageReport: () => {
       console.log("Updated original strings file.");
-    },
+    }
   }
 });

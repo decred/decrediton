@@ -66,7 +66,7 @@ export default ({
   sendValue,
   onPayRequestChanged,
   onSendPayment,
-  onSendValueChanged,
+  onSendValueChanged
 }) => (
   <>
     <h2 className="ln-payments-subheader"><T id="ln.paymentsTab.sendPayment" m="Send Payment" /></h2>

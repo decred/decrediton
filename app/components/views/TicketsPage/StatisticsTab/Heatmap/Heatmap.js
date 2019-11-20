@@ -54,7 +54,7 @@ function drawInfo(opts = {}) {
     offsetX = 0,
     offsetY = 0,
     graphEntries,
-    columnNumber,
+    columnNumber
   } = opts;
   const theme = getTheme();
   const squares = [];

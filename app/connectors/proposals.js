@@ -19,7 +19,7 @@ const mapStateToProps = selectorMap({
   inventory: sel.inventory,
   loading: sel.initialProposalLoading,
   proposalsList: sel.proposals,
-  proposallistpagesize: sel.proposallistpagesize,
+  proposallistpagesize: sel.proposallistpagesize
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -31,7 +31,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   updateVoteChoice: ga.updateVoteChoice,
   goBackHistory: ca.goBackHistory,
   setLastPoliteiaAccessTime: wa.setLastPoliteiaAccessTime,
-  getTokenAndInitialBatch: ga.getTokenAndInitialBatch,
+  getTokenAndInitialBatch: ga.getTokenAndInitialBatch
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

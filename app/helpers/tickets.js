@@ -8,7 +8,7 @@ export const TicketTypes = new Map([
   [ GetTicketsResponse.TicketDetails.TicketStatus.VOTED, "voted" ],
   [ GetTicketsResponse.TicketDetails.TicketStatus.MISSED, "missed" ],
   [ GetTicketsResponse.TicketDetails.TicketStatus.EXPIRED, "expired" ],
-  [ GetTicketsResponse.TicketDetails.TicketStatus.REVOKED, "revoked" ],
+  [ GetTicketsResponse.TicketDetails.TicketStatus.REVOKED, "revoked" ]
 ]);
 
 // decodeVoteScript decodes the output script of a vote transaction into the

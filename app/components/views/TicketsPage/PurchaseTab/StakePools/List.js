@@ -8,7 +8,7 @@ const StakePoolsList = ({
   onShowAddStakePool,
   onHideStakePoolConfig,
   onRemoveStakePool,
-  rescanRequest,
+  rescanRequest
 }) => (
   <>
     <div className="stakepool-flex-height">
@@ -67,7 +67,7 @@ StakePoolsList.propTypes = {
   configuredStakePools: PropTypes.array.isRequired,
   unconfiguredStakePools: PropTypes.array.isRequired,
   onShowAddStakePool: PropTypes.func.isRequired,
-  onHideStakePoolConfig: PropTypes.func.isRequired,
+  onHideStakePoolConfig: PropTypes.func.isRequired
 };
 
 export default StakePoolsList;

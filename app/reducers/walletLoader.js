@@ -31,73 +31,73 @@ export default function walletLoader(state = {}, action) {
   switch (action.type) {
   case LOADER_ATTEMPT:
     return { ...state,
-      getLoaderRequestAttempt: true,
+      getLoaderRequestAttempt: true
     };
   case LOADER_FAILED:
     return { ...state,
       getLoaderError: String(action.error),
       getLoaderRequestAttempt: false,
-      loader: null,
+      loader: null
     };
   case LOADER_SUCCESS:
     return { ...state,
       getLoaderError: null,
       loader: action.loader,
       getLoaderRequestAttempt: false,
-      stepIndex: 1,
+      stepIndex: 1
     };
   case WALLETEXIST_ATTEMPT:
     return { ...state,
-      walletExistRequestAttempt: true,
+      walletExistRequestAttempt: true
     };
   case WALLETEXIST_FAILED:
     return { ...state,
       walletExistError: String(action.error),
       walletExistRequestAttempt: false,
-      walletExistResponse: null,
+      walletExistResponse: null
     };
   case WALLETEXIST_SUCCESS:
     return { ...state,
       walletExistError: null,
       walletExistRequestAttempt: false,
       walletExistResponse: action.response,
-      stepIndex: 2,
+      stepIndex: 2
     };
   case WALLETCREATED:
     return { ...state,
       createWalletExisting: action.createNewWallet,
-      isWatchingOnly: action.isWatchingOnly,
+      isWatchingOnly: action.isWatchingOnly
     };
   case GENERATESEED_ATTEMPT:
     return { ...state,
-      confirmNewSeed: false,
+      confirmNewSeed: false
     };
   case CREATEWALLET_GOBACK:
     return { ...state,
       stepIndex: 1,
       existingOrNew: false,
-      createNewWallet: false,
+      createNewWallet: false
     };
   case CREATEWATCHONLYWALLET_ATTEMPT:
     return { ...state,
-      stepIndex: 1,
+      stepIndex: 1
     };
   case CREATEWALLET_GOBACK_EXISTING_OR_NEW:
     return { ...state,
       confirmNewSeed: false,
       existingOrNew: true,
-      createNewWallet: false,
+      createNewWallet: false
     };
   case CREATEWALLET_NEWSEED_CONFIRM_INPUT:
     return { ...state,
       createWalletInputRequest: true,
       createWalletExisting: false,
-      confirmNewSeed: true,
+      confirmNewSeed: true
     };
   case  CREATEWALLET_NEWSEED_BACK_INPUT:
     return { ...state,
       createWalletInputRequest: true,
-      confirmNewSeed: false,
+      confirmNewSeed: false
     };
   case CREATEWALLET_EXISTINGSEED_INPUT:
     return { ...state,
@@ -105,7 +105,7 @@ export default function walletLoader(state = {}, action) {
       createWalletExisting: true,
       existingOrNew: false,
       createNewWallet: true,
-      stepIndex: 2,
+      stepIndex: 2
     };
   case CREATEWALLET_NEWSEED_INPUT:
     return { ...state,
@@ -113,18 +113,18 @@ export default function walletLoader(state = {}, action) {
       createWalletExisting: false,
       existingOrNew: false,
       createNewWallet: true,
-      stepIndex: 2,
+      stepIndex: 2
     };
   case CREATEWALLET_ATTEMPT:
     return { ...state,
       createWalletInputRequest: false,
       walletCreateExisting: action.existing,
-      walletCreateRequestAttempt: true,
+      walletCreateRequestAttempt: true
     };
   case CREATEWALLET_FAILED:
     return { ...state,
       walletCreateError: String(action.error),
-      walletCreateRequestAttempt: false,
+      walletCreateRequestAttempt: false
     };
   case CREATEWALLET_SUCCESS:
     return { ...state,
@@ -133,29 +133,29 @@ export default function walletLoader(state = {}, action) {
       walletCreateResponse: action.response,
       advancedDaemonInputRequest: true,
       confirmNewSeed: false,
-      stepIndex: 3,
+      stepIndex: 3
     };
   case OPENWALLET_INPUT:
     return { ...state,
       openWalletInputRequest: true,
-      walletOpenRequestAttempt: false,
+      walletOpenRequestAttempt: false
     };
   case OPENWALLET_FAILED_INPUT:
     return { ...state,
       walletOpenError: String(action.error),
       openWalletInputRequest: true,
-      walletOpenRequestAttempt: false,
+      walletOpenRequestAttempt: false
     };
   case OPENWALLET_ATTEMPT:
     return { ...state,
       walletOpenError: false,
       openWalletInputRequest: false,
-      walletOpenRequestAttempt: true,
+      walletOpenRequestAttempt: true
     };
   case OPENWALLET_FAILED:
     return { ...state,
       walletOpenError: String(action.error),
-      walletOpenRequestAttempt: false,
+      walletOpenRequestAttempt: false
     };
   case OPENWALLET_SUCCESS:
     return { ...state,
@@ -164,16 +164,16 @@ export default function walletLoader(state = {}, action) {
       isWatchingOnly: action.isWatchingOnly,
       walletOpenResponse: action.response,
       advancedDaemonInputRequest: true,
-      stepIndex: 3,
+      stepIndex: 3
     };
   case CLOSEWALLET_ATTEMPT:
     return { ...state,
-      walletCloseRequestAttempt: true,
+      walletCloseRequestAttempt: true
     };
   case CLOSEWALLET_FAILED:
     return { ...state,
       walletCloseError: String(action.error),
-      walletCloseRequestAttempt: false,
+      walletCloseRequestAttempt: false
     };
   case CLOSEWALLET_SUCCESS:
     return { ...state,
@@ -192,7 +192,7 @@ export default function walletLoader(state = {}, action) {
       syncInput: false,
       syncAttemptRequest: false,
       syncError: null,
-      synced: false,
+      synced: false
     };
   case CLOSEDAEMON_SUCCESS:
     return { ...state,
@@ -201,24 +201,24 @@ export default function walletLoader(state = {}, action) {
   case STARTRPC_ATTEMPT:
     return { ...state,
       startRpcError: null,
-      startRpcRequestAttempt: true,
+      startRpcRequestAttempt: true
     };
   case STARTRPC_RETRY:
     return { ...state,
-      rpcRetryAttempts: action.rpcRetryAttempts,
+      rpcRetryAttempts: action.rpcRetryAttempts
     };
   case STARTRPC_FAILED:
     return { ...state,
       startRpcError: String(action.error),
       startRpcRequestAttempt: false,
-      rpcRetryAttempts: 0,
+      rpcRetryAttempts: 0
     };
   case STARTRPC_SUCCESS:
     return { ...state,
       startRpcError: null,
       startRpcRequestAttempt: false,
       startRpcResponse: true,
-      stepIndex: 4,
+      stepIndex: 4
     };
   case GETSTARTUPWALLETINFO_ATTEMPT:
     return { ...state,
@@ -226,15 +226,15 @@ export default function walletLoader(state = {}, action) {
     };
   case UPDATEDISCOVERACCOUNTS:
     return { ...state,
-      discoverAccountsComplete: action.complete,
+      discoverAccountsComplete: action.complete
     };
   case WALLET_LOADER_SETTINGS:
     return { ...state,
-      discoverAccountsComplete: action.discoverAccountsComplete,
+      discoverAccountsComplete: action.discoverAccountsComplete
     };
   case GETWALLETSEEDSVC_ATTEMPT:
     return { ...state,
-      seedService: null,
+      seedService: null
     };
   case GETWALLETSEEDSVC_SUCCESS:
     return { ...state,
@@ -244,118 +244,118 @@ export default function walletLoader(state = {}, action) {
     return { ...state,
       rescanPointAttemptRequest: true,
       rescanPointError: null,
-      rescanPointResponse: null,
+      rescanPointResponse: null
     };
   case RESCANPOINT_FAILED:
     return { ...state,
       rescanPointAttemptRequest: false,
       rescanPointError: action.error,
-      rescanPointResponse: null,
+      rescanPointResponse: null
     };
   case RESCANPOINT_SUCCESS:
     return { ...state,
       rescanPointAttemptRequest: false,
       rescanPointError: null,
-      rescanPointResponse: action.response,
+      rescanPointResponse: action.response
     };
   case SYNC_INPUT:
     return { ...state,
-      syncInput: true,
+      syncInput: true
     };
   case SYNC_ATTEMPT:
     return { ...state,
       syncInput: false,
       syncAttemptRequest: true,
       syncError: null,
-      synced: false,
+      synced: false
     };
   case SYNC_FAILED:
     return { ...state,
       syncInput: false,
       syncAttemptRequest: false,
       synced: false,
-      syncCall: null,
+      syncCall: null
     };
   case SYNC_UPDATE:
     return { ...state,
       syncError: null,
-      syncCall: action.syncCall,
+      syncCall: action.syncCall
     };
   case SYNC_CANCEL:
     return { ...state,
       syncError: null,
       synced: false,
-      syncCall: null,
+      syncCall: null
     };
   case SYNC_SUCCESS:
     return { ...state,
       syncAttemptRequest: false,
       syncError: null,
-      synced: false,
+      synced: false
     };
   case SYNC_SYNCED:
     return { ...state,
-      synced: true,
+      synced: true
     };
   case SYNC_UNSYNCED:
     return { ...state,
-      synced: false,
+      synced: false
     };
   case SYNC_PEER_CONNECTED:
     return { ...state,
-      peerCount: action.peerCount,
+      peerCount: action.peerCount
     };
   case SYNC_PEER_DISCONNECTED:
     return { ...state,
-      peerCount: action.peerCount,
+      peerCount: action.peerCount
     };
   case SYNC_FETCHED_MISSING_CFILTERS_STARTED:
     return { ...state,
-      syncFetchMissingCfiltersAttempt: true,
+      syncFetchMissingCfiltersAttempt: true
     };
   case SYNC_FETCHED_MISSING_CFILTERS_PROGRESS:
     return { ...state,
       syncFetchMissingCfiltersStart: action.cFiltersStart,
-      syncFetchMissingCfiltersEnd: action.cFiltersEnd,
+      syncFetchMissingCfiltersEnd: action.cFiltersEnd
     };
   case SYNC_FETCHED_MISSING_CFILTERS_FINISHED:
     return { ...state,
-      syncFetchMissingCfiltersAttempt: false,
+      syncFetchMissingCfiltersAttempt: false
     };
   case SYNC_FETCHED_HEADERS_STARTED:
     return { ...state,
       syncFetchTimeStart: action.fetchTimeStart,
-      syncFetchHeadersAttempt: true,
+      syncFetchHeadersAttempt: true
     };
   case SYNC_FETCHED_HEADERS_PROGRESS:
     return { ...state,
       syncFetchHeadersCount: action.fetchHeadersCount,
-      syncLastFetchedHeaderTime: action.lastFetchedHeaderTime,
+      syncLastFetchedHeaderTime: action.lastFetchedHeaderTime
     };
   case SYNC_FETCHED_HEADERS_FINISHED:
     return { ...state,
       syncFetchHeadersAttempt: false,
-      syncFetchHeadersComplete: true,
+      syncFetchHeadersComplete: true
     };
   case SYNC_DISCOVER_ADDRESSES_STARTED:
     return { ...state,
-      syncDiscoverAddressesAttempt: true,
+      syncDiscoverAddressesAttempt: true
     };
   case SYNC_DISCOVER_ADDRESSES_FINISHED:
     return { ...state,
-      syncDiscoverAddressesAttempt: false,
+      syncDiscoverAddressesAttempt: false
     };
   case SYNC_RESCAN_STARTED:
     return { ...state,
-      syncRescanAttempt: true,
+      syncRescanAttempt: true
     };
   case SYNC_RESCAN_PROGRESS:
     return { ...state,
-      syncRescanProgress: action.rescannedThrough,
+      syncRescanProgress: action.rescannedThrough
     };
   case SYNC_RESCAN_FINISHED:
     return { ...state,
-      syncRescanAttempt: false,
+      syncRescanAttempt: false
     };
   default:
     return state;

@@ -6,7 +6,7 @@ const PurchaseTicketsAdvanced = ({
   stakePool,
   ticketFee,
   txFee,
-  expiry,
+  expiry
 }) => (
   <div className="stakepool-purchase-ticket-quick-bar">
     <Tooltip text={<T id="purchaseTickets.currentStakepool" m="Current VSP" />}>

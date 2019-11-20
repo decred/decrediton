@@ -24,7 +24,7 @@ const Logs = ({
   dcrlndLogs,
   showDcrlndLogs,
   onShowDcrlndLogs,
-  onHideDcrlndLogs,
+  onHideDcrlndLogs
 }
 ) => (
   <>

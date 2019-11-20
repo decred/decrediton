@@ -44,7 +44,7 @@ const VoteTimeChart = ({ data, intl }) => {
     name: intl.formatMessage(messages.dayMonthDisplay, { value: s.time }),
     legendName: intl.formatMessage(messages.fullDayDisplay, { value: s.time }),
     [stakeFeesKey]: s.stakeFeesPerc*100,
-    [stakeRewardsKey]: s.stakeRewardPerc*100,
+    [stakeRewardsKey]: s.stakeRewardPerc*100
   }));
 
   return (

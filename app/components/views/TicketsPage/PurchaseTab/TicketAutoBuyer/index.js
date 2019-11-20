@@ -19,7 +19,7 @@ class TicketAutoBuyer extends React.Component {
       balanceToMaintainError: false,
       stakePool: this.props.ticketBuyerSettings ? this.props.ticketBuyerSettings.stakepool : this.props.stakePool,
       account: this.props.ticketBuyerSettings ? this.props.ticketBuyerSettings.account : this.props.account,
-      balanceToMaintain: this.props.ticketBuyerSettings ? this.props.ticketBuyerSettings.balanceToMaintain : 0,
+      balanceToMaintain: this.props.ticketBuyerSettings ? this.props.ticketBuyerSettings.balanceToMaintain : 0
     };
   }
 
@@ -71,7 +71,7 @@ class TicketAutoBuyer extends React.Component {
           ...this.props,
           ...this.state,
           ...substruct({
-            onStartAutoBuyer: null,
+            onStartAutoBuyer: null
           }, this)
         }}
       />
@@ -87,7 +87,7 @@ class TicketAutoBuyer extends React.Component {
 
   getCurrentSettings() {
     return substruct({
-      balanceToMaintain: null,
+      balanceToMaintain: null
     }, this.props);
   }
 

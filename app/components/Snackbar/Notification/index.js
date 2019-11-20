@@ -5,7 +5,7 @@ import {
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_RECEIVED,
   TRANSACTION_DIR_TRANSFERRED,
-  TRANSACTION_TYPES,
+  TRANSACTION_TYPES
 } from "wallet/service";
 
 const transactionTypes = [

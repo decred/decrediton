@@ -19,7 +19,7 @@ class PaymentsTab extends React.Component {
       payRequest: "",
       decodedPayRequest: null,
       decodingError: null,
-      expired: false,
+      expired: false
     };
     this.lastDecodeTimer = null;
   }

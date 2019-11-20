@@ -6,7 +6,7 @@ export default ({
   identityPubkey,
   confirmedBalance,
   totalBalance,
-  unconfirmedBalance,
+  unconfirmedBalance
 }) => (
   <>
     <div className="ln-wallet-balances">

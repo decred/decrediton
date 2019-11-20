@@ -4,16 +4,16 @@ import { FormattedMessage as T, defineMessages } from "react-intl";
 const messages = defineMessages({
   txFeePlaceholder: {
     id: "purchaseTickets.txFeePlaceholder",
-    defaultMessage: "Tx Fee",
+    defaultMessage: "Tx Fee"
   },
   ticketFeePlaceholder: {
     id: "purchaseTickets.ticketFeePlaceholder",
-    defaultMessage: "Ticket Fee",
+    defaultMessage: "Ticket Fee"
   },
   expiryPlaceholder: {
     id: "purchaseTickets.expiryPlaceholder",
-    defaultMessage: "Expiry",
-  },
+    defaultMessage: "Expiry"
+  }
 });
 
 const PurchaseTicketsAdvanced = ({
@@ -31,7 +31,7 @@ const PurchaseTicketsAdvanced = ({
   onChangeTxFee,
   onChangeExpiry,
   formatMessage,
-  ...props,
+  ...props
 }) => (
   <div className="is-row purchase-ticket-advanced-info-area">
     <div className="purchase-ticket-advanced-labels">

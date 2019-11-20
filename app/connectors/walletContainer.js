@@ -3,7 +3,7 @@ import { selectorMap } from "../fp";
 import * as sel from "../selectors";
 
 const mapStateToProps = selectorMap({
-  expandSideBar: sel.expandSideBar,
+  expandSideBar: sel.expandSideBar
 });
 
 export default connect(mapStateToProps);

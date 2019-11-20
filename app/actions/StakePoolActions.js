@@ -167,7 +167,7 @@ const updateStakePoolVoteChoicesConfig = (stakePool, voteChoices) => (dispatch, 
 export const setStakePoolVoteChoices = (stakePool, voteChoices) => (dispatch) => {
   wallet.allowStakePoolHost(stakePool.Host);
   wallet.setVoteChoices({
-    apiUrl: stakePool.Host, apiToken: stakePool.ApiKey, voteChoices: voteChoices.getVotebits(),
+    apiUrl: stakePool.Host, apiToken: stakePool.ApiKey, voteChoices: voteChoices.getVotebits()
   })
     .then(response => {
       if (response.data.status == "success") {

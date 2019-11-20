@@ -14,7 +14,7 @@ import "style/HomePage.less";
 const tabMessages = [
   <T id="home.tab.balance" m="Balance" />,
   <T id="home.tab.tickets" m="Tickets" />,
-  <T id="home.tab.transactions" m="Transactions" />,
+  <T id="home.tab.transactions" m="Transactions" />
 ];
 
 const tabLink = (i) => {
@@ -42,7 +42,7 @@ const tabLink = (i) => {
           {tabMessages[i]}
         </span>
       </Tooltip>
-    ),
+    )
   ];
   return m[i];
 };
@@ -72,7 +72,7 @@ const HomePage = ({
           <RoutedTabsHeader tabs={[
             RoutedTab("/home/balance", tabLink(0)),
             RoutedTab("/home/tickets", tabLink(1)),
-            RoutedTab("/home/transactions", tabLink(2)),
+            RoutedTab("/home/transactions", tabLink(2))
           ]} />
         </div>
       </div>

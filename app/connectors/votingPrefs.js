@@ -14,7 +14,7 @@ const mapStateToProps = selectorMap({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   onUpdateVotePreference: ca.setVoteChoicesAttempt,
-  onChangeStakePool: spa.changeSelectedStakePool,
+  onChangeStakePool: spa.changeSelectedStakePool
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

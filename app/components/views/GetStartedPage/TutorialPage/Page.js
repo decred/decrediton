@@ -9,14 +9,14 @@ const docByStep = {
   0: "GetStartedTutorialPage01",
   1: "GetStartedTutorialPage02",
   2: "GetStartedTutorialPage03",
-  3: "GetStartedTutorialPage04",
+  3: "GetStartedTutorialPage04"
 };
 
 const videosByStep = {
   0: onboard01,
   1: onboard02,
   2: onboard03,
-  3: onboard04,
+  3: onboard04
 };
 
 const TutorialPage = ({ tutorialStep, onNextTutorialStep, onGoToStep, finishTutorial }) => {

@@ -56,7 +56,7 @@ class LastBlockTime extends React.Component {
 }
 
 LastBlockTime.propTypes = {
-  lastBlockDate: PropTypes.number,
+  lastBlockDate: PropTypes.number
 };
 
 export { LastBlockTime as LastBlockTime };

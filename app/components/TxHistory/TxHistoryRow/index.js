@@ -19,14 +19,14 @@ const TxRowByType = {
   [txTypes.OUT] : regular,
   [txTypes.IN] : regular,
   [txTypes.TRANSFER] : regular,
-  [txTypes.COINBASE] : regular,
+  [txTypes.COINBASE] : regular
 };
 
 export const timeMessageDefine = defineMessages({
   dayMonthHourDisplay: {
     id: "txHistory.dayMonthHourDisplay",
     defaultMessage: "{value, date, short-month-24hour}"
-  },
+  }
 });
 
 export const timeMessage = (txTimestamp, intl) => intl.formatMessage(timeMessageDefine.dayMonthHourDisplay, { value: txTimestamp });
@@ -54,7 +54,7 @@ const TxRow = ({ tx, overview, tsDate, intl }, { router }) => {
 };
 
 TxRow.contextTypes = {
-  router: PropTypes.object.isRequired,
+  router: PropTypes.object.isRequired
 };
 
 export default injectIntl(TxRow);

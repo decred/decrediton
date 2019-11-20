@@ -206,7 +206,7 @@ const getAccountsBalances = (accounts) => (dispatch, getState) => {
       immatureReward: resp.getImmatureReward(),
       immatureStakeGeneration: resp.getImmatureStakeGeneration(),
       lockedByTickets: resp.getLockedByTickets(),
-      votingAuthority: resp.getVotingAuthority(),
+      votingAuthority: resp.getVotingAuthority()
     };
   });
 
@@ -227,7 +227,7 @@ const getBalanceUpdateSuccess = (accountNumber, getBalanceResponse) => (dispatch
     immatureReward: getBalanceResponse.getImmatureReward(),
     immatureStakeGeneration: getBalanceResponse.getImmatureStakeGeneration(),
     lockedByTickets: getBalanceResponse.getLockedByTickets(),
-    votingAuthority: getBalanceResponse.getVotingAuthority(),
+    votingAuthority: getBalanceResponse.getVotingAuthority()
   };
 
   dispatch(updateAccount(updatedBalance));
@@ -519,7 +519,7 @@ const getTicketsFromTransactions = async (walletService, startIdx, endIdx, maxCo
           // for duplicate occurrences of the ticket later on the code flow.
           const statusByTxType = {
             [TransactionDetails.TransactionType.VOTE]: "voted",
-            [TransactionDetails.TransactionType.REVOCATION]: "revoked",
+            [TransactionDetails.TransactionType.REVOCATION]: "revoked"
           };
           ticket.status = statusByTxType[tx.type];
           ticket.spender = tx.tx;
@@ -849,7 +849,7 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
   const regularTransactionFilter = {
     listDirection: "desc",
     types: [ TransactionDetails.TransactionType.REGULAR ],
-    direction: null,
+    direction: null
   };
 
   recentRegularTransactions = filterTransactions([
@@ -861,7 +861,7 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
   const stakeTransactionFilter = {
     listDirection: "desc",
     types: [ TransactionDetails.TransactionType.TICKET_PURCHASE, TransactionDetails.TransactionType.VOTE, TransactionDetails.TransactionType.REVOCATION ],
-    direction: null,
+    direction: null
   };
 
   recentStakeTransactions = filterTransactions([
@@ -931,7 +931,7 @@ export const getStartupTransactions = () => async (dispatch, getState) => {
     types: [],
     direction: null,
     maxAmount: null,
-    minAmount: null,
+    minAmount: null
   };
   await dispatch(changeTransactionsFilter(defaultFilter));
 
@@ -1187,7 +1187,7 @@ export const fetchMissingStakeTxData = tx => async (dispatch, getState) => {
     newTx = {
       ...tx.originalTx,
       enterTimestamp: tx.txTimestamp,
-      ticketPrice: decodedTx.transaction.getOutputsList()[0].getValue(),
+      ticketPrice: decodedTx.transaction.getOutputsList()[0].getValue()
     };
   } else { // vote/revoke
     let decodedSpender = sel.decodedTransactions(getState())[tx.txHash];
@@ -1220,7 +1220,7 @@ export const fetchMissingStakeTxData = tx => async (dispatch, getState) => {
     const ticket = {
       ticket: ticketTx.tx,
       spender: tx.originalTx.tx,
-      status: tx.txType === "Vote" ? "voted" : "revoked",
+      status: tx.txType === "Vote" ? "voted" : "revoked"
     };
     const ticketNormal = sel.ticketNormalizer(getState())(ticket);
 
@@ -1229,7 +1229,7 @@ export const fetchMissingStakeTxData = tx => async (dispatch, getState) => {
       enterTimestamp: ticketNormal.enterTimestamp,
       leaveTimestamp: ticketNormal.leaveTimestamp,
       ticketPrice: ticketNormal.ticketPrice,
-      ticketReward: ticketNormal.ticketReward,
+      ticketReward: ticketNormal.ticketReward
       // add more stuff from the result of sel.ticketNormalizer if ever needed
     };
   }

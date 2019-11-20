@@ -16,7 +16,7 @@ const messageByType = {
   [txTypes.MISSED] : <T id="transaction.type.missed" m="Missed" />,
   [txTypes.EXPIRED] : <T id="transaction.type.expired" m="Expired" />,
   [txTypes.REVOKED] : <T id="transaction.type.revoked" m="Revoked" />,
-  [txTypes.LIVE] : <T id="transaction.type.live" m="Live" />,
+  [txTypes.LIVE] : <T id="transaction.type.live" m="Live" />
 };
 
 const StakeTxRow = ({ status,  ...props }) => {
@@ -27,7 +27,7 @@ const StakeTxRow = ({ status,  ...props }) => {
     m={"{rewardLabel}: {reward}"}
     values={{
       rewardLabel: rewardLabel,
-      reward: <Balance amount={ticketReward || 0} />,
+      reward: <Balance amount={ticketReward || 0} />
     }} />;
 
   const ticketPriceLabel = <T id="ticket.priceLabel" m="Ticket Price" />;
@@ -35,7 +35,7 @@ const StakeTxRow = ({ status,  ...props }) => {
     m={"{ticketPriceLabel}: {ticketPrice}"}
     values={{
       ticketPriceLabel: ticketPriceLabel,
-      ticketPrice: <Balance amount={ticketPrice || 0} />,
+      ticketPrice: <Balance amount={ticketPrice || 0} />
     }} />;
 
   // ticket can have leaveTimestamp equals null, which is not voted yet
@@ -46,7 +46,7 @@ const StakeTxRow = ({ status,  ...props }) => {
     m={"{daysToVoteLabel}: {daysToVote}"}
     values={{
       daysToVoteLabel: daysToVoteLabel,
-      daysToVote: daysToVote || 0,
+      daysToVote: daysToVote || 0
     }} />;
 
   const typeMsg = messageByType[status] || "(unknown type)";

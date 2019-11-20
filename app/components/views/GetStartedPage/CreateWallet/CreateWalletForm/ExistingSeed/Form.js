@@ -8,7 +8,7 @@ import { WORDS, HEX } from "constants";
 
 const ExistingSeedForm = ({
   onChangeSeedWord, seedWords, setSeedHex, mountSeedErrors, handleOnPaste, hexSeed,
-  seedType, pasteFromClipboard, handleToggle, showPasteWarning, showPasteError,
+  seedType, pasteFromClipboard, handleToggle, showPasteWarning, showPasteError
 }) => {
   const errors = mountSeedErrors();
   return (
