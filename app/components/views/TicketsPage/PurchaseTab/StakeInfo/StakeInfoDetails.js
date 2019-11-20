@@ -1,7 +1,6 @@
 import { Balance } from "shared";
 import { FormattedNumber, FormattedMessage as T } from "react-intl";
 import { Column } from "./Display";
-import "style/StakePool.less";
 
 const StakeInfoDisplay = ({
   ticketPoolSize,

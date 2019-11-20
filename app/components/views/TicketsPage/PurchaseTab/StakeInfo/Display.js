@@ -1,9 +1,7 @@
-import { TransitionMotionWrapper } from "shared";
-import { VerticalExpand } from "buttons";
+import { VerticalAccordion } from "shared";
 import { FormattedNumber, FormattedMessage as T } from "react-intl";
+import StakeInfoDetails from "./StakeInfoDetails";
 import "style/StakePool.less";
-
-const wrapperComponent = props => <div { ...props } />;
 
 export const Column = ({ label, value, className }) =>
   <div className={className}>
@@ -12,47 +10,62 @@ export const Column = ({ label, value, className }) =>
   </div>;
 
 const StakeInfoDisplay = ({
-  getNullStyles,
-  getStakeInfoDetailsComponent,
   isShowingDetails,
   ownMempoolTicketsCount,
   unspentTicketsCount,
   immatureTicketsCount,
   liveTicketsCount,
+  onToggleStakeinfo,
+  sidebarOnBottom,
+  ticketPoolSize,
+  votedTicketsCount,
+  allMempoolTicketsCount,
+  missedTicketsCount,
+  revokedTicketsCount,
+  expiredTicketsCount,
+  totalSubsidy,
   isSPV,
-  onShowStakeInfo,
-  onHideStakeInfo,
-  sidebarOnBottom
 }) => (
-  <div className="stake-info-area">
-    <div className="stake-info-row-area" onClick={isShowingDetails ? onHideStakeInfo : onShowStakeInfo}>
-      <Column
-        className={"stake-info"}
-        label={<T id="stake.ownMempoolTickets" m="Own Mempool Tickets" />}
-        value={<FormattedNumber value={ownMempoolTicketsCount} />} />
-      {!sidebarOnBottom &&
+  <VerticalAccordion
+    header = {
+      <div className="stake-info-area">
         <Column
           className={"stake-info"}
-          label={<T id="stake.immatureTickets" m="Immature Tickets" />}
-          value={<FormattedNumber value={immatureTicketsCount} />} />
-      }
-      {isSPV ?
-        <Column
-          className={"stake-info"}
-          label={<T id="stake.unspentTickets" m="Unspent Tickets" />}
-          value={<FormattedNumber value={unspentTicketsCount} />} /> :
-        <Column
-          className={"stake-info"}
-          label={<T id="stake.liveTickets" m="Live Tickets" />}
-          value={<FormattedNumber value={liveTicketsCount} />} />
-      }
-      <VerticalExpand
-        expanded={!!isShowingDetails}
-      />
-    </div>
-    <TransitionMotionWrapper {...{
-      styles: !isShowingDetails ? getNullStyles() : getStakeInfoDetailsComponent(),
-      wrapperComponent }} />
-  </div>);
+          label={<T id="stake.ownMempoolTickets" m="Own Mempool Tickets" />}
+          value={<FormattedNumber value={ownMempoolTicketsCount} />} />
+        {!sidebarOnBottom &&
+          <Column
+            className={"stake-info"}
+            label={<T id="stake.immatureTickets" m="Immature Tickets" />}
+            value={<FormattedNumber value={immatureTicketsCount} />} />
+        }
+        {isSPV ?
+          <Column
+            className={"stake-info"}
+            label={<T id="stake.unspentTickets" m="Unspent Tickets" />}
+            value={<FormattedNumber value={unspentTicketsCount} />} /> :
+          <Column
+            className={"stake-info"}
+            label={<T id="stake.liveTickets" m="Live Tickets" />}
+            value={<FormattedNumber value={liveTicketsCount} />} />
+        }
+      </div>
+    }
+    show={isShowingDetails}
+    onToggleAccordion={onToggleStakeinfo}
+    className="stake-info-details-accordion"
+  >
+    <StakeInfoDetails {...{
+      ticketPoolSize,
+      votedTicketsCount,
+      allMempoolTicketsCount,
+      missedTicketsCount,
+      revokedTicketsCount,
+      expiredTicketsCount,
+      totalSubsidy,
+      isSPV,
+    }} />
+  </VerticalAccordion>
+);
 
 export default StakeInfoDisplay;
