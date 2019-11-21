@@ -8,7 +8,7 @@ import "style/PurchaseTickets.less";
 import { InfoDocModalButton } from "buttons";
 
 const getTitleIcon = () => (
-  <InfoDocModalButton document="PurchaseTicketsInfo" modalClassName="info-modal-fields" className="info-title-icon" />
+  <InfoDocModalButton document="PurchaseTicketsInfo" modalClassName="info-modal-fields" className="info-title-icon" draggable/>
 );
 const Tickets = ({
   spvMode,

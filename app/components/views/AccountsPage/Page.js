@@ -25,7 +25,7 @@ const AccountsListHeader = ({ onGetNextAccountAttempt, isCreateAccountDisabled }
 
 const subtitleInfoIcon = () => (
   <div className="account-content-title-buttons-area">
-    <InfoDocModalButton document="BalanceOverviewInfo" modalClassName="info-modal-fields" double/>
+    <InfoDocModalButton document="BalanceOverviewInfo" modalClassName="info-modal-fields" double draggable/>
   </div>
 );
 

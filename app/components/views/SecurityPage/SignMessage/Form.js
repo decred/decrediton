@@ -29,7 +29,7 @@ const SignMessageForm = ({
     <>
       <div className="security-center-form">
         <div className="button-right">
-          <InfoDocModalButton document="SignMessageInfo" />
+          <InfoDocModalButton document="SignMessageInfo" draggable/>
         </div>
         <div className="security-center-form-row">
           <div className="security-center-form-row-label">
