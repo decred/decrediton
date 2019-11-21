@@ -10,7 +10,7 @@
  *
  */
 const COMPONENT_NAMES = [
-  "FormattedMessage",
+  "FormattedMessage"
 ];
 
 const DESCRIPTOR_PROPS = new Set([ "m" ]);
@@ -74,7 +74,7 @@ function aliasDefaultMessagePlugin({ types: t }) {
           let descriptor = createMessageDescriptor(
             attributes.map((attr) => [
               attr.get("name"),
-              attr.get("value"),
+              attr.get("value")
             ])
           );
 

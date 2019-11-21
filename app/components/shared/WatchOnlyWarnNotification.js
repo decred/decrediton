@@ -5,7 +5,7 @@ const messages = defineMessages({
   watchOnlyWarn: {
     id: "watchOnly.warn",
     defaultMessage: "This functionality is disabled for watch-only Wallets"
-  },
+  }
 });
 
 const WatchOnlyWarnNotification = ({ dispatchSingleMessage, children, isActive }) => (

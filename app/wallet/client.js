@@ -46,7 +46,7 @@ export const getTickets = log((walletService, startHeight, endHeight, targetCoun
       status: TicketTypes.get(res.getTicket().getTicketStatus()),
       ticket: res.getTicket().getTicket(),
       spender: res.getTicket().getSpender(),
-      block: res.getBlock(),
+      block: res.getBlock()
     });
   });
   getTx.on("end", () => ok(tickets));
@@ -67,7 +67,7 @@ export const getTicket = log((walletService, ticketHash) =>
         status: TicketTypes.get(res.getTicket().getTicketStatus()),
         ticket: res.getTicket().getTicket(),
         spender: res.getTicket().getSpender(),
-        block: res.getBlock(),
+        block: res.getBlock()
       };
 
       ok(ticket);

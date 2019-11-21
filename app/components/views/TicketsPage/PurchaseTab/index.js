@@ -17,7 +17,7 @@ class Purchase extends React.Component {
       stakePool: this.props.stakePool,
       isShowingStakePools: !this.props.stakePool,
       isShowingVotingPrefs: false,
-      isShowingImportScript: false,
+      isShowingImportScript: false
     };
   }
 
@@ -51,7 +51,7 @@ class Purchase extends React.Component {
                 onShowStakePoolConfig: null,
                 onHideStakePoolConfig: null,
                 onImportScript: null,
-                onRevokeTickets: null,
+                onRevokeTickets: null
               }, this)
             }}
           />

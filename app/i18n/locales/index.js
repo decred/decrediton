@@ -40,7 +40,7 @@ export const defaultFormats = {
       hour12: false,
       formatMatcher: "best fit"
     }
-  },
+  }
 };
 
 const de = {

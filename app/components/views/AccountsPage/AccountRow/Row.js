@@ -9,7 +9,7 @@ const isImported = ({ accountNumber }) => accountNumber === Math.pow(2, 31)-1;
 const Header = ({
   account,
   hidden,
-  hasTickets,
+  hasTickets
 }) => (
   // hasTickets shows if the account had ticket EVER. When the account had no tickets
   // we deactivate the imported account.
@@ -44,7 +44,7 @@ const Row = ({
   getAccountDetailsStyles,
   getRenameAccountStyles,
   isShowingDetails,
-  hasTickets,
+  hasTickets
 }) => (<VerticalAccordion
   header={<Header {...{ account, hidden, hasTickets }} />}
   disabled={isImported(account) && !hasTickets}

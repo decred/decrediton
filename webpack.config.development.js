@@ -90,7 +90,7 @@ export default merge(baseConfig, {
             mimetype: "video/mp4"
           }
         } ]
-      },
+      }
     ]
   },
 

@@ -30,7 +30,7 @@ class RescanWalletBody extends React.Component {
       rescanEndBlock,
       rescanStartBlock,
       rescanCurrentBlock,
-      syncRescanProgress,
+      syncRescanProgress
     } = this.props;
     var rescanEnd = rescanEndBlock;
     var rescanStart = rescanStartBlock;
@@ -44,7 +44,7 @@ class RescanWalletBody extends React.Component {
           rescanEndBlock: rescanEnd,
           rescanStartBlock: rescanStart,
           rescanCurrentBlock: rescanCurrent,
-          isSPV,
+          isSPV
         }}
       />
     );

@@ -22,61 +22,61 @@ import {
   SIGNTX_ATTEMPT, SIGNTX_FAILED, SIGNTX_SUCCESS
 } from "actions/ControlActions";
 import {
-  CLOSEWALLET_SUCCESS,
+  CLOSEWALLET_SUCCESS
 } from "actions/WalletLoaderActions";
 
 export default function trezor(state = {}, action) {
   switch (action.type) {
   case TRZ_TREZOR_ENABLED:
     return { ...state,
-      enabled: true,
+      enabled: true
     };
   case TRZ_TREZOR_DISABLED:
     return { ...state,
-      enabled: false,
+      enabled: false
     };
   case TRZ_CLEAR_DEVICELIST:
     return { ...state,
       deviceList: null,
       transportError: false,
       device: null,
-      getDeviceListAttempt: true,
+      getDeviceListAttempt: true
     };
   case TRZ_LOADDEVICELIST_ATTEMPT:
     return { ...state,
       deviceList: null,
       transportError: false,
       device: null,
-      getDeviceListAttempt: true,
+      getDeviceListAttempt: true
     };
   case TRZ_LOADDEVICELIST_SUCCESS:
     return { ...state,
       deviceList: action.deviceList,
       transportError: false,
-      getDeviceListAttempt: false,
+      getDeviceListAttempt: false
     };
   case TRZ_LOADDEVICELIST_FAILED:
     return { ...state,
       transportError: action.error,
-      getDeviceListAttempt: false,
+      getDeviceListAttempt: false
     };
   case TRZ_DEVICELISTTRANSPORT_LOST:
     return { ...state,
       deviceList: null,
       transportError: action.error,
       device: null,
-      performingOperation: false,
+      performingOperation: false
     };
   case TRZ_SELECTEDDEVICE_CHANGED:
     return { ...state,
-      device: action.device,
+      device: action.device
     };
   case TRZ_PIN_REQUESTED:
     return { ...state,
       waitingForPin: true,
       pinCallBack: action.pinCallBack,
       pinMessage: action.pinMessage,
-      performingOperation: true,
+      performingOperation: true
     };
   case TRZ_PIN_CANCELED:
   case TRZ_PIN_ENTERED:
@@ -84,33 +84,33 @@ export default function trezor(state = {}, action) {
       waitingForPin: false,
       pinCallBack: null,
       pinMessage: null,
-      performingOperation: false,
+      performingOperation: false
     };
   case TRZ_PASSPHRASE_REQUESTED:
     return { ...state,
       waitingForPassPhrase: true,
       passPhraseCallBack: action.passPhraseCallBack,
-      performingOperation: true,
+      performingOperation: true
     };
   case TRZ_PASSPHRASE_CANCELED:
   case TRZ_PASSPHRASE_ENTERED:
     return { ...state,
       waitingForPassPhrase: false,
       passPhraseCallBack: null,
-      performingOperation: false,
+      performingOperation: false
     };
   case TRZ_WORD_REQUESTED:
     return { ...state,
       waitingForWord: true,
       wordCallBack: action.wordCallBack,
-      performingOperation: true,
+      performingOperation: true
     };
   case TRZ_WORD_CANCELED:
   case TRZ_WORD_ENTERED:
     return { ...state,
       waitingForWord: false,
       wordCallBack: null,
-      performingOperation: false,
+      performingOperation: false
     };
   case TRZ_CANCELOPERATION_SUCCESS:
     return { ...state,
@@ -121,7 +121,7 @@ export default function trezor(state = {}, action) {
       waitingForPassPhrase: false,
       passPhraseCallBack: null,
       performingOperation: false,
-      waitingForWord: false,
+      waitingForWord: false
     };
   case TRZ_GETWALLETCREATIONMASTERPUBKEY_ATTEMPT:
     return { ...state,
@@ -142,7 +142,7 @@ export default function trezor(state = {}, action) {
   case TRZ_INITDEVICE_ATTEMPT:
   case TRZ_UPDATEFIRMWARE_ATTEMPT:
     return { ...state,
-      performingOperation: true,
+      performingOperation: true
     };
   case SIGNTX_FAILED:
   case SIGNTX_SUCCESS:
@@ -163,11 +163,11 @@ export default function trezor(state = {}, action) {
   case TRZ_UPDATEFIRMWARE_FAILED:
   case TRZ_UPDATEFIRMWARE_SUCCESS:
     return { ...state,
-      performingOperation: false,
+      performingOperation: false
     };
   case CLOSEWALLET_SUCCESS:
     return { ...state,
-      enabled: false,
+      enabled: false
     };
   default:
     return state;

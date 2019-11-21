@@ -9,7 +9,7 @@ const availableProxyTypes = [
   { name: "HTTP", value: PROXYTYPE_HTTP },
   { name: "PAC", value: PROXYTYPE_PAC },
   { name: "SOCKS4", value: PROXYTYPE_SOCKS4 },
-  { name: "SOCKS5", value: PROXYTYPE_SOCKS5 },
+  { name: "SOCKS5", value: PROXYTYPE_SOCKS5 }
 ];
 
 const ProxySettings = ({

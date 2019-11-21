@@ -4,7 +4,7 @@ const Toggle = ({
   leftText,
   rightText,
   activeButton,
-  onClick,
+  onClick
 }) => (
   <div className="text-toggle is-row">
     <div

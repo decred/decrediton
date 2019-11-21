@@ -19,7 +19,7 @@ class ChannelsTab extends React.Component {
       pushAmt: 0,
       pushAmtAtoms: 0,
       canOpen: false,
-      opening: false,
+      opening: false
     };
   }
 

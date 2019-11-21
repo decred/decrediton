@@ -36,7 +36,7 @@ import {
 import { SIGNMESSAGE_ATTEMPT, SIGNMESSAGE_SUCCESS, SIGNMESSAGE_FAILED, SIGNMESSAGE_CLEANSTORE } from "../actions/ControlActions";
 import { VERIFYMESSAGE_ATTEMPT, VERIFYMESSAGE_SUCCESS, VERIFYMESSAGE_FAILED, VERIFYMESSAGE_CLEANSTORE } from "../actions/ControlActions";
 import {
-  CLOSEWALLET_SUCCESS,
+  CLOSEWALLET_SUCCESS
 } from "actions/WalletLoaderActions";
 
 export default function grpc(state = {}, action) {
@@ -55,148 +55,148 @@ export default function grpc(state = {}, action) {
     return {
       ...state,
       getWalletServiceError: null,
-      getWalletServiceRequestAttempt: true,
+      getWalletServiceRequestAttempt: true
     };
   case GETWALLETSERVICE_FAILED:
     return {
       ...state,
       getWalletServiceError: String(action.error),
-      getWalletServiceRequestAttempt: false,
+      getWalletServiceRequestAttempt: false
     };
   case GETWALLETSERVICE_SUCCESS:
     return {
       ...state,
       getWalletServiceError: null,
       getWalletServiceRequestAttempt: false,
-      walletService: action.walletService,
+      walletService: action.walletService
     };
   case GETMESSAGEVERIFICATIONSERVICE_ATTEMPT:
     return {
       ...state,
       getMessageVerificationServiceError: null,
-      getMessageVerificationServiceRequestAttempt: true,
+      getMessageVerificationServiceRequestAttempt: true
     };
   case GETMESSAGEVERIFICATIONSERVICE_FAILED:
     return {
       ...state,
       getMessageVerificationServiceError: String(action.error),
-      getMessageVerificationServiceRequestAttempt: false,
+      getMessageVerificationServiceRequestAttempt: false
     };
   case GETMESSAGEVERIFICATIONSERVICE_SUCCESS:
     return {
       ...state,
       getMessageVerificationServiceError: null,
       getMessageVerificationServiceRequestAttempt: false,
-      messageVerificationService: action.messageVerificationService,
+      messageVerificationService: action.messageVerificationService
     };
   case GETTICKETBUYERSERVICE_ATTEMPT:
     return {
       ...state,
       getTicketBuyerServiceError: null,
-      getTicketBuyerServiceRequestAttempt: true,
+      getTicketBuyerServiceRequestAttempt: true
     };
   case GETTICKETBUYERSERVICE_FAILED:
     return {
       ...state,
       getTicketBuyerServiceError: String(action.error),
-      getTicketBuyerServiceRequestAttempt: false,
+      getTicketBuyerServiceRequestAttempt: false
     };
   case GETTICKETBUYERSERVICE_SUCCESS:
     return {
       ...state,
       getTicketBuyerError: null,
       getTicketBuyerServiceRequestAttempt: false,
-      ticketBuyerService: action.ticketBuyerService,
+      ticketBuyerService: action.ticketBuyerService
     };
   case GETBALANCE_ATTEMPT:
     return {
       ...state,
       getBalanceError: null,
-      getBalanceRequestAttempt: true,
+      getBalanceRequestAttempt: true
     };
   case GETBALANCE_FAILED:
     return {
       ...state,
       getBalanceError: String(action.error),
-      getBalanceRequestAttempt: false,
+      getBalanceRequestAttempt: false
     };
   case GETBALANCE_SUCCESS:
     return {
       ...state,
       getBalanceError: "",
       getBalanceRequestAttempt: false,
-      balances: action.balances,
+      balances: action.balances
     };
   case GETACCOUNTNUMBER_ATTEMPT:
     return {
       ...state,
       getAccountNumberError: "",
-      getAccountNumberRequestAttempt: true,
+      getAccountNumberRequestAttempt: true
     };
   case GETACCOUNTNUMBER_FAILED:
     return {
       ...state,
       getAccountNumberError: String(action.error),
-      getAccountNumberRequestAttempt: false,
+      getAccountNumberRequestAttempt: false
     };
   case GETACCOUNTNUMBER_SUCCESS:
     return {
       ...state,
       getAccountNumberError: "",
       getAccountNumberRequestAttempt: false,
-      getAccountNumberResponse: action.getAccountNumberResponse,
+      getAccountNumberResponse: action.getAccountNumberResponse
     };
   case GETBESTBLOCK_ATTEMPT:
     return {
       ...state,
       getBestBlockHeightRequest: true,
-      getAccountNumberError: null,
+      getAccountNumberError: null
     };
   case GETBESTBLOCK_FAILED:
     return {
       ...state,
       getBestBlockHeightRequest: false,
-      getAccountNumberError: action.error,
+      getAccountNumberError: action.error
     };
   case GETBESTBLOCK_SUCCESS:
     return {
       ...state,
       getBestBlockHeightRequest: false,
       getAccountNumberError: null,
-      currentBlockHeight: action.height,
+      currentBlockHeight: action.height
     };
   case GETNETWORK_ATTEMPT:
     return {
       ...state,
       getNetworkError: null,
-      getNetworkRequestAttempt: true,
+      getNetworkRequestAttempt: true
     };
   case GETNETWORK_FAILED:
     return {
       ...state,
       getNetworkError: String(action.error),
-      getNetworkRequestAttempt: false,
+      getNetworkRequestAttempt: false
     };
   case GETNETWORK_SUCCESS:
     return {
       ...state,
       getNetworkError: null,
       getNetworkRequestAttempt: false,
-      getNetworkResponse: action.getNetworkResponse,
+      getNetworkResponse: action.getNetworkResponse
     };
   case GETPING_ATTEMPT:
     return {
       ...state,
       getPingError: "",
       getPingRequestAttempt: true,
-      pingTimer: null,
+      pingTimer: null
     };
   case GETPING_FAILED:
     return {
       ...state,
       getPingError: String(action.error),
       getPingRequestAttempt: false,
-      pingTimer: null,
+      pingTimer: null
     };
   case GETPING_SUCCESS:
     return {
@@ -204,7 +204,7 @@ export default function grpc(state = {}, action) {
       getPingError: "",
       getPingRequestAttempt: false,
       getPingResponse: action.getPingResponse,
-      pingTimer: action.pingTimer,
+      pingTimer: action.pingTimer
     };
   case GETPING_CANCELED:
     return {
@@ -212,70 +212,70 @@ export default function grpc(state = {}, action) {
       getPingError: "",
       getPingRequestAttempt: false,
       getPingResponse: null,
-      pingTimer: null,
+      pingTimer: null
     };
   case GETSTAKEINFO_ATTEMPT:
     return {
       ...state,
       getStakeInfoError: "",
-      getStakeInfoRequestAttempt: true,
+      getStakeInfoRequestAttempt: true
     };
   case GETSTAKEINFO_FAILED:
     return {
       ...state,
       getStakeInfoError: String(action.error),
-      getStakeInfoRequestAttempt: false,
+      getStakeInfoRequestAttempt: false
     };
   case GETSTAKEINFO_SUCCESS:
     return {
       ...state,
       getStakeInfoError: "",
       getStakeInfoRequestAttempt: false,
-      getStakeInfoResponse: action.getStakeInfoResponse,
+      getStakeInfoResponse: action.getStakeInfoResponse
     };
   case GETTICKETPRICE_ATTEMPT:
     return {
       ...state,
       getTicketPriceError: "",
-      getTicketPriceRequestAttempt: true,
+      getTicketPriceRequestAttempt: true
     };
   case GETTICKETPRICE_FAILED:
     return {
       ...state,
       getTicketPriceError: String(action.error),
-      getTicketPriceRequestAttempt: false,
+      getTicketPriceRequestAttempt: false
     };
   case GETTICKETPRICE_SUCCESS:
     return {
       ...state,
       getTicketPriceError: "",
       getTicketPriceRequestAttempt: false,
-      getTicketPriceResponse: action.getTicketPriceResponse,
+      getTicketPriceResponse: action.getTicketPriceResponse
     };
   case GETACCOUNTS_ATTEMPT:
     return {
       ...state,
       getAccountsError: "",
-      getAccountsRequestAttempt: true,
+      getAccountsRequestAttempt: true
     };
   case GETACCOUNTS_FAILED:
     return {
       ...state,
       getAccountsError: String(action.error),
-      getAccountsRequestAttempt: false,
+      getAccountsRequestAttempt: false
     };
   case GETACCOUNTS_SUCCESS:
     return {
       ...state,
       getAccountsError: "",
       getAccountsRequestAttempt: false,
-      getAccountsResponse: action.response,
+      getAccountsResponse: action.response
     };
   case GETTICKETS_ATTEMPT:
     return {
       ...state,
       getTicketsRequestAttempt: true,
-      getTicketsCancel: false,
+      getTicketsCancel: false
     };
   case GETTICKETS_FAILED:
     return {
@@ -283,7 +283,7 @@ export default function grpc(state = {}, action) {
       getTicketsRequestError: String(action.error),
       getTicketsRequestAttempt: false,
       getTicketsCancel: false,
-      getTicketsProgressStartRequestHeight: null,
+      getTicketsProgressStartRequestHeight: null
     };
   case GETTICKETS_COMPLETE:
     var tickets = [ ...action.unminedTickets, ...action.minedTickets ];
@@ -297,12 +297,12 @@ export default function grpc(state = {}, action) {
       getTicketsRequestAttempt: false,
       getTicketsStartRequestHeight: action.getTicketsStartRequestHeight,
       getTicketsCancel: false,
-      getTicketsProgressStartRequestHeight: null,
+      getTicketsProgressStartRequestHeight: null
     };
   case GETTICKETS_PROGRESS:
     return {
       ...state,
-      getTicketsProgressStartRequestHeight: action.startRequestHeight,
+      getTicketsProgressStartRequestHeight: action.startRequestHeight
     };
   case GETTICKETS_CANCEL:
     return {
@@ -316,7 +316,7 @@ export default function grpc(state = {}, action) {
       minedTickets: [],
       noMoreTickets: false,
       lastTicket: null,
-      getTicketsStartRequestHeight: null,
+      getTicketsStartRequestHeight: null
     };
   case RAWTICKETTRANSACTIONS_DECODED:
     var idxOldTicket = state.tickets.indexOf(action.ticket);
@@ -341,18 +341,18 @@ export default function grpc(state = {}, action) {
       lastTicket: null,
       getTicketsRequestError: "",
       getTicketsRequestAttempt: false,
-      getTicketsStartRequestHeight: null,
+      getTicketsStartRequestHeight: null
     };
   case GETTRANSACTIONS_ATTEMPT:
     return {
       ...state,
-      getTransactionsRequestAttempt: true,
+      getTransactionsRequestAttempt: true
     };
   case GETTRANSACTIONS_FAILED:
     return {
       ...state,
       getTransactionsRequestError: String(action.error),
-      getTransactionsRequestAttempt: false,
+      getTransactionsRequestAttempt: false
     };
   case GETTRANSACTIONS_COMPLETE:
     var transactions = [ ...action.unminedTransactions, ...action.minedTransactions ];
@@ -364,7 +364,7 @@ export default function grpc(state = {}, action) {
       noMoreTransactions: action.noMoreTransactions,
       lastTransaction: action.lastTransaction,
       getTransactionsRequestError: "",
-      getTransactionsRequestAttempt: false,
+      getTransactionsRequestAttempt: false
     };
   case NEW_TRANSACTIONS_RECEIVED:
     return {
@@ -373,7 +373,7 @@ export default function grpc(state = {}, action) {
       unminedTransactions: action.unminedTransactions,
       transactions: [ ...action.unminedTransactions, ...action.minedTransactions ],
       recentRegularTransactions: action.recentRegularTransactions,
-      recentStakeTransactions: action.recentStakeTransactions,
+      recentStakeTransactions: action.recentStakeTransactions
     };
   case CHANGE_TRANSACTIONS_FILTER:
     return {
@@ -390,7 +390,7 @@ export default function grpc(state = {}, action) {
       ...state,
       fetchMissingStakeTxDataAttempt: {
         ...state.fetchMissingStakeTxDataAttempt,
-        [action.txHash]: true,
+        [action.txHash]: true
       }
     };
   case FETCHMISSINGSTAKETXDATA_SUCCESS:
@@ -400,7 +400,7 @@ export default function grpc(state = {}, action) {
       recentStakeTransactions: action.recentStakeTransactions || state.recentStakeTransactions,
       fetchMissingStakeTxDataAttempt: {
         ...state.fetchMissingStakeTxDataAttempt,
-        [action.txHash]: false,
+        [action.txHash]: false
       }
     };
   case FETCHMISSINGSTAKETXDATA_FAILED:
@@ -408,18 +408,18 @@ export default function grpc(state = {}, action) {
       ...state,
       fetchMissingStakeTxDataAttempt: {
         ...state.fetchMissingStakeTxDataAttempt,
-        [action.txHash]: false,
+        [action.txHash]: false
       }
     };
   case UPDATETIMESINCEBLOCK:
     return {
       ...state,
-      recentBlockTimestamp: action.recentBlockTimestamp,
+      recentBlockTimestamp: action.recentBlockTimestamp
     };
   case DAEMONSYNCED:
     return {
       ...state,
-      currentBlockHeight: action.currentBlockHeight,
+      currentBlockHeight: action.currentBlockHeight
     };
   case NEWBLOCKCONNECTED:
     var newMaturingBlockHeights = Object.keys(state.maturingBlockHeights)
@@ -431,149 +431,149 @@ export default function grpc(state = {}, action) {
       ...state,
       recentBlockTimestamp: action.currentBlockTimestamp,
       currentBlockHeight: action.currentBlockHeight,
-      maturingBlockHeights: newMaturingBlockHeights,
+      maturingBlockHeights: newMaturingBlockHeights
     };
   case GETAGENDASERVICE_ATTEMPT:
     return {
       ...state,
       getAgendaServiceError: null,
-      getAgendaServiceRequestAttempt: true,
+      getAgendaServiceRequestAttempt: true
     };
   case GETAGENDASERVICE_FAILED:
     return {
       ...state,
       getAgendaServiceError: String(action.error),
-      getAgendaServiceRequestAttempt: false,
+      getAgendaServiceRequestAttempt: false
     };
   case GETAGENDASERVICE_SUCCESS:
     return {
       ...state,
       getAgendaServiceRequestAttempt: false,
-      agendaService: action.agendaService,
+      agendaService: action.agendaService
     };
   case GETVOTINGSERVICE_ATTEMPT:
     return {
       ...state,
       getVotingServiceError: null,
-      getVotingServiceRequestAttempt: true,
+      getVotingServiceRequestAttempt: true
     };
   case GETVOTINGSERVICE_FAILED:
     return {
       ...state,
       getVotingServiceError: String(action.error),
-      getVotingServiceRequestAttempt: false,
+      getVotingServiceRequestAttempt: false
     };
   case GETVOTINGSERVICE_SUCCESS:
     return {
       ...state,
       getVotingServiceRequestAttempt: false,
-      votingService: action.votingService,
+      votingService: action.votingService
     };
   case SIGNMESSAGE_ATTEMPT:
     return {
       ...state,
-      getSignMessageRequestAttempt: true,
+      getSignMessageRequestAttempt: true
     };
   case SIGNMESSAGE_FAILED:
     return {
       ...state,
       getSignMessageSignature: null,
       getSignMessageError: String(action.error),
-      getSignMessageRequestAttempt: false,
+      getSignMessageRequestAttempt: false
     };
   case SIGNMESSAGE_SUCCESS:
     return {
       ...state,
       getSignMessageError: null,
       getSignMessageSignature: action.getSignMessageSignature,
-      getSignMessageRequestAttempt: false,
+      getSignMessageRequestAttempt: false
     };
   case SIGNMESSAGE_CLEANSTORE:
     return {
       ...state,
       getSignMessageError: null,
       getSignMessageSignature: null,
-      getSignMessageRequestAttempt: false,
+      getSignMessageRequestAttempt: false
     };
   case VERIFYMESSAGE_ATTEMPT:
     return {
       ...state,
-      getVerifyMessageRequestAttempt: true,
+      getVerifyMessageRequestAttempt: true
     };
   case VERIFYMESSAGE_FAILED:
     return {
       ...state,
       getVerifyMessageSuccess: null,
       getVerifyMessageError: String(action.error),
-      getVerifyMessageRequestAttempt: false,
+      getVerifyMessageRequestAttempt: false
     };
   case VERIFYMESSAGE_SUCCESS:
     return {
       ...state,
       getVerifyMessageError: null,
       getVerifyMessageResponse: action.getVerifyMessageResponse,
-      getVerifyMessageRequestAttempt: false,
+      getVerifyMessageRequestAttempt: false
     };
   case VERIFYMESSAGE_CLEANSTORE:
     return {
       ...state,
       getVerifyMessageError: null,
       getVerifyMessageResponse: null,
-      getVerifyMessageRequestAttempt: false,
+      getVerifyMessageRequestAttempt: false
     };
   case GETAGENDAS_ATTEMPT:
     return {
       ...state,
       getAgendasError: null,
-      getAgendasRequestAttempt: true,
+      getAgendasRequestAttempt: true
     };
   case GETAGENDAS_FAILED:
     return {
       ...state,
       getAgendasError: String(action.error),
-      getAgendasRequestAttempt: false,
+      getAgendasRequestAttempt: false
     };
   case GETAGENDAS_SUCCESS:
     return {
       ...state,
       getAgendasRequestAttempt: false,
-      getAgendasResponse: action.agendas,
+      getAgendasResponse: action.agendas
     };
   case GETVOTECHOICES_ATTEMPT:
     return {
       ...state,
       getVoteChoicesError: null,
-      getVoteChoicesRequestAttempt: true,
+      getVoteChoicesRequestAttempt: true
     };
   case GETVOTECHOICES_FAILED:
     return {
       ...state,
       getVoteChoicesError: String(action.error),
-      getVoteChoicesRequestAttempt: false,
+      getVoteChoicesRequestAttempt: false
     };
   case GETVOTECHOICES_SUCCESS:
     return {
       ...state,
       getVoteChoicesRequestAttempt: false,
-      getVoteChoicesResponse: action.voteChoices,
+      getVoteChoicesResponse: action.voteChoices
     };
   case SETVOTECHOICES_ATTEMPT:
     return {
       ...state,
       setVoteChoicesError: null,
-      setVoteChoicesRequestAttempt: true,
+      setVoteChoicesRequestAttempt: true
     };
   case SETVOTECHOICES_FAILED:
     return {
       ...state,
       setVoteChoicesError: String(action.error),
-      setVoteChoicesRequestAttempt: false,
+      setVoteChoicesRequestAttempt: false
     };
   case SETVOTECHOICES_SUCCESS:
     return {
       ...state,
       setVoteChoicesRequestAttempt: false,
-      setVoteChoicesResponse: action.voteChoices,
+      setVoteChoicesResponse: action.voteChoices
     };
   case GETDECODEMESSAGESERVICE_ATTEMPT:
     return {
@@ -592,7 +592,7 @@ export default function grpc(state = {}, action) {
       ...state,
       getMessageDecodeServiceRequestAttempt: false,
       getMessageDecodeServiceError: null,
-      decodeMessageService: action.decodeMessageService,
+      decodeMessageService: action.decodeMessageService
     };
   case DECODERAWTXS_SUCCESS:
     return {
@@ -607,12 +607,12 @@ export default function grpc(state = {}, action) {
       ...state,
       maturingBlockHeights: action.maturingBlockHeights,
       recentRegularTransactions: action.recentRegularTxs,
-      recentStakeTransactions: action.recentStakeTxs,
+      recentStakeTransactions: action.recentStakeTxs
     };
   case MATURINGHEIGHTS_CHANGED:
     return {
       ...state,
-      maturingBlockHeights: action.maturingBlockHeights,
+      maturingBlockHeights: action.maturingBlockHeights
     };
   case WALLETREADY:
     return {
@@ -643,35 +643,35 @@ export default function grpc(state = {}, action) {
         search: null,
         listDirection: "desc",
         types: [],
-        direction: null,
+        direction: null
       },
       recentRegularTransactions: Array(),
       recentStakeTransactions: Array(),
       ticketBuyerService: null,
       transactionsSinceLastOpened: null,
       votingService: null,
-      walletService: null,
+      walletService: null
     };
   case STARTWALLETSERVICE_ATTEMPT:
     return {
       ...state,
       startWalletServiceAttempt: true,
       startWalletServiceSuccess: null,
-      startWalletServiceFailed: null,
+      startWalletServiceFailed: null
     };
   case STARTWALLETSERVICE_FAILED:
     return {
       ... state,
       startWalletServiceAttempt: false,
       startWalletServiceFailed: action.error,
-      startWalletServiceSuccess: null,
+      startWalletServiceSuccess: null
     };
   case STARTWALLETSERVICE_SUCCESS:
     return {
       ... state,
       startWalletServiceAttempt: false,
       startWalletServiceFailed: null,
-      startWalletServiceSuccess: action.success,
+      startWalletServiceSuccess: action.success
     };
   default:
     return state;

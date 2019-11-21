@@ -31,7 +31,7 @@ const mapStateToProps = selectorMap({
   isTestNet: sel.isTestNet,
   isTicketPurchaseTabDisabled: sel.isTicketPurchaseTabDisabled,
   numTicketsToBuy: sel.numTicketsToBuy,
-  sidebarOnBottom: sel.sidebarOnBottom,
+  sidebarOnBottom: sel.sidebarOnBottom
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -41,7 +41,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onClearRevokeTicketsSuccess: ca.clearRevokeTicketsSuccess,
   onClearImportScriptError: ca.clearImportScriptError,
   onClearImportScriptSuccess: ca.clearImportScriptSuccess,
-  onChangeStakePool: spa.changeSelectedStakePool,
+  onChangeStakePool: spa.changeSelectedStakePool
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

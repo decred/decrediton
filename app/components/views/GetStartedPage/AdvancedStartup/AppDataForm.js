@@ -4,8 +4,8 @@ import { PathBrowseInput } from "inputs";
 const messages = defineMessages({
   appdataFieldPlaceholder: {
     id: "login.form.appdata.placeholder",
-    defaultMessage: "Daemon Data Directory",
-  },
+    defaultMessage: "Daemon Data Directory"
+  }
 });
 
 const AppDataForm = ({

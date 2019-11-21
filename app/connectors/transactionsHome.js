@@ -5,7 +5,7 @@ import * as sel from "selectors";
 const mapStateToProps = selectorMap({
   balanceSent: sel.balanceSent,
   balanceReceived: sel.balanceReceived,
-  sentAndReceivedTransactions: sel.sentAndReceivedTransactions,
+  sentAndReceivedTransactions: sel.sentAndReceivedTransactions
 });
 
 export default connect(mapStateToProps);

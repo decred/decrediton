@@ -18,7 +18,7 @@ const BalanceChart = ({ data, intl }) => {
     [votedKey]: s.voted,
     [revokedKey]: s.revoked,
     [ticketKey]: s.ticket,
-    [lockedKey]: s.locked,
+    [lockedKey]: s.locked
   }));
 
   return (

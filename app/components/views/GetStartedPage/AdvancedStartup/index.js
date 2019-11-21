@@ -36,7 +36,7 @@ class AdvancedStartupBody extends React.Component {
       rpcPortHasFailedAttempt: false,
       rpcCertHasFailedAttempt: false,
       appDataHasFailedAttempt: false,
-      appdata: getAppdataPath(),
+      appdata: getAppdataPath()
     };
   }
 
@@ -58,7 +58,7 @@ class AdvancedStartupBody extends React.Component {
       onShowRemote,
       onShowAppData,
       isAppDataValid,
-      isRemoteValid,
+      isRemoteValid
     } = this;
     const remoteValid = isRemoteValid();
     const appDataValid = isAppDataValid();

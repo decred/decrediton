@@ -32,11 +32,11 @@ class PurchaseTickets extends React.Component {
     const { ticketFee, txFee, expiry } = this.state;
     return [ {
       data: <PurchaseTicketsQuickBar {...{ stakePool: getStakePool(),
-        ticketFee, txFee, expiry,
+        ticketFee, txFee, expiry
       }}/>,
       key: "output_0",
       style: {
-        opacity: spring(1, { stiffness: 120, damping: 17 }),
+        opacity: spring(1, { stiffness: 120, damping: 17 })
       }
     } ];
   }
@@ -68,12 +68,12 @@ class PurchaseTickets extends React.Component {
         onChangeTicketFee: changeTicketFee,
         onChangeTxFee: changeTxFee,
         onChangeExpiry: changeExpiry,
-        formatMessage,
+        formatMessage
       }}
       />,
       key: "output_1",
       style: {
-        opacity: spring(1, { stiffness: 120, damping: 17 }),
+        opacity: spring(1, { stiffness: 120, damping: 17 })
       }
     } ];
   }
@@ -81,14 +81,14 @@ class PurchaseTickets extends React.Component {
   willEnter(height) {
     return {
       height: height,
-      opacity: 0,
+      opacity: 0
     };
   }
 
   willLeave() {
     return {
       height: 0,
-      opacity: 0,
+      opacity: 0
     };
   }
 
@@ -112,7 +112,7 @@ class PurchaseTickets extends React.Component {
             willEnter: null,
             willLeave: null,
             getIsValid: null,
-            handleOnKeyDown: null,
+            handleOnKeyDown: null
           }, this)
         }}
       />
@@ -212,7 +212,7 @@ class PurchaseTickets extends React.Component {
     const ticketFeeError = (isNaN(ticketFee) || ticketFee <= 0 || ticketFee >= MAX_POSSIBLE_FEE_INPUT);
     this.setState({
       ticketFee: ticketFee.replace(/[^\d.]/g, ""),
-      ticketFeeError: ticketFeeError,
+      ticketFeeError: ticketFeeError
     });
 
   }

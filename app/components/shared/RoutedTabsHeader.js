@@ -46,7 +46,7 @@ class RoutedTabsHeader extends React.Component {
   getAnimatedCaret() {
     const caretStyle = {
       left: spring(this.state.caretLeft, theme("springs.tab")),
-      width: spring(this.state.caretWidth, theme("springs.tab")),
+      width: spring(this.state.caretWidth, theme("springs.tab"))
     };
 
     return (
@@ -59,7 +59,7 @@ class RoutedTabsHeader extends React.Component {
   getStaticCaret() {
     const style = {
       left: this.state.caretLeft,
-      width: this.state.caretWidth,
+      width: this.state.caretWidth
     };
 
     return <div className="tabs-caret"><div className="active" style={style}></div></div>;
@@ -88,7 +88,7 @@ class RoutedTabsHeader extends React.Component {
 }
 
 RoutedTabsHeader.propTypes = {
-  tabs: PropTypes.array.isRequired,
+  tabs: PropTypes.array.isRequired
 };
 
 export default routing(theming(RoutedTabsHeader));

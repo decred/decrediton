@@ -63,7 +63,7 @@ const mapStateToProps = selectorMap({
   syncRescanProgress: sel.syncRescanProgress,
   syncFetchHeadersComplete: sel.syncFetchHeadersComplete,
   syncFetchTimeStart: sel.syncFetchTimeStart,
-  firstBlockTime: sel.firstBlockTime,
+  firstBlockTime: sel.firstBlockTime
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -94,7 +94,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onRemoveWallet: da.removeWallet,
   setCredentialsAppdataError: da.setCredentialsAppdataError,
   onGetAvailableWallets: da.getAvailableWallets,
-  validateMasterPubKey: ca.validateMasterPubKey,
+  validateMasterPubKey: ca.validateMasterPubKey
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

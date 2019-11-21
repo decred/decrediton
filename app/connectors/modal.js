@@ -6,12 +6,12 @@ import * as ca from "../actions/ControlActions";
 
 const mapStateToProps = selectorMap({
   expandSideBar: sel.expandSideBar,
-  showingSidebarMenu: sel.showingSidebarMenu,
+  showingSidebarMenu: sel.showingSidebarMenu
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   modalShown: ca.modalShown,
-  modalHidden: ca.modalHidden,
+  modalHidden: ca.modalHidden
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

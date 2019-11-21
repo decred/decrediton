@@ -10,7 +10,7 @@ const VotingPrefsPage = ({
   getAgendaSelectedChoice,
   onShowAgenda,
   onCloseAgenda,
-  onUpdateVotePreference,
+  onUpdateVotePreference
 }) => (
   <>
     <div className="consensus-changes-header">

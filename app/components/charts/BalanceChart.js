@@ -13,7 +13,7 @@ const BalanceChart = ({ data, intl }) => {
     name: intl.formatMessage(messages.dayMonthDisplay, { value: s.time }),
     legendName: intl.formatMessage(messages.fullDayDisplay, { value: s.time }),
     [availableKey]: s.available,
-    [lockedKey]: s.locked,
+    [lockedKey]: s.locked
   }));
 
   return (

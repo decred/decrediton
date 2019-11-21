@@ -5,16 +5,16 @@ import { InfoDocModalButton, KeyBlueButton } from "buttons";
 const messages = defineMessages({
   addressFieldPlaceholder: {
     id: "securitycenter.verify.field.address.placeholder",
-    defaultMessage: "Enter an address",
+    defaultMessage: "Enter an address"
   },
   messageFieldPlaceholder: {
     id: "securitycenter.verify.field.message.placeholder",
-    defaultMessage: "Enter your message",
+    defaultMessage: "Enter your message"
   },
   signatureFieldPlaceholder: {
     id: "securitycenter.verify.field.signature.placeholder",
-    defaultMessage: "Enter your signature",
-  },
+    defaultMessage: "Enter your signature"
+  }
 });
 
 const VerifyMessageForm = ({
@@ -99,7 +99,7 @@ const VerifyMessageForm = ({
 VerifyMessageForm.propTypes = {
   formatMessage: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  error: PropTypes.string,
+  error: PropTypes.string
 };
 
 export default VerifyMessageForm;

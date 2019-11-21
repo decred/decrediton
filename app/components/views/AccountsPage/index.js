@@ -9,7 +9,7 @@ class AccountsPage extends React.Component {
     super(props);
     this.state = {
       isShowingAddAccount: false,
-      accountNumDetailsShown: null,
+      accountNumDetailsShown: null
     };
   }
 
@@ -31,7 +31,7 @@ class AccountsPage extends React.Component {
     const {
       walletService, isCreateAccountDisabled, onGetNextAccountAttempt, accounts,
       onGetAccountExtendedKey, onHideAccount, onShowAccount, onRenameAccount,
-      accountExtendedKey, isLoading, walletName, hasTickets,
+      accountExtendedKey, isLoading, walletName, hasTickets
     } = this.props;
     const { accountNumDetailsShown } = this.state;
     const { onShowAccountDetails, onHideAccountDetails } = this;

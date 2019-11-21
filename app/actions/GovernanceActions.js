@@ -70,7 +70,7 @@ const getProposalEligibleTickets = async (token, allEligibleTickets, shouldCache
 
     tickets = tickets.map(t => ({
       ticket: reverseRawHash(t.getTicket()),
-      address: t.getAddress(),
+      address: t.getAddress()
     }));
 
     const ticketsArray = tickets.reduce((tickets, t) => {
@@ -106,7 +106,7 @@ const getTokenInventory = () => async (dispatch, getState) => {
       activeVote: [],
       abandonedVote: [],
       finishedVote: [],
-      preVote: [],
+      preVote: []
     };
 
     inventoryTabs.preVote = data.pre;
@@ -242,7 +242,7 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
     activeVote: [],
     abandonedVote: [],
     finishedVote: [],
-    preVote: [],
+    preVote: []
   };
 
   const blockTimestampFromNow = sel.blockTimestampFromNow(getState());
@@ -346,7 +346,7 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
         digest: f.digest,
         mime: f.mime,
         name: f.name,
-        payload: decodeFilePayload(f),
+        payload: decodeFilePayload(f)
       };
     });
 
@@ -360,7 +360,7 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
       timestamp: p.timestamp,
       files: files,
       hasDetails: true,
-      hasEligibleTickets: false,
+      hasEligibleTickets: false
     };
 
     const voteAndEligibleTickets = getProposalWalletVote(token, testnet, walletName);
@@ -390,7 +390,7 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
         proposal = { ...proposal,
           modifiedSinceLastAccess: false,
           votingSinceLastAccess: false,
-          walletEligibleTickets, hasEligibleTickets, currentVoteChoice,
+          walletEligibleTickets, hasEligibleTickets, currentVoteChoice
         };
         return proposals[key][i] = { ...proposal };
       }

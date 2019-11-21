@@ -7,7 +7,7 @@ const messages = defineMessages({
   placeholder: {
     id: "accountsSelect.placeholder",
     defaultMessage: "Select account"
-  },
+  }
 });
 
 @autobind
@@ -24,7 +24,7 @@ class AccountsSelect extends React.Component {
     super(props);
     this.state = {
       account: props.account || props.defaultSpendingAccount,
-      accounts: this.getAccountsToShow(props),
+      accounts: this.getAccountsToShow(props)
     };
   }
 

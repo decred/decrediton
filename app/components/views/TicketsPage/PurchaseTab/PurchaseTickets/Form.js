@@ -22,7 +22,7 @@ const PurchaseTicketsForm = ({
   onToggleShowAdvanced,
   account,
   willEnter,
-  willLeave,
+  willLeave
 }) => (
   <>
     <div className="purchase-ticket-area-row is-row">

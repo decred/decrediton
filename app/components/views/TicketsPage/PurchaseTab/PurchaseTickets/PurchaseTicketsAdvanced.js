@@ -5,16 +5,16 @@ import cx from "classnames";
 const messages = defineMessages({
   txFeePlaceholder: {
     id: "purchaseTickets.txFeePlaceholder",
-    defaultMessage: "Tx Fee",
+    defaultMessage: "Tx Fee"
   },
   ticketFeePlaceholder: {
     id: "purchaseTickets.ticketFeePlaceholder",
-    defaultMessage: "Ticket Fee",
+    defaultMessage: "Ticket Fee"
   },
   expiryPlaceholder: {
     id: "purchaseTickets.expiryPlaceholder",
-    defaultMessage: "Expiry",
-  },
+    defaultMessage: "Expiry"
+  }
 });
 
 const PurchaseTicketAdvancedInfo = ({

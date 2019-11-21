@@ -13,7 +13,7 @@ import { EXTERNALREQUEST_TREZOR_BRIDGE } from "main_dev/externalRequests";
 import {
   SIGNTX_ATTEMPT, SIGNTX_FAILED, SIGNTX_SUCCESS,
   SIGNMESSAGE_ATTEMPT, SIGNMESSAGE_FAILED, SIGNMESSAGE_SUCCESS,
-  VALIDATEMASTERPUBKEY_SUCCESS,
+  VALIDATEMASTERPUBKEY_SUCCESS
 } from "./ControlActions";
 
 const hardeningConstant = 0x80000000;
@@ -487,7 +487,7 @@ export const walletTxToBtcjsTx = (tx, changeIndex, inputTxs) => async (dispatch,
       script_type: "PAYTOADDRESS", // needs to change on OP_RETURNs
       address: addr,
       address_n: address_n,
-      decred_script_version: outp.getVersion(),
+      decred_script_version: outp.getVersion()
     });
   }
 
@@ -519,7 +519,7 @@ export function walletTxToRefTx(tx) {
   const bin_outputs = tx.getOutputsList().map(outp => ({
     amount: outp.getValue(),
     script_pubkey: rawToHex(outp.getScript()),
-    decred_script_version: outp.getVersion(),
+    decred_script_version: outp.getVersion()
   }));
 
   const txInfo = {
@@ -528,7 +528,7 @@ export function walletTxToRefTx(tx) {
     version: tx.getVersion(),
     expiry: tx.getExpiry(),
     inputs,
-    bin_outputs,
+    bin_outputs
   };
 
   return txInfo;
@@ -673,7 +673,7 @@ export const recoverDevice = () => async (dispatch, getState) => {
         passphrase_protection: false,
         pin_protection: false,
         label: "New DCR Trezor",
-        dry_run: false,
+        dry_run: false
       };
 
       await session.recoverDevice(settings);
@@ -703,7 +703,7 @@ export const initDevice = () => async (dispatch, getState) => {
         strength: 256, // 24 words
         passphrase_protection: false,
         pin_protection: false,
-        label: "New DCR Trezor",
+        label: "New DCR Trezor"
       };
 
       await session.resetDevice(settings);

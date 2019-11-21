@@ -12,7 +12,7 @@ class ValidateAddress extends React.Component {
   getInitialState() {
     return ({
       address: "",
-      error: null,
+      error: null
     });
   }
 

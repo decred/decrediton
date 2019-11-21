@@ -112,7 +112,7 @@ const availableWalletsSelect = createSelector(
       network: wallet.network,
       finished: wallet.finished,
       isWatchingOnly: wallet.watchingOnly,
-      lastAccess: wallet.lastAccess ? new Date(wallet.lastAccess) : null,
+      lastAccess: wallet.lastAccess ? new Date(wallet.lastAccess) : null
     }),
     wallets
   )
@@ -308,7 +308,7 @@ export const ticketNormalizer = createSelector(
         status: ticket.status,
         ticketRawTx: Buffer.from(ticketTx.getTransaction()).toString("hex"),
         spenderRawTx: hasSpender ? Buffer.from(spenderTx.getTransaction()).toString("hex") : null,
-        originalTicket: ticket,
+        originalTicket: ticket
       };
     };
   }
@@ -417,7 +417,7 @@ const transactionNormalizer = createSelector(
         rawTx: Buffer.from(tx.getTransaction()).toString("hex"),
         originalTx: origTx,
         ...txDetails,
-        ...stakeInfo,
+        ...stakeInfo
       };
     };
   }
@@ -442,7 +442,7 @@ export const spendableAndLockedBalance = createSelector(
   ( stats, unitDivisor ) => stats.map(s => ({
     time: s.time,
     available: s.series.spendable / unitDivisor,
-    locked: (s.series.locked + s.series.immature + s.series.immatureNonWallet) / unitDivisor,
+    locked: (s.series.locked + s.series.immature + s.series.immatureNonWallet) / unitDivisor
   })));
 
 export const balanceSent = createSelector(
@@ -484,7 +484,7 @@ export const ticketDataChart = createSelector(
     revoked: s.series.revoked / unitDivisor,
     ticket: s.series.ticket / unitDivisor,
     locked: (s.series.locked + s.series.immature) / unitDivisor,
-    immature: s.series.immature / unitDivisor,
+    immature: s.series.immature / unitDivisor
   })));
 
 export const viewedDecodedTransaction = createSelector(
@@ -929,7 +929,7 @@ export const stakeRewardsStats = createSelector(
     stakeFees: s.series.stakeFees / unitDivisor,
     totalStake: s.series.totalStake / unitDivisor,
     stakeRewardPerc: (s.series.stakeRewards / (s.series.totalStake || 1)),
-    stakeFeesPerc: (s.series.stakeFees / (s.series.totalStake || 1)),
+    stakeFeesPerc: (s.series.stakeFees / (s.series.totalStake || 1))
   })));
 
 export const modalVisible = get([ "control", "modalVisible" ]);

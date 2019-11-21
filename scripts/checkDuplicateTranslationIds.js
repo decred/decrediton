@@ -13,7 +13,7 @@ const defaultOpts = {
   translationsDirectory: "app/i18n/translations/",
   jsonOptions: {
     space: 2,
-    trailingNewline: true,
+    trailingNewline: true
   }
 };
 
@@ -41,7 +41,7 @@ manageTranslations({
     printNoLanguageWhitelistFile: () => {}
   },
 
-  languages: [ "dev" ],
+  languages: [ "dev" ]
 });
 
 if (hasDupes) {

@@ -61,7 +61,7 @@ class TrezorConfigSections extends React.Component {
       onInitDevice,
       onUpdateFirmware,
       onClearDeviceSession,
-      loading,
+      loading
     } = this;
 
     return (

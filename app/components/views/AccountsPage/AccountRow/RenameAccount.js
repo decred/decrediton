@@ -6,7 +6,7 @@ const messages = defineMessages({
   newNamePlaceholder: {
     id: "accounts.rename.newNamePlaceholder",
     defaultMessage: "New Account Name"
-  },
+  }
 });
 
 const RenameAccount = ({

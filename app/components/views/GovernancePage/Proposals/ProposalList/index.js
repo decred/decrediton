@@ -34,7 +34,7 @@ class ProposalsList extends React.Component {
         activeVote: false,
         finishedVote: false,
         preVote: false,
-        abandonedVote: false,
+        abandonedVote: false
       }
     };
   }

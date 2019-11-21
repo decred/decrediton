@@ -64,7 +64,7 @@ export function semverCompatible(req, act) {
   var version = {
     MAJOR: 0,
     MINOR: 1,
-    PATCH: 2,
+    PATCH: 2
   };
 
   if (required.length != 3 || actual.length != 3) {

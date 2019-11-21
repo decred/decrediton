@@ -21,7 +21,7 @@ const Transaction = ({ walletService, viewedTransaction, viewedDecodedTransactio
       {...{
         transactionDetails: viewedTransaction,
         decodedTransaction: viewedDecodedTransaction,
-        tsDate: tsDate,
+        tsDate: tsDate
       }}
     />;
 };

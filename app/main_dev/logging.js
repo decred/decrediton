@@ -39,7 +39,7 @@ const logLevelsPrintable = {
   "info": "INF",
   "verbose": "VBS",
   "debug": "DBG",
-  "silly": "TRC",
+  "silly": "TRC"
 };
 
 const logFormatter = (opts) => {
@@ -68,7 +68,7 @@ export function createLogger(debug) {
         json: false,
         filename: path.join(getAppDataDirectory(), "decrediton.log"),
         timestamp: logTimestamp,
-        formatter: logFormatter,
+        formatter: logFormatter
       })
     ]
   });
@@ -77,7 +77,7 @@ export function createLogger(debug) {
     logger.add(winston.transports.Console, {
       timestamp: logTimestamp,
       formatter: logFormatterColorized,
-      level: "debug",
+      level: "debug"
     });
   }
 

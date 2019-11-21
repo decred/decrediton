@@ -29,7 +29,7 @@ const AccountsList = ({
   showAccount,
   showPubKey,
   onTogglePubkey,
-  accountExtendedKey,
+  accountExtendedKey
 }) => (
   <div key={"details" + account.accountNumber}>
     <div className="account-row-details-bottom-columns">
@@ -133,7 +133,7 @@ AccountsList.propTypes = {
   showRenameAccount: PropTypes.func.isRequired,
   hidden: PropTypes.bool.isRequired,
   hideAccount: PropTypes.func.isRequired,
-  showAccount: PropTypes.func.isRequired,
+  showAccount: PropTypes.func.isRequired
 };
 
 export default AccountsList;

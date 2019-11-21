@@ -207,7 +207,7 @@ export const GETMYTICKETSSTATS_FAILED = "GETMYTICKETSSTATS_FAILED";
 export const getMyTicketsStats = () => (dispatch) => {
   const startupStats = [
     { calcFunction: voteTimeStats },
-    { calcFunction: dailyBalancesStats },
+    { calcFunction: dailyBalancesStats }
   ];
 
   dispatch({ type: GETMYTICKETSSTATS_ATTEMPT });
@@ -228,7 +228,7 @@ export const generateStat = (opts) => (dispatch) => new Promise((resolve, reject
 
   const { calcFunction } = opts;
 
-  const stat = { series: null, data: [], };
+  const stat = { series: null, data: [] };
   const startFunction = ({ series }) => stat.series = series;
   const endFunction = () => resolve(stat);
   const errorFunction = error => reject(error);
@@ -330,8 +330,8 @@ export const transactionStats = (opts) => (dispatch, getState) => {
       { name: "fee", type: VALUE_TYPE_ATOMAMOUNT },
       { name: "amount", type: VALUE_TYPE_ATOMAMOUNT },
       { name: "credits", type: VALUE_TYPE_ATOMAMOUNT },
-      { name: "debits", type: VALUE_TYPE_ATOMAMOUNT },
-    ],
+      { name: "debits", type: VALUE_TYPE_ATOMAMOUNT }
+    ]
   });
 
   const formatTx = (tx) => {
@@ -342,7 +342,7 @@ export const transactionStats = (opts) => (dispatch, getState) => {
       fee: tx.fee,
       amount: tx.amount,
       credits: tx.tx.getCreditsList().reduce((s, c) => s + c.getAmount(), 0),
-      debits: tx.tx.getDebitsList().reduce((s, d) => s + d.getPreviousAmount(), 0),
+      debits: tx.tx.getDebitsList().reduce((s, d) => s + d.getPreviousAmount(), 0)
     };
   };
   const tsDate = sel.tsDate(getState());
@@ -568,7 +568,7 @@ const addDelta = (delta, progressFunction, currentBalance, tsDate, backwards) =>
     stakeRewards: currentBalance.stakeRewards + delta.stakeRewards,
     stakeFees: currentBalance.stakeFees + delta.stakeFees,
     totalStake: currentBalance.totalStake + delta.totalStake,
-    delta,
+    delta
   };
   balance.total = balance.spendable + balance.locked +
     balance.immature;
@@ -730,8 +730,8 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
       { name: "total", type: VALUE_TYPE_ATOMAMOUNT },
       { name: "stakeRewards", type: VALUE_TYPE_ATOMAMOUNT },
       { name: "stakeFees", type: VALUE_TYPE_ATOMAMOUNT },
-      { name: "totalStake", type: VALUE_TYPE_ATOMAMOUNT },
-    ],
+      { name: "totalStake", type: VALUE_TYPE_ATOMAMOUNT }
+    ]
   });
 
   try {
@@ -787,7 +787,7 @@ export const dailyBalancesStats = (opts) => {
         { name: "received", type: VALUE_TYPE_ATOMAMOUNT },
         { name: "voted", type: VALUE_TYPE_ATOMAMOUNT },
         { name: "revoked", type: VALUE_TYPE_ATOMAMOUNT },
-        { name: "ticket", type: VALUE_TYPE_ATOMAMOUNT },
+        { name: "ticket", type: VALUE_TYPE_ATOMAMOUNT }
       ]
     });
   };
@@ -810,7 +810,7 @@ export const dailyBalancesStats = (opts) => {
         received: balance.received + delta.received,
         voted: balance.voted + delta.voted,
         revoked: balance.revoked + delta.revoked,
-        ticket: balance.ticket + delta.ticket,
+        ticket: balance.ticket + delta.ticket
       };
     }
   };
@@ -828,7 +828,7 @@ export const voteTimeStats = (opts) => (dispatch, getState) => {
 
   const chainParams = sel.chainParams(getState());
   const { progressFunction, endFunction, startFunction, errorFunction } = opts;
-  const { currentBlockHeight, walletService, } = getState().grpc;
+  const { currentBlockHeight, walletService } = getState().grpc;
 
   const blocksPerDay = (60 * 60 * 24) / chainParams.TargetTimePerBlock;
   const expirationDays = Math.ceil((chainParams.TicketExpiry + chainParams.TicketMaturity) / blocksPerDay);
@@ -837,7 +837,7 @@ export const voteTimeStats = (opts) => (dispatch, getState) => {
   startFunction({
     series: [
       { name: "daysToVote" },
-      { name: "count" },
+      { name: "count" }
     ],
     noTimestamp: true
   });
@@ -864,7 +864,7 @@ export const voteTimeStats = (opts) => (dispatch, getState) => {
 export const ticketStats = (opts) => (dispatch, getState) => {
 
   const { progressFunction, endFunction, startFunction, errorFunction } = opts;
-  const { currentBlockHeight, walletService, } = getState().grpc;
+  const { currentBlockHeight, walletService } = getState().grpc;
 
   startFunction({
     series: [
@@ -873,8 +873,8 @@ export const ticketStats = (opts) => (dispatch, getState) => {
       { name: "ticketHash" },
       { name: "spenderHash" },
       { name: "sentAmount", type: VALUE_TYPE_ATOMAMOUNT },
-      { name: "returnedAmount", type: VALUE_TYPE_ATOMAMOUNT },
-    ],
+      { name: "returnedAmount", type: VALUE_TYPE_ATOMAMOUNT }
+    ]
   });
 
   const normalizeTicket = sel.ticketNormalizer(getState());
@@ -889,7 +889,7 @@ export const ticketStats = (opts) => (dispatch, getState) => {
         ticketHash: ticket.hash,
         spenderHash: ticket.spenderHash,
         sentAmount: ticket.ticketInvestment,
-        returnedAmount: ticket.ticketReturnAmount,
+        returnedAmount: ticket.ticketReturnAmount
       });
 
     });

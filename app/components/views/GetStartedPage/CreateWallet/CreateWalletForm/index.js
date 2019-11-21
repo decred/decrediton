@@ -14,7 +14,7 @@ class CreateWalletForm extends React.Component {
       mnemonic: "",
       seed: "",
       passPhrase: "",
-      showCopySeedConfirm: false,
+      showCopySeedConfirm: false
     };
   }
 
@@ -64,7 +64,7 @@ class CreateWalletForm extends React.Component {
       getNeededBlocks,
       getEstimatedTimeLeft,
       getDaemonSynced,
-      decodeSeed,
+      decodeSeed
     } = this.props;
     const {
       setSeed,
@@ -72,7 +72,7 @@ class CreateWalletForm extends React.Component {
       onCreateWallet,
       handleCopySeed,
       onSubmitCopySeedConfirm,
-      onCancelCopySeedConfirm,
+      onCancelCopySeedConfirm
     } = this;
     const { mnemonic, showCopySeedConfirm } = this.state;
     const isValid = this.isValid();

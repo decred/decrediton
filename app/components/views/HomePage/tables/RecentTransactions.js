@@ -13,7 +13,7 @@ const RecentTransactions = ({
   getAccountsResponse,
   rowNumber,
   goToTransactionHistory,
-  tsDate,
+  tsDate
 }) => {
   const hasTxs = (transactions.length > 0);
   return (

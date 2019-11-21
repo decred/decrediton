@@ -20,7 +20,7 @@ class WalletSelectionBody extends React.Component {
       walletMasterPubKey: "",
       masterPubKeyError: false,
       walletNameError: null,
-      isTrezor: false,
+      isTrezor: false
     };
   }
   componentDidUpdate(prevProps) {
@@ -59,7 +59,7 @@ class WalletSelectionBody extends React.Component {
       onCloseEditWallets,
       toggleWatchOnly,
       onChangeCreateWalletMasterPubKey,
-      toggleTrezor,
+      toggleTrezor
     } = this;
     const {
       selectedWallet,
@@ -74,7 +74,7 @@ class WalletSelectionBody extends React.Component {
       isWatchingOnly,
       walletMasterPubKey,
       masterPubKeyError,
-      walletNameError,
+      walletNameError
     } = this.state;
     return (
       <WalletSelectionFormBody
@@ -108,7 +108,7 @@ class WalletSelectionBody extends React.Component {
           isSPV,
           toggleTrezor,
           ...this.props,
-          ...this.state,
+          ...this.state
         }}
       />
     );
@@ -133,7 +133,7 @@ class WalletSelectionBody extends React.Component {
       newWalletName: "",
       isWatchingOnly: false,
       isTrezor: false,
-      walletMasterPubKey: "",
+      walletMasterPubKey: ""
     });
   }
   onChangeAvailableWallets(selectedWallet) {

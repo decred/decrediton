@@ -13,7 +13,7 @@ const linkList = [
   { path: "/accounts",      link: <T id="sidebar.link.accounts" m="Accounts" />,         icon:"accounts" },
   { path: "/security",      link: <T id="activesidebar.link.security" m="Security" />,   icon:"securitycntr" },
   { path: "/help",          link: <T id="sidebar.link.help" m="Help" />,                 icon:"help" },
-  { path: "/settings",      link: <T id="sidebar.link.settings" m="Settings" />,         icon:"settings" },
+  { path: "/settings",      link: <T id="sidebar.link.settings" m="Settings" />,         icon:"settings" }
 ];
 
 

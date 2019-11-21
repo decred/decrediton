@@ -6,11 +6,11 @@ import * as ca from "actions/ControlActions";
 
 const mapStateToProps = selectorMap({
   rescanRequest: sel.rescanRequest,
-  isImportingScript: sel.isImportingScript,
+  isImportingScript: sel.isImportingScript
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  onImportScript: ca.manualImportScriptAttempt,
+  onImportScript: ca.manualImportScriptAttempt
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

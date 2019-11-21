@@ -22,7 +22,7 @@ const StakeInfoDisplay = ({
   isSPV,
   onShowStakeInfo,
   onHideStakeInfo,
-  sidebarOnBottom,
+  sidebarOnBottom
 }) => (
   <div className="stake-info-area">
     <div className="stake-info-row-area" onClick={isShowingDetails ? onHideStakeInfo : onShowStakeInfo}>
@@ -52,7 +52,7 @@ const StakeInfoDisplay = ({
     </div>
     <TransitionMotionWrapper {...{
       styles: !isShowingDetails ? getNullStyles() : getStakeInfoDetailsComponent(),
-      wrapperComponent, }} />
+      wrapperComponent }} />
   </div>);
 
 export default StakeInfoDisplay;

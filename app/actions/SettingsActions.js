@@ -118,7 +118,7 @@ export function updateStateSettingsChanged(settings, norestart) {
     const networkChange = {
       network: true,
       spvMode: true,
-      daemonStartAdvanced: true,
+      daemonStartAdvanced: true
     };
 
     const newDiffersFromTemp = settingsFields

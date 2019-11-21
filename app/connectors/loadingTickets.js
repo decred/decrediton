@@ -11,7 +11,7 @@ const mapStateToProps = selectorMap({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  cancelGetTickets: ca.cancelGetTickets,
+  cancelGetTickets: ca.cancelGetTickets
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

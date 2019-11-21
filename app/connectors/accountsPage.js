@@ -16,7 +16,7 @@ const mapStateToProps = selectorMap({
   )),
   accountExtendedKey: sel.accountExtendedKey,
   walletName: sel.getWalletName,
-  hasTickets: sel.hasTickets,
+  hasTickets: sel.hasTickets
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -24,7 +24,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onHideAccount: cla.hideAccount,
   onShowAccount: cla.showAccount,
   onGetNextAccountAttempt: ca.getNextAccountAttempt,
-  onGetAccountExtendedKey: ca.getAccountExtendedKeyAttempt,
+  onGetAccountExtendedKey: ca.getAccountExtendedKeyAttempt
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

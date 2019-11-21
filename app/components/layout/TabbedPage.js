@@ -9,7 +9,7 @@ import { createElement } from "react";
 export const TabbedPageTab = ({ children }) => children;
 TabbedPageTab.propTypes = {
   path: PropTypes.string.isRequired,
-  link: PropTypes.node.isRequired,
+  link: PropTypes.node.isRequired
 };
 
 function getTabs(children) {

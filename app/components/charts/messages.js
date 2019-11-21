@@ -14,7 +14,7 @@ export default defineMessages({
   // each series)
   lockedKey: {
     id: "charts.keys.locked",
-    defaultMessage: "Locked",
+    defaultMessage: "Locked"
   },
   availableKey: {
     id: "charts.keys.available",

@@ -1,4 +1,4 @@
-import { TRANSACTIONNTFNS_START, TRANSACTIONNTFNS_FAILED, TRANSACTIONNTFNS_END, } from "../actions/NotificationActions";
+import { TRANSACTIONNTFNS_START, TRANSACTIONNTFNS_FAILED, TRANSACTIONNTFNS_END } from "../actions/NotificationActions";
 import { ACCOUNTNTFNS_START, ACCOUNTNTFNS_DATA, ACCOUNTNTFNS_END } from "../actions/NotificationActions";
 import { CLEARUNMINEDMESSAGE }  from "../actions/NotificationActions";
 
@@ -7,33 +7,33 @@ export default function notifications(state = {}, action) {
   case TRANSACTIONNTFNS_START:
     return { ...state,
       transactionNtfns: action.transactionNtfns,
-      transactionNtfnsError: null,
+      transactionNtfnsError: null
     };
   case TRANSACTIONNTFNS_FAILED:
     return { ...state,
       transactionNtfns: null,
-      transactionNtfnsError: action.error,
+      transactionNtfnsError: action.error
     };
   case TRANSACTIONNTFNS_END:
     return { ...state,
       transactionNtfns: null,
-      transactionNtfnsError: null,
+      transactionNtfnsError: null
     };
   case ACCOUNTNTFNS_START:
     return { ...state,
-      accountNtfns: action.accountNtfns,
+      accountNtfns: action.accountNtfns
     };
   case ACCOUNTNTFNS_DATA:
     return { ...state,
-      accountNtfnsResponse: action.response,
+      accountNtfnsResponse: action.response
     };
   case ACCOUNTNTFNS_END:
     return { ...state,
-      accountNtfns: action.null,
+      accountNtfns: action.null
     };
   case CLEARUNMINEDMESSAGE:
     return { ...state,
-      newUnminedMessage: null,
+      newUnminedMessage: null
     };
   default:
     return state;

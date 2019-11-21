@@ -45,5 +45,5 @@ export default merge(baseConfig, {
   node: {
     __dirname: false,
     __filename: false
-  },
+  }
 });

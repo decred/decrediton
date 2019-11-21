@@ -3,7 +3,7 @@ const ShowWarning = ({ warn, className }) => (
 );
 
 ShowWarning.propTypes = {
-  warn: PropTypes.object.isRequired,
+  warn: PropTypes.object.isRequired
 };
 
 export default ShowWarning;

@@ -22,7 +22,7 @@ import { GETNEXTADDRESS_ATTEMPT, GETNEXTADDRESS_FAILED, GETNEXTADDRESS_SUCCESS,
   SETBALANCETOMAINTAIN,
   VALIDATEADDRESS_ATTEMPT, VALIDATEADDRESS_SUCCESS, VALIDATEADDRESS_FAILED, VALIDATEADDRESS_CLEANSTORE,
   MODAL_SHOWN, MODAL_HIDDEN, SHOW_ABOUT_MODAL_MACOS, HIDE_ABOUT_MODAL_MACOS, VALIDATEMASTERPUBKEY_SUCCESS, VALIDATEMASTERPUBKEY_FAILED,
-  GETACCOUNTEXTENDEDKEY_ATTEMPT, GETACCOUNTEXTENDEDKEY_FAILED, GETACCOUNTEXTENDEDKEY_SUCCESS, HIDE_AUTOBUYER_RUNNING_MODAL, SHOW_AUTOBUYER_RUNNING_MODAL,
+  GETACCOUNTEXTENDEDKEY_ATTEMPT, GETACCOUNTEXTENDEDKEY_FAILED, GETACCOUNTEXTENDEDKEY_SUCCESS, HIDE_AUTOBUYER_RUNNING_MODAL, SHOW_AUTOBUYER_RUNNING_MODAL
 } from "../actions/ControlActions";
 import { WALLET_AUTOBUYER_SETTINGS } from "actions/DaemonActions";
 
@@ -35,53 +35,53 @@ export default function control(state = {}, action) {
   case GETNEXTADDRESS_ATTEMPT:
     return { ...state,
       getNextAddressError: null,
-      getNextAddressRequestAttempt: true,
+      getNextAddressRequestAttempt: true
     };
   case GETNEXTADDRESS_FAILED:
     return { ...state,
       getNextAddressError: String(action.error),
-      getNextAddressRequestAttempt: false,
+      getNextAddressRequestAttempt: false
     };
   case GETNEXTADDRESS_SUCCESS:
     return { ...state,
       getNextAddressError: "",
       getNextAddressRequestAttempt: false,
-      getNextAddressResponse: action.getNextAddressResponse,
+      getNextAddressResponse: action.getNextAddressResponse
     };
   case RENAMEACCOUNT_ATTEMPT:
     return { ...state,
       renameAccountError: null,
-      renameAccountRequestAttempt: true,
+      renameAccountRequestAttempt: true
     };
   case RENAMEACCOUNT_FAILED:
     return { ...state,
       renameAccountError: String(action.error),
-      renameAccountRequestAttempt: false,
+      renameAccountRequestAttempt: false
     };
   case RENAMEACCOUNT_SUCCESS:
     return { ...state,
       renameAccountError: null,
       renameAccountRequestAttempt: false,
       renameAccountResponse: action.renameAccountResponse,
-      renameAccountSuccess: action.renameAccountSuccess,
+      renameAccountSuccess: action.renameAccountSuccess
     };
   case RESCAN_ATTEMPT:
     return { ...state,
       rescanCall: null,
       rescanError: null,
       rescanRequest: action.request,
-      rescanRequestAttempt: true,
+      rescanRequestAttempt: true
     };
   case RESCAN_FAILED:
     return { ...state,
       rescanCall: null,
       rescanError: String(action.error),
-      rescanRequestAttempt: false,
+      rescanRequestAttempt: false
     };
   case RESCAN_PROGRESS:
     return { ...state,
       rescanCall: action.rescanCall,
-      rescanResponse: action.rescanResponse,
+      rescanResponse: action.rescanResponse
     };
   case RESCAN_CANCEL:
   case RESCAN_COMPLETE:
@@ -90,119 +90,119 @@ export default function control(state = {}, action) {
       rescanError: "",
       rescanRequest: null,
       rescanRequestAttempt: false,
-      rescanResponse: null,
+      rescanResponse: null
     };
   case GETNEXTACCOUNT_ATTEMPT:
     return { ...state,
       getNextAccountError: null,
-      getNextAccountRequestAttempt: true,
+      getNextAccountRequestAttempt: true
     };
   case GETNEXTACCOUNT_FAILED:
     return { ...state,
       getNextAccountError: String(action.error),
-      getNextAccountRequestAttempt: false,
+      getNextAccountRequestAttempt: false
     };
   case GETNEXTACCOUNT_SUCCESS:
     return { ...state,
       getNextAccountError: null,
       getNextAccountRequestAttempt: false,
       getNextAccountResponse: action.getNextAccountResponse,
-      getNextAccountSuccess: action.successMessage,
+      getNextAccountSuccess: action.successMessage
     };
   case IMPORTPRIVKEY_ATTEMPT:
     return { ...state,
       importPrivateKeyError: null,
-      importPrivateKeyRequestAttempt: true,
+      importPrivateKeyRequestAttempt: true
     };
   case IMPORTPRIVKEY_FAILED:
     return { ...state,
       importPrivateKeyError: String(action.error),
-      importPrivateKeyRequestAttempt: false,
+      importPrivateKeyRequestAttempt: false
     };
   case IMPORTPRIVKEY_SUCCESS:
     return { ...state,
       importPrivateKeyError: "",
       importPrivateKeyRequestAttempt: false,
-      importPrivateKeyResponse: action.importPrivateKeyResponse,
+      importPrivateKeyResponse: action.importPrivateKeyResponse
     };
   case IMPORTSCRIPT_ATTEMPT:
     return { ...state,
       importScriptError: null,
-      importScriptRequestAttempt: true,
+      importScriptRequestAttempt: true
     };
   case IMPORTSCRIPT_FAILED:
     return { ...state,
       importScriptError: String(action.error),
       importScriptRequestAttempt: false,
-      purchaseTicketsRequestAttempt: false,
+      purchaseTicketsRequestAttempt: false
     };
   case IMPORTSCRIPT_SUCCESS:
     return { ...state,
       importScriptError: null,
       importScriptRequestAttempt: false,
-      importScriptResponse: action.importScriptResponse,
+      importScriptResponse: action.importScriptResponse
     };
   case IMPORTSCRIPT_SUCCESS_PURCHASE_TICKETS:
     return { ...state,
       importScriptError: null,
       importScriptRequestAttempt: false,
-      importScriptResponse: action.importScriptResponse,
+      importScriptResponse: action.importScriptResponse
     };
   case CHANGEPASSPHRASE_ATTEMPT:
     return { ...state,
       changePassphraseError: null,
-      changePassphraseRequestAttempt: true,
+      changePassphraseRequestAttempt: true
     };
   case CHANGEPASSPHRASE_FAILED:
     return { ...state,
       changePassphraseError: String(action.error),
-      changePassphraseRequestAttempt: false,
+      changePassphraseRequestAttempt: false
     };
   case CHANGEPASSPHRASE_SUCCESS:
     return { ...state,
       changePassphraseError: null,
       changePassphraseRequestAttempt: false,
       changePassphraseResponse: action.changePassphraseResponse,
-      changePassphraseSuccess: "Your private passphrase was successfully updated.",
+      changePassphraseSuccess: "Your private passphrase was successfully updated."
     };
   case LOADACTIVEDATAFILTERS_ATTEMPT:
     return { ...state,
       loadActiveDataFiltersError: null,
-      loadActiveDataFiltersRequestAttempt: true,
+      loadActiveDataFiltersRequestAttempt: true
     };
   case LOADACTIVEDATAFILTERS_FAILED:
     return { ...state,
       loadActiveDataFiltersError: String(action.error),
-      loadActiveDataFiltersRequestAttempt: false,
+      loadActiveDataFiltersRequestAttempt: false
     };
   case LOADACTIVEDATAFILTERS_SUCCESS:
     return { ...state,
       loadActiveDataFiltersError: null,
       loadActiveDataFiltersRequestAttempt: false,
-      loadActiveDataFiltersResponse: action.response,
+      loadActiveDataFiltersResponse: action.response
     };
   case FUNDTX_ATTEMPT:
     return { ...state,
       fundTransactionError: null,
-      fundTransactionRequestAttempt: true,
+      fundTransactionRequestAttempt: true
     };
   case FUNDTX_FAILED:
     return { ...state,
       fundTransactionError: String(action.error),
-      fundTransactionRequestAttempt: false,
+      fundTransactionRequestAttempt: false
     };
   case FUNDTX_SUCCESS:
     return { ...state,
       fundTransactionError: null,
       fundTransactionRequestAttempt: false,
-      fundTransactionResponse: action.fundTransactionResponse,
+      fundTransactionResponse: action.fundTransactionResponse
     };
   case CLEARTX:
     return { ...state,
       constructTxResponse: null,
       constructTxLowBalance: false,
       validateAddressResponse: null,
-      validateAddressError: null,
+      validateAddressError: null
     };
   case SIGNTX_ATTEMPT:
     return { ...state,
@@ -212,114 +212,114 @@ export default function control(state = {}, action) {
   case SIGNTX_FAILED:
     return { ...state,
       signTransactionRequestAttempt: false,
-      signTransactionResponse: null,
+      signTransactionResponse: null
     };
   case SIGNTX_SUCCESS:
     return { ...state,
       signTransactionRequestAttempt: false,
-      signTransactionResponse: action.signTransactionResponse,
+      signTransactionResponse: action.signTransactionResponse
     };
   case PUBLISHTX_ATTEMPT:
     return { ...state,
-      publishTransactionRequestAttempt: true,
+      publishTransactionRequestAttempt: true
     };
   case PUBLISHTX_FAILED:
     return { ...state,
-      publishTransactionRequestAttempt: false,
+      publishTransactionRequestAttempt: false
     };
   case PUBLISHTX_SUCCESS:
     return { ...state,
       publishTransactionRequestAttempt: false,
       publishTransactionResponse: action.hash,
       constructTxResponse: null,
-      signTxResponse: null,
+      signTxResponse: null
     };
   case PURCHASETICKETS_ATTEMPT:
     return { ...state,
       purchaseTicketsError: null,
       purchaseTicketsRequestAttempt: true,
-      numTicketsToBuy: action.numTicketsToBuy,
+      numTicketsToBuy: action.numTicketsToBuy
     };
   case PURCHASETICKETS_FAILED:
     return { ...state,
       purchaseTicketsError: String(action.error),
       purchaseTicketsRequestAttempt: false,
-      importScriptRequestAttempt: false,
+      importScriptRequestAttempt: false
     };
   case PURCHASETICKETS_SUCCESS:
     return { ...state,
       purchaseTicketsError: null,
       purchaseTicketsRequestAttempt: false,
       purchaseTicketsResponse: action.purchaseTicketsResponse,
-      numTicketsToBuy: 1,
+      numTicketsToBuy: 1
     };
   case REVOKETICKETS_ATTEMPT:
     return { ...state,
       revokeTicketsError: null,
-      revokeTicketsRequestAttempt: true,
+      revokeTicketsRequestAttempt: true
     };
   case REVOKETICKETS_FAILED:
     return { ...state,
       revokeTicketsError: String(action.error),
-      revokeTicketsRequestAttempt: false,
+      revokeTicketsRequestAttempt: false
     };
   case REVOKETICKETS_SUCCESS:
     return { ...state,
       revokeTicketsError: null,
       revokeTicketsRequestAttempt: false,
-      revokeTicketsResponse: action.revokeTicketsResponse,
+      revokeTicketsResponse: action.revokeTicketsResponse
     };
   case GETTICKETBUYERCONFIG_ATTEMPT:
     return {
       ...state,
       getTicketBuyerConfigError: null,
-      getTicketBuyerConfigRequestAttempt: true,
+      getTicketBuyerConfigRequestAttempt: true
     };
   case GETTICKETBUYERCONFIG_FAILED:
     return {
       ...state,
       getTicketBuyerConfigError: String(action.error),
-      getTicketBuyerConfigRequestAttempt: false,
+      getTicketBuyerConfigRequestAttempt: false
     };
   case GETTICKETBUYERCONFIG_SUCCESS:
     return {
       ...state,
       getTicketBuyerConfigRequestAttempt: false,
-      getTicketBuyerConfigResponse: action.ticketBuyerConfig,
+      getTicketBuyerConfigResponse: action.ticketBuyerConfig
     };
   case SETTICKETBUYERCONFIG_ATTEMPT:
     return {
       ...state,
       setTicketBuyerConfigError: null,
       setTicketBuyerConfigRequestAttempt: true,
-      setTicketBuyerConfigResponse: null,
+      setTicketBuyerConfigResponse: null
     };
   case SETTICKETBUYERCONFIG_FAILED:
     return {
       ...state,
       setTicketBuyerConfigError: action.error,
-      setTicketBuyerConfigRequestAttempt: false,
+      setTicketBuyerConfigRequestAttempt: false
     };
   case SETTICKETBUYERCONFIG_SUCCESS:
     return {
       ...state,
       setTicketBuyerConfigRequestAttempt: false,
-      setTicketBuyerConfigResponse: action.success,
+      setTicketBuyerConfigResponse: action.success
     };
   case SETBALANCETOMAINTAIN:
     return {
       ...state,
-      balanceToMaintain: action.balanceToMaintain,
+      balanceToMaintain: action.balanceToMaintain
     };
   case STARTAUTOBUYER_ATTEMPT:
     return { ...state,
       startAutoBuyerError: null,
-      startAutoBuyerRequestAttempt: true,
+      startAutoBuyerRequestAttempt: true
     };
   case STARTAUTOBUYER_FAILED:
     return { ...state,
       startAutoBuyerError: String(action.error),
-      startAutoBuyerRequestAttempt: false,
+      startAutoBuyerRequestAttempt: false
     };
   case STARTAUTOBUYER_SUCCESS:
     return { ...state,
@@ -327,17 +327,17 @@ export default function control(state = {}, action) {
       startAutoBuyerRequestAttempt: false,
       startAutoBuyerResponse: action.startAutoBuyerResponse,
       stopAutoBuyerResponse: null,
-      balanceToMaintain: action.balanceToMaintain,
+      balanceToMaintain: action.balanceToMaintain
     };
   case STOPAUTOBUYER_ATTEMPT:
     return { ...state,
       stopAutoBuyerError: null,
-      stopAutoBuyerRequestAttempt: true,
+      stopAutoBuyerRequestAttempt: true
     };
   case STOPAUTOBUYER_FAILED:
     return { ...state,
       //stopAutoBuyerError: String(action.error),
-      stopAutoBuyerRequestAttempt: false,
+      stopAutoBuyerRequestAttempt: false
     };
   case STOPAUTOBUYER_SUCCESS:
     return { ...state,
@@ -346,64 +346,64 @@ export default function control(state = {}, action) {
       stopAutoBuyerRequestAttempt: false,
       stopAutoBuyerResponse: action.stopAutoBuyerResponse,
       startAutoBuyerSuccess: null,
-      startAutoBuyerResponse: null,
+      startAutoBuyerResponse: null
     };
   case STARTTICKETBUYERV2_ATTEMPT:
     return { ...state,
       startTicketBuyerAttempt: true,
       startTicketBuyerError: null,
-      ticketBuyerConfig: action.ticketBuyerConfig,
+      ticketBuyerConfig: action.ticketBuyerConfig
     };
   case STARTTICKETBUYERV2_FAILED:
     return { ...state,
       startTicketBuyerAttempt: false,
       startTicketBuyerError: action.error,
-      startAutoBuyerResponse: null,
+      startAutoBuyerResponse: null
     };
   case STARTTICKETBUYERV2_SUCCESS:
     return { ...state,
       startTicketBuyerAttempt: false,
       startTicketBuyerError: null,
-      startAutoBuyerResponse: null,
+      startAutoBuyerResponse: null
     };
   case STARTTICKETBUYERV2_UPDATE:
     return { ...state,
       ticketBuyerCall: action.ticketBuyerCall,
-      startAutoBuyerResponse: true,
+      startAutoBuyerResponse: true
     };
   case STOPTICKETBUYERV2_ATTEMPT:
-    return { ...state,
+    return { ...state
     };
   case STOPTICKETBUYERV2_SUCCESS:
     return { ...state,
       ticketBuyerCall: null,
-      startAutoBuyerResponse: null,
+      startAutoBuyerResponse: null
     };
   case CONSTRUCTTX_ATTEMPT:
     return { ...state,
       constructTxRequestAttempt: true,
-      constructTxLowBalance: false,
+      constructTxLowBalance: false
     };
   case CONSTRUCTTX_FAILED:
     return { ...state,
       constructTxRequestAttempt: false,
-      constructTxResponse: null,
+      constructTxResponse: null
     };
   case CONSTRUCTTX_FAILED_LOW_BALANCE:
     return { ...state,
       constructTxRequestAttempt: false,
       constructTxResponse: null,
-      constructTxLowBalance: true,
+      constructTxLowBalance: true
     };
   case CONSTRUCTTX_SUCCESS:
     return { ...state,
       constructTxRequestAttempt: false,
-      constructTxResponse: action.constructTxResponse,
+      constructTxResponse: action.constructTxResponse
     };
   case VALIDATEADDRESS_ATTEMPT:
     return { ...state,
       validateAddressRequestAttempt: true,
-      validateAddressResponse: null,
+      validateAddressResponse: null
     };
   case VALIDATEADDRESS_SUCCESS:
     return { ...state,
@@ -422,16 +422,16 @@ export default function control(state = {}, action) {
   case VALIDATEMASTERPUBKEY_SUCCESS:
     return { ...state,
       masterPubKey: action.masterPubKey,
-      isCreatingWatchingOnly: true,
+      isCreatingWatchingOnly: true
     };
   case VALIDATEMASTERPUBKEY_FAILED:
     return { ...state,
       masterPubKey: null,
-      validateMasterPubKeyResponse: null,
+      validateMasterPubKeyResponse: null
     };
   case WALLET_AUTOBUYER_SETTINGS:
     return { ...state,
-      balanceToMaintain: action.balanceToMaintain,
+      balanceToMaintain: action.balanceToMaintain
     };
   case EXPORT_STARTED:
     return { ...state,
@@ -472,17 +472,17 @@ export default function control(state = {}, action) {
   case GETACCOUNTEXTENDEDKEY_ATTEMPT:
     return { ...state,
       getAccountExtendedKeyRequest: true,
-      getAccountExtendedKeyResponse: null,
+      getAccountExtendedKeyResponse: null
     };
   case GETACCOUNTEXTENDEDKEY_FAILED:
     return { ...state,
       getAccountExtendedKeyRequest: false,
-      getAccountExtendedKeyResponse: null,
+      getAccountExtendedKeyResponse: null
     };
   case GETACCOUNTEXTENDEDKEY_SUCCESS:
     return { ...state,
       getAccountExtendedKeyRequest: false,
-      getAccountExtendedKeyResponse: action.getAccountExtendedKeyResponse,
+      getAccountExtendedKeyResponse: action.getAccountExtendedKeyResponse
     };
   default:
     return state;

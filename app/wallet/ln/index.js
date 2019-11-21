@@ -66,7 +66,7 @@ export const formatInvoice = invoiceData => {
   return {
     ...inv,
     status,
-    rHashHex,
+    rHashHex
   };
 };
 
@@ -89,7 +89,7 @@ export const listInvoices = (client, reversed) => {
       const res = {
         lastIndexOffset: resp.getLastIndexOffset(),
         firstIndexOffset: resp.getFirstIndexOffset(),
-        invoices: invoices,
+        invoices: invoices
       };
 
       resolve(res);

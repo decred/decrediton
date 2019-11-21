@@ -2,7 +2,7 @@ import {
   EXPAND_SIDE_MENU,
   REDUCE_SIDE_MENU,
   SIDEBAR_TO_BOTTOM,
-  SIDEBAR_LEAVE_BOTTOM,
+  SIDEBAR_LEAVE_BOTTOM
 } from "../actions/SidebarActions";
 
 export default function sidebar(state = {}, action) {
@@ -10,7 +10,7 @@ export default function sidebar(state = {}, action) {
   case EXPAND_SIDE_MENU:
     return {
       ...state,
-      expandSideBar: true,
+      expandSideBar: true
     };
   case REDUCE_SIDE_MENU:
     return {
@@ -21,12 +21,12 @@ export default function sidebar(state = {}, action) {
     return {
       ...state,
       expandSideBar: false,
-      sidebarOnBottom: true,
+      sidebarOnBottom: true
     };
   case SIDEBAR_LEAVE_BOTTOM:
     return {
       ...state,
-      sidebarOnBottom: false,
+      sidebarOnBottom: false
     };
   default:
     return state;

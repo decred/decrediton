@@ -29,7 +29,7 @@ class History extends React.Component {
     this.state = { selectedTxTypeKey,
       selectedSortOrderKey: listDirection,
       searchText: search,
-      isChangingFilterTimer: null,
+      isChangingFilterTimer: null
     };
   }
 
@@ -71,7 +71,7 @@ class History extends React.Component {
       { key: "revoke",   value: { types: [ types.REVOCATION ],      direction: null },  label: (<T id="txFilter.type.revokes" m="Revokes"/>) },
       { key: "sent",     value: { types: [ types.REGULAR ],         direction: TRANSACTION_DIR_SENT },       label: (<T id="txFilter.type.sent" m="Sent"/>) },
       { key: "receiv",   value: { types: [ types.REGULAR ],         direction: TRANSACTION_DIR_RECEIVED },   label: (<T id="txFilter.type.received" m="Received"/>) },
-      { key: "transf",   value: { types: [ types.REGULAR ],         direction: TRANSACTION_DIR_TRANSFERRED }, label: (<T id="txFilter.type.transfered" m="Transfered"/>) },
+      { key: "transf",   value: { types: [ types.REGULAR ],         direction: TRANSACTION_DIR_TRANSFERRED }, label: (<T id="txFilter.type.transfered" m="Transfered"/>) }
     ];
   }
 

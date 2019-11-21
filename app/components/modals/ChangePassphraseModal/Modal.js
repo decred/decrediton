@@ -19,7 +19,7 @@ const Modal = ({
       ...props,
       onSubmit,
       prependPassphraseRow: true,
-      triggerSubmit: triggerPassphraseModalSubmit,
+      triggerSubmit: triggerPassphraseModalSubmit
     }}
   >
     <PassphraseModalField

@@ -21,7 +21,7 @@ const Form = ({
   onChangeApiKey,
   onSetStakePoolInfo,
   onChangePassPhrase,
-  onContinueCreation,
+  onContinueCreation
 }) => (
   <div className="">
     <div className="getstarted-stakepool-add-row">

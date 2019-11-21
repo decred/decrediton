@@ -119,7 +119,7 @@ SettingsPage.propTypes = {
   onChangeTempSettings: PropTypes.func.isRequired,
   onSaveSettings: PropTypes.func.isRequired,
   onAttemptChangePassphrase: PropTypes.func,
-  isChangePassPhraseDisabled: PropTypes.bool.isRequired,
+  isChangePassPhraseDisabled: PropTypes.bool.isRequired
 };
 
 export default SettingsPage;

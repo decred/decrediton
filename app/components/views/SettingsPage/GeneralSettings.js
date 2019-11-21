@@ -9,7 +9,7 @@ const propTypes = {
   tempSettings: PropTypes.object.isRequired,
   currencies: PropTypes.array.isRequired,
   locales: PropTypes.array.isRequired,
-  onChangeTempSettings: PropTypes.func.isRequired,
+  onChangeTempSettings: PropTypes.func.isRequired
 };
 
 const AlreadySetMessage = () => <T id="settings.alreadySetFromCli" m="This was set as a command-line option when launching decrediton"/>;
@@ -21,7 +21,7 @@ const GeneralSettings = ({
   currencies,
   locales,
   onChangeTempSettings,
-  walletReady,
+  walletReady
 }) => (
   <div className="settings-general">
     <div className="settings-column-title"><T id="settings.general.title" m="General" /></div>
@@ -41,7 +41,7 @@ const GeneralSettings = ({
             disabled={tempSettings.spvModeFromCli}
             options={[
               { key: "true", value: true, description: <T id="settings.spv.true" m="Enabled" /> },
-              { key: "false", value: false, description: <T id="settings.spv.false" m="Disabled" /> },
+              { key: "false", value: false, description: <T id="settings.spv.false" m="Disabled" /> }
             ]}
           />
         </Tooltip>
@@ -73,7 +73,7 @@ const GeneralSettings = ({
             disabled={tempSettings.networkFromCli}
             options={[
               { key: "true", value: MAINNET, description: <T id="settings.network.mainnet" m="Mainnet" /> },
-              { key: "false", value: TESTNET, description: <T id="settings.network.testnet" m="Testnet" /> },
+              { key: "false", value: TESTNET, description: <T id="settings.network.testnet" m="Testnet" /> }
             ]}
           />
         </Tooltip>
@@ -119,7 +119,7 @@ const GeneralSettings = ({
             disabled={tempSettings.daemonStartAdvancedFromCli}
             options={[
               { key: "true", value: true, description: <T id="settings.advancedDaemon.true" m="Enabled" /> },
-              { key: "false", value: false, description: <T id="settings.advancedDaemon.false" m="Disabled" /> },
+              { key: "false", value: false, description: <T id="settings.advancedDaemon.false" m="Disabled" /> }
             ]}
           />
         </Tooltip>

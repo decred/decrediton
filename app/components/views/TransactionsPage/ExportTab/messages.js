@@ -12,7 +12,7 @@ export default {
       { name: "fee", description: <T id="export.transactions.fields.fee" m="Fee paid by the wallet for the transaction" /> },
       { name: "amount", description: <T id="export.transactions.fields.amount" m="Net amount sent (including fees) or received by the wallet on this transaction." /> },
       { name: "credits", description: <T id="export.transactions.fields.credits" m="Sum of credits (transaction outputs) of the wallet included in this transaction." /> },
-      { name: "debits", description: <T id="export.transactions.fields.debits" m="Sum of debits (transaction inputs) of the wallet included in this transaction." /> },
+      { name: "debits", description: <T id="export.transactions.fields.debits" m="Sum of debits (transaction inputs) of the wallet included in this transaction." /> }
     ]
   },
   dailyBalances: {
@@ -33,7 +33,7 @@ export default {
       { name: "received", description: <T id="export.dailyBalances.fields.received" m="Total amount received from addresses not on the wallet." /> },
       { name: "voted", description: <T id="export.dailyBalances.fields.voted" m="Total amount, in DCR, of tickets voted" /> },
       { name: "revoked", description: <T id="export.dailyBalances.fields.revoked" m="Total amount, in DCR, of tickets revoked" /> },
-      { name: "ticket", description: <T id="export.dailyBalances.fields.ticket" m="Total amount, in DCR, spent in tickets" /> },
+      { name: "ticket", description: <T id="export.dailyBalances.fields.ticket" m="Total amount, in DCR, spent in tickets" /> }
     ]
   },
   balances: {
@@ -49,7 +49,7 @@ export default {
       { name: "total", description: <T id="export.balances.fields.total" m="Total available balance." /> },
       { name: "stakeRewards", description: <T id="export.balances.fields.stakeRewards" m="Total stake rewards received." /> },
       { name: "stakeFees", description: <T id="export.balances.fields.stakeFees" m="Total stake fees paid." /> },
-      { name: "totalStake", description: <T id="export.balances.fields.totalStake" m="Total amount of DCR used on staking." /> },
+      { name: "totalStake", description: <T id="export.balances.fields.totalStake" m="Total amount of DCR used on staking." /> }
     ]
   },
   voteTime: {
@@ -57,7 +57,7 @@ export default {
     description: <T id="export.votetime.descr" m="Export a time-to-vote histogram in days (how many days from ticket purchase until the ticket was selected for voting)." />,
     fields: [
       { name: "daysToVote", description: <T id="export.votettime.fields.daysToVote" m="Day bucket" /> },
-      { name: "count", description: <T id="export.votetime.fields.count" m="How many tickets voted in this day bucket" /> },
+      { name: "count", description: <T id="export.votetime.fields.count" m="How many tickets voted in this day bucket" /> }
     ]
   },
   tickets: {
@@ -69,7 +69,7 @@ export default {
       { name: "ticketHash", description: <T id="export.tickets.fields.ticketStatus" m="Txid of the ticket transaction." /> },
       { name: "spenderHash", description: <T id="export.tickets.fields.spenderHash" m="Txid of the spender (vote/revocation) transaction." /> },
       { name: "sentAmount", description: <T id="export.tickets.fields.sentAmount" m="Amount sent by the wallet into the ticket transaction." /> },
-      { name: "returnedAmount", description: <T id="export.tickets.fields.returnedAmount" m="Amount returned to the wallet by the spender (vote/revocation) transaction." /> },
+      { name: "returnedAmount", description: <T id="export.tickets.fields.returnedAmount" m="Amount returned to the wallet by the spender (vote/revocation) transaction." /> }
     ]
   }
 };

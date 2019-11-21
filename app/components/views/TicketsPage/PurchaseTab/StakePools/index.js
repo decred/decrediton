@@ -14,7 +14,7 @@ class StakePools extends React.Component {
       isAdding: false,
       apiKey: "",
       selectedUnconfigured: this.props.unconfiguredStakePools[0],
-      hasFailedAttempt: false,
+      hasFailedAttempt: false
     };
     if (!props.updatedStakePoolList && this.getStakepoolListingEnabled()) {
       this.props.discoverAvailableStakepools();
@@ -81,7 +81,7 @@ class StakePools extends React.Component {
             onCancelPassphraseRequest: null,
             onCancelAddStakePool: null,
             onRemoveStakePool: null
-          }, this),
+          }, this)
         }}
       />
     );

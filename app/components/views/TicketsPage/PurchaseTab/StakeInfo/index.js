@@ -28,12 +28,12 @@ class StakeInfo extends React.Component {
           revokedTicketsCount,
           expiredTicketsCount,
           totalSubsidy,
-          isSPV,
+          isSPV
         }}
       />,
       key: "output_0",
       style: {
-        opacity: spring(1, { stiffness: 100, damping: 20 }),
+        opacity: spring(1, { stiffness: 100, damping: 20 })
       }
     } ];
   }
@@ -44,7 +44,7 @@ class StakeInfo extends React.Component {
       key: "output_0",
       style: {
         height: spring(0, { stiffness: 100, damping: 14 }),
-        opacity: spring(0, { stiffness: 100, damping: 20 }),
+        opacity: spring(0, { stiffness: 100, damping: 20 })
       }
     } ];
   }
@@ -55,7 +55,7 @@ class StakeInfo extends React.Component {
       immatureTicketsCount,
       liveTicketsCount,
       unspentTicketsCount,
-      isSPV,
+      isSPV
     } = this.props;
     return (
       <StakeInfoDisplay
@@ -71,7 +71,7 @@ class StakeInfo extends React.Component {
             onHideStakeInfo: null,
             onShowStakeInfo: null,
             getStakeInfoDetailsComponent: null,
-            getNullStyles: null,
+            getNullStyles: null
           }, this)
         }}
       />

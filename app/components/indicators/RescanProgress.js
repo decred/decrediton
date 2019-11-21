@@ -9,7 +9,7 @@ const RescanProgress = ({
   rescanCurrentBlock,
   rescanPercentFinished,
   rescanRequest,
-  rescanCancel,
+  rescanCancel
 }) => (
   <div className="rescan-progress-area" >
     <div className="rescan-progress-indicator">

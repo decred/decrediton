@@ -111,13 +111,13 @@ const regularTemplate = (mainWindow, locale) => [ {
     accelerator: "F11",
     click() {
       mainWindow.setFullScreen(!mainWindow.isFullScreen());
-    },
+    }
   }, {
     label: locale.messages["appMenu.reloadUI"],
     accelerator: "F5",
     click() {
       mainWindow.webContents.send("app-reload-requested", mainWindow);
-    },
+    }
   }, {
     label: locale.messages["appMenu.developerTools"],
     accelerator: "Alt+Ctrl+I",

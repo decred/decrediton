@@ -20,7 +20,7 @@ class Input extends React.Component{
     }
   }
   componentDidUpdate(prevProps) {
-    const { className, disabled, } = this.props;
+    const { className, disabled } = this.props;
     if (prevProps.disabled != disabled) {
       this.setState({ divClassName: disabled ? this.state.divClassName + " disabled" : "input-and-unit " + (className || "") });
     }
@@ -59,7 +59,7 @@ class Input extends React.Component{
       readOnly,
       unit,
       hidden,
-      type,
+      type
     } = this.props;
     const hasErrorToShow = showErrors && (invalid && value || required && !value);
     return (

@@ -8,7 +8,7 @@ const mapStateToProps = selectorMap({
   messageVerificationService: sel.messageVerificationService,
   verifyMessageError: sel.verifyMessageError,
   verifyMessageSuccess: sel.verifyMessageSuccess,
-  isVerifyingMessage: sel.isVerifyingMessage,
+  isVerifyingMessage: sel.isVerifyingMessage
 });
 
 export default connect(mapStateToProps, { verifyMessageAttempt, verifyMessageCleanStore, validateAddress, getMessageVerificationServiceAttempt });

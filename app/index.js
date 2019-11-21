@@ -37,7 +37,7 @@ const currentSettings = {
   currencyDisplay: DCR,
   network: (cliOptions && cliOptions.network) || globalCfg.get(NETWORK),
   networkFromCli: !!(cliOptions && cliOptions.network),
-  theme: globalCfg.get(THEME),
+  theme: globalCfg.get(THEME)
 };
 var initialState = {
   settings: {
@@ -46,7 +46,7 @@ var initialState = {
     settingsChanged: false,
     uiAnimations: globalCfg.get("ui_animations"),
     needNetworkReset: false,
-    theme: globalCfg.get(THEME),
+    theme: globalCfg.get(THEME)
   },
   stakepool: {
     currentStakePoolConfig: null,
@@ -56,7 +56,7 @@ var initialState = {
     activeStakePoolConfig: false,
     selectedStakePool: null,
     updatedStakePoolList: false,
-    addCustomStakePoolAttempt: false,
+    addCustomStakePoolAttempt: false
   },
   daemon: {
     networkMatch: false,
@@ -86,7 +86,7 @@ var initialState = {
     selectCreateWalletInputRequest: true,
     hiddenAccounts: Array(),
     walletName: null,
-    neededBlocks: 0,
+    neededBlocks: 0
   },
   version: {
     // RequiredVersion
@@ -100,7 +100,7 @@ var initialState = {
     // Balance
     getWalletRPCVersionError: null,
     getWalletRPCVersionRequestAttempt: false,
-    getWalletRPCVersionResponse: null,
+    getWalletRPCVersionResponse: null
   },
   grpc: {
     // WalletService
@@ -175,7 +175,7 @@ var initialState = {
       types: [], // desired transaction types (code). All if blank.
       direction: null, // direction of desired transactions (sent/received/transfer)
       maxAmount: null,
-      minAmount: null,
+      minAmount: null
     },
     lastTransaction: null, //last transaction obtained
 
@@ -192,7 +192,7 @@ var initialState = {
     noMoreTickets: false,
     ticketsFilter: {
       listDirection: "desc", // asc = oldest -> newest, desc => newest -> oldest
-      status: [], // desired ticket status (code). All if blank.
+      status: [] // desired ticket status (code). All if blank.
     },
     getTicketsStartRequestHeight: null,
     getTicketsCancel: false, // user requested cancelation (but it hasn't happened yet)
@@ -220,7 +220,7 @@ var initialState = {
     fetchMissingStakeTxDataAttempt: {},
 
     // Shown under governance tab
-    treasuryBalance: null,
+    treasuryBalance: null
   },
   walletLoader: {
     syncInput: false,
@@ -264,13 +264,13 @@ var initialState = {
     // StartRpc
     startRpcRequestAttempt: false,
     startRpcResponse: null,
-    startRpcError: null,
+    startRpcError: null
   },
   notifications: {
     transactionNtfns: null,
     transactionNtfnsError: null,
     accountNtfnsRequestAttempt: false,
-    accountNtfnsResponse: null,
+    accountNtfnsResponse: null
   },
   control: {
     numTicketsToBuy: 1,
@@ -371,7 +371,7 @@ var initialState = {
     messages: Array()
   },
   sidebar: {
-    expandSideBar: true,
+    expandSideBar: true
   },
   statistics: {
     dailyBalances: [],
@@ -380,7 +380,7 @@ var initialState = {
     getMyTicketsStatsRequest: false,
     getStartupStatsAttempt: false,
     startupStatsEndCalcTime: new Date(0),
-    ticketDataHeatmap: [],
+    ticketDataHeatmap: []
   },
   governance: {
     getProposalsAttempt: false,
@@ -389,14 +389,14 @@ var initialState = {
       activeVote: [],
       abandonedVote: [],
       preVote: [],
-      finishedVote: [],
+      finishedVote: []
     },
     proposalsDetails: {},
     getProposalAttempt: false,
     getProposalError: null,
     lastVettedFetchTime: new Date(0), // time when vetted proposals were requested
     // TODO: Get proposallistpagesize from politeia's request: /v1/policy
-    proposallistpagesize: 20,
+    proposallistpagesize: 20
   },
   trezor: {
     enabled: false,
@@ -414,7 +414,7 @@ var initialState = {
     pinMessage: null,
     passPhraseMessage: null,
     wordCallBack: null,
-    walletCreationMasterPubkeyAttempt: false,
+    walletCreationMasterPubkeyAttempt: false
   },
   ln: {
     enabled: globalCfg.get("ln_enabled"),
@@ -425,18 +425,18 @@ var initialState = {
     info: {
       version: null,
       identityPubkey: null,
-      alias: null,
+      alias: null
     },
     walletBalances: {
       totalBalance: 0,
       confirmedBalance: 0,
-      unconfirmedBalance: 0,
+      unconfirmedBalance: 0
     },
     channelBalances: {
       balance: 0,
       pendingOpenBalance: 0,
       maxInboundAmount: 0,
-      maxOutboundAmount: 0,
+      maxOutboundAmount: 0
     },
     channels: Array(),
     pendingChannels: Array(),
@@ -444,7 +444,7 @@ var initialState = {
     invoices: Array(),
     payments: Array(),
     addInvoiceAttempt: false,
-    sendPaymentAttempt: false,
+    sendPaymentAttempt: false
   },
   locales: locales
 };

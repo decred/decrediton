@@ -3,7 +3,7 @@ import { FormattedMessage as T } from "react-intl";
 import "style/TxHistory.less";
 
 const Row = ({
-  pending, onClick, className, children, overview,
+  pending, onClick, className, children, overview
 }) => {
   const overviewTxIsPending = overview && pending ? "is-row tx-overview-pending" : null;
 

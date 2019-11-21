@@ -88,7 +88,7 @@ class StakePoolSelect extends React.Component {
 }
 
 StakePoolSelect.defaultProps = {
-  clearable: false,
+  clearable: false
 };
 
 export default injectIntl(newStakePool(StakePoolSelect));

@@ -17,7 +17,7 @@ export const FileBrowserFilters = {
 
 const FileBrowserFilterNames = defineMessages({
   csv: { id: "fileBrowserTypes.csv.name", defaultMessage: "CSV Files" },
-  all: { id: "fileBrowserTypes.all.name", defaultMessage: "All Files" },
+  all: { id: "fileBrowserTypes.all.name", defaultMessage: "All Files" }
 });
 
 @autobind
@@ -55,7 +55,7 @@ class PathBrowseInput extends React.Component {
     const f = this.props.save ? dialog.showSaveDialog : dialog.showOpenDialog;
     const opts = {
       properties: [ this.props.type === "directory" ? "openDirectory" : "openFile" ],
-      filters: filters,
+      filters: filters
     };
     f(mainWindow, opts, this.directorySelectorCallback);
   }

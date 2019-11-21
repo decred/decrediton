@@ -182,7 +182,7 @@ export const launchDCRD = (params, testnet, reactIPC) => new Promise((resolve,re
       rpc_pass: rpcpass,
       rpc_cert: rpccert,
       rpc_host: rpchost,
-      rpc_port: rpcport,
+      rpc_port: rpcport
     };
     return resolve(creds);
   }
@@ -419,7 +419,7 @@ export const launchDCRLnd = (walletAccount, walletPort, rpcCreds, walletPath,
     "--dcrd.rpcpass="+rpcCreds.rpc_pass,
     "--dcrwallet.grpchost=localhost:"+walletPort,
     "--dcrwallet.certpath="+path.join(walletPath, "rpc.cert"),
-    "--dcrwallet.accountnumber="+walletAccount,
+    "--dcrwallet.accountnumber="+walletAccount
   ];
 
   if (testnet) {
@@ -496,7 +496,7 @@ export const launchDCRLnd = (walletAccount, walletPort, rpcCreds, walletPath,
     address: "localhost",
     port: 10009,
     certPath: tlsCertPath,
-    macaroonPath: adminMacaroonPath,
+    macaroonPath: adminMacaroonPath
   };
   return resolve(dcrlndCreds);
 });

@@ -85,9 +85,9 @@ const config = merge(baseConfig, {
         test: /\.(mp4)$/,
         use: [ {
           loader: "file-loader",
-          options: { mimetype: "video/mp4", publicPath: "./dist/", }
+          options: { mimetype: "video/mp4", publicPath: "./dist/" }
         } ]
-      },
+      }
     ]
   },
 

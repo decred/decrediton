@@ -31,7 +31,7 @@ class Home extends React.Component{
         ...substruct({
           onShowRevokeTicket: null,
           onRequestPassphrase: null,
-          onCancelPassphraseRequest: null,
+          onCancelPassphraseRequest: null
         }, this)
       }} /> : <ErrorScreen />;
   }

@@ -18,7 +18,7 @@ const StandardPassphraseModal = (props) => {
     modalTitle,
     children,
     prependPassphraseRow,
-    onCancelModal,
+    onCancelModal
   } = props;
 
   const inputRow =

@@ -6,13 +6,13 @@ import "style/Input.less";
 class SettingsInput extends React.Component {
 
   static propTypes = {
-    className: PropTypes.string,
+    className: PropTypes.string
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      value: null,
+      value: null
     };
   }
 

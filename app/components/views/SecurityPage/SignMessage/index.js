@@ -17,7 +17,7 @@ class SignMessage extends React.Component {
       address: "",
       addressError: null,
       message: "",
-      messageError: null,
+      messageError: null
     };
   }
 
@@ -50,7 +50,7 @@ class SignMessage extends React.Component {
         <SignMessageForm {...{
           onChangeAddress, onChangeMessage, address, addressError, message,
           messageError, formatMessage: intl.formatMessage, isSigningMessage,
-          isSignMessageDisabled,
+          isSignMessageDisabled
         } }/>
         {result}
       </>
@@ -81,11 +81,11 @@ SignMessage.propTypes = {
   intl: PropTypes.object.isRequired,
   walletService: PropTypes.object,
   signMessageCleanStore: PropTypes.func.isRequired,
-  signMessageSignature: PropTypes.string,
+  signMessageSignature: PropTypes.string
 };
 
 SignMessage.contextTypes = {
-  router: PropTypes.object.isRequired,
+  router: PropTypes.object.isRequired
 };
 
 export default signMessagePage(injectIntl(SignMessage));

@@ -49,7 +49,7 @@ class EyeFilterMenuWithSlider extends React.Component {
       const toolTipFormatter = {
         to: (value) => {
           return value;
-        },
+        }
       };
 
       if(!rangeSlider) {
@@ -61,7 +61,7 @@ class EyeFilterMenuWithSlider extends React.Component {
           },
           step: 1,
           connect: true,
-          tooltips: [ true, toolTipFormatter ],
+          tooltips: [ true, toolTipFormatter ]
         });
         this.setState({ rangeSlider: range });
 
@@ -169,7 +169,7 @@ class EyeFilterMenuWithSlider extends React.Component {
   render() {
     return (
       <EyeFilterMenu
-        {...{ ...this.state,...this.props, }}
+        {...{ ...this.state,...this.props }}
         getOpenedMenu = {this.getSliderWhenOpenedMenu}
         unmountMenu = {this.unmountSliderRangeInElement}
       />

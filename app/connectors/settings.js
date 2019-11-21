@@ -17,7 +17,7 @@ const mapStateToProps = selectorMap({
   isTicketAutoBuyerEnabled: sel.isTicketAutoBuyerEnabled,
   needNetworkReset: sel.needNetworkReset,
   walletName: sel.getWalletName,
-  walletReady: sel.getWalletReady,
+  walletReady: sel.getWalletReady
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -26,7 +26,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onSaveSettings: sa.saveSettings,
   onCloseWallet: wla.closeWalletRequest,
   onAddAllowedRequestType: sa.addAllowedExternalRequest,
-  toggleTheme: sa.toggleTheme,
+  toggleTheme: sa.toggleTheme
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

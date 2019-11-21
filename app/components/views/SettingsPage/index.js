@@ -12,7 +12,7 @@ class Settings extends React.Component {
     const {
       onAttemptChangePassphrase,
       onSaveSettings,
-      onCloseWallet,
+      onCloseWallet
     } = this;
 
     return !this.props.walletService ? <ErrorScreen /> : (

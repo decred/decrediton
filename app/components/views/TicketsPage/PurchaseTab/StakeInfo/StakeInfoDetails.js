@@ -11,7 +11,7 @@ const StakeInfoDisplay = ({
   revokedTicketsCount,
   expiredTicketsCount,
   totalSubsidy,
-  isSPV,
+  isSPV
 }) => (
   <div className="stake-info-details">
     <div className="stake-info-details-row">

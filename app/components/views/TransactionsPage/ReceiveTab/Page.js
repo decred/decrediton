@@ -8,7 +8,7 @@ import "style/MiscComponents.less";
 
 const ReceivePage = ({
   nextAddress,
-  onRequestAddress,
+  onRequestAddress
 }) => (
   <>
     <Subtitle title={<T id="receive.subtitle" m="Receive DCR"/>} />

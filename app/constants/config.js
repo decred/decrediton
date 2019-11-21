@@ -36,7 +36,7 @@ export const setDaemonRemoteCredentials = (rpcuser, rpcpass, rpccert, rpchost, r
     [RPCPASS]: rpcpass,
     [RPCCERT]: rpccert,
     [RPCHOST]: rpchost,
-    [RPCPORT]: rpcport,
+    [RPCPORT]: rpcport
   };
 };
 
@@ -63,5 +63,5 @@ export const INITIAL_VALUES = {
   [APPDATA]: "",
   [TREZOR_DEBUG]: false,
   [DISABLE_HARDWARE_ACCEL]: false,
-  [LN_ENABLED]: false,
+  [LN_ENABLED]: false
 };

@@ -329,8 +329,8 @@ export function newWalletConfigCreation(testnet, walletPath) {
       grpclisten: "127.0.0.1:0",
       appdata: getWalletPath(testnet, walletPath),
       testnet: testnet ? "1" : "0",
-      nolegacyrpc: "1",
-    },
+      nolegacyrpc: "1"
+    }
   };
   fs.writeFileSync(dcrwalletCfg(getWalletPath(testnet, walletPath)), ini.stringify(dcrwConf));
 }

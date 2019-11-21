@@ -43,7 +43,7 @@ const mbb = (className, modalComponent, buttonComponent) => p =>
       ...p,
       buttonComponent,
       modalComponent: p.modalComponent || modalComponent,
-      className: [ className || "", p.className || "" ].join(" "),
+      className: [ className || "", p.className || "" ].join(" ")
     }}
   />;
 
@@ -53,7 +53,7 @@ const helpLinkButtonNew = ({ className, onClick, title, subtitle }) =>
 const helpLinkButton = ({ className, onClick, buttonLabel }) =>
   <div className={className} onClick={onClick}>{buttonLabel}</div>;
 
-const PoliteiaLinkButton = ({ children, onClick, }) => (<span onClick={onClick}>{children}</span>);
+const PoliteiaLinkButton = ({ children, onClick }) => (<span onClick={onClick}>{children}</span>);
 
 export const HelpLinkInfoModal = mbb(null, InfoModal, helpLinkButtonNew);
 export const HelpLinkAboutModal = mbb(null, AboutModal, helpLinkButtonNew);
