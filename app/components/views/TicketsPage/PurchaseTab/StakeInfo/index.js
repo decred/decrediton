@@ -31,7 +31,7 @@ class StakeInfo extends React.Component {
           ...this.state,
           ...substruct({
             getStakeInfoDetailsComponent: null,
-            onToggleStakeinfo: null,
+            onToggleStakeinfo: null
           }, this)
         }}
       />
