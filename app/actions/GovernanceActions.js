@@ -214,11 +214,27 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
   const findProposal = (proposals, token) =>
     proposals.find( proposal => proposal.censorshiprecord.token === token ? proposal : null );
 
-  const concatProposals = async (oldProposals, newProposals) => {
-    Object.keys(newProposals).forEach( key =>
-      newProposals[key] = oldProposals[key] ? oldProposals[key].concat(newProposals[key]) : newProposals[key]
-    );
-    return newProposals;
+  const concatProposals = (oldProposals, newProposals) => {
+    const response = {};
+    // We copy oldProposals in order to avoid modifying it triggering render
+    const oldProposalsCopy = Object.assign({}, oldProposals);
+    Object.keys(oldProposalsCopy).forEach( key => {
+      if (oldProposalsCopy[key] && oldProposalsCopy[key].length > 0) {
+        for (let i = 0; i < newProposals[key].length; i++) {
+          const newProp = newProposals[key][i];
+          if (findProposal(oldProposalsCopy[key], newProp.token)) {
+            oldProposalsCopy[key][i] = newProp;
+            continue;
+          }
+          oldProposalsCopy[key].push(newProp);
+        }
+        response[key] = oldProposalsCopy[key];
+      } else {
+        response[key] = newProposals[key];
+      }
+    });
+
+    return response;
   };
 
   dispatch({ type: GETPROPROSAL_UPDATEVOTESTATUS_ATTEMPT });
@@ -277,7 +293,7 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
     });
 
     // concat new proposals list array to old proposals list array
-    const concatedProposals = await concatProposals(oldProposals, proposalsUpdated);
+    const concatedProposals = concatProposals(oldProposals, proposalsUpdated);
     return dispatch({ type: GETPROPROSAL_UPDATEVOTESTATUS_SUCCESS, proposals: concatedProposals, bestBlock } );
   } catch (error) {
     dispatch({ type: GETPROPROSAL_UPDATEVOTESTATUS_FAILED, error });
