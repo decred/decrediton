@@ -175,24 +175,47 @@
   min-width: 76px;
 }
 
-.tabbed-page-body.governance .tabbed-page-header > .tabs {
-  overflow-y: auto;
-  left: unset;
-  padding-left: 63px;
-  margin-left: -63px;
-  width: 100%;
-  background-color: var(--tabbed-page-header-bg);
-  > .tab {
-    margin-right: 20px;
-    > a {
-      padding: 3px 10px 3px 10px;
-      border-radius: 5px;
-      span 
-      {
-         color:var(--tabbed-page-header-text);
-      }
-      &.active {
-        background-color: var(--tabbed-page-header-active-bg);
+.tabbed-page-body.governance {
+  top: 157px;
+
+  .tab-content {
+    padding: 0;
+  }
+
+  .tabbed-page-body {
+    top: 174px;
+
+    .tab-content {
+      padding: 0;
+    }
+  }
+
+  .tabbed-page-header {
+    padding: 0;
+    height: 133px;
+    .tabs {
+      position: relative;
+      left: 0;
+      width: 100%;
+      height: 40px;
+      padding-left: 103px;
+      margin-bottom: 9px;
+      background-color: var(--tabbed-page-header-bg);
+
+      .tab {
+        margin-right: 20px;
+        a {
+          margin: 0;
+          border-radius: 5px;
+          span 
+          {
+            color:var(--tabbed-page-header-text);
+          }
+          &.active {
+            background-color: var(--tabbed-page-header-active-bg);
+            padding: 3px 10px 3px 10px;
+          }
+        }
       }
     }
   }
@@ -235,7 +258,6 @@
 
 .tabbed-page .tab-content {
   position: absolute;
-  overflow-y: scroll;
   overflow-x: hidden;
   right: 0px;
   top: 0px;
@@ -343,6 +365,9 @@
   }
   .tabbed-page-header > .tabs{
     left: 55px;
+  }
+  .tabbed-page-body.governance .tabbed-page-header > .tabs {
+    padding-left: 35px;
   }
   .tabbed-page-header,
   .standalone-page-header,
@@ -460,4 +485,10 @@
     }
   }
 
+  .tabbed-page-body.governance {
+    top: 112px;
+    .tabbed-page-body {
+      top: 250px;
+    }
+  }
 }

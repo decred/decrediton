@@ -1,17 +1,21 @@
 import { FormattedMessage as T } from "react-intl";
 import { PoliteiaLink as PiLink } from "shared";
 import { PreVoteProposals, ActiveVoteProposals, FinishedProposal, AbandonedProposals } from "./Page";
-import { shell } from "electron";
 import { TabbedPage, TabbedPageTab as Tab } from "layout";
 import { newProposalCounts, proposals } from "connectors";
 import { createElement as h } from "react";
 
 const PageHeader = () => (
-  <div className="proposals-community-header">
-    <div className="proposals-community-header-title"><T id="proposals.community.title" m="Proposals"/></div>
-    <p className="proposals-community-header-description"><T id="proposals.community.descr" m="Voting on community proposals allows you to have a say on how the project treasury is spent.
-        Participation in voting requires (PoS) tickets. Proposal creation, discussions and other features are available at" /> <a onClick={() => shell.openExternal("https://proposals.decred.org")}>proposals.decred.org</a></p>
-
+  <div className="proposals-community-header is-row">
+    <div className="proposals-community-header-wrapper">
+      <div className="proposals-community-header-title"><T id="proposals.community.title" m="Proposals"/></div>
+      <div className="proposals-community-header-description">
+        <T id="proposals.community.descr"
+          m="Voting on community proposals allows you to have a say on how the project treasury is spent.
+          Participation in voting requires (PoS) tickets. Proposal creation, discussions and other features are available at {link}"
+          values={{ link: <PiLink className="proposals-link">proposals.decred.org</PiLink> }} />
+      </div>
+    </div>
     <div className="links">
       <PiLink><T id="proposals.community.createLink" m="Create a Proposal" /></PiLink>
     </div>
@@ -111,7 +115,7 @@ class ProposalsList extends React.Component {
           link={<ListLink count={newActiveVoteProposalsCount}><T id="proposals.statusLinks.underVote" m="Voting" /></ListLink>}
         />
         <Tab path="/governance/proposals/voted"
-          component={ h(proposals(FinishedProposal), { onLoadMoreProposals, noMoreProposals: noMoreProposals.finishedVote }) }
+          component={ h(proposals(FinishedProposal), { onLoadMoreProposals, noMoreProposals: noMoreProposals.finishedVote, finishedVote: true }) }
           link={<T id="proposals.statusLinks.voted" m="Finished Voting" />} />
         <Tab path="/governance/proposals/abandoned"
           component={ h(proposals(AbandonedProposals), { onLoadMoreProposals, noMoreProposals: noMoreProposals.abandonedVote }) }
