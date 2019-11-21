@@ -127,7 +127,7 @@ const GeneralSettings = ({
       {walletReady &&
         <div className="settings-row">
           <div className="settings-label">
-            <InfoDocFieldModalButton document="GapLimitInfo" modalClassName="has-warning" double />
+            <InfoDocFieldModalButton document="GapLimitInfo" modalClassName="has-warning" double draggable/>
             <div className="info-label">
               <T id="settings.gapLimit.label" m="Gap Limit" />
             </div>

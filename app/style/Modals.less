@@ -4,12 +4,16 @@
 .app-modal-overlay,
 .app-modal-overlay-reduced-bar,
 .app-modal-overlay-standalone {
-  position: fixed;
+  position: absolute;
   right: 0;
   top: 0;
   bottom: 0;
   z-index: 100;
   background-color: rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .app-modal-overlay {
@@ -38,6 +42,10 @@
 
 .app-modal {
   left: 296px;
+
+  &.draggable-modal {
+    left: initial;
+  }
 }
 
 .app-modal-reduced-bar {
@@ -618,12 +626,24 @@
   }
 }
 
+.draggable-modal {
+    margin: 0 !important;
+    position: relative;
+}
+
 .app-modal-reduced-bar.info-modal.double {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);    
   margin:0 !important;
+
+  &.draggable-modal {
+    position: relative;
+    transform: initial;
+    top: initial;
+    left:initial;
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -632,6 +652,7 @@
   }
   .app-modal-overlay-reduced-bar {
     left:0;
+    bottom: 70px;
   }
 
   .app-modal-reduced-bar.info-modal.double {
@@ -644,5 +665,3 @@
     width: 250px !important;
   }
 }
-
-
