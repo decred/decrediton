@@ -23,7 +23,7 @@ export default ({ enableSpv, disableSpv }) => (
     <div className="language-select-title-sub">
       <T id="spv.titleSub"
         m={"Select how Decrediton wallet's should connect to the network. You can change this in the application settings later. For more in-depth information about SPV and how it works, you can go {link}"}
-        values={{ link: <ExternalLink href={"https://docs.decred.org/wallets/spv/"}><T id="spv.titleSub.here" m="here"/></ExternalLink>}}
+        values={{ link: <ExternalLink href={"https://docs.decred.org/wallets/spv/"}><T id="spv.titleSub.here" m="here"/></ExternalLink> }}
       />
     </div>
     <div className="privacy-options">
