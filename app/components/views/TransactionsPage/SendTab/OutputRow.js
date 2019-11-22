@@ -57,10 +57,10 @@ const SendOutputRow = ({
     </div>
     <div>
       { index===0 &&
-        <div class="send-input-wrapper"><AccountsSelect className="send-input"
+        <div className="send-input-wrapper"><AccountsSelect className="send-input"
           {...{ account }} onChange={onChangeAccount} onKeyDown={onKeyDown}/></div>
       }
-      <div class="send-input-wrapper">
+      <div className="send-input-wrapper">
         { isSendSelf ?
           <ReceiveAccountsSelect
             getAddressForSelected={true}
@@ -81,7 +81,7 @@ const SendOutputRow = ({
           />
         }
       </div>
-      <div class="send-input-wrapper">
+      <div className="send-input-wrapper">
         { isSendAll ?
           <Balance flat amount={sendAllAmount} classNameWrapper="send-input send-all" />
           : <DcrInput
