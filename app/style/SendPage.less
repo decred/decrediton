@@ -159,12 +159,19 @@
   height: auto;
 }
 
-.send-input {
-  width: 260px;
+.send-input-wrapper {
   margin-bottom: 25px;
+
+  .input-errors-area {
+    margin-bottom: -14px;
+  }
+}
+
+.send-input {
+  width: 260px;  
   margin-left: 10px;
   margin-right: 10px;
-
+  
   &.send-all {
     border-bottom: 1px var(--stroke-color-default) solid;
     text-align: right;
@@ -237,9 +244,12 @@
     font-size: 13px;
   }
 
+  .send-input-wrapper {
+    margin-bottom: 22px;  
+  }
+
   .send-input {
     width: 240px;
-    margin-bottom: 22px;
     margin-left: 5px;
     margin-right: 5px;
   }
