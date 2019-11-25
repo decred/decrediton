@@ -50,7 +50,7 @@ export const ChooseVoteOption = ({ voteOptions, onUpdateVoteChoice, onVoteOption
       <div className="proposal-details-current-choice-box">
         {voteOptions.map(o => (
           <VoteOption value={o.id} description={o.id.charAt(0).toUpperCase()+o.id.slice(1)} key={o.id} checked={currentVoteChoice !== "abstain" ? o.id === currentVoteChoice.id : null }
-            onClick={!votingComplete ? onVoteOptionSelected : null}/>
+            onClick={ (currentVoteChoice === "abstain" && !votingComplete) ? onVoteOptionSelected : null }/>
         ))}
       </div>
     </div>
