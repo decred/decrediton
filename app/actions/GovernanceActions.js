@@ -428,7 +428,6 @@ export const updateVoteChoice = (proposal, newVoteChoiceID, passphrase) => async
 
   const voteChoice = proposal.voteOptions.find(o => o.id === newVoteChoiceID);
   if (!voteChoice) throw "Unknown vote choice for proposal";
-  proposal.currentVoteChoice = voteChoice;
 
   const messages = walletEligibleTickets.map(t => {
     // msg here needs to follow the same syntax as what is defined on
@@ -447,6 +446,7 @@ export const updateVoteChoice = (proposal, newVoteChoiceID, passphrase) => async
         return p.token === token;
       });
       if (proposal) {
+        newProposal.currentVoteChoice = voteChoice;
         return proposals[key][j] = { ...newProposal };
       }
     }
