@@ -60,7 +60,8 @@ import {
 
 import {
   GETACTIVEVOTE_FAILED, GETVETTED_FAILED, GETPROPOSAL_FAILED,
-  UPDATEVOTECHOICE_FAILED, GETVETTED_UPDATEDVOTERESULTS_FAILED
+  UPDATEVOTECHOICE_SUCCESS, UPDATEVOTECHOICE_FAILED,
+  GETVETTED_UPDATEDVOTERESULTS_FAILED
 } from "actions/GovernanceActions";
 
 import {
@@ -371,6 +372,10 @@ const messages = defineMessages({
   LNWALLET_STARTDCRLND_FAILED: {
     id: "ln.ntf.startDcrlndFailed",
     defaultMessage: "{originalError}"
+  },
+  UPDATEVOTECHOICE_SUCCESS: {
+    id: "governance.ntf.updateVoteChoiceSuccess",
+    defaultMessage: "Your vote has been casted with success!\n Thanks for participating in decred's governance"
   }
 });
 
@@ -440,6 +445,7 @@ export default function snackbar(state = {}, action) {
   case LNWALLET_CLOSECHANNEL_CHANCLOSE:
   case LNWALLET_FUNDWALLET_SUCCESS:
   case LNWALLET_WITHDRAWWALLET_SUCCESS:
+  case UPDATEVOTECHOICE_SUCCESS:
     type = "Success";
     message = messages[action.type] || messages.defaultSuccessMessage;
 
