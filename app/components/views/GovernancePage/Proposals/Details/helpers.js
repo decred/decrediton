@@ -36,7 +36,7 @@ export const NoElligibleTicketsVotingInfo = ({ showPurchaseTicketsPage }) => (
 );
 
 const VoteOption = ({ value, description, onClick, checked }) => (
-  <div className="proposal-vote-option" onClick={onClick ? () => onClick(value) : null}>
+  <div className="proposal-vote-option">
     <input className={value} type="radio" id={value} name="proposalVoteChoice" readOnly={!onClick} onChange={onClick ? () => onClick(value) : null}
       value={value} checked={checked} />
     <label className={"radio-label " + value} htmlFor={value}/>{description}
