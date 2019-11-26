@@ -36,7 +36,7 @@ export const NoElligibleTicketsVotingInfo = ({ showPurchaseTicketsPage }) => (
 );
 
 const VoteOption = ({ value, description, onClick, checked }) => (
-  <div className="proposal-vote-option" onClick={onClick ? () => onClick(value) : null}>
+  <div className="proposal-vote-option">
     <input className={value} type="radio" id={value} name="proposalVoteChoice" readOnly={!onClick} onChange={onClick ? () => onClick(value) : null}
       value={value} checked={checked} />
     <label className={"radio-label " + value} htmlFor={value}/>{description}
@@ -50,7 +50,7 @@ export const ChooseVoteOption = ({ voteOptions, onUpdateVoteChoice, onVoteOption
       <div className="proposal-details-current-choice-box">
         {voteOptions.map(o => (
           <VoteOption value={o.id} description={o.id.charAt(0).toUpperCase()+o.id.slice(1)} key={o.id} checked={currentVoteChoice !== "abstain" ? o.id === currentVoteChoice.id : null }
-            onClick={!votingComplete ? onVoteOptionSelected : null}/>
+            onClick={ (currentVoteChoice === "abstain" && !votingComplete) ? onVoteOptionSelected : null }/>
         ))}
       </div>
     </div>
