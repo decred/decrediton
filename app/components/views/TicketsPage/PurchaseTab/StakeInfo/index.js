@@ -1,7 +1,5 @@
-import { spring } from "react-motion";
 import { substruct } from "fp";
 import StakeInfoDisplay from "./Display";
-import StakeInfoDetails from "./StakeInfoDetails";
 import stakeInfo from "connectors/stakeInfo";
 
 @autobind
@@ -11,42 +9,6 @@ class StakeInfo extends React.Component {
     this.state = {
       isShowingDetails: false
     };
-  }
-
-  getStakeInfoDetailsComponent () {
-    const {
-      ticketPoolSize, votedTicketsCount, allMempoolTicketsCount, missedTicketsCount,
-      revokedTicketsCount, expiredTicketsCount, totalSubsidy, isSPV
-    } = this.props;
-    return [ {
-      data: <StakeInfoDetails
-        {...{
-          ticketPoolSize,
-          votedTicketsCount,
-          allMempoolTicketsCount,
-          missedTicketsCount,
-          revokedTicketsCount,
-          expiredTicketsCount,
-          totalSubsidy,
-          isSPV
-        }}
-      />,
-      key: "output_0",
-      style: {
-        opacity: spring(1, { stiffness: 100, damping: 20 })
-      }
-    } ];
-  }
-
-  getNullStyles() {
-    return [ {
-      data: null,
-      key: "output_0",
-      style: {
-        height: spring(0, { stiffness: 100, damping: 14 }),
-        opacity: spring(0, { stiffness: 100, damping: 20 })
-      }
-    } ];
   }
 
   render() {
@@ -68,22 +30,16 @@ class StakeInfo extends React.Component {
           ...this.props,
           ...this.state,
           ...substruct({
-            onHideStakeInfo: null,
-            onShowStakeInfo: null,
             getStakeInfoDetailsComponent: null,
-            getNullStyles: null
+            onToggleStakeinfo: null
           }, this)
         }}
       />
     );
   }
 
-  onHideStakeInfo() {
-    this.setState({ isShowingDetails: false });
-  }
-
-  onShowStakeInfo() {
-    this.setState({ isShowingDetails: true });
+  onToggleStakeinfo() {
+    this.setState({ isShowingDetails: !this.state.isShowingDetails });
   }
 }
 
