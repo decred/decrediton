@@ -57,42 +57,46 @@ const SendOutputRow = ({
     </div>
     <div>
       { index===0 &&
-        <AccountsSelect className="send-input"
-          {...{ account }} onChange={onChangeAccount} onKeyDown={onKeyDown}/>
+        <div className="send-input-wrapper"><AccountsSelect className="send-input"
+          {...{ account }} onChange={onChangeAccount} onKeyDown={onKeyDown}/></div>
       }
-      { isSendSelf ?
-        <ReceiveAccountsSelect
-          getAddressForSelected={true}
-          showAccountsButton={false}
-          onKeyDown={onKeyDown}
-          className="send-input"
-        /> : <AddressInput
-          required = {true}
-          autoFocus={index === 0}
-          showErrors={ error && error.address }
-          invalid={error && error.address}
-          invalidMessage={error && error.address}
-          value={destination}
-          placeholder={intl.formatMessage(messages.destinationAddrPlaceholder)}
-          onChange={(e) => onValidateAddress({ address: e.target.value , index })}
-          onKeyDown={onKeyDown}
-          className="send-input"
-        />
-      }
-      { isSendAll ?
-        <Balance flat amount={sendAllAmount} classNameWrapper="send-input send-all" />
-        : <DcrInput
-          className = "send-input"
-          required={true}
-          showErrors={error && error.amount}
-          invalid={error && error.amount}
-          invalidMessage={error && error.amount}
-          amount={value}
-          placeholder={intl.formatMessage(messages.amountPlaceholder)}
-          onChange={ e => onValidateAmount({ value: e.value , index, atomValue: e.atomValue })}
-          onKeyDown={onKeyDown}
-        />
-      }
+      <div className="send-input-wrapper">
+        { isSendSelf ?
+          <ReceiveAccountsSelect
+            getAddressForSelected={true}
+            showAccountsButton={false}
+            onKeyDown={onKeyDown}
+            className="send-input"
+          /> : <AddressInput
+            required = {true}
+            autoFocus={index === 0}
+            showErrors={ error && error.address }
+            invalid={error && error.address}
+            invalidMessage={error && error.address}
+            value={destination}
+            placeholder={intl.formatMessage(messages.destinationAddrPlaceholder)}
+            onChange={(e) => onValidateAddress({ address: e.target.value , index })}
+            onKeyDown={onKeyDown}
+            className="send-input"
+          />
+        }
+      </div>
+      <div className="send-input-wrapper">
+        { isSendAll ?
+          <Balance flat amount={sendAllAmount} classNameWrapper="send-input send-all" />
+          : <DcrInput
+            className = "send-input"
+            required={true}
+            showErrors={error && error.amount}
+            invalid={error && error.amount}
+            invalidMessage={error && error.amount}
+            amount={value}
+            placeholder={intl.formatMessage(messages.amountPlaceholder)}
+            onChange={ e => onValidateAmount({ value: e.value , index, atomValue: e.atomValue })}
+            onKeyDown={onKeyDown}
+          />
+        }
+      </div>
     </div>
     <div>
       { index === 0 && getSendSelfIcon({ isSendSelf, onShowSendSelf, onShowSendOthers }) }
