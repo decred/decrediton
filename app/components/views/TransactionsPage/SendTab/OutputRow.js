@@ -98,7 +98,7 @@ const SendOutputRow = ({
         }
       </div>
     </div>
-    <div>
+    <div className="is-column">
       { index === 0 && getSendSelfIcon({ isSendSelf, onShowSendSelf, onShowSendOthers }) }
       { getAddInputIcon({ isSendSelf, onAddOutput, onRemoveOutput, index, isSendAll }) }
       { index===0 && getSendAllFundsIcon({ isSendAll, onShowSendAll, onHideSendAll, outputs })}

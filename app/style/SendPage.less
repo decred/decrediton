@@ -4,18 +4,11 @@
 .send-wrapper-area { 
   width: 740px;
   margin-bottom: 20px;
-  height: 159px;
-}
-
-.send-area {
-  padding-top: 14px;
-  background-color: var(--background-back-color);
-  width: 428px;
-  min-height: 145px;
 }
 
 .details-area {
   width: 298px;
+  height: 145px;
   background-color: var(--transfer-details-bg);
   padding: 14px 20px 0 0;
   font-size: 11px;
@@ -32,7 +25,8 @@
 
 .output-row {
   background-color: var(--background-back-color);
-  padding-bottom: 14px;
+  padding-top: 14px;
+  padding-bottom: 1px;
 }
 
 // accounts-select is a class from AccountsSelect input component
@@ -65,7 +59,7 @@
     background-image: @add-icon;
     background-size: 6px;
     background-color: var(--account-pubkey-text);
-    box-shadow: 0 1px 8px #091440;
+    box-shadow: 0px 3px 8px var(--icons-shadow);
     border-radius: 5px;
 
     &.disabled {
@@ -230,8 +224,7 @@
     height: auto;
   }
 
-  .send-area {
-    min-height: 100%;
+  .output-row {
     width: 355px;
   }
 
