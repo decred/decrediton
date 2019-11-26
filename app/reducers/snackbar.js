@@ -23,7 +23,7 @@ import {
 } from "../actions/ControlActions";
 import {
   UPDATESTAKEPOOLCONFIG_SUCCESS, UPDATESTAKEPOOLCONFIG_FAILED,
-  SETSTAKEPOOLVOTECHOICES_SUCCESS, SETSTAKEPOOLVOTECHOICES_FAILED,
+  SETSTAKEPOOLVOTECHOICES_FAILED,
   REMOVESTAKEPOOLCONFIG,
   ADDCUSTOMSTAKEPOOL_SUCCESS, ADDCUSTOMSTAKEPOOL_FAILED,
   REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED
@@ -159,10 +159,6 @@ const messages = defineMessages({
   REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED: {
     id: "tickets.errors.refreshStakePoolInfo",
     defaultMessage: "Error refreshing stakepool data from {host}: {originalError}"
-  },
-  SETSTAKEPOOLVOTECHOICES_SUCCESS: {
-    id: "tickets.setStakePoolVoteChoices",
-    defaultMessage: "Successfully set vote choices."
   },
   SETSTAKEPOOLVOTECHOICES_FAILED: {
     id: "tickets.errors.setStakePoolVoteChoicesFailed",
@@ -419,7 +415,6 @@ export default function snackbar(state = {}, action) {
   case STARTTICKETBUYERV2_SUCCESS:
   case STOPTICKETBUYERV2_SUCCESS:
   case UPDATESTAKEPOOLCONFIG_SUCCESS:
-  case SETSTAKEPOOLVOTECHOICES_SUCCESS:
   case REMOVESTAKEPOOLCONFIG:
   case SEEDCOPIEDTOCLIPBOARD:
   case PUBLISHUNMINEDTRANSACTIONS_SUCCESS:
