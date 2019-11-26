@@ -69,16 +69,20 @@
     "dmg": {
       "contents": [
         {
-          "x": 130,
-          "y": 220
+          "x": 135,
+          "y": 150
         },
         {
-          "x": 410,
-          "y": 220,
+          "x": 405,
+          "y": 150,
           "type": "link",
           "path": "/Applications"
         }
-      ]
+      ],
+      "window": {
+        "width":540,
+        "height":315
+      }
     },
     "files": [
       "dist/",
