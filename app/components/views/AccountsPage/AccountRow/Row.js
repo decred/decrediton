@@ -26,7 +26,10 @@ const Header = ({
     </div>
     <div className="account-row-top-account-funds">
       <div className="account-row-top-total-value">
-        <Balance amount={account.total} />
+        { isImported(account) ?
+          <Balance amount={account.votingAuthority} /> :
+          <Balance amount={account.total} />
+        }
       </div>
       <div className="account-row-top-spendable is-row">
         <T id="accounts.row.spendable" m="Spendable:" />
