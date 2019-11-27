@@ -347,7 +347,7 @@
   "input.invalidInput": "Este campo es incorrecto",
   "input.requiredInput": "Este campo es obligatorio",
   "invalidRPCVersion.info": "La API de la cartera que está ahora mismo en marcha ({walletRPCVersion}) no es compatible con Decrediton (versión requerida {requiredWalletRPCVersion}).\n\n        Actualice el daemon (dcrd) y la cartera (dcrwallet) para tener la última versión, y vuelva a intentarlo.",
-  "loader.title": "Le damos la bienvenida a la cartera de Decretion",
+  "loader.title": "Le damos la bienvenida a la cartera de Decrediton",
   "loaderBar.Loaded": "Cadena de bloques cargada",
   "loaderBar.Loading": "Cadena de bloques en sincronización",
   "loaderBar.Waiting": "Esperando a la conexión de daemon...",
