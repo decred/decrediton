@@ -1,6 +1,6 @@
 # Automatic Purchase Information
 
-**Balance to Maintain** If your balance is lower than this number, you will not buy tickets. The default of 0 will use all the funds in your account to buy tickets
+**Balance to Maintain** If your balance is lower than this number, you will not buy tickets. The default of 0 will use all the funds in your account to buy tickets.
 
 **Max Fee** Tickets are entered into the mempool in order of their fee per kilobyte. This sets the maximum fee you are willing to pay.
 
