@@ -35,6 +35,8 @@ goog.exportSymbol('proto.walletrpc.ChangePassphraseRequest.Key', null, global);
 goog.exportSymbol('proto.walletrpc.ChangePassphraseResponse', null, global);
 goog.exportSymbol('proto.walletrpc.CloseWalletRequest', null, global);
 goog.exportSymbol('proto.walletrpc.CloseWalletResponse', null, global);
+goog.exportSymbol('proto.walletrpc.CoinTypeRequest', null, global);
+goog.exportSymbol('proto.walletrpc.CoinTypeResponse', null, global);
 goog.exportSymbol('proto.walletrpc.CommittedTicketsRequest', null, global);
 goog.exportSymbol('proto.walletrpc.CommittedTicketsResponse', null, global);
 goog.exportSymbol('proto.walletrpc.CommittedTicketsResponse.TicketAddress', null, global);
@@ -75,6 +77,8 @@ goog.exportSymbol('proto.walletrpc.FundTransactionResponse', null, global);
 goog.exportSymbol('proto.walletrpc.FundTransactionResponse.PreviousOutput', null, global);
 goog.exportSymbol('proto.walletrpc.GenerateRandomSeedRequest', null, global);
 goog.exportSymbol('proto.walletrpc.GenerateRandomSeedResponse', null, global);
+goog.exportSymbol('proto.walletrpc.GetAccountExtendedPrivKeyRequest', null, global);
+goog.exportSymbol('proto.walletrpc.GetAccountExtendedPrivKeyResponse', null, global);
 goog.exportSymbol('proto.walletrpc.GetAccountExtendedPubKeyRequest', null, global);
 goog.exportSymbol('proto.walletrpc.GetAccountExtendedPubKeyResponse', null, global);
 goog.exportSymbol('proto.walletrpc.GetTicketRequest', null, global);
@@ -513,7 +517,7 @@ proto.walletrpc.VersionResponse.prototype.getVersionString = function() {
 
 /** @param {string} value */
 proto.walletrpc.VersionResponse.prototype.setVersionString = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -528,7 +532,7 @@ proto.walletrpc.VersionResponse.prototype.getMajor = function() {
 
 /** @param {number} value */
 proto.walletrpc.VersionResponse.prototype.setMajor = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -543,7 +547,7 @@ proto.walletrpc.VersionResponse.prototype.getMinor = function() {
 
 /** @param {number} value */
 proto.walletrpc.VersionResponse.prototype.setMinor = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -558,7 +562,7 @@ proto.walletrpc.VersionResponse.prototype.getPatch = function() {
 
 /** @param {number} value */
 proto.walletrpc.VersionResponse.prototype.setPatch = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -573,7 +577,7 @@ proto.walletrpc.VersionResponse.prototype.getPrerelease = function() {
 
 /** @param {string} value */
 proto.walletrpc.VersionResponse.prototype.setPrerelease = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
@@ -588,7 +592,7 @@ proto.walletrpc.VersionResponse.prototype.getBuildMetadata = function() {
 
 /** @param {string} value */
 proto.walletrpc.VersionResponse.prototype.setBuildMetadata = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
@@ -977,7 +981,7 @@ proto.walletrpc.TransactionDetails.Input.prototype.getIndex = function() {
 
 /** @param {number} value */
 proto.walletrpc.TransactionDetails.Input.prototype.setIndex = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -992,7 +996,7 @@ proto.walletrpc.TransactionDetails.Input.prototype.getPreviousAccount = function
 
 /** @param {number} value */
 proto.walletrpc.TransactionDetails.Input.prototype.setPreviousAccount = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -1007,7 +1011,7 @@ proto.walletrpc.TransactionDetails.Input.prototype.getPreviousAmount = function(
 
 /** @param {number} value */
 proto.walletrpc.TransactionDetails.Input.prototype.setPreviousAmount = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -1209,7 +1213,7 @@ proto.walletrpc.TransactionDetails.Output.prototype.getIndex = function() {
 
 /** @param {number} value */
 proto.walletrpc.TransactionDetails.Output.prototype.setIndex = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -1224,7 +1228,7 @@ proto.walletrpc.TransactionDetails.Output.prototype.getAccount = function() {
 
 /** @param {number} value */
 proto.walletrpc.TransactionDetails.Output.prototype.setAccount = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -1241,7 +1245,7 @@ proto.walletrpc.TransactionDetails.Output.prototype.getInternal = function() {
 
 /** @param {boolean} value */
 proto.walletrpc.TransactionDetails.Output.prototype.setInternal = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3BooleanField(this, 3, value);
 };
 
 
@@ -1256,7 +1260,7 @@ proto.walletrpc.TransactionDetails.Output.prototype.getAmount = function() {
 
 /** @param {number} value */
 proto.walletrpc.TransactionDetails.Output.prototype.setAmount = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -1271,7 +1275,7 @@ proto.walletrpc.TransactionDetails.Output.prototype.getAddress = function() {
 
 /** @param {string} value */
 proto.walletrpc.TransactionDetails.Output.prototype.setAddress = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
@@ -1310,7 +1314,7 @@ proto.walletrpc.TransactionDetails.Output.prototype.getOutputScript_asU8 = funct
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.TransactionDetails.Output.prototype.setOutputScript = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3BytesField(this, 6, value);
 };
 
 
@@ -1349,7 +1353,7 @@ proto.walletrpc.TransactionDetails.prototype.getHash_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.TransactionDetails.prototype.setHash = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -1388,21 +1392,21 @@ proto.walletrpc.TransactionDetails.prototype.getTransaction_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.TransactionDetails.prototype.setTransaction = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
 /**
  * repeated Input debits = 3;
- * @return {!Array.<!proto.walletrpc.TransactionDetails.Input>}
+ * @return {!Array<!proto.walletrpc.TransactionDetails.Input>}
  */
 proto.walletrpc.TransactionDetails.prototype.getDebitsList = function() {
-  return /** @type{!Array.<!proto.walletrpc.TransactionDetails.Input>} */ (
+  return /** @type{!Array<!proto.walletrpc.TransactionDetails.Input>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.walletrpc.TransactionDetails.Input, 3));
 };
 
 
-/** @param {!Array.<!proto.walletrpc.TransactionDetails.Input>} value */
+/** @param {!Array<!proto.walletrpc.TransactionDetails.Input>} value */
 proto.walletrpc.TransactionDetails.prototype.setDebitsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 3, value);
 };
@@ -1425,15 +1429,15 @@ proto.walletrpc.TransactionDetails.prototype.clearDebitsList = function() {
 
 /**
  * repeated Output credits = 4;
- * @return {!Array.<!proto.walletrpc.TransactionDetails.Output>}
+ * @return {!Array<!proto.walletrpc.TransactionDetails.Output>}
  */
 proto.walletrpc.TransactionDetails.prototype.getCreditsList = function() {
-  return /** @type{!Array.<!proto.walletrpc.TransactionDetails.Output>} */ (
+  return /** @type{!Array<!proto.walletrpc.TransactionDetails.Output>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.walletrpc.TransactionDetails.Output, 4));
 };
 
 
-/** @param {!Array.<!proto.walletrpc.TransactionDetails.Output>} value */
+/** @param {!Array<!proto.walletrpc.TransactionDetails.Output>} value */
 proto.walletrpc.TransactionDetails.prototype.setCreditsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 4, value);
 };
@@ -1465,7 +1469,7 @@ proto.walletrpc.TransactionDetails.prototype.getFee = function() {
 
 /** @param {number} value */
 proto.walletrpc.TransactionDetails.prototype.setFee = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -1480,7 +1484,7 @@ proto.walletrpc.TransactionDetails.prototype.getTimestamp = function() {
 
 /** @param {number} value */
 proto.walletrpc.TransactionDetails.prototype.setTimestamp = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -1495,7 +1499,7 @@ proto.walletrpc.TransactionDetails.prototype.getTransactionType = function() {
 
 /** @param {!proto.walletrpc.TransactionDetails.TransactionType} value */
 proto.walletrpc.TransactionDetails.prototype.setTransactionType = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3EnumField(this, 7, value);
 };
 
 
@@ -1719,7 +1723,7 @@ proto.walletrpc.BlockDetails.prototype.getHash_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.BlockDetails.prototype.setHash = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -1734,7 +1738,7 @@ proto.walletrpc.BlockDetails.prototype.getHeight = function() {
 
 /** @param {number} value */
 proto.walletrpc.BlockDetails.prototype.setHeight = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -1749,7 +1753,7 @@ proto.walletrpc.BlockDetails.prototype.getTimestamp = function() {
 
 /** @param {number} value */
 proto.walletrpc.BlockDetails.prototype.setTimestamp = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -1766,21 +1770,21 @@ proto.walletrpc.BlockDetails.prototype.getApprovesParent = function() {
 
 /** @param {boolean} value */
 proto.walletrpc.BlockDetails.prototype.setApprovesParent = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3BooleanField(this, 5, value);
 };
 
 
 /**
  * repeated TransactionDetails transactions = 4;
- * @return {!Array.<!proto.walletrpc.TransactionDetails>}
+ * @return {!Array<!proto.walletrpc.TransactionDetails>}
  */
 proto.walletrpc.BlockDetails.prototype.getTransactionsList = function() {
-  return /** @type{!Array.<!proto.walletrpc.TransactionDetails>} */ (
+  return /** @type{!Array<!proto.walletrpc.TransactionDetails>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.walletrpc.TransactionDetails, 4));
 };
 
 
-/** @param {!Array.<!proto.walletrpc.TransactionDetails>} value */
+/** @param {!Array<!proto.walletrpc.TransactionDetails>} value */
 proto.walletrpc.BlockDetails.prototype.setTransactionsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 4, value);
 };
@@ -1951,7 +1955,7 @@ proto.walletrpc.AccountBalance.prototype.getAccount = function() {
 
 /** @param {number} value */
 proto.walletrpc.AccountBalance.prototype.setAccount = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -1966,7 +1970,7 @@ proto.walletrpc.AccountBalance.prototype.getTotalBalance = function() {
 
 /** @param {number} value */
 proto.walletrpc.AccountBalance.prototype.setTotalBalance = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -2456,7 +2460,265 @@ proto.walletrpc.NetworkResponse.prototype.getActiveNetwork = function() {
 
 /** @param {number} value */
 proto.walletrpc.NetworkResponse.prototype.setActiveNetwork = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.walletrpc.CoinTypeRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.walletrpc.CoinTypeRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.walletrpc.CoinTypeRequest.displayName = 'proto.walletrpc.CoinTypeRequest';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.walletrpc.CoinTypeRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.CoinTypeRequest.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.walletrpc.CoinTypeRequest} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.CoinTypeRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.walletrpc.CoinTypeRequest}
+ */
+proto.walletrpc.CoinTypeRequest.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.walletrpc.CoinTypeRequest;
+  return proto.walletrpc.CoinTypeRequest.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.walletrpc.CoinTypeRequest} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.walletrpc.CoinTypeRequest}
+ */
+proto.walletrpc.CoinTypeRequest.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.CoinTypeRequest.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.walletrpc.CoinTypeRequest.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.walletrpc.CoinTypeRequest} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.CoinTypeRequest.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.walletrpc.CoinTypeResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.walletrpc.CoinTypeResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.walletrpc.CoinTypeResponse.displayName = 'proto.walletrpc.CoinTypeResponse';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.walletrpc.CoinTypeResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.CoinTypeResponse.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.walletrpc.CoinTypeResponse} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.CoinTypeResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    coinType: jspb.Message.getFieldWithDefault(msg, 1, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.walletrpc.CoinTypeResponse}
+ */
+proto.walletrpc.CoinTypeResponse.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.walletrpc.CoinTypeResponse;
+  return proto.walletrpc.CoinTypeResponse.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.walletrpc.CoinTypeResponse} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.walletrpc.CoinTypeResponse}
+ */
+proto.walletrpc.CoinTypeResponse.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setCoinType(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.CoinTypeResponse.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.walletrpc.CoinTypeResponse.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.walletrpc.CoinTypeResponse} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.CoinTypeResponse.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getCoinType();
+  if (f !== 0) {
+    writer.writeUint32(
+      1,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional uint32 coin_type = 1;
+ * @return {number}
+ */
+proto.walletrpc.CoinTypeResponse.prototype.getCoinType = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.CoinTypeResponse.prototype.setCoinType = function(value) {
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -2598,7 +2860,7 @@ proto.walletrpc.AccountNumberRequest.prototype.getAccountName = function() {
 
 /** @param {string} value */
 proto.walletrpc.AccountNumberRequest.prototype.setAccountName = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -2740,7 +3002,7 @@ proto.walletrpc.AccountNumberResponse.prototype.getAccountNumber = function() {
 
 /** @param {number} value */
 proto.walletrpc.AccountNumberResponse.prototype.setAccountNumber = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -3219,7 +3481,7 @@ proto.walletrpc.AccountsResponse.Account.prototype.getAccountNumber = function()
 
 /** @param {number} value */
 proto.walletrpc.AccountsResponse.Account.prototype.setAccountNumber = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -3234,7 +3496,7 @@ proto.walletrpc.AccountsResponse.Account.prototype.getAccountName = function() {
 
 /** @param {string} value */
 proto.walletrpc.AccountsResponse.Account.prototype.setAccountName = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -3249,7 +3511,7 @@ proto.walletrpc.AccountsResponse.Account.prototype.getTotalBalance = function() 
 
 /** @param {number} value */
 proto.walletrpc.AccountsResponse.Account.prototype.setTotalBalance = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -3264,7 +3526,7 @@ proto.walletrpc.AccountsResponse.Account.prototype.getExternalKeyCount = functio
 
 /** @param {number} value */
 proto.walletrpc.AccountsResponse.Account.prototype.setExternalKeyCount = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -3279,7 +3541,7 @@ proto.walletrpc.AccountsResponse.Account.prototype.getInternalKeyCount = functio
 
 /** @param {number} value */
 proto.walletrpc.AccountsResponse.Account.prototype.setInternalKeyCount = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -3294,21 +3556,21 @@ proto.walletrpc.AccountsResponse.Account.prototype.getImportedKeyCount = functio
 
 /** @param {number} value */
 proto.walletrpc.AccountsResponse.Account.prototype.setImportedKeyCount = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
 /**
  * repeated Account accounts = 1;
- * @return {!Array.<!proto.walletrpc.AccountsResponse.Account>}
+ * @return {!Array<!proto.walletrpc.AccountsResponse.Account>}
  */
 proto.walletrpc.AccountsResponse.prototype.getAccountsList = function() {
-  return /** @type{!Array.<!proto.walletrpc.AccountsResponse.Account>} */ (
+  return /** @type{!Array<!proto.walletrpc.AccountsResponse.Account>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.walletrpc.AccountsResponse.Account, 1));
 };
 
 
-/** @param {!Array.<!proto.walletrpc.AccountsResponse.Account>} value */
+/** @param {!Array<!proto.walletrpc.AccountsResponse.Account>} value */
 proto.walletrpc.AccountsResponse.prototype.setAccountsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
@@ -3364,7 +3626,7 @@ proto.walletrpc.AccountsResponse.prototype.getCurrentBlockHash_asU8 = function()
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.AccountsResponse.prototype.setCurrentBlockHash = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
@@ -3379,7 +3641,7 @@ proto.walletrpc.AccountsResponse.prototype.getCurrentBlockHeight = function() {
 
 /** @param {number} value */
 proto.walletrpc.AccountsResponse.prototype.setCurrentBlockHeight = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -3533,7 +3795,7 @@ proto.walletrpc.RenameAccountRequest.prototype.getAccountNumber = function() {
 
 /** @param {number} value */
 proto.walletrpc.RenameAccountRequest.prototype.setAccountNumber = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -3548,7 +3810,7 @@ proto.walletrpc.RenameAccountRequest.prototype.getNewName = function() {
 
 /** @param {string} value */
 proto.walletrpc.RenameAccountRequest.prototype.setNewName = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -3818,7 +4080,7 @@ proto.walletrpc.RescanRequest.prototype.getBeginHeight = function() {
 
 /** @param {number} value */
 proto.walletrpc.RescanRequest.prototype.setBeginHeight = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -3857,7 +4119,7 @@ proto.walletrpc.RescanRequest.prototype.getBeginHash_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.RescanRequest.prototype.setBeginHash = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
@@ -3999,7 +4261,7 @@ proto.walletrpc.RescanResponse.prototype.getRescannedThrough = function() {
 
 /** @param {number} value */
 proto.walletrpc.RescanResponse.prototype.setRescannedThrough = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -4177,7 +4439,7 @@ proto.walletrpc.NextAccountRequest.prototype.getPassphrase_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.NextAccountRequest.prototype.setPassphrase = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -4192,7 +4454,7 @@ proto.walletrpc.NextAccountRequest.prototype.getAccountName = function() {
 
 /** @param {string} value */
 proto.walletrpc.NextAccountRequest.prototype.setAccountName = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -4334,7 +4596,7 @@ proto.walletrpc.NextAccountResponse.prototype.getAccountNumber = function() {
 
 /** @param {number} value */
 proto.walletrpc.NextAccountResponse.prototype.setAccountNumber = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -4518,7 +4780,7 @@ proto.walletrpc.NextAddressRequest.prototype.getAccount = function() {
 
 /** @param {number} value */
 proto.walletrpc.NextAddressRequest.prototype.setAccount = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -4533,7 +4795,7 @@ proto.walletrpc.NextAddressRequest.prototype.getKind = function() {
 
 /** @param {!proto.walletrpc.NextAddressRequest.Kind} value */
 proto.walletrpc.NextAddressRequest.prototype.setKind = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3EnumField(this, 2, value);
 };
 
 
@@ -4548,7 +4810,7 @@ proto.walletrpc.NextAddressRequest.prototype.getGapPolicy = function() {
 
 /** @param {!proto.walletrpc.NextAddressRequest.GapPolicy} value */
 proto.walletrpc.NextAddressRequest.prototype.setGapPolicy = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3EnumField(this, 3, value);
 };
 
 
@@ -4702,7 +4964,7 @@ proto.walletrpc.NextAddressResponse.prototype.getAddress = function() {
 
 /** @param {string} value */
 proto.walletrpc.NextAddressResponse.prototype.setAddress = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -4717,7 +4979,7 @@ proto.walletrpc.NextAddressResponse.prototype.getPublicKey = function() {
 
 /** @param {string} value */
 proto.walletrpc.NextAddressResponse.prototype.setPublicKey = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -4931,7 +5193,7 @@ proto.walletrpc.ImportPrivateKeyRequest.prototype.getPassphrase_asU8 = function(
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.ImportPrivateKeyRequest.prototype.setPassphrase = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -4946,7 +5208,7 @@ proto.walletrpc.ImportPrivateKeyRequest.prototype.getAccount = function() {
 
 /** @param {number} value */
 proto.walletrpc.ImportPrivateKeyRequest.prototype.setAccount = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -4961,7 +5223,7 @@ proto.walletrpc.ImportPrivateKeyRequest.prototype.getPrivateKeyWif = function() 
 
 /** @param {string} value */
 proto.walletrpc.ImportPrivateKeyRequest.prototype.setPrivateKeyWif = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -4978,7 +5240,7 @@ proto.walletrpc.ImportPrivateKeyRequest.prototype.getRescan = function() {
 
 /** @param {boolean} value */
 proto.walletrpc.ImportPrivateKeyRequest.prototype.setRescan = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3BooleanField(this, 4, value);
 };
 
 
@@ -4993,7 +5255,7 @@ proto.walletrpc.ImportPrivateKeyRequest.prototype.getScanFrom = function() {
 
 /** @param {number} value */
 proto.walletrpc.ImportPrivateKeyRequest.prototype.setScanFrom = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -5323,7 +5585,7 @@ proto.walletrpc.ImportScriptRequest.prototype.getPassphrase_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.ImportScriptRequest.prototype.setPassphrase = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -5362,7 +5624,7 @@ proto.walletrpc.ImportScriptRequest.prototype.getScript_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.ImportScriptRequest.prototype.setScript = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
@@ -5379,7 +5641,7 @@ proto.walletrpc.ImportScriptRequest.prototype.getRescan = function() {
 
 /** @param {boolean} value */
 proto.walletrpc.ImportScriptRequest.prototype.setRescan = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3BooleanField(this, 3, value);
 };
 
 
@@ -5394,7 +5656,7 @@ proto.walletrpc.ImportScriptRequest.prototype.getScanFrom = function() {
 
 /** @param {number} value */
 proto.walletrpc.ImportScriptRequest.prototype.setScanFrom = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -5411,7 +5673,7 @@ proto.walletrpc.ImportScriptRequest.prototype.getRequireRedeemable = function() 
 
 /** @param {boolean} value */
 proto.walletrpc.ImportScriptRequest.prototype.setRequireRedeemable = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3BooleanField(this, 5, value);
 };
 
 
@@ -5565,7 +5827,7 @@ proto.walletrpc.ImportScriptResponse.prototype.getP2shAddress = function() {
 
 /** @param {string} value */
 proto.walletrpc.ImportScriptResponse.prototype.setP2shAddress = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -5582,7 +5844,7 @@ proto.walletrpc.ImportScriptResponse.prototype.getRedeemable = function() {
 
 /** @param {boolean} value */
 proto.walletrpc.ImportScriptResponse.prototype.setRedeemable = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BooleanField(this, 2, value);
 };
 
 
@@ -5736,7 +5998,7 @@ proto.walletrpc.BalanceRequest.prototype.getAccountNumber = function() {
 
 /** @param {number} value */
 proto.walletrpc.BalanceRequest.prototype.setAccountNumber = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -5751,7 +6013,7 @@ proto.walletrpc.BalanceRequest.prototype.getRequiredConfirmations = function() {
 
 /** @param {number} value */
 proto.walletrpc.BalanceRequest.prototype.setRequiredConfirmations = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -5965,7 +6227,7 @@ proto.walletrpc.BalanceResponse.prototype.getTotal = function() {
 
 /** @param {number} value */
 proto.walletrpc.BalanceResponse.prototype.setTotal = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -5980,7 +6242,7 @@ proto.walletrpc.BalanceResponse.prototype.getSpendable = function() {
 
 /** @param {number} value */
 proto.walletrpc.BalanceResponse.prototype.setSpendable = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -5995,7 +6257,7 @@ proto.walletrpc.BalanceResponse.prototype.getImmatureReward = function() {
 
 /** @param {number} value */
 proto.walletrpc.BalanceResponse.prototype.setImmatureReward = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -6010,7 +6272,7 @@ proto.walletrpc.BalanceResponse.prototype.getImmatureStakeGeneration = function(
 
 /** @param {number} value */
 proto.walletrpc.BalanceResponse.prototype.setImmatureStakeGeneration = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -6025,7 +6287,7 @@ proto.walletrpc.BalanceResponse.prototype.getLockedByTickets = function() {
 
 /** @param {number} value */
 proto.walletrpc.BalanceResponse.prototype.setLockedByTickets = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -6040,7 +6302,7 @@ proto.walletrpc.BalanceResponse.prototype.getVotingAuthority = function() {
 
 /** @param {number} value */
 proto.walletrpc.BalanceResponse.prototype.setVotingAuthority = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -6055,7 +6317,7 @@ proto.walletrpc.BalanceResponse.prototype.getUnconfirmed = function() {
 
 /** @param {number} value */
 proto.walletrpc.BalanceResponse.prototype.setUnconfirmed = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
@@ -6221,7 +6483,7 @@ proto.walletrpc.GetTransactionRequest.prototype.getTransactionHash_asU8 = functi
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.GetTransactionRequest.prototype.setTransactionHash = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -6401,7 +6663,7 @@ proto.walletrpc.GetTransactionResponse.prototype.clearTransaction = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.walletrpc.GetTransactionResponse.prototype.hasTransaction = function() {
   return jspb.Message.getField(this, 1) != null;
@@ -6419,7 +6681,7 @@ proto.walletrpc.GetTransactionResponse.prototype.getConfirmations = function() {
 
 /** @param {number} value */
 proto.walletrpc.GetTransactionResponse.prototype.setConfirmations = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -6458,7 +6720,7 @@ proto.walletrpc.GetTransactionResponse.prototype.getBlockHash_asU8 = function() 
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.GetTransactionResponse.prototype.setBlockHash = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3BytesField(this, 3, value);
 };
 
 
@@ -6684,7 +6946,7 @@ proto.walletrpc.GetTransactionsRequest.prototype.getStartingBlockHash_asU8 = fun
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.GetTransactionsRequest.prototype.setStartingBlockHash = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -6699,7 +6961,7 @@ proto.walletrpc.GetTransactionsRequest.prototype.getStartingBlockHeight = functi
 
 /** @param {number} value */
 proto.walletrpc.GetTransactionsRequest.prototype.setStartingBlockHeight = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -6738,7 +7000,7 @@ proto.walletrpc.GetTransactionsRequest.prototype.getEndingBlockHash_asU8 = funct
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.GetTransactionsRequest.prototype.setEndingBlockHash = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3BytesField(this, 3, value);
 };
 
 
@@ -6753,7 +7015,7 @@ proto.walletrpc.GetTransactionsRequest.prototype.getEndingBlockHeight = function
 
 /** @param {number} value */
 proto.walletrpc.GetTransactionsRequest.prototype.setEndingBlockHeight = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -6768,7 +7030,7 @@ proto.walletrpc.GetTransactionsRequest.prototype.getMinimumRecentTransactions = 
 
 /** @param {number} value */
 proto.walletrpc.GetTransactionsRequest.prototype.setMinimumRecentTransactions = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -6783,7 +7045,7 @@ proto.walletrpc.GetTransactionsRequest.prototype.getTargetTransactionCount = fun
 
 /** @param {number} value */
 proto.walletrpc.GetTransactionsRequest.prototype.setTargetTransactionCount = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -6961,7 +7223,7 @@ proto.walletrpc.GetTransactionsResponse.prototype.clearMinedTransactions = funct
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.walletrpc.GetTransactionsResponse.prototype.hasMinedTransactions = function() {
   return jspb.Message.getField(this, 1) != null;
@@ -6970,15 +7232,15 @@ proto.walletrpc.GetTransactionsResponse.prototype.hasMinedTransactions = functio
 
 /**
  * repeated TransactionDetails unmined_transactions = 2;
- * @return {!Array.<!proto.walletrpc.TransactionDetails>}
+ * @return {!Array<!proto.walletrpc.TransactionDetails>}
  */
 proto.walletrpc.GetTransactionsResponse.prototype.getUnminedTransactionsList = function() {
-  return /** @type{!Array.<!proto.walletrpc.TransactionDetails>} */ (
+  return /** @type{!Array<!proto.walletrpc.TransactionDetails>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.walletrpc.TransactionDetails, 2));
 };
 
 
-/** @param {!Array.<!proto.walletrpc.TransactionDetails>} value */
+/** @param {!Array<!proto.walletrpc.TransactionDetails>} value */
 proto.walletrpc.GetTransactionsResponse.prototype.setUnminedTransactionsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 2, value);
 };
@@ -7161,7 +7423,7 @@ proto.walletrpc.GetTicketRequest.prototype.getTicketHash_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.GetTicketRequest.prototype.setTicketHash = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -7375,7 +7637,7 @@ proto.walletrpc.GetTicketsRequest.prototype.getStartingBlockHash_asU8 = function
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.GetTicketsRequest.prototype.setStartingBlockHash = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -7390,7 +7652,7 @@ proto.walletrpc.GetTicketsRequest.prototype.getStartingBlockHeight = function() 
 
 /** @param {number} value */
 proto.walletrpc.GetTicketsRequest.prototype.setStartingBlockHeight = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -7429,7 +7691,7 @@ proto.walletrpc.GetTicketsRequest.prototype.getEndingBlockHash_asU8 = function()
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.GetTicketsRequest.prototype.setEndingBlockHash = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3BytesField(this, 3, value);
 };
 
 
@@ -7444,7 +7706,7 @@ proto.walletrpc.GetTicketsRequest.prototype.getEndingBlockHeight = function() {
 
 /** @param {number} value */
 proto.walletrpc.GetTicketsRequest.prototype.setEndingBlockHeight = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -7459,7 +7721,7 @@ proto.walletrpc.GetTicketsRequest.prototype.getTargetTicketCount = function() {
 
 /** @param {number} value */
 proto.walletrpc.GetTicketsRequest.prototype.setTargetTicketCount = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -7798,7 +8060,7 @@ proto.walletrpc.GetTicketsResponse.TicketDetails.prototype.clearTicket = functio
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.walletrpc.GetTicketsResponse.TicketDetails.prototype.hasTicket = function() {
   return jspb.Message.getField(this, 1) != null;
@@ -7828,7 +8090,7 @@ proto.walletrpc.GetTicketsResponse.TicketDetails.prototype.clearSpender = functi
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.walletrpc.GetTicketsResponse.TicketDetails.prototype.hasSpender = function() {
   return jspb.Message.getField(this, 2) != null;
@@ -7846,7 +8108,7 @@ proto.walletrpc.GetTicketsResponse.TicketDetails.prototype.getTicketStatus = fun
 
 /** @param {!proto.walletrpc.GetTicketsResponse.TicketDetails.TicketStatus} value */
 proto.walletrpc.GetTicketsResponse.TicketDetails.prototype.setTicketStatus = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3EnumField(this, 3, value);
 };
 
 
@@ -8036,7 +8298,7 @@ proto.walletrpc.GetTicketsResponse.BlockDetails.prototype.getHash_asU8 = functio
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.GetTicketsResponse.BlockDetails.prototype.setHash = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -8051,7 +8313,7 @@ proto.walletrpc.GetTicketsResponse.BlockDetails.prototype.getHeight = function()
 
 /** @param {number} value */
 proto.walletrpc.GetTicketsResponse.BlockDetails.prototype.setHeight = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -8066,7 +8328,7 @@ proto.walletrpc.GetTicketsResponse.BlockDetails.prototype.getTimestamp = functio
 
 /** @param {number} value */
 proto.walletrpc.GetTicketsResponse.BlockDetails.prototype.setTimestamp = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -8093,7 +8355,7 @@ proto.walletrpc.GetTicketsResponse.prototype.clearTicket = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.walletrpc.GetTicketsResponse.prototype.hasTicket = function() {
   return jspb.Message.getField(this, 1) != null;
@@ -8123,7 +8385,7 @@ proto.walletrpc.GetTicketsResponse.prototype.clearBlock = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.walletrpc.GetTicketsResponse.prototype.hasBlock = function() {
   return jspb.Message.getField(this, 2) != null;
@@ -8396,7 +8658,7 @@ proto.walletrpc.TicketPriceResponse.prototype.getTicketPrice = function() {
 
 /** @param {number} value */
 proto.walletrpc.TicketPriceResponse.prototype.setTicketPrice = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -8411,7 +8673,7 @@ proto.walletrpc.TicketPriceResponse.prototype.getHeight = function() {
 
 /** @param {number} value */
 proto.walletrpc.TicketPriceResponse.prototype.setHeight = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -8789,7 +9051,7 @@ proto.walletrpc.StakeInfoResponse.prototype.getPoolSize = function() {
 
 /** @param {number} value */
 proto.walletrpc.StakeInfoResponse.prototype.setPoolSize = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -8804,7 +9066,7 @@ proto.walletrpc.StakeInfoResponse.prototype.getAllMempoolTix = function() {
 
 /** @param {number} value */
 proto.walletrpc.StakeInfoResponse.prototype.setAllMempoolTix = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -8819,7 +9081,7 @@ proto.walletrpc.StakeInfoResponse.prototype.getOwnMempoolTix = function() {
 
 /** @param {number} value */
 proto.walletrpc.StakeInfoResponse.prototype.setOwnMempoolTix = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -8834,7 +9096,7 @@ proto.walletrpc.StakeInfoResponse.prototype.getImmature = function() {
 
 /** @param {number} value */
 proto.walletrpc.StakeInfoResponse.prototype.setImmature = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -8849,7 +9111,7 @@ proto.walletrpc.StakeInfoResponse.prototype.getLive = function() {
 
 /** @param {number} value */
 proto.walletrpc.StakeInfoResponse.prototype.setLive = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -8864,7 +9126,7 @@ proto.walletrpc.StakeInfoResponse.prototype.getVoted = function() {
 
 /** @param {number} value */
 proto.walletrpc.StakeInfoResponse.prototype.setVoted = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -8879,7 +9141,7 @@ proto.walletrpc.StakeInfoResponse.prototype.getMissed = function() {
 
 /** @param {number} value */
 proto.walletrpc.StakeInfoResponse.prototype.setMissed = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
@@ -8894,7 +9156,7 @@ proto.walletrpc.StakeInfoResponse.prototype.getRevoked = function() {
 
 /** @param {number} value */
 proto.walletrpc.StakeInfoResponse.prototype.setRevoked = function(value) {
-  jspb.Message.setField(this, 8, value);
+  jspb.Message.setProto3IntField(this, 8, value);
 };
 
 
@@ -8909,7 +9171,7 @@ proto.walletrpc.StakeInfoResponse.prototype.getExpired = function() {
 
 /** @param {number} value */
 proto.walletrpc.StakeInfoResponse.prototype.setExpired = function(value) {
-  jspb.Message.setField(this, 9, value);
+  jspb.Message.setProto3IntField(this, 9, value);
 };
 
 
@@ -8924,7 +9186,7 @@ proto.walletrpc.StakeInfoResponse.prototype.getTotalSubsidy = function() {
 
 /** @param {number} value */
 proto.walletrpc.StakeInfoResponse.prototype.setTotalSubsidy = function(value) {
-  jspb.Message.setField(this, 10, value);
+  jspb.Message.setProto3IntField(this, 10, value);
 };
 
 
@@ -8939,7 +9201,7 @@ proto.walletrpc.StakeInfoResponse.prototype.getUnspent = function() {
 
 /** @param {number} value */
 proto.walletrpc.StakeInfoResponse.prototype.setUnspent = function(value) {
-  jspb.Message.setField(this, 11, value);
+  jspb.Message.setProto3IntField(this, 11, value);
 };
 
 
@@ -9117,7 +9379,7 @@ proto.walletrpc.BlockInfoRequest.prototype.getBlockHash_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.BlockInfoRequest.prototype.setBlockHash = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -9132,7 +9394,7 @@ proto.walletrpc.BlockInfoRequest.prototype.getBlockHeight = function() {
 
 /** @param {number} value */
 proto.walletrpc.BlockInfoRequest.prototype.setBlockHeight = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -9370,7 +9632,7 @@ proto.walletrpc.BlockInfoResponse.prototype.getBlockHash_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.BlockInfoResponse.prototype.setBlockHash = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -9385,7 +9647,7 @@ proto.walletrpc.BlockInfoResponse.prototype.getBlockHeight = function() {
 
 /** @param {number} value */
 proto.walletrpc.BlockInfoResponse.prototype.setBlockHeight = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -9400,7 +9662,7 @@ proto.walletrpc.BlockInfoResponse.prototype.getConfirmations = function() {
 
 /** @param {number} value */
 proto.walletrpc.BlockInfoResponse.prototype.setConfirmations = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -9415,7 +9677,7 @@ proto.walletrpc.BlockInfoResponse.prototype.getTimestamp = function() {
 
 /** @param {number} value */
 proto.walletrpc.BlockInfoResponse.prototype.setTimestamp = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -9454,7 +9716,7 @@ proto.walletrpc.BlockInfoResponse.prototype.getBlockHeader_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.BlockInfoResponse.prototype.setBlockHeader = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3BytesField(this, 5, value);
 };
 
 
@@ -9471,7 +9733,7 @@ proto.walletrpc.BlockInfoResponse.prototype.getStakeInvalidated = function() {
 
 /** @param {boolean} value */
 proto.walletrpc.BlockInfoResponse.prototype.setStakeInvalidated = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3BooleanField(this, 6, value);
 };
 
 
@@ -9488,7 +9750,7 @@ proto.walletrpc.BlockInfoResponse.prototype.getApprovesParent = function() {
 
 /** @param {boolean} value */
 proto.walletrpc.BlockInfoResponse.prototype.setApprovesParent = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3BooleanField(this, 7, value);
 };
 
 
@@ -9662,7 +9924,7 @@ proto.walletrpc.ChangePassphraseRequest.prototype.getKey = function() {
 
 /** @param {!proto.walletrpc.ChangePassphraseRequest.Key} value */
 proto.walletrpc.ChangePassphraseRequest.prototype.setKey = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -9701,7 +9963,7 @@ proto.walletrpc.ChangePassphraseRequest.prototype.getOldPassphrase_asU8 = functi
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.ChangePassphraseRequest.prototype.setOldPassphrase = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
@@ -9740,7 +10002,7 @@ proto.walletrpc.ChangePassphraseRequest.prototype.getNewPassphrase_asU8 = functi
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.ChangePassphraseRequest.prototype.setNewPassphrase = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3BytesField(this, 3, value);
 };
 
 
@@ -10046,7 +10308,7 @@ proto.walletrpc.FundTransactionRequest.prototype.getAccount = function() {
 
 /** @param {number} value */
 proto.walletrpc.FundTransactionRequest.prototype.setAccount = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -10061,7 +10323,7 @@ proto.walletrpc.FundTransactionRequest.prototype.getTargetAmount = function() {
 
 /** @param {number} value */
 proto.walletrpc.FundTransactionRequest.prototype.setTargetAmount = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -10076,7 +10338,7 @@ proto.walletrpc.FundTransactionRequest.prototype.getRequiredConfirmations = func
 
 /** @param {number} value */
 proto.walletrpc.FundTransactionRequest.prototype.setRequiredConfirmations = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -10093,7 +10355,7 @@ proto.walletrpc.FundTransactionRequest.prototype.getIncludeImmatureCoinbases = f
 
 /** @param {boolean} value */
 proto.walletrpc.FundTransactionRequest.prototype.setIncludeImmatureCoinbases = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3BooleanField(this, 4, value);
 };
 
 
@@ -10110,7 +10372,7 @@ proto.walletrpc.FundTransactionRequest.prototype.getIncludeChangeScript = functi
 
 /** @param {boolean} value */
 proto.walletrpc.FundTransactionRequest.prototype.setIncludeChangeScript = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3BooleanField(this, 5, value);
 };
 
 
@@ -10509,7 +10771,7 @@ proto.walletrpc.FundTransactionResponse.PreviousOutput.prototype.getTransactionH
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.FundTransactionResponse.PreviousOutput.prototype.setTransactionHash = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -10524,7 +10786,7 @@ proto.walletrpc.FundTransactionResponse.PreviousOutput.prototype.getOutputIndex 
 
 /** @param {number} value */
 proto.walletrpc.FundTransactionResponse.PreviousOutput.prototype.setOutputIndex = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -10539,7 +10801,7 @@ proto.walletrpc.FundTransactionResponse.PreviousOutput.prototype.getAmount = fun
 
 /** @param {number} value */
 proto.walletrpc.FundTransactionResponse.PreviousOutput.prototype.setAmount = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -10578,7 +10840,7 @@ proto.walletrpc.FundTransactionResponse.PreviousOutput.prototype.getPkScript_asU
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.FundTransactionResponse.PreviousOutput.prototype.setPkScript = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3BytesField(this, 4, value);
 };
 
 
@@ -10593,7 +10855,7 @@ proto.walletrpc.FundTransactionResponse.PreviousOutput.prototype.getReceiveTime 
 
 /** @param {number} value */
 proto.walletrpc.FundTransactionResponse.PreviousOutput.prototype.setReceiveTime = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -10610,7 +10872,7 @@ proto.walletrpc.FundTransactionResponse.PreviousOutput.prototype.getFromCoinbase
 
 /** @param {boolean} value */
 proto.walletrpc.FundTransactionResponse.PreviousOutput.prototype.setFromCoinbase = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3BooleanField(this, 6, value);
 };
 
 
@@ -10625,21 +10887,21 @@ proto.walletrpc.FundTransactionResponse.PreviousOutput.prototype.getTree = funct
 
 /** @param {number} value */
 proto.walletrpc.FundTransactionResponse.PreviousOutput.prototype.setTree = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
 /**
  * repeated PreviousOutput selected_outputs = 1;
- * @return {!Array.<!proto.walletrpc.FundTransactionResponse.PreviousOutput>}
+ * @return {!Array<!proto.walletrpc.FundTransactionResponse.PreviousOutput>}
  */
 proto.walletrpc.FundTransactionResponse.prototype.getSelectedOutputsList = function() {
-  return /** @type{!Array.<!proto.walletrpc.FundTransactionResponse.PreviousOutput>} */ (
+  return /** @type{!Array<!proto.walletrpc.FundTransactionResponse.PreviousOutput>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.walletrpc.FundTransactionResponse.PreviousOutput, 1));
 };
 
 
-/** @param {!Array.<!proto.walletrpc.FundTransactionResponse.PreviousOutput>} value */
+/** @param {!Array<!proto.walletrpc.FundTransactionResponse.PreviousOutput>} value */
 proto.walletrpc.FundTransactionResponse.prototype.setSelectedOutputsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
@@ -10671,7 +10933,7 @@ proto.walletrpc.FundTransactionResponse.prototype.getTotalAmount = function() {
 
 /** @param {number} value */
 proto.walletrpc.FundTransactionResponse.prototype.setTotalAmount = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -10710,7 +10972,7 @@ proto.walletrpc.FundTransactionResponse.prototype.getChangePkScript_asU8 = funct
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.FundTransactionResponse.prototype.setChangePkScript = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3BytesField(this, 3, value);
 };
 
 
@@ -10888,7 +11150,7 @@ proto.walletrpc.UnspentOutputsRequest.prototype.getAccount = function() {
 
 /** @param {number} value */
 proto.walletrpc.UnspentOutputsRequest.prototype.setAccount = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -10903,7 +11165,7 @@ proto.walletrpc.UnspentOutputsRequest.prototype.getTargetAmount = function() {
 
 /** @param {number} value */
 proto.walletrpc.UnspentOutputsRequest.prototype.setTargetAmount = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -10918,7 +11180,7 @@ proto.walletrpc.UnspentOutputsRequest.prototype.getRequiredConfirmations = funct
 
 /** @param {number} value */
 proto.walletrpc.UnspentOutputsRequest.prototype.setRequiredConfirmations = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -10935,7 +11197,7 @@ proto.walletrpc.UnspentOutputsRequest.prototype.getIncludeImmatureCoinbases = fu
 
 /** @param {boolean} value */
 proto.walletrpc.UnspentOutputsRequest.prototype.setIncludeImmatureCoinbases = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3BooleanField(this, 4, value);
 };
 
 
@@ -11185,7 +11447,7 @@ proto.walletrpc.UnspentOutputResponse.prototype.getTransactionHash_asU8 = functi
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.UnspentOutputResponse.prototype.setTransactionHash = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -11200,7 +11462,7 @@ proto.walletrpc.UnspentOutputResponse.prototype.getOutputIndex = function() {
 
 /** @param {number} value */
 proto.walletrpc.UnspentOutputResponse.prototype.setOutputIndex = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -11215,7 +11477,7 @@ proto.walletrpc.UnspentOutputResponse.prototype.getAmount = function() {
 
 /** @param {number} value */
 proto.walletrpc.UnspentOutputResponse.prototype.setAmount = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -11254,7 +11516,7 @@ proto.walletrpc.UnspentOutputResponse.prototype.getPkScript_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.UnspentOutputResponse.prototype.setPkScript = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3BytesField(this, 4, value);
 };
 
 
@@ -11269,7 +11531,7 @@ proto.walletrpc.UnspentOutputResponse.prototype.getReceiveTime = function() {
 
 /** @param {number} value */
 proto.walletrpc.UnspentOutputResponse.prototype.setReceiveTime = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -11286,7 +11548,7 @@ proto.walletrpc.UnspentOutputResponse.prototype.getFromCoinbase = function() {
 
 /** @param {boolean} value */
 proto.walletrpc.UnspentOutputResponse.prototype.setFromCoinbase = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3BooleanField(this, 6, value);
 };
 
 
@@ -11301,7 +11563,7 @@ proto.walletrpc.UnspentOutputResponse.prototype.getTree = function() {
 
 /** @param {number} value */
 proto.walletrpc.UnspentOutputResponse.prototype.setTree = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
@@ -11316,7 +11578,7 @@ proto.walletrpc.UnspentOutputResponse.prototype.getAmountSum = function() {
 
 /** @param {number} value */
 proto.walletrpc.UnspentOutputResponse.prototype.setAmountSum = function(value) {
-  jspb.Message.setField(this, 8, value);
+  jspb.Message.setProto3IntField(this, 8, value);
 };
 
 
@@ -11689,7 +11951,7 @@ proto.walletrpc.ConstructTransactionRequest.OutputDestination.prototype.getAddre
 
 /** @param {string} value */
 proto.walletrpc.ConstructTransactionRequest.OutputDestination.prototype.setAddress = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -11728,7 +11990,7 @@ proto.walletrpc.ConstructTransactionRequest.OutputDestination.prototype.getScrip
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.ConstructTransactionRequest.OutputDestination.prototype.setScript = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
@@ -11743,7 +12005,7 @@ proto.walletrpc.ConstructTransactionRequest.OutputDestination.prototype.getScrip
 
 /** @param {number} value */
 proto.walletrpc.ConstructTransactionRequest.OutputDestination.prototype.setScriptVersion = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -11911,7 +12173,7 @@ proto.walletrpc.ConstructTransactionRequest.Output.prototype.clearDestination = 
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.walletrpc.ConstructTransactionRequest.Output.prototype.hasDestination = function() {
   return jspb.Message.getField(this, 1) != null;
@@ -11929,7 +12191,7 @@ proto.walletrpc.ConstructTransactionRequest.Output.prototype.getAmount = functio
 
 /** @param {number} value */
 proto.walletrpc.ConstructTransactionRequest.Output.prototype.setAmount = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -11944,7 +12206,7 @@ proto.walletrpc.ConstructTransactionRequest.prototype.getSourceAccount = functio
 
 /** @param {number} value */
 proto.walletrpc.ConstructTransactionRequest.prototype.setSourceAccount = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -11959,7 +12221,7 @@ proto.walletrpc.ConstructTransactionRequest.prototype.getRequiredConfirmations =
 
 /** @param {number} value */
 proto.walletrpc.ConstructTransactionRequest.prototype.setRequiredConfirmations = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -11974,7 +12236,7 @@ proto.walletrpc.ConstructTransactionRequest.prototype.getFeePerKb = function() {
 
 /** @param {number} value */
 proto.walletrpc.ConstructTransactionRequest.prototype.setFeePerKb = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -11989,21 +12251,21 @@ proto.walletrpc.ConstructTransactionRequest.prototype.getOutputSelectionAlgorith
 
 /** @param {!proto.walletrpc.ConstructTransactionRequest.OutputSelectionAlgorithm} value */
 proto.walletrpc.ConstructTransactionRequest.prototype.setOutputSelectionAlgorithm = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3EnumField(this, 4, value);
 };
 
 
 /**
  * repeated Output non_change_outputs = 5;
- * @return {!Array.<!proto.walletrpc.ConstructTransactionRequest.Output>}
+ * @return {!Array<!proto.walletrpc.ConstructTransactionRequest.Output>}
  */
 proto.walletrpc.ConstructTransactionRequest.prototype.getNonChangeOutputsList = function() {
-  return /** @type{!Array.<!proto.walletrpc.ConstructTransactionRequest.Output>} */ (
+  return /** @type{!Array<!proto.walletrpc.ConstructTransactionRequest.Output>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.walletrpc.ConstructTransactionRequest.Output, 5));
 };
 
 
-/** @param {!Array.<!proto.walletrpc.ConstructTransactionRequest.Output>} value */
+/** @param {!Array<!proto.walletrpc.ConstructTransactionRequest.Output>} value */
 proto.walletrpc.ConstructTransactionRequest.prototype.setNonChangeOutputsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 5, value);
 };
@@ -12047,7 +12309,7 @@ proto.walletrpc.ConstructTransactionRequest.prototype.clearChangeDestination = f
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.walletrpc.ConstructTransactionRequest.prototype.hasChangeDestination = function() {
   return jspb.Message.getField(this, 6) != null;
@@ -12264,7 +12526,7 @@ proto.walletrpc.ConstructTransactionResponse.prototype.getUnsignedTransaction_as
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.ConstructTransactionResponse.prototype.setUnsignedTransaction = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -12279,7 +12541,7 @@ proto.walletrpc.ConstructTransactionResponse.prototype.getTotalPreviousOutputAmo
 
 /** @param {number} value */
 proto.walletrpc.ConstructTransactionResponse.prototype.setTotalPreviousOutputAmount = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -12294,7 +12556,7 @@ proto.walletrpc.ConstructTransactionResponse.prototype.getTotalOutputAmount = fu
 
 /** @param {number} value */
 proto.walletrpc.ConstructTransactionResponse.prototype.setTotalOutputAmount = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -12309,7 +12571,7 @@ proto.walletrpc.ConstructTransactionResponse.prototype.getEstimatedSignedSize = 
 
 /** @param {number} value */
 proto.walletrpc.ConstructTransactionResponse.prototype.setEstimatedSignedSize = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -12324,7 +12586,7 @@ proto.walletrpc.ConstructTransactionResponse.prototype.getChangeIndex = function
 
 /** @param {number} value */
 proto.walletrpc.ConstructTransactionResponse.prototype.setChangeIndex = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -12687,7 +12949,7 @@ proto.walletrpc.SignTransactionRequest.AdditionalScript.prototype.getTransaction
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.SignTransactionRequest.AdditionalScript.prototype.setTransactionHash = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -12702,7 +12964,7 @@ proto.walletrpc.SignTransactionRequest.AdditionalScript.prototype.getOutputIndex
 
 /** @param {number} value */
 proto.walletrpc.SignTransactionRequest.AdditionalScript.prototype.setOutputIndex = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -12717,7 +12979,7 @@ proto.walletrpc.SignTransactionRequest.AdditionalScript.prototype.getTree = func
 
 /** @param {number} value */
 proto.walletrpc.SignTransactionRequest.AdditionalScript.prototype.setTree = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -12756,7 +13018,7 @@ proto.walletrpc.SignTransactionRequest.AdditionalScript.prototype.getPkScript_as
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.SignTransactionRequest.AdditionalScript.prototype.setPkScript = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3BytesField(this, 4, value);
 };
 
 
@@ -12795,7 +13057,7 @@ proto.walletrpc.SignTransactionRequest.prototype.getPassphrase_asU8 = function()
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.SignTransactionRequest.prototype.setPassphrase = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -12834,21 +13096,21 @@ proto.walletrpc.SignTransactionRequest.prototype.getSerializedTransaction_asU8 =
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.SignTransactionRequest.prototype.setSerializedTransaction = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
 /**
  * repeated AdditionalScript additional_scripts = 4;
- * @return {!Array.<!proto.walletrpc.SignTransactionRequest.AdditionalScript>}
+ * @return {!Array<!proto.walletrpc.SignTransactionRequest.AdditionalScript>}
  */
 proto.walletrpc.SignTransactionRequest.prototype.getAdditionalScriptsList = function() {
-  return /** @type{!Array.<!proto.walletrpc.SignTransactionRequest.AdditionalScript>} */ (
+  return /** @type{!Array<!proto.walletrpc.SignTransactionRequest.AdditionalScript>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.walletrpc.SignTransactionRequest.AdditionalScript, 4));
 };
 
 
-/** @param {!Array.<!proto.walletrpc.SignTransactionRequest.AdditionalScript>} value */
+/** @param {!Array<!proto.walletrpc.SignTransactionRequest.AdditionalScript>} value */
 proto.walletrpc.SignTransactionRequest.prototype.setAdditionalScriptsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 4, value);
 };
@@ -12966,7 +13228,7 @@ proto.walletrpc.SignTransactionResponse.deserializeBinaryFromReader = function(m
       msg.setTransaction(value);
       break;
     case 2:
-      var value = /** @type {!Array.<number>} */ (reader.readPackedUint32());
+      var value = /** @type {!Array<number>} */ (reader.readPackedUint32());
       msg.setUnsignedInputIndexesList(value);
       break;
     default:
@@ -13050,27 +13312,27 @@ proto.walletrpc.SignTransactionResponse.prototype.getTransaction_asU8 = function
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.SignTransactionResponse.prototype.setTransaction = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
 /**
  * repeated uint32 unsigned_input_indexes = 2;
- * @return {!Array.<number>}
+ * @return {!Array<number>}
  */
 proto.walletrpc.SignTransactionResponse.prototype.getUnsignedInputIndexesList = function() {
-  return /** @type {!Array.<number>} */ (jspb.Message.getRepeatedField(this, 2));
+  return /** @type {!Array<number>} */ (jspb.Message.getRepeatedField(this, 2));
 };
 
 
-/** @param {!Array.<number>} value */
+/** @param {!Array<number>} value */
 proto.walletrpc.SignTransactionResponse.prototype.setUnsignedInputIndexesList = function(value) {
   jspb.Message.setField(this, 2, value || []);
 };
 
 
 /**
- * @param {!number} value
+ * @param {number} value
  * @param {number=} opt_index
  */
 proto.walletrpc.SignTransactionResponse.prototype.addUnsignedInputIndexes = function(value, opt_index) {
@@ -13445,7 +13707,7 @@ proto.walletrpc.SignTransactionsRequest.AdditionalScript.prototype.getTransactio
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.SignTransactionsRequest.AdditionalScript.prototype.setTransactionHash = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -13460,7 +13722,7 @@ proto.walletrpc.SignTransactionsRequest.AdditionalScript.prototype.getOutputInde
 
 /** @param {number} value */
 proto.walletrpc.SignTransactionsRequest.AdditionalScript.prototype.setOutputIndex = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -13475,7 +13737,7 @@ proto.walletrpc.SignTransactionsRequest.AdditionalScript.prototype.getTree = fun
 
 /** @param {number} value */
 proto.walletrpc.SignTransactionsRequest.AdditionalScript.prototype.setTree = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -13514,7 +13776,7 @@ proto.walletrpc.SignTransactionsRequest.AdditionalScript.prototype.getPkScript_a
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.SignTransactionsRequest.AdditionalScript.prototype.setPkScript = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3BytesField(this, 4, value);
 };
 
 
@@ -13680,7 +13942,7 @@ proto.walletrpc.SignTransactionsRequest.UnsignedTransaction.prototype.getSeriali
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.SignTransactionsRequest.UnsignedTransaction.prototype.setSerializedTransaction = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -13719,21 +13981,21 @@ proto.walletrpc.SignTransactionsRequest.prototype.getPassphrase_asU8 = function(
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.SignTransactionsRequest.prototype.setPassphrase = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
 /**
  * repeated UnsignedTransaction transactions = 2;
- * @return {!Array.<!proto.walletrpc.SignTransactionsRequest.UnsignedTransaction>}
+ * @return {!Array<!proto.walletrpc.SignTransactionsRequest.UnsignedTransaction>}
  */
 proto.walletrpc.SignTransactionsRequest.prototype.getTransactionsList = function() {
-  return /** @type{!Array.<!proto.walletrpc.SignTransactionsRequest.UnsignedTransaction>} */ (
+  return /** @type{!Array<!proto.walletrpc.SignTransactionsRequest.UnsignedTransaction>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.walletrpc.SignTransactionsRequest.UnsignedTransaction, 2));
 };
 
 
-/** @param {!Array.<!proto.walletrpc.SignTransactionsRequest.UnsignedTransaction>} value */
+/** @param {!Array<!proto.walletrpc.SignTransactionsRequest.UnsignedTransaction>} value */
 proto.walletrpc.SignTransactionsRequest.prototype.setTransactionsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 2, value);
 };
@@ -13756,15 +14018,15 @@ proto.walletrpc.SignTransactionsRequest.prototype.clearTransactionsList = functi
 
 /**
  * repeated AdditionalScript additional_scripts = 3;
- * @return {!Array.<!proto.walletrpc.SignTransactionsRequest.AdditionalScript>}
+ * @return {!Array<!proto.walletrpc.SignTransactionsRequest.AdditionalScript>}
  */
 proto.walletrpc.SignTransactionsRequest.prototype.getAdditionalScriptsList = function() {
-  return /** @type{!Array.<!proto.walletrpc.SignTransactionsRequest.AdditionalScript>} */ (
+  return /** @type{!Array<!proto.walletrpc.SignTransactionsRequest.AdditionalScript>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.walletrpc.SignTransactionsRequest.AdditionalScript, 3));
 };
 
 
-/** @param {!Array.<!proto.walletrpc.SignTransactionsRequest.AdditionalScript>} value */
+/** @param {!Array<!proto.walletrpc.SignTransactionsRequest.AdditionalScript>} value */
 proto.walletrpc.SignTransactionsRequest.prototype.setAdditionalScriptsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 3, value);
 };
@@ -14019,7 +14281,7 @@ proto.walletrpc.SignTransactionsResponse.SignedTransaction.deserializeBinaryFrom
       msg.setTransaction(value);
       break;
     case 2:
-      var value = /** @type {!Array.<number>} */ (reader.readPackedUint32());
+      var value = /** @type {!Array<number>} */ (reader.readPackedUint32());
       msg.setUnsignedInputIndexesList(value);
       break;
     default:
@@ -14103,27 +14365,27 @@ proto.walletrpc.SignTransactionsResponse.SignedTransaction.prototype.getTransact
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.SignTransactionsResponse.SignedTransaction.prototype.setTransaction = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
 /**
  * repeated uint32 unsigned_input_indexes = 2;
- * @return {!Array.<number>}
+ * @return {!Array<number>}
  */
 proto.walletrpc.SignTransactionsResponse.SignedTransaction.prototype.getUnsignedInputIndexesList = function() {
-  return /** @type {!Array.<number>} */ (jspb.Message.getRepeatedField(this, 2));
+  return /** @type {!Array<number>} */ (jspb.Message.getRepeatedField(this, 2));
 };
 
 
-/** @param {!Array.<number>} value */
+/** @param {!Array<number>} value */
 proto.walletrpc.SignTransactionsResponse.SignedTransaction.prototype.setUnsignedInputIndexesList = function(value) {
   jspb.Message.setField(this, 2, value || []);
 };
 
 
 /**
- * @param {!number} value
+ * @param {number} value
  * @param {number=} opt_index
  */
 proto.walletrpc.SignTransactionsResponse.SignedTransaction.prototype.addUnsignedInputIndexes = function(value, opt_index) {
@@ -14138,15 +14400,15 @@ proto.walletrpc.SignTransactionsResponse.SignedTransaction.prototype.clearUnsign
 
 /**
  * repeated SignedTransaction transactions = 1;
- * @return {!Array.<!proto.walletrpc.SignTransactionsResponse.SignedTransaction>}
+ * @return {!Array<!proto.walletrpc.SignTransactionsResponse.SignedTransaction>}
  */
 proto.walletrpc.SignTransactionsResponse.prototype.getTransactionsList = function() {
-  return /** @type{!Array.<!proto.walletrpc.SignTransactionsResponse.SignedTransaction>} */ (
+  return /** @type{!Array<!proto.walletrpc.SignTransactionsResponse.SignedTransaction>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.walletrpc.SignTransactionsResponse.SignedTransaction, 1));
 };
 
 
-/** @param {!Array.<!proto.walletrpc.SignTransactionsResponse.SignedTransaction>} value */
+/** @param {!Array<!proto.walletrpc.SignTransactionsResponse.SignedTransaction>} value */
 proto.walletrpc.SignTransactionsResponse.prototype.setTransactionsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
@@ -14401,7 +14663,7 @@ proto.walletrpc.CreateSignatureRequest.prototype.getPassphrase_asU8 = function()
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.CreateSignatureRequest.prototype.setPassphrase = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -14416,7 +14678,7 @@ proto.walletrpc.CreateSignatureRequest.prototype.getAddress = function() {
 
 /** @param {string} value */
 proto.walletrpc.CreateSignatureRequest.prototype.setAddress = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -14455,7 +14717,7 @@ proto.walletrpc.CreateSignatureRequest.prototype.getSerializedTransaction_asU8 =
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.CreateSignatureRequest.prototype.setSerializedTransaction = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3BytesField(this, 3, value);
 };
 
 
@@ -14470,7 +14732,7 @@ proto.walletrpc.CreateSignatureRequest.prototype.getInputIndex = function() {
 
 /** @param {number} value */
 proto.walletrpc.CreateSignatureRequest.prototype.setInputIndex = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -14485,7 +14747,7 @@ proto.walletrpc.CreateSignatureRequest.prototype.getHashType = function() {
 
 /** @param {!proto.walletrpc.CreateSignatureRequest.SigHashType} value */
 proto.walletrpc.CreateSignatureRequest.prototype.setHashType = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3EnumField(this, 5, value);
 };
 
 
@@ -14524,7 +14786,7 @@ proto.walletrpc.CreateSignatureRequest.prototype.getPreviousPkScript_asU8 = func
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.CreateSignatureRequest.prototype.setPreviousPkScript = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3BytesField(this, 6, value);
 };
 
 
@@ -14702,7 +14964,7 @@ proto.walletrpc.CreateSignatureResponse.prototype.getSignature_asU8 = function()
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.CreateSignatureResponse.prototype.setSignature = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -14741,7 +15003,7 @@ proto.walletrpc.CreateSignatureResponse.prototype.getPublicKey_asU8 = function()
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.CreateSignatureResponse.prototype.setPublicKey = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
@@ -14907,7 +15169,7 @@ proto.walletrpc.PublishTransactionRequest.prototype.getSignedTransaction_asU8 = 
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.PublishTransactionRequest.prototype.setSignedTransaction = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -15073,7 +15335,7 @@ proto.walletrpc.PublishTransactionResponse.prototype.getTransactionHash_asU8 = f
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.PublishTransactionResponse.prototype.setTransactionHash = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -15591,7 +15853,7 @@ proto.walletrpc.PurchaseTicketsRequest.prototype.getPassphrase_asU8 = function()
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.PurchaseTicketsRequest.prototype.setPassphrase = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -15606,7 +15868,7 @@ proto.walletrpc.PurchaseTicketsRequest.prototype.getAccount = function() {
 
 /** @param {number} value */
 proto.walletrpc.PurchaseTicketsRequest.prototype.setAccount = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -15621,7 +15883,7 @@ proto.walletrpc.PurchaseTicketsRequest.prototype.getSpendLimit = function() {
 
 /** @param {number} value */
 proto.walletrpc.PurchaseTicketsRequest.prototype.setSpendLimit = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -15636,7 +15898,7 @@ proto.walletrpc.PurchaseTicketsRequest.prototype.getRequiredConfirmations = func
 
 /** @param {number} value */
 proto.walletrpc.PurchaseTicketsRequest.prototype.setRequiredConfirmations = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -15651,7 +15913,7 @@ proto.walletrpc.PurchaseTicketsRequest.prototype.getTicketAddress = function() {
 
 /** @param {string} value */
 proto.walletrpc.PurchaseTicketsRequest.prototype.setTicketAddress = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
@@ -15666,7 +15928,7 @@ proto.walletrpc.PurchaseTicketsRequest.prototype.getNumTickets = function() {
 
 /** @param {number} value */
 proto.walletrpc.PurchaseTicketsRequest.prototype.setNumTickets = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -15681,7 +15943,7 @@ proto.walletrpc.PurchaseTicketsRequest.prototype.getPoolAddress = function() {
 
 /** @param {string} value */
 proto.walletrpc.PurchaseTicketsRequest.prototype.setPoolAddress = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3StringField(this, 7, value);
 };
 
 
@@ -15696,7 +15958,7 @@ proto.walletrpc.PurchaseTicketsRequest.prototype.getPoolFees = function() {
 
 /** @param {number} value */
 proto.walletrpc.PurchaseTicketsRequest.prototype.setPoolFees = function(value) {
-  jspb.Message.setField(this, 8, value);
+  jspb.Message.setProto3FloatField(this, 8, value);
 };
 
 
@@ -15711,7 +15973,7 @@ proto.walletrpc.PurchaseTicketsRequest.prototype.getExpiry = function() {
 
 /** @param {number} value */
 proto.walletrpc.PurchaseTicketsRequest.prototype.setExpiry = function(value) {
-  jspb.Message.setField(this, 9, value);
+  jspb.Message.setProto3IntField(this, 9, value);
 };
 
 
@@ -15726,7 +15988,7 @@ proto.walletrpc.PurchaseTicketsRequest.prototype.getTxFee = function() {
 
 /** @param {number} value */
 proto.walletrpc.PurchaseTicketsRequest.prototype.setTxFee = function(value) {
-  jspb.Message.setField(this, 10, value);
+  jspb.Message.setProto3IntField(this, 10, value);
 };
 
 
@@ -15741,7 +16003,7 @@ proto.walletrpc.PurchaseTicketsRequest.prototype.getTicketFee = function() {
 
 /** @param {number} value */
 proto.walletrpc.PurchaseTicketsRequest.prototype.setTicketFee = function(value) {
-  jspb.Message.setField(this, 11, value);
+  jspb.Message.setProto3IntField(this, 11, value);
 };
 
 
@@ -15891,10 +16153,10 @@ proto.walletrpc.PurchaseTicketsResponse.prototype.getTicketHashesList = function
 /**
  * repeated bytes ticket_hashes = 1;
  * This is a type-conversion wrapper around `getTicketHashesList()`
- * @return {!Array.<string>}
+ * @return {!Array<string>}
  */
 proto.walletrpc.PurchaseTicketsResponse.prototype.getTicketHashesList_asB64 = function() {
-  return /** @type {!Array.<string>} */ (jspb.Message.bytesListAsB64(
+  return /** @type {!Array<string>} */ (jspb.Message.bytesListAsB64(
       this.getTicketHashesList()));
 };
 
@@ -15904,10 +16166,10 @@ proto.walletrpc.PurchaseTicketsResponse.prototype.getTicketHashesList_asB64 = fu
  * Note that Uint8Array is not supported on all browsers.
  * @see http://caniuse.com/Uint8Array
  * This is a type-conversion wrapper around `getTicketHashesList()`
- * @return {!Array.<!Uint8Array>}
+ * @return {!Array<!Uint8Array>}
  */
 proto.walletrpc.PurchaseTicketsResponse.prototype.getTicketHashesList_asU8 = function() {
-  return /** @type {!Array.<!Uint8Array>} */ (jspb.Message.bytesListAsU8(
+  return /** @type {!Array<!Uint8Array>} */ (jspb.Message.bytesListAsU8(
       this.getTicketHashesList()));
 };
 
@@ -16094,7 +16356,7 @@ proto.walletrpc.RevokeTicketsRequest.prototype.getPassphrase_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.RevokeTicketsRequest.prototype.setPassphrase = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -16608,7 +16870,7 @@ proto.walletrpc.SignMessageRequest.prototype.getAddress = function() {
 
 /** @param {string} value */
 proto.walletrpc.SignMessageRequest.prototype.setAddress = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -16623,7 +16885,7 @@ proto.walletrpc.SignMessageRequest.prototype.getMessage = function() {
 
 /** @param {string} value */
 proto.walletrpc.SignMessageRequest.prototype.setMessage = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -16662,7 +16924,7 @@ proto.walletrpc.SignMessageRequest.prototype.getPassphrase_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.SignMessageRequest.prototype.setPassphrase = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3BytesField(this, 3, value);
 };
 
 
@@ -16828,7 +17090,7 @@ proto.walletrpc.SignMessageResponse.prototype.getSignature_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.SignMessageResponse.prototype.setSignature = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -17131,7 +17393,7 @@ proto.walletrpc.SignMessagesRequest.Message.prototype.getAddress = function() {
 
 /** @param {string} value */
 proto.walletrpc.SignMessagesRequest.Message.prototype.setAddress = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -17146,7 +17408,7 @@ proto.walletrpc.SignMessagesRequest.Message.prototype.getMessage = function() {
 
 /** @param {string} value */
 proto.walletrpc.SignMessagesRequest.Message.prototype.setMessage = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -17185,21 +17447,21 @@ proto.walletrpc.SignMessagesRequest.prototype.getPassphrase_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.SignMessagesRequest.prototype.setPassphrase = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
 /**
  * repeated Message messages = 2;
- * @return {!Array.<!proto.walletrpc.SignMessagesRequest.Message>}
+ * @return {!Array<!proto.walletrpc.SignMessagesRequest.Message>}
  */
 proto.walletrpc.SignMessagesRequest.prototype.getMessagesList = function() {
-  return /** @type{!Array.<!proto.walletrpc.SignMessagesRequest.Message>} */ (
+  return /** @type{!Array<!proto.walletrpc.SignMessagesRequest.Message>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.walletrpc.SignMessagesRequest.Message, 2));
 };
 
 
-/** @param {!Array.<!proto.walletrpc.SignMessagesRequest.Message>} value */
+/** @param {!Array<!proto.walletrpc.SignMessagesRequest.Message>} value */
 proto.walletrpc.SignMessagesRequest.prototype.setMessagesList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 2, value);
 };
@@ -17531,7 +17793,7 @@ proto.walletrpc.SignMessagesResponse.SignReply.prototype.getSignature_asU8 = fun
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.SignMessagesResponse.SignReply.prototype.setSignature = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -17546,21 +17808,21 @@ proto.walletrpc.SignMessagesResponse.SignReply.prototype.getError = function() {
 
 /** @param {string} value */
 proto.walletrpc.SignMessagesResponse.SignReply.prototype.setError = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
 /**
  * repeated SignReply replies = 1;
- * @return {!Array.<!proto.walletrpc.SignMessagesResponse.SignReply>}
+ * @return {!Array<!proto.walletrpc.SignMessagesResponse.SignReply>}
  */
 proto.walletrpc.SignMessagesResponse.prototype.getRepliesList = function() {
-  return /** @type{!Array.<!proto.walletrpc.SignMessagesResponse.SignReply>} */ (
+  return /** @type{!Array<!proto.walletrpc.SignMessagesResponse.SignReply>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.walletrpc.SignMessagesResponse.SignReply, 1));
 };
 
 
-/** @param {!Array.<!proto.walletrpc.SignMessagesResponse.SignReply>} value */
+/** @param {!Array<!proto.walletrpc.SignMessagesResponse.SignReply>} value */
 proto.walletrpc.SignMessagesResponse.prototype.setRepliesList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
@@ -17875,15 +18137,15 @@ proto.walletrpc.TransactionNotificationsResponse.serializeBinaryToWriter = funct
 
 /**
  * repeated BlockDetails attached_blocks = 1;
- * @return {!Array.<!proto.walletrpc.BlockDetails>}
+ * @return {!Array<!proto.walletrpc.BlockDetails>}
  */
 proto.walletrpc.TransactionNotificationsResponse.prototype.getAttachedBlocksList = function() {
-  return /** @type{!Array.<!proto.walletrpc.BlockDetails>} */ (
+  return /** @type{!Array<!proto.walletrpc.BlockDetails>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.walletrpc.BlockDetails, 1));
 };
 
 
-/** @param {!Array.<!proto.walletrpc.BlockDetails>} value */
+/** @param {!Array<!proto.walletrpc.BlockDetails>} value */
 proto.walletrpc.TransactionNotificationsResponse.prototype.setAttachedBlocksList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
@@ -17916,10 +18178,10 @@ proto.walletrpc.TransactionNotificationsResponse.prototype.getDetachedBlocksList
 /**
  * repeated bytes detached_blocks = 2;
  * This is a type-conversion wrapper around `getDetachedBlocksList()`
- * @return {!Array.<string>}
+ * @return {!Array<string>}
  */
 proto.walletrpc.TransactionNotificationsResponse.prototype.getDetachedBlocksList_asB64 = function() {
-  return /** @type {!Array.<string>} */ (jspb.Message.bytesListAsB64(
+  return /** @type {!Array<string>} */ (jspb.Message.bytesListAsB64(
       this.getDetachedBlocksList()));
 };
 
@@ -17929,10 +18191,10 @@ proto.walletrpc.TransactionNotificationsResponse.prototype.getDetachedBlocksList
  * Note that Uint8Array is not supported on all browsers.
  * @see http://caniuse.com/Uint8Array
  * This is a type-conversion wrapper around `getDetachedBlocksList()`
- * @return {!Array.<!Uint8Array>}
+ * @return {!Array<!Uint8Array>}
  */
 proto.walletrpc.TransactionNotificationsResponse.prototype.getDetachedBlocksList_asU8 = function() {
-  return /** @type {!Array.<!Uint8Array>} */ (jspb.Message.bytesListAsU8(
+  return /** @type {!Array<!Uint8Array>} */ (jspb.Message.bytesListAsU8(
       this.getDetachedBlocksList()));
 };
 
@@ -17959,15 +18221,15 @@ proto.walletrpc.TransactionNotificationsResponse.prototype.clearDetachedBlocksLi
 
 /**
  * repeated TransactionDetails unmined_transactions = 3;
- * @return {!Array.<!proto.walletrpc.TransactionDetails>}
+ * @return {!Array<!proto.walletrpc.TransactionDetails>}
  */
 proto.walletrpc.TransactionNotificationsResponse.prototype.getUnminedTransactionsList = function() {
-  return /** @type{!Array.<!proto.walletrpc.TransactionDetails>} */ (
+  return /** @type{!Array<!proto.walletrpc.TransactionDetails>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.walletrpc.TransactionDetails, 3));
 };
 
 
-/** @param {!Array.<!proto.walletrpc.TransactionDetails>} value */
+/** @param {!Array<!proto.walletrpc.TransactionDetails>} value */
 proto.walletrpc.TransactionNotificationsResponse.prototype.setUnminedTransactionsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 3, value);
 };
@@ -18000,10 +18262,10 @@ proto.walletrpc.TransactionNotificationsResponse.prototype.getUnminedTransaction
 /**
  * repeated bytes unmined_transaction_hashes = 4;
  * This is a type-conversion wrapper around `getUnminedTransactionHashesList()`
- * @return {!Array.<string>}
+ * @return {!Array<string>}
  */
 proto.walletrpc.TransactionNotificationsResponse.prototype.getUnminedTransactionHashesList_asB64 = function() {
-  return /** @type {!Array.<string>} */ (jspb.Message.bytesListAsB64(
+  return /** @type {!Array<string>} */ (jspb.Message.bytesListAsB64(
       this.getUnminedTransactionHashesList()));
 };
 
@@ -18013,10 +18275,10 @@ proto.walletrpc.TransactionNotificationsResponse.prototype.getUnminedTransaction
  * Note that Uint8Array is not supported on all browsers.
  * @see http://caniuse.com/Uint8Array
  * This is a type-conversion wrapper around `getUnminedTransactionHashesList()`
- * @return {!Array.<!Uint8Array>}
+ * @return {!Array<!Uint8Array>}
  */
 proto.walletrpc.TransactionNotificationsResponse.prototype.getUnminedTransactionHashesList_asU8 = function() {
-  return /** @type {!Array.<!Uint8Array>} */ (jspb.Message.bytesListAsU8(
+  return /** @type {!Array<!Uint8Array>} */ (jspb.Message.bytesListAsU8(
       this.getUnminedTransactionHashesList()));
 };
 
@@ -18343,7 +18605,7 @@ proto.walletrpc.AccountNotificationsResponse.prototype.getAccountNumber = functi
 
 /** @param {number} value */
 proto.walletrpc.AccountNotificationsResponse.prototype.setAccountNumber = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -18358,7 +18620,7 @@ proto.walletrpc.AccountNotificationsResponse.prototype.getAccountName = function
 
 /** @param {string} value */
 proto.walletrpc.AccountNotificationsResponse.prototype.setAccountName = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -18373,7 +18635,7 @@ proto.walletrpc.AccountNotificationsResponse.prototype.getExternalKeyCount = fun
 
 /** @param {number} value */
 proto.walletrpc.AccountNotificationsResponse.prototype.setExternalKeyCount = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -18388,7 +18650,7 @@ proto.walletrpc.AccountNotificationsResponse.prototype.getInternalKeyCount = fun
 
 /** @param {number} value */
 proto.walletrpc.AccountNotificationsResponse.prototype.setInternalKeyCount = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -18403,7 +18665,7 @@ proto.walletrpc.AccountNotificationsResponse.prototype.getImportedKeyCount = fun
 
 /** @param {number} value */
 proto.walletrpc.AccountNotificationsResponse.prototype.setImportedKeyCount = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -18565,10 +18827,10 @@ proto.walletrpc.ConfirmationNotificationsRequest.prototype.getTxHashesList = fun
 /**
  * repeated bytes tx_hashes = 1;
  * This is a type-conversion wrapper around `getTxHashesList()`
- * @return {!Array.<string>}
+ * @return {!Array<string>}
  */
 proto.walletrpc.ConfirmationNotificationsRequest.prototype.getTxHashesList_asB64 = function() {
-  return /** @type {!Array.<string>} */ (jspb.Message.bytesListAsB64(
+  return /** @type {!Array<string>} */ (jspb.Message.bytesListAsB64(
       this.getTxHashesList()));
 };
 
@@ -18578,10 +18840,10 @@ proto.walletrpc.ConfirmationNotificationsRequest.prototype.getTxHashesList_asB64
  * Note that Uint8Array is not supported on all browsers.
  * @see http://caniuse.com/Uint8Array
  * This is a type-conversion wrapper around `getTxHashesList()`
- * @return {!Array.<!Uint8Array>}
+ * @return {!Array<!Uint8Array>}
  */
 proto.walletrpc.ConfirmationNotificationsRequest.prototype.getTxHashesList_asU8 = function() {
-  return /** @type {!Array.<!Uint8Array>} */ (jspb.Message.bytesListAsU8(
+  return /** @type {!Array<!Uint8Array>} */ (jspb.Message.bytesListAsU8(
       this.getTxHashesList()));
 };
 
@@ -18617,7 +18879,7 @@ proto.walletrpc.ConfirmationNotificationsRequest.prototype.getStopAfter = functi
 
 /** @param {number} value */
 proto.walletrpc.ConfirmationNotificationsRequest.prototype.setStopAfter = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -18956,7 +19218,7 @@ proto.walletrpc.ConfirmationNotificationsResponse.TransactionConfirmations.proto
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.ConfirmationNotificationsResponse.TransactionConfirmations.prototype.setTxHash = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -18971,7 +19233,7 @@ proto.walletrpc.ConfirmationNotificationsResponse.TransactionConfirmations.proto
 
 /** @param {number} value */
 proto.walletrpc.ConfirmationNotificationsResponse.TransactionConfirmations.prototype.setConfirmations = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -19010,7 +19272,7 @@ proto.walletrpc.ConfirmationNotificationsResponse.TransactionConfirmations.proto
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.ConfirmationNotificationsResponse.TransactionConfirmations.prototype.setBlockHash = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3BytesField(this, 3, value);
 };
 
 
@@ -19025,21 +19287,21 @@ proto.walletrpc.ConfirmationNotificationsResponse.TransactionConfirmations.proto
 
 /** @param {number} value */
 proto.walletrpc.ConfirmationNotificationsResponse.TransactionConfirmations.prototype.setBlockHeight = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
 /**
  * repeated TransactionConfirmations confirmations = 1;
- * @return {!Array.<!proto.walletrpc.ConfirmationNotificationsResponse.TransactionConfirmations>}
+ * @return {!Array<!proto.walletrpc.ConfirmationNotificationsResponse.TransactionConfirmations>}
  */
 proto.walletrpc.ConfirmationNotificationsResponse.prototype.getConfirmationsList = function() {
-  return /** @type{!Array.<!proto.walletrpc.ConfirmationNotificationsResponse.TransactionConfirmations>} */ (
+  return /** @type{!Array<!proto.walletrpc.ConfirmationNotificationsResponse.TransactionConfirmations>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.walletrpc.ConfirmationNotificationsResponse.TransactionConfirmations, 1));
 };
 
 
-/** @param {!Array.<!proto.walletrpc.ConfirmationNotificationsResponse.TransactionConfirmations>} value */
+/** @param {!Array<!proto.walletrpc.ConfirmationNotificationsResponse.TransactionConfirmations>} value */
 proto.walletrpc.ConfirmationNotificationsResponse.prototype.setConfirmationsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
@@ -19246,7 +19508,7 @@ proto.walletrpc.CreateWalletRequest.prototype.getPublicPassphrase_asU8 = functio
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.CreateWalletRequest.prototype.setPublicPassphrase = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -19285,7 +19547,7 @@ proto.walletrpc.CreateWalletRequest.prototype.getPrivatePassphrase_asU8 = functi
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.CreateWalletRequest.prototype.setPrivatePassphrase = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
@@ -19324,7 +19586,7 @@ proto.walletrpc.CreateWalletRequest.prototype.getSeed_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.CreateWalletRequest.prototype.setSeed = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3BytesField(this, 3, value);
 };
 
 
@@ -19594,7 +19856,7 @@ proto.walletrpc.CreateWatchingOnlyWalletRequest.prototype.getExtendedPubKey = fu
 
 /** @param {string} value */
 proto.walletrpc.CreateWatchingOnlyWalletRequest.prototype.setExtendedPubKey = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -19633,7 +19895,7 @@ proto.walletrpc.CreateWatchingOnlyWalletRequest.prototype.getPublicPassphrase_as
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.CreateWatchingOnlyWalletRequest.prototype.setPublicPassphrase = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
@@ -19915,7 +20177,7 @@ proto.walletrpc.OpenWalletRequest.prototype.getPublicPassphrase_asU8 = function(
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.OpenWalletRequest.prototype.setPublicPassphrase = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -20059,7 +20321,7 @@ proto.walletrpc.OpenWalletResponse.prototype.getWatchingOnly = function() {
 
 /** @param {boolean} value */
 proto.walletrpc.OpenWalletResponse.prototype.setWatchingOnly = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -20551,7 +20813,7 @@ proto.walletrpc.WalletExistsResponse.prototype.getExists = function() {
 
 /** @param {boolean} value */
 proto.walletrpc.WalletExistsResponse.prototype.setExists = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -20729,7 +20991,7 @@ proto.walletrpc.StartConsensusRpcRequest.prototype.getNetworkAddress = function(
 
 /** @param {string} value */
 proto.walletrpc.StartConsensusRpcRequest.prototype.setNetworkAddress = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -20744,7 +21006,7 @@ proto.walletrpc.StartConsensusRpcRequest.prototype.getUsername = function() {
 
 /** @param {string} value */
 proto.walletrpc.StartConsensusRpcRequest.prototype.setUsername = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -20783,7 +21045,7 @@ proto.walletrpc.StartConsensusRpcRequest.prototype.getPassword_asU8 = function()
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.StartConsensusRpcRequest.prototype.setPassword = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3BytesField(this, 3, value);
 };
 
 
@@ -20822,7 +21084,7 @@ proto.walletrpc.StartConsensusRpcRequest.prototype.getCertificate_asU8 = functio
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.StartConsensusRpcRequest.prototype.setCertificate = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3BytesField(this, 4, value);
 };
 
 
@@ -21106,7 +21368,7 @@ proto.walletrpc.DiscoverAddressesRequest.prototype.getDiscoverAccounts = functio
 
 /** @param {boolean} value */
 proto.walletrpc.DiscoverAddressesRequest.prototype.setDiscoverAccounts = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -21145,7 +21407,7 @@ proto.walletrpc.DiscoverAddressesRequest.prototype.getPrivatePassphrase_asU8 = f
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.DiscoverAddressesRequest.prototype.setPrivatePassphrase = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
@@ -21184,7 +21446,7 @@ proto.walletrpc.DiscoverAddressesRequest.prototype.getStartingBlockHash_asU8 = f
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.DiscoverAddressesRequest.prototype.setStartingBlockHash = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3BytesField(this, 3, value);
 };
 
 
@@ -22070,7 +22332,7 @@ proto.walletrpc.FetchHeadersResponse.prototype.getFetchedHeadersCount = function
 
 /** @param {number} value */
 proto.walletrpc.FetchHeadersResponse.prototype.setFetchedHeadersCount = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -22109,7 +22371,7 @@ proto.walletrpc.FetchHeadersResponse.prototype.getFirstNewBlockHash_asU8 = funct
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.FetchHeadersResponse.prototype.setFirstNewBlockHash = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
@@ -22124,7 +22386,7 @@ proto.walletrpc.FetchHeadersResponse.prototype.getFirstNewBlockHeight = function
 
 /** @param {number} value */
 proto.walletrpc.FetchHeadersResponse.prototype.setFirstNewBlockHeight = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -22163,7 +22425,7 @@ proto.walletrpc.FetchHeadersResponse.prototype.getMainChainTipBlockHash_asU8 = f
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.FetchHeadersResponse.prototype.setMainChainTipBlockHash = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3BytesField(this, 4, value);
 };
 
 
@@ -22178,7 +22440,7 @@ proto.walletrpc.FetchHeadersResponse.prototype.getMainChainTipBlockHeight = func
 
 /** @param {number} value */
 proto.walletrpc.FetchHeadersResponse.prototype.setMainChainTipBlockHeight = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -22332,7 +22594,7 @@ proto.walletrpc.FetchHeadersNotification.prototype.getFetchedHeadersCount = func
 
 /** @param {number} value */
 proto.walletrpc.FetchHeadersNotification.prototype.setFetchedHeadersCount = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -22347,7 +22609,7 @@ proto.walletrpc.FetchHeadersNotification.prototype.getLastHeaderTime = function(
 
 /** @param {number} value */
 proto.walletrpc.FetchHeadersNotification.prototype.setLastHeaderTime = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -22501,7 +22763,7 @@ proto.walletrpc.FetchMissingCFiltersNotification.prototype.getFetchedCfiltersSta
 
 /** @param {number} value */
 proto.walletrpc.FetchMissingCFiltersNotification.prototype.setFetchedCfiltersStartHeight = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -22516,7 +22778,7 @@ proto.walletrpc.FetchMissingCFiltersNotification.prototype.getFetchedCfiltersEnd
 
 /** @param {number} value */
 proto.walletrpc.FetchMissingCFiltersNotification.prototype.setFetchedCfiltersEndHeight = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -22658,7 +22920,7 @@ proto.walletrpc.RescanProgressNotification.prototype.getRescannedThrough = funct
 
 /** @param {number} value */
 proto.walletrpc.RescanProgressNotification.prototype.setRescannedThrough = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -22812,7 +23074,7 @@ proto.walletrpc.PeerNotification.prototype.getPeerCount = function() {
 
 /** @param {number} value */
 proto.walletrpc.PeerNotification.prototype.setPeerCount = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -22827,7 +23089,7 @@ proto.walletrpc.PeerNotification.prototype.getAddress = function() {
 
 /** @param {string} value */
 proto.walletrpc.PeerNotification.prototype.setAddress = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -23029,7 +23291,7 @@ proto.walletrpc.RpcSyncRequest.prototype.getNetworkAddress = function() {
 
 /** @param {string} value */
 proto.walletrpc.RpcSyncRequest.prototype.setNetworkAddress = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -23044,7 +23306,7 @@ proto.walletrpc.RpcSyncRequest.prototype.getUsername = function() {
 
 /** @param {string} value */
 proto.walletrpc.RpcSyncRequest.prototype.setUsername = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -23083,7 +23345,7 @@ proto.walletrpc.RpcSyncRequest.prototype.getPassword_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.RpcSyncRequest.prototype.setPassword = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3BytesField(this, 3, value);
 };
 
 
@@ -23122,7 +23384,7 @@ proto.walletrpc.RpcSyncRequest.prototype.getCertificate_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.RpcSyncRequest.prototype.setCertificate = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3BytesField(this, 4, value);
 };
 
 
@@ -23139,7 +23401,7 @@ proto.walletrpc.RpcSyncRequest.prototype.getDiscoverAccounts = function() {
 
 /** @param {boolean} value */
 proto.walletrpc.RpcSyncRequest.prototype.setDiscoverAccounts = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3BooleanField(this, 5, value);
 };
 
 
@@ -23178,7 +23440,7 @@ proto.walletrpc.RpcSyncRequest.prototype.getPrivatePassphrase_asU8 = function() 
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.RpcSyncRequest.prototype.setPrivatePassphrase = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3BytesField(this, 6, value);
 };
 
 
@@ -23390,7 +23652,7 @@ proto.walletrpc.RpcSyncResponse.prototype.getSynced = function() {
 
 /** @param {boolean} value */
 proto.walletrpc.RpcSyncResponse.prototype.setSynced = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -23405,7 +23667,7 @@ proto.walletrpc.RpcSyncResponse.prototype.getNotificationType = function() {
 
 /** @param {!proto.walletrpc.SyncNotificationType} value */
 proto.walletrpc.RpcSyncResponse.prototype.setNotificationType = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3EnumField(this, 2, value);
 };
 
 
@@ -23432,7 +23694,7 @@ proto.walletrpc.RpcSyncResponse.prototype.clearFetchHeaders = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.walletrpc.RpcSyncResponse.prototype.hasFetchHeaders = function() {
   return jspb.Message.getField(this, 3) != null;
@@ -23462,7 +23724,7 @@ proto.walletrpc.RpcSyncResponse.prototype.clearFetchMissingCfilters = function()
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.walletrpc.RpcSyncResponse.prototype.hasFetchMissingCfilters = function() {
   return jspb.Message.getField(this, 4) != null;
@@ -23492,7 +23754,7 @@ proto.walletrpc.RpcSyncResponse.prototype.clearRescanProgress = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.walletrpc.RpcSyncResponse.prototype.hasRescanProgress = function() {
   return jspb.Message.getField(this, 5) != null;
@@ -23522,7 +23784,7 @@ proto.walletrpc.RpcSyncResponse.prototype.clearPeerInformation = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.walletrpc.RpcSyncResponse.prototype.hasPeerInformation = function() {
   return jspb.Message.getField(this, 6) != null;
@@ -23700,7 +23962,7 @@ proto.walletrpc.SpvSyncRequest.prototype.getDiscoverAccounts = function() {
 
 /** @param {boolean} value */
 proto.walletrpc.SpvSyncRequest.prototype.setDiscoverAccounts = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -23739,27 +24001,27 @@ proto.walletrpc.SpvSyncRequest.prototype.getPrivatePassphrase_asU8 = function() 
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.SpvSyncRequest.prototype.setPrivatePassphrase = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
 /**
  * repeated string spv_connect = 3;
- * @return {!Array.<string>}
+ * @return {!Array<string>}
  */
 proto.walletrpc.SpvSyncRequest.prototype.getSpvConnectList = function() {
-  return /** @type {!Array.<string>} */ (jspb.Message.getRepeatedField(this, 3));
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 3));
 };
 
 
-/** @param {!Array.<string>} value */
+/** @param {!Array<string>} value */
 proto.walletrpc.SpvSyncRequest.prototype.setSpvConnectList = function(value) {
   jspb.Message.setField(this, 3, value || []);
 };
 
 
 /**
- * @param {!string} value
+ * @param {string} value
  * @param {number=} opt_index
  */
 proto.walletrpc.SpvSyncRequest.prototype.addSpvConnect = function(value, opt_index) {
@@ -23980,7 +24242,7 @@ proto.walletrpc.SpvSyncResponse.prototype.getSynced = function() {
 
 /** @param {boolean} value */
 proto.walletrpc.SpvSyncResponse.prototype.setSynced = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -23995,7 +24257,7 @@ proto.walletrpc.SpvSyncResponse.prototype.getNotificationType = function() {
 
 /** @param {!proto.walletrpc.SyncNotificationType} value */
 proto.walletrpc.SpvSyncResponse.prototype.setNotificationType = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3EnumField(this, 2, value);
 };
 
 
@@ -24022,7 +24284,7 @@ proto.walletrpc.SpvSyncResponse.prototype.clearFetchHeaders = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.walletrpc.SpvSyncResponse.prototype.hasFetchHeaders = function() {
   return jspb.Message.getField(this, 3) != null;
@@ -24052,7 +24314,7 @@ proto.walletrpc.SpvSyncResponse.prototype.clearFetchMissingCfilters = function()
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.walletrpc.SpvSyncResponse.prototype.hasFetchMissingCfilters = function() {
   return jspb.Message.getField(this, 4) != null;
@@ -24082,7 +24344,7 @@ proto.walletrpc.SpvSyncResponse.prototype.clearRescanProgress = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.walletrpc.SpvSyncResponse.prototype.hasRescanProgress = function() {
   return jspb.Message.getField(this, 5) != null;
@@ -24112,7 +24374,7 @@ proto.walletrpc.SpvSyncResponse.prototype.clearPeerInformation = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.walletrpc.SpvSyncResponse.prototype.hasPeerInformation = function() {
   return jspb.Message.getField(this, 6) != null;
@@ -24397,7 +24659,7 @@ proto.walletrpc.RescanPointResponse.prototype.getRescanPointHash_asU8 = function
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.RescanPointResponse.prototype.setRescanPointHash = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -24539,7 +24801,7 @@ proto.walletrpc.GenerateRandomSeedRequest.prototype.getSeedLength = function() {
 
 /** @param {number} value */
 proto.walletrpc.GenerateRandomSeedRequest.prototype.setSeedLength = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -24729,7 +24991,7 @@ proto.walletrpc.GenerateRandomSeedResponse.prototype.getSeedBytes_asU8 = functio
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.GenerateRandomSeedResponse.prototype.setSeedBytes = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -24744,7 +25006,7 @@ proto.walletrpc.GenerateRandomSeedResponse.prototype.getSeedHex = function() {
 
 /** @param {string} value */
 proto.walletrpc.GenerateRandomSeedResponse.prototype.setSeedHex = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -24759,7 +25021,7 @@ proto.walletrpc.GenerateRandomSeedResponse.prototype.getSeedMnemonic = function(
 
 /** @param {string} value */
 proto.walletrpc.GenerateRandomSeedResponse.prototype.setSeedMnemonic = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -24901,7 +25163,7 @@ proto.walletrpc.DecodeSeedRequest.prototype.getUserInput = function() {
 
 /** @param {string} value */
 proto.walletrpc.DecodeSeedRequest.prototype.setUserInput = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -25067,7 +25329,7 @@ proto.walletrpc.DecodeSeedResponse.prototype.getDecodedSeed_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.DecodeSeedResponse.prototype.setDecodedSeed = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -25305,7 +25567,7 @@ proto.walletrpc.RunTicketBuyerRequest.prototype.getPassphrase_asU8 = function() 
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.RunTicketBuyerRequest.prototype.setPassphrase = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -25320,7 +25582,7 @@ proto.walletrpc.RunTicketBuyerRequest.prototype.getAccount = function() {
 
 /** @param {number} value */
 proto.walletrpc.RunTicketBuyerRequest.prototype.setAccount = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -25335,7 +25597,7 @@ proto.walletrpc.RunTicketBuyerRequest.prototype.getVotingAccount = function() {
 
 /** @param {number} value */
 proto.walletrpc.RunTicketBuyerRequest.prototype.setVotingAccount = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -25350,7 +25612,7 @@ proto.walletrpc.RunTicketBuyerRequest.prototype.getBalanceToMaintain = function(
 
 /** @param {number} value */
 proto.walletrpc.RunTicketBuyerRequest.prototype.setBalanceToMaintain = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -25365,7 +25627,7 @@ proto.walletrpc.RunTicketBuyerRequest.prototype.getVotingAddress = function() {
 
 /** @param {string} value */
 proto.walletrpc.RunTicketBuyerRequest.prototype.setVotingAddress = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
@@ -25380,7 +25642,7 @@ proto.walletrpc.RunTicketBuyerRequest.prototype.getPoolAddress = function() {
 
 /** @param {string} value */
 proto.walletrpc.RunTicketBuyerRequest.prototype.setPoolAddress = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
@@ -25395,7 +25657,7 @@ proto.walletrpc.RunTicketBuyerRequest.prototype.getPoolFees = function() {
 
 /** @param {number} value */
 proto.walletrpc.RunTicketBuyerRequest.prototype.setPoolFees = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3FloatField(this, 7, value);
 };
 
 
@@ -25785,7 +26047,7 @@ proto.walletrpc.StartAutoBuyerRequest.prototype.getPassphrase_asU8 = function() 
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.StartAutoBuyerRequest.prototype.setPassphrase = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -25800,7 +26062,7 @@ proto.walletrpc.StartAutoBuyerRequest.prototype.getAccount = function() {
 
 /** @param {number} value */
 proto.walletrpc.StartAutoBuyerRequest.prototype.setAccount = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -25815,7 +26077,7 @@ proto.walletrpc.StartAutoBuyerRequest.prototype.getBalanceToMaintain = function(
 
 /** @param {number} value */
 proto.walletrpc.StartAutoBuyerRequest.prototype.setBalanceToMaintain = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -25830,7 +26092,7 @@ proto.walletrpc.StartAutoBuyerRequest.prototype.getMaxFeePerKb = function() {
 
 /** @param {number} value */
 proto.walletrpc.StartAutoBuyerRequest.prototype.setMaxFeePerKb = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -25845,7 +26107,7 @@ proto.walletrpc.StartAutoBuyerRequest.prototype.getMaxPriceRelative = function()
 
 /** @param {number} value */
 proto.walletrpc.StartAutoBuyerRequest.prototype.setMaxPriceRelative = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3FloatField(this, 5, value);
 };
 
 
@@ -25860,7 +26122,7 @@ proto.walletrpc.StartAutoBuyerRequest.prototype.getMaxPriceAbsolute = function()
 
 /** @param {number} value */
 proto.walletrpc.StartAutoBuyerRequest.prototype.setMaxPriceAbsolute = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -25875,7 +26137,7 @@ proto.walletrpc.StartAutoBuyerRequest.prototype.getVotingAddress = function() {
 
 /** @param {string} value */
 proto.walletrpc.StartAutoBuyerRequest.prototype.setVotingAddress = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3StringField(this, 7, value);
 };
 
 
@@ -25890,7 +26152,7 @@ proto.walletrpc.StartAutoBuyerRequest.prototype.getPoolAddress = function() {
 
 /** @param {string} value */
 proto.walletrpc.StartAutoBuyerRequest.prototype.setPoolAddress = function(value) {
-  jspb.Message.setField(this, 8, value);
+  jspb.Message.setProto3StringField(this, 8, value);
 };
 
 
@@ -25905,7 +26167,7 @@ proto.walletrpc.StartAutoBuyerRequest.prototype.getPoolFees = function() {
 
 /** @param {number} value */
 proto.walletrpc.StartAutoBuyerRequest.prototype.setPoolFees = function(value) {
-  jspb.Message.setField(this, 9, value);
+  jspb.Message.setProto3FloatField(this, 9, value);
 };
 
 
@@ -25920,7 +26182,7 @@ proto.walletrpc.StartAutoBuyerRequest.prototype.getMaxPerBlock = function() {
 
 /** @param {number} value */
 proto.walletrpc.StartAutoBuyerRequest.prototype.setMaxPerBlock = function(value) {
-  jspb.Message.setField(this, 10, value);
+  jspb.Message.setProto3IntField(this, 10, value);
 };
 
 
@@ -26754,7 +27016,7 @@ proto.walletrpc.TicketBuyerConfigResponse.prototype.getAccount = function() {
 
 /** @param {number} value */
 proto.walletrpc.TicketBuyerConfigResponse.prototype.setAccount = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -26769,7 +27031,7 @@ proto.walletrpc.TicketBuyerConfigResponse.prototype.getAvgPriceMode = function()
 
 /** @param {string} value */
 proto.walletrpc.TicketBuyerConfigResponse.prototype.setAvgPriceMode = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -26784,7 +27046,7 @@ proto.walletrpc.TicketBuyerConfigResponse.prototype.getAvgPricevwapDelta = funct
 
 /** @param {number} value */
 proto.walletrpc.TicketBuyerConfigResponse.prototype.setAvgPricevwapDelta = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -26799,7 +27061,7 @@ proto.walletrpc.TicketBuyerConfigResponse.prototype.getBalanceToMaintain = funct
 
 /** @param {number} value */
 proto.walletrpc.TicketBuyerConfigResponse.prototype.setBalanceToMaintain = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -26814,7 +27076,7 @@ proto.walletrpc.TicketBuyerConfigResponse.prototype.getBlocksToAvg = function() 
 
 /** @param {number} value */
 proto.walletrpc.TicketBuyerConfigResponse.prototype.setBlocksToAvg = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -26831,7 +27093,7 @@ proto.walletrpc.TicketBuyerConfigResponse.prototype.getDontWaitForTickets = func
 
 /** @param {boolean} value */
 proto.walletrpc.TicketBuyerConfigResponse.prototype.setDontWaitForTickets = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3BooleanField(this, 6, value);
 };
 
 
@@ -26846,7 +27108,7 @@ proto.walletrpc.TicketBuyerConfigResponse.prototype.getExpiryDelta = function() 
 
 /** @param {number} value */
 proto.walletrpc.TicketBuyerConfigResponse.prototype.setExpiryDelta = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
@@ -26861,7 +27123,7 @@ proto.walletrpc.TicketBuyerConfigResponse.prototype.getFeeSource = function() {
 
 /** @param {string} value */
 proto.walletrpc.TicketBuyerConfigResponse.prototype.setFeeSource = function(value) {
-  jspb.Message.setField(this, 8, value);
+  jspb.Message.setProto3StringField(this, 8, value);
 };
 
 
@@ -26876,7 +27138,7 @@ proto.walletrpc.TicketBuyerConfigResponse.prototype.getFeeTargetScaling = functi
 
 /** @param {number} value */
 proto.walletrpc.TicketBuyerConfigResponse.prototype.setFeeTargetScaling = function(value) {
-  jspb.Message.setField(this, 9, value);
+  jspb.Message.setProto3FloatField(this, 9, value);
 };
 
 
@@ -26891,7 +27153,7 @@ proto.walletrpc.TicketBuyerConfigResponse.prototype.getMinFee = function() {
 
 /** @param {number} value */
 proto.walletrpc.TicketBuyerConfigResponse.prototype.setMinFee = function(value) {
-  jspb.Message.setField(this, 10, value);
+  jspb.Message.setProto3IntField(this, 10, value);
 };
 
 
@@ -26906,7 +27168,7 @@ proto.walletrpc.TicketBuyerConfigResponse.prototype.getMaxFee = function() {
 
 /** @param {number} value */
 proto.walletrpc.TicketBuyerConfigResponse.prototype.setMaxFee = function(value) {
-  jspb.Message.setField(this, 12, value);
+  jspb.Message.setProto3IntField(this, 12, value);
 };
 
 
@@ -26921,7 +27183,7 @@ proto.walletrpc.TicketBuyerConfigResponse.prototype.getMaxPerBlock = function() 
 
 /** @param {number} value */
 proto.walletrpc.TicketBuyerConfigResponse.prototype.setMaxPerBlock = function(value) {
-  jspb.Message.setField(this, 13, value);
+  jspb.Message.setProto3IntField(this, 13, value);
 };
 
 
@@ -26936,7 +27198,7 @@ proto.walletrpc.TicketBuyerConfigResponse.prototype.getMaxPriceAbsolute = functi
 
 /** @param {number} value */
 proto.walletrpc.TicketBuyerConfigResponse.prototype.setMaxPriceAbsolute = function(value) {
-  jspb.Message.setField(this, 14, value);
+  jspb.Message.setProto3IntField(this, 14, value);
 };
 
 
@@ -26951,7 +27213,7 @@ proto.walletrpc.TicketBuyerConfigResponse.prototype.getMaxPriceRelative = functi
 
 /** @param {number} value */
 proto.walletrpc.TicketBuyerConfigResponse.prototype.setMaxPriceRelative = function(value) {
-  jspb.Message.setField(this, 15, value);
+  jspb.Message.setProto3FloatField(this, 15, value);
 };
 
 
@@ -26966,7 +27228,7 @@ proto.walletrpc.TicketBuyerConfigResponse.prototype.getMaxInMempool = function()
 
 /** @param {number} value */
 proto.walletrpc.TicketBuyerConfigResponse.prototype.setMaxInMempool = function(value) {
-  jspb.Message.setField(this, 17, value);
+  jspb.Message.setProto3IntField(this, 17, value);
 };
 
 
@@ -26981,7 +27243,7 @@ proto.walletrpc.TicketBuyerConfigResponse.prototype.getPoolAddress = function() 
 
 /** @param {string} value */
 proto.walletrpc.TicketBuyerConfigResponse.prototype.setPoolAddress = function(value) {
-  jspb.Message.setField(this, 18, value);
+  jspb.Message.setProto3StringField(this, 18, value);
 };
 
 
@@ -26996,7 +27258,7 @@ proto.walletrpc.TicketBuyerConfigResponse.prototype.getPoolFees = function() {
 
 /** @param {number} value */
 proto.walletrpc.TicketBuyerConfigResponse.prototype.setPoolFees = function(value) {
-  jspb.Message.setField(this, 19, value);
+  jspb.Message.setProto3FloatField(this, 19, value);
 };
 
 
@@ -27013,7 +27275,7 @@ proto.walletrpc.TicketBuyerConfigResponse.prototype.getSpreadTicketPurchases = f
 
 /** @param {boolean} value */
 proto.walletrpc.TicketBuyerConfigResponse.prototype.setSpreadTicketPurchases = function(value) {
-  jspb.Message.setField(this, 20, value);
+  jspb.Message.setProto3BooleanField(this, 20, value);
 };
 
 
@@ -27028,7 +27290,7 @@ proto.walletrpc.TicketBuyerConfigResponse.prototype.getVotingAddress = function(
 
 /** @param {string} value */
 proto.walletrpc.TicketBuyerConfigResponse.prototype.setVotingAddress = function(value) {
-  jspb.Message.setField(this, 21, value);
+  jspb.Message.setProto3StringField(this, 21, value);
 };
 
 
@@ -27043,7 +27305,7 @@ proto.walletrpc.TicketBuyerConfigResponse.prototype.getTxFee = function() {
 
 /** @param {number} value */
 proto.walletrpc.TicketBuyerConfigResponse.prototype.setTxFee = function(value) {
-  jspb.Message.setField(this, 22, value);
+  jspb.Message.setProto3IntField(this, 22, value);
 };
 
 
@@ -27185,7 +27447,7 @@ proto.walletrpc.SetAccountRequest.prototype.getAccount = function() {
 
 /** @param {number} value */
 proto.walletrpc.SetAccountRequest.prototype.setAccount = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -27443,7 +27705,7 @@ proto.walletrpc.SetBalanceToMaintainRequest.prototype.getBalanceToMaintain = fun
 
 /** @param {number} value */
 proto.walletrpc.SetBalanceToMaintainRequest.prototype.setBalanceToMaintain = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -27701,7 +27963,7 @@ proto.walletrpc.SetMaxFeeRequest.prototype.getMaxFeePerKb = function() {
 
 /** @param {number} value */
 proto.walletrpc.SetMaxFeeRequest.prototype.setMaxFeePerKb = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -27959,7 +28221,7 @@ proto.walletrpc.SetMaxPriceRelativeRequest.prototype.getMaxPriceRelative = funct
 
 /** @param {number} value */
 proto.walletrpc.SetMaxPriceRelativeRequest.prototype.setMaxPriceRelative = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3FloatField(this, 1, value);
 };
 
 
@@ -28217,7 +28479,7 @@ proto.walletrpc.SetMaxPriceAbsoluteRequest.prototype.getMaxPriceAbsolute = funct
 
 /** @param {number} value */
 proto.walletrpc.SetMaxPriceAbsoluteRequest.prototype.setMaxPriceAbsolute = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -28475,7 +28737,7 @@ proto.walletrpc.SetVotingAddressRequest.prototype.getVotingAddress = function() 
 
 /** @param {string} value */
 proto.walletrpc.SetVotingAddressRequest.prototype.setVotingAddress = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -28733,7 +28995,7 @@ proto.walletrpc.SetPoolAddressRequest.prototype.getPoolAddress = function() {
 
 /** @param {string} value */
 proto.walletrpc.SetPoolAddressRequest.prototype.setPoolAddress = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -28991,7 +29253,7 @@ proto.walletrpc.SetPoolFeesRequest.prototype.getPoolFees = function() {
 
 /** @param {number} value */
 proto.walletrpc.SetPoolFeesRequest.prototype.setPoolFees = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3FloatField(this, 1, value);
 };
 
 
@@ -29249,7 +29511,7 @@ proto.walletrpc.SetMaxPerBlockRequest.prototype.getMaxPerBlock = function() {
 
 /** @param {number} value */
 proto.walletrpc.SetMaxPerBlockRequest.prototype.setMaxPerBlock = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -29842,7 +30104,7 @@ proto.walletrpc.AgendasResponse.Agenda.prototype.getId = function() {
 
 /** @param {string} value */
 proto.walletrpc.AgendasResponse.Agenda.prototype.setId = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -29857,7 +30119,7 @@ proto.walletrpc.AgendasResponse.Agenda.prototype.getDescription = function() {
 
 /** @param {string} value */
 proto.walletrpc.AgendasResponse.Agenda.prototype.setDescription = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -29872,21 +30134,21 @@ proto.walletrpc.AgendasResponse.Agenda.prototype.getMask = function() {
 
 /** @param {number} value */
 proto.walletrpc.AgendasResponse.Agenda.prototype.setMask = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
 /**
  * repeated Choice choices = 4;
- * @return {!Array.<!proto.walletrpc.AgendasResponse.Choice>}
+ * @return {!Array<!proto.walletrpc.AgendasResponse.Choice>}
  */
 proto.walletrpc.AgendasResponse.Agenda.prototype.getChoicesList = function() {
-  return /** @type{!Array.<!proto.walletrpc.AgendasResponse.Choice>} */ (
+  return /** @type{!Array<!proto.walletrpc.AgendasResponse.Choice>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.walletrpc.AgendasResponse.Choice, 4));
 };
 
 
-/** @param {!Array.<!proto.walletrpc.AgendasResponse.Choice>} value */
+/** @param {!Array<!proto.walletrpc.AgendasResponse.Choice>} value */
 proto.walletrpc.AgendasResponse.Agenda.prototype.setChoicesList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 4, value);
 };
@@ -29918,7 +30180,7 @@ proto.walletrpc.AgendasResponse.Agenda.prototype.getStartTime = function() {
 
 /** @param {number} value */
 proto.walletrpc.AgendasResponse.Agenda.prototype.setStartTime = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -29933,7 +30195,7 @@ proto.walletrpc.AgendasResponse.Agenda.prototype.getExpireTime = function() {
 
 /** @param {number} value */
 proto.walletrpc.AgendasResponse.Agenda.prototype.setExpireTime = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -30123,7 +30385,7 @@ proto.walletrpc.AgendasResponse.Choice.prototype.getId = function() {
 
 /** @param {string} value */
 proto.walletrpc.AgendasResponse.Choice.prototype.setId = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -30138,7 +30400,7 @@ proto.walletrpc.AgendasResponse.Choice.prototype.getDescription = function() {
 
 /** @param {string} value */
 proto.walletrpc.AgendasResponse.Choice.prototype.setDescription = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -30153,7 +30415,7 @@ proto.walletrpc.AgendasResponse.Choice.prototype.getBits = function() {
 
 /** @param {number} value */
 proto.walletrpc.AgendasResponse.Choice.prototype.setBits = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -30170,7 +30432,7 @@ proto.walletrpc.AgendasResponse.Choice.prototype.getIsAbstain = function() {
 
 /** @param {boolean} value */
 proto.walletrpc.AgendasResponse.Choice.prototype.setIsAbstain = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3BooleanField(this, 4, value);
 };
 
 
@@ -30187,7 +30449,7 @@ proto.walletrpc.AgendasResponse.Choice.prototype.getIsNo = function() {
 
 /** @param {boolean} value */
 proto.walletrpc.AgendasResponse.Choice.prototype.setIsNo = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3BooleanField(this, 5, value);
 };
 
 
@@ -30202,21 +30464,21 @@ proto.walletrpc.AgendasResponse.prototype.getVersion = function() {
 
 /** @param {number} value */
 proto.walletrpc.AgendasResponse.prototype.setVersion = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
 /**
  * repeated Agenda agendas = 2;
- * @return {!Array.<!proto.walletrpc.AgendasResponse.Agenda>}
+ * @return {!Array<!proto.walletrpc.AgendasResponse.Agenda>}
  */
 proto.walletrpc.AgendasResponse.prototype.getAgendasList = function() {
-  return /** @type{!Array.<!proto.walletrpc.AgendasResponse.Agenda>} */ (
+  return /** @type{!Array<!proto.walletrpc.AgendasResponse.Agenda>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.walletrpc.AgendasResponse.Agenda, 2));
 };
 
 
-/** @param {!Array.<!proto.walletrpc.AgendasResponse.Agenda>} value */
+/** @param {!Array<!proto.walletrpc.AgendasResponse.Agenda>} value */
 proto.walletrpc.AgendasResponse.prototype.setAgendasList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 2, value);
 };
@@ -30688,7 +30950,7 @@ proto.walletrpc.VoteChoicesResponse.Choice.prototype.getAgendaId = function() {
 
 /** @param {string} value */
 proto.walletrpc.VoteChoicesResponse.Choice.prototype.setAgendaId = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -30703,7 +30965,7 @@ proto.walletrpc.VoteChoicesResponse.Choice.prototype.getAgendaDescription = func
 
 /** @param {string} value */
 proto.walletrpc.VoteChoicesResponse.Choice.prototype.setAgendaDescription = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -30718,7 +30980,7 @@ proto.walletrpc.VoteChoicesResponse.Choice.prototype.getChoiceId = function() {
 
 /** @param {string} value */
 proto.walletrpc.VoteChoicesResponse.Choice.prototype.setChoiceId = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -30733,7 +30995,7 @@ proto.walletrpc.VoteChoicesResponse.Choice.prototype.getChoiceDescription = func
 
 /** @param {string} value */
 proto.walletrpc.VoteChoicesResponse.Choice.prototype.setChoiceDescription = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -30748,21 +31010,21 @@ proto.walletrpc.VoteChoicesResponse.prototype.getVersion = function() {
 
 /** @param {number} value */
 proto.walletrpc.VoteChoicesResponse.prototype.setVersion = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
 /**
  * repeated Choice choices = 2;
- * @return {!Array.<!proto.walletrpc.VoteChoicesResponse.Choice>}
+ * @return {!Array<!proto.walletrpc.VoteChoicesResponse.Choice>}
  */
 proto.walletrpc.VoteChoicesResponse.prototype.getChoicesList = function() {
-  return /** @type{!Array.<!proto.walletrpc.VoteChoicesResponse.Choice>} */ (
+  return /** @type{!Array<!proto.walletrpc.VoteChoicesResponse.Choice>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.walletrpc.VoteChoicesResponse.Choice, 2));
 };
 
 
-/** @param {!Array.<!proto.walletrpc.VoteChoicesResponse.Choice>} value */
+/** @param {!Array<!proto.walletrpc.VoteChoicesResponse.Choice>} value */
 proto.walletrpc.VoteChoicesResponse.prototype.setChoicesList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 2, value);
 };
@@ -30794,7 +31056,7 @@ proto.walletrpc.VoteChoicesResponse.prototype.getVotebits = function() {
 
 /** @param {number} value */
 proto.walletrpc.VoteChoicesResponse.prototype.setVotebits = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -31085,7 +31347,7 @@ proto.walletrpc.SetVoteChoicesRequest.Choice.prototype.getAgendaId = function() 
 
 /** @param {string} value */
 proto.walletrpc.SetVoteChoicesRequest.Choice.prototype.setAgendaId = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -31100,21 +31362,21 @@ proto.walletrpc.SetVoteChoicesRequest.Choice.prototype.getChoiceId = function() 
 
 /** @param {string} value */
 proto.walletrpc.SetVoteChoicesRequest.Choice.prototype.setChoiceId = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
 /**
  * repeated Choice choices = 1;
- * @return {!Array.<!proto.walletrpc.SetVoteChoicesRequest.Choice>}
+ * @return {!Array<!proto.walletrpc.SetVoteChoicesRequest.Choice>}
  */
 proto.walletrpc.SetVoteChoicesRequest.prototype.getChoicesList = function() {
-  return /** @type{!Array.<!proto.walletrpc.SetVoteChoicesRequest.Choice>} */ (
+  return /** @type{!Array<!proto.walletrpc.SetVoteChoicesRequest.Choice>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.walletrpc.SetVoteChoicesRequest.Choice, 1));
 };
 
 
-/** @param {!Array.<!proto.walletrpc.SetVoteChoicesRequest.Choice>} value */
+/** @param {!Array<!proto.walletrpc.SetVoteChoicesRequest.Choice>} value */
 proto.walletrpc.SetVoteChoicesRequest.prototype.setChoicesList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
@@ -31273,7 +31535,7 @@ proto.walletrpc.SetVoteChoicesResponse.prototype.getVotebits = function() {
 
 /** @param {number} value */
 proto.walletrpc.SetVoteChoicesResponse.prototype.setVotebits = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -31439,7 +31701,7 @@ proto.walletrpc.VerifyMessageRequest.prototype.getAddress = function() {
 
 /** @param {string} value */
 proto.walletrpc.VerifyMessageRequest.prototype.setAddress = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -31454,7 +31716,7 @@ proto.walletrpc.VerifyMessageRequest.prototype.getMessage = function() {
 
 /** @param {string} value */
 proto.walletrpc.VerifyMessageRequest.prototype.setMessage = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -31493,7 +31755,7 @@ proto.walletrpc.VerifyMessageRequest.prototype.getSignature_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.VerifyMessageRequest.prototype.setSignature = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3BytesField(this, 3, value);
 };
 
 
@@ -31637,7 +31899,7 @@ proto.walletrpc.VerifyMessageResponse.prototype.getValid = function() {
 
 /** @param {boolean} value */
 proto.walletrpc.VerifyMessageResponse.prototype.setValid = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -32120,7 +32382,7 @@ proto.walletrpc.DecodedTransaction.Input.prototype.getPreviousTransactionHash_as
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.DecodedTransaction.Input.prototype.setPreviousTransactionHash = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -32135,7 +32397,7 @@ proto.walletrpc.DecodedTransaction.Input.prototype.getPreviousTransactionIndex =
 
 /** @param {number} value */
 proto.walletrpc.DecodedTransaction.Input.prototype.setPreviousTransactionIndex = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -32150,7 +32412,7 @@ proto.walletrpc.DecodedTransaction.Input.prototype.getTree = function() {
 
 /** @param {!proto.walletrpc.DecodedTransaction.Input.TreeType} value */
 proto.walletrpc.DecodedTransaction.Input.prototype.setTree = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3EnumField(this, 3, value);
 };
 
 
@@ -32165,7 +32427,7 @@ proto.walletrpc.DecodedTransaction.Input.prototype.getSequence = function() {
 
 /** @param {number} value */
 proto.walletrpc.DecodedTransaction.Input.prototype.setSequence = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -32180,7 +32442,7 @@ proto.walletrpc.DecodedTransaction.Input.prototype.getAmountIn = function() {
 
 /** @param {number} value */
 proto.walletrpc.DecodedTransaction.Input.prototype.setAmountIn = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -32195,7 +32457,7 @@ proto.walletrpc.DecodedTransaction.Input.prototype.getBlockHeight = function() {
 
 /** @param {number} value */
 proto.walletrpc.DecodedTransaction.Input.prototype.setBlockHeight = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -32210,7 +32472,7 @@ proto.walletrpc.DecodedTransaction.Input.prototype.getBlockIndex = function() {
 
 /** @param {number} value */
 proto.walletrpc.DecodedTransaction.Input.prototype.setBlockIndex = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
@@ -32249,7 +32511,7 @@ proto.walletrpc.DecodedTransaction.Input.prototype.getSignatureScript_asU8 = fun
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.DecodedTransaction.Input.prototype.setSignatureScript = function(value) {
-  jspb.Message.setField(this, 8, value);
+  jspb.Message.setProto3BytesField(this, 8, value);
 };
 
 
@@ -32264,7 +32526,7 @@ proto.walletrpc.DecodedTransaction.Input.prototype.getSignatureScriptAsm = funct
 
 /** @param {string} value */
 proto.walletrpc.DecodedTransaction.Input.prototype.setSignatureScriptAsm = function(value) {
-  jspb.Message.setField(this, 9, value);
+  jspb.Message.setProto3StringField(this, 9, value);
 };
 
 
@@ -32527,7 +32789,7 @@ proto.walletrpc.DecodedTransaction.Output.prototype.getValue = function() {
 
 /** @param {number} value */
 proto.walletrpc.DecodedTransaction.Output.prototype.setValue = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -32542,7 +32804,7 @@ proto.walletrpc.DecodedTransaction.Output.prototype.getIndex = function() {
 
 /** @param {number} value */
 proto.walletrpc.DecodedTransaction.Output.prototype.setIndex = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -32557,7 +32819,7 @@ proto.walletrpc.DecodedTransaction.Output.prototype.getVersion = function() {
 
 /** @param {number} value */
 proto.walletrpc.DecodedTransaction.Output.prototype.setVersion = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -32596,7 +32858,7 @@ proto.walletrpc.DecodedTransaction.Output.prototype.getScript_asU8 = function() 
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.DecodedTransaction.Output.prototype.setScript = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3BytesField(this, 4, value);
 };
 
 
@@ -32611,7 +32873,7 @@ proto.walletrpc.DecodedTransaction.Output.prototype.getScriptAsm = function() {
 
 /** @param {string} value */
 proto.walletrpc.DecodedTransaction.Output.prototype.setScriptAsm = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
@@ -32626,7 +32888,7 @@ proto.walletrpc.DecodedTransaction.Output.prototype.getRequiredSignatures = func
 
 /** @param {number} value */
 proto.walletrpc.DecodedTransaction.Output.prototype.setRequiredSignatures = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -32641,27 +32903,27 @@ proto.walletrpc.DecodedTransaction.Output.prototype.getScriptClass = function() 
 
 /** @param {!proto.walletrpc.DecodedTransaction.Output.ScriptClass} value */
 proto.walletrpc.DecodedTransaction.Output.prototype.setScriptClass = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3EnumField(this, 7, value);
 };
 
 
 /**
  * repeated string addresses = 8;
- * @return {!Array.<string>}
+ * @return {!Array<string>}
  */
 proto.walletrpc.DecodedTransaction.Output.prototype.getAddressesList = function() {
-  return /** @type {!Array.<string>} */ (jspb.Message.getRepeatedField(this, 8));
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 8));
 };
 
 
-/** @param {!Array.<string>} value */
+/** @param {!Array<string>} value */
 proto.walletrpc.DecodedTransaction.Output.prototype.setAddressesList = function(value) {
   jspb.Message.setField(this, 8, value || []);
 };
 
 
 /**
- * @param {!string} value
+ * @param {string} value
  * @param {number=} opt_index
  */
 proto.walletrpc.DecodedTransaction.Output.prototype.addAddresses = function(value, opt_index) {
@@ -32685,7 +32947,7 @@ proto.walletrpc.DecodedTransaction.Output.prototype.getCommitmentAmount = functi
 
 /** @param {number} value */
 proto.walletrpc.DecodedTransaction.Output.prototype.setCommitmentAmount = function(value) {
-  jspb.Message.setField(this, 9, value);
+  jspb.Message.setProto3IntField(this, 9, value);
 };
 
 
@@ -32724,7 +32986,7 @@ proto.walletrpc.DecodedTransaction.prototype.getTransactionHash_asU8 = function(
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.DecodedTransaction.prototype.setTransactionHash = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -32739,7 +33001,7 @@ proto.walletrpc.DecodedTransaction.prototype.getVersion = function() {
 
 /** @param {number} value */
 proto.walletrpc.DecodedTransaction.prototype.setVersion = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -32754,7 +33016,7 @@ proto.walletrpc.DecodedTransaction.prototype.getLockTime = function() {
 
 /** @param {number} value */
 proto.walletrpc.DecodedTransaction.prototype.setLockTime = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -32769,7 +33031,7 @@ proto.walletrpc.DecodedTransaction.prototype.getExpiry = function() {
 
 /** @param {number} value */
 proto.walletrpc.DecodedTransaction.prototype.setExpiry = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -32784,21 +33046,21 @@ proto.walletrpc.DecodedTransaction.prototype.getTransactionType = function() {
 
 /** @param {!proto.walletrpc.TransactionDetails.TransactionType} value */
 proto.walletrpc.DecodedTransaction.prototype.setTransactionType = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3EnumField(this, 5, value);
 };
 
 
 /**
  * repeated Input inputs = 6;
- * @return {!Array.<!proto.walletrpc.DecodedTransaction.Input>}
+ * @return {!Array<!proto.walletrpc.DecodedTransaction.Input>}
  */
 proto.walletrpc.DecodedTransaction.prototype.getInputsList = function() {
-  return /** @type{!Array.<!proto.walletrpc.DecodedTransaction.Input>} */ (
+  return /** @type{!Array<!proto.walletrpc.DecodedTransaction.Input>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.walletrpc.DecodedTransaction.Input, 6));
 };
 
 
-/** @param {!Array.<!proto.walletrpc.DecodedTransaction.Input>} value */
+/** @param {!Array<!proto.walletrpc.DecodedTransaction.Input>} value */
 proto.walletrpc.DecodedTransaction.prototype.setInputsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 6, value);
 };
@@ -32821,15 +33083,15 @@ proto.walletrpc.DecodedTransaction.prototype.clearInputsList = function() {
 
 /**
  * repeated Output outputs = 7;
- * @return {!Array.<!proto.walletrpc.DecodedTransaction.Output>}
+ * @return {!Array<!proto.walletrpc.DecodedTransaction.Output>}
  */
 proto.walletrpc.DecodedTransaction.prototype.getOutputsList = function() {
-  return /** @type{!Array.<!proto.walletrpc.DecodedTransaction.Output>} */ (
+  return /** @type{!Array<!proto.walletrpc.DecodedTransaction.Output>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.walletrpc.DecodedTransaction.Output, 7));
 };
 
 
-/** @param {!Array.<!proto.walletrpc.DecodedTransaction.Output>} value */
+/** @param {!Array<!proto.walletrpc.DecodedTransaction.Output>} value */
 proto.walletrpc.DecodedTransaction.prototype.setOutputsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 7, value);
 };
@@ -33012,7 +33274,7 @@ proto.walletrpc.DecodeRawTransactionRequest.prototype.getSerializedTransaction_a
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.DecodeRawTransactionRequest.prototype.setSerializedTransaction = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -33168,7 +33430,7 @@ proto.walletrpc.DecodeRawTransactionResponse.prototype.clearTransaction = functi
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.walletrpc.DecodeRawTransactionResponse.prototype.hasTransaction = function() {
   return jspb.Message.getField(this, 1) != null;
@@ -33313,7 +33575,7 @@ proto.walletrpc.ValidateAddressRequest.prototype.getAddress = function() {
 
 /** @param {string} value */
 proto.walletrpc.ValidateAddressRequest.prototype.setAddress = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -33614,7 +33876,7 @@ proto.walletrpc.ValidateAddressResponse.prototype.getIsValid = function() {
 
 /** @param {boolean} value */
 proto.walletrpc.ValidateAddressResponse.prototype.setIsValid = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -33631,7 +33893,7 @@ proto.walletrpc.ValidateAddressResponse.prototype.getIsMine = function() {
 
 /** @param {boolean} value */
 proto.walletrpc.ValidateAddressResponse.prototype.setIsMine = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BooleanField(this, 2, value);
 };
 
 
@@ -33646,7 +33908,7 @@ proto.walletrpc.ValidateAddressResponse.prototype.getAccountNumber = function() 
 
 /** @param {number} value */
 proto.walletrpc.ValidateAddressResponse.prototype.setAccountNumber = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -33661,7 +33923,7 @@ proto.walletrpc.ValidateAddressResponse.prototype.getPubKeyAddr = function() {
 
 /** @param {string} value */
 proto.walletrpc.ValidateAddressResponse.prototype.setPubKeyAddr = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -33700,7 +33962,7 @@ proto.walletrpc.ValidateAddressResponse.prototype.getPubKey_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.ValidateAddressResponse.prototype.setPubKey = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3BytesField(this, 5, value);
 };
 
 
@@ -33717,27 +33979,27 @@ proto.walletrpc.ValidateAddressResponse.prototype.getIsScript = function() {
 
 /** @param {boolean} value */
 proto.walletrpc.ValidateAddressResponse.prototype.setIsScript = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3BooleanField(this, 6, value);
 };
 
 
 /**
  * repeated string pk_script_addrs = 7;
- * @return {!Array.<string>}
+ * @return {!Array<string>}
  */
 proto.walletrpc.ValidateAddressResponse.prototype.getPkScriptAddrsList = function() {
-  return /** @type {!Array.<string>} */ (jspb.Message.getRepeatedField(this, 7));
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 7));
 };
 
 
-/** @param {!Array.<string>} value */
+/** @param {!Array<string>} value */
 proto.walletrpc.ValidateAddressResponse.prototype.setPkScriptAddrsList = function(value) {
   jspb.Message.setField(this, 7, value || []);
 };
 
 
 /**
- * @param {!string} value
+ * @param {string} value
  * @param {number=} opt_index
  */
 proto.walletrpc.ValidateAddressResponse.prototype.addPkScriptAddrs = function(value, opt_index) {
@@ -33761,7 +34023,7 @@ proto.walletrpc.ValidateAddressResponse.prototype.getScriptType = function() {
 
 /** @param {!proto.walletrpc.ValidateAddressResponse.ScriptType} value */
 proto.walletrpc.ValidateAddressResponse.prototype.setScriptType = function(value) {
-  jspb.Message.setField(this, 8, value);
+  jspb.Message.setProto3EnumField(this, 8, value);
 };
 
 
@@ -33800,7 +34062,7 @@ proto.walletrpc.ValidateAddressResponse.prototype.getPayToAddrScript_asU8 = func
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.ValidateAddressResponse.prototype.setPayToAddrScript = function(value) {
-  jspb.Message.setField(this, 9, value);
+  jspb.Message.setProto3BytesField(this, 9, value);
 };
 
 
@@ -33815,7 +34077,7 @@ proto.walletrpc.ValidateAddressResponse.prototype.getSigsRequired = function() {
 
 /** @param {number} value */
 proto.walletrpc.ValidateAddressResponse.prototype.setSigsRequired = function(value) {
-  jspb.Message.setField(this, 10, value);
+  jspb.Message.setProto3IntField(this, 10, value);
 };
 
 
@@ -33832,7 +34094,7 @@ proto.walletrpc.ValidateAddressResponse.prototype.getIsInternal = function() {
 
 /** @param {boolean} value */
 proto.walletrpc.ValidateAddressResponse.prototype.setIsInternal = function(value) {
-  jspb.Message.setField(this, 11, value);
+  jspb.Message.setProto3BooleanField(this, 11, value);
 };
 
 
@@ -33847,7 +34109,7 @@ proto.walletrpc.ValidateAddressResponse.prototype.getIndex = function() {
 
 /** @param {number} value */
 proto.walletrpc.ValidateAddressResponse.prototype.setIndex = function(value) {
-  jspb.Message.setField(this, 12, value);
+  jspb.Message.setProto3IntField(this, 12, value);
 };
 
 
@@ -33997,10 +34259,10 @@ proto.walletrpc.CommittedTicketsRequest.prototype.getTicketsList = function() {
 /**
  * repeated bytes tickets = 1;
  * This is a type-conversion wrapper around `getTicketsList()`
- * @return {!Array.<string>}
+ * @return {!Array<string>}
  */
 proto.walletrpc.CommittedTicketsRequest.prototype.getTicketsList_asB64 = function() {
-  return /** @type {!Array.<string>} */ (jspb.Message.bytesListAsB64(
+  return /** @type {!Array<string>} */ (jspb.Message.bytesListAsB64(
       this.getTicketsList()));
 };
 
@@ -34010,10 +34272,10 @@ proto.walletrpc.CommittedTicketsRequest.prototype.getTicketsList_asB64 = functio
  * Note that Uint8Array is not supported on all browsers.
  * @see http://caniuse.com/Uint8Array
  * This is a type-conversion wrapper around `getTicketsList()`
- * @return {!Array.<!Uint8Array>}
+ * @return {!Array<!Uint8Array>}
  */
 proto.walletrpc.CommittedTicketsRequest.prototype.getTicketsList_asU8 = function() {
-  return /** @type {!Array.<!Uint8Array>} */ (jspb.Message.bytesListAsU8(
+  return /** @type {!Array<!Uint8Array>} */ (jspb.Message.bytesListAsU8(
       this.getTicketsList()));
 };
 
@@ -34176,7 +34438,7 @@ proto.walletrpc.GetAccountExtendedPubKeyRequest.prototype.getAccountNumber = fun
 
 /** @param {number} value */
 proto.walletrpc.GetAccountExtendedPubKeyRequest.prototype.setAccountNumber = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -34318,7 +34580,342 @@ proto.walletrpc.GetAccountExtendedPubKeyResponse.prototype.getAccExtendedPubKey 
 
 /** @param {string} value */
 proto.walletrpc.GetAccountExtendedPubKeyResponse.prototype.setAccExtendedPubKey = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.walletrpc.GetAccountExtendedPrivKeyRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.walletrpc.GetAccountExtendedPrivKeyRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.walletrpc.GetAccountExtendedPrivKeyRequest.displayName = 'proto.walletrpc.GetAccountExtendedPrivKeyRequest';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.walletrpc.GetAccountExtendedPrivKeyRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.GetAccountExtendedPrivKeyRequest.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.walletrpc.GetAccountExtendedPrivKeyRequest} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.GetAccountExtendedPrivKeyRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    accountNumber: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    passphrase: msg.getPassphrase_asB64()
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.walletrpc.GetAccountExtendedPrivKeyRequest}
+ */
+proto.walletrpc.GetAccountExtendedPrivKeyRequest.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.walletrpc.GetAccountExtendedPrivKeyRequest;
+  return proto.walletrpc.GetAccountExtendedPrivKeyRequest.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.walletrpc.GetAccountExtendedPrivKeyRequest} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.walletrpc.GetAccountExtendedPrivKeyRequest}
+ */
+proto.walletrpc.GetAccountExtendedPrivKeyRequest.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setAccountNumber(value);
+      break;
+    case 2:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setPassphrase(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.GetAccountExtendedPrivKeyRequest.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.walletrpc.GetAccountExtendedPrivKeyRequest.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.walletrpc.GetAccountExtendedPrivKeyRequest} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.GetAccountExtendedPrivKeyRequest.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getAccountNumber();
+  if (f !== 0) {
+    writer.writeUint32(
+      1,
+      f
+    );
+  }
+  f = message.getPassphrase_asU8();
+  if (f.length > 0) {
+    writer.writeBytes(
+      2,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional uint32 account_number = 1;
+ * @return {number}
+ */
+proto.walletrpc.GetAccountExtendedPrivKeyRequest.prototype.getAccountNumber = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.GetAccountExtendedPrivKeyRequest.prototype.setAccountNumber = function(value) {
+  jspb.Message.setProto3IntField(this, 1, value);
+};
+
+
+/**
+ * optional bytes passphrase = 2;
+ * @return {!(string|Uint8Array)}
+ */
+proto.walletrpc.GetAccountExtendedPrivKeyRequest.prototype.getPassphrase = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/**
+ * optional bytes passphrase = 2;
+ * This is a type-conversion wrapper around `getPassphrase()`
+ * @return {string}
+ */
+proto.walletrpc.GetAccountExtendedPrivKeyRequest.prototype.getPassphrase_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getPassphrase()));
+};
+
+
+/**
+ * optional bytes passphrase = 2;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getPassphrase()`
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.GetAccountExtendedPrivKeyRequest.prototype.getPassphrase_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getPassphrase()));
+};
+
+
+/** @param {!(string|Uint8Array)} value */
+proto.walletrpc.GetAccountExtendedPrivKeyRequest.prototype.setPassphrase = function(value) {
+  jspb.Message.setProto3BytesField(this, 2, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.walletrpc.GetAccountExtendedPrivKeyResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.walletrpc.GetAccountExtendedPrivKeyResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.walletrpc.GetAccountExtendedPrivKeyResponse.displayName = 'proto.walletrpc.GetAccountExtendedPrivKeyResponse';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.walletrpc.GetAccountExtendedPrivKeyResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.GetAccountExtendedPrivKeyResponse.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.walletrpc.GetAccountExtendedPrivKeyResponse} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.GetAccountExtendedPrivKeyResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    accExtendedPrivKey: jspb.Message.getFieldWithDefault(msg, 1, "")
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.walletrpc.GetAccountExtendedPrivKeyResponse}
+ */
+proto.walletrpc.GetAccountExtendedPrivKeyResponse.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.walletrpc.GetAccountExtendedPrivKeyResponse;
+  return proto.walletrpc.GetAccountExtendedPrivKeyResponse.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.walletrpc.GetAccountExtendedPrivKeyResponse} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.walletrpc.GetAccountExtendedPrivKeyResponse}
+ */
+proto.walletrpc.GetAccountExtendedPrivKeyResponse.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setAccExtendedPrivKey(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.GetAccountExtendedPrivKeyResponse.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.walletrpc.GetAccountExtendedPrivKeyResponse.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.walletrpc.GetAccountExtendedPrivKeyResponse} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.GetAccountExtendedPrivKeyResponse.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getAccExtendedPrivKey();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string acc_extended_priv_key = 1;
+ * @return {string}
+ */
+proto.walletrpc.GetAccountExtendedPrivKeyResponse.prototype.getAccExtendedPrivKey = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.walletrpc.GetAccountExtendedPrivKeyResponse.prototype.setAccExtendedPrivKey = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -34633,7 +35230,7 @@ proto.walletrpc.CommittedTicketsResponse.TicketAddress.prototype.getTicket_asU8 
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.CommittedTicketsResponse.TicketAddress.prototype.setTicket = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -34648,21 +35245,21 @@ proto.walletrpc.CommittedTicketsResponse.TicketAddress.prototype.getAddress = fu
 
 /** @param {string} value */
 proto.walletrpc.CommittedTicketsResponse.TicketAddress.prototype.setAddress = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
 /**
  * repeated TicketAddress ticketAddresses = 1;
- * @return {!Array.<!proto.walletrpc.CommittedTicketsResponse.TicketAddress>}
+ * @return {!Array<!proto.walletrpc.CommittedTicketsResponse.TicketAddress>}
  */
 proto.walletrpc.CommittedTicketsResponse.prototype.getTicketaddressesList = function() {
-  return /** @type{!Array.<!proto.walletrpc.CommittedTicketsResponse.TicketAddress>} */ (
+  return /** @type{!Array<!proto.walletrpc.CommittedTicketsResponse.TicketAddress>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.walletrpc.CommittedTicketsResponse.TicketAddress, 1));
 };
 
 
-/** @param {!Array.<!proto.walletrpc.CommittedTicketsResponse.TicketAddress>} value */
+/** @param {!Array<!proto.walletrpc.CommittedTicketsResponse.TicketAddress>} value */
 proto.walletrpc.CommittedTicketsResponse.prototype.setTicketaddressesList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
@@ -34949,7 +35546,7 @@ proto.walletrpc.BestBlockResponse.prototype.getHeight = function() {
 
 /** @param {number} value */
 proto.walletrpc.BestBlockResponse.prototype.setHeight = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -34988,7 +35585,7 @@ proto.walletrpc.BestBlockResponse.prototype.getHash_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.BestBlockResponse.prototype.setHash = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
@@ -35166,7 +35763,7 @@ proto.walletrpc.SweepAccountRequest.prototype.getSourceAccount = function() {
 
 /** @param {string} value */
 proto.walletrpc.SweepAccountRequest.prototype.setSourceAccount = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -35181,7 +35778,7 @@ proto.walletrpc.SweepAccountRequest.prototype.getDestinationAddress = function()
 
 /** @param {string} value */
 proto.walletrpc.SweepAccountRequest.prototype.setDestinationAddress = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -35196,7 +35793,7 @@ proto.walletrpc.SweepAccountRequest.prototype.getRequiredConfirmations = functio
 
 /** @param {number} value */
 proto.walletrpc.SweepAccountRequest.prototype.setRequiredConfirmations = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -35211,7 +35808,7 @@ proto.walletrpc.SweepAccountRequest.prototype.getFeePerKb = function() {
 
 /** @param {number} value */
 proto.walletrpc.SweepAccountRequest.prototype.setFeePerKb = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3FloatField(this, 4, value);
 };
 
 
@@ -35413,7 +36010,7 @@ proto.walletrpc.SweepAccountResponse.prototype.getUnsignedTransaction_asU8 = fun
 
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.SweepAccountResponse.prototype.setUnsignedTransaction = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -35428,7 +36025,7 @@ proto.walletrpc.SweepAccountResponse.prototype.getTotalPreviousOutputAmount = fu
 
 /** @param {number} value */
 proto.walletrpc.SweepAccountResponse.prototype.setTotalPreviousOutputAmount = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -35443,7 +36040,7 @@ proto.walletrpc.SweepAccountResponse.prototype.getTotalOutputAmount = function()
 
 /** @param {number} value */
 proto.walletrpc.SweepAccountResponse.prototype.setTotalOutputAmount = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -35458,7 +36055,7 @@ proto.walletrpc.SweepAccountResponse.prototype.getEstimatedSignedSize = function
 
 /** @param {number} value */
 proto.walletrpc.SweepAccountResponse.prototype.setEstimatedSignedSize = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 

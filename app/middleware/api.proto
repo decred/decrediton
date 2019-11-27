@@ -20,10 +20,12 @@ service WalletService {
 	// Queries
 	rpc Ping (PingRequest) returns (PingResponse);
 	rpc Network (NetworkRequest) returns (NetworkResponse);
+	rpc CoinType (CoinTypeRequest) returns (CoinTypeResponse);
 	rpc AccountNumber (AccountNumberRequest) returns (AccountNumberResponse);
 	rpc Accounts (AccountsRequest) returns (AccountsResponse);
 	rpc Balance (BalanceRequest) returns (BalanceResponse);
 	rpc GetAccountExtendedPubKey (GetAccountExtendedPubKeyRequest) returns (GetAccountExtendedPubKeyResponse);	
+	rpc GetAccountExtendedPrivKey (GetAccountExtendedPrivKeyRequest) returns (GetAccountExtendedPrivKeyResponse);
 	rpc GetTransaction (GetTransactionRequest) returns (GetTransactionResponse);
 	rpc GetTransactions (GetTransactionsRequest) returns (stream GetTransactionsResponse);
 	rpc GetTicket (GetTicketRequest) returns (GetTicketsResponse);
@@ -70,11 +72,6 @@ service WalletLoaderService {
 	rpc CreateWatchingOnlyWallet (CreateWatchingOnlyWalletRequest) returns (CreateWatchingOnlyWalletResponse);
 	rpc OpenWallet (OpenWalletRequest) returns (OpenWalletResponse);
 	rpc CloseWallet (CloseWalletRequest) returns (CloseWalletResponse);
-	rpc StartConsensusRpc (StartConsensusRpcRequest) returns (StartConsensusRpcResponse);
-	rpc DiscoverAddresses (DiscoverAddressesRequest) returns (DiscoverAddressesResponse);
-	rpc SubscribeToBlockNotifications (SubscribeToBlockNotificationsRequest) returns (SubscribeToBlockNotificationsResponse);
-	rpc FetchHeaders(FetchHeadersRequest) returns (FetchHeadersResponse);
-	rpc FetchMissingCFilters(FetchMissingCFiltersRequest) returns (FetchMissingCFiltersResponse);
 	rpc SpvSync(SpvSyncRequest) returns (stream SpvSyncResponse);
 	rpc RpcSync(RpcSyncRequest) returns (stream RpcSyncResponse);
 	rpc RescanPoint(RescanPointRequest) returns (RescanPointResponse);
@@ -166,6 +163,11 @@ message PingResponse {}
 message NetworkRequest {}
 message NetworkResponse {
 	uint32 active_network = 1;
+}
+
+message CoinTypeRequest {}
+message CoinTypeResponse {
+	uint32 coin_type = 1;
 }
 
 message AccountNumberRequest {
@@ -603,7 +605,7 @@ message TransactionNotificationsResponse {
 	// Any new unmined transactions are included here.  These unmined transactions
 	// refer to the current best chain, so transactions from detached blocks may
 	// be moved to mempool and included here if they are not mined or double spent
-	// in the new chain.  Additonally, if no new blocks were attached but a relevant
+	// in the new chain.  Additionally, if no new blocks were attached but a relevant
 	// unmined transaction is seen by the wallet, it will be reported here.
 	repeated TransactionDetails unmined_transactions = 3;
 
@@ -1040,6 +1042,15 @@ message GetAccountExtendedPubKeyRequest {
 
 message GetAccountExtendedPubKeyResponse {
 	string acc_extended_pub_key = 1;
+}
+
+message GetAccountExtendedPrivKeyRequest {
+	uint32 account_number = 1;
+	bytes passphrase = 2;
+}
+
+message GetAccountExtendedPrivKeyResponse {
+	string acc_extended_priv_key = 1;
 }
 
 message CommittedTicketsResponse {
