@@ -1,7 +1,7 @@
 @import (reference) "./main.less";
 @import (reference) "./Icons.less";
 
-.send-wrapper-area { 
+.send-wrapper-area {
   width: 740px;
   margin-bottom: 20px;
 }
@@ -19,7 +19,7 @@
 
     .total-amount-send-amount-bytes {
       color: var(--account-text);
-    }    
+    }
   }
 }
 
@@ -50,7 +50,7 @@
   background-position: 50% 50%;
   background-size: 19px;
   background-repeat: no-repeat;
-  margin-bottom: 25px;
+  margin-bottom: 23px;
   cursor: pointer;
 
   &.add {
@@ -92,7 +92,7 @@
         background-image: @send-all-disabled;
       }
     }
-  
+
     &:hover {
       background-image: var(--send-all-hover);
     }
@@ -116,7 +116,7 @@
 }
 
 .details-label-column {
-  white-space: nowrap; 
+  white-space: nowrap;
   .total-amount-sending-text {
     margin-left: 27px;
   }
@@ -154,7 +154,7 @@
 }
 
 .send-input-wrapper {
-  margin-bottom: 25px;
+  margin-bottom: 23px;
 
   .input-errors-area {
     margin-bottom: -14px;
@@ -162,9 +162,14 @@
 }
 
 .send-input {
-  width: 260px;  
+  width: 260px;
   margin-left: 10px;
   margin-right: 10px;
+
+  &.input-and-unit {
+    width: 255px;
+    padding-bottom: 2px;
+  }
 
   &.send-all {
     border-bottom: 1px var(--stroke-color-default) solid;
@@ -238,7 +243,7 @@
   }
 
   .send-input-wrapper {
-    margin-bottom: 22px;  
+    margin-bottom: 22px;
   }
 
   .send-input {

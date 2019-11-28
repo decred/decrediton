@@ -42,7 +42,7 @@ const getSendSelfIcon = ({ isSendSelf, onShowSendSelf, onShowSendOthers }) => !i
   </Tooltip>;
 
 const SendOutputRow = ({
-  index, destination, value, onAddOutput, onRemoveOutput,
+  index, destination, amount, onAddOutput, onRemoveOutput,
   onValidateAmount, onValidateAddress, isSendAll, onKeyDown, sendAllAmount, error, intl,
   onShowSendAll, onHideSendAll, isSendSelf, outputs, onChangeAccount, onShowSendSelf,
   account, onShowSendOthers
@@ -90,9 +90,9 @@ const SendOutputRow = ({
             showErrors={error && error.amount}
             invalid={error && error.amount}
             invalidMessage={error && error.amount}
-            amount={value}
+            amount={amount}
             placeholder={intl.formatMessage(messages.amountPlaceholder)}
-            onChange={ e => onValidateAmount({ value: e.value , index, atomValue: e.atomValue })}
+            onChangeAmount={ e => onValidateAmount({ index, atomValue: e.atomValue })}
             onKeyDown={onKeyDown}
           />
         }
