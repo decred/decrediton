@@ -88,7 +88,7 @@ class ChannelsTab extends React.Component {
         opening={opening}
         canOpen={canOpen}
         detailedChannel={detailedChannel}
-        testnet={isMainNet}
+        isMainNet={isMainNet}
         onNodeChanged={onNodeChanged}
         onLocalAmtChanged={onLocalAmtChanged}
         onPushAmtChanged={onPushAmtChanged}
