@@ -3,7 +3,7 @@ import {
   getLoader, getWalletExists, createWallet, openWallet, closeWallet, getStakePoolInfo, rescanPoint
 } from "wallet";
 import * as wallet from "wallet";
-import { rescanCancel } from "./ControlActions";
+import { rescanCancel, ticketBuyerCancel } from "./ControlActions";
 import { getWalletServiceAttempt, startWalletServices, getBestBlockHeightAttempt,
   cancelPingAttempt } from "./ClientActions";
 import { getVersionServiceAttempt } from "./VersionActions";
@@ -194,6 +194,7 @@ export const closeWalletRequest = () => async(dispatch, getState) => {
     await dispatch(rescanCancel());
     await dispatch(trezorClearDeviceSession());
     await dispatch(stopDcrlnd());
+    await dispatch(ticketBuyerCancel());
     if (walletReady) {
       await closeWallet(getState().walletLoader.loader);
     }
