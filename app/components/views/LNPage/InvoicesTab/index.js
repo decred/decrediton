@@ -14,15 +14,14 @@ class InvoicesTab extends React.Component {
   constructor(props)  {
     super(props);
     this.state = {
-      value: 0,
       atomValue: 0,
       memo: "",
       lastPayRequest: ""
     };
   }
 
-  onValueChanged({ value, atomValue }) {
-    this.setState({ value, atomValue });
+  onValueChanged({ atomValue }) {
+    this.setState({ atomValue });
   }
 
   onMemoChanged(e) {
@@ -46,14 +45,14 @@ class InvoicesTab extends React.Component {
 
   render() {
     const { invoices, tsDate, addInvoiceAttempt } = this.props;
-    const { memo, value, lastPayRequest, lastError } = this.state;
+    const { memo, atomValue, lastPayRequest, lastError } = this.state;
     const { onValueChanged, onMemoChanged, onAddInvoice } = this;
 
     return (
       <Page
         invoices={invoices}
         tsDate={tsDate}
-        value={value}
+        value={atomValue}
         memo={memo}
         addInvoiceAttempt={addInvoiceAttempt}
         lastPayRequest={lastPayRequest}

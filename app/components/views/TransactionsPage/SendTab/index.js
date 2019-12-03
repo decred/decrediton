@@ -32,11 +32,15 @@ class Send extends React.Component {
   componentDidUpdate(prevProps) {
     const { constructTxLowBalance, unsignedRawTx, isWatchingOnly, nextAddress, publishTxResponse } = this.props;
     const { isSendSelf, outputs } = this.state;
+    let newOutputs;
     if (publishTxResponse && publishTxResponse !== prevProps.publishTxResponse) {
-      this.setState({ outputs: [ { key: "output_0", data: this.getBaseOutput() } ] });
+      newOutputs = [ { key: "output_0", data: this.getBaseOutput() } ];
+      this.setState({ isSendAll: false });
     }
     if (isSendSelf && (prevProps.nextAddress != nextAddress)) {
-      let newOutputs = outputs.map(o => ({ ...o, data:{ ...o.data, destination: nextAddress } }));
+      newOutputs = (newOutputs || outputs).map(o => ({ ...o, data:{ ...o.data, destination: nextAddress } }));
+    }
+    if (newOutputs) {
       this.setState({ outputs: newOutputs }, this.onAttemptConstructTransaction);
     }
     if (constructTxLowBalance !== prevProps.constructTxLowBalance) {
@@ -103,7 +107,7 @@ class Send extends React.Component {
   }
 
   getBaseOutput() {
-    return { destination: "", amount: null, value: null, error: { address: null, amount: null } };
+    return { destination: "", amount: null, error: { address: null, amount: null } };
   }
 
   getDefaultStyles() {
@@ -232,18 +236,15 @@ class Send extends React.Component {
   }
 
   onValidateAmount(data) {
-    // value represents the value to be showed on the component and amount
-    // represents its value in atoms so we can calculate transaction data.
-    const { value, atomValue, index } = data;
+    const { atomValue, index } = data;
     let error;
-    if (!value || isNaN(value)) {
+    if (!atomValue || isNaN(atomValue)) {
       error = <T id="send.errors.invalidAmount" m="Please enter a valid amount" />;
     }
-    if (value <= 0) {
+    if (atomValue <= 0) {
       error = <T id="send.errors.negativeAmount" m="Please enter a valid amount (> 0)" />;
     }
     const ref = this.state.outputs[index];
-    ref.data.value = value;
     ref.data.amount = atomValue;
 
     ref.data.error.amount = error;
