@@ -365,7 +365,8 @@ var initialState = {
     exportingData: false,
     modalVisible: false,
     aboutModalMacOSVisible: false,
-    autobuyerRunningModalVisible: false
+    autobuyerRunningModalVisible: false,
+    changeScriptByAccount: {}
   },
   snackbar: {
     messages: Array()
