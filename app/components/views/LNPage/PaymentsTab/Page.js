@@ -39,7 +39,7 @@ const DecodedPayRequest = ({ decoded, tsDate, expired, sendValue, onSendValueCha
   <div className="decoded-payreq">
     { decoded.numAtoms
       ? <div className="num-atoms"><Balance amount={decoded.numAtoms} /></div>
-      : <DcrInput amount={sendValue} onChange={onSendValueChanged} />
+      : <DcrInput amount={sendValue} onChangeAmount={onSendValueChanged} />
     }
     { decoded.description
       ? <div className="description">{decoded.description}</div>

@@ -14,9 +14,7 @@ class ChannelsTab extends React.Component {
     super(props);
     this.state = {
       node: "",
-      localAmt: 0,
       localAmtAtoms: 0,
-      pushAmt: 0,
       pushAmtAtoms: 0,
       canOpen: false,
       opening: false
@@ -24,17 +22,17 @@ class ChannelsTab extends React.Component {
   }
 
   onNodeChanged(e) {
-    const canOpen = e.target.value && this.state.localAmt > 0;
+    const canOpen = e.target.value && this.state.localAmtAtoms > 0;
     this.setState({ node: (""+e.target.value).trim(), canOpen });
   }
 
-  onLocalAmtChanged({ value, atomValue }) {
+  onLocalAmtChanged({ atomValue }) {
     const canOpen = atomValue > 0 && this.state.node;
-    this.setState({ localAmt: value, localAmtAtoms: atomValue, canOpen });
+    this.setState({ localAmtAtoms: atomValue, canOpen });
   }
 
-  onPushAmtChanged({ value, atomValue }) {
-    this.setState({ pushAmt: value, pushAmtAtoms: atomValue });
+  onPushAmtChanged({ atomValue }) {
+    this.setState({ pushAmtAtoms: atomValue });
   }
 
   onOpenChannel() {
@@ -44,8 +42,8 @@ class ChannelsTab extends React.Component {
     }
     this.setState({ opening: true });
     this.props.openChannel(node, localAmtAtoms, pushAmtAtoms).then(() => {
-      this.setState({ opening: false, node: "", localAmt: 0, pushAmt: 0,
-        localAmtAtoms: 0, pushAmtAtoms: 0 });
+      this.setState({ opening: false, node: "", localAmtAtoms: 0,
+        pushAmtAtoms: 0, canOpen: false });
     }).catch(() => {
       this.setState({ opening: false });
     });
@@ -68,7 +66,7 @@ class ChannelsTab extends React.Component {
       maxOutboundAmount } = this.props.channelBalances;
 
     const { channels, pendingChannels, closedChannels, isMainNet } = this.props;
-    const { node, localAmt, pushAmt, opening, canOpen,
+    const { node, localAmtAtoms, pushAmtAtoms, opening, canOpen,
       detailedChannel } = this.state;
     const { onNodeChanged, onLocalAmtChanged, onPushAmtChanged,
       onOpenChannel, onCloseChannel, onToggleChannelDetails } = this;
@@ -83,8 +81,8 @@ class ChannelsTab extends React.Component {
         pendingChannels={pendingChannels}
         closedChannels={closedChannels}
         node={node}
-        localAmt={localAmt}
-        pushAmt={pushAmt}
+        localAmt={localAmtAtoms}
+        pushAmt={pushAmtAtoms}
         opening={opening}
         canOpen={canOpen}
         detailedChannel={detailedChannel}

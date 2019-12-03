@@ -55,7 +55,7 @@ export default ({
       </div>
       <div className="value">
         <T id="ln.invoicesTab.addInvoice.value" m="Value" />
-        <DcrInput amount={value} onChange={onValueChanged} />
+        <DcrInput amount={value} onChangeAmount={onValueChanged} />
       </div>
       <KeyBlueButton onClick={onAddInvoice} disabled={addInvoiceAttempt}>+</KeyBlueButton>
       { !lastPayRequest

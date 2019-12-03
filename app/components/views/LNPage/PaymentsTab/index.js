@@ -14,7 +14,6 @@ class PaymentsTab extends React.Component {
   constructor(props)  {
     super(props);
     this.state = {
-      sendValue: 0,
       sendValueAtom: 0,
       payRequest: "",
       decodedPayRequest: null,
@@ -62,8 +61,8 @@ class PaymentsTab extends React.Component {
     this.lastDecodeTimer = this.props.setTimeout(this.decodePayRequest, 1000);
   }
 
-  onSendValueChanged({ value, atomValue }) {
-    this.setState({ sendValue: value, sendValueAtom: atomValue });
+  onSendValueChanged({ atomValue }) {
+    this.setState({ sendValueAtom: atomValue });
   }
 
   onSendPayment() {
@@ -84,7 +83,7 @@ class PaymentsTab extends React.Component {
   render() {
     const { payments, tsDate } = this.props;
     const { payRequest, decodedPayRequest, decodingError,
-      expired, sending, sendValue } = this.state;
+      expired, sending, sendValueAtom } = this.state;
     const { onPayRequestChanged, onSendPayment, onSendValueChanged } = this;
 
     return (
@@ -96,7 +95,7 @@ class PaymentsTab extends React.Component {
         decodingError={decodingError}
         expired={expired}
         sending={sending}
-        sendValue={sendValue}
+        sendValue={sendValueAtom}
         onPayRequestChanged={onPayRequestChanged}
         onSendPayment={onSendPayment}
         onSendValueChanged={onSendValueChanged}

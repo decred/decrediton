@@ -116,17 +116,9 @@ class TicketAutoBuyer extends React.Component {
       : null;
   }
 
-  onChangeBalanceToMaintain(balanceToMaintain) {
-    const balanceToMaintainInAtoms = this.getValueInAtoms(balanceToMaintain);
-
-    const balanceToMaintainError = (
-      isNaN(balanceToMaintainInAtoms) ||
-      balanceToMaintainInAtoms < 0
-    ) || !balanceToMaintain;
-
+  onChangeBalanceToMaintain({ atomValue }) {
     this.setState({
-      balanceToMaintain: balanceToMaintain,
-      balanceToMaintainError: balanceToMaintainError
+      balanceToMaintain: atomValue
     });
   }
 
