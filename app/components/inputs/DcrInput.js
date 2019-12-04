@@ -17,6 +17,13 @@ import { MAX_DCR_AMOUNT } from "constants";
 export const FixedDcrInput = ({ currencyDisplay, ...props }) =>
   <FloatInput {...{ ...props, unit: currencyDisplay, maxFracDigits: 8 }} />;
 
+function countDecimalDigits(s) {
+  for (let i = s.length-1; i >= 0; i--) {
+    if (s[i] === ".") return s.length - i - 1;
+  }
+  return 0;
+}
+
 /**
  * DcrInput provides a way to receive decred amount inputs. Instead of the usual
  * value/onChange pair, it uses amount/onChangeAmount to track values in decred
@@ -32,21 +39,36 @@ class DcrInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      decimal: false
+      decimal: false,
+      decimalDigits: 0
     };
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.amount !== prevProps.amount && !this.props.amount && this.props.amount !== 0) {
+      // Amount just got cleared, so clear decimalDigits as well to display a
+      // blank input.
+      this.setState({ decimalDigits: 0 });
+    }
   }
 
   // amountToDisplayStr converts the given amount in atoms to the appropriate
   // string to display given the current config of this input.
   amountToDisplayStr(amount) {
-    if (!amount && !this.state.decimal) return amount;
-    if (!amount) return "0.";
+    if (!amount) {
+      if (this.state.decimal) {
+        return "0.";
+      } else if (this.state.decimalDigits) {
+        return (0).toFixed(this.state.decimalDigits);
+      }
+      return amount;
+    }
     const { unitDivisor } = this.props;
     let scaled = amount / unitDivisor;
     if (this.state.decimal) {
-      scaled += ".";
+      return scaled.toFixed(0) + ".";
     }
-    return scaled;
+    return scaled.toFixed(this.state.decimalDigits);
   }
 
   // typedValueToAmount converts the given string value typed into the input to
@@ -60,6 +82,7 @@ class DcrInput extends React.Component {
     let amount;
     const value = e.target.value;
     const decimal = value && value.length > 0 && value[value.length-1] == ".";
+    const decimalDigits = countDecimalDigits(value);
     if (value) {
       amount = this.typedValueToAmount(value);
 
@@ -67,7 +90,7 @@ class DcrInput extends React.Component {
       if (amount > MAX_DCR_AMOUNT) return;
     }
     if (onChangeAmount) onChangeAmount({ ...e, value, atomValue: amount });
-    this.setState({ decimal });
+    this.setState({ decimal, decimalDigits });
   }
 
   render() {
