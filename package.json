@@ -80,8 +80,8 @@
         }
       ],
       "window": {
-        "width":540,
-        "height":315
+        "width": 540,
+        "height": 315
       }
     },
     "files": [
@@ -167,6 +167,8 @@
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.0.0",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
