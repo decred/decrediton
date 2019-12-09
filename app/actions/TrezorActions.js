@@ -455,10 +455,6 @@ export const walletTxToBtcjsTx = (tx, changeIndex, inputTxs) => async (dispatch,
       address_n: addressPath(addrIndex, addrBranch, WALLET_ACCOUNT,
         chainParams.HDCoinType),
       decred_tree: inp.getTree()
-
-      // FIXME: this needs to be supported on trezor.js.
-      // decredTree: inp.getTree(),
-      // decredScriptVersion: 0,
     });
   }
 
@@ -509,11 +505,8 @@ export function walletTxToRefTx(tx) {
     amount: inp.getAmountIn(),
     prev_hash: rawHashToHex(inp.getPreviousTransactionHash()),
     prev_index: inp.getPreviousTransactionIndex(),
-    decred_tree: inp.getTree()
-
-    // TODO: this needs to be supported on trezor.js
-    // decredTree: inp.getTree(),
-    // decredScriptVersion: 0,
+    decred_tree: inp.getTree(),
+    sequence: inp.getSequence()
   }));
 
   const bin_outputs = tx.getOutputsList().map(outp => ({
