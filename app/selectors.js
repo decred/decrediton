@@ -335,7 +335,7 @@ const txHashToTicket = createSelector(
   }, {})
 );
 
-const transactionNormalizer = createSelector(
+export const transactionNormalizer = createSelector(
   [ accounts, txURLBuilder, blockURLBuilder ],
   (accounts, txURLBuilder, blockURLBuilder) => {
     const findAccount = num => accounts.find(account => account.getAccountNumber() === num);
