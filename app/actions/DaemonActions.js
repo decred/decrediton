@@ -95,18 +95,18 @@ export const showPrivacy = () => (dispatch) => {
   dispatch(pushHistory("/getstarted/privacy"));
 };
 
-export const enableSpv = () => (dispatch, getState) => {
+export const enableSpv = () => async (dispatch, getState) => {
   dispatch(updateStateSettingsChanged({ spvMode: true }, true));
   const tempSettings = getState().settings.tempSettings;
-  dispatch(saveSettings(tempSettings));
-  dispatch(finishSpvChoice());
+  await dispatch(saveSettings(tempSettings));
+  dispatch(finishSpvChoice(true));
 };
 
 export const disableSpv = () => (dispatch, getState) => {
   dispatch(updateStateSettingsChanged({ spvMode: false }, true));
   const tempSettings = getState().settings.tempSettings;
   dispatch(saveSettings(tempSettings));
-  dispatch(finishSpvChoice());
+  dispatch(finishSpvChoice(false));
 };
 
 export const setupStandardPrivacy = () => (dispatch, getState) => {
@@ -131,11 +131,13 @@ export const selectLanguage = (selectedLanguage) => (dispatch) => {
   dispatch(pushHistory("/getstarted"));
 };
 
-export const finishSpvChoice = () => (dispatch) => {
+export const finishSpvChoice = (isSPV) => (dispatch) => {
   const config = getGlobalCfg();
   config.set("show_spvchoice", false);
   dispatch({ type: FINISH_SPVCHOICE });
-  dispatch(startDaemon());
+  if (!isSPV) {
+    dispatch(startDaemon());
+  }
   dispatch(goBack());
 };
 
