@@ -1,9 +1,9 @@
 import fs from "fs-extra";
 import path from "path";
 import { createLogger } from "./logging";
-import { getWalletPath, getWalletDb, getDcrdPath, getDcrdRpcCert } from "./paths";
-import { initWalletCfg, newWalletConfigCreation, getWalletCfg, readDcrdConfig } from "config";
-import { launchDCRD, launchDCRWallet, GetDcrdPID, GetDcrwPID, closeDCRD, closeDCRW, GetDcrwPort,
+import { getWalletPath, getWalletDb, getDcrdPath } from "./paths";
+import { initWalletCfg, newWalletConfigCreation, getWalletCfg } from "config";
+import { launchDCRD, launchDCRWallet, GetDcrwPID, closeDCRD, closeDCRW, GetDcrwPort,
   launchDCRLnd, GetDcrlndPID, GetDcrlndCreds, closeDcrlnd, setDcrdRpcCredentials } from "./launch";
 import { MAINNET } from "constants";
 

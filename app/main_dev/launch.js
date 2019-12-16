@@ -26,7 +26,6 @@ let dcrwPipeRx, dcrwPipeTx, dcrdPipeRx, dcrwTxStream;
 
 let dcrwPort;
 let rpcuser, rpcpass, rpccert, rpchost, rpcport;
-let appdata;
 let dcrlndCreds;
 
 let dcrdSocket, heightIsSynced, selectedWallet = null;
