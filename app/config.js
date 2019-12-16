@@ -155,17 +155,30 @@ export function getWalletCert(certPath) {
   return(cert);
 }
 
-export function readDcrdConfig(testnet) {
+// readDcrdConfig reads top level entries from dcrd.conf file. It checks if
+// appdata is defined and reads its dcrd.conf. Reads from getAppDataDirectory otherwise.
+// If none of the dcrd.conf file exists, it creates a tempdcrd with random values to rpcuser and rpcpass,
+// default values to rpchost and rpcport, writes its new file to getAppDataDirectory()
+// and reads from it.
+export function readDcrdConfig(testnet, appdata) {
   try {
     let readCfg;
     let newCfg = {};
     newCfg.rpc_host = "127.0.0.1";
     newCfg.rpc_port = testnet ? "19109" : "9109";
 
-    if (fs.existsSync(dcrdCfg(getAppDataDirectory()))) {
+    // read dcrd.conf file
+    // first check if appdata is defined and it has a dcrd.conf
+    if (appdata && fs.existsSync(dcrdCfg(appdata))) {
+      readCfg = ini.parse(Buffer.from(fs.readFileSync(dcrdCfg(appdata))).toString());
+    // else if appdata is not defined we check for at getAppDataDirectory() and
+    // read the conf file from there if exists
+    } else if (!appdata && fs.existsSync(dcrdCfg(getAppDataDirectory()))) {
       readCfg = ini.parse(Buffer.from(fs.readFileSync(dcrdCfg(getAppDataDirectory()))).toString());
+    // else we create a temp dcrd conf file with new values and writes the new
+    // dcrd.conf file at getAppDataDirectory() and parses it.
     } else {
-      var newCfgPath = createTempDcrdConf(testnet);
+      const newCfgPath = createTempDcrdConf(testnet);
       readCfg = ini.parse(Buffer.from(fs.readFileSync(dcrdCfg(newCfgPath))).toString());
     }
 
@@ -296,7 +309,9 @@ function makeRandomString(length) {
   return text;
 }
 
-export function createTempDcrdConf(testnet) {
+// createTempDcrdConf creates a temp dcrd conf file and writes it
+// to decreditons config directory: getAppDataDirectory()
+function createTempDcrdConf(testnet) {
   var dcrdConf = {};
   if (!fs.existsSync(dcrdCfg(getAppDataDirectory()))) {
     const port = testnet ? "19109" : "9109";

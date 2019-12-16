@@ -10,7 +10,7 @@ import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRe
 import { setupProxy } from "./main_dev/proxy";
 import {
   getDaemonInfo, cleanShutdown, GetDcrdPID, GetDcrwPID, getBlockChainInfo, connectRpcDaemon,
-  setHeightSynced, getHeightSynced, getDaemonCredentials, setSelectedWallet, getSelectedWallet, setDaemonCredentials,
+  setHeightSynced, getHeightSynced, getDcrdRpcCredentials, setSelectedWallet, getSelectedWallet,
   GetDcrlndPID, GetDcrlndCreds
 } from "./main_dev/launch";
 import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopDaemon, stopWallet, startWallet,
@@ -340,12 +340,8 @@ ipcMain.on("set-selected-wallet", (event, wallet) => {
   event.returnValue = true;
 });
 
-ipcMain.on("get-daemon-credentials", (event) => {
-  event.returnValue = getDaemonCredentials();
-});
-
-ipcMain.on("set-daemon-credentials", (event, credentials) => {
-  setDaemonCredentials(credentials);
+ipcMain.on("get-dcrd-rpc-credentials", (event) => {
+  event.returnValue = getDcrdRpcCredentials();
 });
 
 ipcMain.on("set-previous-wallet", (event, cfg) => {
