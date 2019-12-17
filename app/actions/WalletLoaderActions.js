@@ -223,7 +223,7 @@ export const startRpcRequestFunc = (privPass, isRetry) =>
     }
     const { daemon: { walletName }, walletLoader: { discoverAccountsComplete,isWatchingOnly } }= getState();
 
-    const credentials = ipcRenderer.sendSync("get-daemon-credentials");
+    const credentials = ipcRenderer.sendSync("get-dcrd-rpc-credentials");
     const { rpc_user, rpc_cert, rpc_pass, rpc_host, rpc_port } = credentials;
 
     var request = new RpcSyncRequest();
