@@ -158,7 +158,6 @@ export const finishPrivacy = () => (dispatch) => {
 };
 
 export const startDaemon = (params) => (dispatch, getState) => new Promise ((resolve, reject) => {
-  const appdata = params && params.appdata;
   dispatch({ type: DAEMONSTART_ATTEMPT });
   const { daemonStarted } = getState().daemon;
   if (daemonStarted) {
@@ -166,7 +165,15 @@ export const startDaemon = (params) => (dispatch, getState) => new Promise ((res
   }
 
   return wallet.startDaemon(params, isTestNet(getState()))
-    .then(rpcCreds => {
+    .then(started => {
+      const rpcCreds = {
+        rpc_user: started.rpc_user,
+        rpc_pass: started.rpc_pass,
+        rpc_cert: started.rpc_cert,
+        rpc_host: started.rpc_host,
+        rpc_port: started.rpc_port
+      };
+      const appdata = started.appdata;
       dispatch({ type: DAEMONSTART_SUCCESS, credentials: rpcCreds, appdata });
       resolve({ appdata, credentials: rpcCreds });
     })

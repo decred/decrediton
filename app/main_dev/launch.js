@@ -48,7 +48,7 @@ export const setHeightSynced = (isSynced) => {
 
 export const getHeightSynced = () => heightIsSynced;
 
-export const setDaemonCredentials = ({ rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port }) => {
+export const setDcrdRpcCredentials = ({ rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port }) => {
   rpcuser = rpc_user;
   rpcpass = rpc_pass;
   rpccert = rpc_cert;
@@ -57,7 +57,7 @@ export const setDaemonCredentials = ({ rpc_user, rpc_pass, rpc_cert, rpc_host, r
   return true;
 };
 
-export const getDaemonCredentials = () => ({
+export const getDcrdRpcCredentials = () => ({
   rpc_user: rpcuser,
   rpc_pass: rpcpass,
   rpc_cert: rpccert,
@@ -190,42 +190,31 @@ export async function cleanShutdown(mainWindow, app) {
   });
 }
 
-export const launchDCRD = (params, testnet, reactIPC) => new Promise((resolve,reject) => {
-  let rpcCreds, appdata;
-
-  rpcCreds = params && params.rpcCreds;
-  appdata = params && params.appdata;
-
-  if (rpcCreds) {
-    setDaemonCredentials(rpcCreds);
-    dcrdPID = -1;
-    AddToDcrdLog(process.stdout, "dcrd is connected as remote", debug);
-    return resolve(rpcCreds);
-  }
-  if (dcrdPID === -1) {
-    return resolve(getDaemonCredentials());
-  }
-
-  if (!appdata) appdata = getDcrdPath();
-
-  let args = [ "--nolisten" ];
-  const newConfig = readDcrdConfig(appdata, testnet);
-  newConfig.appdata = appdata;
-
-  if (fs.existsSync(dcrdCfg(appdata))) {
-    args.push(`--configfile=${dcrdCfg(appdata)}`);
-  }
-  args.push(`--appdata=${appdata}`);
-
-  if (testnet) {
-    args.push("--testnet");
-  }
-  setDaemonCredentials(newConfig);
-
+// launchDCRD checks launches dcrd
+export const launchDCRD = (reactIPC, testnet, appdata) => new Promise((resolve,reject) => {
   const dcrdExe = getExecutablePath("dcrd", argv.custombinpath);
   if (!fs.existsSync(dcrdExe)) {
     logger.log("error", "The dcrd executable does not exist. Expected to find it at " + dcrdExe);
     return;
+  }
+
+  const args = [ "--nolisten" ];
+
+  // we read dcrd config before setting appdata because if appdata is not defined
+  // we use dcrd.conf file from decrediton's config folder, so appdata needs to be undefined.
+  const newConfig = readDcrdConfig(testnet, appdata);
+
+  if (!appdata) appdata = getDcrdPath();
+  // After reading dcrd.conf we can set rpc.cert, as we are going to use it from getDcrdPath() if
+  // appdata is not defined.
+  newConfig.rpc_cert = `${appdata}/rpc.cert`;
+  newConfig.appdata = appdata;
+  args.push(`--appdata=${appdata}`);
+  if (fs.existsSync(dcrdCfg(appdata))) {
+    args.push(`--configfile=${dcrdCfg(appdata)}`);
+  }
+  if (testnet) {
+    args.push("--testnet");
   }
 
   if (os.platform() == "win32") {
@@ -570,7 +559,7 @@ export const connectRpcDaemon = async (mainWindow, rpcCreds) => {
   let rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port;
 
   if (rpcCreds) {
-    setDaemonCredentials(rpcCreds);
+    setDcrdRpcCredentials(rpcCreds);
     rpc_user = rpcCreds.rpc_user;
     rpc_pass = rpcCreds.rpc_pass;
     rpc_cert = rpcCreds.rpc_cert;
