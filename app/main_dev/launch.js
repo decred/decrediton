@@ -1,4 +1,4 @@
-import { dcrwalletConf, getWalletPath, getExecutablePath, dcrdCfg, getDcrdPath } from "./paths";
+import { dcrwalletConf, getWalletPath, getExecutablePath, dcrdCfg } from "./paths";
 import { getWalletCfg, readDcrdConfig } from "config";
 import { createLogger, AddToDcrdLog, AddToDcrwalletLog, AddToDcrlndLog, GetDcrdLogs,
   GetDcrwalletLogs, lastErrorLine, lastPanicLine, ClearDcrwalletLogs, CheckDaemonLogs } from "./logging";

@@ -2,7 +2,7 @@ import { Machine } from "xstate";
 
 // Hierarchical state machine called insed getStartedStateMachine.
 // source: https://github.com/davidkpiano/xstate#hierarchical-nested-state-machines
-export const CreateWalletMachine = (a) => Machine({
+export const CreateWalletMachine = () => Machine({
   id: "getStarted",
   initial: "preStart",
   context: {
@@ -20,7 +20,7 @@ export const CreateWalletMachine = (a) => Machine({
         CREATE: {
           target: "newWallet",
           cond: (c, event) => !!event.isNew
-        },
+        }
       }
     },
     newWallet: {
@@ -48,7 +48,7 @@ export const CreateWalletMachine = (a) => Machine({
     },
     walletCreated: {
       type: "final",
-      onEntry: "isAtStartWalletCreated",
+      onEntry: "isAtStartWalletCreated"
     }
   }
 },

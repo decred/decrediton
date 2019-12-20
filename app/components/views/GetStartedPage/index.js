@@ -159,7 +159,7 @@ class GetStarted extends React.Component {
       <GetStartedPage
         {...{ ...this.state, ...this.props, submitRemoteCredentials, submitAppdata,
           submitChosenWallet, service, machine, error, text }}
-          StateComponent={StateComponent} />
+        StateComponent={StateComponent} />
     );
   }
 }

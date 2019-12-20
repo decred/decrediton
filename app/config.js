@@ -169,7 +169,7 @@ export function readDcrdConfig(testnet, appdata) {
     newCfg.rpc_port = testnet ? "19109" : "9109";
 
     if (appdata) {
-      newCfg.appdata = appdata
+      newCfg.appdata = appdata;
       newCfg.rpc_cert = `${appdata}/rpc.cert`;
       newCfg.configFile = appdata;
     } else {

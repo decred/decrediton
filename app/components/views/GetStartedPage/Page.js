@@ -2,7 +2,7 @@ import { AnimatedLinearProgressFull } from "indicators";
 import { SlateGrayButton, InvisibleButton } from "buttons";
 import "style/GetStarted.less";
 import { LogsLinkMsg, SettingsLinkMsg, LearnBasicsMsg, UpdateAvailableLink,
-    WhatsNewLink, LoaderTitleMsg, AboutModalButton } from "./messages";
+  WhatsNewLink, LoaderTitleMsg, AboutModalButton } from "./messages";
 const DaemonLoadingBody = ({
   updateAvailable, appVersion, onShowSettings, onShowLogs, StateComponent, getDaemonSynced,
   error, text, getCurrentBlockCount, animationType, getNeededBlocks, ...props
