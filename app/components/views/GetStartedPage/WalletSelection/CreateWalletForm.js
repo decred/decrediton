@@ -27,7 +27,6 @@ const CreateWalletForm = ({
   hideCreateWalletForm,
   newWalletName,
   walletNameError,
-  createNewWallet,
   onChangeCreateWalletName,
   hasFailedAttemptName,
   hasFailedAttemptPubKey,
@@ -39,11 +38,12 @@ const CreateWalletForm = ({
   masterPubKeyError,
   isTrezor,
   toggleTrezor,
-  onShowTrezorConfig
+  onShowTrezorConfig,
+  isCreateWallet
 }) => {
   return (
     <>
-      {!createNewWallet ?
+      {isCreateWallet ?
         <div className="new-wallet-title-area">
           <div className="wallet-icon-small createnew" />
           <div className="new-wallet-title">
@@ -73,7 +73,7 @@ const CreateWalletForm = ({
           />
         </div>
       </div>
-      {createNewWallet &&
+      {!isCreateWallet &&
         <>
           <div className="advanced-daemon-row">
             <div className="advanced-daemon-label">
