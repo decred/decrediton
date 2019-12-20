@@ -27,7 +27,7 @@ class LoaderBarBottom extends React.Component {
       finishDateEstimation = new Date();
       finishDateEstimation.setSeconds(finishDateEstimation.getSeconds() + getEstimatedTimeLeft);
     }
-    return ( getCurrentBlockCount && !getDaemonSynced &&
+    return getCurrentBlockCount && !getDaemonSynced ? (
       <div className="loader-bar-bottom">
         <div className="loader-bar-estimation">
           <span className="normal">{finishDateEstimation ? <T id="getStarted.chainLoading.syncEstimation.small" m="Loading Decred blockchain, completion estimated"/> : null}</span>
@@ -39,7 +39,8 @@ class LoaderBarBottom extends React.Component {
           value={getCurrentBlockCount}
         />
       </div>
-    );
+    ) : <div />;
   }
 }
+
 export default LoaderBarBottom;
