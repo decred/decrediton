@@ -46,6 +46,7 @@ class GetStarted extends React.Component {
 
   componentDidMount() {
     this.service.start();
+    this.getStateComponent();
   }
 
   componentWillUnmount() {
@@ -67,8 +68,7 @@ class GetStarted extends React.Component {
     const { current } = prevState;
     const { syncFetchMissingCfiltersAttempt, syncFetchHeadersAttempt, syncRescanAttempt, syncDiscoverAddressesAttempt } = this.props;
     if (current && current.value !== this.state.current.value) {
-      const StateComponent = this.getStateComponent();
-      this.setState({ StateComponent });
+      this.getStateComponent();
     }
     if (prevProps.syncFetchMissingCfiltersAttempt !== syncFetchMissingCfiltersAttempt && syncFetchMissingCfiltersAttempt) {
       this.setState({ animationType: daemonWaiting });
@@ -88,38 +88,38 @@ class GetStarted extends React.Component {
 
   getStateComponent() {
     const { current } = this.state;
-    let component;
+    let component, text;
 
     switch(current.value) {
     case "startAdvancedDaemon":
       component = AdvancedStartupBody;
-      this.setState({ text: <T id="loaderBar.WaitingDaemon" m="Waiting for daemon connection..." /> });
+      text = <T id="loaderBar.WaitingDaemon" m="Waiting for daemon connection..." />;
       break;
     case "connectingDaemon":
-      this.setState({ text: <T id="loaderBar.WaitingConnection" m="connecting to daemon..." /> });
+      text = <T id="loaderBar.WaitingConnection" m="connecting to daemon..." /> ;
       break;
     case "checkingNetworkMatch":
-      this.setState({ text: <T id="loaderBar.checkingNetwork" m="Checking if network matches..." /> });
+      text = <T id="loaderBar.checkingNetwork" m="Checking if network matches..." />;
       break;
     case "startingDaemon":
-      this.setState({ text: <T id="loaderBar.StartingDaemon" m="Starting Daemon..." /> });
+      text = <T id="loaderBar.StartingDaemon" m="Starting Daemon..." />;
       break;
     case "syncingDaemon":
-      this.setState({ text: <T id="loaderBar.syncingDaemon" m="syncing Daemon..." /> });
+      text = <T id="loaderBar.syncingDaemon" m="syncing Daemon..." />;
       break;
     case "choosingWallet":
-      this.setState({ text: <T id="loaderBar.choosingWallet" m="Choose a wallet to open" /> });
+      text = <T id="loaderBar.choosingWallet" m="Choose a wallet to open" />;
       component = WalletSelection;
       break;
     case "startingWallet":
-      this.setState({ text: <T id="loaderBar.startingWallet" m="Starting wallet..." /> });
+      text = <T id="loaderBar.startingWallet" m="Starting wallet..." />;
       break;
     case "syncingRPC":
-      this.setState({ text: <T id="loaderBar.syncingRPC" m="Syncing RPC connection..." /> });
+      text = <T id="loaderBar.syncingRPC" m="Syncing RPC connection..." />;
       break;
     }
 
-    return component;
+    return this.setState({ StateComponent: component, text });
   }
 
   sendEvent(data) {
@@ -159,7 +159,7 @@ class GetStarted extends React.Component {
       <GetStartedPage
         {...{ ...this.state, ...this.props, submitRemoteCredentials, submitAppdata,
           submitChosenWallet, service, machine, error, text }}
-        StateComponent={StateComponent} />
+          StateComponent={StateComponent} />
     );
   }
 }
