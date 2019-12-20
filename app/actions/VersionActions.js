@@ -63,7 +63,7 @@ export const getWalletRPCVersionAttempt = () => (dispatch, getState) => new Prom
       } else {
         const { address, port } = getState().grpc;
         await dispatch(loaderRequest(address,port));
-        dispatch(getWalletSeedService(address, port));
+        await dispatch(getWalletSeedService(address, port));
         resolve(true);
       }
     } catch (error) {
