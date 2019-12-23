@@ -7,7 +7,7 @@ class WalletSelectionBody extends React.Component {
     super(props);
     this.state = {
       editWallets: false,
-      isCreateWallet: false,
+      isCreateNewWallet: false,
       isCreatingOrRestoring: false,
       newWalletName: "",
       hasFailedAttempt: false,
@@ -38,7 +38,7 @@ class WalletSelectionBody extends React.Component {
     } = this;
     const {
       newWalletName,
-      isCreateWallet,
+      isCreateNewWallet,
       isCreatingOrRestoring,
       editWallets,
       hasFailedAttemptName,
@@ -58,7 +58,7 @@ class WalletSelectionBody extends React.Component {
           availableWallets,
           startWallet,
           createWallet,
-          isCreateWallet,
+          isCreateNewWallet,
           isCreatingOrRestoring,
           showCreateWalletForm,
           hideCreateWalletForm,
@@ -90,8 +90,8 @@ class WalletSelectionBody extends React.Component {
   onCloseEditWallets() {
     this.setState({ editWallets: false });
   }
-  showCreateWalletForm(isCreateWallet) {
-    this.setState({ isCreatingOrRestoring: true, isCreateWallet });
+  showCreateWalletForm(isCreateNewWallet) {
+    this.setState({ isCreatingOrRestoring: true, isCreateNewWallet });
   }
   hideCreateWalletForm() {
     if (this.state.isTrezor) {
@@ -99,7 +99,7 @@ class WalletSelectionBody extends React.Component {
     }
     this.setState({ hasFailedAttemptName: false,
       hasFailedAttemptPubKey: false,
-      isCreateWallet: false,
+      isCreateNewWallet: false,
       isCreatingOrRestoring: false,
       newWalletName: "",
       isWatchingOnly: false,
@@ -129,7 +129,7 @@ class WalletSelectionBody extends React.Component {
   }
   createWallet() {
     const { newWalletName, isWatchingOnly, masterPubKeyError, walletMasterPubKey,
-      walletNameError, isTrezor, isCreateWallet } = this.state;
+      walletNameError, isTrezor, isCreateNewWallet } = this.state;
 
     const walletSelected = {
       label: newWalletName,
@@ -154,12 +154,12 @@ class WalletSelectionBody extends React.Component {
         this.props.onCreateWallet(walletSelected));
     }
 
-    if (!isCreateWallet) {
-      this.props.createWalletExistingToggle(true);
+    if (!isCreateNewWallet) {
+      this.props.isCreateNewWallet(true);
     }
 
     return this.props.onCreateWallet(walletSelected)
-      .then(() => this.props.onShowCreateWallet());
+      .then(() => this.props.onShowCreateWallet(isCreateNewWallet));
   }
   toggleWatchOnly() {
     const { isWatchingOnly } = this.state;

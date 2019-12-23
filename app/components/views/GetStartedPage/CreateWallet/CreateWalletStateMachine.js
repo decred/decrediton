@@ -13,11 +13,11 @@ export const CreateWalletMachine = () => Machine({
     createWallet: {
       onEntry: "isAtCreateWallet",
       on: {
-        RESTORE: {
+        CREATE_WALLET: {
           target: "writeSeed",
           cond: (c, event) => !event.isNew
         },
-        CREATE: {
+        CREATE_WALLET: {
           target: "newWallet",
           cond: (c, event) => !!event.isNew
         }
@@ -56,6 +56,9 @@ export const CreateWalletMachine = () => Machine({
   actions: {
     isAtCreateWallet: () => {
       console.log("is at create wallet");
+    },
+    isAtNewWallet: () => {
+      console.log("is At NewWallet")
     }
   }
 });

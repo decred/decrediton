@@ -12,7 +12,7 @@ export default () =>
   <BlurableContainer className="getstarted-page-body">
     <Switch>
       <Route path="/getstarted/language"     component={LanguageSelectPage} />
-      <Route path="/getstarted/createwallet" component={CreateWallet} />
+      <Route path="/getstarted/createwallet/:isNew" component={CreateWallet} />
       <Route path="/getstarted/tutorial"     component={TutorialPage} />
       <Route path="/getstarted/privacy"      component={PrivacyPage} />
       <Route path="/getstarted/spvchoice"    component={SpvChoicePage} />

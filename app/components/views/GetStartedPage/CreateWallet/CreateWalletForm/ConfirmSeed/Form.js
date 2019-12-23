@@ -1,12 +1,10 @@
 import "style/CreateWalletForm.less";
 import { InfoDocFieldModalButton } from "buttons";
 import SingleSeedWordEntry from "../SingleSeedWordEntry";
-import WalletHeader from "../createWalletHeader";
 import { ConfirmSeedMsg } from "../../../messages";
 
 export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord }) => (
   <>
-    <WalletHeader />
     <div className="seed is-row">
       <div className="is-row confirm-seed-label-text seed">
         <InfoDocFieldModalButton document="SeedInfo" />

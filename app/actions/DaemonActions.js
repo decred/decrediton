@@ -97,8 +97,8 @@ export const showPrivacy = () => (dispatch) => {
   dispatch(pushHistory("/getstarted/privacy"));
 };
 
-export const showCreateWallet = () => (dispatch) => {
-  dispatch(pushHistory("/getstarted/createwallet"));
+export const showCreateWallet = (isNew) => (dispatch) => {
+  dispatch(pushHistory("/getstarted/createwallet/"+isNew));
 }
 
 export const enableSpv = () => async (dispatch, getState) => {

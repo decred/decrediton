@@ -1,16 +1,11 @@
 import ContinueWalletCreation from "./ContinueWalletCreation";
-import CreateWallet from "./CreateWallet";
 import { createWallet } from "connectors";
 
 @autobind
 class CreateWalletForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = this.getInitialState();
-  }
-
-  getInitialState() {
-    return {
+    this.state = {
       mnemonic: "",
       seed: "",
       passPhrase: "",
@@ -31,10 +26,6 @@ class CreateWalletForm extends React.Component {
     if (prevProps.decodeSeedError !== this.props.decodeSeedError) {
       this.setState({ seedError: this.props.decodeSeedError });
     }
-  }
-
-  componentWillUnmount() {
-    this.resetState();
   }
 
   handleCopySeed() {
@@ -100,29 +91,8 @@ class CreateWalletForm extends React.Component {
           }}
         />
       ) : (
-        <CreateWallet
-          {...{
-            createNewWallet,
-            mnemonic,
-            isValid,
-            createWalletConfirmNewSeed,
-            handleCopySeed,
-            showCopySeedConfirm,
-            onSubmitCopySeedConfirm,
-            onCancelCopySeedConfirm,
-            onReturnToWalletSelection,
-            onReturnToExistingOrNewScreen,
-            getCurrentBlockCount,
-            getNeededBlocks,
-            getEstimatedTimeLeft,
-            getDaemonSynced
-          }}
-        />
+        <></>
       );
-  }
-
-  resetState() {
-    this.setState(this.getInitialState());
   }
 
   generateSeed() {

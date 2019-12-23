@@ -3,8 +3,7 @@ import { FormattedMessage as T } from "react-intl";
 import { SeedCopyConfirmModal } from "modals";
 import { LoaderBarBottom } from "indicators";
 import { Documentation } from "shared";
-import WalletHeader from "./createWalletHeader";
-import { BackBtnMsg } from "../../messages";
+import { BackBtnMsg } from "../messages";
 import "style/CreateWalletForm.less";
 
 const CreateWallet = ({
@@ -22,14 +21,12 @@ const CreateWallet = ({
 }) => (
   <>
     <div className="getstarted content">
-      <WalletHeader {...{ onBack: onReturnToWalletSelection }} />
       <Documentation name="WalletCreationWarning" className="create-wallet-warning" />
       <div className="seedArea">
         {mnemonic.split(" ").map((word, i) => {
           return (
-            <div key={i} className="seedWord filled">
-              <span className="number">{i+1}.</span>
-              <span className="word">{word}</span>
+            <div key={i} className="seedWord">
+              {word}
             </div>
           );
         })}
