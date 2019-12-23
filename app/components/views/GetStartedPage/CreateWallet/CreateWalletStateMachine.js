@@ -4,7 +4,7 @@ import { Machine } from "xstate";
 // source: https://github.com/davidkpiano/xstate#hierarchical-nested-state-machines
 export const CreateWalletMachine = () => Machine({
   id: "getStarted",
-  initial: "preStart",
+  initial: "createWallet",
   context: {
     isNew: null,
     error: null

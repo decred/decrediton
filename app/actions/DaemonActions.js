@@ -97,6 +97,10 @@ export const showPrivacy = () => (dispatch) => {
   dispatch(pushHistory("/getstarted/privacy"));
 };
 
+export const showCreateWallet = () => (dispatch) => {
+  dispatch(pushHistory("/getstarted/createwallet"));
+}
+
 export const enableSpv = () => async (dispatch, getState) => {
   dispatch(updateStateSettingsChanged({ spvMode: true }, true));
   const tempSettings = getState().settings.tempSettings;

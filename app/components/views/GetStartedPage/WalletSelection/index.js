@@ -1,4 +1,5 @@
 import { WalletSelectionFormBody } from "./Form";
+import { walletStartup } from "connectors";
 
 @autobind
 class WalletSelectionBody extends React.Component {
@@ -158,7 +159,7 @@ class WalletSelectionBody extends React.Component {
     }
 
     return this.props.onCreateWallet(walletSelected)
-      .then(wallet => this.props.createChosenWallet(wallet));
+      .then(() => this.props.onShowCreateWallet());
   }
   toggleWatchOnly() {
     const { isWatchingOnly } = this.state;
@@ -186,7 +187,6 @@ class WalletSelectionBody extends React.Component {
     this.setState({ walletMasterPubKey });
   }
   startWallet() {
-    console.log(this.props.selectedWallet);
     this.props.onStartWallet(this.props.selectedWallet);
   }
   resetState() {
@@ -194,4 +194,4 @@ class WalletSelectionBody extends React.Component {
   }
 }
 
-export default WalletSelectionBody;
+export default walletStartup(WalletSelectionBody);
