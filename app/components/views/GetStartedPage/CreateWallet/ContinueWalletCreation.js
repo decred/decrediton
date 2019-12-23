@@ -4,7 +4,7 @@ import CreatePassPhrase from "./CreatePassPhrase";
 import { FormattedMessage as T } from "react-intl";
 import { LoaderBarBottom } from "indicators";
 import { KeyBlueButton, InvisibleButton } from "buttons";
-import { BackBtnMsg } from "../../messages";
+import { BackBtnMsg } from "../messages";
 import "style/CreateWalletForm.less";
 
 const ContinueWalletCreation = ({

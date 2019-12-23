@@ -1,4 +1,4 @@
-import ContinueWalletCreation from "../ContinueWalletCreation";
+import CopySeed from "./Page";
 import { createWallet } from "connectors";
 
 @autobind
@@ -43,24 +43,12 @@ class CreateWalletForm extends React.Component {
   }
   render() {
     const {
-      confirmNewSeed,
-      createNewWallet,
-      createWalletExisting,
-      createWalletConfirmNewSeed,
-      onReturnToNewSeed,
-      onReturnToWalletSelection,
-      onReturnToExistingOrNewScreen,
-      isCreatingWallet,
       getCurrentBlockCount,
       getNeededBlocks,
       getEstimatedTimeLeft,
       getDaemonSynced,
-      decodeSeed
     } = this.props;
     const {
-      setSeed,
-      setPassPhrase,
-      onCreateWallet,
       handleCopySeed,
       onSubmitCopySeedConfirm,
       onCancelCopySeedConfirm
@@ -68,31 +56,20 @@ class CreateWalletForm extends React.Component {
     const { mnemonic, showCopySeedConfirm } = this.state;
     const isValid = this.isValid();
 
-    return (confirmNewSeed || createWalletExisting)
-      ? (
-        <ContinueWalletCreation
-          {...{
-            mnemonic: createWalletExisting ? null : mnemonic,
-            setSeed,
-            createWalletExisting,
-            createNewWallet,
-            setPassPhrase,
-            onCreateWallet,
-            decodeSeed,
-            isValid,
-            onReturnToNewSeed,
-            onReturnToWalletSelection,
-            onReturnToExistingOrNewScreen,
-            isCreatingWallet,
-            getCurrentBlockCount,
-            getNeededBlocks,
-            getEstimatedTimeLeft,
-            getDaemonSynced
-          }}
-        />
-      ) : (
-        <></>
-      );
+    return <CopySeed {...{
+        mnemonic,
+        isValid,
+        handleCopySeed,
+        showCopySeedConfirm,
+        onSubmitCopySeedConfirm,
+        onCancelCopySeedConfirm,
+        getCurrentBlockCount,
+        getNeededBlocks,
+        getEstimatedTimeLeft,
+        getDaemonSynced
+      }}
+     />
+
   }
 
   generateSeed() {
