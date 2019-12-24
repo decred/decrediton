@@ -101,8 +101,7 @@ class CreateWallet extends React.Component {
     const { sendEvent, sendContinue } = this;
     const { StateComponent, mnemonic, showCopySeedConfirm } = this.state;
     return <div className={cx("page-body getstarted", isTestNet && "testnet-body")}>
-      <Page {...{ StateComponent, sendEvent, mnemonic, showCopySeedConfirm, sendContinue
-      }}/>
+      <Page {...{ StateComponent, sendEvent, mnemonic, showCopySeedConfirm, sendContinue }}/>
     </div>
   }
 }

@@ -1,6 +1,6 @@
 import ExistingSeed from "./ExistingSeed";
 import ConfirmSeed from "./ConfirmSeed";
-import CreatePassPhrase from "./CreatePassPhrase";
+import { CreatePassPhrase } from "shared";
 import { FormattedMessage as T } from "react-intl";
 import { LoaderBarBottom } from "indicators";
 import { KeyBlueButton, InvisibleButton } from "buttons";
@@ -24,7 +24,7 @@ const ContinueWalletCreation = ({
   createNewWallet,
   ...props
 }) => (
-  <div className="getstarted content">
+  <>
     {createWalletExisting ?
       <ExistingSeed {...props} onChange={setSeed} /> :
       <ConfirmSeed  {...{ ...props, onReturnToNewSeed }} onChange={setSeed} /> }
@@ -45,7 +45,7 @@ const ContinueWalletCreation = ({
       ><BackBtnMsg /></InvisibleButton>
     </div>
     <LoaderBarBottom  {...{ getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft, getDaemonSynced }}  />
-  </div>
+  </>
 );
 
 export default ContinueWalletCreation;
