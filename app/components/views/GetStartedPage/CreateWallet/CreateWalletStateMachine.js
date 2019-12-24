@@ -1,6 +1,6 @@
 import { Machine } from "xstate";
 
-// Hierarchical state machine called insed getStartedStateMachine.
+// Hierarchical state machine called inside getStartedStateMachine.
 // source: https://github.com/davidkpiano/xstate#hierarchical-nested-state-machines
 export const CreateWalletMachine = () => Machine({
   id: "getStarted",
@@ -39,7 +39,7 @@ export const CreateWalletMachine = () => Machine({
       }
     },
     confirmSeed: {
-      onEntry: "isStartedDaemon",
+      onEntry: "isAtConfirmSeed",
       on: {
         CONFIRMED: "walletCreated",
         ERROR: "newWallet",
@@ -59,6 +59,9 @@ export const CreateWalletMachine = () => Machine({
     },
     isAtNewWallet: () => {
       console.log("is At NewWallet")
+    },
+    isAtConfirmSeed: () => {
+      console.log("is At ConfirmSeed");
     }
   }
 });

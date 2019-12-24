@@ -8,7 +8,6 @@ import "style/CreateWalletForm.less";
 
 const CreateWallet = ({
   mnemonic,
-  createWalletConfirmNewSeed,
   handleCopySeed,
   showCopySeedConfirm,
   onCancelCopySeedConfirm,
@@ -17,15 +16,17 @@ const CreateWallet = ({
   getCurrentBlockCount,
   getNeededBlocks,
   getEstimatedTimeLeft,
-  getDaemonSynced
+  getDaemonSynced,
+  sendContinue
 }) => (
   <>
     <Documentation name="WalletCreationWarning" className="create-wallet-warning" />
     <div className="seedArea">
       {mnemonic.split(" ").map((word, i) => {
         return (
-          <div key={i} className="seedWord">
-            {word}
+          <div key={i} className="seedWord filled">
+            <span className="number">{i+1}.</span>
+            <span className="word">{word}</span>
           </div>
         );
       })}
@@ -34,7 +35,7 @@ const CreateWallet = ({
       </div>
     </div>
     <div className="toolbar">
-      <KeyBlueButton className="wallet-key-blue-button" onClick={createWalletConfirmNewSeed}>
+      <KeyBlueButton className="wallet-key-blue-button" onClick={sendContinue}>
         <T id="createWallet.continueBtn" m="Continue" />
       </KeyBlueButton>
       <InvisibleButton
