@@ -6,7 +6,7 @@ import * as wallet from "wallet";
 import { rescanCancel, ticketBuyerCancel } from "./ControlActions";
 import { getWalletServiceAttempt, startWalletServices, getBestBlockHeightAttempt,
   cancelPingAttempt } from "./ClientActions";
-import { WALLETREMOVED_FAILED } from "./DaemonActions";
+import { WALLETREMOVED_FAILED, backToCredentials } from "./DaemonActions";
 import { getWalletCfg, getDcrdCert } from "config";
 import { getWalletPath } from "main_dev/paths";
 import { isTestNet, isSPV } from "selectors";
@@ -97,6 +97,7 @@ export const createWalletGoBackWalletSelection = () => async (dispatch, getState
     await wallet.stopWallet();
     await wallet.removeWallet(walletName, network == TESTNET);
     dispatch({ type: CREATEWALLET_GOBACK });
+    dispatch(backToCredentials());
   } catch (err) {
     dispatch({ error: err, type: WALLETREMOVED_FAILED });
   }
@@ -110,16 +111,16 @@ export const CREATEWALLET_ATTEMPT = "CREATEWALLET_ATTEMPT";
 export const CREATEWALLET_FAILED = "CREATEWALLET_FAILED";
 export const CREATEWALLET_SUCCESS = "CREATEWALLET_SUCCESS";
 
-export const createWalletRequest = (pubPass, privPass, seed, existing) =>
+export const createWalletRequest = (pubPass, privPass, seed, isNew) =>
   (dispatch, getState) => {
-    dispatch({ existing: existing, type: CREATEWALLET_ATTEMPT });
+    dispatch({ existing: !isNew, type: CREATEWALLET_ATTEMPT });
     return createWallet(getState().walletLoader.loader, pubPass, privPass, seed)
       .then(() => {
         const { daemon: { walletName } } = getState();
         const config = getWalletCfg(isTestNet(getState()), walletName);
         config.delete("discoveraccounts");
-        config.set("discoveraccounts", !existing);
-        dispatch({ complete: !existing, type: UPDATEDISCOVERACCOUNTS });
+        config.set("discoveraccounts", isNew);
+        dispatch({ complete: isNew, type: UPDATEDISCOVERACCOUNTS });
         dispatch({ response: {}, type: CREATEWALLET_SUCCESS });
         dispatch(clearStakePoolConfigNewWallet());
         dispatch(getWalletServiceAttempt());

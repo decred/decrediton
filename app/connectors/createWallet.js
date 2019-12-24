@@ -2,6 +2,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { selectorMap } from "fp";
 import * as sel from "selectors";
+import * as da from "actions/DaemonActions";
 import * as wla from "actions/WalletLoaderActions";
 import * as ca from "actions/ClientActions";
 import * as trza from "actions/TrezorActions";
@@ -20,6 +21,8 @@ const mapStateToProps = selectorMap({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  backToCredentials: da.backToCredentials,
+  goBackToWalletSelection: wla.createWalletGoBackWalletSelection,
   createWalletConfirmNewSeed: wla.createWalletConfirmNewSeed,
   createWalletGoBackNewSeed: wla.createWalletGoBackNewSeed,
   createWalletRequest: wla.createWalletRequest,

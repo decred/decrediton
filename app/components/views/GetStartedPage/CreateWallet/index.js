@@ -6,8 +6,9 @@ import { CreateWalletMachine } from "./CreateWalletStateMachine";
 import Page from "./Page"
 import { withRouter } from "react-router";
 import CopySeed from "./CopySeed";
-import ContinueWalletCreation from "./ContinueWalletCreation";
+import ConfirmSeed from "./ConfirmSeed";
 import { createWallet } from "connectors";
+import { createElement as h, cloneElement as k } from "react";
 
 @autobind
 class CreateWallet extends React.Component {
@@ -24,6 +25,7 @@ class CreateWallet extends React.Component {
       mnemonic: "",
       seed: "",
       passPhrase: "",
+      isNew: "",
     };
   }
 
@@ -31,27 +33,37 @@ class CreateWallet extends React.Component {
     this.service.start();
     const { isNew } = this.props.match.params;
     const { isCreatingWatchingOnly, masterPubKey } = this.props;
+    this.setState({ isNew });
     if (isCreatingWatchingOnly && masterPubKey) {
       this.props.createWatchOnlyWalletRequest(masterPubKey);
       return;
     }
     if (isNew) {
-      this.generateSeed();
+      this.props.generateSeed().then(response => this.setState({
+        mnemonic: response.getSeedMnemonic(),
+        seed: this.props.isTestNet ? response.getSeedBytes() : null // Allows verification skip in dev
+      }, this.getStateComponent ));
     }
     this.service.send({ type: "CREATE_WALLET", isNew })
   }
 
   getStateComponent() {
     const { current } = this.state;
+    const { sendBack, sendContinue, onCreateWallet, setPassPhrase, setSeed, isValid } = this;
+    const { mnemonic } = this.state;
+    const { decodeSeed } = this.props;
     let component, text;
 
     switch(current.value) {
     case "newWallet":
-      component = CopySeed;
+      component = h(CopySeed, { sendBack, sendContinue, mnemonic });
       break;
     case "confirmSeed":
-      component = ContinueWalletCreation;
+      component = h(ConfirmSeed, { mnemonic, sendBack, decodeSeed, onCreateWallet, setPassPhrase, setSeed, isValid });
       break;
+    case "finished":
+      this.service.stop();
+      this.props.goBackToWalletSelection();
     }
 
     return this.setState({ StateComponent: component, text });
@@ -64,45 +76,50 @@ class CreateWallet extends React.Component {
   }
 
   sendContinue() {
-    this.sendEvent({ type: "CONTINUE" })
+    this.sendEvent({ type: "CONTINUE" });
   }
 
-  generateSeed() {
-    return this.props.generateSeed().then(response => this.setState({
-      mnemonic: response.getSeedMnemonic(),
-      seed: this.props.isTestNet ? response.getSeedBytes() : null // Allows verification skip in dev
-    }));
+  sendBack() {
+    this.sendEvent({ type: "BACK" });
+  }
+
+  render() {
+    const { decodeSeed, onReturnToWalletSelection, onSetWalletPrivatePassphrase,
+      getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft, isTestNet, intl
+    } = this.props;
+
+    const { StateComponent } = this.state;
+    return <div className={cx("page-body getstarted", isTestNet && "testnet-body")}>
+        <Page {...{ StateComponent }}/>
+      </div>
   }
 
   onCreateWallet() {
     const {
-      createWalletExisting,
       createWalletRequest,
       onSetWalletPrivatePassphrase
     } = this.props;
-    const { seed, passPhrase } = this.state;
+    const { seed, passPhrase, isNew } = this.state;
     const pubpass = ""; // Temporarily disabled?
 
-    if (!this.isValid()) return;
-    createWalletRequest(pubpass, passPhrase, seed, !!createWalletExisting);
-    !!createWalletExisting && onSetWalletPrivatePassphrase && onSetWalletPrivatePassphrase(passPhrase);
+    if (!(seed && passPhrase)) return;
+    createWalletRequest(pubpass, passPhrase, seed, isNew);
+    isNew && onSetWalletPrivatePassphrase && onSetWalletPrivatePassphrase(passPhrase);
+    this.sendContinue();
+    this.props.backToCredentials();
+  }
+
+  setPassPhrase(passPhrase) {
+    this.setState({ passPhrase });
+  }
+
+  setSeed(seed) {
+    this.setState({ seed });
   }
 
   isValid() {
     const { seed, passPhrase } = this.state;
     return !!(seed && passPhrase);
-  }
-
-  render() {
-    const { onReturnToNewSeed, onReturnToWalletSelection, onSetWalletPrivatePassphrase,
-      getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft, isTestNet, intl
-    } = this.props;
-
-    const { sendEvent, sendContinue } = this;
-    const { StateComponent, mnemonic, showCopySeedConfirm } = this.state;
-    return <div className={cx("page-body getstarted", isTestNet && "testnet-body")}>
-      <Page {...{ StateComponent, sendEvent, mnemonic, showCopySeedConfirm, sendContinue }}/>
-    </div>
   }
 }
 

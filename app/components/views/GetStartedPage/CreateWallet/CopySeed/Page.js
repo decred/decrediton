@@ -1,22 +1,17 @@
-import { KeyBlueButton, InvisibleButton } from "buttons";
-import { FormattedMessage as T } from "react-intl";
 import { SeedCopyConfirmModal } from "modals";
-import { LoaderBarBottom } from "indicators";
+import { FormattedMessage as T } from "react-intl";
 import { Documentation } from "shared";
+import { KeyBlueButton, InvisibleButton } from "buttons";
 import { BackBtnMsg } from "../../messages";
 import "style/CreateWalletForm.less";
 
 const CreateWallet = ({
-  mnemonic,
   handleCopySeed,
   showCopySeedConfirm,
   onCancelCopySeedConfirm,
   onSubmitCopySeedConfirm,
-  onReturnToWalletSelection,
-  getCurrentBlockCount,
-  getNeededBlocks,
-  getEstimatedTimeLeft,
-  getDaemonSynced,
+  mnemonic,
+  sendBack,
   sendContinue
 }) => (
   <>
@@ -40,11 +35,10 @@ const CreateWallet = ({
       </KeyBlueButton>
       <InvisibleButton
         className="go-back-button"
-        onClick={onReturnToWalletSelection}>
+        onClick={sendBack}>
         <BackBtnMsg />
       </InvisibleButton>
     </div>
-    <LoaderBarBottom  {...{ getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft, getDaemonSynced }}  />
     <SeedCopyConfirmModal
       show={showCopySeedConfirm}
       onSubmit={onSubmitCopySeedConfirm}

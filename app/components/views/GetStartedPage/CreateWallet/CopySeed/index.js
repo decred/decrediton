@@ -21,7 +21,7 @@ class CreateWalletForm extends React.Component {
   }
 
   onSubmitCopySeedConfirm() {
-    const { mnemonic } = this.state;
+    const { mnemonic } = this.props;
     this.setState({ showCopySeedConfirm: false });
     this.props.copySeedToClipboard(mnemonic);
   }
@@ -30,60 +30,13 @@ class CreateWalletForm extends React.Component {
     this.setState({ showCopySeedConfirm: false });
   }
   render() {
-    const {
-      getCurrentBlockCount,
-      getNeededBlocks,
-      getEstimatedTimeLeft,
-      getDaemonSynced,
-      sendContinue,
-      mnemonic,
-    } = this.props;
-    const {
-      handleCopySeed,
-      onSubmitCopySeedConfirm,
-      onCancelCopySeedConfirm
-    } = this;
+    const { sendContinue, mnemonic, sendBack } = this.props;
+    const { handleCopySeed, onSubmitCopySeedConfirm, onCancelCopySeedConfirm } = this;
     const { showCopySeedConfirm } = this.state;
 
-//   onReturnToWalletSelection,
-
     return <CopySeed {...{
-        mnemonic,
-        handleCopySeed,
-        showCopySeedConfirm,
-        onSubmitCopySeedConfirm,
-        onCancelCopySeedConfirm,
-        getCurrentBlockCount,
-        getNeededBlocks,
-        getEstimatedTimeLeft,
-        getDaemonSynced,
-        sendContinue
-      }}
-     />
-
-  }
-
-  setPassPhrase(passPhrase) {
-    this.setState({ passPhrase });
-  }
-
-  onCreateWallet() {
-    const {
-      createWalletExisting,
-      createWalletRequest,
-      onSetWalletPrivatePassphrase
-    } = this.props;
-    const { seed, passPhrase } = this.state;
-    const pubpass = ""; // Temporarily disabled?
-
-    if (!this.isValid()) return;
-    createWalletRequest(pubpass, passPhrase, seed, !!createWalletExisting);
-    !!createWalletExisting && onSetWalletPrivatePassphrase && onSetWalletPrivatePassphrase(passPhrase);
-  }
-
-  isValid() {
-    const { seed, passPhrase } = this.state;
-    return !!(seed && passPhrase);
+      mnemonic, handleCopySeed, showCopySeedConfirm, onSubmitCopySeedConfirm,
+      onCancelCopySeedConfirm, sendContinue, sendBack }} />;
   }
 }
 

@@ -21,13 +21,12 @@ const PassPhraseInputs = ({
   passPhraseVerificationError = <T id="createWallet.passphraseInput.errors.noMatch" m="*Passphrases do not match" />,
   passPhrase,
   passPhraseVerification,
-  isMatching,
-  isBlank,
   setPassPhrase,
   setPassPhraseVerification,
   intl,
   onKeyDown,
-  hasFailedAttempt
+  hasFailedAttempt,
+  isValid
 }) => (
   <>
     <div className="is-row passphrase">
@@ -55,7 +54,7 @@ const PassPhraseInputs = ({
       <form>
         <PasswordInput
           className="input-private-password"
-          invalid={!isBlank && !isMatching}
+          invalid={!isValid}
           invalidMessage={passPhraseVerificationError}
           placeholder={intl.formatMessage(messages.verifyPassphrasePlaceholder)}
           value={passPhraseVerification}

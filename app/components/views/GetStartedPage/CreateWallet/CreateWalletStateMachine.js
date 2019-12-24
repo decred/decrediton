@@ -27,7 +27,7 @@ export const CreateWalletMachine = () => Machine({
       onEntry: "isAtNewWallet",
       on: {
         CONTINUE: "confirmSeed",
-        BACK: "createWallet"
+        BACK: "finished"
       }
     },
     writeSeed: {
@@ -41,7 +41,7 @@ export const CreateWalletMachine = () => Machine({
     confirmSeed: {
       onEntry: "isAtConfirmSeed",
       on: {
-        CONFIRMED: "walletCreated",
+        CONTINUE: "walletCreated",
         ERROR: "newWallet",
         BACK: "newWallet"
       }
@@ -49,6 +49,10 @@ export const CreateWalletMachine = () => Machine({
     walletCreated: {
       type: "final",
       onEntry: "isAtStartWalletCreated"
+    },
+    finished: {
+      type: "final",
+      onEntry: "isAtFinished"
     }
   }
 },
@@ -62,6 +66,9 @@ export const CreateWalletMachine = () => Machine({
     },
     isAtConfirmSeed: () => {
       console.log("is At ConfirmSeed");
+    },
+    isAtFinished: () => {
+      console.log("is At Finished");
     }
   }
 });

@@ -1,9 +1,12 @@
 import "style/CreateWalletForm.less";
-import { InfoDocFieldModalButton } from "buttons";
+import { InfoDocFieldModalButton, KeyBlueButton, InvisibleButton } from "buttons";
 import SingleSeedWordEntry from "../SingleSeedWordEntry";
-import { ConfirmSeedMsg } from "../../messages";
+import { ConfirmSeedMsg, BackBtnMsg } from "../../messages";
+import { FormattedMessage as T } from "react-intl";
+import { CreatePassPhrase } from "shared";
 
-export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord }) => (
+export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord, isValid, onCreateWallet, sendBack, setPassPhrase,  }) => (
+<>
   <div className="seed is-row">
     <div className="is-row confirm-seed-label-text seed">
       <InfoDocFieldModalButton document="SeedInfo" />
@@ -21,7 +24,6 @@ export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord }) => (
         } else {
           className += "empty";
         }
-
         return <>
           <div key={`seeditem-${seedWord.index}`} className={className}>
             <span className="number">{seedWord.index + 1}.</span>
@@ -41,6 +43,22 @@ export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord }) => (
       })}
     </div>
   </div>
+  <CreatePassPhrase onChange={setPassPhrase} onSubmit={onCreateWallet} />
+  <div className="create-wallet-button-container">
+      <KeyBlueButton
+        className="wallet-key-blue-button"
+        disabled={!isValid()}
+        // loading={isCreatingWallet}
+        onClick={onCreateWallet}
+      >
+        <T id="createWallet.createWalletBtn" m="Create Wallet" />
+      </KeyBlueButton>
+      <InvisibleButton
+        className="go-back-button"
+        onClick={ sendBack }
+      ><BackBtnMsg /></InvisibleButton>
+    </div>
+</>
 );
 
 export default ConfirmSeedForm;
