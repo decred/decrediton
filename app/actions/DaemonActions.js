@@ -1,4 +1,4 @@
-import { syncCancel } from "./WalletLoaderActions";
+import { syncCancel, setSelectedWallet } from "./WalletLoaderActions";
 import { getVersionServiceAttempt } from "./VersionActions";
 import { stopNotifcations } from "./NotificationActions";
 import { saveSettings, updateStateSettingsChanged } from "./SettingsActions";
@@ -33,7 +33,6 @@ export const WALLETREMOVED = "WALLETREMOVED";
 export const WALLETREMOVED_FAILED= "WALLETREMOVED_FAILED";
 export const AVAILABLE_WALLETS = "AVAILABLE_WALLETS";
 export const SHUTDOWN_REQUESTED = "SHUTDOWN_REQUESTED";
-export const SET_CREDENTIALS_APPDATA_ERROR = "SET_CREDENTIALS_APPDATA_ERROR";
 export const REGISTERFORERRORS = "REGISTERFORERRORS";
 export const DAEMON_ERROR = "DAEMON_ERROR";
 export const FATAL_WALLET_ERROR = "FATAL_WALLET_ERROR";
@@ -279,6 +278,7 @@ export const createWallet = (selectedWallet) => (dispatch, getState) => new Prom
   try {
     dispatch({ isWatchingOnly: selectedWallet.value.watchingOnly,
       type: WALLETCREATED });
+    dispatch(setSelectedWallet(selectedWallet));
     await wallet.createNewWallet(selectedWallet.value.wallet, network == TESTNET)
     await dispatch(startWallet(selectedWallet));
     resolve(selectedWallet);

@@ -130,10 +130,11 @@ class WalletSelectionBody extends React.Component {
   createWallet() {
     const { newWalletName, isWatchingOnly, masterPubKeyError, walletMasterPubKey,
       walletNameError, isTrezor, isCreateNewWallet } = this.state;
+    const { isTestNet } = this.props;
 
     const walletSelected = {
       label: newWalletName,
-      value: { wallet: newWalletName, isWatchingOnly, isTrezor }
+      value: { wallet: newWalletName, isWatchingOnly, isTrezor, network: isTestNet ? "testnet" : "mainnet" }
     };
 
     if (newWalletName === "" || walletNameError) {

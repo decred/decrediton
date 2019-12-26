@@ -47,7 +47,7 @@ class CreateWallet extends React.Component {
     this.service.send({ type: "CREATE_WALLET", isNew })
   }
 
-  getStateComponent() {
+  async getStateComponent() {
     const { current } = this.state;
     const { sendBack, sendContinue, onCreateWallet, setPassPhrase, setSeed, isValid } = this;
     const { mnemonic } = this.state;
@@ -63,7 +63,12 @@ class CreateWallet extends React.Component {
       break;
     case "finished":
       this.service.stop();
-      this.props.goBackToWalletSelection();
+      await this.props.cancelCreateWallet();
+      this.props.backToCredentials();
+      break;
+    case "walletCreated":
+      this.props.backToCredentials();
+      break;
     }
 
     return this.setState({ StateComponent: component, text });
@@ -106,7 +111,6 @@ class CreateWallet extends React.Component {
     createWalletRequest(pubpass, passPhrase, seed, isNew);
     isNew && onSetWalletPrivatePassphrase && onSetWalletPrivatePassphrase(passPhrase);
     this.sendContinue();
-    this.props.backToCredentials();
   }
 
   setPassPhrase(passPhrase) {
