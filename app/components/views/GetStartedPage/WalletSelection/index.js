@@ -155,10 +155,6 @@ class WalletSelectionBody extends React.Component {
         this.props.onCreateWallet(walletSelected));
     }
 
-    if (!isCreateNewWallet) {
-      this.props.isCreateNewWallet(true);
-    }
-
     return this.props.onCreateWallet(walletSelected)
       .then(() => this.props.onShowCreateWallet(isCreateNewWallet));
   }

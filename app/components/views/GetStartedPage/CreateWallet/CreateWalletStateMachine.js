@@ -6,20 +6,19 @@ export const CreateWalletMachine = ({ cancelCreateWallet, backToCredentials }) =
   id: "getStarted",
   initial: "createWallet",
   context: {
-    isNew: null,
     error: null,
   },
   states: {
     createWallet: {
       onEntry: "isAtCreateWallet",
       on: {
-        CREATE_WALLET: {
+        RESTORE_WALLET: {
           target: "writeSeed",
-          cond: (c, event) => !event.isNew
+          cond: (c, event) => event.isNew === "false"
         },
         CREATE_WALLET: {
           target: "newWallet",
-          cond: (c, event) => !!event.isNew
+          cond: (c, event) => event.isNew === "true"
         }
       }
     },
@@ -33,7 +32,7 @@ export const CreateWalletMachine = ({ cancelCreateWallet, backToCredentials }) =
     writeSeed: {
       onEntry: "isAtWriteSeed",
       on: {
-        WRITED: "walletCreated",
+        CONTINUE: "walletCreated",
         ERROR: "createWallet",
         BACK: "createWallet"
       }
@@ -63,6 +62,9 @@ export const CreateWalletMachine = ({ cancelCreateWallet, backToCredentials }) =
     },
     isAtNewWallet: () => {
       console.log("is At NewWallet")
+    },
+    isAtWriteSeed: () => {
+      console.log("is At writeseed")
     },
     isAtFinished: async () => {
       await cancelCreateWallet();

@@ -7,6 +7,7 @@ import Page from "./Page"
 import { withRouter } from "react-router";
 import CopySeed from "./CopySeed";
 import ConfirmSeed from "./ConfirmSeed";
+import ExistingSeed from "./ExistingSeed";
 import { createWallet } from "connectors";
 import { createElement as h, cloneElement as k } from "react";
 
@@ -34,18 +35,15 @@ class CreateWallet extends React.Component {
     this.service.start();
     const { isNew } = this.props.match.params;
     const { isCreatingWatchingOnly, masterPubKey } = this.props;
-    this.setState({ isNew });
-    if (isCreatingWatchingOnly && masterPubKey) {
-      this.props.createWatchOnlyWalletRequest(masterPubKey);
-      return;
-    }
-    if (isNew) {
+    if (isNew === "true") {
       this.props.generateSeed().then(response => this.setState({
         mnemonic: response.getSeedMnemonic(),
         seed: this.props.isTestNet ? response.getSeedBytes() : null // Allows verification skip in dev
       }, this.getStateComponent ));
     }
-    this.service.send({ type: "CREATE_WALLET", isNew })
+    this.service.send({ type: "CREATE_WALLET", isNew });
+    this.service.send({ type: "RESTORE_WALLET", isNew });
+    this.setState({ isNew });
   }
 
   componentWillUnmount() {
@@ -65,6 +63,11 @@ class CreateWallet extends React.Component {
       break;
     case "confirmSeed":
       component = h(ConfirmSeed, {
+        mnemonic, sendBack, decodeSeed, sendContinue, isNew, createWalletRequest, onSetWalletPrivatePassphrase
+      });
+      break;
+    case "writeSeed":
+      component = h(ExistingSeed, {
         mnemonic, sendBack, decodeSeed, sendContinue, isNew, createWalletRequest, onSetWalletPrivatePassphrase
       });
       break;
@@ -95,13 +98,12 @@ class CreateWallet extends React.Component {
     const {
       getDaemonSynced, getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft, isTestNet
     } = this.props;
-
-    const { StateComponent } = this.state;
+    const { StateComponent, walletHeader } = this.state;
     return <div className={cx("page-body getstarted", isTestNet && "testnet-body")}>
-        <Page {...{
-          StateComponent, getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft, getDaemonSynced
-        }}/>
-      </div>
+      <Page {...{
+        StateComponent, getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft, getDaemonSynced, walletHeader
+      }}/>
+    </div>
   }
 }
 

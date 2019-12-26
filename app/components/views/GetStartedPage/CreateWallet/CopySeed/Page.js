@@ -3,6 +3,7 @@ import { FormattedMessage as T } from "react-intl";
 import { Documentation } from "shared";
 import { KeyBlueButton, InvisibleButton } from "buttons";
 import { BackBtnMsg } from "../../messages";
+import { Tooltip } from "shared";
 import "style/CreateWalletForm.less";
 
 const CreateWallet = ({
@@ -15,6 +16,12 @@ const CreateWallet = ({
   sendContinue
 }) => (
   <>
+    <div className="content-title-wrapper is-row">
+      <div className="content-title">
+        <T id="createWallet.title" m={"Create a new wallet"}/>
+      </div>
+      {sendBack && <Tooltip text={<T id="createWallet.goBack" m="Go back" />}><div className="go-back-screen-button" onClick={ sendBack } /></Tooltip>}
+    </div>
     <Documentation name="WalletCreationWarning" className="create-wallet-warning" />
     <div className="seedArea">
       {mnemonic.split(" ").map((word, i) => {
