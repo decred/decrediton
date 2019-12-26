@@ -20,19 +20,22 @@ class ConfirmSeed extends React.Component {
     this.state = {
       seedWords,
       splitMnemonic,
-      seedError: "*Please confirm the missing words"
+      seedError: "*Please confirm the missing words",
+      seed: "",
+      passPhrase: "",
+      isValid: false
     };
   }
 
   render() {
-    const { onChangeSeedWord, setSeed } = this;
-    const { seedWords } = this.state;
+    const { onChangeSeedWord, setPassPhrase, onCreateWallet } = this;
+    const { seedWords, isValid } = this.state;
     const isEmpty = this.state.seedWords.length <= 1; // Weird errors with one word, better to count as empty
     const seedError = isEmpty ? null : this.state.seedError;
-    const { sendBack, isValid, setPassPhrase, onCreateWallet } = this.props;
+    const { sendBack } = this.props;
     return (
       <ConfirmSeedForm {...{
-        seedWords, seedError, isEmpty, onChangeSeedWord, sendBack, onCreateWallet, setSeed, isValid, setPassPhrase
+        seedWords, seedError, isEmpty, onChangeSeedWord, sendBack, onCreateWallet, isValid, setPassPhrase
       }} />
     );
   }
@@ -40,21 +43,53 @@ class ConfirmSeed extends React.Component {
   onChangeSeedWord(seedWord, update) {
     const { seedWords, splitMnemonic } = this.state;
     const { mnemonic } = this.props;
-    var updatedSeedWords = seedWords;
-    updatedSeedWords[seedWord.index] = { word: update, show: seedWord.show, index: seedWord.index, match: splitMnemonic[seedWord.index] == update };
+    const updatedSeedWords = seedWords;
+    updatedSeedWords[seedWord.index] = {
+      word: update, show: seedWord.show, index: seedWord.index, match: splitMnemonic[seedWord.index] == update
+    };
     this.setState({ seedWords: updatedSeedWords });
 
     const seedWordStr = seedWords.map(seedWord => seedWord.word).join(" ");
-    if (seedWordStr == mnemonic) {
+    if (seedWordStr === mnemonic) {
       this.setState({ seedWordsError: null });
       this.props
         .decodeSeed(mnemonic)
-        .then(response => this.props.setSeed(response.getDecodedSeed()))
+        .then(response => this.setState({ seed: response.getDecodedSeed() }, this.checkIsValid))
         .then(() => this.setState({ seedError: null }))
         .catch(e => console.log(e));
     } else {
+      this.setState({ seed: "" });
       this.setState({ seedError: "*Please confirm the missing words" });
     }
+  }
+
+  onCreateWallet() {
+    const {
+      createWalletRequest, onSetWalletPrivatePassphrase, isNew, sendContinue
+    } = this.props;
+    const { seed, passPhrase } = this.state;
+    const pubpass = ""; // Temporarily disabled?
+
+    if (!(seed && passPhrase)) return;
+    createWalletRequest(pubpass, passPhrase, seed, isNew);
+    isNew && onSetWalletPrivatePassphrase && onSetWalletPrivatePassphrase(passPhrase);
+    sendContinue();
+  }
+
+  setPassPhrase(passPhrase) {
+    this.setState({ passPhrase }, this.checkIsValid);
+  }
+
+  checkIsValid() {
+    const { seed, passPhrase, seedWords } = this.state;
+    const { mnemonic } = this.props;
+    const seedWordStr = seedWords.map(seedWord => seedWord.word).join(" ");
+
+    if (seed.length === 0) return this.setState({ isValid: false });
+    if (passPhrase.length === 0) return this.setState({ isValid: false });;
+    if (seedWordStr !== mnemonic) return this.setState({ isValid: false });;
+
+    return this.setState({ isValid: true });;
   }
 }
 

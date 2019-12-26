@@ -47,7 +47,7 @@ export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord, isValid, onCreate
   <div className="create-wallet-button-container">
       <KeyBlueButton
         className="wallet-key-blue-button"
-        disabled={!isValid()}
+        disabled={!isValid}
         // loading={isCreatingWallet}
         onClick={onCreateWallet}
       >

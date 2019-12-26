@@ -65,9 +65,15 @@ class CreatePassPhrase extends React.Component {
 
   onChange() {
     if (this.isValid()) {
-      this.props.onChange && this.props.onChange(this.state.passPhrase);
+      this.props.onChange(this.state.passPhrase);
+    } else {
+      this.props.onChange("");
     }
   }
 }
+
+CreatePassPhrase.propTypes = {
+  onChange: PropTypes.func.isRequired
+};
 
 export default CreatePassPhrase;

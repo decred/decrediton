@@ -15,12 +15,13 @@ class CreateWallet extends React.Component {
   service;
   constructor(props) {
     super(props);
-    this.machine = CreateWalletMachine({});
+    const { backToCredentials, cancelCreateWallet } = props;
+    this.machine = CreateWalletMachine({ backToCredentials, cancelCreateWallet });
     this.service = interpret(this.machine).onTransition(current => {
       this.setState({ current }, this.getStateComponent);
     });
     this.state = {
-      current: CreateWalletMachine().initialState,
+      current: this.machine.initialState,
       StateComponent: null,
       mnemonic: "",
       seed: "",
@@ -47,11 +48,15 @@ class CreateWallet extends React.Component {
     this.service.send({ type: "CREATE_WALLET", isNew })
   }
 
+  componentWillUnmount() {
+    this.service.stop();
+  }
+
   async getStateComponent() {
-    const { current } = this.state;
-    const { sendBack, sendContinue, onCreateWallet, setPassPhrase, setSeed, isValid } = this;
+    const { current, isNew } = this.state;
+    const { sendBack, sendContinue } = this;
     const { mnemonic } = this.state;
-    const { decodeSeed } = this.props;
+    const { decodeSeed, createWalletRequest, onSetWalletPrivatePassphrase } = this.props;
     let component, text;
 
     switch(current.value) {
@@ -59,15 +64,13 @@ class CreateWallet extends React.Component {
       component = h(CopySeed, { sendBack, sendContinue, mnemonic });
       break;
     case "confirmSeed":
-      component = h(ConfirmSeed, { mnemonic, sendBack, decodeSeed, onCreateWallet, setPassPhrase, setSeed, isValid });
+      component = h(ConfirmSeed, {
+        mnemonic, sendBack, decodeSeed, sendContinue, isNew, createWalletRequest, onSetWalletPrivatePassphrase
+      });
       break;
     case "finished":
-      this.service.stop();
-      await this.props.cancelCreateWallet();
-      this.props.backToCredentials();
       break;
     case "walletCreated":
-      this.props.backToCredentials();
       break;
     }
 
@@ -89,41 +92,16 @@ class CreateWallet extends React.Component {
   }
 
   render() {
-    const { decodeSeed, onReturnToWalletSelection, onSetWalletPrivatePassphrase,
-      getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft, isTestNet, intl
+    const {
+      getDaemonSynced, getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft, isTestNet
     } = this.props;
 
     const { StateComponent } = this.state;
     return <div className={cx("page-body getstarted", isTestNet && "testnet-body")}>
-        <Page {...{ StateComponent }}/>
+        <Page {...{
+          StateComponent, getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft, getDaemonSynced
+        }}/>
       </div>
-  }
-
-  onCreateWallet() {
-    const {
-      createWalletRequest,
-      onSetWalletPrivatePassphrase
-    } = this.props;
-    const { seed, passPhrase, isNew } = this.state;
-    const pubpass = ""; // Temporarily disabled?
-
-    if (!(seed && passPhrase)) return;
-    createWalletRequest(pubpass, passPhrase, seed, isNew);
-    isNew && onSetWalletPrivatePassphrase && onSetWalletPrivatePassphrase(passPhrase);
-    this.sendContinue();
-  }
-
-  setPassPhrase(passPhrase) {
-    this.setState({ passPhrase });
-  }
-
-  setSeed(seed) {
-    this.setState({ seed });
-  }
-
-  isValid() {
-    const { seed, passPhrase } = this.state;
-    return !!(seed && passPhrase);
   }
 }
 

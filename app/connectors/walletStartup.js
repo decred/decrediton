@@ -80,7 +80,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   enableSpv: da.enableSpv,
   disableSpv: da.disableSpv,
   onReturnToNewSeed: wla.createWalletGoBackNewSeed,
-  onReturnToWalletSelection: wla.cancelCreateWallet,
   onReturnToExistingOrNewScreen: wla.createWalletGoBackExistingOrNew,
   onSetCreateWalletFromExisting: wla.createWalletExistingToggle,
   onOpenWallet: wla.openWalletAttempt,

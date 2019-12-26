@@ -2,12 +2,12 @@ import { Machine } from "xstate";
 
 // Hierarchical state machine called inside getStartedStateMachine.
 // source: https://github.com/davidkpiano/xstate#hierarchical-nested-state-machines
-export const CreateWalletMachine = () => Machine({
+export const CreateWalletMachine = ({ cancelCreateWallet, backToCredentials }) => Machine({
   id: "getStarted",
   initial: "createWallet",
   context: {
     isNew: null,
-    error: null
+    error: null,
   },
   states: {
     createWallet: {
@@ -48,7 +48,7 @@ export const CreateWalletMachine = () => Machine({
     },
     walletCreated: {
       type: "final",
-      onEntry: "isAtStartWalletCreated"
+      onEntry: "isAtWalletCreated"
     },
     finished: {
       type: "final",
@@ -64,11 +64,12 @@ export const CreateWalletMachine = () => Machine({
     isAtNewWallet: () => {
       console.log("is At NewWallet")
     },
-    isAtConfirmSeed: () => {
-      console.log("is At ConfirmSeed");
+    isAtFinished: async () => {
+      await cancelCreateWallet();
+      backToCredentials();
     },
-    isAtFinished: () => {
-      console.log("is At Finished");
+    isAtWalletCreated: async () => {
+      backToCredentials();
     }
   }
 });

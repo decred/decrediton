@@ -144,10 +144,6 @@ export default function version(state = {}, action) {
       walletName: "",
       selectCreateWalletInputRequest: true
     };
-  case WALLETCREATED:
-    return { ...state,
-      selectCreateWalletInputRequest: false
-    };
   case SHUTDOWN_REQUESTED:
     return { ...state,
       shutdownRequested: true
