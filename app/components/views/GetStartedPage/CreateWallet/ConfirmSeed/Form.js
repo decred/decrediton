@@ -6,7 +6,7 @@ import { FormattedMessage as T } from "react-intl";
 import { CreatePassPhrase } from "shared";
 import { Tooltip } from "shared";
 
-export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord, isValid, onCreateWallet, sendBack, setPassPhrase,  }) => (
+export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord, isValid, onCreateWallet, sendBack, setPassPhrase }) => (
 <>
   <div className="content-title-wrapper is-row">
     <div className="content-title">
@@ -31,9 +31,9 @@ export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord, isValid, onCreate
         } else {
           className += "empty";
         }
-        return <>
+        return (
           <div key={`seeditem-${seedWord.index}`} className={className}>
-            <span className="number">{seedWord.index + 1}.</span>
+          <span className="number">{seedWord.index + 1}.</span>
             <span className="word">
               { seedWord.show ? seedWord.word :
                 <SingleSeedWordEntry
@@ -46,8 +46,7 @@ export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord, isValid, onCreate
               }
             </span>
           </div>
-        </>;
-      })}
+        )})}
     </div>
   </div>
   <CreatePassPhrase onChange={setPassPhrase} onSubmit={onCreateWallet} />

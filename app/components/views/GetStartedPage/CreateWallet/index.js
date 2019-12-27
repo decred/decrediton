@@ -16,34 +16,28 @@ class CreateWallet extends React.Component {
   service;
   constructor(props) {
     super(props);
-    const { backToCredentials, cancelCreateWallet } = props;
-    this.machine = CreateWalletMachine({ backToCredentials, cancelCreateWallet });
+    const { sendEvent, checkIsValid } = this;
+    const { backToCredentials, cancelCreateWallet, generateSeed } = props;
+    this.machine = CreateWalletMachine({ generateSeed, backToCredentials, cancelCreateWallet, sendEvent, checkIsValid });
     this.service = interpret(this.machine).onTransition(current => {
       this.setState({ current }, this.getStateComponent);
     });
     this.state = {
       current: this.machine.initialState,
       StateComponent: null,
-      mnemonic: "",
-      seed: "",
-      passPhrase: "",
       isNew: "",
+      isValid: false
     };
   }
 
   componentDidMount() {
     this.service.start();
-    const { isNew } = this.props.match.params;
-    const { isCreatingWatchingOnly, masterPubKey } = this.props;
-    if (isNew === "true") {
-      this.props.generateSeed().then(response => this.setState({
-        mnemonic: response.getSeedMnemonic(),
-        seed: this.props.isTestNet ? response.getSeedBytes() : null // Allows verification skip in dev
-      }, this.getStateComponent ));
-    }
+    let isNew = this.props.match.params.isNew;
+    isNew = isNew == "true" ? true : false
+    this.setState({ isNew });
+    const { isCreatingWatchingOnly, masterPubKey, isTestNet } = this.props;
     this.service.send({ type: "CREATE_WALLET", isNew });
     this.service.send({ type: "RESTORE_WALLET", isNew });
-    this.setState({ isNew });
   }
 
   componentWillUnmount() {
@@ -51,9 +45,9 @@ class CreateWallet extends React.Component {
   }
 
   async getStateComponent() {
-    const { current, isNew } = this.state;
-    const { sendBack, sendContinue } = this;
-    const { mnemonic } = this.state;
+    const { current, isNew, isValid } = this.state;
+    const { sendBack, sendContinue, onChangeSeedWord, setPassPhrase, setSeed, setError, onCreateWallet } = this;
+    const { mnemonic } = this.machine.context;
     const { decodeSeed, createWalletRequest, onSetWalletPrivatePassphrase } = this.props;
     let component, text;
 
@@ -62,13 +56,12 @@ class CreateWallet extends React.Component {
       component = h(CopySeed, { sendBack, sendContinue, mnemonic });
       break;
     case "confirmSeed":
-      component = h(ConfirmSeed, {
-        mnemonic, sendBack, decodeSeed, sendContinue, isNew, createWalletRequest, onSetWalletPrivatePassphrase
-      });
+      component = h(ConfirmSeed, { mnemonic, sendBack, setPassPhrase, onCreateWallet, isValid, decodeSeed, setSeed, setError });
       break;
     case "writeSeed":
       component = h(ExistingSeed, {
-        mnemonic, sendBack, decodeSeed, sendContinue, isNew, createWalletRequest, onSetWalletPrivatePassphrase
+        sendBack, decodeSeed, sendContinue, isNew, createWalletRequest, onSetWalletPrivatePassphrase,
+        onChangeSeedWord, setPassPhrase, onCreateWallet
       });
       break;
     case "finished":
@@ -81,17 +74,56 @@ class CreateWallet extends React.Component {
   }
 
   sendEvent(data) {
-    const { send } = this.service;
     const { type, payload } = data;
-    send({ type, payload });
+    this.service.send({ type, payload });
   }
 
   sendContinue() {
-    this.sendEvent({ type: "CONTINUE" });
+    this.service.send({ type: "CONTINUE" });
   }
 
   sendBack() {
-    this.sendEvent({ type: "BACK" });
+    this.service.send({ type: "BACK" });
+  }
+
+  onCreateWallet() {
+    const {
+      createWalletRequest, onSetWalletPrivatePassphrase, sendContinue
+    } = this.props;
+    const { isNew } = this.state;
+    const pubpass = ""; // Temporarily disabled?
+    const { seed, passPhrase } = this.service._state.context;
+
+    if (!(seed && passPhrase)) return;
+    createWalletRequest(pubpass, passPhrase, seed, isNew);
+    isNew && onSetWalletPrivatePassphrase && onSetWalletPrivatePassphrase(passPhrase);
+    this.sendContinue();
+  }
+
+  setError(error) {
+    this.service.send({ type: "VALIDATE_DATA", error });
+  }
+
+  setSeed(seed) {
+    const { passPhrase, error } = this.machine.context
+    this.service.send({ type: "VALIDATE_DATA", seed, passPhrase });
+  }
+
+  setPassPhrase(passPhrase) {
+    const { seed, error } = this.machine.context
+    this.service.send({ type: "VALIDATE_DATA", passPhrase, seed, error });
+  }
+
+  checkIsValid() {
+    const { seed, passPhrase } = this.service._state.context;
+
+    // We validate our seed and passphrase at their specific components
+    // So if they are set at the machine it means they have passed validation.
+    if (!seed || !passPhrase) return this.setState({ isValid: false });
+    if (seed.length === 0) return this.setState({ isValid: false });
+    if (passPhrase.length === 0) return this.setState({ isValid: false });;
+
+    return this.setState({ isValid: true });;
   }
 
   render() {
