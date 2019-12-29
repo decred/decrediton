@@ -33,18 +33,23 @@ const ExistingSeedForm = ({
         </div>
         {seedType === WORDS && Array.isArray(seedWords) ?
           <div className="seedArea">
-            {seedWords.map((seedWord) => {
+            {seedWords.map((seedWord, index) => {
               const className = seedWord.word ? seedWord.error ? "seedWord error" : "seedWord populated" : "seedWord restore";
               return (
-                <SingleSeedWordEntry
-                  className={className}
-                  onChange={onChangeSeedWord}
-                  onPaste={handleOnPaste}
-                  seedWord={seedWord}
-                  value={{ name: seedWord.word }}
-                  key={seedWord.index}
-                  onPasteFromClipboard={pasteFromClipboard}
-                />);
+                <div key={index} className={className}>
+                  <span className="number">{index + 1}.</span>
+                  <span className="word">
+                    <SingleSeedWordEntry
+                      onChange={onChangeSeedWord}
+                      onPaste={handleOnPaste}
+                      seedWord={seedWord}
+                      value={{ name: seedWord.word }}
+                      key={index}
+                      className="Select-menu-with-arrow"
+                      onPasteFromClipboard={pasteFromClipboard}
+                    />
+                  </span>
+                </div>);
             })}
           </div> :
           <div className="seedArea hex">

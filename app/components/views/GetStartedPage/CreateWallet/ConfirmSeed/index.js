@@ -26,7 +26,6 @@ class ConfirmSeed extends React.Component {
   render() {
     const { onChangeSeedWord } = this;
     const { seedWords } = this.state;
-    // const seedError = isEmpty ? null : this.state.seedError;
     const { sendBack, setPassPhrase, onCreateWallet, isValid } = this.props;
     return (
       <ConfirmSeedForm {...{
