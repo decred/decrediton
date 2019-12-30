@@ -18,8 +18,7 @@ import {
   CHANGEPASSPHRASE_SUCCESS, CHANGEPASSPHRASE_FAILED,
   SIGNMESSAGE_FAILED, VERIFYMESSAGE_FAILED,
   PUBLISHUNMINEDTRANSACTIONS_SUCCESS, PUBLISHUNMINEDTRANSACTIONS_FAILED,
-  GETACCOUNTEXTENDEDKEY_FAILED,
-  PUBLISHTX_SUCCESS
+  GETACCOUNTEXTENDEDKEY_FAILED
 } from "../actions/ControlActions";
 import {
   UPDATESTAKEPOOLCONFIG_SUCCESS, UPDATESTAKEPOOLCONFIG_FAILED,
@@ -92,10 +91,6 @@ const messages = defineMessages({
   WALLETREMOVED_FAILED: {
     id: "createwallet.errors.walletRemoveFailed",
     defaultMessage: "{originalError}"
-  },
-  PUBLISHTX_SUCCESS: {
-    id: "send.publishedTxHeader",
-    defaultMessage: "Published tx: {hash}"
   },
   PUBLISHTX_FAILED: {
     id: "send.errors.publishTxFailed",
@@ -425,7 +420,6 @@ export default function snackbar(state = {}, action) {
   case PUBLISHUNMINEDTRANSACTIONS_SUCCESS:
   case PURCHASETICKETS_SUCCESS:
   case ADDCUSTOMSTAKEPOOL_SUCCESS:
-  case PUBLISHTX_SUCCESS:
   case TRZ_CHANGEHOMESCREEN_SUCCESS:
   case TRZ_WIPEDEVICE_SUCCESS:
   case TRZ_RECOVERDEVICE_SUCCESS:
@@ -454,9 +448,6 @@ export default function snackbar(state = {}, action) {
       break;
     case PURCHASETICKETS_SUCCESS:
       values = { numTickets: action.purchaseTicketsResponse.getTicketHashesList().length };
-      break;
-    case PUBLISHTX_SUCCESS:
-      values = { hash: action.hash };
       break;
     case TRZ_TOGGLEPINPROTECTION_SUCCESS:
     case TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS:
