@@ -17,11 +17,11 @@ export const getMessageVerificationService = promisify(client.getMessageVerifica
 export const getDecodeService = promisify(client.getDecodeMessageService);
 export const getSeedService = promisify(client.getSeedService);
 
-export const getNextAddress = log((walletService, accountNum) =>
+export const getNextAddress = log((walletService, accountNum, kind) =>
   new Promise((resolve, reject) => {
     const request = new api.NextAddressRequest();
     request.setAccount(accountNum);
-    request.setKind(0);
+    request.setKind(kind ? kind : 0);
     request.setGapPolicy(api.NextAddressRequest.GapPolicy.GAP_POLICY_WRAP);
     walletService
       .nextAddress(request, (error, response) => error ? reject(error) : resolve(response));

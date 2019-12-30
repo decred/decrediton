@@ -25,6 +25,7 @@ import { GETNEXTADDRESS_ATTEMPT, GETNEXTADDRESS_FAILED, GETNEXTADDRESS_SUCCESS,
   GETACCOUNTEXTENDEDKEY_ATTEMPT, GETACCOUNTEXTENDEDKEY_FAILED, GETACCOUNTEXTENDEDKEY_SUCCESS, HIDE_AUTOBUYER_RUNNING_MODAL, SHOW_AUTOBUYER_RUNNING_MODAL
 } from "../actions/ControlActions";
 import { WALLET_AUTOBUYER_SETTINGS } from "actions/DaemonActions";
+import { CLOSEWALLET_SUCCESS } from "actions/WalletLoaderActions";
 
 import {
   EXPORT_STARTED, EXPORT_COMPLETED, EXPORT_ERROR
@@ -232,7 +233,8 @@ export default function control(state = {}, action) {
       publishTransactionRequestAttempt: false,
       publishTransactionResponse: action.hash,
       constructTxResponse: null,
-      signTxResponse: null
+      signTxResponse: null,
+      changeScriptByAccount: action.changeScriptByAccount
     };
   case PURCHASETICKETS_ATTEMPT:
     return { ...state,
@@ -397,6 +399,7 @@ export default function control(state = {}, action) {
     };
   case CONSTRUCTTX_SUCCESS:
     return { ...state,
+      changeScriptByAccount: action.changeScriptByAccount,
       constructTxRequestAttempt: false,
       constructTxResponse: action.constructTxResponse
     };
@@ -483,6 +486,10 @@ export default function control(state = {}, action) {
     return { ...state,
       getAccountExtendedKeyRequest: false,
       getAccountExtendedKeyResponse: action.getAccountExtendedKeyResponse
+    };
+  case CLOSEWALLET_SUCCESS:
+    return { ...state,
+      changeScriptByAccount: {}
     };
   default:
     return state;

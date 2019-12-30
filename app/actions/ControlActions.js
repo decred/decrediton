@@ -226,7 +226,26 @@ export const publishTransactionAttempt = (tx) => (dispatch, getState) => {
   dispatch({ type: PUBLISHTX_ATTEMPT });
   return wallet.publishTransaction(sel.walletService(getState()), tx)
     .then(res => {
-      dispatch({ hash: reverseRawHash(res.getTransactionHash()), type: PUBLISHTX_SUCCESS });
+      // If one of the outputs of the just published tx is one of the recorded
+      // change scripts, clear it as to prevent address reuse. This is needed
+      // due to dcrwallet#1622.
+      const rawTx = Buffer.from(tx, "hex");
+      const decoded = wallet.decodeRawTransaction(rawTx);
+      const changeScriptByAccount = getState().control.changeScriptByAccount || {};
+      const newChangeScriptByAccount = {};
+      Object.keys(changeScriptByAccount).forEach(account => {
+        const foundScript = decoded.outputs.some(out => {
+          if (out.script.equals(changeScriptByAccount[account])) {
+            return true;
+          }
+        });
+        if (!foundScript) {
+          newChangeScriptByAccount[account] = changeScriptByAccount[account];
+        }
+      });
+
+      dispatch({ hash: reverseRawHash(res.getTransactionHash()),
+        changeScriptByAccount: newChangeScriptByAccount, type: PUBLISHTX_SUCCESS });
     })
     .catch(error => dispatch({ error, type: PUBLISHTX_FAILED }));
 };
@@ -339,7 +358,7 @@ export const CONSTRUCTTX_FAILED = "CONSTRUCTTX_FAILED";
 export const CONSTRUCTTX_FAILED_LOW_BALANCE = "CONSTRUCTTX_FAILED_LOW_BALANCE";
 export const CONSTRUCTTX_SUCCESS = "CONSTRUCTTX_SUCCESS";
 
-export function constructTransactionAttempt(account, confirmations, outputs, all) {
+export const constructTransactionAttempt = (account, confirmations, outputs, all) => (dispatch, getState) => {
   var request = new ConstructTransactionRequest();
   request.setSourceAccount(parseInt(account));
   request.setRequiredConfirmations(parseInt(parseInt(confirmations)));
@@ -355,6 +374,16 @@ export function constructTransactionAttempt(account, confirmations, outputs, all
       request.addNonChangeOutputs(newOutput);
       totalAmount += output.amount;
     });
+
+    // If there's a previously stored change address for this account, use it.
+    // This alleviates a possible gap limit address exhaustion. See
+    // issue dcrwallet#1622.
+    const changeScript = getState().control.changeScriptByAccount[account] || null;
+    if (changeScript) {
+      const changeDest = new ConstructTransactionRequest.OutputDestination();
+      changeDest.setScript(changeScript);
+      request.setChangeDestination(changeDest);
+    }
   } else {
     if (outputs.length > 1) {
       return (dispatch) => {
@@ -373,30 +402,48 @@ export function constructTransactionAttempt(account, confirmations, outputs, all
       request.setChangeDestination(outputDest);
     }
   }
-  return (dispatch, getState) => {
-    dispatch({ type: CONSTRUCTTX_ATTEMPT });
-    const { walletService } = getState().grpc;
-    walletService.constructTransaction(request,
-      function(error, constructTxResponse) {
-        if (error) {
-          if (String(error).indexOf("insufficient balance") > 0) {
-            dispatch({ error, type: CONSTRUCTTX_FAILED_LOW_BALANCE });
-          } else {
-            dispatch({ error, type: CONSTRUCTTX_FAILED });
-          }
-          return;
+
+  dispatch({ type: CONSTRUCTTX_ATTEMPT });
+  const { walletService } = getState().grpc;
+  walletService.constructTransaction(request,
+    function(error, constructTxResponse) {
+      if (error) {
+        if (String(error).indexOf("insufficient balance") > 0) {
+          dispatch({ error, type: CONSTRUCTTX_FAILED_LOW_BALANCE });
+        } else if (String(error).indexOf("violates the unused address gap limit policy") > 0) {
+          // Work around dcrwallet#1622: generate a new address in the internal
+          // branch using the wrap gap policy so that change addresses can be
+          // regenerated again.
+          // We'll still error out to let the user know wrapping has occurred.
+          wallet.getNextAddress(sel.walletService(getState()), parseInt(account), 1);
+          dispatch({ error, type: CONSTRUCTTX_FAILED });
+        } else {
+          dispatch({ error, type: CONSTRUCTTX_FAILED });
+        }
+        return;
+      }
+
+      let changeScriptByAccount = getState().control.changeScriptByAccount || {};
+      if (!all) {
+        // Store the change address we just generated so that future changes to
+        // the tx being constructed will use the same address and prevent gap
+        // limit exhaustion (see above note on issue dcrwallet#1622).
+        const changeIndex = constructTxResponse.getChangeIndex();
+        if (changeIndex > -1) {
+          const rawTx = Buffer.from(constructTxResponse.getUnsignedTransaction());
+          const decoded = wallet.decodeRawTransaction(rawTx);
+          changeScriptByAccount[account] = decoded.outputs[changeIndex].script;
         }
 
-        if (!all) {
-          constructTxResponse.totalAmount = totalAmount;
-        } else {
-          constructTxResponse.totalAmount = constructTxResponse.getTotalOutputAmount();
-        }
-        constructTxResponse.rawTx = rawToHex(constructTxResponse.getUnsignedTransaction());
-        dispatch({ constructTxResponse: constructTxResponse, type: CONSTRUCTTX_SUCCESS });
-      });
-  };
-}
+        constructTxResponse.totalAmount = totalAmount;
+      } else {
+        constructTxResponse.totalAmount = constructTxResponse.getTotalOutputAmount();
+      }
+      constructTxResponse.rawTx = rawToHex(constructTxResponse.getUnsignedTransaction());
+      dispatch({ constructTxResponse: constructTxResponse, changeScriptByAccount,
+        type: CONSTRUCTTX_SUCCESS });
+    });
+};
 
 export const VALIDATEADDRESS_ATTEMPT = "VALIDATEADDRESS_ATTEMPT";
 export const VALIDATEADDRESS_FAILED = "VALIDATEADDRESS_FAILED";
