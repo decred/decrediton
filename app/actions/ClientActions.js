@@ -5,7 +5,7 @@ import eq from "lodash/fp/eq";
 import { getNextAddressAttempt, publishUnminedTransactionsAttempt } from "./ControlActions";
 import { transactionNtfnsStart, accountNtfnsStart } from "./NotificationActions";
 import { refreshStakepoolPurchaseInformation, setStakePoolVoteChoices, getStakepoolStats } from "./StakePoolActions";
-import { getDecodeMessageServiceAttempt, decodeRawTransactions } from "./DecodeMessageActions";
+import { getDecodeMessageServiceAttempt } from "./DecodeMessageActions";
 import { checkLnWallet } from "./LNActions";
 import { push as pushHistory, goBack } from "react-router-redux";
 import { getWalletCfg, getGlobalCfg } from "config";
@@ -744,6 +744,11 @@ export const getTransactions = () => async (dispatch, getState) => {
   let { unmined } = await walletGetTransactions(walletService, -1, -1, 0);
   let unminedTransactions = filterTransactions(unmined, transactionsFilter);
 
+  const stakeTypes = [ TransactionDetails.TransactionType.VOTE,
+    TransactionDetails.TransactionType.REVOCATION,
+    TransactionDetails.TransactionType.TICKET_PURCHASE ];
+  const txNormalizer = sel.transactionNormalizer(getState());
+
   // now, request a batch of mined transactions until `maximumTransactionCount`
   // transactions have been obtained (after filtering)
   let reachedGenesis = false;
@@ -766,8 +771,20 @@ export const getTransactions = () => async (dispatch, getState) => {
       reachedGenesis = (transactionsFilter.listDirection === "desc") &&
         lastTransaction && (lastTransaction.height === 1);
       noMoreTransactions = mined.length === 0 || reachedGenesis;
-      filterTransactions(mined, transactionsFilter)
-        .forEach(v => filtered.push(v));
+      const newFiltered = filterTransactions(mined, transactionsFilter);
+
+      for (let i = 0; i < newFiltered.length; i++) {
+        const tx = newFiltered[i];
+        if (stakeTypes.indexOf(tx.type) > -1) {
+          // For stake txs, fetch the missing stake info.
+          const normalizedTx = txNormalizer(tx);
+          const stakeTx = await(dispatch(getMissingStakeTxData(normalizedTx)));
+          filtered.push(stakeTx);
+        } else {
+          // Regular txs already have all the necessary info.
+          filtered.push(tx);
+        }
+      }
     } catch (error) {
       dispatch({ type: GETTRANSACTIONS_FAILED, error });
       return;
@@ -1152,6 +1169,81 @@ export const FETCHMISSINGSTAKETXDATA_ATTEMPT = "FETCHMISSINGSTAKETXDATA_ATTEMPT"
 export const FETCHMISSINGSTAKETXDATA_SUCCESS = "FETCHMISSINGSTAKETXDATA_SUCCESS";
 export const FETCHMISSINGSTAKETXDATA_FAILED = "FETCHMISSINGSTAKETXDATA_FAILED";
 
+const getMissingStakeTxData = tx => async (dispatch, getState) => {
+  const walletService = sel.walletService(getState());
+
+  let ticketTx, spenderTx, status;
+
+  if (tx.txType == "Ticket") {
+    // This is currently a somewhat slow call in RPC mode due to having to check
+    // in dcrd whether the ticket is live or not.
+    const ticket = await wallet.getTicket(walletService, strHashToRaw(tx.txHash));
+    status = ticket.status;
+    if (ticket.spender.getHash()) {
+      try {
+        const spenderHash = rawHashToHex(ticket.spender.getHash());
+        const spender = await wallet.getTransaction(walletService, spenderHash);
+        spenderTx = spender.tx;
+      } catch (error) {
+        if (String(error).indexOf("NOT_FOUND") === -1) {
+          // A NOT_FOUND error means the wallet hasn't recorded the spender of
+          // this ticket (possibly it was purchased with a reward address from
+          // a different wallet). So just return the available information in
+          // that case and error out in actual failures.
+          throw error;
+        }
+      }
+    }
+    ticketTx = tx.originalTx.tx;
+  } else { // vote/revoke
+    const decodedSpender = wallet.decodeRawTransaction(Buffer.from(tx.rawTx, "hex"));
+
+    // Find the ticket hash of the vote/revoke.
+    const spenderInputs = decodedSpender.inputs;
+    const outpIdx = spenderInputs.length === 1 ? 0 : 1;
+    const ticketTxHash = rawHashToHex(spenderInputs[outpIdx].prevTxId);
+    status = tx.txType === "Vote" ? "voted" : "revoked";
+
+    // given that the ticket may be much older than the transactions currently
+    // in the `transactions` state var, we need to manually fetch the ticket
+    // transaction
+    try {
+      const ticket = await wallet.getTransaction(walletService,
+        ticketTxHash);
+      ticketTx = ticket.tx;
+    } catch (error) {
+      if (String(error).indexOf("NOT_FOUND") > -1) {
+        // NOT_FOUND error means we have a vote/revocation tx recorded but not
+        // the originating ticket. This might happen in pool fee wallets or
+        // wallets receiving the rewards from a different funding wallet.
+        // In that case, we return with the original tx since there's nothing
+        // else to do.
+      } else {
+        throw error;
+      }
+    }
+
+    spenderTx = tx.originalTx.tx;
+  }
+
+  // normalize ticket+spender as if it was a result item from a wallet.getTickets call
+  const ticket = {
+    ticket: ticketTx ,
+    spender: spenderTx,
+    status: status
+  };
+  const ticketNormal = sel.ticketNormalizer(getState())(ticket);
+
+  return {
+    ...tx.originalTx,
+    enterTimestamp: ticketNormal.enterTimestamp,
+    leaveTimestamp: ticketNormal.leaveTimestamp,
+    ticketPrice: ticketNormal.ticketPrice,
+    ticketReward: ticketNormal.ticketReward
+    // add more stuff from the result of sel.ticketNormalizer if ever needed
+  };
+};
+
 // fetchMissingStakeTxData fetches the missing stake information of a given
 // transaction returned from getTransaction. For tickets, it tries to fill the
 // ticket purchase amount and for votes it tries to fill the purchase info and
@@ -1166,73 +1258,7 @@ export const fetchMissingStakeTxData = tx => async (dispatch, getState) => {
   }
   dispatch({ txHash: tx.txHash, type: FETCHMISSINGSTAKETXDATA_ATTEMPT });
 
-  let newTx;
-
-  if (tx.txType == "Ticket") {
-    // TODO: the wallet doesn't have a specific call to get ticket details
-    // (including spender tx) from an arbitrary transaction hash, so for the
-    // moment we can only get the ticket price and purchase date (enterTimestamp).
-    // If this ever changes, we can probably merge this code path with the one
-    // in the else clause below, so that voted/revoked tickets will show
-    // all the relevant information.
-
-    // Use the raw decoded transaction vs credit[0] due to situations where the
-    // ticket submission output is not from this wallet (solo voting tickets and
-    // split tickets)
-    let decodedTx = sel.decodedTransactions(getState())[tx.txHash];
-    if (!decodedTx) {
-      decodedTx = (await dispatch(decodeRawTransactions([ tx.rawTx ])))[tx.txHash];
-    }
-
-    newTx = {
-      ...tx.originalTx,
-      enterTimestamp: tx.txTimestamp,
-      ticketPrice: decodedTx.transaction.getOutputsList()[0].getValue()
-    };
-  } else { // vote/revoke
-    let decodedSpender = sel.decodedTransactions(getState())[tx.txHash];
-    if (!decodedSpender) {
-      // don't have the spender decoded. Request it.
-      decodedSpender = (await dispatch(decodeRawTransactions([ tx.rawTx ])))[tx.txHash];
-    }
-
-    // Find the ticket hash of the vote/revoke. Determining whether it's a vote
-    // or revocation by looking at the number of inputs is not great, but works
-    // for now given the current consensus rules.
-    const spenderInputs = decodedSpender.transaction.getInputsList();
-    const outpIdx = spenderInputs.length === 1 ? 0 : 1;
-    const ticketTxHash = rawHashToHex(spenderInputs[outpIdx].getPreviousTransactionHash());
-
-    // given that the ticket may be much older than the transactions currently
-    // in the `transactions` state var, we need to manually fetch the ticket
-    // transaction
-    const ticketTx = await wallet.getTransaction(sel.walletService(getState()),
-      ticketTxHash);
-
-    let decodedTicket = sel.decodedTransactions(getState())[ticketTxHash];
-    if (!decodedTicket) {
-      // don't have the ticket decoded. Request it.
-      const rawTicketTx = Buffer.from(ticketTx.tx.getTransaction()).toString("hex");
-      await dispatch(decodeRawTransactions([ rawTicketTx ]));
-    }
-
-    // normalize ticket+spender as if it was a result item from a wallet.getTickets call
-    const ticket = {
-      ticket: ticketTx.tx,
-      spender: tx.originalTx.tx,
-      status: tx.txType === "Vote" ? "voted" : "revoked"
-    };
-    const ticketNormal = sel.ticketNormalizer(getState())(ticket);
-
-    newTx = {
-      ...tx.originalTx,
-      enterTimestamp: ticketNormal.enterTimestamp,
-      leaveTimestamp: ticketNormal.leaveTimestamp,
-      ticketPrice: ticketNormal.ticketPrice,
-      ticketReward: ticketNormal.ticketReward
-      // add more stuff from the result of sel.ticketNormalizer if ever needed
-    };
-  }
+  const newTx = await(dispatch(getMissingStakeTxData(tx)));
 
   const oldTxs = getState().grpc.transactions;
   const oldStakeTxs = getState().grpc.recentStakeTransactions;
