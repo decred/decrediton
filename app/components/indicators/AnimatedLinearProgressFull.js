@@ -1,13 +1,20 @@
 import "style/Loading.less";
 import { HeaderTimeMsg } from "views/GetStartedPage/messages";
 import { FormattedRelative } from "shared";
+import { FormattedMessage as T } from "react-intl";
 
 @autobind
 class AnimatedLinearProgressFull extends React.Component {
   render() {
-    const { value, min, max, error, getDaemonSynced, text, animationType, syncFetchHeadersLastHeaderTime, lastDcrwalletLogLine } = this.props;
-    const perComplete = (value-min)/(max-min);
+    const { min, max, error, getDaemonSynced, text, animationType,
+      syncFetchHeadersLastHeaderTime, lastDcrwalletLogLine, getCurrentBlockCount, getDaemonStarted, getEstimatedTimeLeft} = this.props;
+    const perComplete = (getCurrentBlockCount-min)/(max-min);
     const leftStartingPoint = perComplete ? perComplete*100 : 0;
+    let finishDateEstimation = null;
+    if (getEstimatedTimeLeft !== null) {
+      finishDateEstimation = new Date();
+      finishDateEstimation.setSeconds(finishDateEstimation.getSeconds() + getEstimatedTimeLeft);
+    }
     return (
       <>
         <div className={"linear-progress " + animationType}>
@@ -33,14 +40,20 @@ class AnimatedLinearProgressFull extends React.Component {
           </div>
         </div>
         <div>
-          { syncFetchHeadersLastHeaderTime && (
+          { getDaemonStarted && getCurrentBlockCount && finishDateEstimation &&
+            <div className="loader-bar-estimation">
+              <T id="getStarted.chainLoading.syncEstimation" m="Blockchain download estimated complete: "/>
+              <span className="bold"><FormattedRelative value={finishDateEstimation}/>({getCurrentBlockCount} / {max})</span>
+            </div>
+          }
+          { getDaemonStarted && syncFetchHeadersLastHeaderTime &&
             <div className="loader-bar-estimation">
               <HeaderTimeMsg />
               <span className="bold">
                 <FormattedRelative value={syncFetchHeadersLastHeaderTime}/>
               </span>
             </div>
-          )}
+          }
           { lastDcrwalletLogLine &&
             <div className="get-started-last-log-lines">
               <div className="last-dcrwallet-log-line">{lastDcrwalletLogLine}</div>
