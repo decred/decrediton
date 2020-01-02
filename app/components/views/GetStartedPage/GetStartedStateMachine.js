@@ -6,6 +6,8 @@ export const getStartedMachine = (a) => Machine({
   context: {
     credentials: {},
     selectedWallet: null,
+    appdata: null,
+    error: null
   },
   states: {
     preStart: {
@@ -19,63 +21,73 @@ export const getStartedMachine = (a) => Machine({
           target: "startAdvancedDaemon",
           cond: (c, event) => !!event.isAdvancedDaemon
         },
-        START_DAEMON: {
+        START_REGULAR_DAEMON: {
           target: "startingDaemon",
           cond: (c, event) => !event.isAdvancedDaemon && !event.isSPV
-        }
-      },
+        },
+        CHOOSE_WALLET: "choosingWallet"
+      }
     },
     startSpv: {
-      onEntry: "isAtStartSPV",
+      onEntry: "isAtStartSPV"
     },
     startingDaemon: {
       onEntry: "isAtStartingDaemon",
       on: {
-        STARTED_DAEMON: "startedDaemon",
         START_ADVANCED_DAEMON: "startAdvancedDaemon",
+        CONNECT_DAEMON: "connectingDaemon",
+        ERROR_STARTING_DAEMON: "errorStartingDaemon"
+      }
+    },
+    errorStartingDaemon: {
+      onEntry: "isAtErrorStartingDaemon",
+      on: {
+        START_ADVANCED_DAEMON: "startAdvancedDaemon"
       }
     },
     startedDaemon: {
       onEntry: "isStartedDaemon",
       on: {
-        CONNECT_DAEMON: "connectingDaemon",
+        CONNECT_DAEMON: "connectingDaemon"
       }
     },
     startAdvancedDaemon: {
       onEntry: "isAtStartAdvancedDaemon",
       on: {
         SUBMIT_REMOTE: "connectingDaemon",
-        SUBMIT_APPDATA: "startingDaemon",
+        SUBMIT_APPDATA: "startingDaemon"
       }
     },
     connectingDaemon: {
-      onEntry: "isAtConnectDaemon",
+      onEntry: "isAtConnectingDaemon",
       on: {
-        CHECK_NETWORK_MATCH: "checkingNetworkMatch",
+        SYNC_DAEMON: "syncingDaemon",
+        ERROR_CONNECTING_DAEMON: "startAdvancedDaemon"
       }
     },
     checkingNetworkMatch: {
       onEntry: "isAtCheckNetworkMatch",
       on: {
-        SYNC_DAEMON: "syncingDaemon",
+        CHOOSE_WALLET: "choosingWallet"
       }
     },
     syncingDaemon: {
       onEntry: "isAtSyncingDaemon",
       on: {
-        CHOOSE_WALLET: "choosingWallet",
+        CHECK_NETWORK_MATCH: "checkingNetworkMatch"
       }
     },
     choosingWallet: {
+      onEntry: "isAtChoosingWallet",
       onExit: "isAtLeavingChoosingWallet",
       on: {
-        SUBMIT_CHOOSE_WALLET: "startingWallet",
+        SUBMIT_CHOOSE_WALLET: "startingWallet"
       }
     },
     startingWallet: {
       onEntry: "isAtStartWallet",
       on: {
-        SYNC_RPC: "syncingRPC",
+        SYNC_RPC: "syncingRPC"
       }
     },
     syncingRPC: {
@@ -83,70 +95,104 @@ export const getStartedMachine = (a) => Machine({
       on: {
         // CHOOSE_WALLET: "choosingWallet",
       }
-    },
-  },
+    }
+  }
 },
 {
   actions: {
     isAtPreStart: () => {
-      // console.log(e)
       console.log("is at pre start");
-      console.log(a);
-      return a.prepStartDaemon();
+      return a.preStartDaemon();
     },
-    isAtStartAdvancedDaemon: () => {
+    isAtStartAdvancedDaemon: (context, event) => {
       console.log("is at start advanced daemon");
+      context.error = event.payload && event.payload.error;
     },
     isAtStartSPV: () => {
       console.log("is at start SPV");
     },
-    isAtStartingDaemon: () => {
-      console.log("is at start  At Starting Daemonn");
+    isAtStartingDaemon: (context, event) => {
+      console.log("is at Starting Daemonn");
+      const { appdata } = event;
+      context.appdata = appdata;
+      return a.onStartDaemon({ appdata })
+        .then(started => {
+          const { credentials, appdata } = started;
+          context.credentials = credentials;
+          context.appdata = appdata;
+          a.sendEvent({ type: "CONNECT_DAEMON", payload: started });
+        })
+        .catch(
+          error => a.sendEvent({ type: "ERROR_STARTING_DAEMON", payload: { error } })
+        );
+    },
+    isAtErrorStartingDaemon: (context) => {
+      console.log("is at error starting daemon");
+      const { appdata } = context;
+      if (appdata) {
+        a.sendEvent({ type: "START_ADVANCED_DAEMON" });
+      }
+      return a.goToError();
     },
     isStartedDaemon: () => {
       console.log("is at started daemon");
     },
-    isAtConnectDaemon: (context, event) => {
+    isAtConnectingDaemon: (context, event) => {
       console.log(" is at connect daemon ");
       const { remoteCredentials } = event;
-      context.credentials = remoteCredentials;
+      remoteCredentials && (context.credentials = remoteCredentials);
       return a.onConnectDaemon(remoteCredentials)
         .then(connected => {
-          console.log(context);
-          console.log(event);
-          a.sendEvent({ type: "CHECK_NETWORK_MATCH", payload: connected });
+          a.sendEvent({ type: "SYNC_DAEMON", payload: connected });
         })
-        .catch(e => console.log(e));
+        .catch(error =>
+          a.sendEvent({ type: "ERROR_CONNECTING_DAEMON", payload: { error } })
+        );
     },
     isAtCheckNetworkMatch: () => {
       console.log(" is at check network ");
       return a.checkNetworkMatch()
-        .then(checked => a.sendEvent({ type: "SYNC_DAEMON", payload: checked }))
+        .then( checked => a.sendEvent({ type: "CHOOSE_WALLET", payload: { checked } }))
         .catch(e => console.log(e));
     },
     isAtSyncingDaemon: () => {
       console.log(" is at syncing daemon ");
-      a.syncDaemon().then( synced => {
-        a.onGetAvailableWallets().
-          then(w => a.sendEvent({ type: "CHOOSE_WALLET", payload: { synced, w } }));
-      });
+      a.syncDaemon()
+        .then(synced => a.sendEvent({ type: "CHECK_NETWORK_MATCH", payload: synced }))
+        .catch(e => console.log(e));
+    },
+    isAtChoosingWallet: (context, event) => {
+      console.log("is at choosingWallet");
+      a.onGetAvailableWallets()
+        .then(w => a.sendEvent({ type: "CHOOSE_WALLET", payload: { w } }) )
+        .catch(e => console.log(e));
+      const { selectedWallet } = event;
+      if (selectedWallet) {
+        context.selectedWallet = selectedWallet;
+        return a.sendEvent({ type: "SUBMIT_CHOOSE_WALLET" });
+      }
     },
     isAtLeavingChoosingWallet: (context, event) => {
       console.log("is leaving choosing wallet");
+      if (!event.selectedWallet) {
+        return;
+      }
       context.selectedWallet = event.selectedWallet;
-    },
-    isAtChoosingWallet: () => {
-      console.log("is At Choose Wallet");
     },
     isAtStartWallet: (context) => {
       console.log("is At Start Wallet");
-      a.onStartWallet(context.selectedWallet).then(r => {
-        a.sendEvent({ type: "SYNC_RPC", r });
-      });
+      const { selectedWallet } = context;
+      a.setSelectedWallet(selectedWallet);
+
+      a.onStartWallet(selectedWallet)
+        .then(r => {
+          a.sendEvent({ type: "SYNC_RPC", r });
+        })
+        .catch(err => console.log(err));
     },
-    isSyncingRPC: (context, ) => {
+    isSyncingRPC: () => {
       console.log("is at syncing rpc");
-      a.onRetryStartRPC(context.credentials);
-    },
-  },
+      a.onRetryStartRPC();
+    }
+  }
 });
