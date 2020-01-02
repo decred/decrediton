@@ -8,7 +8,7 @@ import { semverCompatible } from "./VersionActions";
 import * as wallet from "wallet";
 import { push as pushHistory, goBack } from "react-router-redux";
 import { ipcRenderer } from "electron";
-import { setMustOpenForm, getWalletCfg, getAppdataPath, getRemoteCredentials, getGlobalCfg, setLastHeight } from "config";
+import { getWalletCfg, getGlobalCfg, setLastHeight } from "config";
 import { isTestNet } from "selectors";
 import axios from "axios";
 import { STANDARD_EXTERNAL_REQUESTS } from "main_dev/externalRequests";
@@ -35,9 +35,10 @@ export const AVAILABLE_WALLETS = "AVAILABLE_WALLETS";
 export const SHUTDOWN_REQUESTED = "SHUTDOWN_REQUESTED";
 export const SET_CREDENTIALS_APPDATA_ERROR = "SET_CREDENTIALS_APPDATA_ERROR";
 export const REGISTERFORERRORS = "REGISTERFORERRORS";
-export const FATAL_DAEMON_ERROR = "FATAL_DAEMON_ERROR";
+export const DAEMON_ERROR = "DAEMON_ERROR";
 export const FATAL_WALLET_ERROR = "FATAL_WALLET_ERROR";
 export const DAEMON_WARNING = "DAEMON_WARNING";
+export const WALLET_ERROR = "WALLET_ERROR";
 export const WALLET_WARNING = "WALLET_WARNING";
 export const WALLETCREATED = "WALLETCREATED";
 export const WALLET_AUTOBUYER_SETTINGS = "WALLET_AUTOBUYER_SETTINGS";
@@ -156,7 +157,7 @@ export const finishPrivacy = () => (dispatch) => {
   dispatch(goBack());
 };
 
-export const startDaemon = (params) => (dispatch, getState) => {
+export const startDaemon = (params) => (dispatch, getState) => new Promise ((resolve, reject) => {
   const appdata = params && params.appdata;
   dispatch({ type: DAEMONSTART_ATTEMPT });
   const { daemonStarted } = getState().daemon;
@@ -164,26 +165,26 @@ export const startDaemon = (params) => (dispatch, getState) => {
     return dispatch({ type: DAEMONSTART_SUCCESS });
   }
 
-  wallet.startDaemon(params, isTestNet(getState()))
+  return wallet.startDaemon(params, isTestNet(getState()))
     .then(rpcCreds => {
       dispatch({ type: DAEMONSTART_SUCCESS, credentials: rpcCreds, appdata });
-      dispatch(connectDaemon(rpcCreds, appdata));
+      resolve({ appdata, credentials: rpcCreds });
     })
-    .catch((err) => dispatch({ err, type: DAEMONSTART_FAILURE }));
-};
+    .catch((err) => {
+      dispatch({ err, type: DAEMONSTART_FAILURE });
+      reject(err);
+    });
+});
 
-export const setCredentialsAppdataError = () => (dispatch) => {
-  dispatch({ type: SET_CREDENTIALS_APPDATA_ERROR });
-};
 
 export const registerForErrors = () => (dispatch) => {
   dispatch({ type: REGISTERFORERRORS });
-  ipcRenderer.sendSync("register-for-errors");
+  ipcRenderer.send("register-for-errors");
   ipcRenderer.on("error-received", (event, daemon, error) => {
     if (daemon) {
-      dispatch({ error, type: FATAL_DAEMON_ERROR });
+      dispatch({ error, type: DAEMON_ERROR });
     } else {
-      dispatch({ error, type: FATAL_WALLET_ERROR });
+      dispatch({ error, type: WALLET_ERROR });
     }
     dispatch(pushHistory("/error"));
   });
@@ -295,6 +296,12 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => new Promi
     const { currentSettings } = getState().settings;
     const network = currentSettings.network;
 
+    // if selected wallet is not send in the call of the method,
+    // it probably means it is a refresh, so we get the selected wallet
+    // stored in ipc memory.
+    if (!selectedWallet) {
+      selectedWallet = ipcRenderer.sendSync("get-selected-wallet");
+    }
     const walletStarted = await wallet.startWallet(selectedWallet.value.wallet, network == "testnet");
     const { port } = walletStarted;
     const walletCfg = getWalletCfg(network == "testnet", selectedWallet.value.wallet);
@@ -348,37 +355,38 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => new Promi
     });
 });
 
-export const prepStartDaemon = () => (dispatch, getState) => {
+const prepStartDaemon = () => (dispatch, getState) => {
   const { daemon: { daemonAdvanced } } = getState();
-  const cliOptions = ipcRenderer.sendSync("get-cli-options");
-  dispatch(registerForErrors());
-  dispatch(checkDecreditonVersion());
+  // const cliOptions = ipcRenderer.sendSync("get-cli-options");
+  // console.log(cliOptions)
   if (!daemonAdvanced) {
     return;
   }
 
-  let rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port;
-  if (cliOptions.rpcPresent) {
-    rpc_user = cliOptions.rpcUser;
-    rpc_pass = cliOptions.rpcPass;
-    rpc_cert = cliOptions.rpcCert;
-    rpc_host = cliOptions.rpcHost;
-    rpc_port = cliOptions.rpcPort;
-  } else {
-    ({ rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port } = getRemoteCredentials());
-  }
-  const hasAllCredentials = rpc_pass && rpc_user && rpc_pass.length > 0 && rpc_user.length > 0 && rpc_cert.length > 0 && rpc_host.length > 0 && rpc_port.length > 0;
-  const hasAppData = getAppdataPath() && getAppdataPath().length > 0;
-
-  if(hasAllCredentials && hasAppData)
-    this.props.setCredentialsAppdataError();
+  // let rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port;
+  // if (cliOptions.rpcPresent) {
+  //   rpc_user = cliOptions.rpcUser;
+  //   rpc_pass = cliOptions.rpcPass;
+  //   rpc_cert = cliOptions.rpcCert;
+  //   rpc_host = cliOptions.rpcHost;
+  //   rpc_port = cliOptions.rpcPort;
+  // } else {
+  //   ({ rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port } = getRemoteCredentials());
+  // }
 };
 
-const TIME_TO_TIMEOUT = 30 * 1000; // 30 sec
+export const decreditonInit = () => async (dispatch) => {
+  dispatch(registerForErrors());
+  dispatch(checkDecreditonVersion());
+  await dispatch(prepStartDaemon());
+};
+
+const TIME_TO_TIMEOUT = 15 * 1000; // 15 sec
 export const connectDaemon = (rpcCreds) => (dispatch, getState) => new Promise((resolve,reject) => {
   dispatch({ type: CONNECTDAEMON_ATTEMPT });
   const timeBeforeConnect = new Date();
   const tryConnect = async () => {
+
     const { daemonConnected, credentials, daemonError, daemonWarning, timeStart } = getState().daemon;
     const creds = rpcCreds ? rpcCreds : credentials;
     const timeNow = new Date();
@@ -386,8 +394,9 @@ export const connectDaemon = (rpcCreds) => (dispatch, getState) => new Promise((
     // We do not consider timeout if has a warning as it probably means dcrd
     // is reindexing or upgrading its database.
     if (!daemonWarning && (timeStart === 0 && timeElapsed >= TIME_TO_TIMEOUT)) {
-      dispatch({ type: CONNECTDAEMON_FAILURE, daemonTimeout: true, error: "timeout exceed" });
-      return;
+      const error = "timeout exceed";
+      dispatch({ type: CONNECTDAEMON_FAILURE, daemonTimeout: true, error });
+      return reject(error);
     }
     if (daemonConnected || daemonError) return;
 
@@ -421,6 +430,7 @@ export const checkNetworkMatch = () => async (dispatch, getState) => new Promise
         dispatch({ error: DIFF_CONNECTION_ERROR, type: CHECK_NETWORKMATCH_FAILED });
         return dispatch(pushHistory("/error"));
       }
+      dispatch({ type: CHECK_NETWORKMATCH_SUCCESS });
       resolve(daemonInfo);
     })
     .catch(error => {
@@ -432,15 +442,17 @@ export const checkNetworkMatch = () => async (dispatch, getState) => new Promise
 export const syncDaemon = () => (dispatch, getState) => new Promise((resolve) => {
   dispatch({ type: SYNC_DAEMON_ATTEMPT });
   const updateBlockCount = () => {
-    const { daemon: { daemonSynced, timeStart, blockStart, daemonError } } = getState();
-    if (daemonSynced || daemonError) return;
+    const { daemon: { daemonSynced, timeStart, blockStart } } = getState();
+    if (daemonSynced) return;
     return wallet.getBlockCount()
       .then(( blockChainInfo ) => {
         const { blockCount, syncHeight } = blockChainInfo;
         if (blockCount && syncHeight) {
           if (blockCount >= syncHeight) {
-            dispatch({ type: DAEMONSYNCED, currentBlockHeight: blockCount });
-            setMustOpenForm(false);
+            dispatch({ type: DAEMONSYNCED, blockCount, syncHeight });
+            // After this points the refresh will load directly instead of
+            // starting, connecting and syncing daemon.
+            wallet.setHeightSynced(true);
             resolve({ type: DAEMONSYNCED, currentBlockHeight: blockCount });
             return;
           }

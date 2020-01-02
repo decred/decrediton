@@ -282,10 +282,6 @@ export function setRemoteCredentials(rpcuser, rpcpass, rpccert, rpchost, rpcport
   return setConfigData(cfgConstants.REMOTE_CREDENTIALS, credentials);
 }
 
-export function setMustOpenForm(openForm) {
-  return setConfigData(cfgConstants.OPEN_FORM, openForm);
-}
-
 export function setLastHeight(height) {
   return setConfigData(cfgConstants.LAST_HEIGHT, height);
 }

@@ -149,7 +149,7 @@ class AdvancedStartupBody extends React.Component {
       return;
     }
     setAppdataPath(appdata);
-    this.props.onStartDaemon({ appdata });
+    this.props.submitAppdata(appdata);
   }
 
   isRemoteValid() {

@@ -63,8 +63,9 @@ export const startDaemon = async (params, testnet, reactIPC) => {
   try {
     const started = await launchDCRD(params, testnet, reactIPC);
     return started;
-  } catch (e) {
-    logger.log("error", "error launching dcrd: " + e);
+  } catch (err) {
+    logger.log("error", "error launching dcrd: " + err);
+    return { err };
   }
 };
 

@@ -16,6 +16,7 @@ import { stopNotifcations } from "./NotificationActions";
 import { clearDeviceSession as trezorClearDeviceSession } from "./TrezorActions";
 import { stopDcrlnd } from "./LNActions";
 import { TESTNET } from "constants";
+import { ipcRenderer } from "electron";
 
 const MAX_RPC_RETRIES = 5;
 const RPC_RETRY_DELAY = 5000;
@@ -196,6 +197,7 @@ export const closeWalletRequest = () => async(dispatch, getState) => {
     await dispatch(trezorClearDeviceSession());
     await dispatch(stopDcrlnd());
     await dispatch(ticketBuyerCancel());
+    await dispatch(setSelectedWallet(null));
     if (walletReady) {
       await closeWallet(getState().walletLoader.loader);
     }
@@ -213,28 +215,22 @@ export const STARTRPC_FAILED = "STARTRPC_FAILED";
 export const STARTRPC_SUCCESS = "STARTRPC_SUCCESS";
 export const STARTRPC_RETRY = "STARTRPC_RETRY";
 
-export const startRpcRequestFunc = (credentials, privPass, isRetry) =>
+export const startRpcRequestFunc = (privPass, isRetry) =>
   (dispatch, getState) => {
     const { syncAttemptRequest } =  getState().walletLoader;
     if (syncAttemptRequest) {
       return;
     }
     const { daemon: { walletName }, walletLoader: { discoverAccountsComplete,isWatchingOnly } }= getState();
-    let rpcuser, rpccertPath, rpcpass, daemonhost, rpcport;
 
-    if (credentials) {
-      rpcuser = credentials.rpc_user;
-      rpccertPath = credentials.rpc_cert;
-      rpcpass = credentials.rpc_pass;
-      daemonhost = credentials.rpc_host;
-      rpcport = credentials.rpc_port;
-    }
+    const credentials = ipcRenderer.sendSync("get-daemon-credentials");
+    const { rpc_user, rpc_cert, rpc_pass, rpc_host, rpc_port } = credentials;
 
     var request = new RpcSyncRequest();
-    const cert = getDcrdCert(rpccertPath);
-    request.setNetworkAddress(daemonhost + ":" + rpcport);
-    request.setUsername(rpcuser);
-    request.setPassword(new Uint8Array(Buffer.from(rpcpass)));
+    const cert = getDcrdCert(rpc_cert);
+    request.setNetworkAddress(rpc_host + ":" + rpc_port);
+    request.setUsername(rpc_user);
+    request.setPassword(new Uint8Array(Buffer.from(rpc_pass)));
     request.setCertificate(new Uint8Array(cert));
     if (!discoverAccountsComplete && privPass) {
       request.setDiscoverAccounts(true);
@@ -282,6 +278,21 @@ export const startRpcRequestFunc = (credentials, privPass, isRetry) =>
       }, 500);
     });
   };
+
+export const WALLET_SELECTED = "WALLET_SELECTED";
+
+export const setSelectedWallet = (selectedWallet) => (dispatch) => {
+  dispatch({ type: WALLET_SELECTED });
+  ipcRenderer.sendSync("set-selected-wallet", selectedWallet);
+};
+
+export const GET_SELECTED_WALLET = "GET_SELECTED_WALLET";
+
+export const getSelectedWallet = () => (dispatch) => {
+  const wallet = ipcRenderer.sendSync("get-selected-wallet");
+  dispatch({ type: GET_SELECTED_WALLET });
+  return wallet;
+};
 
 export const UPDATEDISCOVERACCOUNTS = "UPDATEDISCOVERACCOUNTS";
 export const CLEARSTAKEPOOLCONFIG = "CLEARSTAKEPOOLCONFIG";

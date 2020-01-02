@@ -14,7 +14,7 @@ import "./style/ReactSelectGlobal.less";
 import pkg from "./package.json";
 import { log } from "./wallet";
 import { ipcRenderer } from "electron";
-import { DCR, DAEMON_ADVANCED, THEME, OPEN_FORM, LOCALE, NETWORK } from "constants";
+import { DCR, DAEMON_ADVANCED, THEME, LOCALE, NETWORK } from "constants";
 
 const globalCfg = getGlobalCfg();
 const locale = globalCfg.get(LOCALE);
@@ -68,7 +68,7 @@ var initialState = {
     setLanguage: globalCfg.get("set_language"),
     showSpvChoice: globalCfg.get("show_spvchoice"),
     daemonStarted: false,
-    daemonSynced: false,
+    daemonSynced: ipcRenderer.sendSync("get-height-synced"),
     daemonStopped: false,
     daemonTimeout: false,
     walletReady: false,
@@ -80,7 +80,6 @@ var initialState = {
     credentials: null,
     appdata: null,
     shutdownRequested: false,
-    openForm: globalCfg.get(OPEN_FORM),
     remoteAppdataError: false,
     previousWallet: null,
     selectCreateWalletInputRequest: true,
