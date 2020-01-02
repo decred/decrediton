@@ -7,7 +7,7 @@ import { FormattedMessage as T } from "react-intl";
 class AnimatedLinearProgressFull extends React.Component {
   render() {
     const { min, max, error, getDaemonSynced, text, animationType,
-      syncFetchHeadersLastHeaderTime, lastDcrwalletLogLine, getCurrentBlockCount, getDaemonStarted, getEstimatedTimeLeft} = this.props;
+      syncFetchHeadersLastHeaderTime, lastDcrwalletLogLine, getCurrentBlockCount, getDaemonStarted, getEstimatedTimeLeft } = this.props;
     const perComplete = (getCurrentBlockCount-min)/(max-min);
     const leftStartingPoint = perComplete ? perComplete*100 : 0;
     let finishDateEstimation = null;
