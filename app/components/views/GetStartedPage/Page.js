@@ -1,11 +1,12 @@
-import { LinearProgressFull } from "indicators";
+import { AnimatedLinearProgressFull } from "indicators";
 import { SlateGrayButton, InvisibleButton } from "buttons";
 import "style/GetStarted.less";
 import { LogsLinkMsg, SettingsLinkMsg, LearnBasicsMsg, UpdateAvailableLink,
   WhatsNewLink, LoaderTitleMsg, AboutModalButton } from "./messages";
 
 const DaemonLoadingBody = ({
-  updateAvailable, appVersion, onShowSettings, onShowLogs, StateComponent, getDaemonSynced, submitRemoteCredentials, ...props
+  updateAvailable, appVersion, onShowSettings, onShowLogs, StateComponent, getDaemonSynced,
+  error, text, getCurrentBlockCount, animationType, getNeededBlocks, ...props
 }) => (
   <div className="page-body getstarted">
     <div className="getstarted loader">
@@ -32,10 +33,16 @@ const DaemonLoadingBody = ({
           <WhatsNewLink />
         </div>
         <div className="loader-bar">
-          <LinearProgressFull {...{ getDaemonSynced }} />
+          <AnimatedLinearProgressFull {...{ getDaemonSynced, text, value: getCurrentBlockCount, animationType, min: 0,
+            max: getNeededBlocks, disabled: false }} />
         </div>
-        { StateComponent && <StateComponent {...{ ...props, submitRemoteCredentials, getDaemonSynced }} /> }
-
+        {
+          error &&
+          <div className="error launch-error">
+            {error}
+          </div>
+        }
+        { StateComponent && <StateComponent {...{ ...props, getDaemonSynced }} /> }
       </>
     </div>
   </div>

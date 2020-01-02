@@ -104,7 +104,7 @@ const WalletSelectionBodyBase = ({
           </div>
         </div>
       </div>) :
-      availableWallets.length == 0 && !createWalletForm ? <CreateRestoreButtons {...{ showCreateWalletForm }}/> :
+      !createWalletForm ? <CreateRestoreButtons {...{ showCreateWalletForm }}/> :
         <div className="advanced-page">
           <div className="advanced-page-form">
             <CreateWalletForm {...{ ...props, intl, availableWallets,

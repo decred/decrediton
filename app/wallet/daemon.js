@@ -7,12 +7,13 @@ export const checkDecreditonVersion = log(() => Promise
   .resolve(ipcRenderer.sendSync("check-version"))
 , "Check Decrediton release version");
 
-export const startDaemon = log((params, testnet) => Promise
-  .resolve(ipcRenderer.sendSync("start-daemon", params, testnet))
-  .then(started => {
-    if (!started) throw "Error starting daemon";
-    return started;
-  }), "Start Daemon");
+export const startDaemon = log((params, testnet) => new Promise((resolve, reject) => {
+  ipcRenderer.send("start-daemon", params, testnet);
+  ipcRenderer.on("start-daemon-response", (event, started) => {
+    if (started && started.err) reject(started.err);
+    resolve(started);
+  });
+}), "Start Daemon");
 
 export const deleteDaemonData = log((appData, testnet) => Promise
   .resolve(ipcRenderer.sendSync("delete-daemon", appData, testnet)), "Delete Daemon Data");
@@ -96,6 +97,13 @@ export const getBlockCount = log(() => new Promise(resolve => {
   });
   ipcRenderer.send("check-daemon");
 }), "Get Block Count");
+
+export const setHeightSynced = log(() => Promise
+  .resolve(ipcRenderer.sendSync("set-height-synced", true))
+  .then( saved => {
+    if (!saved) throw "Error set height saved";
+    return;
+  }), "set height is synced");
 
 export const getDaemonInfo = log((rpcCreds) => new Promise(resolve => {
   ipcRenderer.once("check-getinfo-response", (e, info) => {
