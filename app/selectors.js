@@ -21,7 +21,6 @@ export const daemonError = get([ "daemon" , "daemonError" ]);
 export const walletError = get([ "daemon", "walletError" ]);
 export const appVersion = get([ "daemon", "appVersion" ]);
 export const updateAvailable = get([ "daemon", "updateAvailable" ]);
-export const openForm = get([ "daemon", "openForm" ]);
 export const isDaemonRemote = get([ "daemon", "daemonRemote" ]);
 export const getDaemonStarted = get([ "daemon", "daemonStarted" ]);
 export const getDaemonConnected = get([ "daemon", "daemonConnected" ]);
