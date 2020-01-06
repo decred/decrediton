@@ -19,7 +19,6 @@ class ConfirmSeed extends React.Component {
     this.state = {
       seedWords,
       splitMnemonic,
-      seedError: "*Please confirm the missing words",
     };
   }
 
@@ -47,7 +46,10 @@ class ConfirmSeed extends React.Component {
         this.setState({ seedWordsError: null });
         this.props.decodeSeed(mnemonic)
           // if no errors happened we set the seed at our machine state
-          .then(response => this.props.setSeed(response.getDecodedSeed()))
+          .then(response => {
+            this.props.setSeed(response.getDecodedSeed());
+            this.props.setError("")
+          })
           .catch(e => {
             this.props.setError(e);
             this.props.setSeed([]);

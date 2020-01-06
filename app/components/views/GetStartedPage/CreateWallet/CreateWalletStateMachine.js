@@ -41,7 +41,18 @@ export const CreateWalletMachine = ({
       on: {
         CONTINUE: "walletCreated",
         ERROR: "createWallet",
-        BACK: "createWallet"
+        BACK: "finished",
+        VALIDATE_DATA: {
+          target: "writeSeed",
+          // assign new context;
+          actions: [
+            assign({
+              passPhrase: (context, event) => event.passPhrase ? event.passPhrase : context.passPhrase ? context.passPhrase : "",
+              seed: (context, event) => event.seed ? event.seed : context.seed ? context.seed : [],
+              error: (context, event) => event.error && event.error
+            }),
+          ],
+        }
       }
     },
     confirmSeed: {
@@ -69,7 +80,7 @@ export const CreateWalletMachine = ({
               error: (context, event) => event.error && event.error
             }),
           ],
-        } 
+        }
       },
     },
     walletCreated: {
@@ -96,13 +107,12 @@ export const CreateWalletMachine = ({
         context.mnemonic = mnemonic;
         sendEvent({ type: "GENERATED" })
       });
-      console.log("is At NewWallet")
     },
     isAtConfirmSeed: (context, event) => {
       checkIsValid();
     },
     isAtWriteSeed: () => {
-      console.log("is At writeseed")
+      checkIsValid();
     },
     isAtFinished: async () => {
       await cancelCreateWallet();

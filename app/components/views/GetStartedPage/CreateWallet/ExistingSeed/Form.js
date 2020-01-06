@@ -1,16 +1,16 @@
 import SingleSeedWordEntry from "../SingleSeedWordEntry";
 import SeedHexEntry from "inputs/SeedHexEntry";
-import { TextToggle } from "buttons";
+import { TextToggle, KeyBlueButton, InvisibleButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
-import { ConfirmSeedMsg } from "../../messages";
+import { ConfirmSeedMsg, BackBtnMsg } from "../../messages";
 import "style/CreateWalletForm.less";
 import { WORDS, HEX } from "constants";
-import { Tooltip } from "shared";
+import { Tooltip, CreatePassPhrase } from "shared";
 
 const ExistingSeedForm = ({
-  sendBack,
   onChangeSeedWord, seedWords, setSeedHex, mountSeedErrors, handleOnPaste, hexSeed,
-  seedType, pasteFromClipboard, handleToggle, showPasteWarning, showPasteError
+  seedType, pasteFromClipboard, handleToggle, showPasteWarning, showPasteError, isValid,
+  onCreateWallet, sendBack, setPassPhrase
 }) => {
   const errors = mountSeedErrors();
   return (
@@ -70,7 +70,22 @@ const ExistingSeedForm = ({
       {showPasteWarning &&
         <div className="warning seed-warning-message">
           <T id="confirmSeed.warnings.pasteExistingSeed" m="*Please make sure you also have a physical, written down copy of your seed." />
-        </div>}
+        </div>
+      }
+      <CreatePassPhrase onChange={setPassPhrase} onSubmit={onCreateWallet} />
+      <div className="create-wallet-button-container">
+        <KeyBlueButton
+          className="wallet-key-blue-button"
+          disabled={!isValid}
+          // loading={isCreatingWallet}
+          onClick={onCreateWallet}
+        >
+          <T id="createWallet.createWalletBtn" m="Create Wallet" />
+        </KeyBlueButton>
+        <InvisibleButton className="go-back-button" onClick={ sendBack } >
+          <BackBtnMsg />
+        </InvisibleButton>
+      </div>
     </>
   );
 };

@@ -13,8 +13,6 @@ class ExistingSeed extends React.Component {
     this.state = {
       seedWords: this.getEmptySeedWords(),
       hexSeed: null,
-      seed: null,
-      seedError: null,
       showPasteWarning: false,
       showPasteError: false,
       seedType: WORDS
@@ -42,16 +40,43 @@ class ExistingSeed extends React.Component {
       return;
     }
 
-    const mnemonic = this.getSeedWordsStr();
-    this.props
-      .decodeSeed(mnemonic)
-      .then(response => {
-        this.setState({ seed: response.getDecodedSeed(), seedError: null });
-        this.props.onChange(response.getDecodedSeed());
-      })
-      .catch(error => {
-        this.setState({ seed: "", seedError: error+"" });
+    const countWords = () => {
+      let count = 0;
+      seedWords.forEach( wordObj => {
+        if(wordObj.word.length > 0) count++;
       });
+      return count;
+    };
+    const fixPositionError = (errorStr) => {
+      const index = errorStr.indexOf(POSITION_ERROR);
+      const numberPosition = index + POSITION_ERROR.length + 1;
+      const endErrorStr = errorStr.slice(numberPosition + 1);
+      const beginErrorStr = errorStr.slice(0, numberPosition);
+      return beginErrorStr + (seedWord.index + 1) + endErrorStr;
+    };
+    const onError = (seedError) => {
+      let seedErrorStr = seedError + "";
+      if (countWords() <= 1) { // Weird errors with one word, better to avoid them.
+        return;
+      }
+      if (seedErrorStr.includes(MISMATCH_ERROR) && countWords() < 33) {
+        return;
+      }
+      if (seedErrorStr.includes(POSITION_ERROR)) {
+        seedErrorStr = fixPositionError(seedErrorStr);
+      }
+      this.props.setSeed([]);
+      this.props.setError(seedErrorStr);
+    };
+
+    const seedWordStr = this.getSeedWordsStr();
+    this.props.decodeSeed(seedWordStr)
+      // if no errors happened we set the seed at our machine state
+      .then(response => {
+        this.props.setSeed(response.getDecodedSeed());
+        this.props.setError("")
+      })
+      .catch(onError);
   }
 
   getEmptySeedWords() {
@@ -125,12 +150,9 @@ class ExistingSeed extends React.Component {
     updatedSeedWords[seedWord.index] = { word: update, index: seedWord.index, error: false };
     const countWords = () => {
       let count = 0;
-      seedWords.forEach((wordObj) => {
-        if(wordObj.word.length > 0) {
-          count++;
-        }
+      seedWords.forEach( wordObj => {
+        if(wordObj.word.length > 0) count++;
       });
-
       return count;
     };
     const fixPositionError = (errorStr) => {
@@ -141,40 +163,29 @@ class ExistingSeed extends React.Component {
       return beginErrorStr + (seedWord.index + 1) + endErrorStr;
     };
     const onError = (seedError) => {
-      const seedErrorStr = seedError + "";
+      let seedErrorStr = seedError + "";
       if (countWords() <= 1) { // Weird errors with one word, better to avoid them.
         return;
       }
       if (seedErrorStr.includes(MISMATCH_ERROR) && countWords() < 33) {
         return;
       }
-      this.setState({ seedError: seedErrorStr });
-      this.props.onChange(null);
       if (seedErrorStr.includes(POSITION_ERROR)) {
-        const positionErr = fixPositionError(seedErrorStr);
-
-        updatedSeedWords[seedWord.index] = { word: update, index: seedWord.index, error: true };
-        this.setState({ seedWords: updatedSeedWords, seedError: positionErr });
+        seedErrorStr = fixPositionError(seedErrorStr);
       }
+      this.props.setSeed([]);
+      this.props.setError(seedErrorStr);
     };
+    
+    const seedWordStr = this.getSeedWordsStr();
     this.setState({ seedWords: updatedSeedWords }, () => {
-      const mnemonic = this.getSeedWordsStr();
-      if (this.props.mnemonic && this.isMatch()) {
-        this.props
-          .decodeSeed(mnemonic)
-          .then(response => this.props.onChange(response.getDecodedSeed()))
-          .then(() => this.setState({ seedError: null }))
-          .catch(onError);
-      } else {
-        this.props.onChange(null);
-        this.props
-          .decodeSeed(mnemonic)
-          .then(response => {
-            this.setState({ mnemonic, seedError: null });
-            this.props.onChange(response.getDecodedSeed());
-          })
-          .catch(onError);
-      }
+      this.props.decodeSeed(seedWordStr)
+        // if no errors happened we set the seed at our state machine
+        .then(response => {
+          this.props.setSeed(response.getDecodedSeed());
+          this.props.setError("")
+        })
+        .catch(onError);
     });
   }
 
@@ -196,11 +207,6 @@ class ExistingSeed extends React.Component {
     return seedType === HEX ? hexSeed : seedWords.map(({ word }) => word).join(" ");
   }
 
-  isMatch() {
-    const mnemonic = this.state.mnemonic || this.props.mnemonic;
-    return !!(mnemonic && (this.getSeedWordsStr() === mnemonic));
-  }
-
   isHexValid(seed) {
     return /^[0-9a-fA-F]*$/.test(seed) && seed.length <= SEED_LENGTH.HEX_MAX;
   }
@@ -212,7 +218,7 @@ class ExistingSeed extends React.Component {
     const { seedWords, seedError, hexSeed } = this.state;
     return (
       <ExistingSeedForm {...{
-        ...this.state, seedWords, onChangeSeedWord, seedError, setSeedHex,
+        ...this.props, ...this.state, seedWords, onChangeSeedWord, seedError, setSeedHex,
         hexSeed, handleOnPaste, mountSeedErrors, pasteFromClipboard, handleToggle
       }} />
     );

@@ -3,8 +3,7 @@ import { InfoDocFieldModalButton, KeyBlueButton, InvisibleButton } from "buttons
 import SingleSeedWordEntry from "../SingleSeedWordEntry";
 import { ConfirmSeedMsg, BackBtnMsg } from "../../messages";
 import { FormattedMessage as T } from "react-intl";
-import { CreatePassPhrase } from "shared";
-import { Tooltip } from "shared";
+import { Tooltip, CreatePassPhrase } from "shared";
 
 export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord, isValid, onCreateWallet, sendBack, setPassPhrase }) => (
 <>
@@ -51,19 +50,18 @@ export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord, isValid, onCreate
   </div>
   <CreatePassPhrase onChange={setPassPhrase} onSubmit={onCreateWallet} />
   <div className="create-wallet-button-container">
-      <KeyBlueButton
-        className="wallet-key-blue-button"
-        disabled={!isValid}
-        // loading={isCreatingWallet}
-        onClick={onCreateWallet}
-      >
-        <T id="createWallet.createWalletBtn" m="Create Wallet" />
-      </KeyBlueButton>
-      <InvisibleButton
-        className="go-back-button"
-        onClick={ sendBack }
-      ><BackBtnMsg /></InvisibleButton>
-    </div>
+    <KeyBlueButton
+      className="wallet-key-blue-button"
+      disabled={!isValid}
+      // loading={isCreatingWallet}
+      onClick={onCreateWallet}
+    >
+      <T id="createWallet.createWalletBtn" m="Create Wallet" />
+    </KeyBlueButton>
+    <InvisibleButton className="go-back-button" onClick={ sendBack } >
+      <BackBtnMsg />
+    </InvisibleButton>
+  </div>
 </>
 );
 

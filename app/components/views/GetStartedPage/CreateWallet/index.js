@@ -60,8 +60,7 @@ class CreateWallet extends React.Component {
       break;
     case "writeSeed":
       component = h(ExistingSeed, {
-        sendBack, decodeSeed, sendContinue, isNew, createWalletRequest, onSetWalletPrivatePassphrase,
-        onChangeSeedWord, setPassPhrase, onCreateWallet
+        sendBack, decodeSeed, sendContinue, setSeed, setPassPhrase, onCreateWallet, isValid, setError
       });
       break;
     case "finished":
@@ -87,9 +86,7 @@ class CreateWallet extends React.Component {
   }
 
   onCreateWallet() {
-    const {
-      createWalletRequest, onSetWalletPrivatePassphrase, sendContinue
-    } = this.props;
+    const { createWalletRequest, onSetWalletPrivatePassphrase } = this.props;
     const { isNew } = this.state;
     const pubpass = ""; // Temporarily disabled?
     const { seed, passPhrase } = this.service._state.context;
@@ -106,7 +103,7 @@ class CreateWallet extends React.Component {
 
   setSeed(seed) {
     const { passPhrase, error } = this.machine.context
-    this.service.send({ type: "VALIDATE_DATA", seed, passPhrase });
+    this.service.send({ type: "VALIDATE_DATA", seed, passPhrase, error });
   }
 
   setPassPhrase(passPhrase) {
