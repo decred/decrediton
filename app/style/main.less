@@ -125,9 +125,16 @@ main {
 //  Disable element selection 
 ////////////////////////////////////
 
-*, *::after, *::before {
+.decrediton {
 	-webkit-user-select: none;
 	-webkit-user-drag: none;
 	-webkit-app-region: no-drag;
 	cursor: default;
+}
+
+//Exceptions
+
+.standalone-page.txdetails-standalone-page,.snackbar,.purchase-ticket-area,
+.stakepool-flex-height,.tickets-list,.my-tickets-charts,.account-content-nest{
+	-webkit-user-select: text;
 }
