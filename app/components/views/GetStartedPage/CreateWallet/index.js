@@ -3,13 +3,13 @@ import "style/GetStarted.less";
 import cx from "classnames";
 import { interpret } from "xstate";
 import { CreateWalletMachine } from "./CreateWalletStateMachine";
-import Page from "./Page"
+import Page from "./Page";
 import { withRouter } from "react-router";
 import CopySeed from "./CopySeed";
 import ConfirmSeed from "./ConfirmSeed";
 import ExistingSeed from "./ExistingSeed";
 import { createWallet } from "connectors";
-import { createElement as h, cloneElement as k } from "react";
+import { createElement as h } from "react";
 
 @autobind
 class CreateWallet extends React.Component {
@@ -31,9 +31,10 @@ class CreateWallet extends React.Component {
   componentDidMount() {
     this.service.start();
     let isNew = this.props.match.params.isNew;
-    isNew = isNew == "true" ? true : false
+    isNew = isNew == "true" ? true : false;
     this.setState({ isNew });
-    const { isCreatingWatchingOnly, masterPubKey, isTestNet } = this.props;
+    // TODO Add watching only state and tezos
+    // const { isCreatingWatchingOnly, masterPubKey, isTestNet } = this.props;
     this.service.send({ type: "CREATE_WALLET", isNew });
     this.service.send({ type: "RESTORE_WALLET", isNew });
   }
@@ -100,12 +101,12 @@ class CreateWallet extends React.Component {
   }
 
   setSeed(seed) {
-    const { passPhrase, error } = this.machine.context
+    const { passPhrase, error } = this.machine.context;
     this.service.send({ type: "VALIDATE_DATA", seed, passPhrase, error });
   }
 
   setPassPhrase(passPhrase) {
-    const { seed, error } = this.machine.context
+    const { seed, error } = this.machine.context;
     this.service.send({ type: "VALIDATE_DATA", passPhrase, seed, error });
   }
 
@@ -115,9 +116,9 @@ class CreateWallet extends React.Component {
     // So if they are set at the machine it means they have passed validation.
     if (!seed || !passPhrase) return this.setState({ isValid: false });
     if (seed.length === 0) return this.setState({ isValid: false });
-    if (passPhrase.length === 0) return this.setState({ isValid: false });;
+    if (passPhrase.length === 0) return this.setState({ isValid: false });
 
-    return this.setState({ isValid: true });;
+    return this.setState({ isValid: true });
   }
 
   render() {
@@ -129,7 +130,7 @@ class CreateWallet extends React.Component {
       <Page {...{
         StateComponent, getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft, getDaemonSynced, walletHeader
       }}/>
-    </div>
+    </div>;
   }
 }
 

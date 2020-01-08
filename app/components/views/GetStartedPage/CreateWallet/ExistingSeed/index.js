@@ -3,9 +3,6 @@ import { SEED_LENGTH, SEED_WORDS } from "wallet/seed";
 import { FormattedMessage as T } from "react-intl";
 import { WORDS, HEX, POSITION_ERROR, MISMATCH_ERROR } from "constants";
 
-const shouldShowNonSupportSeedSize = (hexSeed, seedType) =>
-  hexSeed && seedType === HEX && hexSeed.length !== 64 && hexSeed.length > SEED_LENGTH.HEX_MIN;
-
 @autobind
 class ExistingSeed extends React.Component {
   constructor(props) {
@@ -44,7 +41,7 @@ class ExistingSeed extends React.Component {
       // if no errors happened we set the seed at our machine state
       .then(response => {
         this.props.setSeed(response.getDecodedSeed());
-        this.props.setError("")
+        this.props.setError("");
       })
       .catch(this.onError);
   }
@@ -95,17 +92,6 @@ class ExistingSeed extends React.Component {
     this.setState({ seedType: side === "left" ? WORDS : HEX });
   }
 
-  mountSeedErrors = () => {
-    if(shouldShowNonSupportSeedSize(this.state.hexSeed, this.state.seedType)) {
-      errors.push(
-        <div key='confirmSeed.errors.hexNot32Bytes'>
-          <T id="confirmSeed.errors.hexNot32Bytes" m="Error: seed is not 32 bytes, such comes from a non-supported software and may have unintended consequences." />
-        </div>
-      );
-    }
-    return errors;
-  }
-
   async onError(seedError, seedWord) {
     const { seedWords } = this.state;
     let seedErrorStr = seedError + "";
@@ -137,35 +123,39 @@ class ExistingSeed extends React.Component {
     }
     this.props.setSeed([]);
     this.props.setError(seedErrorStr);
-  };
-
-  onChangeSeedWord(seedWord, update) {
-    const { seedWords } = this.state;
-    const updatedSeedWords = seedWords;
-    updatedSeedWords[seedWord.index] = { word: update, index: seedWord.index, error: false };
-    
-    const seedWordStr = this.getSeedWordsStr();
-    this.setState({ seedWords: updatedSeedWords }, () => {
-      this.props.decodeSeed(seedWordStr)
-        // if no errors happened we set the seed at our state machine
-        .then(response => {
-          this.props.setSeed(response.getDecodedSeed());
-          this.props.setError("")
-        })
-        .catch(err => this.onError(err, seedWord));
-    });
   }
 
-  setSeedHex(seed) {
-    const trimmedSeed = seed.trim();
-    if (this.isHexValid(trimmedSeed)) {
-      this.setState({
-        hexSeed: trimmedSeed, showPasteError: false, showPasteWarning: false
+  onChangeSeedWord(seedWord, update) {
+    const { seedType, seedWords } = this.state;
+    const updatedSeedWords = seedWords;
+    updatedSeedWords[seedWord.index] = { word: update, index: seedWord.index, error: false };
+
+    const seedWordStr = this.getSeedWordsStr();
+    // validate seed inputed as words
+    if (seedType === WORDS) {
+      return this.setState({ seedWords: updatedSeedWords }, () => {
+        this.props.decodeSeed(seedWordStr)
+          // if no errors happened we set the seed at our state machine
+          .then(response => {
+            this.props.setSeed(response.getDecodedSeed());
+            this.props.setError("");
+          })
+          .catch(err => this.onError(err, seedWord));
       });
-    } else {
-      this.setState({
-        seedError: <T id="confirmSeed.errors.invalidHex" m="Please paste a valid hex seed" />
-      });
+    }
+    // validate seed inputed as HEX
+    if (seedType === HEX) {
+      const trimmedSeed = seedWord.trim();
+      if (this.isHexValid(trimmedSeed)) {
+        this.setState({
+          hexSeed: trimmedSeed, showPasteError: false, showPasteWarning: false
+        });
+      } else {
+        this.props.setError(
+          <T id="confirmSeed.errors.hexNot32Bytes"
+            m="Error: seed is not 32 bytes, such comes from a non-supported software and may have unintended consequences." />
+        );
+      }
     }
   }
 
@@ -175,18 +165,25 @@ class ExistingSeed extends React.Component {
   }
 
   isHexValid(seed) {
+    if (seed.length !== 64 && seed.length > SEED_LENGTH.HEX_MIN) {
+      this.props.setError(
+        <T id="confirmSeed.errors.hexNot32Bytes"
+          m="Error: seed is not 32 bytes, such comes from a non-supported software and may have unintended consequences." />
+      );
+      return false;
+    }
     return /^[0-9a-fA-F]*$/.test(seed) && seed.length <= SEED_LENGTH.HEX_MAX;
   }
 
   render() {
     const {
-      onChangeSeedWord, handleOnPaste, handleToggle, mountSeedErrors, pasteFromClipboard, setSeedHex
+      onChangeSeedWord, handleOnPaste, handleToggle, pasteFromClipboard, setSeedHex
     } = this;
     const { seedWords, seedError, hexSeed } = this.state;
     return (
       <ExistingSeedForm {...{
         ...this.props, ...this.state, seedWords, onChangeSeedWord, seedError, setSeedHex,
-        hexSeed, handleOnPaste, mountSeedErrors, pasteFromClipboard, handleToggle
+        hexSeed, handleOnPaste, pasteFromClipboard, handleToggle
       }} />
     );
   }

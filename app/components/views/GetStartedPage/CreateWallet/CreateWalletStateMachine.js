@@ -50,11 +50,11 @@ export const CreateWalletMachine = ({
               passPhrase: (context, event) => event.passPhrase ? event.passPhrase : context.passPhrase ? context.passPhrase : "",
               seed: (context, event) => event.seed ? event.seed : context.seed ? context.seed : [],
               error: (context, event) => {
-                console.log(event)
-                return event.error && event.error
+                console.log(event);
+                return event.error && event.error;
               }
-            }),
-          ],
+            })
+          ]
         }
       }
     },
@@ -70,7 +70,7 @@ export const CreateWalletMachine = ({
               passPhrase: "",
               seed: [],
               error: ""
-            }),
+            })
           ]
         },
         VALIDATE_DATA: {
@@ -81,10 +81,10 @@ export const CreateWalletMachine = ({
               passPhrase: (context, event) => event.passPhrase ? event.passPhrase : context.passPhrase ? context.passPhrase : "",
               seed: (context, event) => event.seed ? event.seed : context.seed ? context.seed : [],
               error: (context, event) => event.error && event.error
-            }),
-          ],
+            })
+          ]
         }
-      },
+      }
     },
     walletCreated: {
       type: "final",
@@ -101,7 +101,7 @@ export const CreateWalletMachine = ({
     isAtCreateWallet: () => {
       console.log("is at create wallet");
     },
-    isAtNewWallet: (context, event) => {
+    isAtNewWallet: (context) => {
       // We only generate the seed once. If mnemonic already exists, we return it.
       if (context.mnemonic) return;
       generateSeed().then(response => {
@@ -109,10 +109,10 @@ export const CreateWalletMachine = ({
         // context.seed = event.isTestNet ? response.getSeedBytes() : null;
         const mnemonic = response.getSeedMnemonic();
         context.mnemonic = mnemonic;
-        sendEvent({ type: "GENERATED" })
+        sendEvent({ type: "GENERATED" });
       });
     },
-    isAtConfirmSeed: (context, event) => {
+    isAtConfirmSeed: () => {
       checkIsValid();
     },
     isAtWriteSeed: () => {

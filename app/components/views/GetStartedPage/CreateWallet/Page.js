@@ -1,5 +1,4 @@
 import { LoaderBarBottom } from "indicators";
-import { FormattedMessage as T } from "react-intl";
 import "style/GetStarted.less";
 
 const CreateWalletPage = ({

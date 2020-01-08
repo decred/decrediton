@@ -18,7 +18,7 @@ class ConfirmSeed extends React.Component {
     });
     this.state = {
       seedWords,
-      splitMnemonic,
+      splitMnemonic
     };
   }
 
@@ -48,7 +48,7 @@ class ConfirmSeed extends React.Component {
           // if no errors happened we set the seed at our machine state
           .then(response => {
             this.props.setSeed(response.getDecodedSeed());
-            this.props.setError("")
+            this.props.setError("");
           })
           .catch(e => {
             this.props.setError(e);

@@ -100,7 +100,7 @@ export const showPrivacy = () => (dispatch) => {
 
 export const showCreateWallet = (isNew) => (dispatch) => {
   dispatch(pushHistory("/getstarted/createwallet/"+isNew));
-}
+};
 
 export const enableSpv = () => async (dispatch, getState) => {
   dispatch(updateStateSettingsChanged({ spvMode: true }, true));
@@ -271,21 +271,25 @@ export const removeWallet = (selectedWallet) => (dispatch) => {
     });
 };
 
-export const createWallet = (selectedWallet) => (dispatch, getState) => new Promise(async (resolve, reject) => {
-  const { currentSettings } = getState().settings;
+export const createWallet = (selectedWallet) => (dispatch, getState) => new Promise((resolve, reject) => {
   dispatch({ type: CREATE_WALLET_ATTEMPT });
-  const network = currentSettings.network;
-  try {
-    dispatch({ isWatchingOnly: selectedWallet.value.watchingOnly,
-      type: WALLETCREATED });
-    dispatch(setSelectedWallet(selectedWallet));
-    await wallet.createNewWallet(selectedWallet.value.wallet, network == TESTNET)
-    await dispatch(startWallet(selectedWallet));
-    resolve(selectedWallet);
-  } catch (err) {
-    dispatch({ type: CREATE_WALLET_ERROR });
-    reject(err);
-  }
+  const createWalletAsync = async() => {
+    const { currentSettings } = getState().settings;
+    const network = currentSettings.network;
+    try {
+      dispatch({ isWatchingOnly: selectedWallet.value.watchingOnly,
+        type: WALLETCREATED });
+      dispatch(setSelectedWallet(selectedWallet));
+      await wallet.createNewWallet(selectedWallet.value.wallet, network == TESTNET);
+      await dispatch(startWallet(selectedWallet));
+      resolve(selectedWallet);
+    } catch (err) {
+      dispatch({ type: CREATE_WALLET_ERROR });
+      reject(err);
+    }
+  };
+
+  createWalletAsync().then(r => resolve(r)).catch(err => reject(err));
 });
 
 export const CLOSEDAEMON_ATTEMPT = "CLOSEDAEMON_ATTEMPT";

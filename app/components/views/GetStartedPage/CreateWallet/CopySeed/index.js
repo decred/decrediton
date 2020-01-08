@@ -7,7 +7,7 @@ class CreateWalletForm extends React.Component {
     super(props);
     this.state = {
       showCopySeedConfirm: false
-    }
+    };
   }
 
   handleCopySeed() {

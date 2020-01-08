@@ -8,7 +8,7 @@ import { WORDS, HEX } from "constants";
 import { Tooltip, CreatePassPhrase } from "shared";
 
 const ExistingSeedForm = ({
-  onChangeSeedWord, seedWords, setSeedHex, mountSeedErrors, handleOnPaste, hexSeed,
+  onChangeSeedWord, seedWords, handleOnPaste, hexSeed,
   seedType, pasteFromClipboard, handleToggle, showPasteWarning, showPasteError, isValid,
   onCreateWallet, sendBack, setPassPhrase, error
 }) => (
@@ -52,7 +52,7 @@ const ExistingSeedForm = ({
         </div> :
         <div className="seedArea hex">
           <SeedHexEntry
-            onChange={(e) => setSeedHex(e.target.value)}
+            onChange={(e) => onChangeSeedWord(e.target.value)}
             seed={hexSeed}
           />
         </div>}
@@ -62,14 +62,14 @@ const ExistingSeedForm = ({
         <T id="confirmSeed.warnings.pasteExistingError" m="* Please paste a valid 33 word seed."/>
       </div>
     }
-    { error &&
-      <div className="warning">
-        <div>{error}</div>
-      </div>
-    }
     {showPasteWarning &&
       <div className="warning seed-warning-message">
         <T id="confirmSeed.warnings.pasteExistingSeed" m="*Please make sure you also have a physical, written down copy of your seed." />
+      </div>
+    }
+    { error &&
+      <div className="warning">
+        {error}
       </div>
     }
     <CreatePassPhrase onChange={setPassPhrase} onSubmit={onCreateWallet} />
