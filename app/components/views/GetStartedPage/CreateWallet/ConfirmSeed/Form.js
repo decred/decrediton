@@ -1,17 +1,16 @@
 import "style/CreateWalletForm.less";
 import { InfoDocFieldModalButton, KeyBlueButton, InvisibleButton } from "buttons";
 import SingleSeedWordEntry from "../SingleSeedWordEntry";
-import { ConfirmSeedMsg, BackBtnMsg } from "../../messages";
-import { FormattedMessage as T } from "react-intl";
+import { ConfirmSeedMsg, BackBtnMsg, CreateWalletMsg, GoBackMsg, CreateNewWalletTitle } from "../../messages";
 import { Tooltip, CreatePassPhrase } from "shared";
 
 export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord, isValid, onCreateWallet, sendBack, setPassPhrase }) => (
   <>
     <div className="content-title-wrapper is-row">
       <div className="content-title">
-        <T id="createWallet.title" m={"Create a new wallet"}/>
+        <CreateNewWalletTitle />
       </div>
-      {sendBack && <Tooltip text={<T id="createWallet.goBack" m="Go back" />}><div className="go-back-screen-button" onClick={ sendBack } /></Tooltip>}
+      {sendBack && <Tooltip text={<GoBackMsg />}><div className="go-back-screen-button" onClick={ sendBack } /></Tooltip>}
     </div>
     <div className="seed is-row">
       <div className="is-row confirm-seed-label-text seed">
@@ -56,7 +55,7 @@ export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord, isValid, onCreate
         // loading={isCreatingWallet}
         onClick={onCreateWallet}
       >
-        <T id="createWallet.createWalletBtn" m="Create Wallet" />
+        <CreateWalletMsg />
       </KeyBlueButton>
       <InvisibleButton className="go-back-button" onClick={ sendBack } >
         <BackBtnMsg />

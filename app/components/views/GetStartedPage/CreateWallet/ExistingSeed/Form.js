@@ -2,7 +2,7 @@ import SingleSeedWordEntry from "../SingleSeedWordEntry";
 import SeedHexEntry from "inputs/SeedHexEntry";
 import { TextToggle, KeyBlueButton, InvisibleButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
-import { ConfirmSeedMsg, BackBtnMsg } from "../../messages";
+import { ConfirmSeedMsg, BackBtnMsg, GoBackMsg, CreateWalletMsg } from "../../messages";
 import "style/CreateWalletForm.less";
 import { WORDS, HEX } from "constants";
 import { Tooltip, CreatePassPhrase } from "shared";
@@ -23,7 +23,7 @@ const ExistingSeedForm = ({
         rightText={HEX}
         toggleAction={handleToggle}
       />
-      {sendBack && <Tooltip text={<T id="createWallet.goBack" m="Go back" />}><div className="go-back-screen-button" onClick={ sendBack } /></Tooltip>}
+      {sendBack && <Tooltip text={<GoBackMsg />}><div className="go-back-screen-button" onClick={ sendBack } /></Tooltip>}
     </div>
     <div className="is-row seed">
       <div className="confirm-seed-label-text seed">
@@ -80,7 +80,7 @@ const ExistingSeedForm = ({
         // loading={isCreatingWallet}
         onClick={onCreateWallet}
       >
-        <T id="createWallet.createWalletBtn" m="Create Wallet" />
+        <CreateWalletMsg />
       </KeyBlueButton>
       <InvisibleButton className="go-back-button" onClick={ sendBack } >
         <BackBtnMsg />
