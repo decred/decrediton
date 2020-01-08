@@ -49,7 +49,10 @@ export const CreateWalletMachine = ({
             assign({
               passPhrase: (context, event) => event.passPhrase ? event.passPhrase : context.passPhrase ? context.passPhrase : "",
               seed: (context, event) => event.seed ? event.seed : context.seed ? context.seed : [],
-              error: (context, event) => event.error && event.error
+              error: (context, event) => {
+                console.log(event)
+                return event.error && event.error
+              }
             }),
           ],
         }
@@ -99,6 +102,7 @@ export const CreateWalletMachine = ({
       console.log("is at create wallet");
     },
     isAtNewWallet: (context, event) => {
+      // We only generate the seed once. If mnemonic already exists, we return it.
       if (context.mnemonic) return;
       generateSeed().then(response => {
         // Allows verification skip in dev

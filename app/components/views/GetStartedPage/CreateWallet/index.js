@@ -19,9 +19,7 @@ class CreateWallet extends React.Component {
     const { sendEvent, checkIsValid } = this;
     const { backToCredentials, cancelCreateWallet, generateSeed } = props;
     this.machine = CreateWalletMachine({ generateSeed, backToCredentials, cancelCreateWallet, sendEvent, checkIsValid });
-    this.service = interpret(this.machine).onTransition(current => {
-      this.setState({ current }, this.getStateComponent);
-    });
+    this.service = interpret(this.machine).onTransition(current => this.setState({ current }, this.getStateComponent));
     this.state = {
       current: this.machine.initialState,
       StateComponent: null,
@@ -45,10 +43,10 @@ class CreateWallet extends React.Component {
   }
 
   async getStateComponent() {
-    const { current, isNew, isValid } = this.state;
-    const { sendBack, sendContinue, onChangeSeedWord, setPassPhrase, setSeed, setError, onCreateWallet } = this;
-    const { mnemonic } = this.machine.context;
-    const { decodeSeed, createWalletRequest, onSetWalletPrivatePassphrase } = this.props;
+    const { current, isValid } = this.state;
+    const { sendBack, sendContinue, setPassPhrase, setSeed, setError, onCreateWallet } = this;
+    const { mnemonic, error } = this.service._state.context;
+    const { decodeSeed } = this.props;
     let component, text;
 
     switch(current.value) {
@@ -60,7 +58,7 @@ class CreateWallet extends React.Component {
       break;
     case "writeSeed":
       component = h(ExistingSeed, {
-        sendBack, decodeSeed, sendContinue, setSeed, setPassPhrase, onCreateWallet, isValid, setError
+        sendBack, decodeSeed, sendContinue, setSeed, setPassPhrase, onCreateWallet, isValid, setError, error
       });
       break;
     case "finished":
@@ -113,7 +111,6 @@ class CreateWallet extends React.Component {
 
   checkIsValid() {
     const { seed, passPhrase } = this.service._state.context;
-
     // We validate our seed and passphrase at their specific components
     // So if they are set at the machine it means they have passed validation.
     if (!seed || !passPhrase) return this.setState({ isValid: false });

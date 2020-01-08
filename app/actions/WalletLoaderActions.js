@@ -347,7 +347,7 @@ export const decodeSeed = (mnemonic) => async (dispatch, getState) => {
   const seedService = getState().walletLoader.seedService;
   dispatch({ type: DECODESEED_ATTEMPT }); // please note: don't copy the seed here.
   try {
-    const response = wallet.decodeSeed(seedService, mnemonic);
+    const response = await wallet.decodeSeed(seedService, mnemonic);
     dispatch({ type: DECODESEED_SUCCESS });
     return response;
   } catch (error) {

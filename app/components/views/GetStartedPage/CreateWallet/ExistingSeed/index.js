@@ -39,36 +39,6 @@ class ExistingSeed extends React.Component {
     if (isEqual(prevState.seedWords, seedWords)) {
       return;
     }
-
-    const countWords = () => {
-      let count = 0;
-      seedWords.forEach( wordObj => {
-        if(wordObj.word.length > 0) count++;
-      });
-      return count;
-    };
-    const fixPositionError = (errorStr) => {
-      const index = errorStr.indexOf(POSITION_ERROR);
-      const numberPosition = index + POSITION_ERROR.length + 1;
-      const endErrorStr = errorStr.slice(numberPosition + 1);
-      const beginErrorStr = errorStr.slice(0, numberPosition);
-      return beginErrorStr + (seedWord.index + 1) + endErrorStr;
-    };
-    const onError = (seedError) => {
-      let seedErrorStr = seedError + "";
-      if (countWords() <= 1) { // Weird errors with one word, better to avoid them.
-        return;
-      }
-      if (seedErrorStr.includes(MISMATCH_ERROR) && countWords() < 33) {
-        return;
-      }
-      if (seedErrorStr.includes(POSITION_ERROR)) {
-        seedErrorStr = fixPositionError(seedErrorStr);
-      }
-      this.props.setSeed([]);
-      this.props.setError(seedErrorStr);
-    };
-
     const seedWordStr = this.getSeedWordsStr();
     this.props.decodeSeed(seedWordStr)
       // if no errors happened we set the seed at our machine state
@@ -76,7 +46,7 @@ class ExistingSeed extends React.Component {
         this.props.setSeed(response.getDecodedSeed());
         this.props.setError("")
       })
-      .catch(onError);
+      .catch(this.onError);
   }
 
   getEmptySeedWords() {
@@ -126,14 +96,6 @@ class ExistingSeed extends React.Component {
   }
 
   mountSeedErrors = () => {
-    const errors = [];
-    if(this.state.seedError) {
-      errors.push(
-        <div key={this.state.seedError}>
-          {this.state.seedError}
-        </div>
-      );
-    }
     if(shouldShowNonSupportSeedSize(this.state.hexSeed, this.state.seedType)) {
       errors.push(
         <div key='confirmSeed.errors.hexNot32Bytes'>
@@ -144,38 +106,43 @@ class ExistingSeed extends React.Component {
     return errors;
   }
 
-  onChangeSeedWord(seedWord, update) {
+  async onError(seedError, seedWord) {
     const { seedWords } = this.state;
-    const updatedSeedWords = seedWords;
-    updatedSeedWords[seedWord.index] = { word: update, index: seedWord.index, error: false };
+    let seedErrorStr = seedError + "";
+
     const countWords = () => {
       let count = 0;
       seedWords.forEach( wordObj => {
-        if(wordObj.word.length > 0) count++;
+        if(wordObj.word && wordObj.word.length > 0) count++;
       });
       return count;
     };
-    const fixPositionError = (errorStr) => {
+    if (countWords() <= 1) { // Weird errors with one word, better to avoid them.
+      return;
+    }
+    // if user has not completed filing all words we avoid showing invalid decoding.
+    if (seedErrorStr.includes(MISMATCH_ERROR) && countWords() < 33) {
+      return;
+    }
+    const fixPositionError = (errorStr, seedWord) => {
+      if (!seedWord) return;
       const index = errorStr.indexOf(POSITION_ERROR);
       const numberPosition = index + POSITION_ERROR.length + 1;
       const endErrorStr = errorStr.slice(numberPosition + 1);
       const beginErrorStr = errorStr.slice(0, numberPosition);
       return beginErrorStr + (seedWord.index + 1) + endErrorStr;
     };
-    const onError = (seedError) => {
-      let seedErrorStr = seedError + "";
-      if (countWords() <= 1) { // Weird errors with one word, better to avoid them.
-        return;
-      }
-      if (seedErrorStr.includes(MISMATCH_ERROR) && countWords() < 33) {
-        return;
-      }
-      if (seedErrorStr.includes(POSITION_ERROR)) {
-        seedErrorStr = fixPositionError(seedErrorStr);
-      }
-      this.props.setSeed([]);
-      this.props.setError(seedErrorStr);
-    };
+    if (seedErrorStr.includes(POSITION_ERROR)) {
+      seedErrorStr = fixPositionError(seedErrorStr, seedWord);
+    }
+    this.props.setSeed([]);
+    this.props.setError(seedErrorStr);
+  };
+
+  onChangeSeedWord(seedWord, update) {
+    const { seedWords } = this.state;
+    const updatedSeedWords = seedWords;
+    updatedSeedWords[seedWord.index] = { word: update, index: seedWord.index, error: false };
     
     const seedWordStr = this.getSeedWordsStr();
     this.setState({ seedWords: updatedSeedWords }, () => {
@@ -185,7 +152,7 @@ class ExistingSeed extends React.Component {
           this.props.setSeed(response.getDecodedSeed());
           this.props.setError("")
         })
-        .catch(onError);
+        .catch(err => this.onError(err, seedWord));
     });
   }
 
