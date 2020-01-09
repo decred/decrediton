@@ -43,7 +43,7 @@ class FatalErrorPage extends React.Component {
           m="Please note the error above and go to the support channel on slack/matrix/Rocketchat for help resolving the issue. {link}"
           values = {{ link:
             <ExternalLink href="https://decred.org/community">
-              <T id="getStarted.updateAvailable" m="https://decred.org/community" />
+              <T id="getStarted.community.link" m="https://decred.org/community" />
             </ExternalLink> }}
         />
       );
