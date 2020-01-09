@@ -23,7 +23,6 @@ export const FINISH_SPVCHOICE = "FINISH_SPVCHOICE";
 export const DAEMONSTART_ATTEMPT = "DAEMONSTART_ATTEMPT";
 export const DAEMONSTART_SUCCESS = "DAEMONSTART_SUCCESS";
 export const DAEMONSTART_FAILURE = "DAEMONSTART_FAILURE";
-export const DAEMONSTARTED_ERROR = "DAEMONSTARTED_ERROR";
 export const DAEMONSTOPPED = "DAEMONSTOPPED";
 export const DAEMONSYNCING_START = "DAEMONSYNCING_START";
 export const DAEMONSYNCING_PROGRESS = "DAEMONSYNCING_PROGRESS";
@@ -363,13 +362,8 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => new Promi
   };
 
   start()
-    .then(discoverAccountsComplete => {
-      resolve (discoverAccountsComplete);
-    })
-    .catch(err => {
-      dispatch({ type: DAEMONSTARTED_ERROR });
-      reject(err);
-    });
+    .then(discoverAccountsComplete => resolve (discoverAccountsComplete))
+    .catch(err => reject(err))
 });
 
 const prepStartDaemon = () => (dispatch, getState) => {

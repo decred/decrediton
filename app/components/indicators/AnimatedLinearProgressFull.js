@@ -40,10 +40,14 @@ class AnimatedLinearProgressFull extends React.Component {
           </div>
         </div>
         <div>
-          { getDaemonStarted && getCurrentBlockCount && finishDateEstimation &&
+          { getCurrentBlockCount &&
             <div className="loader-bar-estimation">
               <T id="getStarted.chainLoading.syncEstimation" m="Blockchain download estimated complete: "/>
-              <span className="bold"><FormattedRelative value={finishDateEstimation}/>({getCurrentBlockCount} / {max})</span>
+              <span className="bold">
+                { finishDateEstimation &&
+                  <FormattedRelative value={finishDateEstimation}/>
+                }
+                ({getCurrentBlockCount} / {max})</span>
             </div>
           }
           { getDaemonStarted && syncFetchHeadersLastHeaderTime &&

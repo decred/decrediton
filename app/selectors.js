@@ -17,6 +17,7 @@ import * as wallet from "wallet";
 const EMPTY_ARRAY = [];  // Maintaining identity (will) improve performance;
 
 export const theme = get([ "settings", "theme" ]);
+// Daemon startup selectors
 export const daemonError = get([ "daemon" , "daemonError" ]);
 export const walletError = get([ "daemon", "walletError" ]);
 export const appVersion = get([ "daemon", "appVersion" ]);
