@@ -424,8 +424,6 @@ export const launchDCRLnd = (walletAccount, walletPort, rpcCreds, walletPath,
 
   if (testnet) {
     args.push("--testnet");
-  } else {
-    args.push("--mainnet");
   }
 
   if (autopilotEnabled) {
