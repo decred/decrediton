@@ -6,7 +6,7 @@ import * as wallet from "wallet";
 import { rescanCancel, ticketBuyerCancel } from "./ControlActions";
 import { getWalletServiceAttempt, startWalletServices, getBestBlockHeightAttempt,
   cancelPingAttempt } from "./ClientActions";
-import { getAvailableWallets, WALLETREMOVED_FAILED } from "./DaemonActions";
+import { WALLETREMOVED_FAILED } from "./DaemonActions";
 import { getWalletCfg, getDcrdCert } from "config";
 import { getWalletPath } from "main_dev/paths";
 import { isTestNet, isSPV } from "selectors";
@@ -86,21 +86,20 @@ export const createWalletConfirmNewSeed = () => ({ type: CREATEWALLET_NEWSEED_CO
 export const createWalletGoBackNewSeed = () => ({ type: CREATEWALLET_NEWSEED_BACK_INPUT });
 export const createWalletGoBackExistingOrNew = () => ({ type: CREATEWALLET_GOBACK_EXISTING_OR_NEW });
 
-export const createWalletGoBackWalletSelection = () => (dispatch, getState) => {
+// createWalletGoBackWalletSelection stops and remove the wallet being created
+// removing its directories. It is used when a wallet starts being created
+// but the user has given up.
+export const createWalletGoBackWalletSelection = () => async (dispatch, getState) => {
   const { daemon: { walletName } } = getState();
   const { currentSettings } = getState().settings;
   const network = currentSettings.network;
-  wallet.stopWallet().then(() => {
-    wallet.removeWallet(walletName, network == TESTNET)
-      .then(() => {
-        dispatch({ type: CREATEWALLET_GOBACK });
-        dispatch(getAvailableWallets());
-      })
-      .catch((err) => {
-        console.error(err);
-        dispatch({ error: err, type: WALLETREMOVED_FAILED });
-      });
-  });
+  try {
+    await wallet.stopWallet();
+    await wallet.removeWallet(walletName, network == TESTNET);
+    dispatch({ type: CREATEWALLET_GOBACK });
+  } catch (err) {
+    dispatch({ error: err, type: WALLETREMOVED_FAILED });
+  }
 };
 export const createWalletExistingToggle = (existing) => (dispatch) =>
   existing

@@ -85,7 +85,7 @@ export const startDaemon = async (params, testnet, reactIPC) => {
 export const createWallet = (testnet, walletPath) => {
   const newWalletDirectory = getWalletPath(testnet, walletPath);
   try {
-    if (!fs.pathExistsSync(newWalletDirectory)){
+    if (!fs.pathExistsSync(newWalletDirectory)) {
       fs.mkdirsSync(newWalletDirectory);
 
       // create new configs for new wallet
