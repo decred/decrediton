@@ -86,16 +86,17 @@ export const createWalletConfirmNewSeed = () => ({ type: CREATEWALLET_NEWSEED_CO
 export const createWalletGoBackNewSeed = () => ({ type: CREATEWALLET_NEWSEED_BACK_INPUT });
 export const createWalletGoBackExistingOrNew = () => ({ type: CREATEWALLET_GOBACK_EXISTING_OR_NEW });
 
-// createWalletGoBackWalletSelection stops and remove the wallet being created
+// cancelCreateWallet stops and remove the wallet being created
 // removing its directories. It is used when a wallet starts being created
 // but the user has given up.
-export const createWalletGoBackWalletSelection = () => async (dispatch, getState) => {
+export const cancelCreateWallet = () => async (dispatch, getState) => {
   const { daemon: { walletName } } = getState();
   const { currentSettings } = getState().settings;
   const network = currentSettings.network;
   try {
     await wallet.stopWallet();
     await wallet.removeWallet(walletName, network == TESTNET);
+    dispatch(setSelectedWallet(null));
     dispatch({ type: CREATEWALLET_GOBACK });
   } catch (err) {
     dispatch({ error: err, type: WALLETREMOVED_FAILED });
@@ -110,16 +111,16 @@ export const CREATEWALLET_ATTEMPT = "CREATEWALLET_ATTEMPT";
 export const CREATEWALLET_FAILED = "CREATEWALLET_FAILED";
 export const CREATEWALLET_SUCCESS = "CREATEWALLET_SUCCESS";
 
-export const createWalletRequest = (pubPass, privPass, seed, existing) =>
+export const createWalletRequest = (pubPass, privPass, seed, isNew) =>
   (dispatch, getState) => {
-    dispatch({ existing: existing, type: CREATEWALLET_ATTEMPT });
+    dispatch({ existing: !isNew, type: CREATEWALLET_ATTEMPT });
     return createWallet(getState().walletLoader.loader, pubPass, privPass, seed)
       .then(() => {
         const { daemon: { walletName } } = getState();
         const config = getWalletCfg(isTestNet(getState()), walletName);
         config.delete("discoveraccounts");
-        config.set("discoveraccounts", !existing);
-        dispatch({ complete: !existing, type: UPDATEDISCOVERACCOUNTS });
+        config.set("discoveraccounts", isNew);
+        dispatch({ complete: isNew, type: UPDATEDISCOVERACCOUNTS });
         dispatch({ response: {}, type: CREATEWALLET_SUCCESS });
         dispatch(clearStakePoolConfigNewWallet());
         dispatch(getWalletServiceAttempt());
@@ -346,7 +347,7 @@ export const decodeSeed = (mnemonic) => async (dispatch, getState) => {
   const seedService = getState().walletLoader.seedService;
   dispatch({ type: DECODESEED_ATTEMPT }); // please note: don't copy the seed here.
   try {
-    const response = wallet.decodeSeed(seedService, mnemonic);
+    const response = await wallet.decodeSeed(seedService, mnemonic);
     dispatch({ type: DECODESEED_SUCCESS });
     return response;
   } catch (error) {

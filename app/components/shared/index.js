@@ -15,4 +15,5 @@ export { default as PoliteiaLink } from "./PoliteiaLink";
 export { default as WatchOnlyWarnNotification } from "./WatchOnlyWarnNotification";
 export { default as Subtitle } from "./Subtitle";
 export { default as FormattedRelative } from "./FormattedRelative";
+export { default as CreatePassPhrase } from "./CreatePassPhrase";
 export * from "./RoutedTabsHeader";

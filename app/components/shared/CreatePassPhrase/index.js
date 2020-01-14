@@ -4,11 +4,7 @@ import PassPhraseInputs from "./PassPhraseInputs";
 class CreatePassPhrase extends React.Component {
   constructor(props) {
     super(props);
-    this.state = this.getInitialState();
-  }
-
-  getInitialState() {
-    return {
+    this.state = {
       passPhrase: "",
       passPhraseVerification: "",
       isShowingPassphraseInformation: false,
@@ -16,16 +12,10 @@ class CreatePassPhrase extends React.Component {
     };
   }
 
-  onComponentWillUnmount() {
-    this.state = this.getInitialState();
-  }
-
   render() {
     const { setPassPhrase, setPassPhraseVerification, onKeyDown, showPassphraseInformation, hidePassphraseInformation } = this;
     const { passPhrase, passPhraseVerification,isShowingPassphraseInformation, hasFailedAttempt } = this.state;
     const isValid = this.isValid();
-    const isBlank = this.isBlank();
-    const isMatching = this.isMatching();
     return (
       <PassPhraseInputs
         {...{
@@ -34,8 +24,6 @@ class CreatePassPhrase extends React.Component {
           passPhrase,
           passPhraseVerification,
           isValid,
-          isBlank,
-          isMatching,
           setPassPhrase,
           setPassPhraseVerification,
           onKeyDown,
@@ -52,16 +40,9 @@ class CreatePassPhrase extends React.Component {
   hidePassphraseInformation() {
     this.setState({ isShowingPassphraseInformation: false });
   }
-  isMatching() {
-    return this.state.passPhrase === this.state.passPhraseVerification;
-  }
-
-  isBlank() {
-    return !this.state.passPhrase;
-  }
 
   isValid() {
-    return !this.isBlank() && this.isMatching();
+    return !!this.state.passPhrase && this.state.passPhrase === this.state.passPhraseVerification;
   }
 
   setPassPhrase(passPhrase) {
@@ -84,11 +65,15 @@ class CreatePassPhrase extends React.Component {
 
   onChange() {
     if (this.isValid()) {
-      this.props.onChange ? this.props.onChange(this.state.passPhrase) : null;
+      this.props.onChange(this.state.passPhrase);
     } else {
-      this.props.onChange ? this.props.onChange("") : null;
+      this.props.onChange("");
     }
   }
 }
+
+CreatePassPhrase.propTypes = {
+  onChange: PropTypes.func.isRequired
+};
 
 export default CreatePassPhrase;
