@@ -38,7 +38,7 @@ const WalletSelectionBodyBase = ({
   masterPubKeyError,
   maxWalletCount,
   submitChosenWallet,
-  isCreateWallet,
+  isCreateNewWallet,
   isCreatingOrRestoring,
   ...props
 }) => (
@@ -104,7 +104,7 @@ const WalletSelectionBodyBase = ({
       <div className="advanced-page">
         <div className="advanced-page-form">
           <CreateWalletForm {...{ ...props, intl, availableWallets,
-            hideCreateWalletForm, createWallet, isCreateWallet, isWatchingOnly,
+            hideCreateWalletForm, createWallet, isCreateNewWallet, isWatchingOnly,
             toggleWatchOnly, masterPubKeyError }} />
         </div>
       </div>

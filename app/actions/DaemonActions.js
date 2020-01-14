@@ -1,4 +1,4 @@
-import { syncCancel } from "./WalletLoaderActions";
+import { syncCancel, setSelectedWallet } from "./WalletLoaderActions";
 import { getVersionServiceAttempt } from "./VersionActions";
 import { stopNotifcations } from "./NotificationActions";
 import { saveSettings, updateStateSettingsChanged } from "./SettingsActions";
@@ -33,7 +33,6 @@ export const WALLETREMOVED = "WALLETREMOVED";
 export const WALLETREMOVED_FAILED= "WALLETREMOVED_FAILED";
 export const AVAILABLE_WALLETS = "AVAILABLE_WALLETS";
 export const SHUTDOWN_REQUESTED = "SHUTDOWN_REQUESTED";
-export const SET_CREDENTIALS_APPDATA_ERROR = "SET_CREDENTIALS_APPDATA_ERROR";
 export const REGISTERFORERRORS = "REGISTERFORERRORS";
 export const DAEMON_ERROR = "DAEMON_ERROR";
 export const FATAL_WALLET_ERROR = "FATAL_WALLET_ERROR";
@@ -59,6 +58,8 @@ export const CONNECTDAEMON_FAILURE = "CONNECTDAEMON_FAILURE";
 export const SYNC_DAEMON_ATTEMPT = "SYNC_DAEMON_ATTEMPT";
 export const SYNC_DAEMON_FAILED = "SYNC_DAEMON_FAILED";
 export const BACK_TO_CREDENTIALS = "BACK_TO_CREDENTIALS";
+export const CREATE_WALLET_ERROR = "CREATE_WALLET_ERROR";
+export const CREATE_WALLET_ATTEMPT = "CREATE_WALLET_ATTEMPT";
 
 export const checkDecreditonVersion = () => (dispatch, getState) =>{
   const detectedVersion = getState().daemon.appVersion;
@@ -95,6 +96,10 @@ export const showSpvChoice = () => (dispatch) => {
 
 export const showPrivacy = () => (dispatch) => {
   dispatch(pushHistory("/getstarted/privacy"));
+};
+
+export const showCreateWallet = (isNew) => (dispatch) => {
+  dispatch(pushHistory("/getstarted/createwallet/"+isNew));
 };
 
 export const enableSpv = () => async (dispatch, getState) => {
@@ -205,7 +210,6 @@ export const registerForErrors = () => (dispatch) => {
 };
 
 export const backToCredentials = () => (dispatch) => {
-  dispatch({ type: BACK_TO_CREDENTIALS  });
   dispatch(pushHistory("/getstarted"));
 };
 
@@ -268,21 +272,24 @@ export const removeWallet = (selectedWallet) => (dispatch) => {
 };
 
 export const createWallet = (selectedWallet) => (dispatch, getState) => new Promise((resolve, reject) => {
-  const { currentSettings } = getState().settings;
-  // dispatch({ type: CREATE_WALLET_ATTEMPT });
-  const network = currentSettings.network;
-  wallet.createNewWallet(selectedWallet.value.wallet, network == TESTNET)
-    .then(async () => {
+  dispatch({ type: CREATE_WALLET_ATTEMPT });
+  const createWalletAsync = async() => {
+    const { currentSettings } = getState().settings;
+    const network = currentSettings.network;
+    try {
       dispatch({ isWatchingOnly: selectedWallet.value.watchingOnly,
         type: WALLETCREATED });
+      dispatch(setSelectedWallet(selectedWallet));
+      await wallet.createNewWallet(selectedWallet.value.wallet, network == TESTNET);
       await dispatch(startWallet(selectedWallet));
       resolve(selectedWallet);
-    })
-    .catch((err) => {
-      console.log(err);
+    } catch (err) {
+      dispatch({ type: CREATE_WALLET_ERROR });
       reject(err);
-      // dispatch({ type: CREATE_WALLET_ERROR });
-    });
+    }
+  };
+
+  createWalletAsync().then(r => resolve(r)).catch(err => reject(err));
 });
 
 export const CLOSEDAEMON_ATTEMPT = "CLOSEDAEMON_ATTEMPT";

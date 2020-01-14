@@ -12,7 +12,6 @@ import {
   DAEMONSYNCED,
   DAEMONSTOPPED,
   WALLETREADY,
-  WALLETCREATED,
   SHUTDOWN_REQUESTED,
   SET_CREDENTIALS_APPDATA_ERROR,
   AVAILABLE_WALLETS,
@@ -143,10 +142,6 @@ export default function version(state = {}, action) {
       walletReady: false,
       walletName: "",
       selectCreateWalletInputRequest: true
-    };
-  case WALLETCREATED:
-    return { ...state,
-      selectCreateWalletInputRequest: false
     };
   case SHUTDOWN_REQUESTED:
     return { ...state,
