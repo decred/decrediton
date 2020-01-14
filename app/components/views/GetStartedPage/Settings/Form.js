@@ -18,6 +18,7 @@ export default ({
   onChangeTempSettings,
   onSaveSettings,
   onHideSettings,
+  onSendBack,
   onShowLogs,
   getCurrentBlockCount,
   getNeededBlocks,
@@ -39,7 +40,7 @@ export default ({
         </InvisibleButton>
       </div>
       <div className="go-back-screen-button-area">
-        <Tooltip text={ <GoBackMsg /> }><div className="go-back-screen-button" onClick={onHideSettings}/></Tooltip>
+        <Tooltip text={ <GoBackMsg /> }><div className="go-back-screen-button" onClick={onSendBack}/></Tooltip>
       </div>
       <Subtitle title={<T id="settings.subtitle" m="Settings"/>} />
       <div className="settings-wrapper">

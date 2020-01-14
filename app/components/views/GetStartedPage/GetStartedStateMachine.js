@@ -3,7 +3,7 @@ import { CreateWalletMachine } from "./CreateWallet/CreateWalletStateMachine";
 
 export const getStartedMachine = (a) => Machine({
   id: "getStarted",
-  initial: "preStart",
+  initial: "startMachine",
   context: {
     credentials: {},
     selectedWallet: null,
@@ -11,99 +11,125 @@ export const getStartedMachine = (a) => Machine({
     error: null
   },
   states: {
-    preStart: {
-      onEntry: "isAtPreStart",
+    startMachine: {
+      initial: "preStart",
       on: {
-        START_SPV: {
-          target: "startSpv",
-          cond: (c, event) => !!event.isSPV
-        },
-        START_ADVANCED_DAEMON: {
-          target: "startAdvancedDaemon",
-          cond: (c, event) => !!event.isAdvancedDaemon
-        },
-        START_REGULAR_DAEMON: {
-          target: "startingDaemon",
-          cond: (c, event) => !event.isAdvancedDaemon && !event.isSPV
-        },
-        CHOOSE_WALLET: "choosingWallet"
-      }
-    },
-    startSpv: {
-      onEntry: "isAtStartSPV"
-    },
-    startingDaemon: {
-      onEntry: "isAtStartingDaemon",
-      on: {
-        START_ADVANCED_DAEMON: "startAdvancedDaemon",
-        CONNECT_DAEMON: "connectingDaemon",
-        ERROR_STARTING_DAEMON: "errorStartingDaemon"
-      }
-    },
-    errorStartingDaemon: {
-      onEntry: "isAtErrorStartingDaemon",
-      on: {
-        START_ADVANCED_DAEMON: "startAdvancedDaemon"
-      }
-    },
-    startedDaemon: {
-      onEntry: "isStartedDaemon",
-      on: {
-        CONNECT_DAEMON: "connectingDaemon"
-      }
-    },
-    startAdvancedDaemon: {
-      onEntry: "isAtStartAdvancedDaemon",
-      on: {
-        SUBMIT_REMOTE: "connectingDaemon",
-        SUBMIT_APPDATA: "startingDaemon"
-      }
-    },
-    connectingDaemon: {
-      onEntry: "isAtConnectingDaemon",
-      on: {
-        SYNC_DAEMON: "syncingDaemon",
-        ERROR_CONNECTING_DAEMON: "startAdvancedDaemon"
-      }
-    },
-    checkingNetworkMatch: {
-      onEntry: "isAtCheckNetworkMatch",
-      on: {
-        CHOOSE_WALLET: "choosingWallet"
-      }
-    },
-    syncingDaemon: {
-      onEntry: "isAtSyncingDaemon",
-      on: {
-        CHECK_NETWORK_MATCH: "checkingNetworkMatch"
-      }
-    },
-    creatingWallet: {
-      onEntry: "isAtCreatingWallet",
-      on: {
-        WALLET_CREATED: "syncingRPC"
+        SHOW_SETTINGS: "settings"
       },
-      ...CreateWalletMachine
+      states: {
+        preStart: {
+          onEntry: "isAtPreStart",
+          on: {
+            START_SPV: {
+              target: "startSpv",
+              cond: (c, event) => !!event.isSPV
+            },
+            START_ADVANCED_DAEMON: {
+              target: "startAdvancedDaemon",
+              cond: (c, event) => !!event.isAdvancedDaemon
+            },
+            START_REGULAR_DAEMON: {
+              target: "startingDaemon",
+              cond: (c, event) => !event.isAdvancedDaemon && !event.isSPV
+            },
+            CHOOSE_WALLET: "choosingWallet"
+          }
+        },
+        startSpv: {
+          onEntry: "isAtStartSPV"
+        },
+        startingDaemon: {
+          onEntry: "isAtStartingDaemon",
+          on: {
+            START_ADVANCED_DAEMON: "startAdvancedDaemon",
+            CONNECT_DAEMON: "connectingDaemon",
+            ERROR_STARTING_DAEMON: "errorStartingDaemon"
+          }
+        },
+        errorStartingDaemon: {
+          onEntry: "isAtErrorStartingDaemon",
+          on: {
+            START_ADVANCED_DAEMON: "startAdvancedDaemon"
+          }
+        },
+        startedDaemon: {
+          onEntry: "isStartedDaemon",
+          on: {
+            CONNECT_DAEMON: "connectingDaemon"
+          }
+        },
+        startAdvancedDaemon: {
+          onEntry: "isAtStartAdvancedDaemon",
+          on: {
+            SUBMIT_REMOTE: "connectingDaemon",
+            SUBMIT_APPDATA: "startingDaemon"
+          }
+        },
+        connectingDaemon: {
+          onEntry: "isAtConnectingDaemon",
+          on: {
+            SYNC_DAEMON: "syncingDaemon",
+            ERROR_CONNECTING_DAEMON: "startAdvancedDaemon"
+          }
+        },
+        checkingNetworkMatch: {
+          onEntry: "isAtCheckNetworkMatch",
+          on: {
+            CHOOSE_WALLET: "choosingWallet"
+          }
+        },
+        syncingDaemon: {
+          onEntry: "isAtSyncingDaemon",
+          on: {
+            CHECK_NETWORK_MATCH: "checkingNetworkMatch"
+          }
+        },
+        creatingWallet: {
+          onEntry: "isAtCreatingWallet",
+          on: {
+            WALLET_CREATED: "syncingRPC"
+          },
+          ...CreateWalletMachine
+        },
+        choosingWallet: {
+          onEntry: "isAtChoosingWallet",
+          onExit: "isAtLeavingChoosingWallet",
+          on: {
+            SUBMIT_CHOOSE_WALLET: "startingWallet",
+            CREATE_CHOSEN_WALLET: "creatingWallet",
+            CREATE_WALLET: "creatingWallet"
+          }
+        },
+        startingWallet: {
+          onEntry: "isAtStartWallet",
+          on: {
+            SYNC_RPC: "syncingRPC"
+          }
+        },
+        syncingRPC: {
+          onEntry: "isSyncingRPC",
+          on: {
+            // CHOOSE_WALLET: "choosingWallet",
+          }
+        },
+        // history state so we can go back in the specific state when going to other view, like settings or log
+        // source: https://xstate.js.org/docs/guides/history.html#history
+        hist: {
+          type: 'history',
+          history: 'shallow' // optional; default is 'shallow'
+        },
+        // end of startMachine states
+      },
     },
-    choosingWallet: {
-      onEntry: "isAtChoosingWallet",
-      onExit: "isAtLeavingChoosingWallet",
+    settings: {
+      initial: "settings",
+      states: {
+        settings: {
+          onEntry: "isAtSettings",
+        }
+      },
       on: {
-        SUBMIT_CHOOSE_WALLET: "startingWallet",
-        CREATE_CHOSEN_WALLET: "creatingWallet",
-        CREATE_WALLET: "creatingWallet"
-      }
-    },
-    startingWallet: {
-      onEntry: "isAtStartWallet",
-      on: {
-        SYNC_RPC: "syncingRPC"
-      }
-    },
-    syncingRPC: {
-      onEntry: "isSyncingRPC",
-      on: {
-        // CHOOSE_WALLET: "choosingWallet",
+        BACK: "startMachine.hist"
       }
     }
   }

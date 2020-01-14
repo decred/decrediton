@@ -41,7 +41,7 @@ const DaemonLoadingBody = ({
             {error}
           </div>
         }
-        { StateComponent && <StateComponent {...{ ...props, getDaemonSynced }} /> }
+        { StateComponent && (React.isValidElement(StateComponent) ? StateComponent : <StateComponent {...{ ...props, getDaemonSynced }} />) }
       </>
     </div>
   </div>
