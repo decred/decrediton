@@ -1,4 +1,5 @@
 import { Machine } from "xstate";
+import { CreateWalletMachine } from "./CreateWallet/CreateWalletStateMachine";
 
 export const getStartedMachine = (a) => Machine({
   id: "getStarted",
@@ -77,11 +78,20 @@ export const getStartedMachine = (a) => Machine({
         CHECK_NETWORK_MATCH: "checkingNetworkMatch"
       }
     },
+    creatingWallet: {
+      onEntry: "isAtCreatingWallet",
+      on: {
+        WALLET_CREATED: "syncingRPC"
+      },
+      ...CreateWalletMachine
+    },
     choosingWallet: {
       onEntry: "isAtChoosingWallet",
       onExit: "isAtLeavingChoosingWallet",
       on: {
-        SUBMIT_CHOOSE_WALLET: "startingWallet"
+        SUBMIT_CHOOSE_WALLET: "startingWallet",
+        CREATE_CHOSEN_WALLET: "creatingWallet",
+        CREATE_WALLET: "creatingWallet"
       }
     },
     startingWallet: {
