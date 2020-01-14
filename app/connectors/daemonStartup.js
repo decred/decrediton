@@ -12,7 +12,10 @@ const mapStateToProps = selectorMap({
   getDaemonSynced: sel.getDaemonSynced,
   getCurrentBlockCount: sel.getCurrentBlockCount,
   getNeededBlocks: sel.getNeededBlocks,
+  getDaemonStarted: sel.getDaemonStarted,
+  getEstimatedTimeLeft: sel.getEstimatedTimeLeft,
 
+  maxWalletCount: sel.maxWalletCount,
   peerCount: sel.peerCount,
   synced: sel.synced,
   syncFetchMissingCfiltersAttempt: sel.syncFetchMissingCfiltersAttempt,
@@ -41,7 +44,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onGetAvailableWallets: da.getAvailableWallets,
   onStartWallet: da.startWallet,
   onRemoveWallet: da.removeWallet,
-  goToError: ca.goToError
+  goToError: ca.goToError,
+  onCreateWallet: da.createWallet,
+  createWalletExistingToggle: wla.createWalletExistingToggle
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

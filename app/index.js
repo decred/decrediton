@@ -82,7 +82,6 @@ var initialState = {
     shutdownRequested: false,
     remoteAppdataError: false,
     previousWallet: null,
-    selectCreateWalletInputRequest: true,
     hiddenAccounts: Array(),
     walletName: null,
     neededBlocks: 0
