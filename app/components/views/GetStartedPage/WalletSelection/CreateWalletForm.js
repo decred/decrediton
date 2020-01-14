@@ -39,11 +39,11 @@ const CreateWalletForm = ({
   isTrezor,
   toggleTrezor,
   onShowTrezorConfig,
-  isCreateWallet
+  isCreateNewWallet
 }) => {
   return (
     <>
-      {isCreateWallet ?
+      {isCreateNewWallet ?
         <div className="new-wallet-title-area">
           <div className="wallet-icon-small createnew" />
           <div className="new-wallet-title">
@@ -73,7 +73,7 @@ const CreateWalletForm = ({
           />
         </div>
       </div>
-      {!isCreateWallet &&
+      {!isCreateNewWallet &&
         <>
           <div className="advanced-daemon-row">
             <div className="advanced-daemon-label">
