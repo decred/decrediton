@@ -20,7 +20,7 @@ class GetStartedPosition extends React.Component{
     }
   }
   render() {
-    return (<>sadfsdf</>);
+    return <></>;
   }
 }
 

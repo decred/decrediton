@@ -20,6 +20,8 @@ export const ScanBtnMsg = () => <T id="getStarted.discoverAddresses.scanBtn" m="
 export const LearnBasicsMsg = () => <T id="getStarted.learnBasics" m="Learn the Basics" />;
 export const NewSeedTabMsg = () => <T id="getStarted.newSeedTab" m="Create a New Wallet"/>;
 export const RestoreTabMsg = () => <T id="getStarted.restore" m="Restore Existing Wallet"/>;
+export const CreateWalletMsg = () => <T id="createWallet.createWalletBtn" m="Create Wallet" />;
+export const CreateNewWalletTitle = () => <T id="createWallet.title" m={"Create a new wallet"}/>;
 
 export const messages = defineMessages({
   passphrasePlaceholder: {

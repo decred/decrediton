@@ -100,12 +100,14 @@ export const createWallet = (testnet, walletPath) => {
 };
 
 export const removeWallet = (testnet, walletPath) => {
+  if (!walletPath) return;
   let removeWalletDirectory = getWalletPath(testnet, walletPath);
   try {
     if (fs.pathExistsSync(removeWalletDirectory)) {
       fs.removeSync(removeWalletDirectory);
+      return true;
     }
-    return true;
+    return false;
   } catch (e) {
     logger.log("error", "error creating wallet: " + e);
     return false;
