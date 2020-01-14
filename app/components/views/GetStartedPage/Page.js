@@ -3,10 +3,10 @@ import { SlateGrayButton, InvisibleButton } from "buttons";
 import "style/GetStarted.less";
 import { LogsLinkMsg, SettingsLinkMsg, LearnBasicsMsg, UpdateAvailableLink,
   WhatsNewLink, LoaderTitleMsg, AboutModalButton } from "./messages";
-
 const DaemonLoadingBody = ({
   updateAvailable, appVersion, onShowSettings, onShowLogs, StateComponent, getDaemonSynced,
-  error, text, getCurrentBlockCount, animationType, getNeededBlocks, ...props
+  error, text, getCurrentBlockCount, animationType, getNeededBlocks,
+  getDaemonStarted, getEstimatedTimeLeft, ...props
 }) => (
   <div className="page-body getstarted">
     <div className="getstarted loader">
@@ -33,11 +33,10 @@ const DaemonLoadingBody = ({
           <WhatsNewLink />
         </div>
         <div className="loader-bar">
-          <AnimatedLinearProgressFull {...{ getDaemonSynced, text, value: getCurrentBlockCount, animationType, min: 0,
-            max: getNeededBlocks, disabled: false }} />
+          <AnimatedLinearProgressFull {...{ getDaemonStarted, getDaemonSynced, text, getCurrentBlockCount, animationType, min: 0,
+            max: getNeededBlocks, getEstimatedTimeLeft, disabled: false }} />
         </div>
-        {
-          error &&
+        { error &&
           <div className="error launch-error">
             {error}
           </div>

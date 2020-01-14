@@ -1,4 +1,4 @@
-import { dcrwalletCfg, getWalletPath, getExecutablePath, dcrdCfg, getDcrdPath } from "./paths";
+import { dcrwalletConf, getWalletPath, getExecutablePath, dcrdCfg } from "./paths";
 import { getWalletCfg, readDcrdConfig } from "config";
 import { createLogger, AddToDcrdLog, AddToDcrwalletLog, AddToDcrlndLog, GetDcrdLogs,
   GetDcrwalletLogs, lastErrorLine, lastPanicLine, ClearDcrwalletLogs, CheckDaemonLogs } from "./logging";
@@ -200,8 +200,6 @@ export const launchDCRD = (reactIPC, testnet, appdata) => new Promise((resolve,r
 
   const args = [ "--nolisten" ];
 
-  // we read dcrd config before setting appdata because if appdata is not defined
-  // we use dcrd.conf file from decrediton's config folder, so appdata needs to be undefined.
   const newConfig = readDcrdConfig(testnet, appdata);
 
   if (!appdata) appdata = getDcrdPath();
@@ -330,9 +328,10 @@ const DecodeDaemonIPCData = (data, cb) => {
 };
 
 export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testnet, reactIPC) => {
-  let args = [ "--configfile=" + dcrwalletCfg(getWalletPath(testnet, walletPath)) ];
-
   const cfg = getWalletCfg(testnet, walletPath);
+  const confFile = fs.existsSync(dcrwalletConf(getWalletPath(testnet, walletPath))) ?
+    `--configfile=${dcrwalletConf(getWalletPath(testnet, walletPath))}` : "";
+  let args = [ confFile ];
 
   args.push("--gaplimit=" + cfg.get("gaplimit"));
 
@@ -608,7 +607,6 @@ export const connectRpcDaemon = async (mainWindow, rpcCreds) => {
   }
 
   try {
-
     // During the first startup, the rpc.cert file might not exist for a few
     // seconds. In that case, we wait up to 30s before failing this call.
     let tries = 0;

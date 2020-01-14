@@ -267,20 +267,23 @@ export const removeWallet = (selectedWallet) => (dispatch) => {
     });
 };
 
-export const createWallet = (createNewWallet, selectedWallet) => (dispatch, getState) => {
+export const createWallet = (selectedWallet) => (dispatch, getState) => new Promise((resolve, reject) => {
   const { currentSettings } = getState().settings;
+  // dispatch({ type: CREATE_WALLET_ATTEMPT });
   const network = currentSettings.network;
   wallet.createNewWallet(selectedWallet.value.wallet, network == TESTNET)
-    .then(() => {
-      dispatch({ createNewWallet, isWatchingOnly: selectedWallet.value.watchingOnly,
+    .then(async () => {
+      dispatch({ isWatchingOnly: selectedWallet.value.watchingOnly,
         type: WALLETCREATED });
-      dispatch(startWallet(selectedWallet));
+      await dispatch(startWallet(selectedWallet));
+      resolve(selectedWallet);
     })
     .catch((err) => {
       console.log(err);
-      dispatch({ type: DAEMONSTARTED_ERROR });
+      reject(err);
+      // dispatch({ type: CREATE_WALLET_ERROR });
     });
-};
+});
 
 export const CLOSEDAEMON_ATTEMPT = "CLOSEDAEMON_ATTEMPT";
 export const CLOSEDAEMON_FAILED = "CLOSEDAEMON_FAILED";
@@ -364,6 +367,7 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => new Promi
 
 const prepStartDaemon = () => (dispatch, getState) => {
   const { daemon: { daemonAdvanced } } = getState();
+  // TODO re-add cliOptions
   // const cliOptions = ipcRenderer.sendSync("get-cli-options");
   // console.log(cliOptions)
   if (!daemonAdvanced) {
@@ -393,7 +397,6 @@ export const connectDaemon = (rpcCreds) => (dispatch, getState) => new Promise((
   dispatch({ type: CONNECTDAEMON_ATTEMPT });
   const timeBeforeConnect = new Date();
   const tryConnect = async () => {
-
     const { daemonConnected, credentials, daemonError, daemonWarning, timeStart } = getState().daemon;
     const creds = rpcCreds ? rpcCreds : credentials;
     const timeNow = new Date();
