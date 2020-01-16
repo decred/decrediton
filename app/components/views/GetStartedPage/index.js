@@ -8,6 +8,7 @@ import WalletSelection from "./WalletSelection";
 import Settings from "./Settings";
 import { FormattedMessage as T } from "react-intl";
 import { createElement as h } from "react";
+import GetStartedMachinePage from "./GetStartedMachinePage";
 
 @autobind
 class GetStarted extends React.Component {
@@ -16,19 +17,17 @@ class GetStarted extends React.Component {
     super(props);
     const {
       onConnectDaemon, checkNetworkMatch, syncDaemon, onStartWallet, onRetryStartRPC, onGetAvailableWallets,
-      onStartDaemon, setSelectedWallet, goToError
+      onStartDaemon, setSelectedWallet, goToError, goToSettings, backToCredentials
     } = this.props;
     const { sendEvent, preStartDaemon } = this;
     this.machine = getStartedMachine({
       onConnectDaemon, checkNetworkMatch, syncDaemon, onStartWallet, onRetryStartRPC, sendEvent, onGetAvailableWallets,
-      onStartDaemon, setSelectedWallet, preStartDaemon, goToError
+      onStartDaemon, setSelectedWallet, preStartDaemon, goToError, goToSettings, backToCredentials
     });
-    this.service = interpret(this.machine).onTransition(current => {
-      this.setState({ current }, this.getStateComponent);
-    });
+    this.service = interpret(this.machine).onTransition(current => this.setState({ current }, this.getStateComponent));
     this.state = {
-      current: getStartedMachine().initialState,
-      StateComponent: null,
+      current: this.machine.initialState,
+      PageComponent: null,
       text: <T id="getStarted.header.discoveringAddresses.meta" m="Discovering addresses" />,
       animationType: null
     };
@@ -86,7 +85,7 @@ class GetStarted extends React.Component {
   getStateComponent() {
     const { current } = this.state;
     const { onSendBack } = this;
-    let component, text;
+    let component, text, PageComponent;
 
     const key = Object.keys(current.value)[0];
     if (key === "startMachine") {
@@ -118,12 +117,19 @@ class GetStarted extends React.Component {
         text = <T id="loaderBar.syncingRPC" m="Syncing RPC connection..." />;
         break;
       }
+      const { service, submitChosenWallet, submitRemoteCredentials, submitAppdata, onShowSettings } = this;
+      const { machine } = service;
+      const error = this.getError();
+      PageComponent = h(GetStartedMachinePage, {
+        ...this.state, ...this.props, submitRemoteCredentials, submitAppdata, onShowSettings,
+        submitChosenWallet, service, machine, error, text, StateComponent: component
+      });
     }
     if (key === "settings") {
-      component = h(Settings, { onSendBack });
+      PageComponent = h(Settings, { onSendBack });
     }
 
-    return this.setState({ StateComponent: component, text });
+    return this.setState({ PageComponent, text });
   }
 
   sendEvent(data) {
@@ -162,17 +168,9 @@ class GetStarted extends React.Component {
   }
 
   render() {
-    const { StateComponent, text } = this.state;
-    const { service, submitChosenWallet, submitRemoteCredentials, submitAppdata, onShowSettings } = this;
-    const { machine } = service;
-    const error = this.getError();
+    const { PageComponent } = this.state;
 
-    return (
-      <GetStartedPage
-        {...{ ...this.state, ...this.props, submitRemoteCredentials, submitAppdata, onShowSettings,
-          submitChosenWallet, service, machine, error, text }}
-        StateComponent={StateComponent} />
-    );
+    return <GetStartedPage PageComponent={PageComponent} />;
   }
 }
 
