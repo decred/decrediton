@@ -400,6 +400,9 @@ app.on("ready", async () => {
   mainWindow.on("close", (e) => {
     mainWindow.webContents.send("check-auto-buyer-running");
     e.preventDefault();
+    if (stopSecondInstance) {
+      app.quit();
+    }
   });
 
   mainWindow.on("closed", () => {
