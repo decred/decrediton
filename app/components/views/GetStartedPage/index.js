@@ -6,6 +6,7 @@ import { AdvancedStartupBody } from "./AdvancedStartup";
 import { injectIntl } from "react-intl";
 import WalletSelection from "./WalletSelection";
 import Settings from "./Settings";
+import Logs from "./Logs";
 import { FormattedMessage as T } from "react-intl";
 import { createElement as h } from "react";
 import GetStartedMachinePage from "./GetStartedMachinePage";
@@ -128,6 +129,9 @@ class GetStarted extends React.Component {
     if (key === "settings") {
       PageComponent = h(Settings, { onSendBack });
     }
+    if (key === "logs") {
+      PageComponent = h(Logs, { onSendBack });
+    }
 
     return this.setState({ PageComponent, text });
   }
@@ -154,6 +158,10 @@ class GetStarted extends React.Component {
     return this.service.send({ type: "SHOW_SETTINGS" });
   }
 
+  onShowLogs() {
+    return this.service.send({ type: "SHOW_LOGS" });
+  }
+
   onSendBack() {
     return this.service.send({ type: "BACK" });
   }
@@ -169,8 +177,10 @@ class GetStarted extends React.Component {
 
   render() {
     const { PageComponent } = this.state;
+    const { onShowLogs, onShowSettings } = this;
+    const { updateAvailable, appVersion } = this.props;
 
-    return <GetStartedPage PageComponent={PageComponent} />;
+    return <GetStartedPage PageComponent={PageComponent} {...{ onShowLogs, onShowSettings, updateAvailable, appVersion }} />;
   }
 }
 

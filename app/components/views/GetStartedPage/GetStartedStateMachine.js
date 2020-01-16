@@ -18,7 +18,8 @@ export const getStartedMachine = ({
     startMachine: {
       initial: "preStart",
       on: {
-        SHOW_SETTINGS: "settings"
+        SHOW_SETTINGS: "settings",
+        SHOW_LOGS: "logs"
       },
       states: {
         preStart: {
@@ -123,19 +124,27 @@ export const getStartedMachine = ({
         },
       },
     // end of startMachine states 
-    },    
+    },
     settings: {
       initial: "settings",
       states: {
-        settings: {
-          onEntry: "isAtSettings",
-          onExit: "isExittingSettings"
-        }
+        settings: {}
       },
       on: {
-        BACK: "startMachine.hist"
+        BACK: "startMachine.hist",
+        SHOW_LOGS: "logs"
       }
-    }
+    },
+    logs: {
+      initial: "logs",
+      states: {
+        logs: {}
+      },
+      on: {
+        BACK: "startMachine.hist",
+        SHOW_SETTINGS: "settings"
+      }
+    },
   }
 },
 {
