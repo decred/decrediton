@@ -223,7 +223,7 @@ const messages = defineMessages({
   },
   EXPORT_COMPLETED: {
     id: "export.completed",
-    defaultMessage: "Export of file '{filename}' completed!"
+    defaultMessage: "Export of file ''{filename}'' completed!"
   },
   ADDCUSTOMSTAKEPOOL_FAILED: {
     id: "addCustomStakePool.failed",
