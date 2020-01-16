@@ -13,18 +13,14 @@ import {
   DAEMONSTOPPED,
   WALLETREADY,
   SHUTDOWN_REQUESTED,
-  SET_CREDENTIALS_APPDATA_ERROR,
   AVAILABLE_WALLETS,
   DECREDITON_VERSION,
   DAEMON_ERROR,
-  FATAL_WALLET_ERROR,
   DAEMON_WARNING,
   WALLET_WARNING, CLOSEDAEMON_ATTEMPT, CLOSEDAEMON_FAILED, CLOSEDAEMON_SUCCESS,
   CHECK_NETWORKMATCH_ATTEMPT, CHECK_NETWORKMATCH_SUCCESS, CHECK_NETWORKMATCH_FAILED,
-  BACK_TO_CREDENTIALS
 } from "../actions/DaemonActions";
 import {
-  CREATEWALLET_GOBACK,
   CLOSEWALLET_SUCCESS, CLOSEWALLET_FAILED
 } from "../actions/WalletLoaderActions";
 import {
@@ -103,11 +99,6 @@ export default function version(state = {}, action) {
       timeStart: null,
       blockStart: null
     };
-  case BACK_TO_CREDENTIALS:
-    return {
-      ...state,
-      daemonStarted: false
-    };
   case DAEMONSYNCING_START:
     return { ...state,
       daemonStarted: true,
@@ -130,19 +121,13 @@ export default function version(state = {}, action) {
       daemonSynced: true,
       daemonWarning: null
     };
-  case WALLETREADY:
-    return { ...state,
-      selectCreateWalletInputRequest: false,
-      walletReady: true,
-      walletName: action.walletName,
-      hiddenAccounts: action.hiddenAccounts
-    };
-  case CREATEWALLET_GOBACK:
-    return { ...state,
-      walletReady: false,
-      walletName: "",
-      selectCreateWalletInputRequest: true
-    };
+    case WALLETREADY:
+      return { ...state,
+        selectCreateWalletInputRequest: false,
+        walletReady: true,
+        walletName: action.walletName,
+        hiddenAccounts: action.hiddenAccounts
+      };
   case SHUTDOWN_REQUESTED:
     return { ...state,
       shutdownRequested: true
@@ -151,10 +136,6 @@ export default function version(state = {}, action) {
     return { ...state,
       daemonStarted: false,
       daemonStopped: true
-    };
-  case SET_CREDENTIALS_APPDATA_ERROR:
-    return { ...state,
-      remoteAppdataError: true
     };
   case AVAILABLE_WALLETS:
     return { ...state,
@@ -171,11 +152,6 @@ export default function version(state = {}, action) {
     return {
       ...state,
       daemonError: action.error
-    };
-  case FATAL_WALLET_ERROR:
-    return {
-      ...state,
-      walletError: action.error
     };
   case DAEMON_WARNING:
     return {

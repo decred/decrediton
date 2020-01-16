@@ -46,7 +46,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onRemoveWallet: da.removeWallet,
   goToError: ca.goToError,
   onCreateWallet: da.createWallet,
-  createWalletExistingToggle: wla.createWalletExistingToggle
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);
