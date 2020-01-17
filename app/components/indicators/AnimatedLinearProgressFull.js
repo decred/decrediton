@@ -18,9 +18,9 @@ class AnimatedLinearProgressFull extends React.Component {
     this.props.setInterval(async () => {
       try {
         const lastDcrwalletLogLine = await this.props.getDcrwalletLogs();
-        this.setState({ lastDcrwalletLogLine })
+        this.setState({ lastDcrwalletLogLine });
       } catch(err) {
-        console.log(err)
+        console.log(err);
       }
     }, 2000);
   }

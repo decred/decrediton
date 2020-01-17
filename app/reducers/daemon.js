@@ -18,7 +18,7 @@ import {
   DAEMON_ERROR,
   DAEMON_WARNING,
   WALLET_WARNING, CLOSEDAEMON_ATTEMPT, CLOSEDAEMON_FAILED, CLOSEDAEMON_SUCCESS,
-  CHECK_NETWORKMATCH_ATTEMPT, CHECK_NETWORKMATCH_SUCCESS, CHECK_NETWORKMATCH_FAILED,
+  CHECK_NETWORKMATCH_ATTEMPT, CHECK_NETWORKMATCH_SUCCESS, CHECK_NETWORKMATCH_FAILED
 } from "../actions/DaemonActions";
 import {
   CLOSEWALLET_SUCCESS, CLOSEWALLET_FAILED
@@ -121,13 +121,13 @@ export default function version(state = {}, action) {
       daemonSynced: true,
       daemonWarning: null
     };
-    case WALLETREADY:
-      return { ...state,
-        selectCreateWalletInputRequest: false,
-        walletReady: true,
-        walletName: action.walletName,
-        hiddenAccounts: action.hiddenAccounts
-      };
+  case WALLETREADY:
+    return { ...state,
+      selectCreateWalletInputRequest: false,
+      walletReady: true,
+      walletName: action.walletName,
+      hiddenAccounts: action.hiddenAccounts
+    };
   case SHUTDOWN_REQUESTED:
     return { ...state,
       shutdownRequested: true

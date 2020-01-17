@@ -3,7 +3,7 @@ import { CreateWalletMachine } from "./CreateWallet/CreateWalletStateMachine";
 
 export const getStartedMachine = ({
   preStartDaemon, onStartDaemon, sendEvent, goToError, onConnectDaemon, checkNetworkMatch, syncDaemon,
-  onGetAvailableWallets, setSelectedWallet, onStartWallet, onRetryStartRPC, goToSettings, backToCredentials
+  onGetAvailableWallets, setSelectedWallet, onStartWallet, onRetryStartRPC
 }) => Machine({
   id: "getStarted",
   initial: "startMachine",
@@ -120,10 +120,10 @@ export const getStartedMachine = ({
         // history state so we can go back in the specific state when going to other view, like settings or log
         // source: https://xstate.js.org/docs/guides/history.html#history
         hist: {
-          type: 'history',
-        },
-      },
-    // end of startMachine states 
+          type: "history"
+        }
+      }
+    // end of startMachine states
     },
     settings: {
       initial: "settings",
@@ -144,7 +144,7 @@ export const getStartedMachine = ({
         BACK: "startMachine.hist",
         SHOW_SETTINGS: "settings"
       }
-    },
+    }
   }
 },
 {
@@ -242,6 +242,6 @@ export const getStartedMachine = ({
     isSyncingRPC: () => {
       console.log("is at syncing rpc");
       onRetryStartRPC();
-    },
+    }
   }
 });

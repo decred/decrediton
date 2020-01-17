@@ -361,7 +361,7 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => new Promi
 
   start()
     .then(discoverAccountsComplete => resolve (discoverAccountsComplete))
-    .catch(err => reject(err))
+    .catch(err => reject(err));
 });
 
 const prepStartDaemon = () => (dispatch, getState) => {

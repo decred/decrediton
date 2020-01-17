@@ -67,11 +67,11 @@ export const WALLETEXIST_SUCCESS = "WALLETEXIST_SUCCESS";
 export const walletExistRequest = () => (dispatch, getState) =>
   getWalletExists(getState().walletLoader.loader)
     .then(response => {
-        dispatch({ response: response, type: WALLETEXIST_SUCCESS });
-        if (response.getExists()) {
-          dispatch(openWalletAttempt("public", false));
-        }
-      })
+      dispatch({ response: response, type: WALLETEXIST_SUCCESS });
+      if (response.getExists()) {
+        dispatch(openWalletAttempt("public", false));
+      }
+    })
     .catch(error => dispatch({ error, type: WALLETEXIST_FAILED }));
 
 export const CREATEWALLET_GOBACK = "CREATEWALLET_GOBACK";
