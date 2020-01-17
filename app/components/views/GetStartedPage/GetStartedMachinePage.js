@@ -6,7 +6,7 @@ import { LogsLinkMsg, SettingsLinkMsg, LearnBasicsMsg, UpdateAvailableLink,
 export default ({
   updateAvailable, appVersion, onShowSettings, onShowLogs, StateComponent, getDaemonSynced,
   error, text, getCurrentBlockCount, animationType, getNeededBlocks, getDaemonStarted,
-  getEstimatedTimeLeft, ...props
+  getEstimatedTimeLeft, lastDcrwalletLogLine, ...props
 }) => (
 <>
   <div className="content-title">
@@ -20,7 +20,7 @@ export default ({
   </div>
   <div className="loader-bar">
     <AnimatedLinearProgressFull {...{ getDaemonStarted, getDaemonSynced, text, getCurrentBlockCount, animationType, min: 0,
-      max: getNeededBlocks, getEstimatedTimeLeft, disabled: false }} />
+      max: getNeededBlocks, getEstimatedTimeLeft, lastDcrwalletLogLine, disabled: false }} />
   </div>
   { error &&
     <div className="error launch-error">

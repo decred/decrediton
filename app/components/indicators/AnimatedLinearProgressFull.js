@@ -1,13 +1,33 @@
 import "style/Loading.less";
+import { daemonStartup } from "connectors";
 import { HeaderTimeMsg } from "views/GetStartedPage/messages";
 import { FormattedRelative } from "shared";
 import { FormattedMessage as T } from "react-intl";
+import ReactTimeout from "react-timeout";
 
 @autobind
 class AnimatedLinearProgressFull extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      lastDcrwalletLogLine: ""
+    };
+  }
+
+  componentDidMount() {
+    this.props.setInterval(async () => {
+      try {
+        const lastDcrwalletLogLine = await this.props.getDcrwalletLogs();
+        this.setState({ lastDcrwalletLogLine })
+      } catch(err) {
+        console.log(err)
+      }
+    }, 2000);
+  }
+
   render() {
     const { min, max, error, getDaemonSynced, text, animationType,
-      syncFetchHeadersLastHeaderTime, lastDcrwalletLogLine, getCurrentBlockCount, getDaemonStarted, getEstimatedTimeLeft } = this.props;
+      syncFetchHeadersLastHeaderTime, getCurrentBlockCount, getDaemonStarted, getEstimatedTimeLeft } = this.props;
     const perComplete = (getCurrentBlockCount-min)/(max-min);
     const leftStartingPoint = perComplete ? perComplete*100 : 0;
     let finishDateEstimation = null;
@@ -15,6 +35,8 @@ class AnimatedLinearProgressFull extends React.Component {
       finishDateEstimation = new Date();
       finishDateEstimation.setSeconds(finishDateEstimation.getSeconds() + getEstimatedTimeLeft);
     }
+    const { lastDcrwalletLogLine } = this.state;
+
     return (
       <>
         <div className={"linear-progress " + animationType}>
@@ -69,4 +91,4 @@ class AnimatedLinearProgressFull extends React.Component {
   }
 }
 
-export default AnimatedLinearProgressFull;
+export default ReactTimeout(daemonStartup(AnimatedLinearProgressFull));

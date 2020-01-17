@@ -46,6 +46,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onRemoveWallet: da.removeWallet,
   goToError: ca.goToError,
   onCreateWallet: da.createWallet,
+  getDcrwalletLogs: da.getDcrwalletLogs
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

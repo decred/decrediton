@@ -506,16 +506,8 @@ export const getDcrdLogs = () => {
       });
 };
 
-export const getDcrwalletLogs = () => {
-  wallet.getDcrwalletLogs()
-    .then(logs => {
-      return(logs);
-    }).catch(
-      err=>{
-        console.log(err);
-        return (null, err);
-      });
-};
+export const getDcrwalletLogs = () => () => new Promise((resolve, reject) => wallet.getDcrwalletLastLogLine()
+  .then( logs => resolve(logs) ).catch( err => reject(err)));
 
 export const getDecreditonLogs = () => {
   wallet.getDecreditonLogs()
