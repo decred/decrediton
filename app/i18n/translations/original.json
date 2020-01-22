@@ -184,7 +184,7 @@
   "export.balances.fields.totalStake": "Total amount of DCR used on staking.",
   "export.balances.name": "Balances",
   "export.btnExport": "Export",
-  "export.completed": "Export of file ‘{filename}’ completed!",
+  "export.completed": "Export of file '{filename}' completed!",
   "export.dailyBalances.descr": "Export the different types of balances, with a daily aggregation.",
   "export.dailyBalances.fields.immature": "Balance locked in immature tickets.",
   "export.dailyBalances.fields.immatureNonWallet": "Balance locked in immature tickets not controlled by the wallet.",
