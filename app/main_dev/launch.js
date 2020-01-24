@@ -413,7 +413,7 @@ export const launchDCRLnd = (walletAccount, walletPort, rpcCreds, walletPath,
     "--tlskeypath="+path.join(dcrlndRoot, "tls.key"),
     "--configfile="+path.join(dcrlndRoot,"dcrlnd.conf"),
     "--adminmacaroonpath="+adminMacaroonPath,
-    "--decred.node=dcrd",
+    "--node=dcrd",
     "--dcrd.rpchost="+rpcCreds.rpc_host+":"+rpcCreds.rpc_port,
     "--dcrd.rpcuser="+rpcCreds.rpc_user,
     "--dcrd.rpcpass="+rpcCreds.rpc_pass,
@@ -423,9 +423,7 @@ export const launchDCRLnd = (walletAccount, walletPort, rpcCreds, walletPath,
   ];
 
   if (testnet) {
-    args.push("--decred.testnet");
-  } else {
-    args.push("--decred.mainnet");
+    args.push("--testnet");
   }
 
   if (autopilotEnabled) {
