@@ -300,7 +300,6 @@ export const revokeTicketsAttempt = (passphrase) => (dispatch, getState) => {
 export const STARTTICKETBUYERV2_ATTEMPT = "STARTTICKETBUYERV2_ATTEMPT";
 export const STARTTICKETBUYERV2_FAILED = "STARTTICKETBUYERV2_FAILED";
 export const STARTTICKETBUYERV2_SUCCESS = "STARTTICKETBUYERV2_SUCCESS";
-export const STARTTICKETBUYERV2_UPDATE = "STARTTICKETBUYERV2_UPDATE";
 
 export const STOPTICKETBUYERV2_ATTEMPT = "STOPTICKETBUYERV2_ATTEMPT";
 export const STOPTICKETBUYERV2_FAILED = "STOPTICKETBUYERV2_FAILED";
@@ -319,13 +318,14 @@ export const startTicketBuyerV2Attempt = ( passphrase, account, balanceToMaintai
   return new Promise(() => {
     const { ticketBuyerService } = getState().grpc;
     dispatch({ ticketBuyerConfig, type: STARTTICKETBUYERV2_ATTEMPT });
-    var ticketBuyer = ticketBuyerService.runTicketBuyer(request);
+    const ticketBuyer = ticketBuyerService.runTicketBuyer(request);
     ticketBuyer.on("data", function(response) {
       // No expected responses but log in case.
       console.log(response);
     });
-    ticketBuyer.on("end", function() {
-      dispatch({ type: STARTTICKETBUYERV2_SUCCESS });
+    ticketBuyer.on("end", function(response) {
+      // No expected response in end but log in case.
+      console.log(response);
     });
     ticketBuyer.on("error", function(status) {
       status = status + "";
@@ -337,18 +337,17 @@ export const startTicketBuyerV2Attempt = ( passphrase, account, balanceToMaintai
         dispatch({ type: STOPTICKETBUYERV2_SUCCESS });
       }
     });
-    dispatch({ ticketBuyerCall: ticketBuyer , type: STARTTICKETBUYERV2_UPDATE });
+    dispatch({ ticketBuyerCall: ticketBuyer , type: STARTTICKETBUYERV2_SUCCESS });
   });
 };
 
 export function ticketBuyerCancel() {
   return (dispatch, getState) => {
     const { ticketBuyerCall } = getState().control;
+    if (!ticketBuyerCall) return;
     if (ticketBuyerCall) {
       dispatch({ type: STOPTICKETBUYERV2_ATTEMPT });
       ticketBuyerCall.cancel();
-    } else {
-      dispatch({ type: STOPTICKETBUYERV2_SUCCESS });
     }
   };
 }
