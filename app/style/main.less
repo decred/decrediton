@@ -120,3 +120,21 @@ main {
 ::-webkit-scrollbar-thumb {
   background-color: var(--disabled-color);
 }
+
+////////////////////////////////////
+//  Disable element selection 
+////////////////////////////////////
+
+.decrediton {
+	-webkit-user-select: none;
+	-webkit-user-drag: none;
+	-webkit-app-region: no-drag;
+	cursor: default;
+}
+
+//Exceptions
+
+.standalone-page.txdetails-standalone-page,.snackbar,.purchase-ticket-area,.receive-content-nest,
+.stakepool-flex-height,.tickets-list,.my-tickets-charts,.account-content-nest,.message-signature{
+	-webkit-user-select: text;
+}
