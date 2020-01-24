@@ -64,6 +64,21 @@
   background-repeat: no-repeat;
   background-color: white;
   margin-top:4px;
+  position: relative;
+
+  &::before {
+    position: absolute;
+    content: "";
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    width: 26px;
+    height: 26px;
+    background-repeat: no-repeat;
+    background-image: @qr-logo;
+    background-size: 28px;
+    background-position: -1px -1px;
+  }
 }
 
 .receive-toolbar {
@@ -113,6 +128,13 @@
     width: 120px;
     height: 120px;
     margin: 0 auto;
+
+    &::before {
+      width: 34px;
+      height: 34px;
+      background-size: 40px;
+      background-position: -3px -3px;
+    }    
   }
   
   .receive-select-account-input {
