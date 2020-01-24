@@ -15,7 +15,7 @@ const HomePage = ({
       <div className="overview-spendable-locked-wrapper">
         <div className="overview-spendable-locked-wrapper-area">
           <Balance
-            classNameWrapper="overview-balance-spendable-locked received"
+            classNameWrapper="overview-balance-spendable-locked received amount"
             classNameUnit="overview-balance-spendable-locked-unit"
             amount={balanceReceived} />
           <div className="overview-balance-spendable-locked-label">
@@ -24,7 +24,7 @@ const HomePage = ({
         </div>
         <div className="overview-spendable-locked-wrapper-area">
           <Balance
-            classNameWrapper="overview-balance-spendable-locked sent"
+            classNameWrapper="overview-balance-spendable-locked sent amount"
             classNameUnit="overview-balance-spendable-locked-unit"
             amount={balanceSent} />
           <div className="overview-balance-spendable-locked-label">

@@ -6,7 +6,7 @@ const mapStateToProps = selectorMap({
   sentAndReceivedTransactions: sel.sentAndReceivedTransactions,
   totalValueOfLiveTickets: sel.totalValueOfLiveTickets,
   earnedStakingReward: sel.totalSubsidy,
-  liveTicketsCount: sel.liveTicketsCount,
+  activeTicketsCount: sel.activeTicketsCount,
   votedTicketsCount: sel.votedTicketsCount,
   ticketDataChart: sel.ticketDataChart
 });
