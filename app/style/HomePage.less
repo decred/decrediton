@@ -3,7 +3,7 @@
 
 .overview-header {
   padding-left: 63px;
-  padding-top: 47px; 
+  padding-top: 47px;
   padding-right: 56px;
   justify-content: space-between;
   background-color: var(--background-back-color);
@@ -66,24 +66,30 @@
 }
 
 .overview-balance-spendable-locked {
-  font-size: 17px;
+  font-family: var(--font-family-regular);
+  line-height: 13px;
   color: var(--input-color-default);
-  font-family: var(--font-family-monospaced);
-  line-height: 18px;
   padding-left: 10px;
   margin-right: 2px;
   background-repeat: no-repeat;
   background-position: 0 50%;
   background-size: 7px;
 
+  > .count,
+  &.amount {
+  font-size: 17px;
+  font-family: var(--font-family-monospaced);
+  line-height: 18px;
+  }
+
   &.active {
     background-image: @legend-active;
   }
-  
+
   &.voted {
     background-image: @legend-voted;
   }
-  
+
   &.received {
     background-image: @legend-received;
   }
@@ -185,7 +191,7 @@
   .overview-transactions-ticket {
     padding: 30px 20px;
   }
-  
+
   .overview-header {
     padding-top: 60px;
     padding-left: 20px;
@@ -229,8 +235,8 @@
     padding-right: 0;
 
     .overview-header-wrapper {
-      width: 394px;  
-      min-width: 394px;  
+      width: 394px;
+      min-width: 394px;
     }
 
     .tabs > .tab > a {
@@ -242,7 +248,7 @@
 
       .overview-tab {
         border: 1px solid var(--home-content-link);
-        border-radius: 3px;        
+        border-radius: 3px;
       }
     }
   }
