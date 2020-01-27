@@ -1293,7 +1293,14 @@ export const getTreasuryBalance = () => (dispatch, getState) => {
   da.getTreasuryInfo(dURL, treasuryAddress)
     .then(treasuryInfo => {
       // Manually convert DCR to atom amounts to avoid floating point multiplication errors (eg. 589926.57667882*1e8 => 58992657667881.99)
-      const treasuryBalance = parseInt(treasuryInfo["data"]["dcr_unspent"].toString().replace(".",""));
+      const splitedTreasuryInfo = treasuryInfo["data"]["dcr_unspent"].toString().split(".");
+      const integerPart = splitedTreasuryInfo[0];
+      // dcrdata can send numbers with its decimal part less than 8 decimals, so we manually add it.
+      let decimalPart = splitedTreasuryInfo[1];
+      while (decimalPart.length < 8) {
+        decimalPart += "0";
+      }
+      const treasuryBalance = integerPart + decimalPart;
       dispatch({ treasuryBalance, type: GETTREASURY_BALANCE_SUCCESS });
     });
 };
