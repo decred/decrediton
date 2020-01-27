@@ -1297,9 +1297,7 @@ export const getTreasuryBalance = () => (dispatch, getState) => {
       const integerPart = splitedTreasuryInfo[0];
       // dcrdata can send numbers with its decimal part less than 8 decimals, so we manually add it.
       let decimalPart = splitedTreasuryInfo[1];
-      while (decimalPart.length < 8) {
-        decimalPart += "0";
-      }
+      decimalPart += "0".repeat(8 - decimalPart.length);
       const treasuryBalance = integerPart + decimalPart;
       dispatch({ treasuryBalance, type: GETTREASURY_BALANCE_SUCCESS });
     });
