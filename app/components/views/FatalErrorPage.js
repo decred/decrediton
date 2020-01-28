@@ -40,7 +40,7 @@ class FatalErrorPage extends React.Component {
     default:
       errorMessage = (
         <T id="fatal.suggestion.fallthrough"
-          m="Please note the error above and go to the support channel on matrix (via riot) or some other preferred
+          m="Please note the error above and go to the support channel on matrix or some other preferred
             chat channel for help resolving the issue. {link}"
           values = {{ link:
             <ExternalLink href="https://decred.org/community">
