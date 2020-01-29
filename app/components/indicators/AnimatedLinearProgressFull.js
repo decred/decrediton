@@ -26,9 +26,9 @@ class AnimatedLinearProgressFull extends React.Component {
   }
 
   render() {
-    const { min, max, error, getDaemonSynced, text, animationType,
-      syncFetchHeadersLastHeaderTime, getCurrentBlockCount, getDaemonStarted, getEstimatedTimeLeft } = this.props;
-    const perComplete = (getCurrentBlockCount-min)/(max-min);
+    const { min, error, getDaemonSynced, text, animationType,
+      syncFetchHeadersLastHeaderTime, getCurrentBlockCount, getDaemonStarted, getEstimatedTimeLeft, getNeededBlocks } = this.props;
+    const perComplete = (getCurrentBlockCount-min)/(getNeededBlocks-min);
     const leftStartingPoint = perComplete ? perComplete*100 : 0;
     let finishDateEstimation = null;
     if (getEstimatedTimeLeft !== null) {
@@ -62,14 +62,14 @@ class AnimatedLinearProgressFull extends React.Component {
           </div>
         </div>
         <div>
-          { getCurrentBlockCount &&
+          { getCurrentBlockCount && !getDaemonSynced &&
             <div className="loader-bar-estimation">
               <T id="getStarted.chainLoading.syncEstimation" m="Blockchain download estimated complete: "/>
               <span className="bold">
                 { finishDateEstimation &&
                   <FormattedRelative value={finishDateEstimation}/>
                 }
-                ({getCurrentBlockCount} / {max})</span>
+                ({getCurrentBlockCount} / {getNeededBlocks})</span>
             </div>
           }
           { getDaemonStarted && syncFetchHeadersLastHeaderTime &&
