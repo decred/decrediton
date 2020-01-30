@@ -14,7 +14,7 @@ import {
   SYNC_FETCHED_MISSING_CFILTERS_PROGRESS, SYNC_FETCHED_MISSING_CFILTERS_FINISHED,
   SYNC_DISCOVER_ADDRESSES_STARTED, SYNC_DISCOVER_ADDRESSES_FINISHED,
   SYNC_RESCAN_STARTED, SYNC_RESCAN_PROGRESS, SYNC_RESCAN_FINISHED, SYNC_CANCEL,
-  GENERATESEED_ATTEMPT
+  GENERATESEED_ATTEMPT, WALLET_SELECTED
 } from "actions/WalletLoaderActions";
 import {
   WALLETCREATED, CLOSEDAEMON_SUCCESS
@@ -65,6 +65,10 @@ export default function walletLoader(state = {}, action) {
     return { ...state,
       createWalletExisting: action.createNewWallet,
       isWatchingOnly: action.isWatchingOnly
+    };
+  case WALLET_SELECTED:
+    return { ...state,
+      selectedWallet: action.selectedWallet
     };
   case GENERATESEED_ATTEMPT:
     return { ...state,
@@ -151,7 +155,8 @@ export default function walletLoader(state = {}, action) {
       syncInput: false,
       syncAttemptRequest: false,
       syncError: null,
-      synced: false
+      synced: false,
+      syncLastFetchedHeaderTime: null
     };
   case CLOSEDAEMON_SUCCESS:
     return { ...state,

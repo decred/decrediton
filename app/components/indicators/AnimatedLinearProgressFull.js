@@ -26,8 +26,10 @@ class AnimatedLinearProgressFull extends React.Component {
   }
 
   render() {
-    const { min, error, getDaemonSynced, text, animationType,
-      syncFetchHeadersLastHeaderTime, getCurrentBlockCount, getDaemonStarted, getEstimatedTimeLeft, getNeededBlocks } = this.props;
+    const {
+      min, error, getDaemonSynced, text, animationType, syncFetchHeadersLastHeaderTime,
+      getCurrentBlockCount, selectedWalletSelector, getEstimatedTimeLeft, getNeededBlocks
+    } = this.props;
     const perComplete = (getCurrentBlockCount-min)/(getNeededBlocks-min);
     const leftStartingPoint = perComplete ? perComplete*100 : 0;
     let finishDateEstimation = null;
@@ -72,18 +74,18 @@ class AnimatedLinearProgressFull extends React.Component {
                 ({getCurrentBlockCount} / {getNeededBlocks})</span>
             </div>
           }
-          { getDaemonStarted && syncFetchHeadersLastHeaderTime &&
+          { selectedWalletSelector && syncFetchHeadersLastHeaderTime && (
             <div className="loader-bar-estimation">
               <HeaderTimeMsg />
               <span className="bold">
                 <FormattedRelative value={syncFetchHeadersLastHeaderTime}/>
               </span>
             </div>
-          }
-          { lastDcrwalletLogLine &&
-            <div className="get-started-last-log-lines">
-              <div className="last-dcrwallet-log-line">{lastDcrwalletLogLine}</div>
-            </div>
+          )}
+          { selectedWalletSelector && lastDcrwalletLogLine &&
+              <div className="get-started-last-log-lines">
+                <div className="last-dcrwallet-log-line">{lastDcrwalletLogLine}</div>
+              </div>
           }
         </div>
       </>

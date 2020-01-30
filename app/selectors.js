@@ -124,6 +124,7 @@ export const sortedAvailableWallets = createSelector(
 );
 export const previousWallet = get([ "daemon", "previousWallet" ]);
 export const getWalletName = get([ "daemon", "walletName" ]);
+export const getSelectedWallet = get([ "walletLoader", "selectedWallet" ]);
 
 export const openWalletInputRequest = get([ "walletLoader", "openWalletInputRequest" ]);
 

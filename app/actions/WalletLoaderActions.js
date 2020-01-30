@@ -266,17 +266,23 @@ export const startRpcRequestFunc = (privPass, isRetry) =>
 
 export const WALLET_SELECTED = "WALLET_SELECTED";
 
+// setSelectedWallet sets a selected wallet which the user opened at the reducer and
+// at node memory with ipcRender. This way we can still know the wallet opened by the
+// user after a refresh (common when in dev).
 export const setSelectedWallet = (selectedWallet) => (dispatch) => {
-  dispatch({ type: WALLET_SELECTED });
+  dispatch({ type: WALLET_SELECTED, selectedWallet });
   ipcRenderer.sendSync("set-selected-wallet", selectedWallet);
 };
 
-export const GET_SELECTED_WALLET = "GET_SELECTED_WALLET";
-
+// getSelectedWallet gets a wallet from the node memory. If it does exit, it is
+// dispatched and added to the reducer.
 export const getSelectedWallet = () => (dispatch) => {
-  const wallet = ipcRenderer.sendSync("get-selected-wallet");
-  dispatch({ type: GET_SELECTED_WALLET });
-  return wallet;
+  const selectedWallet = ipcRenderer.sendSync("get-selected-wallet");
+  if (!selectedWallet) {
+    return null;
+  }
+  dispatch({ type: WALLET_SELECTED, selectedWallet });
+  return selectedWallet;
 };
 
 export const UPDATEDISCOVERACCOUNTS = "UPDATEDISCOVERACCOUNTS";

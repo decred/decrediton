@@ -29,7 +29,8 @@ const mapStateToProps = selectorMap({
   syncRescanProgress: sel.syncRescanProgress,
   syncFetchHeadersComplete: sel.syncFetchHeadersComplete,
   syncFetchTimeStart: sel.syncFetchTimeStart,
-  firstBlockTime: sel.firstBlockTime
+  firstBlockTime: sel.firstBlockTime,
+  selectedWalletSelector: sel.getSelectedWallet
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
