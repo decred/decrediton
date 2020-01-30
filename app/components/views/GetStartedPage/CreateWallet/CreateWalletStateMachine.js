@@ -101,12 +101,12 @@ export const CreateWalletMachine = ({
     isAtCreateWallet: () => {
       console.log("is at create wallet");
     },
-    isAtNewWallet: (context) => {
+    isAtNewWallet: (context, event) => {
       // We only generate the seed once. If mnemonic already exists, we return it.
       if (context.mnemonic) return;
       generateSeed().then(response => {
         // Allows verification skip in dev
-        // context.seed = event.isTestNet ? response.getSeedBytes() : null;
+        context.seed = event.isTestNet ? response.getSeedBytes() : null;
         const mnemonic = response.getSeedMnemonic();
         context.mnemonic = mnemonic;
         sendEvent({ type: "GENERATED" });

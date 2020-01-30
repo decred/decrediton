@@ -34,8 +34,8 @@ class CreateWallet extends React.Component {
     isNew = isNew == "true" ? true : false;
     this.setState({ isNew });
     // TODO Add watching only state and tezos
-    // const { isCreatingWatchingOnly, masterPubKey, isTestNet } = this.props;
-    this.service.send({ type: "CREATE_WALLET", isNew });
+    const { isCreatingWatchingOnly, masterPubKey, isTestNet } = this.props;
+    this.service.send({ type: "CREATE_WALLET", isNew, isTestNet });
     this.service.send({ type: "RESTORE_WALLET", isNew });
   }
 
