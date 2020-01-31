@@ -10,16 +10,17 @@ import ConfirmSeed from "./ConfirmSeed";
 import ExistingSeed from "./ExistingSeed";
 import { createWallet } from "connectors";
 import { createElement as h } from "react";
+import { DecredLoading } from "indicators";
 
 @autobind
 class CreateWallet extends React.Component {
   service;
   constructor(props) {
     super(props);
-    const { sendEvent, checkIsValid, onCreateWatchOnly } = this;
+    const { sendEvent, sendContinue, checkIsValid, onCreateWatchOnly } = this;
     const { backToCredentials, cancelCreateWallet, generateSeed } = props;
     this.machine = CreateWalletMachine({
-      generateSeed, backToCredentials, cancelCreateWallet, sendEvent, checkIsValid, onCreateWatchOnly
+      generateSeed, backToCredentials, cancelCreateWallet, sendEvent, sendContinue, checkIsValid, onCreateWatchOnly
     });
     this.service = interpret(this.machine).onTransition(current => this.setState({ current }, this.getStateComponent));
     this.state = {
@@ -63,6 +64,9 @@ class CreateWallet extends React.Component {
         sendBack, decodeSeed, sendContinue, setSeed, setPassPhrase, onCreateWallet, isValid, setError, error
       });
       break;
+    case "creatingWallet":
+      component = h(DecredLoading);
+      break;
     case "finished":
       break;
     case "walletCreated":
@@ -78,6 +82,7 @@ class CreateWallet extends React.Component {
   }
 
   sendContinue() {
+    console.log('continue sended')
     this.service.send({ type: "CONTINUE" });
   }
 
@@ -86,21 +91,26 @@ class CreateWallet extends React.Component {
   }
 
   onCreateWallet() {
-    const { createWalletRequest, onSetWalletPrivatePassphrase } = this.props;
+    const { createWalletRequest } = this.props;
     const { isNew } = this.state;
     const pubpass = ""; // Temporarily disabled?
     const { seed, passPhrase } = this.service._state.context;
 
     if (!(seed && passPhrase)) return;
-    createWalletRequest(pubpass, passPhrase, seed, isNew);
-    isNew && onSetWalletPrivatePassphrase && onSetWalletPrivatePassphrase(passPhrase);
-    this.sendContinue();
+    createWalletRequest(pubpass, passPhrase, seed, isNew)
+      .then(r => this.sendContinue())
+      .catch(error => this.sendEvent({ type: "ERROR", error }));
+    // we send a continue so we go to creatingWallet state
+    this.sendContinue()
   }
 
   onCreateWatchOnly() {
     const { createWatchOnlyWalletRequest, walletMasterPubKey } = this.props
-    createWatchOnlyWalletRequest(walletMasterPubKey);
-    this.sendContinue();
+    createWatchOnlyWalletRequest(walletMasterPubKey)
+      .then(r => this.sendContinue())
+      .catch(error => this.sendEvent({ type: "ERROR", error }));
+    // we send a continue so we go to creatingWallet state
+    this.sendContinue()
   }
 
   setError(error) {

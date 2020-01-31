@@ -43,7 +43,7 @@ export const CreateWalletMachine = ({
     writeSeed: {
       onEntry: "isAtWriteSeed",
       on: {
-        CONTINUE: "walletCreated",
+        CONTINUE: "creatingWallet",
         ERROR: "createWallet",
         BACK: "finished",
         VALIDATE_DATA: {
@@ -65,7 +65,7 @@ export const CreateWalletMachine = ({
     confirmSeed: {
       onEntry: "isAtConfirmSeed",
       on: {
-        CONTINUE: "walletCreated",
+        CONTINUE: "creatingWallet",
         ERROR: "newWallet",
         BACK: {
           target: "newWallet",
@@ -93,7 +93,13 @@ export const CreateWalletMachine = ({
     restoreWatchingOnly: {
       onEntry: "isAtRestoreWatchingOnly",
       on: {
-        CONTINUE: "walletCreated",
+        CONTINUE: "creatingWallet",
+      }
+    },
+    creatingWallet: {
+      onEntry: "isAtCreatingWallet",
+      on: {
+        CONTINUE: "walletCreated"
       }
     },
     walletCreated: {
@@ -135,6 +141,9 @@ export const CreateWalletMachine = ({
     isAtFinished: async () => {
       await cancelCreateWallet();
       backToCredentials();
+    },
+    isAtCreatingWallet: () => {
+      console.log("creating wallet")
     },
     isAtWalletCreated: async () => {
       backToCredentials();

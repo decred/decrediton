@@ -97,7 +97,7 @@ export const CREATEWALLET_ATTEMPT = "CREATEWALLET_ATTEMPT";
 export const CREATEWALLET_FAILED = "CREATEWALLET_FAILED";
 export const CREATEWALLET_SUCCESS = "CREATEWALLET_SUCCESS";
 
-export const createWalletRequest = (pubPass, privPass, seed, isNew) => (dispatch, getState) => {
+export const createWalletRequest = (pubPass, privPass, seed, isNew) => (dispatch, getState) => new Promise((resolve, reject) => {
   dispatch({ existing: !isNew, type: CREATEWALLET_ATTEMPT });
   return createWallet(getState().walletLoader.loader, pubPass, privPass, seed)
     .then(() => {
@@ -109,15 +109,19 @@ export const createWalletRequest = (pubPass, privPass, seed, isNew) => (dispatch
       dispatch({ response: {}, type: CREATEWALLET_SUCCESS });
       dispatch(clearStakePoolConfigNewWallet());
       dispatch(getWalletServiceAttempt());
+      resolve(true);
     })
-    .catch(error => dispatch({ error, type: CREATEWALLET_FAILED }));
-};
+    .catch(error => {
+      dispatch({ error, type: CREATEWALLET_FAILED });
+      reject(error);
+    });
+});
 
 export const CREATEWATCHONLYWALLET_ATTEMPT = "CREATEWATCHONLYWALLET_ATTEMPT";
 export const CREATEWATCHONLYWALLET_FAILED = "CREATEWATCHONLYWALLET_FAILED";
 export const CREATEWATCHONLYWALLET_SUCCESS = "CREATEWATCHONLYWALLET_SUCCESS";
 
-export const createWatchOnlyWalletRequest = (extendedPubKey, pubPass ="") => (dispatch, getState) => {
+export const createWatchOnlyWalletRequest = (extendedPubKey, pubPass ="") => (dispatch, getState) => new Promise((resolve,reject) => {
   dispatch({ type: CREATEWATCHONLYWALLET_ATTEMPT });
   return wallet.createWatchingOnlyWallet(getState().walletLoader.loader, extendedPubKey, pubPass)
     .then(() => {
@@ -127,9 +131,13 @@ export const createWatchOnlyWalletRequest = (extendedPubKey, pubPass ="") => (di
       config.delete("discoveraccounts");
       dispatch({ response: {}, type: CREATEWATCHONLYWALLET_SUCCESS });
       dispatch(getWalletServiceAttempt());
+      resolve(true);
     })
-    .catch(error => dispatch({ error, type: CREATEWATCHONLYWALLET_FAILED }));
-};
+    .catch(error => {
+      dispatch({ error, type: CREATEWATCHONLYWALLET_FAILED })
+      reject(error);
+    });
+});
 
 export const OPENWALLET_INPUT = "OPENWALLET_INPUT";
 export const OPENWALLET_FAILED_INPUT = "OPENWALLET_FAILED_INPUT";
