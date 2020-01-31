@@ -127,11 +127,6 @@ export const createWatchOnlyWalletRequest = (extendedPubKey, pubPass ="") => (di
       config.delete("discoveraccounts");
       dispatch({ response: {}, type: CREATEWATCHONLYWALLET_SUCCESS });
       dispatch(getWalletServiceAttempt());
-      if (isSPV(getState())) {
-        dispatch(spvSyncAttempt());
-      } else {
-        dispatch(startRpcRequestFunc());
-      }
     })
     .catch(error => dispatch({ error, type: CREATEWATCHONLYWALLET_FAILED }));
 };

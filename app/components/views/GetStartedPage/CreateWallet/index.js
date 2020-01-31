@@ -16,27 +16,28 @@ class CreateWallet extends React.Component {
   service;
   constructor(props) {
     super(props);
-    const { sendEvent, checkIsValid } = this;
+    const { sendEvent, checkIsValid, onCreateWatchOnly } = this;
     const { backToCredentials, cancelCreateWallet, generateSeed } = props;
-    this.machine = CreateWalletMachine({ generateSeed, backToCredentials, cancelCreateWallet, sendEvent, checkIsValid });
+    this.machine = CreateWalletMachine({
+      generateSeed, backToCredentials, cancelCreateWallet, sendEvent, checkIsValid, onCreateWatchOnly
+    });
     this.service = interpret(this.machine).onTransition(current => this.setState({ current }, this.getStateComponent));
     this.state = {
       current: this.machine.initialState,
       StateComponent: null,
-      isNew: "",
       isValid: false
     };
   }
 
   componentDidMount() {
     this.service.start();
-    let isNew = this.props.match.params.isNew;
-    isNew = isNew == "true" ? true : false;
-    this.setState({ isNew });
+    const isNew = !this.props.createWalletExisting;
+    const isWatchingOnly = this.props.isCreatingWatchingOnly;
     // TODO Add watching only state and tezos
-    const { isCreatingWatchingOnly, masterPubKey, isTestNet } = this.props;
+    const { isTestNet } = this.props;
     this.service.send({ type: "CREATE_WALLET", isNew, isTestNet });
-    this.service.send({ type: "RESTORE_WALLET", isNew });
+    this.service.send({ type: "RESTORE_WALLET", isNew, isWatchingOnly });
+    this.service.send({ type: "RETORE_WATCHING_ONLY_WALLET", isWatchingOnly });
   }
 
   componentWillUnmount() {
@@ -93,6 +94,12 @@ class CreateWallet extends React.Component {
     if (!(seed && passPhrase)) return;
     createWalletRequest(pubpass, passPhrase, seed, isNew);
     isNew && onSetWalletPrivatePassphrase && onSetWalletPrivatePassphrase(passPhrase);
+    this.sendContinue();
+  }
+
+  onCreateWatchOnly() {
+    const { createWatchOnlyWalletRequest, walletMasterPubKey } = this.props
+    createWatchOnlyWalletRequest(walletMasterPubKey);
     this.sendContinue();
   }
 

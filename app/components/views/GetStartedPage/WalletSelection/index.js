@@ -10,7 +10,6 @@ class WalletSelectionBody extends React.Component {
       isCreateNewWallet: false,
       isCreatingOrRestoring: false,
       newWalletName: "",
-      hasFailedAttempt: false,
       isWatchingOnly: false,
       walletMasterPubKey: "",
       masterPubKeyError: false,
@@ -24,29 +23,13 @@ class WalletSelectionBody extends React.Component {
       maxWalletCount, isSPV, availableWallets, getDaemonSynced, submitChosenWallet
     } = this.props;
     const {
-      onChangeAvailableWallets,
-      startWallet,
-      createWallet,
-      onChangeCreateWalletName,
-      showCreateWalletForm,
-      hideCreateWalletForm,
-      onEditWallets,
-      onCloseEditWallets,
-      toggleWatchOnly,
-      onChangeCreateWalletMasterPubKey,
-      toggleTrezor
+      onChangeAvailableWallets, startWallet, createWallet, onChangeCreateWalletName,
+      showCreateWalletForm, hideCreateWalletForm, onEditWallets, onCloseEditWallets,
+      toggleWatchOnly, onChangeCreateWalletMasterPubKey, toggleTrezor
     } = this;
     const {
-      newWalletName,
-      isCreateNewWallet,
-      isCreatingOrRestoring,
-      editWallets,
-      hasFailedAttemptName,
-      hasFailedAttemptPubKey,
-      isWatchingOnly,
-      walletMasterPubKey,
-      masterPubKeyError,
-      walletNameError
+      newWalletName, isCreateNewWallet, isCreatingOrRestoring, editWallets, hasFailedAttemptName,
+      hasFailedAttemptPubKey, isWatchingOnly, walletMasterPubKey, masterPubKeyError, walletNameError
     } = this.state;
     return (
       <WalletSelectionFormBody
@@ -134,7 +117,10 @@ class WalletSelectionBody extends React.Component {
 
     const walletSelected = {
       label: newWalletName,
-      value: { wallet: newWalletName, isWatchingOnly, isTrezor, network: isTestNet ? "testnet" : "mainnet" }
+      value: {
+        wallet: newWalletName, isWatchingOnly, isTrezor, isNew: isCreateNewWallet,
+        walletMasterPubKey, network: isTestNet ? "testnet" : "mainnet"
+      }
     };
 
     if (newWalletName === "" || walletNameError) {

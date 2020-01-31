@@ -14,6 +14,7 @@ const mapStateToProps = selectorMap({
   createNewWallet: sel.createNewWallet,
   isTestNet: sel.isTestNet,
   isCreatingWatchingOnly: sel.isWatchingOnly,
+  walletMasterPubKey: sel.walletMasterPubKey,
   masterPubKey: sel.masterPubKey,
   maxWalletCount: sel.maxWalletCount,
   trezorDeviceList: sel.trezorDeviceList,

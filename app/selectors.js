@@ -56,6 +56,7 @@ export const walletRPCVersion = createSelector(
   [ get([ "version", "getWalletRPCVersionResponse" ]) ],
   (r) => r ? r.getVersionString() : null);
 const walletExistResponse = get([ "walletLoader", "walletExistResponse" ]);
+export const walletMasterPubKey = get([ "walletLoader", "walletMasterPubKey" ]);
 export const startStepIndex = get([ "walletLoader", "stepIndex" ]);
 export const getVersionServiceError = get([ "version", "getVersionServiceError" ]);
 export const getWalletRPCVersionError = get([ "version", "getWalletRPCVersionError" ]);

@@ -3,7 +3,7 @@ import { Machine, assign } from "xstate";
 // Hierarchical state machine called inside getStartedStateMachine.
 // source: https://github.com/davidkpiano/xstate#hierarchical-nested-state-machines
 export const CreateWalletMachine = ({
-  cancelCreateWallet, backToCredentials, generateSeed, sendEvent, checkIsValid
+  cancelCreateWallet, backToCredentials, generateSeed, sendEvent, checkIsValid, onCreateWatchOnly
 }) => Machine({
   id: "getStarted",
   initial: "createWallet",
@@ -20,11 +20,15 @@ export const CreateWalletMachine = ({
       on: {
         RESTORE_WALLET: {
           target: "writeSeed",
-          cond: (c, event) => !event.isNew
+          cond: (c, event) => !event.isNew && !event.isWatchingOnly
         },
         CREATE_WALLET: {
           target: "newWallet",
           cond: (c, event) => event.isNew
+        },
+        RETORE_WATCHING_ONLY_WALLET: {
+          target: "restoreWatchingOnly",
+          cond: (c, event) => event.isWatchingOnly
         }
       }
     },
@@ -44,7 +48,7 @@ export const CreateWalletMachine = ({
         BACK: "finished",
         VALIDATE_DATA: {
           target: "writeSeed",
-          // assign new context;
+          // assign new context value to each one;
           actions: [
             assign({
               passPhrase: (context, event) => event.passPhrase ? event.passPhrase : context.passPhrase ? context.passPhrase : "",
@@ -86,6 +90,12 @@ export const CreateWalletMachine = ({
         }
       }
     },
+    restoreWatchingOnly: {
+      onEntry: "isAtRestoreWatchingOnly",
+      on: {
+        CONTINUE: "walletCreated",
+      }
+    },
     walletCreated: {
       type: "final",
       onEntry: "isAtWalletCreated"
@@ -117,6 +127,10 @@ export const CreateWalletMachine = ({
     },
     isAtWriteSeed: () => {
       checkIsValid();
+    },
+    isAtRestoreWatchingOnly: (context, event) => {
+      console.log("is at restoring watching only")
+      onCreateWatchOnly();
     },
     isAtFinished: async () => {
       await cancelCreateWallet();
