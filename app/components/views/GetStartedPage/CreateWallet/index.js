@@ -82,7 +82,6 @@ class CreateWallet extends React.Component {
   }
 
   sendContinue() {
-    console.log('continue sended')
     this.service.send({ type: "CONTINUE" });
   }
 

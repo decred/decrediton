@@ -9,7 +9,7 @@ import { getWalletServiceAttempt, startWalletServices, getBestBlockHeightAttempt
 import { WALLETREMOVED_FAILED } from "./DaemonActions";
 import { getWalletCfg, getDcrdCert } from "config";
 import { getWalletPath } from "main_dev/paths";
-import { isTestNet, isSPV } from "selectors";
+import { isTestNet } from "selectors";
 import { SpvSyncRequest, SyncNotificationType, RpcSyncRequest } from "../middleware/walletrpc/api_pb";
 import { push as pushHistory } from "react-router-redux";
 import { stopNotifcations } from "./NotificationActions";
@@ -129,6 +129,7 @@ export const createWatchOnlyWalletRequest = (extendedPubKey, pubPass ="") => (di
       const config = getWalletCfg(isTestNet(getState()), walletName);
       config.set("iswatchonly", true);
       config.delete("discoveraccounts");
+      wallet.setIsWatchingOnly(true);
       dispatch({ response: {}, type: CREATEWATCHONLYWALLET_SUCCESS });
       dispatch(getWalletServiceAttempt());
       resolve(true);
@@ -223,9 +224,6 @@ export const startRpcRequestFunc = (privPass, isRetry) =>
     if (!discoverAccountsComplete && privPass) {
       request.setDiscoverAccounts(true);
       request.setPrivatePassphrase(new Uint8Array(Buffer.from(privPass)));
-    } else if (!discoverAccountsComplete && !privPass && !isWatchingOnly) {
-      dispatch({ type: SYNC_INPUT });
-      return;
     }
     return new Promise(() => {
       if (!isRetry) dispatch({ type: SYNC_ATTEMPT });
