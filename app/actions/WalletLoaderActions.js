@@ -135,7 +135,7 @@ export const createWatchOnlyWalletRequest = (extendedPubKey, pubPass ="") => (di
       resolve(true);
     })
     .catch(error => {
-      dispatch({ error, type: CREATEWATCHONLYWALLET_FAILED })
+      dispatch({ error, type: CREATEWATCHONLYWALLET_FAILED });
       reject(error);
     });
 });
@@ -210,7 +210,7 @@ export const startRpcRequestFunc = (privPass, isRetry) =>
     if (syncAttemptRequest) {
       return;
     }
-    const { daemon: { walletName }, walletLoader: { discoverAccountsComplete,isWatchingOnly } }= getState();
+    const { daemon: { walletName }, walletLoader: { discoverAccountsComplete } }= getState();
 
     const credentials = ipcRenderer.sendSync("get-dcrd-rpc-credentials");
     const { rpc_user, rpc_cert, rpc_pass, rpc_host, rpc_port } = credentials;

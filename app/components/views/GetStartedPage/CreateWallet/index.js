@@ -97,19 +97,19 @@ class CreateWallet extends React.Component {
 
     if (!(seed && passPhrase)) return;
     createWalletRequest(pubpass, passPhrase, seed, isNew)
-      .then(r => this.sendContinue())
+      .then(() => this.sendContinue())
       .catch(error => this.sendEvent({ type: "ERROR", error }));
     // we send a continue so we go to creatingWallet state
-    this.sendContinue()
+    this.sendContinue();
   }
 
   onCreateWatchOnly() {
-    const { createWatchOnlyWalletRequest, walletMasterPubKey } = this.props
+    const { createWatchOnlyWalletRequest, walletMasterPubKey } = this.props;
     createWatchOnlyWalletRequest(walletMasterPubKey)
-      .then(r => this.sendContinue())
+      .then(() => this.sendContinue())
       .catch(error => this.sendEvent({ type: "ERROR", error }));
     // we send a continue so we go to creatingWallet state
-    this.sendContinue()
+    this.sendContinue();
   }
 
   setError(error) {

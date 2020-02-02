@@ -93,7 +93,7 @@ export const CreateWalletMachine = ({
     restoreWatchingOnly: {
       onEntry: "isAtRestoreWatchingOnly",
       on: {
-        CONTINUE: "creatingWallet",
+        CONTINUE: "creatingWallet"
       }
     },
     creatingWallet: {
@@ -134,8 +134,8 @@ export const CreateWalletMachine = ({
     isAtWriteSeed: () => {
       checkIsValid();
     },
-    isAtRestoreWatchingOnly: (context, event) => {
-      console.log("is at restoring watching only")
+    isAtRestoreWatchingOnly: () => {
+      console.log("is at restoring watching only");
       onCreateWatchOnly();
     },
     isAtFinished: async () => {
@@ -143,7 +143,7 @@ export const CreateWalletMachine = ({
       backToCredentials();
     },
     isAtCreatingWallet: () => {
-      console.log("creating wallet")
+      console.log("creating wallet");
     },
     isAtWalletCreated: async () => {
       backToCredentials();
