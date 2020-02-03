@@ -57,7 +57,7 @@ const SettingsPage = ({
   <StandalonePage header={<SettingsPageHeader {...{ onCloseWallet, walletName, isTicketAutoBuyerEnabled }} />} className="settings-standalone-page">
     <div className="settings-wrapper">
       <div className="settings-group">
-        <div className="settings-group-title"><T id="settings.group-title.connectivity" m="Connectivity" /></div>
+        <div className="settings-group-title"><T id="settings.getstartpage.group-title.connectivity" m="Connectivity" /></div>
         <div className="settings-column-wrapper">
           <div className="settings-column">
             <NetworkSettings {...{
@@ -72,7 +72,7 @@ const SettingsPage = ({
       </div>
 
       <div className="settings-group general">
-        <div className="settings-group-title"><T id="settings.group-title.general" m="General" /></div>
+        <div className="settings-group-title"><T id="settings.getstartpage.group-title.general" m="General" /></div>
         <div className="settings-column-wrapper">
           <div className="settings-column">
             <UISettings {...{ tempSettings, locales, onChangeTempSettings }} />
@@ -89,7 +89,7 @@ const SettingsPage = ({
       </div>
 
       <div className="settings-group privacy">
-        <div className="settings-group-title"><T id="settings.group-title.privacy-and-security" m="Privacy and Security" /></div>
+        <div className="settings-group-title"><T id="settings.getstartpage.group-title.privacy-and-security" m="Privacy and Security" /></div>
         <div className="settings-column-wrapper">
           <div className="settings-column">
             <PrivacySettings {...{ tempSettings, onAttemptChangePassphrase,
