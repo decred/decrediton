@@ -14,7 +14,8 @@ class StakePools extends React.Component {
       isAdding: false,
       apiKey: "",
       selectedUnconfigured: this.props.unconfiguredStakePools[0],
-      hasFailedAttempt: false
+      hasFailedAttempt: false,
+      show: true
     };
     if (!props.updatedStakePoolList && this.getStakepoolListingEnabled()) {
       this.props.discoverAvailableStakepools();
@@ -42,6 +43,10 @@ class StakePools extends React.Component {
     if (!this.getStakepoolListingEnabled() && this.props.stakePoolListingEnabled) {
       this.props.discoverAvailableStakepools();
     }
+  }
+
+  toggleBackupModal() {
+    this.setState({ show: !this.state.show });
   }
 
   renderStakepoolListingDisabled() {
@@ -101,9 +106,11 @@ class StakePools extends React.Component {
     return (
       <StakePoolsList
         {...{
+          showModal: this.state.show,
           ...this.props,
           ...substruct({
-            onShowAddStakePool: null
+            onShowAddStakePool: null,
+            toggleBackupModal: null
           }, this)
         }}
       />
