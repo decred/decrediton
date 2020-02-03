@@ -1,4 +1,4 @@
-import { TicketsCogs, PassphraseModalButton, ImportScriptIconButton, KeyBlueButton, InvisibleButton } from "buttons";
+import { TicketsCogs, PassphraseModalButton, ImportScriptIconButton, KeyBlueButton, InvisibleConfirmModalButton } from "buttons";
 import { AccountsSelect, NumTicketsInput } from "inputs";
 import { FormattedMessage as T } from "react-intl";
 import { TransitionMotionWrapper, ShowWarning, ExternalLink } from "shared";
@@ -24,7 +24,8 @@ const PurchaseTicketsForm = ({
   willEnter,
   willLeave,
   onShowStakePoolConfig,
-  dismissBackupRedeemScript
+  dismissBackupRedeemScript,
+  onDismissBackupRedeemScript
 }) => (
   <>
     <div className="purchase-ticket-area-row is-row">
@@ -71,9 +72,17 @@ const PurchaseTicketsForm = ({
               <T id="purchase.ticket.decred.docs" m="Decred docs"/>
             </ExternalLink> }}
           />}/>
-        <InvisibleButton className="stakepool-content-send" onClick={onShowStakePoolConfig}>
-          <T id="purchase.ticket.dismiss.warn" m="Dismiss Message" />
-        </InvisibleButton>
+        <InvisibleConfirmModalButton
+          modalTitle={<T id="purchase.ticket.modal.title" m="Dismiss Button"/>}
+          modalContent={<T id="purchase.ticket.modal.desc"
+            m="Are you sure you want to dismiss this message? Make sure your redeem scripts are backed up" />}
+          buttonLabel={<T id="purchase.ticket.dismiss.warn" m="Dismiss Message" />}
+          onSubmit={() => onDismissBackupRedeemScript()}
+          className="stakepool-content-send" 
+        />
+        <KeyBlueButton className="stakepool-content-send" onClick={onShowStakePoolConfig}>
+          <T id="purchase.ticket.warn.button" m="Backup Redeem Scripts" />
+        </KeyBlueButton>
       </div>
     )}
     <div className="stakepool-purchase-ticket-buttons-area">
@@ -84,11 +93,6 @@ const PurchaseTicketsForm = ({
           onSubmit={onRevokeTickets}
           buttonLabel={<T id="purchaseTickets.revokeBtn" m="Revoke" />}
         />
-      }
-      { !dismissBackupRedeemScript && 
-        <KeyBlueButton className="stakepool-content-send" onClick={onShowStakePoolConfig}>
-          <T id="purchase.ticket.warn.button" m="Backup Redeem Scripts" />
-        </KeyBlueButton>
       }
       <PassphraseModalButton
         modalTitle={<T id="tickets.purchaseConfirmation" m="Ticket Purchase Confirmation" />}

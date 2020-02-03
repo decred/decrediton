@@ -1,5 +1,5 @@
 import { shell } from "electron";
-import { KeyBlueButton, InvisibleConfirmModalButton } from "buttons";
+import { KeyBlueButton, InvisibleConfirmPoliteiaModalButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import { StakeyBounceXs, VotingProgress, PoliteiaLoading } from "indicators";
 import { showCheck } from "helpers";
@@ -95,7 +95,7 @@ export const TimeValue = ({ timestamp, tsDate }) => (
 // This changes links to never open. Debatable whether we want to
 // allow proposals to link somewhere directly from decrediton.
 const renderInternalProposalLink = ({ children, href }) => (
-  <InvisibleConfirmModalButton
+  <InvisibleConfirmPoliteiaModalButton
     modalTitle={<T id="politeia.details.openLinkModal" m="Open Link in External Browser"/>}
     modalContent={
       <T id="politeia.details.openLinkModalDesc"

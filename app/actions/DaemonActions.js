@@ -311,7 +311,7 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => {
       const selectedStakePool = firstConfiguredStakePool;
       const lastPoliteiaAccessTime = walletCfg.get("politeia_last_access_time");
       const lastPoliteiaAccessBlock = walletCfg.get("politeia_last_access_block");
-      const dismissBackupRedeemScript = walletCfg.get("dismissBackupRedeemScript");
+      const dismissBackupRedeemScript = walletCfg.get("dismiss_backup_msg_redeem_script");
 
       walletCfg.set("lastaccess", Date.now());
       dispatch({ type: WALLETREADY,
