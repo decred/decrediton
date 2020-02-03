@@ -1,9 +1,9 @@
 import InfoConfirmModal from "../InfoConfirmModal";
 import { FormattedMessage as T } from "react-intl";
 
-const Content = ({ script }) => (
+const Content = ({ script, key }) => (
   <>
-    <div className="backup-redeem-script-message">
+    <div key={key} className="backup-redeem-script-message">
       <T id="backup.redeem.script.message"
         m={`You must make a backup of the redeem script.
           If the VSP closes without notifying and you do not have access to your redeem script {warnMessage}`}
@@ -16,7 +16,7 @@ const Content = ({ script }) => (
 
 export default ({ show, onCancelModal, className, script }) => (
   <InfoConfirmModal { ...{ show, onCancelModal, className }}
-    modalTitle={"Backup Redeem Script"}
+    modalTitle={<T id="backup.redeem.script.modal.title" m="Backup Redeem Script" />}
     modalContent={Content({ script })}
   />
 );
