@@ -15,14 +15,17 @@ class StakePools extends React.Component {
       apiKey: "",
       selectedUnconfigured: this.props.unconfiguredStakePools[0],
       hasFailedAttempt: false,
-      show: true
+      show: false
     };
     if (!props.updatedStakePoolList && this.getStakepoolListingEnabled()) {
       this.props.discoverAvailableStakepools();
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
+    if (this.props.stakePool !== prevProps.stakePool) {
+      this.setState({ show: true });
+    }
     const configuredHost = this.state.selectedUnconfigured ? this.state.selectedUnconfigured.Host : "";
     const hasUnconfigured = this.props.unconfiguredStakePools.some(p => p.Host ===  configuredHost);
     if (!hasUnconfigured && this.props.unconfiguredStakePools.length) {
