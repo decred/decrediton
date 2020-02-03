@@ -1,7 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import { KeyBlueButton, SlateGrayButton, RemoveStakePoolButton }from "buttons";
 import { BackupRedeemScriptModal } from "modals";
-import { RedeemScriptArea } from "shared";
 import "style/Layout.less";
 import "style/StakePool.less";
 

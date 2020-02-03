@@ -311,6 +311,7 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => {
       const selectedStakePool = firstConfiguredStakePool;
       const lastPoliteiaAccessTime = walletCfg.get("politeia_last_access_time");
       const lastPoliteiaAccessBlock = walletCfg.get("politeia_last_access_block");
+      const dismissBackupRedeemScript = walletCfg.get("dismissBackupRedeemScript");
 
       walletCfg.set("lastaccess", Date.now());
       dispatch({ type: WALLETREADY,
@@ -318,7 +319,7 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => {
       });
       dispatch({ type: WALLET_AUTOBUYER_SETTINGS, balanceToMaintain });
       dispatch({ type: WALLET_SETTINGS, currencyDisplay, gapLimit });
-      dispatch({ type: WALLET_STAKEPOOL_SETTINGS, activeStakePoolConfig, selectedStakePool, currentStakePoolConfig });
+      dispatch({ type: WALLET_STAKEPOOL_SETTINGS, activeStakePoolConfig, selectedStakePool, currentStakePoolConfig, dismissBackupRedeemScript });
       dispatch({ type: WALLET_LOADER_SETTINGS, discoverAccountsComplete });
       selectedWallet.value.isTrezor && dispatch(enableTrezor());
       setTimeout(()=>dispatch(versionCheckAction()), 2000);

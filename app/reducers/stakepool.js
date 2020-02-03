@@ -52,7 +52,8 @@ export default function stakepool(state = {}, action) {
     return { ...state,
       activeStakePoolConfig: action.activeStakePoolConfig,
       selectedStakePool: action.selectedStakePool,
-      currentStakePoolConfig: action.currentStakePoolConfig
+      currentStakePoolConfig: action.currentStakePoolConfig,
+      dismissBackupRedeemScript: action.dismissBackupRedeemScript
     };
   case GETSTAKEPOOLSTATS_ATTEMPT:
     return { ...state,
