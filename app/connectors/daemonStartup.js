@@ -1,10 +1,11 @@
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { selectorMap } from "../fp";
-import * as sel from "../selectors";
-import * as wla from "../actions/WalletLoaderActions";
-import * as da from "../actions/DaemonActions";
-import * as ca from "../actions/ClientActions";
+import { selectorMap } from "fp";
+import * as sel from "selectors";
+import * as wla from "actions/WalletLoaderActions";
+import * as da from "actions/DaemonActions";
+import * as ca from "actions/ClientActions";
+import * as trza from "actions/TrezorActions";
 
 const mapStateToProps = selectorMap({
   isAdvancedDaemon: sel.isAdvancedDaemon,
@@ -47,7 +48,12 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onRemoveWallet: da.removeWallet,
   goToError: ca.goToError,
   onCreateWallet: da.createWallet,
-  getDcrwalletLogs: da.getDcrwalletLogs
+  getDcrwalletLogs: da.getDcrwalletLogs,
+  trezorLoadDeviceList: trza.loadDeviceList,
+  trezorEnable: trza.enableTrezor,
+  trezorDisable: trza.disableTrezor,
+  trezorAlertNoConnectedDevice: trza.alertNoConnectedDevice,
+  trezorGetWalletCreationMasterPubKey: trza.getWalletCreationMasterPubKey  
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

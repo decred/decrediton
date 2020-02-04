@@ -36,8 +36,7 @@ const WalletSelectionBodyBase = ({
   onRemoveWallet,
   selectedWallet,
   onChangeAvailableWallets,
-  onEditWallets,
-  onCloseEditWallets,
+  onToggleEditWallet,
   editWallets,
   intl,
   toggleWatchOnly,
@@ -81,11 +80,6 @@ const WalletSelectionBodyBase = ({
                 <div className={selected && !editWallets ? "display-wallet-last-access selected" : "display-wallet-last-access"}>
                   {wallet.lastAccess && <><T id="walletselection.lastAccess" m="Last accessed"/>: <FormattedRelative value={wallet.lastAccess} updateInterval={1*1000}/></>}
                 </div>
-                {editWallets &&
-                <div className={"display-wallet-cancel-changes"} onClick={onCloseEditWallets}>
-                  <T id="walletselection.canelChanges" m="Cancel Changes"/>
-                </div>
-                }
                 {!editWallets && selected &&
                 <>
                   <div className={"display-wallet-launch"} onClick={() => submitChosenWallet(selectedWallet)}>
@@ -99,10 +93,10 @@ const WalletSelectionBodyBase = ({
           {availableWallets.length < maxWalletCount && <CreateRestoreButtons {...{ showCreateWalletForm }}/>}
           {editWallets ?
             <Tooltip text={<T id="walletselection.closeEditWallets" m="Close"/>}>
-              <div className="edit-wallets-button close" onClick={onCloseEditWallets}/>
+              <div className="edit-wallets-button close" onClick={onToggleEditWallet}/>
             </Tooltip> :
             <Tooltip text={<T id="walletselection.editWallets" m="Edit Wallets"/>}>
-              <div className="edit-wallets-button" onClick={onEditWallets}/>
+              <div className="edit-wallets-button" onClick={onToggleEditWallet}/>
             </Tooltip>
           }
         </div>

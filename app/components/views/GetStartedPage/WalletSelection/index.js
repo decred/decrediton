@@ -1,5 +1,5 @@
 import { WalletSelectionFormBody } from "./Form";
-import { walletStartup } from "connectors";
+import { substruct } from "fp";
 
 @autobind
 class WalletSelectionBody extends React.Component {
@@ -23,55 +23,47 @@ class WalletSelectionBody extends React.Component {
       maxWalletCount, isSPV, availableWallets, getDaemonSynced, submitChosenWallet
     } = this.props;
     const {
-      onChangeAvailableWallets, startWallet, createWallet, onChangeCreateWalletName,
-      showCreateWalletForm, hideCreateWalletForm, onEditWallets, onCloseEditWallets,
-      toggleWatchOnly, onChangeCreateWalletMasterPubKey, toggleTrezor
-    } = this;
-    const {
       newWalletName, isCreateNewWallet, isCreatingOrRestoring, editWallets, hasFailedAttemptName,
       hasFailedAttemptPubKey, isWatchingOnly, walletMasterPubKey, masterPubKeyError, walletNameError
     } = this.state;
     return (
       <WalletSelectionFormBody
         {...{
-          onChangeAvailableWallets,
-          onChangeCreateWalletName,
           selectedWallet: availableWallets[0],
           submitChosenWallet,
           availableWallets,
-          startWallet,
-          createWallet,
           isCreateNewWallet,
           isCreatingOrRestoring,
-          showCreateWalletForm,
-          hideCreateWalletForm,
           newWalletName,
           hasFailedAttemptName,
           hasFailedAttemptPubKey,
-          onEditWallets,
-          onCloseEditWallets,
           editWallets,
           getDaemonSynced,
-          toggleWatchOnly,
           isWatchingOnly,
-          onChangeCreateWalletMasterPubKey,
           walletMasterPubKey,
           masterPubKeyError,
           walletNameError,
           maxWalletCount,
           isSPV,
-          toggleTrezor,
           ...this.props,
-          ...this.state
+          ...this.state,
+          ...substruct({
+            onChangeAvailableWallets: null,
+            createWallet: null,
+            onChangeCreateWalletName: null,
+            showCreateWalletForm: null,
+            hideCreateWalletForm: null,
+            toggleWatchOnly: null,
+            onChangeCreateWalletMasterPubKey: null,
+            toggleTrezor: null,
+            onToggleEditWallet: null
+          }, this)
         }}
       />
     );
   }
-  onEditWallets() {
-    this.setState({ editWallets: true });
-  }
-  onCloseEditWallets() {
-    this.setState({ editWallets: false });
+  onToggleEditWallet() {
+    this.setState({ editWallets: !this.state.editWallets })
   }
   showCreateWalletForm(isCreateNewWallet) {
     this.setState({ isCreatingOrRestoring: true, isCreateNewWallet });
@@ -169,12 +161,6 @@ class WalletSelectionBody extends React.Component {
     }
     this.setState({ walletMasterPubKey });
   }
-  startWallet() {
-    this.props.onStartWallet(this.props.selectedWallet);
-  }
-  resetState() {
-    this.setState(this.getInitialState());
-  }
 }
 
-export default walletStartup(WalletSelectionBody);
+export default WalletSelectionBody;
