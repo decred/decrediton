@@ -23,8 +23,11 @@ class StakePools extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.stakePool !== prevProps.stakePool) {
-      this.setState({ show: true });
+    // If we added a new VSP we show the modal warning to backup the redeem script.
+    if (this.props.configuredStakePools.length > prevProps.configuredStakePools.length) {
+      if (this.props.stakePool !== prevProps.stakePool) {
+        this.setState({ show: true, isAdding: false });
+      }
     }
     const configuredHost = this.state.selectedUnconfigured ? this.state.selectedUnconfigured.Host : "";
     const hasUnconfigured = this.props.unconfiguredStakePools.some(p => p.Host ===  configuredHost);

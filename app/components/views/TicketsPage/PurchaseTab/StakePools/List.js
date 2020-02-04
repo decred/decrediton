@@ -22,8 +22,8 @@ const StakePoolsList = ({
         {configuredStakePools.map(({
           value: { Host, TicketAddress, PoolFees, Script } }
         ) => (
-          <>
-            <div key={Host} className="stakepool-content-nest-stake-pool">
+          <div key={Host}>
+            <div className="stakepool-content-nest-stake-pool">
               <div className="stakepool-content-nest-settings">
                 <div className="stakepool-content-nest-prefix-settings"><T id="stakepools.list.form.field.url" m="URL:" /></div>
                 <div className="stakepool-content-nest-content-settings">{Host}</div>
@@ -54,10 +54,10 @@ const StakePoolsList = ({
                 </div>
               </div>
             </div>
-            <BackupRedeemScriptModal className="backup-redeem-script-modal"
+            <BackupRedeemScriptModal key={"modal"+Host} className="backup-redeem-script-modal"
               show={showModal} script={Script} onCancelModal={toggleBackupModal}
             />
-          </>
+          </div>
         ))}
       </div>
     </div>
