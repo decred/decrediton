@@ -6,7 +6,7 @@ const propTypes = {
   modalTitle: PropTypes.object.isRequired,
   show: PropTypes.bool.isRequired,
   modalContent: PropTypes.object.isRequired,
-  onCancelModal: PropTypes.func.isRequired,
+  onCancelModal: PropTypes.func.isRequired
 };
 
 const ConfirmModal = ({ modalTitle, modalContent, show, onCancelModal, className }) => (

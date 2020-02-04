@@ -170,8 +170,8 @@ export const dismissBackupRedeemScript = () => (dispatch, getState) => {
   const { daemon: { walletName } } = getState();
   const walletCfg = getWalletCfg(sel.isTestNet(getState()), walletName);
   walletCfg.set("dismiss_backup_msg_redeem_scrip", true);
-  dispatch({ type: DISMISS_BACKUP_MSG_REDEEM_SCRIPT })
-}
+  dispatch({ type: DISMISS_BACKUP_MSG_REDEEM_SCRIPT });
+};
 
 export const setStakePoolVoteChoices = (stakePool, voteChoices) => (dispatch) => {
   wallet.allowStakePoolHost(stakePool.Host);

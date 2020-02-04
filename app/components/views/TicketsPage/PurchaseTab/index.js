@@ -51,8 +51,7 @@ class Purchase extends React.Component {
                 onShowStakePoolConfig: null,
                 onHideStakePoolConfig: null,
                 onImportScript: null,
-                onRevokeTickets: null,
-                onShowStakePoolConfig: null
+                onRevokeTickets: null
               }, this)
             }}
           />
