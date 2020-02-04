@@ -5,8 +5,6 @@ import {
   OPENWALLET_INPUT, OPENWALLET_FAILED_INPUT, OPENWALLET_ATTEMPT, OPENWALLET_FAILED, OPENWALLET_SUCCESS,
   CLOSEWALLET_ATTEMPT, CLOSEWALLET_FAILED, CLOSEWALLET_SUCCESS,
   STARTRPC_ATTEMPT, STARTRPC_FAILED, STARTRPC_SUCCESS, STARTRPC_RETRY,
-  CREATEWALLET_EXISTINGSEED_INPUT, CREATEWALLET_NEWSEED_INPUT, CREATEWALLET_NEWSEED_CONFIRM_INPUT, CREATEWALLET_NEWSEED_BACK_INPUT,
-  CREATEWALLET_GOBACK_EXISTING_OR_NEW, CREATEWALLET_GOBACK,
   UPDATEDISCOVERACCOUNTS, CREATEWATCHONLYWALLET_ATTEMPT,
   GETWALLETSEEDSVC_ATTEMPT, GETWALLETSEEDSVC_SUCCESS,
   RESCANPOINT_ATTEMPT, RESCANPOINT_FAILED, RESCANPOINT_SUCCESS,
@@ -16,7 +14,7 @@ import {
   SYNC_FETCHED_MISSING_CFILTERS_PROGRESS, SYNC_FETCHED_MISSING_CFILTERS_FINISHED,
   SYNC_DISCOVER_ADDRESSES_STARTED, SYNC_DISCOVER_ADDRESSES_FINISHED,
   SYNC_RESCAN_STARTED, SYNC_RESCAN_PROGRESS, SYNC_RESCAN_FINISHED, SYNC_CANCEL,
-  GENERATESEED_ATTEMPT
+  GENERATESEED_ATTEMPT, WALLET_SELECTED
 } from "actions/WalletLoaderActions";
 import {
   WALLETCREATED, CLOSEDAEMON_SUCCESS
@@ -68,52 +66,17 @@ export default function walletLoader(state = {}, action) {
       createWalletExisting: action.createNewWallet,
       isWatchingOnly: action.isWatchingOnly
     };
+  case WALLET_SELECTED:
+    return { ...state,
+      selectedWallet: action.selectedWallet
+    };
   case GENERATESEED_ATTEMPT:
     return { ...state,
       confirmNewSeed: false
     };
-  case CREATEWALLET_GOBACK:
-    return { ...state,
-      stepIndex: 1,
-      existingOrNew: false,
-      createNewWallet: false
-    };
   case CREATEWATCHONLYWALLET_ATTEMPT:
     return { ...state,
       stepIndex: 1
-    };
-  case CREATEWALLET_GOBACK_EXISTING_OR_NEW:
-    return { ...state,
-      confirmNewSeed: false,
-      existingOrNew: true,
-      createNewWallet: false
-    };
-  case CREATEWALLET_NEWSEED_CONFIRM_INPUT:
-    return { ...state,
-      createWalletInputRequest: true,
-      createWalletExisting: false,
-      confirmNewSeed: true
-    };
-  case  CREATEWALLET_NEWSEED_BACK_INPUT:
-    return { ...state,
-      createWalletInputRequest: true,
-      confirmNewSeed: false
-    };
-  case CREATEWALLET_EXISTINGSEED_INPUT:
-    return { ...state,
-      createWalletInputRequest: true,
-      createWalletExisting: true,
-      existingOrNew: false,
-      createNewWallet: true,
-      stepIndex: 2
-    };
-  case CREATEWALLET_NEWSEED_INPUT:
-    return { ...state,
-      createWalletInputRequest: true,
-      createWalletExisting: false,
-      existingOrNew: false,
-      createNewWallet: true,
-      stepIndex: 2
     };
   case CREATEWALLET_ATTEMPT:
     return { ...state,
@@ -192,7 +155,8 @@ export default function walletLoader(state = {}, action) {
       syncInput: false,
       syncAttemptRequest: false,
       syncError: null,
-      synced: false
+      synced: false,
+      syncLastFetchedHeaderTime: null
     };
   case CLOSEDAEMON_SUCCESS:
     return { ...state,

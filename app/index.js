@@ -15,6 +15,7 @@ import pkg from "./package.json";
 import { log } from "./wallet";
 import { ipcRenderer } from "electron";
 import { DCR, DAEMON_ADVANCED, THEME, LOCALE, NETWORK } from "constants";
+import { getSelectedWallet } from "./main_dev/launch";
 
 const globalCfg = getGlobalCfg();
 const locale = globalCfg.get(LOCALE);
@@ -232,6 +233,8 @@ var initialState = {
     stepIndex: 0,
     maxWalletCount: globalCfg.get("max_wallet_count"),
     isWatchingOnly: false,
+    // getSelectedWallet returns null if no wallet is selected.
+    selectedWallet: getSelectedWallet(),
 
     synced: false,
     syncFetchHeadersComplete: false,

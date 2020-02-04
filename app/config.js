@@ -171,21 +171,24 @@ export function readDcrdConfig(testnet, appdata) {
     if (appdata) {
       newCfg.appdata = appdata;
       newCfg.rpc_cert = `${appdata}/rpc.cert`;
-      newCfg.configFile = appdata;
+      if (fs.existsSync(dcrdCfg(appdata))) {
+        newCfg.configFile = appdata;
+      } else {
+        // if dcrd.conf from appdata does not exist, we use dcrd.conf from the decrediton dir.
+        newCfg.configFile = getAppDataDirectory();
+      }
     } else {
       newCfg.rpc_cert = `${getDcrdPath()}/rpc.cert`;
       newCfg.appdata = getDcrdPath();
-      // if appdata is not defined, we use dcrd.conf file from the decrediton dir
       newCfg.configFile = getAppDataDirectory();
     }
-    const configFile = newCfg.configFile;
 
-    if (fs.existsSync(dcrdCfg(configFile))) {
-      readCfg = ini.parse(Buffer.from(fs.readFileSync(dcrdCfg(configFile))).toString());
-    } else {
-      const newCfgPath = createTempDcrdConf(testnet);
-      readCfg = ini.parse(Buffer.from(fs.readFileSync(dcrdCfg(newCfgPath))).toString());
+    // if dcrd.conf file is from decrediton dir and does not exist we create a
+    // new one.
+    if (newCfg.configFile === getAppDataDirectory() && !fs.existsSync(dcrdCfg(newCfg.configFile)) ) {
+      createTempDcrdConf(testnet);
     }
+    readCfg = ini.parse(Buffer.from(fs.readFileSync(dcrdCfg(newCfg.configFile))).toString());
 
     let userFound, passFound = false;
     // Look through all top level config entries

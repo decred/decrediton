@@ -5,7 +5,11 @@ import GetStartedPage from "./Page";
 import { AdvancedStartupBody } from "./AdvancedStartup";
 import { injectIntl } from "react-intl";
 import WalletSelection from "./WalletSelection";
+import Settings from "./Settings";
+import Logs from "./Logs";
 import { FormattedMessage as T } from "react-intl";
+import { createElement as h } from "react";
+import GetStartedMachinePage from "./GetStartedMachinePage";
 
 @autobind
 class GetStarted extends React.Component {
@@ -14,19 +18,17 @@ class GetStarted extends React.Component {
     super(props);
     const {
       onConnectDaemon, checkNetworkMatch, syncDaemon, onStartWallet, onRetryStartRPC, onGetAvailableWallets,
-      onStartDaemon, setSelectedWallet, goToError
+      onStartDaemon, setSelectedWallet, goToError, goToSettings, backToCredentials
     } = this.props;
     const { sendEvent, preStartDaemon } = this;
     this.machine = getStartedMachine({
       onConnectDaemon, checkNetworkMatch, syncDaemon, onStartWallet, onRetryStartRPC, sendEvent, onGetAvailableWallets,
-      onStartDaemon, setSelectedWallet, preStartDaemon, goToError
+      onStartDaemon, setSelectedWallet, preStartDaemon, goToError, goToSettings, backToCredentials
     });
-    this.service = interpret(this.machine).onTransition(current => {
-      this.setState({ current });
-    });
+    this.service = interpret(this.machine).onTransition(current => this.setState({ current }, this.getStateComponent));
     this.state = {
-      current: getStartedMachine().initialState,
-      StateComponent: null,
+      current: this.machine.initialState,
+      PageComponent: null,
       text: <T id="getStarted.header.discoveringAddresses.meta" m="Discovering addresses" />,
       animationType: null
     };
@@ -46,14 +48,13 @@ class GetStarted extends React.Component {
 
   componentDidMount() {
     this.service.start();
-    this.getStateComponent();
   }
 
   componentWillUnmount() {
     this.service.stop();
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     // const blockChainLoading = "blockchain-syncing";
     const daemonWaiting = "daemon-waiting";
     const discoveringAddresses = "discovering-addresses";
@@ -65,11 +66,7 @@ class GetStarted extends React.Component {
     //     text = <T id="getStarted.header.startrpc.meta" m="Establishing RPC connection" />;
     //     animationType = establishingRpc;
 
-    const { current } = prevState;
     const { syncFetchMissingCfiltersAttempt, syncFetchHeadersAttempt, syncRescanAttempt, syncDiscoverAddressesAttempt } = this.props;
-    if (current && current.value !== this.state.current.value) {
-      this.getStateComponent();
-    }
     if (prevProps.syncFetchMissingCfiltersAttempt !== syncFetchMissingCfiltersAttempt && syncFetchMissingCfiltersAttempt) {
       this.setState({ animationType: daemonWaiting });
       this.setState({ text: <T id="getStarted.header.fetchingMissing.meta" m="Fetching missing committed filters" /> });
@@ -88,38 +85,55 @@ class GetStarted extends React.Component {
 
   getStateComponent() {
     const { current } = this.state;
-    let component, text;
+    const { onSendBack } = this;
+    let component, text, PageComponent;
 
-    switch(current.value) {
-    case "startAdvancedDaemon":
-      component = AdvancedStartupBody;
-      text = <T id="loaderBar.WaitingDaemon" m="Waiting for daemon connection..." />;
-      break;
-    case "connectingDaemon":
-      text = <T id="loaderBar.WaitingConnection" m="connecting to daemon..." /> ;
-      break;
-    case "checkingNetworkMatch":
-      text = <T id="loaderBar.checkingNetwork" m="Checking if network matches..." />;
-      break;
-    case "startingDaemon":
-      text = <T id="loaderBar.StartingDaemon" m="Starting Daemon..." />;
-      break;
-    case "syncingDaemon":
-      text = <T id="loaderBar.syncingDaemon" m="syncing Daemon..." />;
-      break;
-    case "choosingWallet":
-      text = <T id="loaderBar.choosingWallet" m="Choose a wallet to open" />;
-      component = WalletSelection;
-      break;
-    case "startingWallet":
-      text = <T id="loaderBar.startingWallet" m="Starting wallet..." />;
-      break;
-    case "syncingRPC":
-      text = <T id="loaderBar.syncingRPC" m="Syncing RPC connection..." />;
-      break;
+    const key = Object.keys(current.value)[0];
+    if (key === "startMachine") {
+      switch(current.value[key]) {
+      case "startAdvancedDaemon":
+        component = AdvancedStartupBody;
+        text = <T id="loaderBar.WaitingDaemon" m="Waiting for daemon connection..." />;
+        break;
+      case "connectingDaemon":
+        text = <T id="loaderBar.WaitingConnection" m="connecting to daemon..." /> ;
+        break;
+      case "checkingNetworkMatch":
+        text = <T id="loaderBar.checkingNetwork" m="Checking if network matches..." />;
+        break;
+      case "startingDaemon":
+        text = <T id="loaderBar.StartingDaemon" m="Starting Daemon..." />;
+        break;
+      case "syncingDaemon":
+        text = <T id="loaderBar.syncingDaemon" m="syncing Daemon..." />;
+        break;
+      case "choosingWallet":
+        text = <T id="loaderBar.choosingWallet" m="Choose a wallet to open" />;
+        component = WalletSelection;
+        break;
+      case "startingWallet":
+        text = <T id="loaderBar.startingWallet" m="Starting wallet..." />;
+        break;
+      case "syncingRPC":
+        text = <T id="loaderBar.syncingRPC" m="Syncing RPC connection..." />;
+        break;
+      }
+      const { service, submitChosenWallet, submitRemoteCredentials, submitAppdata, onShowSettings } = this;
+      const { machine } = service;
+      const error = this.getError();
+      PageComponent = h(GetStartedMachinePage, {
+        ...this.state, ...this.props, submitRemoteCredentials, submitAppdata, onShowSettings,
+        submitChosenWallet, service, machine, error, text, StateComponent: component
+      });
+    }
+    if (key === "settings") {
+      PageComponent = h(Settings, { onSendBack });
+    }
+    if (key === "logs") {
+      PageComponent = h(Logs, { onSendBack });
     }
 
-    return this.setState({ StateComponent: component, text });
+    return this.setState({ PageComponent, text });
   }
 
   sendEvent(data) {
@@ -140,6 +154,18 @@ class GetStarted extends React.Component {
     return this.service.send({ type: "SUBMIT_APPDATA", appdata });
   }
 
+  onShowSettings() {
+    return this.service.send({ type: "SHOW_SETTINGS" });
+  }
+
+  onShowLogs() {
+    return this.service.send({ type: "SHOW_LOGS" });
+  }
+
+  onSendBack() {
+    return this.service.send({ type: "BACK" });
+  }
+
   getError() {
     const { error } = this.service.machine.context;
     if (!error) return;
@@ -150,17 +176,11 @@ class GetStarted extends React.Component {
   }
 
   render() {
-    const { StateComponent, text } = this.state;
-    const { service, submitChosenWallet, submitRemoteCredentials, submitAppdata } = this;
-    const { machine } = service;
-    const error = this.getError();
+    const { PageComponent } = this.state;
+    const { onShowLogs, onShowSettings } = this;
+    const { updateAvailable, appVersion } = this.props;
 
-    return (
-      <GetStartedPage
-        {...{ ...this.state, ...this.props, submitRemoteCredentials, submitAppdata,
-          submitChosenWallet, service, machine, error, text }}
-        StateComponent={StateComponent} />
-    );
+    return <GetStartedPage PageComponent={PageComponent} {...{ onShowLogs, onShowSettings, updateAvailable, appVersion }} />;
   }
 }
 

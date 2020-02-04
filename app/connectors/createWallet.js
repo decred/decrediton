@@ -23,8 +23,6 @@ const mapStateToProps = selectorMap({
 const mapDispatchToProps = dispatch => bindActionCreators({
   backToCredentials: da.backToCredentials,
   cancelCreateWallet: wla.cancelCreateWallet,
-  createWalletConfirmNewSeed: wla.createWalletConfirmNewSeed,
-  createWalletGoBackNewSeed: wla.createWalletGoBackNewSeed,
   createWalletRequest: wla.createWalletRequest,
   copySeedToClipboard: ca.copySeedToClipboard,
   createWatchOnlyWalletRequest: wla.createWatchOnlyWalletRequest,
