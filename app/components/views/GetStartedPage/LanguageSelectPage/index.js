@@ -37,7 +37,6 @@ class LanguageSelect extends React.Component{
   onSelectLang() {
     this.props.onSelectLanguage(this.state.selectedLang);
   }
-
 }
 
 export default walletStartup(LanguageSelect);

@@ -1,12 +1,12 @@
-import { AnimatedLinearProgressFull } from "indicators";
-import { SlateGrayButton, InvisibleButton } from "buttons";
+import { InvisibleButton } from "buttons";
+import { LogsLinkMsg, SettingsLinkMsg, UpdateAvailableLink, AboutModalButton } from "./messages";
+import { LoaderBarBottom } from "indicators";
+
 import "style/GetStarted.less";
-import { LogsLinkMsg, SettingsLinkMsg, LearnBasicsMsg, UpdateAvailableLink,
-  WhatsNewLink, LoaderTitleMsg, AboutModalButton } from "./messages";
+
 const DaemonLoadingBody = ({
-  updateAvailable, appVersion, onShowSettings, onShowLogs, StateComponent, getDaemonSynced,
-  error, text, getCurrentBlockCount, animationType, getNeededBlocks,
-  getDaemonStarted, getEstimatedTimeLeft, ...props
+  PageComponent, updateAvailable, appVersion, onShowLogs, onShowSettings,
+  getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft
 }) => (
   <div className="page-body getstarted">
     <div className="getstarted loader">
@@ -22,28 +22,10 @@ const DaemonLoadingBody = ({
           </InvisibleButton>
         </>
       </div>
-      <>
-        <div className="content-title">
-          <LoaderTitleMsg />
-        </div>
-        <div className="loader-buttons">
-          <SlateGrayButton className="tutorial-button" >
-            <LearnBasicsMsg />
-          </SlateGrayButton>
-          <WhatsNewLink />
-        </div>
-        <div className="loader-bar">
-          <AnimatedLinearProgressFull {...{ getDaemonStarted, getDaemonSynced, text, getCurrentBlockCount, animationType, min: 0,
-            max: getNeededBlocks, getEstimatedTimeLeft, disabled: false }} />
-        </div>
-        { error &&
-          <div className="error launch-error">
-            {error}
-          </div>
-        }
-        { StateComponent && <StateComponent {...{ ...props, getDaemonSynced }} /> }
-      </>
+      { PageComponent && (React.isValidElement(PageComponent) ? PageComponent : <PageComponent />)}
+      <LoaderBarBottom  {...{ getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft }}  />
     </div>
   </div>
 );
+
 export default DaemonLoadingBody;

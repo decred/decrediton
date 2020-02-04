@@ -23,7 +23,6 @@ export const FINISH_SPVCHOICE = "FINISH_SPVCHOICE";
 export const DAEMONSTART_ATTEMPT = "DAEMONSTART_ATTEMPT";
 export const DAEMONSTART_SUCCESS = "DAEMONSTART_SUCCESS";
 export const DAEMONSTART_FAILURE = "DAEMONSTART_FAILURE";
-export const DAEMONSTARTED_ERROR = "DAEMONSTARTED_ERROR";
 export const DAEMONSTOPPED = "DAEMONSTOPPED";
 export const DAEMONSYNCING_START = "DAEMONSYNCING_START";
 export const DAEMONSYNCING_PROGRESS = "DAEMONSYNCING_PROGRESS";
@@ -35,7 +34,6 @@ export const AVAILABLE_WALLETS = "AVAILABLE_WALLETS";
 export const SHUTDOWN_REQUESTED = "SHUTDOWN_REQUESTED";
 export const REGISTERFORERRORS = "REGISTERFORERRORS";
 export const DAEMON_ERROR = "DAEMON_ERROR";
-export const FATAL_WALLET_ERROR = "FATAL_WALLET_ERROR";
 export const DAEMON_WARNING = "DAEMON_WARNING";
 export const WALLET_ERROR = "WALLET_ERROR";
 export const WALLET_WARNING = "WALLET_WARNING";
@@ -57,7 +55,6 @@ export const CONNECTDAEMON_SUCCESS = "CONNECTDAEMON_SUCCESS";
 export const CONNECTDAEMON_FAILURE = "CONNECTDAEMON_FAILURE";
 export const SYNC_DAEMON_ATTEMPT = "SYNC_DAEMON_ATTEMPT";
 export const SYNC_DAEMON_FAILED = "SYNC_DAEMON_FAILED";
-export const BACK_TO_CREDENTIALS = "BACK_TO_CREDENTIALS";
 export const CREATE_WALLET_ERROR = "CREATE_WALLET_ERROR";
 export const CREATE_WALLET_ATTEMPT = "CREATE_WALLET_ATTEMPT";
 
@@ -363,13 +360,8 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => new Promi
   };
 
   start()
-    .then(discoverAccountsComplete => {
-      resolve (discoverAccountsComplete);
-    })
-    .catch(err => {
-      dispatch({ type: DAEMONSTARTED_ERROR });
-      reject(err);
-    });
+    .then(discoverAccountsComplete => resolve (discoverAccountsComplete))
+    .catch(err => reject(err));
 });
 
 const prepStartDaemon = () => (dispatch, getState) => {
@@ -427,7 +419,7 @@ export const connectDaemon = (rpcCreds) => (dispatch, getState) => new Promise((
         setTimeout(tryConnect, 1000);
       } else if (daemonWarning) {
         // If we have a warning we wait 3 seconds instead of 1 to retry
-        // connecting.
+        // connecting, as it may be reindexing the blockchain.
         setTimeout(tryConnect, 3000);
       } else {
         dispatch({ type: CONNECTDAEMON_FAILURE, error });
@@ -514,16 +506,8 @@ export const getDcrdLogs = () => {
       });
 };
 
-export const getDcrwalletLogs = () => {
-  wallet.getDcrwalletLogs()
-    .then(logs => {
-      return(logs);
-    }).catch(
-      err=>{
-        console.log(err);
-        return (null, err);
-      });
-};
+export const getDcrwalletLogs = () => () => new Promise((resolve, reject) => wallet.getDcrwalletLastLogLine()
+  .then( logs => resolve(logs) ).catch( err => reject(err)));
 
 export const getDecreditonLogs = () => {
   wallet.getDecreditonLogs()
