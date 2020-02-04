@@ -1,9 +1,12 @@
 import { Machine } from "xstate";
 import { CreateWalletMachine } from "./CreateWallet/CreateWalletStateMachine";
 
-export const getStartedMachine = (a) => Machine({
+export const getStartedMachine = ({
+  preStartDaemon, onStartDaemon, sendEvent, goToError, onConnectDaemon, checkNetworkMatch, syncDaemon,
+  onGetAvailableWallets, setSelectedWallet, onStartWallet, onRetryStartRPC
+}) => Machine({
   id: "getStarted",
-  initial: "preStart",
+  initial: "startMachine",
   context: {
     credentials: {},
     selectedWallet: null,
@@ -11,99 +14,135 @@ export const getStartedMachine = (a) => Machine({
     error: null
   },
   states: {
-    preStart: {
-      onEntry: "isAtPreStart",
+    // startMachine represents the state with daemon and wallet starting operations.
+    startMachine: {
+      initial: "preStart",
       on: {
-        START_SPV: {
-          target: "startSpv",
-          cond: (c, event) => !!event.isSPV
-        },
-        START_ADVANCED_DAEMON: {
-          target: "startAdvancedDaemon",
-          cond: (c, event) => !!event.isAdvancedDaemon
-        },
-        START_REGULAR_DAEMON: {
-          target: "startingDaemon",
-          cond: (c, event) => !event.isAdvancedDaemon && !event.isSPV
-        },
-        CHOOSE_WALLET: "choosingWallet"
-      }
-    },
-    startSpv: {
-      onEntry: "isAtStartSPV"
-    },
-    startingDaemon: {
-      onEntry: "isAtStartingDaemon",
-      on: {
-        START_ADVANCED_DAEMON: "startAdvancedDaemon",
-        CONNECT_DAEMON: "connectingDaemon",
-        ERROR_STARTING_DAEMON: "errorStartingDaemon"
-      }
-    },
-    errorStartingDaemon: {
-      onEntry: "isAtErrorStartingDaemon",
-      on: {
-        START_ADVANCED_DAEMON: "startAdvancedDaemon"
-      }
-    },
-    startedDaemon: {
-      onEntry: "isStartedDaemon",
-      on: {
-        CONNECT_DAEMON: "connectingDaemon"
-      }
-    },
-    startAdvancedDaemon: {
-      onEntry: "isAtStartAdvancedDaemon",
-      on: {
-        SUBMIT_REMOTE: "connectingDaemon",
-        SUBMIT_APPDATA: "startingDaemon"
-      }
-    },
-    connectingDaemon: {
-      onEntry: "isAtConnectingDaemon",
-      on: {
-        SYNC_DAEMON: "syncingDaemon",
-        ERROR_CONNECTING_DAEMON: "startAdvancedDaemon"
-      }
-    },
-    checkingNetworkMatch: {
-      onEntry: "isAtCheckNetworkMatch",
-      on: {
-        CHOOSE_WALLET: "choosingWallet"
-      }
-    },
-    syncingDaemon: {
-      onEntry: "isAtSyncingDaemon",
-      on: {
-        CHECK_NETWORK_MATCH: "checkingNetworkMatch"
-      }
-    },
-    creatingWallet: {
-      onEntry: "isAtCreatingWallet",
-      on: {
-        WALLET_CREATED: "syncingRPC"
+        SHOW_SETTINGS: "settings",
+        SHOW_LOGS: "logs"
       },
-      ...CreateWalletMachine
+      states: {
+        preStart: {
+          onEntry: "isAtPreStart",
+          on: {
+            START_SPV: {
+              target: "startSpv",
+              cond: (c, event) => !!event.isSPV
+            },
+            START_ADVANCED_DAEMON: {
+              target: "startAdvancedDaemon",
+              cond: (c, event) => !!event.isAdvancedDaemon
+            },
+            START_REGULAR_DAEMON: {
+              target: "startingDaemon",
+              cond: (c, event) => !event.isAdvancedDaemon && !event.isSPV
+            },
+            CHOOSE_WALLET: "choosingWallet"
+          }
+        },
+        startSpv: {
+          onEntry: "isAtStartSPV"
+        },
+        startingDaemon: {
+          onEntry: "isAtStartingDaemon",
+          on: {
+            START_ADVANCED_DAEMON: "startAdvancedDaemon",
+            CONNECT_DAEMON: "connectingDaemon",
+            ERROR_STARTING_DAEMON: "errorStartingDaemon"
+          }
+        },
+        errorStartingDaemon: {
+          onEntry: "isAtErrorStartingDaemon",
+          on: {
+            START_ADVANCED_DAEMON: "startAdvancedDaemon"
+          }
+        },
+        startedDaemon: {
+          onEntry: "isStartedDaemon",
+          on: {
+            CONNECT_DAEMON: "connectingDaemon"
+          }
+        },
+        startAdvancedDaemon: {
+          onEntry: "isAtStartAdvancedDaemon",
+          on: {
+            SUBMIT_REMOTE: "connectingDaemon",
+            SUBMIT_APPDATA: "startingDaemon"
+          }
+        },
+        connectingDaemon: {
+          onEntry: "isAtConnectingDaemon",
+          on: {
+            SYNC_DAEMON: "syncingDaemon",
+            ERROR_CONNECTING_DAEMON: "startAdvancedDaemon"
+          }
+        },
+        checkingNetworkMatch: {
+          onEntry: "isAtCheckNetworkMatch",
+          on: {
+            CHOOSE_WALLET: "choosingWallet"
+          }
+        },
+        syncingDaemon: {
+          onEntry: "isAtSyncingDaemon",
+          on: {
+            CHECK_NETWORK_MATCH: "checkingNetworkMatch"
+          }
+        },
+        creatingWallet: {
+          onEntry: "isAtCreatingWallet",
+          on: {
+            WALLET_CREATED: "syncingRPC"
+          },
+          ...CreateWalletMachine
+        },
+        choosingWallet: {
+          onEntry: "isAtChoosingWallet",
+          onExit: "isAtLeavingChoosingWallet",
+          on: {
+            SUBMIT_CHOOSE_WALLET: "startingWallet",
+            CREATE_CHOSEN_WALLET: "creatingWallet",
+            CREATE_WALLET: "creatingWallet"
+          }
+        },
+        startingWallet: {
+          onEntry: "isAtStartWallet",
+          on: {
+            SYNC_RPC: "syncingRPC"
+          }
+        },
+        syncingRPC: {
+          onEntry: "isSyncingRPC",
+          on: {
+            // CHOOSE_WALLET: "choosingWallet",
+          }
+        },
+        // history state so we can go back in the specific state when going to other view, like settings or log
+        // source: https://xstate.js.org/docs/guides/history.html#history
+        hist: {
+          type: "history"
+        }
+      }
+    // end of startMachine states
     },
-    choosingWallet: {
-      onEntry: "isAtChoosingWallet",
-      onExit: "isAtLeavingChoosingWallet",
+    settings: {
+      initial: "settings",
+      states: {
+        settings: {}
+      },
       on: {
-        SUBMIT_CHOOSE_WALLET: "startingWallet",
-        CREATE_CHOSEN_WALLET: "creatingWallet",
-        CREATE_WALLET: "creatingWallet"
+        BACK: "startMachine.hist",
+        SHOW_LOGS: "logs"
       }
     },
-    startingWallet: {
-      onEntry: "isAtStartWallet",
+    logs: {
+      initial: "logs",
+      states: {
+        logs: {}
+      },
       on: {
-        SYNC_RPC: "syncingRPC"
-      }
-    },
-    syncingRPC: {
-      onEntry: "isSyncingRPC",
-      on: {
-        // CHOOSE_WALLET: "choosingWallet",
+        BACK: "startMachine.hist",
+        SHOW_SETTINGS: "settings"
       }
     }
   }
@@ -112,7 +151,7 @@ export const getStartedMachine = (a) => Machine({
   actions: {
     isAtPreStart: () => {
       console.log("is at pre start");
-      return a.preStartDaemon();
+      return preStartDaemon();
     },
     isAtStartAdvancedDaemon: (context, event) => {
       console.log("is at start advanced daemon");
@@ -125,24 +164,24 @@ export const getStartedMachine = (a) => Machine({
       console.log("is at Starting Daemonn");
       const { appdata } = event;
       context.appdata = appdata;
-      return a.onStartDaemon({ appdata })
+      return onStartDaemon({ appdata })
         .then(started => {
           const { credentials, appdata } = started;
           context.credentials = credentials;
           context.appdata = appdata;
-          a.sendEvent({ type: "CONNECT_DAEMON", payload: started });
+          sendEvent({ type: "CONNECT_DAEMON", payload: started });
         })
         .catch(
-          error => a.sendEvent({ type: "ERROR_STARTING_DAEMON", payload: { error } })
+          error => sendEvent({ type: "ERROR_STARTING_DAEMON", payload: { error } })
         );
     },
     isAtErrorStartingDaemon: (context) => {
       console.log("is at error starting daemon");
       const { appdata } = context;
       if (appdata) {
-        a.sendEvent({ type: "START_ADVANCED_DAEMON" });
+        sendEvent({ type: "START_ADVANCED_DAEMON" });
       }
-      return a.goToError();
+      return goToError();
     },
     isStartedDaemon: () => {
       console.log("is at started daemon");
@@ -151,35 +190,35 @@ export const getStartedMachine = (a) => Machine({
       console.log(" is at connect daemon ");
       const { remoteCredentials } = event;
       remoteCredentials && (context.credentials = remoteCredentials);
-      return a.onConnectDaemon(remoteCredentials)
+      return onConnectDaemon(remoteCredentials)
         .then(connected => {
-          a.sendEvent({ type: "SYNC_DAEMON", payload: connected });
+          sendEvent({ type: "SYNC_DAEMON", payload: connected });
         })
         .catch(error =>
-          a.sendEvent({ type: "ERROR_CONNECTING_DAEMON", payload: { error } })
+          sendEvent({ type: "ERROR_CONNECTING_DAEMON", payload: { error } })
         );
     },
     isAtCheckNetworkMatch: () => {
       console.log(" is at check network ");
-      return a.checkNetworkMatch()
-        .then( checked => a.sendEvent({ type: "CHOOSE_WALLET", payload: { checked } }))
+      return checkNetworkMatch()
+        .then( checked => sendEvent({ type: "CHOOSE_WALLET", payload: { checked } }))
         .catch(e => console.log(e));
     },
     isAtSyncingDaemon: () => {
       console.log(" is at syncing daemon ");
-      a.syncDaemon()
-        .then(synced => a.sendEvent({ type: "CHECK_NETWORK_MATCH", payload: synced }))
+      syncDaemon()
+        .then(synced => sendEvent({ type: "CHECK_NETWORK_MATCH", payload: synced }))
         .catch(e => console.log(e));
     },
     isAtChoosingWallet: (context, event) => {
       console.log("is at choosingWallet");
-      a.onGetAvailableWallets()
-        .then(w => a.sendEvent({ type: "CHOOSE_WALLET", payload: { w } }) )
+      onGetAvailableWallets()
+        .then(w => sendEvent({ type: "CHOOSE_WALLET", payload: { w } }) )
         .catch(e => console.log(e));
       const { selectedWallet } = event;
       if (selectedWallet) {
         context.selectedWallet = selectedWallet;
-        return a.sendEvent({ type: "SUBMIT_CHOOSE_WALLET" });
+        return sendEvent({ type: "SUBMIT_CHOOSE_WALLET" });
       }
     },
     isAtLeavingChoosingWallet: (context, event) => {
@@ -192,17 +231,17 @@ export const getStartedMachine = (a) => Machine({
     isAtStartWallet: (context) => {
       console.log("is At Start Wallet");
       const { selectedWallet } = context;
-      a.setSelectedWallet(selectedWallet);
+      setSelectedWallet(selectedWallet);
 
-      a.onStartWallet(selectedWallet)
+      onStartWallet(selectedWallet)
         .then(r => {
-          a.sendEvent({ type: "SYNC_RPC", r });
+          sendEvent({ type: "SYNC_RPC", r });
         })
         .catch(err => console.log(err));
     },
     isSyncingRPC: () => {
       console.log("is at syncing rpc");
-      a.onRetryStartRPC();
+      onRetryStartRPC();
     }
   }
 });
