@@ -10,6 +10,7 @@ import Logs from "./Logs";
 import { FormattedMessage as T } from "react-intl";
 import { createElement as h } from "react";
 import GetStartedMachinePage from "./GetStartedMachinePage";
+import TrezorConfig from "./TrezorConfig";
 
 @autobind
 class GetStarted extends React.Component {
@@ -118,11 +119,11 @@ class GetStarted extends React.Component {
         text = <T id="loaderBar.syncingRPC" m="Syncing RPC connection..." />;
         break;
       }
-      const { service, submitChosenWallet, submitRemoteCredentials, submitAppdata, onShowSettings } = this;
+      const { service, submitChosenWallet, submitRemoteCredentials, submitAppdata, onShowSettings, onShowTrezorConfig } = this;
       const { machine } = service;
       const error = this.getError();
       PageComponent = h(GetStartedMachinePage, {
-        ...this.state, ...this.props, submitRemoteCredentials, submitAppdata, onShowSettings,
+        ...this.state, ...this.props, submitRemoteCredentials, submitAppdata, onShowSettings, onShowTrezorConfig,
         submitChosenWallet, service, machine, error, text, StateComponent: component
       });
     }
@@ -131,6 +132,9 @@ class GetStarted extends React.Component {
     }
     if (key === "logs") {
       PageComponent = h(Logs, { onSendBack });
+    }
+    if (key === "trezorConfig") {
+      PageComponent = h(TrezorConfig, { onSendBack });
     }
 
     return this.setState({ PageComponent, text });
@@ -160,6 +164,10 @@ class GetStarted extends React.Component {
 
   onShowLogs() {
     return this.service.send({ type: "SHOW_LOGS" });
+  }
+
+  onShowTrezorConfig() {
+    return this.service.send({ type: "SHOW_TREZOR_CONFIG" });
   }
 
   onSendBack() {

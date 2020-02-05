@@ -20,7 +20,7 @@ class WalletSelectionBody extends React.Component {
 
   render() {
     const {
-      maxWalletCount, isSPV, availableWallets, getDaemonSynced, submitChosenWallet
+      maxWalletCount, isSPV, availableWallets, getDaemonSynced, submitChosenWallet, onShowTrezorConfig
     } = this.props;
     const {
       newWalletName, isCreateNewWallet, isCreatingOrRestoring, editWallets, hasFailedAttemptName,
@@ -45,6 +45,7 @@ class WalletSelectionBody extends React.Component {
           walletNameError,
           maxWalletCount,
           isSPV,
+          onShowTrezorConfig,
           ...this.props,
           ...this.state,
           ...substruct({
