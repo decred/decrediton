@@ -18,18 +18,22 @@ export const CreateWalletMachine = ({
     createWallet: {
       onEntry: "isAtCreateWallet",
       on: {
-        RESTORE_WALLET: {
-          target: "writeSeed",
-          cond: (c, event) => !event.isNew && !event.isWatchingOnly
-        },
         CREATE_WALLET: {
           target: "newWallet",
           cond: (c, event) => event.isNew
         },
-        RETORE_WATCHING_ONLY_WALLET: {
+        RESTORE_WATCHING_ONLY_WALLET: {
           target: "restoreWatchingOnly",
           cond: (c, event) => event.isWatchingOnly
-        }
+        },
+        RESTORE_TREZOR_WALLET: {
+          target: "restoreTrezor",
+          cond: (c, event) => event.isTrezor
+        },
+        RESTORE_WALLET: {
+          target: "writeSeed",
+          cond: (c, event) => event.isRestore
+        },
       }
     },
     newWallet: {
@@ -96,6 +100,12 @@ export const CreateWalletMachine = ({
         CONTINUE: "creatingWallet"
       }
     },
+    restoreTrezor: {
+      onEntry: "isAtRestoreTrezor",
+      on: {
+        CONTINUE: "walletCreated"
+      }
+    },
     creatingWallet: {
       onEntry: "isAtCreatingWallet",
       on: {
@@ -138,6 +148,10 @@ export const CreateWalletMachine = ({
       console.log("is at restoring watching only");
       onCreateWatchOnly();
     },
+    isAtRestoreTrezor: () => {
+      console.log("is at restoring trezor");
+      sendEvent({ type: "CONTINUE" })
+    },
     isAtFinished: async () => {
       await cancelCreateWallet();
       backToCredentials();
@@ -145,7 +159,7 @@ export const CreateWalletMachine = ({
     isAtCreatingWallet: () => {
       console.log("creating wallet");
     },
-    isAtWalletCreated: async () => {
+    isAtWalletCreated: () => {
       backToCredentials();
     }
   }

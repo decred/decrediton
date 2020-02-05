@@ -102,7 +102,6 @@ export const getStartedMachine = ({
           onExit: "isAtLeavingChoosingWallet",
           on: {
             SUBMIT_CHOOSE_WALLET: "startingWallet",
-            CREATE_CHOSEN_WALLET: "creatingWallet",
             CREATE_WALLET: "creatingWallet"
           }
         },

@@ -35,10 +35,12 @@ class CreateWallet extends React.Component {
     const isNew = !this.props.createWalletExisting;
     const isWatchingOnly = this.props.isCreatingWatchingOnly;
     // TODO Add watching only state and tezos
-    const { isTestNet } = this.props;
+    const { isTrezor, isTestNet } = this.props;
     this.service.send({ type: "CREATE_WALLET", isNew, isTestNet });
-    this.service.send({ type: "RESTORE_WALLET", isNew, isWatchingOnly });
-    this.service.send({ type: "RETORE_WATCHING_ONLY_WALLET", isWatchingOnly });
+    this.service.send({ type: "RESTORE_WATCHING_ONLY_WALLET", isWatchingOnly });
+    this.service.send({ type: "RESTORE_TREZOR_WALLET", isTrezor });
+    this.service.send({ type: "RESTORE_WALLET", isRestore: !isNew, isWatchingOnly });
+
   }
 
   componentWillUnmount() {

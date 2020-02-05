@@ -1,5 +1,6 @@
 import { WalletSelectionFormBody } from "./Form";
 import { substruct } from "fp";
+import { daemonStartup } from "connectors";
 
 @autobind
 class WalletSelectionBody extends React.Component {
@@ -130,8 +131,10 @@ class WalletSelectionBody extends React.Component {
     }
     if (isTrezor) {
       walletSelected.watchingOnly = true;
-      return this.props.trezorGetWalletCreationMasterPubKey().then(() =>
-        this.props.onCreateWallet(walletSelected));
+      return this.props.trezorGetWalletCreationMasterPubKey()
+        .then(() => this.props.onCreateWallet(walletSelected)
+        .then(() => this.props.onShowCreateWallet(isCreateNewWallet))
+      );
     }
 
     return this.props.onCreateWallet(walletSelected)
@@ -164,4 +167,4 @@ class WalletSelectionBody extends React.Component {
   }
 }
 
-export default WalletSelectionBody;
+export default daemonStartup(WalletSelectionBody);

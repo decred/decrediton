@@ -18,7 +18,8 @@ const mapStateToProps = selectorMap({
   masterPubKey: sel.masterPubKey,
   maxWalletCount: sel.maxWalletCount,
   trezorDeviceList: sel.trezorDeviceList,
-  trezorDevice: sel.trezorDevice
+  trezorDevice: sel.trezorDevice,
+  isTrezor: sel.isTrezor
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

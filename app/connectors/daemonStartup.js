@@ -15,6 +15,7 @@ const mapStateToProps = selectorMap({
   getNeededBlocks: sel.getNeededBlocks,
   getDaemonStarted: sel.getDaemonStarted,
   getEstimatedTimeLeft: sel.getEstimatedTimeLeft,
+  trezorDevice: sel.trezorDevice,
 
   maxWalletCount: sel.maxWalletCount,
   peerCount: sel.peerCount,
@@ -31,7 +32,8 @@ const mapStateToProps = selectorMap({
   syncFetchHeadersComplete: sel.syncFetchHeadersComplete,
   syncFetchTimeStart: sel.syncFetchTimeStart,
   firstBlockTime: sel.firstBlockTime,
-  selectedWalletSelector: sel.getSelectedWallet
+  selectedWalletSelector: sel.getSelectedWallet,
+  isTrezor: sel.isTrezor
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -46,6 +48,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onGetAvailableWallets: da.getAvailableWallets,
   onStartWallet: da.startWallet,
   onRemoveWallet: da.removeWallet,
+  onShowCreateWallet: da.showCreateWallet,
   goToError: ca.goToError,
   onCreateWallet: da.createWallet,
   getDcrwalletLogs: da.getDcrwalletLogs,
