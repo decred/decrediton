@@ -76,7 +76,7 @@ const PurchaseTicketsForm = ({
           <InvisibleConfirmModalButton
             modalTitle={<T id="purchase.ticket.modal.title" m="Dismiss Button"/>}
             modalContent={<T id="purchase.ticket.modal.desc"
-              m="Are you sure you want to dismiss this message? Make sure your redeem scripts are backed up" />}
+              m="Are you sure you want to dismiss this message? Make sure your redeem scripts are backed up." />}
             buttonLabel={<T id="purchase.ticket.dismiss.warn" m="Dismiss Message" />}
             onSubmit={() => onDismissBackupRedeemScript()}
             className="stakepool-content-send"
