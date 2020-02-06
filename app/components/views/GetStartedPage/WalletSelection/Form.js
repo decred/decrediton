@@ -71,7 +71,11 @@ const WalletSelectionBodyBase = ({
                   </Tooltip>
                 </div>}
                 <div className={selected && !editWallets ? "display-wallet-complete selected" : "display-wallet-complete"}>
-                  {!wallet.isWatchingOnly ? !wallet.finished && <T id="walletselection.setupIncomplete" m="Setup incomplete"/> : <T id="walletselection.watchOnly" m="Watch Only"/>}
+                  <WalletTypeLabel
+                    isWatchingOnly={wallet.isWatchingOnly}
+                    isTrezor={wallet.value.isTrezor}
+                    finished={wallet.finished}
+                  />
                 </div>
                 <div className={selected && !editWallets ? "wallet-icon selected" : "wallet-icon wallet"}/>
                 <div className={selected && !editWallets ? "display-wallet-name selected" : "display-wallet-name"}>
