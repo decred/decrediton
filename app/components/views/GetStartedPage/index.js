@@ -114,11 +114,11 @@ class GetStarted extends React.Component {
         break;
       case "choosingWallet":
         text = <T id="loaderBar.choosingWallet" m="Choose a wallet to open" />;
-        component = h(WalletSelection, { onSendCreateWallet, onShowTrezorConfig })
+        component = h(WalletSelection, { onSendCreateWallet, onShowTrezorConfig });
         break;
       case "creatingWallet":
         text = <T id="loaderBar.creatingWallet" m="Creating Wallet..." />;
-        component = h(WalletSelection, { creatingWallet: true })
+        component = h(WalletSelection, { creatingWallet: true });
         break;
       case "startingWallet":
         text = <T id="loaderBar.startingWallet" m="Starting wallet..." />;

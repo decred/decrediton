@@ -133,7 +133,7 @@ class WalletSelectionBody extends React.Component {
     }
     // send CreateWallet action type to getStartedStateMachine so we can go to
     // creatingWallet state.
-    onSendCreateWallet()
+    onSendCreateWallet();
     if (isTrezor) {
       walletSelected.watchingOnly = true;
       return this.props.trezorGetWalletCreationMasterPubKey()
