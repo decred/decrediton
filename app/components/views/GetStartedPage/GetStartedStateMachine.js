@@ -92,9 +92,6 @@ export const getStartedMachine = ({
         },
         creatingWallet: {
           onEntry: "isAtCreatingWallet",
-          on: {
-            WALLET_CREATED: "syncingRPC"
-          },
           ...CreateWalletMachine
         },
         choosingWallet: {

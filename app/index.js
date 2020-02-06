@@ -363,7 +363,7 @@ var initialState = {
     validateAddressResponse: null,
     validateAddressError: null,
 
-    masterPubKey: null,
+    walletMasterPubKey: null,
     exportingData: false,
     modalVisible: false,
     aboutModalMacOSVisible: false,

@@ -39,7 +39,8 @@ const CreateWalletForm = ({
   isTrezor,
   toggleTrezor,
   onShowTrezorConfig,
-  isCreateNewWallet
+  isCreateNewWallet,
+  creatingWallet
 }) => {
   return (
     <>
@@ -112,7 +113,9 @@ const CreateWalletForm = ({
         </>}
       <div className="advanced-daemon-row">
         <KeyBlueButton onClick={createWallet}>
-          <T id="wallet.create.button" m="Continue" />
+          {
+            creatingWallet ? <T id="wallet.creating.button" m="Creating" /> : <T id="wallet.create.button" m="Continue" />
+          }
         </KeyBlueButton>
         <InvisibleButton onClick={hideCreateWalletForm}>
           <T id="advancedStartup.cancel" m="Cancel"/>

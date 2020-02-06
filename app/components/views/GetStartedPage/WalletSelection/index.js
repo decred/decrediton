@@ -21,7 +21,8 @@ class WalletSelectionBody extends React.Component {
 
   render() {
     const {
-      maxWalletCount, isSPV, availableWallets, getDaemonSynced, submitChosenWallet, onShowTrezorConfig
+      maxWalletCount, isSPV, availableWallets, getDaemonSynced, submitChosenWallet,
+      onShowTrezorConfig, creatingWallet
     } = this.props;
     const {
       newWalletName, isCreateNewWallet, isCreatingOrRestoring, editWallets, hasFailedAttemptName,
@@ -47,6 +48,7 @@ class WalletSelectionBody extends React.Component {
           maxWalletCount,
           isSPV,
           onShowTrezorConfig,
+          creatingWallet,
           ...this.props,
           ...this.state,
           ...substruct({
@@ -107,7 +109,7 @@ class WalletSelectionBody extends React.Component {
   createWallet() {
     const { newWalletName, isWatchingOnly, masterPubKeyError, walletMasterPubKey,
       walletNameError, isTrezor, isCreateNewWallet } = this.state;
-    const { isTestNet } = this.props;
+    const { isTestNet, onSendCreateWallet } = this.props;
 
     const walletSelected = {
       label: newWalletName,
@@ -129,6 +131,9 @@ class WalletSelectionBody extends React.Component {
       this.props.trezorAlertNoConnectedDevice();
       return;
     }
+    // send CreateWallet action type to getStartedStateMachine so we can go to
+    // creatingWallet state.
+    onSendCreateWallet()
     if (isTrezor) {
       walletSelected.watchingOnly = true;
       return this.props.trezorGetWalletCreationMasterPubKey()

@@ -86,7 +86,11 @@ class GetStarted extends React.Component {
 
   getStateComponent() {
     const { current } = this.state;
-    const { onSendBack } = this;
+    const {
+      service, submitChosenWallet, submitRemoteCredentials, submitAppdata,
+      onShowSettings, onShowTrezorConfig, onSendBack, onSendCreateWallet
+    } = this;
+    const { machine } = service;
     let component, text, PageComponent;
 
     const key = Object.keys(current.value)[0];
@@ -110,7 +114,11 @@ class GetStarted extends React.Component {
         break;
       case "choosingWallet":
         text = <T id="loaderBar.choosingWallet" m="Choose a wallet to open" />;
-        component = WalletSelection;
+        component = h(WalletSelection, { onSendCreateWallet, onShowTrezorConfig })
+        break;
+      case "creatingWallet":
+        text = <T id="loaderBar.creatingWallet" m="Creating Wallet..." />;
+        component = h(WalletSelection, { creatingWallet: true })
         break;
       case "startingWallet":
         text = <T id="loaderBar.startingWallet" m="Starting wallet..." />;
@@ -119,11 +127,9 @@ class GetStarted extends React.Component {
         text = <T id="loaderBar.syncingRPC" m="Syncing RPC connection..." />;
         break;
       }
-      const { service, submitChosenWallet, submitRemoteCredentials, submitAppdata, onShowSettings, onShowTrezorConfig } = this;
-      const { machine } = service;
       const error = this.getError();
       PageComponent = h(GetStartedMachinePage, {
-        ...this.state, ...this.props, submitRemoteCredentials, submitAppdata, onShowSettings, onShowTrezorConfig,
+        ...this.state, ...this.props, submitRemoteCredentials, submitAppdata, onShowSettings,
         submitChosenWallet, service, machine, error, text, StateComponent: component
       });
     }
@@ -168,6 +174,10 @@ class GetStarted extends React.Component {
 
   onShowTrezorConfig() {
     return this.service.send({ type: "SHOW_TREZOR_CONFIG" });
+  }
+
+  onSendCreateWallet() {
+    return this.service.send({ type: "CREATE_WALLET" });
   }
 
   onSendBack() {
