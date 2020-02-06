@@ -131,7 +131,7 @@ class GetStarted extends React.Component {
         break;
       case "creatingWallet":
         text = isCreateNewWallet ?
-          <T id="loaderBar.creatingWallet" m="Creating Wallet..." /> : 
+          <T id="loaderBar.creatingWallet" m="Creating Wallet..." /> :
           <T id="loaderBar.restoringWallet" m="Restoring Wallet..." />;
         break;
       case "startingWallet":

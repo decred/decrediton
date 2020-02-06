@@ -103,7 +103,7 @@ export const getStartedMachine = ({
         creatingWallet: {
           onEntry: "isAtCreatingWallet",
           on: {
-            ERROR: "preCreateWallet",
+            ERROR: "preCreateWallet"
           },
           ...CreateWalletMachine
         },

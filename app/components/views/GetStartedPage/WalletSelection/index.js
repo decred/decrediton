@@ -7,7 +7,7 @@ class WalletSelectionBody extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      editWallets: false,
+      editWallets: false
     };
   }
 

@@ -56,7 +56,7 @@ class PreCreateWallet extends React.Component {
             hideCreateWalletForm: null,
             toggleWatchOnly: null,
             onChangeCreateWalletMasterPubKey: null,
-            toggleTrezor: null,
+            toggleTrezor: null
           }, this)
         }}
       />

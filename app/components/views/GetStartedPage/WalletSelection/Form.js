@@ -36,7 +36,7 @@ const WalletSelectionBodyBase = ({
   onToggleEditWallet,
   editWallets,
   maxWalletCount,
-  submitChosenWallet,
+  submitChosenWallet
 }) => (
   <div className="advanced-page">
     <div className="advanced-page-form">

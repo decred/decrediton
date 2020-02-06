@@ -42,38 +42,38 @@ const CreateWalletForm = ({
   isCreateNewWallet,
   creatingWallet
 }) => (
-<>
-  { isCreateNewWallet ?
-    <div className="new-wallet-title-area">
-      <div className="wallet-icon-small createnew" />
-      <div className="new-wallet-title">
-        <NewSeedTabMsg />
+  <>
+    { isCreateNewWallet ?
+      <div className="new-wallet-title-area">
+        <div className="wallet-icon-small createnew" />
+        <div className="new-wallet-title">
+          <NewSeedTabMsg />
+        </div>
+      </div> :
+      <div className="new-wallet-title-area">
+        <div className="wallet-icon-small restore" />
+        <div className="new-wallet-title">
+          <RestoreTabMsg />
+        </div>
       </div>
-    </div> :
-    <div className="new-wallet-title-area">
-      <div className="wallet-icon-small restore" />
-      <div className="new-wallet-title">
-        <RestoreTabMsg />
+    }
+    <div className="advanced-daemon-row">
+      <div className="advanced-daemon-label">
+        <T id="createwallet.walletname.label" m="Wallet Name" />
+      </div>
+      <div className="advanced-daemon-input">
+        <TextInput
+          required
+          invalid={walletNameError}
+          invalidMessage={intl.formatMessage(messages.messageWalletDupeNameError)}
+          value={newWalletName}
+          onChange={(e) => onChangeCreateWalletName(e.target.value)}
+          placeholder={intl.formatMessage(messages.messageWalletNamePlaceholder)}
+          showErrors={hasFailedAttemptName}
+        />
       </div>
     </div>
-  }
-  <div className="advanced-daemon-row">
-    <div className="advanced-daemon-label">
-      <T id="createwallet.walletname.label" m="Wallet Name" />
-    </div>
-    <div className="advanced-daemon-input">
-      <TextInput
-        required
-        invalid={walletNameError}
-        invalidMessage={intl.formatMessage(messages.messageWalletDupeNameError)}
-        value={newWalletName}
-        onChange={(e) => onChangeCreateWalletName(e.target.value)}
-        placeholder={intl.formatMessage(messages.messageWalletNamePlaceholder)}
-        showErrors={hasFailedAttemptName}
-      />
-    </div>
-  </div>
-  { !isCreateNewWallet &&
+    { !isCreateNewWallet &&
     <>
       <div className="advanced-daemon-row">
         <div className="advanced-daemon-label">
@@ -110,18 +110,18 @@ const CreateWalletForm = ({
           </div>
         </div>}
     </>
-  }
-  <div className="advanced-daemon-row">
-    <KeyBlueButton onClick={createWallet}>
-      {
-        creatingWallet ? <T id="wallet.creating.button" m="Creating" /> : <T id="wallet.create.button" m="Continue" />
-      }
-    </KeyBlueButton>
-    <InvisibleButton onClick={hideCreateWalletForm}>
-      <T id="advancedStartup.cancel" m="Cancel"/>
-    </InvisibleButton>
-  </div>
-</>
+    }
+    <div className="advanced-daemon-row">
+      <KeyBlueButton onClick={createWallet}>
+        {
+          creatingWallet ? <T id="wallet.creating.button" m="Creating" /> : <T id="wallet.create.button" m="Continue" />
+        }
+      </KeyBlueButton>
+      <InvisibleButton onClick={hideCreateWalletForm}>
+        <T id="advancedStartup.cancel" m="Cancel"/>
+      </InvisibleButton>
+    </div>
+  </>
 );
 
 export default CreateWalletForm;
