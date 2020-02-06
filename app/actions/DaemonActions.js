@@ -276,7 +276,7 @@ export const removeWallet = (selectedWallet) => (dispatch) => {
 //   label: newWalletName,
 //   value: {
 //    wallet: newWalletName, isWatchingOnly, isTrezor, isNew,
-//    walletMasterPubKey, network: isTestNet ? "testnet" : "mainnet"
+//    network: isTestNet ? "testnet" : "mainnet"
 //  }
 // }
 export const createWallet = (selectedWallet) => (dispatch, getState) => new Promise((resolve, reject) => {
@@ -291,7 +291,6 @@ export const createWallet = (selectedWallet) => (dispatch, getState) => new Prom
         isWatchingOnly: selectedWallet.value.isWatchingOnly,
         createNewWallet: selectedWallet.value.isNew,
         isTrezor: selectedWallet.value.istrezor,
-        walletMasterPubKey: selectedWallet.value.walletMasterPubKey,
         type: WALLETCREATED
       });
       dispatch(setSelectedWallet(selectedWallet));

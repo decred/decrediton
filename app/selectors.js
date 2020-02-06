@@ -56,7 +56,6 @@ export const walletRPCVersion = createSelector(
   [ get([ "version", "getWalletRPCVersionResponse" ]) ],
   (r) => r ? r.getVersionString() : null);
 const walletExistResponse = get([ "walletLoader", "walletExistResponse" ]);
-export const walletMasterPubKey = get([ "walletLoader", "walletMasterPubKey" ]);
 export const startStepIndex = get([ "walletLoader", "stepIndex" ]);
 export const getVersionServiceError = get([ "version", "getVersionServiceError" ]);
 export const getWalletRPCVersionError = get([ "version", "getWalletRPCVersionError" ]);
@@ -695,7 +694,7 @@ export const validateAddressSuccess = compose(
   r => r ? r.toObject() : null, validateAddressResponse
 );
 
-export const masterPubKey = get([ "control", "masterPubKey" ]);
+export const walletMasterPubKey = get([ "control", "masterPubKey" ]);
 
 const getStakeInfoResponse = get([ "grpc", "getStakeInfoResponse" ]);
 

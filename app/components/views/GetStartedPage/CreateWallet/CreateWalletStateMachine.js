@@ -150,7 +150,7 @@ export const CreateWalletMachine = ({
     },
     isAtRestoreTrezor: () => {
       console.log("is at restoring trezor");
-      sendEvent({ type: "CONTINUE" })
+      onCreateWatchOnly();
     },
     isAtFinished: async () => {
       await cancelCreateWallet();

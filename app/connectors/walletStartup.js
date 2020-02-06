@@ -43,7 +43,7 @@ const mapStateToProps = selectorMap({
   updateAvailable: sel.updateAvailable,
   createNewWallet: sel.createNewWallet,
   isWatchingOnly: sel.isWatchingOnly,
-  masterPubKey: sel.masterPubKey,
+  // masterPubKey: sel.masterPubKey,
   isSPV: sel.isSPV,
   syncInput: sel.syncInput,
   daemonWarning: sel.daemonWarning,

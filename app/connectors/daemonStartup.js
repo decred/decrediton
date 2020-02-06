@@ -5,6 +5,7 @@ import * as sel from "selectors";
 import * as wla from "actions/WalletLoaderActions";
 import * as da from "actions/DaemonActions";
 import * as ca from "actions/ClientActions";
+import * as ctrla from "actions/ControlActions";
 import * as trza from "actions/TrezorActions";
 
 const mapStateToProps = selectorMap({
@@ -56,7 +57,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   trezorEnable: trza.enableTrezor,
   trezorDisable: trza.disableTrezor,
   trezorAlertNoConnectedDevice: trza.alertNoConnectedDevice,
-  trezorGetWalletCreationMasterPubKey: trza.getWalletCreationMasterPubKey  
+  trezorGetWalletCreationMasterPubKey: trza.getWalletCreationMasterPubKey,
+  validateMasterPubKey: ctrla.validateMasterPubKey
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

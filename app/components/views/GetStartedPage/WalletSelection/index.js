@@ -113,7 +113,7 @@ class WalletSelectionBody extends React.Component {
       label: newWalletName,
       value: {
         wallet: newWalletName, isWatchingOnly, isTrezor, isNew: isCreateNewWallet,
-        walletMasterPubKey, network: isTestNet ? "testnet" : "mainnet"
+        network: isTestNet ? "testnet" : "mainnet"
       }
     };
 

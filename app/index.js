@@ -363,6 +363,7 @@ var initialState = {
     validateAddressResponse: null,
     validateAddressError: null,
 
+    masterPubKey: null,
     exportingData: false,
     modalVisible: false,
     aboutModalMacOSVisible: false,
