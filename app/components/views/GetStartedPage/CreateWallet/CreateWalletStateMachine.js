@@ -33,7 +33,7 @@ export const CreateWalletMachine = ({
         RESTORE_WALLET: {
           target: "writeSeed",
           cond: (c, event) => event.isRestore
-        },
+        }
       }
     },
     newWallet: {
@@ -103,7 +103,7 @@ export const CreateWalletMachine = ({
     restoreTrezor: {
       onEntry: "isAtRestoreTrezor",
       on: {
-        CONTINUE: "walletCreated"
+        CONTINUE: "creatingWallet"
       }
     },
     creatingWallet: {

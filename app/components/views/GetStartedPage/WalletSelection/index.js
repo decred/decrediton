@@ -65,7 +65,7 @@ class WalletSelectionBody extends React.Component {
     );
   }
   onToggleEditWallet() {
-    this.setState({ editWallets: !this.state.editWallets })
+    this.setState({ editWallets: !this.state.editWallets });
   }
   showCreateWalletForm(isCreateNewWallet) {
     this.setState({ isCreatingOrRestoring: true, isCreateNewWallet });
@@ -133,8 +133,8 @@ class WalletSelectionBody extends React.Component {
       walletSelected.watchingOnly = true;
       return this.props.trezorGetWalletCreationMasterPubKey()
         .then(() => this.props.onCreateWallet(walletSelected)
-        .then(() => this.props.onShowCreateWallet(isCreateNewWallet))
-      );
+          .then(() => this.props.onShowCreateWallet(isCreateNewWallet))
+        );
     }
 
     return this.props.onCreateWallet(walletSelected)
