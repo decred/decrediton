@@ -8,7 +8,6 @@ class PreCreateWallet extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isCreateNewWallet: false,
       newWalletName: "",
       isWatchingOnly: false,
       walletMasterPubKey: "",
@@ -19,13 +18,12 @@ class PreCreateWallet extends React.Component {
   }
 
   render() {
-    console.log(this.props)
     const {
       maxWalletCount, isSPV, availableWallets, getDaemonSynced, submitChosenWallet,
-      onShowTrezorConfig, creatingWallet
+      onShowTrezorConfig, isCreateNewWallet, creatingWallet
     } = this.props;
     const {
-      newWalletName, isCreateNewWallet, editWallets, hasFailedAttemptName,
+      newWalletName, editWallets, hasFailedAttemptName,
       hasFailedAttemptPubKey, isWatchingOnly, walletMasterPubKey, masterPubKeyError, walletNameError
     } = this.state;
     return (
@@ -64,15 +62,14 @@ class PreCreateWallet extends React.Component {
       />
     );
   }
+
   hideCreateWalletForm() {
     if (this.state.isTrezor) {
       this.props.trezorDisable();
     }
     this.props.onSendBack();
   }
-  onChangeAvailableWallets(selectedWallet) {
-    this.setState({ selectedWallet });
-  }
+
   onChangeCreateWalletName(newWalletName) {
     const { availableWallets } = this.props;
     this.setState({ hasFailedAttemptName: true });
@@ -90,10 +87,11 @@ class PreCreateWallet extends React.Component {
     }
     this.setState({ newWalletName });
   }
+
   createWallet() {
     const { newWalletName, isWatchingOnly, masterPubKeyError, walletMasterPubKey,
-      walletNameError, isTrezor, isCreateNewWallet } = this.state;
-    const { isTestNet, onSendContinue } = this.props;
+      walletNameError, isTrezor } = this.state;
+    const { isTestNet, onSendContinue, isCreateNewWallet } = this.props;
 
     const walletSelected = {
       label: newWalletName,
@@ -115,9 +113,9 @@ class PreCreateWallet extends React.Component {
       this.props.trezorAlertNoConnectedDevice();
       return;
     }
-    onSendContinue();
-    // send CreateWallet action type to getStartedStateMachine so we can go to
+    // onSendContinue action so getStartedStateMachine we can go to
     // creatingWallet state.
+    onSendContinue();
     if (isTrezor) {
       walletSelected.watchingOnly = true;
       return this.props.trezorGetWalletCreationMasterPubKey()
@@ -130,10 +128,12 @@ class PreCreateWallet extends React.Component {
       .then(() => this.props.onShowCreateWallet(isCreateNewWallet))
       .catch( error => this.props.onSendError(error) );
   }
+
   toggleWatchOnly() {
     const { isWatchingOnly } = this.state;
     this.setState({ isWatchingOnly : !isWatchingOnly, isTrezor: false });
   }
+
   toggleTrezor() {
     const isTrezor = !this.state.isTrezor;
     this.setState({ isTrezor, isWatchingOnly: false });
@@ -143,6 +143,7 @@ class PreCreateWallet extends React.Component {
       this.props.trezorDisable();
     }
   }
+
   async onChangeCreateWalletMasterPubKey(walletMasterPubKey) {
     if (walletMasterPubKey === "") {
       this.setState({ hasFailedAttemptPubKey: true });

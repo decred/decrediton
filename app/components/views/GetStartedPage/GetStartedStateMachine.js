@@ -11,7 +11,8 @@ export const getStartedMachine = ({
     credentials: {},
     selectedWallet: null,
     appdata: null,
-    error: null
+    error: null,
+    isCreateNewWallet: null
   },
   states: {
     // startMachine represents the state with daemon and wallet starting operations.
@@ -242,6 +243,7 @@ export const getStartedMachine = ({
     },
     isAtPreCreateWallet: (context, event) => {
       context.error = event.error && event.error;
+      context.isCreateNewWallet = typeof event.isNew === "undefined" ? context.isCreateNewWallet : event.isNew;
     },
     isAtLeavingChoosingWallet: (context, event) => {
       console.log("is leaving choosing wallet");

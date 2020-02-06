@@ -1,4 +1,4 @@
-import { FormattedMessage as T, injectIntl } from "react-intl";
+import { FormattedMessage as T } from "react-intl";
 import { RemoveWalletButton } from "buttons";
 import { NewSeedTabMsg, RestoreTabMsg } from "../messages";
 import { Tooltip, FormattedRelative } from "shared";
@@ -29,23 +29,14 @@ const WalletTypeLabel = ({ isWatchingOnly, finished, isTrezor }) => {
 
 const WalletSelectionBodyBase = ({
   availableWallets,
-  createWallet,
   showCreateWalletForm,
-  hideCreateWalletForm,
   onRemoveWallet,
   selectedWallet,
   onChangeAvailableWallets,
   onToggleEditWallet,
   editWallets,
-  intl,
-  toggleWatchOnly,
-  isWatchingOnly,
-  masterPubKeyError,
   maxWalletCount,
   submitChosenWallet,
-  isCreateNewWallet,
-  isCreatingOrRestoring,
-  ...props
 }) => (
   <div className="advanced-page">
     <div className="advanced-page-form">
@@ -106,4 +97,4 @@ const WalletSelectionBodyBase = ({
   </div>
 );
 
-export const WalletSelectionFormBody = injectIntl(WalletSelectionBodyBase);
+export const WalletSelectionFormBody = WalletSelectionBodyBase;

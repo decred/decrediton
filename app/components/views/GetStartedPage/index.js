@@ -93,6 +93,7 @@ class GetStarted extends React.Component {
       onSendError, onSendContinue
     } = this;
     const { machine } = service;
+    const { isCreateNewWallet } = this.service._state.context;
     const error = this.getError();
     let component, text, PageComponent;
 
@@ -120,12 +121,18 @@ class GetStarted extends React.Component {
         component = h(WalletSelection, { onSendCreateWallet });
         break;
       case "preCreateWallet":
-        text = <T id="loaderBar.preCreateWallet" m="Create or Restore a wallet..." />;
-        component = h(CreateWalletForm, { onSendCreateWallet, onSendContinue, onSendBack, onSendError, onShowTrezorConfig, error });
+        text = isCreateNewWallet ?
+          <T id="loaderBar.preCreateWalletCreate" m="Create a wallet..." /> :
+          <T id="loaderBar.preCreateWalletRestore" m="Restore a Wallet..." />;
+        component = h(CreateWalletForm, {
+          onSendCreateWallet, onSendContinue, onSendBack, onSendError,
+          onShowTrezorConfig, isCreateNewWallet, error
+        });
         break;
       case "creatingWallet":
-        text = <T id="loaderBar.creatingWallet" m="Creating Wallet..." />;
-        component = h(WalletSelection, { creatingWallet: true, onSendError });
+        text = isCreateNewWallet ?
+          <T id="loaderBar.creatingWallet" m="Creating Wallet..." /> : 
+          <T id="loaderBar.restoringWallet" m="Restoring Wallet..." />;
         break;
       case "startingWallet":
         text = <T id="loaderBar.startingWallet" m="Starting wallet..." />;
