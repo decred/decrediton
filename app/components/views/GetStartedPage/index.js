@@ -11,6 +11,7 @@ import { FormattedMessage as T } from "react-intl";
 import { createElement as h } from "react";
 import GetStartedMachinePage from "./GetStartedMachinePage";
 import TrezorConfig from "./TrezorConfig";
+import CreateWalletForm from "./PreCreateWallet";
 
 @autobind
 class GetStarted extends React.Component {
@@ -19,12 +20,12 @@ class GetStarted extends React.Component {
     super(props);
     const {
       onConnectDaemon, checkNetworkMatch, syncDaemon, onStartWallet, onRetryStartRPC, onGetAvailableWallets,
-      onStartDaemon, setSelectedWallet, goToError, goToSettings, backToCredentials
+      onStartDaemon, setSelectedWallet, goToErrorPage, goToSettings, backToCredentials
     } = this.props;
     const { sendEvent, preStartDaemon } = this;
     this.machine = getStartedMachine({
       onConnectDaemon, checkNetworkMatch, syncDaemon, onStartWallet, onRetryStartRPC, sendEvent, onGetAvailableWallets,
-      onStartDaemon, setSelectedWallet, preStartDaemon, goToError, goToSettings, backToCredentials
+      onStartDaemon, setSelectedWallet, preStartDaemon, goToErrorPage, goToSettings, backToCredentials
     });
     this.service = interpret(this.machine).onTransition(current => this.setState({ current }, this.getStateComponent));
     this.state = {
@@ -88,9 +89,11 @@ class GetStarted extends React.Component {
     const { current } = this.state;
     const {
       service, submitChosenWallet, submitRemoteCredentials, submitAppdata,
-      onShowSettings, onShowTrezorConfig, onSendBack, onSendCreateWallet
+      onShowSettings, onShowTrezorConfig, onSendBack, onSendCreateWallet,
+      onSendError, onSendContinue
     } = this;
     const { machine } = service;
+    const error = this.getError();
     let component, text, PageComponent;
 
     const key = Object.keys(current.value)[0];
@@ -114,11 +117,15 @@ class GetStarted extends React.Component {
         break;
       case "choosingWallet":
         text = <T id="loaderBar.choosingWallet" m="Choose a wallet to open" />;
-        component = h(WalletSelection, { onSendCreateWallet, onShowTrezorConfig });
+        component = h(WalletSelection, { onSendCreateWallet });
+        break;
+      case "preCreateWallet":
+        text = <T id="loaderBar.preCreateWallet" m="Create or Restore a wallet..." />;
+        component = h(CreateWalletForm, { onSendCreateWallet, onSendContinue, onSendBack, onSendError, onShowTrezorConfig, error });
         break;
       case "creatingWallet":
         text = <T id="loaderBar.creatingWallet" m="Creating Wallet..." />;
-        component = h(WalletSelection, { creatingWallet: true });
+        component = h(WalletSelection, { creatingWallet: true, onSendError });
         break;
       case "startingWallet":
         text = <T id="loaderBar.startingWallet" m="Starting wallet..." />;
@@ -127,7 +134,6 @@ class GetStarted extends React.Component {
         text = <T id="loaderBar.syncingRPC" m="Syncing RPC connection..." />;
         break;
       }
-      const error = this.getError();
       PageComponent = h(GetStartedMachinePage, {
         ...this.state, ...this.props, submitRemoteCredentials, submitAppdata, onShowSettings,
         submitChosenWallet, service, machine, error, text, StateComponent: component
@@ -176,16 +182,24 @@ class GetStarted extends React.Component {
     return this.service.send({ type: "SHOW_TREZOR_CONFIG" });
   }
 
-  onSendCreateWallet() {
-    return this.service.send({ type: "CREATE_WALLET" });
+  onSendCreateWallet(isNew) {
+    return this.service.send({ type: "CREATE_WALLET", isNew });
+  }
+
+  onSendContinue() {
+    return this.service.send({ type: "CONTINUE" });
   }
 
   onSendBack() {
     return this.service.send({ type: "BACK" });
   }
 
+  onSendError(error) {
+    return this.service.send({ type: "ERROR", error });
+  }
+
   getError() {
-    const { error } = this.service.machine.context;
+    const { error } = this.service._state.context;
     if (!error) return;
     if (typeof error  === "object") {
       return JSON.stringify(error);

@@ -50,7 +50,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onStartWallet: da.startWallet,
   onRemoveWallet: da.removeWallet,
   onShowCreateWallet: da.showCreateWallet,
-  goToError: ca.goToError,
+  goToErrorPage: ca.goToError,
   onCreateWallet: da.createWallet,
   getDcrwalletLogs: da.getDcrwalletLogs,
   trezorLoadDeviceList: trza.loadDeviceList,

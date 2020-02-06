@@ -2,7 +2,7 @@ import { Machine } from "xstate";
 import { CreateWalletMachine } from "./CreateWallet/CreateWalletStateMachine";
 
 export const getStartedMachine = ({
-  preStartDaemon, onStartDaemon, sendEvent, goToError, onConnectDaemon, checkNetworkMatch, syncDaemon,
+  preStartDaemon, onStartDaemon, sendEvent, goToErrorPage, onConnectDaemon, checkNetworkMatch, syncDaemon,
   onGetAvailableWallets, setSelectedWallet, onStartWallet, onRetryStartRPC
 }) => Machine({
   id: "getStarted",
@@ -90,8 +90,20 @@ export const getStartedMachine = ({
             CHECK_NETWORK_MATCH: "checkingNetworkMatch"
           }
         },
+        // We have a step before wallet creation, which creates wallet directory and config.
+        // preCreateWallet state is responsible to deal with that.
+        preCreateWallet: {
+          onEntry: "isAtPreCreateWallet",
+          on: {
+            CONTINUE: "creatingWallet",
+            BACK: "choosingWallet"
+          }
+        },
         creatingWallet: {
           onEntry: "isAtCreatingWallet",
+          on: {
+            ERROR: "preCreateWallet",
+          },
           ...CreateWalletMachine
         },
         choosingWallet: {
@@ -99,7 +111,7 @@ export const getStartedMachine = ({
           onExit: "isAtLeavingChoosingWallet",
           on: {
             SUBMIT_CHOOSE_WALLET: "startingWallet",
-            CREATE_WALLET: "creatingWallet"
+            CREATE_WALLET: "preCreateWallet"
           }
         },
         startingWallet: {
@@ -188,7 +200,7 @@ export const getStartedMachine = ({
       if (appdata) {
         sendEvent({ type: "START_ADVANCED_DAEMON" });
       }
-      return goToError();
+      return goToErrorPage();
     },
     isStartedDaemon: () => {
       console.log("is at started daemon");
@@ -227,6 +239,9 @@ export const getStartedMachine = ({
         context.selectedWallet = selectedWallet;
         return sendEvent({ type: "SUBMIT_CHOOSE_WALLET" });
       }
+    },
+    isAtPreCreateWallet: (context, event) => {
+      context.error = event.error && event.error;
     },
     isAtLeavingChoosingWallet: (context, event) => {
       console.log("is leaving choosing wallet");

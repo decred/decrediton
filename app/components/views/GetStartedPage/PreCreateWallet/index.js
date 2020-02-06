@@ -1,13 +1,13 @@
-import { WalletSelectionFormBody } from "./Form";
+import CreateWalletForm from "./CreateWalletForm";
 import { substruct } from "fp";
 import { daemonStartup } from "connectors";
+import { injectIntl } from "react-intl";
 
 @autobind
-class WalletSelectionBody extends React.Component {
+class PreCreateWallet extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      editWallets: false,
       isCreateNewWallet: false,
       newWalletName: "",
       isWatchingOnly: false,
@@ -19,6 +19,7 @@ class WalletSelectionBody extends React.Component {
   }
 
   render() {
+    console.log(this.props)
     const {
       maxWalletCount, isSPV, availableWallets, getDaemonSynced, submitChosenWallet,
       onShowTrezorConfig, creatingWallet
@@ -28,7 +29,7 @@ class WalletSelectionBody extends React.Component {
       hasFailedAttemptPubKey, isWatchingOnly, walletMasterPubKey, masterPubKeyError, walletNameError
     } = this.state;
     return (
-      <WalletSelectionFormBody
+      <CreateWalletForm
         {...{
           selectedWallet: availableWallets[0],
           submitChosenWallet,
@@ -58,30 +59,16 @@ class WalletSelectionBody extends React.Component {
             toggleWatchOnly: null,
             onChangeCreateWalletMasterPubKey: null,
             toggleTrezor: null,
-            onToggleEditWallet: null
           }, this)
         }}
       />
     );
   }
-  onToggleEditWallet() {
-    this.setState({ editWallets: !this.state.editWallets });
-  }
-  showCreateWalletForm(isCreateNewWallet) {
-    this.props.onSendCreateWallet(isCreateNewWallet);
-  }
   hideCreateWalletForm() {
     if (this.state.isTrezor) {
       this.props.trezorDisable();
     }
-    this.setState({ hasFailedAttemptName: false,
-      hasFailedAttemptPubKey: false,
-      isCreateNewWallet: false,
-      newWalletName: "",
-      isWatchingOnly: false,
-      isTrezor: false,
-      walletMasterPubKey: ""
-    });
+    this.props.onSendBack();
   }
   onChangeAvailableWallets(selectedWallet) {
     this.setState({ selectedWallet });
@@ -106,7 +93,7 @@ class WalletSelectionBody extends React.Component {
   createWallet() {
     const { newWalletName, isWatchingOnly, masterPubKeyError, walletMasterPubKey,
       walletNameError, isTrezor, isCreateNewWallet } = this.state;
-    const { isTestNet, onSendCreateWallet } = this.props;
+    const { isTestNet, onSendContinue } = this.props;
 
     const walletSelected = {
       label: newWalletName,
@@ -128,15 +115,14 @@ class WalletSelectionBody extends React.Component {
       this.props.trezorAlertNoConnectedDevice();
       return;
     }
+    onSendContinue();
     // send CreateWallet action type to getStartedStateMachine so we can go to
     // creatingWallet state.
     if (isTrezor) {
       walletSelected.watchingOnly = true;
       return this.props.trezorGetWalletCreationMasterPubKey()
-        .then(() =>
-          this.props.onCreateWallet(walletSelected)
-            .then(() => this.props.onShowCreateWallet(isCreateNewWallet))
-            .catch(() => this.props.onSendError())
+        .then(() => this.props.onCreateWallet(walletSelected)
+          .then(() => this.props.onShowCreateWallet(isCreateNewWallet))
         );
     }
 
@@ -171,4 +157,4 @@ class WalletSelectionBody extends React.Component {
   }
 }
 
-export default daemonStartup(WalletSelectionBody);
+export default injectIntl(daemonStartup(PreCreateWallet));
