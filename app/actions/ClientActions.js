@@ -15,7 +15,7 @@ import { TransactionDetails } from "middleware/walletrpc/api_pb";
 import { clipboard } from "electron";
 import { getStartupStats } from "./StatisticsActions";
 import { getTokenAndInitialBatch } from "./GovernanceActions";
-import { rawHashToHex, reverseRawHash, strHashToRaw } from "helpers";
+import { rawHashToHex, reverseRawHash, strHashToRaw, reverseHash } from "helpers";
 import * as da from "../middleware/dcrdataapi";
 import { EXTERNALREQUEST_DCRDATA, EXTERNALREQUEST_POLITEIA } from "main_dev/externalRequests";
 import { TESTNET, MAINNET } from "constants";
@@ -696,6 +696,40 @@ function filterTransactions(transactions, filter) {
     .filter(v => filter.maxAmount ? Math.abs(v.amount) <= filter.maxAmount : true);
 }
 
+// getNonWalletOutputs decodes a tx and gets outputs which are not from the wallet.
+const getNonWalletOutputs = (decodeMessageService, walletService, tx) => new Promise((resolve,reject) => wallet.decodeTransaction(
+  decodeMessageService, Buffer.from(tx.tx.getTransaction())
+).then(async r => {
+  const tx = r.getTransaction();
+  const outputs = tx.getOutputsList().map(async o => {
+    const address = o.getAddressesList()[0];
+    // Validate address so we can check if it is our own.
+    // If that is the case it is a change output.
+    const addrValidResp = await wallet.validateAddress(walletService, address);
+    return {
+      address,
+      value: o.getValue(),
+      isChange: addrValidResp.getIsMine()
+    };
+  });
+  resolve(Promise.all(outputs));
+})
+.catch(err => reject(err)))
+
+// getNonWalletInputs decodes a tx and gets inputs which are not from the wallet.
+const getNonWalletInputs = (decodeMessageService, tx) => new Promise((resolve,reject) => wallet.decodeTransaction(
+  decodeMessageService, Buffer.from(tx.tx.getTransaction())
+).then(r => {
+  const tx = r.getTransaction();
+  const inputs = tx.getInputsList().map(o => ({
+      previoutOutpoint: reverseHash(Buffer.from(o.getPreviousTransactionHash()).toString("hex"))+":" +
+        o.getPreviousTransactionIndex(),
+      value: o.getAmountIn()
+  }));
+  resolve(inputs);
+})
+.catch(err => console.log(err) && reject(err)))
+
 // getTransactions loads a list of transactions from the wallet, given the
 // current grpc state.
 //
@@ -708,10 +742,11 @@ function filterTransactions(transactions, filter) {
 // `grpc.noMoreTransactions` is set to true.
 export const getTransactions = () => async (dispatch, getState) => {
   const { currentBlockHeight, getTransactionsRequestAttempt,
-    transactionsFilter, walletService, maximumTransactionCount, recentTransactionCount } = getState().grpc;
-  let { noMoreTransactions, lastTransaction, minedTransactions, recentRegularTransactions, recentStakeTransactions } = getState().grpc;
+    transactionsFilter, walletService, maximumTransactionCount, recentTransactionCount, decodeMessageService,
+    noMoreTransactions, lastTransaction, minedTransactions, recentRegularTransactions, recentStakeTransactions
+   } = getState().grpc;
   if (getTransactionsRequestAttempt || noMoreTransactions) return;
-
+  
   if (!currentBlockHeight) {
     // Wait a little then re-dispatch this call since we have no starting height yet
     setTimeout(() => { dispatch(getTransactions()); }, 1000);
@@ -766,7 +801,9 @@ export const getTransactions = () => async (dispatch, getState) => {
           const stakeTx = await(dispatch(getMissingStakeTxData(normalizedTx)));
           filtered.push(stakeTx);
         } else {
-          // Regular txs already have all the necessary info.
+          // For regular tx we get the nonWalletoutputs and nonWalletInputs.
+          tx.inputs = await getNonWalletInputs(decodeMessageService, tx)
+          tx.outputs = await getNonWalletOutputs(decodeMessageService, walletService, tx);
           filtered.push(tx);
         }
       }
@@ -937,7 +974,7 @@ export const getStartupTransactions = () => async (dispatch, getState) => {
   };
   await dispatch(changeTransactionsFilter(defaultFilter));
 
-  const { currentBlockHeight, walletService, recentTransactionCount } = getState().grpc;
+  const { currentBlockHeight, walletService, recentTransactionCount, decodeMessageService } = getState().grpc;
   const chainParams = sel.chainParams(getState());
   let startRequestHeight = currentBlockHeight;
   const pageSize = 50;
@@ -961,8 +998,13 @@ export const getStartupTransactions = () => async (dispatch, getState) => {
 
   const mergeRegularTxs = txs =>
     (recentRegularTxs.length < recentTransactionCount) &&
-    (recentRegularTxs.push( ...txs.filter(
-      tx => tx.type === TransactionDetails.TransactionType.REGULAR )));
+    recentRegularTxs.push( ...txs.filter( async tx => {
+        if (tx.type !== TransactionDetails.TransactionType.REGULAR) return;
+        tx.outputs = await getNonWalletOutputs(decodeMessageService, walletService, tx);
+        tx.inputs = await getNonWalletInputs(decodeMessageService, tx)
+        return tx;
+      })
+    );
 
   const mergeStakeTxs = txs =>
     (recentStakeTxs.length < recentTransactionCount) &&
