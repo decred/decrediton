@@ -24,13 +24,13 @@ class Home extends React.Component{
 
   render() {
     return this.props.walletService ? <HomePage {...{
-        rowNumber: ROWS_NUMBER_ON_TABLE, ...this.props, ...this.state,
-        ...substruct({
-          onShowRevokeTicket: null,
-          onRequestPassphrase: null,
-          onCancelPassphraseRequest: null
-        }, this)
-      }} /> : <ErrorScreen />;
+      rowNumber: ROWS_NUMBER_ON_TABLE, ...this.props, ...this.state,
+      ...substruct({
+        onShowRevokeTicket: null,
+        onRequestPassphrase: null,
+        onCancelPassphraseRequest: null
+      }, this)
+    }} /> : <ErrorScreen />;
   }
 
   onRevokeTickets(privpass) {
