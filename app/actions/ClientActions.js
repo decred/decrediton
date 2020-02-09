@@ -855,11 +855,11 @@ function checkForStakeTransactions(txs) {
 }
 // newTransactionsReceived should be called when a new set of transactions has
 // been received from the wallet (through a notification).
-export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTransactions) => (dispatch, getState) => {
+export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTransactions) => async (dispatch, getState) => {
   if (!newlyMinedTransactions.length && !newlyUnminedTransactions.length) return;
 
   let { unminedTransactions, minedTransactions, recentRegularTransactions, recentStakeTransactions } = getState().grpc;
-  const { transactionsFilter, recentTransactionCount } = getState().grpc;
+  const { transactionsFilter, recentTransactionCount, decodeMessageService, walletService } = getState().grpc;
   const chainParams = sel.chainParams(getState());
 
   // aux maps of [txhash] => tx (used to ensure no duplicate txs)
@@ -898,7 +898,13 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
     ...newlyUnminedTransactions,
     ...newlyMinedTransactions,
     ...recentRegularTransactions.filter(tx => !newlyMinedMap[tx.hash] && !newlyUnminedMap[tx.hash])
-  ], regularTransactionFilter).slice(0, recentTransactionCount);
+  ], regularTransactionFilter).slice(0, recentTransactionCount).map(async tx => {
+    const outputs = await getNonWalletOutputs(decodeMessageService, walletService, tx);
+    const inputs = await getNonWalletInputs(decodeMessageService, tx);
+    return { ...tx, outputs, inputs };
+  });
+  // add inputs and outputs to recentRegularTransactions after receveing new tx.
+  await Promise.all(recentRegularTransactions).then(r => recentRegularTransactions = r);
 
   const stakeTransactionFilter = {
     listDirection: "desc",
@@ -998,11 +1004,10 @@ export const getStartupTransactions = () => async (dispatch, getState) => {
 
   // the mergeXXX functions pick a list of transactions returned from
   // getTransactions and fills the appropriate result variables
-
-  const mergeRegularTxs = txs => {
-    if (recentRegularTxs.length >= recentTransactionCount) return;
-    recentRegularTxs = txs.filter(tx => tx.type === TransactionDetails.TransactionType.REGULAR);
-  };
+  const mergeRegularTxs = txs =>
+    (recentRegularTxs.length < recentTransactionCount) &&
+    (recentRegularTxs.push( ...txs.filter(
+      tx => tx.type === TransactionDetails.TransactionType.REGULAR )));
 
   const mergeStakeTxs = txs =>
     (recentStakeTxs.length < recentTransactionCount) &&
@@ -1076,7 +1081,6 @@ export const getStartupTransactions = () => async (dispatch, getState) => {
 
   dispatch({ recentRegularTxs, recentStakeTxs, maturingBlockHeights,
     type: GETSTARTUPTRANSACTIONS_SUCCESS });
-
 };
 
 export const UPDATETIMESINCEBLOCK = "UPDATETIMESINCEBLOCK";
