@@ -714,7 +714,7 @@ const getNonWalletOutputs = (decodeMessageService, walletService, tx) => new Pro
   });
   resolve(Promise.all(outputs));
 })
-.catch(err => reject(err)))
+  .catch(err => reject(err)));
 
 // getNonWalletInputs decodes a tx and gets inputs which are not from the wallet.
 const getNonWalletInputs = (decodeMessageService, tx) => new Promise((resolve,reject) => wallet.decodeTransaction(
@@ -722,13 +722,13 @@ const getNonWalletInputs = (decodeMessageService, tx) => new Promise((resolve,re
 ).then(r => {
   const tx = r.getTransaction();
   const inputs = tx.getInputsList().map(o => ({
-      previoutOutpoint: reverseHash(Buffer.from(o.getPreviousTransactionHash()).toString("hex"))+":" +
+    previoutOutpoint: reverseHash(Buffer.from(o.getPreviousTransactionHash()).toString("hex"))+":" +
         o.getPreviousTransactionIndex(),
-      value: o.getAmountIn()
+    value: o.getAmountIn()
   }));
   resolve(inputs);
 })
-.catch(err => console.log(err) && reject(err)))
+  .catch(err => console.log(err) && reject(err)));
 
 // getTransactions loads a list of transactions from the wallet, given the
 // current grpc state.
@@ -744,12 +744,12 @@ export const getTransactions = () => async (dispatch, getState) => {
   const {
     currentBlockHeight, getTransactionsRequestAttempt, transactionsFilter, walletService,
     maximumTransactionCount, recentTransactionCount, decodeMessageService
-   } = getState().grpc;
+  } = getState().grpc;
   let {
     noMoreTransactions, lastTransaction, minedTransactions, recentRegularTransactions, recentStakeTransactions
   } = getState().grpc;
   if (getTransactionsRequestAttempt || noMoreTransactions) return;
-  
+
   if (!currentBlockHeight) {
     // Wait a little then re-dispatch this call since we have no starting height yet
     setTimeout(() => { dispatch(getTransactions()); }, 1000);
@@ -805,7 +805,7 @@ export const getTransactions = () => async (dispatch, getState) => {
           filtered.push(stakeTx);
         } else {
           // For regular tx we get the nonWalletoutputs and nonWalletInputs.
-          tx.inputs = await getNonWalletInputs(decodeMessageService, tx)
+          tx.inputs = await getNonWalletInputs(decodeMessageService, tx);
           tx.outputs = await getNonWalletOutputs(decodeMessageService, walletService, tx);
           filtered.push(tx);
         }
@@ -999,15 +999,10 @@ export const getStartupTransactions = () => async (dispatch, getState) => {
   // the mergeXXX functions pick a list of transactions returned from
   // getTransactions and fills the appropriate result variables
 
-  const mergeRegularTxs = txs =>
-    (recentRegularTxs.length < recentTransactionCount) &&
-    recentRegularTxs.push( ...txs.filter( async tx => {
-        if (tx.type !== TransactionDetails.TransactionType.REGULAR) return;
-        tx.outputs = await getNonWalletOutputs(decodeMessageService, walletService, tx);
-        tx.inputs = await getNonWalletInputs(decodeMessageService, tx)
-        return tx;
-      })
-    );
+  const mergeRegularTxs = txs => {
+    if (recentRegularTxs.length >= recentTransactionCount) return;
+    recentRegularTxs = txs.filter(tx => tx.type === TransactionDetails.TransactionType.REGULAR);
+  };
 
   const mergeStakeTxs = txs =>
     (recentStakeTxs.length < recentTransactionCount) &&
@@ -1070,6 +1065,14 @@ export const getStartupTransactions = () => async (dispatch, getState) => {
 
   recentRegularTxs = recentRegularTxs.slice(0, recentTransactionCount);
   recentStakeTxs = recentStakeTxs.slice(0, recentTransactionCount);
+
+  // get non wallet inputs and outputs so we can show at our home page.
+  const addNonWalletInfo = recentRegularTxs.map(async tx => {
+    const outputs = await getNonWalletOutputs(decodeMessageService, walletService, tx);
+    const inputs = await getNonWalletInputs(decodeMessageService, tx);
+    return { ...tx, outputs, inputs };
+  });
+  await Promise.all(addNonWalletInfo).then(r => recentRegularTxs = r);
 
   dispatch({ recentRegularTxs, recentStakeTxs, maturingBlockHeights,
     type: GETSTARTUPTRANSACTIONS_SUCCESS });

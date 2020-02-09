@@ -5,7 +5,7 @@ import { timeMessage } from "./index";
 import { FormattedMessage as T } from "react-intl";
 
 const RegularTxRow = ({
-  txAmount, txDescription, txDirection, overview, txAccountName, pending, txTs,
+  txAmount, txDirection, overview, txAccountName, pending, txTs,
   txOutputAddresses, txInputOutpoints, ...props
 }) => (
   <Row {...{ ...props, txAccountName, pending, overview }}>
@@ -16,27 +16,27 @@ const RegularTxRow = ({
         <div className="transaction-status">
           <span className="transaction-account-name">{txAccountName}</span>
         </div> : txDirection !== "in" ? (
-            <div className="transaction-info is-row">
-              <T id="txHistory.from" m="From " />
-              <div className="transaction-status">
-                <span className="transaction-account-name">{txAccountName}</span>
-              </div>
-              <T id="txHistory.to" m=" To " />
-              <div className="transaction-status">
-                <span className="transaction-account-name">{txOutputAddresses}</span>
-              </div>
+          <div className="transaction-info is-row">
+            <T id="txHistory.from" m="From " />
+            <div className="transaction-status">
+              <span className="transaction-account-name">{txAccountName}</span>
             </div>
-          ) : (
-            <div className="transaction-info is-row">
-              <T id="txHistory.from" m="From " />
-              <div className="transaction-status">
-                <span className="address-shorter transaction-account-name">{txInputOutpoints}</span>
-              </div>
-              <T id="txHistory.to" m=" To " />
-              <div className="transaction-status">
-                <span className="transaction-account-name">{txAccountName}</span>
-              </div>
+            <T id="txHistory.to" m=" To " />
+            <div className="transaction-status">
+              <span className="transaction-account-name">{txOutputAddresses}</span>
             </div>
+          </div>
+        ) : (
+          <div className="transaction-info is-row">
+            <T id="txHistory.from" m="From " />
+            <div className="transaction-status">
+              <span className="address-shorter transaction-account-name">{txInputOutpoints}</span>
+            </div>
+            <T id="txHistory.to" m=" To " />
+            <div className="transaction-status">
+              <span className="transaction-account-name">{txAccountName}</span>
+            </div>
+          </div>
         ))}
       { !pending &&
         <div className="transaction-time-date-spacer">
