@@ -765,7 +765,13 @@ export const getTransactions = () => async (dispatch, getState) => {
 
   // first, request unmined transactions. They always come first in decrediton.
   let { unmined } = await walletGetTransactions(walletService, -1, -1, 0);
-  let unminedTransactions = filterTransactions(unmined, transactionsFilter);
+  let unminedTransactions = filterTransactions(unmined, transactionsFilter).map(async tx => {
+    const outputs = await getNonWalletOutputs(decodeMessageService, walletService, tx);
+    const inputs = await getNonWalletInputs(decodeMessageService, tx);
+    return { ...tx, outputs, inputs };
+  });
+  // add inputs and outputs to unminedTransactions.
+  await Promise.all(unminedTransactions).then(r => unminedTransactions = r);
 
   const stakeTypes = [ TransactionDetails.TransactionType.VOTE,
     TransactionDetails.TransactionType.REVOCATION,
