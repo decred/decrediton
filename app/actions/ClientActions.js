@@ -741,10 +741,13 @@ const getNonWalletInputs = (decodeMessageService, tx) => new Promise((resolve,re
 // When no more transactions are available given the current filter,
 // `grpc.noMoreTransactions` is set to true.
 export const getTransactions = () => async (dispatch, getState) => {
-  const { currentBlockHeight, getTransactionsRequestAttempt,
-    transactionsFilter, walletService, maximumTransactionCount, recentTransactionCount, decodeMessageService,
-    noMoreTransactions, lastTransaction, minedTransactions, recentRegularTransactions, recentStakeTransactions
+  const {
+    currentBlockHeight, getTransactionsRequestAttempt, transactionsFilter, walletService,
+    maximumTransactionCount, recentTransactionCount, decodeMessageService
    } = getState().grpc;
+  let {
+    noMoreTransactions, lastTransaction, minedTransactions, recentRegularTransactions, recentStakeTransactions
+  } = getState().grpc;
   if (getTransactionsRequestAttempt || noMoreTransactions) return;
   
   if (!currentBlockHeight) {
