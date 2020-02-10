@@ -118,7 +118,7 @@ class GetStarted extends React.Component {
         break;
       case "choosingWallet":
         text = <T id="loaderBar.choosingWallet" m="Choose a wallet to open" />;
-        component = h(WalletSelection, { onSendCreateWallet });
+        component = h(WalletSelection, { onSendCreateWallet, submitChosenWallet });
         break;
       case "preCreateWallet":
         text = isCreateNewWallet ?
@@ -143,7 +143,7 @@ class GetStarted extends React.Component {
       }
       PageComponent = h(GetStartedMachinePage, {
         ...this.state, ...this.props, submitRemoteCredentials, submitAppdata, onShowSettings,
-        submitChosenWallet, service, machine, error, text, StateComponent: component
+        service, machine, error, text, StateComponent: component
       });
     }
     if (key === "settings") {
