@@ -10,6 +10,7 @@ import * as trza from "actions/TrezorActions";
 
 const mapStateToProps = selectorMap({
   isAdvancedDaemon: sel.isAdvancedDaemon,
+  isSPV: sel.isSPV,
   availableWallets: sel.sortedAvailableWallets,
   getDaemonSynced: sel.getDaemonSynced,
   getCurrentBlockCount: sel.getCurrentBlockCount,
@@ -40,6 +41,7 @@ const mapStateToProps = selectorMap({
 const mapDispatchToProps = dispatch => bindActionCreators({
   decreditonInit: da.decreditonInit,
   onRetryStartRPC: wla.startRpcRequestFunc,
+  startSPVSync: wla.spvSyncAttempt,
   setSelectedWallet: wla.setSelectedWallet,
   getSelectedWallet: wla.getSelectedWallet,
   onStartDaemon: da.startDaemon,

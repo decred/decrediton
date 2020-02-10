@@ -3,7 +3,7 @@ import { CreateWalletMachine } from "./CreateWallet/CreateWalletStateMachine";
 
 export const getStartedMachine = ({
   preStartDaemon, onStartDaemon, sendEvent, goToErrorPage, onConnectDaemon, checkNetworkMatch, syncDaemon,
-  onGetAvailableWallets, setSelectedWallet, onStartWallet, onRetryStartRPC
+  onGetAvailableWallets, setSelectedWallet, onStartWallet, onRetryStartRPC, startSPVSync
 }) => Machine({
   id: "getStarted",
   initial: "startMachine",
@@ -43,7 +43,10 @@ export const getStartedMachine = ({
           }
         },
         startSpv: {
-          onEntry: "isAtStartSPV"
+          onEntry: "isAtStartSPV",
+          on: {
+            CONTINUE: "choosingWallet"
+          }
         },
         startingDaemon: {
           onEntry: "isAtStartingDaemon",
@@ -177,8 +180,9 @@ export const getStartedMachine = ({
       console.log("is at start advanced daemon");
       context.error = event.payload && event.payload.error;
     },
-    isAtStartSPV: () => {
-      console.log("is at start SPV");
+    isAtStartSPV: (context, event) => {
+      context.isSPV = event.isSPV;
+      sendEvent({ type: "CONTINUE" });
     },
     isAtStartingDaemon: (context, event) => {
       console.log("is at Starting Daemonn");
@@ -263,13 +267,12 @@ export const getStartedMachine = ({
         })
         .catch(err => console.log(err));
     },
-    isSyncingRPC: async () => {
+    isSyncingRPC: (context) => {
       console.log("is at syncing rpc");
-      try {
-        await onRetryStartRPC();
-      } catch (error) {
-        console.log(error);
+      if (context.isSPV) {
+        return startSPVSync();
       }
+      onRetryStartRPC();
     }
   }
 });

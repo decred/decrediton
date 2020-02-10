@@ -20,12 +20,12 @@ class GetStarted extends React.Component {
     super(props);
     const {
       onConnectDaemon, checkNetworkMatch, syncDaemon, onStartWallet, onRetryStartRPC, onGetAvailableWallets,
-      onStartDaemon, setSelectedWallet, goToErrorPage, goToSettings, backToCredentials
+      onStartDaemon, setSelectedWallet, goToErrorPage, goToSettings, backToCredentials, startSPVSync
     } = this.props;
     const { sendEvent, preStartDaemon } = this;
     this.machine = getStartedMachine({
       onConnectDaemon, checkNetworkMatch, syncDaemon, onStartWallet, onRetryStartRPC, sendEvent, onGetAvailableWallets,
-      onStartDaemon, setSelectedWallet, preStartDaemon, goToErrorPage, goToSettings, backToCredentials
+      onStartDaemon, setSelectedWallet, preStartDaemon, goToErrorPage, goToSettings, backToCredentials, startSPVSync
     });
     this.service = interpret(this.machine).onTransition(current => this.setState({ current }, this.getStateComponent));
     this.state = {
@@ -43,7 +43,7 @@ class GetStarted extends React.Component {
       const selectedWallet = getSelectedWallet();
       return this.service.send({ type: "CHOOSE_WALLET", selectedWallet });
     }
-    this.service.send({ type: "START_SPV", isSPV, isAdvancedDaemon });
+    this.service.send({ type: "START_SPV", isSPV });
     this.service.send({ type: "START_ADVANCED_DAEMON", isSPV, isAdvancedDaemon });
     this.service.send({ type: "START_REGULAR_DAEMON", isSPV, isAdvancedDaemon });
   }
