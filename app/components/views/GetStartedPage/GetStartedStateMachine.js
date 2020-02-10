@@ -224,6 +224,7 @@ export const getStartedMachine = ({
     },
     isAtCheckNetworkMatch: () => {
       console.log(" is at check network ");
+      // TODO add error when network does not match
       return checkNetworkMatch()
         .then( checked => sendEvent({ type: "CHOOSE_WALLET", payload: { checked } }))
         .catch(e => console.log(e));

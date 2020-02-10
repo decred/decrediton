@@ -12,6 +12,16 @@ import { createElement as h } from "react";
 import GetStartedMachinePage from "./GetStartedMachinePage";
 import TrezorConfig from "./TrezorConfig";
 import CreateWalletForm from "./PreCreateWallet";
+import { RescanWalletBody } from "./RescanWallet";
+
+// css animation classes:
+const blockChainLoading = "blockchain-syncing";
+const daemonWaiting = "daemon-waiting";
+const discoveringAddresses = "discovering-addresses";
+const scanningBlocks = "scanning-blocks";
+const finalizingSetup = "finalizing-setup";
+const fetchingHeaders = "fetching-headers";
+const establishingRpc = "establishing-rpc";
 
 @autobind
 class GetStarted extends React.Component {
@@ -57,35 +67,37 @@ class GetStarted extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    // const blockChainLoading = "blockchain-syncing";
-    const daemonWaiting = "daemon-waiting";
-    const discoveringAddresses = "discovering-addresses";
-    const scanningBlocks = "scanning-blocks";
-    // const finalizingSetup = "finalizing-setup";
-    const fetchingHeaders = "fetching-headers";
-    // const establishingRpc = "establishing-rpc";
-    //     text = <T id="getStarted.header.stakePools.meta" m="Import StakePools" />;
-    //     text = <T id="getStarted.header.startrpc.meta" m="Establishing RPC connection" />;
-    //     animationType = establishingRpc;
-
-    const { syncFetchMissingCfiltersAttempt, syncFetchHeadersAttempt, syncRescanAttempt, syncDiscoverAddressesAttempt } = this.props;
+    // This is responsable for updating the text and animation of the loader bar
+    // when syncing rpc This is done this way to avoid removing syncConsumer method
+    // from the reducer.
+    // After Each update we need to call getStateComponent or the PageComponent will not
+    // update itself.
+    let text, animationType, component;
+    const { syncFetchMissingCfiltersAttempt, syncFetchHeadersAttempt, syncRescanAttempt, syncDiscoverAddressesAttempt, synced } = this.props;
     if (prevProps.syncFetchMissingCfiltersAttempt !== syncFetchMissingCfiltersAttempt && syncFetchMissingCfiltersAttempt) {
-      this.setState({ animationType: daemonWaiting });
-      this.setState({ text: <T id="getStarted.header.fetchingMissing.meta" m="Fetching missing committed filters" /> });
+      animationType = daemonWaiting;
+      text = <T id="getStarted.header.fetchingMissing.meta" m="Fetching missing committed filters" />;
+      this.getStateComponent(text, animationType, component);
     } else if (prevProps.syncFetchHeadersAttempt !== syncFetchHeadersAttempt && syncFetchHeadersAttempt) {
-      this.setState({ animationType: fetchingHeaders });
-      this.setState({ text: <T id="getStarted.header.fetchingBlockHeaders.meta" m="Fetching block headers" /> });
+      animationType = fetchingHeaders;
+      text = <T id="getStarted.header.fetchingBlockHeaders.meta" m="Fetching block headers" />;
     } else if (syncDiscoverAddressesAttempt !== prevProps.syncDiscoverAddressesAttempt && syncDiscoverAddressesAttempt) {
-      this.setState({ animationType: discoveringAddresses });
-      this.setState({ text: <T id="getStarted.header.discoveringAddresses.meta" m="Discovering addresses" /> });
+      animationType = discoveringAddresses;
+      text = <T id="getStarted.header.discoveringAddresses.meta" m="Discovering addresses" />;
+      this.getStateComponent(text, animationType, component);
     } else if (prevProps.syncRescanAttempt !== syncRescanAttempt && syncRescanAttempt) {
-      this.setState({ animationType: scanningBlocks });
-      this.setState({ text:<T id="getStarted.header.rescanWallet.meta" m="Scanning blocks for transactions" /> });
-      // Form = RescanWalletBody;
+      animationType = scanningBlocks;
+      text = <T id="getStarted.header.rescanWallet.meta" m="Scanning blocks for transactions" />;
+      component = RescanWalletBody;
+      this.getStateComponent(text, animationType, component);
+    } else if (prevProps.synced !== synced && synced) {
+      animationType = finalizingSetup;
+      text = <T id="getStarted.header.finishingStart.meta" m="Finishing to load wallet" />; 
+      this.getStateComponent(text, animationType, component);
     }
   }
 
-  getStateComponent() {
+  getStateComponent(updatedText, updatedAnimationType, updatedComponent) {
     const { current } = this.state;
     const {
       service, submitChosenWallet, submitRemoteCredentials, submitAppdata,
@@ -95,7 +107,7 @@ class GetStarted extends React.Component {
     const { machine } = service;
     const { isCreateNewWallet } = this.service._state.context;
     const error = this.getError();
-    let component, text, PageComponent;
+    let component, text, animationType, PageComponent;
 
     const key = Object.keys(current.value)[0];
     if (key === "startMachine") {
@@ -114,6 +126,7 @@ class GetStarted extends React.Component {
         text = <T id="loaderBar.StartingDaemon" m="Starting Daemon..." />;
         break;
       case "syncingDaemon":
+        animationType = blockChainLoading;
         text = <T id="loaderBar.syncingDaemon" m="syncing Daemon..." />;
         break;
       case "choosingWallet":
@@ -138,12 +151,15 @@ class GetStarted extends React.Component {
         text = <T id="loaderBar.startingWallet" m="Starting wallet..." />;
         break;
       case "syncingRPC":
+        animationType = establishingRpc;
         text = <T id="loaderBar.syncingRPC" m="Syncing RPC connection..." />;
         break;
       }
       PageComponent = h(GetStartedMachinePage, {
         ...this.state, ...this.props, submitRemoteCredentials, submitAppdata, onShowSettings,
-        service, machine, error, text, StateComponent: component
+        service, machine, error,
+        
+        text: updatedText ? updatedText : text, animationType: updatedAnimationType ? updatedAnimationType : animationType, StateComponent: updatedComponent ? updatedComponent : component
       });
     }
     if (key === "settings") {
@@ -156,7 +172,7 @@ class GetStarted extends React.Component {
       PageComponent = h(TrezorConfig, { onSendBack });
     }
 
-    return this.setState({ PageComponent, text });
+    return this.setState({ PageComponent });
   }
 
   sendEvent(data) {

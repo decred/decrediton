@@ -26,8 +26,8 @@ export const LOADER_ATTEMPT = "LOADER_ATTEMPT";
 export const LOADER_FAILED = "LOADER_FAILED";
 export const LOADER_SUCCESS = "LOADER_SUCCESS";
 
-export const loaderRequest = () => (dispatch, getState) => new Promise((resolve) => {
-  const get = async () => {
+export const loaderRequest = () => (dispatch, getState) => new Promise((resolve, reject) => {
+  const getLoaderAsync = async () => {
     const { grpc: { address, port } } = getState();
     const { daemon: { walletName } } = getState();
     const request = { isTestNet: isTestNet(getState()), walletName, address, port };
@@ -35,14 +35,15 @@ export const loaderRequest = () => (dispatch, getState) => new Promise((resolve)
     try {
       const loader = await getLoader(request);
       dispatch({ loader, type: LOADER_SUCCESS });
-      dispatch(walletExistRequest());
-      resolve(true);
+      dispatch(openWalletAttempt("", false));
+      resolve(loader);
     } catch (error) {
       dispatch({ error, type: LOADER_FAILED });
+      reject(error);
     }
   };
 
-  get();
+  getLoaderAsync();
 });
 
 export const GETWALLETSEEDSVC_ATTEMPT = "GETWALLETSEEDSVC_ATTEMPT";
@@ -59,20 +60,6 @@ export const getWalletSeedService = () => (dispatch, getState) => {
     })
     .catch(error => dispatch({ error, type: GETWALLETSEEDSVC_FAILED }));
 };
-
-export const WALLETEXIST_ATTEMPT = "WALLETEXIST_ATTEMPT";
-export const WALLETEXIST_FAILED = "WALLETEXIST_FAILED";
-export const WALLETEXIST_SUCCESS = "WALLETEXIST_SUCCESS";
-
-export const walletExistRequest = () => (dispatch, getState) =>
-  getWalletExists(getState().walletLoader.loader)
-    .then(response => {
-      dispatch({ response: response, type: WALLETEXIST_SUCCESS });
-      if (response.getExists()) {
-        dispatch(openWalletAttempt("public", false));
-      }
-    })
-    .catch(error => dispatch({ error, type: WALLETEXIST_FAILED }));
 
 export const CREATEWALLET_GOBACK = "CREATEWALLET_GOBACK";
 
@@ -106,7 +93,7 @@ export const createWalletRequest = (pubPass, privPass, seed, isNew) => (dispatch
       config.delete("discoveraccounts");
       config.set("discoveraccounts", isNew);
       dispatch({ complete: isNew, type: UPDATEDISCOVERACCOUNTS });
-      dispatch({ response: {}, type: CREATEWALLET_SUCCESS });
+      dispatch({ type: CREATEWALLET_SUCCESS });
       dispatch(clearStakePoolConfigNewWallet());
       dispatch(getWalletServiceAttempt());
       resolve(true);
@@ -420,7 +407,6 @@ export function syncCancel() {
   };
 }
 
-// TODO: move this method to state machine
 const syncConsumer = (response) => (dispatch, getState) => {
   const { discoverAccountsComplete } = getState().walletLoader;
   switch (response.getNotificationType()) {

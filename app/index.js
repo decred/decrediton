@@ -230,7 +230,6 @@ var initialState = {
     existingOrNew: false,
     rpcRetryAttempts: 0,
     curBlocks: 0,
-    stepIndex: 0,
     maxWalletCount: globalCfg.get("max_wallet_count"),
     isWatchingOnly: false,
     // getSelectedWallet returns null if no wallet is selected.
@@ -245,27 +244,9 @@ var initialState = {
     getLoaderError: null,
     // WalletCreate
     createWalletExisting: false,
-    confirmNewSeed: false,
-    walletCreateRequestAttempt: false,
-    walletCreateResponse: null,
-    walletCreateError: null,
-    walletCreateExisting: false,
-    // WalletExist
-    walletExistRequestAttempt: false,
-    walletExistResponse: null,
-    walletExistError: null,
     // WalletOpen
     walletOpenRequestAttempt: false,
-    walletOpenResponse: null,
     walletOpenError: null,
-    // WalletClose
-    walletCloseRequestAttempt: false,
-    walletClosedResponse: null,
-    walletClosedError: null,
-    // StartRpc
-    startRpcRequestAttempt: false,
-    startRpcResponse: null,
-    startRpcError: null
   },
   notifications: {
     transactionNtfns: null,
