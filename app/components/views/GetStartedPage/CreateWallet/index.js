@@ -10,7 +10,6 @@ import ConfirmSeed from "./ConfirmSeed";
 import ExistingSeed from "./ExistingSeed";
 import { createWallet } from "connectors";
 import { createElement as h } from "react";
-import { DecredLoading } from "indicators";
 
 @autobind
 class CreateWallet extends React.Component {
@@ -67,7 +66,9 @@ class CreateWallet extends React.Component {
       });
       break;
     case "creatingWallet":
-      component = h(DecredLoading);
+      // Get last StateComponent and re-render it with all its props and
+      // isCreatingWallet props as true.
+      component = h(this.state.StateComponent.type, { ...this.state.StateComponent.props, isCreatingWallet: true });
       break;
     case "finished":
       break;

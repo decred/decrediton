@@ -4,7 +4,9 @@ import SingleSeedWordEntry from "../SingleSeedWordEntry";
 import { ConfirmSeedMsg, BackBtnMsg, CreateWalletMsg, GoBackMsg, CreateNewWalletTitle } from "../../messages";
 import { Tooltip, CreatePassPhrase } from "shared";
 
-export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord, isValid, onCreateWallet, sendBack, setPassPhrase }) => (
+export const ConfirmSeedForm = ({
+  seedWords, onChangeSeedWord, isValid, onCreateWallet, sendBack, setPassPhrase, isCreatingWallet
+}) => (
   <>
     <div className="content-title-wrapper is-row">
       <div className="content-title">
@@ -52,7 +54,7 @@ export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord, isValid, onCreate
       <KeyBlueButton
         className="wallet-key-blue-button"
         disabled={!isValid}
-        // loading={isCreatingWallet}
+        loading={isCreatingWallet}
         onClick={onCreateWallet}
       >
         <CreateWalletMsg />
