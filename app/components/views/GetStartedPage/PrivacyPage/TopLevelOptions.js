@@ -14,7 +14,7 @@ const PrivacyOption = ({ title, description, icon, onClick }) => (
   </div>
 );
 
-export default ({ setupStandardPrivacy, setupDisabledPrivacy, setupCustomPrivacy }) => (
+export default ({ setupStandardPrivacy, setupDisabledPrivacy, toggleCustomPrivacy }) => (
   <>
     <div className="language-select-title">
       <T id="privacy.title" m={"Privacy Options"}/>
@@ -41,7 +41,7 @@ export default ({ setupStandardPrivacy, setupDisabledPrivacy, setupCustomPrivacy
         title={<T id="privacy.options.custom.title" m="Customize Allowed Connections" />}
         icon="custom"
         description={<T id="privacy.options.custom.description" m="Allows you to choose exactly which third party services can be accessed by the app." />}
-        onClick={setupCustomPrivacy}
+        onClick={toggleCustomPrivacy}
       />
     </div>
   </>

@@ -2,7 +2,7 @@ import { FormattedMessage as T } from "react-intl";
 import PrivacySettings from "views/SettingsPage/PrivacySettings";
 import { InvisibleButton, KeyBlueButton } from "buttons";
 
-export default ({ cancelCustomPrivacy, acceptCustomPrivacy, ...props }) => (
+export default ({ toggleCustomPrivacy, acceptCustomPrivacy, ...props }) => (
   <>
     <div className="language-select-title">
       <T id="privacy.custom.title" m={"Custom Privacy Options"}/>
@@ -13,7 +13,7 @@ export default ({ cancelCustomPrivacy, acceptCustomPrivacy, ...props }) => (
     <div className="get-started-custom-privacy-settings" >
       <PrivacySettings {...props} />
       <div className="privacy-buttons">
-        <InvisibleButton onClick={cancelCustomPrivacy}>
+        <InvisibleButton onClick={toggleCustomPrivacy}>
           <T id="privacy.custom.cancel" m="Cancel" />
         </InvisibleButton>
         <KeyBlueButton onClick={acceptCustomPrivacy}>

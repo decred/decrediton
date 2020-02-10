@@ -15,7 +15,7 @@ const PrivacyOption = ({ title, description, icon, onClick }) => (
   </div>
 );
 
-export default ({ enableSpv, disableSpv }) => (
+export default ({ toggleSpv }) => (
   <>
     <div className="language-select-title">
       <T id="spv.title" m={"Simple Payment Verification (SPV)"}/>
@@ -31,14 +31,14 @@ export default ({ enableSpv, disableSpv }) => (
         title={<T id="spv.options.enable.title" m="Enable SPV" />}
         icon="enable-spv"
         description={<T id="spv.options.enable.description" m="SPV will allow your wallets to be restored and used much more quickly.  This speed comes at cost, with blocks not being fully verified.  It's 'less secure' but very unlikely that there will be any problems." />}
-        onClick={enableSpv}
+        onClick={() => toggleSpv(true)}
       />
 
       <PrivacyOption
         title={<T id="spv.options.disable.title" m="Disable SPV" />}
         icon="disable-spv"
         description={<T id="spv.options.disable.description" m="This will use the regular Decred Daemon and fully verify blocks.  This will take longer, but is fully secure.  Any block or mined transaction can be fully trusted." />}
-        onClick={disableSpv}
+        onClick={() => toggleSpv(false)}
       />
 
     </div>

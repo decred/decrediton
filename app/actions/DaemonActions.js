@@ -99,18 +99,16 @@ export const showCreateWallet = (isNew) => (dispatch) => {
   dispatch(pushHistory("/getstarted/createwallet/"+isNew));
 };
 
-export const enableSpv = () => async (dispatch, getState) => {
-  dispatch(updateStateSettingsChanged({ spvMode: true }, true));
+// toggleSpv enables and disables spv in decrediton when first starting
+export const toggleSpv = (isSPV) => async (dispatch, getState) => {
+  dispatch(updateStateSettingsChanged({ spvMode: isSPV }, true));
   const tempSettings = getState().settings.tempSettings;
-  await dispatch(saveSettings(tempSettings));
-  dispatch(finishSpvChoice(true));
-};
+  const config = getGlobalCfg();
+  config.set("show_spvchoice", false);
 
-export const disableSpv = () => (dispatch, getState) => {
-  dispatch(updateStateSettingsChanged({ spvMode: false }, true));
-  const tempSettings = getState().settings.tempSettings;
-  dispatch(saveSettings(tempSettings));
-  dispatch(finishSpvChoice(false));
+  await dispatch(saveSettings(tempSettings));
+  dispatch({ type: FINISH_SPVCHOICE });
+  dispatch(goBack());
 };
 
 export const setupStandardPrivacy = () => (dispatch, getState) => {
@@ -133,16 +131,6 @@ export const selectLanguage = (selectedLanguage) => (dispatch) => {
   config.set("set_language", false);
   dispatch({ language: selectedLanguage.language, type: SELECT_LANGUAGE });
   dispatch(pushHistory("/getstarted"));
-};
-
-export const finishSpvChoice = (isSPV) => (dispatch) => {
-  const config = getGlobalCfg();
-  config.set("show_spvchoice", false);
-  dispatch({ type: FINISH_SPVCHOICE });
-  if (!isSPV) {
-    dispatch(startDaemon());
-  }
-  dispatch(goBack());
 };
 
 export const finishTutorial = () => (dispatch) => {
