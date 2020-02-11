@@ -10,6 +10,8 @@ import Logs from "./Logs";
 import { FormattedMessage as T } from "react-intl";
 import { createElement as h } from "react";
 import GetStartedMachinePage from "./GetStartedMachinePage";
+import TrezorConfig from "./TrezorConfig";
+import CreateWalletForm from "./PreCreateWallet";
 
 @autobind
 class GetStarted extends React.Component {
@@ -18,12 +20,12 @@ class GetStarted extends React.Component {
     super(props);
     const {
       onConnectDaemon, checkNetworkMatch, syncDaemon, onStartWallet, onRetryStartRPC, onGetAvailableWallets,
-      onStartDaemon, setSelectedWallet, goToError, goToSettings, backToCredentials
+      onStartDaemon, setSelectedWallet, goToErrorPage, goToSettings, backToCredentials
     } = this.props;
     const { sendEvent, preStartDaemon } = this;
     this.machine = getStartedMachine({
       onConnectDaemon, checkNetworkMatch, syncDaemon, onStartWallet, onRetryStartRPC, sendEvent, onGetAvailableWallets,
-      onStartDaemon, setSelectedWallet, preStartDaemon, goToError, goToSettings, backToCredentials
+      onStartDaemon, setSelectedWallet, preStartDaemon, goToErrorPage, goToSettings, backToCredentials
     });
     this.service = interpret(this.machine).onTransition(current => this.setState({ current }, this.getStateComponent));
     this.state = {
@@ -85,7 +87,14 @@ class GetStarted extends React.Component {
 
   getStateComponent() {
     const { current } = this.state;
-    const { onSendBack } = this;
+    const {
+      service, submitChosenWallet, submitRemoteCredentials, submitAppdata,
+      onShowSettings, onShowTrezorConfig, onSendBack, onSendCreateWallet,
+      onSendError, onSendContinue
+    } = this;
+    const { machine } = service;
+    const { isCreateNewWallet } = this.service._state.context;
+    const error = this.getError();
     let component, text, PageComponent;
 
     const key = Object.keys(current.value)[0];
@@ -109,7 +118,21 @@ class GetStarted extends React.Component {
         break;
       case "choosingWallet":
         text = <T id="loaderBar.choosingWallet" m="Choose a wallet to open" />;
-        component = WalletSelection;
+        component = h(WalletSelection, { onSendCreateWallet, submitChosenWallet });
+        break;
+      case "preCreateWallet":
+        text = isCreateNewWallet ?
+          <T id="loaderBar.preCreateWalletCreate" m="Create a wallet..." /> :
+          <T id="loaderBar.preCreateWalletRestore" m="Restore a Wallet..." />;
+        component = h(CreateWalletForm, {
+          onSendCreateWallet, onSendContinue, onSendBack, onSendError,
+          onShowTrezorConfig, isCreateNewWallet, error
+        });
+        break;
+      case "creatingWallet":
+        text = isCreateNewWallet ?
+          <T id="loaderBar.creatingWallet" m="Creating Wallet..." /> :
+          <T id="loaderBar.restoringWallet" m="Restoring Wallet..." />;
         break;
       case "startingWallet":
         text = <T id="loaderBar.startingWallet" m="Starting wallet..." />;
@@ -118,12 +141,9 @@ class GetStarted extends React.Component {
         text = <T id="loaderBar.syncingRPC" m="Syncing RPC connection..." />;
         break;
       }
-      const { service, submitChosenWallet, submitRemoteCredentials, submitAppdata, onShowSettings } = this;
-      const { machine } = service;
-      const error = this.getError();
       PageComponent = h(GetStartedMachinePage, {
         ...this.state, ...this.props, submitRemoteCredentials, submitAppdata, onShowSettings,
-        submitChosenWallet, service, machine, error, text, StateComponent: component
+        service, machine, error, text, StateComponent: component
       });
     }
     if (key === "settings") {
@@ -131,6 +151,9 @@ class GetStarted extends React.Component {
     }
     if (key === "logs") {
       PageComponent = h(Logs, { onSendBack });
+    }
+    if (key === "trezorConfig") {
+      PageComponent = h(TrezorConfig, { onSendBack });
     }
 
     return this.setState({ PageComponent, text });
@@ -162,12 +185,28 @@ class GetStarted extends React.Component {
     return this.service.send({ type: "SHOW_LOGS" });
   }
 
+  onShowTrezorConfig() {
+    return this.service.send({ type: "SHOW_TREZOR_CONFIG" });
+  }
+
+  onSendCreateWallet(isNew) {
+    return this.service.send({ type: "CREATE_WALLET", isNew });
+  }
+
+  onSendContinue() {
+    return this.service.send({ type: "CONTINUE" });
+  }
+
   onSendBack() {
     return this.service.send({ type: "BACK" });
   }
 
+  onSendError(error) {
+    return this.service.send({ type: "ERROR", error });
+  }
+
   getError() {
-    const { error } = this.service.machine.context;
+    const { error } = this.service._state.context;
     if (!error) return;
     if (typeof error  === "object") {
       return JSON.stringify(error);

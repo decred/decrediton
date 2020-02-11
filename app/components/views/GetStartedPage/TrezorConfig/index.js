@@ -7,7 +7,6 @@ import "style/Trezor.less";
 
 @autobind
 class TrezorConfig extends React.Component {
-
   constructor(props) {
     super(props);
     props.enableTrezor();

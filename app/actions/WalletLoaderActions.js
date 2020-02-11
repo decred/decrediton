@@ -9,7 +9,7 @@ import { getWalletServiceAttempt, startWalletServices, getBestBlockHeightAttempt
 import { WALLETREMOVED_FAILED } from "./DaemonActions";
 import { getWalletCfg, getDcrdCert } from "config";
 import { getWalletPath } from "main_dev/paths";
-import { isTestNet, isSPV } from "selectors";
+import { isTestNet } from "selectors";
 import { SpvSyncRequest, SyncNotificationType, RpcSyncRequest } from "../middleware/walletrpc/api_pb";
 import { push as pushHistory } from "react-router-redux";
 import { stopNotifcations } from "./NotificationActions";
@@ -97,7 +97,7 @@ export const CREATEWALLET_ATTEMPT = "CREATEWALLET_ATTEMPT";
 export const CREATEWALLET_FAILED = "CREATEWALLET_FAILED";
 export const CREATEWALLET_SUCCESS = "CREATEWALLET_SUCCESS";
 
-export const createWalletRequest = (pubPass, privPass, seed, isNew) => (dispatch, getState) => {
+export const createWalletRequest = (pubPass, privPass, seed, isNew) => (dispatch, getState) => new Promise((resolve, reject) => {
   dispatch({ existing: !isNew, type: CREATEWALLET_ATTEMPT });
   return createWallet(getState().walletLoader.loader, pubPass, privPass, seed)
     .then(() => {
@@ -109,15 +109,19 @@ export const createWalletRequest = (pubPass, privPass, seed, isNew) => (dispatch
       dispatch({ response: {}, type: CREATEWALLET_SUCCESS });
       dispatch(clearStakePoolConfigNewWallet());
       dispatch(getWalletServiceAttempt());
+      resolve(true);
     })
-    .catch(error => dispatch({ error, type: CREATEWALLET_FAILED }));
-};
+    .catch(error => {
+      dispatch({ error, type: CREATEWALLET_FAILED });
+      reject(error);
+    });
+});
 
 export const CREATEWATCHONLYWALLET_ATTEMPT = "CREATEWATCHONLYWALLET_ATTEMPT";
 export const CREATEWATCHONLYWALLET_FAILED = "CREATEWATCHONLYWALLET_FAILED";
 export const CREATEWATCHONLYWALLET_SUCCESS = "CREATEWATCHONLYWALLET_SUCCESS";
 
-export const createWatchOnlyWalletRequest = (extendedPubKey, pubPass ="") => (dispatch, getState) => {
+export const createWatchOnlyWalletRequest = (extendedPubKey, pubPass ="") => (dispatch, getState) => new Promise((resolve,reject) => {
   dispatch({ type: CREATEWATCHONLYWALLET_ATTEMPT });
   return wallet.createWatchingOnlyWallet(getState().walletLoader.loader, extendedPubKey, pubPass)
     .then(() => {
@@ -125,16 +129,16 @@ export const createWatchOnlyWalletRequest = (extendedPubKey, pubPass ="") => (di
       const config = getWalletCfg(isTestNet(getState()), walletName);
       config.set("iswatchonly", true);
       config.delete("discoveraccounts");
+      wallet.setIsWatchingOnly(true);
       dispatch({ response: {}, type: CREATEWATCHONLYWALLET_SUCCESS });
       dispatch(getWalletServiceAttempt());
-      if (isSPV(getState())) {
-        dispatch(spvSyncAttempt());
-      } else {
-        dispatch(startRpcRequestFunc());
-      }
+      resolve(true);
     })
-    .catch(error => dispatch({ error, type: CREATEWATCHONLYWALLET_FAILED }));
-};
+    .catch(error => {
+      dispatch({ error, type: CREATEWATCHONLYWALLET_FAILED });
+      reject(error);
+    });
+});
 
 export const OPENWALLET_INPUT = "OPENWALLET_INPUT";
 export const OPENWALLET_FAILED_INPUT = "OPENWALLET_FAILED_INPUT";
@@ -200,13 +204,13 @@ export const STARTRPC_FAILED = "STARTRPC_FAILED";
 export const STARTRPC_SUCCESS = "STARTRPC_SUCCESS";
 export const STARTRPC_RETRY = "STARTRPC_RETRY";
 
-export const startRpcRequestFunc = (privPass, isRetry) =>
+export const startRpcRequestFunc = (isRetry, privPass) =>
   (dispatch, getState) => {
     const { syncAttemptRequest } =  getState().walletLoader;
     if (syncAttemptRequest) {
       return;
     }
-    const { daemon: { walletName }, walletLoader: { discoverAccountsComplete,isWatchingOnly } }= getState();
+    const { daemon: { walletName }, walletLoader: { discoverAccountsComplete } }= getState();
 
     const credentials = ipcRenderer.sendSync("get-dcrd-rpc-credentials");
     const { rpc_user, rpc_cert, rpc_pass, rpc_host, rpc_port } = credentials;
@@ -220,9 +224,6 @@ export const startRpcRequestFunc = (privPass, isRetry) =>
     if (!discoverAccountsComplete && privPass) {
       request.setDiscoverAccounts(true);
       request.setPrivatePassphrase(new Uint8Array(Buffer.from(privPass)));
-    } else if (!discoverAccountsComplete && !privPass && !isWatchingOnly) {
-      dispatch({ type: SYNC_INPUT });
-      return;
     }
     return new Promise(() => {
       if (!isRetry) dispatch({ type: SYNC_ATTEMPT });
@@ -254,6 +255,7 @@ export const startRpcRequestFunc = (privPass, isRetry) =>
             } else {
               if (status.indexOf("invalid passphrase") > 0 || status.indexOf("Stream removed")) {
                 dispatch({ error: status, type: SYNC_FAILED });
+                throw status;
               } else {
                 dispatch(startRpcRequestFunc(true, privPass));
               }

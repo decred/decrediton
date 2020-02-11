@@ -2,7 +2,7 @@ import { Machine } from "xstate";
 import { CreateWalletMachine } from "./CreateWallet/CreateWalletStateMachine";
 
 export const getStartedMachine = ({
-  preStartDaemon, onStartDaemon, sendEvent, goToError, onConnectDaemon, checkNetworkMatch, syncDaemon,
+  preStartDaemon, onStartDaemon, sendEvent, goToErrorPage, onConnectDaemon, checkNetworkMatch, syncDaemon,
   onGetAvailableWallets, setSelectedWallet, onStartWallet, onRetryStartRPC
 }) => Machine({
   id: "getStarted",
@@ -11,7 +11,8 @@ export const getStartedMachine = ({
     credentials: {},
     selectedWallet: null,
     appdata: null,
-    error: null
+    error: null,
+    isCreateNewWallet: null
   },
   states: {
     // startMachine represents the state with daemon and wallet starting operations.
@@ -19,7 +20,8 @@ export const getStartedMachine = ({
       initial: "preStart",
       on: {
         SHOW_SETTINGS: "settings",
-        SHOW_LOGS: "logs"
+        SHOW_LOGS: "logs",
+        SHOW_TREZOR_CONFIG: "trezorConfig"
       },
       states: {
         preStart: {
@@ -89,10 +91,19 @@ export const getStartedMachine = ({
             CHECK_NETWORK_MATCH: "checkingNetworkMatch"
           }
         },
+        // We have a step before wallet creation, which creates wallet directory and config.
+        // preCreateWallet state is responsible to deal with that.
+        preCreateWallet: {
+          onEntry: "isAtPreCreateWallet",
+          on: {
+            CONTINUE: "creatingWallet",
+            BACK: "choosingWallet"
+          }
+        },
         creatingWallet: {
           onEntry: "isAtCreatingWallet",
           on: {
-            WALLET_CREATED: "syncingRPC"
+            ERROR: "preCreateWallet"
           },
           ...CreateWalletMachine
         },
@@ -101,8 +112,7 @@ export const getStartedMachine = ({
           onExit: "isAtLeavingChoosingWallet",
           on: {
             SUBMIT_CHOOSE_WALLET: "startingWallet",
-            CREATE_CHOSEN_WALLET: "creatingWallet",
-            CREATE_WALLET: "creatingWallet"
+            CREATE_WALLET: "preCreateWallet"
           }
         },
         startingWallet: {
@@ -124,6 +134,16 @@ export const getStartedMachine = ({
         }
       }
     // end of startMachine states
+    },
+    trezorConfig: {
+      initial: "trezorConfig",
+      states: {
+        trezorConfig: {}
+      },
+      on: {
+        BACK: "startMachine.hist",
+        SHOW_TREZOR_CONFIG: "trezorConfig"
+      }
     },
     settings: {
       initial: "settings",
@@ -181,7 +201,7 @@ export const getStartedMachine = ({
       if (appdata) {
         sendEvent({ type: "START_ADVANCED_DAEMON" });
       }
-      return goToError();
+      return goToErrorPage();
     },
     isStartedDaemon: () => {
       console.log("is at started daemon");
@@ -221,6 +241,10 @@ export const getStartedMachine = ({
         return sendEvent({ type: "SUBMIT_CHOOSE_WALLET" });
       }
     },
+    isAtPreCreateWallet: (context, event) => {
+      context.error = event.error && event.error;
+      context.isCreateNewWallet = typeof event.isNew === "undefined" ? context.isCreateNewWallet : event.isNew;
+    },
     isAtLeavingChoosingWallet: (context, event) => {
       console.log("is leaving choosing wallet");
       if (!event.selectedWallet) {
@@ -239,9 +263,13 @@ export const getStartedMachine = ({
         })
         .catch(err => console.log(err));
     },
-    isSyncingRPC: () => {
+    isSyncingRPC: async () => {
       console.log("is at syncing rpc");
-      onRetryStartRPC();
+      try {
+        await onRetryStartRPC();
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 });
