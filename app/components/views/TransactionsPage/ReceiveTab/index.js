@@ -13,19 +13,45 @@ export const ReceiveTabHeader = () =>
 class Receive extends React.Component{
   render() {
     const { walletService } = this.props;
-    const { onRequestAddress } = this;
+    const { onRequestAddress, onValidateAmount } = this;
 
     return !walletService ? <ErrorScreen /> :
       <ReceivePage {...{
         ...this.props,
         ...this.state,
-        onRequestAddress
+        onRequestAddress,
+        onValidateAmount
       }} />;
   }
 
   onRequestAddress () {
     const { getNextAddressAttempt, account } = this.props;
     getNextAddressAttempt(account.value);
+  }
+
+  onValidateAmount(data) {
+    const { value, atomValue } = data;
+
+    let error;
+    if (!atomValue || isNaN(atomValue)) {
+      error = (
+        <T id="receive.errors.invalidAmount" m="Please enter a valid amount" />
+      );
+    }
+    if (atomValue <= 0) {
+      error = (
+        <T
+          id="receive.errors.negativeAmount"
+          m="Please enter a valid amount (> 0)"
+        />
+      );
+    }
+
+    this.setState({
+      amount: value,
+      amountAtomValue: atomValue,
+      error: { amount: error }
+    });
   }
 }
 
