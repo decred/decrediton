@@ -14,10 +14,11 @@ const mapStateToProps = selectorMap({
   createNewWallet: sel.createNewWallet,
   isTestNet: sel.isTestNet,
   isCreatingWatchingOnly: sel.isWatchingOnly,
-  masterPubKey: sel.masterPubKey,
+  walletMasterPubKey: sel.walletMasterPubKey,
   maxWalletCount: sel.maxWalletCount,
   trezorDeviceList: sel.trezorDeviceList,
-  trezorDevice: sel.trezorDevice
+  trezorDevice: sel.trezorDevice,
+  isTrezor: sel.isTrezor
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

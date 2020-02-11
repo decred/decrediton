@@ -695,7 +695,7 @@ export const validateAddressSuccess = compose(
   r => r ? r.toObject() : null, validateAddressResponse
 );
 
-export const masterPubKey = get([ "control", "masterPubKey" ]);
+export const walletMasterPubKey = get([ "control", "masterPubKey" ]);
 
 const getStakeInfoResponse = get([ "grpc", "getStakeInfoResponse" ]);
 

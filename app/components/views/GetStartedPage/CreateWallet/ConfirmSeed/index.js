@@ -25,10 +25,10 @@ class ConfirmSeed extends React.Component {
   render() {
     const { onChangeSeedWord } = this;
     const { seedWords } = this.state;
-    const { sendBack, setPassPhrase, onCreateWallet, isValid } = this.props;
+    const { sendBack, setPassPhrase, onCreateWallet, isValid, isCreatingWallet } = this.props;
     return (
       <ConfirmSeedForm {...{
-        seedWords, onChangeSeedWord, sendBack, onCreateWallet, isValid, setPassPhrase
+        isCreatingWallet, seedWords, onChangeSeedWord, sendBack, onCreateWallet, isValid, setPassPhrase
       }} />
     );
   }

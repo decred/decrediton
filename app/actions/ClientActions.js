@@ -36,12 +36,6 @@ export const GETWALLETSERVICE_ATTEMPT = "GETWALLETSERVICE_ATTEMPT";
 export const GETWALLETSERVICE_FAILED = "GETWALLETSERVICE_FAILED";
 export const GETWALLETSERVICE_SUCCESS = "GETWALLETSERVICE_SUCCESS";
 
-function getWalletServiceSuccess(walletService) {
-  return (dispatch) => {
-    dispatch({ walletService, type: GETWALLETSERVICE_SUCCESS });
-  };
-}
-
 export const STARTWALLETSERVICE_ATTEMPT = "STARTWALLETSERVICE_ATTEMPT";
 export const STARTWALLETSERVICE_FAILED = "STARTWALLETSERVICE_FAILED";
 export const STARTWALLETSERVICE_SUCCESS = "STARTWALLETSERVICE_SUCCESS";
@@ -167,7 +161,7 @@ export const getWalletServiceAttempt = () => (dispatch, getState) => {
   const { daemon: { walletName } } = getState();
   dispatch({ type: GETWALLETSERVICE_ATTEMPT });
   wallet.getWalletService(sel.isTestNet(getState()), walletName, address, port)
-    .then(walletService => dispatch(getWalletServiceSuccess(walletService)))
+    .then(walletService => dispatch({ walletService, type: GETWALLETSERVICE_SUCCESS }))
     .catch(error => dispatch({ error, type: GETWALLETSERVICE_FAILED }));
 };
 

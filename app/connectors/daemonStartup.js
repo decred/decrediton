@@ -1,10 +1,12 @@
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { selectorMap } from "../fp";
-import * as sel from "../selectors";
-import * as wla from "../actions/WalletLoaderActions";
-import * as da from "../actions/DaemonActions";
-import * as ca from "../actions/ClientActions";
+import { selectorMap } from "fp";
+import * as sel from "selectors";
+import * as wla from "actions/WalletLoaderActions";
+import * as da from "actions/DaemonActions";
+import * as ca from "actions/ClientActions";
+import * as ctrla from "actions/ControlActions";
+import * as trza from "actions/TrezorActions";
 
 const mapStateToProps = selectorMap({
   isAdvancedDaemon: sel.isAdvancedDaemon,
@@ -14,6 +16,7 @@ const mapStateToProps = selectorMap({
   getNeededBlocks: sel.getNeededBlocks,
   getDaemonStarted: sel.getDaemonStarted,
   getEstimatedTimeLeft: sel.getEstimatedTimeLeft,
+  trezorDevice: sel.trezorDevice,
 
   maxWalletCount: sel.maxWalletCount,
   peerCount: sel.peerCount,
@@ -30,7 +33,8 @@ const mapStateToProps = selectorMap({
   syncFetchHeadersComplete: sel.syncFetchHeadersComplete,
   syncFetchTimeStart: sel.syncFetchTimeStart,
   firstBlockTime: sel.firstBlockTime,
-  selectedWalletSelector: sel.getSelectedWallet
+  selectedWalletSelector: sel.getSelectedWallet,
+  isTrezor: sel.isTrezor
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -45,9 +49,16 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onGetAvailableWallets: da.getAvailableWallets,
   onStartWallet: da.startWallet,
   onRemoveWallet: da.removeWallet,
-  goToError: ca.goToError,
+  onShowCreateWallet: da.showCreateWallet,
+  goToErrorPage: ca.goToError,
   onCreateWallet: da.createWallet,
-  getDcrwalletLogs: da.getDcrwalletLogs
+  getDcrwalletLogs: da.getDcrwalletLogs,
+  trezorLoadDeviceList: trza.loadDeviceList,
+  trezorEnable: trza.enableTrezor,
+  trezorDisable: trza.disableTrezor,
+  trezorAlertNoConnectedDevice: trza.alertNoConnectedDevice,
+  trezorGetWalletCreationMasterPubKey: trza.getWalletCreationMasterPubKey,
+  validateMasterPubKey: ctrla.validateMasterPubKey
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

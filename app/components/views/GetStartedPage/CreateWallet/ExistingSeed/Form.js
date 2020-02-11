@@ -8,7 +8,7 @@ import { WORDS, HEX } from "constants";
 import { Tooltip, CreatePassPhrase } from "shared";
 
 const ExistingSeedForm = ({
-  onChangeSeedWord, seedWords, handleOnPaste, hexSeed,
+  onChangeSeedWord, seedWords, handleOnPaste, hexSeed, isCreatingWallet,
   seedType, pasteFromClipboard, handleToggle, showPasteWarning, showPasteError, isValid,
   onCreateWallet, sendBack, setPassPhrase, error
 }) => (
@@ -77,7 +77,7 @@ const ExistingSeedForm = ({
       <KeyBlueButton
         className="wallet-key-blue-button"
         disabled={!isValid}
-        // loading={isCreatingWallet}
+        loading={isCreatingWallet}
         onClick={onCreateWallet}
       >
         <CreateWalletMsg />

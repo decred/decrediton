@@ -268,17 +268,32 @@ export const removeWallet = (selectedWallet) => (dispatch) => {
     });
 };
 
+// createWallet creates a new wallet directory and its config, so we can start
+// a wallet creation. It does not create the wallet.db file, which is done
+// later in the wallet creation proccess.
+// selectedWallet is of the form
+// selectedWallet = {
+//   label: newWalletName,
+//   value: {
+//    wallet: newWalletName, isWatchingOnly, isTrezor, isNew,
+//    network: isTestNet ? "testnet" : "mainnet"
+//  }
+// }
 export const createWallet = (selectedWallet) => (dispatch, getState) => new Promise((resolve, reject) => {
   dispatch({ type: CREATE_WALLET_ATTEMPT });
   const createWalletAsync = async() => {
     const { currentSettings } = getState().settings;
     const network = currentSettings.network;
     try {
-      dispatch({ isWatchingOnly: selectedWallet.value.watchingOnly,
-        type: WALLETCREATED });
-      dispatch(setSelectedWallet(selectedWallet));
       await wallet.createNewWallet(selectedWallet.value.wallet, network == TESTNET);
       await dispatch(startWallet(selectedWallet));
+      dispatch({
+        isWatchingOnly: selectedWallet.value.isWatchingOnly,
+        createNewWallet: selectedWallet.value.isNew,
+        isTrezor: selectedWallet.value.istrezor,
+        type: WALLETCREATED
+      });
+      dispatch(setSelectedWallet(selectedWallet));
       resolve(selectedWallet);
     } catch (err) {
       dispatch({ type: CREATE_WALLET_ERROR });

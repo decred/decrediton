@@ -635,7 +635,7 @@ export const connectRpcDaemon = async (mainWindow, rpcCreds) => {
     });
     dcrdSocket.on("error", function(error) {
       logger.log("error",`Error: ${error}`);
-      return mainWindow.webContents.send("connectRpcDaemon-response", { connected: false, error });
+      return mainWindow.webContents.send("connectRpcDaemon-response", { connected: false, error: error.toString() });
     });
     dcrdSocket.on("message", function(data) {
       const parsedData = JSON.parse(data);
