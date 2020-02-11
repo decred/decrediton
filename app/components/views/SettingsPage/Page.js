@@ -1,14 +1,15 @@
 import { FormattedMessage as T } from "react-intl";
 import { StandaloneHeader, StandalonePage } from "layout";
-import { ChangePassphraseButton, KeyBlueButton, CloseWalletModalButton, ResetNetworkButton } from "buttons";
-import { WatchOnlyWarnNotification } from "shared";
-import GeneralSettings from "./GeneralSettings";
-import PrivacySettings from "./PrivacySettings";
+import { KeyBlueButton, CloseWalletModalButton, ResetNetworkButton } from "buttons";
+import NetworkSettings from "./NetworkSettings";
 import ProxySettings from "./ProxySettings";
+import PrivacySettings from "./PrivacySettings";
+import UISettings from "./UISettings";
+import MiscSettings from "./MiscSettings";
 import TimezoneSettings from "./TimezoneSettings";
+
 import "style/StakePool.less";
 import "style/Settings.less";
-import UIThemeSettings from "./UIThemeSettings";
 
 const closeWalletModalContent = (walletName) =>
   <T
@@ -40,7 +41,6 @@ const SettingsPageHeader = ({ onCloseWallet, walletName, isTicketAutoBuyerEnable
 const SettingsPage = ({
   areSettingsDirty,
   tempSettings,
-  networks,
   currencies,
   locales,
   onChangeTempSettings,
@@ -56,32 +56,46 @@ const SettingsPage = ({
 }) => (
   <StandalonePage header={<SettingsPageHeader {...{ onCloseWallet, walletName, isTicketAutoBuyerEnabled }} />} className="settings-standalone-page">
     <div className="settings-wrapper">
-      <div className="settings-columns">
-        <GeneralSettings {...{ tempSettings, networks, currencies, locales, walletReady,
-          onChangeTempSettings }} />
-        <ProxySettings {...{ tempSettings, onChangeTempSettings }} />
-        <UIThemeSettings {...{ tempSettings, onChangeTempSettings }} />
-      </div>
-      <div className="settings-columns">
-        <div className="settings-security">
-          <div className="settings-column-title"><T id="settings.security.title" m="Security" /></div>
-          <div className="settings-action-buttons">
-            <div disabled={isChangePassPhraseDisabled} className="settings-update-passphrase-button">
-              <T id="settings.updatePrivatePassphrase" m="Update Private Passphrase" />
-              <WatchOnlyWarnNotification isActive={ isChangePassPhraseDisabled }>
-                <ChangePassphraseButton
-                  className={[
-                    isChangePassPhraseDisabled ? "change-password-disabled-icon" : "",
-                    changePassphraseRequestAttempt ? "change-password-loading" : "" ].join(" ")}
-                  isDisabled={isChangePassPhraseDisabled}
-                  modalTitle={<T id="settings.changeConfirmation" m="Change your passphrase" />}
-                  onSubmit={onAttemptChangePassphrase} />
-              </WatchOnlyWarnNotification>
-            </div>
+      <div className="settings-group">
+        <div className="settings-group-title"><T id="settings.getstartpage.group-title.connectivity" m="Connectivity" /></div>
+        <div className="settings-column-wrapper">
+          <div className="settings-column">
+            <NetworkSettings {...{
+              tempSettings,
+              onChangeTempSettings
+            }} />
+          </div>
+          <div className="settings-column">
+            <ProxySettings {...{ tempSettings, onChangeTempSettings }} />
           </div>
         </div>
-        <PrivacySettings {...{ tempSettings, onChangeTempSettings }} />
-        <TimezoneSettings {...{ tempSettings, onChangeTempSettings }} />
+      </div>
+
+      <div className="settings-group general">
+        <div className="settings-group-title"><T id="settings.getstartpage.group-title.general" m="General" /></div>
+        <div className="settings-column-wrapper">
+          <div className="settings-column">
+            <UISettings {...{ tempSettings, locales, onChangeTempSettings }} />
+          </div>
+          <div className="settings-column timezone">
+            <TimezoneSettings {...{ tempSettings, onChangeTempSettings }} />
+          </div>
+          {walletReady &&
+            <div className="settings-column">
+              <MiscSettings {...{ tempSettings, currencies, walletReady, onChangeTempSettings }} />
+            </div>
+          }
+        </div>
+      </div>
+
+      <div className="settings-group privacy">
+        <div className="settings-group-title"><T id="settings.getstartpage.group-title.privacy-and-security" m="Privacy and Security" /></div>
+        <div className="settings-column-wrapper">
+          <div className="settings-column">
+            <PrivacySettings {...{ tempSettings, onAttemptChangePassphrase,
+              isChangePassPhraseDisabled, onChangeTempSettings, changePassphraseRequestAttempt }} />
+          </div>
+        </div>
       </div>
     </div>
 
@@ -119,7 +133,8 @@ SettingsPage.propTypes = {
   onChangeTempSettings: PropTypes.func.isRequired,
   onSaveSettings: PropTypes.func.isRequired,
   onAttemptChangePassphrase: PropTypes.func,
-  isChangePassPhraseDisabled: PropTypes.bool.isRequired
+  isChangePassPhraseDisabled: PropTypes.bool.isRequired,
+  changePassphraseRequestAttempt: PropTypes.bool.isRequired
 };
 
 export default SettingsPage;
