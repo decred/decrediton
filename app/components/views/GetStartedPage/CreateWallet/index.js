@@ -66,14 +66,15 @@ class CreateWallet extends React.Component {
         sendBack, decodeSeed, sendContinue, setSeed, setPassPhrase, onCreateWallet, isValid, setError, error
       });
       break;
-    case "creatingWallet":
-      // If we already have rendered a component, get the last StateComponent 
+    case "creatingWallet": {
+      // If we already have rendered a component, get the last StateComponent
       // and re-render it with all its props and isCreatingWallet props as true.
       // Render DecredLoading, otherwise.
       const c = this.state.StateComponent ? this.state.StateComponent.type : DecredLoading;
       const props = this.state.StateComponent ? { ...this.state.StateComponent.props } : {};
       component = h(c, { ...props, isCreatingWallet: true });
       break;
+    }
     case "finished":
       break;
     case "walletCreated":
