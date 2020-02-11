@@ -10,33 +10,37 @@ import ConfirmSeed from "./ConfirmSeed";
 import ExistingSeed from "./ExistingSeed";
 import { createWallet } from "connectors";
 import { createElement as h } from "react";
+import { DecredLoading } from "indicators";
 
 @autobind
 class CreateWallet extends React.Component {
   service;
   constructor(props) {
     super(props);
-    const { sendEvent, checkIsValid } = this;
+    const { sendEvent, sendContinue, checkIsValid, onCreateWatchOnly } = this;
     const { backToCredentials, cancelCreateWallet, generateSeed } = props;
-    this.machine = CreateWalletMachine({ generateSeed, backToCredentials, cancelCreateWallet, sendEvent, checkIsValid });
+    this.machine = CreateWalletMachine({
+      generateSeed, backToCredentials, cancelCreateWallet, sendEvent, sendContinue, checkIsValid, onCreateWatchOnly
+    });
     this.service = interpret(this.machine).onTransition(current => this.setState({ current }, this.getStateComponent));
     this.state = {
       current: this.machine.initialState,
       StateComponent: null,
-      isNew: "",
       isValid: false
     };
   }
 
   componentDidMount() {
     this.service.start();
-    let isNew = this.props.match.params.isNew;
-    isNew = isNew == "true" ? true : false;
-    this.setState({ isNew });
+    const isNew = !this.props.createWalletExisting;
+    const isWatchingOnly = this.props.isCreatingWatchingOnly;
     // TODO Add watching only state and tezos
-    // const { isCreatingWatchingOnly, masterPubKey, isTestNet } = this.props;
-    this.service.send({ type: "CREATE_WALLET", isNew });
-    this.service.send({ type: "RESTORE_WALLET", isNew });
+    const { isTrezor, isTestNet } = this.props;
+    this.service.send({ type: "CREATE_WALLET", isNew, isTestNet });
+    this.service.send({ type: "RESTORE_WATCHING_ONLY_WALLET", isWatchingOnly });
+    this.service.send({ type: "RESTORE_TREZOR_WALLET", isTrezor });
+    this.service.send({ type: "RESTORE_WALLET", isRestore: !isNew, isWatchingOnly });
+
   }
 
   componentWillUnmount() {
@@ -62,6 +66,15 @@ class CreateWallet extends React.Component {
         sendBack, decodeSeed, sendContinue, setSeed, setPassPhrase, onCreateWallet, isValid, setError, error
       });
       break;
+    case "creatingWallet": {
+      // If we already have rendered a component, get the last StateComponent
+      // and re-render it with all its props and isCreatingWallet props as true.
+      // Render DecredLoading, otherwise.
+      const c = this.state.StateComponent ? this.state.StateComponent.type : DecredLoading;
+      const props = this.state.StateComponent ? { ...this.state.StateComponent.props } : {};
+      component = h(c, { ...props, isCreatingWallet: true });
+      break;
+    }
     case "finished":
       break;
     case "walletCreated":
@@ -85,14 +98,25 @@ class CreateWallet extends React.Component {
   }
 
   onCreateWallet() {
-    const { createWalletRequest, onSetWalletPrivatePassphrase } = this.props;
+    const { createWalletRequest } = this.props;
     const { isNew } = this.state;
     const pubpass = ""; // Temporarily disabled?
     const { seed, passPhrase } = this.service._state.context;
 
     if (!(seed && passPhrase)) return;
-    createWalletRequest(pubpass, passPhrase, seed, isNew);
-    isNew && onSetWalletPrivatePassphrase && onSetWalletPrivatePassphrase(passPhrase);
+    createWalletRequest(pubpass, passPhrase, seed, isNew)
+      .then(() => this.sendContinue())
+      .catch(error => this.sendEvent({ type: "ERROR", error }));
+    // we send a continue so we go to creatingWallet state
+    this.sendContinue();
+  }
+
+  onCreateWatchOnly() {
+    const { createWatchOnlyWalletRequest, walletMasterPubKey } = this.props;
+    createWatchOnlyWalletRequest(walletMasterPubKey)
+      .then(() => this.sendContinue())
+      .catch(error => this.sendEvent({ type: "ERROR", error }));
+    // we send a continue so we go to creatingWallet state
     this.sendContinue();
   }
 

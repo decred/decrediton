@@ -3,7 +3,7 @@ import { Machine, assign } from "xstate";
 // Hierarchical state machine called inside getStartedStateMachine.
 // source: https://github.com/davidkpiano/xstate#hierarchical-nested-state-machines
 export const CreateWalletMachine = ({
-  cancelCreateWallet, backToCredentials, generateSeed, sendEvent, checkIsValid
+  cancelCreateWallet, backToCredentials, generateSeed, sendEvent, checkIsValid, onCreateWatchOnly
 }) => Machine({
   id: "getStarted",
   initial: "createWallet",
@@ -18,13 +18,21 @@ export const CreateWalletMachine = ({
     createWallet: {
       onEntry: "isAtCreateWallet",
       on: {
-        RESTORE_WALLET: {
-          target: "writeSeed",
-          cond: (c, event) => !event.isNew
-        },
         CREATE_WALLET: {
           target: "newWallet",
           cond: (c, event) => event.isNew
+        },
+        RESTORE_WATCHING_ONLY_WALLET: {
+          target: "restoreWatchingOnly",
+          cond: (c, event) => event.isWatchingOnly
+        },
+        RESTORE_TREZOR_WALLET: {
+          target: "restoreTrezor",
+          cond: (c, event) => event.isTrezor
+        },
+        RESTORE_WALLET: {
+          target: "writeSeed",
+          cond: (c, event) => event.isRestore
         }
       }
     },
@@ -39,12 +47,12 @@ export const CreateWalletMachine = ({
     writeSeed: {
       onEntry: "isAtWriteSeed",
       on: {
-        CONTINUE: "walletCreated",
+        CONTINUE: "creatingWallet",
         ERROR: "createWallet",
         BACK: "finished",
         VALIDATE_DATA: {
           target: "writeSeed",
-          // assign new context;
+          // assign new context value to each one;
           actions: [
             assign({
               passPhrase: (context, event) => event.passPhrase ? event.passPhrase : context.passPhrase ? context.passPhrase : "",
@@ -61,7 +69,7 @@ export const CreateWalletMachine = ({
     confirmSeed: {
       onEntry: "isAtConfirmSeed",
       on: {
-        CONTINUE: "walletCreated",
+        CONTINUE: "creatingWallet",
         ERROR: "newWallet",
         BACK: {
           target: "newWallet",
@@ -86,6 +94,24 @@ export const CreateWalletMachine = ({
         }
       }
     },
+    restoreWatchingOnly: {
+      onEntry: "isAtRestoreWatchingOnly",
+      on: {
+        CONTINUE: "creatingWallet"
+      }
+    },
+    restoreTrezor: {
+      onEntry: "isAtRestoreTrezor",
+      on: {
+        CONTINUE: "creatingWallet"
+      }
+    },
+    creatingWallet: {
+      onEntry: "isAtCreatingWallet",
+      on: {
+        CONTINUE: "walletCreated"
+      }
+    },
     walletCreated: {
       type: "final",
       onEntry: "isAtWalletCreated"
@@ -101,12 +127,12 @@ export const CreateWalletMachine = ({
     isAtCreateWallet: () => {
       console.log("is at create wallet");
     },
-    isAtNewWallet: (context) => {
+    isAtNewWallet: (context, event) => {
       // We only generate the seed once. If mnemonic already exists, we return it.
       if (context.mnemonic) return;
       generateSeed().then(response => {
         // Allows verification skip in dev
-        // context.seed = event.isTestNet ? response.getSeedBytes() : null;
+        context.seed = event.isTestNet ? response.getSeedBytes() : null;
         const mnemonic = response.getSeedMnemonic();
         context.mnemonic = mnemonic;
         sendEvent({ type: "GENERATED" });
@@ -118,11 +144,22 @@ export const CreateWalletMachine = ({
     isAtWriteSeed: () => {
       checkIsValid();
     },
+    isAtRestoreWatchingOnly: () => {
+      console.log("is at restoring watching only");
+      onCreateWatchOnly();
+    },
+    isAtRestoreTrezor: () => {
+      console.log("is at restoring trezor");
+      onCreateWatchOnly();
+    },
     isAtFinished: async () => {
       await cancelCreateWallet();
       backToCredentials();
     },
-    isAtWalletCreated: async () => {
+    isAtCreatingWallet: () => {
+      console.log("creating wallet");
+    },
+    isAtWalletCreated: () => {
       backToCredentials();
     }
   }

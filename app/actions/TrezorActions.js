@@ -774,7 +774,7 @@ export const getWalletCreationMasterPubKey = () => async (dispatch, getState) =>
       return res.message.xpub;
     });
 
-    dispatch({ type: VALIDATEMASTERPUBKEY_SUCCESS, isWatchOnly: true, masterPubKey });
+    dispatch({ type: VALIDATEMASTERPUBKEY_SUCCESS, masterPubKey });
     dispatch({ type: TRZ_GETWALLETCREATIONMASTERPUBKEY_SUCCESS });
   } catch (error) {
     dispatch({ error, type:  TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED });
