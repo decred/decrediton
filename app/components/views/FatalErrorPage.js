@@ -1,7 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
 import { fatalErrorPage } from "connectors";
 import { KeyBlueButton, RemoveDaemonButton } from "buttons";
-import { CopyToClipboard } from "shared";
+import { CopyToClipboard, ExternalLink } from "shared";
 import { DIFF_CONNECTION_ERROR } from "constants";
 import "style/Layout.less";
 
@@ -38,7 +38,16 @@ class FatalErrorPage extends React.Component {
         </>);
       break;
     default:
-      errorMessage = <T id="fatal.suggestion.fallthrough" m="Please note the error above and go to the support channel on slack/matrix/rockchat for help resolving the issue." />;
+      errorMessage = (
+        <T id="fatal.suggestion.fallthrough"
+          m="Please note the error above and go to the support channel on matrix or some other preferred
+            chat channel for help resolving the issue. {link}"
+          values = {{ link:
+            <ExternalLink href="https://decred.org/community">
+              <T id="getStarted.community.link" m="https://decred.org/community" />
+            </ExternalLink> }}
+        />
+      );
       break;
     }
 
@@ -69,7 +78,7 @@ class FatalErrorPage extends React.Component {
               }
             </div>
           </div>
-          <div className="fatal-error-title"><T id="fatal.suggestion.title" m="Suggested action to resolve error" />:</div>
+          <div className="fatal-error-title"><T id="fatal.suggestion.title" m="Suggested action to resolve the error" />:</div>
           <div className="fatal-error-suggestion">
             {daemonError && this.getErrorAction()}
           </div>
