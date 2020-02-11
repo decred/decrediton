@@ -1,6 +1,6 @@
 // @flow
 import {
-  getLoader, getWalletExists, createWallet, openWallet, closeWallet, getStakePoolInfo, rescanPoint
+  getLoader, createWallet, openWallet, closeWallet, getStakePoolInfo, rescanPoint
 } from "wallet";
 import * as wallet from "wallet";
 import { rescanCancel, ticketBuyerCancel } from "./ControlActions";

@@ -34,7 +34,7 @@ export default function walletLoader(state = {}, action) {
     return { ...state,
       getLoaderError: null,
       loader: action.loader,
-      getLoaderRequestAttempt: false,
+      getLoaderRequestAttempt: false
     };
   case WALLETCREATED:
     return { ...state,
@@ -59,7 +59,7 @@ export default function walletLoader(state = {}, action) {
     };
   case OPENWALLET_SUCCESS:
     return { ...state,
-      isWatchingOnly: action.isWatchingOnly,
+      isWatchingOnly: action.isWatchingOnly
     };
   case CLOSEWALLET_FAILED:
     return { ...state,

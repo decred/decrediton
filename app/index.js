@@ -246,7 +246,7 @@ var initialState = {
     createWalletExisting: false,
     // WalletOpen
     walletOpenRequestAttempt: false,
-    walletOpenError: null,
+    walletOpenError: null
   },
   notifications: {
     transactionNtfns: null,

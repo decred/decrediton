@@ -21,11 +21,6 @@ export const startRpc = log((loader, daemonhost, rpcport, rpcuser, rpcpass, cert
     loader.startConsensusRpc(request, error => error ? reject(error) : resolve());
   }), "Start RPC", logOptionNoArgs());
 
-export const getWalletExists = log((loader) =>
-  new Promise((resolve, reject) =>
-    loader.walletExists(new WalletExistsRequest(), (error, response) =>
-      error ? reject(error) : resolve(response))), "Get Wallet Exists");
-
 export const createWallet = log((loader, pubPass, privPass, seed) =>
   new Promise((resolve, reject) => {
     const request = new CreateWalletRequest();

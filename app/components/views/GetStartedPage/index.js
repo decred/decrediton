@@ -92,7 +92,7 @@ class GetStarted extends React.Component {
       this.getStateComponent(text, animationType, component);
     } else if (prevProps.synced !== synced && synced) {
       animationType = finalizingSetup;
-      text = <T id="getStarted.header.finishingStart.meta" m="Finishing to load wallet" />; 
+      text = <T id="getStarted.header.finishingStart.meta" m="Finishing to load wallet" />;
       this.getStateComponent(text, animationType, component);
     }
   }
@@ -158,7 +158,7 @@ class GetStarted extends React.Component {
       PageComponent = h(GetStartedMachinePage, {
         ...this.state, ...this.props, submitRemoteCredentials, submitAppdata, onShowSettings,
         service, machine, error,
-        
+
         text: updatedText ? updatedText : text, animationType: updatedAnimationType ? updatedAnimationType : animationType, StateComponent: updatedComponent ? updatedComponent : component
       });
     }
