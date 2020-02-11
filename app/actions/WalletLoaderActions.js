@@ -204,7 +204,7 @@ export const STARTRPC_FAILED = "STARTRPC_FAILED";
 export const STARTRPC_SUCCESS = "STARTRPC_SUCCESS";
 export const STARTRPC_RETRY = "STARTRPC_RETRY";
 
-export const startRpcRequestFunc = (privPass, isRetry) =>
+export const startRpcRequestFunc = (isRetry, privPass) =>
   (dispatch, getState) => {
     const { syncAttemptRequest } =  getState().walletLoader;
     if (syncAttemptRequest) {
@@ -255,6 +255,7 @@ export const startRpcRequestFunc = (privPass, isRetry) =>
             } else {
               if (status.indexOf("invalid passphrase") > 0 || status.indexOf("Stream removed")) {
                 dispatch({ error: status, type: SYNC_FAILED });
+                throw status;
               } else {
                 dispatch(startRpcRequestFunc(true, privPass));
               }

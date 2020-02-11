@@ -263,9 +263,13 @@ export const getStartedMachine = ({
         })
         .catch(err => console.log(err));
     },
-    isSyncingRPC: () => {
+    isSyncingRPC: async () => {
       console.log("is at syncing rpc");
-      onRetryStartRPC();
+      try {
+        await onRetryStartRPC();
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 });
