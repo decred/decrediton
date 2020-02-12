@@ -99,7 +99,7 @@ export const showCreateWallet = (isNew) => (dispatch) => {
   dispatch(pushHistory("/getstarted/createwallet/"+isNew));
 };
 
-// toggleSpv enables and disables spv in decrediton when first starting
+// toggleSpv enables and disables spv in decrediton when first starting.
 export const toggleSpv = (isSPV) => async (dispatch, getState) => {
   dispatch(updateStateSettingsChanged({ spvMode: isSPV }, true));
   const tempSettings = getState().settings.tempSettings;
@@ -349,10 +349,7 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => new Promi
     const lastPoliteiaAccessBlock = walletCfg.get("politeia_last_access_block");
 
     walletCfg.set("lastaccess", Date.now());
-    dispatch({ type: WALLETREADY,
-      walletName, network, hiddenAccounts, port, lastPoliteiaAccessTime, lastPoliteiaAccessBlock
-    });
-    dispatch({ type: WALLETREADY, walletName: selectedWallet.value.wallet, network: network, hiddenAccounts, port });
+    dispatch({ type: WALLETREADY, walletName, network, hiddenAccounts, port, lastPoliteiaAccessTime, lastPoliteiaAccessBlock });
     dispatch({ type: WALLET_AUTOBUYER_SETTINGS, balanceToMaintain });
     dispatch({ type: WALLET_SETTINGS, currencyDisplay, gapLimit });
     dispatch({ type: WALLET_STAKEPOOL_SETTINGS, activeStakePoolConfig, selectedStakePool, currentStakePoolConfig });

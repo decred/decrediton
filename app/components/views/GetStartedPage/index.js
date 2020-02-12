@@ -49,9 +49,12 @@ class GetStarted extends React.Component {
   preStartDaemon () {
     const { isSPV, isAdvancedDaemon, getDaemonSynced, getSelectedWallet } = this.props;
     this.props.decreditonInit();
-    if (getDaemonSynced) {
+    // If daemon is synced or isSPV mode we checks for a selectedWallet.
+    // If it is selected, it probably means a wallet was just pre created or
+    // a refresh (usual in dev mode).
+    if (getDaemonSynced || isSPV) {
       const selectedWallet = getSelectedWallet();
-      return this.service.send({ type: "CHOOSE_WALLET", selectedWallet });
+      return this.service.send({ type: "CHOOSE_WALLET", selectedWallet, isSPV });
     }
     this.service.send({ type: "START_SPV", isSPV });
     this.service.send({ type: "START_ADVANCED_DAEMON", isSPV, isAdvancedDaemon });
@@ -105,7 +108,7 @@ class GetStarted extends React.Component {
       onSendError, onSendContinue
     } = this;
     const { machine } = service;
-    const { isCreateNewWallet } = this.service._state.context;
+    const { isCreateNewWallet, isSPV } = this.service._state.context;
     const error = this.getError();
     let component, text, animationType, PageComponent;
 
@@ -130,7 +133,9 @@ class GetStarted extends React.Component {
         text = <T id="loaderBar.syncingDaemon" m="syncing Daemon..." />;
         break;
       case "choosingWallet":
-        text = <T id="loaderBar.choosingWallet" m="Choose a wallet to open" />;
+        text = isSPV ?
+          <T id="loaderBar.choosingWalletSPV" m="Choose a wallet to open in SPV mode" />
+          : <T id="loaderBar.choosingWallet" m="Choose a wallet to open" />;
         component = h(WalletSelection, { onSendCreateWallet, submitChosenWallet });
         break;
       case "preCreateWallet":
@@ -157,9 +162,11 @@ class GetStarted extends React.Component {
       }
       PageComponent = h(GetStartedMachinePage, {
         ...this.state, ...this.props, submitRemoteCredentials, submitAppdata, onShowSettings,
-        service, machine, error,
-
-        text: updatedText ? updatedText : text, animationType: updatedAnimationType ? updatedAnimationType : animationType, StateComponent: updatedComponent ? updatedComponent : component
+        service, machine, error, isSPV,
+        // if updated* is set, we use it, as it means it is called by the componentDidUpdate.
+        text: updatedText ? updatedText : text,
+        animationType: updatedAnimationType ? updatedAnimationType : animationType,
+        StateComponent: updatedComponent ? updatedComponent : component
       });
     }
     if (key === "settings") {

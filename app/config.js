@@ -286,6 +286,10 @@ export function getDaemonIsAdvanced() {
   return getConfigData(cfgConstants.DAEMON_ADVANCED);
 }
 
+export function getIsSpv() {
+  return getConfigData(cfgConstants.SPV_MODE)
+}
+
 export function setConfigData(key, value) {
   const config = getGlobalCfg();
   return config.set(key, value);

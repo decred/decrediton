@@ -7,7 +7,7 @@ import { Switch, Route } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import { App } from "containers";
 import configureStore from "./store/configureStore";
-import { getGlobalCfg, getDaemonIsAdvanced } from "./config";
+import { getGlobalCfg, getDaemonIsAdvanced, getIsSpv } from "./config";
 import locales from "./i18n/locales";
 import "./style/main.less";
 import "./style/ReactSelectGlobal.less";
@@ -30,7 +30,7 @@ const currentSettings = {
   allowedExternalRequests: globalCfg.get("allowed_external_requests"),
   proxyType: globalCfg.get("proxy_type"),
   proxyLocation: globalCfg.get("proxy_location"),
-  spvMode: (cliOptions && cliOptions.spvMode) || globalCfg.get("spv_mode"),
+  spvMode: (cliOptions && cliOptions.spvMode) || getIsSpv(),
   spvModeFromCli: !!(cliOptions && cliOptions.spvMode),
   spvConnect: (cliOptions && cliOptions.spvConnect) || globalCfg.get("spv_connect"),
   spvConnectFromCli: !!(cliOptions && cliOptions.spvConnect),

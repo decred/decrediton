@@ -1,7 +1,7 @@
 import Promise from "promise";
 import { withLog as log, logOptionNoArgs } from "./app";
 import { loader as rpcLoader } from "middleware/grpc/client";
-import { WalletExistsRequest, CreateWalletRequest, OpenWalletRequest,
+import { CreateWalletRequest, OpenWalletRequest,
   CloseWalletRequest, StartConsensusRpcRequest, DiscoverAddressesRequest,
   SubscribeToBlockNotificationsRequest, FetchHeadersRequest, CreateWatchingOnlyWalletRequest,
   SpvSyncRequest, FetchMissingCFiltersRequest, RescanPointRequest } from "middleware/walletrpc/api_pb";

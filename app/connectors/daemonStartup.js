@@ -24,6 +24,7 @@ const mapStateToProps = selectorMap({
 
   isAdvancedDaemon: sel.isAdvancedDaemon,
   isSPV: sel.isSPV,
+  isTestNet: sel.isTestNet,
   availableWallets: sel.sortedAvailableWallets,
   getDaemonSynced: sel.getDaemonSynced,
   getCurrentBlockCount: sel.getCurrentBlockCount,

@@ -12,7 +12,8 @@ export const getStartedMachine = ({
     selectedWallet: null,
     appdata: null,
     error: null,
-    isCreateNewWallet: null
+    isCreateNewWallet: null,
+    isSPV: null
   },
   states: {
     // startMachine represents the state with daemon and wallet starting operations.
@@ -237,6 +238,7 @@ export const getStartedMachine = ({
     },
     isAtChoosingWallet: (context, event) => {
       console.log("is at choosingWallet");
+      context.isSPV = typeof event.isSPV === undefined ? context.isSPV : event.isSPV;
       onGetAvailableWallets()
         .then(w => sendEvent({ type: "CHOOSE_WALLET", payload: { w } }) )
         .catch(e => console.log(e));
@@ -268,12 +270,20 @@ export const getStartedMachine = ({
         })
         .catch(err => console.log(err));
     },
-    isSyncingRPC: (context) => {
+    isSyncingRPC: async (context) => {
       console.log("is at syncing rpc");
       if (context.isSPV) {
-        return startSPVSync();
+        try {
+          return await startSPVSync();
+        } catch (error) {
+          console.log(error);
+        }
       }
-      onRetryStartRPC();
+      try {
+        onRetryStartRPC();
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 });

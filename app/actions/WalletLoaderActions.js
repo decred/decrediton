@@ -374,9 +374,6 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
   if (!discoverAccountsComplete && privPass) {
     request.setDiscoverAccounts(true);
     request.setPrivatePassphrase(new Uint8Array(Buffer.from(privPass)));
-  } else if (!discoverAccountsComplete && !privPass) {
-    dispatch({ type: SYNC_INPUT });
-    return;
   }
   return new Promise(() => {
     const { loader } = getState().walletLoader;
