@@ -364,31 +364,9 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => new Promi
     .catch(err => reject(err));
 });
 
-const prepStartDaemon = () => (dispatch, getState) => {
-  const { daemon: { daemonAdvanced } } = getState();
-  // TODO re-add cliOptions
-  // const cliOptions = ipcRenderer.sendSync("get-cli-options");
-  // console.log(cliOptions)
-  if (!daemonAdvanced) {
-    return;
-  }
-
-  // let rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port;
-  // if (cliOptions.rpcPresent) {
-  //   rpc_user = cliOptions.rpcUser;
-  //   rpc_pass = cliOptions.rpcPass;
-  //   rpc_cert = cliOptions.rpcCert;
-  //   rpc_host = cliOptions.rpcHost;
-  //   rpc_port = cliOptions.rpcPort;
-  // } else {
-  //   ({ rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port } = getRemoteCredentials());
-  // }
-};
-
 export const decreditonInit = () => async (dispatch) => {
   dispatch(registerForErrors());
   dispatch(checkDecreditonVersion());
-  await dispatch(prepStartDaemon());
 };
 
 const TIME_TO_TIMEOUT = 15 * 1000; // 15 sec

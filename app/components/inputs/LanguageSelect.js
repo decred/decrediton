@@ -17,7 +17,6 @@ class SettingsInput extends React.Component {
   }
 
   componentDidMount() {
-    this.props.decreditonInit();
     const { value } = this.props;
     if(value) {
       this.setState({ value: value });

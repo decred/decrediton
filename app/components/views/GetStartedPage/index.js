@@ -13,6 +13,7 @@ import GetStartedMachinePage from "./GetStartedMachinePage";
 import TrezorConfig from "./TrezorConfig";
 import CreateWalletForm from "./PreCreateWallet";
 import RescanWalletBody from "./RescanWallet";
+import { ipcRenderer } from "electron";
 
 // css animation classes:
 const blockChainLoading = "blockchain-syncing";
@@ -41,17 +42,30 @@ class GetStarted extends React.Component {
     this.state = {
       current: this.machine.initialState,
       PageComponent: null,
-      text: <T id="getStarted.header.discoveringAddresses.meta" m="Discovering addresses" />,
+      text: null,
       animationType: null
     };
   }
 
+  // preStartDaemon gets data from cli to connect with remote dcrd if rpc
+  // connection data is inputed.
   preStartDaemon () {
     const { isSPV, isAdvancedDaemon, getDaemonSynced, getSelectedWallet } = this.props;
-    this.props.decreditonInit();
+    const cliOptions = ipcRenderer.sendSync("get-cli-options");
+    let rpcCliRemote;
+    if (cliOptions.rpcPresent) {
+      rpcCliRemote = {
+        rpc_user: cliOptions.rpcUser,
+        rpc_pass: cliOptions.rpcPass,
+        rpc_cert: cliOptions.rpcCert,
+        rpc_host: cliOptions.rpcHost,
+        rpc_port: cliOptions.rpcPort
+      }
+      this.service.send({ type: "START_CLI_REMOTE_DAEMON", remoteCredentials: rpcCliRemote });
+    }
     // If daemon is synced or isSPV mode we checks for a selectedWallet.
     // If it is selected, it probably means a wallet was just pre created or
-    // a refresh (usual in dev mode).
+    // a refresh (common when in dev mode).
     if (getDaemonSynced || isSPV) {
       const selectedWallet = getSelectedWallet();
       return this.service.send({ type: "CHOOSE_WALLET", selectedWallet, isSPV });

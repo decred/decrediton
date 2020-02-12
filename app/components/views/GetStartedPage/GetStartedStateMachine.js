@@ -40,6 +40,10 @@ export const getStartedMachine = ({
               target: "startingDaemon",
               cond: (c, event) => !event.isAdvancedDaemon && !event.isSPV
             },
+            START_CLI_REMOTE_DAEMON: {
+              target: "connectingDaemon",
+              cond: (c, event) => !!(event.remoteCredentials)
+            },
             CHOOSE_WALLET: "choosingWallet"
           }
         },

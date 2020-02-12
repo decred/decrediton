@@ -74,7 +74,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   // tutorial page
   finishTutorial: da.finishTutorial,
   // end of general methods
-  decreditonInit: da.decreditonInit,
   onRetryStartRPC: wla.startRpcRequestFunc,
   startSPVSync: wla.spvSyncAttempt,
   setSelectedWallet: wla.setSelectedWallet,
