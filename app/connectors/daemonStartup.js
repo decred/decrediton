@@ -44,7 +44,6 @@ const mapStateToProps = selectorMap({
   syncFetchHeadersLastHeaderTime: sel.syncFetchHeadersLastHeaderTime,
   syncDiscoverAddressesAttempt: sel.syncDiscoverAddressesAttempt,
   syncRescanAttempt: sel.syncRescanAttempt,
-  syncRescanProgress: sel.syncRescanProgress,
   syncFetchHeadersComplete: sel.syncFetchHeadersComplete,
   syncFetchTimeStart: sel.syncFetchTimeStart,
   firstBlockTime: sel.firstBlockTime,

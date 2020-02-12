@@ -73,7 +73,6 @@ export const syncFetchHeadersCount = get([ "walletLoader", "syncFetchHeadersCoun
 export const syncFetchHeadersLastHeaderTime = get([ "walletLoader", "syncLastFetchedHeaderTime" ]);
 export const syncDiscoverAddressesAttempt = get([ "walletLoader", "syncDiscoverAddressesAttempt" ]);
 export const syncRescanAttempt = get([ "walletLoader", "syncRescanAttempt" ]);
-export const syncRescanProgress = get([ "walletLoader", "syncRescanProgress" ]);
 export const syncFetchHeadersComplete = get([ "walletLoader" , "syncFetchHeadersComplete" ]);
 export const syncFetchTimeStart = get([ "walletLoader" , "syncFetchTimeStart" ]);
 

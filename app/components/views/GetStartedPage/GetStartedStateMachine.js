@@ -272,6 +272,7 @@ export const getStartedMachine = ({
     },
     isSyncingRPC: async (context) => {
       console.log("is at syncing rpc");
+      // TODO treat errors when syncing rpc
       if (context.isSPV) {
         try {
           return await startSPVSync();
@@ -279,11 +280,7 @@ export const getStartedMachine = ({
           console.log(error);
         }
       }
-      try {
-        onRetryStartRPC();
-      } catch (error) {
-        console.log(error)
-      }
+      onRetryStartRPC().then(r => r).catch(e => console.log(e));
     }
   }
 });

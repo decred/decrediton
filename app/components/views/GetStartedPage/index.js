@@ -12,7 +12,7 @@ import { createElement as h } from "react";
 import GetStartedMachinePage from "./GetStartedMachinePage";
 import TrezorConfig from "./TrezorConfig";
 import CreateWalletForm from "./PreCreateWallet";
-import { RescanWalletBody } from "./RescanWallet";
+import RescanWalletBody from "./RescanWallet";
 
 // css animation classes:
 const blockChainLoading = "blockchain-syncing";

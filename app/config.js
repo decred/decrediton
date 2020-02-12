@@ -287,7 +287,7 @@ export function getDaemonIsAdvanced() {
 }
 
 export function getIsSpv() {
-  return getConfigData(cfgConstants.SPV_MODE)
+  return getConfigData(cfgConstants.SPV_MODE);
 }
 
 export function setConfigData(key, value) {

@@ -17,6 +17,7 @@ import { clearDeviceSession as trezorClearDeviceSession } from "./TrezorActions"
 import { stopDcrlnd } from "./LNActions";
 import { TESTNET } from "constants";
 import { ipcRenderer } from "electron";
+import { RESCAN_PROGRESS } from "./ControlActions";
 
 const MAX_RPC_RETRIES = 5;
 const RPC_RETRY_DELAY = 5000;
@@ -211,7 +212,7 @@ export const startRpcRequestFunc = (privPass, isRetry) => (dispatch, getState) =
     request.setDiscoverAccounts(true);
     request.setPrivatePassphrase(new Uint8Array(Buffer.from(privPass)));
   }
-  return new Promise(() => {
+  return new Promise((resolve, reject) => {
     if (!isRetry) dispatch({ type: SYNC_ATTEMPT });
     const { loader } = getState().walletLoader;
     setTimeout(async () => {
@@ -241,7 +242,7 @@ export const startRpcRequestFunc = (privPass, isRetry) => (dispatch, getState) =
           } else {
             if (status.indexOf("invalid passphrase") > 0 || status.indexOf("Stream removed")) {
               dispatch({ error: status, type: SYNC_FAILED });
-              throw status;
+              reject(status);
             } else {
               dispatch(startRpcRequestFunc(true, privPass));
             }
@@ -355,7 +356,6 @@ export const SYNC_FETCHED_HEADERS_FINISHED = "SYNC_FETCHED_HEADERS_FINISHED";
 export const SYNC_DISCOVER_ADDRESSES_FINISHED = "SYNC_DISCOVER_ADDRESSES_FINISHED";
 export const SYNC_DISCOVER_ADDRESSES_STARTED= "SYNC_DISCOVER_ADDRESSES_STARTED";
 export const SYNC_RESCAN_STARTED = "SYNC_RESCAN_STARTED";
-export const SYNC_RESCAN_PROGRESS = "SYNC_RESCAN_PROGRESS";
 export const SYNC_RESCAN_FINISHED = "SYNC_RESCAN_FINISHED";
 
 export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
@@ -471,10 +471,11 @@ const syncConsumer = (response) => (dispatch, getState) => {
   }
   case SyncNotificationType.RESCAN_STARTED: {
     dispatch({ type: SYNC_RESCAN_STARTED });
+    dispatch(getBestBlockHeightAttempt());
     break;
   }
   case SyncNotificationType.RESCAN_PROGRESS: {
-    dispatch({ rescannedThrough: response.getRescanProgress().getRescannedThrough(), type: SYNC_RESCAN_PROGRESS });
+    dispatch({ type: RESCAN_PROGRESS, rescanResponse: response.getRescanProgress() });
     break;
   }
   case SyncNotificationType.RESCAN_FINISHED: {

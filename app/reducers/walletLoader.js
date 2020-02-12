@@ -210,7 +210,8 @@ export default function walletLoader(state = {}, action) {
     };
   case SYNC_RESCAN_PROGRESS:
     return { ...state,
-      syncRescanProgress: action.rescannedThrough
+      syncRescanProgress: action.rescannedThrough,
+      rescanResponse: action.rescanResponse
     };
   case SYNC_RESCAN_FINISHED:
     return { ...state,

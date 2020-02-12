@@ -22,9 +22,9 @@ export default ({
         max: getNeededBlocks, getEstimatedTimeLeft, lastDcrwalletLogLine, disabled: false }} />
     </div>
     { error &&
-    <div className="error launch-error">
-      {error}
-    </div>
+      <div className="error launch-error">
+        {error}
+      </div>
     }
     { StateComponent && (React.isValidElement(StateComponent) ? StateComponent : <StateComponent {...{ ...props, getDaemonSynced }} />) }
   </>
