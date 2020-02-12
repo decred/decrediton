@@ -136,7 +136,7 @@ class GetStarted extends React.Component {
         text = isSPV ?
           <T id="loaderBar.choosingWalletSPV" m="Choose a wallet to open in SPV mode" />
           : <T id="loaderBar.choosingWallet" m="Choose a wallet to open" />;
-        component = h(WalletSelection, { onSendCreateWallet, submitChosenWallet });
+        component = h(WalletSelection, { onSendCreateWallet, submitChosenWallet, isSPV });
         break;
       case "preCreateWallet":
         text = isCreateNewWallet ?

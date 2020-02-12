@@ -223,6 +223,7 @@ export const startRpcRequestFunc = (privPass, isRetry) => (dispatch, getState) =
       });
       rpcSyncCall.on("end", function() {
         dispatch({ type: SYNC_SUCCESS });
+        resolve({ synced: true });
       });
       rpcSyncCall.on("error", function(status) {
         status = status + "";
