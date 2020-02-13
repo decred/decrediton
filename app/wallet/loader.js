@@ -1,7 +1,7 @@
 import Promise from "promise";
 import { withLog as log, logOptionNoArgs } from "./app";
 import { loader as rpcLoader } from "middleware/grpc/client";
-import { WalletExistsRequest, CreateWalletRequest, OpenWalletRequest,
+import { CreateWalletRequest, OpenWalletRequest,
   CloseWalletRequest, StartConsensusRpcRequest, DiscoverAddressesRequest,
   SubscribeToBlockNotificationsRequest, FetchHeadersRequest, CreateWatchingOnlyWalletRequest,
   SpvSyncRequest, FetchMissingCFiltersRequest, RescanPointRequest } from "middleware/walletrpc/api_pb";
@@ -20,11 +20,6 @@ export const startRpc = log((loader, daemonhost, rpcport, rpcuser, rpcpass, cert
     request.setCertificate(new Uint8Array(cert));
     loader.startConsensusRpc(request, error => error ? reject(error) : resolve());
   }), "Start RPC", logOptionNoArgs());
-
-export const getWalletExists = log((loader) =>
-  new Promise((resolve, reject) =>
-    loader.walletExists(new WalletExistsRequest(), (error, response) =>
-      error ? reject(error) : resolve(response))), "Get Wallet Exists");
 
 export const createWallet = log((loader, pubPass, privPass, seed) =>
   new Promise((resolve, reject) => {

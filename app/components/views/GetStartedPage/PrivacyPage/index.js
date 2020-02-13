@@ -1,4 +1,4 @@
-import { walletStartup, settings } from "connectors";
+import { daemonStartup, settings } from "connectors";
 import Page from "./Page";
 
 @autobind
@@ -8,12 +8,8 @@ class PrivacyPage extends React.Component{
     this.state = { showCustomPrivacy: false };
   }
 
-  setupCustomPrivacy() {
-    this.setState({ showCustomPrivacy: true });
-  }
-
-  cancelCustomPrivacy() {
-    this.setState({ showCustomPrivacy: false });
+  toggleCustomPrivacy() {
+    this.setState({ showCustomPrivacy: !this.state.showCustomPrivacy });
   }
 
   acceptCustomPrivacy() {
@@ -22,15 +18,11 @@ class PrivacyPage extends React.Component{
   }
 
   render() {
-    const { setupCustomPrivacy, cancelCustomPrivacy, acceptCustomPrivacy } = this;
-    return <Page
-      {...this.props}
-      {...this.state}
-      setupCustomPrivacy={setupCustomPrivacy}
-      cancelCustomPrivacy={cancelCustomPrivacy}
-      acceptCustomPrivacy={acceptCustomPrivacy}
-    />;
+    const { acceptCustomPrivacy, toggleCustomPrivacy } = this;
+    return <Page {...{
+      ...this.props, ...this.state, acceptCustomPrivacy, toggleCustomPrivacy
+    }} />;
   }
 }
 
-export default walletStartup(settings(PrivacyPage));
+export default daemonStartup(settings(PrivacyPage));
