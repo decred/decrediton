@@ -1,5 +1,6 @@
 import { Machine } from "xstate";
 import { CreateWalletMachine } from "./CreateWallet/CreateWalletStateMachine";
+import { OPENWALLET_INPUT } from "actions/WalletLoaderActions";
 
 export const getStartedMachine = ({
   preStartDaemon, onStartDaemon, sendEvent, goToErrorPage, onConnectDaemon, checkNetworkMatch, syncDaemon,
@@ -126,7 +127,15 @@ export const getStartedMachine = ({
         startingWallet: {
           onEntry: "isAtStartWallet",
           on: {
-            SYNC_RPC: "syncingRPC"
+            SYNC_RPC: "syncingRPC",
+            WALLET_PUBPASS_INPUT: "walletPubpassInput"
+          }
+        },
+        walletPubpassInput: {
+          onEntry: "isAtWalletPubpassInput",
+          on: {
+            CONTINUE: "syncingRPC",
+            ERROR: "walletPubpassInput"
           }
         },
         syncingRPC: {
@@ -263,6 +272,9 @@ export const getStartedMachine = ({
       }
       context.selectedWallet = event.selectedWallet;
     },
+    isAtWalletPubpassInput: (context, event) => {
+      context.error = event.error && event.error;
+    },
     isAtStartWallet: (context) => {
       console.log("is At Start Wallet");
       const { selectedWallet } = context;
@@ -272,7 +284,13 @@ export const getStartedMachine = ({
         .then(r => {
           sendEvent({ type: "SYNC_RPC", r });
         })
-        .catch(err => console.log(err));
+        .catch(error => {
+          // If error is OPENWALLET_INPUT, the wallet has a pubpass and we
+          // switch states, for inputing it and open the wallet.
+          if (error === OPENWALLET_INPUT) {
+            sendEvent({ type: "WALLET_PUBPASS_INPUT" });
+          }
+        });
     },
     isSyncingRPC: async (context) => {
       console.log("is at syncing rpc");

@@ -35,15 +35,14 @@ export const loaderRequest = () => (dispatch, getState) => new Promise((resolve,
     try {
       const loader = await getLoader(request);
       dispatch({ loader, type: LOADER_SUCCESS });
-      dispatch(openWalletAttempt("", false));
-      resolve(loader);
+      return loader;
     } catch (error) {
       dispatch({ error, type: LOADER_FAILED });
       reject(error);
     }
   };
 
-  getLoaderAsync();
+  getLoaderAsync().then(loader => resolve(loader)).catch(error => console.log(error));
 });
 
 export const GETWALLETSEEDSVC_ATTEMPT = "GETWALLETSEEDSVC_ATTEMPT";
@@ -133,30 +132,37 @@ export const OPENWALLET_ATTEMPT = "OPENWALLET_ATTEMPT";
 export const OPENWALLET_FAILED = "OPENWALLET_FAILED";
 export const OPENWALLET_SUCCESS = "OPENWALLET_SUCCESS";
 
-export const openWalletAttempt = (pubPass, retryAttempt) => (dispatch, getState) => {
+export const openWalletAttempt = (pubPass, retryAttempt) => (dispatch, getState) => new Promise((resolve, reject) => {
   dispatch({ type: OPENWALLET_ATTEMPT });
   return openWallet(getState().walletLoader.loader, pubPass)
-    .then((response) => {
-      dispatch(getWalletServiceAttempt());
+    .then(async (response) => {
+      await dispatch(getWalletServiceAttempt());
       wallet.setIsWatchingOnly(response.getWatchingOnly());
       dispatch({ isWatchingOnly: response.getWatchingOnly(),  type: OPENWALLET_SUCCESS });
+      resolve(true);
     })
     .catch(async error => {
+      // This error message happens after creating a new wallet as we already
+      // started it on creation. So we just ignore it.
       if (error.message.includes("wallet already")) {
         dispatch(getWalletServiceAttempt());
         const isWatchingOnly = await wallet.getIsWatchingOnly();
         dispatch({ isWatchingOnly, type: OPENWALLET_SUCCESS });
-      } else if (error.message.includes("invalid passphrase:: wallet.Open")) {
+        return resolve(true);
+      }
+      // Wallet with pub pass
+      if (error.message.includes("invalid passphrase:: wallet.Open")) {
         if (retryAttempt) {
           dispatch({ error, type: OPENWALLET_FAILED_INPUT });
-        } else {
-          dispatch({ type: OPENWALLET_INPUT });
+          return reject(OPENWALLET_FAILED_INPUT);
         }
-      } else {
-        dispatch({ error, type: OPENWALLET_FAILED });
+        return reject(OPENWALLET_INPUT);
       }
+
+      dispatch({ error, type: OPENWALLET_FAILED });
+      reject(error);
     });
-};
+});
 
 export const CLOSEWALLET_ATTEMPT = "CLOSEWALLET_ATTEMPT";
 export const CLOSEWALLET_FAILED = "CLOSEWALLET_FAILED";
@@ -408,8 +414,8 @@ const syncConsumer = (response) => (dispatch, getState) => {
   const { discoverAccountsComplete } = getState().walletLoader;
   switch (response.getNotificationType()) {
   case SyncNotificationType.SYNCED: {
-    dispatch({ type: SYNC_SYNCED });
     dispatch(getBestBlockHeightAttempt(startWalletServices));
+    dispatch({ type: SYNC_SYNCED });
     break;
   }
   case SyncNotificationType.UNSYNCED: {

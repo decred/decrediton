@@ -1,4 +1,4 @@
-import { syncCancel, setSelectedWallet } from "./WalletLoaderActions";
+import { syncCancel, setSelectedWallet, openWalletAttempt } from "./WalletLoaderActions";
 import { getVersionServiceAttempt } from "./VersionActions";
 import { stopNotifcations } from "./NotificationActions";
 import { saveSettings, updateStateSettingsChanged } from "./SettingsActions";
@@ -356,11 +356,11 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => new Promi
     dispatch({ type: WALLET_LOADER_SETTINGS, discoverAccountsComplete });
     selectedWallet.value.isTrezor && dispatch(enableTrezor());
     await dispatch(getVersionServiceAttempt());
+    await dispatch(openWalletAttempt("", false));
     return discoverAccountsComplete;
   };
 
-  start()
-    .then(discoverAccountsComplete => resolve (discoverAccountsComplete))
+  start().then(discoverAccountsComplete => resolve (discoverAccountsComplete))
     .catch(err => reject(err));
 });
 

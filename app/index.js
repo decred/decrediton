@@ -244,10 +244,7 @@ var initialState = {
     loader: null,
     getLoaderError: null,
     // WalletCreate
-    createWalletExisting: false,
-    // WalletOpen
-    walletOpenRequestAttempt: false,
-    walletOpenError: null
+    createWalletExisting: false
   },
   notifications: {
     transactionNtfns: null,

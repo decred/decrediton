@@ -89,8 +89,6 @@ export const previousWallet = get([ "daemon", "previousWallet" ]);
 export const getWalletName = get([ "daemon", "walletName" ]);
 export const getSelectedWallet = get([ "walletLoader", "selectedWallet" ]);
 
-export const openWalletInputRequest = get([ "walletLoader", "openWalletInputRequest" ]);
-
 export const balances = or(get([ "grpc", "balances" ]), () => []);
 export const walletService = get([ "grpc", "walletService" ]);
 export const agendaService = get([ "grpc", "agendaService" ]);
@@ -784,7 +782,6 @@ export const isImportingScript = bool(importScriptRequestAttempt);
 export const newUnminedMessage = get([ "notifications", "newUnminedMessage" ]);
 
 export const createWalletExisting = get([ "walletLoader", "createWalletExisting" ]);
-export const isOpeningWallet = get([ "walletLoader", "walletOpenRequestAttempt" ]);
 
 export const lastBlockTimestamp = get([ "grpc", "recentBlockTimestamp" ]);
 

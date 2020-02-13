@@ -13,6 +13,7 @@ import GetStartedMachinePage from "./GetStartedMachinePage";
 import TrezorConfig from "./TrezorConfig";
 import CreateWalletForm from "./PreCreateWallet";
 import RescanWalletBody from "./RescanWallet";
+import WalletPubpassInput from "./OpenWallet";
 import { ipcRenderer } from "electron";
 
 // css animation classes:
@@ -166,6 +167,10 @@ class GetStarted extends React.Component {
           <T id="loaderBar.creatingWallet" m="Creating Wallet..." /> :
           <T id="loaderBar.restoringWallet" m="Restoring Wallet..." />;
         break;
+      case "walletPubpassInput":
+        text = <T id="loaderBar.walletPubPass" m="Insert your pubkey" />;
+        component = h(WalletPubpassInput, { onSendContinue, onSendError, error, ...this.props });
+        break;
       case "startingWallet":
         text = <T id="loaderBar.startingWallet" m="Starting wallet..." />;
         break;
@@ -245,6 +250,13 @@ class GetStarted extends React.Component {
   getError() {
     const { error } = this.service._state.context;
     if (!error) return;
+    // We can return errors in the form of react component, which are objects.
+    // So we handle them first.
+    if (React.isValidElement(error)) {
+      return error;
+    }
+    // If the errors is an object but not a react component, we strigfy it so we can
+    // render.
     if (typeof error  === "object") {
       return JSON.stringify(error);
     }

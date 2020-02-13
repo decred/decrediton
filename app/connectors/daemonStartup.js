@@ -80,6 +80,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   startSPVSync: wla.spvSyncAttempt,
   setSelectedWallet: wla.setSelectedWallet,
   getSelectedWallet: wla.getSelectedWallet,
+  onOpenWallet: wla.openWalletAttempt,
   onStartDaemon: da.startDaemon,
   onConnectDaemon: da.connectDaemon,
   checkNetworkMatch: da.checkNetworkMatch,
