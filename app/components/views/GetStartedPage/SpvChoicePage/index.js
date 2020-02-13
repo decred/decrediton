@@ -1,4 +1,4 @@
-import { walletStartup, settings } from "connectors";
+import { daemonStartup, settings } from "connectors";
 import Page from "./Page";
 
 @autobind
@@ -15,4 +15,4 @@ class SpvChoicePage extends React.Component{
   }
 }
 
-export default walletStartup(settings(SpvChoicePage));
+export default daemonStartup(settings(SpvChoicePage));

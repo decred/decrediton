@@ -28,7 +28,8 @@ class AnimatedLinearProgressFull extends React.Component {
   render() {
     const {
       min, error, getDaemonSynced, text, animationType, syncFetchHeadersLastHeaderTime,
-      getCurrentBlockCount, selectedWalletSelector, getEstimatedTimeLeft, getNeededBlocks
+      getCurrentBlockCount, selectedWalletSelector, getEstimatedTimeLeft, getNeededBlocks,
+      isSPV
     } = this.props;
     const perComplete = (getCurrentBlockCount-min)/(getNeededBlocks-min);
     const leftStartingPoint = perComplete ? perComplete*100 : 0;
@@ -42,7 +43,7 @@ class AnimatedLinearProgressFull extends React.Component {
     return (
       <>
         <div className={"linear-progress " + animationType}>
-          { getDaemonSynced ?
+          { getDaemonSynced || isSPV ?
             <div className={"linear-progress-bar " + (error ? "error" : null)}
               style={error || getDaemonSynced ? {} : { width: `${perComplete*100}` + "%" }}>
             </div> :
@@ -58,7 +59,8 @@ class AnimatedLinearProgressFull extends React.Component {
                 { perComplete > 0.75 && perComplete < 1 && <div className="linear-progress-box five"   style={{ left: leftStartingPoint + 200 }}/> }
                 { perComplete > 0.9  && perComplete < 1 && <div className="linear-progress-box six"    style={{ left: leftStartingPoint + 200 }}/> }
               </div>
-            </>}
+            </>
+          }
           <div className={"linear-progress-text " + animationType}>
             {text}
           </div>

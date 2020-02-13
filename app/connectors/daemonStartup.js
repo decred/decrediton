@@ -9,7 +9,22 @@ import * as ctrla from "actions/ControlActions";
 import * as trza from "actions/TrezorActions";
 
 const mapStateToProps = selectorMap({
+  // general selectors
+  // Get posistion selectors when first starting decrediton
+  setLanguage: sel.setLanguage,
+  showTutorial: sel.showTutorial,
+  showSpvChoice: sel.showSpvChoice,
+  showPrivacy: sel.showPrivacy,
+
+  // language page selectors
+  availableLanguages: sel.sortedLocales,
+  defaultLocale: sel.defaultLocaleName,
+
+  // end of general selectors
+
   isAdvancedDaemon: sel.isAdvancedDaemon,
+  isSPV: sel.isSPV,
+  isTestNet: sel.isTestNet,
   availableWallets: sel.sortedAvailableWallets,
   getDaemonSynced: sel.getDaemonSynced,
   getCurrentBlockCount: sel.getCurrentBlockCount,
@@ -29,7 +44,6 @@ const mapStateToProps = selectorMap({
   syncFetchHeadersLastHeaderTime: sel.syncFetchHeadersLastHeaderTime,
   syncDiscoverAddressesAttempt: sel.syncDiscoverAddressesAttempt,
   syncRescanAttempt: sel.syncRescanAttempt,
-  syncRescanProgress: sel.syncRescanProgress,
   syncFetchHeadersComplete: sel.syncFetchHeadersComplete,
   syncFetchTimeStart: sel.syncFetchTimeStart,
   firstBlockTime: sel.firstBlockTime,
@@ -38,8 +52,31 @@ const mapStateToProps = selectorMap({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  // general methods
+  // Methods for showing positions when first starting decrediton
+  onShowTutorial: da.showTutorial,
+  onShowSpvChoice: da.showSpvChoice,
+  onShowPrivacy: da.showPrivacy,
+  onShowCreateWallet: da.showCreateWallet,
+  onShowLanguage: da.showLanguage,
+  onShowGetStarted: da.showGetStarted,
+
+  // language page
+  onSelectLanguage: da.selectLanguage,
+
+  // privacy page
+  setupStandardPrivacy: da.setupStandardPrivacy,
+  setupDisabledPrivacy: da.setupDisabledPrivacy,
+
+  // spv page
+  toggleSpv: da.toggleSpv,
+
+  // tutorial page
+  finishTutorial: da.finishTutorial,
+  // end of general methods
   decreditonInit: da.decreditonInit,
   onRetryStartRPC: wla.startRpcRequestFunc,
+  startSPVSync: wla.spvSyncAttempt,
   setSelectedWallet: wla.setSelectedWallet,
   getSelectedWallet: wla.getSelectedWallet,
   onStartDaemon: da.startDaemon,
@@ -49,7 +86,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onGetAvailableWallets: da.getAvailableWallets,
   onStartWallet: da.startWallet,
   onRemoveWallet: da.removeWallet,
-  onShowCreateWallet: da.showCreateWallet,
   goToErrorPage: ca.goToError,
   onCreateWallet: da.createWallet,
   getDcrwalletLogs: da.getDcrwalletLogs,

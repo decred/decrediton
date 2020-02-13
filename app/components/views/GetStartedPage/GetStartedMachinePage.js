@@ -4,7 +4,8 @@ import { LearnBasicsMsg, WhatsNewLink, LoaderTitleMsg } from "./messages";
 
 export default ({
   StateComponent, getDaemonSynced, error, text, getCurrentBlockCount, animationType,
-  getNeededBlocks, getDaemonStarted, getEstimatedTimeLeft, lastDcrwalletLogLine, ...props
+  getNeededBlocks, getDaemonStarted, getEstimatedTimeLeft, lastDcrwalletLogLine, isSPV,
+  ...props
 }) => (
   <>
     <div className="content-title">
@@ -17,13 +18,13 @@ export default ({
       <WhatsNewLink />
     </div>
     <div className="loader-bar">
-      <AnimatedLinearProgressFull {...{ getDaemonStarted, getDaemonSynced, text, getCurrentBlockCount, animationType, min: 0,
+      <AnimatedLinearProgressFull {...{ getDaemonStarted, getDaemonSynced, isSPV, text, getCurrentBlockCount, animationType, min: 0,
         max: getNeededBlocks, getEstimatedTimeLeft, lastDcrwalletLogLine, disabled: false }} />
     </div>
     { error &&
-    <div className="error launch-error">
-      {error}
-    </div>
+      <div className="error launch-error">
+        {error}
+      </div>
     }
     { StateComponent && (React.isValidElement(StateComponent) ? StateComponent : <StateComponent {...{ ...props, getDaemonSynced }} />) }
   </>
