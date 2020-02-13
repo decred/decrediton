@@ -9,9 +9,6 @@ import * as trza from "actions/TrezorActions";
 
 const mapStateToProps = selectorMap({
   createWalletExisting: sel.createWalletExisting,
-  isCreatingWallet: sel.isCreatingWallet,
-  confirmNewSeed: sel.confirmNewSeed,
-  createNewWallet: sel.createNewWallet,
   isTestNet: sel.isTestNet,
   isCreatingWatchingOnly: sel.isWatchingOnly,
   walletMasterPubKey: sel.walletMasterPubKey,
@@ -29,7 +26,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   createWatchOnlyWalletRequest: wla.createWatchOnlyWalletRequest,
   generateSeed: wla.generateSeed,
   decodeSeed: wla.decodeSeed,
-  trezorLoadDeviceList: trza.loadDeviceList,
   trezorEnable: trza.enableTrezor,
   trezorDisable: trza.disableTrezor,
   trezorAlertNoConnectedDevice: trza.alertNoConnectedDevice,

@@ -1,68 +1,29 @@
-import {
-  RescanWalletFormHeader as RescanWalletHeader,
-  RescanWalletFormBody
-} from "./Form";
+import { LinearProgressSmall } from "indicators";
+import { FormattedMessage as T } from "react-intl";
+import { rescan } from "connectors";
+import "style/GetStarted.less";
 
-class RescanWalletBody extends React.Component {
+const RescanWalletFormBody = ({
+  rescanEndBlock, rescanStartBlock, rescanCurrentBlock
+}) => (
+  <>
+    <LinearProgressSmall
+      min={rescanStartBlock}
+      max={rescanEndBlock}
+      value={rescanCurrentBlock}
+    />
+    <T
+      id="getStarted.walletRescan.progress"
+      m="Rescan Progress ({rescanCurrentBlock} / {rescanEndBlock})"
+      values={{
+        rescanCurrentBlock: rescanCurrentBlock > rescanStartBlock
+          ? rescanCurrentBlock
+          : rescanStartBlock,
+        rescanEndBlock: rescanEndBlock
+      }}
+    />
+  </>
 
-  constructor(props)  {
-    super(props);
-    this.state = this.getInitialState();
-  }
+);
 
-  componentWillUnmount() {
-    this.mounted = false;
-    this.resetState();
-    if(this.timeoutId) {
-      clearTimeout(this.timeoutId);
-    }
-  }
-
-  getInitialState() {
-    return {
-      showLongWaitMessage: false
-    };
-  }
-
-  render() {
-    const { showLongWaitMessage } = this.state;
-    const { isSPV,
-      rescanEndBlock,
-      rescanStartBlock,
-      rescanCurrentBlock,
-      syncRescanProgress
-    } = this.props;
-    var rescanEnd = rescanEndBlock;
-    var rescanStart = rescanStartBlock;
-    var rescanCurrent = rescanCurrentBlock;
-    rescanCurrent = syncRescanProgress;
-    return (
-      <RescanWalletFormBody
-        {...{
-          ...this.props,
-          showLongWaitMessage,
-          rescanEndBlock: rescanEnd,
-          rescanStartBlock: rescanStart,
-          rescanCurrentBlock: rescanCurrent,
-          isSPV
-        }}
-      />
-    );
-  }
-
-  componentDidMount() {
-    this.mounted = true;
-    this.timeoutId = setTimeout(() => {
-      if(this.mounted) {
-        this.setState({ showLongWaitMessage: true });
-      }
-      delete this.timeoutId;
-    }, 2000);
-  }
-
-  resetState() {
-    this.setState(this.getInitialState());
-  }
-
-}
-export { RescanWalletHeader, RescanWalletBody };
+export default rescan(RescanWalletFormBody);

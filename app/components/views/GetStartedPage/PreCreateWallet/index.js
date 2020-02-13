@@ -113,7 +113,7 @@ class PreCreateWallet extends React.Component {
       this.props.trezorAlertNoConnectedDevice();
       return;
     }
-    // onSendContinue action so getStartedStateMachine we can go to
+    // onSendContinue action so getStartedStateMachine can go to
     // creatingWallet state.
     onSendContinue();
     if (isTrezor) {

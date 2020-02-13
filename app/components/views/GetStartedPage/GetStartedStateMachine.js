@@ -3,7 +3,7 @@ import { CreateWalletMachine } from "./CreateWallet/CreateWalletStateMachine";
 
 export const getStartedMachine = ({
   preStartDaemon, onStartDaemon, sendEvent, goToErrorPage, onConnectDaemon, checkNetworkMatch, syncDaemon,
-  onGetAvailableWallets, setSelectedWallet, onStartWallet, onRetryStartRPC
+  onGetAvailableWallets, setSelectedWallet, onStartWallet, onRetryStartRPC, startSPVSync
 }) => Machine({
   id: "getStarted",
   initial: "startMachine",
@@ -12,7 +12,8 @@ export const getStartedMachine = ({
     selectedWallet: null,
     appdata: null,
     error: null,
-    isCreateNewWallet: null
+    isCreateNewWallet: null,
+    isSPV: null
   },
   states: {
     // startMachine represents the state with daemon and wallet starting operations.
@@ -43,7 +44,10 @@ export const getStartedMachine = ({
           }
         },
         startSpv: {
-          onEntry: "isAtStartSPV"
+          onEntry: "isAtStartSPV",
+          on: {
+            CONTINUE: "choosingWallet"
+          }
         },
         startingDaemon: {
           onEntry: "isAtStartingDaemon",
@@ -177,8 +181,9 @@ export const getStartedMachine = ({
       console.log("is at start advanced daemon");
       context.error = event.payload && event.payload.error;
     },
-    isAtStartSPV: () => {
-      console.log("is at start SPV");
+    isAtStartSPV: (context, event) => {
+      context.isSPV = event.isSPV;
+      sendEvent({ type: "CONTINUE" });
     },
     isAtStartingDaemon: (context, event) => {
       console.log("is at Starting Daemonn");
@@ -220,6 +225,7 @@ export const getStartedMachine = ({
     },
     isAtCheckNetworkMatch: () => {
       console.log(" is at check network ");
+      // TODO add error when network does not match
       return checkNetworkMatch()
         .then( checked => sendEvent({ type: "CHOOSE_WALLET", payload: { checked } }))
         .catch(e => console.log(e));
@@ -232,6 +238,7 @@ export const getStartedMachine = ({
     },
     isAtChoosingWallet: (context, event) => {
       console.log("is at choosingWallet");
+      context.isSPV = typeof event.isSPV === undefined ? context.isSPV : event.isSPV;
       onGetAvailableWallets()
         .then(w => sendEvent({ type: "CHOOSE_WALLET", payload: { w } }) )
         .catch(e => console.log(e));
@@ -263,13 +270,17 @@ export const getStartedMachine = ({
         })
         .catch(err => console.log(err));
     },
-    isSyncingRPC: async () => {
+    isSyncingRPC: async (context) => {
       console.log("is at syncing rpc");
-      try {
-        await onRetryStartRPC();
-      } catch (error) {
-        console.log(error);
+      // TODO treat errors when syncing rpc
+      if (context.isSPV) {
+        try {
+          return await startSPVSync();
+        } catch (error) {
+          console.log(error);
+        }
       }
+      onRetryStartRPC().then(r => r).catch(e => console.log(e));
     }
   }
 });

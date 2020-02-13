@@ -171,35 +171,6 @@ export const changePassphraseAttempt = (oldPass, newPass, priv) => (dispatch, ge
     .catch(error => dispatch({ error, type: CHANGEPASSPHRASE_FAILED }));
 };
 
-export const LOADACTIVEDATAFILTERS_ATTEMPT = "LOADACTIVEDATAFILTERS_ATTEMPT";
-export const LOADACTIVEDATAFILTERS_FAILED= "LOADACTIVEDATAFILTERS_FAILED";
-export const LOADACTIVEDATAFILTERS_SUCCESS = "LOADACTIVEDATAFILTERS_SUCCESS";
-
-export const loadActiveDataFiltersAttempt = () => (dispatch, getState) => {
-  const { walletCreateExisting, walletCreateResponse, rescanPointResponse } = getState().walletLoader;
-  dispatch({ type: LOADACTIVEDATAFILTERS_ATTEMPT });
-  return wallet.loadActiveDataFilters(sel.walletService(getState()))
-    .then(res => {
-      dispatch({ response: res, type: LOADACTIVEDATAFILTERS_SUCCESS });
-
-      // Check here to see if wallet was just created from an existing
-      // seed.  If it was created from a newly generated seed there is no
-      // expectation of address use so rescan can be skipped.
-      if (walletCreateExisting) {
-        setTimeout(() => { dispatch(rescanAttempt(0, null, true)); }, 1000);
-      } else if (walletCreateResponse) {
-        wallet.bestBlock(sel.walletService(getState()))
-          .then(resp => dispatch(rescanAttempt(resp.getHeight(), null, true)));
-      } else if (walletCreateResponse == null && rescanPointResponse != null && rescanPointResponse.getRescanPointHash().length !== 0) {
-        setTimeout(() => { dispatch(rescanAttempt(null, rescanPointResponse != null && rescanPointResponse.getRescanPointHash(), true)); }, 1000);
-      } else {
-        dispatch(startWalletServices());
-      }
-    }
-    )
-    .catch(error => dispatch({ error, type: LOADACTIVEDATAFILTERS_FAILED }));
-};
-
 export const CLEARTX = "CLEARTX";
 
 export const clearTransaction = () => ({ type: CLEARTX });
