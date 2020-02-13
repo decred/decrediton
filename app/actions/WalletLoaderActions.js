@@ -21,7 +21,6 @@ import { RESCAN_PROGRESS } from "./ControlActions";
 
 const MAX_RPC_RETRIES = 5;
 const RPC_RETRY_DELAY = 5000;
-// const cliOptions = ipcRenderer.sendSync("get-cli-options");
 
 export const LOADER_ATTEMPT = "LOADER_ATTEMPT";
 export const LOADER_FAILED = "LOADER_FAILED";

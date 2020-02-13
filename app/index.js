@@ -229,7 +229,6 @@ var initialState = {
     syncAttemptRequest: false,
     syncCall: null,
     peerCount: 0,
-    existingOrNew: false,
     rpcRetryAttempts: 0,
     curBlocks: 0,
     maxWalletCount: globalCfg.get("max_wallet_count"),

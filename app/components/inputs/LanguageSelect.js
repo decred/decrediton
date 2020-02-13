@@ -1,6 +1,5 @@
 import Select from "react-select";
 import { injectIntl } from "react-intl";
-import { daemonStartup } from "connectors";
 import "style/Input.less";
 
 @autobind
@@ -71,4 +70,4 @@ class SettingsInput extends React.Component {
 
 }
 
-export default daemonStartup(injectIntl(SettingsInput));
+export default injectIntl(SettingsInput);

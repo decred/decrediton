@@ -60,7 +60,7 @@ class GetStarted extends React.Component {
         rpc_cert: cliOptions.rpcCert,
         rpc_host: cliOptions.rpcHost,
         rpc_port: cliOptions.rpcPort
-      }
+      };
       this.service.send({ type: "START_CLI_REMOTE_DAEMON", remoteCredentials: rpcCliRemote });
     }
     // If daemon is synced or isSPV mode we checks for a selectedWallet.
@@ -85,7 +85,7 @@ class GetStarted extends React.Component {
 
   componentDidUpdate(prevProps) {
     // This is responsable for updating the text and animation of the loader bar
-    // when syncing rpc This is done this way to avoid removing syncConsumer method
+    // when syncing rpc. This is done this way to avoid removing syncConsumer method
     // from the reducer.
     // After Each update we need to call getStateComponent or the PageComponent will not
     // update itself.

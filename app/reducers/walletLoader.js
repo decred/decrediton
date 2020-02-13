@@ -72,7 +72,6 @@ export default function walletLoader(state = {}, action) {
       walletCloseRequestAttempt: false,
       walletCloseResponse: action.response,
       loader: null,
-      existingOrNew: false,
       advancedDaemonInputRequest: true,
       walletExistResponse: null,
       seedService: null,
