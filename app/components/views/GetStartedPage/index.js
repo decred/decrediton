@@ -49,7 +49,8 @@ class GetStarted extends React.Component {
   }
 
   // preStartDaemon gets data from cli to connect with remote dcrd if rpc
-  // connection data is inputed.
+  // connection data is inputed and sends the first interaction with the state
+  // machine, so it can start. Only one of the choises is chosen.
   preStartDaemon () {
     const { isSPV, isAdvancedDaemon, getDaemonSynced, getSelectedWallet } = this.props;
     const cliOptions = ipcRenderer.sendSync("get-cli-options");
@@ -64,7 +65,7 @@ class GetStarted extends React.Component {
       };
       this.service.send({ type: "START_CLI_REMOTE_DAEMON", remoteCredentials: rpcCliRemote });
     }
-    // If daemon is synced or isSPV mode we checks for a selectedWallet.
+    // If daemon is synced or isSPV mode we check for a selectedWallet.
     // If it is selected, it probably means a wallet was just pre created or
     // a refresh (common when in dev mode).
     if (getDaemonSynced || isSPV) {
@@ -204,7 +205,7 @@ class GetStarted extends React.Component {
   sendEvent(data) {
     const { send } = this.service;
     const { type, payload } = data;
-    send({ type, payload });
+    send({ type, ...payload });
   }
 
   submitChosenWallet(selectedWallet) {

@@ -1,5 +1,4 @@
 import { AdvancedHeader, AdvancedBody } from "./Form";
-import Error from "./Error";
 import { setAppdataPath, getAppdataPath, getRemoteCredentials, setRemoteCredentials } from "config.js";
 
 @autobind
@@ -173,4 +172,4 @@ class AdvancedStartupBody extends React.Component {
   }
 }
 
-export { AdvancedStartupHeader, AdvancedStartupBody, Error as RemoteAppdataError };
+export { AdvancedStartupHeader, AdvancedStartupBody };

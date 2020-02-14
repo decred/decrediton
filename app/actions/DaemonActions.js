@@ -426,11 +426,11 @@ export const checkNetworkMatch = () => async (dispatch, getState) => new Promise
     });
 });
 
-export const syncDaemon = () => (dispatch, getState) => new Promise((resolve) => {
+export const syncDaemon = () => (dispatch, getState) => new Promise((resolve, reject) => {
   dispatch({ type: SYNC_DAEMON_ATTEMPT });
   const updateBlockCount = () => {
     const { daemon: { daemonSynced, timeStart, blockStart } } = getState();
-    if (daemonSynced) return;
+    if (daemonSynced) resolve();
     return wallet.getBlockCount()
       .then(( blockChainInfo ) => {
         const { blockCount, syncHeight } = blockChainInfo;
@@ -440,7 +440,8 @@ export const syncDaemon = () => (dispatch, getState) => new Promise((resolve) =>
             // After this points the refresh will load directly instead of
             // starting, connecting and syncing daemon.
             wallet.setHeightSynced(true);
-            resolve({ type: DAEMONSYNCED, currentBlockHeight: blockCount });
+            dispatch({ type: DAEMONSYNCED, currentBlockHeight: blockCount })
+            resolve();
             return;
           }
 
@@ -466,8 +467,8 @@ export const syncDaemon = () => (dispatch, getState) => new Promise((resolve) =>
         setTimeout(updateBlockCount, 1000);
       })
       .catch( error => {
-        console.log(error);
         dispatch({ error, type: SYNC_DAEMON_FAILED });
+        reject(error);
       });
   };
   updateBlockCount();
