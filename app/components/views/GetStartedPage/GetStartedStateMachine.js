@@ -196,7 +196,12 @@ export const getStartedMachine = ({
         syncingRPC: {
           onEntry: "isSyncingRPC",
           on: {
-            ERROR_SYNCING_DAEMON: "daemonError"
+            ERROR_SYNCING_WALLET: {
+              target: "choosingWallet",
+              actions: assign({
+                error: (context, event) => event.error && event.error
+              })
+            }
           }
         },
         // history state so we can go back in the specific state when going to other view, like settings or log
@@ -326,14 +331,11 @@ export const getStartedMachine = ({
     },
     isSyncingRPC: async (context) => {
       if (context.isSPV) {
-        try {
-          // TODO treat errors when syncing spv
-          return await startSPVSync();
-        } catch (error) {
-          console.log(error);
-        }
+        return startSPVSync()
+          .then(r => r)
+          .catch(error => sendEvent({ type: "ERROR_SYNCING_WALLET", payload: { error } }));
       }
-      onRetryStartRPC().then(r => r).catch(error => sendEvent({ type: "ERROR_SYNCING_DAEMON", payload: { error } }));
+      onRetryStartRPC().then(r => r).catch(error => sendEvent({ type: "ERROR_SYNCING_WALLET", payload: { error } }));
     }
   }
 });

@@ -386,7 +386,7 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
     request.setDiscoverAccounts(true);
     request.setPrivatePassphrase(new Uint8Array(Buffer.from(privPass)));
   }
-  return new Promise(() => {
+  return new Promise((resolve, reject) => {
     const { loader } = getState().walletLoader;
     const spvSyncCall = loader.spvSync(request);
     dispatch({ syncCall: spvSyncCall, type: SYNC_UPDATE });
@@ -395,12 +395,14 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
     });
     spvSyncCall.on("end", function() {
       dispatch({ type: SYNC_SUCCESS });
+      resolve();
     });
     spvSyncCall.on("error", function(status) {
       status = status + "";
       if (status.indexOf("Cancelled") < 0) {
         console.error(status);
         dispatch({ error: status, type: SYNC_FAILED });
+        reject(status);
       }
     });
   });
