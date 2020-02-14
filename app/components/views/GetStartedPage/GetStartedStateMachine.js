@@ -56,6 +56,8 @@ export const getStartedMachine = ({
             CHOOSE_WALLET: {
               target: "choosingWallet",
               actions: assign({
+                isAdvancedDaemon: (context, event) => event.isAdvancedDaemon ? !!event.isAdvancedDaemon : context.isAdvancedDaemon,
+                isSPV: (context, event) => event.isSPV ? !!event.isSPV : context.isSPV,
                 selectedWallet: (context, event) => event.selectedWallet ? event.selectedWallet : context.selectedWallet
               })
             }
@@ -332,8 +334,7 @@ export const getStartedMachine = ({
           console.log(error);
         }
       }
-      onRetryStartRPC().then(r => r).catch(error =>
-        sendEvent({ type: "ERROR_SYNCING_DAEMON", payload: { error } }));
+      onRetryStartRPC().then(r => r).catch(error => sendEvent({ type: "ERROR_SYNCING_DAEMON", payload: { error } }));
     }
   }
 });

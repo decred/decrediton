@@ -28,7 +28,6 @@ export const getCurrentBlockCount = get([ "daemon", "currentBlockCount" ]);
 export const getNeededBlocks = get([ "daemon", "neededBlocks" ]);
 export const getEstimatedTimeLeft = get([ "daemon", "timeLeftEstimate" ]);
 export const getDaemonSynced = get([ "daemon", "daemonSynced" ]);
-export const isAdvancedDaemon = get([ "daemon", "daemonAdvanced" ]);
 export const getWalletReady = get([ "daemon", "walletReady" ]);
 export const maxWalletCount = get([ "walletLoader", "maxWalletCount" ]);
 
@@ -146,6 +145,7 @@ export const defaultLocaleName = createSelector(
 export const tsDate = compose(timezone => timezone === "utc" ? dateToUTC : dateToLocal, timezone);
 
 export const isSPV = get([ "settings", "currentSettings", "spvMode" ]);
+export const isAdvancedDaemon = get([ "settings",  "currentSettings", "daemonStartAdvanced" ]);
 
 export const sortedLocales = createSelector(
   [ get([ "locales" ]) ],

@@ -183,7 +183,6 @@ export const registerForErrors = () => (dispatch) => {
     } else {
       dispatch({ error, type: WALLET_ERROR });
     }
-    dispatch(pushHistory("/error"));
   });
   ipcRenderer.on("warning-received", (event, daemon, warning) => {
     if (daemon) {

@@ -79,7 +79,6 @@ var initialState = {
     timeLeftEstimate: null,
     timeStart: 0,
     blockStart: 0,
-    daemonAdvanced: hasCliOption("daemonStartAdvanced") || getDaemonIsAdvanced(),
     credentials: null,
     appdata: null,
     shutdownRequested: false,
