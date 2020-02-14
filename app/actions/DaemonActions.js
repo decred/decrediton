@@ -439,7 +439,7 @@ export const syncDaemon = () => (dispatch, getState) => new Promise((resolve, re
             // After this points the refresh will load directly instead of
             // starting, connecting and syncing daemon.
             wallet.setHeightSynced(true);
-            dispatch({ type: DAEMONSYNCED, currentBlockHeight: blockCount })
+            dispatch({ type: DAEMONSYNCED, currentBlockHeight: blockCount });
             resolve();
             return;
           }

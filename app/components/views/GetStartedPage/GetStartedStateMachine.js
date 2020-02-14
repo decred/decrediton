@@ -47,7 +47,7 @@ export const getStartedMachine = ({
             },
             START_REGULAR_DAEMON: {
               target: "startingDaemon",
-              cond: (c, event) => !event.isAdvancedDaemon && !event.isSPV,
+              cond: (c, event) => !event.isAdvancedDaemon && !event.isSPV
             },
             START_CLI_REMOTE_DAEMON: {
               target: "connectingDaemon",
@@ -116,7 +116,7 @@ export const getStartedMachine = ({
           onEntry: "isAtCheckNetworkMatch",
           on: {
             CHOOSE_WALLET: "choosingWallet",
-            ERROR_NETWORK_DAEMON: "daemonError",
+            ERROR_NETWORK_DAEMON: "daemonError"
           }
         },
         syncingDaemon: {
@@ -136,7 +136,7 @@ export const getStartedMachine = ({
             ERROR: {
               target: "preCreateWallet",
               actions: assign({
-                error: (context, event) => event.error && event.error,
+                error: (context, event) => event.error && event.error
               })
             }
           }
@@ -147,7 +147,7 @@ export const getStartedMachine = ({
             ERROR: {
               target: "preCreateWallet",
               actions: assign({
-                error: (context, event) => event.error && event.error,
+                error: (context, event) => event.error && event.error
               })
             }
           },
@@ -245,7 +245,7 @@ export const getStartedMachine = ({
       console.log("is at pre start");
       return preStartDaemon();
     },
-    isAtStartSPV: (context, event) => {
+    isAtStartSPV: () => {
       sendEvent({ type: "CONTINUE" });
     },
     isAtStartingDaemon: (context, event) => {
@@ -261,7 +261,7 @@ export const getStartedMachine = ({
         );
     },
     isAtDaemonError: (context, event) => {
-      console.log("is at daemon error")
+      console.log("is at daemon error");
       if (!event) return;
       const { error } = event;
       if (!error) return;
@@ -324,8 +324,7 @@ export const getStartedMachine = ({
           sendEvent({ type: "ERROR_STARTING_WALLET", payload: { error } });
         });
     },
-    isSyncingRPC: async (context, event) => {
-      console.log("is at syncing rpc");
+    isSyncingRPC: async (context) => {
       if (context.isSPV) {
         try {
           // TODO treat errors when syncing spv

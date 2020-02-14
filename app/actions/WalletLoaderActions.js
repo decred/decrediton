@@ -145,7 +145,7 @@ export const openWalletAttempt = (pubPass, retryAttempt) => (dispatch, getState)
       // This error message happens if we start creating a wallet. As its
       // wallet.db file still not created.
       if (error.message.includes("missing database file")) {
-        resolve();      
+        resolve();
       }
       // This error message happens after creating a new wallet as we already
       // started it on creation. So we just ignore it.
