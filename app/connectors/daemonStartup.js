@@ -10,15 +10,21 @@ import * as trza from "actions/TrezorActions";
 
 const mapStateToProps = selectorMap({
   // general selectors
-  // Get posistion selectors when first starting decrediton
+
+  // version selectors
   appVersion: sel.appVersion,
+  updateAvailable: sel.updateAvailable,
+
+  // Get posistion selectors when first starting decrediton
   setLanguage: sel.setLanguage,
   showTutorial: sel.showTutorial,
   showSpvChoice: sel.showSpvChoice,
   showPrivacy: sel.showPrivacy,
+
   // language page selectors
   availableLanguages: sel.sortedLocales,
   defaultLocale: sel.defaultLocaleName,
+
   // end of general selectors
 
   // start daemon selectors

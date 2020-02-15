@@ -5,14 +5,14 @@ import { LearnBasicsMsg, WhatsNewLink, LoaderTitleMsg } from "./messages";
 export default ({
   StateComponent, getDaemonSynced, error, text, getCurrentBlockCount, animationType,
   getNeededBlocks, getDaemonStarted, getEstimatedTimeLeft, lastDcrwalletLogLine, isSPV,
-  onShowReleaseNotes, appVersion, ...props
+  onShowReleaseNotes, onShowTutorial, appVersion, ...props
 }) => (
   <>
     <div className="content-title">
       <LoaderTitleMsg />
     </div>
     <div className="loader-buttons">
-      <SlateGrayButton className="tutorial-button" >
+      <SlateGrayButton onClick={onShowTutorial} className="tutorial-button" >
         <LearnBasicsMsg />
       </SlateGrayButton>
       <WhatsNewLink {...{ onShowReleaseNotes, appVersion }} />
