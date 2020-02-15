@@ -14,6 +14,7 @@ import TrezorConfig from "./TrezorConfig";
 import CreateWalletForm from "./PreCreateWallet";
 import RescanWalletBody from "./RescanWallet";
 import WalletPubpassInput from "./OpenWallet";
+import ReleaseNotes from "./ReleaseNotes";
 import { ipcRenderer } from "electron";
 
 // css animation classes:
@@ -120,8 +121,8 @@ class GetStarted extends React.Component {
     const { current } = this.state;
     const {
       service, submitChosenWallet, submitRemoteCredentials, submitAppdata,
-      onShowSettings, onShowTrezorConfig, onSendBack, onSendCreateWallet,
-      onSendError, onSendContinue
+      onShowTrezorConfig, onSendBack, onSendCreateWallet,
+      onSendError, onSendContinue, onShowReleaseNotes
     } = this;
     const { machine } = service;
     const { isCreateNewWallet, isSPV } = this.service._state.context;
@@ -181,8 +182,8 @@ class GetStarted extends React.Component {
         break;
       }
       PageComponent = h(GetStartedMachinePage, {
-        ...this.state, ...this.props, submitRemoteCredentials, submitAppdata, onShowSettings,
-        service, machine, error, isSPV,
+        ...this.state, ...this.props, submitRemoteCredentials, submitAppdata,
+        service, machine, error, isSPV, onShowReleaseNotes,
         // if updated* is set, we use it, as it means it is called by the componentDidUpdate.
         text: updatedText ? updatedText : text,
         animationType: updatedAnimationType ? updatedAnimationType : animationType,
@@ -197,6 +198,9 @@ class GetStarted extends React.Component {
     }
     if (key === "trezorConfig") {
       PageComponent = h(TrezorConfig, { onSendBack });
+    }
+    if (key === "releaseNotes") {
+      PageComponent = h(ReleaseNotes, { onSendBack });
     }
 
     return this.setState({ PageComponent });
@@ -218,6 +222,10 @@ class GetStarted extends React.Component {
 
   submitAppdata(appdata) {
     return this.service.send({ type: "SUBMIT_APPDATA", appdata });
+  }
+
+  onShowReleaseNotes() {
+    return this.service.send({ type: "SHOW_RELEASE_NOTES" });
   }
 
   onShowSettings() {
@@ -267,9 +275,9 @@ class GetStarted extends React.Component {
   render() {
     const { PageComponent } = this.state;
     const { onShowLogs, onShowSettings } = this;
-    const { updateAvailable, appVersion } = this.props;
+    const { updateAvailable } = this.props;
 
-    return <GetStartedPage PageComponent={PageComponent} {...{ onShowLogs, onShowSettings, updateAvailable, appVersion }} />;
+    return <GetStartedPage PageComponent={PageComponent} {...{ onShowLogs, onShowSettings, updateAvailable }} />;
   }
 }
 

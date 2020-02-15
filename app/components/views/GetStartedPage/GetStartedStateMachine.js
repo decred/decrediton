@@ -24,7 +24,8 @@ export const getStartedMachine = ({
       on: {
         SHOW_SETTINGS: "settings",
         SHOW_LOGS: "logs",
-        SHOW_TREZOR_CONFIG: "trezorConfig"
+        SHOW_TREZOR_CONFIG: "trezorConfig",
+        SHOW_RELEASE_NOTES: "releaseNotes"
       },
       states: {
         preStart: {
@@ -211,6 +212,15 @@ export const getStartedMachine = ({
         }
       }
     // end of startMachine states
+    },
+    releaseNotes: {
+      initial: "releaseNotes",
+      states: {
+        releaseNotes: {}
+      },
+      on: {
+        BACK: "startMachine.hist"
+      }
     },
     trezorConfig: {
       initial: "trezorConfig",
