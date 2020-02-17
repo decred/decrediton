@@ -33,14 +33,9 @@ class ReleaseNotes extends React.Component {
   render() {
     const { onNewerVersion, onOlderVersion } = this;
 
-    return (
-      <ReleaseNotesForm
-        {...this.props}
-        {...this.state}
-        onNewerVersion={onNewerVersion}
-        onOlderVersion={onOlderVersion}
-      />
-    );
+    return <ReleaseNotesForm { ...{
+      ...this.props, ...this.state, onNewerVersion, onOlderVersion
+    }} />;
   }
 }
 

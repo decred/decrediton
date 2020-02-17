@@ -5,17 +5,17 @@ import { LearnBasicsMsg, WhatsNewLink, LoaderTitleMsg } from "./messages";
 export default ({
   StateComponent, getDaemonSynced, error, text, getCurrentBlockCount, animationType,
   getNeededBlocks, getDaemonStarted, getEstimatedTimeLeft, lastDcrwalletLogLine, isSPV,
-  ...props
+  onShowReleaseNotes, onShowTutorial, appVersion, ...props
 }) => (
   <>
     <div className="content-title">
       <LoaderTitleMsg />
     </div>
     <div className="loader-buttons">
-      <SlateGrayButton className="tutorial-button" >
+      <SlateGrayButton onClick={onShowTutorial} className="tutorial-button" >
         <LearnBasicsMsg />
       </SlateGrayButton>
-      <WhatsNewLink />
+      <WhatsNewLink {...{ onShowReleaseNotes, appVersion }} />
     </div>
     <div className="loader-bar">
       <AnimatedLinearProgressFull {...{ getDaemonStarted, getDaemonSynced, isSPV, text, getCurrentBlockCount, animationType, min: 0,
@@ -26,6 +26,6 @@ export default ({
         {error}
       </div>
     }
-    { StateComponent && (React.isValidElement(StateComponent) ? StateComponent : <StateComponent {...{ ...props, getDaemonSynced }} />) }
+    { StateComponent && (React.isValidElement(StateComponent) ? StateComponent : <StateComponent {...{ ...props }} />) }
   </>
 );
