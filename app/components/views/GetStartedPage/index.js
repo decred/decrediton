@@ -13,6 +13,9 @@ import GetStartedMachinePage from "./GetStartedMachinePage";
 import TrezorConfig from "./TrezorConfig";
 import CreateWalletForm from "./PreCreateWallet";
 import RescanWalletBody from "./RescanWallet";
+import WalletPubpassInput from "./OpenWallet";
+import ReleaseNotes from "./ReleaseNotes";
+import { ipcRenderer } from "electron";
 
 // css animation classes:
 const blockChainLoading = "blockchain-syncing";
@@ -41,20 +44,34 @@ class GetStarted extends React.Component {
     this.state = {
       current: this.machine.initialState,
       PageComponent: null,
-      text: <T id="getStarted.header.discoveringAddresses.meta" m="Discovering addresses" />,
+      text: null,
       animationType: null
     };
   }
 
+  // preStartDaemon gets data from cli to connect with remote dcrd if rpc
+  // connection data is inputed and sends the first interaction with the state
+  // machine, so it can start. Only one of the choises is chosen.
   preStartDaemon () {
     const { isSPV, isAdvancedDaemon, getDaemonSynced, getSelectedWallet } = this.props;
-    this.props.decreditonInit();
-    // If daemon is synced or isSPV mode we checks for a selectedWallet.
+    const cliOptions = ipcRenderer.sendSync("get-cli-options");
+    let rpcCliRemote;
+    if (cliOptions.rpcPresent) {
+      rpcCliRemote = {
+        rpc_user: cliOptions.rpcUser,
+        rpc_pass: cliOptions.rpcPass,
+        rpc_cert: cliOptions.rpcCert,
+        rpc_host: cliOptions.rpcHost,
+        rpc_port: cliOptions.rpcPort
+      };
+      this.service.send({ type: "START_CLI_REMOTE_DAEMON", remoteCredentials: rpcCliRemote });
+    }
+    // If daemon is synced or isSPV mode we check for a selectedWallet.
     // If it is selected, it probably means a wallet was just pre created or
-    // a refresh (usual in dev mode).
+    // a refresh (common when in dev mode).
     if (getDaemonSynced || isSPV) {
       const selectedWallet = getSelectedWallet();
-      return this.service.send({ type: "CHOOSE_WALLET", selectedWallet, isSPV });
+      return this.service.send({ type: "CHOOSE_WALLET", selectedWallet, isSPV, isAdvancedDaemon });
     }
     this.service.send({ type: "START_SPV", isSPV });
     this.service.send({ type: "START_ADVANCED_DAEMON", isSPV, isAdvancedDaemon });
@@ -71,7 +88,7 @@ class GetStarted extends React.Component {
 
   componentDidUpdate(prevProps) {
     // This is responsable for updating the text and animation of the loader bar
-    // when syncing rpc This is done this way to avoid removing syncConsumer method
+    // when syncing rpc. This is done this way to avoid removing syncConsumer method
     // from the reducer.
     // After Each update we need to call getStateComponent or the PageComponent will not
     // update itself.
@@ -104,8 +121,8 @@ class GetStarted extends React.Component {
     const { current } = this.state;
     const {
       service, submitChosenWallet, submitRemoteCredentials, submitAppdata,
-      onShowSettings, onShowTrezorConfig, onSendBack, onSendCreateWallet,
-      onSendError, onSendContinue
+      onShowTrezorConfig, onSendBack, onSendCreateWallet,
+      onSendError, onSendContinue, onShowReleaseNotes
     } = this;
     const { machine } = service;
     const { isCreateNewWallet, isSPV } = this.service._state.context;
@@ -152,6 +169,10 @@ class GetStarted extends React.Component {
           <T id="loaderBar.creatingWallet" m="Creating Wallet..." /> :
           <T id="loaderBar.restoringWallet" m="Restoring Wallet..." />;
         break;
+      case "walletPubpassInput":
+        text = <T id="loaderBar.walletPubPass" m="Insert your pubkey" />;
+        component = h(WalletPubpassInput, { onSendContinue, onSendError, error, ...this.props });
+        break;
       case "startingWallet":
         text = <T id="loaderBar.startingWallet" m="Starting wallet..." />;
         break;
@@ -161,8 +182,8 @@ class GetStarted extends React.Component {
         break;
       }
       PageComponent = h(GetStartedMachinePage, {
-        ...this.state, ...this.props, submitRemoteCredentials, submitAppdata, onShowSettings,
-        service, machine, error, isSPV,
+        ...this.state, ...this.props, submitRemoteCredentials, submitAppdata,
+        service, machine, error, isSPV, onShowReleaseNotes,
         // if updated* is set, we use it, as it means it is called by the componentDidUpdate.
         text: updatedText ? updatedText : text,
         animationType: updatedAnimationType ? updatedAnimationType : animationType,
@@ -178,6 +199,9 @@ class GetStarted extends React.Component {
     if (key === "trezorConfig") {
       PageComponent = h(TrezorConfig, { onSendBack });
     }
+    if (key === "releaseNotes") {
+      PageComponent = h(ReleaseNotes, { onSendBack });
+    }
 
     return this.setState({ PageComponent });
   }
@@ -185,7 +209,7 @@ class GetStarted extends React.Component {
   sendEvent(data) {
     const { send } = this.service;
     const { type, payload } = data;
-    send({ type, payload });
+    send({ type, ...payload });
   }
 
   submitChosenWallet(selectedWallet) {
@@ -198,6 +222,10 @@ class GetStarted extends React.Component {
 
   submitAppdata(appdata) {
     return this.service.send({ type: "SUBMIT_APPDATA", appdata });
+  }
+
+  onShowReleaseNotes() {
+    return this.service.send({ type: "SHOW_RELEASE_NOTES" });
   }
 
   onShowSettings() {
@@ -231,6 +259,13 @@ class GetStarted extends React.Component {
   getError() {
     const { error } = this.service._state.context;
     if (!error) return;
+    // We can return errors in the form of react component, which are objects.
+    // So we handle them first.
+    if (React.isValidElement(error)) {
+      return error;
+    }
+    // If the errors is an object but not a react component, we strigfy it so we can
+    // render.
     if (typeof error  === "object") {
       return JSON.stringify(error);
     }
@@ -240,9 +275,9 @@ class GetStarted extends React.Component {
   render() {
     const { PageComponent } = this.state;
     const { onShowLogs, onShowSettings } = this;
-    const { updateAvailable, appVersion } = this.props;
+    const { updateAvailable } = this.props;
 
-    return <GetStartedPage PageComponent={PageComponent} {...{ onShowLogs, onShowSettings, updateAvailable, appVersion }} />;
+    return <GetStartedPage PageComponent={PageComponent} {...{ onShowLogs, onShowSettings, updateAvailable }} />;
   }
 }
 

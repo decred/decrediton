@@ -121,7 +121,8 @@ if (isString(argv.rpcconnect)) {
     app.quit();
   }
   cliOptions.rpcHost = parts[0];
-  cliOptions.rpcPort = parts[1] || "9109";
+  // TODO add default port based on network.
+  cliOptions.rpcPort = parts[1];
 }
 cliOptions.rpcPresent = rpcOptionsCount == 4 ? true : false;
 

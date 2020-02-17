@@ -1,12 +1,10 @@
 import {
-  LOADER_ATTEMPT, LOADER_FAILED, LOADER_SUCCESS,
-  OPENWALLET_INPUT, OPENWALLET_FAILED_INPUT, OPENWALLET_SUCCESS,
-  CLOSEWALLET_FAILED, CLOSEWALLET_SUCCESS,
-  UPDATEDISCOVERACCOUNTS,
-  GETWALLETSEEDSVC_ATTEMPT, GETWALLETSEEDSVC_SUCCESS,
+  LOADER_ATTEMPT, LOADER_FAILED, LOADER_SUCCESS, OPENWALLET_SUCCESS,
+  CLOSEWALLET_FAILED, CLOSEWALLET_SUCCESS, UPDATEDISCOVERACCOUNTS,
+  GETWALLETSEEDSVC_ATTEMPT, GETWALLETSEEDSVC_SUCCESS, SYNC_SUCCESS, SYNC_UPDATE,
   RESCANPOINT_ATTEMPT, RESCANPOINT_FAILED, RESCANPOINT_SUCCESS,
-  SYNC_SUCCESS, SYNC_UPDATE, SYNC_FAILED, SYNC_ATTEMPT, SYNC_INPUT,
-  SYNC_SYNCED, SYNC_UNSYNCED, SYNC_FETCHED_HEADERS_STARTED, SYNC_FETCHED_HEADERS_PROGRESS, SYNC_FETCHED_HEADERS_FINISHED,
+  SYNC_FETCHED_HEADERS_FINISHED, SYNC_FAILED, SYNC_ATTEMPT, SYNC_INPUT,
+  SYNC_SYNCED, SYNC_UNSYNCED, SYNC_FETCHED_HEADERS_STARTED, SYNC_FETCHED_HEADERS_PROGRESS,
   SYNC_PEER_CONNECTED, SYNC_PEER_DISCONNECTED, SYNC_FETCHED_MISSING_CFILTERS_STARTED,
   SYNC_FETCHED_MISSING_CFILTERS_PROGRESS, SYNC_FETCHED_MISSING_CFILTERS_FINISHED,
   SYNC_DISCOVER_ADDRESSES_STARTED, SYNC_DISCOVER_ADDRESSES_FINISHED,
@@ -46,17 +44,6 @@ export default function walletLoader(state = {}, action) {
     return { ...state,
       selectedWallet: action.selectedWallet
     };
-  case OPENWALLET_INPUT:
-    return { ...state,
-      openWalletInputRequest: true,
-      walletOpenRequestAttempt: false
-    };
-  case OPENWALLET_FAILED_INPUT:
-    return { ...state,
-      walletOpenError: String(action.error),
-      openWalletInputRequest: true,
-      walletOpenRequestAttempt: false
-    };
   case OPENWALLET_SUCCESS:
     return { ...state,
       isWatchingOnly: action.isWatchingOnly
@@ -72,7 +59,6 @@ export default function walletLoader(state = {}, action) {
       walletCloseRequestAttempt: false,
       walletCloseResponse: action.response,
       loader: null,
-      existingOrNew: false,
       advancedDaemonInputRequest: true,
       walletExistResponse: null,
       seedService: null,

@@ -17,17 +17,15 @@ export const getVersionServiceAttempt = () => (dispatch, getState) => new Promis
     try {
       const versionService = await getVersionService(isTestNet(getState()), walletName, address, port);
       dispatch({ versionService, type: GETVERSIONSERVICE_SUCCESS });
-      await setTimeout(async () => {
-        await dispatch(getWalletRPCVersionAttempt());
-        resolve(true);
-      }, 500);
+      await dispatch(getWalletRPCVersionAttempt(versionService));
+      return true;
     } catch (error) {
-      reject(error);
       dispatch({ error, type: GETVERSIONSERVICE_FAILED });
+      reject(error);
     }
   };
 
-  getVersion();
+  getVersion().then(r => resolve(r)).catch(error => reject(error));
 });
 
 export const WALLETRPCVERSION_ATTEMPT = "WALLETRPCVERSION_ATTEMPT";
@@ -35,10 +33,9 @@ export const WALLETRPCVERSION_FAILED = "WALLETRPCVERSION_FAILED";
 export const WALLETRPCVERSION_SUCCESS = "WALLETRPCVERSION_SUCCESS";
 export const VERSION_NOT_VALID = "VERSION_NOT_VALID";
 
-export const getWalletRPCVersionAttempt = () => (dispatch, getState) => new Promise((resolve,reject) => {
+export const getWalletRPCVersionAttempt = (versionService) => (dispatch, getState) => new Promise((resolve,reject) => {
   const getVersion = async () => {
     dispatch({ type: WALLETRPCVERSION_ATTEMPT });
-    const { version: { versionService } } = getState();
 
     try {
       const getWalletRPCVersionResponse = await getVersionResponse(versionService);
@@ -60,19 +57,18 @@ export const getWalletRPCVersionAttempt = () => (dispatch, getState) => new Prom
       if (versionErr) {
         dispatch({ error: versionErr, type: VERSION_NOT_VALID });
         dispatch(pushHistory("/invalidRPCVersion"));
-      } else {
-        const { address, port } = getState().grpc;
-        await dispatch(loaderRequest(address,port));
-        await dispatch(getWalletSeedService(address, port));
-        resolve(true);
+        return reject(versionErr);
       }
+      const { address, port } = getState().grpc;
+      await dispatch(loaderRequest(address,port));
+      await dispatch(getWalletSeedService(address, port));
     } catch (error) {
-      reject(error);
       dispatch({ error, type: WALLETRPCVERSION_FAILED });
+      reject(error);
     }
   };
 
-  getVersion();
+  getVersion().then(r => resolve(r)).catch(error => reject(error));
 });
 
 export function semverCompatible(req, act) {

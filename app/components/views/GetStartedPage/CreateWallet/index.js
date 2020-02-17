@@ -40,7 +40,6 @@ class CreateWallet extends React.Component {
     this.service.send({ type: "RESTORE_WATCHING_ONLY_WALLET", isWatchingOnly });
     this.service.send({ type: "RESTORE_TREZOR_WALLET", isTrezor });
     this.service.send({ type: "RESTORE_WALLET", isRestore: !isNew, isWatchingOnly });
-
   }
 
   componentWillUnmount() {

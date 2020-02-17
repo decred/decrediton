@@ -19,8 +19,8 @@ class PreCreateWallet extends React.Component {
 
   render() {
     const {
-      maxWalletCount, isSPV, availableWallets, getDaemonSynced, submitChosenWallet,
-      onShowTrezorConfig, isCreateNewWallet, creatingWallet
+      maxWalletCount, isSPV, availableWallets, getDaemonSynced, onShowTrezorConfig,
+      isCreateNewWallet, creatingWallet
     } = this.props;
     const {
       newWalletName, editWallets, hasFailedAttemptName,
@@ -30,7 +30,6 @@ class PreCreateWallet extends React.Component {
       <CreateWalletForm
         {...{
           selectedWallet: availableWallets[0],
-          submitChosenWallet,
           availableWallets,
           isCreateNewWallet,
           newWalletName,

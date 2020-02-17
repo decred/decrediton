@@ -1,4 +1,4 @@
-import { syncCancel, setSelectedWallet } from "./WalletLoaderActions";
+import { syncCancel, setSelectedWallet, openWalletAttempt } from "./WalletLoaderActions";
 import { getVersionServiceAttempt } from "./VersionActions";
 import { stopNotifcations } from "./NotificationActions";
 import { saveSettings, updateStateSettingsChanged } from "./SettingsActions";
@@ -183,7 +183,6 @@ export const registerForErrors = () => (dispatch) => {
     } else {
       dispatch({ error, type: WALLET_ERROR });
     }
-    dispatch(pushHistory("/error"));
   });
   ipcRenderer.on("warning-received", (event, daemon, warning) => {
     if (daemon) {
@@ -356,39 +355,17 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => new Promi
     dispatch({ type: WALLET_LOADER_SETTINGS, discoverAccountsComplete });
     selectedWallet.value.isTrezor && dispatch(enableTrezor());
     await dispatch(getVersionServiceAttempt());
+    await dispatch(openWalletAttempt("", false));
     return discoverAccountsComplete;
   };
 
-  start()
-    .then(discoverAccountsComplete => resolve (discoverAccountsComplete))
+  start().then(discoverAccountsComplete => resolve (discoverAccountsComplete))
     .catch(err => reject(err));
 });
-
-const prepStartDaemon = () => (dispatch, getState) => {
-  const { daemon: { daemonAdvanced } } = getState();
-  // TODO re-add cliOptions
-  // const cliOptions = ipcRenderer.sendSync("get-cli-options");
-  // console.log(cliOptions)
-  if (!daemonAdvanced) {
-    return;
-  }
-
-  // let rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port;
-  // if (cliOptions.rpcPresent) {
-  //   rpc_user = cliOptions.rpcUser;
-  //   rpc_pass = cliOptions.rpcPass;
-  //   rpc_cert = cliOptions.rpcCert;
-  //   rpc_host = cliOptions.rpcHost;
-  //   rpc_port = cliOptions.rpcPort;
-  // } else {
-  //   ({ rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port } = getRemoteCredentials());
-  // }
-};
 
 export const decreditonInit = () => async (dispatch) => {
   dispatch(registerForErrors());
   dispatch(checkDecreditonVersion());
-  await dispatch(prepStartDaemon());
 };
 
 const TIME_TO_TIMEOUT = 15 * 1000; // 15 sec
@@ -448,11 +425,11 @@ export const checkNetworkMatch = () => async (dispatch, getState) => new Promise
     });
 });
 
-export const syncDaemon = () => (dispatch, getState) => new Promise((resolve) => {
+export const syncDaemon = () => (dispatch, getState) => new Promise((resolve, reject) => {
   dispatch({ type: SYNC_DAEMON_ATTEMPT });
   const updateBlockCount = () => {
     const { daemon: { daemonSynced, timeStart, blockStart } } = getState();
-    if (daemonSynced) return;
+    if (daemonSynced) resolve();
     return wallet.getBlockCount()
       .then(( blockChainInfo ) => {
         const { blockCount, syncHeight } = blockChainInfo;
@@ -462,7 +439,8 @@ export const syncDaemon = () => (dispatch, getState) => new Promise((resolve) =>
             // After this points the refresh will load directly instead of
             // starting, connecting and syncing daemon.
             wallet.setHeightSynced(true);
-            resolve({ type: DAEMONSYNCED, currentBlockHeight: blockCount });
+            dispatch({ type: DAEMONSYNCED, currentBlockHeight: blockCount });
+            resolve();
             return;
           }
 
@@ -488,8 +466,8 @@ export const syncDaemon = () => (dispatch, getState) => new Promise((resolve) =>
         setTimeout(updateBlockCount, 1000);
       })
       .catch( error => {
-        console.log(error);
         dispatch({ error, type: SYNC_DAEMON_FAILED });
+        reject(error);
       });
   };
   updateBlockCount();

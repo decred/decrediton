@@ -10,6 +10,11 @@ import * as trza from "actions/TrezorActions";
 
 const mapStateToProps = selectorMap({
   // general selectors
+
+  // version selectors
+  appVersion: sel.appVersion,
+  updateAvailable: sel.updateAvailable,
+
   // Get posistion selectors when first starting decrediton
   setLanguage: sel.setLanguage,
   showTutorial: sel.showTutorial,
@@ -22,6 +27,7 @@ const mapStateToProps = selectorMap({
 
   // end of general selectors
 
+  // start daemon selectors
   isAdvancedDaemon: sel.isAdvancedDaemon,
   isSPV: sel.isSPV,
   isTestNet: sel.isTestNet,
@@ -32,8 +38,11 @@ const mapStateToProps = selectorMap({
   getDaemonStarted: sel.getDaemonStarted,
   getEstimatedTimeLeft: sel.getEstimatedTimeLeft,
   trezorDevice: sel.trezorDevice,
-
+  isTrezor: sel.isTrezor,
   maxWalletCount: sel.maxWalletCount,
+  // end of daemon selectors
+
+  // sync dcrwallet spv or rpc selectors
   peerCount: sel.peerCount,
   synced: sel.synced,
   syncFetchMissingCfiltersAttempt: sel.syncFetchMissingCfiltersAttempt,
@@ -46,9 +55,7 @@ const mapStateToProps = selectorMap({
   syncRescanAttempt: sel.syncRescanAttempt,
   syncFetchHeadersComplete: sel.syncFetchHeadersComplete,
   syncFetchTimeStart: sel.syncFetchTimeStart,
-  firstBlockTime: sel.firstBlockTime,
-  selectedWalletSelector: sel.getSelectedWallet,
-  isTrezor: sel.isTrezor
+  selectedWalletSelector: sel.getSelectedWallet
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -74,11 +81,13 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   // tutorial page
   finishTutorial: da.finishTutorial,
   // end of general methods
-  decreditonInit: da.decreditonInit,
+
+  // start daemon and wallet methods
   onRetryStartRPC: wla.startRpcRequestFunc,
   startSPVSync: wla.spvSyncAttempt,
   setSelectedWallet: wla.setSelectedWallet,
   getSelectedWallet: wla.getSelectedWallet,
+  onOpenWallet: wla.openWalletAttempt,
   onStartDaemon: da.startDaemon,
   onConnectDaemon: da.connectDaemon,
   checkNetworkMatch: da.checkNetworkMatch,
@@ -87,6 +96,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onStartWallet: da.startWallet,
   onRemoveWallet: da.removeWallet,
   goToErrorPage: ca.goToError,
+
+  // create or restore wallet methods
   onCreateWallet: da.createWallet,
   getDcrwalletLogs: da.getDcrwalletLogs,
   trezorLoadDeviceList: trza.loadDeviceList,

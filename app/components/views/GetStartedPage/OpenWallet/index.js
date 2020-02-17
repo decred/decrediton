@@ -1,49 +1,34 @@
 import OpenWalletDecryptFormBody from "./DecryptForm";
+import { FormattedMessage as T } from "react-intl";
+import { substruct } from "fp";
+import { OPENWALLET_FAILED_INPUT } from "actions/WalletLoaderActions";
 
 @autobind
 class OpenWallet extends React.Component {
   constructor(props)  {
     super(props);
-    this.state = this.getInitialState();
-  }
-
-  componentWillUnmount() {
-    this.resetState();
-  }
-
-  getInitialState() {
-    return {
+    this.state = {
       publicPassPhrase: ""
     };
   }
 
   render() {
-    const { openWalletInputRequest, isOpeningWallet } = this.props;
-    if (!openWalletInputRequest) return null;
-
     const { publicPassPhrase } = this.state;
-    const {
-      onSetPublicPassPhrase,
-      onOpenWallet,
-      onKeyDown
-    } = this;
 
     return (
       <OpenWalletDecryptFormBody
         {...{
           ...this.props,
-          isOpeningWallet,
+          // isOpeningWallet,
           publicPassPhrase,
-          onSetPublicPassPhrase,
-          onOpenWallet,
-          onKeyDown
+          ...substruct({
+            onSetPublicPassPhrase: null,
+            onOpenWallet: null,
+            onKeyDown: null
+          }, this)
         }}
       />
     );
-  }
-
-  resetState() {
-    this.setState(this.getInitialState());
   }
 
   onSetPublicPassPhrase(publicPassPhrase) {
@@ -55,8 +40,15 @@ class OpenWallet extends React.Component {
       return;
     }
 
-    this.props.onOpenWallet(this.state.publicPassPhrase, true);
-    this.resetState();
+    this.props.onOpenWallet(this.state.publicPassPhrase, true)
+      .then(() => this.props.onSendContinue())
+      .catch(error => {
+        if (error === OPENWALLET_FAILED_INPUT) {
+          return this.props.onSendError(<T id="getStarted.decrypt.error" m="Wrong public passphrase inserted." />);
+        }
+        this.props.onSendError(error);
+      });
+    this.setState({ publicPassPhrase: "" });
   }
 
   onKeyDown(e) {
@@ -65,7 +57,6 @@ class OpenWallet extends React.Component {
       this.onOpenWallet();
     }
   }
-
 }
 
 export default OpenWallet;

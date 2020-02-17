@@ -14,7 +14,7 @@ import "./style/ReactSelectGlobal.less";
 import pkg from "./package.json";
 import { log } from "./wallet";
 import { ipcRenderer } from "electron";
-import { DCR, DAEMON_ADVANCED, THEME, LOCALE, NETWORK } from "constants";
+import { DCR, THEME, LOCALE, NETWORK } from "constants";
 import { getSelectedWallet } from "./main_dev/launch";
 
 const globalCfg = getGlobalCfg();
@@ -23,21 +23,23 @@ const cliOptions = ipcRenderer.sendSync("get-cli-options");
 
 log("info", "Starting main react app");
 
+const hasCliOption = (key) => cliOptions && cliOptions[key];
+
 const currentSettings = {
   locale: locale,
-  daemonStartAdvanced: (cliOptions && cliOptions.daemonStartAdvanced) || globalCfg.get(DAEMON_ADVANCED),
-  daemonStartAdvancedFromCli: !!(cliOptions && cliOptions.daemonStartAdvanced),
+  daemonStartAdvanced: hasCliOption("daemonStartAdvanced") || getDaemonIsAdvanced(),
+  daemonStartAdvancedFromCli: !!(hasCliOption("daemonStartAdvanced")),
   allowedExternalRequests: globalCfg.get("allowed_external_requests"),
   proxyType: globalCfg.get("proxy_type"),
   proxyLocation: globalCfg.get("proxy_location"),
-  spvMode: (cliOptions && cliOptions.spvMode) || getIsSpv(),
-  spvModeFromCli: !!(cliOptions && cliOptions.spvMode),
-  spvConnect: (cliOptions && cliOptions.spvConnect) || globalCfg.get("spv_connect"),
-  spvConnectFromCli: !!(cliOptions && cliOptions.spvConnect),
+  spvMode: hasCliOption("spvMode") || getIsSpv(),
+  spvModeFromCli: !!(hasCliOption("spvMode")),
+  spvConnect: hasCliOption("spvConnect") || globalCfg.get("spv_connect"),
+  spvConnectFromCli: !!(hasCliOption("spvConnect")),
   timezone: globalCfg.get("timezone"),
   currencyDisplay: DCR,
-  network: (cliOptions && cliOptions.network) || globalCfg.get(NETWORK),
-  networkFromCli: !!(cliOptions && cliOptions.network),
+  network: hasCliOption("network") || globalCfg.get(NETWORK),
+  networkFromCli: !!(hasCliOption("network")),
   theme: globalCfg.get(THEME)
 };
 var initialState = {
@@ -77,7 +79,6 @@ var initialState = {
     timeLeftEstimate: null,
     timeStart: 0,
     blockStart: 0,
-    daemonAdvanced: (cliOptions && cliOptions.daemonStartAdvanced) || getDaemonIsAdvanced(),
     credentials: null,
     appdata: null,
     shutdownRequested: false,
@@ -227,7 +228,6 @@ var initialState = {
     syncAttemptRequest: false,
     syncCall: null,
     peerCount: 0,
-    existingOrNew: false,
     rpcRetryAttempts: 0,
     curBlocks: 0,
     maxWalletCount: globalCfg.get("max_wallet_count"),
@@ -243,10 +243,7 @@ var initialState = {
     loader: null,
     getLoaderError: null,
     // WalletCreate
-    createWalletExisting: false,
-    // WalletOpen
-    walletOpenRequestAttempt: false,
-    walletOpenError: null
+    createWalletExisting: false
   },
   notifications: {
     transactionNtfns: null,
