@@ -139,6 +139,8 @@ export const reloadAllowedExternalRequests = () => {
 
   if (process.env.NODE_ENV === "development") {
     allowedURLs.push(/^http:\/\/localhost:3000/);
+    allowedURLs.push(/^chrome-extension:\/\/react-developer-tools\/*/);
+    allowedURLs.push(/^chrome-extension:\/\/redux-devtools\/*/);
   }
 
   const globalCfg = getGlobalCfg();
