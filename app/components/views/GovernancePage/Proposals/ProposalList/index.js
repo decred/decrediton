@@ -43,6 +43,13 @@ class ProposalsList extends React.Component {
     };
   }
 
+  shouldComponentUpdate(nextProps) {
+    if (this.props.proposalsList !== nextProps.proposalsList) {
+      return true;
+    }
+    return false;
+  }
+
   componentDidUpdate(prevProps, prevState) {
     const { location } = this.props;
     const { noMoreProposals } = this.state;

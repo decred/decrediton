@@ -3,7 +3,7 @@ import {
   UPDATEVOTECHOICE_ATTEMPT, UPDATEVOTECHOICE_SUCCESS, UPDATEVOTECHOICE_FAILED,
   GETTOKEN_INVENTORY_SUCCESS, GETPROPROSAL_UPDATEVOTESTATUS_ATTEMPT,
   GETPROPROSAL_UPDATEVOTESTATUS_SUCCESS, GETPROPROSAL_UPDATEVOTESTATUS_FAILED,
-  GETTOKEN_INVENTORY_ATTEMPT, DISABLE_POLITEIA_SUCCESS
+  GETTOKEN_INVENTORY_ATTEMPT, DISABLE_POLITEIA_SUCCESS, COMPARE_INVENTORY_SUCCESS
 } from "actions/GovernanceActions";
 import {
   CLOSEWALLET_SUCCESS
@@ -20,6 +20,10 @@ export default function governance(state = {}, action) {
     return { ...state,
       inventory: action.inventory,
       getProposalsAttempt: false
+    };
+  case COMPARE_INVENTORY_SUCCESS:
+    return { ...state,
+      inventory: action.inventory
     };
   case GETPROPOSAL_ATTEMPT:
     return { ...state, getProposalAttempt: true, getProposalError: null };

@@ -19,11 +19,24 @@ import LNPage from "components/views/LNPage";
 import SideBar from "components/SideBar";
 import { BlurableContainer } from "layout";
 import { walletContainer, theming } from "connectors";
+import ReactTimeout from "react-timeout";
 
 const pageAnimation = { atEnter: { opacity: 0 }, atLeave: { opacity: 0 }, atActive: { opacity: 1 } };
 
 @autobind
 class Wallet extends React.Component {
+  constructor(props) {
+    super(props);
+    const { compareInventory, politeiaEnabled } = props;
+    // Compare politeias inventory and update proposal list if they are different
+    // every 1 minute.
+    this.fetchPoliteiaInventory = this.props.setInterval(() => {
+      if (politeiaEnabled) {
+        compareInventory();
+      }
+    }, 60000);
+  }
+
   render() {
     const { expandSideBar } = this.props;
     const MainSwitch = this.props.uiAnimations ? AnimatedSwitch : StaticSwitch;
@@ -55,4 +68,4 @@ class Wallet extends React.Component {
   }
 }
 
-export default walletContainer(theming(Wallet));
+export default ReactTimeout(walletContainer(theming(Wallet)));

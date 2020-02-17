@@ -19,6 +19,17 @@ export const VOTESTATUS_ACTIVEVOTE = 3;
 export const VOTESTATUS_FINISHEDVOTE = 4;
 export const PROPOSALSTATUS_ABANDONED = 6;
 
+// defaultInventory is how inventory is stored at our redux state.
+const defaultInventory = {
+  activeVote: [],
+  abandonedVote: [],
+  finishedVote: [],
+  preVote: []
+};
+
+// getDefaultInventory gets the inventory default's state.
+export const getDefaultInventory = () => Object.assign({}, defaultInventory);
+
 // Aux function to parse the vote status of a single proposal, given a response
 // for the /votesStatus or /proposal/P/voteStatus api calls, then fill the
 // proposal object with the results.
@@ -93,6 +104,20 @@ const getProposalEligibleTickets = async (token, allEligibleTickets, shouldCache
   return await getWalletEligibleTickets(allEligibleTickets, walletService);
 };
 
+
+// updateInventoryFromApiData receives politeia data from getTokenInventory and
+// put it in decrediton's inventory format.
+// @param data - data from getTokenInventory api.
+const updateInventoryFromApiData = (data) => {
+  const inventory = getDefaultInventory();
+  inventory.preVote = data.pre;
+  inventory.activeVote = data.active;
+  inventory.finishedVote = [ ...data.approved, ...data.rejected ];
+  inventory.abandonedVote = data.abandoned;
+
+  return inventory;
+};
+
 export const GETTOKEN_INVENTORY_ATTEMPT = "GETTOKEN_INVENTORY_ATTEMPT";
 export const GETTOKEN_INVENTORY_SUCCESS = "GETTOKEN_INVENTORY_SUCCESS";
 export const GETTOKEN_INVENTORY_FAILED = "GETTOKEN_INVENTORY_FAILED";
@@ -102,21 +127,53 @@ const getTokenInventory = () => async (dispatch, getState) => {
   const piURL = sel.politeiaURL(getState());
   try {
     const { data } = await pi.getTokenInventory(piURL);
-    const inventoryTabs = {
-      activeVote: [],
-      abandonedVote: [],
-      finishedVote: [],
-      preVote: []
-    };
+    const inventory = updateInventoryFromApiData(data);
 
-    inventoryTabs.preVote = data.pre;
-    inventoryTabs.activeVote = data.active;
-    inventoryTabs.finishedVote = [ ...data.approved, ...data.rejected ];
-    inventoryTabs.abandonedVote = data.abandoned;
+    dispatch({ type: GETTOKEN_INVENTORY_SUCCESS, inventory });
 
-    dispatch({ type: GETTOKEN_INVENTORY_SUCCESS, inventory: inventoryTabs });
+    return inventory;
   } catch (error) {
-    dispatch({ error, GETTOKEN_INVENTORY_FAILED });
+    dispatch({ error, type: GETTOKEN_INVENTORY_FAILED });
+    throw error;
+  }
+};
+
+export const COMPARE_INVENTORY_ATTEMPT = "COMPARE_INVENTORY_ATTEMPT";
+export const COMPARE_INVENTORY_SUCCESS = "COMPARE_INVENTORY_SUCCESS";
+export const COMPARE_INVENTORY_FAILED = "COMPARE_INVENTORY_FAILED";
+
+// compareInventory compares the state's inventory with a fresh new inventory.
+// If they are different, we get the batch of tokens and update the proposal list.
+// return the different hashes for each key if the inventories are different.
+// Return null otherwise.
+// @param inventory -> is an inventory object the same type of defaultInventory.
+export const compareInventory = () => async (dispatch, getState) => {
+  dispatch({ type: COMPARE_INVENTORY_ATTEMPT });
+  try {
+    const oldInventory = sel.inventory(getState());
+    const piURL = sel.politeiaURL(getState());
+    const { data } = await pi.getTokenInventory(piURL);
+    const inventory = updateInventoryFromApiData(data);
+
+    const inventoryDiff = getDefaultInventory();
+    let isDifferent = false;
+
+    Object.keys(oldInventory).forEach( async key => {
+      if (inventory[key].length > oldInventory[key].length) {
+        isDifferent = true;
+        // get different hashes
+        const diffHashes = inventory[key].filter( hash => !oldInventory[key].includes(hash));
+
+        inventoryDiff[key] = diffHashes;
+
+        dispatch(getProposalsAndUpdateVoteStatus(diffHashes));
+      }
+    });
+
+    dispatch({ type: COMPARE_INVENTORY_SUCCESS, inventory });
+    return isDifferent ? inventoryDiff : null;
+  } catch (error) {
+    dispatch({ type: COMPARE_INVENTORY_FAILED, error });
   }
 };
 
@@ -206,7 +263,7 @@ export const GETPROPROSAL_UPDATEVOTESTATUS_SUCCESS = "GETPROPROSAL_UPDATEVOTESTA
 export const GETPROPROSAL_UPDATEVOTESTATUS_FAILED = "GETPROPROSAL_UPDATEVOTESTATUS_FAILED";
 
 // getProposalsAndUpdateVoteStatus gets a proposal batch and its vote summary
-// and concat with proposals from getState
+// and concat with proposals from getState.
 export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch, getState) => {
   // tokensBatch batch legnth can not exceed politeia's proposallistpagesize limit
   // otherwise it will return ErrorStatusMaxProposalsExceededPolicy
