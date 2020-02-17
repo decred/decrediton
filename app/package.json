@@ -15,7 +15,7 @@
     "bs58check": "^2.1.1",
     "electron-store": "1.2.0",
     "fs-extra": "^5.0.0",
-    "grpc": "1.23.0",
+    "grpc": "1.24.2",
     "minimist": "^1.2.0"
   },
   "resolutions": {

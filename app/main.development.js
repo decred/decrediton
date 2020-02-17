@@ -371,6 +371,7 @@ app.on("ready", async () => {
     page: "app.html",
     webPreferences: {
       nodeIntegration: true,
+      devTools: true,
     },
   };
   if (stopSecondInstance) {
@@ -392,7 +393,7 @@ app.on("ready", async () => {
 
   mainWindow = new BrowserWindow(windowOpts);
   installSessionHandlers(logger);
-  if (debug) mainWindow.openDevTools();
+  if (debug) mainWindow.webContents.openDevTools();
   mainWindow.loadURL(`file://${__dirname}/${windowOpts.page}`);
 
   mainWindow.webContents.on("did-finish-load", () => {

@@ -43,8 +43,8 @@ export const setupProxy = (logger) => new Promise( (resolve, reject) => {
   }
 
   logger.log("info", "Setting up proxy " + (proxyConfig.pacScript||proxyConfig.proxyRules));
-  session.defaultSession.setProxy(proxyConfig, () => {
+  session.defaultSession.setProxy(proxyConfig).then(() => {
     logger.log("info", "Proxy successfully setup");
     resolve();
-  });
+  }).catch(reject);
 });
