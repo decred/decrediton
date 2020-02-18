@@ -908,6 +908,7 @@ export const isTrezor = get([ "trezor", "enabled" ]);
 export const isSignMessageDisabled = and(isWatchingOnly, not(isTrezor));
 export const isCreateAccountDisabled = isWatchingOnly;
 export const isChangePassPhraseDisabled = isWatchingOnly;
+export const isEnablePoliteiaDisabled = not(getWalletReady);
 export const isTransactionsSendTabDisabled = not(isTrezor);
 export const isTicketPurchaseTabDisabled = isWatchingOnly;
 

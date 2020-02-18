@@ -15,7 +15,8 @@ const propTypes = {
   onAttemptChangePassphrase: PropTypes.func,
   isChangePassPhraseDisabled: PropTypes.bool.isRequired,
   changePassphraseRequestAttempt: PropTypes.bool.isRequired,
-  onChangeTempSettings: PropTypes.func.isRequired
+  onChangeTempSettings: PropTypes.func.isRequired,
+  isEnablePoliteiaDisabled: PropTypes.bool.isRequired
 };
 
 const AllowableRequestType = ({ id, label, description, checked, onChange }) => (
@@ -38,7 +39,9 @@ const PrivacySettings = ({
   isChangePassPhraseDisabled,
   changePassphraseRequestAttempt,
   onAttemptChangePassphrase,
-  onChangeTempSettings
+  onChangeTempSettings,
+  isEnablePoliteiaDisabled,
+  getWalletReady
 }) => {
   const toggle = (value) => () => {
     const allowedExternalRequests = [ ...tempSettings.allowedExternalRequests ];
@@ -54,7 +57,7 @@ const PrivacySettings = ({
   return (
     <div className="settings-privacy">
       <div className="settings-column-content">
-        <div className="settings-row settings-row-checklist">
+        { getWalletReady && <div className="settings-row settings-row-checklist">
           <div disabled={isChangePassPhraseDisabled} className="settings-update-passphrase-button">
             <T id="settings.updatePrivatePassphrase" m="Update Private Passphrase" />
             <WatchOnlyWarnNotification isActive={isChangePassPhraseDisabled}>
@@ -68,7 +71,7 @@ const PrivacySettings = ({
             </WatchOnlyWarnNotification>
           </div>
         </div>
-
+        }
         <AllowableRequestType
           label={<T id="settings.privacy.updateCheck.label" m="Update Check" />}
           id="update"
@@ -83,13 +86,14 @@ const PrivacySettings = ({
           checked={tempSettings.allowedExternalRequests.indexOf(EXTERNALREQUEST_NETWORK_STATUS) > -1}
           onChange={toggle(EXTERNALREQUEST_NETWORK_STATUS)}
         />
-        <AllowableRequestType
+        { !isEnablePoliteiaDisabled && <AllowableRequestType
           label={<T id="settings.privacy.politeia.label" m="Politeia" />}
           id="politeia"
           description={<T id="settings.privacy.politeia.description" m="List and vote on proposals on proposals.decred.org" />}
           checked={tempSettings.allowedExternalRequests.indexOf(EXTERNALREQUEST_POLITEIA) > -1}
           onChange={toggle(EXTERNALREQUEST_POLITEIA)}
         />
+        }
         <AllowableRequestType
           label={<T id="settings.privacy.stakepoolListing.label" m="VSP Listing" />}
           id="stakepool"

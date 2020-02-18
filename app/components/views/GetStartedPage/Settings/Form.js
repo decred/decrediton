@@ -17,51 +17,51 @@ export default ({
   onAttemptChangePassphrase,
   isChangePassPhraseDisabled,
   changePassphraseRequestAttempt,
-  onSendBack
+  onSendBack,
+  isEnablePoliteiaDisabled,
+  getWalletReady
 }) => (
   <>
-    <div className="getstarted loader logs settings">
-      <div className="go-back-screen-button-area">
-        <Tooltip text={ <GoBackMsg /> }><div className="go-back-screen-button" onClick={onSendBack}/></Tooltip>
+    <div className="go-back-screen-button-area">
+      <Tooltip text={ <GoBackMsg /> }><div className="go-back-screen-button" onClick={onSendBack}/></Tooltip>
+    </div>
+    <Subtitle title={<T id="settings.subtitle" m="Settings"/>} />
+    <div className="settings-wrapper">
+      <div className="settings-group">
+        <div className="settings-group-title"><T id="settings.group-title.connectivity" m="Connectivity" /></div>
+        <div className="settings-column-wrapper">
+          <div className="settings-column">
+            <NetworkSettings {...{
+              tempSettings,
+              onChangeTempSettings
+            }} />
+          </div>
+          <div className="settings-column">
+            <ProxySettings {...{ tempSettings, onChangeTempSettings }} />
+          </div>
+        </div>
       </div>
-      <Subtitle title={<T id="settings.subtitle" m="Settings"/>} />
-      <div className="settings-wrapper">
-        <div className="settings-group">
-          <div className="settings-group-title"><T id="settings.group-title.connectivity" m="Connectivity" /></div>
-          <div className="settings-column-wrapper">
-            <div className="settings-column">
-              <NetworkSettings {...{
-                tempSettings,
-                onChangeTempSettings
-              }} />
-            </div>
-            <div className="settings-column">
-              <ProxySettings {...{ tempSettings, onChangeTempSettings }} />
-            </div>
+
+      <div className="settings-group general">
+        <div className="settings-group-title"><T id="settings.group-title.general" m="General" /></div>
+        <div className="settings-column-wrapper">
+          <div className="settings-column">
+            <UISettings {...{ tempSettings, locales, onChangeTempSettings }} />
+          </div>
+          <div className="settings-column timezone">
+            <TimezoneSettings {...{ tempSettings, onChangeTempSettings }} />
           </div>
         </div>
+      </div>
 
-        <div className="settings-group general">
-          <div className="settings-group-title"><T id="settings.group-title.general" m="General" /></div>
-          <div className="settings-column-wrapper">
-            <div className="settings-column">
-              <UISettings {...{ tempSettings, locales, onChangeTempSettings }} />
-            </div>
-            <div className="settings-column timezone">
-              <TimezoneSettings {...{ tempSettings, onChangeTempSettings }} />
-            </div>
-          </div>
-        </div>
-
-        <div className="settings-group privacy">
-          <div className="settings-group-title"><T id="settings.group-title.privacy-and-security" m="Privacy and Security" /></div>
-          <div className="settings-column-wrapper">
-            <div className="settings-column">
-              <PrivacySettings {...{
-                tempSettings, onAttemptChangePassphrase,
-                isChangePassPhraseDisabled, onChangeTempSettings, changePassphraseRequestAttempt
-              }} />
-            </div>
+      <div className="settings-group privacy">
+        <div className="settings-group-title"><T id="settings.group-title.privacy-and-security" m="Privacy and Security" /></div>
+        <div className="settings-column-wrapper">
+          <div className="settings-column">
+            <PrivacySettings {...{
+              tempSettings, onAttemptChangePassphrase, isEnablePoliteiaDisabled, getWalletReady,
+              isChangePassPhraseDisabled, onChangeTempSettings, changePassphraseRequestAttempt
+            }} />
           </div>
         </div>
       </div>
