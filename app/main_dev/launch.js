@@ -194,6 +194,7 @@ export const launchDCRD = (params, testnet, reactIPC) => new Promise((resolve,re
 
   args.push(`--configfile=${dcrdCfg(getAppDataDirectory())}`);
   args.push(`--appdata=${appdata}`);
+  args.push("--tlscurve=P-256");
 
   if (testnet) {
     args.push("--testnet");
