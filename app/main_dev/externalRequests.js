@@ -135,7 +135,7 @@ export const allowStakepoolRequests = (stakePoolHost) => {
 
 export const reloadAllowedExternalRequests = () => {
   allowedExternalRequests = {};
-  allowedURLs = [/^devtools:\/\/*/];
+  allowedURLs = [ /^devtools:\/\/*/ ];
 
   if (process.env.NODE_ENV === "development") {
     allowedURLs.push(/^http:\/\/localhost:3000/);

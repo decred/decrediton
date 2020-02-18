@@ -371,8 +371,8 @@ app.on("ready", async () => {
     page: "app.html",
     webPreferences: {
       nodeIntegration: true,
-      devTools: true,
-    },
+      devTools: true
+    }
   };
   if (stopSecondInstance) {
     windowOpts = {
