@@ -128,8 +128,9 @@ export const importScriptAttempt = (passphrase, script) =>
   async (dispatch, getState) => {
     dispatch({ type: IMPORTSCRIPT_ATTEMPT });
     const walletService = sel.walletService(getState());
+    const isWatchingOnly = sel.isWatchingOnly(getState());
     try {
-      const importScriptResponse = await wallet.importScript(walletService, passphrase, script, false, 0);
+      const importScriptResponse = await wallet.importScript(walletService, passphrase, script, isWatchingOnly);
       dispatch({ importScriptResponse, type: IMPORTSCRIPT_SUCCESS });
       return importScriptResponse;
     } catch (error) {
