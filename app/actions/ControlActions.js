@@ -230,23 +230,27 @@ export const purchaseTicketsAttempt = (
   ticketFee, txFee, stakepool
 ) => async (dispatch, getState) => {
   try {
-    dispatch({ numTicketsToBuy: numTickets, type: PURCHASETICKETS_ATTEMPT });
-
-    // re-import the script to ensure the wallet will control the ticket.
-    const importScriptResponse = await dispatch(importScriptAttempt(passphrase, stakepool.Script));
-    if (importScriptResponse.getP2shAddress() !== stakepool.TicketAddress) {
-      throw new Error("Trying to use a ticket address not corresponding to script");
-    }
-
-    const state = getState();
-    const currentBlockHeight = sel.currentBlockHeight(state);
+    const currentBlockHeight = sel.currentBlockHeight(getState());
+    const walletService = sel.walletService(getState());
     expiry = expiry === 0 ? expiry : currentBlockHeight + expiry;
     txFee = txFee * 1e8;
     ticketFee = ticketFee * 1e8;
+    const dontSignTx = sel.isWatchingOnly(getState());
+
+    dispatch({ numTicketsToBuy: numTickets, type: PURCHASETICKETS_ATTEMPT });
+
+    if (!dontSignTx) {
+      // If we need to sign the tx, we re-import the script to ensure the
+      // wallet will control the ticket.
+      const importScriptResponse = await dispatch(importScriptAttempt(passphrase, stakepool.Script));
+      if (importScriptResponse.getP2shAddress() !== stakepool.TicketAddress) {
+        throw new Error("Trying to use a ticket address not corresponding to script");
+      }
+    }
 
     const purchaseTicketsResponse = await wallet.purchaseTickets(
-      sel.walletService(state), passphrase, accountNum, spendLimit, requiredConf, numTickets,
-      expiry, ticketFee, txFee, stakepool
+      walletService, passphrase, accountNum, spendLimit, requiredConf, numTickets,
+      expiry, ticketFee, txFee, stakepool, !dontSignTx
     );
     dispatch({ purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
   } catch (error) {

@@ -715,6 +715,18 @@ export const stopAutoBuyerError = get([ "control", "stopAutoBuyerError" ]);
 export const stopAutoBuyerSuccess = get([ "control", "stopAutoBuyerSuccess" ]);
 export const isTicketAutoBuyerEnabled = bool(startAutoBuyerResponse);
 
+const purchaseTicketsResponse = get([ "control", "purchaseTicketsResponse" ]);
+
+export const splitTx = createSelector(
+  [ purchaseTicketsResponse ],
+  res => res && Buffer.from(res.getSplitTx()).toString("hex")
+);
+
+export const ticketsList = createSelector(
+  [ purchaseTicketsResponse ],
+  res => res && res.getTicketsList().map(t => Buffer.from(t).toString("hex"))
+);
+
 export const currentStakePoolConfig = get([ "stakepool", "currentStakePoolConfig" ]);
 
 const allStakePoolStats = get([ "stakepool", "getStakePoolInfo" ]);

@@ -5,6 +5,8 @@ import { TransitionMotionWrapper, ShowWarning, ExternalLink } from "shared";
 
 import "style/StakePool.less";
 
+const purchaseLabel = () => <T id="purchaseTickets.purchaseBtn" m="Purchase" />;
+
 const PurchaseTicketsForm = ({
   isShowingAdvanced,
   getQuickBarComponent,
@@ -24,7 +26,8 @@ const PurchaseTicketsForm = ({
   willLeave,
   onShowStakePoolConfig,
   dismissBackupRedeemScript,
-  onDismissBackupRedeemScript
+  onDismissBackupRedeemScript,
+  isWatchingOnly
 }) => (
   <>
     <div className="purchase-ticket-area-row is-row">
@@ -93,12 +96,17 @@ const PurchaseTicketsForm = ({
         onSubmit={onRevokeTickets}
         buttonLabel={<T id="purchaseTickets.revokeBtn" m="Revoke" />}
       />
-      <PassphraseModalButton
-        modalTitle={<T id="tickets.purchaseConfirmation" m="Ticket Purchase Confirmation" />}
-        disabled={getIsValid && !getIsValid()}
-        onSubmit={onPurchaseTickets}
-        buttonLabel={<T id="purchaseTickets.purchaseBtn" m="Purchase" />}
-      />
+      { isWatchingOnly ?
+        <KeyBlueButton disabled={getIsValid && !getIsValid()} onClick={onPurchaseTickets}>
+          {purchaseLabel()}
+        </KeyBlueButton> :
+        <PassphraseModalButton
+          modalTitle={<T id="tickets.purchaseConfirmation" m="Ticket Purchase Confirmation" />}
+          disabled={getIsValid && !getIsValid()}
+          onSubmit={onPurchaseTickets}
+          buttonLabel={purchaseLabel()}
+        />
+      }
     </div>
   </>);
 
