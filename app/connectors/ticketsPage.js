@@ -29,7 +29,6 @@ const mapStateToProps = selectorMap({
   isPurchasingTickets: sel.isPurchasingTickets,
   isSavingStakePoolConfig: sel.isSavingStakePoolConfig,
   isTestNet: sel.isTestNet,
-  isTicketPurchaseTabDisabled: sel.isTicketPurchaseTabDisabled,
   numTicketsToBuy: sel.numTicketsToBuy,
   sidebarOnBottom: sel.sidebarOnBottom
 });
