@@ -30,7 +30,10 @@ const mapStateToProps = selectorMap({
   isSavingStakePoolConfig: sel.isSavingStakePoolConfig,
   isTestNet: sel.isTestNet,
   numTicketsToBuy: sel.numTicketsToBuy,
-  sidebarOnBottom: sel.sidebarOnBottom
+  sidebarOnBottom: sel.sidebarOnBottom,
+  isWatchingOnly: sel.isWatchingOnly,
+  splitTx: sel.splitTx,
+  unsignedTickets: sel.ticketsList
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

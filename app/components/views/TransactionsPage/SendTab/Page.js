@@ -1,7 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
 import { Balance, TransitionMotionWrapper, Subtitle } from "shared";
 import { SendTransactionButton } from "buttons";
-import { CopyToClipboard } from "shared";
+import { UnsignedTx } from "shared";
 import "style/SendPage.less";
 import "style/MiscComponents.less";
 
@@ -82,15 +82,10 @@ const SendPage = ({
         </SendTransactionButton>
       }
     </div>
-    { unsignedRawTx && isWatchingOnly && !isTrezor && (
-      <div className="unsigned-raw-tx-area">
-        <div className="unsigned-raw-tx-title"><T id="send.unsignedRawTxTite" m="Unsigned Raw Transaction:" /></div>
-        <div className="unsigned-raw-tx">
-          {unsignedRawTx}
-        </div>
-        <CopyToClipboard textToCopy={unsignedRawTx} className="unsigned-raw-tx-copy-to-clipboard-icon" />
-      </div>
-    )}
+    { unsignedRawTx && isWatchingOnly && !isTrezor &&
+      <UnsignedTx title={<T id="send.unsignedRawTxTite" m="Unsigned Raw Transaction:" />}
+        tx={unsignedRawTx} />
+    }
   </>
 );
 
