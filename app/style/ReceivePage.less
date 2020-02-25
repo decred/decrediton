@@ -14,10 +14,12 @@
   .inline-block-mixin;
 
   margin-right: 20px;
-  margin-left: 0.5em;
+  min-width: 160px;
+  margin-left: 0;
   font-size: 19px;
   line-height: 24px;
   text-transform: capitalize;
+  text-align: right;
 
   &.prefix-short {
     display:none;
@@ -33,6 +35,7 @@
   .inline-block-mixin;
 
   width: 308px;
+  height: 25px;
   .accounts-select {
     width: 285px;
     margin-right: 20px;
@@ -48,6 +51,20 @@
   height: 50px;
   width: 490px;
   justify-content: flex-end;
+}
+
+.receive-requested-amount {
+  margin-top: 16px;
+
+  .receive-select-account-input{
+    .requested-amount-input {
+      margin-left: 0;
+    }
+    .input-and-unit {
+      padding-left: 10px;
+      width: 258px;
+    }
+  }
 }
 
 .receive-content-nest-qrhash {
@@ -106,7 +123,11 @@
   .receive-select-account-input {
     width: 293px;
   }
-  
+
+  .receive-requested-amount .receive-select-account-input .input-and-unit {
+    width: 243px;
+  }  
+
   .receive-toolbar {
     width: 649px;
   }
@@ -145,6 +166,10 @@
       margin-right:0;
     }
   }
+  
+  .receive-requested-amount .receive-select-account-input .input-and-unit {
+    width: 216px;
+  }   
 
   .receive-content-nest-qr {
     height: 35px;
@@ -166,7 +191,8 @@
     }
 
     &.prefix-short {
-      display:inline;
+      display: inline-block;
+      min-width: 79px;
     }
   }
 
