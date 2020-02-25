@@ -23,6 +23,7 @@ export const APPDATA = "appdata_path";
 export const DISABLE_HARDWARE_ACCEL = "disable_hardware_accel";
 export const LN_ENABLED = "ln_enabled";
 export const TREZOR_DEBUG = "trezor_debug";
+export const UPGD_ELECTRON8 = "upgd_electron8";
 
 export const RPCUSER = "rpc_user";
 export const RPCPASS = "rpc_pass";
@@ -63,5 +64,6 @@ export const INITIAL_VALUES = {
   [APPDATA]: "",
   [TREZOR_DEBUG]: false,
   [DISABLE_HARDWARE_ACCEL]: false,
-  [LN_ENABLED]: false
+  [LN_ENABLED]: false,
+  [UPGD_ELECTRON8]: false
 };

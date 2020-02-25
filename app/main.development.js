@@ -368,7 +368,11 @@ app.on("ready", async () => {
     width: 1192,
     minHeight: 299,
     height: 790,
-    page: "app.html"
+    page: "app.html",
+    webPreferences: {
+      nodeIntegration: true,
+      devTools: true
+    }
   };
   if (stopSecondInstance) {
     windowOpts = {
@@ -389,7 +393,7 @@ app.on("ready", async () => {
 
   mainWindow = new BrowserWindow(windowOpts);
   installSessionHandlers(logger);
-  if (debug) mainWindow.openDevTools();
+  if (debug) mainWindow.webContents.openDevTools();
   mainWindow.loadURL(`file://${__dirname}/${windowOpts.page}`);
 
   mainWindow.webContents.on("did-finish-load", () => {

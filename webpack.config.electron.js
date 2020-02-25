@@ -3,6 +3,7 @@
  */
 
 import webpack from "webpack";
+import path from "path";
 import merge from "webpack-merge";
 import baseConfig from "./webpack.config.base";
 
@@ -36,6 +37,14 @@ export default merge(baseConfig, {
    * https://github.com/chentsulin/webpack-target-electron-renderer#how-this-module-works
    */
   target: "electron-main",
+
+  resolve: {
+    alias: {
+      ws: path.resolve(path.join(__dirname, "node_modules/ws/index.js"))
+    }
+  },
+
+
 
   /**
    * Disables webpack processing of __dirname and __filename.

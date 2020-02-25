@@ -14,9 +14,9 @@ export const SPV_WITH_ADVANCED_MODE = "Cannot use SPV mode and advanced daemon m
 
 export const DIFF_CONNECTION_ERROR = "daemon and decrediton does not have the same network";
 
-export const USAGE_MESSAGE = app ? `${app.getName()} version ${app.getVersion()}
+export const USAGE_MESSAGE = app ? `${app.name} version ${app.getVersion()}
 Usage
-  $ ${app.getName()} [OPTIONS]
+  $ ${app.name} [OPTIONS]
 
 Options
   --help -h          Show help and exit.
@@ -36,7 +36,7 @@ Options
 ` : null;
 
 
-export const VERSION_MESSAGE = app ? `${app.getName()} version ${app.getVersion()}` : null;
+export const VERSION_MESSAGE = app ? `${app.name} version ${app.getVersion()}` : null;
 
 // POSITION_ERROR and MISMATCH_ERROR represent errors when creating or
 // restoring wallet with seed.
