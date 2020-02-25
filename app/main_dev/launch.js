@@ -1,9 +1,9 @@
 import { dcrwalletCfg, getWalletPath, getExecutablePath, dcrdCfg, getAppDataDirectory, getDcrdRpcCert, getDcrdPath } from "./paths";
-import { getWalletCfg, readDcrdConfig } from "config";
+import { getWalletCfg, readDcrdConfig, getGlobalCfg } from "config";
 import { createLogger, AddToDcrdLog, AddToDcrwalletLog, AddToDcrlndLog, GetDcrdLogs,
   GetDcrwalletLogs, lastErrorLine, lastPanicLine, ClearDcrwalletLogs, CheckDaemonLogs } from "./logging";
 import parseArgs from "minimist";
-import { OPTIONS } from "constants";
+import { OPTIONS, UPGD_ELECTRON8 } from "constants";
 import os from "os";
 import fs from "fs-extra";
 import util from "util";
@@ -201,9 +201,27 @@ export const launchDCRD = (params, testnet, reactIPC) => new Promise((resolve,re
   }
 
 
+  // Upgrade for electron 8.0+ which doesn't support curve P-521: in systems
+  // with the previous version of decrediton installed we need to remove the
+  // rpc.key file so that the tls cert is recreated.
+  let rpcCertPath = getDcrdRpcCert(appdata);
+  let rpcKeyPath = rpcCertPath.replace(/\.cert$/, ".key");
+  const globalCfg = getGlobalCfg();
+  if (!globalCfg.get(UPGD_ELECTRON8)) {
+    if (fs.existsSync(rpcKeyPath)) {
+      logger.log("info", "Removing dcrd TLS key file for electron 8 upgrade at " + rpcKeyPath);
+      fs.unlinkSync(rpcKeyPath);
+    }
+    if (fs.existsSync(rpcCertPath)) {
+      logger.log("info", "Removing dcrd TLS cert file for electron 8 upgrade at " + rpcCertPath);
+      fs.unlinkSync(rpcCertPath);
+    }
+    globalCfg.set(UPGD_ELECTRON8, true);
+  }
+
   rpcuser = newConfig.rpc_user;
   rpcpass = newConfig.rpc_pass;
-  newConfig.rpc_cert = getDcrdRpcCert(appdata);
+  newConfig.rpc_cert = rpcCertPath;
   rpccert = newConfig.rpc_cert;
   rpchost = newConfig.rpc_host;
   rpcport = newConfig.rpc_port;
