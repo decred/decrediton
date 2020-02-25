@@ -234,6 +234,7 @@
     "is-running": "^2.1.0",
     "lodash": "^4.17.14",
     "mv": "^2.1.1",
+    "node-abi": "^2.15.0",
     "node-addon-loader": "decred/node-addon-loader#master",
     "nouislider": "^12.0.0",
     "prop-types": "^15.7.2",
