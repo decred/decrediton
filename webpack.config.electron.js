@@ -41,7 +41,7 @@ export default merge(baseConfig, {
   resolve: {
     alias: {
       ws: path.resolve(path.join(__dirname, "node_modules/ws/index.js"))
-    },
+    }
   },
 
 
