@@ -1,7 +1,7 @@
 import {
   UPDATESTAKEPOOLCONFIG_ATTEMPT, UPDATESTAKEPOOLCONFIG_FAILED, UPDATESTAKEPOOLCONFIG_SUCCESS,
   DISCOVERAVAILABLESTAKEPOOLS_SUCCESS, CHANGESELECTEDSTAKEPOOL,
-  REMOVESTAKEPOOLCONFIG,
+  REMOVESTAKEPOOLCONFIG, DISMISS_BACKUP_MSG_REDEEM_SCRIPT,
   GETSTAKEPOOLSTATS_ATTEMPT, GETSTAKEPOOLSTATS_FAILED, GETSTAKEPOOLSTATS_SUCCESS,
   ADDCUSTOMSTAKEPOOL_ATTEMPT, ADDCUSTOMSTAKEPOOL_SUCCESS, ADDCUSTOMSTAKEPOOL_FAILED
 } from "../actions/StakePoolActions";
@@ -52,7 +52,8 @@ export default function stakepool(state = {}, action) {
     return { ...state,
       activeStakePoolConfig: action.activeStakePoolConfig,
       selectedStakePool: action.selectedStakePool,
-      currentStakePoolConfig: action.currentStakePoolConfig
+      currentStakePoolConfig: action.currentStakePoolConfig,
+      dismissBackupRedeemScript: action.dismissBackupRedeemScript
     };
   case GETSTAKEPOOLSTATS_ATTEMPT:
     return { ...state,
@@ -81,6 +82,10 @@ export default function stakepool(state = {}, action) {
   case ADDCUSTOMSTAKEPOOL_FAILED:
     return { ...state,
       addCustomStakePoolAttempt: false
+    };
+  case DISMISS_BACKUP_MSG_REDEEM_SCRIPT:
+    return { ...state,
+      dismissBackupRedeemScript: true
     };
   default:
     return state;

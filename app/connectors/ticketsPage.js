@@ -41,7 +41,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onClearRevokeTicketsSuccess: ca.clearRevokeTicketsSuccess,
   onClearImportScriptError: ca.clearImportScriptError,
   onClearImportScriptSuccess: ca.clearImportScriptSuccess,
-  onChangeStakePool: spa.changeSelectedStakePool
+  onChangeStakePool: spa.changeSelectedStakePool,
+  onDismissBackupRedeemScript: spa.dismissBackupRedeemScript
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);
