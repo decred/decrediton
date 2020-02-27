@@ -32,7 +32,6 @@ export const LinksTab = () => (
     <Subtitle title={<T id="help.subtitle.communications" m="Communications"/>} />
     <div className="help-icons-list">
       <HelpLink className={"help-matrix-icon"} href="https://decred.org/matrix" title={<T id="help.matrix" m="Matrix Chat" />} subtitle={<T id="help.matrix.subtitle" m="riot.im"/>}/>
-      <HelpLink className={"help-slack-icon"} href="https://slack.decred.org" title={<T id="help.slack" m="Slack" />} subtitle={<T id="help.slack.subtitle" m="slack.decred.org"/>}/>
       <HelpLink className={"help-forum-icon"} href="https://t.me/decred" title={<T id="help.telegram" m="Telegram" />} subtitle={<T id="help.telegram.subtitle" m="t.me/decred"/>}/>
     </div>
   </>
