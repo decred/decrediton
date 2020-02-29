@@ -224,6 +224,7 @@ export const publishTransactionAttempt = (tx) => (dispatch, getState) => {
 export const PURCHASETICKETS_ATTEMPT = "PURCHASETICKETS_ATTEMPT";
 export const PURCHASETICKETS_FAILED = "PURCHASETICKETS_FAILED";
 export const PURCHASETICKETS_SUCCESS = "PURCHASETICKETS_SUCCESS";
+export const CREATE_UNSIGNEDTICKETS_SUCCESS = "CREATE_UNSIGNEDTICKETS_SUCCESS";
 
 export const purchaseTicketsAttempt = (
   passphrase, accountNum, spendLimit, requiredConf, numTickets, expiry,
@@ -252,6 +253,9 @@ export const purchaseTicketsAttempt = (
       walletService, passphrase, accountNum, spendLimit, requiredConf, numTickets,
       expiry, ticketFee, txFee, stakepool, !dontSignTx
     );
+    if (dontSignTx) {
+      return dispatch({ purchaseTicketsResponse, type: CREATE_UNSIGNEDTICKETS_SUCCESS });
+    }
     dispatch({ purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
   } catch (error) {
     dispatch({ error, type: PURCHASETICKETS_FAILED });
