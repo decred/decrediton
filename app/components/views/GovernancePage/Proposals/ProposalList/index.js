@@ -47,17 +47,16 @@ class ProposalsList extends React.Component {
     if (this.props.proposalsList !== nextProps.proposalsList) {
       return true;
     }
+    if (nextProps.location !== this.props.location) {
+      return true;
+    }
     return false;
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { location } = this.props;
     const { noMoreProposals } = this.state;
     const tab = this.getProposalsTab();
 
-    if (prevProps.location === location) {
-      return;
-    }
     if (noMoreProposals[tab] === prevState[tab]) {
       return;
     }
