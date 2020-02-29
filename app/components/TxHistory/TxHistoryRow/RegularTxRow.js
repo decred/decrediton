@@ -8,7 +8,7 @@ const accountMessage = <T id="txHistory.account" m=" Account" />;
 
 const RegularTxRow = ({
   txAmount, txDirection, overview, txAccountName, pending, txTs,
-  txOutputAddresses, txInputOutpoints, ...props
+  txOutputAddresses, ...props
 }) => (
   <Row {...{ ...props, txAccountName, pending, overview }}>
     <div className="is-row">
@@ -44,26 +44,26 @@ const RegularTxRow = ({
     </div>
     { overview &&
         <div className="transaction-amount-hash">
-          { txDirection === "transfer" ? 
+          { txDirection === "transfer" ?
             <>
               <T id="txHistory.from" m="From " />
               { txAccountName }
               { accountMessage }
             </> :
-          txDirection !== "in" ? (
-            <>
-              <T id="txHistory.from" m="From " />
-              { txAccountName }
-              <T id="txHistory.to" m=" To " />
-              <span className="address-shorter">{ txOutputAddresses }</span>
-            </>
-          ) : (
-            <>
-              <T id="txHistory.to" m=" To " />
-              { txAccountName }
-              { accountMessage }
-            </>
-          )}
+            txDirection !== "in" ? (
+              <>
+                <T id="txHistory.from" m="From " />
+                { txAccountName }
+                <T id="txHistory.to" m=" To " />
+                <span className="address-shorter">{ txOutputAddresses }</span>
+              </>
+            ) : (
+              <>
+                <T id="txHistory.to" m=" To " />
+                { txAccountName }
+                { accountMessage }
+              </>
+            )}
         </div>
     }
 
