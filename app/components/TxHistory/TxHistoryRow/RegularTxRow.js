@@ -4,6 +4,8 @@ import { createElement as h } from "react";
 import { timeMessage } from "./index";
 import { FormattedMessage as T } from "react-intl";
 
+const accountMessage = <T id="txHistory.account" m=" Account" />;
+
 const RegularTxRow = ({
   txAmount, txDirection, overview, txAccountName, pending, txTs,
   txOutputAddresses, txInputOutpoints, ...props
@@ -28,10 +30,6 @@ const RegularTxRow = ({
           </div>
         ) : (
           <div className="transaction-info is-row">
-            <T id="txHistory.from" m="From " />
-            <div className="transaction-status">
-              <span className="address-shorter transaction-account-name">{txInputOutpoints}</span>
-            </div>
             <T id="txHistory.to" m=" To " />
             <div className="transaction-status">
               <span className="transaction-account-name">{txAccountName}</span>
@@ -46,7 +44,13 @@ const RegularTxRow = ({
     </div>
     { overview &&
         <div className="transaction-amount-hash">
-          { txDirection !== "in" ? (
+          { txDirection === "transfer" ? 
+            <>
+              <T id="txHistory.from" m="From " />
+              { txAccountName }
+              { accountMessage }
+            </> :
+          txDirection !== "in" ? (
             <>
               <T id="txHistory.from" m="From " />
               { txAccountName }
@@ -55,10 +59,9 @@ const RegularTxRow = ({
             </>
           ) : (
             <>
-              <T id="txHistory.from" m="From " />
-              <span className="address-shorter">{ txInputOutpoints }</span>
               <T id="txHistory.to" m=" To " />
               { txAccountName }
+              { accountMessage }
             </>
           )}
         </div>

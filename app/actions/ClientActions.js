@@ -716,20 +716,6 @@ const getNonWalletOutputs = (decodeMessageService, walletService, tx) => new Pro
 })
   .catch(err => reject(err)));
 
-// getNonWalletInputs decodes a tx and gets inputs which are not from the wallet.
-const getNonWalletInputs = (decodeMessageService, tx) => new Promise((resolve,reject) => wallet.decodeTransaction(
-  decodeMessageService, Buffer.from(tx.tx.getTransaction())
-).then(r => {
-  const tx = r.getTransaction();
-  const inputs = tx.getInputsList().map(o => ({
-    previoutOutpoint: reverseHash(Buffer.from(o.getPreviousTransactionHash()).toString("hex"))+":" +
-        o.getPreviousTransactionIndex(),
-    value: o.getAmountIn()
-  }));
-  resolve(inputs);
-})
-  .catch(err => console.log(err) && reject(err)));
-
 // getTransactions loads a list of transactions from the wallet, given the
 // current grpc state.
 //
@@ -767,8 +753,7 @@ export const getTransactions = () => async (dispatch, getState) => {
   let { unmined } = await walletGetTransactions(walletService, -1, -1, 0);
   let unminedTransactions = filterTransactions(unmined, transactionsFilter).map(async tx => {
     const outputs = await getNonWalletOutputs(decodeMessageService, walletService, tx);
-    const inputs = await getNonWalletInputs(decodeMessageService, tx);
-    return { ...tx, outputs, inputs };
+    return { ...tx, outputs };
   });
   // add inputs and outputs to unminedTransactions.
   await Promise.all(unminedTransactions).then(r => unminedTransactions = r);
@@ -810,8 +795,8 @@ export const getTransactions = () => async (dispatch, getState) => {
           const stakeTx = await(dispatch(getMissingStakeTxData(normalizedTx)));
           filtered.push(stakeTx);
         } else {
-          // For regular tx we get the nonWalletoutputs and nonWalletInputs.
-          tx.inputs = await getNonWalletInputs(decodeMessageService, tx);
+          // For regular tx we get the nonWalletoutputs so we can show them at
+          // the overview.
           tx.outputs = await getNonWalletOutputs(decodeMessageService, walletService, tx);
           filtered.push(tx);
         }
@@ -906,8 +891,7 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
     ...recentRegularTransactions.filter(tx => !newlyMinedMap[tx.hash] && !newlyUnminedMap[tx.hash])
   ], regularTransactionFilter).slice(0, recentTransactionCount).map(async tx => {
     const outputs = await getNonWalletOutputs(decodeMessageService, walletService, tx);
-    const inputs = await getNonWalletInputs(decodeMessageService, tx);
-    return { ...tx, outputs, inputs };
+    return { ...tx, outputs };
   });
   // add inputs and outputs to recentRegularTransactions after receveing new tx.
   await Promise.all(recentRegularTransactions).then(r => recentRegularTransactions = r);
@@ -1077,11 +1061,10 @@ export const getStartupTransactions = () => async (dispatch, getState) => {
   recentRegularTxs = recentRegularTxs.slice(0, recentTransactionCount);
   recentStakeTxs = recentStakeTxs.slice(0, recentTransactionCount);
 
-  // get non wallet inputs and outputs so we can show at our home page.
+  // get non wallet outputs so we can show at our home page.
   const addNonWalletInfo = recentRegularTxs.map(async tx => {
     const outputs = await getNonWalletOutputs(decodeMessageService, walletService, tx);
-    const inputs = await getNonWalletInputs(decodeMessageService, tx);
-    return { ...tx, outputs, inputs };
+    return { ...tx, outputs };
   });
   await Promise.all(addNonWalletInfo).then(r => recentRegularTxs = r);
 
