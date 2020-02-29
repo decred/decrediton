@@ -1,5 +1,5 @@
-import { dcrwalletConf, getWalletPath, getExecutablePath, dcrdCfg } from "./paths";
-import { getWalletCfg, readDcrdConfig } from "config";
+import { dcrwalletConf, getWalletPath, getExecutablePath, dcrdCfg, getDcrdRpcCert } from "./paths";
+import { getWalletCfg, readDcrdConfig, getGlobalCfg } from "config";
 import { createLogger, AddToDcrdLog, AddToDcrwalletLog, AddToDcrlndLog, GetDcrdLogs,
   GetDcrwalletLogs, lastErrorLine, lastPanicLine, ClearDcrwalletLogs, CheckDaemonLogs } from "./logging";
 import parseArgs from "minimist";
@@ -198,29 +198,19 @@ export const launchDCRD = (reactIPC, testnet, appdata) => new Promise((resolve,r
     return;
   }
 
-  const args = [ "--nolisten" ];
-
+  const args = [ "--nolisten", "--tlscurve=P-256" ];
   const newConfig = readDcrdConfig(testnet, appdata);
 
-  if (!appdata) appdata = getDcrdPath();
-  // After reading dcrd.conf we can set rpc.cert, as we are going to use it from getDcrdPath() if
-  // appdata is not defined.
-  newConfig.rpc_cert = `${appdata}/rpc.cert`;
-  newConfig.appdata = appdata;
-  args.push(`--appdata=${appdata}`);
-  if (fs.existsSync(dcrdCfg(appdata))) {
-    args.push(`--configfile=${dcrdCfg(appdata)}`);
-  }
-  args.push(`--appdata=${appdata}`);
-  args.push("--tlscurve=P-256");
-
+  args.push(`--appdata=${newConfig.appdata}`);
+  args.push(`--configfile=${dcrdCfg(newConfig.configFile)}`);
   if (testnet) {
     args.push("--testnet");
   }
+
   // Upgrade for electron 8.0+ which doesn't support curve P-521: in systems
   // with the previous version of decrediton installed we need to remove the
   // rpc.key file so that the tls cert is recreated.
-  let rpcCertPath = getDcrdRpcCert(appdata);
+  let rpcCertPath = getDcrdRpcCert(newConfig.appdata);
   let rpcKeyPath = rpcCertPath.replace(/\.cert$/, ".key");
   const globalCfg = getGlobalCfg();
   if (!globalCfg.get(UPGD_ELECTRON8)) {
@@ -241,13 +231,6 @@ export const launchDCRD = (reactIPC, testnet, appdata) => new Promise((resolve,r
   rpccert = newConfig.rpc_cert;
   rpchost = newConfig.rpc_host;
   rpcport = newConfig.rpc_port;
-  setDaemonCredentials(newConfig);
-
-  const dcrdExe = getExecutablePath("dcrd", argv.custombinpath);
-  if (!fs.existsSync(dcrdExe)) {
-    logger.log("error", "The dcrd executable does not exist. Expected to find it at " + dcrdExe);
-    return;
-  }
 
   if (os.platform() == "win32") {
     try {
