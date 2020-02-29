@@ -130,7 +130,7 @@ export const importScriptAttempt = (passphrase, script) =>
     const walletService = sel.walletService(getState());
     const isWatchingOnly = sel.isWatchingOnly(getState());
     try {
-      const importScriptResponse = await wallet.importScript(walletService, passphrase, script, isWatchingOnly);
+      const importScriptResponse = await wallet.importScript(walletService, passphrase, script);
       dispatch({ importScriptResponse, type: IMPORTSCRIPT_SUCCESS });
       return importScriptResponse;
     } catch (error) {

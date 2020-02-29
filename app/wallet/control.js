@@ -48,17 +48,14 @@ export const importPrivateKey = (walletService, passphrase, accountNum, wif, res
     walletService.importPrivateKey(request, (err, res) => err ? fail(err) : ok(res));
   });
 
-export const importScript = (walletService, passphrase, script, isWatchingOnly) =>
+export const importScript = (walletService, passphrase, script) =>
   new Promise((ok, fail) => {
     const request = new api.ImportScriptRequest();
     request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
     request.setScript(new Uint8Array(Buffer.from(hexToBytes(script))));
     request.setRescan(false);
     request.setScanFrom(0);
-    // watch only wallets are not redeemable of their scripts, therefore we
-    // don't require them to be redeemable.
-    const isRequireRedeem = isWatchingOnly ? false : true;
-    request.setRequireRedeemable(isRequireRedeem);
+    request.setRequireRedeemable(true);
     walletService.importScript(request, (err, res) => err ? fail(err) : ok(res));
   });
 
