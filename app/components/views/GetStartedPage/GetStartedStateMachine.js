@@ -109,7 +109,12 @@ export const getStartedMachine = ({
         connectingDaemon: {
           onEntry: "isAtConnectingDaemon",
           on: {
-            SYNC_DAEMON: "syncingDaemon",
+            SYNC_DAEMON: {
+              target: "syncingDaemon",
+              actions: assign({
+                error: (context, event) => event.error && event.error
+              })
+            },
             ERROR_CONNECTING_DAEMON: "daemonError"
           }
         },
@@ -123,7 +128,12 @@ export const getStartedMachine = ({
         syncingDaemon: {
           onEntry: "isAtSyncingDaemon",
           on: {
-            CHECK_NETWORK_MATCH: "checkingNetworkMatch",
+            CHECK_NETWORK_MATCH: {
+              target: "checkingNetworkMatch",
+              actions: assign({
+                error: (context, event) => event.error && event.error
+              })
+            },
             ERROR_SYNCING_DAEMON: "daemonError"
           }
         },
