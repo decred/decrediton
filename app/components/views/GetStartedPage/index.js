@@ -147,7 +147,7 @@ class GetStarted extends React.Component {
         break;
       case "syncingDaemon":
         animationType = blockChainLoading;
-        text = <T id="loaderBar.syncingDaemon" m="syncing Daemon..." />;
+        text = <T id="loaderBar.syncingDaemon" m="Syncing Daemon..." />;
         break;
       case "choosingWallet":
         text = isSPV ?
