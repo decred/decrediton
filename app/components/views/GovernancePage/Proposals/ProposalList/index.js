@@ -44,7 +44,8 @@ class ProposalsList extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    if (this.props.proposalsList !== nextProps.proposalsList) {
+    const tab = this.getProposalsTab();
+    if (this.props.proposalsList[tab].length !== nextProps.proposalsList[tab].length) {
       return true;
     }
     if (nextProps.location !== this.props.location) {
@@ -53,14 +54,14 @@ class ProposalsList extends React.Component {
     return false;
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
+    const { location } = this.props;
     const { noMoreProposals } = this.state;
     const tab = this.getProposalsTab();
 
-    if (noMoreProposals[tab] === prevState[tab]) {
-      return;
+    if (prevProps.location !== location && !noMoreProposals[tab]) {
+      this.onLoadMoreProposals();
     }
-    this.onLoadMoreProposals();
   }
 
   getProposalsTab() {

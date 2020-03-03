@@ -1000,7 +1000,7 @@ export const newActiveVoteProposalsCount = compose(
   activeVoteProposals
 );
 export const newPreVoteProposalsCount = compose(
-  reduce((acc, p) => p.modifiedSinceLastAccess ? acc + 1 : acc, 0),
+  reduce((acc, p) => p && p.modifiedSinceLastAccess ? acc + 1 : acc, 0),
   preVoteProposals
 );
 export const newProposalsStartedVoting = compose(some(p => p.votingSinceLastAccess), activeVoteProposals);

@@ -141,6 +141,7 @@ const getTokenInventory = () => async (dispatch, getState) => {
 export const COMPARE_INVENTORY_ATTEMPT = "COMPARE_INVENTORY_ATTEMPT";
 export const COMPARE_INVENTORY_SUCCESS = "COMPARE_INVENTORY_SUCCESS";
 export const COMPARE_INVENTORY_FAILED = "COMPARE_INVENTORY_FAILED";
+export const REMOVED_PROPOSALS_FROM_LIST = "REMOVED_PROPOSALS_FROM_LIST";
 
 // compareInventory compares the state's inventory with a fresh new inventory.
 // If they are different, we get the batch of tokens and update the proposal list.
@@ -152,26 +153,44 @@ export const compareInventory = () => async (dispatch, getState) => {
   try {
     const oldInventory = sel.inventory(getState());
     const piURL = sel.politeiaURL(getState());
+    let oldProposals = sel.proposals(getState());
+    const keys = Object.keys(oldInventory);
+
     const { data } = await pi.getTokenInventory(piURL);
     const inventory = updateInventoryFromApiData(data);
 
-    const inventoryDiff = getDefaultInventory();
     let isDifferent = false;
 
-    Object.keys(oldInventory).forEach( async key => {
-      if (inventory[key].length > oldInventory[key].length) {
-        isDifferent = true;
-        // get different hashes
-        const diffHashes = inventory[key].filter( hash => !oldInventory[key].includes(hash));
+    // Check if old proposals list have had some proposal removed from inventory and
+    // also remove it from the list.
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i];
+      oldProposals[key].forEach( (proposal, index) => {
+        if (!inventory[key].includes(proposal.token)) {
+          oldProposals[key].splice(index, 1);
+          isDifferent = true;
+        }
+      });
 
-        inventoryDiff[key] = diffHashes;
+      if (isDifferent) {
+        isDifferent = false;
+        dispatch({ type: REMOVED_PROPOSALS_FROM_LIST, proposals: oldProposals });
+      }
+    }
 
+    // Compare difference betweeen old inventory and inventory we just get and
+    // update proposal list with missing proposals.
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i];
+      const diffHashes = inventory[key].filter( token => !oldInventory[key].includes(token) && (isDifferent = true));
+
+      if (isDifferent) {
+        isDifferent = false;
         dispatch(getProposalsAndUpdateVoteStatus(diffHashes));
       }
-    });
+    }
 
     dispatch({ type: COMPARE_INVENTORY_SUCCESS, inventory });
-    return isDifferent ? inventoryDiff : null;
   } catch (error) {
     dispatch({ type: COMPARE_INVENTORY_FAILED, error });
   }
