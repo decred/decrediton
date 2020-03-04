@@ -20,6 +20,7 @@
     "start-hot-nosandbox": "cross-env HOT=1 NODE_ENV=development electron -r @babel/register -r @babel/polyfill ./app/main.development -r --no-sandbox",
     "postinstall": "concurrently \"electron-builder install-app-deps\" \"node node_modules/fbjs-scripts/node/check-dev-engines.js package.json\"",
     "dev": "npm run hot-server -- --start-hot",
+    "dev-nosandbox": "npm run hot-server -- --start-hot-nosandbox",
     "package": "npm run build && ./node_modules/.bin/electron-builder build --publish never",
     "package-win": "npm run build && ./node_modules/.bin/electron-builder build --win --x64 --ia32",
     "package-linux": "npm run build && ./node_modules/.bin/electron-builder build --linux",
