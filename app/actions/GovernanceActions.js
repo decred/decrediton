@@ -169,7 +169,7 @@ export const compareInventory = () => async (dispatch, getState) => {
           acc.push(p);
         } else {
           // Remove token from old inventory so we can re-fetch it.
-          oldInventory[key].splice(oldInventory[key].indexOf(p.token), 1)
+          oldInventory[key].splice(oldInventory[key].indexOf(p.token), 1);
           isDifferent = true;
         }
         return acc;
@@ -180,20 +180,20 @@ export const compareInventory = () => async (dispatch, getState) => {
     }
 
     // create array with all old inventory and inventory token's values
-    const flatOldProps = [oldInventory.activeVote, oldInventory.abandonedVote, oldInventory.finishedVote, oldInventory.preVote].reduce( (acc, v) => {
+    const flatOldProps = [ oldInventory.activeVote, oldInventory.abandonedVote, oldInventory.finishedVote, oldInventory.preVote ].reduce( (acc, v) => {
       v.forEach(vp => acc.push(vp));
       return acc;
     }, []);
-    const flatNewProps = [inventory.activeVote, inventory.abandonedVote, inventory.finishedVote, inventory.preVote].reduce((acc, v) => {
+    const flatNewProps = [ inventory.activeVote, inventory.abandonedVote, inventory.finishedVote, inventory.preVote ].reduce((acc, v) => {
       v.forEach(vp => acc.push(vp));
-      return acc
+      return acc;
     }, []);
 
     // Get difference between new inventory and old one, so we can bring a batch
     // of new proposals.
     const diffHashes = flatNewProps.filter( token => !flatOldProps.includes(token));
     if (diffHashes.length > 0) {
-      dispatch(getProposalsAndUpdateVoteStatus(diffHashes));      
+      dispatch(getProposalsAndUpdateVoteStatus(diffHashes));
     }
 
     dispatch({ type: COMPARE_INVENTORY_SUCCESS, inventory });
