@@ -19,7 +19,7 @@ export const VOTESTATUS_ACTIVEVOTE = 3;
 export const VOTESTATUS_FINISHEDVOTE = 4;
 export const PROPOSALSTATUS_ABANDONED = 6;
 
-// defaultInventory is how inventory is stored at our redux state.
+// defaultInventory is how inventory and proposals are stored at our redux state.
 const defaultInventory = {
   activeVote: [],
   abandonedVote: [],
@@ -153,8 +153,8 @@ export const compareInventory = () => async (dispatch, getState) => {
   try {
     const oldInventory = sel.inventory(getState());
     const piURL = sel.politeiaURL(getState());
-    let oldProposals = sel.proposals(getState());
-    const keys = Object.keys(oldInventory);
+    const oldProposals = sel.proposals(getState());
+    const newProposalsList = getDefaultInventory();
 
     const { data } = await pi.getTokenInventory(piURL);
     const inventory = updateInventoryFromApiData(data);
@@ -162,32 +162,38 @@ export const compareInventory = () => async (dispatch, getState) => {
     let isDifferent = false;
 
     // Check if old proposals list have had some proposal removed from inventory and
-    // also remove it from the list.
-    for (let i = 0; i < keys.length; i++) {
-      const key = keys[i];
-      oldProposals[key].forEach( (proposal, index) => {
-        if (!inventory[key].includes(proposal.token)) {
-          oldProposals[key].splice(index, 1);
+    // also remove it from proposal's list.
+    Object.keys(oldProposals).forEach( key => {
+      newProposalsList[key] = oldProposals[key].reduce((acc, p) => {
+        if(inventory[key].includes(p.token)) {
+          acc.push(p);
+        } else {
+          // Remove token from old inventory so we can re-fetch it.
+          oldInventory[key].splice(oldInventory[key].indexOf(p.token), 1)
           isDifferent = true;
         }
-      });
-
-      if (isDifferent) {
-        isDifferent = false;
-        dispatch({ type: REMOVED_PROPOSALS_FROM_LIST, proposals: oldProposals });
-      }
+        return acc;
+      }, []);
+    });
+    if (isDifferent) {
+      dispatch({ type: REMOVED_PROPOSALS_FROM_LIST, proposals: newProposalsList });
     }
 
-    // Compare difference betweeen old inventory and inventory we just get and
-    // update proposal list with missing proposals.
-    for (let i = 0; i < keys.length; i++) {
-      const key = keys[i];
-      const diffHashes = inventory[key].filter( token => !oldInventory[key].includes(token) && (isDifferent = true));
+    // create array with all old inventory and inventory token's values
+    const flatOldProps = [oldInventory.activeVote, oldInventory.abandonedVote, oldInventory.finishedVote, oldInventory.preVote].reduce( (acc, v) => {
+      v.forEach(vp => acc.push(vp));
+      return acc;
+    }, []);
+    const flatNewProps = [inventory.activeVote, inventory.abandonedVote, inventory.finishedVote, inventory.preVote].reduce((acc, v) => {
+      v.forEach(vp => acc.push(vp));
+      return acc
+    }, []);
 
-      if (isDifferent) {
-        isDifferent = false;
-        dispatch(getProposalsAndUpdateVoteStatus(diffHashes));
-      }
+    // Get difference between new inventory and old one, so we can bring a batch
+    // of new proposals.
+    const diffHashes = flatNewProps.filter( token => !flatOldProps.includes(token));
+    if (diffHashes.length > 0) {
+      dispatch(getProposalsAndUpdateVoteStatus(diffHashes));      
     }
 
     dispatch({ type: COMPARE_INVENTORY_SUCCESS, inventory });
