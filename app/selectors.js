@@ -17,34 +17,21 @@ import * as wallet from "wallet";
 const EMPTY_ARRAY = [];  // Maintaining identity (will) improve performance;
 
 export const theme = get([ "settings", "theme" ]);
+// Daemon startup selectors
 export const daemonError = get([ "daemon" , "daemonError" ]);
 export const walletError = get([ "daemon", "walletError" ]);
 export const appVersion = get([ "daemon", "appVersion" ]);
 export const updateAvailable = get([ "daemon", "updateAvailable" ]);
-export const openForm = get([ "daemon", "openForm" ]);
 export const isDaemonRemote = get([ "daemon", "daemonRemote" ]);
 export const getDaemonStarted = get([ "daemon", "daemonStarted" ]);
-export const getDaemonConnected = get([ "daemon", "daemonConnected" ]);
-export const getRemoteAppdataError = get([ "daemon", "remoteAppdataError" ]);
 export const getCurrentBlockCount = get([ "daemon", "currentBlockCount" ]);
 export const getNeededBlocks = get([ "daemon", "neededBlocks" ]);
 export const getEstimatedTimeLeft = get([ "daemon", "timeLeftEstimate" ]);
 export const getDaemonSynced = get([ "daemon", "daemonSynced" ]);
-export const getDaemonTimeout = get([ "daemon", "daemonTimeout" ]);
-export const isAdvancedDaemon = get([ "daemon", "daemonAdvanced" ]);
 export const getWalletReady = get([ "daemon", "walletReady" ]);
-export const createNewWallet = get([ "walletLoader", "createNewWallet" ]);
 export const maxWalletCount = get([ "walletLoader", "maxWalletCount" ]);
-export const isPrepared = and(
-  getDaemonStarted,
-  getDaemonSynced,
-);
-export const getCredentials = get([ "daemon", "credentials" ]);
 
-const START_STEP_OPEN = 2;
-const START_STEP_RPC1 = 3;
-const START_STEP_RPC2 = 4;
-
+// general startup selector
 export const setLanguage = get([ "daemon", "setLanguage" ]);
 export const showTutorial = get([ "daemon", "tutorial" ]);
 export const showPrivacy = get([ "daemon", "showPrivacy" ]);
@@ -55,19 +42,15 @@ export const requiredWalletRPCVersion = get([ "version", "requiredVersion" ]);
 export const walletRPCVersion = createSelector(
   [ get([ "version", "getWalletRPCVersionResponse" ]) ],
   (r) => r ? r.getVersionString() : null);
-const walletExistResponse = get([ "walletLoader", "walletExistResponse" ]);
-export const startStepIndex = get([ "walletLoader", "stepIndex" ]);
 export const getVersionServiceError = get([ "version", "getVersionServiceError" ]);
 export const getWalletRPCVersionError = get([ "version", "getWalletRPCVersionError" ]);
 export const getLoaderError = get([ "version", "getLoaderError" ]);
-export const hasExistingWallet = compose(r => !!(r && r.getExists()), walletExistResponse);
-export const confirmNewSeed = get([ "walletLoader", "confirmNewSeed" ]);
-export const existingOrNew = get([ "walletLoader", "existingOrNew" ]);
 export const versionInvalidError = createSelector(
   [ versionInvalid, get([ "version", "versionInvalidError" ]) ],
   (invalid, error) => invalid ? error || "Unknown Error" : null
 );
 
+// rpc or spv dcrwallet sync selectors
 export const syncInput = get([ "walletLoader", "syncInput" ]);
 export const peerCount = get([ "walletLoader", "peerCount" ]);
 export const synced = get([ "walletLoader", "synced" ]);
@@ -79,30 +62,10 @@ export const syncFetchHeadersCount = get([ "walletLoader", "syncFetchHeadersCoun
 export const syncFetchHeadersLastHeaderTime = get([ "walletLoader", "syncLastFetchedHeaderTime" ]);
 export const syncDiscoverAddressesAttempt = get([ "walletLoader", "syncDiscoverAddressesAttempt" ]);
 export const syncRescanAttempt = get([ "walletLoader", "syncRescanAttempt" ]);
-export const syncRescanProgress = get([ "walletLoader", "syncRescanProgress" ]);
 export const syncFetchHeadersComplete = get([ "walletLoader" , "syncFetchHeadersComplete" ]);
 export const syncFetchTimeStart = get([ "walletLoader" , "syncFetchTimeStart" ]);
 
-const isStartStepOpen = compose(eq(START_STEP_OPEN), startStepIndex);
-const isStartStepRPC = compose(or(eq(START_STEP_RPC1), eq(START_STEP_RPC2)), startStepIndex);
-
-const walletExistError = and(get([ "walletLoader", "walletExistError" ]), isStartStepOpen);
-const walletCreateError = and(get([ "walletLoader", "walletCreateError" ]), isStartStepOpen);
-const walletOpenError = and(get([ "walletLoader", "walletOpenError" ]), isStartStepOpen);
-const startRpcError = and(get([ "walletLoader", "startRpcError" ]), isStartStepRPC);
-
-export const startupError = or(
-  getVersionServiceError,
-  getWalletRPCVersionError,
-  getLoaderError,
-  walletExistError,
-  walletCreateError,
-  walletOpenError,
-  startRpcError,
-);
-
 const availableWallets = get([ "daemon", "availableWallets" ]);
-
 const availableWalletsSelect = createSelector(
   [ availableWallets ],
   (wallets) => map(
@@ -117,15 +80,13 @@ const availableWalletsSelect = createSelector(
     wallets
   )
 );
-
 export const sortedAvailableWallets = createSelector(
   [ availableWalletsSelect ],
   (availableWallets) => (availableWallets.sort((a, b) => (b.lastAccess - a.lastAccess)))
 );
 export const previousWallet = get([ "daemon", "previousWallet" ]);
 export const getWalletName = get([ "daemon", "walletName" ]);
-
-export const openWalletInputRequest = get([ "walletLoader", "openWalletInputRequest" ]);
+export const getSelectedWallet = get([ "walletLoader", "selectedWallet" ]);
 
 export const balances = or(get([ "grpc", "balances" ]), () => []);
 export const walletService = get([ "grpc", "walletService" ]);
@@ -184,6 +145,7 @@ export const defaultLocaleName = createSelector(
 export const tsDate = compose(timezone => timezone === "utc" ? dateToUTC : dateToLocal, timezone);
 
 export const isSPV = get([ "settings", "currentSettings", "spvMode" ]);
+export const isAdvancedDaemon = get([ "settings",  "currentSettings", "daemonStartAdvanced" ]);
 
 export const sortedLocales = createSelector(
   [ get([ "locales" ]) ],
@@ -694,7 +656,7 @@ export const validateAddressSuccess = compose(
   r => r ? r.toObject() : null, validateAddressResponse
 );
 
-export const masterPubKey = get([ "control", "masterPubKey" ]);
+export const walletMasterPubKey = get([ "control", "masterPubKey" ]);
 
 const getStakeInfoResponse = get([ "grpc", "getStakeInfoResponse" ]);
 
@@ -821,8 +783,6 @@ export const isImportingScript = bool(importScriptRequestAttempt);
 export const newUnminedMessage = get([ "notifications", "newUnminedMessage" ]);
 
 export const createWalletExisting = get([ "walletLoader", "createWalletExisting" ]);
-export const isCreatingWallet = get([ "walletLoader", "walletCreateRequestAttempt" ]);
-export const isOpeningWallet = get([ "walletLoader", "walletOpenRequestAttempt" ]);
 
 export const lastBlockTimestamp = get([ "grpc", "recentBlockTimestamp" ]);
 

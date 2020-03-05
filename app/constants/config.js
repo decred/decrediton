@@ -2,7 +2,6 @@ import { MAINNET } from "./Decrediton";
 
 export const DAEMON_ADVANCED = "daemon_start_advanced";
 export const THEME = "theme";
-export const OPEN_FORM = "must_open_form";
 export const LOCALE = "locale";
 export const NETWORK = "network";
 export const SET_LANGUAGE = "set_language";
@@ -44,7 +43,6 @@ export const setDaemonRemoteCredentials = (rpcuser, rpcpass, rpccert, rpchost, r
 export const INITIAL_VALUES = {
   [DAEMON_ADVANCED]: false,
   [THEME]: "theme-light",
-  [OPEN_FORM]: true,
   [LOCALE]: "",
   [NETWORK]: MAINNET,
   [SET_LANGUAGE]: true,

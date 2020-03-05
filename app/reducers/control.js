@@ -5,7 +5,6 @@ import { GETNEXTADDRESS_ATTEMPT, GETNEXTADDRESS_FAILED, GETNEXTADDRESS_SUCCESS,
   IMPORTPRIVKEY_ATTEMPT, IMPORTPRIVKEY_FAILED, IMPORTPRIVKEY_SUCCESS,
   IMPORTSCRIPT_ATTEMPT, IMPORTSCRIPT_FAILED, IMPORTSCRIPT_SUCCESS, IMPORTSCRIPT_SUCCESS_PURCHASE_TICKETS,
   CHANGEPASSPHRASE_ATTEMPT, CHANGEPASSPHRASE_FAILED, CHANGEPASSPHRASE_SUCCESS,
-  LOADACTIVEDATAFILTERS_ATTEMPT, LOADACTIVEDATAFILTERS_FAILED, LOADACTIVEDATAFILTERS_SUCCESS,
   FUNDTX_ATTEMPT, FUNDTX_FAILED, FUNDTX_SUCCESS,
   CLEARTX,
   SIGNTX_ATTEMPT, SIGNTX_FAILED, SIGNTX_SUCCESS,
@@ -166,22 +165,6 @@ export default function control(state = {}, action) {
       changePassphraseRequestAttempt: false,
       changePassphraseResponse: action.changePassphraseResponse,
       changePassphraseSuccess: "Your private passphrase was successfully updated."
-    };
-  case LOADACTIVEDATAFILTERS_ATTEMPT:
-    return { ...state,
-      loadActiveDataFiltersError: null,
-      loadActiveDataFiltersRequestAttempt: true
-    };
-  case LOADACTIVEDATAFILTERS_FAILED:
-    return { ...state,
-      loadActiveDataFiltersError: String(action.error),
-      loadActiveDataFiltersRequestAttempt: false
-    };
-  case LOADACTIVEDATAFILTERS_SUCCESS:
-    return { ...state,
-      loadActiveDataFiltersError: null,
-      loadActiveDataFiltersRequestAttempt: false,
-      loadActiveDataFiltersResponse: action.response
     };
   case FUNDTX_ATTEMPT:
     return { ...state,
@@ -421,8 +404,7 @@ export default function control(state = {}, action) {
     };
   case VALIDATEMASTERPUBKEY_SUCCESS:
     return { ...state,
-      masterPubKey: action.masterPubKey,
-      isCreatingWatchingOnly: true
+      masterPubKey: action.masterPubKey
     };
   case VALIDATEMASTERPUBKEY_FAILED:
     return { ...state,

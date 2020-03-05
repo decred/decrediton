@@ -1,4 +1,4 @@
-import { dcrwalletCfg, getWalletPath, getExecutablePath, dcrdCfg, getAppDataDirectory, getDcrdRpcCert, getDcrdPath } from "./paths";
+import { dcrwalletConf, getWalletPath, getExecutablePath, dcrdCfg, getDcrdRpcCert } from "./paths";
 import { getWalletCfg, readDcrdConfig, getGlobalCfg } from "config";
 import { createLogger, AddToDcrdLog, AddToDcrwalletLog, AddToDcrlndLog, GetDcrdLogs,
   GetDcrwalletLogs, lastErrorLine, lastPanicLine, ClearDcrwalletLogs, CheckDaemonLogs } from "./logging";
@@ -28,7 +28,7 @@ let dcrwPort;
 let rpcuser, rpcpass, rpccert, rpchost, rpcport;
 let dcrlndCreds;
 
-let dcrdSocket = null;
+let dcrdSocket, heightIsSynced, selectedWallet = null;
 
 function closeClis() {
   // shutdown daemon and wallet.
@@ -40,6 +40,36 @@ function closeClis() {
   if(dcrlndPID && dcrlndPID !== -1)
     closeDcrlnd();
 }
+
+export const setHeightSynced = (isSynced) => {
+  heightIsSynced = isSynced;
+  return true;
+};
+
+export const getHeightSynced = () => heightIsSynced;
+
+export const setDcrdRpcCredentials = ({ rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port }) => {
+  rpcuser = rpc_user;
+  rpcpass = rpc_pass;
+  rpccert = rpc_cert;
+  rpchost = rpc_host;
+  rpcport = rpc_port;
+  return true;
+};
+
+export const getDcrdRpcCredentials = () => ({
+  rpc_user: rpcuser,
+  rpc_pass: rpcpass,
+  rpc_cert: rpccert,
+  rpc_host: rpchost,
+  rpc_port: rpcport
+});
+
+export const setSelectedWallet = (w) => {
+  return selectedWallet = w;
+};
+
+export const getSelectedWallet = () => selectedWallet;
 
 export function closeDCRD() {
   if (dcrdPID === -1) {
@@ -160,51 +190,27 @@ export async function cleanShutdown(mainWindow, app) {
   });
 }
 
-export const launchDCRD = (params, testnet, reactIPC) => new Promise((resolve,reject) => {
-  let rpcCreds, appdata;
-
-  rpcCreds = params && params.rpcCreds;
-  appdata = params && params.appdata;
-
-  if (rpcCreds) {
-    rpcuser = rpcCreds.rpc_user;
-    rpcpass = rpcCreds.rpc_pass;
-    rpccert = rpcCreds.rpc_cert;
-    rpchost = rpcCreds.rpc_host;
-    rpcport = rpcCreds.rpc_port;
-    dcrdPID = -1;
-    AddToDcrdLog(process.stdout, "dcrd is connected as remote", debug);
-    return resolve(rpcCreds);
-  }
-  if (dcrdPID === -1) {
-    const creds = {
-      rpc_user: rpcuser,
-      rpc_pass: rpcpass,
-      rpc_cert: rpccert,
-      rpc_host: rpchost,
-      rpc_port: rpcport
-    };
-    return resolve(creds);
+// launchDCRD checks launches dcrd
+export const launchDCRD = (reactIPC, testnet, appdata) => new Promise((resolve,reject) => {
+  const dcrdExe = getExecutablePath("dcrd", argv.custombinpath);
+  if (!fs.existsSync(dcrdExe)) {
+    logger.log("error", "The dcrd executable does not exist. Expected to find it at " + dcrdExe);
+    return;
   }
 
-  if (!appdata) appdata = getDcrdPath();
+  const args = [ "--nolisten", "--tlscurve=P-256" ];
+  const newConfig = readDcrdConfig(testnet, appdata);
 
-  let args = [ "--nolisten" ];
-  const newConfig = readDcrdConfig(testnet);
-
-  args.push(`--configfile=${dcrdCfg(getAppDataDirectory())}`);
-  args.push(`--appdata=${appdata}`);
-  args.push("--tlscurve=P-256");
-
+  args.push(`--appdata=${newConfig.appdata}`);
+  args.push(`--configfile=${dcrdCfg(newConfig.configFile)}`);
   if (testnet) {
     args.push("--testnet");
   }
 
-
   // Upgrade for electron 8.0+ which doesn't support curve P-521: in systems
   // with the previous version of decrediton installed we need to remove the
   // rpc.key file so that the tls cert is recreated.
-  let rpcCertPath = getDcrdRpcCert(appdata);
+  let rpcCertPath = getDcrdRpcCert(newConfig.appdata);
   let rpcKeyPath = rpcCertPath.replace(/\.cert$/, ".key");
   const globalCfg = getGlobalCfg();
   if (!globalCfg.get(UPGD_ELECTRON8)) {
@@ -226,12 +232,6 @@ export const launchDCRD = (params, testnet, reactIPC) => new Promise((resolve,re
   rpchost = newConfig.rpc_host;
   rpcport = newConfig.rpc_port;
 
-  const dcrdExe = getExecutablePath("dcrd", argv.custombinpath);
-  if (!fs.existsSync(dcrdExe)) {
-    logger.log("error", "The dcrd executable does not exist. Expected to find it at " + dcrdExe);
-    return;
-  }
-
   if (os.platform() == "win32") {
     try {
       const win32ipc = require("../node_modules/win32ipc/build/Release/win32ipc.node");
@@ -250,6 +250,7 @@ export const launchDCRD = (params, testnet, reactIPC) => new Promise((resolve,re
   });
 
   dcrd.on("error", function (err) {
+    reactIPC.send("error-received", true, err);
     reject(err);
   });
 
@@ -260,7 +261,8 @@ export const launchDCRD = (params, testnet, reactIPC) => new Promise((resolve,re
         lastDcrdErr = lastPanicLine(GetDcrdLogs());
       }
       logger.log("error", "dcrd closed due to an error: ", lastDcrdErr);
-      return reject(lastDcrdErr);
+      reactIPC.send("error-received", true, lastDcrdErr);
+      reject(lastDcrdErr);
     }
 
     logger.log("info", `dcrd exited with code ${code}`);
@@ -268,23 +270,25 @@ export const launchDCRD = (params, testnet, reactIPC) => new Promise((resolve,re
 
   dcrd.stdout.on("data", (data) => {
     AddToDcrdLog(process.stdout, data, debug);
-    if (CheckDaemonLogs(data.toString("utf-8"))) {
-      reactIPC.send("warning-received", true, data.toString("utf-8"));
+    const dataString = data.toString("utf-8");
+    if (CheckDaemonLogs(dataString)) {
+      reactIPC.send("warning-received", true, dataString);
     }
-    resolve(data.toString("utf-8"));
+    if (dataString.includes("New valid peer")) {
+      newConfig.pid = dcrd.pid;
+      dcrdPID = dcrd.pid;
+      logger.log("info", "dcrd started with pid:" + newConfig.pid);
+
+      dcrd.unref();
+      return resolve(newConfig);
+    }
   });
 
   dcrd.stderr.on("data", (data) => {
     AddToDcrdLog(process.stderr, data, debug);
+    reactIPC.send("error-received", true, data.toString("utf-8"));
     reject(data.toString("utf-8"));
   });
-
-  newConfig.pid = dcrd.pid;
-  dcrdPID = dcrd.pid;
-  logger.log("info", "dcrd started with pid:" + newConfig.pid);
-
-  dcrd.unref();
-  return resolve(newConfig);
 });
 
 // DecodeDaemonIPCData decodes messages from an IPC message received from dcrd/
@@ -307,9 +311,10 @@ const DecodeDaemonIPCData = (data, cb) => {
 };
 
 export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testnet, reactIPC) => {
-  let args = [ "--configfile=" + dcrwalletCfg(getWalletPath(testnet, walletPath)) ];
-
   const cfg = getWalletCfg(testnet, walletPath);
+  const confFile = fs.existsSync(dcrwalletConf(getWalletPath(testnet, walletPath))) ?
+    `--configfile=${dcrwalletConf(getWalletPath(testnet, walletPath))}` : "";
+  let args = [ confFile ];
 
   args.push("--gaplimit=" + cfg.get("gaplimit"));
 
@@ -567,61 +572,76 @@ export const readExesVersion = (app, grpcVersions) => {
 
 // connectDaemon starts a new rpc connection to dcrd
 export const connectRpcDaemon = async (mainWindow, rpcCreds) => {
-  const rpc_host = rpcCreds ? rpcCreds.rpc_host : rpchost;
-  const rpc_port = rpcCreds ? rpcCreds.rpc_port : rpcport;
-  const rpc_user = rpcCreds ? rpcCreds.rpc_user : rpcuser;
-  const rpc_pass = rpcCreds ? rpcCreds.rpc_pass : rpcpass;
-  const rpc_cert = rpcCreds ? rpcCreds.rpc_cert : rpccert;
+  let rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port;
 
-  // During the first startup, the rpc.cert file might not exist for a few
-  // seconds. In that case, we wait up to 30s before failing this call.
-  let tries = 0;
-  let sleep = ms => new Promise(ok => setTimeout(ok, ms));
-  while (tries++ < 30 && !fs.existsSync(rpc_cert)) await sleep(1000);
-  if (!fs.existsSync(rpc_cert)) {
-    return mainWindow.webContents.send("connectRpcDaemon-response", { error: new Error("rpc cert '"+rpc_cert+"' does not exist") });
+  if (rpcCreds) {
+    setDcrdRpcCredentials(rpcCreds);
+    rpc_user = rpcCreds.rpc_user;
+    rpc_pass = rpcCreds.rpc_pass;
+    rpc_cert = rpcCreds.rpc_cert;
+    rpc_host = rpcCreds.rpc_host;
+    rpc_port = rpcCreds.rpc_port;
+  } else {
+    rpc_user = rpcuser;
+    rpc_pass = rpcpass;
+    rpc_cert = rpccert;
+    rpc_host = rpchost;
+    rpc_port = rpcport;
   }
 
-  var cert = fs.readFileSync(rpc_cert);
-  const url = `${rpc_host}:${rpc_port}`;
-  if (dcrdSocket && dcrdSocket.readyState === dcrdSocket.OPEN) {
-    return mainWindow.webContents.send("connectRpcDaemon-response", { connected: true });
-  }
-  dcrdSocket = new webSocket(`wss://${url}/ws`, {
-    headers: {
-      "Authorization": "Basic "+Buffer.from(rpc_user+":"+rpc_pass).toString("base64")
-    },
-    cert: cert,
-    ecdhCurve: "secp521r1",
-    ca: [ cert ]
-  });
-  dcrdSocket.on("open", function() {
-    logger.log("info","decrediton has connected to dcrd instance");
-    return mainWindow.webContents.send("connectRpcDaemon-response", { connected: true });
-  });
-  dcrdSocket.on("error", function(error) {
-    logger.log("error",`Error: ${error}`);
+  try {
+    // During the first startup, the rpc.cert file might not exist for a few
+    // seconds. In that case, we wait up to 30s before failing this call.
+    let tries = 0;
+    const sleep = ms => new Promise(ok => setTimeout(ok, ms));
+    while (tries++ < 30 && !fs.existsSync(rpc_cert)) await sleep(1000);
+    if (!fs.existsSync(rpc_cert)) {
+      return mainWindow.webContents.send("connectRpcDaemon-response", { error: new Error("rpc cert '"+rpc_cert+"' does not exist") });
+    }
+
+    const cert = fs.readFileSync(rpc_cert);
+    const url = `${rpc_host}:${rpc_port}`;
+    if (dcrdSocket && dcrdSocket.readyState === dcrdSocket.OPEN) {
+      return mainWindow.webContents.send("connectRpcDaemon-response", { connected: true });
+    }
+    dcrdSocket = new webSocket(`wss://${url}/ws`, {
+      headers: {
+        "Authorization": "Basic "+Buffer.from(rpc_user+":"+rpc_pass).toString("base64")
+      },
+      cert: cert,
+      ecdhCurve: "secp521r1",
+      ca: [ cert ]
+    });
+    dcrdSocket.on("open", function() {
+      logger.log("info","decrediton has connected to dcrd instance");
+      return mainWindow.webContents.send("connectRpcDaemon-response", { connected: true });
+    });
+    dcrdSocket.on("error", function(error) {
+      logger.log("error",`Error: ${error}`);
+      return mainWindow.webContents.send("connectRpcDaemon-response", { connected: false, error: error.toString() });
+    });
+    dcrdSocket.on("message", function(data) {
+      const parsedData = JSON.parse(data);
+      const id = parsedData ? parsedData.id : "";
+      switch (id) {
+      case "getinfo":
+        mainWindow.webContents.send("check-getinfo-response", parsedData.result );
+        break;
+      case "getblockchaininfo": {
+        const dataResults = parsedData.result || {};
+        const blockCount = dataResults.blocks;
+        const syncHeight = dataResults.syncheight;
+        mainWindow.webContents.send("check-daemon-response", { blockCount, syncHeight });
+        break;
+      }
+      }
+    });
+    dcrdSocket.on("close", () => {
+      logger.log("info","decrediton has disconnected to dcrd instance");
+    });
+  } catch (error) {
     return mainWindow.webContents.send("connectRpcDaemon-response", { connected: false, error });
-  });
-  dcrdSocket.on("message", function(data) {
-    const parsedData = JSON.parse(data);
-    const id = parsedData ? parsedData.id : "";
-    switch (id) {
-    case "getinfo":
-      mainWindow.webContents.send("check-getinfo-response", parsedData.result );
-      break;
-    case "getblockchaininfo": {
-      const dataResults = parsedData.result || {};
-      const blockCount = dataResults.blocks;
-      const syncHeight = dataResults.syncheight;
-      mainWindow.webContents.send("check-daemon-response", { blockCount, syncHeight });
-      break;
-    }
-    }
-  });
-  dcrdSocket.on("close", () => {
-    logger.log("info","decrediton has disconnected to dcrd instance");
-  });
+  }
 };
 
 export const getDaemonInfo = () => dcrdSocket.send("{\"jsonrpc\":\"1.0\",\"id\":\"getinfo\",\"method\":\"getinfo\",\"params\":[]}");

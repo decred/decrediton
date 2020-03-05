@@ -45,6 +45,7 @@ class App extends React.Component {
     window.addEventListener("resize", this.updateWindowDimensions);
     this.updateWindowDimensions();
     this.refreshing = false;
+    this.props.decreditonInit();
 
     props.listenForAppReloadRequest(this.onReloadRequested);
   }

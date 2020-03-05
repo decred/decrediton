@@ -4,7 +4,7 @@ import { isTestNet } from "selectors";
 import { equalElements } from "helpers";
 import * as wallet from "wallet";
 import { closeWalletRequest } from "actions/WalletLoaderActions";
-import { closeDaemonRequest, getAvailableWallets, prepStartDaemon } from "actions/DaemonActions";
+import { closeDaemonRequest, backToCredentials } from "actions/DaemonActions";
 import { getTreasuryBalance, resetTreasuryBalance } from "actions/ClientActions";
 import { EXTERNALREQUEST_DCRDATA, EXTERNALREQUEST_POLITEIA } from "main_dev/externalRequests";
 import { getTokenAndInitialBatch, resetInventoryAndProposals } from "actions/GovernanceActions";
@@ -77,8 +77,7 @@ export const saveSettings = (settings) => async (dispatch, getState) => {
   if (needNetworkReset) {
     dispatch(closeWalletRequest());
     await dispatch(closeDaemonRequest());
-    await dispatch(prepStartDaemon());
-    dispatch(getAvailableWallets());
+    dispatch(backToCredentials());
   }
 
 };

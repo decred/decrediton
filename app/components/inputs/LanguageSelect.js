@@ -4,7 +4,6 @@ import "style/Input.less";
 
 @autobind
 class SettingsInput extends React.Component {
-
   static propTypes = {
     className: PropTypes.string
   };

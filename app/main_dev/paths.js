@@ -55,8 +55,8 @@ export function dcrdCfg(configPath) {
   return path.resolve(configPath, "dcrd.conf");
 }
 
-// dcrwalletCfg gets the dcrwallet.conf file from a specified path
-export function dcrwalletCfg(configPath) {
+// dcrwalletConf gets the dcrwallet.conf file from a specified path
+export function dcrwalletConf(configPath) {
   return path.resolve(configPath, "dcrwallet.conf");
 }
 

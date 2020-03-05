@@ -2,7 +2,8 @@ import fs from "fs";
 import Store from "electron-store";
 import ini from "ini";
 import { stakePoolInfo } from "./middleware/stakepoolapi";
-import { getAppDataDirectory, getGlobalCfgPath, dcrdCfg, getWalletPath, dcrwalletCfg, getDcrdRpcCert } from "./main_dev/paths";
+import { getAppDataDirectory, getGlobalCfgPath, dcrdCfg, getWalletPath,
+  dcrwalletConf, getDcrdRpcCert, getDcrdPath } from "./main_dev/paths";
 import * as cfgConstants from "constants/config";
 import { DCR  } from "constants";
 
@@ -150,24 +151,44 @@ export function getWalletCert(certPath) {
     } else {
       console.error(certPath + " " + err);
     }
+    return null;
   }
 
   return(cert);
 }
 
-export function readDcrdConfig(testnet) {
+// readDcrdConfig reads top level entries from dcrd.conf file. If appdata is
+// not defined, we read dcrd.conf file from our app directory. If it does not
+// exist, a new conf file is created with random rpc_user and rpc_pass.
+// return { appdata, rpc_cert, rpc_user, rpc_pass, rpc_host, rpc_port }
+export function readDcrdConfig(testnet, appdata) {
   try {
     let readCfg;
-    let newCfg = {};
+    const newCfg = {};
     newCfg.rpc_host = "127.0.0.1";
     newCfg.rpc_port = testnet ? "19109" : "9109";
 
-    if (fs.existsSync(dcrdCfg(getAppDataDirectory()))) {
-      readCfg = ini.parse(Buffer.from(fs.readFileSync(dcrdCfg(getAppDataDirectory()))).toString());
+    if (appdata) {
+      newCfg.appdata = appdata;
+      newCfg.rpc_cert = `${appdata}/rpc.cert`;
+      if (fs.existsSync(dcrdCfg(appdata))) {
+        newCfg.configFile = appdata;
+      } else {
+        // if dcrd.conf from appdata does not exist, we use dcrd.conf from the decrediton dir.
+        newCfg.configFile = getAppDataDirectory();
+      }
     } else {
-      var newCfgPath = createTempDcrdConf(testnet);
-      readCfg = ini.parse(Buffer.from(fs.readFileSync(dcrdCfg(newCfgPath))).toString());
+      newCfg.rpc_cert = `${getDcrdPath()}/rpc.cert`;
+      newCfg.appdata = getDcrdPath();
+      newCfg.configFile = getAppDataDirectory();
     }
+
+    // if dcrd.conf file is from decrediton dir and does not exist we create a
+    // new one.
+    if (newCfg.configFile === getAppDataDirectory() && !fs.existsSync(dcrdCfg(newCfg.configFile)) ) {
+      createTempDcrdConf(testnet);
+    }
+    readCfg = ini.parse(Buffer.from(fs.readFileSync(dcrdCfg(newCfg.configFile))).toString());
 
     let userFound, passFound = false;
     // Look through all top level config entries
@@ -265,6 +286,10 @@ export function getDaemonIsAdvanced() {
   return getConfigData(cfgConstants.DAEMON_ADVANCED);
 }
 
+export function getIsSpv() {
+  return getConfigData(cfgConstants.SPV_MODE);
+}
+
 export function setConfigData(key, value) {
   const config = getGlobalCfg();
   return config.set(key, value);
@@ -282,10 +307,6 @@ export function setRemoteCredentials(rpcuser, rpcpass, rpccert, rpchost, rpcport
   return setConfigData(cfgConstants.REMOTE_CREDENTIALS, credentials);
 }
 
-export function setMustOpenForm(openForm) {
-  return setConfigData(cfgConstants.OPEN_FORM, openForm);
-}
-
 export function setLastHeight(height) {
   return setConfigData(cfgConstants.LAST_HEIGHT, height);
 }
@@ -300,7 +321,9 @@ function makeRandomString(length) {
   return text;
 }
 
-export function createTempDcrdConf(testnet) {
+// createTempDcrdConf creates a temp dcrd conf file and writes it
+// to decreditons config directory: getAppDataDirectory()
+function createTempDcrdConf(testnet) {
   var dcrdConf = {};
   if (!fs.existsSync(dcrdCfg(getAppDataDirectory()))) {
     const port = testnet ? "19109" : "9109";
@@ -332,5 +355,5 @@ export function newWalletConfigCreation(testnet, walletPath) {
       nolegacyrpc: "1"
     }
   };
-  fs.writeFileSync(dcrwalletCfg(getWalletPath(testnet, walletPath)), ini.stringify(dcrwConf));
+  fs.writeFileSync(dcrwalletConf(getWalletPath(testnet, walletPath)), ini.stringify(dcrwConf));
 }

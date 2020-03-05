@@ -2,48 +2,27 @@ import NetworkSettings from "views/SettingsPage/NetworkSettings";
 import ProxySettings from "views/SettingsPage/ProxySettings";
 import PrivacySettings from "views/SettingsPage/PrivacySettings";
 import UISettings from "views/SettingsPage/UISettings";
-import MiscSettings from "views/SettingsPage/MiscSettings";
 import TimezoneSettings from "views/SettingsPage/TimezoneSettings";
 import { Tooltip, Subtitle } from "shared";
 import { FormattedMessage as T } from "react-intl";
-import { LoaderBarBottom } from "indicators";
-import { KeyBlueButton, InvisibleButton } from "buttons";
-import { LogsLinkMsg, SettingsLinkMsg, GoBackMsg, AboutModalButton } from "../messages";
-import cx from "classnames";
+import { KeyBlueButton } from "buttons";
+import { GoBackMsg } from "../messages";
 
 export default ({
   areSettingsDirty,
   tempSettings,
-  currencies,
   locales,
   onChangeTempSettings,
   onSaveSettings,
-  onHideSettings,
-  onShowLogs,
-  getCurrentBlockCount,
-  getNeededBlocks,
-  getEstimatedTimeLeft,
-  appVersion,
-  updateAvailable,
-  isTestNet,
-  walletReady,
   onAttemptChangePassphrase,
   isChangePassPhraseDisabled,
-  changePassphraseRequestAttempt
+  changePassphraseRequestAttempt,
+  onSendBack
 }) => (
-  <div className={cx("page-body getstarted", isTestNet && "testnet-body")}>
+  <>
     <div className="getstarted loader logs settings">
-      <div className="loader-settings-logs">
-        <AboutModalButton { ...{ appVersion, updateAvailable } } />
-        <InvisibleButton className="active">
-          <SettingsLinkMsg />
-        </InvisibleButton>
-        <InvisibleButton onClick={onShowLogs}>
-          <LogsLinkMsg />
-        </InvisibleButton>
-      </div>
       <div className="go-back-screen-button-area">
-        <Tooltip text={ <GoBackMsg /> }><div className="go-back-screen-button" onClick={onHideSettings}/></Tooltip>
+        <Tooltip text={ <GoBackMsg /> }><div className="go-back-screen-button" onClick={onSendBack}/></Tooltip>
       </div>
       <Subtitle title={<T id="settings.subtitle" m="Settings"/>} />
       <div className="settings-wrapper">
@@ -71,11 +50,6 @@ export default ({
             <div className="settings-column timezone">
               <TimezoneSettings {...{ tempSettings, onChangeTempSettings }} />
             </div>
-            {walletReady &&
-              <div className="settings-column">
-                <MiscSettings {...{ tempSettings, currencies, walletReady, onChangeTempSettings }} />
-              </div>
-            }
           </div>
         </div>
 
@@ -91,16 +65,15 @@ export default ({
           </div>
         </div>
       </div>
-      <div className="save-button-wrapper">
-        <KeyBlueButton
-          disabled={!areSettingsDirty}
-          size="large"
-          block={false}
-          onClick={() => {onSaveSettings(tempSettings); onHideSettings();}}>
-          <T id="getStarted.settings.save" m="Save" />
-        </KeyBlueButton>
-      </div>
-      <LoaderBarBottom  {...{ getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft }}  />
     </div>
-  </div>
+    <div className="save-button-wrapper">
+      <KeyBlueButton
+        disabled={!areSettingsDirty}
+        size="large"
+        block={false}
+        onClick={() => {onSaveSettings(tempSettings); onSendBack();}}>
+        <T id="getStarted.settings.save" m="Save" />
+      </KeyBlueButton>
+    </div>
+  </>
 );

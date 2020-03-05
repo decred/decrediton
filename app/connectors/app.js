@@ -21,6 +21,7 @@ const mapStateToProps = selectorMap({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  decreditonInit: da.decreditonInit,
   shutdownApp: da.shutdownApp,
   listenForAppReloadRequest: cla.listenForAppReloadRequest,
   showAboutModalMacOS: ca.showAboutModalMacOS,

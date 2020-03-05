@@ -1,6 +1,5 @@
 import TutorialPage from "./Page";
-import { walletStartup } from "connectors";
-
+import { daemonStartup } from "connectors";
 @autobind
 class Tutorial extends React.Component{
   constructor(props) {
@@ -50,4 +49,4 @@ class Tutorial extends React.Component{
 
 }
 
-export default walletStartup(Tutorial);
+export default daemonStartup(Tutorial);

@@ -1,14 +1,15 @@
 import fs from "fs-extra";
 import path from "path";
 import { createLogger } from "./logging";
-import { getWalletPath, getWalletDb, getDcrdPath, getDcrdRpcCert } from "./paths";
-import { initWalletCfg, newWalletConfigCreation, getWalletCfg, readDcrdConfig } from "config";
-import { launchDCRD, launchDCRWallet, GetDcrdPID, GetDcrwPID, closeDCRD, closeDCRW, GetDcrwPort,
-  launchDCRLnd, GetDcrlndPID, GetDcrlndCreds, closeDcrlnd } from "./launch";
+import { getWalletPath, getWalletDb, getDcrdPath } from "./paths";
+import { initWalletCfg, newWalletConfigCreation, getWalletCfg } from "config";
+import { launchDCRD, launchDCRWallet, GetDcrwPID, closeDCRD, closeDCRW, GetDcrwPort,
+  launchDCRLnd, GetDcrlndPID, GetDcrlndCreds, closeDcrlnd, setDcrdRpcCredentials } from "./launch";
 import { MAINNET } from "constants";
 
 const logger = createLogger();
 let watchingOnlyWallet;
+let dcrdIsRemote;
 
 export const getAvailableWallets = (network) => {
   // Attempt to find all currently available wallet.db's in the respective network direction in each wallets data dir
@@ -49,29 +50,42 @@ export const deleteDaemon = (appData, testnet) => {
   }
 };
 
+// startDaemon checks for rpc credentials parameters, which are
+// { rpcuser, rpcpass, rpccert, rpchost, rpcport }, if they are defined
+// dcrdIsRemote is set to true. Otherwise startDaemon checks for appdata
+// parameter and if it is defined startDaemon launches dcrd with appdata's
+// value if it is valid.
+// startDaemon returns an object of format:
+// { appdata, rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port }
 export const startDaemon = async (params, testnet, reactIPC) => {
-  if (GetDcrdPID() && GetDcrdPID() !== -1) {
-    logger.log("info", "Skipping restart of daemon as it is already running " + GetDcrdPID());
-    const appdata = params ? params.appdata : null;
-    const newConfig = readDcrdConfig(appdata, testnet);
-
-    newConfig.pid =  GetDcrdPID();
-    newConfig.rpc_cert = getDcrdRpcCert(appdata);
-    return newConfig;
+  if (dcrdIsRemote) {
+    logger.log("info", "Skipping restart of daemon as it is connected as remote");
+    return;
   }
 
   try {
-    const started = await launchDCRD(params, testnet, reactIPC);
+    let rpcCreds, appdata;
+    rpcCreds = params && params.rpcCreds;
+    if (rpcCreds) {
+      setDcrdRpcCredentials(rpcCreds);
+      dcrdIsRemote = true;
+      logger.log("info", "dcrd is connected as remote");
+      return rpcCreds;
+    }
+
+    appdata = params && params.appdata;
+    const started = await launchDCRD(reactIPC, testnet, appdata);
     return started;
-  } catch (e) {
-    logger.log("error", "error launching dcrd: " + e);
+  } catch (err) {
+    logger.log("error", "error launching dcrd: " + err);
+    return { err };
   }
 };
 
 export const createWallet = (testnet, walletPath) => {
   const newWalletDirectory = getWalletPath(testnet, walletPath);
   try {
-    if (!fs.pathExistsSync(newWalletDirectory)){
+    if (!fs.pathExistsSync(newWalletDirectory)) {
       fs.mkdirsSync(newWalletDirectory);
 
       // create new configs for new wallet
@@ -86,12 +100,14 @@ export const createWallet = (testnet, walletPath) => {
 };
 
 export const removeWallet = (testnet, walletPath) => {
+  if (!walletPath) return;
   let removeWalletDirectory = getWalletPath(testnet, walletPath);
   try {
     if (fs.pathExistsSync(removeWalletDirectory)) {
       fs.removeSync(removeWalletDirectory);
+      return true;
     }
-    return true;
+    return false;
   } catch (e) {
     logger.log("error", "error creating wallet: " + e);
     return false;

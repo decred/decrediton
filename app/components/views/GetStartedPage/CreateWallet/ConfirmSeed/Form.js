@@ -1,12 +1,19 @@
 import "style/CreateWalletForm.less";
-import { InfoDocFieldModalButton } from "buttons";
+import { InfoDocFieldModalButton, KeyBlueButton, InvisibleButton } from "buttons";
 import SingleSeedWordEntry from "../SingleSeedWordEntry";
-import WalletHeader from "../createWalletHeader";
-import { ConfirmSeedMsg } from "../../../messages";
+import { ConfirmSeedMsg, BackBtnMsg, CreateWalletMsg, GoBackMsg, CreateNewWalletTitle } from "../../messages";
+import { Tooltip, CreatePassPhrase } from "shared";
 
-export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord }) => (
+export const ConfirmSeedForm = ({
+  seedWords, onChangeSeedWord, isValid, onCreateWallet, sendBack, setPassPhrase, isCreatingWallet
+}) => (
   <>
-    <WalletHeader />
+    <div className="content-title-wrapper is-row">
+      <div className="content-title">
+        <CreateNewWalletTitle />
+      </div>
+      {sendBack && <Tooltip text={<GoBackMsg />}><div className="go-back-screen-button" onClick={ sendBack } /></Tooltip>}
+    </div>
     <div className="seed is-row">
       <div className="is-row confirm-seed-label-text seed">
         <InfoDocFieldModalButton document="SeedInfo" />
@@ -16,8 +23,7 @@ export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord }) => (
       </div>
       <div className="seedArea">
         {seedWords.map((seedWord) => {
-
-          var className = "seedWord ";
+          let className = "seedWord ";
           if (seedWord.show){
             className += "filled";
           } else if (seedWord.word != ""){
@@ -25,8 +31,7 @@ export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord }) => (
           } else {
             className += "empty";
           }
-
-          return <>
+          return (
             <div key={`seeditem-${seedWord.index}`} className={className}>
               <span className="number">{seedWord.index + 1}.</span>
               <span className="word">
@@ -41,9 +46,22 @@ export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord }) => (
                 }
               </span>
             </div>
-          </>;
-        })}
+          );})}
       </div>
+    </div>
+    <CreatePassPhrase onChange={setPassPhrase} onSubmit={onCreateWallet} />
+    <div className="create-wallet-button-container">
+      <KeyBlueButton
+        className="wallet-key-blue-button"
+        disabled={!isValid}
+        loading={isCreatingWallet}
+        onClick={onCreateWallet}
+      >
+        <CreateWalletMsg />
+      </KeyBlueButton>
+      <InvisibleButton className="go-back-button" onClick={ sendBack } >
+        <BackBtnMsg />
+      </InvisibleButton>
     </div>
   </>
 );

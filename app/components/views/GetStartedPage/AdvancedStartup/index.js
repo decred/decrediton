@@ -1,5 +1,4 @@
 import { AdvancedHeader, AdvancedBody } from "./Form";
-import Error from "./Error";
 import { setAppdataPath, getAppdataPath, getRemoteCredentials, setRemoteCredentials } from "config.js";
 
 @autobind
@@ -11,7 +10,6 @@ class AdvancedStartupHeader extends React.Component {
       }}
     />);
   }
-
 }
 
 @autobind
@@ -132,6 +130,7 @@ class AdvancedStartupBody extends React.Component {
   }
 
   onSubmitRemoteForm() {
+    const { submitRemoteCredentials } = this.props;
     if (!this.isRemoteValid()) {
       this.setState({ rpcUserHasFailedAttempt: true, rpcPasswordHasFailedAttempt: true, rpcHostHasFailedAttempt: true, rpcPortHasFailedAttempt: true, rpcCertHasFailedAttempt: true });
       return;
@@ -139,7 +138,7 @@ class AdvancedStartupBody extends React.Component {
     const { rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port } = this.state;
     setRemoteCredentials(rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port);
     let args = { rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port };
-    this.props.onStartDaemon({ rpcCreds: args });
+    submitRemoteCredentials(args);
   }
 
   onSubmitAppDataForm() {
@@ -149,7 +148,7 @@ class AdvancedStartupBody extends React.Component {
       return;
     }
     setAppdataPath(appdata);
-    this.props.onStartDaemon({ appdata });
+    this.props.submitAppdata(appdata);
   }
 
   isRemoteValid() {
@@ -173,4 +172,4 @@ class AdvancedStartupBody extends React.Component {
   }
 }
 
-export { AdvancedStartupHeader, AdvancedStartupBody, Error as RemoteAppdataError };
+export { AdvancedStartupHeader, AdvancedStartupBody };

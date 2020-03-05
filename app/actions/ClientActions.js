@@ -28,47 +28,40 @@ export const goToMyTickets = () => (dispatch) => {
   dispatch(pushHistory("/tickets/mytickets"));
 };
 
+export const goToError = () => (dispatch) => {
+  dispatch(pushHistory("/error"));
+};
+
 export const GETWALLETSERVICE_ATTEMPT = "GETWALLETSERVICE_ATTEMPT";
 export const GETWALLETSERVICE_FAILED = "GETWALLETSERVICE_FAILED";
 export const GETWALLETSERVICE_SUCCESS = "GETWALLETSERVICE_SUCCESS";
-
-function getWalletServiceSuccess(walletService) {
-  return (dispatch) => {
-    dispatch({ walletService, type: GETWALLETSERVICE_SUCCESS });
-  };
-}
 
 export const STARTWALLETSERVICE_ATTEMPT = "STARTWALLETSERVICE_ATTEMPT";
 export const STARTWALLETSERVICE_FAILED = "STARTWALLETSERVICE_FAILED";
 export const STARTWALLETSERVICE_SUCCESS = "STARTWALLETSERVICE_SUCCESS";
 
 const startWalletServicesTrigger = () => (dispatch, getState) => new Promise((resolve,reject) => {
-  try {
-    setTimeout( async () => {
-      const { spvSynced } = getState().walletLoader;
-      if (!spvSynced) {
-        dispatch(getTicketBuyerServiceAttempt());
-      }
+  const startServicesAsync = async () => {
+    const { spvSynced } = getState().walletLoader;
+    if (!spvSynced) {
+      dispatch(getTicketBuyerServiceAttempt());
+    }
+    await dispatch(getNextAddressAttempt(0));
+    await dispatch(getTicketPriceAttempt());
+    await dispatch(getPingAttempt());
+    await dispatch(getNetworkAttempt());
+    await dispatch(refreshStakepoolPurchaseInformation());
+    await dispatch(getDecodeMessageServiceAttempt());
+    await dispatch(getVotingServiceAttempt());
+    await dispatch(getAgendaServiceAttempt());
+    await dispatch(getStakepoolStats());
+    await dispatch(getStartupWalletInfo());
+    await dispatch(transactionNtfnsStart());
+    await dispatch(accountNtfnsStart());
+    await dispatch(pushHistory("/home"));
+  };
 
-      await dispatch(getNextAddressAttempt(0));
-      await dispatch(getTicketPriceAttempt());
-      await dispatch(getPingAttempt());
-      await dispatch(getNetworkAttempt());
-      await dispatch(refreshStakepoolPurchaseInformation());
-      await dispatch(getDecodeMessageServiceAttempt());
-      await dispatch(getVotingServiceAttempt());
-      await dispatch(getAgendaServiceAttempt());
-      await dispatch(getStakepoolStats());
-      await dispatch(getStartupWalletInfo());
-      await dispatch(transactionNtfnsStart());
-      await dispatch(accountNtfnsStart());
-
-      await dispatch(pushHistory("/home"));
-      resolve();
-    }, 1000);
-  } catch (err) {
-    reject (err);
-  }
+  startServicesAsync().then(() => resolve()).catch(error => reject(error));
 });
 
 export const startWalletServices = () => (dispatch, getState) => {
@@ -158,12 +151,12 @@ function transactionsMaturingHeights(txs, chainParams) {
   return res;
 }
 
-export const getWalletServiceAttempt = () => (dispatch, getState) => {
+export const getWalletServiceAttempt = () => async (dispatch, getState) => {
   const { grpc: { address, port } } = getState();
   const { daemon: { walletName } } = getState();
   dispatch({ type: GETWALLETSERVICE_ATTEMPT });
   wallet.getWalletService(sel.isTestNet(getState()), walletName, address, port)
-    .then(walletService => dispatch(getWalletServiceSuccess(walletService)))
+    .then(walletService => dispatch({ walletService, type: GETWALLETSERVICE_SUCCESS }))
     .catch(error => dispatch({ error, type: GETWALLETSERVICE_FAILED }));
 };
 
@@ -254,14 +247,6 @@ export const GETBESTBLOCK_FAILED = "GETBESTBLOCK_FAILED";
 export const GETBESTBLOCK_SUCCESS = "GETBESTBLOCK_SUCCESS";
 
 export const getBestBlockHeightAttempt = (cb) => (dispatch, getState) => {
-  const { getBestBlockHeightRequest } = getState().grpc;
-  if (getBestBlockHeightRequest) {
-    return;
-  }
-  if (sel.walletService(getState()) == null) {
-    setTimeout(() => dispatch(getBestBlockHeightAttempt(cb)), 100);
-    return;
-  }
   dispatch({ type: GETBESTBLOCK_ATTEMPT });
   wallet.bestBlock(sel.walletService(getState()))
     .then(resp => {
