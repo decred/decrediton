@@ -906,7 +906,6 @@ export const isSignMessageDisabled = and(isWatchingOnly, not(isTrezor));
 export const isCreateAccountDisabled = isWatchingOnly;
 export const isChangePassPhraseDisabled = isWatchingOnly;
 export const isTransactionsSendTabDisabled = not(isTrezor);
-export const isTicketPurchaseTabDisabled = isWatchingOnly;
 
 export const politeiaURL = createSelector(
   [ isTestNet ],

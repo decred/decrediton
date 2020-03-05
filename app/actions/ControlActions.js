@@ -129,7 +129,7 @@ export const importScriptAttempt = (passphrase, script) =>
     dispatch({ type: IMPORTSCRIPT_ATTEMPT });
     const walletService = sel.walletService(getState());
     try {
-      const importScriptResponse = await wallet.importScript(walletService, passphrase, script, false, 0);
+      const importScriptResponse = await wallet.importScript(walletService, passphrase, script);
       dispatch({ importScriptResponse, type: IMPORTSCRIPT_SUCCESS });
       return importScriptResponse;
     } catch (error) {

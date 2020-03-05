@@ -48,13 +48,13 @@ export const importPrivateKey = (walletService, passphrase, accountNum, wif, res
     walletService.importPrivateKey(request, (err, res) => err ? fail(err) : ok(res));
   });
 
-export const importScript = (walletService, passphrase, script, rescan, scanFrom) =>
+export const importScript = (walletService, passphrase, script) =>
   new Promise((ok, fail) => {
     const request = new api.ImportScriptRequest();
     request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
     request.setScript(new Uint8Array(Buffer.from(hexToBytes(script))));
-    request.setRescan(rescan);
-    request.setScanFrom(scanFrom);
+    request.setRescan(false);
+    request.setScanFrom(0);
     request.setRequireRedeemable(true);
     walletService.importScript(request, (err, res) => err ? fail(err) : ok(res));
   });
