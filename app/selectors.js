@@ -349,7 +349,8 @@ export const transactionNormalizer = createSelector(
             txDescription: { direction: "Transferred", addressStr },
             txAmount: fee,
             txDirection: "transfer",
-            txAccountName: getAccountName(creditedAccount)
+            txAccountNameCredited: getAccountName(creditedAccount),
+            txAccountNameDebited: getAccountName(debitedAccount)
           }
           : {
             txDescription: { direction: "Received at:", addressStr },

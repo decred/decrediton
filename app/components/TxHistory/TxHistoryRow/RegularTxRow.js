@@ -4,20 +4,26 @@ import { createElement as h } from "react";
 import { timeMessage } from "./index";
 import { FormattedMessage as T } from "react-intl";
 
-const accountMessage = <T id="txHistory.account" m=" Account" />;
-
 const RegularTxRow = ({
-  txAmount, txDirection, overview, txAccountName, pending, txTs,
-  txOutputAddresses, ...props
+  txAmount, txDirection, overview, txAccountName, pending, txTs, txOutputAddresses,
+  txAccountNameCredited, txAccountNameDebited, ...props
 }) => (
   <Row {...{ ...props, txAccountName, pending, overview }}>
     <div className="is-row">
       <span className="icon" />
       <span className="transaction-amount-number"><Balance amount={txDirection !== "in" ? -txAmount : txAmount} /></span>
       { !overview && (txDirection === "transfer" ?
-        <div className="transaction-status">
-          <span className="transaction-account-name">{txAccountName}</span>
-        </div> : txDirection !== "in" ? (
+        ( <div className="transaction-info is-row">
+          <T id="txHistory.from" m="From " />
+          <div className="transaction-status">
+            <span className="transaction-account-name">{txAccountNameDebited}</span>
+          </div>
+          <T id="txHistory.to" m=" To " />
+          <div className="transaction-status">
+            <span className="transaction-account-name">{txAccountNameCredited}</span>
+          </div>
+        </div>
+        ) : txDirection !== "in" ? (
           <div className="transaction-info is-row">
             <T id="txHistory.from" m="From " />
             <div className="transaction-status">
@@ -47,8 +53,11 @@ const RegularTxRow = ({
           { txDirection === "transfer" ?
             <>
               <T id="txHistory.from" m="From " />
-              { txAccountName }
-              { accountMessage }
+              { txAccountNameDebited }
+              <T id="txHistory.account" m=" Account" />
+              <T id="txHistory.to" m=" To " />
+              { txAccountNameCredited }
+              <T id="txHistory.account" m=" Account" />
             </> :
             txDirection !== "in" ? (
               <>
@@ -61,7 +70,7 @@ const RegularTxRow = ({
               <>
                 <T id="txHistory.to" m=" To " />
                 { txAccountName }
-                { accountMessage }
+                <T id="txHistory.account" m=" Account" />
               </>
             )}
         </div>
