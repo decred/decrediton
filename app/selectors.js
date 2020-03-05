@@ -682,10 +682,6 @@ export const activeTicketsCount = createSelector(
       : r.getLive() + r.getImmature()
 );
 export const totalSubsidy = compose(r => r ? r.getTotalSubsidy() : 0, getStakeInfoResponse);
-export const hasTicketsToRevoke = compose(
-  r => r ? r.getRevoked() !== r.getExpired() + r.getMissed() : 0,
-  getStakeInfoResponse
-);
 
 export const ticketBuyerService = get([ "grpc", "ticketBuyerService" ]);
 export const ticketBuyerConfig = get([ "control" , "ticketBuyerConfig" ]);
