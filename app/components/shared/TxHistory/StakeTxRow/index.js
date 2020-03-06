@@ -1,4 +1,4 @@
-import { RegularTxRow } from "./RegularTxRow";
+import { StakeTxRow } from "./StakeTxRow";
 import { defineMessages, injectIntl } from "react-intl";
 import "style/TxHistory.less";
 
@@ -11,16 +11,12 @@ const timeMessageDefine = defineMessages({
 
 export const timeMessage = (txTimestamp, intl) => intl.formatMessage(timeMessageDefine.dayMonthHourDisplay, { value: txTimestamp });
 
-const TxRow = ({ tx, overview, tsDate, intl }, { router }) => {
-  // we define the transaction icon by its rowType, so we pass it as a
-  // classname props.
-  let rowType = tx.status || tx.txType || tx.txDirection;
-  rowType = rowType.toLowerCase();
+const TxRow = ({ tx, overview, tsDate, intl, className }, { router }) => {
 
-  return <RegularTxRow
+  return <StakeTxRow
       {...{
         ...tx,
-        className: rowType,
+        className,
         intl,
         txTs: tsDate(tx.txTimestamp),
         overview,

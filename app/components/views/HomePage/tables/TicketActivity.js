@@ -1,7 +1,7 @@
 // @flow
 import { home } from "connectors";
 import { DecredLoading } from "indicators";
-import TxHistory from "TxHistory";
+import { TxHistory } from "shared";
 import { FormattedMessage as T } from "react-intl";
 import NoTicketsLinks from "./NoTicketsLinks";
 import "style/Fonts.less";

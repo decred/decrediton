@@ -2,7 +2,7 @@ import { EyeFilterMenu, EyeFilterMenuWithSlider } from "buttons";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { Tooltip, Subtitle } from "shared";
 import { TextInput } from "inputs";
-import TxHistory from "TxHistory";
+import { TxHistory } from "shared";
 import { LoadingMoreTransactionsIndicator, NoMoreTransactionsIndicator, NoTransactions } from "indicators";
 import InfiniteScroll from "react-infinite-scroller";
 import "style/HistoryPage.less";
@@ -85,7 +85,7 @@ const Page = ({
         currencyDisplay, transactionsFilter, unitDivisor })} />
     <div className="history-page-content-wrapper">
       {transactions.length > 0
-        ? <TxHistory {...{ transactions, tsDate }} />
+        ? <TxHistory {...{ transactions, tsDate, isRegular: true }} />
         : null }
     </div>
     {!noMoreTransactions

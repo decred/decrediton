@@ -5,7 +5,7 @@ import { FormattedMessage as T } from "react-intl";
 import "style/Fonts.less";
 import "style/HomePage.less";
 import NoTransactionsLinks from "./NoTransactionsLinks";
-import { RegularTxRow } from "shared";
+import { TxHistory } from "shared";
 
 const RecentTransactions = ({
   transactions,
@@ -30,12 +30,7 @@ const RecentTransactions = ({
         </div>
         <div className="home-content-nest">
           { transactions.length > 0 ?
-            transactions.map( (tx, index) => {
-              if(index >= rowNumber) return;
-              return (
-                <RegularTxRow key={tx.txHash} {...{ overview: true, tx, tsDate }} />
-              );
-            }) :
+            <TxHistory {...{ transactions, tsDate, overview: true, limit: rowNumber }} /> :
             <NoTransactionsLinks />}
         </div>
       </div>
