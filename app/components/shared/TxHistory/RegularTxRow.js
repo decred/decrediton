@@ -1,4 +1,4 @@
-import Row from "../Row";
+import Row from "./Row";
 import { Balance } from "shared";
 import { timeMessage } from "./index";
 import { FormattedMessage as T } from "react-intl";

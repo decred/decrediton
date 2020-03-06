@@ -1,6 +1,7 @@
-import RegularTxRow from "./RegularTxRow"
-import StakeTxRow from "./StakeTxRow"
+import { RegularTxRow } from "./RegularTxRow"
+import { StakeTxRow } from "./StakeTxRow"
 import * as txTypes from "constants/Decrediton";
+import { defineMessages, injectIntl } from "react-intl";
 
 const TxRowByType = {
   [txTypes.TICKET]: StakeTxRow,
@@ -20,26 +21,46 @@ const TxRowByType = {
   [txTypes.COINBASE] : RegularTxRow
 };
 
+const timeMessageDefine = defineMessages({
+  dayMonthHourDisplay: {
+    id: "txHistory.dayMonthHourDisplay",
+    defaultMessage: "{value, date, short-month-24hour}"
+  }
+});
+
 // TxHistory is responsible for calling the right component row according to
 // the Tx row type.
-const TxHistory = ({ transactions = [], limit, overview, isRegular, isStake, tsDate }) => (
+const TxHistory = ({ transactions = [], limit, overview, isRegular, isStake, tsDate, intl }) => (
   <>
     { transactions.map( (tx, index) => {
       if(limit && index >= limit) return;
 
+      const txTimestamp = tx.txTimestamp;
       // we define the transaction icon by its rowType, so we pass it as a
       // className props
       let rowType = tx.status || tx.txType || tx.txDirection;
       rowType = rowType.toLowerCase();
-
       const Component = TxRowByType[rowType];
       if (Component === StakeTxRow && isRegular) return;
       if (Component === RegularTxRow && isStake) return;
+
       return (
-        <Component key= {tx.txHash} {...{ overview, tx, tsDate, className: rowType }} />
+        <Component
+          key={tx.txHash}
+          {...{
+            ...tx,
+            className: rowType,
+            intl,
+            txTs: tsDate(txTimestamp),
+            overview,
+            pending: !txTimestamp,
+            onClick: () => router.history.push(`/transactions/history/${tx.txHash}`),
+            timeMessage: (txTimestamp) => intl.formatMessage(timeMessageDefine.dayMonthHourDisplay, { value: txTimestamp })
+          }}
+        />
       );
     })}
   </>
 );
 
-export default TxHistory;
+export default injectIntl(TxHistory);

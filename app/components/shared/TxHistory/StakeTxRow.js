@@ -1,8 +1,7 @@
-import Row from "../Row";
+import Row from "./Row";
 import { FormattedMessage as T } from "react-intl";
 import { Balance, Tooltip } from "shared";
 import { diffBetweenTwoTs } from "helpers/dateFormat";
-import { timeMessage } from "./index";
 import * as txTypes from "constants/Decrediton";
 
 const messageByType = {
@@ -18,7 +17,7 @@ const messageByType = {
   [txTypes.LIVE] : <T id="transaction.type.live" m="Live" />
 };
 
-export const StakeTxRow = ({ className,  ...props }) => {
+export const StakeTxRow = ({ className, timeMessage,  ...props }) => {
   const status = className;
   const { ticketPrice, ticketReward, leaveTimestamp, enterTimestamp, pending, txTs  } = props;
 
@@ -58,7 +57,7 @@ export const StakeTxRow = ({ className,  ...props }) => {
         <span className="transaction-stake-type-overview">{typeMsg}</span>
         {!pending &&
             <div className="transaction-time-date-spacer">
-              {timeMessage(txTs, props.intl)}
+              {timeMessage(txTs)}
             </div>}
       </div>
       <div className="transaction-info-price-reward">
