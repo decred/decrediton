@@ -1,6 +1,5 @@
-import Row from "./Row";
+import Row from "../Row";
 import { Balance } from "shared";
-import { createElement as h } from "react";
 import { timeMessage } from "./index";
 import { FormattedMessage as T } from "react-intl";
 
@@ -83,9 +82,3 @@ const RegularTxRow = ({
 
   </Row>
 );
-
-export const RegularTxRowOfClass = (className) => {
-  const Comp = ({ ...p }) => h(RegularTxRow, { className, ...p });
-  Comp.displayName = `RegularTxRowOfClass: ${className}`;
-  return Comp;
-};
