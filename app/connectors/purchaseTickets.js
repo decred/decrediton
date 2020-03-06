@@ -8,7 +8,6 @@ const mapStateToProps = selectorMap({
   ticketPrice: sel.ticketPrice,
   spendingAccounts: sel.spendingAccounts,
   rescanRequest: sel.rescanRequest,
-  hasTicketsToRevoke: sel.hasTicketsToRevoke,
   dismissBackupRedeemScript: sel.dismissBackupRedeemScript
 });
 

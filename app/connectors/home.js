@@ -14,7 +14,6 @@ const mapStateToProps = selectorMap({
   tickets: sel.homeHistoryTickets,
   revokeTicketsError: sel.revokeTicketsError,
   revokeTicketsSuccess: sel.revokeTicketsSuccess,
-  hasTicketsToRevoke: sel.hasTicketsToRevoke,
   totalBalance: sel.totalBalance,
   tsDate: sel.tsDate
 });
