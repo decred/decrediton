@@ -51,9 +51,9 @@ const TxHistory = ({ transactions = [], limit, overview, isRegular, isStake, tsD
             ...tx,
             className: rowType,
             intl,
-            txTs: tsDate(txTimestamp),
+            txTs: txTimestamp && tsDate(txTimestamp),
             overview,
-            pending: !txTimestamp,
+            pending: tx.isPending,
             onClick: () => router.history.push(`/transactions/history/${tx.txHash}`),
             timeMessage: (txTimestamp) => intl.formatMessage(timeMessageDefine.dayMonthHourDisplay, { value: txTimestamp })
           }}

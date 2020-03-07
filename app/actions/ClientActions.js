@@ -1283,7 +1283,8 @@ const getMissingStakeTxData = tx => async (dispatch, getState) => {
     enterTimestamp: ticketNormal.enterTimestamp,
     leaveTimestamp: ticketNormal.leaveTimestamp,
     ticketPrice: ticketNormal.ticketPrice,
-    ticketReward: ticketNormal.ticketReward
+    ticketReward: ticketNormal.ticketReward,
+    isPending: ticketNormal.isPending
     // add more stuff from the result of sel.ticketNormalizer if ever needed
   };
 };

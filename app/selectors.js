@@ -188,9 +188,10 @@ export const ticketNormalizer = createSelector(
     return ticket => {
       const hasSpender = ticket.spender && ticket.spender.getHash();
       const isVote = ticket.status === "voted";
+      const isPending = ticket.status === "unmined"
       const ticketTx = ticket.ticket;
       const spenderTx = hasSpender ? ticket.spender : null;
-      const hash = reverseHash(Buffer.from(ticketTx.getHash()).toString("hex"));
+      const txHash = reverseHash(Buffer.from(ticketTx.getHash()).toString("hex"));
       const spenderHash = hasSpender ? reverseHash(Buffer.from(spenderTx.getHash()).toString("hex")) : null;
       const hasCredits = ticketTx.getCreditsList().length > 0;
 
@@ -251,7 +252,7 @@ export const ticketNormalizer = createSelector(
       }
 
       return {
-        hash,
+        txHash,
         spenderHash,
         ticketTx,
         spenderTx,
@@ -270,7 +271,8 @@ export const ticketNormalizer = createSelector(
         status: ticket.status,
         ticketRawTx: Buffer.from(ticketTx.getTransaction()).toString("hex"),
         spenderRawTx: hasSpender ? Buffer.from(spenderTx.getTransaction()).toString("hex") : null,
-        originalTicket: ticket
+        originalTicket: ticket,
+        isPending
       };
     };
   }
@@ -372,6 +374,7 @@ export const transactionNormalizer = createSelector(
         txHeight: txInfo.height,
         txType: getTxTypeStr(type),
         txTimestamp: timestamp,
+        isPending: !timestamp,
         txFee: fee,
         txInputs,
         txOutputs,
