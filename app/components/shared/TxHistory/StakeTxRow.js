@@ -17,7 +17,7 @@ const messageByType = {
   [txTypes.LIVE] : <T id="transaction.type.live" m="Live" />
 };
 
-export const StakeTxRow = ({ className, timeMessage,  ...props }) => {
+export const StakeTxRow = ({ className, timeMessage, overview,  ...props }) => {
   const status = className;
   const { ticketPrice, ticketReward, leaveTimestamp, enterTimestamp, pending, txTs  } = props;
 
@@ -50,8 +50,8 @@ export const StakeTxRow = ({ className, timeMessage,  ...props }) => {
 
   const typeMsg = messageByType[status] || "(unknown type)";
 
-  return (
-    <Row {...{ className, ...props }}>
+  return overview ? (
+    <Row {...{ className, overview, ...props }}>
       <div className="is-row">
         <span className="icon" />
         <span className="transaction-stake-type-overview">{typeMsg}</span>
@@ -75,6 +75,31 @@ export const StakeTxRow = ({ className, timeMessage,  ...props }) => {
             </div>
           </Tooltip>
         )}
+      </div>
+    </Row>
+  ) : (
+    <Row {...{ className, ...props }}>
+      <div className="my-tickets-table">
+        <div>
+          <span className="icon" />
+          <span className="transaction-stake-type-overview">{typeMsg}</span>
+        </div>
+        <Balance classNameWrapper="" amount={ticketPrice} />
+        <Balance classNameWrapper="" amount={ticketReward} />
+        { daysToVote !== null && !isNaN(daysToVote) ? (
+          <Tooltip text={daysToVoteMessage}>
+            <div className="">
+              <T id="statusSmall.daysToVotePlural" m="{days, plural, one {# day} other {# days}}"
+                values={{ days: daysToVote }}/>
+            </div>
+          </Tooltip>
+        ) : <div />}
+        <div>Account name</div>
+        { !pending &&
+          <div className="">
+            {timeMessage(txTs)}
+          </div>
+        }
       </div>
     </Row>
   );

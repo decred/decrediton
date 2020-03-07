@@ -1,8 +1,18 @@
 import { ticketsList } from "connectors";
 import TicketListPage from "./Page";
-import { statusMultipleTxt } from "./messages";
 import { FormattedMessage as T } from "react-intl";
 import { substruct } from "fp";
+
+const labels = {
+  "unknown": <T id="ticket.status.multiple.unknown" m="unknown" />,
+  "unmined": <T id="ticket.status.multiple.unmined" m="unmined" />,
+  "immature": <T id="ticket.status.multiple.immature" m="immature" />,
+  "live": <T id="ticket.status.multiple.live" m="live" />,
+  "voted": <T id="ticket.status.multiple.voted" m="voted" />,
+  "missed": <T id="ticket.status.multiple.missed" m="missed" />,
+  "expired": <T id="ticket.status.multiple.expired" m="expired" />,
+  "revoked": <T id="ticket.status.multiple.revoked" m="revoked" />
+};
 
 @autobind
 class MyTickets extends React.Component {
@@ -25,7 +35,6 @@ class MyTickets extends React.Component {
   }
 
   getTicketTypes() {
-    const labels = statusMultipleTxt;
     return [
       { key: "all", value: { status: [] }, label: (<T id="tickets.type.all" m="All" />) },
       { key: "unmined", value: { status: [ "unmined" ] }, label: labels.unmined },
