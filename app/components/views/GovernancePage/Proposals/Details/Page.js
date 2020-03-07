@@ -97,6 +97,7 @@ export default ({ viewedProposalDetails, goBackHistory,
             show={showWalletEligibleTickets}
             onToggleAccordion={onToggleWalletEligibleTickets}
             className="proposal-details-wallet-eligible-tickets"
+            activeAarrowClassName="vertical-accordion-arrow-active"
           >
             {walletEligibleTickets.map((t, i) => (
               <div className="is-row proposal-details-wallet-eligible-tickets-row" key={`ticket-${i+1}`}>
