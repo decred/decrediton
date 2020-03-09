@@ -30,71 +30,55 @@ const subtitleMenu = ({ sortTypes, ticketTypes, selectedSortOrderKey, selectedTi
   </div>
 );
 
-@autobind
-class TicketListPage extends React.Component {
-
-  componentDidMount() {
-    if (!this.props.noMoreTickets) {
-      // hack to load more items, so that the scroll doesn't get stuck and
-      // can actually get triggered.
-      this.props.onLoadMoreTickets();
+const TicketListPage = ({
+  tickets, noMoreTickets, getTickets, onChangeSortType, onChangeSelectedType,
+  selectedSortOrderKey, selectedTicketTypeKey, sortTypes, ticketTypes, tsDate,
+  loadMoreThreshold
+}) => (
+  <InfiniteScroll
+    hasMore={!noMoreTickets}
+    loadMore={getTickets}
+    initialLoad={!noMoreTickets && loadMoreThreshold > 90}
+    useWindow={false}
+    threshold={90}
+  >
+    <Subtitle title={<T id="history.subtitle" m="My Tickets"/>} className={"is-row"}
+      children={subtitleMenu({ sortTypes, ticketTypes, selectedSortOrderKey, selectedTicketTypeKey,
+        onChangeSelectedType, onChangeSortType })} />
+    <div className="history-page-content-wrapper">
+      { tickets.length > 0 &&
+        <>
+          <div className="my-tickets-table-header">
+            <div>
+              <T id="tickets.table.header.status" m="Ticket Status" />
+            </div>
+            <div>
+              <T id="tickets.table.header.price" m="Price" />
+            </div>
+            <div>
+              <T id="tickets.table.header.reward" m="Reward" />
+            </div>
+            <div>
+              <T id="tickets.table.header.votetime" m="Vote Time" />
+            </div>
+            <div>
+              <T id="tickets.table.header.account" m="Account" />
+            </div>
+            <div>
+              <T id="tickets.table.header.purchased" m="Purchased" />
+            </div>
+          </div>
+          <TxHistory {...{ transactions: tickets, tsDate, isStake: true }} />
+        </>
+      }
+    </div>
+    { !noMoreTickets
+      ? <LoadingMoreTicketsIndicator />
+      : tickets.length > 0
+        ? <NoMoreTicketsIndicator />
+        : <NoTicketsIndicator />
     }
-  }
-
-  render() {
-    const {
-      tickets, noMoreTickets, onLoadMoreTickets, onChangeSortType,
-      onChangeSelectedType, selectedSortOrderKey, selectedTicketTypeKey,
-      sortTypes, ticketTypes, tsDate
-    } = this.props;
-
-    return (
-      <InfiniteScroll
-        hasMore={!noMoreTickets}
-        loadMore={onLoadMoreTickets}
-        initialLoad={false}
-        useWindow={false}
-        threshold={180}
-      >
-        <Subtitle title={<T id="history.subtitle" m="My Tickets"/>} className={"is-row"}
-          children={subtitleMenu({ sortTypes, ticketTypes, selectedSortOrderKey, selectedTicketTypeKey,
-            onChangeSelectedType, onChangeSortType })} />
-        <div className="history-page-content-wrapper">
-          { tickets.length > 0 &&
-            <>
-              <div className="my-tickets-table-header">
-                <div>
-                  <T id="tickets.table.header.status" m="Ticket Status" />
-                </div>
-                <div>
-                  <T id="tickets.table.header.price" m="Price" />
-                </div>
-                <div>
-                  <T id="tickets.table.header.reward" m="Reward" />
-                </div>
-                <div>
-                  <T id="tickets.table.header.votetime" m="Vote Time" />
-                </div>
-                <div>
-                  <T id="tickets.table.header.account" m="Account" />
-                </div>
-                <div>
-                  <T id="tickets.table.header.purchased" m="Purchased" />
-                </div>
-              </div>
-              <TxHistory {...{ transactions: tickets, tsDate, isStake: true }} />
-            </>
-          }
-        </div>
-        { !noMoreTickets
-          ? <LoadingMoreTicketsIndicator />
-          : tickets.length > 0
-            ? <NoMoreTicketsIndicator />
-            : <NoTicketsIndicator />
-        }
-      </InfiniteScroll>
-    );
-  }
-}
+  </InfiniteScroll>
+);
 
 export default TicketListPage;

@@ -23,10 +23,6 @@ class MyTickets extends React.Component {
     this.state = { selectedTicketTypeKey, selectedSortOrderKey };
   }
 
-  onLoadMoreTickets() {
-    setTimeout(() => this.props.getTickets && this.props.getTickets(), 10);
-  }
-
   getSortTypes() {
     return [
       { value: "desc", label: (<T id="tickets.sortby.newest" m="Newest" />) },
@@ -76,16 +72,18 @@ class MyTickets extends React.Component {
   }
 
   render() {
+    const loadMoreThreshold = 90 + Math.max(0, this.props.window.innerHeight - 765);
+
     return <TicketListPage
       {...{
         ...this.props,
         ...this.state,
+        loadMoreThreshold,
         ticketTypes: this.getTicketTypes(),
         sortTypes: this.getSortTypes(),
         ...substruct({
           onChangeSelectedType: null,
-          onChangeSortType: null,
-          onLoadMoreTickets: null
+          onChangeSortType: null
         }, this)
       }}
     />;
