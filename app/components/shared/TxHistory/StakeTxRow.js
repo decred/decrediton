@@ -49,7 +49,7 @@ export const StakeTxRow = ({
   const typeMsg = messageByType[status] || "(unknown type)";
 
   return overview ? (
-    <Row {...{ className, overview, ...props }}>
+    <Row {...{ className, overview, pending, ...props }}>
       <div className="is-row">
         <span className="icon" />
         <span className="transaction-stake-type-overview">{typeMsg}</span>
@@ -76,7 +76,7 @@ export const StakeTxRow = ({
       </div>
     </Row>
   ) : (
-    <Row {...{ className, ...props }}>
+    <Row {...{ className, pending, ...props }}>
       <div className="my-tickets-table">
         <div>
           <span className="icon" />
