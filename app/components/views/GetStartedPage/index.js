@@ -143,6 +143,7 @@ class GetStarted extends React.Component {
         text = <T id="loaderBar.checkingNetwork" m="Checking if network matches..." />;
         break;
       case "startingDaemon":
+        animationType = daemonWaiting;
         text = <T id="loaderBar.StartingDaemon" m="Starting Daemon..." />;
         break;
       case "syncingDaemon":
