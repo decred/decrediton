@@ -298,7 +298,7 @@ export const hasTickets = compose(t => t && t.length > 0, tickets);
 const txHashToTicket = createSelector(
   [ tickets ],
   reduce((m, t) => {
-    m[t.hash] = t;
+    m[t.txHash] = t;
     m[t.spenderHash] = t;
     return m;
   }, {})
