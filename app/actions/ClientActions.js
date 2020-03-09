@@ -93,10 +93,10 @@ export const getStartupWalletInfo = () => (dispatch) => {
       try {
         await dispatch(checkLnWallet());
         await dispatch(getStakeInfoAttempt());
-        await dispatch(reloadTickets());
-        await dispatch(getStartupTransactions());
         await dispatch(publishUnminedTransactionsAttempt());
         await dispatch(getAccountsAttempt(true));
+        await dispatch(reloadTickets());
+        await dispatch(getStartupTransactions());
         await dispatch(getStartupStats());
         if (dcrdataEnabled) {
           dispatch(getTreasuryBalance());
@@ -1218,7 +1218,7 @@ const getMissingStakeTxData = tx => async (dispatch, getState) => {
 
   let ticketTx, spenderTx, status;
 
-  if (tx.txType == "Ticket") {
+  if (tx.txType === "Ticket") {
     // This is currently a somewhat slow call in RPC mode due to having to check
     // in dcrd whether the ticket is live or not.
     const ticket = await wallet.getTicket(walletService, strHashToRaw(tx.txHash));
@@ -1284,7 +1284,8 @@ const getMissingStakeTxData = tx => async (dispatch, getState) => {
     leaveTimestamp: ticketNormal.leaveTimestamp,
     ticketPrice: ticketNormal.ticketPrice,
     ticketReward: ticketNormal.ticketReward,
-    isPending: ticketNormal.isPending
+    isPending: ticketNormal.isPending,
+    accountName: ticketNormal.accountName
     // add more stuff from the result of sel.ticketNormalizer if ever needed
   };
 };

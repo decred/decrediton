@@ -183,9 +183,11 @@ export const txOutURLBuilder = createSelector(
 export const decodedTransactions = get([ "grpc", "decodedTransactions" ]);
 
 export const ticketNormalizer = createSelector(
-  [ network ],
-  (network) => {
+  [ network, accounts ],
+  (network, accounts) => {
     return ticket => {
+      const findAccount = num => accounts.find(account => account.getAccountNumber() === num);
+      const getAccountName = num => (act => act ? act.getAccountName() : "")(findAccount(num));
       const hasSpender = ticket.spender && ticket.spender.getHash();
       const isVote = ticket.status === "voted";
       const isPending = ticket.status === "unmined"
@@ -216,7 +218,9 @@ export const ticketNormalizer = createSelector(
       const ticketChange = ticketTx.getCreditsList().reduce((s, c) => s + isTicketChange(c) ? c.getAmount() : 0, 0);
 
       // ticket investment is the full amount paid by the wallet on the ticket purchase
-      const ticketInvestment = ticketTx.getDebitsList().reduce((a, v) => a+v.getPreviousAmount(), 0)
+      const debitList = ticketTx.getDebitsList();
+      const accountName = getAccountName(debitList[0].getPreviousAccount());
+      const ticketInvestment = debitList.reduce((a, v) => a+v.getPreviousAmount(), 0)
         - ticketChange;
 
       let ticketReward, ticketStakeRewards, ticketReturnAmount, ticketPoolFee, voteChoices;
@@ -272,7 +276,8 @@ export const ticketNormalizer = createSelector(
         ticketRawTx: Buffer.from(ticketTx.getTransaction()).toString("hex"),
         spenderRawTx: hasSpender ? Buffer.from(spenderTx.getTransaction()).toString("hex") : null,
         originalTicket: ticket,
-        isPending
+        isPending,
+        accountName
       };
     };
   }
@@ -321,11 +326,12 @@ export const transactionNormalizer = createSelector(
       const txHash = reverseHash(Buffer.from(tx.getHash()).toString("hex"));
       const txBlockHash = blockHash ? reverseHash(Buffer.from(blockHash).toString("hex")) : null;
       const fee = tx.getFee();
+      let debitedAccountName, creditedAccountName;
       const totalDebit = tx.getDebitsList().reduce((total, debit) => {
         debitedAccount = debit.getPreviousAccount();
-        const accountName = getAccountName(debitedAccount);
+        debitedAccountName = getAccountName(debitedAccount);
         const amount = debit.getPreviousAmount();
-        txInputs.push({ accountName, amount, index: debit.getIndex() });
+        txInputs.push({ accountName: debitedAccountName, amount, index: debit.getIndex() });
         return total + amount;
       }, 0);
 
@@ -333,9 +339,9 @@ export const transactionNormalizer = createSelector(
         const amount = credit.getAmount();
         const address = credit.getAddress();
         addressStr.push(address);
-        creditedAccount = credit.getAccount();
-        const accountName = getAccountName(creditedAccount);
-        txOutputs.push({ accountName, amount, address, index: credit.getIndex() });
+        creditedAccountName = credit.getAccount();
+        creditedAccountName = getAccountName(creditedAccount);
+        txOutputs.push({ accountName: creditedAccountName, amount, address, index: credit.getIndex() });
         credit.getInternal() ? (totalChange += amount) : (totalFundsReceived += amount);
       });
 

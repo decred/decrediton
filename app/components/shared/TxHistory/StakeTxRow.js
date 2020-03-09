@@ -17,34 +17,32 @@ const messageByType = {
   [txTypes.LIVE] : <T id="transaction.type.live" m="Live" />
 };
 
-export const StakeTxRow = ({ className, timeMessage, overview,  ...props }) => {
+export const StakeTxRow = ({
+  className, timeMessage, overview, ticketPrice, ticketReward, leaveTimestamp, enterTimestamp, pending, txTs, accountName,  ...props
+}) => {
   const status = className;
-  const { ticketPrice, ticketReward, leaveTimestamp, enterTimestamp, pending, txTs  } = props;
 
-  const rewardLabel = <T id="history.ticket.rewardLabel" m="Ticket Reward" />;
   const ticketRewardMessage = <T id="history.ticket.rewardMesage"
     m={"{rewardLabel}: {reward}"}
     values={{
-      rewardLabel: rewardLabel,
+      rewardLabel: <T id="history.ticket.rewardLabel" m="Ticket Reward" />,
       reward: <Balance amount={ticketReward || 0} />
     }} />;
 
-  const ticketPriceLabel = <T id="ticket.priceLabel" m="Ticket Price" />;
   const ticketPriceMessage = <T id="ticket.priceMessage"
     m={"{ticketPriceLabel}: {ticketPrice}"}
     values={{
-      ticketPriceLabel: ticketPriceLabel,
+      ticketPriceLabel: <T id="ticket.priceLabel" m="Ticket Price" />,
       ticketPrice: <Balance amount={ticketPrice || 0} />
     }} />;
 
   // ticket can have leaveTimestamp equals null, which is not voted yet
   const daysToVote = leaveTimestamp ? diffBetweenTwoTs(leaveTimestamp, enterTimestamp) : null;
 
-  const daysToVoteLabel = <T id="ticket.daysToVoteLabel" m="Ticket Days To Vote" />;
   const daysToVoteMessage = <T id="ticket.daysToVoteMessage"
     m={"{daysToVoteLabel}: {daysToVote}"}
     values={{
-      daysToVoteLabel: daysToVoteLabel,
+      daysToVoteLabel: <T id="ticket.daysToVoteLabel" m="Ticket Days To Vote" />,
       daysToVote: daysToVote || 0
     }} />;
 
@@ -94,7 +92,7 @@ export const StakeTxRow = ({ className, timeMessage, overview,  ...props }) => {
             </div>
           </Tooltip>
         ) : <div />}
-        <div>Account name</div>
+        <div>{accountName}</div>
         { !pending &&
           <div className="">
             {timeMessage(txTs)}
