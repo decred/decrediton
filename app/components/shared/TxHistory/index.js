@@ -2,6 +2,7 @@ import { RegularTxRow } from "./RegularTxRow"
 import { StakeTxRow } from "./StakeTxRow"
 import * as txTypes from "constants/Decrediton";
 import { defineMessages, injectIntl } from "react-intl";
+import { withRouter } from "react-router-dom";
 
 const TxRowByType = {
   [txTypes.TICKET]: StakeTxRow,
@@ -30,7 +31,9 @@ const timeMessageDefine = defineMessages({
 
 // TxHistory is responsible for calling the right component row according to
 // the Tx row type.
-const TxHistory = ({ transactions = [], limit, overview, isRegular, isStake, tsDate, intl }) => (
+const TxHistory = ({
+  transactions = [], limit, overview, isRegular, isStake, tsDate, intl, history
+}) => (
   <>
     { transactions.map( (tx, index) => {
       if(limit && index >= limit) return;
@@ -54,7 +57,7 @@ const TxHistory = ({ transactions = [], limit, overview, isRegular, isStake, tsD
             txTs: txTimestamp && tsDate(txTimestamp),
             overview,
             pending: tx.isPending,
-            onClick: () => router.history.push(`/transactions/history/${tx.txHash}`),
+            onClick: () => history.push(`/transactions/history/${tx.txHash}`),
             timeMessage: (txTimestamp) => intl.formatMessage(timeMessageDefine.dayMonthHourDisplay, { value: txTimestamp })
           }}
         />
@@ -63,4 +66,4 @@ const TxHistory = ({ transactions = [], limit, overview, isRegular, isStake, tsD
   </>
 );
 
-export default injectIntl(TxHistory);
+export default withRouter(injectIntl(TxHistory));
