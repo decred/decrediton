@@ -42,7 +42,7 @@ const TicketListPage = ({
     useWindow={false}
     threshold={90}
   >
-    <Subtitle title={<T id="history.subtitle" m="My Tickets"/>} className={"is-row"}
+    <Subtitle title={<T id="mytickets.subtitle" m="My Tickets"/>} className={"is-row"}
       children={subtitleMenu({ sortTypes, ticketTypes, selectedSortOrderKey, selectedTicketTypeKey,
         onChangeSelectedType, onChangeSortType })} />
     <div className="history-page-content-wrapper">
