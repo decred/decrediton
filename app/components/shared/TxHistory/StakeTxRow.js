@@ -3,6 +3,7 @@ import { FormattedMessage as T } from "react-intl";
 import { Balance, Tooltip } from "shared";
 import { diffBetweenTwoTs } from "helpers/dateFormat";
 import * as txTypes from "constants/Decrediton";
+import cx from "classnames";
 
 const messageByType = {
   [txTypes.TICKET] : <T id="transaction.type.ticket" m="Purchased" />,
@@ -52,7 +53,7 @@ export const StakeTxRow = ({
     <Row {...{ className, overview, pending, ...props }}>
       <div className="is-row">
         <span className="icon" />
-        <span className="transaction-stake-type-overview">{typeMsg}</span>
+        <span className={ cx("transaction-stake-type", overview && "overview") }>{typeMsg}</span>
         {!pending &&
             <div className="transaction-time-date-spacer">
               {timeMessage(txTs)}
@@ -60,10 +61,10 @@ export const StakeTxRow = ({
       </div>
       <div className="transaction-info-price-reward">
         <Tooltip text={ticketPriceMessage}>
-          <Balance classNameWrapper="stake-transaction-ticket-price" amount={ticketPrice} />
+          <Balance amount={ticketPrice} />
         </Tooltip>
         <Tooltip text={ticketRewardMessage}>
-          <Balance classNameWrapper="stake-transaction-ticket-reward" amount={ticketReward} noSmallAmount />
+          <Balance classNameWrapper={cx("stake-transaction-ticket-reward", overview && "overview")} amount={ticketReward} noSmallAmount />
         </Tooltip>
         {daysToVote !== null && !isNaN(daysToVote) && (
           <Tooltip text={daysToVoteMessage}>
@@ -80,19 +81,19 @@ export const StakeTxRow = ({
       <div className="my-tickets-table">
         <div>
           <span className="icon" />
-          <span className="transaction-stake-type-overview">{typeMsg}</span>
+          <span className="transaction-stake-type">{typeMsg}</span>
         </div>
-        <Balance classNameWrapper="" amount={ticketPrice} />
-        <Balance classNameWrapper="" amount={ticketReward} />
+        <Balance bold classNameAmount="my-tickes-price" classNameUnit="no-bold" amount={ticketPrice} />
+        <Balance classNameWrapper="stake-transaction-ticket-reward" noSmallAmount amount={ticketReward} />
         { daysToVote !== null && !isNaN(daysToVote) ? (
           <Tooltip text={daysToVoteMessage}>
-            <div className="">
+            <div className="transaction-info-overview-days-to-vote">
               <T id="statusSmall.daysToVotePlural" m="{days, plural, one {# day} other {# days}}"
                 values={{ days: daysToVote }}/>
             </div>
           </Tooltip>
         ) : <div />}
-        <div>{accountName}</div>
+        <div className="transaction-account-name">{accountName}</div>
         { !pending &&
           <div className="">
             {timeMessage(txTs)}

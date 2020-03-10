@@ -133,11 +133,6 @@
   margin-left: 10px;
 }
 
-.transaction-stake-type {
-  margin-left: 10px;
-  padding-top: 4px;
-}
-
 .transaction-amount-hash {
   font-family: var(--font-family-monospace);
   color: var(--overview-balance-label);
@@ -156,11 +151,15 @@
   line-height: 8px;
 }
 
-.transaction-stake-type-overview {
+.transaction-stake-type {
   font-family: var(--font-family-regular);
   color: var(--input-color-default);
   font-size: 15px;
   margin-left: 10px;
+  
+  &:not(.overview) {
+    padding-top: 4px;
+  }
 }
 
 .transaction-info-price-reward {
@@ -177,7 +176,10 @@
   background-size: 11px 11px;
   background-position: 0px 4px;
   padding-left: 16px;
-  margin-left: 50px;
+
+  &.overview {
+    margin-left: 50px;
+  }
 }
 
 .transaction-info-overview-days-to-vote {
@@ -189,8 +191,25 @@
   margin-left: 10px;
 }
 
-.transaction-info {
-  margin-left: auto;
+.transaction-account-name {
+  background-color: var(--transaction-account-name-bg);
+  padding: 2px 4px;
+  border-radius: 5px;
+  font-size: 11px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-right: 20px;
+  height: 15px;
+  width: min-content;
+}
+
+.no-bold {
+  font-weight: 400 !important;
+}
+
+.my-tickes-price {
+  font-size: 15px;
 }
 
 @media screen and (max-width: 1179px) {
