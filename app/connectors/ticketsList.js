@@ -9,7 +9,7 @@ const mapStateToProps = selectorMap({
   tsDate: sel.tsDate,
   noMoreTickets: sel.noMoreTickets,
   ticketsFilter: sel.ticketsFilter,
-  window: sel.mainWindow,
+  window: sel.mainWindow
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

@@ -1,5 +1,5 @@
-import { RegularTxRow } from "./RegularTxRow"
-import { StakeTxRow } from "./StakeTxRow"
+import { RegularTxRow } from "./RegularTxRow";
+import { StakeTxRow } from "./StakeTxRow";
 import * as txTypes from "constants/Decrediton";
 import { defineMessages, injectIntl } from "react-intl";
 import { withRouter } from "react-router-dom";

@@ -190,7 +190,7 @@ export const ticketNormalizer = createSelector(
       const getAccountName = num => (act => act ? act.getAccountName() : "")(findAccount(num));
       const hasSpender = ticket.spender && ticket.spender.getHash();
       const isVote = ticket.status === "voted";
-      const isPending = ticket.status === "unmined"
+      const isPending = ticket.status === "unmined";
       const ticketTx = ticket.ticket;
       const spenderTx = hasSpender ? ticket.spender : null;
       const txHash = reverseHash(Buffer.from(ticketTx.getHash()).toString("hex"));
