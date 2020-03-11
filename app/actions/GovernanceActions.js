@@ -162,14 +162,16 @@ export const compareInventory = () => async (dispatch, getState) => {
     let isDifferent = false;
 
     // Check if old proposals list have had some proposal removed from inventory and
-    // also remove it from proposal's list.
+    // also remove it from proposal's list. As we modify oldInventory object,
+    // we make a copy of it to avoid side effects.
+    const oInventoryCopy = Object.assign({}, oldInventory);
     Object.keys(oldProposals).forEach( key => {
       newProposalsList[key] = oldProposals[key].reduce((acc, p) => {
         if(inventory[key].includes(p.token)) {
           acc.push(p);
         } else {
           // Remove token from old inventory so we can re-fetch it.
-          oldInventory[key].splice(oldInventory[key].indexOf(p.token), 1);
+          oInventoryCopy[key].splice(oInventoryCopy[key].indexOf(p.token), 1);
           isDifferent = true;
         }
         return acc;
@@ -180,18 +182,23 @@ export const compareInventory = () => async (dispatch, getState) => {
     }
 
     // create array with all old inventory and inventory token's values
-    const flatOldProps = [ oldInventory.activeVote, oldInventory.abandonedVote, oldInventory.finishedVote, oldInventory.preVote ].reduce( (acc, v) => {
-      v.forEach(vp => acc.push(vp));
+    const flatOldProps = [
+      oInventoryCopy.activeVote, oInventoryCopy.abandonedVote, oInventoryCopy.finishedVote, oInventoryCopy.preVote
+    ].reduce( (acc, v) => {
+      v.forEach( p => {
+        return acc[p] = p;
+      });
       return acc;
-    }, []);
+    }, {});
     const flatNewProps = [ inventory.activeVote, inventory.abandonedVote, inventory.finishedVote, inventory.preVote ].reduce((acc, v) => {
-      v.forEach(vp => acc.push(vp));
+      v.forEach(p => acc[p] = p);
       return acc;
-    }, []);
+    }, {});
 
     // Get difference between new inventory and old one, so we can bring a batch
     // of new proposals.
-    const diffHashes = flatNewProps.filter( token => !flatOldProps.includes(token));
+    const diffHashes = [];
+    Object.keys(flatNewProps).map( token => !flatOldProps[token] ? diffHashes.push(token) : null);
     if (diffHashes.length > 0) {
       dispatch(getProposalsAndUpdateVoteStatus(diffHashes));
     }
