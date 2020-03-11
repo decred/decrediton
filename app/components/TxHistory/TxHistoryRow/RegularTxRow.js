@@ -14,32 +14,42 @@ const RegularTxRow = ({
       <span className="transaction-amount-number"><Balance amount={txDirection !== "in" ? -txAmount : txAmount} /></span>
       { !overview && (txDirection === "transfer" ?
         ( <div className="transaction-info is-row">
-          <T id="txHistory.from" m="From " />
-          <div className="transaction-status">
-            <span className="transaction-account-name">{txAccountNameDebited}</span>
-          </div>
-          <T id="txHistory.to" m=" To " />
-          <div className="transaction-status">
-            <span className="transaction-account-name">{txAccountNameCredited}</span>
-          </div>
+          <T id="txHistory.transfer.tx"
+            m="From {debAcc} To {credAcc}"
+            values = {{
+              debAcc:
+            <div className="transaction-status">
+              <span className="transaction-account-name">{txAccountNameDebited}</span>
+            </div>,
+              credAcc:
+            <div className="transaction-status">
+              <span className="transaction-account-name">{txAccountNameCredited}</span>
+            </div>
+            }} />
         </div>
         ) : txDirection !== "in" ? (
           <div className="transaction-info is-row">
-            <T id="txHistory.from" m="From " />
-            <div className="transaction-status">
-              <span className="transaction-account-name">{txAccountName}</span>
-            </div>
-            <T id="txHistory.to" m=" To " />
-            <div className="transaction-status">
-              <span className="transaction-account-name">{txOutputAddresses}</span>
-            </div>
+            <T id="txHistory.out.tx"
+              m="From {debAcc} To {credAcc}"
+              values = {{
+                debAcc:
+                  <div className="transaction-status">
+                    <span className="transaction-account-name">{txAccountName}</span>
+                  </div>,
+                credAcc:
+                  <div className="transaction-status">
+                    <span className="transaction-account-name">{txOutputAddresses}</span>
+                  </div>
+              }} />
           </div>
         ) : (
           <div className="transaction-info is-row">
-            <T id="txHistory.to" m=" To " />
-            <div className="transaction-status">
-              <span className="transaction-account-name">{txAccountName}</span>
-            </div>
+            <T id="txHistory.in.tx"
+              m="To {credAcc}"
+              values = {{ credAcc:
+                    <div className="transaction-status">
+                      <span className="transaction-account-name">{txAccountName}</span>
+                    </div> }} />
           </div>
         ))}
       { !pending &&
@@ -51,28 +61,23 @@ const RegularTxRow = ({
     { overview &&
         <div className="transaction-amount-hash">
           { txDirection === "transfer" ?
-            <>
-              <T id="txHistory.from" m="From " />
-              { txAccountNameDebited }
-              <T id="txHistory.account" m=" Account" />
-              <T id="txHistory.to" m=" To " />
-              { txAccountNameCredited }
-              <T id="txHistory.account" m=" Account" />
-            </> :
-            txDirection !== "in" ? (
-              <>
-                <T id="txHistory.from" m="From " />
-                { txAccountName }
-                <T id="txHistory.to" m=" To " />
-                <span className="address-shorter">{ txOutputAddresses }</span>
-              </>
-            ) : (
-              <>
-                <T id="txHistory.to" m=" To " />
-                { txAccountName }
-                <T id="txHistory.account" m=" Account" />
-              </>
-            )}
+            <T id="txHistory.transfer.tx"
+              m="From {debAcc} To {credAcc}"
+              values = {{
+                debAcc: txAccountNameDebited,
+                credAcc: txAccountNameCredited
+              }} /> :
+            txDirection !== "in" ?
+              <T id="txHistory.out.tx"
+                m="From {debAcc} To {credAcc}"
+                values = {{
+                  debAcc: txAccountName,
+                  credAcc: txOutputAddresses
+                }} /> : (
+                <T id="txHistory.in.tx"
+                  m="To {credAcc}"
+                  values = {{ credAcc: txAccountName }} />
+              )}
         </div>
     }
 
