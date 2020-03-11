@@ -699,6 +699,8 @@ export const agendas = createSelector(
   response => response ? response.getAgendasList() : EMPTY_ARRAY
 );
 
+export const allAgendas = get([ "grpc", "allAgendas" ]);
+
 const requiredStakepoolAPIVersion = get([ "grpc", "requiredStakepoolAPIVersion" ]);
 
 export const currentStakePoolConfigError = get([ "stakepool", "currentStakePoolConfigError" ]);

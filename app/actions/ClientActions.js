@@ -100,6 +100,7 @@ export const getStartupWalletInfo = () => (dispatch) => {
         await dispatch(getStartupStats());
         if (dcrdataEnabled) {
           dispatch(getTreasuryBalance());
+          dispatch(getAllAgendasAttempt());
         }
         if (politeiaEnabled) {
           dispatch(getTokenAndInitialBatch());
@@ -1081,11 +1082,28 @@ export const GETAGENDAS_ATTEMPT = "GETAGENDAS_ATTEMPT";
 export const GETAGENDAS_FAILED = "GETAGENDAS_FAILED";
 export const GETAGENDAS_SUCCESS = "GETAGENDAS_SUCCESS";
 
+// getAgendasAttempt gets the current agenda.
 export const getAgendasAttempt = () => (dispatch, getState) => {
   dispatch({ type: GETAGENDAS_ATTEMPT });
   wallet.getAgendas(sel.agendaService(getState()))
     .then(agendas => dispatch({ agendas, type: GETAGENDAS_SUCCESS }))
     .catch(error => dispatch({ error, type: GETAGENDAS_FAILED }));
+};
+
+export const GETALLAGENDAS_ATTEMPT = "GETALLAGENDAS_ATTEMPT";
+export const GETALLAGENDAS_FAILED = "GETALLAGENDAS_FAILED";
+export const GETALLAGENDAS_SUCCESS = "GETALLAGENDAS_SUCCESS";
+
+// getAllAgendasAttempt gets all agendas.
+export const getAllAgendasAttempt = () => (dispatch, getState) => {
+  dispatch({ type: GETALLAGENDAS_ATTEMPT });
+  const dURL = sel.dcrdataURL(getState());
+  da.getAdendasInfo(dURL)
+    .then(response => {
+      const { data } = response;
+      dispatch({ allAgendas: data, type: GETALLAGENDAS_SUCCESS })
+    })
+    .catch(error => dispatch({ error, type: GETALLAGENDAS_FAILED }));
 };
 
 export const GETVOTECHOICES_ATTEMPT = "GETVOTECHOICES_ATTEMPT";

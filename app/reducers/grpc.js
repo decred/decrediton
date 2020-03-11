@@ -25,7 +25,8 @@ import {
   STARTWALLETSERVICE_ATTEMPT,
   STARTWALLETSERVICE_FAILED, STARTWALLETSERVICE_SUCCESS, GETTREASURY_BALANCE_SUCCESS, RESET_TREASURY_BALANCE,
   FETCHMISSINGSTAKETXDATA_ATTEMPT, FETCHMISSINGSTAKETXDATA_SUCCESS, FETCHMISSINGSTAKETXDATA_FAILED,
-  GETSTARTUPTRANSACTIONS_SUCCESS
+  GETSTARTUPTRANSACTIONS_SUCCESS,
+  GETALLAGENDAS_SUCCESS, GETALLAGENDAS_FAILED
 } from "../actions/ClientActions";
 import { DAEMONSYNCED, WALLETREADY } from "../actions/DaemonActions";
 import { NEWBLOCKCONNECTED } from "../actions/NotificationActions";
@@ -672,6 +673,14 @@ export default function grpc(state = {}, action) {
       startWalletServiceAttempt: false,
       startWalletServiceFailed: null,
       startWalletServiceSuccess: action.success
+    };
+  case GETALLAGENDAS_SUCCESS:
+    return { ...state,
+      allAgendas: action.allAgendas
+    };
+  case GETALLAGENDAS_FAILED:
+    return { ...state,
+      getAllAgendasError: String(action.error) 
     };
   default:
     return state;
