@@ -14,8 +14,7 @@ class VotingPrefs extends React.Component {
   }
 
   render() {
-    return (
-      <VotingPrefsPage
+    return <VotingPrefsPage
         {...{
           ...this.props,
           ...this.state,
@@ -28,7 +27,6 @@ class VotingPrefs extends React.Component {
           }, this)
         }}
       />
-    );
   }
 
   getStakePool() {
@@ -40,7 +38,7 @@ class VotingPrefs extends React.Component {
 
   getAgendaSelectedChoice(agenda) {
     return get([ "choiceId" ], find(
-      compose(eq(agenda.getId()), get([ "agendaId" ])),
+      compose(eq(agenda.name), get([ "agendaId" ])),
       get("VoteChoices", this.getStakePool()) || []
     )) || "abstain";
   }

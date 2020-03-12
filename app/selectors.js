@@ -696,10 +696,41 @@ export const ticketPrice = compose(r => r ? r.getTicketPrice() : 0, getTicketPri
 const getAgendasResponse = get([ "grpc", "getAgendasResponse" ]);
 export const agendas = createSelector(
   [ getAgendasResponse ],
-  response => response ? response.getAgendasList() : EMPTY_ARRAY
+  response => response ? response.getAgendasList()[0] : EMPTY_ARRAY
 );
 
-export const allAgendas = get([ "grpc", "allAgendas" ]);
+const allAgendasNotNormalized = get([ "grpc", "allAgendas" ]);
+
+const normalizeAgenda = createSelector(
+  [agendas],
+  currentAgenda => {
+    return agenda => {
+      // when the agenda returned by dcrwallet is the same of the one brought
+      // by dcrdata, we use data from the dcrwallet one. way we can still have
+      // the vote choice.
+      if (currentAgenda.getId() === agenda.name) {
+        currentAgenda.isCurrent = true;
+        const agendaObj = {}
+        agendaObj.name = currentAgenda.getId();
+        agendaObj.choices = currentAgenda.getChoicesList();
+        agendaObj.description = currentAgenda.getDescription();
+        agenda.isCurrent = true;
+        agendaObj.finished = false && agenda.status === "finished";
+        agenda.passed = !!(agenda.activated);
+        return agendaObj;
+      }
+      agenda.isCurrent = false;
+      agenda.finished = agenda.status === "finished";
+      agenda.passed = !!(agenda.activated);
+
+      return agenda;
+    }
+});
+
+export const allAgendas = createSelector(
+  [allAgendasNotNormalized, normalizeAgenda],
+  (agendas, cb) => agendas.map(cb)
+);
 
 const requiredStakepoolAPIVersion = get([ "grpc", "requiredStakepoolAPIVersion" ]);
 

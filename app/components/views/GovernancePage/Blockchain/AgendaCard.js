@@ -22,13 +22,13 @@ const AgendaCard = ({
         </div>
       )}
       <div className="agenda-card-bottom-cfg">
-        {agenda.getDescription()} <span className="agenda-card-bottom-cfg-last">
+        {agenda.description} <span className="agenda-card-bottom-cfg-last">
           <T id="agenda.overview.idLabel" m="Agenda ID" />:
-          <span className="agenda-card-bottom-cfg-last-bold">{agenda.getId()}</span></span>
+          <span className="agenda-card-bottom-cfg-last-bold">{agenda.name}</span></span>
       </div>
     </div>
     <div className="agenda-card-top">
-      <div className="agenda-card-name">{agenda.getId()}</div>
+      <div className="agenda-card-name">{agenda.name}</div>
       <div className="agenda-card-top-preference">
         Preference: <span className="agenda-card-text-highlight-small">{selectedChoice}</span>
       </div>

@@ -10,7 +10,8 @@ const VotingPrefsPage = ({
   getAgendaSelectedChoice,
   onShowAgenda,
   onCloseAgenda,
-  onUpdateVotePreference
+  onUpdateVotePreference,
+  allAgendas
 }) => (
   <>
     <div className="consensus-changes-header is-row">
@@ -26,7 +27,7 @@ const VotingPrefsPage = ({
       </div>
     </div>
     <div className="agenda-wrapper">
-      {selectedAgenda ? (
+      { selectedAgenda &&
         <AgendaOverview
           agenda={selectedAgenda}
           selectedChoice={getAgendaSelectedChoice(selectedAgenda)}
@@ -34,18 +35,12 @@ const VotingPrefsPage = ({
           updatePreferences={onUpdateVotePreference}
           disabled={!stakePool || !stakePool.isVersionValid}
         />
-      ) : null}
-      {(agendas.length > 0) ?
-        agendas.map(agenda =>
-          (!selectedAgenda || selectedAgenda.getId() !== agenda.getId()) &&
-            <AgendaCard
-              key={agenda.getId()}
-              agenda={agenda}
-              selectedChoice={getAgendaSelectedChoice(agenda)}
-              onClick={() => onShowAgenda(agenda)}
-            />
-        )
-        : (
+      }
+      { allAgendas.length > 0 ?
+        allAgendas.map(agenda => (!selectedAgenda || selectedAgenda.name !== agenda.name) && <AgendaCard key={agenda.name}
+            {...{ agenda, selectedChoice: getAgendaSelectedChoice(agenda) }}              
+            onClick={() => onShowAgenda(agenda)}
+        /> ) : (
           <div>
             <T id="votingPreferences.noAgenda" m="There are currently no agendas for voting." />
           </div>
