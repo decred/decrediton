@@ -1101,7 +1101,7 @@ export const getAllAgendasAttempt = () => (dispatch, getState) => {
   da.getAdendasInfo(dURL)
     .then(response => {
       const { data } = response;
-      dispatch({ allAgendas: data, type: GETALLAGENDAS_SUCCESS })
+      dispatch({ allAgendas: data, type: GETALLAGENDAS_SUCCESS });
     })
     .catch(error => dispatch({ error, type: GETALLAGENDAS_FAILED }));
 };

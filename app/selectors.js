@@ -933,10 +933,10 @@ const allAgendasNotNormalized = get([ "grpc", "allAgendas" ]);
 // allAgendasVerify verifies if dcrdata is enabled. If it is not we only return
 // the current agenda which we got from dcrwallet.
 const allAgendasVerify = createSelector(
-  [ currentAgenda, dcrdataEnabled, allAgendasNotNormalized],
+  [ currentAgenda, dcrdataEnabled, allAgendasNotNormalized ],
   // If allAgendas length is 0 we return the agenda from dcrwallet, as dcrdata
   // may be down.
-  (currentAgenda, dcrdataEnabled, allAgendas) => !dcrdataEnabled || allAgendas.length === 0  ? [currentAgenda] : allAgendas
+  (currentAgenda, dcrdataEnabled, allAgendas) => !dcrdataEnabled || allAgendas.length === 0  ? [ currentAgenda ] : allAgendas
 );
 
 const normalizeAgenda = createSelector(
@@ -948,7 +948,7 @@ const normalizeAgenda = createSelector(
       // We use the information from our dcrwallet grpc request.
       if (typeof agenda.getId === "function" || currentAgenda.getId() === agenda.name) {
         currentAgenda.isCurrent = true;
-        const agendaObj = {}
+        const agendaObj = {};
         agendaObj.name = currentAgenda.getId();
         agendaObj.choices = currentAgenda.getChoicesList();
         agendaObj.description = currentAgenda.getDescription();
@@ -964,8 +964,8 @@ const normalizeAgenda = createSelector(
       agenda.choices = [];
 
       return agenda;
-    }
-});
+    };
+  });
 
 export const allAgendas = createSelector(
   [ allAgendasVerify, normalizeAgenda ],

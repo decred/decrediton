@@ -15,17 +15,17 @@ class VotingPrefs extends React.Component {
 
   render() {
     return <VotingPrefsPage
-        {...{
-          ...this.props,
-          ...this.state,
-          stakePool: this.getStakePool(),
-          ...substruct({
-            getAgendaSelectedChoice: null,
-            onShowAgenda: null,
-            onCloseAgenda: null
-          }, this)
-        }}
-      />
+      {...{
+        ...this.props,
+        ...this.state,
+        stakePool: this.getStakePool(),
+        ...substruct({
+          getAgendaSelectedChoice: null,
+          onShowAgenda: null,
+          onCloseAgenda: null
+        }, this)
+      }}
+    />;
   }
 
   getStakePool() {

@@ -680,7 +680,7 @@ export default function grpc(state = {}, action) {
     };
   case GETALLAGENDAS_FAILED:
     return { ...state,
-      getAllAgendasError: String(action.error) 
+      getAllAgendasError: String(action.error)
     };
   default:
     return state;
