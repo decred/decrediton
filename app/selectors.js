@@ -952,9 +952,9 @@ const normalizeAgenda = createSelector(
         agendaObj.name = currentAgenda.getId();
         agendaObj.choices = currentAgenda.getChoicesList();
         agendaObj.description = currentAgenda.getDescription();
-        agenda.isCurrent = true;
+        agendaObj.isCurrent = true;
         agendaObj.finished = agenda.status === "finished";
-        agenda.passed = !!(agenda.activated);
+        agendaObj.passed = !!(agenda.activated);
         return agendaObj;
       }
       agenda.isCurrent = false;
@@ -969,7 +969,7 @@ const normalizeAgenda = createSelector(
 
 export const allAgendas = createSelector(
   [ allAgendasVerify, normalizeAgenda ],
-  (agendas, cb) => agendas.length > 0 && agendas.map(cb)
+  (agendas, cb) => agendas.map(cb)
 );
 
 export const treasuryBalance = get([ "grpc", "treasuryBalance" ]);

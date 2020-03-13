@@ -15,7 +15,7 @@ const AgendaCard = ({
   )}>
     <div className="agenda-card-bottom">
       {agenda.finished ? (
-        <AgendaFinishedIndicator />
+        <AgendaFinishedIndicator passed={agenda.passed} />
       ) : (
         <div className="agenda-card-indicator-pending">
           <T id="agenda.card.inProgressIndicator" m="In Progress" />

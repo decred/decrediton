@@ -33,6 +33,7 @@ class AgendaOverview extends React.Component {
           isFinished: agenda.finished,
           agendaId: agenda.name,
           agendaDescription: agenda.description,
+          passed: agenda.passed,
           selectedChoiceId,
           activeChoiceId,
           hasModifiedChoice,

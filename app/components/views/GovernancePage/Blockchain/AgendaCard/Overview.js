@@ -13,7 +13,8 @@ const Overview = ({
   closeCurrentAgenda,
   setSelecedChoiceId,
   updatePreferences,
-  disabled
+  disabled,
+  passed
 }) => (
   <div className="agenda">
     <div className="agenda-overview">
@@ -64,7 +65,7 @@ const Overview = ({
     <div className="agenda-bottom">
       <div className="agenda-bottom-overview">
         {isFinished ? (
-          <AgendaFinishedIndicator />
+          <AgendaFinishedIndicator passed={passed} />
         ) : (
           <div className="agenda-card-indicator-pending">
             <T id="agenda.overview.inProgressIndicator" m="In Progress" />
