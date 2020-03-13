@@ -1,4 +1,5 @@
 import Overview from "./Overview";
+import AgendaCard from "./AgendaCard";
 
 @autobind
 class AgendaOverview extends React.Component {
@@ -17,7 +18,7 @@ class AgendaOverview extends React.Component {
   }
 
   render() {
-    const { agenda, closeCurrentAgenda } = this.props;
+    const { agenda, onCloseAgenda, showVoteChoice, selectedChoice, onClick } = this.props;
     const { selectedChoiceId, disabled } = this.state;
     const { setSelecedChoiceId, updatePreferences } = this;
     const activeChoiceId = this.props.selectedChoice;
@@ -27,7 +28,7 @@ class AgendaOverview extends React.Component {
     const hasModifiedChoice = this.hasModifiedChoice();
 
     return (
-      <Overview
+      showVoteChoice ? <Overview
         {...{
           isFinished: agenda.finished,
           agendaId: agenda.name,
@@ -38,10 +39,10 @@ class AgendaOverview extends React.Component {
           choices,
           setSelecedChoiceId,
           updatePreferences,
-          closeCurrentAgenda,
+          closeCurrentAgenda: onCloseAgenda,
           disabled
         }}
-      />
+      /> : <AgendaCard {...{ onClick, agenda, selectedChoice  }} />
     );
   }
 
@@ -55,7 +56,7 @@ class AgendaOverview extends React.Component {
 
   updatePreferences() {
     if (!this.hasModifiedChoice()) return;
-    this.props.updatePreferences(this.props.agenda.name, this.state.selectedChoiceId);
+    this.props.onUpdateVotePreference(this.props.agenda.name, this.state.selectedChoiceId);
   }
 }
 

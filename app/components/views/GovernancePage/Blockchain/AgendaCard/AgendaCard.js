@@ -1,5 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
-import { AgendaFinishedIndicator } from "./helpers";
+import { AgendaFinishedIndicator } from "../helpers";
 import "style/AgendaCard.less";
 
 // Currently removing percent progress until a solution to populate is found

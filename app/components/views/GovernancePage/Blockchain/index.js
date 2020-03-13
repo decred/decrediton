@@ -22,8 +22,7 @@ class VotingPrefs extends React.Component {
           ...substruct({
             getAgendaSelectedChoice: null,
             onShowAgenda: null,
-            onCloseAgenda: null,
-            onUpdateVotePreference: null
+            onCloseAgenda: null
           }, this)
         }}
       />
@@ -43,16 +42,12 @@ class VotingPrefs extends React.Component {
     )) || "abstain";
   }
 
-  onShowAgenda(selectedAgenda) {
-    this.setState({ selectedAgenda });
+  onShowAgenda(index) {
+    this.setState({ selectedAgenda: index });
   }
 
   onCloseAgenda() {
     this.setState({ selectedAgenda: null });
-  }
-
-  onUpdateVotePreference(agendaId, choiceId) {
-    this.props.onUpdateVotePreference(agendaId, choiceId);
   }
 }
 

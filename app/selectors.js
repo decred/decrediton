@@ -715,13 +715,15 @@ const normalizeAgenda = createSelector(
         agendaObj.choices = currentAgenda.getChoicesList();
         agendaObj.description = currentAgenda.getDescription();
         agenda.isCurrent = true;
-        agendaObj.finished = false && agenda.status === "finished";
+        agendaObj.finished = agenda.status === "finished";
         agenda.passed = !!(agenda.activated);
         return agendaObj;
       }
       agenda.isCurrent = false;
       agenda.finished = agenda.status === "finished";
       agenda.passed = !!(agenda.activated);
+      // right now we left it empty as there is no easy way to get past vote choices.
+      agenda.choices = [];
 
       return agenda;
     }
