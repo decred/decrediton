@@ -199,6 +199,7 @@ var initialState = {
     getTicketsProgressStartRequestHeight: null,
 
     // Agenda/VoteChoices
+    allAgendas: [],
     getAgendasResponse: null,
     getVoteChoicesResponse: null,
 

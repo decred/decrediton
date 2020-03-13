@@ -3,7 +3,6 @@ import { ExternalLink } from "shared";
 import { FormattedMessage as T } from "react-intl";
 
 const VotingPrefsPage = ({
-  agendas,
   stakePool,
   selectedAgenda,
   getAgendaSelectedChoice,
