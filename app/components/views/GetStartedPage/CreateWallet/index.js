@@ -2,7 +2,7 @@ import { injectIntl } from "react-intl";
 import "style/GetStarted.less";
 import cx from "classnames";
 import { interpret } from "xstate";
-import { CreateWalletMachine } from "./CreateWalletStateMachine";
+import { CreateWalletMachine } from "stateMachines/CreateWalletStateMachine";
 import Page from "./Page";
 import { withRouter } from "react-router";
 import CopySeed from "./CopySeed";
