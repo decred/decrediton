@@ -162,7 +162,6 @@
 
 .proposal-details-overview {
   background-color: var(--background-back-color);
-  display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
   min-height: 200px;
@@ -570,7 +569,61 @@
   }
 }
 
+@media screen and (max-width: 1179px) {
+  .proposal-details {
+    padding-top: 59px;
+    padding-left: 35px;
+  }
+
+  .proposal-details-overview {
+    width: 634px;
+
+    .proposal-details-overview-info {
+      padding: 20px;
+    }
+
+    .proposal-details-overview-voting {
+      width: 244px;
+    }
+  }
+
+  .proposal-details-text {
+    width: 594px;
+  }
+}
+
 @media screen and (max-width: 768px) {
+  .proposal-details-overview {
+    width: 355px;
+
+    &.is-row {
+      flex-direction: column;
+    }
+
+    .proposal-details-voting-progress {
+      width: 315px;
+      padding-left: 20px;
+    }
+    .proposal-details-overview-info {
+      padding: 20px;
+      max-width: 100%;
+    }
+
+    .proposal-details-overview-voting {
+      width: 315px;
+    }
+  }
+
+  .proposal-details-text {
+    padding-left: 20px;
+    width: 335px;
+  }
+  
+  .proposal-details {
+    padding-top: 20px;
+    padding-left: 10px;
+  }
+
   .politeia-disabled-wrapper {
     top: 113px;
   }
