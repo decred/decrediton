@@ -3,7 +3,9 @@ import { PoliteiaLink as PiLink } from "shared";
 import { PreVoteProposals, ActiveVoteProposals, FinishedProposal, AbandonedProposals } from "./Page";
 import { TabbedPage, TabbedPageTab as Tab } from "layout";
 import { newProposalCounts, proposals } from "connectors";
-import { createElement as h } from "react";
+import { createElement as h, useState } from "react";
+import { fetchMachine } from "stateMachines/FetchStateMachine";
+import { useMachine } from "@xstate/react";
 
 const PageHeader = () => (
   <div className="proposals-community-header is-row">
@@ -29,69 +31,45 @@ const ListLink = ({ count, children }) => (
   </>
 );
 
-@autobind
-class ProposalsList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      noMoreProposals: {
-        activeVote: false,
-        finishedVote: false,
-        preVote: false,
-        abandonedVote: false
-      }
-    };
+function getProposalsTab(location) {
+  const { pathname } = location;
+  if (pathname.includes("prevote")) {
+    return "preVote";
   }
-
-  shouldComponentUpdate(nextProps) {
-    const tab = this.getProposalsTab();
-    if (this.props.proposalsList[tab].length !== nextProps.proposalsList[tab].length) {
-      return true;
-    }
-    if (nextProps.location !== this.props.location) {
-      return true;
-    }
-    return false;
+  if (pathname.includes("activevote")) {
+    return "activeVote";
   }
-
-  componentDidUpdate(prevProps) {
-    const { location } = this.props;
-    const { noMoreProposals } = this.state;
-    const tab = this.getProposalsTab();
-
-    if (prevProps.location !== location && !noMoreProposals[tab]) {
-      this.onLoadMoreProposals();
-    }
+  if (pathname.includes("voted")) {
+    return "finishedVote";
   }
-
-  getProposalsTab() {
-    const { location } = this.props;
-    const { pathname } = location;
-    if (pathname.includes("prevote")) {
-      return "preVote";
-    }
-    if (pathname.includes("activevote")) {
-      return "activeVote";
-    }
-    if (pathname.includes("voted")) {
-      return "finishedVote";
-    }
-    if (pathname.includes("abandoned")) {
-      return "abandonedVote";
-    }
+  if (pathname.includes("abandoned")) {
+    return "abandonedVote";
   }
+}
 
-  onLoadMoreProposals() {
-    const { inventory, proposalsList, proposallistpagesize } = this.props;
-    const tab = this.getProposalsTab();
+function ProposalsList (props) {
+  const [ current, send ] = useMachine(fetchMachine);
+  const [ noMoreProposals, setNoMoreProposals ] = useState({
+    noMoreProposals: {
+      activeVote: false,
+      finishedVote: false,
+      preVote: false,
+      abandonedVote: false
+    }
+  });
+
+  // TODO: Get proposallistpagesize from politeia's request: /v1/policy
+  function onLoadMoreProposals(proposallistpagesize = 20) {
+    const { inventory, proposalsList, getProposalsAndUpdateVoteStatus, location } = props;
+    const tab = getProposalsTab(location);
     if (!proposalsList[tab] || !inventory[tab]) {
       return;
     }
 
     const proposalLength = proposalsList[tab].length;
     if (proposalLength === inventory[tab].length) {
-      this.setState({
-        noMoreProposals: { ...this.state.noMoreProposals, [tab]: true }
+      setNoMoreProposals({
+        noMoreProposals: { ...noMoreProposals, [tab]: true }
       });
       return;
     }
@@ -103,33 +81,29 @@ class ProposalsList extends React.Component {
     }
 
     const proposalBatch = inventory[tab].slice(proposalLength, proposalNumber);
-    this.props.getProposalsAndUpdateVoteStatus(proposalBatch);
+    getProposalsAndUpdateVoteStatus(proposalBatch);
   }
 
-  render() {
-    const { newActiveVoteProposalsCount, newPreVoteProposalsCount } = this.props;
-    const { noMoreProposals } = this.state;
-    const { onLoadMoreProposals } = this;
+  const { newActiveVoteProposalsCount, newPreVoteProposalsCount } = props;
 
-    return (
-      <TabbedPage caret={<div/>} header={<PageHeader />} >
-        <Tab path="/governance/proposals/prevote"
-          component={ h(proposals(PreVoteProposals), { onLoadMoreProposals, noMoreProposals: noMoreProposals.preVote }) }
-          link={<ListLink count={newPreVoteProposalsCount}><T id="proposals.statusLinks.preVote" m="In Discussion" /></ListLink> }
-        />
-        <Tab path="/governance/proposals/activevote"
-          component={ h(proposals(ActiveVoteProposals), { onLoadMoreProposals, noMoreProposals: noMoreProposals.activeVote }) }
-          link={<ListLink count={newActiveVoteProposalsCount}><T id="proposals.statusLinks.underVote" m="Voting" /></ListLink>}
-        />
-        <Tab path="/governance/proposals/voted"
-          component={ h(proposals(FinishedProposal), { onLoadMoreProposals, noMoreProposals: noMoreProposals.finishedVote, finishedVote: true }) }
-          link={<T id="proposals.statusLinks.voted" m="Finished Voting" />} />
-        <Tab path="/governance/proposals/abandoned"
-          component={ h(proposals(AbandonedProposals), { onLoadMoreProposals, noMoreProposals: noMoreProposals.abandonedVote }) }
-          link={<T id="proposals.statusLinks.abandoned" m="Abandoned" />} />
-      </TabbedPage>
-    );
-  }
+  return (
+    <TabbedPage onChange={onLoadMoreProposals} caret={<div/>} header={<PageHeader />} >
+      <Tab path="/governance/proposals/prevote"
+        component={ h(proposals(PreVoteProposals), { onLoadMoreProposals, noMoreProposals: noMoreProposals.preVote }) }
+        link={<ListLink count={newPreVoteProposalsCount}><T id="proposals.statusLinks.preVote" m="In Discussion" /></ListLink> }
+      />
+      <Tab path="/governance/proposals/activevote"
+        component={ h(proposals(ActiveVoteProposals), { onLoadMoreProposals, noMoreProposals: noMoreProposals.activeVote }) }
+        link={<ListLink count={newActiveVoteProposalsCount}><T id="proposals.statusLinks.underVote" m="Voting" /></ListLink>}
+      />
+      <Tab path="/governance/proposals/voted"
+        component={ h(proposals(FinishedProposal), { onLoadMoreProposals, noMoreProposals: noMoreProposals.finishedVote, finishedVote: true }) }
+        link={<T id="proposals.statusLinks.voted" m="Finished Voting" />} />
+      <Tab path="/governance/proposals/abandoned"
+        component={ h(proposals(AbandonedProposals), { onLoadMoreProposals, noMoreProposals: noMoreProposals.abandonedVote }) }
+        link={<T id="proposals.statusLinks.abandoned" m="Abandoned" />} />
+    </TabbedPage>
+  );
 }
 
 export default proposals(newProposalCounts(ProposalsList));

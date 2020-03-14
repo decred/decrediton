@@ -32,6 +32,8 @@ class TabbedPage extends React.Component {
       return;
     }
 
+    if (typeof this.props.onChange === "function") this.props.onChange();
+
     const matchedTab = this.matchedTab(this.props.location);
     const dir = prevState.matchedTab && matchedTab &&
       prevState.matchedTab.index > matchedTab.index ? "r2l" : "l2r";
