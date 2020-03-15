@@ -14,11 +14,10 @@ export default {
 
   module: {
     rules: [ {
-      test: /\.jsx?$/,
+      test: /\.(js|jsx)$/,
       exclude: /node_modules/,
-      use: [ {
-        loader: "babel-loader"
-      } ]
+      include: /app/,
+      loader: "babel-loader"
     },
     {
       test: /\.(png|jpg)$/,

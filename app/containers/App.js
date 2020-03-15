@@ -16,6 +16,8 @@ import { TrezorModals } from "components/modals/trezor";
 import "style/Themes.less";
 import "style/Layout.less";
 import { ipcRenderer } from "electron";
+import { hot } from "react-hot-loader/root";
+
 const topLevelAnimation = { atEnter: { opacity: 0 }, atLeave: { opacity: 0 }, atActive: { opacity: 1 } };
 
 // minimum size to reduce the sidebar in px.
@@ -152,4 +154,4 @@ class App extends React.Component {
   }
 }
 
-export default app(theming(App));
+export default hot(app(theming(App)));
