@@ -2,10 +2,13 @@ import { FormattedMessage as T } from "react-intl";
 import { PoliteiaLink as PiLink } from "shared";
 import { PreVoteProposals, ActiveVoteProposals, FinishedProposal, AbandonedProposals } from "./Page";
 import { TabbedPage, TabbedPageTab as Tab } from "layout";
-import { newProposalCounts, proposals } from "connectors";
+import { proposals } from "connectors";
 import { createElement as h, useState } from "react";
 import { fetchMachine } from "stateMachines/FetchStateMachine";
 import { useMachine } from "@xstate/react";
+import { useSelector, useDispatch } from 'react-redux'
+import * as sel from "selectors";
+import { getProposalsAndUpdateVoteStatus } from "actions/GovernanceActions";
 
 const PageHeader = () => (
   <div className="proposals-community-header is-row">
@@ -49,6 +52,14 @@ function getProposalsTab(location) {
 
 function ProposalsList (props) {
   const [ current, send ] = useMachine(fetchMachine);
+  const { inventory, proposalsList, location, activeVoteCount, preVoteCount } = useSelector(state => ({
+    inventory: sel.inventory(state),
+    proposalsList: sel.proposals(state),
+    location: sel.location(state),
+    activeVoteCount: sel.newActiveVoteProposalsCount(state),
+    preVoteCount: sel.newPreVoteProposalsCount(state)
+  }));
+  const dispatch = useDispatch();
   const [ noMoreProposals, setNoMoreProposals ] = useState({
     noMoreProposals: {
       activeVote: false,
@@ -60,7 +71,6 @@ function ProposalsList (props) {
 
   // TODO: Get proposallistpagesize from politeia's request: /v1/policy
   function onLoadMoreProposals(proposallistpagesize = 20) {
-    const { inventory, proposalsList, getProposalsAndUpdateVoteStatus, location } = props;
     const tab = getProposalsTab(location);
     if (!proposalsList[tab] || !inventory[tab]) {
       return;
@@ -81,20 +91,18 @@ function ProposalsList (props) {
     }
 
     const proposalBatch = inventory[tab].slice(proposalLength, proposalNumber);
-    getProposalsAndUpdateVoteStatus(proposalBatch);
+    dispatch(getProposalsAndUpdateVoteStatus(proposalBatch));
   }
-
-  const { newActiveVoteProposalsCount, newPreVoteProposalsCount } = props;
 
   return (
     <TabbedPage onChange={onLoadMoreProposals} caret={<div/>} header={<PageHeader />} >
       <Tab path="/governance/proposals/prevote"
         component={ h(proposals(PreVoteProposals), { onLoadMoreProposals, noMoreProposals: noMoreProposals.preVote }) }
-        link={<ListLink count={newPreVoteProposalsCount}><T id="proposals.statusLinks.preVote" m="In Discussion" /></ListLink> }
+        link={<ListLink count={preVoteCount}><T id="proposals.statusLinks.preVote" m="In Discussion" /></ListLink> }
       />
       <Tab path="/governance/proposals/activevote"
         component={ h(proposals(ActiveVoteProposals), { onLoadMoreProposals, noMoreProposals: noMoreProposals.activeVote }) }
-        link={<ListLink count={newActiveVoteProposalsCount}><T id="proposals.statusLinks.underVote" m="Voting" /></ListLink>}
+        link={<ListLink count={activeVoteCount}><T id="proposals.statusLinks.underVote" m="Voting" /></ListLink>}
       />
       <Tab path="/governance/proposals/voted"
         component={ h(proposals(FinishedProposal), { onLoadMoreProposals, noMoreProposals: noMoreProposals.finishedVote, finishedVote: true }) }
@@ -106,4 +114,4 @@ function ProposalsList (props) {
   );
 }
 
-export default proposals(newProposalCounts(ProposalsList));
+export default ProposalsList;

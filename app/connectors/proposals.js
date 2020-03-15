@@ -24,7 +24,6 @@ const mapStateToProps = selectorMap({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   getVettedProposals: ga.getVettedProposals,
-  getProposalsAndUpdateVoteStatus: ga.getProposalsAndUpdateVoteStatus,
   getProposalDetails: ga.getProposalDetails,
   viewProposalDetails: ga.viewProposalDetails,
   showPurchaseTicketsPage: ca.showPurchaseTicketsPage,
