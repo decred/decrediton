@@ -2,7 +2,7 @@
 window.eval = () => { throw new Error("Do not import things that use eval()"); };
 import { render } from "react-dom";
 import { Provider } from "react-redux";
-import { ConnectedRouter } from "react-router-redux";
+import { ConnectedRouter } from "connected-react-router";
 import { Switch, Route } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import { App } from "containers";

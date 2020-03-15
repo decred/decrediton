@@ -11,7 +11,7 @@ import { getWalletCfg, getDcrdCert } from "config";
 import { getWalletPath } from "main_dev/paths";
 import { isTestNet } from "selectors";
 import { SpvSyncRequest, SyncNotificationType, RpcSyncRequest } from "../middleware/walletrpc/api_pb";
-import { push as pushHistory } from "react-router-redux";
+import { push as pushHistory } from "connected-react-router";
 import { stopNotifcations } from "./NotificationActions";
 import { clearDeviceSession as trezorClearDeviceSession } from "./TrezorActions";
 import { stopDcrlnd } from "./LNActions";

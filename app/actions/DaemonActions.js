@@ -6,7 +6,7 @@ import { rescanCancel } from "./ControlActions";
 import { cancelPingAttempt } from "./ClientActions";
 import { semverCompatible } from "./VersionActions";
 import * as wallet from "wallet";
-import { push as pushHistory, goBack } from "react-router-redux";
+import { push as pushHistory, goBack } from "connected-react-router";
 import { ipcRenderer } from "electron";
 import { getWalletCfg, getGlobalCfg, setLastHeight } from "config";
 import { isTestNet } from "selectors";
