@@ -52,7 +52,7 @@ function ProposalListItem ({ name, timestamp, token, voteCounts,
 const getStateComponent = (state, proposals, props) => {
   switch (state.value) {
     case 'idle':
-      return <button onClick={_ => props.send('FETCH')}>Fetch</button>;;
+      return <button onClick={_ => props.send('RESOLVE')}>Fetch</button>;;
     case 'loading':
       return <div className="proposal-loading-page"><PoliteiaLoading center /></div>;
     case 'success':
@@ -80,5 +80,6 @@ const getStateComponent = (state, proposals, props) => {
 export function ProposalList ({
   proposals, state, finishedVote, noMoreProposals, onLoadMoreProposals, send
 }) {
+  console.log(state)
   return getStateComponent(state, proposals, { send, finishedVote, noMoreProposals, onLoadMoreProposals });
 }

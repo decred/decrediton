@@ -11,7 +11,7 @@ import { proposals } from "connectors";
 import { createElement as h, useState, useEffect } from "react";
 import { fetchMachine } from "stateMachines/FetchStateMachine";
 import { useMachine } from "@xstate/react";
-import { getProposalsAndUpdateVoteStatus } from "actions/GovernanceActions";
+import * as gov from "actions/GovernanceActions";
 
 const PageHeader = () => (
   <div className="proposals-community-header is-row">
@@ -73,12 +73,11 @@ function Proposals() {
     finishedProposals: sel.finishedProposals(state),
     abandonedProposals: sel.abandonedProposals(state)
   }));
-
   if (!politeiaEnabled) {
     return <PoliteiaDisabled />;
   }
 
-  const [ tab, setTab] = useState(getProposalsTab(location));
+  const [ tab, setTab ] = useState(getProposalsTab(location));
   const [ state, send ] = useMachine(fetchMachine, {
     actions: {
       initial: () => {
@@ -107,6 +106,8 @@ function Proposals() {
   useEffect(() => {
     setTab(getProposalsTab(location))
   }, [location]);
+  useEffect(() => {
+  }, [state])
 
   // TODO: Get proposallistpagesize from politeia's request: /v1/policy
   async function onLoadMoreProposals(proposallistpagesize = 20) {
@@ -131,28 +132,29 @@ function Proposals() {
     const proposalBatch = inventory[tab].slice(proposalLength, proposalNumber);
     try {
       send('FETCH');
-      await dispatch(getProposalsAndUpdateVoteStatus(proposalBatch));
+      await dispatch(gov.getProposalsAndUpdateVoteStatus(proposalBatch));
     } catch (err) {
       console.log(err)
     }
   }
 
+  console.log(state)
   return (
     <TabbedPage onChange={onLoadMoreProposals} caret={<div/>} header={<PageHeader />} >
       <Tab path="/governance/proposals/prevote"
-        // component={ () => h(ProposalList, { tsDate, viewProposalDetails: viewProposalDetailsFn, onLoadMoreProposals, noMoreProposals: noMoreProposals.preVote, state, proposals: preVoteProposals }) }
-        component={() => <ProposalList { ...{ send, onLoadMoreProposals, noMoreProposals: noMoreProposals.preVote, state, proposals: preVoteProposals }} /> }
+        component={ h(ProposalList, { send, onLoadMoreProposals, noMoreProposals: noMoreProposals.preVote, state, proposals: preVoteProposals }) }
+        // component={() => getStateComponent(state, preVoteProposals, { onLoadMoreProposals, noMoreProposals: noMoreProposals.preVote, }) }
         link={<ListLink count={preVoteCount}><T id="proposals.statusLinks.preVote" m="In Discussion" /></ListLink> }
       />
       <Tab path="/governance/proposals/activevote"
-        component={() => h(ProposalList, { onLoadMoreProposals, noMoreProposals: noMoreProposals.activeVote, state, proposals: activeVoteProposals }) }
+        component={h(ProposalList, { onLoadMoreProposals, noMoreProposals: noMoreProposals.activeVote, state, proposals: activeVoteProposals }) }
         link={<ListLink count={activeVoteCount}><T id="proposals.statusLinks.underVote" m="Voting" /></ListLink>}
       />
       <Tab path="/governance/proposals/voted"
-        component={() => h(ProposalList, { onLoadMoreProposals, noMoreProposals: noMoreProposals.finishedVote, finishedVote: true, state, proposals: finishedProposals }) }
+        component={h(ProposalList, { onLoadMoreProposals, noMoreProposals: noMoreProposals.finishedVote, finishedVote: true, state, proposals: finishedProposals }) }
         link={<T id="proposals.statusLinks.voted" m="Finished Voting" />} />
       <Tab path="/governance/proposals/abandoned"
-        component={() => h(ProposalList, { onLoadMoreProposals, noMoreProposals: noMoreProposals.abandonedVote, state, proposals: abandonedProposals }) }
+        component={h(ProposalList, { onLoadMoreProposals, noMoreProposals: noMoreProposals.abandonedVote, state, proposals: abandonedProposals }) }
         link={<T id="proposals.statusLinks.abandoned" m="Abandoned" />} />
     </TabbedPage>
   )
