@@ -1,15 +1,19 @@
 import { FormattedMessage as T } from "react-intl";
-import { activeVoteProposals, preVoteProposals, finishedProposals, abandonedProposals } from "connectors";
 import { VotingProgress } from "indicators";
 import { PoliteiaLoading, NoProposals } from "indicators";
 import { VOTESTATUS_ACTIVEVOTE, VOTESTATUS_FINISHEDVOTE } from "actions/GovernanceActions";
 import InfiniteScroll from "react-infinite-scroller";
 import { FormattedRelative } from "shared";
+import { useSelector, useDispatch } from "react-redux";
+import * as sel from "selectors";
+import * as gov from "actions/GovernanceActions";
 
-const ProposalListItem = ({ name, timestamp, token, voteCounts, tsDate, onClick,
+function ProposalListItem ({ name, timestamp, token, voteCounts,
   voteStatus, currentVoteChoice, quorumPass, voteResult, modifiedSinceLastAccess,
-  votingSinceLastAccess, quorumMinimumVotes }) => {
+  votingSinceLastAccess, quorumMinimumVotes }) {
 
+  const tsDate = useSelector(state => sel.tsDate(state));
+  const dispatch = useDispatch();
   const isVoting = voteStatus == VOTESTATUS_ACTIVEVOTE;
   const modifiedClassName =
     (!isVoting && modifiedSinceLastAccess) || (isVoting && votingSinceLastAccess)
@@ -17,7 +21,7 @@ const ProposalListItem = ({ name, timestamp, token, voteCounts, tsDate, onClick,
       : null;
 
   return (
-    <div onClick={() => onClick(token)}
+    <div onClick={() => dispatch(gov.viewProposalDetails(token))}
       className={[ "is-row", "proposal-list-item", voteResult, modifiedClassName ].join(" ")}
     >
       <div className="info">
@@ -45,34 +49,36 @@ const ProposalListItem = ({ name, timestamp, token, voteCounts, tsDate, onClick,
   );
 };
 
-const ProposalList = ({
-  proposals, loading, viewProposalDetails, tsDate, finishedVote, noMoreProposals, onLoadMoreProposals
-}) => (
-  <>
-    { loading
-      ? <div className="proposal-loading-page"><PoliteiaLoading center /></div>
-      : proposals && proposals.length
+const getStateComponent = (state, proposals, props) => {
+  switch (state.value) {
+    case 'idle':
+      return <button onClick={_ => props.send('FETCH')}>Fetch</button>;;
+    case 'loading':
+      return <div className="proposal-loading-page"><PoliteiaLoading center /></div>;
+    case 'success':
+      return (
+        proposals && proposals.length
         ? (
           <InfiniteScroll
-            hasMore={!noMoreProposals}
-            loadMore={onLoadMoreProposals}
+            hasMore={!props.noMoreProposals}
+            loadMore={props.onLoadMoreProposals}
             initialLoad={false}
             useWindow={false}
             threshold={0}
           >
-            <div className={"proposal-list " + (finishedVote && "ended")}>
-              { proposals.map(v => (
-                <ProposalListItem key={v.token} {...v} tsDate={tsDate} onClick={viewProposalDetails} />
-              ))}
+            <div className={"proposal-list " + (props.finishedVote && "ended")}>
+              { proposals.map(v => <ProposalListItem key={v.token} {...v} />) }
             </div>
           </InfiniteScroll>
-        )
-        : <NoProposals />
-    }
-  </>
-);
+        ) : <NoProposals />
+      );
+    default:
+      return null;
+  }
+}
 
-export const ActiveVoteProposals = activeVoteProposals(ProposalList);
-export const PreVoteProposals = preVoteProposals(ProposalList);
-export const FinishedProposal = finishedProposals(ProposalList);
-export const AbandonedProposals = abandonedProposals(ProposalList);
+export function ProposalList ({
+  proposals, state, finishedVote, noMoreProposals, onLoadMoreProposals, send
+}) {
+  return getStateComponent(state, proposals, { send, finishedVote, noMoreProposals, onLoadMoreProposals });
+}

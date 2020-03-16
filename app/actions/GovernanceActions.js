@@ -497,7 +497,7 @@ export const viewProposalDetails = (token) => (dispatch, getState) => {
   if (!details[token] || !details[token].hasDetails) {
     dispatch(getProposalDetails(token));
   }
-  dispatch(pushHistory("/governance/proposals/details/" + token));
+  dispatch(pushHistory("/proposal/details/" + token));
 };
 
 export const UPDATEVOTECHOICE_ATTEMPT = "UPDATEVOTECHOICE_ATTEMPT";
