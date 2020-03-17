@@ -297,7 +297,6 @@ If you have any further questions you can find us at:
 - irc.freenode.net (channel #decred)
 - [webchat](https://webchat.freenode.net/?channels=decred)
 - forum.decred.org
-- decred.slack.com
 
 ## Issue Tracker
 
