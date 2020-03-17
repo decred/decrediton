@@ -59,8 +59,9 @@ export default ({ viewedProposalDetails, goBackHistory,
 
   return (
     <div className="proposal-details">
-      <div className="proposal-details-overview">
+      <div className="proposal-details-overview is-row">
         <div className="proposal-details-overview-info">
+          <InvisibleButton className="go-back-icon-button-small-width" onClick={goBackHistory} />
           <div className="proposal-details-title">{name}</div>
           <div className="proposal-details-token">
             <PoliteiaLink path={"/proposals/"+token}>{token}</PoliteiaLink>
