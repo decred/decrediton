@@ -7,7 +7,7 @@ import { transactionNtfnsStart, accountNtfnsStart } from "./NotificationActions"
 import { refreshStakepoolPurchaseInformation, setStakePoolVoteChoices, getStakepoolStats } from "./StakePoolActions";
 import { getDecodeMessageServiceAttempt } from "./DecodeMessageActions";
 import { checkLnWallet } from "./LNActions";
-import { push as pushHistory, goBack } from "react-router-redux";
+import { push as pushHistory, goBack } from "connected-react-router";
 import { getWalletCfg, getGlobalCfg } from "config";
 import { onAppReloadRequested } from "wallet";
 import { getTransactions as walletGetTransactions } from "wallet/service";

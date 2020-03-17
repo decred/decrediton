@@ -790,7 +790,7 @@ export const renameAccountError = get([ "control", "renameAccountError" ]);
 export const renameAccountSuccess = get([ "control", "renameAccountSuccess" ]);
 export const renameAccountRequestAttempt = get([ "control", "renameAccountRequestAttempt" ]);
 
-export const location = get([ "routing", "location" ]);
+export const location = get([ "router", "location" ]);
 export const isGetStarted = compose(l => /^\/getstarted\//.test(l.pathname), location);
 
 export const showingSidebarMenu = not(isGetStarted);

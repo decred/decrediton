@@ -27,6 +27,7 @@ module.exports = function (api) {
       "@babel/plugin-proposal-optional-chaining",
       "@babel/plugin-proposal-throw-expressions",
       "./scripts/aliasDefaultMessage.js",
+      "react-hot-loader/babel",
       [ "react-intl", { "messagesDir": "app/i18n/extracted" } ],
       [ "module-resolver", {
         "root": [ "./app" ],

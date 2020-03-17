@@ -1,7 +1,7 @@
 import * as sel from "selectors";
 import * as pi from "middleware/politeiaapi";
 import * as wallet from "wallet";
-import { push as pushHistory } from "react-router-redux";
+import { push as pushHistory } from "connected-react-router";
 import { hexReversedHashToArray, reverseRawHash } from "helpers";
 import { setPoliteiaPath, getEligibleTickets, saveEligibleTickets, savePiVote, getProposalWalletVote, removeCachedProposals } from "main_dev/paths";
 

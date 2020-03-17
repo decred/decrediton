@@ -1,8 +1,8 @@
 // @flow
 window.eval = () => { throw new Error("Do not import things that use eval()"); };
-import { render } from "react-dom";
+import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { ConnectedRouter } from "react-router-redux";
+import { ConnectedRouter } from "connected-react-router";
 import { Switch, Route } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import { App } from "containers";
@@ -16,6 +16,7 @@ import { log } from "./wallet";
 import { ipcRenderer } from "electron";
 import { DCR, THEME, LOCALE, NETWORK } from "constants";
 import { getSelectedWallet } from "./main_dev/launch";
+import { AppContainer } from "react-hot-loader";
 
 const globalCfg = getGlobalCfg();
 const locale = globalCfg.get(LOCALE);
@@ -433,13 +434,17 @@ var initialState = {
 const history = createMemoryHistory();
 const store = configureStore(initialState, history);
 
-render(
-  <Provider store={store}>
-    <ConnectedRouter history={history}>
-      <Switch>
-        <Route path="/" component={App} />
-      </Switch>
-    </ConnectedRouter>
-  </Provider>,
+const render = () => ReactDOM.render(
+  <AppContainer>
+    <Provider store={store}>
+      <ConnectedRouter history={history}>
+        <Switch>
+          <Route path="/" component={App} />
+        </Switch>
+      </ConnectedRouter>
+    </Provider>
+  </AppContainer>,
   document.getElementById("root")
 );
+
+render();
