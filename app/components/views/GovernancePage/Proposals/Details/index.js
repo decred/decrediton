@@ -37,7 +37,7 @@ class ProposalDetails extends React.Component {
     if (getProposalError) return <ProposalError error={getProposalError} />;
 
     let text = "";
-    viewedProposalDetails.files.forEach(f => {
+    viewedProposalDetails && viewedProposalDetails.files.forEach(f => {
       if (f.name === "index.md") {
         text += politeiaMarkdownIndexMd(f.payload);
       }

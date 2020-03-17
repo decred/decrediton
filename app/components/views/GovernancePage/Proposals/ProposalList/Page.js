@@ -61,7 +61,7 @@ const ProposalList = ({
             threshold={0}
           >
             <div className={"proposal-list " + (finishedVote && "ended")}>
-              {proposals.map(v => (
+              { proposals.map(v => (
                 <ProposalListItem key={v.token} {...v} tsDate={tsDate} onClick={viewProposalDetails} />
               ))}
             </div>

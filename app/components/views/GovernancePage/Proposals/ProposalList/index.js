@@ -43,18 +43,25 @@ class ProposalsList extends React.Component {
     };
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  shouldComponentUpdate(nextProps) {
+    const tab = this.getProposalsTab();
+    if (this.props.proposalsList[tab].length !== nextProps.proposalsList[tab].length) {
+      return true;
+    }
+    if (nextProps.location !== this.props.location) {
+      return true;
+    }
+    return false;
+  }
+
+  componentDidUpdate(prevProps) {
     const { location } = this.props;
     const { noMoreProposals } = this.state;
     const tab = this.getProposalsTab();
 
-    if (prevProps.location === location) {
-      return;
+    if (prevProps.location !== location && !noMoreProposals[tab]) {
+      this.onLoadMoreProposals();
     }
-    if (noMoreProposals[tab] === prevState[tab]) {
-      return;
-    }
-    this.onLoadMoreProposals();
   }
 
   getProposalsTab() {

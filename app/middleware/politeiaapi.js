@@ -2,6 +2,8 @@
 import axios from "axios";
 
 // Uncomment this and comment the following definition to test locally.
+// Also uncomment a code part at externalRequests.js, as politeia is a ssl-enabled
+// service and decrediton will fail to fetch locally with a self signed cert.
 // export const POLITEIA_URL_TESTNET = "https://localhost:4443";
 
 // Politeia doc source:

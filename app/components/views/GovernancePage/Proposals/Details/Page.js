@@ -17,7 +17,7 @@ export default ({ viewedProposalDetails, goBackHistory,
 {
   const { name, token, voteStatus, proposalStatus, voteOptions, voteCounts,
     creator, timestamp, endTimestamp, currentVoteChoice, hasEligibleTickets,
-    version, quorumMinimumVotes, walletEligibleTickets } = viewedProposalDetails;
+    version, quorumMinimumVotes, walletEligibleTickets } = () => viewedProposalDetails || {};
 
   const getVoteInfo = ({
     voteStatus, voteOptions, onUpdateVoteChoice, onVoteOptionSelected, newVoteChoice,
@@ -44,7 +44,7 @@ export default ({ viewedProposalDetails, goBackHistory,
     return <ProposalNotVoting />;
   };
 
-  const eligibleTicketCount = viewedProposalDetails.walletEligibleTickets && viewedProposalDetails.walletEligibleTickets.length;
+  const eligibleTicketCount = viewedProposalDetails && viewedProposalDetails.walletEligibleTickets && viewedProposalDetails.walletEligibleTickets.length;
   let voteInfo = null;
 
   // Check if proposal is abandoned. If it is not we check its vote status

@@ -1,9 +1,16 @@
 import { connect } from "react-redux";
-import { selectorMap } from "../fp";
-import * as sel from "../selectors";
+import { bindActionCreators } from "redux";
+import { selectorMap } from "fp";
+import * as ga from "actions/GovernanceActions";
+import * as sel from "selectors";
 
 const mapStateToProps = selectorMap({
-  expandSideBar: sel.expandSideBar
+  expandSideBar: sel.expandSideBar,
+  politeiaEnabled: sel.politeiaEnabled
 });
 
-export default connect(mapStateToProps);
+const mapDispatchToProps = dispatch => bindActionCreators({
+  compareInventory: ga.compareInventory
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps);
