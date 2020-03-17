@@ -1,4 +1,4 @@
-import { ProposalList } from "./Page";
+import { ProposalList } from "./ProposalsList";
 import PoliteiaDisabled from "./PoliteiaDisabled";
 import { useSelector, useDispatch } from 'react-redux';
 import { setLastPoliteiaAccessTime } from "actions/WalletLoaderActions";

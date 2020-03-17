@@ -53,7 +53,7 @@ function ProposalListItem ({ name, timestamp, token, voteCounts,
 };
 
 // TODO: Get proposallistpagesize from politeia's request: /v1/policy
-async function onLoadMoreProposals(proposals, inventory, getProposalsAndUpdateVoteStatus, proposallistpagesize = 2) {
+async function onLoadMoreProposals(proposals, inventory, getProposalsAndUpdateVoteStatus, proposallistpagesize = 20) {
   const proposalLength = proposals.length;
   let proposalNumber;
   if (inventory.length <= proposallistpagesize) {
