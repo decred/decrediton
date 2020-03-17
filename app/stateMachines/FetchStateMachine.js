@@ -8,21 +8,21 @@ export const fetchMachine = Machine({
   },
   states: {
     idle: {
-      entry: ["initial"],
+      entry: [ "initial" ],
       on: {
         FETCH: "loading",
         RESOLVE: "success"
       }
     },
     loading: {
-      entry: ["load"],
+      entry: [ "load" ],
       on: {
         RESOLVE: "success",
         REJECT: "failure"
       }
     },
     success: {
-      entry: ["onSucess"],
+      entry: [ "onSucess" ],
       on: {
         FETCH: "loading"
       }
@@ -32,7 +32,7 @@ export const fetchMachine = Machine({
         RETRY: {
           target: "loading",
           actions: assign({
-            retries: (context, event) => context.retries + 1
+            retries: (context) => context.retries + 1
           })
         }
       }

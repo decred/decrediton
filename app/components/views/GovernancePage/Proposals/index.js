@@ -1,11 +1,11 @@
 import { ProposalList } from "./ProposalsList";
 import PoliteiaDisabled from "./PoliteiaDisabled";
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from "react-redux";
 import { setLastPoliteiaAccessTime } from "actions/WalletLoaderActions";
 import { FormattedMessage as T } from "react-intl";
 import { PoliteiaLink as PiLink } from "shared";
 import { TabbedPage, TabbedPageTab as Tab } from "layout";
-import { createElement as h, useState, useEffect, useReducer } from "react";
+import { createElement as h, useEffect, useReducer } from "react";
 import * as sel from "selectors";
 
 const PageHeader = () => (
@@ -51,14 +51,12 @@ function getProposalsTab(location) {
 function Proposals() {
   const dispatch = useDispatch();
   const {
-    inventory, activeVoteCount, preVoteCount, location, politeiaEnabled, proposalsList
+    activeVoteCount, preVoteCount, location, politeiaEnabled
   } = useSelector(state => ({
     politeiaEnabled: sel.politeiaEnabled(state),
-    inventory: sel.inventory(state),
     activeVoteCount: sel.newActiveVoteProposalsCount(state),
     preVoteCount: sel.newPreVoteProposalsCount(state),
-    location: sel.location(state),
-    proposalsList: sel.proposals(state)
+    location: sel.location(state)
   }));
   if (!politeiaEnabled) {
     return <PoliteiaDisabled />;
@@ -69,8 +67,8 @@ function Proposals() {
   }, []);
   useEffect(() => {
     const tab = getProposalsTab(location);
-    setTab(tab)
-  }, [location]);
+    setTab(tab);
+  }, [ location ]);
 
   return (
     <TabbedPage caret={<div/>} header={<PageHeader />} >
@@ -93,7 +91,7 @@ function Proposals() {
         key="abandoned"
         link={<T id="proposals.statusLinks.abandoned" m="Abandoned" />} />
     </TabbedPage>
-  )
+  );
 }
 
 export default Proposals;

@@ -4,7 +4,7 @@ import { PoliteiaLoading, NoProposals } from "indicators";
 import { VOTESTATUS_ACTIVEVOTE, VOTESTATUS_FINISHEDVOTE } from "actions/GovernanceActions";
 import InfiniteScroll from "react-infinite-scroller";
 import { FormattedRelative } from "shared";
-import { useState, useEffect, useReducer } from "react";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchMachine } from "stateMachines/FetchStateMachine";
 import { useMachine } from "@xstate/react";
@@ -50,7 +50,7 @@ function ProposalListItem ({ name, timestamp, token, voteCounts,
       </div>
     </div>
   );
-};
+}
 
 // TODO: Get proposallistpagesize from politeia's request: /v1/policy
 async function onLoadMoreProposals(proposals, inventory, getProposalsAndUpdateVoteStatus, proposallistpagesize = 20) {
@@ -66,7 +66,7 @@ async function onLoadMoreProposals(proposals, inventory, getProposalsAndUpdateVo
   try {
     await getProposalsAndUpdateVoteStatus(proposalBatch);
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
 }
 
@@ -100,8 +100,8 @@ export function ProposalList ({ finishedVote, tab }) {
           return send("RESOLVE");
         }
         onLoadMoreProposals(proposals[tab], inventory[tab], getProposalsAndUpdateVoteStatus).then(res => {
-          send({ type: 'RESOLVE', data: res });
-        })
+          send({ type: "RESOLVE", data: res });
+        });
       }
     }
   });
@@ -109,13 +109,13 @@ export function ProposalList ({ finishedVote, tab }) {
   // console.log(noMoreProposals)
   const proposalTab = proposals[tab];
   switch (state.value) {
-    case 'idle':
-      return <button onClick={_ => send('FETCH')}>Fetch</button>;
-    case 'loading':
-      return <div className="proposal-loading-page"><PoliteiaLoading center /></div>;
-    case 'success':
-      return (
-        proposalTab && proposalTab.length
+  case "idle":
+    return <button onClick={ () => send("FETCH")}>Fetch</button>;
+  case "loading":
+    return <div className="proposal-loading-page"><PoliteiaLoading center /></div>;
+  case "success":
+    return (
+      proposalTab && proposalTab.length
         ? (
           <InfiniteScroll
             hasMore={!noMoreProposals}
@@ -129,8 +129,8 @@ export function ProposalList ({ finishedVote, tab }) {
             </div>
           </InfiniteScroll>
         ) : <NoProposals />
-      );
-    default:
-      return null;
+    );
+  default:
+    return null;
   }
 }
