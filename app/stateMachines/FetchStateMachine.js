@@ -22,7 +22,6 @@ export const fetchMachine = Machine({
       }
     },
     success: {
-      entry: [ "onSucess" ],
       on: {
         FETCH: "loading"
       }

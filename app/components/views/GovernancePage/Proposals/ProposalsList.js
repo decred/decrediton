@@ -94,9 +94,6 @@ export function ProposalList ({ finishedVote, tab }) {
         }
         send("RESOLVE");
       },
-      onSucess: () => {
-        // console.log("aqui no success")
-      },
       load: () => {
         if (!inventory || !inventory[tab]) return;
         if (proposals[tab].length >= inventory[tab].length) {
@@ -109,14 +106,17 @@ export function ProposalList ({ finishedVote, tab }) {
       }
     }
   });
-  const previous = usePrevious({ proposals });
+  const previous = usePrevious({ proposals, tab });
   useEffect(() => {
     if (!previous || !previous.proposals[tab]) return;
-    // if proposals list is bigger goes to success.
+    if (previous.tab !== tab) return;
+    // if proposals list is bigger goes to success. This is needed because
+    // if enabling politeia decrediton gets the inventory and initial batch
+    // in the same request.
     if (proposals[tab].length > previous.proposals[tab].length) {
       send("RESOLVE");
     }
-  }, [proposals]);
+  }, [ proposals ]);
 
   // console.log(noMoreProposals)
   const proposalTab = proposals[tab];

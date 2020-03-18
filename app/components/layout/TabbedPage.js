@@ -3,7 +3,7 @@ import { isArray } from "util";
 import { RoutedTabsHeader, RoutedTab } from "shared";
 import { TransitionMotion, spring } from "react-motion";
 import theme from "theme";
-import { createElement as h, cloneElement as k, useEffect, useState, useRef, useReducer } from "react";
+import { createElement as h, cloneElement as k, useEffect, useState, useReducer } from "react";
 import { useSelector } from "react-redux";
 import * as sel from "selectors";
 import { usePrevious } from "helpers";

@@ -90,7 +90,7 @@ export default function governance(state = {}, action) {
   case REMOVED_PROPOSALS_FROM_LIST:
     return { ...state,
       proposals: action.proposals
-    }
+    };
   default:
     return state;
   }
