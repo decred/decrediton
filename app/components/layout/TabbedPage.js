@@ -6,20 +6,13 @@ import theme from "theme";
 import { createElement as h, cloneElement as k, useEffect, useState, useRef, useReducer } from "react";
 import { useSelector } from "react-redux";
 import * as sel from "selectors";
+import { usePrevious } from "helpers";
 
 export const TabbedPageTab = ({ children }) => children;
 TabbedPageTab.propTypes = {
   path: PropTypes.string.isRequired,
   link: PropTypes.node.isRequired
 };
-
-function usePrevious(value) {
-  const ref = useRef();
-  useEffect(() => {
-    ref.current = value;
-  });
-  return ref.current;
-}
 
 function getTabs(children) {
   if (!isArray(children)) children = [ children ];

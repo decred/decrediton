@@ -49,7 +49,6 @@ function getProposalsTab(location) {
 }
 
 function Proposals() {
-  const dispatch = useDispatch();
   const {
     activeVoteCount, preVoteCount, location, politeiaEnabled
   } = useSelector(state => ({
@@ -58,10 +57,11 @@ function Proposals() {
     preVoteCount: sel.newPreVoteProposalsCount(state),
     location: sel.location(state)
   }));
-  if (!politeiaEnabled) {
-    return <PoliteiaDisabled />;
-  }
+  // TODO move reducers which only control local states from reducer/governance.js
+  // to here.
   const [ tab, setTab ] = useReducer(() => getProposalsTab(location));
+
+  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(setLastPoliteiaAccessTime());
   }, []);
@@ -70,6 +70,9 @@ function Proposals() {
     setTab(tab);
   }, [ location ]);
 
+  if (!politeiaEnabled) {
+    return <PoliteiaDisabled />;
+  }
   return (
     <TabbedPage caret={<div/>} header={<PageHeader />} >
       <Tab path="/governance/proposals/prevote"

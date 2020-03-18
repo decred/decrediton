@@ -22,21 +22,33 @@ export default function governance(state = {}, action) {
       inventory: action.inventory,
       getProposalsAttempt: false
     };
-  case COMPARE_INVENTORY_SUCCESS:
+  case CLOSEWALLET_SUCCESS:
     return { ...state,
-      inventory: action.inventory
+      getProposalsAttempt: false,
+      getProposalError: null,
+      proposals: {}
     };
-  case REMOVED_PROPOSALS_FROM_LIST:
+  case GETPROPROSAL_UPDATEVOTESTATUS_ATTEMPT:
     return { ...state,
-      proposals: action.proposals
+      getProposalsAttempt: true
+    };
+  case GETPROPROSAL_UPDATEVOTESTATUS_SUCCESS:
+    return { ...state,
+      proposals: { ...action.proposals },
+      getProposalsAttempt: false
+    };
+  case GETPROPROSAL_UPDATEVOTESTATUS_FAILED:
+    return { ...state,
+      getProposalsAttempt: false,
+      getProposalError: state.error
     };
   case GETPROPOSAL_ATTEMPT:
-    return { ...state, getProposalAttempt: true, getProposalError: null };
+    return { ...state, getProposalsAttempt: true, getProposalError: null };
   case GETPROPOSAL_FAILED:
-    return { ...state, getProposalAttempt: false, getProposalError: state.error };
+    return { ...state, getProposalsAttempt: false, getProposalError: state.error };
   case GETPROPOSAL_SUCCESS:
     return { ...state,
-      getProposalAttempt: false,
+      getProposalsAttempt: false,
       proposalsDetails: { ...state.proposalsDetails,
         [action.token]: { ...action.proposal }
       },
@@ -56,27 +68,6 @@ export default function governance(state = {}, action) {
 
   case UPDATEVOTECHOICE_FAILED:
     return { ...state, updateVoteChoiceAttempt: false };
-  case CLOSEWALLET_SUCCESS:
-    return { ...state,
-      getProposalAttempt: false,
-      getProposalsAttempt: false,
-      getProposalError: null,
-      proposals: {}
-    };
-  case GETPROPROSAL_UPDATEVOTESTATUS_ATTEMPT:
-    return { ...state,
-      getProposalsAttempt: true
-    };
-  case GETPROPROSAL_UPDATEVOTESTATUS_SUCCESS:
-    return { ...state,
-      proposals: { ...action.proposals },
-      getProposalsAttempt: false
-    };
-  case GETPROPROSAL_UPDATEVOTESTATUS_FAILED:
-    return { ...state,
-      getProposalsAttempt: false,
-      getProposalError: state.error
-    };
   case WALLETREADY:
     return { ...state,
       lastPoliteiaAccessTime: action.lastPoliteiaAccessTime,
@@ -92,6 +83,14 @@ export default function governance(state = {}, action) {
         finishedVote: []
       }
     };
+  case COMPARE_INVENTORY_SUCCESS:
+    return { ...state,
+      inventory: action.inventory
+    };
+  case REMOVED_PROPOSALS_FROM_LIST:
+    return { ...state,
+      proposals: action.proposals
+    }
   default:
     return state;
   }

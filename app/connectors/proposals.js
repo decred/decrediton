@@ -10,14 +10,13 @@ const mapStateToProps = selectorMap({
   politeiaEnabled: sel.politeiaEnabled,
   viewedProposalDetails: sel.viewedProposalDetails,
   proposalsDetails: sel.proposalsDetails,
-  getProposalAttempt: sel.getProposalAttempt,
   getProposalError: sel.getProposalError,
   hasTickets: sel.hasTickets,
   updateVoteChoiceAttempt: sel.updateVoteChoiceAttempt,
   lastVettedFetchTime: sel.lastVettedFetchTime,
   tsDate: sel.tsDate,
   inventory: sel.inventory,
-  loading: sel.initialProposalLoading,
+  loading: sel.getProposalsAttempt,
   proposalsList: sel.proposals,
   proposallistpagesize: sel.proposallistpagesize
 });

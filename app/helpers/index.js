@@ -1,4 +1,4 @@
-import { createElement as h } from "react";
+import { createElement as h, useRef, useEffect } from "react";
 export * from "./dateFormat";
 export * from "./strings";
 export * from "./byteActions";
@@ -21,3 +21,12 @@ export const showCheck = C => {
   Comp.displayName = `ShowChecked: ${ C.displayName || C.name || C }`;
   return Comp;
 };
+
+// usePrevious keeps reference for later comparing when hook had have change.
+export const usePrevious = (value) => {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+}

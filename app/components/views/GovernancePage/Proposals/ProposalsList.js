@@ -4,12 +4,13 @@ import { PoliteiaLoading, NoProposals } from "indicators";
 import { VOTESTATUS_ACTIVEVOTE, VOTESTATUS_FINISHEDVOTE } from "actions/GovernanceActions";
 import InfiniteScroll from "react-infinite-scroller";
 import { FormattedRelative } from "shared";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchMachine } from "stateMachines/FetchStateMachine";
 import { useMachine } from "@xstate/react";
 import * as sel from "selectors";
 import * as gov from "actions/GovernanceActions";
+import { usePrevious } from "helpers";
 
 function ProposalListItem ({ name, timestamp, token, voteCounts,
   voteStatus, currentVoteChoice, quorumPass, voteResult, modifiedSinceLastAccess,
@@ -74,13 +75,15 @@ export function ProposalList ({ finishedVote, tab }) {
   const [ noMoreProposals, setNoMore ] = useState(false);
   const { proposals, inventory } = useSelector(state => ({
     proposals: sel.proposals(state),
-    inventory: sel.inventory(state)
+    inventory: sel.inventory(state),
+    loading: sel.getProposalsAttempt(state)
   }));
   const dispatch = useDispatch();
   const getProposalsAndUpdateVoteStatus = (proposalBatch) => dispatch(gov.getProposalsAndUpdateVoteStatus(proposalBatch));
   const [ state, send ] = useMachine(fetchMachine, {
     actions: {
       initial: () => {
+        if (!inventory || !inventory[tab]) return send("FETCH");
         if (inventory[tab].length === 0) return;
         if (proposals[tab].length === 0) {
           return send("FETCH");
@@ -95,6 +98,7 @@ export function ProposalList ({ finishedVote, tab }) {
         // console.log("aqui no success")
       },
       load: () => {
+        if (!inventory || !inventory[tab]) return;
         if (proposals[tab].length >= inventory[tab].length) {
           setNoMore(true);
           return send("RESOLVE");
@@ -105,6 +109,14 @@ export function ProposalList ({ finishedVote, tab }) {
       }
     }
   });
+  const previous = usePrevious({ proposals });
+  useEffect(() => {
+    if (!previous || !previous.proposals[tab]) return;
+    // if proposals list is bigger goes to success.
+    if (proposals[tab].length > previous.proposals[tab].length) {
+      send("RESOLVE");
+    }
+  }, [proposals]);
 
   // console.log(noMoreProposals)
   const proposalTab = proposals[tab];
