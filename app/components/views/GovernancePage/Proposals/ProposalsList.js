@@ -122,7 +122,7 @@ export function ProposalList ({ finishedVote, tab }) {
   const proposalTab = proposals[tab];
   switch (state.value) {
   case "idle":
-    return <button onClick={ () => send("FETCH")}>Fetch</button>;
+    return <NoProposals />;
   case "loading":
     return <div className="proposal-loading-page"><PoliteiaLoading center /></div>;
   case "success":
