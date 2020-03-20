@@ -26,7 +26,8 @@ export default function governance(state = {}, action) {
     return { ...state,
       getProposalsAttempt: false,
       getProposalError: null,
-      proposals: {}
+      proposals: null,
+      inventory: null
     };
   case GETPROPROSAL_UPDATEVOTESTATUS_ATTEMPT:
     return { ...state,

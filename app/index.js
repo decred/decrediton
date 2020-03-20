@@ -367,13 +367,8 @@ var initialState = {
   },
   governance: {
     getProposalsAttempt: false,
-    inventory: [],
-    proposals: {
-      activeVote: [],
-      abandonedVote: [],
-      preVote: [],
-      finishedVote: []
-    },
+    inventory: null,
+    proposals: null,
     proposalsDetails: {},
     getProposalError: null,
     lastVettedFetchTime: new Date(0), // time when vetted proposals were requested

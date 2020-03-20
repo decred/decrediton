@@ -83,7 +83,7 @@ export function ProposalList ({ finishedVote, tab }) {
   const [ state, send ] = useMachine(fetchMachine, {
     actions: {
       initial: () => {
-        if (!inventory || !inventory[tab]) return send("FETCH");
+        if (!proposals || !proposals[tab] || !inventory || !inventory[tab]) return send("FETCH");
         if (inventory[tab].length === 0) return;
         if (proposals[tab].length === 0) {
           return send("FETCH");
@@ -118,7 +118,6 @@ export function ProposalList ({ finishedVote, tab }) {
     }
   }, [ proposals ]);
 
-  // console.log(noMoreProposals)
   const proposalTab = proposals[tab];
   switch (state.value) {
   case "idle":
