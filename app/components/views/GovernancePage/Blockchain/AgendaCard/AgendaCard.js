@@ -1,5 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
-import { AgendaFinishedIndicator } from "./helpers";
+import { AgendaFinishedIndicator } from "../helpers";
 import "style/AgendaCard.less";
 
 // Currently removing percent progress until a solution to populate is found
@@ -15,20 +15,20 @@ const AgendaCard = ({
   )}>
     <div className="agenda-card-bottom">
       {agenda.finished ? (
-        <AgendaFinishedIndicator />
+        <AgendaFinishedIndicator passed={agenda.passed} />
       ) : (
         <div className="agenda-card-indicator-pending">
           <T id="agenda.card.inProgressIndicator" m="In Progress" />
         </div>
       )}
       <div className="agenda-card-bottom-cfg">
-        {agenda.getDescription()} <span className="agenda-card-bottom-cfg-last">
+        {agenda.description} <span className="agenda-card-bottom-cfg-last">
           <T id="agenda.overview.idLabel" m="Agenda ID" />:
-          <span className="agenda-card-bottom-cfg-last-bold">{agenda.getId()}</span></span>
+          <span className="agenda-card-bottom-cfg-last-bold">{agenda.name}</span></span>
       </div>
     </div>
     <div className="agenda-card-top">
-      <div className="agenda-card-name">{agenda.getId()}</div>
+      <div className="agenda-card-name">{agenda.name}</div>
       <div className="agenda-card-top-preference">
         Preference: <span className="agenda-card-text-highlight-small">{selectedChoice}</span>
       </div>

@@ -14,21 +14,18 @@ class VotingPrefs extends React.Component {
   }
 
   render() {
-    return (
-      <VotingPrefsPage
-        {...{
-          ...this.props,
-          ...this.state,
-          stakePool: this.getStakePool(),
-          ...substruct({
-            getAgendaSelectedChoice: null,
-            onShowAgenda: null,
-            onCloseAgenda: null,
-            onUpdateVotePreference: null
-          }, this)
-        }}
-      />
-    );
+    return <VotingPrefsPage
+      {...{
+        ...this.props,
+        ...this.state,
+        stakePool: this.getStakePool(),
+        ...substruct({
+          getAgendaSelectedChoice: null,
+          onShowAgenda: null,
+          onCloseAgenda: null
+        }, this)
+      }}
+    />;
   }
 
   getStakePool() {
@@ -40,21 +37,17 @@ class VotingPrefs extends React.Component {
 
   getAgendaSelectedChoice(agenda) {
     return get([ "choiceId" ], find(
-      compose(eq(agenda.getId()), get([ "agendaId" ])),
+      compose(eq(agenda.name), get([ "agendaId" ])),
       get("VoteChoices", this.getStakePool()) || []
     )) || "abstain";
   }
 
-  onShowAgenda(selectedAgenda) {
-    this.setState({ selectedAgenda });
+  onShowAgenda(index) {
+    this.setState({ selectedAgenda: index });
   }
 
   onCloseAgenda() {
     this.setState({ selectedAgenda: null });
-  }
-
-  onUpdateVotePreference(agendaId, choiceId) {
-    this.props.onUpdateVotePreference(agendaId, choiceId);
   }
 }
 

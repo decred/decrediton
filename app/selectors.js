@@ -693,12 +693,6 @@ const getTicketPriceResponse = get([ "grpc", "getTicketPriceResponse" ]);
 
 export const ticketPrice = compose(r => r ? r.getTicketPrice() : 0, getTicketPriceResponse);
 
-const getAgendasResponse = get([ "grpc", "getAgendasResponse" ]);
-export const agendas = createSelector(
-  [ getAgendasResponse ],
-  response => response ? response.getAgendasList() : EMPTY_ARRAY
-);
-
 const requiredStakepoolAPIVersion = get([ "grpc", "requiredStakepoolAPIVersion" ]);
 
 export const currentStakePoolConfigError = get([ "stakepool", "currentStakePoolConfigError" ]);
@@ -925,6 +919,57 @@ export const politeiaEnabled = compose(
 export const dcrdataEnabled = compose(
   l => l.indexOf(EXTERNALREQUEST_DCRDATA) > -1,
   allowedExternalRequests
+);
+
+const getAgendasResponse = get([ "grpc", "getAgendasResponse" ]);
+
+const currentAgenda = createSelector(
+  [ getAgendasResponse ],
+  response => response ? response.getAgendasList()[0] : EMPTY_ARRAY
+);
+
+const allAgendasNotNormalized = get([ "grpc", "allAgendas" ]);
+
+// allAgendasVerify verifies if dcrdata is enabled. If it is not we only return
+// the current agenda which we got from dcrwallet.
+const allAgendasVerify = createSelector(
+  [ currentAgenda, dcrdataEnabled, allAgendasNotNormalized ],
+  // If allAgendas length is 0 we return the agenda from dcrwallet, as dcrdata
+  // may be down.
+  (currentAgenda, dcrdataEnabled, allAgendas) => !dcrdataEnabled || allAgendas.length === 0  ? [ currentAgenda ] : allAgendas
+);
+
+const normalizeAgenda = createSelector(
+  [ currentAgenda ],
+  currentAgenda => {
+    return agenda => {
+      // When agenda has getId function (this happens when dcrdata privacy is disabled
+      // or a possible dcrdata crash) or the agenda is the same for dcrwallet and dcrdata.
+      // We use the information from our dcrwallet grpc request.
+      if (typeof agenda.getId === "function" || currentAgenda.getId() === agenda.name) {
+        currentAgenda.isCurrent = true;
+        const agendaObj = {};
+        agendaObj.name = currentAgenda.getId();
+        agendaObj.choices = currentAgenda.getChoicesList();
+        agendaObj.description = currentAgenda.getDescription();
+        agendaObj.isCurrent = true;
+        agendaObj.finished = agenda.status === "finished";
+        agendaObj.passed = !!(agenda.activated);
+        return agendaObj;
+      }
+      agenda.isCurrent = false;
+      agenda.finished = agenda.status === "finished";
+      agenda.passed = !!(agenda.activated);
+      // right now we left it empty as there is no easy way to get past vote choices.
+      agenda.choices = [];
+
+      return agenda;
+    };
+  });
+
+export const allAgendas = createSelector(
+  [ allAgendasVerify, normalizeAgenda ],
+  (agendas, cb) => agendas.map(cb)
 );
 
 export const treasuryBalance = get([ "grpc", "treasuryBalance" ]);

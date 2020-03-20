@@ -1,16 +1,15 @@
 import AgendaCard from "./AgendaCard";
-import AgendaOverview from "./AgendaOverview";
 import { ExternalLink } from "shared";
 import { FormattedMessage as T } from "react-intl";
 
 const VotingPrefsPage = ({
-  agendas,
   stakePool,
   selectedAgenda,
   getAgendaSelectedChoice,
   onShowAgenda,
   onCloseAgenda,
-  onUpdateVotePreference
+  onUpdateVotePreference,
+  allAgendas
 }) => (
   <>
     <div className="consensus-changes-header is-row">
@@ -26,26 +25,11 @@ const VotingPrefsPage = ({
       </div>
     </div>
     <div className="agenda-wrapper">
-      {selectedAgenda ? (
-        <AgendaOverview
-          agenda={selectedAgenda}
-          selectedChoice={getAgendaSelectedChoice(selectedAgenda)}
-          closeCurrentAgenda={onCloseAgenda}
-          updatePreferences={onUpdateVotePreference}
-          disabled={!stakePool || !stakePool.isVersionValid}
-        />
-      ) : null}
-      {(agendas.length > 0) ?
-        agendas.map(agenda =>
-          (!selectedAgenda || selectedAgenda.getId() !== agenda.getId()) &&
-            <AgendaCard
-              key={agenda.getId()}
-              agenda={agenda}
-              selectedChoice={getAgendaSelectedChoice(agenda)}
-              onClick={() => onShowAgenda(agenda)}
-            />
-        )
-        : (
+      { allAgendas.length > 0 ?
+        allAgendas.map((agenda, index) => <AgendaCard key={agenda.name}
+          {...{ agenda, onCloseAgenda, onUpdateVotePreference, stakePool, selectedChoice: getAgendaSelectedChoice(agenda), showVoteChoice: index === selectedAgenda }}
+          onClick={() => onShowAgenda(index)}
+        /> ) : (
           <div>
             <T id="votingPreferences.noAgenda" m="There are currently no agendas for voting." />
           </div>
