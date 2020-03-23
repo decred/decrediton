@@ -108,7 +108,7 @@ export function ProposalList ({ finishedVote, tab }) {
   });
   const previous = usePrevious({ proposals, tab });
   useEffect(() => {
-    if (!previous || !previous.proposals[tab]) return;
+    if (!previous || !previous.proposals || !previous.proposals[tab]) return;
     if (previous.tab !== tab) return;
     // if proposals list is bigger goes to success. This is needed because
     // if enabling politeia decrediton gets the inventory and initial batch
@@ -118,7 +118,6 @@ export function ProposalList ({ finishedVote, tab }) {
     }
   }, [ proposals ]);
 
-  const proposalTab = proposals[tab];
   switch (state.value) {
   case "idle":
     return <NoProposals />;
@@ -126,7 +125,7 @@ export function ProposalList ({ finishedVote, tab }) {
     return <div className="proposal-loading-page"><PoliteiaLoading center /></div>;
   case "success":
     return (
-      proposalTab && proposalTab.length
+      proposals[tab] && proposals[tab].length
         ? (
           <InfiniteScroll
             hasMore={!noMoreProposals}
@@ -136,7 +135,7 @@ export function ProposalList ({ finishedVote, tab }) {
             threshold={300}
           >
             <div className={"proposal-list " + (finishedVote && "ended")}>
-              { proposalTab.map(v => <ProposalListItem key={v.token} {...v} />) }
+              { proposals[tab].map(v => <ProposalListItem key={v.token} {...v} />) }
             </div>
           </InfiniteScroll>
         ) : <NoProposals />
