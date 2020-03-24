@@ -6,7 +6,7 @@ import { GETNEXTADDRESS_ATTEMPT, GETNEXTADDRESS_FAILED, GETNEXTADDRESS_SUCCESS,
   IMPORTSCRIPT_ATTEMPT, IMPORTSCRIPT_FAILED, IMPORTSCRIPT_SUCCESS, IMPORTSCRIPT_SUCCESS_PURCHASE_TICKETS,
   CHANGEPASSPHRASE_ATTEMPT, CHANGEPASSPHRASE_FAILED, CHANGEPASSPHRASE_SUCCESS,
   FUNDTX_ATTEMPT, FUNDTX_FAILED, FUNDTX_SUCCESS,
-  CLEARTX,
+  CLEARTX, CREATE_UNSIGNEDTICKETS_SUCCESS,
   SIGNTX_ATTEMPT, SIGNTX_FAILED, SIGNTX_SUCCESS,
   PUBLISHTX_ATTEMPT, PUBLISHTX_FAILED, PUBLISHTX_SUCCESS,
   PURCHASETICKETS_ATTEMPT, PURCHASETICKETS_FAILED, PURCHASETICKETS_SUCCESS,
@@ -233,6 +233,13 @@ export default function control(state = {}, action) {
       importScriptRequestAttempt: false
     };
   case PURCHASETICKETS_SUCCESS:
+    return { ...state,
+      purchaseTicketsError: null,
+      purchaseTicketsRequestAttempt: false,
+      purchaseTicketsResponse: action.purchaseTicketsResponse,
+      numTicketsToBuy: 1
+    };
+  case CREATE_UNSIGNEDTICKETS_SUCCESS:
     return { ...state,
       purchaseTicketsError: null,
       purchaseTicketsRequestAttempt: false,

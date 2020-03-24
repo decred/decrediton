@@ -83,10 +83,10 @@ export const publishTransaction = (walletService, tx) => new Promise((ok, fail) 
 
 export const purchaseTickets = (
   walletService, passphrase, accountNum, spendLimit, requiredConf, numTickets, expiry, ticketFee,
-  txFee, stakepool
+  txFee, stakepool, signTx
 ) => new Promise((ok, fail) => {
   const request = new api.PurchaseTicketsRequest();
-  request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
+  signTx && request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
   request.setAccount(accountNum);
   request.setSpendLimit(spendLimit);
   request.setRequiredConfirmations(requiredConf);
@@ -97,6 +97,7 @@ export const purchaseTickets = (
   request.setExpiry(expiry);
   request.setTxFee(txFee);
   request.setTicketFee(ticketFee);
+  request.setDontSignTx(!signTx);
   walletService.purchaseTickets(request, (err, res) => err ? fail(err) : ok(res));
 });
 

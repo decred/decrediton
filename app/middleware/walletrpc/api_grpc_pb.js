@@ -917,6 +917,28 @@ function deserialize_walletrpc_RpcSyncResponse(buffer_arg) {
   return api_pb.RpcSyncResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_walletrpc_RunAccountMixerRequest(arg) {
+  if (!(arg instanceof api_pb.RunAccountMixerRequest)) {
+    throw new Error('Expected argument of type walletrpc.RunAccountMixerRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_RunAccountMixerRequest(buffer_arg) {
+  return api_pb.RunAccountMixerRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_RunAccountMixerResponse(arg) {
+  if (!(arg instanceof api_pb.RunAccountMixerResponse)) {
+    throw new Error('Expected argument of type walletrpc.RunAccountMixerResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_RunAccountMixerResponse(buffer_arg) {
+  return api_pb.RunAccountMixerResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_walletrpc_RunTicketBuyerRequest(arg) {
   if (!(arg instanceof api_pb.RunTicketBuyerRequest)) {
     throw new Error('Expected argument of type walletrpc.RunTicketBuyerRequest');
@@ -1573,7 +1595,7 @@ var VersionServiceService = exports.VersionServiceService = {
 exports.VersionServiceClient = grpc.makeGenericClientConstructor(VersionServiceService);
 var WalletServiceService = exports.WalletServiceService = {
   // Queries
-  ping: {
+ping: {
     path: '/walletrpc.WalletService/Ping',
     requestStream: false,
     responseStream: false,
@@ -1750,7 +1772,7 @@ var WalletServiceService = exports.WalletServiceService = {
     responseDeserialize: deserialize_walletrpc_BestBlockResponse,
   },
   // Notifications
-  transactionNotifications: {
+transactionNotifications: {
     path: '/walletrpc.WalletService/TransactionNotifications',
     requestStream: false,
     responseStream: true,
@@ -1784,7 +1806,7 @@ var WalletServiceService = exports.WalletServiceService = {
     responseDeserialize: deserialize_walletrpc_ConfirmationNotificationsResponse,
   },
   // Control
-  changePassphrase: {
+changePassphrase: {
     path: '/walletrpc.WalletService/ChangePassphrase',
     requestStream: false,
     responseStream: false,
@@ -2132,6 +2154,21 @@ var WalletLoaderServiceService = exports.WalletLoaderServiceService = {
 };
 
 exports.WalletLoaderServiceClient = grpc.makeGenericClientConstructor(WalletLoaderServiceService);
+var AccountMixerServiceService = exports.AccountMixerServiceService = {
+  runAccountMixer: {
+    path: '/walletrpc.AccountMixerService/RunAccountMixer',
+    requestStream: false,
+    responseStream: true,
+    requestType: api_pb.RunAccountMixerRequest,
+    responseType: api_pb.RunAccountMixerResponse,
+    requestSerialize: serialize_walletrpc_RunAccountMixerRequest,
+    requestDeserialize: deserialize_walletrpc_RunAccountMixerRequest,
+    responseSerialize: serialize_walletrpc_RunAccountMixerResponse,
+    responseDeserialize: deserialize_walletrpc_RunAccountMixerResponse,
+  },
+};
+
+exports.AccountMixerServiceClient = grpc.makeGenericClientConstructor(AccountMixerServiceService);
 var TicketBuyerV2ServiceService = exports.TicketBuyerV2ServiceService = {
   runTicketBuyer: {
     path: '/walletrpc.TicketBuyerV2Service/RunTicketBuyer',
