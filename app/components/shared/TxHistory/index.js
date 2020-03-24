@@ -47,11 +47,14 @@ const TxHistory = ({
       if (Component === StakeTxRow && isRegular) return;
       if (Component === RegularTxRow && isStake) return;
 
+      const txOutputAddresses = tx.originalTx && tx.originalTx.outputs &&
+        tx.originalTx.outputs.filter(o => !o.isChange).map(o => o.address).join(" ");
       return (
         <Component
           key={tx.txHash}
           {...{
             ...tx,
+            txOutputAddresses,
             className: rowType,
             intl,
             txTs: txTimestamp && tsDate(txTimestamp),

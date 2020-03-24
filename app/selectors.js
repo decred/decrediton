@@ -339,7 +339,7 @@ export const transactionNormalizer = createSelector(
         const amount = credit.getAmount();
         const address = credit.getAddress();
         addressStr.push(address);
-        creditedAccountName = credit.getAccount();
+        creditedAccount = credit.getAccount();
         creditedAccountName = getAccountName(creditedAccount);
         txOutputs.push({ accountName: creditedAccountName, amount, address, index: credit.getIndex() });
         credit.getInternal() ? (totalChange += amount) : (totalFundsReceived += amount);

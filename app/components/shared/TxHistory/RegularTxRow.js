@@ -1,11 +1,10 @@
 import Row from "./Row";
 import { Balance } from "shared";
-import { timeMessage } from "./index";
 import { FormattedMessage as T } from "react-intl";
 
-const RegularTxRow = ({
+export const RegularTxRow = ({
   txAmount, txDirection, overview, txAccountName, pending, txTs, txOutputAddresses,
-  txAccountNameCredited, txAccountNameDebited, ...props
+  txAccountNameCredited, txAccountNameDebited, timeMessage, ...props
 }) => (
   <Row {...{ ...props, txAccountName, pending, overview }}>
     <div className="is-row">
@@ -53,7 +52,7 @@ const RegularTxRow = ({
         ))}
       { !pending &&
         <div className="transaction-time-date-spacer">
-          {timeMessage(txTs, props.intl)}
+          {timeMessage(txTs)}
         </div>
       }
     </div>
