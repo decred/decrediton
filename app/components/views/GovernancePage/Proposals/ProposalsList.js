@@ -73,11 +73,8 @@ async function onLoadMoreProposals(proposals, inventory, getProposalsAndUpdateVo
 
 export function ProposalList ({ finishedVote, tab }) {
   const [ noMoreProposals, setNoMore ] = useState(false);
-  const { proposals, inventory } = useSelector(state => ({
-    proposals: sel.proposals(state),
-    inventory: sel.inventory(state),
-    loading: sel.getProposalsAttempt(state)
-  }));
+  const proposals = useSelector(sel.proposals);
+  const inventory = useSelector(sel.inventory);
   const dispatch = useDispatch();
   const getProposalsAndUpdateVoteStatus = (proposalBatch) => dispatch(gov.getProposalsAndUpdateVoteStatus(proposalBatch));
   const [ state, send ] = useMachine(fetchMachine, {

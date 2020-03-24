@@ -95,10 +95,8 @@ function animatedStyles(styles, dir) {
 }
 
 function TabbedPage(props) {
-  const { location, uiAnimations } = useSelector(state => ({
-    location: sel.location(state),
-    uiAnimations: sel.uiAnimations(state)
-  }));
+  const location = useSelector(sel.location);
+  const uiAnimations = useSelector(sel.location);
   const [ matchedTab, setMatchedTab ] = useReducer(() => getMatchedTab(location, props.children));
 
   const previous = usePrevious({ matchedTab, location });

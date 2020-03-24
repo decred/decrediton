@@ -49,14 +49,11 @@ function getProposalsTab(location) {
 }
 
 function Proposals() {
-  const {
-    activeVoteCount, preVoteCount, location, politeiaEnabled
-  } = useSelector(state => ({
-    politeiaEnabled: sel.politeiaEnabled(state),
-    activeVoteCount: sel.newActiveVoteProposalsCount(state),
-    preVoteCount: sel.newPreVoteProposalsCount(state),
-    location: sel.location(state)
-  }));
+  const activeVoteCount = useSelector(sel.newActiveVoteProposalsCount);
+  const preVoteCount = useSelector(sel.newPreVoteProposalsCount);
+  const politeiaEnabled = useSelector(sel.politeiaEnabled);
+  const location = useSelector(sel.location);
+
   // TODO move reducers which only control local states from reducer/governance.js
   // to here.
   const [ tab, setTab ] = useReducer(() => getProposalsTab(location));
