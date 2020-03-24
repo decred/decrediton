@@ -59,6 +59,10 @@
   .tx-info {
     padding: 16px 20px 9px 10px;
   }
+
+  .transaction-time-date-spacer {
+    margin-left: auto;
+  }
 }
 
 .tx-info .icon {
@@ -117,7 +121,6 @@
 }
 
 .transaction-time-date-spacer {
-  margin-left: auto;
   font-size: 11px;
 }
 
@@ -137,11 +140,17 @@
   color: var(--overview-balance-label);
   font-size: 11px;
   line-height: 11px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 100px;
   margin-left: 34px;
+}
+
+.address-shorter {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 200px;
+  display: inline-block;
+  overflow: hidden;
+  // this line-height is needed because hidden breaks the layout.
+  line-height: 8px;
 }
 
 .transaction-stake-type-overview {
@@ -177,8 +186,15 @@
   margin-left: 10px;
 }
 
+.transaction-info {
+  margin-left: auto;
+}
+
 @media screen and (max-width: 1179px) {
   .tx-overview-row {
     width: 315px;
+  }
+  .address-shorter {
+    max-width: 150px;
   }
 }

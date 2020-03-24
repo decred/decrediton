@@ -32,8 +32,12 @@ export const timeMessageDefine = defineMessages({
 export const timeMessage = (txTimestamp, intl) => intl.formatMessage(timeMessageDefine.dayMonthHourDisplay, { value: txTimestamp });
 
 const TxRow = ({ tx, overview, tsDate, intl }, { router }) => {
-  let rowType = tx.status ? tx.status :
-    tx.txType ? tx.txType : tx.txDirection;
+  let rowType = tx.status || tx.txType || tx.txDirection;
+
+  const txOutputAddresses = tx.originalTx.outputs && tx.originalTx.outputs.filter(o => o.isChange === false).map(o => o.address).join(" ");
+  const txInputOutpoints = tx.originalTx.inputs && tx.originalTx.inputs.map(i => i.previoutOutpoint).join(" ");
+  tx.txOutputAddresses = txOutputAddresses;
+  tx.txInputOutpoints = txInputOutpoints;
 
   rowType = rowType.toLowerCase();
   // calls the component we defined above at TxRowByType.

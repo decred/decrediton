@@ -697,6 +697,26 @@ function filterTransactions(transactions, filter) {
     .filter(v => filter.maxAmount ? Math.abs(v.amount) <= filter.maxAmount : true);
 }
 
+// getNonWalletOutputs decodes a tx and gets outputs which are not from the wallet.
+const getNonWalletOutputs = (decodeMessageService, walletService, tx) => new Promise((resolve,reject) => wallet.decodeTransaction(
+  decodeMessageService, Buffer.from(tx.tx.getTransaction())
+).then(async r => {
+  const tx = r.getTransaction();
+  const outputs = tx.getOutputsList().map(async o => {
+    const address = o.getAddressesList()[0];
+    // Validate address so we can check if it is our own.
+    // If that is the case it is a change output.
+    const addrValidResp = await wallet.validateAddress(walletService, address);
+    return {
+      address,
+      value: o.getValue(),
+      isChange: addrValidResp.getIsMine()
+    };
+  });
+  resolve(Promise.all(outputs));
+})
+  .catch(err => reject(err)));
+
 // getTransactions loads a list of transactions from the wallet, given the
 // current grpc state.
 //
@@ -708,9 +728,13 @@ function filterTransactions(transactions, filter) {
 // When no more transactions are available given the current filter,
 // `grpc.noMoreTransactions` is set to true.
 export const getTransactions = () => async (dispatch, getState) => {
-  const { currentBlockHeight, getTransactionsRequestAttempt,
-    transactionsFilter, walletService, maximumTransactionCount, recentTransactionCount } = getState().grpc;
-  let { noMoreTransactions, lastTransaction, minedTransactions, recentRegularTransactions, recentStakeTransactions } = getState().grpc;
+  const {
+    currentBlockHeight, getTransactionsRequestAttempt, transactionsFilter, walletService,
+    maximumTransactionCount, recentTransactionCount, decodeMessageService
+  } = getState().grpc;
+  let {
+    noMoreTransactions, lastTransaction, minedTransactions, recentRegularTransactions, recentStakeTransactions
+  } = getState().grpc;
   if (getTransactionsRequestAttempt || noMoreTransactions) return;
 
   if (!currentBlockHeight) {
@@ -728,7 +752,12 @@ export const getTransactions = () => async (dispatch, getState) => {
 
   // first, request unmined transactions. They always come first in decrediton.
   let { unmined } = await walletGetTransactions(walletService, -1, -1, 0);
-  let unminedTransactions = filterTransactions(unmined, transactionsFilter);
+  let unminedTransactions = filterTransactions(unmined, transactionsFilter).map(async tx => {
+    const outputs = await getNonWalletOutputs(decodeMessageService, walletService, tx);
+    return { ...tx, outputs };
+  });
+  // add inputs and outputs to unminedTransactions.
+  await Promise.all(unminedTransactions).then(r => unminedTransactions = r);
 
   const stakeTypes = [ TransactionDetails.TransactionType.VOTE,
     TransactionDetails.TransactionType.REVOCATION,
@@ -767,7 +796,9 @@ export const getTransactions = () => async (dispatch, getState) => {
           const stakeTx = await(dispatch(getMissingStakeTxData(normalizedTx)));
           filtered.push(stakeTx);
         } else {
-          // Regular txs already have all the necessary info.
+          // For regular tx we get the nonWalletoutputs so we can show them at
+          // the overview.
+          tx.outputs = await getNonWalletOutputs(decodeMessageService, walletService, tx);
           filtered.push(tx);
         }
       }
@@ -816,11 +847,11 @@ function checkForStakeTransactions(txs) {
 }
 // newTransactionsReceived should be called when a new set of transactions has
 // been received from the wallet (through a notification).
-export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTransactions) => (dispatch, getState) => {
+export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTransactions) => async (dispatch, getState) => {
   if (!newlyMinedTransactions.length && !newlyUnminedTransactions.length) return;
 
   let { unminedTransactions, minedTransactions, recentRegularTransactions, recentStakeTransactions } = getState().grpc;
-  const { transactionsFilter, recentTransactionCount } = getState().grpc;
+  const { transactionsFilter, recentTransactionCount, decodeMessageService, walletService } = getState().grpc;
   const chainParams = sel.chainParams(getState());
 
   // aux maps of [txhash] => tx (used to ensure no duplicate txs)
@@ -859,7 +890,12 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
     ...newlyUnminedTransactions,
     ...newlyMinedTransactions,
     ...recentRegularTransactions.filter(tx => !newlyMinedMap[tx.hash] && !newlyUnminedMap[tx.hash])
-  ], regularTransactionFilter).slice(0, recentTransactionCount);
+  ], regularTransactionFilter).slice(0, recentTransactionCount).map(async tx => {
+    const outputs = await getNonWalletOutputs(decodeMessageService, walletService, tx);
+    return { ...tx, outputs };
+  });
+  // add inputs and outputs to recentRegularTransactions after receveing new tx.
+  await Promise.all(recentRegularTransactions).then(r => recentRegularTransactions = r);
 
   const stakeTransactionFilter = {
     listDirection: "desc",
@@ -938,7 +974,7 @@ export const getStartupTransactions = () => async (dispatch, getState) => {
   };
   await dispatch(changeTransactionsFilter(defaultFilter));
 
-  const { currentBlockHeight, walletService, recentTransactionCount } = getState().grpc;
+  const { currentBlockHeight, walletService, recentTransactionCount, decodeMessageService } = getState().grpc;
   const chainParams = sel.chainParams(getState());
   let startRequestHeight = currentBlockHeight;
   const pageSize = 50;
@@ -959,7 +995,6 @@ export const getStartupTransactions = () => async (dispatch, getState) => {
 
   // the mergeXXX functions pick a list of transactions returned from
   // getTransactions and fills the appropriate result variables
-
   const mergeRegularTxs = txs =>
     (recentRegularTxs.length < recentTransactionCount) &&
     (recentRegularTxs.push( ...txs.filter(
@@ -1027,9 +1062,15 @@ export const getStartupTransactions = () => async (dispatch, getState) => {
   recentRegularTxs = recentRegularTxs.slice(0, recentTransactionCount);
   recentStakeTxs = recentStakeTxs.slice(0, recentTransactionCount);
 
+  // get non wallet outputs so we can show at our home page.
+  const addNonWalletInfo = recentRegularTxs.map(async tx => {
+    const outputs = await getNonWalletOutputs(decodeMessageService, walletService, tx);
+    return { ...tx, outputs };
+  });
+  await Promise.all(addNonWalletInfo).then(r => recentRegularTxs = r);
+
   dispatch({ recentRegularTxs, recentStakeTxs, maturingBlockHeights,
     type: GETSTARTUPTRANSACTIONS_SUCCESS });
-
 };
 
 export const UPDATETIMESINCEBLOCK = "UPDATETIMESINCEBLOCK";
