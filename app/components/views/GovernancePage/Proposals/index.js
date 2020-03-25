@@ -6,6 +6,7 @@ import { FormattedMessage as T } from "react-intl";
 import { PoliteiaLink as PiLink } from "shared";
 import { TabbedPage, TabbedPageTab as Tab } from "layout";
 import { createElement as h, useEffect, useReducer } from "react";
+import * as gov from "actions/GovernanceActions";
 import * as sel from "selectors";
 
 const PageHeader = () => (
@@ -62,13 +63,14 @@ function Proposals() {
   useEffect(() => {
     dispatch(setLastPoliteiaAccessTime());
   }, []);
+  const getTokenAndInitialBatch = () => dispatch(gov.getTokenAndInitialBatch());
   useEffect(() => {
     const tab = getProposalsTab(location);
     setTab(tab);
   }, [ location ]);
 
   if (!politeiaEnabled) {
-    return <PoliteiaDisabled />;
+    return <PoliteiaDisabled {...{ getTokenAndInitialBatch }} />;
   }
   return (
     <TabbedPage caret={<div/>} header={<PageHeader />} >

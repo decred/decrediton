@@ -46,7 +46,6 @@ export { default as fatalErrorPage } from "./fatalErrorPage";
 export { default as theming } from "./theming";
 export { default as newStakePool } from "./newStakePool";
 export { default as helpPage } from "./helpPage";
-export { default as proposals } from "./proposals";
 export { default as newProposalCounts } from "./newProposalCounts";
 export { default as network } from "./network";
 export { default as treasuryInfo } from "./treasuryInfo";
