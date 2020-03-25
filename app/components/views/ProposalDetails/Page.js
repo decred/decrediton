@@ -13,17 +13,18 @@ import { useSelector } from "react-redux";
 import * as sel from "selectors";
 
 function ProposalDetails ({ viewedProposalDetails, goBackHistory,
-  showPurchaseTicketsPage, hasTickets, onVoteOptionSelected, onUpdateVoteChoice,
+  showPurchaseTicketsPage, setVoteOption, onUpdateVoteChoice,
   newVoteChoice, updateVoteChoiceAttempt, text, showWalletEligibleTickets,
   onToggleWalletEligibleTickets }) {
-  
+
   const tsDate = useSelector(sel.tsDate);
+  const hasTickets = useSelector(sel.hasTickets);
   const { name, token, voteStatus, proposalStatus, voteOptions, voteCounts,
     creator, timestamp, endTimestamp, currentVoteChoice, hasEligibleTickets,
-    version, quorumMinimumVotes, walletEligibleTickets } = viewedProposalDetails || {};
+    version, quorumMinimumVotes, walletEligibleTickets } = viewedProposalDetails;
 
   const getVoteInfo = ({
-    voteStatus, voteOptions, onUpdateVoteChoice, onVoteOptionSelected, newVoteChoice,
+    voteStatus, voteOptions, onUpdateVoteChoice, setVoteOption, newVoteChoice,
     eligibleTicketCount,currentVoteChoice, showPurchaseTicketsPage
   }) => {
     if (voteStatus === VOTESTATUS_FINISHEDVOTE) {
@@ -41,21 +42,20 @@ function ProposalDetails ({ viewedProposalDetails, goBackHistory,
       }
 
       return <ChooseVoteOption {...{ voteOptions, onUpdateVoteChoice,
-        onVoteOptionSelected, newVoteChoice, eligibleTicketCount,
+        setVoteOption, newVoteChoice, eligibleTicketCount,
         currentVoteChoice, votingComplete: false }} />;
     }
     return <ProposalNotVoting />;
   };
 
-  const eligibleTicketCount = viewedProposalDetails && viewedProposalDetails.walletEligibleTickets && viewedProposalDetails.walletEligibleTickets.length;
+  const eligibleTicketCount = viewedProposalDetails.walletEligibleTickets && viewedProposalDetails.walletEligibleTickets.length;
   let voteInfo = null;
-
   // Check if proposal is abandoned. If it is not we check its vote status
   if (proposalStatus === PROPOSALSTATUS_ABANDONED) {
     voteInfo = <ProposalAbandoned />;
   } else {
     voteInfo = getVoteInfo({
-      voteStatus, voteOptions, onUpdateVoteChoice, onVoteOptionSelected, newVoteChoice,
+      voteStatus, voteOptions, onUpdateVoteChoice, setVoteOption, newVoteChoice,
       eligibleTicketCount,currentVoteChoice, showPurchaseTicketsPage
     });
   }
@@ -124,6 +124,6 @@ function ProposalDetails ({ viewedProposalDetails, goBackHistory,
       </div>
     </div>
   );
-};
+}
 
 export default ProposalDetails;

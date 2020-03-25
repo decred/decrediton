@@ -40,14 +40,14 @@ const VoteOption = ({ value, description, onClick, checked }) => (
   </div>
 );
 
-export const ChooseVoteOption = ({ voteOptions, onUpdateVoteChoice, onVoteOptionSelected, newVoteChoice, currentVoteChoice, votingComplete, eligibleTicketCount }) => (
+export const ChooseVoteOption = ({ voteOptions, onUpdateVoteChoice, setVoteOption, newVoteChoice, currentVoteChoice, votingComplete, eligibleTicketCount }) => (
   <>
     <div className="proposal-details-voting-preference">
       <div className="proposal-details-voting-preference-title"><T id="proposalDetails.votingInfo.votingPreferenceTitle" m="My Voting Preference" /></div>
       <div className="proposal-details-current-choice-box">
         {voteOptions.map(o => (
           <VoteOption value={o.id} description={o.id.charAt(0).toUpperCase()+o.id.slice(1)} key={o.id} checked={currentVoteChoice !== "abstain" ? o.id === currentVoteChoice.id : null }
-            onClick={ (currentVoteChoice === "abstain" && !votingComplete) ? onVoteOptionSelected : null }/>
+            onClick={ (currentVoteChoice === "abstain" && !votingComplete) ? setVoteOption : null }/>
         ))}
       </div>
     </div>

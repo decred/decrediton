@@ -13,12 +13,24 @@ import * as cli from "actions/ClientActions";
 
 function ProposalDetails() {
   const dispatch = useDispatch();
-  const [ showWalletEligibleTickets, toggleShowWalletEligibleTickets] = useState(false);
+  let viewedProposalDetails;
+  let text = "";
+
+  const [ showWalletEligibleTickets, toggleShowWalletEligibleTickets ] = useState(false);
   const [ newVoteChoice, setVoteOption ] = useState(null);
   const { token } = useParams();
   const proposalsDetails = useSelector(sel.proposalsDetails);
+  const getProposalError =  useSelector(sel.getProposalError);
+
   const getProposalDetails = (token) => dispatch(gov.getProposalDetails(token));
   const goBackHistory = () => dispatch(cli.goBackHistory());
+
+  async function onUpdateVoteChoice(privatePassphrase) {
+    if (!viewedProposalDetails || !newVoteChoice) return;
+    await dispatch(gov.updateVoteChoice(viewedProposalDetails, newVoteChoice, privatePassphrase));
+    return true;
+  }
+
   const [ state, send ] = useMachine(fetchMachine, {
     actions: {
       initial: () => {
@@ -26,79 +38,33 @@ function ProposalDetails() {
         return send("RESOLVE");
       },
       load: () => {
-        getProposalDetails(token).then(res => {
-          send({ type: "RESOLVE" });
-        });
+        getProposalDetails(token).then(() => send({ type: "RESOLVE" }));
       }
     }
   });
-  const getProposalError =  useSelector(sel.getProposalError);
-  let text = "";
-  let viewedProposalDetails;
 
   switch (state.value) {
-    case "idle":
-      return <></>;
-    case "loading":
-      return <div className="proposal-loading-page"><PoliteiaLoading /></div>;
-    case "success":
-      viewedProposalDetails = proposalsDetails[token];
-      console.log(viewedProposalDetails)
-      viewedProposalDetails.files.forEach(f => {
-        if (f.name === "index.md") {
-          text += politeiaMarkdownIndexMd(f.payload);
-        }
-      });
-      return (
-        <Page {...{
-          newVoteChoice, showWalletEligibleTickets, text, viewedProposalDetails,
-          goBackHistory,
-        }}
-            onVoteOptionSelected={setVoteOption}
-            // onUpdateVoteChoice={this.onUpdateVoteChoice}
-            onToggleWalletEligibleTickets={toggleShowWalletEligibleTickets}
-          />
-      );
-    case "failure":
-      return <ProposalError error={getProposalError} />;
-    default:
-      return null;
-    }
-  return 
+  case "idle":
+    return <></>;
+  case "loading":
+    return <div className="proposal-loading-page"><PoliteiaLoading /></div>;
+  case "success":
+    viewedProposalDetails = proposalsDetails[token];
+    viewedProposalDetails.files.forEach(f => {
+      if (f.name === "index.md") {
+        text += politeiaMarkdownIndexMd(f.payload);
+      }
+    });
+    return <Page {...{
+      newVoteChoice, showWalletEligibleTickets, text, viewedProposalDetails,
+      onToggleWalletEligibleTickets: toggleShowWalletEligibleTickets,
+      goBackHistory, onUpdateVoteChoice, setVoteOption
+    }} />;
+  case "failure":
+    return <ProposalError error={getProposalError} />;
+  default:
+    return null;
+  }
 }
-
-// @autobind
-// class ProposalDetails extends React.Component {
-
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       newVoteChoice: null,
-//       showWalletEligibleTickets: false
-//     };
-//   }
-
-//   onVoteOptionSelected(opt) {
-//     this.setState( { newVoteChoice: opt } );
-//   }
-
-//   onUpdateVoteChoice(privatePassphrase) {
-//     if (!this.state.newVoteChoice) return;
-//     if (!this.props.viewedProposalDetails) return;
-
-//     this.props.updateVoteChoice(this.props.viewedProposalDetails,
-//       this.state.newVoteChoice, privatePassphrase);
-//     this.setState( { newVoteChoice: null } );
-//   }
-
-//   onToggleWalletEligibleTickets() {
-//     this.setState({ showWalletEligibleTickets: !this.state.showWalletEligibleTickets });
-//   }
-
-//   render() {
-
-//     );
-//   }
-// }
 
 export default ProposalDetails;
