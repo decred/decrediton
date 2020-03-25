@@ -13,7 +13,6 @@ const mapStateToProps = selectorMap({
   getProposalError: sel.getProposalError,
   hasTickets: sel.hasTickets,
   updateVoteChoiceAttempt: sel.updateVoteChoiceAttempt,
-  lastVettedFetchTime: sel.lastVettedFetchTime,
   tsDate: sel.tsDate,
   inventory: sel.inventory,
   loading: sel.getProposalsAttempt,

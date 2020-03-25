@@ -9,12 +9,15 @@ import {
 import {
   VOTESTATUS_ACTIVEVOTE, VOTESTATUS_FINISHEDVOTE, PROPOSALSTATUS_ABANDONED
 } from "actions/GovernanceActions";
+import { useSelector } from "react-redux";
+import * as sel from "selectors";
 
-export default ({ viewedProposalDetails, goBackHistory,
+function ProposalDetails ({ viewedProposalDetails, goBackHistory,
   showPurchaseTicketsPage, hasTickets, onVoteOptionSelected, onUpdateVoteChoice,
-  newVoteChoice, updateVoteChoiceAttempt, tsDate, text, showWalletEligibleTickets,
-  onToggleWalletEligibleTickets }) =>
-{
+  newVoteChoice, updateVoteChoiceAttempt, text, showWalletEligibleTickets,
+  onToggleWalletEligibleTickets }) {
+  
+  const tsDate = useSelector(sel.tsDate);
   const { name, token, voteStatus, proposalStatus, voteOptions, voteCounts,
     creator, timestamp, endTimestamp, currentVoteChoice, hasEligibleTickets,
     version, quorumMinimumVotes, walletEligibleTickets } = viewedProposalDetails || {};
@@ -122,3 +125,5 @@ export default ({ viewedProposalDetails, goBackHistory,
     </div>
   );
 };
+
+export default ProposalDetails;

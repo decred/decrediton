@@ -92,7 +92,7 @@ export function ProposalList ({ finishedVote, tab }) {
         send("RESOLVE");
       },
       load: () => {
-        if (!inventory || !inventory[tab]) return;
+        if (!proposals || !proposals[tab] || !inventory || !inventory[tab]) return;
         if (proposals[tab].length >= inventory[tab].length) {
           setNoMore(true);
           return send("RESOLVE");

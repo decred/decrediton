@@ -7,9 +7,6 @@ import UpdateVoteChoiceModalButton from "./UpdateVoteChoiceModalButton";
 import { default as ReactMarkdown }  from "react-markdown";
 import { FormattedRelative } from "shared";
 
-export const LoadingProposal = () =>
-  <div className="proposal-loading-page"><PoliteiaLoading /></div>;
-
 export const ProposalError = ( { error } ) => <div><T id="proposalDetails.loadingError" m="Error loading Proposal: {error}" values={{ error }} /></div>;
 
 export const ProposalAbandoned = () =>

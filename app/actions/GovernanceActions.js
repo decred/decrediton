@@ -445,7 +445,6 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
       numComments: p.numcomments,
       timestamp: p.timestamp,
       files: files,
-      hasDetails: true,
       hasEligibleTickets: false
     };
 
@@ -490,11 +489,7 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
 };
 
 export const viewProposalDetails = (token) => (dispatch, getState) => {
-  const details = sel.proposalsDetails(getState());
-  if (!details[token] || !details[token].hasDetails) {
-    dispatch(getProposalDetails(token));
-  }
-  dispatch(pushHistory("/proposal/details/" + token));
+  dispatch(pushHistory(`/proposal/details/${token}`));
 };
 
 export const UPDATEVOTECHOICE_ATTEMPT = "UPDATEVOTECHOICE_ATTEMPT";
