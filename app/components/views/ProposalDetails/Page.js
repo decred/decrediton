@@ -3,21 +3,19 @@ import { InvisibleButton } from "buttons";
 import { PoliteiaLink, VerticalAccordion } from "shared";
 import {
   ProposalNotVoting, NoTicketsVotingInfo, OverviewField, OverviewVotingProgressInfo,
-  NoElligibleTicketsVotingInfo, UpdatingVoteChoice, TimeValue,
-  ProposalText, ProposalAbandoned
+  NoElligibleTicketsVotingInfo, TimeValue, ProposalText, ProposalAbandoned
 } from "./helpers";
 import ChooseVoteOption from "./ChooseVoteOption";
 import {
   VOTESTATUS_ACTIVEVOTE, VOTESTATUS_FINISHEDVOTE, PROPOSALSTATUS_ABANDONED
 } from "actions/GovernanceActions";
 import { useSelector } from "react-redux";
-import { useState } from "react"
+import { useState } from "react";
 import * as sel from "selectors";
 
-function ProposalDetails ({ 
+function ProposalDetails ({
   viewedProposalDetails, showPurchaseTicketsPage, setVoteOption,
-  newVoteChoice, updateVoteChoiceAttempt, text, goBackHistory,
-  onUpdateVoteChoice
+  newVoteChoice, text, goBackHistory
 }) {
   const {
     creator, timestamp, endTimestamp, currentVoteChoice, hasEligibleTickets,
@@ -47,7 +45,7 @@ function ProposalDetails ({
       }} />;
     }
     return <ProposalNotVoting />;
-  };
+  }
   let voteInfo = null;
   // Check if proposal is abandoned. If it is not we check its vote status
   if (proposalStatus === PROPOSALSTATUS_ABANDONED) {

@@ -1,7 +1,7 @@
 import { shell } from "electron";
 import { KeyBlueButton, InvisibleConfirmPoliteiaModalButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
-import { VotingProgress, PoliteiaLoading } from "indicators";
+import { VotingProgress } from "indicators";
 import { showCheck } from "helpers";
 import { default as ReactMarkdown }  from "react-markdown";
 import { FormattedRelative } from "shared";

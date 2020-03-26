@@ -488,7 +488,7 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
   }
 };
 
-export const viewProposalDetails = (token) => (dispatch, getState) => {
+export const viewProposalDetails = (token) => (dispatch) => {
   dispatch(pushHistory(`/proposal/details/${token}`));
 };
 

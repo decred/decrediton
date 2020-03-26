@@ -1,8 +1,6 @@
-import { proposals } from "connectors";
 import Page from "./Page";
 import { ProposalError, politeiaMarkdownIndexMd } from "./helpers";
 import { PoliteiaLoading } from "indicators";
-import { useState } from "react";
 import * as sel from "selectors";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";

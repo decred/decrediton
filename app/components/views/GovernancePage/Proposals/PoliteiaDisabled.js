@@ -1,7 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import { EnableExternalRequestButton } from "buttons";
 import { EXTERNALREQUEST_POLITEIA } from "main_dev/externalRequests";
-import { proposals } from "connectors";
 
 export default ({ getTokenAndInitialBatch }) => (
   <div className="politeia-disabled-wrapper">

@@ -1,6 +1,5 @@
 import { showCheck, eventOutsideElement } from "helpers";
 import ReactDOM from "react-dom";
-import { modal } from "connectors";
 import EventListener from "react-event-listener";
 import "style/Modals.less";
 import Draggable from "react-draggable";
