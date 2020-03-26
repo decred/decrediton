@@ -16,20 +16,12 @@ function ProposalDetails() {
   let viewedProposalDetails;
   let text = "";
 
-  const [ showWalletEligibleTickets, toggleShowWalletEligibleTickets ] = useState(false);
-  const [ newVoteChoice, setVoteOption ] = useState(null);
   const { token } = useParams();
   const proposalsDetails = useSelector(sel.proposalsDetails);
   const getProposalError =  useSelector(sel.getProposalError);
 
   const getProposalDetails = (token) => dispatch(gov.getProposalDetails(token));
   const goBackHistory = () => dispatch(cli.goBackHistory());
-
-  async function onUpdateVoteChoice(privatePassphrase) {
-    if (!viewedProposalDetails || !newVoteChoice) return;
-    await dispatch(gov.updateVoteChoice(viewedProposalDetails, newVoteChoice, privatePassphrase));
-    return true;
-  }
 
   const [ state, send ] = useMachine(fetchMachine, {
     actions: {
@@ -55,11 +47,7 @@ function ProposalDetails() {
         text += politeiaMarkdownIndexMd(f.payload);
       }
     });
-    return <Page {...{
-      newVoteChoice, showWalletEligibleTickets, text, viewedProposalDetails,
-      onToggleWalletEligibleTickets: toggleShowWalletEligibleTickets,
-      goBackHistory, onUpdateVoteChoice, setVoteOption
-    }} />;
+    return <Page {...{ text, viewedProposalDetails, goBackHistory }} />;
   case "failure":
     return <ProposalError error={getProposalError} />;
   default:

@@ -996,7 +996,6 @@ export const allAgendas = createSelector(
 
 export const treasuryBalance = get([ "grpc", "treasuryBalance" ]);
 
-export const updateVoteChoiceAttempt = get([ "governance", "updateVoteChoiceAttempt" ]);
 export const proposals = get([ "governance", "proposals" ]);
 export const proposallistpagesize = get([ "governance", "proposallistpagesize" ]);
 export const getProposalsAttempt = get([ "governance", "getProposalsAttempt" ]);

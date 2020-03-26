@@ -1,9 +1,8 @@
 import { shell } from "electron";
 import { KeyBlueButton, InvisibleConfirmPoliteiaModalButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
-import { StakeyBounceXs, VotingProgress, PoliteiaLoading } from "indicators";
+import { VotingProgress, PoliteiaLoading } from "indicators";
 import { showCheck } from "helpers";
-import UpdateVoteChoiceModalButton from "./UpdateVoteChoiceModalButton";
 import { default as ReactMarkdown }  from "react-markdown";
 import { FormattedRelative } from "shared";
 
@@ -30,36 +29,6 @@ export const NoElligibleTicketsVotingInfo = ({ showPurchaseTicketsPage }) => (
     <div className="proposal-details-no-tickets"><T id="proposalDetails.votingInfo.noElligibleTickets" m="You don't have tickets elligible for voting on this proposal. Purchase tickets to vote on future proposals." /></div>
     <KeyBlueButton onClick={showPurchaseTicketsPage}><T id="proposalDetails.votingInfo.purchaseTicketsBtn" m="Purchase Tickets" /></KeyBlueButton>
   </>
-);
-
-const VoteOption = ({ value, description, onClick, checked }) => (
-  <div className="proposal-vote-option">
-    <input className={value} type="radio" id={value} name="proposalVoteChoice" readOnly={!onClick} onChange={onClick ? () => onClick(value) : null}
-      value={value} checked={checked} />
-    <label className={"radio-label " + value} htmlFor={value}/>{description}
-  </div>
-);
-
-export const ChooseVoteOption = ({ voteOptions, onUpdateVoteChoice, setVoteOption, newVoteChoice, currentVoteChoice, votingComplete, eligibleTicketCount }) => (
-  <>
-    <div className="proposal-details-voting-preference">
-      <div className="proposal-details-voting-preference-title"><T id="proposalDetails.votingInfo.votingPreferenceTitle" m="My Voting Preference" /></div>
-      <div className="proposal-details-current-choice-box">
-        {voteOptions.map(o => (
-          <VoteOption value={o.id} description={o.id.charAt(0).toUpperCase()+o.id.slice(1)} key={o.id} checked={currentVoteChoice !== "abstain" ? o.id === currentVoteChoice.id : null }
-            onClick={ (currentVoteChoice === "abstain" && !votingComplete) ? setVoteOption : null }/>
-        ))}
-      </div>
-    </div>
-    {!votingComplete && <UpdateVoteChoiceModalButton {...{ newVoteChoice, onUpdateVoteChoice, eligibleTicketCount }} />}
-  </>
-);
-
-export const UpdatingVoteChoice = () => (
-  <div className="proposal-details-updating-vote-choice">
-    <StakeyBounceXs />
-    <T id="proposalDetails.votingInfo.updatingVoteChoice" m="Updating vote choice" />...
-  </div>
 );
 
 export const OverviewField = showCheck(( { label, value } ) => (

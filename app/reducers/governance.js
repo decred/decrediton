@@ -55,20 +55,14 @@ export default function governance(state = {}, action) {
       },
       proposals: { ...action.proposals }
     };
-  case UPDATEVOTECHOICE_ATTEMPT:
-    return { ...state, updateVoteChoiceAttempt: true };
   case UPDATEVOTECHOICE_SUCCESS:
     return {
       ...state,
       proposals: { ...action.proposals },
-      updateVoteChoiceAttempt: false,
       proposalsDetails: { ...state.proposalsDetails,
         [action.token]: { ...action.proposal }
       }
     };
-
-  case UPDATEVOTECHOICE_FAILED:
-    return { ...state, updateVoteChoiceAttempt: false };
   case WALLETREADY:
     return { ...state,
       lastPoliteiaAccessTime: action.lastPoliteiaAccessTime,
