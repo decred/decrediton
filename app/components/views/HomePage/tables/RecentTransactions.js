@@ -1,16 +1,15 @@
 // @flow
 import { home } from "connectors";
 import { DecredLoading } from "indicators";
-import TxHistory from "TxHistory";
 import { FormattedMessage as T } from "react-intl";
 import "style/Fonts.less";
 import "style/HomePage.less";
 import NoTransactionsLinks from "./NoTransactionsLinks";
+import { TxHistory } from "shared";
 
 const RecentTransactions = ({
   transactions,
   getTransactionsRequestAttempt,
-  getAccountsResponse,
   rowNumber,
   goToTransactionHistory,
   tsDate
@@ -30,8 +29,8 @@ const RecentTransactions = ({
           }
         </div>
         <div className="home-content-nest">
-          {transactions.length > 0 ?
-            <TxHistory overview limit={rowNumber} {...{ getAccountsResponse, transactions, tsDate }} /> :
+          { transactions.length > 0 ?
+            <TxHistory {...{ transactions, tsDate, overview: true, limit: rowNumber }} /> :
             <NoTransactionsLinks />}
         </div>
       </div>

@@ -1,10 +1,12 @@
 import "style/Balance.less";
 import { FormattedNumber } from "react-intl";
 import { balance } from "connectors";
-import { DCR, ATOMS, UNIT_DIVISOR } from "constants";
+import { DCR, UNIT_DIVISOR } from "constants";
+import cx from "classnames";
 
 export const Balance = ({ currencyDisplay, amount, onClick, bold, large,
-  flat, title, noSmallAmount, classNameWrapper, classNameUnit, preScaled, hideCurrency
+  flat, title, noSmallAmount, classNameWrapper, classNameUnit, preScaled,
+  hideCurrency, classNameAmount
 }) => {
   const secondary = large ? "balance-tiny" : flat ? "balance-base" : title ? "balance-title" : "balance-small";
   if (currencyDisplay === DCR) {
@@ -19,7 +21,7 @@ export const Balance = ({ currencyDisplay, amount, onClick, bold, large,
     return (
       <div className={classNameWrapper}>
         <span {...{ onClick }}>
-          <span className={ bold ? "bold" : null }>
+          <span className={ cx(classNameAmount, bold && "bold") }>
             {negativeZero ? "-" : ""}
             <FormattedNumber value={ head } maximumFractionDigits={ 2 } minimumFractionDigits={ 2 }/>
           </span>
@@ -32,20 +34,20 @@ export const Balance = ({ currencyDisplay, amount, onClick, bold, large,
         </span>
       </div>
     );
-  } else if (currencyDisplay === ATOMS) {
-    return (
-      <div className={classNameWrapper}>
-        <span className="mono" {...{ onClick }}>
-          <span className={[ secondary, bold ? "bold" : null ].join(" ") }>
-            { amount + " " }
-          </span>
-          {!hideCurrency && <span className={ [ secondary, classNameUnit ].join(" ") }>
-            atoms
-          </span> }
-        </span>
-      </div>
-    );
   }
+  // currencyDisplay === ATOMS
+  return (
+    <div className={classNameWrapper}>
+      <span className="mono" {...{ onClick }}>
+        <span className={[ secondary, bold ? "bold" : null ].join(" ") }>
+          { amount + " " }
+        </span>
+        {!hideCurrency && <span className={ [ secondary, classNameUnit ].join(" ") }>
+          atoms
+        </span> }
+      </span>
+    </div>
+  );
 };
 
 export default balance(Balance);

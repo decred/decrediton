@@ -17,4 +17,5 @@ export { default as Subtitle } from "./Subtitle";
 export { default as FormattedRelative } from "./FormattedRelative";
 export { default as CreatePassPhrase } from "./CreatePassPhrase";
 export { default as UnsignedTx } from "./UnsignedTx";
+export { default as TxHistory } from "./TxHistory";
 export * from "./RoutedTabsHeader";

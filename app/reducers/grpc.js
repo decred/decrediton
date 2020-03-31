@@ -287,10 +287,9 @@ export default function grpc(state = {}, action) {
       getTicketsProgressStartRequestHeight: null
     };
   case GETTICKETS_COMPLETE:
-    var tickets = [ ...action.unminedTickets, ...action.minedTickets ];
     return {
       ...state,
-      tickets: tickets,
+      tickets: [ ...action.unminedTickets, ...action.minedTickets ],
       unminedTickets: action.unminedTickets,
       minedTickets: action.minedTickets,
       noMoreTickets: action.noMoreTickets,

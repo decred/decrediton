@@ -93,10 +93,10 @@ export const getStartupWalletInfo = () => (dispatch) => {
       try {
         await dispatch(checkLnWallet());
         await dispatch(getStakeInfoAttempt());
-        await dispatch(reloadTickets());
-        await dispatch(getStartupTransactions());
         await dispatch(publishUnminedTransactionsAttempt());
         await dispatch(getAccountsAttempt(true));
+        await dispatch(reloadTickets());
+        await dispatch(getStartupTransactions());
         await dispatch(getStartupStats());
         if (dcrdataEnabled) {
           dispatch(getTreasuryBalance());
@@ -641,8 +641,8 @@ export const getTickets = () => async (dispatch, getState) => {
     // tx (which should have the correct status) and ignore the next one (the
     // purchase, which would show as missed/expired)
     newMinedTickets.push(...minedTickets);
-    const ticketsMap = minedTickets.reduce((m, t) => { m[t.hash] = t; return m; }, {});
-    newMinedTickets.push(...filtered.filter(t => !ticketsMap[t.hash]));
+    const ticketsMap = minedTickets.reduce((m, t) => { m[t.txHash] = t; return m; }, {});
+    newMinedTickets.push(...filtered.filter(t => !ticketsMap[t.txHash]));
   } else {
     // When iterating in asc mode, we unshift the newly found (most recent)
     // tickets first, then ignore the previous (older) one, as the most recent
@@ -651,8 +651,8 @@ export const getTickets = () => async (dispatch, getState) => {
     // the list, causing a "jump" and if the user backtracks it won't be
     // there anymore.
     newMinedTickets.push(...filtered);
-    const ticketsMap = filtered.reduce((m, t) => { m[t.hash] = t; return m; }, {});
-    newMinedTickets.unshift(...minedTickets.filter(t => !ticketsMap[t.hash]));
+    const ticketsMap = filtered.reduce((m, t) => { m[t.txHash] = t; return m; }, {});
+    newMinedTickets.unshift(...minedTickets.filter(t => !ticketsMap[t.txHash]));
   }
 
   dispatch({ unminedTickets, minedTickets: newMinedTickets, noMoreTickets,
@@ -1218,7 +1218,7 @@ const getMissingStakeTxData = tx => async (dispatch, getState) => {
 
   let ticketTx, spenderTx, status;
 
-  if (tx.txType == "Ticket") {
+  if (tx.txType === "Ticket") {
     // This is currently a somewhat slow call in RPC mode due to having to check
     // in dcrd whether the ticket is live or not.
     const ticket = await wallet.getTicket(walletService, strHashToRaw(tx.txHash));
@@ -1283,7 +1283,9 @@ const getMissingStakeTxData = tx => async (dispatch, getState) => {
     enterTimestamp: ticketNormal.enterTimestamp,
     leaveTimestamp: ticketNormal.leaveTimestamp,
     ticketPrice: ticketNormal.ticketPrice,
-    ticketReward: ticketNormal.ticketReward
+    ticketReward: ticketNormal.ticketReward,
+    isPending: ticketNormal.isPending,
+    accountName: ticketNormal.accountName
     // add more stuff from the result of sel.ticketNormalizer if ever needed
   };
 };
