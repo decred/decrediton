@@ -1,5 +1,5 @@
 import { Machine, assign } from "xstate";
-import { CreateWalletMachine } from "./CreateWallet/CreateWalletStateMachine";
+import { CreateWalletMachine } from "stateMachines/CreateWalletStateMachine";
 import { OPENWALLET_INPUT } from "actions/WalletLoaderActions";
 
 export const getStartedMachine = ({

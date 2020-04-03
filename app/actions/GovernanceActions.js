@@ -4,6 +4,7 @@ import * as wallet from "wallet";
 import { push as pushHistory } from "connected-react-router";
 import { hexReversedHashToArray, reverseRawHash } from "helpers";
 import { setPoliteiaPath, getEligibleTickets, saveEligibleTickets, savePiVote, getProposalWalletVote, removeCachedProposals } from "main_dev/paths";
+import { cloneDeep } from "fp";
 
 // Proposal vote status codes from politeiawww's v1.PropVoteStatusT
 // PropVoteStatusInvalid       PropVoteStatusT = 0 // Invalid vote status
@@ -28,7 +29,7 @@ const defaultInventory = {
 };
 
 // getDefaultInventory gets the inventory default's state.
-export const getDefaultInventory = () => Object.assign({}, defaultInventory);
+const getDefaultInventory = () => cloneDeep(defaultInventory);
 
 // Aux function to parse the vote status of a single proposal, given a response
 // for the /votesStatus or /proposal/P/voteStatus api calls, then fill the
@@ -326,17 +327,13 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
     return response;
   };
 
-  dispatch({ type: GETPROPROSAL_UPDATEVOTESTATUS_ATTEMPT });
-  let proposalsUpdated = {
-    activeVote: [],
-    abandonedVote: [],
-    finishedVote: [],
-    preVote: []
-  };
-
+  dispatch({ type: GETPROPROSAL_UPDATEVOTESTATUS_ATTEMPT, tokensBatch });
+  let proposalsUpdated = getDefaultInventory();
   const blockTimestampFromNow = sel.blockTimestampFromNow(getState());
   const piURL = sel.politeiaURL(getState());
-  const oldProposals = sel.proposals(getState());
+  // If proposals is null at our redux state, it probably means first starting or
+  // the wallet was closed.
+  const oldProposals = sel.proposals(getState()) === null ? getDefaultInventory() : sel.proposals(getState());
   const lastPoliteiaAccessTime = sel.lastPoliteiaAccessTime(getState());
   const walletName = sel.getWalletName(getState());
   const testnet = sel.isTestNet(getState());
@@ -497,7 +494,7 @@ export const viewProposalDetails = (token) => (dispatch, getState) => {
   if (!details[token] || !details[token].hasDetails) {
     dispatch(getProposalDetails(token));
   }
-  dispatch(pushHistory("/governance/proposals/details/" + token));
+  dispatch(pushHistory("/proposal/details/" + token));
 };
 
 export const UPDATEVOTECHOICE_ATTEMPT = "UPDATEVOTECHOICE_ATTEMPT";

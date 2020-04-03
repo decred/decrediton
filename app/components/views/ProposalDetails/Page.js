@@ -17,7 +17,7 @@ export default ({ viewedProposalDetails, goBackHistory,
 {
   const { name, token, voteStatus, proposalStatus, voteOptions, voteCounts,
     creator, timestamp, endTimestamp, currentVoteChoice, hasEligibleTickets,
-    version, quorumMinimumVotes, walletEligibleTickets } = () => viewedProposalDetails || {};
+    version, quorumMinimumVotes, walletEligibleTickets } = viewedProposalDetails || {};
 
   const getVoteInfo = ({
     voteStatus, voteOptions, onUpdateVoteChoice, onVoteOptionSelected, newVoteChoice,

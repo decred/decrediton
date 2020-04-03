@@ -31,9 +31,9 @@ class ProposalDetails extends React.Component {
   }
 
   render() {
-    const { getProposalAttempt, getProposalError, viewedProposalDetails } = this.props;
+    const { loading, getProposalError, viewedProposalDetails } = this.props;
 
-    if (getProposalAttempt) return <LoadingProposal />;
+    if (loading) return <LoadingProposal />;
     if (getProposalError) return <ProposalError error={getProposalError} />;
 
     let text = "";

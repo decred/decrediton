@@ -1,6 +1,6 @@
 import { daemonStartup } from "connectors";
 import { interpret } from "xstate";
-import { getStartedMachine } from "./GetStartedStateMachine";
+import { getStartedMachine } from "stateMachines/GetStartedStateMachine";
 import GetStartedPage from "./Page";
 import { AdvancedStartupBody } from "./AdvancedStartup";
 import { injectIntl } from "react-intl";

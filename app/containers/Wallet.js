@@ -14,6 +14,7 @@ import TransactionPage from "components/views/TransactionPage";
 import TicketsPage from "components/views/TicketsPage";
 import TutorialsPage from "components/views/TutorialsPage";
 import GovernancePage from "components/views/GovernancePage";
+import ProposalDetailsPage from "components/views/ProposalDetails";
 import TrezorPage from "components/views/TrezorPage";
 import LNPage from "components/views/LNPage";
 import SideBar from "components/SideBar";
@@ -62,6 +63,7 @@ class Wallet extends React.Component {
             <Route path="/ln"                             component={LNPage} />
           </MainSwitch>
           <Route path="/transactions/history/:txHash" component={TransactionPage} />
+          <Route path="/proposal/details/:token" component={ProposalDetailsPage}/>
         </BlurableContainer>
       </div>
     );

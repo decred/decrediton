@@ -1,6 +1,6 @@
 export { createSelector } from "reselect";
 export { compose, reduce, find, findIndex, filter, get, eq, map, keyBy, some } from "lodash/fp";
-export { concat, isString } from "lodash";
+export { concat, isString, cloneDeep } from "lodash";
 
 import compose from "lodash/fp/compose";
 import get from "lodash/fp/get";
