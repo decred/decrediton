@@ -16,7 +16,7 @@
     "electron-store": "1.2.0",
     "fs-extra": "^5.0.0",
     "grpc": "1.24.2",
-    "minimist": "^1.2.2"
+    "minimist": "^1.2.3"
   },
   "resolutions": {
     "conf": "1.1.2"
