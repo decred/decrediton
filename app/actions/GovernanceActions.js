@@ -105,7 +105,6 @@ const getProposalEligibleTickets = async (token, allEligibleTickets, shouldCache
   return await getWalletEligibleTickets(allEligibleTickets, walletService);
 };
 
-
 // updateInventoryFromApiData receives politeia data from getTokenInventory and
 // put it in decrediton's inventory format.
 // @param data - data from getTokenInventory api.

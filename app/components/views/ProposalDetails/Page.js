@@ -15,14 +15,13 @@ import * as sel from "selectors";
 
 function ProposalDetails ({
   viewedProposalDetails, showPurchaseTicketsPage, setVoteOption,
-  newVoteChoice, text, goBackHistory
+  newVoteChoice, text, goBackHistory, eligibleTicketCount
 }) {
   const {
     creator, timestamp, endTimestamp, currentVoteChoice, hasEligibleTickets,
     name, token, voteStatus, proposalStatus, voteOptions, voteCounts,
     version, quorumMinimumVotes, walletEligibleTickets
   } = viewedProposalDetails;
-  const eligibleTicketCount = viewedProposalDetails.walletEligibleTickets && viewedProposalDetails.walletEligibleTickets.length;
   const tsDate = useSelector(sel.tsDate);
   const hasTickets = useSelector(sel.hasTickets);
   const [ showWalletEligibleTickets, toggleWalletEligibleTickets ] = useState(false);

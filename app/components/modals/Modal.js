@@ -13,7 +13,7 @@ function Modal(props) {
   const showingSidebarMenu = useSelector(sel.showingSidebarMenu);
   const { children, className, draggable } = props;
   const domNode = document.getElementById("modal-portal");
-  const modalRef = useRef(null)
+  const modalRef = useRef(null);
 
   function mouseUp(event) {
     const el = modalRef.current;
@@ -21,7 +21,7 @@ function Modal(props) {
       props.onCancelModal && props.onCancelModal();
     }
   }
-  
+
   function onKeyDown(event) {
     // 27: ESC key
     if (event.keyCode === 27) {
