@@ -31,6 +31,13 @@ export const HEX = "hex";
 export const TESTNET = "testnet";
 export const MAINNET = "mainnet";
 
+// BATCH_TX_COUNT represents a batch of transaction wich will be fetched
+// on a getTransactions request.
+export const BATCH_TX_COUNT = 10;
+
+// RECENT_TX_COUNT is the number of transactions for Overview Page.
+export const RECENT_TX_COUNT = 8;
+
 // tx types
 export const TICKET = "ticket";
 export const VOTE = "vote";

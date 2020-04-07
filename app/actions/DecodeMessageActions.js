@@ -1,4 +1,4 @@
-import { decodeTransaction, getDecodeService } from "wallet";
+import { decodeTransaction, getDecodeService, validateAddress } from "wallet";
 import { reverseHash } from "helpers/byteActions";
 import Promise from "promise";
 import { isTestNet } from "selectors";
@@ -28,7 +28,27 @@ export const decodeRawTransaction = (hexTx) => (dispatch, getState) => new Promi
       const decodedTx = resp.getTransaction();
       const hash = reverseHash(Buffer.from(decodedTx.getTransactionHash()).toString("hex"));
       dispatch({ decodedTx, hash, type: DECODERAWTXS_SUCCESS });
-      resolve(decodedTx)
+      resolve(decodedTx);
     })
-    .catch(error => dispatch({ error, type: DECODERAWTXS_FAILED }))
+    .catch(error => dispatch({ error, type: DECODERAWTXS_FAILED }));
 });
+
+// getNonWalletOutputs decodes a tx and gets outputs which are not from the wallet.
+export const getNonWalletOutputs = (decodeMessageService, walletService, tx) => new Promise((resolve,reject) => decodeTransaction(
+  decodeMessageService, Buffer.from(tx.tx.getTransaction())
+).then(async r => {
+  const tx = r.getTransaction();
+  const outputs = tx.getOutputsList().map(async o => {
+    const address = o.getAddressesList()[0];
+    // Validate address so we can check if it is our own.
+    // If that is the case it is a change output.
+    const addrValidResp = await validateAddress(walletService, address);
+    return {
+      address,
+      value: o.getValue(),
+      isChange: addrValidResp.getIsMine()
+    };
+  });
+  resolve(Promise.all(outputs));
+})
+  .catch(err => reject(err)));
