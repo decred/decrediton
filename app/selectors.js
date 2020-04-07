@@ -303,7 +303,7 @@ export const numTicketsToBuy = get([ "control", "numTicketsToBuy" ]);
 export const hasTickets = compose(t => t && t.length > 0, tickets);
 
 // aux map from ticket/spender hash => ticket info
-const txHashToTicket = createSelector(
+export const getTxHashToTicket = createSelector(
   [ tickets ],
   reduce((m, t) => {
     m[t.txHash] = t;
@@ -467,20 +467,15 @@ export const ticketDataChart = createSelector(
     immature: s.series.immature / unitDivisor
   })));
 
-export const viewedDecodedTransaction = createSelector(
-  [ transactions, (state, { match: { params: { txHash } } }) => txHash, decodedTransactions ],
-  (transactions, txHash, decodedTransactions) => decodedTransactions[txHash]
-);
-
 const recentStakeTransactions = createSelector(
   [ transactionsNormalizer, get([ "grpc", "recentStakeTransactions" ]) ], apply
 );
 
 export const homeHistoryTickets = createSelector(
-  [ recentStakeTransactions, txHashToTicket ],
-  ( recentStakeTransactions, txHashToTicket ) => {
+  [ recentStakeTransactions, getTxHashToTicket ],
+  ( recentStakeTransactions, getTxHashToTicket ) => {
     return recentStakeTransactions.map( tx => {
-      const ticketDecoded = txHashToTicket[tx.txHash];
+      const ticketDecoded = getTxHashToTicket[tx.txHash];
       if (!ticketDecoded) {
         // ordinarily, this shouldn't happen as we should have all tickets purchases
         // and spends (votes/revocations) stored in the allTickets/txHashToTicket
@@ -505,23 +500,6 @@ export const homeHistoryTickets = createSelector(
 export const viewableTransactions = createSelector(
   [ transactions, homeHistoryTransactions, homeHistoryTickets ],
   (transactions, homeTransactions, homeHistoryTickets) => [ ...transactions, ...homeTransactions, ...homeHistoryTickets ]
-);
-export const viewedTransaction = createSelector(
-  [ viewableTransactions, (state, { match: { params: { txHash } } }) => txHash, txHashToTicket ],
-  (transactions, txHash, txHashToTicket) => {
-    const ticketDecoded = txHashToTicket[txHash];
-    const tx = find({ txHash }, transactions);
-    if (ticketDecoded) {
-      if (ticketDecoded.ticketPrice) tx.ticketPrice = ticketDecoded.ticketPrice;
-      if (ticketDecoded.status != "voted") {
-        tx.status = ticketDecoded.status;
-      }
-      if (ticketDecoded.enterTimestamp) tx.enterTimestamp = ticketDecoded.enterTimestamp;
-      if (ticketDecoded.leaveTimestamp) tx.leaveTimestamp = ticketDecoded.leaveTimestamp;
-      if (ticketDecoded.ticketReward) tx.ticketReward = ticketDecoded.ticketReward;
-    }
-    return tx;
-  }
 );
 
 const rescanResponse = get([ "control", "rescanResponse" ]);

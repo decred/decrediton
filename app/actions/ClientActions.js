@@ -976,7 +976,6 @@ export const getStartupTransactions = () => async (dispatch, getState) => {
     maxAmount: null,
     minAmount: null
   };
-  await dispatch(changeTransactionsFilter(defaultFilter));
 
   const { currentBlockHeight, walletService, recentTransactionCount, decodeMessageService } = getState().grpc;
   const chainParams = sel.chainParams(getState());

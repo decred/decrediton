@@ -60,7 +60,7 @@ const TxHistory = ({
             txTs: txTimestamp && tsDate(txTimestamp),
             overview,
             pending: tx.isPending,
-            onClick: () => history.push(`/transactions/history/${tx.txHash}`),
+            onClick: () => history.push(`/transaction/history/${tx.txHash}`),
             timeMessage: (txTimestamp) => intl.formatMessage(timeMessageDefine.dayMonthHourDisplay, { value: txTimestamp })
           }}
         />

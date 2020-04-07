@@ -374,12 +374,11 @@ export default function grpc(state = {}, action) {
       getTransactionsRequestAttempt: false
     };
   case GETTRANSACTIONS_COMPLETE:
-    var transactions = [ ...action.unminedTransactions, ...action.minedTransactions ];
     return {
       ...state,
       minedTransactions: action.minedTransactions,
       unminedTransactions: action.unminedTransactions,
-      transactions: transactions,
+      transactions: [ ...action.unminedTransactions, ...action.minedTransactions ],
       noMoreTransactions: action.noMoreTransactions,
       lastTransaction: action.lastTransaction,
       getTransactionsRequestError: "",
@@ -630,7 +629,7 @@ export default function grpc(state = {}, action) {
       ...state,
       decodedTransactions: {
         ...state.decodedTransactions,
-        ...action.transactions
+        [action.hash]: action.decodedTx
       }
     };
   case GETSTARTUPTRANSACTIONS_SUCCESS:
@@ -638,7 +637,8 @@ export default function grpc(state = {}, action) {
       ...state,
       maturingBlockHeights: action.maturingBlockHeights,
       recentRegularTransactions: action.recentRegularTxs,
-      recentStakeTransactions: action.recentStakeTxs
+      recentStakeTransactions: action.recentStakeTxs,
+      transactions: [ ...action.recentRegularTxs, ...action.recentStakeTxs ]
     };
   case MATURINGHEIGHTS_CHANGED:
     return {

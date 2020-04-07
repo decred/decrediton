@@ -20,28 +20,15 @@ export const getDecodeMessageServiceAttempt = () => (dispatch, getState) => {
 export const DECODERAWTXS_SUCCESS = "DECODERAWTXS_SUCCESS";
 export const DECODERAWTXS_FAILED = "DECODERAWTXS_FAILED";
 
-// decodeRawTransaction requests decodification of a list of hex transactions.
-// Dispatches the event when all transactions have been decoded. Better
-// performance than to use a sequence of decodeRawTransaction
-export const decodeRawTransactions = (hexTxs) => (dispatch, getState) => {
-  const { grpc: { decodeMessageService } } = getState();
-
-  const resolved = resps => {
-    const transactions = resps.reduce((map, resp) => {
-      const decodedTransaction = resp.getTransaction();
-      const hash = reverseHash(Buffer.from(decodedTransaction.getTransactionHash()).toString("hex"));
-      map[hash] = { hash: hash, transaction: decodedTransaction };
-      return map;
-    }, {});
-    dispatch({ transactions, type: DECODERAWTXS_SUCCESS });
-    return transactions;
-  };
-
-  return Promise
-    .all(hexTxs.map(hex => decodeTransaction(decodeMessageService, hex)))
-    .then(resolved)
-    .catch(error => dispatch({ error, type: DECODERAWTXS_FAILED }));
-};
-
 // decodeRawTransaction requests decodification of a raw, hex-encoded transaction.
-export const decodeRawTransaction = (hexTx) => decodeRawTransactions([ hexTx ]);
+export const decodeRawTransaction = (hexTx) => (dispatch, getState) => new Promise((resolve, reject) => {
+  const { decodeMessageService } = getState().grpc;
+  decodeTransaction(decodeMessageService, hexTx)
+    .then(resp => {
+      const decodedTx = resp.getTransaction();
+      const hash = reverseHash(Buffer.from(decodedTx.getTransactionHash()).toString("hex"));
+      dispatch({ decodedTx, hash, type: DECODERAWTXS_SUCCESS });
+      resolve(decodedTx)
+    })
+    .catch(error => dispatch({ error, type: DECODERAWTXS_FAILED }))
+});
