@@ -3,11 +3,10 @@ import * as sel from "selectors";
 import eq from "lodash/fp/eq";
 import { getStakeInfoAttempt, getBalanceUpdateAttempt } from "./ClientActions";
 import { getNonWalletOutputs } from "./DecodeMessageActions";
-import { getTransactions as walletGetTransactions } from "wallet/service";
 import { TransactionDetails } from "middleware/walletrpc/api_pb";
 import { getStartupStats } from "./StatisticsActions";
 import { rawHashToHex, reverseRawHash, strHashToRaw } from "helpers";
-import { RECENT_TX_COUNT, BATCH_TX_COUNT  } from "constants";
+import { RECENT_TX_COUNT, BATCH_TX_COUNT } from "constants";
 
 function filterTickets(tickets, filter) {
   return tickets
@@ -133,7 +132,6 @@ const getTicketsFromTransactions = async (walletService, startIdx, endIdx, maxCo
     startIdx = desc ? lastTx.height - 1 : lastTx.height + 1;
   }
 
-  console.log(tickets);
   return { tickets, startIdx };
 };
 
@@ -274,7 +272,6 @@ function filterTransactions(transactions, filter) {
     .filter(v => filter.minAmount ? Math.abs(v.amount) >= filter.minAmount : true)
     .filter(v => filter.maxAmount ? Math.abs(v.amount) <= filter.maxAmount : true);
 }
-
 
 function checkAccountsToUpdate(txs, accountsToUpdate) {
   txs.forEach(tx => {
@@ -440,10 +437,11 @@ export const getStartupTransactions = () => async (dispatch, getState) => {
 
   // the mergeXXX functions pick a list of transactions returned from
   // getTransactions and fills the appropriate result variables
-  const mergeRegularTxs = txs =>
-    (recentRegularTxs.length < RECENT_TX_COUNT) &&
+  const mergeRegularTxs = txs => {
+    return (recentRegularTxs.length < RECENT_TX_COUNT) &&
     (recentRegularTxs.push(...txs.filter(
       tx => tx.type === TransactionDetails.TransactionType.REGULAR)));
+  }
 
   const mergeStakeTxs = txs =>
     (recentStakeTxs.length < RECENT_TX_COUNT) &&
@@ -514,9 +512,19 @@ export const getStartupTransactions = () => async (dispatch, getState) => {
   });
   await Promise.all(addNonWalletInfo).then(r => recentRegularTxs = r);
 
-  dispatch({
-    recentRegularTxs, recentStakeTxs, maturingBlockHeights,
-    type: GETSTARTUPTRANSACTIONS_SUCCESS
+  const regularTxMap = recentRegularTxs.reduce((m, t) => {
+    m[t.txHash] = t;
+    return m;
+  }, {});
+  const stakeTxMap = recentStakeTxs.reduce((m, t) => {
+    m[t.txHash] = t;
+    return m;
+  }, {});
+  console.log(regularTxMap)
+  const transactions = { ...regularTxMap, ...stakeTxMap };
+
+  dispatch({ type: GETSTARTUPTRANSACTIONS_SUCCESS,
+    recentRegularTxs, recentStakeTxs, maturingBlockHeights, transactions
   });
 };
 
@@ -539,7 +547,7 @@ export const getTransactions = () => async (dispatch, getState) => {
     currentBlockHeight, getTransactionsRequestAttempt, transactionsFilter, walletService,
     decodeMessageService
   } = getState().grpc;
-  let { noMoreTransactions, lastTransaction, minedTransactions } = getState().grpc;
+  let { noMoreTransactions, lastTransaction } = getState().grpc;
   if (getTransactionsRequestAttempt || noMoreTransactions) return;
 
   if (!currentBlockHeight) {
@@ -550,10 +558,10 @@ export const getTransactions = () => async (dispatch, getState) => {
   dispatch({ type: GETTRANSACTIONS_ATTEMPT });
 
   // List of transactions found after filtering
-  let filtered = [];
+  const filtered = [];
 
   // first, request unmined transactions. They always come first in decrediton.
-  let { unmined } = await walletGetTransactions(walletService, -1, -1, 0);
+  const { unmined } = await wallet.getTransactions(walletService, -1, -1, 0);
   let unminedTransactions = filterTransactions(unmined, transactionsFilter).map(async tx => {
     const outputs = await getNonWalletOutputs(decodeMessageService, walletService, tx);
     return { ...tx, outputs };
@@ -573,21 +581,29 @@ export const getTransactions = () => async (dispatch, getState) => {
     let startRequestHeight, endRequestHeight;
 
     if (transactionsFilter.listDirection === "desc") {
-      startRequestHeight = lastTransaction ? lastTransaction.height - 1 : currentBlockHeight;
-      if (startRequestHeight < 1) break;
       endRequestHeight = 1;
+      startRequestHeight = lastTransaction ? lastTransaction.height - 1 : currentBlockHeight;
+      // Reached genesis.
+      if (startRequestHeight < 1) {
+        noMoreTransactions = true;
+        break
+      };
     } else {
       startRequestHeight = lastTransaction ? lastTransaction.height + 1 : 1;
       endRequestHeight = currentBlockHeight;
     }
 
     try {
-      let { mined } = await walletGetTransactions(walletService,
-        startRequestHeight, endRequestHeight, BATCH_TX_COUNT);
-      lastTransaction = mined.length ? mined[mined.length - 1] : lastTransaction;
-      reachedGenesis = (transactionsFilter.listDirection === "desc") &&
-        lastTransaction && (lastTransaction.height === 1);
-      noMoreTransactions = mined.length === 0 || reachedGenesis;
+      const { mined } = await wallet.getTransactions(
+        walletService, startRequestHeight, endRequestHeight, BATCH_TX_COUNT
+      );
+      // no more transactions
+      if (mined.length === 0) {
+        noMoreTransactions = true;
+        break;
+      }
+      lastTransaction = mined[mined.length - 1];
+
       const newFiltered = filterTransactions(mined, transactionsFilter);
 
       for (let i = 0; i < newFiltered.length; i++) {
@@ -595,8 +611,8 @@ export const getTransactions = () => async (dispatch, getState) => {
         if (stakeTypes.indexOf(tx.type) > -1) {
           // For stake txs, fetch the missing stake info.
           const normalizedTx = txNormalizer(tx);
-          const stakeTx = await (dispatch(getMissingStakeTxData(normalizedTx)));
-          filtered.push(stakeTx);
+          const stakeTx = await dispatch(getMissingStakeTxData(normalizedTx));
+          filtered.push(normalizedTx);
         } else {
           // For regular tx we get the nonWalletoutputs so we can show them at
           // the overview.
@@ -610,9 +626,14 @@ export const getTransactions = () => async (dispatch, getState) => {
     }
   }
 
-  minedTransactions = [ ...minedTransactions, ...filtered ];
+  // make map of transactions
+  let transactions = filtered.reduce((m, t) => {
+    console.log(t)
+    m[t.txHash] = t;
+    return m;
+  }, {});
 
-  return dispatch({ type: GETTRANSACTIONS_COMPLETE, noMoreTransactions, lastTransaction });
+  return dispatch({ type: GETTRANSACTIONS_COMPLETE, noMoreTransactions, lastTransaction, transactions });
 };
 
 const getMissingStakeTxData = tx => async (dispatch, getState) => {

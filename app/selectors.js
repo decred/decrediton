@@ -319,10 +319,10 @@ export const transactionNormalizer = createSelector(
     const getAccountName = num => (act => act ? act.getAccountName() : "")(findAccount(num));
     return origTx => {
       const { blockHash } = origTx;
-      const type = origTx.type || (origTx.getTransactionType ? origTx.getTransactionType() : null);
       let txInfo = origTx.tx ? origTx : {};
       let timestamp = origTx.timestamp;
-      const tx = origTx.tx || origTx;
+      const tx = origTx.tx || (origTx.originalTx ? origTx.originalTx.tx : null);
+      const type = origTx.type || (tx.getTransactionType ? tx.getTransactionType() : null);
       timestamp = timestamp || tx.timestamp;
       let totalFundsReceived = 0;
       let totalChange = 0;
@@ -404,15 +404,49 @@ export const transactionNormalizer = createSelector(
 );
 
 export const noMoreTransactions = get([ "grpc", "noMoreTransactions" ]);
-const transactionsNormalizer = createSelector([ transactionNormalizer ], map);
 export const transactionsFilter = get([ "grpc", "transactionsFilter" ]);
-export const hasUnminedTransactions = compose(l => l && l.length > 0, get([ "grpc", "unminedTransactions" ]));
-export const transactions = createSelector(
-  [ transactionsNormalizer, get([ "grpc", "transactions" ]) ], apply
+export const transactionsMap = createSelector(
+  [ transactionNormalizer, get([ "grpc", "transactions" ])],
+  (normalizerFn, txsMap) => {
+    return Object.keys(txsMap).reduce((normalizedMap, txHash) => {
+      normalizedMap[txHash] = normalizerFn(txsMap[txHash]);
+      return normalizedMap
+    }, {});
+  }
+);
+
+const transactionsNormalizer = createSelector([ transactionNormalizer ], map);
+const recentStakeTransactions = createSelector(
+  [ transactionsNormalizer, get([ "grpc", "recentStakeTransactions" ]) ], apply
 );
 
 export const homeHistoryTransactions = createSelector(
   [ transactionsNormalizer, get([ "grpc", "recentRegularTransactions" ]) ], apply
+);
+export const homeHistoryTickets = createSelector(
+  [ recentStakeTransactions, getTxHashToTicket ],
+  ( recentStakeTransactions, getTxHashToTicket ) => {
+    return recentStakeTransactions.map( tx => {
+      const ticketDecoded = getTxHashToTicket[tx.txHash];
+      if (!ticketDecoded) {
+        // ordinarily, this shouldn't happen as we should have all tickets purchases
+        // and spends (votes/revocations) stored in the allTickets/txHashToTicket
+        // selectors. I'm getting some errors here on some wallets while testing
+        // split tickets and non-standard voting layouts, so I'm leaving this and
+        // the filter for the moment.
+        return null;
+      }
+      if (ticketDecoded.ticketPrice) tx.ticketPrice = ticketDecoded.ticketPrice;
+      if (ticketDecoded.status != "voted") {
+        tx.status = ticketDecoded.status;
+      }
+      if (ticketDecoded.enterTimestamp) tx.enterTimestamp = ticketDecoded.enterTimestamp;
+      if (ticketDecoded.leaveTimestamp) tx.leaveTimestamp = ticketDecoded.leaveTimestamp;
+      if (ticketDecoded.ticketReward) tx.ticketReward = ticketDecoded.ticketReward;
+
+      return tx;
+    }).filter(v => !!v);
+  }
 );
 
 export const dailyBalancesStats = get([ "statistics", "dailyBalances" ]);
@@ -466,41 +500,6 @@ export const ticketDataChart = createSelector(
     locked: (s.series.locked + s.series.immature) / unitDivisor,
     immature: s.series.immature / unitDivisor
   })));
-
-const recentStakeTransactions = createSelector(
-  [ transactionsNormalizer, get([ "grpc", "recentStakeTransactions" ]) ], apply
-);
-
-export const homeHistoryTickets = createSelector(
-  [ recentStakeTransactions, getTxHashToTicket ],
-  ( recentStakeTransactions, getTxHashToTicket ) => {
-    return recentStakeTransactions.map( tx => {
-      const ticketDecoded = getTxHashToTicket[tx.txHash];
-      if (!ticketDecoded) {
-        // ordinarily, this shouldn't happen as we should have all tickets purchases
-        // and spends (votes/revocations) stored in the allTickets/txHashToTicket
-        // selectors. I'm getting some errors here on some wallets while testing
-        // split tickets and non-standard voting layouts, so I'm leaving this and
-        // the filter for the moment.
-        return null;
-      }
-      if (ticketDecoded.ticketPrice) tx.ticketPrice = ticketDecoded.ticketPrice;
-      if (ticketDecoded.status != "voted") {
-        tx.status = ticketDecoded.status;
-      }
-      if (ticketDecoded.enterTimestamp) tx.enterTimestamp = ticketDecoded.enterTimestamp;
-      if (ticketDecoded.leaveTimestamp) tx.leaveTimestamp = ticketDecoded.leaveTimestamp;
-      if (ticketDecoded.ticketReward) tx.ticketReward = ticketDecoded.ticketReward;
-
-      return tx;
-    }).filter(v => !!v);
-  }
-);
-
-export const viewableTransactions = createSelector(
-  [ transactions, homeHistoryTransactions, homeHistoryTickets ],
-  (transactions, homeTransactions, homeHistoryTickets) => [ ...transactions, ...homeTransactions, ...homeHistoryTickets ]
-);
 
 const rescanResponse = get([ "control", "rescanResponse" ]);
 export const rescanRequest = get([ "control", "rescanRequest" ]);

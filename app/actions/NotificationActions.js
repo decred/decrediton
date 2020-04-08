@@ -1,7 +1,7 @@
 // @flow
 import * as wallet from "wallet";
 import { getTicketPriceAttempt, updateAccount, getAccountNumbersBalances } from "./ClientActions";
-import { newTransactionsReceived } from "./ClientActions";
+import { newTransactionsReceived } from "./TransactionActions";
 import { TransactionNotificationsRequest, AccountNotificationsRequest } from "middleware/walletrpc/api_pb";
 
 export const TRANSACTIONNTFNS_START = "TRANSACTIONNTFNS_START";

@@ -82,12 +82,13 @@ class History extends React.Component {
     ];
   }
 
-  getTransactions() {
-    return this.props.transactions;
-  }
-
   onLoadMoreTransactions() {
     this.props.getTransactions();
+  }
+
+  getTransactions() {
+    const { transactions } = this.props;
+    return Object.keys(transactions).map(hash => transactions[hash]);
   }
 
   onChangeFilter(value) {

@@ -54,6 +54,7 @@ export const OUT = "out";
 export const IN = "in";
 export const TRANSFER = "transfer";
 export const COINBASE = "coinbase";
+export const REGULAR = "regular";
 
 // Default name to privacy accounts needed for creation
 export const MIXED_ACCOUNT = "mixed";

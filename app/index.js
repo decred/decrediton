@@ -159,16 +159,13 @@ var initialState = {
     getAccountsRequestAttempt: false,
     getAccountsResponse: null,
 
-    // Transactions for Overview Page
-    recentTransactionCount: 8,
-    recentTransactions: Array(),
-    recentStakeTransactions: Array(),
+    recentTransactions: [],
+    recentStakeTransactions: [],
 
     // GetTransactions
     minedTransactions: Array(),
     unminedTransactions: Array(),
-    transactions: Array(), // unmined + mined. Calculated on the grpc reducer.
-    maximumTransactionCount: 10,
+    transactions: {},
     noMoreTransactions: false,
     transactionsFilter: {
       search: null, // The freeform text in the Search box
@@ -178,7 +175,6 @@ var initialState = {
       maxAmount: null,
       minAmount: null
     },
-    lastTransaction: null, //last transaction obtained
 
     getTransactionsError: null,
     getTransactionsRequestAttempt: false,

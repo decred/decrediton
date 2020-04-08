@@ -82,7 +82,8 @@ const Page = ({
     <Subtitle title={<T id="history.subtitle" m="Transaction History"/>} className={"is-row"}
       children={subtitleMenu({ sortTypes, txTypes, selectedSortOrderKey, selectedTxTypeKey,
         searchText, intl, onChangeSelectedType, onChangeSortType, onChangeSearchText, onChangeSliderValue,
-        currencyDisplay, transactionsFilter, unitDivisor })} />
+        currencyDisplay, transactionsFilter, unitDivisor })}
+    />
     <div className="history-page-content-wrapper">
       {transactions.length > 0
         ? <TxHistory {...{ transactions, tsDate, isRegular: true }} />

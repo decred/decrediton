@@ -40,11 +40,10 @@ function Transaction({ intl }) {
   const tsDate = useSelector(sel.tsDate);
   const txHashToTicket = useSelector(sel.getTxHashToTicket);
   const decodedTransactions = useSelector(sel.decodedTransactions);
-  const transactions = useSelector(sel.transactions);
-  const [viewedTransaction, setViewedTx] = useState(find({ txHash }, transactions));
-  console.log(find({ txHash }, transactions))
-  const [viewedDecodedTx, setViewedDecodedTx] = useState(decodedTransactions[txHash]);
-  const [state, send] = useMachine(fetchMachine, {
+  const transactionsMap = useSelector(sel.transactionsMap);
+  const [ viewedTransaction, setViewedTx ] = useState(transactionsMap[txHash]);
+  const [ viewedDecodedTx, setViewedDecodedTx ] = useState(decodedTransactions[txHash]);
+  const [ state, send ] = useMachine(fetchMachine, {
     actions: {
       initial: () => {
         if (!viewedTransaction) return send("REJECT");
@@ -55,22 +54,22 @@ function Transaction({ intl }) {
         if (!viewedDecodedTx) {
           return decodeRawTransactions(viewedTransaction.rawTx)
             .then(res => {
-              console.log(res)
-              setViewedDecodedTx(res)
-              send({ type: "RESOLVE", data: res })
+              console.log(res);
+              setViewedDecodedTx(res);
+              send({ type: "RESOLVE", data: res });
             })
             .catch(error => {
-              console.log(error)
-              send({ type: "REJECT", error })
+              console.log(error);
+              send({ type: "REJECT", error });
             });
         }
-        const { txType, ticketPrice, leaveTimestamp } = viewedTransaction
+        const { txType, ticketPrice, leaveTimestamp } = viewedTransaction;
         if ((txType === "Ticket" && !ticketPrice) || (txType == "Vote" && !leaveTimestamp)) {
           fetchMissingStakeTxData(viewedTransaction)
             .then(r => send("RESOLVE"))
             .catch(error => {
-              console.log(error)
-              send({ type: "REJECT", error })
+              console.log(error);
+              send({ type: "REJECT", error });
             });
         }
       }
@@ -81,9 +80,10 @@ function Transaction({ intl }) {
     enterTimestamp, leaveTimestamp
   } = viewedTransaction;
   const isConfirmed = !!txTimestamp;
-  const icon = headerIcons[txType || txDirection];
+  // If it is a regular tx we use txDirection instead
+  const icon = txType === "Regular" ? headerIcons[txDirection] : headerIcons[txType];
 
-  let title = txType ? intl.formatMessage(messages[txType]) :
+  let title = txType !== "Regular" ? intl.formatMessage(messages[txType]) :
     <Balance title bold amount={txDirection !== "in" ? -txAmount : txAmount} />;
   if (txType == "Ticket" && ticketReward) {
     title = title + ", Voted";
@@ -102,9 +102,9 @@ function Transaction({ intl }) {
   let subtitle = <div />;
 
   switch (txType) {
-    case "Ticket":
-    case "Vote":
-      subtitle =
+  case "Ticket":
+  case "Vote":
+    subtitle =
         <div className="tx-details-subtitle">
           {isConfirmed ?
             <div className="tx-details-subtitle-pair">
@@ -121,9 +121,9 @@ function Transaction({ intl }) {
           {ticketPrice && <div className="tx-details-subtitle-pair"><div className="tx-details-subtitle-sentfrom"><T id="txDetails.ticketCost" m="Ticket Cost" /></div><div className="tx-details-subtitle-account"><Balance amount={ticketPrice} /></div></div>}
           {ticketReward && <div className="tx-details-subtitle-pair"><div className="tx-details-subtitle-sentfrom"><T id="txDetails.reward" m="Reward" /></div><div className="tx-details-subtitle-account"><Balance amount={ticketReward} /></div></div>}
         </div>;
-      break;
-    default:
-      subtitle =
+    break;
+  default:
+    subtitle =
         <div className="tx-details-subtitle">
           {txDirection == "out" ? <><div className="tx-details-subtitle-sentfrom"><T id="txDetails.sentFrom" m="Sent From" /></div><div className="tx-details-subtitle-account">{sentFromAccount}</div></> : <div />}
           <div className="tx-details-subtitle-date">{isConfirmed ? <T id="txDetails.timestamp" m="{timestamp, date, medium} {timestamp, time, medium}" values={{ timestamp: tsDate(txTimestamp) }} /> : <T id="txDetails.unConfirmed" m="Unconfirmed" />}</div>
@@ -140,28 +140,28 @@ function Transaction({ intl }) {
 
   const getStateComponent = () => {
     switch (state.value) {
-      case "idle":
-        return <></>;
-      case "loading":
-        return <DecredLoading center />;
-      case "success":
-        return <TransactionPage {...{
-          transactionDetails: viewedTransaction, decodedTransaction: viewedDecodedTx
-        }}
-        />;
-      case "failure":
-        return <p>Transaction not found</p>;
-      default:
-        return null;
+    case "idle":
+      return <></>;
+    case "loading":
+      return <DecredLoading center />;
+    case "success":
+      return <TransactionPage {...{
+        transactionDetails: viewedTransaction, decodedTransaction: viewedDecodedTx
+      }}
+      />;
+    case "failure":
+      return <p>Transaction not found</p>;
+    default:
+      return null;
     }
-  }
+  };
 
   return (
     <StandalonePage header={header} className="txdetails-standalone-page">
       {getStateComponent()}
     </StandalonePage>
-  )
+  );
 
-};
+}
 
 export default injectIntl(Transaction);
