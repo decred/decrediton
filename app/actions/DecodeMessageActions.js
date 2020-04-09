@@ -30,7 +30,10 @@ export const decodeRawTransaction = (hexTx) => (dispatch, getState) => new Promi
       dispatch({ decodedTx, hash, type: DECODERAWTXS_SUCCESS });
       resolve(decodedTx);
     })
-    .catch(error => dispatch({ error, type: DECODERAWTXS_FAILED }));
+    .catch(error => {
+      dispatch({ error, type: DECODERAWTXS_FAILED });
+      reject(error);
+    });
 });
 
 // getNonWalletOutputs decodes a tx and gets outputs which are not from the wallet.

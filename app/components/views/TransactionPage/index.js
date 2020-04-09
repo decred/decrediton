@@ -5,12 +5,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchMachine } from "stateMachines/FetchStateMachine";
 import { DecredLoading } from "indicators";
 import { useMachine } from "@xstate/react";
-import { useState, useEffect } from "react";
-import { find } from "fp";
+import { useState } from "react";
 import { Balance } from "shared";
 import { SlateGrayButton } from "buttons";
 import { StandaloneHeader, StandalonePage } from "layout";
 import * as ta from "actions/TransactionActions";
+import * as ca from "actions/ClientActions";
 import * as msg from "actions/DecodeMessageActions";
 import * as sel from "selectors";
 
@@ -38,10 +38,9 @@ function Transaction({ intl }) {
   const decodeRawTransactions = (hexTx) => dispatch(msg.decodeRawTransaction(hexTx));
   const { txHash } = useParams();
   const tsDate = useSelector(sel.tsDate);
-  const txHashToTicket = useSelector(sel.getTxHashToTicket);
   const decodedTransactions = useSelector(sel.decodedTransactions);
   const transactionsMap = useSelector(sel.transactionsMap);
-  const [ viewedTransaction, setViewedTx ] = useState(transactionsMap[txHash]);
+  const viewedTransaction = transactionsMap[txHash];
   const [ viewedDecodedTx, setViewedDecodedTx ] = useState(decodedTransactions[txHash]);
   const [ state, send ] = useMachine(fetchMachine, {
     actions: {
@@ -54,7 +53,6 @@ function Transaction({ intl }) {
         if (!viewedDecodedTx) {
           return decodeRawTransactions(viewedTransaction.rawTx)
             .then(res => {
-              console.log(res);
               setViewedDecodedTx(res);
               send({ type: "RESOLVE", data: res });
             })
@@ -66,7 +64,7 @@ function Transaction({ intl }) {
         const { txType, ticketPrice, leaveTimestamp } = viewedTransaction;
         if ((txType === "Ticket" && !ticketPrice) || (txType == "Vote" && !leaveTimestamp)) {
           fetchMissingStakeTxData(viewedTransaction)
-            .then(r => send("RESOLVE"))
+            .then(() => send("RESOLVE"))
             .catch(error => {
               console.log(error);
               send({ type: "REJECT", error });

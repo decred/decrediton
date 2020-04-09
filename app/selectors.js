@@ -283,7 +283,7 @@ export const ticketNormalizer = createSelector(
         status: ticket.status,
         ticketRawTx: Buffer.from(ticketTx.getTransaction()).toString("hex"),
         spenderRawTx: hasSpender ? Buffer.from(spenderTx.getTransaction()).toString("hex") : null,
-        originalTicket: ticket,
+        tx: ticketTx,
         isPending,
         accountName
       };
@@ -406,11 +406,11 @@ export const transactionNormalizer = createSelector(
 export const noMoreTransactions = get([ "grpc", "noMoreTransactions" ]);
 export const transactionsFilter = get([ "grpc", "transactionsFilter" ]);
 export const transactionsMap = createSelector(
-  [ transactionNormalizer, get([ "grpc", "transactions" ])],
+  [ transactionNormalizer, get([ "grpc", "transactions" ]) ],
   (normalizerFn, txsMap) => {
     return Object.keys(txsMap).reduce((normalizedMap, txHash) => {
       normalizedMap[txHash] = normalizerFn(txsMap[txHash]);
-      return normalizedMap
+      return normalizedMap;
     }, {});
   }
 );

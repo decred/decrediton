@@ -601,7 +601,7 @@ export const getTransactions = () => async (dispatch, getState) => {
           // For stake txs, fetch the missing stake info.
           const normalizedTx = txNormalizer(tx);
           const stakeTx = await dispatch(getMissingStakeTxData(normalizedTx));
-          filtered.push(normalizedTx);
+          filtered.push(stakeTx);
         } else {
           // For regular tx we get the nonWalletoutputs so we can show them at
           // the overview.

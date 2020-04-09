@@ -19,7 +19,7 @@ const TxRowByType = {
   [txTypes.OUT] : RegularTxRow,
   [txTypes.IN] : RegularTxRow,
   [txTypes.TRANSFER] : RegularTxRow,
-  [txTypes.COINBASE] : RegularTxRow,
+  [txTypes.COINBASE] : RegularTxRow
 };
 
 const timeMessageDefine = defineMessages({

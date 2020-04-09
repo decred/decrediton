@@ -43,9 +43,8 @@ const Page = ({
   let nonWalletOutputs = [];
 
   const {
-    txHash, txUrl, txHeight, txType, txInputs, txOutputs, txBlockHash, txBlockUrl,
-    txAmount, txFee, txDirection, txTimestamp, rawTx, ticketReward, ticketPrice,
-    enterTimestamp, leaveTimestamp
+    txHash, txUrl, txHeight, txType, txInputs, txOutputs, txBlockHash,
+    txBlockUrl, txFee, txDirection, txTimestamp, rawTx
   } = transactionDetails;
 
   const isConfirmed = !!txTimestamp;
