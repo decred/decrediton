@@ -310,6 +310,7 @@ export default function grpc(state = {}, action) {
     return {
       ...state,
       tickets: [ ...action.unminedTickets, ...action.minedTickets ],
+      transactions: { ...state.transactions, ...action.ticketsMap },
       unminedTickets: action.unminedTickets,
       minedTickets: action.minedTickets,
       noMoreTickets: action.noMoreTickets,
@@ -397,9 +398,8 @@ export default function grpc(state = {}, action) {
   case NEW_TRANSACTIONS_RECEIVED:
     return {
       ...state,
-      minedTransactions: action.minedTransactions,
       unminedTransactions: action.unminedTransactions,
-      transactions: [ ...action.unminedTransactions, ...action.minedTransactions ],
+      transactions: { ...action.unminedTransactions, ...state.transactions },
       recentRegularTransactions: action.recentRegularTransactions,
       recentStakeTransactions: action.recentStakeTransactions
     };
@@ -407,9 +407,7 @@ export default function grpc(state = {}, action) {
     return {
       ...state,
       transactionsFilter: action.transactionsFilter,
-      minedTransactions: [],
       unminedTransactions: [],
-      transactions: [],
       noMoreTransactions: false
     };
   case FETCHMISSINGSTAKETXDATA_ATTEMPT:
@@ -423,7 +421,6 @@ export default function grpc(state = {}, action) {
   case FETCHMISSINGSTAKETXDATA_SUCCESS:
     return {
       ...state,
-      transactions: action.transactions || state.transactions,
       recentStakeTransactions: action.recentStakeTransactions || state.recentStakeTransactions,
       fetchMissingStakeTxDataAttempt: {
         ...state.fetchMissingStakeTxDataAttempt,
@@ -662,10 +659,9 @@ export default function grpc(state = {}, action) {
       getTicketPriceResponse: null,
       lastTransaction: null,
       maturingBlockHeights: {},
-      minedTransactions: Array(),
-      unminedTransactions: Array(),
-      tickets: Array(),
-      transactions: Array(),
+      unminedTransactions: [],
+      tickets: [],
+      transactions: [],
       noMoreTransactions: false,
       transactionsFilter: {
         search: null,

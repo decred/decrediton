@@ -1,8 +1,8 @@
 import { connect } from "react-redux";
-import { selectorMap } from "../fp";
+import { selectorMap } from "fp";
 import { bindActionCreators } from "redux";
-import * as sel from "../selectors";
-import * as ca from "actions/ClientActions";
+import * as sel from "selectors";
+import * as ta from "actions/TransactionActions";
 
 const mapStateToProps = selectorMap({
   startRequestHeight: sel.getTicketsProgressStartRequestHeight,
@@ -11,7 +11,7 @@ const mapStateToProps = selectorMap({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  cancelGetTickets: ca.cancelGetTickets
+  cancelGetTickets: ta.cancelGetTickets
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

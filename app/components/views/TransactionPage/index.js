@@ -10,7 +10,7 @@ import { find } from "fp";
 import { Balance } from "shared";
 import { SlateGrayButton } from "buttons";
 import { StandaloneHeader, StandalonePage } from "layout";
-import * as ca from "actions/ClientActions";
+import * as ta from "actions/TransactionActions";
 import * as msg from "actions/DecodeMessageActions";
 import * as sel from "selectors";
 
@@ -34,7 +34,7 @@ const headerIcons = {
 function Transaction({ intl }) {
   const dispatch = useDispatch();
   const goBack = () => dispatch(ca.goBackHistory());
-  const fetchMissingStakeTxData = () => dispatch(ca.fetchMissingStakeTxData());
+  const fetchMissingStakeTxData = () => dispatch(ta.fetchMissingStakeTxData());
   const decodeRawTransactions = (hexTx) => dispatch(msg.decodeRawTransaction(hexTx));
   const { txHash } = useParams();
   const tsDate = useSelector(sel.tsDate);

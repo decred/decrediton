@@ -1,8 +1,9 @@
 import { connect } from "react-redux";
-import { selectorMap } from "../fp";
+import { selectorMap } from "fp";
 import { bindActionCreators } from "redux";
-import * as sel from "../selectors";
-import * as ca from "../actions/ClientActions";
+import * as sel from "selectors";
+import * as ca from "actions/ClientActions";
+import * as ta from "actions/TransactionActions";
 
 const mapStateToProps = selectorMap({
   tickets: sel.tickets,
@@ -14,8 +15,8 @@ const mapStateToProps = selectorMap({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   goBackHistory: ca.goBackHistory,
-  getTickets: ca.getTickets,
-  changeTicketsFilter: ca.changeTicketsFilter
+  getTickets: ta.getTickets,
+  changeTicketsFilter: ta.changeTicketsFilter
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

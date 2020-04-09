@@ -210,12 +210,13 @@ export const getTickets = () => async (dispatch, getState) => {
   // and a vote/revocation) shown as the same expired or missed status.
   const newMinedTickets = [];
 
+  let ticketsMap;
   if (desc) {
     // When iterating in desc mode, we add the first found (most recent) ticket
     // tx (which should have the correct status) and ignore the next one (the
     // purchase, which would show as missed/expired)
     newMinedTickets.push(...minedTickets);
-    const ticketsMap = minedTickets.reduce((m, t) => { m[t.txHash] = t; return m; }, {});
+    ticketsMap = minedTickets.reduce((m, t) => { m[t.txHash] = t; return m; }, {});
     newMinedTickets.push(...filtered.filter(t => !ticketsMap[t.txHash]));
   } else {
     // When iterating in asc mode, we unshift the newly found (most recent)
@@ -225,13 +226,13 @@ export const getTickets = () => async (dispatch, getState) => {
     // the list, causing a "jump" and if the user backtracks it won't be
     // there anymore.
     newMinedTickets.push(...filtered);
-    const ticketsMap = filtered.reduce((m, t) => { m[t.txHash] = t; return m; }, {});
+    ticketsMap = filtered.reduce((m, t) => { m[t.txHash] = t; return m; }, {});
     newMinedTickets.unshift(...minedTickets.filter(t => !ticketsMap[t.txHash]));
   }
 
   dispatch({
     unminedTickets, minedTickets: newMinedTickets, noMoreTickets,
-    getTicketsStartRequestHeight: startRequestHeight,
+    getTicketsStartRequestHeight: startRequestHeight, ticketsMap,
     type: GETTICKETS_COMPLETE
   });
 };
