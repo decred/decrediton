@@ -163,8 +163,7 @@ var initialState = {
     recentStakeTransactions: [],
 
     // GetTransactions
-    minedTransactions: Array(),
-    unminedTransactions: Array(),
+    unminedTransactions: [],
     transactions: {},
     noMoreTransactions: false,
     transactionsFilter: {

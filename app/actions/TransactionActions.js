@@ -301,7 +301,7 @@ export const MATURINGHEIGHTS_CHANGED = "MATURINGHEIGHTS_CHANGED";
 export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTransactions) => async (dispatch, getState) => {
   if (!newlyMinedTransactions.length && !newlyUnminedTransactions.length) return;
 
-  let { unminedTransactions, minedTransactions, recentRegularTransactions, recentStakeTransactions } = getState().grpc;
+  let { unminedTransactions, transactions, recentRegularTransactions, recentStakeTransactions } = getState().grpc;
   const { transactionsFilter, decodeMessageService, walletService } = getState().grpc;
   const chainParams = sel.chainParams(getState());
 
@@ -309,12 +309,11 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
   const newlyMinedMap = newlyMinedTransactions.reduce((m, v) => { m[v.hash] = v; return m; }, {});
   const newlyUnminedMap = newlyUnminedTransactions.reduce((m, v) => { m[v.hash] = v; return m; }, {});
 
-  const minedMap = minedTransactions.reduce((m, v) => { m[v.hash] = v; return m; }, {});
   const unminedMap = unminedTransactions.reduce((m, v) => { m[v.hash] = v; return m; }, {});
 
-  const unminedDupeCheck = newlyUnminedTransactions.filter(tx => !minedMap[tx.hash] && !unminedMap[tx.hash]);
+  const unminedDupeCheck = newlyUnminedTransactions.filter(tx => !transactions[tx.txHash] && !unminedMap[tx.txHash]);
 
-  var accountsToUpdate = new Array();
+  let accountsToUpdate = new Array();
   accountsToUpdate = checkAccountsToUpdate(unminedDupeCheck, accountsToUpdate);
   accountsToUpdate = checkAccountsToUpdate(newlyMinedTransactions, accountsToUpdate);
   accountsToUpdate = Array.from(new Set(accountsToUpdate));
@@ -371,19 +370,9 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
   mergeNewMaturingHeights(transactionsMaturingHeights(newlyMinedTransactions, chainParams));
   dispatch({ maturingBlockHeights: newMaturingHeights, type: MATURINGHEIGHTS_CHANGED });
 
-  // TODO: filter newlyMinedTransactions against minedTransactions if this
-  // starts generating a duplicated key error
-
-  if (transactionsFilter.listDirection === "desc") {
-    minedTransactions = [ ...newlyMinedTransactions, ...minedTransactions ];
-  } else {
-    minedTransactions = [ ...minedTransactions, ...newlyMinedTransactions ];
-  }
-  minedTransactions = filterTransactions(minedTransactions, transactionsFilter);
-
   dispatch({
-    unminedTransactions, minedTransactions, newlyUnminedTransactions,
-    newlyMinedTransactions, recentRegularTransactions, recentStakeTransactions, type: NEW_TRANSACTIONS_RECEIVED
+    recentRegularTransactions, recentStakeTransactions, type: NEW_TRANSACTIONS_RECEIVED,
+    unminedTransactions, newlyUnminedTransactions, newlyMinedTransactions
   });
 
   if (newlyMinedTransactions.length > 0) {
@@ -441,7 +430,7 @@ export const getStartupTransactions = () => async (dispatch, getState) => {
     return (recentRegularTxs.length < RECENT_TX_COUNT) &&
     (recentRegularTxs.push(...txs.filter(
       tx => tx.type === TransactionDetails.TransactionType.REGULAR)));
-  }
+  };
 
   const mergeStakeTxs = txs =>
     (recentStakeTxs.length < RECENT_TX_COUNT) &&
@@ -520,7 +509,6 @@ export const getStartupTransactions = () => async (dispatch, getState) => {
     m[t.txHash] = t;
     return m;
   }, {});
-  console.log(regularTxMap)
   const transactions = { ...regularTxMap, ...stakeTxMap };
 
   dispatch({ type: GETSTARTUPTRANSACTIONS_SUCCESS,
@@ -586,8 +574,8 @@ export const getTransactions = () => async (dispatch, getState) => {
       // Reached genesis.
       if (startRequestHeight < 1) {
         noMoreTransactions = true;
-        break
-      };
+        break;
+      }
     } else {
       startRequestHeight = lastTransaction ? lastTransaction.height + 1 : 1;
       endRequestHeight = currentBlockHeight;
@@ -628,7 +616,6 @@ export const getTransactions = () => async (dispatch, getState) => {
 
   // make map of transactions
   let transactions = filtered.reduce((m, t) => {
-    console.log(t)
     m[t.txHash] = t;
     return m;
   }, {});

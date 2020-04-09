@@ -95,11 +95,11 @@ export const getStartupWalletInfo = () => (dispatch) => {
       try {
         await dispatch(checkLnWallet());
         await dispatch(getStakeInfoAttempt());
-        await dispatch(publishUnminedTransactionsAttempt());
         await dispatch(getAccountsAttempt(true));
         await dispatch(reloadTickets());
         await dispatch(getStartupTransactions());
         await dispatch(getStartupStats());
+        await dispatch(publishUnminedTransactionsAttempt());
         if (dcrdataEnabled) {
           dispatch(getTreasuryBalance());
           dispatch(getAllAgendasAttempt());
