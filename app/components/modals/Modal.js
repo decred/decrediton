@@ -8,26 +8,27 @@ import { useRef } from "react";
 import { useSelector } from "react-redux";
 import * as sel from "selectors";
 
-function Modal(props) {
+function Modal({
+  children, className, draggable, onCancelModal
+}) {
   const expandSideBar = useSelector(sel.expandSideBar);
   const showingSidebarMenu = useSelector(sel.showingSidebarMenu);
-  const { children, className, draggable } = props;
   const domNode = document.getElementById("modal-portal");
   const modalRef = useRef(null);
 
-  function mouseUp(event) {
+  const mouseUp = (event) => {
     const el = modalRef.current;
     if (eventOutsideElement(el, event.target)) {
-      props.onCancelModal && props.onCancelModal();
+      onCancelModal && onCancelModal();
     }
-  }
+  };
 
-  function onKeyDown(event) {
+  const onKeyDown = (event) => {
     // 27: ESC key
     if (event.keyCode === 27) {
-      props.onCancelModal && props.onCancelModal();
+      onCancelModal && onCancelModal();
     }
-  }
+  };
 
 
   const innerView = <div ref={modalRef} className={cx((showingSidebarMenu ? expandSideBar ? "app-modal " : "app-modal-reduced-bar " : "app-modal-standalone "), className && className, draggable && " draggable-modal ")}>

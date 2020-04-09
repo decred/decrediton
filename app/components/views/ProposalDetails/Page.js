@@ -27,7 +27,7 @@ function ProposalDetails ({
   const [ showWalletEligibleTickets, toggleWalletEligibleTickets ] = useState(false);
 
   // getVoteInfo is an auxiliar function to get the properly vote info component.
-  function getVoteInfo () {
+  const getVoteInfo = () => {
     if (voteStatus === VOTESTATUS_FINISHEDVOTE) {
       return <ChooseVoteOption {...{ voteOptions, currentVoteChoice, votingComplete: true }} />;
     }
@@ -44,7 +44,7 @@ function ProposalDetails ({
       }} />;
     }
     return <ProposalNotVoting />;
-  }
+  };
   let voteInfo = null;
   // Check if proposal is abandoned. If it is not we check its vote status
   if (proposalStatus === PROPOSALSTATUS_ABANDONED) {

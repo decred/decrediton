@@ -44,14 +44,14 @@ function UpdateVoteChoiceModalButton({ onSubmit, newVoteChoice, eligibleTicketCo
     />
   );}
 
-function getError(error) {
+const getError = (error) => {
   if (!error) return;
   if (typeof error === "string") return error;
   if (typeof error === "object") {
     if (error.message) return error.message;
     return JSON.stringify(error);
   }
-}
+};
 
 function ChooseVoteOption({
   viewedProposalDetails, voteOptions, currentVoteChoice, votingComplete, eligibleTicketCount
