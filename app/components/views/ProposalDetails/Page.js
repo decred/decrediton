@@ -116,7 +116,7 @@ function ProposalDetails ({
       </div>
       <div className="proposal-details-text">
         <div className="links">
-          <PoliteiaLink path={"/proposals/"+token}>
+          <PoliteiaLink path={"/proposals/"+token} isButton>
             <T id="proposals.community.goToProposal" m="See proposal comments on Politeia" />
           </PoliteiaLink>
         </div>
