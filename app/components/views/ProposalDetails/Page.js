@@ -3,57 +3,56 @@ import { InvisibleButton } from "buttons";
 import { PoliteiaLink, VerticalAccordion } from "shared";
 import {
   ProposalNotVoting, NoTicketsVotingInfo, OverviewField, OverviewVotingProgressInfo,
-  NoElligibleTicketsVotingInfo, UpdatingVoteChoice, TimeValue,
-  ChooseVoteOption, ProposalText, ProposalAbandoned
+  NoElligibleTicketsVotingInfo, TimeValue, ProposalText, ProposalAbandoned
 } from "./helpers";
+import ChooseVoteOption from "./ChooseVoteOption";
 import {
   VOTESTATUS_ACTIVEVOTE, VOTESTATUS_FINISHEDVOTE, PROPOSALSTATUS_ABANDONED
 } from "actions/GovernanceActions";
+import { useSelector } from "react-redux";
+import { useState } from "react";
+import * as sel from "selectors";
 
-export default ({ viewedProposalDetails, goBackHistory,
-  showPurchaseTicketsPage, hasTickets, onVoteOptionSelected, onUpdateVoteChoice,
-  newVoteChoice, updateVoteChoiceAttempt, tsDate, text, showWalletEligibleTickets,
-  onToggleWalletEligibleTickets }) =>
-{
-  const { name, token, voteStatus, proposalStatus, voteOptions, voteCounts,
+function ProposalDetails ({
+  viewedProposalDetails, showPurchaseTicketsPage, setVoteOption,
+  newVoteChoice, text, goBackHistory, eligibleTicketCount
+}) {
+  const {
     creator, timestamp, endTimestamp, currentVoteChoice, hasEligibleTickets,
-    version, quorumMinimumVotes, walletEligibleTickets } = viewedProposalDetails || {};
+    name, token, voteStatus, proposalStatus, voteOptions, voteCounts,
+    version, quorumMinimumVotes, walletEligibleTickets
+  } = viewedProposalDetails;
+  const tsDate = useSelector(sel.tsDate);
+  const hasTickets = useSelector(sel.hasTickets);
+  const [ showWalletEligibleTickets, toggleWalletEligibleTickets ] = useState(false);
 
-  const getVoteInfo = ({
-    voteStatus, voteOptions, onUpdateVoteChoice, onVoteOptionSelected, newVoteChoice,
-    eligibleTicketCount,currentVoteChoice, showPurchaseTicketsPage
-  }) => {
+  // getVoteInfo is an auxiliar function to get the properly vote info component.
+  const getVoteInfo = () => {
     if (voteStatus === VOTESTATUS_FINISHEDVOTE) {
       return <ChooseVoteOption {...{ voteOptions, currentVoteChoice, votingComplete: true }} />;
     }
     if (voteStatus === VOTESTATUS_ACTIVEVOTE) {
-      if (updateVoteChoiceAttempt) {
-        return <UpdatingVoteChoice />;
-      }
       if (!hasTickets) {
         return <NoTicketsVotingInfo {...{ showPurchaseTicketsPage }} />;
       }
       if (!hasEligibleTickets) {
         return <NoElligibleTicketsVotingInfo {...{ showPurchaseTicketsPage }} />;
       }
-
-      return <ChooseVoteOption {...{ voteOptions, onUpdateVoteChoice,
-        onVoteOptionSelected, newVoteChoice, eligibleTicketCount,
-        currentVoteChoice, votingComplete: false }} />;
+      return <ChooseVoteOption {...{
+        viewedProposalDetails, voteOptions, setVoteOption, newVoteChoice,
+        eligibleTicketCount, currentVoteChoice, votingComplete: false
+      }} />;
     }
     return <ProposalNotVoting />;
   };
-
-  const eligibleTicketCount = viewedProposalDetails && viewedProposalDetails.walletEligibleTickets && viewedProposalDetails.walletEligibleTickets.length;
   let voteInfo = null;
-
   // Check if proposal is abandoned. If it is not we check its vote status
   if (proposalStatus === PROPOSALSTATUS_ABANDONED) {
     voteInfo = <ProposalAbandoned />;
   } else {
     voteInfo = getVoteInfo({
-      voteStatus, voteOptions, onUpdateVoteChoice, onVoteOptionSelected, newVoteChoice,
-      eligibleTicketCount,currentVoteChoice, showPurchaseTicketsPage
+      voteStatus, voteOptions, setVoteOption, newVoteChoice, eligibleTicketCount,
+      currentVoteChoice, showPurchaseTicketsPage, hasTickets, hasEligibleTickets
     });
   }
 
@@ -96,7 +95,7 @@ export default ({ viewedProposalDetails, goBackHistory,
               </div>
             }
             show={showWalletEligibleTickets}
-            onToggleAccordion={onToggleWalletEligibleTickets}
+            onToggleAccordion={ () => toggleWalletEligibleTickets(!showWalletEligibleTickets)}
             className="proposal-details-wallet-eligible-tickets"
           >
             {walletEligibleTickets.map((t, i) => (
@@ -121,4 +120,6 @@ export default ({ viewedProposalDetails, goBackHistory,
       </div>
     </div>
   );
-};
+}
+
+export default ProposalDetails;

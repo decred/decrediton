@@ -105,7 +105,6 @@ const getProposalEligibleTickets = async (token, allEligibleTickets, shouldCache
   return await getWalletEligibleTickets(allEligibleTickets, walletService);
 };
 
-
 // updateInventoryFromApiData receives politeia data from getTokenInventory and
 // put it in decrediton's inventory format.
 // @param data - data from getTokenInventory api.
@@ -445,7 +444,6 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
       numComments: p.numcomments,
       timestamp: p.timestamp,
       files: files,
-      hasDetails: true,
       hasEligibleTickets: false
     };
 
@@ -489,12 +487,8 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
   }
 };
 
-export const viewProposalDetails = (token) => (dispatch, getState) => {
-  const details = sel.proposalsDetails(getState());
-  if (!details[token] || !details[token].hasDetails) {
-    dispatch(getProposalDetails(token));
-  }
-  dispatch(pushHistory("/proposal/details/" + token));
+export const viewProposalDetails = (token) => (dispatch) => {
+  dispatch(pushHistory(`/proposal/details/${token}`));
 };
 
 export const UPDATEVOTECHOICE_ATTEMPT = "UPDATEVOTECHOICE_ATTEMPT";

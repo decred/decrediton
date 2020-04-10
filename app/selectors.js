@@ -996,7 +996,6 @@ export const allAgendas = createSelector(
 
 export const treasuryBalance = get([ "grpc", "treasuryBalance" ]);
 
-export const updateVoteChoiceAttempt = get([ "governance", "updateVoteChoiceAttempt" ]);
 export const proposals = get([ "governance", "proposals" ]);
 export const proposallistpagesize = get([ "governance", "proposallistpagesize" ]);
 export const getProposalsAttempt = get([ "governance", "getProposalsAttempt" ]);
@@ -1016,7 +1015,6 @@ export const abandonedProposals = createSelector(
   [ proposals ],
   (proposals) => proposals && proposals.abandonedVote
 );
-export const lastVettedFetchTime = get([ "governance", "lastVettedFetchTime" ]);
 export const inventory = get([ "governance", "inventory" ]);
 export const newActiveVoteProposalsCount = compose(
   reduce((acc, p) => p.votingSinceLastAccess ? acc + 1 : acc, 0),
@@ -1030,11 +1028,6 @@ export const newProposalsStartedVoting = compose(some(p => p.votingSinceLastAcce
 
 export const getProposalError = get([ "governance", "getProposalError" ]);
 export const proposalsDetails = get([ "governance", "proposalsDetails" ]);
-export const viewedProposalToken = (state, ctx) => ctx.match && ctx.match.params && ctx.match.params.token ? ctx.match.params.token : null;
-export const viewedProposalDetails = createSelector(
-  [ proposalsDetails, viewedProposalToken ],
-  (proposals, token) => proposals[token]
-);
 export const lastPoliteiaAccessBlock = get([ "governance", "lastPoliteiaAccessBlock" ]);
 export const lastPoliteiaAccessTime = get([ "governance", "lastPoliteiaAccessTime" ]);
 

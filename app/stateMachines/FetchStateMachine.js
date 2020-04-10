@@ -4,7 +4,8 @@ export const fetchMachine = Machine({
   id: "fetch",
   initial: "idle",
   context: {
-    retries: 0
+    retries: 0,
+    error: null
   },
   states: {
     idle: {
@@ -18,7 +19,12 @@ export const fetchMachine = Machine({
       entry: [ "load" ],
       on: {
         RESOLVE: "success",
-        REJECT: "failure"
+        REJECT: {
+          target: "failure",
+          actions: assign({
+            error: (context, event) => event.error
+          })
+        }
       }
     },
     success: {
