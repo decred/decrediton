@@ -271,7 +271,8 @@
     "timezone-mock": "^1.0.12",
     "trezor.js": "^8.1.0",
     "winston": "^2.3.1",
-    "xstate": "^4.6.0"
+    "xstate": "^4.6.0",
+    "pi-ui": "https://github.com/decred/pi-ui"
   },
   "optionalDependencies": {
     "google-proto-files": "^1.1.2",

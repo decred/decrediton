@@ -27,7 +27,7 @@ export default merge(baseConfig, {
   module: {
     rules: [
       {
-        test: /\.less$/,
+        test: [ /\.less$/, /\.css$/ ],
         use: [ {
           loader: "style-loader"
         }, {
@@ -38,16 +38,21 @@ export default merge(baseConfig, {
             importLoaders: 1,
             localIdentName: "[local]"
           }
-        }, {
-          loader: "less-loader",
-          options: {
-            sourceMap: true,
-            noIeCompat: true,
-            strictMath: true
-          }
-        } ]
+        }
+        ]
       },
-
+      {
+        test: /\.less$/,
+        use: [
+          {
+            loader: "less-loader",
+            options: {
+              sourceMap: true,
+              noIeCompat: true,
+              strictMath: true
+            }
+          } ]
+      },
       {
         test: [ /\.woff(\?v=\d+\.\d+\.\d+)?$/, /\.woff2(\?v=\d+\.\d+\.\d+)?$/ ],
         use: [ {

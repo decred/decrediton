@@ -58,57 +58,61 @@ function ProposalDetails ({
 
   return (
     <div className="proposal-details">
-      <div className="proposal-details-overview is-row">
-        <div className="proposal-details-overview-info">
-          <InvisibleButton className="go-back-icon-button-small-width" onClick={goBackHistory} />
-          <div className="proposal-details-title">{name}</div>
-          <div className="proposal-details-token">
-            <PoliteiaLink path={"/proposals/"+token}>{token}</PoliteiaLink>
+      <div className="proposal-details-overview">
+        <div className="is-row">
+          <div className="proposal-details-overview-info">
+            <InvisibleButton className="go-back-icon-button-small-width" onClick={goBackHistory} />
+            <div className="proposal-details-title">{name}</div>
+            <div className="proposal-details-token">
+              <PoliteiaLink path={"/proposals/"+token}>{token}</PoliteiaLink>
+            </div>
+            <div className="proposal-details-overview-fields">
+              <OverviewField
+                label={<T id="proposal.overview.created.label" m="Created by" />}
+                value={creator} />
+              <OverviewField
+                label={<T id="proposal.overview.version.label" m="Version" />}
+                value={version} />
+              <OverviewField
+                label={<T id="proposal.overview.lastUpdated.label" m="Last Updated" />}
+                value={<TimeValue timestamp={timestamp} tsDate={tsDate} />} />
+              <OverviewField
+                show={voteStatus === VOTESTATUS_ACTIVEVOTE && endTimestamp}
+                label={<T id="proposal.overview.deadline.label" m="Voting Deadline" />}
+                value={<TimeValue timestamp={endTimestamp} tsDate={tsDate} /> } />
+            </div>
           </div>
-          <div className="proposal-details-overview-fields">
-            <OverviewField
-              label={<T id="proposal.overview.created.label" m="Created by" />}
-              value={creator} />
-            <OverviewField
-              label={<T id="proposal.overview.version.label" m="Version" />}
-              value={version} />
-            <OverviewField
-              label={<T id="proposal.overview.lastUpdated.label" m="Last Updated" />}
-              value={<TimeValue timestamp={timestamp} tsDate={tsDate} />} />
-            <OverviewField
-              show={voteStatus === VOTESTATUS_ACTIVEVOTE && endTimestamp}
-              label={<T id="proposal.overview.deadline.label" m="Voting Deadline" />}
-              value={<TimeValue timestamp={endTimestamp} tsDate={tsDate} /> } />
+          <div className="proposal-details-overview-voting">
+            <InvisibleButton className="go-back-icon-button" onClick={goBackHistory} />
+            {voteInfo}
           </div>
-        </div>
-        <div className="proposal-details-overview-voting">
-          <InvisibleButton className="go-back-icon-button" onClick={goBackHistory} />
-          {voteInfo}
         </div>
         { (voteStatus === VOTESTATUS_ACTIVEVOTE || voteStatus === VOTESTATUS_FINISHEDVOTE ) &&
-          <OverviewVotingProgressInfo {...{ voteCounts, quorumMinimumVotes }} /> }
-        { walletEligibleTickets &&
-          <VerticalAccordion
-            header = {
-              <div className="proposal-details-wallet-eligible-tickets-header">
-                <T id="proposals.detail.wallet.eligible.header" m="Wallet Eligible Tickets " />
-              </div>
-            }
-            show={showWalletEligibleTickets}
-            onToggleAccordion={ () => toggleWalletEligibleTickets(!showWalletEligibleTickets)}
-            className="proposal-details-wallet-eligible-tickets"
-          >
-            {walletEligibleTickets.map((t, i) => (
-              <div className="is-row proposal-details-wallet-eligible-tickets-row" key={`ticket-${i+1}`}>
-                <div className="row proposal-details-wallet-eligible-tickets-label">
-                  <T id="proposals.detail.tickets" m="Ticket " />{i+1}: </div>
-                <div>
-                  {t.ticket}
+            <OverviewVotingProgressInfo {...{ voteCounts, quorumMinimumVotes }} /> }
+        <div>
+          { walletEligibleTickets &&
+            <VerticalAccordion
+              header = {
+                <div className="proposal-details-wallet-eligible-tickets-header">
+                  <T id="proposals.detail.wallet.eligible.header" m="Wallet Eligible Tickets " />
                 </div>
-              </div>
-            ))}
-          </VerticalAccordion>
-        }
+              }
+              show={showWalletEligibleTickets}
+              onToggleAccordion={ () => toggleWalletEligibleTickets(!showWalletEligibleTickets)}
+              className="proposal-details-wallet-eligible-tickets"
+            >
+              {walletEligibleTickets.map((t, i) => (
+                <div className="is-row proposal-details-wallet-eligible-tickets-row" key={`ticket-${i+1}`}>
+                  <div className="row proposal-details-wallet-eligible-tickets-label">
+                    <T id="proposals.detail.tickets" m="Ticket " />{i+1}: </div>
+                  <div>
+                    {t.ticket}
+                  </div>
+                </div>
+              ))}
+            </VerticalAccordion>
+          }
+        </div>
       </div>
       <div className="proposal-details-text">
         <div className="links">
