@@ -27,6 +27,21 @@ export default merge(baseConfig, {
   module: {
     rules: [
       {
+        test: /\.css$/,
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              importLoaders: 1,
+              modules: true,
+              localIdentName: "[local]__[hash:base64:5]" // TODO: config prod and use [hash:base64]
+            }
+          }
+        ],
+        include: /\.module\.css$/
+      },
+      {
         test: [ /\.less$/, /\.css$/ ],
         use: [ {
           loader: "style-loader"
@@ -39,7 +54,8 @@ export default merge(baseConfig, {
             localIdentName: "[local]"
           }
         }
-        ]
+        ],
+        exclude: /\.module\.css$/
       },
       {
         test: /\.less$/,

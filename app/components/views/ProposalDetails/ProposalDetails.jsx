@@ -12,6 +12,7 @@ import {
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import * as sel from "selectors";
+import styles from "./ProposalDetails.module.css";
 
 function ProposalDetails ({
   viewedProposalDetails, showPurchaseTicketsPage, setVoteOption,
@@ -57,7 +58,7 @@ function ProposalDetails ({
   }
 
   return (
-    <div className="proposal-details">
+    <div className={styles.proposalDetails}>
       <div className="proposal-details-overview">
         <div className="is-row">
           <div className="proposal-details-overview-info">

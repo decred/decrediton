@@ -1,0 +1,204 @@
+.proposalDetails {
+  padding-top: 59px;
+  padding-left: 63px;
+}
+
+/* .proposal-details-overview {
+  background-color: var(--background-back-color);
+  justify-content: space-between;
+  min-height: 200px;
+  width: 740px;
+
+  .proposal-details-overview-info {
+    padding: 20px 10px 15px 40px;
+    max-width: 49%;
+  }
+
+  .proposal-details-title {
+    font-size: 19px;
+    line-height: 24px;
+    color: var(--tutorial-header);
+  }
+
+  .proposal-details-token {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100px;
+    color: var(--overview-balance-label);
+  }
+
+  .proposal-details-token a {
+    font-size: 13px;
+    line-height: 19px;
+    color: var(--overview-balance-label);
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .proposal-details-token a:hover {
+    color: var(--stroke-color-default);
+  }
+
+  .proposal-details-overview-voting {
+    background-color: var(--transfer-details-bg);
+    padding: 30px 20px;
+    width: 284px;
+    height: 60px;
+
+    .go-back-icon-button {
+      margin: -20px -12px 0px 0px;
+      float: right;
+      cursor: pointer;
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+
+    .button {
+      padding: 6px 18px;
+      position: relative;
+      top: -4px;
+      left: 158px;
+    }
+
+    .proposal-details-no-tickets,
+    .proposal-details-voting-preference,
+    .proposal-details-voting-not-voting,
+    .proposal-details-voting-voted {
+      font-size: 13px;
+      line-height: 16px;
+      margin-bottom: 15px;
+      height: 64px;
+    }
+
+    .proposal-details-voting-not-voting {
+      background-image: @chatBubbles;
+      background-repeat: no-repeat;
+      background-size: 30px;
+      padding-left: 38px;
+      padding-top: 7px;
+    }
+
+    .proposal-details-updating-vote-choice {
+      margin-top: 15px;
+      height: 64px;
+    }
+
+    .proposal-details-voting-preference-title {
+      margin-bottom: 15px;
+    }
+
+    .proposal-details-no-tickets {
+      background-size: 30px 30px;
+      background-position: 0 50%;
+      background-repeat: no-repeat;
+      background-image: @ticket-voted-grey-icon;
+      width: 157px;
+      padding-left: 40px;
+    }
+
+  }
+
+  .proposal-details-overview-fields {
+    margin-top: 11px;
+  }
+
+  .proposal-details-overview-field {
+    .label {
+      color: var(--agenda-card-bottom-cfg);
+      display: inline-block;
+      margin-right: 0.5em;
+      width: 100px;
+      text-align: right;
+      vertical-align: middle;
+    }
+
+    .value {
+      color: var(--input-color-default);
+      display: inline-block;
+      vertical-align: middle;
+      max-width: 229px;
+    }
+
+    .time-value {
+      font-weight: bold;
+      margin-right: 0.2em;
+    }
+  }
+
+  .proposal-details-voting-progress {
+    width: 100%;
+    height: 60px;
+    padding: 10px 30px;
+
+    .voting-progress-indicator {
+      height: 5px;
+      width: 100%;
+    }
+  }
+}
+
+.proposal-details-text {
+  font-family: var(--font-family-regular-semi-bold);
+  min-height:100%;
+  padding-top: 30px;
+  padding-left: 40px;
+  background-color: var(--background-back-color);
+  margin-bottom: 80px;
+  border-top: 1px solid var(--tabbed-page-header-bg);
+  width: 700px;
+
+  .links {
+    float: right;
+    margin-right: 20px;
+    margin-top: -10px;
+  }
+  p {
+    word-wrap: break-word;
+  }
+  a {
+    color:var(--link-color);
+  }
+  pre {
+    background-color: var(--proposal-text-markdown);
+    border-radius: 3px;
+    font-size: 85%;
+    line-height: 1.45;
+    overflow: auto;
+    padding: 16px;
+  }
+
+  div:not(.links) {
+    padding-right: 30px;
+    padding-bottom: 20px;
+  }
+}
+
+.proposal-details-voting-progress-counts {
+  text-align: right;
+  padding-right: 5px;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 19px;
+
+  > div {
+    width: 6px;
+    height: 6px;
+    display: inline-block;
+    border-radius: 100px;
+    margin: 0px 5px 0px 20px;
+  }
+
+  .yes-count-box {
+    background-color: var(--vote-yes-color);
+  }
+
+  .no-count-box {
+    background-color: var(--vote-no-color);
+  }
+
+  .abstain-count-box {
+    background-color: var(--vote-abstain-color);
+  }
+} */
