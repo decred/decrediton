@@ -5,13 +5,11 @@ import {
   ProposalNotVoting, NoTicketsVotingInfo, OverviewField, OverviewVotingProgressInfo,
   NoElligibleTicketsVotingInfo, TimeValue, ProposalText, ProposalAbandoned
 } from "./helpers";
-import ChooseVoteOption from "./ChooseVoteOption";
+import ChooseVoteOption from "./ChooseVoteOption.jsx";
 import {
   VOTESTATUS_ACTIVEVOTE, VOTESTATUS_FINISHEDVOTE, PROPOSALSTATUS_ABANDONED
 } from "actions/GovernanceActions";
-import { useSelector } from "react-redux";
-import { useState } from "react";
-import * as sel from "selectors";
+import { useProposalDetails } from "./hooks";
 import styles from "./ProposalDetails.module.css";
 
 function ProposalDetails ({
@@ -23,9 +21,8 @@ function ProposalDetails ({
     name, token, voteStatus, proposalStatus, voteOptions, voteCounts,
     version, quorumMinimumVotes, walletEligibleTickets
   } = viewedProposalDetails;
-  const tsDate = useSelector(sel.tsDate);
-  const hasTickets = useSelector(sel.hasTickets);
-  const [ showWalletEligibleTickets, toggleWalletEligibleTickets ] = useState(false);
+
+  const { tsDate, hasTickets, showWalletEligibleTickets, toggleWalletEligibleTickets } = useProposalDetails();
 
   // getVoteInfo is an auxiliar function to get the properly vote info component.
   const getVoteInfo = () => {
