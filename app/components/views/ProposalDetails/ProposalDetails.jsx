@@ -1,3 +1,4 @@
+import { useState, useMemo } from "react";
 import { FormattedMessage as T } from "react-intl";
 import { InvisibleButton } from "buttons";
 import { PoliteiaLink, VerticalAccordion } from "shared";
@@ -21,11 +22,13 @@ function ProposalDetails ({
     name, token, voteStatus, proposalStatus, voteOptions, voteCounts,
     version, quorumMinimumVotes, walletEligibleTickets
   } = viewedProposalDetails;
+  const [ showWalletEligibleTickets, toggleWalletEligibleTickets ] = useState(false);
+  const { tsDate, hasTickets } = useProposalDetails();
 
-  const { tsDate, hasTickets, showWalletEligibleTickets, toggleWalletEligibleTickets } = useProposalDetails();
-
-  // getVoteInfo is an auxiliar function to get the properly vote info component.
-  const getVoteInfo = () => {
+  const voteInfo = useMemo(() => {
+    if (proposalStatus === PROPOSALSTATUS_ABANDONED) {
+      return <ProposalAbandoned />;
+    }
     if (voteStatus === VOTESTATUS_FINISHEDVOTE) {
       return <ChooseVoteOption {...{ voteOptions, currentVoteChoice, votingComplete: true }} />;
     }
@@ -42,17 +45,7 @@ function ProposalDetails ({
       }} />;
     }
     return <ProposalNotVoting />;
-  };
-  let voteInfo = null;
-  // Check if proposal is abandoned. If it is not we check its vote status
-  if (proposalStatus === PROPOSALSTATUS_ABANDONED) {
-    voteInfo = <ProposalAbandoned />;
-  } else {
-    voteInfo = getVoteInfo({
-      voteStatus, voteOptions, setVoteOption, newVoteChoice, eligibleTicketCount,
-      currentVoteChoice, showPurchaseTicketsPage, hasTickets, hasEligibleTickets
-    });
-  }
+  }, [ proposalStatus, voteStatus, hasTickets, hasEligibleTickets, currentVoteChoice, viewedProposalDetails, eligibleTicketCount, newVoteChoice, setVoteOption, showPurchaseTicketsPage, voteOptions ]);
 
   return (
     <div className={styles.proposalDetails}>

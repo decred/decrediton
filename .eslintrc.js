@@ -6,7 +6,8 @@ module.exports = {
     "es6": true
   },
   "plugins": [
-    "react"
+    "react",
+    "react-hooks"
   ],
   "parser": "babel-eslint",
   "extends": "eslint:recommended",
@@ -47,6 +48,7 @@ module.exports = {
     ],
     "react/jsx-uses-vars":1,
     "react/jsx-uses-react":1,
+    "react-hooks/exhaustive-deps": 2,
     "comma-dangle": ["error", "never"]
   },
   "globals": {
