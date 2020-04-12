@@ -1,4 +1,4 @@
-import Page from "./Page";
+import ProposalDetails from "./ProposalDetails";
 import { ProposalError, politeiaMarkdownIndexMd } from "./helpers";
 import { PoliteiaLoading } from "indicators";
 import * as sel from "selectors";
@@ -20,7 +20,7 @@ const Header = ({ eligibleTicketCount }) => <StandaloneHeader
   iconClassName="governance"
 />;
 
-function ProposalDetails() {
+function ProposalDetailsPage() {
   const dispatch = useDispatch();
   let text = "";
 
@@ -57,7 +57,7 @@ function ProposalDetails() {
           text += politeiaMarkdownIndexMd(f.payload);
         }
       });
-      return <Page {...{ text, viewedProposalDetails, goBackHistory, eligibleTicketCount }} />;
+      return <ProposalDetails {...{ text, viewedProposalDetails, goBackHistory, eligibleTicketCount }} />;
     case "failure":
       return <ProposalError error={getProposalError} />;
     default:
@@ -73,4 +73,4 @@ function ProposalDetails() {
 
 }
 
-export default ProposalDetails;
+export default ProposalDetailsPage;
