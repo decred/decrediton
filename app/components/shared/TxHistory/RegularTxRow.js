@@ -17,11 +17,11 @@ export const RegularTxRow = ({
             values = {{
               debAcc:
             <div className="transaction-status">
-              <span className="transaction-account-name">{txAccountNameDebited}</span>
+              <div className="transaction-account-name">{txAccountNameDebited}</div>
             </div>,
               credAcc:
             <div className="transaction-status">
-              <span className="transaction-account-name">{txAccountNameCredited}</span>
+              <div className="transaction-account-name">{txAccountNameCredited}</div>
             </div>
             }} />
         </div>
@@ -32,11 +32,11 @@ export const RegularTxRow = ({
               values = {{
                 debAcc:
                   <div className="transaction-status">
-                    <span className="transaction-account-name">{txAccountName}</span>
+                    <div className="transaction-account-name">{txAccountName}</div>
                   </div>,
                 credAcc:
                   <div className="transaction-status">
-                    <span className="transaction-account-name">{txOutputAddresses}</span>
+                    <div className="transaction-account-name">{txOutputAddresses}</div>
                   </div>
               }} />
           </div>
@@ -46,7 +46,7 @@ export const RegularTxRow = ({
               m="To {credAcc}"
               values = {{ credAcc:
                     <div className="transaction-status">
-                      <span className="transaction-account-name">{txAccountName}</span>
+                      <div className="transaction-account-name">{txAccountName}</div>
                     </div> }} />
           </div>
         ))}
