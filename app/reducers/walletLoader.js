@@ -76,7 +76,11 @@ export default function walletLoader(state = {}, action) {
   case WALLET_LOADER_SETTINGS:
     return { ...state,
       discoverAccountsComplete: action.discoverAccountsComplete,
-      privacyEnabled: action.enablePrivacy
+      privacyEnabled: action.enablePrivacy,
+      mixingAccount: action.mixingAccount,
+      changeAccount: action.changeAccount,
+      csppServer: action.csppServer,
+      csppPort: action.csppPort
     };
   case GETWALLETSEEDSVC_ATTEMPT:
     return { ...state,

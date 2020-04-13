@@ -65,6 +65,10 @@ export const syncRescanAttempt = get([ "walletLoader", "syncRescanAttempt" ]);
 export const syncFetchHeadersComplete = get([ "walletLoader" , "syncFetchHeadersComplete" ]);
 export const syncFetchTimeStart = get([ "walletLoader" , "syncFetchTimeStart" ]);
 export const getPrivacyEnabled = get([ "walletLoader" , "privacyEnabled" ]);
+export const getMixingAccount = get([ "walletLoader" , "mixingAccount" ]);
+export const getChangeAccount = get([ "walletLoader" , "changeAccount" ]);
+export const getCsppServer = get([ "walletLoader" , "csppServer" ]);
+export const getCsppPort = get([ "walletLoader" , "csppPort" ]);
 
 const availableWallets = get([ "daemon", "availableWallets" ]);
 const availableWalletsSelect = createSelector(

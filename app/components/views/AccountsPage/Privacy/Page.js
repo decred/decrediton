@@ -7,19 +7,18 @@ import cx from "classnames";
 import "style/Privacy.less";
 
 const PrivacyPage = ({
-  mixedAccount, setMixedAccount, setMixedAccountBranch, mixedAccountBranch, changeAccount, setChangeAccount,
-  onToggleStartMixer, canStartMixer, error, enabled, accountMixerRunning, stopAccountMixer, onStartMixerAttempt
-  // csppServer, csppPort,
+  mixedAccountName, setMixedAccountBranch, mixedAccountBranch, changeAccountName, setChangeAccount,
+  onToggleStartMixer, canStartMixer, error, enabled, accountMixerRunning, stopAccountMixer, onStartMixerAttempt,
+  csppServer, csppPort
 }) => (
   <>
     <Subtitle title={<T id="privacy.subtitle" m="Privacy"/>} />
 
     <div className="privacy-page-wrapper is-column">
-
       <div className={ cx("is-row", "privacy-row") }>
         <div className={ cx("is-row", "privacy-item", error["mixedAccount"] && "error") }>
           <div className=""><T id="privacy.mixing.account" m="Mixing Account" />:</div>
-          <AccountsSelect {...{ account: mixedAccount, onChange: setMixedAccount, accountsType:"visible"  }} className="" />
+          <TextInput required disabled value={mixedAccountName} />
         </div>
 
         <div className={cx("privacy-item", error["mixedAccountBranch"] && "error")}>
@@ -36,7 +35,7 @@ const PrivacyPage = ({
       <div className={ cx("is-row", "privacy-row") }>
         <div className={cx("is-row", "privacy-item", error["changeAccount"] && "error")}>
           <div className=""><T id="privacy.change.account" m="Change Account" />:</div>
-          <AccountsSelect {...{ account: changeAccount, onChange: setChangeAccount, accountsType:"visible"  }} className="" />
+          <TextInput required disabled value={changeAccountName} />
         </div>
       </div>
 
@@ -50,12 +49,8 @@ const PrivacyPage = ({
           <div className=""><T id="privacy.mixing.server" m="Shuffle Server" />:</div>
           <TextInput
             required
-            // invalid={walletNameError}
-            // invalidMessage={intl.formatMessage(messages.messageWalletDupeNameError)}
-            value={"cspp.decred.org"}
-            // onChange={(e) => onChangeCreateWalletName(e.target.value)}
-            // placeholder={intl.formatMessage(messages.messageWalletNamePlaceholder)}
-            // showErrors={hasFailedAttemptName}
+            disabled
+            value={csppServer}
           />
         </div>
 
@@ -63,33 +58,25 @@ const PrivacyPage = ({
           <div className=""><T id="privacy.mixing.server.port" m="Shuffle Port" />:</div>
           <TextInput
             required
-            // invalid={walletNameError}
-            // invalidMessage={intl.formatMessage(messages.messageWalletDupeNameError)}
-            value={"15760"}
-            // onChange={(e) => onChangeCreateWalletName(e.target.value)}
-            // placeholder={intl.formatMessage(messages.messageWalletNamePlaceholder)}
-            // showErrors={hasFailedAttemptName}
+            disabled
+            value={csppPort}
           />
         </div>
       </div>
       <div className="button-area privacy-row">
         {
           accountMixerRunning ? <AutoBuyerSwitch enabled onClick={stopAccountMixer} /> :
-          <PassphraseModalSwitch
-            disabled={!canStartMixer}
-            modalTitle={<T id="accounts.newAccountConfirmations" m="Start Mixer" />}
-            // modalComponent={AddAccountModal}
-            // onSubmit={onGetNextAccountAttempt}
-            buttonLabel={<T id="accounts.addNewButton" m="Start Mixer" />}
-            modalDescription={<T id="privacy.mixer.modal.description"
-              m = {`Do you want to start the shuffle Mixer?
+            <PassphraseModalSwitch
+              disabled={!canStartMixer}
+              modalTitle={<T id="accounts.newAccountConfirmations" m="Start Mixer" />}
+              buttonLabel={<T id="accounts.addNewButton" m="Start Mixer" />}
+              modalDescription={<T id="privacy.mixer.modal.description"
+                m = {`Do you want to start the shuffle Mixer?
                 Decrediton must remain running for mixer properly mix inputs.`} />
-            }
-            // disabled={disabled || isSendingTransaction}
-            className="start-mixer-button"
-            onSubmit={ passaphrase => onStartMixerAttempt(passaphrase)}
-            // loading={isSendingTransaction}
-          />
+              }
+              className="start-mixer-button"
+              onSubmit={ passaphrase => onStartMixerAttempt(passaphrase)}
+            />
         }
       </div>
       {

@@ -66,6 +66,18 @@ export function initWalletCfg(testnet, walletPath) {
   if (!config.has("ln_macaroonpath")) {
     config.set("ln_macaroonpath", "");
   }
+  if (!config.has("mixingaccount")) {
+    config.set("mixingaccount", "");
+  }
+  if (!config.has("changeaccount")) {
+    config.set("changeaccount", "");
+  }
+  if (!config.has("csppserver")) {
+    config.set("csppserver", "");
+  }
+  if (!config.has("csppport")) {
+    config.set("csppport", "");
+  }
   stakePoolInfo(function(foundStakePoolConfigs) {
     if (foundStakePoolConfigs !== null) {
       updateStakePoolConfig(config, foundStakePoolConfigs);
@@ -78,9 +90,10 @@ export function initWalletCfg(testnet, walletPath) {
 function cleanWalletCfg(config) {
   var key;
   const walletCfgFields = [ "enableticketbuyer", "balancetomaintain", "currency_display",
+    "ln_wallet_exists", "ln_account", "enableprivacy", "mixingaccount", "changeaccount",
     "hiddenaccounts", "discoveraccounts", "gaplimit", "iswatchonly", "stakepools",
-    "lastaccess", "politeia_last_access_time", "politeia_last_access_block",
-    "ln_wallet_exists", "ln_account", "enableprivacy" ];
+    "lastaccess", "politeia_last_access_time", "politeia_last_access_block", "csppserver", "csppport"
+  ];
   for (key in config.store) {
     var found = false;
     for (var i = 0; i < walletCfgFields.length; i++) {
