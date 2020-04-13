@@ -8556,9 +8556,9 @@ performance-now@^2.1.0:
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
   integrity sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=
 
-"pi-ui@https://github.com/decred/pi-ui.git":
+"pi-ui@https://github.com/decred/pi-ui":
   version "1.0.0"
-  resolved "https://github.com/decred/pi-ui.git#d0f292fc80b6c17b23595bfab3a4abf9135fddf9"
+  resolved "https://github.com/decred/pi-ui#d0f292fc80b6c17b23595bfab3a4abf9135fddf9"
   dependencies:
     clamp-js-main "^0.11.5"
     react-select "2.4.4"
