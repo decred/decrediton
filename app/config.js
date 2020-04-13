@@ -17,6 +17,7 @@ export function getWalletCfg(testnet, walletPath){
   return (config);
 }
 
+// TODO: move this constants to constants directory file.
 export function initWalletCfg(testnet, walletPath) {
   const config = new Store({ cwd: getWalletPath(testnet, walletPath) });
   if (!config.has("enableticketbuyer")) {
@@ -50,6 +51,9 @@ export function initWalletCfg(testnet, walletPath) {
   if (!config.has("trezor")) {
     config.set("trezor", false);
   }
+  if (!config.has("enableprivacy")) {
+    config.set("enableprivacy", true);
+  }
   if (!config.has("ln_address")) {
     config.set("ln_address", "");
   }
@@ -76,7 +80,7 @@ function cleanWalletCfg(config) {
   const walletCfgFields = [ "enableticketbuyer", "balancetomaintain", "currency_display",
     "hiddenaccounts", "discoveraccounts", "gaplimit", "iswatchonly", "stakepools",
     "lastaccess", "politeia_last_access_time", "politeia_last_access_block",
-    "ln_wallet_exists", "ln_account" ];
+    "ln_wallet_exists", "ln_account", "enableprivacy" ];
   for (key in config.store) {
     var found = false;
     for (var i = 0; i < walletCfgFields.length; i++) {

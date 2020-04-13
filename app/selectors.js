@@ -64,6 +64,7 @@ export const syncDiscoverAddressesAttempt = get([ "walletLoader", "syncDiscoverA
 export const syncRescanAttempt = get([ "walletLoader", "syncRescanAttempt" ]);
 export const syncFetchHeadersComplete = get([ "walletLoader" , "syncFetchHeadersComplete" ]);
 export const syncFetchTimeStart = get([ "walletLoader" , "syncFetchTimeStart" ]);
+export const getPrivacyEnabled = get([ "walletLoader" , "privacyEnabled" ]);
 
 const availableWallets = get([ "daemon", "availableWallets" ]);
 const availableWalletsSelect = createSelector(

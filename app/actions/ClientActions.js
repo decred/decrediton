@@ -43,13 +43,11 @@ export const STARTWALLETSERVICE_SUCCESS = "STARTWALLETSERVICE_SUCCESS";
 
 const startWalletServicesTrigger = () => (dispatch, getState) => new Promise((resolve,reject) => {
   const startServicesAsync = async () => {
-    const { spvSynced } = getState().walletLoader;
+    const { spvSynced, privacyEnabled } = getState().walletLoader;
     if (!spvSynced) {
       dispatch(getTicketBuyerServiceAttempt());
     }
-    // TODO: get privacyIsEnabled from config file
-    const privacyIsEnabled = true;
-    if (privacyIsEnabled) {
+    if (privacyEnabled) {
       dispatch(getAccountMixerServiceAttempt());
     }
     await dispatch(getNextAddressAttempt(0));

@@ -75,7 +75,8 @@ export default function walletLoader(state = {}, action) {
     };
   case WALLET_LOADER_SETTINGS:
     return { ...state,
-      discoverAccountsComplete: action.discoverAccountsComplete
+      discoverAccountsComplete: action.discoverAccountsComplete,
+      privacyEnabled: action.enablePrivacy
     };
   case GETWALLETSEEDSVC_ATTEMPT:
     return { ...state,

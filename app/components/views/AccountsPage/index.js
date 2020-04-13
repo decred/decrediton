@@ -6,6 +6,8 @@ import PrivacyTab from "./Privacy";
 import { PassphraseModalButton } from "buttons";
 import { AddAccountModal } from "modals";
 import { WatchOnlyWarnNotification } from "shared";
+import { useSelector } from "react-redux";
+import * as sel from "selectors";
 
 const AccountsListHeader = ({ onGetNextAccountAttempt, isCreateAccountDisabled }) => <StandaloneHeader
   title={<T id="accounts.title" m=" Accounts" />}
@@ -24,10 +26,15 @@ const AccountsListHeader = ({ onGetNextAccountAttempt, isCreateAccountDisabled }
   }
 />;
 
-export default () => (
-  <TabbedPage header={<AccountsListHeader />} >
-    <Switch><Redirect from="/accounts" exact to="/accounts/list" /></Switch>
-    <Tab path="/accounts/list" component={AccountsTab} link={<T id="tickets.tab.purchase" m="List Accounts"/>}/>
-    <Tab path="/accounts/privacy" component={PrivacyTab} link={<T id="tickets.tab.mytickets" m="Privacy"/>}/>
-  </TabbedPage>
-);
+function Main() {
+  const privacyEnabled = useSelector(sel.getPrivacyEnabled);
+  return (
+    <TabbedPage header={<AccountsListHeader />} >
+      <Switch><Redirect from="/accounts" exact to="/accounts/list" /></Switch>
+      <Tab path="/accounts/list" component={AccountsTab} link={<T id="tickets.tab.purchase" m="List Accounts"/>}/>
+      <Tab path="/accounts/privacy" component={PrivacyTab} link={<T id="tickets.tab.mytickets" m="Privacy"/>} disabled={!privacyEnabled}/>
+    </TabbedPage>
+  );
+}
+
+export default Main;
