@@ -1,10 +1,8 @@
 import { FormattedMessage as T } from "react-intl";
-import { StandalonePage, StandaloneHeader } from "layout";
 import AccountRow from "./AccountRow";
 import { DecredLoading } from "indicators";
-import { InfoDocModalButton, PassphraseModalButton } from "buttons";
-import { AddAccountModal } from "modals";
-import { WatchOnlyWarnNotification, Subtitle } from "shared";
+import { InfoDocModalButton } from "buttons";
+import { Subtitle } from "shared";
 
 const subtitleInfoIcon = () => (
   <div className="account-content-title-buttons-area">
@@ -22,14 +20,12 @@ const subtitleWalletName = ({ walletName }) => (
 const AccountsList = ({
   accounts,
   isLoading,
-  onGetNextAccountAttempt,
   onGetAccountExtendedKey,
   accountExtendedKey,
   onShowAccount,
   onHideAccount,
   onRenameAccount,
   accountNumDetailsShown,
-  isCreateAccountDisabled,
   walletName,
   hasTickets
 }) => (
@@ -56,12 +52,10 @@ const AccountsList = ({
 AccountsList.propTypes = {
   accounts: PropTypes.array.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  onGetNextAccountAttempt: PropTypes.func.isRequired,
   onShowAccount: PropTypes.func.isRequired,
   onHideAccount: PropTypes.func.isRequired,
   onRenameAccount: PropTypes.func.isRequired,
-  accountNumDetailsShown: PropTypes.number,
-  isCreateAccountDisabled: PropTypes.bool.isRequired
+  accountNumDetailsShown: PropTypes.number
 };
 
 export default AccountsList;

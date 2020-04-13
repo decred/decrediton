@@ -60,7 +60,7 @@ export default function grpc(state = {}, action) {
       ...state,
       accountMixerRunning: false,
       mixerStreamer: null
-    }
+    };
   case GETTREASURY_BALANCE_SUCCESS:
     return {
       ...state,

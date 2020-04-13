@@ -55,4 +55,4 @@ export const stopAccountMixer = () => {
       dispatch({ type: STOPMIXER_FAILED, error });
     }
   };
-}
+};

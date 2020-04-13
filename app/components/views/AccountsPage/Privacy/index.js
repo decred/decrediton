@@ -66,7 +66,7 @@ function Privacy() {
   async function onStartMixerAttempt(passphrase) {
     const request = {
       passphrase,
-      mixedAccount: mixingAccount,
+      mixedAccount,
       changeAccount: changeAccount.value,
       mixedAccountBranch,
       csppServer: "cspp.decred.org:15760"
@@ -84,8 +84,7 @@ function Privacy() {
   return <PrivacyPage {...{
     mixedAccountName, mixedAccountBranch, setMixedAccountBranch,
     changeAccountName, onStartMixerAttempt, canStartMixer, error,
-    stopAccountMixer, onStartMixerAttempt, accountMixerRunning,
-    csppServer, csppPort
+    stopAccountMixer, accountMixerRunning, csppServer, csppPort
   }} />;
 }
 

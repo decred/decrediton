@@ -1,14 +1,13 @@
 import { FormattedMessage as T } from "react-intl";
-import { StandaloneHeader, StandalonePage } from "layout";
-import { AccountsSelect, TextInput, NumericInput } from "inputs";
+import { TextInput, NumericInput } from "inputs";
 import { Subtitle } from "shared";
-import { PassphraseModalButton, PassphraseModalSwitch, AutoBuyerSwitch } from "buttons";
+import { PassphraseModalSwitch, AutoBuyerSwitch } from "buttons";
 import cx from "classnames";
 import "style/Privacy.less";
 
 const PrivacyPage = ({
-  mixedAccountName, setMixedAccountBranch, mixedAccountBranch, changeAccountName, setChangeAccount,
-  onToggleStartMixer, canStartMixer, error, enabled, accountMixerRunning, stopAccountMixer, onStartMixerAttempt,
+  mixedAccountName, setMixedAccountBranch, mixedAccountBranch, changeAccountName,
+  canStartMixer, error, accountMixerRunning, stopAccountMixer, onStartMixerAttempt,
   csppServer, csppPort
 }) => (
   <>
@@ -68,8 +67,8 @@ const PrivacyPage = ({
           accountMixerRunning ? <AutoBuyerSwitch enabled onClick={stopAccountMixer} /> :
             <PassphraseModalSwitch
               disabled={!canStartMixer}
-              modalTitle={<T id="accounts.newAccountConfirmations" m="Start Mixer" />}
-              buttonLabel={<T id="accounts.addNewButton" m="Start Mixer" />}
+              modalTitle={<T id="privacy.start.mixer.confirmation" m="Start Mixer" />}
+              buttonLabel={<T id="privacy.start.mixer" m="Start Mixer" />}
               modalDescription={<T id="privacy.mixer.modal.description"
                 m = {`Do you want to start the shuffle Mixer?
                 Decrediton must remain running for mixer properly mix inputs.`} />
