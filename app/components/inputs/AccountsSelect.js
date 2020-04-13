@@ -23,7 +23,7 @@ class AccountsSelect extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      account: props.account || props.defaultSpendingAccount,
+      account: props.account,
       accounts: this.getAccountsToShow(props)
     };
   }

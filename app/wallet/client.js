@@ -90,3 +90,16 @@ export const abandonTransaction = log((walletService, txHash) => new Promise((re
   req.setTransactionHash(Buffer.isBuffer(txHash) ? txHash : strHashToRaw(txHash));
   walletService.abandonTransaction(req, (err) => err ? reject(err) : resolve());
 }), "Abandon Transaction");
+
+export const runAccountMixerRequest = (
+  walletService, { passphrase, mixedAccount, mixedAccountBranch, changeAccount, csppServer }
+) => new Promise( ok => {
+  const request = new api.RunAccountMixerRequest();
+  request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
+  request.setMixedAccount(mixedAccount);
+  request.setMixedAccountBranch(mixedAccountBranch);
+  request.setChangeAccount(changeAccount);
+  request.setCsppServer(csppServer);
+  const mixer = walletService.runAccountMixer(request);
+  ok(mixer);
+});

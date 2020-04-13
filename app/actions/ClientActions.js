@@ -6,6 +6,7 @@ import { getNextAddressAttempt, publishUnminedTransactionsAttempt } from "./Cont
 import { transactionNtfnsStart, accountNtfnsStart } from "./NotificationActions";
 import { refreshStakepoolPurchaseInformation, setStakePoolVoteChoices, getStakepoolStats } from "./StakePoolActions";
 import { getDecodeMessageServiceAttempt } from "./DecodeMessageActions";
+import { getAccountMixerServiceAttempt } from "./AccountMixerActions";
 import { checkLnWallet } from "./LNActions";
 import { push as pushHistory, goBack } from "connected-react-router";
 import { getWalletCfg, getGlobalCfg } from "config";
@@ -45,6 +46,11 @@ const startWalletServicesTrigger = () => (dispatch, getState) => new Promise((re
     const { spvSynced } = getState().walletLoader;
     if (!spvSynced) {
       dispatch(getTicketBuyerServiceAttempt());
+    }
+    // TODO: get privacyIsEnabled from config file
+    const privacyIsEnabled = true;
+    if (privacyIsEnabled) {
+      dispatch(getAccountMixerServiceAttempt());
     }
     await dispatch(getNextAddressAttempt(0));
     await dispatch(getTicketPriceAttempt());

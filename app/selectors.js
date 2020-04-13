@@ -92,10 +92,12 @@ export const balances = or(get([ "grpc", "balances" ]), () => []);
 export const walletService = get([ "grpc", "walletService" ]);
 export const agendaService = get([ "grpc", "agendaService" ]);
 export const votingService = get([ "grpc", "votingService" ]);
+export const accountMixerService = get([ "grpc", "accountMixerService" ]);
 export const getBalanceRequestAttempt = get([ "grpc", "getBalanceRequestAttempt" ]);
 export const getAccountsResponse = get([ "grpc", "getAccountsResponse" ]);
 export const getNetworkResponse = get([ "grpc", "getNetworkResponse" ]);
 export const getNetworkError = get([ "grpc", "getNetworkError" ]);
+export const getAccountMixerRunning = get([ "grpc", "accountMixerRunning" ]);
 const accounts = createSelector([ getAccountsResponse ], r => r ? r.getAccountsList() : []);
 
 export const isWatchingOnly = bool(get([ "walletLoader", "isWatchingOnly" ]));
