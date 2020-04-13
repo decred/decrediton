@@ -27,4 +27,5 @@ const LNActivePage = () =>
 const LNPage = ({ lnActive }) =>
   lnActive ? <LNActivePage /> : <LNConnectPage />;
 
+
 export default lnPage(LNPage);
