@@ -3,10 +3,10 @@ import { TextInput, PassphraseModalField } from "inputs";
 import { PassphraseModal } from "../PassphraseModal";
 
 const Modal = ({
-  mixedAccountName, changeAccountName, setMixedAccountName, onSubmit,
-  setChangeAccountName, isValid, show, onCancelModal
+  mixedAccountName, changeAccountName, setMixedAccountName, setChangeAccountName,
+  ...props
 }) => (
-  <PassphraseModal {...{ onSubmit, show, onCancelModal }}>
+  <PassphraseModal {...{ ...props }}>
     <PassphraseModalField
       label={<T id="addMixerAccountModal.mixedAccountName" m="Mixed Account Name" />}
     >

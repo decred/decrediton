@@ -62,10 +62,16 @@ export const CREATEMIXERACCOUNTS_ATTEMPT = "CREATEMIXERACCOUNTS_ATTEMPT";
 export const CREATEMIXERACCOUNTS_FAILED = "CREATEMIXERACCOUNTS_FAILED";
 export const CREATEMIXERACCOUNTS_SUCCESS = "CREATEMIXERACCOUNTS_SUCCESS";
 
-export const createNeededAccounts = (passphrase, mixingAccountName, changeAccountName) => (dispatch, getState) => {
+export const createNeededAccounts = (passphrase, mixingAccountName, changeAccountName) => async (dispatch, getState) => {
+  dispatch({type: CREATEMIXERACCOUNTS_ATTEMPT });
+
+  const walletService = sel.walletService(getState());
+  const createAccout = (pass, name) => wallet.getNextAccount(walletService, pass, name)
+
   try {
-    dispatch(getNextAccountAttempt(passphrase, mixingAccountName));
-    dispatch(getNextAccountAttempt(passphrase, changeAccountName));
+    await createAccout(passphrase, mixingAccountName);
+    await createAccout(passphrase, changeAccountName);
+    dispatch({type: CREATEMIXERACCOUNTS_SUCCESS });
   } catch (error) {
     dispatch({ type: CREATEMIXERACCOUNTS_FAILED, error });
   }

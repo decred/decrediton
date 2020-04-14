@@ -45,7 +45,7 @@ function Privacy({
   const [ canStartMixer, setCanStartMixer ] = useState(false);
 
   if (!mixedAccount && !changeAccount) {
-    return <ConfigMixer {...{ isCreateAccountDisabled }} />
+    return <ConfigMixer {...{ isCreateAccountDisabled, accounts }} />
   }
 
   const getAccountName = (n) => {
