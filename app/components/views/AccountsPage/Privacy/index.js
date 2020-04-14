@@ -4,6 +4,7 @@ import { useEffect, useState, useReducer } from "react";
 import { FormattedMessage as T } from "react-intl";
 import PrivacyPage from "./Page";
 import * as sel from "selectors";
+import ConfigMixer from "./ConfigMixer";
 
 function validateErrorReducer(state, action) {
   switch (action.type) {
@@ -25,7 +26,9 @@ function validateErrorReducer(state, action) {
   }
 }
 
-function Privacy() {
+function Privacy({
+  isCreateAccountDisabled,
+}) {
   const dispatch = useDispatch();
   const runAccountMixer = (request) => dispatch(act.runAccountMixer(request));
   const stopAccountMixer = () => dispatch(act.stopAccountMixer());
@@ -37,12 +40,13 @@ function Privacy() {
   const accounts = useSelector(sel.sortedAccounts);
   const [ mixedAccountBranch, setMixedAccountBranch ] = useState(0);
   const [ error, dispatchError ] = useReducer(validateErrorReducer, {
-    mixedAccount: null,
-    changeAccount: null,
-    mixedAccountBranch: null,
-    sameAccount: null
+    mixedAccountBranch: null
   });
   const [ canStartMixer, setCanStartMixer ] = useState(false);
+
+  if (!mixedAccount && !changeAccount) {
+    return <ConfigMixer {...{ isCreateAccountDisabled }} />
+  }
 
   const getAccountName = (n) => {
     return accounts.find( ({ accountNumber }) => accountNumber === n ).accountName;
@@ -67,7 +71,7 @@ function Privacy() {
     const request = {
       passphrase,
       mixedAccount,
-      changeAccount: changeAccount.value,
+      changeAccount,
       mixedAccountBranch,
       csppServer: "cspp.decred.org:15760"
     };
@@ -77,9 +81,7 @@ function Privacy() {
       dispatchError({ type: "ACCOUNT_MIXER_START", error });
     }
   }
-
-  useEffect(() => setCanStartMixer(isValidStartMixer()),
-    [ mixedAccount, changeAccount, mixedAccountBranch ]);
+  useEffect(() => setCanStartMixer(isValidStartMixer()), [ mixedAccountBranch ]);
 
   return <PrivacyPage {...{
     mixedAccountName, mixedAccountBranch, setMixedAccountBranch,
