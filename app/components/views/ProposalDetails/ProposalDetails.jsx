@@ -12,6 +12,7 @@ import {
 } from "actions/GovernanceActions";
 import { useProposalDetails } from "./hooks";
 import styles from "./ProposalDetails.module.css";
+import { classNames } from "pi-ui";
 
 function ProposalDetails ({
   viewedProposalDetails, showPurchaseTicketsPage, setVoteOption,
@@ -84,17 +85,19 @@ function ProposalDetails ({
           { walletEligibleTickets &&
             <VerticalAccordion
               header = {
-                <div className="proposal-details-wallet-eligible-tickets-header">
+                <div>
                   <T id="proposals.detail.wallet.eligible.header" m="Wallet Eligible Tickets " />
                 </div>
               }
               show={showWalletEligibleTickets}
               onToggleAccordion={ () => toggleWalletEligibleTickets(!showWalletEligibleTickets)}
-              className="proposal-details-wallet-eligible-tickets"
+              className={styles.walletEligibleTickets}
+              headerClassName={styles.walletEligibleTicketsHeader}
+              arrowClassName={styles.walletEligibleTicketsArrow}
             >
               {walletEligibleTickets.map((t, i) => (
-                <div className="is-row proposal-details-wallet-eligible-tickets-row" key={`ticket-${i+1}`}>
-                  <div className="is-row proposal-details-wallet-eligible-tickets-label">
+                <div className={classNames("is-row", styles.walletEligibleTicketsRow)} key={`ticket-${i+1}`}>
+                  <div className={styles.walletEligibleTicketsLabel}>
                     <T id="proposals.detail.tickets" m="Ticket " />{i+1}: </div>
                   <div>
                     {t.ticket}
