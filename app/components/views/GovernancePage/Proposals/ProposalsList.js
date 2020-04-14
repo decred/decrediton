@@ -11,6 +11,7 @@ import { useMachine } from "@xstate/react";
 import * as sel from "selectors";
 import * as gov from "actions/GovernanceActions";
 import { usePrevious } from "helpers";
+import styles from "./ProposalsList.module.css";
 
 function ProposalListItem ({ name, timestamp, token, voteCounts,
   voteStatus, currentVoteChoice, quorumPass, voteResult, modifiedSinceLastAccess,
@@ -113,13 +114,13 @@ export function ProposalList ({ finishedVote, tab }) {
     if (proposals[tab].length > previous.proposals[tab].length) {
       send("RESOLVE");
     }
-  }, [ proposals ]);
+  }, [ proposals, previous, send, tab ]);
 
   switch (state.value) {
   case "idle":
     return <NoProposals />;
   case "loading":
-    return <div className="proposal-loading-page"><PoliteiaLoading center /></div>;
+    return <div className={styles.loadingPage}><PoliteiaLoading center /></div>;
   case "success":
     return (
       proposals[tab] && proposals[tab].length

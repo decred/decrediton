@@ -52,7 +52,6 @@
   height: 60px;
 }
 
-/* test this */
 .overviewVoting .button {
   padding: 6px 18px;
   position: relative;
@@ -329,345 +328,89 @@
   padding-left: 20px;
 }
 
-/* .proposal-details-overview {
-  background-color: var(--background-back-color);
-  justify-content: space-between;
-  min-height: 200px;
-  width: 740px;
-
-
-  .proposal-details-overview-info {
-    padding: 20px 10px 15px 40px;
-    max-width: 49%;
-  }
-  
-  .proposal-details-title {
-    font-size: 19px;
-    line-height: 24px;
-    color: var(--tutorial-header);
-  }
-
-  .proposal-details-token {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    width: 100px;
-    color: var(--overview-balance-label);
-  }
-  
-  .proposal-details-token a {
-    font-size: 13px;
-    line-height: 19px;
-    color: var(--overview-balance-label);
-    text-decoration: none;
-    cursor: pointer;
-  }
-
-  .proposal-details-token a:hover {
-    color: var(--stroke-color-default);
-  }
-
-  .proposal-details-overview-fields {
-    margin-top: 11px;
-  }
-
-  .proposal-details-overview-voting {
-    background-color: var(--transfer-details-bg);
-    padding: 30px 20px;
-    width: 284px;
-    height: 60px;
-
-    .go-back-icon-button {
-      margin: -20px -12px 0px 0px;
-      float: right;
-      cursor: pointer;
-      &:hover {
-        opacity: 0.7;
-      }
-    }
-
-    .button {
-      padding: 6px 18px;
-      position: relative;
-      top: -4px;
-      left: 158px;
-    }
-
-    .proposal-details-no-tickets,
-    .proposal-details-voting-preference,
-    .proposal-details-voting-not-voting,
-    .proposal-details-voting-voted {
-      font-size: 13px;
-      line-height: 16px;
-      margin-bottom: 15px;
-      height: 64px;
-    }
-
-    .proposal-details-voting-not-voting {
-      background-image: @chatBubbles;
-      background-repeat: no-repeat;
-      background-size: 30px;
-      padding-left: 38px;
-      padding-top: 7px;
-    }
-
-    .proposal-details-updating-vote-choice {
-      margin-top: 15px;
-      height: 64px;
-    }
-
-    .proposal-details-voting-preference-title {
-      margin-bottom: 15px;
-    }
-
-    .proposal-details-no-tickets {
-      background-size: 30px 30px;
-      background-position: 0 50%;
-      background-repeat: no-repeat;
-      background-image: @ticket-voted-grey-icon;
-      width: 157px;
-      padding-left: 40px;
-    }
-  }
-
-  
-  .proposal-details-overview-field {
-    .label {
-      color: var(--agenda-card-bottom-cfg);
-      display: inline-block;
-      margin-right: 0.5em;
-      width: 100px;
-      text-align: right;
-      vertical-align: middle;
-    }
-
-    .value {
-      color: var(--input-color-default);
-      display: inline-block;
-      vertical-align: middle;
-      max-width: 229px;
-    }
-
-    .time-value {
-      font-weight: bold;
-      margin-right: 0.2em;
-    }
-  }
-  .proposal-details-voting-progress {
-    width: 100%;
-    height: 60px;
-    padding: 10px 30px;
-    
-    .voting-progress-indicator {
-      height: 5px;
-      width: 100%;
-    }
-  }
-}
-.proposal-details-text {
-  font-family: var(--font-family-regular-semi-bold);
-  min-height:100%;
-  padding-top: 30px;
-  padding-left: 40px;
-  background-color: var(--background-back-color);
-  margin-bottom: 80px;
-  border-top: 1px solid var(--tabbed-page-header-bg);
-  width: 700px;
-
-  .links {
-    float: right;
-    margin-right: 20px;
-    margin-top: -10px;
-  }
-  p {
-    word-wrap: break-word;
-  }
-  a {
-    color:var(--link-color);
-  }
-  pre {
-    background-color: var(--proposal-text-markdown);
-    border-radius: 3px;
-    font-size: 85%;
-    line-height: 1.45;
-    overflow: auto;
-    padding: 16px;
-  }
-
-  div:not(.links) {
-    padding-right: 30px;
-    padding-bottom: 20px;
-  }
-}
-
-
-.proposal-details-voting-progress-counts {
-  text-align: right;
-  padding-right: 5px;
-  font-weight: 600;
-  font-size: 13px;
-  line-height: 19px;
-
-  > div {
-    width: 6px;
-    height: 6px;
-    display: inline-block;
-    border-radius: 100px;
-    margin: 0px 5px 0px 20px;
-  }
-
-  .yes-count-box {
-    background-color: var(--vote-yes-color);
-  }
-
-  .no-count-box {
-    background-color: var(--vote-no-color);
-  }
-
-  .abstain-count-box {
-    background-color: var(--vote-abstain-color);
-  }
-} 
-
-.proposal-vote-option {
-  margin-bottom: 10px;
-
-  input[type="radio"] {
-    position: absolute;
-    opacity: 0;
-    + .radio-label {
-      &:before {
-        content: '';
-        background: var(--disabled-background-color-lighter);
-        border-radius: 100%;
-        border: 1px solid var(--disabled-color);
-        display: inline-block;
-        width: 14px;
-        height: 14px;
-        position: relative;
-        cursor: pointer;
-        text-align: center;
-        transition: all 250ms ease;
-        margin-bottom: -3px;
-      }
-      &:empty {
-        &:before {
-          margin-right: 5px;
-          text-transform:  capitalize;
-        }
-      }
-    }
-
-    + .radio-label.yes {
-      &:before {
-      border: 1px solid var(--vote-yes-color);
-      }
-    }
-
-    + .radio-label.no {
-      &:before {
-      border: 1px solid var(--vote-no-color);
-      }
-    }
-
-    &:checked {
-      + .radio-label.yes {
-        &:before {
-          background-color: var(--vote-yes-color);
-          box-shadow: inset 0 0 0 3px var(--disabled-background-color-lighter);
-        }
-      }
-      + .radio-label.no {
-        &:before {
-          background-color: var(--vote-no-color);
-          box-shadow: inset 0 0 0 3px var(--disabled-background-color-lighter);
-        }
-      }
-    }
-    &:focus {
-      + .radio-label.no {
-        &:before {
-          outline: none;
-          border-color: var(--vote-no-color);
-        }
-      }
-      + .radio-label.yes {
-        &:before {
-          outline: none;
-          border-color: var(--vote-yes-color);
-        }
-      }
-    }
-    &:disabled {
-      + .radio-label {
-        &:before {
-          box-shadow: inset 0 0 0 4px var(--disabled-background-color-lighter);
-          border-color: var(--disabled-color);
-          background: var(--disabled-background-color-lighter);
-        }
-      }
-    }
-  }
-}
-
-.proposal-vote-confirmation {
-  background-color: var(--background-container);
-  font-size: 27px;
-  line-height: 34px;
-  margin-left: 10px;
-  padding-left: 10px;
-  padding-right: 10px;
-  display: flex;
-  flex-direction: row;
-  text-transform: capitalize;
-
-  >.yes-proposal {
-    width: 12px;
-    height: 12px;
-    border-radius: 100px;
-    background-color: var(--vote-yes-color);
-    margin-top: 13px;
-    margin-right: 5px;
-  }
-  >.no-proposal {
-    width: 12px;
-    height: 12px;
-    border-radius: 100px;
-    background-color: var(--vote-no-color);
-    margin-top: 13px;
-    margin-right: 5px;
-  }
-}
-
-.go-back-icon-button-small-width { changed it a bit!
-  .go-back-icon-button;
-  visibility: hidden;
-}
-
-.proposal-details-wallet-eligible-tickets {
+.loadingPage {
   width: 100%;
-  font-size: 9pt;
-  color: var(--overview-balance-label);
+  text-align: center;
+}
 
-  .vertical-accordion-header {
-    margin-right: 30px;
-    text-align: right;
+.politeiaButton {
+  font-size: 13px !important;
+  line-height: 17px !important;
+  border-radius: 5px !important;
+  padding: 6px 15px !important;
+  margin: 4px !important;
+  color: var(--info-modal-button-text) !important;
+  background-color: var(--info-modal-button-bg) !important;
+  border-color: var(--info-modal-button-bg) !important;
+}
+
+.politeiaButton:hover {
+  background-color: var(--title-text-and-button-background-hovered);
+}
+
+@media screen and (max-width: 1179px) {
+  .proposalDetails {
+    padding-top: 59px;
+    padding-left: 35px;
   }
 
-  .vertical-accordion-arrow {
-    top: 5px;
-    right: -20px;
+  .overview {
+    width: 634px;
+  }
+  
+  .overviewInfo {
+    padding: 20px;
+  }
+
+  .overviewVoting {
+    width: 244px;
+  }
+
+  .detailsText {
+    width: 594px;
   }
 }
 
-.proposal-details-wallet-eligible-tickets-label {
-  padding-right: 5px;
-}
+@media screen and (max-width: 768px) {
+  
+  .proposalDetails {
+    padding-top: 20px;
+    padding-left: 10px;
+  }
 
-.proposal-details-wallet-eligible-tickets-row {
-  border-top: 1px solid var(--tabbed-page-header-bg);
-  padding-left: 20px;
-}
+  .overview {
+    width: 355px;
+  }
 
-----
-*/
+  .overview.is-row {
+    flex-direction: column;
+  }
+
+  .overviewInfo {
+    padding: 20px;
+    max-width: 100%;
+  }
+
+  .votingProgress {
+    width: 315px;
+    padding-left: 20px;
+  }
+
+  .overviewVoting {
+    width: 315px;
+  }
+
+  .detailsText {
+    padding-left: 20px;
+    width: 335px;
+  }
+
+  .smallWidth {
+    float: right;
+    visibility: visible;
+  }
+
+  .backIconButton {
+    visibility: hidden;
+  }
+}

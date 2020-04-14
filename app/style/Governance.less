@@ -156,11 +156,6 @@
   }
 }
 
-.proposal-loading-page {
-  width: 100%;
-  text-align: center;
-}
-
 .politeia-loading-indicator {
   background-size: 100%;
   background-image: @politeia-loading-icon;
@@ -226,103 +221,5 @@
 
   .proposal-list-item {
     width: 600px;
-  }
-}
-
-@media screen and (max-width: 1179px) {
-  .proposal-details {
-    padding-top: 59px;
-    padding-left: 35px;
-  }
-
-  .proposal-details-overview {
-    width: 634px;
-
-    .proposal-details-overview-info {
-      padding: 20px;
-    }
-
-    .proposal-details-overview-voting {
-      width: 244px;
-    }
-  }
-
-  .proposal-details-text {
-    width: 594px;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .proposal-details-overview {
-    width: 355px;
-
-    &.is-row {
-      flex-direction: column;
-    }
-
-    .proposal-details-voting-progress {
-      width: 315px;
-      padding-left: 20px;
-    }
-    .proposal-details-overview-info {
-      padding: 20px;
-      max-width: 100%;
-    }
-
-    .proposal-details-overview-voting {
-      width: 315px;
-    }
-  }
-
-  .go-back-icon-button-small-width {
-    float: right;
-    visibility: visible;
-  }
-
-  .go-back-icon-button {
-    visibility: hidden;
-  }
-
-  .proposal-details-text {
-    padding-left: 20px;
-    width: 335px;
-  }
-  
-  .proposal-details {
-    padding-top: 20px;
-    padding-left: 10px;
-  }
-
-  .politeia-disabled-wrapper {
-    top: 113px;
-  }
-
-  .proposal-list {
-    padding-bottom: 150px !important;
-  }
-
-  .proposal-list-item {
-    width: 355px;
-  }
-
-  .info .proposal-name {
-    width: 315px !important;
-  }
-
-  .is-row.proposal-list-item {
-    flex-direction: column !important;
-  }
-
-  .proposals-community-header.is-row {
-    flex-direction: column;
-    padding-left: 30px;
-    padding-top: 20px;
-    .proposals-community-header-description {
-      width: 315px;
-    }
-    .links {
-      margin-left: 0;
-      margin-top: 10px;
-    }
   }
 }

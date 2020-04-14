@@ -1,3 +1,4 @@
+import { useCallback, useMemo } from "react";
 import ProposalDetails from "./ProposalDetails";
 import { ProposalError, politeiaMarkdownIndexMd } from "./helpers";
 import { PoliteiaLoading } from "indicators";
@@ -10,6 +11,7 @@ import { StandalonePage, StandaloneHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
 import * as gov from "actions/GovernanceActions";
 import * as cli from "actions/ClientActions";
+import styles from "./ProposalDetails.module.css";
 
 const Header = ({ eligibleTicketCount }) => <StandaloneHeader
   title={<T id="proposal.details.title" m="Governance" />}
@@ -22,7 +24,6 @@ const Header = ({ eligibleTicketCount }) => <StandaloneHeader
 
 function ProposalDetailsPage() {
   const dispatch = useDispatch();
-  let text = "";
 
   const { token } = useParams();
   const proposalsDetails = useSelector(sel.proposalsDetails);
@@ -32,9 +33,9 @@ function ProposalDetailsPage() {
   const eligibleTicketCount = viewedProposalDetails && viewedProposalDetails.walletEligibleTickets ?
     proposalsDetails[token].walletEligibleTickets.length : 0;
   const getProposalDetails = (token) => dispatch(gov.getProposalDetails(token));
-  const goBackHistory = () => dispatch(cli.goBackHistory());
+  const goBackHistory = useCallback(() => dispatch(cli.goBackHistory()), [ dispatch ]);
 
-  const [ state, send ] = useMachine(fetchMachine, {
+  const [ { value }, send ] = useMachine(fetchMachine, {
     actions: {
       initial: () => {
         if (!proposalsDetails[token]) return send("FETCH");
@@ -45,12 +46,13 @@ function ProposalDetailsPage() {
       }
     }
   });
-  const getStateComponent = () => {
-    switch (state.value) {
+  const stateComponent = useMemo(() => {
+    let text = "";
+    switch (value) {
     case "idle":
       return <></>;
     case "loading":
-      return <div className="proposal-loading-page"><PoliteiaLoading /></div>;
+      return <div className={styles.loadingPage}><PoliteiaLoading /></div>;
     case "success":
       viewedProposalDetails.files.forEach(f => {
         if (f.name === "index.md") {
@@ -63,11 +65,11 @@ function ProposalDetailsPage() {
     default:
       return null;
     }
-  };
+  }, [ eligibleTicketCount, goBackHistory, viewedProposalDetails, getProposalError, value ]);
 
   return (
     <StandalonePage header={Header({ eligibleTicketCount })}>
-      {getStateComponent()}
+      {stateComponent}
     </StandalonePage>
   );
 
