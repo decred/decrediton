@@ -1,3 +1,4 @@
+import { classNames } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
 import { PassphraseModalButton } from "buttons";
 import { fetchMachine } from "stateMachines/FetchStateMachine";
@@ -7,15 +8,16 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { ProposalError } from "./helpers";
 import * as gov from "actions/GovernanceActions";
+import styles from "./ProposalDetails.module.css";
 
 const VoteOption = ({ value, description, onClick, checked }) => (
-  <div className="proposal-vote-option">
+  <div className={styles.voteOption}>
     <input className={value} type="radio" id={value} name="proposalVoteChoice"
       readOnly={!onClick} onChange={onClick}
       value={value}
       checked ={checked}
     />
-    <label className={"radio-label " + value} htmlFor={value}/>{description}
+    <label className={classNames(styles.radioLabel, styles[value])} htmlFor={value}/>{description}
   </div>
 );
 
@@ -25,8 +27,8 @@ function UpdateVoteChoiceModalButton({ onSubmit, newVoteChoice, eligibleTicketCo
       modalTitle={
         <>
           <T id="proposals.updateVoteChoiceModal.title" m="Confirm Your Vote" />
-          <div className="proposal-vote-confirmation">
-            <div className={newVoteChoice+"-proposal"}/>
+          <div className={styles.voteConfirmation}>
+            <div className={styles[`${newVoteChoice}Proposal`]}/>
             {newVoteChoice}
           </div>
         </>
@@ -78,9 +80,9 @@ function ChooseVoteOption({
   const error = state && state.context && getError(state.context.error);
   const ChooseOptions = () => (
     <>
-      <div className="proposal-details-voting-preference">
-        <div className="proposal-details-voting-preference-title"><T id="proposalDetails.votingInfo.votingPreferenceTitle" m="My Voting Preference" /></div>
-        <div className="proposal-details-current-choice-box">
+      <div className={styles.votingPreference}>
+        <div className={styles.preferenceTitle}><T id="proposalDetails.votingInfo.votingPreferenceTitle" m="My Voting Preference" /></div>
+        <div>
           { voteOptions.map(o => {
             return <VoteOption
               value={o.id}  key={o.id}
@@ -107,7 +109,7 @@ function ChooseVoteOption({
     }} />;
   case "loading":
     return (
-      <div className="proposal-details-updating-vote-choice">
+      <div className={styles.voteChoice}>
         <StakeyBounceXs />
         <T id="proposalDetails.votingInfo.updatingVoteChoice" m="Updating vote choice" />...
       </div>

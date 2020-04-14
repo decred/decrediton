@@ -5,55 +5,56 @@ import { VotingProgress } from "indicators";
 import { showCheck } from "helpers";
 import { default as ReactMarkdown }  from "react-markdown";
 import { FormattedRelative } from "shared";
+import styles from "./ProposalDetails.module.css";
 
 export const ProposalError = ( { error } ) => <div><T id="proposalDetails.loadingError" m="Error loading Proposal: {error}" values={{ error }} /></div>;
 
 export const ProposalAbandoned = () =>
-  <div className="proposal-details-voting-not-voting"><T id="proposalDetails.votingInfo.abandoned" m="Proposal has been abandoned" /></div>;
+  <div className={styles.notVoting}><T id="proposalDetails.votingInfo.abandoned" m="Proposal has been abandoned" /></div>;
 
 export const ProposalNotVoting = () =>
-  <div className="proposal-details-voting-not-voting"><T id="proposalDetails.votingInfo.notVoting" m="Proposal not yet on voting stage" /></div>;
+  <div className={styles.notVoting}><T id="proposalDetails.votingInfo.notVoting" m="Proposal not yet on voting stage" /></div>;
 
 export const ProposalVoted = () =>
-  <div className="proposal-details-voting-voted"><T id="proposalDetails.votingInfo.voted" m="Voting has ended for this proposal" /></div>;
+  <div className={styles.voted}><T id="proposalDetails.votingInfo.voted" m="Voting has ended for this proposal" /></div>;
 
 export const NoTicketsVotingInfo = ({ showPurchaseTicketsPage }) => (
   <>
-    <div className="proposal-details-no-tickets"><T id="proposalDetails.votingInfo.noTickets" m="Voting is only available upon participation in Staking." /></div>
+    <div className={styles.noTickets}><T id="proposalDetails.votingInfo.noTickets" m="Voting is only available upon participation in Staking." /></div>
     <KeyBlueButton onClick={showPurchaseTicketsPage}><T id="proposalDetails.votingInfo.startStakingBtn" m="Start Staking" /></KeyBlueButton>
   </>
 );
 
 export const NoElligibleTicketsVotingInfo = ({ showPurchaseTicketsPage }) => (
   <>
-    <div className="proposal-details-no-tickets"><T id="proposalDetails.votingInfo.noElligibleTickets" m="You don't have tickets elligible for voting on this proposal. Purchase tickets to vote on future proposals." /></div>
+    <div className={styles.noTickets}><T id="proposalDetails.votingInfo.noElligibleTickets" m="You don't have tickets elligible for voting on this proposal. Purchase tickets to vote on future proposals." /></div>
     <KeyBlueButton onClick={showPurchaseTicketsPage}><T id="proposalDetails.votingInfo.purchaseTicketsBtn" m="Purchase Tickets" /></KeyBlueButton>
   </>
 );
 
 export const OverviewField = showCheck(( { label, value } ) => (
-  <div className="proposal-details-overview-field">
-    <div className="label">{label}:</div>
-    <div className="value">{value}</div>
+  <div className={styles.overviewField}>
+    <div className={styles.label}>{label}:</div>
+    <div className={styles.value}>{value}</div>
   </div>
 ));
 
 export const OverviewVotingProgressInfo = ({ voteCounts, quorumMinimumVotes }) => (
-  <div className="proposal-details-voting-progress">
-    <div className="proposal-details-voting-progress-counts">
-      <div className="yes-count-box" />{voteCounts.yes}
-      <div className="no-count-box" />{voteCounts.no}
+  <div className={styles.votingProgress}>
+    <div className={styles.progressCounts}>
+      <div className={styles.yesCountBox} />{voteCounts.yes}
+      <div className={styles.noCountBox} />{voteCounts.no}
       {/* // TODO: return if we have have quorum/total ticket counts available.
-      <div className="abstain-count-box" /><T id="proposal.progressCount.abstain" m="{count} Abstain" values={{ count: voteCounts.abstain }} /> */}
+      <div className={styles.abstainCountBox /><T id="proposal.progressCount.abstain" m="{count} Abstain" values={{ count: voteCounts.abstain }} /> */}
     </div>
 
-    <VotingProgress  {...{ voteCounts, quorumMinimumVotes }} />
+    <VotingProgress  className={styles.progressIndicator} {...{ voteCounts, quorumMinimumVotes }} />
   </div>
 );
 
 export const TimeValue = ({ timestamp, tsDate }) => (
   <>
-    <span className="time-value"><FormattedRelative  value={ tsDate(timestamp) } /></span>
+    <span className={styles.timeValue}><FormattedRelative  value={ tsDate(timestamp) } /></span>
     (<T id="proposal.overview.fullTime" m="{timestamp, date, medium} {timestamp, time, short}" values={{ timestamp: tsDate(timestamp) }} />)
   </>
 );
@@ -66,7 +67,7 @@ const renderInternalProposalLink = ({ children, href }) => (
     modalContent={
       <T id="politeia.details.openLinkModalDesc"
         m="Click Confirm to open the link: {link} in an external browser."
-        values={{ link: <span className="prop-details-modal-link">{href}</span>
+        values={{ link: <span>{href}</span>
         }} />}
     buttonComponent={<span>{children}</span>}
     buttonLabel={<a onClick={() => {} } href="#">{children}</a>}

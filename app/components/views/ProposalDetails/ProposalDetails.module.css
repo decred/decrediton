@@ -3,17 +3,316 @@
   padding-left: 63px;
 }
 
+
+.overview {
+  background-color: var(--background-back-color);
+  justify-content: space-between;
+  min-height: 200px;
+  width: 740px;
+}
+
+.overviewInfo {
+  padding: 20px 10px 15px 40px;
+  max-width: 49%;
+}
+
+.title {
+  font-size: 19px;
+  line-height: 24px;
+  color: var(--tutorial-header);
+}
+
+.token {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 100px;
+  color: var(--overview-balance-label);
+}
+
+.token a {
+  font-size: 13px;
+  line-height: 19px;
+  color: var(--overview-balance-label);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.token a:hover {
+  color: var(--stroke-color-default);
+}
+
+.fields {
+  margin-top: 11px;
+}
+
+.overviewVoting {
+  background-color: var(--transfer-details-bg);
+  padding: 30px 20px;
+  width: 284px;
+  height: 60px;
+}
+
+/* test this */
+.overviewVoting .button {
+  padding: 6px 18px;
+  position: relative;
+  top: -4px;
+  left: 158px;
+}
+
+.backIconButton {
+  margin: -20px -12px 0px 0px;
+  float: right;
+  cursor: pointer;
+}
+
+.backIconButton:hover {
+  opacity: 0.7;
+}
+
+.smallWidth .backIconButton {
+  visibility: hidden;
+}
+
+.noTickets,
+.votingPreference,
+.notVoting,
+.voted {
+  font-size: 13px;
+  line-height: 16px;
+  margin-bottom: 15px;
+  height: 64px;
+}
+
+.notVoting {
+  /* background-image: @chatBubbles; */
+  background-repeat: no-repeat;
+  background-size: 30px;
+  padding-left: 38px;
+  padding-top: 7px;
+}
+
+.voteChoice {
+  margin-top: 15px;
+  height: 64px;
+}
+
+.preferenceTitle {
+  margin-bottom: 15px;
+}
+
+.noTickets {
+  background-size: 30px 30px;
+  background-position: 0 50%;
+  background-repeat: no-repeat;
+  /* background-image: @ticket-voted-grey-icon; */
+  width: 157px;
+  padding-left: 40px;
+}
+
+.overviewField .label {
+  color: var(--agenda-card-bottom-cfg);
+  display: inline-block;
+  margin-right: 0.5em;
+  width: 100px;
+  text-align: right;
+  vertical-align: middle;
+}
+
+.overviewField .value {
+  color: var(--input-color-default);
+  display: inline-block;
+  vertical-align: middle;
+  max-width: 229px;
+}
+
+.overviewField .timeValue {
+  font-weight: bold;
+  margin-right: 0.2em;
+}
+
+.votingProgress {
+  width: 100%;
+  height: 60px;
+  padding: 10px 30px;
+}
+
+.progressIndicator {
+  height: 5px;
+  width: 100%;
+}
+
+.detailsText {
+  font-family: var(--font-family-regular-semi-bold);
+  min-height:100%;
+  padding-top: 30px;
+  padding-left: 40px;
+  background-color: var(--background-back-color);
+  margin-bottom: 80px;
+  border-top: 1px solid var(--tabbed-page-header-bg);
+  width: 700px;
+}
+
+.detailsText .links {
+  float: right;
+  margin-right: 20px;
+  margin-top: -10px;
+}
+.detailsText p {
+  word-wrap: break-word;
+}
+.detailsText a {
+  color:var(--link-color);
+}
+.detailsText pre {
+  background-color: var(--proposal-text-markdown);
+  border-radius: 3px;
+  font-size: 85%;
+  line-height: 1.45;
+  overflow: auto;
+  padding: 16px;
+}
+
+.detailsText div:not(.links) {
+  padding-right: 30px;
+  padding-bottom: 20px;
+}
+
+.progressCounts {
+  text-align: right;
+  padding-right: 5px;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 19px;
+}
+
+.progressCounts > div {
+  width: 6px;
+  height: 6px;
+  display: inline-block;
+  border-radius: 100px;
+  margin: 0px 5px 0px 20px;
+}
+
+.yesCountBox {
+  background-color: var(--vote-yes-color);
+}
+
+.noCountBox {
+  background-color: var(--vote-no-color);
+}
+
+.abstainCountBox {
+  background-color: var(--vote-abstain-color);
+}
+
+.voteOption {
+  margin-bottom: 10px;
+}
+
+.voteOption input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+}
+
+.voteOption input[type="radio"] + .radio-label ::before {
+  content: '';
+  background: var(--disabled-background-color-lighter);
+  border-radius: 100%;
+  border: 1px solid var(--disabled-color);
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  position: relative;
+  cursor: pointer;
+  text-align: center;
+  transition: all 250ms ease;
+  margin-bottom: -3px;
+}
+
+.voteOption input[type="radio"] + .radioLabel :empty ::before {
+  margin-right: 5px;
+  text-transform:  capitalize;
+}
+
+.voteOption input[type="radio"] + .radioLabel .yes ::before {
+  border: 1px solid var(--vote-yes-color);
+}
+
+.voteOption input[type="radio"] + .radioLabel .no ::before {
+  border: 1px solid var(--vote-no-color);
+}
+
+.voteOption input[type="radio"] :checked + .radioLabel .yes ::before {
+      background-color: var(--vote-yes-color);
+      box-shadow: inset 0 0 0 3px var(--disabled-background-color-lighter);
+}
+
+.voteOption input[type="radio"] :checked + .radioLabel .no ::before {
+  background-color: var(--vote-no-color);
+  box-shadow: inset 0 0 0 3px var(--disabled-background-color-lighter);
+}
+
+.voteOption input[type="radio"] :focus + .radioLabel .no ::before {
+  outline: none;
+  border-color: var(--vote-no-color);
+}
+
+.voteOption input[type="radio"] :focus + .radioLabel .yes ::before {
+  outline: none;
+  border-color: var(--vote-yes-color);
+}
+
+.voteOption input[type="radio"] :disabled + .radioLabel ::before {
+  box-shadow: inset 0 0 0 4px var(--disabled-background-color-lighter);
+  border-color: var(--disabled-color);
+  background: var(--disabled-background-color-lighter);
+}
+
+
+.voteConfirmation {
+  background-color: var(--background-container);
+  font-size: 27px;
+  line-height: 34px;
+  margin-left: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  display: flex;
+  flex-direction: row;
+  text-transform: capitalize;
+}
+
+.yesProposal {
+  width: 12px;
+  height: 12px;
+  border-radius: 100px;
+  background-color: var(--vote-yes-color);
+  margin-top: 13px;
+  margin-right: 5px;
+}
+
+.noProposal {
+  width: 12px;
+  height: 12px;
+  border-radius: 100px;
+  background-color: var(--vote-no-color);
+  margin-top: 13px;
+  margin-right: 5px;
+}
+
 /* .proposal-details-overview {
   background-color: var(--background-back-color);
   justify-content: space-between;
   min-height: 200px;
   width: 740px;
 
+
   .proposal-details-overview-info {
     padding: 20px 10px 15px 40px;
     max-width: 49%;
   }
-
+  
   .proposal-details-title {
     font-size: 19px;
     line-height: 24px;
@@ -27,7 +326,7 @@
     width: 100px;
     color: var(--overview-balance-label);
   }
-
+  
   .proposal-details-token a {
     font-size: 13px;
     line-height: 19px;
@@ -38,6 +337,10 @@
 
   .proposal-details-token a:hover {
     color: var(--stroke-color-default);
+  }
+
+  .proposal-details-overview-fields {
+    margin-top: 11px;
   }
 
   .proposal-details-overview-voting {
@@ -97,13 +400,9 @@
       width: 157px;
       padding-left: 40px;
     }
-
   }
 
-  .proposal-details-overview-fields {
-    margin-top: 11px;
-  }
-
+  
   .proposal-details-overview-field {
     .label {
       color: var(--agenda-card-bottom-cfg);
@@ -126,19 +425,17 @@
       margin-right: 0.2em;
     }
   }
-
   .proposal-details-voting-progress {
     width: 100%;
     height: 60px;
     padding: 10px 30px;
-
+    
     .voting-progress-indicator {
       height: 5px;
       width: 100%;
     }
   }
 }
-
 .proposal-details-text {
   font-family: var(--font-family-regular-semi-bold);
   min-height:100%;
@@ -175,6 +472,7 @@
   }
 }
 
+
 .proposal-details-voting-progress-counts {
   text-align: right;
   padding-right: 5px;
@@ -201,4 +499,121 @@
   .abstain-count-box {
     background-color: var(--vote-abstain-color);
   }
-} */
+} 
+
+.proposal-vote-option {
+  margin-bottom: 10px;
+
+  input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    + .radio-label {
+      &:before {
+        content: '';
+        background: var(--disabled-background-color-lighter);
+        border-radius: 100%;
+        border: 1px solid var(--disabled-color);
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        position: relative;
+        cursor: pointer;
+        text-align: center;
+        transition: all 250ms ease;
+        margin-bottom: -3px;
+      }
+      &:empty {
+        &:before {
+          margin-right: 5px;
+          text-transform:  capitalize;
+        }
+      }
+    }
+
+    + .radio-label.yes {
+      &:before {
+      border: 1px solid var(--vote-yes-color);
+      }
+    }
+
+    + .radio-label.no {
+      &:before {
+      border: 1px solid var(--vote-no-color);
+      }
+    }
+
+    &:checked {
+      + .radio-label.yes {
+        &:before {
+          background-color: var(--vote-yes-color);
+          box-shadow: inset 0 0 0 3px var(--disabled-background-color-lighter);
+        }
+      }
+      + .radio-label.no {
+        &:before {
+          background-color: var(--vote-no-color);
+          box-shadow: inset 0 0 0 3px var(--disabled-background-color-lighter);
+        }
+      }
+    }
+    &:focus {
+      + .radio-label.no {
+        &:before {
+          outline: none;
+          border-color: var(--vote-no-color);
+        }
+      }
+      + .radio-label.yes {
+        &:before {
+          outline: none;
+          border-color: var(--vote-yes-color);
+        }
+      }
+    }
+    &:disabled {
+      + .radio-label {
+        &:before {
+          box-shadow: inset 0 0 0 4px var(--disabled-background-color-lighter);
+          border-color: var(--disabled-color);
+          background: var(--disabled-background-color-lighter);
+        }
+      }
+    }
+  }
+}
+
+.proposal-vote-confirmation {
+  background-color: var(--background-container);
+  font-size: 27px;
+  line-height: 34px;
+  margin-left: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  display: flex;
+  flex-direction: row;
+  text-transform: capitalize;
+
+  >.yes-proposal {
+    width: 12px;
+    height: 12px;
+    border-radius: 100px;
+    background-color: var(--vote-yes-color);
+    margin-top: 13px;
+    margin-right: 5px;
+  }
+  >.no-proposal {
+    width: 12px;
+    height: 12px;
+    border-radius: 100px;
+    background-color: var(--vote-no-color);
+    margin-top: 13px;
+    margin-right: 5px;
+  }
+}
+
+.go-back-icon-button-small-width { changed it a bit!
+  .go-back-icon-button;
+  visibility: hidden;
+}
+----
+*/

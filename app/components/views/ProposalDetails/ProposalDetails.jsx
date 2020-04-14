@@ -49,15 +49,15 @@ function ProposalDetails ({
 
   return (
     <div className={styles.proposalDetails}>
-      <div className="proposal-details-overview">
+      <div className={styles.overview}>
         <div className="is-row">
-          <div className="proposal-details-overview-info">
-            <InvisibleButton className="go-back-icon-button-small-width" onClick={goBackHistory} />
-            <div className="proposal-details-title">{name}</div>
-            <div className="proposal-details-token">
+          <div className={styles.overviewInfo}>
+            <InvisibleButton className={styles.smallWidth} onClick={goBackHistory} />
+            <div className={styles.title}>{name}</div>
+            <div className={styles.token}>
               <PoliteiaLink path={"/proposals/"+token}>{token}</PoliteiaLink>
             </div>
-            <div className="proposal-details-overview-fields">
+            <div className={styles.fields}>
               <OverviewField
                 label={<T id="proposal.overview.created.label" m="Created by" />}
                 value={creator} />
@@ -73,8 +73,8 @@ function ProposalDetails ({
                 value={<TimeValue timestamp={endTimestamp} tsDate={tsDate} /> } />
             </div>
           </div>
-          <div className="proposal-details-overview-voting">
-            <InvisibleButton className="go-back-icon-button" onClick={goBackHistory} />
+          <div className={styles.overviewVoting}>
+            <InvisibleButton className={styles.backIconButton} onClick={goBackHistory} />
             {voteInfo}
           </div>
         </div>
@@ -94,7 +94,7 @@ function ProposalDetails ({
             >
               {walletEligibleTickets.map((t, i) => (
                 <div className="is-row proposal-details-wallet-eligible-tickets-row" key={`ticket-${i+1}`}>
-                  <div className="row proposal-details-wallet-eligible-tickets-label">
+                  <div className="is-row proposal-details-wallet-eligible-tickets-label">
                     <T id="proposals.detail.tickets" m="Ticket " />{i+1}: </div>
                   <div>
                     {t.ticket}
@@ -105,8 +105,8 @@ function ProposalDetails ({
           }
         </div>
       </div>
-      <div className="proposal-details-text">
-        <div className="links">
+      <div className={styles.detailsText}>
+        <div className={styles.links}>
           <PoliteiaLink path={"/proposals/"+token} isButton>
             <T id="proposals.community.goToProposal" m="See proposal comments on Politeia" />
           </PoliteiaLink>
