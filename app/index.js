@@ -12,7 +12,6 @@ import locales from "./i18n/locales";
 import "pi-ui/dist/index.css";
 import "./style/main.less";
 import "./style/ReactSelectGlobal.less";
-import { defaultLightTheme, ThemeProvider, defaultDarkTheme } from "pi-ui";
 import pkg from "./package.json";
 import { log } from "./wallet";
 import { ipcRenderer } from "electron";
@@ -20,6 +19,8 @@ import { DCR, THEME, LOCALE, NETWORK } from "constants";
 import { getSelectedWallet } from "./main_dev/launch";
 import { AppContainer } from "react-hot-loader";
 
+import { defaultLightTheme, ThemeProvider, defaultDarkTheme } from "pi-ui";
+import { lightTheme, darkTheme } from "style/themes";
 import SourceSansProLight from "style/fonts/SourceSansPro-Light.ttf";
 import SourceSansProRegular from "style/fonts/SourceSansPro-Regular.ttf";
 import SourceSansProSemiBold from "style/fonts/SourceSansPro-SemiBold.ttf";
@@ -441,8 +442,8 @@ const fontConfig = {
 
 // TODO: merge pi-ui's themes with decreidton's - will give us access to useTheme in all nested components!
 const themes = {
-  light: defaultLightTheme,
-  dark: defaultDarkTheme
+  light: { ...defaultLightTheme, ...lightTheme },
+  dark:  { ...defaultDarkTheme, ...darkTheme }
 };
 
 const history = createMemoryHistory();
