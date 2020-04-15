@@ -63,6 +63,12 @@
   margin: -20px -12px 0px 0px;
   float: right;
   cursor: pointer;
+  height: 12px;
+  width: 12px;
+  background-repeat: no-repeat;
+  background-size: 12px;
+  background-image: var(--x-grey);
+  padding: 0;
 }
 
 .backIconButton:hover {
@@ -84,7 +90,7 @@
 }
 
 .notVoting {
-  background-image: url('/app/style/icons/chatBubbles.svg');
+  background-image: var(--chat-bubbles);
   background-repeat: no-repeat;
   background-size: 30px;
   padding-left: 38px;
@@ -104,7 +110,7 @@
   background-size: 30px 30px;
   background-position: 0 50%;
   background-repeat: no-repeat;
-  background-image: url('/app/style/icons/votingGrey.svg');
+  background-image: var(--ticket-voted-grey-icon);
   width: 157px;
   padding-left: 40px;
 }

@@ -20,7 +20,7 @@ import { getSelectedWallet } from "./main_dev/launch";
 import { AppContainer } from "react-hot-loader";
 
 import { defaultLightTheme, ThemeProvider, defaultDarkTheme } from "pi-ui";
-import { lightTheme, darkTheme } from "style/themes";
+import { lightTheme, darkTheme, icons } from "style/themes";
 import SourceSansProLight from "style/fonts/SourceSansPro-Light.ttf";
 import SourceSansProRegular from "style/fonts/SourceSansPro-Regular.ttf";
 import SourceSansProSemiBold from "style/fonts/SourceSansPro-SemiBold.ttf";
@@ -441,8 +441,8 @@ const fontConfig = {
 };
 
 const themes = {
-  light: { ...defaultLightTheme, ...lightTheme },
-  dark:  { ...defaultDarkTheme, ...darkTheme }
+  light: { ...defaultLightTheme, ...lightTheme, ...icons },
+  dark:  { ...defaultDarkTheme, ...darkTheme, ...icons }
 };
 
 const history = createMemoryHistory();
