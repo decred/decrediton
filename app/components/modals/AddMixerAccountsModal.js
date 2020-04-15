@@ -1,6 +1,3 @@
-import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import * as sel from "selectors";
 import { useEffect } from "react";
 import { FormattedMessage as T } from "react-intl";
 import { TextInput, PassphraseModalField } from "inputs";
@@ -13,7 +10,7 @@ function AddMixerAccountsModal({
   useEffect(() => {
     setMixedAccountName("");
     setChangeAccountName("");
-  }, [show])
+  }, [ show ]);
 
   return (
     <PassphraseModal {...{ show, ...props }}>

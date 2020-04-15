@@ -62,7 +62,7 @@ export const CREATEMIXERACCOUNTS_FAILED = "CREATEMIXERACCOUNTS_FAILED";
 export const CREATEMIXERACCOUNTS_SUCCESS = "CREATEMIXERACCOUNTS_SUCCESS";
 
 export const createNeededAccounts = (passphrase, mixingAccountName, changeAccountName) => async (dispatch, getState) => {
-  dispatch({type: CREATEMIXERACCOUNTS_ATTEMPT });
+  dispatch({ type: CREATEMIXERACCOUNTS_ATTEMPT });
 
   const walletService = sel.walletService(getState());
   // TODO use constants here
@@ -73,7 +73,7 @@ export const createNeededAccounts = (passphrase, mixingAccountName, changeAccoun
   const csppServer = "cspp.decred.org";
 
   const cfg = getWalletCfg(isTestnet, walletName);
-  const createAccout = (pass, name) => wallet.getNextAccount(walletService, pass, name)
+  const createAccout = (pass, name) => wallet.getNextAccount(walletService, pass, name);
 
   try {
     const mixedAccount = await createAccout(passphrase, mixingAccountName);
@@ -87,9 +87,9 @@ export const createNeededAccounts = (passphrase, mixingAccountName, changeAccoun
     cfg.set("mixingaccount", mixedNumber);
     cfg.set("changeaccount", changeNumber);
 
-    dispatch({type: CREATEMIXERACCOUNTS_SUCCESS,
+    dispatch({ type: CREATEMIXERACCOUNTS_SUCCESS,
       mixingAccount: mixedNumber, changeAccount: changeNumber, csppPort, csppServer  });
   } catch (error) {
     dispatch({ type: CREATEMIXERACCOUNTS_FAILED, error });
   }
-}
+};

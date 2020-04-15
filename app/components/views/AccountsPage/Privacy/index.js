@@ -27,7 +27,7 @@ function validateErrorReducer(state, action) {
 }
 
 function Privacy({
-  isCreateAccountDisabled,
+  isCreateAccountDisabled
 }) {
   const dispatch = useDispatch();
   const runAccountMixer = (request) => dispatch(act.runAccountMixer(request));
@@ -47,7 +47,7 @@ function Privacy({
 
 
   if (!mixedAccount && !changeAccount) {
-    return <ConfigMixer {...{ isCreateAccountDisabled, accounts }} />
+    return <ConfigMixer {...{ isCreateAccountDisabled, accounts }} />;
   }
 
   const getAccountName = (n) => {

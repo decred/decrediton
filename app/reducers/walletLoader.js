@@ -214,8 +214,8 @@ export default function walletLoader(state = {}, action) {
       mixingAccount: action.mixingAccount,
       changeAccount: action.changeAccount,
       csppServer: action.csppServer,
-      csppPort: action.csppPort      
-    }
+      csppPort: action.csppPort
+    };
   default:
     return state;
   }
