@@ -3,7 +3,6 @@ import Promise from "promise";
 import * as sel from "selectors";
 import * as wallet from "wallet";
 import { getWalletCfg } from "config";
-import { getNextAccountAttempt } from "./ControlActions";
 
 export const GETACCOUNTMIXERSERVICE_ATTEMPT = "GETACCOUNTMIXERSERVICE_ATTEMPT";
 export const GETACCOUNTMIXERSERVICE_SUCCESS = "GETACCOUNTMIXERSERVICE_SUCCESS";
