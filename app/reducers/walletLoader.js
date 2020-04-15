@@ -12,6 +12,7 @@ import {
   WALLET_SELECTED
 } from "actions/WalletLoaderActions";
 import { WALLETCREATED } from "actions/DaemonActions";
+import { CREATEMIXERACCOUNTS_SUCCESS } from "actions/AccountMixerActions";
 
 import { WALLET_LOADER_SETTINGS } from "actions/DaemonActions";
 
@@ -208,6 +209,13 @@ export default function walletLoader(state = {}, action) {
     return { ...state,
       syncRescanAttempt: false
     };
+  case CREATEMIXERACCOUNTS_SUCCESS:
+    return { ...state,
+      mixingAccount: action.mixingAccount,
+      changeAccount: action.changeAccount,
+      csppServer: action.csppServer,
+      csppPort: action.csppPort      
+    }
   default:
     return state;
   }

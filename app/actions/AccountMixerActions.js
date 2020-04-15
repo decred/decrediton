@@ -66,28 +66,31 @@ export const createNeededAccounts = (passphrase, mixingAccountName, changeAccoun
   dispatch({type: CREATEMIXERACCOUNTS_ATTEMPT });
 
   const walletService = sel.walletService(getState());
+  // TODO use constants here
+  // MAINNET DOOR?
+  const walletName = sel.getWalletName(getState());
+  const isTestnet = sel.isTestNet(getState());
+  const csppPort = isTestnet ? "15760" : "";
+  const csppServer = "cspp.decred.org";
+
+  const cfg = getWalletCfg(isTestnet, walletName);
   const createAccout = (pass, name) => wallet.getNextAccount(walletService, pass, name)
 
   try {
-    await createAccout(passphrase, mixingAccountName);
-    await createAccout(passphrase, changeAccountName);
-    dispatch({type: CREATEMIXERACCOUNTS_SUCCESS });
+    const mixedAccount = await createAccout(passphrase, mixingAccountName);
+    const changeAccount = await createAccout(passphrase, changeAccountName);
+
+    const mixedNumber = mixedAccount.getAccountNumber();
+    const changeNumber = changeAccount.getAccountNumber();
+
+    cfg.set("csppserver", csppServer);
+    cfg.set("csppport", csppPort);
+    cfg.set("mixingaccount", mixedNumber);
+    cfg.set("changeaccount", changeNumber);
+
+    dispatch({type: CREATEMIXERACCOUNTS_SUCCESS,
+      mixingAccount: mixedNumber, changeAccount: changeNumber, csppPort, csppServer  });
   } catch (error) {
     dispatch({ type: CREATEMIXERACCOUNTS_FAILED, error });
   }
-}
-
-// firstSettingMixer is responsible for first setting the mixer configuration.
-export const firstSettingMixer = (mixingAccount, changeAccount) => (dispatch, getState) => {
-  const isTestnet = sel.isTestNet(getState());
-  // TODO use constants here
-  // MAINNET DOOR?
-  const port = isTestnet ? "15760" : "";
-  const server = "cspp.decred.org";
-  const walletName = sel.getWalletName(getState);
-  const cfg = getWalletCfg(isTestnet, walletName);
-  cfg.set("csppserver", server);
-  cfg.set("csppport", port);
-  cfg.set("mixingacount", mixingAccount);
-  cfg.set("changeaccount", changeAccount);
 }

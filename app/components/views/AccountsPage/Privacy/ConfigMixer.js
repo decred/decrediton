@@ -11,15 +11,12 @@ function ConfigMixer({
   const [areAccountsAvailable, setAreAvailable] = useState(null);
 
   const checkAvailableAccounts = () => {
-    console.log(accounts)
-    console.log(MIXED_ACCOUNT)
     const mixedExists = accounts.find(({ accountName }) => accountName === MIXED_ACCOUNT);
     const changeExists = accounts.find(({ accountName }) => accountName === CHANGE_ACCOUNT);
 
     return !mixedExists && !changeExists;
   }
   useEffect(() => setAreAvailable(checkAvailableAccounts()), []);
-
 
   return (
     <>
@@ -67,7 +64,7 @@ function ConfigMixer({
                     disabled={isCreateAccountDisabled}
                     modalTitle={<T id="accounts.newAccountConfirmations" m="Create needed accounts" />}
                     modalComponent={AddMixerAccountsModal}
-                    buttonLabel={<T id="accounts.addNewButton" m="Add New" />}
+                    buttonLabel={<T id="accounts.addNewButton" m="Create Needed Accounts" />}
                   />
                 </WatchOnlyWarnNotification>
               </>

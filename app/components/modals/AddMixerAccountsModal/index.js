@@ -5,15 +5,17 @@ import * as amc from "actions/AccountMixerActions";
 import * as sel from "selectors";
 import { useEffect } from "react";
 
-function AddMixerAccountsModal({ show, onCancelModal, modalTitle }) {
+function AddMixerAccountsModal({ show, onSubmit, ...props }) {
   const dispatch = useDispatch();
   const [ mixedAccountName, setMixedAccountName ] = useState("");
   const [ changeAccountName, setChangeAccountName ] = useState("");
   const accounts = useSelector(sel.sortedAccounts);
 
   const isValid = () => !(!mixedAccountName || !changeAccountName);
-  const onSubmit = (passphrase) =>
+  const handleOnSubmit = (passphrase) => {
     dispatch(amc.createNeededAccounts(passphrase, mixedAccountName, changeAccountName));
+    onSubmit();
+  }
 
   useEffect(() => {
     setMixedAccountName("");
@@ -21,8 +23,8 @@ function AddMixerAccountsModal({ show, onCancelModal, modalTitle }) {
   }, [show])
 
   return <Modal {...{
-    mixedAccountName, changeAccountName, setMixedAccountName, onSubmit,
-    setChangeAccountName, isValid, show, onCancelModal, modalTitle
+    mixedAccountName, changeAccountName, setMixedAccountName, onSubmit: handleOnSubmit,
+    setChangeAccountName, isValid, show, ...props
   }} />;
 }
 

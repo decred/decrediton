@@ -43,13 +43,16 @@ function Privacy({
     mixedAccountBranch: null
   });
   const [ canStartMixer, setCanStartMixer ] = useState(false);
+  useEffect(() => setCanStartMixer(isValidStartMixer()), [ mixedAccountBranch ]);
+
 
   if (!mixedAccount && !changeAccount) {
     return <ConfigMixer {...{ isCreateAccountDisabled, accounts }} />
   }
 
   const getAccountName = (n) => {
-    return accounts.find( ({ accountNumber }) => accountNumber === n ).accountName;
+    const account = accounts.find( ({ accountNumber }) => accountNumber === n );
+    return account ? account.accountName : null;
   };
 
   const mixedAccountName = getAccountName(mixedAccount);
@@ -81,7 +84,6 @@ function Privacy({
       dispatchError({ type: "ACCOUNT_MIXER_START", error });
     }
   }
-  useEffect(() => setCanStartMixer(isValidStartMixer()), [ mixedAccountBranch ]);
 
   return <PrivacyPage {...{
     mixedAccountName, mixedAccountBranch, setMixedAccountBranch,
