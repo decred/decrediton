@@ -36,8 +36,8 @@ function Main() {
   return (
     <TabbedPage header={<AccountsListHeader />} >
       <Switch><Redirect from="/accounts" exact to="/accounts/list" /></Switch>
-      <Tab path="/accounts/list" component={AccountsTab} link={<T id="tickets.tab.purchase" m="List Accounts"/>}/>
-      <Tab path="/accounts/privacy" component={<PrivacyTab {...{ isCreateAccountDisabled }}/>} link={<T id="tickets.tab.mytickets" m="Privacy"/>} disabled={!privacyEnabled}/>
+      <Tab path="/accounts/list" component={AccountsTab} link={<T id="accounts.tab.listAccounts" m="List Accounts"/>}/>
+      <Tab path="/accounts/privacy" component={<PrivacyTab {...{ isCreateAccountDisabled }}/>} link={<T id="accounts.tab.privacy" m="Privacy"/>} disabled={!privacyEnabled}/>
     </TabbedPage>
   );
 }
