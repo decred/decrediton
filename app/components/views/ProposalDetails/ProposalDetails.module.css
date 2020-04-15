@@ -84,7 +84,7 @@
 }
 
 .notVoting {
-  /* background-image: @chatBubbles; */
+  background-image: url('/app/style/icons/chatBubbles.svg');
   background-repeat: no-repeat;
   background-size: 30px;
   padding-left: 38px;
@@ -104,7 +104,7 @@
   background-size: 30px 30px;
   background-position: 0 50%;
   background-repeat: no-repeat;
-  /* background-image: @ticket-voted-grey-icon; */
+  background-image: url('/app/style/icons/votingGrey.svg');
   width: 157px;
   padding-left: 40px;
 }
