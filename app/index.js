@@ -440,7 +440,6 @@ const fontConfig = {
   format: "truetype"
 };
 
-// TODO: merge pi-ui's themes with decreidton's - will give us access to useTheme in all nested components!
 const themes = {
   light: { ...defaultLightTheme, ...lightTheme },
   dark:  { ...defaultDarkTheme, ...darkTheme }
