@@ -12,7 +12,7 @@ import styles from "./ProposalDetails.module.css";
 
 const VoteOption = ({ value, description, onClick, checked }) => (
   <div className={styles.voteOption}>
-    <input className={value} type="radio" id={value} name="proposalVoteChoice"
+    <input className={styles[value]} type="radio" id={value} name="proposalVoteChoice"
       readOnly={!onClick} onChange={onClick}
       value={value}
       checked ={checked}
