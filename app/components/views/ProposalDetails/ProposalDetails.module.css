@@ -10,6 +10,11 @@
   width: 740px;
 }
 
+.overviewInfoWrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
 .overviewInfo {
   padding: 20px 10px 15px 40px;
   max-width: 49%;
@@ -136,10 +141,14 @@
   margin-right: 0.2em;
 }
 
+.votingProgressWrapper {
+  display: flex;
+  justify-content: center;
+}
+
 .votingProgress {
-  width: 100%;
+  flex-basis: 95%;
   height: 60px;
-  padding: 10px 30px;
 }
 
 .progressIndicator {

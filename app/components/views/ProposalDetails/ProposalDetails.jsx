@@ -51,9 +51,8 @@ function ProposalDetails ({
   return (
     <div className={styles.proposalDetails}>
       <div className={styles.overview}>
-        <div className="is-row">
+        <div className={styles.overviewInfoWrapper}>
           <div className={styles.overviewInfo}>
-            <InvisibleButton className={styles.smallWidth} onClick={goBackHistory} />
             <div className={styles.title}>{name}</div>
             <div className={styles.token}>
               <PoliteiaLink path={"/proposals/"+token}>{token}</PoliteiaLink>
@@ -80,7 +79,8 @@ function ProposalDetails ({
           </div>
         </div>
         { (voteStatus === VOTESTATUS_ACTIVEVOTE || voteStatus === VOTESTATUS_FINISHEDVOTE ) &&
-            <OverviewVotingProgressInfo {...{ voteCounts, quorumMinimumVotes }} /> }
+            <OverviewVotingProgressInfo {...{ voteCounts, quorumMinimumVotes }} />
+        }
         <div>
           { walletEligibleTickets &&
             <VerticalAccordion
