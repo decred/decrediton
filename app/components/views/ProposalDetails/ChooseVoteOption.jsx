@@ -42,9 +42,11 @@ function UpdateVoteChoiceModalButton({ onSubmit, newVoteChoice, eligibleTicketCo
       }
       disabled={!newVoteChoice}
       onSubmit={onSubmit}
+      className={styles.castVoteButton}
       buttonLabel={<T id="proposals.updateVoteChoiceModal.btnLabel" m="Cast Vote" />}
     />
-  );}
+  );
+}
 
 const getError = (error) => {
   if (!error) return;

@@ -52,7 +52,7 @@
   height: 60px;
 }
 
-.overviewVoting .button {
+.castVoteButton {
   padding: 6px 18px;
   position: relative;
   top: -4px;
