@@ -78,6 +78,7 @@ function ChooseVoteOption({
   });
 
   const error = state && state.context && getError(state.context.error);
+  // TODO: use memo here! currently this is being recaclulated on each new render!
   const ChooseOptions = () => (
     <>
       <div className={styles.votingPreference}>

@@ -42,7 +42,7 @@ export const setDaemonRemoteCredentials = (rpcuser, rpcpass, rpccert, rpchost, r
 
 export const INITIAL_VALUES = {
   [DAEMON_ADVANCED]: false,
-  [THEME]: "theme-light",
+  [THEME]: "light",
   [LOCALE]: "",
   [NETWORK]: MAINNET,
   [SET_LANGUAGE]: true,

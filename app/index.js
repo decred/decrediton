@@ -452,7 +452,7 @@ const render = () => ReactDOM.render(
   <AppContainer>
     <ThemeProvider
       themes={themes}
-      defaultThemeName="light"
+      defaultThemeName={currentSettings.theme}
       fontConfig={fontConfig}>
       <Provider store={store}>
         <ConnectedRouter history={history}>
