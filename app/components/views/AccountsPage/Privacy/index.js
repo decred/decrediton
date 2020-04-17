@@ -1,7 +1,6 @@
 import * as act from "actions/AccountMixerActions";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState, useReducer } from "react";
-import { FormattedMessage as T } from "react-intl";
+import { useReducer } from "react";
 import PrivacyPage from "./Page";
 import * as sel from "selectors";
 import ConfigMixer from "./ConfigMixer";
@@ -32,7 +31,6 @@ function Privacy({
   const [ error, dispatchError ] = useReducer(validateErrorReducer,  {
     mixedStart: null
   });
-  const [ canStartMixer, setCanStartMixer ] = useState(false);
 
   if (!mixedAccount && !changeAccount) {
     return <ConfigMixer {...{ isCreateAccountDisabled, accounts }} />;
@@ -62,9 +60,8 @@ function Privacy({
   }
 
   return <PrivacyPage {...{
-    mixedAccountName, mixedAccountBranch, canStartMixer, error,
-    changeAccountName, onStartMixerAttempt, stopAccountMixer,
-    accountMixerRunning, csppServer, csppPort
+    mixedAccountName, accountMixerRunning, error, csppServer, csppPort, changeAccountName,
+    onStartMixerAttempt, stopAccountMixer, mixedAccountBranch
   }} />;
 }
 
