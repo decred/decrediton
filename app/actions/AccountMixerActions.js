@@ -61,22 +61,21 @@ export const CREATEMIXERACCOUNTS_ATTEMPT = "CREATEMIXERACCOUNTS_ATTEMPT";
 export const CREATEMIXERACCOUNTS_FAILED = "CREATEMIXERACCOUNTS_FAILED";
 export const CREATEMIXERACCOUNTS_SUCCESS = "CREATEMIXERACCOUNTS_SUCCESS";
 
-export const createNeededAccounts = (passphrase, mixingAccountName, changeAccountName) => async (dispatch, getState) => {
+export const createNeededAccounts = (passphrase, mixedAccountName, changeAccountName) => async (dispatch, getState) => {
   dispatch({ type: CREATEMIXERACCOUNTS_ATTEMPT });
 
   const walletService = sel.walletService(getState());
   // TODO use constants here
-  // MAINNET DOOR?
   const walletName = sel.getWalletName(getState());
   const isTestnet = sel.isTestNet(getState());
-  const csppPort = isTestnet ? "15760" : "";
+  const csppPort = isTestnet ? "15760" : "5760";
   const csppServer = "cspp.decred.org";
 
   const cfg = getWalletCfg(isTestnet, walletName);
   const createAccout = (pass, name) => wallet.getNextAccount(walletService, pass, name);
 
   try {
-    const mixedAccount = await createAccout(passphrase, mixingAccountName);
+    const mixedAccount = await createAccout(passphrase, mixedAccountName);
     const changeAccount = await createAccout(passphrase, changeAccountName);
 
     const mixedNumber = mixedAccount.getAccountNumber();
@@ -84,11 +83,11 @@ export const createNeededAccounts = (passphrase, mixingAccountName, changeAccoun
 
     cfg.set("csppserver", csppServer);
     cfg.set("csppport", csppPort);
-    cfg.set("mixingaccount", mixedNumber);
+    cfg.set("mixedaccount", mixedNumber);
     cfg.set("changeaccount", changeNumber);
 
     dispatch({ type: CREATEMIXERACCOUNTS_SUCCESS,
-      mixingAccount: mixedNumber, changeAccount: changeNumber, csppPort, csppServer  });
+      mixedAccount: mixedNumber, changeAccount: changeNumber, csppPort, csppServer  });
   } catch (error) {
     dispatch({ type: CREATEMIXERACCOUNTS_FAILED, error });
   }

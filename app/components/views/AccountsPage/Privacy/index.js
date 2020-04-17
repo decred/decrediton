@@ -33,7 +33,7 @@ function Privacy({
   const runAccountMixer = (request) => dispatch(act.runAccountMixer(request));
   const stopAccountMixer = () => dispatch(act.stopAccountMixer());
   const accountMixerRunning = useSelector(sel.getAccountMixerRunning);
-  const mixedAccount = useSelector(sel.getMixingAccount);
+  const mixedAccount = useSelector(sel.getMixedAccount);
   const changeAccount = useSelector(sel.getChangeAccount);
   const csppServer = useSelector(sel.getCsppServer);
   const csppPort = useSelector(sel.getCsppPort);

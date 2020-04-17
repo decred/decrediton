@@ -66,8 +66,8 @@ export function initWalletCfg(testnet, walletPath) {
   if (!config.has("ln_macaroonpath")) {
     config.set("ln_macaroonpath", "");
   }
-  if (!config.has("mixingaccount")) {
-    config.set("mixingaccount", "");
+  if (!config.has("mixedaccount")) {
+    config.set("mixedaccount", "");
   }
   if (!config.has("changeaccount")) {
     config.set("changeaccount", "");
@@ -90,7 +90,7 @@ export function initWalletCfg(testnet, walletPath) {
 function cleanWalletCfg(config) {
   var key;
   const walletCfgFields = [ "enableticketbuyer", "balancetomaintain", "currency_display",
-    "ln_wallet_exists", "ln_account", "enableprivacy", "mixingaccount", "changeaccount",
+    "ln_wallet_exists", "ln_account", "enableprivacy", "mixedaccount", "changeaccount",
     "hiddenaccounts", "discoveraccounts", "gaplimit", "iswatchonly", "stakepools",
     "lastaccess", "politeia_last_access_time", "politeia_last_access_block", "csppserver", "csppport"
   ];

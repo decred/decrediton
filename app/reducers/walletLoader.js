@@ -78,7 +78,7 @@ export default function walletLoader(state = {}, action) {
     return { ...state,
       discoverAccountsComplete: action.discoverAccountsComplete,
       privacyEnabled: action.enablePrivacy,
-      mixingAccount: action.mixingAccount,
+      mixedAccount: action.mixedAccount,
       changeAccount: action.changeAccount,
       csppServer: action.csppServer,
       csppPort: action.csppPort
@@ -211,7 +211,7 @@ export default function walletLoader(state = {}, action) {
     };
   case CREATEMIXERACCOUNTS_SUCCESS:
     return { ...state,
-      mixingAccount: action.mixingAccount,
+      mixedAccount: action.mixedAccount,
       changeAccount: action.changeAccount,
       csppServer: action.csppServer,
       csppPort: action.csppPort

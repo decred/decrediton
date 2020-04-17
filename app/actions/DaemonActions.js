@@ -347,7 +347,7 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => new Promi
     const lastPoliteiaAccessBlock = walletCfg.get("politeia_last_access_block");
     const dismissBackupRedeemScript = walletCfg.get("dismiss_backup_msg_redeem_script");
     const enablePrivacy = walletCfg.get("enableprivacy");
-    const mixingAccount = walletCfg.get("mixingaccount");
+    const mixedAccount = walletCfg.get("mixedaccount");
     const changeAccount = walletCfg.get("changeaccount");
     const csppServer = walletCfg.get("csppserver");
     const csppPort = walletCfg.get("csppport");
@@ -357,7 +357,7 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => new Promi
     dispatch({ type: WALLET_AUTOBUYER_SETTINGS, balanceToMaintain });
     dispatch({ type: WALLET_SETTINGS, currencyDisplay, gapLimit });
     dispatch({ type: WALLET_STAKEPOOL_SETTINGS, activeStakePoolConfig, selectedStakePool, currentStakePoolConfig, dismissBackupRedeemScript });
-    dispatch({ type: WALLET_LOADER_SETTINGS, discoverAccountsComplete, enablePrivacy, mixingAccount, changeAccount, csppServer, csppPort });
+    dispatch({ type: WALLET_LOADER_SETTINGS, discoverAccountsComplete, enablePrivacy, mixedAccount, changeAccount, csppServer, csppPort });
     selectedWallet.value.isTrezor && dispatch(enableTrezor());
     await dispatch(getVersionServiceAttempt());
     await dispatch(openWalletAttempt("", false));
