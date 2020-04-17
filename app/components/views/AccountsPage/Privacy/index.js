@@ -8,16 +8,6 @@ import ConfigMixer from "./ConfigMixer";
 
 function validateErrorReducer(state, action) {
   switch (action.type) {
-  case "MIXED_ACCOUNT_BRANCH":
-    return {
-      ...state,
-      mixedAccountBranch: <T id="privacy.error.mixed.branch" m="Missing Mixed Account Branch" />
-    };
-  case "REMOVE_MIXED_ACCOUNT_BRANCH_ERROR":
-    return {
-      ...state,
-      mixedAccountBranch: null
-    };
   case "ACCOUNT_MIXER_START":
     return {
       ...state,
@@ -37,14 +27,12 @@ function Privacy({
   const changeAccount = useSelector(sel.getChangeAccount);
   const csppServer = useSelector(sel.getCsppServer);
   const csppPort = useSelector(sel.getCsppPort);
+  const mixedAccountBranch = useSelector(sel.getMixedAccountBranch);
   const accounts = useSelector(sel.sortedAccounts);
-  const [ mixedAccountBranch, setMixedAccountBranch ] = useState(0);
-  const [ error, dispatchError ] = useReducer(validateErrorReducer, {
-    mixedAccountBranch: null
+  const [ error, dispatchError ] = useReducer(validateErrorReducer,  {
+    mixedStart: null
   });
   const [ canStartMixer, setCanStartMixer ] = useState(false);
-  useEffect(() => setCanStartMixer(isValidStartMixer()), [ mixedAccountBranch ]);
-
 
   if (!mixedAccount && !changeAccount) {
     return <ConfigMixer {...{ isCreateAccountDisabled, accounts }} />;
@@ -58,25 +46,13 @@ function Privacy({
   const mixedAccountName = getAccountName(mixedAccount);
   const changeAccountName = getAccountName(changeAccount);
 
-  function isValidStartMixer() {
-    let isValid = true;
-    if (mixedAccountBranch === "") {
-      isValid = false;
-      dispatchError({ type: "MIXED_ACCOUNT_BRANCH" });
-    } else {
-      dispatchError({ type: "REMOVE_MIXED_ACCOUNT_BRANCH_ERROR" });
-    }
-
-    return isValid;
-  }
-
   async function onStartMixerAttempt(passphrase) {
     const request = {
       passphrase,
       mixedAccount,
       changeAccount,
       mixedAccountBranch,
-      csppServer: "cspp.decred.org:15760"
+      csppServer: `${csppServer}:${csppPort}`
     };
     try {
       await runAccountMixer(request);
@@ -86,9 +62,9 @@ function Privacy({
   }
 
   return <PrivacyPage {...{
-    mixedAccountName, mixedAccountBranch, setMixedAccountBranch,
-    changeAccountName, onStartMixerAttempt, canStartMixer, error,
-    stopAccountMixer, accountMixerRunning, csppServer, csppPort
+    mixedAccountName, mixedAccountBranch, canStartMixer, error,
+    changeAccountName, onStartMixerAttempt, stopAccountMixer,
+    accountMixerRunning, csppServer, csppPort
   }} />;
 }
 

@@ -78,6 +78,9 @@ export function initWalletCfg(testnet, walletPath) {
   if (!config.has("csppport")) {
     config.set("csppport", "");
   }
+  if (!config.has("mixedaccbranch")) {
+    config.set("mixedaccbranch", "");
+  }
   stakePoolInfo(function(foundStakePoolConfigs) {
     if (foundStakePoolConfigs !== null) {
       updateStakePoolConfig(config, foundStakePoolConfigs);
@@ -90,7 +93,7 @@ export function initWalletCfg(testnet, walletPath) {
 function cleanWalletCfg(config) {
   var key;
   const walletCfgFields = [ "enableticketbuyer", "balancetomaintain", "currency_display",
-    "ln_wallet_exists", "ln_account", "enableprivacy", "mixedaccount", "changeaccount",
+    "ln_wallet_exists", "ln_account", "enableprivacy", "mixedaccount", "mixedaccbranch", "changeaccount",
     "hiddenaccounts", "discoveraccounts", "gaplimit", "iswatchonly", "stakepools",
     "lastaccess", "politeia_last_access_time", "politeia_last_access_block", "csppserver", "csppport"
   ];

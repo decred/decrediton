@@ -6,45 +6,36 @@ import cx from "classnames";
 import "style/Privacy.less";
 
 const PrivacyPage = ({
-  mixedAccountName, setMixedAccountBranch, mixedAccountBranch, changeAccountName,
-  canStartMixer, error, accountMixerRunning, stopAccountMixer, onStartMixerAttempt,
-  csppServer, csppPort
+  mixedAccountName, mixedAccountBranch, changeAccountName, csppServer, csppPort,
+  error, accountMixerRunning, stopAccountMixer, onStartMixerAttempt
 }) => (
   <>
     <Subtitle title={<T id="privacy.subtitle" m="Privacy"/>} />
 
     <div className="privacy-page-wrapper is-column">
       <div className={ cx("is-row", "privacy-row") }>
-        <div className={ cx("is-row", "privacy-item", error["mixedAccount"] && "error") }>
+        <div className={ cx("is-row", "privacy-item") }>
           <div className=""><T id="privacy.mixing.account" m="Mixing Account" />:</div>
           <TextInput required disabled value={mixedAccountName} />
         </div>
 
-        <div className={cx("privacy-item", error["mixedAccountBranch"] && "error")}>
+        <div className="privacy-item">
           <div className="is-row">
             <div className=""><T id="privacy.mixing.account.branch" m="Account Branch" />:</div>
-            <NumericInput
-              value={mixedAccountBranch} onChange={ e => setMixedAccountBranch(e.target.value)}
-            />
+            <NumericInput value={mixedAccountBranch} disabled />
           </div>
-          { error["mixedAccountBranch"] }
         </div>
       </div>
 
       <div className={ cx("is-row", "privacy-row") }>
-        <div className={cx("is-row", "privacy-item", error["changeAccount"] && "error")}>
+        <div className={cx("is-row", "privacy-item")}>
           <div className=""><T id="privacy.change.account" m="Change Account" />:</div>
           <TextInput required disabled value={changeAccountName} />
         </div>
       </div>
 
-      {
-        error["sameAccount"] &&
-        <div className="privacy-item error">{ error["sameAccount"] }</div>
-      }
-
       <div className={ cx("is-row", "privacy-row") }>
-        <div className={cx("is-row", "privacy-item", error["csppServer"] && "error")}>
+        <div className={cx("is-row", "privacy-item")}>
           <div className=""><T id="privacy.mixing.server" m="Shuffle Server" />:</div>
           <TextInput
             required
@@ -53,7 +44,7 @@ const PrivacyPage = ({
           />
         </div>
 
-        <div className={cx("is-row", "privacy-item", error["csppPort"] && "error")}>
+        <div className={cx("is-row", "privacy-item")}>
           <div className=""><T id="privacy.mixing.server.port" m="Shuffle Port" />:</div>
           <TextInput
             required
@@ -66,7 +57,6 @@ const PrivacyPage = ({
         {
           accountMixerRunning ? <AutoBuyerSwitch enabled onClick={stopAccountMixer} /> :
             <PassphraseModalSwitch
-              disabled={!canStartMixer}
               modalTitle={<T id="privacy.start.mixer.confirmation" m="Start Mixer" />}
               buttonLabel={<T id="privacy.start.mixer" m="Start Mixer" />}
               modalDescription={<T id="privacy.mixer.modal.description"

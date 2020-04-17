@@ -81,7 +81,8 @@ export default function walletLoader(state = {}, action) {
       mixedAccount: action.mixedAccount,
       changeAccount: action.changeAccount,
       csppServer: action.csppServer,
-      csppPort: action.csppPort
+      csppPort: action.csppPort,
+      mixedAccountBranch: action.mixedAccountBranch
     };
   case GETWALLETSEEDSVC_ATTEMPT:
     return { ...state,
@@ -214,7 +215,8 @@ export default function walletLoader(state = {}, action) {
       mixedAccount: action.mixedAccount,
       changeAccount: action.changeAccount,
       csppServer: action.csppServer,
-      csppPort: action.csppPort
+      csppPort: action.csppPort,
+      mixedAccountBranch: action.mixedAccountBranch
     };
   default:
     return state;

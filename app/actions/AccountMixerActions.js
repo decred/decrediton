@@ -85,9 +85,10 @@ export const createNeededAccounts = (passphrase, mixedAccountName, changeAccount
     cfg.set("csppport", csppPort);
     cfg.set("mixedaccount", mixedNumber);
     cfg.set("changeaccount", changeNumber);
+    cfg.set("mixedaccbranch", 0);
 
     dispatch({ type: CREATEMIXERACCOUNTS_SUCCESS,
-      mixedAccount: mixedNumber, changeAccount: changeNumber, csppPort, csppServer  });
+      mixedAccount: mixedNumber, changeAccount: changeNumber, csppPort, csppServer, mixedAccountBranch: 0 });
   } catch (error) {
     dispatch({ type: CREATEMIXERACCOUNTS_FAILED, error });
   }
