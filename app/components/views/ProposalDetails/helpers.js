@@ -40,7 +40,7 @@ export const OverviewField = showCheck(( { label, value } ) => (
 ));
 
 export const OverviewVotingProgressInfo = ({ voteCounts, quorumMinimumVotes }) => (
-  <div class={styles.votingProgressWrapper}>
+  <div className={styles.votingProgressWrapper}>
     <div className={styles.votingProgress}>
       <div className={styles.progressCounts}>
         <div className={styles.yesCountBox} />{voteCounts.yes}
