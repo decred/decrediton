@@ -15,7 +15,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: yarn
+    - name: yarn install 1.21.1
+      run: yarn set 1.12.1
+      name: yarn
       run: yarn
     - name: linter checks
       run: yarn lint
