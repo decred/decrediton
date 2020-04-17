@@ -9,8 +9,8 @@ const propTypes = {
 };
 
 const availableUIThemeTypes = [
-  { name: <T id="settings.uitheme.type.light" m="Light" />, value: "light" },
-  { name: <T id="settings.uitheme.type.dark" m="Dark" />, value: "dark" }
+  { name: <T id="settings.uitheme.type.light" m="Light" />, value: "thme-light" },
+  { name: <T id="settings.uitheme.type.dark" m="Dark" />, value: "theme-dark" }
 ];
 
 const UISettings = ({

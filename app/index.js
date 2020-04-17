@@ -441,8 +441,8 @@ const fontConfig = {
 };
 
 const themes = {
-  light: { ...defaultLightTheme, ...lightTheme, ...icons },
-  dark:  { ...defaultDarkTheme, ...darkTheme, ...icons }
+  "theme-light": { ...defaultLightTheme, ...lightTheme, ...icons },
+  "theme-dark":  { ...defaultDarkTheme, ...darkTheme, ...icons }
 };
 
 const history = createMemoryHistory();
