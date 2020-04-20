@@ -54,15 +54,16 @@ function Proposals() {
   const preVoteCount = useSelector(sel.newPreVoteProposalsCount);
   const politeiaEnabled = useSelector(sel.politeiaEnabled);
   const location = useSelector(sel.location);
+  const dispatch = useDispatch();
 
   // TODO move reducers which only control local states from reducer/governance.js
   // to here.
   const [ tab, setTab ] = useReducer(() => getProposalsTab(location));
 
-  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(setLastPoliteiaAccessTime());
-  }, []);
+  }, [ dispatch ]);
+
   const getTokenAndInitialBatch = () => dispatch(gov.getTokenAndInitialBatch());
   useEffect(() => {
     const tab = getProposalsTab(location);
