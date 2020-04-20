@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [12.16.1, 13.x]
+        node-version: [12.x, 13.x]
 
     steps:
     - uses: actions/checkout@v1
@@ -15,10 +15,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: yarn install 1.21.1
-      run: yarn set 1.21.1
       name: yarn
-      run: yarn
+      run: yarn nstall --network-concurrency 1
     - name: linter checks
       run: yarn lint
     - name: tests
