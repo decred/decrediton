@@ -103,7 +103,7 @@ function TabbedPage(props) {
   const [ dir, setDir ] = useState("l2r");
   useEffect( () => {
     setMatchedTab(getMatchedTab(location, props.children));
-  }, []);
+  }, [ props.children, location ]);
   useEffect(() => {
     if (previous && previous.location.pathname === location.pathname ) return;
     if (typeof props.onChange === "function") props.onChange();
@@ -116,7 +116,7 @@ function TabbedPage(props) {
       : "l2r";
     setDir(dir);
     setMatchedTab(matchedTab);
-  }, [ location ]);
+  }, [ location, previous, props ]);
   let { children, header, className } = props;
   if (!isArray(children)) children = [ children ];
 
