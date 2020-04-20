@@ -20,7 +20,7 @@ jobs:
     - name: linter checks
       run: yarn lint
     - name: tests
-      run: yarn test --network-concurrency 1
+      run: yarn test
       env:
         CI: true
     - name: build
