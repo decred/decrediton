@@ -16,11 +16,11 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: yarn
-      run: yarn install --network-concurrency 1
+      run: yarn --network-concurrency 1
     - name: linter checks
       run: yarn lint
     - name: tests
-      run: yarn test
+      run: yarn test --network-concurrency 1
       env:
         CI: true
     - name: build
