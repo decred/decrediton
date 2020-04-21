@@ -518,6 +518,18 @@ export const publishUnminedTransactionsAttempt = () => (dispatch, getState) => {
   }
 };
 
+
+export const ABANDONTRANSACTION_ATTEMPT = "ABANDONTRANSACTION_ATTEMPT";
+export const ABANDONTRANSACTION_SUCCESS = "ABANDONTRANSACTION_SUCCESS";
+export const ABANDONTRANSACTION_FAILED  = "ABANDONTRANSACTION_FAILED";
+
+export const abandonTransactionAttempt = (txid) => (dispatch, getState) => {
+  dispatch({ type: ABANDONTRANSACTION_ATTEMPT });
+  wallet.abandonTransactionAttempt(sel.walletService(getState()), txid)
+    .then(() => dispatch({ type: ABANDONTRANSACTION_SUCCESS }))
+    .catch(error => dispatch({ error, type: ABANDONTRANSACTION_FAILED }));
+};
+
 export const SHOW_ABOUT_MODAL_MACOS = "SHOW_ABOUT_MODAL_MACOS";
 export const showAboutModalMacOS = () => (dispatch) => dispatch({ type: SHOW_ABOUT_MODAL_MACOS });
 
