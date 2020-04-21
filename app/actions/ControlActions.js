@@ -523,9 +523,9 @@ export const ABANDONTRANSACTION_ATTEMPT = "ABANDONTRANSACTION_ATTEMPT";
 export const ABANDONTRANSACTION_SUCCESS = "ABANDONTRANSACTION_SUCCESS";
 export const ABANDONTRANSACTION_FAILED  = "ABANDONTRANSACTION_FAILED";
 
-export const abandonTransactionAttempt = (txid) => (dispatch, getState) => {
+export const abandonTransactionAttempt = txid => (dispatch, getState) => {
   dispatch({ type: ABANDONTRANSACTION_ATTEMPT });
-  wallet.abandonTransactionAttempt(sel.walletService(getState()), txid)
+  wallet.abandonTransaction(sel.walletService(getState()), txid)
     .then(() => dispatch({ type: ABANDONTRANSACTION_SUCCESS }))
     .catch(error => dispatch({ error, type: ABANDONTRANSACTION_FAILED }));
 };
