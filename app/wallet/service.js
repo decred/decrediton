@@ -251,7 +251,7 @@ export const publishUnminedTransactions = log((walletService) => new Promise((re
 
 export const abandonTransaction = log((walletService, txid) => new Promise((resolve, reject) => {
   const req = new api.AbandonTransactionRequest();
-  req.seTtransactionHash(txid);
+  req.setTransactionHash(txid);
   walletService.abandonTransaction(req, (err) => err ? reject(err) : resolve());
 }), "Abandon Transaction");
 
