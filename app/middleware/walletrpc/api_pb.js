@@ -11,6 +11,8 @@ var jspb = require('google-protobuf');
 var goog = jspb;
 var global = Function('return this')();
 
+goog.exportSymbol('proto.walletrpc.AbandonTransactionRequest', null, global);
+goog.exportSymbol('proto.walletrpc.AbandonTransactionResponse', null, global);
 goog.exportSymbol('proto.walletrpc.AccountBalance', null, global);
 goog.exportSymbol('proto.walletrpc.AccountNotificationsRequest', null, global);
 goog.exportSymbol('proto.walletrpc.AccountNotificationsResponse', null, global);
@@ -64,6 +66,7 @@ goog.exportSymbol('proto.walletrpc.DecodedTransaction.Input', null, global);
 goog.exportSymbol('proto.walletrpc.DecodedTransaction.Input.TreeType', null, global);
 goog.exportSymbol('proto.walletrpc.DecodedTransaction.Output', null, global);
 goog.exportSymbol('proto.walletrpc.DecodedTransaction.Output.ScriptClass', null, global);
+goog.exportSymbol('proto.walletrpc.DetachedBlockDetails', null, global);
 goog.exportSymbol('proto.walletrpc.DiscoverAddressesRequest', null, global);
 goog.exportSymbol('proto.walletrpc.DiscoverAddressesResponse', null, global);
 goog.exportSymbol('proto.walletrpc.FetchHeadersNotification', null, global);
@@ -152,6 +155,8 @@ goog.exportSymbol('proto.walletrpc.SetVoteChoicesRequest.Choice', null, global);
 goog.exportSymbol('proto.walletrpc.SetVoteChoicesResponse', null, global);
 goog.exportSymbol('proto.walletrpc.SetVotingAddressRequest', null, global);
 goog.exportSymbol('proto.walletrpc.SetVotingAddressResponse', null, global);
+goog.exportSymbol('proto.walletrpc.SignHashesRequest', null, global);
+goog.exportSymbol('proto.walletrpc.SignHashesResponse', null, global);
 goog.exportSymbol('proto.walletrpc.SignMessageRequest', null, global);
 goog.exportSymbol('proto.walletrpc.SignMessageResponse', null, global);
 goog.exportSymbol('proto.walletrpc.SignMessagesRequest', null, global);
@@ -166,6 +171,8 @@ goog.exportSymbol('proto.walletrpc.SignTransactionsRequest.AdditionalScript', nu
 goog.exportSymbol('proto.walletrpc.SignTransactionsRequest.UnsignedTransaction', null, global);
 goog.exportSymbol('proto.walletrpc.SignTransactionsResponse', null, global);
 goog.exportSymbol('proto.walletrpc.SignTransactionsResponse.SignedTransaction', null, global);
+goog.exportSymbol('proto.walletrpc.SpenderRequest', null, global);
+goog.exportSymbol('proto.walletrpc.SpenderResponse', null, global);
 goog.exportSymbol('proto.walletrpc.SpvSyncRequest', null, global);
 goog.exportSymbol('proto.walletrpc.SpvSyncResponse', null, global);
 goog.exportSymbol('proto.walletrpc.StakeInfoRequest', null, global);
@@ -1564,7 +1571,8 @@ proto.walletrpc.BlockDetails.toObject = function(includeInstance, msg) {
     timestamp: jspb.Message.getFieldWithDefault(msg, 3, 0),
     approvesParent: jspb.Message.getFieldWithDefault(msg, 5, false),
     transactionsList: jspb.Message.toObjectList(msg.getTransactionsList(),
-    proto.walletrpc.TransactionDetails.toObject, includeInstance)
+    proto.walletrpc.TransactionDetails.toObject, includeInstance),
+    prevBlock: msg.getPrevBlock_asB64()
   };
 
   if (includeInstance) {
@@ -1621,6 +1629,10 @@ proto.walletrpc.BlockDetails.deserializeBinaryFromReader = function(msg, reader)
       var value = new proto.walletrpc.TransactionDetails;
       reader.readMessage(value,proto.walletrpc.TransactionDetails.deserializeBinaryFromReader);
       msg.addTransactions(value);
+      break;
+    case 6:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setPrevBlock(value);
       break;
     default:
       reader.skipField();
@@ -1685,6 +1697,13 @@ proto.walletrpc.BlockDetails.serializeBinaryToWriter = function(message, writer)
       4,
       f,
       proto.walletrpc.TransactionDetails.serializeBinaryToWriter
+    );
+  }
+  f = message.getPrevBlock_asU8();
+  if (f.length > 0) {
+    writer.writeBytes(
+      6,
+      f
     );
   }
 };
@@ -1804,6 +1823,316 @@ proto.walletrpc.BlockDetails.prototype.addTransactions = function(opt_value, opt
 
 proto.walletrpc.BlockDetails.prototype.clearTransactionsList = function() {
   this.setTransactionsList([]);
+};
+
+
+/**
+ * optional bytes prev_block = 6;
+ * @return {!(string|Uint8Array)}
+ */
+proto.walletrpc.BlockDetails.prototype.getPrevBlock = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
+};
+
+
+/**
+ * optional bytes prev_block = 6;
+ * This is a type-conversion wrapper around `getPrevBlock()`
+ * @return {string}
+ */
+proto.walletrpc.BlockDetails.prototype.getPrevBlock_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getPrevBlock()));
+};
+
+
+/**
+ * optional bytes prev_block = 6;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getPrevBlock()`
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.BlockDetails.prototype.getPrevBlock_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getPrevBlock()));
+};
+
+
+/** @param {!(string|Uint8Array)} value */
+proto.walletrpc.BlockDetails.prototype.setPrevBlock = function(value) {
+  jspb.Message.setProto3BytesField(this, 6, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.walletrpc.DetachedBlockDetails = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.walletrpc.DetachedBlockDetails, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.walletrpc.DetachedBlockDetails.displayName = 'proto.walletrpc.DetachedBlockDetails';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.walletrpc.DetachedBlockDetails.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.DetachedBlockDetails.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.walletrpc.DetachedBlockDetails} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.DetachedBlockDetails.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    hash: msg.getHash_asB64(),
+    height: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    prevBlock: msg.getPrevBlock_asB64(),
+    timestamp: jspb.Message.getFieldWithDefault(msg, 4, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.walletrpc.DetachedBlockDetails}
+ */
+proto.walletrpc.DetachedBlockDetails.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.walletrpc.DetachedBlockDetails;
+  return proto.walletrpc.DetachedBlockDetails.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.walletrpc.DetachedBlockDetails} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.walletrpc.DetachedBlockDetails}
+ */
+proto.walletrpc.DetachedBlockDetails.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setHash(value);
+      break;
+    case 2:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setHeight(value);
+      break;
+    case 3:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setPrevBlock(value);
+      break;
+    case 4:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setTimestamp(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.DetachedBlockDetails.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.walletrpc.DetachedBlockDetails.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.walletrpc.DetachedBlockDetails} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.DetachedBlockDetails.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getHash_asU8();
+  if (f.length > 0) {
+    writer.writeBytes(
+      1,
+      f
+    );
+  }
+  f = message.getHeight();
+  if (f !== 0) {
+    writer.writeInt32(
+      2,
+      f
+    );
+  }
+  f = message.getPrevBlock_asU8();
+  if (f.length > 0) {
+    writer.writeBytes(
+      3,
+      f
+    );
+  }
+  f = message.getTimestamp();
+  if (f !== 0) {
+    writer.writeInt64(
+      4,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional bytes hash = 1;
+ * @return {!(string|Uint8Array)}
+ */
+proto.walletrpc.DetachedBlockDetails.prototype.getHash = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/**
+ * optional bytes hash = 1;
+ * This is a type-conversion wrapper around `getHash()`
+ * @return {string}
+ */
+proto.walletrpc.DetachedBlockDetails.prototype.getHash_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getHash()));
+};
+
+
+/**
+ * optional bytes hash = 1;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getHash()`
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.DetachedBlockDetails.prototype.getHash_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getHash()));
+};
+
+
+/** @param {!(string|Uint8Array)} value */
+proto.walletrpc.DetachedBlockDetails.prototype.setHash = function(value) {
+  jspb.Message.setProto3BytesField(this, 1, value);
+};
+
+
+/**
+ * optional int32 height = 2;
+ * @return {number}
+ */
+proto.walletrpc.DetachedBlockDetails.prototype.getHeight = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.DetachedBlockDetails.prototype.setHeight = function(value) {
+  jspb.Message.setProto3IntField(this, 2, value);
+};
+
+
+/**
+ * optional bytes prev_block = 3;
+ * @return {!(string|Uint8Array)}
+ */
+proto.walletrpc.DetachedBlockDetails.prototype.getPrevBlock = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/**
+ * optional bytes prev_block = 3;
+ * This is a type-conversion wrapper around `getPrevBlock()`
+ * @return {string}
+ */
+proto.walletrpc.DetachedBlockDetails.prototype.getPrevBlock_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getPrevBlock()));
+};
+
+
+/**
+ * optional bytes prev_block = 3;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getPrevBlock()`
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.DetachedBlockDetails.prototype.getPrevBlock_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getPrevBlock()));
+};
+
+
+/** @param {!(string|Uint8Array)} value */
+proto.walletrpc.DetachedBlockDetails.prototype.setPrevBlock = function(value) {
+  jspb.Message.setProto3BytesField(this, 3, value);
+};
+
+
+/**
+ * optional int64 timestamp = 4;
+ * @return {number}
+ */
+proto.walletrpc.DetachedBlockDetails.prototype.getTimestamp = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.DetachedBlockDetails.prototype.setTimestamp = function(value) {
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -18129,7 +18458,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<number>}
  * @const
  */
-proto.walletrpc.TransactionNotificationsResponse.repeatedFields_ = [1,2,3,4];
+proto.walletrpc.TransactionNotificationsResponse.repeatedFields_ = [1,2,3,4,5];
 
 
 
@@ -18165,7 +18494,9 @@ proto.walletrpc.TransactionNotificationsResponse.toObject = function(includeInst
     detachedBlocksList: msg.getDetachedBlocksList_asB64(),
     unminedTransactionsList: jspb.Message.toObjectList(msg.getUnminedTransactionsList(),
     proto.walletrpc.TransactionDetails.toObject, includeInstance),
-    unminedTransactionHashesList: msg.getUnminedTransactionHashesList_asB64()
+    unminedTransactionHashesList: msg.getUnminedTransactionHashesList_asB64(),
+    detachedBlockHeadersList: jspb.Message.toObjectList(msg.getDetachedBlockHeadersList(),
+    proto.walletrpc.DetachedBlockDetails.toObject, includeInstance)
   };
 
   if (includeInstance) {
@@ -18219,6 +18550,11 @@ proto.walletrpc.TransactionNotificationsResponse.deserializeBinaryFromReader = f
     case 4:
       var value = /** @type {!Uint8Array} */ (reader.readBytes());
       msg.addUnminedTransactionHashes(value);
+      break;
+    case 5:
+      var value = new proto.walletrpc.DetachedBlockDetails;
+      reader.readMessage(value,proto.walletrpc.DetachedBlockDetails.deserializeBinaryFromReader);
+      msg.addDetachedBlockHeaders(value);
       break;
     default:
       reader.skipField();
@@ -18277,6 +18613,14 @@ proto.walletrpc.TransactionNotificationsResponse.serializeBinaryToWriter = funct
     writer.writeRepeatedBytes(
       4,
       f
+    );
+  }
+  f = message.getDetachedBlockHeadersList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      5,
+      f,
+      proto.walletrpc.DetachedBlockDetails.serializeBinaryToWriter
     );
   }
 };
@@ -18447,6 +18791,37 @@ proto.walletrpc.TransactionNotificationsResponse.prototype.addUnminedTransaction
 
 proto.walletrpc.TransactionNotificationsResponse.prototype.clearUnminedTransactionHashesList = function() {
   this.setUnminedTransactionHashesList([]);
+};
+
+
+/**
+ * repeated DetachedBlockDetails detached_block_headers = 5;
+ * @return {!Array<!proto.walletrpc.DetachedBlockDetails>}
+ */
+proto.walletrpc.TransactionNotificationsResponse.prototype.getDetachedBlockHeadersList = function() {
+  return /** @type{!Array<!proto.walletrpc.DetachedBlockDetails>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.walletrpc.DetachedBlockDetails, 5));
+};
+
+
+/** @param {!Array<!proto.walletrpc.DetachedBlockDetails>} value */
+proto.walletrpc.TransactionNotificationsResponse.prototype.setDetachedBlockHeadersList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 5, value);
+};
+
+
+/**
+ * @param {!proto.walletrpc.DetachedBlockDetails=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.walletrpc.DetachedBlockDetails}
+ */
+proto.walletrpc.TransactionNotificationsResponse.prototype.addDetachedBlockHeaders = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 5, opt_value, proto.walletrpc.DetachedBlockDetails, opt_index);
+};
+
+
+proto.walletrpc.TransactionNotificationsResponse.prototype.clearDetachedBlockHeadersList = function() {
+  this.setDetachedBlockHeadersList([]);
 };
 
 
@@ -36593,6 +36968,1177 @@ proto.walletrpc.SweepAccountResponse.prototype.getEstimatedSignedSize = function
 /** @param {number} value */
 proto.walletrpc.SweepAccountResponse.prototype.setEstimatedSignedSize = function(value) {
   jspb.Message.setProto3IntField(this, 4, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.walletrpc.AbandonTransactionRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.walletrpc.AbandonTransactionRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.walletrpc.AbandonTransactionRequest.displayName = 'proto.walletrpc.AbandonTransactionRequest';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.walletrpc.AbandonTransactionRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.AbandonTransactionRequest.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.walletrpc.AbandonTransactionRequest} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.AbandonTransactionRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    transactionHash: msg.getTransactionHash_asB64()
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.walletrpc.AbandonTransactionRequest}
+ */
+proto.walletrpc.AbandonTransactionRequest.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.walletrpc.AbandonTransactionRequest;
+  return proto.walletrpc.AbandonTransactionRequest.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.walletrpc.AbandonTransactionRequest} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.walletrpc.AbandonTransactionRequest}
+ */
+proto.walletrpc.AbandonTransactionRequest.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setTransactionHash(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.AbandonTransactionRequest.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.walletrpc.AbandonTransactionRequest.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.walletrpc.AbandonTransactionRequest} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.AbandonTransactionRequest.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getTransactionHash_asU8();
+  if (f.length > 0) {
+    writer.writeBytes(
+      1,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional bytes transaction_hash = 1;
+ * @return {!(string|Uint8Array)}
+ */
+proto.walletrpc.AbandonTransactionRequest.prototype.getTransactionHash = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/**
+ * optional bytes transaction_hash = 1;
+ * This is a type-conversion wrapper around `getTransactionHash()`
+ * @return {string}
+ */
+proto.walletrpc.AbandonTransactionRequest.prototype.getTransactionHash_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getTransactionHash()));
+};
+
+
+/**
+ * optional bytes transaction_hash = 1;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getTransactionHash()`
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.AbandonTransactionRequest.prototype.getTransactionHash_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getTransactionHash()));
+};
+
+
+/** @param {!(string|Uint8Array)} value */
+proto.walletrpc.AbandonTransactionRequest.prototype.setTransactionHash = function(value) {
+  jspb.Message.setProto3BytesField(this, 1, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.walletrpc.AbandonTransactionResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.walletrpc.AbandonTransactionResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.walletrpc.AbandonTransactionResponse.displayName = 'proto.walletrpc.AbandonTransactionResponse';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.walletrpc.AbandonTransactionResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.AbandonTransactionResponse.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.walletrpc.AbandonTransactionResponse} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.AbandonTransactionResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.walletrpc.AbandonTransactionResponse}
+ */
+proto.walletrpc.AbandonTransactionResponse.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.walletrpc.AbandonTransactionResponse;
+  return proto.walletrpc.AbandonTransactionResponse.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.walletrpc.AbandonTransactionResponse} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.walletrpc.AbandonTransactionResponse}
+ */
+proto.walletrpc.AbandonTransactionResponse.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.AbandonTransactionResponse.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.walletrpc.AbandonTransactionResponse.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.walletrpc.AbandonTransactionResponse} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.AbandonTransactionResponse.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.walletrpc.SignHashesRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.walletrpc.SignHashesRequest.repeatedFields_, null);
+};
+goog.inherits(proto.walletrpc.SignHashesRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.walletrpc.SignHashesRequest.displayName = 'proto.walletrpc.SignHashesRequest';
+}
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.walletrpc.SignHashesRequest.repeatedFields_ = [3];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.walletrpc.SignHashesRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.SignHashesRequest.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.walletrpc.SignHashesRequest} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.SignHashesRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    passphrase: msg.getPassphrase_asB64(),
+    address: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    hashesList: msg.getHashesList_asB64()
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.walletrpc.SignHashesRequest}
+ */
+proto.walletrpc.SignHashesRequest.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.walletrpc.SignHashesRequest;
+  return proto.walletrpc.SignHashesRequest.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.walletrpc.SignHashesRequest} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.walletrpc.SignHashesRequest}
+ */
+proto.walletrpc.SignHashesRequest.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setPassphrase(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setAddress(value);
+      break;
+    case 3:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.addHashes(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.SignHashesRequest.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.walletrpc.SignHashesRequest.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.walletrpc.SignHashesRequest} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.SignHashesRequest.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getPassphrase_asU8();
+  if (f.length > 0) {
+    writer.writeBytes(
+      1,
+      f
+    );
+  }
+  f = message.getAddress();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+  f = message.getHashesList_asU8();
+  if (f.length > 0) {
+    writer.writeRepeatedBytes(
+      3,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional bytes passphrase = 1;
+ * @return {!(string|Uint8Array)}
+ */
+proto.walletrpc.SignHashesRequest.prototype.getPassphrase = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/**
+ * optional bytes passphrase = 1;
+ * This is a type-conversion wrapper around `getPassphrase()`
+ * @return {string}
+ */
+proto.walletrpc.SignHashesRequest.prototype.getPassphrase_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getPassphrase()));
+};
+
+
+/**
+ * optional bytes passphrase = 1;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getPassphrase()`
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.SignHashesRequest.prototype.getPassphrase_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getPassphrase()));
+};
+
+
+/** @param {!(string|Uint8Array)} value */
+proto.walletrpc.SignHashesRequest.prototype.setPassphrase = function(value) {
+  jspb.Message.setProto3BytesField(this, 1, value);
+};
+
+
+/**
+ * optional string address = 2;
+ * @return {string}
+ */
+proto.walletrpc.SignHashesRequest.prototype.getAddress = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.walletrpc.SignHashesRequest.prototype.setAddress = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * repeated bytes hashes = 3;
+ * @return {!(Array<!Uint8Array>|Array<string>)}
+ */
+proto.walletrpc.SignHashesRequest.prototype.getHashesList = function() {
+  return /** @type {!(Array<!Uint8Array>|Array<string>)} */ (jspb.Message.getRepeatedField(this, 3));
+};
+
+
+/**
+ * repeated bytes hashes = 3;
+ * This is a type-conversion wrapper around `getHashesList()`
+ * @return {!Array<string>}
+ */
+proto.walletrpc.SignHashesRequest.prototype.getHashesList_asB64 = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.bytesListAsB64(
+      this.getHashesList()));
+};
+
+
+/**
+ * repeated bytes hashes = 3;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getHashesList()`
+ * @return {!Array<!Uint8Array>}
+ */
+proto.walletrpc.SignHashesRequest.prototype.getHashesList_asU8 = function() {
+  return /** @type {!Array<!Uint8Array>} */ (jspb.Message.bytesListAsU8(
+      this.getHashesList()));
+};
+
+
+/** @param {!(Array<!Uint8Array>|Array<string>)} value */
+proto.walletrpc.SignHashesRequest.prototype.setHashesList = function(value) {
+  jspb.Message.setField(this, 3, value || []);
+};
+
+
+/**
+ * @param {!(string|Uint8Array)} value
+ * @param {number=} opt_index
+ */
+proto.walletrpc.SignHashesRequest.prototype.addHashes = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 3, value, opt_index);
+};
+
+
+proto.walletrpc.SignHashesRequest.prototype.clearHashesList = function() {
+  this.setHashesList([]);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.walletrpc.SignHashesResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.walletrpc.SignHashesResponse.repeatedFields_, null);
+};
+goog.inherits(proto.walletrpc.SignHashesResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.walletrpc.SignHashesResponse.displayName = 'proto.walletrpc.SignHashesResponse';
+}
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.walletrpc.SignHashesResponse.repeatedFields_ = [2];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.walletrpc.SignHashesResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.SignHashesResponse.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.walletrpc.SignHashesResponse} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.SignHashesResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    publicKey: msg.getPublicKey_asB64(),
+    signaturesList: msg.getSignaturesList_asB64()
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.walletrpc.SignHashesResponse}
+ */
+proto.walletrpc.SignHashesResponse.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.walletrpc.SignHashesResponse;
+  return proto.walletrpc.SignHashesResponse.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.walletrpc.SignHashesResponse} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.walletrpc.SignHashesResponse}
+ */
+proto.walletrpc.SignHashesResponse.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setPublicKey(value);
+      break;
+    case 2:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.addSignatures(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.SignHashesResponse.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.walletrpc.SignHashesResponse.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.walletrpc.SignHashesResponse} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.SignHashesResponse.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getPublicKey_asU8();
+  if (f.length > 0) {
+    writer.writeBytes(
+      1,
+      f
+    );
+  }
+  f = message.getSignaturesList_asU8();
+  if (f.length > 0) {
+    writer.writeRepeatedBytes(
+      2,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional bytes public_key = 1;
+ * @return {!(string|Uint8Array)}
+ */
+proto.walletrpc.SignHashesResponse.prototype.getPublicKey = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/**
+ * optional bytes public_key = 1;
+ * This is a type-conversion wrapper around `getPublicKey()`
+ * @return {string}
+ */
+proto.walletrpc.SignHashesResponse.prototype.getPublicKey_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getPublicKey()));
+};
+
+
+/**
+ * optional bytes public_key = 1;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getPublicKey()`
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.SignHashesResponse.prototype.getPublicKey_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getPublicKey()));
+};
+
+
+/** @param {!(string|Uint8Array)} value */
+proto.walletrpc.SignHashesResponse.prototype.setPublicKey = function(value) {
+  jspb.Message.setProto3BytesField(this, 1, value);
+};
+
+
+/**
+ * repeated bytes signatures = 2;
+ * @return {!(Array<!Uint8Array>|Array<string>)}
+ */
+proto.walletrpc.SignHashesResponse.prototype.getSignaturesList = function() {
+  return /** @type {!(Array<!Uint8Array>|Array<string>)} */ (jspb.Message.getRepeatedField(this, 2));
+};
+
+
+/**
+ * repeated bytes signatures = 2;
+ * This is a type-conversion wrapper around `getSignaturesList()`
+ * @return {!Array<string>}
+ */
+proto.walletrpc.SignHashesResponse.prototype.getSignaturesList_asB64 = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.bytesListAsB64(
+      this.getSignaturesList()));
+};
+
+
+/**
+ * repeated bytes signatures = 2;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getSignaturesList()`
+ * @return {!Array<!Uint8Array>}
+ */
+proto.walletrpc.SignHashesResponse.prototype.getSignaturesList_asU8 = function() {
+  return /** @type {!Array<!Uint8Array>} */ (jspb.Message.bytesListAsU8(
+      this.getSignaturesList()));
+};
+
+
+/** @param {!(Array<!Uint8Array>|Array<string>)} value */
+proto.walletrpc.SignHashesResponse.prototype.setSignaturesList = function(value) {
+  jspb.Message.setField(this, 2, value || []);
+};
+
+
+/**
+ * @param {!(string|Uint8Array)} value
+ * @param {number=} opt_index
+ */
+proto.walletrpc.SignHashesResponse.prototype.addSignatures = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 2, value, opt_index);
+};
+
+
+proto.walletrpc.SignHashesResponse.prototype.clearSignaturesList = function() {
+  this.setSignaturesList([]);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.walletrpc.SpenderRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.walletrpc.SpenderRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.walletrpc.SpenderRequest.displayName = 'proto.walletrpc.SpenderRequest';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.walletrpc.SpenderRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.SpenderRequest.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.walletrpc.SpenderRequest} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.SpenderRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    transactionHash: msg.getTransactionHash_asB64(),
+    index: jspb.Message.getFieldWithDefault(msg, 2, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.walletrpc.SpenderRequest}
+ */
+proto.walletrpc.SpenderRequest.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.walletrpc.SpenderRequest;
+  return proto.walletrpc.SpenderRequest.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.walletrpc.SpenderRequest} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.walletrpc.SpenderRequest}
+ */
+proto.walletrpc.SpenderRequest.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setTransactionHash(value);
+      break;
+    case 2:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setIndex(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.SpenderRequest.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.walletrpc.SpenderRequest.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.walletrpc.SpenderRequest} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.SpenderRequest.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getTransactionHash_asU8();
+  if (f.length > 0) {
+    writer.writeBytes(
+      1,
+      f
+    );
+  }
+  f = message.getIndex();
+  if (f !== 0) {
+    writer.writeUint32(
+      2,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional bytes transaction_hash = 1;
+ * @return {!(string|Uint8Array)}
+ */
+proto.walletrpc.SpenderRequest.prototype.getTransactionHash = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/**
+ * optional bytes transaction_hash = 1;
+ * This is a type-conversion wrapper around `getTransactionHash()`
+ * @return {string}
+ */
+proto.walletrpc.SpenderRequest.prototype.getTransactionHash_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getTransactionHash()));
+};
+
+
+/**
+ * optional bytes transaction_hash = 1;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getTransactionHash()`
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.SpenderRequest.prototype.getTransactionHash_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getTransactionHash()));
+};
+
+
+/** @param {!(string|Uint8Array)} value */
+proto.walletrpc.SpenderRequest.prototype.setTransactionHash = function(value) {
+  jspb.Message.setProto3BytesField(this, 1, value);
+};
+
+
+/**
+ * optional uint32 index = 2;
+ * @return {number}
+ */
+proto.walletrpc.SpenderRequest.prototype.getIndex = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.SpenderRequest.prototype.setIndex = function(value) {
+  jspb.Message.setProto3IntField(this, 2, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.walletrpc.SpenderResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.walletrpc.SpenderResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.walletrpc.SpenderResponse.displayName = 'proto.walletrpc.SpenderResponse';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.walletrpc.SpenderResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.SpenderResponse.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.walletrpc.SpenderResponse} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.SpenderResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    spenderTransaction: msg.getSpenderTransaction_asB64(),
+    inputIndex: jspb.Message.getFieldWithDefault(msg, 2, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.walletrpc.SpenderResponse}
+ */
+proto.walletrpc.SpenderResponse.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.walletrpc.SpenderResponse;
+  return proto.walletrpc.SpenderResponse.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.walletrpc.SpenderResponse} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.walletrpc.SpenderResponse}
+ */
+proto.walletrpc.SpenderResponse.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setSpenderTransaction(value);
+      break;
+    case 2:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setInputIndex(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.SpenderResponse.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.walletrpc.SpenderResponse.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.walletrpc.SpenderResponse} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.SpenderResponse.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getSpenderTransaction_asU8();
+  if (f.length > 0) {
+    writer.writeBytes(
+      1,
+      f
+    );
+  }
+  f = message.getInputIndex();
+  if (f !== 0) {
+    writer.writeUint32(
+      2,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional bytes spender_transaction = 1;
+ * @return {!(string|Uint8Array)}
+ */
+proto.walletrpc.SpenderResponse.prototype.getSpenderTransaction = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/**
+ * optional bytes spender_transaction = 1;
+ * This is a type-conversion wrapper around `getSpenderTransaction()`
+ * @return {string}
+ */
+proto.walletrpc.SpenderResponse.prototype.getSpenderTransaction_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getSpenderTransaction()));
+};
+
+
+/**
+ * optional bytes spender_transaction = 1;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getSpenderTransaction()`
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.SpenderResponse.prototype.getSpenderTransaction_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getSpenderTransaction()));
+};
+
+
+/** @param {!(string|Uint8Array)} value */
+proto.walletrpc.SpenderResponse.prototype.setSpenderTransaction = function(value) {
+  jspb.Message.setProto3BytesField(this, 1, value);
+};
+
+
+/**
+ * optional uint32 input_index = 2;
+ * @return {number}
+ */
+proto.walletrpc.SpenderResponse.prototype.getInputIndex = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.SpenderResponse.prototype.setInputIndex = function(value) {
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
