@@ -13,7 +13,7 @@ const mapStateToProps = selectorMap({
 const mapDispatchToProps = dispatch => bindActionCreators({
   goBackHistory: ca.goBackHistory,
   publishUnminedTransactions: cla.publishUnminedTransactionsAttempt,
-  abandonTransaction: cla.abandonTransactionAttempt
+  abandonTransaction: ca.abandonTransactionAttempt
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

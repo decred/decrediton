@@ -198,7 +198,7 @@ const TxDetails = ({
       {!isConfirmed &&
       <div>
         <div className="rebroadcast-button-container"><KeyBlueButton className="rebroadcast-button" onClick={publishUnminedTransactions}><T id="txDetails.rebroadcastTransactions" m="Rebroadcast Transaction" /></KeyBlueButton></div>
-        <div className="rebroadcast-button-container"><KeyBlueButton className="rebroadcast-button" onClick={abandonTransaction(txHash)}><T id="txDetails.abandontTransaction" m="Abandon Transaction" /></KeyBlueButton></div>
+        <div className="rebroadcast-button-container"><KeyBlueButton className="rebroadcast-button" onClick={() => abandonTransaction(txHash)}><T id="txDetails.abandontTransaction" m="Abandon Transaction" /></KeyBlueButton></div>
       </div> }
       <div className="txdetails-io">
         <div className="txdetails-title"><T id="txDetails.io.title" m="I/O Details" /></div>

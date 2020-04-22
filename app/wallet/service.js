@@ -249,12 +249,6 @@ export const publishUnminedTransactions = log((walletService) => new Promise((re
   walletService.publishUnminedTransactions(req, (err) => err ? reject(err) : resolve());
 }), "Publish Unmined Transactions");
 
-export const abandonTransaction = log((walletService, txid) => new Promise((resolve, reject) => {
-  const req = new api.AbandonTransactionRequest();
-  req.setTransactionHash(txid);
-  walletService.abandonTransaction(req, (err) => err ? reject(err) : resolve());
-}), "Abandon Transaction");
-
 export const committedTickets = withLogNoData((walletService, ticketHashes) => new Promise((resolve, reject) => {
   const req = new CommittedTicketsRequest();
   req.setTicketsList(ticketHashes);

@@ -83,3 +83,9 @@ export const setAgendaVote = log((votingService, agendaId, choiceId) =>
     request.addChoices(choice);
     votingService.setVoteChoices(request, (err, res) => err ? fail(err) : ok(res));
   }), "Set Agenda Vote");
+
+export const abandonTransaction = log((walletService, txid) => new Promise((resolve, reject) => {
+  const req = new api.AbandonTransactionRequest();
+  req.setTransactionHash(txid);
+  walletService.abandonTransaction(req, (err) => err ? reject(err) : resolve());
+}), "Abandon Transaction");
