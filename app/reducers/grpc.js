@@ -26,7 +26,8 @@ import {
   STARTWALLETSERVICE_FAILED, STARTWALLETSERVICE_SUCCESS, GETTREASURY_BALANCE_SUCCESS, RESET_TREASURY_BALANCE,
   FETCHMISSINGSTAKETXDATA_ATTEMPT, FETCHMISSINGSTAKETXDATA_SUCCESS, FETCHMISSINGSTAKETXDATA_FAILED,
   GETSTARTUPTRANSACTIONS_SUCCESS,
-  GETALLAGENDAS_SUCCESS, GETALLAGENDAS_FAILED
+  GETALLAGENDAS_SUCCESS, GETALLAGENDAS_FAILED,
+  ABANDONTRANSACTION_ATTEMPT, ABANDONTRANSACTION_SUCCESS, ABANDONTRANSACTION_FAILED
 } from "../actions/ClientActions";
 import { DAEMONSYNCED, WALLETREADY } from "../actions/DaemonActions";
 import { NEWBLOCKCONNECTED } from "../actions/NotificationActions";
@@ -365,6 +366,18 @@ export default function grpc(state = {}, action) {
       lastTransaction: action.lastTransaction,
       getTransactionsRequestError: "",
       getTransactionsRequestAttempt: false
+    };
+  case ABANDONTRANSACTION_ATTEMPT:
+    return { ...state,
+      abandonTransactionRequestAttempt: true
+    };
+  case ABANDONTRANSACTION_FAILED:
+    return { ...state,
+      abandonTransactionRequestAttempt: false
+    };
+  case ABANDONTRANSACTION_SUCCESS:
+    return { ...state,
+      abandonTransactionRequestAttempt: false
     };
   case NEW_TRANSACTIONS_RECEIVED:
     return {
