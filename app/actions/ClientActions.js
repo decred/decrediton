@@ -1361,6 +1361,9 @@ export const ABANDONTRANSACTION_FAILED  = "ABANDONTRANSACTION_FAILED";
 export const abandonTransactionAttempt = txid => (dispatch, getState) => {
   dispatch({ type: ABANDONTRANSACTION_ATTEMPT });
   wallet.abandonTransaction(sel.walletService(getState()), txid)
-    .then(() => dispatch({ type: ABANDONTRANSACTION_SUCCESS }))
+    .then(() => {
+      dispatch({ type: ABANDONTRANSACTION_SUCCESS });
+      dispatch(goBack());
+    })
     .catch(error => dispatch({ error, type: ABANDONTRANSACTION_FAILED }));
 };
