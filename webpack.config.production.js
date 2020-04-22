@@ -26,27 +26,45 @@ const config = merge(baseConfig, {
   module: {
     rules: [
       {
-        test: /\.less$/,
+        test: /\.css$/,
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              importLoaders: 1,
+              modules: true,
+              localIdentName: "[hash:base64]"
+            }
+          }
+        ],
+        include: /\.module\.css$/
+      },
+      {
+        test: [ /\.css$/, /\.less$/ ],
         use: [ {
           loader: MiniCssExtractPlugin.loader
         }, {
           loader: "css-loader",
           options: {
-            sourceMap: true,
             modules: true,
             importLoaders: 1,
             localIdentName: "[local]"
           }
-        }, {
-          loader: "less-loader",
-          options: {
-            sourceMap: true,
-            noIeCompat: true,
-            strictMath: true
-          }
-        } ]
+        } ],
+        exclude: /\.module\.css$/
       },
-
+      {
+        test: /\.less$/,
+        use: [
+          {
+            loader: "less-loader",
+            options: {
+              noIeCompat: true,
+              strictMath: true
+            }
+          } ]
+      },
       {
         test: [ /\.woff(\?v=\d+\.\d+\.\d+)?$/, /\.woff2(\?v=\d+\.\d+\.\d+)?$/ ],
         use: [ {

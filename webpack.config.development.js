@@ -35,7 +35,7 @@ export default merge(baseConfig, {
             options: {
               importLoaders: 1,
               modules: true,
-              localIdentName: "[local]__[hash:base64:5]" // TODO: config prod and use [hash:base64]
+              localIdentName: "[local]__[hash:base64:5]"
             }
           }
         ],
