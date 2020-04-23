@@ -5,12 +5,12 @@ import { fetchMachine } from "stateMachines/FetchStateMachine";
 import { useMachine } from "@xstate/react";
 import { StakeyBounceXs } from "indicators";
 import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { ProposalError } from "./helpers";
 import * as gov from "actions/GovernanceActions";
 import styles from "./ProposalDetails.module.css";
 
-const VoteOption = ({ value, description, onClick, checked }) => (
+const VoteOption = React.memo(({ value, description, onClick, checked }) => (
   <div className={styles.voteOption}>
     <input className={styles[value]} type="radio" id={value} name="proposalVoteChoice"
       readOnly={!onClick} onChange={onClick}
@@ -19,7 +19,7 @@ const VoteOption = ({ value, description, onClick, checked }) => (
     />
     <label className={classNames(styles.radioLabel, styles[value])} htmlFor={value}/>{description}
   </div>
-);
+));
 
 function UpdateVoteChoiceModalButton({ onSubmit, newVoteChoice, eligibleTicketCount }) {
   return (
@@ -80,8 +80,8 @@ function ChooseVoteOption({
   });
 
   const error = state && state.context && getError(state.context.error);
-  // TODO: use memo here! currently this is being recaclulated on each new render!
-  const ChooseOptions = () => (
+
+  const ChooseOptions = useCallback(() => (
     <>
       <div className={styles.votingPreference}>
         <div className={styles.preferenceTitle}><T id="proposalDetails.votingInfo.votingPreferenceTitle" m="My Voting Preference" /></div>
@@ -102,7 +102,7 @@ function ChooseVoteOption({
         }} />
       }
     </>
-  );
+  ), [ currentVoteChoice, eligibleTicketCount, send, newVoteChoice, voteOptions, votingComplete ]);
 
   switch (state.value) {
   case "idle":
