@@ -10,10 +10,16 @@ import { ProposalError } from "./helpers";
 import * as gov from "actions/GovernanceActions";
 import styles from "./ProposalDetails.module.css";
 
-const VoteOption = React.memo(({ value, description, onClick, checked }) => (
+const VoteOption = React.memo(({ value, description, onClick, checked, votingComplete }) => (
   <div className={styles.voteOption}>
-    <input className={styles[value]} type="radio" id={value} name="proposalVoteChoice"
-      readOnly={!onClick} onChange={onClick}
+    <input
+      className={styles[value]}
+      type="radio"
+      id={value}
+      name="proposalVoteChoice"
+      readOnly={!onClick}
+      onChange={onClick}
+      disabled={votingComplete}
       value={value}
       checked ={checked}
     />
@@ -81,14 +87,16 @@ function ChooseVoteOption({
 
   const error = state && state.context && getError(state.context.error);
 
-  const ChooseOptions = useCallback(() => (
-    <>
+  const ChooseOptions = useCallback(() => {
+    console.log(votingComplete);
+    return (<>
       <div className={styles.votingPreference}>
         <div className={styles.preferenceTitle}><T id="proposalDetails.votingInfo.votingPreferenceTitle" m="My Voting Preference" /></div>
         <div>
           { voteOptions.map(o => {
             return <VoteOption
               value={o.id}  key={o.id}
+              votingComplete={votingComplete}
               description={o.id.charAt(0).toUpperCase()+o.id.slice(1)}
               onClick={ () => currentVoteChoice === "abstain" && setVoteOption(o.id) }
               checked={ newVoteChoice ? newVoteChoice === o.id : currentVoteChoice !== "abstain" ? currentVoteChoice.id === o.id : null }
@@ -102,7 +110,8 @@ function ChooseVoteOption({
         }} />
       }
     </>
-  ), [ currentVoteChoice, eligibleTicketCount, send, newVoteChoice, voteOptions, votingComplete ]);
+    );
+  }, [ currentVoteChoice, eligibleTicketCount, send, newVoteChoice, voteOptions, votingComplete ]);
 
   switch (state.value) {
   case "idle":

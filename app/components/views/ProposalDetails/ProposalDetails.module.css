@@ -286,7 +286,6 @@
   background: var(--disabled-background-color-lighter);
 }
 
-
 .voteConfirmation {
   background-color: var(--background-container);
   font-size: 27px;
@@ -316,7 +315,6 @@
   margin-top: 13px;
   margin-right: 5px;
 }
-
 
 .walletEligibleTickets {
   width: 100%;
