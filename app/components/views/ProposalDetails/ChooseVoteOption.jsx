@@ -87,9 +87,8 @@ function ChooseVoteOption({
 
   const error = state && state.context && getError(state.context.error);
 
-  const ChooseOptions = useCallback(() => {
-    console.log(votingComplete);
-    return (<>
+  const ChooseOptions = useCallback(() =>(
+    <>
       <div className={styles.votingPreference}>
         <div className={styles.preferenceTitle}><T id="proposalDetails.votingInfo.votingPreferenceTitle" m="My Voting Preference" /></div>
         <div>
@@ -110,8 +109,7 @@ function ChooseVoteOption({
         }} />
       }
     </>
-    );
-  }, [ currentVoteChoice, eligibleTicketCount, send, newVoteChoice, voteOptions, votingComplete ]);
+  ), [ currentVoteChoice, eligibleTicketCount, send, newVoteChoice, voteOptions, votingComplete ]);
 
   switch (state.value) {
   case "idle":
