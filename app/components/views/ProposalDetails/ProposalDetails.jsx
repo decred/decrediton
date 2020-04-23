@@ -1,52 +1,30 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { FormattedMessage as T } from "react-intl";
 import { InvisibleButton } from "buttons";
 import { PoliteiaLink, VerticalAccordion } from "shared";
 import {
-  ProposalNotVoting, NoTicketsVotingInfo, OverviewField, OverviewVotingProgressInfo,
-  NoElligibleTicketsVotingInfo, TimeValue, ProposalText, ProposalAbandoned
+  OverviewField, OverviewVotingProgressInfo,
+  TimeValue, ProposalText
 } from "./helpers";
-import ChooseVoteOption from "./ChooseVoteOption.jsx";
 import {
-  VOTESTATUS_ACTIVEVOTE, VOTESTATUS_FINISHEDVOTE, PROPOSALSTATUS_ABANDONED
+  VOTESTATUS_ACTIVEVOTE, VOTESTATUS_FINISHEDVOTE
 } from "actions/GovernanceActions";
 import { useProposalDetails } from "./hooks";
 import styles from "./ProposalDetails.module.css";
+import VoteInfo from "./VoteInfo";
 import { classNames } from "pi-ui";
 
 function ProposalDetails ({
-  viewedProposalDetails, showPurchaseTicketsPage, setVoteOption,
-  newVoteChoice, text, goBackHistory, eligibleTicketCount
-}) {
-  const {
+  viewedProposalDetails,
+  viewedProposalDetails: {
     creator, timestamp, endTimestamp, currentVoteChoice, hasEligibleTickets,
     name, token, voteStatus, proposalStatus, voteOptions, voteCounts,
     version, quorumMinimumVotes, walletEligibleTickets
-  } = viewedProposalDetails;
+  }, showPurchaseTicketsPage, setVoteOption,
+  newVoteChoice, text, goBackHistory, eligibleTicketCount
+}) {
   const [ showWalletEligibleTickets, toggleWalletEligibleTickets ] = useState(false);
   const { tsDate, hasTickets } = useProposalDetails();
-
-  const voteInfo = useMemo(() => {
-    if (proposalStatus === PROPOSALSTATUS_ABANDONED) {
-      return <ProposalAbandoned />;
-    }
-    if (voteStatus === VOTESTATUS_FINISHEDVOTE) {
-      return <ChooseVoteOption {...{ voteOptions, currentVoteChoice, votingComplete: true }} />;
-    }
-    if (voteStatus === VOTESTATUS_ACTIVEVOTE) {
-      if (!hasTickets) {
-        return <NoTicketsVotingInfo {...{ showPurchaseTicketsPage }} />;
-      }
-      if (!hasEligibleTickets) {
-        return <NoElligibleTicketsVotingInfo {...{ showPurchaseTicketsPage }} />;
-      }
-      return <ChooseVoteOption {...{
-        viewedProposalDetails, voteOptions, setVoteOption, newVoteChoice,
-        eligibleTicketCount, currentVoteChoice, votingComplete: false
-      }} />;
-    }
-    return <ProposalNotVoting />;
-  }, [ proposalStatus, voteStatus, hasTickets, hasEligibleTickets, currentVoteChoice, viewedProposalDetails, eligibleTicketCount, newVoteChoice, setVoteOption, showPurchaseTicketsPage, voteOptions ]);
 
   return (
     <div className={styles.proposalDetails}>
@@ -75,7 +53,19 @@ function ProposalDetails ({
           </div>
           <div className={styles.overviewVoting}>
             <InvisibleButton className={styles.backIconButton} onClick={goBackHistory} />
-            {voteInfo}
+            <VoteInfo
+              proposalStatus={proposalStatus}
+              voteStatus={voteStatus}
+              hasTickets={hasTickets}
+              hasEligibleTickets={hasEligibleTickets}
+              currentVoteChoice={currentVoteChoice}
+              viewedProposalDetails={viewedProposalDetails}
+              eligibleTicketCount={eligibleTicketCount}
+              newVoteChoice={newVoteChoice}
+              setVoteOption={setVoteOption}
+              showPurchaseTicketsPage={showPurchaseTicketsPage}
+              voteOptions={voteOptions}
+            />
           </div>
         </div>
         { (voteStatus === VOTESTATUS_ACTIVEVOTE || voteStatus === VOTESTATUS_FINISHEDVOTE ) &&
