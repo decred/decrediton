@@ -1,6 +1,3 @@
-import { classNames } from "pi-ui";
-import { FormattedMessage as T } from "react-intl";
-import { PassphraseModalButton } from "buttons";
 import { fetchMachine } from "stateMachines/FetchStateMachine";
 import { useMachine } from "@xstate/react";
 import { StakeyBounceXs } from "indicators";
@@ -9,50 +6,8 @@ import { useState, useCallback } from "react";
 import { ProposalError } from "./helpers";
 import * as gov from "actions/GovernanceActions";
 import styles from "./ProposalDetails.module.css";
-
-const VoteOption = React.memo(({ value, description, onClick, checked, votingComplete }) => (
-  <div className={styles.voteOption}>
-    <input
-      className={styles[value]}
-      type="radio"
-      id={value}
-      name="proposalVoteChoice"
-      readOnly={!onClick}
-      onChange={onClick}
-      disabled={votingComplete}
-      value={value}
-      checked ={checked}
-    />
-    <label className={classNames(styles.radioLabel, styles[value])} htmlFor={value}/>{description}
-  </div>
-));
-
-function UpdateVoteChoiceModalButton({ onSubmit, newVoteChoice, eligibleTicketCount }) {
-  return (
-    <PassphraseModalButton
-      modalTitle={
-        <>
-          <T id="proposals.updateVoteChoiceModal.title" m="Confirm Your Vote" />
-          <div className={styles.voteConfirmation}>
-            <div className={styles[`${newVoteChoice}Proposal`]}/>
-            {newVoteChoice}
-          </div>
-        </>
-      }
-      modalDescription={
-        <T
-          id="proposalDetails.votingInfo.eligibleCount"
-          m="You have {count, plural, one {one ticket} other {# tickets}} eligible for voting"
-          values={{ count: eligibleTicketCount }}
-        />
-      }
-      disabled={!newVoteChoice}
-      onSubmit={onSubmit}
-      className={styles.castVoteButton}
-      buttonLabel={<T id="proposals.updateVoteChoiceModal.btnLabel" m="Cast Vote" />}
-    />
-  );
-}
+import ChooseOptions from "./ChooseOptions";
+import { FormattedMessage as T } from "react-intl";
 
 const getError = (error) => {
   if (!error) return;
@@ -87,35 +42,16 @@ function ChooseVoteOption({
 
   const error = state && state.context && getError(state.context.error);
 
-  const ChooseOptions = useCallback(() =>(
-    <>
-      <div className={styles.votingPreference}>
-        <div className={styles.preferenceTitle}><T id="proposalDetails.votingInfo.votingPreferenceTitle" m="My Voting Preference" /></div>
-        <div>
-          { voteOptions.map(o => {
-            return <VoteOption
-              value={o.id}  key={o.id}
-              votingComplete={votingComplete}
-              description={o.id.charAt(0).toUpperCase()+o.id.slice(1)}
-              onClick={ () => currentVoteChoice === "abstain" && setVoteOption(o.id) }
-              checked={ newVoteChoice ? newVoteChoice === o.id : currentVoteChoice !== "abstain" ? currentVoteChoice.id === o.id : null }
-            />;
-          })}
-        </div>
-      </div>
-      { !votingComplete &&
-        <UpdateVoteChoiceModalButton {...{
-          newVoteChoice, onSubmit: (privatePassphrase) => send({ type: "FETCH", privatePassphrase }), eligibleTicketCount
-        }} />
-      }
-    </>
-  ), [ currentVoteChoice, eligibleTicketCount, send, newVoteChoice, voteOptions, votingComplete ]);
+  const voteSubmitHandler = useCallback(
+    (privatePassphrase) => send({ type: "FETCH", privatePassphrase }),
+    [ send ],
+  );
 
   switch (state.value) {
   case "idle":
     return <ChooseOptions {...{
       setVoteOption, newVoteChoice, eligibleTicketCount, currentVoteChoice,
-      voteOptions, votingComplete
+      voteOptions, votingComplete, onVoteSubmit: voteSubmitHandler
     }} />;
   case "loading":
     return (
@@ -127,7 +63,7 @@ function ChooseVoteOption({
   case "success":
     return <ChooseOptions {...{
       setVoteOption, newVoteChoice, eligibleTicketCount, currentVoteChoice,
-      voteOptions, votingComplete
+      voteOptions, votingComplete, onVoteSubmit: voteSubmitHandler
     }} />;
   case "failure":
     return <ProposalError {...{ error }} />;
