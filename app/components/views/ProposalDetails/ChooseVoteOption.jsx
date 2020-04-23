@@ -63,7 +63,7 @@ function ChooseVoteOption({
   case "success":
     return <ChooseOptions {...{
       setVoteOption, newVoteChoice, eligibleTicketCount, currentVoteChoice,
-      voteOptions, votingComplete, onVoteSubmit: voteSubmitHandler
+      voteOptions, votingComplete, onVoteSubmit: voteSubmitHandler, votedSuccessfully: true
     }} />;
   case "failure":
     return <ProposalError {...{ error }} />;

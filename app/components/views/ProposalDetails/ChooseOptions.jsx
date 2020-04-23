@@ -4,7 +4,7 @@ import { classNames } from "pi-ui";
 import styles from "./ProposalDetails.module.css";
 import { PassphraseModalButton } from "buttons";
 
-const ChooseOptions = React.memo(({ currentVoteChoice, eligibleTicketCount, newVoteChoice, voteOptions, votingComplete, onVoteSubmit, setVoteOption }) => (
+const ChooseOptions = React.memo(({ currentVoteChoice, eligibleTicketCount, newVoteChoice, voteOptions, votingComplete, onVoteSubmit, setVoteOption, votedSuccessfully }) => (
   <>
     <div className={styles.votingPreference}>
       <div className={styles.preferenceTitle}>
@@ -25,7 +25,7 @@ const ChooseOptions = React.memo(({ currentVoteChoice, eligibleTicketCount, newV
     </div>
     { !votingComplete &&
       <UpdateVoteChoiceModalButton {...{
-        newVoteChoice, onSubmit: onVoteSubmit , eligibleTicketCount
+        newVoteChoice, onSubmit: onVoteSubmit , eligibleTicketCount, votedSuccessfully
       }} />
     }
   </>
@@ -50,7 +50,9 @@ const VoteOption = React.memo(({ value, description, onClick, checked, votingCom
   </div>
 ));
 
-function UpdateVoteChoiceModalButton({ onSubmit, newVoteChoice, eligibleTicketCount }) {
+function UpdateVoteChoiceModalButton({ onSubmit, newVoteChoice, eligibleTicketCount, votedSuccessfully }) {
+  console.log(votedSuccessfully);
+  console.log(newVoteChoice);
   return (
     <PassphraseModalButton
       modalTitle={
@@ -69,7 +71,7 @@ function UpdateVoteChoiceModalButton({ onSubmit, newVoteChoice, eligibleTicketCo
           values={{ count: eligibleTicketCount }}
         />
       }
-      disabled={!newVoteChoice}
+      disabled={!newVoteChoice || votedSuccessfully}
       onSubmit={onSubmit}
       className={styles.castVoteButton}
       buttonLabel={<T id="proposals.updateVoteChoiceModal.btnLabel" m="Cast Vote" />}
