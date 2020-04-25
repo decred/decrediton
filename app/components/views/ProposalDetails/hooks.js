@@ -18,8 +18,11 @@ export const useProposalDetailsPage = () => {
   const { token } = useParams();
   const proposalsDetails = useSelector(sel.proposalsDetails);
   const getProposalError =  useSelector(sel.getProposalError);
-  const getProposalDetails = (token) => dispatch(gov.getProposalDetails(token));
+
+  const showPurchaseTicketsPage = useCallback(() => dispatch(cli.showPurchaseTicketsPage()), [ dispatch ]);
+  const getProposalDetails = useCallback((token) => dispatch(gov.getProposalDetails(token)), [ dispatch ]);
   const goBackHistory = useCallback(() => dispatch(cli.goBackHistory()), [ dispatch ]);
+
   const [ { value: votingStatus }, send ] = useMachine(fetchMachine, {
     actions: {
       initial: () => {
@@ -32,5 +35,5 @@ export const useProposalDetailsPage = () => {
     }
   });
 
-  return { votingStatus, getProposalError, proposalsDetails, token, dispatch, goBackHistory };
+  return { votingStatus, getProposalError, proposalsDetails, token, dispatch, goBackHistory, showPurchaseTicketsPage };
 };

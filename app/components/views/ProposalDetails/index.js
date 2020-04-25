@@ -7,17 +7,20 @@ import { FormattedMessage as T } from "react-intl";
 import styles from "./ProposalDetails.module.css";
 import { useProposalDetailsPage } from "./hooks";
 
-const Header = React.memo(({ eligibleTicketCount }) => <StandaloneHeader
-  title={<T id="proposal.details.title" m="Governance" />}
-  description={<T id="proposal.details.description"
-    m={"Your voting power: {votingPower}"}
-    values={{ votingPower: eligibleTicketCount }}
-  />}
-  iconClassName="governance"
-/>);
+const Header = React.memo(function Header({ eligibleTicketCount }) {
+  return (<StandaloneHeader
+    title={<T id="proposal.details.title" m="Governance" />}
+    description={<T id="proposal.details.description"
+      m={"Your voting power: {votingPower}"}
+      values={{ votingPower: eligibleTicketCount }}
+    />}
+    iconClassName="governance"
+  />);
+});
 
 function ProposalDetailsPage() {
   const { votingStatus, getProposalError, proposalsDetails, token, goBackHistory, showPurchaseTicketsPage } = useProposalDetailsPage();
+
   const viewedProposalDetails = proposalsDetails[token];
   const eligibleTicketCount = viewedProposalDetails && viewedProposalDetails.walletEligibleTickets ?
     proposalsDetails[token].walletEligibleTickets.length : 0;
@@ -44,7 +47,7 @@ function ProposalDetailsPage() {
   }, [ eligibleTicketCount, goBackHistory, viewedProposalDetails, getProposalError, votingStatus, showPurchaseTicketsPage ]);
 
   return (
-    <StandalonePage header={Header({ eligibleTicketCount })}>
+    <StandalonePage header={<Header eligibleTicketCount={eligibleTicketCount} /> }>
       {stateComponent}
     </StandalonePage>
   );
