@@ -52,7 +52,7 @@
       "app/middleware/ln/google/"
     ],
     "transform": {
-      "^.+\\.js?$": "babel-jest"
+      "^.+\\.(js|jsx)?$": "babel-jest"
     },
     "setupFiles": [
       "<rootDir>/../setup.js"
