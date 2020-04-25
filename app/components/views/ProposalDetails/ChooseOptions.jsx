@@ -73,7 +73,7 @@ function UpdateVoteChoiceModalButton({ onSubmit, newVoteChoice, eligibleTicketCo
       }
       disabled={!newVoteChoice || votedSuccessfully}
       onSubmit={onSubmit}
-      className={styles.castVoteButton}
+      className={styles.overviewVotingButton}
       buttonLabel={<T id="proposals.updateVoteChoiceModal.btnLabel" m="Cast Vote" />}
     />
   );

@@ -7,7 +7,7 @@ import { default as ReactMarkdown }  from "react-markdown";
 import { FormattedRelative } from "shared";
 import styles from "./ProposalDetails.module.css";
 
-export const ProposalError = ( { error } ) => <div><T id="proposalDetails.loadingError" m="Error loading Proposal: {error}" values={{ error }} /></div>;
+export const ProposalError = ({ error }) => <div><T id="proposalDetails.loadingError" m="Error loading Proposal: {error}" values={{ error }} /></div>;
 
 export const ProposalAbandoned = () =>
   <div className={styles.notVoting}><T id="proposalDetails.votingInfo.abandoned" m="Proposal has been abandoned" /></div>;
@@ -28,7 +28,7 @@ export const NoTicketsVotingInfo = ({ showPurchaseTicketsPage }) => (
 export const NoElligibleTicketsVotingInfo = ({ showPurchaseTicketsPage }) => (
   <>
     <div className={styles.noTickets}><T id="proposalDetails.votingInfo.noElligibleTickets" m="You don't have tickets elligible for voting on this proposal. Purchase tickets to vote on future proposals." /></div>
-    <KeyBlueButton onClick={showPurchaseTicketsPage}><T id="proposalDetails.votingInfo.purchaseTicketsBtn" m="Purchase Tickets" /></KeyBlueButton>
+    <KeyBlueButton className={styles.overviewVotingButton} onClick={showPurchaseTicketsPage}><T id="proposalDetails.votingInfo.purchaseTicketsBtn" m="Purchase Tickets" /></KeyBlueButton>
   </>
 );
 
@@ -48,7 +48,6 @@ export const OverviewVotingProgressInfo = ({ voteCounts, quorumMinimumVotes }) =
         {/* // TODO: return if we have have quorum/total ticket counts available.
         <div className={styles.abstainCountBox /><T id="proposal.progressCount.abstain" m="{count} Abstain" values={{ count: voteCounts.abstain }} /> */}
       </div>
-
       <VotingProgress  className={styles.progressIndicator} {...{ voteCounts, quorumMinimumVotes }} />
     </div>
   </div>

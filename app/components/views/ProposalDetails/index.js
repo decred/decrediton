@@ -1,54 +1,30 @@
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import ProposalDetails from "./ProposalDetails";
 import { ProposalError, politeiaMarkdownIndexMd } from "./helpers";
 import { PoliteiaLoading } from "indicators";
-import * as sel from "selectors";
-import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
-import { fetchMachine } from "stateMachines/FetchStateMachine";
-import { useMachine } from "@xstate/react";
 import { StandalonePage, StandaloneHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
-import * as gov from "actions/GovernanceActions";
-import * as cli from "actions/ClientActions";
 import styles from "./ProposalDetails.module.css";
+import { useProposalDetailsPage } from "./hooks";
 
-const Header = ({ eligibleTicketCount }) => <StandaloneHeader
+const Header = React.memo(({ eligibleTicketCount }) => <StandaloneHeader
   title={<T id="proposal.details.title" m="Governance" />}
   description={<T id="proposal.details.description"
     m={"Your voting power: {votingPower}"}
     values={{ votingPower: eligibleTicketCount }}
   />}
   iconClassName="governance"
-/>;
+/>);
 
 function ProposalDetailsPage() {
-  const dispatch = useDispatch();
-
-  const { token } = useParams();
-  const proposalsDetails = useSelector(sel.proposalsDetails);
-  const getProposalError =  useSelector(sel.getProposalError);
-
+  const { votingStatus, getProposalError, proposalsDetails, token, goBackHistory, showPurchaseTicketsPage } = useProposalDetailsPage();
   const viewedProposalDetails = proposalsDetails[token];
   const eligibleTicketCount = viewedProposalDetails && viewedProposalDetails.walletEligibleTickets ?
     proposalsDetails[token].walletEligibleTickets.length : 0;
-  const getProposalDetails = (token) => dispatch(gov.getProposalDetails(token));
-  const goBackHistory = useCallback(() => dispatch(cli.goBackHistory()), [ dispatch ]);
 
-  const [ { value }, send ] = useMachine(fetchMachine, {
-    actions: {
-      initial: () => {
-        if (!proposalsDetails[token]) return send("FETCH");
-        return send("RESOLVE");
-      },
-      load: () => {
-        getProposalDetails(token).then(() => send({ type: "RESOLVE" }));
-      }
-    }
-  });
   const stateComponent = useMemo(() => {
     let text = "";
-    switch (value) {
+    switch (votingStatus) {
     case "idle":
       return <></>;
     case "loading":
@@ -59,13 +35,13 @@ function ProposalDetailsPage() {
           text += politeiaMarkdownIndexMd(f.payload);
         }
       });
-      return <ProposalDetails {...{ text, viewedProposalDetails, goBackHistory, eligibleTicketCount }} />;
+      return <ProposalDetails {...{ text, viewedProposalDetails, goBackHistory, eligibleTicketCount, showPurchaseTicketsPage }} />;
     case "failure":
       return <ProposalError error={getProposalError} />;
     default:
       return null;
     }
-  }, [ eligibleTicketCount, goBackHistory, viewedProposalDetails, getProposalError, value ]);
+  }, [ eligibleTicketCount, goBackHistory, viewedProposalDetails, getProposalError, votingStatus, showPurchaseTicketsPage ]);
 
   return (
     <StandalonePage header={Header({ eligibleTicketCount })}>
