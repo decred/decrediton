@@ -1,28 +1,32 @@
 import { useState } from "react";
+import { classNames } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
 import { InvisibleButton } from "buttons";
 import { PoliteiaLink, VerticalAccordion } from "shared";
 import {
   OverviewField, OverviewVotingProgressInfo,
-  TimeValue, ProposalText
+  TimeValue, ProposalText, VoteInfo
 } from "./helpers";
 import {
   VOTESTATUS_ACTIVEVOTE, VOTESTATUS_FINISHEDVOTE
 } from "actions/GovernanceActions";
 import { useProposalDetails } from "./hooks";
 import styles from "./ProposalDetails.module.css";
-import VoteInfo from "./VoteInfo";
-import { classNames } from "pi-ui";
 
-function ProposalDetails ({
+const ProposalDetails = ({
   viewedProposalDetails,
   viewedProposalDetails: {
     creator, timestamp, endTimestamp, currentVoteChoice, hasEligibleTickets,
     name, token, voteStatus, proposalStatus, voteOptions, voteCounts,
     version, quorumMinimumVotes, walletEligibleTickets
-  }, showPurchaseTicketsPage, setVoteOption,
-  newVoteChoice, text, goBackHistory, eligibleTicketCount
-}) {
+  },
+  showPurchaseTicketsPage,
+  setVoteOption,
+  newVoteChoice,
+  text,
+  goBackHistory,
+  eligibleTicketCount
+}) => {
   const [ showWalletEligibleTickets, toggleWalletEligibleTickets ] = useState(false);
   const { tsDate, hasTickets } = useProposalDetails();
 
@@ -68,8 +72,8 @@ function ProposalDetails ({
             />
           </div>
         </div>
-        { (voteStatus === VOTESTATUS_ACTIVEVOTE || voteStatus === VOTESTATUS_FINISHEDVOTE ) &&
-            <OverviewVotingProgressInfo {...{ voteCounts, quorumMinimumVotes }} />
+        {(voteStatus === VOTESTATUS_ACTIVEVOTE || voteStatus === VOTESTATUS_FINISHEDVOTE ) &&
+         <OverviewVotingProgressInfo {...{ voteCounts, quorumMinimumVotes }} />
         }
         <div>
           { walletEligibleTickets &&
@@ -108,6 +112,6 @@ function ProposalDetails ({
       </div>
     </div>
   );
-}
+};
 
 export default ProposalDetails;

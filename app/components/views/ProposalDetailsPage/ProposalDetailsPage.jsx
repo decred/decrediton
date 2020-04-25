@@ -1,26 +1,14 @@
 import { useMemo } from "react";
 import ProposalDetails from "./ProposalDetails";
-import { ProposalError, politeiaMarkdownIndexMd } from "./helpers";
+import { politeiaMarkdownIndexMd } from "./utils";
+import { ProposalError, Header } from "./helpers";
 import { PoliteiaLoading } from "indicators";
-import { StandalonePage, StandaloneHeader } from "layout";
-import { FormattedMessage as T } from "react-intl";
+import { StandalonePage } from "layout";
 import styles from "./ProposalDetails.module.css";
 import { useProposalDetailsPage } from "./hooks";
 
-const Header = React.memo(function Header({ eligibleTicketCount }) {
-  return (<StandaloneHeader
-    title={<T id="proposal.details.title" m="Governance" />}
-    description={<T id="proposal.details.description"
-      m={"Your voting power: {votingPower}"}
-      values={{ votingPower: eligibleTicketCount }}
-    />}
-    iconClassName="governance"
-  />);
-});
-
-function ProposalDetailsPage() {
+const ProposalDetailsPage = () => {
   const { votingStatus, getProposalError, proposalsDetails, token, goBackHistory, showPurchaseTicketsPage } = useProposalDetailsPage();
-
   const viewedProposalDetails = proposalsDetails[token];
   const eligibleTicketCount = viewedProposalDetails && viewedProposalDetails.walletEligibleTickets ?
     proposalsDetails[token].walletEligibleTickets.length : 0;
@@ -51,7 +39,6 @@ function ProposalDetailsPage() {
       {stateComponent}
     </StandalonePage>
   );
-
-}
+};
 
 export default ProposalDetailsPage;

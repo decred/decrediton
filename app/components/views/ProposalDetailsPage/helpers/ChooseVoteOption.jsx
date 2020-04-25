@@ -3,9 +3,9 @@ import { useMachine } from "@xstate/react";
 import { StakeyBounceXs } from "indicators";
 import { useDispatch } from "react-redux";
 import { useState, useCallback } from "react";
-import { ProposalError } from "./helpers";
+import { ProposalError } from "./";
 import * as gov from "actions/GovernanceActions";
-import styles from "./ProposalDetails.module.css";
+import styles from "../ProposalDetails.module.css";
 import ChooseOptions from "./ChooseOptions";
 import { FormattedMessage as T } from "react-intl";
 
@@ -18,9 +18,9 @@ const getError = (error) => {
   }
 };
 
-function ChooseVoteOption({
+const ChooseVoteOption = ({
   viewedProposalDetails, voteOptions, currentVoteChoice, votingComplete, eligibleTicketCount
-}) {
+}) => {
   const [ newVoteChoice, setVoteOption ] = useState(null);
 
   const dispatch = useDispatch();
@@ -68,6 +68,6 @@ function ChooseVoteOption({
   case "failure":
     return <ProposalError {...{ error }} />;
   }
-}
+};
 
 export default ChooseVoteOption;

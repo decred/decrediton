@@ -6,7 +6,7 @@ import {
 import {
   ProposalNotVoting, NoTicketsVotingInfo,
   NoElligibleTicketsVotingInfo, ProposalAbandoned
-} from "./helpers";
+} from "./";
 
 const VoteInfo = React.memo(({ proposalStatus, voteStatus, hasTickets, hasEligibleTickets, currentVoteChoice, viewedProposalDetails, eligibleTicketCount, newVoteChoice, setVoteOption, showPurchaseTicketsPage, voteOptions }) => {
   if (proposalStatus === PROPOSALSTATUS_ABANDONED) {
