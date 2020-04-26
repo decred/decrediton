@@ -21,7 +21,7 @@ const PageHeader = () => (
       </div>
     </div>
     <div className="links">
-      <PiLink><T id="proposals.community.createLink" m="Create a Proposal" /></PiLink>
+      <PiLink path={"/proposals/new"}><T id="proposals.community.createLink" m="Create a Proposal" /></PiLink>
     </div>
   </div>
 );
