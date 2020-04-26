@@ -349,11 +349,11 @@
   margin: 4px !important;
   color: var(--info-modal-button-text) !important;
   background-color: var(--info-modal-button-bg) !important;
-  border-color: var(--info-modal-button-bg) !important;
+  border: 0 !important;
 }
 
 .politeiaButton:hover {
-  background-color: var(--title-text-and-button-background-hovered);
+  background-color: var(--title-text-and-button-background-hovered) !important;
 }
 
 @media screen and (max-width: 1179px) {

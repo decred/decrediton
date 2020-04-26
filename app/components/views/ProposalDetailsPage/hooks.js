@@ -10,7 +10,8 @@ import { useMachine } from "@xstate/react";
 export const useProposalDetails = () => {
   const tsDate = useSelector(sel.tsDate);
   const hasTickets = useSelector(sel.hasTickets);
-  return { tsDate, hasTickets };
+  const isTestnet = useSelector(sel.isTestNet);
+  return { tsDate, hasTickets, isTestnet };
 };
 
 export const useProposalDetailsPage = () => {

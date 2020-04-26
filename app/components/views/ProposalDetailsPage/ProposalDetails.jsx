@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { classNames } from "pi-ui";
+import { classNames, Button } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
 import { InvisibleButton } from "buttons";
 import { PoliteiaLink, VerticalAccordion } from "shared";
@@ -28,7 +28,7 @@ const ProposalDetails = ({
   eligibleTicketCount
 }) => {
   const [ showWalletEligibleTickets, toggleWalletEligibleTickets ] = useState(false);
-  const { tsDate, hasTickets } = useProposalDetails();
+  const { tsDate, hasTickets, isTestnet } = useProposalDetails();
 
   return (
     <div>
@@ -104,7 +104,7 @@ const ProposalDetails = ({
       </div>
       <div className={styles.detailsText}>
         <div className={styles.links}>
-          <PoliteiaLink className={styles.politeiaButton} path={"/proposals/"+token} isButton>
+          <PoliteiaLink className={styles.politeiaButton} path={`/proposals/${token}`} CustomComponent={Button} isTestnet={isTestnet}>
             <T id="proposals.community.goToProposal" m="See proposal comments on Politeia" />
           </PoliteiaLink>
         </div>
