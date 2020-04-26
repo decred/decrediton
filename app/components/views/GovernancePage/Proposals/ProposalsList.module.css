@@ -12,6 +12,7 @@
   color: var(--info-modal-button-text) !important;
   background-color: var(--info-modal-button-bg) !important;
   border: 0 !important;
+  text-decoration: none !important;
 }
 
 .politeiaButton:hover {
