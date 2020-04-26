@@ -31,7 +31,7 @@ const ProposalDetails = ({
   const { tsDate, hasTickets } = useProposalDetails();
 
   return (
-    <div className={styles.proposalDetails}>
+    <div>
       <div className={styles.overview}>
         <div className={styles.overviewInfoWrapper}>
           <div className={styles.overviewInfo}>

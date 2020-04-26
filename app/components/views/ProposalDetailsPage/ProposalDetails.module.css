@@ -1,8 +1,3 @@
-.proposalDetails {
-  padding-top: 59px;
-  padding-left: 63px;
-}
-
 .overview {
   background-color: var(--background-back-color);
   justify-content: space-between;
@@ -362,9 +357,8 @@
 }
 
 @media screen and (max-width: 1179px) {
-  .proposalDetails {
-    padding-top: 59px;
-    padding-left: 35px;
+  .overviewVotingButton {
+    left: 123px;
   }
 
   .overview {
@@ -385,12 +379,6 @@
 }
 
 @media screen and (max-width: 768px) {
-  
-  .proposalDetails {
-    padding-top: 20px;
-    padding-left: 10px;
-  }
-
   .overview {
     width: 355px;
   }
