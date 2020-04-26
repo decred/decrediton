@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as sel from "selectors";
 import * as gov from "actions/GovernanceActions";
@@ -19,6 +19,10 @@ export const useProposalDetailsPage = () => {
   const proposalsDetails = useSelector(sel.proposalsDetails);
   const getProposalError =  useSelector(sel.getProposalError);
 
+  const viewedProposalDetails = useMemo(() => proposalsDetails[token], [ token, proposalsDetails ]);
+  const eligibleTicketCount = viewedProposalDetails && viewedProposalDetails.walletEligibleTickets ?
+    proposalsDetails[token].walletEligibleTickets.length : 0;
+
   const showPurchaseTicketsPage = useCallback(() => dispatch(cli.showPurchaseTicketsPage()), [ dispatch ]);
   const getProposalDetails = useCallback((token) => dispatch(gov.getProposalDetails(token)), [ dispatch ]);
   const goBackHistory = useCallback(() => dispatch(cli.goBackHistory()), [ dispatch ]);
@@ -35,5 +39,5 @@ export const useProposalDetailsPage = () => {
     }
   });
 
-  return { votingStatus, getProposalError, proposalsDetails, token, dispatch, goBackHistory, showPurchaseTicketsPage };
+  return { viewedProposalDetails, eligibleTicketCount, votingStatus, getProposalError, proposalsDetails, token, dispatch, goBackHistory, showPurchaseTicketsPage };
 };

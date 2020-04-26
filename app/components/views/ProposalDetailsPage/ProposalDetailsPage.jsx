@@ -8,10 +8,14 @@ import styles from "./ProposalDetails.module.css";
 import { useProposalDetailsPage } from "./hooks";
 
 const ProposalDetailsPage = () => {
-  const { votingStatus, getProposalError, proposalsDetails, token, goBackHistory, showPurchaseTicketsPage } = useProposalDetailsPage();
-  const viewedProposalDetails = proposalsDetails[token];
-  const eligibleTicketCount = viewedProposalDetails && viewedProposalDetails.walletEligibleTickets ?
-    proposalsDetails[token].walletEligibleTickets.length : 0;
+  const {
+    viewedProposalDetails,
+    eligibleTicketCount,
+    votingStatus,
+    getProposalError,
+    goBackHistory,
+    showPurchaseTicketsPage
+  } = useProposalDetailsPage();
 
   const stateComponent = useMemo(() => {
     let text = "";
