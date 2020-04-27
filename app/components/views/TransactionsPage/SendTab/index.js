@@ -174,32 +174,15 @@ class Send extends React.Component {
       onShowSendAll,
       onHideSendAll
     } = this;
+    const filterAccounts = this.props.notMixedAccounts;
+    const accountsType =  filterAccounts ? "visible" : "spending";
     return outputs.map((output, index) => ({
-      data: (
-        <OutputRow
-          {...{
-            ...this.props,
-            index,
-            outputs,
-            account,
-            ...output.data,
-            isSendAll,
-            isSendSelf,
-            totalSpent,
-            sendAllAmount,
-            onValidateAddress,
-            onValidateAmount,
-            onShowSendAll,
-            onHideSendAll,
-            onRemoveOutput,
-            onChangeAccount,
-            onShowSendSelf,
-            onShowSendOthers,
-            onAddOutput,
-            onKeyDown
-          }}
-        />
-      ),
+      data: <OutputRow
+        {...{
+          ...this.props, index, outputs, account, ...output.data, isSendAll, isSendSelf, totalSpent, sendAllAmount,
+          onValidateAddress, onValidateAmount, onShowSendAll, onHideSendAll, onRemoveOutput,   onChangeAccount,
+          onShowSendSelf, onShowSendOthers, onAddOutput, onKeyDown, filterAccounts, accountsType }}
+      />,
       key: "output_" + index,
       style: {
         opacity: spring(1, presets.gentle)
