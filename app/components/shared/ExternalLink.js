@@ -2,7 +2,6 @@ import { shell } from "electron";
 import { network } from "connectors";
 
 const clicker = (isTestNet, href, hrefTestNet) => () => {
-  console.log(isTestNet);
   const url = hrefTestNet && isTestNet ? hrefTestNet : href;
   shell.openExternal(url);
 };
