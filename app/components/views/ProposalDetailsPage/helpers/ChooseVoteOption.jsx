@@ -3,20 +3,10 @@ import { useMachine } from "@xstate/react";
 import { StakeyBounceXs } from "indicators";
 import { useDispatch } from "react-redux";
 import { useState, useCallback } from "react";
-import { ProposalError } from "./";
 import * as gov from "actions/GovernanceActions";
 import styles from "../ProposalDetails.module.css";
 import ChooseOptions from "./ChooseOptions";
 import { FormattedMessage as T } from "react-intl";
-
-const getError = (error) => {
-  if (!error) return;
-  if (typeof error === "string") return error;
-  if (typeof error === "object") {
-    if (error.message) return error.message;
-    return JSON.stringify(error);
-  }
-};
 
 const ChooseVoteOption = ({
   viewedProposalDetails, voteOptions, currentVoteChoice, votingComplete, eligibleTicketCount
@@ -35,12 +25,13 @@ const ChooseVoteOption = ({
         if(!newVoteChoice) return;
         onUpdateVoteChoice(privatePassphrase)
           .then(() => send("RESOLVE"))
-          .catch(error => send({ type: "REJECT", error }));
+          .catch(() => {
+            setVoteOption(null);
+            send("REJECT");
+          });
       }
     }
   });
-
-  const error = state && state.context && getError(state.context.error);
 
   const voteSubmitHandler = useCallback(
     (privatePassphrase) => send({ type: "FETCH", privatePassphrase }),
@@ -65,8 +56,6 @@ const ChooseVoteOption = ({
       setVoteOption, newVoteChoice, eligibleTicketCount, currentVoteChoice,
       voteOptions, votingComplete, onVoteSubmit: voteSubmitHandler, votedSuccessfully: true
     }} />;
-  case "failure":
-    return <ProposalError {...{ error }} />;
   }
 };
 

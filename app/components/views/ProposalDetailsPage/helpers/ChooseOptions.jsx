@@ -46,7 +46,16 @@ const UpdateVoteChoiceModalButton = ({ onSubmit, newVoteChoice, eligibleTicketCo
   />
 );
 
-const ChooseOptions = React.memo(({ currentVoteChoice, eligibleTicketCount, newVoteChoice, voteOptions, votingComplete, onVoteSubmit, setVoteOption, votedSuccessfully }) => (
+const ChooseOptions = React.memo(({
+  currentVoteChoice,
+  eligibleTicketCount,
+  newVoteChoice,
+  voteOptions,
+  votingComplete,
+  onVoteSubmit,
+  setVoteOption,
+  votedSuccessfully
+}) => (
   <>
     <div className={styles.votingPreference}>
       <div className={styles.preferenceTitle}>

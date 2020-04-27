@@ -20,10 +20,7 @@ export const fetchMachine = Machine({
       on: {
         RESOLVE: "success",
         REJECT: {
-          target: "failure",
-          actions: assign({
-            error: (context, event) => event.error
-          })
+          target: "idle"
         }
       }
     },
