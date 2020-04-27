@@ -85,12 +85,10 @@ import {
   DECODERAWTXS_FAILED
 } from "actions/TransactionActions";
 import {
-  GETACTIVEVOTE_FAILED,
-  GETVETTED_FAILED,
-  GETPROPOSAL_FAILED,
-  UPDATEVOTECHOICE_SUCCESS,
-  UPDATEVOTECHOICE_FAILED,
-  GETVETTED_UPDATEDVOTERESULTS_FAILED
+  GETACTIVEVOTE_FAILED, GETVETTED_FAILED, GETPROPOSAL_FAILED,
+  UPDATEVOTECHOICE_SUCCESS, UPDATEVOTECHOICE_FAILED,
+  GETVETTED_UPDATEDVOTERESULTS_FAILED,
+  GETPROPROSAL_UPDATEVOTESTATUS_FAILED
 } from "actions/GovernanceActions";
 import {
   LNWALLET_CONNECT_FAILED,
@@ -436,11 +434,11 @@ export default function snackbar(state = {}, action) {
     case NEW_TRANSACTIONS_RECEIVED: {
       const tx = action.newlyMinedTransactions.length
         ? action.newlyMinedTransactions[
-            action.newlyMinedTransactions.length - 1
-          ]
+        action.newlyMinedTransactions.length - 1
+        ]
         : action.newlyUnminedTransactions[
-            action.newlyUnminedTransactions.length - 1
-          ];
+        action.newlyUnminedTransactions.length - 1
+        ];
 
       // check if this transaction is already in the message stack and don't add it
       // if it is to prevent double notifications (eg: published tx and it got mined
@@ -542,6 +540,7 @@ export default function snackbar(state = {}, action) {
     case GETACTIVEVOTE_FAILED:
     case GETVETTED_FAILED:
     case GETVETTED_UPDATEDVOTERESULTS_FAILED:
+    case GETPROPROSAL_UPDATEVOTESTATUS_FAILED:
     case GETPROPOSAL_FAILED:
     case SPVSYNC_FAILED:
     case UPDATEVOTECHOICE_FAILED:
@@ -565,18 +564,13 @@ export default function snackbar(state = {}, action) {
     case LNWALLET_WITHDRAWWALLET_FAILED:
     case LNWALLET_STARTDCRLND_FAILED:
       type = "Error";
-      if (
-        action.error &&
-        String(action.error).indexOf(
-          "wallet.Unlock: invalid passphrase:: secretkey.DeriveKey"
-        ) > -1
-      ) {
+      if (action.error && String(action.error).indexOf("wallet.Unlock: invalid passphrase:: secretkey.DeriveKey") > -1) {
         // intercepting all wrong passphrase errors, independently of which error
         // state was triggered. Not terribly pretty.
         message = messages[WRONG_PASSPHRASE_MSG];
       } else if (String(action.error).indexOf("[object Object]") > -1) {
         const keys = Object.keys(action.error);
-        error = keys.map((key) => `${key}: ${action.error[key]}`);
+        error = keys.map(key => `${key}: ${action.error[key]}`);
         message = messages[ERROR_IS_OBJECT];
         values = { error };
         break;
@@ -603,8 +597,8 @@ export default function snackbar(state = {}, action) {
       type = "Success";
       message =
         messages[
-          "TRZ_TOGGLEPINPROTECTION_SUCCESS_" +
-            (action.clearProtection ? "DISABLED" : "ENABLED")
+        "TRZ_TOGGLEPINPROTECTION_SUCCESS_" +
+        (action.clearProtection ? "DISABLED" : "ENABLED")
         ];
       values = { label: action.deviceLabel };
       break;
