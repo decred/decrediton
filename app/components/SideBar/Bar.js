@@ -27,10 +27,13 @@ const Bar = ({
   onExpandSideBar,
   onReduceSideBar,
   isWatchingOnly,
-  rescanCancel
+  rescanCancel,
+  accountMixerRunning
 }) => (
   <div className={cx("sidebar", !expandSideBar && "sidebar-reduced", !expandSideBar && sidebarOnBottom && "sidebar-on-bottom")}>
-    <Logo {...{ isTestNet, expandSideBar, sidebarOnBottom, onReduceSideBar, onExpandSideBar, isWatchingOnly }} />
+    <Logo {...{
+      isTestNet, expandSideBar, sidebarOnBottom, onReduceSideBar, onExpandSideBar, isWatchingOnly, accountMixerRunning
+    }} />
     <div className="sidebar-main">
       <div className="sidebar-scroll">
         <MenuLinks {...{ expandSideBar, sidebarOnBottom }}/>

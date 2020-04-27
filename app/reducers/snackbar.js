@@ -28,6 +28,7 @@ import {
   REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED
 } from "../actions/StakePoolActions";
 import {
+  ABANDONTRANSACTION_SUCCESS, ABANDONTRANSACTION_FAILED,
   NEW_TRANSACTIONS_RECEIVED,
   GETSTARTUPWALLETINFO_FAILED,
   SEEDCOPIEDTOCLIPBOARD
@@ -94,6 +95,14 @@ const messages = defineMessages({
   },
   PUBLISHTX_FAILED: {
     id: "send.errors.publishTxFailed",
+    defaultMessage: "{originalError}"
+  },
+  ABANDONTRANSACTION_SUCCESS: {
+    id: "send.errors.abandonTxSuccess",
+    defaultMessage: "Transaction successfully abandoned!"
+  },
+  ABANDONTRANSACTION_FAILED: {
+    id: "send.errors.abandonTxFailed",
     defaultMessage: "{originalError}"
   },
   SIGNTX_FAILED: {
@@ -418,6 +427,7 @@ export default function snackbar(state = {}, action) {
   case REMOVESTAKEPOOLCONFIG:
   case SEEDCOPIEDTOCLIPBOARD:
   case PUBLISHUNMINEDTRANSACTIONS_SUCCESS:
+  case ABANDONTRANSACTION_SUCCESS:
   case PURCHASETICKETS_SUCCESS:
   case ADDCUSTOMSTAKEPOOL_SUCCESS:
   case TRZ_CHANGEHOMESCREEN_SUCCESS:
@@ -468,6 +478,7 @@ export default function snackbar(state = {}, action) {
   case CONSTRUCTTX_FAILED:
   case SIGNTX_FAILED:
   case PUBLISHTX_FAILED:
+  case ABANDONTRANSACTION_FAILED:
   case PURCHASETICKETS_FAILED:
   case REVOKETICKETS_FAILED:
   case IMPORTSCRIPT_MANUAL_FAILED:

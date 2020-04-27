@@ -1,5 +1,6 @@
 import Promise from "promise";
 import { TicketTypes } from "helpers/tickets";
+import { strHashToRaw } from "../helpers/byteActions";
 import { withLog as log, logOptionNoResponseData, withLogNoData, withLogNoResponseData } from "./app";
 import * as api from "middleware/walletrpc/api_pb";
 
@@ -83,3 +84,22 @@ export const setAgendaVote = log((votingService, agendaId, choiceId) =>
     request.addChoices(choice);
     votingService.setVoteChoices(request, (err, res) => err ? fail(err) : ok(res));
   }), "Set Agenda Vote");
+
+export const abandonTransaction = log((walletService, txHash) => new Promise((resolve, reject) => {
+  const req = new api.AbandonTransactionRequest();
+  req.setTransactionHash(Buffer.isBuffer(txHash) ? txHash : strHashToRaw(txHash));
+  walletService.abandonTransaction(req, (err) => err ? reject(err) : resolve());
+}), "Abandon Transaction");
+
+export const runAccountMixerRequest = (
+  walletService, { passphrase, mixedAccount, mixedAccountBranch, changeAccount, csppServer }
+) => new Promise( ok => {
+  const request = new api.RunAccountMixerRequest();
+  request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
+  request.setMixedAccount(mixedAccount);
+  request.setMixedAccountBranch(mixedAccountBranch);
+  request.setChangeAccount(changeAccount);
+  request.setCsppServer(csppServer);
+  const mixer = walletService.runAccountMixer(request);
+  ok(mixer);
+});

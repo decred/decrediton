@@ -7,7 +7,6 @@ import * as cla from "actions/ClientActions";
 
 const mapStateToProps = selectorMap({
   walletService: sel.walletService,
-  isCreateAccountDisabled: sel.isCreateAccountDisabled,
   accounts: sel.sortedAccounts,
   hiddenAccounts: sel.hiddenAccounts,
   isLoading: bool(or(
@@ -23,7 +22,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onRenameAccount: ca.renameAccountAttempt,
   onHideAccount: cla.hideAccount,
   onShowAccount: cla.showAccount,
-  onGetNextAccountAttempt: ca.getNextAccountAttempt,
   onGetAccountExtendedKey: ca.getAccountExtendedKeyAttempt
 }, dispatch);
 

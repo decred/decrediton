@@ -26,7 +26,8 @@ import {
   STARTWALLETSERVICE_FAILED, STARTWALLETSERVICE_SUCCESS, GETTREASURY_BALANCE_SUCCESS, RESET_TREASURY_BALANCE,
   FETCHMISSINGSTAKETXDATA_ATTEMPT, FETCHMISSINGSTAKETXDATA_SUCCESS, FETCHMISSINGSTAKETXDATA_FAILED,
   GETSTARTUPTRANSACTIONS_SUCCESS,
-  GETALLAGENDAS_SUCCESS, GETALLAGENDAS_FAILED
+  GETALLAGENDAS_SUCCESS, GETALLAGENDAS_FAILED,
+  ABANDONTRANSACTION_ATTEMPT, ABANDONTRANSACTION_SUCCESS, ABANDONTRANSACTION_FAILED
 } from "../actions/ClientActions";
 import { DAEMONSYNCED, WALLETREADY } from "../actions/DaemonActions";
 import { NEWBLOCKCONNECTED } from "../actions/NotificationActions";
@@ -39,9 +40,27 @@ import { VERIFYMESSAGE_ATTEMPT, VERIFYMESSAGE_SUCCESS, VERIFYMESSAGE_FAILED, VER
 import {
   CLOSEWALLET_SUCCESS
 } from "actions/WalletLoaderActions";
+import { GETACCOUNTMIXERSERVICE_SUCCESS, RUNACCOUNTMIXER_SUCCESS, STOPMIXER_SUCCESS } from "actions/AccountMixerActions";
 
 export default function grpc(state = {}, action) {
   switch (action.type) {
+  case GETACCOUNTMIXERSERVICE_SUCCESS:
+    return {
+      ...state,
+      accountMixerService: action.accountMixerService
+    };
+  case RUNACCOUNTMIXER_SUCCESS:
+    return {
+      ...state,
+      accountMixerRunning: true,
+      mixerStreamer: action.mixerStreamer
+    };
+  case STOPMIXER_SUCCESS:
+    return {
+      ...state,
+      accountMixerRunning: false,
+      mixerStreamer: null
+    };
   case GETTREASURY_BALANCE_SUCCESS:
     return {
       ...state,
@@ -365,6 +384,18 @@ export default function grpc(state = {}, action) {
       lastTransaction: action.lastTransaction,
       getTransactionsRequestError: "",
       getTransactionsRequestAttempt: false
+    };
+  case ABANDONTRANSACTION_ATTEMPT:
+    return { ...state,
+      abandonTransactionRequestAttempt: true
+    };
+  case ABANDONTRANSACTION_FAILED:
+    return { ...state,
+      abandonTransactionRequestAttempt: false
+    };
+  case ABANDONTRANSACTION_SUCCESS:
+    return { ...state,
+      abandonTransactionRequestAttempt: false
     };
   case NEW_TRANSACTIONS_RECEIVED:
     return {

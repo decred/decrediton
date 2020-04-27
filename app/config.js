@@ -17,6 +17,7 @@ export function getWalletCfg(testnet, walletPath){
   return (config);
 }
 
+// TODO: move this constants to constants directory file.
 export function initWalletCfg(testnet, walletPath) {
   const config = new Store({ cwd: getWalletPath(testnet, walletPath) });
   if (!config.has("enableticketbuyer")) {
@@ -50,6 +51,9 @@ export function initWalletCfg(testnet, walletPath) {
   if (!config.has("trezor")) {
     config.set("trezor", false);
   }
+  if (!config.has("enableprivacy")) {
+    config.set("enableprivacy", true);
+  }
   if (!config.has("ln_address")) {
     config.set("ln_address", "");
   }
@@ -61,6 +65,21 @@ export function initWalletCfg(testnet, walletPath) {
   }
   if (!config.has("ln_macaroonpath")) {
     config.set("ln_macaroonpath", "");
+  }
+  if (!config.has("mixedaccount")) {
+    config.set("mixedaccount", "");
+  }
+  if (!config.has("changeaccount")) {
+    config.set("changeaccount", "");
+  }
+  if (!config.has("csppserver")) {
+    config.set("csppserver", "");
+  }
+  if (!config.has("csppport")) {
+    config.set("csppport", "");
+  }
+  if (!config.has("mixedaccbranch")) {
+    config.set("mixedaccbranch", "");
   }
   stakePoolInfo(function(foundStakePoolConfigs) {
     if (foundStakePoolConfigs !== null) {
@@ -74,9 +93,10 @@ export function initWalletCfg(testnet, walletPath) {
 function cleanWalletCfg(config) {
   var key;
   const walletCfgFields = [ "enableticketbuyer", "balancetomaintain", "currency_display",
+    "ln_wallet_exists", "ln_account", "enableprivacy", "mixedaccount", "mixedaccbranch", "changeaccount",
     "hiddenaccounts", "discoveraccounts", "gaplimit", "iswatchonly", "stakepools",
-    "lastaccess", "politeia_last_access_time", "politeia_last_access_block",
-    "ln_wallet_exists", "ln_account" ];
+    "lastaccess", "politeia_last_access_time", "politeia_last_access_block", "csppserver", "csppport"
+  ];
   for (key in config.store) {
     var found = false;
     for (var i = 0; i < walletCfgFields.length; i++) {

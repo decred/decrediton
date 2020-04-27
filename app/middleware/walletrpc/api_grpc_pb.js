@@ -4,6 +4,28 @@
 var grpc = require('grpc');
 var api_pb = require('./api_pb.js');
 
+function serialize_walletrpc_AbandonTransactionRequest(arg) {
+  if (!(arg instanceof api_pb.AbandonTransactionRequest)) {
+    throw new Error('Expected argument of type walletrpc.AbandonTransactionRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_AbandonTransactionRequest(buffer_arg) {
+  return api_pb.AbandonTransactionRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_AbandonTransactionResponse(arg) {
+  if (!(arg instanceof api_pb.AbandonTransactionResponse)) {
+    throw new Error('Expected argument of type walletrpc.AbandonTransactionResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_AbandonTransactionResponse(buffer_arg) {
+  return api_pb.AbandonTransactionResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_walletrpc_AccountNotificationsRequest(arg) {
   if (!(arg instanceof api_pb.AccountNotificationsRequest)) {
     throw new Error('Expected argument of type walletrpc.AccountNotificationsRequest');
@@ -1181,6 +1203,28 @@ function deserialize_walletrpc_SetVotingAddressResponse(buffer_arg) {
   return api_pb.SetVotingAddressResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_walletrpc_SignHashesRequest(arg) {
+  if (!(arg instanceof api_pb.SignHashesRequest)) {
+    throw new Error('Expected argument of type walletrpc.SignHashesRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_SignHashesRequest(buffer_arg) {
+  return api_pb.SignHashesRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_SignHashesResponse(arg) {
+  if (!(arg instanceof api_pb.SignHashesResponse)) {
+    throw new Error('Expected argument of type walletrpc.SignHashesResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_SignHashesResponse(buffer_arg) {
+  return api_pb.SignHashesResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_walletrpc_SignMessageRequest(arg) {
   if (!(arg instanceof api_pb.SignMessageRequest)) {
     throw new Error('Expected argument of type walletrpc.SignMessageRequest');
@@ -1267,6 +1311,28 @@ function serialize_walletrpc_SignTransactionsResponse(arg) {
 
 function deserialize_walletrpc_SignTransactionsResponse(buffer_arg) {
   return api_pb.SignTransactionsResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_SpenderRequest(arg) {
+  if (!(arg instanceof api_pb.SpenderRequest)) {
+    throw new Error('Expected argument of type walletrpc.SpenderRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_SpenderRequest(buffer_arg) {
+  return api_pb.SpenderRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_SpenderResponse(arg) {
+  if (!(arg instanceof api_pb.SpenderResponse)) {
+    throw new Error('Expected argument of type walletrpc.SpenderResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_SpenderResponse(buffer_arg) {
+  return api_pb.SpenderResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_walletrpc_SpvSyncRequest(arg) {
@@ -1771,6 +1837,17 @@ ping: {
     responseSerialize: serialize_walletrpc_BestBlockResponse,
     responseDeserialize: deserialize_walletrpc_BestBlockResponse,
   },
+  spender: {
+    path: '/walletrpc.WalletService/Spender',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.SpenderRequest,
+    responseType: api_pb.SpenderResponse,
+    requestSerialize: serialize_walletrpc_SpenderRequest,
+    requestDeserialize: deserialize_walletrpc_SpenderRequest,
+    responseSerialize: serialize_walletrpc_SpenderResponse,
+    responseDeserialize: deserialize_walletrpc_SpenderResponse,
+  },
   // Notifications
 transactionNotifications: {
     path: '/walletrpc.WalletService/TransactionNotifications',
@@ -2058,6 +2135,28 @@ changePassphrase: {
     requestDeserialize: deserialize_walletrpc_SweepAccountRequest,
     responseSerialize: serialize_walletrpc_SweepAccountResponse,
     responseDeserialize: deserialize_walletrpc_SweepAccountResponse,
+  },
+  abandonTransaction: {
+    path: '/walletrpc.WalletService/AbandonTransaction',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.AbandonTransactionRequest,
+    responseType: api_pb.AbandonTransactionResponse,
+    requestSerialize: serialize_walletrpc_AbandonTransactionRequest,
+    requestDeserialize: deserialize_walletrpc_AbandonTransactionRequest,
+    responseSerialize: serialize_walletrpc_AbandonTransactionResponse,
+    responseDeserialize: deserialize_walletrpc_AbandonTransactionResponse,
+  },
+  signHashes: {
+    path: '/walletrpc.WalletService/SignHashes',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.SignHashesRequest,
+    responseType: api_pb.SignHashesResponse,
+    requestSerialize: serialize_walletrpc_SignHashesRequest,
+    requestDeserialize: deserialize_walletrpc_SignHashesRequest,
+    responseSerialize: serialize_walletrpc_SignHashesResponse,
+    responseDeserialize: deserialize_walletrpc_SignHashesResponse,
   },
 };
 

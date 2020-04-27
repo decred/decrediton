@@ -64,6 +64,12 @@ export const syncDiscoverAddressesAttempt = get([ "walletLoader", "syncDiscoverA
 export const syncRescanAttempt = get([ "walletLoader", "syncRescanAttempt" ]);
 export const syncFetchHeadersComplete = get([ "walletLoader" , "syncFetchHeadersComplete" ]);
 export const syncFetchTimeStart = get([ "walletLoader" , "syncFetchTimeStart" ]);
+export const getPrivacyEnabled = get([ "walletLoader" , "privacyEnabled" ]);
+export const getMixedAccount = get([ "walletLoader" , "mixedAccount" ]);
+export const getChangeAccount = get([ "walletLoader" , "changeAccount" ]);
+export const getCsppServer = get([ "walletLoader" , "csppServer" ]);
+export const getCsppPort = get([ "walletLoader" , "csppPort" ]);
+export const getMixedAccountBranch = get([ "walletLoader" , "mixedAccountBranch" ]);
 
 const availableWallets = get([ "daemon", "availableWallets" ]);
 const availableWalletsSelect = createSelector(
@@ -92,10 +98,12 @@ export const balances = or(get([ "grpc", "balances" ]), () => []);
 export const walletService = get([ "grpc", "walletService" ]);
 export const agendaService = get([ "grpc", "agendaService" ]);
 export const votingService = get([ "grpc", "votingService" ]);
+export const accountMixerService = get([ "grpc", "accountMixerService" ]);
 export const getBalanceRequestAttempt = get([ "grpc", "getBalanceRequestAttempt" ]);
 export const getAccountsResponse = get([ "grpc", "getAccountsResponse" ]);
 export const getNetworkResponse = get([ "grpc", "getNetworkResponse" ]);
 export const getNetworkError = get([ "grpc", "getNetworkError" ]);
+export const getAccountMixerRunning = get([ "grpc", "accountMixerRunning" ]);
 const accounts = createSelector([ getAccountsResponse ], r => r ? r.getAccountsList() : []);
 
 export const isWatchingOnly = bool(get([ "walletLoader", "isWatchingOnly" ]));
@@ -919,7 +927,6 @@ export const autobuyerRunningModalVisible = get([ "control", "autobuyerRunningMo
 export const isTrezor = get([ "trezor", "enabled" ]);
 
 export const isSignMessageDisabled = and(isWatchingOnly, not(isTrezor));
-export const isCreateAccountDisabled = isWatchingOnly;
 export const isChangePassPhraseDisabled = isWatchingOnly;
 export const isTransactionsSendTabDisabled = not(isTrezor);
 
