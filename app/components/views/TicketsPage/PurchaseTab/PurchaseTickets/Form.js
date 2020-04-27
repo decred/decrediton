@@ -7,15 +7,6 @@ import "style/StakePool.less";
 
 const purchaseLabel = () => <T id="purchaseTickets.purchaseBtn" m="Purchase" />;
 
-const PurchaseValidMessage = ({ spendable, numTicketsToBuy, ticketPrice }) => (
-  <div className="purchase-ticket-valid-message-area">
-    <T id="purchaseTickets.output" m="Output:" />
-    <Balance flat amount={numTicketsToBuy * ticketPrice} />
-    <T id="purchaseTickets.remaining" m="Remaining:" />
-    <Balance flat amount={spendable - numTicketsToBuy * ticketPrice} />
-  </div>
-);
-
 const PurchaseTicketsForm = ({
   isShowingAdvanced,
   getQuickBarComponent,
@@ -54,14 +45,25 @@ const PurchaseTicketsForm = ({
           required
           invalid={!getIsValid()}
           invalidMessage={<T id="purchaseTickets.errors.insufficientBalance" m="Not enough funds" />}
-          validMessage={<PurchaseValidMessage {...{ spendable: account.spendable, ticketPrice, numTicketsToBuy }} />}
           numTickets={numTicketsToBuy}
           incrementNumTickets={onIncrementNumTickets}
           decrementNumTickets={onDecrementNumTickets}
           onChangeNumTickets={onChangeNumTickets}
           onKeyDown={handleOnKeyDown}
           showErrors={true}
-        />
+        ></NumTicketsInput>
+        {
+          getIsValid() && <div className="input-purchase-valid-message-area">
+            <T
+              id="purchaseTickets.validMsg"
+              m="Total: {amount} Remaining: {remaining}"
+              values={{
+                amount: <Balance flat amount={numTicketsToBuy * ticketPrice} />,
+                remaining: <Balance flat amount={account.spendable - numTicketsToBuy * ticketPrice} />
+              }}
+            />
+          </div>
+        }
       </div>
     </div>
     <div className="stakepool-purchase-ticket-info">

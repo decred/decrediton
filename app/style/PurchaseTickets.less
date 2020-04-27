@@ -43,6 +43,10 @@
   }
 }
 
+.purchase-ticket-input-amount {
+  flex-wrap: wrap;
+}
+
 .purchase-ticket-input-amount .purchase-ticket-area-row-label {
   padding-left: 72px;
 }
@@ -57,7 +61,7 @@
   background-size: 6px;
   background-position: 50% 50%;
   background-repeat: no-repeat;
-  background-color: #8997a5;
+  background-color: var(--account-text);
   box-shadow: 0px 3px 8px var(--icons-shadow);
   margin-left: 3px;
   border-radius: 5px;
@@ -143,25 +147,6 @@
     bottom: -13px;
     left: 6px;
     margin: 0;
-  }
-
-  .input-valid-message-area {
-    width: 160%;
-    position: absolute;
-    bottom: -43px;
-    left: -60px;
-    margin: 0;
-
-    .purchase-ticket-valid-message-area {
-      width: 100%;
-      position: relative;
-      display: grid;
-      grid-template-rows: repeat(2, 1fr);
-      //row-gap: 5px;
-      grid-template-columns: 60px auto;
-      font-size: 11px;
-      text-align: left;
-    }
   }
 
   .input-and-unit:hover:not(.disabled):not(.active):not(.error) {
@@ -500,6 +485,20 @@
     margin: 0;
     padding: 0;
   }
+}
+
+.input-purchase-valid-message-area {
+  width: 200px;
+  height: 60px;
+  position: relative;
+  display: grid;
+  grid-template-rows: 20px 20px;
+  grid-template-columns: 72px auto;
+  bottom: 0px;
+  left: 0px;
+  margin: 0;
+  padding-top: 2px;
+  padding-left: 72px;
 }
 
 @media screen and (max-width: 1179px) {

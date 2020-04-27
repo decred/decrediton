@@ -49,7 +49,6 @@ class Input extends React.Component {
     const {
       showErrors,
       invalidMessage,
-      validMessage,
       requiredMessage,
       required,
       invalid,
@@ -96,13 +95,6 @@ class Input extends React.Component {
                     <T id="input.requiredInput" m="This field is required" />}
                 </div>
               ) : null}
-            </div>
-          ) : null}
-          {!invalid && value && validMessage ? (
-            <div className="input-valid-message-area">
-              <div>
-                {validMessage}
-              </div>
             </div>
           ) : null}
         </>

@@ -9,7 +9,6 @@ const NumTicketsInput = ({
   required,
   invalid,
   invalidMessage,
-  validMessage,
   showErrors,
   onKeyDown
 }) => {
@@ -17,7 +16,7 @@ const NumTicketsInput = ({
   return (
     <div className={"is-row stakepool-purchase-ticket-num-select " + (invalid && "error")} >
       <IntegerInput
-        {...{ required, onKeyDown, showErrors, invalid, invalidMessage, validMessage,
+        {...{ required, onKeyDown, showErrors, invalid, invalidMessage,
           value: numTickets }}
         className="ticket-numeric-input"
         onChange={e => onChangeNumTickets && onChangeNumTickets(e.target.value)}
