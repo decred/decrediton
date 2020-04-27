@@ -3,7 +3,7 @@ import { PassphraseModalButton } from "buttons";
 import { AddMixerAccountsModal } from "modals";
 import { WatchOnlyWarnNotification, Subtitle } from "shared";
 import { MIXED_ACCOUNT, CHANGE_ACCOUNT } from "constants";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import * as amc from "actions/AccountMixerActions";
 
@@ -13,12 +13,12 @@ function ConfigMixer({
   const dispatch = useDispatch();
   const [ areAccountsAvailable, setAreAvailable ] = useState(null);
 
-  const checkAvailableAccounts = () => {
+  const checkAvailableAccounts = useCallback(() => {
     const mixedExists = accounts.find(({ accountName }) => accountName === MIXED_ACCOUNT);
     const changeExists = accounts.find(({ accountName }) => accountName === CHANGE_ACCOUNT);
 
     return !mixedExists && !changeExists;
-  };
+  }, [ accounts ]);
   const [ mixedAccountName, setMixedAccountName ] = useState("");
   const [ changeAccountName, setChangeAccountName ] = useState("");
   const isValid = () => !(!mixedAccountName || !changeAccountName);
@@ -32,7 +32,7 @@ function ConfigMixer({
       setMixedAccountName(MIXED_ACCOUNT);
       setChangeAccountName(CHANGE_ACCOUNT);
     }
-  }, []);
+  }, [ checkAvailableAccounts ]);
 
   return (
     <>
