@@ -276,9 +276,7 @@
 }
 
 .voteOption input[type="radio"]:disabled + .radioLabel::before {
-  box-shadow: inset 0 0 0 4px var(--disabled-background-color-lighter);
-  border-color: var(--disabled-color);
-  background: var(--disabled-background-color-lighter);
+  cursor: default;
 }
 
 .voteConfirmation {
