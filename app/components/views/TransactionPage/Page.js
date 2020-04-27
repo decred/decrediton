@@ -32,7 +32,7 @@ function mapNonWalletInput(input) {
 }
 
 const Page = ({
-  transactionDetails, decodedTransaction
+  transactionDetails, decodedTransaction, abandonTransaction
 }) => {
   const dispatch = useDispatch();
   const publishUnminedTransactions = () => dispatch(cla.publishUnminedTransactionsAttempt);
@@ -104,7 +104,12 @@ const Page = ({
           <div className="txdetails-value"><Balance amount={txFee} /></div>
         </div> }
       </div>
-      {!isConfirmed && <div className="rebroadcast-button-container"><KeyBlueButton className="rebroadcast-button" onClick={publishUnminedTransactions}><T id="txDetails.rebroadcastTransactions" m="Rebroadcast Transaction" /></KeyBlueButton></div> }
+      { !isConfirmed &&
+        <div className="txdetails-abandon-rebroadcast-area">
+          <div className="rebroadcast-button-container"><KeyBlueButton className="rebroadcast-button" onClick={publishUnminedTransactions}><T id="txDetails.rebroadcastTransactions" m="Rebroadcast Transaction" /></KeyBlueButton></div>
+          <div className="abandon-button-container"><KeyBlueButton className="abandon-button" onClick={abandonTransaction}><T id="txDetails.abandontTransaction" m="Abandon Transaction" /></KeyBlueButton></div>
+        </div>
+      }
       <div className="txdetails-io">
         <div className="txdetails-title"><T id="txDetails.io.title" m="I/O Details" /></div>
         <div className="txdetails-overview">

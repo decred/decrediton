@@ -32,11 +32,12 @@ const headerIcons = {
 };
 
 function Transaction({ intl }) {
+  const { txHash } = useParams();
   const dispatch = useDispatch();
   const goBack = () => dispatch(ca.goBackHistory());
+  const abandonTransaction = () => dispatch(ca.abandonTransaction(txHash));
   const fetchMissingStakeTxData = () => dispatch(ta.fetchMissingStakeTxData());
   const decodeRawTransactions = (hexTx) => dispatch(msg.decodeRawTransaction(hexTx));
-  const { txHash } = useParams();
   const tsDate = useSelector(sel.tsDate);
   const decodedTransactions = useSelector(sel.decodedTransactions);
   const transactionsMap = useSelector(sel.transactionsMap);
@@ -144,7 +145,7 @@ function Transaction({ intl }) {
       return <DecredLoading center />;
     case "success":
       return <TransactionPage {...{
-        transactionDetails: viewedTransaction, decodedTransaction: viewedDecodedTx
+        transactionDetails: viewedTransaction, decodedTransaction: viewedDecodedTx, abandonTransaction
       }}
       />;
     case "failure":
