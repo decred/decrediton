@@ -21,7 +21,7 @@ const getError = (error) => {
 const ChooseVoteOption = ({
   viewedProposalDetails, voteOptions, currentVoteChoice, votingComplete, eligibleTicketCount
 }) => {
-  const [ newVoteChoice, setVoteOption ] = useState("");
+  const [ newVoteChoice, setVoteOption ] = useState(null);
 
   const dispatch = useDispatch();
   const onUpdateVoteChoice = (privatePassphrase) => dispatch(

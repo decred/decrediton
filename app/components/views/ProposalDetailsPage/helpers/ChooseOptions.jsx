@@ -60,7 +60,7 @@ const ChooseOptions = React.memo(({ currentVoteChoice, eligibleTicketCount, newV
             votingComplete={votingComplete}
             description={o.id.charAt(0).toUpperCase()+o.id.slice(1)}
             onClick={ () => currentVoteChoice === "abstain" && setVoteOption(o.id) }
-            checked={ newVoteChoice ? newVoteChoice === o.id : currentVoteChoice !== "abstain" ? currentVoteChoice.id === o.id : null }
+            checked={ newVoteChoice ? newVoteChoice === o.id : currentVoteChoice !== "abstain" ? currentVoteChoice.id === o.id : false }
           />)
         )}
       </div>
