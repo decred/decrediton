@@ -53,7 +53,7 @@ const PurchaseTicketsForm = ({
           showErrors={true}
         ></NumTicketsInput>
         {
-          getIsValid() && <div className="input-purchase-valid-message-area">
+          getIsValid() && <div className="input-purchase-ticket-valid-message-area">
             <T
               id="purchaseTickets.validMsg"
               m="Total: {amount} Remaining: {remaining}"
