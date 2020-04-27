@@ -2,7 +2,7 @@ import { FormattedMessage as T } from "react-intl";
 import "style/Input.less";
 import { isNullOrUndefined } from "util";
 
-class Input extends React.Component{
+class Input extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.getInitialState();
@@ -49,6 +49,7 @@ class Input extends React.Component{
     const {
       showErrors,
       invalidMessage,
+      validMessage,
       requiredMessage,
       required,
       invalid,
@@ -68,7 +69,7 @@ class Input extends React.Component{
           <div className={hasErrorToShow ? this.state.divClassName + " error" : this.state.divClassName} ref={div => { this.state.inputUnitDiv = div; }}>
             <input
               ref={input => { this.input = input; }}
-              type={type||"text"}
+              type={type || "text"}
               className="input"
               disabled={disabled ? disabled : null}
               readOnly={readOnly ? readOnly : null}
@@ -95,6 +96,13 @@ class Input extends React.Component{
                     <T id="input.requiredInput" m="This field is required" />}
                 </div>
               ) : null}
+            </div>
+          ) : null}
+          {!invalid && value && validMessage ? (
+            <div className="input-valid-message-area">
+              <div>
+                {validMessage}
+              </div>
             </div>
           ) : null}
         </>
