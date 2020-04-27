@@ -10,7 +10,6 @@ export { default as invalidRPCVersion } from "./invalidRPCVersion";
 export { default as logging } from "./logging";
 export { default as purchaseTickets } from "./purchaseTickets";
 export { default as receive } from "./receive";
-export { default as receiveAccountsSelect } from "./receiveAccountsSelect";
 export { default as rescan } from "./rescan";
 export { default as send } from "./send";
 export { default as service } from "./service";

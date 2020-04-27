@@ -54,11 +54,18 @@ class AccountsSelect extends React.Component {
   }
 
   getAccountsToShow(nextProps) {
-    const accountsPerType = {
-      spending: nextProps.spendingAccounts,
-      visible: nextProps.visibleAccounts
+    const { filterAccounts } = nextProps;
+    let accountsPerType = {
+      "spending": nextProps.spendingAccounts,
+      "visible": nextProps.visibleAccounts
     };
-    return accountsPerType[this.props.accountsType || "spending"];
+    let filteredAccounts = accountsPerType[this.props.accountsType||"spending"];
+    // filterAccounts remove accounts if needed. This is usefull to remove accounts
+    // which are not supposed to be shown, for example, mixed accounts in privacy wallets
+    if (Array.isArray(filterAccounts)) {
+      filteredAccounts = filteredAccounts.filter(({ value }) => !filterAccounts.includes(value));
+    }
+    return filteredAccounts;
   }
 
   render() {
