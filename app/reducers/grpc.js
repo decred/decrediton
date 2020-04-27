@@ -40,9 +40,27 @@ import { VERIFYMESSAGE_ATTEMPT, VERIFYMESSAGE_SUCCESS, VERIFYMESSAGE_FAILED, VER
 import {
   CLOSEWALLET_SUCCESS
 } from "actions/WalletLoaderActions";
+import { GETACCOUNTMIXERSERVICE_SUCCESS, RUNACCOUNTMIXER_SUCCESS, STOPMIXER_SUCCESS } from "actions/AccountMixerActions";
 
 export default function grpc(state = {}, action) {
   switch (action.type) {
+  case GETACCOUNTMIXERSERVICE_SUCCESS:
+    return {
+      ...state,
+      accountMixerService: action.accountMixerService
+    };
+  case RUNACCOUNTMIXER_SUCCESS:
+    return {
+      ...state,
+      accountMixerRunning: true,
+      mixerStreamer: action.mixerStreamer
+    };
+  case STOPMIXER_SUCCESS:
+    return {
+      ...state,
+      accountMixerRunning: false,
+      mixerStreamer: null
+    };
   case GETTREASURY_BALANCE_SUCCESS:
     return {
       ...state,

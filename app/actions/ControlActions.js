@@ -98,12 +98,7 @@ export const GETNEXTACCOUNT_SUCCESS = "GETNEXTACCOUNT_SUCCESS";
 export const getNextAccountAttempt = (passphrase, accountName) => (dispatch, getState) => {
   dispatch({ type: GETNEXTACCOUNT_ATTEMPT });
   return wallet.getNextAccount(sel.walletService(getState()), passphrase, accountName)
-    .then(getNextAccountResponse => {
-      setTimeout( () => dispatch({
-        getNextAccountResponse, type: GETNEXTACCOUNT_SUCCESS
-      }), 1000);
-      return getNextAccountResponse;
-    })
+    .then(getNextAccountResponse => dispatch({ getNextAccountResponse, type: GETNEXTACCOUNT_SUCCESS }))
     .catch(error => dispatch({ error, type: GETNEXTACCOUNT_FAILED }));
 };
 

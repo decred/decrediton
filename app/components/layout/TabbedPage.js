@@ -120,7 +120,7 @@ function TabbedPage(props) {
   let { children, header, className } = props;
   if (!isArray(children)) children = [ children ];
 
-  const tabs = children.filter(c => c.type === TabbedPageTab);
+  const tabs = children.filter(c => c.type === TabbedPageTab && !c.props.disabled);
   const nonTabs = children.filter(c => c.type !== TabbedPageTab);
 
   const tabHeaders = tabs.map(c => (RoutedTab(c.props.path, c.props.link)));

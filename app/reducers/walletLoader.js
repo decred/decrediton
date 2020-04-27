@@ -12,6 +12,7 @@ import {
   WALLET_SELECTED
 } from "actions/WalletLoaderActions";
 import { WALLETCREATED } from "actions/DaemonActions";
+import { CREATEMIXERACCOUNTS_SUCCESS } from "actions/AccountMixerActions";
 
 import { WALLET_LOADER_SETTINGS } from "actions/DaemonActions";
 
@@ -75,7 +76,13 @@ export default function walletLoader(state = {}, action) {
     };
   case WALLET_LOADER_SETTINGS:
     return { ...state,
-      discoverAccountsComplete: action.discoverAccountsComplete
+      discoverAccountsComplete: action.discoverAccountsComplete,
+      privacyEnabled: action.enablePrivacy,
+      mixedAccount: action.mixedAccount,
+      changeAccount: action.changeAccount,
+      csppServer: action.csppServer,
+      csppPort: action.csppPort,
+      mixedAccountBranch: action.mixedAccountBranch
     };
   case GETWALLETSEEDSVC_ATTEMPT:
     return { ...state,
@@ -202,6 +209,14 @@ export default function walletLoader(state = {}, action) {
   case SYNC_RESCAN_FINISHED:
     return { ...state,
       syncRescanAttempt: false
+    };
+  case CREATEMIXERACCOUNTS_SUCCESS:
+    return { ...state,
+      mixedAccount: action.mixedAccount,
+      changeAccount: action.changeAccount,
+      csppServer: action.csppServer,
+      csppPort: action.csppPort,
+      mixedAccountBranch: action.mixedAccountBranch
     };
   default:
     return state;
