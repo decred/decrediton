@@ -2,42 +2,49 @@ import fs from "fs";
 import Store from "electron-store";
 import ini from "ini";
 import { stakePoolInfo } from "./middleware/stakepoolapi";
-import { getAppDataDirectory, getGlobalCfgPath, dcrdCfg, getWalletPath,
-  dcrwalletConf, getDcrdRpcCert, getDcrdPath } from "./main_dev/paths";
+import {
+  getAppDataDirectory,
+  getGlobalCfgPath,
+  dcrdCfg,
+  getWalletPath,
+  dcrwalletConf,
+  getDcrdRpcCert,
+  getDcrdPath,
+} from "./main_dev/paths";
 import * as cfgConstants from "constants/config";
-import { DCR  } from "constants";
+import { DCR } from "constants";
 
 export function getGlobalCfg() {
   const config = new Store();
-  return (config);
+  return config;
 }
 
-export function getWalletCfg(testnet, walletPath){
+export function getWalletCfg(testnet, walletPath) {
   const config = new Store({ cwd: getWalletPath(testnet, walletPath) });
-  return (config);
+  return config;
 }
 
 // TODO: move this constants to constants directory file.
 export function initWalletCfg(testnet, walletPath) {
   const config = new Store({ cwd: getWalletPath(testnet, walletPath) });
   if (!config.has("enableticketbuyer")) {
-    config.set("enableticketbuyer","0");
+    config.set("enableticketbuyer", "0");
   }
   if (!config.has("balancetomaintain")) {
-    config.set("balancetomaintain","0");
+    config.set("balancetomaintain", "0");
   }
   if (!config.has("currency_display")) {
     config.set("currency_display", DCR);
   }
   if (!config.has("hiddenaccounts")) {
     var hiddenAccounts = Array();
-    config.set("hiddenaccounts",hiddenAccounts);
+    config.set("hiddenaccounts", hiddenAccounts);
   }
   if (!config.has("discoveraccounts")) {
-    config.set("discoveraccounts",true);
+    config.set("discoveraccounts", true);
   }
   if (!config.has("gaplimit")) {
-    config.set("gaplimit","20");
+    config.set("gaplimit", "20");
   }
   if (!config.has("iswatchonly")) {
     config.set("iswatchonly", false);
@@ -81,21 +88,37 @@ export function initWalletCfg(testnet, walletPath) {
   if (!config.has("mixedaccbranch")) {
     config.set("mixedaccbranch", "");
   }
-  stakePoolInfo(function(foundStakePoolConfigs) {
+  stakePoolInfo(function (foundStakePoolConfigs) {
     if (foundStakePoolConfigs !== null) {
       updateStakePoolConfig(config, foundStakePoolConfigs);
     }
   });
   cleanWalletCfg(config);
-  return (config);
+  return config;
 }
 
 function cleanWalletCfg(config) {
   var key;
-  const walletCfgFields = [ "enableticketbuyer", "balancetomaintain", "currency_display",
-    "ln_wallet_exists", "ln_account", "enableprivacy", "mixedaccount", "mixedaccbranch", "changeaccount",
-    "hiddenaccounts", "discoveraccounts", "gaplimit", "iswatchonly", "stakepools",
-    "lastaccess", "politeia_last_access_time", "politeia_last_access_block", "csppserver", "csppport"
+  const walletCfgFields = [
+    "enableticketbuyer",
+    "balancetomaintain",
+    "currency_display",
+    "ln_wallet_exists",
+    "ln_account",
+    "enableprivacy",
+    "mixedaccount",
+    "mixedaccbranch",
+    "changeaccount",
+    "hiddenaccounts",
+    "discoveraccounts",
+    "gaplimit",
+    "iswatchonly",
+    "stakepools",
+    "lastaccess",
+    "politeia_last_access_time",
+    "politeia_last_access_block",
+    "csppserver",
+    "csppport",
   ];
   for (key in config.store) {
     var found = false;
@@ -112,13 +135,13 @@ function cleanWalletCfg(config) {
 
 export function initGlobalCfg() {
   const config = new Store();
-  Object.keys(cfgConstants.INITIAL_VALUES).map(key => {
+  Object.keys(cfgConstants.INITIAL_VALUES).map((key) => {
     if (!config.has(key)) {
       config.set(key, cfgConstants.INITIAL_VALUES[key]);
     }
   });
   cleanGlobalCfg(config);
-  return(config);
+  return config;
 }
 
 function cleanGlobalCfg(config) {
@@ -142,15 +165,13 @@ export function validateGlobalCfgFile() {
   let fileContents;
   try {
     fileContents = fs.readFileSync(getGlobalCfgPath(), "utf8");
-  }
-  catch(err) {
+  } catch (err) {
     return null;
   }
 
   try {
     JSON.parse(fileContents);
-  }
-  catch(err) {
+  } catch (err) {
     console.error(err);
     return err;
   }
@@ -174,7 +195,7 @@ export function getWalletCert(certPath) {
     return null;
   }
 
-  return(cert);
+  return cert;
 }
 
 // readDcrdConfig reads top level entries from dcrd.conf file. If appdata is
@@ -205,14 +226,20 @@ export function readDcrdConfig(testnet, appdata) {
 
     // if dcrd.conf file is from decrediton dir and does not exist we create a
     // new one.
-    if (newCfg.configFile === getAppDataDirectory() && !fs.existsSync(dcrdCfg(newCfg.configFile)) ) {
+    if (
+      newCfg.configFile === getAppDataDirectory() &&
+      !fs.existsSync(dcrdCfg(newCfg.configFile))
+    ) {
       createTempDcrdConf(testnet);
     }
-    readCfg = ini.parse(Buffer.from(fs.readFileSync(dcrdCfg(newCfg.configFile))).toString());
+    readCfg = ini.parse(
+      Buffer.from(fs.readFileSync(dcrdCfg(newCfg.configFile))).toString()
+    );
 
-    let userFound, passFound = false;
+    let userFound,
+      passFound = false;
     // Look through all top level config entries
-    for (let [ key, value ] of Object.entries(readCfg)) {
+    for (let [key, value] of Object.entries(readCfg)) {
       if (key === "rpcuser") {
         newCfg.rpc_user = value;
         userFound = true;
@@ -231,7 +258,7 @@ export function readDcrdConfig(testnet, appdata) {
       if (!userFound && !passFound) {
         // If user and pass aren't found on the top level, look through all
         // next level config entries
-        for (let [ key2, value2 ] of Object.entries(value)) {
+        for (let [key2, value2] of Object.entries(value)) {
           if (key2 === "rpcuser") {
             newCfg.rpc_user = value2;
             userFound = true;
@@ -257,20 +284,20 @@ export function readDcrdConfig(testnet, appdata) {
 }
 
 export function getDcrdCert(dcrdCertPath) {
-  if(dcrdCertPath)
-    if(fs.existsSync(dcrdCertPath))
-      return fs.readFileSync(dcrdCertPath);
+  if (dcrdCertPath)
+    if (fs.existsSync(dcrdCertPath)) return fs.readFileSync(dcrdCertPath);
 
   var certPath = getDcrdRpcCert();
 
   var cert = fs.readFileSync(certPath);
-  return(cert);
+  return cert;
 }
 
 export function updateStakePoolConfig(config, foundStakePoolConfigs) {
-  var currentStakePoolConfigs = config.has("stakepools") && Array.isArray(config.get("stakepools"))
-    ? config.get("stakepools")
-    : [];
+  var currentStakePoolConfigs =
+    config.has("stakepools") && Array.isArray(config.get("stakepools"))
+      ? config.get("stakepools")
+      : [];
 
   var currentConfigsByHost = currentStakePoolConfigs.reduce((l, s) => {
     l[s.Host] = s;
@@ -278,13 +305,14 @@ export function updateStakePoolConfig(config, foundStakePoolConfigs) {
   }, {});
 
   if (foundStakePoolConfigs !== null) {
-    let newStakePoolConfigs = foundStakePoolConfigs.map(s => {
+    let newStakePoolConfigs = foundStakePoolConfigs.map((s) => {
       const current = currentConfigsByHost[s.Host];
       delete currentConfigsByHost[s.Host];
       return current ? { ...current, ...s } : s;
     });
-    Object.keys(currentConfigsByHost)
-      .forEach(v => newStakePoolConfigs.push(currentConfigsByHost[v]));
+    Object.keys(currentConfigsByHost).forEach((v) =>
+      newStakePoolConfigs.push(currentConfigsByHost[v])
+    );
     config.set("stakepools", newStakePoolConfigs);
   }
 }
@@ -316,14 +344,32 @@ export function setConfigData(key, value) {
 }
 
 export function setAppdataPath(appdataPath) {
-  const credentialKeys = cfgConstants.setDaemonRemoteCredentials("", "", "", "", "");
+  const credentialKeys = cfgConstants.setDaemonRemoteCredentials(
+    "",
+    "",
+    "",
+    "",
+    ""
+  );
   setConfigData(cfgConstants.REMOTE_CREDENTIALS, credentialKeys);
   return setConfigData(cfgConstants.APPDATA, appdataPath);
 }
 
-export function setRemoteCredentials(rpcuser, rpcpass, rpccert, rpchost, rpcport) {
+export function setRemoteCredentials(
+  rpcuser,
+  rpcpass,
+  rpccert,
+  rpchost,
+  rpcport
+) {
   setConfigData(cfgConstants.APPDATA, "");
-  const credentials = cfgConstants.setDaemonRemoteCredentials(rpcuser, rpcpass, rpccert, rpchost, rpcport);
+  const credentials = cfgConstants.setDaemonRemoteCredentials(
+    rpcuser,
+    rpcpass,
+    rpccert,
+    rpchost,
+    rpcport
+  );
   return setConfigData(cfgConstants.REMOTE_CREDENTIALS, credentials);
 }
 
@@ -333,7 +379,8 @@ export function setLastHeight(height) {
 
 function makeRandomString(length) {
   var text = "";
-  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  var possible =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
   for (var i = 0; i < length; i++)
     text += possible.charAt(Math.floor(Math.random() * possible.length));
@@ -349,12 +396,11 @@ function createTempDcrdConf(testnet) {
     const port = testnet ? "19109" : "9109";
 
     dcrdConf = {
-      "Application Options":
-      {
+      "Application Options": {
         rpcuser: makeRandomString(10),
         rpcpass: makeRandomString(10),
-        rpclisten: `127.0.0.1:${port}`
-      }
+        rpclisten: `127.0.0.1:${port}`,
+      },
     };
     fs.writeFileSync(dcrdCfg(getAppDataDirectory()), ini.stringify(dcrdConf));
   }
@@ -364,16 +410,18 @@ function createTempDcrdConf(testnet) {
 export function newWalletConfigCreation(testnet, walletPath) {
   // TODO: set random user/password
   var dcrwConf = {
-    "Application Options":
-    {
+    "Application Options": {
       tlscurve: "P-256",
       noinitialload: "1",
       onetimetlskey: "1",
       grpclisten: "127.0.0.1:0",
       appdata: getWalletPath(testnet, walletPath),
       testnet: testnet ? "1" : "0",
-      nolegacyrpc: "1"
-    }
+      nolegacyrpc: "1",
+    },
   };
-  fs.writeFileSync(dcrwalletConf(getWalletPath(testnet, walletPath)), ini.stringify(dcrwConf));
+  fs.writeFileSync(
+    dcrwalletConf(getWalletPath(testnet, walletPath)),
+    ini.stringify(dcrwConf)
+  );
 }

@@ -7,14 +7,18 @@ class WalletSelectionBody extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      editWallets: false
+      editWallets: false,
     };
   }
 
   render() {
     const {
-      maxWalletCount, isSPV, availableWallets, getDaemonSynced, submitChosenWallet,
-      creatingWallet
+      maxWalletCount,
+      isSPV,
+      availableWallets,
+      getDaemonSynced,
+      submitChosenWallet,
+      creatingWallet,
     } = this.props;
     const { editWallets } = this.state;
     return (
@@ -30,17 +34,20 @@ class WalletSelectionBody extends React.Component {
           creatingWallet,
           ...this.props,
           ...this.state,
-          ...substruct({
-            onChangeAvailableWallets: null,
-            createWallet: null,
-            onChangeCreateWalletName: null,
-            showCreateWalletForm: null,
-            hideCreateWalletForm: null,
-            toggleWatchOnly: null,
-            onChangeCreateWalletMasterPubKey: null,
-            toggleTrezor: null,
-            onToggleEditWallet: null
-          }, this)
+          ...substruct(
+            {
+              onChangeAvailableWallets: null,
+              createWallet: null,
+              onChangeCreateWalletName: null,
+              showCreateWalletForm: null,
+              hideCreateWalletForm: null,
+              toggleWatchOnly: null,
+              onChangeCreateWalletMasterPubKey: null,
+              toggleTrezor: null,
+              onToggleEditWallet: null,
+            },
+            this
+          ),
         }}
       />
     );

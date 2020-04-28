@@ -7,11 +7,15 @@ import * as sel from "../selectors";
 
 const mapStateToProps = selectorMap({
   nextAddress: sel.nextAddress,
-  account: sel.nextAddressAccount
+  account: sel.nextAddressAccount,
 });
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getNextAddressAttempt: ca.getNextAddressAttempt
-}, dispatch);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      getNextAddressAttempt: ca.getNextAddressAttempt,
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps);

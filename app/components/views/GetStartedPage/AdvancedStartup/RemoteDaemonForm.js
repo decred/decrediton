@@ -4,24 +4,24 @@ import { TextInput, PasswordInput, PathBrowseInput } from "inputs";
 const messages = defineMessages({
   messageLoginPlaceholder: {
     id: "login.form.rpcuser.placeholder",
-    defaultMessage: "RPC Username"
+    defaultMessage: "RPC Username",
   },
   passphraseFieldPlaceholder: {
     id: "login.form.rpcpassword.placeholder",
-    defaultMessage: "RPC Password"
+    defaultMessage: "RPC Password",
   },
   certFieldPlaceholder: {
     id: "login.form.rpccert.placeholder.",
-    defaultMessage: "RPC Certificate path"
+    defaultMessage: "RPC Certificate path",
   },
   hostFieldPlaceholder: {
     id: "login.form.rpchost.placeholder.",
-    defaultMessage: "RPC Host"
+    defaultMessage: "RPC Host",
   },
   portFieldPlaceholder: {
     id: "login.form.rpcport.placeholder.",
-    defaultMessage: "RPC Port"
-  }
+    defaultMessage: "RPC Port",
+  },
 });
 
 const RemoteDaemonForm = ({
@@ -40,7 +40,7 @@ const RemoteDaemonForm = ({
   rpcHostHasFailedAttempt,
   rpcPortHasFailedAttempt,
   rpcCertHasFailedAttempt,
-  intl
+  intl,
 }) => {
   return (
     <>
@@ -67,7 +67,9 @@ const RemoteDaemonForm = ({
             required
             value={rpc_pass}
             onChange={(e) => setRpcPass(e.target.value)}
-            placeholder={intl.formatMessage(messages.passphraseFieldPlaceholder)}
+            placeholder={intl.formatMessage(
+              messages.passphraseFieldPlaceholder
+            )}
             showErrors={rpcPasswordHasFailedAttempt}
           />
         </div>

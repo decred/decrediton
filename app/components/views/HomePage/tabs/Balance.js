@@ -8,7 +8,7 @@ import "style/HomePage.less";
 const HomePage = ({
   spendableTotalBalance,
   lockedTotalBalance,
-  spendableAndLockedBalance
+  spendableAndLockedBalance,
 }) => {
   return (
     <div className="overview-content-wrapper">
@@ -17,7 +17,8 @@ const HomePage = ({
           <Balance
             classNameWrapper="overview-balance-spendable-locked available amount"
             classNameUnit="overview-balance-spendable-locked-unit"
-            amount={spendableTotalBalance} />
+            amount={spendableTotalBalance}
+          />
           <div className="overview-balance-spendable-locked-label">
             <T id="home.currentTotalSpendableBalanceLabel" m="Available" />
           </div>
@@ -26,14 +27,15 @@ const HomePage = ({
           <Balance
             classNameWrapper="overview-balance-spendable-locked locked amount"
             classNameUnit="overview-balance-spendable-locked-unit"
-            amount={lockedTotalBalance} />
+            amount={lockedTotalBalance}
+          />
           <div className="overview-balance-spendable-locked-label">
             <T id="home.currentTotalLockedBalanceLabel" m="Locked" />
           </div>
         </div>
       </div>
       <div className="overview-chart-wrapper">
-        <BalanceChart data={spendableAndLockedBalance}/>
+        <BalanceChart data={spendableAndLockedBalance} />
       </div>
     </div>
   );

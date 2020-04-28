@@ -1,7 +1,7 @@
 import { daemonStartup } from "connectors";
 
 @autobind
-class GetStartedPosition extends React.Component{
+class GetStartedPosition extends React.Component {
   constructor(props) {
     super(props);
   }

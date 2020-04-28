@@ -9,17 +9,22 @@ const docByStep = {
   0: "GetStartedTutorialPage01",
   1: "GetStartedTutorialPage02",
   2: "GetStartedTutorialPage03",
-  3: "GetStartedTutorialPage04"
+  3: "GetStartedTutorialPage04",
 };
 
 const videosByStep = {
   0: onboard01,
   1: onboard02,
   2: onboard03,
-  3: onboard04
+  3: onboard04,
 };
 
-const TutorialPage = ({ tutorialStep, onNextTutorialStep, onGoToStep, finishTutorial }) => {
+const TutorialPage = ({
+  tutorialStep,
+  onNextTutorialStep,
+  onGoToStep,
+  finishTutorial,
+}) => {
   return (
     <div className="getstarted-tutorial">
       <div className={"tutorial-side step-" + tutorialStep}>
@@ -33,9 +38,11 @@ const TutorialPage = ({ tutorialStep, onNextTutorialStep, onGoToStep, finishTuto
 
         <div className="tutorial-main-toolbar">
           <InvisibleButton className="skip-button" onClick={finishTutorial}>
-            {tutorialStep < 3
-              ? <T id="tutorial.skipBtn" m={"Skip"} />
-              : <T id="tutorial.finishBtn" m={"Finish"} />}
+            {tutorialStep < 3 ? (
+              <T id="tutorial.skipBtn" m={"Skip"} />
+            ) : (
+              <T id="tutorial.finishBtn" m={"Finish"} />
+            )}
           </InvisibleButton>
 
           <StepIndicator
@@ -44,7 +51,9 @@ const TutorialPage = ({ tutorialStep, onNextTutorialStep, onGoToStep, finishTuto
             onGotoPage={onGoToStep}
           />
 
-          <KeyBlueButton className="next-button" onClick={tutorialStep < 3 ? onNextTutorialStep : finishTutorial} >
+          <KeyBlueButton
+            className="next-button"
+            onClick={tutorialStep < 3 ? onNextTutorialStep : finishTutorial}>
             <T id="tutorial.nextBtn" m={"Next"} />
           </KeyBlueButton>
         </div>

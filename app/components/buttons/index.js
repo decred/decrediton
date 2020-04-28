@@ -23,46 +23,85 @@ import DangerButton from "./DangerButton";
 import CloseButton from "./CloseButton";
 import HelpLink from "./HelpLink";
 import InvisibleButton from "./InvisibleButton";
-export { ModalButton, AutoBuyerSwitch, KeyBlueButton, DangerButton,
-  CloseButton, NetworkSwitch, InvisibleButton, WatchOnlyWalletSwitch };
+export {
+  ModalButton,
+  AutoBuyerSwitch,
+  KeyBlueButton,
+  DangerButton,
+  CloseButton,
+  NetworkSwitch,
+  InvisibleButton,
+  WatchOnlyWalletSwitch,
+};
 
 /***************************************************
  * Custom Modal Buttons
  ***************************************************/
 import {
-  InfoModal, PassphraseModal, ChangePassphraseModal,
-  ConfirmModal, InfoDocumentModal, AboutModal
+  InfoModal,
+  PassphraseModal,
+  ChangePassphraseModal,
+  ConfirmModal,
+  InfoDocumentModal,
+  AboutModal,
 } from "modals";
 
 // mbb = ModalButtonBuilder (func to build a functional ModalButton component
 // with extra fixed props)
-const mbb = (className, modalComponent, buttonComponent) => p =>
+const mbb = (className, modalComponent, buttonComponent) => (p) => (
   <ModalButton
     {...{
       ...p,
       buttonComponent,
       modalComponent: p.modalComponent || modalComponent,
-      className: [ className || "", p.className || "" ].join(" ")
+      className: [className || "", p.className || ""].join(" "),
     }}
-  />;
+  />
+);
 
-const helpLinkButtonNew = ({ className, onClick, title, subtitle }) =>
-  <HelpLink className={className} onClick={onClick} title={title} subtitle={subtitle} expand/>;
+const helpLinkButtonNew = ({ className, onClick, title, subtitle }) => (
+  <HelpLink
+    className={className}
+    onClick={onClick}
+    title={title}
+    subtitle={subtitle}
+    expand
+  />
+);
 
-const helpLinkButton = ({ className, onClick, buttonLabel }) =>
-  <div className={className} onClick={onClick}>{buttonLabel}</div>;
+const helpLinkButton = ({ className, onClick, buttonLabel }) => (
+  <div className={className} onClick={onClick}>
+    {buttonLabel}
+  </div>
+);
 
-const PoliteiaLinkButton = ({ children, onClick }) => (<span onClick={onClick}>{children}</span>);
+const PoliteiaLinkButton = ({ children, onClick }) => (
+  <span onClick={onClick}>{children}</span>
+);
 
 export const HelpLinkInfoModal = mbb(null, InfoModal, helpLinkButtonNew);
 export const HelpLinkAboutModal = mbb(null, AboutModal, helpLinkButtonNew);
 export const InfoModalButton = mbb("info-modal-button", InfoModal);
 export const InfoDocModalButton = mbb("info-modal-button", InfoDocumentModal);
-export const InfoDocFieldModalButton = mbb("info-field-modal-button", InfoDocumentModal);
-export const ChangePassphraseButton = mbb("change-password-default-icon", ChangePassphraseModal);
-export const InvisiblePassphraseModalButton = mbb(null, PassphraseModal, InvisibleButton);
+export const InfoDocFieldModalButton = mbb(
+  "info-field-modal-button",
+  InfoDocumentModal
+);
+export const ChangePassphraseButton = mbb(
+  "change-password-default-icon",
+  ChangePassphraseModal
+);
+export const InvisiblePassphraseModalButton = mbb(
+  null,
+  PassphraseModal,
+  InvisibleButton
+);
 export const PassphraseModalButton = mbb(null, PassphraseModal, KeyBlueButton);
-export const PassphraseModalSwitch = mbb(null, PassphraseModal, AutoBuyerSwitch);
+export const PassphraseModalSwitch = mbb(
+  null,
+  PassphraseModal,
+  AutoBuyerSwitch
+);
 export const RemoveStakePoolButton = mbb(null, ConfirmModal, DangerButton);
 export const RemoveWalletButton = mbb(null, ConfirmModal, DangerButton);
 export const RemoveDaemonButton = mbb(null, ConfirmModal, DangerButton);
@@ -70,7 +109,23 @@ export const ResetNetworkButton = mbb(null, ConfirmModal, KeyBlueButton);
 export const ScriptRedeemableButton = mbb(null, InfoModal, helpLinkButton);
 export const AboutModalButton = mbb(null, AboutModal, KeyBlueButton);
 export const AboutModalButtonInvisible = mbb(null, AboutModal, InvisibleButton);
-export const CloseWalletModalButton = mbb("close-modal-button", ConfirmModal, InvisibleButton);
-export const CloseChannelModalButton = mbb("go-back-icon-button", ConfirmModal, InvisibleButton);
-export const InvisibleConfirmPoliteiaModalButton = mbb(null, ConfirmModal, PoliteiaLinkButton);
-export const InvisibleConfirmModalButton = mbb(null, ConfirmModal, InvisibleButton);
+export const CloseWalletModalButton = mbb(
+  "close-modal-button",
+  ConfirmModal,
+  InvisibleButton
+);
+export const CloseChannelModalButton = mbb(
+  "go-back-icon-button",
+  ConfirmModal,
+  InvisibleButton
+);
+export const InvisibleConfirmPoliteiaModalButton = mbb(
+  null,
+  ConfirmModal,
+  PoliteiaLinkButton
+);
+export const InvisibleConfirmModalButton = mbb(
+  null,
+  ConfirmModal,
+  InvisibleButton
+);

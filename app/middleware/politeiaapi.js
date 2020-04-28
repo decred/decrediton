@@ -28,11 +28,11 @@ function GET(piURL, path) {
 }
 
 function POST(piURL, path, payload) {
-  return ensureCSRF(piURL).then(resp => {
+  return ensureCSRF(piURL).then((resp) => {
     const cfg = {
       headers: {
-        [CSRF_TOKEN_HEADER]: resp.headers[CSRF_TOKEN_HEADER]
-      }
+        [CSRF_TOKEN_HEADER]: resp.headers[CSRF_TOKEN_HEADER],
+      },
     };
     return axios.post(piURL + path, payload, cfg);
   });
@@ -41,14 +41,21 @@ function POST(piURL, path, payload) {
 export const getActiveVotes = (piURL) => GET(piURL, "/v1/proposals/activevote");
 export const getVetted = (piURL) => GET(piURL, "/v1/proposals/vetted");
 export const getVotesStatus = (piURL) => GET(piURL, "/v1/proposals/votestatus");
-export const getProposal = (piURL, token) => GET(piURL, "/v1/proposals/" + token);
-export const getProposalVotes = (piURL, token) => GET(piURL, "/v1/proposals/" + token + "/votes");
-export const getProposalVoteStatus = (piURL, token) => GET(piURL, "/v1/proposals/" + token + "/votestatus");
-export const getTokenInventory = (piURL) => GET(piURL, "/v1/proposals/tokeninventory");
+export const getProposal = (piURL, token) =>
+  GET(piURL, "/v1/proposals/" + token);
+export const getProposalVotes = (piURL, token) =>
+  GET(piURL, "/v1/proposals/" + token + "/votes");
+export const getProposalVoteStatus = (piURL, token) =>
+  GET(piURL, "/v1/proposals/" + token + "/votestatus");
+export const getTokenInventory = (piURL) =>
+  GET(piURL, "/v1/proposals/tokeninventory");
 
 // votes must be an array of Vote()-produced objects.
-export const castVotes = (piURL, votes) => POST(piURL, "/v1/proposals/castvotes", { votes });
+export const castVotes = (piURL, votes) =>
+  POST(piURL, "/v1/proposals/castvotes", { votes });
 
 // tokens is an array of tokens to be fetched.
-export const getProposalsBatch = (piURL, tokens) => POST(piURL, "/v1/proposals/batch", { tokens });
-export const getProposalsVoteStatusBatch = (piURL, tokens) => POST(piURL, "/v1/proposals/batchvotesummary", { tokens });
+export const getProposalsBatch = (piURL, tokens) =>
+  POST(piURL, "/v1/proposals/batch", { tokens });
+export const getProposalsVoteStatusBatch = (piURL, tokens) =>
+  POST(piURL, "/v1/proposals/batchvotesummary", { tokens });

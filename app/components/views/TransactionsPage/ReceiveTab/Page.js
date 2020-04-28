@@ -9,8 +9,8 @@ import "style/MiscComponents.less";
 const messages = defineMessages({
   amountPlaceholder: {
     id: "receive.amountPlaceholder",
-    defaultMessage: "Amount"
-  }
+    defaultMessage: "Amount",
+  },
 });
 
 const ReceivePage = ({
@@ -21,18 +21,18 @@ const ReceivePage = ({
   error,
   intl,
   onValidateAmount,
-  onKeyDown
+  onKeyDown,
 }) => (
   <>
-    <Subtitle title={<T id="receive.subtitle" m="Receive DCR"/>} />
+    <Subtitle title={<T id="receive.subtitle" m="Receive DCR" />} />
     <div className="receive-content-nest">
       <div className="receive-content-nest-address-and-qr">
         <div className="receive-content-nest-for-address">
           <div className="receive-content-nest-prefix prefix-long">
-            <T id="receive.accountLabel" m="This address is for"/>:
+            <T id="receive.accountLabel" m="This address is for" />:
           </div>
           <div className="receive-content-nest-prefix prefix-short">
-            <T id="receive.shortAccountLabel" m="Address is for"/>:
+            <T id="receive.shortAccountLabel" m="Address is for" />:
           </div>
           <div className="receive-select-account-input">
             <ReceiveAccountsSelect showAccountsButton />
@@ -41,10 +41,10 @@ const ReceivePage = ({
         </div>
         <div className="receive-requested-amount">
           <div className="receive-content-nest-prefix prefix-long">
-            <T id="receive.requestedAmountLabel" m="Requested amount"/>:
+            <T id="receive.requestedAmountLabel" m="Requested amount" />:
           </div>
           <div className="receive-content-nest-prefix prefix-short">
-            <T id="receive.shortRequestedAmountLabel" m="Amount"/>:
+            <T id="receive.shortRequestedAmountLabel" m="Amount" />:
           </div>
           <div className="receive-select-account-input">
             <DcrInput
@@ -55,7 +55,7 @@ const ReceivePage = ({
               invalidMessage={error && error.amount}
               amount={amountAtomValue}
               placeholder={intl.formatMessage(messages.amountPlaceholder)}
-              onChangeAmount={e => onValidateAmount(e)}
+              onChangeAmount={(e) => onValidateAmount(e)}
               onKeyDown={onKeyDown}
             />
           </div>
@@ -64,11 +64,14 @@ const ReceivePage = ({
           <div className="receive-content-nest-qrhash">
             <div>{nextAddress}</div>
           </div>
-          <CopyToClipboard textToCopy={nextAddress} className="receive-content-nest-copy-to-clipboard-icon" />
+          <CopyToClipboard
+            textToCopy={nextAddress}
+            className="receive-content-nest-copy-to-clipboard-icon"
+          />
           <div style={{ clear: "both" }}></div>
         </div>
       </div>
-      <QRCode addr={nextAddress} amount={amount}/>
+      <QRCode addr={nextAddress} amount={amount} />
     </div>
     <div className="receive-toolbar">
       <KeyBlueButton size="large" block={false} onClick={onRequestAddress}>

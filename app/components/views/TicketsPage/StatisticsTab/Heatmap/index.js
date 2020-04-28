@@ -3,7 +3,7 @@ import { myTicketsCharts } from "connectors";
 import { DecredLoading } from "indicators";
 
 @autobind
-class Heatmap extends React.Component{
+class Heatmap extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -14,7 +14,11 @@ class Heatmap extends React.Component{
 
   render() {
     const { ticketDataHeatmap } = this.props;
-    return ticketDataHeatmap.length > 0 ? <Page {...{ data: this.props.ticketDataHeatmap }}/> : <DecredLoading />;
+    return ticketDataHeatmap.length > 0 ? (
+      <Page {...{ data: this.props.ticketDataHeatmap }} />
+    ) : (
+      <DecredLoading />
+    );
   }
 }
 

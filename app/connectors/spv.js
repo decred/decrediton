@@ -4,7 +4,7 @@ import * as sel from "../selectors";
 
 const mapStateToProps = selectorMap({
   spvMode: sel.isSPV,
-  blocksNumberToNextTicket: sel.blocksNumberToNextTicket
+  blocksNumberToNextTicket: sel.blocksNumberToNextTicket,
 });
 
 export default connect(mapStateToProps);

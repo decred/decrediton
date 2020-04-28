@@ -20,21 +20,25 @@ const mapStateToProps = selectorMap({
   info: sel.lnInfo,
   defaultAccount: sel.defaultSpendingAccount,
   lightningWalletExists: sel.lnWalletExists,
-  isMainNet: sel.isMainNet
+  isMainNet: sel.isMainNet,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  connectToLNWallet: lna.connectToLNWallet,
-  updateWalletBalances: lna.updateLNWalletBalances,
-  addInvoice: lna.addInvoice,
-  decodePayRequest: lna.decodePayRequest,
-  sendPayment: lna.sendPayment,
-  openChannel: lna.openChannel,
-  closeChannel: lna.closeChannel,
-  fundWallet: lna.fundWallet,
-  withdrawWallet: lna.withdrawWallet,
-  getWalletConfig: lna.getLNWalletConfig,
-  startDcrlnd: lna.startDcrlnd
-}, dispatch);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      connectToLNWallet: lna.connectToLNWallet,
+      updateWalletBalances: lna.updateLNWalletBalances,
+      addInvoice: lna.addInvoice,
+      decodePayRequest: lna.decodePayRequest,
+      sendPayment: lna.sendPayment,
+      openChannel: lna.openChannel,
+      closeChannel: lna.closeChannel,
+      fundWallet: lna.fundWallet,
+      withdrawWallet: lna.withdrawWallet,
+      getWalletConfig: lna.getLNWalletConfig,
+      startDcrlnd: lna.startDcrlnd,
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps);

@@ -15,7 +15,7 @@ class StakePools extends React.Component {
       apiKey: "",
       selectedUnconfigured: this.props.unconfiguredStakePools[0],
       hasFailedAttempt: false,
-      show: false
+      show: false,
     };
     if (!props.updatedStakePoolList && this.getStakepoolListingEnabled()) {
       this.props.discoverAvailableStakepools();
@@ -24,29 +24,41 @@ class StakePools extends React.Component {
 
   componentDidUpdate(prevProps) {
     // If we added a new VSP we show the modal warning to backup the redeem script.
-    if (this.props.configuredStakePools.length > prevProps.configuredStakePools.length) {
+    if (
+      this.props.configuredStakePools.length >
+      prevProps.configuredStakePools.length
+    ) {
       if (this.props.stakePool !== prevProps.stakePool) {
         this.setState({ show: true, isAdding: false });
       }
     }
-    const configuredHost = this.state.selectedUnconfigured ? this.state.selectedUnconfigured.Host : "";
-    const hasUnconfigured = this.props.unconfiguredStakePools.some(p => p.Host ===  configuredHost);
+    const configuredHost = this.state.selectedUnconfigured
+      ? this.state.selectedUnconfigured.Host
+      : "";
+    const hasUnconfigured = this.props.unconfiguredStakePools.some(
+      (p) => p.Host === configuredHost
+    );
     if (!hasUnconfigured && this.props.unconfiguredStakePools.length) {
       // We just added a stakepool, so it has been removed from the list of
       // unconfigured. Select the next one on the list.
       this.setState({
         selectedUnconfigured: this.props.unconfiguredStakePools[0],
         apiKey: "",
-        hasFailedAttempt: false
+        hasFailedAttempt: false,
       });
     }
   }
 
   componentDidMount() {
-    if(!this.state.selectedUnconfigured) {
-      this.setState({ selectedUnconfigured: this.props.unconfiguredStakePools[0] });
+    if (!this.state.selectedUnconfigured) {
+      this.setState({
+        selectedUnconfigured: this.props.unconfiguredStakePools[0],
+      });
     }
-    if (!this.getStakepoolListingEnabled() && this.props.stakePoolListingEnabled) {
+    if (
+      !this.getStakepoolListingEnabled() &&
+      this.props.stakePoolListingEnabled
+    ) {
       this.props.discoverAvailableStakepools();
     }
   }
@@ -58,8 +70,14 @@ class StakePools extends React.Component {
   renderStakepoolListingDisabled() {
     return (
       <div>
-        <p><T id="stake.enableStakePoolListing.description" m="VSP listing from external API endpoint is currently disabled. Please enable the access to this third party service or manually configure the VSP." /></p>
-        <EnableExternalRequestButton requestType={EXTERNALREQUEST_STAKEPOOL_LISTING}>
+        <p>
+          <T
+            id="stake.enableStakePoolListing.description"
+            m="VSP listing from external API endpoint is currently disabled. Please enable the access to this third party service or manually configure the VSP."
+          />
+        </p>
+        <EnableExternalRequestButton
+          requestType={EXTERNALREQUEST_STAKEPOOL_LISTING}>
           <T id="stake.enableStakePoolListing.button" m="Enable VSP Listing" />
         </EnableExternalRequestButton>
       </div>
@@ -72,8 +90,17 @@ class StakePools extends React.Component {
         id="stake.noAvailableStakepools"
         m="No VSP found. Check your internet connection or {link} to see if the VSP API is down."
         values={{
-          link: (<a className="stakepool-link" onClick={() => shell.openExternal("https://api.decred.org/?c=gsd")}><T id="stake.discoverStakeOoolsAPILink" m="this link" /></a>)
-        }} />
+          link: (
+            <a
+              className="stakepool-link"
+              onClick={() =>
+                shell.openExternal("https://api.decred.org/?c=gsd")
+              }>
+              <T id="stake.discoverStakeOoolsAPILink" m="this link" />
+            </a>
+          ),
+        }}
+      />
     );
   }
 
@@ -84,15 +111,18 @@ class StakePools extends React.Component {
           ...this.props,
           ...this.state,
           selectedUnconfigured: this.getSelectedUnconfigured(),
-          ...substruct({
-            onChangeApiKey: null,
-            onSaveStakePool: null,
-            onSetStakePoolInfo: null,
-            onChangeSelectedUnconfigured: null,
-            onCancelPassphraseRequest: null,
-            onCancelAddStakePool: null,
-            onRemoveStakePool: null
-          }, this)
+          ...substruct(
+            {
+              onChangeApiKey: null,
+              onSaveStakePool: null,
+              onSetStakePoolInfo: null,
+              onChangeSelectedUnconfigured: null,
+              onCancelPassphraseRequest: null,
+              onCancelAddStakePool: null,
+              onRemoveStakePool: null,
+            },
+            this
+          ),
         }}
       />
     );
@@ -114,29 +144,39 @@ class StakePools extends React.Component {
         {...{
           showModal: this.state.show,
           ...this.props,
-          ...substruct({
-            onShowAddStakePool: null,
-            toggleBackupModal: null
-          }, this)
+          ...substruct(
+            {
+              onShowAddStakePool: null,
+              toggleBackupModal: null,
+            },
+            this
+          ),
         }}
       />
     );
   }
 
   getIsAdding() {
-    return this.state.isAdding
-      || this.props.configuredStakePools.length <= 0
-      || this.props.isImportingScript;
+    return (
+      this.state.isAdding ||
+      this.props.configuredStakePools.length <= 0 ||
+      this.props.isImportingScript
+    );
   }
 
   getNoAvailableStakepools() {
-    return (this.props.unconfiguredStakePools.length === 0) && (this.props.configuredStakePools.length === 0);
+    return (
+      this.props.unconfiguredStakePools.length === 0 &&
+      this.props.configuredStakePools.length === 0
+    );
   }
 
   getSelectedUnconfigured() {
     const pool = this.state.selectedUnconfigured;
     return pool
-      ? this.props.unconfiguredStakePools.find(compose(eq(pool.Host), get("Host")))
+      ? this.props.unconfiguredStakePools.find(
+          compose(eq(pool.Host), get("Host"))
+        )
       : null;
   }
 

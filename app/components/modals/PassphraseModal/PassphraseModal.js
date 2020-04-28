@@ -12,7 +12,10 @@ class PassphraseModal extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if ((prevProps.triggerSubmit !== this.props.triggerSubmit) && this.props.triggerSubmit) {
+    if (
+      prevProps.triggerSubmit !== this.props.triggerSubmit &&
+      this.props.triggerSubmit
+    ) {
       this.onSubmit();
     }
   }
@@ -29,7 +32,7 @@ class PassphraseModal extends React.Component {
   getInitialState() {
     return {
       passPhrase: "",
-      hasFailedAttempt: false
+      hasFailedAttempt: false,
     };
   }
 
@@ -69,7 +72,7 @@ class PassphraseModal extends React.Component {
           onSubmit,
           onCancelModal,
           hasFailedAttempt,
-          isValid: isValid()
+          isValid: isValid(),
         }}
       />
     );

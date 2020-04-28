@@ -7,11 +7,15 @@ import * as ca from "actions/ClientActions";
 const mapStateToProps = selectorMap({
   startRequestHeight: sel.getTicketsProgressStartRequestHeight,
   ticketsFilter: sel.ticketsFilter,
-  currentBlockHeight: sel.currentBlockHeight
+  currentBlockHeight: sel.currentBlockHeight,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  cancelGetTickets: ca.cancelGetTickets
-}, dispatch);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      cancelGetTickets: ca.cancelGetTickets,
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps);

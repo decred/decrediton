@@ -5,9 +5,18 @@ import { equalElements } from "helpers";
 import * as wallet from "wallet";
 import { closeWalletRequest } from "actions/WalletLoaderActions";
 import { closeDaemonRequest, backToCredentials } from "actions/DaemonActions";
-import { getTreasuryBalance, resetTreasuryBalance } from "actions/ClientActions";
-import { EXTERNALREQUEST_DCRDATA, EXTERNALREQUEST_POLITEIA } from "main_dev/externalRequests";
-import { getTokenAndInitialBatch, resetInventoryAndProposals } from "actions/GovernanceActions";
+import {
+  getTreasuryBalance,
+  resetTreasuryBalance,
+} from "actions/ClientActions";
+import {
+  EXTERNALREQUEST_DCRDATA,
+  EXTERNALREQUEST_POLITEIA,
+} from "main_dev/externalRequests";
+import {
+  getTokenAndInitialBatch,
+  resetInventoryAndProposals,
+} from "actions/GovernanceActions";
 import * as configConstants from "constants/config";
 
 export const SETTINGS_SAVE = "SETTINGS_SAVE";
@@ -16,19 +25,28 @@ export const SETTINGS_UNCHANGED = "SETTINGS_UNCHANGED";
 export const SETTINGS_TOGGLE_THEME = "SETTINGS_TOGGLE_THEME";
 
 export const saveSettings = (settings) => async (dispatch, getState) => {
-  const { settings: { needNetworkReset } } = getState();
-  const { daemon: { walletName } } = getState();
+  const {
+    settings: { needNetworkReset },
+  } = getState();
+  const {
+    daemon: { walletName },
+  } = getState();
 
   const config = getGlobalCfg();
-  const oldAllowedExternalRequests = config.get(configConstants.ALLOW_EXTERNAL_REQUEST);
+  const oldAllowedExternalRequests = config.get(
+    configConstants.ALLOW_EXTERNAL_REQUEST
+  );
   const oldTheme = config.get(configConstants.THEME);
   const updatedProxy =
-    (config.get(configConstants.PROXY_TYPE,) !== settings.proxyType) ||
-    (config.get(configConstants.PROXY_LOCATION) !== settings.proxyLocation);
+    config.get(configConstants.PROXY_TYPE) !== settings.proxyType ||
+    config.get(configConstants.PROXY_LOCATION) !== settings.proxyLocation;
 
   config.set(configConstants.LOCALE, settings.locale);
   config.set(configConstants.DAEMON_ADVANCED, settings.daemonStartAdvanced);
-  config.set(configConstants.ALLOW_EXTERNAL_REQUEST, settings.allowedExternalRequests);
+  config.set(
+    configConstants.ALLOW_EXTERNAL_REQUEST,
+    settings.allowedExternalRequests
+  );
   config.set(configConstants.PROXY_TYPE, settings.proxyType);
   config.set(configConstants.PROXY_LOCATION, settings.proxyLocation);
   config.set(configConstants.TIMEZONE, settings.timezone);
@@ -43,7 +61,8 @@ export const saveSettings = (settings) => async (dispatch, getState) => {
     walletConfig.set("gaplimit", settings.gapLimit);
 
     // We can not enable politeia without wallet name as we need it to check for cached votes.
-    const newPoliteiaEnabled = settings.allowedExternalRequests.indexOf(EXTERNALREQUEST_POLITEIA) > -1;
+    const newPoliteiaEnabled =
+      settings.allowedExternalRequests.indexOf(EXTERNALREQUEST_POLITEIA) > -1;
     if (newPoliteiaEnabled === true) {
       dispatch(getTokenAndInitialBatch());
     }
@@ -52,7 +71,9 @@ export const saveSettings = (settings) => async (dispatch, getState) => {
     }
   }
 
-  if (!equalElements(oldAllowedExternalRequests, settings.allowedExternalRequests)) {
+  if (
+    !equalElements(oldAllowedExternalRequests, settings.allowedExternalRequests)
+  ) {
     wallet.reloadAllowedExternalRequests();
   }
 
@@ -60,7 +81,8 @@ export const saveSettings = (settings) => async (dispatch, getState) => {
     dispatch({ theme: settings.theme, type: SETTINGS_TOGGLE_THEME });
   }
 
-  const newDcrdataEnabled = settings.allowedExternalRequests.indexOf(EXTERNALREQUEST_DCRDATA) > -1;
+  const newDcrdataEnabled =
+    settings.allowedExternalRequests.indexOf(EXTERNALREQUEST_DCRDATA) > -1;
   if (newDcrdataEnabled === true) {
     dispatch(getTreasuryBalance());
   }
@@ -79,35 +101,47 @@ export const saveSettings = (settings) => async (dispatch, getState) => {
     await dispatch(closeDaemonRequest());
     dispatch(backToCredentials());
   }
-
 };
 
 export const ALLOWEDEXTERNALREQUESTS_ADDED = "ALLOWEDEXTERNALREQUESTS_ADDED";
-export const addAllowedExternalRequest = (requestType) => (dispatch, getState) => new Promise( (resolve, reject) => {
-  const config = getGlobalCfg();
-  const allowed = config.get(configConstants.ALLOW_EXTERNAL_REQUEST);
+export const addAllowedExternalRequest = (requestType) => (
+  dispatch,
+  getState
+) =>
+  new Promise((resolve, reject) => {
+    const config = getGlobalCfg();
+    const allowed = config.get(configConstants.ALLOW_EXTERNAL_REQUEST);
 
-  if (allowed.indexOf(requestType) > -1) return reject(false);
+    if (allowed.indexOf(requestType) > -1) return reject(false);
 
-  allowed.push(requestType);
-  config.set(configConstants.ALLOW_EXTERNAL_REQUEST, allowed);
-  wallet.allowExternalRequest(requestType);
+    allowed.push(requestType);
+    config.set(configConstants.ALLOW_EXTERNAL_REQUEST, allowed);
+    wallet.allowExternalRequest(requestType);
 
-  const { settings: { currentSettings, tempSettings } } = getState();
-  const newSettings = { ...currentSettings };
-  newSettings.allowedExternalRequests = allowed;
+    const {
+      settings: { currentSettings, tempSettings },
+    } = getState();
+    const newSettings = { ...currentSettings };
+    newSettings.allowedExternalRequests = allowed;
 
-  // Also modify temp settings, given that it may be different than the current
-  // settings.
-  const newTempSettings = { ...tempSettings };
-  newTempSettings.allowedExternalRequests = [ ...newTempSettings.allowedExternalRequests ];
-  if (newTempSettings.allowedExternalRequests.indexOf(requestType) === -1) {
-    newTempSettings.allowedExternalRequests.push(requestType);
-  }
+    // Also modify temp settings, given that it may be different than the current
+    // settings.
+    const newTempSettings = { ...tempSettings };
+    newTempSettings.allowedExternalRequests = [
+      ...newTempSettings.allowedExternalRequests,
+    ];
+    if (newTempSettings.allowedExternalRequests.indexOf(requestType) === -1) {
+      newTempSettings.allowedExternalRequests.push(requestType);
+    }
 
-  dispatch({ newSettings, newTempSettings, type: ALLOWEDEXTERNALREQUESTS_ADDED, requestType });
-  resolve(true);
-});
+    dispatch({
+      newSettings,
+      newTempSettings,
+      type: ALLOWEDEXTERNALREQUESTS_ADDED,
+      requestType,
+    });
+    resolve(true);
+  });
 
 export function updateStateSettingsChanged(settings, norestart) {
   return (dispatch, getState) => {
@@ -117,27 +151,46 @@ export function updateStateSettingsChanged(settings, norestart) {
     const networkChange = {
       network: true,
       spvMode: true,
-      daemonStartAdvanced: true
+      daemonStartAdvanced: true,
     };
 
-    const newDiffersFromTemp = settingsFields
-      .reduce((d, f) => (d || newSettings[f] !== tempSettings[f]), false);
+    const newDiffersFromTemp = settingsFields.reduce(
+      (d, f) => d || newSettings[f] !== tempSettings[f],
+      false
+    );
 
     if (newDiffersFromTemp) {
-      const newDiffersFromCurrent = settingsFields
-        .reduce((d, f) => (d || newSettings[f] !== currentSettings[f]), false);
-      const needNetworkReset = !norestart && Object.keys(networkChange)
-        .reduce((d, f) => (d || newSettings[f] !== currentSettings[f]), false);
+      const newDiffersFromCurrent = settingsFields.reduce(
+        (d, f) => d || newSettings[f] !== currentSettings[f],
+        false
+      );
+      const needNetworkReset =
+        !norestart &&
+        Object.keys(networkChange).reduce(
+          (d, f) => d || newSettings[f] !== currentSettings[f],
+          false
+        );
       newDiffersFromCurrent
-        ? dispatch({ tempSettings: newSettings, needNetworkReset, type: SETTINGS_CHANGED })
+        ? dispatch({
+            tempSettings: newSettings,
+            needNetworkReset,
+            type: SETTINGS_CHANGED,
+          })
         : dispatch({ tempSettings: currentSettings, type: SETTINGS_UNCHANGED });
     }
   };
 }
 
-export const updateStateVoteSettingsChanged = (settings) => (dispatch, getState) => {
-  const { settings: { tempSettings, currentSettings } } = getState();
-  const { daemon: { walletName } } = getState();
+export const updateStateVoteSettingsChanged = (settings) => (
+  dispatch,
+  getState
+) => {
+  const {
+    settings: { tempSettings, currentSettings },
+  } = getState();
+  const {
+    daemon: { walletName },
+  } = getState();
   if (settings.enableTicketBuyer !== tempSettings.enableTicketBuyer) {
     const config = getWalletCfg(isTestNet(getState()), walletName);
     config.set("enableticketbuyer", settings.enableTicketBuyer);

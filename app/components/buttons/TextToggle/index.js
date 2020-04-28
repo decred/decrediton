@@ -5,7 +5,7 @@ class TextToggle extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeButton: this.props.activeButton
+      activeButton: this.props.activeButton,
     };
   }
 
@@ -19,9 +19,7 @@ class TextToggle extends React.Component {
     const { activeButton } = this.state;
     const { onClick } = this;
 
-    return (
-      <Toggle {...{ leftText, rightText, activeButton, onClick }} />
-    );
+    return <Toggle {...{ leftText, rightText, activeButton, onClick }} />;
   }
 }
 

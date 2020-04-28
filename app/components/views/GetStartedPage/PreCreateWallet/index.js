@@ -13,18 +13,29 @@ class PreCreateWallet extends React.Component {
       walletMasterPubKey: "",
       masterPubKeyError: false,
       walletNameError: null,
-      isTrezor: false
+      isTrezor: false,
     };
   }
 
   render() {
     const {
-      maxWalletCount, isSPV, availableWallets, getDaemonSynced, onShowTrezorConfig,
-      isCreateNewWallet, creatingWallet
+      maxWalletCount,
+      isSPV,
+      availableWallets,
+      getDaemonSynced,
+      onShowTrezorConfig,
+      isCreateNewWallet,
+      creatingWallet,
     } = this.props;
     const {
-      newWalletName, editWallets, hasFailedAttemptName,
-      hasFailedAttemptPubKey, isWatchingOnly, walletMasterPubKey, masterPubKeyError, walletNameError
+      newWalletName,
+      editWallets,
+      hasFailedAttemptName,
+      hasFailedAttemptPubKey,
+      isWatchingOnly,
+      walletMasterPubKey,
+      masterPubKeyError,
+      walletNameError,
     } = this.state;
     return (
       <CreateWalletForm
@@ -47,16 +58,19 @@ class PreCreateWallet extends React.Component {
           creatingWallet,
           ...this.props,
           ...this.state,
-          ...substruct({
-            onChangeAvailableWallets: null,
-            createWallet: null,
-            onChangeCreateWalletName: null,
-            showCreateWalletForm: null,
-            hideCreateWalletForm: null,
-            toggleWatchOnly: null,
-            onChangeCreateWalletMasterPubKey: null,
-            toggleTrezor: null
-          }, this)
+          ...substruct(
+            {
+              onChangeAvailableWallets: null,
+              createWallet: null,
+              onChangeCreateWalletName: null,
+              showCreateWalletForm: null,
+              hideCreateWalletForm: null,
+              toggleWatchOnly: null,
+              onChangeCreateWalletMasterPubKey: null,
+              toggleTrezor: null,
+            },
+            this
+          ),
         }}
       />
     );
@@ -88,16 +102,25 @@ class PreCreateWallet extends React.Component {
   }
 
   createWallet() {
-    const { newWalletName, isWatchingOnly, masterPubKeyError, walletMasterPubKey,
-      walletNameError, isTrezor } = this.state;
+    const {
+      newWalletName,
+      isWatchingOnly,
+      masterPubKeyError,
+      walletMasterPubKey,
+      walletNameError,
+      isTrezor,
+    } = this.state;
     const { isTestNet, onSendContinue, isCreateNewWallet } = this.props;
 
     const walletSelected = {
       label: newWalletName,
       value: {
-        wallet: newWalletName, isWatchingOnly, isTrezor, isNew: isCreateNewWallet,
-        network: isTestNet ? "testnet" : "mainnet"
-      }
+        wallet: newWalletName,
+        isWatchingOnly,
+        isTrezor,
+        isNew: isCreateNewWallet,
+        network: isTestNet ? "testnet" : "mainnet",
+      },
     };
 
     if (newWalletName === "" || walletNameError) {
@@ -117,20 +140,24 @@ class PreCreateWallet extends React.Component {
     onSendContinue();
     if (isTrezor) {
       walletSelected.watchingOnly = true;
-      return this.props.trezorGetWalletCreationMasterPubKey()
-        .then(() => this.props.onCreateWallet(walletSelected)
-          .then(() => this.props.onShowCreateWallet(isCreateNewWallet))
+      return this.props
+        .trezorGetWalletCreationMasterPubKey()
+        .then(() =>
+          this.props
+            .onCreateWallet(walletSelected)
+            .then(() => this.props.onShowCreateWallet(isCreateNewWallet))
         );
     }
 
-    return this.props.onCreateWallet(walletSelected)
+    return this.props
+      .onCreateWallet(walletSelected)
       .then(() => this.props.onShowCreateWallet(isCreateNewWallet))
-      .catch( error => this.props.onSendError(error) );
+      .catch((error) => this.props.onSendError(error));
   }
 
   toggleWatchOnly() {
     const { isWatchingOnly } = this.state;
-    this.setState({ isWatchingOnly : !isWatchingOnly, isTrezor: false });
+    this.setState({ isWatchingOnly: !isWatchingOnly, isTrezor: false });
   }
 
   toggleTrezor() {
@@ -147,7 +174,9 @@ class PreCreateWallet extends React.Component {
     if (walletMasterPubKey === "") {
       this.setState({ hasFailedAttemptPubKey: true });
     }
-    const { isValid } = await this.props.validateMasterPubKey(walletMasterPubKey);
+    const { isValid } = await this.props.validateMasterPubKey(
+      walletMasterPubKey
+    );
     if (!isValid) {
       this.setState({ masterPubKeyError: true });
     } else {

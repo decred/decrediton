@@ -13,21 +13,28 @@ const CreateWallet = ({
   onSubmitCopySeedConfirm,
   mnemonic,
   sendBack,
-  sendContinue
+  sendContinue,
 }) => (
   <>
     <div className="content-title-wrapper is-row">
       <div className="content-title">
         <CreateNewWalletTitle />
       </div>
-      {sendBack && <Tooltip text={<GoBackMsg />}><div className="go-back-screen-button" onClick={ sendBack } /></Tooltip>}
+      {sendBack && (
+        <Tooltip text={<GoBackMsg />}>
+          <div className="go-back-screen-button" onClick={sendBack} />
+        </Tooltip>
+      )}
     </div>
-    <Documentation name="WalletCreationWarning" className="create-wallet-warning" />
+    <Documentation
+      name="WalletCreationWarning"
+      className="create-wallet-warning"
+    />
     <div className="seedArea">
       {mnemonic.split(" ").map((word, i) => {
         return (
           <div key={i} className="seedWord filled">
-            <span className="number">{i+1}.</span>
+            <span className="number">{i + 1}.</span>
             <span className="word">{word}</span>
           </div>
         );
@@ -40,9 +47,7 @@ const CreateWallet = ({
       <KeyBlueButton className="wallet-key-blue-button" onClick={sendContinue}>
         <T id="createWallet.continueBtn" m="Continue" />
       </KeyBlueButton>
-      <InvisibleButton
-        className="go-back-button"
-        onClick={sendBack}>
+      <InvisibleButton className="go-back-button" onClick={sendBack}>
         <BackBtnMsg />
       </InvisibleButton>
     </div>

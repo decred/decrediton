@@ -1,7 +1,7 @@
 import TutorialPage from "./Page";
 import { daemonStartup } from "connectors";
 @autobind
-class Tutorial extends React.Component{
+class Tutorial extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.getInitialState();
@@ -9,7 +9,7 @@ class Tutorial extends React.Component{
 
   getInitialState() {
     return {
-      tutorialStep: 0
+      tutorialStep: 0,
     };
   }
 
@@ -24,9 +24,10 @@ class Tutorial extends React.Component{
           onNextTutorialStep,
           onPrevTutorialStep,
           onGoToStep,
-          finishTutorial
-        }
-        }/>);
+          finishTutorial,
+        }}
+      />
+    );
   }
 
   onGoToStep(step) {
@@ -46,7 +47,6 @@ class Tutorial extends React.Component{
       this.setState({ tutorialStep: tutorialStep - 1 });
     }
   }
-
 }
 
 export default daemonStartup(Tutorial);

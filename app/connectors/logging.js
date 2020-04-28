@@ -9,7 +9,7 @@ const mapStateToProps = selectorMap({
   isDaemonStarted: sel.getDaemonStarted,
   lnActive: sel.lnActive,
   lnConnectAttempt: sel.lnConnectAttempt,
-  lnStartAttempt: sel.lnStartAttempt
+  lnStartAttempt: sel.lnStartAttempt,
 });
 
 export default connect(mapStateToProps);

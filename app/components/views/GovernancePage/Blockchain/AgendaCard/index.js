@@ -7,7 +7,7 @@ class AgendaOverview extends React.Component {
     super(props);
     this.state = {
       selectedChoiceId: this.props.selectedChoice,
-      disabled: this.props.disabled
+      disabled: this.props.disabled,
     };
   }
 
@@ -18,17 +18,23 @@ class AgendaOverview extends React.Component {
   }
 
   render() {
-    const { agenda, onCloseAgenda, showVoteChoice, selectedChoice, onClick } = this.props;
+    const {
+      agenda,
+      onCloseAgenda,
+      showVoteChoice,
+      selectedChoice,
+      onClick,
+    } = this.props;
     const { selectedChoiceId, disabled } = this.state;
     const { setSelecedChoiceId, updatePreferences } = this;
     const activeChoiceId = this.props.selectedChoice;
-    const choices = agenda.choices.map(choice => ({
-      choiceId: choice.getId()
+    const choices = agenda.choices.map((choice) => ({
+      choiceId: choice.getId(),
     }));
     const hasModifiedChoice = this.hasModifiedChoice();
 
-    return (
-      showVoteChoice ? <Overview
+    return showVoteChoice ? (
+      <Overview
         {...{
           isFinished: agenda.finished,
           agendaId: agenda.name,
@@ -41,9 +47,11 @@ class AgendaOverview extends React.Component {
           setSelecedChoiceId,
           updatePreferences,
           closeCurrentAgenda: onCloseAgenda,
-          disabled
+          disabled,
         }}
-      /> : <AgendaCard {...{ onClick, agenda, selectedChoice  }} />
+      />
+    ) : (
+      <AgendaCard {...{ onClick, agenda, selectedChoice }} />
     );
   }
 
@@ -57,7 +65,10 @@ class AgendaOverview extends React.Component {
 
   updatePreferences() {
     if (!this.hasModifiedChoice()) return;
-    this.props.onUpdateVotePreference(this.props.agenda.name, this.state.selectedChoiceId);
+    this.props.onUpdateVotePreference(
+      this.props.agenda.name,
+      this.state.selectedChoiceId
+    );
   }
 }
 

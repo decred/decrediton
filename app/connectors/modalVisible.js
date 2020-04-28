@@ -3,7 +3,7 @@ import { selectorMap } from "../fp";
 import * as sel from "../selectors";
 
 const mapStateToProps = selectorMap({
-  modalVisible: sel.modalVisible
+  modalVisible: sel.modalVisible,
 });
 
 export default connect(mapStateToProps);

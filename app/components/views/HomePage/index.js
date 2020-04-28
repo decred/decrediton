@@ -6,7 +6,7 @@ import { substruct } from "fp";
 const ROWS_NUMBER_ON_TABLE = 5;
 
 @autobind
-class Home extends React.Component{
+class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.getInitialState();
@@ -18,19 +18,30 @@ class Home extends React.Component{
       passphraseHeading: null,
       passphraseDescription: null,
       passphraseCallback: null,
-      isRequestingPassphrase: false
+      isRequestingPassphrase: false,
     };
   }
 
   render() {
-    return this.props.walletService ? <HomePage {...{
-      rowNumber: ROWS_NUMBER_ON_TABLE, ...this.props, ...this.state,
-      ...substruct({
-        onShowRevokeTicket: null,
-        onRequestPassphrase: null,
-        onCancelPassphraseRequest: null
-      }, this)
-    }} /> : <ErrorScreen />;
+    return this.props.walletService ? (
+      <HomePage
+        {...{
+          rowNumber: ROWS_NUMBER_ON_TABLE,
+          ...this.props,
+          ...this.state,
+          ...substruct(
+            {
+              onShowRevokeTicket: null,
+              onRequestPassphrase: null,
+              onCancelPassphraseRequest: null,
+            },
+            this
+          ),
+        }}
+      />
+    ) : (
+      <ErrorScreen />
+    );
   }
 
   onRevokeTickets(privpass) {
@@ -39,17 +50,25 @@ class Home extends React.Component{
     this.onCancelPassphraseRequest();
   }
 
-  onRequestPassphrase(passphraseHeading, passphraseDescription, passphraseCallback) {
+  onRequestPassphrase(
+    passphraseHeading,
+    passphraseDescription,
+    passphraseCallback
+  ) {
     this.setState({
       passphraseHeading,
       passphraseDescription,
       passphraseCallback,
-      isRequestingPassphrase: true
+      isRequestingPassphrase: true,
     });
   }
 
   onShowRevokeTicket() {
-    this.onRequestPassphrase("Enter Passphrase to Revoke Tickets", null, this.onRevokeTickets);
+    this.onRequestPassphrase(
+      "Enter Passphrase to Revoke Tickets",
+      null,
+      this.onRevokeTickets
+    );
   }
 
   onCancelPassphraseRequest() {
@@ -57,10 +76,9 @@ class Home extends React.Component{
       isRequestingPassphrase: false,
       passphraseHeading: null,
       passphraseDescription: null,
-      passphraseCallback: null
+      passphraseCallback: null,
     });
   }
-
 }
 
 export default service(home(Home));

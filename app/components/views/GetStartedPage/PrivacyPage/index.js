@@ -2,7 +2,7 @@ import { daemonStartup, settings } from "connectors";
 import Page from "./Page";
 
 @autobind
-class PrivacyPage extends React.Component{
+class PrivacyPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = { showCustomPrivacy: false };
@@ -19,9 +19,16 @@ class PrivacyPage extends React.Component{
 
   render() {
     const { acceptCustomPrivacy, toggleCustomPrivacy } = this;
-    return <Page {...{
-      ...this.props, ...this.state, acceptCustomPrivacy, toggleCustomPrivacy
-    }} />;
+    return (
+      <Page
+        {...{
+          ...this.props,
+          ...this.state,
+          acceptCustomPrivacy,
+          toggleCustomPrivacy,
+        }}
+      />
+    );
   }
 }
 

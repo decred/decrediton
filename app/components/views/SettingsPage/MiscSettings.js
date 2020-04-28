@@ -5,20 +5,21 @@ import { InfoDocFieldModalButton } from "buttons";
 const propTypes = {
   tempSettings: PropTypes.object.isRequired,
   currencies: PropTypes.array.isRequired,
-  onChangeTempSettings: PropTypes.func.isRequired
+  onChangeTempSettings: PropTypes.func.isRequired,
 };
 
 const MiscSettings = ({
   tempSettings,
   currencies,
   onChangeTempSettings,
-  walletReady
+  walletReady,
 }) => (
   <div className="settings-misc">
-    <div className="settings-column-title"><T id="settings.misc.title" m="Misc" /></div>
+    <div className="settings-column-title">
+      <T id="settings.misc.title" m="Misc" />
+    </div>
     <div className="settings-column-content">
-
-      {walletReady &&
+      {walletReady && (
         <div className="settings-row">
           <div className="settings-label">
             <T id="settings.displayedUnits" m="Displayed Units" />
@@ -26,17 +27,25 @@ const MiscSettings = ({
           <SettingsInput
             className="settings-input"
             value={tempSettings.currencyDisplay}
-            onChange={(newCurrency) => onChangeTempSettings({ currencyDisplay: newCurrency.name })}
-            valueKey="name" labelKey="name"
+            onChange={(newCurrency) =>
+              onChangeTempSettings({ currencyDisplay: newCurrency.name })
+            }
+            valueKey="name"
+            labelKey="name"
             options={currencies}
           />
         </div>
-      }
+      )}
 
-      {walletReady &&
+      {walletReady && (
         <div className="settings-row">
           <div className="settings-label">
-            <InfoDocFieldModalButton document="GapLimitInfo" modalClassName="has-warning" double draggable/>
+            <InfoDocFieldModalButton
+              document="GapLimitInfo"
+              modalClassName="has-warning"
+              double
+              draggable
+            />
             <div className="info-label">
               <T id="settings.gapLimit.label" m="Gap Limit" />
             </div>
@@ -44,11 +53,13 @@ const MiscSettings = ({
           <div className="settings-input">
             <NumericInput
               value={tempSettings.gapLimit}
-              onChange={(e) => onChangeTempSettings({ gapLimit: e.target.value })}
+              onChange={(e) =>
+                onChangeTempSettings({ gapLimit: e.target.value })
+              }
             />
           </div>
         </div>
-      }
+      )}
     </div>
   </div>
 );

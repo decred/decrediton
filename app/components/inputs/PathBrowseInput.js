@@ -11,18 +11,17 @@ import { defineMessages, injectIntl } from "react-intl";
 // Import this and pass one of the objects as a member of the filter prop
 // of PathBrowseInput
 export const FileBrowserFilters = {
-  csv: { key: "csv", extensions: [ "csv" ] },
-  all: { key: "all", extensions: [ "*" ] }
+  csv: { key: "csv", extensions: ["csv"] },
+  all: { key: "all", extensions: ["*"] },
 };
 
 const FileBrowserFilterNames = defineMessages({
   csv: { id: "fileBrowserTypes.csv.name", defaultMessage: "CSV Files" },
-  all: { id: "fileBrowserTypes.all.name", defaultMessage: "All Files" }
+  all: { id: "fileBrowserTypes.all.name", defaultMessage: "All Files" },
 });
 
 @autobind
 class PathBrowseInput extends React.Component {
-
   key = Math.random().toString(36).substring(2, 15);
 
   constructor(props) {
@@ -31,7 +30,6 @@ class PathBrowseInput extends React.Component {
   }
 
   componentDidMount() {
-
     let self = this;
     let pathListener = function (event, data) {
       let path = isArray(data) ? data[0] : data;
@@ -48,14 +46,16 @@ class PathBrowseInput extends React.Component {
 
   selectDirectory() {
     const intl = this.props.intl;
-    const filters = (this.props.filters || []).map(f => {
+    const filters = (this.props.filters || []).map((f) => {
       return { ...f, name: intl.formatMessage(FileBrowserFilterNames[f.key]) };
     });
 
     const f = this.props.save ? dialog.showSaveDialog : dialog.showOpenDialog;
     const opts = {
-      properties: [ this.props.type === "directory" ? "openDirectory" : "openFile" ],
-      filters: filters
+      properties: [
+        this.props.type === "directory" ? "openDirectory" : "openFile",
+      ],
+      filters: filters,
     };
     f(mainWindow, opts, this.directorySelectorCallback);
   }

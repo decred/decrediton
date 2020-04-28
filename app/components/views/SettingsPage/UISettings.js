@@ -5,21 +5,22 @@ import "style/LanguageSelect.less";
 const propTypes = {
   tempSettings: PropTypes.object.isRequired,
   locales: PropTypes.array.isRequired,
-  onChangeTempSettings: PropTypes.func.isRequired
+  onChangeTempSettings: PropTypes.func.isRequired,
 };
 
 const availableUIThemeTypes = [
-  { name: <T id="settings.uitheme.type.light" m="Light" />, value: "theme-light" },
-  { name: <T id="settings.uitheme.type.dark" m="Dark" />, value: "theme-dark" }
+  {
+    name: <T id="settings.uitheme.type.light" m="Light" />,
+    value: "theme-light",
+  },
+  { name: <T id="settings.uitheme.type.dark" m="Dark" />, value: "theme-dark" },
 ];
 
-const UISettings = ({
-  tempSettings,
-  locales,
-  onChangeTempSettings
-}) => (
+const UISettings = ({ tempSettings, locales, onChangeTempSettings }) => (
   <div className="settings-ui">
-    <div className="settings-column-title"><T id="settings.ui.title" m="UI" /></div>
+    <div className="settings-column-title">
+      <T id="settings.ui.title" m="UI" />
+    </div>
     <div className="settings-column-content">
       <div className="settings-row">
         <div className="settings-label">
@@ -28,7 +29,9 @@ const UISettings = ({
         <SettingsInput
           className="settings-input"
           value={tempSettings.theme}
-          onChange={(newTheme) => onChangeTempSettings({ theme: newTheme.value })}
+          onChange={(newTheme) =>
+            onChangeTempSettings({ theme: newTheme.value })
+          }
           valueKey="value"
           labelKey="name"
           options={availableUIThemeTypes}
@@ -42,8 +45,11 @@ const UISettings = ({
         <LanguageSelect
           className="language-select-input"
           value={tempSettings.locale}
-          onChange={(newLocale) => onChangeTempSettings({ locale: newLocale.key })}
-          valueKey="key" labelKey="description"
+          onChange={(newLocale) =>
+            onChangeTempSettings({ locale: newLocale.key })
+          }
+          valueKey="key"
+          labelKey="description"
           options={locales}
         />
       </div>

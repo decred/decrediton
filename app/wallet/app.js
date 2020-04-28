@@ -2,14 +2,18 @@ import { ipcRenderer } from "electron";
 import { isObject, isString, isNumber, isUndefined, isNull } from "util";
 import { isFunction } from "util";
 
-export const onAppReloadRequested = cb => ipcRenderer.on("app-reload-requested", cb);
+export const onAppReloadRequested = (cb) =>
+  ipcRenderer.on("app-reload-requested", cb);
 
 export const log = (level, ...args) => {
-  ipcRenderer.send("main-log", ...[ level, ...args ]);
+  ipcRenderer.send("main-log", ...[level, ...args]);
 };
 
 export const logOptionNoArgs = (opts) => ({ ...opts, noArguments: true });
-export const logOptionNoResponseData = (opts) => ({ ...opts, noResponseData: true });
+export const logOptionNoResponseData = (opts) => ({
+  ...opts,
+  noResponseData: true,
+});
 
 // Formats a dynamic list of log arguments
 const formatLogArgs = (msg, args) => {
@@ -27,15 +31,14 @@ const formatLogArgs = (msg, args) => {
   };
 
   let logMsg = args.reduce((a) => a + "%s ", "%s ");
-  let logArgs = [ msg, ...args.map(formatArg) ];
+  let logArgs = [msg, ...args.map(formatArg)];
 
   return { logMsg, logArgs };
 };
 
 // Higher Order Function that wraps the promise-generating function f with log
 // calls. Calling f() **must** return a promise.
-export const withLog = (f, msg, opts={}) => (...args) => {
-
+export const withLog = (f, msg, opts = {}) => (...args) => {
   if (opts.noArguments) {
     log("info", msg);
   } else {
@@ -59,8 +62,8 @@ export const withLog = (f, msg, opts={}) => (...args) => {
 
         resolve(...res);
       })
-      .catch(err => {
-        const { logMsg, logArgs } = formatLogArgs(`${msg} errored `, [ err ]);
+      .catch((err) => {
+        const { logMsg, logArgs } = formatLogArgs(`${msg} errored `, [err]);
         log("error", logMsg, ...logArgs);
 
         reject(err);
@@ -68,13 +71,13 @@ export const withLog = (f, msg, opts={}) => (...args) => {
   });
 };
 
-export const withLogNoArgs = (f, msg, opts={}) =>
+export const withLogNoArgs = (f, msg, opts = {}) =>
   withLog(f, msg, logOptionNoArgs(opts));
 
-export const withLogNoResponseData = (f, msg, opts={}) =>
+export const withLogNoResponseData = (f, msg, opts = {}) =>
   withLog(f, msg, logOptionNoResponseData(opts));
 
-export const withLogNoData = (f, msg, opts={}) =>
+export const withLogNoData = (f, msg, opts = {}) =>
   withLog(f, msg, logOptionNoArgs(logOptionNoResponseData(opts)));
 
 export const setupProxy = () => {

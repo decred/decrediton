@@ -23,7 +23,6 @@ class ChangeLabel extends React.Component {
   }
 
   render() {
-
     const changeLabelHeader = (
       <>
         <T id="trezor.changeLabel.header" m="Change Label" />
@@ -37,9 +36,10 @@ class ChangeLabel extends React.Component {
         header={changeLabelHeader}
         show={this.state.show}
         onToggleAccordion={this.onToggleAccordion}
-        className="trezor-config-accordion"
-      >
-        <div><T id="trezor.changeLabel.description" m="New Label" /></div>
+        className="trezor-config-accordion">
+        <div>
+          <T id="trezor.changeLabel.description" m="New Label" />
+        </div>
         <div>
           <TextInput
             value={this.state.newLabel}
@@ -47,12 +47,14 @@ class ChangeLabel extends React.Component {
           />
         </div>
         <div>
-          <KeyBlueButton onClick={this.onChangeLabelClicked} disabled={loading} loading={loading} >
+          <KeyBlueButton
+            onClick={this.onChangeLabelClicked}
+            disabled={loading}
+            loading={loading}>
             <T id="trezor.changeLabel.changeButton" m="Change" />
           </KeyBlueButton>
         </div>
       </VerticalAccordion>
-
     );
   }
 }

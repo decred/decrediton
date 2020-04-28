@@ -24,7 +24,6 @@ class FirmwareUpdate extends React.Component {
   }
 
   render() {
-
     const header = (
       <>
         <T id="trezor.firmwareUpdate.header" m="Firmware Update" />
@@ -38,20 +37,28 @@ class FirmwareUpdate extends React.Component {
         header={header}
         show={this.state.show}
         onToggleAccordion={this.onToggleAccordion}
-        className="trezor-config-accordion trezor-config-regular-buttons"
-      >
+        className="trezor-config-accordion trezor-config-regular-buttons">
         <div className="trezor-wipe-warning">
           <Documentation name="TrezorFirmwareUpdateWarning" />
         </div>
 
-        <p><T id="trezorPage.updateFirmwarePah" m="Path to firmware file" /></p>
-        <div><PathBrowseInput onChange={this.onChangePath} value={this.state.path} /></div>
+        <p>
+          <T id="trezorPage.updateFirmwarePah" m="Path to firmware file" />
+        </p>
+        <div>
+          <PathBrowseInput
+            onChange={this.onChangePath}
+            value={this.state.path}
+          />
+        </div>
 
-        <DangerButton onClick={this.onUpdateFirmware} loading={loading} disabled={loading}>
+        <DangerButton
+          onClick={this.onUpdateFirmware}
+          loading={loading}
+          disabled={loading}>
           <T id="trezorPage.updateFirmwareBtn" m="Update Firmware" />
         </DangerButton>
       </VerticalAccordion>
-
     );
   }
 }

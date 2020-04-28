@@ -7,7 +7,7 @@ export const NETWORK = "network";
 export const SET_LANGUAGE = "set_language";
 export const UI_ANIMATION = "ui_animations";
 export const SHOW_SPV_CHOICE = "show_spvchoice";
-export const SHOW_TUTORIAL  = "show_tutorial";
+export const SHOW_TUTORIAL = "show_tutorial";
 export const SHOW_PRIVACY = "show_privacy";
 export const ALLOW_EXTERNAL_REQUEST = "allowed_external_requests";
 export const PROXY_TYPE = "proxy_type";
@@ -30,13 +30,19 @@ export const RPCCERT = "rpc_cert";
 export const RPCHOST = "rpc_host";
 export const RPCPORT = "rpc_port";
 
-export const setDaemonRemoteCredentials = (rpcuser, rpcpass, rpccert, rpchost, rpcport) => {
+export const setDaemonRemoteCredentials = (
+  rpcuser,
+  rpcpass,
+  rpccert,
+  rpchost,
+  rpcport
+) => {
   return {
     [RPCUSER]: rpcuser,
     [RPCPASS]: rpcpass,
     [RPCCERT]: rpccert,
     [RPCHOST]: rpchost,
-    [RPCPORT]: rpcport
+    [RPCPORT]: rpcport,
   };
 };
 
@@ -63,5 +69,5 @@ export const INITIAL_VALUES = {
   [TREZOR_DEBUG]: false,
   [DISABLE_HARDWARE_ACCEL]: false,
   [LN_ENABLED]: false,
-  [UPGD_ELECTRON8]: false
+  [UPGD_ELECTRON8]: false,
 };

@@ -12,12 +12,8 @@ function isHidable(account) {
 
 const DataLine = ({ children }) => (
   <div className="account-row-details-bottom-spec">
-    <div className="account-row-details-bottom-spec-name">
-      {children[0]}
-    </div>
-    <div className="account-row-details-bottom-spec-value">
-      {children[1]}
-    </div>
+    <div className="account-row-details-bottom-spec-name">{children[0]}</div>
+    <div className="account-row-details-bottom-spec-value">{children[1]}</div>
   </div>
 );
 
@@ -29,7 +25,7 @@ const AccountsList = ({
   showAccount,
   showPubKey,
   onTogglePubkey,
-  accountExtendedKey
+  accountExtendedKey,
 }) => (
   <div key={"details" + account.accountNumber}>
     <div className="account-row-details-bottom-columns">
@@ -77,52 +73,78 @@ const AccountsList = ({
         </DataLine>
         <DataLine>
           <T id="accounts.keys" m="Keys" />
-          <T id="accounts.keys.counts" m="{external} external, {internal} internal, {imported} imported"
+          <T
+            id="accounts.keys.counts"
+            m="{external} external, {internal} internal, {imported} imported"
             values={{
               external: account.externalKeys,
               internal: account.internalKeys,
-              imported: account.importedKeys }} />
+              imported: account.importedKeys,
+            }}
+          />
         </DataLine>
       </div>
     </div>
 
     <div className="account-actions is-row">
-      {account.accountName !== "imported" &&
-          <div className="account-actions-pubkey">
-            <div className="account-actions-pubkey-label">
-              <T id="account.pubKey" m="Extended Public Key"/>
-            </div>
-            {showPubKey && accountExtendedKey?
-              <>
-                <div className="account-actions-pubkey-area">
-                  {accountExtendedKey}
-                </div>
-                <CopyToClipboard textToCopy={accountExtendedKey} className="account-actions-pubkey-clipboard" />
-              </> :
-              <SlateGrayButton className="account-actions-pubkey-button"><T id="account.Hidden" m="Hidden"/></SlateGrayButton>
-            }
+      {account.accountName !== "imported" && (
+        <div className="account-actions-pubkey">
+          <div className="account-actions-pubkey-label">
+            <T id="account.pubKey" m="Extended Public Key" />
           </div>
-      }
+          {showPubKey && accountExtendedKey ? (
+            <>
+              <div className="account-actions-pubkey-area">
+                {accountExtendedKey}
+              </div>
+              <CopyToClipboard
+                textToCopy={accountExtendedKey}
+                className="account-actions-pubkey-clipboard"
+              />
+            </>
+          ) : (
+            <SlateGrayButton className="account-actions-pubkey-button">
+              <T id="account.Hidden" m="Hidden" />
+            </SlateGrayButton>
+          )}
+        </div>
+      )}
       <div className="account-actions-buttons is-row">
-        {account.accountName !== "imported" &&
-            <Tooltip text={<T id="accounts.rename.tip" m="Rename Account" />}>
-              <div className="rename-account-button" onClick={showRenameAccount} />
-            </Tooltip> }
-        {account.accountName !== "imported" &&
-            <Tooltip text={showPubKey ?
-              <T id="accounts.hide.pubkey" m="Hide Pubkey" /> :
-              <T id="accounts.reveal.pubkey" m="Reveal Pubkey" />}>
-              <div className={"reveal-account-pubkey-button " + (showPubKey ? "hide" : "show") }
-                onClick={onTogglePubkey} />
-            </Tooltip> }
-        {isHidable(account) && !hidden &&
-            <Tooltip text={<T id="accounts.hide.tip" m="Hide" />}>
-              <div className="hide-account-button" onClick={hideAccount} />
-            </Tooltip> }
-        {hidden &&
-              <Tooltip text={<T id="accounts.show.tip" m="Show" />}>
-                <div className="show-account-button" onClick={showAccount} />
-              </Tooltip> }
+        {account.accountName !== "imported" && (
+          <Tooltip text={<T id="accounts.rename.tip" m="Rename Account" />}>
+            <div
+              className="rename-account-button"
+              onClick={showRenameAccount}
+            />
+          </Tooltip>
+        )}
+        {account.accountName !== "imported" && (
+          <Tooltip
+            text={
+              showPubKey ? (
+                <T id="accounts.hide.pubkey" m="Hide Pubkey" />
+              ) : (
+                <T id="accounts.reveal.pubkey" m="Reveal Pubkey" />
+              )
+            }>
+            <div
+              className={
+                "reveal-account-pubkey-button " + (showPubKey ? "hide" : "show")
+              }
+              onClick={onTogglePubkey}
+            />
+          </Tooltip>
+        )}
+        {isHidable(account) && !hidden && (
+          <Tooltip text={<T id="accounts.hide.tip" m="Hide" />}>
+            <div className="hide-account-button" onClick={hideAccount} />
+          </Tooltip>
+        )}
+        {hidden && (
+          <Tooltip text={<T id="accounts.show.tip" m="Show" />}>
+            <div className="show-account-button" onClick={showAccount} />
+          </Tooltip>
+        )}
       </div>
     </div>
   </div>
@@ -133,7 +155,7 @@ AccountsList.propTypes = {
   showRenameAccount: PropTypes.func.isRequired,
   hidden: PropTypes.bool.isRequired,
   hideAccount: PropTypes.func.isRequired,
-  showAccount: PropTypes.func.isRequired
+  showAccount: PropTypes.func.isRequired,
 };
 
 export default AccountsList;

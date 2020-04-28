@@ -5,8 +5,8 @@ import { TextInput } from "inputs";
 const messages = defineMessages({
   newNamePlaceholder: {
     id: "accounts.rename.newNamePlaceholder",
-    defaultMessage: "New Account Name"
-  }
+    defaultMessage: "New Account Name",
+  },
 });
 
 const RenameAccount = ({
@@ -16,9 +16,11 @@ const RenameAccount = ({
   renameAccount,
   hideRenameAccount,
   intl,
-  hasFailedAttempt
+  hasFailedAttempt,
 }) => (
-  <div className="account-row-rename-bottom" key={"details" + account.accountNumber}>
+  <div
+    className="account-row-rename-bottom"
+    key={"details" + account.accountNumber}>
     <div className="account-row-rename-bottom-title">
       <T id="accounts.rename" m="Rename Account" />
     </div>
@@ -35,7 +37,10 @@ const RenameAccount = ({
           maxLength="50"
           value={renameAccountName}
           onChange={(e) => updateRenameAccountName(e.target.value)}
-          showErrors={hasFailedAttempt || (renameAccountName && renameAccountName.length > 50)}
+          showErrors={
+            hasFailedAttempt ||
+            (renameAccountName && renameAccountName.length > 50)
+          }
         />
       </div>
     </div>
@@ -59,7 +64,7 @@ RenameAccount.propTypes = {
   updateRenameAccountName: PropTypes.func.isRequired,
   renameAccount: PropTypes.func.isRequired,
   hideRenameAccount: PropTypes.func.isRequired,
-  intl: PropTypes.object.isRequired
+  intl: PropTypes.object.isRequired,
 };
 
 export default RenameAccount;

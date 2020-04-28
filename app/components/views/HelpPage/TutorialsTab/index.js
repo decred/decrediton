@@ -3,14 +3,20 @@ import { DescriptionHeader } from "layout";
 import { Subtitle } from "shared";
 import { Link } from "react-router-dom";
 
-export const TutorialsTabHeader = () =>
+export const TutorialsTabHeader = () => (
   <DescriptionHeader
-    description={<T id="help.description.tutorials" m="Learn about the various aspects of the Decred network." />}
-  />;
+    description={
+      <T
+        id="help.description.tutorials"
+        m="Learn about the various aspects of the Decred network."
+      />
+    }
+  />
+);
 
 export const TutorialsTab = () => (
   <>
-    <Subtitle title={<T id="tutorials.subtitle" m="Tutorials"/>} />
+    <Subtitle title={<T id="tutorials.subtitle" m="Tutorials" />} />
     <div className="overview-no-tickets">
       {/* <Link to="/mytickets/purchase" className="purchaseTickets">
         <T id="home.noTickets.purchase" m="Stake Your Idle DCR and Earn Rewards" /> →
@@ -19,7 +25,11 @@ export const TutorialsTab = () => (
         <T id="tutorials.staking" m="What is Staking (Proof-of-Stake)?" /> →
       </Link>
       <Link to="/tutorial/ticketLifecycle" className="ticketLifeCycle">
-        <T id="tutorials.ticketLifecycle" m="Learn About the Ticket Lifecycle" /> →
+        <T
+          id="tutorials.ticketLifecycle"
+          m="Learn About the Ticket Lifecycle"
+        />{" "}
+        →
       </Link>
     </div>
   </>

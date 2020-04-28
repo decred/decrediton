@@ -13,14 +13,24 @@ class TrezorConfig extends React.Component {
   }
 
   renderNoDevice() {
-    return <>
-      <div><T id="trezor.getStartedConfig.noDeviceFound" m="No trezor device found. Check the connection and the trezor bridge software."/></div>
-      <div>
-        <InvisibleButton onClick={this.props.reloadDeviceList}>
-          <T id="trezor.getStartedConfig.btnReloadDeviceList" m="Reload Device List"/>
-        </InvisibleButton>
-      </div>
-    </>;
+    return (
+      <>
+        <div>
+          <T
+            id="trezor.getStartedConfig.noDeviceFound"
+            m="No trezor device found. Check the connection and the trezor bridge software."
+          />
+        </div>
+        <div>
+          <InvisibleButton onClick={this.props.reloadDeviceList}>
+            <T
+              id="trezor.getStartedConfig.btnReloadDeviceList"
+              m="Reload Device List"
+            />
+          </InvisibleButton>
+        </div>
+      </>
+    );
   }
 
   render() {
@@ -31,7 +41,9 @@ class TrezorConfig extends React.Component {
       children = this.renderNoDevice();
     } else {
       const loading = this.props.performingOperation;
-      children = <ConfigSections device={device} loading={loading} { ...this.props } />;
+      children = (
+        <ConfigSections device={device} loading={loading} {...this.props} />
+      );
     }
 
     return (

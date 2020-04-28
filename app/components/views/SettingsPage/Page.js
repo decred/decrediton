@@ -2,7 +2,11 @@ import { useCallback } from "react";
 import { useTheme } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
 import { StandaloneHeader, StandalonePage } from "layout";
-import { KeyBlueButton, CloseWalletModalButton, ResetNetworkButton } from "buttons";
+import {
+  KeyBlueButton,
+  CloseWalletModalButton,
+  ResetNetworkButton,
+} from "buttons";
 import { getGlobalCfg } from "config";
 import NetworkSettings from "./NetworkSettings";
 import ProxySettings from "./ProxySettings";
@@ -14,32 +18,52 @@ import "style/StakePool.less";
 import "style/Settings.less";
 import * as configConstants from "constants/config";
 
-const closeWalletModalContent = (walletName) =>
+const closeWalletModalContent = (walletName) => (
   <T
     id="settings.closeWalletModalContent"
     m="Are you sure you want to close {walletName} and return to the launcher?"
     values={{ walletName }}
-  />;
+  />
+);
 
-const closeWalletWithAutobuyerModal = (walletName) =>
+const closeWalletWithAutobuyerModal = (walletName) => (
   <T
     id="settings.closeWalletModalWithAutobuyerModal"
     m="Are you sure you want to close {walletName} and return to the launcher? The auto ticket buyer is still running. If you proceed, it will be closed and no more tickets will be purchased."
     values={{ walletName }}
-  />;
+  />
+);
 
-const SettingsPageHeader = ({ onCloseWallet, walletName, isTicketAutoBuyerEnabled }) =>
+const SettingsPageHeader = ({
+  onCloseWallet,
+  walletName,
+  isTicketAutoBuyerEnabled,
+}) => (
   <StandaloneHeader
-    title={<T id="settings.title" m="Settings"/>}
+    title={<T id="settings.title" m="Settings" />}
     iconClassName="settings"
-    description={<T id="settings.description" m="Changing network settings requires a restart"/>}
+    description={
+      <T
+        id="settings.description"
+        m="Changing network settings requires a restart"
+      />
+    }
     actionButton={
       <CloseWalletModalButton
-        modalTitle={<T id="settings.closeWalletModalTitle" m="Confirmation Required" />}
+        modalTitle={
+          <T id="settings.closeWalletModalTitle" m="Confirmation Required" />
+        }
         buttonLabel={<T id="settings.closeWalletModalOk" m="Close Wallet" />}
-        modalContent={ isTicketAutoBuyerEnabled ? closeWalletWithAutobuyerModal(walletName) : closeWalletModalContent(walletName) }
-        onSubmit={onCloseWallet}/>}
-  />;
+        modalContent={
+          isTicketAutoBuyerEnabled
+            ? closeWalletWithAutobuyerModal(walletName)
+            : closeWalletModalContent(walletName)
+        }
+        onSubmit={onCloseWallet}
+      />
+    }
+  />
+);
 
 const SettingsPage = ({
   areSettingsDirty,
@@ -55,9 +79,8 @@ const SettingsPage = ({
   needNetworkReset,
   walletName,
   walletReady,
-  isTicketAutoBuyerEnabled
+  isTicketAutoBuyerEnabled,
 }) => {
-
   const { setThemeName } = useTheme();
   const saveSettingsHandler = useCallback(() => {
     const config = getGlobalCfg();
@@ -66,19 +89,32 @@ const SettingsPage = ({
       setThemeName(tempSettings.theme);
     }
     onSaveSettings(tempSettings);
-  }, [ onSaveSettings, tempSettings, setThemeName ]);
+  }, [onSaveSettings, tempSettings, setThemeName]);
 
   return (
-    <StandalonePage header={<SettingsPageHeader {...{ onCloseWallet, walletName, isTicketAutoBuyerEnabled }} />} className="settings-standalone-page">
+    <StandalonePage
+      header={
+        <SettingsPageHeader
+          {...{ onCloseWallet, walletName, isTicketAutoBuyerEnabled }}
+        />
+      }
+      className="settings-standalone-page">
       <div className="settings-wrapper">
         <div className="settings-group">
-          <div className="settings-group-title"><T id="settings.getstartpage.group-title.connectivity" m="Connectivity" /></div>
+          <div className="settings-group-title">
+            <T
+              id="settings.getstartpage.group-title.connectivity"
+              m="Connectivity"
+            />
+          </div>
           <div className="settings-column-wrapper">
             <div className="settings-column">
-              <NetworkSettings {...{
-                tempSettings,
-                onChangeTempSettings
-              }} />
+              <NetworkSettings
+                {...{
+                  tempSettings,
+                  onChangeTempSettings,
+                }}
+              />
             </div>
             <div className="settings-column">
               <ProxySettings {...{ tempSettings, onChangeTempSettings }} />
@@ -87,28 +123,51 @@ const SettingsPage = ({
         </div>
 
         <div className="settings-group general">
-          <div className="settings-group-title"><T id="settings.getstartpage.group-title.general" m="General" /></div>
+          <div className="settings-group-title">
+            <T id="settings.getstartpage.group-title.general" m="General" />
+          </div>
           <div className="settings-column-wrapper">
             <div className="settings-column">
-              <UISettings {...{ tempSettings, locales, onChangeTempSettings }} />
+              <UISettings
+                {...{ tempSettings, locales, onChangeTempSettings }}
+              />
             </div>
             <div className="settings-column timezone">
               <TimezoneSettings {...{ tempSettings, onChangeTempSettings }} />
             </div>
-            {walletReady &&
+            {walletReady && (
               <div className="settings-column">
-                <MiscSettings {...{ tempSettings, currencies, walletReady, onChangeTempSettings }} />
+                <MiscSettings
+                  {...{
+                    tempSettings,
+                    currencies,
+                    walletReady,
+                    onChangeTempSettings,
+                  }}
+                />
               </div>
-            }
+            )}
           </div>
         </div>
 
         <div className="settings-group privacy">
-          <div className="settings-group-title"><T id="settings.getstartpage.group-title.privacy-and-security" m="Privacy and Security" /></div>
+          <div className="settings-group-title">
+            <T
+              id="settings.getstartpage.group-title.privacy-and-security"
+              m="Privacy and Security"
+            />
+          </div>
           <div className="settings-column-wrapper">
             <div className="settings-column">
-              <PrivacySettings {...{ tempSettings, onAttemptChangePassphrase,
-                isChangePassPhraseDisabled, onChangeTempSettings, changePassphraseRequestAttempt }} />
+              <PrivacySettings
+                {...{
+                  tempSettings,
+                  onAttemptChangePassphrase,
+                  isChangePassPhraseDisabled,
+                  onChangeTempSettings,
+                  changePassphraseRequestAttempt,
+                }}
+              />
             </div>
           </div>
         </div>
@@ -116,17 +175,24 @@ const SettingsPage = ({
 
       <div className="settings-save-button-wrapper">
         <div className="settings-save-button">
-          {needNetworkReset ?
+          {needNetworkReset ? (
             <ResetNetworkButton
-              modalTitle={<T id="settings.resetNetworkTitle" m="Reset required" />}
+              modalTitle={
+                <T id="settings.resetNetworkTitle" m="Reset required" />
+              }
               buttonLabel={<T id="settings.save" m="Save" />}
               modalContent={
-                <T id="settings.resetNetworkContent" m="The setting you have chosen to change requires Decrediton to be restarted.  Please confirm this action before proceeding."/>
+                <T
+                  id="settings.resetNetworkContent"
+                  m="The setting you have chosen to change requires Decrediton to be restarted.  Please confirm this action before proceeding."
+                />
               }
               disabled={!areSettingsDirty}
               size="large"
               block={false}
-              onSubmit={saveSettingsHandler}/> :
+              onSubmit={saveSettingsHandler}
+            />
+          ) : (
             <KeyBlueButton
               disabled={!areSettingsDirty}
               size="large"
@@ -134,7 +200,7 @@ const SettingsPage = ({
               onClick={saveSettingsHandler}>
               <T id="settings.save" m="Save" />
             </KeyBlueButton>
-          }
+          )}
         </div>
       </div>
     </StandalonePage>
@@ -151,7 +217,7 @@ SettingsPage.propTypes = {
   onSaveSettings: PropTypes.func.isRequired,
   onAttemptChangePassphrase: PropTypes.func,
   isChangePassPhraseDisabled: PropTypes.bool.isRequired,
-  changePassphraseRequestAttempt: PropTypes.bool.isRequired
+  changePassphraseRequestAttempt: PropTypes.bool.isRequired,
 };
 
 export default SettingsPage;

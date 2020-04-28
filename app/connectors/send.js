@@ -22,16 +22,20 @@ const mapStateToProps = selectorMap({
   isTrezor: sel.isTrezor,
   unsignedRawTx: sel.unsignedRawTx,
   isWatchingOnly: sel.isWatchingOnly,
-  publishTxResponse: sel.publishTxResponse
+  publishTxResponse: sel.publishTxResponse,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  onAttemptConstructTransaction: ca.constructTransactionAttempt,
-  onAttemptSignTransaction: ca.signTransactionAttempt,
-  onClearTransaction: ca.clearTransaction,
-  getNextAddressAttempt: ca.getNextAddressAttempt,
-  validateAddress: ca.validateAddress,
-  onAttemptSignTransactionTrezor: tza.signTransactionAttemptTrezor
-}, dispatch);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      onAttemptConstructTransaction: ca.constructTransactionAttempt,
+      onAttemptSignTransaction: ca.signTransactionAttempt,
+      onClearTransaction: ca.clearTransaction,
+      getNextAddressAttempt: ca.getNextAddressAttempt,
+      validateAddress: ca.validateAddress,
+      onAttemptSignTransactionTrezor: tza.signTransactionAttemptTrezor,
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps);

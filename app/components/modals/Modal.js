@@ -8,9 +8,7 @@ import { useRef } from "react";
 import { useSelector } from "react-redux";
 import * as sel from "selectors";
 
-function Modal({
-  children, className, draggable, onCancelModal
-}) {
+function Modal({ children, className, draggable, onCancelModal }) {
   const expandSideBar = useSelector(sel.expandSideBar);
   const showingSidebarMenu = useSelector(sel.showingSidebarMenu);
   const domNode = document.getElementById("modal-portal");
@@ -30,18 +28,43 @@ function Modal({
     }
   };
 
-
-  const innerView = <div ref={modalRef} className={cx((showingSidebarMenu ? expandSideBar ? "app-modal " : "app-modal-reduced-bar " : "app-modal-standalone "), className && className, draggable && " draggable-modal ")}>
-    {children}
-  </div>;
+  const innerView = (
+    <div
+      ref={modalRef}
+      className={cx(
+        showingSidebarMenu
+          ? expandSideBar
+            ? "app-modal "
+            : "app-modal-reduced-bar "
+          : "app-modal-standalone ",
+        className && className,
+        draggable && " draggable-modal "
+      )}>
+      {children}
+    </div>
+  );
 
   return ReactDOM.createPortal(
     <EventListener target="document" onMouseUp={mouseUp} onKeyDown={onKeyDown}>
-      <div className={showingSidebarMenu ? expandSideBar ? "app-modal-overlay" : "app-modal-overlay-reduced-bar" : "app-modal-overlay-standalone"}>
-        {draggable ? <Draggable bounds="parent" cancel=".cancel-dragging">{innerView}</Draggable> : innerView  }
+      <div
+        className={
+          showingSidebarMenu
+            ? expandSideBar
+              ? "app-modal-overlay"
+              : "app-modal-overlay-reduced-bar"
+            : "app-modal-overlay-standalone"
+        }>
+        {draggable ? (
+          <Draggable bounds="parent" cancel=".cancel-dragging">
+            {innerView}
+          </Draggable>
+        ) : (
+          innerView
+        )}
       </div>
-    </EventListener>
-    , domNode);
+    </EventListener>,
+    domNode
+  );
 }
 
 export default showCheck(Modal);

@@ -6,14 +6,13 @@ import createLogger from "redux-logger";
 import rootReducer from "../reducers";
 
 export default function configureStore(initialState: Object, history: Object) {
-
   const actionCreators = {
-    push
+    push,
   };
 
   const logger = createLogger({
     level: "info",
-    collapsed: true
+    collapsed: true,
   });
 
   const routeMiddleware = routerMiddleware(history);
@@ -23,12 +22,12 @@ export default function configureStore(initialState: Object, history: Object) {
 
   // If Redux DevTools Extension is installed use it, otherwise use Redux compose
   /* eslint-disable no-underscore-dangle */
-  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
-      // Options: http://zalmoxisus.github.io/redux-devtools-extension/API/Arguments.html
-      actionCreators
-    }) :
-    compose;
+  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+        // Options: http://zalmoxisus.github.io/redux-devtools-extension/API/Arguments.html
+        actionCreators,
+      })
+    : compose;
   /* eslint-enable no-underscore-dangle */
   const enhancer = composeEnhancers(
     applyMiddleware(thunk, routeMiddleware, logger)

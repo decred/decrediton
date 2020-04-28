@@ -18,17 +18,30 @@ export const useProposalDetailsPage = () => {
   const dispatch = useDispatch();
   const { token } = useParams();
   const proposalsDetails = useSelector(sel.proposalsDetails);
-  const getProposalError =  useSelector(sel.getProposalError);
+  const getProposalError = useSelector(sel.getProposalError);
 
-  const viewedProposalDetails = useMemo(() => proposalsDetails[token], [ token, proposalsDetails ]);
-  const eligibleTicketCount = viewedProposalDetails && viewedProposalDetails.walletEligibleTickets ?
-    proposalsDetails[token].walletEligibleTickets.length : 0;
+  const viewedProposalDetails = useMemo(() => proposalsDetails[token], [
+    token,
+    proposalsDetails,
+  ]);
+  const eligibleTicketCount =
+    viewedProposalDetails && viewedProposalDetails.walletEligibleTickets
+      ? proposalsDetails[token].walletEligibleTickets.length
+      : 0;
 
-  const showPurchaseTicketsPage = useCallback(() => dispatch(cli.showPurchaseTicketsPage()), [ dispatch ]);
-  const getProposalDetails = useCallback((token) => dispatch(gov.getProposalDetails(token)), [ dispatch ]);
-  const goBackHistory = useCallback(() => dispatch(cli.goBackHistory()), [ dispatch ]);
+  const showPurchaseTicketsPage = useCallback(
+    () => dispatch(cli.showPurchaseTicketsPage()),
+    [dispatch]
+  );
+  const getProposalDetails = useCallback(
+    (token) => dispatch(gov.getProposalDetails(token)),
+    [dispatch]
+  );
+  const goBackHistory = useCallback(() => dispatch(cli.goBackHistory()), [
+    dispatch,
+  ]);
 
-  const [ { value: votingStatus }, send ] = useMachine(fetchMachine, {
+  const [{ value: votingStatus }, send] = useMachine(fetchMachine, {
     actions: {
       initial: () => {
         if (!proposalsDetails[token]) return send("FETCH");
@@ -36,9 +49,19 @@ export const useProposalDetailsPage = () => {
       },
       load: () => {
         getProposalDetails(token).then(() => send({ type: "RESOLVE" }));
-      }
-    }
+      },
+    },
   });
 
-  return { viewedProposalDetails, eligibleTicketCount, votingStatus, getProposalError, proposalsDetails, token, dispatch, goBackHistory, showPurchaseTicketsPage };
+  return {
+    viewedProposalDetails,
+    eligibleTicketCount,
+    votingStatus,
+    getProposalError,
+    proposalsDetails,
+    token,
+    dispatch,
+    goBackHistory,
+    showPurchaseTicketsPage,
+  };
 };

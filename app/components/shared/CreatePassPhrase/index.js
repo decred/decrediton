@@ -8,13 +8,24 @@ class CreatePassPhrase extends React.Component {
       passPhrase: "",
       passPhraseVerification: "",
       isShowingPassphraseInformation: false,
-      hasFailedAttempt: false
+      hasFailedAttempt: false,
     };
   }
 
   render() {
-    const { setPassPhrase, setPassPhraseVerification, onKeyDown, showPassphraseInformation, hidePassphraseInformation } = this;
-    const { passPhrase, passPhraseVerification,isShowingPassphraseInformation, hasFailedAttempt } = this.state;
+    const {
+      setPassPhrase,
+      setPassPhraseVerification,
+      onKeyDown,
+      showPassphraseInformation,
+      hidePassphraseInformation,
+    } = this;
+    const {
+      passPhrase,
+      passPhraseVerification,
+      isShowingPassphraseInformation,
+      hasFailedAttempt,
+    } = this.state;
     const isValid = this.isValid();
     return (
       <PassPhraseInputs
@@ -29,7 +40,7 @@ class CreatePassPhrase extends React.Component {
           onKeyDown,
           showPassphraseInformation,
           hidePassphraseInformation,
-          isShowingPassphraseInformation
+          isShowingPassphraseInformation,
         }}
       />
     );
@@ -42,7 +53,10 @@ class CreatePassPhrase extends React.Component {
   }
 
   isValid() {
-    return !!this.state.passPhrase && this.state.passPhrase === this.state.passPhraseVerification;
+    return (
+      !!this.state.passPhrase &&
+      this.state.passPhrase === this.state.passPhraseVerification
+    );
   }
 
   setPassPhrase(passPhrase) {
@@ -55,9 +69,10 @@ class CreatePassPhrase extends React.Component {
   }
 
   onKeyDown(e) {
-    if(e.keyCode == 13) {      // Enter key
+    if (e.keyCode == 13) {
+      // Enter key
       e.preventDefault();
-      if(this.props.onSubmit) {
+      if (this.props.onSubmit) {
         this.props.onSubmit();
       }
     }
@@ -73,7 +88,7 @@ class CreatePassPhrase extends React.Component {
 }
 
 CreatePassPhrase.propTypes = {
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
 };
 
 export default CreatePassPhrase;

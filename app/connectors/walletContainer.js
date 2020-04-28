@@ -6,11 +6,15 @@ import * as sel from "selectors";
 
 const mapStateToProps = selectorMap({
   expandSideBar: sel.expandSideBar,
-  politeiaEnabled: sel.politeiaEnabled
+  politeiaEnabled: sel.politeiaEnabled,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  compareInventory: ga.compareInventory
-}, dispatch);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      compareInventory: ga.compareInventory,
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps);

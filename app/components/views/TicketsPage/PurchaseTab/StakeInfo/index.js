@@ -7,7 +7,7 @@ class StakeInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isShowingDetails: false
+      isShowingDetails: false,
     };
   }
 
@@ -17,7 +17,7 @@ class StakeInfo extends React.Component {
       immatureTicketsCount,
       liveTicketsCount,
       unspentTicketsCount,
-      isSPV
+      isSPV,
     } = this.props;
     return (
       <StakeInfoDisplay
@@ -29,10 +29,13 @@ class StakeInfo extends React.Component {
           isSPV,
           ...this.props,
           ...this.state,
-          ...substruct({
-            getStakeInfoDetailsComponent: null,
-            onToggleStakeinfo: null
-          }, this)
+          ...substruct(
+            {
+              getStakeInfoDetailsComponent: null,
+              onToggleStakeinfo: null,
+            },
+            this
+          ),
         }}
       />
     );

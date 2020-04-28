@@ -13,13 +13,17 @@ const mapStateToProps = selectorMap({
   stakePoolListingEnabled: sel.stakePoolListingEnabled,
   updatedStakePoolList: sel.updatedStakePoolList,
   isSavingStakePoolConfig: sel.isSavingStakePoolConfig,
-  isImportingScript: sel.isImportingScript
+  isImportingScript: sel.isImportingScript,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  onSetStakePoolInfo: spa.setStakePoolInformation,
-  onRemoveStakePool: spa.removeStakePoolConfig,
-  discoverAvailableStakepools: spa.discoverAvailableStakepools
-}, dispatch);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      onSetStakePoolInfo: spa.setStakePoolInformation,
+      onRemoveStakePool: spa.removeStakePoolConfig,
+      discoverAvailableStakepools: spa.discoverAvailableStakepools,
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps);

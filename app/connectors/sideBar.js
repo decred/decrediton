@@ -15,13 +15,17 @@ const mapStateToProps = selectorMap({
   isWatchingOnly: sel.isWatchingOnly,
   tsDate: sel.tsDate,
   sidebarOnBottom: sel.sidebarOnBottom,
-  accountMixerRunning: sel.getAccountMixerRunning
+  accountMixerRunning: sel.getAccountMixerRunning,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  updateBlockTimeSince: ca.updateBlockTimeSince,
-  onExpandSideBar: sba.expandSideBar,
-  onReduceSideBar: sba.reduceSideBar
-}, dispatch);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      updateBlockTimeSince: ca.updateBlockTimeSince,
+      onExpandSideBar: sba.expandSideBar,
+      onReduceSideBar: sba.reduceSideBar,
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps);

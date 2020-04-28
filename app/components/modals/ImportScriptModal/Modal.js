@@ -2,16 +2,10 @@ import { FormattedMessage as T } from "react-intl";
 import { TextInput, PassphraseModalField } from "inputs";
 import { PassphraseModal } from "../PassphraseModal";
 
-const Modal = ({
-  script,
-  hasFailedAttempt,
-  setScript,
-  ...props
-}) => (
-  <PassphraseModal {...{ ...props }} >
+const Modal = ({ script, hasFailedAttempt, setScript, ...props }) => (
+  <PassphraseModal {...{ ...props }}>
     <PassphraseModalField
-      label={<T id="importScriptModal.redeemScript" m="Redeem Script" />}
-    >
+      label={<T id="importScriptModal.redeemScript" m="Redeem Script" />}>
       <TextInput
         autoFocus
         required

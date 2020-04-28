@@ -2,7 +2,7 @@ import Select from "react-select";
 import { SEED_WORDS } from "wallet/seed";
 import { clipboard } from "electron";
 
-const SEED_WORD_OPTIONS = SEED_WORDS.map(name => ({ name }));
+const SEED_WORD_OPTIONS = SEED_WORDS.map((name) => ({ name }));
 
 @autobind
 class SingleSeedWordEntry extends React.Component {
@@ -16,9 +16,9 @@ class SingleSeedWordEntry extends React.Component {
         const isPasted = this.props.onPasteFromClipboard(clipboard.readText());
 
         // missing with the select options from react-select
-        if(isPasted) {
+        if (isPasted) {
           const select = document.querySelector(".Select-menu-outer");
-          if(select) {
+          if (select) {
             select.style.display = "none";
           }
         }
@@ -26,14 +26,13 @@ class SingleSeedWordEntry extends React.Component {
     };
   }
 
-  render () {
+  render() {
     const value = { name: this.props.value.name };
     return (
       <div
         className={this.props.className}
         onKeyDown={this.handleKeyDown}
-        onPaste={this.props.onPaste}
-      >
+        onPaste={this.props.onPaste}>
         <Select.Async
           autoFocus
           simpleValue
@@ -52,20 +51,21 @@ class SingleSeedWordEntry extends React.Component {
     );
   }
 
-  getSeedWords (input, callback) {
+  getSeedWords(input, callback) {
     input = input.toLowerCase();
-    const options = SEED_WORD_OPTIONS
-      .filter(i => i.name.toLowerCase().substr(0, input.length) === input);
+    const options = SEED_WORD_OPTIONS.filter(
+      (i) => i.name.toLowerCase().substr(0, input.length) === input
+    );
     callback(null, {
-      options: options.slice(0, 5)
+      options: options.slice(0, 5),
     });
   }
 
-  selectKeyDown (e) {
-    switch(e.keyCode) {
-    case 32:
-      e.keyCode = 9;
-      break;
+  selectKeyDown(e) {
+    switch (e.keyCode) {
+      case 32:
+        e.keyCode = 9;
+        break;
     }
   }
 }

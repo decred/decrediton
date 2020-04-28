@@ -5,14 +5,11 @@ import "style/AgendaCard.less";
 // Currently removing percent progress until a solution to populate is found
 // <div style={styles.agendaCardPercent}><span style={styles.agendaPercentNumber}>XX</span>%</div>
 // should go UNDER agendaCarBottomCfg div
-const AgendaCard = ({
-  agenda, onClick, selectedChoice
-}) => (
-  <div {...(
-    agenda.finished
-      ? ({ className: "agenda-card-disabled" })
-      : ({ className: "agenda-card", onClick })
-  )}>
+const AgendaCard = ({ agenda, onClick, selectedChoice }) => (
+  <div
+    {...(agenda.finished
+      ? { className: "agenda-card-disabled" }
+      : { className: "agenda-card", onClick })}>
     <div className="agenda-card-bottom">
       {agenda.finished ? (
         <AgendaFinishedIndicator passed={agenda.passed} />
@@ -22,15 +19,22 @@ const AgendaCard = ({
         </div>
       )}
       <div className="agenda-card-bottom-cfg">
-        {agenda.description} <span className="agenda-card-bottom-cfg-last">
+        {agenda.description}{" "}
+        <span className="agenda-card-bottom-cfg-last">
           <T id="agenda.overview.idLabel" m="Agenda ID" />:
-          <span className="agenda-card-bottom-cfg-last-bold">{agenda.name}</span></span>
+          <span className="agenda-card-bottom-cfg-last-bold">
+            {agenda.name}
+          </span>
+        </span>
       </div>
     </div>
     <div className="agenda-card-top">
       <div className="agenda-card-name">{agenda.name}</div>
       <div className="agenda-card-top-preference">
-        Preference: <span className="agenda-card-text-highlight-small">{selectedChoice}</span>
+        Preference:{" "}
+        <span className="agenda-card-text-highlight-small">
+          {selectedChoice}
+        </span>
       </div>
     </div>
   </div>

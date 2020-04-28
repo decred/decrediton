@@ -12,9 +12,14 @@ export function getAppDataDirectory() {
   if (os.platform() == "win32") {
     return path.join(os.homedir(), "AppData", "Local", "Decrediton");
   } else if (process.platform === "darwin") {
-    return path.join(os.homedir(), "Library","Application Support","decrediton");
+    return path.join(
+      os.homedir(),
+      "Library",
+      "Application Support",
+      "decrediton"
+    );
   } else {
-    return path.join(os.homedir(),".config","decrediton");
+    return path.join(os.homedir(), ".config", "decrediton");
   }
 }
 
@@ -32,7 +37,11 @@ export function getWalletsDirectoryPath() {
 // getWalletsDirectoryPathNetwork gets the wallets directory.
 // Example in unix if testnet equals true: ~/.config/decrediton/wallets/testnet
 export function getWalletsDirectoryPathNetwork(testnet) {
-  return path.join(getAppDataDirectory(), "wallets", testnet ? TESTNET : MAINNET);
+  return path.join(
+    getAppDataDirectory(),
+    "wallets",
+    testnet ? TESTNET : MAINNET
+  );
 }
 
 // getWalletPath returns the directory of a selected wallet byt its name.
@@ -45,8 +54,11 @@ export function getWalletPath(testnet, walletName = "") {
 // walletPath represents the wallet name decrediton has loaded.
 export function getWalletDb(testnet, walletPath) {
   return path.join(
-    getWalletsDirectoryPath(), testnet ? TESTNET : MAINNET,
-    walletPath, testnet ? "testnet3" : MAINNET, "wallet.db"
+    getWalletsDirectoryPath(),
+    testnet ? TESTNET : MAINNET,
+    walletPath,
+    testnet ? "testnet3" : MAINNET,
+    "wallet.db"
   );
 }
 
@@ -64,24 +76,26 @@ export function dcrwalletConf(configPath) {
 export function getDcrdPath() {
   if (os.platform() == "win32") {
     return path.join(os.homedir(), "AppData", "Local", "Dcrd");
-  } if (process.platform === "darwin") {
-    return path.join(os.homedir(), "Library","Application Support","dcrd");
+  }
+  if (process.platform === "darwin") {
+    return path.join(os.homedir(), "Library", "Application Support", "dcrd");
   } else {
-    return path.join(os.homedir(),".dcrd");
+    return path.join(os.homedir(), ".dcrd");
   }
 }
 
 // getDcrdRpcCert gets rpc.cert file from a specified path.
 // if no path is informed it gets from the default path.
-export function getDcrdRpcCert (appDataPath) {
+export function getDcrdRpcCert(appDataPath) {
   return path.resolve(appDataPath ? appDataPath : getDcrdPath(), "rpc.cert");
 }
 
 export function getExecutablePath(name, custombinpath) {
-  let binPath = custombinpath ? custombinpath :
-    process.env.NODE_ENV === "development"
-      ? path.join(__dirname, "..", "..", "bin")
-      : path.join(process.resourcesPath, "bin");
+  let binPath = custombinpath
+    ? custombinpath
+    : process.env.NODE_ENV === "development"
+    ? path.join(__dirname, "..", "..", "bin")
+    : path.join(process.resourcesPath, "bin");
   let execName = os.platform() !== "win32" ? name : name + ".exe";
 
   return path.join(binPath, execName);
@@ -95,14 +109,23 @@ export function getDirectoryLogs(dir) {
 // checkAndInitWalletCfg checks for existing old wallet.db directories and copy its
 // wallet.db file to the new decrediton wallets path.
 // TODO deprecate this code as most decrediton are updated to 1.4.0 version.
-export function checkAndInitWalletCfg (testnet) {
+export function checkAndInitWalletCfg(testnet) {
   const walletDirectory = getWalletPath(testnet, "default-wallet");
   const configJson = path.join(walletDirectory, "config.json");
-  const oldWalletDbPath = path.join(getAppDataDirectory(), testnet ? "testnet3" : MAINNET);
+  const oldWalletDbPath = path.join(
+    getAppDataDirectory(),
+    testnet ? "testnet3" : MAINNET
+  );
 
-  if (!fs.pathExistsSync(walletDirectory) && fs.pathExistsSync(oldWalletDbPath)) {
+  if (
+    !fs.pathExistsSync(walletDirectory) &&
+    fs.pathExistsSync(oldWalletDbPath)
+  ) {
     fs.mkdirsSync(walletDirectory);
-    fs.copySync(path.join(oldWalletDbPath, "wallet.db"), path.join(walletDirectory, testnet ? "testnet3" : MAINNET, "wallet.db"));
+    fs.copySync(
+      path.join(oldWalletDbPath, "wallet.db"),
+      path.join(walletDirectory, testnet ? "testnet3" : MAINNET, "wallet.db")
+    );
 
     // copy over existing config.json if it exists
     if (fs.pathExistsSync(getGlobalCfgPath())) {
@@ -116,12 +139,12 @@ export function checkAndInitWalletCfg (testnet) {
 }
 
 // getPoliteiaPath gets the politeia path which proposals are cached.
-export function getPoliteiaPath () {
+export function getPoliteiaPath() {
   return path.join(getAppDataDirectory(), "politeia");
 }
 
 // setPoliteiaPath sets the politeia path which proposals are cached.
-export function setPoliteiaPath () {
+export function setPoliteiaPath() {
   const politeiaPath = getPoliteiaPath();
   if (fs.pathExistsSync(politeiaPath)) {
     return;
@@ -131,7 +154,7 @@ export function setPoliteiaPath () {
 
 // getProposalPathFromPoliteia gets a proposal by its token or return empty string
 // if proposal is not foud.
-function getProposalPathFromPoliteia (token) {
+function getProposalPathFromPoliteia(token) {
   const proposalPath = path.join(getPoliteiaPath(), token);
   if (fs.pathExistsSync(proposalPath)) {
     return proposalPath;
@@ -140,7 +163,7 @@ function getProposalPathFromPoliteia (token) {
 }
 
 // setPoliteiaProposalPath mkdir if directory of proposal does not exists.
-export function setPoliteiaProposalPath (token) {
+export function setPoliteiaProposalPath(token) {
   let proposalPath = getProposalPathFromPoliteia(token);
   if (fs.pathExistsSync(proposalPath)) {
     return;
@@ -153,7 +176,7 @@ export function setPoliteiaProposalPath (token) {
 // saveEligibleTickets receives a proposal token and its eligible tickets object.
 // it checks if proposal path exists, creates it if it does not exist.
 // and write a eligibletickets.json file, with { eligibleTickets: [tickets]) }
-export function saveEligibleTickets (token, eligibleTickets) {
+export function saveEligibleTickets(token, eligibleTickets) {
   let proposalPath = getProposalPathFromPoliteia(token);
   if (!fs.pathExistsSync(proposalPath)) {
     proposalPath = setPoliteiaProposalPath(token);
@@ -164,7 +187,7 @@ export function saveEligibleTickets (token, eligibleTickets) {
 
 // getEligibleTickets get the eligibletickets.json from the proposal Path
 // return null if proposal directory or eligibletickets.json is not found.
-export function getEligibleTickets (token) {
+export function getEligibleTickets(token) {
   const proposalPath = getProposalPathFromPoliteia(token);
   if (!proposalPath) {
     return null;
@@ -179,8 +202,11 @@ export function getEligibleTickets (token) {
 
 // getWalletPiPath gets the wallet politeia path if it exists, otherwise
 // it creates its path and returns it.
-function getWalletPiPath (testnet, walletName) {
-  const walletPiPath = path.join(getWalletPath(testnet, walletName), "politeia");
+function getWalletPiPath(testnet, walletName) {
+  const walletPiPath = path.join(
+    getWalletPath(testnet, walletName),
+    "politeia"
+  );
   if (fs.pathExistsSync(walletPiPath)) {
     return walletPiPath;
   }
@@ -192,7 +218,7 @@ function getWalletPiPath (testnet, walletName) {
 // creates the vote.json file with the vote information.
 // we do not delete this directory after, as we use it to check for finished
 // votings with the wallet.
-export function savePiVote (vote, token, testnet, walletName) {
+export function savePiVote(vote, token, testnet, walletName) {
   const walletPath = getWalletPiPath(testnet, walletName);
   const proposalPath = path.join(walletPath, token);
   if (!fs.pathExistsSync(proposalPath)) {
@@ -205,7 +231,7 @@ export function savePiVote (vote, token, testnet, walletName) {
 }
 
 // getProposalWalletVote returns vote.json file if found or return null
-export function getProposalWalletVote (token, testnet, walletName) {
+export function getProposalWalletVote(token, testnet, walletName) {
   const walletPath = getWalletPiPath(testnet, walletName);
   const proposalPath = path.join(walletPath, token);
   if (!fs.pathExistsSync(proposalPath)) {
@@ -220,25 +246,29 @@ export function getProposalWalletVote (token, testnet, walletName) {
 // the values in the directory, and remove the ones that are not in the inventory.
 // We use this method to remove cached proposals from proposals which have finished
 // voting.
-export function removeCachedProposals (inventoryProposals) {
+export function removeCachedProposals(inventoryProposals) {
   const politeiaPath = getPoliteiaPath();
   const dirProposals = fs.readdirSync(politeiaPath);
   // we get all values that are in the directory but are not in the inventory
   // and remove them as the vote has finished.
-  const difference = dirProposals.filter(x => !inventoryProposals.includes(x));
-  difference.forEach(token => {
+  const difference = dirProposals.filter(
+    (x) => !inventoryProposals.includes(x)
+  );
+  difference.forEach((token) => {
     const proposalPath = path.join(politeiaPath, token);
     deleteFolderRecursive(proposalPath);
   });
 }
 
-function deleteFolderRecursive (path) {
+function deleteFolderRecursive(path) {
   if (fs.existsSync(path)) {
-    fs.readdirSync(path).forEach( file => {
+    fs.readdirSync(path).forEach((file) => {
       const curPath = path + "/" + file;
-      if (fs.lstatSync(curPath).isDirectory()) { // recurse
+      if (fs.lstatSync(curPath).isDirectory()) {
+        // recurse
         deleteFolderRecursive(curPath);
-      } else { // delete file
+      } else {
+        // delete file
         fs.unlinkSync(curPath);
       }
     });

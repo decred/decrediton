@@ -5,7 +5,7 @@ const Header = ({
   headerTop,
   headerTitleOverview,
   headerMetaOverview,
-  children
+  children,
 }) => (
   <div className="header">
     <div className="header-top">{headerTop}</div>

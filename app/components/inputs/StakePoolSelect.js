@@ -1,18 +1,17 @@
 import { Creatable } from "react-select";
 import Select from "react-select";
-import {  FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
+import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { newStakePool } from "connectors";
 
 const messages = defineMessages({
   placeholder: {
     id: "selectStakepool.placeholder",
-    defaultMessage: "Select VSP..."
-  }
+    defaultMessage: "Select VSP...",
+  },
 });
 
 @autobind
 class StakePoolSelect extends React.Component {
-
   constructor(props) {
     super(props);
     this.lastInput = "";
@@ -28,10 +27,14 @@ class StakePoolSelect extends React.Component {
       if (!addCustomStakePool) return;
 
       const formattedHost = value.Host.replace(/\/$/, "");
-      addCustomStakePool(formattedHost).then(poolInfo => {
+      addCustomStakePool(formattedHost).then((poolInfo) => {
         if (!poolInfo) return;
-        const opt = { ...poolInfo, label: poolInfo.Host, value: poolInfo,
-          isVersionValid: true };
+        const opt = {
+          ...poolInfo,
+          label: poolInfo.Host,
+          value: poolInfo,
+          isVersionValid: true,
+        };
         onChange(opt);
       });
       return;
@@ -40,8 +43,13 @@ class StakePoolSelect extends React.Component {
   }
 
   addStakePoolLabel() {
-    return <T id="stakePoolSelect.addNewPrompt" m="Add VSP {host}"
-      values={{ host: this.lastInput }} />;
+    return (
+      <T
+        id="stakePoolSelect.addNewPrompt"
+        m="Add VSP {host}"
+        values={{ host: this.lastInput }}
+      />
+    );
   }
 
   newOptionCreator(obj) {
@@ -56,10 +64,12 @@ class StakePoolSelect extends React.Component {
 
   getOptions() {
     if (!this.props.creatable || this.lastInput) return this.props.options;
-    const options = [ ...this.props.options ];
+    const options = [...this.props.options];
     options.unshift({
-      label: <T id="stakePoolSelect.addNewPromptEmpty" m="Type to add new VSP" />,
-      Host: null
+      label: (
+        <T id="stakePoolSelect.addNewPromptEmpty" m="Type to add new VSP" />
+      ),
+      Host: null,
     });
     return options;
   }
@@ -88,7 +98,7 @@ class StakePoolSelect extends React.Component {
 }
 
 StakePoolSelect.defaultProps = {
-  clearable: false
+  clearable: false,
 };
 
 export default injectIntl(newStakePool(StakePoolSelect));

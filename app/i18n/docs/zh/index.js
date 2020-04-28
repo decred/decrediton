@@ -5,4 +5,3 @@ export { default as TrezorFirmwareUpdateWarning } from "./Warnings/TrezorFirmwar
 export { default as TrezorWalletCreationPassPhraseWarning } from "./Warnings/TrezorWalletCreationPassPhrase.md";
 
 export { default as ReleaseNote1_4_0 } from "./ReleaseNotes/v1.4.0.md";
-

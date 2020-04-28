@@ -6,7 +6,7 @@ class CreateWalletForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showCopySeedConfirm: false
+      showCopySeedConfirm: false,
     };
   }
 
@@ -25,12 +25,26 @@ class CreateWalletForm extends React.Component {
   }
   render() {
     const { sendContinue, mnemonic, sendBack } = this.props;
-    const { handleCopySeed, onSubmitCopySeedConfirm, onCancelCopySeedConfirm } = this;
+    const {
+      handleCopySeed,
+      onSubmitCopySeedConfirm,
+      onCancelCopySeedConfirm,
+    } = this;
     const { showCopySeedConfirm } = this.state;
 
-    return <CopySeed {...{
-      mnemonic, handleCopySeed, showCopySeedConfirm, onSubmitCopySeedConfirm,
-      onCancelCopySeedConfirm, sendContinue, sendBack }} />;
+    return (
+      <CopySeed
+        {...{
+          mnemonic,
+          handleCopySeed,
+          showCopySeedConfirm,
+          onSubmitCopySeedConfirm,
+          onCancelCopySeedConfirm,
+          sendContinue,
+          sendBack,
+        }}
+      />
+    );
   }
 }
 

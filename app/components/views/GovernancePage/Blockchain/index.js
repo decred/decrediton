@@ -9,37 +9,51 @@ class VotingPrefs extends React.Component {
     this.state = {
       stakePool: props.stakePool,
       selectedAgenda: null,
-      isShowingDetails: false
+      isShowingDetails: false,
     };
   }
 
   render() {
-    return <VotingPrefsPage
-      {...{
-        ...this.props,
-        ...this.state,
-        stakePool: this.getStakePool(),
-        ...substruct({
-          getAgendaSelectedChoice: null,
-          onShowAgenda: null,
-          onCloseAgenda: null
-        }, this)
-      }}
-    />;
+    return (
+      <VotingPrefsPage
+        {...{
+          ...this.props,
+          ...this.state,
+          stakePool: this.getStakePool(),
+          ...substruct(
+            {
+              getAgendaSelectedChoice: null,
+              onShowAgenda: null,
+              onCloseAgenda: null,
+            },
+            this
+          ),
+        }}
+      />
+    );
   }
 
   getStakePool() {
-    const pool = this.props.onChangeStakePool ? this.props.stakePool : this.state.stakePool;
+    const pool = this.props.onChangeStakePool
+      ? this.props.stakePool
+      : this.state.stakePool;
     return pool
-      ? this.props.configuredStakePools.find(compose(eq(pool.Host), get("Host")))
+      ? this.props.configuredStakePools.find(
+          compose(eq(pool.Host), get("Host"))
+        )
       : null;
   }
 
   getAgendaSelectedChoice(agenda) {
-    return get([ "choiceId" ], find(
-      compose(eq(agenda.name), get([ "agendaId" ])),
-      get("VoteChoices", this.getStakePool()) || []
-    )) || "abstain";
+    return (
+      get(
+        ["choiceId"],
+        find(
+          compose(eq(agenda.name), get(["agendaId"])),
+          get("VoteChoices", this.getStakePool()) || []
+        )
+      ) || "abstain"
+    );
   }
 
   onShowAgenda(index) {

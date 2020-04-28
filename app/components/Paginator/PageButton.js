@@ -1,10 +1,10 @@
 import { InvisibleButton } from "buttons";
 
 const propTypes = {
-  value: PropTypes.oneOfType([ PropTypes.number, PropTypes.string ]).isRequired,
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   disabled: PropTypes.bool,
   isCurrent: PropTypes.bool,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
 };
 
 @autobind
@@ -17,11 +17,12 @@ class PageButton extends React.Component {
     const { value, isCurrent, disabled } = this.props;
     return (
       <InvisibleButton
-        className={[ "paginator-page-button", isCurrent ? "active" : "" ].join(" ")}
+        className={["paginator-page-button", isCurrent ? "active" : ""].join(
+          " "
+        )}
         disabled={disabled}
-        onClick={this.onClick}
-      >
-        {isFinite(value) ? value+1 : value}
+        onClick={this.onClick}>
+        {isFinite(value) ? value + 1 : value}
       </InvisibleButton>
     );
   }

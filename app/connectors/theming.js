@@ -3,7 +3,7 @@ import * as sel from "../selectors";
 import { selectorMap } from "../fp";
 
 const mapStateToProps = selectorMap({
-  uiAnimations: sel.uiAnimations
+  uiAnimations: sel.uiAnimations,
 });
 
 export default connect(mapStateToProps);

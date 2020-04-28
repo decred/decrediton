@@ -11,25 +11,24 @@ import "@formatjs/intl-relativetimeformat/dist/locale-data/ja";
 import "@formatjs/intl-relativetimeformat/dist/locale-data/pt";
 import "@formatjs/intl-relativetimeformat/dist/locale-data/zh";
 
-
 // Extra formats. May be customized by each locale.
 export const defaultFormats = {
   number: {
     "two-decimals": {
-      minimumFractionDigits: 2
+      minimumFractionDigits: 2,
     },
     "precise-percent": {
       style: "percent",
-      minimumFractionDigits: 4
-    }
+      minimumFractionDigits: 4,
+    },
   },
   date: {
     "day-short-month": {
       day: "numeric",
-      month: "short"
+      month: "short",
     },
     "short-month": {
-      month: "short"
+      month: "short",
     },
     "short-month-24hour": {
       day: "2-digit",
@@ -38,9 +37,9 @@ export const defaultFormats = {
       hour: "numeric",
       minute: "numeric",
       hour12: false,
-      formatMatcher: "best fit"
-    }
-  }
+      formatMatcher: "best fit",
+    },
+  },
 };
 
 const de = {
@@ -48,7 +47,7 @@ const de = {
   language: "de",
   description: "Deutsch",
   messages: require("../translations/de.json"),
-  formats: defaultFormats
+  formats: defaultFormats,
 };
 
 const en = {
@@ -56,7 +55,7 @@ const en = {
   language: "en",
   description: "English (US)",
   messages: staticDefaults, // uses defaultMessage for anything not on the staticDefaults
-  formats: defaultFormats //dont customize for en language
+  formats: defaultFormats, //dont customize for en language
 };
 
 const en_GB = {
@@ -64,7 +63,7 @@ const en_GB = {
   language: "en-GB",
   description: "English (UK)",
   messages: require("../translations/original.json"),
-  formats: defaultFormats //dont customize for en language
+  formats: defaultFormats, //dont customize for en language
 };
 
 const en_AU = {
@@ -72,7 +71,7 @@ const en_AU = {
   language: "en-AU",
   description: "English (AU)",
   messages: require("../translations/original.json"),
-  formats: defaultFormats //dont customize for en language
+  formats: defaultFormats, //dont customize for en language
 };
 
 const es = {
@@ -80,7 +79,7 @@ const es = {
   language: "es",
   description: "Español",
   messages: require("../translations/es.json"),
-  formats: defaultFormats
+  formats: defaultFormats,
 };
 
 const fr = {
@@ -88,7 +87,7 @@ const fr = {
   language: "fr",
   description: "Français",
   messages: require("../translations/fr.json"),
-  formats: defaultFormats
+  formats: defaultFormats,
 };
 
 const ja = {
@@ -96,7 +95,7 @@ const ja = {
   language: "ja",
   description: "日本語",
   messages: require("../translations/ja.json"),
-  formats: defaultFormats
+  formats: defaultFormats,
 };
 
 const pt_BR = {
@@ -104,7 +103,7 @@ const pt_BR = {
   language: "pt-BR",
   description: "Português do Brasil",
   messages: require("../translations/pt.json"),
-  formats: defaultFormats
+  formats: defaultFormats,
 };
 
 const zh = {
@@ -112,7 +111,7 @@ const zh = {
   language: "zh",
   description: "中文",
   messages: require("../translations/zh.json"),
-  formats: defaultFormats
+  formats: defaultFormats,
 };
 
 // pseudo-locale for i18n testing during development. Can be freely
@@ -122,10 +121,10 @@ const dev = {
   language: "pt-BR", // must be one of the allowed locales of format.js/react-intl
   description: "Dev Locale for testing",
   messages: require("../translations/dev.json"),
-  formats: defaultFormats
+  formats: defaultFormats,
 };
 
-const locales = [ de, en, en_GB, en_AU, es, fr, ja, pt_BR, zh ];
+const locales = [de, en, en_GB, en_AU, es, fr, ja, pt_BR, zh];
 
 if (process.env.NODE_ENV === "development") {
   locales.push(dev);
@@ -140,40 +139,40 @@ export default locales;
 // The locale key returned by this function is guaranteed to exist.
 export function appLocaleFromElectronLocale(electronLocale) {
   switch (electronLocale) {
+    case "de":
+    case "de-AT":
+    case "de-CH":
+    case "de-DE":
+      return "de";
 
-  case "de":
-  case "de-AT":
-  case "de-CH":
-  case "de-DE":
-    return "de";
+    case "en-GB":
+      return "en-GB";
+    case "en-AU":
+      return "en-AU";
 
-  case "en-GB":
-    return "en-GB";
-  case "en-AU":
-    return "en-AU";
+    case "es":
+      return "es";
 
-  case "es":
-    return "es";
+    case "fr":
+    case "fr-CA":
+    case "fr-CH":
+    case "fr-FR":
+      return "fr";
 
-  case "fr":
-  case "fr-CA":
-  case "fr-CH":
-  case "fr-FR":
-    return "fr";
+    case "ja":
+      return "ja";
 
-  case "ja":
-    return "ja";
+    case "pt":
+    case "pt-BR":
+    case "pt-PT":
+      return "pt-BR";
 
-  case "pt":
-  case "pt-BR":
-  case "pt-PT":
-    return "pt-BR";
+    case "zh":
+    case "zh-CN":
+    case "zh-TW":
+      return "zh";
 
-  case "zh":
-  case "zh-CN":
-  case "zh-TW":
-    return "zh";
-
-  default: return "en";
+    default:
+      return "en";
   }
 }

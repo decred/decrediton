@@ -3,7 +3,7 @@ import { selectorMap } from "fp";
 import * as sel from "selectors";
 
 const mapStateToProps = selectorMap({
-  currentLocaleName: sel.currentLocaleName
+  currentLocaleName: sel.currentLocaleName,
 });
 
 export default connect(mapStateToProps);
