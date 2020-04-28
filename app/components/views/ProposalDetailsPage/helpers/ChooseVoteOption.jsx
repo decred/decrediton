@@ -25,9 +25,9 @@ const ChooseVoteOption = ({
         if(!newVoteChoice) return;
         onUpdateVoteChoice(privatePassphrase)
           .then(() => send("RESOLVE"))
-          .catch(() => {
+          .catch(error => {
+            send({ type: "REJECT", error });
             setVoteOption(null);
-            send("REJECT");
           });
       }
     }
@@ -40,6 +40,7 @@ const ChooseVoteOption = ({
 
   switch (state.value) {
   case "idle":
+  case "failure":
     return <ChooseOptions {...{
       setVoteOption, newVoteChoice, eligibleTicketCount, currentVoteChoice,
       voteOptions, votingComplete, onVoteSubmit: voteSubmitHandler
