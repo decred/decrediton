@@ -8,8 +8,10 @@ import { TabbedPage, TabbedPageTab as Tab } from "layout";
 import { createElement as h, useEffect, useReducer } from "react";
 import * as gov from "actions/GovernanceActions";
 import * as sel from "selectors";
+import { Button } from "pi-ui";
+import styles from "./ProposalsList.module.css";
 
-const PageHeader = () => (
+const PageHeader = ({ isTestnet }) => (
   <div className="proposals-community-header is-row">
     <div className="proposals-community-header-wrapper">
       <div className="proposals-community-header-title"><T id="proposals.community.title" m="Proposals"/></div>
@@ -21,7 +23,9 @@ const PageHeader = () => (
       </div>
     </div>
     <div className="links">
-      <PiLink><T id="proposals.community.createLink" m="Create a Proposal" /></PiLink>
+      <PiLink className={styles.politeiaButton} CustomComponent={Button} path="/proposals/new" isTestnet={isTestnet}>
+        <T id="proposals.community.createLink" m="Create a Proposal" />
+      </PiLink>
     </div>
   </div>
 );
@@ -50,19 +54,22 @@ function getProposalsTab(location) {
 }
 
 function Proposals() {
+  // TODOs:
+  // - add custom hooks, css module and restructure => see proposal details page!
+  // - move reducers which only control local states from reducer/governance.js to here.
+
   const activeVoteCount = useSelector(sel.newActiveVoteProposalsCount);
   const preVoteCount = useSelector(sel.newPreVoteProposalsCount);
   const politeiaEnabled = useSelector(sel.politeiaEnabled);
   const location = useSelector(sel.location);
-
-  // TODO move reducers which only control local states from reducer/governance.js
-  // to here.
+  const isTestnet = useSelector(sel.isTestNet);
+  const dispatch = useDispatch();
   const [ tab, setTab ] = useReducer(() => getProposalsTab(location));
 
-  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(setLastPoliteiaAccessTime());
-  }, []);
+  }, [ dispatch ]);
+
   const getTokenAndInitialBatch = () => dispatch(gov.getTokenAndInitialBatch());
   useEffect(() => {
     const tab = getProposalsTab(location);
@@ -73,7 +80,7 @@ function Proposals() {
     return <PoliteiaDisabled {...{ getTokenAndInitialBatch }} />;
   }
   return (
-    <TabbedPage caret={<div/>} header={<PageHeader />} >
+    <TabbedPage caret={<div/>} header={<PageHeader isTestnet={isTestnet} />} >
       <Tab path="/governance/proposals/prevote"
         component={ h(ProposalList, { tab }) }
         key="preVote"

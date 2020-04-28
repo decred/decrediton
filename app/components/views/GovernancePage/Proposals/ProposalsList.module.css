@@ -1,0 +1,20 @@
+.loadingPage {
+  width: 100%;
+  text-align: center;
+}
+
+.politeiaButton {
+  font-size: 13px !important;
+  line-height: 17px !important;
+  border-radius: 5px !important;
+  padding: 6px 15px !important;
+  margin: 4px !important;
+  color: var(--info-modal-button-text) !important;
+  background-color: var(--info-modal-button-bg) !important;
+  border: 0 !important;
+  text-decoration: none !important;
+}
+
+.politeiaButton:hover {
+  background-color: var(--title-text-and-button-background-hovered) !important;
+}

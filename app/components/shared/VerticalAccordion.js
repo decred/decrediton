@@ -1,6 +1,7 @@
 import { createElement as h } from "react";
 import { TransitionMotion } from "react-motion";
 import { spring } from "react-motion";
+import { classNames } from "pi-ui";
 
 @autobind
 class VerticalAccordion extends React.Component {
@@ -59,12 +60,6 @@ class VerticalAccordion extends React.Component {
 
   render() {
     const { disabled, className, show } = this.props;
-
-    const classNames = [
-      "vertical-accordion",
-      show ? "active" : "",
-      className || ""
-    ].join(" ");
     const childrenClassNames = show ? "active" : "";
     const defaultStyles = this.getDefaultStyles();
     const styles = this.chosenStyles();
@@ -77,10 +72,10 @@ class VerticalAccordion extends React.Component {
     }));
 
     return (
-      <div className={classNames}>
-        <div className="vertical-accordion-header" onClick={ !disabled ? this.onToggleAccordion : null } >
+      <div className={classNames("vertical-accordion", show && "active", className)}>
+        <div className={classNames("vertical-accordion-header", this.props.headerClassName)} onClick={ !disabled ? this.onToggleAccordion : null } >
           {this.props.header}
-          <div className={(disabled && "disabled") + " vertical-accordion-arrow"} />
+          <div className={classNames(disabled && "disabled", "vertical-accordion-arrow", this.props.arrowClassName)} />
         </div>
         { h(TransitionMotion, tmProps, childrenMotion) }
       </div>

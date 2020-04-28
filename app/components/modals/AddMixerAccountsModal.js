@@ -10,7 +10,7 @@ function AddMixerAccountsModal({
   useEffect(() => {
     setMixedAccountName("");
     setChangeAccountName("");
-  }, [ show ]);
+  }, [ show, setMixedAccountName, setChangeAccountName ]);
 
   return (
     <PassphraseModal {...{ show, ...props }}>

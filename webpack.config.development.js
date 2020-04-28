@@ -27,7 +27,22 @@ export default merge(baseConfig, {
   module: {
     rules: [
       {
-        test: /\.less$/,
+        test: /\.css$/,
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              importLoaders: 1,
+              modules: true,
+              localIdentName: "[local]__[hash:base64:5]"
+            }
+          }
+        ],
+        include: /\.module\.css$/
+      },
+      {
+        test: [ /\.less$/, /\.css$/ ],
         use: [ {
           loader: "style-loader"
         }, {
@@ -38,16 +53,22 @@ export default merge(baseConfig, {
             importLoaders: 1,
             localIdentName: "[local]"
           }
-        }, {
-          loader: "less-loader",
-          options: {
-            sourceMap: true,
-            noIeCompat: true,
-            strictMath: true
-          }
-        } ]
+        }
+        ],
+        exclude: /\.module\.css$/
       },
-
+      {
+        test: /\.less$/,
+        use: [
+          {
+            loader: "less-loader",
+            options: {
+              sourceMap: true,
+              noIeCompat: true,
+              strictMath: true
+            }
+          } ]
+      },
       {
         test: [ /\.woff(\?v=\d+\.\d+\.\d+)?$/, /\.woff2(\?v=\d+\.\d+\.\d+)?$/ ],
         use: [ {

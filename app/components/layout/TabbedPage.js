@@ -1,3 +1,4 @@
+import { classNames } from "pi-ui";
 import { Switch, Route, matchPath } from "react-router-dom";
 import { isArray } from "util";
 import { RoutedTabsHeader, RoutedTab } from "shared";
@@ -94,20 +95,20 @@ function animatedStyles(styles, dir) {
   );
 }
 
-function TabbedPage(props) {
+function TabbedPage({ children, header, className, onChange, caret }) {
   const location = useSelector(sel.location);
   const uiAnimations = useSelector(sel.location);
-  const [ matchedTab, setMatchedTab ] = useReducer(() => getMatchedTab(location, props.children));
+  const [ matchedTab, setMatchedTab ] = useReducer(() => getMatchedTab(location, children));
 
   const previous = usePrevious({ matchedTab, location });
   const [ dir, setDir ] = useState("l2r");
   useEffect( () => {
-    setMatchedTab(getMatchedTab(location, props.children));
-  }, []);
+    setMatchedTab(getMatchedTab(location, children));
+  }, [ children, location ]);
   useEffect(() => {
     if (previous && previous.location.pathname === location.pathname ) return;
-    if (typeof props.onChange === "function") props.onChange();
-    const matchedTab = getMatchedTab(location, props.children);
+    if (typeof onChange === "function") onChange();
+    const matchedTab = getMatchedTab(location, children);
     if (!matchedTab) return;
     // if (previous && previous.matchedTab) is false, it probably means it is the first time rendering
     // therefore we use "l2r", as it is probably the first tab.
@@ -116,8 +117,7 @@ function TabbedPage(props) {
       : "l2r";
     setDir(dir);
     setMatchedTab(matchedTab);
-  }, [ location ]);
-  let { children, header, className } = props;
+  }, [ location, previous, children, onChange ]);
   if (!isArray(children)) children = [ children ];
 
   const tabs = children.filter(c => c.type === TabbedPageTab && !c.props.disabled);
@@ -138,10 +138,10 @@ function TabbedPage(props) {
       <div className="tabbed-page-header">
         {header}
         <Switch>{headers}</Switch>
-        <RoutedTabsHeader tabs={tabHeaders} caret={props.caret}/>
+        <RoutedTabsHeader tabs={tabHeaders} caret={caret}/>
       </div>
 
-      <div className={"tabbed-page-body" + (className ? (" " + className) : "")}>
+      <div className={classNames("tabbed-page-body", className)}>
         {tabContents}
         {nonTabs}
       </div>

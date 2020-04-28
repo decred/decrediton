@@ -1,4 +1,4 @@
-import { ProposalText } from "views/ProposalDetails/helpers";
+import { ProposalText } from "views/ProposalDetailsPage/helpers";
 import { render } from "enzyme";
 import fullMarkdown from "data/FullProposalMarkdown";
 

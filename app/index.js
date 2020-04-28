@@ -9,6 +9,7 @@ import { App } from "containers";
 import configureStore from "./store/configureStore";
 import { getGlobalCfg, getDaemonIsAdvanced, getIsSpv } from "./config";
 import locales from "./i18n/locales";
+import "pi-ui/dist/index.css";
 import "./style/main.less";
 import "./style/ReactSelectGlobal.less";
 import pkg from "./package.json";
@@ -17,6 +18,12 @@ import { ipcRenderer } from "electron";
 import { DCR, THEME, LOCALE, NETWORK } from "constants";
 import { getSelectedWallet } from "./main_dev/launch";
 import { AppContainer } from "react-hot-loader";
+
+import { defaultLightTheme, ThemeProvider, defaultDarkTheme } from "pi-ui";
+import { lightTheme, darkTheme, icons } from "style/themes";
+import SourceSansProLight from "style/fonts/SourceSansPro-Light.ttf";
+import SourceSansProRegular from "style/fonts/SourceSansPro-Regular.ttf";
+import SourceSansProSemiBold from "style/fonts/SourceSansPro-SemiBold.ttf";
 
 const globalCfg = getGlobalCfg();
 const locale = globalCfg.get(LOCALE);
@@ -43,7 +50,7 @@ const currentSettings = {
   networkFromCli: !!(hasCliOption("network")),
   theme: globalCfg.get(THEME)
 };
-var initialState = {
+const initialState = {
   settings: {
     currentSettings: currentSettings,
     tempSettings: currentSettings,
@@ -425,18 +432,36 @@ var initialState = {
   locales: locales
 };
 
+const fontConfig = {
+  fontFamilyText: "Source Sans Pro",
+  regularUrl: SourceSansProRegular,
+  semiBoldUrl: SourceSansProSemiBold,
+  lightUrl: SourceSansProLight,
+  format: "truetype"
+};
+
+const themes = {
+  "theme-light": { ...defaultLightTheme, ...lightTheme, ...icons },
+  "theme-dark":  { ...defaultDarkTheme, ...darkTheme, ...icons }
+};
+
 const history = createMemoryHistory();
 const store = configureStore(initialState, history);
 
 const render = () => ReactDOM.render(
   <AppContainer>
-    <Provider store={store}>
-      <ConnectedRouter history={history}>
-        <Switch>
-          <Route path="/" component={App} />
-        </Switch>
-      </ConnectedRouter>
-    </Provider>
+    <ThemeProvider
+      themes={themes}
+      defaultThemeName={currentSettings.theme}
+      fontConfig={fontConfig}>
+      <Provider store={store}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route path="/" component={App} />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>
+    </ThemeProvider>
   </AppContainer>,
   document.getElementById("root")
 );

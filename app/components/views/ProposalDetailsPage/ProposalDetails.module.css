@@ -1,0 +1,416 @@
+.overview {
+  background-color: var(--background-back-color);
+  justify-content: space-between;
+  min-height: 200px;
+  width: 740px;
+}
+
+.overviewInfoWrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.overviewInfo {
+  padding: 20px 10px 15px 40px;
+  max-width: 49%;
+}
+
+.title {
+  font-size: 19px;
+  line-height: 24px;
+  color: var(--tutorial-header);
+}
+
+.token {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 100px;
+  color: var(--overview-balance-label);
+}
+
+.token a {
+  font-size: 13px;
+  line-height: 19px;
+  color: var(--overview-balance-label);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.token a:hover {
+  color: var(--stroke-color-default);
+}
+
+.fields {
+  margin-top: 11px;
+}
+
+.overviewVoting {
+  background-color: var(--transfer-details-bg);
+  padding: 30px 20px;
+  width: 284px;
+  height: 60px;
+}
+
+.overviewVotingButton {
+  padding: 6px 18px;
+  position: relative;
+  top: -4px;
+  left: 158px;
+}
+
+.backIconButton {
+  margin: -20px -12px 0px 0px;
+  float: right;
+  cursor: pointer;
+  height: 12px;
+  width: 12px;
+  background-repeat: no-repeat;
+  background-size: 12px;
+  background-image: var(--x-grey);
+  padding: 0;
+}
+
+.backIconButton:hover {
+  opacity: 0.7;
+}
+
+.smallWidth .backIconButton {
+  visibility: hidden;
+}
+
+.noTickets,
+.votingPreference,
+.notVoting,
+.voted {
+  font-size: 13px;
+  line-height: 16px;
+  margin-bottom: 15px;
+  height: 64px;
+}
+
+.notVoting {
+  background-image: var(--chat-bubbles);
+  background-repeat: no-repeat;
+  background-size: 30px;
+  padding-left: 38px;
+  padding-top: 7px;
+}
+
+.voteChoice {
+  margin-top: 15px;
+  height: 64px;
+}
+
+.preferenceTitle {
+  margin-bottom: 15px;
+}
+
+.noTickets {
+  background-size: 30px 30px;
+  background-position: 0 50%;
+  background-repeat: no-repeat;
+  background-image: var(--ticket-voted-grey-icon);
+  width: 157px;
+  padding-left: 40px;
+}
+
+.overviewField .label {
+  color: var(--agenda-card-bottom-cfg);
+  display: inline-block;
+  margin-right: 0.5em;
+  width: 100px;
+  text-align: right;
+  vertical-align: middle;
+}
+
+.overviewField .value {
+  color: var(--input-color-default);
+  display: inline-block;
+  vertical-align: middle;
+  max-width: 229px;
+}
+
+.overviewField .timeValue {
+  font-weight: bold;
+  margin-right: 0.2em;
+}
+
+.votingProgressWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.votingProgress {
+  flex-basis: 95%;
+  height: 60px;
+}
+
+.progressIndicator {
+  height: 5px;
+  width: 100%;
+}
+
+.detailsText {
+  font-family: var(--font-family-regular-semi-bold);
+  min-height:100%;
+  padding-top: 30px;
+  padding-left: 40px;
+  background-color: var(--background-back-color);
+  margin-bottom: 80px;
+  border-top: 1px solid var(--tabbed-page-header-bg);
+  width: 700px;
+}
+
+.detailsText .links {
+  float: right;
+  margin-right: 20px;
+  margin-top: -10px;
+}
+
+.detailsText p {
+  word-wrap: break-word;
+}
+
+.detailsText a {
+  color:var(--link-color);
+}
+
+.detailsText pre {
+  background-color: var(--proposal-text-markdown);
+  border-radius: 3px;
+  font-size: 85%;
+  line-height: 1.45;
+  overflow: auto;
+  padding: 16px;
+}
+
+.detailsText div:not(.links) {
+  padding-right: 30px;
+  padding-bottom: 20px;
+}
+
+.progressCounts {
+  text-align: right;
+  padding-right: 5px;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 19px;
+}
+
+.progressCounts > div {
+  width: 6px;
+  height: 6px;
+  display: inline-block;
+  border-radius: 100px;
+  margin: 0px 5px 0px 20px;
+}
+
+.yesCountBox {
+  background-color: var(--vote-yes-color);
+}
+
+.noCountBox {
+  background-color: var(--vote-no-color);
+}
+
+.abstainCountBox {
+  background-color: var(--vote-abstain-color);
+}
+
+.voteOption {
+  margin-bottom: 10px;
+}
+
+.voteOption input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+}
+
+.voteOption input[type="radio"] + .radioLabel::before {
+  content: '';
+  background: var(--disabled-background-color-lighter);
+  border-radius: 100%;
+  border: 1px solid var(--disabled-color);
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  position: relative;
+  cursor: pointer;
+  text-align: center;
+  transition: all 250ms ease;
+  margin-bottom: -3px;
+}
+
+.voteOption input[type="radio"] + .radioLabel:empty::before {
+  margin-right: 5px;
+  text-transform:  capitalize;
+}
+
+.voteOption input[type="radio"] + .radioLabel.yes::before {
+  border: 1px solid var(--vote-yes-color);
+}
+
+.voteOption input[type="radio"] + .radioLabel.no::before {
+  border: 1px solid var(--vote-no-color);
+}
+
+.voteOption input[type="radio"]:checked + .radioLabel.yes::before {
+  background-color: var(--vote-yes-color);
+  box-shadow: inset 0 0 0 3px var(--disabled-background-color-lighter);
+}
+
+.voteOption input[type="radio"]:checked + .radioLabel.no::before {
+  background-color: var(--vote-no-color);
+  box-shadow: inset 0 0 0 3px var(--disabled-background-color-lighter);
+}
+
+.voteOption input[type="radio"]:focus + .radioLabel.no::before {
+  outline: none;
+  border-color: var(--vote-no-color);
+}
+
+.voteOption input[type="radio"]:focus + .radioLabel.yes::before {
+  outline: none;
+  border-color: var(--vote-yes-color);
+}
+
+.voteOption input[type="radio"]:disabled + .radioLabel::before {
+  cursor: default;
+}
+
+.voteConfirmation {
+  background-color: var(--background-container);
+  font-size: 27px;
+  line-height: 34px;
+  margin-left: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  display: flex;
+  flex-direction: row;
+  text-transform: capitalize;
+}
+
+.yesProposal {
+  width: 12px;
+  height: 12px;
+  border-radius: 100px;
+  background-color: var(--vote-yes-color);
+  margin-top: 13px;
+  margin-right: 5px;
+}
+
+.noProposal {
+  width: 12px;
+  height: 12px;
+  border-radius: 100px;
+  background-color: var(--vote-no-color);
+  margin-top: 13px;
+  margin-right: 5px;
+}
+
+.walletEligibleTickets {
+  width: 100%;
+  font-size: 9pt;
+  color: var(--overview-balance-label);
+}
+
+.walletEligibleTicketsHeader {
+  margin-right: 30px;
+  text-align: right;
+}
+
+.walletEligibleTicketsArrow {
+  top: 5px;
+  right: -20px;
+}
+
+.walletEligibleTicketsLabel {
+  padding-right: 5px;
+}
+
+.walletEligibleTicketsRow {
+  border-top: 1px solid var(--tabbed-page-header-bg);
+  padding-left: 20px;
+}
+
+.loadingPage {
+  width: 100%;
+  text-align: center;
+}
+
+.politeiaButton {
+  font-size: 13px !important;
+  line-height: 17px !important;
+  border-radius: 5px !important;
+  padding: 6px 15px !important;
+  margin: 4px !important;
+  color: var(--info-modal-button-text) !important;
+  background-color: var(--info-modal-button-bg) !important;
+  border: 0 !important;
+  text-decoration: none !important;
+}
+
+.politeiaButton:hover {
+  background-color: var(--title-text-and-button-background-hovered) !important;
+}
+
+@media screen and (max-width: 1179px) {
+  .overviewVotingButton {
+    left: 123px;
+  }
+
+  .overview {
+    width: 634px;
+  }
+  
+  .overviewInfo {
+    padding: 20px;
+  }
+
+  .overviewVoting {
+    width: 244px;
+  }
+
+  .detailsText {
+    width: 594px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .overview {
+    width: 355px;
+  }
+
+  .overview.is-row {
+    flex-direction: column;
+  }
+
+  .overviewInfo {
+    padding: 20px;
+    max-width: 100%;
+  }
+
+  .votingProgress {
+    width: 315px;
+    padding-left: 20px;
+  }
+
+  .overviewVoting {
+    width: 315px;
+  }
+
+  .detailsText {
+    padding-left: 20px;
+    width: 335px;
+  }
+
+  .smallWidth {
+    float: right;
+    visibility: visible;
+  }
+
+  .backIconButton {
+    visibility: hidden;
+  }
+}

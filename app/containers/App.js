@@ -13,7 +13,6 @@ import AboutModal from "../components/modals/AboutModal/AboutModal";
 import AutobuyerRunningModal from "../components/modals/AutobuyerRunningModal/AutobuyerRunningModal";
 import { log } from "wallet";
 import { TrezorModals } from "components/modals/trezor";
-import "style/Themes.less";
 import "style/Layout.less";
 import { ipcRenderer } from "electron";
 import { hot } from "react-hot-loader/root";
