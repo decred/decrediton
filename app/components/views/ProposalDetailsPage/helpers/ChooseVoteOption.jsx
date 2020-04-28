@@ -8,6 +8,15 @@ import styles from "../ProposalDetails.module.css";
 import ChooseOptions from "./ChooseOptions";
 import { FormattedMessage as T } from "react-intl";
 
+const getError = (error) => {
+  if (!error) return;
+  if (typeof error === "string") return error;
+  if (typeof error === "object") {
+    if (error.message) return error.message;
+    return JSON.stringify(error);
+  }
+};
+
 const ChooseVoteOption = ({
   viewedProposalDetails, voteOptions, currentVoteChoice, votingComplete, eligibleTicketCount
 }) => {
@@ -33,9 +42,11 @@ const ChooseVoteOption = ({
     }
   });
 
+  const error = state && state.context && getError(state.context.error);
+
   const voteSubmitHandler = useCallback(
-    (privatePassphrase) => send({ type: "FETCH", privatePassphrase }),
-    [ send ],
+    (privatePassphrase) => !error ? send({ type: "FETCH", privatePassphrase }) : send({ type: "RETRY", privatePassphrase }),
+    [ send, error ],
   );
 
   switch (state.value) {
