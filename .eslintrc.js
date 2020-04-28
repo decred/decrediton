@@ -10,7 +10,7 @@ module.exports = {
     "react-hooks"
   ],
   "parser": "babel-eslint",
-  "extends": "eslint:recommended",
+  "extends": ["eslint:recommended", "prettier"],
   "rules": {
     "object-curly-spacing": [
       "error", 
