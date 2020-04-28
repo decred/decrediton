@@ -2,7 +2,7 @@ import { fetchMachine } from "stateMachines/FetchStateMachine";
 import { useMachine } from "@xstate/react";
 import { StakeyBounceXs } from "indicators";
 import { useDispatch } from "react-redux";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import * as gov from "actions/GovernanceActions";
 import styles from "../ProposalDetails.module.css";
 import ChooseOptions from "./ChooseOptions";
@@ -42,7 +42,7 @@ const ChooseVoteOption = ({
     }
   });
 
-  const error = state && state.context && getError(state.context.error);
+  const error = useMemo(() => state && state.context && getError(state.context.error), [ state ]);
 
   const voteSubmitHandler = useCallback(
     (privatePassphrase) => !error ? send({ type: "FETCH", privatePassphrase }) : send({ type: "RETRY", privatePassphrase }),
