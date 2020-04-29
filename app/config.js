@@ -186,11 +186,11 @@ export function getWalletCert(certPath) {
     cert = fs.readFileSync(certPath);
   } catch (err) {
     if (err.code === "ENOENT") {
-      console.log(certPath + " does not exist");
+      console.log(`${certPath} does not exist`);
     } else if (err.code === "EACCES") {
-      console.log(certPath + " permission denied");
+      console.log(`${certPath} permission denied`);
     } else {
-      console.error(certPath + " " + err);
+      console.error(`${certPath} ${err}`);
     }
     return null;
   }

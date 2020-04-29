@@ -138,7 +138,7 @@ const availableWallets = get(["daemon", "availableWallets"]);
 const availableWalletsSelect = createSelector([availableWallets], (wallets) =>
   map(
     (wallet) => ({
-      label: wallet.wallet + " (" + wallet.network + ")",
+      label: `${wallet.wallet}(${wallet.network})`,
       value: wallet,
       network: wallet.network,
       finished: wallet.finished,

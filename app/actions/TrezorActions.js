@@ -508,10 +508,9 @@ export const walletTxToBtcjsTx = (tx, changeIndex, inputTxs) => async (
   for (const inp of tx.getInputsList()) {
     const inputTx = inputTxsMap[rawHashToHex(inp.getPreviousTransactionHash())];
     if (!inputTx)
-      throw (
-        "Cannot sign transaction without knowing source tx " +
-        rawHashToHex(inp.getPreviousTransactionHash())
-      );
+      throw `Cannot sign transaction without knowing source tx ${rawHashToHex(
+        inp.getPreviousTransactionHash()
+      )}`;
 
     const inputTxOut = inputTx.getOutputsList()[
       inp.getPreviousTransactionIndex()
@@ -533,7 +532,7 @@ export const walletTxToBtcjsTx = (tx, changeIndex, inputTxs) => async (
 
     const addrValidResp = await wallet.validateAddress(walletService, addr);
     if (!addrValidResp.getIsValid())
-      throw "Input has an invalid address " + addr;
+      throw `Input has an invalid address ${addr}`;
 
     // Trezor firmware (mcu) currently (2018-06-25) only support signing
     // when all inputs of the transaction are from the wallet. This happens
@@ -905,21 +904,11 @@ export const getWalletCreationMasterPubKey = () => async (
         features.minor_version < wantMinor);
     if (features.model == 1 && versionLessThan(1, 8)) {
       throw new Error(
-        "Trezor Model One needs to run on firmware >= 1.8.0. Found " +
-          features.major_version +
-          "." +
-          features.minor_version +
-          "." +
-          features.patch_version
+        `Trezor Model One needs to run on firmware >= 1.8.0. Found: ${features.major_version}.${features.minor_version}.${features.patch_version}`
       );
     } else if (features.model == "T" && versionLessThan(2, 1)) {
       throw new Error(
-        "Trezor Model T needs to run on firmware >= 2.1.0. Found " +
-          features.major_version +
-          "." +
-          features.minor_version +
-          "." +
-          features.patch_version
+        `Trezor Model T needs to run on firmware >= 2.1.0. Found: ${features.major_version}.${features.minor_version}.${features.patch_version}`
       );
     } else if (!features.model) {
       throw new Error("Unknown firmware model/version");

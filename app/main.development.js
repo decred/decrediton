@@ -397,11 +397,10 @@ ipcMain.on("get-dcrlnd-logs", (event) => {
 });
 
 ipcMain.on("get-decrediton-logs", (event) => {
-  const logFileName =
-    logger.transports.file.dirname + "/" + logger.transports.file.filename;
+  const logFileName = `${logger.transports.file.dirname}/${logger.transports.file.filename}`;
   readFileBackward(logFileName, MAX_LOG_LENGTH, (err, data) => {
     if (err) {
-      logger.log("error", "Error reading log: " + err);
+      logger.log("error", `Error reading log: ${err}`);
       return (event.returnValue = null);
     }
     event.returnValue = data.toString("utf8");

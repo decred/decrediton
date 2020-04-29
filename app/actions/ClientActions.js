@@ -238,12 +238,9 @@ const getAccountsBalances = (accounts) => (dispatch, getState) => {
       internalKeys: account.getInternalKeyCount(),
       importedKeys: account.getImportedKeyCount(),
       hidden: !!hiddenAccounts.find(eq(account.getAccountNumber())),
-      HDPath:
-        "m / 44' / " +
-        chainParams.HDCoinType +
-        "' / " +
-        account.getAccountNumber() +
-        "'",
+      HDPath: `m / 44' / ${
+        chainParams.HDCoinType
+      }' / ${account.getAccountNumber()}'`,
       total: resp.getTotal(),
       spendable: resp.getSpendable(),
       immatureReward: resp.getImmatureReward(),
@@ -492,12 +489,9 @@ export function updateAccount(account) {
         spendable: 0,
         total: 0,
         votingAuthority: 0,
-        HDPath:
-          "m / 44' / " +
-          chainParams.HDCoinType +
-          "' / " +
-          account.accountNumber +
-          "'",
+        HDPath: `m / 44' / ${
+          chainParams.HDCoinType
+        }' / ${account.getAccountNumber()}'`,
         ...account
       };
       updatedBalances = [...balances, newAccount];
