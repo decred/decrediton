@@ -221,7 +221,7 @@ const darkTheme = {
   "menu-trezor-active": "url('style/icons/trezorActiveDark.svg')",
   "menu-trezor-default": "url('style/icons/trezorDefaultDark.svg')",
   "menu-trezor-hover": "url('style/icons/trezorHoverDark.svg')",
-  "menu-cancel-rescan-icon": "url('style/icons/menuCancelRescanDark.svg')",
+  "menu-cancel-rescan-icon": "url('style/icons/menuCancelRescanDark.svg')"
 };
 
 export default darkTheme;

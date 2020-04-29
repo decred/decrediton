@@ -6,7 +6,7 @@ const AllowableRequestType = ({
   label,
   description,
   checked,
-  onChange,
+  onChange
 }) => (
   <div className="settings-row settings-row-checklist">
     <div className="settings-label">{label}</div>

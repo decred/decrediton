@@ -34,7 +34,7 @@ const mapStateToProps = selectorMap({
   sidebarOnBottom: sel.sidebarOnBottom,
   isWatchingOnly: sel.isWatchingOnly,
   splitTx: sel.splitTx,
-  unsignedTickets: sel.ticketsList,
+  unsignedTickets: sel.ticketsList
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -47,7 +47,7 @@ const mapDispatchToProps = (dispatch) =>
       onClearImportScriptError: ca.clearImportScriptError,
       onClearImportScriptSuccess: ca.clearImportScriptSuccess,
       onChangeStakePool: spa.changeSelectedStakePool,
-      onDismissBackupRedeemScript: spa.dismissBackupRedeemScript,
+      onDismissBackupRedeemScript: spa.dismissBackupRedeemScript
     },
     dispatch
   );

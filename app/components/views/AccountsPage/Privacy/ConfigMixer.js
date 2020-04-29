@@ -66,7 +66,7 @@ function ConfigMixer({ isCreateAccountDisabled, accounts }) {
                       m="This action can not be undone"
                     />
                   </span>
-                ),
+                )
               }}
             />
             <div>
@@ -78,7 +78,7 @@ function ConfigMixer({ isCreateAccountDisabled, accounts }) {
                     changeAccountName,
                     setMixedAccountName,
                     setChangeAccountName,
-                    isValid,
+                    isValid
                   }}
                   disabled={isCreateAccountDisabled}
                   modalTitle={
@@ -117,7 +117,7 @@ function ConfigMixer({ isCreateAccountDisabled, accounts }) {
                         m="This action can not be undone"
                       />
                     </span>
-                  ),
+                  )
                 }}
               />
             </div>
@@ -129,7 +129,7 @@ function ConfigMixer({ isCreateAccountDisabled, accounts }) {
                   changeAccountName,
                   setMixedAccountName,
                   setChangeAccountName,
-                  isValid,
+                  isValid
                 }}
                 disabled={isCreateAccountDisabled}
                 modalTitle={

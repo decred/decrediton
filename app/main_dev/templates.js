@@ -1,4 +1,4 @@
-let versionWin = null;
+const versionWin = null;
 let grpcVersions = { requiredVersion: null, walletVersion: null };
 
 const darwinTemplate = (mainWindow, locale) => [
@@ -10,43 +10,43 @@ const darwinTemplate = (mainWindow, locale) => [
         selector: "orderFrontStandardAboutPanel:",
         click() {
           mainWindow.webContents.send("show-about-modal");
-        },
+        }
       },
       {
-        type: "separator",
+        type: "separator"
       },
       {
         label: locale.messages["appMenu.services"],
-        submenu: [],
+        submenu: []
       },
       {
-        type: "separator",
+        type: "separator"
       },
       {
         label: locale.messages["appMenu.hideDecrediton"],
         accelerator: "Command+H",
-        selector: "hide:",
+        selector: "hide:"
       },
       {
         label: locale.messages["appMenu.hideOthers"],
         accelerator: "Command+Shift+H",
-        selector: "hideOtherApplications:",
+        selector: "hideOtherApplications:"
       },
       {
         label: locale.messages["appMenu.showAll"],
-        selector: "unhideAllApplications:",
+        selector: "unhideAllApplications:"
       },
       {
-        type: "separator",
+        type: "separator"
       },
       {
         label: locale.messages["appMenu.quit"],
         accelerator: "Command+Q",
         click() {
           mainWindow.webContents.send("check-auto-buyer-running");
-        },
-      },
-    ],
+        }
+      }
+    ]
   },
   {
     label: locale.messages["appMenu.edit"],
@@ -54,37 +54,37 @@ const darwinTemplate = (mainWindow, locale) => [
       {
         label: locale.messages["appMenu.undo"],
         accelerator: "Command+Z",
-        selector: "undo:",
+        selector: "undo:"
       },
       {
         label: locale.messages["appMenu.redo"],
         accelerator: "Shift+Command+Z",
-        selector: "redo:",
+        selector: "redo:"
       },
       {
-        type: "separator",
+        type: "separator"
       },
       {
         label: locale.messages["appMenu.cut"],
         accelerator: "Command+X",
-        selector: "cut:",
+        selector: "cut:"
       },
       {
         label: locale.messages["appMenu.copy"],
         accelerator: "Command+C",
-        selector: "copy:",
+        selector: "copy:"
       },
       {
         label: locale.messages["appMenu.paste"],
         accelerator: "Command+V",
-        selector: "paste:",
+        selector: "paste:"
       },
       {
         label: locale.messages["appMenu.selectAll"],
         accelerator: "Command+A",
-        selector: "selectAll:",
-      },
-    ],
+        selector: "selectAll:"
+      }
+    ]
   },
   {
     label: locale.messages["appMenu.view"],
@@ -94,9 +94,9 @@ const darwinTemplate = (mainWindow, locale) => [
         accelerator: "Ctrl+Command+F",
         click() {
           mainWindow.setFullScreen(!mainWindow.isFullScreen());
-        },
-      },
-    ],
+        }
+      }
+    ]
   },
   {
     label: locale.messages["appMenu.window"],
@@ -104,22 +104,22 @@ const darwinTemplate = (mainWindow, locale) => [
       {
         label: locale.messages["appMenu.minimize"],
         accelerator: "Command+M",
-        selector: "performMiniaturize:",
+        selector: "performMiniaturize:"
       },
       {
         label: locale.messages["appMenu.close"],
         accelerator: "Command+W",
-        selector: "performClose:",
+        selector: "performClose:"
       },
       {
-        type: "separator",
+        type: "separator"
       },
       {
         label: locale.messages["appMenu.bringAllFront"],
-        selector: "arrangeInFront:",
-      },
-    ],
-  },
+        selector: "arrangeInFront:"
+      }
+    ]
+  }
 ];
 
 const regularTemplate = (mainWindow, locale) => [
@@ -131,9 +131,9 @@ const regularTemplate = (mainWindow, locale) => [
         accelerator: "Ctrl+W",
         click() {
           mainWindow.close();
-        },
-      },
-    ],
+        }
+      }
+    ]
   },
   {
     label: locale.messages["appMenu.view"],
@@ -143,24 +143,24 @@ const regularTemplate = (mainWindow, locale) => [
         accelerator: "F11",
         click() {
           mainWindow.setFullScreen(!mainWindow.isFullScreen());
-        },
+        }
       },
       {
         label: locale.messages["appMenu.reloadUI"],
         accelerator: "F5",
         click() {
           mainWindow.webContents.send("app-reload-requested", mainWindow);
-        },
+        }
       },
       {
         label: locale.messages["appMenu.developerTools"],
         accelerator: "Alt+Ctrl+I",
         click() {
           mainWindow.toggleDevTools();
-        },
-      },
-    ],
-  },
+        }
+      }
+    ]
+  }
 ];
 
 export const initTemplate = (mainWindow, locale) => {
@@ -186,18 +186,18 @@ const inputMenuRoles = [
   { role: "copy" },
   { role: "paste" },
   { type: "separator" },
-  { role: "selectall" },
+  { role: "selectall" }
 ];
 const selectionMenuRoles = [
   { role: "copy" },
   { type: "separator" },
-  { role: "selectall" },
+  { role: "selectall" }
 ];
 
 const inspectElement = (mainWindow, x, y) => {
   return {
     label: "Inspect element",
-    click: () => mainWindow.inspectElement(x, y),
+    click: () => mainWindow.inspectElement(x, y)
   };
 };
 

@@ -10,14 +10,14 @@ const mapStateToProps = selectorMap({
   rescanStartBlock: sel.rescanStartBlock,
   rescanEndBlock: sel.rescanEndBlock,
   rescanCurrentBlock: sel.rescanCurrentBlock,
-  rescanPercentFinished: sel.rescanPercentFinished,
+  rescanPercentFinished: sel.rescanPercentFinished
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       rescanAttempt: ca.rescanAttempt,
-      rescanCancel: ca.rescanCancel,
+      rescanCancel: ca.rescanCancel
     },
     dispatch
   );

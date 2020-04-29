@@ -26,7 +26,7 @@ import {
   VERIFYMESSAGE_FAILED,
   PUBLISHUNMINEDTRANSACTIONS_SUCCESS,
   PUBLISHUNMINEDTRANSACTIONS_FAILED,
-  GETACCOUNTEXTENDEDKEY_FAILED,
+  GETACCOUNTEXTENDEDKEY_FAILED
 } from "../actions/ControlActions";
 import {
   UPDATESTAKEPOOLCONFIG_SUCCESS,
@@ -35,32 +35,32 @@ import {
   REMOVESTAKEPOOLCONFIG,
   ADDCUSTOMSTAKEPOOL_SUCCESS,
   ADDCUSTOMSTAKEPOOL_FAILED,
-  REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED,
+  REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED
 } from "../actions/StakePoolActions";
 import {
   ABANDONTRANSACTION_SUCCESS,
   ABANDONTRANSACTION_FAILED,
   NEW_TRANSACTIONS_RECEIVED,
   GETSTARTUPWALLETINFO_FAILED,
-  SEEDCOPIEDTOCLIPBOARD,
+  SEEDCOPIEDTOCLIPBOARD
 } from "../actions/ClientActions";
 import {
   SNACKBAR_DISMISS_MESSAGES,
-  SNACKBAR_SIMPLE_MESSAGE,
+  SNACKBAR_SIMPLE_MESSAGE
 } from "../actions/SnackbarActions";
 import {
   EXPORT_ERROR,
   EXPORT_COMPLETED,
   GETSTARTUPSTATS_FAILED,
-  GETMYTICKETSSTATS_FAILED,
+  GETMYTICKETSSTATS_FAILED
 } from "actions/StatisticsActions";
 import {
   WALLETREMOVED_FAILED,
-  CONNECTDAEMON_FAILURE,
+  CONNECTDAEMON_FAILURE
 } from "actions/DaemonActions";
 import {
   GETWALLETSEEDSVC_FAILED,
-  SPVSYNC_FAILED,
+  SPVSYNC_FAILED
 } from "actions/WalletLoaderActions";
 import {
   TRZ_TOGGLEPINPROTECTION_SUCCESS,
@@ -80,7 +80,7 @@ import {
   TRZ_UPDATEFIRMWARE_SUCCESS,
   TRZ_UPDATEFIRMWARE_FAILED,
   TRZ_NOCONNECTEDDEVICE,
-  TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED,
+  TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED
 } from "actions/TrezorActions";
 
 import {
@@ -89,7 +89,7 @@ import {
   GETPROPOSAL_FAILED,
   UPDATEVOTECHOICE_SUCCESS,
   UPDATEVOTECHOICE_FAILED,
-  GETVETTED_UPDATEDVOTERESULTS_FAILED,
+  GETVETTED_UPDATEDVOTERESULTS_FAILED
 } from "actions/GovernanceActions";
 
 import {
@@ -107,7 +107,7 @@ import {
   LNWALLET_WITHDRAWWALLET_FAILED,
   LNWALLET_FUNDWALLET_SUCCESS,
   LNWALLET_WITHDRAWWALLET_SUCCESS,
-  LNWALLET_STARTDCRLND_FAILED,
+  LNWALLET_STARTDCRLND_FAILED
 } from "actions/LNActions";
 
 const WRONG_PASSPHRASE_MSG = "WRONG_PASSPHRASE_MSG";
@@ -116,310 +116,309 @@ const ERROR_IS_OBJECT = "ERROR_IS_OBJECT";
 const messages = defineMessages({
   defaultSuccessMessage: {
     id: "snackbar.defaults.success",
-    defaultMessage: "Success!",
+    defaultMessage: "Success!"
   },
   defaultErrorMessage: {
     id: "snackbar.defaults.error",
-    defaultMessage: "{originalError}",
+    defaultMessage: "{originalError}"
   },
   WALLETREMOVED_FAILED: {
     id: "createwallet.errors.walletRemoveFailed",
-    defaultMessage: "{originalError}",
+    defaultMessage: "{originalError}"
   },
   PUBLISHTX_FAILED: {
     id: "send.errors.publishTxFailed",
-    defaultMessage: "{originalError}",
+    defaultMessage: "{originalError}"
   },
   ABANDONTRANSACTION_SUCCESS: {
     id: "send.errors.abandonTxSuccess",
-    defaultMessage: "Transaction successfully abandoned!",
+    defaultMessage: "Transaction successfully abandoned!"
   },
   ABANDONTRANSACTION_FAILED: {
     id: "send.errors.abandonTxFailed",
-    defaultMessage: "{originalError}",
+    defaultMessage: "{originalError}"
   },
   SIGNTX_FAILED: {
     id: "send.errors.signTxFailed",
-    defaultMessage: "{originalError}",
+    defaultMessage: "{originalError}"
   },
   CONSTRUCTTX_FAILED: {
     id: "send.errors.constructTxFailed",
-    defaultMessage: "{originalError}",
+    defaultMessage: "{originalError}"
   },
   VALIDATEADDRESS_FAILED: {
     id: "send.errors.validateAddressFailed",
-    defaultMessage: "{originalError}",
+    defaultMessage: "{originalError}"
   },
   PURCHASETICKETS_SUCCESS: {
     id: "tickets.purchaseTicketsHeader",
     defaultMessage:
-      "You bought {numTickets, plural, one { # ticket } other { # tickets }}",
+      "You bought {numTickets, plural, one { # ticket } other { # tickets }}"
   },
   PURCHASETICKETS_FAILED: {
     id: "tickets.errors.purchaseTicketsFailed",
-    defaultMessage: "{originalError}",
+    defaultMessage: "{originalError}"
   },
   REVOKETICKETS_SUCCESS: {
     id: "tickets.revokeTicketsHeader",
-    defaultMessage: "You successfully revoked tickets",
+    defaultMessage: "You successfully revoked tickets"
   },
   REVOKETICKETS_FAILED: {
     id: "tickets.errors.revokeTicketsFailed",
-    defaultMessage: "{originalError}",
+    defaultMessage: "{originalError}"
   },
   IMPORTSCRIPT_MANUAL_SUCCESS: {
     id: "tickets.importScriptHeader",
-    defaultMessage: "You successfully imported a script",
+    defaultMessage: "You successfully imported a script"
   },
   IMPORTSCRIPT_MANUAL_FAILED: {
     id: "tickets.errors.importScriptFailed",
-    defaultMessage: "{originalError}",
+    defaultMessage: "{originalError}"
   },
   STARTAUTOBUYER_SUCCESS: {
     id: "tickets.startAutoBuyerHeader",
-    defaultMessage: "Ticket buyer is now running.",
+    defaultMessage: "Ticket buyer is now running."
   },
   STARTAUTOBUYER_FAILED: {
     id: "tickets.errors.startAutoBuyerFailed",
-    defaultMessage: "{originalError}",
+    defaultMessage: "{originalError}"
   },
   STOPAUTOBUYER_SUCCESS: {
     id: "tickets.stopAutoBuyerHeader",
-    defaultMessage: "Ticket buyer is now stopped.",
+    defaultMessage: "Ticket buyer is now stopped."
   },
   UPDATESTAKEPOOLCONFIG_SUCCESS: {
     id: "tickets.updateStakePoolConfigHeader",
-    defaultMessage: "You have successfully updated your stakepool settings.",
+    defaultMessage: "You have successfully updated your stakepool settings."
   },
   UPDATESTAKEPOOLCONFIG_FAILED: {
     id: "tickets.errors.updateStakePoolConfigFailed",
-    defaultMessage: "{originalError}",
+    defaultMessage: "{originalError}"
   },
   REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED: {
     id: "tickets.errors.refreshStakePoolInfo",
     defaultMessage:
-      "Error refreshing stakepool data from {host}: {originalError}",
+      "Error refreshing stakepool data from {host}: {originalError}"
   },
   SETSTAKEPOOLVOTECHOICES_FAILED: {
     id: "tickets.errors.setStakePoolVoteChoicesFailed",
-    defaultMessage: "{originalError}",
+    defaultMessage: "{originalError}"
   },
   RENAMEACCOUNT_SUCCESS: {
     id: "accounts.renameAccount",
-    defaultMessage: "Successfully renamed account.",
+    defaultMessage: "Successfully renamed account."
   },
   RENAMEACCOUNT_FAILED: {
     id: "accounts.errors.renameAccountFailed",
-    defaultMessage: "{originalError}",
+    defaultMessage: "{originalError}"
   },
   GETNEXTACCOUNT_SUCCESS: {
     id: "accounts.nextAccount",
-    defaultMessage: "Successfully created a new account.",
+    defaultMessage: "Successfully created a new account."
   },
   GETNEXTACCOUNT_FAILED: {
     id: "accounts.errors.getNextAccountFailed",
-    defaultMessage: "{originalError}",
+    defaultMessage: "{originalError}"
   },
   CHANGEPASSPHRASE_SUCCESS: {
     id: "settings.changePassphrase",
-    defaultMessage: "Successfully changed private passphrase.",
+    defaultMessage: "Successfully changed private passphrase."
   },
   CHANGEPASSPHRASE_FAILED: {
     id: "settings.errors.changePassphraseFailed",
     defaultMessage:
-      "Update passphrase failed. Incorrect private passphrase, please try again.",
+      "Update passphrase failed. Incorrect private passphrase, please try again."
   },
   DECODERAWTXS_FAILED: {
     id: "decodeRawTx.errors.decodeFailed",
-    defaultMessage: "{originalError}",
+    defaultMessage: "{originalError}"
   },
   DAEMONCONNECTING_TIMEOUT: {
     id: "daemonSyncingTimeout.errors",
     defaultMessage:
-      "Daemon connection timeout exceded.\n That Probably means you filled your parameters wrong. Please review it.",
+      "Daemon connection timeout exceded.\n That Probably means you filled your parameters wrong. Please review it."
   },
   DAEMONCONNECTING_ERROR: {
     id: "daemon.connect.error",
-    defaultMessage: "Error connecting to daemon",
+    defaultMessage: "Error connecting to daemon"
   },
   REMOVESTAKEPOOLCONFIG: {
     id: "stakepools.removedStakePoolConfig",
-    defaultMessage: "Successfully removed StakePool config",
+    defaultMessage: "Successfully removed StakePool config"
   },
   SIGNMESSAGE_FAILED: {
     id: "security.sign.failed",
-    defaultMessage: "{originalError}",
+    defaultMessage: "{originalError}"
   },
   VERIFYMESSAGE_FAILED: {
     id: "security.verify.failed",
-    defaultMessage: "{originalError}",
+    defaultMessage: "{originalError}"
   },
   SEEDCOPIEDTOCLIPBOARD: {
     id: "createWallet.seedCopiedToClipboard",
-    defaultMessage: "Seed copied to clipboard!",
+    defaultMessage: "Seed copied to clipboard!"
   },
   PUBLISHUNMINEDTRANSACTIONS_SUCCESS: {
     id: "send.publishUnminedTransactions.success",
-    defaultMessage: "Republished unmined transactions to the decred network.",
+    defaultMessage: "Republished unmined transactions to the decred network."
   },
   EXPORT_COMPLETED: {
     id: "export.completed",
-    defaultMessage: "Export of file ‘{filename}’ completed!",
+    defaultMessage: "Export of file ‘{filename}’ completed!"
   },
   ADDCUSTOMSTAKEPOOL_FAILED: {
     id: "addCustomStakePool.failed",
-    defaultMessage: "Error trying to add custom stakepool: {originalError}",
+    defaultMessage: "Error trying to add custom stakepool: {originalError}"
   },
   ADDCUSTOMSTAKEPOOL_SUCCESS: {
     id: "addCustomStakePool.success",
-    defaultMessage: "Successfully added stakepool {host}!",
+    defaultMessage: "Successfully added stakepool {host}!"
   },
   GETACCOUNTEXTENDEDKEY_FAILED: {
     id: "accountExtendedKey.failed",
-    defaultMessage: "Error getting account extended key: {originalError}",
+    defaultMessage: "Error getting account extended key: {originalError}"
   },
   SPVSYNC_FAILED: {
     id: "spvSync.Failed",
-    defaultMessage: "Error syncing SPV wallet: {originalError}",
+    defaultMessage: "Error syncing SPV wallet: {originalError}"
   },
   STARTTICKETBUYERV2_SUCCESS: {
     id: "runTicketBuyer.Success",
-    defaultMessage: "Ticket Buyer successfully started.",
+    defaultMessage: "Ticket Buyer successfully started."
   },
   STARTTICKETBUYERV2_FAILED: {
     id: "runTicketBuyer.Failed",
-    defaultMessage: "Invalid private password. Please try again.",
+    defaultMessage: "Invalid private password. Please try again."
   },
   STOPTICKETBUYERV2_SUCCESS: {
     id: "stopTicketBuyer.Success",
-    defaultMessage: "Ticket Buyer successfully stopped.",
+    defaultMessage: "Ticket Buyer successfully stopped."
   },
   WRONG_PASSPHRASE_MSG: {
     id: "errors.wrongPassphrase",
     defaultMessage:
-      "Wrong private passphrase entered. Please verify you have typed the correct private passphrase for the wallet.",
+      "Wrong private passphrase entered. Please verify you have typed the correct private passphrase for the wallet."
   },
   TRZ_TOGGLEPINPROTECTION_SUCCESS_ENABLED: {
     id: "trezor.pinProtectionSuccess.enabled",
-    defaultMessage: "Pin protection has been enabled in trezor '{label}'",
+    defaultMessage: "Pin protection has been enabled in trezor '{label}'"
   },
   TRZ_TOGGLEPINPROTECTION_SUCCESS_DISABLED: {
     id: "trezor.pinProtectionSuccess.disabled",
-    defaultMessage: "Pin protection has been disabled in trezor '{label}'",
+    defaultMessage: "Pin protection has been disabled in trezor '{label}'"
   },
   TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS_ENABLED: {
     id: "trezor.passphraseProtectionSuccess.enabled",
-    defaultMessage:
-      "Passphrase protection has been enabled in trezor '{label}'",
+    defaultMessage: "Passphrase protection has been enabled in trezor '{label}'"
   },
   TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS_DISABLED: {
     id: "trezor.passphraseProtectionSuccess.disabled",
     defaultMessage:
-      "Passphrase protection has been disabled in trezor '{label}'",
+      "Passphrase protection has been disabled in trezor '{label}'"
   },
   TRZ_CHANGEHOMESCREEN_SUCCESS: {
     id: "trezor.changeHomeScreen.success",
-    defaultMessage: "Trezor home screen successfully changed",
+    defaultMessage: "Trezor home screen successfully changed"
   },
   TRZ_CHANGELABEL_SUCCESS: {
     id: "trezor.changeLabel.success",
-    defaultMessage: "Changed label on selected trezor to '{label}'",
+    defaultMessage: "Changed label on selected trezor to '{label}'"
   },
   TRZ_WIPEDEVICE_SUCCESS: {
     id: "trezor.wipeDevice.success",
-    defaultMessage: "Trezor device wiped",
+    defaultMessage: "Trezor device wiped"
   },
   TRZ_RECOVERDEVICE_SUCCESS: {
     id: "trezor.recoverDevice.success",
-    defaultMessage: "Trezor device recovered",
+    defaultMessage: "Trezor device recovered"
   },
   TRZ_INITDEVICE_SUCCESS: {
     id: "trezor.initDevice.success",
-    defaultMessage: "Trezor device initialized with new seed",
+    defaultMessage: "Trezor device initialized with new seed"
   },
   TRZ_UPDATEFIRMWARE_SUCCESS: {
     id: "trezor.updateFirmware.success",
-    defaultMessage: "Firmware updated on trezor device",
+    defaultMessage: "Firmware updated on trezor device"
   },
   TRZ_NOCONNECTEDDEVICE: {
     id: "trezor.noConnectedDevice",
     defaultMessage:
-      "No trezor device connected. Check the device connection and trezor bridge.",
+      "No trezor device connected. Check the device connection and trezor bridge."
   },
   TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED: {
     id: "trezor.getWalletCreationMasterPubKey.failed",
     defaultMessage:
-      "Failed to obtain master extended pubkey from trezor device: {originalError}",
+      "Failed to obtain master extended pubkey from trezor device: {originalError}"
   },
   ERROR_IS_OBJECT: {
     id: "snackbar.errorObject",
-    defaultMessage: "The following error happened: {error}",
+    defaultMessage: "The following error happened: {error}"
   },
   LNWALLET_CONNECT_FAILED: {
     id: "ln.ntf.connectFailed",
-    defaultMessage: "Failed to connect to LN wallet: {originalError}",
+    defaultMessage: "Failed to connect to LN wallet: {originalError}"
   },
   LNWALLET_INVOICE_SETTLED: {
     id: "ln.ntf.invoiceSettled",
-    defaultMessage: "Invoice '{memo}' settled!",
+    defaultMessage: "Invoice '{memo}' settled!"
   },
   LNWALLET_SENDPAYMENT_FAILED: {
     id: "ln.ntf.sendPaymentFailed",
-    defaultMessage: "Error sending payment: {originalError}",
+    defaultMessage: "Error sending payment: {originalError}"
   },
   LNWALLET_SENDPAYMENT_SUCCESS: {
     id: "ln.ntf.sendPaymentSuccess",
-    defaultMessage: "Payment sent successfully!",
+    defaultMessage: "Payment sent successfully!"
   },
   LNWALLET_OPENCHANNEL_CHANPENDING: {
     id: "ln.ntf.openchannelChanPending",
-    defaultMessage: "New channel in pending state",
+    defaultMessage: "New channel in pending state"
   },
   LNWALLET_OPENCHANNEL_CHANOPEN: {
     id: "ln.ntf.openchannelChanOpen",
-    defaultMessage: "New channel successfully opened and confirmed",
+    defaultMessage: "New channel successfully opened and confirmed"
   },
   LNWALLET_OPENCHANNEL_FAILED: {
     id: "ln.ntf.openchannelFailed",
-    defaultMessage: "Unable to open channel: {originalError}",
+    defaultMessage: "Unable to open channel: {originalError}"
   },
   LNWALLET_CLOSECHANNEL_CLOSEPENDING: {
     id: "ln.ntf.closechannelClosepending",
-    defaultMessage: "Channel close procedures started",
+    defaultMessage: "Channel close procedures started"
   },
   LNWALLET_CLOSECHANNEL_CHANCLOSE: {
     id: "ln.ntf.closechannelChanclose",
-    defaultMessage: "Channel closed",
+    defaultMessage: "Channel closed"
   },
   LNWALLET_CLOSECHANNEL_FAILED: {
     id: "ln.ntf.closechannelFailed",
-    defaultMessage: "Unable to close channel: {originalError}",
+    defaultMessage: "Unable to close channel: {originalError}"
   },
   LNWALLET_FUNDWALLET_FAILED: {
     id: "ln.ntf.fundWalletFailed",
-    defaultMessage: "Funding LN Wallet failed: {originalError}",
+    defaultMessage: "Funding LN Wallet failed: {originalError}"
   },
   LNWALLET_FUNDWALLET_SUCCESS: {
     id: "ln.ntf.fundWalletSucces",
-    defaultMessage: "Sent LN Wallet fund transaction",
+    defaultMessage: "Sent LN Wallet fund transaction"
   },
   LNWALLET_WITHDRAWWALLET_FAILED: {
     id: "ln.ntf.withdrawWalletFailed",
-    defaultMessage: "Withdrawing from LN Wallet failed: {originalError}",
+    defaultMessage: "Withdrawing from LN Wallet failed: {originalError}"
   },
   LNWALLET_WITHDRAWWALLET_SUCCESS: {
     id: "ln.ntf.withdrawWalletSuccess",
-    defaultMessage: "Sent withdraw transaction for LN Wallet",
+    defaultMessage: "Sent withdraw transaction for LN Wallet"
   },
   LNWALLET_STARTDCRLND_FAILED: {
     id: "ln.ntf.startDcrlndFailed",
-    defaultMessage: "{originalError}",
+    defaultMessage: "{originalError}"
   },
   UPDATEVOTECHOICE_SUCCESS: {
     id: "governance.ntf.updateVoteChoiceSuccess",
     defaultMessage:
-      "Your vote has been casted with success!\n Thanks for participating in decred's governance",
-  },
+      "Your vote has been casted with success!\n Thanks for participating in decred's governance"
+  }
 });
 
 export default function snackbar(state = {}, action) {
@@ -431,7 +430,7 @@ export default function snackbar(state = {}, action) {
     case SNACKBAR_SIMPLE_MESSAGE: {
       return {
         ...state,
-        messages: [action],
+        messages: [action]
       };
     }
     // snackbar management events
@@ -506,7 +505,7 @@ export default function snackbar(state = {}, action) {
         case PURCHASETICKETS_SUCCESS:
           values = {
             numTickets: action.purchaseTicketsResponse.getTicketHashesList()
-              .length,
+              .length
           };
           break;
         case TRZ_TOGGLEPINPROTECTION_SUCCESS:

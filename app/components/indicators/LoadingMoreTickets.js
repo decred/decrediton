@@ -9,7 +9,7 @@ const DescMessage = ({ startRequestHeight, currentBlockHeight }) => (
     m="Down to block {block} ({blockPerc, number, percent})"
     values={{
       block: startRequestHeight,
-      blockPerc: (currentBlockHeight - startRequestHeight) / currentBlockHeight,
+      blockPerc: (currentBlockHeight - startRequestHeight) / currentBlockHeight
     }}
   />
 );
@@ -20,7 +20,7 @@ const AscMessage = ({ startRequestHeight, currentBlockHeight }) => (
     m="Up to block {block} ({blockPerc, number, percent})"
     values={{
       block: startRequestHeight,
-      blockPerc: startRequestHeight / currentBlockHeight,
+      blockPerc: startRequestHeight / currentBlockHeight
     }}
   />
 );
@@ -40,7 +40,7 @@ const CancelLoadingTicketsButton = ({ cancelGetTickets }) => (
 const LoadingTicketsProgress = ({
   startRequestHeight,
   ticketsFilter,
-  currentBlockHeight,
+  currentBlockHeight
 }) => (
   <div className="loading-more-tickets-progress-line">
     {ticketsFilter.listDirection === "desc" ? (

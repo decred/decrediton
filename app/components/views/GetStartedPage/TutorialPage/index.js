@@ -9,7 +9,7 @@ class Tutorial extends React.Component {
 
   getInitialState() {
     return {
-      tutorialStep: 0,
+      tutorialStep: 0
     };
   }
 
@@ -24,7 +24,7 @@ class Tutorial extends React.Component {
           onNextTutorialStep,
           onPrevTutorialStep,
           onGoToStep,
-          finishTutorial,
+          finishTutorial
         }}
       />
     );

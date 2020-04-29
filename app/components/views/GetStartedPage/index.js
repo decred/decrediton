@@ -43,7 +43,7 @@ class GetStarted extends React.Component {
       goToErrorPage,
       goToSettings,
       backToCredentials,
-      startSPVSync,
+      startSPVSync
     } = this.props;
     const { sendEvent, preStartDaemon } = this;
     this.machine = getStartedMachine({
@@ -60,7 +60,7 @@ class GetStarted extends React.Component {
       goToErrorPage,
       goToSettings,
       backToCredentials,
-      startSPVSync,
+      startSPVSync
     });
     this.service = interpret(this.machine).onTransition((current) =>
       this.setState({ current }, this.getStateComponent)
@@ -69,7 +69,7 @@ class GetStarted extends React.Component {
       current: this.machine.initialState,
       PageComponent: null,
       text: null,
-      animationType: null,
+      animationType: null
     };
   }
 
@@ -81,7 +81,7 @@ class GetStarted extends React.Component {
       isSPV,
       isAdvancedDaemon,
       getDaemonSynced,
-      getSelectedWallet,
+      getSelectedWallet
     } = this.props;
     const cliOptions = ipcRenderer.sendSync("get-cli-options");
     let rpcCliRemote;
@@ -91,11 +91,11 @@ class GetStarted extends React.Component {
         rpc_pass: cliOptions.rpcPass,
         rpc_cert: cliOptions.rpcCert,
         rpc_host: cliOptions.rpcHost,
-        rpc_port: cliOptions.rpcPort,
+        rpc_port: cliOptions.rpcPort
       };
       this.service.send({
         type: "START_CLI_REMOTE_DAEMON",
-        remoteCredentials: rpcCliRemote,
+        remoteCredentials: rpcCliRemote
       });
     }
     // If daemon is synced or isSPV mode we check for a selectedWallet.
@@ -107,19 +107,19 @@ class GetStarted extends React.Component {
         type: "CHOOSE_WALLET",
         selectedWallet,
         isSPV,
-        isAdvancedDaemon,
+        isAdvancedDaemon
       });
     }
     this.service.send({ type: "START_SPV", isSPV });
     this.service.send({
       type: "START_ADVANCED_DAEMON",
       isSPV,
-      isAdvancedDaemon,
+      isAdvancedDaemon
     });
     this.service.send({
       type: "START_REGULAR_DAEMON",
       isSPV,
-      isAdvancedDaemon,
+      isAdvancedDaemon
     });
   }
 
@@ -143,7 +143,7 @@ class GetStarted extends React.Component {
       syncFetchHeadersAttempt,
       syncRescanAttempt,
       syncDiscoverAddressesAttempt,
-      synced,
+      synced
     } = this.props;
     if (
       prevProps.syncFetchMissingCfiltersAttempt !==
@@ -218,7 +218,7 @@ class GetStarted extends React.Component {
       onSendCreateWallet,
       onSendError,
       onSendContinue,
-      onShowReleaseNotes,
+      onShowReleaseNotes
     } = this;
     const { machine } = service;
     const { isCreateNewWallet, isSPV } = this.service._state.context;
@@ -270,7 +270,7 @@ class GetStarted extends React.Component {
           component = h(WalletSelection, {
             onSendCreateWallet,
             submitChosenWallet,
-            isSPV,
+            isSPV
           });
           break;
         case "preCreateWallet":
@@ -286,7 +286,7 @@ class GetStarted extends React.Component {
             onSendError,
             onShowTrezorConfig,
             isCreateNewWallet,
-            error,
+            error
           });
           break;
         case "creatingWallet":
@@ -302,7 +302,7 @@ class GetStarted extends React.Component {
             onSendContinue,
             onSendError,
             error,
-            ...this.props,
+            ...this.props
           });
           break;
         case "startingWallet":
@@ -328,7 +328,7 @@ class GetStarted extends React.Component {
         animationType: updatedAnimationType
           ? updatedAnimationType
           : animationType,
-        StateComponent: updatedComponent ? updatedComponent : component,
+        StateComponent: updatedComponent ? updatedComponent : component
       });
     }
     if (key === "settings") {

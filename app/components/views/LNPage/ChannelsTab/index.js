@@ -23,7 +23,7 @@ class ChannelsTab extends React.Component {
       localAmtAtoms: 0,
       pushAmtAtoms: 0,
       canOpen: false,
-      opening: false,
+      opening: false
     };
   }
 
@@ -55,7 +55,7 @@ class ChannelsTab extends React.Component {
           node: "",
           localAmtAtoms: 0,
           pushAmtAtoms: 0,
-          canOpen: false,
+          canOpen: false
         });
       })
       .catch(() => {
@@ -80,7 +80,7 @@ class ChannelsTab extends React.Component {
       balance,
       pendingOpenBalance,
       maxInboundAmount,
-      maxOutboundAmount,
+      maxOutboundAmount
     } = this.props.channelBalances;
 
     const { channels, pendingChannels, closedChannels, isMainNet } = this.props;
@@ -90,7 +90,7 @@ class ChannelsTab extends React.Component {
       pushAmtAtoms,
       opening,
       canOpen,
-      detailedChannel,
+      detailedChannel
     } = this.state;
     const {
       onNodeChanged,
@@ -98,7 +98,7 @@ class ChannelsTab extends React.Component {
       onPushAmtChanged,
       onOpenChannel,
       onCloseChannel,
-      onToggleChannelDetails,
+      onToggleChannelDetails
     } = this;
 
     return (

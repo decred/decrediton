@@ -9,7 +9,7 @@ class ReceiveAccountsSelect extends React.Component {
         {...{
           ...this.props,
           onChange: this.onChangeAccount,
-          accountsType: "visible",
+          accountsType: "visible"
         }}
       />
     );

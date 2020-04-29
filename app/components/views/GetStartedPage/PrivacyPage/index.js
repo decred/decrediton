@@ -25,7 +25,7 @@ class PrivacyPage extends React.Component {
           ...this.props,
           ...this.state,
           acceptCustomPrivacy,
-          toggleCustomPrivacy,
+          toggleCustomPrivacy
         }}
       />
     );

@@ -6,7 +6,7 @@ const VoteTimeChartPage = ({
   voteTimeStats,
   averageVoteTime,
   medianVoteTime,
-  ninetyFifthPercentileVoteTime,
+  ninetyFifthPercentileVoteTime
 }) => {
   return (
     <>

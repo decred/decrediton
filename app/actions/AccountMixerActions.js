@@ -10,10 +10,10 @@ export const GETACCOUNTMIXERSERVICE_FAILED = "GETACCOUNTMIXERSERVICE_FAILED";
 
 export const getAccountMixerServiceAttempt = () => (dispatch, getState) => {
   const {
-    grpc: { address, port },
+    grpc: { address, port }
   } = getState();
   const {
-    daemon: { walletName },
+    daemon: { walletName }
   } = getState();
   dispatch({ type: GETACCOUNTMIXERSERVICE_ATTEMPT });
   return getAccountMixerService(
@@ -37,7 +37,7 @@ export const runAccountMixer = ({
   mixedAccount,
   mixedAccountBranch,
   changeAccount,
-  csppServer,
+  csppServer
 }) => (dispatch, getState) =>
   new Promise((resolve, reject) => {
     dispatch({ type: RUNACCOUNTMIXER_ATTEMPT });
@@ -47,7 +47,7 @@ export const runAccountMixer = ({
         mixedAccount,
         mixedAccountBranch,
         changeAccount,
-        csppServer,
+        csppServer
       })
       .then((mixerStreamer) => {
         mixerStreamer.on("data", () => resolve());
@@ -119,7 +119,7 @@ export const createNeededAccounts = (
       changeAccount: changeNumber,
       csppPort,
       csppServer,
-      mixedAccountBranch: 0,
+      mixedAccountBranch: 0
     });
   } catch (error) {
     dispatch({ type: CREATEMIXERACCOUNTS_FAILED, error });

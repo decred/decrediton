@@ -5,12 +5,12 @@ import { isValidAddress, isValidMasterPubKey } from "helpers";
 import {
   getStakeInfoAttempt,
   startWalletServices,
-  getStartupWalletInfo,
+  getStartupWalletInfo
 } from "./ClientActions";
 import {
   RescanRequest,
   ConstructTransactionRequest,
-  RunTicketBuyerRequest,
+  RunTicketBuyerRequest
 } from "../middleware/walletrpc/api_pb";
 import { reverseRawHash, rawToHex } from "helpers/byteActions";
 
@@ -29,7 +29,7 @@ export const getNextAddressAttempt = (accountNumber) => (
       res.accountNumber = accountNumber;
       return dispatch({
         getNextAddressResponse: res,
-        type: GETNEXTADDRESS_SUCCESS,
+        type: GETNEXTADDRESS_SUCCESS
       });
     })
     .catch((error) => dispatch({ error, type: GETNEXTACCOUNT_FAILED }));
@@ -51,7 +51,7 @@ export const renameAccountAttempt = (accountNumber, newName) => (
         () =>
           dispatch({
             renameAccountResponse,
-            type: RENAMEACCOUNT_SUCCESS,
+            type: RENAMEACCOUNT_SUCCESS
           }),
         1000
       );
@@ -66,7 +66,7 @@ export const RESCAN_COMPLETE = "RESCAN_COMPLETE";
 export const RESCAN_CANCEL = "RESCAN_CANCEL";
 
 export function rescanAttempt(beginHeight, beginHash, startup) {
-  var request = new RescanRequest();
+  const request = new RescanRequest();
   if (beginHeight !== null) {
     request.setBeginHeight(beginHeight);
   } else {
@@ -76,12 +76,12 @@ export function rescanAttempt(beginHeight, beginHash, startup) {
     return new Promise((resolve, reject) => {
       dispatch({ request: request, type: RESCAN_ATTEMPT });
       const { walletService } = getState().grpc;
-      var rescanCall = walletService.rescan(request);
+      const rescanCall = walletService.rescan(request);
       rescanCall.on("data", function (response) {
         dispatch({
           rescanCall: rescanCall,
           rescanResponse: response,
-          type: RESCAN_PROGRESS,
+          type: RESCAN_PROGRESS
         });
       });
       rescanCall.on("end", function () {
@@ -208,7 +208,7 @@ export const changePassphraseAttempt = (oldPass, newPass, priv) => (
     .then((res) =>
       dispatch({
         changePassphraseResponse: res,
-        type: CHANGEPASSPHRASE_SUCCESS,
+        type: CHANGEPASSPHRASE_SUCCESS
       })
     )
     .catch((error) => dispatch({ error, type: CHANGEPASSPHRASE_FAILED }));
@@ -232,7 +232,7 @@ export const signTransactionAttempt = (passphrase, rawTx) => (
     .then((signTransactionResponse) => {
       dispatch({
         signTransactionResponse: signTransactionResponse,
-        type: SIGNTX_SUCCESS,
+        type: SIGNTX_SUCCESS
       });
       dispatch(
         publishTransactionAttempt(signTransactionResponse.getTransaction())
@@ -272,7 +272,7 @@ export const publishTransactionAttempt = (tx) => (dispatch, getState) => {
       dispatch({
         hash: reverseRawHash(res.getTransactionHash()),
         changeScriptByAccount: newChangeScriptByAccount,
-        type: PUBLISHTX_SUCCESS,
+        type: PUBLISHTX_SUCCESS
       });
     })
     .catch((error) => dispatch({ error, type: PUBLISHTX_FAILED }));
@@ -333,7 +333,7 @@ export const purchaseTicketsAttempt = (
     if (dontSignTx) {
       return dispatch({
         purchaseTicketsResponse,
-        type: CREATE_UNSIGNEDTICKETS_SUCCESS,
+        type: CREATE_UNSIGNEDTICKETS_SUCCESS
       });
     }
     dispatch({ purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
@@ -373,7 +373,7 @@ export const startTicketBuyerV2Attempt = (
   balanceToMaintain,
   stakepool
 ) => (dispatch, getState) => {
-  var request = new RunTicketBuyerRequest();
+  const request = new RunTicketBuyerRequest();
   request.setBalanceToMaintain(balanceToMaintain);
   request.setAccount(account.value);
   request.setVotingAccount(account.value);
@@ -406,7 +406,7 @@ export const startTicketBuyerV2Attempt = (
     });
     dispatch({
       ticketBuyerCall: ticketBuyer,
-      type: STARTTICKETBUYERV2_SUCCESS,
+      type: STARTTICKETBUYERV2_SUCCESS
     });
   });
 };
@@ -433,16 +433,16 @@ export const constructTransactionAttempt = (
   outputs,
   all
 ) => (dispatch, getState) => {
-  var request = new ConstructTransactionRequest();
+  const request = new ConstructTransactionRequest();
   request.setSourceAccount(parseInt(account));
   request.setRequiredConfirmations(parseInt(parseInt(confirmations)));
   if (!all) {
     request.setOutputSelectionAlgorithm(0);
     var totalAmount = 0;
     outputs.map((output) => {
-      var outputDest = new ConstructTransactionRequest.OutputDestination();
+      const outputDest = new ConstructTransactionRequest.OutputDestination();
       outputDest.setAddress(output.destination);
-      var newOutput = new ConstructTransactionRequest.Output();
+      const newOutput = new ConstructTransactionRequest.Output();
       newOutput.setDestination(outputDest);
       newOutput.setAmount(parseInt(output.amount));
       request.addNonChangeOutputs(newOutput);
@@ -459,24 +459,22 @@ export const constructTransactionAttempt = (
       changeDest.setScript(changeScript);
       request.setChangeDestination(changeDest);
     }
-  } else {
-    if (outputs.length > 1) {
+  } else if (outputs.length > 1) {
       return (dispatch) => {
-        var error = "Too many outputs provided for a send all request.";
+        const error = "Too many outputs provided for a send all request.";
         dispatch({ error, type: CONSTRUCTTX_FAILED });
       };
     } else if (outputs.length == 0) {
       return (dispatch) => {
-        var error = "No destination specified for send all request.";
+        const error = "No destination specified for send all request.";
         dispatch({ error, type: CONSTRUCTTX_FAILED });
       };
     } else {
       request.setOutputSelectionAlgorithm(1);
-      var outputDest = new ConstructTransactionRequest.OutputDestination();
+      const outputDest = new ConstructTransactionRequest.OutputDestination();
       outputDest.setAddress(outputs[0].data.destination);
       request.setChangeDestination(outputDest);
     }
-  }
 
   dispatch({ type: CONSTRUCTTX_ATTEMPT });
   const { walletService } = getState().grpc;
@@ -507,7 +505,7 @@ export const constructTransactionAttempt = (
       return;
     }
 
-    let changeScriptByAccount = getState().control.changeScriptByAccount || {};
+    const changeScriptByAccount = getState().control.changeScriptByAccount || {};
     if (!all) {
       // Store the change address we just generated so that future changes to
       // the tx being constructed will use the same address and prevent gap
@@ -529,7 +527,7 @@ export const constructTransactionAttempt = (
     dispatch({
       constructTxResponse: constructTxResponse,
       changeScriptByAccount,
-      type: CONSTRUCTTX_SUCCESS,
+      type: CONSTRUCTTX_SUCCESS
     });
   });
 };
@@ -551,11 +549,11 @@ export const validateAddress = (address) => async (dispatch, getState) => {
         error: validationErr,
         getIsValid() {
           return false;
-        },
+        }
       };
     }
     dispatch({ type: VALIDATEADDRESS_ATTEMPT });
-    let response = await wallet.validateAddress(
+    const response = await wallet.validateAddress(
       sel.walletService(getState()),
       address
     );
@@ -565,7 +563,7 @@ export const validateAddress = (address) => async (dispatch, getState) => {
       error: null,
       getIsValid() {
         return response.getIsValid();
-      },
+      }
     };
   } catch (error) {
     dispatch({ type: VALIDATEADDRESS_FAILED });
@@ -574,7 +572,7 @@ export const validateAddress = (address) => async (dispatch, getState) => {
       error,
       getIsValid() {
         return false;
-      },
+      }
     };
   }
 };
@@ -614,7 +612,7 @@ export function signMessageAttempt(address, message, passphrase) {
       .then((getSignMessageResponse) =>
         dispatch({
           getSignMessageSignature: getSignMessageResponse.toObject().signature,
-          type: SIGNMESSAGE_SUCCESS,
+          type: SIGNMESSAGE_SUCCESS
         })
       )
       .catch((error) => dispatch({ error, type: SIGNMESSAGE_FAILED }));
@@ -646,7 +644,7 @@ export function verifyMessageAttempt(address, message, signature) {
 }
 
 export const verifyMessageCleanStore = () => ({
-  type: VERIFYMESSAGE_CLEANSTORE,
+  type: VERIFYMESSAGE_CLEANSTORE
 });
 
 export const PUBLISHUNMINEDTRANSACTIONS_ATTEMPT =
@@ -659,7 +657,7 @@ export const PUBLISHUNMINEDTRANSACTIONS_FAILED =
 export const publishUnminedTransactionsAttempt = () => (dispatch, getState) => {
   dispatch({ type: PUBLISHUNMINEDTRANSACTIONS_ATTEMPT });
   const {
-    grpc: { unminedTransactions },
+    grpc: { unminedTransactions }
   } = getState();
   if (unminedTransactions && unminedTransactions.length > 0) {
     wallet
@@ -702,7 +700,7 @@ export const getAccountExtendedKeyAttempt = (accountNumber) => (
       res.accountNumber = accountNumber;
       return dispatch({
         getAccountExtendedKeyResponse: res,
-        type: GETACCOUNTEXTENDEDKEY_SUCCESS,
+        type: GETACCOUNTEXTENDEDKEY_SUCCESS
       });
     })
     .catch((error) => dispatch({ error, type: GETACCOUNTEXTENDEDKEY_FAILED }));

@@ -1,11 +1,11 @@
 import NumericInput from "./NumericInput";
 import {
   restrictToStdDecimalNumber,
-  limitFractionalDigits,
+  limitFractionalDigits
 } from "helpers/strings";
 
 const FloatInput = ({ maxFracDigits, ...props }) => {
-  var value = props.value;
+  let value = props.value;
 
   const onChange = (e) => {
     let newValue = restrictToStdDecimalNumber(e.target.value);

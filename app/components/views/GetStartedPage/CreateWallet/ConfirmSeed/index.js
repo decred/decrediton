@@ -13,12 +13,12 @@ class ConfirmSeed extends React.Component {
         word: shouldShow ? word : "",
         show: shouldShow,
         index,
-        match: shouldShow,
+        match: shouldShow
       };
     });
     this.state = {
       seedWords,
-      splitMnemonic,
+      splitMnemonic
     };
   }
 
@@ -30,7 +30,7 @@ class ConfirmSeed extends React.Component {
       setPassPhrase,
       onCreateWallet,
       isValid,
-      isCreatingWallet,
+      isCreatingWallet
     } = this.props;
     return (
       <ConfirmSeedForm
@@ -41,7 +41,7 @@ class ConfirmSeed extends React.Component {
           sendBack,
           onCreateWallet,
           isValid,
-          setPassPhrase,
+          setPassPhrase
         }}
       />
     );
@@ -55,7 +55,7 @@ class ConfirmSeed extends React.Component {
       word: update,
       show: seedWord.show,
       index: seedWord.index,
-      match: splitMnemonic[seedWord.index] == update,
+      match: splitMnemonic[seedWord.index] == update
     };
     this.setState({ seedWords: updatedSeedWords }, () => {
       const seedWordStr = seedWords.map((seedWord) => seedWord.word).join(" ");

@@ -8,7 +8,7 @@ export const CreateWalletMachine = ({
   generateSeed,
   sendEvent,
   checkIsValid,
-  onCreateWatchOnly,
+  onCreateWatchOnly
 }) =>
   Machine(
     {
@@ -19,7 +19,7 @@ export const CreateWalletMachine = ({
         isNew: null,
         mnemonic: "",
         seed: "",
-        passPhrase: "",
+        passPhrase: ""
       },
       states: {
         createWallet: {
@@ -27,29 +27,29 @@ export const CreateWalletMachine = ({
           on: {
             CREATE_WALLET: {
               target: "newWallet",
-              cond: (c, event) => event.isNew,
+              cond: (c, event) => event.isNew
             },
             RESTORE_WATCHING_ONLY_WALLET: {
               target: "restoreWatchingOnly",
-              cond: (c, event) => event.isWatchingOnly,
+              cond: (c, event) => event.isWatchingOnly
             },
             RESTORE_TREZOR_WALLET: {
               target: "restoreTrezor",
-              cond: (c, event) => event.isTrezor,
+              cond: (c, event) => event.isTrezor
             },
             RESTORE_WALLET: {
               target: "writeSeed",
-              cond: (c, event) => event.isRestore,
-            },
-          },
+              cond: (c, event) => event.isRestore
+            }
+          }
         },
         newWallet: {
           onEntry: "isAtNewWallet",
           on: {
             CONTINUE: "confirmSeed",
             BACK: "finished",
-            GENERATED: "newWallet",
-          },
+            GENERATED: "newWallet"
+          }
         },
         writeSeed: {
           onEntry: "isAtWriteSeed",
@@ -73,11 +73,11 @@ export const CreateWalletMachine = ({
                   error: (context, event) => {
                     console.log(event);
                     return event.error && event.error;
-                  },
-                }),
-              ],
-            },
-          },
+                  }
+                })
+              ]
+            }
+          }
         },
         confirmSeed: {
           onEntry: "isAtConfirmSeed",
@@ -90,9 +90,9 @@ export const CreateWalletMachine = ({
                 assign({
                   passPhrase: "",
                   seed: [],
-                  error: "",
-                }),
-              ],
+                  error: ""
+                })
+              ]
             },
             VALIDATE_DATA: {
               target: "confirmSeed",
@@ -107,39 +107,39 @@ export const CreateWalletMachine = ({
                       : "",
                   seed: (context, event) =>
                     event.seed ? event.seed : context.seed ? context.seed : [],
-                  error: (context, event) => event.error && event.error,
-                }),
-              ],
-            },
-          },
+                  error: (context, event) => event.error && event.error
+                })
+              ]
+            }
+          }
         },
         restoreWatchingOnly: {
           onEntry: "isAtRestoreWatchingOnly",
           on: {
-            CONTINUE: "creatingWallet",
-          },
+            CONTINUE: "creatingWallet"
+          }
         },
         restoreTrezor: {
           onEntry: "isAtRestoreTrezor",
           on: {
-            CONTINUE: "creatingWallet",
-          },
+            CONTINUE: "creatingWallet"
+          }
         },
         creatingWallet: {
           onEntry: "isAtCreatingWallet",
           on: {
-            CONTINUE: "walletCreated",
-          },
+            CONTINUE: "walletCreated"
+          }
         },
         walletCreated: {
           type: "final",
-          onEntry: "isAtWalletCreated",
+          onEntry: "isAtWalletCreated"
         },
         finished: {
           type: "final",
-          onEntry: "isAtFinished",
-        },
-      },
+          onEntry: "isAtFinished"
+        }
+      }
     },
     {
       actions: {
@@ -180,7 +180,7 @@ export const CreateWalletMachine = ({
         },
         isAtWalletCreated: () => {
           backToCredentials();
-        },
-      },
+        }
+      }
     }
   );

@@ -28,7 +28,7 @@ const StakeInfoDisplay = ({
   revokedTicketsCount,
   expiredTicketsCount,
   totalSubsidy,
-  isSPV,
+  isSPV
 }) => (
   <VerticalAccordion
     header={
@@ -72,7 +72,7 @@ const StakeInfoDisplay = ({
         revokedTicketsCount,
         expiredTicketsCount,
         totalSubsidy,
-        isSPV,
+        isSPV
       }}
     />
   </VerticalAccordion>

@@ -11,7 +11,7 @@ const StakePoolsList = ({
   onRemoveStakePool,
   rescanRequest,
   toggleBackupModal,
-  showModal,
+  showModal
 }) => (
   <>
     <div className="stakepool-flex-height">
@@ -83,7 +83,7 @@ const StakePoolsList = ({
                           id="stakepools.list.confirmRemove"
                           m="Do you confirm removal of VSP {stakepool}?"
                           values={{
-                            stakepool: <span className="mono">{Host}</span>,
+                            stakepool: <span className="mono">{Host}</span>
                           }}
                         />
                       }
@@ -122,7 +122,7 @@ StakePoolsList.propTypes = {
   configuredStakePools: PropTypes.array.isRequired,
   unconfiguredStakePools: PropTypes.array.isRequired,
   onShowAddStakePool: PropTypes.func.isRequired,
-  onHideStakePoolConfig: PropTypes.func.isRequired,
+  onHideStakePoolConfig: PropTypes.func.isRequired
 };
 
 export default StakePoolsList;

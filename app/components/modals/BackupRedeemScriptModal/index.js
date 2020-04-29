@@ -16,7 +16,7 @@ const Content = ({ script, key }) => (
                 m="your funds may be lost forever."
               />
             </span>
-          ),
+          )
         }}
       />
     </div>

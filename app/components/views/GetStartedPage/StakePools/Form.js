@@ -5,8 +5,8 @@ import { TextInput, StakePoolSelect, PasswordInput } from "inputs";
 const messages = defineMessages({
   apiKeyPlaceholder: {
     id: "getStartedStake.apiKeyPlaceholder",
-    defaultMessage: "Typically starts with ‘eyJhb…’",
-  },
+    defaultMessage: "Typically starts with ‘eyJhb…’"
+  }
 });
 
 const Form = ({
@@ -21,7 +21,7 @@ const Form = ({
   onChangeApiKey,
   onSetStakePoolInfo,
   onChangePassPhrase,
-  onContinueCreation,
+  onContinueCreation
 }) => (
   <div className="">
     <div className="getstarted-stakepool-add-row">

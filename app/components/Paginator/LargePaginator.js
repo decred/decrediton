@@ -6,7 +6,7 @@ const propTypes = {
   currentPage: PropTypes.number.isRequired,
   gotoPage: PropTypes.func.isRequired,
   gotoPreviousPage: PropTypes.func.isRequired,
-  gotoNextPage: PropTypes.func.isRequired,
+  gotoNextPage: PropTypes.func.isRequired
 };
 
 @autobind

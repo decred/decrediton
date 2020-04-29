@@ -1,6 +1,6 @@
 "use strict";
 
-var wordlist = [
+const wordlist = [
   "aardvark",
   "adroitness",
   "absurd",
@@ -512,6 +512,6 @@ var wordlist = [
   "woodlark",
   "yesteryear",
   "Zulu",
-  "Yucatan",
+  "Yucatan"
 ];
 module.exports = wordlist;

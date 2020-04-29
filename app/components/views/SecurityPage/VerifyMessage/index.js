@@ -18,7 +18,7 @@ class VerifyMessage extends React.Component {
       message: "",
       messageError: null,
       signature: "",
-      signatureError: null,
+      signatureError: null
     };
   }
 
@@ -38,13 +38,13 @@ class VerifyMessage extends React.Component {
       signature,
       addressError,
       messageError,
-      signatureError,
+      signatureError
     } = this.state;
     const {
       onChangeAddress,
       onChangeMessage,
       onChangeSignature,
-      onSubmit,
+      onSubmit
     } = this;
 
     let result = null;
@@ -86,7 +86,7 @@ class VerifyMessage extends React.Component {
             onChangeMessage,
             onChangeSignature,
             formatMessage: intl.formatMessage,
-            isVerifyingMessage,
+            isVerifyingMessage
           }}
         />
         {result}
@@ -101,7 +101,7 @@ class VerifyMessage extends React.Component {
       message,
       messageError,
       signature,
-      signatureError,
+      signatureError
     } = this.state;
     if (addressError || messageError || signatureError) return;
     this.props.verifyMessageAttempt(address, message, signature);
@@ -118,14 +118,14 @@ class VerifyMessage extends React.Component {
             address,
             addressError: resp.getIsValid()
               ? ""
-              : "Please enter a valid address",
+              : "Please enter a valid address"
           });
         })
         .catch((error) => {
           console.log(error);
           this.setState({
             address,
-            addressError: "Error: Address validation failed, please try again.",
+            addressError: "Error: Address validation failed, please try again."
           });
         });
     }
@@ -141,7 +141,7 @@ class VerifyMessage extends React.Component {
     if (signature == "")
       this.setState({
         signature: "",
-        signatureError: "Please enter a signature",
+        signatureError: "Please enter a signature"
       });
     else this.setState({ signature, signatureError: null });
   }
@@ -153,8 +153,8 @@ VerifyMessage.propTypes = {
   verifyMessageCleanStore: PropTypes.func.isRequired,
   verifyMessageError: PropTypes.string,
   verifyMessageSuccess: PropTypes.shape({
-    signature: PropTypes.string,
-  }),
+    signature: PropTypes.string
+  })
 };
 
 export default verifyMessagePage(injectIntl(VerifyMessage));

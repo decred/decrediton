@@ -5,7 +5,7 @@ const SlateGrayButton = ({
   type,
   disabled,
   onClick,
-  children,
+  children
 }) => (
   <div
     className={"slate-gray-button" + (className ? " " + className : "")}

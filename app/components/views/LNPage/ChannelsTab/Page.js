@@ -5,15 +5,15 @@ import { TextInput, DcrInput } from "inputs";
 import {
   default as OpenChannel,
   OpenChannelDetails,
-  CloseChannelModalContent,
+  CloseChannelModalContent
 } from "./OpenChannel";
 import {
   default as PendingChannel,
-  PendingChannelDetails,
+  PendingChannelDetails
 } from "./PendingChannel";
 import {
   default as ClosedChannel,
-  ClosedChannelDetails,
+  ClosedChannelDetails
 } from "./ClosedChannel";
 
 export default ({
@@ -36,7 +36,7 @@ export default ({
   onPushAmtChanged,
   onOpenChannel,
   onCloseChannel,
-  onToggleChannelDetails,
+  onToggleChannelDetails
 }) => (
   <>
     <div className="ln-wallet-balances">

@@ -8,7 +8,7 @@ import {
   homeChartSize,
   radiusFull,
   padding,
-  hoverFill,
+  hoverFill
 } from "./Styles";
 import "style/Chart.less";
 
@@ -20,7 +20,7 @@ const BalanceChart = ({ data, intl }) => {
     name: intl.formatMessage(messages.dayMonthDisplay, { value: s.time }),
     legendName: intl.formatMessage(messages.fullDayDisplay, { value: s.time }),
     [sentKey]: s.sent,
-    [receivedKey]: s.received,
+    [receivedKey]: s.received
   }));
 
   return (

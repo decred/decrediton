@@ -3,7 +3,7 @@ import {
   PercentInput,
   BlocksInput,
   AddressInput,
-  StakePoolSelect,
+  StakePoolSelect
 } from "inputs";
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import cx from "classnames";
@@ -11,23 +11,23 @@ import cx from "classnames";
 const messages = defineMessages({
   txFeePlaceholder: {
     id: "purchaseTickets.txFeePlaceholder",
-    defaultMessage: "Tx Fee",
+    defaultMessage: "Tx Fee"
   },
   ticketFeePlaceholder: {
     id: "purchaseTickets.ticketFeePlaceholder",
-    defaultMessage: "Ticket Fee",
+    defaultMessage: "Ticket Fee"
   },
   expiryPlaceholder: {
     id: "purchaseTickets.expiryPlaceholder",
-    defaultMessage: "Expiry",
-  },
+    defaultMessage: "Expiry"
+  }
 });
 
 const PurchaseTicketAdvancedInfo = ({
   label,
   className,
   onIconClick,
-  children,
+  children
 }) => (
   <>
     <div className={cx("purchase-ticket-advanced-info-label", className)}>

@@ -6,7 +6,7 @@ import { TxHistory } from "shared";
 import {
   LoadingMoreTransactionsIndicator,
   NoMoreTransactionsIndicator,
-  NoTransactions,
+  NoTransactions
 } from "indicators";
 import InfiniteScroll from "react-infinite-scroller";
 import "style/HistoryPage.less";
@@ -14,8 +14,8 @@ import "style/HistoryPage.less";
 const messages = defineMessages({
   filterByAddrPlaceholder: {
     id: "txhistory.filterByAddrPlaceholder",
-    defaultMessage: "Filter by Address",
-  },
+    defaultMessage: "Filter by Address"
+  }
 });
 
 const subtitleMenu = ({
@@ -31,7 +31,7 @@ const subtitleMenu = ({
   onChangeSliderValue,
   currencyDisplay,
   transactionsFilter,
-  unitDivisor,
+  unitDivisor
 }) => (
   <div className="history-select-tx-types-area">
     <div className="history-search-tx">
@@ -90,7 +90,7 @@ const Page = ({
   onChangeSliderValue,
   currencyDisplay,
   transactionsFilter,
-  unitDivisor,
+  unitDivisor
 }) => (
   <InfiniteScroll
     hasMore={!noMoreTransactions}
@@ -114,7 +114,7 @@ const Page = ({
         onChangeSliderValue,
         currencyDisplay,
         transactionsFilter,
-        unitDivisor,
+        unitDivisor
       })}
     />
     <div className="history-page-content-wrapper">

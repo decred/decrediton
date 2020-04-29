@@ -14,7 +14,7 @@ import {
   GetDcrlndPID,
   GetDcrlndCreds,
   closeDcrlnd,
-  setDcrdRpcCredentials,
+  setDcrdRpcCredentials
 } from "./launch";
 import { MAINNET } from "constants";
 
@@ -45,7 +45,7 @@ export const getAvailableWallets = (network) => {
       finished,
       lastAccess,
       watchingOnly,
-      isTrezor,
+      isTrezor
     });
   });
 
@@ -55,7 +55,7 @@ export const getAvailableWallets = (network) => {
 export const deleteDaemon = (appData, testnet) => {
   let removeDaemonDirectory = getDcrdPath();
   if (appData) removeDaemonDirectory = appData;
-  let removeDaemonDirectoryData = path.join(
+  const removeDaemonDirectoryData = path.join(
     removeDaemonDirectory,
     "data",
     testnet ? "testnet3" : MAINNET
@@ -126,7 +126,7 @@ export const createWallet = (testnet, walletPath) => {
 
 export const removeWallet = (testnet, walletPath) => {
   if (!walletPath) return;
-  let removeWalletDirectory = getWalletPath(testnet, walletPath);
+  const removeWalletDirectory = getWalletPath(testnet, walletPath);
   try {
     if (fs.pathExistsSync(removeWalletDirectory)) {
       fs.removeSync(removeWalletDirectory);

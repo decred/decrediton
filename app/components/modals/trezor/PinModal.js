@@ -52,7 +52,7 @@ class PinModal extends React.Component {
       onSubmit,
       onPinButtonClick,
       onClearPin,
-      onChangeCurrentPin,
+      onChangeCurrentPin
     } = this;
 
     const currentPin = this.state.currentPin
@@ -74,7 +74,7 @@ class PinModal extends React.Component {
     const className = [
       "passphrase-modal",
       "trezor-pin-modal",
-      this.props.isGetStarted ? "get-started" : "",
+      this.props.isGetStarted ? "get-started" : ""
     ].join(" ");
 
     return (
@@ -87,7 +87,7 @@ class PinModal extends React.Component {
             id="trezor.pinModal.description"
             m="Click button sequence that corresponds to your pin on trezor {label}"
             values={{
-              label: <span className="trezor-label">'{trezorLabel}'</span>,
+              label: <span className="trezor-label">'{trezorLabel}'</span>
             }}
           />
         </p>

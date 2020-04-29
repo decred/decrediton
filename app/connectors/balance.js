@@ -4,7 +4,7 @@ import * as sel from "../selectors";
 
 const mapStateToProps = selectorMap({
   currencyDisplay: sel.currencyDisplay,
-  unitDivisor: sel.unitDivisor,
+  unitDivisor: sel.unitDivisor
 });
 
 export default connect(mapStateToProps);

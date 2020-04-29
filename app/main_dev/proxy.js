@@ -13,10 +13,10 @@ export const setupProxy = (logger) =>
     const proxyType = cfg.get("proxy_type");
     const proxyLocation = cfg.get("proxy_location");
 
-    let proxyConfig = {
+    const proxyConfig = {
       pacScript: null,
       proxyRules: null,
-      proxyBypassRules: null,
+      proxyBypassRules: null
     };
 
     if (process.env.NODE_ENV === "development") {

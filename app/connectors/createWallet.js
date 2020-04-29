@@ -15,7 +15,7 @@ const mapStateToProps = selectorMap({
   maxWalletCount: sel.maxWalletCount,
   trezorDeviceList: sel.trezorDeviceList,
   trezorDevice: sel.trezorDevice,
-  isTrezor: sel.isTrezor,
+  isTrezor: sel.isTrezor
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -31,7 +31,7 @@ const mapDispatchToProps = (dispatch) =>
       trezorEnable: trza.enableTrezor,
       trezorDisable: trza.disableTrezor,
       trezorAlertNoConnectedDevice: trza.alertNoConnectedDevice,
-      trezorGetWalletCreationMasterPubKey: trza.getWalletCreationMasterPubKey,
+      trezorGetWalletCreationMasterPubKey: trza.getWalletCreationMasterPubKey
     },
     dispatch
   );

@@ -5,7 +5,7 @@ class TextToggle extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeButton: this.props.activeButton,
+      activeButton: this.props.activeButton
     };
   }
 

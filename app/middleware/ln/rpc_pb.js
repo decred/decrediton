@@ -224,7 +224,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         aezeedPassphrase: msg.getAezeedPassphrase_asB64(),
-        seedEntropy: msg.getSeedEntropy_asB64(),
+        seedEntropy: msg.getSeedEntropy_asB64()
       };
 
     if (includeInstance) {
@@ -451,7 +451,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         cipherSeedMnemonicList: jspb.Message.getRepeatedField(msg, 1),
-        encipheredSeed: msg.getEncipheredSeed_asB64(),
+        encipheredSeed: msg.getEncipheredSeed_asB64()
       };
 
     if (includeInstance) {
@@ -677,7 +677,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         recoveryWindow: jspb.Message.getFieldWithDefault(msg, 4, 0),
         channelBackups:
           (f = msg.getChannelBackups()) &&
-          proto.lnrpc.ChanBackupSnapshot.toObject(includeInstance, f),
+          proto.lnrpc.ChanBackupSnapshot.toObject(includeInstance, f)
       };
 
     if (includeInstance) {
@@ -1122,7 +1122,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         recoveryWindow: jspb.Message.getFieldWithDefault(msg, 2, 0),
         channelBackups:
           (f = msg.getChannelBackups()) &&
-          proto.lnrpc.ChanBackupSnapshot.toObject(includeInstance, f),
+          proto.lnrpc.ChanBackupSnapshot.toObject(includeInstance, f)
       };
 
     if (includeInstance) {
@@ -1481,7 +1481,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         currentPassword: msg.getCurrentPassword_asB64(),
-        newPassword: msg.getNewPassword_asB64(),
+        newPassword: msg.getNewPassword_asB64()
       };
 
     if (includeInstance) {
@@ -1829,7 +1829,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         outpoint:
           (f = msg.getOutpoint()) &&
           proto.lnrpc.OutPoint.toObject(includeInstance, f),
-        confirmations: jspb.Message.getFieldWithDefault(msg, 6, 0),
+        confirmations: jspb.Message.getFieldWithDefault(msg, 6, 0)
       };
 
     if (includeInstance) {
@@ -2109,7 +2109,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         timeStamp: jspb.Message.getFieldWithDefault(msg, 6, 0),
         totalFees: jspb.Message.getFieldWithDefault(msg, 7, 0),
         destAddressesList: jspb.Message.getRepeatedField(msg, 8),
-        rawTxHex: jspb.Message.getFieldWithDefault(msg, 9, ""),
+        rawTxHex: jspb.Message.getFieldWithDefault(msg, 9, "")
       };
 
     if (includeInstance) {
@@ -2569,7 +2569,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           msg.getTransactionsList(),
           proto.lnrpc.Transaction.toObject,
           includeInstance
-        ),
+        )
       };
 
     if (includeInstance) {
@@ -2739,7 +2739,7 @@ proto.lnrpc.FeeLimit.oneofGroups_ = [[1, 2]];
 proto.lnrpc.FeeLimit.LimitCase = {
   LIMIT_NOT_SET: 0,
   FIXED: 1,
-  PERCENT: 2,
+  PERCENT: 2
 };
 
 /**
@@ -2780,7 +2780,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         fixed: jspb.Message.getFieldWithDefault(msg, 1, 0),
-        percent: jspb.Message.getFieldWithDefault(msg, 2, 0),
+        percent: jspb.Message.getFieldWithDefault(msg, 2, 0)
       };
 
     if (includeInstance) {
@@ -2990,7 +2990,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         cltvLimit: jspb.Message.getFieldWithDefault(msg, 11, 0),
         destTlvMap: (f = msg.getDestTlvMap())
           ? f.toObject(includeInstance, undefined)
-          : [],
+          : []
       };
 
     if (includeInstance) {
@@ -3450,7 +3450,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         paymentRoute:
           (f = msg.getPaymentRoute()) &&
           proto.lnrpc.Route.toObject(includeInstance, f),
-        paymentHash: msg.getPaymentHash_asB64(),
+        paymentHash: msg.getPaymentHash_asB64()
       };
 
     if (includeInstance) {
@@ -3722,8 +3722,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         paymentHash: msg.getPaymentHash_asB64(),
         paymentHashString: jspb.Message.getFieldWithDefault(msg, 2, ""),
         route:
-          (f = msg.getRoute()) &&
-          proto.lnrpc.Route.toObject(includeInstance, f),
+          (f = msg.getRoute()) && proto.lnrpc.Route.toObject(includeInstance, f)
       };
 
     if (includeInstance) {
@@ -3967,7 +3966,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         feePerKb: jspb.Message.getFieldWithDefault(msg, 10, 0),
         csvDelay: jspb.Message.getFieldWithDefault(msg, 11, 0),
         maxAcceptedHtlcs: jspb.Message.getFieldWithDefault(msg, 12, 0),
-        channelFlags: jspb.Message.getFieldWithDefault(msg, 13, 0),
+        channelFlags: jspb.Message.getFieldWithDefault(msg, 13, 0)
       };
 
     if (includeInstance) {
@@ -4451,7 +4450,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         accept: jspb.Message.getFieldWithDefault(msg, 1, false),
-        pendingChanId: msg.getPendingChanId_asB64(),
+        pendingChanId: msg.getPendingChanId_asB64()
       };
 
     if (includeInstance) {
@@ -4642,7 +4641,7 @@ proto.lnrpc.ChannelPoint.oneofGroups_ = [[1, 2]];
 proto.lnrpc.ChannelPoint.FundingTxidCase = {
   FUNDING_TXID_NOT_SET: 0,
   FUNDING_TXID_BYTES: 1,
-  FUNDING_TXID_STR: 2,
+  FUNDING_TXID_STR: 2
 };
 
 /**
@@ -4684,7 +4683,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
       obj = {
         fundingTxidBytes: msg.getFundingTxidBytes_asB64(),
         fundingTxidStr: jspb.Message.getFieldWithDefault(msg, 2, ""),
-        outputIndex: jspb.Message.getFieldWithDefault(msg, 3, 0),
+        outputIndex: jspb.Message.getFieldWithDefault(msg, 3, 0)
       };
 
     if (includeInstance) {
@@ -4930,7 +4929,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
       obj = {
         txidBytes: msg.getTxidBytes_asB64(),
         txidStr: jspb.Message.getFieldWithDefault(msg, 2, ""),
-        outputIndex: jspb.Message.getFieldWithDefault(msg, 3, 0),
+        outputIndex: jspb.Message.getFieldWithDefault(msg, 3, 0)
       };
 
     if (includeInstance) {
@@ -5131,7 +5130,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         pubkey: jspb.Message.getFieldWithDefault(msg, 1, ""),
-        host: jspb.Message.getFieldWithDefault(msg, 2, ""),
+        host: jspb.Message.getFieldWithDefault(msg, 2, "")
       };
 
     if (includeInstance) {
@@ -5293,7 +5292,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         addrtoamountMap: (f = msg.getAddrtoamountMap())
           ? f.toObject(includeInstance, undefined)
           : [],
-        targetConf: jspb.Message.getFieldWithDefault(msg, 2, 0),
+        targetConf: jspb.Message.getFieldWithDefault(msg, 2, 0)
       };
 
     if (includeInstance) {
@@ -5477,7 +5476,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         feeAtoms: jspb.Message.getFieldWithDefault(msg, 1, 0),
-        feerateAtomsPerByte: jspb.Message.getFieldWithDefault(msg, 2, 0),
+        feerateAtomsPerByte: jspb.Message.getFieldWithDefault(msg, 2, 0)
       };
 
     if (includeInstance) {
@@ -5645,7 +5644,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           ? f.toObject(includeInstance, undefined)
           : [],
         targetConf: jspb.Message.getFieldWithDefault(msg, 3, 0),
-        atomsPerByte: jspb.Message.getFieldWithDefault(msg, 5, 0),
+        atomsPerByte: jspb.Message.getFieldWithDefault(msg, 5, 0)
       };
 
     if (includeInstance) {
@@ -5845,7 +5844,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   proto.lnrpc.SendManyResponse.toObject = function (includeInstance, msg) {
     var f,
       obj = {
-        txid: jspb.Message.getFieldWithDefault(msg, 1, ""),
+        txid: jspb.Message.getFieldWithDefault(msg, 1, "")
       };
 
     if (includeInstance) {
@@ -5987,7 +5986,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         amount: jspb.Message.getFieldWithDefault(msg, 2, 0),
         targetConf: jspb.Message.getFieldWithDefault(msg, 3, 0),
         atomsPerByte: jspb.Message.getFieldWithDefault(msg, 5, 0),
-        sendAll: jspb.Message.getFieldWithDefault(msg, 6, false),
+        sendAll: jspb.Message.getFieldWithDefault(msg, 6, false)
       };
 
     if (includeInstance) {
@@ -6215,7 +6214,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   proto.lnrpc.SendCoinsResponse.toObject = function (includeInstance, msg) {
     var f,
       obj = {
-        txid: jspb.Message.getFieldWithDefault(msg, 1, ""),
+        txid: jspb.Message.getFieldWithDefault(msg, 1, "")
       };
 
     if (includeInstance) {
@@ -6354,7 +6353,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         minConfs: jspb.Message.getFieldWithDefault(msg, 1, 0),
-        maxConfs: jspb.Message.getFieldWithDefault(msg, 2, 0),
+        maxConfs: jspb.Message.getFieldWithDefault(msg, 2, 0)
       };
 
     if (includeInstance) {
@@ -6534,7 +6533,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           msg.getUtxosList(),
           proto.lnrpc.Utxo.toObject,
           includeInstance
-        ),
+        )
       };
 
     if (includeInstance) {
@@ -6702,7 +6701,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   proto.lnrpc.NewAddressRequest.toObject = function (includeInstance, msg) {
     var f,
       obj = {
-        type: jspb.Message.getFieldWithDefault(msg, 1, 0),
+        type: jspb.Message.getFieldWithDefault(msg, 1, 0)
       };
 
     if (includeInstance) {
@@ -6844,7 +6843,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   proto.lnrpc.NewAddressResponse.toObject = function (includeInstance, msg) {
     var f,
       obj = {
-        address: jspb.Message.getFieldWithDefault(msg, 1, ""),
+        address: jspb.Message.getFieldWithDefault(msg, 1, "")
       };
 
     if (includeInstance) {
@@ -6985,7 +6984,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   proto.lnrpc.SignMessageRequest.toObject = function (includeInstance, msg) {
     var f,
       obj = {
-        msg: msg.getMsg_asB64(),
+        msg: msg.getMsg_asB64()
       };
 
     if (includeInstance) {
@@ -7151,7 +7150,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   proto.lnrpc.SignMessageResponse.toObject = function (includeInstance, msg) {
     var f,
       obj = {
-        signature: jspb.Message.getFieldWithDefault(msg, 1, ""),
+        signature: jspb.Message.getFieldWithDefault(msg, 1, "")
       };
 
     if (includeInstance) {
@@ -7294,7 +7293,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         msg: msg.getMsg_asB64(),
-        signature: jspb.Message.getFieldWithDefault(msg, 2, ""),
+        signature: jspb.Message.getFieldWithDefault(msg, 2, "")
       };
 
     if (includeInstance) {
@@ -7485,7 +7484,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         valid: jspb.Message.getFieldWithDefault(msg, 1, false),
-        pubkey: jspb.Message.getFieldWithDefault(msg, 2, ""),
+        pubkey: jspb.Message.getFieldWithDefault(msg, 2, "")
       };
 
     if (includeInstance) {
@@ -7656,7 +7655,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         addr:
           (f = msg.getAddr()) &&
           proto.lnrpc.LightningAddress.toObject(includeInstance, f),
-        perm: jspb.Message.getFieldWithDefault(msg, 2, false),
+        perm: jspb.Message.getFieldWithDefault(msg, 2, false)
       };
 
     if (includeInstance) {
@@ -7971,7 +7970,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   proto.lnrpc.DisconnectPeerRequest.toObject = function (includeInstance, msg) {
     var f,
       obj = {
-        pubKey: jspb.Message.getFieldWithDefault(msg, 1, ""),
+        pubKey: jspb.Message.getFieldWithDefault(msg, 1, "")
       };
 
     if (includeInstance) {
@@ -8238,7 +8237,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         incoming: jspb.Message.getFieldWithDefault(msg, 1, false),
         amount: jspb.Message.getFieldWithDefault(msg, 2, 0),
         hashLock: msg.getHashLock_asB64(),
-        expirationHeight: jspb.Message.getFieldWithDefault(msg, 4, 0),
+        expirationHeight: jspb.Message.getFieldWithDefault(msg, 4, 0)
       };
 
     if (includeInstance) {
@@ -8501,7 +8500,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         chanStatusFlags: jspb.Message.getFieldWithDefault(msg, 19, ""),
         localChanReserveAtoms: jspb.Message.getFieldWithDefault(msg, 20, 0),
         remoteChanReserveAtoms: jspb.Message.getFieldWithDefault(msg, 21, 0),
-        staticRemoteKey: jspb.Message.getFieldWithDefault(msg, 22, false),
+        staticRemoteKey: jspb.Message.getFieldWithDefault(msg, 22, false)
       };
 
     if (includeInstance) {
@@ -9133,7 +9132,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         activeOnly: jspb.Message.getFieldWithDefault(msg, 1, false),
         inactiveOnly: jspb.Message.getFieldWithDefault(msg, 2, false),
         publicOnly: jspb.Message.getFieldWithDefault(msg, 3, false),
-        privateOnly: jspb.Message.getFieldWithDefault(msg, 4, false),
+        privateOnly: jspb.Message.getFieldWithDefault(msg, 4, false)
       };
 
     if (includeInstance) {
@@ -9379,7 +9378,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           msg.getChannelsList(),
           proto.lnrpc.Channel.toObject,
           includeInstance
-        ),
+        )
       };
 
     if (includeInstance) {
@@ -9564,7 +9563,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         closeHeight: jspb.Message.getFieldWithDefault(msg, 7, 0),
         settledBalance: jspb.Message.getFieldWithDefault(msg, 8, 0),
         timeLockedBalance: jspb.Message.getFieldWithDefault(msg, 9, 0),
-        closeType: jspb.Message.getFieldWithDefault(msg, 10, 0),
+        closeType: jspb.Message.getFieldWithDefault(msg, 10, 0)
       };
 
     if (includeInstance) {
@@ -9726,7 +9725,7 @@ proto.lnrpc.ChannelCloseSummary.ClosureType = {
   REMOTE_FORCE_CLOSE: 2,
   BREACH_CLOSE: 3,
   FUNDING_CANCELED: 4,
-  ABANDONED: 5,
+  ABANDONED: 5
 };
 
 /**
@@ -9921,7 +9920,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         remoteForce: jspb.Message.getFieldWithDefault(msg, 3, false),
         breach: jspb.Message.getFieldWithDefault(msg, 4, false),
         fundingCanceled: jspb.Message.getFieldWithDefault(msg, 5, false),
-        abandoned: jspb.Message.getFieldWithDefault(msg, 6, false),
+        abandoned: jspb.Message.getFieldWithDefault(msg, 6, false)
       };
 
     if (includeInstance) {
@@ -10229,7 +10228,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           msg.getChannelsList(),
           proto.lnrpc.ChannelCloseSummary.toObject,
           includeInstance
-        ),
+        )
       };
 
     if (includeInstance) {
@@ -10412,7 +10411,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         atomsRecv: jspb.Message.getFieldWithDefault(msg, 7, 0),
         inbound: jspb.Message.getFieldWithDefault(msg, 8, false),
         pingTime: jspb.Message.getFieldWithDefault(msg, 9, 0),
-        syncType: jspb.Message.getFieldWithDefault(msg, 10, 0),
+        syncType: jspb.Message.getFieldWithDefault(msg, 10, 0)
       };
 
     if (includeInstance) {
@@ -10554,7 +10553,7 @@ proto.lnrpc.Peer.serializeBinaryToWriter = function (message, writer) {
 proto.lnrpc.Peer.SyncType = {
   UNKNOWN_SYNC: 0,
   ACTIVE_SYNC: 1,
-  PASSIVE_SYNC: 2,
+  PASSIVE_SYNC: 2
 };
 
 /**
@@ -10863,7 +10862,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           msg.getPeersList(),
           proto.lnrpc.Peer.toObject,
           includeInstance
-        ),
+        )
       };
 
     if (includeInstance) {
@@ -11175,7 +11174,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           includeInstance
         ),
         color: jspb.Message.getFieldWithDefault(msg, 17, ""),
-        syncedToGraph: jspb.Message.getFieldWithDefault(msg, 18, false),
+        syncedToGraph: jspb.Message.getFieldWithDefault(msg, 18, false)
       };
 
     if (includeInstance) {
@@ -11698,7 +11697,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         chain: jspb.Message.getFieldWithDefault(msg, 1, ""),
-        network: jspb.Message.getFieldWithDefault(msg, 2, ""),
+        network: jspb.Message.getFieldWithDefault(msg, 2, "")
       };
 
     if (includeInstance) {
@@ -11853,7 +11852,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
       obj = {
         blockSha: msg.getBlockSha_asB64(),
         blockHeight: jspb.Message.getFieldWithDefault(msg, 2, 0),
-        numConfsLeft: jspb.Message.getFieldWithDefault(msg, 3, 0),
+        numConfsLeft: jspb.Message.getFieldWithDefault(msg, 3, 0)
       };
 
     if (includeInstance) {
@@ -12064,7 +12063,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
       obj = {
         channelPoint:
           (f = msg.getChannelPoint()) &&
-          proto.lnrpc.ChannelPoint.toObject(includeInstance, f),
+          proto.lnrpc.ChannelPoint.toObject(includeInstance, f)
       };
 
     if (includeInstance) {
@@ -12223,7 +12222,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         closingTxid: msg.getClosingTxid_asB64(),
-        success: jspb.Message.getFieldWithDefault(msg, 2, false),
+        success: jspb.Message.getFieldWithDefault(msg, 2, false)
       };
 
     if (includeInstance) {
@@ -12423,7 +12422,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           proto.lnrpc.ChannelPoint.toObject(includeInstance, f),
         force: jspb.Message.getFieldWithDefault(msg, 2, false),
         targetConf: jspb.Message.getFieldWithDefault(msg, 3, 0),
-        atomsPerByte: jspb.Message.getFieldWithDefault(msg, 4, 0),
+        atomsPerByte: jspb.Message.getFieldWithDefault(msg, 4, 0)
       };
 
     if (includeInstance) {
@@ -12646,7 +12645,7 @@ proto.lnrpc.CloseStatusUpdate.oneofGroups_ = [[1, 3]];
 proto.lnrpc.CloseStatusUpdate.UpdateCase = {
   UPDATE_NOT_SET: 0,
   CLOSE_PENDING: 1,
-  CHAN_CLOSE: 3,
+  CHAN_CLOSE: 3
 };
 
 /**
@@ -12693,7 +12692,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           proto.lnrpc.PendingUpdate.toObject(includeInstance, f),
         chanClose:
           (f = msg.getChanClose()) &&
-          proto.lnrpc.ChannelCloseUpdate.toObject(includeInstance, f),
+          proto.lnrpc.ChannelCloseUpdate.toObject(includeInstance, f)
       };
 
     if (includeInstance) {
@@ -12911,7 +12910,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         txid: msg.getTxid_asB64(),
-        outputIndex: jspb.Message.getFieldWithDefault(msg, 2, 0),
+        outputIndex: jspb.Message.getFieldWithDefault(msg, 2, 0)
       };
 
     if (includeInstance) {
@@ -13098,7 +13097,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         minHtlcMAtoms: jspb.Message.getFieldWithDefault(msg, 9, 0),
         remoteCsvDelay: jspb.Message.getFieldWithDefault(msg, 10, 0),
         minConfs: jspb.Message.getFieldWithDefault(msg, 11, 0),
-        spendUnconfirmed: jspb.Message.getFieldWithDefault(msg, 12, false),
+        spendUnconfirmed: jspb.Message.getFieldWithDefault(msg, 12, false)
       };
 
     if (includeInstance) {
@@ -13486,7 +13485,7 @@ proto.lnrpc.OpenStatusUpdate.oneofGroups_ = [[1, 3]];
 proto.lnrpc.OpenStatusUpdate.UpdateCase = {
   UPDATE_NOT_SET: 0,
   CHAN_PENDING: 1,
-  CHAN_OPEN: 3,
+  CHAN_OPEN: 3
 };
 
 /**
@@ -13533,7 +13532,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           proto.lnrpc.PendingUpdate.toObject(includeInstance, f),
         chanOpen:
           (f = msg.getChanOpen()) &&
-          proto.lnrpc.ChannelOpenUpdate.toObject(includeInstance, f),
+          proto.lnrpc.ChannelOpenUpdate.toObject(includeInstance, f)
       };
 
     if (includeInstance) {
@@ -13753,7 +13752,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         outpoint: jspb.Message.getFieldWithDefault(msg, 3, ""),
         maturityHeight: jspb.Message.getFieldWithDefault(msg, 4, 0),
         blocksTilMaturity: jspb.Message.getFieldWithDefault(msg, 5, 0),
-        stage: jspb.Message.getFieldWithDefault(msg, 6, 0),
+        stage: jspb.Message.getFieldWithDefault(msg, 6, 0)
       };
 
     if (includeInstance) {
@@ -14161,7 +14160,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           msg.getWaitingCloseChannelsList(),
           proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel.toObject,
           includeInstance
-        ),
+        )
       };
 
     if (includeInstance) {
@@ -14373,7 +14372,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         localBalance: jspb.Message.getFieldWithDefault(msg, 4, 0),
         remoteBalance: jspb.Message.getFieldWithDefault(msg, 5, 0),
         localChanReserveAtoms: jspb.Message.getFieldWithDefault(msg, 6, 0),
-        remoteChanReserveAtoms: jspb.Message.getFieldWithDefault(msg, 7, 0),
+        remoteChanReserveAtoms: jspb.Message.getFieldWithDefault(msg, 7, 0)
       };
 
     if (includeInstance) {
@@ -14678,7 +14677,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         confirmationHeight: jspb.Message.getFieldWithDefault(msg, 2, 0),
         commitFee: jspb.Message.getFieldWithDefault(msg, 4, 0),
         commitSize: jspb.Message.getFieldWithDefault(msg, 5, 0),
-        feePerKb: jspb.Message.getFieldWithDefault(msg, 6, 0),
+        feePerKb: jspb.Message.getFieldWithDefault(msg, 6, 0)
       };
 
     if (includeInstance) {
@@ -14959,7 +14958,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
             includeInstance,
             f
           ),
-        limboBalance: jspb.Message.getFieldWithDefault(msg, 2, 0),
+        limboBalance: jspb.Message.getFieldWithDefault(msg, 2, 0)
       };
 
     if (includeInstance) {
@@ -15168,7 +15167,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
             includeInstance,
             f
           ),
-        closingTxid: jspb.Message.getFieldWithDefault(msg, 2, ""),
+        closingTxid: jspb.Message.getFieldWithDefault(msg, 2, "")
       };
 
     if (includeInstance) {
@@ -15402,7 +15401,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           msg.getPendingHtlcsList(),
           proto.lnrpc.PendingHTLC.toObject,
           includeInstance
-        ),
+        )
       };
 
     if (includeInstance) {
@@ -16046,7 +16045,7 @@ proto.lnrpc.ChannelEventUpdate.ChannelCase = {
   OPEN_CHANNEL: 1,
   CLOSED_CHANNEL: 2,
   ACTIVE_CHANNEL: 3,
-  INACTIVE_CHANNEL: 4,
+  INACTIVE_CHANNEL: 4
 };
 
 /**
@@ -16100,7 +16099,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         inactiveChannel:
           (f = msg.getInactiveChannel()) &&
           proto.lnrpc.ChannelPoint.toObject(includeInstance, f),
-        type: jspb.Message.getFieldWithDefault(msg, 5, 0),
+        type: jspb.Message.getFieldWithDefault(msg, 5, 0)
       };
 
     if (includeInstance) {
@@ -16240,7 +16239,7 @@ proto.lnrpc.ChannelEventUpdate.UpdateType = {
   OPEN_CHANNEL: 0,
   CLOSED_CHANNEL: 1,
   ACTIVE_CHANNEL: 2,
-  INACTIVE_CHANNEL: 3,
+  INACTIVE_CHANNEL: 3
 };
 
 /**
@@ -16568,7 +16567,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
       obj = {
         totalBalance: jspb.Message.getFieldWithDefault(msg, 1, 0),
         confirmedBalance: jspb.Message.getFieldWithDefault(msg, 2, 0),
-        unconfirmedBalance: jspb.Message.getFieldWithDefault(msg, 3, 0),
+        unconfirmedBalance: jspb.Message.getFieldWithDefault(msg, 3, 0)
       };
 
     if (includeInstance) {
@@ -16887,7 +16886,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         balance: jspb.Message.getFieldWithDefault(msg, 1, 0),
         pendingOpenBalance: jspb.Message.getFieldWithDefault(msg, 2, 0),
         maxInboundAmount: jspb.Message.getFieldWithDefault(msg, 3, 0),
-        maxOutboundAmount: jspb.Message.getFieldWithDefault(msg, 4, 0),
+        maxOutboundAmount: jspb.Message.getFieldWithDefault(msg, 4, 0)
       };
 
     if (includeInstance) {
@@ -17128,7 +17127,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           msg.getIgnoredPairsList(),
           proto.lnrpc.NodePair.toObject,
           includeInstance
-        ),
+        )
       };
 
     if (includeInstance) {
@@ -17580,7 +17579,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         from: msg.getFrom_asB64(),
-        to: msg.getTo_asB64(),
+        to: msg.getTo_asB64()
       };
 
     if (includeInstance) {
@@ -17780,7 +17779,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         channelId: jspb.Message.getFieldWithDefault(msg, 1, 0),
-        directionReverse: jspb.Message.getFieldWithDefault(msg, 2, false),
+        directionReverse: jspb.Message.getFieldWithDefault(msg, 2, false)
       };
 
     if (includeInstance) {
@@ -17958,7 +17957,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           proto.lnrpc.Route.toObject,
           includeInstance
         ),
-        successProb: +jspb.Message.getFieldWithDefault(msg, 2, 0.0),
+        successProb: +jspb.Message.getFieldWithDefault(msg, 2, 0.0)
       };
 
     if (includeInstance) {
@@ -18164,7 +18163,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         amtToForwardMAtoms: jspb.Message.getFieldWithDefault(msg, 6, 0),
         feeMAtoms: jspb.Message.getFieldWithDefault(msg, 7, 0),
         pubKey: jspb.Message.getFieldWithDefault(msg, 8, ""),
-        tlvPayload: jspb.Message.getFieldWithDefault(msg, 9, false),
+        tlvPayload: jspb.Message.getFieldWithDefault(msg, 9, false)
       };
 
     if (includeInstance) {
@@ -18490,7 +18489,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           includeInstance
         ),
         totalFeesMAtoms: jspb.Message.getFieldWithDefault(msg, 5, 0),
-        totalAmtMAtoms: jspb.Message.getFieldWithDefault(msg, 6, 0),
+        totalAmtMAtoms: jspb.Message.getFieldWithDefault(msg, 6, 0)
       };
 
     if (includeInstance) {
@@ -18752,7 +18751,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         pubKey: jspb.Message.getFieldWithDefault(msg, 1, ""),
-        includeChannels: jspb.Message.getFieldWithDefault(msg, 2, false),
+        includeChannels: jspb.Message.getFieldWithDefault(msg, 2, false)
       };
 
     if (includeInstance) {
@@ -18937,7 +18936,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           msg.getChannelsList(),
           proto.lnrpc.ChannelEdge.toObject,
           includeInstance
-        ),
+        )
       };
 
     if (includeInstance) {
@@ -19208,7 +19207,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           proto.lnrpc.NodeAddress.toObject,
           includeInstance
         ),
-        color: jspb.Message.getFieldWithDefault(msg, 5, ""),
+        color: jspb.Message.getFieldWithDefault(msg, 5, "")
       };
 
     if (includeInstance) {
@@ -19457,7 +19456,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         network: jspb.Message.getFieldWithDefault(msg, 1, ""),
-        addr: jspb.Message.getFieldWithDefault(msg, 2, ""),
+        addr: jspb.Message.getFieldWithDefault(msg, 2, "")
       };
 
     if (includeInstance) {
@@ -19616,7 +19615,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         feeRateMilliMAtoms: jspb.Message.getFieldWithDefault(msg, 4, 0),
         disabled: jspb.Message.getFieldWithDefault(msg, 5, false),
         maxHtlcMAtoms: jspb.Message.getFieldWithDefault(msg, 6, 0),
-        lastUpdate: jspb.Message.getFieldWithDefault(msg, 7, 0),
+        lastUpdate: jspb.Message.getFieldWithDefault(msg, 7, 0)
       };
 
     if (includeInstance) {
@@ -19889,7 +19888,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           proto.lnrpc.RoutingPolicy.toObject(includeInstance, f),
         node2Policy:
           (f = msg.getNode2Policy()) &&
-          proto.lnrpc.RoutingPolicy.toObject(includeInstance, f),
+          proto.lnrpc.RoutingPolicy.toObject(includeInstance, f)
       };
 
     if (includeInstance) {
@@ -20217,7 +20216,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   proto.lnrpc.ChannelGraphRequest.toObject = function (includeInstance, msg) {
     var f,
       obj = {
-        includeUnannounced: jspb.Message.getFieldWithDefault(msg, 1, false),
+        includeUnannounced: jspb.Message.getFieldWithDefault(msg, 1, false)
       };
 
     if (includeInstance) {
@@ -20386,7 +20385,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           msg.getEdgesList(),
           proto.lnrpc.ChannelEdge.toObject,
           includeInstance
-        ),
+        )
       };
 
     if (includeInstance) {
@@ -20601,7 +20600,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   proto.lnrpc.ChanInfoRequest.toObject = function (includeInstance, msg) {
     var f,
       obj = {
-        chanId: jspb.Message.getFieldWithDefault(msg, 1, 0),
+        chanId: jspb.Message.getFieldWithDefault(msg, 1, 0)
       };
 
     if (includeInstance) {
@@ -20865,7 +20864,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         minChannelSize: jspb.Message.getFieldWithDefault(msg, 8, 0),
         maxChannelSize: jspb.Message.getFieldWithDefault(msg, 9, 0),
         medianChannelSizeSat: jspb.Message.getFieldWithDefault(msg, 10, 0),
-        numZombieChans: jspb.Message.getFieldWithDefault(msg, 11, 0),
+        numZombieChans: jspb.Message.getFieldWithDefault(msg, 11, 0)
       };
 
     if (includeInstance) {
@@ -21582,7 +21581,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           msg.getClosedChansList(),
           proto.lnrpc.ClosedChannelUpdate.toObject,
           includeInstance
-        ),
+        )
       };
 
     if (includeInstance) {
@@ -21888,7 +21887,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         identityKey: jspb.Message.getFieldWithDefault(msg, 2, ""),
         globalFeatures: msg.getGlobalFeatures_asB64(),
         alias: jspb.Message.getFieldWithDefault(msg, 4, ""),
-        color: jspb.Message.getFieldWithDefault(msg, 5, ""),
+        color: jspb.Message.getFieldWithDefault(msg, 5, "")
       };
 
     if (includeInstance) {
@@ -22156,7 +22155,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           (f = msg.getRoutingPolicy()) &&
           proto.lnrpc.RoutingPolicy.toObject(includeInstance, f),
         advertisingNode: jspb.Message.getFieldWithDefault(msg, 5, ""),
-        connectingNode: jspb.Message.getFieldWithDefault(msg, 6, ""),
+        connectingNode: jspb.Message.getFieldWithDefault(msg, 6, "")
       };
 
     if (includeInstance) {
@@ -22449,7 +22448,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         closedHeight: jspb.Message.getFieldWithDefault(msg, 3, 0),
         chanPoint:
           (f = msg.getChanPoint()) &&
-          proto.lnrpc.ChannelPoint.toObject(includeInstance, f),
+          proto.lnrpc.ChannelPoint.toObject(includeInstance, f)
       };
 
     if (includeInstance) {
@@ -22675,7 +22674,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         chanId: jspb.Message.getFieldWithDefault(msg, 2, 0),
         feeBaseMAtoms: jspb.Message.getFieldWithDefault(msg, 3, 0),
         feeProportionalMillionths: jspb.Message.getFieldWithDefault(msg, 4, 0),
-        cltvExpiryDelta: jspb.Message.getFieldWithDefault(msg, 5, 0),
+        cltvExpiryDelta: jspb.Message.getFieldWithDefault(msg, 5, 0)
       };
 
     if (includeInstance) {
@@ -22906,7 +22905,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           msg.getHopHintsList(),
           proto.lnrpc.HopHint.toObject,
           includeInstance
-        ),
+        )
       };
 
     if (includeInstance) {
@@ -23110,7 +23109,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           proto.lnrpc.InvoiceHTLC.toObject,
           includeInstance
         ),
-        ignoreMaxInboundAmt: jspb.Message.getFieldWithDefault(msg, 1001, false),
+        ignoreMaxInboundAmt: jspb.Message.getFieldWithDefault(msg, 1001, false)
       };
 
     if (includeInstance) {
@@ -23381,7 +23380,7 @@ proto.lnrpc.Invoice.InvoiceState = {
   OPEN: 0,
   SETTLED: 1,
   CANCELED: 2,
-  ACCEPTED: 3,
+  ACCEPTED: 3
 };
 
 /**
@@ -23905,7 +23904,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         acceptTime: jspb.Message.getFieldWithDefault(msg, 5, 0),
         resolveTime: jspb.Message.getFieldWithDefault(msg, 6, 0),
         expiryHeight: jspb.Message.getFieldWithDefault(msg, 7, 0),
-        state: jspb.Message.getFieldWithDefault(msg, 8, 0),
+        state: jspb.Message.getFieldWithDefault(msg, 8, 0)
       };
 
     if (includeInstance) {
@@ -24190,7 +24189,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
       obj = {
         rHash: msg.getRHash_asB64(),
         paymentRequest: jspb.Message.getFieldWithDefault(msg, 2, ""),
-        addIndex: jspb.Message.getFieldWithDefault(msg, 16, 0),
+        addIndex: jspb.Message.getFieldWithDefault(msg, 16, 0)
       };
 
     if (includeInstance) {
@@ -24396,7 +24395,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         rHashStr: jspb.Message.getFieldWithDefault(msg, 1, ""),
-        rHash: msg.getRHash_asB64(),
+        rHash: msg.getRHash_asB64()
       };
 
     if (includeInstance) {
@@ -24576,7 +24575,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         pendingOnly: jspb.Message.getFieldWithDefault(msg, 1, false),
         indexOffset: jspb.Message.getFieldWithDefault(msg, 4, 0),
         numMaxInvoices: jspb.Message.getFieldWithDefault(msg, 5, 0),
-        reversed: jspb.Message.getFieldWithDefault(msg, 6, false),
+        reversed: jspb.Message.getFieldWithDefault(msg, 6, false)
       };
 
     if (includeInstance) {
@@ -24812,7 +24811,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           includeInstance
         ),
         lastIndexOffset: jspb.Message.getFieldWithDefault(msg, 2, 0),
-        firstIndexOffset: jspb.Message.getFieldWithDefault(msg, 3, 0),
+        firstIndexOffset: jspb.Message.getFieldWithDefault(msg, 3, 0)
       };
 
     if (includeInstance) {
@@ -25035,7 +25034,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         addIndex: jspb.Message.getFieldWithDefault(msg, 1, 0),
-        settleIndex: jspb.Message.getFieldWithDefault(msg, 2, 0),
+        settleIndex: jspb.Message.getFieldWithDefault(msg, 2, 0)
       };
 
     if (includeInstance) {
@@ -25219,7 +25218,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         paymentRequest: jspb.Message.getFieldWithDefault(msg, 9, ""),
         status: jspb.Message.getFieldWithDefault(msg, 10, 0),
         feeAtoms: jspb.Message.getFieldWithDefault(msg, 11, 0),
-        feeMAtoms: jspb.Message.getFieldWithDefault(msg, 12, 0),
+        feeMAtoms: jspb.Message.getFieldWithDefault(msg, 12, 0)
       };
 
     if (includeInstance) {
@@ -25386,7 +25385,7 @@ proto.lnrpc.Payment.PaymentStatus = {
   UNKNOWN: 0,
   IN_FLIGHT: 1,
   SUCCEEDED: 2,
-  FAILED: 3,
+  FAILED: 3
 };
 
 /**
@@ -25612,7 +25611,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   proto.lnrpc.ListPaymentsRequest.toObject = function (includeInstance, msg) {
     var f,
       obj = {
-        includeIncomplete: jspb.Message.getFieldWithDefault(msg, 1, false),
+        includeIncomplete: jspb.Message.getFieldWithDefault(msg, 1, false)
       };
 
     if (includeInstance) {
@@ -25779,7 +25778,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           msg.getPaymentsList(),
           proto.lnrpc.Payment.toObject,
           includeInstance
-        ),
+        )
       };
 
     if (includeInstance) {
@@ -26210,7 +26209,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
       obj = {
         channelPoint:
           (f = msg.getChannelPoint()) &&
-          proto.lnrpc.ChannelPoint.toObject(includeInstance, f),
+          proto.lnrpc.ChannelPoint.toObject(includeInstance, f)
       };
 
     if (includeInstance) {
@@ -26497,7 +26496,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         show: jspb.Message.getFieldWithDefault(msg, 1, false),
-        levelSpec: jspb.Message.getFieldWithDefault(msg, 2, ""),
+        levelSpec: jspb.Message.getFieldWithDefault(msg, 2, "")
       };
 
     if (includeInstance) {
@@ -26662,7 +26661,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   proto.lnrpc.DebugLevelResponse.toObject = function (includeInstance, msg) {
     var f,
       obj = {
-        subSystems: jspb.Message.getFieldWithDefault(msg, 1, ""),
+        subSystems: jspb.Message.getFieldWithDefault(msg, 1, "")
       };
 
     if (includeInstance) {
@@ -26801,7 +26800,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   proto.lnrpc.PayReqString.toObject = function (includeInstance, msg) {
     var f,
       obj = {
-        payReq: jspb.Message.getFieldWithDefault(msg, 1, ""),
+        payReq: jspb.Message.getFieldWithDefault(msg, 1, "")
       };
 
     if (includeInstance) {
@@ -26957,7 +26956,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           msg.getRouteHintsList(),
           proto.lnrpc.RouteHint.toObject,
           includeInstance
-        ),
+        )
       };
 
     if (includeInstance) {
@@ -27427,7 +27426,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         chanPoint: jspb.Message.getFieldWithDefault(msg, 1, ""),
         baseFeeMAtoms: jspb.Message.getFieldWithDefault(msg, 2, 0),
         feePerMil: jspb.Message.getFieldWithDefault(msg, 3, 0),
-        feeRate: +jspb.Message.getFieldWithDefault(msg, 4, 0.0),
+        feeRate: +jspb.Message.getFieldWithDefault(msg, 4, 0.0)
       };
 
     if (includeInstance) {
@@ -27652,7 +27651,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         ),
         dayFeeSum: jspb.Message.getFieldWithDefault(msg, 2, 0),
         weekFeeSum: jspb.Message.getFieldWithDefault(msg, 3, 0),
-        monthFeeSum: jspb.Message.getFieldWithDefault(msg, 4, 0),
+        monthFeeSum: jspb.Message.getFieldWithDefault(msg, 4, 0)
       };
 
     if (includeInstance) {
@@ -27881,7 +27880,7 @@ proto.lnrpc.PolicyUpdateRequest.oneofGroups_ = [[1, 2]];
 proto.lnrpc.PolicyUpdateRequest.ScopeCase = {
   SCOPE_NOT_SET: 0,
   GLOBAL: 1,
-  CHAN_POINT: 2,
+  CHAN_POINT: 2
 };
 
 /**
@@ -27930,7 +27929,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         baseFeeMAtoms: jspb.Message.getFieldWithDefault(msg, 3, 0),
         feeRate: +jspb.Message.getFieldWithDefault(msg, 4, 0.0),
         timeLockDelta: jspb.Message.getFieldWithDefault(msg, 5, 0),
-        maxHtlcMAtoms: jspb.Message.getFieldWithDefault(msg, 6, 0),
+        maxHtlcMAtoms: jspb.Message.getFieldWithDefault(msg, 6, 0)
       };
 
     if (includeInstance) {
@@ -28362,7 +28361,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         startTime: jspb.Message.getFieldWithDefault(msg, 1, 0),
         endTime: jspb.Message.getFieldWithDefault(msg, 2, 0),
         indexOffset: jspb.Message.getFieldWithDefault(msg, 3, 0),
-        numMaxEvents: jspb.Message.getFieldWithDefault(msg, 4, 0),
+        numMaxEvents: jspb.Message.getFieldWithDefault(msg, 4, 0)
       };
 
     if (includeInstance) {
@@ -28576,7 +28575,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         amtIn: jspb.Message.getFieldWithDefault(msg, 5, 0),
         amtOut: jspb.Message.getFieldWithDefault(msg, 6, 0),
         fee: jspb.Message.getFieldWithDefault(msg, 7, 0),
-        feeMAtoms: jspb.Message.getFieldWithDefault(msg, 8, 0),
+        feeMAtoms: jspb.Message.getFieldWithDefault(msg, 8, 0)
       };
 
     if (includeInstance) {
@@ -28865,7 +28864,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           proto.lnrpc.ForwardingEvent.toObject,
           includeInstance
         ),
-        lastOffsetIndex: jspb.Message.getFieldWithDefault(msg, 2, 0),
+        lastOffsetIndex: jspb.Message.getFieldWithDefault(msg, 2, 0)
       };
 
     if (includeInstance) {
@@ -29074,7 +29073,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
       obj = {
         chanPoint:
           (f = msg.getChanPoint()) &&
-          proto.lnrpc.ChannelPoint.toObject(includeInstance, f),
+          proto.lnrpc.ChannelPoint.toObject(includeInstance, f)
       };
 
     if (includeInstance) {
@@ -29240,7 +29239,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         chanPoint:
           (f = msg.getChanPoint()) &&
           proto.lnrpc.ChannelPoint.toObject(includeInstance, f),
-        chanBackup: msg.getChanBackup_asB64(),
+        chanBackup: msg.getChanBackup_asB64()
       };
 
     if (includeInstance) {
@@ -29457,7 +29456,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           proto.lnrpc.ChannelPoint.toObject,
           includeInstance
         ),
-        multiChanBackup: msg.getMultiChanBackup_asB64(),
+        multiChanBackup: msg.getMultiChanBackup_asB64()
       };
 
     if (includeInstance) {
@@ -29808,7 +29807,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           proto.lnrpc.ChannelBackups.toObject(includeInstance, f),
         multiChanBackup:
           (f = msg.getMultiChanBackup()) &&
-          proto.lnrpc.MultiChanBackup.toObject(includeInstance, f),
+          proto.lnrpc.MultiChanBackup.toObject(includeInstance, f)
       };
 
     if (includeInstance) {
@@ -30037,7 +30036,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           msg.getChanBackupsList(),
           proto.lnrpc.ChannelBackup.toObject,
           includeInstance
-        ),
+        )
       };
 
     if (includeInstance) {
@@ -30203,7 +30202,7 @@ proto.lnrpc.RestoreChanBackupRequest.oneofGroups_ = [[1, 2]];
 proto.lnrpc.RestoreChanBackupRequest.BackupCase = {
   BACKUP_NOT_SET: 0,
   CHAN_BACKUPS: 1,
-  MULTI_CHAN_BACKUP: 2,
+  MULTI_CHAN_BACKUP: 2
 };
 
 /**
@@ -30254,7 +30253,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         chanBackups:
           (f = msg.getChanBackups()) &&
           proto.lnrpc.ChannelBackups.toObject(includeInstance, f),
-        multiChanBackup: msg.getMultiChanBackup_asB64(),
+        multiChanBackup: msg.getMultiChanBackup_asB64()
       };
 
     if (includeInstance) {
@@ -30832,7 +30831,7 @@ proto.lnrpc.AddressType = {
   NESTED_PUBKEY_HASH: 1,
   PUBKEY_HASH: 2,
   SCRIPT_HASH: 3,
-  UNUSED_PUBKEY_HASH: 4,
+  UNUSED_PUBKEY_HASH: 4
 };
 
 /**
@@ -30841,7 +30840,7 @@ proto.lnrpc.AddressType = {
 proto.lnrpc.InvoiceHTLCState = {
   ACCEPTED: 0,
   SETTLED: 1,
-  CANCELED: 2,
+  CANCELED: 2
 };
 
 goog.object.extend(exports, proto.lnrpc);

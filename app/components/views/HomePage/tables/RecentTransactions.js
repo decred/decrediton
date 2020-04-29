@@ -12,7 +12,7 @@ const RecentTransactions = ({
   getTransactionsRequestAttempt,
   rowNumber,
   goToTransactionHistory,
-  tsDate,
+  tsDate
 }) => {
   const hasTxs = transactions.length > 0;
   return getTransactionsRequestAttempt ? (

@@ -25,7 +25,7 @@ class TicketAutoBuyer extends React.Component {
         : this.props.account,
       balanceToMaintain: this.props.ticketBuyerSettings
         ? this.props.ticketBuyerSettings.balanceToMaintain
-        : 0,
+        : 0
     };
   }
 
@@ -77,10 +77,10 @@ class TicketAutoBuyer extends React.Component {
           ...this.state,
           ...substruct(
             {
-              onStartAutoBuyer: null,
+              onStartAutoBuyer: null
             },
             this
-          ),
+          )
         }}
       />
     );
@@ -95,7 +95,7 @@ class TicketAutoBuyer extends React.Component {
   getCurrentSettings() {
     return substruct(
       {
-        balanceToMaintain: null,
+        balanceToMaintain: null
       },
       this.props
     );
@@ -134,7 +134,7 @@ class TicketAutoBuyer extends React.Component {
 
   onChangeBalanceToMaintain({ atomValue }) {
     this.setState({
-      balanceToMaintain: atomValue,
+      balanceToMaintain: atomValue
     });
   }
 
@@ -154,13 +154,13 @@ class TicketAutoBuyer extends React.Component {
 
     if (balanceToMaintainError) {
       this.setState({
-        canNotEnableAutobuyer: true,
+        canNotEnableAutobuyer: true
       });
       return true;
     }
 
     this.setState({
-      canNotEnableAutobuyer: false,
+      canNotEnableAutobuyer: false
     });
     return false;
   }

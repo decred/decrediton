@@ -5,7 +5,7 @@ import { TESTNET, MAINNET } from "constants";
 
 const propTypes = {
   tempSettings: PropTypes.object.isRequired,
-  onChangeTempSettings: PropTypes.func.isRequired,
+  onChangeTempSettings: PropTypes.func.isRequired
 };
 
 const AlreadySetMessage = () => (
@@ -41,13 +41,13 @@ const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
               {
                 key: "true",
                 value: MAINNET,
-                description: <T id="settings.network.mainnet" m="Mainnet" />,
+                description: <T id="settings.network.mainnet" m="Mainnet" />
               },
               {
                 key: "false",
                 value: TESTNET,
-                description: <T id="settings.network.testnet" m="Testnet" />,
-              },
+                description: <T id="settings.network.testnet" m="Testnet" />
+              }
             ]}
           />
         </Tooltip>
@@ -71,13 +71,13 @@ const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
               {
                 key: "true",
                 value: true,
-                description: <T id="settings.spv.true" m="Enabled" />,
+                description: <T id="settings.spv.true" m="Enabled" />
               },
               {
                 key: "false",
                 value: false,
-                description: <T id="settings.spv.false" m="Disabled" />,
-              },
+                description: <T id="settings.spv.false" m="Disabled" />
+              }
             ]}
           />
         </Tooltip>
@@ -120,17 +120,15 @@ const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
               {
                 key: "true",
                 value: true,
-                description: (
-                  <T id="settings.advancedDaemon.true" m="Enabled" />
-                ),
+                description: <T id="settings.advancedDaemon.true" m="Enabled" />
               },
               {
                 key: "false",
                 value: false,
                 description: (
                   <T id="settings.advancedDaemon.false" m="Disabled" />
-                ),
-              },
+                )
+              }
             ]}
           />
         </Tooltip>

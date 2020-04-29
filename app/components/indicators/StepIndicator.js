@@ -10,7 +10,7 @@ export default ({ pageCount, currentPageIndex, onGotoPage }) => (
               ? "current"
               : index < currentPageIndex
               ? "checked"
-              : "unchecked",
+              : "unchecked"
           ].join(" ")}
           onClick={() => onGotoPage(index)}
           key={index}

@@ -5,14 +5,14 @@ import { InfoDocFieldModalButton } from "buttons";
 const propTypes = {
   tempSettings: PropTypes.object.isRequired,
   currencies: PropTypes.array.isRequired,
-  onChangeTempSettings: PropTypes.func.isRequired,
+  onChangeTempSettings: PropTypes.func.isRequired
 };
 
 const MiscSettings = ({
   tempSettings,
   currencies,
   onChangeTempSettings,
-  walletReady,
+  walletReady
 }) => (
   <div className="settings-misc">
     <div className="settings-column-title">

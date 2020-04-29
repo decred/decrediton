@@ -29,7 +29,7 @@ class Receive extends React.Component {
           ...this.props,
           ...this.state,
           onRequestAddress,
-          onValidateAmount,
+          onValidateAmount
         }}
       />
     );
@@ -61,7 +61,7 @@ class Receive extends React.Component {
     this.setState({
       amount: value,
       amountAtomValue: atomValue,
-      error: { amount: error },
+      error: { amount: error }
     });
   }
 }

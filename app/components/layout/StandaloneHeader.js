@@ -5,7 +5,7 @@ const StandaloneHeader = ({
   title,
   description,
   iconClassName,
-  actionButton,
+  actionButton
 }) => {
   return (
     <div className="standalone-page-header">

@@ -5,7 +5,7 @@ const PassphraseModalButtonsToolbar = ({
   onSubmit,
   onCancelModal,
   submitLabel,
-  isValid,
+  isValid
 }) => (
   <div className="passphrase-modal-toolbar">
     <KeyBlueButton

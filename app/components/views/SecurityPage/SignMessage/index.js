@@ -17,7 +17,7 @@ class SignMessage extends React.Component {
       address: "",
       addressError: null,
       message: "",
-      messageError: null,
+      messageError: null
     };
   }
 
@@ -36,7 +36,7 @@ class SignMessage extends React.Component {
       signMessageSignature,
       isSigningMessage,
       isSignMessageDisabled,
-      intl,
+      intl
     } = this.props;
     const { onChangeAddress, onChangeMessage } = this;
     const { address, addressError, message, messageError } = this.state;
@@ -65,7 +65,7 @@ class SignMessage extends React.Component {
             messageError,
             formatMessage: intl.formatMessage,
             isSigningMessage,
-            isSignMessageDisabled,
+            isSignMessageDisabled
           }}
         />
         {result}
@@ -84,14 +84,14 @@ class SignMessage extends React.Component {
             address,
             addressError: !resp.getIsValid()
               ? "Please enter a valid address"
-              : null,
+              : null
           });
         })
         .catch((error) => {
           console.error(error);
           this.setState({
             address,
-            addressError: "Error: Address validation failed, please try again.",
+            addressError: "Error: Address validation failed, please try again."
           });
         });
     }
@@ -108,11 +108,11 @@ SignMessage.propTypes = {
   intl: PropTypes.object.isRequired,
   walletService: PropTypes.object,
   signMessageCleanStore: PropTypes.func.isRequired,
-  signMessageSignature: PropTypes.string,
+  signMessageSignature: PropTypes.string
 };
 
 SignMessage.contextTypes = {
-  router: PropTypes.object.isRequired,
+  router: PropTypes.object.isRequired
 };
 
 export default signMessagePage(injectIntl(SignMessage));

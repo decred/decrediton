@@ -55,8 +55,8 @@ export const CreateNewWalletTitle = () => (
 export const messages = defineMessages({
   passphrasePlaceholder: {
     id: "getStarted.discoverAddresses.passphrasePlaceholder",
-    defaultMessage: "Private Passphrase",
-  },
+    defaultMessage: "Private Passphrase"
+  }
 });
 
 export const UpdateAvailableLink = ({ updateAvailable }) => (

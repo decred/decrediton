@@ -11,7 +11,7 @@ const ExternalLink = ({
   href,
   children,
   hrefTestNet,
-  isTestNet,
+  isTestNet
 }) => (
   <a
     className={className}

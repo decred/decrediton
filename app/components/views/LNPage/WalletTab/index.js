@@ -22,7 +22,7 @@ class WalletTab extends React.Component {
     this.state = {
       amount: 0,
       account: props.defaultAccount,
-      actionsEnabled: false,
+      actionsEnabled: false
     };
   }
 
@@ -64,7 +64,7 @@ class WalletTab extends React.Component {
     const {
       confirmedBalance,
       unconfirmedBalance,
-      totalBalance,
+      totalBalance
     } = this.props.walletBalances;
     const { account, amount, actionsEnabled, sending } = this.state;
     const { alias, identityPubkey } = this.props.info;
@@ -72,7 +72,7 @@ class WalletTab extends React.Component {
       onChangeAmount,
       onChangeAccount,
       onFundWallet,
-      onWithdrawWallet,
+      onWithdrawWallet
     } = this;
 
     return (

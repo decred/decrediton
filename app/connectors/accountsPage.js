@@ -14,7 +14,7 @@ const mapStateToProps = selectorMap({
   ),
   accountExtendedKey: sel.accountExtendedKey,
   walletName: sel.getWalletName,
-  hasTickets: sel.hasTickets,
+  hasTickets: sel.hasTickets
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -23,7 +23,7 @@ const mapDispatchToProps = (dispatch) =>
       onRenameAccount: ca.renameAccountAttempt,
       onHideAccount: cla.hideAccount,
       onShowAccount: cla.showAccount,
-      onGetAccountExtendedKey: ca.getAccountExtendedKeyAttempt,
+      onGetAccountExtendedKey: ca.getAccountExtendedKeyAttempt
     },
     dispatch
   );

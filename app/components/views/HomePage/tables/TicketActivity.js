@@ -13,7 +13,7 @@ const RecentTickets = ({
   getAccountsResponse,
   rowNumber,
   goToMyTickets,
-  tsDate,
+  tsDate
 }) =>
   getTransactionsRequestAttempt ? (
     <DecredLoading />

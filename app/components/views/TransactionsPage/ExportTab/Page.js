@@ -21,7 +21,7 @@ const ExportPage = ({
   destinationFile,
   setDestinationFile,
   expanded,
-  expandFields,
+  expandFields
 }) => (
   <>
     <Subtitle title={<T id="export.subtitle" m="Export Transactions" />} />
@@ -52,7 +52,7 @@ const ExportPage = ({
       <div
         className={[
           "export-area-right",
-          !expanded && "export-info-not-expanded ",
+          !expanded && "export-info-not-expanded "
         ].join(" ")}
         onClick={expandFields}>
         <div

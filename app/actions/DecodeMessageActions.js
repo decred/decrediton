@@ -11,10 +11,10 @@ export const GETDECODEMESSAGESERVICE_SUCCESS =
 
 export const getDecodeMessageServiceAttempt = () => (dispatch, getState) => {
   const {
-    grpc: { address, port },
+    grpc: { address, port }
   } = getState();
   const {
-    daemon: { walletName },
+    daemon: { walletName }
   } = getState();
   dispatch({ type: GETDECODEMESSAGESERVICE_ATTEMPT });
   return getDecodeService(isTestNet(getState()), walletName, address, port)
@@ -34,7 +34,7 @@ export const DECODERAWTXS_FAILED = "DECODERAWTXS_FAILED";
 // performance than to use a sequence of decodeRawTransaction
 export const decodeRawTransactions = (hexTxs) => (dispatch, getState) => {
   const {
-    grpc: { decodeMessageService },
+    grpc: { decodeMessageService }
   } = getState();
 
   const resolved = (resps) => {

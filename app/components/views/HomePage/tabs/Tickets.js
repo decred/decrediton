@@ -10,7 +10,7 @@ const HomePage = ({
   earnedStakingReward,
   activeTicketsCount,
   votedTicketsCount,
-  ticketDataChart,
+  ticketDataChart
 }) => {
   return (
     <div className="overview-content-wrapper">
@@ -23,7 +23,7 @@ const HomePage = ({
                 m="{count, plural, one {{fmtCount} active ticket} other {{fmtCount} active tickets}}"
                 values={{
                   count: activeTicketsCount,
-                  fmtCount: <span className="count">{activeTicketsCount}</span>,
+                  fmtCount: <span className="count">{activeTicketsCount}</span>
                 }}
               />
             </div>
@@ -41,7 +41,7 @@ const HomePage = ({
                       classNameUnit="overview-balance-spendable-locked-unit"
                       amount={totalValueOfLiveTickets}
                     />
-                  ),
+                  )
                 }}
               />
             </div>
@@ -55,7 +55,7 @@ const HomePage = ({
                 m="{count, plural, one {{fmtCount} voted ticket} other {{fmtCount} voted tickets}}"
                 values={{
                   count: votedTicketsCount,
-                  fmtCount: <span className="count">{votedTicketsCount}</span>,
+                  fmtCount: <span className="count">{votedTicketsCount}</span>
                 }}
               />
             </div>
@@ -73,7 +73,7 @@ const HomePage = ({
                       classNameUnit="overview-balance-spendable-locked-unit"
                       amount={earnedStakingReward}
                     />
-                  ),
+                  )
                 }}
               />
             </div>

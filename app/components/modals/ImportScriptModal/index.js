@@ -27,7 +27,7 @@ class ImportScriptModal extends React.Component {
   getInitialState() {
     return {
       script: "",
-      hasFailedAttempt: false,
+      hasFailedAttempt: false
     };
   }
 
@@ -53,7 +53,7 @@ class ImportScriptModal extends React.Component {
       onSubmit,
       onCancelModal,
       isValid,
-      validationFailed,
+      validationFailed
     } = this;
 
     return (
@@ -64,7 +64,7 @@ class ImportScriptModal extends React.Component {
           onSubmit,
           onCancelModal,
           isValid,
-          validationFailed,
+          validationFailed
         }}
       />
     );

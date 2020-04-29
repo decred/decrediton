@@ -2,7 +2,7 @@ import {
   TabbedPage,
   TabbedPageTab as Tab,
   TitleHeader,
-  DescriptionHeader,
+  DescriptionHeader
 } from "layout";
 import { FormattedMessage as T } from "react-intl";
 import { Switch, Redirect } from "react-router-dom";
@@ -39,7 +39,7 @@ const TabHeader = treasuryInfo(({ treasuryBalance }) => (
                   amount={treasuryBalance}
                   classNameWrapper="header-small-balance"
                 />
-              ),
+              )
             }}
           />
         }

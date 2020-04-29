@@ -26,7 +26,7 @@ class SecurityPage extends React.Component {
 
   getInitialState() {
     return {
-      sideActive: true,
+      sideActive: true
     };
   }
 

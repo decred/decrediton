@@ -12,7 +12,7 @@ class TrezorWalletCreationPassphraseModal extends React.Component {
       passphraseValue: "",
       passphraseConfirmValue: "",
       submitAttempted: false,
-      mismatchedValues: false,
+      mismatchedValues: false
     };
   }
 
@@ -35,7 +35,7 @@ class TrezorWalletCreationPassphraseModal extends React.Component {
     this.setState({
       passphraseValue,
       submitAttempted: false,
-      mismatchedValues: false,
+      mismatchedValues: false
     });
   }
 
@@ -43,7 +43,7 @@ class TrezorWalletCreationPassphraseModal extends React.Component {
     this.setState({
       passphraseConfirmValue,
       submitAttempted: false,
-      mismatchedValues: false,
+      mismatchedValues: false
     });
   }
 
@@ -52,13 +52,13 @@ class TrezorWalletCreationPassphraseModal extends React.Component {
     const {
       onSubmit,
       onChangePassphraseValue,
-      onChangePassphraseConfirmValue,
+      onChangePassphraseConfirmValue
     } = this;
     const {
       submitAttempted,
       passphraseValue,
       passphraseConfirmValue,
-      mismatchedValues,
+      mismatchedValues
     } = this.state;
 
     const trezorLabel = this.props.device
@@ -67,7 +67,7 @@ class TrezorWalletCreationPassphraseModal extends React.Component {
 
     const className = [
       "trezor-passphrase-modal",
-      this.props.isGetStarted ? "get-started" : "",
+      this.props.isGetStarted ? "get-started" : ""
     ].join(" ");
 
     return (
@@ -85,7 +85,7 @@ class TrezorWalletCreationPassphraseModal extends React.Component {
               "Type the secret passphrase of the wallet to restore from the trezor device {label}"
             }
             values={{
-              label: <span className="trezor-label">'{trezorLabel}'</span>,
+              label: <span className="trezor-label">'{trezorLabel}'</span>
             }}
           />
         </p>

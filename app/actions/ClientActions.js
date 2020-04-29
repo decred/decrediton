@@ -4,16 +4,16 @@ import * as sel from "selectors";
 import eq from "lodash/fp/eq";
 import {
   getNextAddressAttempt,
-  publishUnminedTransactionsAttempt,
+  publishUnminedTransactionsAttempt
 } from "./ControlActions";
 import {
   transactionNtfnsStart,
-  accountNtfnsStart,
+  accountNtfnsStart
 } from "./NotificationActions";
 import {
   refreshStakepoolPurchaseInformation,
   setStakePoolVoteChoices,
-  getStakepoolStats,
+  getStakepoolStats
 } from "./StakePoolActions";
 import { getDecodeMessageServiceAttempt } from "./DecodeMessageActions";
 import { getAccountMixerServiceAttempt } from "./AccountMixerActions";
@@ -30,7 +30,7 @@ import { rawHashToHex, reverseRawHash, strHashToRaw } from "helpers";
 import * as da from "../middleware/dcrdataapi";
 import {
   EXTERNALREQUEST_DCRDATA,
-  EXTERNALREQUEST_POLITEIA,
+  EXTERNALREQUEST_POLITEIA
 } from "main_dev/externalRequests";
 import { TESTNET, MAINNET } from "constants";
 
@@ -150,7 +150,7 @@ export const MATURINGHEIGHTS_ADDED = "MATURINGHEIGHTS_ADDED";
 // Given a list of transactions, returns the maturing heights of all
 // stake txs in the list.
 function transactionsMaturingHeights(txs, chainParams) {
-  let res = {};
+  const res = {};
   const addToRes = (height, found) => {
     const accounts = res[height] || [];
     found.forEach((a) =>
@@ -160,7 +160,7 @@ function transactionsMaturingHeights(txs, chainParams) {
   };
 
   txs.forEach((tx) => {
-    let accountsToUpdate = [];
+    const accountsToUpdate = [];
     switch (tx.type) {
       case TransactionDetails.TransactionType.TICKET_PURCHASE:
         checkAccountsToUpdate([tx], accountsToUpdate);
@@ -182,10 +182,10 @@ function transactionsMaturingHeights(txs, chainParams) {
 
 export const getWalletServiceAttempt = () => async (dispatch, getState) => {
   const {
-    grpc: { address, port },
+    grpc: { address, port }
   } = getState();
   const {
-    daemon: { walletName },
+    daemon: { walletName }
   } = getState();
   dispatch({ type: GETWALLETSERVICE_ATTEMPT });
   wallet
@@ -202,10 +202,10 @@ export const GETTICKETBUYERSERVICE_SUCCESS = "GETTICKETBUYERSERVICE_SUCCESS";
 
 export const getTicketBuyerServiceAttempt = () => (dispatch, getState) => {
   const {
-    grpc: { address, port },
+    grpc: { address, port }
   } = getState();
   const {
-    daemon: { walletName },
+    daemon: { walletName }
   } = getState();
   dispatch({ type: GETTICKETBUYERSERVICE_ATTEMPT });
   wallet
@@ -249,7 +249,7 @@ const getAccountsBalances = (accounts) => (dispatch, getState) => {
       immatureReward: resp.getImmatureReward(),
       immatureStakeGeneration: resp.getImmatureStakeGeneration(),
       lockedByTickets: resp.getLockedByTickets(),
-      votingAuthority: resp.getVotingAuthority(),
+      votingAuthority: resp.getVotingAuthority()
     };
   });
 
@@ -265,14 +265,14 @@ export const GETBALANCE_SUCCESS = "GETBALANCE_SUCCESS";
 const getBalanceUpdateSuccess = (accountNumber, getBalanceResponse) => (
   dispatch
 ) => {
-  let updatedBalance = {
+  const updatedBalance = {
     accountNumber,
     total: getBalanceResponse.getTotal(),
     spendable: getBalanceResponse.getSpendable(),
     immatureReward: getBalanceResponse.getImmatureReward(),
     immatureStakeGeneration: getBalanceResponse.getImmatureStakeGeneration(),
     lockedByTickets: getBalanceResponse.getLockedByTickets(),
-    votingAuthority: getBalanceResponse.getVotingAuthority(),
+    votingAuthority: getBalanceResponse.getVotingAuthority()
   };
 
   dispatch(updateAccount(updatedBalance));
@@ -301,7 +301,7 @@ export const getAccountNumberAttempt = (accountName) => (
     .then((resp) =>
       dispatch({
         getAccountNumberResponse: resp,
-        type: GETACCOUNTNUMBER_SUCCESS,
+        type: GETACCOUNTNUMBER_SUCCESS
       })
     )
     .catch((error) => dispatch({ error, type: GETACCOUNTNUMBER_FAILED }));
@@ -335,9 +335,9 @@ function getNetworkSuccess(getNetworkResponse) {
     const { testnet, mainnet } = getState().grpc;
     const { currentSettings } = getState().settings;
     const network = currentSettings.network;
-    var currentNetwork = getNetworkResponse.getActiveNetwork();
+    const currentNetwork = getNetworkResponse.getActiveNetwork();
     // XXX remove network magic numbers here
-    var networkStr = "";
+    let networkStr = "";
     if (
       (currentNetwork == testnet && network == TESTNET) ||
       (currentNetwork == mainnet && network == MAINNET)
@@ -346,7 +346,7 @@ function getNetworkSuccess(getNetworkResponse) {
       getNetworkResponse.networkStr = networkStr;
       dispatch({
         getNetworkResponse: getNetworkResponse,
-        type: GETNETWORK_SUCCESS,
+        type: GETNETWORK_SUCCESS
       });
     } else {
       dispatch({ error: "Invalid network detected", type: GETNETWORK_FAILED });
@@ -384,7 +384,7 @@ export const getPingAttempt = () => (dispatch, getState) =>
     })
     .catch((error) => {
       const {
-        daemon: { shutdownRequested, walletError },
+        daemon: { shutdownRequested, walletError }
       } = getState();
       dispatch({ error, type: GETPING_FAILED });
       if (!shutdownRequested && !walletError)
@@ -410,7 +410,7 @@ export const getStakeInfoAttempt = () => (dispatch, getState) => {
   wallet
     .getStakeInfo(sel.walletService(getState()))
     .then((resp) => {
-      let { getStakeInfoResponse } = getState().grpc;
+      const { getStakeInfoResponse } = getState().grpc;
       dispatch({ getStakeInfoResponse: resp, type: GETSTAKEINFO_SUCCESS });
 
       const checkedFields = [
@@ -419,7 +419,7 @@ export const getStakeInfoAttempt = () => (dispatch, getState) => {
         "getMissed",
         "getOwnMempoolTix",
         "getRevoked",
-        "getVoted",
+        "getVoted"
       ];
       const doReloadTickets = getStakeInfoResponse
         ? checkedFields.reduce(
@@ -464,7 +464,7 @@ export const getAccountsAttempt = (startup) => async (dispatch, getState) => {
     dispatch({
       accounts: response.getAccountsList(),
       response,
-      type: GETACCOUNTS_SUCCESS,
+      type: GETACCOUNTS_SUCCESS
     });
   } catch (error) {
     dispatch({ error, type: GETACCOUNTS_FAILED });
@@ -477,7 +477,7 @@ export const UPDATEACCOUNT_SUCCESS = "UPDATEACCOUNT_SUCCESS";
 export function updateAccount(account) {
   return (dispatch, getState) => {
     const {
-      grpc: { balances },
+      grpc: { balances }
     } = getState();
     const existingAccount = balances.find(
       (a) => a.accountNumber === account.accountNumber
@@ -498,7 +498,7 @@ export function updateAccount(account) {
           "' / " +
           account.accountNumber +
           "'",
-        ...account,
+        ...account
       };
       updatedBalances = [...balances, newAccount];
     } else {
@@ -515,17 +515,17 @@ export function updateAccount(account) {
 export function hideAccount(accountNumber) {
   return (dispatch, getState) => {
     const {
-      daemon: { walletName, hiddenAccounts },
+      daemon: { walletName, hiddenAccounts }
     } = getState();
-    var updatedHiddenAccounts = [...hiddenAccounts];
+    const updatedHiddenAccounts = [...hiddenAccounts];
     if (updatedHiddenAccounts.indexOf(accountNumber) === -1) {
       updatedHiddenAccounts.push(accountNumber);
     }
-    var cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
+    const cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
     cfg.set("hiddenaccounts", updatedHiddenAccounts);
     dispatch({
       hiddenAccounts: updatedHiddenAccounts,
-      type: UPDATEHIDDENACCOUNTS,
+      type: UPDATEHIDDENACCOUNTS
     });
     dispatch(updateAccount({ accountNumber, hidden: true }));
   };
@@ -534,19 +534,19 @@ export function hideAccount(accountNumber) {
 export function showAccount(accountNumber) {
   return (dispatch, getState) => {
     const {
-      daemon: { walletName, hiddenAccounts },
+      daemon: { walletName, hiddenAccounts }
     } = getState();
-    var updatedHiddenAccounts = Array();
-    for (var i = 0; i < hiddenAccounts.length; i++) {
+    const updatedHiddenAccounts = Array();
+    for (let i = 0; i < hiddenAccounts.length; i++) {
       if (hiddenAccounts[i] !== accountNumber) {
         updatedHiddenAccounts.push(hiddenAccounts[i]);
       }
     }
-    var cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
+    const cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
     cfg.set("hiddenaccounts", updatedHiddenAccounts);
     dispatch({
       hiddenAccounts: updatedHiddenAccounts,
-      type: UPDATEHIDDENACCOUNTS,
+      type: UPDATEHIDDENACCOUNTS
     });
     dispatch(updateAccount({ accountNumber, hidden: false }));
   };
@@ -582,12 +582,12 @@ const getTicketsFromTransactions = async (
   maxCount,
   currentBlockHeight
 ) => {
-  let tickets = [];
+  const tickets = [];
   const pageSize = maxCount * 4;
   const stakeTypes = [
     TransactionDetails.TransactionType.VOTE,
     TransactionDetails.TransactionType.REVOCATION,
-    TransactionDetails.TransactionType.TICKET_PURCHASE,
+    TransactionDetails.TransactionType.TICKET_PURCHASE
   ];
   const desc = endIdx < startIdx;
 
@@ -644,7 +644,7 @@ const getTicketsFromTransactions = async (
               // for duplicate occurrences of the ticket later on the code flow.
               const statusByTxType = {
                 [TransactionDetails.TransactionType.VOTE]: "voted",
-                [TransactionDetails.TransactionType.REVOCATION]: "revoked",
+                [TransactionDetails.TransactionType.REVOCATION]: "revoked"
               };
               ticket.status = statusByTxType[tx.type];
               ticket.spender = tx.tx;
@@ -721,22 +721,22 @@ export const getTickets = () => async (dispatch, getState) => {
     ticketsFilter,
     maximumTransactionCount,
     walletService,
-    currentBlockHeight,
+    currentBlockHeight
   } = getState().grpc;
   let {
     noMoreTickets,
     getTicketsStartRequestHeight,
-    minedTickets,
+    minedTickets
   } = getState().grpc;
   const pageCount = maximumTransactionCount;
   const ticketsNormalizer = sel.ticketsNormalizer(getState());
 
   // List of transactions found after filtering
-  let filtered = [];
+  const filtered = [];
 
   // always request unmined tickets as new ones may be available or some may
   // have been mined
-  let { tickets } = await getTicketsFromTransactions(
+  const { tickets } = await getTicketsFromTransactions(
     walletService,
     -1,
     -1,
@@ -767,7 +767,7 @@ export const getTickets = () => async (dispatch, getState) => {
   // transactions have been obtained (after filtering)
   while (!noMoreTickets && filtered.length < maximumTransactionCount) {
     try {
-      let { tickets, startIdx } = await getTicketsFromTransactions(
+      const { tickets, startIdx } = await getTicketsFromTransactions(
         walletService,
         startRequestHeight,
         endRequestHeight,
@@ -838,7 +838,7 @@ export const getTickets = () => async (dispatch, getState) => {
     minedTickets: newMinedTickets,
     noMoreTickets,
     getTicketsStartRequestHeight: startRequestHeight,
-    type: GETTICKETS_COMPLETE,
+    type: GETTICKETS_COMPLETE
   });
 };
 
@@ -915,7 +915,7 @@ const getNonWalletOutputs = (decodeMessageService, walletService, tx) =>
           return {
             address,
             value: o.getValue(),
-            isChange: addrValidResp.getIsMine(),
+            isChange: addrValidResp.getIsMine()
           };
         });
         resolve(Promise.all(outputs));
@@ -941,14 +941,14 @@ export const getTransactions = () => async (dispatch, getState) => {
     walletService,
     maximumTransactionCount,
     recentTransactionCount,
-    decodeMessageService,
+    decodeMessageService
   } = getState().grpc;
   let {
     noMoreTransactions,
     lastTransaction,
     minedTransactions,
     recentRegularTransactions,
-    recentStakeTransactions,
+    recentStakeTransactions
   } = getState().grpc;
   if (getTransactionsRequestAttempt || noMoreTransactions) return;
 
@@ -965,10 +965,10 @@ export const getTransactions = () => async (dispatch, getState) => {
   const pageCount = maximumTransactionCount;
 
   // List of transactions found after filtering
-  let filtered = [];
+  const filtered = [];
 
   // first, request unmined transactions. They always come first in decrediton.
-  let { unmined } = await walletGetTransactions(walletService, -1, -1, 0);
+  const { unmined } = await walletGetTransactions(walletService, -1, -1, 0);
   let unminedTransactions = filterTransactions(unmined, transactionsFilter).map(
     async (tx) => {
       const outputs = await getNonWalletOutputs(
@@ -985,7 +985,7 @@ export const getTransactions = () => async (dispatch, getState) => {
   const stakeTypes = [
     TransactionDetails.TransactionType.VOTE,
     TransactionDetails.TransactionType.REVOCATION,
-    TransactionDetails.TransactionType.TICKET_PURCHASE,
+    TransactionDetails.TransactionType.TICKET_PURCHASE
   ];
   const txNormalizer = sel.transactionNormalizer(getState());
 
@@ -1011,7 +1011,7 @@ export const getTransactions = () => async (dispatch, getState) => {
     }
 
     try {
-      let { mined } = await walletGetTransactions(
+      const { mined } = await walletGetTransactions(
         walletService,
         startRequestHeight,
         endRequestHeight,
@@ -1081,7 +1081,7 @@ export const getTransactions = () => async (dispatch, getState) => {
     lastTransaction,
     recentRegularTransactions,
     recentStakeTransactions,
-    type: GETTRANSACTIONS_COMPLETE,
+    type: GETTRANSACTIONS_COMPLETE
   };
   dispatch(stateChange);
   return stateChange;
@@ -1104,7 +1104,7 @@ function checkAccountsToUpdate(txs, accountsToUpdate) {
 }
 
 function checkForStakeTransactions(txs) {
-  var stakeTxsFound = false;
+  let stakeTxsFound = false;
   txs.forEach((tx) => {
     if (
       tx.type == TransactionDetails.TransactionType.VOTE ||
@@ -1129,13 +1129,13 @@ export const newTransactionsReceived = (
     unminedTransactions,
     minedTransactions,
     recentRegularTransactions,
-    recentStakeTransactions,
+    recentStakeTransactions
   } = getState().grpc;
   const {
     transactionsFilter,
     recentTransactionCount,
     decodeMessageService,
-    walletService,
+    walletService
   } = getState().grpc;
   const chainParams = sel.chainParams(getState());
 
@@ -1162,7 +1162,7 @@ export const newTransactionsReceived = (
     (tx) => !minedMap[tx.hash] && !unminedMap[tx.hash]
   );
 
-  var accountsToUpdate = new Array();
+  let accountsToUpdate = new Array();
   accountsToUpdate = checkAccountsToUpdate(unminedDupeCheck, accountsToUpdate);
   accountsToUpdate = checkAccountsToUpdate(
     newlyMinedTransactions,
@@ -1184,7 +1184,7 @@ export const newTransactionsReceived = (
       ...newlyUnminedTransactions,
       ...unminedTransactions.filter(
         (tx) => !newlyMinedMap[tx.hash] && !newlyUnminedMap[tx.hash]
-      ),
+      )
     ],
     transactionsFilter
   );
@@ -1192,7 +1192,7 @@ export const newTransactionsReceived = (
   const regularTransactionFilter = {
     listDirection: "desc",
     types: [TransactionDetails.TransactionType.REGULAR],
-    direction: null,
+    direction: null
   };
 
   recentRegularTransactions = filterTransactions(
@@ -1201,7 +1201,7 @@ export const newTransactionsReceived = (
       ...newlyMinedTransactions,
       ...recentRegularTransactions.filter(
         (tx) => !newlyMinedMap[tx.hash] && !newlyUnminedMap[tx.hash]
-      ),
+      )
     ],
     regularTransactionFilter
   )
@@ -1224,9 +1224,9 @@ export const newTransactionsReceived = (
     types: [
       TransactionDetails.TransactionType.TICKET_PURCHASE,
       TransactionDetails.TransactionType.VOTE,
-      TransactionDetails.TransactionType.REVOCATION,
+      TransactionDetails.TransactionType.REVOCATION
     ],
-    direction: null,
+    direction: null
   };
 
   recentStakeTransactions = filterTransactions(
@@ -1235,7 +1235,7 @@ export const newTransactionsReceived = (
       ...newlyMinedTransactions,
       ...recentStakeTransactions.filter(
         (tx) => !newlyMinedMap[tx.hash] && !newlyUnminedMap[tx.hash]
-      ),
+      )
     ],
     stakeTransactionFilter
   ).slice(0, recentTransactionCount);
@@ -1256,7 +1256,7 @@ export const newTransactionsReceived = (
   );
   dispatch({
     maturingBlockHeights: newMaturingHeights,
-    type: MATURINGHEIGHTS_CHANGED,
+    type: MATURINGHEIGHTS_CHANGED
   });
 
   // TODO: filter newlyMinedTransactions against minedTransactions if this
@@ -1276,13 +1276,13 @@ export const newTransactionsReceived = (
     newlyMinedTransactions,
     recentRegularTransactions,
     recentStakeTransactions,
-    type: NEW_TRANSACTIONS_RECEIVED,
+    type: NEW_TRANSACTIONS_RECEIVED
   });
 
   if (newlyMinedTransactions.length > 0) {
     const {
       startupStatsEndCalcTime,
-      startupStatsCalcSeconds,
+      startupStatsCalcSeconds
     } = getState().statistics;
     const secFromLastStats = (new Date() - startupStatsEndCalcTime) / 1000;
     if (secFromLastStats > 5 * startupStatsCalcSeconds) {
@@ -1296,7 +1296,7 @@ export function changeTransactionsFilter(newFilter) {
   return (dispatch) => {
     dispatch({
       transactionsFilter: newFilter,
-      type: CHANGE_TRANSACTIONS_FILTER,
+      type: CHANGE_TRANSACTIONS_FILTER
     });
     return dispatch(getTransactions());
   };
@@ -1321,7 +1321,7 @@ export const getStartupTransactions = () => async (dispatch, getState) => {
     types: [],
     direction: null,
     maxAmount: null,
-    minAmount: null,
+    minAmount: null
   };
   await dispatch(changeTransactionsFilter(defaultFilter));
 
@@ -1329,19 +1329,19 @@ export const getStartupTransactions = () => async (dispatch, getState) => {
     currentBlockHeight,
     walletService,
     recentTransactionCount,
-    decodeMessageService,
+    decodeMessageService
   } = getState().grpc;
   const chainParams = sel.chainParams(getState());
-  let startRequestHeight = currentBlockHeight;
+  const startRequestHeight = currentBlockHeight;
   const pageSize = 50;
   const voteTypes = [
     TransactionDetails.TransactionType.VOTE,
-    TransactionDetails.TransactionType.REVOCATION,
+    TransactionDetails.TransactionType.REVOCATION
   ];
   const checkHeightDeltas = [
     chainParams.TicketMaturity,
     chainParams.CoinbaseMaturity,
-    chainParams.SStxChangeMaturity,
+    chainParams.SStxChangeMaturity
   ];
   const immatureHeight = currentBlockHeight - Math.max(...checkHeightDeltas);
 
@@ -1454,7 +1454,7 @@ export const getStartupTransactions = () => async (dispatch, getState) => {
     recentRegularTxs,
     recentStakeTxs,
     maturingBlockHeights,
-    type: GETSTARTUPTRANSACTIONS_SUCCESS,
+    type: GETSTARTUPTRANSACTIONS_SUCCESS
   });
 };
 
@@ -1468,11 +1468,11 @@ export function updateBlockTimeSince() {
       transactionNtfnsResponse.getAttachedBlocksList().length > 0
     ) {
       const attachedBlocks = transactionNtfnsResponse.getAttachedBlocksList();
-      var lastBlockTimestamp = attachedBlocks[0].getTimestamp();
+      const lastBlockTimestamp = attachedBlocks[0].getTimestamp();
       if (recentBlockTimestamp != lastBlockTimestamp) {
         dispatch({
           recentBlockTimestamp: lastBlockTimestamp,
-          type: UPDATETIMESINCEBLOCK,
+          type: UPDATETIMESINCEBLOCK
         });
       }
     }
@@ -1485,10 +1485,10 @@ export const GETAGENDASERVICE_SUCCESS = "GETAGENDASERVICE_SUCCESS";
 
 export const getAgendaServiceAttempt = () => (dispatch, getState) => {
   const {
-    grpc: { address, port },
+    grpc: { address, port }
   } = getState();
   const {
-    daemon: { walletName },
+    daemon: { walletName }
   } = getState();
   dispatch({ type: GETAGENDASERVICE_ATTEMPT });
   wallet
@@ -1508,10 +1508,10 @@ export const GETVOTINGSERVICE_SUCCESS = "GETVOTINGSERVICE_SUCCESS";
 
 export const getVotingServiceAttempt = () => (dispatch, getState) => {
   const {
-    grpc: { address, port },
+    grpc: { address, port }
   } = getState();
   const {
-    daemon: { walletName },
+    daemon: { walletName }
   } = getState();
   dispatch({ type: GETVOTINGSERVICE_ATTEMPT });
   wallet
@@ -1580,7 +1580,7 @@ export const setVoteChoicesAttempt = (agendaId, choiceId) => (
     .setAgendaVote(sel.votingService(getState()), agendaId, choiceId)
     .then((response) => {
       dispatch({ response, type: SETVOTECHOICES_SUCCESS });
-      for (var i = 0; i < stakePools.length; i++) {
+      for (let i = 0; i < stakePools.length; i++) {
         dispatch(getVoteChoicesAttempt(stakePools[i]));
       }
     })
@@ -1599,10 +1599,10 @@ export const getMessageVerificationServiceAttempt = () => (
   getState
 ) => {
   const {
-    grpc: { address, port },
+    grpc: { address, port }
   } = getState();
   const {
-    daemon: { walletName },
+    daemon: { walletName }
   } = getState();
   dispatch({ type: GETMESSAGEVERIFICATIONSERVICE_ATTEMPT });
   wallet
@@ -1615,7 +1615,7 @@ export const getMessageVerificationServiceAttempt = () => (
     .then((messageVerificationService) =>
       dispatch({
         messageVerificationService,
-        type: GETMESSAGEVERIFICATIONSERVICE_SUCCESS,
+        type: GETMESSAGEVERIFICATIONSERVICE_SUCCESS
       })
     )
     .catch((error) =>
@@ -1712,7 +1712,7 @@ const getMissingStakeTxData = (tx) => async (dispatch, getState) => {
   const ticket = {
     ticket: ticketTx,
     spender: spenderTx,
-    status: status,
+    status: status
   };
   const ticketNormal = sel.ticketNormalizer(getState())(ticket);
 
@@ -1723,7 +1723,7 @@ const getMissingStakeTxData = (tx) => async (dispatch, getState) => {
     ticketPrice: ticketNormal.ticketPrice,
     ticketReward: ticketNormal.ticketReward,
     isPending: ticketNormal.isPending,
-    accountName: ticketNormal.accountName,
+    accountName: ticketNormal.accountName
     // add more stuff from the result of sel.ticketNormalizer if ever needed
   };
 };
@@ -1751,7 +1751,7 @@ export const fetchMissingStakeTxData = (tx) => async (dispatch, getState) => {
   if (txIdx > -1 || stakeTxIdx > -1) {
     const dispatchState = {
       txHash: tx.txHash,
-      type: FETCHMISSINGSTAKETXDATA_SUCCESS,
+      type: FETCHMISSINGSTAKETXDATA_SUCCESS
     };
     if (txIdx > -1) {
       const newTxs = [...oldTxs];

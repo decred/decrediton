@@ -30,5 +30,5 @@ export default {
   statistics,
   governance,
   trezor,
-  ln,
+  ln
 };

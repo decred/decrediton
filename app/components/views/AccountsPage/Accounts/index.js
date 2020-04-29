@@ -13,7 +13,7 @@ function AccountsPage({
   onGetAccountExtendedKey,
   onHideAccount,
   onShowAccount,
-  onRenameAccount,
+  onRenameAccount
 }) {
   return !walletService ? (
     <ErrorScreen />
@@ -28,7 +28,7 @@ function AccountsPage({
         isLoading,
         accountExtendedKey,
         walletName,
-        hasTickets,
+        hasTickets
       }}
     />
   );

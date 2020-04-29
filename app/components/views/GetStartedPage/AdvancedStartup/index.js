@@ -3,7 +3,7 @@ import {
   setAppdataPath,
   getAppdataPath,
   getRemoteCredentials,
-  setRemoteCredentials,
+  setRemoteCredentials
 } from "config.js";
 
 @autobind
@@ -12,7 +12,7 @@ class AdvancedStartupHeader extends React.Component {
     return (
       <AdvancedHeader
         {...{
-          ...this.props,
+          ...this.props
         }}
       />
     );
@@ -32,7 +32,7 @@ class AdvancedStartupBody extends React.Component {
       rpc_user,
       rpc_cert,
       rpc_host,
-      rpc_port,
+      rpc_port
     } = getRemoteCredentials();
     return {
       sideActive: true,
@@ -47,7 +47,7 @@ class AdvancedStartupBody extends React.Component {
       rpcPortHasFailedAttempt: false,
       rpcCertHasFailedAttempt: false,
       appDataHasFailedAttempt: false,
-      appdata: getAppdataPath(),
+      appdata: getAppdataPath()
     };
   }
 
@@ -69,7 +69,7 @@ class AdvancedStartupBody extends React.Component {
       onShowRemote,
       onShowAppData,
       isAppDataValid,
-      isRemoteValid,
+      isRemoteValid
     } = this;
     const remoteValid = isRemoteValid();
     const appDataValid = isAppDataValid();
@@ -90,7 +90,7 @@ class AdvancedStartupBody extends React.Component {
           setRpcPort,
           setAppData,
           remoteValid,
-          appDataValid,
+          appDataValid
         }}
       />
     );
@@ -150,13 +150,13 @@ class AdvancedStartupBody extends React.Component {
         rpcPasswordHasFailedAttempt: true,
         rpcHostHasFailedAttempt: true,
         rpcPortHasFailedAttempt: true,
-        rpcCertHasFailedAttempt: true,
+        rpcCertHasFailedAttempt: true
       });
       return;
     }
     const { rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port } = this.state;
     setRemoteCredentials(rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port);
-    let args = { rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port };
+    const args = { rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port };
     submitRemoteCredentials(args);
   }
 

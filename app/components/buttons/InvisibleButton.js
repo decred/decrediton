@@ -5,7 +5,7 @@ const InvisibleButton = ({
   type,
   disabled,
   onClick,
-  children,
+  children
 }) => (
   <div
     className={"invisible-button" + (className ? " " + className : "")}

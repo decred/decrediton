@@ -220,7 +220,7 @@ const lightTheme = {
   "menu-trezor-active": "url('style/icons/trezorActive.svg')",
   "menu-trezor-default": "url('style/icons/trezorDefault.svg')",
   "menu-trezor-hover": "url('style/icons/trezorHover.svg')",
-  "menu-cancel-rescan-icon": "url('style/icons/menu-cancel-rescan.svg')",
+  "menu-cancel-rescan-icon": "url('style/icons/menu-cancel-rescan.svg')"
 };
 
 export default lightTheme;

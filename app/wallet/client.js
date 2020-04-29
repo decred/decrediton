@@ -5,7 +5,7 @@ import {
   withLog as log,
   logOptionNoResponseData,
   withLogNoData,
-  withLogNoResponseData,
+  withLogNoResponseData
 } from "./app";
 import * as api from "middleware/walletrpc/api_pb";
 
@@ -101,7 +101,7 @@ export const getTickets = log(
           status: TicketTypes.get(res.getTicket().getTicketStatus()),
           ticket: res.getTicket().getTicket(),
           spender: res.getTicket().getSpender(),
-          block: res.getBlock(),
+          block: res.getBlock()
         });
       });
       getTx.on("end", () => ok(tickets));
@@ -126,7 +126,7 @@ export const getTicket = log(
           status: TicketTypes.get(res.getTicket().getTicketStatus()),
           ticket: res.getTicket().getTicket(),
           spender: res.getTicket().getSpender(),
-          block: res.getBlock(),
+          block: res.getBlock()
         };
 
         ok(ticket);

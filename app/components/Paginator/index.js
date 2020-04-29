@@ -7,7 +7,7 @@ import "style/Paginator.less";
 const propTypes = {
   totalPages: PropTypes.number.isRequired,
   currentPage: PropTypes.number.isRequired,
-  onPageChanged: PropTypes.func.isRequired,
+  onPageChanged: PropTypes.func.isRequired
 };
 
 @autobind
@@ -53,10 +53,10 @@ class Paginator extends React.Component {
               {
                 gotoPage: null,
                 gotoNextPage: null,
-                gotoPreviousPage: null,
+                gotoPreviousPage: null
               },
               this
-            ),
+            )
           }}
         />
       )

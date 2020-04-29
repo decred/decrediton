@@ -17,7 +17,7 @@ export const Balance = ({
   classNameUnit,
   preScaled,
   hideCurrency,
-  classNameAmount,
+  classNameAmount
 }) => {
   const secondary = large
     ? "balance-tiny"
@@ -27,7 +27,7 @@ export const Balance = ({
     ? "balance-title"
     : "balance-small";
   if (currencyDisplay === DCR) {
-    var totalDcr = 0;
+    let totalDcr = 0;
     if (typeof amount !== "undefined" && amount !== 0 && !isNaN(amount)) {
       totalDcr = preScaled
         ? parseFloat(amount)

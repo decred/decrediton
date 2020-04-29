@@ -41,7 +41,7 @@ export const RegularTxRow = ({
                       {txAccountNameCredited}
                     </div>
                   </div>
-                ),
+                )
               }}
             />
           </div>
@@ -64,7 +64,7 @@ export const RegularTxRow = ({
                       {txOutputAddresses}
                     </div>
                   </div>
-                ),
+                )
               }}
             />
           </div>
@@ -80,7 +80,7 @@ export const RegularTxRow = ({
                       {txAccountName}
                     </div>
                   </div>
-                ),
+                )
               }}
             />
           </div>
@@ -97,7 +97,7 @@ export const RegularTxRow = ({
             m="From {debAcc} To {credAcc}"
             values={{
               debAcc: txAccountNameDebited,
-              credAcc: txAccountNameCredited,
+              credAcc: txAccountNameCredited
             }}
           />
         ) : txDirection !== "in" ? (
@@ -106,7 +106,7 @@ export const RegularTxRow = ({
             m="From {debAcc} To {credAcc}"
             values={{
               debAcc: txAccountName,
-              credAcc: txOutputAddresses,
+              credAcc: txOutputAddresses
             }}
           />
         ) : (

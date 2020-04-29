@@ -2033,8 +2033,8 @@ var VersionServiceService = (exports.VersionServiceService = {
     requestSerialize: serialize_walletrpc_VersionRequest,
     requestDeserialize: deserialize_walletrpc_VersionRequest,
     responseSerialize: serialize_walletrpc_VersionResponse,
-    responseDeserialize: deserialize_walletrpc_VersionResponse,
-  },
+    responseDeserialize: deserialize_walletrpc_VersionResponse
+  }
 });
 
 exports.VersionServiceClient = grpc.makeGenericClientConstructor(
@@ -2051,7 +2051,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_PingRequest,
     requestDeserialize: deserialize_walletrpc_PingRequest,
     responseSerialize: serialize_walletrpc_PingResponse,
-    responseDeserialize: deserialize_walletrpc_PingResponse,
+    responseDeserialize: deserialize_walletrpc_PingResponse
   },
   network: {
     path: "/walletrpc.WalletService/Network",
@@ -2062,7 +2062,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_NetworkRequest,
     requestDeserialize: deserialize_walletrpc_NetworkRequest,
     responseSerialize: serialize_walletrpc_NetworkResponse,
-    responseDeserialize: deserialize_walletrpc_NetworkResponse,
+    responseDeserialize: deserialize_walletrpc_NetworkResponse
   },
   coinType: {
     path: "/walletrpc.WalletService/CoinType",
@@ -2073,7 +2073,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_CoinTypeRequest,
     requestDeserialize: deserialize_walletrpc_CoinTypeRequest,
     responseSerialize: serialize_walletrpc_CoinTypeResponse,
-    responseDeserialize: deserialize_walletrpc_CoinTypeResponse,
+    responseDeserialize: deserialize_walletrpc_CoinTypeResponse
   },
   accountNumber: {
     path: "/walletrpc.WalletService/AccountNumber",
@@ -2084,7 +2084,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_AccountNumberRequest,
     requestDeserialize: deserialize_walletrpc_AccountNumberRequest,
     responseSerialize: serialize_walletrpc_AccountNumberResponse,
-    responseDeserialize: deserialize_walletrpc_AccountNumberResponse,
+    responseDeserialize: deserialize_walletrpc_AccountNumberResponse
   },
   accounts: {
     path: "/walletrpc.WalletService/Accounts",
@@ -2095,7 +2095,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_AccountsRequest,
     requestDeserialize: deserialize_walletrpc_AccountsRequest,
     responseSerialize: serialize_walletrpc_AccountsResponse,
-    responseDeserialize: deserialize_walletrpc_AccountsResponse,
+    responseDeserialize: deserialize_walletrpc_AccountsResponse
   },
   balance: {
     path: "/walletrpc.WalletService/Balance",
@@ -2106,7 +2106,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_BalanceRequest,
     requestDeserialize: deserialize_walletrpc_BalanceRequest,
     responseSerialize: serialize_walletrpc_BalanceResponse,
-    responseDeserialize: deserialize_walletrpc_BalanceResponse,
+    responseDeserialize: deserialize_walletrpc_BalanceResponse
   },
   getAccountExtendedPubKey: {
     path: "/walletrpc.WalletService/GetAccountExtendedPubKey",
@@ -2117,7 +2117,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_GetAccountExtendedPubKeyRequest,
     requestDeserialize: deserialize_walletrpc_GetAccountExtendedPubKeyRequest,
     responseSerialize: serialize_walletrpc_GetAccountExtendedPubKeyResponse,
-    responseDeserialize: deserialize_walletrpc_GetAccountExtendedPubKeyResponse,
+    responseDeserialize: deserialize_walletrpc_GetAccountExtendedPubKeyResponse
   },
   getAccountExtendedPrivKey: {
     path: "/walletrpc.WalletService/GetAccountExtendedPrivKey",
@@ -2128,7 +2128,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_GetAccountExtendedPrivKeyRequest,
     requestDeserialize: deserialize_walletrpc_GetAccountExtendedPrivKeyRequest,
     responseSerialize: serialize_walletrpc_GetAccountExtendedPrivKeyResponse,
-    responseDeserialize: deserialize_walletrpc_GetAccountExtendedPrivKeyResponse,
+    responseDeserialize: deserialize_walletrpc_GetAccountExtendedPrivKeyResponse
   },
   getTransaction: {
     path: "/walletrpc.WalletService/GetTransaction",
@@ -2139,7 +2139,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_GetTransactionRequest,
     requestDeserialize: deserialize_walletrpc_GetTransactionRequest,
     responseSerialize: serialize_walletrpc_GetTransactionResponse,
-    responseDeserialize: deserialize_walletrpc_GetTransactionResponse,
+    responseDeserialize: deserialize_walletrpc_GetTransactionResponse
   },
   getTransactions: {
     path: "/walletrpc.WalletService/GetTransactions",
@@ -2150,7 +2150,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_GetTransactionsRequest,
     requestDeserialize: deserialize_walletrpc_GetTransactionsRequest,
     responseSerialize: serialize_walletrpc_GetTransactionsResponse,
-    responseDeserialize: deserialize_walletrpc_GetTransactionsResponse,
+    responseDeserialize: deserialize_walletrpc_GetTransactionsResponse
   },
   getTicket: {
     path: "/walletrpc.WalletService/GetTicket",
@@ -2161,7 +2161,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_GetTicketRequest,
     requestDeserialize: deserialize_walletrpc_GetTicketRequest,
     responseSerialize: serialize_walletrpc_GetTicketsResponse,
-    responseDeserialize: deserialize_walletrpc_GetTicketsResponse,
+    responseDeserialize: deserialize_walletrpc_GetTicketsResponse
   },
   getTickets: {
     path: "/walletrpc.WalletService/GetTickets",
@@ -2172,7 +2172,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_GetTicketsRequest,
     requestDeserialize: deserialize_walletrpc_GetTicketsRequest,
     responseSerialize: serialize_walletrpc_GetTicketsResponse,
-    responseDeserialize: deserialize_walletrpc_GetTicketsResponse,
+    responseDeserialize: deserialize_walletrpc_GetTicketsResponse
   },
   ticketPrice: {
     path: "/walletrpc.WalletService/TicketPrice",
@@ -2183,7 +2183,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_TicketPriceRequest,
     requestDeserialize: deserialize_walletrpc_TicketPriceRequest,
     responseSerialize: serialize_walletrpc_TicketPriceResponse,
-    responseDeserialize: deserialize_walletrpc_TicketPriceResponse,
+    responseDeserialize: deserialize_walletrpc_TicketPriceResponse
   },
   stakeInfo: {
     path: "/walletrpc.WalletService/StakeInfo",
@@ -2194,7 +2194,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_StakeInfoRequest,
     requestDeserialize: deserialize_walletrpc_StakeInfoRequest,
     responseSerialize: serialize_walletrpc_StakeInfoResponse,
-    responseDeserialize: deserialize_walletrpc_StakeInfoResponse,
+    responseDeserialize: deserialize_walletrpc_StakeInfoResponse
   },
   blockInfo: {
     path: "/walletrpc.WalletService/BlockInfo",
@@ -2205,7 +2205,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_BlockInfoRequest,
     requestDeserialize: deserialize_walletrpc_BlockInfoRequest,
     responseSerialize: serialize_walletrpc_BlockInfoResponse,
-    responseDeserialize: deserialize_walletrpc_BlockInfoResponse,
+    responseDeserialize: deserialize_walletrpc_BlockInfoResponse
   },
   bestBlock: {
     path: "/walletrpc.WalletService/BestBlock",
@@ -2216,7 +2216,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_BestBlockRequest,
     requestDeserialize: deserialize_walletrpc_BestBlockRequest,
     responseSerialize: serialize_walletrpc_BestBlockResponse,
-    responseDeserialize: deserialize_walletrpc_BestBlockResponse,
+    responseDeserialize: deserialize_walletrpc_BestBlockResponse
   },
   spender: {
     path: "/walletrpc.WalletService/Spender",
@@ -2227,7 +2227,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_SpenderRequest,
     requestDeserialize: deserialize_walletrpc_SpenderRequest,
     responseSerialize: serialize_walletrpc_SpenderResponse,
-    responseDeserialize: deserialize_walletrpc_SpenderResponse,
+    responseDeserialize: deserialize_walletrpc_SpenderResponse
   },
   // Notifications
   transactionNotifications: {
@@ -2239,7 +2239,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_TransactionNotificationsRequest,
     requestDeserialize: deserialize_walletrpc_TransactionNotificationsRequest,
     responseSerialize: serialize_walletrpc_TransactionNotificationsResponse,
-    responseDeserialize: deserialize_walletrpc_TransactionNotificationsResponse,
+    responseDeserialize: deserialize_walletrpc_TransactionNotificationsResponse
   },
   accountNotifications: {
     path: "/walletrpc.WalletService/AccountNotifications",
@@ -2250,7 +2250,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_AccountNotificationsRequest,
     requestDeserialize: deserialize_walletrpc_AccountNotificationsRequest,
     responseSerialize: serialize_walletrpc_AccountNotificationsResponse,
-    responseDeserialize: deserialize_walletrpc_AccountNotificationsResponse,
+    responseDeserialize: deserialize_walletrpc_AccountNotificationsResponse
   },
   confirmationNotifications: {
     path: "/walletrpc.WalletService/ConfirmationNotifications",
@@ -2261,7 +2261,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_ConfirmationNotificationsRequest,
     requestDeserialize: deserialize_walletrpc_ConfirmationNotificationsRequest,
     responseSerialize: serialize_walletrpc_ConfirmationNotificationsResponse,
-    responseDeserialize: deserialize_walletrpc_ConfirmationNotificationsResponse,
+    responseDeserialize: deserialize_walletrpc_ConfirmationNotificationsResponse
   },
   // Control
   changePassphrase: {
@@ -2273,7 +2273,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_ChangePassphraseRequest,
     requestDeserialize: deserialize_walletrpc_ChangePassphraseRequest,
     responseSerialize: serialize_walletrpc_ChangePassphraseResponse,
-    responseDeserialize: deserialize_walletrpc_ChangePassphraseResponse,
+    responseDeserialize: deserialize_walletrpc_ChangePassphraseResponse
   },
   renameAccount: {
     path: "/walletrpc.WalletService/RenameAccount",
@@ -2284,7 +2284,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_RenameAccountRequest,
     requestDeserialize: deserialize_walletrpc_RenameAccountRequest,
     responseSerialize: serialize_walletrpc_RenameAccountResponse,
-    responseDeserialize: deserialize_walletrpc_RenameAccountResponse,
+    responseDeserialize: deserialize_walletrpc_RenameAccountResponse
   },
   rescan: {
     path: "/walletrpc.WalletService/Rescan",
@@ -2295,7 +2295,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_RescanRequest,
     requestDeserialize: deserialize_walletrpc_RescanRequest,
     responseSerialize: serialize_walletrpc_RescanResponse,
-    responseDeserialize: deserialize_walletrpc_RescanResponse,
+    responseDeserialize: deserialize_walletrpc_RescanResponse
   },
   nextAccount: {
     path: "/walletrpc.WalletService/NextAccount",
@@ -2306,7 +2306,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_NextAccountRequest,
     requestDeserialize: deserialize_walletrpc_NextAccountRequest,
     responseSerialize: serialize_walletrpc_NextAccountResponse,
-    responseDeserialize: deserialize_walletrpc_NextAccountResponse,
+    responseDeserialize: deserialize_walletrpc_NextAccountResponse
   },
   nextAddress: {
     path: "/walletrpc.WalletService/NextAddress",
@@ -2317,7 +2317,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_NextAddressRequest,
     requestDeserialize: deserialize_walletrpc_NextAddressRequest,
     responseSerialize: serialize_walletrpc_NextAddressResponse,
-    responseDeserialize: deserialize_walletrpc_NextAddressResponse,
+    responseDeserialize: deserialize_walletrpc_NextAddressResponse
   },
   importPrivateKey: {
     path: "/walletrpc.WalletService/ImportPrivateKey",
@@ -2328,7 +2328,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_ImportPrivateKeyRequest,
     requestDeserialize: deserialize_walletrpc_ImportPrivateKeyRequest,
     responseSerialize: serialize_walletrpc_ImportPrivateKeyResponse,
-    responseDeserialize: deserialize_walletrpc_ImportPrivateKeyResponse,
+    responseDeserialize: deserialize_walletrpc_ImportPrivateKeyResponse
   },
   importScript: {
     path: "/walletrpc.WalletService/ImportScript",
@@ -2339,7 +2339,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_ImportScriptRequest,
     requestDeserialize: deserialize_walletrpc_ImportScriptRequest,
     responseSerialize: serialize_walletrpc_ImportScriptResponse,
-    responseDeserialize: deserialize_walletrpc_ImportScriptResponse,
+    responseDeserialize: deserialize_walletrpc_ImportScriptResponse
   },
   fundTransaction: {
     path: "/walletrpc.WalletService/FundTransaction",
@@ -2350,7 +2350,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_FundTransactionRequest,
     requestDeserialize: deserialize_walletrpc_FundTransactionRequest,
     responseSerialize: serialize_walletrpc_FundTransactionResponse,
-    responseDeserialize: deserialize_walletrpc_FundTransactionResponse,
+    responseDeserialize: deserialize_walletrpc_FundTransactionResponse
   },
   unspentOutputs: {
     path: "/walletrpc.WalletService/UnspentOutputs",
@@ -2361,7 +2361,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_UnspentOutputsRequest,
     requestDeserialize: deserialize_walletrpc_UnspentOutputsRequest,
     responseSerialize: serialize_walletrpc_UnspentOutputResponse,
-    responseDeserialize: deserialize_walletrpc_UnspentOutputResponse,
+    responseDeserialize: deserialize_walletrpc_UnspentOutputResponse
   },
   constructTransaction: {
     path: "/walletrpc.WalletService/ConstructTransaction",
@@ -2372,7 +2372,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_ConstructTransactionRequest,
     requestDeserialize: deserialize_walletrpc_ConstructTransactionRequest,
     responseSerialize: serialize_walletrpc_ConstructTransactionResponse,
-    responseDeserialize: deserialize_walletrpc_ConstructTransactionResponse,
+    responseDeserialize: deserialize_walletrpc_ConstructTransactionResponse
   },
   signTransaction: {
     path: "/walletrpc.WalletService/SignTransaction",
@@ -2383,7 +2383,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_SignTransactionRequest,
     requestDeserialize: deserialize_walletrpc_SignTransactionRequest,
     responseSerialize: serialize_walletrpc_SignTransactionResponse,
-    responseDeserialize: deserialize_walletrpc_SignTransactionResponse,
+    responseDeserialize: deserialize_walletrpc_SignTransactionResponse
   },
   signTransactions: {
     path: "/walletrpc.WalletService/SignTransactions",
@@ -2394,7 +2394,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_SignTransactionsRequest,
     requestDeserialize: deserialize_walletrpc_SignTransactionsRequest,
     responseSerialize: serialize_walletrpc_SignTransactionsResponse,
-    responseDeserialize: deserialize_walletrpc_SignTransactionsResponse,
+    responseDeserialize: deserialize_walletrpc_SignTransactionsResponse
   },
   createSignature: {
     path: "/walletrpc.WalletService/CreateSignature",
@@ -2405,7 +2405,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_CreateSignatureRequest,
     requestDeserialize: deserialize_walletrpc_CreateSignatureRequest,
     responseSerialize: serialize_walletrpc_CreateSignatureResponse,
-    responseDeserialize: deserialize_walletrpc_CreateSignatureResponse,
+    responseDeserialize: deserialize_walletrpc_CreateSignatureResponse
   },
   publishTransaction: {
     path: "/walletrpc.WalletService/PublishTransaction",
@@ -2416,7 +2416,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_PublishTransactionRequest,
     requestDeserialize: deserialize_walletrpc_PublishTransactionRequest,
     responseSerialize: serialize_walletrpc_PublishTransactionResponse,
-    responseDeserialize: deserialize_walletrpc_PublishTransactionResponse,
+    responseDeserialize: deserialize_walletrpc_PublishTransactionResponse
   },
   publishUnminedTransactions: {
     path: "/walletrpc.WalletService/PublishUnminedTransactions",
@@ -2427,7 +2427,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_PublishUnminedTransactionsRequest,
     requestDeserialize: deserialize_walletrpc_PublishUnminedTransactionsRequest,
     responseSerialize: serialize_walletrpc_PublishUnminedTransactionsResponse,
-    responseDeserialize: deserialize_walletrpc_PublishUnminedTransactionsResponse,
+    responseDeserialize: deserialize_walletrpc_PublishUnminedTransactionsResponse
   },
   purchaseTickets: {
     path: "/walletrpc.WalletService/PurchaseTickets",
@@ -2438,7 +2438,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_PurchaseTicketsRequest,
     requestDeserialize: deserialize_walletrpc_PurchaseTicketsRequest,
     responseSerialize: serialize_walletrpc_PurchaseTicketsResponse,
-    responseDeserialize: deserialize_walletrpc_PurchaseTicketsResponse,
+    responseDeserialize: deserialize_walletrpc_PurchaseTicketsResponse
   },
   revokeTickets: {
     path: "/walletrpc.WalletService/RevokeTickets",
@@ -2449,7 +2449,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_RevokeTicketsRequest,
     requestDeserialize: deserialize_walletrpc_RevokeTicketsRequest,
     responseSerialize: serialize_walletrpc_RevokeTicketsResponse,
-    responseDeserialize: deserialize_walletrpc_RevokeTicketsResponse,
+    responseDeserialize: deserialize_walletrpc_RevokeTicketsResponse
   },
   loadActiveDataFilters: {
     path: "/walletrpc.WalletService/LoadActiveDataFilters",
@@ -2460,7 +2460,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_LoadActiveDataFiltersRequest,
     requestDeserialize: deserialize_walletrpc_LoadActiveDataFiltersRequest,
     responseSerialize: serialize_walletrpc_LoadActiveDataFiltersResponse,
-    responseDeserialize: deserialize_walletrpc_LoadActiveDataFiltersResponse,
+    responseDeserialize: deserialize_walletrpc_LoadActiveDataFiltersResponse
   },
   signMessage: {
     path: "/walletrpc.WalletService/SignMessage",
@@ -2471,7 +2471,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_SignMessageRequest,
     requestDeserialize: deserialize_walletrpc_SignMessageRequest,
     responseSerialize: serialize_walletrpc_SignMessageResponse,
-    responseDeserialize: deserialize_walletrpc_SignMessageResponse,
+    responseDeserialize: deserialize_walletrpc_SignMessageResponse
   },
   signMessages: {
     path: "/walletrpc.WalletService/SignMessages",
@@ -2482,7 +2482,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_SignMessagesRequest,
     requestDeserialize: deserialize_walletrpc_SignMessagesRequest,
     responseSerialize: serialize_walletrpc_SignMessagesResponse,
-    responseDeserialize: deserialize_walletrpc_SignMessagesResponse,
+    responseDeserialize: deserialize_walletrpc_SignMessagesResponse
   },
   validateAddress: {
     path: "/walletrpc.WalletService/ValidateAddress",
@@ -2493,7 +2493,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_ValidateAddressRequest,
     requestDeserialize: deserialize_walletrpc_ValidateAddressRequest,
     responseSerialize: serialize_walletrpc_ValidateAddressResponse,
-    responseDeserialize: deserialize_walletrpc_ValidateAddressResponse,
+    responseDeserialize: deserialize_walletrpc_ValidateAddressResponse
   },
   committedTickets: {
     path: "/walletrpc.WalletService/CommittedTickets",
@@ -2504,7 +2504,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_CommittedTicketsRequest,
     requestDeserialize: deserialize_walletrpc_CommittedTicketsRequest,
     responseSerialize: serialize_walletrpc_CommittedTicketsResponse,
-    responseDeserialize: deserialize_walletrpc_CommittedTicketsResponse,
+    responseDeserialize: deserialize_walletrpc_CommittedTicketsResponse
   },
   sweepAccount: {
     path: "/walletrpc.WalletService/SweepAccount",
@@ -2515,7 +2515,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_SweepAccountRequest,
     requestDeserialize: deserialize_walletrpc_SweepAccountRequest,
     responseSerialize: serialize_walletrpc_SweepAccountResponse,
-    responseDeserialize: deserialize_walletrpc_SweepAccountResponse,
+    responseDeserialize: deserialize_walletrpc_SweepAccountResponse
   },
   abandonTransaction: {
     path: "/walletrpc.WalletService/AbandonTransaction",
@@ -2526,7 +2526,7 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_AbandonTransactionRequest,
     requestDeserialize: deserialize_walletrpc_AbandonTransactionRequest,
     responseSerialize: serialize_walletrpc_AbandonTransactionResponse,
-    responseDeserialize: deserialize_walletrpc_AbandonTransactionResponse,
+    responseDeserialize: deserialize_walletrpc_AbandonTransactionResponse
   },
   signHashes: {
     path: "/walletrpc.WalletService/SignHashes",
@@ -2537,8 +2537,8 @@ var WalletServiceService = (exports.WalletServiceService = {
     requestSerialize: serialize_walletrpc_SignHashesRequest,
     requestDeserialize: deserialize_walletrpc_SignHashesRequest,
     responseSerialize: serialize_walletrpc_SignHashesResponse,
-    responseDeserialize: deserialize_walletrpc_SignHashesResponse,
-  },
+    responseDeserialize: deserialize_walletrpc_SignHashesResponse
+  }
 });
 
 exports.WalletServiceClient = grpc.makeGenericClientConstructor(
@@ -2554,7 +2554,7 @@ var WalletLoaderServiceService = (exports.WalletLoaderServiceService = {
     requestSerialize: serialize_walletrpc_WalletExistsRequest,
     requestDeserialize: deserialize_walletrpc_WalletExistsRequest,
     responseSerialize: serialize_walletrpc_WalletExistsResponse,
-    responseDeserialize: deserialize_walletrpc_WalletExistsResponse,
+    responseDeserialize: deserialize_walletrpc_WalletExistsResponse
   },
   createWallet: {
     path: "/walletrpc.WalletLoaderService/CreateWallet",
@@ -2565,7 +2565,7 @@ var WalletLoaderServiceService = (exports.WalletLoaderServiceService = {
     requestSerialize: serialize_walletrpc_CreateWalletRequest,
     requestDeserialize: deserialize_walletrpc_CreateWalletRequest,
     responseSerialize: serialize_walletrpc_CreateWalletResponse,
-    responseDeserialize: deserialize_walletrpc_CreateWalletResponse,
+    responseDeserialize: deserialize_walletrpc_CreateWalletResponse
   },
   createWatchingOnlyWallet: {
     path: "/walletrpc.WalletLoaderService/CreateWatchingOnlyWallet",
@@ -2576,7 +2576,7 @@ var WalletLoaderServiceService = (exports.WalletLoaderServiceService = {
     requestSerialize: serialize_walletrpc_CreateWatchingOnlyWalletRequest,
     requestDeserialize: deserialize_walletrpc_CreateWatchingOnlyWalletRequest,
     responseSerialize: serialize_walletrpc_CreateWatchingOnlyWalletResponse,
-    responseDeserialize: deserialize_walletrpc_CreateWatchingOnlyWalletResponse,
+    responseDeserialize: deserialize_walletrpc_CreateWatchingOnlyWalletResponse
   },
   openWallet: {
     path: "/walletrpc.WalletLoaderService/OpenWallet",
@@ -2587,7 +2587,7 @@ var WalletLoaderServiceService = (exports.WalletLoaderServiceService = {
     requestSerialize: serialize_walletrpc_OpenWalletRequest,
     requestDeserialize: deserialize_walletrpc_OpenWalletRequest,
     responseSerialize: serialize_walletrpc_OpenWalletResponse,
-    responseDeserialize: deserialize_walletrpc_OpenWalletResponse,
+    responseDeserialize: deserialize_walletrpc_OpenWalletResponse
   },
   closeWallet: {
     path: "/walletrpc.WalletLoaderService/CloseWallet",
@@ -2598,7 +2598,7 @@ var WalletLoaderServiceService = (exports.WalletLoaderServiceService = {
     requestSerialize: serialize_walletrpc_CloseWalletRequest,
     requestDeserialize: deserialize_walletrpc_CloseWalletRequest,
     responseSerialize: serialize_walletrpc_CloseWalletResponse,
-    responseDeserialize: deserialize_walletrpc_CloseWalletResponse,
+    responseDeserialize: deserialize_walletrpc_CloseWalletResponse
   },
   spvSync: {
     path: "/walletrpc.WalletLoaderService/SpvSync",
@@ -2609,7 +2609,7 @@ var WalletLoaderServiceService = (exports.WalletLoaderServiceService = {
     requestSerialize: serialize_walletrpc_SpvSyncRequest,
     requestDeserialize: deserialize_walletrpc_SpvSyncRequest,
     responseSerialize: serialize_walletrpc_SpvSyncResponse,
-    responseDeserialize: deserialize_walletrpc_SpvSyncResponse,
+    responseDeserialize: deserialize_walletrpc_SpvSyncResponse
   },
   rpcSync: {
     path: "/walletrpc.WalletLoaderService/RpcSync",
@@ -2620,7 +2620,7 @@ var WalletLoaderServiceService = (exports.WalletLoaderServiceService = {
     requestSerialize: serialize_walletrpc_RpcSyncRequest,
     requestDeserialize: deserialize_walletrpc_RpcSyncRequest,
     responseSerialize: serialize_walletrpc_RpcSyncResponse,
-    responseDeserialize: deserialize_walletrpc_RpcSyncResponse,
+    responseDeserialize: deserialize_walletrpc_RpcSyncResponse
   },
   rescanPoint: {
     path: "/walletrpc.WalletLoaderService/RescanPoint",
@@ -2631,8 +2631,8 @@ var WalletLoaderServiceService = (exports.WalletLoaderServiceService = {
     requestSerialize: serialize_walletrpc_RescanPointRequest,
     requestDeserialize: deserialize_walletrpc_RescanPointRequest,
     responseSerialize: serialize_walletrpc_RescanPointResponse,
-    responseDeserialize: deserialize_walletrpc_RescanPointResponse,
-  },
+    responseDeserialize: deserialize_walletrpc_RescanPointResponse
+  }
 });
 
 exports.WalletLoaderServiceClient = grpc.makeGenericClientConstructor(
@@ -2648,8 +2648,8 @@ var AccountMixerServiceService = (exports.AccountMixerServiceService = {
     requestSerialize: serialize_walletrpc_RunAccountMixerRequest,
     requestDeserialize: deserialize_walletrpc_RunAccountMixerRequest,
     responseSerialize: serialize_walletrpc_RunAccountMixerResponse,
-    responseDeserialize: deserialize_walletrpc_RunAccountMixerResponse,
-  },
+    responseDeserialize: deserialize_walletrpc_RunAccountMixerResponse
+  }
 });
 
 exports.AccountMixerServiceClient = grpc.makeGenericClientConstructor(
@@ -2665,8 +2665,8 @@ var TicketBuyerV2ServiceService = (exports.TicketBuyerV2ServiceService = {
     requestSerialize: serialize_walletrpc_RunTicketBuyerRequest,
     requestDeserialize: deserialize_walletrpc_RunTicketBuyerRequest,
     responseSerialize: serialize_walletrpc_RunTicketBuyerResponse,
-    responseDeserialize: deserialize_walletrpc_RunTicketBuyerResponse,
-  },
+    responseDeserialize: deserialize_walletrpc_RunTicketBuyerResponse
+  }
 });
 
 exports.TicketBuyerV2ServiceClient = grpc.makeGenericClientConstructor(
@@ -2682,7 +2682,7 @@ var TicketBuyerServiceService = (exports.TicketBuyerServiceService = {
     requestSerialize: serialize_walletrpc_StartAutoBuyerRequest,
     requestDeserialize: deserialize_walletrpc_StartAutoBuyerRequest,
     responseSerialize: serialize_walletrpc_StartAutoBuyerResponse,
-    responseDeserialize: deserialize_walletrpc_StartAutoBuyerResponse,
+    responseDeserialize: deserialize_walletrpc_StartAutoBuyerResponse
   },
   stopAutoBuyer: {
     path: "/walletrpc.TicketBuyerService/StopAutoBuyer",
@@ -2693,7 +2693,7 @@ var TicketBuyerServiceService = (exports.TicketBuyerServiceService = {
     requestSerialize: serialize_walletrpc_StopAutoBuyerRequest,
     requestDeserialize: deserialize_walletrpc_StopAutoBuyerRequest,
     responseSerialize: serialize_walletrpc_StopAutoBuyerResponse,
-    responseDeserialize: deserialize_walletrpc_StopAutoBuyerResponse,
+    responseDeserialize: deserialize_walletrpc_StopAutoBuyerResponse
   },
   ticketBuyerConfig: {
     path: "/walletrpc.TicketBuyerService/TicketBuyerConfig",
@@ -2704,7 +2704,7 @@ var TicketBuyerServiceService = (exports.TicketBuyerServiceService = {
     requestSerialize: serialize_walletrpc_TicketBuyerConfigRequest,
     requestDeserialize: deserialize_walletrpc_TicketBuyerConfigRequest,
     responseSerialize: serialize_walletrpc_TicketBuyerConfigResponse,
-    responseDeserialize: deserialize_walletrpc_TicketBuyerConfigResponse,
+    responseDeserialize: deserialize_walletrpc_TicketBuyerConfigResponse
   },
   setAccount: {
     path: "/walletrpc.TicketBuyerService/SetAccount",
@@ -2715,7 +2715,7 @@ var TicketBuyerServiceService = (exports.TicketBuyerServiceService = {
     requestSerialize: serialize_walletrpc_SetAccountRequest,
     requestDeserialize: deserialize_walletrpc_SetAccountRequest,
     responseSerialize: serialize_walletrpc_SetAccountResponse,
-    responseDeserialize: deserialize_walletrpc_SetAccountResponse,
+    responseDeserialize: deserialize_walletrpc_SetAccountResponse
   },
   setBalanceToMaintain: {
     path: "/walletrpc.TicketBuyerService/SetBalanceToMaintain",
@@ -2726,7 +2726,7 @@ var TicketBuyerServiceService = (exports.TicketBuyerServiceService = {
     requestSerialize: serialize_walletrpc_SetBalanceToMaintainRequest,
     requestDeserialize: deserialize_walletrpc_SetBalanceToMaintainRequest,
     responseSerialize: serialize_walletrpc_SetBalanceToMaintainResponse,
-    responseDeserialize: deserialize_walletrpc_SetBalanceToMaintainResponse,
+    responseDeserialize: deserialize_walletrpc_SetBalanceToMaintainResponse
   },
   setMaxFee: {
     path: "/walletrpc.TicketBuyerService/SetMaxFee",
@@ -2737,7 +2737,7 @@ var TicketBuyerServiceService = (exports.TicketBuyerServiceService = {
     requestSerialize: serialize_walletrpc_SetMaxFeeRequest,
     requestDeserialize: deserialize_walletrpc_SetMaxFeeRequest,
     responseSerialize: serialize_walletrpc_SetMaxFeeResponse,
-    responseDeserialize: deserialize_walletrpc_SetMaxFeeResponse,
+    responseDeserialize: deserialize_walletrpc_SetMaxFeeResponse
   },
   setMaxPriceRelative: {
     path: "/walletrpc.TicketBuyerService/SetMaxPriceRelative",
@@ -2748,7 +2748,7 @@ var TicketBuyerServiceService = (exports.TicketBuyerServiceService = {
     requestSerialize: serialize_walletrpc_SetMaxPriceRelativeRequest,
     requestDeserialize: deserialize_walletrpc_SetMaxPriceRelativeRequest,
     responseSerialize: serialize_walletrpc_SetMaxPriceRelativeResponse,
-    responseDeserialize: deserialize_walletrpc_SetMaxPriceRelativeResponse,
+    responseDeserialize: deserialize_walletrpc_SetMaxPriceRelativeResponse
   },
   setMaxPriceAbsolute: {
     path: "/walletrpc.TicketBuyerService/SetMaxPriceAbsolute",
@@ -2759,7 +2759,7 @@ var TicketBuyerServiceService = (exports.TicketBuyerServiceService = {
     requestSerialize: serialize_walletrpc_SetMaxPriceAbsoluteRequest,
     requestDeserialize: deserialize_walletrpc_SetMaxPriceAbsoluteRequest,
     responseSerialize: serialize_walletrpc_SetMaxPriceAbsoluteResponse,
-    responseDeserialize: deserialize_walletrpc_SetMaxPriceAbsoluteResponse,
+    responseDeserialize: deserialize_walletrpc_SetMaxPriceAbsoluteResponse
   },
   setVotingAddress: {
     path: "/walletrpc.TicketBuyerService/SetVotingAddress",
@@ -2770,7 +2770,7 @@ var TicketBuyerServiceService = (exports.TicketBuyerServiceService = {
     requestSerialize: serialize_walletrpc_SetVotingAddressRequest,
     requestDeserialize: deserialize_walletrpc_SetVotingAddressRequest,
     responseSerialize: serialize_walletrpc_SetVotingAddressResponse,
-    responseDeserialize: deserialize_walletrpc_SetVotingAddressResponse,
+    responseDeserialize: deserialize_walletrpc_SetVotingAddressResponse
   },
   setPoolAddress: {
     path: "/walletrpc.TicketBuyerService/SetPoolAddress",
@@ -2781,7 +2781,7 @@ var TicketBuyerServiceService = (exports.TicketBuyerServiceService = {
     requestSerialize: serialize_walletrpc_SetPoolAddressRequest,
     requestDeserialize: deserialize_walletrpc_SetPoolAddressRequest,
     responseSerialize: serialize_walletrpc_SetPoolAddressResponse,
-    responseDeserialize: deserialize_walletrpc_SetPoolAddressResponse,
+    responseDeserialize: deserialize_walletrpc_SetPoolAddressResponse
   },
   setPoolFees: {
     path: "/walletrpc.TicketBuyerService/SetPoolFees",
@@ -2792,7 +2792,7 @@ var TicketBuyerServiceService = (exports.TicketBuyerServiceService = {
     requestSerialize: serialize_walletrpc_SetPoolFeesRequest,
     requestDeserialize: deserialize_walletrpc_SetPoolFeesRequest,
     responseSerialize: serialize_walletrpc_SetPoolFeesResponse,
-    responseDeserialize: deserialize_walletrpc_SetPoolFeesResponse,
+    responseDeserialize: deserialize_walletrpc_SetPoolFeesResponse
   },
   setMaxPerBlock: {
     path: "/walletrpc.TicketBuyerService/SetMaxPerBlock",
@@ -2803,8 +2803,8 @@ var TicketBuyerServiceService = (exports.TicketBuyerServiceService = {
     requestSerialize: serialize_walletrpc_SetMaxPerBlockRequest,
     requestDeserialize: deserialize_walletrpc_SetMaxPerBlockRequest,
     responseSerialize: serialize_walletrpc_SetMaxPerBlockResponse,
-    responseDeserialize: deserialize_walletrpc_SetMaxPerBlockResponse,
-  },
+    responseDeserialize: deserialize_walletrpc_SetMaxPerBlockResponse
+  }
 });
 
 exports.TicketBuyerServiceClient = grpc.makeGenericClientConstructor(
@@ -2820,7 +2820,7 @@ var SeedServiceService = (exports.SeedServiceService = {
     requestSerialize: serialize_walletrpc_GenerateRandomSeedRequest,
     requestDeserialize: deserialize_walletrpc_GenerateRandomSeedRequest,
     responseSerialize: serialize_walletrpc_GenerateRandomSeedResponse,
-    responseDeserialize: deserialize_walletrpc_GenerateRandomSeedResponse,
+    responseDeserialize: deserialize_walletrpc_GenerateRandomSeedResponse
   },
   decodeSeed: {
     path: "/walletrpc.SeedService/DecodeSeed",
@@ -2831,8 +2831,8 @@ var SeedServiceService = (exports.SeedServiceService = {
     requestSerialize: serialize_walletrpc_DecodeSeedRequest,
     requestDeserialize: deserialize_walletrpc_DecodeSeedRequest,
     responseSerialize: serialize_walletrpc_DecodeSeedResponse,
-    responseDeserialize: deserialize_walletrpc_DecodeSeedResponse,
-  },
+    responseDeserialize: deserialize_walletrpc_DecodeSeedResponse
+  }
 });
 
 exports.SeedServiceClient = grpc.makeGenericClientConstructor(
@@ -2848,8 +2848,8 @@ var AgendaServiceService = (exports.AgendaServiceService = {
     requestSerialize: serialize_walletrpc_AgendasRequest,
     requestDeserialize: deserialize_walletrpc_AgendasRequest,
     responseSerialize: serialize_walletrpc_AgendasResponse,
-    responseDeserialize: deserialize_walletrpc_AgendasResponse,
-  },
+    responseDeserialize: deserialize_walletrpc_AgendasResponse
+  }
 });
 
 exports.AgendaServiceClient = grpc.makeGenericClientConstructor(
@@ -2865,7 +2865,7 @@ var VotingServiceService = (exports.VotingServiceService = {
     requestSerialize: serialize_walletrpc_VoteChoicesRequest,
     requestDeserialize: deserialize_walletrpc_VoteChoicesRequest,
     responseSerialize: serialize_walletrpc_VoteChoicesResponse,
-    responseDeserialize: deserialize_walletrpc_VoteChoicesResponse,
+    responseDeserialize: deserialize_walletrpc_VoteChoicesResponse
   },
   setVoteChoices: {
     path: "/walletrpc.VotingService/SetVoteChoices",
@@ -2876,8 +2876,8 @@ var VotingServiceService = (exports.VotingServiceService = {
     requestSerialize: serialize_walletrpc_SetVoteChoicesRequest,
     requestDeserialize: deserialize_walletrpc_SetVoteChoicesRequest,
     responseSerialize: serialize_walletrpc_SetVoteChoicesResponse,
-    responseDeserialize: deserialize_walletrpc_SetVoteChoicesResponse,
-  },
+    responseDeserialize: deserialize_walletrpc_SetVoteChoicesResponse
+  }
 });
 
 exports.VotingServiceClient = grpc.makeGenericClientConstructor(
@@ -2893,8 +2893,8 @@ var MessageVerificationServiceService = (exports.MessageVerificationServiceServi
     requestSerialize: serialize_walletrpc_VerifyMessageRequest,
     requestDeserialize: deserialize_walletrpc_VerifyMessageRequest,
     responseSerialize: serialize_walletrpc_VerifyMessageResponse,
-    responseDeserialize: deserialize_walletrpc_VerifyMessageResponse,
-  },
+    responseDeserialize: deserialize_walletrpc_VerifyMessageResponse
+  }
 });
 
 exports.MessageVerificationServiceClient = grpc.makeGenericClientConstructor(
@@ -2910,8 +2910,8 @@ var DecodeMessageServiceService = (exports.DecodeMessageServiceService = {
     requestSerialize: serialize_walletrpc_DecodeRawTransactionRequest,
     requestDeserialize: deserialize_walletrpc_DecodeRawTransactionRequest,
     responseSerialize: serialize_walletrpc_DecodeRawTransactionResponse,
-    responseDeserialize: deserialize_walletrpc_DecodeRawTransactionResponse,
-  },
+    responseDeserialize: deserialize_walletrpc_DecodeRawTransactionResponse
+  }
 });
 
 exports.DecodeMessageServiceClient = grpc.makeGenericClientConstructor(

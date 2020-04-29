@@ -6,7 +6,7 @@ import {
   ConfirmSeedMsg,
   BackBtnMsg,
   GoBackMsg,
-  CreateWalletMsg,
+  CreateWalletMsg
 } from "../../messages";
 import "style/CreateWalletForm.less";
 import { WORDS, HEX } from "constants";
@@ -27,7 +27,7 @@ const ExistingSeedForm = ({
   onCreateWallet,
   sendBack,
   setPassPhrase,
-  error,
+  error
 }) => (
   <>
     <div className="is-row content-title-wrapper">

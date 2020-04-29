@@ -1,29 +1,29 @@
 export const yAxisStyle = {
   fontFamily: "Source Sans Pro",
-  fontSize: 10,
+  fontSize: 10
 };
 
 export const xAxisStyle = {
   fontFamily: "Source Sans Pro",
-  fontSize: 10,
+  fontSize: 10
 };
 
 export const homeChartSize = {
   width: 450,
-  height: 250,
+  height: 250
 };
 
 export const myTicketsChartSize = {
   width: 400,
-  height: 250,
+  height: 250
 };
 
 export const padding = {
-  bottom: 16,
+  bottom: 16
 };
 
 export const hoverFill = {
-  fill: "#e9f8fe",
+  fill: "#e9f8fe"
 };
 
 export const radiusFull = [10, 10, 10, 10];

@@ -13,7 +13,7 @@ class Statistics extends React.Component {
       props.getMyTicketsStats();
     }
     this.state = {
-      hasStats: props.voteTimeStats && !props.getMyTicketsStatsRequest,
+      hasStats: props.voteTimeStats && !props.getMyTicketsStatsRequest
     };
   }
 
@@ -30,8 +30,7 @@ class Statistics extends React.Component {
 
   componentDidMount() {
     this.setState({
-      hasStats:
-        this.props.voteTimeStats && !this.props.getMyTicketsStatsRequest,
+      hasStats: this.props.voteTimeStats && !this.props.getMyTicketsStatsRequest
     });
   }
 
@@ -40,7 +39,7 @@ class Statistics extends React.Component {
       <StatisticsPage
         {...{
           ...this.props,
-          ...this.state,
+          ...this.state
         }}
       />
     );

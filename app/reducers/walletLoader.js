@@ -32,7 +32,7 @@ import {
   SYNC_RESCAN_PROGRESS,
   SYNC_RESCAN_FINISHED,
   SYNC_CANCEL,
-  WALLET_SELECTED,
+  WALLET_SELECTED
 } from "actions/WalletLoaderActions";
 import { WALLETCREATED } from "actions/DaemonActions";
 import { CREATEMIXERACCOUNTS_SUCCESS } from "actions/AccountMixerActions";
@@ -48,21 +48,21 @@ export default function walletLoader(state = {}, action) {
         ...state,
         getLoaderError: String(action.error),
         getLoaderRequestAttempt: false,
-        loader: null,
+        loader: null
       };
     case LOADER_SUCCESS:
       return {
         ...state,
         getLoaderError: null,
         loader: action.loader,
-        getLoaderRequestAttempt: false,
+        getLoaderRequestAttempt: false
       };
     case WALLETCREATED:
       return {
         ...state,
         createWalletExisting: !action.createNewWallet,
         isWatchingOnly: action.isWatchingOnly,
-        isTrezor: action.isTrezor,
+        isTrezor: action.isTrezor
       };
     case WALLET_SELECTED:
       return { ...state, selectedWallet: action.selectedWallet };
@@ -72,7 +72,7 @@ export default function walletLoader(state = {}, action) {
       return {
         ...state,
         walletCloseError: String(action.error),
-        walletCloseRequestAttempt: false,
+        walletCloseRequestAttempt: false
       };
     case CLOSEWALLET_SUCCESS:
       return {
@@ -89,7 +89,7 @@ export default function walletLoader(state = {}, action) {
         syncAttemptRequest: false,
         syncError: null,
         synced: false,
-        syncLastFetchedHeaderTime: null,
+        syncLastFetchedHeaderTime: null
       };
     case UPDATEDISCOVERACCOUNTS:
       return { ...state, discoverAccountsComplete: action.complete };
@@ -102,7 +102,7 @@ export default function walletLoader(state = {}, action) {
         changeAccount: action.changeAccount,
         csppServer: action.csppServer,
         csppPort: action.csppPort,
-        mixedAccountBranch: action.mixedAccountBranch,
+        mixedAccountBranch: action.mixedAccountBranch
       };
     case GETWALLETSEEDSVC_ATTEMPT:
       return { ...state, seedService: null };
@@ -113,21 +113,21 @@ export default function walletLoader(state = {}, action) {
         ...state,
         rescanPointAttemptRequest: true,
         rescanPointError: null,
-        rescanPointResponse: null,
+        rescanPointResponse: null
       };
     case RESCANPOINT_FAILED:
       return {
         ...state,
         rescanPointAttemptRequest: false,
         rescanPointError: action.error,
-        rescanPointResponse: null,
+        rescanPointResponse: null
       };
     case RESCANPOINT_SUCCESS:
       return {
         ...state,
         rescanPointAttemptRequest: false,
         rescanPointError: null,
-        rescanPointResponse: action.response,
+        rescanPointResponse: action.response
       };
     case SYNC_INPUT:
       return { ...state, syncInput: true };
@@ -137,7 +137,7 @@ export default function walletLoader(state = {}, action) {
         syncInput: false,
         syncAttemptRequest: true,
         syncError: null,
-        synced: false,
+        synced: false
       };
     case SYNC_FAILED:
       return {
@@ -145,7 +145,7 @@ export default function walletLoader(state = {}, action) {
         syncInput: false,
         syncAttemptRequest: false,
         synced: false,
-        syncCall: null,
+        syncCall: null
       };
     case SYNC_UPDATE:
       return { ...state, syncError: null, syncCall: action.syncCall };
@@ -156,7 +156,7 @@ export default function walletLoader(state = {}, action) {
         ...state,
         syncAttemptRequest: false,
         syncError: null,
-        synced: false,
+        synced: false
       };
     case SYNC_SYNCED:
       return { ...state, synced: true };
@@ -172,7 +172,7 @@ export default function walletLoader(state = {}, action) {
       return {
         ...state,
         syncFetchMissingCfiltersStart: action.cFiltersStart,
-        syncFetchMissingCfiltersEnd: action.cFiltersEnd,
+        syncFetchMissingCfiltersEnd: action.cFiltersEnd
       };
     case SYNC_FETCHED_MISSING_CFILTERS_FINISHED:
       return { ...state, syncFetchMissingCfiltersAttempt: false };
@@ -180,19 +180,19 @@ export default function walletLoader(state = {}, action) {
       return {
         ...state,
         syncFetchTimeStart: action.fetchTimeStart,
-        syncFetchHeadersAttempt: true,
+        syncFetchHeadersAttempt: true
       };
     case SYNC_FETCHED_HEADERS_PROGRESS:
       return {
         ...state,
         syncFetchHeadersCount: action.fetchHeadersCount,
-        syncLastFetchedHeaderTime: action.lastFetchedHeaderTime,
+        syncLastFetchedHeaderTime: action.lastFetchedHeaderTime
       };
     case SYNC_FETCHED_HEADERS_FINISHED:
       return {
         ...state,
         syncFetchHeadersAttempt: false,
-        syncFetchHeadersComplete: true,
+        syncFetchHeadersComplete: true
       };
     case SYNC_DISCOVER_ADDRESSES_STARTED:
       return { ...state, syncDiscoverAddressesAttempt: true };
@@ -204,7 +204,7 @@ export default function walletLoader(state = {}, action) {
       return {
         ...state,
         syncRescanProgress: action.rescannedThrough,
-        rescanResponse: action.rescanResponse,
+        rescanResponse: action.rescanResponse
       };
     case SYNC_RESCAN_FINISHED:
       return { ...state, syncRescanAttempt: false };
@@ -215,7 +215,7 @@ export default function walletLoader(state = {}, action) {
         changeAccount: action.changeAccount,
         csppServer: action.csppServer,
         csppPort: action.csppPort,
-        mixedAccountBranch: action.mixedAccountBranch,
+        mixedAccountBranch: action.mixedAccountBranch
       };
     default:
       return state;

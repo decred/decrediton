@@ -13,8 +13,7 @@ const mapStateToProps = selectorMap({
   performingOperation: sel.trezorPerformingOperation,
   isGetStarted: sel.isGetStarted,
   deviceList: sel.trezorDeviceList,
-  walletCreationMasterPubkeyAttempt:
-    sel.trezorWalletCreationMasterPubkeyAttempt,
+  walletCreationMasterPubkeyAttempt: sel.trezorWalletCreationMasterPubkeyAttempt
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -35,7 +34,7 @@ const mapDispatchToProps = (dispatch) =>
       updateFirmware: trza.updateFirmware,
       enableTrezor: trza.enableTrezor,
       reloadDeviceList: trza.reloadTrezorDeviceList,
-      clearDeviceSession: trza.clearDeviceSession,
+      clearDeviceSession: trza.clearDeviceSession
     },
     dispatch
   );

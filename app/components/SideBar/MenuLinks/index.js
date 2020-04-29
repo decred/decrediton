@@ -9,40 +9,40 @@ const linkList = [
   {
     path: "/home",
     link: <T id="sidebar.link.home" m="Overview" />,
-    icon: "overview",
+    icon: "overview"
   },
   {
     path: "/transactions",
     link: <T id="sidebar.link.transactions" m="Transactions" />,
-    icon: "transactions",
+    icon: "transactions"
   },
   {
     path: "/governance",
     link: <T id="sidebar.link.governance" m="Governance" />,
     icon: "governance",
-    notifProp: "newProposalsStartedVoting",
+    notifProp: "newProposalsStartedVoting"
   },
   {
     path: "/tickets",
     link: <T id="sidebar.link.tickets" m="Tickets" />,
-    icon: "tickets",
+    icon: "tickets"
   },
   {
     path: "/accounts",
     link: <T id="sidebar.link.accounts" m="Accounts" />,
-    icon: "accounts",
+    icon: "accounts"
   },
   {
     path: "/security",
     link: <T id="activesidebar.link.security" m="Security" />,
-    icon: "securitycntr",
+    icon: "securitycntr"
   },
   { path: "/help", link: <T id="sidebar.link.help" m="Help" />, icon: "help" },
   {
     path: "/settings",
     link: <T id="sidebar.link.settings" m="Settings" />,
-    icon: "settings",
-  },
+    icon: "settings"
+  }
 ];
 
 // number of link in a row when sidebar is at bottom.
@@ -61,7 +61,7 @@ class MenuLinks extends React.Component {
       this.links.push({
         path: "/trezor",
         link: <T id="sidebar.link.trezor" m="Trezor Setup" />,
-        icon: "trezor",
+        icon: "trezor"
       });
     }
 
@@ -69,7 +69,7 @@ class MenuLinks extends React.Component {
       this.links.push({
         path: "/ln",
         link: <T id="sidebar.link.ln" m="Lightning Network" />,
-        icon: "ln",
+        icon: "ln"
       });
     }
   }

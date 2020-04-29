@@ -10,13 +10,13 @@ import { spring, TransitionMotion } from "react-motion";
 import {
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_RECEIVED,
-  TRANSACTION_DIR_TRANSFERRED,
+  TRANSACTION_DIR_TRANSFERRED
 } from "wallet/service";
 import "style/Snackbar.less";
 
 const propTypes = {
   messages: PropTypes.array.isRequired,
-  onDismissAllMessages: PropTypes.func.isRequired,
+  onDismissAllMessages: PropTypes.func.isRequired
 };
 
 const snackbarClasses = ({ type }) =>
@@ -29,7 +29,7 @@ const snackbarClasses = ({ type }) =>
     [TRANSACTION_DIR_TRANSFERRED]: "snackbar snackbar-transfer",
     Warning: "snackbar snackbar-warning",
     Error: "snackbar snackbar-error",
-    Success: "snackbar snackbar-success",
+    Success: "snackbar snackbar-success"
   }[type] || "snackbar");
 
 @autobind
@@ -39,7 +39,7 @@ class Snackbar extends React.Component {
     this.hideTimer = null;
     this.state = {
       messages: new Array(),
-      progress: 0,
+      progress: 0
     };
   }
 
@@ -96,8 +96,8 @@ class Snackbar extends React.Component {
   getStaticNotification() {
     const { messages, progress } = this.state;
     const { onDismissMessage, clearHideTimer, enableHideTimer } = this;
-    var notifications = new Array();
-    for (var i = 0; i < messages.length; i++) {
+    const notifications = new Array();
+    for (let i = 0; i < messages.length; i++) {
       const message = messages[i];
       const notification = (
         <div
@@ -111,7 +111,7 @@ class Snackbar extends React.Component {
               topNotification: i === 0,
               progress,
               onDismissMessage,
-              ...message,
+              ...message
             }}
           />
         </div>
@@ -146,13 +146,13 @@ class Snackbar extends React.Component {
       clearHideTimer,
       enableHideTimer,
       notifWillEnter,
-      animatedNotifRef,
+      animatedNotifRef
     } = this;
 
     const styles = [];
 
     let totalHeight = 0;
-    for (var i = messages.length - 1; i >= 0; i--) {
+    for (let i = messages.length - 1; i >= 0; i--) {
       styles.unshift({
         key: messages[i].key,
         data: messages[i],
@@ -160,8 +160,8 @@ class Snackbar extends React.Component {
           bottom: spring(
             20 + (messages.length - i - 1) * 20 + totalHeight,
             theme("springs.tab")
-          ),
-        },
+          )
+        }
       });
       totalHeight += messages[i].height || 64;
     }
@@ -184,7 +184,7 @@ class Snackbar extends React.Component {
                     topNotification: i === 0,
                     progress,
                     onDismissMessage,
-                    ...s.data,
+                    ...s.data
                   }}
                 />
               </div>

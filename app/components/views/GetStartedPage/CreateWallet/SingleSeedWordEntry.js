@@ -57,7 +57,7 @@ class SingleSeedWordEntry extends React.Component {
       (i) => i.name.toLowerCase().substr(0, input.length) === input
     );
     callback(null, {
-      options: options.slice(0, 5),
+      options: options.slice(0, 5)
     });
   }
 

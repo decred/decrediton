@@ -5,7 +5,7 @@ import {
   openWallet,
   closeWallet,
   getStakePoolInfo,
-  rescanPoint,
+  rescanPoint
 } from "wallet";
 import * as wallet from "wallet";
 import { rescanCancel, ticketBuyerCancel } from "./ControlActions";
@@ -13,7 +13,7 @@ import {
   getWalletServiceAttempt,
   startWalletServices,
   getBestBlockHeightAttempt,
-  cancelPingAttempt,
+  cancelPingAttempt
 } from "./ClientActions";
 import { WALLETREMOVED_FAILED } from "./DaemonActions";
 import { getWalletCfg, getDcrdCert } from "config";
@@ -22,7 +22,7 @@ import { isTestNet } from "selectors";
 import {
   SpvSyncRequest,
   SyncNotificationType,
-  RpcSyncRequest,
+  RpcSyncRequest
 } from "../middleware/walletrpc/api_pb";
 import { push as pushHistory } from "connected-react-router";
 import { stopNotifcations } from "./NotificationActions";
@@ -43,16 +43,16 @@ export const loaderRequest = () => (dispatch, getState) =>
   new Promise((resolve, reject) => {
     const getLoaderAsync = async () => {
       const {
-        grpc: { address, port },
+        grpc: { address, port }
       } = getState();
       const {
-        daemon: { walletName },
+        daemon: { walletName }
       } = getState();
       const request = {
         isTestNet: isTestNet(getState()),
         walletName,
         address,
-        port,
+        port
       };
       dispatch({ request, type: LOADER_ATTEMPT });
       try {
@@ -76,10 +76,10 @@ export const GETWALLETSEEDSVC_SUCCESS = "GETWALLETSEEDSVC_SUCCESS";
 
 export const getWalletSeedService = () => (dispatch, getState) => {
   const {
-    grpc: { address, port },
+    grpc: { address, port }
   } = getState();
   const {
-    daemon: { walletName },
+    daemon: { walletName }
   } = getState();
   dispatch({ type: GETWALLETSEEDSVC_ATTEMPT });
   return wallet
@@ -97,7 +97,7 @@ export const CREATEWALLET_GOBACK = "CREATEWALLET_GOBACK";
 // but the user has given up.
 export const cancelCreateWallet = () => async (dispatch, getState) => {
   const {
-    daemon: { walletName },
+    daemon: { walletName }
   } = getState();
   const { currentSettings } = getState().settings;
   const network = currentSettings.network;
@@ -124,7 +124,7 @@ export const createWalletRequest = (pubPass, privPass, seed, isNew) => (
     return createWallet(getState().walletLoader.loader, pubPass, privPass, seed)
       .then(() => {
         const {
-          daemon: { walletName },
+          daemon: { walletName }
         } = getState();
         const config = getWalletCfg(isTestNet(getState()), walletName);
         config.delete("discoveraccounts");
@@ -159,7 +159,7 @@ export const createWatchOnlyWalletRequest = (extendedPubKey, pubPass = "") => (
       )
       .then(() => {
         const {
-          daemon: { walletName },
+          daemon: { walletName }
         } = getState();
         const config = getWalletCfg(isTestNet(getState()), walletName);
         config.set("iswatchonly", true);
@@ -193,7 +193,7 @@ export const openWalletAttempt = (pubPass, retryAttempt) => (
         wallet.setIsWatchingOnly(response.getWatchingOnly());
         dispatch({
           isWatchingOnly: response.getWatchingOnly(),
-          type: OPENWALLET_SUCCESS,
+          type: OPENWALLET_SUCCESS
         });
         resolve(true);
       })
@@ -268,13 +268,13 @@ export const startRpcRequestFunc = (privPass, isRetry) => (
   }
   const {
     daemon: { walletName },
-    walletLoader: { discoverAccountsComplete },
+    walletLoader: { discoverAccountsComplete }
   } = getState();
 
   const credentials = ipcRenderer.sendSync("get-dcrd-rpc-credentials");
   const { rpc_user, rpc_cert, rpc_pass, rpc_host, rpc_port } = credentials;
 
-  var request = new RpcSyncRequest();
+  const request = new RpcSyncRequest();
   const cert = getDcrdCert(rpc_cert);
   request.setNetworkAddress(rpc_host + ":" + rpc_port);
   request.setUsername(rpc_user);
@@ -306,7 +306,7 @@ export const startRpcRequestFunc = (privPass, isRetry) => (
             if (rpcRetryAttempts < MAX_RPC_RETRIES) {
               dispatch({
                 rpcRetryAttempts: rpcRetryAttempts + 1,
-                type: STARTRPC_RETRY,
+                type: STARTRPC_RETRY
               });
               setTimeout(
                 () => dispatch(startRpcRequestFunc(isRetry, privPass)),
@@ -318,11 +318,10 @@ export const startRpcRequestFunc = (privPass, isRetry) => (
                   isTestNet(getState()),
                   walletName
                 )} and try again`,
-                type: STARTRPC_FAILED,
+                type: STARTRPC_FAILED
               });
             }
-          } else {
-            if (
+          } else if (
               status.indexOf("invalid passphrase") > 0 ||
               status.indexOf("Stream removed")
             ) {
@@ -331,7 +330,6 @@ export const startRpcRequestFunc = (privPass, isRetry) => (
             } else {
               dispatch(startRpcRequestFunc(true, privPass));
             }
-          }
         }
       });
     }, 500);
@@ -365,18 +363,18 @@ export const CLEARSTAKEPOOLCONFIG = "CLEARSTAKEPOOLCONFIG";
 export function clearStakePoolConfigNewWallet() {
   return (dispatch, getState) => {
     const {
-      daemon: { walletName },
+      daemon: { walletName }
     } = getState();
-    let config = getWalletCfg(isTestNet(getState()), walletName);
+    const config = getWalletCfg(isTestNet(getState()), walletName);
     config.delete("stakepools");
 
     getStakePoolInfo().then((foundStakePoolConfigs) => {
       if (foundStakePoolConfigs) {
-        let config = getWalletCfg(isTestNet(getState()), walletName);
+        const config = getWalletCfg(isTestNet(getState()), walletName);
         config.set("stakepools", foundStakePoolConfigs);
         dispatch({
           currentStakePoolConfig: foundStakePoolConfigs,
-          type: CLEARSTAKEPOOLCONFIG,
+          type: CLEARSTAKEPOOLCONFIG
         });
       }
     });
@@ -461,8 +459,8 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
   const { discoverAccountsComplete } = getState().walletLoader;
   const { currentSettings } = getState().settings;
   const spvConnect = currentSettings.spvConnect;
-  var request = new SpvSyncRequest();
-  for (var i = 0; spvConnect && i < spvConnect.length; i++) {
+  const request = new SpvSyncRequest();
+  for (let i = 0; spvConnect && i < spvConnect.length; i++) {
     request.addSpvConnect(spvConnect[i]);
   }
   if (!discoverAccountsComplete && privPass) {
@@ -515,14 +513,14 @@ const syncConsumer = (response) => (dispatch, getState) => {
     case SyncNotificationType.PEER_CONNECTED: {
       dispatch({
         peerCount: response.getPeerInformation().getPeerCount(),
-        type: SYNC_PEER_CONNECTED,
+        type: SYNC_PEER_CONNECTED
       });
       break;
     }
     case SyncNotificationType.PEER_DISCONNECTED: {
       dispatch({
         peerCount: response.getPeerInformation().getPeerCount(),
-        type: SYNC_PEER_DISCONNECTED,
+        type: SYNC_PEER_DISCONNECTED
       });
       break;
     }
@@ -540,7 +538,7 @@ const syncConsumer = (response) => (dispatch, getState) => {
       dispatch({
         cFiltersStart,
         cFiltersEnd,
-        type: SYNC_FETCHED_MISSING_CFILTERS_PROGRESS,
+        type: SYNC_FETCHED_MISSING_CFILTERS_PROGRESS
       });
       break;
     }
@@ -564,7 +562,7 @@ const syncConsumer = (response) => (dispatch, getState) => {
       dispatch({
         fetchHeadersCount,
         lastFetchedHeaderTime,
-        type: SYNC_FETCHED_HEADERS_PROGRESS,
+        type: SYNC_FETCHED_HEADERS_PROGRESS
       });
       break;
     }
@@ -580,7 +578,7 @@ const syncConsumer = (response) => (dispatch, getState) => {
       dispatch({ type: SYNC_DISCOVER_ADDRESSES_FINISHED });
       if (!discoverAccountsComplete) {
         const {
-          daemon: { walletName },
+          daemon: { walletName }
         } = getState();
         const config = getWalletCfg(isTestNet(getState()), walletName);
         config.delete("discoveraccounts");
@@ -597,7 +595,7 @@ const syncConsumer = (response) => (dispatch, getState) => {
     case SyncNotificationType.RESCAN_PROGRESS: {
       dispatch({
         type: RESCAN_PROGRESS,
-        rescanResponse: response.getRescanProgress(),
+        rescanResponse: response.getRescanProgress()
       });
       break;
     }
@@ -628,10 +626,10 @@ export const SET_POLITEIA_LAST_ACCESS_SUCCESS =
 
 export const setLastPoliteiaAccessTime = () => (dispatch, getState) => {
   const {
-    daemon: { walletName },
+    daemon: { walletName }
   } = getState();
   const {
-    grpc: { currentBlockHeight },
+    grpc: { currentBlockHeight }
   } = getState();
   const config = getWalletCfg(isTestNet(getState()), walletName);
   // time in seconds as politeia uses its proposal time in seconds
@@ -641,6 +639,6 @@ export const setLastPoliteiaAccessTime = () => (dispatch, getState) => {
   dispatch({
     type: SET_POLITEIA_LAST_ACCESS_SUCCESS,
     currentBlockHeight,
-    timestamp,
+    timestamp
   });
 };

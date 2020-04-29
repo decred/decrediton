@@ -9,7 +9,7 @@ const RescanProgress = ({
   rescanCurrentBlock,
   rescanPercentFinished,
   rescanRequest,
-  rescanCancel,
+  rescanCancel
 }) => (
   <div className="rescan-progress-area">
     <div className="rescan-progress-indicator">
@@ -39,7 +39,7 @@ const RescanProgress = ({
               values={{ progress: rescanPercentFinished / 100 }}
             />
           </span>
-        ),
+        )
       }}
     />
     <div className="rescan-cancel-button-area">

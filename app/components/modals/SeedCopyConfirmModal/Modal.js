@@ -8,7 +8,7 @@ const propTypes = {
   show: PropTypes.bool.isRequired,
   onCancelModal: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  copyConfirmationPhrase: PropTypes.string.isRequired,
+  copyConfirmationPhrase: PropTypes.string.isRequired
 };
 
 const Modal = ({
@@ -17,7 +17,7 @@ const Modal = ({
   onSubmit,
   copyConfirmationPhrase,
   typedConfirmationPhrase,
-  onTypedConfirmationPhraseChanged,
+  onTypedConfirmationPhraseChanged
 }) => (
   <DefaultModal className="confirm-seed-copy-modal" {...{ show }}>
     <div className="title-warning-copy-modal">
@@ -34,7 +34,7 @@ const Modal = ({
               <span className="mono confirm-seed-copy-phrase">
                 '{copyConfirmationPhrase}'
               </span>
-            ),
+            )
           }}
         />
       </div>

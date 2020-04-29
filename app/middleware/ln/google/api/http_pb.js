@@ -82,7 +82,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           msg,
           2,
           false
-        ),
+        )
       };
 
     if (includeInstance) {
@@ -278,7 +278,7 @@ proto.google.api.HttpRule.PatternCase = {
   POST: 4,
   DELETE: 5,
   PATCH: 6,
-  CUSTOM: 8,
+  CUSTOM: 8
 };
 
 /**
@@ -335,7 +335,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           msg.getAdditionalBindingsList(),
           proto.google.api.HttpRule.toObject,
           includeInstance
-        ),
+        )
       };
 
     if (includeInstance) {
@@ -839,7 +839,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         kind: jspb.Message.getFieldWithDefault(msg, 1, ""),
-        path: jspb.Message.getFieldWithDefault(msg, 2, ""),
+        path: jspb.Message.getFieldWithDefault(msg, 2, "")
       };
 
     if (includeInstance) {

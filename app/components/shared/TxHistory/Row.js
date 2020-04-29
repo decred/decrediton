@@ -10,7 +10,7 @@ const Row = ({ pending, onClick, className, children, overview }) => {
     <div
       className={[
         overview ? "tx-overview-row" : "tx-history-row is-row",
-        overviewTxIsPending,
+        overviewTxIsPending
       ].join(" ")}>
       <div className={["tx-info", className].join(" ")} {...{ onClick }}>
         {children}

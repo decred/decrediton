@@ -33,7 +33,7 @@ class ConnectPage extends React.Component {
       launching: this.props.connectAttempt || this.props.startAttempt,
       autopilotEnabled: false,
       account: this.props.defaultAccount,
-      accountOption: NEW_ACCOUNT,
+      accountOption: NEW_ACCOUNT
     };
   }
 
@@ -93,9 +93,9 @@ class ConnectPage extends React.Component {
         key: "output_0",
         style: {
           height: spring(140, { stiffness: 100, damping: 14 }),
-          opacity: spring(1, { stiffness: 100, damping: 20 }),
-        },
-      },
+          opacity: spring(1, { stiffness: 100, damping: 20 })
+        }
+      }
     ];
   }
 
@@ -106,9 +106,9 @@ class ConnectPage extends React.Component {
         key: "output_0",
         style: {
           height: spring(0, { stiffness: 100, damping: 14 }),
-          opacity: spring(0, { stiffness: 100, damping: 20 }),
-        },
-      },
+          opacity: spring(0, { stiffness: 100, damping: 20 })
+        }
+      }
     ];
   }
 
@@ -116,7 +116,7 @@ class ConnectPage extends React.Component {
     const {
       onAccountOptionClick,
       getNullStyles,
-      getAccountsListComponent,
+      getAccountsListComponent
     } = this;
     const { accountOption } = this.state;
 
@@ -140,7 +140,7 @@ class ConnectPage extends React.Component {
                 accountOption === NEW_ACCOUNT
                   ? getNullStyles()
                   : getAccountsListComponent(),
-              wrapperComponent,
+              wrapperComponent
             }}
           />
         </div>

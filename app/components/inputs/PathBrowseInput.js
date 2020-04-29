@@ -12,12 +12,12 @@ import { defineMessages, injectIntl } from "react-intl";
 // of PathBrowseInput
 export const FileBrowserFilters = {
   csv: { key: "csv", extensions: ["csv"] },
-  all: { key: "all", extensions: ["*"] },
+  all: { key: "all", extensions: ["*"] }
 };
 
 const FileBrowserFilterNames = defineMessages({
   csv: { id: "fileBrowserTypes.csv.name", defaultMessage: "CSV Files" },
-  all: { id: "fileBrowserTypes.all.name", defaultMessage: "All Files" },
+  all: { id: "fileBrowserTypes.all.name", defaultMessage: "All Files" }
 });
 
 @autobind
@@ -30,9 +30,9 @@ class PathBrowseInput extends React.Component {
   }
 
   componentDidMount() {
-    let self = this;
-    let pathListener = function (event, data) {
-      let path = isArray(data) ? data[0] : data;
+    const self = this;
+    const pathListener = function (event, data) {
+      const path = isArray(data) ? data[0] : data;
       self.setState({ path });
       self.props.onChange(path);
     };
@@ -53,9 +53,9 @@ class PathBrowseInput extends React.Component {
     const f = this.props.save ? dialog.showSaveDialog : dialog.showOpenDialog;
     const opts = {
       properties: [
-        this.props.type === "directory" ? "openDirectory" : "openFile",
+        this.props.type === "directory" ? "openDirectory" : "openFile"
       ],
-      filters: filters,
+      filters: filters
     };
     f(mainWindow, opts, this.directorySelectorCallback);
   }

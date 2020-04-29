@@ -14,7 +14,7 @@ import "style/HomePage.less";
 const tabMessages = [
   <T id="home.tab.balance" m="Balance" />,
   <T id="home.tab.tickets" m="Tickets" />,
-  <T id="home.tab.transactions" m="Transactions" />,
+  <T id="home.tab.transactions" m="Transactions" />
 ];
 
 const tabLink = (i) => {
@@ -30,7 +30,7 @@ const tabLink = (i) => {
     <Tooltip text={tabMessages[i]}>
       <span className="overview-tab tx" />
       <span className="overview-tab-label">{tabMessages[i]}</span>
-    </Tooltip>,
+    </Tooltip>
   ];
   return m[i];
 };
@@ -41,7 +41,7 @@ const HomePage = ({
   transactions,
   getTransactionsRequestAttempt,
   getAccountsResponse,
-  rowNumber,
+  rowNumber
 }) => {
   return (
     <>
@@ -62,7 +62,7 @@ const HomePage = ({
             tabs={[
               RoutedTab("/home/balance", tabLink(0)),
               RoutedTab("/home/tickets", tabLink(1)),
-              RoutedTab("/home/transactions", tabLink(2)),
+              RoutedTab("/home/transactions", tabLink(2))
             ]}
           />
         </div>
@@ -81,7 +81,7 @@ const HomePage = ({
             transactions,
             getTransactionsRequestAttempt,
             getAccountsResponse,
-            rowNumber,
+            rowNumber
           }}
         />
         <TicketActivity
@@ -89,7 +89,7 @@ const HomePage = ({
             tickets,
             getTransactionsRequestAttempt,
             getAccountsResponse,
-            rowNumber,
+            rowNumber
           }}
         />
       </div>

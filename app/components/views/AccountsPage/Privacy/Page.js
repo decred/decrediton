@@ -14,7 +14,7 @@ const PrivacyPage = ({
   error,
   accountMixerRunning,
   stopAccountMixer,
-  onStartMixerAttempt,
+  onStartMixerAttempt
 }) => (
   <>
     <Subtitle title={<T id="privacy.subtitle" m="Privacy" />} />

@@ -5,7 +5,7 @@ const GetStarted = ({
   headerTop,
   headerTitleOverview,
   headerMetaOverview,
-  children,
+  children
 }) => (
   <div className="header-get-started">
     <div className="header-top-get-started">{headerTop}</div>

@@ -40,7 +40,7 @@ class WordModal extends React.Component {
       (w) => w.word.toLowerCase().substr(0, input.length) === input
     );
     callback(null, {
-      options: options.slice(0, 5),
+      options: options.slice(0, 5)
     });
   }
 
@@ -50,13 +50,13 @@ class WordModal extends React.Component {
       onSubmit,
       onWordChanged,
       onSelectKeyDown,
-      getSeedWords,
+      getSeedWords
     } = this;
 
     const className = [
       "passphrase-modal",
       "trezor-word-modal",
-      this.props.isGetStarted ? "get-started" : "",
+      this.props.isGetStarted ? "get-started" : ""
     ].join(" ");
 
     return (

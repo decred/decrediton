@@ -8,7 +8,7 @@ class OpenWallet extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      publicPassPhrase: "",
+      publicPassPhrase: ""
     };
   }
 
@@ -25,10 +25,10 @@ class OpenWallet extends React.Component {
             {
               onSetPublicPassPhrase: null,
               onOpenWallet: null,
-              onKeyDown: null,
+              onKeyDown: null
             },
             this
-          ),
+          )
         }}
       />
     );

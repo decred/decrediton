@@ -14,7 +14,7 @@ const Overview = ({
   setSelecedChoiceId,
   updatePreferences,
   disabled,
-  passed,
+  passed
 }) => (
   <div className="agenda">
     <div className="agenda-overview">

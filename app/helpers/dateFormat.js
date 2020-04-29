@@ -52,9 +52,9 @@ export function formatLocalISODate(d, timezone) {
     tzOffset = -tzOffset;
     tzOffsetSign = "+";
   }
-  let tzOffsetHours = Math.trunc(tzOffset / 60);
-  let tzOffsetMinutes = Math.trunc(tzOffset % 60);
-  let tz =
+  const tzOffsetHours = Math.trunc(tzOffset / 60);
+  const tzOffsetMinutes = Math.trunc(tzOffset % 60);
+  const tz =
     timezone === "utc"
       ? "Z"
       : tzOffsetSign + pad(tzOffsetHours, 2) + pad(tzOffsetMinutes, 2);

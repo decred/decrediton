@@ -28,7 +28,7 @@ const Bar = ({
   onReduceSideBar,
   isWatchingOnly,
   rescanCancel,
-  accountMixerRunning,
+  accountMixerRunning
 }) => (
   <div
     className={cx(
@@ -44,7 +44,7 @@ const Bar = ({
         onReduceSideBar,
         onExpandSideBar,
         isWatchingOnly,
-        accountMixerRunning,
+        accountMixerRunning
       }}
     />
     <div className="sidebar-main">
@@ -137,7 +137,7 @@ const Bar = ({
 );
 
 Bar.propTypes = {
-  expandSideBar: PropTypes.bool.isRequired,
+  expandSideBar: PropTypes.bool.isRequired
 };
 
 export default Bar;

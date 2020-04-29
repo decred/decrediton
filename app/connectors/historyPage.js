@@ -11,14 +11,14 @@ const mapStateToProps = selectorMap({
   transactionsFilter: sel.transactionsFilter,
   noMoreTransactions: sel.noMoreTransactions,
   window: sel.mainWindow,
-  tsDate: sel.tsDate,
+  tsDate: sel.tsDate
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       getTransactions: ca.getTransactions,
-      changeTransactionsFilter: ca.changeTransactionsFilter,
+      changeTransactionsFilter: ca.changeTransactionsFilter
     },
     dispatch
   );

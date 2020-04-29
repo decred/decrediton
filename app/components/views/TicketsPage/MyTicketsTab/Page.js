@@ -3,7 +3,7 @@ import InfiniteScroll from "react-infinite-scroller";
 import {
   LoadingMoreTicketsIndicator,
   NoMoreTicketsIndicator,
-  NoTicketsIndicator,
+  NoTicketsIndicator
 } from "indicators";
 import { TxHistory, Subtitle, Tooltip } from "shared";
 import { EyeFilterMenu } from "buttons";
@@ -15,7 +15,7 @@ const subtitleMenu = ({
   selectedSortOrderKey,
   selectedTicketTypeKey,
   onChangeSelectedType,
-  onChangeSortType,
+  onChangeSortType
 }) => (
   <div className="tickets-buttons-area">
     <Tooltip
@@ -55,7 +55,7 @@ const TicketListPage = ({
   sortTypes,
   ticketTypes,
   tsDate,
-  loadMoreThreshold,
+  loadMoreThreshold
 }) => (
   <InfiniteScroll
     hasMore={!noMoreTickets}
@@ -72,7 +72,7 @@ const TicketListPage = ({
         selectedSortOrderKey,
         selectedTicketTypeKey,
         onChangeSelectedType,
-        onChangeSortType,
+        onChangeSortType
       })}
     />
     <div className="history-page-content-wrapper">

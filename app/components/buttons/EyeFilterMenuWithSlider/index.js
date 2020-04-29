@@ -17,7 +17,7 @@ class EyeFilterMenuWithSlider extends React.Component {
       max: 100,
       sliderShower: true,
       expandedSliderInfo: false,
-      rangeSlider: null,
+      rangeSlider: null
     };
   }
 
@@ -26,7 +26,7 @@ class EyeFilterMenuWithSlider extends React.Component {
       maxFilterValue,
       minFilterValue,
       unitDivisor,
-      currencyDisplay,
+      currencyDisplay
     } = this.props;
     if (maxFilterValue) {
       const maxValue =
@@ -56,7 +56,7 @@ class EyeFilterMenuWithSlider extends React.Component {
       const toolTipFormatter = {
         to: (value) => {
           return value;
-        },
+        }
       };
 
       if (!rangeSlider) {
@@ -64,11 +64,11 @@ class EyeFilterMenuWithSlider extends React.Component {
           start: [minAmount, maxAmount],
           range: {
             min: [parseInt(min)],
-            max: [parseInt(max)],
+            max: [parseInt(max)]
           },
           step: 1,
           connect: true,
-          tooltips: [true, toolTipFormatter],
+          tooltips: [true, toolTipFormatter]
         });
         this.setState({ rangeSlider: range });
 
@@ -108,7 +108,7 @@ class EyeFilterMenuWithSlider extends React.Component {
       min,
       max,
       maxAmount,
-      minAmount,
+      minAmount
     } = this.state;
 
     return (
@@ -163,8 +163,8 @@ class EyeFilterMenuWithSlider extends React.Component {
     rangeSlider.noUiSlider.updateOptions({
       range: {
         min: [intMin],
-        max: [parseInt(max)],
-      },
+        max: [parseInt(max)]
+      }
     });
   }
 
@@ -175,8 +175,8 @@ class EyeFilterMenuWithSlider extends React.Component {
     rangeSlider.noUiSlider.updateOptions({
       range: {
         min: [parseInt(min)],
-        max: [intMax],
-      },
+        max: [intMax]
+      }
     });
   }
 

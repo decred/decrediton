@@ -7,7 +7,7 @@ import * as cla from "../actions/ControlActions";
 
 const mapStateToProps = selectorMap({
   currentBlockHeight: sel.currentBlockHeight,
-  tsDate: sel.tsDate,
+  tsDate: sel.tsDate
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -15,7 +15,7 @@ const mapDispatchToProps = (dispatch) =>
     {
       goBackHistory: ca.goBackHistory,
       publishUnminedTransactions: cla.publishUnminedTransactionsAttempt,
-      abandonTransaction: ca.abandonTransactionAttempt,
+      abandonTransaction: ca.abandonTransactionAttempt
     },
     dispatch
   );

@@ -14,7 +14,7 @@ const messages = defineMessages({
   Ticket: { id: "txDetails.type.ticket", defaultMessage: "Ticket" },
   Vote: { id: "txDetails.type.vote", defaultMessage: "Vote" },
   Revocation: { id: "txDetails.type.revoke", defaultMessage: "Revoke" },
-  Coinbase: { id: "txDetails.type.coinbase", defaultMessage: "Coinbase" },
+  Coinbase: { id: "txDetails.type.coinbase", defaultMessage: "Coinbase" }
 });
 
 const headerIcons = {
@@ -24,7 +24,7 @@ const headerIcons = {
   transfer: "tx-detail-icon-transfer",
   Ticket: "tx-detail-icon-ticket",
   Vote: "tx-detail-icon-vote",
-  Revocation: "tx-detail-icon-revocation",
+  Revocation: "tx-detail-icon-revocation"
 };
 
 function mapNonWalletOutput(output) {
@@ -62,7 +62,7 @@ const TxDetails = ({
   goBackHistory,
   tsDate,
   publishUnminedTransactions,
-  abandonTransaction,
+  abandonTransaction
 }) => {
   const {
     txHash,
@@ -81,7 +81,7 @@ const TxDetails = ({
     ticketReward,
     ticketPrice,
     enterTimestamp,
-    leaveTimestamp,
+    leaveTimestamp
   } = tx;
 
   const isConfirmed = !!txTimestamp;
@@ -89,7 +89,7 @@ const TxDetails = ({
   const goBack = () => goBackHistory();
   const openTxUrl = () => shell.openExternal(txUrl);
   const openBlockUrl = () => shell.openExternal(txBlockUrl);
-  var title = txType ? (
+  let title = txType ? (
     intl.formatMessage(messages[txType])
   ) : (
     <Balance title bold amount={txDirection !== "in" ? -txAmount : txAmount} />
@@ -97,7 +97,7 @@ const TxDetails = ({
   if (txType == "Ticket" && ticketReward) {
     title = title + ", Voted";
   }
-  var sentFromAccount = "";
+  let sentFromAccount = "";
   if (txDirection == "out") {
     sentFromAccount = txInputs.length > 0 ? txInputs[0].accountName : "";
   }
@@ -123,7 +123,7 @@ const TxDetails = ({
     </SlateGrayButton>
   );
 
-  var subtitle = <div />;
+  let subtitle = <div />;
 
   switch (txType) {
     case "Ticket":
@@ -144,7 +144,7 @@ const TxDetails = ({
                       txType == "Vote" && enterTimestamp
                         ? enterTimestamp
                         : txTimestamp
-                    ),
+                    )
                   }}
                 />
               </div>
@@ -264,7 +264,7 @@ const TxDetails = ({
                   values={{
                     confirmations: isConfirmed
                       ? currentBlockHeight - txHeight
-                      : 0,
+                      : 0
                   }}
                 />
               </span>

@@ -42,7 +42,7 @@ export default ({
           max: getNeededBlocks,
           getEstimatedTimeLeft,
           lastDcrwalletLogLine,
-          disabled: false,
+          disabled: false
         }}
       />
     </div>

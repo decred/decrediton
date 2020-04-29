@@ -12,7 +12,7 @@ class StakePoolsBody extends React.Component {
       isAdding: false,
       apiKey: "",
       selectedUnconfigured: this.props.unconfiguredStakePools[0],
-      passPhrase: "",
+      passPhrase: ""
     };
     if (!props.updatedStakePoolList && this.getStakepoolListingEnabled()) {
       this.props.discoverAvailableStakepools();
@@ -117,10 +117,10 @@ class StakePoolsBody extends React.Component {
               onSetStakePoolInfo: null,
               onChangeSelectedUnconfigured: null,
               onChangePassPhrase: null,
-              onContinueCreation: null,
+              onContinueCreation: null
             },
             this
-          ),
+          )
         }}
       />
     );

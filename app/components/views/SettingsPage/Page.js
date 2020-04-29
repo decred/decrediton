@@ -5,7 +5,7 @@ import { StandaloneHeader, StandalonePage } from "layout";
 import {
   KeyBlueButton,
   CloseWalletModalButton,
-  ResetNetworkButton,
+  ResetNetworkButton
 } from "buttons";
 import { getGlobalCfg } from "config";
 import NetworkSettings from "./NetworkSettings";
@@ -17,6 +17,7 @@ import TimezoneSettings from "./TimezoneSettings";
 import "style/StakePool.less";
 import "style/Settings.less";
 import * as configConstants from "constants/config";
+import PropTypes from "prop-types";
 
 const closeWalletModalContent = (walletName) => (
   <T
@@ -37,7 +38,7 @@ const closeWalletWithAutobuyerModal = (walletName) => (
 const SettingsPageHeader = ({
   onCloseWallet,
   walletName,
-  isTicketAutoBuyerEnabled,
+  isTicketAutoBuyerEnabled
 }) => (
   <StandaloneHeader
     title={<T id="settings.title" m="Settings" />}
@@ -79,7 +80,7 @@ const SettingsPage = ({
   needNetworkReset,
   walletName,
   walletReady,
-  isTicketAutoBuyerEnabled,
+  isTicketAutoBuyerEnabled
 }) => {
   const { setThemeName } = useTheme();
   const saveSettingsHandler = useCallback(() => {
@@ -112,7 +113,7 @@ const SettingsPage = ({
               <NetworkSettings
                 {...{
                   tempSettings,
-                  onChangeTempSettings,
+                  onChangeTempSettings
                 }}
               />
             </div>
@@ -142,7 +143,7 @@ const SettingsPage = ({
                     tempSettings,
                     currencies,
                     walletReady,
-                    onChangeTempSettings,
+                    onChangeTempSettings
                   }}
                 />
               </div>
@@ -165,7 +166,7 @@ const SettingsPage = ({
                   onAttemptChangePassphrase,
                   isChangePassPhraseDisabled,
                   onChangeTempSettings,
-                  changePassphraseRequestAttempt,
+                  changePassphraseRequestAttempt
                 }}
               />
             </div>
@@ -217,7 +218,7 @@ SettingsPage.propTypes = {
   onSaveSettings: PropTypes.func.isRequired,
   onAttemptChangePassphrase: PropTypes.func,
   isChangePassPhraseDisabled: PropTypes.bool.isRequired,
-  changePassphraseRequestAttempt: PropTypes.bool.isRequired,
+  changePassphraseRequestAttempt: PropTypes.bool.isRequired
 };
 
 export default SettingsPage;

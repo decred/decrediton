@@ -2049,7 +2049,7 @@ export const word_list = [
   "zebra",
   "zero",
   "zone",
-  "zoo",
+  "zoo"
 ];
 
 // Protocol messages used for communication between the trezor transport lib
@@ -2067,20 +2067,20 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "address_n",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "show_display",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "BinanceAddress",
@@ -2090,13 +2090,13 @@ export const messages = {
           options: {},
           type: "string",
           name: "address",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "BinanceGetPublicKey",
@@ -2106,20 +2106,20 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "address_n",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "show_display",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "BinancePublicKey",
@@ -2129,13 +2129,13 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "public_key",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "BinanceSignTx",
@@ -2145,55 +2145,55 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "address_n",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "msg_count",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "sint64",
           name: "account_number",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "chain_id",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "memo",
-          id: 5,
+          id: 5
         },
         {
           rule: "optional",
           options: {},
           type: "sint64",
           name: "sequence",
-          id: 6,
+          id: 6
         },
         {
           rule: "optional",
           options: {},
           type: "sint64",
           name: "source",
-          id: 7,
-        },
+          id: 7
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "BinanceTxRequest",
@@ -2201,7 +2201,7 @@ export const messages = {
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "BinanceTransferMsg",
@@ -2211,15 +2211,15 @@ export const messages = {
           options: {},
           type: "BinanceInputOutput",
           name: "inputs",
-          id: 1,
+          id: 1
         },
         {
           rule: "repeated",
           options: {},
           type: "BinanceInputOutput",
           name: "outputs",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [
@@ -2231,20 +2231,20 @@ export const messages = {
               options: {},
               type: "string",
               name: "address",
-              id: 1,
+              id: 1
             },
             {
               rule: "repeated",
               options: {},
               type: "BinanceCoin",
               name: "coins",
-              id: 2,
-            },
+              id: 2
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
+          oneofs: {}
         },
         {
           name: "BinanceCoin",
@@ -2254,24 +2254,24 @@ export const messages = {
               options: {},
               type: "sint64",
               name: "amount",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "string",
               name: "denom",
-              id: 2,
-            },
+              id: 2
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
-        },
+          oneofs: {}
+        }
       ],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "BinanceOrderMsg",
@@ -2281,57 +2281,57 @@ export const messages = {
           options: {},
           type: "string",
           name: "id",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "BinanceOrderType",
           name: "ordertype",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "sint64",
           name: "price",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "sint64",
           name: "quantity",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "sender",
-          id: 5,
+          id: 5
         },
         {
           rule: "optional",
           options: {},
           type: "BinanceOrderSide",
           name: "side",
-          id: 6,
+          id: 6
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "symbol",
-          id: 7,
+          id: 7
         },
         {
           rule: "optional",
           options: {},
           type: "BinanceTimeInForce",
           name: "timeinforce",
-          id: 8,
-        },
+          id: 8
+        }
       ],
       enums: [
         {
@@ -2339,67 +2339,67 @@ export const messages = {
           values: [
             {
               name: "OT_UNKNOWN",
-              id: 0,
+              id: 0
             },
             {
               name: "MARKET",
-              id: 1,
+              id: 1
             },
             {
               name: "LIMIT",
-              id: 2,
+              id: 2
             },
             {
               name: "OT_RESERVED",
-              id: 3,
-            },
+              id: 3
+            }
           ],
-          options: {},
+          options: {}
         },
         {
           name: "BinanceOrderSide",
           values: [
             {
               name: "SIDE_UNKNOWN",
-              id: 0,
+              id: 0
             },
             {
               name: "BUY",
-              id: 1,
+              id: 1
             },
             {
               name: "SELL",
-              id: 2,
-            },
+              id: 2
+            }
           ],
-          options: {},
+          options: {}
         },
         {
           name: "BinanceTimeInForce",
           values: [
             {
               name: "TIF_UNKNOWN",
-              id: 0,
+              id: 0
             },
             {
               name: "GTE",
-              id: 1,
+              id: 1
             },
             {
               name: "TIF_RESERVED",
-              id: 2,
+              id: 2
             },
             {
               name: "IOC",
-              id: 3,
-            },
+              id: 3
+            }
           ],
-          options: {},
-        },
+          options: {}
+        }
       ],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "BinanceCancelMsg",
@@ -2409,27 +2409,27 @@ export const messages = {
           options: {},
           type: "string",
           name: "refid",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "sender",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "symbol",
-          id: 3,
-        },
+          id: 3
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "BinanceSignedTx",
@@ -2439,20 +2439,20 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "signature",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "public_key",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MultisigRedeemScriptType",
@@ -2462,36 +2462,36 @@ export const messages = {
           options: {},
           type: "HDNodePathType",
           name: "pubkeys",
-          id: 1,
+          id: 1
         },
         {
           rule: "repeated",
           options: {},
           type: "bytes",
           name: "signatures",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "m",
-          id: 3,
+          id: 3
         },
         {
           rule: "repeated",
           options: {},
           type: "HDNodeType",
           name: "nodes",
-          id: 4,
+          id: 4
         },
         {
           rule: "repeated",
           options: {},
           type: "uint32",
           name: "address_n",
-          id: 5,
-        },
+          id: 5
+        }
       ],
       enums: [],
       messages: [
@@ -2503,24 +2503,24 @@ export const messages = {
               options: {},
               type: "HDNodeType",
               name: "node",
-              id: 1,
+              id: 1
             },
             {
               rule: "repeated",
               options: {},
               type: "uint32",
               name: "address_n",
-              id: 2,
-            },
+              id: 2
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
-        },
+          oneofs: {}
+        }
       ],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "GetPublicKey",
@@ -2530,45 +2530,45 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "address_n",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "ecdsa_curve_name",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "show_display",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {
-            default: "Bitcoin",
+            default: "Bitcoin"
           },
           type: "string",
           name: "coin_name",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {
-            default: "SPENDADDRESS",
+            default: "SPENDADDRESS"
           },
           type: "InputScriptType",
           name: "script_type",
-          id: 5,
-        },
+          id: 5
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "PublicKey",
@@ -2578,20 +2578,20 @@ export const messages = {
           options: {},
           type: "HDNodeType",
           name: "node",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "xpub",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "GetAddress",
@@ -2601,45 +2601,45 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "address_n",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {
-            default: "Bitcoin",
+            default: "Bitcoin"
           },
           type: "string",
           name: "coin_name",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "show_display",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "MultisigRedeemScriptType",
           name: "multisig",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {
-            default: "SPENDADDRESS",
+            default: "SPENDADDRESS"
           },
           type: "InputScriptType",
           name: "script_type",
-          id: 5,
-        },
+          id: 5
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "Address",
@@ -2649,13 +2649,13 @@ export const messages = {
           options: {},
           type: "string",
           name: "address",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "SignMessage",
@@ -2665,38 +2665,38 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "address_n",
-          id: 1,
+          id: 1
         },
         {
           rule: "required",
           options: {},
           type: "bytes",
           name: "message",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {
-            default: "Bitcoin",
+            default: "Bitcoin"
           },
           type: "string",
           name: "coin_name",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {
-            default: "SPENDADDRESS",
+            default: "SPENDADDRESS"
           },
           type: "InputScriptType",
           name: "script_type",
-          id: 4,
-        },
+          id: 4
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MessageSignature",
@@ -2706,20 +2706,20 @@ export const messages = {
           options: {},
           type: "string",
           name: "address",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "signature",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "VerifyMessage",
@@ -2729,36 +2729,36 @@ export const messages = {
           options: {},
           type: "string",
           name: "address",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "signature",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "message",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {
-            default: "Bitcoin",
+            default: "Bitcoin"
           },
           type: "string",
           name: "coin_name",
-          id: 4,
-        },
+          id: 4
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "SignTx",
@@ -2768,82 +2768,82 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "outputs_count",
-          id: 1,
+          id: 1
         },
         {
           rule: "required",
           options: {},
           type: "uint32",
           name: "inputs_count",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {
-            default: "Bitcoin",
+            default: "Bitcoin"
           },
           type: "string",
           name: "coin_name",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {
-            default: 1,
+            default: 1
           },
           type: "uint32",
           name: "version",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {
-            default: 0,
+            default: 0
           },
           type: "uint32",
           name: "lock_time",
-          id: 5,
+          id: 5
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "expiry",
-          id: 6,
+          id: 6
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "overwintered",
-          id: 7,
+          id: 7
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "version_group_id",
-          id: 8,
+          id: 8
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "timestamp",
-          id: 9,
+          id: 9
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "branch_id",
-          id: 10,
-        },
+          id: 10
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "TxRequest",
@@ -2853,22 +2853,22 @@ export const messages = {
           options: {},
           type: "RequestType",
           name: "request_type",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "TxRequestDetailsType",
           name: "details",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "TxRequestSerializedType",
           name: "serialized",
-          id: 3,
-        },
+          id: 3
+        }
       ],
       enums: [
         {
@@ -2876,27 +2876,27 @@ export const messages = {
           values: [
             {
               name: "TXINPUT",
-              id: 0,
+              id: 0
             },
             {
               name: "TXOUTPUT",
-              id: 1,
+              id: 1
             },
             {
               name: "TXMETA",
-              id: 2,
+              id: 2
             },
             {
               name: "TXFINISHED",
-              id: 3,
+              id: 3
             },
             {
               name: "TXEXTRADATA",
-              id: 4,
-            },
+              id: 4
+            }
           ],
-          options: {},
-        },
+          options: {}
+        }
       ],
       messages: [
         {
@@ -2907,34 +2907,34 @@ export const messages = {
               options: {},
               type: "uint32",
               name: "request_index",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "bytes",
               name: "tx_hash",
-              id: 2,
+              id: 2
             },
             {
               rule: "optional",
               options: {},
               type: "uint32",
               name: "extra_data_len",
-              id: 3,
+              id: 3
             },
             {
               rule: "optional",
               options: {},
               type: "uint32",
               name: "extra_data_offset",
-              id: 4,
-            },
+              id: 4
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
+          oneofs: {}
         },
         {
           name: "TxRequestSerializedType",
@@ -2944,31 +2944,31 @@ export const messages = {
               options: {},
               type: "uint32",
               name: "signature_index",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "bytes",
               name: "signature",
-              id: 2,
+              id: 2
             },
             {
               rule: "optional",
               options: {},
               type: "bytes",
               name: "serialized_tx",
-              id: 3,
-            },
+              id: 3
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
-        },
+          oneofs: {}
+        }
       ],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "TxAck",
@@ -2978,8 +2978,8 @@ export const messages = {
           options: {},
           type: "TransactionType",
           name: "tx",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [
@@ -2991,99 +2991,99 @@ export const messages = {
               options: {},
               type: "uint32",
               name: "version",
-              id: 1,
+              id: 1
             },
             {
               rule: "repeated",
               options: {},
               type: "TxInputType",
               name: "inputs",
-              id: 2,
+              id: 2
             },
             {
               rule: "repeated",
               options: {},
               type: "TxOutputBinType",
               name: "bin_outputs",
-              id: 3,
+              id: 3
             },
             {
               rule: "optional",
               options: {},
               type: "uint32",
               name: "lock_time",
-              id: 4,
+              id: 4
             },
             {
               rule: "repeated",
               options: {},
               type: "TxOutputType",
               name: "outputs",
-              id: 5,
+              id: 5
             },
             {
               rule: "optional",
               options: {},
               type: "uint32",
               name: "inputs_cnt",
-              id: 6,
+              id: 6
             },
             {
               rule: "optional",
               options: {},
               type: "uint32",
               name: "outputs_cnt",
-              id: 7,
+              id: 7
             },
             {
               rule: "optional",
               options: {},
               type: "bytes",
               name: "extra_data",
-              id: 8,
+              id: 8
             },
             {
               rule: "optional",
               options: {},
               type: "uint32",
               name: "extra_data_len",
-              id: 9,
+              id: 9
             },
             {
               rule: "optional",
               options: {},
               type: "uint32",
               name: "expiry",
-              id: 10,
+              id: 10
             },
             {
               rule: "optional",
               options: {},
               type: "bool",
               name: "overwintered",
-              id: 11,
+              id: 11
             },
             {
               rule: "optional",
               options: {},
               type: "uint32",
               name: "version_group_id",
-              id: 12,
+              id: 12
             },
             {
               rule: "optional",
               options: {},
               type: "uint32",
               name: "timestamp",
-              id: 13,
+              id: 13
             },
             {
               rule: "optional",
               options: {},
               type: "uint32",
               name: "branch_id",
-              id: 14,
-            },
+              id: 14
+            }
           ],
           enums: [],
           messages: [
@@ -3095,94 +3095,94 @@ export const messages = {
                   options: {},
                   type: "uint32",
                   name: "address_n",
-                  id: 1,
+                  id: 1
                 },
                 {
                   rule: "required",
                   options: {},
                   type: "bytes",
                   name: "prev_hash",
-                  id: 2,
+                  id: 2
                 },
                 {
                   rule: "required",
                   options: {},
                   type: "uint32",
                   name: "prev_index",
-                  id: 3,
+                  id: 3
                 },
                 {
                   rule: "optional",
                   options: {},
                   type: "bytes",
                   name: "script_sig",
-                  id: 4,
+                  id: 4
                 },
                 {
                   rule: "optional",
                   options: {
-                    default: 4294967295,
+                    default: 4294967295
                   },
                   type: "uint32",
                   name: "sequence",
-                  id: 5,
+                  id: 5
                 },
                 {
                   rule: "optional",
                   options: {
-                    default: "SPENDADDRESS",
+                    default: "SPENDADDRESS"
                   },
                   type: "InputScriptType",
                   name: "script_type",
-                  id: 6,
+                  id: 6
                 },
                 {
                   rule: "optional",
                   options: {},
                   type: "MultisigRedeemScriptType",
                   name: "multisig",
-                  id: 7,
+                  id: 7
                 },
                 {
                   rule: "optional",
                   options: {},
                   type: "uint64",
                   name: "amount",
-                  id: 8,
+                  id: 8
                 },
                 {
                   rule: "optional",
                   options: {},
                   type: "uint32",
                   name: "decred_tree",
-                  id: 9,
+                  id: 9
                 },
                 {
                   rule: "optional",
                   options: {},
                   type: "uint32",
                   name: "decred_script_version",
-                  id: 10,
+                  id: 10
                 },
                 {
                   rule: "optional",
                   options: {},
                   type: "bytes",
                   name: "prev_block_hash_bip115",
-                  id: 11,
+                  id: 11
                 },
                 {
                   rule: "optional",
                   options: {},
                   type: "uint32",
                   name: "prev_block_height_bip115",
-                  id: 12,
-                },
+                  id: 12
+                }
               ],
               enums: [],
               messages: [],
               options: {},
-              oneofs: {},
+              oneofs: {}
             },
             {
               name: "TxOutputBinType",
@@ -3192,27 +3192,27 @@ export const messages = {
                   options: {},
                   type: "uint64",
                   name: "amount",
-                  id: 1,
+                  id: 1
                 },
                 {
                   rule: "required",
                   options: {},
                   type: "bytes",
                   name: "script_pubkey",
-                  id: 2,
+                  id: 2
                 },
                 {
                   rule: "optional",
                   options: {},
                   type: "uint32",
                   name: "decred_script_version",
-                  id: 3,
-                },
+                  id: 3
+                }
               ],
               enums: [],
               messages: [],
               options: {},
-              oneofs: {},
+              oneofs: {}
             },
             {
               name: "TxOutputType",
@@ -3222,64 +3222,64 @@ export const messages = {
                   options: {},
                   type: "string",
                   name: "address",
-                  id: 1,
+                  id: 1
                 },
                 {
                   rule: "repeated",
                   options: {},
                   type: "uint32",
                   name: "address_n",
-                  id: 2,
+                  id: 2
                 },
                 {
                   rule: "required",
                   options: {},
                   type: "uint64",
                   name: "amount",
-                  id: 3,
+                  id: 3
                 },
                 {
                   rule: "required",
                   options: {},
                   type: "OutputScriptType",
                   name: "script_type",
-                  id: 4,
+                  id: 4
                 },
                 {
                   rule: "optional",
                   options: {},
                   type: "MultisigRedeemScriptType",
                   name: "multisig",
-                  id: 5,
+                  id: 5
                 },
                 {
                   rule: "optional",
                   options: {},
                   type: "bytes",
                   name: "op_return_data",
-                  id: 6,
+                  id: 6
                 },
                 {
                   rule: "optional",
                   options: {},
                   type: "uint32",
                   name: "decred_script_version",
-                  id: 7,
+                  id: 7
                 },
                 {
                   rule: "optional",
                   options: {},
                   type: "bytes",
                   name: "block_hash_bip115",
-                  id: 8,
+                  id: 8
                 },
                 {
                   rule: "optional",
                   options: {},
                   type: "uint32",
                   name: "block_height_bip115",
-                  id: 9,
-                },
+                  id: 9
+                }
               ],
               enums: [
                 {
@@ -3287,43 +3287,43 @@ export const messages = {
                   values: [
                     {
                       name: "PAYTOADDRESS",
-                      id: 0,
+                      id: 0
                     },
                     {
                       name: "PAYTOSCRIPTHASH",
-                      id: 1,
+                      id: 1
                     },
                     {
                       name: "PAYTOMULTISIG",
-                      id: 2,
+                      id: 2
                     },
                     {
                       name: "PAYTOOPRETURN",
-                      id: 3,
+                      id: 3
                     },
                     {
                       name: "PAYTOWITNESS",
-                      id: 4,
+                      id: 4
                     },
                     {
                       name: "PAYTOP2SHWITNESS",
-                      id: 5,
-                    },
+                      id: 5
+                    }
                   ],
-                  options: {},
-                },
+                  options: {}
+                }
               ],
               messages: [],
               options: {},
-              oneofs: {},
-            },
+              oneofs: {}
+            }
           ],
           options: {},
-          oneofs: {},
-        },
+          oneofs: {}
+        }
       ],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "FirmwareErase",
@@ -3333,13 +3333,13 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "length",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "FirmwareRequest",
@@ -3349,20 +3349,20 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "offset",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "length",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "FirmwareUpload",
@@ -3372,20 +3372,20 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "payload",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "hash",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "SelfTest",
@@ -3395,13 +3395,13 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "payload",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "CardanoGetAddress",
@@ -3411,20 +3411,20 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "address_n",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "show_display",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "CardanoAddress",
@@ -3434,13 +3434,13 @@ export const messages = {
           options: {},
           type: "string",
           name: "address",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "CardanoGetPublicKey",
@@ -3450,20 +3450,20 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "address_n",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "show_display",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "CardanoPublicKey",
@@ -3473,20 +3473,20 @@ export const messages = {
           options: {},
           type: "string",
           name: "xpub",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "HDNodeType",
           name: "node",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "CardanoSignTx",
@@ -3496,29 +3496,29 @@ export const messages = {
           options: {},
           type: "CardanoTxInputType",
           name: "inputs",
-          id: 1,
+          id: 1
         },
         {
           rule: "repeated",
           options: {},
           type: "CardanoTxOutputType",
           name: "outputs",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "transactions_count",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "protocol_magic",
-          id: 5,
-        },
+          id: 5
+        }
       ],
       enums: [],
       messages: [
@@ -3530,34 +3530,34 @@ export const messages = {
               options: {},
               type: "uint32",
               name: "address_n",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "bytes",
               name: "prev_hash",
-              id: 2,
+              id: 2
             },
             {
               rule: "optional",
               options: {},
               type: "uint32",
               name: "prev_index",
-              id: 3,
+              id: 3
             },
             {
               rule: "optional",
               options: {},
               type: "uint32",
               name: "type",
-              id: 4,
-            },
+              id: 4
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
+          oneofs: {}
         },
         {
           name: "CardanoTxOutputType",
@@ -3567,31 +3567,31 @@ export const messages = {
               options: {},
               type: "string",
               name: "address",
-              id: 1,
+              id: 1
             },
             {
               rule: "repeated",
               options: {},
               type: "uint32",
               name: "address_n",
-              id: 2,
+              id: 2
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "amount",
-              id: 3,
-            },
+              id: 3
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
-        },
+          oneofs: {}
+        }
       ],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "CardanoTxRequest",
@@ -3601,27 +3601,27 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "tx_index",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "tx_hash",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "tx_body",
-          id: 3,
-        },
+          id: 3
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "CardanoTxAck",
@@ -3631,13 +3631,13 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "transaction",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "CardanoSignedTx",
@@ -3647,20 +3647,20 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "tx_hash",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "tx_body",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "Success",
@@ -3670,13 +3670,13 @@ export const messages = {
           options: {},
           type: "string",
           name: "message",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "Failure",
@@ -3686,15 +3686,15 @@ export const messages = {
           options: {},
           type: "FailureType",
           name: "code",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "message",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [
         {
@@ -3702,63 +3702,63 @@ export const messages = {
           values: [
             {
               name: "Failure_UnexpectedMessage",
-              id: 1,
+              id: 1
             },
             {
               name: "Failure_ButtonExpected",
-              id: 2,
+              id: 2
             },
             {
               name: "Failure_DataError",
-              id: 3,
+              id: 3
             },
             {
               name: "Failure_ActionCancelled",
-              id: 4,
+              id: 4
             },
             {
               name: "Failure_PinExpected",
-              id: 5,
+              id: 5
             },
             {
               name: "Failure_PinCancelled",
-              id: 6,
+              id: 6
             },
             {
               name: "Failure_PinInvalid",
-              id: 7,
+              id: 7
             },
             {
               name: "Failure_InvalidSignature",
-              id: 8,
+              id: 8
             },
             {
               name: "Failure_ProcessError",
-              id: 9,
+              id: 9
             },
             {
               name: "Failure_NotEnoughFunds",
-              id: 10,
+              id: 10
             },
             {
               name: "Failure_NotInitialized",
-              id: 11,
+              id: 11
             },
             {
               name: "Failure_PinMismatch",
-              id: 12,
+              id: 12
             },
             {
               name: "Failure_FirmwareError",
-              id: 99,
-            },
+              id: 99
+            }
           ],
-          options: {},
-        },
+          options: {}
+        }
       ],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "ButtonRequest",
@@ -3768,8 +3768,8 @@ export const messages = {
           options: {},
           type: "ButtonRequestType",
           name: "code",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [
         {
@@ -3777,83 +3777,83 @@ export const messages = {
           values: [
             {
               name: "ButtonRequest_Other",
-              id: 1,
+              id: 1
             },
             {
               name: "ButtonRequest_FeeOverThreshold",
-              id: 2,
+              id: 2
             },
             {
               name: "ButtonRequest_ConfirmOutput",
-              id: 3,
+              id: 3
             },
             {
               name: "ButtonRequest_ResetDevice",
-              id: 4,
+              id: 4
             },
             {
               name: "ButtonRequest_ConfirmWord",
-              id: 5,
+              id: 5
             },
             {
               name: "ButtonRequest_WipeDevice",
-              id: 6,
+              id: 6
             },
             {
               name: "ButtonRequest_ProtectCall",
-              id: 7,
+              id: 7
             },
             {
               name: "ButtonRequest_SignTx",
-              id: 8,
+              id: 8
             },
             {
               name: "ButtonRequest_FirmwareCheck",
-              id: 9,
+              id: 9
             },
             {
               name: "ButtonRequest_Address",
-              id: 10,
+              id: 10
             },
             {
               name: "ButtonRequest_PublicKey",
-              id: 11,
+              id: 11
             },
             {
               name: "ButtonRequest_MnemonicWordCount",
-              id: 12,
+              id: 12
             },
             {
               name: "ButtonRequest_MnemonicInput",
-              id: 13,
+              id: 13
             },
             {
               name: "ButtonRequest_PassphraseType",
-              id: 14,
+              id: 14
             },
             {
               name: "ButtonRequest_UnknownDerivationPath",
-              id: 15,
+              id: 15
             },
             {
               name: "ButtonRequest_RecoveryHomepage",
-              id: 16,
+              id: 16
             },
             {
               name: "ButtonRequest_Success",
-              id: 17,
+              id: 17
             },
             {
               name: "ButtonRequest_Warning",
-              id: 18,
-            },
+              id: 18
+            }
           ],
-          options: {},
-        },
+          options: {}
+        }
       ],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "ButtonAck",
@@ -3861,7 +3861,7 @@ export const messages = {
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "PinMatrixRequest",
@@ -3871,8 +3871,8 @@ export const messages = {
           options: {},
           type: "PinMatrixRequestType",
           name: "type",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [
         {
@@ -3880,23 +3880,23 @@ export const messages = {
           values: [
             {
               name: "PinMatrixRequestType_Current",
-              id: 1,
+              id: 1
             },
             {
               name: "PinMatrixRequestType_NewFirst",
-              id: 2,
+              id: 2
             },
             {
               name: "PinMatrixRequestType_NewSecond",
-              id: 3,
-            },
+              id: 3
+            }
           ],
-          options: {},
-        },
+          options: {}
+        }
       ],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "PinMatrixAck",
@@ -3906,13 +3906,13 @@ export const messages = {
           options: {},
           type: "string",
           name: "pin",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "PassphraseRequest",
@@ -3922,13 +3922,13 @@ export const messages = {
           options: {},
           type: "bool",
           name: "on_device",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "PassphraseAck",
@@ -3938,20 +3938,20 @@ export const messages = {
           options: {},
           type: "string",
           name: "passphrase",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "state",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "PassphraseStateRequest",
@@ -3961,13 +3961,13 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "state",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "PassphraseStateAck",
@@ -3975,7 +3975,7 @@ export const messages = {
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "HDNodeType",
@@ -3985,48 +3985,48 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "depth",
-          id: 1,
+          id: 1
         },
         {
           rule: "required",
           options: {},
           type: "uint32",
           name: "fingerprint",
-          id: 2,
+          id: 2
         },
         {
           rule: "required",
           options: {},
           type: "uint32",
           name: "child_num",
-          id: 3,
+          id: 3
         },
         {
           rule: "required",
           options: {},
           type: "bytes",
           name: "chain_code",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "private_key",
-          id: 5,
+          id: 5
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "public_key",
-          id: 6,
-        },
+          id: 6
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "CipherKeyValue",
@@ -4036,55 +4036,55 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "address_n",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "key",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "value",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "encrypt",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "ask_on_encrypt",
-          id: 5,
+          id: 5
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "ask_on_decrypt",
-          id: 6,
+          id: 6
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "iv",
-          id: 7,
-        },
+          id: 7
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "CipheredKeyValue",
@@ -4094,13 +4094,13 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "value",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "IdentityType",
@@ -4110,50 +4110,50 @@ export const messages = {
           options: {},
           type: "string",
           name: "proto",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "user",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "host",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "port",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "path",
-          id: 5,
+          id: 5
         },
         {
           rule: "optional",
           options: {
-            default: 0,
+            default: 0
           },
           type: "uint32",
           name: "index",
-          id: 6,
-        },
+          id: 6
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "SignIdentity",
@@ -4163,34 +4163,34 @@ export const messages = {
           options: {},
           type: "IdentityType",
           name: "identity",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "challenge_hidden",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "challenge_visual",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "ecdsa_curve_name",
-          id: 4,
-        },
+          id: 4
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "SignedIdentity",
@@ -4200,27 +4200,27 @@ export const messages = {
           options: {},
           type: "string",
           name: "address",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "public_key",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "signature",
-          id: 3,
-        },
+          id: 3
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "GetECDHSessionKey",
@@ -4230,27 +4230,27 @@ export const messages = {
           options: {},
           type: "IdentityType",
           name: "identity",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "peer_public_key",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "ecdsa_curve_name",
-          id: 3,
-        },
+          id: 3
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "ECDHSessionKey",
@@ -4260,13 +4260,13 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "session_key",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "CosiCommit",
@@ -4276,20 +4276,20 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "address_n",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "data",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "CosiCommitment",
@@ -4299,20 +4299,20 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "commitment",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "pubkey",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "CosiSign",
@@ -4322,34 +4322,34 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "address_n",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "data",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "global_commitment",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "global_pubkey",
-          id: 4,
-        },
+          id: 4
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "CosiSignature",
@@ -4359,13 +4359,13 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "signature",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "DebugLinkDecision",
@@ -4375,43 +4375,43 @@ export const messages = {
           options: {},
           type: "bool",
           name: "yes_no",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "DebugSwipeDirection",
           name: "swipe",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "input",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "x",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "y",
-          id: 5,
+          id: 5
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "wait",
-          id: 6,
-        },
+          id: 6
+        }
       ],
       enums: [
         {
@@ -4419,27 +4419,27 @@ export const messages = {
           values: [
             {
               name: "UP",
-              id: 0,
+              id: 0
             },
             {
               name: "DOWN",
-              id: 1,
+              id: 1
             },
             {
               name: "LEFT",
-              id: 2,
+              id: 2
             },
             {
               name: "RIGHT",
-              id: 3,
-            },
+              id: 3
+            }
           ],
-          options: {},
-        },
+          options: {}
+        }
       ],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "DebugLinkLayout",
@@ -4449,13 +4449,13 @@ export const messages = {
           options: {},
           type: "string",
           name: "lines",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "DebugLinkGetState",
@@ -4465,27 +4465,27 @@ export const messages = {
           options: {},
           type: "bool",
           name: "wait_word_list",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "wait_word_pos",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "wait_layout",
-          id: 3,
-        },
+          id: 3
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "DebugLinkState",
@@ -4495,97 +4495,97 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "layout",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "pin",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "matrix",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "mnemonic_secret",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {},
           type: "HDNodeType",
           name: "node",
-          id: 5,
+          id: 5
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "passphrase_protection",
-          id: 6,
+          id: 6
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "reset_word",
-          id: 7,
+          id: 7
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "reset_entropy",
-          id: 8,
+          id: 8
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "recovery_fake_word",
-          id: 9,
+          id: 9
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "recovery_word_pos",
-          id: 10,
+          id: 10
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "reset_word_pos",
-          id: 11,
+          id: 11
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "mnemonic_type",
-          id: 12,
+          id: 12
         },
         {
           rule: "repeated",
           options: {},
           type: "string",
           name: "layout_lines",
-          id: 13,
-        },
+          id: 13
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "DebugLinkStop",
@@ -4593,7 +4593,7 @@ export const messages = {
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "DebugLinkLog",
@@ -4603,27 +4603,27 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "level",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "bucket",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "text",
-          id: 3,
-        },
+          id: 3
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "DebugLinkMemoryRead",
@@ -4633,20 +4633,20 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "address",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "length",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "DebugLinkMemory",
@@ -4656,13 +4656,13 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "memory",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "DebugLinkMemoryWrite",
@@ -4672,27 +4672,27 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "address",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "memory",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "flash",
-          id: 3,
-        },
+          id: 3
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "DebugLinkFlashErase",
@@ -4702,13 +4702,13 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "sector",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "EosGetPublicKey",
@@ -4718,20 +4718,20 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "address_n",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "show_display",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "EosPublicKey",
@@ -4741,20 +4741,20 @@ export const messages = {
           options: {},
           type: "string",
           name: "wif_public_key",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "raw_public_key",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "EosSignTx",
@@ -4764,29 +4764,29 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "address_n",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "chain_id",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "EosTxHeader",
           name: "header",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "num_actions",
-          id: 4,
-        },
+          id: 4
+        }
       ],
       enums: [],
       messages: [
@@ -4798,52 +4798,52 @@ export const messages = {
               options: {},
               type: "uint32",
               name: "expiration",
-              id: 1,
+              id: 1
             },
             {
               rule: "required",
               options: {},
               type: "uint32",
               name: "ref_block_num",
-              id: 2,
+              id: 2
             },
             {
               rule: "required",
               options: {},
               type: "uint32",
               name: "ref_block_prefix",
-              id: 3,
+              id: 3
             },
             {
               rule: "required",
               options: {},
               type: "uint32",
               name: "max_net_usage_words",
-              id: 4,
+              id: 4
             },
             {
               rule: "required",
               options: {},
               type: "uint32",
               name: "max_cpu_usage_ms",
-              id: 5,
+              id: 5
             },
             {
               rule: "required",
               options: {},
               type: "uint32",
               name: "delay_sec",
-              id: 6,
-            },
+              id: 6
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
-        },
+          oneofs: {}
+        }
       ],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "EosTxActionRequest",
@@ -4853,13 +4853,13 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "data_size",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "EosTxActionAck",
@@ -4869,106 +4869,106 @@ export const messages = {
           options: {},
           type: "EosActionCommon",
           name: "common",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "EosActionTransfer",
           name: "transfer",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "EosActionDelegate",
           name: "delegate",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "EosActionUndelegate",
           name: "undelegate",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {},
           type: "EosActionRefund",
           name: "refund",
-          id: 5,
+          id: 5
         },
         {
           rule: "optional",
           options: {},
           type: "EosActionBuyRam",
           name: "buy_ram",
-          id: 6,
+          id: 6
         },
         {
           rule: "optional",
           options: {},
           type: "EosActionBuyRamBytes",
           name: "buy_ram_bytes",
-          id: 7,
+          id: 7
         },
         {
           rule: "optional",
           options: {},
           type: "EosActionSellRam",
           name: "sell_ram",
-          id: 8,
+          id: 8
         },
         {
           rule: "optional",
           options: {},
           type: "EosActionVoteProducer",
           name: "vote_producer",
-          id: 9,
+          id: 9
         },
         {
           rule: "optional",
           options: {},
           type: "EosActionUpdateAuth",
           name: "update_auth",
-          id: 10,
+          id: 10
         },
         {
           rule: "optional",
           options: {},
           type: "EosActionDeleteAuth",
           name: "delete_auth",
-          id: 11,
+          id: 11
         },
         {
           rule: "optional",
           options: {},
           type: "EosActionLinkAuth",
           name: "link_auth",
-          id: 12,
+          id: 12
         },
         {
           rule: "optional",
           options: {},
           type: "EosActionUnlinkAuth",
           name: "unlink_auth",
-          id: 13,
+          id: 13
         },
         {
           rule: "optional",
           options: {},
           type: "EosActionNewAccount",
           name: "new_account",
-          id: 14,
+          id: 14
         },
         {
           rule: "optional",
           options: {},
           type: "EosActionUnknown",
           name: "unknown",
-          id: 15,
-        },
+          id: 15
+        }
       ],
       enums: [],
       messages: [
@@ -4980,20 +4980,20 @@ export const messages = {
               options: {},
               type: "sint64",
               name: "amount",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "symbol",
-              id: 2,
-            },
+              id: 2
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
+          oneofs: {}
         },
         {
           name: "EosPermissionLevel",
@@ -5003,20 +5003,20 @@ export const messages = {
               options: {},
               type: "uint64",
               name: "actor",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "permission",
-              id: 2,
-            },
+              id: 2
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
+          oneofs: {}
         },
         {
           name: "EosAuthorizationKey",
@@ -5026,34 +5026,34 @@ export const messages = {
               options: {},
               type: "uint32",
               name: "type",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "bytes",
               name: "key",
-              id: 2,
+              id: 2
             },
             {
               rule: "repeated",
               options: {},
               type: "uint32",
               name: "address_n",
-              id: 3,
+              id: 3
             },
             {
               rule: "optional",
               options: {},
               type: "uint32",
               name: "weight",
-              id: 4,
-            },
+              id: 4
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
+          oneofs: {}
         },
         {
           name: "EosAuthorizationAccount",
@@ -5063,20 +5063,20 @@ export const messages = {
               options: {},
               type: "EosPermissionLevel",
               name: "account",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "uint32",
               name: "weight",
-              id: 2,
-            },
+              id: 2
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
+          oneofs: {}
         },
         {
           name: "EosAuthorizationWait",
@@ -5086,20 +5086,20 @@ export const messages = {
               options: {},
               type: "uint32",
               name: "wait_sec",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "uint32",
               name: "weight",
-              id: 2,
-            },
+              id: 2
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
+          oneofs: {}
         },
         {
           name: "EosAuthorization",
@@ -5109,34 +5109,34 @@ export const messages = {
               options: {},
               type: "uint32",
               name: "threshold",
-              id: 1,
+              id: 1
             },
             {
               rule: "repeated",
               options: {},
               type: "EosAuthorizationKey",
               name: "keys",
-              id: 2,
+              id: 2
             },
             {
               rule: "repeated",
               options: {},
               type: "EosAuthorizationAccount",
               name: "accounts",
-              id: 3,
+              id: 3
             },
             {
               rule: "repeated",
               options: {},
               type: "EosAuthorizationWait",
               name: "waits",
-              id: 4,
-            },
+              id: 4
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
+          oneofs: {}
         },
         {
           name: "EosActionCommon",
@@ -5146,27 +5146,27 @@ export const messages = {
               options: {},
               type: "uint64",
               name: "account",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "name",
-              id: 2,
+              id: 2
             },
             {
               rule: "repeated",
               options: {},
               type: "EosPermissionLevel",
               name: "authorization",
-              id: 3,
-            },
+              id: 3
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
+          oneofs: {}
         },
         {
           name: "EosActionTransfer",
@@ -5176,34 +5176,34 @@ export const messages = {
               options: {},
               type: "uint64",
               name: "sender",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "receiver",
-              id: 2,
+              id: 2
             },
             {
               rule: "optional",
               options: {},
               type: "EosAsset",
               name: "quantity",
-              id: 3,
+              id: 3
             },
             {
               rule: "optional",
               options: {},
               type: "string",
               name: "memo",
-              id: 4,
-            },
+              id: 4
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
+          oneofs: {}
         },
         {
           name: "EosActionDelegate",
@@ -5213,41 +5213,41 @@ export const messages = {
               options: {},
               type: "uint64",
               name: "sender",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "receiver",
-              id: 2,
+              id: 2
             },
             {
               rule: "optional",
               options: {},
               type: "EosAsset",
               name: "net_quantity",
-              id: 3,
+              id: 3
             },
             {
               rule: "optional",
               options: {},
               type: "EosAsset",
               name: "cpu_quantity",
-              id: 4,
+              id: 4
             },
             {
               rule: "optional",
               options: {},
               type: "bool",
               name: "transfer",
-              id: 5,
-            },
+              id: 5
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
+          oneofs: {}
         },
         {
           name: "EosActionUndelegate",
@@ -5257,34 +5257,34 @@ export const messages = {
               options: {},
               type: "uint64",
               name: "sender",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "receiver",
-              id: 2,
+              id: 2
             },
             {
               rule: "optional",
               options: {},
               type: "EosAsset",
               name: "net_quantity",
-              id: 3,
+              id: 3
             },
             {
               rule: "optional",
               options: {},
               type: "EosAsset",
               name: "cpu_quantity",
-              id: 4,
-            },
+              id: 4
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
+          oneofs: {}
         },
         {
           name: "EosActionRefund",
@@ -5294,13 +5294,13 @@ export const messages = {
               options: {},
               type: "uint64",
               name: "owner",
-              id: 1,
-            },
+              id: 1
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
+          oneofs: {}
         },
         {
           name: "EosActionBuyRam",
@@ -5310,27 +5310,27 @@ export const messages = {
               options: {},
               type: "uint64",
               name: "payer",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "receiver",
-              id: 2,
+              id: 2
             },
             {
               rule: "optional",
               options: {},
               type: "EosAsset",
               name: "quantity",
-              id: 3,
-            },
+              id: 3
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
+          oneofs: {}
         },
         {
           name: "EosActionBuyRamBytes",
@@ -5340,27 +5340,27 @@ export const messages = {
               options: {},
               type: "uint64",
               name: "payer",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "receiver",
-              id: 2,
+              id: 2
             },
             {
               rule: "optional",
               options: {},
               type: "uint32",
               name: "bytes",
-              id: 3,
-            },
+              id: 3
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
+          oneofs: {}
         },
         {
           name: "EosActionSellRam",
@@ -5370,20 +5370,20 @@ export const messages = {
               options: {},
               type: "uint64",
               name: "account",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "bytes",
-              id: 2,
-            },
+              id: 2
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
+          oneofs: {}
         },
         {
           name: "EosActionVoteProducer",
@@ -5393,27 +5393,27 @@ export const messages = {
               options: {},
               type: "uint64",
               name: "voter",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "proxy",
-              id: 2,
+              id: 2
             },
             {
               rule: "repeated",
               options: {},
               type: "uint64",
               name: "producers",
-              id: 3,
-            },
+              id: 3
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
+          oneofs: {}
         },
         {
           name: "EosActionUpdateAuth",
@@ -5423,34 +5423,34 @@ export const messages = {
               options: {},
               type: "uint64",
               name: "account",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "permission",
-              id: 2,
+              id: 2
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "parent",
-              id: 3,
+              id: 3
             },
             {
               rule: "optional",
               options: {},
               type: "EosAuthorization",
               name: "auth",
-              id: 4,
-            },
+              id: 4
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
+          oneofs: {}
         },
         {
           name: "EosActionDeleteAuth",
@@ -5460,20 +5460,20 @@ export const messages = {
               options: {},
               type: "uint64",
               name: "account",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "permission",
-              id: 2,
-            },
+              id: 2
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
+          oneofs: {}
         },
         {
           name: "EosActionLinkAuth",
@@ -5483,34 +5483,34 @@ export const messages = {
               options: {},
               type: "uint64",
               name: "account",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "code",
-              id: 2,
+              id: 2
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "type",
-              id: 3,
+              id: 3
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "requirement",
-              id: 4,
-            },
+              id: 4
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
+          oneofs: {}
         },
         {
           name: "EosActionUnlinkAuth",
@@ -5520,27 +5520,27 @@ export const messages = {
               options: {},
               type: "uint64",
               name: "account",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "code",
-              id: 2,
+              id: 2
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "type",
-              id: 3,
-            },
+              id: 3
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
+          oneofs: {}
         },
         {
           name: "EosActionNewAccount",
@@ -5550,34 +5550,34 @@ export const messages = {
               options: {},
               type: "uint64",
               name: "creator",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "name",
-              id: 2,
+              id: 2
             },
             {
               rule: "optional",
               options: {},
               type: "EosAuthorization",
               name: "owner",
-              id: 3,
+              id: 3
             },
             {
               rule: "optional",
               options: {},
               type: "EosAuthorization",
               name: "active",
-              id: 4,
-            },
+              id: 4
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
+          oneofs: {}
         },
         {
           name: "EosActionUnknown",
@@ -5587,24 +5587,24 @@ export const messages = {
               options: {},
               type: "uint32",
               name: "data_size",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "bytes",
               name: "data_chunk",
-              id: 2,
-            },
+              id: 2
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
-        },
+          oneofs: {}
+        }
       ],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "EosSignedTx",
@@ -5614,13 +5614,13 @@ export const messages = {
           options: {},
           type: "string",
           name: "signature",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "EthereumGetPublicKey",
@@ -5630,20 +5630,20 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "address_n",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "show_display",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "EthereumPublicKey",
@@ -5653,20 +5653,20 @@ export const messages = {
           options: {},
           type: "HDNodeType",
           name: "node",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "xpub",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "EthereumGetAddress",
@@ -5676,20 +5676,20 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "address_n",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "show_display",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "EthereumAddress",
@@ -5697,24 +5697,24 @@ export const messages = {
         {
           rule: "optional",
           options: {
-            deprecated: true,
+            deprecated: true
           },
           type: "bytes",
           name: "old_address",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "address",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "EthereumSignTx",
@@ -5724,76 +5724,76 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "address_n",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "nonce",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "gas_price",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "gas_limit",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "to",
-          id: 11,
+          id: 11
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "value",
-          id: 6,
+          id: 6
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "data_initial_chunk",
-          id: 7,
+          id: 7
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "data_length",
-          id: 8,
+          id: 8
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "chain_id",
-          id: 9,
+          id: 9
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "tx_type",
-          id: 10,
-        },
+          id: 10
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "EthereumTxRequest",
@@ -5803,34 +5803,34 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "data_length",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "signature_v",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "signature_r",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "signature_s",
-          id: 4,
-        },
+          id: 4
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "EthereumTxAck",
@@ -5840,13 +5840,13 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "data_chunk",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "EthereumSignMessage",
@@ -5856,20 +5856,20 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "address_n",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "message",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "EthereumMessageSignature",
@@ -5879,20 +5879,20 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "signature",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "address",
-          id: 3,
-        },
+          id: 3
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "EthereumVerifyMessage",
@@ -5902,27 +5902,27 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "signature",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "message",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "address",
-          id: 4,
-        },
+          id: 4
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "LiskGetAddress",
@@ -5932,20 +5932,20 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "address_n",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "show_display",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "LiskAddress",
@@ -5955,13 +5955,13 @@ export const messages = {
           options: {},
           type: "string",
           name: "address",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "LiskGetPublicKey",
@@ -5971,20 +5971,20 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "address_n",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "show_display",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "LiskPublicKey",
@@ -5994,13 +5994,13 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "public_key",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "LiskSignTx",
@@ -6010,15 +6010,15 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "address_n",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "LiskTransactionCommon",
           name: "transaction",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [
@@ -6030,66 +6030,66 @@ export const messages = {
               options: {},
               type: "LiskTransactionType",
               name: "type",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {
-                default: 0,
+                default: 0
               },
               type: "uint64",
               name: "amount",
-              id: 2,
+              id: 2
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "fee",
-              id: 3,
+              id: 3
             },
             {
               rule: "optional",
               options: {},
               type: "string",
               name: "recipient_id",
-              id: 4,
+              id: 4
             },
             {
               rule: "optional",
               options: {},
               type: "bytes",
               name: "sender_public_key",
-              id: 5,
+              id: 5
             },
             {
               rule: "optional",
               options: {},
               type: "bytes",
               name: "requester_public_key",
-              id: 6,
+              id: 6
             },
             {
               rule: "optional",
               options: {},
               type: "bytes",
               name: "signature",
-              id: 7,
+              id: 7
             },
             {
               rule: "optional",
               options: {},
               type: "uint32",
               name: "timestamp",
-              id: 8,
+              id: 8
             },
             {
               rule: "optional",
               options: {},
               type: "LiskTransactionAsset",
               name: "asset",
-              id: 9,
-            },
+              id: 9
+            }
           ],
           enums: [
             {
@@ -6097,39 +6097,39 @@ export const messages = {
               values: [
                 {
                   name: "Transfer",
-                  id: 0,
+                  id: 0
                 },
                 {
                   name: "RegisterSecondPassphrase",
-                  id: 1,
+                  id: 1
                 },
                 {
                   name: "RegisterDelegate",
-                  id: 2,
+                  id: 2
                 },
                 {
                   name: "CastVotes",
-                  id: 3,
+                  id: 3
                 },
                 {
                   name: "RegisterMultisignatureAccount",
-                  id: 4,
+                  id: 4
                 },
                 {
                   name: "CreateDapp",
-                  id: 5,
+                  id: 5
                 },
                 {
                   name: "TransferIntoDapp",
-                  id: 6,
+                  id: 6
                 },
                 {
                   name: "TransferOutOfDapp",
-                  id: 7,
-                },
+                  id: 7
+                }
               ],
-              options: {},
-            },
+              options: {}
+            }
           ],
           messages: [
             {
@@ -6140,36 +6140,36 @@ export const messages = {
                   options: {},
                   type: "LiskSignatureType",
                   name: "signature",
-                  id: 1,
+                  id: 1
                 },
                 {
                   rule: "optional",
                   options: {},
                   type: "LiskDelegateType",
                   name: "delegate",
-                  id: 2,
+                  id: 2
                 },
                 {
                   rule: "repeated",
                   options: {},
                   type: "string",
                   name: "votes",
-                  id: 3,
+                  id: 3
                 },
                 {
                   rule: "optional",
                   options: {},
                   type: "LiskMultisignatureType",
                   name: "multisignature",
-                  id: 4,
+                  id: 4
                 },
                 {
                   rule: "optional",
                   options: {},
                   type: "string",
                   name: "data",
-                  id: 5,
-                },
+                  id: 5
+                }
               ],
               enums: [],
               messages: [
@@ -6181,13 +6181,13 @@ export const messages = {
                       options: {},
                       type: "bytes",
                       name: "public_key",
-                      id: 1,
-                    },
+                      id: 1
+                    }
                   ],
                   enums: [],
                   messages: [],
                   options: {},
-                  oneofs: {},
+                  oneofs: {}
                 },
                 {
                   name: "LiskDelegateType",
@@ -6197,13 +6197,13 @@ export const messages = {
                       options: {},
                       type: "string",
                       name: "username",
-                      id: 1,
-                    },
+                      id: 1
+                    }
                   ],
                   enums: [],
                   messages: [],
                   options: {},
-                  oneofs: {},
+                  oneofs: {}
                 },
                 {
                   name: "LiskMultisignatureType",
@@ -6213,39 +6213,39 @@ export const messages = {
                       options: {},
                       type: "uint32",
                       name: "min",
-                      id: 1,
+                      id: 1
                     },
                     {
                       rule: "optional",
                       options: {},
                       type: "uint32",
                       name: "life_time",
-                      id: 2,
+                      id: 2
                     },
                     {
                       rule: "repeated",
                       options: {},
                       type: "string",
                       name: "keys_group",
-                      id: 3,
-                    },
+                      id: 3
+                    }
                   ],
                   enums: [],
                   messages: [],
                   options: {},
-                  oneofs: {},
-                },
+                  oneofs: {}
+                }
               ],
               options: {},
-              oneofs: {},
-            },
+              oneofs: {}
+            }
           ],
           options: {},
-          oneofs: {},
-        },
+          oneofs: {}
+        }
       ],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "LiskSignedTx",
@@ -6255,13 +6255,13 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "signature",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "LiskSignMessage",
@@ -6271,20 +6271,20 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "address_n",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "message",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "LiskMessageSignature",
@@ -6294,20 +6294,20 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "public_key",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "signature",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "LiskVerifyMessage",
@@ -6317,27 +6317,27 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "public_key",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "signature",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "message",
-          id: 3,
-        },
+          id: 3
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "Initialize",
@@ -6347,20 +6347,20 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "state",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "skip_passphrase",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "GetFeatures",
@@ -6368,7 +6368,7 @@ export const messages = {
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "Features",
@@ -6378,225 +6378,225 @@ export const messages = {
           options: {},
           type: "string",
           name: "vendor",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "major_version",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "minor_version",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "patch_version",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "bootloader_mode",
-          id: 5,
+          id: 5
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "device_id",
-          id: 6,
+          id: 6
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "pin_protection",
-          id: 7,
+          id: 7
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "passphrase_protection",
-          id: 8,
+          id: 8
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "language",
-          id: 9,
+          id: 9
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "label",
-          id: 10,
+          id: 10
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "initialized",
-          id: 12,
+          id: 12
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "revision",
-          id: 13,
+          id: 13
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "bootloader_hash",
-          id: 14,
+          id: 14
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "imported",
-          id: 15,
+          id: 15
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "pin_cached",
-          id: 16,
+          id: 16
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "passphrase_cached",
-          id: 17,
+          id: 17
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "firmware_present",
-          id: 18,
+          id: 18
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "needs_backup",
-          id: 19,
+          id: 19
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "flags",
-          id: 20,
+          id: 20
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "model",
-          id: 21,
+          id: 21
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "fw_major",
-          id: 22,
+          id: 22
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "fw_minor",
-          id: 23,
+          id: 23
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "fw_patch",
-          id: 24,
+          id: 24
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "fw_vendor",
-          id: 25,
+          id: 25
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "fw_vendor_keys",
-          id: 26,
+          id: 26
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "unfinished_backup",
-          id: 27,
+          id: 27
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "no_backup",
-          id: 28,
+          id: 28
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "recovery_mode",
-          id: 29,
+          id: 29
         },
         {
           rule: "repeated",
           options: {},
           type: "Capability",
           name: "capabilities",
-          id: 30,
+          id: 30
         },
         {
           rule: "optional",
           options: {},
           type: "BackupType",
           name: "backup_type",
-          id: 31,
+          id: 31
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "sd_card_present",
-          id: 32,
+          id: 32
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "sd_protection",
-          id: 33,
-        },
+          id: 33
+        }
       ],
       enums: [
         {
@@ -6604,75 +6604,75 @@ export const messages = {
           values: [
             {
               name: "Capability_Bitcoin",
-              id: 1,
+              id: 1
             },
             {
               name: "Capability_Bitcoin_like",
-              id: 2,
+              id: 2
             },
             {
               name: "Capability_Binance",
-              id: 3,
+              id: 3
             },
             {
               name: "Capability_Cardano",
-              id: 4,
+              id: 4
             },
             {
               name: "Capability_Crypto",
-              id: 5,
+              id: 5
             },
             {
               name: "Capability_EOS",
-              id: 6,
+              id: 6
             },
             {
               name: "Capability_Ethereum",
-              id: 7,
+              id: 7
             },
             {
               name: "Capability_Lisk",
-              id: 8,
+              id: 8
             },
             {
               name: "Capability_Monero",
-              id: 9,
+              id: 9
             },
             {
               name: "Capability_NEM",
-              id: 10,
+              id: 10
             },
             {
               name: "Capability_Ripple",
-              id: 11,
+              id: 11
             },
             {
               name: "Capability_Stellar",
-              id: 12,
+              id: 12
             },
             {
               name: "Capability_Tezos",
-              id: 13,
+              id: 13
             },
             {
               name: "Capability_U2F",
-              id: 14,
+              id: 14
             },
             {
               name: "Capability_Shamir",
-              id: 15,
+              id: 15
             },
             {
               name: "Capability_ShamirGroups",
-              id: 16,
-            },
+              id: 16
+            }
           ],
-          options: {},
-        },
+          options: {}
+        }
       ],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "ClearSession",
@@ -6680,7 +6680,7 @@ export const messages = {
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "ApplySettings",
@@ -6690,50 +6690,50 @@ export const messages = {
           options: {},
           type: "string",
           name: "language",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "label",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "use_passphrase",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "homescreen",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {},
           type: "PassphraseSourceType",
           name: "passphrase_source",
-          id: 5,
+          id: 5
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "auto_lock_delay_ms",
-          id: 6,
+          id: 6
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "display_rotation",
-          id: 7,
-        },
+          id: 7
+        }
       ],
       enums: [
         {
@@ -6741,23 +6741,23 @@ export const messages = {
           values: [
             {
               name: "ASK",
-              id: 0,
+              id: 0
             },
             {
               name: "DEVICE",
-              id: 1,
+              id: 1
             },
             {
               name: "HOST",
-              id: 2,
-            },
+              id: 2
+            }
           ],
-          options: {},
-        },
+          options: {}
+        }
       ],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "ApplyFlags",
@@ -6767,13 +6767,13 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "flags",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "ChangePin",
@@ -6783,13 +6783,13 @@ export const messages = {
           options: {},
           type: "bool",
           name: "remove",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "SdProtect",
@@ -6799,8 +6799,8 @@ export const messages = {
           options: {},
           type: "SdProtectOperationType",
           name: "operation",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [
         {
@@ -6808,23 +6808,23 @@ export const messages = {
           values: [
             {
               name: "DISABLE",
-              id: 0,
+              id: 0
             },
             {
               name: "ENABLE",
-              id: 1,
+              id: 1
             },
             {
               name: "REFRESH",
-              id: 2,
-            },
+              id: 2
+            }
           ],
-          options: {},
-        },
+          options: {}
+        }
       ],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "Ping",
@@ -6834,34 +6834,34 @@ export const messages = {
           options: {},
           type: "string",
           name: "message",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "button_protection",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "pin_protection",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "passphrase_protection",
-          id: 4,
-        },
+          id: 4
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "Cancel",
@@ -6869,7 +6869,7 @@ export const messages = {
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "GetEntropy",
@@ -6879,13 +6879,13 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "size",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "Entropy",
@@ -6895,13 +6895,13 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "entropy",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "WipeDevice",
@@ -6909,7 +6909,7 @@ export const messages = {
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "LoadDevice",
@@ -6919,64 +6919,64 @@ export const messages = {
           options: {},
           type: "string",
           name: "mnemonics",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "HDNodeType",
           name: "node",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "pin",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "passphrase_protection",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {
-            default: "english",
+            default: "english"
           },
           type: "string",
           name: "language",
-          id: 5,
+          id: 5
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "label",
-          id: 6,
+          id: 6
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "skip_checksum",
-          id: 7,
+          id: 7
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "u2f_counter",
-          id: 8,
-        },
+          id: 8
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "ResetDevice",
@@ -6986,82 +6986,82 @@ export const messages = {
           options: {},
           type: "bool",
           name: "display_random",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {
-            default: 256,
+            default: 256
           },
           type: "uint32",
           name: "strength",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "passphrase_protection",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "pin_protection",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {
-            default: "english",
+            default: "english"
           },
           type: "string",
           name: "language",
-          id: 5,
+          id: 5
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "label",
-          id: 6,
+          id: 6
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "u2f_counter",
-          id: 7,
+          id: 7
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "skip_backup",
-          id: 8,
+          id: 8
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "no_backup",
-          id: 9,
+          id: 9
         },
         {
           rule: "optional",
           options: {
-            default: "Bip39",
+            default: "Bip39"
           },
           type: "BackupType",
           name: "backup_type",
-          id: 10,
-        },
+          id: 10
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "BackupDevice",
@@ -7069,7 +7069,7 @@ export const messages = {
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "EntropyRequest",
@@ -7077,7 +7077,7 @@ export const messages = {
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "EntropyAck",
@@ -7087,13 +7087,13 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "entropy",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "RecoveryDevice",
@@ -7103,66 +7103,66 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "word_count",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "passphrase_protection",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "pin_protection",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {
-            default: "english",
+            default: "english"
           },
           type: "string",
           name: "language",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "label",
-          id: 5,
+          id: 5
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "enforce_wordlist",
-          id: 6,
+          id: 6
         },
         {
           rule: "optional",
           options: {},
           type: "RecoveryDeviceType",
           name: "type",
-          id: 8,
+          id: 8
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "u2f_counter",
-          id: 9,
+          id: 9
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "dry_run",
-          id: 10,
-        },
+          id: 10
+        }
       ],
       enums: [
         {
@@ -7170,19 +7170,19 @@ export const messages = {
           values: [
             {
               name: "RecoveryDeviceType_ScrambledWords",
-              id: 0,
+              id: 0
             },
             {
               name: "RecoveryDeviceType_Matrix",
-              id: 1,
-            },
+              id: 1
+            }
           ],
-          options: {},
-        },
+          options: {}
+        }
       ],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "WordRequest",
@@ -7192,8 +7192,8 @@ export const messages = {
           options: {},
           type: "WordRequestType",
           name: "type",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [
         {
@@ -7201,23 +7201,23 @@ export const messages = {
           values: [
             {
               name: "WordRequestType_Plain",
-              id: 0,
+              id: 0
             },
             {
               name: "WordRequestType_Matrix9",
-              id: 1,
+              id: 1
             },
             {
               name: "WordRequestType_Matrix6",
-              id: 2,
-            },
+              id: 2
+            }
           ],
-          options: {},
-        },
+          options: {}
+        }
       ],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "WordAck",
@@ -7227,13 +7227,13 @@ export const messages = {
           options: {},
           type: "string",
           name: "word",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "SetU2FCounter",
@@ -7243,13 +7243,13 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "u2f_counter",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroTransactionSourceEntry",
@@ -7259,64 +7259,64 @@ export const messages = {
           options: {},
           type: "MoneroOutputEntry",
           name: "outputs",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "uint64",
           name: "real_output",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "real_out_tx_key",
-          id: 3,
+          id: 3
         },
         {
           rule: "repeated",
           options: {},
           type: "bytes",
           name: "real_out_additional_tx_keys",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {},
           type: "uint64",
           name: "real_output_in_tx_index",
-          id: 5,
+          id: 5
         },
         {
           rule: "optional",
           options: {},
           type: "uint64",
           name: "amount",
-          id: 6,
+          id: 6
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "rct",
-          id: 7,
+          id: 7
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "mask",
-          id: 8,
+          id: 8
         },
         {
           rule: "optional",
           options: {},
           type: "MoneroMultisigKLRki",
           name: "multisig_kLRki",
-          id: 9,
-        },
+          id: 9
+        }
       ],
       enums: [],
       messages: [
@@ -7328,15 +7328,15 @@ export const messages = {
               options: {},
               type: "uint64",
               name: "idx",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "MoneroRctKeyPublic",
               name: "key",
-              id: 2,
-            },
+              id: 2
+            }
           ],
           enums: [],
           messages: [
@@ -7348,24 +7348,24 @@ export const messages = {
                   options: {},
                   type: "bytes",
                   name: "dest",
-                  id: 1,
+                  id: 1
                 },
                 {
                   rule: "optional",
                   options: {},
                   type: "bytes",
                   name: "commitment",
-                  id: 2,
-                },
+                  id: 2
+                }
               ],
               enums: [],
               messages: [],
               options: {},
-              oneofs: {},
-            },
+              oneofs: {}
+            }
           ],
           options: {},
-          oneofs: {},
+          oneofs: {}
         },
         {
           name: "MoneroMultisigKLRki",
@@ -7375,38 +7375,38 @@ export const messages = {
               options: {},
               type: "bytes",
               name: "K",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "bytes",
               name: "L",
-              id: 2,
+              id: 2
             },
             {
               rule: "optional",
               options: {},
               type: "bytes",
               name: "R",
-              id: 3,
+              id: 3
             },
             {
               rule: "optional",
               options: {},
               type: "bytes",
               name: "ki",
-              id: 4,
-            },
+              id: 4
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
-        },
+          oneofs: {}
+        }
       ],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroTransactionDestinationEntry",
@@ -7416,36 +7416,36 @@ export const messages = {
           options: {},
           type: "uint64",
           name: "amount",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "MoneroAccountPublicAddress",
           name: "addr",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "is_subaddress",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "original",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "is_integrated",
-          id: 5,
-        },
+          id: 5
+        }
       ],
       enums: [],
       messages: [
@@ -7457,24 +7457,24 @@ export const messages = {
               options: {},
               type: "bytes",
               name: "spend_public_key",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "bytes",
               name: "view_public_key",
-              id: 2,
-            },
+              id: 2
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
-        },
+          oneofs: {}
+        }
       ],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroTransactionRsigData",
@@ -7484,55 +7484,55 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "rsig_type",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "offload_type",
-          id: 2,
+          id: 2
         },
         {
           rule: "repeated",
           options: {},
           type: "uint64",
           name: "grouping",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "mask",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "rsig",
-          id: 5,
+          id: 5
         },
         {
           rule: "repeated",
           options: {},
           type: "bytes",
           name: "rsig_parts",
-          id: 6,
+          id: 6
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "bp_version",
-          id: 7,
-        },
+          id: 7
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroGetAddress",
@@ -7542,48 +7542,48 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "address_n",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "show_display",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "network_type",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "account",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "minor",
-          id: 5,
+          id: 5
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "payment_id",
-          id: 6,
-        },
+          id: 6
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroAddress",
@@ -7593,13 +7593,13 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "address",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroGetWatchKey",
@@ -7609,20 +7609,20 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "address_n",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "network_type",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroWatchKey",
@@ -7632,20 +7632,20 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "watch_key",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "address",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroTransactionInitRequest",
@@ -7655,29 +7655,29 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "version",
-          id: 1,
+          id: 1
         },
         {
           rule: "repeated",
           options: {},
           type: "uint32",
           name: "address_n",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "network_type",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "MoneroTransactionData",
           name: "tsx_data",
-          id: 4,
-        },
+          id: 4
+        }
       ],
       enums: [],
       messages: [
@@ -7689,115 +7689,115 @@ export const messages = {
               options: {},
               type: "uint32",
               name: "version",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "bytes",
               name: "payment_id",
-              id: 2,
+              id: 2
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "unlock_time",
-              id: 3,
+              id: 3
             },
             {
               rule: "repeated",
               options: {},
               type: "MoneroTransactionDestinationEntry",
               name: "outputs",
-              id: 4,
+              id: 4
             },
             {
               rule: "optional",
               options: {},
               type: "MoneroTransactionDestinationEntry",
               name: "change_dts",
-              id: 5,
+              id: 5
             },
             {
               rule: "optional",
               options: {},
               type: "uint32",
               name: "num_inputs",
-              id: 6,
+              id: 6
             },
             {
               rule: "optional",
               options: {},
               type: "uint32",
               name: "mixin",
-              id: 7,
+              id: 7
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "fee",
-              id: 8,
+              id: 8
             },
             {
               rule: "optional",
               options: {},
               type: "uint32",
               name: "account",
-              id: 9,
+              id: 9
             },
             {
               rule: "repeated",
               options: {},
               type: "uint32",
               name: "minor_indices",
-              id: 10,
+              id: 10
             },
             {
               rule: "optional",
               options: {},
               type: "MoneroTransactionRsigData",
               name: "rsig_data",
-              id: 11,
+              id: 11
             },
             {
               rule: "repeated",
               options: {},
               type: "uint32",
               name: "integrated_indices",
-              id: 12,
+              id: 12
             },
             {
               rule: "optional",
               options: {},
               type: "uint32",
               name: "client_version",
-              id: 13,
+              id: 13
             },
             {
               rule: "optional",
               options: {},
               type: "uint32",
               name: "hard_fork",
-              id: 14,
+              id: 14
             },
             {
               rule: "optional",
               options: {},
               type: "bytes",
               name: "monero_version",
-              id: 15,
-            },
+              id: 15
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
-        },
+          oneofs: {}
+        }
       ],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroTransactionInitAck",
@@ -7807,20 +7807,20 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "hmacs",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "MoneroTransactionRsigData",
           name: "rsig_data",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroTransactionSetInputRequest",
@@ -7830,13 +7830,13 @@ export const messages = {
           options: {},
           type: "MoneroTransactionSourceEntry",
           name: "src_entr",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroTransactionSetInputAck",
@@ -7846,48 +7846,48 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "vini",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "vini_hmac",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "pseudo_out",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "pseudo_out_hmac",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "pseudo_out_alpha",
-          id: 5,
+          id: 5
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "spend_key",
-          id: 6,
-        },
+          id: 6
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroTransactionInputsPermutationRequest",
@@ -7897,13 +7897,13 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "perm",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroTransactionInputsPermutationAck",
@@ -7911,7 +7911,7 @@ export const messages = {
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroTransactionInputViniRequest",
@@ -7921,41 +7921,41 @@ export const messages = {
           options: {},
           type: "MoneroTransactionSourceEntry",
           name: "src_entr",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "vini",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "vini_hmac",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "pseudo_out",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "pseudo_out_hmac",
-          id: 5,
-        },
+          id: 5
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroTransactionInputViniAck",
@@ -7963,7 +7963,7 @@ export const messages = {
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroTransactionAllInputsSetRequest",
@@ -7971,7 +7971,7 @@ export const messages = {
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroTransactionAllInputsSetAck",
@@ -7981,13 +7981,13 @@ export const messages = {
           options: {},
           type: "MoneroTransactionRsigData",
           name: "rsig_data",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroTransactionSetOutputRequest",
@@ -7997,34 +7997,34 @@ export const messages = {
           options: {},
           type: "MoneroTransactionDestinationEntry",
           name: "dst_entr",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "dst_entr_hmac",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "MoneroTransactionRsigData",
           name: "rsig_data",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "is_offloaded_bp",
-          id: 4,
-        },
+          id: 4
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroTransactionSetOutputAck",
@@ -8034,41 +8034,41 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "tx_out",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "vouti_hmac",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "MoneroTransactionRsigData",
           name: "rsig_data",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "out_pk",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "ecdh_info",
-          id: 5,
-        },
+          id: 5
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroTransactionAllOutSetRequest",
@@ -8078,13 +8078,13 @@ export const messages = {
           options: {},
           type: "MoneroTransactionRsigData",
           name: "rsig_data",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroTransactionAllOutSetAck",
@@ -8094,29 +8094,29 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "extra",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "tx_prefix_hash",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "MoneroRingCtSig",
           name: "rv",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "full_message_hash",
-          id: 5,
-        },
+          id: 5
+        }
       ],
       enums: [],
       messages: [
@@ -8128,31 +8128,31 @@ export const messages = {
               options: {},
               type: "uint64",
               name: "txn_fee",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "bytes",
               name: "message",
-              id: 2,
+              id: 2
             },
             {
               rule: "optional",
               options: {},
               type: "uint32",
               name: "rv_type",
-              id: 3,
-            },
+              id: 3
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
-        },
+          oneofs: {}
+        }
       ],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroTransactionSignInputRequest",
@@ -8162,55 +8162,55 @@ export const messages = {
           options: {},
           type: "MoneroTransactionSourceEntry",
           name: "src_entr",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "vini",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "vini_hmac",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "pseudo_out",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "pseudo_out_hmac",
-          id: 5,
+          id: 5
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "pseudo_out_alpha",
-          id: 6,
+          id: 6
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "spend_key",
-          id: 7,
-        },
+          id: 7
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroTransactionSignInputAck",
@@ -8220,20 +8220,20 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "signature",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "pseudo_out",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroTransactionFinalRequest",
@@ -8241,7 +8241,7 @@ export const messages = {
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroTransactionFinalAck",
@@ -8251,34 +8251,34 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "cout_key",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "salt",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "rand_mult",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "tx_enc_keys",
-          id: 4,
-        },
+          id: 4
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroKeyImageExportInitRequest",
@@ -8288,36 +8288,36 @@ export const messages = {
           options: {},
           type: "uint64",
           name: "num",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "hash",
-          id: 2,
+          id: 2
         },
         {
           rule: "repeated",
           options: {},
           type: "uint32",
           name: "address_n",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "network_type",
-          id: 4,
+          id: 4
         },
         {
           rule: "repeated",
           options: {},
           type: "MoneroSubAddressIndicesList",
           name: "subs",
-          id: 5,
-        },
+          id: 5
+        }
       ],
       enums: [],
       messages: [
@@ -8329,24 +8329,24 @@ export const messages = {
               options: {},
               type: "uint32",
               name: "account",
-              id: 1,
+              id: 1
             },
             {
               rule: "repeated",
               options: {},
               type: "uint32",
               name: "minor_indices",
-              id: 2,
-            },
+              id: 2
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
-        },
+          oneofs: {}
+        }
       ],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroKeyImageExportInitAck",
@@ -8354,7 +8354,7 @@ export const messages = {
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroKeyImageSyncStepRequest",
@@ -8364,8 +8364,8 @@ export const messages = {
           options: {},
           type: "MoneroTransferDetails",
           name: "tdis",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [
@@ -8377,38 +8377,38 @@ export const messages = {
               options: {},
               type: "bytes",
               name: "out_key",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "bytes",
               name: "tx_pub_key",
-              id: 2,
+              id: 2
             },
             {
               rule: "repeated",
               options: {},
               type: "bytes",
               name: "additional_tx_pub_keys",
-              id: 3,
+              id: 3
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "internal_output_index",
-              id: 4,
-            },
+              id: 4
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
-        },
+          oneofs: {}
+        }
       ],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroKeyImageSyncStepAck",
@@ -8418,8 +8418,8 @@ export const messages = {
           options: {},
           type: "MoneroExportedKeyImage",
           name: "kis",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [
@@ -8431,24 +8431,24 @@ export const messages = {
               options: {},
               type: "bytes",
               name: "iv",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "bytes",
               name: "blob",
-              id: 3,
-            },
+              id: 3
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
-        },
+          oneofs: {}
+        }
       ],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroKeyImageSyncFinalRequest",
@@ -8456,7 +8456,7 @@ export const messages = {
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroKeyImageSyncFinalAck",
@@ -8466,13 +8466,13 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "enc_key",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroGetTxKeyRequest",
@@ -8482,62 +8482,62 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "address_n",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "network_type",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "salt1",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "salt2",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "tx_enc_keys",
-          id: 5,
+          id: 5
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "tx_prefix_hash",
-          id: 6,
+          id: 6
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "reason",
-          id: 7,
+          id: 7
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "view_public_key",
-          id: 8,
-        },
+          id: 8
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroGetTxKeyAck",
@@ -8547,27 +8547,27 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "salt",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "tx_keys",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "tx_derivations",
-          id: 3,
-        },
+          id: 3
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroLiveRefreshStartRequest",
@@ -8577,20 +8577,20 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "address_n",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "network_type",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroLiveRefreshStartAck",
@@ -8598,7 +8598,7 @@ export const messages = {
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroLiveRefreshStepRequest",
@@ -8608,41 +8608,41 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "out_key",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "recv_deriv",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "uint64",
           name: "real_out_idx",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "sub_addr_major",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "sub_addr_minor",
-          id: 5,
-        },
+          id: 5
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroLiveRefreshStepAck",
@@ -8652,20 +8652,20 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "salt",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "key_image",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroLiveRefreshFinalRequest",
@@ -8673,7 +8673,7 @@ export const messages = {
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "MoneroLiveRefreshFinalAck",
@@ -8681,7 +8681,7 @@ export const messages = {
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "DebugMoneroDiagRequest",
@@ -8691,48 +8691,48 @@ export const messages = {
           options: {},
           type: "uint64",
           name: "ins",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "uint64",
           name: "p1",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "uint64",
           name: "p2",
-          id: 3,
+          id: 3
         },
         {
           rule: "repeated",
           options: {},
           type: "uint64",
           name: "pd",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "data1",
-          id: 5,
+          id: 5
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "data2",
-          id: 6,
-        },
+          id: 6
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "DebugMoneroDiagAck",
@@ -8742,48 +8742,48 @@ export const messages = {
           options: {},
           type: "uint64",
           name: "ins",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "uint64",
           name: "p1",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "uint64",
           name: "p2",
-          id: 3,
+          id: 3
         },
         {
           rule: "repeated",
           options: {},
           type: "uint64",
           name: "pd",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "data1",
-          id: 5,
+          id: 5
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "data2",
-          id: 6,
-        },
+          id: 6
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "NEMGetAddress",
@@ -8793,27 +8793,27 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "address_n",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "network",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "show_display",
-          id: 3,
-        },
+          id: 3
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "NEMAddress",
@@ -8823,13 +8823,13 @@ export const messages = {
           options: {},
           type: "string",
           name: "address",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "NEMSignTx",
@@ -8839,64 +8839,64 @@ export const messages = {
           options: {},
           type: "NEMTransactionCommon",
           name: "transaction",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "NEMTransactionCommon",
           name: "multisig",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "NEMTransfer",
           name: "transfer",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "cosigning",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {},
           type: "NEMProvisionNamespace",
           name: "provision_namespace",
-          id: 5,
+          id: 5
         },
         {
           rule: "optional",
           options: {},
           type: "NEMMosaicCreation",
           name: "mosaic_creation",
-          id: 6,
+          id: 6
         },
         {
           rule: "optional",
           options: {},
           type: "NEMMosaicSupplyChange",
           name: "supply_change",
-          id: 7,
+          id: 7
         },
         {
           rule: "optional",
           options: {},
           type: "NEMAggregateModification",
           name: "aggregate_modification",
-          id: 8,
+          id: 8
         },
         {
           rule: "optional",
           options: {},
           type: "NEMImportanceTransfer",
           name: "importance_transfer",
-          id: 9,
-        },
+          id: 9
+        }
       ],
       enums: [],
       messages: [
@@ -8908,48 +8908,48 @@ export const messages = {
               options: {},
               type: "uint32",
               name: "address_n",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "uint32",
               name: "network",
-              id: 2,
+              id: 2
             },
             {
               rule: "optional",
               options: {},
               type: "uint32",
               name: "timestamp",
-              id: 3,
+              id: 3
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "fee",
-              id: 4,
+              id: 4
             },
             {
               rule: "optional",
               options: {},
               type: "uint32",
               name: "deadline",
-              id: 5,
+              id: 5
             },
             {
               rule: "optional",
               options: {},
               type: "bytes",
               name: "signer",
-              id: 6,
-            },
+              id: 6
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
+          oneofs: {}
         },
         {
           name: "NEMTransfer",
@@ -8959,36 +8959,36 @@ export const messages = {
               options: {},
               type: "string",
               name: "recipient",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "amount",
-              id: 2,
+              id: 2
             },
             {
               rule: "optional",
               options: {},
               type: "bytes",
               name: "payload",
-              id: 3,
+              id: 3
             },
             {
               rule: "optional",
               options: {},
               type: "bytes",
               name: "public_key",
-              id: 4,
+              id: 4
             },
             {
               rule: "repeated",
               options: {},
               type: "NEMMosaic",
               name: "mosaics",
-              id: 5,
-            },
+              id: 5
+            }
           ],
           enums: [],
           messages: [
@@ -9000,31 +9000,31 @@ export const messages = {
                   options: {},
                   type: "string",
                   name: "namespace",
-                  id: 1,
+                  id: 1
                 },
                 {
                   rule: "optional",
                   options: {},
                   type: "string",
                   name: "mosaic",
-                  id: 2,
+                  id: 2
                 },
                 {
                   rule: "optional",
                   options: {},
                   type: "uint64",
                   name: "quantity",
-                  id: 3,
-                },
+                  id: 3
+                }
               ],
               enums: [],
               messages: [],
               options: {},
-              oneofs: {},
-            },
+              oneofs: {}
+            }
           ],
           options: {},
-          oneofs: {},
+          oneofs: {}
         },
         {
           name: "NEMProvisionNamespace",
@@ -9034,34 +9034,34 @@ export const messages = {
               options: {},
               type: "string",
               name: "namespace",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "string",
               name: "parent",
-              id: 2,
+              id: 2
             },
             {
               rule: "optional",
               options: {},
               type: "string",
               name: "sink",
-              id: 3,
+              id: 3
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "fee",
-              id: 4,
-            },
+              id: 4
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
+          oneofs: {}
         },
         {
           name: "NEMMosaicCreation",
@@ -9071,22 +9071,22 @@ export const messages = {
               options: {},
               type: "NEMMosaicDefinition",
               name: "definition",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "string",
               name: "sink",
-              id: 2,
+              id: 2
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "fee",
-              id: 3,
-            },
+              id: 3
+            }
           ],
           enums: [],
           messages: [
@@ -9098,106 +9098,106 @@ export const messages = {
                   options: {},
                   type: "string",
                   name: "name",
-                  id: 1,
+                  id: 1
                 },
                 {
                   rule: "optional",
                   options: {},
                   type: "string",
                   name: "ticker",
-                  id: 2,
+                  id: 2
                 },
                 {
                   rule: "optional",
                   options: {},
                   type: "string",
                   name: "namespace",
-                  id: 3,
+                  id: 3
                 },
                 {
                   rule: "optional",
                   options: {},
                   type: "string",
                   name: "mosaic",
-                  id: 4,
+                  id: 4
                 },
                 {
                   rule: "optional",
                   options: {},
                   type: "uint32",
                   name: "divisibility",
-                  id: 5,
+                  id: 5
                 },
                 {
                   rule: "optional",
                   options: {},
                   type: "NEMMosaicLevy",
                   name: "levy",
-                  id: 6,
+                  id: 6
                 },
                 {
                   rule: "optional",
                   options: {},
                   type: "uint64",
                   name: "fee",
-                  id: 7,
+                  id: 7
                 },
                 {
                   rule: "optional",
                   options: {},
                   type: "string",
                   name: "levy_address",
-                  id: 8,
+                  id: 8
                 },
                 {
                   rule: "optional",
                   options: {},
                   type: "string",
                   name: "levy_namespace",
-                  id: 9,
+                  id: 9
                 },
                 {
                   rule: "optional",
                   options: {},
                   type: "string",
                   name: "levy_mosaic",
-                  id: 10,
+                  id: 10
                 },
                 {
                   rule: "optional",
                   options: {},
                   type: "uint64",
                   name: "supply",
-                  id: 11,
+                  id: 11
                 },
                 {
                   rule: "optional",
                   options: {},
                   type: "bool",
                   name: "mutable_supply",
-                  id: 12,
+                  id: 12
                 },
                 {
                   rule: "optional",
                   options: {},
                   type: "bool",
                   name: "transferable",
-                  id: 13,
+                  id: 13
                 },
                 {
                   rule: "optional",
                   options: {},
                   type: "string",
                   name: "description",
-                  id: 14,
+                  id: 14
                 },
                 {
                   rule: "repeated",
                   options: {},
                   type: "uint32",
                   name: "networks",
-                  id: 15,
-                },
+                  id: 15
+                }
               ],
               enums: [
                 {
@@ -9205,23 +9205,23 @@ export const messages = {
                   values: [
                     {
                       name: "MosaicLevy_Absolute",
-                      id: 1,
+                      id: 1
                     },
                     {
                       name: "MosaicLevy_Percentile",
-                      id: 2,
-                    },
+                      id: 2
+                    }
                   ],
-                  options: {},
-                },
+                  options: {}
+                }
               ],
               messages: [],
               options: {},
-              oneofs: {},
-            },
+              oneofs: {}
+            }
           ],
           options: {},
-          oneofs: {},
+          oneofs: {}
         },
         {
           name: "NEMMosaicSupplyChange",
@@ -9231,29 +9231,29 @@ export const messages = {
               options: {},
               type: "string",
               name: "namespace",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "string",
               name: "mosaic",
-              id: 2,
+              id: 2
             },
             {
               rule: "optional",
               options: {},
               type: "NEMSupplyChangeType",
               name: "type",
-              id: 3,
+              id: 3
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "delta",
-              id: 4,
-            },
+              id: 4
+            }
           ],
           enums: [
             {
@@ -9261,19 +9261,19 @@ export const messages = {
               values: [
                 {
                   name: "SupplyChange_Increase",
-                  id: 1,
+                  id: 1
                 },
                 {
                   name: "SupplyChange_Decrease",
-                  id: 2,
-                },
+                  id: 2
+                }
               ],
-              options: {},
-            },
+              options: {}
+            }
           ],
           messages: [],
           options: {},
-          oneofs: {},
+          oneofs: {}
         },
         {
           name: "NEMAggregateModification",
@@ -9283,15 +9283,15 @@ export const messages = {
               options: {},
               type: "NEMCosignatoryModification",
               name: "modifications",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "sint32",
               name: "relative_change",
-              id: 2,
-            },
+              id: 2
+            }
           ],
           enums: [],
           messages: [
@@ -9303,15 +9303,15 @@ export const messages = {
                   options: {},
                   type: "NEMModificationType",
                   name: "type",
-                  id: 1,
+                  id: 1
                 },
                 {
                   rule: "optional",
                   options: {},
                   type: "bytes",
                   name: "public_key",
-                  id: 2,
-                },
+                  id: 2
+                }
               ],
               enums: [
                 {
@@ -9319,23 +9319,23 @@ export const messages = {
                   values: [
                     {
                       name: "CosignatoryModification_Add",
-                      id: 1,
+                      id: 1
                     },
                     {
                       name: "CosignatoryModification_Delete",
-                      id: 2,
-                    },
+                      id: 2
+                    }
                   ],
-                  options: {},
-                },
+                  options: {}
+                }
               ],
               messages: [],
               options: {},
-              oneofs: {},
-            },
+              oneofs: {}
+            }
           ],
           options: {},
-          oneofs: {},
+          oneofs: {}
         },
         {
           name: "NEMImportanceTransfer",
@@ -9345,15 +9345,15 @@ export const messages = {
               options: {},
               type: "NEMImportanceTransferMode",
               name: "mode",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "bytes",
               name: "public_key",
-              id: 2,
-            },
+              id: 2
+            }
           ],
           enums: [
             {
@@ -9361,23 +9361,23 @@ export const messages = {
               values: [
                 {
                   name: "ImportanceTransfer_Activate",
-                  id: 1,
+                  id: 1
                 },
                 {
                   name: "ImportanceTransfer_Deactivate",
-                  id: 2,
-                },
+                  id: 2
+                }
               ],
-              options: {},
-            },
+              options: {}
+            }
           ],
           messages: [],
           options: {},
-          oneofs: {},
-        },
+          oneofs: {}
+        }
       ],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "NEMSignedTx",
@@ -9387,20 +9387,20 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "data",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "signature",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "NEMDecryptMessage",
@@ -9410,34 +9410,34 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "address_n",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "network",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "public_key",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "payload",
-          id: 4,
-        },
+          id: 4
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "NEMDecryptedMessage",
@@ -9447,13 +9447,13 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "payload",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "RippleGetAddress",
@@ -9463,20 +9463,20 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "address_n",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "show_display",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "RippleAddress",
@@ -9486,13 +9486,13 @@ export const messages = {
           options: {},
           type: "string",
           name: "address",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "RippleSignTx",
@@ -9502,43 +9502,43 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "address_n",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "uint64",
           name: "fee",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "flags",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "sequence",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "last_ledger_sequence",
-          id: 5,
+          id: 5
         },
         {
           rule: "optional",
           options: {},
           type: "RipplePayment",
           name: "payment",
-          id: 6,
-        },
+          id: 6
+        }
       ],
       enums: [],
       messages: [
@@ -9550,31 +9550,31 @@ export const messages = {
               options: {},
               type: "uint64",
               name: "amount",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "string",
               name: "destination",
-              id: 2,
+              id: 2
             },
             {
               rule: "optional",
               options: {},
               type: "uint32",
               name: "destination_tag",
-              id: 3,
-            },
+              id: 3
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
-        },
+          oneofs: {}
+        }
       ],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "RippleSignedTx",
@@ -9584,20 +9584,20 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "signature",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "serialized_tx",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "StellarAssetType",
@@ -9607,27 +9607,27 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "type",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "code",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "issuer",
-          id: 3,
-        },
+          id: 3
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "StellarGetAddress",
@@ -9637,20 +9637,20 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "address_n",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "show_display",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "StellarAddress",
@@ -9660,13 +9660,13 @@ export const messages = {
           options: {},
           type: "string",
           name: "address",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "StellarSignTx",
@@ -9676,90 +9676,90 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "address_n",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "network_passphrase",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "source_account",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "fee",
-          id: 5,
+          id: 5
         },
         {
           rule: "optional",
           options: {},
           type: "uint64",
           name: "sequence_number",
-          id: 6,
+          id: 6
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "timebounds_start",
-          id: 8,
+          id: 8
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "timebounds_end",
-          id: 9,
+          id: 9
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "memo_type",
-          id: 10,
+          id: 10
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "memo_text",
-          id: 11,
+          id: 11
         },
         {
           rule: "optional",
           options: {},
           type: "uint64",
           name: "memo_id",
-          id: 12,
+          id: 12
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "memo_hash",
-          id: 13,
+          id: 13
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "num_operations",
-          id: 14,
-        },
+          id: 14
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "StellarTxOpRequest",
@@ -9767,7 +9767,7 @@ export const messages = {
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "StellarPaymentOp",
@@ -9777,34 +9777,34 @@ export const messages = {
           options: {},
           type: "string",
           name: "source_account",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "destination_account",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "StellarAssetType",
           name: "asset",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "sint64",
           name: "amount",
-          id: 4,
-        },
+          id: 4
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "StellarCreateAccountOp",
@@ -9814,27 +9814,27 @@ export const messages = {
           options: {},
           type: "string",
           name: "source_account",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "new_account",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "sint64",
           name: "starting_balance",
-          id: 3,
-        },
+          id: 3
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "StellarPathPaymentOp",
@@ -9844,55 +9844,55 @@ export const messages = {
           options: {},
           type: "string",
           name: "source_account",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "StellarAssetType",
           name: "send_asset",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "sint64",
           name: "send_max",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "destination_account",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {},
           type: "StellarAssetType",
           name: "destination_asset",
-          id: 5,
+          id: 5
         },
         {
           rule: "optional",
           options: {},
           type: "sint64",
           name: "destination_amount",
-          id: 6,
+          id: 6
         },
         {
           rule: "repeated",
           options: {},
           type: "StellarAssetType",
           name: "paths",
-          id: 7,
-        },
+          id: 7
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "StellarManageOfferOp",
@@ -9902,55 +9902,55 @@ export const messages = {
           options: {},
           type: "string",
           name: "source_account",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "StellarAssetType",
           name: "selling_asset",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "StellarAssetType",
           name: "buying_asset",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "sint64",
           name: "amount",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "price_n",
-          id: 5,
+          id: 5
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "price_d",
-          id: 6,
+          id: 6
         },
         {
           rule: "optional",
           options: {},
           type: "uint64",
           name: "offer_id",
-          id: 7,
-        },
+          id: 7
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "StellarCreatePassiveOfferOp",
@@ -9960,48 +9960,48 @@ export const messages = {
           options: {},
           type: "string",
           name: "source_account",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "StellarAssetType",
           name: "selling_asset",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "StellarAssetType",
           name: "buying_asset",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "sint64",
           name: "amount",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "price_n",
-          id: 5,
+          id: 5
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "price_d",
-          id: 6,
-        },
+          id: 6
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "StellarSetOptionsOp",
@@ -10011,90 +10011,90 @@ export const messages = {
           options: {},
           type: "string",
           name: "source_account",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "inflation_destination_account",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "clear_flags",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "set_flags",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "master_weight",
-          id: 5,
+          id: 5
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "low_threshold",
-          id: 6,
+          id: 6
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "medium_threshold",
-          id: 7,
+          id: 7
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "high_threshold",
-          id: 8,
+          id: 8
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "home_domain",
-          id: 9,
+          id: 9
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "signer_type",
-          id: 10,
+          id: 10
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "signer_key",
-          id: 11,
+          id: 11
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "signer_weight",
-          id: 12,
-        },
+          id: 12
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "StellarChangeTrustOp",
@@ -10104,27 +10104,27 @@ export const messages = {
           options: {},
           type: "string",
           name: "source_account",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "StellarAssetType",
           name: "asset",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "uint64",
           name: "limit",
-          id: 3,
-        },
+          id: 3
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "StellarAllowTrustOp",
@@ -10134,41 +10134,41 @@ export const messages = {
           options: {},
           type: "string",
           name: "source_account",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "trusted_account",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "asset_type",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "asset_code",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {},
           type: "uint32",
           name: "is_authorized",
-          id: 5,
-        },
+          id: 5
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "StellarAccountMergeOp",
@@ -10178,20 +10178,20 @@ export const messages = {
           options: {},
           type: "string",
           name: "source_account",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "destination_account",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "StellarManageDataOp",
@@ -10201,27 +10201,27 @@ export const messages = {
           options: {},
           type: "string",
           name: "source_account",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "key",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "value",
-          id: 3,
-        },
+          id: 3
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "StellarBumpSequenceOp",
@@ -10231,20 +10231,20 @@ export const messages = {
           options: {},
           type: "string",
           name: "source_account",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "uint64",
           name: "bump_to",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "StellarSignedTx",
@@ -10254,20 +10254,20 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "public_key",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "signature",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "TezosGetAddress",
@@ -10277,20 +10277,20 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "address_n",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "show_display",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "TezosAddress",
@@ -10300,13 +10300,13 @@ export const messages = {
           options: {},
           type: "string",
           name: "address",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "TezosGetPublicKey",
@@ -10316,20 +10316,20 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "address_n",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "show_display",
-          id: 2,
-        },
+          id: 2
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "TezosPublicKey",
@@ -10339,13 +10339,13 @@ export const messages = {
           options: {},
           type: "string",
           name: "public_key",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "TezosSignTx",
@@ -10355,57 +10355,57 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "address_n",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "branch",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "TezosRevealOp",
           name: "reveal",
-          id: 3,
+          id: 3
         },
         {
           rule: "optional",
           options: {},
           type: "TezosTransactionOp",
           name: "transaction",
-          id: 4,
+          id: 4
         },
         {
           rule: "optional",
           options: {},
           type: "TezosOriginationOp",
           name: "origination",
-          id: 5,
+          id: 5
         },
         {
           rule: "optional",
           options: {},
           type: "TezosDelegationOp",
           name: "delegation",
-          id: 6,
+          id: 6
         },
         {
           rule: "optional",
           options: {},
           type: "TezosProposalOp",
           name: "proposal",
-          id: 7,
+          id: 7
         },
         {
           rule: "optional",
           options: {},
           type: "TezosBallotOp",
           name: "ballot",
-          id: 8,
-        },
+          id: 8
+        }
       ],
       enums: [],
       messages: [
@@ -10417,15 +10417,15 @@ export const messages = {
               options: {},
               type: "TezosContractType",
               name: "tag",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "bytes",
               name: "hash",
-              id: 2,
-            },
+              id: 2
+            }
           ],
           enums: [
             {
@@ -10433,19 +10433,19 @@ export const messages = {
               values: [
                 {
                   name: "Implicit",
-                  id: 0,
+                  id: 0
                 },
                 {
                   name: "Originated",
-                  id: 1,
-                },
+                  id: 1
+                }
               ],
-              options: {},
-            },
+              options: {}
+            }
           ],
           messages: [],
           options: {},
-          oneofs: {},
+          oneofs: {}
         },
         {
           name: "TezosRevealOp",
@@ -10455,48 +10455,48 @@ export const messages = {
               options: {},
               type: "bytes",
               name: "source",
-              id: 7,
+              id: 7
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "fee",
-              id: 2,
+              id: 2
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "counter",
-              id: 3,
+              id: 3
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "gas_limit",
-              id: 4,
+              id: 4
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "storage_limit",
-              id: 5,
+              id: 5
             },
             {
               rule: "optional",
               options: {},
               type: "bytes",
               name: "public_key",
-              id: 6,
-            },
+              id: 6
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
+          oneofs: {}
         },
         {
           name: "TezosTransactionOp",
@@ -10506,64 +10506,64 @@ export const messages = {
               options: {},
               type: "bytes",
               name: "source",
-              id: 9,
+              id: 9
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "fee",
-              id: 2,
+              id: 2
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "counter",
-              id: 3,
+              id: 3
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "gas_limit",
-              id: 4,
+              id: 4
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "storage_limit",
-              id: 5,
+              id: 5
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "amount",
-              id: 6,
+              id: 6
             },
             {
               rule: "optional",
               options: {},
               type: "TezosContractID",
               name: "destination",
-              id: 7,
+              id: 7
             },
             {
               rule: "optional",
               options: {},
               type: "bytes",
               name: "parameters",
-              id: 8,
+              id: 8
             },
             {
               rule: "optional",
               options: {},
               type: "TezosParametersManager",
               name: "parameters_manager",
-              id: 10,
-            },
+              id: 10
+            }
           ],
           enums: [],
           messages: [
@@ -10575,22 +10575,22 @@ export const messages = {
                   options: {},
                   type: "bytes",
                   name: "set_delegate",
-                  id: 1,
+                  id: 1
                 },
                 {
                   rule: "optional",
                   options: {},
                   type: "bool",
                   name: "cancel_delegate",
-                  id: 2,
+                  id: 2
                 },
                 {
                   rule: "optional",
                   options: {},
                   type: "TezosManagerTransfer",
                   name: "transfer",
-                  id: 3,
-                },
+                  id: 3
+                }
               ],
               enums: [],
               messages: [
@@ -10602,28 +10602,28 @@ export const messages = {
                       options: {},
                       type: "TezosContractID",
                       name: "destination",
-                      id: 1,
+                      id: 1
                     },
                     {
                       rule: "optional",
                       options: {},
                       type: "uint64",
                       name: "amount",
-                      id: 2,
-                    },
+                      id: 2
+                    }
                   ],
                   enums: [],
                   messages: [],
                   options: {},
-                  oneofs: {},
-                },
+                  oneofs: {}
+                }
               ],
               options: {},
-              oneofs: {},
-            },
+              oneofs: {}
+            }
           ],
           options: {},
-          oneofs: {},
+          oneofs: {}
         },
         {
           name: "TezosOriginationOp",
@@ -10633,83 +10633,83 @@ export const messages = {
               options: {},
               type: "bytes",
               name: "source",
-              id: 12,
+              id: 12
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "fee",
-              id: 2,
+              id: 2
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "counter",
-              id: 3,
+              id: 3
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "gas_limit",
-              id: 4,
+              id: 4
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "storage_limit",
-              id: 5,
+              id: 5
             },
             {
               rule: "optional",
               options: {},
               type: "bytes",
               name: "manager_pubkey",
-              id: 6,
+              id: 6
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "balance",
-              id: 7,
+              id: 7
             },
             {
               rule: "optional",
               options: {},
               type: "bool",
               name: "spendable",
-              id: 8,
+              id: 8
             },
             {
               rule: "optional",
               options: {},
               type: "bool",
               name: "delegatable",
-              id: 9,
+              id: 9
             },
             {
               rule: "optional",
               options: {},
               type: "bytes",
               name: "delegate",
-              id: 10,
+              id: 10
             },
             {
               rule: "optional",
               options: {},
               type: "bytes",
               name: "script",
-              id: 11,
-            },
+              id: 11
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
+          oneofs: {}
         },
         {
           name: "TezosDelegationOp",
@@ -10719,48 +10719,48 @@ export const messages = {
               options: {},
               type: "bytes",
               name: "source",
-              id: 7,
+              id: 7
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "fee",
-              id: 2,
+              id: 2
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "counter",
-              id: 3,
+              id: 3
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "gas_limit",
-              id: 4,
+              id: 4
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "storage_limit",
-              id: 5,
+              id: 5
             },
             {
               rule: "optional",
               options: {},
               type: "bytes",
               name: "delegate",
-              id: 6,
-            },
+              id: 6
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
+          oneofs: {}
         },
         {
           name: "TezosProposalOp",
@@ -10770,27 +10770,27 @@ export const messages = {
               options: {},
               type: "bytes",
               name: "source",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "period",
-              id: 2,
+              id: 2
             },
             {
               rule: "repeated",
               options: {},
               type: "bytes",
               name: "proposals",
-              id: 4,
-            },
+              id: 4
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
+          oneofs: {}
         },
         {
           name: "TezosBallotOp",
@@ -10800,29 +10800,29 @@ export const messages = {
               options: {},
               type: "bytes",
               name: "source",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "uint64",
               name: "period",
-              id: 2,
+              id: 2
             },
             {
               rule: "optional",
               options: {},
               type: "bytes",
               name: "proposal",
-              id: 3,
+              id: 3
             },
             {
               rule: "optional",
               options: {},
               type: "TezosBallotType",
               name: "ballot",
-              id: 4,
-            },
+              id: 4
+            }
           ],
           enums: [
             {
@@ -10830,27 +10830,27 @@ export const messages = {
               values: [
                 {
                   name: "Yay",
-                  id: 0,
+                  id: 0
                 },
                 {
                   name: "Nay",
-                  id: 1,
+                  id: 1
                 },
                 {
                   name: "Pass",
-                  id: 2,
-                },
+                  id: 2
+                }
               ],
-              options: {},
-            },
+              options: {}
+            }
           ],
           messages: [],
           options: {},
-          oneofs: {},
-        },
+          oneofs: {}
+        }
       ],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "TezosSignedTx",
@@ -10860,27 +10860,27 @@ export const messages = {
           options: {},
           type: "string",
           name: "signature",
-          id: 1,
+          id: 1
         },
         {
           rule: "optional",
           options: {},
           type: "bytes",
           name: "sig_op_contents",
-          id: 2,
+          id: 2
         },
         {
           rule: "optional",
           options: {},
           type: "string",
           name: "operation_hash",
-          id: 3,
-        },
+          id: 3
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "WebAuthnListResidentCredentials",
@@ -10888,7 +10888,7 @@ export const messages = {
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "WebAuthnAddResidentCredential",
@@ -10898,13 +10898,13 @@ export const messages = {
           options: {},
           type: "bytes",
           name: "credential_id",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "WebAuthnRemoveResidentCredential",
@@ -10914,13 +10914,13 @@ export const messages = {
           options: {},
           type: "uint32",
           name: "index",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       name: "WebAuthnCredentials",
@@ -10930,8 +10930,8 @@ export const messages = {
           options: {},
           type: "WebAuthnCredential",
           name: "credentials",
-          id: 1,
-        },
+          id: 1
+        }
       ],
       enums: [],
       messages: [
@@ -10943,80 +10943,80 @@ export const messages = {
               options: {},
               type: "uint32",
               name: "index",
-              id: 1,
+              id: 1
             },
             {
               rule: "optional",
               options: {},
               type: "bytes",
               name: "id",
-              id: 2,
+              id: 2
             },
             {
               rule: "optional",
               options: {},
               type: "string",
               name: "rp_id",
-              id: 3,
+              id: 3
             },
             {
               rule: "optional",
               options: {},
               type: "string",
               name: "rp_name",
-              id: 4,
+              id: 4
             },
             {
               rule: "optional",
               options: {},
               type: "bytes",
               name: "user_id",
-              id: 5,
+              id: 5
             },
             {
               rule: "optional",
               options: {},
               type: "string",
               name: "user_name",
-              id: 6,
+              id: 6
             },
             {
               rule: "optional",
               options: {},
               type: "string",
               name: "user_display_name",
-              id: 7,
+              id: 7
             },
             {
               rule: "optional",
               options: {},
               type: "uint32",
               name: "creation_time",
-              id: 8,
+              id: 8
             },
             {
               rule: "optional",
               options: {},
               type: "bool",
               name: "hmac_secret",
-              id: 9,
+              id: 9
             },
             {
               rule: "optional",
               options: {},
               type: "bool",
               name: "use_sign_count",
-              id: 10,
-            },
+              id: 10
+            }
           ],
           enums: [],
           messages: [],
           options: {},
-          oneofs: {},
-        },
+          oneofs: {}
+        }
       ],
       options: {},
-      oneofs: {},
+      oneofs: {}
     },
     {
       ref: "google.protobuf.EnumValueOptions",
@@ -11026,52 +11026,52 @@ export const messages = {
           options: {},
           type: "bool",
           name: "wire_in",
-          id: 50002,
+          id: 50002
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "wire_out",
-          id: 50003,
+          id: 50003
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "wire_debug_in",
-          id: 50004,
+          id: 50004
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "wire_debug_out",
-          id: 50005,
+          id: 50005
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "wire_tiny",
-          id: 50006,
+          id: 50006
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "wire_bootloader",
-          id: 50007,
+          id: 50007
         },
         {
           rule: "optional",
           options: {},
           type: "bool",
           name: "wire_no_fsm",
-          id: 50008,
-        },
-      ],
-    },
+          id: 50008
+        }
+      ]
+    }
   ],
   enums: [
     {
@@ -11079,785 +11079,785 @@ export const messages = {
       values: [
         {
           name: "SPENDADDRESS",
-          id: 0,
+          id: 0
         },
         {
           name: "SPENDMULTISIG",
-          id: 1,
+          id: 1
         },
         {
           name: "EXTERNAL",
-          id: 2,
+          id: 2
         },
         {
           name: "SPENDWITNESS",
-          id: 3,
+          id: 3
         },
         {
           name: "SPENDP2SHWITNESS",
-          id: 4,
-        },
+          id: 4
+        }
       ],
-      options: {},
+      options: {}
     },
     {
       name: "BackupType",
       values: [
         {
           name: "Bip39",
-          id: 0,
+          id: 0
         },
         {
           name: "Slip39_Basic",
-          id: 1,
+          id: 1
         },
         {
           name: "Slip39_Advanced",
-          id: 2,
-        },
+          id: 2
+        }
       ],
-      options: {},
+      options: {}
     },
     {
       name: "MessageType",
       values: [
         {
           name: "MessageType_Initialize",
-          id: 0,
+          id: 0
         },
         {
           name: "MessageType_Ping",
-          id: 1,
+          id: 1
         },
         {
           name: "MessageType_Success",
-          id: 2,
+          id: 2
         },
         {
           name: "MessageType_Failure",
-          id: 3,
+          id: 3
         },
         {
           name: "MessageType_ChangePin",
-          id: 4,
+          id: 4
         },
         {
           name: "MessageType_WipeDevice",
-          id: 5,
+          id: 5
         },
         {
           name: "MessageType_GetEntropy",
-          id: 9,
+          id: 9
         },
         {
           name: "MessageType_Entropy",
-          id: 10,
+          id: 10
         },
         {
           name: "MessageType_LoadDevice",
-          id: 13,
+          id: 13
         },
         {
           name: "MessageType_ResetDevice",
-          id: 14,
+          id: 14
         },
         {
           name: "MessageType_Features",
-          id: 17,
+          id: 17
         },
         {
           name: "MessageType_PinMatrixRequest",
-          id: 18,
+          id: 18
         },
         {
           name: "MessageType_PinMatrixAck",
-          id: 19,
+          id: 19
         },
         {
           name: "MessageType_Cancel",
-          id: 20,
+          id: 20
         },
         {
           name: "MessageType_ClearSession",
-          id: 24,
+          id: 24
         },
         {
           name: "MessageType_ApplySettings",
-          id: 25,
+          id: 25
         },
         {
           name: "MessageType_ButtonRequest",
-          id: 26,
+          id: 26
         },
         {
           name: "MessageType_ButtonAck",
-          id: 27,
+          id: 27
         },
         {
           name: "MessageType_ApplyFlags",
-          id: 28,
+          id: 28
         },
         {
           name: "MessageType_BackupDevice",
-          id: 34,
+          id: 34
         },
         {
           name: "MessageType_EntropyRequest",
-          id: 35,
+          id: 35
         },
         {
           name: "MessageType_EntropyAck",
-          id: 36,
+          id: 36
         },
         {
           name: "MessageType_PassphraseRequest",
-          id: 41,
+          id: 41
         },
         {
           name: "MessageType_PassphraseAck",
-          id: 42,
+          id: 42
         },
         {
           name: "MessageType_PassphraseStateRequest",
-          id: 77,
+          id: 77
         },
         {
           name: "MessageType_PassphraseStateAck",
-          id: 78,
+          id: 78
         },
         {
           name: "MessageType_RecoveryDevice",
-          id: 45,
+          id: 45
         },
         {
           name: "MessageType_WordRequest",
-          id: 46,
+          id: 46
         },
         {
           name: "MessageType_WordAck",
-          id: 47,
+          id: 47
         },
         {
           name: "MessageType_GetFeatures",
-          id: 55,
+          id: 55
         },
         {
           name: "MessageType_SetU2FCounter",
-          id: 63,
+          id: 63
         },
         {
           name: "MessageType_SdProtect",
-          id: 79,
+          id: 79
         },
         {
           name: "MessageType_FirmwareErase",
-          id: 6,
+          id: 6
         },
         {
           name: "MessageType_FirmwareUpload",
-          id: 7,
+          id: 7
         },
         {
           name: "MessageType_FirmwareRequest",
-          id: 8,
+          id: 8
         },
         {
           name: "MessageType_SelfTest",
-          id: 32,
+          id: 32
         },
         {
           name: "MessageType_GetPublicKey",
-          id: 11,
+          id: 11
         },
         {
           name: "MessageType_PublicKey",
-          id: 12,
+          id: 12
         },
         {
           name: "MessageType_SignTx",
-          id: 15,
+          id: 15
         },
         {
           name: "MessageType_TxRequest",
-          id: 21,
+          id: 21
         },
         {
           name: "MessageType_TxAck",
-          id: 22,
+          id: 22
         },
         {
           name: "MessageType_GetAddress",
-          id: 29,
+          id: 29
         },
         {
           name: "MessageType_Address",
-          id: 30,
+          id: 30
         },
         {
           name: "MessageType_SignMessage",
-          id: 38,
+          id: 38
         },
         {
           name: "MessageType_VerifyMessage",
-          id: 39,
+          id: 39
         },
         {
           name: "MessageType_MessageSignature",
-          id: 40,
+          id: 40
         },
         {
           name: "MessageType_CipherKeyValue",
-          id: 23,
+          id: 23
         },
         {
           name: "MessageType_CipheredKeyValue",
-          id: 48,
+          id: 48
         },
         {
           name: "MessageType_SignIdentity",
-          id: 53,
+          id: 53
         },
         {
           name: "MessageType_SignedIdentity",
-          id: 54,
+          id: 54
         },
         {
           name: "MessageType_GetECDHSessionKey",
-          id: 61,
+          id: 61
         },
         {
           name: "MessageType_ECDHSessionKey",
-          id: 62,
+          id: 62
         },
         {
           name: "MessageType_CosiCommit",
-          id: 71,
+          id: 71
         },
         {
           name: "MessageType_CosiCommitment",
-          id: 72,
+          id: 72
         },
         {
           name: "MessageType_CosiSign",
-          id: 73,
+          id: 73
         },
         {
           name: "MessageType_CosiSignature",
-          id: 74,
+          id: 74
         },
         {
           name: "MessageType_DebugLinkDecision",
-          id: 100,
+          id: 100
         },
         {
           name: "MessageType_DebugLinkGetState",
-          id: 101,
+          id: 101
         },
         {
           name: "MessageType_DebugLinkState",
-          id: 102,
+          id: 102
         },
         {
           name: "MessageType_DebugLinkStop",
-          id: 103,
+          id: 103
         },
         {
           name: "MessageType_DebugLinkLog",
-          id: 104,
+          id: 104
         },
         {
           name: "MessageType_DebugLinkMemoryRead",
-          id: 110,
+          id: 110
         },
         {
           name: "MessageType_DebugLinkMemory",
-          id: 111,
+          id: 111
         },
         {
           name: "MessageType_DebugLinkMemoryWrite",
-          id: 112,
+          id: 112
         },
         {
           name: "MessageType_DebugLinkFlashErase",
-          id: 113,
+          id: 113
         },
         {
           name: "MessageType_DebugLinkLayout",
-          id: 9001,
+          id: 9001
         },
         {
           name: "MessageType_EthereumGetPublicKey",
-          id: 450,
+          id: 450
         },
         {
           name: "MessageType_EthereumPublicKey",
-          id: 451,
+          id: 451
         },
         {
           name: "MessageType_EthereumGetAddress",
-          id: 56,
+          id: 56
         },
         {
           name: "MessageType_EthereumAddress",
-          id: 57,
+          id: 57
         },
         {
           name: "MessageType_EthereumSignTx",
-          id: 58,
+          id: 58
         },
         {
           name: "MessageType_EthereumTxRequest",
-          id: 59,
+          id: 59
         },
         {
           name: "MessageType_EthereumTxAck",
-          id: 60,
+          id: 60
         },
         {
           name: "MessageType_EthereumSignMessage",
-          id: 64,
+          id: 64
         },
         {
           name: "MessageType_EthereumVerifyMessage",
-          id: 65,
+          id: 65
         },
         {
           name: "MessageType_EthereumMessageSignature",
-          id: 66,
+          id: 66
         },
         {
           name: "MessageType_NEMGetAddress",
-          id: 67,
+          id: 67
         },
         {
           name: "MessageType_NEMAddress",
-          id: 68,
+          id: 68
         },
         {
           name: "MessageType_NEMSignTx",
-          id: 69,
+          id: 69
         },
         {
           name: "MessageType_NEMSignedTx",
-          id: 70,
+          id: 70
         },
         {
           name: "MessageType_NEMDecryptMessage",
-          id: 75,
+          id: 75
         },
         {
           name: "MessageType_NEMDecryptedMessage",
-          id: 76,
+          id: 76
         },
         {
           name: "MessageType_LiskGetAddress",
-          id: 114,
+          id: 114
         },
         {
           name: "MessageType_LiskAddress",
-          id: 115,
+          id: 115
         },
         {
           name: "MessageType_LiskSignTx",
-          id: 116,
+          id: 116
         },
         {
           name: "MessageType_LiskSignedTx",
-          id: 117,
+          id: 117
         },
         {
           name: "MessageType_LiskSignMessage",
-          id: 118,
+          id: 118
         },
         {
           name: "MessageType_LiskMessageSignature",
-          id: 119,
+          id: 119
         },
         {
           name: "MessageType_LiskVerifyMessage",
-          id: 120,
+          id: 120
         },
         {
           name: "MessageType_LiskGetPublicKey",
-          id: 121,
+          id: 121
         },
         {
           name: "MessageType_LiskPublicKey",
-          id: 122,
+          id: 122
         },
         {
           name: "MessageType_TezosGetAddress",
-          id: 150,
+          id: 150
         },
         {
           name: "MessageType_TezosAddress",
-          id: 151,
+          id: 151
         },
         {
           name: "MessageType_TezosSignTx",
-          id: 152,
+          id: 152
         },
         {
           name: "MessageType_TezosSignedTx",
-          id: 153,
+          id: 153
         },
         {
           name: "MessageType_TezosGetPublicKey",
-          id: 154,
+          id: 154
         },
         {
           name: "MessageType_TezosPublicKey",
-          id: 155,
+          id: 155
         },
         {
           name: "MessageType_StellarSignTx",
-          id: 202,
+          id: 202
         },
         {
           name: "MessageType_StellarTxOpRequest",
-          id: 203,
+          id: 203
         },
         {
           name: "MessageType_StellarGetAddress",
-          id: 207,
+          id: 207
         },
         {
           name: "MessageType_StellarAddress",
-          id: 208,
+          id: 208
         },
         {
           name: "MessageType_StellarCreateAccountOp",
-          id: 210,
+          id: 210
         },
         {
           name: "MessageType_StellarPaymentOp",
-          id: 211,
+          id: 211
         },
         {
           name: "MessageType_StellarPathPaymentOp",
-          id: 212,
+          id: 212
         },
         {
           name: "MessageType_StellarManageOfferOp",
-          id: 213,
+          id: 213
         },
         {
           name: "MessageType_StellarCreatePassiveOfferOp",
-          id: 214,
+          id: 214
         },
         {
           name: "MessageType_StellarSetOptionsOp",
-          id: 215,
+          id: 215
         },
         {
           name: "MessageType_StellarChangeTrustOp",
-          id: 216,
+          id: 216
         },
         {
           name: "MessageType_StellarAllowTrustOp",
-          id: 217,
+          id: 217
         },
         {
           name: "MessageType_StellarAccountMergeOp",
-          id: 218,
+          id: 218
         },
         {
           name: "MessageType_StellarManageDataOp",
-          id: 220,
+          id: 220
         },
         {
           name: "MessageType_StellarBumpSequenceOp",
-          id: 221,
+          id: 221
         },
         {
           name: "MessageType_StellarSignedTx",
-          id: 230,
+          id: 230
         },
         {
           name: "MessageType_CardanoSignTx",
-          id: 303,
+          id: 303
         },
         {
           name: "MessageType_CardanoTxRequest",
-          id: 304,
+          id: 304
         },
         {
           name: "MessageType_CardanoGetPublicKey",
-          id: 305,
+          id: 305
         },
         {
           name: "MessageType_CardanoPublicKey",
-          id: 306,
+          id: 306
         },
         {
           name: "MessageType_CardanoGetAddress",
-          id: 307,
+          id: 307
         },
         {
           name: "MessageType_CardanoAddress",
-          id: 308,
+          id: 308
         },
         {
           name: "MessageType_CardanoTxAck",
-          id: 309,
+          id: 309
         },
         {
           name: "MessageType_CardanoSignedTx",
-          id: 310,
+          id: 310
         },
         {
           name: "MessageType_RippleGetAddress",
-          id: 400,
+          id: 400
         },
         {
           name: "MessageType_RippleAddress",
-          id: 401,
+          id: 401
         },
         {
           name: "MessageType_RippleSignTx",
-          id: 402,
+          id: 402
         },
         {
           name: "MessageType_RippleSignedTx",
-          id: 403,
+          id: 403
         },
         {
           name: "MessageType_MoneroTransactionInitRequest",
-          id: 501,
+          id: 501
         },
         {
           name: "MessageType_MoneroTransactionInitAck",
-          id: 502,
+          id: 502
         },
         {
           name: "MessageType_MoneroTransactionSetInputRequest",
-          id: 503,
+          id: 503
         },
         {
           name: "MessageType_MoneroTransactionSetInputAck",
-          id: 504,
+          id: 504
         },
         {
           name: "MessageType_MoneroTransactionInputsPermutationRequest",
-          id: 505,
+          id: 505
         },
         {
           name: "MessageType_MoneroTransactionInputsPermutationAck",
-          id: 506,
+          id: 506
         },
         {
           name: "MessageType_MoneroTransactionInputViniRequest",
-          id: 507,
+          id: 507
         },
         {
           name: "MessageType_MoneroTransactionInputViniAck",
-          id: 508,
+          id: 508
         },
         {
           name: "MessageType_MoneroTransactionAllInputsSetRequest",
-          id: 509,
+          id: 509
         },
         {
           name: "MessageType_MoneroTransactionAllInputsSetAck",
-          id: 510,
+          id: 510
         },
         {
           name: "MessageType_MoneroTransactionSetOutputRequest",
-          id: 511,
+          id: 511
         },
         {
           name: "MessageType_MoneroTransactionSetOutputAck",
-          id: 512,
+          id: 512
         },
         {
           name: "MessageType_MoneroTransactionAllOutSetRequest",
-          id: 513,
+          id: 513
         },
         {
           name: "MessageType_MoneroTransactionAllOutSetAck",
-          id: 514,
+          id: 514
         },
         {
           name: "MessageType_MoneroTransactionSignInputRequest",
-          id: 515,
+          id: 515
         },
         {
           name: "MessageType_MoneroTransactionSignInputAck",
-          id: 516,
+          id: 516
         },
         {
           name: "MessageType_MoneroTransactionFinalRequest",
-          id: 517,
+          id: 517
         },
         {
           name: "MessageType_MoneroTransactionFinalAck",
-          id: 518,
+          id: 518
         },
         {
           name: "MessageType_MoneroKeyImageExportInitRequest",
-          id: 530,
+          id: 530
         },
         {
           name: "MessageType_MoneroKeyImageExportInitAck",
-          id: 531,
+          id: 531
         },
         {
           name: "MessageType_MoneroKeyImageSyncStepRequest",
-          id: 532,
+          id: 532
         },
         {
           name: "MessageType_MoneroKeyImageSyncStepAck",
-          id: 533,
+          id: 533
         },
         {
           name: "MessageType_MoneroKeyImageSyncFinalRequest",
-          id: 534,
+          id: 534
         },
         {
           name: "MessageType_MoneroKeyImageSyncFinalAck",
-          id: 535,
+          id: 535
         },
         {
           name: "MessageType_MoneroGetAddress",
-          id: 540,
+          id: 540
         },
         {
           name: "MessageType_MoneroAddress",
-          id: 541,
+          id: 541
         },
         {
           name: "MessageType_MoneroGetWatchKey",
-          id: 542,
+          id: 542
         },
         {
           name: "MessageType_MoneroWatchKey",
-          id: 543,
+          id: 543
         },
         {
           name: "MessageType_DebugMoneroDiagRequest",
-          id: 546,
+          id: 546
         },
         {
           name: "MessageType_DebugMoneroDiagAck",
-          id: 547,
+          id: 547
         },
         {
           name: "MessageType_MoneroGetTxKeyRequest",
-          id: 550,
+          id: 550
         },
         {
           name: "MessageType_MoneroGetTxKeyAck",
-          id: 551,
+          id: 551
         },
         {
           name: "MessageType_MoneroLiveRefreshStartRequest",
-          id: 552,
+          id: 552
         },
         {
           name: "MessageType_MoneroLiveRefreshStartAck",
-          id: 553,
+          id: 553
         },
         {
           name: "MessageType_MoneroLiveRefreshStepRequest",
-          id: 554,
+          id: 554
         },
         {
           name: "MessageType_MoneroLiveRefreshStepAck",
-          id: 555,
+          id: 555
         },
         {
           name: "MessageType_MoneroLiveRefreshFinalRequest",
-          id: 556,
+          id: 556
         },
         {
           name: "MessageType_MoneroLiveRefreshFinalAck",
-          id: 557,
+          id: 557
         },
         {
           name: "MessageType_EosGetPublicKey",
-          id: 600,
+          id: 600
         },
         {
           name: "MessageType_EosPublicKey",
-          id: 601,
+          id: 601
         },
         {
           name: "MessageType_EosSignTx",
-          id: 602,
+          id: 602
         },
         {
           name: "MessageType_EosTxActionRequest",
-          id: 603,
+          id: 603
         },
         {
           name: "MessageType_EosTxActionAck",
-          id: 604,
+          id: 604
         },
         {
           name: "MessageType_EosSignedTx",
-          id: 605,
+          id: 605
         },
         {
           name: "MessageType_BinanceGetAddress",
-          id: 700,
+          id: 700
         },
         {
           name: "MessageType_BinanceAddress",
-          id: 701,
+          id: 701
         },
         {
           name: "MessageType_BinanceGetPublicKey",
-          id: 702,
+          id: 702
         },
         {
           name: "MessageType_BinancePublicKey",
-          id: 703,
+          id: 703
         },
         {
           name: "MessageType_BinanceSignTx",
-          id: 704,
+          id: 704
         },
         {
           name: "MessageType_BinanceTxRequest",
-          id: 705,
+          id: 705
         },
         {
           name: "MessageType_BinanceTransferMsg",
-          id: 706,
+          id: 706
         },
         {
           name: "MessageType_BinanceOrderMsg",
-          id: 707,
+          id: 707
         },
         {
           name: "MessageType_BinanceCancelMsg",
-          id: 708,
+          id: 708
         },
         {
           name: "MessageType_BinanceSignedTx",
-          id: 709,
+          id: 709
         },
         {
           name: "MessageType_WebAuthnListResidentCredentials",
-          id: 800,
+          id: 800
         },
         {
           name: "MessageType_WebAuthnCredentials",
-          id: 801,
+          id: 801
         },
         {
           name: "MessageType_WebAuthnAddResidentCredential",
-          id: 802,
+          id: 802
         },
         {
           name: "MessageType_WebAuthnRemoveResidentCredential",
-          id: 803,
-        },
+          id: 803
+        }
       ],
-      options: {},
-    },
+      options: {}
+    }
   ],
   imports: [],
   options: {},
-  services: [],
+  services: []
 };

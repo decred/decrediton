@@ -14,7 +14,7 @@ const Header = ({ account, hidden, hasTickets }) => (
       "account-row-details-top",
       hidden && "account-hidden",
       isImported(account) && "imported",
-      isImported(account) && !hasTickets && "disabled",
+      isImported(account) && !hasTickets && "disabled"
     ].join(" ")}>
     <div className="account-row-top-account-name">
       {account.accountName === "default" ? (
@@ -52,7 +52,7 @@ const Row = ({
   getAccountDetailsStyles,
   getRenameAccountStyles,
   isShowingDetails,
-  hasTickets,
+  hasTickets
 }) => (
   <VerticalAccordion
     header={<Header {...{ account, hidden, hasTickets }} />}

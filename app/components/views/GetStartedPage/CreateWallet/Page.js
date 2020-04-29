@@ -6,7 +6,7 @@ const CreateWalletPage = ({
   getCurrentBlockCount,
   getNeededBlocks,
   getEstimatedTimeLeft,
-  getDaemonSynced,
+  getDaemonSynced
 }) => (
   <div className="getstarted content">
     {StateComponent &&
@@ -20,7 +20,7 @@ const CreateWalletPage = ({
         getCurrentBlockCount,
         getNeededBlocks,
         getEstimatedTimeLeft,
-        getDaemonSynced,
+        getDaemonSynced
       }}
     />
   </div>

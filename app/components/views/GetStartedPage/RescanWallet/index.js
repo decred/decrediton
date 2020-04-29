@@ -6,7 +6,7 @@ import "style/GetStarted.less";
 const RescanWalletFormBody = ({
   rescanEndBlock,
   rescanStartBlock,
-  rescanCurrentBlock,
+  rescanCurrentBlock
 }) => (
   <>
     <LinearProgressSmall
@@ -22,7 +22,7 @@ const RescanWalletFormBody = ({
           rescanCurrentBlock > rescanStartBlock
             ? rescanCurrentBlock
             : rescanStartBlock,
-        rescanEndBlock: rescanEndBlock,
+        rescanEndBlock: rescanEndBlock
       }}
     />
   </>

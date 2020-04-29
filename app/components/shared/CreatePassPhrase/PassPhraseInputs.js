@@ -6,12 +6,12 @@ import "style/CreateWalletForm.less";
 const messages = defineMessages({
   passphrasePlaceholder: {
     id: "createWallet.passphrasePlaceholder",
-    defaultMessage: "Private Passphrase",
+    defaultMessage: "Private Passphrase"
   },
   verifyPassphrasePlaceholder: {
     id: "createWallet.verifyPassphrasePlaceholder",
-    defaultMessage: "Confirm Private Passphrase",
-  },
+    defaultMessage: "Confirm Private Passphrase"
+  }
 });
 
 const PassPhraseInputs = ({
@@ -43,7 +43,7 @@ const PassPhraseInputs = ({
   intl,
   onKeyDown,
   hasFailedAttempt,
-  isValid,
+  isValid
 }) => (
   <>
     <div className="is-row passphrase">

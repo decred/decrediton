@@ -51,7 +51,7 @@ const currentSettings = {
   currencyDisplay: DCR,
   network: hasCliOption("network") || globalCfg.get(NETWORK),
   networkFromCli: !!hasCliOption("network"),
-  theme: globalCfg.get(THEME),
+  theme: globalCfg.get(THEME)
 };
 const initialState = {
   settings: {
@@ -60,7 +60,7 @@ const initialState = {
     settingsChanged: false,
     uiAnimations: globalCfg.get("ui_animations"),
     needNetworkReset: false,
-    theme: globalCfg.get(THEME),
+    theme: globalCfg.get(THEME)
   },
   stakepool: {
     currentStakePoolConfig: null,
@@ -70,7 +70,7 @@ const initialState = {
     activeStakePoolConfig: false,
     selectedStakePool: null,
     updatedStakePoolList: false,
-    addCustomStakePoolAttempt: false,
+    addCustomStakePoolAttempt: false
   },
   daemon: {
     networkMatch: false,
@@ -97,7 +97,7 @@ const initialState = {
     previousWallet: null,
     hiddenAccounts: Array(),
     walletName: null,
-    neededBlocks: 0,
+    neededBlocks: 0
   },
   version: {
     // RequiredVersion
@@ -111,7 +111,7 @@ const initialState = {
     // Balance
     getWalletRPCVersionError: null,
     getWalletRPCVersionRequestAttempt: false,
-    getWalletRPCVersionResponse: null,
+    getWalletRPCVersionResponse: null
   },
   grpc: {
     // WalletService
@@ -186,7 +186,7 @@ const initialState = {
       types: [], // desired transaction types (code). All if blank.
       direction: null, // direction of desired transactions (sent/received/transfer)
       maxAmount: null,
-      minAmount: null,
+      minAmount: null
     },
     lastTransaction: null, //last transaction obtained
 
@@ -203,7 +203,7 @@ const initialState = {
     noMoreTickets: false,
     ticketsFilter: {
       listDirection: "desc", // asc = oldest -> newest, desc => newest -> oldest
-      status: [], // desired ticket status (code). All if blank.
+      status: [] // desired ticket status (code). All if blank.
     },
     getTicketsStartRequestHeight: null,
     getTicketsCancel: false, // user requested cancelation (but it hasn't happened yet)
@@ -232,7 +232,7 @@ const initialState = {
     fetchMissingStakeTxDataAttempt: {},
 
     // Shown under governance tab
-    treasuryBalance: null,
+    treasuryBalance: null
   },
   walletLoader: {
     syncInput: false,
@@ -255,13 +255,13 @@ const initialState = {
     loader: null,
     getLoaderError: null,
     // WalletCreate
-    createWalletExisting: false,
+    createWalletExisting: false
   },
   notifications: {
     transactionNtfns: null,
     transactionNtfnsError: null,
     accountNtfnsRequestAttempt: false,
-    accountNtfnsResponse: null,
+    accountNtfnsResponse: null
   },
   control: {
     numTicketsToBuy: 1,
@@ -358,13 +358,13 @@ const initialState = {
     modalVisible: false,
     aboutModalMacOSVisible: false,
     autobuyerRunningModalVisible: false,
-    changeScriptByAccount: {},
+    changeScriptByAccount: {}
   },
   snackbar: {
-    messages: Array(),
+    messages: Array()
   },
   sidebar: {
-    expandSideBar: true,
+    expandSideBar: true
   },
   statistics: {
     dailyBalances: [],
@@ -373,7 +373,7 @@ const initialState = {
     getMyTicketsStatsRequest: false,
     getStartupStatsAttempt: false,
     startupStatsEndCalcTime: new Date(0),
-    ticketDataHeatmap: [],
+    ticketDataHeatmap: []
   },
   governance: {
     getProposalsAttempt: false,
@@ -382,7 +382,7 @@ const initialState = {
     proposalsDetails: {},
     getProposalError: null,
     // TODO: Get proposallistpagesize from politeia's request: /v1/policy
-    proposallistpagesize: 20,
+    proposallistpagesize: 20
   },
   trezor: {
     enabled: false,
@@ -400,7 +400,7 @@ const initialState = {
     pinMessage: null,
     passPhraseMessage: null,
     wordCallBack: null,
-    walletCreationMasterPubkeyAttempt: false,
+    walletCreationMasterPubkeyAttempt: false
   },
   ln: {
     enabled: globalCfg.get("ln_enabled"),
@@ -411,18 +411,18 @@ const initialState = {
     info: {
       version: null,
       identityPubkey: null,
-      alias: null,
+      alias: null
     },
     walletBalances: {
       totalBalance: 0,
       confirmedBalance: 0,
-      unconfirmedBalance: 0,
+      unconfirmedBalance: 0
     },
     channelBalances: {
       balance: 0,
       pendingOpenBalance: 0,
       maxInboundAmount: 0,
-      maxOutboundAmount: 0,
+      maxOutboundAmount: 0
     },
     channels: Array(),
     pendingChannels: Array(),
@@ -430,9 +430,9 @@ const initialState = {
     invoices: Array(),
     payments: Array(),
     addInvoiceAttempt: false,
-    sendPaymentAttempt: false,
+    sendPaymentAttempt: false
   },
-  locales: locales,
+  locales: locales
 };
 
 const fontConfig = {
@@ -440,12 +440,12 @@ const fontConfig = {
   regularUrl: SourceSansProRegular,
   semiBoldUrl: SourceSansProSemiBold,
   lightUrl: SourceSansProLight,
-  format: "truetype",
+  format: "truetype"
 };
 
 const themes = {
   "theme-light": { ...defaultLightTheme, ...lightTheme, ...icons },
-  "theme-dark": { ...defaultDarkTheme, ...darkTheme, ...icons },
+  "theme-dark": { ...defaultDarkTheme, ...darkTheme, ...icons }
 };
 
 const history = createMemoryHistory();

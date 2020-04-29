@@ -19,7 +19,7 @@ const InvalidRPCVersion = ({ requiredWalletRPCVersion, walletRPCVersion }) => (
 
 InvalidRPCVersion.propTypes = {
   requiredWalletRPCVersion: PropTypes.string.isRequired,
-  walletRPCVersion: PropTypes.string.isRequired,
+  walletRPCVersion: PropTypes.string.isRequired
 };
 
 export default invalidRPCVersion(InvalidRPCVersion);

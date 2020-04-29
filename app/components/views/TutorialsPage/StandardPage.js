@@ -10,7 +10,7 @@ export const StandardPage = ({
   onNextPage,
   onPreviousPage,
   onGotoPage,
-  onFinish,
+  onFinish
 }) => (
   <div className="tutorial-standard-page">
     <div className="tutorial-text">

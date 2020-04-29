@@ -81,7 +81,7 @@ export default ({ channel }) => (
   <div
     className={[
       "ln-open-channel",
-      "channel-" + (channel.active ? "active" : "inactive"),
+      "channel-" + (channel.active ? "active" : "inactive")
     ].join(" ")}>
     <div className="data-wrapper">
       <div className="capacity">

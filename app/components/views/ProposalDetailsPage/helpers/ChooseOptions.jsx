@@ -31,7 +31,7 @@ const UpdateVoteChoiceModalButton = ({
   onSubmit,
   newVoteChoice,
   eligibleTicketCount,
-  votedSuccessfully,
+  votedSuccessfully
 }) => (
   <PassphraseModalButton
     modalTitle={
@@ -68,7 +68,7 @@ const ChooseOptions = React.memo(
     votingComplete,
     onVoteSubmit,
     setVoteOption,
-    votedSuccessfully,
+    votedSuccessfully
   }) => (
     <>
       <div className={styles.votingPreference}>
@@ -105,7 +105,7 @@ const ChooseOptions = React.memo(
             newVoteChoice,
             onSubmit: onVoteSubmit,
             eligibleTicketCount,
-            votedSuccessfully,
+            votedSuccessfully
           }}
         />
       )}

@@ -23,11 +23,11 @@ import {
   CLOSEDAEMON_SUCCESS,
   CHECK_NETWORKMATCH_ATTEMPT,
   CHECK_NETWORKMATCH_SUCCESS,
-  CHECK_NETWORKMATCH_FAILED,
+  CHECK_NETWORKMATCH_FAILED
 } from "../actions/DaemonActions";
 import {
   CLOSEWALLET_SUCCESS,
-  CLOSEWALLET_FAILED,
+  CLOSEWALLET_FAILED
 } from "../actions/WalletLoaderActions";
 import { UPDATEHIDDENACCOUNTS } from "../actions/ClientActions";
 
@@ -51,7 +51,7 @@ export default function version(state = {}, action) {
         credentials: action.credentials,
         daemonRemote: action.daemonRemote,
         appdata: action.appdata,
-        daemonError: null,
+        daemonError: null
       };
     case CONNECTDAEMON_ATTEMPT:
       return { ...state, daemonConnected: false, daemonError: null };
@@ -62,7 +62,7 @@ export default function version(state = {}, action) {
         ...state,
         daemonConnected: false,
         daemonError: action.error,
-        daemonTimeout: action.daemonTimeout,
+        daemonTimeout: action.daemonTimeout
       };
     case CLOSEDAEMON_ATTEMPT:
       return { ...state, daemonCloseRequestAttempt: true };
@@ -70,7 +70,7 @@ export default function version(state = {}, action) {
       return {
         ...state,
         daemonCloseError: String(action.error),
-        daemonCloseRequestAttempt: false,
+        daemonCloseRequestAttempt: false
       };
     case CLOSEDAEMON_SUCCESS:
       return {
@@ -86,7 +86,7 @@ export default function version(state = {}, action) {
         currentBlockCount: null,
         timeLeftEstimate: null,
         timeStart: null,
-        blockStart: null,
+        blockStart: null
       };
     case DAEMONSYNCING_START:
       return {
@@ -96,14 +96,14 @@ export default function version(state = {}, action) {
         timeStart: action.timeStart,
         blockStart: action.blockStart,
         neededBlocks: action.syncHeight,
-        daemonWarning: null,
+        daemonWarning: null
       };
     case DAEMONSYNCING_PROGRESS:
       return {
         ...state,
         currentBlockCount: action.currentBlockCount,
         timeLeftEstimate: action.timeLeftEstimate,
-        neededBlocks: action.syncHeight,
+        neededBlocks: action.syncHeight
       };
     case DAEMONSYNCED:
       return {
@@ -111,7 +111,7 @@ export default function version(state = {}, action) {
         neededBlocks: action.syncHeight,
         currentBlockCount: action.blockCount,
         daemonSynced: true,
-        daemonWarning: null,
+        daemonWarning: null
       };
     case WALLETREADY:
       return {
@@ -119,7 +119,7 @@ export default function version(state = {}, action) {
         selectCreateWalletInputRequest: false,
         walletReady: true,
         walletName: action.walletName,
-        hiddenAccounts: action.hiddenAccounts,
+        hiddenAccounts: action.hiddenAccounts
       };
     case SHUTDOWN_REQUESTED:
       return { ...state, shutdownRequested: true };
@@ -130,27 +130,27 @@ export default function version(state = {}, action) {
         ...state,
         availableWallets: action.availableWallets,
         previousWallet: action.previousWallet,
-        selectCreateWalletInputRequest: !action.previousWallet,
+        selectCreateWalletInputRequest: !action.previousWallet
       };
     case UPDATEHIDDENACCOUNTS:
       return {
         ...state,
-        hiddenAccounts: action.hiddenAccounts,
+        hiddenAccounts: action.hiddenAccounts
       };
     case DAEMON_ERROR:
       return {
         ...state,
-        daemonError: action.error,
+        daemonError: action.error
       };
     case DAEMON_WARNING:
       return {
         ...state,
-        daemonWarning: action.warning,
+        daemonWarning: action.warning
       };
     case WALLET_WARNING:
       return {
         ...state,
-        walletWarning: action.warning,
+        walletWarning: action.warning
       };
     case CLOSEWALLET_SUCCESS:
       return {
@@ -158,12 +158,12 @@ export default function version(state = {}, action) {
         hiddenAccounts: [],
         walletReady: false,
         walletName: null,
-        daemonWarning: null,
+        daemonWarning: null
       };
     case CLOSEWALLET_FAILED:
       return {
         ...state,
-        walletError: action.error,
+        walletError: action.error
       };
     case CHECK_NETWORKMATCH_ATTEMPT:
       return { ...state, daemonError: null, networkMatch: null };

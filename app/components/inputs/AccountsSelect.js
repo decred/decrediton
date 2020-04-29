@@ -6,8 +6,8 @@ import { Balance, LinkToAccounts } from "shared";
 const messages = defineMessages({
   placeholder: {
     id: "accountsSelect.placeholder",
-    defaultMessage: "Select account",
-  },
+    defaultMessage: "Select account"
+  }
 });
 
 @autobind
@@ -16,14 +16,14 @@ class AccountsSelect extends React.Component {
     accountsType: PropTypes.oneOf(["spending", "visible"]),
     className: PropTypes.string,
     showAccountsButton: PropTypes.bool,
-    getAddressForSelected: PropTypes.bool,
+    getAddressForSelected: PropTypes.bool
   };
 
   constructor(props) {
     super(props);
     this.state = {
       account: props.account,
-      accounts: this.getAccountsToShow(props),
+      accounts: this.getAccountsToShow(props)
     };
   }
 
@@ -54,9 +54,9 @@ class AccountsSelect extends React.Component {
   }
 
   getAccountsToShow(nextProps) {
-    let accountsPerType = {
+    const accountsPerType = {
       spending: nextProps.spendingAccounts,
-      visible: nextProps.visibleAccounts,
+      visible: nextProps.visibleAccounts
     };
     return accountsPerType[this.props.accountsType || "spending"];
   }

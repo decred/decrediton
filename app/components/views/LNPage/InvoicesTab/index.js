@@ -21,7 +21,7 @@ class InvoicesTab extends React.Component {
     this.state = {
       atomValue: 0,
       memo: "",
-      lastPayRequest: "",
+      lastPayRequest: ""
     };
   }
 
@@ -47,7 +47,7 @@ class InvoicesTab extends React.Component {
         this.setState({
           memo: "",
           value: 0,
-          lastPayRequest: payReq.paymentRequest,
+          lastPayRequest: payReq.paymentRequest
         });
       })
       .catch((error) => {

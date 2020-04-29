@@ -14,7 +14,7 @@ export const getStartedMachine = ({
   setSelectedWallet,
   onStartWallet,
   onRetryStartRPC,
-  startSPVSync,
+  startSPVSync
 }) =>
   Machine(
     {
@@ -27,7 +27,7 @@ export const getStartedMachine = ({
         error: null,
         isCreateNewWallet: null,
         isSPV: null,
-        isAdvancedDaemon: null,
+        isAdvancedDaemon: null
       },
       states: {
         // startMachine represents the state with daemon and wallet starting operations.
@@ -37,7 +37,7 @@ export const getStartedMachine = ({
             SHOW_SETTINGS: "settings",
             SHOW_LOGS: "logs",
             SHOW_TREZOR_CONFIG: "trezorConfig",
-            SHOW_RELEASE_NOTES: "releaseNotes",
+            SHOW_RELEASE_NOTES: "releaseNotes"
           },
           states: {
             preStart: {
@@ -48,8 +48,8 @@ export const getStartedMachine = ({
                   cond: (c, event) => !!event.isSPV,
                   actions: assign({
                     isSPV: (context, event) =>
-                      event.isSPV ? !!event.isSPV : context.isSPV,
-                  }),
+                      event.isSPV ? !!event.isSPV : context.isSPV
+                  })
                 },
                 START_ADVANCED_DAEMON: {
                   target: "startAdvancedDaemon",
@@ -59,16 +59,16 @@ export const getStartedMachine = ({
                       event.isAdvancedDaemon
                         ? !!event.isAdvancedDaemon
                         : context.isAdvancedDaemon,
-                    error: (context, event) => event.error,
-                  }),
+                    error: (context, event) => event.error
+                  })
                 },
                 START_REGULAR_DAEMON: {
                   target: "startingDaemon",
-                  cond: (c, event) => !event.isAdvancedDaemon && !event.isSPV,
+                  cond: (c, event) => !event.isAdvancedDaemon && !event.isSPV
                 },
                 START_CLI_REMOTE_DAEMON: {
                   target: "connectingDaemon",
-                  cond: (c, event) => !!event.remoteCredentials,
+                  cond: (c, event) => !!event.remoteCredentials
                 },
                 CHOOSE_WALLET: {
                   target: "choosingWallet",
@@ -82,16 +82,16 @@ export const getStartedMachine = ({
                     selectedWallet: (context, event) =>
                       event.selectedWallet
                         ? event.selectedWallet
-                        : context.selectedWallet,
-                  }),
-                },
-              },
+                        : context.selectedWallet
+                  })
+                }
+              }
             },
             startSpv: {
               onEntry: "isAtStartSPV",
               on: {
-                CONTINUE: "choosingWallet",
-              },
+                CONTINUE: "choosingWallet"
+              }
             },
             startingDaemon: {
               onEntry: "isAtStartingDaemon",
@@ -105,11 +105,11 @@ export const getStartedMachine = ({
                         ? event.credentials
                         : context.credentials,
                     appdata: (context, event) =>
-                      event.appdata ? event.appdata : context.appdata,
-                  }),
+                      event.appdata ? event.appdata : context.appdata
+                  })
                 },
-                ERROR_STARTING_DAEMON: "daemonError",
-              },
+                ERROR_STARTING_DAEMON: "daemonError"
+              }
             },
             // This state is needed to better treat errors. If we are in advanced
             // mode, we will be sent back to startAdvancedDaemon state. Otherwise,
@@ -119,9 +119,9 @@ export const getStartedMachine = ({
               on: {
                 START_ADVANCED_DAEMON: {
                   target: "startAdvancedDaemon",
-                  actions: assign({ error: (context, event) => event.error }),
-                },
-              },
+                  actions: assign({ error: (context, event) => event.error })
+                }
+              }
             },
             startAdvancedDaemon: {
               onEntry: "isAtStartAdvancedDaemon",
@@ -131,10 +131,10 @@ export const getStartedMachine = ({
                   target: "startingDaemon",
                   actions: assign({
                     appdata: (context, event) =>
-                      event.appdata ? event.appdata : context.appdata,
-                  }),
-                },
-              },
+                      event.appdata ? event.appdata : context.appdata
+                  })
+                }
+              }
             },
             connectingDaemon: {
               onEntry: "isAtConnectingDaemon",
@@ -142,18 +142,18 @@ export const getStartedMachine = ({
                 SYNC_DAEMON: {
                   target: "syncingDaemon",
                   actions: assign({
-                    error: (context, event) => event.error && event.error,
-                  }),
+                    error: (context, event) => event.error && event.error
+                  })
                 },
-                ERROR_CONNECTING_DAEMON: "daemonError",
-              },
+                ERROR_CONNECTING_DAEMON: "daemonError"
+              }
             },
             checkingNetworkMatch: {
               onEntry: "isAtCheckNetworkMatch",
               on: {
                 CHOOSE_WALLET: "choosingWallet",
-                ERROR_NETWORK_DAEMON: "daemonError",
-              },
+                ERROR_NETWORK_DAEMON: "daemonError"
+              }
             },
             syncingDaemon: {
               onEntry: "isAtSyncingDaemon",
@@ -161,11 +161,11 @@ export const getStartedMachine = ({
                 CHECK_NETWORK_MATCH: {
                   target: "checkingNetworkMatch",
                   actions: assign({
-                    error: (context, event) => event.error && event.error,
-                  }),
+                    error: (context, event) => event.error && event.error
+                  })
                 },
-                ERROR_SYNCING_DAEMON: "daemonError",
-              },
+                ERROR_SYNCING_DAEMON: "daemonError"
+              }
             },
             // We have a step before wallet creation, which creates wallet directory and config.
             // preCreateWallet state is responsible to deal with that.
@@ -177,10 +177,10 @@ export const getStartedMachine = ({
                 ERROR: {
                   target: "preCreateWallet",
                   actions: assign({
-                    error: (context, event) => event.error && event.error,
-                  }),
-                },
-              },
+                    error: (context, event) => event.error && event.error
+                  })
+                }
+              }
             },
             creatingWallet: {
               onEntry: "isAtCreatingWallet",
@@ -188,11 +188,11 @@ export const getStartedMachine = ({
                 ERROR: {
                   target: "preCreateWallet",
                   actions: assign({
-                    error: (context, event) => event.error && event.error,
-                  }),
-                },
+                    error: (context, event) => event.error && event.error
+                  })
+                }
               },
-              ...CreateWalletMachine,
+              ...CreateWalletMachine
             },
             choosingWallet: {
               onEntry: "isAtChoosingWallet",
@@ -203,8 +203,8 @@ export const getStartedMachine = ({
                     selectedWallet: (context, event) =>
                       event.selectedWallet
                         ? event.selectedWallet
-                        : context.selectedWallet,
-                  }),
+                        : context.selectedWallet
+                  })
                 },
                 CREATE_WALLET: {
                   target: "preCreateWallet",
@@ -212,10 +212,10 @@ export const getStartedMachine = ({
                     isCreateNewWallet: (context, event) =>
                       typeof event.isNew !== "undefined"
                         ? event.isNew
-                        : context.isCreateNewWallet,
-                  }),
-                },
-              },
+                        : context.isCreateNewWallet
+                  })
+                }
+              }
             },
             startingWallet: {
               onEntry: "isAtStartWallet",
@@ -224,9 +224,9 @@ export const getStartedMachine = ({
                 WALLET_PUBPASS_INPUT: "walletPubpassInput",
                 ERROR_STARTING_WALLET: {
                   target: "choosingWallet",
-                  actions: assign({ error: (context, event) => event.error }),
-                },
-              },
+                  actions: assign({ error: (context, event) => event.error })
+                }
+              }
             },
             walletPubpassInput: {
               onEntry: "isAtWalletPubpassInput",
@@ -235,10 +235,10 @@ export const getStartedMachine = ({
                 ERROR: {
                   target: "walletPubpassInput",
                   actions: assign({
-                    error: (context, event) => event.error && event.error,
-                  }),
-                },
-              },
+                    error: (context, event) => event.error && event.error
+                  })
+                }
+              }
             },
             syncingRPC: {
               onEntry: "isSyncingRPC",
@@ -246,59 +246,59 @@ export const getStartedMachine = ({
                 ERROR_SYNCING_WALLET: {
                   target: "choosingWallet",
                   actions: assign({
-                    error: (context, event) => event.error && event.error,
-                  }),
-                },
-              },
+                    error: (context, event) => event.error && event.error
+                  })
+                }
+              }
             },
             // history state so we can go back in the specific state when going to other view, like settings or log
             // source: https://xstate.js.org/docs/guides/history.html#history
             hist: {
-              type: "history",
-            },
-          },
+              type: "history"
+            }
+          }
           // end of startMachine states
         },
         releaseNotes: {
           initial: "releaseNotes",
           states: {
-            releaseNotes: {},
+            releaseNotes: {}
           },
           on: {
-            BACK: "startMachine.hist",
-          },
+            BACK: "startMachine.hist"
+          }
         },
         trezorConfig: {
           initial: "trezorConfig",
           states: {
-            trezorConfig: {},
+            trezorConfig: {}
           },
           on: {
             BACK: "startMachine.hist",
-            SHOW_TREZOR_CONFIG: "trezorConfig",
-          },
+            SHOW_TREZOR_CONFIG: "trezorConfig"
+          }
         },
         settings: {
           initial: "settings",
           states: {
-            settings: {},
+            settings: {}
           },
           on: {
             BACK: "startMachine.hist",
-            SHOW_LOGS: "logs",
-          },
+            SHOW_LOGS: "logs"
+          }
         },
         logs: {
           initial: "logs",
           states: {
-            logs: {},
+            logs: {}
           },
           on: {
             BACK: "startMachine.hist",
-            SHOW_SETTINGS: "settings",
-          },
-        },
-      },
+            SHOW_SETTINGS: "settings"
+          }
+        }
+      }
     },
     {
       actions: {
@@ -317,7 +317,7 @@ export const getStartedMachine = ({
               const { credentials, appdata } = started;
               sendEvent({
                 type: "CONNECT_DAEMON",
-                payload: { started, credentials, appdata },
+                payload: { started, credentials, appdata }
               });
             })
             .catch((error) =>
@@ -405,7 +405,7 @@ export const getStartedMachine = ({
             .catch((error) =>
               sendEvent({ type: "ERROR_SYNCING_WALLET", payload: { error } })
             );
-        },
-      },
+        }
+      }
     }
   );

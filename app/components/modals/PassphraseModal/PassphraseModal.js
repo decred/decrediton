@@ -32,7 +32,7 @@ class PassphraseModal extends React.Component {
   getInitialState() {
     return {
       passPhrase: "",
-      hasFailedAttempt: false,
+      hasFailedAttempt: false
     };
   }
 
@@ -72,7 +72,7 @@ class PassphraseModal extends React.Component {
           onSubmit,
           onCancelModal,
           hasFailedAttempt,
-          isValid: isValid(),
+          isValid: isValid()
         }}
       />
     );

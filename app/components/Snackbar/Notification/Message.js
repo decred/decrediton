@@ -11,7 +11,7 @@ class Message extends React.Component {
       values,
       onDismissMessage,
       progress,
-      topNotification,
+      topNotification
     } = this.props;
     const txt = intl.formatMessage(message, values);
     return (

@@ -21,7 +21,7 @@ import {
   LNWALLET_SENDPAYMENT_ATTEMPT,
   LNWALLET_SENDPAYMENT_SUCCESS,
   LNWALLET_DCRLND_STOPPED,
-  LNWALLET_CHECKED,
+  LNWALLET_CHECKED
 } from "actions/LNActions";
 
 function addOutstandingPayment(oldOut, rhashHex, payData) {
@@ -41,17 +41,17 @@ export default function ln(state = {}, action) {
     case LNWALLET_STARTDCRLND_ATTEMPT:
       return {
         ...state,
-        startAttempt: true,
+        startAttempt: true
       };
     case LNWALLET_STARTDCRLND_FAILED:
       return {
         ...state,
-        startAttempt: false,
+        startAttempt: false
       };
     case LNWALLET_STARTDCRLND_SUCCESS:
       return {
         ...state,
-        startAttempt: false,
+        startAttempt: false
       };
     case LNWALLET_INFO_UPDATED:
       return {
@@ -59,81 +59,81 @@ export default function ln(state = {}, action) {
         info: {
           version: action.version,
           identityPubkey: action.identityPubkey,
-          alias: action.alias,
-        },
+          alias: action.alias
+        }
       };
     case LNWALLET_CONNECT_ATTEMPT:
       return {
         ...state,
         active: false,
         client: null,
-        connectAttempt: true,
+        connectAttempt: true
       };
     case LNWALLET_CONNECT_FAILED:
       return {
         ...state,
-        connectAttempt: false,
+        connectAttempt: false
       };
     case LNWALLET_CONNECT_SUCCESS:
       return {
         ...state,
         active: true,
         client: action.lnClient,
-        connectAttempt: false,
+        connectAttempt: false
       };
     case LNWALLET_BALANCE_UPDATED:
       return {
         ...state,
-        walletBalances: action.balances,
+        walletBalances: action.balances
       };
     case LNWALLET_CHANNELBALANCE_UPDATED:
       return {
         ...state,
-        channelBalances: action.channelBalances,
+        channelBalances: action.channelBalances
       };
     case LNWALLET_CHANNELLIST_UPDATED:
       return {
         ...state,
         channels: action.channels,
         pendingChannels: action.pendingChannels,
-        closedChannels: action.closedChannels,
+        closedChannels: action.closedChannels
       };
     case LNWALLET_LATESTINVOICES_UPDATED:
       return {
         ...state,
-        invoices: action.invoices,
+        invoices: action.invoices
       };
     case LNWALLET_LATESTPAYMENTS_UPDATED:
       return {
         ...state,
-        payments: action.payments,
+        payments: action.payments
       };
     case LNWALLET_ADDINVOICE_ATTEMPT:
       return {
         ...state,
-        addInvoiceAttempt: true,
+        addInvoiceAttempt: true
       };
     case LNWALLET_ADDINVOICE_SUCCESS:
       return {
         ...state,
-        addInvoiceAttempt: false,
+        addInvoiceAttempt: false
       };
     case LNWALLET_ADDINVOICE_FAILED:
       return {
         ...state,
-        addInvoiceAttempt: false,
+        addInvoiceAttempt: false
       };
     case LNWALLET_INVOICE_SETTLED:
     case LNWALLET_INVOICE_OPENED:
     case LNWALLET_INVOICE_EXPIRED:
       return {
         ...state,
-        invoices: action.invoices,
+        invoices: action.invoices
       };
     case LNWALLET_PAYSTREAM_CREATED:
       return {
         ...state,
-        payStream: action.payStream,
+        payStream: action.payStream
       };
     case LNWALLET_SENDPAYMENT_ATTEMPT:
       return {
@@ -142,7 +142,7 @@ export default function ln(state = {}, action) {
           state.outstandingPayments,
           action.rhashHex,
           action.payData
-        ),
+        )
       };
     case LNWALLET_SENDPAYMENT_SUCCESS:
       return {
@@ -150,7 +150,7 @@ export default function ln(state = {}, action) {
         outstandingPayments: delOutstandingPayment(
           state.outstandingPayments,
           action.rhashHex
-        ),
+        )
       };
     case LNWALLET_DCRLND_STOPPED:
       return {
@@ -167,24 +167,24 @@ export default function ln(state = {}, action) {
         info: {
           version: null,
           identityPubkey: null,
-          alias: null,
+          alias: null
         },
         walletBalances: {
           totalBalance: 0,
           confirmedBalance: 0,
-          unconfirmedBalance: 0,
+          unconfirmedBalance: 0
         },
         channelBalances: {
           balance: 0,
           pendingOpenBalance: 0,
           maxInboundAmount: 0,
-          maxOutboundAmount: 0,
-        },
+          maxOutboundAmount: 0
+        }
       };
     case LNWALLET_CHECKED:
       return {
         ...state,
-        exists: !!action.exists,
+        exists: !!action.exists
       };
     default:
       return state;

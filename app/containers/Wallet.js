@@ -25,7 +25,7 @@ import ReactTimeout from "react-timeout";
 const pageAnimation = {
   atEnter: { opacity: 0 },
   atLeave: { opacity: 0 },
-  atActive: { opacity: 1 },
+  atActive: { opacity: 1 }
 };
 
 @autobind

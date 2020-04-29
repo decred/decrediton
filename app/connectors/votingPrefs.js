@@ -9,14 +9,14 @@ const mapStateToProps = selectorMap({
   configuredStakePools: sel.configuredStakePools,
   defaultStakePool: sel.defaultStakePool,
   stakePool: sel.selectedStakePool,
-  allAgendas: sel.allAgendas,
+  allAgendas: sel.allAgendas
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       onUpdateVotePreference: ca.setVoteChoicesAttempt,
-      onChangeStakePool: spa.changeSelectedStakePool,
+      onChangeStakePool: spa.changeSelectedStakePool
     },
     dispatch
   );

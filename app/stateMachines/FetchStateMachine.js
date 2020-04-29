@@ -5,15 +5,15 @@ export const fetchMachine = Machine({
   initial: "idle",
   context: {
     retries: 0,
-    error: null,
+    error: null
   },
   states: {
     idle: {
       entry: ["initial"],
       on: {
         FETCH: "loading",
-        RESOLVE: "success",
-      },
+        RESOLVE: "success"
+      }
     },
     loading: {
       entry: ["load"],
@@ -22,25 +22,25 @@ export const fetchMachine = Machine({
         REJECT: {
           target: "failure",
           actions: assign({
-            error: (context, event) => event.error,
-          }),
-        },
-      },
+            error: (context, event) => event.error
+          })
+        }
+      }
     },
     success: {
       on: {
-        FETCH: "loading",
-      },
+        FETCH: "loading"
+      }
     },
     failure: {
       on: {
         RETRY: {
           target: "loading",
           actions: assign({
-            retries: (context) => context.retries + 1,
-          }),
-        },
-      },
-    },
-  },
+            retries: (context) => context.retries + 1
+          })
+        }
+      }
+    }
+  }
 });

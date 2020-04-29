@@ -6,7 +6,7 @@ import {
   endOfDay,
   reverseRawHash,
   formatLocalISODate,
-  isSameDate,
+  isSameDate
 } from "helpers";
 
 const VALUE_TYPE_ATOMAMOUNT = "VALUE_TYPE_ATOMAMOUNT";
@@ -63,9 +63,9 @@ export const getStartupStats = () => (dispatch, getState) => {
               received: 0,
               voted: 0,
               revoked: 0,
-              ticket: 0,
+              ticket: 0
             },
-            time: new Date(date),
+            time: new Date(date)
           });
         } else {
           lastBalances.push({
@@ -75,9 +75,9 @@ export const getStartupStats = () => (dispatch, getState) => {
               received: 0,
               voted: 0,
               revoked: 0,
-              ticket: 0,
+              ticket: 0
             },
-            time: new Date(date),
+            time: new Date(date)
           });
         }
         date.setDate(date.getDate() + 1);
@@ -90,7 +90,7 @@ export const getStartupStats = () => (dispatch, getState) => {
         dailyBalances: lastBalances,
         startupStatsCalcSeconds,
         startupStatsEndCalcTime: endCalcTime,
-        type: GETSTARTUPSTATS_SUCCESS,
+        type: GETSTARTUPSTATS_SUCCESS
       });
     })
     .catch((error) => {
@@ -134,7 +134,7 @@ export const getTicketsHeatmapStats = () => (dispatch) => {
       }
       dispatch({
         ticketDataHeatmap: resp,
-        type: GETTICKETSHEATMAPSTATS_SUCCESS,
+        type: GETTICKETSHEATMAPSTATS_SUCCESS
       });
     })
     .catch((error) => {
@@ -149,8 +149,8 @@ export const getHeatmapStats = (opts) => (dispatch, getState) =>
       const { endDate, backwards } = opts;
       const { currentBlockHeight, walletService } = getState().grpc;
       const chainParams = sel.chainParams(getState());
-      let liveTickets = {}; // live by hash
-      let maturingTxs = {}; // maturing by height
+      const liveTickets = {}; // live by hash
+      const maturingTxs = {}; // maturing by height
       const tsDate = sel.tsDate(getState());
       const pageSize = 200;
       const maxMaturity = Math.max(
@@ -167,7 +167,7 @@ export const getHeatmapStats = (opts) => (dispatch, getState) =>
           pageSize,
           tsDate,
           backwards,
-          walletService,
+          walletService
         };
         toProcess = await prepDataToCalcStats(
           currentBlockHeight,
@@ -190,7 +190,7 @@ export const getHeatmapStats = (opts) => (dispatch, getState) =>
         const fixedUnmined = unmined.map((tx) => ({
           ...tx,
           timestamp: currentDate.getTime(),
-          height: currentBlockHeight,
+          height: currentBlockHeight
         }));
         toProcess.unshift(...fixedUnmined);
 
@@ -199,7 +199,7 @@ export const getHeatmapStats = (opts) => (dispatch, getState) =>
         // getTransaction calls in voteRevokeInfo()
         toProcess.forEach((tx) => {
           if (tx.txType === wallet.TRANSACTION_TYPE_TICKET_PURCHASE) {
-            var { isWallet, commitAmount } = ticketInfo(tx);
+            const { isWallet, commitAmount } = ticketInfo(tx);
             recordTicket(
               maturingTxs,
               liveTickets,
@@ -216,7 +216,7 @@ export const getHeatmapStats = (opts) => (dispatch, getState) =>
           maturingTxs,
           liveTickets,
           tsDate,
-          chainParams,
+          chainParams
         });
 
         resolve(ticketsCounter);
@@ -228,12 +228,12 @@ export const getHeatmapStats = (opts) => (dispatch, getState) =>
   });
 
 const countTicketsBackwards = ({ mined, chainParams, tsDate }) => {
-  let now = new Date();
+  const now = new Date();
   let lastTxTimestamp = now.getTime() / 1000;
   let lastDate = tsDate(lastTxTimestamp);
   const values = {};
 
-  let ticketsCounter = { live: 0, maturing: 0, vote: 0, revoke: 0 };
+  const ticketsCounter = { live: 0, maturing: 0, vote: 0, revoke: 0 };
 
   for (let i = 0; i < mined.length; i++) {
     const tx = mined[i];
@@ -260,7 +260,7 @@ const countTicketsBackwards = ({ mined, chainParams, tsDate }) => {
         values[tsWillMatureDate] = values[tsWillMatureDate]
           ? {
               ...values[tsWillMatureDate],
-              live: values[tsWillMatureDate].live + 1,
+              live: values[tsWillMatureDate].live + 1
             }
           : { live: 1, maturing: 0, vote: 0, revoke: 0 };
         break;
@@ -291,7 +291,7 @@ export const GETMYTICKETSSTATS_FAILED = "GETMYTICKETSSTATS_FAILED";
 export const getMyTicketsStats = () => (dispatch) => {
   const startupStats = [
     { calcFunction: voteTimeStats },
-    { calcFunction: dailyBalancesStats },
+    { calcFunction: dailyBalancesStats }
   ];
 
   dispatch({ type: GETMYTICKETSSTATS_ATTEMPT });
@@ -326,7 +326,7 @@ export const generateStat = (opts) => (dispatch) =>
         startFunction,
         progressFunction,
         endFunction,
-        errorFunction,
+        errorFunction
       })
     );
   });
@@ -338,9 +338,9 @@ export const EXPORT_ERROR = "EXPORT_ERROR";
 export const exportStatToCSV = (opts) => (dispatch, getState) => {
   const { calcFunction, csvFilename } = opts;
 
-  var fd;
-  var allSeries;
-  var seriesOpts;
+  let fd;
+  let allSeries;
+  let seriesOpts;
 
   // constants (may be overridden/parametrized in the future)
   const unitDivisor = sel.unitDivisor(getState());
@@ -371,7 +371,7 @@ export const exportStatToCSV = (opts) => (dispatch, getState) => {
     dispatch({ type: EXPORT_STARTED });
     allSeries = opts.series.map((s) => ({
       ...s,
-      valueFormatFunc: seriesValueFormatFunc(s),
+      valueFormatFunc: seriesValueFormatFunc(s)
     }));
     seriesOpts = opts;
     const seriesNames = allSeries.map((s) => s.name);
@@ -416,7 +416,7 @@ export const exportStatToCSV = (opts) => (dispatch, getState) => {
       startFunction,
       progressFunction,
       endFunction,
-      errorFunction,
+      errorFunction
     })
   );
 };
@@ -434,8 +434,8 @@ export const transactionStats = (opts) => (dispatch, getState) => {
       { name: "fee", type: VALUE_TYPE_ATOMAMOUNT },
       { name: "amount", type: VALUE_TYPE_ATOMAMOUNT },
       { name: "credits", type: VALUE_TYPE_ATOMAMOUNT },
-      { name: "debits", type: VALUE_TYPE_ATOMAMOUNT },
-    ],
+      { name: "debits", type: VALUE_TYPE_ATOMAMOUNT }
+    ]
   });
 
   const formatTx = (tx) => {
@@ -448,7 +448,7 @@ export const transactionStats = (opts) => (dispatch, getState) => {
       credits: tx.tx.getCreditsList().reduce((s, c) => s + c.getAmount(), 0),
       debits: tx.tx
         .getDebitsList()
-        .reduce((s, d) => s + d.getPreviousAmount(), 0),
+        .reduce((s, d) => s + d.getPreviousAmount(), 0)
     };
   };
   const tsDate = sel.tsDate(getState());
@@ -476,7 +476,7 @@ const recordTicket = (maturingTxs, liveTickets, tx, commitAmount, isWallet) => {
 };
 
 const recordVoteRevoke = (maturingTxs, tx, amount, isWallet, chainParams) => {
-  let matureHeight = tx.height + chainParams.CoinbaseMaturity;
+  const matureHeight = tx.height + chainParams.CoinbaseMaturity;
   maturingTxs[matureHeight] = maturingTxs[matureHeight] || [];
   maturingTxs[matureHeight].push({ tx, amount, isWallet, isTicket: false });
 };
@@ -532,10 +532,10 @@ const findMaturingDeltas = (
   chainParams,
   backwards
 ) => {
-  let start = backwards ? toHeight : fromHeight;
-  let end = backwards ? fromHeight : toHeight;
-  let inc = backwards ? -1 : +1;
-  let test = (h) => (backwards ? h >= end : h <= end);
+  const start = backwards ? toHeight : fromHeight;
+  const end = backwards ? fromHeight : toHeight;
+  const inc = backwards ? -1 : +1;
+  const test = (h) => (backwards ? h >= end : h <= end);
 
   const res = [];
   for (let h = start; test(h); h += inc) {
@@ -564,7 +564,7 @@ const findMaturingDeltas = (
       stakeFees: 0,
       totalStake: 0,
       timestamp,
-      tx: null,
+      tx: null
     };
     maturingTxs[h].forEach(({ tx, amount, isWallet, isTicket }) => {
       maturedThisHeight.spendable += !isTicket ? amount * inc : 0; // isTicket == false means vote, revoke, coinbase
@@ -652,7 +652,7 @@ const voteRevokeInfo = async (tx, liveTickets, walletService) => {
           commitAmount: 0,
           spentAmount: 0,
           purchaseFees: 0,
-          poolFee: 0,
+          poolFee: 0
         };
       } else {
         throw error;
@@ -669,7 +669,7 @@ const voteRevokeInfo = async (tx, liveTickets, walletService) => {
     isVote,
     returnAmount,
     stakeResult,
-    ticketCommitAmount,
+    ticketCommitAmount
   };
 };
 
@@ -715,7 +715,7 @@ const txBalancesDelta = async (
         stakeFees: purchaseFees,
         totalStake: spentAmount,
         timestamp: tx.timestamp,
-        tx,
+        tx
       };
       break;
     case wallet.TRANSACTION_TYPE_VOTE:
@@ -725,7 +725,7 @@ const txBalancesDelta = async (
         isVote,
         returnAmount,
         stakeResult,
-        ticketCommitAmount,
+        ticketCommitAmount
       } = await voteRevokeInfo(tx, liveTickets, walletService);
       recordVoteRevoke(maturingTxs, tx, returnAmount, wasWallet, chainParams);
       delta = {
@@ -743,7 +743,7 @@ const txBalancesDelta = async (
         stakeRewards: isVote ? stakeResult : 0,
         totalStake: 0,
         timestamp: tx.timestamp,
-        tx,
+        tx
       };
       break;
     case wallet.TRANSACTION_TYPE_COINBASE:
@@ -763,7 +763,7 @@ const txBalancesDelta = async (
         totalStake: 0,
         immatureNonWallet: 0,
         timestamp: tx.timestamp,
-        tx,
+        tx
       };
       break;
     default:
@@ -783,7 +783,7 @@ const addDelta = (
 ) => {
   backwards && progressFunction(tsDate(delta.timestamp), currentBalance);
 
-  let balance = {
+  const balance = {
     spendable: currentBalance.spendable + delta.spendable,
     immature: currentBalance.immature + delta.immature,
     immatureNonWallet:
@@ -793,7 +793,7 @@ const addDelta = (
     stakeRewards: currentBalance.stakeRewards + delta.stakeRewards,
     stakeFees: currentBalance.stakeFees + delta.stakeFees,
     totalStake: currentBalance.totalStake + delta.totalStake,
-    delta,
+    delta
   };
   balance.total = balance.spendable + balance.locked + balance.immature;
 
@@ -817,10 +817,10 @@ const txDataCbBackwards = async ({
   balances,
   tsDate,
   maxMaturity,
-  currentBalance,
+  currentBalance
 }) => {
-  let now = new Date();
-  let toAddDeltas = {};
+  const now = new Date();
+  const toAddDeltas = {};
   let lastTxHeight = currentBlockHeight;
   let lastTxTimestamp = now.getTime() / 1000;
   const fields = [
@@ -831,7 +831,7 @@ const txDataCbBackwards = async ({
     "totalStake",
     "immature",
     "lockedNonWallet",
-    "immatureNonWallet",
+    "immatureNonWallet"
   ];
   const turnFieldsNegative = (delta) =>
     fields.forEach((f) => (delta[f] = -delta[f]));
@@ -915,7 +915,7 @@ const txDataCb = async ({
   chainParams,
   walletService,
   recentBlockTimestamp,
-  currentBlockHeight,
+  currentBlockHeight
 }) => {
   let lastTxHeight = 0;
   let lastTxTimestamp = chainParams.GenesisTimestamp;
@@ -982,7 +982,7 @@ const prepDataToCalcStats = async (
     pageSize,
     tsDate,
     walletService,
-    backwards,
+    backwards
   } = data;
 
   // grab transactions in batches of (roughly) `pageSize` transactions, so
@@ -1035,23 +1035,23 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
     endFunction,
     errorFunction,
     endDate,
-    backwards,
+    backwards
   } = opts;
 
   const {
     currentBlockHeight,
     walletService,
     recentBlockTimestamp,
-    balances,
+    balances
   } = getState().grpc;
 
   const chainParams = sel.chainParams(getState());
 
-  let liveTickets = {}; // live by hash
-  let maturingTxs = {}; // maturing by height
+  const liveTickets = {}; // live by hash
+  const maturingTxs = {}; // maturing by height
 
   // running balance totals
-  let currentBalance = {
+  const currentBalance = {
     spendable: 0,
     immature: 0,
     immatureNonWallet: 0,
@@ -1061,7 +1061,7 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
     stakeRewards: 0,
     stakeFees: 0,
     totalStake: 0,
-    delta: { voted: 0, revoked: 0, ticket: 0, sent: 0, received: 0 },
+    delta: { voted: 0, revoked: 0, ticket: 0, sent: 0, received: 0 }
   };
 
   const tsDate = sel.tsDate(getState());
@@ -1071,7 +1071,7 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
     chainParams.CoinbaseMaturity,
     chainParams.TicketMaturity
   );
-  let currentDate = new Date();
+  const currentDate = new Date();
   let toProcess = [];
   startFunction({
     series: [
@@ -1083,8 +1083,8 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
       { name: "total", type: VALUE_TYPE_ATOMAMOUNT },
       { name: "stakeRewards", type: VALUE_TYPE_ATOMAMOUNT },
       { name: "stakeFees", type: VALUE_TYPE_ATOMAMOUNT },
-      { name: "totalStake", type: VALUE_TYPE_ATOMAMOUNT },
-    ],
+      { name: "totalStake", type: VALUE_TYPE_ATOMAMOUNT }
+    ]
   });
 
   try {
@@ -1094,7 +1094,7 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
       pageSize,
       tsDate,
       walletService,
-      backwards,
+      backwards
     };
     if (backwards) {
       toProcess = await prepDataToCalcStats(
@@ -1118,7 +1118,7 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
       const fixedUnmined = unmined.map((tx) => ({
         ...tx,
         timestamp: currentDate.getTime(),
-        height: currentBlockHeight,
+        height: currentBlockHeight
       }));
       toProcess.unshift(...fixedUnmined);
 
@@ -1127,7 +1127,7 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
       // getTransaction calls in voteRevokeInfo()
       toProcess.forEach((tx) => {
         if (tx.txType == wallet.TRANSACTION_TYPE_TICKET_PURCHASE) {
-          var { isWallet, commitAmount } = ticketInfo(tx);
+          const { isWallet, commitAmount } = ticketInfo(tx);
           recordTicket(
             maturingTxs,
             liveTickets,
@@ -1151,7 +1151,7 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
         progressFunction,
         recentBlockTimestamp,
         balances,
-        maxMaturity,
+        maxMaturity
       });
       return endFunction();
     }
@@ -1174,7 +1174,7 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
       currentBalance,
       tsDate,
       progressFunction,
-      recentBlockTimestamp,
+      recentBlockTimestamp
     });
     endFunction();
   } catch (err) {
@@ -1194,7 +1194,7 @@ export const dailyBalancesStats = (opts) => {
     received: 0,
     voted: 0,
     revoked: 0,
-    ticket: 0,
+    ticket: 0
   };
 
   const aggStartFunction = (opts) => {
@@ -1205,8 +1205,8 @@ export const dailyBalancesStats = (opts) => {
         { name: "received", type: VALUE_TYPE_ATOMAMOUNT },
         { name: "voted", type: VALUE_TYPE_ATOMAMOUNT },
         { name: "revoked", type: VALUE_TYPE_ATOMAMOUNT },
-        { name: "ticket", type: VALUE_TYPE_ATOMAMOUNT },
-      ],
+        { name: "ticket", type: VALUE_TYPE_ATOMAMOUNT }
+      ]
     });
   };
 
@@ -1222,7 +1222,7 @@ export const dailyBalancesStats = (opts) => {
         received: delta.received,
         voted: delta.voted,
         revoked: delta.revoked,
-        ticket: delta.ticket,
+        ticket: delta.ticket
       };
       lastDate = new Date(time.getFullYear(), time.getMonth(), time.getDate());
     } else {
@@ -1234,7 +1234,7 @@ export const dailyBalancesStats = (opts) => {
         received: balance.received + delta.received,
         voted: balance.voted + delta.voted,
         revoked: balance.revoked + delta.revoked,
-        ticket: balance.ticket + delta.ticket,
+        ticket: balance.ticket + delta.ticket
       };
     }
   };
@@ -1248,7 +1248,7 @@ export const dailyBalancesStats = (opts) => {
     ...opts,
     progressFunction: aggProgressFunction,
     endFunction: aggEndFunction,
-    startFunction: aggStartFunction,
+    startFunction: aggStartFunction
   });
 };
 
@@ -1265,7 +1265,7 @@ export const voteTimeStats = (opts) => (dispatch, getState) => {
 
   startFunction({
     series: [{ name: "daysToVote" }, { name: "count" }],
-    noTimestamp: true,
+    noTimestamp: true
   });
 
   const txDataCb = (tickets) => {
@@ -1301,8 +1301,8 @@ export const ticketStats = (opts) => (dispatch, getState) => {
       { name: "ticketHash" },
       { name: "spenderHash" },
       { name: "sentAmount", type: VALUE_TYPE_ATOMAMOUNT },
-      { name: "returnedAmount", type: VALUE_TYPE_ATOMAMOUNT },
-    ],
+      { name: "returnedAmount", type: VALUE_TYPE_ATOMAMOUNT }
+    ]
   });
 
   const normalizeTicket = sel.ticketNormalizer(getState());
@@ -1318,7 +1318,7 @@ export const ticketStats = (opts) => (dispatch, getState) => {
         ticketHash: ticket.hash,
         spenderHash: ticket.spenderHash,
         sentAmount: ticket.ticketInvestment,
-        returnedAmount: ticket.ticketReturnAmount,
+        returnedAmount: ticket.ticketReturnAmount
       });
     });
 

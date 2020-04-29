@@ -4,27 +4,27 @@ import {
   KeyBlueButton,
   InvisibleButton,
   WatchOnlyWalletSwitch,
-  TrezorWalletSwitch,
+  TrezorWalletSwitch
 } from "buttons";
 import { NewSeedTabMsg, RestoreTabMsg } from "../messages";
 
 const messages = defineMessages({
   messageWalletNamePlaceholder: {
     id: "createwallet.walletname.placehlder",
-    defaultMessage: "Choose a Name",
+    defaultMessage: "Choose a Name"
   },
   messageWalletMasterPubKey: {
     id: "createwallet.walletpubkey.placeholder",
-    defaultMessage: "Master Pub Key",
+    defaultMessage: "Master Pub Key"
   },
   messageWalletMasterPubkeyError: {
     id: "createwallet.walletWatchOnly.error",
-    defaultMessage: "Invalid Master Pubkey",
+    defaultMessage: "Invalid Master Pubkey"
   },
   messageWalletDupeNameError: {
     id: "createwallet.dupeWalletName.error",
-    defaultMessage: "Please choose an unused wallet name",
-  },
+    defaultMessage: "Please choose an unused wallet name"
+  }
 });
 
 const CreateWalletForm = ({
@@ -45,7 +45,7 @@ const CreateWalletForm = ({
   toggleTrezor,
   onShowTrezorConfig,
   isCreateNewWallet,
-  creatingWallet,
+  creatingWallet
 }) => (
   <>
     {isCreateNewWallet ? (

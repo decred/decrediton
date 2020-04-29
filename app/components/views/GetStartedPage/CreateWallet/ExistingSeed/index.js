@@ -12,7 +12,7 @@ class ExistingSeed extends React.Component {
       hexSeed: null,
       showPasteWarning: false,
       showPasteError: false,
-      seedType: WORDS,
+      seedType: WORDS
     };
   }
 
@@ -53,7 +53,7 @@ class ExistingSeed extends React.Component {
       seedWords.push({
         word: "",
         index: i,
-        error: false,
+        error: false
       });
     }
     return seedWords;
@@ -77,13 +77,13 @@ class ExistingSeed extends React.Component {
       this.setState({
         seedWords: words,
         showPasteWarning: true,
-        showPasteError: false,
+        showPasteError: false
       });
       return true;
     } else {
       this.setState({
         showPasteWarning: false,
-        showPasteError: true,
+        showPasteError: true
       });
       return false;
     }
@@ -134,7 +134,7 @@ class ExistingSeed extends React.Component {
     updatedSeedWords[seedWord.index] = {
       word: update,
       index: seedWord.index,
-      error: false,
+      error: false
     };
 
     const seedWordStr = this.getSeedWordsStr();
@@ -158,7 +158,7 @@ class ExistingSeed extends React.Component {
         this.setState({
           hexSeed: trimmedSeed,
           showPasteError: false,
-          showPasteWarning: false,
+          showPasteWarning: false
         });
       } else {
         this.props.setError(
@@ -197,7 +197,7 @@ class ExistingSeed extends React.Component {
       handleOnPaste,
       handleToggle,
       pasteFromClipboard,
-      setSeedHex,
+      setSeedHex
     } = this;
     const { seedWords, seedError, hexSeed } = this.state;
     return (
@@ -212,7 +212,7 @@ class ExistingSeed extends React.Component {
           hexSeed,
           handleOnPaste,
           pasteFromClipboard,
-          handleToggle,
+          handleToggle
         }}
       />
     );

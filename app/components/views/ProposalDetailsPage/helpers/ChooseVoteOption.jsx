@@ -22,7 +22,7 @@ const ChooseVoteOption = ({
   voteOptions,
   currentVoteChoice,
   votingComplete,
-  eligibleTicketCount,
+  eligibleTicketCount
 }) => {
   const [newVoteChoice, setVoteOption] = useState(null);
 
@@ -47,8 +47,8 @@ const ChooseVoteOption = ({
             send({ type: "REJECT", error });
             setVoteOption(null);
           });
-      },
-    },
+      }
+    }
   });
 
   const error = useMemo(
@@ -76,7 +76,7 @@ const ChooseVoteOption = ({
             currentVoteChoice,
             voteOptions,
             votingComplete,
-            onVoteSubmit: voteSubmitHandler,
+            onVoteSubmit: voteSubmitHandler
           }}
         />
       );
@@ -102,7 +102,7 @@ const ChooseVoteOption = ({
             voteOptions,
             votingComplete,
             onVoteSubmit: voteSubmitHandler,
-            votedSuccessfully: true,
+            votedSuccessfully: true
           }}
         />
       );

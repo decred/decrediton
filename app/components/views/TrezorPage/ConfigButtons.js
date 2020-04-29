@@ -25,7 +25,7 @@ class ConfigButtons extends React.Component {
       onTogglePinProtection,
       onTogglePassPhraseProtection,
       onChangeHomeScreen,
-      onClearDeviceSession,
+      onClearDeviceSession
     } = this.props;
 
     return (

@@ -8,7 +8,7 @@ class VerticalAccordion extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      childHeight: null,
+      childHeight: null
     };
     this.childRef = null;
   }
@@ -29,9 +29,9 @@ class VerticalAccordion extends React.Component {
         key: "body",
         style: {
           height: 0,
-          opacity: 0,
-        },
-      },
+          opacity: 0
+        }
+      }
     ];
   }
 
@@ -46,11 +46,11 @@ class VerticalAccordion extends React.Component {
           style: {
             height: spring(this.childRef.clientHeight, {
               stiffness: 180,
-              damping: 20,
+              damping: 20
             }),
-            opacity: spring(1),
-          },
-        },
+            opacity: spring(1)
+          }
+        }
       ];
     }
     // if we do not return the children we return an empty div.
@@ -60,9 +60,9 @@ class VerticalAccordion extends React.Component {
         key: "body",
         style: {
           height: spring(0, { stiffness: 180, damping: 20 }),
-          opacity: spring(0),
-        },
-      },
+          opacity: spring(0)
+        }
+      }
     ];
   }
 

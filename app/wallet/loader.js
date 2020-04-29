@@ -12,7 +12,7 @@ import {
   CreateWatchingOnlyWalletRequest,
   SpvSyncRequest,
   FetchMissingCFiltersRequest,
-  RescanPointRequest,
+  RescanPointRequest
 } from "middleware/walletrpc/api_pb";
 
 export const getLoader = log(

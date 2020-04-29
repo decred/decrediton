@@ -8,7 +8,7 @@ class DangerButton extends React.Component {
     className += !this.props.disabled
       ? "danger-button"
       : "danger-button-disabled";
-    let style = {};
+    const style = {};
     Object.assign(style, this.props.style);
     if (!this.props.disabled && this.props.block) {
       style.display = "block";

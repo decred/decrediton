@@ -5,13 +5,13 @@ const styles = {
     width: "880px",
     height: "100%",
     float: "right",
-    backgroundColor: "#f3f6f6",
+    backgroundColor: "#f3f6f6"
   },
   content: {
     overflow: "auto",
     height: "556px",
-    padding: "54px 60px 54px 80px",
-  },
+    padding: "54px 60px 54px 80px"
+  }
 };
 
 const WalletError = ({ getNetworkError }) => (

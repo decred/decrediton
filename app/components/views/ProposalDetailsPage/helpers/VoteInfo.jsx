@@ -3,13 +3,13 @@ import ChooseVoteOption from "./ChooseVoteOption.jsx";
 import {
   VOTESTATUS_ACTIVEVOTE,
   VOTESTATUS_FINISHEDVOTE,
-  PROPOSALSTATUS_ABANDONED,
+  PROPOSALSTATUS_ABANDONED
 } from "actions/GovernanceActions";
 import {
   ProposalNotVoting,
   NoTicketsVotingInfo,
   NoElligibleTicketsVotingInfo,
-  ProposalAbandoned,
+  ProposalAbandoned
 } from "./";
 
 const VoteInfo = React.memo(
@@ -24,7 +24,7 @@ const VoteInfo = React.memo(
     newVoteChoice,
     setVoteOption,
     showPurchaseTicketsPage,
-    voteOptions,
+    voteOptions
   }) => {
     if (proposalStatus === PROPOSALSTATUS_ABANDONED) {
       return <ProposalAbandoned />;
@@ -54,7 +54,7 @@ const VoteInfo = React.memo(
             newVoteChoice,
             eligibleTicketCount,
             currentVoteChoice,
-            votingComplete: false,
+            votingComplete: false
           }}
         />
       );

@@ -1,6 +1,6 @@
 import { TESTNET, MAINNET } from "constants";
 
-var createBlakeHash;
+let createBlakeHash;
 if (process.env.NODE_ENV === "test") {
   // Node 10.x errors when trying to import the native blake-hash during unit
   // test. As far as I (matheusd) can see, this only happens during test, and
@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === "test") {
 } else {
   createBlakeHash = require("blake-hash");
 }
-var bs58checkBase = require("bs58check/base");
+const bs58checkBase = require("bs58check/base");
 
 export const ERR_INVALID_ADDR_EMPTY = "ERR_INVALID_ADDR_EMPTY";
 export const ERR_INVALID_ADDR_TOOSHORT = "ERR_INVALID_ADDR_TOOSHORT";
@@ -47,7 +47,7 @@ export function isValidAddress(addr, network) {
     return ERR_INVALID_ADDR_NETWORKPREFIX;
 
   try {
-    var bs58check = bs58checkBase(_blake256x2);
+    const bs58check = bs58checkBase(_blake256x2);
     bs58check.decode(addr, _blake256x2);
   } catch (error) {
     return ERR_INVALID_ADDR_CHECKSUM;
@@ -63,7 +63,7 @@ export function isValidMasterPubKey(masterPubKey) {
   if (!masterPubKey || !masterPubKey.trim().length)
     return ERR_INVALID_MASTER_PUB_KEY;
   try {
-    var bs58check = bs58checkBase(_blake256x2);
+    const bs58check = bs58checkBase(_blake256x2);
     bs58check.decode(masterPubKey, _blake256x2);
   } catch (error) {
     return ERR_INVALID_MASTERPUB_CHECKSUM;

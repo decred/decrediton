@@ -9,7 +9,7 @@ import { SimpleLoading } from "indicators";
 const ImportScriptIconButton = ({
   rescanRequest,
   isImportingScript,
-  onImportScript,
+  onImportScript
 }) => (
   <Tooltip
     warning={!!rescanRequest}

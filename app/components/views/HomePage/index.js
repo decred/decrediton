@@ -18,7 +18,7 @@ class Home extends React.Component {
       passphraseHeading: null,
       passphraseDescription: null,
       passphraseCallback: null,
-      isRequestingPassphrase: false,
+      isRequestingPassphrase: false
     };
   }
 
@@ -33,10 +33,10 @@ class Home extends React.Component {
             {
               onShowRevokeTicket: null,
               onRequestPassphrase: null,
-              onCancelPassphraseRequest: null,
+              onCancelPassphraseRequest: null
             },
             this
-          ),
+          )
         }}
       />
     ) : (
@@ -59,7 +59,7 @@ class Home extends React.Component {
       passphraseHeading,
       passphraseDescription,
       passphraseCallback,
-      isRequestingPassphrase: true,
+      isRequestingPassphrase: true
     });
   }
 
@@ -76,7 +76,7 @@ class Home extends React.Component {
       isRequestingPassphrase: false,
       passphraseHeading: null,
       passphraseDescription: null,
-      passphraseCallback: null,
+      passphraseCallback: null
     });
   }
 }

@@ -5,8 +5,8 @@ import { TextInput } from "inputs";
 const messages = defineMessages({
   newNamePlaceholder: {
     id: "accounts.rename.newNamePlaceholder",
-    defaultMessage: "New Account Name",
-  },
+    defaultMessage: "New Account Name"
+  }
 });
 
 const RenameAccount = ({
@@ -16,7 +16,7 @@ const RenameAccount = ({
   renameAccount,
   hideRenameAccount,
   intl,
-  hasFailedAttempt,
+  hasFailedAttempt
 }) => (
   <div
     className="account-row-rename-bottom"
@@ -64,7 +64,7 @@ RenameAccount.propTypes = {
   updateRenameAccountName: PropTypes.func.isRequired,
   renameAccount: PropTypes.func.isRequired,
   hideRenameAccount: PropTypes.func.isRequired,
-  intl: PropTypes.object.isRequired,
+  intl: PropTypes.object.isRequired
 };
 
 export default RenameAccount;

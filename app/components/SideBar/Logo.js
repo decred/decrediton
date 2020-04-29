@@ -8,7 +8,7 @@ const Logo = ({
   onReduceSideBar,
   onExpandSideBar,
   isWatchingOnly,
-  accountMixerRunning,
+  accountMixerRunning
 }) => (
   <div
     className={expandSideBar ? "sidebar-logo" : "reduced-sidebar-logo"}

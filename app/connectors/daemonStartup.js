@@ -55,7 +55,7 @@ const mapStateToProps = selectorMap({
   syncRescanAttempt: sel.syncRescanAttempt,
   syncFetchHeadersComplete: sel.syncFetchHeadersComplete,
   syncFetchTimeStart: sel.syncFetchTimeStart,
-  selectedWalletSelector: sel.getSelectedWallet,
+  selectedWalletSelector: sel.getSelectedWallet
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -107,7 +107,7 @@ const mapDispatchToProps = (dispatch) =>
       trezorDisable: trza.disableTrezor,
       trezorAlertNoConnectedDevice: trza.alertNoConnectedDevice,
       trezorGetWalletCreationMasterPubKey: trza.getWalletCreationMasterPubKey,
-      validateMasterPubKey: ctrla.validateMasterPubKey,
+      validateMasterPubKey: ctrla.validateMasterPubKey
     },
     dispatch
   );

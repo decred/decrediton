@@ -25,7 +25,7 @@ const PageHeader = ({ isTestnet }) => (
           values={{
             link: (
               <PiLink className="proposals-link">proposals.decred.org</PiLink>
-            ),
+            )
           }}
         />
       </div>

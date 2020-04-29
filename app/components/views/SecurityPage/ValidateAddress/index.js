@@ -12,7 +12,7 @@ class ValidateAddress extends React.Component {
   getInitialState() {
     return {
       address: "",
-      error: null,
+      error: null
     };
   }
 
@@ -36,7 +36,7 @@ class ValidateAddress extends React.Component {
           onAddressBlur,
           address,
           validateAddressSuccess,
-          error,
+          error
         }}
       />
     );
@@ -52,14 +52,14 @@ class ValidateAddress extends React.Component {
       .then((resp) => {
         this.setState({
           address,
-          error: !resp.getIsValid() ? "Please enter a valid address" : null,
+          error: !resp.getIsValid() ? "Please enter a valid address" : null
         });
       })
       .catch((error) => {
         console.error(error);
         this.setState({
           address,
-          error: "Error: Address validation failed, please try again.",
+          error: "Error: Address validation failed, please try again."
         });
       });
   }

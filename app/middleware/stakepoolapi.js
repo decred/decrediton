@@ -7,8 +7,8 @@ const URL_BASE = "https://api.decred.org";
 const GET = (path, apiToken) => {
   const config = {
     headers: {
-      Authorization: "Bearer " + apiToken,
-    },
+      Authorization: "Bearer " + apiToken
+    }
   };
   return axios.get(path, config);
 };
@@ -16,8 +16,8 @@ const GET = (path, apiToken) => {
 const POST = (path, apiToken, json) => {
   const config = {
     headers: {
-      Authorization: "Bearer " + apiToken,
-    },
+      Authorization: "Bearer " + apiToken
+    }
   };
   return axios.post(path, querystring.stringify(json), config);
 };
@@ -25,11 +25,11 @@ const POST = (path, apiToken, json) => {
 // stakepPoolInfoResponseToConfig converts a response object for the
 // stakePoolInfo call into an object array of available stakepool configs.
 function stakepPoolInfoResponseToConfig(response) {
-  var stakePoolNames = Object.keys(response.data);
+  const stakePoolNames = Object.keys(response.data);
 
   return stakePoolNames
     .map((name) => {
-      let { APIEnabled, URL, Network, APIVersionsSupported } = response.data[
+      const { APIEnabled, URL, Network, APIVersionsSupported } = response.data[
         name
       ];
       return !APIEnabled ? null : { Host: URL, Network, APIVersionsSupported };
@@ -49,11 +49,11 @@ export function stakePoolInfo(cb) {
 }
 
 function parseStakePoolResults(response) {
-  var stakePoolNames = Object.keys(response.data);
+  const stakePoolNames = Object.keys(response.data);
 
   return stakePoolNames
     .map((name) => {
-      let { APIEnabled, URL } = response.data[name];
+      const { APIEnabled, URL } = response.data[name];
       return !APIEnabled ? null : { Host: URL, ...response.data[name] };
     })
     .filter((v) => v);
@@ -72,7 +72,7 @@ export function allStakePoolStats(cb) {
 
 export function setStakePoolAddress({ apiUrl, apiToken, pKAddress }, cb) {
   POST(apiUrl + "/api/v1/address", apiToken, {
-    UserPubKeyAddr: pKAddress,
+    UserPubKeyAddr: pKAddress
   })
     .then(function (response) {
       cb(response);
@@ -84,7 +84,7 @@ export function setStakePoolAddress({ apiUrl, apiToken, pKAddress }, cb) {
 
 export function setVoteChoices({ apiUrl, apiToken, voteChoices }, cb) {
   POST(apiUrl + "/api/v2/voting", apiToken, {
-    VoteBits: voteChoices.toString(),
+    VoteBits: voteChoices.toString()
   })
     .then(function (response) {
       cb(response);

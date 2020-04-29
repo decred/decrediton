@@ -56,7 +56,7 @@ const TicketsStatsPage = ({
   getMyTicketsStatsRequest,
   hasStats,
   hasTickets,
-  allStakePoolStats,
+  allStakePoolStats
 }) => {
   if (!hasTickets && allStakePoolStats.length === 0) return <NoStats />;
   return (

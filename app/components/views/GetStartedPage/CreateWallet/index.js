@@ -26,7 +26,7 @@ class CreateWallet extends React.Component {
       sendEvent,
       sendContinue,
       checkIsValid,
-      onCreateWatchOnly,
+      onCreateWatchOnly
     });
     this.service = interpret(this.machine).onTransition((current) =>
       this.setState({ current }, this.getStateComponent)
@@ -34,7 +34,7 @@ class CreateWallet extends React.Component {
     this.state = {
       current: this.machine.initialState,
       StateComponent: null,
-      isValid: false,
+      isValid: false
     };
   }
 
@@ -50,7 +50,7 @@ class CreateWallet extends React.Component {
     this.service.send({
       type: "RESTORE_WALLET",
       isRestore: !isNew,
-      isWatchingOnly,
+      isWatchingOnly
     });
   }
 
@@ -66,7 +66,7 @@ class CreateWallet extends React.Component {
       setPassPhrase,
       setSeed,
       setError,
-      onCreateWallet,
+      onCreateWallet
     } = this;
     const { mnemonic, error } = this.service._state.context;
     const { decodeSeed } = this.props;
@@ -85,7 +85,7 @@ class CreateWallet extends React.Component {
           isValid,
           decodeSeed,
           setSeed,
-          setError,
+          setError
         });
         break;
       case "writeSeed":
@@ -98,7 +98,7 @@ class CreateWallet extends React.Component {
           onCreateWallet,
           isValid,
           setError,
-          error,
+          error
         });
         break;
       case "creatingWallet": {
@@ -190,7 +190,7 @@ class CreateWallet extends React.Component {
       getCurrentBlockCount,
       getNeededBlocks,
       getEstimatedTimeLeft,
-      isTestNet,
+      isTestNet
     } = this.props;
     const { StateComponent, walletHeader } = this.state;
     return (
@@ -202,7 +202,7 @@ class CreateWallet extends React.Component {
             getNeededBlocks,
             getEstimatedTimeLeft,
             getDaemonSynced,
-            walletHeader,
+            walletHeader
           }}
         />
       </div>

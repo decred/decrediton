@@ -1,6 +1,6 @@
 import {
   GenerateRandomSeedRequest,
-  DecodeSeedRequest,
+  DecodeSeedRequest
 } from "../middleware/walletrpc/api_pb";
 import { withLogNoData as log } from "./index";
 
@@ -10,7 +10,7 @@ SEED_WORDS.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
 export const SEED_LENGTH = {
   WORDS: 33,
   HEX_MAX: 128,
-  HEX_MIN: 32,
+  HEX_MIN: 32
 };
 
 export const generateSeed = log(

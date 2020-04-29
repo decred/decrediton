@@ -16,7 +16,7 @@ class Purchase extends React.Component {
       stakePool: this.props.stakePool,
       isShowingStakePools: !this.props.stakePool,
       isShowingVotingPrefs: false,
-      isShowingImportScript: false,
+      isShowingImportScript: false
     };
   }
 
@@ -45,10 +45,10 @@ class Purchase extends React.Component {
               onShowStakePoolConfig: null,
               onHideStakePoolConfig: null,
               onImportScript: null,
-              onRevokeTickets: null,
+              onRevokeTickets: null
             },
             this
-          ),
+          )
         }}
       />
     );
@@ -57,7 +57,7 @@ class Purchase extends React.Component {
   onToggleTicketStakePool(side) {
     this.setState({
       isShowingVotingPrefs: side === "right" ? true : false,
-      purchaseTicketsStakePoolConfig: false,
+      purchaseTicketsStakePoolConfig: false
     });
   }
 

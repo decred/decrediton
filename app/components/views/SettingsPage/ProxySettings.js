@@ -4,7 +4,7 @@ import {
   PROXYTYPE_PAC,
   PROXYTYPE_HTTP,
   PROXYTYPE_SOCKS4,
-  PROXYTYPE_SOCKS5,
+  PROXYTYPE_SOCKS5
 } from "main_dev/proxy";
 
 const availableProxyTypes = [
@@ -12,7 +12,7 @@ const availableProxyTypes = [
   { name: "HTTP", value: PROXYTYPE_HTTP },
   { name: "PAC", value: PROXYTYPE_PAC },
   { name: "SOCKS4", value: PROXYTYPE_SOCKS4 },
-  { name: "SOCKS5", value: PROXYTYPE_SOCKS5 },
+  { name: "SOCKS5", value: PROXYTYPE_SOCKS5 }
 ];
 
 const ProxySettings = ({ tempSettings, onChangeTempSettings }) => (

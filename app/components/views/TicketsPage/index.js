@@ -2,7 +2,7 @@ import {
   TabbedPage,
   TabbedPageTab as Tab,
   TitleHeader,
-  DescriptionHeader,
+  DescriptionHeader
 } from "layout";
 import { Switch, Redirect } from "react-router-dom";
 import { FormattedMessage as T } from "react-intl";
@@ -32,7 +32,7 @@ const TabHeader = purchaseTickets(({ ticketPrice }) => (
               amount={ticketPrice}
               classNameWrapper="header-small-balance"
             />
-          ),
+          )
         }}
       />
     }

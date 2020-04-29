@@ -22,7 +22,7 @@ export const useProposalDetailsPage = () => {
 
   const viewedProposalDetails = useMemo(() => proposalsDetails[token], [
     token,
-    proposalsDetails,
+    proposalsDetails
   ]);
   const eligibleTicketCount =
     viewedProposalDetails && viewedProposalDetails.walletEligibleTickets
@@ -38,7 +38,7 @@ export const useProposalDetailsPage = () => {
     [dispatch]
   );
   const goBackHistory = useCallback(() => dispatch(cli.goBackHistory()), [
-    dispatch,
+    dispatch
   ]);
 
   const [{ value: votingStatus }, send] = useMachine(fetchMachine, {
@@ -49,8 +49,8 @@ export const useProposalDetailsPage = () => {
       },
       load: () => {
         getProposalDetails(token).then(() => send({ type: "RESOLVE" }));
-      },
-    },
+      }
+    }
   });
 
   return {
@@ -62,6 +62,6 @@ export const useProposalDetailsPage = () => {
     token,
     dispatch,
     goBackHistory,
-    showPurchaseTicketsPage,
+    showPurchaseTicketsPage
   };
 };

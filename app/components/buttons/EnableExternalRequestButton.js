@@ -5,7 +5,7 @@ const EnableExternalRequestButton = ({
   children,
   requestType,
   onAddAllowedRequestType,
-  onClick,
+  onClick
 }) => (
   <KeyBlueButton
     onClick={() =>

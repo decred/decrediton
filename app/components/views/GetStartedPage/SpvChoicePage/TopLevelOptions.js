@@ -27,7 +27,7 @@ export default ({ toggleSpv }) => (
             <ExternalLink href={"https://docs.decred.org/wallets/spv/"}>
               <T id="spv.titleSub.here" m="here" />
             </ExternalLink>
-          ),
+          )
         }}
       />
     </div>

@@ -13,7 +13,7 @@ const CreateWallet = ({
   onSubmitCopySeedConfirm,
   mnemonic,
   sendBack,
-  sendContinue,
+  sendContinue
 }) => (
   <>
     <div className="content-title-wrapper is-row">

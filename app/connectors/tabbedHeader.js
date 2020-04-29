@@ -5,7 +5,7 @@ import { selectorMap } from "../fp";
 const mapStateToProps = selectorMap({
   isTestNet: sel.isTestNet,
   totalBalance: sel.totalBalance,
-  ticketPrice: sel.ticketPrice,
+  ticketPrice: sel.ticketPrice
 });
 
 export default connect(mapStateToProps);

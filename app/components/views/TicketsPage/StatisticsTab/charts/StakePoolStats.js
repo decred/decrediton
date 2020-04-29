@@ -23,7 +23,7 @@ class StakePoolStats extends React.Component {
     }
 
     return {
-      stakePool: stakePool,
+      stakePool: stakePool
     };
   }
 

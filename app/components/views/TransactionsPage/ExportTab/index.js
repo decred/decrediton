@@ -4,7 +4,7 @@ import {
   dailyBalancesStats,
   balancesStats,
   voteTimeStats,
-  ticketStats,
+  ticketStats
 } from "actions/StatisticsActions";
 import Page from "./Page";
 import messages from "./messages";
@@ -26,16 +26,16 @@ const AvailableExports = [
   {
     ...messages.transactions,
     key: "transactions",
-    calcFunction: transactionStats,
+    calcFunction: transactionStats
   },
   {
     ...messages.dailyBalances,
     key: "dailyBalances",
-    calcFunction: dailyBalancesStats,
+    calcFunction: dailyBalancesStats
   },
   { ...messages.balances, key: "balances", calcFunction: balancesStats },
   { ...messages.voteTime, key: "votetime", calcFunction: voteTimeStats },
-  { ...messages.tickets, key: "tickets", calcFunction: ticketStats },
+  { ...messages.tickets, key: "tickets", calcFunction: ticketStats }
 ];
 @autobind
 class ExportTab extends React.Component {
@@ -44,7 +44,7 @@ class ExportTab extends React.Component {
     this.state = {
       selectedExport: AvailableExports[0],
       destinationFile: "",
-      expanded: false,
+      expanded: false
     };
   }
 
@@ -61,7 +61,7 @@ class ExportTab extends React.Component {
     const { selectedExport, destinationFile } = this.state;
     const opts = {
       calcFunction: selectedExport.calcFunction,
-      csvFilename: destinationFile,
+      csvFilename: destinationFile
     };
     this.props.exportStatToCSV(opts);
   }
@@ -75,7 +75,7 @@ class ExportTab extends React.Component {
       exportCSV,
       onChangeSelectedExport,
       setDestinationFile,
-      expandFields,
+      expandFields
     } = this;
     const { expanded } = this.state;
 

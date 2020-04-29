@@ -7,15 +7,15 @@ import { closeWalletRequest } from "actions/WalletLoaderActions";
 import { closeDaemonRequest, backToCredentials } from "actions/DaemonActions";
 import {
   getTreasuryBalance,
-  resetTreasuryBalance,
+  resetTreasuryBalance
 } from "actions/ClientActions";
 import {
   EXTERNALREQUEST_DCRDATA,
-  EXTERNALREQUEST_POLITEIA,
+  EXTERNALREQUEST_POLITEIA
 } from "main_dev/externalRequests";
 import {
   getTokenAndInitialBatch,
-  resetInventoryAndProposals,
+  resetInventoryAndProposals
 } from "actions/GovernanceActions";
 import * as configConstants from "constants/config";
 
@@ -26,10 +26,10 @@ export const SETTINGS_TOGGLE_THEME = "SETTINGS_TOGGLE_THEME";
 
 export const saveSettings = (settings) => async (dispatch, getState) => {
   const {
-    settings: { needNetworkReset },
+    settings: { needNetworkReset }
   } = getState();
   const {
-    daemon: { walletName },
+    daemon: { walletName }
   } = getState();
 
   const config = getGlobalCfg();
@@ -119,7 +119,7 @@ export const addAllowedExternalRequest = (requestType) => (
     wallet.allowExternalRequest(requestType);
 
     const {
-      settings: { currentSettings, tempSettings },
+      settings: { currentSettings, tempSettings }
     } = getState();
     const newSettings = { ...currentSettings };
     newSettings.allowedExternalRequests = allowed;
@@ -128,7 +128,7 @@ export const addAllowedExternalRequest = (requestType) => (
     // settings.
     const newTempSettings = { ...tempSettings };
     newTempSettings.allowedExternalRequests = [
-      ...newTempSettings.allowedExternalRequests,
+      ...newTempSettings.allowedExternalRequests
     ];
     if (newTempSettings.allowedExternalRequests.indexOf(requestType) === -1) {
       newTempSettings.allowedExternalRequests.push(requestType);
@@ -138,7 +138,7 @@ export const addAllowedExternalRequest = (requestType) => (
       newSettings,
       newTempSettings,
       type: ALLOWEDEXTERNALREQUESTS_ADDED,
-      requestType,
+      requestType
     });
     resolve(true);
   });
@@ -151,7 +151,7 @@ export function updateStateSettingsChanged(settings, norestart) {
     const networkChange = {
       network: true,
       spvMode: true,
-      daemonStartAdvanced: true,
+      daemonStartAdvanced: true
     };
 
     const newDiffersFromTemp = settingsFields.reduce(
@@ -174,7 +174,7 @@ export function updateStateSettingsChanged(settings, norestart) {
         ? dispatch({
             tempSettings: newSettings,
             needNetworkReset,
-            type: SETTINGS_CHANGED,
+            type: SETTINGS_CHANGED
           })
         : dispatch({ tempSettings: currentSettings, type: SETTINGS_UNCHANGED });
     }
@@ -186,10 +186,10 @@ export const updateStateVoteSettingsChanged = (settings) => (
   getState
 ) => {
   const {
-    settings: { tempSettings, currentSettings },
+    settings: { tempSettings, currentSettings }
   } = getState();
   const {
-    daemon: { walletName },
+    daemon: { walletName }
   } = getState();
   if (settings.enableTicketBuyer !== tempSettings.enableTicketBuyer) {
     const config = getWalletCfg(isTestNet(getState()), walletName);

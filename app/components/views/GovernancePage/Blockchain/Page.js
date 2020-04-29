@@ -9,7 +9,7 @@ const VotingPrefsPage = ({
   onShowAgenda,
   onCloseAgenda,
   onUpdateVotePreference,
-  allAgendas,
+  allAgendas
 }) => (
   <>
     <div className="consensus-changes-header is-row">
@@ -45,7 +45,7 @@ const VotingPrefsPage = ({
               onUpdateVotePreference,
               stakePool,
               selectedChoice: getAgendaSelectedChoice(agenda),
-              showVoteChoice: index === selectedAgenda,
+              showVoteChoice: index === selectedAgenda
             }}
             onClick={() => onShowAgenda(index)}
           />

@@ -9,7 +9,7 @@ import {
   radiusMiddle,
   radiusTop,
   radiusBottom,
-  hoverFill,
+  hoverFill
 } from "./Styles";
 import ChartTooltip from "./ChartTooltip";
 
@@ -25,7 +25,7 @@ const BalanceChart = ({ data, intl }) => {
     [votedKey]: s.voted,
     [revokedKey]: s.revoked,
     [ticketKey]: s.ticket,
-    [lockedKey]: s.locked,
+    [lockedKey]: s.locked
   }));
 
   return (

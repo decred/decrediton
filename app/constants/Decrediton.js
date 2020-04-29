@@ -15,7 +15,7 @@ export const OPTIONS = {
     "help",
     "version",
     "advanced",
-    "spv",
+    "spv"
   ],
   string: [
     "extrawalletargs",
@@ -24,15 +24,15 @@ export const OPTIONS = {
     "rpcuser",
     "rpcpass",
     "rpccert",
-    "rpcconnect",
+    "rpcconnect"
   ],
   default: { debug: false },
   alias: {
     d: "debug",
     h: "help",
-    v: "version",
+    v: "version"
   },
-  unknown: unknownFn,
+  unknown: unknownFn
 };
 
 export const MAX_LOG_LENGTH = 50000;

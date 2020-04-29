@@ -8,7 +8,7 @@ const mapStateToProps = selectorMap({});
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      showTicketList: ca.showTicketList,
+      showTicketList: ca.showTicketList
     },
     dispatch
   );

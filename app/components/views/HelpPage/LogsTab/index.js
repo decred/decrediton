@@ -3,7 +3,7 @@ import {
   getDcrdLogs,
   getDcrwalletLogs,
   getDecreditonLogs,
-  getDcrlndLogs,
+  getDcrlndLogs
 } from "wallet";
 import { logging } from "connectors";
 import { DescriptionHeader } from "layout";
@@ -55,7 +55,7 @@ class LogsTabBody extends React.Component {
       showDcrdLogs: false,
       showDcrwalletLogs: false,
       showDecreditonLogs: false,
-      showDcrlndLogs: false,
+      showDcrlndLogs: false
     };
   }
 
@@ -68,7 +68,7 @@ class LogsTabBody extends React.Component {
       onHideDcrdLogs,
       onHideDcrwalletLogs,
       onShowDcrlndLogs,
-      onHideDcrlndLogs,
+      onHideDcrlndLogs
     } = this;
     return (
       <Logs
@@ -82,7 +82,7 @@ class LogsTabBody extends React.Component {
           onHideDecreditonLogs,
           onHideDcrdLogs,
           onHideDcrwalletLogs,
-          onHideDcrlndLogs,
+          onHideDcrlndLogs
         }}
       />
     );
@@ -93,7 +93,7 @@ class LogsTabBody extends React.Component {
       getDcrdLogs(),
       getDcrwalletLogs(),
       getDecreditonLogs(),
-      getDcrlndLogs(),
+      getDcrlndLogs()
     ]).then(([rawDcrdLogs, rawDcrwalletLogs, decreditonLogs, dcrlndLogs]) => {
       const dcrdLogs = Buffer.from(rawDcrdLogs).toString("utf8");
       const dcrwalletLogs = Buffer.from(rawDcrwalletLogs).toString("utf8");

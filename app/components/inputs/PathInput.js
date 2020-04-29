@@ -5,7 +5,7 @@ const PathInput = ({ onChange, ...props }) => (
     {...{
       ...props,
       className: "path-input",
-      onChange: (e) => onChange(e.target.value),
+      onChange: (e) => onChange(e.target.value)
     }}
   />
 );

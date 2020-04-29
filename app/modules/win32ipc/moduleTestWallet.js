@@ -67,7 +67,7 @@ async function test() {
         `--piperx ${pipeRx.readEnd}`,
         `--pipetx ${pipeTx.writeEnd}`,
         "--rpclistenerevents",
-        "--debuglevel DCRW=TRACE",
+        "--debuglevel DCRW=TRACE"
       ],
       { detached: true, shell: true }
     );

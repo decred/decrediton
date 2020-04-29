@@ -9,7 +9,7 @@ class LanguageSelect extends React.Component {
     this.state = {
       selectedLang:
         availableLanguages.find((v) => v.language === defaultLocale) ||
-        availableLanguages[0],
+        availableLanguages[0]
     };
   }
 
@@ -24,7 +24,7 @@ class LanguageSelect extends React.Component {
           availableLanguages,
           onChangeSelectedLang,
           onSelectLang,
-          isTestNet,
+          isTestNet
         }}
       />
     );

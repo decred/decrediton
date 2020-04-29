@@ -5,15 +5,15 @@ import "style/LanguageSelect.less";
 const propTypes = {
   tempSettings: PropTypes.object.isRequired,
   locales: PropTypes.array.isRequired,
-  onChangeTempSettings: PropTypes.func.isRequired,
+  onChangeTempSettings: PropTypes.func.isRequired
 };
 
 const availableUIThemeTypes = [
   {
     name: <T id="settings.uitheme.type.light" m="Light" />,
-    value: "theme-light",
+    value: "theme-light"
   },
-  { name: <T id="settings.uitheme.type.dark" m="Dark" />, value: "theme-dark" },
+  { name: <T id="settings.uitheme.type.dark" m="Dark" />, value: "theme-dark" }
 ];
 
 const UISettings = ({ tempSettings, locales, onChangeTempSettings }) => (

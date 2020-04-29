@@ -91,12 +91,12 @@ export function getDcrdRpcCert(appDataPath) {
 }
 
 export function getExecutablePath(name, custombinpath) {
-  let binPath = custombinpath
+  const binPath = custombinpath
     ? custombinpath
     : process.env.NODE_ENV === "development"
     ? path.join(__dirname, "..", "..", "bin")
     : path.join(process.resourcesPath, "bin");
-  let execName = os.platform() !== "win32" ? name : name + ".exe";
+  const execName = os.platform() !== "win32" ? name : name + ".exe";
 
   return path.join(binPath, execName);
 }

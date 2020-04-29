@@ -14,10 +14,10 @@ export const getVersionServiceAttempt = () => (dispatch, getState) =>
     const getVersion = async () => {
       dispatch({ type: GETVERSIONSERVICE_ATTEMPT });
       const {
-        grpc: { address, port },
+        grpc: { address, port }
       } = getState();
       const {
-        daemon: { walletName },
+        daemon: { walletName }
       } = getState();
       try {
         const versionService = await getVersionService(
@@ -59,21 +59,20 @@ export const getWalletRPCVersionAttempt = (versionService) => (
         );
         dispatch({
           getWalletRPCVersionResponse,
-          type: WALLETRPCVERSION_SUCCESS,
+          type: WALLETRPCVERSION_SUCCESS
         });
         const {
-          version: { requiredVersion },
+          version: { requiredVersion }
         } = getState();
         let versionErr = null;
-        let walletVersion = getWalletRPCVersionResponse.getVersionString();
+        const walletVersion = getWalletRPCVersionResponse.getVersionString();
         ipcRenderer.send("grpc-versions-determined", {
           requiredVersion,
-          walletVersion,
+          walletVersion
         });
         if (!walletVersion) {
           versionErr = "Unable to obtain Dcrwallet API version";
-        } else {
-          if (!semverCompatible(requiredVersion, walletVersion)) {
+        } else if (!semverCompatible(requiredVersion, walletVersion)) {
             versionErr =
               "API versions not compatible..  Decrediton requires " +
               requiredVersion +
@@ -82,7 +81,6 @@ export const getWalletRPCVersionAttempt = (versionService) => (
               " does not satisfy the requirement. Please check your" +
               " installation, Decrediton and Dcrwallet versions should match.";
           }
-        }
         if (versionErr) {
           dispatch({ error: versionErr, type: VERSION_NOT_VALID });
           dispatch(pushHistory("/invalidRPCVersion"));
@@ -103,13 +101,13 @@ export const getWalletRPCVersionAttempt = (versionService) => (
   });
 
 export function semverCompatible(req, act) {
-  var required = req.split("."),
+  const required = req.split("."),
     actual = act.split(".");
 
-  var version = {
+  const version = {
     MAJOR: 0,
     MINOR: 1,
-    PATCH: 2,
+    PATCH: 2
   };
 
   if (required.length != 3 || actual.length != 3) {

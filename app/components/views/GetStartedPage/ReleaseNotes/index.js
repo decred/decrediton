@@ -5,23 +5,23 @@ const availableVersions = [
   {
     version: "1.5.0",
     docName: "ReleaseNote1_5_0",
-    imgClassName: "release-image-v150",
+    imgClassName: "release-image-v150"
   },
   {
     version: "1.4.0",
     docName: "ReleaseNote1_4_0",
-    imgClassName: "release-image-v140",
+    imgClassName: "release-image-v140"
   },
   {
     version: "1.3.1",
     docName: "ReleaseNote1_3_1",
-    imgClassName: "release-image-v130",
+    imgClassName: "release-image-v130"
   },
   {
     version: "1.3.0",
     docName: "ReleaseNote1_3_0",
-    imgClassName: "release-image-v130",
-  },
+    imgClassName: "release-image-v130"
+  }
 ];
 
 @autobind
@@ -58,7 +58,7 @@ class ReleaseNotes extends React.Component {
           ...this.props,
           ...this.state,
           onNewerVersion,
-          onOlderVersion,
+          onOlderVersion
         }}
       />
     );

@@ -8,11 +8,11 @@ import {
   OverviewVotingProgressInfo,
   TimeValue,
   ProposalText,
-  VoteInfo,
+  VoteInfo
 } from "./helpers";
 import {
   VOTESTATUS_ACTIVEVOTE,
-  VOTESTATUS_FINISHEDVOTE,
+  VOTESTATUS_FINISHEDVOTE
 } from "actions/GovernanceActions";
 import { useProposalDetails } from "./hooks";
 import styles from "./ProposalDetails.module.css";
@@ -33,14 +33,14 @@ const ProposalDetails = ({
     voteCounts,
     version,
     quorumMinimumVotes,
-    walletEligibleTickets,
+    walletEligibleTickets
   },
   showPurchaseTicketsPage,
   setVoteOption,
   newVoteChoice,
   text,
   goBackHistory,
-  eligibleTicketCount,
+  eligibleTicketCount
 }) => {
   const [showWalletEligibleTickets, toggleWalletEligibleTickets] = useState(
     false

@@ -1,7 +1,7 @@
 import Promise from "promise";
 import {
   TransactionNotificationsRequest,
-  AccountNotificationsRequest,
+  AccountNotificationsRequest
 } from "middleware/walletrpc/api_pb";
 import { transactionNtfs, accountNtfs } from "middleware/grpc/client";
 import { withLog as log } from "./index";

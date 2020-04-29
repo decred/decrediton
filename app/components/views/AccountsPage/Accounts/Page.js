@@ -32,7 +32,7 @@ const AccountsList = ({
   onRenameAccount,
   accountNumDetailsShown,
   walletName,
-  hasTickets,
+  hasTickets
 }) => (
   <>
     {isLoading ? (
@@ -52,7 +52,7 @@ const AccountsList = ({
                 account,
                 accountNumDetailsShown,
                 onGetAccountExtendedKey,
-                accountExtendedKey,
+                accountExtendedKey
               }}
               key={account.accountName}
               renameAccount={onRenameAccount}
@@ -72,7 +72,7 @@ AccountsList.propTypes = {
   onShowAccount: PropTypes.func.isRequired,
   onHideAccount: PropTypes.func.isRequired,
   onRenameAccount: PropTypes.func.isRequired,
-  accountNumDetailsShown: PropTypes.number,
+  accountNumDetailsShown: PropTypes.number
 };
 
 export default AccountsList;

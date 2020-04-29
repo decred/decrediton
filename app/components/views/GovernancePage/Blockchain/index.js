@@ -9,7 +9,7 @@ class VotingPrefs extends React.Component {
     this.state = {
       stakePool: props.stakePool,
       selectedAgenda: null,
-      isShowingDetails: false,
+      isShowingDetails: false
     };
   }
 
@@ -24,10 +24,10 @@ class VotingPrefs extends React.Component {
             {
               getAgendaSelectedChoice: null,
               onShowAgenda: null,
-              onCloseAgenda: null,
+              onCloseAgenda: null
             },
             this
-          ),
+          )
         }}
       />
     );

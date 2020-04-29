@@ -77,7 +77,7 @@ function drawInfo(opts = {}) {
               cursor: "pointer",
               position: "absolute",
               left: offsetX + (boxWidth + boxMargin) * col,
-              top: offsetY + (boxWidth + boxMargin) * row,
+              top: offsetY + (boxWidth + boxMargin) * row
             }}
           />
         </Tooltip>
@@ -99,7 +99,7 @@ function drawInfo(opts = {}) {
             position: "absolute",
             fontSize: 10,
             left: graphEntries[i].left,
-            top: offsetY - boxMargin - boxWidth - monthLabelSize,
+            top: offsetY - boxMargin - boxWidth - monthLabelSize
           }}>
           {Month({ date })}
         </div>
@@ -128,7 +128,7 @@ function drawLegend(opts) {
         fontSize: legendFontSize,
         position: "absolute",
         top: offsetY - legendFontSize / 2,
-        left: legendStarts,
+        left: legendStarts
       }}>
       Less
     </span>
@@ -143,7 +143,7 @@ function drawLegend(opts) {
           height: boxWidth,
           position: "absolute",
           left: legendStarts + 25 + totalBoxWidth * i,
-          top: offsetY,
+          top: offsetY
         }}
         key={"legend" + i}
       />
@@ -158,7 +158,7 @@ function drawLegend(opts) {
         position: "absolute",
         top: offsetY - legendFontSize / 2,
         fontSize: legendFontSize,
-        left: legendStarts + 25 + totalBoxWidth * themeColorNumber,
+        left: legendStarts + 25 + totalBoxWidth * themeColorNumber
       }}>
       More
     </span>
@@ -188,7 +188,7 @@ const Heatmap = ({ data, ...opts }) => {
           offsetX,
           offsetY,
           columnNumber,
-          ...opts,
+          ...opts
         })}
         {drawLegend({ offsetY: totalOffsetY, offsetX: totalOffsetX })}
       </div>

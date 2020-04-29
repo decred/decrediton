@@ -21,7 +21,7 @@ class PaymentsTab extends React.Component {
       payRequest: "",
       decodedPayRequest: null,
       decodingError: null,
-      expired: false,
+      expired: false
     };
     this.lastDecodeTimer = null;
   }
@@ -55,7 +55,7 @@ class PaymentsTab extends React.Component {
         this.setState({
           decodedPayRequest: resp,
           decodingError: null,
-          expired,
+          expired
         });
       })
       .catch((error) => {
@@ -67,7 +67,7 @@ class PaymentsTab extends React.Component {
     this.setState({
       payRequest: ("" + e.target.value).trim(),
       decodedPayRequest: null,
-      expired: false,
+      expired: false
     });
     if (this.lastDecodeTimer) {
       this.props.clearTimeout(this.lastDecodeTimer);
@@ -93,7 +93,7 @@ class PaymentsTab extends React.Component {
           sending: false,
           payRequest: "",
           decodedPayRequest: null,
-          sendValue: 0,
+          sendValue: 0
         });
       })
       .catch(() => {
@@ -109,7 +109,7 @@ class PaymentsTab extends React.Component {
       decodingError,
       expired,
       sending,
-      sendValueAtom,
+      sendValueAtom
     } = this.state;
     const { onPayRequestChanged, onSendPayment, onSendValueChanged } = this;
 

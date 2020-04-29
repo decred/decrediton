@@ -9,7 +9,7 @@ import {
   saveEligibleTickets,
   savePiVote,
   getProposalWalletVote,
-  removeCachedProposals,
+  removeCachedProposals
 } from "main_dev/paths";
 import { cloneDeep } from "fp";
 
@@ -32,7 +32,7 @@ const defaultInventory = {
   activeVote: [],
   abandonedVote: [],
   finishedVote: [],
-  preVote: [],
+  preVote: []
 };
 
 // getDefaultInventory gets the inventory default's state.
@@ -101,7 +101,7 @@ const getProposalEligibleTickets = async (
 
     tickets = tickets.map((t) => ({
       ticket: reverseRawHash(t.getTicket()),
-      address: t.getAddress(),
+      address: t.getAddress()
     }));
 
     const ticketsArray = tickets.reduce((tickets, t) => {
@@ -199,7 +199,7 @@ export const compareInventory = () => async (dispatch, getState) => {
     if (isDifferent) {
       dispatch({
         type: REMOVED_PROPOSALS_FROM_LIST,
-        proposals: newProposalsList,
+        proposals: newProposalsList
       });
     }
 
@@ -208,7 +208,7 @@ export const compareInventory = () => async (dispatch, getState) => {
       oInventoryCopy.activeVote,
       oInventoryCopy.abandonedVote,
       oInventoryCopy.finishedVote,
-      oInventoryCopy.preVote,
+      oInventoryCopy.preVote
     ].reduce((acc, v) => {
       v.forEach((p) => {
         return (acc[p] = p);
@@ -219,7 +219,7 @@ export const compareInventory = () => async (dispatch, getState) => {
       inventory.activeVote,
       inventory.abandonedVote,
       inventory.finishedVote,
-      inventory.preVote,
+      inventory.preVote
     ].reduce((acc, v) => {
       v.forEach((p) => (acc[p] = p));
       return acc;
@@ -389,7 +389,7 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (
   };
 
   dispatch({ type: GETPROPROSAL_UPDATEVOTESTATUS_ATTEMPT, tokensBatch });
-  let proposalsUpdated = getDefaultInventory();
+  const proposalsUpdated = getDefaultInventory();
   const blockTimestampFromNow = sel.blockTimestampFromNow(getState());
   const piURL = sel.politeiaURL(getState());
   // If proposals is null at our redux state, it probably means first starting or
@@ -454,7 +454,7 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (
     return dispatch({
       type: GETPROPROSAL_UPDATEVOTESTATUS_SUCCESS,
       proposals: concatedProposals,
-      bestBlock,
+      bestBlock
     });
   } catch (error) {
     dispatch({ type: GETPROPROSAL_UPDATEVOTESTATUS_FAILED, error });
@@ -507,7 +507,7 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
         digest: f.digest,
         mime: f.mime,
         name: f.name,
-        payload: decodeFilePayload(f),
+        payload: decodeFilePayload(f)
       };
     });
 
@@ -520,7 +520,7 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
       numComments: p.numcomments,
       timestamp: p.timestamp,
       files: files,
-      hasEligibleTickets: false,
+      hasEligibleTickets: false
     };
 
     const voteAndEligibleTickets = getProposalWalletVote(
@@ -566,7 +566,7 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
         const votesToCache = {
           token,
           walletEligibleTickets,
-          voteChoice: currentVoteChoice,
+          voteChoice: currentVoteChoice
         };
         savePiVote(votesToCache, token, testnet, walletName);
       }
@@ -582,7 +582,7 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
             votingSinceLastAccess: false,
             walletEligibleTickets,
             hasEligibleTickets,
-            currentVoteChoice,
+            currentVoteChoice
           };
           return (proposals[key][i] = { ...proposal });
         }
@@ -688,7 +688,7 @@ export const updateVoteChoice = (
       proposals,
       proposal: newProposal,
       token,
-      type: UPDATEVOTECHOICE_SUCCESS,
+      type: UPDATEVOTECHOICE_SUCCESS
     });
   } catch (error) {
     dispatch({ error, type: UPDATEVOTECHOICE_FAILED });

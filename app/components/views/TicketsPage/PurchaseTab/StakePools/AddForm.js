@@ -3,7 +3,7 @@ import {
   PassphraseModalButton,
   ScriptRedeemableButton,
   SlateGrayButton,
-  ImportScriptIconButton,
+  ImportScriptIconButton
 } from "buttons";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { TextInput, StakePoolSelect } from "inputs";
@@ -14,8 +14,8 @@ import "style/StakePool.less";
 const messages = defineMessages({
   apiKeyPlaceholder: {
     id: "stake.apiKeyPlaceholder",
-    defaultMessage: "Typically starts with ‘eyJhb…’",
-  },
+    defaultMessage: "Typically starts with ‘eyJhb…’"
+  }
 });
 
 const UnconfiguedStakepoolLink = ({ selectedUnconfigured }) =>
@@ -36,7 +36,7 @@ const StakePoolsAddForm = ({
   onChangeApiKey,
   onSetStakePoolInfo,
   onCancelAddStakePool,
-  hasFailedAttempt,
+  hasFailedAttempt
 }) => (
   <>
     <div className="stakepool-add-title">
@@ -84,7 +84,7 @@ const StakePoolsAddForm = ({
               values={{
                 stakePoolLink: (
                   <UnconfiguedStakepoolLink {...{ selectedUnconfigured }} />
-                ),
+                )
               }}
             />
           </div>

@@ -7,7 +7,7 @@ import * as da from "../actions/DaemonActions";
 const mapStateToProps = selectorMap({
   daemonError: sel.daemonError,
   walletError: sel.walletError,
-  isAdvancedDaemon: sel.isAdvancedDaemon,
+  isAdvancedDaemon: sel.isAdvancedDaemon
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -15,7 +15,7 @@ const mapDispatchToProps = (dispatch) =>
     {
       shutdownApp: da.shutdownApp,
       deleteDaemonData: da.deleteDaemonData,
-      backToCredentials: da.backToCredentials,
+      backToCredentials: da.backToCredentials
     },
     dispatch
   );

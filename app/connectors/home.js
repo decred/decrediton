@@ -15,7 +15,7 @@ const mapStateToProps = selectorMap({
   revokeTicketsError: sel.revokeTicketsError,
   revokeTicketsSuccess: sel.revokeTicketsSuccess,
   totalBalance: sel.totalBalance,
-  tsDate: sel.tsDate,
+  tsDate: sel.tsDate
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -25,7 +25,7 @@ const mapDispatchToProps = (dispatch) =>
       onClearRevokeTicketsError: ca.clearRevokeTicketsError,
       onClearRevokeTicketsSuccess: ca.clearRevokeTicketsSuccess,
       goToMyTickets: cla.goToMyTickets,
-      goToTransactionHistory: cla.goToTransactionHistory,
+      goToTransactionHistory: cla.goToTransactionHistory
     },
     dispatch
   );

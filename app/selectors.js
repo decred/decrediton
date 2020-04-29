@@ -12,7 +12,7 @@ import {
   map,
   apply,
   some,
-  createSelectorEager as createSelector,
+  createSelectorEager as createSelector
 } from "./fp";
 import { appLocaleFromElectronLocale } from "./i18n/locales";
 import { reverseHash } from "./helpers/byteActions";
@@ -22,15 +22,15 @@ import { /*TicketTypes,*/ decodeVoteScript } from "./helpers/tickets";
 import {
   EXTERNALREQUEST_STAKEPOOL_LISTING,
   EXTERNALREQUEST_POLITEIA,
-  EXTERNALREQUEST_DCRDATA,
+  EXTERNALREQUEST_DCRDATA
 } from "main_dev/externalRequests";
 import {
   POLITEIA_URL_TESTNET,
-  POLITEIA_URL_MAINNET,
+  POLITEIA_URL_MAINNET
 } from "./middleware/politeiaapi";
 import {
   DCRDATA_URL_TESTNET,
-  DCRDATA_URL_MAINNET,
+  DCRDATA_URL_MAINNET
 } from "./middleware/dcrdataapi";
 import { dateToLocal, dateToUTC } from "./helpers/dateFormat";
 import {
@@ -39,7 +39,7 @@ import {
   ATOMS,
   UNIT_DIVISOR,
   TESTNET,
-  MAINNET,
+  MAINNET
 } from "constants";
 import * as wallet from "wallet";
 
@@ -74,11 +74,11 @@ export const walletRPCVersion = createSelector(
 );
 export const getVersionServiceError = get([
   "version",
-  "getVersionServiceError",
+  "getVersionServiceError"
 ]);
 export const getWalletRPCVersionError = get([
   "version",
-  "getWalletRPCVersionError",
+  "getWalletRPCVersionError"
 ]);
 export const getLoaderError = get(["version", "getLoaderError"]);
 export const versionInvalidError = createSelector(
@@ -92,36 +92,36 @@ export const peerCount = get(["walletLoader", "peerCount"]);
 export const synced = get(["walletLoader", "synced"]);
 export const syncFetchMissingCfiltersAttempt = get([
   "walletLoader",
-  "syncFetchMissingCfiltersAttempt",
+  "syncFetchMissingCfiltersAttempt"
 ]);
 export const syncFetchMissingCfiltersStart = get([
   "walletLoader",
-  "syncFetchMissingCfiltersStart",
+  "syncFetchMissingCfiltersStart"
 ]);
 export const syncFetchMissingCfiltersEnd = get([
   "walletLoader",
-  "syncFetchMissingCfiltersEnd",
+  "syncFetchMissingCfiltersEnd"
 ]);
 export const syncFetchHeadersAttempt = get([
   "walletLoader",
-  "syncFetchHeadersAttempt",
+  "syncFetchHeadersAttempt"
 ]);
 export const syncFetchHeadersCount = get([
   "walletLoader",
-  "syncFetchHeadersCount",
+  "syncFetchHeadersCount"
 ]);
 export const syncFetchHeadersLastHeaderTime = get([
   "walletLoader",
-  "syncLastFetchedHeaderTime",
+  "syncLastFetchedHeaderTime"
 ]);
 export const syncDiscoverAddressesAttempt = get([
   "walletLoader",
-  "syncDiscoverAddressesAttempt",
+  "syncDiscoverAddressesAttempt"
 ]);
 export const syncRescanAttempt = get(["walletLoader", "syncRescanAttempt"]);
 export const syncFetchHeadersComplete = get([
   "walletLoader",
-  "syncFetchHeadersComplete",
+  "syncFetchHeadersComplete"
 ]);
 export const syncFetchTimeStart = get(["walletLoader", "syncFetchTimeStart"]);
 export const getPrivacyEnabled = get(["walletLoader", "privacyEnabled"]);
@@ -131,7 +131,7 @@ export const getCsppServer = get(["walletLoader", "csppServer"]);
 export const getCsppPort = get(["walletLoader", "csppPort"]);
 export const getMixedAccountBranch = get([
   "walletLoader",
-  "mixedAccountBranch",
+  "mixedAccountBranch"
 ]);
 
 const availableWallets = get(["daemon", "availableWallets"]);
@@ -143,7 +143,7 @@ const availableWalletsSelect = createSelector([availableWallets], (wallets) =>
       network: wallet.network,
       finished: wallet.finished,
       isWatchingOnly: wallet.watchingOnly,
-      lastAccess: wallet.lastAccess ? new Date(wallet.lastAccess) : null,
+      lastAccess: wallet.lastAccess ? new Date(wallet.lastAccess) : null
     }),
     wallets
   )
@@ -164,7 +164,7 @@ export const votingService = get(["grpc", "votingService"]);
 export const accountMixerService = get(["grpc", "accountMixerService"]);
 export const getBalanceRequestAttempt = get([
   "grpc",
-  "getBalanceRequestAttempt",
+  "getBalanceRequestAttempt"
 ]);
 export const getAccountsResponse = get(["grpc", "getAccountsResponse"]);
 export const getNetworkResponse = get(["grpc", "getNetworkResponse"]);
@@ -218,7 +218,7 @@ export const needNetworkReset = get(["settings", "needNetworkReset"]);
 export const currencyDisplay = get([
   "settings",
   "currentSettings",
-  "currencyDisplay",
+  "currencyDisplay"
 ]);
 export const unitDivisor = compose(
   (disp) => (disp === DCR ? UNIT_DIVISOR : 1),
@@ -241,7 +241,7 @@ export const isSPV = get(["settings", "currentSettings", "spvMode"]);
 export const isAdvancedDaemon = get([
   "settings",
   "currentSettings",
-  "daemonStartAdvanced",
+  "daemonStartAdvanced"
 ]);
 
 export const sortedLocales = createSelector([get(["locales"])], (locales) =>
@@ -382,7 +382,7 @@ export const ticketNormalizer = createSelector(
         }
 
         if (isVote) {
-          let voteScript = decodedSpenderTx.outputs[1].script;
+          const voteScript = decodedSpenderTx.outputs[1].script;
           voteChoices = decodeVoteScript(network, voteScript);
         }
       }
@@ -411,7 +411,7 @@ export const ticketNormalizer = createSelector(
           : null,
         originalTicket: ticket,
         isPending,
-        accountName,
+        accountName
       };
     };
   }
@@ -421,7 +421,7 @@ export const noMoreTickets = get(["grpc", "noMoreTickets"]);
 export const ticketsFilter = get(["grpc", "ticketsFilter"]);
 export const getTicketsProgressStartRequestHeight = get([
   "grpc",
-  "getTicketsProgressStartRequestHeight",
+  "getTicketsProgressStartRequestHeight"
 ]);
 export const ticketsNormalizer = createSelector([ticketNormalizer], map);
 export const tickets = get(["grpc", "tickets"]);
@@ -453,13 +453,13 @@ export const transactionNormalizer = createSelector(
       const type =
         origTx.type ||
         (origTx.getTransactionType ? origTx.getTransactionType() : null);
-      let txInfo = origTx.tx ? origTx : {};
+      const txInfo = origTx.tx ? origTx : {};
       let timestamp = origTx.timestamp;
       const tx = origTx.tx || origTx;
       timestamp = timestamp || tx.timestamp;
       let totalFundsReceived = 0;
       let totalChange = 0;
-      let addressStr = [];
+      const addressStr = [];
       let debitedAccount;
       let creditedAccount;
       const txInputs = [];
@@ -477,7 +477,7 @@ export const transactionNormalizer = createSelector(
         txInputs.push({
           accountName: debitedAccountName,
           amount,
-          index: debit.getIndex(),
+          index: debit.getIndex()
         });
         return total + amount;
       }, 0);
@@ -492,7 +492,7 @@ export const transactionNormalizer = createSelector(
           accountName: creditedAccountName,
           amount,
           address,
-          index: credit.getIndex(),
+          index: credit.getIndex()
         });
         credit.getInternal()
           ? (totalChange += amount)
@@ -505,7 +505,7 @@ export const transactionNormalizer = createSelector(
               txDescription: { direction: "Sent", addressStr: addressStr },
               txAmount: totalDebit - fee - totalChange - totalFundsReceived,
               txDirection: "out",
-              txAccountName: getAccountName(debitedAccount),
+              txAccountName: getAccountName(debitedAccount)
             }
           : totalFundsReceived + totalChange + fee === totalDebit
           ? {
@@ -513,16 +513,16 @@ export const transactionNormalizer = createSelector(
               txAmount: fee,
               txDirection: "transfer",
               txAccountNameCredited: getAccountName(creditedAccount),
-              txAccountNameDebited: getAccountName(debitedAccount),
+              txAccountNameDebited: getAccountName(debitedAccount)
             }
           : {
               txDescription: { direction: "Received at:", addressStr },
               txAmount: totalFundsReceived,
               txDirection: "in",
-              txAccountName: getAccountName(creditedAccount),
+              txAccountName: getAccountName(creditedAccount)
             };
 
-      let stakeInfo = {};
+      const stakeInfo = {};
       if (origTx.ticketPrice) stakeInfo.ticketPrice = origTx.ticketPrice;
       if (origTx.enterTimestamp)
         stakeInfo.enterTimestamp = origTx.enterTimestamp;
@@ -546,7 +546,7 @@ export const transactionNormalizer = createSelector(
         rawTx: Buffer.from(tx.getTransaction()).toString("hex"),
         originalTx: origTx,
         ...txDetails,
-        ...stakeInfo,
+        ...stakeInfo
       };
     };
   }
@@ -579,7 +579,7 @@ export const spendableAndLockedBalance = createSelector(
       available: s.series.spendable / unitDivisor,
       locked:
         (s.series.locked + s.series.immature + s.series.immatureNonWallet) /
-        unitDivisor,
+        unitDivisor
     }))
 );
 
@@ -598,7 +598,7 @@ export const sentAndReceivedTransactions = createSelector(
     stats.map((s) => ({
       time: s.time,
       sent: s.series.sent / unitDivisor,
-      received: s.series.received / unitDivisor,
+      received: s.series.received / unitDivisor
     }))
 );
 
@@ -624,7 +624,7 @@ export const ticketDataChart = createSelector(
       revoked: s.series.revoked / unitDivisor,
       ticket: s.series.ticket / unitDivisor,
       locked: (s.series.locked + s.series.immature) / unitDivisor,
-      immature: s.series.immature / unitDivisor,
+      immature: s.series.immature / unitDivisor
     }))
 );
 
@@ -635,11 +635,11 @@ export const viewedDecodedTransaction = createSelector(
       state,
       {
         match: {
-          params: { txHash },
-        },
+          params: { txHash }
+        }
       }
     ) => txHash,
-    decodedTransactions,
+    decodedTransactions
   ],
   (transactions, txHash, decodedTransactions) => decodedTransactions[txHash]
 );
@@ -686,7 +686,7 @@ export const viewableTransactions = createSelector(
   (transactions, homeTransactions, homeHistoryTickets) => [
     ...transactions,
     ...homeTransactions,
-    ...homeHistoryTickets,
+    ...homeHistoryTickets
   ]
 );
 export const viewedTransaction = createSelector(
@@ -696,11 +696,11 @@ export const viewedTransaction = createSelector(
       state,
       {
         match: {
-          params: { txHash },
-        },
+          params: { txHash }
+        }
       }
     ) => txHash,
-    txHashToTicket,
+    txHashToTicket
   ],
   (transactions, txHash, txHashToTicket) => {
     const ticketDecoded = txHashToTicket[txHash];
@@ -725,11 +725,11 @@ const rescanResponse = get(["control", "rescanResponse"]);
 export const rescanRequest = get(["control", "rescanRequest"]);
 export const getTransactionsRequestAttempt = get([
   "grpc",
-  "getTransactionsRequestAttempt",
+  "getTransactionsRequestAttempt"
 ]);
 export const getTicketsRequestAttempt = get([
   "grpc",
-  "getTicketsRequestAttempt",
+  "getTicketsRequestAttempt"
 ]);
 export const notifiedBlockHeight = get(["notifications", "currentHeight"]);
 
@@ -770,8 +770,8 @@ export const visibleAccounts = createSelector(
                 } ${currencyDisplay}`,
                 spendable,
                 hidden,
-                ...data,
-              },
+                ...data
+              }
             ],
       [],
       balances
@@ -797,8 +797,8 @@ export const spendingAccounts = createSelector(
                   spendable / unitDivisor
                 } ${currencyDisplay}`,
                 spendable,
-                ...data,
-              },
+                ...data
+              }
             ],
       [],
       balances
@@ -813,7 +813,7 @@ const nextAddressAccountNumber = compose(
 
 export const getNextAddressRequestAttempt = get([
   "control",
-  "getNextAddressRequestAttempt",
+  "getNextAddressRequestAttempt"
 ]);
 export const nextAddressAccount = createSelector(
   [visibleAccounts, nextAddressAccountNumber],
@@ -828,7 +828,7 @@ export const defaultSpendingAccount = createSelector(
 
 export const changePassphraseRequestAttempt = get([
   "control",
-  "changePassphraseRequestAttempt",
+  "changePassphraseRequestAttempt"
 ]);
 
 export const constructTxLowBalance = get(["control", "constructTxLowBalance"]);
@@ -836,12 +836,12 @@ export const constructTxResponse = get(["control", "constructTxResponse"]);
 const constructTxRequestAttempt = get(["control", "constructTxRequestAttempt"]);
 const signTransactionRequestAttempt = get([
   "control",
-  "signTransactionRequestAttempt",
+  "signTransactionRequestAttempt"
 ]);
 export const signTransactionError = get(["control", "signTransactionError"]);
 const publishTransactionRequestAttempt = get([
   "control",
-  "publishTransactionRequestAttempt",
+  "publishTransactionRequestAttempt"
 ]);
 const totalOutputAmount = compose(
   (r) => (r ? r.getTotalOutputAmount() : 0),
@@ -896,13 +896,13 @@ export const uiAnimations = get(["settings", "uiAnimations"]);
 export const changePassphraseError = get(["control", "changePassphraseError"]);
 export const changePassphraseSuccess = get([
   "control",
-  "changePassphraseSuccess",
+  "changePassphraseSuccess"
 ]);
 export const updatedStakePoolList = get(["stakepool", "updatedStakePoolList"]);
 export const allowedExternalRequests = get([
   "settings",
   "currentSettings",
-  "allowedExternalRequests",
+  "allowedExternalRequests"
 ]);
 export const stakePoolListingEnabled = compose(
   (l) => l.indexOf(EXTERNALREQUEST_STAKEPOOL_LISTING) > -1,
@@ -910,7 +910,7 @@ export const stakePoolListingEnabled = compose(
 );
 export const dismissBackupRedeemScript = get([
   "stakepool",
-  "dismissBackupRedeemScript",
+  "dismissBackupRedeemScript"
 ]);
 
 export const isSigningMessage = get(["grpc", "getSignMessageRequestAttempt"]);
@@ -919,11 +919,11 @@ export const signMessageSignature = get(["grpc", "getSignMessageSignature"]);
 
 export const messageVerificationService = get([
   "grpc",
-  "messageVerificationService",
+  "messageVerificationService"
 ]);
 export const isVerifyingMessage = get([
   "grpc",
-  "getVerifyMessageRequestAttempt",
+  "getVerifyMessageRequestAttempt"
 ]);
 export const verifyMessageError = get(["grpc", "getVerifyMessageError"]);
 export const verifyMessageResponse = get(["grpc", "getVerifyMessageResponse"]);
@@ -933,12 +933,12 @@ export const verifyMessageSuccess = compose(
 );
 export const validateAddressRequestAttempt = get([
   "control",
-  "validateAddressRequestAttempt",
+  "validateAddressRequestAttempt"
 ]);
 export const validateAddressError = get(["control", "validateAddressError"]);
 export const validateAddressResponse = get([
   "control",
-  "validateAddressResponse",
+  "validateAddressResponse"
 ]);
 export const validateAddressSuccess = compose(
   (r) => (r ? r.toObject() : null),
@@ -1014,21 +1014,21 @@ export const ticketPrice = compose(
 
 const requiredStakepoolAPIVersion = get([
   "grpc",
-  "requiredStakepoolAPIVersion",
+  "requiredStakepoolAPIVersion"
 ]);
 
 export const currentStakePoolConfigError = get([
   "stakepool",
-  "currentStakePoolConfigError",
+  "currentStakePoolConfigError"
 ]);
 export const currentStakePoolConfigSuccessMessage = get([
   "stakepool",
-  "currentStakePoolConfigSuccessMessage",
+  "currentStakePoolConfigSuccessMessage"
 ]);
 export const purchaseTicketsError = get(["control", "purchaseTicketsError"]);
 export const purchaseTicketsSuccess = get([
   "control",
-  "purchaseTicketsSuccess",
+  "purchaseTicketsSuccess"
 ]);
 export const revokeTicketsError = get(["control", "revokeTicketsError"]);
 export const revokeTicketsSuccess = get(["control", "revokeTicketsSuccess"]);
@@ -1055,7 +1055,7 @@ export const ticketsList = createSelector(
 
 export const currentStakePoolConfig = get([
   "stakepool",
-  "currentStakePoolConfig",
+  "currentStakePoolConfig"
 ]);
 
 const allStakePoolStats = get(["stakepool", "getStakePoolInfo"]);
@@ -1068,7 +1068,7 @@ const allStakePoolStatsList = createSelector(
         ...pool,
         label: pool.URL,
         value: pool,
-        isVersionValid: pool.APIVersionsSupported[1] === requiredVersion,
+        isVersionValid: pool.APIVersionsSupported[1] === requiredVersion
       }),
       pools
     )
@@ -1086,7 +1086,7 @@ const allStakePools = createSelector(
         ...pool,
         label: pool.Host,
         value: pool,
-        isVersionValid: pool.APIVersionsSupported[1] === requiredVersion,
+        isVersionValid: pool.APIVersionsSupported[1] === requiredVersion
       }),
       pools
     )
@@ -1112,17 +1112,17 @@ export const selectedStakePool = get(["stakepool", "selectedStakePool"]);
 
 const currentStakePoolConfigRequest = get([
   "stakepool",
-  "currentStakePoolConfigRequest",
+  "currentStakePoolConfigRequest"
 ]);
 
 const purchaseTicketsRequestAttempt = get([
   "control",
-  "purchaseTicketsRequestAttempt",
+  "purchaseTicketsRequestAttempt"
 ]);
 
 const importScriptRequestAttempt = get([
   "control",
-  "importScriptRequestAttempt",
+  "importScriptRequestAttempt"
 ]);
 
 export const isSavingStakePoolConfig = bool(currentStakePoolConfigRequest);
@@ -1136,7 +1136,7 @@ export const newUnminedMessage = get(["notifications", "newUnminedMessage"]);
 
 export const createWalletExisting = get([
   "walletLoader",
-  "createWalletExisting",
+  "createWalletExisting"
 ]);
 
 export const lastBlockTimestamp = get(["grpc", "recentBlockTimestamp"]);
@@ -1145,14 +1145,14 @@ export const getNextAccountSuccess = get(["control", "getNextAccountSuccess"]);
 export const getNextAccountError = get(["control", "getNextAccountError"]);
 export const getNextAccountRequestAttempt = get([
   "control",
-  "getNextAccountRequestAttempt",
+  "getNextAccountRequestAttempt"
 ]);
 export const hiddenAccounts = get(["daemon", "hiddenAccounts"]);
 export const renameAccountError = get(["control", "renameAccountError"]);
 export const renameAccountSuccess = get(["control", "renameAccountSuccess"]);
 export const renameAccountRequestAttempt = get([
   "control",
-  "renameAccountRequestAttempt",
+  "renameAccountRequestAttempt"
 ]);
 
 export const location = get(["router", "location"]);
@@ -1266,7 +1266,7 @@ export const ninetyFifthPercentileVoteTime = createSelector(
 );
 export const getMyTicketsStatsRequest = get([
   "statistics",
-  "getMyTicketsStatsRequest",
+  "getMyTicketsStatsRequest"
 ]);
 
 export const fullDailyBalancesStats = get(["statistics", "fullDailyBalances"]);
@@ -1280,18 +1280,18 @@ export const stakeRewardsStats = createSelector(
       stakeFees: s.series.stakeFees / unitDivisor,
       totalStake: s.series.totalStake / unitDivisor,
       stakeRewardPerc: s.series.stakeRewards / (s.series.totalStake || 1),
-      stakeFeesPerc: s.series.stakeFees / (s.series.totalStake || 1),
+      stakeFeesPerc: s.series.stakeFees / (s.series.totalStake || 1)
     }))
 );
 
 export const modalVisible = get(["control", "modalVisible"]);
 export const aboutModalMacOSVisible = get([
   "control",
-  "aboutModalMacOSVisible",
+  "aboutModalMacOSVisible"
 ]);
 export const autobuyerRunningModalVisible = get([
   "control",
-  "autobuyerRunningModalVisible",
+  "autobuyerRunningModalVisible"
 ]);
 
 export const isTrezor = get(["trezor", "enabled"]);
@@ -1409,17 +1409,17 @@ export const getProposalError = get(["governance", "getProposalError"]);
 export const proposalsDetails = get(["governance", "proposalsDetails"]);
 export const lastPoliteiaAccessBlock = get([
   "governance",
-  "lastPoliteiaAccessBlock",
+  "lastPoliteiaAccessBlock"
 ]);
 export const lastPoliteiaAccessTime = get([
   "governance",
-  "lastPoliteiaAccessTime",
+  "lastPoliteiaAccessTime"
 ]);
 
 export const trezorWaitingForPin = get(["trezor", "waitingForPin"]);
 export const trezorWaitingForPassPhrase = get([
   "trezor",
-  "waitingForPassPhrase",
+  "waitingForPassPhrase"
 ]);
 export const trezorWaitingForWord = get(["trezor", "waitingForWord"]);
 export const trezorPerformingOperation = get(["trezor", "performingOperation"]);
@@ -1427,7 +1427,7 @@ export const trezorDevice = get(["trezor", "device"]);
 export const trezorDeviceList = get(["trezor", "deviceList"]);
 export const trezorWalletCreationMasterPubkeyAttempt = get([
   "trezor",
-  "walletCreationMasterPubkeyAttempt",
+  "walletCreationMasterPubkeyAttempt"
 ]);
 
 export const lnEnabled = bool(

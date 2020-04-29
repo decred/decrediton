@@ -43,7 +43,7 @@ const ExpiryTime = ({ expired, decoded, tsDate }) => (
             <FormattedRelative
               value={tsDate(decoded.expiry + decoded.timestamp)}
             />
-          ),
+          )
         }}
       />
     ) : (
@@ -55,7 +55,7 @@ const ExpiryTime = ({ expired, decoded, tsDate }) => (
             <FormattedRelative
               value={tsDate(decoded.expiry + decoded.timestamp)}
             />
-          ),
+          )
         }}
       />
     )}
@@ -67,7 +67,7 @@ const DecodedPayRequest = ({
   tsDate,
   expired,
   sendValue,
-  onSendValueChanged,
+  onSendValueChanged
 }) => (
   <div className="decoded-payreq">
     {decoded.numAtoms ? (
@@ -103,7 +103,7 @@ export default ({
   sendValue,
   onPayRequestChanged,
   onSendPayment,
-  onSendValueChanged,
+  onSendValueChanged
 }) => (
   <>
     <h2 className="ln-payments-subheader">

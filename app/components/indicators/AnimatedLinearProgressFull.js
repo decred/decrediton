@@ -10,7 +10,7 @@ class AnimatedLinearProgressFull extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      lastDcrwalletLogLine: "",
+      lastDcrwalletLogLine: ""
     };
   }
 
@@ -37,7 +37,7 @@ class AnimatedLinearProgressFull extends React.Component {
       selectedWalletSelector,
       getEstimatedTimeLeft,
       getNeededBlocks,
-      isSPV,
+      isSPV
     } = this.props;
     const perComplete = (getCurrentBlockCount - min) / (getNeededBlocks - min);
     const leftStartingPoint = perComplete ? perComplete * 100 : 0;

@@ -4,18 +4,19 @@ import {
   EXTERNALREQUEST_STAKEPOOL_LISTING,
   EXTERNALREQUEST_UPDATE_CHECK,
   EXTERNALREQUEST_POLITEIA,
-  EXTERNALREQUEST_DCRDATA,
+  EXTERNALREQUEST_DCRDATA
 } from "main_dev/externalRequests";
 
 import { ChangePassphraseButton } from "buttons";
 import { WatchOnlyWarnNotification } from "shared";
+import PropTypes from "prop-types";
 
 const propTypes = {
   tempSettings: PropTypes.object.isRequired,
   onAttemptChangePassphrase: PropTypes.func,
   isChangePassPhraseDisabled: PropTypes.bool.isRequired,
   changePassphraseRequestAttempt: PropTypes.bool.isRequired,
-  onChangeTempSettings: PropTypes.func.isRequired,
+  onChangeTempSettings: PropTypes.func.isRequired
 };
 
 const AllowableRequestType = ({
@@ -23,7 +24,7 @@ const AllowableRequestType = ({
   label,
   description,
   checked,
-  onChange,
+  onChange
 }) => (
   <div className="settings-row settings-row-checklist">
     <div className="settings-label">{label}</div>
@@ -40,7 +41,7 @@ const PrivacySettings = ({
   isChangePassPhraseDisabled,
   changePassphraseRequestAttempt,
   onAttemptChangePassphrase,
-  onChangeTempSettings,
+  onChangeTempSettings
 }) => {
   const toggle = (value) => () => {
     const allowedExternalRequests = [...tempSettings.allowedExternalRequests];
@@ -72,7 +73,7 @@ const PrivacySettings = ({
                     : "",
                   changePassphraseRequestAttempt
                     ? "change-password-loading"
-                    : "",
+                    : ""
                 ].join(" ")}
                 isDisabled={isChangePassPhraseDisabled}
                 modalTitle={

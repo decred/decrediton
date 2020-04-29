@@ -7,7 +7,7 @@ const propTypes = {
   modalTitle: PropTypes.object.isRequired,
   show: PropTypes.bool.isRequired,
   onCancelModal: PropTypes.func.isRequired,
-  description: PropTypes.object,
+  description: PropTypes.object
 };
 
 const StandardPassphraseModal = (props) => {
@@ -18,14 +18,14 @@ const StandardPassphraseModal = (props) => {
     modalTitle,
     children,
     prependPassphraseRow,
-    onCancelModal,
+    onCancelModal
   } = props;
 
   const inputRow = (
     <PassphraseInputRow
       {...{
         ...props,
-        autoFocusPassword: prependPassphraseRow || !children,
+        autoFocusPassword: prependPassphraseRow || !children
       }}
     />
   );

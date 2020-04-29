@@ -84,7 +84,7 @@ const AdvancedBodyBase = ({
               rpcHostHasFailedAttempt,
               rpcPortHasFailedAttempt,
               rpcCertHasFailedAttempt,
-              intl,
+              intl
             }}
           />
         ) : (
@@ -94,7 +94,7 @@ const AdvancedBodyBase = ({
               setAppData,
               appdata,
               appDataHasFailedAttempt,
-              intl,
+              intl
             }}
           />
         )}

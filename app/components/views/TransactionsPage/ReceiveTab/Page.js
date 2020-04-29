@@ -9,8 +9,8 @@ import "style/MiscComponents.less";
 const messages = defineMessages({
   amountPlaceholder: {
     id: "receive.amountPlaceholder",
-    defaultMessage: "Amount",
-  },
+    defaultMessage: "Amount"
+  }
 });
 
 const ReceivePage = ({
@@ -21,7 +21,7 @@ const ReceivePage = ({
   error,
   intl,
   onValidateAmount,
-  onKeyDown,
+  onKeyDown
 }) => (
   <>
     <Subtitle title={<T id="receive.subtitle" m="Receive DCR" />} />

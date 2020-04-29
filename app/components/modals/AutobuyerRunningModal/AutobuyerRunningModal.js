@@ -5,7 +5,7 @@ import { InvisibleButton, KeyBlueButton } from "buttons";
 const propTypes = {
   show: PropTypes.bool.isRequired,
   onCancelModal: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired
 };
 
 const AutobuyerRunningModal = ({ show, onCancelModal, onSubmit }) => (

@@ -9,7 +9,7 @@ const mapStateToProps = selectorMap({
   tsDate: sel.tsDate,
   noMoreTickets: sel.noMoreTickets,
   ticketsFilter: sel.ticketsFilter,
-  window: sel.mainWindow,
+  window: sel.mainWindow
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -17,7 +17,7 @@ const mapDispatchToProps = (dispatch) =>
     {
       goBackHistory: ca.goBackHistory,
       getTickets: ca.getTickets,
-      changeTicketsFilter: ca.changeTicketsFilter,
+      changeTicketsFilter: ca.changeTicketsFilter
     },
     dispatch
   );

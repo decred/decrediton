@@ -3,7 +3,7 @@ import { VotingProgress } from "indicators";
 import { PoliteiaLoading, NoProposals } from "indicators";
 import {
   VOTESTATUS_ACTIVEVOTE,
-  VOTESTATUS_FINISHEDVOTE,
+  VOTESTATUS_FINISHEDVOTE
 } from "actions/GovernanceActions";
 import InfiniteScroll from "react-infinite-scroller";
 import { FormattedRelative } from "shared";
@@ -27,7 +27,7 @@ function ProposalListItem({
   voteResult,
   modifiedSinceLastAccess,
   votingSinceLastAccess,
-  quorumMinimumVotes,
+  quorumMinimumVotes
 }) {
   const tsDate = useSelector((state) => sel.tsDate(state));
   const dispatch = useDispatch();
@@ -45,7 +45,7 @@ function ProposalListItem({
         "is-row",
         "proposal-list-item",
         voteResult,
-        modifiedClassName,
+        modifiedClassName
       ].join(" ")}>
       <div className="info">
         <div className="proposal-name">{name}</div>
@@ -69,7 +69,7 @@ function ProposalListItem({
               id="proposalItem.lastUpdatedAt"
               m="Last Updated {reldate}"
               values={{
-                reldate: <FormattedRelative value={tsDate(timestamp)} />,
+                reldate: <FormattedRelative value={tsDate(timestamp)} />
               }}
             />
           </div>
@@ -146,8 +146,8 @@ export function ProposalList({ finishedVote, tab }) {
         ).then((res) => {
           send({ type: "RESOLVE", data: res });
         });
-      },
-    },
+      }
+    }
   });
   const previous = usePrevious({ proposals, tab });
   useEffect(() => {

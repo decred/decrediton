@@ -8,7 +8,7 @@ class CloseButton extends React.Component {
     className += !this.props.disabled
       ? "close-button"
       : "close-button-disabled";
-    let style = {};
+    const style = {};
     Object.assign(style, this.props.style);
     if (!this.props.disabled && this.props.block) {
       style.display = "block";

@@ -8,7 +8,7 @@ import {
   padding,
   radiusBottom,
   radiusTop,
-  hoverFill,
+  hoverFill
 } from "./Styles";
 import { FormattedMessage as T } from "react-intl";
 
@@ -39,7 +39,7 @@ const ChartTooltip = (props) => {
             m="{key}: {value, number, precise-percent}"
             values={{
               key: entry.dataKey,
-              value: entry.value / 100,
+              value: entry.value / 100
             }}
           />
         </div>
@@ -56,7 +56,7 @@ const VoteTimeChart = ({ data, intl }) => {
     name: intl.formatMessage(messages.dayMonthDisplay, { value: s.time }),
     legendName: intl.formatMessage(messages.fullDayDisplay, { value: s.time }),
     [stakeFeesKey]: s.stakeFeesPerc * 100,
-    [stakeRewardsKey]: s.stakeRewardPerc * 100,
+    [stakeRewardsKey]: s.stakeRewardPerc * 100
   }));
 
   return (

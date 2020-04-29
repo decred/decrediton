@@ -31,8 +31,8 @@ function POST(piURL, path, payload) {
   return ensureCSRF(piURL).then((resp) => {
     const cfg = {
       headers: {
-        [CSRF_TOKEN_HEADER]: resp.headers[CSRF_TOKEN_HEADER],
-      },
+        [CSRF_TOKEN_HEADER]: resp.headers[CSRF_TOKEN_HEADER]
+      }
     };
     return axios.post(piURL + path, payload, cfg);
   });

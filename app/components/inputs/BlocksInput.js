@@ -6,7 +6,7 @@ const BlocksInput = ({ ...props }) => (
   <FloatInput
     {...{
       ...props,
-      unit: <T id="blocksInput.blocks" m="blocks" />,
+      unit: <T id="blocksInput.blocks" m="blocks" />
     }}
   />
 );

@@ -60,7 +60,7 @@ class TrezorConfigSections extends React.Component {
       onInitDevice,
       onUpdateFirmware,
       onClearDeviceSession,
-      loading,
+      loading
     } = this;
 
     return (
@@ -71,7 +71,7 @@ class TrezorConfigSections extends React.Component {
             onTogglePassPhraseProtection,
             onChangeHomeScreen,
             onClearDeviceSession,
-            loading,
+            loading
           }}
         />
 

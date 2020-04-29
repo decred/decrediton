@@ -19,14 +19,14 @@ const TxRowByType = {
   [txTypes.OUT]: RegularTxRow,
   [txTypes.IN]: RegularTxRow,
   [txTypes.TRANSFER]: RegularTxRow,
-  [txTypes.COINBASE]: RegularTxRow,
+  [txTypes.COINBASE]: RegularTxRow
 };
 
 const timeMessageDefine = defineMessages({
   dayMonthHourDisplay: {
     id: "txHistory.dayMonthHourDisplay",
-    defaultMessage: "{value, date, short-month-24hour}",
-  },
+    defaultMessage: "{value, date, short-month-24hour}"
+  }
 });
 
 // TxHistory is responsible for calling the right component row according to
@@ -39,7 +39,7 @@ const TxHistory = ({
   isStake,
   tsDate,
   intl,
-  history,
+  history
 }) => (
   <>
     {transactions.map((tx, index) => {
@@ -75,8 +75,8 @@ const TxHistory = ({
             onClick: () => history.push(`/transactions/history/${tx.txHash}`),
             timeMessage: (txTimestamp) =>
               intl.formatMessage(timeMessageDefine.dayMonthHourDisplay, {
-                value: txTimestamp,
-              }),
+                value: txTimestamp
+              })
           }}
         />
       );

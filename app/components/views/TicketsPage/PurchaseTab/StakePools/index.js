@@ -15,7 +15,7 @@ class StakePools extends React.Component {
       apiKey: "",
       selectedUnconfigured: this.props.unconfiguredStakePools[0],
       hasFailedAttempt: false,
-      show: false,
+      show: false
     };
     if (!props.updatedStakePoolList && this.getStakepoolListingEnabled()) {
       this.props.discoverAvailableStakepools();
@@ -44,7 +44,7 @@ class StakePools extends React.Component {
       this.setState({
         selectedUnconfigured: this.props.unconfiguredStakePools[0],
         apiKey: "",
-        hasFailedAttempt: false,
+        hasFailedAttempt: false
       });
     }
   }
@@ -52,7 +52,7 @@ class StakePools extends React.Component {
   componentDidMount() {
     if (!this.state.selectedUnconfigured) {
       this.setState({
-        selectedUnconfigured: this.props.unconfiguredStakePools[0],
+        selectedUnconfigured: this.props.unconfiguredStakePools[0]
       });
     }
     if (
@@ -98,7 +98,7 @@ class StakePools extends React.Component {
               }>
               <T id="stake.discoverStakeOoolsAPILink" m="this link" />
             </a>
-          ),
+          )
         }}
       />
     );
@@ -119,10 +119,10 @@ class StakePools extends React.Component {
               onChangeSelectedUnconfigured: null,
               onCancelPassphraseRequest: null,
               onCancelAddStakePool: null,
-              onRemoveStakePool: null,
+              onRemoveStakePool: null
             },
             this
-          ),
+          )
         }}
       />
     );
@@ -147,10 +147,10 @@ class StakePools extends React.Component {
           ...substruct(
             {
               onShowAddStakePool: null,
-              toggleBackupModal: null,
+              toggleBackupModal: null
             },
             this
-          ),
+          )
         }}
       />
     );

@@ -58,7 +58,7 @@ class ModalButton extends React.Component {
             ...this.props,
             show,
             onSubmit,
-            onCancelModal: this.hideModal,
+            onCancelModal: this.hideModal
           }}
         />
       </>

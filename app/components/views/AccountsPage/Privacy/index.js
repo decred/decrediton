@@ -10,7 +10,7 @@ function validateErrorReducer(state, action) {
     case "ACCOUNT_MIXER_START":
       return {
         ...state,
-        mixerStart: action.error,
+        mixerStart: action.error
       };
   }
 }
@@ -27,7 +27,7 @@ function Privacy({ isCreateAccountDisabled }) {
   const mixedAccountBranch = useSelector(sel.getMixedAccountBranch);
   const accounts = useSelector(sel.sortedAccounts);
   const [error, dispatchError] = useReducer(validateErrorReducer, {
-    mixedStart: null,
+    mixedStart: null
   });
 
   if (!mixedAccount && !changeAccount) {
@@ -48,7 +48,7 @@ function Privacy({ isCreateAccountDisabled }) {
       mixedAccount,
       changeAccount,
       mixedAccountBranch,
-      csppServer: `${csppServer}:${csppPort}`,
+      csppServer: `${csppServer}:${csppPort}`
     };
     try {
       await runAccountMixer(request);
@@ -68,7 +68,7 @@ function Privacy({ isCreateAccountDisabled }) {
         changeAccountName,
         onStartMixerAttempt,
         stopAccountMixer,
-        mixedAccountBranch,
+        mixedAccountBranch
       }}
     />
   );

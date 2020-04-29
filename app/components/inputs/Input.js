@@ -14,7 +14,7 @@ class Input extends React.Component {
       divClassName:
         "input-and-unit " +
         (this.props.className || "") +
-        (this.props.disabled ? " disabled " : ""),
+        (this.props.disabled ? " disabled " : "")
     };
   }
   componentDidMount() {
@@ -28,25 +28,25 @@ class Input extends React.Component {
       this.setState({
         divClassName: disabled
           ? this.state.divClassName + " disabled"
-          : "input-and-unit " + (className || ""),
+          : "input-and-unit " + (className || "")
       });
     }
   }
   onInputFocus = (e) => {
     const { onFocus } = this.props;
     const { inputUnitDiv } = this.state;
-    var updatedInputUnitDiv = inputUnitDiv;
+    const updatedInputUnitDiv = inputUnitDiv;
     this.setState({
-      inputUnitDiv: updatedInputUnitDiv.classList.add("active"),
+      inputUnitDiv: updatedInputUnitDiv.classList.add("active")
     });
     onFocus && onFocus(e);
   };
   onInputBlur = (e) => {
     const { onBlur } = this.props;
     const { inputUnitDiv } = this.state;
-    var updatedInputUnitDiv = inputUnitDiv;
+    const updatedInputUnitDiv = inputUnitDiv;
     this.setState({
-      inputUnitDiv: updatedInputUnitDiv.classList.remove("active"),
+      inputUnitDiv: updatedInputUnitDiv.classList.remove("active")
     });
     onBlur && onBlur(e);
   };
@@ -70,7 +70,7 @@ class Input extends React.Component {
       readOnly,
       unit,
       hidden,
-      type,
+      type
     } = this.props;
     const hasErrorToShow =
       showErrors && ((invalid && value) || (required && !value));

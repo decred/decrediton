@@ -9,7 +9,7 @@ export {
   eq,
   map,
   keyBy,
-  some,
+  some
 } from "lodash/fp";
 export { concat, isString, cloneDeep } from "lodash";
 

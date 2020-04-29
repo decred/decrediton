@@ -17,7 +17,7 @@ const mapStateToProps = selectorMap({
   autobuyerRunningModalVisible: sel.autobuyerRunningModalVisible,
   modalVisible: sel.modalVisible,
   isTicketAutoBuyerEnabled: sel.isTicketAutoBuyerEnabled,
-  theme: sel.theme,
+  theme: sel.theme
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -33,7 +33,7 @@ const mapDispatchToProps = (dispatch) =>
       onExpandSideBar: sba.expandSideBar,
       onReduceSideBar: sba.reduceSideBar,
       onSidebarToBottom: sba.sidebarToBottom,
-      onSidebarLeaveBottom: sba.onSidebarLeaveBottom,
+      onSidebarLeaveBottom: sba.onSidebarLeaveBottom
     },
     dispatch
   );

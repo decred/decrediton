@@ -10,11 +10,11 @@ import { isRegExp } from "util";
 import { getGlobalCfg } from "config";
 import {
   POLITEIA_URL_TESTNET,
-  POLITEIA_URL_MAINNET,
+  POLITEIA_URL_MAINNET
 } from "../middleware/politeiaapi";
 import {
   DCRDATA_URL_TESTNET,
-  DCRDATA_URL_MAINNET,
+  DCRDATA_URL_MAINNET
 } from "../middleware/dcrdataapi";
 
 export const EXTERNALREQUEST_NETWORK_STATUS = "EXTERNALREQUEST_NETWORK_STATUS";
@@ -30,7 +30,7 @@ export const STANDARD_EXTERNAL_REQUESTS = [
   EXTERNALREQUEST_NETWORK_STATUS,
   EXTERNALREQUEST_STAKEPOOL_LISTING,
   EXTERNALREQUEST_UPDATE_CHECK,
-  EXTERNALREQUEST_DCRDATA,
+  EXTERNALREQUEST_DCRDATA
 ];
 
 let allowedURLs = [];
@@ -44,7 +44,7 @@ export const installSessionHandlers = (mainLogger) => {
   reloadAllowedExternalRequests();
 
   const filter = {
-    urls: [],
+    urls: []
   };
 
   // ***IMPORTANT***

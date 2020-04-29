@@ -15,7 +15,7 @@ const messageByType = {
   [txTypes.MISSED]: <T id="transaction.type.missed" m="Missed" />,
   [txTypes.EXPIRED]: <T id="transaction.type.expired" m="Expired" />,
   [txTypes.REVOKED]: <T id="transaction.type.revoked" m="Revoked" />,
-  [txTypes.LIVE]: <T id="transaction.type.live" m="Live" />,
+  [txTypes.LIVE]: <T id="transaction.type.live" m="Live" />
 };
 
 export const StakeTxRow = ({
@@ -39,7 +39,7 @@ export const StakeTxRow = ({
       m={"{rewardLabel}: {reward}"}
       values={{
         rewardLabel: <T id="history.ticket.rewardLabel" m="Ticket Reward" />,
-        reward: <Balance amount={ticketReward || 0} />,
+        reward: <Balance amount={ticketReward || 0} />
       }}
     />
   );
@@ -50,7 +50,7 @@ export const StakeTxRow = ({
       m={"{ticketPriceLabel}: {ticketPrice}"}
       values={{
         ticketPriceLabel: <T id="ticket.priceLabel" m="Ticket Price" />,
-        ticketPrice: <Balance amount={ticketPrice || 0} />,
+        ticketPrice: <Balance amount={ticketPrice || 0} />
       }}
     />
   );
@@ -68,7 +68,7 @@ export const StakeTxRow = ({
         daysToVoteLabel: (
           <T id="ticket.daysToVoteLabel" m="Ticket Days To Vote" />
         ),
-        daysToVote: daysToVote || 0,
+        daysToVote: daysToVote || 0
       }}
     />
   );

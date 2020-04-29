@@ -3,7 +3,7 @@ import { selectorMap } from "../fp";
 import * as sel from "../selectors";
 
 const mapStateToProps = selectorMap({
-  txURLBuilder: sel.txURLBuilder,
+  txURLBuilder: sel.txURLBuilder
 });
 
 export default connect(mapStateToProps);

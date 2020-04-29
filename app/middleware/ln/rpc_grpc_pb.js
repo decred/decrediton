@@ -1276,7 +1276,7 @@ var WalletUnlockerService = (exports.WalletUnlockerService = {
     requestSerialize: serialize_lnrpc_GenSeedRequest,
     requestDeserialize: deserialize_lnrpc_GenSeedRequest,
     responseSerialize: serialize_lnrpc_GenSeedResponse,
-    responseDeserialize: deserialize_lnrpc_GenSeedResponse,
+    responseDeserialize: deserialize_lnrpc_GenSeedResponse
   },
   // *
   // InitWallet is used when lnd is starting up for the first time to fully
@@ -1300,7 +1300,7 @@ var WalletUnlockerService = (exports.WalletUnlockerService = {
     requestSerialize: serialize_lnrpc_InitWalletRequest,
     requestDeserialize: deserialize_lnrpc_InitWalletRequest,
     responseSerialize: serialize_lnrpc_InitWalletResponse,
-    responseDeserialize: deserialize_lnrpc_InitWalletResponse,
+    responseDeserialize: deserialize_lnrpc_InitWalletResponse
   },
   // * lncli: `unlock`
   // UnlockWallet is used at startup of lnd to provide a password to unlock
@@ -1314,7 +1314,7 @@ var WalletUnlockerService = (exports.WalletUnlockerService = {
     requestSerialize: serialize_lnrpc_UnlockWalletRequest,
     requestDeserialize: deserialize_lnrpc_UnlockWalletRequest,
     responseSerialize: serialize_lnrpc_UnlockWalletResponse,
-    responseDeserialize: deserialize_lnrpc_UnlockWalletResponse,
+    responseDeserialize: deserialize_lnrpc_UnlockWalletResponse
   },
   // * lncli: `changepassword`
   // ChangePassword changes the password of the encrypted wallet. This will
@@ -1328,8 +1328,8 @@ var WalletUnlockerService = (exports.WalletUnlockerService = {
     requestSerialize: serialize_lnrpc_ChangePasswordRequest,
     requestDeserialize: deserialize_lnrpc_ChangePasswordRequest,
     responseSerialize: serialize_lnrpc_ChangePasswordResponse,
-    responseDeserialize: deserialize_lnrpc_ChangePasswordResponse,
-  },
+    responseDeserialize: deserialize_lnrpc_ChangePasswordResponse
+  }
 });
 
 exports.WalletUnlockerClient = grpc.makeGenericClientConstructor(
@@ -1349,7 +1349,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_WalletBalanceRequest,
     requestDeserialize: deserialize_lnrpc_WalletBalanceRequest,
     responseSerialize: serialize_lnrpc_WalletBalanceResponse,
-    responseDeserialize: deserialize_lnrpc_WalletBalanceResponse,
+    responseDeserialize: deserialize_lnrpc_WalletBalanceResponse
   },
   // * lncli: `channelbalance`
   // ChannelBalance returns the total funds available across all open channels
@@ -1363,7 +1363,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_ChannelBalanceRequest,
     requestDeserialize: deserialize_lnrpc_ChannelBalanceRequest,
     responseSerialize: serialize_lnrpc_ChannelBalanceResponse,
-    responseDeserialize: deserialize_lnrpc_ChannelBalanceResponse,
+    responseDeserialize: deserialize_lnrpc_ChannelBalanceResponse
   },
   // * lncli: `listchaintxns`
   // GetTransactions returns a list describing all the known transactions
@@ -1377,7 +1377,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_GetTransactionsRequest,
     requestDeserialize: deserialize_lnrpc_GetTransactionsRequest,
     responseSerialize: serialize_lnrpc_TransactionDetails,
-    responseDeserialize: deserialize_lnrpc_TransactionDetails,
+    responseDeserialize: deserialize_lnrpc_TransactionDetails
   },
   // * lncli: `estimatefee`
   // EstimateFee asks the chain backend to estimate the fee rate and total fees
@@ -1391,7 +1391,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_EstimateFeeRequest,
     requestDeserialize: deserialize_lnrpc_EstimateFeeRequest,
     responseSerialize: serialize_lnrpc_EstimateFeeResponse,
-    responseDeserialize: deserialize_lnrpc_EstimateFeeResponse,
+    responseDeserialize: deserialize_lnrpc_EstimateFeeResponse
   },
   // * lncli: `sendcoins`
   // SendCoins executes a request to send coins to a particular address. Unlike
@@ -1408,7 +1408,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_SendCoinsRequest,
     requestDeserialize: deserialize_lnrpc_SendCoinsRequest,
     responseSerialize: serialize_lnrpc_SendCoinsResponse,
-    responseDeserialize: deserialize_lnrpc_SendCoinsResponse,
+    responseDeserialize: deserialize_lnrpc_SendCoinsResponse
   },
   // * lncli: `listunspent`
   // ListUnspent returns a list of all utxos spendable by the wallet with a
@@ -1422,7 +1422,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_ListUnspentRequest,
     requestDeserialize: deserialize_lnrpc_ListUnspentRequest,
     responseSerialize: serialize_lnrpc_ListUnspentResponse,
-    responseDeserialize: deserialize_lnrpc_ListUnspentResponse,
+    responseDeserialize: deserialize_lnrpc_ListUnspentResponse
   },
   // *
   // SubscribeTransactions creates a uni-directional stream from the server to
@@ -1437,7 +1437,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_GetTransactionsRequest,
     requestDeserialize: deserialize_lnrpc_GetTransactionsRequest,
     responseSerialize: serialize_lnrpc_Transaction,
-    responseDeserialize: deserialize_lnrpc_Transaction,
+    responseDeserialize: deserialize_lnrpc_Transaction
   },
   // * lncli: `sendmany`
   // SendMany handles a request for a transaction that creates multiple specified
@@ -1453,7 +1453,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_SendManyRequest,
     requestDeserialize: deserialize_lnrpc_SendManyRequest,
     responseSerialize: serialize_lnrpc_SendManyResponse,
-    responseDeserialize: deserialize_lnrpc_SendManyResponse,
+    responseDeserialize: deserialize_lnrpc_SendManyResponse
   },
   // * lncli: `newaddress`
   // NewAddress creates a new address under control of the local wallet.
@@ -1466,7 +1466,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_NewAddressRequest,
     requestDeserialize: deserialize_lnrpc_NewAddressRequest,
     responseSerialize: serialize_lnrpc_NewAddressResponse,
-    responseDeserialize: deserialize_lnrpc_NewAddressResponse,
+    responseDeserialize: deserialize_lnrpc_NewAddressResponse
   },
   // * lncli: `signmessage`
   // SignMessage signs a message with this node's private key. The returned
@@ -1481,7 +1481,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_SignMessageRequest,
     requestDeserialize: deserialize_lnrpc_SignMessageRequest,
     responseSerialize: serialize_lnrpc_SignMessageResponse,
-    responseDeserialize: deserialize_lnrpc_SignMessageResponse,
+    responseDeserialize: deserialize_lnrpc_SignMessageResponse
   },
   // * lncli: `verifymessage`
   // VerifyMessage verifies a signature over a msg. The signature must be
@@ -1497,7 +1497,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_VerifyMessageRequest,
     requestDeserialize: deserialize_lnrpc_VerifyMessageRequest,
     responseSerialize: serialize_lnrpc_VerifyMessageResponse,
-    responseDeserialize: deserialize_lnrpc_VerifyMessageResponse,
+    responseDeserialize: deserialize_lnrpc_VerifyMessageResponse
   },
   // * lncli: `connect`
   // ConnectPeer attempts to establish a connection to a remote peer. This is at
@@ -1512,7 +1512,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_ConnectPeerRequest,
     requestDeserialize: deserialize_lnrpc_ConnectPeerRequest,
     responseSerialize: serialize_lnrpc_ConnectPeerResponse,
-    responseDeserialize: deserialize_lnrpc_ConnectPeerResponse,
+    responseDeserialize: deserialize_lnrpc_ConnectPeerResponse
   },
   // * lncli: `disconnect`
   // DisconnectPeer attempts to disconnect one peer from another identified by a
@@ -1527,7 +1527,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_DisconnectPeerRequest,
     requestDeserialize: deserialize_lnrpc_DisconnectPeerRequest,
     responseSerialize: serialize_lnrpc_DisconnectPeerResponse,
-    responseDeserialize: deserialize_lnrpc_DisconnectPeerResponse,
+    responseDeserialize: deserialize_lnrpc_DisconnectPeerResponse
   },
   // * lncli: `listpeers`
   // ListPeers returns a verbose listing of all currently active peers.
@@ -1540,7 +1540,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_ListPeersRequest,
     requestDeserialize: deserialize_lnrpc_ListPeersRequest,
     responseSerialize: serialize_lnrpc_ListPeersResponse,
-    responseDeserialize: deserialize_lnrpc_ListPeersResponse,
+    responseDeserialize: deserialize_lnrpc_ListPeersResponse
   },
   // * lncli: `getinfo`
   // GetInfo returns general information concerning the lightning node including
@@ -1555,7 +1555,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_GetInfoRequest,
     requestDeserialize: deserialize_lnrpc_GetInfoRequest,
     responseSerialize: serialize_lnrpc_GetInfoResponse,
-    responseDeserialize: deserialize_lnrpc_GetInfoResponse,
+    responseDeserialize: deserialize_lnrpc_GetInfoResponse
   },
   // TODO(roasbeef): merge with below with bool?
   //
@@ -1573,7 +1573,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_PendingChannelsRequest,
     requestDeserialize: deserialize_lnrpc_PendingChannelsRequest,
     responseSerialize: serialize_lnrpc_PendingChannelsResponse,
-    responseDeserialize: deserialize_lnrpc_PendingChannelsResponse,
+    responseDeserialize: deserialize_lnrpc_PendingChannelsResponse
   },
   // * lncli: `listchannels`
   // ListChannels returns a description of all the open channels that this node
@@ -1587,7 +1587,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_ListChannelsRequest,
     requestDeserialize: deserialize_lnrpc_ListChannelsRequest,
     responseSerialize: serialize_lnrpc_ListChannelsResponse,
-    responseDeserialize: deserialize_lnrpc_ListChannelsResponse,
+    responseDeserialize: deserialize_lnrpc_ListChannelsResponse
   },
   // *
   // SubscribeChannelEvents creates a uni-directional stream from the server to
@@ -1603,7 +1603,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_ChannelEventSubscription,
     requestDeserialize: deserialize_lnrpc_ChannelEventSubscription,
     responseSerialize: serialize_lnrpc_ChannelEventUpdate,
-    responseDeserialize: deserialize_lnrpc_ChannelEventUpdate,
+    responseDeserialize: deserialize_lnrpc_ChannelEventUpdate
   },
   // * lncli: `closedchannels`
   // ClosedChannels returns a description of all the closed channels that
@@ -1617,7 +1617,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_ClosedChannelsRequest,
     requestDeserialize: deserialize_lnrpc_ClosedChannelsRequest,
     responseSerialize: serialize_lnrpc_ClosedChannelsResponse,
-    responseDeserialize: deserialize_lnrpc_ClosedChannelsResponse,
+    responseDeserialize: deserialize_lnrpc_ClosedChannelsResponse
   },
   // *
   // OpenChannelSync is a synchronous version of the OpenChannel RPC call. This
@@ -1633,7 +1633,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_OpenChannelRequest,
     requestDeserialize: deserialize_lnrpc_OpenChannelRequest,
     responseSerialize: serialize_lnrpc_ChannelPoint,
-    responseDeserialize: deserialize_lnrpc_ChannelPoint,
+    responseDeserialize: deserialize_lnrpc_ChannelPoint
   },
   // * lncli: `openchannel`
   // OpenChannel attempts to open a singly funded channel specified in the
@@ -1650,7 +1650,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_OpenChannelRequest,
     requestDeserialize: deserialize_lnrpc_OpenChannelRequest,
     responseSerialize: serialize_lnrpc_OpenStatusUpdate,
-    responseDeserialize: deserialize_lnrpc_OpenStatusUpdate,
+    responseDeserialize: deserialize_lnrpc_OpenStatusUpdate
   },
   // *
   // ChannelAcceptor dispatches a bi-directional streaming RPC in which
@@ -1667,7 +1667,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_ChannelAcceptResponse,
     requestDeserialize: deserialize_lnrpc_ChannelAcceptResponse,
     responseSerialize: serialize_lnrpc_ChannelAcceptRequest,
-    responseDeserialize: deserialize_lnrpc_ChannelAcceptRequest,
+    responseDeserialize: deserialize_lnrpc_ChannelAcceptRequest
   },
   // * lncli: `closechannel`
   // CloseChannel attempts to close an active channel identified by its channel
@@ -1686,7 +1686,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_CloseChannelRequest,
     requestDeserialize: deserialize_lnrpc_CloseChannelRequest,
     responseSerialize: serialize_lnrpc_CloseStatusUpdate,
-    responseDeserialize: deserialize_lnrpc_CloseStatusUpdate,
+    responseDeserialize: deserialize_lnrpc_CloseStatusUpdate
   },
   // * lncli: `abandonchannel`
   // AbandonChannel removes all channel state from the database except for a
@@ -1702,7 +1702,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_AbandonChannelRequest,
     requestDeserialize: deserialize_lnrpc_AbandonChannelRequest,
     responseSerialize: serialize_lnrpc_AbandonChannelResponse,
-    responseDeserialize: deserialize_lnrpc_AbandonChannelResponse,
+    responseDeserialize: deserialize_lnrpc_AbandonChannelResponse
   },
   // * lncli: `sendpayment`
   // SendPayment dispatches a bi-directional streaming RPC for sending payments
@@ -1718,7 +1718,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_SendRequest,
     requestDeserialize: deserialize_lnrpc_SendRequest,
     responseSerialize: serialize_lnrpc_SendResponse,
-    responseDeserialize: deserialize_lnrpc_SendResponse,
+    responseDeserialize: deserialize_lnrpc_SendResponse
   },
   // *
   // SendPaymentSync is the synchronous non-streaming version of SendPayment.
@@ -1734,7 +1734,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_SendRequest,
     requestDeserialize: deserialize_lnrpc_SendRequest,
     responseSerialize: serialize_lnrpc_SendResponse,
-    responseDeserialize: deserialize_lnrpc_SendResponse,
+    responseDeserialize: deserialize_lnrpc_SendResponse
   },
   // * lncli: `sendtoroute`
   // SendToRoute is a bi-directional streaming RPC for sending payment through
@@ -1750,7 +1750,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_SendToRouteRequest,
     requestDeserialize: deserialize_lnrpc_SendToRouteRequest,
     responseSerialize: serialize_lnrpc_SendResponse,
-    responseDeserialize: deserialize_lnrpc_SendResponse,
+    responseDeserialize: deserialize_lnrpc_SendResponse
   },
   // *
   // SendToRouteSync is a synchronous version of SendToRoute. It Will block
@@ -1764,7 +1764,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_SendToRouteRequest,
     requestDeserialize: deserialize_lnrpc_SendToRouteRequest,
     responseSerialize: serialize_lnrpc_SendResponse,
-    responseDeserialize: deserialize_lnrpc_SendResponse,
+    responseDeserialize: deserialize_lnrpc_SendResponse
   },
   // * lncli: `addinvoice`
   // AddInvoice attempts to add a new invoice to the invoice database. Any
@@ -1779,7 +1779,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_Invoice,
     requestDeserialize: deserialize_lnrpc_Invoice,
     responseSerialize: serialize_lnrpc_AddInvoiceResponse,
-    responseDeserialize: deserialize_lnrpc_AddInvoiceResponse,
+    responseDeserialize: deserialize_lnrpc_AddInvoiceResponse
   },
   // * lncli: `listinvoices`
   // ListInvoices returns a list of all the invoices currently stored within the
@@ -1798,7 +1798,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_ListInvoiceRequest,
     requestDeserialize: deserialize_lnrpc_ListInvoiceRequest,
     responseSerialize: serialize_lnrpc_ListInvoiceResponse,
-    responseDeserialize: deserialize_lnrpc_ListInvoiceResponse,
+    responseDeserialize: deserialize_lnrpc_ListInvoiceResponse
   },
   // * lncli: `lookupinvoice`
   // LookupInvoice attempts to look up an invoice according to its payment hash.
@@ -1813,7 +1813,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_PaymentHash,
     requestDeserialize: deserialize_lnrpc_PaymentHash,
     responseSerialize: serialize_lnrpc_Invoice,
-    responseDeserialize: deserialize_lnrpc_Invoice,
+    responseDeserialize: deserialize_lnrpc_Invoice
   },
   // *
   // SubscribeInvoices returns a uni-directional stream (server -> client) for
@@ -1834,7 +1834,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_InvoiceSubscription,
     requestDeserialize: deserialize_lnrpc_InvoiceSubscription,
     responseSerialize: serialize_lnrpc_Invoice,
-    responseDeserialize: deserialize_lnrpc_Invoice,
+    responseDeserialize: deserialize_lnrpc_Invoice
   },
   // * lncli: `decodepayreq`
   // DecodePayReq takes an encoded payment request string and attempts to decode
@@ -1849,7 +1849,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_PayReqString,
     requestDeserialize: deserialize_lnrpc_PayReqString,
     responseSerialize: serialize_lnrpc_PayReq,
-    responseDeserialize: deserialize_lnrpc_PayReq,
+    responseDeserialize: deserialize_lnrpc_PayReq
   },
   // * lncli: `listpayments`
   // ListPayments returns a list of all outgoing payments.
@@ -1862,7 +1862,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_ListPaymentsRequest,
     requestDeserialize: deserialize_lnrpc_ListPaymentsRequest,
     responseSerialize: serialize_lnrpc_ListPaymentsResponse,
-    responseDeserialize: deserialize_lnrpc_ListPaymentsResponse,
+    responseDeserialize: deserialize_lnrpc_ListPaymentsResponse
   },
   // *
   // DeleteAllPayments deletes all outgoing payments from DB.
@@ -1875,7 +1875,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_DeleteAllPaymentsRequest,
     requestDeserialize: deserialize_lnrpc_DeleteAllPaymentsRequest,
     responseSerialize: serialize_lnrpc_DeleteAllPaymentsResponse,
-    responseDeserialize: deserialize_lnrpc_DeleteAllPaymentsResponse,
+    responseDeserialize: deserialize_lnrpc_DeleteAllPaymentsResponse
   },
   // * lncli: `describegraph`
   // DescribeGraph returns a description of the latest graph state from the
@@ -1893,7 +1893,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_ChannelGraphRequest,
     requestDeserialize: deserialize_lnrpc_ChannelGraphRequest,
     responseSerialize: serialize_lnrpc_ChannelGraph,
-    responseDeserialize: deserialize_lnrpc_ChannelGraph,
+    responseDeserialize: deserialize_lnrpc_ChannelGraph
   },
   // * lncli: `getchaninfo`
   // GetChanInfo returns the latest authenticated network announcement for the
@@ -1909,7 +1909,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_ChanInfoRequest,
     requestDeserialize: deserialize_lnrpc_ChanInfoRequest,
     responseSerialize: serialize_lnrpc_ChannelEdge,
-    responseDeserialize: deserialize_lnrpc_ChannelEdge,
+    responseDeserialize: deserialize_lnrpc_ChannelEdge
   },
   // * lncli: `getnodeinfo`
   // GetNodeInfo returns the latest advertised, aggregated, and authenticated
@@ -1923,7 +1923,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_NodeInfoRequest,
     requestDeserialize: deserialize_lnrpc_NodeInfoRequest,
     responseSerialize: serialize_lnrpc_NodeInfo,
-    responseDeserialize: deserialize_lnrpc_NodeInfo,
+    responseDeserialize: deserialize_lnrpc_NodeInfo
   },
   // * lncli: `queryroutes`
   // QueryRoutes attempts to query the daemon's Channel Router for a possible
@@ -1940,7 +1940,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_QueryRoutesRequest,
     requestDeserialize: deserialize_lnrpc_QueryRoutesRequest,
     responseSerialize: serialize_lnrpc_QueryRoutesResponse,
-    responseDeserialize: deserialize_lnrpc_QueryRoutesResponse,
+    responseDeserialize: deserialize_lnrpc_QueryRoutesResponse
   },
   // * lncli: `getnetworkinfo`
   // GetNetworkInfo returns some basic stats about the known channel graph from
@@ -1954,7 +1954,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_NetworkInfoRequest,
     requestDeserialize: deserialize_lnrpc_NetworkInfoRequest,
     responseSerialize: serialize_lnrpc_NetworkInfo,
-    responseDeserialize: deserialize_lnrpc_NetworkInfo,
+    responseDeserialize: deserialize_lnrpc_NetworkInfo
   },
   // * lncli: `stop`
   // StopDaemon will send a shutdown request to the interrupt handler, triggering
@@ -1968,7 +1968,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_StopRequest,
     requestDeserialize: deserialize_lnrpc_StopRequest,
     responseSerialize: serialize_lnrpc_StopResponse,
-    responseDeserialize: deserialize_lnrpc_StopResponse,
+    responseDeserialize: deserialize_lnrpc_StopResponse
   },
   // *
   // SubscribeChannelGraph launches a streaming RPC that allows the caller to
@@ -1986,7 +1986,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_GraphTopologySubscription,
     requestDeserialize: deserialize_lnrpc_GraphTopologySubscription,
     responseSerialize: serialize_lnrpc_GraphTopologyUpdate,
-    responseDeserialize: deserialize_lnrpc_GraphTopologyUpdate,
+    responseDeserialize: deserialize_lnrpc_GraphTopologyUpdate
   },
   // * lncli: `debuglevel`
   // DebugLevel allows a caller to programmatically set the logging verbosity of
@@ -2002,7 +2002,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_DebugLevelRequest,
     requestDeserialize: deserialize_lnrpc_DebugLevelRequest,
     responseSerialize: serialize_lnrpc_DebugLevelResponse,
-    responseDeserialize: deserialize_lnrpc_DebugLevelResponse,
+    responseDeserialize: deserialize_lnrpc_DebugLevelResponse
   },
   // * lncli: `feereport`
   // FeeReport allows the caller to obtain a report detailing the current fee
@@ -2016,7 +2016,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_FeeReportRequest,
     requestDeserialize: deserialize_lnrpc_FeeReportRequest,
     responseSerialize: serialize_lnrpc_FeeReportResponse,
-    responseDeserialize: deserialize_lnrpc_FeeReportResponse,
+    responseDeserialize: deserialize_lnrpc_FeeReportResponse
   },
   // * lncli: `updatechanpolicy`
   // UpdateChannelPolicy allows the caller to update the fee schedule and
@@ -2030,7 +2030,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_PolicyUpdateRequest,
     requestDeserialize: deserialize_lnrpc_PolicyUpdateRequest,
     responseSerialize: serialize_lnrpc_PolicyUpdateResponse,
-    responseDeserialize: deserialize_lnrpc_PolicyUpdateResponse,
+    responseDeserialize: deserialize_lnrpc_PolicyUpdateResponse
   },
   // * lncli: `fwdinghistory`
   // ForwardingHistory allows the caller to query the htlcswitch for a record of
@@ -2052,7 +2052,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_ForwardingHistoryRequest,
     requestDeserialize: deserialize_lnrpc_ForwardingHistoryRequest,
     responseSerialize: serialize_lnrpc_ForwardingHistoryResponse,
-    responseDeserialize: deserialize_lnrpc_ForwardingHistoryResponse,
+    responseDeserialize: deserialize_lnrpc_ForwardingHistoryResponse
   },
   // * lncli: `exportchanbackup`
   // ExportChannelBackup attempts to return an encrypted static channel backup
@@ -2070,7 +2070,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_ExportChannelBackupRequest,
     requestDeserialize: deserialize_lnrpc_ExportChannelBackupRequest,
     responseSerialize: serialize_lnrpc_ChannelBackup,
-    responseDeserialize: deserialize_lnrpc_ChannelBackup,
+    responseDeserialize: deserialize_lnrpc_ChannelBackup
   },
   // *
   // ExportAllChannelBackups returns static channel backups for all existing
@@ -2087,7 +2087,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_ChanBackupExportRequest,
     requestDeserialize: deserialize_lnrpc_ChanBackupExportRequest,
     responseSerialize: serialize_lnrpc_ChanBackupSnapshot,
-    responseDeserialize: deserialize_lnrpc_ChanBackupSnapshot,
+    responseDeserialize: deserialize_lnrpc_ChanBackupSnapshot
   },
   // *
   // VerifyChanBackup allows a caller to verify the integrity of a channel backup
@@ -2102,7 +2102,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_ChanBackupSnapshot,
     requestDeserialize: deserialize_lnrpc_ChanBackupSnapshot,
     responseSerialize: serialize_lnrpc_VerifyChanBackupResponse,
-    responseDeserialize: deserialize_lnrpc_VerifyChanBackupResponse,
+    responseDeserialize: deserialize_lnrpc_VerifyChanBackupResponse
   },
   // * lncli: `restorechanbackup`
   // RestoreChannelBackups accepts a set of singular channel backups, or a
@@ -2118,7 +2118,7 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_RestoreChanBackupRequest,
     requestDeserialize: deserialize_lnrpc_RestoreChanBackupRequest,
     responseSerialize: serialize_lnrpc_RestoreBackupResponse,
-    responseDeserialize: deserialize_lnrpc_RestoreBackupResponse,
+    responseDeserialize: deserialize_lnrpc_RestoreBackupResponse
   },
   // *
   // SubscribeChannelBackups allows a client to sub-subscribe to the most up to
@@ -2137,8 +2137,8 @@ var LightningService = (exports.LightningService = {
     requestSerialize: serialize_lnrpc_ChannelBackupSubscription,
     requestDeserialize: deserialize_lnrpc_ChannelBackupSubscription,
     responseSerialize: serialize_lnrpc_ChanBackupSnapshot,
-    responseDeserialize: deserialize_lnrpc_ChanBackupSnapshot,
-  },
+    responseDeserialize: deserialize_lnrpc_ChanBackupSnapshot
+  }
 });
 
 exports.LightningClient = grpc.makeGenericClientConstructor(LightningService);

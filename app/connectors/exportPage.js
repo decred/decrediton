@@ -5,13 +5,13 @@ import * as sel from "../selectors";
 import * as sta from "../actions/StatisticsActions";
 
 const mapStateToProps = selectorMap({
-  exportingData: sel.exportingData,
+  exportingData: sel.exportingData
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      exportStatToCSV: sta.exportStatToCSV,
+      exportStatToCSV: sta.exportStatToCSV
     },
     dispatch
   );

@@ -2,7 +2,7 @@ import "style/CreateWalletForm.less";
 import {
   InfoDocFieldModalButton,
   KeyBlueButton,
-  InvisibleButton,
+  InvisibleButton
 } from "buttons";
 import SingleSeedWordEntry from "../SingleSeedWordEntry";
 import {
@@ -10,7 +10,7 @@ import {
   BackBtnMsg,
   CreateWalletMsg,
   GoBackMsg,
-  CreateNewWalletTitle,
+  CreateNewWalletTitle
 } from "../../messages";
 import { Tooltip, CreatePassPhrase } from "shared";
 
@@ -21,7 +21,7 @@ export const ConfirmSeedForm = ({
   onCreateWallet,
   sendBack,
   setPassPhrase,
-  isCreatingWallet,
+  isCreatingWallet
 }) => (
   <>
     <div className="content-title-wrapper is-row">

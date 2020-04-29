@@ -29,15 +29,15 @@ export const startDcrlnd = (
   dispatch({ type: LNWALLET_STARTDCRLND_ATTEMPT });
 
   const {
-    grpc: { port },
+    grpc: { port }
   } = getState();
   const {
-    daemon: { credentials, appData, walletName },
+    daemon: { credentials, appData, walletName }
   } = getState();
   const isTestnet = sel.isTestNet(getState());
   const walletPath = getWalletPath(isTestnet, walletName);
   const walletPort = port;
-  let rpcCreds = {};
+  const rpcCreds = {};
 
   const cfg = getWalletCfg(isTestnet, walletName);
   const lnCfg = dispatch(getLNWalletConfig());
@@ -198,7 +198,7 @@ export const connectToLNWallet = (
 
   dispatch({ type: LNWALLET_CONNECT_ATTEMPT });
   try {
-    let lnClient = await ln.getLightningClient(
+    const lnClient = await ln.getLightningClient(
       address,
       port,
       certPath,
@@ -333,14 +333,14 @@ export const updateChannelList = () => async (dispatch, getState) => {
   const results = await Promise.all([
     ln.listChannels(client),
     ln.listPendingChannels(client),
-    ln.listClosedChannels(client),
+    ln.listClosedChannels(client)
   ]);
 
   const channels = results[0].getChannelsList().map((c) => {
     const channel = c.toObject();
     return {
       ...channel,
-      channelPointURL: chanpointURL(channel.channelPoint),
+      channelPointURL: chanpointURL(channel.channelPoint)
     };
   });
 
@@ -351,7 +351,7 @@ export const updateChannelList = () => async (dispatch, getState) => {
       ...extra.channel,
       pendingStatus: "open",
       remotePubkey: extra.channel.remoteNodePub,
-      channelPointURL: chanpointURL(extra.channel.channelPoint),
+      channelPointURL: chanpointURL(extra.channel.channelPoint)
     };
   });
   const pendingClose = results[1].getPendingClosingChannelsList().map((pc) => {
@@ -361,7 +361,7 @@ export const updateChannelList = () => async (dispatch, getState) => {
       ...extra.channel,
       pendingStatus: "close",
       remotePubkey: extra.channel.remoteNodePub,
-      channelPointURL: chanpointURL(extra.channel.channelPoint),
+      channelPointURL: chanpointURL(extra.channel.channelPoint)
     };
   });
   const pendingForceClose = results[1]
@@ -374,7 +374,7 @@ export const updateChannelList = () => async (dispatch, getState) => {
         pendingStatus: "forceclose",
         remotePubkey: extra.channel.remoteNodePub,
         channelPointURL: chanpointURL(extra.channel.channelPoint),
-        closingTxidURL: txURLBuilder(extra.closingTxid),
+        closingTxidURL: txURLBuilder(extra.closingTxid)
       };
     });
   const pendingWaitClose = results[1]
@@ -386,7 +386,7 @@ export const updateChannelList = () => async (dispatch, getState) => {
         ...extra.channel,
         pendingStatus: "waitclose",
         remotePubkey: extra.channel.remoteNodePub,
-        channelPointURL: chanpointURL(extra.channel.channelPoint),
+        channelPointURL: chanpointURL(extra.channel.channelPoint)
       };
     });
 
@@ -395,7 +395,7 @@ export const updateChannelList = () => async (dispatch, getState) => {
     return {
       ...channel,
       channelPointURL: chanpointURL(channel.channelPoint),
-      closingTxidURL: txURLBuilder(channel.closingTxHash),
+      closingTxidURL: txURLBuilder(channel.closingTxHash)
     };
   });
 
@@ -403,14 +403,14 @@ export const updateChannelList = () => async (dispatch, getState) => {
     ...pendingOpen,
     ...pendingClose,
     ...pendingForceClose,
-    ...pendingWaitClose,
+    ...pendingWaitClose
   ];
 
   dispatch({
     channels,
     pendingChannels,
     closedChannels,
-    type: LNWALLET_CHANNELLIST_UPDATED,
+    type: LNWALLET_CHANNELLIST_UPDATED
   });
 };
 
@@ -469,7 +469,7 @@ const subscribeToInvoices = () => (dispatch, getState) => {
     const inv = ln.formatInvoice(invoiceData);
     const oldInvoices = getState().ln.invoices;
     const oldIdx = oldInvoices.findIndex((i) => i.addIndex === inv.addIndex);
-    let newInvoices = [...oldInvoices];
+    const newInvoices = [...oldInvoices];
     if (oldIdx > -1) {
       newInvoices[oldIdx] = inv;
     } else {
@@ -563,7 +563,7 @@ const createPaymentStream = () => async (dispatch, getState) => {
       dispatch({
         error: pay.paymentError,
         rhashHex,
-        type: LNWALLET_SENDPAYMENT_FAILED,
+        type: LNWALLET_SENDPAYMENT_FAILED
       });
     } else {
       dispatch({ rhashHex, type: LNWALLET_SENDPAYMENT_SUCCESS });
@@ -593,7 +593,7 @@ export const sendPayment = (payReq, value) => (dispatch, getState) => {
           payReq,
           payData,
           rhashHex,
-          type: LNWALLET_SENDPAYMENT_ATTEMPT,
+          type: LNWALLET_SENDPAYMENT_ATTEMPT
         });
         ln.sendPayment(payStream, payReq, value);
       })
@@ -780,18 +780,18 @@ export const getLNWalletConfig = () => (dispatch, getState) => {
   // This (and setWalletConfig) are less than ideal for dealing with config
   // options, but sufficient for now.
   const {
-    daemon: { walletName },
+    daemon: { walletName }
   } = getState();
   const cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
   return {
     walletExists: cfg.get("ln_wallet_exists"),
-    account: cfg.get("ln_account"),
+    account: cfg.get("ln_account")
   };
 };
 
 export const setLNWalletConfig = (account) => (dispatch, getState) => {
   const {
-    daemon: { walletName },
+    daemon: { walletName }
   } = getState();
   const cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
   cfg.set("ln_wallet_exists", true);

@@ -3,7 +3,7 @@ import PageButton from "./PageButton";
 const propTypes = {
   totalPages: PropTypes.number.isRequired,
   currentPage: PropTypes.number.isRequired,
-  gotoPage: PropTypes.func.isRequired,
+  gotoPage: PropTypes.func.isRequired
 };
 
 @autobind

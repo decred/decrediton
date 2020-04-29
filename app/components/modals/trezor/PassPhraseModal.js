@@ -21,7 +21,7 @@ class TrezorPassphraseModal extends React.Component {
 
     const className = [
       "trezor-passphrase-modal",
-      this.props.isGetStarted ? "get-started" : "",
+      this.props.isGetStarted ? "get-started" : ""
     ].join(" ");
 
     return (
@@ -37,7 +37,7 @@ class TrezorPassphraseModal extends React.Component {
               id="trezor.passphraseModal.description"
               m="Type the secret passphrase for the wallet stored in trezor {label}"
               values={{
-                label: <span className="trezor-label">'{trezorLabel}'</span>,
+                label: <span className="trezor-label">'{trezorLabel}'</span>
               }}
             />
           </p>

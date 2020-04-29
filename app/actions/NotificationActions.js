@@ -3,12 +3,12 @@ import * as wallet from "wallet";
 import {
   getTicketPriceAttempt,
   updateAccount,
-  getAccountNumbersBalances,
+  getAccountNumbersBalances
 } from "./ClientActions";
 import { newTransactionsReceived } from "./ClientActions";
 import {
   TransactionNotificationsRequest,
-  AccountNotificationsRequest,
+  AccountNotificationsRequest
 } from "middleware/walletrpc/api_pb";
 
 export const TRANSACTIONNTFNS_START = "TRANSACTIONNTFNS_START";
@@ -53,7 +53,7 @@ const transactionNtfnsDataHandler = (dispatch, getState) => {
       dispatch({
         currentBlockHeight,
         currentBlockTimestamp,
-        type: NEWBLOCKCONNECTED,
+        type: NEWBLOCKCONNECTED
       });
       dispatch(getTicketPriceAttempt());
 
@@ -146,9 +146,9 @@ const transactionNtfnsDataHandler = (dispatch, getState) => {
 };
 
 export const transactionNtfnsStart = () => (dispatch, getState) => {
-  var request = new TransactionNotificationsRequest();
+  const request = new TransactionNotificationsRequest();
   const { walletService } = getState().grpc;
-  let transactionNtfns = walletService.transactionNotifications(request);
+  const transactionNtfns = walletService.transactionNotifications(request);
   dispatch({ transactionNtfns, type: TRANSACTIONNTFNS_START });
   transactionNtfns.on("data", transactionNtfnsDataHandler(dispatch, getState));
   transactionNtfns.on("end", () => {
@@ -166,21 +166,21 @@ export const ACCOUNTNTFNS_START = "ACCOUNTNTFNS_START";
 export const ACCOUNTNTFNS_END = "ACCOUNTNTFNS_END";
 
 export const accountNtfnsStart = () => (dispatch, getState) => {
-  var request = new AccountNotificationsRequest();
+  const request = new AccountNotificationsRequest();
   const { walletService } = getState().grpc;
-  let accountNtfns = walletService.accountNotifications(request);
+  const accountNtfns = walletService.accountNotifications(request);
   dispatch({ accountNtfns, type: ACCOUNTNTFNS_START });
   accountNtfns.on("data", (data) => {
     const {
-      daemon: { hiddenAccounts },
+      daemon: { hiddenAccounts }
     } = getState();
-    let account = {
+    const account = {
       hidden: hiddenAccounts.indexOf(data.getAccountNumber()) > -1,
       accountNumber: data.getAccountNumber(),
       accountName: data.getAccountName(),
       externalKeys: data.getExternalKeyCount(),
       internalKeys: data.getInternalKeyCount(),
-      importedKeys: data.getImportedKeyCount(),
+      importedKeys: data.getImportedKeyCount()
     };
     dispatch(updateAccount(account));
   });

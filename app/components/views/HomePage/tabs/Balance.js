@@ -8,7 +8,7 @@ import "style/HomePage.less";
 const HomePage = ({
   spendableTotalBalance,
   lockedTotalBalance,
-  spendableAndLockedBalance,
+  spendableAndLockedBalance
 }) => {
   return (
     <div className="overview-content-wrapper">

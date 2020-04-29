@@ -75,7 +75,7 @@ class FatalErrorPage extends React.Component {
                     m="https://decred.org/community"
                   />
                 </ExternalLink>
-              ),
+              )
             }}
           />
         );
@@ -91,7 +91,7 @@ class FatalErrorPage extends React.Component {
       walletError,
       shutdownApp,
       isAdvancedDaemon,
-      backToCredentials,
+      backToCredentials
     } = this.props;
     return (
       <div className="page-body getstarted">

@@ -1,6 +1,6 @@
 export default class MeteredChart extends React.Component {
   createTicks = (additive, blueValue, blackValue) => {
-    let ticks = [];
+    const ticks = [];
     const ticksCount = 100;
     if (additive) {
       var blueTicks = (blueValue / (blueValue + blackValue)) * ticksCount;
@@ -28,7 +28,7 @@ export default class MeteredChart extends React.Component {
       blueLabel,
       blueValue,
       blackLabel,
-      blackValue,
+      blackValue
     } = this.props;
     return (
       <>

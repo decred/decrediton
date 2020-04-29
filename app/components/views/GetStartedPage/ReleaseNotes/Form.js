@@ -8,7 +8,7 @@ export default ({
   docName,
   imgClassName,
   onNewerVersion,
-  onOlderVersion,
+  onOlderVersion
 }) => (
   <>
     <div className="content-title">

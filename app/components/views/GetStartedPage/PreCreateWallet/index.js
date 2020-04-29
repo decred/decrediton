@@ -13,7 +13,7 @@ class PreCreateWallet extends React.Component {
       walletMasterPubKey: "",
       masterPubKeyError: false,
       walletNameError: null,
-      isTrezor: false,
+      isTrezor: false
     };
   }
 
@@ -25,7 +25,7 @@ class PreCreateWallet extends React.Component {
       getDaemonSynced,
       onShowTrezorConfig,
       isCreateNewWallet,
-      creatingWallet,
+      creatingWallet
     } = this.props;
     const {
       newWalletName,
@@ -35,7 +35,7 @@ class PreCreateWallet extends React.Component {
       isWatchingOnly,
       walletMasterPubKey,
       masterPubKeyError,
-      walletNameError,
+      walletNameError
     } = this.state;
     return (
       <CreateWalletForm
@@ -67,10 +67,10 @@ class PreCreateWallet extends React.Component {
               hideCreateWalletForm: null,
               toggleWatchOnly: null,
               onChangeCreateWalletMasterPubKey: null,
-              toggleTrezor: null,
+              toggleTrezor: null
             },
             this
-          ),
+          )
         }}
       />
     );
@@ -86,10 +86,10 @@ class PreCreateWallet extends React.Component {
   onChangeCreateWalletName(newWalletName) {
     const { availableWallets } = this.props;
     this.setState({ hasFailedAttemptName: true });
-    var nameAvailable = true;
+    let nameAvailable = true;
     // replace all special path symbols
     newWalletName = newWalletName.replace(/[/\\.;:~]/g, "");
-    for (var i = 0; i < availableWallets.length; i++) {
+    for (let i = 0; i < availableWallets.length; i++) {
       if (newWalletName == availableWallets[i].value.wallet) {
         nameAvailable = false;
         this.setState({ walletNameError: true });
@@ -108,7 +108,7 @@ class PreCreateWallet extends React.Component {
       masterPubKeyError,
       walletMasterPubKey,
       walletNameError,
-      isTrezor,
+      isTrezor
     } = this.state;
     const { isTestNet, onSendContinue, isCreateNewWallet } = this.props;
 
@@ -119,8 +119,8 @@ class PreCreateWallet extends React.Component {
         isWatchingOnly,
         isTrezor,
         isNew: isCreateNewWallet,
-        network: isTestNet ? "testnet" : "mainnet",
-      },
+        network: isTestNet ? "testnet" : "mainnet"
+      }
     };
 
     if (newWalletName === "" || walletNameError) {

@@ -13,7 +13,7 @@ const PrivacyOption = ({ title, description, icon, onClick }) => (
 export default ({
   setupStandardPrivacy,
   setupDisabledPrivacy,
-  toggleCustomPrivacy,
+  toggleCustomPrivacy
 }) => (
   <>
     <div className="language-select-title">

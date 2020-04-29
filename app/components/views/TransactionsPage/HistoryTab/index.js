@@ -8,7 +8,7 @@ import { FormattedMessage as T } from "react-intl";
 import {
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_RECEIVED,
-  TRANSACTION_DIR_TRANSFERRED,
+  TRANSACTION_DIR_TRANSFERRED
 } from "wallet/service";
 import { DescriptionHeader } from "layout";
 import { Balance } from "shared";
@@ -27,7 +27,7 @@ export const HistoryTabHeader = historyPage(({ totalBalance }) => (
               amount={totalBalance}
               classNameWrapper="header-small-balance"
             />
-          ),
+          )
         }}
       />
     }
@@ -46,7 +46,7 @@ class History extends React.Component {
       selectedTxTypeKey,
       selectedSortOrderKey: listDirection,
       searchText: search,
-      isChangingFilterTimer: null,
+      isChangingFilterTimer: null
     };
   }
 
@@ -75,10 +75,10 @@ class History extends React.Component {
               onChangeSortType: null,
               onChangeSearchText: null,
               onChangeSliderValue: null,
-              onLoadMoreTransactions: null,
+              onLoadMoreTransactions: null
             },
             this
-          ),
+          )
         }}
       />
     );
@@ -90,53 +90,53 @@ class History extends React.Component {
       {
         key: "all",
         value: { types: [], direction: null },
-        label: <T id="txFilter.type.all" m="All" />,
+        label: <T id="txFilter.type.all" m="All" />
       },
       {
         key: "regular",
         value: { types: [types.REGULAR], direction: null },
-        label: <T id="txFilter.type.regular" m="Regular" />,
+        label: <T id="txFilter.type.regular" m="Regular" />
       },
       {
         key: "ticket",
         value: { types: [types.TICKET_PURCHASE], direction: null },
-        label: <T id="txFilter.type.tickets" m="Tickets" />,
+        label: <T id="txFilter.type.tickets" m="Tickets" />
       },
       {
         key: "vote",
         value: { types: [types.VOTE], direction: null },
-        label: <T id="txFilter.type.votes" m="Votes" />,
+        label: <T id="txFilter.type.votes" m="Votes" />
       },
       {
         key: "revoke",
         value: { types: [types.REVOCATION], direction: null },
-        label: <T id="txFilter.type.revokes" m="Revokes" />,
+        label: <T id="txFilter.type.revokes" m="Revokes" />
       },
       {
         key: "sent",
         value: { types: [types.REGULAR], direction: TRANSACTION_DIR_SENT },
-        label: <T id="txFilter.type.sent" m="Sent" />,
+        label: <T id="txFilter.type.sent" m="Sent" />
       },
       {
         key: "receiv",
         value: { types: [types.REGULAR], direction: TRANSACTION_DIR_RECEIVED },
-        label: <T id="txFilter.type.received" m="Received" />,
+        label: <T id="txFilter.type.received" m="Received" />
       },
       {
         key: "transf",
         value: {
           types: [types.REGULAR],
-          direction: TRANSACTION_DIR_TRANSFERRED,
+          direction: TRANSACTION_DIR_TRANSFERRED
         },
-        label: <T id="txFilter.type.transfered" m="Transfered" />,
-      },
+        label: <T id="txFilter.type.transfered" m="Transfered" />
+      }
     ];
   }
 
   getSortTypes() {
     return [
       { value: "desc", label: <T id="transaction.sortby.newest" m="Newest" /> },
-      { value: "asc", label: <T id="transaction.sortby.oldest" m="Oldest" /> },
+      { value: "asc", label: <T id="transaction.sortby.oldest" m="Oldest" /> }
     ];
   }
 
@@ -154,7 +154,7 @@ class History extends React.Component {
       clearTimeout(isChangingFilterTimer);
     }
     this.setState({
-      isChangingFilterTimer: setTimeout(() => this.changeFilter(value), 100),
+      isChangingFilterTimer: setTimeout(() => this.changeFilter(value), 100)
     });
   }
 
@@ -162,7 +162,7 @@ class History extends React.Component {
     const { isChangingFilterTimer } = this.state;
     const newFilter = {
       ...this.props.transactionsFilter,
-      ...value,
+      ...value
     };
     clearTimeout(isChangingFilterTimer);
     this.props.changeTransactionsFilter(newFilter);

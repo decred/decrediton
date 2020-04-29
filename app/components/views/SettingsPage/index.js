@@ -17,12 +17,12 @@ class Settings extends React.Component {
       <SettingsPage
         {...{
           ...this.props,
-          ...this.state,
+          ...this.state
         }}
         {...{
           onAttemptChangePassphrase,
           onSaveSettings,
-          onCloseWallet,
+          onCloseWallet
         }}
       />
     );

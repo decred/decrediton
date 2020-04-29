@@ -3,7 +3,7 @@ import {
   SETTINGS_CHANGED,
   SETTINGS_UNCHANGED,
   SETTINGS_TOGGLE_THEME,
-  ALLOWEDEXTERNALREQUESTS_ADDED,
+  ALLOWEDEXTERNALREQUESTS_ADDED
 } from "../actions/SettingsActions";
 import { WALLET_SETTINGS, SELECT_LANGUAGE } from "actions/DaemonActions";
 export default function settings(state = {}, action) {
@@ -14,33 +14,33 @@ export default function settings(state = {}, action) {
       return {
         ...state,
         currentSettings: currentSettings,
-        tempSettings: currentSettings,
+        tempSettings: currentSettings
       };
     case SETTINGS_SAVE:
       return {
         ...state,
         currentSettings: action.settings,
         tempSettings: action.settings,
-        settingsChanged: false,
+        settingsChanged: false
       };
     case SETTINGS_CHANGED:
       return {
         ...state,
         tempSettings: action.tempSettings,
         settingsChanged: true,
-        needNetworkReset: action.needNetworkReset,
+        needNetworkReset: action.needNetworkReset
       };
     case SETTINGS_UNCHANGED:
       return {
         ...state,
         tempSettings: action.tempSettings,
-        settingsChanged: false,
+        settingsChanged: false
       };
     case ALLOWEDEXTERNALREQUESTS_ADDED:
       return {
         ...state,
         currentSettings: action.newSettings,
-        tempSettings: action.newTempSettings,
+        tempSettings: action.newTempSettings
       };
     case WALLET_SETTINGS:
       currentSettings = state.currentSettings;
@@ -52,7 +52,7 @@ export default function settings(state = {}, action) {
       return {
         ...state,
         currentSettings: currentSettings,
-        tempSettings: tempSettings,
+        tempSettings: tempSettings
       };
     case SETTINGS_TOGGLE_THEME:
       return { ...state, theme: action.theme };

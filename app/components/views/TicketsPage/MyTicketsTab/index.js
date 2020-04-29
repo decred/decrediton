@@ -11,7 +11,7 @@ const labels = {
   voted: <T id="ticket.status.multiple.voted" m="voted" />,
   missed: <T id="ticket.status.multiple.missed" m="missed" />,
   expired: <T id="ticket.status.multiple.expired" m="expired" />,
-  revoked: <T id="ticket.status.multiple.revoked" m="revoked" />,
+  revoked: <T id="ticket.status.multiple.revoked" m="revoked" />
 };
 
 @autobind
@@ -28,7 +28,7 @@ class MyTickets extends React.Component {
   getSortTypes() {
     return [
       { value: "desc", label: <T id="tickets.sortby.newest" m="Newest" /> },
-      { value: "asc", label: <T id="tickets.sortby.oldest" m="Oldest" /> },
+      { value: "asc", label: <T id="tickets.sortby.oldest" m="Oldest" /> }
     ];
   }
 
@@ -37,19 +37,19 @@ class MyTickets extends React.Component {
       {
         key: "all",
         value: { status: [] },
-        label: <T id="tickets.type.all" m="All" />,
+        label: <T id="tickets.type.all" m="All" />
       },
       { key: "unmined", value: { status: ["unmined"] }, label: labels.unmined },
       {
         key: "immature",
         value: { status: ["immature"] },
-        label: labels.immature,
+        label: labels.immature
       },
       { key: "live", value: { status: ["live"] }, label: labels.live },
       { key: "voted", value: { status: ["voted"] }, label: labels.voted },
       { key: "missed", value: { status: ["missed"] }, label: labels.missed },
       { key: "expired", value: { status: ["expired"] }, label: labels.expired },
-      { key: "revoked", value: { status: ["revoked"] }, label: labels.revoked },
+      { key: "revoked", value: { status: ["revoked"] }, label: labels.revoked }
     ];
   }
 
@@ -66,7 +66,7 @@ class MyTickets extends React.Component {
   onChangeFilter(value) {
     const newFilter = {
       ...this.props.ticketsFilter,
-      ...value,
+      ...value
     };
     this.props.changeTicketsFilter(newFilter);
   }
@@ -96,10 +96,10 @@ class MyTickets extends React.Component {
           ...substruct(
             {
               onChangeSelectedType: null,
-              onChangeSortType: null,
+              onChangeSortType: null
             },
             this
-          ),
+          )
         }}
       />
     );

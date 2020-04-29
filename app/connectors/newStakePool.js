@@ -5,13 +5,13 @@ import * as sel from "../selectors";
 import * as sa from "../actions/StakePoolActions";
 
 const mapStateToProps = selectorMap({
-  isAddingCustomStakePool: sel.isAddingCustomStakePool,
+  isAddingCustomStakePool: sel.isAddingCustomStakePool
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      addCustomStakePool: sa.addCustomStakePool,
+      addCustomStakePool: sa.addCustomStakePool
     },
     dispatch
   );

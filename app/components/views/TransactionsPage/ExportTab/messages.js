@@ -17,7 +17,7 @@ export default {
             id="export.transactions.fields.time"
             m="Date/time of the transaction"
           />
-        ),
+        )
       },
       {
         name: "hash",
@@ -26,7 +26,7 @@ export default {
             id="export.transactions.fields.hash"
             m="Hash of the transaction (txid)"
           />
-        ),
+        )
       },
       {
         name: "type",
@@ -35,7 +35,7 @@ export default {
             id="export.transactions.fields.type"
             m="Detected transaction type (regular, ticket purchase, vote, etc)"
           />
-        ),
+        )
       },
       {
         name: "direction",
@@ -44,7 +44,7 @@ export default {
             id="export.transactions.fields.direction"
             m="Detected direction of a regular transaction in relation to the wallet (send/receive/transfer)"
           />
-        ),
+        )
       },
       {
         name: "fee",
@@ -53,7 +53,7 @@ export default {
             id="export.transactions.fields.fee"
             m="Fee paid by the wallet for the transaction"
           />
-        ),
+        )
       },
       {
         name: "amount",
@@ -62,7 +62,7 @@ export default {
             id="export.transactions.fields.amount"
             m="Net amount sent (including fees) or received by the wallet on this transaction."
           />
-        ),
+        )
       },
       {
         name: "credits",
@@ -71,7 +71,7 @@ export default {
             id="export.transactions.fields.credits"
             m="Sum of credits (transaction outputs) of the wallet included in this transaction."
           />
-        ),
+        )
       },
       {
         name: "debits",
@@ -80,9 +80,9 @@ export default {
             id="export.transactions.fields.debits"
             m="Sum of debits (transaction inputs) of the wallet included in this transaction."
           />
-        ),
-      },
-    ],
+        )
+      }
+    ]
   },
   dailyBalances: {
     name: <T id="export.dailyBalances.name" m="Daily Balances" />,
@@ -100,7 +100,7 @@ export default {
             id="export.dailyBalances.fields.time"
             m="Date of the balance. The time part is always fixed as the last second of the day (to represent the balance at the end of that day)."
           />
-        ),
+        )
       },
       {
         name: "spendable",
@@ -109,7 +109,7 @@ export default {
             id="export.dailyBalances.fields.spendable"
             m="Available balance for spending in regular transactions."
           />
-        ),
+        )
       },
       {
         name: "immature",
@@ -118,7 +118,7 @@ export default {
             id="export.dailyBalances.fields.immature"
             m="Balance locked in immature tickets."
           />
-        ),
+        )
       },
       {
         name: "locked",
@@ -127,7 +127,7 @@ export default {
             id="export.dailyBalances.fields.locked"
             m="Balance locked in immature and live tickets."
           />
-        ),
+        )
       },
       {
         name: "immatureNonWallet",
@@ -136,7 +136,7 @@ export default {
             id="export.dailyBalances.fields.immatureNonWallet"
             m="Balance locked in immature tickets not controlled by the wallet."
           />
-        ),
+        )
       },
       {
         name: "lockedNonWallet",
@@ -145,7 +145,7 @@ export default {
             id="export.balances.fields.lockedNonWallet"
             m="Balance locked in live tickets not controlled by the wallet."
           />
-        ),
+        )
       },
       {
         name: "total",
@@ -154,7 +154,7 @@ export default {
             id="export.dailyBalances.fields.total"
             m="Total available balance."
           />
-        ),
+        )
       },
       {
         name: "stakeRewards",
@@ -163,13 +163,13 @@ export default {
             id="export.balances.fields.stakeRewards"
             m="Total stake rewards received."
           />
-        ),
+        )
       },
       {
         name: "stakeFees",
         description: (
           <T id="export.balances.fields.stakeFees" m="Total stake fees paid." />
-        ),
+        )
       },
       {
         name: "totalStake",
@@ -178,7 +178,7 @@ export default {
             id="export.balances.fields.totalStake"
             m="Total amount of DCR used on staking."
           />
-        ),
+        )
       },
       {
         name: "sent",
@@ -187,7 +187,7 @@ export default {
             id="export.dailyBalances.fields.sent"
             m="Total amount sent to addresses not on the wallet."
           />
-        ),
+        )
       },
       {
         name: "received",
@@ -196,7 +196,7 @@ export default {
             id="export.dailyBalances.fields.received"
             m="Total amount received from addresses not on the wallet."
           />
-        ),
+        )
       },
       {
         name: "voted",
@@ -205,7 +205,7 @@ export default {
             id="export.dailyBalances.fields.voted"
             m="Total amount, in DCR, of tickets voted"
           />
-        ),
+        )
       },
       {
         name: "revoked",
@@ -214,7 +214,7 @@ export default {
             id="export.dailyBalances.fields.revoked"
             m="Total amount, in DCR, of tickets revoked"
           />
-        ),
+        )
       },
       {
         name: "ticket",
@@ -223,9 +223,9 @@ export default {
             id="export.dailyBalances.fields.ticket"
             m="Total amount, in DCR, spent in tickets"
           />
-        ),
-      },
-    ],
+        )
+      }
+    ]
   },
   balances: {
     name: <T id="export.balances.name" m="Balances" />,
@@ -243,7 +243,7 @@ export default {
             id="export.balances.fields.time"
             m="Date/time that the balance changed"
           />
-        ),
+        )
       },
       {
         name: "spendable",
@@ -252,7 +252,7 @@ export default {
             id="export.balances.fields.spendable"
             m="Available balance for spending in regular transactions."
           />
-        ),
+        )
       },
       {
         name: "locked",
@@ -261,7 +261,7 @@ export default {
             id="export.balances.fields.locked"
             m="Balance locked in live tickets."
           />
-        ),
+        )
       },
       {
         name: "immature",
@@ -270,7 +270,7 @@ export default {
             id="export.dailyBalances.fields.immature"
             m="Balance locked in immature tickets."
           />
-        ),
+        )
       },
       {
         name: "lockedNonWallet",
@@ -279,7 +279,7 @@ export default {
             id="export.balances.fields.lockedNonWallet"
             m="Balance locked in live tickets not controlled by the wallet."
           />
-        ),
+        )
       },
       {
         name: "immatureNonWallet",
@@ -288,13 +288,13 @@ export default {
             id="export.dailyBalances.fields.immatureNonWallet"
             m="Balance locked in immature tickets not controlled by the wallet."
           />
-        ),
+        )
       },
       {
         name: "total",
         description: (
           <T id="export.balances.fields.total" m="Total available balance." />
-        ),
+        )
       },
       {
         name: "stakeRewards",
@@ -303,13 +303,13 @@ export default {
             id="export.balances.fields.stakeRewards"
             m="Total stake rewards received."
           />
-        ),
+        )
       },
       {
         name: "stakeFees",
         description: (
           <T id="export.balances.fields.stakeFees" m="Total stake fees paid." />
-        ),
+        )
       },
       {
         name: "totalStake",
@@ -318,9 +318,9 @@ export default {
             id="export.balances.fields.totalStake"
             m="Total amount of DCR used on staking."
           />
-        ),
-      },
-    ],
+        )
+      }
+    ]
   },
   voteTime: {
     name: <T id="export.votetime.name" m="Vote Time" />,
@@ -335,7 +335,7 @@ export default {
         name: "daysToVote",
         description: (
           <T id="export.votettime.fields.daysToVote" m="Day bucket" />
-        ),
+        )
       },
       {
         name: "count",
@@ -344,9 +344,9 @@ export default {
             id="export.votetime.fields.count"
             m="How many tickets voted in this day bucket"
           />
-        ),
-      },
-    ],
+        )
+      }
+    ]
   },
   tickets: {
     name: <T id="export.tickets.name" m="Tickets" />,
@@ -361,7 +361,7 @@ export default {
             id="export.tickets.fields.spenderTimestamp"
             m="Date/Time of vote/revocation."
           />
-        ),
+        )
       },
       {
         name: "status",
@@ -370,7 +370,7 @@ export default {
             id="export.tickets.fields.status"
             m="Latest status for the ticket (live, voted, missed, revoked)."
           />
-        ),
+        )
       },
       {
         name: "ticketHash",
@@ -379,7 +379,7 @@ export default {
             id="export.tickets.fields.ticketStatus"
             m="Txid of the ticket transaction."
           />
-        ),
+        )
       },
       {
         name: "spenderHash",
@@ -388,7 +388,7 @@ export default {
             id="export.tickets.fields.spenderHash"
             m="Txid of the spender (vote/revocation) transaction."
           />
-        ),
+        )
       },
       {
         name: "sentAmount",
@@ -397,7 +397,7 @@ export default {
             id="export.tickets.fields.sentAmount"
             m="Amount sent by the wallet into the ticket transaction."
           />
-        ),
+        )
       },
       {
         name: "returnedAmount",
@@ -406,8 +406,8 @@ export default {
             id="export.tickets.fields.returnedAmount"
             m="Amount returned to the wallet by the spender (vote/revocation) transaction."
           />
-        ),
-      },
-    ],
-  },
+        )
+      }
+    ]
+  }
 };

@@ -29,7 +29,7 @@ const TransitionMotionWrapper = ({
 };
 
 TransitionMotionWrapper.defaultProps = {
-  mapStyles: (val) => val,
+  mapStyles: (val) => val
 };
 
 export default theming(TransitionMotionWrapper);

@@ -9,7 +9,7 @@ import {
   cloneElement as k,
   useEffect,
   useState,
-  useReducer,
+  useReducer
 } from "react";
 import { useSelector } from "react-redux";
 import * as sel from "selectors";
@@ -18,7 +18,7 @@ import { usePrevious } from "helpers";
 export const TabbedPageTab = ({ children }) => children;
 TabbedPageTab.propTypes = {
   path: PropTypes.string.isRequired,
-  link: PropTypes.node.isRequired,
+  link: PropTypes.node.isRequired
 };
 
 function getTabs(children) {
@@ -43,7 +43,7 @@ function getStyles(matchedTab) {
   const element = React.isValidElement(matchedTab.tab.props.component)
     ? k(matchedTab.tab.props.component, {
         ...matchedTab.tab.props,
-        ...matchedTab.tab.props.component.props,
+        ...matchedTab.tab.props.component.props
       })
     : // If the component props are needed, it is needed to make it a valid react element
       // before send, otherwise they will be undfined.
@@ -52,8 +52,8 @@ function getStyles(matchedTab) {
     {
       key: matchedTab.tab.props.path,
       data: { matchedTab, element },
-      style: { left: spring(0, theme("springs.tab")), opacity: 1 },
-    },
+      style: { left: spring(0, theme("springs.tab")), opacity: 1 }
+    }
   ];
 }
 
@@ -61,7 +61,7 @@ function willLeave(dir) {
   const pos = dir === "l2r" ? -1000 : +1000;
   return {
     left: spring(pos, { stiffness: 180, damping: 20 }),
-    opacity: spring(0),
+    opacity: spring(0)
   };
 }
 
@@ -98,13 +98,13 @@ function animatedStyles(styles, dir) {
                 <div
                   className={[
                     "tab-content",
-                    Math.abs(s.style.left) < 0.1 ? "visible" : "",
+                    Math.abs(s.style.left) < 0.1 ? "visible" : ""
                   ].join(" ")}
                   style={{
                     left: s.style.left,
                     right: -s.style.left,
                     opacity: s.style.opacity,
-                    visibility: Math.abs(s.style.left) > 990 ? "hidden" : "",
+                    visibility: Math.abs(s.style.left) > 990 ? "hidden" : ""
                   }}
                   key={s.key}>
                   {s.data.element}

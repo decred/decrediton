@@ -3,7 +3,7 @@ import {
   LogsLinkMsg,
   SettingsLinkMsg,
   UpdateAvailableLink,
-  AboutModalButton,
+  AboutModalButton
 } from "./messages";
 import { LoaderBarBottom } from "indicators";
 import "style/GetStarted.less";
@@ -16,7 +16,7 @@ const DaemonLoadingBody = ({
   onShowSettings,
   getCurrentBlockCount,
   getNeededBlocks,
-  getEstimatedTimeLeft,
+  getEstimatedTimeLeft
 }) => (
   <div className="page-body getstarted">
     <div className="getstarted loader">

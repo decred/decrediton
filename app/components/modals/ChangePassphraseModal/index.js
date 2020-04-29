@@ -22,7 +22,7 @@ class ChangePassphraseModal extends React.Component {
       confirmPrivPass: "",
       confirmPrivPassError: false,
       hasFailedAttempt: false,
-      triggerPassphraseModalSubmit: false,
+      triggerPassphraseModalSubmit: false
     };
   }
 
@@ -56,7 +56,7 @@ class ChangePassphraseModal extends React.Component {
     this.setState({
       confirmPrivPass,
       confirmPrivPassError: false,
-      triggerPassphraseModalSubmit: false,
+      triggerPassphraseModalSubmit: false
     });
   }
 
@@ -72,7 +72,7 @@ class ChangePassphraseModal extends React.Component {
       onCancelModal,
       isValid,
       validationFailed,
-      onTriggerPassphraseModalSubmit,
+      onTriggerPassphraseModalSubmit
     } = this;
 
     return (
@@ -85,7 +85,7 @@ class ChangePassphraseModal extends React.Component {
           onCancelModal,
           isValid,
           validationFailed,
-          onTriggerPassphraseModalSubmit,
+          onTriggerPassphraseModalSubmit
         }}
       />
     );

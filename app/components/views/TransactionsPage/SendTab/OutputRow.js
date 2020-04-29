@@ -3,7 +3,7 @@ import {
   AccountsSelect,
   AddressInput,
   DcrInput,
-  ReceiveAccountsSelect,
+  ReceiveAccountsSelect
 } from "inputs";
 import { Tooltip, Balance } from "shared";
 import "style/SendPage.less";
@@ -11,19 +11,19 @@ import "style/SendPage.less";
 const messages = defineMessages({
   destinationAddrPlaceholder: {
     id: "send.destinationAddrPlaceholder",
-    defaultMessage: "Address",
+    defaultMessage: "Address"
   },
   amountPlaceholder: {
     id: "send.amountPlaceholder",
-    defaultMessage: "Amount",
-  },
+    defaultMessage: "Amount"
+  }
 });
 
 const getSendAllFundsIcon = ({
   isSendAll,
   onShowSendAll,
   onHideSendAll,
-  outputs,
+  outputs
 }) =>
   outputs.length > 1 ? (
     <Tooltip
@@ -54,7 +54,7 @@ const getAddInputIcon = ({
   onAddOutput,
   onRemoveOutput,
   index,
-  isSendAll,
+  isSendAll
 }) =>
   isSendSelf ? (
     <div className="send-icon-wrapper add disabled"></div>
@@ -108,7 +108,7 @@ const SendOutputRow = ({
   onChangeAccount,
   onShowSendSelf,
   account,
-  onShowSendOthers,
+  onShowSendOthers
 }) => (
   <div className="is-row">
     <div>
@@ -198,14 +198,14 @@ const SendOutputRow = ({
         onAddOutput,
         onRemoveOutput,
         index,
-        isSendAll,
+        isSendAll
       })}
       {index === 0 &&
         getSendAllFundsIcon({
           isSendAll,
           onShowSendAll,
           onHideSendAll,
-          outputs,
+          outputs
         })}
     </div>
   </div>

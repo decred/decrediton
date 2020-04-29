@@ -10,7 +10,7 @@ const NumTicketsInput = ({
   invalid,
   invalidMessage,
   showErrors,
-  onKeyDown,
+  onKeyDown
 }) => {
   const ticketUnitLabel =
     numTickets === 1 ? (
@@ -30,7 +30,7 @@ const NumTicketsInput = ({
           showErrors,
           invalid,
           invalidMessage,
-          value: numTickets,
+          value: numTickets
         }}
         className="ticket-numeric-input"
         onChange={(e) =>

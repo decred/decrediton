@@ -27,7 +27,7 @@ class AddAccountModal extends React.Component {
   getInitialState() {
     return {
       name: "",
-      hasFailedAttempt: false,
+      hasFailedAttempt: false
     };
   }
 
@@ -53,7 +53,7 @@ class AddAccountModal extends React.Component {
       onSubmit,
       onCancelModal,
       isValid,
-      validationFailed,
+      validationFailed
     } = this;
 
     return (
@@ -64,7 +64,7 @@ class AddAccountModal extends React.Component {
           onSubmit,
           onCancelModal,
           isValid,
-          validationFailed,
+          validationFailed
         }}
       />
     );

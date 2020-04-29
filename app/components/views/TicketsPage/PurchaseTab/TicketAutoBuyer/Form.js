@@ -14,7 +14,7 @@ const TicketAutoBuyerForm = ({
   changeAccount,
   configuredStakePools,
   stakePool,
-  changeStakePool,
+  changeStakePool
 }) => (
   <>
     <Subtitle

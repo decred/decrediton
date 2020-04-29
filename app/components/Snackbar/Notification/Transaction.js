@@ -6,7 +6,7 @@ import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import {
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_RECEIVED,
-  TRANSACTION_DIR_TRANSFERRED,
+  TRANSACTION_DIR_TRANSFERRED
 } from "wallet/service";
 import "style/Header.less";
 
@@ -14,28 +14,28 @@ const messages = defineMessages({
   //same as the types used in index.js
   Ticket: {
     id: "notifications.type.ticket",
-    defaultMessage: "Ticket",
+    defaultMessage: "Ticket"
   },
   Vote: {
     id: "notifications.type.vote",
-    defaultMessage: "Voted",
+    defaultMessage: "Voted"
   },
   Revocation: {
     id: "notifications.type.revocation",
-    defaultMessage: "Revoked",
+    defaultMessage: "Revoked"
   },
   [TRANSACTION_DIR_SENT]: {
     id: "notifications.type.send",
-    defaultMessage: "Sent",
+    defaultMessage: "Sent"
   },
   [TRANSACTION_DIR_TRANSFERRED]: {
     id: "notifications.type.transfer",
-    defaultMessage: "Transferred",
+    defaultMessage: "Transferred"
   },
   [TRANSACTION_DIR_RECEIVED]: {
     id: "notifications.type.receive",
-    defaultMessage: "Received",
-  },
+    defaultMessage: "Received"
+  }
 });
 
 const Transaction = ({
@@ -44,7 +44,7 @@ const Transaction = ({
   onDismissMessage,
   intl,
   topNotification,
-  progress,
+  progress
 }) => (
   <>
     {topNotification && (

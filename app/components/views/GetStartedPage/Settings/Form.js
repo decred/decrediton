@@ -21,7 +21,7 @@ export default ({
   onAttemptChangePassphrase,
   isChangePassPhraseDisabled,
   changePassphraseRequestAttempt,
-  onSendBack,
+  onSendBack
 }) => {
   const { setThemeName } = useTheme();
   const saveSettingsHandler = useCallback(() => {
@@ -52,7 +52,7 @@ export default ({
                 <NetworkSettings
                   {...{
                     tempSettings,
-                    onChangeTempSettings,
+                    onChangeTempSettings
                   }}
                 />
               </div>
@@ -93,7 +93,7 @@ export default ({
                     onAttemptChangePassphrase,
                     isChangePassPhraseDisabled,
                     onChangeTempSettings,
-                    changePassphraseRequestAttempt,
+                    changePassphraseRequestAttempt
                   }}
                 />
               </div>

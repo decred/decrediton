@@ -23,7 +23,7 @@ const SendPage = ({
   unsignedRawTx,
   isWatchingOnly,
   isTrezor,
-  insuficientFunds,
+  insuficientFunds
 }) => (
   <>
     <Subtitle title={<T id="send.subtitle" m="Send DCR" />} />

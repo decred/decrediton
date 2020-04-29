@@ -7,7 +7,7 @@ class WalletSelectionBody extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      editWallets: false,
+      editWallets: false
     };
   }
 
@@ -18,7 +18,7 @@ class WalletSelectionBody extends React.Component {
       availableWallets,
       getDaemonSynced,
       submitChosenWallet,
-      creatingWallet,
+      creatingWallet
     } = this.props;
     const { editWallets } = this.state;
     return (
@@ -44,10 +44,10 @@ class WalletSelectionBody extends React.Component {
               toggleWatchOnly: null,
               onChangeCreateWalletMasterPubKey: null,
               toggleTrezor: null,
-              onToggleEditWallet: null,
+              onToggleEditWallet: null
             },
             this
-          ),
+          )
         }}
       />
     );

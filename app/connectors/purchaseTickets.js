@@ -8,13 +8,13 @@ const mapStateToProps = selectorMap({
   ticketPrice: sel.ticketPrice,
   spendingAccounts: sel.spendingAccounts,
   rescanRequest: sel.rescanRequest,
-  dismissBackupRedeemScript: sel.dismissBackupRedeemScript,
+  dismissBackupRedeemScript: sel.dismissBackupRedeemScript
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      onPurchaseTickets: ca.purchaseTicketsAttempt,
+      onPurchaseTickets: ca.purchaseTicketsAttempt
     },
     dispatch
   );

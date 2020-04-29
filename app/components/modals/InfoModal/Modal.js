@@ -7,7 +7,7 @@ const propTypes = {
   modalTitle: PropTypes.object,
   show: PropTypes.bool.isRequired,
   modalContent: PropTypes.object.isRequired,
-  onCancelModal: PropTypes.func.isRequired,
+  onCancelModal: PropTypes.func.isRequired
 };
 
 const Title = ({ modalTitle }) => (
@@ -21,7 +21,7 @@ const InfoModal = ({
   show,
   onCancelModal,
   double,
-  draggable,
+  draggable
 }) => (
   <Modal
     className={

@@ -524,7 +524,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         minor: jspb.Message.getFieldWithDefault(msg, 3, 0),
         patch: jspb.Message.getFieldWithDefault(msg, 4, 0),
         prerelease: jspb.Message.getFieldWithDefault(msg, 5, ""),
-        buildMetadata: jspb.Message.getFieldWithDefault(msg, 6, ""),
+        buildMetadata: jspb.Message.getFieldWithDefault(msg, 6, "")
       };
 
     if (includeInstance) {
@@ -804,7 +804,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         ),
         fee: jspb.Message.getFieldWithDefault(msg, 5, 0),
         timestamp: jspb.Message.getFieldWithDefault(msg, 6, 0),
-        transactionType: jspb.Message.getFieldWithDefault(msg, 7, 0),
+        transactionType: jspb.Message.getFieldWithDefault(msg, 7, 0)
       };
 
     if (includeInstance) {
@@ -957,7 +957,7 @@ proto.walletrpc.TransactionDetails.TransactionType = {
   COINBASE: 4,
   TICKET_PURCHASE: 1,
   VOTE: 2,
-  REVOCATION: 3,
+  REVOCATION: 3
 };
 
 /**
@@ -1016,7 +1016,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
       obj = {
         index: jspb.Message.getFieldWithDefault(msg, 1, 0),
         previousAccount: jspb.Message.getFieldWithDefault(msg, 2, 0),
-        previousAmount: jspb.Message.getFieldWithDefault(msg, 3, 0),
+        previousAmount: jspb.Message.getFieldWithDefault(msg, 3, 0)
       };
 
     if (includeInstance) {
@@ -1218,7 +1218,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         internal: jspb.Message.getFieldWithDefault(msg, 3, false),
         amount: jspb.Message.getFieldWithDefault(msg, 4, 0),
         address: jspb.Message.getFieldWithDefault(msg, 5, ""),
-        outputScript: msg.getOutputScript_asB64(),
+        outputScript: msg.getOutputScript_asB64()
       };
 
     if (includeInstance) {
@@ -1734,7 +1734,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           proto.walletrpc.TransactionDetails.toObject,
           includeInstance
         ),
-        prevBlock: msg.getPrevBlock_asB64(),
+        prevBlock: msg.getPrevBlock_asB64()
       };
 
     if (includeInstance) {
@@ -2077,7 +2077,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         hash: msg.getHash_asB64(),
         height: jspb.Message.getFieldWithDefault(msg, 2, 0),
         prevBlock: msg.getPrevBlock_asB64(),
-        timestamp: jspb.Message.getFieldWithDefault(msg, 4, 0),
+        timestamp: jspb.Message.getFieldWithDefault(msg, 4, 0)
       };
 
     if (includeInstance) {
@@ -2332,7 +2332,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         account: jspb.Message.getFieldWithDefault(msg, 1, 0),
-        totalBalance: jspb.Message.getFieldWithDefault(msg, 2, 0),
+        totalBalance: jspb.Message.getFieldWithDefault(msg, 2, 0)
       };
 
     if (includeInstance) {
@@ -2843,7 +2843,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   proto.walletrpc.NetworkResponse.toObject = function (includeInstance, msg) {
     var f,
       obj = {
-        activeNetwork: jspb.Message.getFieldWithDefault(msg, 1, 0),
+        activeNetwork: jspb.Message.getFieldWithDefault(msg, 1, 0)
       };
 
     if (includeInstance) {
@@ -3104,7 +3104,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   proto.walletrpc.CoinTypeResponse.toObject = function (includeInstance, msg) {
     var f,
       obj = {
-        coinType: jspb.Message.getFieldWithDefault(msg, 1, 0),
+        coinType: jspb.Message.getFieldWithDefault(msg, 1, 0)
       };
 
     if (includeInstance) {
@@ -3252,7 +3252,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   ) {
     var f,
       obj = {
-        accountName: jspb.Message.getFieldWithDefault(msg, 1, ""),
+        accountName: jspb.Message.getFieldWithDefault(msg, 1, "")
       };
 
     if (includeInstance) {
@@ -3402,7 +3402,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   ) {
     var f,
       obj = {
-        accountNumber: jspb.Message.getFieldWithDefault(msg, 1, 0),
+        accountNumber: jspb.Message.getFieldWithDefault(msg, 1, 0)
       };
 
     if (includeInstance) {
@@ -3684,7 +3684,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           includeInstance
         ),
         currentBlockHash: msg.getCurrentBlockHash_asB64(),
-        currentBlockHeight: jspb.Message.getFieldWithDefault(msg, 3, 0),
+        currentBlockHeight: jspb.Message.getFieldWithDefault(msg, 3, 0)
       };
 
     if (includeInstance) {
@@ -3848,7 +3848,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         totalBalance: jspb.Message.getFieldWithDefault(msg, 3, 0),
         externalKeyCount: jspb.Message.getFieldWithDefault(msg, 4, 0),
         internalKeyCount: jspb.Message.getFieldWithDefault(msg, 5, 0),
-        importedKeyCount: jspb.Message.getFieldWithDefault(msg, 6, 0),
+        importedKeyCount: jspb.Message.getFieldWithDefault(msg, 6, 0)
       };
 
     if (includeInstance) {
@@ -4214,7 +4214,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         accountNumber: jspb.Message.getFieldWithDefault(msg, 1, 0),
-        newName: jspb.Message.getFieldWithDefault(msg, 2, ""),
+        newName: jspb.Message.getFieldWithDefault(msg, 2, "")
       };
 
     if (includeInstance) {
@@ -4504,7 +4504,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         beginHeight: jspb.Message.getFieldWithDefault(msg, 1, 0),
-        beginHash: msg.getBeginHash_asB64(),
+        beginHash: msg.getBeginHash_asB64()
       };
 
     if (includeInstance) {
@@ -4689,7 +4689,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   proto.walletrpc.RescanResponse.toObject = function (includeInstance, msg) {
     var f,
       obj = {
-        rescannedThrough: jspb.Message.getFieldWithDefault(msg, 1, 0),
+        rescannedThrough: jspb.Message.getFieldWithDefault(msg, 1, 0)
       };
 
     if (includeInstance) {
@@ -4840,7 +4840,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         passphrase: msg.getPassphrase_asB64(),
-        accountName: jspb.Message.getFieldWithDefault(msg, 2, ""),
+        accountName: jspb.Message.getFieldWithDefault(msg, 2, "")
       };
 
     if (includeInstance) {
@@ -5035,7 +5035,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   ) {
     var f,
       obj = {
-        accountNumber: jspb.Message.getFieldWithDefault(msg, 1, 0),
+        accountNumber: jspb.Message.getFieldWithDefault(msg, 1, 0)
       };
 
     if (includeInstance) {
@@ -5187,7 +5187,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
       obj = {
         account: jspb.Message.getFieldWithDefault(msg, 1, 0),
         kind: jspb.Message.getFieldWithDefault(msg, 2, 0),
-        gapPolicy: jspb.Message.getFieldWithDefault(msg, 3, 0),
+        gapPolicy: jspb.Message.getFieldWithDefault(msg, 3, 0)
       };
 
     if (includeInstance) {
@@ -5289,7 +5289,7 @@ proto.walletrpc.NextAddressRequest.serializeBinaryToWriter = function (
  */
 proto.walletrpc.NextAddressRequest.Kind = {
   BIP0044_EXTERNAL: 0,
-  BIP0044_INTERNAL: 1,
+  BIP0044_INTERNAL: 1
 };
 
 /**
@@ -5299,7 +5299,7 @@ proto.walletrpc.NextAddressRequest.GapPolicy = {
   GAP_POLICY_UNSPECIFIED: 0,
   GAP_POLICY_ERROR: 1,
   GAP_POLICY_IGNORE: 2,
-  GAP_POLICY_WRAP: 3,
+  GAP_POLICY_WRAP: 3
 };
 
 /**
@@ -5404,7 +5404,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         address: jspb.Message.getFieldWithDefault(msg, 1, ""),
-        publicKey: jspb.Message.getFieldWithDefault(msg, 2, ""),
+        publicKey: jspb.Message.getFieldWithDefault(msg, 2, "")
       };
 
     if (includeInstance) {
@@ -5577,7 +5577,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         account: jspb.Message.getFieldWithDefault(msg, 2, 0),
         privateKeyWif: jspb.Message.getFieldWithDefault(msg, 3, ""),
         rescan: jspb.Message.getFieldWithDefault(msg, 4, false),
-        scanFrom: jspb.Message.getFieldWithDefault(msg, 5, 0),
+        scanFrom: jspb.Message.getFieldWithDefault(msg, 5, 0)
       };
 
     if (includeInstance) {
@@ -5981,7 +5981,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         script: msg.getScript_asB64(),
         rescan: jspb.Message.getFieldWithDefault(msg, 3, false),
         scanFrom: jspb.Message.getFieldWithDefault(msg, 4, 0),
-        requireRedeemable: jspb.Message.getFieldWithDefault(msg, 5, false),
+        requireRedeemable: jspb.Message.getFieldWithDefault(msg, 5, false)
       };
 
     if (includeInstance) {
@@ -6278,7 +6278,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         p2shAddress: jspb.Message.getFieldWithDefault(msg, 1, ""),
-        redeemable: jspb.Message.getFieldWithDefault(msg, 2, false),
+        redeemable: jspb.Message.getFieldWithDefault(msg, 2, false)
       };
 
     if (includeInstance) {
@@ -6451,7 +6451,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         accountNumber: jspb.Message.getFieldWithDefault(msg, 1, 0),
-        requiredConfirmations: jspb.Message.getFieldWithDefault(msg, 2, 0),
+        requiredConfirmations: jspb.Message.getFieldWithDefault(msg, 2, 0)
       };
 
     if (includeInstance) {
@@ -6622,7 +6622,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         immatureStakeGeneration: jspb.Message.getFieldWithDefault(msg, 4, 0),
         lockedByTickets: jspb.Message.getFieldWithDefault(msg, 5, 0),
         votingAuthority: jspb.Message.getFieldWithDefault(msg, 6, 0),
-        unconfirmed: jspb.Message.getFieldWithDefault(msg, 7, 0),
+        unconfirmed: jspb.Message.getFieldWithDefault(msg, 7, 0)
       };
 
     if (includeInstance) {
@@ -6902,7 +6902,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   ) {
     var f,
       obj = {
-        transactionHash: msg.getTransactionHash_asB64(),
+        transactionHash: msg.getTransactionHash_asB64()
       };
 
     if (includeInstance) {
@@ -7084,7 +7084,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           (f = msg.getTransaction()) &&
           proto.walletrpc.TransactionDetails.toObject(includeInstance, f),
         confirmations: jspb.Message.getFieldWithDefault(msg, 2, 0),
-        blockHash: msg.getBlockHash_asB64(),
+        blockHash: msg.getBlockHash_asB64()
       };
 
     if (includeInstance) {
@@ -7335,7 +7335,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         endingBlockHash: msg.getEndingBlockHash_asB64(),
         endingBlockHeight: jspb.Message.getFieldWithDefault(msg, 4, 0),
         minimumRecentTransactions: jspb.Message.getFieldWithDefault(msg, 5, 0),
-        targetTransactionCount: jspb.Message.getFieldWithDefault(msg, 6, 0),
+        targetTransactionCount: jspb.Message.getFieldWithDefault(msg, 6, 0)
       };
 
     if (includeInstance) {
@@ -7676,7 +7676,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           msg.getUnminedTransactionsList(),
           proto.walletrpc.TransactionDetails.toObject,
           includeInstance
-        ),
+        )
       };
 
     if (includeInstance) {
@@ -7901,7 +7901,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   proto.walletrpc.GetTicketRequest.toObject = function (includeInstance, msg) {
     var f,
       obj = {
-        ticketHash: msg.getTicketHash_asB64(),
+        ticketHash: msg.getTicketHash_asB64()
       };
 
     if (includeInstance) {
@@ -8076,7 +8076,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         startingBlockHeight: jspb.Message.getFieldWithDefault(msg, 2, 0),
         endingBlockHash: msg.getEndingBlockHash_asB64(),
         endingBlockHeight: jspb.Message.getFieldWithDefault(msg, 4, 0),
-        targetTicketCount: jspb.Message.getFieldWithDefault(msg, 5, 0),
+        targetTicketCount: jspb.Message.getFieldWithDefault(msg, 5, 0)
       };
 
     if (includeInstance) {
@@ -8385,7 +8385,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           proto.walletrpc.GetTicketsResponse.BlockDetails.toObject(
             includeInstance,
             f
-          ),
+          )
       };
 
     if (includeInstance) {
@@ -8552,7 +8552,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         spender:
           (f = msg.getSpender()) &&
           proto.walletrpc.TransactionDetails.toObject(includeInstance, f),
-        ticketStatus: jspb.Message.getFieldWithDefault(msg, 3, 0),
+        ticketStatus: jspb.Message.getFieldWithDefault(msg, 3, 0)
       };
 
     if (includeInstance) {
@@ -8681,7 +8681,7 @@ proto.walletrpc.GetTicketsResponse.TicketDetails.TicketStatus = {
   VOTED: 4,
   MISSED: 5,
   EXPIRED: 6,
-  REVOKED: 7,
+  REVOKED: 7
 };
 
 /**
@@ -8821,7 +8821,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
       obj = {
         hash: msg.getHash_asB64(),
         height: jspb.Message.getFieldWithDefault(msg, 2, 0),
-        timestamp: jspb.Message.getFieldWithDefault(msg, 3, 0),
+        timestamp: jspb.Message.getFieldWithDefault(msg, 3, 0)
       };
 
     if (includeInstance) {
@@ -9230,7 +9230,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         ticketPrice: jspb.Message.getFieldWithDefault(msg, 1, 0),
-        height: jspb.Message.getFieldWithDefault(msg, 2, 0),
+        height: jspb.Message.getFieldWithDefault(msg, 2, 0)
       };
 
     if (includeInstance) {
@@ -9527,7 +9527,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         revoked: jspb.Message.getFieldWithDefault(msg, 8, 0),
         expired: jspb.Message.getFieldWithDefault(msg, 9, 0),
         totalSubsidy: jspb.Message.getFieldWithDefault(msg, 10, 0),
-        unspent: jspb.Message.getFieldWithDefault(msg, 11, 0),
+        unspent: jspb.Message.getFieldWithDefault(msg, 11, 0)
       };
 
     if (includeInstance) {
@@ -9884,7 +9884,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         blockHash: msg.getBlockHash_asB64(),
-        blockHeight: jspb.Message.getFieldWithDefault(msg, 2, 0),
+        blockHeight: jspb.Message.getFieldWithDefault(msg, 2, 0)
       };
 
     if (includeInstance) {
@@ -10082,7 +10082,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         timestamp: jspb.Message.getFieldWithDefault(msg, 4, 0),
         blockHeader: msg.getBlockHeader_asB64(),
         stakeInvalidated: jspb.Message.getFieldWithDefault(msg, 6, false),
-        approvesParent: jspb.Message.getFieldWithDefault(msg, 7, false),
+        approvesParent: jspb.Message.getFieldWithDefault(msg, 7, false)
       };
 
     if (includeInstance) {
@@ -10428,7 +10428,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
       obj = {
         key: jspb.Message.getFieldWithDefault(msg, 1, 0),
         oldPassphrase: msg.getOldPassphrase_asB64(),
-        newPassphrase: msg.getNewPassphrase_asB64(),
+        newPassphrase: msg.getNewPassphrase_asB64()
       };
 
     if (includeInstance) {
@@ -10530,7 +10530,7 @@ proto.walletrpc.ChangePassphraseRequest.serializeBinaryToWriter = function (
  */
 proto.walletrpc.ChangePassphraseRequest.Key = {
   PRIVATE: 0,
-  PUBLIC: 1,
+  PUBLIC: 1
 };
 
 /**
@@ -10826,7 +10826,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           4,
           false
         ),
-        includeChangeScript: jspb.Message.getFieldWithDefault(msg, 5, false),
+        includeChangeScript: jspb.Message.getFieldWithDefault(msg, 5, false)
       };
 
     if (includeInstance) {
@@ -11097,7 +11097,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           includeInstance
         ),
         totalAmount: jspb.Message.getFieldWithDefault(msg, 2, 0),
-        changePkScript: msg.getChangePkScript_asB64(),
+        changePkScript: msg.getChangePkScript_asB64()
       };
 
     if (includeInstance) {
@@ -11267,7 +11267,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         pkScript: msg.getPkScript_asB64(),
         receiveTime: jspb.Message.getFieldWithDefault(msg, 5, 0),
         fromCoinbase: jspb.Message.getFieldWithDefault(msg, 6, false),
-        tree: jspb.Message.getFieldWithDefault(msg, 7, 0),
+        tree: jspb.Message.getFieldWithDefault(msg, 7, 0)
       };
 
     if (includeInstance) {
@@ -11726,7 +11726,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           msg,
           4,
           false
-        ),
+        )
       };
 
     if (includeInstance) {
@@ -11956,7 +11956,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         receiveTime: jspb.Message.getFieldWithDefault(msg, 5, 0),
         fromCoinbase: jspb.Message.getFieldWithDefault(msg, 6, false),
         tree: jspb.Message.getFieldWithDefault(msg, 7, 0),
-        amountSum: jspb.Message.getFieldWithDefault(msg, 8, 0),
+        amountSum: jspb.Message.getFieldWithDefault(msg, 8, 0)
       };
 
     if (includeInstance) {
@@ -12348,7 +12348,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           proto.walletrpc.ConstructTransactionRequest.OutputDestination.toObject(
             includeInstance,
             f
-          ),
+          )
       };
 
     if (includeInstance) {
@@ -12498,7 +12498,7 @@ proto.walletrpc.ConstructTransactionRequest.serializeBinaryToWriter = function (
  */
 proto.walletrpc.ConstructTransactionRequest.OutputSelectionAlgorithm = {
   UNSPECIFIED: 0,
-  ALL: 1,
+  ALL: 1
 };
 
 /**
@@ -12562,7 +12562,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
       obj = {
         address: jspb.Message.getFieldWithDefault(msg, 1, ""),
         script: msg.getScript_asB64(),
-        scriptVersion: jspb.Message.getFieldWithDefault(msg, 3, 0),
+        scriptVersion: jspb.Message.getFieldWithDefault(msg, 3, 0)
       };
 
     if (includeInstance) {
@@ -12793,7 +12793,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
             includeInstance,
             f
           ),
-        amount: jspb.Message.getFieldWithDefault(msg, 2, 0),
+        amount: jspb.Message.getFieldWithDefault(msg, 2, 0)
       };
 
     if (includeInstance) {
@@ -13137,7 +13137,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         totalPreviousOutputAmount: jspb.Message.getFieldWithDefault(msg, 2, 0),
         totalOutputAmount: jspb.Message.getFieldWithDefault(msg, 3, 0),
         estimatedSignedSize: jspb.Message.getFieldWithDefault(msg, 4, 0),
-        changeIndex: jspb.Message.getFieldWithDefault(msg, 5, 0),
+        changeIndex: jspb.Message.getFieldWithDefault(msg, 5, 0)
       };
 
     if (includeInstance) {
@@ -13431,7 +13431,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           msg.getAdditionalScriptsList(),
           proto.walletrpc.SignTransactionRequest.AdditionalScript.toObject,
           includeInstance
-        ),
+        )
       };
 
     if (includeInstance) {
@@ -13598,7 +13598,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         transactionHash: msg.getTransactionHash_asB64(),
         outputIndex: jspb.Message.getFieldWithDefault(msg, 2, 0),
         tree: jspb.Message.getFieldWithDefault(msg, 3, 0),
-        pkScript: msg.getPkScript_asB64(),
+        pkScript: msg.getPkScript_asB64()
       };
 
     if (includeInstance) {
@@ -14015,7 +14015,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         transaction: msg.getTransaction_asB64(),
-        unsignedInputIndexesList: jspb.Message.getRepeatedField(msg, 2),
+        unsignedInputIndexesList: jspb.Message.getRepeatedField(msg, 2)
       };
 
     if (includeInstance) {
@@ -14252,7 +14252,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           msg.getAdditionalScriptsList(),
           proto.walletrpc.SignTransactionsRequest.AdditionalScript.toObject,
           includeInstance
-        ),
+        )
       };
 
     if (includeInstance) {
@@ -14429,7 +14429,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         transactionHash: msg.getTransactionHash_asB64(),
         outputIndex: jspb.Message.getFieldWithDefault(msg, 2, 0),
         tree: jspb.Message.getFieldWithDefault(msg, 3, 0),
-        pkScript: msg.getPkScript_asB64(),
+        pkScript: msg.getPkScript_asB64()
       };
 
     if (includeInstance) {
@@ -14712,7 +14712,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   ) {
     var f,
       obj = {
-        serializedTransaction: msg.getSerializedTransaction_asB64(),
+        serializedTransaction: msg.getSerializedTransaction_asB64()
       };
 
     if (includeInstance) {
@@ -15035,7 +15035,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           msg.getTransactionsList(),
           proto.walletrpc.SignTransactionsResponse.SignedTransaction.toObject,
           includeInstance
-        ),
+        )
       };
 
     if (includeInstance) {
@@ -15165,7 +15165,7 @@ if (goog.DEBUG && !COMPILED) {
  * @const
  */
 proto.walletrpc.SignTransactionsResponse.SignedTransaction.repeatedFields_ = [
-  2,
+  2
 ];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -15204,7 +15204,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         transaction: msg.getTransaction_asB64(),
-        unsignedInputIndexesList: jspb.Message.getRepeatedField(msg, 2),
+        unsignedInputIndexesList: jspb.Message.getRepeatedField(msg, 2)
       };
 
     if (includeInstance) {
@@ -15469,7 +15469,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         serializedTransaction: msg.getSerializedTransaction_asB64(),
         inputIndex: jspb.Message.getFieldWithDefault(msg, 4, 0),
         hashType: jspb.Message.getFieldWithDefault(msg, 5, 0),
-        previousPkScript: msg.getPreviousPkScript_asB64(),
+        previousPkScript: msg.getPreviousPkScript_asB64()
       };
 
     if (includeInstance) {
@@ -15599,7 +15599,7 @@ proto.walletrpc.CreateSignatureRequest.SigHashType = {
   SIGHASH_NONE: 2,
   SIGHASH_SINGLE: 3,
   SIGHASH_ALLVALUE: 4,
-  SIGHASH_ANYONECANPAY: 128,
+  SIGHASH_ANYONECANPAY: 128
 };
 
 /**
@@ -15831,7 +15831,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         signature: msg.getSignature_asB64(),
-        publicKey: msg.getPublicKey_asB64(),
+        publicKey: msg.getPublicKey_asB64()
       };
 
     if (includeInstance) {
@@ -16056,7 +16056,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   ) {
     var f,
       obj = {
-        signedTransaction: msg.getSignedTransaction_asB64(),
+        signedTransaction: msg.getSignedTransaction_asB64()
       };
 
     if (includeInstance) {
@@ -16237,7 +16237,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   ) {
     var f,
       obj = {
-        transactionHash: msg.getTransactionHash_asB64(),
+        transactionHash: msg.getTransactionHash_asB64()
       };
 
     if (includeInstance) {
@@ -16691,7 +16691,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         expiry: jspb.Message.getFieldWithDefault(msg, 9, 0),
         txFee: jspb.Message.getFieldWithDefault(msg, 10, 0),
         ticketFee: jspb.Message.getFieldWithDefault(msg, 11, 0),
-        dontSignTx: jspb.Message.getFieldWithDefault(msg, 12, false),
+        dontSignTx: jspb.Message.getFieldWithDefault(msg, 12, false)
       };
 
     if (includeInstance) {
@@ -17139,7 +17139,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
       obj = {
         ticketHashesList: msg.getTicketHashesList_asB64(),
         ticketsList: msg.getTicketsList_asB64(),
-        splitTx: msg.getSplitTx_asB64(),
+        splitTx: msg.getSplitTx_asB64()
       };
 
     if (includeInstance) {
@@ -17443,7 +17443,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   ) {
     var f,
       obj = {
-        passphrase: msg.getPassphrase_asB64(),
+        passphrase: msg.getPassphrase_asB64()
       };
 
     if (includeInstance) {
@@ -18006,7 +18006,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
       obj = {
         address: jspb.Message.getFieldWithDefault(msg, 1, ""),
         message: jspb.Message.getFieldWithDefault(msg, 2, ""),
-        passphrase: msg.getPassphrase_asB64(),
+        passphrase: msg.getPassphrase_asB64()
       };
 
     if (includeInstance) {
@@ -18222,7 +18222,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   ) {
     var f,
       obj = {
-        signature: msg.getSignature_asB64(),
+        signature: msg.getSignature_asB64()
       };
 
     if (includeInstance) {
@@ -18414,7 +18414,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           msg.getMessagesList(),
           proto.walletrpc.SignMessagesRequest.Message.toObject,
           includeInstance
-        ),
+        )
       };
 
     if (includeInstance) {
@@ -18567,7 +18567,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         address: jspb.Message.getFieldWithDefault(msg, 1, ""),
-        message: jspb.Message.getFieldWithDefault(msg, 2, ""),
+        message: jspb.Message.getFieldWithDefault(msg, 2, "")
       };
 
     if (includeInstance) {
@@ -18842,7 +18842,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           msg.getRepliesList(),
           proto.walletrpc.SignMessagesResponse.SignReply.toObject,
           includeInstance
-        ),
+        )
       };
 
     if (includeInstance) {
@@ -18987,7 +18987,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         signature: msg.getSignature_asB64(),
-        error: jspb.Message.getFieldWithDefault(msg, 2, ""),
+        error: jspb.Message.getFieldWithDefault(msg, 2, "")
       };
 
     if (includeInstance) {
@@ -19343,7 +19343,7 @@ proto.walletrpc.TransactionNotificationsResponse.repeatedFields_ = [
   2,
   3,
   4,
-  5,
+  5
 ];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -19397,7 +19397,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           msg.getDetachedBlockHeadersList(),
           proto.walletrpc.DetachedBlockDetails.toObject,
           includeInstance
-        ),
+        )
       };
 
     if (includeInstance) {
@@ -19964,7 +19964,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         accountName: jspb.Message.getFieldWithDefault(msg, 2, ""),
         externalKeyCount: jspb.Message.getFieldWithDefault(msg, 3, 0),
         internalKeyCount: jspb.Message.getFieldWithDefault(msg, 4, 0),
-        importedKeyCount: jspb.Message.getFieldWithDefault(msg, 5, 0),
+        importedKeyCount: jspb.Message.getFieldWithDefault(msg, 5, 0)
       };
 
     if (includeInstance) {
@@ -20225,7 +20225,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         txHashesList: msg.getTxHashesList_asB64(),
-        stopAfter: jspb.Message.getFieldWithDefault(msg, 2, 0),
+        stopAfter: jspb.Message.getFieldWithDefault(msg, 2, 0)
       };
 
     if (includeInstance) {
@@ -20463,7 +20463,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           proto.walletrpc.ConfirmationNotificationsResponse
             .TransactionConfirmations.toObject,
           includeInstance
-        ),
+        )
       };
 
     if (includeInstance) {
@@ -20621,7 +20621,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         txHash: msg.getTxHash_asB64(),
         confirmations: jspb.Message.getFieldWithDefault(msg, 2, 0),
         blockHash: msg.getBlockHash_asB64(),
-        blockHeight: jspb.Message.getFieldWithDefault(msg, 4, 0),
+        blockHeight: jspb.Message.getFieldWithDefault(msg, 4, 0)
       };
 
     if (includeInstance) {
@@ -20938,7 +20938,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
       obj = {
         publicPassphrase: msg.getPublicPassphrase_asB64(),
         privatePassphrase: msg.getPrivatePassphrase_asB64(),
-        seed: msg.getSeed_asB64(),
+        seed: msg.getSeed_asB64()
       };
 
     if (includeInstance) {
@@ -21338,7 +21338,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         extendedPubKey: jspb.Message.getFieldWithDefault(msg, 1, ""),
-        publicPassphrase: msg.getPublicPassphrase_asB64(),
+        publicPassphrase: msg.getPublicPassphrase_asB64()
       };
 
     if (includeInstance) {
@@ -21671,7 +21671,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   proto.walletrpc.OpenWalletRequest.toObject = function (includeInstance, msg) {
     var f,
       obj = {
-        publicPassphrase: msg.getPublicPassphrase_asB64(),
+        publicPassphrase: msg.getPublicPassphrase_asB64()
       };
 
     if (includeInstance) {
@@ -21849,7 +21849,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   ) {
     var f,
       obj = {
-        watchingOnly: jspb.Message.getFieldWithDefault(msg, 1, false),
+        watchingOnly: jspb.Message.getFieldWithDefault(msg, 1, false)
       };
 
     if (includeInstance) {
@@ -22380,7 +22380,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   ) {
     var f,
       obj = {
-        exists: jspb.Message.getFieldWithDefault(msg, 1, false),
+        exists: jspb.Message.getFieldWithDefault(msg, 1, false)
       };
 
     if (includeInstance) {
@@ -22537,7 +22537,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         networkAddress: jspb.Message.getFieldWithDefault(msg, 1, ""),
         username: jspb.Message.getFieldWithDefault(msg, 2, ""),
         password: msg.getPassword_asB64(),
-        certificate: msg.getCertificate_asB64(),
+        certificate: msg.getCertificate_asB64()
       };
 
     if (includeInstance) {
@@ -22941,7 +22941,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
       obj = {
         discoverAccounts: jspb.Message.getFieldWithDefault(msg, 1, false),
         privatePassphrase: msg.getPrivatePassphrase_asB64(),
-        startingBlockHash: msg.getStartingBlockHash_asB64(),
+        startingBlockHash: msg.getStartingBlockHash_asB64()
       };
 
     if (includeInstance) {
@@ -23985,7 +23985,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         firstNewBlockHash: msg.getFirstNewBlockHash_asB64(),
         firstNewBlockHeight: jspb.Message.getFieldWithDefault(msg, 3, 0),
         mainChainTipBlockHash: msg.getMainChainTipBlockHash_asB64(),
-        mainChainTipBlockHeight: jspb.Message.getFieldWithDefault(msg, 5, 0),
+        mainChainTipBlockHeight: jspb.Message.getFieldWithDefault(msg, 5, 0)
       };
 
     if (includeInstance) {
@@ -24284,7 +24284,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         fetchedHeadersCount: jspb.Message.getFieldWithDefault(msg, 1, 0),
-        lastHeaderTime: jspb.Message.getFieldWithDefault(msg, 2, 0),
+        lastHeaderTime: jspb.Message.getFieldWithDefault(msg, 2, 0)
       };
 
     if (includeInstance) {
@@ -24461,7 +24461,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         fetchedCfiltersStartHeight: jspb.Message.getFieldWithDefault(msg, 1, 0),
-        fetchedCfiltersEndHeight: jspb.Message.getFieldWithDefault(msg, 2, 0),
+        fetchedCfiltersEndHeight: jspb.Message.getFieldWithDefault(msg, 2, 0)
       };
 
     if (includeInstance) {
@@ -24639,7 +24639,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   ) {
     var f,
       obj = {
-        rescannedThrough: jspb.Message.getFieldWithDefault(msg, 1, 0),
+        rescannedThrough: jspb.Message.getFieldWithDefault(msg, 1, 0)
       };
 
     if (includeInstance) {
@@ -24789,7 +24789,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         peerCount: jspb.Message.getFieldWithDefault(msg, 1, 0),
-        address: jspb.Message.getFieldWithDefault(msg, 2, ""),
+        address: jspb.Message.getFieldWithDefault(msg, 2, "")
       };
 
     if (includeInstance) {
@@ -24956,7 +24956,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         password: msg.getPassword_asB64(),
         certificate: msg.getCertificate_asB64(),
         discoverAccounts: jspb.Message.getFieldWithDefault(msg, 5, false),
-        privatePassphrase: msg.getPrivatePassphrase_asB64(),
+        privatePassphrase: msg.getPrivatePassphrase_asB64()
       };
 
     if (includeInstance) {
@@ -25312,7 +25312,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           ),
         peerInformation:
           (f = msg.getPeerInformation()) &&
-          proto.walletrpc.PeerNotification.toObject(includeInstance, f),
+          proto.walletrpc.PeerNotification.toObject(includeInstance, f)
       };
 
     if (includeInstance) {
@@ -25686,7 +25686,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
       obj = {
         discoverAccounts: jspb.Message.getFieldWithDefault(msg, 1, false),
         privatePassphrase: msg.getPrivatePassphrase_asB64(),
-        spvConnectList: jspb.Message.getRepeatedField(msg, 3),
+        spvConnectList: jspb.Message.getRepeatedField(msg, 3)
       };
 
     if (includeInstance) {
@@ -25942,7 +25942,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           ),
         peerInformation:
           (f = msg.getPeerInformation()) &&
-          proto.walletrpc.PeerNotification.toObject(includeInstance, f),
+          proto.walletrpc.PeerNotification.toObject(includeInstance, f)
       };
 
     if (includeInstance) {
@@ -26433,7 +26433,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   ) {
     var f,
       obj = {
-        rescanPointHash: msg.getRescanPointHash_asB64(),
+        rescanPointHash: msg.getRescanPointHash_asB64()
       };
 
     if (includeInstance) {
@@ -26611,7 +26611,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   ) {
     var f,
       obj = {
-        seedLength: jspb.Message.getFieldWithDefault(msg, 1, 0),
+        seedLength: jspb.Message.getFieldWithDefault(msg, 1, 0)
       };
 
     if (includeInstance) {
@@ -26766,7 +26766,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
       obj = {
         seedBytes: msg.getSeedBytes_asB64(),
         seedHex: jspb.Message.getFieldWithDefault(msg, 2, ""),
-        seedMnemonic: jspb.Message.getFieldWithDefault(msg, 3, ""),
+        seedMnemonic: jspb.Message.getFieldWithDefault(msg, 3, "")
       };
 
     if (includeInstance) {
@@ -26990,7 +26990,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   proto.walletrpc.DecodeSeedRequest.toObject = function (includeInstance, msg) {
     var f,
       obj = {
-        userInput: jspb.Message.getFieldWithDefault(msg, 1, ""),
+        userInput: jspb.Message.getFieldWithDefault(msg, 1, "")
       };
 
     if (includeInstance) {
@@ -27138,7 +27138,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   ) {
     var f,
       obj = {
-        decodedSeed: msg.getDecodedSeed_asB64(),
+        decodedSeed: msg.getDecodedSeed_asB64()
       };
 
     if (includeInstance) {
@@ -27318,7 +27318,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         balanceToMaintain: jspb.Message.getFieldWithDefault(msg, 4, 0),
         votingAddress: jspb.Message.getFieldWithDefault(msg, 5, ""),
         poolAddress: jspb.Message.getFieldWithDefault(msg, 6, ""),
-        poolFees: +jspb.Message.getFieldWithDefault(msg, 7, 0.0),
+        poolFees: +jspb.Message.getFieldWithDefault(msg, 7, 0.0)
       };
 
     if (includeInstance) {
@@ -27761,7 +27761,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         mixedAccount: jspb.Message.getFieldWithDefault(msg, 2, 0),
         mixedAccountBranch: jspb.Message.getFieldWithDefault(msg, 3, 0),
         changeAccount: jspb.Message.getFieldWithDefault(msg, 4, 0),
-        csppServer: jspb.Message.getFieldWithDefault(msg, 5, ""),
+        csppServer: jspb.Message.getFieldWithDefault(msg, 5, "")
       };
 
     if (includeInstance) {
@@ -28163,7 +28163,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         votingAddress: jspb.Message.getFieldWithDefault(msg, 7, ""),
         poolAddress: jspb.Message.getFieldWithDefault(msg, 8, ""),
         poolFees: +jspb.Message.getFieldWithDefault(msg, 9, 0.0),
-        maxPerBlock: jspb.Message.getFieldWithDefault(msg, 10, 0),
+        maxPerBlock: jspb.Message.getFieldWithDefault(msg, 10, 0)
       };
 
     if (includeInstance) {
@@ -29072,7 +29072,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         poolFees: +jspb.Message.getFieldWithDefault(msg, 19, 0.0),
         spreadTicketPurchases: jspb.Message.getFieldWithDefault(msg, 20, false),
         votingAddress: jspb.Message.getFieldWithDefault(msg, 21, ""),
-        txFee: jspb.Message.getFieldWithDefault(msg, 22, 0),
+        txFee: jspb.Message.getFieldWithDefault(msg, 22, 0)
       };
 
     if (includeInstance) {
@@ -29683,7 +29683,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   proto.walletrpc.SetAccountRequest.toObject = function (includeInstance, msg) {
     var f,
       obj = {
-        account: jspb.Message.getFieldWithDefault(msg, 1, 0),
+        account: jspb.Message.getFieldWithDefault(msg, 1, 0)
       };
 
     if (includeInstance) {
@@ -29956,7 +29956,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   ) {
     var f,
       obj = {
-        balanceToMaintain: jspb.Message.getFieldWithDefault(msg, 1, 0),
+        balanceToMaintain: jspb.Message.getFieldWithDefault(msg, 1, 0)
       };
 
     if (includeInstance) {
@@ -30235,7 +30235,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   proto.walletrpc.SetMaxFeeRequest.toObject = function (includeInstance, msg) {
     var f,
       obj = {
-        maxFeePerKb: jspb.Message.getFieldWithDefault(msg, 1, 0),
+        maxFeePerKb: jspb.Message.getFieldWithDefault(msg, 1, 0)
       };
 
     if (includeInstance) {
@@ -30505,7 +30505,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   ) {
     var f,
       obj = {
-        maxPriceRelative: +jspb.Message.getFieldWithDefault(msg, 1, 0.0),
+        maxPriceRelative: +jspb.Message.getFieldWithDefault(msg, 1, 0.0)
       };
 
     if (includeInstance) {
@@ -30794,7 +30794,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   ) {
     var f,
       obj = {
-        maxPriceAbsolute: jspb.Message.getFieldWithDefault(msg, 1, 0),
+        maxPriceAbsolute: jspb.Message.getFieldWithDefault(msg, 1, 0)
       };
 
     if (includeInstance) {
@@ -31079,7 +31079,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   ) {
     var f,
       obj = {
-        votingAddress: jspb.Message.getFieldWithDefault(msg, 1, ""),
+        votingAddress: jspb.Message.getFieldWithDefault(msg, 1, "")
       };
 
     if (includeInstance) {
@@ -31357,7 +31357,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   ) {
     var f,
       obj = {
-        poolAddress: jspb.Message.getFieldWithDefault(msg, 1, ""),
+        poolAddress: jspb.Message.getFieldWithDefault(msg, 1, "")
       };
 
     if (includeInstance) {
@@ -31632,7 +31632,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   ) {
     var f,
       obj = {
-        poolFees: +jspb.Message.getFieldWithDefault(msg, 1, 0.0),
+        poolFees: +jspb.Message.getFieldWithDefault(msg, 1, 0.0)
       };
 
     if (includeInstance) {
@@ -31909,7 +31909,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   ) {
     var f,
       obj = {
-        maxPerBlock: jspb.Message.getFieldWithDefault(msg, 1, 0),
+        maxPerBlock: jspb.Message.getFieldWithDefault(msg, 1, 0)
       };
 
     if (includeInstance) {
@@ -32314,7 +32314,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           msg.getAgendasList(),
           proto.walletrpc.AgendasResponse.Agenda.toObject,
           includeInstance
-        ),
+        )
       };
 
     if (includeInstance) {
@@ -32487,7 +32487,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           includeInstance
         ),
         startTime: jspb.Message.getFieldWithDefault(msg, 5, 0),
-        expireTime: jspb.Message.getFieldWithDefault(msg, 6, 0),
+        expireTime: jspb.Message.getFieldWithDefault(msg, 6, 0)
       };
 
     if (includeInstance) {
@@ -32786,7 +32786,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         description: jspb.Message.getFieldWithDefault(msg, 2, ""),
         bits: jspb.Message.getFieldWithDefault(msg, 3, 0),
         isAbstain: jspb.Message.getFieldWithDefault(msg, 4, false),
-        isNo: jspb.Message.getFieldWithDefault(msg, 5, false),
+        isNo: jspb.Message.getFieldWithDefault(msg, 5, false)
       };
 
     if (includeInstance) {
@@ -33230,7 +33230,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           proto.walletrpc.VoteChoicesResponse.Choice.toObject,
           includeInstance
         ),
-        votebits: jspb.Message.getFieldWithDefault(msg, 3, 0),
+        votebits: jspb.Message.getFieldWithDefault(msg, 3, 0)
       };
 
     if (includeInstance) {
@@ -33392,7 +33392,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         agendaId: jspb.Message.getFieldWithDefault(msg, 1, ""),
         agendaDescription: jspb.Message.getFieldWithDefault(msg, 2, ""),
         choiceId: jspb.Message.getFieldWithDefault(msg, 3, ""),
-        choiceDescription: jspb.Message.getFieldWithDefault(msg, 4, ""),
+        choiceDescription: jspb.Message.getFieldWithDefault(msg, 4, "")
       };
 
     if (includeInstance) {
@@ -33700,7 +33700,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           msg.getChoicesList(),
           proto.walletrpc.SetVoteChoicesRequest.Choice.toObject,
           includeInstance
-        ),
+        )
       };
 
     if (includeInstance) {
@@ -33845,7 +33845,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         agendaId: jspb.Message.getFieldWithDefault(msg, 1, ""),
-        choiceId: jspb.Message.getFieldWithDefault(msg, 2, ""),
+        choiceId: jspb.Message.getFieldWithDefault(msg, 2, "")
       };
 
     if (includeInstance) {
@@ -34064,7 +34064,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   ) {
     var f,
       obj = {
-        votebits: jspb.Message.getFieldWithDefault(msg, 1, 0),
+        votebits: jspb.Message.getFieldWithDefault(msg, 1, 0)
       };
 
     if (includeInstance) {
@@ -34216,7 +34216,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
       obj = {
         address: jspb.Message.getFieldWithDefault(msg, 1, ""),
         message: jspb.Message.getFieldWithDefault(msg, 2, ""),
-        signature: msg.getSignature_asB64(),
+        signature: msg.getSignature_asB64()
       };
 
     if (includeInstance) {
@@ -34432,7 +34432,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   ) {
     var f,
       obj = {
-        valid: jspb.Message.getFieldWithDefault(msg, 1, false),
+        valid: jspb.Message.getFieldWithDefault(msg, 1, false)
       };
 
     if (includeInstance) {
@@ -34613,7 +34613,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           msg.getOutputsList(),
           proto.walletrpc.DecodedTransaction.Output.toObject,
           includeInstance
-        ),
+        )
       };
 
     if (includeInstance) {
@@ -34820,7 +34820,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         blockHeight: jspb.Message.getFieldWithDefault(msg, 6, 0),
         blockIndex: jspb.Message.getFieldWithDefault(msg, 7, 0),
         signatureScript: msg.getSignatureScript_asB64(),
-        signatureScriptAsm: jspb.Message.getFieldWithDefault(msg, 9, ""),
+        signatureScriptAsm: jspb.Message.getFieldWithDefault(msg, 9, "")
       };
 
     if (includeInstance) {
@@ -34974,7 +34974,7 @@ proto.walletrpc.DecodedTransaction.Input.serializeBinaryToWriter = function (
 proto.walletrpc.DecodedTransaction.Input.TreeType = {
   REGULAR: 0,
   UNKNOWN: -1,
-  STAKE: 1,
+  STAKE: 1
 };
 
 /**
@@ -35245,7 +35245,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         requiredSignatures: jspb.Message.getFieldWithDefault(msg, 6, 0),
         scriptClass: jspb.Message.getFieldWithDefault(msg, 7, 0),
         addressesList: jspb.Message.getRepeatedField(msg, 8),
-        commitmentAmount: jspb.Message.getFieldWithDefault(msg, 9, 0),
+        commitmentAmount: jspb.Message.getFieldWithDefault(msg, 9, 0)
       };
 
     if (includeInstance) {
@@ -35408,7 +35408,7 @@ proto.walletrpc.DecodedTransaction.Output.ScriptClass = {
   STAKE_REVOCATION: 8,
   STAKE_SUB_CHANGE: 9,
   PUB_KEY_ALT: 10,
-  PUB_KEY_HASH_ALT: 11,
+  PUB_KEY_HASH_ALT: 11
 };
 
 /**
@@ -35822,7 +35822,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   ) {
     var f,
       obj = {
-        serializedTransaction: msg.getSerializedTransaction_asB64(),
+        serializedTransaction: msg.getSerializedTransaction_asB64()
       };
 
     if (includeInstance) {
@@ -36007,7 +36007,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
       obj = {
         transaction:
           (f = msg.getTransaction()) &&
-          proto.walletrpc.DecodedTransaction.toObject(includeInstance, f),
+          proto.walletrpc.DecodedTransaction.toObject(includeInstance, f)
       };
 
     if (includeInstance) {
@@ -36186,7 +36186,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   ) {
     var f,
       obj = {
-        address: jspb.Message.getFieldWithDefault(msg, 1, ""),
+        address: jspb.Message.getFieldWithDefault(msg, 1, "")
       };
 
     if (includeInstance) {
@@ -36358,7 +36358,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         payToAddrScript: msg.getPayToAddrScript_asB64(),
         sigsRequired: jspb.Message.getFieldWithDefault(msg, 10, 0),
         isInternal: jspb.Message.getFieldWithDefault(msg, 11, false),
-        index: jspb.Message.getFieldWithDefault(msg, 12, 0),
+        index: jspb.Message.getFieldWithDefault(msg, 12, 0)
       };
 
     if (includeInstance) {
@@ -36542,7 +36542,7 @@ proto.walletrpc.ValidateAddressResponse.ScriptType = {
   STAKEREVOCATIONTY: 8,
   STAKESUBCHANGETY: 9,
   PUBKEYALTTY: 10,
-  PUBKEYHASHALTTY: 11,
+  PUBKEYHASHALTTY: 11
 };
 
 /**
@@ -36881,7 +36881,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   ) {
     var f,
       obj = {
-        ticketsList: msg.getTicketsList_asB64(),
+        ticketsList: msg.getTicketsList_asB64()
       };
 
     if (includeInstance) {
@@ -37073,7 +37073,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   ) {
     var f,
       obj = {
-        accountNumber: jspb.Message.getFieldWithDefault(msg, 1, 0),
+        accountNumber: jspb.Message.getFieldWithDefault(msg, 1, 0)
       };
 
     if (includeInstance) {
@@ -37228,7 +37228,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   ) {
     var f,
       obj = {
-        accExtendedPubKey: jspb.Message.getFieldWithDefault(msg, 1, ""),
+        accExtendedPubKey: jspb.Message.getFieldWithDefault(msg, 1, "")
       };
 
     if (includeInstance) {
@@ -37384,7 +37384,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         accountNumber: jspb.Message.getFieldWithDefault(msg, 1, 0),
-        passphrase: msg.getPassphrase_asB64(),
+        passphrase: msg.getPassphrase_asB64()
       };
 
     if (includeInstance) {
@@ -37588,7 +37588,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   ) {
     var f,
       obj = {
-        accExtendedPrivKey: jspb.Message.getFieldWithDefault(msg, 1, ""),
+        accExtendedPrivKey: jspb.Message.getFieldWithDefault(msg, 1, "")
       };
 
     if (includeInstance) {
@@ -37760,7 +37760,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
           msg.getTicketaddressesList(),
           proto.walletrpc.CommittedTicketsResponse.TicketAddress.toObject,
           includeInstance
-        ),
+        )
       };
 
     if (includeInstance) {
@@ -37912,7 +37912,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         ticket: msg.getTicket_asB64(),
-        address: jspb.Message.getFieldWithDefault(msg, 2, ""),
+        address: jspb.Message.getFieldWithDefault(msg, 2, "")
       };
 
     if (includeInstance) {
@@ -38272,7 +38272,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         height: jspb.Message.getFieldWithDefault(msg, 1, 0),
-        hash: msg.getHash_asB64(),
+        hash: msg.getHash_asB64()
       };
 
     if (includeInstance) {
@@ -38468,7 +38468,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         sourceAccount: jspb.Message.getFieldWithDefault(msg, 1, ""),
         destinationAddress: jspb.Message.getFieldWithDefault(msg, 2, ""),
         requiredConfirmations: jspb.Message.getFieldWithDefault(msg, 3, 0),
-        feePerKb: +jspb.Message.getFieldWithDefault(msg, 4, 0.0),
+        feePerKb: +jspb.Message.getFieldWithDefault(msg, 4, 0.0)
       };
 
     if (includeInstance) {
@@ -38692,7 +38692,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
         unsignedTransaction: msg.getUnsignedTransaction_asB64(),
         totalPreviousOutputAmount: jspb.Message.getFieldWithDefault(msg, 2, 0),
         totalOutputAmount: jspb.Message.getFieldWithDefault(msg, 3, 0),
-        estimatedSignedSize: jspb.Message.getFieldWithDefault(msg, 4, 0),
+        estimatedSignedSize: jspb.Message.getFieldWithDefault(msg, 4, 0)
       };
 
     if (includeInstance) {
@@ -38939,7 +38939,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   ) {
     var f,
       obj = {
-        transactionHash: msg.getTransactionHash_asB64(),
+        transactionHash: msg.getTransactionHash_asB64()
       };
 
     if (includeInstance) {
@@ -39262,7 +39262,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
       obj = {
         passphrase: msg.getPassphrase_asB64(),
         address: jspb.Message.getFieldWithDefault(msg, 2, ""),
-        hashesList: msg.getHashesList_asB64(),
+        hashesList: msg.getHashesList_asB64()
       };
 
     if (includeInstance) {
@@ -39534,7 +39534,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         publicKey: msg.getPublicKey_asB64(),
-        signaturesList: msg.getSignaturesList_asB64(),
+        signaturesList: msg.getSignaturesList_asB64()
       };
 
     if (includeInstance) {
@@ -39767,7 +39767,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         transactionHash: msg.getTransactionHash_asB64(),
-        index: jspb.Message.getFieldWithDefault(msg, 2, 0),
+        index: jspb.Message.getFieldWithDefault(msg, 2, 0)
       };
 
     if (includeInstance) {
@@ -39959,7 +39959,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f,
       obj = {
         spenderTransaction: msg.getSpenderTransaction_asB64(),
-        inputIndex: jspb.Message.getFieldWithDefault(msg, 2, 0),
+        inputIndex: jspb.Message.getFieldWithDefault(msg, 2, 0)
       };
 
     if (includeInstance) {
@@ -40122,7 +40122,7 @@ proto.walletrpc.SyncNotificationType = {
   DISCOVER_ADDRESSES_FINISHED: 11,
   RESCAN_STARTED: 12,
   RESCAN_PROGRESS: 13,
-  RESCAN_FINISHED: 14,
+  RESCAN_FINISHED: 14
 };
 
 goog.object.extend(exports, proto.walletrpc);

@@ -8,7 +8,7 @@ const Transaction = ({
   viewedDecodedTransaction,
   decodeRawTransactions,
   tsDate,
-  fetchMissingStakeTxData,
+  fetchMissingStakeTxData
 }) => {
   if (!viewedDecodedTransaction) {
     decodeRawTransactions([viewedTransaction.rawTx]);
@@ -30,7 +30,7 @@ const Transaction = ({
       {...{
         transactionDetails: viewedTransaction,
         decodedTransaction: viewedDecodedTransaction,
-        tsDate: tsDate,
+        tsDate: tsDate
       }}
     />
   );

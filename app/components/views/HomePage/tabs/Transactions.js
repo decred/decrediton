@@ -8,7 +8,7 @@ import "style/HomePage.less";
 const HomePage = ({
   balanceReceived,
   balanceSent,
-  sentAndReceivedTransactions,
+  sentAndReceivedTransactions
 }) => {
   return (
     <div className="overview-content-wrapper">

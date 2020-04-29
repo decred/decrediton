@@ -9,7 +9,7 @@ class Header extends React.Component {
       headerTop,
       headerTitleOverview,
       headerMetaOverview,
-      children,
+      children
     } = this.props;
 
     const Component = getStarted ? GetStarted : StandardHeader;
@@ -20,7 +20,7 @@ class Header extends React.Component {
           headerTop,
           headerTitleOverview,
           headerMetaOverview,
-          children,
+          children
         }}
       />
     );

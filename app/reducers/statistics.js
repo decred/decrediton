@@ -7,7 +7,7 @@ import {
   GETMYTICKETSSTATS_FAILED,
   GETTICKETSHEATMAPSTATS_ATTEMPT,
   GETTICKETSHEATMAPSTATS_SUCCESS,
-  GETTICKETSHEATMAPSTATS_FAILED,
+  GETTICKETSHEATMAPSTATS_FAILED
 } from "actions/StatisticsActions";
 import { CLOSEWALLET_SUCCESS } from "actions/WalletLoaderActions";
 
@@ -16,12 +16,12 @@ export default function statistics(state = {}, action) {
     case GETSTARTUPSTATS_ATTEMPT:
       return {
         ...state,
-        getStartupStatsAttempt: true,
+        getStartupStatsAttempt: true
       };
     case GETSTARTUPSTATS_FAILED:
       return {
         ...state,
-        getStartupStatsAttempt: false,
+        getStartupStatsAttempt: false
       };
     case GETSTARTUPSTATS_SUCCESS:
       return {
@@ -29,41 +29,41 @@ export default function statistics(state = {}, action) {
         dailyBalances: action.dailyBalances,
         getStartupStatsAttempt: false,
         startupStatsCalcSeconds: action.startupStatsCalcSeconds,
-        startupStatsEndCalcTime: action.startupStatsEndCalcTime,
+        startupStatsEndCalcTime: action.startupStatsEndCalcTime
       };
     case GETTICKETSHEATMAPSTATS_ATTEMPT:
       return {
         ...state,
-        getTicketHeatmapStatsAttempt: true,
+        getTicketHeatmapStatsAttempt: true
       };
     case GETTICKETSHEATMAPSTATS_SUCCESS:
       return {
         ...state,
         getTicketHeatmapStatsAttempt: false,
-        ticketDataHeatmap: action.ticketDataHeatmap,
+        ticketDataHeatmap: action.ticketDataHeatmap
       };
     case GETTICKETSHEATMAPSTATS_FAILED:
       return {
         ...state,
         getTicketHeatmapStatsAttempt: false,
-        ticketDataHeatmap: null,
+        ticketDataHeatmap: null
       };
     case GETMYTICKETSSTATS_ATTEMPT:
       return {
         ...state,
-        getMyTicketsStatsRequest: true,
+        getMyTicketsStatsRequest: true
       };
     case GETMYTICKETSSTATS_SUCCESS:
       return {
         ...state,
         getMyTicketsStatsRequest: false,
         voteTime: action.voteTime,
-        fullDailyBalances: action.dailyBalances.data,
+        fullDailyBalances: action.dailyBalances.data
       };
     case GETMYTICKETSSTATS_FAILED:
       return {
         ...state,
-        getMyTicketsStatsRequest: false,
+        getMyTicketsStatsRequest: false
       };
     case CLOSEWALLET_SUCCESS:
       return {
@@ -72,7 +72,7 @@ export default function statistics(state = {}, action) {
         fullDailyBalances: [],
         ticketDataHeatmap: [],
         voteTime: null,
-        getMyTicketsStatsRequest: false,
+        getMyTicketsStatsRequest: false
       };
     default:
       return state;

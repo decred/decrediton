@@ -7,7 +7,7 @@ import {
   myTicketsChartSize,
   padding,
   radiusFull,
-  hoverFill,
+  hoverFill
 } from "./Styles";
 import { isArray } from "util";
 import { FormattedMessage as T } from "react-intl";
@@ -41,7 +41,7 @@ const VoteTimeChart = ({ data, intl }) => {
   const displayData = data.data.map((s) => ({
     name: s.series.daysToVote,
     legendName: messages.day,
-    [countKey]: s.series.count,
+    [countKey]: s.series.count
   }));
 
   return (

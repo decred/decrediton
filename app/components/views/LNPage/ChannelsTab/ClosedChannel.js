@@ -18,7 +18,7 @@ const closeTypes = {
   [lna.CLOSETYPE_FUNDING_CANCELED]: (
     <T id="ln.closeTypeFundingCanceled" m="Funding Canceled" />
   ),
-  [lna.CLOSETYPE_ABANDONED]: <T id="ln.closeTypeAbandoned" m="Abandoned" />,
+  [lna.CLOSETYPE_ABANDONED]: <T id="ln.closeTypeAbandoned" m="Abandoned" />
 };
 
 export const ClosedChannelDetails = ({ channel }) => (

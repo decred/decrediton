@@ -53,7 +53,7 @@ const ProposalText = ({ text }) => (
         imageReference: renderProposalImage,
         image: renderProposalImage,
 
-        html: () => null,
+        html: () => null
       }}
     />
   </>

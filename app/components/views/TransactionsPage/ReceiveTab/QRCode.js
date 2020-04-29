@@ -3,7 +3,7 @@ import "style/ReceivePage.less";
 
 class QRCode extends React.Component {
   static propTypes = {
-    addr: PropTypes.string.isRequired,
+    addr: PropTypes.string.isRequired
   };
   render() {
     const { addr, amount } = this.props;

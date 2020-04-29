@@ -6,8 +6,8 @@ import "style/GetStarted.less";
 const messages = defineMessages({
   publicPassphrasePlaceholder: {
     id: "getStarted.decrypt.publicPassphrasePlaceholder",
-    defaultMessage: "Public Passphrase",
-  },
+    defaultMessage: "Public Passphrase"
+  }
 });
 
 const OpenWalletDecryptFormBodyBase = ({
@@ -16,7 +16,7 @@ const OpenWalletDecryptFormBodyBase = ({
   intl,
   onSetPublicPassPhrase,
   onOpenWallet,
-  onKeyDown,
+  onKeyDown
 }) => (
   <div className="advanced-page-form">
     <div className="advanced-daemon-row">

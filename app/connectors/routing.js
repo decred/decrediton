@@ -8,13 +8,13 @@ const mapStateToProps = selectorMap({
   location: sel.location,
   isTrezor: sel.isTrezor,
   sidebarOnBottom: sel.sidebarOnBottom,
-  lnEnabled: sel.lnEnabled,
+  lnEnabled: sel.lnEnabled
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      goBackHistory: ca.goBackHistory,
+      goBackHistory: ca.goBackHistory
     },
     dispatch
   );

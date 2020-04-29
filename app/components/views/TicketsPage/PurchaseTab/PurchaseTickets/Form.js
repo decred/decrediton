@@ -3,7 +3,7 @@ import {
   PassphraseModalButton,
   ImportScriptIconButton,
   KeyBlueButton,
-  InvisibleConfirmModalButton,
+  InvisibleConfirmModalButton
 } from "buttons";
 import { AccountsSelect, NumTicketsInput } from "inputs";
 import { FormattedMessage as T } from "react-intl";
@@ -33,7 +33,7 @@ const PurchaseTicketsForm = ({
   onShowStakePoolConfig,
   dismissBackupRedeemScript,
   onDismissBackupRedeemScript,
-  isWatchingOnly,
+  isWatchingOnly
 }) => (
   <>
     <div className="purchase-ticket-area-row is-row">
@@ -85,7 +85,7 @@ const PurchaseTicketsForm = ({
           willEnter: !isShowingAdvanced
             ? () => willEnter(270)
             : () => willEnter(80),
-          willLeave,
+          willLeave
         }}
       />
     </div>
@@ -104,7 +104,7 @@ const PurchaseTicketsForm = ({
                     }>
                     <T id="purchase.ticket.decred.docs" m="Decred docs" />
                   </ExternalLink>
-                ),
+                )
               }}
             />
           }

@@ -24,7 +24,7 @@ const Logs = ({
   dcrlndLogs,
   showDcrlndLogs,
   onShowDcrlndLogs,
-  onHideDcrlndLogs,
+  onHideDcrlndLogs
 }) => (
   <>
     <Subtitle title={<T id="logs.subtitle" m="System Logs" />} />

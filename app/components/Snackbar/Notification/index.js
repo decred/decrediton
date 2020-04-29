@@ -5,14 +5,14 @@ import {
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_RECEIVED,
   TRANSACTION_DIR_TRANSFERRED,
-  TRANSACTION_TYPES,
+  TRANSACTION_TYPES
 } from "wallet/service";
 
 const transactionTypes = [
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_RECEIVED,
   TRANSACTION_DIR_TRANSFERRED,
-  ...Object.values(TRANSACTION_TYPES),
+  ...Object.values(TRANSACTION_TYPES)
 ];
 
 const Notification = ({

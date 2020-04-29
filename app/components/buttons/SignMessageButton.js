@@ -14,7 +14,7 @@ class SignMessageButton extends React.Component {
       message,
       disabled,
       signMessageAttempt,
-      onSubmit,
+      onSubmit
     } = this.props;
     if (!passphrase || disabled || !signMessageAttempt) return;
     await signMessageAttempt(address, message, passphrase);
@@ -27,7 +27,7 @@ class SignMessageButton extends React.Component {
       message,
       disabled,
       signMessageAttemptTrezor,
-      onSubmit,
+      onSubmit
     } = this.props;
     if (disabled || !signMessageAttemptTrezor) return;
     await signMessageAttemptTrezor(address, message);
@@ -69,7 +69,7 @@ class SignMessageButton extends React.Component {
 SignMessageButton.propTypes = {
   message: PropTypes.string.isRequired,
   address: PropTypes.string.isRequired,
-  signMessageAttempt: PropTypes.func.isRequired,
+  signMessageAttempt: PropTypes.func.isRequired
 };
 
 export default signMessagePage(SignMessageButton);

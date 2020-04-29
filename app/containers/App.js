@@ -20,7 +20,7 @@ import { hot } from "react-hot-loader/root";
 const topLevelAnimation = {
   atEnter: { opacity: 0 },
   atLeave: { opacity: 0 },
-  atActive: { opacity: 1 },
+  atActive: { opacity: 1 }
 };
 
 // minimum size to reduce the sidebar in px.
@@ -37,7 +37,7 @@ class App extends React.Component {
     shutdownRequested: PropTypes.bool.isRequired,
     daemonStopped: PropTypes.bool.isRequired,
     autobuyerRunningModalVisible: PropTypes.bool.isRequired,
-    hideAutobuyerRunningModal: PropTypes.func.isRequired,
+    hideAutobuyerRunningModal: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -130,7 +130,7 @@ class App extends React.Component {
       hideAboutModalMacOS,
       autobuyerRunningModalVisible,
       hideAutobuyerRunningModal,
-      shutdownApp,
+      shutdownApp
     } = this.props;
     const MainSwitch = this.props.uiAnimations ? AnimatedSwitch : StaticSwitch;
 

@@ -25,7 +25,7 @@ const AccountsList = ({
   showAccount,
   showPubKey,
   onTogglePubkey,
-  accountExtendedKey,
+  accountExtendedKey
 }) => (
   <div key={"details" + account.accountNumber}>
     <div className="account-row-details-bottom-columns">
@@ -79,7 +79,7 @@ const AccountsList = ({
             values={{
               external: account.externalKeys,
               internal: account.internalKeys,
-              imported: account.importedKeys,
+              imported: account.importedKeys
             }}
           />
         </DataLine>
@@ -155,7 +155,7 @@ AccountsList.propTypes = {
   showRenameAccount: PropTypes.func.isRequired,
   hidden: PropTypes.bool.isRequired,
   hideAccount: PropTypes.func.isRequired,
-  showAccount: PropTypes.func.isRequired,
+  showAccount: PropTypes.func.isRequired
 };
 
 export default AccountsList;

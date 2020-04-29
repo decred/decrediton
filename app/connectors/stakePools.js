@@ -13,7 +13,7 @@ const mapStateToProps = selectorMap({
   stakePoolListingEnabled: sel.stakePoolListingEnabled,
   updatedStakePoolList: sel.updatedStakePoolList,
   isSavingStakePoolConfig: sel.isSavingStakePoolConfig,
-  isImportingScript: sel.isImportingScript,
+  isImportingScript: sel.isImportingScript
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -21,7 +21,7 @@ const mapDispatchToProps = (dispatch) =>
     {
       onSetStakePoolInfo: spa.setStakePoolInformation,
       onRemoveStakePool: spa.removeStakePoolConfig,
-      discoverAvailableStakepools: spa.discoverAvailableStakepools,
+      discoverAvailableStakepools: spa.discoverAvailableStakepools
     },
     dispatch
   );

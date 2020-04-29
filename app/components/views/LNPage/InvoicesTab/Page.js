@@ -50,7 +50,7 @@ export default ({
   lastError,
   onMemoChanged,
   onValueChanged,
-  onAddInvoice,
+  onAddInvoice
 }) => (
   <>
     <h2 className="ln-invoice-subheader">

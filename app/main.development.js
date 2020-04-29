@@ -4,26 +4,26 @@ import { app, BrowserWindow, Menu, dialog } from "electron";
 import { initGlobalCfg, validateGlobalCfgFile } from "./config";
 import {
   appLocaleFromElectronLocale,
-  default as locales,
+  default as locales
 } from "./i18n/locales";
 import {
   createLogger,
   lastLogLine,
   GetDcrdLogs,
   GetDcrwalletLogs,
-  GetDcrlndLogs,
+  GetDcrlndLogs
 } from "./main_dev/logging";
 import {
   getWalletsDirectoryPath,
   getWalletsDirectoryPathNetwork,
-  getAppDataDirectory,
+  getAppDataDirectory
 } from "./main_dev/paths";
 import { getGlobalCfgPath, checkAndInitWalletCfg } from "./main_dev/paths";
 import {
   installSessionHandlers,
   reloadAllowedExternalRequests,
   allowStakepoolRequests,
-  allowExternalRequest,
+  allowExternalRequest
 } from "./main_dev/externalRequests";
 import { setupProxy } from "./main_dev/proxy";
 import {
@@ -39,7 +39,7 @@ import {
   setSelectedWallet,
   getSelectedWallet,
   GetDcrlndPID,
-  GetDcrlndCreds,
+  GetDcrlndCreds
 } from "./main_dev/launch";
 import {
   getAvailableWallets,
@@ -53,7 +53,7 @@ import {
   setWatchingOnlyWallet,
   getWatchingOnlyWallet,
   startDcrlnd,
-  stopDcrlnd,
+  stopDcrlnd
 } from "./main_dev/ipc";
 import {
   initTemplate,
@@ -61,7 +61,7 @@ import {
   setGrpcVersions,
   getGrpcVersions,
   inputMenu,
-  selectionMenu,
+  selectionMenu
 } from "./main_dev/templates";
 import { readFileBackward } from "./helpers/byteActions";
 import electron from "electron";
@@ -78,7 +78,7 @@ import {
   RPC_MISSING_OPTIONS,
   SPV_WITH_ADVANCED_MODE,
   TESTNET,
-  MAINNET,
+  MAINNET
 } from "constants";
 import { DAEMON_ADVANCED, LOCALE } from "constants/config";
 
@@ -88,13 +88,13 @@ app.setPath("userData", getAppDataDirectory());
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const debug = argv.debug || process.env.NODE_ENV === "development";
 const logger = createLogger(debug);
-let cliOptions = {};
+const cliOptions = {};
 
 // Verify that config.json is valid JSON before fetching it, because
 // it will silently fail when fetching.
-let err = validateGlobalCfgFile();
+const err = validateGlobalCfgFile();
 if (err !== null) {
-  let errMessage =
+  const errMessage =
     "There was an error while trying to load the config file, the format is invalid.\n\nFile: " +
     getGlobalCfgPath() +
     "\nError: " +
@@ -367,7 +367,7 @@ ipcMain.on("clean-shutdown", async function (event) {
   event.sender.send("clean-shutdown-finished", stopped);
 });
 
-var reactIPC;
+let reactIPC;
 ipcMain.on("register-for-errors", function (event) {
   reactIPC = event.sender;
   event.returnValue = true;
@@ -498,8 +498,8 @@ app.on("ready", async () => {
     page: "app.html",
     webPreferences: {
       nodeIntegration: true,
-      devTools: true,
-    },
+      devTools: true
+    }
   };
   if (stopSecondInstance) {
     windowOpts = {
@@ -510,7 +510,7 @@ app.on("ready", async () => {
       height: 275,
       autoHideMenuBar: true,
       resizable: false,
-      page: "staticPages/secondInstance.html",
+      page: "staticPages/secondInstance.html"
     };
   } else {
     await installExtensions();
@@ -574,8 +574,8 @@ app.on("ready", async () => {
       Menu.buildFromTemplate([
         {
           label: "Inspect element",
-          click: () => mainWindow.inspectElement(x, y),
-        },
+          click: () => mainWindow.inspectElement(x, y)
+        }
       ]).popup(mainWindow);
     }
   });

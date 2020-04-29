@@ -6,8 +6,8 @@ import { newStakePool } from "connectors";
 const messages = defineMessages({
   placeholder: {
     id: "selectStakepool.placeholder",
-    defaultMessage: "Select VSP...",
-  },
+    defaultMessage: "Select VSP..."
+  }
 });
 
 @autobind
@@ -33,7 +33,7 @@ class StakePoolSelect extends React.Component {
           ...poolInfo,
           label: poolInfo.Host,
           value: poolInfo,
-          isVersionValid: true,
+          isVersionValid: true
         };
         onChange(opt);
       });
@@ -69,7 +69,7 @@ class StakePoolSelect extends React.Component {
       label: (
         <T id="stakePoolSelect.addNewPromptEmpty" m="Type to add new VSP" />
       ),
-      Host: null,
+      Host: null
     });
     return options;
   }
@@ -98,7 +98,7 @@ class StakePoolSelect extends React.Component {
 }
 
 StakePoolSelect.defaultProps = {
-  clearable: false,
+  clearable: false
 };
 
 export default injectIntl(newStakePool(StakePoolSelect));

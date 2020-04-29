@@ -15,7 +15,7 @@ const mapStateToProps = selectorMap({
   isWatchingOnly: sel.isWatchingOnly,
   tsDate: sel.tsDate,
   sidebarOnBottom: sel.sidebarOnBottom,
-  accountMixerRunning: sel.getAccountMixerRunning,
+  accountMixerRunning: sel.getAccountMixerRunning
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -23,7 +23,7 @@ const mapDispatchToProps = (dispatch) =>
     {
       updateBlockTimeSince: ca.updateBlockTimeSince,
       onExpandSideBar: sba.expandSideBar,
-      onReduceSideBar: sba.reduceSideBar,
+      onReduceSideBar: sba.reduceSideBar
     },
     dispatch
   );

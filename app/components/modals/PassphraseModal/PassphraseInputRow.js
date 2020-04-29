@@ -6,7 +6,7 @@ export default ({
   onSubmit,
   hasFailedAttempt,
   setPassPhrase,
-  autoFocusPassword,
+  autoFocusPassword
 }) => (
   <PassphraseModalField
     label={<T id="passphraseModal.privatePassphrase" m="Private Passphrase" />}>

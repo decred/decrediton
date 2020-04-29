@@ -71,7 +71,7 @@ function aliasDefaultMessagePlugin({ types: t }) {
           const attributes = path.get("attributes")
             .filter((attr) => attr.isJSXAttribute());
 
-          let descriptor = createMessageDescriptor(
+          const descriptor = createMessageDescriptor(
             attributes.map((attr) => [
               attr.get("name"),
               attr.get("value")

@@ -31,7 +31,7 @@ export {
   CloseButton,
   NetworkSwitch,
   InvisibleButton,
-  WatchOnlyWalletSwitch,
+  WatchOnlyWalletSwitch
 };
 
 /***************************************************
@@ -43,7 +43,7 @@ import {
   ChangePassphraseModal,
   ConfirmModal,
   InfoDocumentModal,
-  AboutModal,
+  AboutModal
 } from "modals";
 
 // mbb = ModalButtonBuilder (func to build a functional ModalButton component
@@ -54,7 +54,7 @@ const mbb = (className, modalComponent, buttonComponent) => (p) => (
       ...p,
       buttonComponent,
       modalComponent: p.modalComponent || modalComponent,
-      className: [className || "", p.className || ""].join(" "),
+      className: [className || "", p.className || ""].join(" ")
     }}
   />
 );

@@ -9,7 +9,7 @@ const LanguageSelectPage = ({
   selectedLang,
   onChangeSelectedLang,
   onSelectLang,
-  isTestNet,
+  isTestNet
 }) => {
   return (
     <div className={cx("page-body getstarted", isTestNet && "testnet-body")}>
