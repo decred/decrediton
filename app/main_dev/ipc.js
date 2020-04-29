@@ -89,8 +89,7 @@ export const startDaemon = async (params, testnet, reactIPC) => {
   }
 
   try {
-    let rpcCreds, appdata;
-    rpcCreds = params && params.rpcCreds;
+    const rpcCreds = params && params.rpcCreds;
     if (rpcCreds) {
       setDcrdRpcCredentials(rpcCreds);
       dcrdIsRemote = true;
@@ -98,7 +97,7 @@ export const startDaemon = async (params, testnet, reactIPC) => {
       return rpcCreds;
     }
 
-    appdata = params && params.appdata;
+    const appdata = params && params.appdata;
     const started = await launchDCRD(reactIPC, testnet, appdata);
     return started;
   } catch (err) {

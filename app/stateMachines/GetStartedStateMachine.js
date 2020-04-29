@@ -392,7 +392,7 @@ export const getStartedMachine = ({
               sendEvent({ type: "ERROR_STARTING_WALLET", payload: { error } });
             });
         },
-        isSyncingRPC: async (context) => {
+        isSyncingRPC: (context) => {
           if (context.isSPV) {
             return startSPVSync()
               .then((r) => r)

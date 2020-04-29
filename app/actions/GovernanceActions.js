@@ -476,7 +476,7 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
     }
   };
 
-  const getProposal = async (proposals, token) => {
+  const getProposal = (proposals, token) => {
     let proposal;
     const keys = Object.keys(proposals);
     for (let i = 0; i < keys.length; i++) {
@@ -629,12 +629,12 @@ export const updateVoteChoice = (
     return { address: t.address, message: msg };
   });
 
-  const updatePropRef = async (proposals, token, newProposal) => {
+  const updatePropRef = (proposals, token, newProposal) => {
     const keys = Object.keys(proposals);
     for (let i = 0; i < keys.length; i++) {
       const key = keys[i];
-      let proposal, j;
-      proposal = proposals[key].find((p, ind) => {
+      let j;
+      const proposal = proposals[key].find((p, ind) => {
         j = ind;
         return p.token === token;
       });

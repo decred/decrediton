@@ -395,7 +395,7 @@ export const decodeRawTransaction = (rawTx) => {
     output.version = rawTx.readUInt16LE(position);
     position += 2;
     // check length of scripts
-    var scriptLen;
+    let scriptLen;
     first = rawTx.readUInt8(position);
     position += 1;
     switch (first) {

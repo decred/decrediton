@@ -11,7 +11,7 @@ const getServiceClient = (clientClass) => async (
   certPath,
   macaroonPath
 ) => {
-  let cert, macaroon, macaroonCreds;
+  let macaroon, macaroonCreds;
 
   const readFile = (fname) =>
     new Promise((resolve, reject) => {
@@ -41,7 +41,7 @@ const getServiceClient = (clientClass) => async (
       readIfExists();
     });
 
-  cert = await readFile(certPath);
+  const cert = await readFile(certPath);
 
   if (macaroonPath) {
     macaroon = await readFile(macaroonPath);

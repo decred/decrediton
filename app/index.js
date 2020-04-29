@@ -1,7 +1,4 @@
 // @flow
-window.eval = () => {
-  throw new Error("Do not import things that use eval()");
-};
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";

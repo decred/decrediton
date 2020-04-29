@@ -106,7 +106,6 @@ if (err !== null) {
 let menu;
 let mainWindow = null;
 let previousWallet = null;
-let primaryInstance;
 
 const globalCfg = initGlobalCfg();
 const daemonIsAdvanced = argv.advanced || globalCfg.get(DAEMON_ADVANCED);
@@ -460,7 +459,7 @@ ipcMain.on("get-cli-options", (event) => {
   event.returnValue = cliOptions;
 });
 
-primaryInstance = app.requestSingleInstanceLock();
+const primaryInstance = app.requestSingleInstanceLock();
 const stopSecondInstance = !primaryInstance && !daemonIsAdvanced;
 if (stopSecondInstance) {
   logger.log("error", "Preventing second instance from running.");

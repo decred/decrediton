@@ -2,7 +2,8 @@ import Promise from "promise";
 import * as api from "middleware/walletrpc/api_pb";
 
 const hexToBytes = (hex) => {
-  for (var bytes = [], c = 0; c < hex.length; c += 2)
+  const bytes = [];
+  for (let c = 0; c < hex.length; c += 2)
     bytes.push(parseInt(hex.substr(c, 2), 16));
   return bytes;
 };

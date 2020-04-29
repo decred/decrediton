@@ -238,7 +238,7 @@ export const shutdownApp = () => (dispatch, getState) => {
 
 export const cleanShutdown = () => () => wallet.cleanShutdown();
 
-export const getAvailableWallets = () => async (dispatch, getState) =>
+export const getAvailableWallets = () => (dispatch, getState) =>
   new Promise((resolve, reject) => {
     const get = async () => {
       const { currentSettings } = getState().settings;
@@ -434,7 +434,7 @@ export const startWallet = (selectedWallet) => (dispatch, getState) =>
       .catch((err) => reject(err));
   });
 
-export const decreditonInit = () => async (dispatch) => {
+export const decreditonInit = () => (dispatch) => {
   dispatch(registerForErrors());
   dispatch(checkDecreditonVersion());
 };
@@ -488,7 +488,7 @@ export const connectDaemon = (rpcCreds) => (dispatch, getState) =>
     tryConnect();
   });
 
-export const checkNetworkMatch = () => async (dispatch, getState) =>
+export const checkNetworkMatch = () => (dispatch, getState) =>
   new Promise((resolve, reject) => {
     dispatch({ type: CHECK_NETWORKMATCH_ATTEMPT });
     wallet

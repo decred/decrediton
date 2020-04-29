@@ -180,7 +180,7 @@ function transactionsMaturingHeights(txs, chainParams) {
   return res;
 }
 
-export const getWalletServiceAttempt = () => async (dispatch, getState) => {
+export const getWalletServiceAttempt = () => (dispatch, getState) => {
   const {
     grpc: { address, port }
   } = getState();
@@ -721,13 +721,11 @@ export const getTickets = () => async (dispatch, getState) => {
     ticketsFilter,
     maximumTransactionCount,
     walletService,
-    currentBlockHeight
-  } = getState().grpc;
-  let {
-    noMoreTickets,
+    currentBlockHeight,
     getTicketsStartRequestHeight,
     minedTickets
   } = getState().grpc;
+  let { noMoreTickets } = getState().grpc;
   const pageCount = maximumTransactionCount;
   const ticketsNormalizer = sel.ticketsNormalizer(getState());
 
@@ -902,7 +900,7 @@ const getNonWalletOutputs = (decodeMessageService, walletService, tx) =>
         decodeMessageService,
         Buffer.from(tx.tx.getTransaction())
       )
-      .then(async (r) => {
+      .then((r) => {
         const tx = r.getTransaction();
         const outputs = tx.getOutputsList().map(async (o) => {
           const address = o.getAddressesList()[0];

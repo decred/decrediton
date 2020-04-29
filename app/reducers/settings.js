@@ -7,9 +7,11 @@ import {
 } from "../actions/SettingsActions";
 import { WALLET_SETTINGS, SELECT_LANGUAGE } from "actions/DaemonActions";
 export default function settings(state = {}, action) {
+  let currentSettings;
+  let tempSettings;
   switch (action.type) {
     case SELECT_LANGUAGE:
-      var currentSettings = state.currentSettings;
+      currentSettings = state.currentSettings;
       currentSettings.locale = action.language;
       return {
         ...state,
@@ -44,7 +46,7 @@ export default function settings(state = {}, action) {
       };
     case WALLET_SETTINGS:
       currentSettings = state.currentSettings;
-      var tempSettings = state.tempSettings;
+      tempSettings = state.tempSettings;
       currentSettings.currencyDisplay = action.currencyDisplay;
       tempSettings.currencyDisplay = action.currencyDisplay;
       currentSettings.gapLimit = action.gapLimit;

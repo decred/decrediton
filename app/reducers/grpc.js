@@ -106,6 +106,10 @@ import {
 } from "actions/AccountMixerActions";
 
 export default function grpc(state = {}, action) {
+  let idxOldTicket;
+  let newTickets;
+  let transactions;
+  let newMaturingBlockHeights;
   switch (action.type) {
     case GETACCOUNTMIXERSERVICE_SUCCESS:
       return {
@@ -402,12 +406,12 @@ export default function grpc(state = {}, action) {
         getTicketsStartRequestHeight: null
       };
     case RAWTICKETTRANSACTIONS_DECODED:
-      var idxOldTicket = state.tickets.indexOf(action.ticket);
+      idxOldTicket = state.tickets.indexOf(action.ticket);
       if (idxOldTicket < 0) {
         console.log("decoded did not find", idxOldTicket);
         return state;
       }
-      var newTickets = state.tickets.slice();
+      newTickets = state.tickets.slice();
       newTickets.splice(idxOldTicket, 1, action.newTicket);
       return {
         ...state,
@@ -438,7 +442,7 @@ export default function grpc(state = {}, action) {
         getTransactionsRequestAttempt: false
       };
     case GETTRANSACTIONS_COMPLETE:
-      var transactions = [
+      transactions = [
         ...action.unminedTransactions,
         ...action.minedTransactions
       ];
@@ -518,14 +522,15 @@ export default function grpc(state = {}, action) {
         currentBlockHeight: action.currentBlockHeight
       };
     case NEWBLOCKCONNECTED:
-      var newMaturingBlockHeights = Object.keys(
-        state.maturingBlockHeights
-      ).reduce((o, h) => {
-        h > action.currentBlockHeight
-          ? (o[h] = state.maturingBlockHeights[h])
-          : null;
-        return o;
-      }, {});
+      newMaturingBlockHeights = Object.keys(state.maturingBlockHeights).reduce(
+        (o, h) => {
+          h > action.currentBlockHeight
+            ? (o[h] = state.maturingBlockHeights[h])
+            : null;
+          return o;
+        },
+        {}
+      );
       return {
         ...state,
         recentBlockTimestamp: action.currentBlockTimestamp,

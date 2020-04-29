@@ -94,7 +94,7 @@ class ExistingSeed extends React.Component {
     this.setState({ seedType: side === "left" ? WORDS : HEX });
   };
 
-  async onError(seedError, seedWord) {
+  onError(seedError, seedWord) {
     const { seedWords } = this.state;
     let seedErrorStr = seedError + "";
 
