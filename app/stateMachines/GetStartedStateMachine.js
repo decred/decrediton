@@ -204,15 +204,13 @@ export const getStartedMachine = ({
             }
           }
         },
-        syncingRPC: {
-          onEntry: "isSyncingRPC",
-          on: {
-            ERROR_SYNCING_WALLET: {
-              target: "choosingWallet",
-              actions: assign({
-                error: (context, event) => event.error && event.error
-              })
-            }
+        isSyncingRPC: (context) => {
+          if (context.isSPV) {
+            return startSPVSync()
+              .then((r) => r)
+              .catch((error) =>
+                sendEvent({ type: "ERROR_SYNCING_WALLET", payload: { error } })
+              );
           }
         },
         // history state so we can go back in the specific state when going to other view, like settings or log
@@ -349,7 +347,7 @@ export const getStartedMachine = ({
           sendEvent({ type: "ERROR_STARTING_WALLET", payload: { error } });
         });
     },
-    isSyncingRPC: async (context) => {
+    isSyncingRPC: (context) => {
       if (context.isSPV) {
         return startSPVSync()
           .then(r => r)

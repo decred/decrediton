@@ -226,7 +226,7 @@ export const shutdownApp = () => (dispatch, getState) => {
 
 export const cleanShutdown = () => () => wallet.cleanShutdown();
 
-export const getAvailableWallets = () => async (dispatch, getState) => new Promise((resolve, reject) => {
+export const getAvailableWallets = () => (dispatch, getState) => new Promise((resolve, reject) => {
   const get = async () => {
     const { currentSettings } = getState().settings;
     const network = currentSettings.network;
@@ -372,7 +372,7 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => new Promi
     .catch(err => reject(err));
 });
 
-export const decreditonInit = () => async (dispatch) => {
+export const decreditonInit = () => (dispatch) => {
   dispatch(registerForErrors());
   dispatch(checkDecreditonVersion());
 };
@@ -416,7 +416,7 @@ export const connectDaemon = (rpcCreds) => (dispatch, getState) => new Promise((
   tryConnect();
 });
 
-export const checkNetworkMatch = () => async (dispatch, getState) => new Promise((resolve, reject) => {
+export const checkNetworkMatch = () => (dispatch, getState) => new Promise((resolve, reject) => {
   dispatch({ type: CHECK_NETWORKMATCH_ATTEMPT });
   wallet.getDaemonInfo()
     .then(daemonInfo => {

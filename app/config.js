@@ -180,7 +180,6 @@ export function getWalletCert(certPath) {
 // return { appdata, rpc_cert, rpc_user, rpc_pass, rpc_host, rpc_port }
 export function readDcrdConfig(testnet, appdata) {
   try {
-    let readCfg;
     const newCfg = {};
     newCfg.rpc_host = "127.0.0.1";
     newCfg.rpc_port = testnet ? "19109" : "9109";
@@ -205,7 +204,9 @@ export function readDcrdConfig(testnet, appdata) {
     if (newCfg.configFile === getAppDataDirectory() && !fs.existsSync(dcrdCfg(newCfg.configFile)) ) {
       createTempDcrdConf(testnet);
     }
-    readCfg = ini.parse(Buffer.from(fs.readFileSync(dcrdCfg(newCfg.configFile))).toString());
+    const readCfg = ini.parse(
+      Buffer.from(fs.readFileSync(dcrdCfg(newCfg.configFile))).toString()
+    );
 
     let userFound, passFound = false;
     // Look through all top level config entries

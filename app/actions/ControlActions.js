@@ -333,12 +333,13 @@ export const CONSTRUCTTX_SUCCESS = "CONSTRUCTTX_SUCCESS";
 
 export const constructTransactionAttempt = (account, confirmations, outputs, all) => (dispatch, getState) => {
   const request = new ConstructTransactionRequest();
+  let totalAmount;
   request.setSourceAccount(parseInt(account));
   request.setRequiredConfirmations(parseInt(parseInt(confirmations)));
   if (!all) {
     request.setOutputSelectionAlgorithm(0);
-    var totalAmount = 0;
-    outputs.map(output => {
+    totalAmount = 0;
+    outputs.forEach((output) => {
       const outputDest = new ConstructTransactionRequest.OutputDestination();
       outputDest.setAddress(output.destination);
       const newOutput = new ConstructTransactionRequest.Output();
@@ -358,21 +359,21 @@ export const constructTransactionAttempt = (account, confirmations, outputs, all
       request.setChangeDestination(changeDest);
     }
   } else if (outputs.length > 1) {
-      return (dispatch) => {
-        const error = "Too many outputs provided for a send all request.";
-        dispatch({ error, type: CONSTRUCTTX_FAILED });
-      };
-    } else if (outputs.length == 0) {
-      return (dispatch) => {
-        const error = "No destination specified for send all request.";
-        dispatch({ error, type: CONSTRUCTTX_FAILED });
-      };
-    } else {
-      request.setOutputSelectionAlgorithm(1);
-      const outputDest = new ConstructTransactionRequest.OutputDestination();
-      outputDest.setAddress(outputs[0].data.destination);
-      request.setChangeDestination(outputDest);
-    }
+    return (dispatch) => {
+      const error = "Too many outputs provided for a send all request.";
+      dispatch({ error, type: CONSTRUCTTX_FAILED });
+    };
+  } else if (outputs.length == 0) {
+    return (dispatch) => {
+      const error = "No destination specified for send all request.";
+      dispatch({ error, type: CONSTRUCTTX_FAILED });
+    };
+  } else {
+    request.setOutputSelectionAlgorithm(1);
+    const outputDest = new ConstructTransactionRequest.OutputDestination();
+    outputDest.setAddress(outputs[0].data.destination);
+    request.setChangeDestination(outputDest);
+  }
 
   dispatch({ type: CONSTRUCTTX_ATTEMPT });
   const { walletService } = getState().grpc;
@@ -394,17 +395,18 @@ export const constructTransactionAttempt = (account, confirmations, outputs, all
         return;
       }
 
-      const changeScriptByAccount = getState().control.changeScriptByAccount || {};
-      if (!all) {
-        // Store the change address we just generated so that future changes to
-        // the tx being constructed will use the same address and prevent gap
-        // limit exhaustion (see above note on issue dcrwallet#1622).
-        const changeIndex = constructTxResponse.getChangeIndex();
-        if (changeIndex > -1) {
-          const rawTx = Buffer.from(constructTxResponse.getUnsignedTransaction());
-          const decoded = wallet.decodeRawTransaction(rawTx);
-          changeScriptByAccount[account] = decoded.outputs[changeIndex].script;
-        }
+    const changeScriptByAccount =
+      getState().control.changeScriptByAccount || {};
+    if (!all) {
+      // Store the change address we just generated so that future changes to
+      // the tx being constructed will use the same address and prevent gap
+      // limit exhaustion (see above note on issue dcrwallet#1622).
+      const changeIndex = constructTxResponse.getChangeIndex();
+      if (changeIndex > -1) {
+        const rawTx = Buffer.from(constructTxResponse.getUnsignedTransaction());
+        const decoded = wallet.decodeRawTransaction(rawTx);
+        changeScriptByAccount[account] = decoded.outputs[changeIndex].script;
+      }
 
         constructTxResponse.totalAmount = totalAmount;
       } else {
@@ -443,7 +445,7 @@ export const validateAddress = address => async (dispatch, getState) => {
 export const VALIDATEMASTERPUBKEY_FAILED = "VALIDATEMASTERPUBKEY_FAILED";
 export const VALIDATEMASTERPUBKEY_SUCCESS = "VALIDATEMASTERPUBKEY_SUCCESS";
 
-export const validateMasterPubKey = masterPubKey => async (dispatch) => {
+export const validateMasterPubKey = (masterPubKey) => (dispatch) => {
   try {
     const validationErr = isValidMasterPubKey(masterPubKey);
     if (validationErr) {
@@ -458,7 +460,7 @@ export const validateMasterPubKey = masterPubKey => async (dispatch) => {
   }
 };
 
-export const validateAddressCleanStore = () => async (dispatch) => {
+export const validateAddressCleanStore = () => (dispatch) => {
   dispatch({ type: VALIDATEADDRESS_CLEANSTORE });
 };
 

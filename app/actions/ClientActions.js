@@ -156,9 +156,13 @@ function transactionsMaturingHeights(txs, chainParams) {
   return res;
 }
 
-export const getWalletServiceAttempt = () => async (dispatch, getState) => {
-  const { grpc: { address, port } } = getState();
-  const { daemon: { walletName } } = getState();
+export const getWalletServiceAttempt = () => (dispatch, getState) => {
+  const {
+    grpc: { address, port }
+  } = getState();
+  const {
+    daemon: { walletName }
+  } = getState();
   dispatch({ type: GETWALLETSERVICE_ATTEMPT });
   wallet.getWalletService(sel.isTestNet(getState()), walletName, address, port)
     .then(walletService => dispatch({ walletService, type: GETWALLETSERVICE_SUCCESS }))
@@ -574,9 +578,15 @@ export const getTickets = () => async (dispatch, getState) => {
 
   dispatch({ type: GETTICKETS_ATTEMPT });
 
-  const { ticketsFilter, maximumTransactionCount, walletService,
-    currentBlockHeight } = getState().grpc;
-  let { noMoreTickets, getTicketsStartRequestHeight, minedTickets } = getState().grpc;
+  const {
+    ticketsFilter,
+    maximumTransactionCount,
+    walletService,
+    currentBlockHeight,
+    getTicketsStartRequestHeight,
+    minedTickets
+  } = getState().grpc;
+  let { noMoreTickets } = getState().grpc;
   const pageCount = maximumTransactionCount;
   const ticketsNormalizer = sel.ticketsNormalizer(getState());
 
@@ -702,24 +712,33 @@ function filterTransactions(transactions, filter) {
 }
 
 // getNonWalletOutputs decodes a tx and gets outputs which are not from the wallet.
-const getNonWalletOutputs = (decodeMessageService, walletService, tx) => new Promise((resolve, reject) => wallet.decodeTransaction(
-  decodeMessageService, Buffer.from(tx.tx.getTransaction())
-).then(async r => {
-  const tx = r.getTransaction();
-  const outputs = tx.getOutputsList().map(async o => {
-    const address = o.getAddressesList()[0];
-    // Validate address so we can check if it is our own.
-    // If that is the case it is a change output.
-    const addrValidResp = await wallet.validateAddress(walletService, address);
-    return {
-      address,
-      value: o.getValue(),
-      isChange: addrValidResp.getIsMine()
-    };
-  });
-  resolve(Promise.all(outputs));
-})
-  .catch(err => reject(err)));
+const getNonWalletOutputs = (decodeMessageService, walletService, tx) =>
+  new Promise((resolve, reject) =>
+    wallet
+      .decodeTransaction(
+        decodeMessageService,
+        Buffer.from(tx.tx.getTransaction())
+      )
+      .then((r) => {
+        const tx = r.getTransaction();
+        const outputs = tx.getOutputsList().map(async (o) => {
+          const address = o.getAddressesList()[0];
+          // Validate address so we can check if it is our own.
+          // If that is the case it is a change output.
+          const addrValidResp = await wallet.validateAddress(
+            walletService,
+            address
+          );
+          return {
+            address,
+            value: o.getValue(),
+            isChange: addrValidResp.getIsMine()
+          };
+        });
+        resolve(Promise.all(outputs));
+      })
+      .catch((err) => reject(err))
+  );
 
 // getTransactions loads a list of transactions from the wallet, given the
 // current grpc state.

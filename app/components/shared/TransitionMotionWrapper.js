@@ -21,7 +21,7 @@ const TransitionMotionWrapper = ({
   const children = children => h("div", { className: props.className }, children.map(child));
   if (!uiAnimations) {
     const actual = isFunction(styles) ? styles(props) : styles;
-    return h(Aux, {}, children(actual));
+    return h("div", {}, children(actual));
   }
 
   return h(TransitionMotion, tmProps, children);

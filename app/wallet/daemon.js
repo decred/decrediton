@@ -68,8 +68,11 @@ export const stopWallet = log(() => Promise
     return stopped;
   }), "Stop Wallet");
 
-export const startWallet = log((walletPath, testnet) => new Promise((resolve, reject) => {
-  let pid, port;
+export const startWallet = log(
+  (walletPath, testnet) =>
+    new Promise((resolve, reject) => {
+      let port,
+        pid = "";
 
   // resolveCheck must be done both on the dcrwallet-port event and on the
   // return of the sendSync call because we can't be certain which will happen first

@@ -5,8 +5,13 @@ import fs from "fs";
 
 const services = require("./rpc_grpc_pb.js");
 
-const getServiceClient = (clientClass) => async (address, port, certPath, macaroonPath) => {
-  let cert, macaroon, macaroonCreds;
+const getServiceClient = (clientClass) => async (
+  address,
+  port,
+  certPath,
+  macaroonPath
+) => {
+  let macaroon, macaroonCreds;
 
   const readFile = fname => new Promise((resolve, reject) => {
     let tries = 0;
@@ -35,7 +40,7 @@ const getServiceClient = (clientClass) => async (address, port, certPath, macaro
     readIfExists();
   });
 
-  cert = await readFile(certPath);
+  const cert = await readFile(certPath);
 
   if (macaroonPath) {
     macaroon = await readFile(macaroonPath);

@@ -250,12 +250,15 @@ export const startRpcRequestFunc = (privPass, isRetry) => (dispatch, getState) =
                 type: STARTRPC_FAILED
               });
             }
-          } else if (status.indexOf("invalid passphrase") > 0 || status.indexOf("Stream removed")) {
-              dispatch({ error: status, type: SYNC_FAILED });
-              reject(status);
-            } else {
-              dispatch(startRpcRequestFunc(true, privPass));
-            }
+          } else if (
+            status.indexOf("invalid passphrase") > 0 ||
+            status.indexOf("Stream removed")
+          ) {
+            dispatch({ error: status, type: SYNC_FAILED });
+            reject(status);
+          } else {
+            dispatch(startRpcRequestFunc(true, privPass));
+          }
         }
       });
     }, 500);
@@ -312,7 +315,7 @@ export const GENERATESEED_SUCCESS = "GENERATESEED_SUCCESS";
 // or logged.
 // This is an async function, so it returns a promise that resolves once the
 // seed is obtained.
-export const generateSeed = () => async (dispatch, getState) => {
+export const generateSeed = () => (dispatch, getState) => {
   const seedService = getState().walletLoader.seedService;
   dispatch({ type: GENERATESEED_ATTEMPT });
   try {
@@ -506,7 +509,7 @@ export const rescanPointAttempt = () => (dispatch, getState) => {
     .then((response) => {
       dispatch({ response, type: RESCANPOINT_SUCCESS });
     })
-    .catch(async error => {
+    .catch((error) => {
       dispatch({ error, type: RESCANPOINT_FAILED });
     });
 };

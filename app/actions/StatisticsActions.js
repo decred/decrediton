@@ -515,41 +515,89 @@ const voteRevokeInfo = async (tx, liveTickets, walletService) => {
 const txBalancesDelta = async (tx, maturingTxs, liveTickets, walletService, chainParams) => {
   // tx.amount is negative in sends/tickets/transfers already
   let delta = null;
+  let tikcetinfo = null;
+  let revokeInfo = null;
   switch (tx.txType) {
-  case wallet.TRANSACTION_TYPE_TICKET_PURCHASE:
-    var { isWallet, commitAmount, spentAmount, purchaseFees } = ticketInfo(tx);
-    recordTicket(maturingTxs, liveTickets, tx, commitAmount, isWallet, chainParams);
-    delta = { spendable: -spentAmount, immature: 0,
-      immatureNonWallet: 0, voted: 0, revoked: 0,
-      sent: 0, received: 0, ticket: commitAmount,
-      locked: isWallet ? commitAmount : 0,
-      lockedNonWallet: isWallet ? 0 : commitAmount,
-      stakeRewards: 0, stakeFees: purchaseFees, totalStake: spentAmount,
-      timestamp: tx.timestamp, tx };
-    break;
-  case wallet.TRANSACTION_TYPE_VOTE:
-  case wallet.TRANSACTION_TYPE_REVOCATION:
-    var { wasWallet, isVote, returnAmount, stakeResult,
-      ticketCommitAmount } = await voteRevokeInfo(tx, liveTickets, walletService);
-    recordVoteRevoke(maturingTxs, tx, returnAmount, wasWallet, chainParams);
-    delta = { spendable: 0, locked: wasWallet ? -ticketCommitAmount : 0,
-      lockedNonWallet: wasWallet ? 0 : -ticketCommitAmount,
-      voted: isVote ? returnAmount : 0, revoked: !isVote ? returnAmount : 0,
-      sent: 0, received: 0, ticket: 0,
-      immature: wasWallet ? returnAmount : 0,
-      immatureNonWallet: wasWallet ? 0 : returnAmount,
-      stakeFees: isVote ? 0 : -stakeResult, stakeRewards: isVote ? stakeResult : 0,
-      totalStake: 0, timestamp: tx.timestamp, tx };
-    break;
-  case wallet.TRANSACTION_TYPE_COINBASE:
-  case wallet.TRANSACTION_TYPE_REGULAR:
-    delta = { spendable: +tx.amount, locked: 0, lockedNonWallet: 0, voted: 0,
-      revoked: 0, sent: tx.amount < 0 ? tx.amount : 0,
-      received: tx.amount > 0 ? tx.amount : 0, ticket: 0, immature: 0,
-      stakeFees: 0, stakeRewards: 0, totalStake: 0,
-      immatureNonWallet: 0, timestamp: tx.timestamp, tx };
-    break;
-  default: throw "Unknown tx type: " + tx.txType;
+    case wallet.TRANSACTION_TYPE_TICKET_PURCHASE:
+      tikcetinfo = ticketInfo(tx);
+      recordTicket(
+        maturingTxs,
+        liveTickets,
+        tx,
+        tikcetinfo.commitAmount,
+        tikcetinfo.isWallet,
+        chainParams
+      );
+      delta = {
+        spendable: -tikcetinfo.spentAmount,
+        immature: 0,
+        immatureNonWallet: 0,
+        voted: 0,
+        revoked: 0,
+        sent: 0,
+        received: 0,
+        ticket: tikcetinfo.commitAmount,
+        locked: tikcetinfo.isWallet ? tikcetinfo.commitAmount : 0,
+        lockedNonWallet: tikcetinfo.isWallet ? 0 : tikcetinfo.commitAmount,
+        stakeRewards: 0,
+        stakeFees: tikcetinfo.purchaseFees,
+        totalStake: tikcetinfo.spentAmount,
+        timestamp: tx.timestamp,
+        tx
+      };
+      break;
+    case wallet.TRANSACTION_TYPE_VOTE:
+    case wallet.TRANSACTION_TYPE_REVOCATION:
+      revokeInfo = await voteRevokeInfo(tx, liveTickets, walletService);
+      recordVoteRevoke(
+        maturingTxs,
+        tx,
+        revokeInfo.returnAmount,
+        revokeInfo.wasWallet,
+        chainParams
+      );
+      delta = {
+        spendable: 0,
+        locked: revokeInfo.wasWallet ? -revokeInfo.ticketCommitAmount : 0,
+        lockedNonWallet: revokeInfo.wasWallet
+          ? 0
+          : -revokeInfo.ticketCommitAmount,
+        voted: revokeInfo.isVote ? revokeInfo.returnAmount : 0,
+        revoked: !revokeInfo.isVote ? revokeInfo.returnAmount : 0,
+        sent: 0,
+        received: 0,
+        ticket: 0,
+        immature: revokeInfo.wasWallet ? revokeInfo.returnAmount : 0,
+        immatureNonWallet: revokeInfo.wasWallet ? 0 : revokeInfo.returnAmount,
+        stakeFees: revokeInfo.isVote ? 0 : -revokeInfo.stakeResult,
+        stakeRewards: revokeInfo.isVote ? revokeInfo.stakeResult : 0,
+        totalStake: 0,
+        timestamp: tx.timestamp,
+        tx
+      };
+      break;
+    case wallet.TRANSACTION_TYPE_COINBASE:
+    case wallet.TRANSACTION_TYPE_REGULAR:
+      delta = {
+        spendable: +tx.amount,
+        locked: 0,
+        lockedNonWallet: 0,
+        voted: 0,
+        revoked: 0,
+        sent: tx.amount < 0 ? tx.amount : 0,
+        received: tx.amount > 0 ? tx.amount : 0,
+        ticket: 0,
+        immature: 0,
+        stakeFees: 0,
+        stakeRewards: 0,
+        totalStake: 0,
+        immatureNonWallet: 0,
+        timestamp: tx.timestamp,
+        tx
+      };
+      break;
+    default:
+      throw "Unknown tx type: " + tx.txType;
   }
 
   return delta;

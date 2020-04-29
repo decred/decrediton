@@ -46,7 +46,7 @@ class CreateWallet extends React.Component {
     this.service.stop();
   }
 
-  async getStateComponent() {
+  getStateComponent() {
     const { current, isValid } = this.state;
     const { sendBack, sendContinue, setPassPhrase, setSeed, setError, onCreateWallet } = this;
     const { mnemonic, error } = this.service._state.context;

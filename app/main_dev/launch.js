@@ -159,7 +159,7 @@ export const closeDcrlnd = () => {
   return true;
 };
 
-export async function cleanShutdown(mainWindow, app) {
+export function cleanShutdown(mainWindow, app) {
   // Attempt a clean shutdown.
   return new Promise(resolve => {
     const cliShutDownPause = 2; // in seconds.

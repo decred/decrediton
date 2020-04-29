@@ -162,7 +162,7 @@ export const loadDeviceList = () => (dispatch, getState) => {
   });
 };
 
-export const selectDevice = (path) => async (dispatch, getState) => {
+export const selectDevice = (path) => (dispatch, getState) => {
   const devList = getState().trezor.deviceList;
   if (!devList.devices[path]) return;
   dispatch({ device: devList.devices[path], type: TRZ_SELECTEDDEVICE_CHANGED });

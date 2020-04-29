@@ -208,7 +208,7 @@ export const waitForDcrlndSynced = (lnClient) => async () => {
   throw new Error("dcrlnd wallet not synced after 60 seconds");
 };
 
-export const loadLNStartupInfo = () => async (dispatch) => {
+export const loadLNStartupInfo = () => (dispatch) => {
   dispatch(updateLNWalletInfo());
   dispatch(updateLNWalletBalances());
   dispatch(updateLNChannelBalances());
@@ -465,8 +465,9 @@ export const LNWALLET_SENDPAYMENT_ATTEMPT = "LNWALLET_SENDPAYMENT_ATTEMPT";
 export const LNWALLET_SENDPAYMENT_SUCCESS = "LNWALLET_SENDPAYMENT_SUCCESS";
 export const LNWALLET_SENDPAYMENT_FAILED = "LNWALLET_SENDPAYMENT_FAILED";
 
-const createPaymentStream = () => async (dispatch, getState) => {
-  let { client, payStream } = getState().ln;
+const createPaymentStream = () => (dispatch, getState) => {
+  const { client } = getState().ln;
+  let { payStream } = getState().ln;
   if (!client) {
     throw new Error("not connected to a ln wallet");
   }
