@@ -45,7 +45,7 @@ class StakePoolSelect extends React.Component {
   }
 
   newOptionCreator(obj) {
-    return { label: obj.label, Host: this.lastInput, newOption: true };
+    return { value: { Host: this.lastInput }, label: obj.label, Host: this.lastInput, newOption: true };
   }
 
   onInputChange(input) {
