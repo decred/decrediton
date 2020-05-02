@@ -44,7 +44,6 @@ export default function governance(state = {}, action) {
       getProposalError: null
     };
   case GETPROPROSAL_UPDATEVOTESTATUS_FAILED:
-    console.log(action.error);
     return { ...state,
       getProposalsAttempt: false,
       getProposalError: action.error
@@ -52,7 +51,7 @@ export default function governance(state = {}, action) {
   case GETPROPOSAL_ATTEMPT:
     return { ...state, getProposalsAttempt: true, getProposalError: null };
   case GETPROPOSAL_FAILED:
-    return { ...state, getProposalsAttempt: false, getProposalError: state.error };
+    return { ...state, getProposalsAttempt: false, getProposalError: action.error };
   case GETPROPOSAL_SUCCESS:
     return { ...state,
       getProposalsAttempt: false,

@@ -509,7 +509,6 @@ export default function snackbar(state = {}, action) {
         case LNWALLET_INVOICE_SETTLED:
           values = { memo: action.invoice.memo };
       }
-
       break;
 
     // Error messages
@@ -540,7 +539,6 @@ export default function snackbar(state = {}, action) {
     case GETACTIVEVOTE_FAILED:
     case GETVETTED_FAILED:
     case GETVETTED_UPDATEDVOTERESULTS_FAILED:
-    case GETPROPROSAL_UPDATEVOTESTATUS_FAILED:
     case GETPROPOSAL_FAILED:
     case SPVSYNC_FAILED:
     case UPDATEVOTECHOICE_FAILED:
