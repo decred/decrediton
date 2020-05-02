@@ -1,5 +1,4 @@
 const icons = {
-  /* icons */
   "chat-bubbles": "url('style/icons/chatBubbles.svg')",
   "ticket-voted-grey-icon": "url('style/icons/votingGrey.svg')",
   "account-rename-icon": "url('style/icons/account-rename.svg')",
@@ -42,7 +41,7 @@ const icons = {
   "help-rocketchat": "url('style/icons/rocketchatGrey.svg')",
   "help-telegram": "url('style/icons/telegramGrey.svg')",
   "hide-account-icon": "url('style/icons/account-eye-hide.svg')",
-  "info-warning": "url('style/icons/info-warning.svg')",
+  "info-warning-icon": "url('style/icons/info-warning.svg')",
   "indicator-confirmed-icon": "url('style/icons/indicator-confirmed.svg')",
   "indicator-invalid-icon": "url('style/icons/indicator-invalid.svg')",
   "indicator-pending-icon": "url('style/icons/indicator-pending.svg')",
