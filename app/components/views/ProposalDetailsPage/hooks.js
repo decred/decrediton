@@ -41,10 +41,6 @@ export const useProposalDetailsPage = () => {
     dispatch
   ]);
 
-  useEffect(() => {
-    if (getProposalError) send("REJECT");
-  }, [ getProposalError, send ]);
-
   const [{ value: votingStatus }, send] = useMachine(fetchMachine, {
     actions: {
       initial: () => {
@@ -52,14 +48,27 @@ export const useProposalDetailsPage = () => {
         return send("RESOLVE");
       },
       load: () => {
-        getProposalDetails(token).then(() => send({ type: "RESOLVE" })).catch(() => send("REJECT"));
+        getProposalDetails(token)
+          .then(() => send({ type: "RESOLVE" }))
+          .catch(() => send("REJECT"));
       }
     }
   });
 
   useEffect(() => {
-    if (getProposalError) send("REJECT");
-  }, [ getProposalError, send ]);
+    send(getProposalError ? "REJECT" : "RETRY");
+  }, [getProposalError, send]);
 
-  return { viewedProposalDetails, eligibleTicketCount, votingStatus, getProposalError, proposalsDetails, token, dispatch, goBackHistory, showPurchaseTicketsPage, send };
+  return {
+    viewedProposalDetails,
+    eligibleTicketCount,
+    votingStatus,
+    getProposalError,
+    proposalsDetails,
+    token,
+    dispatch,
+    goBackHistory,
+    showPurchaseTicketsPage,
+    send
+  };
 };

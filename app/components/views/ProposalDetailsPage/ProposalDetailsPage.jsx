@@ -22,23 +22,42 @@ const ProposalDetailsPage = () => {
   const stateComponent = useMemo(() => {
     let text = "";
     switch (votingStatus) {
-    case "idle":
-      return <></>;
-    case "loading":
-      return <div className={styles.loadingPage}><PoliteiaLoading /></div>;
-    case "success":
-      viewedProposalDetails.files.forEach(f => {
-        if (f.name === "index.md") {
-          text += politeiaMarkdownIndexMd(f.payload);
-        }
-      });
-      return <ProposalDetails {...{ text, viewedProposalDetails, goBackHistory, eligibleTicketCount, showPurchaseTicketsPage }} />;
-    case "failure":
-      return (
-        <LoadingError errorMessageDescription={String(getProposalError)} reload={() => { send("RETRY"); }} />
-      );
-    default:
-      return null;
+      case "idle":
+        return <></>;
+      case "loading":
+        return (
+          <div className={styles.loadingPage}>
+            <PoliteiaLoading />
+          </div>
+        );
+      case "success":
+        viewedProposalDetails.files.forEach((f) => {
+          if (f.name === "index.md") {
+            text += politeiaMarkdownIndexMd(f.payload);
+          }
+        });
+        return (
+          <ProposalDetails
+            {...{
+              text,
+              viewedProposalDetails,
+              goBackHistory,
+              eligibleTicketCount,
+              showPurchaseTicketsPage
+            }}
+          />
+        );
+      case "failure":
+        return (
+          <LoadingError
+            errorMessageDescription={String(getProposalError)}
+            reload={() => {
+              send("RETRY");
+            }}
+          />
+        );
+      default:
+        return null;
     }
   }, [
     eligibleTicketCount,

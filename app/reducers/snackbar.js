@@ -85,8 +85,10 @@ import {
   DECODERAWTXS_FAILED
 } from "actions/TransactionActions";
 import {
-  GETACTIVEVOTE_FAILED, GETVETTED_FAILED,
-  UPDATEVOTECHOICE_SUCCESS, UPDATEVOTECHOICE_FAILED,
+  GETACTIVEVOTE_FAILED,
+  GETVETTED_FAILED,
+  UPDATEVOTECHOICE_SUCCESS,
+  UPDATEVOTECHOICE_FAILED,
   GETVETTED_UPDATEDVOTERESULTS_FAILED
 } from "actions/GovernanceActions";
 import {
@@ -433,11 +435,11 @@ export default function snackbar(state = {}, action) {
     case NEW_TRANSACTIONS_RECEIVED: {
       const tx = action.newlyMinedTransactions.length
         ? action.newlyMinedTransactions[
-        action.newlyMinedTransactions.length - 1
-        ]
+            action.newlyMinedTransactions.length - 1
+          ]
         : action.newlyUnminedTransactions[
-        action.newlyUnminedTransactions.length - 1
-        ];
+            action.newlyUnminedTransactions.length - 1
+          ];
 
       // check if this transaction is already in the message stack and don't add it
       // if it is to prevent double notifications (eg: published tx and it got mined
@@ -509,69 +511,76 @@ export default function snackbar(state = {}, action) {
           values = { memo: action.invoice.memo };
       }
 
-  // Error messages
-  case WALLETREMOVED_FAILED:
-  case RENAMEACCOUNT_FAILED:
-  case GETNEXTACCOUNT_FAILED:
-  case CHANGEPASSPHRASE_FAILED:
-  case CONSTRUCTTX_FAILED:
-  case SIGNTX_FAILED:
-  case PUBLISHTX_FAILED:
-  case ABANDONTRANSACTION_FAILED:
-  case PURCHASETICKETS_FAILED:
-  case REVOKETICKETS_FAILED:
-  case IMPORTSCRIPT_MANUAL_FAILED:
-  case UPDATESTAKEPOOLCONFIG_FAILED:
-  case REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED:
-  case SETSTAKEPOOLVOTECHOICES_FAILED:
-  case ADDCUSTOMSTAKEPOOL_FAILED:
-  case DECODERAWTXS_FAILED:
-  case SIGNMESSAGE_FAILED:
-  case VERIFYMESSAGE_FAILED:
-  case GETSTARTUPWALLETINFO_FAILED:
-  case PUBLISHUNMINEDTRANSACTIONS_FAILED:
-  case EXPORT_ERROR:
-  case GETSTARTUPSTATS_FAILED:
-  case GETMYTICKETSSTATS_FAILED:
-  case GETWALLETSEEDSVC_FAILED:
-  case GETACTIVEVOTE_FAILED:
-  case GETVETTED_FAILED:
-  case GETVETTED_UPDATEDVOTERESULTS_FAILED:
-  case SPVSYNC_FAILED:
-  case UPDATEVOTECHOICE_FAILED:
-  case GETACCOUNTEXTENDEDKEY_FAILED:
-  case STARTTICKETBUYERV2_FAILED:
-  case TRZ_TOGGLEPINPROTECTION_FAILED:
-  case TRZ_TOGGLEPASSPHRASEPROTECTION_FAILED:
-  case TRZ_CHANGEHOMESCREEN_FAILED:
-  case TRZ_CHANGELABEL_FAILED:
-  case TRZ_WIPEDEVICE_FAILED:
-  case TRZ_RECOVERDEVICE_FAILED:
-  case TRZ_INITDEVICE_FAILED:
-  case TRZ_UPDATEFIRMWARE_FAILED:
-  case TRZ_NOCONNECTEDDEVICE:
-  case TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED:
-  case LNWALLET_CONNECT_FAILED:
-  case LNWALLET_SENDPAYMENT_FAILED:
-  case LNWALLET_OPENCHANNEL_FAILED:
-  case LNWALLET_CLOSECHANNEL_FAILED:
-  case LNWALLET_FUNDWALLET_FAILED:
-  case LNWALLET_WITHDRAWWALLET_FAILED:
-  case LNWALLET_STARTDCRLND_FAILED:
-    type = "Error";
-    if (action.error && String(action.error).indexOf("wallet.Unlock: invalid passphrase:: secretkey.DeriveKey") > -1) {
-      // intercepting all wrong passphrase errors, independently of which error
-      // state was triggered. Not terribly pretty.
-      message = messages[WRONG_PASSPHRASE_MSG];
-    } else if (String(action.error).indexOf("[object Object]") > -1) {
-      const keys = Object.keys(action.error);
-      error = keys.map(key => `${key}: ${action.error[key]}`);
-      message = messages[ERROR_IS_OBJECT];
-      values = { error };
       break;
-    } else {
-      message = messages[action.type] || messages.defaultErrorMessage;
-    }
+
+    // Error messages
+    case WALLETREMOVED_FAILED:
+    case RENAMEACCOUNT_FAILED:
+    case GETNEXTACCOUNT_FAILED:
+    case CHANGEPASSPHRASE_FAILED:
+    case CONSTRUCTTX_FAILED:
+    case SIGNTX_FAILED:
+    case PUBLISHTX_FAILED:
+    case ABANDONTRANSACTION_FAILED:
+    case PURCHASETICKETS_FAILED:
+    case REVOKETICKETS_FAILED:
+    case IMPORTSCRIPT_MANUAL_FAILED:
+    case UPDATESTAKEPOOLCONFIG_FAILED:
+    case REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED:
+    case SETSTAKEPOOLVOTECHOICES_FAILED:
+    case ADDCUSTOMSTAKEPOOL_FAILED:
+    case DECODERAWTXS_FAILED:
+    case SIGNMESSAGE_FAILED:
+    case VERIFYMESSAGE_FAILED:
+    case GETSTARTUPWALLETINFO_FAILED:
+    case PUBLISHUNMINEDTRANSACTIONS_FAILED:
+    case EXPORT_ERROR:
+    case GETSTARTUPSTATS_FAILED:
+    case GETMYTICKETSSTATS_FAILED:
+    case GETWALLETSEEDSVC_FAILED:
+    case GETACTIVEVOTE_FAILED:
+    case GETVETTED_FAILED:
+    case GETVETTED_UPDATEDVOTERESULTS_FAILED:
+    case SPVSYNC_FAILED:
+    case UPDATEVOTECHOICE_FAILED:
+    case GETACCOUNTEXTENDEDKEY_FAILED:
+    case STARTTICKETBUYERV2_FAILED:
+    case TRZ_TOGGLEPINPROTECTION_FAILED:
+    case TRZ_TOGGLEPASSPHRASEPROTECTION_FAILED:
+    case TRZ_CHANGEHOMESCREEN_FAILED:
+    case TRZ_CHANGELABEL_FAILED:
+    case TRZ_WIPEDEVICE_FAILED:
+    case TRZ_RECOVERDEVICE_FAILED:
+    case TRZ_INITDEVICE_FAILED:
+    case TRZ_UPDATEFIRMWARE_FAILED:
+    case TRZ_NOCONNECTEDDEVICE:
+    case TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED:
+    case LNWALLET_CONNECT_FAILED:
+    case LNWALLET_SENDPAYMENT_FAILED:
+    case LNWALLET_OPENCHANNEL_FAILED:
+    case LNWALLET_CLOSECHANNEL_FAILED:
+    case LNWALLET_FUNDWALLET_FAILED:
+    case LNWALLET_WITHDRAWWALLET_FAILED:
+    case LNWALLET_STARTDCRLND_FAILED:
+      type = "Error";
+      if (
+        action.error &&
+        String(action.error).indexOf(
+          "wallet.Unlock: invalid passphrase:: secretkey.DeriveKey"
+        ) > -1
+      ) {
+        // intercepting all wrong passphrase errors, independently of which error
+        // state was triggered. Not terribly pretty.
+        message = messages[WRONG_PASSPHRASE_MSG];
+      } else if (String(action.error).indexOf("[object Object]") > -1) {
+        const keys = Object.keys(action.error);
+        error = keys.map((key) => `${key}: ${action.error[key]}`);
+        message = messages[ERROR_IS_OBJECT];
+        values = { error };
+        break;
+      } else {
+        message = messages[action.type] || messages.defaultErrorMessage;
+      }
 
       values = { originalError: String(action.error) };
 
@@ -592,8 +601,8 @@ export default function snackbar(state = {}, action) {
       type = "Success";
       message =
         messages[
-        "TRZ_TOGGLEPINPROTECTION_SUCCESS_" +
-        (action.clearProtection ? "DISABLED" : "ENABLED")
+          "TRZ_TOGGLEPINPROTECTION_SUCCESS_" +
+            (action.clearProtection ? "DISABLED" : "ENABLED")
         ];
       values = { label: action.deviceLabel };
       break;

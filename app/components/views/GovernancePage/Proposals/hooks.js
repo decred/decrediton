@@ -49,6 +49,7 @@ export function useProposalsList(tab) {
   const [noMoreProposals, setNoMore] = useState(false);
   const proposals = useSelector(sel.proposals);
   const inventory = useSelector(sel.inventory);
+  const getProposalError = useSelector(sel.getProposalError);
   const dispatch = useDispatch();
   const getProposalsAndUpdateVoteStatus = (proposalBatch) =>
     dispatch(gov.getProposalsAndUpdateVoteStatus(proposalBatch));
@@ -70,7 +71,10 @@ export function useProposalsList(tab) {
       load: () => {
         if (!proposals || !proposals[tab] || !inventory || !inventory[tab])
           return;
-        if (proposals[tab].length >= inventory[tab].length) {
+        if (
+          !getProposalError &&
+          proposals[tab].length >= inventory[tab].length
+        ) {
           setNoMore(true);
           return send("RESOLVE");
         }
@@ -84,6 +88,11 @@ export function useProposalsList(tab) {
       }
     }
   });
+
+  useEffect(() => {
+    send(getProposalError ? "REJECT" : "RETRY");
+  }, [getProposalError, send]);
+
   const previous = usePrevious({ proposals, tab });
   useEffect(() => {
     if (!previous || !previous.proposals || !previous.proposals[tab]) return;
@@ -98,7 +107,14 @@ export function useProposalsList(tab) {
 
   const loadMore = useCallback(() => send("FETCH"), [send]);
 
-  return { noMoreProposals, state, proposals, loadMore };
+  return {
+    noMoreProposals,
+    state,
+    proposals,
+    loadMore,
+    getProposalError,
+    send
+  };
 }
 
 const onLoadMoreProposals = async (
