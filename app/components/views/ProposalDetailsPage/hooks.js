@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as sel from "selectors";
 import * as gov from "actions/GovernanceActions";
@@ -41,6 +41,10 @@ export const useProposalDetailsPage = () => {
     dispatch
   ]);
 
+  useEffect(() => {
+    if (getProposalError) send("REJECT");
+  }, [ getProposalError, send ]);
+
   const [{ value: votingStatus }, send] = useMachine(fetchMachine, {
     actions: {
       initial: () => {
@@ -48,20 +52,14 @@ export const useProposalDetailsPage = () => {
         return send("RESOLVE");
       },
       load: () => {
-        getProposalDetails(token).then(() => send({ type: "RESOLVE" }));
+        getProposalDetails(token).then(() => send({ type: "RESOLVE" })).catch(() => send("REJECT"));
       }
     }
   });
 
-  return {
-    viewedProposalDetails,
-    eligibleTicketCount,
-    votingStatus,
-    getProposalError,
-    proposalsDetails,
-    token,
-    dispatch,
-    goBackHistory,
-    showPurchaseTicketsPage
-  };
+  useEffect(() => {
+    if (getProposalError) send("REJECT");
+  }, [ getProposalError, send ]);
+
+  return { viewedProposalDetails, eligibleTicketCount, votingStatus, getProposalError, proposalsDetails, token, dispatch, goBackHistory, showPurchaseTicketsPage, send };
 };
