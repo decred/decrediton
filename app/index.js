@@ -433,6 +433,7 @@ const initialState = {
 };
 
 const fontConfig = {
+  // TODO: specify all fonts in fonts.less here!
   fontFamilyText: "Source Sans Pro",
   regularUrl: SourceSansProRegular,
   semiBoldUrl: SourceSansProSemiBold,
