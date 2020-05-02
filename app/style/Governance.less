@@ -1,5 +1,4 @@
 @import (reference) "./main.less";
-@import (reference) "./Icons.less";
 @import (reference) "./MiscComponents.less";
 
 .proposals-community-header,
@@ -97,7 +96,7 @@
     }
 
     .info .voting-indicator {
-      background-image: @arrow-right-blue-icon;
+      background-image: var(--arrow-right-blue-icon);
     }
   }
   .info {
@@ -158,7 +157,7 @@
 
 .politeia-loading-indicator {
   background-size: 100%;
-  background-image: @politeia-loading-icon;
+  background-image: var(--politeia-loading-icon);
   background-position: center;
   background-repeat: no-repeat;
   display: inline-block;

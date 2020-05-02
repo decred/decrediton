@@ -1,5 +1,4 @@
 @import (reference) "./main.less";
-@import (reference) "./Icons.less";
 
 .input-and-unit {
   display: flex;
@@ -17,7 +16,7 @@
   background-size: 16px 16px;
   background-position: 100% 50%;
   background-repeat: no-repeat;
-  background-image: @warning-input;
+  background-image: var(--warning-input-icon);
 
   &:hover {
     border-bottom: 1px var(--error-text-color) solid;

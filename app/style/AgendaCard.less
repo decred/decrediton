@@ -1,5 +1,4 @@
 @import (reference) "./main.less";
-@import (reference) "./Icons.less";
 
 .agenda-wrapper {
   margin-left: 100px;
@@ -25,7 +24,7 @@
 }
 
 .agenda-card:hover {
-  background-image: @agenda-card-kebab-hover;
+  background-image: var(--agenda-card-kebab-hover);
   background-size: 10px;
 }
 
@@ -39,7 +38,7 @@
   padding: 20px;
   float: left;
   background-color: var(--disabled-background-color);
-  background-image: @agenda-card-kebab-disabled;
+  background-image: var(--agenda-card-kebab-disabled);
   background-size: 10px;
   background-position: 93% 27px;
   background-repeat: no-repeat;
@@ -66,7 +65,7 @@
   text-align: right;
   text-transform: capitalize;
   border-color: var(--input-color);
-  background-image: @agenda-indicator-pending;
+  background-image: var(--agenda-indicator-pending);
   background-position: 6px 50%;
   background-size: 10px;
   background-repeat: no-repeat;
@@ -85,7 +84,7 @@
   margin-right: 20px;
   margin-bottom: 20px;
   border-color: var(--disabled-color);
-  background-image: @agenda-indicator-finished;
+  background-image: var(--agenda-indicator-finished);
   background-position: 6px 50%;
   background-size: 10px;
   background-repeat: no-repeat;

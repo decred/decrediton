@@ -1,5 +1,4 @@
 @import (reference) "./main.less";
-@import (reference) "./Icons.less";
 
 .ticket-list-wrapper {
   width: 740px;
@@ -99,7 +98,7 @@
 
 .ticket-info-expanded-indicator {
   background-repeat: no-repeat;
-  background-image: @agenda-card-kebab-disabled;
+  background-image: var(--agenda-card-kebab-disabled);
   float: right;
   width: 10px;
   background-size: 10px;
@@ -109,7 +108,7 @@
 }
 
 .ticket-card.ticket-info-card.is-expanded .ticket-info-expanded-indicator {
-  background-image: @indicator-invalid-icon;
+  background-image: var(--indicator-invalid-icon);
 }
 
 .ticket-expanded-info {
@@ -149,23 +148,23 @@
 }
 
 .ticket-card.ticket-expired {
-  background-image: @ticket-expired-icon;
+  background-image: var(--ticket-expired-icon);
 }
 
 .ticket-card.ticket-immature {
-  background-image: @ticket-immature-icon;
+  background-image: var(--ticket-immature-icon);
 }
 
 .ticket-card.ticket-live {
-  background-image: @ticket-live-icon;
+  background-image: var(--ticket-live-icon);
 }
 
 .ticket-card.ticket-missed {
-  background-image: @ticket-missed-icon;
+  background-image: var(--ticket-missed-icon);
 }
 
 .ticket-card.ticket-revoked {
-  background-image: @ticket-revoked-icon;
+  background-image: var(--ticket-revoked-icon);
 }
 
 .ticket-card.ticket-unmined {
@@ -173,7 +172,7 @@
 }
 
 .ticket-card.ticket-voted {
-  background-image: @ticket-voted-icon;
+  background-image: var(--ticket-voted-icon);
 }
 
 .my-tickets-charts {
@@ -297,7 +296,7 @@
 }
 
 .loading-more-tickets-icon {
-  background-image: @tickets-loading-more-icon;
+  background-image: var(--tickets-loading-more-icon);
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: 32px;

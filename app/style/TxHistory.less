@@ -1,5 +1,4 @@
 @import (reference) "./main.less";
-@import (reference) "./Icons.less";
 
 .indicator {
   padding: 3px 10px 3px 0px;
@@ -20,19 +19,19 @@
 
 .indicator.pending {
   border-color: var(--input-color);
-  background-image: @indicator-pending-icon;
+  background-image: var(--indicator-pending-icon);
   color: var(--input-color);
 }
 
 .indicator.confirmed {
   border-color: var(--accent-color);
-  background-image: @indicator-confirmed-icon;
+  background-image: var(--indicator-confirmed-icon);
   color: var(--accent-color);
 }
 
 .pending-overview-details {
   background-color: var(--disabled-background-color-lighter);
-  background-image: @pending-animation;
+  background-image: var(--pending-animation);
   background-size: 14px;
   background-position: 50%;
   background-repeat: no-repeat;
@@ -75,42 +74,42 @@
 
 .tx-info {
   &.out .icon {
-    background-image: @minus-small-icon;
+    background-image: var(--minus-small-icon);
   }
   &.in .icon,
   &.coinbase .icon {
-    background-image: @plus-small-icon;
+    background-image: var(--plus-small-icon);
   }
   &.transfer .icon {
-    background-image: @transfer-transaction;
+    background-image: var(--transfer-transaction-icon);
   }
   &.unknown .icon,
   &.ticket .icon {
-    background-image: @ticket-live-icon;
+    background-image: var(--ticket-live-icon);
   }
   &.live .icon {
-    background-image: @ticket-live-icon;
+    background-image: var(--ticket-live-icon);
   }
   &.vote .icon {
-    background-image: @ticket-voted-icon;
+    background-image: var(--ticket-voted-icon);
   }
   &.voted .icon {
-    background-image: @ticket-voted-icon;
+    background-image: var(--ticket-voted-icon);
   }
   &.revocation .icon {
-    background-image: @ticket-revoked-icon;
+    background-image: var(--ticket-revoked-icon);
   }
   &.revoked .icon {
-    background-image: @ticket-revoked-icon;
+    background-image: var(--ticket-revoked-icon);
   }
   &.immature .icon {
-    background-image: @ticket-immature-icon;
+    background-image: var(--ticket-immature-icon);
   }
   &.missed .icon {
-    background-image: @ticket-missed-icon;
+    background-image: var(--ticket-missed-icon);
   }
   &.expired .icon {
-    background-image: @ticket-expired-icon;
+    background-image: var(--ticket-expired-icon);
   }
   &.unmined .icon {
     background-image: @ticket-unmined-icon;

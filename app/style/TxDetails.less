@@ -1,5 +1,4 @@
 @import (reference) "./main.less";
-@import (reference) "./Icons.less";
 
 .txdetails-standalone-page .standalone-page-body {
   padding: 0;
@@ -25,7 +24,7 @@
   .txdetails-indicator-mixin;
 
   border-color: var(--input-color);
-  background-image: @indicator-pending-icon;
+  background-image: var(--indicator-pending-icon);
   color: var(--input-color);
 }
 
@@ -33,7 +32,7 @@
   .txdetails-indicator-mixin;
 
   border-color: var(--accent-color);
-  background-image: @indicator-confirmed-icon;
+  background-image: var(--indicator-confirmed-icon);
   color: var(--accent-color);
 }
 
