@@ -22,8 +22,15 @@ import { AppContainer } from "react-hot-loader";
 import { defaultLightTheme, ThemeProvider, defaultDarkTheme } from "pi-ui";
 import { lightTheme, darkTheme, icons } from "style/themes";
 import SourceSansProLight from "style/fonts/SourceSansPro-Light.ttf";
+import SourceSansProLightItalic from "style/fonts/SourceSansPro-LightItalic.ttf";
 import SourceSansProRegular from "style/fonts/SourceSansPro-Regular.ttf";
+import SourceSansProItalic from "style/fonts/SourceSansPro-Italic.ttf";
 import SourceSansProSemiBold from "style/fonts/SourceSansPro-SemiBold.ttf";
+import SourceSansProSemiBoldItalic from "style/fonts/SourceSansPro-SemiBoldItalic.ttf";
+import SourceSansProBold from "style/fonts/SourceSansPro-Bold.ttf";
+import SourceSansProBoldItalic from "style/fonts/SourceSansPro-BoldItalic.ttf";
+import InconsolataRegular from "style/fonts/Inconsolata-Regular.ttf";
+import InconsolataBold from "style/fonts/Inconsolata-Bold.ttf";
 
 const globalCfg = getGlobalCfg();
 const locale = globalCfg.get(LOCALE);
@@ -432,14 +439,61 @@ const initialState = {
   locales: locales
 };
 
-const fontConfig = {
-  // TODO: specify all fonts in fonts.less here!
-  fontFamilyText: "Source Sans Pro",
-  regularUrl: SourceSansProRegular,
-  semiBoldUrl: SourceSansProSemiBold,
-  lightUrl: SourceSansProLight,
-  format: "truetype"
-};
+const fonts = [
+  // Source Sans Pro
+  {
+    "font-family": "Source Sans Pro",
+    src: `url(${SourceSansProLight}) format("truetype")`,
+    "font-weight": defaultLightTheme["font-weight-light"]
+  },
+  {
+    "font-family": "Source Sans Pro",
+    src: `url(${SourceSansProLightItalic}) format("truetype")`,
+    "font-weight": defaultLightTheme["font-weight-light"],
+    "font-style": "italic"
+  },
+  {
+    "font-family": "Source Sans Pro",
+    src: `url(${SourceSansProRegular}) format("truetype")`
+  },
+  {
+    "font-family": "Source Sans Pro",
+    src: `url(${SourceSansProItalic}) format("truetype")`,
+    "font-style": "italic"
+  },
+  {
+    "font-family": "Source Sans Pro",
+    src: `url(${SourceSansProSemiBold}) format("truetype")`,
+    "font-weight": defaultLightTheme["font-weight-semi-bold"]
+  },
+  {
+    "font-family": "Source Sans Pro",
+    src: `url(${SourceSansProSemiBoldItalic}) format("truetype")`,
+    "font-weight": defaultLightTheme["font-weight-semi-bold"],
+    "font-style": "italic"
+  },
+  {
+    "font-family": "Source Sans Pro",
+    src: `url(${SourceSansProBold}) format("truetype")`,
+    "font-weight": defaultLightTheme["font-weight-bold"]
+  },
+  {
+    "font-family": "Source Sans Pro",
+    src: `url(${SourceSansProBoldItalic}) format("truetype")`,
+    "font-weight": defaultLightTheme["font-weight-bold"],
+    "font-style": "italic"
+  },
+  // Inconsolata
+  {
+    "font-family": "Inconsolata",
+    src: `url(${InconsolataRegular}) format("truetype")`
+  },
+  {
+    "font-family": "Inconsolata",
+    src: `url(${InconsolataBold}) format("truetype")`,
+    "font-weight": defaultLightTheme["font-weight-bold"]
+  }
+];
 
 const themes = {
   "theme-light": { ...defaultLightTheme, ...lightTheme, ...icons },
@@ -454,7 +508,7 @@ const render = () => ReactDOM.render(
     <ThemeProvider
       themes={themes}
       defaultThemeName={currentSettings.theme}
-      fontConfig={fontConfig}>
+      fonts={fonts}>
       <Provider store={store}>
         <ConnectedRouter history={history}>
           <Switch>

@@ -8,7 +8,6 @@ import TicketActivity from "./tables/TicketActivity";
 import BalanceTab from "./tabs/Balance";
 import TicketsTab from "./tabs/Tickets";
 import TransactionsTab from "./tabs/Transactions";
-import "style/Fonts.less";
 import "style/HomePage.less";
 
 const tabMessages = [
