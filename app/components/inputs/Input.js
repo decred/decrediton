@@ -72,26 +72,40 @@ class Input extends React.Component {
       hidden,
       type
     } = this.props;
-    const hasErrorToShow = showErrors && (invalid && value || required && !value);
-    return (
-      hidden ? null :
-        <>
-          <div className={hasErrorToShow ? this.state.divClassName + " error" : this.state.divClassName} ref={div => { this.state.inputUnitDiv = div; }}>
-            <input
-              ref={input => { this.input = input; }}
-              type={type || "text"}
-              className="input"
-              disabled={disabled ? disabled : null}
-              readOnly={readOnly ? readOnly : null}
-              placeholder={placeholder}
-              value={isNullOrUndefined(value) ? "" : value}
-              onChange={onChange}
-              onFocus={this.onInputFocus}
-              onBlur={this.onInputBlur}
-              onKeyDown={this.onKeyDown}
-            />
-            {unit && <span className={"unit-area " + (hasErrorToShow && "error")}>{unit}</span>}
-          </div>
+    const hasErrorToShow =
+      showErrors && ((invalid && value) || (required && !value));
+    return hidden ? null : (
+      <>
+        <div
+          className={
+            hasErrorToShow
+              ? this.state.divClassName + " error"
+              : this.state.divClassName
+          }
+          ref={(div) => {
+            this.state.inputUnitDiv = div;
+          }}>
+          <input
+            ref={(input) => {
+              this.input = input;
+            }}
+            type={type || "text"}
+            className="input"
+            disabled={disabled ? disabled : null}
+            readOnly={readOnly ? readOnly : null}
+            placeholder={placeholder}
+            value={isNullOrUndefined(value) ? "" : value}
+            onChange={onChange}
+            onFocus={this.onInputFocus}
+            onBlur={this.onInputBlur}
+            onKeyDown={this.onKeyDown}
+          />
+          {unit && (
+            <span className={"unit-area " + (hasErrorToShow && "error")}>
+              {unit}
+            </span>
+          )}
+        </div>
         ) : null}
       </>
     );

@@ -52,11 +52,11 @@ export const withLog = (f, msg, opts = {}) => (...args) => {
         if (res.length === 1 && res[0] === undefined) {
           log("debug", "%s returned without data", msg);
         } else if (opts.noResponseData) {
-            log("debug", `${msg} returned [response data omitted]`);
-          } else {
-            const { logMsg, logArgs } = formatLogArgs(`${msg} returned `, res);
-            log("debug", logMsg, ...logArgs);
-          }
+          log("debug", `${msg} returned [response data omitted]`);
+        } else {
+          const { logMsg, logArgs } = formatLogArgs(`${msg} returned `, res);
+          log("debug", logMsg, ...logArgs);
+        }
 
         resolve(...res);
       })
