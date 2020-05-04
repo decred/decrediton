@@ -1,7 +1,7 @@
 import { TicketsCogs, PassphraseModalButton, ImportScriptIconButton, KeyBlueButton, InvisibleConfirmModalButton } from "buttons";
 import { AccountsSelect, NumTicketsInput } from "inputs";
 import { FormattedMessage as T } from "react-intl";
-import { TransitionMotionWrapper, ShowWarning, ExternalLink } from "shared";
+import { TransitionMotionWrapper, ShowWarning, ExternalLink, Balance } from "shared";
 
 import "style/StakePool.less";
 
@@ -22,6 +22,7 @@ const PurchaseTicketsForm = ({
   onRevokeTickets,
   onToggleShowAdvanced,
   account,
+  ticketPrice,
   willEnter,
   willLeave,
   onShowStakePoolConfig,
@@ -34,7 +35,7 @@ const PurchaseTicketsForm = ({
       <div className="is-row purchase-ticket-input-address">
         <div className="purchase-ticket-area-row-label"><T id="purchaseTickets.accountFrom" m="From" />:</div>
         <AccountsSelect className="stakepool-purchase-ticket-input-select"
-          {...{ account, onChange: onChangeAccount }}/>
+          {...{ account, onChange: onChangeAccount }} />
         <div className="stakepool-info-icon account-select-icon"></div>
       </div>
       <div className="is-row purchase-ticket-input-amount">
@@ -50,7 +51,19 @@ const PurchaseTicketsForm = ({
           onChangeNumTickets={onChangeNumTickets}
           onKeyDown={handleOnKeyDown}
           showErrors={true}
-        />
+        ></NumTicketsInput>
+        {
+          getIsValid() && <div className="input-purchase-ticket-valid-message-area">
+            <T
+              id="purchaseTickets.validMsg"
+              m="Total: {amount} Remaining: {remaining}"
+              values={{
+                amount: <Balance flat amount={numTicketsToBuy * ticketPrice} />,
+                remaining: <Balance flat amount={account.spendable - numTicketsToBuy * ticketPrice} />
+              }}
+            />
+          </div>
+        }
       </div>
     </div>
     <div className="stakepool-purchase-ticket-info">
@@ -65,18 +78,20 @@ const PurchaseTicketsForm = ({
       }}
       />
     </div>
-    { !dismissBackupRedeemScript && (
+    {!dismissBackupRedeemScript && (
       <div className="warning-area">
         <ShowWarning warn={<T id="purchase.ticket.backup.redeem.warn"
           m="You must backup your redeem script. More information about it can be found at {link}"
-          values= {{ link:
-            <ExternalLink href={"https://docs.decred.org/wallets/decrediton/using-decrediton/#backup-redeem-script"}>
-              <T id="purchase.ticket.decred.docs" m="Decred docs"/>
-            </ExternalLink> }}
-        />}/>
+          values={{
+            link:
+              <ExternalLink href={"https://docs.decred.org/wallets/decrediton/using-decrediton/#backup-redeem-script"}>
+                <T id="purchase.ticket.decred.docs" m="Decred docs" />
+              </ExternalLink>
+          }}
+        />} />
         <div className="is-row backup-buttons-row-area">
           <InvisibleConfirmModalButton
-            modalTitle={<T id="purchase.ticket.modal.title" m="Dismiss Button"/>}
+            modalTitle={<T id="purchase.ticket.modal.title" m="Dismiss Button" />}
             modalContent={<T id="purchase.ticket.modal.desc"
               m="Are you sure you want to dismiss this message? Make sure your redeem scripts are backed up." />}
             buttonLabel={<T id="purchase.ticket.dismiss.warn" m="Dismiss Message" />}
@@ -96,7 +111,7 @@ const PurchaseTicketsForm = ({
         onSubmit={onRevokeTickets}
         buttonLabel={<T id="purchaseTickets.revokeBtn" m="Revoke" />}
       />
-      { isWatchingOnly ?
+      {isWatchingOnly ?
         <KeyBlueButton disabled={getIsValid && !getIsValid()} onClick={onPurchaseTickets}>
           {purchaseLabel()}
         </KeyBlueButton> :
