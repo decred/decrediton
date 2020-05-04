@@ -1,4 +1,3 @@
-import { FormattedMessage as T } from "react-intl";
 import "style/Input.less";
 import { isNullOrUndefined } from "util";
 
@@ -59,8 +58,6 @@ class Input extends React.Component {
   render() {
     const {
       showErrors,
-      invalidMessage,
-      requiredMessage,
       required,
       invalid,
       value,
