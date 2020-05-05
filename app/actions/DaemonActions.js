@@ -58,7 +58,7 @@ export const SYNC_DAEMON_FAILED = "SYNC_DAEMON_FAILED";
 export const CREATE_WALLET_ERROR = "CREATE_WALLET_ERROR";
 export const CREATE_WALLET_ATTEMPT = "CREATE_WALLET_ATTEMPT";
 
-export const checkDecreditonVersion = () => (dispatch, getState) =>{
+export const checkDecreditonVersion = () => (dispatch, getState) => {
   const detectedVersion = getState().daemon.appVersion;
   const releaseApiURL = "https://api.github.com/repos/decred/decrediton/releases";
   axios.get(releaseApiURL, { timeout: 5000 })
@@ -67,7 +67,7 @@ export const checkDecreditonVersion = () => (dispatch, getState) =>{
       if (semverCompatible(currentVersion, detectedVersion)) {
         wallet.log("info", "Decrediton version up to date.");
       } else {
-        dispatch({ type: DECREDITON_VERSION, msg:  response.data[0].tag_name });
+        dispatch({ type: DECREDITON_VERSION, msg: response.data[0].tag_name });
       }
     })
     .catch(function (error) {
@@ -147,7 +147,7 @@ export const finishPrivacy = () => (dispatch) => {
   dispatch(goBack());
 };
 
-export const startDaemon = (params) => (dispatch, getState) => new Promise ((resolve, reject) => {
+export const startDaemon = (params) => (dispatch, getState) => new Promise((resolve, reject) => {
   dispatch({ type: DAEMONSTART_ATTEMPT });
   const { daemonStarted } = getState().daemon;
   if (daemonStarted) {
@@ -226,7 +226,7 @@ export const shutdownApp = () => (dispatch, getState) => {
 
 export const cleanShutdown = () => () => wallet.cleanShutdown();
 
-export const getAvailableWallets = () => async (dispatch, getState) => new Promise ((resolve, reject) => {
+export const getAvailableWallets = () => async (dispatch, getState) => new Promise((resolve, reject) => {
   const get = async () => {
     const { currentSettings } = getState().settings;
     const network = currentSettings.network;
@@ -307,7 +307,7 @@ export const closeDaemonRequest = () => async(dispatch, getState) => {
   }
 };
 
-export const startWallet = (selectedWallet) => (dispatch, getState) => new Promise((resolve,reject) => {
+export const startWallet = (selectedWallet) => (dispatch, getState) => new Promise((resolve, reject) => {
   const start = async () => {
     const { currentSettings } = getState().settings;
     const network = currentSettings.network;
@@ -323,11 +323,11 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => new Promi
     const walletCfg = getWalletCfg(network == "testnet", selectedWallet.value.wallet);
     wallet.setPreviousWallet(selectedWallet);
 
-    var currentStakePoolConfig = walletCfg.get("stakepools");
-    var foundStakePoolConfig = false;
-    var firstConfiguredStakePool = null;
+    const currentStakePoolConfig = walletCfg.get("stakepools");
+    let foundStakePoolConfig = false;
+    let firstConfiguredStakePool = null;
     if (currentStakePoolConfig !== undefined) {
-      for (var i = 0; i < currentStakePoolConfig.length; i++) {
+      for (let i = 0; i < currentStakePoolConfig.length; i++) {
         if (currentStakePoolConfig[i].ApiKey && currentStakePoolConfig[i].Network == network) {
           foundStakePoolConfig = true;
           firstConfiguredStakePool = currentStakePoolConfig[i];
@@ -368,7 +368,7 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => new Promi
   };
 
   // TODO better treat errors here. Errors can fail silently.
-  start().then(discoverAccountsComplete => resolve (discoverAccountsComplete))
+  start().then(discoverAccountsComplete => resolve(discoverAccountsComplete))
     .catch(err => reject(err));
 });
 
@@ -378,7 +378,7 @@ export const decreditonInit = () => async (dispatch) => {
 };
 
 const TIME_TO_TIMEOUT = 15 * 1000; // 15 sec
-export const connectDaemon = (rpcCreds) => (dispatch, getState) => new Promise((resolve,reject) => {
+export const connectDaemon = (rpcCreds) => (dispatch, getState) => new Promise((resolve, reject) => {
   dispatch({ type: CONNECTDAEMON_ATTEMPT });
   const timeBeforeConnect = new Date();
   const tryConnect = async () => {
@@ -487,7 +487,7 @@ export const getDcrdLogs = () => {
     .then(logs => {
       return(logs);
     }).catch(
-      err=>{
+      err => {
         console.log(err);
         return (null, err);
       });
@@ -501,7 +501,7 @@ export const getDecreditonLogs = () => {
     .then(logs => {
       return(logs);
     }).catch(
-      err=>{
+      err => {
         console.log(err);
         return (null, err);
       });
@@ -512,7 +512,7 @@ export const getDcrlndLogs = () => {
     .then(logs => {
       return(logs);
     }).catch(
-      err=>{
+      err => {
         console.log(err);
         return (null, err);
       });

@@ -27,10 +27,10 @@ const POST = (path, apiToken, json) => {
 // stakepPoolInfoResponseToConfig converts a response object for the
 // stakePoolInfo call into an object array of available stakepool configs.
 function stakepPoolInfoResponseToConfig(response) {
-  var stakePoolNames = Object.keys(response.data);
+  const stakePoolNames = Object.keys(response.data);
 
   return stakePoolNames.map(name => {
-    let { APIEnabled, URL, Network, APIVersionsSupported } = response.data[name];
+    const { APIEnabled, URL, Network, APIVersionsSupported } = response.data[name];
     return !APIEnabled
       ? null
       : { Host: URL, Network, APIVersionsSupported };
@@ -49,10 +49,10 @@ export function stakePoolInfo(cb) {
 }
 
 function parseStakePoolResults(response) {
-  var stakePoolNames = Object.keys(response.data);
+  const stakePoolNames = Object.keys(response.data);
 
   return stakePoolNames.map(name => {
-    let { APIEnabled, URL } = response.data[name];
+    const { APIEnabled, URL } = response.data[name];
     return !APIEnabled
       ? null
       : { Host: URL, ...response.data[name] };

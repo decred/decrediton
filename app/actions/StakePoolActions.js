@@ -129,7 +129,7 @@ export const setStakePoolInformation = (privpass, poolHost, apiKey, rescan) =>
 
       // All set. Update the config, dispatch the success and start a rescan.
       const currentStakePoolConfig = await dispatch(updateSavedConfig(response.data.data, poolHost, apiKey, accountNum));
-      let selectedStakePool = currentStakePoolConfig.filter(p => p.Host === poolHost)[0] || null;
+      const selectedStakePool = currentStakePoolConfig.filter(p => p.Host === poolHost)[0] || null;
       dispatch({ selectedStakePool, currentStakePoolConfig, type: UPDATESTAKEPOOLCONFIG_SUCCESS });
       rescan && dispatch(rescanAttempt(0));
     } catch (error) {
@@ -197,7 +197,7 @@ export const discoverAvailableStakepools = () => (dispatch, getState) =>
     .then((foundStakepoolConfigs) => {
       if (foundStakepoolConfigs) {
         const { daemon: { walletName } } = getState();
-        let config = getWalletCfg(sel.isTestNet(getState()), walletName);
+        const config = getWalletCfg(sel.isTestNet(getState()), walletName);
         updateStakePoolConfig(config, foundStakepoolConfigs);
         dispatch({ type: DISCOVERAVAILABLESTAKEPOOLS_SUCCESS, currentStakePoolConfig: config.get("stakepools") });
       }
@@ -210,9 +210,9 @@ export const changeSelectedStakePool = (selectedStakePool) => (dispatch) =>
 export const REMOVESTAKEPOOLCONFIG = "REMOVESTAKEPOOLCONFIG";
 export const removeStakePoolConfig = (host) => (dispatch, getState) => {
   const { daemon: { walletName } } = getState();
-  let config = getWalletCfg(sel.isTestNet(getState()), walletName);
-  let existingPools = config.get("stakepools");
-  let pool = existingPools.filter(p => p.Host === host)[0];
+  const config = getWalletCfg(sel.isTestNet(getState()), walletName);
+  const existingPools = config.get("stakepools");
+  const pool = existingPools.filter(p => p.Host === host)[0];
   if (!pool) { return; }
 
   // Instead of simply deleting from exsting pools we blank all non-default
@@ -220,9 +220,9 @@ export const removeStakePoolConfig = (host) => (dispatch, getState) => {
   // the stakepool list from the remote api.
 
   const propsToMaintain = [ "Host", "Network", "APIVersionsSupported" ];
-  let newPool = {};
+  const newPool = {};
   propsToMaintain.forEach(p => newPool[p] = pool[p]); // **not** a deep copy
-  let newPools = existingPools.map(p => p.Host === host ? newPool : p);
+  const newPools = existingPools.map(p => p.Host === host ? newPool : p);
   config.set("stakepools", newPools);
 
   let selectedStakePool = sel.selectedStakePool(getState());
@@ -257,7 +257,7 @@ export const addCustomStakePool = host => async (dispatch, getState) => {
     }
 
     const { daemon: { walletName } } = getState();
-    let config = getWalletCfg(sel.isTestNet(getState()), walletName);
+    const config = getWalletCfg(sel.isTestNet(getState()), walletName);
     updateStakePoolConfig(config, [ poolInfo ]);
     const currentStakePoolConfig = config.get("stakepools");
 

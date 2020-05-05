@@ -327,7 +327,7 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
   };
 
   dispatch({ type: GETPROPROSAL_UPDATEVOTESTATUS_ATTEMPT, tokensBatch });
-  let proposalsUpdated = getDefaultInventory();
+  const proposalsUpdated = getDefaultInventory();
   const blockTimestampFromNow = sel.blockTimestampFromNow(getState());
   const piURL = sel.politeiaURL(getState());
   // If proposals is null at our redux state, it probably means first starting or
@@ -339,7 +339,7 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (dispatch,
   const lastPoliteiaAccessBlock = sel.lastPoliteiaAccessBlock(getState());
 
   try {
-    const { proposals } = await getProposalsBatch(tokensBatch,piURL);
+    const { proposals } = await getProposalsBatch(tokensBatch, piURL);
     const { summaries } = await getProposalsVotestatusBatch(tokensBatch, piURL);
     const { bestBlock } = summaries;
     tokensBatch.forEach( token => {

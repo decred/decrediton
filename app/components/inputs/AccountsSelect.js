@@ -51,7 +51,7 @@ class AccountsSelect extends React.Component {
   }
 
   getAccountsToShow(nextProps) {
-    let accountsPerType = {
+    const accountsPerType = {
       "spending": nextProps.spendingAccounts,
       "visible": nextProps.visibleAccounts
     };
@@ -66,7 +66,7 @@ class AccountsSelect extends React.Component {
         <Select
           disabled={disabled}
           clearable={false}
-          style={{ zIndex:"9" }}
+          style={{ zIndex: "9" }}
           placeholder={formatMessage(messages.placeholder)}
           multi={false}
           value={this.state.account}

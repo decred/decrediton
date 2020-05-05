@@ -4,18 +4,18 @@ import grpc from "grpc";
 
 import { getWalletCert } from "config.js";
 import { getWalletPath } from "main_dev/paths.js";
-var services = require("../walletrpc/api_grpc_pb.js");
+const services = require("../walletrpc/api_grpc_pb.js");
 
 const getServiceClient = (clientClass) => (isTestNet, walletPath, address, port, cb) => {
-  var cert = getWalletCert(getWalletPath(isTestNet, walletPath));
+  const cert = getWalletCert(getWalletPath(isTestNet, walletPath));
   if (cert == "") {
     return cb(null, "Unable to load dcrwallet certificate.  dcrwallet not running?");
   }
-  var creds = grpc.credentials.createSsl(cert);
-  var client = new clientClass(address + ":" + port, creds);
+  const creds = grpc.credentials.createSsl(cert);
+  const client = new clientClass(address + ":" + port, creds);
 
-  var deadline = new Date();
-  var deadlineInSeconds = 30;
+  const deadline = new Date();
+  const deadlineInSeconds = 30;
   deadline.setSeconds(deadline.getSeconds()+deadlineInSeconds);
   grpc.waitForClientReady(client, deadline, function(err) {
     if (err) {

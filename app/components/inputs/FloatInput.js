@@ -3,7 +3,7 @@ import { restrictToStdDecimalNumber, limitFractionalDigits } from "helpers/strin
 
 const FloatInput = ({ maxFracDigits, ...props }) => {
 
-  var value = props.value;
+  let value = props.value;
 
   const onChange = (e) => {
     let newValue = restrictToStdDecimalNumber(e.target.value);

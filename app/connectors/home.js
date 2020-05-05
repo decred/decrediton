@@ -26,4 +26,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   goToTransactionHistory: cla.goToTransactionHistory
 }, dispatch);
 
-export default connect(mapStateToProps,mapDispatchToProps);
+export default connect(mapStateToProps, mapDispatchToProps);

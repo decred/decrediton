@@ -63,7 +63,8 @@ const config = merge(baseConfig, {
               noIeCompat: true,
               strictMath: true
             }
-          } ]
+          }
+]
       },
       {
         test: [ /\.woff(\?v=\d+\.\d+\.\d+)?$/, /\.woff2(\?v=\d+\.\d+\.\d+)?$/ ],

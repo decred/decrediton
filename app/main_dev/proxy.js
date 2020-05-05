@@ -12,7 +12,7 @@ export const setupProxy = (logger) => new Promise( (resolve, reject) => {
   const proxyType = cfg.get("proxy_type");
   const proxyLocation = cfg.get("proxy_location");
 
-  let proxyConfig = {
+  const proxyConfig = {
     pacScript: null,
     proxyRules: null,
     proxyBypassRules: null

@@ -38,7 +38,7 @@ class Send extends React.Component {
       this.setState({ isSendAll: false });
     }
     if (isSendSelf && (prevProps.nextAddress != nextAddress)) {
-      newOutputs = (newOutputs || outputs).map(o => ({ ...o, data:{ ...o.data, destination: nextAddress } }));
+      newOutputs = (newOutputs || outputs).map(o => ({ ...o, data: { ...o.data, destination: nextAddress } }));
     }
     if (newOutputs) {
       this.setState({ outputs: newOutputs }, this.onAttemptConstructTransaction);
@@ -158,12 +158,12 @@ class Send extends React.Component {
   }
   onShowSendAll() {
     const { account, outputs } = this.state;
-    const newOutputs = [ { ...outputs[0], data:{ ...outputs[0].data, amount: account.spendable } } ];
+    const newOutputs = [ { ...outputs[0], data: { ...outputs[0].data, amount: account.spendable } } ];
     this.setState({ isSendAll: true, outputs: newOutputs }, this.onAttemptConstructTransaction);
   }
   onHideSendAll() {
     const { outputs } = this.state;
-    const newOutputs = [ { ...outputs[0], data:{ ...outputs[0].data, amount: null } } ];
+    const newOutputs = [ { ...outputs[0], data: { ...outputs[0].data, amount: null } } ];
     this.setState({ isSendAll: false, outputs: newOutputs }, this.onAttemptConstructTransaction);
   }
   onShowConfirm() {
@@ -172,12 +172,12 @@ class Send extends React.Component {
   }
   onShowSendSelf() {
     const { outputs } = this.state;
-    let newOutputs = [ { ...outputs[0], data: this.getBaseOutput() } ];
+    const newOutputs = [ { ...outputs[0], data: this.getBaseOutput() } ];
     this.setState({ isSendSelf: true, outputs: newOutputs }, this.onAttemptConstructTransaction);
   }
   onShowSendOthers() {
     const { outputs } = this.state;
-    let newOutputs = [ { ...outputs[0], data: this.getBaseOutput() } ];
+    const newOutputs = [ { ...outputs[0], data: this.getBaseOutput() } ];
     this.setState({ isSendSelf: false, outputs: newOutputs }, this.onAttemptConstructTransaction);
   }
 

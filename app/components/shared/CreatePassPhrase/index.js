@@ -14,7 +14,7 @@ class CreatePassPhrase extends React.Component {
 
   render() {
     const { setPassPhrase, setPassPhraseVerification, onKeyDown, showPassphraseInformation, hidePassphraseInformation } = this;
-    const { passPhrase, passPhraseVerification,isShowingPassphraseInformation, hasFailedAttempt } = this.state;
+    const { passPhrase, passPhraseVerification, isShowingPassphraseInformation, hasFailedAttempt } = this.state;
     const isValid = this.isValid();
     return (
       <PassPhraseInputs

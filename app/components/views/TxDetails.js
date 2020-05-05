@@ -11,19 +11,19 @@ import "style/Fonts.less";
 import KeyBlueButton from "../buttons/KeyBlueButton";
 
 const messages = defineMessages({
-  Ticket:     { id: "txDetails.type.ticket", defaultMessage: "Ticket" },
-  Vote:       { id: "txDetails.type.vote",   defaultMessage: "Vote" },
+  Ticket: { id: "txDetails.type.ticket", defaultMessage: "Ticket" },
+  Vote: { id: "txDetails.type.vote",   defaultMessage: "Vote" },
   Revocation: { id: "txDetails.type.revoke", defaultMessage: "Revoke" },
-  Coinbase:   { id: "txDetails.type.coinbase", defaultMessage: "Coinbase" }
+  Coinbase: { id: "txDetails.type.coinbase", defaultMessage: "Coinbase" }
 });
 
 const headerIcons = {
-  in:         "tx-detail-icon-in",
-  out:        "tx-detail-icon-out",
-  Coinbase:   "tx-detail-icon-in",
-  transfer:   "tx-detail-icon-transfer",
-  Ticket:     "tx-detail-icon-ticket",
-  Vote:       "tx-detail-icon-vote",
+  in: "tx-detail-icon-in",
+  out: "tx-detail-icon-out",
+  Coinbase: "tx-detail-icon-in",
+  transfer: "tx-detail-icon-transfer",
+  Ticket: "tx-detail-icon-ticket",
+  Vote: "tx-detail-icon-vote",
   Revocation: "tx-detail-icon-revocation"
 };
 
@@ -83,12 +83,12 @@ const TxDetails = ({
   const goBack = () => goBackHistory();
   const openTxUrl = () => shell.openExternal(txUrl);
   const openBlockUrl = () => shell.openExternal(txBlockUrl);
-  var title = txType ? intl.formatMessage(messages[txType]) :
+  let title = txType ? intl.formatMessage(messages[txType]) :
     <Balance title bold amount={txDirection !== "in" ? -txAmount : txAmount}/>;
   if (txType == "Ticket" && ticketReward) {
     title = title + ", Voted";
   }
-  var sentFromAccount = "";
+  let sentFromAccount = "";
   if (txDirection == "out") {
     sentFromAccount = txInputs.length > 0 ? txInputs[0].accountName : "";
   }
@@ -111,7 +111,7 @@ const TxDetails = ({
       <T id="txDetails.backBtn" m="Back" />
     </SlateGrayButton>;
 
-  var subtitle = <div/>;
+  let subtitle = <div/>;
 
   switch (txType) {
   case "Ticket":

@@ -442,7 +442,7 @@ const fontConfig = {
 
 const themes = {
   "theme-light": { ...defaultLightTheme, ...lightTheme, ...icons },
-  "theme-dark":  { ...defaultDarkTheme, ...darkTheme, ...icons }
+  "theme-dark": { ...defaultDarkTheme, ...darkTheme, ...icons }
 };
 
 const history = createMemoryHistory();

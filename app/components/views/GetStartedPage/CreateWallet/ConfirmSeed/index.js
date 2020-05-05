@@ -13,7 +13,7 @@ class ConfirmSeed extends React.Component {
         word: shouldShow ? word : "",
         show: shouldShow,
         index,
-        match:  shouldShow
+        match: shouldShow
       };
     });
     this.state = {

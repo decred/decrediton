@@ -107,7 +107,7 @@ export const CREATEWATCHONLYWALLET_ATTEMPT = "CREATEWATCHONLYWALLET_ATTEMPT";
 export const CREATEWATCHONLYWALLET_FAILED = "CREATEWATCHONLYWALLET_FAILED";
 export const CREATEWATCHONLYWALLET_SUCCESS = "CREATEWATCHONLYWALLET_SUCCESS";
 
-export const createWatchOnlyWalletRequest = (extendedPubKey, pubPass ="") => (dispatch, getState) => new Promise((resolve,reject) => {
+export const createWatchOnlyWalletRequest = (extendedPubKey, pubPass ="") => (dispatch, getState) => new Promise((resolve, reject) => {
   dispatch({ type: CREATEWATCHONLYWALLET_ATTEMPT });
   return wallet.createWatchingOnlyWallet(getState().walletLoader.loader, extendedPubKey, pubPass)
     .then(() => {
@@ -212,7 +212,7 @@ export const startRpcRequestFunc = (privPass, isRetry) => (dispatch, getState) =
   const credentials = ipcRenderer.sendSync("get-dcrd-rpc-credentials");
   const { rpc_user, rpc_cert, rpc_pass, rpc_host, rpc_port } = credentials;
 
-  var request = new RpcSyncRequest();
+  const request = new RpcSyncRequest();
   const cert = getDcrdCert(rpc_cert);
   request.setNetworkAddress(rpc_host + ":" + rpc_port);
   request.setUsername(rpc_user);
@@ -250,14 +250,12 @@ export const startRpcRequestFunc = (privPass, isRetry) => (dispatch, getState) =
                 type: STARTRPC_FAILED
               });
             }
-          } else {
-            if (status.indexOf("invalid passphrase") > 0 || status.indexOf("Stream removed")) {
+          } else if (status.indexOf("invalid passphrase") > 0 || status.indexOf("Stream removed")) {
               dispatch({ error: status, type: SYNC_FAILED });
               reject(status);
             } else {
               dispatch(startRpcRequestFunc(true, privPass));
             }
-          }
         }
       });
     }, 500);
@@ -291,13 +289,13 @@ export const CLEARSTAKEPOOLCONFIG = "CLEARSTAKEPOOLCONFIG";
 export function clearStakePoolConfigNewWallet() {
   return (dispatch, getState) => {
     const { daemon: { walletName } } = getState();
-    let config = getWalletCfg(isTestNet(getState()), walletName);
+    const config = getWalletCfg(isTestNet(getState()), walletName);
     config.delete("stakepools");
 
     getStakePoolInfo()
       .then(foundStakePoolConfigs => {
         if (foundStakePoolConfigs) {
-          let config = getWalletCfg(isTestNet(getState()), walletName);
+          const config = getWalletCfg(isTestNet(getState()), walletName);
           config.set("stakepools", foundStakePoolConfigs);
           dispatch({ currentStakePoolConfig: foundStakePoolConfigs, type: CLEARSTAKEPOOLCONFIG });
         }
@@ -378,8 +376,8 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
   const { discoverAccountsComplete } = getState().walletLoader;
   const { currentSettings } = getState().settings;
   const spvConnect = currentSettings.spvConnect;
-  var request = new SpvSyncRequest();
-  for (var i = 0; spvConnect && i < spvConnect.length; i++) {
+  const request = new SpvSyncRequest();
+  for (let i = 0; spvConnect && i < spvConnect.length; i++) {
     request.addSpvConnect(spvConnect[i]);
   }
   if (!discoverAccountsComplete && privPass) {
@@ -494,7 +492,8 @@ const syncConsumer = (response) => (dispatch, getState) => {
   case SyncNotificationType.RESCAN_FINISHED: {
     dispatch({ type: SYNC_RESCAN_FINISHED });
     break;
-  }}
+  }
+}
 };
 
 export const RESCANPOINT_ATTEMPT = "RESCANPOINT_ATTEMPT";

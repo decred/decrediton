@@ -28,14 +28,14 @@ class Input extends React.Component {
   onInputFocus = (e) => {
     const { onFocus } = this.props;
     const { inputUnitDiv } = this.state;
-    var updatedInputUnitDiv = inputUnitDiv;
+    const updatedInputUnitDiv = inputUnitDiv;
     this.setState({ inputUnitDiv: updatedInputUnitDiv.classList.add("active") });
     onFocus && onFocus(e);
   };
   onInputBlur = (e) => {
     const { onBlur } = this.props;
     const { inputUnitDiv } = this.state;
-    var updatedInputUnitDiv = inputUnitDiv;
+    const updatedInputUnitDiv = inputUnitDiv;
     this.setState({ inputUnitDiv: updatedInputUnitDiv.classList.remove("active") });
     onBlur && onBlur(e);
   };

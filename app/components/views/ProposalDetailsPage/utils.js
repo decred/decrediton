@@ -3,6 +3,6 @@
 // helpers.js file of politeia. Assumes the payload has been converted from
 // base64 into bytes.
 export function politeiaMarkdownIndexMd(payload) {
-  let text = decodeURIComponent(escape(payload));
+  const text = decodeURIComponent(escape(payload));
   return text.substring(text.indexOf("\n") + 1);
 }

@@ -72,10 +72,10 @@ class PreCreateWallet extends React.Component {
   onChangeCreateWalletName(newWalletName) {
     const { availableWallets } = this.props;
     this.setState({ hasFailedAttemptName: true });
-    var nameAvailable = true;
+    let nameAvailable = true;
     // replace all special path symbols
     newWalletName = newWalletName.replace(/[/\\.;:~]/g, "");
-    for (var i = 0; i < availableWallets.length; i++) {
+    for (let i = 0; i < availableWallets.length; i++) {
       if (newWalletName == availableWallets[i].value.wallet) {
         nameAvailable = false;
         this.setState({ walletNameError: true });
@@ -130,7 +130,7 @@ class PreCreateWallet extends React.Component {
 
   toggleWatchOnly() {
     const { isWatchingOnly } = this.state;
-    this.setState({ isWatchingOnly : !isWatchingOnly, isTrezor: false });
+    this.setState({ isWatchingOnly: !isWatchingOnly, isTrezor: false });
   }
 
   toggleTrezor() {

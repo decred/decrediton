@@ -61,7 +61,8 @@ const PrivacySettings = ({
               <ChangePassphraseButton
                 className={[
                   isChangePassPhraseDisabled ? "change-password-disabled-icon" : "",
-                  changePassphraseRequestAttempt ? "change-password-loading" : "" ].join(" ")}
+                  changePassphraseRequestAttempt ? "change-password-loading" : ""
+].join(" ")}
                 isDisabled={isChangePassPhraseDisabled}
                 modalTitle={<T id="settings.changeConfirmation" m="Change your passphrase" />}
                 onSubmit={onAttemptChangePassphrase} />

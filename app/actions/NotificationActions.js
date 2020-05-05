@@ -72,10 +72,12 @@ const transactionNtfnsDataHandler = (dispatch, getState) => {
       ntfTimer = null;
     }
 
-    unmined.forEach(tx => { if (!newlyUnminedMap[tx.txHash]) {
+    unmined.forEach(tx => {
+ if (!newlyUnminedMap[tx.txHash]) {
       newlyUnmined.push(tx);
       newlyUnminedMap[tx.txHash] = tx;
-    }});
+    }
+});
 
     mined.forEach(tx => {
       if (!newlyMinedMap[tx.txHash]) {
@@ -122,9 +124,9 @@ const transactionNtfnsDataHandler = (dispatch, getState) => {
 };
 
 export const transactionNtfnsStart = () => (dispatch, getState) => {
-  var request = new TransactionNotificationsRequest();
+  const request = new TransactionNotificationsRequest();
   const { walletService } = getState().grpc;
-  let transactionNtfns = walletService.transactionNotifications(request);
+  const transactionNtfns = walletService.transactionNotifications(request);
   dispatch({ transactionNtfns, type: TRANSACTIONNTFNS_START });
   transactionNtfns.on("data", transactionNtfnsDataHandler(dispatch, getState));
   transactionNtfns.on("end", () => {
@@ -141,13 +143,13 @@ export const ACCOUNTNTFNS_START = "ACCOUNTNTFNS_START";
 export const ACCOUNTNTFNS_END = "ACCOUNTNTFNS_END";
 
 export const accountNtfnsStart = () => (dispatch, getState) => {
-  var request = new AccountNotificationsRequest();
+  const request = new AccountNotificationsRequest();
   const { walletService } = getState().grpc;
-  let accountNtfns = walletService.accountNotifications(request);
+  const accountNtfns = walletService.accountNotifications(request);
   dispatch({ accountNtfns, type: ACCOUNTNTFNS_START });
   accountNtfns.on("data", data => {
     const { daemon: { hiddenAccounts } } = getState();
-    let account = {
+    const account = {
       hidden: hiddenAccounts.indexOf(data.getAccountNumber()) > -1,
       accountNumber: data.getAccountNumber(),
       accountName: data.getAccountName(),

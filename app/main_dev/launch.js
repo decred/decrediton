@@ -124,7 +124,7 @@ export const closeDCRW = () => {
 // we don't have piperx/pipetx to command it.
 const rpcStopDcrlnd = async (creds) => {
   logger.log("info", "Stopping dcrlnd daemon via RPC call");
-  let lnClient = await ln.getLightningClient(creds.address, creds.port, creds.certPath, creds. macaroonPath);
+  const lnClient = await ln.getLightningClient(creds.address, creds.port, creds.certPath, creds. macaroonPath);
   await ln.stopDaemon(lnClient);
 };
 
@@ -170,7 +170,7 @@ export async function cleanShutdown(mainWindow, app) {
     setTimeout(function () { closeClis(); }, cliShutDownPause * 1000);
     logger.log("info", "Closing decrediton.");
 
-    let shutdownTimer = setInterval(function () {
+    const shutdownTimer = setInterval(function () {
       const stillRunning = dcrdPID !== -1 && (isRunning(dcrdPID) && os.platform() != "win32");
 
       if (!stillRunning) {
@@ -191,7 +191,7 @@ export async function cleanShutdown(mainWindow, app) {
 }
 
 // launchDCRD checks launches dcrd
-export const launchDCRD = (reactIPC, testnet, appdata) => new Promise((resolve,reject) => {
+export const launchDCRD = (reactIPC, testnet, appdata) => new Promise((resolve, reject) => {
   const dcrdExe = getExecutablePath("dcrd", argv.custombinpath);
   if (!fs.existsSync(dcrdExe)) {
     logger.log("error", "The dcrd executable does not exist. Expected to find it at " + dcrdExe);
@@ -210,8 +210,8 @@ export const launchDCRD = (reactIPC, testnet, appdata) => new Promise((resolve,r
   // Upgrade for electron 8.0+ which doesn't support curve P-521: in systems
   // with the previous version of decrediton installed we need to remove the
   // rpc.key file so that the tls cert is recreated.
-  let rpcCertPath = getDcrdRpcCert(newConfig.appdata);
-  let rpcKeyPath = rpcCertPath.replace(/\.cert$/, ".key");
+  const rpcCertPath = getDcrdRpcCert(newConfig.appdata);
+  const rpcKeyPath = rpcCertPath.replace(/\.cert$/, ".key");
   const globalCfg = getGlobalCfg();
   if (!globalCfg.get(UPGD_ELECTRON8)) {
     if (fs.existsSync(rpcKeyPath)) {
@@ -392,7 +392,7 @@ export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
     if (daemonIsAdvanced)
       return;
     if (code !== 0) {
-      var lastDcrwalletErr = lastErrorLine(GetDcrwalletLogs());
+      let lastDcrwalletErr = lastErrorLine(GetDcrwalletLogs());
       if (!lastDcrwalletErr || lastDcrwalletErr == "") {
         lastDcrwalletErr = lastPanicLine(GetDcrwalletLogs());
       }
@@ -419,23 +419,23 @@ export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
 };
 
 export const launchDCRLnd = (walletAccount, walletPort, rpcCreds, walletPath,
-  testnet, autopilotEnabled) => new Promise((resolve,reject) => {
+  testnet, autopilotEnabled) => new Promise((resolve, reject) => {
 
   if (dcrlndPID === -1) {
     resolve();
   }
 
-  let dcrlndRoot = path.join(walletPath, "dcrlnd");
-  let tlsCertPath = path.join(dcrlndRoot, "tls.cert");
-  let adminMacaroonPath = path.join(dcrlndRoot, "admin.macaroon");
+  const dcrlndRoot = path.join(walletPath, "dcrlnd");
+  const tlsCertPath = path.join(dcrlndRoot, "tls.cert");
+  const adminMacaroonPath = path.join(dcrlndRoot, "admin.macaroon");
 
-  let args = [
+  const args = [
     "--nolisten",
     "--logdir="+path.join(dcrlndRoot, "logs"),
     "--datadir="+path.join(dcrlndRoot, "data"),
     "--tlscertpath="+tlsCertPath,
     "--tlskeypath="+path.join(dcrlndRoot, "tls.key"),
-    "--configfile="+path.join(dcrlndRoot,"dcrlnd.conf"),
+    "--configfile="+path.join(dcrlndRoot, "dcrlnd.conf"),
     "--adminmacaroonpath="+adminMacaroonPath,
     "--node=dcrd",
     "--dcrd.rpchost="+rpcCreds.rpc_host+":"+rpcCreds.rpc_port,
@@ -534,32 +534,32 @@ export const GetDcrlndPID = () => dcrlndPID;
 export const GetDcrlndCreds = () => dcrlndCreds;
 
 export const readExesVersion = (app, grpcVersions) => {
-  let args = [ "--version" ];
-  let exes = [ "dcrd", "dcrwallet", "dcrctl" ];
-  let versions = {
+  const args = [ "--version" ];
+  const exes = [ "dcrd", "dcrwallet", "dcrctl" ];
+  const versions = {
     grpc: grpcVersions,
     decrediton: app.getVersion()
   };
 
-  for (let exe of exes) {
-    let exePath = getExecutablePath("dcrd", argv.custombinpath);
+  for (const exe of exes) {
+    const exePath = getExecutablePath("dcrd", argv.custombinpath);
     if (!fs.existsSync(exePath)) {
       logger.log("error", "The dcrd executable does not exist. Expected to find it at " + exePath);
     }
 
-    let proc = spawn(exePath, args, { encoding: "utf8" });
+    const proc = spawn(exePath, args, { encoding: "utf8" });
     if (proc.error) {
       logger.log("error", `Error trying to read version of ${exe}: ${proc.error}`);
       continue;
     }
 
-    let versionLine = proc.stdout.toString();
+    const versionLine = proc.stdout.toString();
     if (!versionLine) {
       logger.log("error", `Empty version line when reading version of ${exe}`);
       continue;
     }
 
-    let decodedLine = versionLine.match(/\w+ version ([^\s]+)/);
+    const decodedLine = versionLine.match(/\w+ version ([^\s]+)/);
     if (decodedLine !== null) {
       versions[exe] = decodedLine[1];
     } else {
@@ -613,11 +613,11 @@ export const connectRpcDaemon = async (mainWindow, rpcCreds) => {
       ca: [ cert ]
     });
     dcrdSocket.on("open", function() {
-      logger.log("info","decrediton has connected to dcrd instance");
+      logger.log("info", "decrediton has connected to dcrd instance");
       return mainWindow.webContents.send("connectRpcDaemon-response", { connected: true });
     });
     dcrdSocket.on("error", function(error) {
-      logger.log("error",`Error: ${error}`);
+      logger.log("error", `Error: ${error}`);
       return mainWindow.webContents.send("connectRpcDaemon-response", { connected: false, error: error.toString() });
     });
     dcrdSocket.on("message", function(data) {
@@ -637,7 +637,7 @@ export const connectRpcDaemon = async (mainWindow, rpcCreds) => {
       }
     });
     dcrdSocket.on("close", () => {
-      logger.log("info","decrediton has disconnected to dcrd instance");
+      logger.log("info", "decrediton has disconnected to dcrd instance");
     });
   } catch (error) {
     return mainWindow.webContents.send("connectRpcDaemon-response", { connected: false, error });

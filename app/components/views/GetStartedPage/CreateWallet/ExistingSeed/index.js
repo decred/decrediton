@@ -74,14 +74,14 @@ class ExistingSeed extends React.Component {
     if (words.length === 33) {
       this.setState({
         seedWords: words,
-        showPasteWarning : true,
+        showPasteWarning: true,
         showPasteError: false
       });
       return true;
     } else {
       this.setState({
-        showPasteWarning : false,
-        showPasteError : true
+        showPasteWarning: false,
+        showPasteError: true
       });
       return false;
     }

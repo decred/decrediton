@@ -6,20 +6,20 @@ import { withRouter } from "react-router-dom";
 
 const TxRowByType = {
   [txTypes.TICKET]: StakeTxRow,
-  [txTypes.VOTE] : StakeTxRow,
-  [txTypes.REVOCATION] : StakeTxRow,
-  [txTypes.UNKNOWN] : StakeTxRow,
-  [txTypes.VOTED] : StakeTxRow,
-  [txTypes.UNMINED] : StakeTxRow,
-  [txTypes.IMMATURE] : StakeTxRow,
-  [txTypes.MISSED] : StakeTxRow,
-  [txTypes.EXPIRED] : StakeTxRow,
-  [txTypes.REVOKED] : StakeTxRow,
-  [txTypes.LIVE] : StakeTxRow,
-  [txTypes.OUT] : RegularTxRow,
-  [txTypes.IN] : RegularTxRow,
-  [txTypes.TRANSFER] : RegularTxRow,
-  [txTypes.COINBASE] : RegularTxRow
+  [txTypes.VOTE]: StakeTxRow,
+  [txTypes.REVOCATION]: StakeTxRow,
+  [txTypes.UNKNOWN]: StakeTxRow,
+  [txTypes.VOTED]: StakeTxRow,
+  [txTypes.UNMINED]: StakeTxRow,
+  [txTypes.IMMATURE]: StakeTxRow,
+  [txTypes.MISSED]: StakeTxRow,
+  [txTypes.EXPIRED]: StakeTxRow,
+  [txTypes.REVOKED]: StakeTxRow,
+  [txTypes.LIVE]: StakeTxRow,
+  [txTypes.OUT]: RegularTxRow,
+  [txTypes.IN]: RegularTxRow,
+  [txTypes.TRANSFER]: RegularTxRow,
+  [txTypes.COINBASE]: RegularTxRow
 };
 
 const timeMessageDefine = defineMessages({

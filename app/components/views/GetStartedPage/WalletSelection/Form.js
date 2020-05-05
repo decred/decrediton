@@ -5,13 +5,13 @@ import { Tooltip, FormattedRelative } from "shared";
 
 const CreateRestoreButtons = ({ showCreateWalletForm }) => (
   <>
-    <div className="display-wallet new" onClick={()=>showCreateWalletForm(true)}>
+    <div className="display-wallet new" onClick={() => showCreateWalletForm(true)}>
       <div className="wallet-icon createnew" />
       <div className="display-wallet-name">
         <NewSeedTabMsg />
       </div>
     </div>
-    <div className="display-wallet new" onClick={()=>showCreateWalletForm(false)}>
+    <div className="display-wallet new" onClick={() => showCreateWalletForm(false)}>
       <div className="wallet-icon restore" />
       <div className="display-wallet-name">
         <RestoreTabMsg />

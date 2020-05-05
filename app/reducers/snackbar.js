@@ -173,19 +173,19 @@ const messages = defineMessages({
     id: "accounts.renameAccount",
     defaultMessage: "Successfully renamed account."
   },
-  RENAMEACCOUNT_FAILED:{
+  RENAMEACCOUNT_FAILED: {
     id: "accounts.errors.renameAccountFailed",
     defaultMessage: "{originalError}"
   },
-  GETNEXTACCOUNT_SUCCESS:{
+  GETNEXTACCOUNT_SUCCESS: {
     id: "accounts.nextAccount",
     defaultMessage: "Successfully created a new account."
   },
-  GETNEXTACCOUNT_FAILED:{
+  GETNEXTACCOUNT_FAILED: {
     id: "accounts.errors.getNextAccountFailed",
     defaultMessage: "{originalError}"
   },
-  CHANGEPASSPHRASE_SUCCESS:{
+  CHANGEPASSPHRASE_SUCCESS: {
     id: "settings.changePassphrase",
     defaultMessage: "Successfully changed private passphrase."
   },

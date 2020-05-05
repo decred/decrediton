@@ -41,15 +41,15 @@ export const validateAddress = withLogNoData((walletService, address) =>
   }), "Validate Address");
 
 export const decodeTransactionLocal = (rawTx) => {
-  var buffer = Buffer.isBuffer(rawTx) ? rawTx : Buffer.from(rawTx, "hex");
+  const buffer = Buffer.isBuffer(rawTx) ? rawTx : Buffer.from(rawTx, "hex");
   return Promise.resolve(decodeRawTransaction(buffer));
 };
 
 export const decodeTransaction = withLogNoData((decodeMessageService, rawTx) =>
   new Promise((resolve, reject) => {
-    var request = new DecodeRawTransactionRequest();
-    var buffer = Buffer.isBuffer(rawTx) ? rawTx : Buffer.from(rawTx, "hex");
-    var buff = new Uint8Array(buffer);
+    const request = new DecodeRawTransactionRequest();
+    const buffer = Buffer.isBuffer(rawTx) ? rawTx : Buffer.from(rawTx, "hex");
+    const buff = new Uint8Array(buffer);
     request.setSerializedTransaction(buff);
     decodeMessageService.decodeRawTransaction(request, (error, tx) => {
       if (error) {
@@ -100,10 +100,10 @@ export function formatTransaction(block, transaction, index) {
   const type = transaction.getTransactionType();
   let direction = "";
 
-  let debitAccounts = [];
+  const debitAccounts = [];
   transaction.getDebitsList().forEach((debit) => debitAccounts.push(debit.getPreviousAccount()));
 
-  let creditAddresses = [];
+  const creditAddresses = [];
   transaction.getCreditsList().forEach((credit) => creditAddresses.push(credit.getAddress()));
 
   if (type === api.TransactionDetails.TransactionType.REGULAR) {
@@ -143,24 +143,24 @@ export function formatUnminedTransaction(transaction, index) {
 export const streamGetTransactions = withLogNoData((walletService, startBlockHeight,
   endBlockHeight, targetTransactionCount, dataCb) =>
   new Promise((resolve, reject) => {
-    var request = new api.GetTransactionsRequest();
+    const request = new api.GetTransactionsRequest();
     request.setStartingBlockHeight(startBlockHeight);
     request.setEndingBlockHeight(endBlockHeight);
     request.setTargetTransactionCount(targetTransactionCount);
 
-    let getTx = walletService.getTransactions(request);
+    const getTx = walletService.getTransactions(request);
     getTx.on("data", (response) => {
-      var foundMined = [];
-      var foundUnmined = [];
+      let foundMined = [];
+      let foundUnmined = [];
 
-      let minedBlock = response.getMinedTransactions();
+      const minedBlock = response.getMinedTransactions();
       if (minedBlock) {
         foundMined = minedBlock
           .getTransactionsList()
           .map((v, i) => formatTransaction(minedBlock, v, i));
       }
 
-      let unmined = response.getUnminedTransactionsList();
+      const unmined = response.getUnminedTransactionsList();
       if (unmined) {
         foundUnmined = unmined
           .map((v, i) => formatUnminedTransaction(v, i));
@@ -180,8 +180,8 @@ export const getTransactions = (walletService, startBlockHeight,
   endBlockHeight, targetTransactionCount) =>
   new Promise((resolve, reject) => {
 
-    var mined = [];
-    var unmined = [];
+    let mined = [];
+    let unmined = [];
 
     const dataCb = (foundMined, foundUnmined) => {
       mined  = mined.concat(foundMined);
@@ -196,7 +196,7 @@ export const getTransactions = (walletService, startBlockHeight,
 
 export const getTransaction = (walletService, txHash) =>
   new Promise((resolve, reject) => {
-    var request = new api.GetTransactionRequest();
+    const request = new api.GetTransactionRequest();
     request.setTransactionHash(strHashToRaw(txHash));
     walletService.getTransaction(request, (err, resp) => {
       if (err) {
@@ -218,8 +218,8 @@ export const getTransaction = (walletService, txHash) =>
 
 export const getUnformattedTransaction = (walletService, txHash) =>
   new Promise((resolve, reject) => {
-    var request = new api.GetTransactionRequest();
-    var buffer = Buffer.isBuffer(txHash) ? txHash : strHashToRaw(txHash);
+    const request = new api.GetTransactionRequest();
+    const buffer = Buffer.isBuffer(txHash) ? txHash : strHashToRaw(txHash);
     request.setTransactionHash(buffer);
     walletService.getTransaction(request, (err, resp) => {
       if (err) {
@@ -236,7 +236,7 @@ export const getUnformattedTransaction = (walletService, txHash) =>
 // transaction (assumes srcTx was returned from decodeTransaction).
 export const getInputTransactions = async (walletService, decodeMessageService, srcTx) => {
   const txs = [];
-  for (let inp of srcTx.getInputsList()) {
+  for (const inp of srcTx.getInputsList()) {
     const inpTx = await getUnformattedTransaction(walletService, rawHashToHex(inp.getPreviousTransactionHash()));
     const decodedInpResp = await decodeTransaction(decodeMessageService, inpTx.getTransaction());
     txs.push(decodedInpResp.getTransaction());
@@ -260,12 +260,12 @@ export const decodeRawTransaction = (rawTx) => {
   if (!(rawTx instanceof Buffer)) {
     throw new Error("rawtx requested for decoding is not a Buffer object");
   }
-  var position = 0;
+  let position = 0;
 
-  var tx = {};
+  const tx = {};
   tx.version = rawTx.readUInt32LE(position);
   position += 4;
-  var first = rawTx.readUInt8(position);
+  let first = rawTx.readUInt8(position);
   position += 1;
   switch (first) {
   case 0xFD:
@@ -280,8 +280,8 @@ export const decodeRawTransaction = (rawTx) => {
     tx.numInputs = first;
   }
   tx.inputs = [];
-  for (var i = 0; i < tx.numInputs; i++) {
-    var input = {};
+  for (let i = 0; i < tx.numInputs; i++) {
+    const input = {};
     input.prevTxId = rawTx.slice(position, position+32);
     position += 32;
     input.outputIndex = rawTx.readUInt32LE(position);
@@ -309,8 +309,8 @@ export const decodeRawTransaction = (rawTx) => {
   }
 
   tx.outputs = [];
-  for (var j = 0; j < tx.numOutputs; j++) {
-    var output = {};
+  for (let j = 0; j < tx.numOutputs; j++) {
+    const output = {};
     output.value = Uint64LE(rawTx.slice(position, position+8)).toNumber();
     position += 8;
     output.version = rawTx.readUInt16LE(position);

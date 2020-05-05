@@ -26,8 +26,8 @@ const formatLogArgs = (msg, args) => {
     }
   };
 
-  let logMsg = args.reduce((a) => a + "%s ", "%s ");
-  let logArgs = [ msg, ...args.map(formatArg) ];
+  const logMsg = args.reduce((a) => a + "%s ", "%s ");
+  const logArgs = [ msg, ...args.map(formatArg) ];
 
   return { logMsg, logArgs };
 };
@@ -48,14 +48,12 @@ export const withLog = (f, msg, opts={}) => (...args) => {
       .then((...res) => {
         if (res.length === 1 && res[0] === undefined) {
           log("debug", "%s returned without data", msg);
-        } else {
-          if (opts.noResponseData) {
+        } else if (opts.noResponseData) {
             log("debug", `${msg} returned [response data omitted]`);
           } else {
             const { logMsg, logArgs } = formatLogArgs(`${msg} returned `, res);
             log("debug", logMsg, ...logArgs);
           }
-        }
 
         resolve(...res);
       })

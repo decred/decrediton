@@ -16,7 +16,7 @@ const ChartLegend = (props) => {
       {
         payload.map((entry, index) => (
           <div key={`item-${index}`} className="tooltip-line">
-            <div className="circle-tooltip" style={{ background:entry.fill }}></div>
+            <div className="circle-tooltip" style={{ background: entry.fill }}></div>
             {entry.dataKey}:
             <Balance amount={entry.value * unitDivisor} classNameWrapper="chart-tooltip-value" />
           </div>

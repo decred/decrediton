@@ -68,7 +68,8 @@ const SendPage = ({
                 {outputs.map((output, index) => {
                   return (
                     <div className="passphrase-modal-confirm-send-address" key={"confirm-" + index}>{output.data.destination}</div>
-                  );}
+                  );
+}
                 )}
               </> :
               <>

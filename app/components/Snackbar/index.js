@@ -93,8 +93,8 @@ class Snackbar extends React.Component {
   getStaticNotification() {
     const { messages, progress } = this.state;
     const { onDismissMessage, clearHideTimer, enableHideTimer } = this;
-    var notifications = new Array();
-    for (var i = 0; i < messages.length; i++) {
+    const notifications = new Array();
+    for (let i = 0; i < messages.length; i++) {
       const message = messages[i];
       const notification =
       <div
@@ -136,7 +136,7 @@ class Snackbar extends React.Component {
     const styles = [];
 
     let totalHeight = 0;
-    for (var i = messages.length-1; i >= 0; i--) {
+    for (let i = messages.length-1; i >= 0; i--) {
       styles.unshift({
         key: messages[i].key,
         data: messages[i],

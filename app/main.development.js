@@ -29,13 +29,13 @@ app.setPath("userData", getAppDataDirectory());
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const debug = argv.debug || process.env.NODE_ENV === "development";
 const logger = createLogger(debug);
-let cliOptions = {};
+const cliOptions = {};
 
 // Verify that config.json is valid JSON before fetching it, because
 // it will silently fail when fetching.
-let err = validateGlobalCfgFile();
+const err = validateGlobalCfgFile();
 if (err !== null) {
-  let errMessage = "There was an error while trying to load the config file, the format is invalid.\n\nFile: " + getGlobalCfgPath() + "\nError: " + err;
+  const errMessage = "There was an error while trying to load the config file, the format is invalid.\n\nFile: " + getGlobalCfgPath() + "\nError: " + err;
   dialog.showErrorBox("Config File Error", errMessage);
   app.quit();
 }
@@ -271,7 +271,7 @@ ipcMain.on("clean-shutdown", async function(event){
   event.sender.send("clean-shutdown-finished", stopped);
 });
 
-var reactIPC;
+let reactIPC;
 ipcMain.on("register-for-errors", function(event){
   reactIPC = event.sender;
   event.returnValue = true;
@@ -471,7 +471,7 @@ app.on("ready", async () => {
 });
 
 app.on("before-quit", (event) => {
-  logger.log("info","Caught before-quit. Set decredition as was closed");
+  logger.log("info", "Caught before-quit. Set decredition as was closed");
   event.preventDefault();
   cleanShutdown(mainWindow, app, GetDcrdPID(), GetDcrwPID());
   app.exit(0);

@@ -32,9 +32,9 @@ class PathBrowseInput extends React.Component {
 
   componentDidMount() {
 
-    let self = this;
-    let pathListener = function (event, data) {
-      let path = isArray(data) ? data[0] : data;
+    const self = this;
+    const pathListener = function (event, data) {
+      const path = isArray(data) ? data[0] : data;
       self.setState({ path });
       self.props.onChange(path);
     };

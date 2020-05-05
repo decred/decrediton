@@ -64,7 +64,7 @@ class DcrInput extends React.Component {
       return amount;
     }
     const { unitDivisor } = this.props;
-    let scaled = amount / unitDivisor;
+    const scaled = amount / unitDivisor;
     if (this.state.decimal) {
       return scaled.toFixed(0) + ".";
     }

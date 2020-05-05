@@ -30,7 +30,7 @@ export const startDcrlnd = (passphrase, autopilotEnabled, walletAccount) => asyn
   const isTestnet = sel.isTestNet(getState());
   const walletPath = getWalletPath(isTestnet, walletName);
   const walletPort = port;
-  let rpcCreds = {};
+  const rpcCreds = {};
 
   const cfg = getWalletCfg(isTestnet, walletName);
   const lnCfg = dispatch(getLNWalletConfig());
@@ -155,7 +155,7 @@ export const connectToLNWallet = (address, port, certPath, macaroonPath, account
 
   dispatch({ type: LNWALLET_CONNECT_ATTEMPT });
   try {
-    let lnClient = await ln.getLightningClient(address, port, certPath, macaroonPath);
+    const lnClient = await ln.getLightningClient(address, port, certPath, macaroonPath);
 
     // Ensure the dcrlnd instance and decrediton are connected to the same(ish)
     // wallet. For this test to fail the user would have had to manually change
@@ -403,7 +403,7 @@ const subscribeToInvoices = () => (dispatch, getState) => {
     const inv = ln.formatInvoice(invoiceData);
     const oldInvoices = getState().ln.invoices;
     const oldIdx = oldInvoices.findIndex(i => i.addIndex === inv.addIndex);
-    let newInvoices = [ ...oldInvoices ];
+    const newInvoices = [ ...oldInvoices ];
     if (oldIdx > -1) {
       newInvoices[oldIdx] = inv;
     } else {

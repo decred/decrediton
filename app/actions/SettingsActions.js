@@ -23,7 +23,7 @@ export const saveSettings = (settings) => async (dispatch, getState) => {
   const oldAllowedExternalRequests = config.get(configConstants.ALLOW_EXTERNAL_REQUEST);
   const oldTheme = config.get(configConstants.THEME);
   const updatedProxy =
-    (config.get(configConstants.PROXY_TYPE,) !== settings.proxyType) ||
+    (config.get(configConstants.PROXY_TYPE) !== settings.proxyType) ||
     (config.get(configConstants.PROXY_LOCATION) !== settings.proxyLocation);
 
   config.set(configConstants.LOCALE, settings.locale);

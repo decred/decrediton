@@ -41,7 +41,7 @@ export const STARTWALLETSERVICE_ATTEMPT = "STARTWALLETSERVICE_ATTEMPT";
 export const STARTWALLETSERVICE_FAILED = "STARTWALLETSERVICE_FAILED";
 export const STARTWALLETSERVICE_SUCCESS = "STARTWALLETSERVICE_SUCCESS";
 
-const startWalletServicesTrigger = () => (dispatch, getState) => new Promise((resolve,reject) => {
+const startWalletServicesTrigger = () => (dispatch, getState) => new Promise((resolve, reject) => {
   const startServicesAsync = async () => {
     const { spvSynced, privacyEnabled } = getState().walletLoader;
     if (!spvSynced) {
@@ -128,7 +128,7 @@ export const MATURINGHEIGHTS_ADDED = "MATURINGHEIGHTS_ADDED";
 // Given a list of transactions, returns the maturing heights of all
 // stake txs in the list.
 function transactionsMaturingHeights(txs, chainParams) {
-  let res = {};
+  const res = {};
   const addToRes = (height, found) => {
     const accounts = res[height] || [];
     found.forEach(a => accounts.indexOf(a) === -1 ? accounts.push(a) : null);
@@ -136,7 +136,7 @@ function transactionsMaturingHeights(txs, chainParams) {
   };
 
   txs.forEach(tx => {
-    let accountsToUpdate = [];
+    const accountsToUpdate = [];
     switch (tx.type) {
     case TransactionDetails.TransactionType.TICKET_PURCHASE:
       checkAccountsToUpdate([ tx ], accountsToUpdate);
@@ -218,7 +218,7 @@ export const GETBALANCE_FAILED = "GETBALANCE_FAILED";
 export const GETBALANCE_SUCCESS = "GETBALANCE_SUCCESS";
 
 const getBalanceUpdateSuccess = (accountNumber, getBalanceResponse) => (dispatch) => {
-  let updatedBalance = {
+  const updatedBalance = {
     accountNumber,
     total: getBalanceResponse.getTotal(),
     spendable: getBalanceResponse.getSpendable(),
@@ -274,9 +274,9 @@ function getNetworkSuccess(getNetworkResponse) {
     const { testnet, mainnet } = getState().grpc;
     const { currentSettings } = getState().settings;
     const network = currentSettings.network;
-    var currentNetwork = getNetworkResponse.getActiveNetwork();
+    const currentNetwork = getNetworkResponse.getActiveNetwork();
     // XXX remove network magic numbers here
-    var networkStr = "";
+    let networkStr = "";
     if ((currentNetwork == testnet && network == TESTNET) ||
       (currentNetwork == mainnet && network == MAINNET)) {
       networkStr = network;
@@ -332,7 +332,7 @@ export const getStakeInfoAttempt = () => (dispatch, getState) => {
   dispatch({ type: GETSTAKEINFO_ATTEMPT });
   wallet.getStakeInfo(sel.walletService(getState()))
     .then(resp => {
-      let { getStakeInfoResponse } = getState().grpc;
+      const { getStakeInfoResponse } = getState().grpc;
       dispatch({ getStakeInfoResponse: resp, type: GETSTAKEINFO_SUCCESS });
 
       const checkedFields = [ "getExpired", "getLive", "getMissed", "getOwnMempoolTix",
@@ -408,11 +408,11 @@ export function updateAccount(account) {
 export function hideAccount(accountNumber) {
   return (dispatch, getState) => {
     const { daemon: { walletName, hiddenAccounts } } = getState();
-    var updatedHiddenAccounts = [ ...hiddenAccounts ];
+    const updatedHiddenAccounts = [ ...hiddenAccounts ];
     if (updatedHiddenAccounts.indexOf(accountNumber) === -1) {
       updatedHiddenAccounts.push(accountNumber);
     }
-    var cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
+    const cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
     cfg.set("hiddenaccounts", updatedHiddenAccounts);
     dispatch({ hiddenAccounts: updatedHiddenAccounts, type: UPDATEHIDDENACCOUNTS });
     dispatch(updateAccount({ accountNumber, hidden: true }));
@@ -422,13 +422,13 @@ export function hideAccount(accountNumber) {
 export function showAccount(accountNumber) {
   return (dispatch, getState) => {
     const { daemon: { walletName, hiddenAccounts } } = getState();
-    var updatedHiddenAccounts = Array();
-    for (var i = 0; i < hiddenAccounts.length; i++) {
+    const updatedHiddenAccounts = Array();
+    for (let i = 0; i < hiddenAccounts.length; i++) {
       if (hiddenAccounts[i] !== accountNumber) {
         updatedHiddenAccounts.push(hiddenAccounts[i]);
       }
     }
-    var cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
+    const cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
     cfg.set("hiddenaccounts", updatedHiddenAccounts);
     dispatch({ hiddenAccounts: updatedHiddenAccounts, type: UPDATEHIDDENACCOUNTS });
     dispatch(updateAccount({ accountNumber, hidden: false }));
@@ -460,7 +460,7 @@ function filterTickets(tickets, filter) {
 const getTicketsFromTransactions = async (walletService, startIdx, endIdx, maxCount,
   currentBlockHeight) => {
 
-  let tickets = [];
+  const tickets = [];
   const pageSize = maxCount*4;
   const stakeTypes = [ TransactionDetails.TransactionType.VOTE,
     TransactionDetails.TransactionType.REVOCATION,
@@ -581,11 +581,11 @@ export const getTickets = () => async (dispatch, getState) => {
   const ticketsNormalizer = sel.ticketsNormalizer(getState());
 
   // List of transactions found after filtering
-  let filtered = [];
+  const filtered = [];
 
   // always request unmined tickets as new ones may be available or some may
   // have been mined
-  let { tickets } = await getTicketsFromTransactions(walletService, -1, -1, 0, currentBlockHeight);
+  const { tickets } = await getTicketsFromTransactions(walletService, -1, -1, 0, currentBlockHeight);
   const unminedFiltered = filterTickets(tickets, ticketsFilter);
   const unminedTickets = ticketsNormalizer(unminedFiltered);
 
@@ -606,7 +606,7 @@ export const getTickets = () => async (dispatch, getState) => {
   // transactions have been obtained (after filtering)
   while (!noMoreTickets && (filtered.length < maximumTransactionCount)) {
     try {
-      let { tickets, startIdx } = await getTicketsFromTransactions(walletService,
+      const { tickets, startIdx } = await getTicketsFromTransactions(walletService,
         startRequestHeight, endRequestHeight, pageCount, currentBlockHeight);
 
       noMoreTickets =
@@ -702,7 +702,7 @@ function filterTransactions(transactions, filter) {
 }
 
 // getNonWalletOutputs decodes a tx and gets outputs which are not from the wallet.
-const getNonWalletOutputs = (decodeMessageService, walletService, tx) => new Promise((resolve,reject) => wallet.decodeTransaction(
+const getNonWalletOutputs = (decodeMessageService, walletService, tx) => new Promise((resolve, reject) => wallet.decodeTransaction(
   decodeMessageService, Buffer.from(tx.tx.getTransaction())
 ).then(async r => {
   const tx = r.getTransaction();
@@ -752,10 +752,10 @@ export const getTransactions = () => async (dispatch, getState) => {
   const pageCount = maximumTransactionCount;
 
   // List of transactions found after filtering
-  let filtered = [];
+  const filtered = [];
 
   // first, request unmined transactions. They always come first in decrediton.
-  let { unmined } = await walletGetTransactions(walletService, -1, -1, 0);
+  const { unmined } = await walletGetTransactions(walletService, -1, -1, 0);
   let unminedTransactions = filterTransactions(unmined, transactionsFilter).map(async tx => {
     const outputs = await getNonWalletOutputs(decodeMessageService, walletService, tx);
     return { ...tx, outputs };
@@ -784,7 +784,7 @@ export const getTransactions = () => async (dispatch, getState) => {
     }
 
     try {
-      let { mined } = await walletGetTransactions(walletService,
+      const { mined } = await walletGetTransactions(walletService,
         startRequestHeight, endRequestHeight, pageCount);
       lastTransaction = mined.length ? mined[mined.length -1] : lastTransaction;
       reachedGenesis = (transactionsFilter.listDirection === "desc") &&
@@ -832,14 +832,14 @@ export const NEW_TRANSACTIONS_RECEIVED = "NEW_TRANSACTIONS_RECEIVED";
 
 function checkAccountsToUpdate(txs, accountsToUpdate) {
   txs.forEach(tx => {
-    tx.tx.getCreditsList().forEach(credit => {if (accountsToUpdate.find(eq(credit.getAccount())) === undefined) accountsToUpdate.push(credit.getAccount());});
-    tx.tx.getDebitsList().forEach(debit => {if (accountsToUpdate.find(eq(debit.getPreviousAccount())) === undefined) accountsToUpdate.push(debit.getPreviousAccount());});
+    tx.tx.getCreditsList().forEach(credit => { if (accountsToUpdate.find(eq(credit.getAccount())) === undefined) accountsToUpdate.push(credit.getAccount()); });
+    tx.tx.getDebitsList().forEach(debit => { if (accountsToUpdate.find(eq(debit.getPreviousAccount())) === undefined) accountsToUpdate.push(debit.getPreviousAccount()); });
   });
   return accountsToUpdate;
 }
 
 function checkForStakeTransactions(txs) {
-  var stakeTxsFound = false;
+  let stakeTxsFound = false;
   txs.forEach(tx => {
     if (tx.type == TransactionDetails.TransactionType.VOTE ||
       tx.type == TransactionDetails.TransactionType.TICKET_PURCHASE ||
@@ -859,15 +859,15 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
   const chainParams = sel.chainParams(getState());
 
   // aux maps of [txhash] => tx (used to ensure no duplicate txs)
-  const newlyMinedMap = newlyMinedTransactions.reduce((m, v) => {m[v.hash] = v; return m;}, {});
-  const newlyUnminedMap = newlyUnminedTransactions.reduce((m, v) => {m[v.hash] = v; return m;}, {});
+  const newlyMinedMap = newlyMinedTransactions.reduce((m, v) => { m[v.hash] = v; return m; }, {});
+  const newlyUnminedMap = newlyUnminedTransactions.reduce((m, v) => { m[v.hash] = v; return m; }, {});
 
-  const minedMap = minedTransactions.reduce((m, v) => {m[v.hash] = v; return m;}, {});
-  const unminedMap = unminedTransactions.reduce((m, v) => {m[v.hash] = v; return m;}, {});
+  const minedMap = minedTransactions.reduce((m, v) => { m[v.hash] = v; return m; }, {});
+  const unminedMap = unminedTransactions.reduce((m, v) => { m[v.hash] = v; return m; }, {});
 
   const unminedDupeCheck =  newlyUnminedTransactions.filter(tx => !minedMap[tx.hash] && !unminedMap[tx.hash]);
 
-  var accountsToUpdate = new Array();
+  let accountsToUpdate = new Array();
   accountsToUpdate = checkAccountsToUpdate(unminedDupeCheck, accountsToUpdate);
   accountsToUpdate = checkAccountsToUpdate(newlyMinedTransactions, accountsToUpdate);
   accountsToUpdate = Array.from(new Set(accountsToUpdate));
@@ -980,7 +980,7 @@ export const getStartupTransactions = () => async (dispatch, getState) => {
 
   const { currentBlockHeight, walletService, recentTransactionCount, decodeMessageService } = getState().grpc;
   const chainParams = sel.chainParams(getState());
-  let startRequestHeight = currentBlockHeight;
+  const startRequestHeight = currentBlockHeight;
   const pageSize = 50;
   const voteTypes = [ TransactionDetails.TransactionType.VOTE,
     TransactionDetails.TransactionType.REVOCATION ];
@@ -1084,7 +1084,7 @@ export function updateBlockTimeSince() {
     const { recentBlockTimestamp } = getState().grpc;
     if (transactionNtfnsResponse !== null && transactionNtfnsResponse.getAttachedBlocksList().length > 0) {
       const attachedBlocks = transactionNtfnsResponse.getAttachedBlocksList();
-      var lastBlockTimestamp = attachedBlocks[0].getTimestamp();
+      const lastBlockTimestamp = attachedBlocks[0].getTimestamp();
       if (recentBlockTimestamp != lastBlockTimestamp) {
         dispatch({
           recentBlockTimestamp: lastBlockTimestamp,
@@ -1175,7 +1175,7 @@ export const setVoteChoicesAttempt = (agendaId, choiceId) => (dispatch, getState
   wallet.setAgendaVote(sel.votingService(getState()), agendaId, choiceId)
     .then(response => {
       dispatch({ response, type: SETVOTECHOICES_SUCCESS });
-      for( var i = 0; i < stakePools.length; i++) {
+      for( let i = 0; i < stakePools.length; i++) {
         dispatch(getVoteChoicesAttempt(stakePools[i]));
       }
     })
@@ -1276,7 +1276,7 @@ const getMissingStakeTxData = tx => async (dispatch, getState) => {
 
   // normalize ticket+spender as if it was a result item from a wallet.getTickets call
   const ticket = {
-    ticket: ticketTx ,
+    ticket: ticketTx,
     spender: spenderTx,
     status: status
   };

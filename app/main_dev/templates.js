@@ -1,5 +1,5 @@
 
-let versionWin = null;
+const versionWin = null;
 let grpcVersions = { requiredVersion: null, walletVersion: null };
 
 const darwinTemplate = (mainWindow, locale) => [
@@ -158,7 +158,7 @@ const selectionMenuRoles = [
   { role: "selectall" }
 ];
 
-const inspectElement = (mainWindow, x,y) => {
+const inspectElement = (mainWindow, x, y) => {
   return {
     label: "Inspect element",
     click: () => mainWindow.inspectElement(x, y)

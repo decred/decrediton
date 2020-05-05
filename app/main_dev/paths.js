@@ -12,9 +12,9 @@ export function getAppDataDirectory() {
   if (os.platform() == "win32") {
     return path.join(os.homedir(), "AppData", "Local", "Decrediton");
   } else if (process.platform === "darwin") {
-    return path.join(os.homedir(), "Library","Application Support","decrediton");
+    return path.join(os.homedir(), "Library", "Application Support", "decrediton");
   } else {
-    return path.join(os.homedir(),".config","decrediton");
+    return path.join(os.homedir(), ".config", "decrediton");
   }
 }
 
@@ -65,9 +65,9 @@ export function getDcrdPath() {
   if (os.platform() == "win32") {
     return path.join(os.homedir(), "AppData", "Local", "Dcrd");
   } if (process.platform === "darwin") {
-    return path.join(os.homedir(), "Library","Application Support","dcrd");
+    return path.join(os.homedir(), "Library", "Application Support", "dcrd");
   } else {
-    return path.join(os.homedir(),".dcrd");
+    return path.join(os.homedir(), ".dcrd");
   }
 }
 
@@ -78,11 +78,11 @@ export function getDcrdRpcCert (appDataPath) {
 }
 
 export function getExecutablePath(name, custombinpath) {
-  let binPath = custombinpath ? custombinpath :
+  const binPath = custombinpath ? custombinpath :
     process.env.NODE_ENV === "development"
       ? path.join(__dirname, "..", "..", "bin")
       : path.join(process.resourcesPath, "bin");
-  let execName = os.platform() !== "win32" ? name : name + ".exe";
+  const execName = os.platform() !== "win32" ? name : name + ".exe";
 
   return path.join(binPath, execName);
 }

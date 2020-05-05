@@ -46,7 +46,8 @@ export const ConfirmSeedForm = ({
                 }
               </span>
             </div>
-          );})}
+          );
+})}
       </div>
     </div>
     <CreatePassPhrase onChange={setPassPhrase} onSubmit={onCreateWallet} />

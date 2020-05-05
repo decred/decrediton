@@ -535,7 +535,7 @@ export const togglePinProtection = () => async (dispatch, getState) => {
 
   const device = selectors.trezorDevice(getState());
   if (!device) {
-    dispatch({ error: "Device not connected", type:  TRZ_TOGGLEPINPROTECTION_FAILED });
+    dispatch({ error: "Device not connected", type: TRZ_TOGGLEPINPROTECTION_FAILED });
     return;
   }
 
@@ -560,7 +560,7 @@ export const togglePassPhraseProtection = () => async (dispatch, getState) => {
 
   const device = selectors.trezorDevice(getState());
   if (!device) {
-    dispatch({ error: "Device not connected", type:  TRZ_TOGGLEPASSPHRASEPROTECTION_FAILED });
+    dispatch({ error: "Device not connected", type: TRZ_TOGGLEPASSPHRASEPROTECTION_FAILED });
     return;
   }
 
@@ -584,7 +584,7 @@ export const TRZ_CHANGEHOMESCREEN_SUCCESS = "TRZ_CHANGEHOMESCREEN_SUCCESS";
 export const changeToDecredHomeScreen = () => async (dispatch, getState) => {
   const device = selectors.trezorDevice(getState());
   if (!device) {
-    dispatch({ error: "Device not connected", type:  TRZ_TOGGLEPASSPHRASEPROTECTION_FAILED });
+    dispatch({ error: "Device not connected", type: TRZ_TOGGLEPASSPHRASEPROTECTION_FAILED });
     return;
   }
 
@@ -607,7 +607,7 @@ export const TRZ_CHANGELABEL_SUCCESS = "TRZ_CHANGELABEL_SUCCESS";
 export const changeLabel = (label) => async (dispatch, getState) => {
   const device = selectors.trezorDevice(getState());
   if (!device) {
-    dispatch({ error: "Device not connected", type:  TRZ_CHANGELABEL_FAILED });
+    dispatch({ error: "Device not connected", type: TRZ_CHANGELABEL_FAILED });
     return;
   }
 
@@ -630,7 +630,7 @@ export const TRZ_WIPEDEVICE_SUCCESS = "TRZ_WIPEDEVICE_SUCCESS";
 export const wipeDevice = () => async (dispatch, getState) => {
   const device = selectors.trezorDevice(getState());
   if (!device) {
-    dispatch({ error: "Device not connected", type:  TRZ_WIPEDEVICE_FAILED });
+    dispatch({ error: "Device not connected", type: TRZ_WIPEDEVICE_FAILED });
     return;
   }
 
@@ -653,7 +653,7 @@ export const TRZ_RECOVERDEVICE_SUCCESS = "TRZ_RECOVERDEVICE_SUCCESS";
 export const recoverDevice = () => async (dispatch, getState) => {
   const device = selectors.trezorDevice(getState());
   if (!device) {
-    dispatch({ error: "Device not connected", type:  TRZ_RECOVERDEVICE_FAILED });
+    dispatch({ error: "Device not connected", type: TRZ_RECOVERDEVICE_FAILED });
     return;
   }
 
@@ -684,7 +684,7 @@ export const TRZ_INITDEVICE_SUCCESS = "TRZ_INITDEVICE_SUCCESS";
 export const initDevice = () => async (dispatch, getState) => {
   const device = selectors.trezorDevice(getState());
   if (!device) {
-    dispatch({ error: "Device not connected", type:  TRZ_RECOVERDEVICE_FAILED });
+    dispatch({ error: "Device not connected", type: TRZ_RECOVERDEVICE_FAILED });
     return;
   }
 
@@ -714,7 +714,7 @@ export const TRZ_UPDATEFIRMWARE_SUCCESS = "TRZ_UPDATEFIRMWARE_SUCCESS";
 export const updateFirmware = (path) => async (dispatch, getState) => {
   const device = selectors.trezorDevice(getState());
   if (!device) {
-    dispatch({ error: "Device not connected", type:  TRZ_UPDATEFIRMWARE_FAILED });
+    dispatch({ error: "Device not connected", type: TRZ_UPDATEFIRMWARE_FAILED });
     return;
   }
 
@@ -742,7 +742,7 @@ export const getWalletCreationMasterPubKey = () => async (dispatch, getState) =>
 
   const device = selectors.trezorDevice(getState());
   if (!device) {
-    dispatch({ error: "Device not connected", type:  TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED });
+    dispatch({ error: "Device not connected", type: TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED });
     return;
   }
 
@@ -777,7 +777,7 @@ export const getWalletCreationMasterPubKey = () => async (dispatch, getState) =>
     dispatch({ type: VALIDATEMASTERPUBKEY_SUCCESS, masterPubKey });
     dispatch({ type: TRZ_GETWALLETCREATIONMASTERPUBKEY_SUCCESS });
   } catch (error) {
-    dispatch({ error, type:  TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED });
+    dispatch({ error, type: TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED });
     throw error;
   }
 };

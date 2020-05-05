@@ -75,7 +75,7 @@ const SendOutputRow = ({
             invalidMessage={error && error.address}
             value={destination}
             placeholder={intl.formatMessage(messages.destinationAddrPlaceholder)}
-            onChange={(e) => onValidateAddress({ address: e.target.value , index })}
+            onChange={(e) => onValidateAddress({ address: e.target.value, index })}
             onKeyDown={onKeyDown}
             className="send-input"
           />

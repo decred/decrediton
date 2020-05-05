@@ -18,7 +18,7 @@ const EMPTY_ARRAY = [];  // Maintaining identity (will) improve performance;
 
 export const theme = get([ "settings", "theme" ]);
 // Daemon startup selectors
-export const daemonError = get([ "daemon" , "daemonError" ]);
+export const daemonError = get([ "daemon", "daemonError" ]);
 export const walletError = get([ "daemon", "walletError" ]);
 export const appVersion = get([ "daemon", "appVersion" ]);
 export const updateAvailable = get([ "daemon", "updateAvailable" ]);
@@ -62,14 +62,14 @@ export const syncFetchHeadersCount = get([ "walletLoader", "syncFetchHeadersCoun
 export const syncFetchHeadersLastHeaderTime = get([ "walletLoader", "syncLastFetchedHeaderTime" ]);
 export const syncDiscoverAddressesAttempt = get([ "walletLoader", "syncDiscoverAddressesAttempt" ]);
 export const syncRescanAttempt = get([ "walletLoader", "syncRescanAttempt" ]);
-export const syncFetchHeadersComplete = get([ "walletLoader" , "syncFetchHeadersComplete" ]);
-export const syncFetchTimeStart = get([ "walletLoader" , "syncFetchTimeStart" ]);
-export const getPrivacyEnabled = get([ "walletLoader" , "privacyEnabled" ]);
-export const getMixedAccount = get([ "walletLoader" , "mixedAccount" ]);
-export const getChangeAccount = get([ "walletLoader" , "changeAccount" ]);
-export const getCsppServer = get([ "walletLoader" , "csppServer" ]);
-export const getCsppPort = get([ "walletLoader" , "csppPort" ]);
-export const getMixedAccountBranch = get([ "walletLoader" , "mixedAccountBranch" ]);
+export const syncFetchHeadersComplete = get([ "walletLoader", "syncFetchHeadersComplete" ]);
+export const syncFetchTimeStart = get([ "walletLoader", "syncFetchTimeStart" ]);
+export const getPrivacyEnabled = get([ "walletLoader", "privacyEnabled" ]);
+export const getMixedAccount = get([ "walletLoader", "mixedAccount" ]);
+export const getChangeAccount = get([ "walletLoader", "changeAccount" ]);
+export const getCsppServer = get([ "walletLoader", "csppServer" ]);
+export const getCsppPort = get([ "walletLoader", "csppPort" ]);
+export const getMixedAccountBranch = get([ "walletLoader", "mixedAccountBranch" ]);
 
 const availableWallets = get([ "daemon", "availableWallets" ]);
 const availableWalletsSelect = createSelector(
@@ -258,7 +258,7 @@ export const ticketNormalizer = createSelector(
         }
 
         if (isVote) {
-          let voteScript = decodedSpenderTx.outputs[1].script;
+          const voteScript = decodedSpenderTx.outputs[1].script;
           voteChoices = decodeVoteScript(network, voteScript);
         }
       }
@@ -320,13 +320,13 @@ export const transactionNormalizer = createSelector(
     return origTx => {
       const { blockHash } = origTx;
       const type = origTx.type || (origTx.getTransactionType ? origTx.getTransactionType() : null);
-      let txInfo = origTx.tx ? origTx : {};
+      const txInfo = origTx.tx ? origTx : {};
       let timestamp = origTx.timestamp;
       const tx = origTx.tx || origTx;
       timestamp = timestamp || tx.timestamp;
       let totalFundsReceived = 0;
       let totalChange = 0;
-      let addressStr = [];
+      const addressStr = [];
       let debitedAccount;
       let creditedAccount;
       const txInputs = [];
@@ -375,7 +375,7 @@ export const transactionNormalizer = createSelector(
             txAccountName: getAccountName(creditedAccount)
           };
 
-      let stakeInfo = {};
+      const stakeInfo = {};
       if (origTx.ticketPrice) stakeInfo.ticketPrice = origTx.ticketPrice;
       if (origTx.enterTimestamp) stakeInfo.enterTimestamp = origTx.enterTimestamp;
       if (origTx.leaveTimestamp) stakeInfo.leaveTimestamp = origTx.leaveTimestamp;
@@ -702,7 +702,7 @@ export const activeTicketsCount = createSelector(
 export const totalSubsidy = compose(r => r ? r.getTotalSubsidy() : 0, getStakeInfoResponse);
 
 export const ticketBuyerService = get([ "grpc", "ticketBuyerService" ]);
-export const ticketBuyerConfig = get([ "control" , "ticketBuyerConfig" ]);
+export const ticketBuyerConfig = get([ "control", "ticketBuyerConfig" ]);
 const startAutoBuyerResponse = get([ "control", "startAutoBuyerResponse" ]);
 
 export const balanceToMaintain = get([ "control", "balanceToMaintain" ]);
@@ -756,7 +756,7 @@ const allStakePoolStatsList = createSelector(
   )
 );
 export const networkStakePoolStatsList = createSelector(
-  [ allStakePoolStatsList , network ],
+  [ allStakePoolStatsList, network ],
   (pools, network) => filter(compose(eq(network), get("Network")), pools)
 );
 

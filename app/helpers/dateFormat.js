@@ -27,7 +27,7 @@ export function dateToUTC(timestamp) {
 // Returns a new date pointing to the last millisecond of the day of the given date
 export function endOfDay(date) {
   const result = new Date(date);
-  result.setHours(23,59,59,999);
+  result.setHours(23, 59, 59, 999);
   return result;
 }
 
@@ -46,9 +46,9 @@ export function formatLocalISODate(d, timezone) {
     tzOffset = -tzOffset;
     tzOffsetSign = "+";
   }
-  let tzOffsetHours = Math.trunc(tzOffset / 60);
-  let tzOffsetMinutes = Math.trunc(tzOffset % 60);
-  let tz = timezone === "utc" ? "Z" : tzOffsetSign + pad(tzOffsetHours, 2) + pad(tzOffsetMinutes, 2);
+  const tzOffsetHours = Math.trunc(tzOffset / 60);
+  const tzOffsetMinutes = Math.trunc(tzOffset % 60);
+  const tz = timezone === "utc" ? "Z" : tzOffsetSign + pad(tzOffsetHours, 2) + pad(tzOffsetMinutes, 2);
 
   return format("%s-%s-%sT%s:%s:%s.%s%s",
     d.getFullYear(), pad(d.getMonth()+1, 2), pad(d.getDate(), 2),
@@ -68,7 +68,7 @@ export function diffBetweenTwoTs(date1, date2) {
 
 // isSameDate receives two dates and return true if they are the same
 // day/month/yeah, false otherwise.
-export function isSameDate(d1,d2) {
+export function isSameDate(d1, d2) {
   if (
     (!d1) || (!d2) ||
       (d1.getYear() !== d2.getYear()) ||

@@ -46,7 +46,7 @@ export const RESCAN_COMPLETE = "RESCAN_COMPLETE";
 export const RESCAN_CANCEL = "RESCAN_CANCEL";
 
 export function rescanAttempt(beginHeight, beginHash, startup) {
-  var request = new RescanRequest();
+  const request = new RescanRequest();
   if (beginHeight !== null) {
     request.setBeginHeight(beginHeight);
   } else {
@@ -56,7 +56,7 @@ export function rescanAttempt(beginHeight, beginHash, startup) {
     return new Promise((resolve, reject) => {
       dispatch({ request: request, type: RESCAN_ATTEMPT });
       const { walletService } = getState().grpc;
-      var rescanCall = walletService.rescan(request);
+      const rescanCall = walletService.rescan(request);
       rescanCall.on("data", function(response) {
         dispatch({ rescanCall: rescanCall, rescanResponse: response, type: RESCAN_PROGRESS });
       });
@@ -280,7 +280,7 @@ export const STOPTICKETBUYERV2_FAILED = "STOPTICKETBUYERV2_FAILED";
 export const STOPTICKETBUYERV2_SUCCESS = "STOPTICKETBUYERV2_SUCCESS";
 
 export const startTicketBuyerV2Attempt = ( passphrase, account, balanceToMaintain, stakepool ) => (dispatch, getState) => {
-  var request = new RunTicketBuyerRequest();
+  const request = new RunTicketBuyerRequest();
   request.setBalanceToMaintain(balanceToMaintain);
   request.setAccount(account.value);
   request.setVotingAccount(account.value);
@@ -311,7 +311,7 @@ export const startTicketBuyerV2Attempt = ( passphrase, account, balanceToMaintai
         dispatch({ type: STOPTICKETBUYERV2_SUCCESS });
       }
     });
-    dispatch({ ticketBuyerCall: ticketBuyer , type: STARTTICKETBUYERV2_SUCCESS });
+    dispatch({ ticketBuyerCall: ticketBuyer, type: STARTTICKETBUYERV2_SUCCESS });
   });
 };
 
@@ -332,16 +332,16 @@ export const CONSTRUCTTX_FAILED_LOW_BALANCE = "CONSTRUCTTX_FAILED_LOW_BALANCE";
 export const CONSTRUCTTX_SUCCESS = "CONSTRUCTTX_SUCCESS";
 
 export const constructTransactionAttempt = (account, confirmations, outputs, all) => (dispatch, getState) => {
-  var request = new ConstructTransactionRequest();
+  const request = new ConstructTransactionRequest();
   request.setSourceAccount(parseInt(account));
   request.setRequiredConfirmations(parseInt(parseInt(confirmations)));
   if (!all) {
     request.setOutputSelectionAlgorithm(0);
     var totalAmount = 0;
     outputs.map(output => {
-      var outputDest = new ConstructTransactionRequest.OutputDestination();
+      const outputDest = new ConstructTransactionRequest.OutputDestination();
       outputDest.setAddress(output.destination);
-      var newOutput = new ConstructTransactionRequest.Output();
+      const newOutput = new ConstructTransactionRequest.Output();
       newOutput.setDestination(outputDest);
       newOutput.setAmount(parseInt(output.amount));
       request.addNonChangeOutputs(newOutput);
@@ -357,24 +357,22 @@ export const constructTransactionAttempt = (account, confirmations, outputs, all
       changeDest.setScript(changeScript);
       request.setChangeDestination(changeDest);
     }
-  } else {
-    if (outputs.length > 1) {
+  } else if (outputs.length > 1) {
       return (dispatch) => {
-        var error = "Too many outputs provided for a send all request.";
+        const error = "Too many outputs provided for a send all request.";
         dispatch({ error, type: CONSTRUCTTX_FAILED });
       };
     } else if (outputs.length == 0) {
       return (dispatch) => {
-        var error = "No destination specified for send all request.";
+        const error = "No destination specified for send all request.";
         dispatch({ error, type: CONSTRUCTTX_FAILED });
       };
     } else {
       request.setOutputSelectionAlgorithm(1);
-      var outputDest = new ConstructTransactionRequest.OutputDestination();
+      const outputDest = new ConstructTransactionRequest.OutputDestination();
       outputDest.setAddress(outputs[0].data.destination);
       request.setChangeDestination(outputDest);
     }
-  }
 
   dispatch({ type: CONSTRUCTTX_ATTEMPT });
   const { walletService } = getState().grpc;
@@ -396,7 +394,7 @@ export const constructTransactionAttempt = (account, confirmations, outputs, all
         return;
       }
 
-      let changeScriptByAccount = getState().control.changeScriptByAccount || {};
+      const changeScriptByAccount = getState().control.changeScriptByAccount || {};
       if (!all) {
         // Store the change address we just generated so that future changes to
         // the tx being constructed will use the same address and prevent gap
@@ -433,7 +431,7 @@ export const validateAddress = address => async (dispatch, getState) => {
       return { isValid: false, error: validationErr, getIsValid () { return false; } };
     }
     dispatch({ type: VALIDATEADDRESS_ATTEMPT });
-    let response = await wallet.validateAddress(sel.walletService(getState()), address);
+    const response = await wallet.validateAddress(sel.walletService(getState()), address);
     dispatch({ response, type: VALIDATEADDRESS_SUCCESS });
     return { isValid: response.getIsValid(), error: null, getIsValid () { return response.getIsValid(); } };
   } catch (error) {

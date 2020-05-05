@@ -169,7 +169,7 @@ class EyeFilterMenuWithSlider extends React.Component {
   render() {
     return (
       <EyeFilterMenu
-        {...{ ...this.state,...this.props }}
+        {...{ ...this.state, ...this.props }}
         getOpenedMenu = {this.getSliderWhenOpenedMenu}
         unmountMenu = {this.unmountSliderRangeInElement}
       />

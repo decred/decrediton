@@ -43,7 +43,7 @@ const Modal = ({
         invalid={!!confirmPrivPassError}
         invalidMessage={<T id="changePassModal.confirmMismatch" m="New passphrase and confirmation don't match" />}
         showErrors={hasFailedAttempt}
-        id='confirmPassphrase'
+        id="confirmPassphrase"
         placeholder=""
         value={confirmPrivPass}
         onChange={(e) => updateConfirmPrivatePassphrase(e.target.value)}

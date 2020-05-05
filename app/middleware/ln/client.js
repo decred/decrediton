@@ -3,15 +3,15 @@ process.env["GRPC_SSL_CIPHER_SUITES"] = "HIGH+ECDSA";
 import grpc from "grpc";
 import fs from "fs";
 
-var services = require("./rpc_grpc_pb.js");
+const services = require("./rpc_grpc_pb.js");
 
 const getServiceClient = (clientClass) => async (address, port, certPath, macaroonPath) => {
   let cert, macaroon, macaroonCreds;
 
   const readFile = fname => new Promise((resolve, reject) => {
-    var tries = 0;
-    var maxTries = 30;
-    var wait = 1000;
+    let tries = 0;
+    const maxTries = 30;
+    const wait = 1000;
 
     const readIfExists = () => {
       try {
@@ -46,12 +46,12 @@ const getServiceClient = (clientClass) => async (address, port, certPath, macaro
     });
   }
 
-  let sslCreds = grpc.credentials.createSsl(cert);
-  let creds = macaroonCreds
+  const sslCreds = grpc.credentials.createSsl(cert);
+  const creds = macaroonCreds
     ? grpc.credentials.combineChannelCredentials(sslCreds, macaroonCreds)
     : sslCreds;
 
-  let client = new clientClass(address + ":" + port, creds);
+  const client = new clientClass(address + ":" + port, creds);
 
   const deadline = new Date();
   const deadlineInSeconds = 30;

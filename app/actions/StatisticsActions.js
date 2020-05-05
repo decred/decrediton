@@ -112,8 +112,8 @@ export const getHeatmapStats = (opts) => (dispatch, getState) => new Promise((re
     const { endDate, backwards } = opts;
     const { currentBlockHeight, walletService } = getState().grpc;
     const chainParams = sel.chainParams(getState());
-    let liveTickets = {}; // live by hash
-    let maturingTxs = {}; // maturing by height
+    const liveTickets = {}; // live by hash
+    const maturingTxs = {}; // maturing by height
     const tsDate = sel.tsDate(getState());
     const pageSize = 200;
     const maxMaturity = Math.max(chainParams.CoinbaseMaturity, chainParams.TicketMaturity);
@@ -137,7 +137,7 @@ export const getHeatmapStats = (opts) => (dispatch, getState) => new Promise((re
       // getTransaction calls in voteRevokeInfo()
       toProcess.forEach(tx => {
         if (tx.txType === wallet.TRANSACTION_TYPE_TICKET_PURCHASE) {
-          var { isWallet, commitAmount } = ticketInfo(tx);
+          const { isWallet, commitAmount } = ticketInfo(tx);
           recordTicket(maturingTxs, liveTickets, tx, commitAmount, isWallet, chainParams);
         }
       });
@@ -153,12 +153,12 @@ export const getHeatmapStats = (opts) => (dispatch, getState) => new Promise((re
 });
 
 const countTicketsBackwards = ({ mined, chainParams, tsDate }) => {
-  let now = new Date();
+  const now = new Date();
   let lastTxTimestamp = now.getTime() / 1000;
   let lastDate = tsDate(lastTxTimestamp);
   const values = {};
 
-  let ticketsCounter = { live: 0, maturing: 0, vote: 0, revoke: 0 };
+  const ticketsCounter = { live: 0, maturing: 0, vote: 0, revoke: 0 };
 
   for (let i = 0; i < mined.length; i++) {
     const tx = mined[i];
@@ -246,9 +246,9 @@ export const EXPORT_ERROR = "EXPORT_ERROR";
 export const exportStatToCSV = (opts) => (dispatch, getState) => {
   const { calcFunction, csvFilename } = opts;
 
-  var fd;
-  var allSeries;
-  var seriesOpts;
+  let fd;
+  let allSeries;
+  let seriesOpts;
 
   // constants (may be overridden/parametrized in the future)
   const unitDivisor = sel.unitDivisor(getState());
@@ -369,7 +369,7 @@ const recordTicket = (maturingTxs, liveTickets, tx, commitAmount, isWallet) => {
 };
 
 const recordVoteRevoke = (maturingTxs, tx, amount, isWallet, chainParams) => {
-  let matureHeight = tx.height + chainParams.CoinbaseMaturity;
+  const matureHeight = tx.height + chainParams.CoinbaseMaturity;
   maturingTxs[matureHeight] = maturingTxs[matureHeight] || [];
   maturingTxs[matureHeight].push({ tx, amount, isWallet, isTicket: false });
 };
@@ -410,10 +410,10 @@ const findTimestampByBlockHeight = (fromHeight, toHeight, fromTimestamp, toTimes
 // return the balance deltas from recorded tickets/votes/revokes that matured
 // in the interval fromHeight..toHeight
 const findMaturingDeltas = (maturingTxs, fromHeight, toHeight, fromTimestamp, toTimestamp, chainParams, backwards) => {
-  let start = backwards ? toHeight : fromHeight;
-  let end = backwards ? fromHeight : toHeight;
-  let inc = backwards ? -1 : +1;
-  let test = h => backwards ? h >= end : h <= end;
+  const start = backwards ? toHeight : fromHeight;
+  const end = backwards ? fromHeight : toHeight;
+  const inc = backwards ? -1 : +1;
+  const test = h => backwards ? h >= end : h <= end;
 
   const res = [];
   for (let h = start; test(h); h += inc) {
@@ -559,7 +559,7 @@ const txBalancesDelta = async (tx, maturingTxs, liveTickets, walletService, chai
 const addDelta = (delta, progressFunction, currentBalance, tsDate, backwards) => {
   backwards && progressFunction(tsDate(delta.timestamp), currentBalance);
 
-  let balance = {
+  const balance = {
     spendable: currentBalance.spendable + delta.spendable,
     immature: currentBalance.immature + delta.immature,
     immatureNonWallet: currentBalance.immatureNonWallet + delta.immatureNonWallet,
@@ -584,8 +584,8 @@ const addDelta = (delta, progressFunction, currentBalance, tsDate, backwards) =>
 // processing them first, then processing tx i.
 const txDataCbBackwards = async ({ mined, maturingTxs, liveTickets,
   walletService, chainParams, progressFunction, currentBlockHeight, balances, tsDate, maxMaturity, currentBalance }) => {
-  let now = new Date();
-  let toAddDeltas = {};
+  const now = new Date();
+  const toAddDeltas = {};
   let lastTxHeight = currentBlockHeight;
   let lastTxTimestamp = now.getTime() / 1000;
   const fields = [ "spendable", "locked", "stakeFees", "stakeRewards",
@@ -706,11 +706,11 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
 
   const chainParams = sel.chainParams(getState());
 
-  let liveTickets = {}; // live by hash
-  let maturingTxs = {}; // maturing by height
+  const liveTickets = {}; // live by hash
+  const maturingTxs = {}; // maturing by height
 
   // running balance totals
-  let currentBalance = { spendable: 0, immature: 0, immatureNonWallet: 0,
+  const currentBalance = { spendable: 0, immature: 0, immatureNonWallet: 0,
     locked: 0, lockedNonWallet: 0, total: 0, stakeRewards: 0, stakeFees: 0,
     totalStake: 0, delta: { voted: 0, revoked: 0, ticket: 0, sent: 0, received: 0 } };
 
@@ -718,7 +718,7 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
 
   const pageSize = 200;
   const maxMaturity = Math.max(chainParams.CoinbaseMaturity, chainParams.TicketMaturity);
-  let currentDate = new Date();
+  const currentDate = new Date();
   let toProcess = [];
   startFunction({
     series: [
@@ -753,7 +753,7 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
       // getTransaction calls in voteRevokeInfo()
       toProcess.forEach(tx => {
         if (tx.txType == wallet.TRANSACTION_TYPE_TICKET_PURCHASE) {
-          var { isWallet, commitAmount } = ticketInfo(tx);
+          const { isWallet, commitAmount } = ticketInfo(tx);
           recordTicket(maturingTxs, liveTickets, tx, commitAmount, isWallet, chainParams);
         }
       });
@@ -781,7 +781,7 @@ export const dailyBalancesStats = (opts) => {
 
   const aggStartFunction = (opts) => {
     startFunction({
-      series : [
+      series: [
         ...opts.series,
         { name: "sent", type: VALUE_TYPE_ATOMAMOUNT },
         { name: "received", type: VALUE_TYPE_ATOMAMOUNT },

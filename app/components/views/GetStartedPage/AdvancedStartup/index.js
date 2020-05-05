@@ -137,7 +137,7 @@ class AdvancedStartupBody extends React.Component {
     }
     const { rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port } = this.state;
     setRemoteCredentials(rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port);
-    let args = { rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port };
+    const args = { rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port };
     submitRemoteCredentials(args);
   }
 
