@@ -32,7 +32,16 @@
     "i18n-prepare-untranslated": "node ./scripts/prepareUntranslated.js && ./node_modules/.bin/rip json2pot 'app/i18n/extracted/**/*.json' -c id -o app/i18n/pot/decrediton.pot",
     "i18n-assemble-translated": "node ./scripts/assembleTranslated.js && ./node_modules/.bin/rip po2json 'app/i18n/po/*.po' -m 'app/i18n/extracted/**/*.json' -c id -o app/i18n/translations --indentation 2 --sort-by-id",
     "i18n-check-docs": "node ./scripts/docsTranslationStatus.js",
-    "i18n-check-dupes": "node ./scripts/checkDuplicateTranslationIds.js"
+    "i18n-check-dupes": "node ./scripts/checkDuplicateTranslationIds.js",
+    "prettify": "prettier --write 'app/**/*.{js,jsx,css,json}'",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{jsx,jsx,css,json}": [
+      "yarn prettify",
+      "yarn lint-fix",
+      "git add"
+    ]
   },
   "jest": {
     "verbose": true,
@@ -193,6 +202,7 @@
     "electron": "8.0.1",
     "enzyme": "^3.11.0",
     "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.11.0",
     "eslint-formatter-pretty": "^3.0.1",
     "eslint-plugin-react": "^7.18.0",
     "eslint-plugin-react-hooks": "^3.0.0",
@@ -205,10 +215,12 @@
     "jest-date-mock": "^1.0.8",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
+    "lint-staged": "^10.2.0",
     "mini-css-extract-plugin": "^0.8.2",
     "minimist": "^1.2.0",
     "node-gyp": "^5.0.7",
     "node-loader": "^0.6.0",
+    "prettier": "^2.0.5",
     "react-intl-translations-manager": "^5.0.0",
     "redux-logger": "^2.7.4",
     "sinon": "^7.4.2",
