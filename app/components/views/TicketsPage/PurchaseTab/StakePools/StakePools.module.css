@@ -1,0 +1,122 @@
+.configuredVSP {
+  width: 740px;
+  height: 140px;
+  background-color: var(--background-back-color);
+  padding-left: 40px;
+  padding-top: 20px;
+  box-sizing: border-box;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.vspURL {
+  font-size: 19px;
+  line-height: 19px;
+  margin-bottom: 17px;
+}
+
+.vspData {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 310px 360px;
+  grid-template-rows: 23px 40px;
+  font-size: 13px;
+}
+
+.txDetails {
+  font-size: 13px;
+  line-height: 17px;
+  padding: 10px 9px 10px 8px;
+  border-radius: 3px;
+  background-color: var(--blue-highlight-background);
+  color: var(--input-color-default);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  /* text-align: center; */
+  margin-right: 5px;
+  width: 270px;
+  height: 35px;
+  box-sizing: border-box;
+}
+
+.txDetailsRaw {
+  font-size: 13px;
+  line-height: 15px;
+  width: 320px;
+  height: 35px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: var(--wallet-close-button-text);
+  padding: 10px;
+  word-wrap: break-word;
+  box-sizing: border-box;
+  display: inline-block;
+}
+
+.txDetailsRawShadow {
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  width: 315px;
+  height: 35px;
+  background: linear-gradient(
+    to top,
+    rgb(243, 246, 246, 0.6) 10%,
+    rgb(243, 246, 246, 0.5) 20%,
+    rgb(243, 246, 246, 0) 70%
+  );
+  border-bottom: 1px var(--wallet-close-button-text) solid;
+  border-left: 1px var(--wallet-close-button-text) solid;
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  background-color: var(--disabled-background-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--disabled-color);
+}
+
+.copyToClipboard {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-image: var(--copy-to-clipboard-icon);
+  background-position: 0 0;
+  background-size: 20px auto;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  margin-left: 10px;
+  margin-bottom: 7px;
+}
+
+.copyToClipboard:hover {
+  opacity: 0.8;
+}
+
+.poolFee {
+  font-size: 13px;
+  position: absolute;
+  top: 20px;
+  left: 582px;
+}
+
+.poolFeePercentage {
+  font-weight: bold;
+}
+
+.close {
+  width: 10px;
+  height: 10px;
+  background-color: transparent;
+  background-image: var(--menu-cancel-rescan-icon);
+  background-size: 10px 10px;
+  cursor: pointer;
+  right: 20px;
+  top: 20px;
+  background-repeat: no-repeat;
+  position: absolute;
+}
