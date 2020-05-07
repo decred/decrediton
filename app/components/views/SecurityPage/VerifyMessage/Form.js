@@ -39,7 +39,7 @@ const VerifyMessageForm = ({
         </div>
         <div className="security-center-form-row">
           <div className="security-center-form-row-label">
-            <T id="securitycenter.verify.field.address.label" m="Address"/>
+            <T id="securitycenter.verify.field.address.label" m="Address" />
           </div>
           <div className="security-center-form-row-field">
             <TextInput
@@ -47,7 +47,7 @@ const VerifyMessageForm = ({
               value={address}
               invalid={addressError}
               invalidMessage={addressError}
-              onChange={e => onChangeAddress(e.target.value)}
+              onChange={(e) => onChangeAddress(e.target.value)}
               placeholder={formatMessage(messages.addressFieldPlaceholder)}
               showErrors={addressError}
             />
@@ -55,7 +55,7 @@ const VerifyMessageForm = ({
         </div>
         <div className="security-center-form-row">
           <div className="security-center-form-row-label">
-            <T id="securitycenter.verify.field.signature.label" m="Signature"/>
+            <T id="securitycenter.verify.field.signature.label" m="Signature" />
           </div>
           <div className="security-center-form-row-field">
             <TextInput
@@ -63,7 +63,7 @@ const VerifyMessageForm = ({
               value={signature}
               invalid={signatureError}
               invalidMessage={signatureError}
-              onChange={e => onChangeSignature(e.target.value)}
+              onChange={(e) => onChangeSignature(e.target.value)}
               placeholder={formatMessage(messages.signatureFieldPlaceholder)}
               showErrors={signatureError}
             />
@@ -71,7 +71,7 @@ const VerifyMessageForm = ({
         </div>
         <div className="security-center-form-row">
           <div className="security-center-form-row-label">
-            <T id="securitycenter.verify.field.message.label" m="Message"/>
+            <T id="securitycenter.verify.field.message.label" m="Message" />
           </div>
           <div className="security-center-form-row-field-message">
             <TextInput
@@ -79,7 +79,7 @@ const VerifyMessageForm = ({
               value={message}
               invalid={messageError}
               invalidMessage={messageError}
-              onChange={e => onChangeMessage(e.target.value)}
+              onChange={(e) => onChangeMessage(e.target.value)}
               placeholder={formatMessage(messages.messageFieldPlaceholder)}
               showErrors={messageError}
             />
@@ -87,7 +87,15 @@ const VerifyMessageForm = ({
         </div>
       </div>
       <KeyBlueButton
-        disabled={isVerifyingMessage || address == "" || message == "" || signature == "" || addressError || messageError || signatureError}
+        disabled={
+          isVerifyingMessage ||
+          address == "" ||
+          message == "" ||
+          signature == "" ||
+          addressError ||
+          messageError ||
+          signatureError
+        }
         onClick={onSubmit}
         loading={isVerifyingMessage}>
         <T id="securitycenter.verify.form.submit" m="Verify Message" />

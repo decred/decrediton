@@ -20,13 +20,17 @@ const mapStateToProps = selectorMap({
   walletReady: sel.getWalletReady
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  onAttemptChangePassphrase: ca.changePassphraseAttempt,
-  onChangeTempSettings: sa.updateStateSettingsChanged,
-  onSaveSettings: sa.saveSettings,
-  onCloseWallet: wla.closeWalletRequest,
-  onAddAllowedRequestType: sa.addAllowedExternalRequest,
-  toggleTheme: sa.toggleTheme
-}, dispatch);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      onAttemptChangePassphrase: ca.changePassphraseAttempt,
+      onChangeTempSettings: sa.updateStateSettingsChanged,
+      onSaveSettings: sa.saveSettings,
+      onCloseWallet: wla.closeWalletRequest,
+      onAddAllowedRequestType: sa.addAllowedExternalRequest,
+      toggleTheme: sa.toggleTheme
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps);

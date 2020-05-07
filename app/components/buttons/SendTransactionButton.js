@@ -10,16 +10,28 @@ class SendTransactionButton extends React.Component {
   }
 
   async onAttemptSignTransaction(privpass) {
-    const { unsignedTransaction, onAttemptSignTransaction, disabled } = this.props;
+    const {
+      unsignedTransaction,
+      onAttemptSignTransaction,
+      disabled
+    } = this.props;
     if (!privpass || disabled || !onAttemptSignTransaction) return;
     await onAttemptSignTransaction(privpass, unsignedTransaction);
   }
 
   async onAttemptSignTransactionTrezor() {
-    const { unsignedTransaction, onAttemptSignTransactionTrezor,
-      constructTxResponse, disabled, onSubmit } = this.props;
+    const {
+      unsignedTransaction,
+      onAttemptSignTransactionTrezor,
+      constructTxResponse,
+      disabled,
+      onSubmit
+    } = this.props;
     if (disabled || !onAttemptSignTransactionTrezor) return;
-    await onAttemptSignTransactionTrezor(unsignedTransaction, constructTxResponse);
+    await onAttemptSignTransactionTrezor(
+      unsignedTransaction,
+      constructTxResponse
+    );
     onSubmit && onSubmit();
   }
 
@@ -32,15 +44,16 @@ class SendTransactionButton extends React.Component {
           onClick={this.onAttemptSignTransactionTrezor}
           disabled={disabled || isSendingTransaction}
           className="content-send"
-          loading={isSendingTransaction}
-        >
+          loading={isSendingTransaction}>
           <T id="send.sendBtn" m="Send" />
         </KeyBlueButton>
       );
     } else {
       return (
         <PassphraseModalButton
-          modalTitle={<T id="send.sendConfirmations" m="Transaction Confirmation" />}
+          modalTitle={
+            <T id="send.sendConfirmations" m="Transaction Confirmation" />
+          }
           modalDescription={children}
           disabled={disabled || isSendingTransaction}
           className="content-send"

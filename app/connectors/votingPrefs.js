@@ -12,9 +12,13 @@ const mapStateToProps = selectorMap({
   allAgendas: sel.allAgendas
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  onUpdateVotePreference: ca.setVoteChoicesAttempt,
-  onChangeStakePool: spa.changeSelectedStakePool
-}, dispatch);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      onUpdateVotePreference: ca.setVoteChoicesAttempt,
+      onChangeStakePool: spa.changeSelectedStakePool
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps);

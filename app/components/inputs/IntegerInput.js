@@ -1,7 +1,6 @@
 import NumericInput from "./NumericInput";
 
 const IntegerInput = ({ ...props }) => {
-
   let value = props.value;
 
   const onChange = (e) => {
@@ -13,7 +12,7 @@ const IntegerInput = ({ ...props }) => {
     }
   };
 
-  return <NumericInput {...props} onChange={onChange} value={value}/>;
+  return <NumericInput {...props} onChange={onChange} value={value} />;
 };
 
 export default IntegerInput;

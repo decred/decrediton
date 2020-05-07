@@ -34,17 +34,17 @@ const logTimestamp = () => {
 // logLevelsPrintable are the printable strings for each log level, compatible
 // with the dcrd/dcrwallet logs.
 const logLevelsPrintable = {
-  "error": "ERR",
-  "warn": "WRN",
-  "info": "INF",
-  "verbose": "VBS",
-  "debug": "DBG",
-  "silly": "TRC"
+  error: "ERR",
+  warn: "WRN",
+  info: "INF",
+  verbose: "VBS",
+  debug: "DBG",
+  silly: "TRC"
 };
 
 const logFormatter = (opts) => {
   //console.log(opts);
-  const lvl = logLevelsPrintable[opts.level]||"UNK";
+  const lvl = logLevelsPrintable[opts.level] || "UNK";
   const time = opts.timestamp();
   const msg = opts.message;
   const subsys = "DCTN";
@@ -60,11 +60,10 @@ const logFormatterColorized = (opts) => {
 // decrediton app data dir and sends to the console when debug == true.
 // This is meant to be called from the ipcMain thread.
 export function createLogger(debug) {
-  if (logger)
-    return logger;
-  logger = new (winston.Logger)({
+  if (logger) return logger;
+  logger = new winston.Logger({
     transports: [
-      new (winston.transports.File)({
+      new winston.transports.File({
         json: false,
         filename: path.join(getAppDataDirectory(), "decrediton.log"),
         timestamp: logTimestamp,
@@ -87,10 +86,12 @@ export function createLogger(debug) {
 const AddToLog = (destIO, destLogBuffer, data, debug) => {
   const dataBuffer = Buffer.from(data);
   if (destLogBuffer.length + dataBuffer.length > MAX_LOG_LENGTH) {
-    destLogBuffer = destLogBuffer.slice(destLogBuffer.indexOf(os.EOL, dataBuffer.length)+1);
+    destLogBuffer = destLogBuffer.slice(
+      destLogBuffer.indexOf(os.EOL, dataBuffer.length) + 1
+    );
   }
   debug && destIO.write(data);
-  return Buffer.concat([ destLogBuffer, dataBuffer ]);
+  return Buffer.concat([destLogBuffer, dataBuffer]);
 };
 
 export const AddToDcrdLog = (destIO, data, debug) => {
@@ -116,7 +117,7 @@ const logError = "[ERR]";
 const panicErr = "panic";
 
 export function lastLogLine(log) {
-  const lastLineIdx = log.lastIndexOf(os.EOL, log.length - os.EOL.length -1);
+  const lastLineIdx = log.lastIndexOf(os.EOL, log.length - os.EOL.length - 1);
   const lastLineBuff = log.slice(lastLineIdx).toString("utf-8");
   return lastLineBuff.trim();
 }
@@ -124,7 +125,9 @@ export function lastLogLine(log) {
 export function lastErrorLine(log) {
   const lastLineIdx = log.lastIndexOf(logError);
   const endOfErrorLineIdx = log.indexOf(os.EOL, lastLineIdx);
-  const lastLineBuff = log.slice(lastLineIdx, endOfErrorLineIdx).toString("utf-8");
+  const lastLineBuff = log
+    .slice(lastLineIdx, endOfErrorLineIdx)
+    .toString("utf-8");
   return lastLineBuff.trim();
 }
 

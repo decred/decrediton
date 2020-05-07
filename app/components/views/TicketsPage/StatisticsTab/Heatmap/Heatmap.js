@@ -11,7 +11,9 @@ const rowNumber = 7;
 const monthLabelSize = 5;
 const legendMargin = 10;
 const headerHeight = 50;
-const Month = ({ date }) => <T id="heatmap.month" m="{date, date, short-month}" values={{ date }} />;
+const Month = ({ date }) => (
+  <T id="heatmap.month" m="{date, date, short-month}" values={{ date }} />
+);
 
 function getTheme() {
   return themes.standard;
@@ -30,9 +32,9 @@ const getBiggestCount = (graphEntries) => {
 const getIntensity = (indicator) => {
   if (indicator === 0) {
     return 0;
-  } else if(indicator >= 0 && indicator < 25) {
+  } else if (indicator >= 0 && indicator < 25) {
     return 1;
-  } else if (indicator >= 25 && indicator < 50){
+  } else if (indicator >= 25 && indicator < 50) {
     return 2;
   } else if (indicator >= 50 && indicator < 75) {
     return 3;
@@ -44,22 +46,17 @@ const getIntensity = (indicator) => {
 const addIntensityInfo = (graphEntries) => {
   const biggestCount = getBiggestCount(graphEntries);
   for (let i = 0; i < graphEntries.length; i++) {
-    const ind = 100 * graphEntries[i].count / biggestCount;
+    const ind = (100 * graphEntries[i].count) / biggestCount;
     graphEntries[i].intensity = getIntensity(ind);
   }
 };
 
 function drawInfo(opts = {}) {
-  const {
-    offsetX = 0,
-    offsetY = 0,
-    graphEntries,
-    columnNumber
-  } = opts;
+  const { offsetX = 0, offsetY = 0, graphEntries, columnNumber } = opts;
   const theme = getTheme();
   const squares = [];
   for (let row = 0; row < rowNumber; row++) {
-    for (let col = 0; col < columnNumber ; col++) {
+    for (let col = 0; col < columnNumber; col++) {
       const dayIndex = row + col * rowNumber;
       if (dayIndex >= graphEntries.length) {
         continue;
@@ -70,11 +67,21 @@ function drawInfo(opts = {}) {
       const color = theme[`grade${day.intensity}`];
       const divEl = (
         <Tooltip
-          text={<TooltipInfo {...{ dayDate, ...day }} /> } key={ "index"+dayIndex }>
-          <div style={{ background: color, width: boxWidth, height: boxWidth, cursor: "pointer",
-            position: "absolute", left: offsetX + (boxWidth + boxMargin) * col,
-            top: offsetY + (boxWidth + boxMargin) * row }} />
-        </Tooltip>);
+          text={<TooltipInfo {...{ dayDate, ...day }} />}
+          key={"index" + dayIndex}>
+          <div
+            style={{
+              background: color,
+              width: boxWidth,
+              height: boxWidth,
+              cursor: "pointer",
+              position: "absolute",
+              left: offsetX + (boxWidth + boxMargin) * col,
+              top: offsetY + (boxWidth + boxMargin) * row
+            }}
+          />
+        </Tooltip>
+      );
       squares.push(divEl);
     }
   }
@@ -86,10 +93,17 @@ function drawInfo(opts = {}) {
     if (lastDateCounted.getMonth() !== date.getMonth()) {
       lastDateCounted = date;
       const divEl = (
-        <div  key={ "month"+i } style={{ position: "absolute", fontSize: 10,
-          left: graphEntries[i].left,
-          top: offsetY - boxMargin - boxWidth - monthLabelSize }} >{Month({ date })}
-        </div>);
+        <div
+          key={"month" + i}
+          style={{
+            position: "absolute",
+            fontSize: 10,
+            left: graphEntries[i].left,
+            top: offsetY - boxMargin - boxWidth - monthLabelSize
+          }}>
+          {Month({ date })}
+        </div>
+      );
       squares.push(divEl);
     }
   }
@@ -104,44 +118,78 @@ function drawLegend(opts) {
   const legend = [];
   const themeColorNumber = 5;
   const totalBoxWidth = boxWidth + boxMargin;
-  const legendWidth = 4*legendFontSize + themeColorNumber*totalBoxWidth;
+  const legendWidth = 4 * legendFontSize + themeColorNumber * totalBoxWidth;
   const legendStarts = offsetX - legendWidth - legendMargin;
 
-  legend.push(<span key="legend-first" style={{
-    fontSize: legendFontSize, position: "absolute",
-    top: offsetY - legendFontSize/2, left: legendStarts }}>
+  legend.push(
+    <span
+      key="legend-first"
+      style={{
+        fontSize: legendFontSize,
+        position: "absolute",
+        top: offsetY - legendFontSize / 2,
+        left: legendStarts
+      }}>
       Less
-  </span>);
+    </span>
+  );
   for (let i = 0; i < themeColorNumber; i++) {
     const color = theme[`grade${i}`];
-    const divEl = <div style={{ background: color, width: boxWidth, height: boxWidth,
-      position: "absolute", left: legendStarts + 25 + totalBoxWidth * i,
-      top: offsetY }} key={"legend"+i} />;
+    const divEl = (
+      <div
+        style={{
+          background: color,
+          width: boxWidth,
+          height: boxWidth,
+          position: "absolute",
+          left: legendStarts + 25 + totalBoxWidth * i,
+          top: offsetY
+        }}
+        key={"legend" + i}
+      />
+    );
 
     legend.push(divEl);
   }
-  legend.push(<span key="legend-last" style={{
-    position: "absolute", top: offsetY - legendFontSize/2, fontSize: legendFontSize,
-    left: legendStarts + 25 + totalBoxWidth * themeColorNumber }}>
-    More
-  </span>);
+  legend.push(
+    <span
+      key="legend-last"
+      style={{
+        position: "absolute",
+        top: offsetY - legendFontSize / 2,
+        fontSize: legendFontSize,
+        left: legendStarts + 25 + totalBoxWidth * themeColorNumber
+      }}>
+      More
+    </span>
+  );
 
   return legend;
 }
 
 const Heatmap = ({ data, ...opts }) => {
-  const columnNumber =  Math.ceil(data.length/rowNumber);
+  const columnNumber = Math.ceil(data.length / rowNumber);
   const offsetY = canvasMargin + headerHeight;
   const offsetX = 0;
-  const totalOffsetY = offsetY + rowNumber * (boxMargin + boxWidth) + monthLabelSize + legendMargin;
+  const totalOffsetY =
+    offsetY +
+    rowNumber * (boxMargin + boxWidth) +
+    monthLabelSize +
+    legendMargin;
   const totalOffsetX = canvasMargin + columnNumber * (boxMargin + boxWidth);
 
   addIntensityInfo(data);
   return (
-    <div className = "ticket-activity-wrapper">
+    <div className="ticket-activity-wrapper">
       <span className="my-tickets-stats-indicators-title">Ticket Activity</span>
       <div className="heatmap-wrapper">
-        {drawInfo({ graphEntries: data, offsetX, offsetY, columnNumber, ...opts })}
+        {drawInfo({
+          graphEntries: data,
+          offsetX,
+          offsetY,
+          columnNumber,
+          ...opts
+        })}
         {drawLegend({ offsetY: totalOffsetY, offsetX: totalOffsetX })}
       </div>
     </div>

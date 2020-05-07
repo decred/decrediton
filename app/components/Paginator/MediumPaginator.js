@@ -11,17 +11,17 @@ const propTypes = {
 
 @autobind
 class MediumPaginator extends React.Component {
-
   render() {
     return (
       <div className="paginator">
         <ActionButton direction="previous" onClick={this.props.gotoNextPage} />
-        {[ ...Array(this.props.totalPages) ].map( (x, i) => (
+        {[...Array(this.props.totalPages)].map((x, i) => (
           <PageButton
             key={i}
             isCurrent={this.props.currentPage === i}
             onClick={this.props.gotoPage}
-            value={i}/>
+            value={i}
+          />
         ))}
         <ActionButton direction="next" onClick={this.props.gotoPreviousPage} />
       </div>

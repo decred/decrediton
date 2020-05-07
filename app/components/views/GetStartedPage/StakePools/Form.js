@@ -49,11 +49,11 @@ const Form = ({
               className="stakepool-add-apikey"
               placeholder={intl.formatMessage(messages.apiKeyPlaceholder)}
               value={apiKey}
-              onChange={e => onChangeApiKey(e.target.value)}
+              onChange={(e) => onChangeApiKey(e.target.value)}
             />
           </div>
         </div>
-        { walletPrivatePassphrase ? null :
+        {walletPrivatePassphrase ? null : (
           <div className="field">
             <div className="label">
               <T id="stakepool.passPhrase" m="Private Passphrase" />:
@@ -61,19 +61,26 @@ const Form = ({
             <div className="value">
               <PasswordInput
                 value={passPhrase}
-                onChange={e => onChangePassPhrase(e.target.value)}
+                onChange={(e) => onChangePassPhrase(e.target.value)}
               />
             </div>
-          </div> }
+          </div>
+        )}
       </div>
 
       <div className="getstarted-stakepool-add-col right">
-        <T id="getStarted.stakePools.info" m="Add your existing VSP APIs here. You can always add them later if you want. After you're done, you can press 'continue'." />
+        <T
+          id="getStarted.stakePools.info"
+          m="Add your existing VSP APIs here. You can always add them later if you want. After you're done, you can press 'continue'."
+        />
       </div>
     </div>
 
     <div className="getstarted-stakepool-add-buttons">
-      <KeyBlueButton onClick={onSetStakePoolInfo} loading={isSavingStakePoolConfig} disabled={isSavingStakePoolConfig}>
+      <KeyBlueButton
+        onClick={onSetStakePoolInfo}
+        loading={isSavingStakePoolConfig}
+        disabled={isSavingStakePoolConfig}>
         <T id="getStarted.stakePools.addBtn" m="Add" />
       </KeyBlueButton>
       <InvisibleButton onClick={onContinueCreation}>

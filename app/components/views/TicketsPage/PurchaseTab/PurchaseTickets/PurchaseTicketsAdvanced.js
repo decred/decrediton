@@ -1,4 +1,10 @@
-import { FeeInput, PercentInput, BlocksInput, AddressInput, StakePoolSelect } from "inputs";
+import {
+  FeeInput,
+  PercentInput,
+  BlocksInput,
+  AddressInput,
+  StakePoolSelect
+} from "inputs";
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import cx from "classnames";
 
@@ -18,15 +24,24 @@ const messages = defineMessages({
 });
 
 const PurchaseTicketAdvancedInfo = ({
-  label, className, onIconClick, children
-}) => (<>
-  <div className={cx("purchase-ticket-advanced-info-label", className)}>{label}:</div>
-  <div className={cx("purchase-ticket-advanced-info-value", className)}>
-    {children}
-    <div className={cx("stakepool-info-icon", className)} onClick={onIconClick} />
-  </div>
-</>);
-
+  label,
+  className,
+  onIconClick,
+  children
+}) => (
+  <>
+    <div className={cx("purchase-ticket-advanced-info-label", className)}>
+      {label}:
+    </div>
+    <div className={cx("purchase-ticket-advanced-info-value", className)}>
+      {children}
+      <div
+        className={cx("stakepool-info-icon", className)}
+        onClick={onIconClick}
+      />
+    </div>
+  </>
+);
 
 const PurchaseTicketsAdvanced = ({
   configuredStakePools,
@@ -60,11 +75,17 @@ const PurchaseTicketsAdvanced = ({
     <PurchaseTicketAdvancedInfo
       label={<T id="purchaseTickets.ticketFee" m="Ticket Fee" />}
       className="ticket-fee">
-      <FeeInput {...{ ...props }}
+      <FeeInput
+        {...{ ...props }}
         name={"ticketFee"}
         required
         invalid={ticketFeeError}
-        invalidMessage={<T id="purchaseTickets.errors.invalidTicketFee" m="Invalid ticket fee" />}
+        invalidMessage={
+          <T
+            id="purchaseTickets.errors.invalidTicketFee"
+            m="Invalid ticket fee"
+          />
+        }
         placeholder={formatMessage(messages.ticketFeePlaceholder)}
         value={ticketFee}
         onChange={onChangeTicketFee}
@@ -78,7 +99,9 @@ const PurchaseTicketsAdvanced = ({
       <FeeInput
         required
         invalid={txFeeError}
-        invalidMessage={<T id="purchaseTickets.errors.invalidTxFee" m="Invalid tx fee" />}
+        invalidMessage={
+          <T id="purchaseTickets.errors.invalidTxFee" m="Invalid tx fee" />
+        }
         placeholder={formatMessage(messages.txFeePlaceholder)}
         value={txFee}
         onChange={onChangeTxFee}
@@ -92,7 +115,9 @@ const PurchaseTicketsAdvanced = ({
       <BlocksInput
         required
         invalid={expiryError}
-        invalidMessage={<T id="purchaseTickets.errors.expiryRequred" m="Invalid expiry" />}
+        invalidMessage={
+          <T id="purchaseTickets.errors.expiryRequred" m="Invalid expiry" />
+        }
         placeholder={formatMessage(messages.expiryPlaceholder)}
         value={expiry}
         onChange={onChangeExpiry}
@@ -101,10 +126,13 @@ const PurchaseTicketsAdvanced = ({
       />
     </PurchaseTicketAdvancedInfo>
     <PurchaseTicketAdvancedInfo
-      label={<T id="purchaseTickets.advanced.ticketAddress" m="Ticket Address" />}
+      label={
+        <T id="purchaseTickets.advanced.ticketAddress" m="Ticket Address" />
+      }
       className="ticket-address">
       <AddressInput
-        disabled readOnly
+        disabled
+        readOnly
         className="stakepool-purchase-ticket-input stakepool-advanced-big-input"
         value={stakePool ? stakePool.value.TicketAddress : null}
       />
@@ -113,7 +141,8 @@ const PurchaseTicketsAdvanced = ({
       label={<T id="purchaseTickets.advanced.poolAddress" m="Pool Address" />}
       className="pool-address">
       <AddressInput
-        disabled readOnly
+        disabled
+        readOnly
         className="stakepool-purchase-ticket-input stakepool-advanced-big-input"
         value={stakePool ? stakePool.value.PoolAddress : null}
       />
@@ -122,11 +151,13 @@ const PurchaseTicketsAdvanced = ({
       label={<T id="purchaseTickets.poolFees" m="Pool Fees" />}
       className="pool-fees">
       <PercentInput
-        disabled readOnly
+        disabled
+        readOnly
         className="stakepool-purchase-ticket-input advanced-small-input"
         value={stakePool ? stakePool.value.PoolFees : null}
       />
     </PurchaseTicketAdvancedInfo>
-  </div>);
+  </div>
+);
 
 export default PurchaseTicketsAdvanced;

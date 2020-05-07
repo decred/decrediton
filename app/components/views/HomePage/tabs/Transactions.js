@@ -17,7 +17,8 @@ const HomePage = ({
           <Balance
             classNameWrapper="overview-balance-spendable-locked received amount"
             classNameUnit="overview-balance-spendable-locked-unit"
-            amount={balanceReceived} />
+            amount={balanceReceived}
+          />
           <div className="overview-balance-spendable-locked-label">
             <T id="home.receivedBalanceLabel" m="Received" />
           </div>
@@ -26,14 +27,15 @@ const HomePage = ({
           <Balance
             classNameWrapper="overview-balance-spendable-locked sent amount"
             classNameUnit="overview-balance-spendable-locked-unit"
-            amount={balanceSent} />
+            amount={balanceSent}
+          />
           <div className="overview-balance-spendable-locked-label">
             <T id="home.sentBalanceLabel" m="Sent" />
           </div>
         </div>
       </div>
       <div className="overview-chart-wrapper">
-        <TransactionChart data={sentAndReceivedTransactions}/>
+        <TransactionChart data={sentAndReceivedTransactions} />
       </div>
     </div>
   );

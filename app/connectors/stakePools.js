@@ -16,10 +16,14 @@ const mapStateToProps = selectorMap({
   isImportingScript: sel.isImportingScript
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  onSetStakePoolInfo: spa.setStakePoolInformation,
-  onRemoveStakePool: spa.removeStakePoolConfig,
-  discoverAvailableStakepools: spa.discoverAvailableStakepools
-}, dispatch);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      onSetStakePoolInfo: spa.setStakePoolInformation,
+      onRemoveStakePool: spa.removeStakePoolConfig,
+      discoverAvailableStakepools: spa.discoverAvailableStakepools
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps);

@@ -21,21 +21,29 @@ const StandardPassphraseModal = (props) => {
     onCancelModal
   } = props;
 
-  const inputRow =
+  const inputRow = (
     <PassphraseInputRow
       {...{
         ...props,
         autoFocusPassword: prependPassphraseRow || !children
       }}
-    />;
+    />
+  );
 
   return (
-    <Modal className={"passphrase-modal " + (modalClassName || "")} {...{ show, onCancelModal }}>
+    <Modal
+      className={"passphrase-modal " + (modalClassName || "")}
+      {...{ show, onCancelModal }}>
       <div className="passphrase-modal-header">
         <div className="passphrase-modal-header-title">
-          {modalTitle ? modalTitle :
-            <T id="passphraseModal.confirmationRequired" m="Confirmation Required" />
-          }
+          {modalTitle ? (
+            modalTitle
+          ) : (
+            <T
+              id="passphraseModal.confirmationRequired"
+              m="Confirmation Required"
+            />
+          )}
         </div>
         <div className="passphrase-modal-header-description">
           {modalDescription}

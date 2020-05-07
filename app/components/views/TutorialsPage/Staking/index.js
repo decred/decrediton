@@ -9,6 +9,6 @@ export default (props) => (
   <PagedTutorial
     {...props}
     title={<T id="tutorial.staking.title" m="Staking" />}
-    pages={[ Page1, Page2 ]}
+    pages={[Page1, Page2]}
   />
 );

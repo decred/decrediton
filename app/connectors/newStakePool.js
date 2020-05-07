@@ -8,8 +8,12 @@ const mapStateToProps = selectorMap({
   isAddingCustomStakePool: sel.isAddingCustomStakePool
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  addCustomStakePool: sa.addCustomStakePool
-}, dispatch);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      addCustomStakePool: sa.addCustomStakePool
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps);

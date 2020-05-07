@@ -13,9 +13,13 @@ const mapStateToProps = selectorMap({
   rescanPercentFinished: sel.rescanPercentFinished
 });
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  rescanAttempt: ca.rescanAttempt,
-  rescanCancel: ca.rescanCancel
-}, dispatch);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      rescanAttempt: ca.rescanAttempt,
+      rescanCancel: ca.rescanCancel
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps);

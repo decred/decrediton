@@ -5,12 +5,17 @@ import { InvisibleButton, KeyBlueButton } from "buttons";
 export default ({ toggleCustomPrivacy, acceptCustomPrivacy, ...props }) => (
   <>
     <div className="language-select-title">
-      <T id="privacy.custom.title" m={"Custom Privacy Options"}/>
+      <T id="privacy.custom.title" m={"Custom Privacy Options"} />
     </div>
     <div className="language-select-title-sub">
-      <T id="privacy.custom.titleSub" m={"Select which external requests Decrediton is allowed to make. You can change this later on the app settings page."}/>
+      <T
+        id="privacy.custom.titleSub"
+        m={
+          "Select which external requests Decrediton is allowed to make. You can change this later on the app settings page."
+        }
+      />
     </div>
-    <div className="get-started-custom-privacy-settings" >
+    <div className="get-started-custom-privacy-settings">
       <PrivacySettings {...props} />
       <div className="privacy-buttons">
         <InvisibleButton onClick={toggleCustomPrivacy}>

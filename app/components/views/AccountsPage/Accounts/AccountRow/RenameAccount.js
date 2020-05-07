@@ -18,7 +18,9 @@ const RenameAccount = ({
   intl,
   hasFailedAttempt
 }) => (
-  <div className="account-row-rename-bottom" key={"details" + account.accountNumber}>
+  <div
+    className="account-row-rename-bottom"
+    key={"details" + account.accountNumber}>
     <div className="account-row-rename-bottom-title">
       <T id="accounts.rename" m="Rename Account" />
     </div>
@@ -35,7 +37,10 @@ const RenameAccount = ({
           maxLength="50"
           value={renameAccountName}
           onChange={(e) => updateRenameAccountName(e.target.value)}
-          showErrors={hasFailedAttempt || (renameAccountName && renameAccountName.length > 50)}
+          showErrors={
+            hasFailedAttempt ||
+            (renameAccountName && renameAccountName.length > 50)
+          }
         />
       </div>
     </div>

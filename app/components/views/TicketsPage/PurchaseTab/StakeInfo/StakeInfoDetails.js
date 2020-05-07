@@ -22,7 +22,7 @@ const StakeInfoDisplay = ({
       <Column
         className={"stake-info"}
         label={<T id="stakeSPV.expiredTickets" m="Expired Tickets" />}
-        value={<FormattedNumber value={expiredTicketsCount}/>}
+        value={<FormattedNumber value={expiredTicketsCount} />}
       />
       <Column
         className={"stake-info"}
@@ -30,31 +30,30 @@ const StakeInfoDisplay = ({
         value={<FormattedNumber value={revokedTicketsCount} />}
       />
     </div>
-    {
-      !isSPV && (
-        <div className="stake-info-details-row">
-          <Column
-            className={"stake-info"}
-            label={<T id="stake.mempoolTickets" m="All Mempool Tickets" />}
-            value={<FormattedNumber value={allMempoolTicketsCount}/> }
-          />
-          <Column
-            className={"stake-info"}
-            label={<T id="stake.poolSize" m="Pool Size" />}
-            value={<FormattedNumber value={ticketPoolSize} />}
-          />
-          <Column
-            className={"stake-info"}
-            label={<T id="stake.missedTickets" m="Missed Tickets" />}
-            value={<FormattedNumber value={missedTicketsCount}/>}
-          />
-        </div>
-      )}
+    {!isSPV && (
+      <div className="stake-info-details-row">
+        <Column
+          className={"stake-info"}
+          label={<T id="stake.mempoolTickets" m="All Mempool Tickets" />}
+          value={<FormattedNumber value={allMempoolTicketsCount} />}
+        />
+        <Column
+          className={"stake-info"}
+          label={<T id="stake.poolSize" m="Pool Size" />}
+          value={<FormattedNumber value={ticketPoolSize} />}
+        />
+        <Column
+          className={"stake-info"}
+          label={<T id="stake.missedTickets" m="Missed Tickets" />}
+          value={<FormattedNumber value={missedTicketsCount} />}
+        />
+      </div>
+    )}
     <div className="stake-info-details-row">
       <Column
         className={"stake-info"}
         label={<T id="stake.totalRewards" m="Total Rewards" />}
-        value={<Balance amount={totalSubsidy}/>}
+        value={<Balance amount={totalSubsidy} />}
       />
     </div>
   </div>

@@ -153,7 +153,7 @@
 
 .detailsText {
   font-family: var(--font-family-regular-semi-bold);
-  min-height:100%;
+  min-height: 100%;
   padding-top: 30px;
   padding-left: 40px;
   background-color: var(--background-back-color);
@@ -173,7 +173,7 @@
 }
 
 .detailsText a {
-  color:var(--link-color);
+  color: var(--link-color);
 }
 
 .detailsText pre {
@@ -228,7 +228,7 @@
 }
 
 .voteOption input[type="radio"] + .radioLabel::before {
-  content: '';
+  content: "";
   background: var(--disabled-background-color-lighter);
   border-radius: 100%;
   border: 1px solid var(--disabled-color);
@@ -244,7 +244,7 @@
 
 .voteOption input[type="radio"] + .radioLabel:empty::before {
   margin-right: 5px;
-  text-transform:  capitalize;
+  text-transform: capitalize;
 }
 
 .voteOption input[type="radio"] + .radioLabel.yes::before {
@@ -363,7 +363,7 @@
   .overview {
     width: 634px;
   }
-  
+
   .overviewInfo {
     padding: 20px;
   }

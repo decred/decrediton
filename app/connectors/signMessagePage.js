@@ -14,11 +14,15 @@ const mapStateToProps = selectorMap({
   isTrezor: sel.isTrezor
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  signMessageAttempt: ca.signMessageAttempt,
-  validateAddress: ca.validateAddress,
-  signMessageCleanStore: ca.signMessageCleanStore,
-  signMessageAttemptTrezor: trza.signMessageAttemptTrezor
-}, dispatch);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      signMessageAttempt: ca.signMessageAttempt,
+      validateAddress: ca.validateAddress,
+      signMessageCleanStore: ca.signMessageCleanStore,
+      signMessageAttemptTrezor: trza.signMessageAttemptTrezor
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps);

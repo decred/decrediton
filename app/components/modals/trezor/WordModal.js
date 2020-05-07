@@ -4,7 +4,7 @@ import { ButtonsToolbar } from "../PassphraseModal";
 import Select from "react-select";
 import { word_list } from "helpers/trezor";
 
-const input_options = word_list.map(w => ({ word: w }));
+const input_options = word_list.map((w) => ({ word: w }));
 
 @autobind
 class WordModal extends React.Component {
@@ -34,17 +34,24 @@ class WordModal extends React.Component {
     }
   }
 
-  getSeedWords (input, callback) {
+  getSeedWords(input, callback) {
     input = input.toLowerCase();
-    const options = input_options
-      .filter(w => w.word.toLowerCase().substr(0, input.length) === input);
+    const options = input_options.filter(
+      (w) => w.word.toLowerCase().substr(0, input.length) === input
+    );
     callback(null, {
       options: options.slice(0, 5)
     });
   }
 
   render() {
-    const { onCancelModal, onSubmit, onWordChanged, onSelectKeyDown, getSeedWords } = this;
+    const {
+      onCancelModal,
+      onSubmit,
+      onWordChanged,
+      onSelectKeyDown,
+      getSeedWords
+    } = this;
 
     const className = [
       "passphrase-modal",
@@ -54,12 +61,19 @@ class WordModal extends React.Component {
 
     return (
       <Modal {...{ className, onCancelModal }}>
-        <h1><T id="trezor.wordModal.title" m="Type the requested word" /></h1>
-        <p><T id="trezor.wordModal.description" m="Type the word requested in the trezor device." /></p>
+        <h1>
+          <T id="trezor.wordModal.title" m="Type the requested word" />
+        </h1>
+        <p>
+          <T
+            id="trezor.wordModal.description"
+            m="Type the word requested in the trezor device."
+          />
+        </p>
 
         <div className="trezor-word-select">
           <Select.Async
-            ref={n => n && n.focus()}
+            ref={(n) => n && n.focus()}
             autoFocus
             simpleValue
             multi={false}
@@ -71,12 +85,17 @@ class WordModal extends React.Component {
             loadOptions={getSeedWords}
             onChange={onWordChanged}
             value={this.state.value}
-            placeholder={<T id="trezor.wordModal.selectPlaceholder" m="Start typing word..." />}
+            placeholder={
+              <T
+                id="trezor.wordModal.selectPlaceholder"
+                m="Start typing word..."
+              />
+            }
             onInputKeyDown={onSelectKeyDown}
           />
         </div>
 
-        <ButtonsToolbar {... { onCancelModal, onSubmit }} />
+        <ButtonsToolbar {...{ onCancelModal, onSubmit }} />
       </Modal>
     );
   }

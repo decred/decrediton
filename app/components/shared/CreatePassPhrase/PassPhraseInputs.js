@@ -15,10 +15,27 @@ const messages = defineMessages({
 });
 
 const PassPhraseInputs = ({
-  passPhraseLabel = <T id="createWallet.passhraseInput.label" m="Private passphrase" />,
-  passPhraseVerificationLabel = <T id="createWallet.passphraseInput.verifyLabel" m="Repeat Private Passphrase" />,
-  blankPassPhraseError = <T id="createWallet.passphraseInput.errors.noPassPhrase" m="*Please enter your private passphrase" />,
-  passPhraseVerificationError = <T id="createWallet.passphraseInput.errors.noMatch" m="*Passphrases do not match" />,
+  passPhraseLabel = (
+    <T id="createWallet.passhraseInput.label" m="Private passphrase" />
+  ),
+  passPhraseVerificationLabel = (
+    <T
+      id="createWallet.passphraseInput.verifyLabel"
+      m="Repeat Private Passphrase"
+    />
+  ),
+  blankPassPhraseError = (
+    <T
+      id="createWallet.passphraseInput.errors.noPassPhrase"
+      m="*Please enter your private passphrase"
+    />
+  ),
+  passPhraseVerificationError = (
+    <T
+      id="createWallet.passphraseInput.errors.noMatch"
+      m="*Passphrases do not match"
+    />
+  ),
   passPhrase,
   passPhraseVerification,
   setPassPhrase,
@@ -32,9 +49,7 @@ const PassPhraseInputs = ({
     <div className="is-row passphrase">
       <div className="confirm-seed-label-text passphrase is-row">
         <InfoDocFieldModalButton document="PassphraseInfo" />
-        <div>
-          {passPhraseLabel}
-        </div>
+        <div>{passPhraseLabel}</div>
       </div>
       <form>
         <PasswordInput
@@ -50,7 +65,9 @@ const PassPhraseInputs = ({
       </form>
     </div>
     <div className="is-row passphrase">
-      <div className="confirm-seed-label-text passphrase">{passPhraseVerificationLabel}</div>
+      <div className="confirm-seed-label-text passphrase">
+        {passPhraseVerificationLabel}
+      </div>
       <form>
         <PasswordInput
           className="input-private-password"

@@ -27,41 +27,58 @@ class Purchase extends React.Component {
   }
 
   render() {
-    return <PurchasePage {...{ ...this.props, ...this.state,
-      stakePool: this.getStakePool(),
-      account: this.getAccount(),
-      ...substruct({
-        onChangeStakePool: null,
-        onChangeAccount: null,
-        onShowImportScript: null,
-        onShowRevokeTicket: null,
-        onCancelImportScript: null,
-        onToggleTicketStakePool: null,
-        onShowStakePoolConfig: null,
-        onHideStakePoolConfig: null,
-        onImportScript: null,
-        onRevokeTickets: null
-      }, this)
-    }} />;
+    return (
+      <PurchasePage
+        {...{
+          ...this.props,
+          ...this.state,
+          stakePool: this.getStakePool(),
+          account: this.getAccount(),
+          ...substruct(
+            {
+              onChangeStakePool: null,
+              onChangeAccount: null,
+              onShowImportScript: null,
+              onShowRevokeTicket: null,
+              onCancelImportScript: null,
+              onToggleTicketStakePool: null,
+              onShowStakePoolConfig: null,
+              onHideStakePoolConfig: null,
+              onImportScript: null,
+              onRevokeTickets: null
+            },
+            this
+          )
+        }}
+      />
+    );
   }
 
   onToggleTicketStakePool(side) {
     this.setState({
-      isShowingVotingPrefs: (side === "right") ? true : false,
+      isShowingVotingPrefs: side === "right" ? true : false,
       purchaseTicketsStakePoolConfig: false
     });
   }
 
   getStakePool() {
-    const pool = this.props.onChangeStakePool ? this.props.stakePool : this.state.stakePool;
+    const pool = this.props.onChangeStakePool
+      ? this.props.stakePool
+      : this.state.stakePool;
     return pool
-      ? this.props.configuredStakePools.find(compose(eq(pool.Host), get("Host")))
+      ? this.props.configuredStakePools.find(
+          compose(eq(pool.Host), get("Host"))
+        )
       : null;
   }
 
   getAccount() {
-    const account = this.props.onChangeAccount ? this.props.account : this.state.account;
-    return this.props.spendingAccounts.find(compose(eq(account.value), get("value")));
+    const account = this.props.onChangeAccount
+      ? this.props.account
+      : this.state.account;
+    return this.props.spendingAccounts.find(
+      compose(eq(account.value), get("value"))
+    );
   }
 
   onChangeStakePool(stakePool) {
@@ -96,8 +113,13 @@ class Purchase extends React.Component {
 
   onShowRevokeTicket() {
     this.onRequestPassphrase(
-      <T id="stake.revokeTicketsPassphrase" m="Enter Passphrase to Revoke Tickets" />,
-      null, this.onRevokeTickets);
+      <T
+        id="stake.revokeTicketsPassphrase"
+        m="Enter Passphrase to Revoke Tickets"
+      />,
+      null,
+      this.onRevokeTickets
+    );
   }
 
   onShowImportScript() {

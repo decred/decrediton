@@ -18,23 +18,32 @@ const getError = (error) => {
 };
 
 const ChooseVoteOption = ({
-  viewedProposalDetails, voteOptions, currentVoteChoice, votingComplete, eligibleTicketCount
+  viewedProposalDetails,
+  voteOptions,
+  currentVoteChoice,
+  votingComplete,
+  eligibleTicketCount
 }) => {
-  const [ newVoteChoice, setVoteOption ] = useState(null);
+  const [newVoteChoice, setVoteOption] = useState(null);
 
   const dispatch = useDispatch();
-  const onUpdateVoteChoice = (privatePassphrase) => dispatch(
-    gov.updateVoteChoice(viewedProposalDetails, newVoteChoice, privatePassphrase)
-  );
-  const [ state, send ] = useMachine(fetchMachine, {
+  const onUpdateVoteChoice = (privatePassphrase) =>
+    dispatch(
+      gov.updateVoteChoice(
+        viewedProposalDetails,
+        newVoteChoice,
+        privatePassphrase
+      )
+    );
+  const [state, send] = useMachine(fetchMachine, {
     actions: {
       initial: () => ({}),
       load: (context, event) => {
         const { privatePassphrase } = event;
-        if(!newVoteChoice) return;
+        if (!newVoteChoice) return;
         onUpdateVoteChoice(privatePassphrase)
           .then(() => send("RESOLVE"))
-          .catch(error => {
+          .catch((error) => {
             send({ type: "REJECT", error });
             setVoteOption(null);
           });
@@ -42,32 +51,61 @@ const ChooseVoteOption = ({
     }
   });
 
-  const error = useMemo(() => state && state.context && getError(state.context.error), [ state ]);
+  const error = useMemo(
+    () => state && state.context && getError(state.context.error),
+    [state]
+  );
 
   const voteSubmitHandler = useCallback(
-    (privatePassphrase) => !error ? send({ type: "FETCH", privatePassphrase }) : send({ type: "RETRY", privatePassphrase }),
-    [ send, error ],
+    (privatePassphrase) =>
+      !error
+        ? send({ type: "FETCH", privatePassphrase })
+        : send({ type: "RETRY", privatePassphrase }),
+    [send, error]
   );
 
   switch (state.value) {
-  case "idle":
-  case "failure":
-    return <ChooseOptions {...{
-      setVoteOption, newVoteChoice, eligibleTicketCount, currentVoteChoice,
-      voteOptions, votingComplete, onVoteSubmit: voteSubmitHandler
-    }} />;
-  case "loading":
-    return (
-      <div className={styles.voteChoice}>
-        <StakeyBounceXs />
-        <T id="proposalDetails.votingInfo.updatingVoteChoice" m="Updating vote choice" />...
-      </div>
-    );
-  case "success":
-    return <ChooseOptions {...{
-      setVoteOption, newVoteChoice, eligibleTicketCount, currentVoteChoice,
-      voteOptions, votingComplete, onVoteSubmit: voteSubmitHandler, votedSuccessfully: true
-    }} />;
+    case "idle":
+    case "failure":
+      return (
+        <ChooseOptions
+          {...{
+            setVoteOption,
+            newVoteChoice,
+            eligibleTicketCount,
+            currentVoteChoice,
+            voteOptions,
+            votingComplete,
+            onVoteSubmit: voteSubmitHandler
+          }}
+        />
+      );
+    case "loading":
+      return (
+        <div className={styles.voteChoice}>
+          <StakeyBounceXs />
+          <T
+            id="proposalDetails.votingInfo.updatingVoteChoice"
+            m="Updating vote choice"
+          />
+          ...
+        </div>
+      );
+    case "success":
+      return (
+        <ChooseOptions
+          {...{
+            setVoteOption,
+            newVoteChoice,
+            eligibleTicketCount,
+            currentVoteChoice,
+            voteOptions,
+            votingComplete,
+            onVoteSubmit: voteSubmitHandler,
+            votedSuccessfully: true
+          }}
+        />
+      );
   }
 };
 

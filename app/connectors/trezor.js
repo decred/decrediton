@@ -16,23 +16,27 @@ const mapStateToProps = selectorMap({
   walletCreationMasterPubkeyAttempt: sel.trezorWalletCreationMasterPubkeyAttempt
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  loadDeviceList: trza.loadDeviceList,
-  cancelCurrentOperation: trza.cancelCurrentOperation,
-  submitPin: trza.submitPin,
-  submitPassPhrase: trza.submitPassPhrase,
-  submitWord: trza.submitWord,
-  togglePinProtection: trza.togglePinProtection,
-  togglePassPhraseProtection: trza.togglePassPhraseProtection,
-  changeToDecredHomeScreen: trza.changeToDecredHomeScreen,
-  changeLabel: trza.changeLabel,
-  wipeDevice: trza.wipeDevice,
-  recoverDevice: trza.recoverDevice,
-  initDevice: trza.initDevice,
-  updateFirmware: trza.updateFirmware,
-  enableTrezor: trza.enableTrezor,
-  reloadDeviceList: trza.reloadTrezorDeviceList,
-  clearDeviceSession: trza.clearDeviceSession
-}, dispatch);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      loadDeviceList: trza.loadDeviceList,
+      cancelCurrentOperation: trza.cancelCurrentOperation,
+      submitPin: trza.submitPin,
+      submitPassPhrase: trza.submitPassPhrase,
+      submitWord: trza.submitWord,
+      togglePinProtection: trza.togglePinProtection,
+      togglePassPhraseProtection: trza.togglePassPhraseProtection,
+      changeToDecredHomeScreen: trza.changeToDecredHomeScreen,
+      changeLabel: trza.changeLabel,
+      wipeDevice: trza.wipeDevice,
+      recoverDevice: trza.recoverDevice,
+      initDevice: trza.initDevice,
+      updateFirmware: trza.updateFirmware,
+      enableTrezor: trza.enableTrezor,
+      reloadDeviceList: trza.reloadTrezorDeviceList,
+      clearDeviceSession: trza.clearDeviceSession
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps);

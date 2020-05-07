@@ -25,17 +25,17 @@ const Logs = ({
   showDcrlndLogs,
   onShowDcrlndLogs,
   onHideDcrlndLogs
-}
-) => (
+}) => (
   <>
-    <Subtitle title={<T id="logs.subtitle" m="System Logs"/>} />
-    {!isDaemonRemote && isDaemonStarted ?
-      !showDcrdLogs ?
+    <Subtitle title={<T id="logs.subtitle" m="System Logs" />} />
+    {!isDaemonRemote && isDaemonStarted ? (
+      !showDcrdLogs ? (
         <div className="log-area hidden">
           <div className="log-area-title hidden" onClick={onShowDcrdLogs}>
             <T id="help.logs.dcrd" m="dcrd" />
           </div>
-        </div>:
+        </div>
+      ) : (
         <div className="log-area expanded">
           <div className="log-area-title expanded" onClick={onHideDcrdLogs}>
             <T id="help.logs.dcrd" m="dcrd" />
@@ -43,15 +43,18 @@ const Logs = ({
           <div className="log-area-logs">
             <textarea rows="30" value={dcrdLogs} disabled />
           </div>
-        </div> :
-      <div/>
-    }
-    {!walletReady ? null : !showDcrwalletLogs ?
+        </div>
+      )
+    ) : (
+      <div />
+    )}
+    {!walletReady ? null : !showDcrwalletLogs ? (
       <div className="log-area hidden">
         <div className="log-area-title hidden" onClick={onShowDcrwalletLogs}>
           <T id="help.logs.dcrwallet" m="dcrwallet" />
         </div>
-      </div>:
+      </div>
+    ) : (
       <div className="log-area expanded">
         <div className="log-area-title expanded" onClick={onHideDcrwalletLogs}>
           <T id="help.logs.dcrwallet" m="dcrwallet" />
@@ -60,13 +63,14 @@ const Logs = ({
           <textarea rows="30" value={dcrwalletLogs} disabled />
         </div>
       </div>
-    }
-    {!showDecreditonLogs ?
+    )}
+    {!showDecreditonLogs ? (
       <div className="log-area hidden">
         <div className="log-area-title hidden" onClick={onShowDecreditonLogs}>
           <T id="help.logs.decrediton" m="decrediton" />
         </div>
-      </div>:
+      </div>
+    ) : (
       <div className="log-area expanded">
         <div className="log-area-title expanded" onClick={onHideDecreditonLogs}>
           <T id="help.logs.decrediton" m="decrediton" />
@@ -75,13 +79,16 @@ const Logs = ({
           <textarea rows="30" value={decreditonLogs} disabled />
         </div>
       </div>
-    }
-    {(!lnActive && !lnConnectAttempt && !lnStartAttempt) ? null : !showDcrlndLogs ?
+    )}
+    {!lnActive &&
+    !lnConnectAttempt &&
+    !lnStartAttempt ? null : !showDcrlndLogs ? (
       <div className="log-area hidden">
         <div className="log-area-title hidden" onClick={onShowDcrlndLogs}>
           <T id="help.logs.dcrlnd" m="dcrlnd" />
         </div>
-      </div>:
+      </div>
+    ) : (
       <div className="log-area expanded">
         <div className="log-area-title expanded" onClick={onHideDcrlndLogs}>
           <T id="help.logs.dcrlnd" m="dcrlnd" />
@@ -90,8 +97,7 @@ const Logs = ({
           <textarea rows="30" value={dcrlndLogs} disabled />
         </div>
       </div>
-    }
-
+    )}
   </>
 );
 

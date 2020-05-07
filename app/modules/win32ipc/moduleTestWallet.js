@@ -9,23 +9,32 @@ const os = require("os");
 const fs = require("fs");
 
 //const pipeFname = "\\\\.\\pipe\\dcrwallet-test";
-const walletConfPath = path.join(os.homedir(), "AppData", "Local", "Decrediton",
-  "wallets", "testnet", "default-wallet", "dcrwallet.conf");
+const walletConfPath = path.join(
+  os.homedir(),
+  "AppData",
+  "Local",
+  "Decrediton",
+  "wallets",
+  "testnet",
+  "default-wallet",
+  "dcrwallet.conf"
+);
 
 function sleep(milli) {
-  return new Promise(resolve => setTimeout(resolve, milli));
+  return new Promise((resolve) => setTimeout(resolve, milli));
 }
 
 function DecodeDaemonIPCData(data, cb) {
   let i = 0;
   while (i < data.length) {
-    if (data[i++] !== 0x01) throw "Wrong protocol version when decoding IPC data";
+    if (data[i++] !== 0x01)
+      throw "Wrong protocol version when decoding IPC data";
     const mtypelen = data[i++];
-    const mtype = data.slice(i, i+mtypelen).toString("utf-8");
+    const mtype = data.slice(i, i + mtypelen).toString("utf-8");
     i += mtypelen;
     const psize = data.readUInt32LE(i);
     i += 4;
-    const payload = data.slice(i, i+psize);
+    const payload = data.slice(i, i + psize);
     i += psize;
     cb(mtype, payload);
   }
@@ -41,7 +50,7 @@ async function test() {
     console.log(pipeRx, pipeTx, pipeTxReadFd);
 
     const txStream = fs.createReadStream("", { fd: pipeTxReadFd });
-    txStream.on("data", data => {
+    txStream.on("data", (data) => {
       DecodeDaemonIPCData(data, (mtype, payload) => {
         console.log("Got message", mtype, payload.toString("utf-8"));
       });
@@ -51,13 +60,17 @@ async function test() {
     txStream.on("end", () => console.log("tx stream ended"));
 
     console.log("Launching wallet");
-    childProcess.spawn("dcrwallet", [
-      `-C ${walletConfPath}`,
-      `--piperx ${pipeRx.readEnd}`,
-      `--pipetx ${pipeTx.writeEnd}`,
-      "--rpclistenerevents",
-      "--debuglevel DCRW=TRACE"
-    ], { "detached": true, "shell": true });
+    childProcess.spawn(
+      "dcrwallet",
+      [
+        `-C ${walletConfPath}`,
+        `--piperx ${pipeRx.readEnd}`,
+        `--pipetx ${pipeTx.writeEnd}`,
+        "--rpclistenerevents",
+        "--debuglevel DCRW=TRACE"
+      ],
+      { detached: true, shell: true }
+    );
 
     await sleep(7000);
     console.log("Slept to test some. Will try to close the pipe.");
@@ -86,4 +99,6 @@ async function testMulti() {
 
 setTimeout(testMulti, 3000);
 
-setTimeout(function () { process.exit(0); }, 150000);
+setTimeout(function () {
+  process.exit(0);
+}, 150000);

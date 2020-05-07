@@ -15,7 +15,6 @@ class RecoveryButtons extends React.Component {
   }
 
   render() {
-
     const header = (
       <>
         <T id="trezor.recoveryButtons.header" m="Device Recovery" />
@@ -29,24 +28,31 @@ class RecoveryButtons extends React.Component {
         header={header}
         show={this.state.show}
         onToggleAccordion={this.onToggleAccordion}
-        className="trezor-config-accordion trezor-config-regular-buttons"
-      >
+        className="trezor-config-accordion trezor-config-regular-buttons">
         <div className="trezor-wipe-warning">
           <Documentation name="TrezorWipeWarning" />
         </div>
-        <DangerButton onClick={onWipeDevice} loading={loading} disabled={loading}>
+        <DangerButton
+          onClick={onWipeDevice}
+          loading={loading}
+          disabled={loading}>
           <T id="trezorPage.wipeDeviceBtn" m="Wipe Device" />
         </DangerButton>
 
-        <DangerButton onClick={onRecoverDevice} loading={loading} disabled={loading}>
+        <DangerButton
+          onClick={onRecoverDevice}
+          loading={loading}
+          disabled={loading}>
           <T id="trezorPage.recoverDeviceBtn" m="Recover Device" />
         </DangerButton>
 
-        <DangerButton onClick={onInitDevice} loading={loading} disabled={loading}>
+        <DangerButton
+          onClick={onInitDevice}
+          loading={loading}
+          disabled={loading}>
           <T id="trezorPage.initDeviceBtn" m="Init Device" />
         </DangerButton>
       </VerticalAccordion>
-
     );
   }
 }

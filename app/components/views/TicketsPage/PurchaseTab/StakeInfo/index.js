@@ -29,10 +29,13 @@ class StakeInfo extends React.Component {
           isSPV,
           ...this.props,
           ...this.state,
-          ...substruct({
-            getStakeInfoDetailsComponent: null,
-            onToggleStakeinfo: null
-          }, this)
+          ...substruct(
+            {
+              getStakeInfoDetailsComponent: null,
+              onToggleStakeinfo: null
+            },
+            this
+          )
         }}
       />
     );

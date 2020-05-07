@@ -8,6 +8,7 @@ const GET = (path) => {
   return axios.get(path);
 };
 
-export const getTreasuryInfo = (daURL, treasuryAddress) => GET(daURL + "/address/" + treasuryAddress + "/totals");
+export const getTreasuryInfo = (daURL, treasuryAddress) =>
+  GET(daURL + "/address/" + treasuryAddress + "/totals");
 
-export const getAdendasInfo = daURL => GET(`${daURL}/agendas`);
+export const getAdendasInfo = (daURL) => GET(`${daURL}/agendas`);

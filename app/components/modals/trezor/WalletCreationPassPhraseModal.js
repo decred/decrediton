@@ -8,8 +8,12 @@ import { ButtonsToolbar } from "../PassphraseModal";
 class TrezorWalletCreationPassphraseModal extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { passphraseValue: "", passphraseConfirmValue: "",
-      submitAttempted: false, mismatchedValues: false };
+    this.state = {
+      passphraseValue: "",
+      passphraseConfirmValue: "",
+      submitAttempted: false,
+      mismatchedValues: false
+    };
   }
 
   componentWillUnmount() {
@@ -28,22 +32,38 @@ class TrezorWalletCreationPassphraseModal extends React.Component {
   }
 
   onChangePassphraseValue(passphraseValue) {
-    this.setState({ passphraseValue, submitAttempted: false,
-      mismatchedValues: false });
+    this.setState({
+      passphraseValue,
+      submitAttempted: false,
+      mismatchedValues: false
+    });
   }
 
   onChangePassphraseConfirmValue(passphraseConfirmValue) {
-    this.setState({ passphraseConfirmValue, submitAttempted: false,
-      mismatchedValues: false });
+    this.setState({
+      passphraseConfirmValue,
+      submitAttempted: false,
+      mismatchedValues: false
+    });
   }
 
   render() {
     const { onCancelModal } = this.props;
-    const { onSubmit, onChangePassphraseValue, onChangePassphraseConfirmValue } = this;
-    const { submitAttempted, passphraseValue, passphraseConfirmValue,
-      mismatchedValues } = this.state;
+    const {
+      onSubmit,
+      onChangePassphraseValue,
+      onChangePassphraseConfirmValue
+    } = this;
+    const {
+      submitAttempted,
+      passphraseValue,
+      passphraseConfirmValue,
+      mismatchedValues
+    } = this.state;
 
-    const trezorLabel = this.props.device ? this.props.device.features.label : "";
+    const trezorLabel = this.props.device
+      ? this.props.device.features.label
+      : "";
 
     const className = [
       "trezor-passphrase-modal",
@@ -52,42 +72,66 @@ class TrezorWalletCreationPassphraseModal extends React.Component {
 
     return (
       <Modal className={className} onCancelModal={onCancelModal}>
-        <h1><T id="trezor.walletCreationPassPhraseModal.title" m="Type Wallet Creation PassPhrase" /></h1>
+        <h1>
+          <T
+            id="trezor.walletCreationPassPhraseModal.title"
+            m="Type Wallet Creation PassPhrase"
+          />
+        </h1>
         <p>
-          <T id="trezor.walletCreationpassphraseModal.description"
-            m={"Type the secret passphrase of the wallet to restore from the trezor device {label}"}
-            values={{ label: <span className="trezor-label">'{trezorLabel}'</span> }} />
+          <T
+            id="trezor.walletCreationpassphraseModal.description"
+            m={
+              "Type the secret passphrase of the wallet to restore from the trezor device {label}"
+            }
+            values={{
+              label: <span className="trezor-label">'{trezorLabel}'</span>
+            }}
+          />
         </p>
         <Documentation name="TrezorWalletCreationPassPhraseWarning" />
 
         <PassphraseModalField
-          label={<T id="trezor.walltCreationPrivatePassphrase" m="Wallet PassPhrase" />}
-        >
+          label={
+            <T
+              id="trezor.walltCreationPrivatePassphrase"
+              m="Wallet PassPhrase"
+            />
+          }>
           <PasswordInput
             autoFocus
             placeholder=""
             value={passphraseValue}
-            onChange={e => onChangePassphraseValue(e.target.value)}
+            onChange={(e) => onChangePassphraseValue(e.target.value)}
             onKeyDownSubmit={onSubmit}
             showErrors={submitAttempted}
           />
         </PassphraseModalField>
 
         <PassphraseModalField
-          label={<T id="trezor.walltCreationPrivatePassphraseConfirm" m="Confirm Wallet PassPhrase" />}
-        >
+          label={
+            <T
+              id="trezor.walltCreationPrivatePassphraseConfirm"
+              m="Confirm Wallet PassPhrase"
+            />
+          }>
           <PasswordInput
             placeholder=""
             value={passphraseConfirmValue}
-            onChange={e => onChangePassphraseConfirmValue(e.target.value)}
+            onChange={(e) => onChangePassphraseConfirmValue(e.target.value)}
             onKeyDownSubmit={onSubmit}
             showErrors={submitAttempted}
             invalid={mismatchedValues}
-            invalidMessage={<T id="trezor.walletCreationPassphrasesMismatched" m="Passphrases are different" />}
+            invalidMessage={
+              <T
+                id="trezor.walletCreationPassphrasesMismatched"
+                m="Passphrases are different"
+              />
+            }
           />
         </PassphraseModalField>
 
-        <ButtonsToolbar {... { onCancelModal, onSubmit }} />
+        <ButtonsToolbar {...{ onCancelModal, onSubmit }} />
       </Modal>
     );
   }

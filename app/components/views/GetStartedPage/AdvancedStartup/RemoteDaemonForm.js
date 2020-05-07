@@ -67,7 +67,9 @@ const RemoteDaemonForm = ({
             required
             value={rpc_pass}
             onChange={(e) => setRpcPass(e.target.value)}
-            placeholder={intl.formatMessage(messages.passphraseFieldPlaceholder)}
+            placeholder={intl.formatMessage(
+              messages.passphraseFieldPlaceholder
+            )}
             showErrors={rpcPasswordHasFailedAttempt}
           />
         </div>

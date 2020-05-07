@@ -13,32 +13,33 @@ const getServiceClient = (clientClass) => async (
 ) => {
   let macaroon, macaroonCreds;
 
-  const readFile = fname => new Promise((resolve, reject) => {
-    let tries = 0;
-    const maxTries = 30;
-    const wait = 1000;
+  const readFile = (fname) =>
+    new Promise((resolve, reject) => {
+      let tries = 0;
+      const maxTries = 30;
+      const wait = 1000;
 
-    const readIfExists = () => {
-      try {
-        const file = fs.readFileSync(fname);
-        resolve(file);
-      } catch (err) {
-        tries++;
-        if (tries < maxTries) {
-          setTimeout(readIfExists, wait);
-          return;
+      const readIfExists = () => {
+        try {
+          const file = fs.readFileSync(fname);
+          resolve(file);
+        } catch (err) {
+          tries++;
+          if (tries < maxTries) {
+            setTimeout(readIfExists, wait);
+            return;
+          }
+          if (err.code === "ENOENT") {
+            reject(new Error("file " + fname + " does not exist"));
+          } else if (err.code === "EACCES") {
+            reject(new Error("file " + fname + " cannot be opened"));
+          } else {
+            reject(new Error("error accessing file " + fname + ": " + err));
+          }
         }
-        if (err.code === "ENOENT") {
-          reject(new Error("file " + fname + " does not exist"));
-        } else if (err.code === "EACCES") {
-          reject(new Error("file " + fname + " cannot be opened"));
-        } else {
-          reject(new Error("error accessing file " + fname + ": "+ err));
-        }
-      }
-    };
-    readIfExists();
-  });
+      };
+      readIfExists();
+    });
 
   const cert = await readFile(certPath);
 
@@ -60,9 +61,9 @@ const getServiceClient = (clientClass) => async (
 
   const deadline = new Date();
   const deadlineInSeconds = 30;
-  deadline.setSeconds(deadline.getSeconds()+deadlineInSeconds);
+  deadline.setSeconds(deadline.getSeconds() + deadlineInSeconds);
   return await new Promise((resolve, reject) => {
-    grpc.waitForClientReady(client, deadline, function(err) {
+    grpc.waitForClientReady(client, deadline, function (err) {
       if (err) {
         reject(err);
       } else {
@@ -73,4 +74,6 @@ const getServiceClient = (clientClass) => async (
 };
 
 export const getLightningClient = getServiceClient(services.LightningClient);
-export const getWalletUnlockerClient = getServiceClient(services.WalletUnlockerClient);
+export const getWalletUnlockerClient = getServiceClient(
+  services.WalletUnlockerClient
+);

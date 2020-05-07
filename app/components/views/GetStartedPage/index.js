@@ -32,15 +32,39 @@ class GetStarted extends React.Component {
   constructor(props) {
     super(props);
     const {
-      onConnectDaemon, checkNetworkMatch, syncDaemon, onStartWallet, onRetryStartRPC, onGetAvailableWallets,
-      onStartDaemon, setSelectedWallet, goToErrorPage, goToSettings, backToCredentials, startSPVSync
+      onConnectDaemon,
+      checkNetworkMatch,
+      syncDaemon,
+      onStartWallet,
+      onRetryStartRPC,
+      onGetAvailableWallets,
+      onStartDaemon,
+      setSelectedWallet,
+      goToErrorPage,
+      goToSettings,
+      backToCredentials,
+      startSPVSync
     } = this.props;
     const { sendEvent, preStartDaemon } = this;
     this.machine = getStartedMachine({
-      onConnectDaemon, checkNetworkMatch, syncDaemon, onStartWallet, onRetryStartRPC, sendEvent, onGetAvailableWallets,
-      onStartDaemon, setSelectedWallet, preStartDaemon, goToErrorPage, goToSettings, backToCredentials, startSPVSync
+      onConnectDaemon,
+      checkNetworkMatch,
+      syncDaemon,
+      onStartWallet,
+      onRetryStartRPC,
+      sendEvent,
+      onGetAvailableWallets,
+      onStartDaemon,
+      setSelectedWallet,
+      preStartDaemon,
+      goToErrorPage,
+      goToSettings,
+      backToCredentials,
+      startSPVSync
     });
-    this.service = interpret(this.machine).onTransition(current => this.setState({ current }, this.getStateComponent));
+    this.service = interpret(this.machine).onTransition((current) =>
+      this.setState({ current }, this.getStateComponent)
+    );
     this.state = {
       current: this.machine.initialState,
       PageComponent: null,
@@ -52,8 +76,13 @@ class GetStarted extends React.Component {
   // preStartDaemon gets data from cli to connect with remote dcrd if rpc
   // connection data is inputed and sends the first interaction with the state
   // machine, so it can start. Only one of the choises is chosen.
-  preStartDaemon () {
-    const { isSPV, isAdvancedDaemon, getDaemonSynced, getSelectedWallet } = this.props;
+  preStartDaemon() {
+    const {
+      isSPV,
+      isAdvancedDaemon,
+      getDaemonSynced,
+      getSelectedWallet
+    } = this.props;
     const cliOptions = ipcRenderer.sendSync("get-cli-options");
     let rpcCliRemote;
     if (cliOptions.rpcPresent) {
@@ -64,18 +93,34 @@ class GetStarted extends React.Component {
         rpc_host: cliOptions.rpcHost,
         rpc_port: cliOptions.rpcPort
       };
-      this.service.send({ type: "START_CLI_REMOTE_DAEMON", remoteCredentials: rpcCliRemote });
+      this.service.send({
+        type: "START_CLI_REMOTE_DAEMON",
+        remoteCredentials: rpcCliRemote
+      });
     }
     // If daemon is synced or isSPV mode we check for a selectedWallet.
     // If it is selected, it probably means a wallet was just pre created or
     // a refresh (common when in dev mode).
     if (getDaemonSynced || isSPV) {
       const selectedWallet = getSelectedWallet();
-      return this.service.send({ type: "CHOOSE_WALLET", selectedWallet, isSPV, isAdvancedDaemon });
+      return this.service.send({
+        type: "CHOOSE_WALLET",
+        selectedWallet,
+        isSPV,
+        isAdvancedDaemon
+      });
     }
     this.service.send({ type: "START_SPV", isSPV });
-    this.service.send({ type: "START_ADVANCED_DAEMON", isSPV, isAdvancedDaemon });
-    this.service.send({ type: "START_REGULAR_DAEMON", isSPV, isAdvancedDaemon });
+    this.service.send({
+      type: "START_ADVANCED_DAEMON",
+      isSPV,
+      isAdvancedDaemon
+    });
+    this.service.send({
+      type: "START_REGULAR_DAEMON",
+      isSPV,
+      isAdvancedDaemon
+    });
   }
 
   componentDidMount() {
@@ -93,26 +138,70 @@ class GetStarted extends React.Component {
     // After Each update we need to call getStateComponent or the PageComponent will not
     // update itself.
     let text, animationType, component;
-    const { syncFetchMissingCfiltersAttempt, syncFetchHeadersAttempt, syncRescanAttempt, syncDiscoverAddressesAttempt, synced } = this.props;
-    if (prevProps.syncFetchMissingCfiltersAttempt !== syncFetchMissingCfiltersAttempt && syncFetchMissingCfiltersAttempt) {
+    const {
+      syncFetchMissingCfiltersAttempt,
+      syncFetchHeadersAttempt,
+      syncRescanAttempt,
+      syncDiscoverAddressesAttempt,
+      synced
+    } = this.props;
+    if (
+      prevProps.syncFetchMissingCfiltersAttempt !==
+        syncFetchMissingCfiltersAttempt &&
+      syncFetchMissingCfiltersAttempt
+    ) {
       animationType = daemonWaiting;
-      text = <T id="getStarted.header.fetchingMissing.meta" m="Fetching missing committed filters" />;
+      text = (
+        <T
+          id="getStarted.header.fetchingMissing.meta"
+          m="Fetching missing committed filters"
+        />
+      );
       this.getStateComponent(text, animationType, component);
-    } else if (prevProps.syncFetchHeadersAttempt !== syncFetchHeadersAttempt && syncFetchHeadersAttempt) {
+    } else if (
+      prevProps.syncFetchHeadersAttempt !== syncFetchHeadersAttempt &&
+      syncFetchHeadersAttempt
+    ) {
       animationType = fetchingHeaders;
-      text = <T id="getStarted.header.fetchingBlockHeaders.meta" m="Fetching block headers" />;
-    } else if (syncDiscoverAddressesAttempt !== prevProps.syncDiscoverAddressesAttempt && syncDiscoverAddressesAttempt) {
+      text = (
+        <T
+          id="getStarted.header.fetchingBlockHeaders.meta"
+          m="Fetching block headers"
+        />
+      );
+    } else if (
+      syncDiscoverAddressesAttempt !== prevProps.syncDiscoverAddressesAttempt &&
+      syncDiscoverAddressesAttempt
+    ) {
       animationType = discoveringAddresses;
-      text = <T id="getStarted.header.discoveringAddresses.meta" m="Discovering addresses" />;
+      text = (
+        <T
+          id="getStarted.header.discoveringAddresses.meta"
+          m="Discovering addresses"
+        />
+      );
       this.getStateComponent(text, animationType, component);
-    } else if (prevProps.syncRescanAttempt !== syncRescanAttempt && syncRescanAttempt) {
+    } else if (
+      prevProps.syncRescanAttempt !== syncRescanAttempt &&
+      syncRescanAttempt
+    ) {
       animationType = scanningBlocks;
-      text = <T id="getStarted.header.rescanWallet.meta" m="Scanning blocks for transactions" />;
+      text = (
+        <T
+          id="getStarted.header.rescanWallet.meta"
+          m="Scanning blocks for transactions"
+        />
+      );
       component = RescanWalletBody;
       this.getStateComponent(text, animationType, component);
     } else if (prevProps.synced !== synced && synced) {
       animationType = finalizingSetup;
-      text = <T id="getStarted.header.finishingStart.meta" m="Finishing to load wallet" />;
+      text = (
+        <T
+          id="getStarted.header.finishingStart.meta"
+          m="Finishing to load wallet"
+        />
+      );
       this.getStateComponent(text, animationType, component);
     }
   }
@@ -120,9 +209,16 @@ class GetStarted extends React.Component {
   getStateComponent(updatedText, updatedAnimationType, updatedComponent) {
     const { current } = this.state;
     const {
-      service, submitChosenWallet, submitRemoteCredentials, submitAppdata,
-      onShowTrezorConfig, onSendBack, onSendCreateWallet,
-      onSendError, onSendContinue, onShowReleaseNotes
+      service,
+      submitChosenWallet,
+      submitRemoteCredentials,
+      submitAppdata,
+      onShowTrezorConfig,
+      onSendBack,
+      onSendCreateWallet,
+      onSendError,
+      onSendContinue,
+      onShowReleaseNotes
     } = this;
     const { machine } = service;
     const { isCreateNewWallet, isSPV } = this.service._state.context;
@@ -131,63 +227,107 @@ class GetStarted extends React.Component {
 
     const key = Object.keys(current.value)[0];
     if (key === "startMachine") {
-      switch(current.value[key]) {
-      case "startAdvancedDaemon":
-        component = AdvancedStartupBody;
-        text = <T id="loaderBar.WaitingDaemon" m="Waiting for daemon connection..." />;
-        break;
-      case "connectingDaemon":
-        text = <T id="loaderBar.WaitingConnection" m="connecting to daemon..." /> ;
-        break;
-      case "checkingNetworkMatch":
-        text = <T id="loaderBar.checkingNetwork" m="Checking if network matches..." />;
-        break;
-      case "startingDaemon":
-        animationType = daemonWaiting;
-        text = <T id="loaderBar.StartingDaemon" m="Starting Daemon..." />;
-        break;
-      case "syncingDaemon":
-        animationType = blockChainLoading;
-        text = <T id="loaderBar.syncingDaemon" m="Syncing Daemon..." />;
-        break;
-      case "choosingWallet":
-        text = isSPV ?
-          <T id="loaderBar.choosingWalletSPV" m="Choose a wallet to open in SPV mode" />
-          : <T id="loaderBar.choosingWallet" m="Choose a wallet to open" />;
-        component = h(WalletSelection, { onSendCreateWallet, submitChosenWallet, isSPV });
-        break;
-      case "preCreateWallet":
-        text = isCreateNewWallet ?
-          <T id="loaderBar.preCreateWalletCreate" m="Create a wallet..." /> :
-          <T id="loaderBar.preCreateWalletRestore" m="Restore a Wallet..." />;
-        component = h(CreateWalletForm, {
-          onSendCreateWallet, onSendContinue, onSendBack, onSendError,
-          onShowTrezorConfig, isCreateNewWallet, error
-        });
-        break;
-      case "creatingWallet":
-        text = isCreateNewWallet ?
-          <T id="loaderBar.creatingWallet" m="Creating Wallet..." /> :
-          <T id="loaderBar.restoringWallet" m="Restoring Wallet..." />;
-        break;
-      case "walletPubpassInput":
-        text = <T id="loaderBar.walletPubPass" m="Insert your pubkey" />;
-        component = h(WalletPubpassInput, { onSendContinue, onSendError, error, ...this.props });
-        break;
-      case "startingWallet":
-        text = <T id="loaderBar.startingWallet" m="Starting wallet..." />;
-        break;
-      case "syncingRPC":
-        animationType = establishingRpc;
-        text = <T id="loaderBar.syncingRPC" m="Syncing RPC connection..." />;
-        break;
+      switch (current.value[key]) {
+        case "startAdvancedDaemon":
+          component = AdvancedStartupBody;
+          text = (
+            <T
+              id="loaderBar.WaitingDaemon"
+              m="Waiting for daemon connection..."
+            />
+          );
+          break;
+        case "connectingDaemon":
+          text = (
+            <T id="loaderBar.WaitingConnection" m="connecting to daemon..." />
+          );
+          break;
+        case "checkingNetworkMatch":
+          text = (
+            <T
+              id="loaderBar.checkingNetwork"
+              m="Checking if network matches..."
+            />
+          );
+          break;
+        case "startingDaemon":
+          animationType = daemonWaiting;
+          text = <T id="loaderBar.StartingDaemon" m="Starting Daemon..." />;
+          break;
+        case "syncingDaemon":
+          animationType = blockChainLoading;
+          text = <T id="loaderBar.syncingDaemon" m="Syncing Daemon..." />;
+          break;
+        case "choosingWallet":
+          text = isSPV ? (
+            <T
+              id="loaderBar.choosingWalletSPV"
+              m="Choose a wallet to open in SPV mode"
+            />
+          ) : (
+            <T id="loaderBar.choosingWallet" m="Choose a wallet to open" />
+          );
+          component = h(WalletSelection, {
+            onSendCreateWallet,
+            submitChosenWallet,
+            isSPV
+          });
+          break;
+        case "preCreateWallet":
+          text = isCreateNewWallet ? (
+            <T id="loaderBar.preCreateWalletCreate" m="Create a wallet..." />
+          ) : (
+            <T id="loaderBar.preCreateWalletRestore" m="Restore a Wallet..." />
+          );
+          component = h(CreateWalletForm, {
+            onSendCreateWallet,
+            onSendContinue,
+            onSendBack,
+            onSendError,
+            onShowTrezorConfig,
+            isCreateNewWallet,
+            error
+          });
+          break;
+        case "creatingWallet":
+          text = isCreateNewWallet ? (
+            <T id="loaderBar.creatingWallet" m="Creating Wallet..." />
+          ) : (
+            <T id="loaderBar.restoringWallet" m="Restoring Wallet..." />
+          );
+          break;
+        case "walletPubpassInput":
+          text = <T id="loaderBar.walletPubPass" m="Insert your pubkey" />;
+          component = h(WalletPubpassInput, {
+            onSendContinue,
+            onSendError,
+            error,
+            ...this.props
+          });
+          break;
+        case "startingWallet":
+          text = <T id="loaderBar.startingWallet" m="Starting wallet..." />;
+          break;
+        case "syncingRPC":
+          animationType = establishingRpc;
+          text = <T id="loaderBar.syncingRPC" m="Syncing RPC connection..." />;
+          break;
       }
       PageComponent = h(GetStartedMachinePage, {
-        ...this.state, ...this.props, submitRemoteCredentials, submitAppdata,
-        service, machine, error, isSPV, onShowReleaseNotes,
+        ...this.state,
+        ...this.props,
+        submitRemoteCredentials,
+        submitAppdata,
+        service,
+        machine,
+        error,
+        isSPV,
+        onShowReleaseNotes,
         // if updated* is set, we use it, as it means it is called by the componentDidUpdate.
         text: updatedText ? updatedText : text,
-        animationType: updatedAnimationType ? updatedAnimationType : animationType,
+        animationType: updatedAnimationType
+          ? updatedAnimationType
+          : animationType,
         StateComponent: updatedComponent ? updatedComponent : component
       });
     }
@@ -267,7 +407,7 @@ class GetStarted extends React.Component {
     }
     // If the errors is an object but not a react component, we strigfy it so we can
     // render.
-    if (typeof error  === "object") {
+    if (typeof error === "object") {
       return JSON.stringify(error);
     }
     return error;
@@ -278,7 +418,12 @@ class GetStarted extends React.Component {
     const { onShowLogs, onShowSettings } = this;
     const { updateAvailable } = this.props;
 
-    return <GetStartedPage PageComponent={PageComponent} {...{ onShowLogs, onShowSettings, updateAvailable }} />;
+    return (
+      <GetStartedPage
+        PageComponent={PageComponent}
+        {...{ onShowLogs, onShowSettings, updateAvailable }}
+      />
+    );
   }
 }
 

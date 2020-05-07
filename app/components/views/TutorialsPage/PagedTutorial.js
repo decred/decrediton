@@ -14,7 +14,7 @@ class PagedTutorial extends React.Component {
   }
 
   onNextPage() {
-    if (this.state.currentPageIndex < this.props.pages.length-1) {
+    if (this.state.currentPageIndex < this.props.pages.length - 1) {
       this.setState({ currentPageIndex: this.state.currentPageIndex + 1 });
     }
   }

@@ -12,10 +12,14 @@ const mapStateToProps = selectorMap({
   window: sel.mainWindow
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  goBackHistory: ca.goBackHistory,
-  getTickets: ca.getTickets,
-  changeTicketsFilter: ca.changeTicketsFilter
-}, dispatch);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      goBackHistory: ca.goBackHistory,
+      getTickets: ca.getTickets,
+      changeTicketsFilter: ca.changeTicketsFilter
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps);

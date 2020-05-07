@@ -10,13 +10,13 @@ class ValidateAddress extends React.Component {
   }
 
   getInitialState() {
-    return ({
+    return {
       address: "",
       error: null
-    });
+    };
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.props.validateAddressCleanStore();
   }
 
@@ -30,8 +30,15 @@ class ValidateAddress extends React.Component {
     const { onAddressChange, onAddressBlur } = this;
 
     return (
-      <ValidateAddressForm {...{ onAddressChange, onAddressBlur, address,
-        validateAddressSuccess, error }}/>
+      <ValidateAddressForm
+        {...{
+          onAddressChange,
+          onAddressBlur,
+          address,
+          validateAddressSuccess,
+          error
+        }}
+      />
     );
   }
 
@@ -40,13 +47,20 @@ class ValidateAddress extends React.Component {
       this.setState({ address, error: null });
       return;
     }
-    this.props.validateAddress(address)
-      .then(resp => {
-        this.setState({ address, error: !resp.getIsValid() ? "Please enter a valid address" : null });
+    this.props
+      .validateAddress(address)
+      .then((resp) => {
+        this.setState({
+          address,
+          error: !resp.getIsValid() ? "Please enter a valid address" : null
+        });
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
-        this.setState({ address, error: "Error: Address validation failed, please try again." });
+        this.setState({
+          address,
+          error: "Error: Address validation failed, please try again."
+        });
       });
   }
 }

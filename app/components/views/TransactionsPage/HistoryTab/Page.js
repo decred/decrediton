@@ -3,7 +3,11 @@ import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { Tooltip, Subtitle } from "shared";
 import { TextInput } from "inputs";
 import { TxHistory } from "shared";
-import { LoadingMoreTransactionsIndicator, NoMoreTransactionsIndicator, NoTransactions } from "indicators";
+import {
+  LoadingMoreTransactionsIndicator,
+  NoMoreTransactionsIndicator,
+  NoTransactions
+} from "indicators";
 import InfiniteScroll from "react-infinite-scroller";
 import "style/HistoryPage.less";
 
@@ -14,9 +18,21 @@ const messages = defineMessages({
   }
 });
 
-const subtitleMenu = ({ sortTypes, txTypes, selectedSortOrderKey, selectedTxTypeKey,
-  searchText, intl, onChangeSelectedType, onChangeSortType, onChangeSearchText, onChangeSliderValue,
-  currencyDisplay, transactionsFilter, unitDivisor }) => (
+const subtitleMenu = ({
+  sortTypes,
+  txTypes,
+  selectedSortOrderKey,
+  selectedTxTypeKey,
+  searchText,
+  intl,
+  onChangeSelectedType,
+  onChangeSortType,
+  onChangeSearchText,
+  onChangeSliderValue,
+  currencyDisplay,
+  transactionsFilter,
+  unitDivisor
+}) => (
   <div className="history-select-tx-types-area">
     <div className="history-search-tx">
       <TextInput
@@ -26,7 +42,9 @@ const subtitleMenu = ({ sortTypes, txTypes, selectedSortOrderKey, selectedTxType
         onChange={(e) => onChangeSearchText(e.target.value)}
       />
     </div>
-    <Tooltip tipWidth={ 300 } text={<T id="transactions.sortby.tooltip" m="Sort By" />}>
+    <Tooltip
+      tipWidth={300}
+      text={<T id="transactions.sortby.tooltip" m="Sort By" />}>
       <EyeFilterMenuWithSlider
         {...{ unitDivisor, currencyDisplay }}
         labelKey="label"
@@ -40,7 +58,9 @@ const subtitleMenu = ({ sortTypes, txTypes, selectedSortOrderKey, selectedTxType
         maxFilterValue={transactionsFilter.maxAmount}
       />
     </Tooltip>
-    <Tooltip tipWidth={ 300 } text={<T id="transactions.txtypes.tooltip" m="Transaction Type" />}>
+    <Tooltip
+      tipWidth={300}
+      text={<T id="transactions.txtypes.tooltip" m="Transaction Type" />}>
       <EyeFilterMenu
         labelKey="label"
         keyField="key"
@@ -77,23 +97,38 @@ const Page = ({
     loadMore={onLoadMoreTransactions}
     initialLoad={loadMoreThreshold > 90}
     useWindow={false}
-    threshold={loadMoreThreshold}
-  >
-    <Subtitle title={<T id="history.subtitle" m="Transaction History"/>} className={"is-row"}
-      children={subtitleMenu({ sortTypes, txTypes, selectedSortOrderKey, selectedTxTypeKey,
-        searchText, intl, onChangeSelectedType, onChangeSortType, onChangeSearchText, onChangeSliderValue,
-        currencyDisplay, transactionsFilter, unitDivisor })} />
+    threshold={loadMoreThreshold}>
+    <Subtitle
+      title={<T id="history.subtitle" m="Transaction History" />}
+      className={"is-row"}
+      children={subtitleMenu({
+        sortTypes,
+        txTypes,
+        selectedSortOrderKey,
+        selectedTxTypeKey,
+        searchText,
+        intl,
+        onChangeSelectedType,
+        onChangeSortType,
+        onChangeSearchText,
+        onChangeSliderValue,
+        currencyDisplay,
+        transactionsFilter,
+        unitDivisor
+      })}
+    />
     <div className="history-page-content-wrapper">
-      {transactions.length > 0
-        ? <TxHistory {...{ transactions, tsDate, isRegular: true }} />
-        : null }
+      {transactions.length > 0 ? (
+        <TxHistory {...{ transactions, tsDate, isRegular: true }} />
+      ) : null}
     </div>
-    {!noMoreTransactions
-      ? <LoadingMoreTransactionsIndicator />
-      : transactions.length > 0
-        ? <NoMoreTransactionsIndicator />
-        : <NoTransactions />
-    }
+    {!noMoreTransactions ? (
+      <LoadingMoreTransactionsIndicator />
+    ) : transactions.length > 0 ? (
+      <NoMoreTransactionsIndicator />
+    ) : (
+      <NoTransactions />
+    )}
   </InfiniteScroll>
 );
 

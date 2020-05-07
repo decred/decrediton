@@ -14,7 +14,8 @@ const mapStateToProps = selectorMap({
   stakePool: sel.selectedStakePool,
   ticketPrice: sel.ticketPrice,
   currentStakePoolConfigError: sel.currentStakePoolConfigError,
-  currentStakePoolConfigSuccessMessage: sel.currentStakePoolConfigSuccessMessage,
+  currentStakePoolConfigSuccessMessage:
+    sel.currentStakePoolConfigSuccessMessage,
   purchaseTicketsError: sel.purchaseTicketsError,
   purchaseTicketsSuccess: sel.purchaseTicketsSuccess,
   revokeTicketsError: sel.revokeTicketsError,
@@ -36,15 +37,19 @@ const mapStateToProps = selectorMap({
   unsignedTickets: sel.ticketsList
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  onRevokeTickets: ca.revokeTicketsAttempt,
-  onImportScript: ca.manualImportScriptAttempt,
-  onClearRevokeTicketsError: ca.clearRevokeTicketsError,
-  onClearRevokeTicketsSuccess: ca.clearRevokeTicketsSuccess,
-  onClearImportScriptError: ca.clearImportScriptError,
-  onClearImportScriptSuccess: ca.clearImportScriptSuccess,
-  onChangeStakePool: spa.changeSelectedStakePool,
-  onDismissBackupRedeemScript: spa.dismissBackupRedeemScript
-}, dispatch);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      onRevokeTickets: ca.revokeTicketsAttempt,
+      onImportScript: ca.manualImportScriptAttempt,
+      onClearRevokeTicketsError: ca.clearRevokeTicketsError,
+      onClearRevokeTicketsSuccess: ca.clearRevokeTicketsSuccess,
+      onClearImportScriptError: ca.clearImportScriptError,
+      onClearImportScriptSuccess: ca.clearImportScriptSuccess,
+      onChangeStakePool: spa.changeSelectedStakePool,
+      onDismissBackupRedeemScript: spa.dismissBackupRedeemScript
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps);

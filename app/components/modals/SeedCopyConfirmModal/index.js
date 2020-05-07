@@ -10,11 +10,12 @@ const messages = defineMessages({
 
 @autobind
 class SeedCopyConfirmModal extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
-      copyConfirmationPhrase: props.intl.formatMessage(messages.copyConfirmationPhrase),
+      copyConfirmationPhrase: props.intl.formatMessage(
+        messages.copyConfirmationPhrase
+      ),
       typedConfirmationPhrase: ""
     };
   }
@@ -35,15 +36,16 @@ class SeedCopyConfirmModal extends React.Component {
 
   render() {
     const { onTypedConfirmationPhraseChanged, onSubmit, onCancelModal } = this;
-    return <Modal
-      {...this.props}
-      {...this.state}
-      onTypedConfirmationPhraseChanged={onTypedConfirmationPhraseChanged}
-      onSubmit={onSubmit}
-      onCancelModal={onCancelModal}
-    />;
+    return (
+      <Modal
+        {...this.props}
+        {...this.state}
+        onTypedConfirmationPhraseChanged={onTypedConfirmationPhraseChanged}
+        onSubmit={onSubmit}
+        onCancelModal={onCancelModal}
+      />
+    );
   }
-
 }
 
 export default injectIntl(SeedCopyConfirmModal);

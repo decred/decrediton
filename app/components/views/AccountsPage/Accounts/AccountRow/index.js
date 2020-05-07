@@ -76,13 +76,9 @@ class AccountRow extends React.Component {
     this.setState({ isShowingDetails: !this.state.isShowingDetails });
   }
 
-  getRenameAccountStyles () {
+  getRenameAccountStyles() {
     const { account, intl } = this.props;
-    const {
-      updateRenameAccountName,
-      renameAccount,
-      hideRenameAccount
-    } = this;
+    const { updateRenameAccountName, renameAccount, hideRenameAccount } = this;
     const { hasFailedAttempt, renameAccountName } = this.state;
     return (
       <RenameAccount
@@ -130,16 +126,8 @@ class AccountRow extends React.Component {
       getRenameAccountStyles,
       onToggleShowDetails
     } = this;
-    const {
-      account,
-      accountNumDetailsShown,
-      hasTickets
-    } = this.props;
-    const {
-      isShowingRenameAccount,
-      hidden,
-      isShowingDetails
-    } = this.state;
+    const { account, accountNumDetailsShown, hasTickets } = this.props;
+    const { isShowingRenameAccount, hidden, isShowingDetails } = this.state;
 
     return (
       <Row

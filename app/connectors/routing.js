@@ -11,8 +11,12 @@ const mapStateToProps = selectorMap({
   lnEnabled: sel.lnEnabled
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  goBackHistory: ca.goBackHistory
-}, dispatch);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      goBackHistory: ca.goBackHistory
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps);

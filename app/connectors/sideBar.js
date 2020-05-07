@@ -18,10 +18,14 @@ const mapStateToProps = selectorMap({
   accountMixerRunning: sel.getAccountMixerRunning
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  updateBlockTimeSince: ca.updateBlockTimeSince,
-  onExpandSideBar: sba.expandSideBar,
-  onReduceSideBar: sba.reduceSideBar
-}, dispatch);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      updateBlockTimeSince: ca.updateBlockTimeSince,
+      onExpandSideBar: sba.expandSideBar,
+      onReduceSideBar: sba.reduceSideBar
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps);

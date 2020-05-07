@@ -4,19 +4,27 @@ import { TextInput, PassphraseModalField } from "inputs";
 import { PassphraseModal } from "./PassphraseModal";
 
 function AddMixerAccountsModal({
-  mixedAccountName, changeAccountName, setMixedAccountName,
-  setChangeAccountName, show, ...props
+  mixedAccountName,
+  changeAccountName,
+  setMixedAccountName,
+  setChangeAccountName,
+  show,
+  ...props
 }) {
   useEffect(() => {
     setMixedAccountName("");
     setChangeAccountName("");
-  }, [ show, setMixedAccountName, setChangeAccountName ]);
+  }, [show, setMixedAccountName, setChangeAccountName]);
 
   return (
     <PassphraseModal {...{ show, ...props }}>
       <PassphraseModalField
-        label={<T id="addMixerAccountModal.mixedAccountName" m="Mixed Account Name" />}
-      >
+        label={
+          <T
+            id="addMixerAccountModal.mixedAccountName"
+            m="Mixed Account Name"
+          />
+        }>
         <TextInput
           autoFocus
           required
@@ -28,8 +36,12 @@ function AddMixerAccountsModal({
         />
       </PassphraseModalField>
       <PassphraseModalField
-        label={<T id="addMixerAccountModal.changeAccountName" m="Change Account Name" />}
-      >
+        label={
+          <T
+            id="addMixerAccountModal.changeAccountName"
+            m="Change Account Name"
+          />
+        }>
         <TextInput
           autoFocus
           required

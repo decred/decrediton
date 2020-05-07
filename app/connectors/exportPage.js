@@ -8,8 +8,12 @@ const mapStateToProps = selectorMap({
   exportingData: sel.exportingData
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  exportStatToCSV: sta.exportStatToCSV
-}, dispatch);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      exportStatToCSV: sta.exportStatToCSV
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps);

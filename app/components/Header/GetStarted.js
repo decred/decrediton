@@ -9,7 +9,9 @@ const GetStarted = ({
 }) => (
   <div className="header-get-started">
     <div className="header-top-get-started">{headerTop}</div>
-    <div className="header-title-overview-get-started">{headerTitleOverview}</div>
+    <div className="header-title-overview-get-started">
+      {headerTitleOverview}
+    </div>
     <div className="header-meta-overview-get-started">{headerMetaOverview}</div>
     {children}
   </div>

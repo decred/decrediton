@@ -1,10 +1,12 @@
-
-const defaultButton = ({ onClick, isDisabled, buttonLabel, className }) =>
-  (<button onClick={onClick} className={className}>{buttonLabel}{isDisabled}</button>);
+const defaultButton = ({ onClick, isDisabled, buttonLabel, className }) => (
+  <button onClick={onClick} className={className}>
+    {buttonLabel}
+    {isDisabled}
+  </button>
+);
 
 @autobind
 class ModalButton extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = { show: false };
@@ -43,20 +45,24 @@ class ModalButton extends React.Component {
     const { onSubmit } = this;
     const Modal = modalComponent;
 
-    return <>
-      <ButtonComponent {...this.props} onClick={!isDisabled ? this.showModal : null}>
-        {buttonLabel}
-      </ButtonComponent>
+    return (
+      <>
+        <ButtonComponent
+          {...this.props}
+          onClick={!isDisabled ? this.showModal : null}>
+          {buttonLabel}
+        </ButtonComponent>
 
-      <Modal
-        {...{
-          ...this.props,
-          show,
-          onSubmit,
-          onCancelModal: this.hideModal
-        }}
-      />
-    </>;
+        <Modal
+          {...{
+            ...this.props,
+            show,
+            onSubmit,
+            onCancelModal: this.hideModal
+          }}
+        />
+      </>
+    );
   }
 }
 

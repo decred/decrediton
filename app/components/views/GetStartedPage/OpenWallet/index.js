@@ -5,7 +5,7 @@ import { OPENWALLET_FAILED_INPUT } from "actions/WalletLoaderActions";
 
 @autobind
 class OpenWallet extends React.Component {
-  constructor(props)  {
+  constructor(props) {
     super(props);
     this.state = {
       publicPassPhrase: ""
@@ -21,11 +21,14 @@ class OpenWallet extends React.Component {
           ...this.props,
           // isOpeningWallet,
           publicPassPhrase,
-          ...substruct({
-            onSetPublicPassPhrase: null,
-            onOpenWallet: null,
-            onKeyDown: null
-          }, this)
+          ...substruct(
+            {
+              onSetPublicPassPhrase: null,
+              onOpenWallet: null,
+              onKeyDown: null
+            },
+            this
+          )
         }}
       />
     );
@@ -40,11 +43,17 @@ class OpenWallet extends React.Component {
       return;
     }
 
-    this.props.onOpenWallet(this.state.publicPassPhrase, true)
+    this.props
+      .onOpenWallet(this.state.publicPassPhrase, true)
       .then(() => this.props.onSendContinue())
-      .catch(error => {
+      .catch((error) => {
         if (error === OPENWALLET_FAILED_INPUT) {
-          return this.props.onSendError(<T id="getStarted.decrypt.error" m="Wrong public passphrase inserted." />);
+          return this.props.onSendError(
+            <T
+              id="getStarted.decrypt.error"
+              m="Wrong public passphrase inserted."
+            />
+          );
         }
         this.props.onSendError(error);
       });
@@ -52,7 +61,7 @@ class OpenWallet extends React.Component {
   }
 
   onKeyDown(e) {
-    if(e.keyCode == 13) {
+    if (e.keyCode == 13) {
       e.preventDefault();
       this.onOpenWallet();
     }

@@ -4,7 +4,9 @@ import { rescan } from "connectors";
 import "style/GetStarted.less";
 
 const RescanWalletFormBody = ({
-  rescanEndBlock, rescanStartBlock, rescanCurrentBlock
+  rescanEndBlock,
+  rescanStartBlock,
+  rescanCurrentBlock
 }) => (
   <>
     <LinearProgressSmall
@@ -16,14 +18,14 @@ const RescanWalletFormBody = ({
       id="getStarted.walletRescan.progress"
       m="Rescan Progress ({rescanCurrentBlock} / {rescanEndBlock})"
       values={{
-        rescanCurrentBlock: rescanCurrentBlock > rescanStartBlock
-          ? rescanCurrentBlock
-          : rescanStartBlock,
+        rescanCurrentBlock:
+          rescanCurrentBlock > rescanStartBlock
+            ? rescanCurrentBlock
+            : rescanStartBlock,
         rescanEndBlock: rescanEndBlock
       }}
     />
   </>
-
 );
 
 export default rescan(RescanWalletFormBody);

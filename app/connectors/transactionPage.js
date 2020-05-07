@@ -12,9 +12,13 @@ const mapStateToProps = selectorMap({
   tsDate: sel.tsDate
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  decodeRawTransactions: dma.decodeRawTransactions,
-  fetchMissingStakeTxData: ca.fetchMissingStakeTxData
-}, dispatch);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      decodeRawTransactions: dma.decodeRawTransactions,
+      fetchMissingStakeTxData: ca.fetchMissingStakeTxData
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps);

@@ -12,7 +12,10 @@ class PassphraseModal extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if ((prevProps.triggerSubmit !== this.props.triggerSubmit) && this.props.triggerSubmit) {
+    if (
+      prevProps.triggerSubmit !== this.props.triggerSubmit &&
+      this.props.triggerSubmit
+    ) {
       this.onSubmit();
     }
   }

@@ -5,10 +5,7 @@ import "style/EyeFilterMenu.less";
 import "style/MiscComponents.less";
 
 const MenuItem = ({ primaryText, className, value, onClick }) => (
-  <div
-    className={className}
-    onClick={e => onClick(e, value)}
-  >
+  <div className={className} onClick={(e) => onClick(e, value)}>
     {primaryText}
   </div>
 );
@@ -50,14 +47,18 @@ class EyeFilterMenu extends React.Component {
 
     return (
       <div className="eye-filter-menu-items">
-        <div className={"arrow-up"}/>
-        {options.map(opt => (
+        <div className={"arrow-up"} />
+        {options.map((opt) => (
           <MenuItem
-            className={"context-menu-item " + (selected === opt[keyField] ? "selected" : "")}
+            className={
+              "context-menu-item " +
+              (selected === opt[keyField] ? "selected" : "")
+            }
             key={opt[keyField]}
             value={opt}
             onClick={this.onMenuChanged}
-            primaryText={opt[labelKey]} />
+            primaryText={opt[labelKey]}
+          />
         ))}
         {belowMenu}
       </div>
@@ -66,8 +67,11 @@ class EyeFilterMenu extends React.Component {
 
   render() {
     const { menuOpen } = this.state;
-    const className = [ "eye-filter-menu", this.props.className || "",
-      (menuOpen ? "menu-open" : "") ].join(" ");
+    const className = [
+      "eye-filter-menu",
+      this.props.className || "",
+      menuOpen ? "menu-open" : ""
+    ].join(" ");
 
     const menu = menuOpen ? this.getOpenedMenu() : null;
 

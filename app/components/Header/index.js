@@ -14,13 +14,16 @@ class Header extends React.Component {
 
     const Component = getStarted ? GetStarted : StandardHeader;
 
-    return <Component
-      {...{
-        headerTop,
-        headerTitleOverview,
-        headerMetaOverview,
-        children
-      }}/>;
+    return (
+      <Component
+        {...{
+          headerTop,
+          headerTitleOverview,
+          headerMetaOverview,
+          children
+        }}
+      />
+    );
   }
 }
 

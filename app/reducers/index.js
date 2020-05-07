@@ -15,7 +15,7 @@ import governance from "./governance";
 import trezor from "./trezor";
 import ln from "./ln";
 
-export default ({
+export default {
   grpc,
   walletLoader,
   notifications,
@@ -31,4 +31,4 @@ export default ({
   governance,
   trezor,
   ln
-});
+};

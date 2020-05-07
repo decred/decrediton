@@ -19,9 +19,7 @@ class TextToggle extends React.Component {
     const { activeButton } = this.state;
     const { onClick } = this;
 
-    return (
-      <Toggle {...{ leftText, rightText, activeButton, onClick }} />
-    );
+    return <Toggle {...{ leftText, rightText, activeButton, onClick }} />;
   }
 }
 
