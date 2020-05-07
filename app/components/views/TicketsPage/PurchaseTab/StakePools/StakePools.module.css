@@ -1,3 +1,14 @@
+.title {
+  font-size: 20px;
+  line-height: 20px;
+  margin-bottom: 14px;
+  color: var(--stroke-color-hovered);
+}
+
+.configuredVSPs {
+  position: relative;
+}
+
 .configuredVSP {
   width: 740px;
   height: 140px;
@@ -81,16 +92,8 @@
 }
 
 .copyToClipboard {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  background-image: var(--copy-to-clipboard-icon);
-  background-position: 0 0;
-  background-size: 20px auto;
-  background-repeat: no-repeat;
-  cursor: pointer;
   margin-left: 10px;
-  margin-bottom: 7px;
+  bottom: 8px;
 }
 
 .copyToClipboard:hover {
@@ -105,18 +108,44 @@
 }
 
 .poolFeePercentage {
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .close {
   width: 10px;
   height: 10px;
   background-color: transparent;
-  background-image: var(--menu-cancel-rescan-icon);
+  background-image: var(--x-grey);
   background-size: 10px 10px;
   cursor: pointer;
   right: 20px;
   top: 20px;
   background-repeat: no-repeat;
   position: absolute;
+}
+
+.buttonContainer {
+  left: 530px;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  /* font-size: 13px;
+  font-weight: 800; */
+}
+
+.addVSP {
+  width: 107px;
+  height: 44px;
+  box-sizing: border-box;
+}
+
+.cancelVSP {
+  width: 107px;
+  height: 44px;
+  box-sizing: border-box;
+  text-align: center;
+  vertical-align: middle;
+  display: inline-block;
+  padding: 12px 30px 14px 30px;
+  color: var(--input-color-default);
 }
