@@ -1,5 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
-import { KeyBlueButton } from "buttons";
+import { KeyBlueButton, InvisibleButton } from "buttons";
 import { BackupRedeemScriptModal } from "modals";
 import { CopyToClipboard } from "shared";
 import styles from "./StakePools.module.css";
@@ -98,9 +98,12 @@ const StakePoolsList = ({
       </div>
     </div>
     <div className={styles.buttonContainer}>
-      <div className={styles.cancelVSP} onClick={onHideStakePoolConfig}>
+      <InvisibleButton
+        className={styles.cancelVSP}
+        onClick={onHideStakePoolConfig}
+      >
         <T id="stakepools.list.form.cancel" m="Cancel" />
-      </div>
+      </InvisibleButton>
       <KeyBlueButton
         className={styles.addVSP}
         disabled={rescanRequest}

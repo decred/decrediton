@@ -137,20 +137,9 @@
 }
 
 .cancelVSP {
-  cursor: pointer;
   width: 107px;
   height: 44px;
   box-sizing: border-box;
-  text-align: center;
-  vertical-align: middle;
-  display: inline-block;
-  padding: 12px 30px 14px 30px;
-  color: var(--disabled-color);
-  font-weight: 600;
-}
-
-.cancelVSP:hover {
-  color: var(--tab-text-active-hover);
 }
 
 .backupRedeemScriptModal {
