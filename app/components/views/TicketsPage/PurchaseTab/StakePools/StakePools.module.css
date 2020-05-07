@@ -44,7 +44,6 @@
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  /* text-align: center; */
   margin-right: 5px;
   width: 270px;
   height: 35px;
@@ -82,13 +81,9 @@
   box-sizing: border-box;
 }
 
-::-webkit-scrollbar {
+::-webkit-scrollbar-thumb:hover {
   width: 5px;
-  background-color: var(--disabled-background-color);
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: var(--disabled-color);
+  background-color: var(--tab-text-active-hover);
 }
 
 .copyToClipboard {
@@ -98,6 +93,10 @@
 
 .copyToClipboard:hover {
   opacity: 0.8;
+}
+
+.script {
+  position: relative;
 }
 
 .poolFee {
@@ -129,8 +128,6 @@
   position: relative;
   display: flex;
   flex-direction: row;
-  /* font-size: 13px;
-  font-weight: 800; */
 }
 
 .addVSP {
@@ -140,6 +137,7 @@
 }
 
 .cancelVSP {
+  cursor: pointer;
   width: 107px;
   height: 44px;
   box-sizing: border-box;
@@ -147,5 +145,51 @@
   vertical-align: middle;
   display: inline-block;
   padding: 12px 30px 14px 30px;
-  color: var(--input-color-default);
+  color: var(--disabled-color);
+  font-weight: 600;
+}
+
+.cancelVSP:hover {
+  color: var(--tab-text-active-hover);
+}
+
+.backupRedeemScriptModal {
+  padding: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .configuredVSP {
+    width: 355px;
+    height: 210px;
+  }
+
+  .txDetails {
+    width: 300px;
+  }
+
+  .txDetailsRaw {
+    width: 270px;
+  }
+
+  .txDetailsRawShadow {
+    width: 265px;
+  }
+
+  .vspData {
+    grid-template-columns: 310px;
+    grid-template-rows: 23px 40px 23px 40px;
+  }
+
+  .vspURL {
+    margin-bottom: 25px;
+  }
+
+  .poolFee {
+    top: 45px;
+    left: 40px;
+  }
+
+  .buttonContainer {
+    left: 140px;
+  }
 }

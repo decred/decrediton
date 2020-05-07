@@ -1,7 +1,7 @@
 import { substruct, compose, eq, get } from "fp";
 import { FormattedMessage as T } from "react-intl";
 import { shell } from "electron";
-import StakePoolsList from "./List";
+import StakePoolsList from "./StakePoolsList";
 import StakePoolsAddForm from "./AddForm";
 import { stakePools } from "connectors";
 import { EnableExternalRequestButton } from "buttons";
@@ -175,8 +175,8 @@ class StakePools extends React.Component {
     const pool = this.state.selectedUnconfigured;
     return pool
       ? this.props.unconfiguredStakePools.find(
-          compose(eq(pool.Host), get("Host"))
-        )
+        compose(eq(pool.Host), get("Host"))
+      )
       : null;
   }
 
