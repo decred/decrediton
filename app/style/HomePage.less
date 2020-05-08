@@ -1,5 +1,4 @@
 @import (reference) "./main.less";
-@import (reference) "./Icons.less";
 
 .overview-header {
   padding-left: 63px;
@@ -83,27 +82,27 @@
   }
 
   &.active {
-    background-image: @legend-active;
+    background-image: var(--legend-active);
   }
 
   &.voted {
-    background-image: @legend-voted;
+    background-image: var(--legend-voted);
   }
 
   &.received {
-    background-image: @legend-received;
+    background-image: var(--legend-received);
   }
 
   &.sent {
-    background-image: @legend-sent;
+    background-image: var(--legend-sent);
   }
 
   &.available {
-    background-image: @legend-available;
+    background-image: var(--legend-available);
   }
 
   &.locked {
-    background-image: @legend-locked;
+    background-image: var(--legend-locked);
   }
 }
 
@@ -167,23 +166,23 @@
 
 .overview-no-transactions {
   a.receive {
-    background-image: @generate-addr-icon;
+    background-image: var(--generate-addr-icon);
   }
   a.buy {
-    background-image: @buy-decred-icon;
+    background-image: var(--buy-decred-icon);
   }
 }
 
 .overview-no-tickets {
   width: 352px;
   a.purchaseTickets {
-    background-image: @dummy-icon;
+    background-image: var(--dummy-icon);
   }
   a.whatIsStaking {
-    background-image: @what-is-staking-icon;
+    background-image: var(--what-is-staking-icon);
   }
   a.ticketLifeCycle {
-    background-image: @ticket-lifecycle-icon;
+    background-image: var(--ticket-lifecycle-icon);
   }
 }
 
@@ -219,7 +218,7 @@
     background-position: 50% 50%;
     background-repeat: no-repeat;
     &.balance {
-      background-image: @balanceTabIcon;
+      background-image: var(--balance-tab-icon);
     }
     &.tickets {
       background-image: var(--menu-tickets-default);

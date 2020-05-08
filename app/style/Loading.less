@@ -1,5 +1,4 @@
 @import (reference) "./main.less";
-@import (reference) "./Icons.less";
 
 @keyframes spin {
   30% { transform: rotate(182deg); }
@@ -54,7 +53,7 @@
   display: inline-block;
   height: 120px;
   width: 120px;
-  background-image: @new-loader;
+  background-image: var(--new-loader);
   background-position: 0px 0px;
   background-size: 120px;
   background-repeat: no-repeat;
@@ -145,49 +144,49 @@
 
 .linear-progress-text.blockchain-syncing {
   padding-left: 56px;
-  background-image: @loader-animation-blockchain-syncing;
+  background-image: var(--loader-animation-blockchain-syncing);
   background-position: 15px 15px;
   background-size: 30px;
 }
 
 .linear-progress-text.daemon-waiting {
   padding-left: 56px;
-  background-image: @loader-animation-daemon-waiting;
+  background-image: var(--loader-animation-daemon-waiting);
   background-position: 15px 15px;
   background-size: 30px;
 }
 
 .linear-progress-text.discovering-addresses {
   padding-left: 56px;
-  background-image: @loader-animation-discovering-addresses;
+  background-image: var(--loader-animation-discovering-addresses);
   background-position: 15px 15px;
   background-size: 30px;
 }
 
 .linear-progress-text.establishing-rpc {
   padding-left: 56px;
-  background-image: @loader-animation-establishing-rpc;
+  background-image: var(--loader-animation-establishing-rpc);
   background-position: 15px 15px;
   background-size: 30px;
 }
 
 .linear-progress-text.fetching-headers {
   padding-left: 56px;
-  background-image: @loader-animation-fetching-headers;
+  background-image: var(--loader-animation-fetching-headers);
   background-position: 15px 15px;
   background-size: 30px;
 }
 
 .linear-progress-text.finalizing-setup {
   padding-left: 56px;
-  background-image: @loader-animation-finalizing-setup;
+  background-image: var(--loader-animation-finalizing-setup);
   background-position: 15px 15px;
   background-size: 30px;
 }
 
 .linear-progress-text.scanning-blocks {
   padding-left: 56px;
-  background-image: @loader-animation-scanning-blocks;
+  background-image: var(--loader-animation-scanning-blocks);
   background-position: 15px 15px;
   background-size: 30px;
 }

@@ -6,7 +6,6 @@ import Logo from "./Logo";
 import LastBlockTime from "./LastBlockTime";
 import { Balance } from "shared";
 import { RescanButton, RescanCancelButton } from "buttons";
-import "style/Fonts.less";
 import "style/SideBar.less";
 import cx from "classnames";
 

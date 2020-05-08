@@ -1,6 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
 import { Balance, VerticalAccordion } from "shared";
-import "style/Fonts.less";
 import "style/AccountRow.less";
 
 // default account's number equals 2^31-1.

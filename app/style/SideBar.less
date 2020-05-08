@@ -1,5 +1,4 @@
 @import (reference) "./main.less";
-@import (reference) "./Icons.less";
 
 .hamburger {
   height: 20px;
@@ -227,14 +226,14 @@
   width: 16px;
   height: 16px;
   background-repeat: no-repeat;
-  background-image: @watch-only-icon;
+  background-image: var(--watch-only-icon);
   margin-right: 10px;
   margin-bottom: 10px;
 }
 
 .sidebar-menu-link-notification-icon {
   background-repeat: no-repeat;
-  background-image: @bell-notification-icon;
+  background-image: var(--bell-notification-icon);
   background-position: center;
   background-size: 10px;
   width: 14px;
@@ -283,19 +282,19 @@
     background-image: var(--menu-settings-default);
   }
   &.settingsIcon:not(.menu-link-active):hover {
-    background-image: @menu-animation-settings;
+    background-image: var(--menu-animation-settings);
   }
   &.helpIcon {
     background-image: var(--menu-help-default);
   }
   &.helpIcon:not(.menu-link-active):hover {
-    background-image: @menu-animation-help;
+    background-image: var(--menu-animation-help);
   }
   &.ticketsIcon {
     background-image: var(--menu-tickets-default);
   }
   &.ticketsIcon:not(.menu-link-active):hover {
-    background-image: @menu-animation-tickets;
+    background-image: var(--menu-animation-tickets);
   }
   &.transactionsIcon {
     background-image: var(--menu-transactions-default);
@@ -307,13 +306,13 @@
     background-image: var(--menu-trezor-hover);
   }
   &.transactionsIcon:not(.menu-link-active):hover {
-    background-image: @menu-animation-transactions;
+    background-image: var(--menu-animation-transactions);
   }
   &.accountsIcon {
     background-image: var(--menu-accounts-default);
   }
   &.accountsIcon:not(.menu-link-active):hover {
-    background-image: @menu-animation-accounts;
+    background-image: var(--menu-animation-accounts);
     background-size: 22px;
     background-position: 19px 50%;
   }
@@ -321,25 +320,25 @@
     background-image: var(--menu-securitycntr-default);
   }
   &.securitycntrIcon:not(.menu-link-active):hover {
-    background-image: @menu-animation-security;
+    background-image: var(--menu-animation-security);
   }
   &.overviewIcon {
     background-image: var(--menu-overview-default);
   }
   &.overviewIcon:not(.menu-link-active):hover {
-    background-image: @menu-animation-overview;
+    background-image: var(--menu-animation-overview);
   }
   &.governanceIcon {
     background-image: var(--menu-governance-default);
   }
   &.governanceIcon:not(.menu-link-active):hover {
-    background-image: @menu-animation-governance;
+    background-image: var(--menu-animation-governance);
   }
   &.lnIcon {
-    background-image: @menu-ln-default;
+    background-image: var(--menu-ln-default);
   }
   &.lnIcon:not(.menu-link-active):hover {
-    background-image: @menu-ln-hover;
+    background-image: var(--menu-ln-hover);
   }
 }
 
@@ -386,7 +385,7 @@
     background-image: var(--menu-trezor-active);
   }
   &.lnIcon {
-    background-image: @menu-ln-active;
+    background-image: var(--menu-ln-active);
   }
 }
 

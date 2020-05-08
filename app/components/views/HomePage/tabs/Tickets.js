@@ -2,7 +2,6 @@ import { Balance } from "shared";
 import { FormattedMessage as T } from "react-intl";
 import { TicketChart } from "charts";
 import { ticketHome } from "connectors";
-import "style/Fonts.less";
 import "style/HomePage.less";
 
 const HomePage = ({

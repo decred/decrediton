@@ -7,7 +7,6 @@ import { addSpacingAroundText, reverseHash } from "helpers";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { DecodedTransaction } from "middleware/walletrpc/api_pb";
 import "style/TxDetails.less";
-import "style/Fonts.less";
 import KeyBlueButton from "../buttons/KeyBlueButton";
 
 const messages = defineMessages({

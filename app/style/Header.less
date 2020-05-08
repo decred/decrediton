@@ -1,5 +1,4 @@
 @import (reference) "./main.less";
-@import (reference) "./Icons.less";
 
 .header-small-balance {
   display: inline;
@@ -71,19 +70,19 @@
   &.transactions { background-image: var(--header-transactions); }
   &.governance { background-image: var(--header-governance); }
   &.trezor { background-image: var(--menu-trezor-active); }
-  &.ln { background-image: @menu-ln-active; }
+  &.ln { background-image: var(--menu-ln-active); }
 
-  &.tx-detail-icon-ticket { background-image: @ticket-live-icon; }
-  &.tx-detail-icon-vote { background-image: @ticket-voted-icon; }
-  &.tx-detail-icon-revocation { background-image: @ticket-revoked-icon; }
-  &.tx-detail-icon-transfer { background-image: @transfer-transaction; }
+  &.tx-detail-icon-ticket { background-image: var(--ticket-live-icon); }
+  &.tx-detail-icon-vote { background-image: var(--ticket-voted-icon); }
+  &.tx-detail-icon-revocation { background-image: var(--ticket-revoked-icon); }
+  &.tx-detail-icon-transfer { background-image: var(--transfer-transaction-icon); }
 
   &.tx-detail-icon-out {
-    background-image: @minus-big-icon;
+    background-image: var(--minus-big-icon);
   }
 
   &.tx-detail-icon-in {
-    background-image: @plus-big-icon;
+    background-image: var(--plus-big-icon);
   }
 }
 

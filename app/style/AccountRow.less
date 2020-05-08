@@ -1,5 +1,4 @@
 @import (reference) "./main.less";
-@import (reference) "./Icons.less";
 
 .account-row-top-spendable {
   color: var(--account-text);
@@ -158,24 +157,24 @@
 
 .reveal-account-pubkey-button {
   &.show {
-    background-image: @show-pubkey-icon;
+    background-image: var(--show-pubkey-icon);
   }
   &.hide {
-    background-image: @hide-pubkey-icon;
+    background-image: var(--hide-pubkey-icon);
   }
 }
 
 .rename-account-button {
-  background-image: @account-rename-icon;
+  background-image: var(--account-rename-icon);
   background-size: 20px;
 }
 
 .show-account-button {
-  background-image: @show-account-icon;
+  background-image: var(--show-account-icon);
 }
 
 .hide-account-button {
-  background-image: @hide-account-icon;
+  background-image: var(--hide-account-icon);
 }
 
 .rename-account-button:hover,

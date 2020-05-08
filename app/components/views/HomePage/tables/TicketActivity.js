@@ -4,7 +4,6 @@ import { DecredLoading } from "indicators";
 import { TxHistory } from "shared";
 import { FormattedMessage as T } from "react-intl";
 import NoTicketsLinks from "./NoTicketsLinks";
-import "style/Fonts.less";
 import "style/HomePage.less";
 
 const RecentTickets = ({
