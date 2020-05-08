@@ -1,5 +1,4 @@
 @import (reference) "./main.less";
-@import (reference) "./Icons.less";
 
 .log-area {
   background-color: var(--background-back-color);
@@ -38,11 +37,11 @@
   }
 
   .log-area-title.expanded {
-    background-image: @arrow-down-mid-blue-icon;
+    background-image: var(--arrow-down-mid-blue-icon);
   }
 
   .log-area-title.expanded:hover {
-    background-image: @arrow-down-key-blue-icon;
+    background-image: var(--arrow-down-key-blue-icon);
   }
 
   .log-area-title.hidden {
@@ -51,7 +50,7 @@
   }
 
   .log-area-title.hidden:hover {
-    background-image: @arrow-right-key-blue-icon;
+    background-image: var(--arrow-right-key-blue-icon);
     background-size: 5px;
   }
 

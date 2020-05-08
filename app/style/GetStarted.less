@@ -1,6 +1,5 @@
 @import (reference) "./main.less";
 @import (reference) "./Layout.less";
-@import (reference) "./Icons.less";
 
 .advanced-page-form {
   width: 100%;
@@ -482,9 +481,9 @@
     background-repeat: no-repeat;
     background-size: 590px;
 
-    &.release-image-v130 { background-image: @release-image-v130; }
-    &.release-image-v140 { background-image: @release-image-v140; }
-    &.release-image-v150 { background-image: @release-image-v150; }
+    &.release-image-v130 { background-image: var(--release-image-v130); }
+    &.release-image-v140 { background-image: var(--release-image-v140); }
+    &.release-image-v150 { background-image: var(--release-image-v150); }
   }
 
   @media screen and (max-width: 1140px) {
@@ -571,7 +570,7 @@
     margin-top: 25px;
     background-size: 58px 58px;
     background-position: 0px 5px;
-    background-image: @restorewallet;
+    background-image: var(--restore-wallet-icon);
   }
 }
 
@@ -613,11 +612,11 @@
 
 .display-wallet-button.remove {
   background-color: var(--button-text);
-  background-image: @launcher-wallet-delete;
+  background-image: var(--launcher-wallet-delete);
 }
 
 .display-wallet-button.remove:hover {
-  background-image: @launcher-wallet-delete-hover;
+  background-image: var(--launcher-wallet-delete-hover);
 }
 
 .display-wallet:hover:not(.selected) {
@@ -729,7 +728,7 @@
 .edit-wallets-button.close {
   background-color: var(--disabled-color);
   background-size: 12px 12px;
-  background-image: @x-white;
+  background-image: var(--x-white-icon);
 }
 
 .new-wallet-title-area {
@@ -761,7 +760,7 @@
 }
 
 .wallet-icon-small.restore {
-  background-image: @restorewallet;
+  background-image: var(--restore-wallet-icon);
 }
 
 .get-started-custom-privacy-settings {
@@ -890,11 +889,11 @@
 }
 
 .privacy-option-icon.enable-spv {
-  background-image: @enable-spv;
+  background-image: var(--enable-spv);
 }
 
 .privacy-option-icon.disable-spv {
-  background-image: @disable-spv;
+  background-image: var(--disable-spv);
 }
 .get-started-last-log-lines {
   font-size: 9px;

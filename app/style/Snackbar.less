@@ -1,5 +1,4 @@
 @import (reference) "./main.less";
-@import (reference) "./Icons.less";
 
 .snackbar {
   border-radius: 5px;
@@ -29,11 +28,11 @@
 
 .snackbar.snackbar-warning,
 .snackbar.snackbar-error {
-  background-image: @notificationError;
+  background-image: var(--notification-error-icon);
 }
 
 .snackbar.snackbar-success {
-  background-image: @notificationSuccess;
+  background-image: var(--notification-success-icon);
 }
 
 .snackbar-message {
@@ -85,25 +84,25 @@
 .snackbar-stake {
   .snackbar-tx-mixin;
 
-  background-image: @ticket-small-icon;
+  background-image: var(--ticket-small-icon);
 }
 
 .snackbar-receive {
   .snackbar-tx-mixin;
 
-  background-image: @plus-big-icon;
+  background-image: var(--plus-big-icon);
 }
 
 .snackbar-send {
   .snackbar-tx-mixin;
 
-  background-image: @minus-big-icon;
+  background-image: var(--minus-big-icon);
 }
 
 .snackbar-transfer {
   .snackbar-tx-mixin;
 
-  background-image: @transfer-transaction;
+  background-image: var(--transfer-transaction-icon);
 }
 
 .snackbar-close-button-top {

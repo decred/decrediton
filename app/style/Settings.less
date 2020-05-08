@@ -1,5 +1,4 @@
 @import (reference) "./main.less";
-@import (reference) "./Icons.less";
 
 .settings-wrapper {
   display: flex;
@@ -103,7 +102,7 @@
     display: inline-block;
     border: 1px solid var(--disabled-color);
     background-color: var(--disabled-background-color);
-    background-image: @checkmarkGrey;
+    background-image: var(--checkmark-grey-icon);
     background-repeat: no-repeat;
     background-size: 10px;
   }
@@ -120,7 +119,7 @@
     display: inline-block;
     border: 1px solid var(--input-color);
     background-color: none;
-    background-image: @checkmarkBlue;
+    background-image: var(--checkmark-blue-icon);
     background-repeat: no-repeat;
     background-size: 10px;
   }
@@ -232,7 +231,7 @@
 }
 
 .change-password-default-icon {
-  background: @change-password-default-icon no-repeat center;
+  background: var(--change-password-default-icon) no-repeat center;
   background-color: var(--input-color);
   background-size: 16px;
   cursor: pointer;
@@ -248,7 +247,7 @@
 
 .change-password-disabled-icon,
 .change-password-loading {
-  background: @password-inactive-icon no-repeat center;
+  background: var(--password-inactive-icon) no-repeat center;
   background-color: var(--disabled-background-color);
   cursor: default;
 }
@@ -335,7 +334,7 @@
   height: 23px;
   background-color: var(--wallet-close-button-bg);
   color: var(--wallet-close-button-text);
-  background-image: @close-wallet-icon;
+  background-image: var(--close-wallet-icon);
   background-repeat: no-repeat;
   background-size: 13px;
   background-position: 10px 8px;

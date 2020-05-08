@@ -1,5 +1,4 @@
 @import (reference) "./main.less";
-@import (reference) "./Icons.less";
 
 .eye-filter-menu {
   margin-left: 0.5em;
@@ -38,7 +37,7 @@
 .eye-filter-menu-button-icon-disabled {
   .eye-filter-menu-button-icon;
 
-  background-image: @contextbutton-eye-disabled-icon;
+  background-image: var(--contextbutton-eye-disabled-icon);
 }
 
 .eye-filter-menu-button-icon::after {
@@ -62,7 +61,7 @@
 }
 
 .eye-filter-menu-button-icon:disabled {
-  background-image: @contextbutton-eye-disabled-icon;
+  background-image: var(--contextbutton-eye-disabled-icon);
 }
 
 .sort-by .eye-filter-menu-button-icon {
@@ -97,7 +96,7 @@
     content: "";
     height: 10px;
     width: 10px;
-    background-image: @checkmarkContext;
+    background-image: var(--checkmark-context-icon);
     background-repeat: no-repeat;
     position: absolute;
     margin-left: -18px;

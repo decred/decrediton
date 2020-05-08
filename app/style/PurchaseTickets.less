@@ -1,5 +1,4 @@
 @import (reference) "./main.less";
-@import (reference) "./Icons.less";
 @import (reference) "./MiscComponents.less";
 
 .purchase-ticket-area {
@@ -69,7 +68,7 @@
   top: 0;
 
   &.more {
-    background-image: @tickets-plus-icon;
+    background-image: var(--tickets-plus-icon);
     right: 0;
     &:hover {
       opacity: 0.7;
@@ -77,7 +76,7 @@
   }
 
   &.less {
-    background-image: @tickets-minus-icon;
+    background-image: var(--tickets-minus-icon);
     right: 22px;
     &:hover {
       opacity: 0.7;
@@ -169,7 +168,7 @@
       right: 43px;
       display: block;
       background-repeat: no-repeat;
-      background-image: @warning-input;
+      background-image: var(--warning-input-icon);
       background-size: 16px 16px;
       background-position: 0 center;
     }

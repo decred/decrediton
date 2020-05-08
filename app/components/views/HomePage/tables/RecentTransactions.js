@@ -2,7 +2,6 @@
 import { home } from "connectors";
 import { DecredLoading } from "indicators";
 import { FormattedMessage as T } from "react-intl";
-import "style/Fonts.less";
 import "style/HomePage.less";
 import NoTransactionsLinks from "./NoTransactionsLinks";
 import { TxHistory } from "shared";
