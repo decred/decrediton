@@ -1,0 +1,271 @@
+.root {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 100;
+  backdrop-filter: blur(5px);
+}
+
+.modal {
+  position: absolute;
+  /* background-color: transparent; */
+  height: 419px;
+  width: 355px;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.decredLogo {
+  width: 15px;
+  height: 13px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: var(--decred-logo);
+  z-index: 1;
+  background-size: 15px 13px;
+}
+
+.modalMain {
+  position: relative;
+  height: 355px;
+  width: 355px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+  padding-left: 20px;
+  box-shadow: 0px 5px 21px #09144021;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+}
+
+.modalAddress {
+  margin-right: 15px;
+  background-color: var(--background-address-copy-color);
+  border-radius: 5px;
+  vertical-align: middle;
+  height: 40px;
+  width: 316px;
+  color: var(--input-color-default);
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  line-height: 40px;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.modalLabel {
+  /* border-bottom: 1px solid red; */
+  font-size: 13px;
+  line-height: 13px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.modalQR {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+}
+
+.qrCode {
+  height: 220px;
+  width: 220px;
+}
+
+.modalSecond {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  background-color: transparent;
+}
+
+.modalClose {
+  background: #48566e 0% 0% no-repeat padding-box;
+  box-shadow: 0px 5px 13px #09144036;
+  border-radius: 5px;
+  height: 44px;
+  width: 71px;
+  font-size: 13px;
+  line-height: 44px;
+  text-align: center;
+  color: #e9f8fe;
+  margin-right: 20px;
+}
+
+.modalShare {
+  box-shadow: 0px 5px 13px #09144036;
+  background-color: white;
+  border-radius: 5px;
+  height: 44px;
+  width: 44px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: var(--share-icon);
+  background-size: 30px 30px;
+}
+
+.receiveContent {
+  background-color: var(--background-back-color);
+  padding-top: 20px;
+  padding-left: 28px;
+  width: 740px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.receiveContentNestForAddress {
+  display: flex;
+}
+
+.receiveSelectAccountInput {
+  width: 310px;
+}
+
+.receiveRequestedAmount {
+  display: flex;
+}
+
+.receiveContentButtons div {
+  display: flex;
+  flex-direction: column;
+}
+
+.receiveContentButtons div span {
+  text-align: center;
+  margin-top: 2px;
+}
+
+.receiveContentNestQR {
+  margin-right: 15px;
+  background-color: var(--background-address-copy-color);
+  border-radius: 5px;
+  vertical-align: middle;
+  height: 40px;
+  width: 470px;
+  color: var(--input-color-default);
+  font-size: 21px;
+  font-weight: 600;
+  text-align: center;
+  line-height: 40px;
+  position: relative;
+}
+
+.receiveContentNestCopyQR {
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 40px auto auto auto;
+  width: 100px;
+  height: 35px;
+  background-color: transparent;
+  z-index: 2;
+}
+
+.receiveContentNestCopyQRText {
+  width: 104px;
+  height: 20px;
+  background-color: white;
+  box-shadow: 0px 3px 13px #09144036;
+  border-radius: 5px;
+  color: #2970ff;
+  font-size: 9px;
+  line-height: 20px;
+  white-space: pre;
+}
+
+.receiveContentNestCopyQRArrow {
+  position: relative;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid white;
+  margin-left: auto;
+  margin-right: auto;
+  width: 0;
+  height: 0;
+}
+
+.line {
+  margin-top: 20px;
+  height: 40px;
+  display: flex;
+  margin-bottom: 21px;
+}
+
+.receiveContentButtons {
+  height: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 5px;
+  font-size: 11px;
+}
+
+.receiveContentCopyButton {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: var(--copy-to-clipboard-icon);
+  background-size: 20px 20px;
+  height: 30px;
+  width: 30px;
+  box-shadow: 0px 3px 5px #09144029;
+  border-radius: 5px;
+  margin-right: 40px;
+  cursor: pointer;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.receiveContentQRButton {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: var(--view-qr-icon);
+  background-size: 20px 20px;
+  height: 30px;
+  width: 30px;
+  box-shadow: 0px 3px 5px #09144029;
+  border-radius: 5px;
+  margin-right: 40px;
+  cursor: pointer;
+  margin-left: 25px;
+  margin-right: 20px;
+}
+
+.receiveContentShareButton {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: var(--share-icon);
+  background-size: 20px 20px;
+  height: 30px;
+  width: 30px;
+  box-shadow: 0px 3px 5px #09144029;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 20px;
+  margin-right: 15px;
+}
+
+.receiveContentCopyButton:hover {
+  background-color: #e9f8ff;
+}
+
+.receiveContentQRButton:hover {
+  background-color: #e9f8ff;
+}
+
+.receiveContentShareButton:hover {
+  background-color: #e9f8ff;
+}
