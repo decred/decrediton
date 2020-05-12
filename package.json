@@ -39,8 +39,7 @@
   "lint-staged": {
     "*.{jsx,jsx,css,json}": [
       "yarn prettify",
-      "yarn lint-fix",
-      "git add"
+      "yarn lint-fix"
     ]
   },
   "jest": {
