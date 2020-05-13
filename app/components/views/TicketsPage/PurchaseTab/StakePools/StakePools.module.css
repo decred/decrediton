@@ -39,7 +39,7 @@
   line-height: 17px;
   padding: 10px 9px 10px 8px;
   border-radius: 3px;
-  background-color: var(--blue-highlight-background);
+  background-color: var(--background-address-copy-color);
   color: var(--input-color-default);
   text-overflow: ellipsis;
   overflow: hidden;
@@ -134,6 +134,9 @@
   width: 107px;
   height: 44px;
   box-sizing: border-box;
+  text-align: center;
+  padding: 0;
+  line-height: 44px;
 }
 
 .cancelVSP {

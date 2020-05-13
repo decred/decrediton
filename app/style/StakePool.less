@@ -1,55 +1,5 @@
 @import (reference) "./main.less";
 
-.stakepool-content-nest-prefix-configured {
-  font-size: 19px;
-  text-transform: capitalize;
-}
-
-.stakepool-content-nest-stake-pool {
-  border-top: 1px solid;
-  border-bottom: 1px solid;
-  margin-bottom: 1em;
-  padding-top: 1em;
-  padding-bottom: 1em;
-}
-
-.stakepool-content-nest-settings {
-  margin-bottom: 1em;
-}
-
-.stakepool-content-nest-prefix-settings {
-  .inline-block-mixin;
-
-  font-size: 19px;
-  text-align: right;
-  text-transform: capitalize;
-  width: 20%;
-  vertical-align: top;
-  padding-right: 0.5em;
-}
-
-.stakepool-content-nest-content-settings {
-  .inline-block-mixin;
-
-  font-size: 13px;
-  width: 72%;
-}
-
-textarea.stakepool-content-nest-content-settings {
-  height: 3em;
-}
-
-.stakepool-content-nest-prefix-confirm {
-  width: 230px;
-  padding-right: 15px;
-  float: left;
-  height: 100%;
-  padding-top: 5px;
-  font-size: 19px;
-  text-align: right;
-  text-transform: capitalize;
-}
-
 .stakepool-hide-config {
   float: right;
   background-color: initial;
@@ -92,13 +42,13 @@ textarea.stakepool-content-nest-content-settings {
 
   a {
     color:var(--link-color);
-  }  
+  }
 }
 
 .stakepool-field {
   margin-bottom: 30px;
   display:flex;
-  flex-wrap: nowrap;  
+  flex-wrap: nowrap;
 }
 
 .stakepool-field-label {
@@ -116,9 +66,9 @@ textarea.stakepool-content-nest-content-settings {
 .stakepool-add-toolbar {
   text-align: right;
   margin-top: 20px;
-  grid-column: 2; 
+  grid-column: 2;
   display: flex;
-  flex-direction: row-reverse; 
+  flex-direction: row-reverse;
 }
 
 .stakepool-link-button-container{
@@ -140,8 +90,9 @@ textarea.stakepool-content-nest-content-settings {
   cursor: pointer;
 }
 
-.stakepool-add-apikey {
+.backup-redeem-script-textarea {
   padding:0;
+  width: 100%;
   input {
     padding-left:10px;
     width: 100%;
@@ -154,15 +105,6 @@ textarea.stakepool-content-nest-content-settings {
   padding: 18px 32px 18px 32px;
 }
 
-.stakepool-flex-height {
-  background-color: var(--background-back-color);
-  padding: 1em;
-}
-
-.stakepool-content-nest-from-address {
-  margin-bottom: 2em;
-}
-
 .stakepool-link {
   color: var(--input-color);
   font-weight: bold;
@@ -173,16 +115,8 @@ textarea.stakepool-content-nest-content-settings {
   margin-top: 1em;
 }
 
-.backup-redeem-script-modal {
-  padding: 10px;
-}
-
-.backup-redeem-script-textarea {
-  width: 100%;
-}
-
 .backup-redeem-script-title {
-  font-size: 19px;  
+  font-size: 19px;
 }
 
 .backup-redeem-script-message{
@@ -226,7 +160,7 @@ textarea.stakepool-content-nest-content-settings {
   .stakepool-add-area{
     width: 634px;
     grid-template-columns: auto 316px;
-  }     
+  }
   .stakepool-link-button-container{
     margin-left:0;
   }
@@ -243,7 +177,7 @@ textarea.stakepool-content-nest-content-settings {
   .stakepool-add-area {
     grid-template-columns: 1fr;
     width: 355px;
-  }  
+  }
   .stakepool-add-title{
     margin-left:16px;
     margin-bottom:20px;
