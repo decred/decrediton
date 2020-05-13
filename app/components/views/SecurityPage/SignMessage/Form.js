@@ -29,14 +29,17 @@ const SignMessageForm = ({
     <>
       <div className="security-center-form">
         <div className="button-right">
-          <InfoDocModalButton document="SignMessageInfo" draggable/>
+          <InfoDocModalButton document="SignMessageInfo" draggable />
         </div>
         <div className="security-center-form-row">
           <div className="security-center-form-row-label">
-            <T id="securitycenter.signMessage.field.address.label" m="Address"/>
+            <T
+              id="securitycenter.signMessage.field.address.label"
+              m="Address"
+            />
           </div>
           <div className="security-center-form-row-field">
-            <WatchOnlyWarnNotification isActive={ isSignMessageDisabled }>
+            <WatchOnlyWarnNotification isActive={isSignMessageDisabled}>
               <TextInput
                 required
                 value={address}
@@ -52,10 +55,13 @@ const SignMessageForm = ({
         </div>
         <div className="security-center-form-row">
           <div className="security-center-form-row-label">
-            <T id="securitycenter.signMessage.field.message.label" m="Message"/>
+            <T
+              id="securitycenter.signMessage.field.message.label"
+              m="Message"
+            />
           </div>
           <div className="security-center-form-row-field-message">
-            <WatchOnlyWarnNotification isActive={ isSignMessageDisabled }>
+            <WatchOnlyWarnNotification isActive={isSignMessageDisabled}>
               <TextInput
                 required
                 value={message}
@@ -73,7 +79,14 @@ const SignMessageForm = ({
       <SignMessageButton
         address={address}
         message={message}
-        disabled={isSigningMessage || address == "" || message == "" || addressError || messageError || isSignMessageDisabled}
+        disabled={
+          isSigningMessage ||
+          address == "" ||
+          message == "" ||
+          addressError ||
+          messageError ||
+          isSignMessageDisabled
+        }
       />
     </>
   );

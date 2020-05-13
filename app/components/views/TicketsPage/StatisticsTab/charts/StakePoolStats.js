@@ -1,11 +1,11 @@
 import { MeteredChart } from "charts";
-import { myTicketsCharts }  from "connectors";
+import { myTicketsCharts } from "connectors";
 import { FormattedMessage as T } from "react-intl";
 import { StakePoolSelect } from "inputs";
 import { Tooltip } from "shared";
 
 @autobind
-class StakePoolStats extends React.Component{
+class StakePoolStats extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.getInitialState();
@@ -15,7 +15,8 @@ class StakePoolStats extends React.Component{
     let stakePool = this.props.allStakePoolStats[0];
     if (this.props.selectedStakePool) {
       const idxSel = this.props.allStakePoolStats.findIndex(
-        s => s.Host === this.props.selectedStakePool.Host);
+        (s) => s.Host === this.props.selectedStakePool.Host
+      );
       if (idxSel > -1) {
         stakePool = this.props.allStakePoolStats[idxSel];
       }
@@ -55,18 +56,42 @@ class StakePoolStats extends React.Component{
             </div>
           </div>
           <div className="my-tickets-stakepool-stats-row">
-            <Tooltip text={<T id="mytickets.statistics.stakepool.ticketsTip" m="{percentage}% proportion of network tickets" values={{ percentage: ticketPercentage.toFixed(1) }} />}>
+            <Tooltip
+              text={
+                <T
+                  id="mytickets.statistics.stakepool.ticketsTip"
+                  m="{percentage}% proportion of network tickets"
+                  values={{ percentage: ticketPercentage.toFixed(1) }}
+                />
+              }>
               <MeteredChart
                 additive={true}
                 blueValue={ticketPoolSize}
-                blueLabel={<T id="mytickets.statistics.stakepool.networkTickets" m="All Network Tickets"/>}
+                blueLabel={
+                  <T
+                    id="mytickets.statistics.stakepool.networkTickets"
+                    m="All Network Tickets"
+                  />
+                }
                 blackValue={stakePool.Live}
-                blackLabel={<T id="mytickets.statistics.stakepool.stakepoolTickets" m="VSP Tickets"/>}
+                blackLabel={
+                  <T
+                    id="mytickets.statistics.stakepool.stakepoolTickets"
+                    m="VSP Tickets"
+                  />
+                }
               />
             </Tooltip>
           </div>
           <div className="my-tickets-stakepool-stats-row">
-            <Tooltip text={<T id="mytickets.statistics.stakepool.votedTip" m="{percentage}% of tickets missed" values={{ percentage: votedPercentage.toFixed(1) }} />}>
+            <Tooltip
+              text={
+                <T
+                  id="mytickets.statistics.stakepool.votedTip"
+                  m="{percentage}% of tickets missed"
+                  values={{ percentage: votedPercentage.toFixed(1) }}
+                />
+              }>
               <MeteredChart
                 additive={true}
                 blueValue={stakePool.Voted}

@@ -1,5 +1,4 @@
 // @flow
-window.eval = () => { throw new Error("Do not import things that use eval()"); };
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
@@ -42,19 +41,20 @@ const hasCliOption = (key) => cliOptions && cliOptions[key];
 
 const currentSettings = {
   locale: locale,
-  daemonStartAdvanced: hasCliOption("daemonStartAdvanced") || getDaemonIsAdvanced(),
-  daemonStartAdvancedFromCli: !!(hasCliOption("daemonStartAdvanced")),
+  daemonStartAdvanced:
+    hasCliOption("daemonStartAdvanced") || getDaemonIsAdvanced(),
+  daemonStartAdvancedFromCli: !!hasCliOption("daemonStartAdvanced"),
   allowedExternalRequests: globalCfg.get("allowed_external_requests"),
   proxyType: globalCfg.get("proxy_type"),
   proxyLocation: globalCfg.get("proxy_location"),
   spvMode: hasCliOption("spvMode") || getIsSpv(),
-  spvModeFromCli: !!(hasCliOption("spvMode")),
+  spvModeFromCli: !!hasCliOption("spvMode"),
   spvConnect: hasCliOption("spvConnect") || globalCfg.get("spv_connect"),
-  spvConnectFromCli: !!(hasCliOption("spvConnect")),
+  spvConnectFromCli: !!hasCliOption("spvConnect"),
   timezone: globalCfg.get("timezone"),
   currencyDisplay: DCR,
   network: hasCliOption("network") || globalCfg.get(NETWORK),
-  networkFromCli: !!(hasCliOption("network")),
+  networkFromCli: !!hasCliOption("network"),
   theme: globalCfg.get(THEME)
 };
 const initialState = {
@@ -497,7 +497,7 @@ const fonts = [
 
 const themes = {
   "theme-light": { ...defaultLightTheme, ...lightTheme, ...icons },
-  "theme-dark":  { ...defaultDarkTheme, ...darkTheme, ...icons }
+  "theme-dark": { ...defaultDarkTheme, ...darkTheme, ...icons }
 };
 
 const history = createMemoryHistory();

@@ -42,8 +42,7 @@ export default {
       use: [ {
         loader: "raw-loader"
       } ]
-    }
-    ]
+    }]
   },
 
   output: {
@@ -66,7 +65,7 @@ export default {
   },
 
   plugins: [ new webpack.ProvidePlugin({
-    React:     "react",
+    React: "react",
     PropTypes: "prop-types",
     autobind: [ "core-decorators", "autobind" ]
   }) ],

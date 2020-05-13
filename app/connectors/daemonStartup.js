@@ -58,54 +58,58 @@ const mapStateToProps = selectorMap({
   selectedWalletSelector: sel.getSelectedWallet
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  // general methods
-  // Methods for showing positions when first starting decrediton
-  onShowTutorial: da.showTutorial,
-  onShowSpvChoice: da.showSpvChoice,
-  onShowPrivacy: da.showPrivacy,
-  onShowCreateWallet: da.showCreateWallet,
-  onShowLanguage: da.showLanguage,
-  onShowGetStarted: da.showGetStarted,
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      // general methods
+      // Methods for showing positions when first starting decrediton
+      onShowTutorial: da.showTutorial,
+      onShowSpvChoice: da.showSpvChoice,
+      onShowPrivacy: da.showPrivacy,
+      onShowCreateWallet: da.showCreateWallet,
+      onShowLanguage: da.showLanguage,
+      onShowGetStarted: da.showGetStarted,
 
-  // language page
-  onSelectLanguage: da.selectLanguage,
+      // language page
+      onSelectLanguage: da.selectLanguage,
 
-  // privacy page
-  setupStandardPrivacy: da.setupStandardPrivacy,
-  setupDisabledPrivacy: da.setupDisabledPrivacy,
+      // privacy page
+      setupStandardPrivacy: da.setupStandardPrivacy,
+      setupDisabledPrivacy: da.setupDisabledPrivacy,
 
-  // spv page
-  toggleSpv: da.toggleSpv,
+      // spv page
+      toggleSpv: da.toggleSpv,
 
-  // tutorial page
-  finishTutorial: da.finishTutorial,
-  // end of general methods
+      // tutorial page
+      finishTutorial: da.finishTutorial,
+      // end of general methods
 
-  // start daemon and wallet methods
-  onRetryStartRPC: wla.startRpcRequestFunc,
-  startSPVSync: wla.spvSyncAttempt,
-  setSelectedWallet: wla.setSelectedWallet,
-  getSelectedWallet: wla.getSelectedWallet,
-  onOpenWallet: wla.openWalletAttempt,
-  onStartDaemon: da.startDaemon,
-  onConnectDaemon: da.connectDaemon,
-  checkNetworkMatch: da.checkNetworkMatch,
-  syncDaemon: da.syncDaemon,
-  onGetAvailableWallets: da.getAvailableWallets,
-  onStartWallet: da.startWallet,
-  onRemoveWallet: da.removeWallet,
-  goToErrorPage: ca.goToError,
+      // start daemon and wallet methods
+      onRetryStartRPC: wla.startRpcRequestFunc,
+      startSPVSync: wla.spvSyncAttempt,
+      setSelectedWallet: wla.setSelectedWallet,
+      getSelectedWallet: wla.getSelectedWallet,
+      onOpenWallet: wla.openWalletAttempt,
+      onStartDaemon: da.startDaemon,
+      onConnectDaemon: da.connectDaemon,
+      checkNetworkMatch: da.checkNetworkMatch,
+      syncDaemon: da.syncDaemon,
+      onGetAvailableWallets: da.getAvailableWallets,
+      onStartWallet: da.startWallet,
+      onRemoveWallet: da.removeWallet,
+      goToErrorPage: ca.goToError,
 
-  // create or restore wallet methods
-  onCreateWallet: da.createWallet,
-  getDcrwalletLogs: da.getDcrwalletLogs,
-  trezorLoadDeviceList: trza.loadDeviceList,
-  trezorEnable: trza.enableTrezor,
-  trezorDisable: trza.disableTrezor,
-  trezorAlertNoConnectedDevice: trza.alertNoConnectedDevice,
-  trezorGetWalletCreationMasterPubKey: trza.getWalletCreationMasterPubKey,
-  validateMasterPubKey: ctrla.validateMasterPubKey
-}, dispatch);
+      // create or restore wallet methods
+      onCreateWallet: da.createWallet,
+      getDcrwalletLogs: da.getDcrwalletLogs,
+      trezorLoadDeviceList: trza.loadDeviceList,
+      trezorEnable: trza.enableTrezor,
+      trezorDisable: trza.disableTrezor,
+      trezorAlertNoConnectedDevice: trza.alertNoConnectedDevice,
+      trezorGetWalletCreationMasterPubKey: trza.getWalletCreationMasterPubKey,
+      validateMasterPubKey: ctrla.validateMasterPubKey
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps);

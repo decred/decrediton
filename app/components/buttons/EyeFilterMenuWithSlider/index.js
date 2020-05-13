@@ -3,7 +3,7 @@ import { FormattedMessage as T } from "react-intl";
 import "style/EyeFilterMenu.less";
 import "style/MiscComponents.less";
 import noUiSlider from "nouislider";
-import {  NumericInput } from "inputs";
+import { NumericInput } from "inputs";
 import { DCR } from "constants";
 
 @autobind
@@ -22,18 +22,25 @@ class EyeFilterMenuWithSlider extends React.Component {
   }
 
   componentDidMount() {
-    const { maxFilterValue, minFilterValue, unitDivisor, currencyDisplay } = this.props;
-    if(maxFilterValue) {
-      const maxValue = currencyDisplay === DCR ? maxFilterValue/unitDivisor : maxFilterValue;
+    const {
+      maxFilterValue,
+      minFilterValue,
+      unitDivisor,
+      currencyDisplay
+    } = this.props;
+    if (maxFilterValue) {
+      const maxValue =
+        currencyDisplay === DCR ? maxFilterValue / unitDivisor : maxFilterValue;
       this.setState({ maxAmount: maxValue });
-      if(maxValue > this.state.max) {
+      if (maxValue > this.state.max) {
         this.setState({ max: maxValue });
       }
     }
-    if(minFilterValue) {
-      const minValue = currencyDisplay === DCR ? minFilterValue/unitDivisor : minFilterValue;
+    if (minFilterValue) {
+      const minValue =
+        currencyDisplay === DCR ? minFilterValue / unitDivisor : minFilterValue;
       this.setState({ minAmount: minValue });
-      if(minValue > this.state.min) {
+      if (minValue > this.state.min) {
         this.setState({ min: minValue });
       }
     }
@@ -52,16 +59,16 @@ class EyeFilterMenuWithSlider extends React.Component {
         }
       };
 
-      if(!rangeSlider) {
+      if (!rangeSlider) {
         noUiSlider.create(range, {
-          start: [ minAmount, maxAmount ],
+          start: [minAmount, maxAmount],
           range: {
-            "min": [ parseInt(min) ],
-            "max": [ parseInt(max) ]
+            min: [parseInt(min)],
+            max: [parseInt(max)]
           },
           step: 1,
           connect: true,
-          tooltips: [ true, toolTipFormatter ]
+          tooltips: [true, toolTipFormatter]
         });
         this.setState({ rangeSlider: range });
 
@@ -95,41 +102,56 @@ class EyeFilterMenuWithSlider extends React.Component {
   getSliderWhenOpenedMenu() {
     const { currencyDisplay } = this.props;
 
-    const { sliderShower, expandedSliderInfo,
-      min, max, maxAmount, minAmount } = this.state;
+    const {
+      sliderShower,
+      expandedSliderInfo,
+      min,
+      max,
+      maxAmount,
+      minAmount
+    } = this.state;
 
     return (
       <div className="history-slider-wrapper">
-        <div className="history-amount-range-label"><T id="history.amount.range" m="Amount Range" /></div>
-        <div ref={r => this.mountSliderRangeInElement(r)} className="min-max-slider"></div>
+        <div className="history-amount-range-label">
+          <T id="history.amount.range" m="Amount Range" />
+        </div>
+        <div
+          ref={(r) => this.mountSliderRangeInElement(r)}
+          className="min-max-slider"></div>
         <div className="history-select-tx-amounts-area">
           <div className="history-select-tx-amounts">
-            <span onClick={() => this.onToggleSliderInfo()} className="history-select-tx-kebab"></span>
+            <span
+              onClick={() => this.onToggleSliderInfo()}
+              className="history-select-tx-kebab"></span>
           </div>
-          {
-            expandedSliderInfo && (
-              <div className="history-select-tx-slider-info">
-                <div>
-                  <T id="history.min.value" m="Slider min" />:
-                  <NumericInput value={min} onChange={(e) => this.onChangeMinValue(e.target.value)} />
-                </div>
-                <div>
-                  <T id="history.max.value" m="Slider max" />:
-                  <NumericInput value={max} onChange={(e) => this.onChangeMaxValue(e.target.value)} />
-                </div>
+          {expandedSliderInfo && (
+            <div className="history-select-tx-slider-info">
+              <div>
+                <T id="history.min.value" m="Slider min" />:
+                <NumericInput
+                  value={min}
+                  onChange={(e) => this.onChangeMinValue(e.target.value)}
+                />
               </div>
-            )
-          }
-        </div>
-        {
-          sliderShower && (
-            <div className="history-slider-value-shower">
-              {minAmount} {currencyDisplay} - {maxAmount} {currencyDisplay}
-              <div className="history-slider-value-shower-closer"
-                onClick={() => this.onToggleSliderShower()}></div>
+              <div>
+                <T id="history.max.value" m="Slider max" />:
+                <NumericInput
+                  value={max}
+                  onChange={(e) => this.onChangeMaxValue(e.target.value)}
+                />
+              </div>
             </div>
-          )
-        }
+          )}
+        </div>
+        {sliderShower && (
+          <div className="history-slider-value-shower">
+            {minAmount} {currencyDisplay} - {maxAmount} {currencyDisplay}
+            <div
+              className="history-slider-value-shower-closer"
+              onClick={() => this.onToggleSliderShower()}></div>
+          </div>
+        )}
       </div>
     );
   }
@@ -140,8 +162,8 @@ class EyeFilterMenuWithSlider extends React.Component {
     const intMin = isNaN(parseInt(min)) ? 0 : parseInt(min);
     rangeSlider.noUiSlider.updateOptions({
       range: {
-        "min": [ intMin ],
-        "max": [ parseInt(max) ]
+        min: [intMin],
+        max: [parseInt(max)]
       }
     });
   }
@@ -152,8 +174,8 @@ class EyeFilterMenuWithSlider extends React.Component {
     const intMax = isNaN(parseInt(max)) ? 0 : parseInt(max);
     rangeSlider.noUiSlider.updateOptions({
       range: {
-        "min": [ parseInt(min) ],
-        "max": [ intMax ]
+        min: [parseInt(min)],
+        max: [intMax]
       }
     });
   }
@@ -169,9 +191,9 @@ class EyeFilterMenuWithSlider extends React.Component {
   render() {
     return (
       <EyeFilterMenu
-        {...{ ...this.state,...this.props }}
-        getOpenedMenu = {this.getSliderWhenOpenedMenu}
-        unmountMenu = {this.unmountSliderRangeInElement}
+        {...{ ...this.state, ...this.props }}
+        getOpenedMenu={this.getSliderWhenOpenedMenu}
+        unmountMenu={this.unmountSliderRangeInElement}
       />
     );
   }

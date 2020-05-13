@@ -11,30 +11,56 @@ const propTypes = {
   copyConfirmationPhrase: PropTypes.string.isRequired
 };
 
-const Modal = ({ show, onCancelModal, onSubmit, copyConfirmationPhrase,
-  typedConfirmationPhrase, onTypedConfirmationPhraseChanged }) => (
+const Modal = ({
+  show,
+  onCancelModal,
+  onSubmit,
+  copyConfirmationPhrase,
+  typedConfirmationPhrase,
+  onTypedConfirmationPhraseChanged
+}) => (
   <DefaultModal className="confirm-seed-copy-modal" {...{ show }}>
-    <div className="title-warning-copy-modal"><T id="seedCopyConfirm.titleWarning" m="Seed Clipboard Copy Warning" /></div>
+    <div className="title-warning-copy-modal">
+      <T id="seedCopyConfirm.titleWarning" m="Seed Clipboard Copy Warning" />
+    </div>
     <div className="confirm-seed-copy-modal-content">
       <div className="confirm-seed-copy-warning-text">
         <Documentation name="SeedCopyWarning" />
         <T
           id="seedCopyConfirmModal.confirmPhraseInstruction"
           m="Please type {confirmationPhrase} to copy the seed."
-          values={{ confirmationPhrase: <span className="mono confirm-seed-copy-phrase">'{copyConfirmationPhrase}'</span> }} />
+          values={{
+            confirmationPhrase: (
+              <span className="mono confirm-seed-copy-phrase">
+                '{copyConfirmationPhrase}'
+              </span>
+            )
+          }}
+        />
       </div>
       <TextInput
         autoFocus
         value={typedConfirmationPhrase}
         onChange={(e) => onTypedConfirmationPhraseChanged(e.target.value)}
-        onKeyDownSubmit={() => typedConfirmationPhrase.toLowerCase() === copyConfirmationPhrase.toLowerCase() && onSubmit() }
+        onKeyDownSubmit={() =>
+          typedConfirmationPhrase.toLowerCase() ===
+            copyConfirmationPhrase.toLowerCase() && onSubmit()
+        }
       />
     </div>
     <div className="confirm-seed-copy-modal-toolbar">
-      <DangerButton className="confirm-modal-confirm-button" onClick={onSubmit} disabled={typedConfirmationPhrase.toLowerCase() !== copyConfirmationPhrase.toLowerCase()}>
+      <DangerButton
+        className="confirm-modal-confirm-button"
+        onClick={onSubmit}
+        disabled={
+          typedConfirmationPhrase.toLowerCase() !==
+          copyConfirmationPhrase.toLowerCase()
+        }>
         <T id="seedCopyConfirm.btnConfirm" m="Confirm Seed Copy" />
       </DangerButton>
-      <InvisibleButton className="confirm-modal-close-button" onClick={onCancelModal}>
+      <InvisibleButton
+        className="confirm-modal-close-button"
+        onClick={onCancelModal}>
         <T id="seedCopyConfirm.btnCancel" m="Cancel" />
       </InvisibleButton>
     </div>

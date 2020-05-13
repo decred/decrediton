@@ -4,7 +4,6 @@ import "style/Input.less";
 
 @autobind
 class SettingsInput extends React.Component {
-
   static propTypes = {
     className: PropTypes.string
   };
@@ -18,15 +17,13 @@ class SettingsInput extends React.Component {
 
   componentDidMount() {
     const { value } = this.props;
-    if(value) {
+    if (value) {
       this.setState({ value: value });
     }
   }
 
   render() {
-    const {
-      className, valueKey, labelKey, options, disabled
-    } = this.props;
+    const { className, valueKey, labelKey, options, disabled } = this.props;
 
     return (
       <div className={className}>
@@ -45,20 +42,19 @@ class SettingsInput extends React.Component {
     );
   }
 
-  selectKeyDown (e) {
-    switch(e.keyCode) {
-    case 8:
-    case 46:
-      e.preventDefault();
-      break;
+  selectKeyDown(e) {
+    switch (e.keyCode) {
+      case 8:
+      case 46:
+        e.preventDefault();
+        break;
     }
   }
 
-  onChangeSelect(value){
+  onChangeSelect(value) {
     this.setState({ value: value });
     this.props.onChange(value);
   }
-
 }
 
 export default injectIntl(SettingsInput);

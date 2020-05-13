@@ -24,24 +24,28 @@ const OwnedAddress = () => (
 
 const NotOwnedAddress = () => (
   <div className="validate-address-form-address-response not-owned valid">
-    <T id="securitycenter.validate.result.notOwned" m="Address Valid, Not Owned" />
+    <T
+      id="securitycenter.validate.result.notOwned"
+      m="Address Valid, Not Owned"
+    />
   </div>
 );
 
 const Result = ({ validateAddressSuccess, error }) => {
-  if (error || !validateAddressSuccess || !validateAddressSuccess.isValid) return <InvalidAddress />;
+  if (error || !validateAddressSuccess || !validateAddressSuccess.isValid)
+    return <InvalidAddress />;
   if (!validateAddressSuccess.isMine) return <NotOwnedAddress />;
-  return <OwnedAddress/>;
+  return <OwnedAddress />;
 };
 
 const OwnedData = ({ validateAddressSuccess }) => (
   <div className="validate-address-owned-form">
     <div className="validate-address-owned-data">
-      <T id="securitycenter.validate.owned.accountNumber" m="Account Number"/>
+      <T id="securitycenter.validate.owned.accountNumber" m="Account Number" />
       <div>{validateAddressSuccess.accountNumber}</div>
-      <T id="securitycenter.validate.owned.branch" m="Branch"/>
+      <T id="securitycenter.validate.owned.branch" m="Branch" />
       <div>{validateAddressSuccess.isInternal ? 1 : 0}</div>
-      <T id="securitycenter.validate.owned.index" m="Index"/>
+      <T id="securitycenter.validate.owned.index" m="Index" />
       <div>{validateAddressSuccess.index}</div>
     </div>
   </div>
@@ -55,22 +59,31 @@ const ValidateAddressForm = ({
   intl
 }) => (
   <>
-    <Subtitle title={<T id="security.validate.title" m="Validate Addresses"/>} />
+    <Subtitle
+      title={<T id="security.validate.title" m="Validate Addresses" />}
+    />
     <div className="validate-address-form">
       <div className="validate-address-form-label">
-        <T id="securitycenter.validate.field.address.label" m="Address"/>
+        <T id="securitycenter.validate.field.address.label" m="Address" />
       </div>
-      <div className={cx("validate-address-form-address", address && validateAddressSuccess && "valid-address")}>
+      <div
+        className={cx(
+          "validate-address-form-address",
+          address && validateAddressSuccess && "valid-address"
+        )}>
         <TextInput
           value={address}
           placeholder={intl.formatMessage(messages.addressFieldPlaceholder)}
           onChange={(e) => onAddressChange(e.target.value)}
         />
       </div>
-      { address && <Result validateAddressSuccess={validateAddressSuccess} error={error} /> }
+      {address && (
+        <Result validateAddressSuccess={validateAddressSuccess} error={error} />
+      )}
     </div>
-    { validateAddressSuccess && validateAddressSuccess.isMine &&
-      <OwnedData validateAddressSuccess={validateAddressSuccess} /> }
+    {validateAddressSuccess && validateAddressSuccess.isMine && (
+      <OwnedData validateAddressSuccess={validateAddressSuccess} />
+    )}
   </>
 );
 

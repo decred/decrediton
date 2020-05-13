@@ -9,8 +9,12 @@ const mapStateToProps = selectorMap({
   politeiaEnabled: sel.politeiaEnabled
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  compareInventory: ga.compareInventory
-}, dispatch);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      compareInventory: ga.compareInventory
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps);

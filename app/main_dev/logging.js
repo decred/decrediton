@@ -20,31 +20,31 @@ const pad = (s, n) => {
 // format compatible to dcrd/dcrwallet logs. This function is meant to be
 // installed in the winston loggers.
 const logTimestamp = () => {
-  let date = new Date();
-  let y = date.getFullYear();
-  let mo = pad(date.getMonth() + 1);
-  let d = pad(date.getDate());
-  let h = pad(date.getHours());
-  let mi = pad(date.getMinutes());
-  let s = pad(date.getSeconds());
-  let ms = pad(date.getMilliseconds(), 3);
+  const date = new Date();
+  const y = date.getFullYear();
+  const mo = pad(date.getMonth() + 1);
+  const d = pad(date.getDate());
+  const h = pad(date.getHours());
+  const mi = pad(date.getMinutes());
+  const s = pad(date.getSeconds());
+  const ms = pad(date.getMilliseconds(), 3);
   return `${y}-${mo}-${d} ${h}:${mi}:${s}.${ms}`;
 };
 
 // logLevelsPrintable are the printable strings for each log level, compatible
 // with the dcrd/dcrwallet logs.
 const logLevelsPrintable = {
-  "error": "ERR",
-  "warn": "WRN",
-  "info": "INF",
-  "verbose": "VBS",
-  "debug": "DBG",
-  "silly": "TRC"
+  error: "ERR",
+  warn: "WRN",
+  info: "INF",
+  verbose: "VBS",
+  debug: "DBG",
+  silly: "TRC"
 };
 
 const logFormatter = (opts) => {
   //console.log(opts);
-  const lvl = logLevelsPrintable[opts.level]||"UNK";
+  const lvl = logLevelsPrintable[opts.level] || "UNK";
   const time = opts.timestamp();
   const msg = opts.message;
   const subsys = "DCTN";
@@ -60,11 +60,10 @@ const logFormatterColorized = (opts) => {
 // decrediton app data dir and sends to the console when debug == true.
 // This is meant to be called from the ipcMain thread.
 export function createLogger(debug) {
-  if (logger)
-    return logger;
-  logger = new (winston.Logger)({
+  if (logger) return logger;
+  logger = new winston.Logger({
     transports: [
-      new (winston.transports.File)({
+      new winston.transports.File({
         json: false,
         filename: path.join(getAppDataDirectory(), "decrediton.log"),
         timestamp: logTimestamp,
@@ -85,12 +84,14 @@ export function createLogger(debug) {
 }
 
 const AddToLog = (destIO, destLogBuffer, data, debug) => {
-  var dataBuffer = Buffer.from(data);
+  const dataBuffer = Buffer.from(data);
   if (destLogBuffer.length + dataBuffer.length > MAX_LOG_LENGTH) {
-    destLogBuffer = destLogBuffer.slice(destLogBuffer.indexOf(os.EOL,dataBuffer.length)+1);
+    destLogBuffer = destLogBuffer.slice(
+      destLogBuffer.indexOf(os.EOL, dataBuffer.length) + 1
+    );
   }
   debug && destIO.write(data);
-  return Buffer.concat([ destLogBuffer, dataBuffer ]);
+  return Buffer.concat([destLogBuffer, dataBuffer]);
 };
 
 export const AddToDcrdLog = (destIO, data, debug) => {
@@ -116,22 +117,24 @@ const logError = "[ERR]";
 const panicErr = "panic";
 
 export function lastLogLine(log) {
-  let lastLineIdx = log.lastIndexOf(os.EOL, log.length - os.EOL.length -1);
-  let lastLineBuff = log.slice(lastLineIdx).toString("utf-8");
+  const lastLineIdx = log.lastIndexOf(os.EOL, log.length - os.EOL.length - 1);
+  const lastLineBuff = log.slice(lastLineIdx).toString("utf-8");
   return lastLineBuff.trim();
 }
 
 export function lastErrorLine(log) {
-  let lastLineIdx = log.lastIndexOf(logError);
-  let endOfErrorLineIdx = log.indexOf(os.EOL, lastLineIdx);
-  let lastLineBuff = log.slice(lastLineIdx, endOfErrorLineIdx).toString("utf-8");
+  const lastLineIdx = log.lastIndexOf(logError);
+  const endOfErrorLineIdx = log.indexOf(os.EOL, lastLineIdx);
+  const lastLineBuff = log
+    .slice(lastLineIdx, endOfErrorLineIdx)
+    .toString("utf-8");
   return lastLineBuff.trim();
 }
 
 export function lastPanicLine(log) {
   let lastLineIdx = log.indexOf(panicErr);
   if (lastLineIdx < 0) lastLineIdx = log.indexOf("goroutine");
-  let lastLineBuff = log.slice(lastLineIdx).toString("utf-8");
+  const lastLineBuff = log.slice(lastLineIdx).toString("utf-8");
   return lastLineBuff;
 }
 

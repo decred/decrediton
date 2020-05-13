@@ -2,7 +2,6 @@ import Modal from "./Modal";
 
 @autobind
 class ImportScriptModal extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = this.getInitialState();

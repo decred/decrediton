@@ -1,14 +1,21 @@
 import { AdvancedHeader, AdvancedBody } from "./Form";
-import { setAppdataPath, getAppdataPath, getRemoteCredentials, setRemoteCredentials } from "config.js";
+import {
+  setAppdataPath,
+  getAppdataPath,
+  getRemoteCredentials,
+  setRemoteCredentials
+} from "config.js";
 
 @autobind
 class AdvancedStartupHeader extends React.Component {
   render() {
-    return (<AdvancedHeader
-      {...{
-        ...this.props
-      }}
-    />);
+    return (
+      <AdvancedHeader
+        {...{
+          ...this.props
+        }}
+      />
+    );
   }
 }
 
@@ -20,7 +27,13 @@ class AdvancedStartupBody extends React.Component {
   }
 
   getInitialState() {
-    const { rpc_pass, rpc_user, rpc_cert, rpc_host, rpc_port } = getRemoteCredentials();
+    const {
+      rpc_pass,
+      rpc_user,
+      rpc_cert,
+      rpc_host,
+      rpc_port
+    } = getRemoteCredentials();
     return {
       sideActive: true,
       rpc_user: rpc_user,
@@ -132,12 +145,18 @@ class AdvancedStartupBody extends React.Component {
   onSubmitRemoteForm() {
     const { submitRemoteCredentials } = this.props;
     if (!this.isRemoteValid()) {
-      this.setState({ rpcUserHasFailedAttempt: true, rpcPasswordHasFailedAttempt: true, rpcHostHasFailedAttempt: true, rpcPortHasFailedAttempt: true, rpcCertHasFailedAttempt: true });
+      this.setState({
+        rpcUserHasFailedAttempt: true,
+        rpcPasswordHasFailedAttempt: true,
+        rpcHostHasFailedAttempt: true,
+        rpcPortHasFailedAttempt: true,
+        rpcCertHasFailedAttempt: true
+      });
       return;
     }
     const { rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port } = this.state;
     setRemoteCredentials(rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port);
-    let args = { rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port };
+    const args = { rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port };
     submitRemoteCredentials(args);
   }
 
@@ -157,10 +176,10 @@ class AdvancedStartupBody extends React.Component {
   }
 
   isAppDataValid() {
-    return !!(this.state.appdata);
+    return !!this.state.appdata;
   }
 
-  skipAdvancedDaemon(){
+  skipAdvancedDaemon() {
     this.props.onStartDaemon();
   }
 

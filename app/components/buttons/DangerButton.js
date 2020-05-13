@@ -5,15 +5,16 @@ import "style/MiscComponents.less";
 class DangerButton extends React.Component {
   render() {
     let className = "button ";
-    className += !this.props.disabled ? "danger-button"
+    className += !this.props.disabled
+      ? "danger-button"
       : "danger-button-disabled";
-    let style = {};
+    const style = {};
     Object.assign(style, this.props.style);
-    if(!this.props.disabled && this.props.block) {
+    if (!this.props.disabled && this.props.block) {
       style.display = "block";
     }
 
-    if(this.props.className) {
+    if (this.props.className) {
       className += " " + this.props.className;
     }
 
@@ -23,14 +24,18 @@ class DangerButton extends React.Component {
         style={style}
         type={this.props.type}
         disabled={this.props.disabled}
-        onClick = {this.onClick}
+        onClick={this.onClick}
         hidden={this.props.hidden}>
-        {this.props.loading ? <SimpleLoading {...{ disabled: this.props.disabled }}/> : this.props.children}
+        {this.props.loading ? (
+          <SimpleLoading {...{ disabled: this.props.disabled }} />
+        ) : (
+          this.props.children
+        )}
       </div>
     );
   }
 
-  onClick (e) {
+  onClick(e) {
     if (!this.props.disabled && this.props.onClick) {
       this.props.onClick(e);
     }

@@ -7,17 +7,15 @@ import ConfigMixer from "./ConfigMixer";
 
 function validateErrorReducer(state, action) {
   switch (action.type) {
-  case "ACCOUNT_MIXER_START":
-    return {
-      ...state,
-      mixerStart: action.error
-    };
+    case "ACCOUNT_MIXER_START":
+      return {
+        ...state,
+        mixerStart: action.error
+      };
   }
 }
 
-function Privacy({
-  isCreateAccountDisabled
-}) {
+function Privacy({ isCreateAccountDisabled }) {
   const dispatch = useDispatch();
   const runAccountMixer = (request) => dispatch(act.runAccountMixer(request));
   const stopAccountMixer = () => dispatch(act.stopAccountMixer());
@@ -28,7 +26,7 @@ function Privacy({
   const csppPort = useSelector(sel.getCsppPort);
   const mixedAccountBranch = useSelector(sel.getMixedAccountBranch);
   const accounts = useSelector(sel.sortedAccounts);
-  const [ error, dispatchError ] = useReducer(validateErrorReducer,  {
+  const [error, dispatchError] = useReducer(validateErrorReducer, {
     mixedStart: null
   });
 
@@ -37,7 +35,7 @@ function Privacy({
   }
 
   const getAccountName = (n) => {
-    const account = accounts.find( ({ accountNumber }) => accountNumber === n );
+    const account = accounts.find(({ accountNumber }) => accountNumber === n);
     return account ? account.accountName : null;
   };
 
@@ -59,10 +57,21 @@ function Privacy({
     }
   }
 
-  return <PrivacyPage {...{
-    mixedAccountName, accountMixerRunning, error, csppServer, csppPort, changeAccountName,
-    onStartMixerAttempt, stopAccountMixer, mixedAccountBranch
-  }} />;
+  return (
+    <PrivacyPage
+      {...{
+        mixedAccountName,
+        accountMixerRunning,
+        error,
+        csppServer,
+        csppPort,
+        changeAccountName,
+        onStartMixerAttempt,
+        stopAccountMixer,
+        mixedAccountBranch
+      }}
+    />
+  );
 }
 
 export default Privacy;

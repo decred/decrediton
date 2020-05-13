@@ -1,6 +1,6 @@
 import { TESTNET, MAINNET } from "constants";
 
-var createBlakeHash;
+let createBlakeHash;
 if (process.env.NODE_ENV === "test") {
   // Node 10.x errors when trying to import the native blake-hash during unit
   // test. As far as I (matheusd) can see, this only happens during test, and
@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === "test") {
 } else {
   createBlakeHash = require("blake-hash");
 }
-var bs58checkBase = require("bs58check/base");
+const bs58checkBase = require("bs58check/base");
 
 export const ERR_INVALID_ADDR_EMPTY = "ERR_INVALID_ADDR_EMPTY";
 export const ERR_INVALID_ADDR_TOOSHORT = "ERR_INVALID_ADDR_TOOSHORT";
@@ -32,25 +32,22 @@ export const ERR_INVALID_ADDR_CHECKSUM = "ERR_INVALID_ADDR_CHECKSUM";
 
 // Injected checksum function
 function _blake256x2(buffer) {
-  buffer = createBlakeHash("blake256")
-    .update(buffer)
-    .digest();
-  return createBlakeHash("blake256")
-    .update(buffer)
-    .digest();
+  buffer = createBlakeHash("blake256").update(buffer).digest();
+  return createBlakeHash("blake256").update(buffer).digest();
 }
 
 export function isValidAddress(addr, network) {
-
   if (!addr || !addr.trim().length) return ERR_INVALID_ADDR_EMPTY;
   if (addr.length < 25) return ERR_INVALID_ADDR_TOOSHORT;
   if (addr.length > 36) return ERR_INVALID_ADDR_TOOLONG;
 
-  if (network === TESTNET && addr[0] !== "T") return ERR_INVALID_ADDR_NETWORKPREFIX;
-  if (network === MAINNET && addr[0] !== "D") return ERR_INVALID_ADDR_NETWORKPREFIX;
+  if (network === TESTNET && addr[0] !== "T")
+    return ERR_INVALID_ADDR_NETWORKPREFIX;
+  if (network === MAINNET && addr[0] !== "D")
+    return ERR_INVALID_ADDR_NETWORKPREFIX;
 
   try {
-    var bs58check = bs58checkBase(_blake256x2);
+    const bs58check = bs58checkBase(_blake256x2);
     bs58check.decode(addr, _blake256x2);
   } catch (error) {
     return ERR_INVALID_ADDR_CHECKSUM;
@@ -63,9 +60,10 @@ const ERR_INVALID_MASTER_PUB_KEY = "ERR_INVALID_MASTER_PUB_KEY";
 const ERR_INVALID_MASTERPUB_CHECKSUM = "ERR_INVALID_MASTERPUB_CHECKSUM";
 
 export function isValidMasterPubKey(masterPubKey) {
-  if (!masterPubKey || !masterPubKey.trim().length) return ERR_INVALID_MASTER_PUB_KEY;
+  if (!masterPubKey || !masterPubKey.trim().length)
+    return ERR_INVALID_MASTER_PUB_KEY;
   try {
-    var bs58check = bs58checkBase(_blake256x2);
+    const bs58check = bs58checkBase(_blake256x2);
     bs58check.decode(masterPubKey, _blake256x2);
   } catch (error) {
     return ERR_INVALID_MASTERPUB_CHECKSUM;

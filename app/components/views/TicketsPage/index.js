@@ -1,4 +1,9 @@
-import { TabbedPage, TabbedPageTab as Tab, TitleHeader, DescriptionHeader } from "layout";
+import {
+  TabbedPage,
+  TabbedPageTab as Tab,
+  TitleHeader,
+  DescriptionHeader
+} from "layout";
 import { Switch, Redirect } from "react-router-dom";
 import { FormattedMessage as T } from "react-intl";
 import { purchaseTickets } from "connectors";
@@ -7,26 +12,55 @@ import { default as PurchaseTab } from "./PurchaseTab";
 import { default as StatisticsTab } from "./StatisticsTab";
 import { default as MyTicketsTab } from "./MyTicketsTab";
 
-const PageHeader = () =>
+const PageHeader = () => (
   <TitleHeader
     iconClassName="tickets"
     title={<T id="tickets.title" m="Tickets" />}
-  />;
-
-const TabHeader = purchaseTickets(({ ticketPrice }) =>
-  <DescriptionHeader
-    description={
-      <T id="tickets.description" m="Current Price: {ticketPrice}"
-        values={{ ticketPrice: <Balance flat amount={ticketPrice} classNameWrapper="header-small-balance"/> }} />
-    }
   />
 );
 
+const TabHeader = purchaseTickets(({ ticketPrice }) => (
+  <DescriptionHeader
+    description={
+      <T
+        id="tickets.description"
+        m="Current Price: {ticketPrice}"
+        values={{
+          ticketPrice: (
+            <Balance
+              flat
+              amount={ticketPrice}
+              classNameWrapper="header-small-balance"
+            />
+          )
+        }}
+      />
+    }
+  />
+));
+
 export default () => (
-  <TabbedPage header={<PageHeader />} >
-    <Switch><Redirect from="/tickets" exact to="/tickets/purchase" /></Switch>
-    <Tab path="/tickets/purchase" component={PurchaseTab} header={TabHeader} link={<T id="tickets.tab.purchase" m="Purchase"/>}/>
-    <Tab path="/tickets/mytickets" component={MyTicketsTab} header={TabHeader} link={<T id="tickets.tab.mytickets" m="My Tickets"/>}/>
-    <Tab path="/tickets/statistics" component={StatisticsTab} header={TabHeader} link={<T id="tickets.tab.statistics" m="Statistics"/>}/>
+  <TabbedPage header={<PageHeader />}>
+    <Switch>
+      <Redirect from="/tickets" exact to="/tickets/purchase" />
+    </Switch>
+    <Tab
+      path="/tickets/purchase"
+      component={PurchaseTab}
+      header={TabHeader}
+      link={<T id="tickets.tab.purchase" m="Purchase" />}
+    />
+    <Tab
+      path="/tickets/mytickets"
+      component={MyTicketsTab}
+      header={TabHeader}
+      link={<T id="tickets.tab.mytickets" m="My Tickets" />}
+    />
+    <Tab
+      path="/tickets/statistics"
+      component={StatisticsTab}
+      header={TabHeader}
+      link={<T id="tickets.tab.statistics" m="Statistics" />}
+    />
   </TabbedPage>
 );

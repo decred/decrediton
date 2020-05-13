@@ -4,27 +4,38 @@ import { service, receive } from "connectors";
 import { DescriptionHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
 
-export const ReceiveTabHeader = () =>
+export const ReceiveTabHeader = () => (
   <DescriptionHeader
-    description={<T id="transactions.description.receive" m="Each time you request a payment, create a new address to protect your privacy." />}
-  />;
+    description={
+      <T
+        id="transactions.description.receive"
+        m="Each time you request a payment, create a new address to protect your privacy."
+      />
+    }
+  />
+);
 
 @autobind
-class Receive extends React.Component{
+class Receive extends React.Component {
   render() {
     const { walletService } = this.props;
     const { onRequestAddress, onValidateAmount } = this;
 
-    return !walletService ? <ErrorScreen /> :
-      <ReceivePage {...{
-        ...this.props,
-        ...this.state,
-        onRequestAddress,
-        onValidateAmount
-      }} />;
+    return !walletService ? (
+      <ErrorScreen />
+    ) : (
+      <ReceivePage
+        {...{
+          ...this.props,
+          ...this.state,
+          onRequestAddress,
+          onValidateAmount
+        }}
+      />
+    );
   }
 
-  onRequestAddress () {
+  onRequestAddress() {
     const { getNextAddressAttempt, account } = this.props;
     getNextAddressAttempt(account.value);
   }

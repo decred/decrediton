@@ -4,6 +4,8 @@ import { Documentation } from "shared";
 export default ({ document, ...props }) => (
   <InfoModal
     {...props}
-    modalContent={<Documentation name={document} className="info-modal-documentation" />}
+    modalContent={
+      <Documentation name={document} className="info-modal-documentation" />
+    }
   />
 );

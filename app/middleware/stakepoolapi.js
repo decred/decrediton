@@ -7,7 +7,7 @@ const URL_BASE = "https://api.decred.org";
 const GET = (path, apiToken) => {
   const config = {
     headers: {
-      "Authorization": "Bearer " + apiToken
+      Authorization: "Bearer " + apiToken
     }
   };
   return axios.get(path, config);
@@ -16,25 +16,25 @@ const GET = (path, apiToken) => {
 const POST = (path, apiToken, json) => {
   const config = {
     headers: {
-      "Authorization": "Bearer " + apiToken
+      Authorization: "Bearer " + apiToken
     }
   };
-  return axios.post(path,
-    querystring.stringify(json),
-    config);
+  return axios.post(path, querystring.stringify(json), config);
 };
 
 // stakepPoolInfoResponseToConfig converts a response object for the
 // stakePoolInfo call into an object array of available stakepool configs.
 function stakepPoolInfoResponseToConfig(response) {
-  var stakePoolNames = Object.keys(response.data);
+  const stakePoolNames = Object.keys(response.data);
 
-  return stakePoolNames.map(name => {
-    let { APIEnabled, URL, Network, APIVersionsSupported } = response.data[name];
-    return !APIEnabled
-      ? null
-      : { Host: URL, Network, APIVersionsSupported };
-  }).filter(v => v);
+  return stakePoolNames
+    .map((name) => {
+      const { APIEnabled, URL, Network, APIVersionsSupported } = response.data[
+        name
+      ];
+      return !APIEnabled ? null : { Host: URL, Network, APIVersionsSupported };
+    })
+    .filter((v) => v);
 }
 
 export function stakePoolInfo(cb) {
@@ -49,14 +49,14 @@ export function stakePoolInfo(cb) {
 }
 
 function parseStakePoolResults(response) {
-  var stakePoolNames = Object.keys(response.data);
+  const stakePoolNames = Object.keys(response.data);
 
-  return stakePoolNames.map(name => {
-    let { APIEnabled, URL } = response.data[name];
-    return !APIEnabled
-      ? null
-      : { Host: URL, ...response.data[name] };
-  }).filter(v => v);
+  return stakePoolNames
+    .map((name) => {
+      const { APIEnabled, URL } = response.data[name];
+      return !APIEnabled ? null : { Host: URL, ...response.data[name] };
+    })
+    .filter((v) => v);
 }
 
 export function allStakePoolStats(cb) {
@@ -74,32 +74,32 @@ export function setStakePoolAddress({ apiUrl, apiToken, pKAddress }, cb) {
   POST(apiUrl + "/api/v1/address", apiToken, {
     UserPubKeyAddr: pKAddress
   })
-    .then(function(response) {
+    .then(function (response) {
       cb(response);
     })
-    .catch(function(error) {
+    .catch(function (error) {
       cb(null, error);
     });
 }
 
 export function setVoteChoices({ apiUrl, apiToken, voteChoices }, cb) {
-  POST(apiUrl+"/api/v2/voting", apiToken, {
+  POST(apiUrl + "/api/v2/voting", apiToken, {
     VoteBits: voteChoices.toString()
   })
-    .then(function(response) {
+    .then(function (response) {
       cb(response);
     })
-    .catch(function(error) {
+    .catch(function (error) {
       cb(null, error);
     });
 }
 
 export function getPurchaseInfo({ apiUrl, apiToken }, cb) {
-  GET(apiUrl+"/api/v1/getpurchaseinfo", apiToken)
-    .then(function(response) {
+  GET(apiUrl + "/api/v1/getpurchaseinfo", apiToken)
+    .then(function (response) {
       cb(response, null, apiUrl);
     })
-    .catch(function(error) {
+    .catch(function (error) {
       cb(null, error, apiUrl);
     });
 }
@@ -108,6 +108,6 @@ export function getPurchaseInfo({ apiUrl, apiToken }, cb) {
 // stakepool host.
 export function statsFromStakePool(host, cb) {
   GET(host + "/api/v1/stats")
-    .then(resp => cb(resp, null, host))
-    .catch(error => cb(null, error, host));
+    .then((resp) => cb(resp, null, host))
+    .catch((error) => cb(null, error, host));
 }

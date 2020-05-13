@@ -1,11 +1,10 @@
 import NumericInput from "./NumericInput";
 
 const IntegerInput = ({ ...props }) => {
-
-  var value = props.value;
+  let value = props.value;
 
   const onChange = (e) => {
-    let newValue = e.target.value.replace(/[^0-9]/g, "");
+    const newValue = e.target.value.replace(/[^0-9]/g, "");
     if (value !== newValue) {
       value = newValue;
       e.target.value = newValue;
@@ -13,7 +12,7 @@ const IntegerInput = ({ ...props }) => {
     }
   };
 
-  return <NumericInput {...props} onChange={onChange} value={value}/>;
+  return <NumericInput {...props} onChange={onChange} value={value} />;
 };
 
 export default IntegerInput;

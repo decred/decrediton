@@ -1,10 +1,15 @@
 import { FormattedMessage as T } from "react-intl";
 import { PasswordInput, PassphraseModalField } from "inputs";
 
-export default ({ passPhrase, onSubmit, hasFailedAttempt, setPassPhrase, autoFocusPassword }) =>
+export default ({
+  passPhrase,
+  onSubmit,
+  hasFailedAttempt,
+  setPassPhrase,
+  autoFocusPassword
+}) => (
   <PassphraseModalField
-    label={<T id="passphraseModal.privatePassphrase" m="Private Passphrase" />}
-  >
+    label={<T id="passphraseModal.privatePassphrase" m="Private Passphrase" />}>
     <PasswordInput
       autoFocus={autoFocusPassword}
       required
@@ -15,4 +20,5 @@ export default ({ passPhrase, onSubmit, hasFailedAttempt, setPassPhrase, autoFoc
       onKeyDownSubmit={onSubmit}
       showErrors={hasFailedAttempt}
     />
-  </PassphraseModalField>;
+  </PassphraseModalField>
+);

@@ -14,11 +14,12 @@ import { MAX_DCR_AMOUNT } from "constants";
  * Whenever possible, use the DcrInput component, as it is more flexible and
  * already manages the underlying input value in atoms.
  */
-export const FixedDcrInput = ({ currencyDisplay, ...props }) =>
-  <FloatInput {...{ ...props, unit: currencyDisplay, maxFracDigits: 8 }} />;
+export const FixedDcrInput = ({ currencyDisplay, ...props }) => (
+  <FloatInput {...{ ...props, unit: currencyDisplay, maxFracDigits: 8 }} />
+);
 
 function countDecimalDigits(s) {
-  for (let i = s.length-1; i >= 0; i--) {
+  for (let i = s.length - 1; i >= 0; i--) {
     if (s[i] === ".") return s.length - i - 1;
   }
   return 0;
@@ -45,7 +46,11 @@ class DcrInput extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.amount !== prevProps.amount && !this.props.amount && this.props.amount !== 0) {
+    if (
+      this.props.amount !== prevProps.amount &&
+      !this.props.amount &&
+      this.props.amount !== 0
+    ) {
       // Amount just got cleared, so clear decimalDigits as well to display a
       // blank input.
       this.setState({ decimalDigits: 0 });
@@ -64,7 +69,7 @@ class DcrInput extends React.Component {
       return amount;
     }
     const { unitDivisor } = this.props;
-    let scaled = amount / unitDivisor;
+    const scaled = amount / unitDivisor;
     if (this.state.decimal) {
       return scaled.toFixed(0) + ".";
     }
@@ -81,7 +86,7 @@ class DcrInput extends React.Component {
     const { onChangeAmount } = this.props;
     let amount;
     const value = e.target.value;
-    const decimal = value && value.length > 0 && value[value.length-1] == ".";
+    const decimal = value && value.length > 0 && value[value.length - 1] == ".";
     const decimalDigits = countDecimalDigits(value);
     if (value) {
       amount = this.typedValueToAmount(value);
@@ -98,13 +103,15 @@ class DcrInput extends React.Component {
     const maxFracDigits = Math.log10(unitDivisor);
 
     const Comp = unitDivisor !== 1 ? FloatInput : IntegerInput;
-    return <Comp
-      {...this.props}
-      unit={currencyDisplay}
-      value={this.amountToDisplayStr(this.props.amount)}
-      onChange={this.onChange}
-      maxFracDigits={maxFracDigits}
-    />;
+    return (
+      <Comp
+        {...this.props}
+        unit={currencyDisplay}
+        value={this.amountToDisplayStr(this.props.amount)}
+        onChange={this.onChange}
+        maxFracDigits={maxFracDigits}
+      />
+    );
   }
 }
 

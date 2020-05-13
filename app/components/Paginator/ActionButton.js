@@ -1,7 +1,7 @@
 import { InvisibleButton } from "buttons";
 
 const propTypes = {
-  direction: PropTypes.oneOf([ "next", "previous" ]).isRequired,
+  direction: PropTypes.oneOf(["next", "previous"]).isRequired,
   onClick: PropTypes.func.isRequired
 };
 
@@ -23,10 +23,7 @@ class ActionButton extends React.Component {
     const { direction } = this.props;
 
     return (
-      <InvisibleButton
-        className={classNames[direction]}
-        onClick={this.onClick}
-      >
+      <InvisibleButton className={classNames[direction]} onClick={this.onClick}>
         {labels[direction]}
       </InvisibleButton>
     );

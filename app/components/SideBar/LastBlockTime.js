@@ -28,11 +28,14 @@ class LastBlockTime extends React.Component {
       }
 
       const now = new Date();
-      lastBlockDate = new Date(lastBlockTimestamp*1000);
+      lastBlockDate = new Date(lastBlockTimestamp * 1000);
       const timeFromLastBlock = now.getTime() - lastBlockDate.getTime();
       lastBlockIsRecent = timeFromLastBlock < 60000;
       if (lastBlockIsRecent) {
-        updateRecentTimer = this.props.setTimeout(this.updateRecentBlockTime, 60000 - timeFromLastBlock);
+        updateRecentTimer = this.props.setTimeout(
+          this.updateRecentBlockTime,
+          60000 - timeFromLastBlock
+        );
       }
     }
     return { lastBlockDate, lastBlockIsRecent, updateRecentTimer };
@@ -47,18 +50,19 @@ class LastBlockTime extends React.Component {
     if (lastBlockDate && lastBlockIsRecent) {
       return <T id="sidebar.lastBlockIsRecent" m="< 1 minute ago" />;
     } else if (lastBlockDate) {
-      return <FormattedRelative value={lastBlockDate} updateInterval={1*1000}/>;
+      return (
+        <FormattedRelative value={lastBlockDate} updateInterval={1 * 1000} />
+      );
     } else {
       return null;
     }
   }
-
 }
 
 LastBlockTime.propTypes = {
   lastBlockDate: PropTypes.number
 };
 
-export { LastBlockTime as LastBlockTime };
+export { LastBlockTime };
 
 export default ReactTimeout(LastBlockTime);

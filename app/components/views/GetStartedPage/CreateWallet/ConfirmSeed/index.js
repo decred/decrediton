@@ -13,7 +13,7 @@ class ConfirmSeed extends React.Component {
         word: shouldShow ? word : "",
         show: shouldShow,
         index,
-        match:  shouldShow
+        match: shouldShow
       };
     });
     this.state = {
@@ -25,11 +25,25 @@ class ConfirmSeed extends React.Component {
   render() {
     const { onChangeSeedWord } = this;
     const { seedWords } = this.state;
-    const { sendBack, setPassPhrase, onCreateWallet, isValid, isCreatingWallet } = this.props;
+    const {
+      sendBack,
+      setPassPhrase,
+      onCreateWallet,
+      isValid,
+      isCreatingWallet
+    } = this.props;
     return (
-      <ConfirmSeedForm {...{
-        isCreatingWallet, seedWords, onChangeSeedWord, sendBack, onCreateWallet, isValid, setPassPhrase
-      }} />
+      <ConfirmSeedForm
+        {...{
+          isCreatingWallet,
+          seedWords,
+          onChangeSeedWord,
+          sendBack,
+          onCreateWallet,
+          isValid,
+          setPassPhrase
+        }}
+      />
     );
   }
 
@@ -38,19 +52,23 @@ class ConfirmSeed extends React.Component {
     const { mnemonic } = this.props;
     const updatedSeedWords = seedWords;
     updatedSeedWords[seedWord.index] = {
-      word: update, show: seedWord.show, index: seedWord.index, match: splitMnemonic[seedWord.index] == update
+      word: update,
+      show: seedWord.show,
+      index: seedWord.index,
+      match: splitMnemonic[seedWord.index] == update
     };
     this.setState({ seedWords: updatedSeedWords }, () => {
-      const seedWordStr = seedWords.map(seedWord => seedWord.word).join(" ");
+      const seedWordStr = seedWords.map((seedWord) => seedWord.word).join(" ");
       if (seedWordStr === mnemonic) {
         this.setState({ seedWordsError: null });
-        this.props.decodeSeed(mnemonic)
+        this.props
+          .decodeSeed(mnemonic)
           // if no errors happened we set the seed at our machine state
-          .then(response => {
+          .then((response) => {
             this.props.setSeed(response.getDecodedSeed());
             this.props.setError("");
           })
-          .catch(e => {
+          .catch((e) => {
             this.props.setError(e);
             this.props.setSeed([]);
           });

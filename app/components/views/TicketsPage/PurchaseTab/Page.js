@@ -9,9 +9,13 @@ const PurchasePage = ({
   isShowingStakePools,
   onHideStakePoolConfig,
   ...props
-}) => (
-  isPurchasingTickets ? <StakeyBounce center/> : (isShowingStakePools) ?
-    <StakePools {...{ onHideStakePoolConfig }} /> : <Tickets {...{ stakePool, ...props }} />
-);
+}) =>
+  isPurchasingTickets ? (
+    <StakeyBounce center />
+  ) : isShowingStakePools ? (
+    <StakePools {...{ onHideStakePoolConfig }} />
+  ) : (
+    <Tickets {...{ stakePool, ...props }} />
+  );
 
 export default PurchasePage;

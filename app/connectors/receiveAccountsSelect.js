@@ -8,8 +8,12 @@ const mapStateToProps = selectorMap({
   account: sel.nextAddressAccount
 });
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getNextAddressAttempt: ca.getNextAddressAttempt
-}, dispatch);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      getNextAddressAttempt: ca.getNextAddressAttempt
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps);

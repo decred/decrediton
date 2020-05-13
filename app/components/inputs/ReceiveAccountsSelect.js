@@ -3,14 +3,15 @@ import { receiveAccountsSelect } from "connectors";
 
 @autobind
 class ReceiveAccountsSelect extends React.Component {
-
   render() {
     return (
-      <AccountsSelect {...{
-        ...this.props,
-        onChange: this.onChangeAccount,
-        accountsType: "visible"
-      }} />
+      <AccountsSelect
+        {...{
+          ...this.props,
+          onChange: this.onChangeAccount,
+          accountsType: "visible"
+        }}
+      />
     );
   }
 

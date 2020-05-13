@@ -9,8 +9,12 @@ const mapStateToProps = selectorMap({
   isImportingScript: sel.isImportingScript
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  onImportScript: ca.manualImportScriptAttempt
-}, dispatch);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      onImportScript: ca.manualImportScriptAttempt
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps);

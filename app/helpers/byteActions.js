@@ -3,9 +3,9 @@ import fs from "fs-extra";
 // @flow
 export function reverseHash(s) {
   s = s.replace(/^(.(..)*)$/, "0$1"); // add a leading zero if needed
-  var a = s.match(/../g);             // split number in groups of two
-  a.reverse();                        // reverse the groups
-  var s2 = a.join("");
+  const a = s.match(/../g); // split number in groups of two
+  a.reverse(); // reverse the groups
+  const s2 = a.join("");
   return s2;
 }
 
@@ -44,38 +44,35 @@ export function hexReversedHashToArray(hexStr) {
 // readFileBackward reads a file backward and if maxSize is specified it will
 // only read until reach that size in bytes.
 export function readFileBackward(path, maxSize, end) {
-  fs.open(path, "r",
-    function(error, descriptor) {
+  fs.open(path, "r", function (error, descriptor) {
+    if (error) return end(error);
+    fs.fstat(descriptor, function (error, stats) {
       if (error) return end(error);
-      fs.fstat(descriptor,
-        function(error, stats) {
+      let buffer, position;
+      if (stats.size > maxSize) {
+        buffer = Buffer.alloc(maxSize);
+        position = stats.size - maxSize;
+      } else {
+        buffer = Buffer.alloc(stats.size);
+        position = 0;
+      }
+      let offset = 0;
+      let length = buffer.length;
+      const read = function () {
+        fs.read(descriptor, buffer, offset, length, position, function (
+          error,
+          copied
+        ) {
           if (error) return end(error);
-          let buffer, position;
-          if(stats.size > maxSize) {
-            buffer = Buffer.alloc(maxSize);
-            position = stats.size - maxSize;
-          } else {
-            buffer = Buffer.alloc(stats.size);
-            position = 0;
-          }
-          let offset = 0;
-          let length = buffer.length;
-          const read = function() {
-            fs.read(descriptor, buffer, offset, length, position,
-              function(error, copied) {
-                if (error) return end(error);
-                offset += copied;
-                length -= copied;
-                if (length === 0) return end(undefined, buffer);
-                read();
-              }
-            );
-          };
+          offset += copied;
+          length -= copied;
+          if (length === 0) return end(undefined, buffer);
           read();
-        }
-      );
-    }
-  );
+        });
+      };
+      read();
+    });
+  });
 }
 
 // str2utf8hex converts a (js, utf-16) string into (utf-8 encoded) hex.

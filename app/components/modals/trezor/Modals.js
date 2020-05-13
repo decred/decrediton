@@ -31,12 +31,7 @@ class TrezorModals extends React.Component {
     }
 
     if (!Component) return null;
-    return (
-      <Component
-        {...this.props}
-        onCancelModal={this.onCancelModal}
-      />
-    );
+    return <Component {...this.props} onCancelModal={this.onCancelModal} />;
   }
 }
 

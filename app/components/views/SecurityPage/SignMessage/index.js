@@ -32,7 +32,12 @@ class SignMessage extends React.Component {
   }
 
   render() {
-    const { signMessageSignature, isSigningMessage, isSignMessageDisabled, intl } = this.props;
+    const {
+      signMessageSignature,
+      isSigningMessage,
+      isSignMessageDisabled,
+      intl
+    } = this.props;
     const { onChangeAddress, onChangeMessage } = this;
     const { address, addressError, message, messageError } = this.state;
     let result = null;
@@ -40,39 +45,61 @@ class SignMessage extends React.Component {
       result = (
         <div className="security-center-message-result sign">
           <div className="message-signature">{signMessageSignature}</div>
-          <CopyToClipboard textToCopy={signMessageSignature} className="message-content-nest-copy-to-clipboard-icon" />
+          <CopyToClipboard
+            textToCopy={signMessageSignature}
+            className="message-content-nest-copy-to-clipboard-icon"
+          />
         </div>
       );
     }
 
     return (
       <>
-        <SignMessageForm {...{
-          onChangeAddress, onChangeMessage, address, addressError, message,
-          messageError, formatMessage: intl.formatMessage, isSigningMessage,
-          isSignMessageDisabled
-        } }/>
+        <SignMessageForm
+          {...{
+            onChangeAddress,
+            onChangeMessage,
+            address,
+            addressError,
+            message,
+            messageError,
+            formatMessage: intl.formatMessage,
+            isSigningMessage,
+            isSignMessageDisabled
+          }}
+        />
         {result}
       </>
     );
   }
 
-  onChangeAddress(address){
-    if (address == "") this.setState({ address: "", addressError: "Please enter an address" });
+  onChangeAddress(address) {
+    if (address == "")
+      this.setState({ address: "", addressError: "Please enter an address" });
     else {
-      this.props.validateAddress(address)
-        .then(resp => {
-          this.setState({ address, addressError: !resp.getIsValid() ? "Please enter a valid address" : null });
+      this.props
+        .validateAddress(address)
+        .then((resp) => {
+          this.setState({
+            address,
+            addressError: !resp.getIsValid()
+              ? "Please enter a valid address"
+              : null
+          });
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(error);
-          this.setState({ address, addressError: "Error: Address validation failed, please try again." });
+          this.setState({
+            address,
+            addressError: "Error: Address validation failed, please try again."
+          });
         });
     }
   }
 
-  onChangeMessage(message){
-    if (message == "") this.setState({ message: "", messageError: "Please enter a message" });
+  onChangeMessage(message) {
+    if (message == "")
+      this.setState({ message: "", messageError: "Please enter a message" });
     else this.setState({ message, messageError: null });
   }
 }

@@ -10,27 +10,37 @@ const propTypes = {
   onSubmit: PropTypes.func.isRequired
 };
 
-const ConfirmModal = ({ modalTitle, modalContent, show, onCancelModal, onSubmit,
-  confirmLabel, danger }) => (
+const ConfirmModal = ({
+  modalTitle,
+  modalContent,
+  show,
+  onCancelModal,
+  onSubmit,
+  confirmLabel,
+  danger
+}) => (
   <Modal className="confirm-modal" {...{ show, onCancelModal }}>
     <div className="confirm-modal-header">
-      <div className="confirm-modal-header-title">
-        {modalTitle}
-      </div>
+      <div className="confirm-modal-header-title">{modalTitle}</div>
     </div>
-    <div className="confirm-modal-content">
-      {modalContent}
-    </div>
+    <div className="confirm-modal-content">{modalContent}</div>
     <div className="confirm-modal-toolbar">
-      { danger ?
-        <DangerButton className="confirm-modal-confirm-button" onClick={onSubmit}>
+      {danger ? (
+        <DangerButton
+          className="confirm-modal-confirm-button"
+          onClick={onSubmit}>
           {confirmLabel || <T id="infoModal.btnConfirm" m="Confirm" />}
-        </DangerButton> :
-        <KeyBlueButton className="confirm-modal-confirm-button" onClick={onSubmit}>
+        </DangerButton>
+      ) : (
+        <KeyBlueButton
+          className="confirm-modal-confirm-button"
+          onClick={onSubmit}>
           {confirmLabel || <T id="infoModal.btnConfirm" m="Confirm" />}
         </KeyBlueButton>
-      }
-      <InvisibleButton className="confirm-modal-close-button" onClick={onCancelModal}>
+      )}
+      <InvisibleButton
+        className="confirm-modal-close-button"
+        onClick={onCancelModal}>
         <T id="confirmModal.btnCancel" m="Cancel" />
       </InvisibleButton>
     </div>

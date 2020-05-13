@@ -1,9 +1,7 @@
 import { classNames } from "pi-ui";
 
 export default ({ voteCounts, quorumMinimumVotes, className }) => {
-
-  if (!voteCounts)
-    return <></>;
+  if (!voteCounts) return <></>;
 
   // TODO: support options other than yes/no/abstain (currently not used on
   // politeia)

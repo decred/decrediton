@@ -8,11 +8,18 @@
 import { session } from "electron";
 import { isRegExp } from "util";
 import { getGlobalCfg } from "config";
-import { POLITEIA_URL_TESTNET, POLITEIA_URL_MAINNET } from "../middleware/politeiaapi";
-import { DCRDATA_URL_TESTNET, DCRDATA_URL_MAINNET } from "../middleware/dcrdataapi";
+import {
+  POLITEIA_URL_TESTNET,
+  POLITEIA_URL_MAINNET
+} from "../middleware/politeiaapi";
+import {
+  DCRDATA_URL_TESTNET,
+  DCRDATA_URL_MAINNET
+} from "../middleware/dcrdataapi";
 
 export const EXTERNALREQUEST_NETWORK_STATUS = "EXTERNALREQUEST_NETWORK_STATUS";
-export const EXTERNALREQUEST_STAKEPOOL_LISTING = "EXTERNALREQUEST_STAKEPOOL_LISTING";
+export const EXTERNALREQUEST_STAKEPOOL_LISTING =
+  "EXTERNALREQUEST_STAKEPOOL_LISTING";
 export const EXTERNALREQUEST_UPDATE_CHECK = "EXTERNALREQUEST_UPDATE_CHECK";
 export const EXTERNALREQUEST_POLITEIA = "EXTERNALREQUEST_POLITEIA";
 export const EXTERNALREQUEST_DCRDATA = "EXTERNALREQUEST_DCRDATA";
@@ -60,22 +67,35 @@ export const installSessionHandlers = (mainLogger) => {
 
   // TODO: check if this filtering is working even when multiple windows are
   // created (relevant to multi-wallet usage)
-  session.defaultSession.webRequest.onBeforeSendHeaders(filter, (details, callback) => {
-    const isURLAllowed = (urlRegexp) => urlRegexp.test(details.url);
-    if (!allowedURLs.some(isURLAllowed)) {
-      logger.log("error", "Blocking external request: " + details.method + " " + details.url);
-      logger.log("error", "Make sure that the request is whitelisted in main_dev/externalRequests.js");
-      callback({ cancel: true, requestHeaders: details.requestHeaders });
-    } else {
-      logger.log("verbose", details.method + " " + details.url);
-      if (allowedExternalRequests[EXTERNALREQUEST_TREZOR_BRIDGE] && /^http:\/\/127.0.0.1:21325\//.test(details.url)) {
-        // trezor bridge requires this as an origin to prevent unwanted access.
-        details.requestHeaders["Origin"] = "https://dummy-origin-to-fool-trezor-bridge.trezor.io";
-      }
+  session.defaultSession.webRequest.onBeforeSendHeaders(
+    filter,
+    (details, callback) => {
+      const isURLAllowed = (urlRegexp) => urlRegexp.test(details.url);
+      if (!allowedURLs.some(isURLAllowed)) {
+        logger.log(
+          "error",
+          "Blocking external request: " + details.method + " " + details.url
+        );
+        logger.log(
+          "error",
+          "Make sure that the request is whitelisted in main_dev/externalRequests.js"
+        );
+        callback({ cancel: true, requestHeaders: details.requestHeaders });
+      } else {
+        logger.log("verbose", details.method + " " + details.url);
+        if (
+          allowedExternalRequests[EXTERNALREQUEST_TREZOR_BRIDGE] &&
+          /^http:\/\/127.0.0.1:21325\//.test(details.url)
+        ) {
+          // trezor bridge requires this as an origin to prevent unwanted access.
+          details.requestHeaders["Origin"] =
+            "https://dummy-origin-to-fool-trezor-bridge.trezor.io";
+        }
 
-      callback({ cancel: false, requestHeaders: details.requestHeaders });
+        callback({ cancel: false, requestHeaders: details.requestHeaders });
+      }
     }
-  });
+  );
 };
 
 const addAllowedURL = (url) => {
@@ -87,37 +107,41 @@ export const allowExternalRequest = (externalReqType) => {
   if (allowedExternalRequests[externalReqType]) return;
 
   switch (externalReqType) {
-  case EXTERNALREQUEST_NETWORK_STATUS:
-    addAllowedURL("https://testnet.decred.org/api/status");
-    addAllowedURL("https://mainnet.decred.org/api/status");
-    break;
-  case EXTERNALREQUEST_STAKEPOOL_LISTING:
-    addAllowedURL(/^https:\/\/api\.decred\.org\/\?c=gsd$/);
-    break;
-  case EXTERNALREQUEST_UPDATE_CHECK:
-    addAllowedURL("https://api.github.com/repos/decred/decrediton/releases");
-    break;
-  case EXTERNALREQUEST_POLITEIA:
-    addAllowedURL(POLITEIA_URL_TESTNET);
-    addAllowedURL(POLITEIA_URL_MAINNET);
-    break;
-  case EXTERNALREQUEST_DCRDATA:
-    addAllowedURL(DCRDATA_URL_TESTNET);
-    addAllowedURL(DCRDATA_URL_MAINNET);
-    break;
-  case EXTERNALREQUEST_TREZOR_BRIDGE:
-    addAllowedURL(/^http:\/\/127.0.0.1:21324\//);
-    addAllowedURL(/^http:\/\/127.0.0.1:21325\//);
+    case EXTERNALREQUEST_NETWORK_STATUS:
+      addAllowedURL("https://testnet.decred.org/api/status");
+      addAllowedURL("https://mainnet.decred.org/api/status");
+      break;
+    case EXTERNALREQUEST_STAKEPOOL_LISTING:
+      addAllowedURL(/^https:\/\/api\.decred\.org\/\?c=gsd$/);
+      break;
+    case EXTERNALREQUEST_UPDATE_CHECK:
+      addAllowedURL("https://api.github.com/repos/decred/decrediton/releases");
+      break;
+    case EXTERNALREQUEST_POLITEIA:
+      addAllowedURL(POLITEIA_URL_TESTNET);
+      addAllowedURL(POLITEIA_URL_MAINNET);
+      break;
+    case EXTERNALREQUEST_DCRDATA:
+      addAllowedURL(DCRDATA_URL_TESTNET);
+      addAllowedURL(DCRDATA_URL_MAINNET);
+      break;
+    case EXTERNALREQUEST_TREZOR_BRIDGE:
+      addAllowedURL(/^http:\/\/127.0.0.1:21324\//);
+      addAllowedURL(/^http:\/\/127.0.0.1:21325\//);
 
-    // TODO: decide whether we want to provide our own signed config
-    addAllowedURL(/^https:\/\/wallet.trezor.io\/data\/config_signed.bin\?[\d]+$/);
+      // TODO: decide whether we want to provide our own signed config
+      addAllowedURL(
+        /^https:\/\/wallet.trezor.io\/data\/config_signed.bin\?[\d]+$/
+      );
 
-    // TODO: decide if we wanna block this
-    addAllowedURL(/^https:\/\/wallet.trezor.io\/data\/bridge\/latest.txt\?[\d]+$/);
+      // TODO: decide if we wanna block this
+      addAllowedURL(
+        /^https:\/\/wallet.trezor.io\/data\/bridge\/latest.txt\?[\d]+$/
+      );
 
-    break;
-  default:
-    logger.log("error", "Unknown external request type: " + externalReqType);
+      break;
+    default:
+      logger.log("error", "Unknown external request type: " + externalReqType);
   }
 
   allowedExternalRequests[externalReqType] = true;
@@ -135,7 +159,7 @@ export const allowStakepoolRequests = (stakePoolHost) => {
 
 export const reloadAllowedExternalRequests = () => {
   allowedExternalRequests = {};
-  allowedURLs = [ /^devtools:\/\/*/ ];
+  allowedURLs = [/^devtools:\/\/*/];
 
   if (process.env.NODE_ENV === "development") {
     allowedURLs.push(/^http:\/\/localhost:3000/);
@@ -145,5 +169,5 @@ export const reloadAllowedExternalRequests = () => {
 
   const globalCfg = getGlobalCfg();
   const cfgAllowedRequests = globalCfg.get("allowed_external_requests", []);
-  cfgAllowedRequests.forEach(v => allowExternalRequest(v));
+  cfgAllowedRequests.forEach((v) => allowExternalRequest(v));
 };

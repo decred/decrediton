@@ -13,8 +13,19 @@ class CreatePassPhrase extends React.Component {
   }
 
   render() {
-    const { setPassPhrase, setPassPhraseVerification, onKeyDown, showPassphraseInformation, hidePassphraseInformation } = this;
-    const { passPhrase, passPhraseVerification,isShowingPassphraseInformation, hasFailedAttempt } = this.state;
+    const {
+      setPassPhrase,
+      setPassPhraseVerification,
+      onKeyDown,
+      showPassphraseInformation,
+      hidePassphraseInformation
+    } = this;
+    const {
+      passPhrase,
+      passPhraseVerification,
+      isShowingPassphraseInformation,
+      hasFailedAttempt
+    } = this.state;
     const isValid = this.isValid();
     return (
       <PassPhraseInputs
@@ -42,7 +53,10 @@ class CreatePassPhrase extends React.Component {
   }
 
   isValid() {
-    return !!this.state.passPhrase && this.state.passPhrase === this.state.passPhraseVerification;
+    return (
+      !!this.state.passPhrase &&
+      this.state.passPhrase === this.state.passPhraseVerification
+    );
   }
 
   setPassPhrase(passPhrase) {
@@ -55,9 +69,10 @@ class CreatePassPhrase extends React.Component {
   }
 
   onKeyDown(e) {
-    if(e.keyCode == 13) {      // Enter key
+    if (e.keyCode == 13) {
+      // Enter key
       e.preventDefault();
-      if(this.props.onSubmit) {
+      if (this.props.onSubmit) {
         this.props.onSubmit();
       }
     }

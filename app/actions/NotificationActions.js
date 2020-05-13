@@ -1,8 +1,15 @@
 // @flow
 import * as wallet from "wallet";
-import { getTicketPriceAttempt, updateAccount, getAccountNumbersBalances } from "./ClientActions";
+import {
+  getTicketPriceAttempt,
+  updateAccount,
+  getAccountNumbersBalances
+} from "./ClientActions";
 import { newTransactionsReceived } from "./ClientActions";
-import { TransactionNotificationsRequest, AccountNotificationsRequest } from "middleware/walletrpc/api_pb";
+import {
+  TransactionNotificationsRequest,
+  AccountNotificationsRequest
+} from "middleware/walletrpc/api_pb";
 
 export const TRANSACTIONNTFNS_START = "TRANSACTIONNTFNS_START";
 export const TRANSACTIONNTFNS_FAILED = "TRANSACTIONNTFNS_FAILED";
@@ -22,7 +29,6 @@ export const NEWBLOCKCONNECTED = "NEWBLOCKCONNECTED";
 // received in a short period of time after a new block is connected, only a
 // single global state change is dispatched instead of many individual changes.
 const transactionNtfnsDataHandler = (dispatch, getState) => {
-
   let ntfTimer;
   let newlyMined = [];
   let newlyUnmined = [];
@@ -44,13 +50,21 @@ const transactionNtfnsDataHandler = (dispatch, getState) => {
 
     if (currentBlockHeight) {
       const { maturingBlockHeights } = getState().grpc;
-      dispatch({ currentBlockHeight, currentBlockTimestamp, type: NEWBLOCKCONNECTED });
+      dispatch({
+        currentBlockHeight,
+        currentBlockTimestamp,
+        type: NEWBLOCKCONNECTED
+      });
       dispatch(getTicketPriceAttempt());
 
-      const maturedHeights = Object.keys(maturingBlockHeights).filter(h => h <= currentBlockHeight);
+      const maturedHeights = Object.keys(maturingBlockHeights).filter(
+        (h) => h <= currentBlockHeight
+      );
       if (maturedHeights.length > 0) {
         const accountNumbers = maturedHeights.reduce((l, h) => {
-          maturingBlockHeights[h].forEach(an => l.indexOf(an) === -1 ? l.push(an) : null);
+          maturingBlockHeights[h].forEach((an) =>
+            l.indexOf(an) === -1 ? l.push(an) : null
+          );
           return l;
         }, []);
         dispatch(getAccountNumbersBalances(accountNumbers));
@@ -72,21 +86,23 @@ const transactionNtfnsDataHandler = (dispatch, getState) => {
       ntfTimer = null;
     }
 
-    unmined.forEach(tx => { if (!newlyUnminedMap[tx.txHash]) {
-      newlyUnmined.push(tx);
-      newlyUnminedMap[tx.txHash] = tx;
-    }});
+    unmined.forEach((tx) => {
+      if (!newlyUnminedMap[tx.txHash]) {
+        newlyUnmined.push(tx);
+        newlyUnminedMap[tx.txHash] = tx;
+      }
+    });
 
-    mined.forEach(tx => {
+    mined.forEach((tx) => {
       if (!newlyMinedMap[tx.txHash]) {
         newlyMined.push(tx);
         newlyMined[tx.txHash] = tx;
       }
       if (newlyUnminedMap[tx.txHash]) {
         // remove from txs that have already been mined from the unmined list
-        delete(newlyUnminedMap[tx.txHash]);
-        const i = newlyUnmined.findIndex(v => tx.txHash === v.txHash);
-        (i > -1) && newlyUnmined.splice(i, 1);
+        delete newlyUnminedMap[tx.txHash];
+        const i = newlyUnmined.findIndex((v) => tx.txHash === v.txHash);
+        i > -1 && newlyUnmined.splice(i, 1);
       }
     });
 
@@ -101,8 +117,12 @@ const transactionNtfnsDataHandler = (dispatch, getState) => {
 
     // Block was mined
     if (attachedBlocks.length > 0) {
-      currentBlockTimestamp = attachedBlocks[attachedBlocks.length-1].getTimestamp();
-      currentBlockHeight = attachedBlocks[attachedBlocks.length-1].getHeight();
+      currentBlockTimestamp = attachedBlocks[
+        attachedBlocks.length - 1
+      ].getTimestamp();
+      currentBlockHeight = attachedBlocks[
+        attachedBlocks.length - 1
+      ].getHeight();
 
       const mined = attachedBlocks.reduce((l, b) => {
         b.getTransactionsList().forEach((t, i) => {
@@ -112,27 +132,32 @@ const transactionNtfnsDataHandler = (dispatch, getState) => {
         return l;
       }, []);
 
-      const unmined = unminedTxList.map((t, i) => wallet.formatUnminedTransaction(t, i));
+      const unmined = unminedTxList.map((t, i) =>
+        wallet.formatUnminedTransaction(t, i)
+      );
       addToOutstandingTxs(mined, unmined);
     } else if (unminedTxList.length > 0) {
-      const unmined = unminedTxList.map((t, i) => wallet.formatUnminedTransaction(t, i));
+      const unmined = unminedTxList.map((t, i) =>
+        wallet.formatUnminedTransaction(t, i)
+      );
       addToOutstandingTxs([], unmined);
     }
   };
 };
 
 export const transactionNtfnsStart = () => (dispatch, getState) => {
-  var request = new TransactionNotificationsRequest();
+  const request = new TransactionNotificationsRequest();
   const { walletService } = getState().grpc;
-  let transactionNtfns = walletService.transactionNotifications(request);
+  const transactionNtfns = walletService.transactionNotifications(request);
   dispatch({ transactionNtfns, type: TRANSACTIONNTFNS_START });
   transactionNtfns.on("data", transactionNtfnsDataHandler(dispatch, getState));
   transactionNtfns.on("end", () => {
     console.log("Transaction notifications done");
     dispatch({ type: TRANSACTIONNTFNS_END });
   });
-  transactionNtfns.on("error", error => {
-    if (!String(error).includes("Cancelled")) console.error("Transactions ntfns error received:", error);
+  transactionNtfns.on("error", (error) => {
+    if (!String(error).includes("Cancelled"))
+      console.error("Transactions ntfns error received:", error);
     dispatch({ type: TRANSACTIONNTFNS_END });
   });
 };
@@ -141,13 +166,15 @@ export const ACCOUNTNTFNS_START = "ACCOUNTNTFNS_START";
 export const ACCOUNTNTFNS_END = "ACCOUNTNTFNS_END";
 
 export const accountNtfnsStart = () => (dispatch, getState) => {
-  var request = new AccountNotificationsRequest();
+  const request = new AccountNotificationsRequest();
   const { walletService } = getState().grpc;
-  let accountNtfns = walletService.accountNotifications(request);
+  const accountNtfns = walletService.accountNotifications(request);
   dispatch({ accountNtfns, type: ACCOUNTNTFNS_START });
-  accountNtfns.on("data", data => {
-    const { daemon: { hiddenAccounts } } = getState();
-    let account = {
+  accountNtfns.on("data", (data) => {
+    const {
+      daemon: { hiddenAccounts }
+    } = getState();
+    const account = {
       hidden: hiddenAccounts.indexOf(data.getAccountNumber()) > -1,
       accountNumber: data.getAccountNumber(),
       accountName: data.getAccountName(),
@@ -161,8 +188,9 @@ export const accountNtfnsStart = () => (dispatch, getState) => {
     console.log("Account notifications done");
     dispatch({ type: ACCOUNTNTFNS_END });
   });
-  accountNtfns.on("error", error => {
-    if (!String(error).includes("Cancelled")) console.error("Account ntfns error received:", error);
+  accountNtfns.on("error", (error) => {
+    if (!String(error).includes("Cancelled"))
+      console.error("Account ntfns error received:", error);
     dispatch({ type: ACCOUNTNTFNS_END });
   });
 };

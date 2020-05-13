@@ -20,11 +20,11 @@ const Modal = ({
       onSubmit,
       prependPassphraseRow: true,
       triggerSubmit: triggerPassphraseModalSubmit
-    }}
-  >
+    }}>
     <PassphraseModalField
-      label={<T id="changePassModal.newPassphrase" m="New Private Passphrase" />}
-    >
+      label={
+        <T id="changePassModal.newPassphrase" m="New Private Passphrase" />
+      }>
       <PasswordInput
         required
         showErrors={hasFailedAttempt}
@@ -37,13 +37,17 @@ const Modal = ({
     </PassphraseModalField>
 
     <PassphraseModalField
-      label={<T id="changePassModal.confirm" m="Confirm" />}
-    >
+      label={<T id="changePassModal.confirm" m="Confirm" />}>
       <PasswordInput
         invalid={!!confirmPrivPassError}
-        invalidMessage={<T id="changePassModal.confirmMismatch" m="New passphrase and confirmation don't match" />}
+        invalidMessage={
+          <T
+            id="changePassModal.confirmMismatch"
+            m="New passphrase and confirmation don't match"
+          />
+        }
         showErrors={hasFailedAttempt}
-        id='confirmPassphrase'
+        id="confirmPassphrase"
         placeholder=""
         value={confirmPrivPass}
         onChange={(e) => updateConfirmPrivatePassphrase(e.target.value)}

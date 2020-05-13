@@ -22,7 +22,11 @@ import { BlurableContainer } from "layout";
 import { walletContainer, theming } from "connectors";
 import ReactTimeout from "react-timeout";
 
-const pageAnimation = { atEnter: { opacity: 0 }, atLeave: { opacity: 0 }, atActive: { opacity: 1 } };
+const pageAnimation = {
+  atEnter: { opacity: 0 },
+  atLeave: { opacity: 0 },
+  atActive: { opacity: 1 }
+};
 
 @autobind
 class Wallet extends React.Component {
@@ -45,25 +49,32 @@ class Wallet extends React.Component {
     return (
       <div className={"page-body"}>
         <SideBar />
-        <BlurableContainer className={expandSideBar ? "page-view" : "page-view-reduced-bar"}>
+        <BlurableContainer
+          className={expandSideBar ? "page-view" : "page-view-reduced-bar"}>
           <MainSwitch {...pageAnimation}>
-            <Route path="/home"                           component={HomePage} />
-            <Route path="/accounts"                       component={AccountsPage} />
-            <Route path="/settings"                       component={SettingsPage} />
-            <Route path="/walletError"                    component={WalletError} />
-            <Route path="/error"                          component={ErrorScreen} />
-            <Route path="/invalidRPCVersion"              component={InvalidRPCVersion} />
-            <Route path="/help"                           component={HelpPage} />
-            <Route path="/security"                       component={SecurityPage} />
-            <Route path="/transactions"                   component={TransactionsPage} />
-            <Route path="/tickets"                        component={TicketsPage} />
-            <Route path="/tutorial"                       component={TutorialsPage} />
-            <Route path="/governance"                     component={GovernancePage} />
-            <Route path="/trezor"                         component={TrezorPage} />
-            <Route path="/ln"                             component={LNPage} />
+            <Route path="/home" component={HomePage} />
+            <Route path="/accounts" component={AccountsPage} />
+            <Route path="/settings" component={SettingsPage} />
+            <Route path="/walletError" component={WalletError} />
+            <Route path="/error" component={ErrorScreen} />
+            <Route path="/invalidRPCVersion" component={InvalidRPCVersion} />
+            <Route path="/help" component={HelpPage} />
+            <Route path="/security" component={SecurityPage} />
+            <Route path="/transactions" component={TransactionsPage} />
+            <Route path="/tickets" component={TicketsPage} />
+            <Route path="/tutorial" component={TutorialsPage} />
+            <Route path="/governance" component={GovernancePage} />
+            <Route path="/trezor" component={TrezorPage} />
+            <Route path="/ln" component={LNPage} />
           </MainSwitch>
-          <Route path="/transactions/history/:txHash" component={TransactionPage} />
-          <Route path="/proposal/details/:token" component={ProposalDetailsPage}/>
+          <Route
+            path="/transactions/history/:txHash"
+            component={TransactionPage}
+          />
+          <Route
+            path="/proposal/details/:token"
+            component={ProposalDetailsPage}
+          />
         </BlurableContainer>
       </div>
     );

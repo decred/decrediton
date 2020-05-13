@@ -5,7 +5,6 @@ import FirmwareUpdate from "./FirmwareUpdate";
 
 @autobind
 class TrezorConfigSections extends React.Component {
-
   constructor(props) {
     super(props);
   }
@@ -66,18 +65,26 @@ class TrezorConfigSections extends React.Component {
 
     return (
       <>
-        <ConfigButtons {...{ onTogglePinProtection, onTogglePassPhraseProtection,
-          onChangeHomeScreen, onClearDeviceSession, loading }}  />
+        <ConfigButtons
+          {...{
+            onTogglePinProtection,
+            onTogglePassPhraseProtection,
+            onChangeHomeScreen,
+            onClearDeviceSession,
+            loading
+          }}
+        />
 
         <ChangeLabel {...{ onChangeLabel, loading }} />
 
-        <RecoveryButtons {...{ onWipeDevice, onRecoverDevice, onInitDevice, loading }} />
+        <RecoveryButtons
+          {...{ onWipeDevice, onRecoverDevice, onInitDevice, loading }}
+        />
 
         <FirmwareUpdate {...{ onUpdateFirmware, loading }} />
       </>
     );
   }
-
 }
 
 export default TrezorConfigSections;

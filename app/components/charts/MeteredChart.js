@@ -1,26 +1,37 @@
 export default class MeteredChart extends React.Component {
-
   createTicks = (additive, blueValue, blackValue) => {
-    let ticks = [];
+    const ticks = [];
     const ticksCount = 100;
+    let blueTicks;
+    let blackTicks;
     if (additive) {
-      var blueTicks = blueValue / (blueValue + blackValue) * ticksCount;
-      var blackTicks = ticksCount - blueTicks;
+      blueTicks = (blueValue / (blueValue + blackValue)) * ticksCount;
+      blackTicks = ticksCount - blueTicks;
     } else {
       blueTicks = blueValue;
       blackTicks = blackValue;
     }
     for (let i = 0; i < blueTicks; i++) {
-      ticks.push(<div key={"blue-ticks-"+i} className="metered-ticks blue-tick"/>);
+      ticks.push(
+        <div key={"blue-ticks-" + i} className="metered-ticks blue-tick" />
+      );
     }
     for (let j = 0; j < blackTicks; j++) {
-      ticks.push(<div key={"black-ticks-"+j} className="metered-ticks black-tick"/>);
+      ticks.push(
+        <div key={"black-ticks-" + j} className="metered-ticks black-tick" />
+      );
     }
     return ticks;
-  }
+  };
 
   render() {
-    const { additive, blueLabel, blueValue, blackLabel, blackValue } = this.props;
+    const {
+      additive,
+      blueLabel,
+      blueValue,
+      blackLabel,
+      blackValue
+    } = this.props;
     return (
       <>
         <div className="metered-ticks-area">

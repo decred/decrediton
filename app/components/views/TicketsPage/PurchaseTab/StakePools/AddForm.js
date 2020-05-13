@@ -1,6 +1,10 @@
 import { ExternalLink } from "shared";
-import { PassphraseModalButton, ScriptRedeemableButton, SlateGrayButton,
-  ImportScriptIconButton } from "buttons";
+import {
+  PassphraseModalButton,
+  ScriptRedeemableButton,
+  SlateGrayButton,
+  ImportScriptIconButton
+} from "buttons";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { TextInput, StakePoolSelect } from "inputs";
 import { Documentation } from "shared";
@@ -14,11 +18,12 @@ const messages = defineMessages({
   }
 });
 
-const UnconfiguedStakepoolLink = ({ selectedUnconfigured }) => (
-  selectedUnconfigured
-    ? <ExternalLink href={selectedUnconfigured.label}>{selectedUnconfigured.label}</ExternalLink>
-    : null
-);
+const UnconfiguedStakepoolLink = ({ selectedUnconfigured }) =>
+  selectedUnconfigured ? (
+    <ExternalLink href={selectedUnconfigured.label}>
+      {selectedUnconfigured.label}
+    </ExternalLink>
+  ) : null;
 
 const StakePoolsAddForm = ({
   selectedUnconfigured,
@@ -63,7 +68,7 @@ const StakePoolsAddForm = ({
               className="stakepool-add-apikey"
               placeholder={intl.formatMessage(messages.apiKeyPlaceholder)}
               value={apiKey}
-              onChange={e => onChangeApiKey(e.target.value)}
+              onChange={(e) => onChangeApiKey(e.target.value)}
             />
           </div>
         </div>
@@ -71,19 +76,28 @@ const StakePoolsAddForm = ({
       <div className="stakepool-add-area-right">
         <div className="stakepool-add-instructions">
           <div>
-            <T id="stake.addPool.info" m={
-              "Create an account or login to your existing account at {stakePoolLink} Once logged in, select the ‘Settings’ tab, copy and paste your API KEY into the field."
-            }
-            values={{
-              stakePoolLink: <UnconfiguedStakepoolLink { ...{ selectedUnconfigured } } />
-            }}/>
+            <T
+              id="stake.addPool.info"
+              m={
+                "Create an account or login to your existing account at {stakePoolLink} Once logged in, select the ‘Settings’ tab, copy and paste your API KEY into the field."
+              }
+              values={{
+                stakePoolLink: (
+                  <UnconfiguedStakepoolLink {...{ selectedUnconfigured }} />
+                )
+              }}
+            />
           </div>
           <div className="stakepool-link-button-container">
             <ScriptRedeemableButton
-              modalTitle={<T id="stake.notRedeemed" m="Script not redeemable?" />}
+              modalTitle={
+                <T id="stake.notRedeemed" m="Script not redeemable?" />
+              }
               modalContent={<Documentation name="ScriptNotRedeemableInfo" />}
               className="stakepool-add-not-redeemable"
-              buttonLabel={<T id="stake.notRedeemed" m={"Script not redeemable?"} />}
+              buttonLabel={
+                <T id="stake.notRedeemed" m={"Script not redeemable?"} />
+              }
             />
             <ImportScriptIconButton />
           </div>
@@ -101,8 +115,9 @@ const StakePoolsAddForm = ({
         {configuredStakePools.length ? (
           <SlateGrayButton
             className="stakepool-hide-config"
-            onClick={onCancelAddStakePool}
-          ><T id="stake.addPool.cancelBtn" m="Cancel" /></SlateGrayButton>
+            onClick={onCancelAddStakePool}>
+            <T id="stake.addPool.cancelBtn" m="Cancel" />
+          </SlateGrayButton>
         ) : null}
       </div>
     </div>

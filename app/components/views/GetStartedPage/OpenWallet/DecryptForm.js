@@ -20,7 +20,10 @@ const OpenWalletDecryptFormBodyBase = ({
 }) => (
   <div className="advanced-page-form">
     <div className="advanced-daemon-row">
-      <T id="getStarted.decrypt.info" m="This wallet is encrypted, please enter the public passphrase to decrypt it." />
+      <T
+        id="getStarted.decrypt.info"
+        m="This wallet is encrypted, please enter the public passphrase to decrypt it."
+      />
     </div>
     <div className="advanced-daemon-row">
       <div className="advanced-daemon-label">
@@ -33,7 +36,8 @@ const OpenWalletDecryptFormBodyBase = ({
           placeholder={intl.formatMessage(messages.publicPassphrasePlaceholder)}
           value={publicPassPhrase}
           onChange={(e) => onSetPublicPassPhrase(e.target.value)}
-          onKeyDown={onKeyDown}/>
+          onKeyDown={onKeyDown}
+        />
       </div>
     </div>
     <div className="loader-bar-buttons">
@@ -41,7 +45,7 @@ const OpenWalletDecryptFormBodyBase = ({
         onClick={onOpenWallet}
         disabled={publicPassPhrase == "" || isOpeningWallet}
         loading={isOpeningWallet}>
-        <T id="decryptWalletForm.openBtn" m="Open Wallet"/>
+        <T id="decryptWalletForm.openBtn" m="Open Wallet" />
       </KeyBlueButton>
     </div>
   </div>

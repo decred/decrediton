@@ -5,47 +5,65 @@ import { strHashToRaw } from "helpers/byteActions";
 export const getLightningClient = client.getLightningClient;
 export const getWalletUnlockerClient = client.getWalletUnlockerClient;
 
-export const getInfo = client => {
+export const getInfo = (client) => {
   const request = new pb.GetInfoRequest();
-  return new Promise((resolve, reject) => client.getInfo(request,
-    (err, resp) => err ? reject(err) : resolve(resp.toObject())));
+  return new Promise((resolve, reject) =>
+    client.getInfo(request, (err, resp) =>
+      err ? reject(err) : resolve(resp.toObject())
+    )
+  );
 };
 
 export const getWalletBalance = (client) => {
   const request = new pb.WalletBalanceRequest();
-  return new Promise((resolve, reject) => client.walletBalance(request,
-    (err, resp) => err ? reject(err) : resolve(resp)));
+  return new Promise((resolve, reject) =>
+    client.walletBalance(request, (err, resp) =>
+      err ? reject(err) : resolve(resp)
+    )
+  );
 };
 
-export const getChannelBalance = client => {
+export const getChannelBalance = (client) => {
   const request = new pb.ChannelBalanceRequest();
-  return new Promise((resolve, reject) => client.channelBalance(request,
-    (err, resp) => err ? reject(err) : resolve(resp)));
+  return new Promise((resolve, reject) =>
+    client.channelBalance(request, (err, resp) =>
+      err ? reject(err) : resolve(resp)
+    )
+  );
 };
 
 export const listChannels = (client) => {
   const request = new pb.ListChannelsRequest();
-  return new Promise((resolve, reject) => client.listChannels(request,
-    (err, resp) => err ? reject(err) : resolve(resp)));
+  return new Promise((resolve, reject) =>
+    client.listChannels(request, (err, resp) =>
+      err ? reject(err) : resolve(resp)
+    )
+  );
 };
 
-export const listPendingChannels = client => {
+export const listPendingChannels = (client) => {
   const request = new pb.PendingChannelsRequest();
-  return new Promise((resolve, reject) => client.pendingChannels(request,
-    (err, resp) => err ? reject(err) : resolve(resp)));
+  return new Promise((resolve, reject) =>
+    client.pendingChannels(request, (err, resp) =>
+      err ? reject(err) : resolve(resp)
+    )
+  );
 };
 
-export const listClosedChannels = client => {
+export const listClosedChannels = (client) => {
   const request = new pb.ClosedChannelsRequest();
-  return new Promise((resolve, reject) => client.closedChannels(request,
-    (err, resp) => err ? reject(err) : resolve(resp)));
+  return new Promise((resolve, reject) =>
+    client.closedChannels(request, (err, resp) =>
+      err ? reject(err) : resolve(resp)
+    )
+  );
 };
 
 export const INVOICE_STATUS_OPEN = "open";
 export const INVOICE_STATUS_SETTLED = "settled";
 export const INVOICE_STATUS_EXPIRED = "expired";
 
-export const formatInvoice = invoiceData => {
+export const formatInvoice = (invoiceData) => {
   const inv = invoiceData.toObject();
   if (inv.paymentRequest.indexOf("[ERROR]") === 0) return null;
   let status = "";
@@ -73,14 +91,17 @@ export const formatInvoice = invoiceData => {
 export const listInvoices = (client, reversed) => {
   const request = new pb.ListInvoiceRequest();
   request.setReversed(reversed);
-  return new Promise((resolve, reject) => client.listInvoices(request,
-    (err, resp) => {
+  return new Promise((resolve, reject) =>
+    client.listInvoices(request, (err, resp) => {
       if (err) {
         reject(err);
         return;
       }
 
-      const invoices = resp.getInvoicesList().map(formatInvoice).filter(v => !!v);
+      const invoices = resp
+        .getInvoicesList()
+        .map(formatInvoice)
+        .filter((v) => !!v);
 
       if (reversed) {
         invoices.reverse();
@@ -93,22 +114,24 @@ export const listInvoices = (client, reversed) => {
       };
 
       resolve(res);
-    }));
+    })
+  );
 };
 
 export const listPayments = (client) => {
   const request = new pb.ListPaymentsRequest();
-  return new Promise((resolve, reject) => client.listPayments(request,
-    (err, resp) => {
+  return new Promise((resolve, reject) =>
+    client.listPayments(request, (err, resp) => {
       if (err) {
         reject(err);
         return;
       }
 
-      const payments = resp.getPaymentsList().map(p => p.toObject());
+      const payments = resp.getPaymentsList().map((p) => p.toObject());
       payments.reverse();
       resolve(payments);
-    }));
+    })
+  );
 };
 
 export const addInvoice = (client, memo, value) => {
@@ -132,7 +155,7 @@ export const subscribeToInvoices = (client) => {
   return client.subscribeInvoices(request);
 };
 
-export const subscribeChannelEvents= (client) => {
+export const subscribeChannelEvents = (client) => {
   const request = new pb.ChannelEventSubscription();
   return client.subscribeChannelEvents(request);
 };
@@ -152,7 +175,7 @@ export const decodePayReq = (client, payReq) => {
   });
 };
 
-export const createPayStream = client => {
+export const createPayStream = (client) => {
   return client.sendPayment(null);
 };
 
@@ -173,8 +196,11 @@ export const connectPeer = (client, node, address) => {
   request.setAddr(addr);
   request.setPerm(false);
 
-  return new Promise((resolve, reject) => client.connectPeer(request,
-    (err, resp) => err ? reject(err) : resolve(resp)));
+  return new Promise((resolve, reject) =>
+    client.connectPeer(request, (err, resp) =>
+      err ? reject(err) : resolve(resp)
+    )
+  );
 };
 
 export const openChannel = (client, node, localAmt, pushAmt) => {
@@ -200,28 +226,40 @@ export const closeChannel = (client, txid, outputIdx, force) => {
 export const newAddress = (client) => {
   const request = new pb.NewAddressRequest();
   request.setType(pb.AddressType.PUBKEY_HASH);
-  return new Promise((resolve, reject) => client.newAddress(request,
-    (err, resp) => err ? reject(err) : resolve(resp.getAddress())));
+  return new Promise((resolve, reject) =>
+    client.newAddress(request, (err, resp) =>
+      err ? reject(err) : resolve(resp.getAddress())
+    )
+  );
 };
 
 export const sendCoins = (client, address, amount) => {
   const request = new pb.SendCoinsRequest();
   request.setAddr(address);
   request.setAmount(amount);
-  return new Promise((resolve, reject) => client.sendCoins(request,
-    (err, resp) => err ? reject(err) : resolve(resp.getTxid())));
+  return new Promise((resolve, reject) =>
+    client.sendCoins(request, (err, resp) =>
+      err ? reject(err) : resolve(resp.getTxid())
+    )
+  );
 };
 
 export const unlockWallet = (wuClient, passphrase) => {
   const request = new pb.UnlockWalletRequest();
   const bytesPassphrase = new Uint8Array(Buffer.from(passphrase));
   request.setWalletPassword(bytesPassphrase);
-  return new Promise((resolve, reject) => wuClient.unlockWallet(request,
-    (err, resp) => err ? reject(err) : resolve(resp)));
+  return new Promise((resolve, reject) =>
+    wuClient.unlockWallet(request, (err, resp) =>
+      err ? reject(err) : resolve(resp)
+    )
+  );
 };
 
 export const stopDaemon = (client) => {
   const request = new pb.StopRequest();
-  return new Promise((resolve, reject) => client.stopDaemon(request,
-    (err, resp) => err ? reject(err) : resolve(resp)));
+  return new Promise((resolve, reject) =>
+    client.stopDaemon(request, (err, resp) =>
+      err ? reject(err) : resolve(resp)
+    )
+  );
 };

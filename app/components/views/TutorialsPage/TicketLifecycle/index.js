@@ -13,6 +13,6 @@ export default (props) => (
   <PagedTutorial
     {...props}
     title={<T id="tutorial.ticketLifecycle.title" m="Ticket Lifecycle" />}
-    pages={[ Page1, Page2, Page3, Page4, Page5, Page6 ]}
+    pages={[Page1, Page2, Page3, Page4, Page5, Page6]}
   />
 );

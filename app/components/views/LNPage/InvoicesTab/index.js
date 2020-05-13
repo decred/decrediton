@@ -3,15 +3,20 @@ import { FormattedMessage as T } from "react-intl";
 import { lnPage } from "connectors";
 import Page from "./Page";
 
-export const InvoicesTabHeader = () =>
+export const InvoicesTabHeader = () => (
   <DescriptionHeader
-    description={<T id="ln.description.invoices" m="Invoices (payment requests) created by this LN wallet." />}
-  />;
-
+    description={
+      <T
+        id="ln.description.invoices"
+        m="Invoices (payment requests) created by this LN wallet."
+      />
+    }
+  />
+);
 
 @autobind
 class InvoicesTab extends React.Component {
-  constructor(props)  {
+  constructor(props) {
     super(props);
     this.state = {
       atomValue: 0,
@@ -36,11 +41,18 @@ class InvoicesTab extends React.Component {
   onAddInvoice() {
     const { memo, atomValue } = this.state;
     this.setState({ lastPayRequest: "", lastError: null });
-    this.props.addInvoice(memo, atomValue).then(payReq => {
-      this.setState({ memo: "", value: 0, lastPayRequest: payReq.paymentRequest });
-    }).catch(error => {
-      this.setState({ lastError: error });
-    });
+    this.props
+      .addInvoice(memo, atomValue)
+      .then((payReq) => {
+        this.setState({
+          memo: "",
+          value: 0,
+          lastPayRequest: payReq.paymentRequest
+        });
+      })
+      .catch((error) => {
+        this.setState({ lastError: error });
+      });
   }
 
   render() {

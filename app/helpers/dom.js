@@ -15,9 +15,11 @@ export const isDescendant = (el, target) => {
 // the target of an onMouseUp event is outside a root element.
 export const eventOutsideElement = (el, target) => {
   const doc = ownerDocument(el);
-  return doc.documentElement &&
+  return (
+    doc.documentElement &&
     doc.documentElement.contains(target) &&
-    !isDescendant(el, target);
+    !isDescendant(el, target)
+  );
 };
 
 // eventOutsideComponent returns true if the event that happened at the given

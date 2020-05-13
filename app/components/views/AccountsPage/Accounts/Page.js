@@ -6,14 +6,19 @@ import { Subtitle } from "shared";
 
 const subtitleInfoIcon = () => (
   <div className="account-content-title-buttons-area">
-    <InfoDocModalButton document="BalanceOverviewInfo" modalClassName="info-modal-fields" double draggable/>
+    <InfoDocModalButton
+      document="BalanceOverviewInfo"
+      modalClassName="info-modal-fields"
+      double
+      draggable
+    />
   </div>
 );
 
 const subtitleWalletName = ({ walletName }) => (
   <span>
     <span className="wallet-name">{walletName}</span>
-    <T id="accounts.subtitle" m="Accounts"/>
+    <T id="accounts.subtitle" m="Accounts" />
   </span>
 );
 
@@ -30,22 +35,34 @@ const AccountsList = ({
   hasTickets
 }) => (
   <>
-    { isLoading ? <DecredLoading/> :
+    {isLoading ? (
+      <DecredLoading />
+    ) : (
       <>
-        <Subtitle title={subtitleWalletName({ walletName })} className={"is-row"} children={subtitleInfoIcon()} />
+        <Subtitle
+          title={subtitleWalletName({ walletName })}
+          className={"is-row"}
+          children={subtitleInfoIcon()}
+        />
         <div className="account-content-nest">
-          {accounts.map(account => (
-            <AccountRow {...{
-              hasTickets, account, accountNumDetailsShown, onGetAccountExtendedKey, accountExtendedKey
-            }}
-            key={account.accountName}
-            renameAccount={onRenameAccount}
-            hideAccount={onHideAccount}
-            showAccount={onShowAccount}
+          {accounts.map((account) => (
+            <AccountRow
+              {...{
+                hasTickets,
+                account,
+                accountNumDetailsShown,
+                onGetAccountExtendedKey,
+                accountExtendedKey
+              }}
+              key={account.accountName}
+              renameAccount={onRenameAccount}
+              hideAccount={onHideAccount}
+              showAccount={onShowAccount}
             />
           ))}
         </div>
-      </> }
+      </>
+    )}
   </>
 );
 

@@ -20,7 +20,10 @@ class StakePoolsBody extends React.Component {
   }
 
   getNoAvailableStakepools() {
-    return (this.props.unconfiguredStakePools.length === 0) && (this.props.configuredStakePools.length === 0);
+    return (
+      this.props.unconfiguredStakePools.length === 0 &&
+      this.props.configuredStakePools.length === 0
+    );
   }
 
   getStakepoolListingEnabled() {
@@ -30,7 +33,9 @@ class StakePoolsBody extends React.Component {
   getSelectedUnconfigured() {
     const pool = this.state.selectedUnconfigured;
     return pool
-      ? this.props.unconfiguredStakePools.find(compose(eq(pool.Host), get("Host")))
+      ? this.props.unconfiguredStakePools.find(
+          compose(eq(pool.Host), get("Host"))
+        )
       : null;
   }
 
@@ -49,7 +54,8 @@ class StakePoolsBody extends React.Component {
   onContinueCreation() {
     if (this.state.passPhrase) {
       const { onSetWalletPrivatePassphrase } = this.props;
-      onSetWalletPrivatePassphrase && onSetWalletPrivatePassphrase(this.state.passPhrase);
+      onSetWalletPrivatePassphrase &&
+        onSetWalletPrivatePassphrase(this.state.passPhrase);
     }
     this.props.startWalletServices();
   }
@@ -81,9 +87,18 @@ class StakePoolsBody extends React.Component {
     if (this.getNoAvailableStakepools() && !this.getStakepoolListingEnabled()) {
       return (
         <div>
-          <p><T id="stake.enableStakePoolListing.description" m="VSP listing from external API endpoint is currently disabled. Please enable the access to this third party service or manually configure the VSP." /></p>
-          <EnableExternalRequestButton requestType={EXTERNALREQUEST_STAKEPOOL_LISTING}>
-            <T id="stake.enableStakePoolListing.button" m="Enable VSP Listing" />
+          <p>
+            <T
+              id="stake.enableStakePoolListing.description"
+              m="VSP listing from external API endpoint is currently disabled. Please enable the access to this third party service or manually configure the VSP."
+            />
+          </p>
+          <EnableExternalRequestButton
+            requestType={EXTERNALREQUEST_STAKEPOOL_LISTING}>
+            <T
+              id="stake.enableStakePoolListing.button"
+              m="Enable VSP Listing"
+            />
           </EnableExternalRequestButton>
         </div>
       );
@@ -95,14 +110,17 @@ class StakePoolsBody extends React.Component {
           ...this.props,
           ...this.state,
           selectedUnconfigured: this.getSelectedUnconfigured(),
-          ...substruct({
-            onChangeApiKey: null,
-            onSaveStakePool: null,
-            onSetStakePoolInfo: null,
-            onChangeSelectedUnconfigured: null,
-            onChangePassPhrase: null,
-            onContinueCreation: null
-          }, this)
+          ...substruct(
+            {
+              onChangeApiKey: null,
+              onSaveStakePool: null,
+              onSetStakePoolInfo: null,
+              onChangeSelectedUnconfigured: null,
+              onChangePassPhrase: null,
+              onContinueCreation: null
+            },
+            this
+          )
         }}
       />
     );

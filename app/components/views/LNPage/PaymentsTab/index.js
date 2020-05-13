@@ -4,14 +4,17 @@ import { lnPage } from "connectors";
 import Page from "./Page";
 import ReactTimeout from "react-timeout";
 
-export const PaymentsTabHeader = () =>
+export const PaymentsTabHeader = () => (
   <DescriptionHeader
-    description={<T id="ln.description.payments" m="Payments sent from this LN wallet." />}
-  />;
+    description={
+      <T id="ln.description.payments" m="Payments sent from this LN wallet." />
+    }
+  />
+);
 
 @autobind
 class PaymentsTab extends React.Component {
-  constructor(props)  {
+  constructor(props) {
     super(props);
     this.state = {
       sendValueAtom: 0,
@@ -27,8 +30,9 @@ class PaymentsTab extends React.Component {
     const { decodedPayRequest } = this.state;
     if (!decodedPayRequest) return;
 
-
-    const timeToExpire = (decodedPayRequest.timestamp + decodedPayRequest.expiry) * 1000 - Date.now();
+    const timeToExpire =
+      (decodedPayRequest.timestamp + decodedPayRequest.expiry) * 1000 -
+      Date.now();
     if (timeToExpire < 0) {
       this.setState({ expired: true });
     }
@@ -40,21 +44,31 @@ class PaymentsTab extends React.Component {
       this.setState({ decodingError: null, decodedPayRequest: null });
       return;
     }
-    this.props.decodePayRequest(this.state.payRequest).then(resp => {
-      const timeToExpire = (resp.timestamp + resp.expiry) * 1000 - Date.now();
-      const expired = timeToExpire < 0;
-      if (!expired) {
-        this.props.setTimeout(this.checkExpired, timeToExpire + 1000);
-      }
-      this.setState({ decodedPayRequest: resp, decodingError: null, expired });
-    }).catch(error => {
-      this.setState({ decodedPayRequest: null, decodingError: error });
-    });
+    this.props
+      .decodePayRequest(this.state.payRequest)
+      .then((resp) => {
+        const timeToExpire = (resp.timestamp + resp.expiry) * 1000 - Date.now();
+        const expired = timeToExpire < 0;
+        if (!expired) {
+          this.props.setTimeout(this.checkExpired, timeToExpire + 1000);
+        }
+        this.setState({
+          decodedPayRequest: resp,
+          decodingError: null,
+          expired
+        });
+      })
+      .catch((error) => {
+        this.setState({ decodedPayRequest: null, decodingError: error });
+      });
   }
 
   onPayRequestChanged(e) {
-    this.setState({ payRequest: (""+e.target.value).trim(), decodedPayRequest: null,
-      expired: false });
+    this.setState({
+      payRequest: ("" + e.target.value).trim(),
+      decodedPayRequest: null,
+      expired: false
+    });
     if (this.lastDecodeTimer) {
       this.props.clearTimeout(this.lastDecodeTimer);
     }
@@ -72,18 +86,31 @@ class PaymentsTab extends React.Component {
 
     const { payRequest, sendValueAtom } = this.state;
     this.setState({ sending: true });
-    this.props.sendPayment(payRequest, sendValueAtom).then(() => {
-      this.setState({ sending: false, payRequest: "",
-        decodedPayRequest: null, sendValue: 0 });
-    }).catch(() => {
-      this.setState({ sending: false });
-    });
+    this.props
+      .sendPayment(payRequest, sendValueAtom)
+      .then(() => {
+        this.setState({
+          sending: false,
+          payRequest: "",
+          decodedPayRequest: null,
+          sendValue: 0
+        });
+      })
+      .catch(() => {
+        this.setState({ sending: false });
+      });
   }
 
   render() {
     const { payments, tsDate } = this.props;
-    const { payRequest, decodedPayRequest, decodingError,
-      expired, sending, sendValueAtom } = this.state;
+    const {
+      payRequest,
+      decodedPayRequest,
+      decodingError,
+      expired,
+      sending,
+      sendValueAtom
+    } = this.state;
     const { onPayRequestChanged, onSendPayment, onSendValueChanged } = this;
 
     return (

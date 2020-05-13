@@ -18,18 +18,22 @@ const mapStateToProps = selectorMap({
   isTrezor: sel.isTrezor
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  backToCredentials: da.backToCredentials,
-  cancelCreateWallet: wla.cancelCreateWallet,
-  createWalletRequest: wla.createWalletRequest,
-  copySeedToClipboard: ca.copySeedToClipboard,
-  createWatchOnlyWalletRequest: wla.createWatchOnlyWalletRequest,
-  generateSeed: wla.generateSeed,
-  decodeSeed: wla.decodeSeed,
-  trezorEnable: trza.enableTrezor,
-  trezorDisable: trza.disableTrezor,
-  trezorAlertNoConnectedDevice: trza.alertNoConnectedDevice,
-  trezorGetWalletCreationMasterPubKey: trza.getWalletCreationMasterPubKey
-}, dispatch);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      backToCredentials: da.backToCredentials,
+      cancelCreateWallet: wla.cancelCreateWallet,
+      createWalletRequest: wla.createWalletRequest,
+      copySeedToClipboard: ca.copySeedToClipboard,
+      createWatchOnlyWalletRequest: wla.createWatchOnlyWalletRequest,
+      generateSeed: wla.generateSeed,
+      decodeSeed: wla.decodeSeed,
+      trezorEnable: trza.enableTrezor,
+      trezorDisable: trza.disableTrezor,
+      trezorAlertNoConnectedDevice: trza.alertNoConnectedDevice,
+      trezorGetWalletCreationMasterPubKey: trza.getWalletCreationMasterPubKey
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps);

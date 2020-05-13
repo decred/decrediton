@@ -10,10 +10,14 @@ const mapStateToProps = selectorMap({
   isAdvancedDaemon: sel.isAdvancedDaemon
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  shutdownApp: da.shutdownApp,
-  deleteDaemonData: da.deleteDaemonData,
-  backToCredentials: da.backToCredentials
-}, dispatch);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      shutdownApp: da.shutdownApp,
+      deleteDaemonData: da.deleteDaemonData,
+      backToCredentials: da.backToCredentials
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps);

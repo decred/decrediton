@@ -12,9 +12,8 @@ const messages = defineMessages({
 
 @autobind
 class AccountsSelect extends React.Component {
-
   static propTypes = {
-    accountsType: PropTypes.oneOf([ "spending", "visible" ]),
+    accountsType: PropTypes.oneOf(["spending", "visible"]),
     className: PropTypes.string,
     showAccountsButton: PropTypes.bool,
     getAddressForSelected: PropTypes.bool
@@ -35,12 +34,16 @@ class AccountsSelect extends React.Component {
       newState = { account: this.props.account };
     }
 
-    if ((prevProps.spendingAccounts !== this.props.spendingAccounts) ||
-        (prevProps.visibleAccounts !== this.props.visibleAccounts) ||
-        (prevProps.accountsType !== this.props.accountsType)) {
+    if (
+      prevProps.spendingAccounts !== this.props.spendingAccounts ||
+      prevProps.visibleAccounts !== this.props.visibleAccounts ||
+      prevProps.accountsType !== this.props.accountsType
+    ) {
       newState = { accounts: this.getAccountsToShow(this.props), ...newState };
       if (this.props.account && !newState.account) {
-        const newAccount = newState.accounts.find(a => a.value === this.props.account.value);
+        const newAccount = newState.accounts.find(
+          (a) => a.value === this.props.account.value
+        );
         newState = { account: newAccount, ...newState };
       }
     }
@@ -51,11 +54,11 @@ class AccountsSelect extends React.Component {
   }
 
   getAccountsToShow(nextProps) {
-    let accountsPerType = {
-      "spending": nextProps.spendingAccounts,
-      "visible": nextProps.visibleAccounts
+    const accountsPerType = {
+      spending: nextProps.spendingAccounts,
+      visible: nextProps.visibleAccounts
     };
-    return accountsPerType[this.props.accountsType||"spending"];
+    return accountsPerType[this.props.accountsType || "spending"];
   }
 
   render() {
@@ -66,7 +69,7 @@ class AccountsSelect extends React.Component {
         <Select
           disabled={disabled}
           clearable={false}
-          style={{ zIndex:"9" }}
+          style={{ zIndex: "9" }}
           placeholder={formatMessage(messages.placeholder)}
           multi={false}
           value={this.state.account}
@@ -79,7 +82,7 @@ class AccountsSelect extends React.Component {
           className="accounts-select"
           onInputKeyDown={this.selectKeyDown}
         />
-        { showAccountsButton && <LinkToAccounts /> }
+        {showAccountsButton && <LinkToAccounts />}
       </div>
     );
   }
@@ -87,11 +90,11 @@ class AccountsSelect extends React.Component {
   selectKeyDown(e) {
     const { onKeyDown } = this.props;
 
-    switch(e.keyCode) {
-    case 8:
-    case 46:
-      e.preventDefault();
-      break;
+    switch (e.keyCode) {
+      case 8:
+      case 46:
+        e.preventDefault();
+        break;
     }
     onKeyDown && this.props.onKeyDown(e);
   }
@@ -101,11 +104,11 @@ class AccountsSelect extends React.Component {
     return (
       <div className="accounts-select-value">
         <div className="accounts-select-name">{option.name}</div>
-        {!this.props.hideSpendable &&
+        {!this.props.hideSpendable && (
           <div className="accounts-select-spendable">
             <Balance flat amount={option.spendable} />
           </div>
-        }
+        )}
       </div>
     );
   }

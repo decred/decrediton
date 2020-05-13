@@ -2,12 +2,13 @@ import LanguageSelectPage from "./Page";
 import { daemonStartup } from "connectors";
 
 @autobind
-class LanguageSelect extends React.Component{
+class LanguageSelect extends React.Component {
   constructor(props) {
     super(props);
     const { availableLanguages, defaultLocale } = this.props;
     this.state = {
-      selectedLang: availableLanguages.find(v => v.language === defaultLocale) ||
+      selectedLang:
+        availableLanguages.find((v) => v.language === defaultLocale) ||
         availableLanguages[0]
     };
   }
@@ -24,8 +25,9 @@ class LanguageSelect extends React.Component{
           onChangeSelectedLang,
           onSelectLang,
           isTestNet
-        }
-        }/>);
+        }}
+      />
+    );
   }
   onChangeSelectedLang(newLang) {
     this.setState({ selectedLang: newLang });

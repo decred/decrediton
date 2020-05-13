@@ -2,7 +2,12 @@ import * as wallet from "wallet";
 import * as sel from "selectors";
 import fs from "fs";
 import { isNumber, isNullOrUndefined, isUndefined } from "util";
-import { endOfDay, reverseRawHash, formatLocalISODate, isSameDate } from "helpers";
+import {
+  endOfDay,
+  reverseRawHash,
+  formatLocalISODate,
+  isSameDate
+} from "helpers";
 
 const VALUE_TYPE_ATOMAMOUNT = "VALUE_TYPE_ATOMAMOUNT";
 const VALUE_TYPE_DATETIME = "VALUE_TYPE_DATETIME";
@@ -13,7 +18,6 @@ export const GETSTARTUPSTATS_FAILED = "GETSTARTUPSTATS_FAILED";
 
 // Calculates all startup statistics
 export const getStartupStats = () => (dispatch, getState) => {
-
   if (getState().statistics.getStartupStatsAttempt) {
     return;
   }
@@ -22,11 +26,12 @@ export const getStartupStats = () => (dispatch, getState) => {
 
   const startCalcTime = new Date();
   const endDate = new Date();
-  endDate.setDate(endDate.getDate()-16);
+  endDate.setDate(endDate.getDate() - 16);
 
-  return dispatch(generateStat({ calcFunction: dailyBalancesStats, backwards: true, endDate }))
-    .then( dailyBalances => {
-
+  return dispatch(
+    generateStat({ calcFunction: dailyBalancesStats, backwards: true, endDate })
+  )
+    .then((dailyBalances) => {
       // the `dailyBalances` returns only days when there was a change in
       // some of the balances, so we need to fill the gaps of days without
       // changes with the previous balance, taking care to set sent/received
@@ -35,32 +40,60 @@ export const getStartupStats = () => (dispatch, getState) => {
       const lastBalances = [];
 
       const date = endOfDay(new Date());
-      date.setDate(date.getDate()-14);
+      date.setDate(date.getDate() - 14);
 
       let idx = 0;
       for (let i = 0; i < 15; i++) {
-        while (idx < dailyBalances.length-1 && dailyBalances[idx+1].time <= date) idx++;
+        while (
+          idx < dailyBalances.length - 1 &&
+          dailyBalances[idx + 1].time <= date
+        )
+          idx++;
         if (dailyBalances[idx].time.getTime() === date.getTime()) {
           lastBalances.push(dailyBalances[idx]);
         } else if (dailyBalances[idx].time.getTime() > date.getTime()) {
           // newish wallet without balance
-          lastBalances.push({ series: { locked: 0, lockedNonWallet: 0, available: 0,
-            total: 0, sent: 0, received: 0, voted: 0, revoked: 0, ticket: 0 },
-          time: new Date(date) });
+          lastBalances.push({
+            series: {
+              locked: 0,
+              lockedNonWallet: 0,
+              available: 0,
+              total: 0,
+              sent: 0,
+              received: 0,
+              voted: 0,
+              revoked: 0,
+              ticket: 0
+            },
+            time: new Date(date)
+          });
         } else {
-          lastBalances.push({ series: { ...dailyBalances[idx].series, sent: 0,
-            received: 0, voted: 0, revoked: 0, ticket: 0 },
-          time: new Date(date) });
+          lastBalances.push({
+            series: {
+              ...dailyBalances[idx].series,
+              sent: 0,
+              received: 0,
+              voted: 0,
+              revoked: 0,
+              ticket: 0
+            },
+            time: new Date(date)
+          });
         }
-        date.setDate(date.getDate()+1);
+        date.setDate(date.getDate() + 1);
       }
 
       const endCalcTime = new Date();
-      const startupStatsCalcSeconds = (endCalcTime.getTime() - startCalcTime.getTime()) / 1000;
-      dispatch({ dailyBalances: lastBalances, startupStatsCalcSeconds,
-        startupStatsEndCalcTime: endCalcTime, type: GETSTARTUPSTATS_SUCCESS });
+      const startupStatsCalcSeconds =
+        (endCalcTime.getTime() - startCalcTime.getTime()) / 1000;
+      dispatch({
+        dailyBalances: lastBalances,
+        startupStatsCalcSeconds,
+        startupStatsEndCalcTime: endCalcTime,
+        type: GETSTARTUPSTATS_SUCCESS
+      });
     })
-    .catch(error => {
+    .catch((error) => {
       console.error("getStartupStats errored", error);
       dispatch({ error, type: GETSTARTUPSTATS_FAILED });
     });
@@ -75,17 +108,17 @@ export const getTicketsHeatmapStats = () => (dispatch) => {
 
   const numberOfDays = 181;
   const endDate = new Date();
-  endDate.setDate(endDate.getDate()-numberOfDays);
+  endDate.setDate(endDate.getDate() - numberOfDays);
 
   return dispatch(getHeatmapStats({ endDate, backwards: true }))
-    .then( dailyTicketsCounter => {
+    .then((dailyTicketsCounter) => {
       // the `dailyTicketsCounter` returns only days when there was a change in
       // some of the tickets, so we need to fill the gaps of days without
       // changes
       const resp = [];
 
       const date = endOfDay(new Date());
-      date.setDate(date.getDate()-numberOfDays);
+      date.setDate(date.getDate() - numberOfDays);
       for (let i = 0; i <= numberOfDays; i++) {
         const endOfDayDate = endOfDay(date);
         const dailyTicketCounter = dailyTicketsCounter[endOfDayDate];
@@ -97,101 +130,152 @@ export const getTicketsHeatmapStats = () => (dispatch) => {
         } else {
           resp.push({ date: endOfDayDate, count: 0 });
         }
-        date.setDate(endOfDayDate.getDate()+1);
+        date.setDate(endOfDayDate.getDate() + 1);
       }
-      dispatch({ ticketDataHeatmap: resp, type: GETTICKETSHEATMAPSTATS_SUCCESS });
+      dispatch({
+        ticketDataHeatmap: resp,
+        type: GETTICKETSHEATMAPSTATS_SUCCESS
+      });
     })
-    .catch(error => {
+    .catch((error) => {
       console.error("getTicketsHeatmapStats errored", error);
       dispatch({ error, type: GETTICKETSHEATMAPSTATS_FAILED });
     });
 };
 
-export const getHeatmapStats = (opts) => (dispatch, getState) => new Promise((resolve, reject) => {
-  const countTickets = async () => {
-    const { endDate, backwards } = opts;
-    const { currentBlockHeight, walletService } = getState().grpc;
-    const chainParams = sel.chainParams(getState());
-    let liveTickets = {}; // live by hash
-    let maturingTxs = {}; // maturing by height
-    const tsDate = sel.tsDate(getState());
-    const pageSize = 200;
-    const maxMaturity = Math.max(chainParams.CoinbaseMaturity, chainParams.TicketMaturity);
-    const currentDate = new Date();
-    let toProcess = [];
+export const getHeatmapStats = (opts) => (dispatch, getState) =>
+  new Promise((resolve, reject) => {
+    const countTickets = async () => {
+      const { endDate, backwards } = opts;
+      const { currentBlockHeight, walletService } = getState().grpc;
+      const chainParams = sel.chainParams(getState());
+      const liveTickets = {}; // live by hash
+      const maturingTxs = {}; // maturing by height
+      const tsDate = sel.tsDate(getState());
+      const pageSize = 200;
+      const maxMaturity = Math.max(
+        chainParams.CoinbaseMaturity,
+        chainParams.TicketMaturity
+      );
+      const currentDate = new Date();
+      let toProcess = [];
 
-    try {
-      const data = { maxMaturity, currentBlockHeight, pageSize, tsDate, backwards, walletService };
-      toProcess = await prepDataToCalcStats(currentBlockHeight, 1, currentDate, endDate, -1, data);
-      // when calculating backwards, we need to account for unmined txs, because
-      // the account balances for locked tickets include them. To simplify the
-      // logic, we modify the unmined transactions to simulate as if it had been
-      // just mined in the last block.
-      const { unmined } = await wallet.getTransactions(walletService, -1, -1, 0);
-      const fixedUnmined = unmined.map(tx => ({ ...tx, timestamp: currentDate.getTime(),
-        height: currentBlockHeight }));
-      toProcess.unshift(...fixedUnmined);
+      try {
+        const data = {
+          maxMaturity,
+          currentBlockHeight,
+          pageSize,
+          tsDate,
+          backwards,
+          walletService
+        };
+        toProcess = await prepDataToCalcStats(
+          currentBlockHeight,
+          1,
+          currentDate,
+          endDate,
+          -1,
+          data
+        );
+        // when calculating backwards, we need to account for unmined txs, because
+        // the account balances for locked tickets include them. To simplify the
+        // logic, we modify the unmined transactions to simulate as if it had been
+        // just mined in the last block.
+        const { unmined } = await wallet.getTransactions(
+          walletService,
+          -1,
+          -1,
+          0
+        );
+        const fixedUnmined = unmined.map((tx) => ({
+          ...tx,
+          timestamp: currentDate.getTime(),
+          height: currentBlockHeight
+        }));
+        toProcess.unshift(...fixedUnmined);
 
-      // on backwards stats, we find vote txs before finding ticket txs, so
-      // pre-process tickets from all grabbed txs to avoid making the separate
-      // getTransaction calls in voteRevokeInfo()
-      toProcess.forEach(tx => {
-        if (tx.txType === wallet.TRANSACTION_TYPE_TICKET_PURCHASE) {
-          var { isWallet, commitAmount } = ticketInfo(tx);
-          recordTicket(maturingTxs, liveTickets, tx, commitAmount, isWallet, chainParams);
-        }
-      });
+        // on backwards stats, we find vote txs before finding ticket txs, so
+        // pre-process tickets from all grabbed txs to avoid making the separate
+        // getTransaction calls in voteRevokeInfo()
+        toProcess.forEach((tx) => {
+          if (tx.txType === wallet.TRANSACTION_TYPE_TICKET_PURCHASE) {
+            const { isWallet, commitAmount } = ticketInfo(tx);
+            recordTicket(
+              maturingTxs,
+              liveTickets,
+              tx,
+              commitAmount,
+              isWallet,
+              chainParams
+            );
+          }
+        });
 
-      const ticketsCounter = await countTicketsBackwards({ mined: toProcess, maturingTxs, liveTickets, tsDate, chainParams });
+        const ticketsCounter = await countTicketsBackwards({
+          mined: toProcess,
+          maturingTxs,
+          liveTickets,
+          tsDate,
+          chainParams
+        });
 
-      resolve(ticketsCounter);
-    } catch (err) {
-      reject(err);
-    }
-  };
-  return countTickets();
-});
+        resolve(ticketsCounter);
+      } catch (err) {
+        reject(err);
+      }
+    };
+    return countTickets();
+  });
 
 const countTicketsBackwards = ({ mined, chainParams, tsDate }) => {
-  let now = new Date();
+  const now = new Date();
   let lastTxTimestamp = now.getTime() / 1000;
   let lastDate = tsDate(lastTxTimestamp);
   const values = {};
 
-  let ticketsCounter = { live: 0, maturing: 0, vote: 0, revoke: 0 };
+  const ticketsCounter = { live: 0, maturing: 0, vote: 0, revoke: 0 };
 
   for (let i = 0; i < mined.length; i++) {
     const tx = mined[i];
     const lastTxDate = endOfDay(tsDate(tx.timestamp));
     // Checks if passed the day. Add the data to values and clean the ticketscounter
     if (lastTxDate.getTime() !== lastDate.getTime()) {
-      values[lastDate] ?
-        Object.keys(ticketsCounter).forEach( k => values[lastDate][k] += ticketsCounter[k]) :
-        values[lastDate] = Object.assign({}, ticketsCounter);
-      Object.keys(ticketsCounter).forEach( k => ticketsCounter[k] = 0 );
+      values[lastDate]
+        ? Object.keys(ticketsCounter).forEach(
+            (k) => (values[lastDate][k] += ticketsCounter[k])
+          )
+        : (values[lastDate] = Object.assign({}, ticketsCounter));
+      Object.keys(ticketsCounter).forEach((k) => (ticketsCounter[k] = 0));
       lastDate = lastTxDate;
     }
 
-    const tsWillMature = tx.timestamp + chainParams.TicketMaturity * chainParams.TargetTimePerBlock;
+    const tsWillMature =
+      tx.timestamp +
+      chainParams.TicketMaturity * chainParams.TargetTimePerBlock;
     const tsWillMatureDate = endOfDay(tsDate(tsWillMature));
 
     switch (tx.txType) {
-    case wallet.TRANSACTION_TYPE_TICKET_PURCHASE:
-      ticketsCounter.maturing++;
-      values[tsWillMatureDate] = values[tsWillMatureDate] ?
-        { ...values[tsWillMatureDate], live: values[tsWillMatureDate].live + 1 } : { live: 1, maturing: 0, vote: 0, revoke: 0 };
-      break;
-    case wallet.TRANSACTION_TYPE_VOTE:
-      ticketsCounter.vote++;
-      break;
-    case wallet.TRANSACTION_TYPE_REVOCATION:
-      ticketsCounter.revoke++;
-      break;
-    case wallet.TRANSACTION_TYPE_COINBASE:
-      break;
-    case wallet.TRANSACTION_TYPE_REGULAR:
-      break;
-    default: throw "Unknown tx type: " + tx.txType;
+      case wallet.TRANSACTION_TYPE_TICKET_PURCHASE:
+        ticketsCounter.maturing++;
+        values[tsWillMatureDate] = values[tsWillMatureDate]
+          ? {
+              ...values[tsWillMatureDate],
+              live: values[tsWillMatureDate].live + 1
+            }
+          : { live: 1, maturing: 0, vote: 0, revoke: 0 };
+        break;
+      case wallet.TRANSACTION_TYPE_VOTE:
+        ticketsCounter.vote++;
+        break;
+      case wallet.TRANSACTION_TYPE_REVOCATION:
+        ticketsCounter.revoke++;
+        break;
+      case wallet.TRANSACTION_TYPE_COINBASE:
+        break;
+      case wallet.TRANSACTION_TYPE_REGULAR:
+        break;
+      default:
+        throw "Unknown tx type: " + tx.txType;
     }
 
     lastTxTimestamp = tx.timestamp;
@@ -211,11 +295,11 @@ export const getMyTicketsStats = () => (dispatch) => {
   ];
 
   dispatch({ type: GETMYTICKETSSTATS_ATTEMPT });
-  return Promise.all(startupStats.map(s => dispatch(generateStat(s))))
-    .then(([ voteTime, dailyBalances ]) => {
+  return Promise.all(startupStats.map((s) => dispatch(generateStat(s))))
+    .then(([voteTime, dailyBalances]) => {
       dispatch({ voteTime, dailyBalances, type: GETMYTICKETSSTATS_SUCCESS });
     })
-    .catch(error => {
+    .catch((error) => {
       console.error("getMyTicketsStats errored", error);
       dispatch({ error, type: GETMYTICKETSSTATS_FAILED });
     });
@@ -224,20 +308,28 @@ export const getMyTicketsStats = () => (dispatch) => {
 // generateStat starts generating the statistic as defined on the opts. It
 // returns a promise that gets resolved with all the data in-memory after the
 // stat has been completely calculated.
-export const generateStat = (opts) => (dispatch) => new Promise((resolve, reject) => {
+export const generateStat = (opts) => (dispatch) =>
+  new Promise((resolve, reject) => {
+    const { calcFunction } = opts;
 
-  const { calcFunction } = opts;
+    const stat = { series: null, data: [] };
+    const startFunction = ({ series }) => (stat.series = series);
+    const endFunction = () => resolve(stat);
+    const errorFunction = (error) => reject(error);
+    const progressFunction = (time, series) => {
+      stat.data.push({ time, series });
+    };
 
-  const stat = { series: null, data: [] };
-  const startFunction = ({ series }) => stat.series = series;
-  const endFunction = () => resolve(stat);
-  const errorFunction = error => reject(error);
-  const progressFunction = (time, series) => {
-    stat.data.push({ time, series });
-  };
-
-  dispatch(calcFunction({ ...opts, startFunction, progressFunction, endFunction, errorFunction }));
-});
+    dispatch(
+      calcFunction({
+        ...opts,
+        startFunction,
+        progressFunction,
+        endFunction,
+        errorFunction
+      })
+    );
+  });
 
 export const EXPORT_STARTED = "EXPORT_STARTED";
 export const EXPORT_COMPLETED = "EXPORT_COMPLETED";
@@ -246,40 +338,44 @@ export const EXPORT_ERROR = "EXPORT_ERROR";
 export const exportStatToCSV = (opts) => (dispatch, getState) => {
   const { calcFunction, csvFilename } = opts;
 
-  var fd;
-  var allSeries;
-  var seriesOpts;
+  let fd;
+  let allSeries;
+  let seriesOpts;
 
   // constants (may be overridden/parametrized in the future)
   const unitDivisor = sel.unitDivisor(getState());
   const timezone = sel.timezone(getState());
   const vsep = ","; // value separator
-  const ln = "\n";  // line separator
+  const ln = "\n"; // line separator
   const precision = Math.ceil(Math.log10(unitDivisor)); // maximum decimal precision
 
   // formatting functions
-  const quote = (v) => "\"" + v.replace("\"", "\\\"") + "\"";
-  const formatTime = v => v ? formatLocalISODate(v, timezone) : "";
-  const csvValue = (v) => isNullOrUndefined(v) ? "" : isNumber(v) ? v.toFixed(precision) : quote(v);
+  const quote = (v) => '"' + v.replace('"', '\\"') + '"';
+  const formatTime = (v) => (v ? formatLocalISODate(v, timezone) : "");
+  const csvValue = (v) =>
+    isNullOrUndefined(v) ? "" : isNumber(v) ? v.toFixed(precision) : quote(v);
   const csvLine = (values) => values.map(csvValue).join(vsep);
 
   const seriesValueFormatFunc = (series) => {
     if (series["type"] === VALUE_TYPE_ATOMAMOUNT) {
-      return v => v / unitDivisor;
+      return (v) => v / unitDivisor;
     } else if (series["type"] === VALUE_TYPE_DATETIME) {
       return formatTime;
     } else {
-      return v => v;
+      return (v) => v;
     }
   };
 
   // called once at the start of the stats calc function
   const startFunction = (opts) => {
     dispatch({ type: EXPORT_STARTED });
-    allSeries = opts.series.map(s => ({ ...s, valueFormatFunc: seriesValueFormatFunc(s) }));
+    allSeries = opts.series.map((s) => ({
+      ...s,
+      valueFormatFunc: seriesValueFormatFunc(s)
+    }));
     seriesOpts = opts;
-    const seriesNames = allSeries.map(s => s.name);
-    const headerLine = csvLine([ "time", ...seriesNames ]);
+    const seriesNames = allSeries.map((s) => s.name);
+    const headerLine = csvLine(["time", ...seriesNames]);
 
     fd = fs.openSync(csvFilename, "w", 0o600);
     fs.writeSync(fd, headerLine);
@@ -288,9 +384,9 @@ export const exportStatToCSV = (opts) => (dispatch, getState) => {
 
   // called once for each data line
   const progressFunction = (time, series) => {
-    const values = allSeries.map(s => !isUndefined(series[s.name])
-      ? s.valueFormatFunc(series[s.name])
-      : null);
+    const values = allSeries.map((s) =>
+      !isUndefined(series[s.name]) ? s.valueFormatFunc(series[s.name]) : null
+    );
 
     !seriesOpts.noTimestamp && values.unshift(formatTime(time));
     const line = csvLine(values);
@@ -314,7 +410,15 @@ export const exportStatToCSV = (opts) => (dispatch, getState) => {
       fd = null;
     }
   };
-  dispatch(calcFunction({ opts, startFunction, progressFunction, endFunction, errorFunction }));
+  dispatch(
+    calcFunction({
+      opts,
+      startFunction,
+      progressFunction,
+      endFunction,
+      errorFunction
+    })
+  );
 };
 
 export const transactionStats = (opts) => (dispatch, getState) => {
@@ -342,15 +446,18 @@ export const transactionStats = (opts) => (dispatch, getState) => {
       fee: tx.fee,
       amount: tx.amount,
       credits: tx.tx.getCreditsList().reduce((s, c) => s + c.getAmount(), 0),
-      debits: tx.tx.getDebitsList().reduce((s, d) => s + d.getPreviousAmount(), 0)
+      debits: tx.tx
+        .getDebitsList()
+        .reduce((s, d) => s + d.getPreviousAmount(), 0)
     };
   };
   const tsDate = sel.tsDate(getState());
   const txDataCb = (mined) => {
-    mined.forEach(tx => progressFunction(tsDate(tx.timestamp), formatTx(tx)));
+    mined.forEach((tx) => progressFunction(tsDate(tx.timestamp), formatTx(tx)));
   };
 
-  wallet.streamGetTransactions(walletService, 0, currentBlockHeight, 0, txDataCb)
+  wallet
+    .streamGetTransactions(walletService, 0, currentBlockHeight, 0, txDataCb)
     .then(endFunction)
     .catch(errorFunction);
 };
@@ -369,20 +476,27 @@ const recordTicket = (maturingTxs, liveTickets, tx, commitAmount, isWallet) => {
 };
 
 const recordVoteRevoke = (maturingTxs, tx, amount, isWallet, chainParams) => {
-  let matureHeight = tx.height + chainParams.CoinbaseMaturity;
+  const matureHeight = tx.height + chainParams.CoinbaseMaturity;
   maturingTxs[matureHeight] = maturingTxs[matureHeight] || [];
   maturingTxs[matureHeight].push({ tx, amount, isWallet, isTicket: false });
 };
 
-const findTimestampByBlockHeight = (fromHeight, toHeight, fromTimestamp, toTimestamp, heightDelta, chainParams) => {
+const findTimestampByBlockHeight = (
+  fromHeight,
+  toHeight,
+  fromTimestamp,
+  toTimestamp,
+  heightDelta,
+  chainParams
+) => {
   // largeStakeTimeDiff === true when the time+height difference to calculate
   // the maturity is so large that it's better to estimate the maturity time
   // using chainParams.TargetTimePerBlock instead of linearly interpolating
   // the time between fromTimestamp...toTimestamp
   const largeStakeTimeDiff =
-    ((toHeight - fromHeight) > chainParams.TicketMaturity) &&
-    (toTimestamp - fromTimestamp) >
-    (toHeight - fromHeight) * chainParams.TargetTimePerBlock;
+    toHeight - fromHeight > chainParams.TicketMaturity &&
+    toTimestamp - fromTimestamp >
+      (toHeight - fromHeight) * chainParams.TargetTimePerBlock;
   const blockInterval = (toTimestamp - fromTimestamp) / (toHeight - fromHeight);
   let timestamp;
   if (fromHeight === toHeight) {
@@ -401,7 +515,7 @@ const findTimestampByBlockHeight = (fromHeight, toHeight, fromTimestamp, toTimes
     // estimate the maturation timestamp by linearly interpolating the
     // times as if the blocks between fromHeight...toHeight were mined in
     // regular intervals
-    timestamp = fromTimestamp + (heightDelta * blockInterval);
+    timestamp = fromTimestamp + heightDelta * blockInterval;
   }
 
   return timestamp;
@@ -409,28 +523,56 @@ const findTimestampByBlockHeight = (fromHeight, toHeight, fromTimestamp, toTimes
 
 // return the balance deltas from recorded tickets/votes/revokes that matured
 // in the interval fromHeight..toHeight
-const findMaturingDeltas = (maturingTxs, fromHeight, toHeight, fromTimestamp, toTimestamp, chainParams, backwards) => {
-  let start = backwards ? toHeight : fromHeight;
-  let end = backwards ? fromHeight : toHeight;
-  let inc = backwards ? -1 : +1;
-  let test = h => backwards ? h >= end : h <= end;
+const findMaturingDeltas = (
+  maturingTxs,
+  fromHeight,
+  toHeight,
+  fromTimestamp,
+  toTimestamp,
+  chainParams,
+  backwards
+) => {
+  const start = backwards ? toHeight : fromHeight;
+  const end = backwards ? fromHeight : toHeight;
+  const inc = backwards ? -1 : +1;
+  const test = (h) => (backwards ? h >= end : h <= end);
 
   const res = [];
   for (let h = start; test(h); h += inc) {
     if (!maturingTxs[h]) continue;
-    const timestamp = findTimestampByBlockHeight(fromHeight, toHeight, fromTimestamp, toTimestamp, h-fromHeight, chainParams);
+    const timestamp = findTimestampByBlockHeight(
+      fromHeight,
+      toHeight,
+      fromTimestamp,
+      toTimestamp,
+      h - fromHeight,
+      chainParams
+    );
 
     const maturedThisHeight = {
-      spendable: 0, immature: 0, immatureNonWallet: 0, locked: 0, ticket: 0,
-      lockedNonWallet: 0, voted: 0, revoked: 0, sent: 0, received: 0,
-      stakeRewards: 0, stakeFees: 0, totalStake: 0, timestamp, tx: null
+      spendable: 0,
+      immature: 0,
+      immatureNonWallet: 0,
+      locked: 0,
+      ticket: 0,
+      lockedNonWallet: 0,
+      voted: 0,
+      revoked: 0,
+      sent: 0,
+      received: 0,
+      stakeRewards: 0,
+      stakeFees: 0,
+      totalStake: 0,
+      timestamp,
+      tx: null
     };
     maturingTxs[h].forEach(({ tx, amount, isWallet, isTicket }) => {
-      maturedThisHeight.spendable += !isTicket ? amount*inc : 0; // isTicket == false means vote, revoke, coinbase
-      maturedThisHeight.immature += isWallet ? -amount*inc : 0;
-      maturedThisHeight.immatureNonWallet +=  isWallet ? 0 : -amount*inc;
-      maturedThisHeight.locked += isWallet && isTicket ? amount*inc : 0;
-      maturedThisHeight.lockedNonWallet += !isWallet && isTicket ? amount*inc : 0;
+      maturedThisHeight.spendable += !isTicket ? amount * inc : 0; // isTicket == false means vote, revoke, coinbase
+      maturedThisHeight.immature += isWallet ? -amount * inc : 0;
+      maturedThisHeight.immatureNonWallet += isWallet ? 0 : -amount * inc;
+      maturedThisHeight.locked += isWallet && isTicket ? amount * inc : 0;
+      maturedThisHeight.lockedNonWallet +=
+        !isWallet && isTicket ? amount * inc : 0;
       maturedThisHeight.tx = tx;
     });
 
@@ -441,29 +583,35 @@ const findMaturingDeltas = (maturingTxs, fromHeight, toHeight, fromTimestamp, to
 
 // closure that calcs ticket info necessary to correctly account for its delta
 // to balances, given a ticket tx
-const ticketInfo = tx => {
+const ticketInfo = (tx) => {
   const debits = tx.tx.getDebitsList();
   // changes in an sstx are the even-numbered, > 0 txouts
-  const isTicketChange = (c) => (c.getIndex() > 0) && (c.getIndex() % 2) === 0;
-  const change = tx.tx.getCreditsList().reduce((s, c) => s + isTicketChange(c) ? c.getAmount() : 0, 0);
+  const isTicketChange = (c) => c.getIndex() > 0 && c.getIndex() % 2 === 0;
+  const change = tx.tx
+    .getCreditsList()
+    .reduce((s, c) => (s + isTicketChange(c) ? c.getAmount() : 0), 0);
   // a ticket "belongs" to the wallet when the wallet has the private key
   // that can be used to vote/revoke the ticket (ie: if the wallet considers the
   // txout with index === 0 a credit).
-  const isWalletTicket = (tx) => (tx.getCreditsList().length > 0) && (tx.getCreditsList()[0].getIndex() === 0);
+  const isWalletTicket = (tx) =>
+    tx.getCreditsList().length > 0 && tx.getCreditsList()[0].getIndex() === 0;
   const isWallet = isWalletTicket(tx.tx);
   const debitsSum = debits.reduce((s, d) => s + d.getPreviousAmount(), 0);
 
   // pool fee exists and needs to be accounted for when there are more than
   // two debits and the index of the first one is zero
-  const poolFee = (debits.length > 1) && (debits[0].getIndex() === 0)
-    ? debits[0].getPreviousAmount() : 0;
+  const poolFee =
+    debits.length > 1 && debits[0].getIndex() === 0
+      ? debits[0].getPreviousAmount()
+      : 0;
 
   // commit amount is deduced by seeing subtracting everything the wallet
   // spent from what it got back. Ideally, this would be gotten by decoding
   // appropriate stake commitment output. This is specially true if, in the
   // future, consensus rules change to break the requirement that
   // amount_in[x] == commitment_amount[x].
-  const commitAmount = debitsSum - change - (isWallet ? tx.tx.getFee() : 0) - poolFee;
+  const commitAmount =
+    debitsSum - change - (isWallet ? tx.tx.getFee() : 0) - poolFee;
   const spentAmount = commitAmount + (isWallet ? tx.fee : 0) + poolFee;
   const purchaseFees = debitsSum - commitAmount;
   return { isWallet, commitAmount, spentAmount, purchaseFees, poolFee };
@@ -474,14 +622,18 @@ const ticketInfo = tx => {
 const voteRevokeInfo = async (tx, liveTickets, walletService) => {
   const isVote = tx.txType === wallet.TRANSACTION_TYPE_VOTE;
 
-  const decodedSpender = await wallet.decodeTransactionLocal(tx.tx.getTransaction());
+  const decodedSpender = await wallet.decodeTransactionLocal(
+    tx.tx.getTransaction()
+  );
   const spenderInputs = decodedSpender.inputs;
-  const ticketHash = reverseRawHash(spenderInputs[spenderInputs.length-1].prevTxId);
+  const ticketHash = reverseRawHash(
+    spenderInputs[spenderInputs.length - 1].prevTxId
+  );
 
   let ticket = liveTickets[ticketHash];
   if (!ticket) {
     let ticketTx;
-    try{
+    try {
       ticketTx = await wallet.getTransaction(walletService, ticketHash);
       if (!ticketTx) {
         // shouldn't really happen on new wallets, given that getTransaction
@@ -490,21 +642,35 @@ const voteRevokeInfo = async (tx, liveTickets, walletService) => {
       }
       ticket = ticketInfo(ticketTx);
     } catch (error) {
-      if (error.code === 5) { // 5 === grpc/codes.NotFound
+      if (error.code === 5) {
+        // 5 === grpc/codes.NotFound
         // we may not have the ticket transaction if this wallet only recorded
         // the vote/revocation (eg: pool fee wallet). In this case, we consider
         // that the ticket wasn't ours and zero all applicable values.
-        ticket = { isWallet: false, commitAmount: 0, spentAmount: 0,
-          purchaseFees: 0, poolFee: 0 };
+        ticket = {
+          isWallet: false,
+          commitAmount: 0,
+          spentAmount: 0,
+          purchaseFees: 0,
+          poolFee: 0
+        };
       } else {
         throw error;
       }
     }
   }
   const ticketCommitAmount = ticket.commitAmount;
-  const returnAmount = tx.tx.getCreditsList().reduce((s, c) => s + c.getAmount(), 0);
+  const returnAmount = tx.tx
+    .getCreditsList()
+    .reduce((s, c) => s + c.getAmount(), 0);
   const stakeResult = returnAmount - ticketCommitAmount;
-  return { wasWallet: ticket.isWallet, isVote, returnAmount, stakeResult, ticketCommitAmount };
+  return {
+    wasWallet: ticket.isWallet,
+    isVote,
+    returnAmount,
+    stakeResult,
+    ticketCommitAmount
+  };
 };
 
 // closure that calcs how much each tx affects each balance type.
@@ -512,57 +678,118 @@ const voteRevokeInfo = async (tx, liveTickets, walletService) => {
 // are encoded (1st txout === ticket, odds are commitments, etc). If consensus
 // rules change the "shape" of a ticket tx in the future, this will need to be
 // heavily revised.
-const txBalancesDelta = async (tx, maturingTxs, liveTickets, walletService, chainParams) => {
+const txBalancesDelta = async (
+  tx,
+  maturingTxs,
+  liveTickets,
+  walletService,
+  chainParams
+) => {
   // tx.amount is negative in sends/tickets/transfers already
   let delta = null;
+  let tikcetinfo = null;
+  let revokeInfo = null;
   switch (tx.txType) {
-  case wallet.TRANSACTION_TYPE_TICKET_PURCHASE:
-    var { isWallet, commitAmount, spentAmount, purchaseFees } = ticketInfo(tx);
-    recordTicket(maturingTxs, liveTickets, tx, commitAmount, isWallet, chainParams);
-    delta = { spendable: -spentAmount, immature: 0,
-      immatureNonWallet: 0, voted: 0, revoked: 0,
-      sent: 0, received: 0, ticket: commitAmount,
-      locked: isWallet ? commitAmount : 0,
-      lockedNonWallet: isWallet ? 0 : commitAmount,
-      stakeRewards: 0, stakeFees: purchaseFees, totalStake: spentAmount,
-      timestamp: tx.timestamp, tx };
-    break;
-  case wallet.TRANSACTION_TYPE_VOTE:
-  case wallet.TRANSACTION_TYPE_REVOCATION:
-    var { wasWallet, isVote, returnAmount, stakeResult,
-      ticketCommitAmount } = await voteRevokeInfo(tx, liveTickets, walletService);
-    recordVoteRevoke(maturingTxs, tx, returnAmount, wasWallet, chainParams);
-    delta = { spendable: 0, locked: wasWallet ? -ticketCommitAmount : 0,
-      lockedNonWallet: wasWallet ? 0 : -ticketCommitAmount,
-      voted: isVote ? returnAmount : 0, revoked: !isVote ? returnAmount : 0,
-      sent: 0, received: 0, ticket: 0,
-      immature: wasWallet ? returnAmount : 0,
-      immatureNonWallet: wasWallet ? 0 : returnAmount,
-      stakeFees: isVote ? 0 : -stakeResult, stakeRewards: isVote ? stakeResult : 0,
-      totalStake: 0, timestamp: tx.timestamp, tx };
-    break;
-  case wallet.TRANSACTION_TYPE_COINBASE:
-  case wallet.TRANSACTION_TYPE_REGULAR:
-    delta = { spendable: +tx.amount, locked: 0, lockedNonWallet: 0, voted: 0,
-      revoked: 0, sent: tx.amount < 0 ? tx.amount : 0,
-      received: tx.amount > 0 ? tx.amount : 0, ticket: 0, immature: 0,
-      stakeFees: 0, stakeRewards: 0, totalStake: 0,
-      immatureNonWallet: 0, timestamp: tx.timestamp, tx };
-    break;
-  default: throw "Unknown tx type: " + tx.txType;
+    case wallet.TRANSACTION_TYPE_TICKET_PURCHASE:
+      tikcetinfo = ticketInfo(tx);
+      recordTicket(
+        maturingTxs,
+        liveTickets,
+        tx,
+        tikcetinfo.commitAmount,
+        tikcetinfo.isWallet,
+        chainParams
+      );
+      delta = {
+        spendable: -tikcetinfo.spentAmount,
+        immature: 0,
+        immatureNonWallet: 0,
+        voted: 0,
+        revoked: 0,
+        sent: 0,
+        received: 0,
+        ticket: tikcetinfo.commitAmount,
+        locked: tikcetinfo.isWallet ? tikcetinfo.commitAmount : 0,
+        lockedNonWallet: tikcetinfo.isWallet ? 0 : tikcetinfo.commitAmount,
+        stakeRewards: 0,
+        stakeFees: tikcetinfo.purchaseFees,
+        totalStake: tikcetinfo.spentAmount,
+        timestamp: tx.timestamp,
+        tx
+      };
+      break;
+    case wallet.TRANSACTION_TYPE_VOTE:
+    case wallet.TRANSACTION_TYPE_REVOCATION:
+      revokeInfo = await voteRevokeInfo(tx, liveTickets, walletService);
+      recordVoteRevoke(
+        maturingTxs,
+        tx,
+        revokeInfo.returnAmount,
+        revokeInfo.wasWallet,
+        chainParams
+      );
+      delta = {
+        spendable: 0,
+        locked: revokeInfo.wasWallet ? -revokeInfo.ticketCommitAmount : 0,
+        lockedNonWallet: revokeInfo.wasWallet
+          ? 0
+          : -revokeInfo.ticketCommitAmount,
+        voted: revokeInfo.isVote ? revokeInfo.returnAmount : 0,
+        revoked: !revokeInfo.isVote ? revokeInfo.returnAmount : 0,
+        sent: 0,
+        received: 0,
+        ticket: 0,
+        immature: revokeInfo.wasWallet ? revokeInfo.returnAmount : 0,
+        immatureNonWallet: revokeInfo.wasWallet ? 0 : revokeInfo.returnAmount,
+        stakeFees: revokeInfo.isVote ? 0 : -revokeInfo.stakeResult,
+        stakeRewards: revokeInfo.isVote ? revokeInfo.stakeResult : 0,
+        totalStake: 0,
+        timestamp: tx.timestamp,
+        tx
+      };
+      break;
+    case wallet.TRANSACTION_TYPE_COINBASE:
+    case wallet.TRANSACTION_TYPE_REGULAR:
+      delta = {
+        spendable: +tx.amount,
+        locked: 0,
+        lockedNonWallet: 0,
+        voted: 0,
+        revoked: 0,
+        sent: tx.amount < 0 ? tx.amount : 0,
+        received: tx.amount > 0 ? tx.amount : 0,
+        ticket: 0,
+        immature: 0,
+        stakeFees: 0,
+        stakeRewards: 0,
+        totalStake: 0,
+        immatureNonWallet: 0,
+        timestamp: tx.timestamp,
+        tx
+      };
+      break;
+    default:
+      throw "Unknown tx type: " + tx.txType;
   }
 
   return delta;
 };
 
 // account for this delta in the balances and call the progress function
-const addDelta = (delta, progressFunction, currentBalance, tsDate, backwards) => {
+const addDelta = (
+  delta,
+  progressFunction,
+  currentBalance,
+  tsDate,
+  backwards
+) => {
   backwards && progressFunction(tsDate(delta.timestamp), currentBalance);
 
-  let balance = {
+  const balance = {
     spendable: currentBalance.spendable + delta.spendable,
     immature: currentBalance.immature + delta.immature,
-    immatureNonWallet: currentBalance.immatureNonWallet + delta.immatureNonWallet,
+    immatureNonWallet:
+      currentBalance.immatureNonWallet + delta.immatureNonWallet,
     locked: currentBalance.locked + delta.locked + delta.lockedNonWallet,
     lockedNonWallet: 0,
     stakeRewards: currentBalance.stakeRewards + delta.stakeRewards,
@@ -570,8 +797,7 @@ const addDelta = (delta, progressFunction, currentBalance, tsDate, backwards) =>
     totalStake: currentBalance.totalStake + delta.totalStake,
     delta
   };
-  balance.total = balance.spendable + balance.locked +
-    balance.immature;
+  balance.total = balance.spendable + balance.locked + balance.immature;
 
   !backwards && progressFunction(tsDate(delta.timestamp), balance);
   return balance;
@@ -582,15 +808,35 @@ const addDelta = (delta, progressFunction, currentBalance, tsDate, backwards) =>
 // affect by this or earlier transaction's immature balances. So we process
 // the txs by collecting the maturing transactions that might affect tx `i`,
 // processing them first, then processing tx i.
-const txDataCbBackwards = async ({ mined, maturingTxs, liveTickets,
-  walletService, chainParams, progressFunction, currentBlockHeight, balances, tsDate, maxMaturity, currentBalance }) => {
-  let now = new Date();
-  let toAddDeltas = {};
+const txDataCbBackwards = async ({
+  mined,
+  maturingTxs,
+  liveTickets,
+  walletService,
+  chainParams,
+  progressFunction,
+  currentBlockHeight,
+  balances,
+  tsDate,
+  maxMaturity,
+  currentBalance
+}) => {
+  const now = new Date();
+  const toAddDeltas = {};
   let lastTxHeight = currentBlockHeight;
   let lastTxTimestamp = now.getTime() / 1000;
-  const fields = [ "spendable", "locked", "stakeFees", "stakeRewards",
-    "totalStake", "immature", "lockedNonWallet", "immatureNonWallet" ];
-  const turnFieldsNegative = (delta) => fields.forEach(f => delta[f] = -delta[f]);
+  const fields = [
+    "spendable",
+    "locked",
+    "stakeFees",
+    "stakeRewards",
+    "totalStake",
+    "immature",
+    "lockedNonWallet",
+    "immatureNonWallet"
+  ];
+  const turnFieldsNegative = (delta) =>
+    fields.forEach((f) => (delta[f] = -delta[f]));
 
   currentBalance = await balances.reduce((cb, acct) => {
     cb.spendable += acct.spendable;
@@ -602,44 +848,105 @@ const txDataCbBackwards = async ({ mined, maturingTxs, liveTickets,
   let balance = currentBalance;
   for (let i = 0; i < mined.length; i++) {
     const tx = mined[i];
-    const delta = toAddDeltas[i] ? toAddDeltas[i] : await txBalancesDelta(tx, maturingTxs, liveTickets, walletService, chainParams);
+    const delta = toAddDeltas[i]
+      ? toAddDeltas[i]
+      : await txBalancesDelta(
+          tx,
+          maturingTxs,
+          liveTickets,
+          walletService,
+          chainParams
+        );
     turnFieldsNegative(delta);
 
-    let j = i+1;
-    while ((j < mined.length) && (mined[j].height >= tx.height - maxMaturity)) {
+    let j = i + 1;
+    while (j < mined.length && mined[j].height >= tx.height - maxMaturity) {
       // this tx might influence the balance of tx[i]. So calculate its delta,
       // which will fill `maturingTxs` as needed
       if (!toAddDeltas[j]) {
-        toAddDeltas[j] = await txBalancesDelta(mined[j], maturingTxs, liveTickets, walletService, chainParams);
+        toAddDeltas[j] = await txBalancesDelta(
+          mined[j],
+          maturingTxs,
+          liveTickets,
+          walletService,
+          chainParams
+        );
       }
       j++;
     }
     turnFieldsNegative(toAddDeltas);
 
-    const maturedDeltas = findMaturingDeltas(maturingTxs, tx.height+1, lastTxHeight,
-      tx.timestamp, lastTxTimestamp, chainParams, true);
+    const maturedDeltas = findMaturingDeltas(
+      maturingTxs,
+      tx.height + 1,
+      lastTxHeight,
+      tx.timestamp,
+      lastTxTimestamp,
+      chainParams,
+      true
+    );
     maturedDeltas.forEach((delta) => {
-      balance = addDelta(delta, progressFunction, { ...balance, delta }, tsDate, true);
+      balance = addDelta(
+        delta,
+        progressFunction,
+        { ...balance, delta },
+        tsDate,
+        true
+      );
     });
-    balance = addDelta(delta, progressFunction, { ...balance, delta }, tsDate, true);
+    balance = addDelta(
+      delta,
+      progressFunction,
+      { ...balance, delta },
+      tsDate,
+      true
+    );
 
     lastTxHeight = tx.height;
     lastTxTimestamp = delta.timestamp;
   }
 };
 
-const txDataCb = async ({ mined, maturingTxs, liveTickets, currentBalance, tsDate, progressFunction, chainParams, walletService, recentBlockTimestamp, currentBlockHeight }) => {
+const txDataCb = async ({
+  mined,
+  maturingTxs,
+  liveTickets,
+  currentBalance,
+  tsDate,
+  progressFunction,
+  chainParams,
+  walletService,
+  recentBlockTimestamp,
+  currentBlockHeight
+}) => {
   let lastTxHeight = 0;
   let lastTxTimestamp = chainParams.GenesisTimestamp;
   for (let i = 0; i < mined.length; i++) {
     const tx = mined[i];
-    const maturedDeltas = findMaturingDeltas(maturingTxs, lastTxHeight+1, tx.height,
-      lastTxTimestamp, tx.timestamp, chainParams);
+    const maturedDeltas = findMaturingDeltas(
+      maturingTxs,
+      lastTxHeight + 1,
+      tx.height,
+      lastTxTimestamp,
+      tx.timestamp,
+      chainParams
+    );
     maturedDeltas.forEach((delta) => {
-      currentBalance = addDelta(delta, progressFunction, currentBalance, tsDate);
+      currentBalance = addDelta(
+        delta,
+        progressFunction,
+        currentBalance,
+        tsDate
+      );
     });
 
-    const delta = await txBalancesDelta(tx, maturingTxs, liveTickets, walletService, chainParams);
+    const delta = await txBalancesDelta(
+      tx,
+      maturingTxs,
+      liveTickets,
+      walletService,
+      chainParams
+    );
     currentBalance = addDelta(delta, progressFunction, currentBalance, tsDate);
 
     lastTxHeight = tx.height;
@@ -647,49 +954,74 @@ const txDataCb = async ({ mined, maturingTxs, liveTickets, currentBalance, tsDat
   }
 
   // check for remaining tickets that may have matured
-  const maturedDeltas = findMaturingDeltas(maturingTxs, lastTxHeight+1, currentBlockHeight,
-    lastTxTimestamp, recentBlockTimestamp || Date.now(), chainParams);
-  maturedDeltas.forEach( delta => {
+  const maturedDeltas = findMaturingDeltas(
+    maturingTxs,
+    lastTxHeight + 1,
+    currentBlockHeight,
+    lastTxTimestamp,
+    recentBlockTimestamp || Date.now(),
+    chainParams
+  );
+  maturedDeltas.forEach((delta) => {
     currentBalance = addDelta(delta, progressFunction, currentBalance, tsDate);
   });
 };
 
-const prepDataToCalcStats = async (startBlock, endBlock, currentDate, endDate, pageDir, data) => {
+const prepDataToCalcStats = async (
+  startBlock,
+  endBlock,
+  currentDate,
+  endDate,
+  pageDir,
+  data
+) => {
   let continueGetting = true;
   let currentBlock = startBlock;
   const toProcess = [];
-  const { maxMaturity, currentBlockHeight, pageSize, tsDate, walletService,
-    backwards } = data;
+  const {
+    maxMaturity,
+    currentBlockHeight,
+    pageSize,
+    tsDate,
+    walletService,
+    backwards
+  } = data;
 
   // grab transactions in batches of (roughly) `pageSize` transactions, so
   // that if we can stop in the middle of the process (say, because we're
   // interested in only the first 10 days worth of balances)
   while (continueGetting) {
-    const { mined } = await wallet.getTransactions(walletService, currentBlock,
-      endBlock, pageSize);
+    const { mined } = await wallet.getTransactions(
+      walletService,
+      currentBlock,
+      endBlock,
+      pageSize
+    );
     if (mined.length > 0) {
-      const lastTx = mined[mined.length-1];
+      const lastTx = mined[mined.length - 1];
       currentBlock = lastTx.height + pageDir;
       currentDate = tsDate(lastTx.timestamp);
       toProcess.push(...mined);
     }
     continueGetting =
-      (mined.length > 0) &&
-      (currentBlock > 0) &&
-      (currentBlock < currentBlockHeight) &&
-      (
-        (!endDate) ||
+      mined.length > 0 &&
+      currentBlock > 0 &&
+      currentBlock < currentBlockHeight &&
+      (!endDate ||
         (endDate && !backwards && currentDate < endDate) ||
-        (endDate && backwards && currentDate > endDate )
-      );
+        (endDate && backwards && currentDate > endDate));
   }
 
   // grab all txs that are ticket/coinbase maturity blocks from the last tx
   // so that we can account for tickets and votes maturing
   endBlock = currentBlock + maxMaturity * pageDir;
-  if ((currentBlock > 0) && (currentBlock < currentBlockHeight)) {
-    const { mined } = await wallet.getTransactions(walletService, currentBlock,
-      endBlock, 0);
+  if (currentBlock > 0 && currentBlock < currentBlockHeight) {
+    const { mined } = await wallet.getTransactions(
+      walletService,
+      currentBlock,
+      endBlock,
+      0
+    );
     if (mined && mined.length > 0) {
       toProcess.push(...mined);
     }
@@ -699,26 +1031,49 @@ const prepDataToCalcStats = async (startBlock, endBlock, currentDate, endDate, p
 };
 
 export const balancesStats = (opts) => async (dispatch, getState) => {
-  const { progressFunction, startFunction, endFunction, errorFunction, endDate, backwards } = opts;
+  const {
+    progressFunction,
+    startFunction,
+    endFunction,
+    errorFunction,
+    endDate,
+    backwards
+  } = opts;
 
-  const { currentBlockHeight, walletService,
-    recentBlockTimestamp, balances } = getState().grpc;
+  const {
+    currentBlockHeight,
+    walletService,
+    recentBlockTimestamp,
+    balances
+  } = getState().grpc;
 
   const chainParams = sel.chainParams(getState());
 
-  let liveTickets = {}; // live by hash
-  let maturingTxs = {}; // maturing by height
+  const liveTickets = {}; // live by hash
+  const maturingTxs = {}; // maturing by height
 
   // running balance totals
-  let currentBalance = { spendable: 0, immature: 0, immatureNonWallet: 0,
-    locked: 0, lockedNonWallet: 0, total: 0, stakeRewards: 0, stakeFees: 0,
-    totalStake: 0, delta: { voted: 0, revoked: 0, ticket: 0, sent: 0, received: 0 } };
+  const currentBalance = {
+    spendable: 0,
+    immature: 0,
+    immatureNonWallet: 0,
+    locked: 0,
+    lockedNonWallet: 0,
+    total: 0,
+    stakeRewards: 0,
+    stakeFees: 0,
+    totalStake: 0,
+    delta: { voted: 0, revoked: 0, ticket: 0, sent: 0, received: 0 }
+  };
 
   const tsDate = sel.tsDate(getState());
 
   const pageSize = 200;
-  const maxMaturity = Math.max(chainParams.CoinbaseMaturity, chainParams.TicketMaturity);
-  let currentDate = new Date();
+  const maxMaturity = Math.max(
+    chainParams.CoinbaseMaturity,
+    chainParams.TicketMaturity
+  );
+  const currentDate = new Date();
   let toProcess = [];
   startFunction({
     series: [
@@ -735,37 +1090,94 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
   });
 
   try {
-    const data = { maxMaturity, currentBlockHeight, pageSize, tsDate, walletService,
-      backwards };
+    const data = {
+      maxMaturity,
+      currentBlockHeight,
+      pageSize,
+      tsDate,
+      walletService,
+      backwards
+    };
     if (backwards) {
-      toProcess = await prepDataToCalcStats(currentBlockHeight, 1, currentDate, endDate, -1, data);
+      toProcess = await prepDataToCalcStats(
+        currentBlockHeight,
+        1,
+        currentDate,
+        endDate,
+        -1,
+        data
+      );
       // when calculating backwards, we need to account for unmined txs, because
       // the account balances for locked tickets include them. To simplify the
       // logic, we modify the unmined transactions to simulate as if it had been
       // just mined in the last block.
-      const { unmined } = await wallet.getTransactions(walletService, -1, -1, 0);
-      const fixedUnmined = unmined.map(tx => ({ ...tx, timestamp: currentDate.getTime(),
-        height: currentBlockHeight }));
+      const { unmined } = await wallet.getTransactions(
+        walletService,
+        -1,
+        -1,
+        0
+      );
+      const fixedUnmined = unmined.map((tx) => ({
+        ...tx,
+        timestamp: currentDate.getTime(),
+        height: currentBlockHeight
+      }));
       toProcess.unshift(...fixedUnmined);
 
       // on backwards stats, we find vote txs before finding ticket txs, so
       // pre-process tickets from all grabbed txs to avoid making the separate
       // getTransaction calls in voteRevokeInfo()
-      toProcess.forEach(tx => {
+      toProcess.forEach((tx) => {
         if (tx.txType == wallet.TRANSACTION_TYPE_TICKET_PURCHASE) {
-          var { isWallet, commitAmount } = ticketInfo(tx);
-          recordTicket(maturingTxs, liveTickets, tx, commitAmount, isWallet, chainParams);
+          const { isWallet, commitAmount } = ticketInfo(tx);
+          recordTicket(
+            maturingTxs,
+            liveTickets,
+            tx,
+            commitAmount,
+            isWallet,
+            chainParams
+          );
         }
       });
 
-      await txDataCbBackwards({ mined: toProcess, maturingTxs, liveTickets, walletService, currentBalance,
-        chainParams, currentBlockHeight, tsDate, progressFunction, recentBlockTimestamp, balances, maxMaturity });
+      await txDataCbBackwards({
+        mined: toProcess,
+        maturingTxs,
+        liveTickets,
+        walletService,
+        currentBalance,
+        chainParams,
+        currentBlockHeight,
+        tsDate,
+        progressFunction,
+        recentBlockTimestamp,
+        balances,
+        maxMaturity
+      });
       return endFunction();
     }
 
-    toProcess = await prepDataToCalcStats(1, currentBlockHeight, currentDate, endDate, 1, data);
-    await txDataCb({ mined: toProcess, maturingTxs, liveTickets, walletService,
-      chainParams, currentBlockHeight, currentBalance, tsDate, progressFunction, recentBlockTimestamp });
+    toProcess = await prepDataToCalcStats(
+      1,
+      currentBlockHeight,
+      currentDate,
+      endDate,
+      1,
+      data
+    );
+    await txDataCb({
+      mined: toProcess,
+      maturingTxs,
+      liveTickets,
+      walletService,
+      chainParams,
+      currentBlockHeight,
+      currentBalance,
+      tsDate,
+      progressFunction,
+      recentBlockTimestamp
+    });
     endFunction();
   } catch (err) {
     errorFunction(err);
@@ -776,12 +1188,20 @@ export const dailyBalancesStats = (opts) => {
   const { progressFunction, endFunction, startFunction, backwards } = opts;
 
   let lastDate = null;
-  let balance = { spendable: 0, locked: 0, total: 0, sent: 0, received: 0,
-    voted: 0, revoked: 0, ticket: 0 };
+  let balance = {
+    spendable: 0,
+    locked: 0,
+    total: 0,
+    sent: 0,
+    received: 0,
+    voted: 0,
+    revoked: 0,
+    ticket: 0
+  };
 
   const aggStartFunction = (opts) => {
     startFunction({
-      series : [
+      series: [
         ...opts.series,
         { name: "sent", type: VALUE_TYPE_ATOMAMOUNT },
         { name: "received", type: VALUE_TYPE_ATOMAMOUNT },
@@ -798,8 +1218,14 @@ export const dailyBalancesStats = (opts) => {
         progressFunction(endOfDay(lastDate), balance);
       }
       const { delta } = series;
-      balance = { ...series, sent: delta.sent, received: delta.received,
-        voted: delta.voted, revoked: delta.revoked, ticket: delta.ticket };
+      balance = {
+        ...series,
+        sent: delta.sent,
+        received: delta.received,
+        voted: delta.voted,
+        revoked: delta.revoked,
+        ticket: delta.ticket
+      };
       lastDate = new Date(time.getFullYear(), time.getMonth(), time.getDate());
     } else {
       const { delta } = series;
@@ -820,32 +1246,36 @@ export const dailyBalancesStats = (opts) => {
     endFunction();
   };
 
-  return balancesStats({ ...opts, progressFunction: aggProgressFunction,
-    endFunction: aggEndFunction, startFunction: aggStartFunction });
+  return balancesStats({
+    ...opts,
+    progressFunction: aggProgressFunction,
+    endFunction: aggEndFunction,
+    startFunction: aggStartFunction
+  });
 };
 
 export const voteTimeStats = (opts) => (dispatch, getState) => {
-
   const chainParams = sel.chainParams(getState());
   const { progressFunction, endFunction, startFunction, errorFunction } = opts;
   const { currentBlockHeight, walletService } = getState().grpc;
 
   const blocksPerDay = (60 * 60 * 24) / chainParams.TargetTimePerBlock;
-  const expirationDays = Math.ceil((chainParams.TicketExpiry + chainParams.TicketMaturity) / blocksPerDay);
-  const dayBuckets = Array(expirationDays+1).fill(0);
+  const expirationDays = Math.ceil(
+    (chainParams.TicketExpiry + chainParams.TicketMaturity) / blocksPerDay
+  );
+  const dayBuckets = Array(expirationDays + 1).fill(0);
 
   startFunction({
-    series: [
-      { name: "daysToVote" },
-      { name: "count" }
-    ],
+    series: [{ name: "daysToVote" }, { name: "count" }],
     noTimestamp: true
   });
 
   const txDataCb = (tickets) => {
-    tickets.forEach(t => {
+    tickets.forEach((t) => {
       if (t.status !== "voted") return;
-      const daysToVote = Math.floor((t.spender.getTimestamp() - t.ticket.getTimestamp()) / (24 * 60 * 60));
+      const daysToVote = Math.floor(
+        (t.spender.getTimestamp() - t.ticket.getTimestamp()) / (24 * 60 * 60)
+      );
       dayBuckets[daysToVote] += 1;
     });
 
@@ -856,13 +1286,13 @@ export const voteTimeStats = (opts) => (dispatch, getState) => {
     endFunction();
   };
 
-  wallet.getTickets(walletService, 0, currentBlockHeight)
+  wallet
+    .getTickets(walletService, 0, currentBlockHeight)
     .then(txDataCb)
     .catch(errorFunction);
 };
 
 export const ticketStats = (opts) => (dispatch, getState) => {
-
   const { progressFunction, endFunction, startFunction, errorFunction } = opts;
   const { currentBlockHeight, walletService } = getState().grpc;
 
@@ -879,25 +1309,26 @@ export const ticketStats = (opts) => (dispatch, getState) => {
 
   const normalizeTicket = sel.ticketNormalizer(getState());
   const txDataCb = (tickets) => {
-    tickets.forEach(t => {
-
+    tickets.forEach((t) => {
       const ticket = normalizeTicket(t);
       const tsDate = sel.tsDate(getState());
       progressFunction(tsDate(ticket.enterTimestamp), {
-        spenderTimestamp: ticket.leaveTimestamp ? tsDate(ticket.leaveTimestamp) : null,
+        spenderTimestamp: ticket.leaveTimestamp
+          ? tsDate(ticket.leaveTimestamp)
+          : null,
         status: ticket.status,
         ticketHash: ticket.hash,
         spenderHash: ticket.spenderHash,
         sentAmount: ticket.ticketInvestment,
         returnedAmount: ticket.ticketReturnAmount
       });
-
     });
 
     endFunction();
   };
 
-  wallet.getTickets(walletService, 0, currentBlockHeight)
+  wallet
+    .getTickets(walletService, 0, currentBlockHeight)
     .then(txDataCb)
     .catch(errorFunction);
 };

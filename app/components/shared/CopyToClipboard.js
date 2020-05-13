@@ -19,14 +19,21 @@ class CopyToClipboard extends React.Component {
   }
 
   render() {
-    const successBanner = [ "copy-to-clipboard-success", this.state.success ].join(" ");
-    const button = [ "clipboard-box", this.props.className ].join(" ");
+    const successBanner = [
+      "copy-to-clipboard-success",
+      this.state.success
+    ].join(" ");
+    const button = ["clipboard-box", this.props.className].join(" ");
     return (
-      <div className={ button }>
-        <div className={ successBanner }>
+      <div className={button}>
+        <div className={successBanner}>
           <T id="clipboard.copied" m="Copied" />
         </div>
-        <a className="copy-to-clipboard-icon" onClick={this.onClick} onMouseLeave={this.onMouseLeave} />
+        <a
+          className="copy-to-clipboard-icon"
+          onClick={this.onClick}
+          onMouseLeave={this.onMouseLeave}
+        />
       </div>
     );
   }

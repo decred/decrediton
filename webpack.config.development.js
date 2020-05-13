@@ -53,8 +53,7 @@ export default merge(baseConfig, {
             importLoaders: 1,
             localIdentName: "[local]"
           }
-        }
-        ],
+        }],
         exclude: /\.module\.css$/
       },
       {
@@ -67,7 +66,8 @@ export default merge(baseConfig, {
               noIeCompat: true,
               strictMath: true
             }
-          } ]
+          }
+]
       },
       {
         test: [ /\.woff(\?v=\d+\.\d+\.\d+)?$/, /\.woff2(\?v=\d+\.\d+\.\d+)?$/ ],

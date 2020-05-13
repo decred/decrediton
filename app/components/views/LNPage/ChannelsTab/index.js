@@ -3,14 +3,20 @@ import { FormattedMessage as T } from "react-intl";
 import { lnPage } from "connectors";
 import Page from "./Page";
 
-export const ChannelsTabHeader = () =>
+export const ChannelsTabHeader = () => (
   <DescriptionHeader
-    description={<T id="ln.description.channels" m="Open and pending channels of this LN Wallet" />}
-  />;
+    description={
+      <T
+        id="ln.description.channels"
+        m="Open and pending channels of this LN Wallet"
+      />
+    }
+  />
+);
 
 @autobind
 class ChannelsTab extends React.Component {
-  constructor(props)  {
+  constructor(props) {
     super(props);
     this.state = {
       node: "",
@@ -23,7 +29,7 @@ class ChannelsTab extends React.Component {
 
   onNodeChanged(e) {
     const canOpen = e.target.value && this.state.localAmtAtoms > 0;
-    this.setState({ node: (""+e.target.value).trim(), canOpen });
+    this.setState({ node: ("" + e.target.value).trim(), canOpen });
   }
 
   onLocalAmtChanged({ atomValue }) {
@@ -41,12 +47,20 @@ class ChannelsTab extends React.Component {
       return;
     }
     this.setState({ opening: true });
-    this.props.openChannel(node, localAmtAtoms, pushAmtAtoms).then(() => {
-      this.setState({ opening: false, node: "", localAmtAtoms: 0,
-        pushAmtAtoms: 0, canOpen: false });
-    }).catch(() => {
-      this.setState({ opening: false });
-    });
+    this.props
+      .openChannel(node, localAmtAtoms, pushAmtAtoms)
+      .then(() => {
+        this.setState({
+          opening: false,
+          node: "",
+          localAmtAtoms: 0,
+          pushAmtAtoms: 0,
+          canOpen: false
+        });
+      })
+      .catch(() => {
+        this.setState({ opening: false });
+      });
   }
 
   onCloseChannel(channel) {
@@ -62,14 +76,30 @@ class ChannelsTab extends React.Component {
   }
 
   render() {
-    const { balance, pendingOpenBalance, maxInboundAmount,
-      maxOutboundAmount } = this.props.channelBalances;
+    const {
+      balance,
+      pendingOpenBalance,
+      maxInboundAmount,
+      maxOutboundAmount
+    } = this.props.channelBalances;
 
     const { channels, pendingChannels, closedChannels, isMainNet } = this.props;
-    const { node, localAmtAtoms, pushAmtAtoms, opening, canOpen,
-      detailedChannel } = this.state;
-    const { onNodeChanged, onLocalAmtChanged, onPushAmtChanged,
-      onOpenChannel, onCloseChannel, onToggleChannelDetails } = this;
+    const {
+      node,
+      localAmtAtoms,
+      pushAmtAtoms,
+      opening,
+      canOpen,
+      detailedChannel
+    } = this.state;
+    const {
+      onNodeChanged,
+      onLocalAmtChanged,
+      onPushAmtChanged,
+      onOpenChannel,
+      onCloseChannel,
+      onToggleChannelDetails
+    } = this;
 
     return (
       <Page

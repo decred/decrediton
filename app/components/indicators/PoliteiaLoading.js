@@ -1,3 +1,1 @@
-export default () => (
-  <div className="politeia-loading-indicator" />
-);
+export default () => <div className="politeia-loading-indicator" />;

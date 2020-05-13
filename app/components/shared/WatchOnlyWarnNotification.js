@@ -8,8 +8,15 @@ const messages = defineMessages({
   }
 });
 
-const WatchOnlyWarnNotification = ({ dispatchSingleMessage, children, isActive }) => (
-  <span onClick={isActive ? () => dispatchSingleMessage(messages.watchOnlyWarn) : null}>
+const WatchOnlyWarnNotification = ({
+  dispatchSingleMessage,
+  children,
+  isActive
+}) => (
+  <span
+    onClick={
+      isActive ? () => dispatchSingleMessage(messages.watchOnlyWarn) : null
+    }>
     {children}
   </span>
 );

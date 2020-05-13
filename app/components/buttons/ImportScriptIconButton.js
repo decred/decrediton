@@ -6,17 +6,39 @@ import InvisibleButton from "./InvisibleButton";
 import { FormattedMessage as T } from "react-intl";
 import { SimpleLoading } from "indicators";
 
-const ImportScriptIconButton = ({ rescanRequest, isImportingScript, onImportScript }) => (
-  <Tooltip warning={!!rescanRequest}
-    text={!rescanRequest
-      ? <T id="purchaseTickets.import" m="Manually import a redeem script for tickets." />
-      : <T id="purchaseTickets.importDisabledRescan" m="Importing scripts is disabled during a rescan." />}
-  >
+const ImportScriptIconButton = ({
+  rescanRequest,
+  isImportingScript,
+  onImportScript
+}) => (
+  <Tooltip
+    warning={!!rescanRequest}
+    text={
+      !rescanRequest ? (
+        <T
+          id="purchaseTickets.import"
+          m="Manually import a redeem script for tickets."
+        />
+      ) : (
+        <T
+          id="purchaseTickets.importDisabledRescan"
+          m="Importing scripts is disabled during a rescan."
+        />
+      )
+    }>
     <ModalButton
       buttonComponent={InvisibleButton}
       buttonLabel={isImportingScript ? <SimpleLoading /> : null}
-      className={"stakepool-content-import-script-button " + (isImportingScript ? "loading" : "")}
-      modalTitle={<T id="tickets.importScriptConfirmation" m="Import Script Confirmation" />}
+      className={
+        "stakepool-content-import-script-button " +
+        (isImportingScript ? "loading" : "")
+      }
+      modalTitle={
+        <T
+          id="tickets.importScriptConfirmation"
+          m="Import Script Confirmation"
+        />
+      }
       modalComponent={ImportScriptModal}
       disabled={rescanRequest}
       onSubmit={onImportScript}

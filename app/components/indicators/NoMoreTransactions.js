@@ -1,9 +1,10 @@
 import { FormattedMessage as T } from "react-intl";
 import "style/Loading.less";
 
-const LoadingMoreTransactionsIndicator = () =>
+const LoadingMoreTransactionsIndicator = () => (
   <div className="loading-more-transactions-indicator">
     <T id="history.noMoreTransactions" m="No more transactions." />
-  </div>;
+  </div>
+);
 
 export default LoadingMoreTransactionsIndicator;

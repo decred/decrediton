@@ -25,13 +25,17 @@ const mapStateToProps = selectorMap({
   publishTxResponse: sel.publishTxResponse
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  onAttemptConstructTransaction: ca.constructTransactionAttempt,
-  onAttemptSignTransaction: ca.signTransactionAttempt,
-  onClearTransaction: ca.clearTransaction,
-  getNextAddressAttempt: ca.getNextAddressAttempt,
-  validateAddress: ca.validateAddress,
-  onAttemptSignTransactionTrezor: tza.signTransactionAttemptTrezor
-}, dispatch);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      onAttemptConstructTransaction: ca.constructTransactionAttempt,
+      onAttemptSignTransaction: ca.signTransactionAttempt,
+      onClearTransaction: ca.clearTransaction,
+      getNextAddressAttempt: ca.getNextAddressAttempt,
+      validateAddress: ca.validateAddress,
+      onAttemptSignTransactionTrezor: tza.signTransactionAttemptTrezor
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps);

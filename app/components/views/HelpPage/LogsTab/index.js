@@ -1,14 +1,25 @@
 import Logs from "./Page";
-import { getDcrdLogs, getDcrwalletLogs, getDecreditonLogs, getDcrlndLogs } from "wallet";
+import {
+  getDcrdLogs,
+  getDcrwalletLogs,
+  getDecreditonLogs,
+  getDcrlndLogs
+} from "wallet";
 import { logging } from "connectors";
 import { DescriptionHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
 import ReactTimeout from "react-timeout";
 
-export const LogsTabHeader = () =>
+export const LogsTabHeader = () => (
   <DescriptionHeader
-    description={<T id="help.description.logs" m="Please find your current logs below to look for any issue or error you are having." />}
-  />;
+    description={
+      <T
+        id="help.description.logs"
+        m="Please find your current logs below to look for any issue or error you are having."
+      />
+    }
+  />
+);
 @autobind
 class LogsTabBody extends React.Component {
   constructor(props) {
@@ -21,7 +32,7 @@ class LogsTabBody extends React.Component {
   }
 
   componentDidUpdate() {
-    if(this.state.interval) {
+    if (this.state.interval) {
       return;
     }
     const interval = this.props.setInterval(() => {
@@ -49,8 +60,14 @@ class LogsTabBody extends React.Component {
   }
 
   render() {
-    const { onShowDecreditonLogs, onShowDcrdLogs, onShowDcrwalletLogs,
-      onHideDecreditonLogs, onHideDcrdLogs, onHideDcrwalletLogs, onShowDcrlndLogs,
+    const {
+      onShowDecreditonLogs,
+      onShowDcrdLogs,
+      onShowDcrwalletLogs,
+      onHideDecreditonLogs,
+      onHideDcrdLogs,
+      onHideDcrwalletLogs,
+      onShowDcrlndLogs,
       onHideDcrlndLogs
     } = this;
     return (
@@ -72,24 +89,27 @@ class LogsTabBody extends React.Component {
   }
 
   getLogs() {
-    return Promise
-      .all([ getDcrdLogs(), getDcrwalletLogs(), getDecreditonLogs(), getDcrlndLogs() ])
-      .then(([ rawDcrdLogs, rawDcrwalletLogs, decreditonLogs, dcrlndLogs ]) => {
-        const dcrdLogs = Buffer.from(rawDcrdLogs).toString("utf8");
-        const dcrwalletLogs = Buffer.from(rawDcrwalletLogs).toString("utf8");
-        if ( dcrdLogs !== this.state.dcrdLogs ) {
-          this.setState({ dcrdLogs });
-        }
-        if ( dcrwalletLogs !== this.state.dcrwalletLogs ) {
-          this.setState({ dcrwalletLogs });
-        }
-        if ( decreditonLogs !== this.state.decreditonLogs ) {
-          this.setState({ decreditonLogs });
-        }
-        if ( dcrlndLogs !== this.state.dcrlndLogs ) {
-          this.setState({ dcrlndLogs });
-        }
-      });
+    return Promise.all([
+      getDcrdLogs(),
+      getDcrwalletLogs(),
+      getDecreditonLogs(),
+      getDcrlndLogs()
+    ]).then(([rawDcrdLogs, rawDcrwalletLogs, decreditonLogs, dcrlndLogs]) => {
+      const dcrdLogs = Buffer.from(rawDcrdLogs).toString("utf8");
+      const dcrwalletLogs = Buffer.from(rawDcrwalletLogs).toString("utf8");
+      if (dcrdLogs !== this.state.dcrdLogs) {
+        this.setState({ dcrdLogs });
+      }
+      if (dcrwalletLogs !== this.state.dcrwalletLogs) {
+        this.setState({ dcrwalletLogs });
+      }
+      if (decreditonLogs !== this.state.decreditonLogs) {
+        this.setState({ decreditonLogs });
+      }
+      if (dcrlndLogs !== this.state.dcrlndLogs) {
+        this.setState({ dcrlndLogs });
+      }
+    });
   }
 
   onShowDecreditonLogs() {

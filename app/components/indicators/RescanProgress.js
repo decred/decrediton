@@ -11,12 +11,12 @@ const RescanProgress = ({
   rescanRequest,
   rescanCancel
 }) => (
-  <div className="rescan-progress-area" >
+  <div className="rescan-progress-area">
     <div className="rescan-progress-indicator">
       <LinearProgressSmall
         min={0}
         max={1}
-        value={rescanCurrentBlock/rescanEndBlock}
+        value={rescanCurrentBlock / rescanEndBlock}
       />
     </div>
     <div className="rescan-button-area">
@@ -26,11 +26,20 @@ const RescanProgress = ({
       id="rescan.rescanning"
       m="Rescanning {blockProgress} ({progressPercent})"
       values={{
-        blockProgress: (<span className="rescan-progress-fraction">{rescanCurrentBlock}/{rescanEndBlock}</span>),
-        progressPercent:
-          (<span className="rescan-progress-percent">
-            <T id="rescan.progressPercent" m="{progress, number, percent}" values={{ progress: rescanPercentFinished/100 }} />
-          </span>)
+        blockProgress: (
+          <span className="rescan-progress-fraction">
+            {rescanCurrentBlock}/{rescanEndBlock}
+          </span>
+        ),
+        progressPercent: (
+          <span className="rescan-progress-percent">
+            <T
+              id="rescan.progressPercent"
+              m="{progress, number, percent}"
+              values={{ progress: rescanPercentFinished / 100 }}
+            />
+          </span>
+        )
       }}
     />
     <div className="rescan-cancel-button-area">

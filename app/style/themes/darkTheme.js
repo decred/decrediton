@@ -1,4 +1,3 @@
-
 const darkTheme = {
   "background-back-color": "#223767",
   "background-container": "#1B2B54",
@@ -144,10 +143,10 @@ const darkTheme = {
   "sidebar-balance-icon": "url('style/icons/sidebarBalanceDark.svg')",
   "testnet-logo": "url('style/icons/testnetLogoDark.svg')",
   "mainnet-logo": "url('style/icons/decredLogoDark.svg')",
-  "createnewwallet": "url('style/icons/createnewwalletDark.svg')",
+  createnewwallet: "url('style/icons/createnewwalletDark.svg')",
   "wallet-blue-icon": "url('style/icons/walletBlueDark.svg')",
   "wallet-gray-icon": "url('style/icons/walletGrayDark.svg')",
-  "blockchain": "url('style/icons/blockchainDark.svg')",
+  blockchain: "url('style/icons/blockchainDark.svg')",
   "blockchain-default": "url('style/icons/blockchainDefaultDark.svg')",
   "launcher-edit-wallets": "url('style/icons/editDefaultDark.svg')",
   "launcher-edit-wallets-hover": "url('style/icons/editHoverDark.svg')",
@@ -169,7 +168,8 @@ const darkTheme = {
   "help-forum": "url('style/icons/forumGreyDark.svg')",
   "help-stakepools": "url('style/icons/stakepoolsGreyDark.svg')",
   "help-matrix": "url('style/icons/matrixGreyDark.svg')",
-  "help-blockchain-explorer": "url('style/icons/blockchainExplorerGreyDark.svg')",
+  "help-blockchain-explorer":
+    "url('style/icons/blockchainExplorerGreyDark.svg')",
   "help-constitution": "url('style/icons/constitutionGreyDark.svg')",
   "help-star": "url('style/icons/starGreyDark.svg')",
   "help-external-default": "url('style/icons/externalDefaultDark.svg')",
@@ -184,13 +184,14 @@ const darkTheme = {
   "send-self-default": "url('style/icons/sendSelfDefaultDark.svg')",
   "send-all-default": "url('style/icons/sendMaxDefaultDark.svg')",
   "search-icon": "url('style/icons/searchDark.svg')",
-  "wallet-tutorial-check-circle": "url('style/icons/walletTutorialCheckcircleDark.svg')",
+  "wallet-tutorial-check-circle":
+    "url('style/icons/walletTutorialCheckcircleDark.svg')",
   "importscript-icon": "url('style/icons/importScriptDark.svg')",
   "stakepool-stats-active-icon": "url('style/icons/stakepoolsActiveDark.svg')",
   "accounts-default": "url('style/icons/accountDefaultDark.svg')",
   "accounts-imported": "url('style/icons/accountImportedDark.svg')",
-  "password": "url('style/icons/passwordDark.svg')",
-  "txDetailsArrowLeft": "url('style/icons/txDetailsArrowLeftDark.svg')",
+  password: "url('style/icons/passwordDark.svg')",
+  txDetailsArrowLeft: "url('style/icons/txDetailsArrowLeftDark.svg')",
   "stake-pool-icon": "url('style/icons/stakepoolDark.svg')",
   "expiry-icon": "url('style/icons/expiryDark.svg')",
   "split-fee-icon": "url('style/icons/splitFeeDark.svg')",
@@ -199,7 +200,8 @@ const darkTheme = {
   "ticket-address-icon": "url('style/icons/votingAddressDark.svg')",
   "fee-address-icon": "url('style/icons/poolFeeAddressDark.svg')",
   "sort-by-icon": "url('style/icons/sortbyDark.svg')",
-  "contextbutton-eye-default-icon": "url('style/icons/contextbuttonEyeDefaultDark.svg')",
+  "contextbutton-eye-default-icon":
+    "url('style/icons/contextbuttonEyeDefaultDark.svg')",
   "launcher-logo": "url('style/icons/launcherLogoDark.svg')",
   "help-getstared": "url('style/icons/helpGetstaredDark.svg')",
   "no-tx-icon": "url('style/icons/noTxDark.svg')",
@@ -210,7 +212,8 @@ const darkTheme = {
   "vote-time-stats-icon": "url('style/icons/voteTimeDefaultDark.svg')",
   "vote-time-stats-active-icon": "url('style/icons/voteTimeActiveDark.svg')",
   "stakerewards-stats-icon": "url('style/icons/stakeRewardsDefaultDark.svg')",
-  "stakerewards-stats-active-icon": "url('style/icons/stakeRewardsActiveDark.svg')",
+  "stakerewards-stats-active-icon":
+    "url('style/icons/stakeRewardsActiveDark.svg')",
   "send-self-hover": "url('style/icons/sendSelfHoverDark.svg')",
   "send-all-hover": "url('style/icons/sendMaxHoverDark.svg')",
   "select-arrow-up": "url('style/icons/selectArrowUpDark.svg')",
@@ -219,7 +222,6 @@ const darkTheme = {
   "menu-trezor-default": "url('style/icons/trezorDefaultDark.svg')",
   "menu-trezor-hover": "url('style/icons/trezorHoverDark.svg')",
   "menu-cancel-rescan-icon": "url('style/icons/menuCancelRescanDark.svg')"
-
 };
 
 export default darkTheme;

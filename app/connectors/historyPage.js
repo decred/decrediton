@@ -14,9 +14,13 @@ const mapStateToProps = selectorMap({
   tsDate: sel.tsDate
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  getTransactions: ca.getTransactions,
-  changeTransactionsFilter: ca.changeTransactionsFilter
-}, dispatch);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      getTransactions: ca.getTransactions,
+      changeTransactionsFilter: ca.changeTransactionsFilter
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps);

@@ -17,29 +17,34 @@ class TicketAutoBuyer extends React.Component {
       isScrollingDown: false,
       canNotEnableAutobuyer: false,
       balanceToMaintainError: false,
-      stakePool: this.props.ticketBuyerSettings ? this.props.ticketBuyerSettings.stakepool : this.props.stakePool,
-      account: this.props.ticketBuyerSettings ? this.props.ticketBuyerSettings.account : this.props.account,
-      balanceToMaintain: this.props.ticketBuyerSettings ? this.props.ticketBuyerSettings.balanceToMaintain : 0
+      stakePool: this.props.ticketBuyerSettings
+        ? this.props.ticketBuyerSettings.stakepool
+        : this.props.stakePool,
+      account: this.props.ticketBuyerSettings
+        ? this.props.ticketBuyerSettings.account
+        : this.props.account,
+      balanceToMaintain: this.props.ticketBuyerSettings
+        ? this.props.ticketBuyerSettings.balanceToMaintain
+        : 0
     };
   }
 
   componentDidUpdate() {
     const { isHidingDetails } = this.state;
-    if(!isHidingDetails) {
+    if (!isHidingDetails) {
       this.scrollToBottom();
     }
   }
 
   scrollTo(element, to, duration) {
     const { isScrollingDown } = this.state;
-    if (!isScrollingDown)
-      return;
+    if (!isScrollingDown) return;
     if (duration <= 0) {
       this.setState({ isScrollingDown: false });
       return;
     }
     const difference = to - element.scrollTop;
-    const perTick = difference / duration * 10;
+    const perTick = (difference / duration) * 10;
 
     let intervelId = setTimeout(() => {
       element.scrollTop = element.scrollTop + perTick;
@@ -49,15 +54,15 @@ class TicketAutoBuyer extends React.Component {
     }, 10);
   }
 
-  scrollToBottom () {
+  scrollToBottom() {
     const content = document.querySelector(".tab-content");
     this.scrollTo(content, content.scrollHeight, 150);
   }
 
   render() {
-    const changeBalanceToMaintain = e => this.onChangeBalanceToMaintain(e);
-    const changeAccount = e => this.onChangeAccount(e);
-    const changeStakePool = e => this.onChangeStakePool(e);
+    const changeBalanceToMaintain = (e) => this.onChangeBalanceToMaintain(e);
+    const changeAccount = (e) => this.onChangeAccount(e);
+    const changeStakePool = (e) => this.onChangeStakePool(e);
     return (
       <TicketAutoBuyerForm
         {...{
@@ -70,9 +75,12 @@ class TicketAutoBuyer extends React.Component {
           stakePool: this.getStakePool(),
           ...this.props,
           ...this.state,
-          ...substruct({
-            onStartAutoBuyer: null
-          }, this)
+          ...substruct(
+            {
+              onStartAutoBuyer: null
+            },
+            this
+          )
         }}
       />
     );
@@ -80,15 +88,17 @@ class TicketAutoBuyer extends React.Component {
 
   getValueInAtoms(value) {
     const { currencyDisplay } = this.props;
-    if (currencyDisplay === DCR)
-      return value * UNIT_DIVISOR;
+    if (currencyDisplay === DCR) return value * UNIT_DIVISOR;
     return value;
   }
 
   getCurrentSettings() {
-    return substruct({
-      balanceToMaintain: null
-    }, this.props);
+    return substruct(
+      {
+        balanceToMaintain: null
+      },
+      this.props
+    );
   }
 
   onChangeStakePool(stakePool) {
@@ -101,18 +111,24 @@ class TicketAutoBuyer extends React.Component {
 
   getIsDirty() {
     const settings = this.getCurrentSettings();
-    return !!Object.keys(settings).find(key => this.state[key] !== settings[key]);
+    return !!Object.keys(settings).find(
+      (key) => this.state[key] !== settings[key]
+    );
   }
 
   getAccount() {
     const account = this.state.account;
-    return this.props.spendingAccounts.find(compose(eq(account.value), get("value")));
+    return this.props.spendingAccounts.find(
+      compose(eq(account.value), get("value"))
+    );
   }
 
   getStakePool() {
     const pool = this.state.stakePool;
     return pool
-      ? this.props.configuredStakePools.find(compose(eq(pool.Host), get("Host")))
+      ? this.props.configuredStakePools.find(
+          compose(eq(pool.Host), get("Host"))
+        )
       : null;
   }
 
@@ -124,12 +140,13 @@ class TicketAutoBuyer extends React.Component {
 
   onStartAutoBuyer(passphrase) {
     const { onEnableTicketAutoBuyer } = this.props;
-    onEnableTicketAutoBuyer && onEnableTicketAutoBuyer(
-      passphrase,
-      this.getAccount(),
-      this.state.balanceToMaintain,
-      this.getStakePool()
-    );
+    onEnableTicketAutoBuyer &&
+      onEnableTicketAutoBuyer(
+        passphrase,
+        this.getAccount(),
+        this.state.balanceToMaintain,
+        this.getStakePool()
+      );
   }
 
   getErrors() {
@@ -147,7 +164,6 @@ class TicketAutoBuyer extends React.Component {
     });
     return false;
   }
-
 }
 
 export default ticketAutoBuyer(injectIntl(TicketAutoBuyer));

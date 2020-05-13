@@ -20,18 +20,22 @@ const mapStateToProps = selectorMap({
   theme: sel.theme
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  decreditonInit: da.decreditonInit,
-  shutdownApp: da.shutdownApp,
-  listenForAppReloadRequest: cla.listenForAppReloadRequest,
-  showAboutModalMacOS: ca.showAboutModalMacOS,
-  hideAboutModalMacOS: ca.hideAboutModalMacOS,
-  showAutobuyerRunningModal: ca.showAutobuyerRunningModal,
-  hideAutobuyerRunningModal: ca.hideAutobuyerRunningModal,
-  onExpandSideBar: sba.expandSideBar,
-  onReduceSideBar: sba.reduceSideBar,
-  onSidebarToBottom: sba.sidebarToBottom,
-  onSidebarLeaveBottom: sba.onSidebarLeaveBottom
-}, dispatch);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      decreditonInit: da.decreditonInit,
+      shutdownApp: da.shutdownApp,
+      listenForAppReloadRequest: cla.listenForAppReloadRequest,
+      showAboutModalMacOS: ca.showAboutModalMacOS,
+      hideAboutModalMacOS: ca.hideAboutModalMacOS,
+      showAutobuyerRunningModal: ca.showAutobuyerRunningModal,
+      hideAutobuyerRunningModal: ca.hideAutobuyerRunningModal,
+      onExpandSideBar: sba.expandSideBar,
+      onReduceSideBar: sba.reduceSideBar,
+      onSidebarToBottom: sba.sidebarToBottom,
+      onSidebarLeaveBottom: sba.onSidebarLeaveBottom
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps);
