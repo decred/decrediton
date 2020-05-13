@@ -102,6 +102,7 @@
   text-align: center;
   color: #e9f8fe;
   margin-right: 20px;
+  cursor: pointer;
 }
 
 .modalShare {
@@ -114,6 +115,7 @@
   background-position: center;
   background-image: var(--share-icon);
   background-size: 30px 30px;
+  cursor: pointer;
 }
 
 .receiveContent {
