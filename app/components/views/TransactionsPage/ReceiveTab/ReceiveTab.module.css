@@ -130,14 +130,29 @@
 
 .receiveContentNestForAddress {
   display: flex;
+  margin-bottom: 20px;
 }
 
 .receiveSelectAccountInput {
   width: 310px;
+  display: flex;
+}
+
+.receiveSelectAmountInput {
+  width: 310px;
+  display: flex;
+}
+
+.receiveSelectAccountInputValue {
+}
+
+.requestedAmountInput {
+  width: 285px;
 }
 
 .receiveRequestedAmount {
   display: flex;
+  margin-bottom: 20px;
 }
 
 .receiveContentButtons div {
@@ -163,6 +178,16 @@
   text-align: center;
   line-height: 40px;
   position: relative;
+  border: 1px transparent solid;
+  transition: border-color 1s;
+}
+
+.receiveContentNestQR:hover {
+  border-color: #78d9f8;
+}
+
+.border {
+  border-color: #78d9f8;
 }
 
 .receiveContentNestCopyQR {
@@ -172,14 +197,20 @@
   left: 0;
   right: 0;
   margin: 40px auto auto auto;
-  width: 100px;
+  width: 120px;
   height: 35px;
   background-color: transparent;
   z-index: 2;
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.opacity {
+  opacity: 1 !important;
 }
 
 .receiveContentNestCopyQRText {
-  width: 104px;
+  width: 120px;
   height: 20px;
   background-color: white;
   box-shadow: 0px 3px 13px #09144036;
@@ -202,7 +233,6 @@
 }
 
 .line {
-  margin-top: 20px;
   height: 40px;
   display: flex;
   margin-bottom: 21px;
@@ -270,4 +300,12 @@
 
 .receiveContentShareButton:hover {
   background-color: #e9f8ff;
+}
+
+.generateButton {
+  position: relative;
+  margin-top: 20px;
+  margin-left: 560px;
+  width: 185px;
+  height: 45px;
 }
