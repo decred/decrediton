@@ -173,16 +173,12 @@ const initialState = {
     getAccountsRequestAttempt: false,
     getAccountsResponse: null,
 
-    // Transactions for Overview Page
-    recentTransactionCount: 8,
-    recentTransactions: Array(),
-    recentStakeTransactions: Array(),
+    recentTransactions: [],
+    recentStakeTransactions: [],
 
     // GetTransactions
-    minedTransactions: Array(),
-    unminedTransactions: Array(),
-    transactions: Array(), // unmined + mined. Calculated on the grpc reducer.
-    maximumTransactionCount: 10,
+    unminedTransactions: [],
+    transactions: {},
     noMoreTransactions: false,
     transactionsFilter: {
       search: null, // The freeform text in the Search box
@@ -192,7 +188,6 @@ const initialState = {
       maxAmount: null,
       minAmount: null
     },
-    lastTransaction: null, //last transaction obtained
 
     getTransactionsError: null,
     getTransactionsRequestAttempt: false,
@@ -211,17 +206,11 @@ const initialState = {
     },
     getTicketsStartRequestHeight: null,
     getTicketsCancel: false, // user requested cancelation (but it hasn't happened yet)
-    getTicketsProgressStartRequestHeight: null,
 
     // Agenda/VoteChoices
     allAgendas: [],
     getAgendasResponse: null,
     getVoteChoicesResponse: null,
-
-    // GetMessageDecodeService
-    decodeMessageService: null,
-    getMessageDecodeServiceRequestAttempt: false,
-    getMessageDecodeServiceError: null,
 
     // map from (reversed) transaction hash to fully decoded transaction
     decodedTransactions: {},
@@ -230,10 +219,6 @@ const initialState = {
     // heights, due to maturing stake transactions. Keys are the heights,
     // values are arrays of account numbers.
     maturingBlockHeights: {},
-
-    // list of outstanding requests for additional stake data from transactions
-    // (indexed by transaction hash)
-    fetchMissingStakeTxDataAttempt: {},
 
     // Shown under governance tab
     treasuryBalance: null
