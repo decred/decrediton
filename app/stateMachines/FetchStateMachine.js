@@ -12,7 +12,8 @@ export const fetchMachine = Machine({
       entry: ["initial"],
       on: {
         FETCH: "loading",
-        RESOLVE: "success"
+        RESOLVE: "success",
+        REJECT: "failure"
       }
     },
     loading: {
