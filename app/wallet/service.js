@@ -1,21 +1,24 @@
 import Promise from "promise";
 import * as client from "middleware/grpc/client";
-import {
-  reverseHash,
-  strHashToRaw,
-  rawHashToHex
-} from "../helpers/byteActions";
-import { Uint64LE } from "int64-buffer";
-import {
-  CommittedTicketsRequest,
-  DecodeRawTransactionRequest
-} from "middleware/walletrpc/api_pb";
+import { reverseHash, strHashToRaw, rawToHex } from "helpers/byteActions";
+import { CommittedTicketsRequest } from "middleware/walletrpc/api_pb";
 import {
   withLog as log,
   withLogNoData,
   logOptionNoResponseData
 } from "./index";
 import * as api from "middleware/walletrpc/api_pb";
+import {
+  TRANSACTION_DIR_SENT,
+  TRANSACTION_DIR_RECEIVED,
+  TRANSACTION_DIR_TRANSFERRED
+} from "constants/Decrediton";
+import {
+  _blake256,
+  selializeNoWitnessEncode,
+  decodeRawTransaction as decodeHelper
+} from "helpers";
+import { extractPkScriptAddrs } from "helpers/scripts";
 
 const promisify = (fn) => (...args) =>
   new Promise((ok, fail) =>
@@ -29,7 +32,6 @@ export const getAgendaService = promisify(client.getAgendaService);
 export const getMessageVerificationService = promisify(
   client.getMessageVerificationService
 );
-export const getDecodeService = promisify(client.getDecodeMessageService);
 export const getSeedService = promisify(client.getSeedService);
 export const getAccountMixerService = promisify(client.getAccountMixerService);
 
@@ -64,32 +66,14 @@ export const validateAddress = withLogNoData(
   "Validate Address"
 );
 
-export const decodeTransactionLocal = (rawTx) => {
+export const decodeTransactionLocal = (rawTx, chainParams) => {
   const buffer = Buffer.isBuffer(rawTx) ? rawTx : Buffer.from(rawTx, "hex");
-  return Promise.resolve(decodeRawTransaction(buffer));
+  return Promise.resolve(decodeRawTransaction(buffer, chainParams));
 };
-
-export const decodeTransaction = withLogNoData(
-  (decodeMessageService, rawTx) =>
-    new Promise((resolve, reject) => {
-      const request = new DecodeRawTransactionRequest();
-      const buffer = Buffer.isBuffer(rawTx) ? rawTx : Buffer.from(rawTx, "hex");
-      const buff = new Uint8Array(buffer);
-      request.setSerializedTransaction(buff);
-      decodeMessageService.decodeRawTransaction(request, (error, tx) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(tx);
-        }
-      });
-    }),
-  "Decode Transaction"
-);
 
 // UNMINED_BLOCK_TEMPLATE is a helper const that defines what an unmined block
 // looks like (null timestamp, height == -1, etc).
-export const UNMINED_BLOCK_TEMPLATE = {
+const UNMINED_BLOCK_TEMPLATE = {
   getTimestamp() {
     return null;
   },
@@ -101,6 +85,7 @@ export const UNMINED_BLOCK_TEMPLATE = {
   }
 };
 
+// TODO move these to constants
 export const TRANSACTION_TYPE_REGULAR = "Regular";
 export const TRANSACTION_TYPE_TICKET_PURCHASE = "Ticket";
 export const TRANSACTION_TYPE_VOTE = "Vote";
@@ -118,15 +103,19 @@ export const TRANSACTION_TYPES = {
   [api.TransactionDetails.TransactionType.COINBASE]: TRANSACTION_TYPE_COINBASE
 };
 
-export const TRANSACTION_DIR_SENT = "sent";
-export const TRANSACTION_DIR_RECEIVED = "received";
-export const TRANSACTION_DIR_TRANSFERRED = "transfer";
+const StakeTxType = [
+  api.TransactionDetails.TransactionType.VOTE,
+  api.TransactionDetails.TransactionType.REVOCATION,
+  api.TransactionDetails.TransactionType.TICKET_PURCHASE
+];
 
 // formatTransaction converts a transaction from the structure of a grpc reply
-// into a structure more amenable to use within decrediton. It stores the block
-// information of when the transaction was mined into the transaction.
-// Index is the index of the transaction within the block.
+// into a structure more amenable to use within decrediton. If dec
 export function formatTransaction(block, transaction, index) {
+  // isStakeTx gets a transaction type and return true if it is a stake tx, false otherwise.
+  // @param {int} type.
+  const isStakeTx = (type) => StakeTxType.indexOf(type) > -1;
+
   const inputAmounts = transaction
     .getDebitsList()
     .reduce((s, input) => s + input.getPreviousAmount(), 0);
@@ -136,7 +125,8 @@ export function formatTransaction(block, transaction, index) {
   const amount = outputAmounts - inputAmounts;
   const fee = transaction.getFee();
   const type = transaction.getTransactionType();
-  let direction = "";
+  const txType = TRANSACTION_TYPES[type];
+  let direction;
 
   const debitAccounts = [];
   transaction
@@ -148,7 +138,9 @@ export function formatTransaction(block, transaction, index) {
     .getCreditsList()
     .forEach((credit) => creditAddresses.push(credit.getAddress()));
 
-  if (type === api.TransactionDetails.TransactionType.REGULAR) {
+  const isStake = isStakeTx(type);
+
+  if (!isStake) {
     if (amount > 0) {
       direction = TRANSACTION_DIR_RECEIVED;
     } else if (amount < 0 && fee == Math.abs(amount)) {
@@ -159,22 +151,24 @@ export function formatTransaction(block, transaction, index) {
   }
 
   return {
-    timestamp: block.getTimestamp(),
+    txTimestamp: block.getTimestamp(),
     height: block.getHeight(),
     blockHash: block.getHash(),
     index: index,
     hash: transaction.getHash(),
     txHash: reverseHash(Buffer.from(transaction.getHash()).toString("hex")),
     tx: transaction,
-    txType: TRANSACTION_TYPES[type],
+    txType,
     debitsAmount: inputAmounts,
     creditsAmount: outputAmounts,
     type,
-    direction,
     amount,
     fee,
     debitAccounts,
-    creditAddresses
+    creditAddresses,
+    isStake,
+    rawTx: Buffer.from(transaction.getTransaction()).toString("hex"),
+    direction
   };
 }
 
@@ -273,45 +267,6 @@ export const getTransaction = (walletService, txHash) =>
     });
   });
 
-export const getUnformattedTransaction = (walletService, txHash) =>
-  new Promise((resolve, reject) => {
-    const request = new api.GetTransactionRequest();
-    const buffer = Buffer.isBuffer(txHash) ? txHash : strHashToRaw(txHash);
-    request.setTransactionHash(buffer);
-    walletService.getTransaction(request, (err, resp) => {
-      if (err) {
-        reject(err);
-        return;
-      }
-
-      const tx = resp.getTransaction();
-      resolve(tx);
-    });
-  });
-
-// getInputTransactions returns the input transactions to the given source
-// transaction (assumes srcTx was returned from decodeTransaction).
-export const getInputTransactions = async (
-  walletService,
-  decodeMessageService,
-  srcTx
-) => {
-  const txs = [];
-  for (const inp of srcTx.getInputsList()) {
-    const inpTx = await getUnformattedTransaction(
-      walletService,
-      rawHashToHex(inp.getPreviousTransactionHash())
-    );
-    const decodedInpResp = await decodeTransaction(
-      decodeMessageService,
-      inpTx.getTransaction()
-    );
-    txs.push(decodedInpResp.getTransaction());
-  }
-
-  return txs;
-};
-
 export const publishUnminedTransactions = log(
   (walletService) =>
     new Promise((resolve, reject) => {
@@ -335,89 +290,30 @@ export const committedTickets = withLogNoData(
   "Committed Tickets"
 );
 
-export const decodeRawTransaction = (rawTx) => {
+// decodeRawTransaction decodes a raw transaction into a human readable
+// object.
+export const decodeRawTransaction = (rawTx, chainParams) => {
   if (!(rawTx instanceof Buffer)) {
     throw new Error("rawtx requested for decoding is not a Buffer object");
   }
-  let position = 0;
-
-  const tx = {};
-  tx.version = rawTx.readUInt32LE(position);
-  position += 4;
-  let first = rawTx.readUInt8(position);
-  position += 1;
-  switch (first) {
-    case 0xfd:
-      tx.numInputs = rawTx.readUInt16LE(position);
-      position += 2;
-      break;
-    case 0xfe:
-      tx.numInputs = rawTx.readUInt32LE(position);
-      position += 4;
-      break;
-    default:
-      tx.numInputs = first;
-  }
-  tx.inputs = [];
-  for (let i = 0; i < tx.numInputs; i++) {
-    const input = {};
-    input.prevTxId = rawTx.slice(position, position + 32);
-    position += 32;
-    input.outputIndex = rawTx.readUInt32LE(position);
-    position += 4;
-    input.outputTree = rawTx.readUInt8(position);
-    position += 1;
-    input.sequence = rawTx.readUInt32LE(position);
-    position += 4;
-    tx.inputs.push(input);
+  if (!chainParams) {
+    throw new Error("chainParams can not be undefined");
   }
 
-  first = rawTx.readUInt8(position);
-  position += 1;
-  switch (first) {
-    case 0xfd:
-      tx.numOutputs = rawTx.readUInt16LE(position);
-      position += 2;
-      break;
-    case 0xfe:
-      tx.numOutputs = rawTx.readUInt32LE(position);
-      position += 4;
-      break;
-    default:
-      tx.numOutputs = first;
-  }
+  const decodedTx = decodeHelper(rawTx);
+  decodedTx.outputs = decodedTx.outputs.map((o) => {
+    return {
+      ...o,
+      decodedScript: extractPkScriptAddrs(0, o.script, chainParams)
+    };
+  });
 
-  tx.outputs = [];
-  for (let j = 0; j < tx.numOutputs; j++) {
-    const output = {};
-    output.value = Uint64LE(rawTx.slice(position, position + 8)).toNumber();
-    position += 8;
-    output.version = rawTx.readUInt16LE(position);
-    position += 2;
-    // check length of scripts
-    let scriptLen;
-    first = rawTx.readUInt8(position);
-    position += 1;
-    switch (first) {
-      case 0xfd:
-        scriptLen = rawTx.readUInt16LE(position);
-        position += 2;
-        break;
-      case 0xfe:
-        scriptLen = rawTx.readUInt32LE(position);
-        position += 4;
-        break;
-      default:
-        scriptLen = first;
-    }
-    output.script = rawTx.slice(position, position + scriptLen);
-    position += scriptLen;
-    tx.outputs.push(output);
-  }
+  return decodedTx;
+};
 
-  tx.lockTime = rawTx.readUInt32LE(position);
-  position += 4;
-  tx.expiry = rawTx.readUInt32LE(position);
-  position += 4;
-  return tx;
+// calculateHashFromEncodedTx calculates a hash from a decoded tx prefix.
+export const calculateHashFromDecodedTx = (decodedTx) => {
+  const rawEncodedTx = selializeNoWitnessEncode(decodedTx);
+  const checksum = _blake256(Buffer.from(rawEncodedTx));
+  return reverseHash(rawToHex(checksum));
 };
