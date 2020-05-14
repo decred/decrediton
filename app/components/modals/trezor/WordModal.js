@@ -2,7 +2,7 @@ import Modal from "../Modal";
 import { FormattedMessage as T } from "react-intl";
 import { ButtonsToolbar } from "../PassphraseModal";
 import Select from "react-select";
-import { word_list } from "helpers/trezor";
+import { word_list } from "constants/trezor";
 
 const input_options = word_list.map((w) => ({ word: w }));
 

@@ -5,14 +5,18 @@ import {
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_RECEIVED,
   TRANSACTION_DIR_TRANSFERRED,
-  TRANSACTION_TYPES
-} from "wallet/service";
+  TICKET,
+  VOTE,
+  REVOCATION
+} from "constants/Decrediton";
 
 const transactionTypes = [
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_RECEIVED,
   TRANSACTION_DIR_TRANSFERRED,
-  ...Object.values(TRANSACTION_TYPES)
+  TICKET,
+  VOTE,
+  REVOCATION
 ];
 
 const Notification = ({

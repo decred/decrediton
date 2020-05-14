@@ -32,6 +32,7 @@ class MyTickets extends React.Component {
     ];
   }
 
+  // TODO use constants
   getTicketTypes() {
     return [
       {
@@ -81,6 +82,12 @@ class MyTickets extends React.Component {
     this.setState({ selectedSortOrderKey: type.value });
   }
 
+  getTickets() {
+    const { tickets } = this.props;
+    if (!tickets) return [];
+    return Object.keys(tickets).map((hash) => tickets[hash]);
+  }
+
   render() {
     const loadMoreThreshold =
       90 + Math.max(0, this.props.window.innerHeight - 765);
@@ -93,6 +100,7 @@ class MyTickets extends React.Component {
           loadMoreThreshold,
           ticketTypes: this.getTicketTypes(),
           sortTypes: this.getSortTypes(),
+          tickets: this.getTickets(),
           ...substruct(
             {
               onChangeSelectedType: null,

@@ -10,8 +10,11 @@ import { spring, TransitionMotion } from "react-motion";
 import {
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_RECEIVED,
-  TRANSACTION_DIR_TRANSFERRED
-} from "wallet/service";
+  TRANSACTION_DIR_TRANSFERRED,
+  TICKET,
+  VOTE,
+  REVOCATION
+} from "constants/Decrediton";
 import "style/Snackbar.less";
 
 const propTypes = {
@@ -21,9 +24,9 @@ const propTypes = {
 
 const snackbarClasses = ({ type }) =>
   ({
-    Ticket: "snackbar snackbar-stake",
-    Vote: "snackbar snackbar-stake",
-    Revocation: "snackbar snackbar-stake",
+    [TICKET]: "snackbar snackbar-stake",
+    [VOTE]: "snackbar snackbar-stake",
+    [REVOCATION]: "snackbar snackbar-stake",
     [TRANSACTION_DIR_RECEIVED]: "snackbar snackbar-receive",
     [TRANSACTION_DIR_SENT]: "snackbar snackbar-send",
     [TRANSACTION_DIR_TRANSFERRED]: "snackbar snackbar-transfer",
