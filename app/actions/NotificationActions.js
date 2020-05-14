@@ -5,7 +5,7 @@ import {
   updateAccount,
   getAccountNumbersBalances
 } from "./ClientActions";
-import { newTransactionsReceived } from "./ClientActions";
+import { newTransactionsReceived } from "./TransactionActions";
 import {
   TransactionNotificationsRequest,
   AccountNotificationsRequest

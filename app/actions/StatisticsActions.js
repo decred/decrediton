@@ -2,12 +2,7 @@ import * as wallet from "wallet";
 import * as sel from "selectors";
 import fs from "fs";
 import { isNumber, isNullOrUndefined, isUndefined } from "util";
-import {
-  endOfDay,
-  reverseRawHash,
-  formatLocalISODate,
-  isSameDate
-} from "helpers";
+import { endOfDay, formatLocalISODate, isSameDate } from "helpers";
 
 const VALUE_TYPE_ATOMAMOUNT = "VALUE_TYPE_ATOMAMOUNT";
 const VALUE_TYPE_DATETIME = "VALUE_TYPE_DATETIME";
@@ -619,16 +614,15 @@ const ticketInfo = (tx) => {
 
 // closure that cals vote/revoke info necessary to correctly account for its
 // delta to balances, given a vote/revoke tx
-const voteRevokeInfo = async (tx, liveTickets, walletService) => {
+const voteRevokeInfo = async (tx, liveTickets, walletService, chainParams) => {
   const isVote = tx.txType === wallet.TRANSACTION_TYPE_VOTE;
 
   const decodedSpender = await wallet.decodeTransactionLocal(
-    tx.tx.getTransaction()
+    tx.tx.getTransaction(),
+    chainParams
   );
   const spenderInputs = decodedSpender.inputs;
-  const ticketHash = reverseRawHash(
-    spenderInputs[spenderInputs.length - 1].prevTxId
-  );
+  const ticketHash = spenderInputs[spenderInputs.length - 1].prevTxId;
 
   let ticket = liveTickets[ticketHash];
   if (!ticket) {
@@ -720,7 +714,12 @@ const txBalancesDelta = async (
       break;
     case wallet.TRANSACTION_TYPE_VOTE:
     case wallet.TRANSACTION_TYPE_REVOCATION:
-      revokeInfo = await voteRevokeInfo(tx, liveTickets, walletService);
+      revokeInfo = await voteRevokeInfo(
+        tx,
+        liveTickets,
+        walletService,
+        chainParams
+      );
       recordVoteRevoke(
         maturingTxs,
         tx,
