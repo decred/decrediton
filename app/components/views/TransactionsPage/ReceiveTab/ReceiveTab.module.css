@@ -10,7 +10,6 @@
 
 .modal {
   position: absolute;
-  /* background-color: transparent; */
   height: 419px;
   width: 355px;
   top: 0;
@@ -37,12 +36,12 @@
   position: relative;
   height: 355px;
   width: 355px;
-  background-color: white;
+  background-color: var(--background-back-color);
   display: flex;
   flex-direction: column;
   padding-top: 20px;
   padding-left: 20px;
-  box-shadow: 0px 5px 21px #09144021;
+  box-shadow: 0px 5px 21px var(--icons-shadow);
   box-sizing: border-box;
   margin-bottom: 20px;
 }
@@ -64,7 +63,6 @@
 }
 
 .modalLabel {
-  /* border-bottom: 1px solid red; */
   font-size: 13px;
   line-height: 13px;
   text-align: center;
@@ -92,22 +90,22 @@
 }
 
 .modalClose {
-  background: #48566e 0% 0% no-repeat padding-box;
-  box-shadow: 0px 5px 13px #09144036;
+  background: var(--info-modal-button-bg) 0% 0% no-repeat padding-box;
+  box-shadow: 0px 5px 13px var(--icons-shadow);
   border-radius: 5px;
   height: 44px;
   width: 71px;
   font-size: 13px;
   line-height: 44px;
   text-align: center;
-  color: #e9f8fe;
+  color: var(--background-copy-color);
   margin-right: 20px;
   cursor: pointer;
 }
 
 .modalShare {
-  box-shadow: 0px 5px 13px #09144036;
-  background-color: white;
+  box-shadow: 0px 5px 13px var(--icons-shadow);
+  background-color: var(--background-back-color);
   border-radius: 5px;
   height: 44px;
   width: 44px;
@@ -133,17 +131,13 @@
   margin-bottom: 20px;
 }
 
-.receiveSelectAccountInput {
-  width: 310px;
-  display: flex;
-}
-
 .receiveSelectAmountInput {
-  width: 310px;
+  width: 285px;
   display: flex;
 }
 
-.receiveSelectAccountInputValue {
+.receiveSelectAccountInput {
+  width: 313px;
 }
 
 .requestedAmountInput {
@@ -154,17 +148,6 @@
   display: flex;
   margin-bottom: 20px;
 }
-
-.receiveContentButtons div {
-  display: flex;
-  flex-direction: column;
-}
-
-.receiveContentButtons div span {
-  text-align: center;
-  margin-top: 2px;
-}
-
 .receiveContentNestQR {
   margin-right: 15px;
   background-color: var(--background-address-copy-color);
@@ -173,7 +156,7 @@
   height: 40px;
   width: 470px;
   color: var(--input-color-default);
-  font-size: 21px;
+  font-size: 19px;
   font-weight: 600;
   text-align: center;
   line-height: 40px;
@@ -183,11 +166,11 @@
 }
 
 .receiveContentNestQR:hover {
-  border-color: #78d9f8;
+  border-color: #78D9F8
 }
 
 .border {
-  border-color: #78d9f8;
+  border-color: #78D9F8
 }
 
 .receiveContentNestCopyQR {
@@ -196,8 +179,8 @@
   top: 0;
   left: 0;
   right: 0;
-  margin: 40px auto auto auto;
-  width: 120px;
+  margin: 41px auto auto auto;
+  width: 118px;
   height: 35px;
   background-color: transparent;
   z-index: 2;
@@ -210,13 +193,14 @@
 }
 
 .receiveContentNestCopyQRText {
-  width: 120px;
+  width: 118px;
   height: 20px;
-  background-color: white;
-  box-shadow: 0px 3px 13px #09144036;
+  background-color: var(--background-back-color);
+  box-shadow: 0px 3px 13px var(--icons-shadow);
   border-radius: 5px;
-  color: #2970ff;
+  color: var(--link-color);
   font-size: 9px;
+  font-weight: normal;
   line-height: 20px;
   white-space: pre;
 }
@@ -225,7 +209,7 @@
   position: relative;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
-  border-bottom: 5px solid white;
+  border-bottom: 5px solid var(--background-back-color);
   margin-left: auto;
   margin-right: auto;
   width: 0;
@@ -236,14 +220,18 @@
   height: 40px;
   display: flex;
   margin-bottom: 21px;
+  text-align: center;
+  font-size: 11px;
 }
 
-.receiveContentButtons {
-  height: 50px;
-  display: flex;
-  flex-wrap: wrap;
-  padding-top: 5px;
-  font-size: 11px;
+.receiveContentNestPrefix {
+  margin-right: 20px;
+  min-width: 125px;
+  margin-left: 0;
+  font-size: 19px;
+  line-height: 24px;
+  text-transform: capitalize;
+  text-align: right;
 }
 
 .receiveContentCopyButton {
@@ -253,12 +241,10 @@
   background-size: 20px 20px;
   height: 30px;
   width: 30px;
-  box-shadow: 0px 3px 5px #09144029;
+  box-shadow: 0px 3px 5px var(--icons-shadow);
   border-radius: 5px;
-  margin-right: 40px;
   cursor: pointer;
-  margin-left: 15px;
-  margin-right: 15px;
+  margin: 0 15px 2px 15px;
 }
 
 .receiveContentQRButton {
@@ -268,12 +254,10 @@
   background-size: 20px 20px;
   height: 30px;
   width: 30px;
-  box-shadow: 0px 3px 5px #09144029;
+  box-shadow: 0px 3px 5px var(--icons-shadow);
   border-radius: 5px;
-  margin-right: 40px;
   cursor: pointer;
-  margin-left: 25px;
-  margin-right: 20px;
+  margin: 0 20px 2px 20px;
 }
 
 .receiveContentShareButton {
@@ -283,23 +267,55 @@
   background-size: 20px 20px;
   height: 30px;
   width: 30px;
-  box-shadow: 0px 3px 5px #09144029;
+  box-shadow: 0px 3px 5px var(--icons-shadow);
   border-radius: 5px;
   cursor: pointer;
-  margin-left: 20px;
-  margin-right: 15px;
+  margin: 0 15px 2px 15px;
 }
 
 .receiveContentCopyButton:hover {
-  background-color: #e9f8ff;
+  background-color: var(--background-copy-color);
 }
 
 .receiveContentQRButton:hover {
-  background-color: #e9f8ff;
+  background-color: var(--background-copy-color);
 }
 
 .receiveContentShareButton:hover {
-  background-color: #e9f8ff;
+  background-color: var(--background-copy-color);
+}
+
+.copyParent {
+  padding-top: 5px;
+  color: var(--tab-text-active-hover);
+}
+
+.viewQRParent {
+  padding-top: 5px;
+  margin-left: 5px;
+  color: var(--tab-text-active-hover);
+}
+
+.shareQRParent {
+  padding-top: 5px;
+  margin-left: 5px;
+  color: var(--tab-text-active-hover);
+}
+.copyParent:hover {
+  padding-top: 5px;
+  color: var(--input-color-default);
+}
+
+.viewQRParent:hover {
+  padding-top: 5px;
+  margin-left: 5px;
+  color: var(--input-color-default);
+}
+
+.shareQRParent:hover {
+  padding-top: 5px;
+  margin-left: 5px;
+  color: var(--input-color-default);
 }
 
 .generateButton {
@@ -308,4 +324,13 @@
   margin-left: 560px;
   width: 185px;
   height: 45px;
+}
+
+.blueButton {
+  font-size: 13px;
+  padding: 12px 23px 14px 23px;
+}
+
+.receiveSelectAccountInput a {
+  margin-left: 10px;
 }
