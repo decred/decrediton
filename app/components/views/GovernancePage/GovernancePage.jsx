@@ -1,15 +1,9 @@
-import {
-  TabbedPage,
-  TabbedPageTab as Tab,
-  TitleHeader,
-  DescriptionHeader
-} from "layout";
+import { TabbedPage, TabbedPageTab as Tab, TitleHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
 import { Switch, Redirect } from "react-router-dom";
 import { default as ProposalsTab } from "./Proposals";
 import { default as BlockchainTab } from "./Blockchain";
-import { Balance } from "shared";
-import { treasuryInfo } from "connectors";
+import TabHeader from "./TabHeader";
 import "style/Governance.less";
 
 const PageHeader = () => (
@@ -18,35 +12,6 @@ const PageHeader = () => (
     title={<T id="governance.title" m="Governance" />}
   />
 );
-
-const TabHeader = treasuryInfo(({ treasuryBalance }) => (
-  <>
-    <DescriptionHeader
-      description={
-        <T id="governance.description" m="Governance aspects of Decred." />
-      }
-    />
-    {treasuryBalance && (
-      <DescriptionHeader
-        description={
-          <T
-            id="governance.treasury_balance"
-            m="Available Treasury Balance: {treasuryBalance}"
-            values={{
-              treasuryBalance: (
-                <Balance
-                  flat
-                  amount={treasuryBalance}
-                  classNameWrapper="header-small-balance"
-                />
-              )
-            }}
-          />
-        }
-      />
-    )}
-  </>
-));
 
 export default () => (
   <TabbedPage className="governance" header={<PageHeader />}>
