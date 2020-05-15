@@ -3,7 +3,7 @@ import { FormattedMessage as T } from "react-intl";
 import { Switch, Redirect } from "react-router-dom";
 import { default as ProposalsTab } from "./Proposals";
 import { default as BlockchainTab } from "./Blockchain";
-import TabHeader from "./TabHeader";
+import TabHeader from "./TabHeader/TabHeader";
 import "style/Governance.less";
 
 const PageHeader = () => (

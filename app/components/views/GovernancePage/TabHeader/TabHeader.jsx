@@ -1,7 +1,8 @@
 import { Balance } from "shared";
 import { DescriptionHeader } from "layout";
-import { useTreasuryInfo } from "./hooks";
+import { useTreasuryInfo } from "../hooks";
 import { FormattedMessage as T } from "react-intl";
+import styles from "./TabHeader.module.css";
 
 const TabHeader = () => {
   const { treasuryBalance } = useTreasuryInfo();
@@ -23,7 +24,7 @@ const TabHeader = () => {
                   <Balance
                     flat
                     amount={treasuryBalance}
-                    classNameWrapper="header-small-balance"
+                    classNameWrapper={styles.balanceAmount}
                   />
                 )
               }}
