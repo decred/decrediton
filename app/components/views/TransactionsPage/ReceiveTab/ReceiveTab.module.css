@@ -99,7 +99,6 @@
   line-height: 44px;
   text-align: center;
   color: var(--background-copy-color);
-  margin-right: 20px;
   cursor: pointer;
 }
 
@@ -132,12 +131,12 @@
 }
 
 .receiveSelectAmountInput {
-  width: 285px;
+  width: 300px;
   display: flex;
 }
 
 .receiveSelectAccountInput {
-  width: 313px;
+  width: 325px;
 }
 
 .requestedAmountInput {
@@ -166,11 +165,11 @@
 }
 
 .receiveContentNestQR:hover {
-  border-color: #78D9F8
+  border-color: #78D9F8;
 }
 
 .border {
-  border-color: #78D9F8
+  border-color: #78D9F8;
 }
 
 .receiveContentNestCopyQR {
@@ -186,6 +185,7 @@
   z-index: 2;
   opacity: 0;
   transition: opacity 1s;
+  transition-duration: 2s;
 }
 
 .opacity {

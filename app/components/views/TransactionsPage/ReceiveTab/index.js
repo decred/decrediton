@@ -1,5 +1,5 @@
 import ErrorScreen from "ErrorScreen";
-import ReceivePage from "./Page";
+import ReceivePage from "./ReceiveTabPage";
 import { service, receive } from "connectors";
 import { DescriptionHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
