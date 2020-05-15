@@ -89,10 +89,28 @@ const getSendSelfIcon = ({ isSendSelf, onShowSendSelf, onShowSendOthers }) =>
   );
 
 const SendOutputRow = ({
-  index, destination, amount, onAddOutput, onRemoveOutput,
-  onValidateAmount, onValidateAddress, isSendAll, onKeyDown, sendAllAmount, error, intl,
-  onShowSendAll, onHideSendAll, isSendSelf, outputs, onChangeAccount, onShowSendSelf,
-  account, onShowSendOthers, filterAccounts, accountsType
+  index,
+  destination,
+  amount,
+  onAddOutput,
+  onRemoveOutput,
+  onValidateAmount,
+  onValidateAddress,
+  isSendAll,
+  onKeyDown,
+  sendAllAmount,
+  error,
+  intl,
+  onShowSendAll,
+  onHideSendAll,
+  isSendSelf,
+  outputs,
+  onChangeAccount,
+  onShowSendSelf,
+  account,
+  onShowSendOthers,
+  filterAccounts,
+  accountsType
 }) => (
   <div className="is-row">
     <div>
@@ -113,15 +131,20 @@ const SendOutputRow = ({
       </div>
     </div>
     <div>
-      { index===0 &&
+      {index === 0 && (
         <div className="send-input-wrapper">
-          <AccountsSelect className="send-input"
+          <AccountsSelect
+            className="send-input"
             {...{
-              account, filterAccounts, onChange: onChangeAccount, onKeyDown, accountsType
+              account,
+              filterAccounts,
+              onChange: onChangeAccount,
+              onKeyDown,
+              accountsType
             }}
           />
         </div>
-      }
+      )}
       <div className="send-input-wrapper">
         {isSendSelf ? (
           <ReceiveAccountsSelect

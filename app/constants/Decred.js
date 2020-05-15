@@ -54,7 +54,7 @@ export const UNIT_DIVISOR = 100000000;
 //   - 72 bytes DER signature + 1 byte sighash
 //   - OP_DATA_33
 //   - 33 bytes serialized compressed pubkey
-export const	RedeemP2PKHSigScriptSize = 1 + 73 + 1 + 33;
+export const RedeemP2PKHSigScriptSize = 1 + 73 + 1 + 33;
 
 // AtomsPerCoin is the number of atomic units in one coin.
 const AtomsPerCoin = 1e8;

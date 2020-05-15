@@ -1,5 +1,5 @@
-const MaxUint16 = 1<<16 - 1;
-const MaxUint32 = 1<<32 - 1;
+const MaxUint16 = 1 << (16 - 1);
+const MaxUint32 = 1 << (32 - 1);
 
 // VarIntSerializeSize returns the number of bytes it would take to serialize
 // val as a variable length integer.
@@ -34,14 +34,16 @@ const VarIntSerializeSize = (val) => {
 //   - the compact int representation of the script size
 //   - the supplied script size
 //   - 4 bytes sequence
-const EstimateInputSize = (scriptSize) => 32 + 4 + 1 + 8 + 4 + 4 + VarIntSerializeSize(scriptSize) + scriptSize + 4;
+const EstimateInputSize = (scriptSize) =>
+  32 + 4 + 1 + 8 + 4 + 4 + VarIntSerializeSize(scriptSize) + scriptSize + 4;
 
 // EstimateOutputSize returns the worst case serialize size estimate for a tx output
 //   - 8 bytes amount
 //   - 2 bytes version
 //   - the compact int representation of the script size
 //   - the supplied script size
-const EstimateOutputSize = (scriptSize) => 8 + 2 + VarIntSerializeSize(scriptSize) + scriptSize;
+const EstimateOutputSize = (scriptSize) =>
+  8 + 2 + VarIntSerializeSize(scriptSize) + scriptSize;
 
 // EstimateSerializeSizeFromScriptSizes returns a worst case serialize size
 // estimate for a signed transaction that spends len(inputSizes) previous
@@ -49,14 +51,22 @@ const EstimateOutputSize = (scriptSize) => 8 + 2 + VarIntSerializeSize(scriptSiz
 // worst-case sizes. The estimated size is incremented for an additional
 // change output if changeScriptSize is greater than 0. Passing 0 does not
 // add a change output.
-export const EstimateSerializeSizeFromScriptSizes = (inputSizes, outputSizes, changeScriptSize) => {
+export const EstimateSerializeSizeFromScriptSizes = (
+  inputSizes,
+  outputSizes,
+  changeScriptSize
+) => {
   // Generate and sum up the estimated sizes of the inputs.
   let txInsSize = 0;
-  inputSizes.forEach(inputSize => txInsSize += EstimateInputSize(inputSize));
+  inputSizes.forEach(
+    (inputSize) => (txInsSize += EstimateInputSize(inputSize))
+  );
 
   // Generate and sum up the estimated sizes of the outputs.
   let txOutsSize = 0;
-  outputSizes.forEach(outputSize => txOutsSize += EstimateOutputSize(outputSize));
+  outputSizes.forEach(
+    (outputSize) => (txOutsSize += EstimateOutputSize(outputSize))
+  );
 
   const inputCount = inputSizes.length;
   let outputCount = outputSizes.length;
@@ -67,7 +77,12 @@ export const EstimateSerializeSizeFromScriptSizes = (inputSizes, outputSizes, ch
   }
 
   // 12 additional bytes are for version, locktime and expiry.
-  return 12 + (2 * VarIntSerializeSize(inputCount)) +
-		VarIntSerializeSize(outputCount) +
-		txInsSize + txOutsSize + changeSize;
+  return (
+    12 +
+    2 * VarIntSerializeSize(inputCount) +
+    VarIntSerializeSize(outputCount) +
+    txInsSize +
+    txOutsSize +
+    changeSize
+  );
 };

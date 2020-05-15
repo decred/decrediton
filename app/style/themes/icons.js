@@ -4,8 +4,10 @@ const icons = {
   "account-rename-icon": "url('style/icons/account-rename.svg')",
   "accounts-button-icon": "url('style/icons/accountInButton.svg')",
   "add-icon": "url('style/icons/add.svg')",
-  "agenda-card-kebab-disabled": "url('style/icons/tickets-agenda-card-kebab-disabled.svg')",
-  "agenda-card-kebab-hover": "url('style/icons/tickets-agenda-card-kebab-hover.svg')",
+  "agenda-card-kebab-disabled":
+    "url('style/icons/tickets-agenda-card-kebab-disabled.svg')",
+  "agenda-card-kebab-hover":
+    "url('style/icons/tickets-agenda-card-kebab-hover.svg')",
   "agenda-indicator-finished": "url('style/icons/indicator-finished.svg')",
   "agenda-indicator-pending": "url('style/icons/indicator-pending.svg')",
   "agenda-stripe": "url('style/icons/stripe.svg')",
@@ -19,9 +21,11 @@ const icons = {
   "checkmark-blue-icon": "url('style/icons/checkmarkBlue.svg')",
   "checkmark-grey-icon": "url('style/icons/checkmarkGrey.svg')",
   "checkmark-context-icon": "url('style/icons/checkMarkContextMenu.svg')",
-  "change-password-default-icon": "url('style/icons/changepasswordDefault.svg')",
+  "change-password-default-icon":
+    "url('style/icons/changepasswordDefault.svg')",
   "close-wallet-icon": "url('style/icons/closeWallet.svg')",
-  "contextbutton-eye-disabled-icon": "url('style/icons/contextbutton-eye-disabled.svg')",
+  "contextbutton-eye-disabled-icon":
+    "url('style/icons/contextbutton-eye-disabled.svg')",
   "delete-icon": "url('style/icons/delete.svg')",
   "decred-macos-1024-logo": "url('style/icons/decred-macos-1024-logo.png')",
   "dummy-icon": "url('style/icons/dummy-icon.svg')",
@@ -46,7 +50,8 @@ const icons = {
   "indicator-invalid-icon": "url('style/icons/indicator-invalid.svg')",
   "indicator-pending-icon": "url('style/icons/indicator-pending.svg')",
   "launcher-wallet-delete": "url('style/icons/LauncherWalletDelete.svg')",
-  "launcher-wallet-delete-hover": "url('style/icons/LauncherWalletDeleteHover.svg')",
+  "launcher-wallet-delete-hover":
+    "url('style/icons/LauncherWalletDeleteHover.svg')",
   "legend-available": "url('style/icons/availLegend.svg')",
   "legend-locked": "url('style/icons/lockedLegend.svg')",
   "legend-sent": "url('style/icons/sentLegend.svg')",
@@ -75,7 +80,8 @@ const icons = {
   "plus-big-icon": "url('style/icons/plus-big.svg')",
   "plus-small-icon": "url('style/icons/plus-small.svg')",
   "politeia-loading-icon": "url('style/icons/politeia-loading.gif')",
-  "rebroadcast-transaction-icon": "url('style/icons/rebroadcastTransaction.svg')",
+  "rebroadcast-transaction-icon":
+    "url('style/icons/rebroadcastTransaction.svg')",
   "restore-wallet-icon": "url('style/icons/restorewallet.svg')",
   "send-all-disabled": "url('style/icons/sendMaxDisabled.svg')",
   "show-account-icon": "url('style/icons/account-eye-open.svg')",
@@ -101,13 +107,20 @@ const icons = {
   "x-white-icon": "url('style/icons/closeWhite.svg')",
   "show-pubkey-icon": "url('style/icons/accountShowWhite.svg')",
   "hide-pubkey-icon": "url('style/icons/accountHideWhite.svg')",
-  "loader-animation-blockchain-syncing": "url('style/icons/blockchain_syncing_loader.gif')",
-  "loader-animation-daemon-waiting": "url('style/icons/daemon_waiting_loader.gif')",
-  "loader-animation-discovering-addresses": "url('style/icons/discovering_addresses_loader.gif')",
-  "loader-animation-establishing-rpc": "url('style/icons/establishing_rpc_loader.gif')",
-  "loader-animation-fetching-headers": "url('style/icons/fetching_headers_loader.gif')",
-  "loader-animation-finalizing-setup": "url('style/icons/finalizing_setup_loader.gif')",
-  "loader-animation-scanning-blocks": "url('style/icons/scanning_blocks_loader.gif')",
+  "loader-animation-blockchain-syncing":
+    "url('style/icons/blockchain_syncing_loader.gif')",
+  "loader-animation-daemon-waiting":
+    "url('style/icons/daemon_waiting_loader.gif')",
+  "loader-animation-discovering-addresses":
+    "url('style/icons/discovering_addresses_loader.gif')",
+  "loader-animation-establishing-rpc":
+    "url('style/icons/establishing_rpc_loader.gif')",
+  "loader-animation-fetching-headers":
+    "url('style/icons/fetching_headers_loader.gif')",
+  "loader-animation-finalizing-setup":
+    "url('style/icons/finalizing_setup_loader.gif')",
+  "loader-animation-scanning-blocks":
+    "url('style/icons/scanning_blocks_loader.gif')",
   "menu-animation-accounts": "url('style/animations/accountsMotion.gif')",
   "menu-animation-governance": "url('style/animations/governanceMotion.gif')",
   "menu-animation-help": "url('style/animations/helpMotion.gif')",
@@ -115,11 +128,13 @@ const icons = {
   "menu-animation-settings": "url('style/animations/settingsMotion.gif')",
   "menu-animation-security": "url('style/animations/securityMotion.gif')",
   "menu-animation-tickets": "url('style/animations/ticketsMotion.gif')",
-  "menu-animation-transactions": "url('style/animations/transactionsMotion.gif')",
+  "menu-animation-transactions":
+    "url('style/animations/transactionsMotion.gif')",
   "release-image-v130": "url('style/icons/release-note-v130.gif')",
   "release-image-v140": "url('style/icons/release-note-v140.gif')",
   "release-image-v150": "url('style/icons/release-note-v150.png')",
-  "tickets-loading-more-icon": "url('style/icons/ticket_live_loop_decrediton_grey.gif')",
+  "tickets-loading-more-icon":
+    "url('style/icons/ticket_live_loop_decrediton_grey.gif')",
   "qr-icon": "url('style/icons/qr-logo.svg')"
 };
 

@@ -3,9 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import * as ca from "actions/ControlActions";
 import * as sel from "selectors";
 
-function ReceiveAccountsSelect ({ onChange }) {
+function ReceiveAccountsSelect({ onChange }) {
   const dispatch = useDispatch();
-  const getNextAddressAttempt = (value) => dispatch(ca.getNextAddressAttempt(value));
+  const getNextAddressAttempt = (value) =>
+    dispatch(ca.getNextAddressAttempt(value));
   const mixedAccount = useSelector(sel.getMixedAccount);
   const account = useSelector(sel.nextAddressAccount);
   const onChangeAccount = (account) => {
@@ -14,12 +15,14 @@ function ReceiveAccountsSelect ({ onChange }) {
   };
 
   return (
-    <AccountsSelect {...{
-      onChange: onChangeAccount,
-      accountsType: "visible",
-      filterAccounts: [ mixedAccount ],
-      account
-    }} />
+    <AccountsSelect
+      {...{
+        onChange: onChangeAccount,
+        accountsType: "visible",
+        filterAccounts: [mixedAccount],
+        account
+      }}
+    />
   );
 }
 

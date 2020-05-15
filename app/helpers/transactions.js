@@ -1,13 +1,16 @@
 import {
-  RedeemP2PKHSigScriptSize, P2PKHPkScriptSize, TicketCommitmentScriptSize,
-  MaxAmount, DefaultRelayFeePerKb
+  RedeemP2PKHSigScriptSize,
+  P2PKHPkScriptSize,
+  TicketCommitmentScriptSize,
+  MaxAmount,
+  DefaultRelayFeePerKb
 } from "constants";
 import { EstimateSerializeSizeFromScriptSizes } from "./scripts";
 
 // FeeForSerializeSize calculates the required fee for a transaction of some
 // arbitrary size given a mempool's relay fee policy.
 const FeeForSerializeSize = (relayFeePerKb, txSerializeSize) => {
-  let fee = relayFeePerKb * txSerializeSize / 1000;
+  let fee = (relayFeePerKb * txSerializeSize) / 1000;
 
   if (fee == 0 && relayFeePerKb > 0) {
     fee = relayFeePerKb;
@@ -36,7 +39,7 @@ const splitPoints = [
 
 const splitPointMapInit = () => {
   const splitMap = {};
-  splitPoints.forEach(amt => splitMap[amt] = {});
+  splitPoints.forEach((amt) => (splitMap[amt] = {}));
   return splitMap;
 };
 
@@ -53,7 +56,7 @@ export const isMixTx = (tx) => {
 
   const splitPointMap = splitPointMapInit();
   const mixedOuts = new Map();
-  tx.txOutputs.forEach(output => {
+  tx.txOutputs.forEach((output) => {
     const val = output.amount;
     if (splitPointMap[val]) {
       const mixedOutCount = mixedOuts.get(val);
@@ -65,7 +68,7 @@ export const isMixTx = (tx) => {
     }
   });
 
-  mixedOuts.forEach( (count, val) => {
+  mixedOuts.forEach((count, val) => {
     console.log(val);
     console.log(count);
     console.log(mixedOuts);
@@ -84,13 +87,20 @@ export const isMixTx = (tx) => {
 // The size of a solo (non-pool) ticket purchase transaction assumes a specific
 // transaction structure and worst-case signature script sizes.
 const calcSoloTicketTxSize = () => {
-  const inSizes = [ RedeemP2PKHSigScriptSize ];
-  const outSizes = [ P2PKHPkScriptSize + 1, TicketCommitmentScriptSize, P2PKHPkScriptSize + 1 ];
+  const inSizes = [RedeemP2PKHSigScriptSize];
+  const outSizes = [
+    P2PKHPkScriptSize + 1,
+    TicketCommitmentScriptSize,
+    P2PKHPkScriptSize + 1
+  ];
   return EstimateSerializeSizeFromScriptSizes(inSizes, outSizes, 0);
 };
 
 const soloTicketTxSize = calcSoloTicketTxSize();
-const defaultFeeForTicket = FeeForSerializeSize(DefaultRelayFeePerKb, soloTicketTxSize);
+const defaultFeeForTicket = FeeForSerializeSize(
+  DefaultRelayFeePerKb,
+  soloTicketTxSize
+);
 
 // IsMixedSplitTx tests if a transaction is a CSPP-mixed ticket split
 // transaction (the transaction that creates appropriately-sized outputs to be
@@ -116,7 +126,7 @@ export const IsMixedSplitTx = (tx, relayFeeRate, ticketPrice) => {
   ticketOutAmt = ticketPrice + ticketTxFee;
 
   let numOtherOut = 0;
-  tx.txOutputs.forEach(o => {
+  tx.txOutputs.forEach((o) => {
     if (o.amount === ticketOutAmt) {
       numTickets++;
     } else {
