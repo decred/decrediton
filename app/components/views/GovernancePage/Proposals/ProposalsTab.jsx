@@ -49,7 +49,7 @@ const ListLink = ({ count, children }) => (
   </>
 );
 
-function getProposalsTab(location) {
+const getProposalsTab = (location) => {
   const { pathname } = location;
   if (pathname.includes("prevote")) {
     return "preVote";
@@ -63,13 +63,10 @@ function getProposalsTab(location) {
   if (pathname.includes("abandoned")) {
     return "abandonedVote";
   }
-}
+};
 
-function Proposals() {
-  // TODOs:
-  // - add custom hooks, css module and restructure => see proposal details page!
-  // - move reducers which only control local states from reducer/governance.js to here.
-
+const ProposalsTab = () => {
+  // TODO: move reducers which only control local states from reducer/governance.js to here.
   const activeVoteCount = useSelector(sel.newActiveVoteProposalsCount);
   const preVoteCount = useSelector(sel.newPreVoteProposalsCount);
   const politeiaEnabled = useSelector(sel.politeiaEnabled);
@@ -127,6 +124,6 @@ function Proposals() {
       />
     </TabbedPage>
   );
-}
+};
 
-export default Proposals;
+export default ProposalsTab;

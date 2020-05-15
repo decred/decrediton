@@ -1,8 +1,8 @@
 import { TabbedPage, TabbedPageTab as Tab, TitleHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
 import { Switch, Redirect } from "react-router-dom";
-import { default as ProposalsTab } from "./Proposals";
-import { default as BlockchainTab } from "./Blockchain";
+import ProposalsTab from "./Proposals/ProposalsTab";
+import VotingPrefsTab from "./Blockchain/VotingPrefsTab";
 import TabHeader from "./TabHeader/TabHeader";
 import "style/Governance.less";
 
@@ -32,7 +32,7 @@ export default () => (
     />
     <Tab
       path="/governance/blockchain"
-      component={BlockchainTab}
+      component={VotingPrefsTab}
       header={TabHeader}
       link={<T id="governance.tab.consensusChanges" m="Consensus Changes" />}
     />

@@ -1,9 +1,9 @@
-import VotingPrefsPage from "./Page";
+import VotingPrefs from "./VotingPrefs";
 import { votingPrefs } from "connectors";
 import { find, compose, eq, get, substruct } from "fp";
 
 @autobind
-class VotingPrefs extends React.Component {
+class VotingPrefsTab extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,8 +14,9 @@ class VotingPrefs extends React.Component {
   }
 
   render() {
+    console.log(this.getAgendaSelectedChoice);
     return (
-      <VotingPrefsPage
+      <VotingPrefs
         {...{
           ...this.props,
           ...this.state,
@@ -65,4 +66,4 @@ class VotingPrefs extends React.Component {
   }
 }
 
-export default votingPrefs(VotingPrefs);
+export default votingPrefs(VotingPrefsTab);

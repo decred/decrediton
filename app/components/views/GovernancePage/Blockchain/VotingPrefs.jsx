@@ -1,8 +1,8 @@
-import AgendaCard from "./AgendaCard";
+import AgendaCard from "./AgendaCard/AgendaOverview";
 import { ExternalLink } from "shared";
 import { FormattedMessage as T } from "react-intl";
 
-const VotingPrefsPage = ({
+const VotingPrefs = ({
   stakePool,
   selectedAgenda,
   getAgendaSelectedChoice,
@@ -62,4 +62,4 @@ const VotingPrefsPage = ({
   </>
 );
 
-export default VotingPrefsPage;
+export default VotingPrefs;
