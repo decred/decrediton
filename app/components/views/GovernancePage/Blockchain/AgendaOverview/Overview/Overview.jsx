@@ -24,7 +24,7 @@ const Overview = ({
           onClick={closeCurrentAgenda}></a>
         <div className={styles.overviewTitleName}>{agendaId}</div>
       </div>
-      <div className={styles.middl}>
+      <div className={styles.middle}>
         <div className={styles.text}>
           <div>{agendaDescription}</div>
           <div className={styles.idCt}>
