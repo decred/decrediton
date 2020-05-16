@@ -1,69 +1,48 @@
+import { useState } from "react";
 import VotingPrefs from "./VotingPrefs";
 import { votingPrefs } from "connectors";
-import { find, compose, eq, get, substruct } from "fp";
+import { find, compose, eq, get } from "fp";
 
-@autobind
-class VotingPrefsTab extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      stakePool: props.stakePool,
-      selectedAgenda: null,
-      isShowingDetails: false
-    };
-  }
+const VotingPrefsTab = ({
+  stakePool,
+  onChangeStakePool,
+  configuredStakePools,
+  ...props
+}) => {
+  const [selectedAgenda, setSelectedAgenda] = useState(null);
 
-  render() {
-    console.log(this.getAgendaSelectedChoice);
-    return (
-      <VotingPrefs
-        {...{
-          ...this.props,
-          ...this.state,
-          stakePool: this.getStakePool(),
-          ...substruct(
-            {
-              getAgendaSelectedChoice: null,
-              onShowAgenda: null,
-              onCloseAgenda: null
-            },
-            this
-          )
-        }}
-      />
-    );
-  }
-
-  getStakePool() {
-    const pool = this.props.onChangeStakePool
-      ? this.props.stakePool
-      : this.state.stakePool;
+  const getStakePool = () => {
+    const pool = onChangeStakePool && stakePool;
     return pool
-      ? this.props.configuredStakePools.find(
-          compose(eq(pool.Host), get("Host"))
-        )
+      ? configuredStakePools.find(compose(eq(pool.Host), get("Host")))
       : null;
-  }
+  };
 
-  getAgendaSelectedChoice(agenda) {
-    return (
-      get(
-        ["choiceId"],
-        find(
-          compose(eq(agenda.name), get(["agendaId"])),
-          get("VoteChoices", this.getStakePool()) || []
-        )
-      ) || "abstain"
-    );
-  }
+  const getAgendaSelectedChoice = (agenda) =>
+    get(
+      ["choiceId"],
+      find(
+        compose(eq(agenda.name), get(["agendaId"])),
+        get("VoteChoices", getStakePool()) || []
+      )
+    ) || "abstain";
 
-  onShowAgenda(index) {
-    this.setState({ selectedAgenda: index });
-  }
+  const onShowAgenda = (index) => setSelectedAgenda(index);
 
-  onCloseAgenda() {
-    this.setState({ selectedAgenda: null });
-  }
-}
+  const onCloseAgenda = () => setSelectedAgenda(null);
+
+  return (
+    <VotingPrefs
+      {...{
+        ...props,
+        selectedAgenda,
+        getAgendaSelectedChoice,
+        onShowAgenda,
+        onCloseAgenda,
+        stakePool: getStakePool()
+      }}
+    />
+  );
+};
 
 export default votingPrefs(VotingPrefsTab);
