@@ -1,4 +1,4 @@
-import AgendaCard from "./AgendaCard/AgendaOverview";
+import AgendaOverview from "./AgendaOverview/AgendaOverview";
 import { ExternalLink } from "shared";
 import { FormattedMessage as T } from "react-intl";
 import styles from "./VotingPrefs.module.css";
@@ -38,7 +38,7 @@ const VotingPrefs = ({
     <div className={styles.agendaWrapper}>
       {allAgendas.length > 0 ? (
         allAgendas.map((agenda, index) => (
-          <AgendaCard
+          <AgendaOverview
             key={agenda.name}
             {...{
               agenda,

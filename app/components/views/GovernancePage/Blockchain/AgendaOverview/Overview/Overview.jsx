@@ -1,6 +1,6 @@
 import { KeyBlueButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
-import AgendaFinishedIndicator from "./AgendaFinishedIndicator";
+import AgendaFinishedIndicator from "../FinishedIndicator/FinishedIndicator";
 import styles from "./Overview.module.css";
 
 const Overview = ({

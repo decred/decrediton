@@ -1,8 +1,8 @@
 import { FormattedMessage as T } from "react-intl";
 import { Tooltip } from "shared";
-import styles from "./AgendaCard.module.css";
+import styles from "./FinishedIndicator.module.css";
 
-const AgendaFinishedIndicator = ({ passed }) => (
+const FinishedIndicator = ({ passed }) => (
   <Tooltip
     text={
       <T
@@ -17,4 +17,4 @@ const AgendaFinishedIndicator = ({ passed }) => (
   </Tooltip>
 );
 
-export default AgendaFinishedIndicator;
+export default FinishedIndicator;

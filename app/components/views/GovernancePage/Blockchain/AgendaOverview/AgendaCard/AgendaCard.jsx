@@ -1,6 +1,6 @@
 import { classNames } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
-import AgendaFinishedIndicator from "./AgendaFinishedIndicator";
+import AgendaFinishedIndicator from "../FinishedIndicator/FinishedIndicator";
 import styles from "./AgendaCard.module.css";
 
 const AgendaCard = ({ agenda, onClick, selectedChoice }) => (

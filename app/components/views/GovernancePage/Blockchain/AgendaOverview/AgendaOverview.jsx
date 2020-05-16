@@ -1,5 +1,5 @@
-import Overview from "./Overview";
-import AgendaCard from "./AgendaCard";
+import Overview from "./Overview/Overview";
+import AgendaCard from "./AgendaCard/AgendaCard";
 
 @autobind
 class AgendaOverview extends React.Component {
