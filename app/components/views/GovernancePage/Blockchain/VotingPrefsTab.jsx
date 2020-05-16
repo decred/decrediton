@@ -1,15 +1,18 @@
 import { useState } from "react";
 import VotingPrefs from "./VotingPrefs";
-import { votingPrefs } from "connectors";
 import { find, compose, eq, get } from "fp";
+import { useVotingPrefs } from "./hooks";
 
-const VotingPrefsTab = ({
-  stakePool,
-  onChangeStakePool,
-  configuredStakePools,
-  ...props
-}) => {
+const VotingPrefsTab = () => {
   const [selectedAgenda, setSelectedAgenda] = useState(null);
+  const {
+    configuredStakePools,
+    defaultStakePool,
+    stakePool,
+    allAgendas,
+    onUpdateVotePreference,
+    onChangeStakePool
+  } = useVotingPrefs();
 
   const getStakePool = () => {
     const pool = onChangeStakePool && stakePool;
@@ -34,8 +37,10 @@ const VotingPrefsTab = ({
   return (
     <VotingPrefs
       {...{
-        ...props,
         selectedAgenda,
+        defaultStakePool,
+        allAgendas,
+        onUpdateVotePreference,
         getAgendaSelectedChoice,
         onShowAgenda,
         onCloseAgenda,
@@ -45,4 +50,4 @@ const VotingPrefsTab = ({
   );
 };
 
-export default votingPrefs(VotingPrefsTab);
+export default VotingPrefsTab;
