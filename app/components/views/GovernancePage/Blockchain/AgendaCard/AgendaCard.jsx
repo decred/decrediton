@@ -1,57 +1,38 @@
+import { classNames } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
 import AgendaFinishedIndicator from "./AgendaFinishedIndicator";
-import "style/AgendaCard.less";
+import styles from "./AgendaCard.module.css";
 
-// Currently removing percent progress until a solution to populate is found
-// <div style={styles.agendaCardPercent}><span style={styles.agendaPercentNumber}>XX</span>%</div>
-// should go UNDER agendaCarBottomCfg div
 const AgendaCard = ({ agenda, onClick, selectedChoice }) => (
   <div
-    {...(agenda.finished
-      ? { className: "agenda-card-disabled" }
-      : { className: "agenda-card", onClick })}>
-    <div className="agenda-card-bottom">
+    className={classNames(
+      agenda.finished && styles.agendaCardDisabled,
+      onClick && styles.agendaCard
+    )}>
+    <div className={styles.bottom}>
       {agenda.finished ? (
         <AgendaFinishedIndicator passed={agenda.passed} />
       ) : (
-        <div className="agenda-card-indicator-pending">
+        <div className={styles.indicatorPending}>
           <T id="agenda.card.inProgressIndicator" m="In Progress" />
         </div>
       )}
-      <div className="agenda-card-bottom-cfg">
+      <div className={styles.bottomCfg}>
         {agenda.description}{" "}
-        <span className="agenda-card-bottom-cfg-last">
+        <span className={styles.bottomCfgLast}>
           <T id="agenda.overview.idLabel" m="Agenda ID" />:
-          <span className="agenda-card-bottom-cfg-last-bold">
-            {agenda.name}
-          </span>
+          <span className={styles.bottomCfgLastBold}>{agenda.name}</span>
         </span>
       </div>
     </div>
-    <div className="agenda-card-top">
-      <div className="agenda-card-name">{agenda.name}</div>
-      <div className="agenda-card-top-preference">
+    <div className={styles.top}>
+      <div className={styles.name}>{agenda.name}</div>
+      <div className={styles.topPreference}>
         Preference:{" "}
-        <span className="agenda-card-text-highlight-small">
-          {selectedChoice}
-        </span>
+        <span className={styles.textHighlightSmall}>{selectedChoice}</span>
       </div>
     </div>
   </div>
 );
 
 export default AgendaCard;
-/*
-  XXX We are currently going to automatically set the agendas to finished to avoid confusion
-  Once we have figured a more graceful way to determine whether an agenda is still active we can just leave this.
-
-{agenda.finished ? (
-  <div className="agenda-card-indicator-finished">
-    <T id="agenda.card.finishedIndicator" m="Finished" />
-  </div>
-) : (
-  <div className="agenda-card-indicator-pending">
-    <T id="agenda.card.inProgressIndicator" m="In Progress" />
-  </div>
-)}
-*/

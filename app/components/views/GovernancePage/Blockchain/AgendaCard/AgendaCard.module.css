@@ -1,11 +1,4 @@
-@import (reference) "./main.less";
-
-.agenda-wrapper {
-  margin-left: 100px;
-  margin-top: 20px;
-}
-
-.agenda-card {
+.agendaCard {
   position: relative;
   overflow: hidden;
   width: 180px;
@@ -23,12 +16,12 @@
   cursor: pointer;
 }
 
-.agenda-card:hover {
+.agendaCard:hover {
   background-image: var(--agenda-card-kebab-hover);
   background-size: 10px;
 }
 
-.agenda-card-disabled {
+.disabled {
   position: relative;
   overflow: hidden;
   width: 180px;
@@ -46,7 +39,7 @@
   cursor: default;
 }
 
-.agenda-card-bottom {
+.bottom {
   position: absolute;
   left: 0px;
   right: 0px;
@@ -54,7 +47,7 @@
   padding: 20px;
 }
 
-.agenda-card-indicator-pending {
+.indicatorPending {
   float: right;
   padding: 5px 8px 5px 20px;
   border-style: solid;
@@ -77,7 +70,7 @@
   margin-bottom: 20px;
 }
 
-.agenda-card-indicator-finished {
+.indicatorFinished {
   position: absolute;
   right: 0px;
   bottom: 0px;
@@ -100,39 +93,34 @@
   text-transform: capitalize;
 }
 
-.agenda-card-bottom-cfg {
+.bottomCfg {
   height: 80px;
   margin-bottom: 55px;
   float: left;
   color: var(--agenda-card-bottom-cfg);
 }
 
-.agenda-card-bottom-cfg-last {
+.bottomCfgLast {
   float: left;
   color: var(--input-color-default);
 }
 
-.agenda-card-bottom-cfg-disabled {
+.bottomCfgDisabled {
   height: 80px;
   margin-bottom: 20px;
   float: left;
   color: var(--disabled-color);
 }
 
-.agenda-card-bottom-cfg-last-disabled {
+.bottomCfgLastDisabled {
   color: var(--disabled-color);
 }
 
-.agenda-card-bottom-cfg-last-bold {
+.bottomCfgLastBold {
   font-weight: 600;
 }
 
-.agenda-card-percent {
-  float: left;
-  font-size: 19px;
-}
-
-.agenda-card-top {
+.top {
   position: absolute;
   left: 0px;
   top: 0px;
@@ -142,28 +130,24 @@
   padding-left: 20px;
 }
 
-.agenda-percent-number {
-  font-size: 45px;
-  font-weight: 600;
-}
-
-.agenda-card-name {
+.name {
   padding-right: 10px;
   float: left;
   font-size: 19px;
 }
 
-.agenda-card-top-preference {
+.topPreference {
   margin-top: 6px;
   float: left;
   width: 186px;
-  color:var(--header-desc-lighter-color);
-  span {
-    color:var(--input-color-default);
-  }
+  color: var(--header-desc-lighter-color);
 }
 
-.agenda-card-text-highlight-small {
+.topPreference span {
+  color: var(--input-color-default);
+}
+
+.textHighlightSmall {
   padding-right: 2px;
   padding-left: 2px;
   border-radius: 3px;
@@ -173,7 +157,8 @@
   text-transform: capitalize;
 }
 
-.agenda-overview-title-close {
+/* !! needed in agendacard/overview.jsx => move to module when created! !! */
+.overviewTitleClose {
   position: absolute;
   top: 7px;
   right: 0px;
@@ -189,6 +174,6 @@
   cursor: pointer;
 }
 
-.agenda-overview-title-close:hover {
+.overviewTitleClose:hover {
   opacity: 0.7;
 }
