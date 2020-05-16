@@ -1,7 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
 import { Tooltip } from "shared";
 
-export const AgendaFinishedIndicator = ({ passed }) => (
+const AgendaFinishedIndicator = ({ passed }) => (
   <Tooltip
     text={
       <T
@@ -15,3 +15,5 @@ export const AgendaFinishedIndicator = ({ passed }) => (
     </div>
   </Tooltip>
 );
+
+export default AgendaFinishedIndicator;
