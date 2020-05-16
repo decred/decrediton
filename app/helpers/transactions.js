@@ -50,14 +50,14 @@ const splitPointMapInit = () => {
 export const isMixTx = (tx) => {
   let mixDenom = 0;
   let mixCount;
-  if (tx.txOutputs.length < 3 || tx.txInputs.length < 3) {
+  if (tx.outputs.length < 3 || tx.inputs.length < 3) {
     return { isMix: false };
   }
 
   const splitPointMap = splitPointMapInit();
   const mixedOuts = new Map();
-  tx.txOutputs.forEach((output) => {
-    const val = output.amount;
+  tx.outputs.forEach((output) => {
+    const val = output.value;
     if (splitPointMap[val]) {
       const mixedOutCount = mixedOuts.get(val);
       if (mixedOutCount) {
@@ -69,10 +69,6 @@ export const isMixTx = (tx) => {
   });
 
   mixedOuts.forEach((count, val) => {
-    console.log(val);
-    console.log(count);
-    console.log(mixedOuts);
-    console.log(mixedOuts.get(val));
     if (count < 3) return;
     if (val > mixDenom) {
       mixDenom = val;
@@ -80,8 +76,9 @@ export const isMixTx = (tx) => {
     }
   });
 
-  const isMix = mixCount >= tx.txOutputs.length / 2;
-  return { isMix, mixDenom, mixCount };
+  const isMix = mixCount >= tx.outputs.length / 2;
+  // We return it that way to make it easier for testing.
+  return isMix ? { isMix, mixDenom, mixCount } : { isMix: false };
 };
 
 // The size of a solo (non-pool) ticket purchase transaction assumes a specific
@@ -102,7 +99,7 @@ const defaultFeeForTicket = FeeForSerializeSize(
   soloTicketTxSize
 );
 
-// IsMixedSplitTx tests if a transaction is a CSPP-mixed ticket split
+// isMixedSplitTx tests if a transaction is a CSPP-mixed ticket split
 // transaction (the transaction that creates appropriately-sized outputs to be
 // spent by a ticket purchase). Such a transaction must have 3 or more outputs
 // with an amount equal to the ticket price plus transaction fees, and at least
@@ -112,10 +109,10 @@ const defaultFeeForTicket = FeeForSerializeSize(
 // ticket commitment output.
 
 // return (isMix bool, ticketOutAmt int64, numTickets uint32)
-export const IsMixedSplitTx = (tx, relayFeeRate, ticketPrice) => {
+export const isMixedSplitTx = (tx, relayFeeRate, ticketPrice) => {
   let numTickets = 0;
   let ticketOutAmt = 0;
-  if (tx.txOutputs < 6 || tx.txInputs < 3) {
+  if (tx.outputs < 6 || tx.inputs < 3) {
     return { isMix: false, ticketOutAmt, numTickets };
   }
 
@@ -126,8 +123,8 @@ export const IsMixedSplitTx = (tx, relayFeeRate, ticketPrice) => {
   ticketOutAmt = ticketPrice + ticketTxFee;
 
   let numOtherOut = 0;
-  tx.txOutputs.forEach((o) => {
-    if (o.amount === ticketOutAmt) {
+  tx.outputs.forEach((o) => {
+    if (o.value === ticketOutAmt) {
       numTickets++;
     } else {
       numOtherOut++;
