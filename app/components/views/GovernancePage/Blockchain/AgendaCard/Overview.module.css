@@ -1,0 +1,140 @@
+.overview {
+  position: relative;
+  width: 420px;
+  padding: 10px 20px 4px;
+  float: left;
+}
+
+.titleArea {
+  margin-bottom: 29px;
+  position: relative;
+}
+
+.titleName {
+  padding-right: 10px;
+  float: left;
+  font-size: 19px;
+}
+
+.agenda {
+  position: relative;
+  overflow: hidden;
+  width: 700px;
+  height: 256px;
+  margin-bottom: 20px;
+  float: left;
+  background-color: var(--background-back-color);
+  background-image: var(--agenda-stripe);
+  background-position: 460px 50%;
+  background-size: 1px;
+  background-repeat: repeat-y;
+}
+
+.middle {
+  color: var(--stroke-color-hovered);
+  font-size: 13px;
+  position: relative;
+}
+
+.text {
+  line-height: 18px;
+}
+
+.idCt {
+  color: var(--input-color-default);
+}
+
+.id {
+  font-weight: 600;
+}
+
+.readMore {
+  display: block;
+  color: var(--input-color);
+  text-decoration: none;
+  background-color: transparent;
+}
+
+.optionsArea {
+  position: relative;
+  display: inline;
+  width: 170px;
+  padding-top: 20px;
+  padding-right: 35px;
+  padding-left: 35px;
+  float: left;
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.optionsSection {
+  margin-bottom: 29px;
+}
+
+.nameOptions {
+  padding-right: 10px;
+  float: left;
+  font-size: 19px;
+}
+
+.optionsRadio {
+  float: left;
+}
+
+.optionsRadioLabel {
+  display: block;
+  width: 100%;
+  color: var(--tab-text-active-hover);
+  font-size: 11px;
+  line-height: 14px;
+  cursor: pointer;
+  margin-bottom: 8px;
+  box-sizing: border-box;
+}
+
+.bottom {
+  padding-top: 15px;
+  float: left;
+  width: 700px;
+  height: 64px;
+}
+
+.bottomOverview {
+  position: relative;
+  width: 420px;
+  padding: 15px 20px 20px 20px;
+  float: left;
+}
+
+.bottomOptions {
+  width: 240px;
+  float: left;
+}
+
+.updatePreferencesButton {
+  width: 134px;
+  display: block;
+  margin-right: 35px;
+  margin-bottom: 20px;
+  margin-left: 35px;
+}
+
+.overviewTitleClose {
+  position: absolute;
+  top: 7px;
+  right: 0px;
+  width: 11px;
+  height: 11px;
+  float: right;
+  background-image: var(--agenda-close-icon);
+  background-position: 50% 50%;
+  background-size: 11px;
+  background-repeat: no-repeat;
+  max-width: 100%;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.overviewTitleClose:hover {
+  opacity: 0.7;
+}

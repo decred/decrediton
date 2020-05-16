@@ -1,7 +1,7 @@
 import { KeyBlueButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import AgendaFinishedIndicator from "./AgendaFinishedIndicator";
-import "style/AgendaOverview.less";
+import styles from "./Overview.module.css";
 
 const Overview = ({
   isFinished,
@@ -16,24 +16,22 @@ const Overview = ({
   disabled,
   passed
 }) => (
-  <div className="agenda">
-    <div className="agenda-overview">
-      <div className="agenda-overview-title-area">
+  <div className={styles.agenda}>
+    <div className={styles.overview}>
+      <div className={styles.overviewTitleArea}>
         <a
-          className="agenda-overview-title-close"
+          className={styles.overviewTitleClose}
           onClick={closeCurrentAgenda}></a>
-        <div className="agenda-overview-title-name">{agendaId}</div>
+        <div className={styles.overviewTitleName}>{agendaId}</div>
       </div>
-      <div className="agenda-overview-middle">
-        <div className="agenda-overview-text">
-          <div className="agenda-overview-short-description">
-            {agendaDescription}
-          </div>
-          <div className="agenda-overview-agenda-id-ct">
+      <div className={styles.middl}>
+        <div className={styles.text}>
+          <div>{agendaDescription}</div>
+          <div className={styles.idCt}>
             <T id="agenda.card.idLabel" m="Agenda ID" />:{" "}
-            <span className="agenda-overview-agenda-id">{agendaId}</span>
+            <span className={styles.id}>{agendaId}</span>
           </div>
-          <div className="agenda-overview-description">
+          <div>
             <T
               id="agenda.overviewDescription"
               m="Once the majority of the PoW miners have upgraded (75% of the 100 most recent blocks are at the latest version) and the majority of the PoS miners have upgraded (75% of the votes in a 2016 block interval), the voting process begins."
@@ -42,22 +40,22 @@ const Overview = ({
         </div>
       </div>
     </div>
-    <div className="agenda-overview-options-area">
-      <div className="agenda-overview-options-section">
-        <div className="agenda-name-options">
+    <div className={styles.optionsArea}>
+      <div className={styles.optionsSection}>
+        <div className={styles.nameOptions}>
           <T id="agenda.votingFor" m="Voting for" />
         </div>
       </div>
-      <div className="agenda-overview-options-section-middle">
+      <div>
         {choices.map(({ choiceId }) => (
           <label
-            className="agenda-options-radio-label"
+            className={styles.optionsRadioLabel}
             htmlFor={choiceId}
             key={agendaId + choiceId}>
             {choiceId}
             <input
               disabled={disabled}
-              className="agenda-options-radio"
+              className={styles.optionsRadio}
               id={choiceId}
               type="radio"
               name="field"
@@ -70,20 +68,20 @@ const Overview = ({
         ))}
       </div>
     </div>
-    <div className="agenda-bottom">
-      <div className="agenda-bottom-overview">
+    <div className={styles.bottom}>
+      <div className={styles.bottomOverview}>
         {isFinished ? (
           <AgendaFinishedIndicator passed={passed} />
         ) : (
-          <div className="agenda-card-indicator-pending">
+          <div>
             <T id="agenda.overview.inProgressIndicator" m="In Progress" />
           </div>
         )}
       </div>
-      <div className="agenda-bottom-options">
+      <div className={styles.bottomOptions}>
         <KeyBlueButton
           disabled={!hasModifiedChoice || disabled}
-          className="agenda-update-preferences-button"
+          className={styles.updatePreferencesButton}
           onClick={updatePreferences}>
           <T id="agenda.updatePreference" m="Update Preference" />
         </KeyBlueButton>
@@ -92,7 +90,4 @@ const Overview = ({
   </div>
 );
 
-// Need to replace once we have a way to get the agenda progress
-//  <div className="agenda-percent"><span className="agenda-percent-number">XX</span>%</div>
-// needs to go below div.agenda-indicator-pending
 export default Overview;
