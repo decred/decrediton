@@ -1,6 +1,7 @@
 import Overview from "./Overview/Overview";
 import AgendaCard from "./AgendaCard/AgendaCard";
 
+// TODO: convert to functional compoennt
 @autobind
 class AgendaOverview extends React.Component {
   constructor(props) {

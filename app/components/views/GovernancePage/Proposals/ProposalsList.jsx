@@ -29,6 +29,7 @@ function ProposalListItem({
   votingSinceLastAccess,
   quorumMinimumVotes
 }) {
+  // TODO: add custom hook and move to separate file
   const tsDate = useSelector((state) => sel.tsDate(state));
   const dispatch = useDispatch();
   const isVoting = voteStatus == VOTESTATUS_ACTIVEVOTE;
@@ -111,6 +112,7 @@ async function onLoadMoreProposals(
 }
 
 export function ProposalList({ finishedVote, tab }) {
+  // TODO: add custom hook
   const [noMoreProposals, setNoMore] = useState(false);
   const proposals = useSelector(sel.proposals);
   const inventory = useSelector(sel.inventory);
