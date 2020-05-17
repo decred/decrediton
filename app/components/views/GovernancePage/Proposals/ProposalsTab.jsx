@@ -1,4 +1,4 @@
-import { ProposalList } from "./ProposalsList";
+import { ProposalList } from "./ProposalsList/ProposalsList";
 import PoliteiaDisabled from "./PoliteiaDisabled";
 import { useSelector, useDispatch } from "react-redux";
 import { setLastPoliteiaAccessTime } from "actions/WalletLoaderActions";
@@ -9,7 +9,7 @@ import { createElement as h, useEffect, useReducer } from "react";
 import * as gov from "actions/GovernanceActions";
 import * as sel from "selectors";
 import { Button } from "pi-ui";
-import styles from "./ProposalsList.module.css";
+import styles from "./ProposalsTab.module.css";
 
 const PageHeader = ({ isTestnet }) => (
   <div className="proposals-community-header is-row">
