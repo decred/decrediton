@@ -1,14 +1,11 @@
 import ProposalList from "./ProposalsList/ProposalsList";
 import PoliteiaDisabled from "./PoliteiaDisabled";
-import { useSelector, useDispatch } from "react-redux";
-import { setLastPoliteiaAccessTime } from "actions/WalletLoaderActions";
 import { FormattedMessage as T } from "react-intl";
 import { PoliteiaLink as PiLink } from "shared";
 import { TabbedPage, TabbedPageTab as Tab } from "layout";
-import { createElement as h, useEffect, useReducer } from "react";
-import * as gov from "actions/GovernanceActions";
-import * as sel from "selectors";
+import { createElement as h } from "react";
 import { Button } from "pi-ui";
+import { useProposalsTab } from "./hooks";
 import styles from "./ProposalsTab.module.css";
 
 const PageHeader = ({ isTestnet }) => (
@@ -49,42 +46,15 @@ const ListLink = ({ count, children }) => (
   </>
 );
 
-const getProposalsTab = (location) => {
-  const { pathname } = location;
-  if (pathname.includes("prevote")) {
-    return "preVote";
-  }
-  if (pathname.includes("activevote")) {
-    return "activeVote";
-  }
-  if (pathname.includes("voted")) {
-    return "finishedVote";
-  }
-  if (pathname.includes("abandoned")) {
-    return "abandonedVote";
-  }
-};
-
 const ProposalsTab = () => {
-  // TODO: move reducers which only control local states from reducer/governance.js to here.
-  const activeVoteCount = useSelector(sel.newActiveVoteProposalsCount);
-  const preVoteCount = useSelector(sel.newPreVoteProposalsCount);
-  const politeiaEnabled = useSelector(sel.politeiaEnabled);
-  const location = useSelector(sel.location);
-  const isTestnet = useSelector(sel.isTestNet);
-  const dispatch = useDispatch();
-  const [tab, setTab] = useReducer(() => getProposalsTab(location));
-
-  useEffect(() => {
-    dispatch(setLastPoliteiaAccessTime());
-  }, [dispatch]);
-
-  const getTokenAndInitialBatch = () => dispatch(gov.getTokenAndInitialBatch());
-  useEffect(() => {
-    const tab = getProposalsTab(location);
-    setTab(tab);
-  }, [location]);
-
+  const {
+    activeVoteCount,
+    preVoteCount,
+    politeiaEnabled,
+    isTestnet,
+    tab,
+    getTokenAndInitialBatch
+  } = useProposalsTab();
   if (!politeiaEnabled) {
     return <PoliteiaDisabled {...{ getTokenAndInitialBatch }} />;
   }

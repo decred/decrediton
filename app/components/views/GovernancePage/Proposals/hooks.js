@@ -1,10 +1,41 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useReducer } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchMachine } from "stateMachines/FetchStateMachine";
 import { useMachine } from "@xstate/react";
 import * as sel from "selectors";
 import * as gov from "actions/GovernanceActions";
 import { usePrevious } from "helpers";
+import { setLastPoliteiaAccessTime } from "actions/WalletLoaderActions";
+
+export function useProposalsTab() {
+  // TODO: move reducers which only control local states from reducer/governance.js to here.
+  const activeVoteCount = useSelector(sel.newActiveVoteProposalsCount);
+  const preVoteCount = useSelector(sel.newPreVoteProposalsCount);
+  const politeiaEnabled = useSelector(sel.politeiaEnabled);
+  const location = useSelector(sel.location);
+  const isTestnet = useSelector(sel.isTestNet);
+  const dispatch = useDispatch();
+  const [tab, setTab] = useReducer(() => getProposalsTab(location));
+
+  useEffect(() => {
+    dispatch(setLastPoliteiaAccessTime());
+  }, [dispatch]);
+
+  const getTokenAndInitialBatch = () => dispatch(gov.getTokenAndInitialBatch());
+  useEffect(() => {
+    const tab = getProposalsTab(location);
+    setTab(tab);
+  }, [location]);
+
+  return {
+    activeVoteCount,
+    preVoteCount,
+    politeiaEnabled,
+    isTestnet,
+    tab,
+    getTokenAndInitialBatch
+  };
+}
 
 export function useProposalsListItem(token) {
   const tsDate = useSelector((state) => sel.tsDate(state));
@@ -68,12 +99,12 @@ export function useProposalsList(tab) {
   return { noMoreProposals, state, proposals };
 }
 
-async function onLoadMoreProposals(
+const onLoadMoreProposals = async (
   proposals,
   inventory,
   getProposalsAndUpdateVoteStatus,
   proposallistpagesize = 20 // TODO: Get proposallistpagesize from politeia's request: /v1/policy
-) {
+) => {
   const proposalLength = proposals.length;
   let proposalNumber;
   if (inventory.length <= proposallistpagesize) {
@@ -88,4 +119,20 @@ async function onLoadMoreProposals(
   } catch (err) {
     console.log(err);
   }
-}
+};
+
+const getProposalsTab = (location) => {
+  const { pathname } = location;
+  if (pathname.includes("prevote")) {
+    return "preVote";
+  }
+  if (pathname.includes("activevote")) {
+    return "activeVote";
+  }
+  if (pathname.includes("voted")) {
+    return "finishedVote";
+  }
+  if (pathname.includes("abandoned")) {
+    return "abandonedVote";
+  }
+};
