@@ -3,8 +3,9 @@ import InfiniteScroll from "react-infinite-scroller";
 import ProposalsListItem from "../ProposalsListItem/ProposalsListItem";
 import styles from "./ProposalsList.module.css";
 import { useProposalsList } from "../hooks";
+import { classNames } from "pi-ui";
 
-const ProposalList = ({ finishedVote, tab }) => {
+const ProposalsList = ({ finishedVote, tab }) => {
   const { noMoreProposals, state, proposals, send } = useProposalsList(tab);
   switch (state.value) {
     case "idle":
@@ -23,7 +24,7 @@ const ProposalList = ({ finishedVote, tab }) => {
           initialLoad={false}
           useWindow={false}
           threshold={300}>
-          <div className={"proposal-list " + (finishedVote && "ended")}>
+          <div className={classNames("proposal-list", finishedVote && "ended")}>
             {proposals[tab].map((v) => (
               <ProposalsListItem key={v.token} {...v} />
             ))}
@@ -37,4 +38,4 @@ const ProposalList = ({ finishedVote, tab }) => {
   }
 };
 
-export default ProposalList;
+export default ProposalsList;

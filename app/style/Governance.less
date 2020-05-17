@@ -20,7 +20,7 @@
     font-size: 21px;
     line-height: 27px;
     margin-bottom: 10px;
-    color:var(--title-text-and-button-background);
+    color: var(--title-text-and-button-background);
   }
 
   .proposals-community-header-description {
@@ -44,23 +44,16 @@
   background-color: var(--disabled-background-color);
 }
 
-.no-proposals-indicator {
-  margin-top: 20px;
-  margin-left: 38px;
-  font-size: 120%;
-  padding: 1em;
-}
-
 .proposal-list {
   margin-top: 30px;
   margin-left: 85px;
   padding-bottom: 50px;
 
   &.ended {
-    >.proposal-list-item.passed {
+    > .proposal-list-item.passed {
       border-left: 2px solid var(--vote-yes-color);
     }
-    >.proposal-list-item.declined {
+    > .proposal-list-item.declined {
       border-left: 2px solid var(--vote-no-color);
     }
     > .proposal-list-item {
@@ -87,7 +80,7 @@
   }
 
   &.proposal-modified-since-last-access {
-    border-left: 5px solid #66A9FF;
+    border-left: 5px solid #66a9ff;
   }
 
   &:hover {
@@ -155,59 +148,7 @@
   }
 }
 
-.politeia-loading-indicator {
-  background-size: 100%;
-  background-image: var(--politeia-loading-icon);
-  background-position: center;
-  background-repeat: no-repeat;
-  display: inline-block;
-  width: 256px;
-  height: 256px;
-}
-
-.proposal-list-link-count {
-  position: absolute;
-  border: 1px solid var(--settings-desc);
-  background-color: var(--tooltip-container);
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  line-height: 14px;
-  font-size: 9pt;
-}
-
-.links {
-  > a:not(.info-modal-button) {
-    font-size: 13px;
-    line-height: 17px;
-    display: inline-block;
-    border-radius: 5px;
-    padding: 6px 15px;
-    margin: 4px;
-    text-decoration: none;
-    color: var(--info-modal-button-text);
-    background-color: var(--info-modal-button-bg);
-    cursor: pointer;
-
-    &:hover {
-      background-color: var(--title-text-and-button-background-hovered);
-    }
-  }
-}
-
-.proposals-link {
-  color: var(--button-text) !important;
-}
-
-.politeia-disabled-wrapper {
-  padding: 38px 60px 30px 63px;
-}
-
 @media screen and (max-width: 1179px) {
-  .politeia-disabled-wrapper {
-    padding-left: 20px;
-  }
-
   .proposals-community-header {
     padding-left: 35px;
     .links {

@@ -1,3 +1,14 @@
+.linkCount {
+  position: absolute;
+  border: 1px solid var(--settings-desc);
+  background-color: var(--tooltip-container);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  line-height: 14px;
+  font-size: 9pt;
+}
+
 .politeiaButton {
   font-size: 13px !important;
   line-height: 17px !important;
@@ -12,4 +23,18 @@
 
 .politeiaButton:hover {
   background-color: var(--title-text-and-button-background-hovered) !important;
+}
+
+.politeiaDisabled {
+  padding: 38px 60px 30px 63px;
+}
+
+.proposalsLink {
+  color: var(--button-text) !important;
+}
+
+@media screen and (max-width: 1179px) {
+  .politeiaDisabled {
+    padding-left: 20px;
+  }
 }

@@ -1,4 +1,4 @@
-import ProposalList from "./ProposalsList/ProposalsList";
+import ProposalsList from "./ProposalsList/ProposalsList";
 import PoliteiaDisabled from "./PoliteiaDisabled";
 import { FormattedMessage as T } from "react-intl";
 import { PoliteiaLink as PiLink } from "shared";
@@ -21,7 +21,9 @@ const PageHeader = ({ isTestnet }) => (
           Participation in voting requires (PoS) tickets. Proposal creation, discussions and other features are available at {link}"
           values={{
             link: (
-              <PiLink className="proposals-link">proposals.decred.org</PiLink>
+              <PiLink className={styles.proposalsLink}>
+                proposals.decred.org
+              </PiLink>
             )
           }}
         />
@@ -42,7 +44,7 @@ const PageHeader = ({ isTestnet }) => (
 const ListLink = ({ count, children }) => (
   <>
     {children}
-    {count ? <span className="proposal-list-link-count">{count}</span> : null}
+    {count ? <span className={styles.linkCount}>{count}</span> : null}
   </>
 );
 
@@ -62,7 +64,7 @@ const ProposalsTab = () => {
     <TabbedPage caret={<div />} header={<PageHeader isTestnet={isTestnet} />}>
       <Tab
         path="/governance/proposals/prevote"
-        component={h(ProposalList, { tab })}
+        component={h(ProposalsList, { tab })}
         key="preVote"
         link={
           <ListLink count={preVoteCount}>
@@ -72,7 +74,7 @@ const ProposalsTab = () => {
       />
       <Tab
         path="/governance/proposals/activevote"
-        component={h(ProposalList, { tab })}
+        component={h(ProposalsList, { tab })}
         key="activevote"
         link={
           <ListLink count={activeVoteCount}>
@@ -82,13 +84,13 @@ const ProposalsTab = () => {
       />
       <Tab
         path="/governance/proposals/voted"
-        component={h(ProposalList, { finishedVote: true, tab })}
+        component={h(ProposalsList, { finishedVote: true, tab })}
         key="activevote"
         link={<T id="proposals.statusLinks.voted" m="Finished Voting" />}
       />
       <Tab
         path="/governance/proposals/abandoned"
-        component={h(ProposalList, { tab })}
+        component={h(ProposalsList, { tab })}
         key="abandoned"
         link={<T id="proposals.statusLinks.abandoned" m="Abandoned" />}
       />

@@ -13,7 +13,6 @@ const VotingPrefs = ({
   allAgendas
 }) => (
   <>
-    {/* TODO: classes to VotingPrefs.jsx */}
     <div className="consensus-changes-header is-row">
       <div>
         <div className="proposals-community-header-title">
