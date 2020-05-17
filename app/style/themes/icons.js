@@ -79,6 +79,7 @@ const icons = {
   "pending-animation": "url('style/icons/pending_dots.gif')",
   "plus-big-icon": "url('style/icons/plus-big.svg')",
   "plus-small-icon": "url('style/icons/plus-small.svg')",
+  "politeia-loading-icon": "url('style/icons/politeia-loading.gif')",
   "rebroadcast-transaction-icon":
     "url('style/icons/rebroadcastTransaction.svg')",
   "restore-wallet-icon": "url('style/icons/restorewallet.svg')",
@@ -142,7 +143,10 @@ const icons = {
   "ticket-revoked": "url('style/icons/ticketRevoked.svg')",
   "ticket-unmined": "url('style/icons/ticketUnmined.svg')",
   "ticket-voted": "url('style/icons/ticketVoted.svg')",
-  "delete-vsp": "url('style/icons/deleteVSP.svg')"
+  "delete-vsp": "url('style/icons/deleteVSP.svg')",
+  "view-qr-icon": "url('style/icons/showQR.svg')",
+  "share-icon": "url('style/icons/share.svg')",
+  "decred-logo": "url('style/icons/dcrLogoShare.svg')"
 };
 
 export default icons;

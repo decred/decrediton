@@ -23,7 +23,6 @@ const QRCodeModal = ({ nextAddress, amount, setModal }) => (
         <div className={style.modalClose} onClick={() => setModal(false)}>
           <T id="receive.modalClose" m="Close" />
         </div>
-        {/* <div className={style.modalShare} /> */}
       </div>
     </div>
   </div>

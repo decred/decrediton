@@ -1,3 +1,4 @@
+import copy from "clipboard-copy";
 import { useState } from "react";
 import { ReceiveAccountsSelect, DcrInput } from "inputs";
 import { Subtitle } from "shared";
@@ -5,6 +6,7 @@ import { KeyBlueButton } from "buttons";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import QRCodeModal from "./QRCodeModal";
 import style from "./ReceiveTab.module.css";
+import { useRef } from "react";
 
 const messages = defineMessages({
   amountPlaceholder: {
@@ -12,8 +14,6 @@ const messages = defineMessages({
     defaultMessage: "Amount"
   }
 });
-
-let timeout = null;
 
 const ReceivePage = ({
   nextAddress,
@@ -28,11 +28,12 @@ const ReceivePage = ({
   const [modal, setModal] = useState(false);
   const [tooltip, setTooltip] = useState(false);
   const [tooltipText, setTooltipText] = useState(false);
+  const timeout = useRef();
 
-  function updateCopy() {
-    clearTimeout(timeout);
+  function showTooltip() {
+    clearTimeout(timeout.current);
     setTooltip(true);
-    timeout = setTimeout(() => {
+    timeout.current = setTimeout(() => {
       setTooltip(false);
     }, 2500);
   }
@@ -102,8 +103,9 @@ const ReceivePage = ({
             <div
               className={style.receiveContentCopyButton}
               onClick={() => {
+                copy(nextAddress);
                 setTooltipText(false);
-                updateCopy();
+                showTooltip();
               }}
             />
             <span>
@@ -119,12 +121,6 @@ const ReceivePage = ({
               <T id="receive.viewQR" m="View QR" />
             </span>
           </div>
-          {/* <div className={style.shareQRParent}>
-            <div className={style.receiveContentShareButton} />
-            <span>
-              <T id="receive.shareQR" m="Share" />
-            </span>
-          </div> */}
         </div>
       </div>
       <div className={style.generateButton}>
@@ -134,7 +130,7 @@ const ReceivePage = ({
           className={style.blueButton}
           onClick={() => {
             setTooltipText(true);
-            updateCopy();
+            showTooltip();
             onRequestAddress();
           }}>
           <T id="receive.newAddressBtn" m="Generate new address" />
