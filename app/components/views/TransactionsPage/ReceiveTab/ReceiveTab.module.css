@@ -165,11 +165,11 @@
 }
 
 .receiveContentNestQR:hover {
-  border-color: #78d9f8;
+  border-color: var(--input-copy-hover-color);
 }
 
 .border {
-  border-color: #78d9f8;
+  border-color: var(--input-copy-hover-color);
 }
 
 .receiveContentNestCopyQR {
