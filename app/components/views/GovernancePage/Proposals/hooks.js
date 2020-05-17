@@ -6,6 +6,14 @@ import * as sel from "selectors";
 import * as gov from "actions/GovernanceActions";
 import { usePrevious } from "helpers";
 
+export function useProposalsListItem(token) {
+  const tsDate = useSelector((state) => sel.tsDate(state));
+  const dispatch = useDispatch();
+  const viewProposalDetailsHandler = () =>
+    dispatch(gov.viewProposalDetails(token));
+  return { tsDate, viewProposalDetailsHandler };
+}
+
 export function useProposalsList(tab) {
   const [noMoreProposals, setNoMore] = useState(false);
   const proposals = useSelector(sel.proposals);

@@ -5,11 +5,8 @@ import {
   VOTESTATUS_FINISHEDVOTE
 } from "actions/GovernanceActions";
 import { FormattedRelative } from "shared";
-import { useSelector, useDispatch } from "react-redux";
-import * as sel from "selectors";
-import * as gov from "actions/GovernanceActions";
 import { classNames } from "pi-ui";
-
+import { useProposalsListItem } from "../hooks";
 const ProposalsListItem = ({
   name,
   timestamp,
@@ -23,24 +20,19 @@ const ProposalsListItem = ({
   votingSinceLastAccess,
   quorumMinimumVotes
 }) => {
-  // TODO: add custom hook
-  const tsDate = useSelector((state) => sel.tsDate(state));
-  const dispatch = useDispatch();
+  const { viewProposalDetailsHandler, tsDate } = useProposalsListItem(token);
   const isVoting = voteStatus == VOTESTATUS_ACTIVEVOTE;
-  const modifiedClassName =
+  const isModified =
     (!isVoting && modifiedSinceLastAccess) ||
-    (isVoting && votingSinceLastAccess)
-      ? "proposal-modified-since-last-access"
-      : null;
-
+    (isVoting && votingSinceLastAccess);
   return (
     <div
-      onClick={() => dispatch(gov.viewProposalDetails(token))}
+      onClick={viewProposalDetailsHandler}
       className={classNames(
         "is-row",
         "proposal-list-item",
         voteResult,
-        modifiedClassName
+        isModified && "proposal-modified-since-last-access"
       )}>
       <div className="info">
         <div className="proposal-name">{name}</div>
