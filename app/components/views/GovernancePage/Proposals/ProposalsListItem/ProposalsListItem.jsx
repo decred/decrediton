@@ -8,6 +8,7 @@ import { FormattedRelative } from "shared";
 import { useSelector, useDispatch } from "react-redux";
 import * as sel from "selectors";
 import * as gov from "actions/GovernanceActions";
+import { classNames } from "pi-ui";
 
 const ProposalsListItem = ({
   name,
@@ -35,12 +36,12 @@ const ProposalsListItem = ({
   return (
     <div
       onClick={() => dispatch(gov.viewProposalDetails(token))}
-      className={[
+      className={classNames(
         "is-row",
         "proposal-list-item",
         voteResult,
         modifiedClassName
-      ].join(" ")}>
+      )}>
       <div className="info">
         <div className="proposal-name">{name}</div>
         <div className="proposal-token">{token}</div>
