@@ -5,7 +5,7 @@ import { useProposalsList } from "../hooks";
 import styles from "./ProposalsList.module.css";
 
 const ProposalsList = ({ finishedVote, tab }) => {
-  const { noMoreProposals, state, proposals, send } = useProposalsList(tab);
+  const { noMoreProposals, state, proposals, loadMore } = useProposalsList(tab);
   switch (state.value) {
     case "idle":
       return <NoProposals />;
@@ -19,7 +19,7 @@ const ProposalsList = ({ finishedVote, tab }) => {
       return proposals[tab] && proposals[tab].length ? (
         <InfiniteScroll
           hasMore={!noMoreProposals}
-          loadMore={() => send("FETCH")}
+          loadMore={loadMore}
           initialLoad={false}
           useWindow={false}
           threshold={300}>

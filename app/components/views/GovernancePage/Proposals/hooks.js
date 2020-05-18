@@ -1,4 +1,4 @@
-import { useState, useEffect, useReducer } from "react";
+import { useState, useEffect, useReducer, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchMachine } from "stateMachines/FetchStateMachine";
 import { useMachine } from "@xstate/react";
@@ -96,7 +96,9 @@ export function useProposalsList(tab) {
     }
   }, [proposals, previous, send, tab]);
 
-  return { noMoreProposals, state, proposals };
+  const loadMore = useCallback(() => send("FETCH"), [send]);
+
+  return { noMoreProposals, state, proposals, loadMore };
 }
 
 const onLoadMoreProposals = async (

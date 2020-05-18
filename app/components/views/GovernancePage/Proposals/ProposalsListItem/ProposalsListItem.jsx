@@ -49,7 +49,7 @@ const ProposalsListItem = ({
             <div
               className={classNames(
                 styles.voteChoice,
-                currentVoteChoice && currentVoteChoice.id
+                currentVoteChoice && styles[currentVoteChoice.id]
               )}
             />
             <VotingProgress {...{ voteCounts, quorumMinimumVotes }} />
