@@ -66,7 +66,7 @@ const ProposalsListItem = ({
             />
           </div>
         ) : (
-          <div className={voteResult}>
+          <div className={styles.voteResult}>
             {quorumPass ? (
               voteResult
             ) : (
