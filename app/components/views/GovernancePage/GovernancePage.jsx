@@ -4,7 +4,6 @@ import { Switch, Redirect } from "react-router-dom";
 import ProposalsTab from "./Proposals/ProposalsTab";
 import VotingPrefsTab from "./Blockchain/VotingPrefsTab";
 import TabHeader from "./TabHeader/TabHeader";
-import "style/Governance.less";
 
 const PageHeader = () => (
   <TitleHeader

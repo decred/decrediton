@@ -4,17 +4,18 @@ import { FormattedMessage as T } from "react-intl";
 import { PoliteiaLink as PiLink } from "shared";
 import { TabbedPage, TabbedPageTab as Tab } from "layout";
 import { createElement as h } from "react";
-import { Button } from "pi-ui";
+import { Button, classNames } from "pi-ui";
 import { useProposalsTab } from "./hooks";
 import styles from "./ProposalsTab.module.css";
 
 const PageHeader = ({ isTestnet }) => (
-  <div className="proposals-community-header is-row">
-    <div className="proposals-community-header-wrapper">
-      <div className="proposals-community-header-title">
+  <div className={classNames(styles.header, "is-row")}>
+    {/* TODO: wrapp this 'header' in a component same header is used in VotingPrefs.jsx */}
+    <div>
+      <div className={styles.title}>
         <T id="proposals.community.title" m="Proposals" />
       </div>
-      <div className="proposals-community-header-description">
+      <div className={styles.description}>
         <T
           id="proposals.community.descr"
           m="Voting on community proposals allows you to have a say on how the project treasury is spent.
@@ -29,7 +30,7 @@ const PageHeader = ({ isTestnet }) => (
         />
       </div>
     </div>
-    <div className="links">
+    <div className={styles.links}>
       <PiLink
         className={styles.politeiaButton}
         CustomComponent={Button}

@@ -9,6 +9,36 @@
   font-size: 9pt;
 }
 
+.header {
+  background-color: var(--disabled-background-color);
+  color: var(--modal-text);
+  padding-left: 103px;
+  padding-top: 25px;
+  padding-bottom: 15px;
+}
+
+.title {
+  font-size: 21px;
+  line-height: 27px;
+  margin-bottom: 10px;
+  color: var(--title-text-and-button-background);
+}
+
+.description {
+  font-size: 13px;
+  line-height: 19px;
+  margin-top: 0;
+  width: 460px;
+}
+
+.links {
+  margin-left: 130px;
+}
+
+.links a {
+  margin: 0 !important;
+}
+
 .politeiaButton {
   font-size: 13px !important;
   line-height: 17px !important;
@@ -36,5 +66,13 @@
 @media screen and (max-width: 1179px) {
   .politeiaDisabled {
     padding-left: 20px;
+  }
+
+  .header {
+    padding-left: 35px;
+  }
+
+  .links {
+    margin-left: 44px;
   }
 }
