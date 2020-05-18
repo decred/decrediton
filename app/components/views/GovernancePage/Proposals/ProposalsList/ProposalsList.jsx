@@ -1,9 +1,8 @@
 import { PoliteiaLoading, NoProposals } from "indicators";
 import InfiniteScroll from "react-infinite-scroller";
 import ProposalsListItem from "../ProposalsListItem/ProposalsListItem";
-import styles from "./ProposalsList.module.css";
 import { useProposalsList } from "../hooks";
-import { classNames } from "pi-ui";
+import styles from "./ProposalsList.module.css";
 
 const ProposalsList = ({ finishedVote, tab }) => {
   const { noMoreProposals, state, proposals, send } = useProposalsList(tab);
@@ -24,9 +23,13 @@ const ProposalsList = ({ finishedVote, tab }) => {
           initialLoad={false}
           useWindow={false}
           threshold={300}>
-          <div className={classNames("proposal-list", finishedVote && "ended")}>
+          <div className={styles.proposalList}>
             {proposals[tab].map((v) => (
-              <ProposalsListItem key={v.token} {...v} />
+              <ProposalsListItem
+                key={v.token}
+                {...v}
+                finishedVote={finishedVote}
+              />
             ))}
           </div>
         </InfiniteScroll>

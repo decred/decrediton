@@ -7,6 +7,8 @@ import {
 import { FormattedRelative } from "shared";
 import { classNames } from "pi-ui";
 import { useProposalsListItem } from "../hooks";
+import styles from "./ProposalsListItem.module.css";
+
 const ProposalsListItem = ({
   name,
   timestamp,
@@ -18,7 +20,8 @@ const ProposalsListItem = ({
   voteResult,
   modifiedSinceLastAccess,
   votingSinceLastAccess,
-  quorumMinimumVotes
+  quorumMinimumVotes,
+  finishedVote
 }) => {
   const { viewProposalDetailsHandler, tsDate } = useProposalsListItem(token);
   const isVoting = voteStatus == VOTESTATUS_ACTIVEVOTE;
@@ -30,28 +33,30 @@ const ProposalsListItem = ({
       onClick={viewProposalDetailsHandler}
       className={classNames(
         "is-row",
-        "proposal-list-item",
-        voteResult,
-        isModified && "proposal-modified-since-last-access"
+        styles.listiTtem,
+        styles[voteResult],
+        finishedVote && styles.ended,
+        isModified && styles.modified
       )}>
-      <div className="info">
-        <div className="proposal-name">{name}</div>
-        <div className="proposal-token">{token}</div>
+      <div>
+        <div className={styles.name}>{name}</div>
+        <div className={styles.token}>{token}</div>
       </div>
-      <div className="proposal-results-area">
+      <div className={styles.resultsArea}>
         {(voteStatus === VOTESTATUS_ACTIVEVOTE ||
           voteStatus === VOTESTATUS_FINISHEDVOTE) && (
-          <div className="is-row voting-indicator">
+          <div className={classNames("is-row", styles.votingIndicator)}>
             <div
-              className={
-                "vote-choice " + (currentVoteChoice && currentVoteChoice.id)
-              }
+              className={classNames(
+                styles.voteChoice,
+                currentVoteChoice && currentVoteChoice.id
+              )}
             />
             <VotingProgress {...{ voteCounts, quorumMinimumVotes }} />
           </div>
         )}
         {voteStatus !== VOTESTATUS_FINISHEDVOTE ? (
-          <div className="proposal-timestamp">
+          <div className={styles.timestamp}>
             <T
               id="proposalItem.lastUpdatedAt"
               m="Last Updated {reldate}"
@@ -61,7 +66,7 @@ const ProposalsListItem = ({
             />
           </div>
         ) : (
-          <div className="vote-result">
+          <div className={voteResult}>
             {quorumPass ? (
               voteResult
             ) : (
