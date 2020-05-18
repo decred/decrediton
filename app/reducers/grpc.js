@@ -31,7 +31,6 @@ import {
   GETAGENDASERVICE_ATTEMPT,
   GETAGENDASERVICE_FAILED,
   GETAGENDASERVICE_SUCCESS,
-  RAWTICKETTRANSACTIONS_DECODED,
   GETMESSAGEVERIFICATIONSERVICE_ATTEMPT,
   GETMESSAGEVERIFICATIONSERVICE_FAILED,
   GETMESSAGEVERIFICATIONSERVICE_SUCCESS,
@@ -353,18 +352,6 @@ export default function grpc(state = {}, action) {
         ...state,
         getTicketsCancel: true
       };
-    case RAWTICKETTRANSACTIONS_DECODED:
-      idxOldTicket = state.tickets.indexOf(action.ticket);
-      if (idxOldTicket < 0) {
-        console.log("decoded did not find", idxOldTicket);
-        return state;
-      }
-      newTickets = state.tickets.slice();
-      newTickets.splice(idxOldTicket, 1, action.newTicket);
-      return {
-        ...state,
-        tickets: newTickets
-      };
     case CHANGE_TICKETS_FILTER:
       return {
         ...state,
@@ -618,8 +605,7 @@ export default function grpc(state = {}, action) {
         maturingBlockHeights: action.maturingBlockHeights,
         recentRegularTransactions: action.recentRegularTxs,
         recentStakeTransactions: action.recentStakeTxs,
-        transactions: action.transactions,
-        tickets: [...action.recentStakeTxs]
+        transactions: action.transactions
       };
     case MATURINGHEIGHTS_CHANGED:
       return {
@@ -646,7 +632,6 @@ export default function grpc(state = {}, action) {
         lastTransaction: null,
         maturingBlockHeights: {},
         unminedTransactions: [],
-        tickets: [],
         transactions: [],
         noMoreTransactions: false,
         transactionsFilter: {

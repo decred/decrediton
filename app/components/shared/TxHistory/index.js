@@ -55,6 +55,7 @@ const TxHistory = ({
       const Component = TxRowByType[rowType];
       if (Component === StakeTxRow && isRegular) return;
       if (Component === RegularTxRow && isStake) return;
+      const key = tx.spenderHash ? tx.spenderHash : tx.txHash
 
       const txOutputAddresses =
         tx.outputs &&
@@ -62,9 +63,9 @@ const TxHistory = ({
           .filter((o) => !o.isChange)
           .map((o) => o.address)
           .join(" ");
-      return (
+          return (
         <Component
-          key={tx.txHash}
+          key={key}
           {...{
             ...tx,
             txOutputAddresses,

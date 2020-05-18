@@ -447,12 +447,7 @@ export const getTicketsProgressStartRequestHeight = get([
   "grpc",
   "getTicketsProgressStartRequestHeight"
 ]);
-export const tickets = get(["grpc", "tickets"]);
 export const numTicketsToBuy = get(["control", "numTicketsToBuy"]);
-
-// note that hasTickets means "ever had any tickets", **NOT** "currently has live
-// tickets".
-export const hasTickets = compose((t) => t && t.length > 0, tickets);
 
 // transactionNormalizer normalizes regular decred's regular transactions
 export const transactionNormalizer = createSelector(
@@ -588,6 +583,12 @@ export const stakeTransactions = createSelector(
         return normalizedMap;
       }, {});
   }
+);
+
+// note that hasTickets means "ever had any tickets", **NOT** "currently has live
+// tickets".
+export const hasTickets = compose(
+  (t) => t && Object.keys(t).length > 0, stakeTransactions
 );
 
 export const noMoreTransactions = get(["grpc", "noMoreTransactions"]);
