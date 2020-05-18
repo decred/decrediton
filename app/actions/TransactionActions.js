@@ -6,6 +6,7 @@ import { TransactionDetails } from "middleware/walletrpc/api_pb";
 import { getStartupStats } from "./StatisticsActions";
 import { hexToBytes, strHashToRaw } from "helpers";
 import { RECENT_TX_COUNT, BATCH_TX_COUNT } from "constants";
+import { TICKET, VOTE, VOTED, REVOKED } from "constants/Decrediton";
 
 export const { TRANSACTION_TYPES } = wallet;
 
@@ -565,7 +566,7 @@ const getMissingStakeTxData = async (
   let ticketTx, spenderTx, status;
   const { txHash, txType, rawTx, tx } = transaction;
 
-  if (txType === "Ticket") {
+  if (txType === TICKET) {
     // This is currently a somewhat slow call in RPC mode due to having to check
     // in dcrd whether the ticket is live or not.
     const ticket = await wallet.getTicket(walletService, strHashToRaw(txHash));
@@ -597,7 +598,7 @@ const getMissingStakeTxData = async (
     const spenderInputs = decodedSpender.inputs;
     const outpIdx = spenderInputs.length === 1 ? 0 : 1;
     const ticketTxHash = spenderInputs[outpIdx].prevTxId;
-    status = txType === "Vote" ? "voted" : "revoked";
+    status = txType === VOTE ? VOTED : REVOKED;
 
     // given that the ticket may be much older than the transactions currently
     // in the `transactions` state var, we need to manually fetch the ticket

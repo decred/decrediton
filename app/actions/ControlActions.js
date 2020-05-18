@@ -284,6 +284,7 @@ export const PURCHASETICKETS_FAILED = "PURCHASETICKETS_FAILED";
 export const PURCHASETICKETS_SUCCESS = "PURCHASETICKETS_SUCCESS";
 export const CREATE_UNSIGNEDTICKETS_SUCCESS = "CREATE_UNSIGNEDTICKETS_SUCCESS";
 
+// TODO move purchaseTicketsAttempt to TransactionActions
 export const purchaseTicketsAttempt = (
   passphrase,
   accountNum,

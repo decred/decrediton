@@ -88,10 +88,6 @@ import {
   GETTRANSACTIONS_ATTEMPT,
   GETTRANSACTIONS_FAILED,
   GETTRANSACTIONS_COMPLETE,
-  GETTICKETS_ATTEMPT,
-  GETTICKETS_FAILED,
-  GETTICKETS_COMPLETE,
-  GETTICKETS_PROGRESS,
   GETTICKETS_CANCEL,
   CHANGE_TICKETS_FILTER,
   MATURINGHEIGHTS_CHANGED,
@@ -351,39 +347,6 @@ export default function grpc(state = {}, action) {
         getAccountsError: "",
         getAccountsRequestAttempt: false,
         getAccountsResponse: action.response
-      };
-    case GETTICKETS_ATTEMPT:
-      return {
-        ...state,
-        getTicketsRequestAttempt: true,
-        getTicketsCancel: false
-      };
-    case GETTICKETS_FAILED:
-      return {
-        ...state,
-        getTicketsRequestError: String(action.error),
-        getTicketsRequestAttempt: false,
-        getTicketsCancel: false,
-        getTicketsProgressStartRequestHeight: null
-      };
-    case GETTICKETS_COMPLETE:
-      return {
-        ...state,
-        tickets: [...action.unminedTickets, ...action.minedTickets],
-        transactions: { ...state.transactions, ...action.ticketsMap },
-        unminedTickets: action.unminedTickets,
-        minedTickets: action.minedTickets,
-        noMoreTickets: action.noMoreTickets,
-        getTicketsRequestError: "",
-        getTicketsRequestAttempt: false,
-        getTicketsStartRequestHeight: action.getTicketsStartRequestHeight,
-        getTicketsCancel: false,
-        getTicketsProgressStartRequestHeight: null
-      };
-    case GETTICKETS_PROGRESS:
-      return {
-        ...state,
-        getTicketsProgressStartRequestHeight: action.startRequestHeight
       };
     case GETTICKETS_CANCEL:
       return {
@@ -655,7 +618,8 @@ export default function grpc(state = {}, action) {
         maturingBlockHeights: action.maturingBlockHeights,
         recentRegularTransactions: action.recentRegularTxs,
         recentStakeTransactions: action.recentStakeTxs,
-        transactions: action.transactions
+        transactions: action.transactions,
+        tickets: [...action.recentStakeTxs]
       };
     case MATURINGHEIGHTS_CHANGED:
       return {

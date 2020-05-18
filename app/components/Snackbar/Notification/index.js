@@ -25,8 +25,8 @@ const Notification = ({
   onDismissMessages,
   type,
   ...message
-}) =>
-  transactionTypes.indexOf(type) > -1 ? (
+}) => {
+  return transactionTypes.indexOf(type) > -1 ? (
     <Transaction
       {...{ topNotification, progress, onDismissMessages, type, ...message }}
     />
@@ -35,5 +35,6 @@ const Notification = ({
       {...{ topNotification, progress, onDismissMessages, ...message, type }}
     />
   );
+};
 
 export default Notification;

@@ -11,7 +11,12 @@ import * as api from "middleware/walletrpc/api_pb";
 import {
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_RECEIVED,
-  TRANSACTION_DIR_TRANSFERRED
+  TRANSACTION_DIR_TRANSFERRED,
+  REGULAR,
+  COINBASE,
+  TICKET,
+  VOTE,
+  REVOCATION
 } from "constants/Decrediton";
 import {
   _blake256,
@@ -85,22 +90,13 @@ const UNMINED_BLOCK_TEMPLATE = {
   }
 };
 
-// TODO move these to constants
-export const TRANSACTION_TYPE_REGULAR = "Regular";
-export const TRANSACTION_TYPE_TICKET_PURCHASE = "Ticket";
-export const TRANSACTION_TYPE_VOTE = "Vote";
-export const TRANSACTION_TYPE_REVOCATION = "Revocation";
-export const TRANSACTION_TYPE_COINBASE = "Coinbase";
-
 // Map from numerical into string transaction type
 export const TRANSACTION_TYPES = {
-  [api.TransactionDetails.TransactionType.REGULAR]: TRANSACTION_TYPE_REGULAR,
-  [api.TransactionDetails.TransactionType
-    .TICKET_PURCHASE]: TRANSACTION_TYPE_TICKET_PURCHASE,
-  [api.TransactionDetails.TransactionType.VOTE]: TRANSACTION_TYPE_VOTE,
-  [api.TransactionDetails.TransactionType
-    .REVOCATION]: TRANSACTION_TYPE_REVOCATION,
-  [api.TransactionDetails.TransactionType.COINBASE]: TRANSACTION_TYPE_COINBASE
+  [api.TransactionDetails.TransactionType.REGULAR]: REGULAR,
+  [api.TransactionDetails.TransactionType.TICKET_PURCHASE]: TICKET,
+  [api.TransactionDetails.TransactionType.VOTE]: VOTE,
+  [api.TransactionDetails.TransactionType.REVOCATION]: REVOCATION,
+  [api.TransactionDetails.TransactionType.COINBASE]: COINBASE
 };
 
 const StakeTxType = [
@@ -151,7 +147,7 @@ export function formatTransaction(block, transaction, index) {
   }
 
   return {
-    txTimestamp: block.getTimestamp(),
+    timestamp: block.getTimestamp(),
     height: block.getHeight(),
     blockHash: block.getHash(),
     index: index,

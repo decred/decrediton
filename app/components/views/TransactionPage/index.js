@@ -9,25 +9,36 @@ import { useState } from "react";
 import { Balance } from "shared";
 import { SlateGrayButton } from "buttons";
 import { StandaloneHeader, StandalonePage } from "layout";
+import {
+  OUT,
+  IN,
+  TRANSACTION_DIR_TRANSFERRED,
+  REGULAR,
+  TICKET,
+  VOTE,
+  REVOCATION,
+  COINBASE
+} from "constants/Decrediton";
 import * as ta from "actions/TransactionActions";
 import * as ca from "actions/ClientActions";
 import * as sel from "selectors";
 
+// TODO use constants instead
 const messages = defineMessages({
-  Ticket: { id: "txDetails.type.ticket", defaultMessage: "Ticket" },
-  Vote: { id: "txDetails.type.vote", defaultMessage: "Vote" },
-  Revocation: { id: "txDetails.type.revoke", defaultMessage: "Revoke" },
-  Coinbase: { id: "txDetails.type.coinbase", defaultMessage: "Coinbase" }
+  [TICKET]: { id: "txDetails.type.ticket", defaultMessage: "Ticket" },
+  [VOTE]: { id: "txDetails.type.vote", defaultMessage: "Vote" },
+  [REVOCATION]: { id: "txDetails.type.revoke", defaultMessage: "Revoke" },
+  [COINBASE]: { id: "txDetails.type.coinbase", defaultMessage: "Coinbase" }
 });
 
 const headerIcons = {
-  in: "tx-detail-icon-in",
-  out: "tx-detail-icon-out",
-  Coinbase: "tx-detail-icon-in",
-  transfer: "tx-detail-icon-transfer",
-  Ticket: "tx-detail-icon-ticket",
-  Vote: "tx-detail-icon-vote",
-  Revocation: "tx-detail-icon-revocation"
+  [IN]: "tx-detail-icon-in",
+  [OUT]: "tx-detail-icon-out",
+  [COINBASE]: "tx-detail-icon-in",
+  [TRANSACTION_DIR_TRANSFERRED]: "tx-detail-icon-transfer",
+  [TICKET]: "tx-detail-icon-ticket",
+  [VOTE]: "tx-detail-icon-vote",
+  [REVOCATION]: "tx-detail-icon-revocation"
 };
 
 function Transaction({ intl }) {
@@ -61,8 +72,8 @@ function Transaction({ intl }) {
         }
         const { txType, ticketPrice, leaveTimestamp } = viewedTransaction;
         if (
-          (txType === "Ticket" && !ticketPrice) ||
-          (txType == "Vote" && !leaveTimestamp)
+          (txType === TICKET && !ticketPrice) ||
+          (txType == VOTE && !leaveTimestamp)
         ) {
           fetchMissingStakeTxData(viewedTransaction)
             .then(() => send("RESOLVE"))
@@ -79,20 +90,20 @@ function Transaction({ intl }) {
     txInputs,
     txAmount,
     txDirection,
-    txTimestamp,
+    timestamp,
     ticketReward,
     enterTimestamp,
     leaveTimestamp,
     ticketPrice
   } = viewedTransaction;
   console.log(viewedTransaction);
-  const isConfirmed = !!txTimestamp;
+  const isConfirmed = !!timestamp;
   // If it is a regular tx we use txDirection instead
   const icon =
-    txType === "Regular" ? headerIcons[txDirection] : headerIcons[txType];
+    txType === REGULAR ? headerIcons[txDirection] : headerIcons[txType];
 
   let title =
-    txType !== "Regular" ? (
+    txType !== REGULAR ? (
       intl.formatMessage(messages[txType])
     ) : (
       <Balance
@@ -101,7 +112,7 @@ function Transaction({ intl }) {
         amount={txDirection !== "in" ? -txAmount : txAmount}
       />
     );
-  if (txType == "Ticket" && ticketReward) {
+  if (txType == TICKET && ticketReward) {
     title = title + ", Voted";
   }
   let sentFromAccount = "";
@@ -119,8 +130,8 @@ function Transaction({ intl }) {
   let subtitle = <div />;
 
   switch (txType) {
-    case "Ticket":
-    case "Vote":
+    case TICKET:
+    case VOTE:
       subtitle = (
         <div className="tx-details-subtitle">
           {isConfirmed ? (
@@ -134,9 +145,9 @@ function Transaction({ intl }) {
                   m="{timestamp, date, medium} {timestamp, time, medium}"
                   values={{
                     timestamp: tsDate(
-                      txType == "Vote" && enterTimestamp
+                      txType == VOTE && enterTimestamp
                         ? enterTimestamp
-                        : txTimestamp
+                        : timestamp
                     )
                   }}
                 />
@@ -204,7 +215,7 @@ function Transaction({ intl }) {
               <T
                 id="txDetails.timestamp"
                 m="{timestamp, date, medium} {timestamp, time, medium}"
-                values={{ timestamp: tsDate(txTimestamp) }}
+                values={{ timestamp: tsDate(timestamp) }}
               />
             ) : (
               <T id="txDetails.unConfirmed" m="Unconfirmed" />

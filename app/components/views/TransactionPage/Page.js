@@ -5,6 +5,7 @@ import { addSpacingAroundText, reverseHash } from "helpers";
 import { FormattedMessage as T } from "react-intl";
 import { DecodedTransaction } from "middleware/walletrpc/api_pb";
 import { useSelector, useDispatch } from "react-redux";
+import { VOTE, IN } from "constants/Decrediton";
 import * as cla from "actions/ControlActions";
 import * as sel from "selectors";
 import "style/TxDetails.less";
@@ -61,11 +62,11 @@ const Page = ({
     txBlockUrl,
     txFee,
     txDirection,
-    txTimestamp,
+    timestamp,
     rawTx
   } = transactionDetails;
 
-  const isConfirmed = !!txTimestamp;
+  const isConfirmed = !!timestamp;
   if (decodedTransaction) {
     const walletOutputIndices = txOutputs.map((v) => v.index);
     const walletInputIndices = txInputs.map((v) => v.index);
@@ -118,7 +119,7 @@ const Page = ({
             )}
           </div>
         </div>
-        {txType !== "Vote" && (
+        {txType !== VOTE && (
           <div className="txdetails-top-row">
             <div className="txdetails-name">
               <T id="txDetails.toAddress" m="To address" />:
@@ -133,7 +134,7 @@ const Page = ({
             </div>
           </div>
         )}
-        {txDirection !== "in" && txType !== "Vote" && (
+        {txDirection !== IN && txType !== VOTE && (
           <div className="txdetails-top-row">
             <div className="txdetails-name">
               <T id="txDetails.transactionFeeLabel" m="Transaction fee" />:
