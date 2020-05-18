@@ -19,7 +19,15 @@ export const TestNetParams = {
   HDCoinType: 1,
 
   TreasuryAddress: "TcrypGAcGCRVXrES7hWqVZb5oLJKCZEtoL1",
-  trezorCoinName: "Decred Testnet"
+  trezorCoinName: "Decred Testnet",
+
+  // Address encoding magics
+  NetworkAddressPrefix: "T",
+  PubKeyAddrID: Buffer.from([0x28, 0xf7]), // starts with Tk
+  PubKeyHashAddrID: Buffer.from([0x0f, 0x21]), // starts with Ts
+  PKHEdwardsAddrID: [0x0f, 0x01], // starts with Te
+  PKHSchnorrAddrID: [0x0e, 0xe3], // starts with TS
+  ScriptHashAddrID: [0x0e, 0xfc] // starts with Tc
 };
 
 export const MainNetParams = {
@@ -37,7 +45,15 @@ export const MainNetParams = {
   HDCoinType: 42,
 
   TreasuryAddress: "Dcur2mcGjmENx4DhNqDctW5wJCVyT3Qeqkx",
-  trezorCoinName: "Decred"
+  trezorCoinName: "Decred",
+
+  // Address encoding magics
+  NetworkAddressPrefix: "D",
+  PubKeyAddrID: [0x13, 0x86], // starts with Dk
+  PubKeyHashAddrID: [0x07, 0x3f], // starts with Ds
+  PKHEdwardsAddrID: [0x07, 0x1f], // starts with De
+  PKHSchnorrAddrID: [0x07, 0x01], // starts with DS
+  ScriptHashAddrID: [0x07, 0x1a] // starts with Dc
 };
 
 // MAX_DCR_AMOUNT represents the maximum decred amount in atoms.
@@ -85,3 +101,36 @@ export const TicketCommitmentScriptSize = 1 + 1 + 20 + 8 + 2;
 
 // DefaultRelayFeePerKb is the default minimum relay fee policy for a mempool.
 export const DefaultRelayFeePerKb = 1e4;
+// STEcdsaSecp256k1 specifies that the signature is an ECDSA signature
+// over the secp256k1 elliptic curve.
+export const STEcdsaSecp256k1 = 0;
+
+// STEd25519 specifies that the signature is an ECDSA signature over the
+// edwards25519 twisted Edwards curve.
+export const STEd25519 = 1;
+
+// STSchnorrSecp256k1 specifies that the signature is a Schnorr
+// signature over the secp256k1 elliptic curve.
+export const STSchnorrSecp256k1 = 2;
+
+// ripemd160Size is the size of the RIPEMD-160 hash algorithm checksum in bytes.
+export const ripemd160Size = 20;
+
+// OP_CODES
+export const OP_0 = 0x00; // 0
+export const OP_1 = 0x51; // 81 - AKA OP_TRUE
+export const OP_16 = 0x60; // 96
+export const OP_DUP = 0x76; // 118
+export const OP_HASH160 = 0xa9; // 169
+export const OP_DATA_20 = 0x14; // 20
+export const OP_EQUAL = 0x87; // 135
+export const OP_EQUALVERIFY = 0x88; // 136
+export const OP_CHECKSIG = 0xac; // 172
+export const OP_SSTX = 0xba; // 186 DECRED
+export const OP_SSGEN = 0xbb; // 187 DECRED
+export const OP_SSRTX = 0xbc; // 188 DECRED
+export const OP_SSTXCHANGE = 0xbd; // 189 DECRED
+export const OP_DATA_33 = 0x21; // 33
+export const OP_DATA_65 = 0x41; // 65
+export const OP_CHECKSIGALT = 0xbe; // 190 DECRED
+export const OP_DATA_45 = 0x2d; // 45
