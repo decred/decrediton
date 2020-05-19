@@ -11,28 +11,22 @@ import * as sel from "selectors";
 import "style/TxDetails.less";
 
 function mapNonWalletOutput(output) {
-  const address = output.getAddressesList()[0] || "[script]";
+  const address = output.decodedScript.address || "[script]";
 
   const amount =
-    output.getScriptClass() ===
+    output.decodedScript.scriptClass ===
     DecodedTransaction.Output.ScriptClass.NULL_DATA ? (
       "[null data]"
     ) : (
-      <Balance amount={output.getValue()} />
+      <Balance amount={output.value} />
     );
 
   return { address, amount };
 }
 
 function mapNonWalletInput(input) {
-  const address =
-    reverseHash(
-      Buffer.from(input.getPreviousTransactionHash()).toString("hex")
-    ) +
-    ":" +
-    input.getPreviousTransactionIndex();
-
-  const amount = input.getAmountIn();
+  const address = `${input.prevTxId}:${input.outputIndex}`;
+  const amount = input.amountIn;
 
   return { address, amount };
 }
@@ -46,11 +40,6 @@ const Page = ({
   const publishUnminedTransactions = () =>
     dispatch(cla.publishUnminedTransactionsAttempt);
   const currentBlockHeight = useSelector(sel.currentBlockHeight);
-  const openTxUrl = () => shell.openExternal(txUrl);
-  const openBlockUrl = () => shell.openExternal(txBlockUrl);
-  let nonWalletInputs = [];
-  let nonWalletOutputs = [];
-
   const {
     txHash,
     txUrl,
@@ -63,10 +52,18 @@ const Page = ({
     txFee,
     txDirection,
     timestamp,
-    rawTx
+    rawTx,
+    isPending
   } = transactionDetails;
 
-  const isConfirmed = !!timestamp;
+  console.log(txUrl)
+  const openTxUrl = () => shell.openExternal(txUrl);
+  const openBlockUrl = () => shell.openExternal(txBlockUrl);
+  let nonWalletInputs = [];
+  let nonWalletOutputs = [];
+
+  const { inputs, outputs } = decodedTransaction;
+
   if (decodedTransaction) {
     const walletOutputIndices = txOutputs.map((v) => v.index);
     const walletInputIndices = txInputs.map((v) => v.index);
@@ -93,7 +90,7 @@ const Page = ({
         </div>
         <div className="txdetails-top-row">
           <div className="txdetails-name">
-            {isConfirmed ? (
+            {!isPending ? (
               <div className="txdetails-indicator-confirmed">
                 <T id="txDetails.indicatorConfirmed" m="Confirmed" />
               </div>
@@ -104,13 +101,13 @@ const Page = ({
             )}
           </div>
           <div className="txdetails-value">
-            {isConfirmed && (
+            {!isPending && (
               <span className="txdetails-value-text">
                 <T
                   id="transaction.confirmationHeight"
                   m="{confirmations, plural, =0 {Mined, block awaiting approval} one {# confirmation} other {# confirmations}}"
                   values={{
-                    confirmations: isConfirmed
+                    confirmations: !isPending
                       ? currentBlockHeight - txHeight
                       : 0
                   }}
@@ -125,7 +122,7 @@ const Page = ({
               <T id="txDetails.toAddress" m="To address" />:
             </div>
             <div className="txdetails-value non-flex">
-              {txOutputs.map(({ address }) => (
+            {txOutputs.map(({ address }) => (
                 <div>{addSpacingAroundText(address)}</div>
               ))}
               {nonWalletOutputs.map(({ address }) => (
@@ -145,7 +142,7 @@ const Page = ({
           </div>
         )}
       </div>
-      {!isConfirmed && (
+      {isPending && (
         <div className="txdetails-abandon-rebroadcast-area">
           <div className="rebroadcast-button-container">
             <KeyBlueButton
@@ -199,13 +196,13 @@ const Page = ({
                 }>
                 <T id="txDetails.nonWalletInputs" m="Non Wallet Inputs" />
               </div>
-              {nonWalletInputs.map(({ address, amount }, idx) => (
+              {inputs.map(({ outpointAddress, amountIn }, idx) => (
                 <div key={idx} className="txdetails-row">
                   <div className="txdetails-address">
-                    {addSpacingAroundText(address)}
+                    {addSpacingAroundText(outpointAddress)}
                   </div>
                   <div className="txdetails-amount">
-                    <Balance amount={amount} />
+                    <Balance amount={amountIn} />
                   </div>
                 </div>
               ))}
@@ -216,23 +213,23 @@ const Page = ({
             <div className="txdetails-output-area">
               <div
                 className={
-                  txOutputs.length > 0
+                  outputs.length > 0
                     ? "txdetails-overview-title-consumed"
                     : "txdetails-overview-title-empty"
                 }>
                 <T id="txDetails.walletOutputs" m="Wallet Outputs" />
               </div>
-              {txOutputs.map(({ accountName, address, amount }, idx) => (
+              {outputs.map(({ accountName, decodedScript, value }, idx) => (
                 <div key={idx} className="txdetails-row">
                   <div className="txdetails-address">
                     {txDirection === "out"
                       ? "change"
                       : accountName
                       ? addSpacingAroundText(accountName)
-                      : addSpacingAroundText(address)}
+                      : addSpacingAroundText(decodedScript.address)}
                   </div>
                   <div className="txdetails-amount">
-                    <Balance amount={amount} />
+                    <Balance amount={value} />
                   </div>
                 </div>
               ))}
@@ -262,7 +259,7 @@ const Page = ({
         <div className="txdetails-title">
           <T id="txDetails.properties" m="Properties" />
         </div>
-        {isConfirmed && (
+        {!isPending && (
           <>
             <div className="txdetails-top-row">
               <div className="txdetails-name">

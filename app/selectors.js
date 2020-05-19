@@ -313,25 +313,58 @@ export const chainParams = compose(
 );
 
 export const ticketNormalizer = createSelector(
-  [network, accounts, chainParams],
-  (network, accounts, chainParams) => {
+  [network, accounts, chainParams, txURLBuilder, blockURLBuilder],
+  (network, accounts, chainParams, txURLBuilder, blockURLBuilder) => {
     return (ticket) => {
+      const { txType, status, spender, blockHash, rawTx } = ticket;
+      // TODO refactor same code to be used in tickets and regular tx normalizers.
       const findAccount = (num) =>
         accounts.find((account) => account.getAccountNumber() === num);
       const getAccountName = (num) =>
         ((act) => (act ? act.getAccountName() : ""))(findAccount(num));
-      const hasSpender = ticket.spender && ticket.spender.getHash();
-      const isVote = ticket.status === "voted";
-      const isPending = ticket.status === "unmined";
+      const txInputs = [];
+      const txOutputs = [];
+      const hasSpender = spender && spender.getHash();
+      const isVote = status === "voted";
+      const isPending = status === "unmined";
       const ticketTx = ticket.ticket;
-      const spenderTx = hasSpender ? ticket.spender : null;
-      const txHash = reverseHash(
-        Buffer.from(ticketTx.getHash()).toString("hex")
-      );
+      const spenderTx = hasSpender ? spender : null;
+      const txBlockHash = blockHash
+        ? reverseHash(Buffer.from(blockHash).toString("hex"))
+        : null;
+      const txHash = ticket.txHash;
+      const txUrl = txURLBuilder(txHash);
+      const txBlockUrl = blockURLBuilder(txBlockHash);
+
       const spenderHash = hasSpender
         ? reverseHash(Buffer.from(spenderTx.getHash()).toString("hex"))
         : null;
       const hasCredits = ticketTx.getCreditsList().length > 0;
+
+      ticketTx.getDebitsList().reduce((total, debit) => {
+        const debitedAccount = debit.getPreviousAccount();
+        const debitedAccountName = getAccountName(debitedAccount);
+        const amount = debit.getPreviousAmount();
+        txInputs.push({
+          accountName: debitedAccountName,
+          amount,
+          index: debit.getIndex()
+        });
+        return total + amount;
+      }, 0);
+
+      ticketTx.getCreditsList().forEach((credit) => {
+        const amount = credit.getAmount();
+        const address = credit.getAddress();
+        const creditedAccount = credit.getAccount();
+        const creditedAccountName = getAccountName(creditedAccount);
+        txOutputs.push({
+          accountName: creditedAccountName,
+          amount,
+          address,
+          index: credit.getIndex()
+        });
+      });
 
       let ticketPrice = 0;
       if (hasCredits) {
@@ -413,6 +446,7 @@ export const ticketNormalizer = createSelector(
 
       return {
         txHash,
+        txBlockHash,
         spenderHash,
         ticketTx,
         spenderTx,
@@ -429,13 +463,16 @@ export const ticketNormalizer = createSelector(
         enterTimestamp: ticketTx.getTimestamp(),
         leaveTimestamp: hasSpender ? spenderTx.getTimestamp() : null,
         status: ticket.status,
-        ticketRawTx: Buffer.from(ticketTx.getTransaction()).toString("hex"),
-        spenderRawTx: hasSpender
-          ? Buffer.from(spenderTx.getTransaction()).toString("hex")
-          : null,
+        rawTx,
         tx: ticketTx,
+        txType,
         isPending,
-        accountName
+        accountName,
+        txInputs,
+        txOutputs,
+        txHeight: ticket.height,
+        txUrl,
+        txBlockUrl
       };
     };
   }
@@ -478,14 +515,12 @@ export const transactionNormalizer = createSelector(
       let totalFundsReceived = 0;
       let totalChange = 0;
       const addressStr = [];
-      let debitedAccount;
-      let creditedAccount;
       const txInputs = [];
       const txOutputs = [];
       const fee = tx.getFee();
       let debitedAccountName, creditedAccountName;
       const totalDebit = tx.getDebitsList().reduce((total, debit) => {
-        debitedAccount = debit.getPreviousAccount();
+        const debitedAccount = debit.getPreviousAccount();
         debitedAccountName = getAccountName(debitedAccount);
         const amount = debit.getPreviousAmount();
         txInputs.push({
@@ -500,7 +535,7 @@ export const transactionNormalizer = createSelector(
         const amount = credit.getAmount();
         const address = credit.getAddress();
         addressStr.push(address);
-        creditedAccount = credit.getAccount();
+        const creditedAccount = credit.getAccount();
         creditedAccountName = getAccountName(creditedAccount);
         txOutputs.push({
           accountName: creditedAccountName,
@@ -519,21 +554,21 @@ export const transactionNormalizer = createSelector(
               txDescription: { direction: "Sent", addressStr: addressStr },
               txAmount: totalDebit - fee - totalChange - totalFundsReceived,
               txDirection: "out",
-              txAccountName: getAccountName(debitedAccount)
+              txAccountName: debitedAccountName
             }
           : totalFundsReceived + totalChange + fee === totalDebit
           ? {
               txDescription: { direction: "Transferred", addressStr },
               txAmount: fee,
               txDirection: "transfer",
-              txAccountNameCredited: getAccountName(creditedAccount),
-              txAccountNameDebited: getAccountName(debitedAccount)
+              txAccountNameCredited: creditedAccountName,
+              txAccountNameDebited: debitedAccountName
             }
           : {
               txDescription: { direction: "Received at:", addressStr },
               txAmount: totalFundsReceived,
               txDirection: "in",
-              txAccountName: getAccountName(creditedAccount)
+              txAccountName: creditedAccountName
             };
 
       return {
