@@ -56,7 +56,6 @@ const Page = ({
     isPending
   } = transactionDetails;
 
-  console.log(txUrl)
   const openTxUrl = () => shell.openExternal(txUrl);
   const openBlockUrl = () => shell.openExternal(txBlockUrl);
   let nonWalletInputs = [];
