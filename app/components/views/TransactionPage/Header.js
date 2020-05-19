@@ -60,11 +60,11 @@ const backBtn = ({ goBack, }) => (
 );
 
 const subtitle = ({
-  txType, isPending, enterTimestamp, timestamp, leaveTimestamp, ticketPrice, ticketReward, txDirection, tsDate
+  txType, isPending, enterTimestamp, timestamp, leaveTimestamp, ticketPrice, ticketReward, txDirection, tsDate, txInputs
 }) => {
   let sentFromAccount = "";
   // This assumes all inputs are from same account.
-  if (txDirection == "out") {
+  if (txDirection === "out") {
     sentFromAccount = txInputs.length > 0 ? txInputs[0].accountName : "";
   }
   switch (txType) {
@@ -176,7 +176,8 @@ const Header = ({
   ticketPrice,
   ticketReward,
   txDirection,
-  intl
+  intl,
+  txInputs
 }) => {
   const dispatch = useDispatch();
   const tsDate = useSelector(sel.tsDate);
@@ -186,7 +187,7 @@ const Header = ({
     title={title({ txType, txAmount, txDirection, ticketReward, intl })}
     iconClassName={icon({ txType, txDirection })}
     description={subtitle({
-      txType, isPending, enterTimestamp, timestamp, leaveTimestamp, ticketPrice, ticketReward, txDirection, tsDate
+      txType, isPending, enterTimestamp, timestamp, leaveTimestamp, ticketPrice, ticketReward, txDirection, tsDate, txInputs
     })}
     actionButton={backBtn({ goBack })}
   />;

@@ -394,7 +394,7 @@ export default function grpc(state = {}, action) {
       return {
         ...state,
         unminedTransactions: action.unminedTransactions,
-        transactions: { ...action.unminedTransactions, ...state.transactions },
+        transactions: action.newTransactionsMap,
         recentRegularTransactions: action.recentRegularTransactions,
         recentStakeTransactions: action.recentStakeTransactions
       };

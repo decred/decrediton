@@ -96,7 +96,6 @@ const transactionNtfnsDataHandler = (dispatch, getState) => {
     mined.forEach((tx) => {
       if (!newlyMinedMap[tx.txHash]) {
         newlyMined.push(tx);
-        newlyMined[tx.txHash] = tx;
       }
       if (newlyUnminedMap[tx.txHash]) {
         // remove from txs that have already been mined from the unmined list
@@ -124,13 +123,13 @@ const transactionNtfnsDataHandler = (dispatch, getState) => {
         attachedBlocks.length - 1
       ].getHeight();
 
-      const mined = attachedBlocks.reduce((l, b) => {
+      const mined = [];
+      attachedBlocks.forEach((b) => {
         b.getTransactionsList().forEach((t, i) => {
           const tx = wallet.formatTransaction(b, t, i);
-          l.push(tx);
+          mined.push(tx);
         });
-        return l;
-      }, []);
+      });
 
       const unmined = unminedTxList.map((t, i) =>
         wallet.formatUnminedTransaction(t, i)
