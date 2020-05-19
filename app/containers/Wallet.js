@@ -68,7 +68,7 @@ class Wallet extends React.Component {
             <Route path="/ln" component={LNPage} />
           </MainSwitch>
           <Route
-            path="/transactions/history/:txHash"
+            path="/transaction/history/:txHash"
             component={TransactionPage}
           />
           <Route
