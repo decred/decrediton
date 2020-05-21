@@ -2,6 +2,7 @@ import { FormattedMessage as T } from "react-intl";
 import { Balance, FormattedRelative } from "shared";
 import { KeyBlueButton } from "buttons";
 import { TextInput, DcrInput } from "inputs";
+import { SimpleLoading } from "indicators";
 
 const Payment = ({ payment, tsDate }) => (
   <div className="ln-payment">
@@ -23,6 +24,30 @@ const Payment = ({ payment, tsDate }) => (
       </div>
       <div className="rhash">{payment.paymentHash}</div>
     </div>
+  </div>
+);
+
+const OutstandingPayment = ({ payment, tsDate }) => (
+  <div className="ln-payment outstanding">
+    <div>
+      <div className="value">
+        <Balance amount={payment.valueAtoms} />
+      </div>
+      <div className="fee">
+        <Balance amount={payment.fee} />
+      </div>
+    </div>
+    <div>
+      <div>
+        <T
+          id="ln.paymentsTab.outstanding.creationDate"
+          m="{creationDate, date, medium} {creationDate, time, short}"
+          values={{ creationDate: tsDate(payment.timestamp) }}
+        />
+      </div>
+      <div className="rhash">{payment.paymentHash}</div>
+    </div>
+    <SimpleLoading />
   </div>
 );
 
@@ -94,12 +119,12 @@ const DecodedPayRequest = ({
 
 export default ({
   payments,
+  outstandingPayments,
   tsDate,
   payRequest,
   decodedPayRequest,
   decodingError,
   expired,
-  sending,
   sendValue,
   onPayRequestChanged,
   onSendPayment,
@@ -113,11 +138,7 @@ export default ({
     <div className="ln-send-payment">
       <div className="payreq">
         <T id="ln.paymentsTab.payReq" m="Payment Request" />
-        <TextInput
-          disabled={sending}
-          value={payRequest}
-          onChange={onPayRequestChanged}
-        />
+        <TextInput value={payRequest} onChange={onPayRequestChanged} />
       </div>
       {decodingError ? (
         <div className="decoding-error">{"" + decodingError}</div>
@@ -131,15 +152,27 @@ export default ({
             sendValue={sendValue}
             onSendValueChanged={onSendValueChanged}
           />
-          <KeyBlueButton
-            loading={sending}
-            disabled={sending || expired}
-            className="sendpayment"
-            onClick={onSendPayment}>
+          <KeyBlueButton className="sendpayment" onClick={onSendPayment}>
             <T id="ln.paymentsTab.sendBtn" m="Send" />
           </KeyBlueButton>
         </>
       ) : null}
+    </div>
+
+    {Object.keys(outstandingPayments).length > 0 ? (
+      <h2 className="ln-payments-subheader">
+        <T id="ln.paymentsTab.outstanding" m="Ongoing Payments" />
+      </h2>
+    ) : null}
+
+    <div className="ln-payments-list">
+      {Object.keys(outstandingPayments).map((ph) => (
+        <OutstandingPayment
+          payment={outstandingPayments[ph].decoded}
+          key={"outstanding-" + ph}
+          tsDate={tsDate}
+        />
+      ))}
     </div>
 
     <h2 className="ln-payments-subheader">

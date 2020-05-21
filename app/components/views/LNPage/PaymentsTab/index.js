@@ -85,24 +85,16 @@ class PaymentsTab extends React.Component {
     }
 
     const { payRequest, sendValueAtom } = this.state;
-    this.setState({ sending: true });
-    this.props
-      .sendPayment(payRequest, sendValueAtom)
-      .then(() => {
-        this.setState({
-          sending: false,
-          payRequest: "",
-          decodedPayRequest: null,
-          sendValue: 0
-        });
-      })
-      .catch(() => {
-        this.setState({ sending: false });
-      });
+    this.setState({
+      payRequest: "",
+      decodedPayRequest: null,
+      sendValue: 0
+    });
+    this.props.sendPayment(payRequest, sendValueAtom);
   }
 
   render() {
-    const { payments, tsDate } = this.props;
+    const { payments, outstandingPayments, tsDate } = this.props;
     const {
       payRequest,
       decodedPayRequest,
@@ -116,6 +108,7 @@ class PaymentsTab extends React.Component {
     return (
       <Page
         payments={payments}
+        outstandingPayments={outstandingPayments}
         tsDate={tsDate}
         payRequest={payRequest}
         decodedPayRequest={decodedPayRequest}

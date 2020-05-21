@@ -599,7 +599,7 @@ export const sendPayment = (payReq, value) => (dispatch, getState) => {
         ln.sendPayment(payStream, payReq, value);
       })
       .catch((error) => {
-        dispatch({ error, type: LNWALLET_SENDPAYMENT_FAILED });
+        dispatch({ error, rhashHex: null, type: LNWALLET_SENDPAYMENT_FAILED });
         reject(error);
       });
   });

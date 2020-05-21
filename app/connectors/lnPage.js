@@ -15,6 +15,7 @@ const mapStateToProps = selectorMap({
   closedChannels: sel.lnClosedChannels,
   invoices: sel.lnInvoices,
   payments: sel.lnPayments,
+  outstandingPayments: sel.lnOutstandingPayments,
   tsDate: sel.tsDate,
   addInvoiceAttempt: sel.lnAddInvoiceAttempt,
   info: sel.lnInfo,
