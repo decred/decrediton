@@ -1,0 +1,16 @@
+.loadingPage {
+  width: 100%;
+  text-align: center;
+}
+
+.proposalList {
+  margin-top: 30px;
+  margin-left: 85px;
+  padding-bottom: 50px;
+}
+
+@media screen and (max-width: 1179px) {
+  .proposalList {
+    margin-left: 35px;
+  }
+}

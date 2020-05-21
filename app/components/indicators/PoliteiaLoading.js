@@ -1,1 +1,3 @@
-export default () => <div className="politeia-loading-indicator" />;
+import styles from "./indicators.module.css";
+
+export default () => <div className={styles.politeiaLoading} />;

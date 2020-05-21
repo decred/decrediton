@@ -1,0 +1,94 @@
+.listiTtem {
+  padding: 18px 16px 6px 20px;
+  border-left: 2px solid var(--background-back-color);
+  border-bottom: 2px solid var(--background-container);
+  cursor: pointer;
+  background-color: var(--background-back-color);
+  min-height: 30px;
+  width: 700px;
+}
+
+.listiTtem.ended.passed {
+  border-left: 2px solid var(--vote-yes-color);
+}
+
+.listiTtem.ended.declined {
+  border-left: 2px solid var(--vote-no-color);
+}
+
+.listiTtem.ended .proposalName {
+  color: var(--stroke-color-hovered);
+}
+
+.modified {
+  border-left: 5px solid #66a9ff;
+}
+
+.votingIndicator {
+  padding-top: 6px;
+}
+
+.listiTtem:hover .name {
+  color: var(--input-color);
+}
+
+.name {
+  font-size: 13px;
+  line-height: 17px;
+  color: var(--input-color-default);
+  width: 440px;
+}
+
+.token {
+  font-size: 11px;
+  line-height: 14px;
+  color: var(--stroke-color-default);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 100px;
+}
+
+.resultsArea {
+  margin-left: auto;
+  background-image: var(--arrow-right-gray-icon);
+  background-repeat: no-repeat;
+  background-position: 100% 5px;
+  background-origin: content-box;
+  background-size: 5px 10px;
+}
+
+.voteResult {
+  font-size: 11px;
+  text-transform: capitalize;
+  color: var(--stroke-color-default);
+}
+
+.timestamp {
+  font-size: 11px;
+  color: var(--stroke-color-default);
+  margin-right: 10px;
+}
+
+.voteChoice {
+  padding: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 100px;
+  background-color: var(--vote-abstain-color);
+  margin-top: 2px;
+  margin-right: 10px;
+}
+
+.voteChoice.yes {
+  background-color: var(--vote-yes-color);
+}
+.voteChoice.no {
+  background-color: var(--vote-no-color);
+}
+
+@media screen and (max-width: 1179px) {
+  .listiTtem {
+    width: 600px;
+  }
+}

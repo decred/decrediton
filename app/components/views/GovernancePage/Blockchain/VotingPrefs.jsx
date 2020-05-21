@@ -1,8 +1,10 @@
-import AgendaCard from "./AgendaCard";
+import AgendaOverview from "./AgendaOverview/AgendaOverview";
 import { ExternalLink } from "shared";
 import { FormattedMessage as T } from "react-intl";
+import { classNames } from "pi-ui";
+import styles from "./VotingPrefs.module.css";
 
-const VotingPrefsPage = ({
+const VotingPrefs = ({
   stakePool,
   selectedAgenda,
   getAgendaSelectedChoice,
@@ -12,32 +14,34 @@ const VotingPrefsPage = ({
   allAgendas
 }) => (
   <>
-    <div className="consensus-changes-header is-row">
+    <div className={classNames(styles.header, "is-row")}>
       <div>
-        <div className="proposals-community-header-title">
+        <div className={styles.title}>
           <T id="votingPreferences.title" m="Consensus Changes" />
         </div>
-        <p className="proposals-community-header-description">
+        <p className={styles.description}>
           <T
             id="votingPreferences.description"
             m="Consensus changes refer to the on-chain governance aspect of Decred. This means deciding whether to adopt changes to the consensus rules of the network. Participation in voting requires (PoS) tickets."
           />
         </p>
       </div>
-      <div className="links">
+      <div className={styles.links}>
         <ExternalLink
-          className="info-modal-button"
+          className={styles.infoButton}
           href="https://docs.decred.org/getting-started/user-guides/agenda-voting/"
         />
-        <ExternalLink href="https://voting.decred.org">
+        <ExternalLink
+          className={styles.dashboardButton}
+          href="https://voting.decred.org">
           <T id="votingPreferences.dashboard" m="Voting Dashboard" />
         </ExternalLink>
       </div>
     </div>
-    <div className="agenda-wrapper">
+    <div className={styles.agendaWrapper}>
       {allAgendas.length > 0 ? (
         allAgendas.map((agenda, index) => (
-          <AgendaCard
+          <AgendaOverview
             key={agenda.name}
             {...{
               agenda,
@@ -62,4 +66,4 @@ const VotingPrefsPage = ({
   </>
 );
 
-export default VotingPrefsPage;
+export default VotingPrefs;

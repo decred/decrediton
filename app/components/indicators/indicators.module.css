@@ -1,0 +1,16 @@
+.politeiaLoading {
+  background-size: 100%;
+  background-image: var(--politeia-loading-icon);
+  background-position: center;
+  background-repeat: no-repeat;
+  display: inline-block;
+  width: 256px;
+  height: 256px;
+}
+
+.noProposals {
+  margin-top: 20px;
+  margin-left: 38px;
+  font-size: 120%;
+  padding: 1em;
+}

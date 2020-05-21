@@ -1,9 +1,10 @@
 import { FormattedMessage as T } from "react-intl";
 import { EnableExternalRequestButton } from "buttons";
 import { EXTERNALREQUEST_POLITEIA } from "main_dev/externalRequests";
+import styles from "./ProposalsTab.module.css";
 
 export default ({ getTokenAndInitialBatch }) => (
-  <div className="politeia-disabled-wrapper">
+  <div className={styles.politeiaDisabled}>
     <p>
       <T
         id="proposals.enablePoliteia.description"
