@@ -481,8 +481,6 @@ export const ticketNormalizer = createSelector(
   }
 );
 
-export const noMoreTickets = get(["grpc", "noMoreTickets"]);
-export const ticketsFilter = get(["grpc", "ticketsFilter"]);
 export const getTicketsProgressStartRequestHeight = get([
   "grpc",
   "getTicketsProgressStartRequestHeight"
@@ -607,8 +605,22 @@ export const regularTransactions = createSelector(
   }
 );
 
+export const stakeTransactions = createSelector(
+  [ticketNormalizer, transactionsMap],
+  (normalizerFn, txsMap) => {
+    return Object.keys(txsMap)
+      .filter((hash) => txsMap[hash].isStake)
+      .reduce((normalizedMap, txHash) => {
+        const tx = txsMap[txHash];
+        normalizedMap[txHash] = normalizerFn(tx);
+        return normalizedMap;
+      }, {});
+  }
+);
+
 export const noMoreTransactions = get(["grpc", "noMoreTransactions"]);
 export const transactionsFilter = get(["grpc", "transactionsFilter"]);
+export const ticketsFilter = get(["grpc", "ticketsFilter"]);
 
 // filterTransactions filters a list of transactions given a filtering object.
 //
@@ -621,8 +633,6 @@ export const transactionsFilter = get(["grpc", "transactionsFilter"]);
 export const filteredRegularTxs = createSelector(
   [regularTransactions, transactionsFilter],
   (transactions, filter) => {
-    console.log(transactions)
-    console.log(filter)
     const filteredTxs = Object.keys(transactions).map((hash) => transactions[hash])
     .filter((v) => (filter.direction ? filter.direction === v.txDirection : true))
     .filter((v) =>
@@ -645,16 +655,13 @@ export const filteredRegularTxs = createSelector(
   }
 );
 
-export const stakeTransactions = createSelector(
-  [ticketNormalizer, transactionsMap],
-  (normalizerFn, txsMap) => {
-    return Object.keys(txsMap)
-      .filter((hash) => txsMap[hash].isStake)
-      .reduce((normalizedMap, txHash) => {
-        const tx = txsMap[txHash];
-        normalizedMap[txHash] = normalizerFn(tx);
-        return normalizedMap;
-      }, {});
+export const filteredStakeTxs = createSelector(
+  [stakeTransactions, ticketsFilter],
+  (transactions, filter) => {
+    const filteredTxs = Object.keys(transactions).map((hash) => transactions[hash])
+      .filter(v => filter.status ? filter.status === v.status : true);
+
+    return filteredTxs;
   }
 );
 
@@ -741,10 +748,6 @@ export const rescanRequest = get(["control", "rescanRequest"]);
 export const getTransactionsRequestAttempt = get([
   "grpc",
   "getTransactionsRequestAttempt"
-]);
-export const getTicketsRequestAttempt = get([
-  "grpc",
-  "getTicketsRequestAttempt"
 ]);
 export const notifiedBlockHeight = get(["notifications", "currentHeight"]);
 

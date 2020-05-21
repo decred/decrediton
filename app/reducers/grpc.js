@@ -356,13 +356,9 @@ export default function grpc(state = {}, action) {
       return {
         ...state,
         ticketsFilter: action.ticketsFilter,
-        tickets: [],
-        unminedTickets: [],
-        minedTickets: [],
         noMoreTickets: false,
         lastTicket: null,
         getTicketsRequestError: "",
-        getTicketsRequestAttempt: false,
         getTicketsStartRequestHeight: null
       };
     case GETTRANSACTIONS_ATTEMPT:

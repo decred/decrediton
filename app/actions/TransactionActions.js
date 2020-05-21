@@ -7,27 +7,9 @@ import { getStartupStats } from "./StatisticsActions";
 import { hexToBytes, strHashToRaw } from "helpers";
 import { RECENT_TX_COUNT, BATCH_TX_COUNT, DESC } from "constants";
 import { TICKET, VOTE, VOTED, REVOKED } from "constants/Decrediton";
-
 export const { TRANSACTION_TYPES } = wallet;
 
-// TODO apply filters at transactions selectors
-
-// function filterTickets(tickets, filter) {
-//   return tickets
-//     .filter(v => filter.status.length ? filter.status.indexOf(v.status) > -1 : true);
-// }
-
-// export const CHANGE_TICKETS_FILTER = "CHANGE_TICKETS_FILTER";
-
-// export function changeTicketsFilter(newFilter) {
-//   return (dispatch) => {
-//     dispatch({ ticketsFilter: newFilter, type: CHANGE_TICKETS_FILTER });
-//     dispatch(getTickets());
-//   };
-// }
-
 export const GETTICKETS_CANCEL = "GETTICKETS_CANCEL";
-
 export const cancelGetTickets = () => (dispatch) =>
   dispatch({ type: GETTICKETS_CANCEL });
 
@@ -186,6 +168,14 @@ export function changeTransactionsFilter(newFilter) {
       type: CHANGE_TRANSACTIONS_FILTER
     });
     return dispatch(getTransactions());
+  };
+}
+
+export const CHANGE_TICKETS_FILTER = "CHANGE_TICKETS_FILTER";
+export function changeTicketsFilter(newFilter) {
+  return (dispatch) => {
+    dispatch({ ticketsFilter: newFilter, type: CHANGE_TICKETS_FILTER });
+    dispatch(getTransactions());
   };
 }
 

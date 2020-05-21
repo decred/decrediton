@@ -188,21 +188,11 @@ const initialState = {
       maxAmount: null,
       minAmount: null
     },
-
-    getTransactionsError: null,
     getTransactionsRequestAttempt: false,
     getTransactionsResponse: null,
-
-    // GetTickets
-    getTicketsError: null,
-    getTicketsRequestAttempt: false,
-    tickets: Array(),
-    minedTickets: Array(),
-    unminedTickets: Array(),
-    noMoreTickets: false,
     ticketsFilter: {
       listDirection: "desc", // asc = oldest -> newest, desc => newest -> oldest
-      status: [] // desired ticket status (code). All if blank.
+      status: null // desired ticket status (code). All if blank.
     },
     getTicketsStartRequestHeight: null,
     getTicketsCancel: false, // user requested cancelation (but it hasn't happened yet)
