@@ -53,6 +53,9 @@ export const BATCH_TX_COUNT = 10;
 // RECENT_TX_COUNT is the number of transactions for Overview Page.
 export const RECENT_TX_COUNT = 8;
 
+// tx filter direction - descending order
+export const DESC = "desc"
+
 // tx types
 export const TICKET = "ticket";
 export const VOTE = "vote";
@@ -65,8 +68,6 @@ export const MISSED = "missed";
 export const EXPIRED = "expired";
 export const REVOKED = "revoked";
 export const LIVE = "live";
-export const OUT = "out";
-export const IN = "in";
 export const TRANSFER = "transfer";
 export const COINBASE = "coinbase";
 export const REGULAR = "regular";

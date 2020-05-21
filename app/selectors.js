@@ -38,7 +38,10 @@ import {
   ATOMS,
   UNIT_DIVISOR,
   TESTNET,
-  MAINNET
+  MAINNET,
+  TRANSACTION_DIR_SENT,
+  TRANSACTION_DIR_RECEIVED,
+  TRANSACTION_DIR_TRANSFERRED
 } from "constants";
 import * as wallet from "wallet";
 
@@ -504,7 +507,8 @@ export const transactionNormalizer = createSelector(
         timestamp,
         txHash,
         rawTx,
-        outputs
+        outputs,
+        creditAddresses
       } = origTx;
       const txUrl = txURLBuilder(txHash);
       const txBlockHash = blockHash
@@ -514,7 +518,6 @@ export const transactionNormalizer = createSelector(
 
       let totalFundsReceived = 0;
       let totalChange = 0;
-      const addressStr = [];
       const txInputs = [];
       const txOutputs = [];
       const fee = tx.getFee();
@@ -534,7 +537,6 @@ export const transactionNormalizer = createSelector(
       tx.getCreditsList().forEach((credit) => {
         const amount = credit.getAmount();
         const address = credit.getAddress();
-        addressStr.push(address);
         const creditedAccount = credit.getAccount();
         creditedAccountName = getAccountName(creditedAccount);
         txOutputs.push({
@@ -551,23 +553,20 @@ export const transactionNormalizer = createSelector(
       const txDetails =
         totalFundsReceived + totalChange + fee < totalDebit
           ? {
-              txDescription: { direction: "Sent", addressStr: addressStr },
               txAmount: totalDebit - fee - totalChange - totalFundsReceived,
-              txDirection: "out",
+              txDirection: TRANSACTION_DIR_SENT,
               txAccountName: debitedAccountName
             }
           : totalFundsReceived + totalChange + fee === totalDebit
           ? {
-              txDescription: { direction: "Transferred", addressStr },
               txAmount: fee,
-              txDirection: "transfer",
+              txDirection: TRANSACTION_DIR_TRANSFERRED,
               txAccountNameCredited: creditedAccountName,
               txAccountNameDebited: debitedAccountName
             }
           : {
-              txDescription: { direction: "Received at:", addressStr },
               txAmount: totalFundsReceived,
-              txDirection: "in",
+              txDirection: TRANSACTION_DIR_RECEIVED,
               txAccountName: creditedAccountName
             };
 
@@ -586,6 +585,7 @@ export const transactionNormalizer = createSelector(
         txNumericType: type,
         rawTx,
         outputs,
+        creditAddresses,
         ...txDetails
       };
     };
@@ -607,6 +607,44 @@ export const regularTransactions = createSelector(
   }
 );
 
+export const noMoreTransactions = get(["grpc", "noMoreTransactions"]);
+export const transactionsFilter = get(["grpc", "transactionsFilter"]);
+
+// filterTransactions filters a list of transactions given a filtering object.
+//
+// Currently supported filters in the filter object:
+// - type (array): Array of types a transaction must belong to, to be accepted.
+// - direction (string): A string of one of the allowed directions for regular
+//   transactions (sent/received/transferred)
+//
+// If empty, all transactions are accepted.
+export const filteredRegularTxs = createSelector(
+  [regularTransactions, transactionsFilter],
+  (transactions, filter) => {
+    console.log(transactions)
+    console.log(filter)
+    const filteredTxs = Object.keys(transactions).map((hash) => transactions[hash])
+    .filter((v) => (filter.direction ? filter.direction === v.txDirection : true))
+    .filter((v) =>
+      filter.search
+        ? v.creditAddresses.find(
+            (address) =>
+              address.length > 1 &&
+              address.toLowerCase().indexOf(filter.search.toLowerCase()) !== -1
+          ) != undefined
+        : true
+    )
+    .filter((v) =>
+      filter.minAmount ? Math.abs(v.txAmount) >= filter.minAmount : true
+    )
+    .filter((v) =>
+      filter.maxAmount ? Math.abs(v.txAmount) <= filter.maxAmount : true
+    )
+
+    return filteredTxs;
+  }
+);
+
 export const stakeTransactions = createSelector(
   [ticketNormalizer, transactionsMap],
   (normalizerFn, txsMap) => {
@@ -625,9 +663,6 @@ export const stakeTransactions = createSelector(
 export const hasTickets = compose(
   (t) => t && Object.keys(t).length > 0, stakeTransactions
 );
-
-export const noMoreTransactions = get(["grpc", "noMoreTransactions"]);
-export const transactionsFilter = get(["grpc", "transactionsFilter"]);
 
 const transactionsNormalizer = createSelector([transactionNormalizer], map);
 const ticketsNormalizer = createSelector([ticketNormalizer], map);

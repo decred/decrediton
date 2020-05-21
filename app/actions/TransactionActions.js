@@ -5,7 +5,7 @@ import { getStakeInfoAttempt, getBalanceUpdateAttempt } from "./ClientActions";
 import { TransactionDetails } from "middleware/walletrpc/api_pb";
 import { getStartupStats } from "./StatisticsActions";
 import { hexToBytes, strHashToRaw } from "helpers";
-import { RECENT_TX_COUNT, BATCH_TX_COUNT } from "constants";
+import { RECENT_TX_COUNT, BATCH_TX_COUNT, DESC } from "constants";
 import { TICKET, VOTE, VOTED, REVOKED } from "constants/Decrediton";
 
 export const { TRANSACTION_TYPES } = wallet;
@@ -30,37 +30,6 @@ export const GETTICKETS_CANCEL = "GETTICKETS_CANCEL";
 
 export const cancelGetTickets = () => (dispatch) =>
   dispatch({ type: GETTICKETS_CANCEL });
-
-// filterTransactions filters a list of transactions given a filtering object.
-//
-// Currently supported filters in the filter object:
-// - type (array): Array of types a transaction must belong to, to be accepted.
-// - direction (string): A string of one of the allowed directions for regular
-//   transactions (sent/received/transferred)
-//
-// If empty, all transactions are accepted.
-function filterTransactions(transactions, filter) {
-  return transactions
-    .filter((v) =>
-      filter.types.length ? filter.types.indexOf(v.type) > -1 : true
-    )
-    .filter((v) => (filter.direction ? filter.direction === v.direction : true))
-    .filter((v) =>
-      filter.search
-        ? v.creditAddresses.find(
-            (address) =>
-              address.length > 1 &&
-              address.toLowerCase().indexOf(filter.search.toLowerCase()) !== -1
-          ) != undefined
-        : true
-    )
-    .filter((v) =>
-      filter.minAmount ? Math.abs(v.amount) >= filter.minAmount : true
-    )
-    .filter((v) =>
-      filter.maxAmount ? Math.abs(v.amount) <= filter.maxAmount : true
-    );
-}
 
 function checkAccountsToUpdate(txs, accountsToUpdate) {
   txs.forEach((tx) => {
@@ -465,11 +434,6 @@ export const getTransactions = () => async (dispatch, getState) => {
   let { unmined } = await wallet.getTransactions(walletService, -1, -1, 0);
   unmined = await normalizeBatchTx(walletService, chainParams, unmined);
 
-  // TODO: Filter and get other transactions data in another stage. Use getTransactions only
-  // to get transactions and dispatch them at transactions's map.
-
-  // now, request a batch of mined transactions until BATCH_TX_COUNT
-  // transactions have been obtained (after filtering)
   const reachedGenesis = false;
   let transactions = unmined.reduce((m, t) => {
     m[t.txHash] = t;
@@ -479,10 +443,9 @@ export const getTransactions = () => async (dispatch, getState) => {
   while (!noMoreTransactions && !reachedGenesis) {
     let startRequestHeight, endRequestHeight;
     const transactionsLength = Object.keys(transactions).length;
-
     if (transactionsLength >= BATCH_TX_COUNT) break;
 
-    if (transactionsFilter.listDirection === "desc") {
+    if (transactionsFilter.listDirection === DESC) {
       endRequestHeight = 1;
       startRequestHeight = lastTransaction
         ? lastTransaction.height - 1

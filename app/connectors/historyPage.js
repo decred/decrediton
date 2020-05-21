@@ -7,7 +7,7 @@ import * as ta from "actions/TransactionActions";
 const mapStateToProps = selectorMap({
   walletService: sel.walletService,
   totalBalance: sel.totalBalance,
-  transactions: sel.regularTransactions,
+  transactions: sel.filteredRegularTxs,
   transactionsFilter: sel.transactionsFilter,
   noMoreTransactions: sel.noMoreTransactions,
   window: sel.mainWindow,

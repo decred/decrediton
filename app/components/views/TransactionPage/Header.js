@@ -1,8 +1,8 @@
 import { Balance } from "shared";
 import { FormattedMessage as T, defineMessages, injectIntl } from "react-intl";
 import {
-  OUT,
-  IN,
+  TRANSACTION_DIR_SENT,
+  TRANSACTION_DIR_RECEIVED,
   TRANSACTION_DIR_TRANSFERRED,
   REGULAR,
   TICKET,
@@ -24,10 +24,10 @@ const messages = defineMessages({
 });
 
 const headerIcons = {
-  [IN]: "tx-detail-icon-in",
-  [OUT]: "tx-detail-icon-out",
-  [COINBASE]: "tx-detail-icon-in",
+  [TRANSACTION_DIR_RECEIVED]: "tx-detail-icon-in",
+  [TRANSACTION_DIR_SENT]: "tx-detail-icon-out",
   [TRANSACTION_DIR_TRANSFERRED]: "tx-detail-icon-transfer",
+  [COINBASE]: "tx-detail-icon-in",
   [TICKET]: "tx-detail-icon-ticket",
   [VOTE]: "tx-detail-icon-vote",
   [REVOCATION]: "tx-detail-icon-revocation"
@@ -45,7 +45,7 @@ const title = ({ txType, txAmount, txDirection, ticketReward, intl }) => {
       titleComp = <Balance
         title
         bold
-        amount={txDirection !== IN ? -txAmount : txAmount}
+        amount={txDirection !== TRANSACTION_DIR_RECEIVED ? -txAmount : txAmount}
       />
     );
   if (txType === TICKET && ticketReward) {
@@ -64,7 +64,7 @@ const subtitle = ({
 }) => {
   let sentFromAccount = "";
   // This assumes all inputs are from same account.
-  if (txDirection === "out") {
+  if (txDirection === TRANSACTION_DIR_SENT) {
     sentFromAccount = txInputs.length > 0 ? txInputs[0].accountName : "";
   }
   switch (txType) {
@@ -138,7 +138,7 @@ const subtitle = ({
     default:
       return (
         <div className="tx-details-subtitle">
-          {txDirection == "out" ? (
+          {txDirection === TRANSACTION_DIR_SENT ? (
             <>
               <div className="tx-details-subtitle-sentfrom">
                 <T id="txDetails.sentFrom" m="Sent From" />

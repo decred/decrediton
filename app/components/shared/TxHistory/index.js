@@ -16,8 +16,8 @@ const TxRowByType = {
   [txTypes.EXPIRED]: StakeTxRow,
   [txTypes.REVOKED]: StakeTxRow,
   [txTypes.LIVE]: StakeTxRow,
-  [txTypes.OUT]: RegularTxRow,
-  [txTypes.IN]: RegularTxRow,
+  [txTypes.TRANSACTION_DIR_SENT]: RegularTxRow,
+  [txTypes.TRANSACTION_DIR_RECEIVED]: RegularTxRow,
   [txTypes.TRANSFER]: RegularTxRow,
   [txTypes.COINBASE]: RegularTxRow
 };

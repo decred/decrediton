@@ -4,12 +4,6 @@ import EventListener from "react-event-listener";
 import "style/EyeFilterMenu.less";
 import "style/MiscComponents.less";
 
-const MenuItem = ({ primaryText, className, value, onClick }) => (
-  <div className={className} onClick={(e) => onClick(e, value)}>
-    {primaryText}
-  </div>
-);
-
 @autobind
 class EyeFilterMenu extends React.Component {
   constructor(props) {
@@ -40,25 +34,20 @@ class EyeFilterMenu extends React.Component {
 
   getOpenedMenu() {
     const options = this.props.options;
-    const labelKey = this.props.labelKey || "label";
-    const keyField = this.props.keyField || labelKey;
     const selected = this.props.selected;
     const belowMenu = this.props.getOpenedMenu && this.props.getOpenedMenu();
 
     return (
       <div className="eye-filter-menu-items">
         <div className={"arrow-up"} />
-        {options.map((opt) => (
-          <MenuItem
-            className={
-              "context-menu-item " +
-              (selected === opt[keyField] ? "selected" : "")
-            }
-            key={opt[keyField]}
-            value={opt}
-            onClick={this.onMenuChanged}
-            primaryText={opt[labelKey]}
-          />
+        {options.map((option, i) => (
+          <div
+            key={i}
+            className={"context-menu-item " + (selected === option.key ? "selected" : "")}
+            onClick={(e) => this.onMenuChanged(e, { value: option.value, key: option.key })}
+          >
+            {option.label}
+          </div>
         ))}
         {belowMenu}
       </div>

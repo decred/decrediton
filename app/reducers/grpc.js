@@ -402,8 +402,8 @@ export default function grpc(state = {}, action) {
       return {
         ...state,
         transactionsFilter: action.transactionsFilter,
-        unminedTransactions: [],
-        noMoreTransactions: false
+        noMoreTransactions: false,
+        lastTransaction: null
       };
     case FETCHMISSINGSTAKETXDATA_ATTEMPT:
       return {

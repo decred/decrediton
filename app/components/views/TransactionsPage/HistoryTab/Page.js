@@ -62,8 +62,6 @@ const subtitleMenu = ({
       tipWidth={300}
       text={<T id="transactions.txtypes.tooltip" m="Transaction Type" />}>
       <EyeFilterMenu
-        labelKey="label"
-        keyField="key"
         options={txTypes}
         selected={selectedTxTypeKey}
         onChange={onChangeSelectedType}
@@ -90,14 +88,10 @@ const Page = ({
   onChangeSliderValue,
   currencyDisplay,
   transactionsFilter,
-  unitDivisor
+  unitDivisor,
+  isReverse
 }) => (
-  <InfiniteScroll
-    hasMore={!noMoreTransactions}
-    loadMore={onLoadMoreTransactions}
-    initialLoad={loadMoreThreshold > 90}
-    useWindow={false}
-    threshold={loadMoreThreshold}>
+  <>
     <Subtitle
       title={<T id="history.subtitle" m="Transaction History" />}
       className={"is-row"}
@@ -117,11 +111,20 @@ const Page = ({
         unitDivisor
       })}
     />
-    <div className="history-page-content-wrapper">
-      {transactions.length > 0 ? (
-        <TxHistory {...{ transactions, tsDate, isRegular: true }} />
-      ) : null}
-    </div>
+    <InfiniteScroll
+      hasMore={!noMoreTransactions}
+      loadMore={onLoadMoreTransactions}
+      initialLoad={loadMoreThreshold > 90}
+      useWindow={false}
+      threshold={loadMoreThreshold}
+      isReverse={isReverse}
+      >
+      <div className="history-page-content-wrapper">
+        {transactions.length > 0 ? (
+          <TxHistory {...{ transactions, tsDate, isRegular: true }} />
+        ) : null}
+      </div>
+    </InfiniteScroll>
     {!noMoreTransactions ? (
       <LoadingMoreTransactionsIndicator />
     ) : transactions.length > 0 ? (
@@ -129,7 +132,7 @@ const Page = ({
     ) : (
       <NoTransactions />
     )}
-  </InfiniteScroll>
+  </>
 );
 
 export default injectIntl(Page);

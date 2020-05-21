@@ -5,7 +5,7 @@ import { addSpacingAroundText, reverseHash } from "helpers";
 import { FormattedMessage as T } from "react-intl";
 import { DecodedTransaction } from "middleware/walletrpc/api_pb";
 import { useSelector, useDispatch } from "react-redux";
-import { VOTE, IN } from "constants/Decrediton";
+import { VOTE, TRANSACTION_DIR_RECEIVED, TRANSACTION_DIR_SENT } from "constants/Decrediton";
 import * as cla from "actions/ControlActions";
 import * as sel from "selectors";
 import "style/TxDetails.less";
@@ -130,7 +130,7 @@ const Page = ({
             </div>
           </div>
         )}
-        {txDirection !== IN && txType !== VOTE && (
+        {txDirection !== TRANSACTION_DIR_RECEIVED && txType !== VOTE && (
           <div className="txdetails-top-row">
             <div className="txdetails-name">
               <T id="txDetails.transactionFeeLabel" m="Transaction fee" />:
@@ -221,7 +221,7 @@ const Page = ({
               {outputs.map(({ accountName, decodedScript, value }, idx) => (
                 <div key={idx} className="txdetails-row">
                   <div className="txdetails-address">
-                    {txDirection === "out"
+                    {txDirection === TRANSACTION_DIR_SENT
                       ? "change"
                       : accountName
                       ? addSpacingAroundText(accountName)

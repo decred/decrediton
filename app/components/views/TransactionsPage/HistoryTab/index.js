@@ -9,7 +9,7 @@ import {
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_RECEIVED,
   TRANSACTION_DIR_TRANSFERRED
-} from "wallet/service";
+} from "constants";
 import { DescriptionHeader } from "layout";
 import { Balance } from "shared";
 import { DCR } from "constants";
@@ -43,7 +43,7 @@ class History extends React.Component {
     );
     const { search, listDirection } = props.transactionsFilter;
     this.state = {
-      selectedTxTypeKey,
+      selectedTxTypeKey: selectedTxTypeKey,
       selectedSortOrderKey: listDirection,
       searchText: search,
       isChangingFilterTimer: null
@@ -56,7 +56,7 @@ class History extends React.Component {
     const loadMoreThreshold =
       90 + Math.max(0, this.props.window.innerHeight - 765);
     const tsDate = this.props.tsDate;
-
+    const { listDirection } = this.props.transactionsFilter;
     return !this.props.walletService ? (
       <ErrorScreen />
     ) : (
@@ -68,7 +68,7 @@ class History extends React.Component {
           loadMoreThreshold,
           txTypes: this.getTxTypes(),
           sortTypes: this.getSortTypes(),
-          transactions: this.getTransactions(),
+          transactions: this.props.transactions,
           ...substruct(
             {
               onChangeSelectedType: null,
@@ -89,45 +89,22 @@ class History extends React.Component {
     return [
       {
         key: "all",
-        value: { types: [], direction: null },
+        value: { direction: null },
         label: <T id="txFilter.type.all" m="All" />
       },
       {
-        key: "regular",
-        value: { types: [types.REGULAR], direction: null },
-        label: <T id="txFilter.type.regular" m="Regular" />
-      },
-      {
-        key: "ticket",
-        value: { types: [types.TICKET_PURCHASE], direction: null },
-        label: <T id="txFilter.type.tickets" m="Tickets" />
-      },
-      {
-        key: "vote",
-        value: { types: [types.VOTE], direction: null },
-        label: <T id="txFilter.type.votes" m="Votes" />
-      },
-      {
-        key: "revoke",
-        value: { types: [types.REVOCATION], direction: null },
-        label: <T id="txFilter.type.revokes" m="Revokes" />
-      },
-      {
         key: "sent",
-        value: { types: [types.REGULAR], direction: TRANSACTION_DIR_SENT },
+        value: { direction: TRANSACTION_DIR_SENT },
         label: <T id="txFilter.type.sent" m="Sent" />
       },
       {
         key: "receiv",
-        value: { types: [types.REGULAR], direction: TRANSACTION_DIR_RECEIVED },
+        value: { direction: TRANSACTION_DIR_RECEIVED },
         label: <T id="txFilter.type.received" m="Received" />
       },
       {
         key: "transf",
-        value: {
-          types: [types.REGULAR],
-          direction: TRANSACTION_DIR_TRANSFERRED
-        },
+        value: { direction: TRANSACTION_DIR_TRANSFERRED },
         label: <T id="txFilter.type.transfered" m="Transfered" />
       }
     ];
@@ -142,12 +119,6 @@ class History extends React.Component {
 
   onLoadMoreTransactions() {
     this.props.getTransactions();
-  }
-
-  getTransactions() {
-    const { transactions } = this.props;
-    if (!transactions) return [];
-    return Object.keys(transactions).map((hash) => transactions[hash]);
   }
 
   onChangeFilter(value) {
@@ -198,17 +169,16 @@ class History extends React.Component {
   }
 
   selectedTxTypeFromFilter(filter) {
-    if (filter.types.length === 0) return "all";
+    const { direction } = filter;
     const types = this.getTxTypes();
-    types.shift(); //drop "all" which doesn't have value.types
-    return types.reduce(
-      (a, v) =>
-        v.value.types[0] === filter.types[0] &&
-        v.value.direction === filter.direction
-          ? v.key
-          : a,
-      null
-    );
+    let key;
+    types.forEach(type => {
+      if (filter.direction === type.value.direction) {
+        key = type.key;
+        return;
+      }
+    })
+    return key;
   }
 }
 
