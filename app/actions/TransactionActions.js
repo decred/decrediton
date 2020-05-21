@@ -9,9 +9,9 @@ import { RECENT_TX_COUNT, BATCH_TX_COUNT, DESC } from "constants";
 import { TICKET, VOTE, VOTED, REVOKED } from "constants/Decrediton";
 export const { TRANSACTION_TYPES } = wallet;
 
-export const GETTICKETS_CANCEL = "GETTICKETS_CANCEL";
-export const cancelGetTickets = () => (dispatch) =>
-  dispatch({ type: GETTICKETS_CANCEL });
+export const GETTRANSACTIONS_CANCEL = "GETTRANSACTIONS_CANCEL";
+export const cancelGetTransactions = () => (dispatch) =>
+  dispatch({ type: GETTRANSACTIONS_CANCEL });
 
 function checkAccountsToUpdate(txs, accountsToUpdate) {
   txs.forEach((tx) => {
@@ -405,11 +405,12 @@ export const getTransactions = () => async (dispatch, getState) => {
     currentBlockHeight,
     getTransactionsRequestAttempt,
     transactionsFilter,
-    walletService
+    walletService,
+    getTransactionsCancel
   } = getState().grpc;
   const chainParams = sel.chainParams(getState());
   let { noMoreTransactions, lastTransaction } = getState().grpc;
-  if (getTransactionsRequestAttempt || noMoreTransactions) return;
+  if (getTransactionsRequestAttempt || noMoreTransactions || getTransactionsCancel) return;
 
   if (!currentBlockHeight) {
     // Wait a little then re-dispatch this call since we have no starting height yet

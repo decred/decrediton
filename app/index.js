@@ -194,8 +194,6 @@ const initialState = {
       listDirection: "desc", // asc = oldest -> newest, desc => newest -> oldest
       status: null // desired ticket status (code). All if blank.
     },
-    getTicketsStartRequestHeight: null,
-    getTicketsCancel: false, // user requested cancelation (but it hasn't happened yet)
 
     // Agenda/VoteChoices
     allAgendas: [],

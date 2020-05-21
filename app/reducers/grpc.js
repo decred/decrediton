@@ -87,7 +87,7 @@ import {
   GETTRANSACTIONS_ATTEMPT,
   GETTRANSACTIONS_FAILED,
   GETTRANSACTIONS_COMPLETE,
-  GETTICKETS_CANCEL,
+  GETTRANSACTIONS_CANCEL,
   CHANGE_TICKETS_FILTER,
   MATURINGHEIGHTS_CHANGED,
   GETSTARTUPTRANSACTIONS_SUCCESS,
@@ -347,23 +347,24 @@ export default function grpc(state = {}, action) {
         getAccountsRequestAttempt: false,
         getAccountsResponse: action.response
       };
-    case GETTICKETS_CANCEL:
+    case GETTRANSACTIONS_CANCEL:
       return {
         ...state,
-        getTicketsCancel: true
+        getTransactionsCancel: true,
+        getTransactionsRequestAttempt: false
       };
     case CHANGE_TICKETS_FILTER:
       return {
         ...state,
         ticketsFilter: action.ticketsFilter,
-        noMoreTickets: false,
         lastTicket: null,
         getTicketsRequestError: "",
-        getTicketsStartRequestHeight: null
+        getTransactionsCancel: false
       };
     case GETTRANSACTIONS_ATTEMPT:
       return {
         ...state,
+        getTransactionsCancel: false,
         getTransactionsRequestAttempt: true
       };
     case GETTRANSACTIONS_FAILED:
@@ -398,7 +399,6 @@ export default function grpc(state = {}, action) {
       return {
         ...state,
         transactionsFilter: action.transactionsFilter,
-        noMoreTransactions: false,
         lastTransaction: null
       };
     case FETCHMISSINGSTAKETXDATA_ATTEMPT:

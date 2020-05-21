@@ -481,10 +481,6 @@ export const ticketNormalizer = createSelector(
   }
 );
 
-export const getTicketsProgressStartRequestHeight = get([
-  "grpc",
-  "getTicketsProgressStartRequestHeight"
-]);
 export const numTicketsToBuy = get(["control", "numTicketsToBuy"]);
 
 // transactionNormalizer normalizes regular decred's regular transactions

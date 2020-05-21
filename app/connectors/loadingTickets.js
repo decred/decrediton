@@ -5,7 +5,7 @@ import * as sel from "selectors";
 import * as ta from "actions/TransactionActions";
 
 const mapStateToProps = selectorMap({
-  startRequestHeight: sel.getTicketsProgressStartRequestHeight,
+  startRequestHeight: sel.getTransactionsRequestAttempt,
   ticketsFilter: sel.ticketsFilter,
   currentBlockHeight: sel.currentBlockHeight
 });
@@ -13,7 +13,7 @@ const mapStateToProps = selectorMap({
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      cancelGetTickets: ta.cancelGetTickets
+      cancelGetTransactions: ta.cancelGetTransactions
     },
     dispatch
   );
