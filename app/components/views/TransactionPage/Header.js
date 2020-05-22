@@ -84,10 +84,8 @@ const subtitle = ({
                   id="txDetails.timestamp"
                   m="{timestamp, date, medium} {timestamp, time, medium}"
                   values={{
-                    timestamp: tsDate(
-                      ((txType === VOTE || txType === REVOCATION) &&
-                      enterTimestamp)
-                        ? enterTimestamp
+                    timestamp: tsDate(enterTimestamp ?
+                        enterTimestamp
                         : timestamp
                     )
                   }}

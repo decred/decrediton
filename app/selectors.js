@@ -319,7 +319,7 @@ export const ticketNormalizer = createSelector(
   [network, accounts, chainParams, txURLBuilder, blockURLBuilder],
   (network, accounts, chainParams, txURLBuilder, blockURLBuilder) => {
     return (ticket) => {
-      const { txType, status, spender, blockHash, rawTx } = ticket;
+      const { txType, status, spender, blockHash, rawTx, isStake } = ticket;
       // TODO refactor same code to be used in tickets and regular tx normalizers.
       const findAccount = (num) =>
         accounts.find((account) => account.getAccountNumber() === num);
@@ -344,30 +344,56 @@ export const ticketNormalizer = createSelector(
         : null;
       const hasCredits = ticketTx.getCreditsList().length > 0;
 
-      ticketTx.getDebitsList().reduce((total, debit) => {
-        const debitedAccount = debit.getPreviousAccount();
-        const debitedAccountName = getAccountName(debitedAccount);
-        const amount = debit.getPreviousAmount();
-        txInputs.push({
-          accountName: debitedAccountName,
-          amount,
-          index: debit.getIndex()
+      if (spenderTx) {
+        spenderTx.getDebitsList().reduce((total, debit) => {
+          const debitedAccount = debit.getPreviousAccount();
+          const debitedAccountName = getAccountName(debitedAccount);
+          const amount = debit.getPreviousAmount();
+          txInputs.push({
+            accountName: debitedAccountName,
+            amount,
+            index: debit.getIndex()
+          });
+          return total + amount;
+        }, 0);
+        spenderTx.getCreditsList().forEach((credit) => {
+          const amount = credit.getAmount();
+          const address = credit.getAddress();
+          const creditedAccount = credit.getAccount();
+          const creditedAccountName = getAccountName(creditedAccount);
+          txOutputs.push({
+            accountName: creditedAccountName,
+            amount,
+            address,
+            index: credit.getIndex()
+          });
         });
-        return total + amount;
-      }, 0);
+      } else {
+        ticketTx.getDebitsList().reduce((total, debit) => {
+          const debitedAccount = debit.getPreviousAccount();
+          const debitedAccountName = getAccountName(debitedAccount);
+          const amount = debit.getPreviousAmount();
+          txInputs.push({
+            accountName: debitedAccountName,
+            amount,
+            index: debit.getIndex()
+          });
+          return total + amount;
+        }, 0);
 
-      ticketTx.getCreditsList().forEach((credit) => {
-        const amount = credit.getAmount();
-        const address = credit.getAddress();
-        const creditedAccount = credit.getAccount();
-        const creditedAccountName = getAccountName(creditedAccount);
-        txOutputs.push({
-          accountName: creditedAccountName,
-          amount,
-          address,
-          index: credit.getIndex()
+        ticketTx.getCreditsList().forEach((credit) => {
+          const amount = credit.getAmount();
+          const address = credit.getAddress();
+          const creditedAccount = credit.getAccount();
+          const creditedAccountName = getAccountName(creditedAccount);
+          txOutputs.push({
+            accountName: creditedAccountName,
+            amount,
+            address,
+            index: credit.getIndex()
+          });
         });
-      });
+      }
 
       let ticketPrice = 0;
       if (hasCredits) {
@@ -475,7 +501,8 @@ export const ticketNormalizer = createSelector(
         txOutputs,
         txHeight: ticket.height,
         txUrl,
-        txBlockUrl
+        txBlockUrl,
+        isStake
       };
     };
   }

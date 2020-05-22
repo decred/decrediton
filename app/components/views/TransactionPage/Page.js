@@ -60,8 +60,6 @@ const Page = ({
   let nonWalletInputs = [];
   let nonWalletOutputs = [];
 
-  const { inputs, outputs } = decodedTransaction;
-
   if (decodedTransaction) {
     const walletOutputIndices = txOutputs.map((v) => v.index);
     const walletInputIndices = txInputs.map((v) => v.index);
@@ -120,11 +118,11 @@ const Page = ({
               <T id="txDetails.toAddress" m="To address" />:
             </div>
             <div className="txdetails-value non-flex">
-            {txOutputs.map(({ address }) => (
-                <div>{addSpacingAroundText(address)}</div>
+            {txOutputs.map(({ address }, i) => (
+                <div key={i}>{addSpacingAroundText(address)}</div>
               ))}
-              {nonWalletOutputs.map(({ address }) => (
-                <div>{addSpacingAroundText(address)}</div>
+              {nonWalletOutputs.map(({ address }, i) => (
+                <div key={i}>{addSpacingAroundText(address)}</div>
               ))}
             </div>
           </div>
@@ -194,7 +192,7 @@ const Page = ({
                 }>
                 <T id="txDetails.nonWalletInputs" m="Non Wallet Inputs" />
               </div>
-              {inputs.map(({ outpointAddress, amountIn }, idx) => (
+              {nonWalletInputs.map(({ outpointAddress, amountIn }, idx) => (
                 <div key={idx} className="txdetails-row">
                   <div className="txdetails-address">
                     {addSpacingAroundText(outpointAddress)}
@@ -211,13 +209,13 @@ const Page = ({
             <div className="txdetails-output-area">
               <div
                 className={
-                  outputs.length > 0
+                  txOutputs.length > 0
                     ? "txdetails-overview-title-consumed"
                     : "txdetails-overview-title-empty"
                 }>
                 <T id="txDetails.walletOutputs" m="Wallet Outputs" />
               </div>
-              {outputs.map(({ accountName, decodedScript, value }, idx) => (
+              {txOutputs.map(({ accountName, decodedScript, value }, idx) => (
                 <div key={idx} className="txdetails-row">
                   <div className="txdetails-address">
                     {txDirection === TRANSACTION_DIR_SENT

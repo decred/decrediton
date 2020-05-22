@@ -37,16 +37,19 @@ function Transaction() {
       load: async () => {
         if (!viewedDecodedTx) {
           const decodedTx = decodeRawTransactions(viewedTransaction.rawTx);
-          const decodedTxWithInputs = await getAmountFromTxInputs(decodedTx);
-          console.log(decodedTxWithInputs);
+          let decodedTxWithInputs = decodedTx;
+          console.log(viewedTransaction);
+          if (!viewedTransaction.isStake) {
+            decodedTxWithInputs = await getAmountFromTxInputs(decodedTx);
+          }
           setViewedDecodedTx(decodedTxWithInputs);
-          return send({ type: "RESOLVE", data: decodedTx });
+          return send({ type: "RESOLVE" });
         }
         console.log(viewedTransaction);
         const { txType, ticketPrice, leaveTimestamp } = viewedTransaction;
         if (
           (txType === TICKET && !ticketPrice) ||
-          (txType == VOTE && !leaveTimestamp)
+          (txType === VOTE && !leaveTimestamp)
         ) {
           fetchMissingStakeTxData(viewedTransaction)
             .then(() => send("RESOLVE"))
@@ -63,7 +66,6 @@ function Transaction() {
     case "idle":
       return <></>;
     case "loading":
-      console.log(viewedTransaction);
       return (
         <StandalonePage header={Header({ ...viewedTransaction })} className="txdetails-standalone-page">
           <DecredLoading center />
@@ -82,7 +84,11 @@ function Transaction() {
         </StandalonePage>
       );
     case "failure":
-      return <p>Transaction not found</p>;
+      return (
+        <StandalonePage header={Header({ ...viewedTransaction })} className="txdetails-standalone-page">
+          <p>Transaction not found</p>
+        </StandalonePage>
+      );
     default:
       return null;
   }

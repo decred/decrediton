@@ -92,7 +92,8 @@ import {
   MATURINGHEIGHTS_CHANGED,
   GETSTARTUPTRANSACTIONS_SUCCESS,
   NEW_TRANSACTIONS_RECEIVED,
-  CHANGE_TRANSACTIONS_FILTER
+  CHANGE_TRANSACTIONS_FILTER,
+  GETTRANSACTIONS_CANCELED
 } from "actions/TransactionActions";
 
 export default function grpc(state = {}, action) {
@@ -357,14 +358,12 @@ export default function grpc(state = {}, action) {
         ticketsFilter: action.ticketsFilter,
         lastTicket: null,
         getTicketsRequestError: "",
-        getTransactionsCancel: false,
         stakeTransactions: action.stakeTransactions,
         getStakeTxsAux: action.getStakeTxsAux
       };
     case GETTRANSACTIONS_ATTEMPT:
       return {
         ...state,
-        getTransactionsCancel: false,
         getTransactionsRequestAttempt: true
       };
     case GETTRANSACTIONS_FAILED:
@@ -383,6 +382,10 @@ export default function grpc(state = {}, action) {
         getStakeTxsAux: action.getStakeTxsAux,
         getTransactionsRequestAttempt: false,
         startRequestHeight: action.startRequestHeight
+      };
+    case GETTRANSACTIONS_CANCELED:
+      return {
+        getTransactionsCancel: false
       };
     case ABANDONTRANSACTION_ATTEMPT:
       return { ...state, abandonTransactionRequestAttempt: true };
@@ -404,8 +407,7 @@ export default function grpc(state = {}, action) {
         ...state,
         transactionsFilter: action.transactionsFilter,
         regularTransactions: action.regularTransactions,
-        getRegularTxsAux: action.getRegularTxsAux,
-        getTransactionsCancel: false
+        getRegularTxsAux: action.getRegularTxsAux
       };
     case FETCHMISSINGSTAKETXDATA_ATTEMPT:
       return {

@@ -206,6 +206,7 @@ export function decodeRawTransaction(rawTx) {
     position += 1;
     input.sequence = rawTx.readUInt32LE(position);
     position += 4;
+    input.index = i;
     tx.inputs.push(input);
   }
 
@@ -248,6 +249,7 @@ export function decodeRawTransaction(rawTx) {
         scriptLen = first;
     }
     output.script = rawTx.slice(position, position + scriptLen);
+    output.index = j;
 
     position += scriptLen;
     tx.outputs.push(output);

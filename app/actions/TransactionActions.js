@@ -388,6 +388,7 @@ const getNonWalletOutputs = (walletService, chainParams, tx) =>
 export const GETTRANSACTIONS_ATTEMPT = "GETTRANSACTIONS_ATTEMPT";
 export const GETTRANSACTIONS_FAILED = "GETTRANSACTIONS_FAILED";
 export const GETTRANSACTIONS_COMPLETE = "GETTRANSACTIONS_COMPLETE";
+export const GETTRANSACTIONS_CANCELED = "GETTRANSACTIONS_CANCELED";
 
 // normalizeTx is used to normalize txs after fetched from dcrwallet.
 // this is needed because we do not have all information right after
@@ -440,7 +441,10 @@ export const getTransactions = (isStake) => async (dispatch, getState) => {
   const listDirection = isStake ? ticketsFilter.listDirection : transactionsFilter.listDirection;
   const transactions = [];
 
-  if (getTransactionsRequestAttempt || noMoreTransactions || getTransactionsCancel) return;
+  if (getTransactionsRequestAttempt || noMoreTransactions ) return;
+  if (getTransactionsCancel) {
+    dispatch({ type: GETTRANSACTIONS_CANCELED });
+  }
 
   if (!currentBlockHeight) {
     // Wait a little then re-dispatch this call since we have no starting height yet
@@ -684,35 +688,39 @@ export const getAmountFromTxInputs = (decodedTx) => async (
 ) => {
   const { walletService } = getState().grpc;
   const chainParams = sel.chainParams(getState());
-  const inputWithAmount = decodedTx.inputs.map(
-    async ({ prevTxId, outputIndex }, i) => {
-      const oldTx = await wallet.getTransaction(walletService, prevTxId);
-      if (!oldTx) {
-        return Promise.reject(new Error(`Transaction ${prevTxId} not found`));
-      }
-      const rawTxBuffer = Buffer.from(hexToBytes(oldTx.rawTx));
-      const decodedOldTx = wallet.decodeRawTransaction(
-        rawTxBuffer,
-        chainParams
-      );
-      const oldOutput = decodedOldTx.outputs[outputIndex];
-      if (!oldOutput) {
-        return Promise.reject(
-          new Error(`Unknown outpoint ${prevTxId}:${outputIndex} not found`)
+  try {
+    const inputWithAmount = decodedTx.inputs.map(
+      async ({ prevTxId, outputIndex }, i) => {
+        const oldTx = await wallet.getTransaction(walletService, prevTxId);
+        if (!oldTx) {
+          return Promise.reject(new Error(`Transaction ${prevTxId} not found`));
+        }
+        const rawTxBuffer = Buffer.from(hexToBytes(oldTx.rawTx));
+        const decodedOldTx = wallet.decodeRawTransaction(
+          rawTxBuffer,
+          chainParams
         );
+        const oldOutput = decodedOldTx.outputs[outputIndex];
+        if (!oldOutput) {
+          return Promise.reject(
+            new Error(`Unknown outpoint ${prevTxId}:${outputIndex} not found`)
+          );
+        }
+        decodedTx.inputs[i].amountIn = decodedOldTx.outputs[outputIndex].value;
+        // we also save the outpoint address to perform sanity checkes on trezor txs.
+        decodedTx.inputs[i].outpointAddress =
+          decodedOldTx.outputs[outputIndex].decodedScript.address;
+          decodedTx.inputs[i].outpoint = `${prevTxId}:${outputIndex}`;
+        return decodedTx.inputs[i];
       }
-      decodedTx.inputs[i].amountIn = decodedOldTx.outputs[outputIndex].value;
-      // we also save the outpoint address to perform sanity checkes on trezor txs.
-      decodedTx.inputs[i].outpointAddress =
-        decodedOldTx.outputs[outputIndex].decodedScript.address;
-        decodedTx.inputs[i].outpoint = `${prevTxId}:${outputIndex}`;
-      return decodedTx.inputs[i];
-    }
-  );
+    );
 
-  decodedTx.inputs = await Promise.all(inputWithAmount);
+    decodedTx.inputs = await Promise.all(inputWithAmount);
 
-  return decodedTx;
+    return decodedTx;
+  } catch (e) {
+    return Promise.reject(e);
+  }
 };
 
 // getTxFromInputs receives a decoded unsignedTx as parameter and gets the txs
