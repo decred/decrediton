@@ -5,7 +5,11 @@ import { addSpacingAroundText } from "helpers";
 import { FormattedMessage as T } from "react-intl";
 import { DecodedTransaction } from "middleware/walletrpc/api_pb";
 import { useSelector, useDispatch } from "react-redux";
-import { VOTE, TRANSACTION_DIR_RECEIVED, TRANSACTION_DIR_SENT } from "constants/Decrediton";
+import {
+  VOTE,
+  TRANSACTION_DIR_RECEIVED,
+  TRANSACTION_DIR_SENT
+} from "constants/Decrediton";
 import * as cla from "actions/ControlActions";
 import * as sel from "selectors";
 import "style/TxDetails.less";
@@ -118,7 +122,7 @@ const Page = ({
               <T id="txDetails.toAddress" m="To address" />:
             </div>
             <div className="txdetails-value non-flex">
-            {txOutputs.map(({ address }, i) => (
+              {txOutputs.map(({ address }, i) => (
                 <div key={i}>{addSpacingAroundText(address)}</div>
               ))}
               {nonWalletOutputs.map(({ address }, i) => (

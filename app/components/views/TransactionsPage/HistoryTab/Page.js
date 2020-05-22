@@ -117,8 +117,7 @@ const Page = ({
       initialLoad={loadMoreThreshold > 90}
       useWindow={false}
       threshold={loadMoreThreshold}
-      isReverse={isReverse}
-      >
+      isReverse={isReverse}>
       <div className="history-page-content-wrapper">
         {transactions.length > 0 ? (
           <TxHistory {...{ transactions, tsDate, isRegular: true }} />

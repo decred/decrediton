@@ -39,15 +39,17 @@ const icon = ({ txType, txDirection }) =>
 
 const title = ({ txType, txAmount, txDirection, ticketReward, intl }) => {
   let titleComp;
-  txType !== REGULAR ? (
-    titleComp = intl.formatMessage(messages[txType])
-  ) : (
-      titleComp = <Balance
-        title
-        bold
-        amount={txDirection !== TRANSACTION_DIR_RECEIVED ? -txAmount : txAmount}
-      />
-    );
+  txType !== REGULAR
+    ? (titleComp = intl.formatMessage(messages[txType]))
+    : (titleComp = (
+        <Balance
+          title
+          bold
+          amount={
+            txDirection !== TRANSACTION_DIR_RECEIVED ? -txAmount : txAmount
+          }
+        />
+      ));
   if (txType === TICKET && ticketReward) {
     titleComp = titleComp + ", Voted";
   }
@@ -61,7 +63,16 @@ const backBtn = ({ goBack }) => (
 );
 
 const subtitle = ({
-  txType, isPending, enterTimestamp, timestamp, leaveTimestamp, ticketPrice, ticketReward, txDirection, tsDate, txInputs
+  txType,
+  isPending,
+  enterTimestamp,
+  timestamp,
+  leaveTimestamp,
+  ticketPrice,
+  ticketReward,
+  txDirection,
+  tsDate,
+  txInputs
 }) => {
   let sentFromAccount = "";
   // This assumes all inputs are from same account.
@@ -84,19 +95,18 @@ const subtitle = ({
                   id="txDetails.timestamp"
                   m="{timestamp, date, medium} {timestamp, time, medium}"
                   values={{
-                    timestamp: tsDate(enterTimestamp ?
-                        enterTimestamp
-                        : timestamp
+                    timestamp: tsDate(
+                      enterTimestamp ? enterTimestamp : timestamp
                     )
                   }}
                 />
               </div>
             </div>
           ) : (
-              <div className="tx-details-subtitle-date">
-                <T id="txDetails.unConfirmed" m="Unconfirmed" />
-              </div>
-            )}
+            <div className="tx-details-subtitle-date">
+              <T id="txDetails.unConfirmed" m="Unconfirmed" />
+            </div>
+          )}
           {leaveTimestamp && (
             <div className="tx-details-subtitle-pair">
               <div className="tx-details-subtitle-sentfrom">
@@ -146,8 +156,8 @@ const subtitle = ({
               </div>
             </>
           ) : (
-              <div />
-            )}
+            <div />
+          )}
           <div className="tx-details-subtitle-date">
             {!isPending ? (
               <T
@@ -156,8 +166,8 @@ const subtitle = ({
                 values={{ timestamp: tsDate(timestamp) }}
               />
             ) : (
-                <T id="txDetails.unConfirmed" m="Unconfirmed" />
-              )}
+              <T id="txDetails.unConfirmed" m="Unconfirmed" />
+            )}
           </div>
         </div>
       );
@@ -180,14 +190,25 @@ const Header = ({
   const dispatch = useDispatch();
   const tsDate = useSelector(sel.tsDate);
   const goBack = () => dispatch(ca.goBackHistory());
-  return <StandaloneHeader
-    title={title({ txType, txAmount, txDirection, ticketReward, intl })}
-    iconClassName={icon({ txType, txDirection })}
-    description={subtitle({
-      txType, isPending, enterTimestamp, timestamp, leaveTimestamp, ticketPrice, ticketReward, txDirection, tsDate, txInputs
-    })}
-    actionButton={backBtn({ goBack })}
-  />;
+  return (
+    <StandaloneHeader
+      title={title({ txType, txAmount, txDirection, ticketReward, intl })}
+      iconClassName={icon({ txType, txDirection })}
+      description={subtitle({
+        txType,
+        isPending,
+        enterTimestamp,
+        timestamp,
+        leaveTimestamp,
+        ticketPrice,
+        ticketReward,
+        txDirection,
+        tsDate,
+        txInputs
+      })}
+      actionButton={backBtn({ goBack })}
+    />
+  );
 };
 
 export default injectIntl(Header);

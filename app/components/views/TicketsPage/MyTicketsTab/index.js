@@ -27,8 +27,16 @@ class MyTickets extends React.Component {
 
   getSortTypes() {
     return [
-      { value: "desc", key: "desc", label: <T id="tickets.sortby.newest" m="Newest" /> },
-      { value: "asc", key: "asc", label: <T id="tickets.sortby.oldest" m="Oldest" /> }
+      {
+        value: "desc",
+        key: "desc",
+        label: <T id="tickets.sortby.newest" m="Newest" />
+      },
+      {
+        value: "asc",
+        key: "asc",
+        label: <T id="tickets.sortby.oldest" m="Oldest" />
+      }
     ];
   }
 
@@ -57,7 +65,7 @@ class MyTickets extends React.Component {
   selectedTicketTypeFromFilter(filter) {
     const types = this.getTicketTypes();
     let key;
-    types.forEach(type => {
+    types.forEach((type) => {
       if (filter.status === type.value.status) {
         key = type.key;
         return;

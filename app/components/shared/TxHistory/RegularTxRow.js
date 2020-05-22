@@ -23,7 +23,11 @@ export const RegularTxRow = ({
     <div className="is-row">
       <span className="icon" />
       <span className="transaction-amount-number">
-        <Balance amount={txDirection !== TRANSACTION_DIR_RECEIVED ? -txAmount : txAmount} />
+        <Balance
+          amount={
+            txDirection !== TRANSACTION_DIR_RECEIVED ? -txAmount : txAmount
+          }
+        />
       </span>
       {!overview &&
         (txDirection === TRANSACTION_DIR_TRANSFERRED ? (

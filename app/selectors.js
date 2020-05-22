@@ -621,32 +621,38 @@ const regularTxs = get(["grpc", "regularTransactions"]);
 export const regularTransactions = createSelector(
   [transactionNormalizer, regularTxs],
   (normalizerFn, txsMap) => {
-    return Object.keys(txsMap)
-      .reduce((normalizedMap, txHash) => {
-        const tx = txsMap[txHash];
-        if (tx.isStake) return null;
-        normalizedMap[txHash] = normalizerFn(tx);
-        return normalizedMap;
-      }, {});
+    return Object.keys(txsMap).reduce((normalizedMap, txHash) => {
+      const tx = txsMap[txHash];
+      if (tx.isStake) return null;
+      normalizedMap[txHash] = normalizerFn(tx);
+      return normalizedMap;
+    }, {});
   }
 );
 
 export const stakeTransactions = createSelector(
   [ticketNormalizer, stakeTxs],
   (normalizerFn, txsMap) => {
-    return Object.keys(txsMap)
-      .reduce((normalizedMap, txHash) => {
-        const tx = txsMap[txHash];
-        normalizedMap[txHash] = normalizerFn(tx);
-        return normalizedMap;
-      }, {});
+    return Object.keys(txsMap).reduce((normalizedMap, txHash) => {
+      const tx = txsMap[txHash];
+      normalizedMap[txHash] = normalizerFn(tx);
+      return normalizedMap;
+    }, {});
   }
 );
 
-export const startRequestHeight = get([ "grpc", "startRequestHeight" ]);
+export const startRequestHeight = get(["grpc", "startRequestHeight"]);
 
-export const noMoreRegularTxs = get(["grpc", "getRegularTxsAux", "noMoreTransactions"]);
-export const noMoreStakeTxs = get(["grpc", "getStakeTxsAux", "noMoreTransactions"]);
+export const noMoreRegularTxs = get([
+  "grpc",
+  "getRegularTxsAux",
+  "noMoreTransactions"
+]);
+export const noMoreStakeTxs = get([
+  "grpc",
+  "getStakeTxsAux",
+  "noMoreTransactions"
+]);
 export const transactionsFilter = get(["grpc", "transactionsFilter"]);
 export const ticketsFilter = get(["grpc", "ticketsFilter"]);
 
@@ -661,23 +667,27 @@ export const ticketsFilter = get(["grpc", "ticketsFilter"]);
 export const filteredRegularTxs = createSelector(
   [regularTransactions, transactionsFilter],
   (transactions, filter) => {
-    const filteredTxs = Object.keys(transactions).map((hash) => transactions[hash])
-    .filter((v) => (filter.direction ? filter.direction === v.txDirection : true))
-    .filter((v) =>
-      filter.search
-        ? v.creditAddresses.find(
-            (address) =>
-              address.length > 1 &&
-              address.toLowerCase().indexOf(filter.search.toLowerCase()) !== -1
-          ) != undefined
-        : true
-    )
-    .filter((v) =>
-      filter.minAmount ? Math.abs(v.txAmount) >= filter.minAmount : true
-    )
-    .filter((v) =>
-      filter.maxAmount ? Math.abs(v.txAmount) <= filter.maxAmount : true
-    );
+    const filteredTxs = Object.keys(transactions)
+      .map((hash) => transactions[hash])
+      .filter((v) =>
+        filter.direction ? filter.direction === v.txDirection : true
+      )
+      .filter((v) =>
+        filter.search
+          ? v.creditAddresses.find(
+              (address) =>
+                address.length > 1 &&
+                address.toLowerCase().indexOf(filter.search.toLowerCase()) !==
+                  -1
+            ) != undefined
+          : true
+      )
+      .filter((v) =>
+        filter.minAmount ? Math.abs(v.txAmount) >= filter.minAmount : true
+      )
+      .filter((v) =>
+        filter.maxAmount ? Math.abs(v.txAmount) <= filter.maxAmount : true
+      );
 
     return filteredTxs;
   }
@@ -686,8 +696,9 @@ export const filteredRegularTxs = createSelector(
 export const filteredStakeTxs = createSelector(
   [stakeTransactions, ticketsFilter],
   (transactions, filter) => {
-    const filteredTxs = Object.keys(transactions).map((hash) => transactions[hash])
-      .filter(v => filter.status ? filter.status === v.status : true);
+    const filteredTxs = Object.keys(transactions)
+      .map((hash) => transactions[hash])
+      .filter((v) => (filter.status ? filter.status === v.status : true));
 
     return filteredTxs;
   }
@@ -696,7 +707,8 @@ export const filteredStakeTxs = createSelector(
 // note that hasTickets means "ever had any tickets", **NOT** "currently has live
 // tickets".
 export const hasTickets = compose(
-  (t) => t && Object.keys(t).length > 0, stakeTransactions
+  (t) => t && Object.keys(t).length > 0,
+  stakeTransactions
 );
 
 const transactionsNormalizer = createSelector([transactionNormalizer], map);

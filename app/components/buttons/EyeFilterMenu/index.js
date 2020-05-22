@@ -43,9 +43,12 @@ class EyeFilterMenu extends React.Component {
         {options.map((option, i) => (
           <div
             key={i}
-            className={"context-menu-item " + (selected === option.key ? "selected" : "")}
-            onClick={(e) => this.onMenuChanged(e, { value: option.value, key: option.key })}
-          >
+            className={
+              "context-menu-item " + (selected === option.key ? "selected" : "")
+            }
+            onClick={(e) =>
+              this.onMenuChanged(e, { value: option.value, key: option.key })
+            }>
             {option.label}
           </div>
         ))}

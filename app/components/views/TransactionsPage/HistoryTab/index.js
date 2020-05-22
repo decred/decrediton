@@ -110,8 +110,16 @@ class History extends React.Component {
   // TODO use constants
   getSortTypes() {
     return [
-      { value: "desc", key: "desc", label: <T id="transaction.sortby.newest" m="Newest" /> },
-      { value: "asc", key: "asc", label: <T id="transaction.sortby.oldest" m="Oldest" /> }
+      {
+        value: "desc",
+        key: "desc",
+        label: <T id="transaction.sortby.newest" m="Newest" />
+      },
+      {
+        value: "asc",
+        key: "asc",
+        label: <T id="transaction.sortby.oldest" m="Oldest" />
+      }
     ];
   }
 
@@ -169,7 +177,7 @@ class History extends React.Component {
   selectedTxTypeFromFilter(filter) {
     const types = this.getTxTypes();
     let key;
-    types.forEach(type => {
+    types.forEach((type) => {
       if (filter.direction === type.value.direction) {
         key = type.key;
         return;

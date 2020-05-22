@@ -17,11 +17,14 @@ function Transaction() {
   const abandonTransaction = () => dispatch(ca.abandonTransaction(txHash));
   const decodeRawTransactions = (hexTx) =>
     dispatch(ta.decodeRawTransaction(hexTx, txHash));
-  const getAmountFromTxInputs = (decodedTx) => dispatch(ta.getAmountFromTxInputs(decodedTx));
+  const getAmountFromTxInputs = (decodedTx) =>
+    dispatch(ta.getAmountFromTxInputs(decodedTx));
   const decodedTransactions = useSelector(sel.decodedTransactions);
   const regularTxs = useSelector(sel.regularTransactions);
   const stakeTxs = useSelector(sel.stakeTransactions);
-  const viewedTransaction = regularTxs[txHash] ? regularTxs[txHash] : stakeTxs[txHash];
+  const viewedTransaction = regularTxs[txHash]
+    ? regularTxs[txHash]
+    : stakeTxs[txHash];
   const [viewedDecodedTx, setViewedDecodedTx] = useState(
     decodedTransactions[txHash]
   );
@@ -51,13 +54,17 @@ function Transaction() {
       return <></>;
     case "loading":
       return (
-        <StandalonePage header={Header({ ...viewedTransaction })} className="txdetails-standalone-page">
+        <StandalonePage
+          header={Header({ ...viewedTransaction })}
+          className="txdetails-standalone-page">
           <DecredLoading center />
         </StandalonePage>
       );
     case "success":
       return (
-        <StandalonePage header={Header({ ...viewedTransaction })} className="txdetails-standalone-page">
+        <StandalonePage
+          header={Header({ ...viewedTransaction })}
+          className="txdetails-standalone-page">
           <TransactionPage
             {...{
               transactionDetails: viewedTransaction,
@@ -69,7 +76,9 @@ function Transaction() {
       );
     case "failure":
       return (
-        <StandalonePage header={Header({ ...viewedTransaction })} className="txdetails-standalone-page">
+        <StandalonePage
+          header={Header({ ...viewedTransaction })}
+          className="txdetails-standalone-page">
           <p>Transaction not found</p>
         </StandalonePage>
       );

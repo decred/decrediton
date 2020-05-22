@@ -33,7 +33,10 @@ const CancelLoadingTicketsButton = ({ cancelGetTransactions }) => (
         m={"Cancel listing tickets"}
       />
     }>
-    <button className={"gettickets-cancel-button"} onClick={cancelGetTransactions} />
+    <button
+      className={"gettickets-cancel-button"}
+      onClick={cancelGetTransactions}
+    />
   </Tooltip>
 );
 
@@ -64,12 +67,17 @@ const LoadingMoreTicketsIndicator = ({
           <div className="loading-more-tickets-icon"></div>
           <div>
             <>
-              <T id="myTickets.loadingMoreTickets" m="Loading more tickets..." />
+              <T
+                id="myTickets.loadingMoreTickets"
+                m="Loading more tickets..."
+              />
               <LoadingTicketsProgress {...{ startRequestHeight, ...props }} />
             </>
           </div>
         </div>
-        <CancelLoadingTicketsButton cancelGetTransactions={cancelGetTransactions} />
+        <CancelLoadingTicketsButton
+          cancelGetTransactions={cancelGetTransactions}
+        />
       </>
     )}
   </div>

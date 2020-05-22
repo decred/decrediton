@@ -40,11 +40,11 @@ function checkForStakeTransactions(txs) {
 
 const divideTransactions = (transactions) => {
   const stakeTransactions = transactions.reduce((m, t) => {
-    t.isStake ? m[t.txHash] = t : null;
+    t.isStake ? (m[t.txHash] = t) : null;
     return m;
   }, {});
   const regularTransactions = transactions.reduce((m, t) => {
-    !t.isStake ? m[t.txHash] = t : null;
+    !t.isStake ? (m[t.txHash] = t) : null;
     return m;
   }, {});
 
@@ -69,8 +69,16 @@ export const newTransactionsReceived = (
   } = getState().grpc;
   const { walletService, maturingBlockHeights } = getState().grpc;
   const chainParams = sel.chainParams(getState());
-  newlyUnminedTransactions = await normalizeBatchTx(walletService, chainParams, newlyUnminedTransactions);
-  newlyMinedTransactions = await normalizeBatchTx(walletService, chainParams, newlyMinedTransactions);
+  newlyUnminedTransactions = await normalizeBatchTx(
+    walletService,
+    chainParams,
+    newlyUnminedTransactions
+  );
+  newlyMinedTransactions = await normalizeBatchTx(
+    walletService,
+    chainParams,
+    newlyMinedTransactions
+  );
 
   const transactions = [];
   transactions.push(...newlyUnminedTransactions);
@@ -87,7 +95,10 @@ export const newTransactionsReceived = (
   }, {});
 
   let accountsToUpdate = new Array();
-  accountsToUpdate = checkAccountsToUpdate(newlyUnminedTransactions, accountsToUpdate);
+  accountsToUpdate = checkAccountsToUpdate(
+    newlyUnminedTransactions,
+    accountsToUpdate
+  );
   accountsToUpdate = checkAccountsToUpdate(
     newlyMinedTransactions,
     accountsToUpdate
@@ -102,7 +113,7 @@ export const newTransactionsReceived = (
     dispatch(getStakeInfoAttempt());
   }
 
-  unminedTransactions =  [
+  unminedTransactions = [
     ...newlyUnminedTransactions,
     ...unminedTransactions.filter(
       (tx) => !newlyMinedMap[tx.txHash] && !newlyUnminedMap[tx.txHash]
@@ -115,7 +126,7 @@ export const newTransactionsReceived = (
     ...recentRegularTransactions.filter(
       (tx) => !newlyMinedMap[tx.txHash] && !newlyUnminedMap[tx.txHash]
     )
-  ].filter( (tx) => !tx.isStake);
+  ].filter((tx) => !tx.isStake);
 
   recentStakeTransactions = [
     ...unminedTransactions,
@@ -143,7 +154,9 @@ export const newTransactionsReceived = (
     type: MATURINGHEIGHTS_CHANGED
   });
 
-  const { stakeTransactions, regularTransactions } = divideTransactions(transactions);
+  const { stakeTransactions, regularTransactions } = divideTransactions(
+    transactions
+  );
   dispatch({
     recentRegularTransactions,
     recentStakeTransactions,
@@ -168,43 +181,54 @@ export const newTransactionsReceived = (
 };
 
 export const CHANGE_TRANSACTIONS_FILTER = "CHANGE_TRANSACTIONS_FILTER";
-export const changeTransactionsFilter = (newFilter) => (dispatch, getState) => new Promise((resolve) => {
-  const { transactionsFilter: { listDirection } } = getState().grpc;
-  let { regularTransactions, getRegularTxsAux } = getState().grpc;
-  // If list direction changes (from asc to desc or vice versa), we need to
-  // clean txs, otherwise the UI gets buggy with infinite scroll.
-  if (listDirection !== newFilter.listDirection) {
-    regularTransactions = {};
-    getRegularTxsAux = {
-      noMoreTransactions: false,
-      lastTransaction: null
-    };
-  }
-  dispatch({
-    transactionsFilter: newFilter,
-    regularTransactions,
-    getRegularTxsAux,
-    type: CHANGE_TRANSACTIONS_FILTER
+export const changeTransactionsFilter = (newFilter) => (dispatch, getState) =>
+  new Promise((resolve) => {
+    const {
+      transactionsFilter: { listDirection }
+    } = getState().grpc;
+    let { regularTransactions, getRegularTxsAux } = getState().grpc;
+    // If list direction changes (from asc to desc or vice versa), we need to
+    // clean txs, otherwise the UI gets buggy with infinite scroll.
+    if (listDirection !== newFilter.listDirection) {
+      regularTransactions = {};
+      getRegularTxsAux = {
+        noMoreTransactions: false,
+        lastTransaction: null
+      };
+    }
+    dispatch({
+      transactionsFilter: newFilter,
+      regularTransactions,
+      getRegularTxsAux,
+      type: CHANGE_TRANSACTIONS_FILTER
+    });
+    resolve();
   });
-  resolve();
-});
 
 export const CHANGE_TICKETS_FILTER = "CHANGE_TICKETS_FILTER";
-export const changeTicketsFilter = (newFilter) => (dispatch, getState) => new Promise((resolve) => {
-  const { transactionsFilter: { listDirection } } = getState().grpc;
-  let { stakeTransactions, getStakeTxsAux } = getState().grpc;
-  // If list direction changes (from asc to desc or vice versa), we need to
-  // clean txs, otherwise the UI gets buggy with infinite scroll.
-  if (listDirection !== newFilter.listDirection) {
-    stakeTransactions = {};
-    getStakeTxsAux = {
-      noMoreTransactions: false,
-      lastTransaction: null
-    };
-  }
-  dispatch({ ticketsFilter: newFilter, stakeTransactions, getStakeTxsAux, type: CHANGE_TICKETS_FILTER });
-  resolve();
-});
+export const changeTicketsFilter = (newFilter) => (dispatch, getState) =>
+  new Promise((resolve) => {
+    const {
+      transactionsFilter: { listDirection }
+    } = getState().grpc;
+    let { stakeTransactions, getStakeTxsAux } = getState().grpc;
+    // If list direction changes (from asc to desc or vice versa), we need to
+    // clean txs, otherwise the UI gets buggy with infinite scroll.
+    if (listDirection !== newFilter.listDirection) {
+      stakeTransactions = {};
+      getStakeTxsAux = {
+        noMoreTransactions: false,
+        lastTransaction: null
+      };
+    }
+    dispatch({
+      ticketsFilter: newFilter,
+      stakeTransactions,
+      getStakeTxsAux,
+      type: CHANGE_TICKETS_FILTER
+    });
+    resolve();
+  });
 
 export const GETSTARTUPTRANSACTIONS_ATTEMPT = "GETSTARTUPTRANSACTIONS_ATTEMPT";
 export const GETSTARTUPTRANSACTIONS_SUCCESS = "GETSTARTUPTRANSACTIONS_SUCCESS";
@@ -332,7 +356,9 @@ export const getStartupTransactions = () => async (dispatch, getState) => {
     }
   }
 
-  const { stakeTransactions, regularTransactions } = divideTransactions(transactions);
+  const { stakeTransactions, regularTransactions } = divideTransactions(
+    transactions
+  );
 
   dispatch({
     type: GETSTARTUPTRANSACTIONS_SUCCESS,
@@ -436,12 +462,21 @@ export const getTransactions = (isStake) => async (dispatch, getState) => {
     getTransactionsCancel
   } = getState().grpc;
   const chainParams = sel.chainParams(getState());
-  let { getRegularTxsAux, getStakeTxsAux, stakeTransactions, regularTransactions } = getState().grpc;
-  let { noMoreTransactions, lastTransaction } = isStake ? getStakeTxsAux : getRegularTxsAux;
-  const listDirection = isStake ? ticketsFilter.listDirection : transactionsFilter.listDirection;
+  let {
+    getRegularTxsAux,
+    getStakeTxsAux,
+    stakeTransactions,
+    regularTransactions
+  } = getState().grpc;
+  let { noMoreTransactions, lastTransaction } = isStake
+    ? getStakeTxsAux
+    : getRegularTxsAux;
+  const listDirection = isStake
+    ? ticketsFilter.listDirection
+    : transactionsFilter.listDirection;
   const transactions = [];
 
-  if (getTransactionsRequestAttempt || noMoreTransactions ) return;
+  if (getTransactionsRequestAttempt || noMoreTransactions) return;
   if (getTransactionsCancel) {
     dispatch({ type: GETTRANSACTIONS_CANCELED });
   }
@@ -506,17 +541,20 @@ export const getTransactions = (isStake) => async (dispatch, getState) => {
     }
   }
 
-  isStake ?
-    getStakeTxsAux = { noMoreTransactions, lastTransaction } :
-    getRegularTxsAux = { noMoreTransactions, lastTransaction };
+  isStake
+    ? (getStakeTxsAux = { noMoreTransactions, lastTransaction })
+    : (getRegularTxsAux = { noMoreTransactions, lastTransaction });
 
-    // divide stake transactions and regular transactions map. This way we can
-    // have different filter behaviors without one interfering the other.
+  // divide stake transactions and regular transactions map. This way we can
+  // have different filter behaviors without one interfering the other.
   const newTxs = divideTransactions(transactions);
   if (isStake) {
     stakeTransactions = { ...stakeTransactions, ...newTxs.stakeTransactions };
   } else {
-    regularTransactions = { ...regularTransactions, ...newTxs.regularTransactions };
+    regularTransactions = {
+      ...regularTransactions,
+      ...newTxs.regularTransactions
+    };
   }
 
   return dispatch({
@@ -658,7 +696,7 @@ export const getAmountFromTxInputs = (decodedTx) => async (
         // we also save the outpoint address to perform sanity checkes on trezor txs.
         decodedTx.inputs[i].outpointAddress =
           decodedOldTx.outputs[outputIndex].decodedScript.address;
-          decodedTx.inputs[i].outpoint = `${prevTxId}:${outputIndex}`;
+        decodedTx.inputs[i].outpoint = `${prevTxId}:${outputIndex}`;
         return decodedTx.inputs[i];
       }
     );
