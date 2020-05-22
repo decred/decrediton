@@ -12,12 +12,14 @@ export const multiTxPrefix = {
       prevTxId: "0000000000000000000000000000000000000000000000000000000000000000",
       outputIndex: 0xffffffff,
       sequence: 0xffffffff,
-      outputTree: 0
+      outputTree: 0,
+      index: 0
     }
   ],
   outputs: [
     {
       value: 0x12a05f200,
+      index: 0,
       version: 0xabab,
       script: Buffer.from([
         0x41, // OP_DATA_65
@@ -34,6 +36,7 @@ export const multiTxPrefix = {
       ]),
     },
     {
+      index: 1,
       value: 0x5f5e100,
       version: 0xbcbc,
       script: Buffer.from([
