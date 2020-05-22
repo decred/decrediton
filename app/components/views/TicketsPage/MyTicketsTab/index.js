@@ -27,8 +27,8 @@ class MyTickets extends React.Component {
 
   getSortTypes() {
     return [
-      { value: "desc", label: <T id="tickets.sortby.newest" m="Newest" /> },
-      { value: "asc", label: <T id="tickets.sortby.oldest" m="Oldest" /> }
+      { value: "desc", key: "desc", label: <T id="tickets.sortby.newest" m="Newest" /> },
+      { value: "asc", key: "asc", label: <T id="tickets.sortby.oldest" m="Oldest" /> }
     ];
   }
 

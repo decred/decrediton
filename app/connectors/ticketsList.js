@@ -8,7 +8,7 @@ import * as ta from "actions/TransactionActions";
 const mapStateToProps = selectorMap({
   tickets: sel.filteredStakeTxs,
   tsDate: sel.tsDate,
-  noMoreTickets: sel.noMoreTransactions,
+  noMoreTickets: sel.noMoreStakeTxs,
   ticketsFilter: sel.ticketsFilter,
   window: sel.mainWindow
 });

@@ -359,7 +359,9 @@ export default function grpc(state = {}, action) {
         ticketsFilter: action.ticketsFilter,
         lastTicket: null,
         getTicketsRequestError: "",
-        getTransactionsCancel: false
+        getTransactionsCancel: false,
+        stakeTransactions: action.stakeTransactions,
+        getStakeTxsAux: action.getStakeTxsAux
       };
     case GETTRANSACTIONS_ATTEMPT:
       return {
@@ -376,10 +378,13 @@ export default function grpc(state = {}, action) {
     case GETTRANSACTIONS_COMPLETE:
       return {
         ...state,
+        stakeTransactions: action.stakeTransactions,
+        regularTransactions: action.regularTransactions,
         transactions: { ...state.transactions, ...action.transactions },
-        noMoreTransactions: action.noMoreTransactions,
-        lastTransaction: action.lastTransaction,
-        getTransactionsRequestAttempt: false
+        getRegularTxsAux: action.getRegularTxsAux,
+        getStakeTxsAux: action.getStakeTxsAux,
+        getTransactionsRequestAttempt: false,
+        startRequestHeight: action.startRequestHeight
       };
     case ABANDONTRANSACTION_ATTEMPT:
       return { ...state, abandonTransactionRequestAttempt: true };
@@ -391,15 +396,18 @@ export default function grpc(state = {}, action) {
       return {
         ...state,
         unminedTransactions: action.unminedTransactions,
-        transactions: action.newTransactionsMap,
         recentRegularTransactions: action.recentRegularTransactions,
-        recentStakeTransactions: action.recentStakeTransactions
+        recentStakeTransactions: action.recentStakeTransactions,
+        stakeTransactions: { ...state.stakeTransactions, ...action.stakeTransactions },
+        regularTransactions: { ...state.regularTransactions, ...action.regularTransactions },
       };
     case CHANGE_TRANSACTIONS_FILTER:
       return {
         ...state,
         transactionsFilter: action.transactionsFilter,
-        lastTransaction: null
+        regularTransactions: action.regularTransactions,
+        getRegularTxsAux: action.getRegularTxsAux,
+        getTransactionsCancel: false
       };
     case FETCHMISSINGSTAKETXDATA_ATTEMPT:
       return {
@@ -601,7 +609,8 @@ export default function grpc(state = {}, action) {
         maturingBlockHeights: action.maturingBlockHeights,
         recentRegularTransactions: action.recentRegularTxs,
         recentStakeTransactions: action.recentStakeTxs,
-        transactions: action.transactions
+        stakeTransactions: action.stakeTransactions,
+        regularTransactions: action.regularTransactions
       };
     case MATURINGHEIGHTS_CHANGED:
       return {

@@ -38,6 +38,19 @@ function checkForStakeTransactions(txs) {
   return stakeTxsFound;
 }
 
+const divideTransactions = (transactions) => {
+  const stakeTransactions = transactions.reduce((m, t) => {
+    t.isStake ? m[t.txHash] = t : null;
+    return m;
+  }, {});
+  const regularTransactions = transactions.reduce((m, t) => {
+    !t.isStake ? m[t.txHash] = t : null;
+    return m;
+  }, {});
+
+  return { stakeTransactions, regularTransactions };
+}
+
 export const NEW_TRANSACTIONS_RECEIVED = "NEW_TRANSACTIONS_RECEIVED";
 export const MATURINGHEIGHTS_CHANGED = "MATURINGHEIGHTS_CHANGED";
 
@@ -49,28 +62,22 @@ export const newTransactionsReceived = (
 ) => async (dispatch, getState) => {
   if (!newlyMinedTransactions.length && !newlyUnminedTransactions.length)
     return;
-
   let {
     unminedTransactions,
     recentRegularTransactions,
     recentStakeTransactions
   } = getState().grpc;
   const {
-    transactionsFilter, transactions, walletService, maturingBlockHeights
+    transactionsFilter, walletService, maturingBlockHeights
   } = getState().grpc;
   const chainParams = sel.chainParams(getState());
   newlyUnminedTransactions = await normalizeBatchTx(walletService, chainParams, newlyUnminedTransactions);
   newlyMinedTransactions = await normalizeBatchTx(walletService, chainParams, newlyMinedTransactions);
 
-  // update transactions map with new transactions values.
-  let newTransactionsMap = newlyUnminedTransactions.reduce((m, t) => {
-    m[t.txHash] = t;
-    return m;
-  }, transactions);
-  newTransactionsMap = newlyMinedTransactions.reduce((m, t) => {
-    m[t.txHash] = t;
-    return m;
-  }, transactions);
+  const transactions = [];
+  transactions.push(...newlyUnminedTransactions);
+  transactions.push(...newlyMinedTransactions);
+
   // aux maps of [txhash] => tx (used to ensure no duplicate txs)
   const newlyMinedMap = newlyMinedTransactions.reduce((m, v) => {
     m[v.txHash] = v;
@@ -138,6 +145,7 @@ export const newTransactionsReceived = (
     type: MATURINGHEIGHTS_CHANGED
   });
 
+  const { stakeTransactions, regularTransactions } = divideTransactions(transactions);
   dispatch({
     recentRegularTransactions,
     recentStakeTransactions,
@@ -145,7 +153,8 @@ export const newTransactionsReceived = (
     unminedTransactions,
     newlyUnminedTransactions,
     newlyMinedTransactions,
-    newTransactionsMap
+    stakeTransactions,
+    regularTransactions
   });
 
   if (newlyMinedTransactions.length > 0) {
@@ -161,23 +170,43 @@ export const newTransactionsReceived = (
 };
 
 export const CHANGE_TRANSACTIONS_FILTER = "CHANGE_TRANSACTIONS_FILTER";
-export function changeTransactionsFilter(newFilter) {
-  return (dispatch) => {
-    dispatch({
-      transactionsFilter: newFilter,
-      type: CHANGE_TRANSACTIONS_FILTER
-    });
-    return dispatch(getTransactions());
-  };
-}
+export const changeTransactionsFilter = (newFilter) => async (dispatch, getState) => new Promise((resolve) => {
+  const { transactionsFilter: { listDirection } } = getState().grpc;
+  let { regularTransactions, getRegularTxsAux } = getState().grpc;
+  // If list direction changes (from asc to desc or vice versa), we need to
+  // clean txs, otherwise the UI gets buggy with infinite scroll.
+  if (listDirection !== newFilter.listDirection) {
+    regularTransactions = {};
+    getRegularTxsAux = {
+      noMoreTransactions: false,
+      lastTransaction: null
+    };
+  }
+  dispatch({
+    transactionsFilter: newFilter,
+    regularTransactions,
+    getRegularTxsAux,
+    type: CHANGE_TRANSACTIONS_FILTER
+  });
+  resolve();
+});
 
 export const CHANGE_TICKETS_FILTER = "CHANGE_TICKETS_FILTER";
-export function changeTicketsFilter(newFilter) {
-  return (dispatch) => {
-    dispatch({ ticketsFilter: newFilter, type: CHANGE_TICKETS_FILTER });
-    dispatch(getTransactions());
-  };
-}
+export const changeTicketsFilter = (newFilter) => async (dispatch, getState) => new Promise((resolve) => {
+  const { transactionsFilter: { listDirection } } = getState().grpc;
+  let { stakeTransactions, getStakeTxsAux } = getState().grpc;
+  // If list direction changes (from asc to desc or vice versa), we need to
+  // clean txs, otherwise the UI gets buggy with infinite scroll.
+  if (listDirection !== newFilter.listDirection) {
+    stakeTransactions = {};
+    getStakeTxsAux = {
+      noMoreTransactions: false,
+      lastTransaction: null
+    }
+  }
+  dispatch({ ticketsFilter: newFilter, stakeTransactions, getStakeTxsAux, type: CHANGE_TICKETS_FILTER });
+  resolve();
+});
 
 export const GETSTARTUPTRANSACTIONS_ATTEMPT = "GETSTARTUPTRANSACTIONS_ATTEMPT";
 export const GETSTARTUPTRANSACTIONS_SUCCESS = "GETSTARTUPTRANSACTIONS_SUCCESS";
@@ -213,6 +242,7 @@ export const getStartupTransactions = () => async (dispatch, getState) => {
   // to update account's balances.
   const maturingBlockHeights = {};
   const votedTickets = {}; // aux map of ticket hash => true
+  const transactions = [];
 
   // the mergeXXX functions pick a list of transactions returned from
   // getTransactions and fills the appropriate result variables
@@ -265,10 +295,7 @@ export const getStartupTransactions = () => async (dispatch, getState) => {
     pageSize
   );
   unmined = await normalizeBatchTx(walletService, chainParams, unmined);
-  let transactions = unmined.reduce((m, t) => {
-    m[t.txHash] = t;
-    return m;
-  }, {});
+  transactions.push(...unmined);
 
   mergeRegularTxs(unmined);
   mergeStakeTxs(unmined);
@@ -283,10 +310,7 @@ export const getStartupTransactions = () => async (dispatch, getState) => {
     );
     mined = await normalizeBatchTx(walletService, chainParams, mined);
     // make transactions map
-    transactions = mined.reduce((m, t) => {
-      m[t.txHash] = t;
-      return m;
-    }, transactions);
+    transactions.push(...mined);
 
     if (mined.length === 0) {
       // TODO dispatch nomoretransactions to selector
@@ -310,12 +334,15 @@ export const getStartupTransactions = () => async (dispatch, getState) => {
     }
   }
 
+  const { stakeTransactions, regularTransactions } = divideTransactions(transactions);
+
   dispatch({
     type: GETSTARTUPTRANSACTIONS_SUCCESS,
     recentRegularTxs,
     recentStakeTxs,
     maturingBlockHeights,
-    transactions
+    stakeTransactions,
+    regularTransactions
   });
 };
 
@@ -400,16 +427,21 @@ const normalizeBatchTx = async (walletService, chainParams, txs) =>
 //
 // When no more transactions are available given the current filter,
 // `grpc.noMoreTransactions` is set to true.
-export const getTransactions = () => async (dispatch, getState) => {
+export const getTransactions = (isStake) => async (dispatch, getState) => {
   const {
     currentBlockHeight,
     getTransactionsRequestAttempt,
     transactionsFilter,
+    ticketsFilter,
     walletService,
     getTransactionsCancel
   } = getState().grpc;
   const chainParams = sel.chainParams(getState());
-  let { noMoreTransactions, lastTransaction } = getState().grpc;
+  let { getRegularTxsAux, getStakeTxsAux, stakeTransactions, regularTransactions } = getState().grpc;
+  let { noMoreTransactions, lastTransaction } = isStake ? getStakeTxsAux : getRegularTxsAux;
+  const listDirection = isStake ? ticketsFilter.listDirection : transactionsFilter.listDirection;
+  const transactions = [];
+
   if (getTransactionsRequestAttempt || noMoreTransactions || getTransactionsCancel) return;
 
   if (!currentBlockHeight) {
@@ -426,17 +458,13 @@ export const getTransactions = () => async (dispatch, getState) => {
   unmined = await normalizeBatchTx(walletService, chainParams, unmined);
 
   const reachedGenesis = false;
-  let transactions = unmined.reduce((m, t) => {
-    m[t.txHash] = t;
-    return m;
-  }, {});
-
+  
+  let startRequestHeight, endRequestHeight;
   while (!noMoreTransactions && !reachedGenesis) {
-    let startRequestHeight, endRequestHeight;
-    const transactionsLength = Object.keys(transactions).length;
+    const transactionsLength = transactions.length;
     if (transactionsLength >= BATCH_TX_COUNT) break;
 
-    if (transactionsFilter.listDirection === DESC) {
+    if (listDirection === DESC) {
       endRequestHeight = 1;
       startRequestHeight = lastTransaction
         ? lastTransaction.height - 1
@@ -467,22 +495,34 @@ export const getTransactions = () => async (dispatch, getState) => {
 
       mined = await normalizeBatchTx(walletService, chainParams, mined);
 
-      // make transactions map
-      transactions = mined.reduce((m, t) => {
-        m[t.txHash] = t;
-        return m;
-      }, transactions);
+      // concat txs
+      transactions.push(...mined);
     } catch (error) {
       dispatch({ type: GETTRANSACTIONS_FAILED, error });
       return;
     }
   }
 
+  isStake ?
+    getStakeTxsAux = { noMoreTransactions, lastTransaction } :
+    getRegularTxsAux = { noMoreTransactions, lastTransaction };
+
+    // divide stake transactions and regular transactions map. This way we can
+    // have different filter behaviors without one interfering the other.
+  const newTxs = divideTransactions(transactions);
+  if (isStake) {
+    stakeTransactions = { ...stakeTransactions, ...newTxs.stakeTransactions };
+  } else {
+    regularTransactions = { ...regularTransactions, ...newTxs.regularTransactions };
+  }
+
   return dispatch({
     type: GETTRANSACTIONS_COMPLETE,
-    noMoreTransactions,
-    lastTransaction,
-    transactions
+    getRegularTxsAux,
+    getStakeTxsAux,
+    stakeTransactions,
+    regularTransactions,
+    startRequestHeight
   });
 };
 
@@ -598,7 +638,7 @@ export const fetchMissingStakeTxData = (tx) => async (dispatch, getState) => {
   } else {
     // not supposed to happen in normal usage; this function  should only be
     // entered from a transaction already in the transaction map
-    // (sel.transactionsMap).
+    // (sel.stakeTransactions).
     dispatch({ txHash: tx.txHash, type: FETCHMISSINGSTAKETXDATA_FAILED });
   }
 };

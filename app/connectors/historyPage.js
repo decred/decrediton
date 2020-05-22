@@ -9,7 +9,7 @@ const mapStateToProps = selectorMap({
   totalBalance: sel.totalBalance,
   transactions: sel.filteredRegularTxs,
   transactionsFilter: sel.transactionsFilter,
-  noMoreTransactions: sel.noMoreTransactions,
+  noMoreTransactions: sel.noMoreRegularTxs,
   window: sel.mainWindow,
   tsDate: sel.tsDate
 });

@@ -5,7 +5,7 @@ import * as sel from "selectors";
 import * as ta from "actions/TransactionActions";
 
 const mapStateToProps = selectorMap({
-  startRequestHeight: sel.getTransactionsRequestAttempt,
+  startRequestHeight: sel.startRequestHeight,
   ticketsFilter: sel.ticketsFilter,
   currentBlockHeight: sel.currentBlockHeight
 });

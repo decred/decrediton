@@ -110,15 +110,16 @@ class History extends React.Component {
     ];
   }
 
+  // TODO use constants
   getSortTypes() {
     return [
-      { value: "desc", label: <T id="transaction.sortby.newest" m="Newest" /> },
-      { value: "asc", label: <T id="transaction.sortby.oldest" m="Oldest" /> }
+      { value: "desc", key: "desc", label: <T id="transaction.sortby.newest" m="Newest" /> },
+      { value: "asc", key: "asc", label: <T id="transaction.sortby.oldest" m="Oldest" /> }
     ];
   }
 
   onLoadMoreTransactions() {
-    this.props.getTransactions();
+    this.props.getTransactions(false);
   }
 
   onChangeFilter(value) {
@@ -177,7 +178,7 @@ class History extends React.Component {
         key = type.key;
         return;
       }
-    })
+    });
     return key;
   }
 }

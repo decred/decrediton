@@ -585,13 +585,16 @@ export const transactionNormalizer = createSelector(
     };
   }
 );
-export const transactionsMap = get(["grpc", "transactions"]);
 
+// transactions selectors before normalized
+const stakeTxs = get(["grpc" , "stakeTransactions"]);
+const regularTxs = get(["grpc" , "regularTransactions"]);
+
+// transactions selectors normalized
 export const regularTransactions = createSelector(
-  [transactionNormalizer, transactionsMap],
+  [transactionNormalizer, regularTxs],
   (normalizerFn, txsMap) => {
     return Object.keys(txsMap)
-      .filter((hash) => !txsMap[hash].isStake)
       .reduce((normalizedMap, txHash) => {
         const tx = txsMap[txHash];
         if (tx.isStake) return null;
@@ -602,10 +605,9 @@ export const regularTransactions = createSelector(
 );
 
 export const stakeTransactions = createSelector(
-  [ticketNormalizer, transactionsMap],
+  [ticketNormalizer, stakeTxs],
   (normalizerFn, txsMap) => {
     return Object.keys(txsMap)
-      .filter((hash) => txsMap[hash].isStake)
       .reduce((normalizedMap, txHash) => {
         const tx = txsMap[txHash];
         normalizedMap[txHash] = normalizerFn(tx);
@@ -614,7 +616,10 @@ export const stakeTransactions = createSelector(
   }
 );
 
-export const noMoreTransactions = get(["grpc", "noMoreTransactions"]);
+export const startRequestHeight = get([ "grpc", "startRequestHeight" ]);
+
+export const noMoreRegularTxs = get(["grpc", "getRegularTxsAux", "noMoreTransactions"]);
+export const noMoreStakeTxs = get(["grpc", "getStakeTxsAux", "noMoreTransactions"]);
 export const transactionsFilter = get(["grpc", "transactionsFilter"]);
 export const ticketsFilter = get(["grpc", "ticketsFilter"]);
 

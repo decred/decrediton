@@ -54,13 +54,12 @@ const TicketListPage = ({
   selectedTicketTypeKey,
   sortTypes,
   ticketTypes,
-  tsDate,
-  loadMoreThreshold
+  tsDate
 }) => (
   <InfiniteScroll
     hasMore={!noMoreTickets}
-    loadMore={getTickets}
-    initialLoad={!noMoreTickets && loadMoreThreshold > 90}
+    loadMore={() => getTickets(true)}
+    initialLoad={!noMoreTickets}
     useWindow={false}
     threshold={90}>
     <Subtitle

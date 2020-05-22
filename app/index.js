@@ -173,13 +173,25 @@ const initialState = {
     getAccountsRequestAttempt: false,
     getAccountsResponse: null,
 
-    recentTransactions: [],
     recentStakeTransactions: [],
 
     // GetTransactions
+    // requestHeight of last getTransaction call
+    startRequestHeight: null,
     unminedTransactions: [],
-    transactions: {},
-    noMoreTransactions: false,
+    // map representing each txs type
+    stakeTransactions: {},
+    regularTransactions: {},
+    // getRegularTxsAux is a state helper to get regular transactions
+    getRegularTxsAux: {
+      noMoreTransactions: false,
+      lastTransaction: null      
+    },
+    // getRegularTxsAux is a state helper to get stake transactions
+    getStakeTxsAux: {
+      noMoreTransactions: false,
+      lastTransaction: null      
+    },
     transactionsFilter: {
       search: null, // The freeform text in the Search box
       listDirection: "desc", // asc = oldest -> newest, desc => newest -> oldest
