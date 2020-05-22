@@ -54,7 +54,7 @@ export const BATCH_TX_COUNT = 10;
 export const RECENT_TX_COUNT = 8;
 
 // tx filter direction - descending order
-export const DESC = "desc"
+export const DESC = "desc";
 
 // tx types
 export const TICKET = "ticket";

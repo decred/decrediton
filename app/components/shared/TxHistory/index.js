@@ -55,7 +55,7 @@ const TxHistory = ({
       const Component = TxRowByType[rowType];
       if (Component === StakeTxRow && isRegular) return;
       if (Component === RegularTxRow && isStake) return;
-      const key = tx.spenderHash ? tx.spenderHash : tx.txHash
+      const key = tx.spenderHash ? tx.spenderHash : tx.txHash;
 
       const txOutputAddresses =
         tx.outputs &&

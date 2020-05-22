@@ -3,7 +3,6 @@ import ErrorScreen from "ErrorScreen";
 import HistoryPage from "./Page";
 import { historyPage, balance } from "connectors";
 import { injectIntl } from "react-intl";
-import { TransactionDetails } from "middleware/walletrpc/api_pb";
 import { FormattedMessage as T } from "react-intl";
 import {
   TRANSACTION_DIR_SENT,
@@ -56,7 +55,6 @@ class History extends React.Component {
     const loadMoreThreshold =
       90 + Math.max(0, this.props.window.innerHeight - 765);
     const tsDate = this.props.tsDate;
-    const { listDirection } = this.props.transactionsFilter;
     return !this.props.walletService ? (
       <ErrorScreen />
     ) : (
@@ -85,7 +83,6 @@ class History extends React.Component {
   }
 
   getTxTypes() {
-    const types = TransactionDetails.TransactionType;
     return [
       {
         key: "all",
@@ -170,7 +167,6 @@ class History extends React.Component {
   }
 
   selectedTxTypeFromFilter(filter) {
-    const { direction } = filter;
     const types = this.getTxTypes();
     let key;
     types.forEach(type => {

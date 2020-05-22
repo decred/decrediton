@@ -62,9 +62,9 @@ const LoadingMoreTicketsIndicator = ({
       <>
         <div className="is-row loading-more-tickets-info">
           <div className="loading-more-tickets-icon"></div>
-          <div>        
+          <div>
             <>
-              <T id="myTickets.loadingMoreTickets" m="Loading more tickets..." />       
+              <T id="myTickets.loadingMoreTickets" m="Loading more tickets..." />
               <LoadingTicketsProgress {...{ startRequestHeight, ...props }} />
             </>
           </div>

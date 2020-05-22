@@ -96,8 +96,6 @@ import {
 } from "actions/TransactionActions";
 
 export default function grpc(state = {}, action) {
-  let idxOldTicket;
-  let newTickets;
   let newMaturingBlockHeights;
   switch (action.type) {
     case GETACCOUNTMIXERSERVICE_SUCCESS:
@@ -399,7 +397,7 @@ export default function grpc(state = {}, action) {
         recentRegularTransactions: action.recentRegularTransactions,
         recentStakeTransactions: action.recentStakeTransactions,
         stakeTransactions: { ...state.stakeTransactions, ...action.stakeTransactions },
-        regularTransactions: { ...state.regularTransactions, ...action.regularTransactions },
+        regularTransactions: { ...state.regularTransactions, ...action.regularTransactions }
       };
     case CHANGE_TRANSACTIONS_FILTER:
       return {

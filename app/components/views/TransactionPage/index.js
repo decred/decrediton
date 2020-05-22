@@ -1,17 +1,18 @@
 import TransactionPage from "./Page";
-import Header from "./Header"
-import { FormattedMessage as T, defineMessages, injectIntl } from "react-intl";
+import Header from "./Header";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchMachine } from "stateMachines/FetchStateMachine";
 import { DecredLoading } from "indicators";
 import { useMachine } from "@xstate/react";
-import { useState, useEffect } from "react";
-import { StandaloneHeader, StandalonePage } from "layout";
+import { useState } from "react";
+import { StandalonePage } from "layout";
 import * as ta from "actions/TransactionActions";
+import * as ca from "actions/ClientActions";
 import * as sel from "selectors";
+import { TICKET, VOTE } from "constants/Decrediton";
 
-function Transaction({ intl }) {
+function Transaction() {
   const { txHash } = useParams();
   const dispatch = useDispatch();
   const abandonTransaction = () => dispatch(ca.abandonTransaction(txHash));
@@ -19,34 +20,29 @@ function Transaction({ intl }) {
   const decodeRawTransactions = (hexTx) =>
     dispatch(ta.decodeRawTransaction(hexTx, txHash));
   const getAmountFromTxInputs = (decodedTx) => dispatch(ta.getAmountFromTxInputs(decodedTx));
-  const tsDate = useSelector(sel.tsDate);
   const decodedTransactions = useSelector(sel.decodedTransactions);
-  const transactions = useSelector(sel.transactionsMap);
   const regularTxs = useSelector(sel.regularTransactions);
   const stakeTxs = useSelector(sel.stakeTransactions);
-  // txFromMap from map are not completed, as they have not bein normalized
-  // yet.
-  const txFromMap = transactions[txHash];
-  const [viewedTransaction, setViewedTx] = useState(null);
+  const viewedTransaction = regularTxs[txHash] ? regularTxs[txHash] : stakeTxs[txHash];
   const [viewedDecodedTx, setViewedDecodedTx] = useState(
     decodedTransactions[txHash]
   );
   const [state, send] = useMachine(fetchMachine, {
     actions: {
       initial: () => {
-        if (!txFromMap) return send("REJECT");
+        if (!viewedTransaction) return send("REJECT");
         if (!viewedDecodedTx) return send("FETCH");
         send("RESOLVE");
       },
       load: async () => {
         if (!viewedDecodedTx) {
-          console.log(viewedTransaction)
-          const decodedTx = decodeRawTransactions(txFromMap.rawTx);
+          const decodedTx = decodeRawTransactions(viewedTransaction.rawTx);
           const decodedTxWithInputs = await getAmountFromTxInputs(decodedTx);
           console.log(decodedTxWithInputs);
           setViewedDecodedTx(decodedTxWithInputs);
           return send({ type: "RESOLVE", data: decodedTx });
         }
+        console.log(viewedTransaction);
         const { txType, ticketPrice, leaveTimestamp } = viewedTransaction;
         if (
           (txType === TICKET && !ticketPrice) ||
@@ -62,25 +58,20 @@ function Transaction({ intl }) {
       }
     }
   });
-  useEffect(() => {
-    console.log(txHash)
-    const viewedTx = txFromMap.isStake ? stakeTxs[txHash] : regularTxs[txHash];
-    console.log(viewedTx)
-    setViewedTx(viewedTx)
-  }, [state])
 
   switch (state.value) {
     case "idle":
       return <></>;
     case "loading":
+      console.log(viewedTransaction);
       return (
-        <StandalonePage header={Header({...viewedTransaction})} className="txdetails-standalone-page">
+        <StandalonePage header={Header({ ...viewedTransaction })} className="txdetails-standalone-page">
           <DecredLoading center />
         </StandalonePage>
-      )
+      );
     case "success":
       return (
-        <StandalonePage header={Header({...viewedTransaction})} className="txdetails-standalone-page">
+        <StandalonePage header={Header({ ...viewedTransaction })} className="txdetails-standalone-page">
           <TransactionPage
             {...{
               transactionDetails: viewedTransaction,
@@ -97,4 +88,4 @@ function Transaction({ intl }) {
   }
 }
 
-export default injectIntl(Transaction);
+export default Transaction;

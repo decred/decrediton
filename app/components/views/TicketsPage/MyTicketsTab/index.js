@@ -55,7 +55,6 @@ class MyTickets extends React.Component {
   }
 
   selectedTicketTypeFromFilter(filter) {
-    const { status } = filter;
     const types = this.getTicketTypes();
     let key;
     types.forEach(type => {

@@ -1,7 +1,7 @@
 import { Balance, CopyToClipboard } from "shared";
 import { shell } from "electron";
 import { KeyBlueButton } from "buttons";
-import { addSpacingAroundText, reverseHash } from "helpers";
+import { addSpacingAroundText } from "helpers";
 import { FormattedMessage as T } from "react-intl";
 import { DecodedTransaction } from "middleware/walletrpc/api_pb";
 import { useSelector, useDispatch } from "react-redux";
@@ -51,7 +51,6 @@ const Page = ({
     txBlockUrl,
     txFee,
     txDirection,
-    timestamp,
     rawTx,
     isPending
   } = transactionDetails;

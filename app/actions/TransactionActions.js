@@ -49,7 +49,7 @@ const divideTransactions = (transactions) => {
   }, {});
 
   return { stakeTransactions, regularTransactions };
-}
+};
 
 export const NEW_TRANSACTIONS_RECEIVED = "NEW_TRANSACTIONS_RECEIVED";
 export const MATURINGHEIGHTS_CHANGED = "MATURINGHEIGHTS_CHANGED";
@@ -67,9 +67,7 @@ export const newTransactionsReceived = (
     recentRegularTransactions,
     recentStakeTransactions
   } = getState().grpc;
-  const {
-    transactionsFilter, walletService, maturingBlockHeights
-  } = getState().grpc;
+  const { walletService, maturingBlockHeights } = getState().grpc;
   const chainParams = sel.chainParams(getState());
   newlyUnminedTransactions = await normalizeBatchTx(walletService, chainParams, newlyUnminedTransactions);
   newlyMinedTransactions = await normalizeBatchTx(walletService, chainParams, newlyMinedTransactions);
@@ -170,7 +168,7 @@ export const newTransactionsReceived = (
 };
 
 export const CHANGE_TRANSACTIONS_FILTER = "CHANGE_TRANSACTIONS_FILTER";
-export const changeTransactionsFilter = (newFilter) => async (dispatch, getState) => new Promise((resolve) => {
+export const changeTransactionsFilter = (newFilter) => (dispatch, getState) => new Promise((resolve) => {
   const { transactionsFilter: { listDirection } } = getState().grpc;
   let { regularTransactions, getRegularTxsAux } = getState().grpc;
   // If list direction changes (from asc to desc or vice versa), we need to
@@ -192,7 +190,7 @@ export const changeTransactionsFilter = (newFilter) => async (dispatch, getState
 });
 
 export const CHANGE_TICKETS_FILTER = "CHANGE_TICKETS_FILTER";
-export const changeTicketsFilter = (newFilter) => async (dispatch, getState) => new Promise((resolve) => {
+export const changeTicketsFilter = (newFilter) => (dispatch, getState) => new Promise((resolve) => {
   const { transactionsFilter: { listDirection } } = getState().grpc;
   let { stakeTransactions, getStakeTxsAux } = getState().grpc;
   // If list direction changes (from asc to desc or vice versa), we need to
@@ -202,7 +200,7 @@ export const changeTicketsFilter = (newFilter) => async (dispatch, getState) => 
     getStakeTxsAux = {
       noMoreTransactions: false,
       lastTransaction: null
-    }
+    };
   }
   dispatch({ ticketsFilter: newFilter, stakeTransactions, getStakeTxsAux, type: CHANGE_TICKETS_FILTER });
   resolve();
@@ -456,9 +454,10 @@ export const getTransactions = (isStake) => async (dispatch, getState) => {
   // first, request unmined transactions. They always come first in decrediton.
   let { unmined } = await wallet.getTransactions(walletService, -1, -1, 0);
   unmined = await normalizeBatchTx(walletService, chainParams, unmined);
+  transactions.push(...unmined);
 
   const reachedGenesis = false;
-  
+
   let startRequestHeight, endRequestHeight;
   while (!noMoreTransactions && !reachedGenesis) {
     const transactionsLength = transactions.length;

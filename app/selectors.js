@@ -587,8 +587,8 @@ export const transactionNormalizer = createSelector(
 );
 
 // transactions selectors before normalized
-const stakeTxs = get(["grpc" , "stakeTransactions"]);
-const regularTxs = get(["grpc" , "regularTransactions"]);
+const stakeTxs = get(["grpc", "stakeTransactions"]);
+const regularTxs = get(["grpc", "regularTransactions"]);
 
 // transactions selectors normalized
 export const regularTransactions = createSelector(
@@ -650,7 +650,7 @@ export const filteredRegularTxs = createSelector(
     )
     .filter((v) =>
       filter.maxAmount ? Math.abs(v.txAmount) <= filter.maxAmount : true
-    )
+    );
 
     return filteredTxs;
   }

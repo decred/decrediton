@@ -51,9 +51,10 @@ const title = ({ txType, txAmount, txDirection, ticketReward, intl }) => {
   if (txType === TICKET && ticketReward) {
     titleComp = titleComp + ", Voted";
   }
-}
+  return titleComp;
+};
 
-const backBtn = ({ goBack, }) => (
+const backBtn = ({ goBack }) => (
   <SlateGrayButton onClick={() => goBack()} className="thin-button">
     <T id="txDetails.backBtn" m="Back" />
   </SlateGrayButton>
@@ -134,7 +135,6 @@ const subtitle = ({
           )}
         </div>
       );
-      break;
     default:
       return (
         <div className="tx-details-subtitle">
@@ -164,7 +164,7 @@ const subtitle = ({
         </div>
       );
   }
-}
+};
 
 const Header = ({
   txType,
@@ -181,7 +181,6 @@ const Header = ({
 }) => {
   const dispatch = useDispatch();
   const tsDate = useSelector(sel.tsDate);
-  const date = tsDate(enterTimestamp)
   const goBack = () => dispatch(ca.goBackHistory());
   return <StandaloneHeader
     title={title({ txType, txAmount, txDirection, ticketReward, intl })}
@@ -191,6 +190,6 @@ const Header = ({
     })}
     actionButton={backBtn({ goBack })}
   />;
-}
+};
 
 export default injectIntl(Header);
