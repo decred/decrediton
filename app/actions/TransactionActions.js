@@ -594,58 +594,6 @@ const getMissingStakeTxData = async (
   return { ticket: ticketTx, spender: spenderTx, status };
 };
 
-export const FETCHMISSINGSTAKETXDATA_ATTEMPT =
-  "FETCHMISSINGSTAKETXDATA_ATTEMPT";
-export const FETCHMISSINGSTAKETXDATA_SUCCESS =
-  "FETCHMISSINGSTAKETXDATA_SUCCESS";
-export const FETCHMISSINGSTAKETXDATA_FAILED = "FETCHMISSINGSTAKETXDATA_FAILED";
-
-// fetchMissingStakeTxData fetches the missing stake information of a given
-// transaction returned from getTransaction. For tickets, it tries to fill the
-// ticket purchase amount and for votes it tries to fill the purchase info and
-// reward data.
-//
-// This function is not suitable for calling on a list of transactions, since
-// some cases/operations are slow.
-export const fetchMissingStakeTxData = (tx) => async (dispatch, getState) => {
-  const { walletService, fetchMissingStakeTxDataAttempt } = getState().grpc;
-  const chainParams = sel.chainParams(getState());
-  if (fetchMissingStakeTxDataAttempt[tx.txHash]) {
-    return;
-  }
-  dispatch({ txHash: tx.txHash, type: FETCHMISSINGSTAKETXDATA_ATTEMPT });
-
-  const newTx = await getMissingStakeTxData(walletService, chainParams, tx);
-
-  const oldTxs = getState().grpc.transactions;
-  const oldStakeTxs = getState().grpc.recentStakeTransactions;
-  const txIdx = oldTxs.findIndex((t) => t.txHash === tx.txHash);
-  const stakeTxIdx = oldStakeTxs.findIndex((t) => t.txHash === tx.txHash);
-
-  if (txIdx > -1 || stakeTxIdx > -1) {
-    const dispatchState = {
-      txHash: tx.txHash,
-      type: FETCHMISSINGSTAKETXDATA_SUCCESS
-    };
-    if (txIdx > -1) {
-      const newTxs = [...oldTxs];
-      newTxs[txIdx] = newTx;
-      dispatchState["transactions"] = newTxs;
-    }
-    if (stakeTxIdx > -1) {
-      const newStakeTxs = [...oldStakeTxs];
-      newStakeTxs[stakeTxIdx] = newTx;
-      dispatchState["recentStakeTransactions"] = newStakeTxs;
-    }
-    dispatch(dispatchState);
-  } else {
-    // not supposed to happen in normal usage; this function  should only be
-    // entered from a transaction already in the transaction map
-    // (sel.stakeTransactions).
-    dispatch({ txHash: tx.txHash, type: FETCHMISSINGSTAKETXDATA_FAILED });
-  }
-};
-
 // Given a list of transactions, returns the maturing heights of all
 // stake txs in the list.
 function transactionsMaturingHeights(txs, chainParams) {

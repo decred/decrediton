@@ -10,13 +10,11 @@ import { StandalonePage } from "layout";
 import * as ta from "actions/TransactionActions";
 import * as ca from "actions/ClientActions";
 import * as sel from "selectors";
-import { TICKET, VOTE } from "constants/Decrediton";
 
 function Transaction() {
   const { txHash } = useParams();
   const dispatch = useDispatch();
   const abandonTransaction = () => dispatch(ca.abandonTransaction(txHash));
-  const fetchMissingStakeTxData = () => dispatch(ta.fetchMissingStakeTxData());
   const decodeRawTransactions = (hexTx) =>
     dispatch(ta.decodeRawTransaction(hexTx, txHash));
   const getAmountFromTxInputs = (decodedTx) => dispatch(ta.getAmountFromTxInputs(decodedTx));
@@ -38,25 +36,11 @@ function Transaction() {
         if (!viewedDecodedTx) {
           const decodedTx = decodeRawTransactions(viewedTransaction.rawTx);
           let decodedTxWithInputs = decodedTx;
-          console.log(viewedTransaction);
           if (!viewedTransaction.isStake) {
             decodedTxWithInputs = await getAmountFromTxInputs(decodedTx);
           }
           setViewedDecodedTx(decodedTxWithInputs);
           return send({ type: "RESOLVE" });
-        }
-        console.log(viewedTransaction);
-        const { txType, ticketPrice, leaveTimestamp } = viewedTransaction;
-        if (
-          (txType === TICKET && !ticketPrice) ||
-          (txType === VOTE && !leaveTimestamp)
-        ) {
-          fetchMissingStakeTxData(viewedTransaction)
-            .then(() => send("RESOLVE"))
-            .catch((error) => {
-              console.log(error);
-              send({ type: "REJECT", error });
-            });
         }
       }
     }

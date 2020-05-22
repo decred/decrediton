@@ -81,9 +81,6 @@ import {
   STOPMIXER_SUCCESS
 } from "actions/AccountMixerActions";
 import {
-  FETCHMISSINGSTAKETXDATA_ATTEMPT,
-  FETCHMISSINGSTAKETXDATA_SUCCESS,
-  FETCHMISSINGSTAKETXDATA_FAILED,
   GETTRANSACTIONS_ATTEMPT,
   GETTRANSACTIONS_FAILED,
   GETTRANSACTIONS_COMPLETE,
@@ -408,32 +405,6 @@ export default function grpc(state = {}, action) {
         transactionsFilter: action.transactionsFilter,
         regularTransactions: action.regularTransactions,
         getRegularTxsAux: action.getRegularTxsAux
-      };
-    case FETCHMISSINGSTAKETXDATA_ATTEMPT:
-      return {
-        ...state,
-        fetchMissingStakeTxDataAttempt: {
-          ...state.fetchMissingStakeTxDataAttempt,
-          [action.txHash]: true
-        }
-      };
-    case FETCHMISSINGSTAKETXDATA_SUCCESS:
-      return {
-        ...state,
-        recentStakeTransactions:
-          action.recentStakeTransactions || state.recentStakeTransactions,
-        fetchMissingStakeTxDataAttempt: {
-          ...state.fetchMissingStakeTxDataAttempt,
-          [action.txHash]: false
-        }
-      };
-    case FETCHMISSINGSTAKETXDATA_FAILED:
-      return {
-        ...state,
-        fetchMissingStakeTxDataAttempt: {
-          ...state.fetchMissingStakeTxDataAttempt,
-          [action.txHash]: false
-        }
       };
     case UPDATETIMESINCEBLOCK:
       return {
