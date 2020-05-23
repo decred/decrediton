@@ -1,15 +1,10 @@
 import { useState } from "react";
-import { classNames, Button } from "pi-ui";
+import { classNames, Button, StatusBar } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
 import { InvisibleButton } from "buttons";
 import { PoliteiaLink, VerticalAccordion } from "shared";
-import {
-  OverviewField,
-  OverviewVotingProgressInfo,
-  TimeValue,
-  ProposalText,
-  VoteInfo
-} from "./helpers";
+import { OverviewField, TimeValue, ProposalText, VoteInfo } from "./helpers";
+import { getStatusBarData } from "./utils";
 import {
   VOTESTATUS_ACTIVEVOTE,
   VOTESTATUS_FINISHEDVOTE
@@ -110,7 +105,12 @@ const ProposalDetails = ({
         </div>
         {(voteStatus === VOTESTATUS_ACTIVEVOTE ||
           voteStatus === VOTESTATUS_FINISHEDVOTE) && (
-          <OverviewVotingProgressInfo {...{ voteCounts, quorumMinimumVotes }} />
+          <StatusBar
+            className={styles.voteStatusBar}
+            max={quorumMinimumVotes}
+            status={getStatusBarData(voteCounts)}
+            showMarker={false}
+          />
         )}
         <div>
           {walletEligibleTickets && (
