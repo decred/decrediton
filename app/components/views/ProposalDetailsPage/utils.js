@@ -8,20 +8,17 @@ export function politeiaMarkdownIndexMd(payload) {
 }
 
 /**
- * Converts the vote counts into an array of data
+ * Converts the vote counts {"yes": x, "no": y} obj into an array of data
  * that can be used to render the StatusBar
- * @param {Object} voteSummary
- * @returns {Array} status bar data
+ * @param {Array} voteCounts
+ * @returns {Array} status bar data [{label, color, amount}, ..]
  */
-export const getStatusBarData = (voteCounts) => {
-  return (
-    voteCounts &&
-    Object.entries(voteCounts)
-      .map(([voteOption, votesReceived]) => ({
-        label: voteOption,
-        amount: votesReceived,
-        color: voteOption === "yes" ? "#41BE53" : "#ED6D47"
-      }))
-      .sort((a) => (a.label === "yes" ? -1 : 1))
-  );
-};
+export const getStatusBarData = (voteCounts) =>
+  voteCounts &&
+  Object.entries(voteCounts)
+    .map(([voteOption, votesReceived]) => ({
+      label: voteOption,
+      amount: votesReceived,
+      color: voteOption === "yes" ? "#41BE53" : "#ED6D47"
+    }))
+    .sort((a) => (a.label === "yes" ? -1 : 1));
