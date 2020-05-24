@@ -44,7 +44,7 @@ class Send extends React.Component {
     };
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     const {
       constructTxLowBalance,
       unsignedRawTx,
@@ -61,7 +61,13 @@ class Send extends React.Component {
       newOutputs = [{ key: "output_0", data: this.getBaseOutput() }];
       this.setState({ isSendAll: false });
     }
-    if (isSendSelf && prevProps.nextAddress != nextAddress) {
+    if (
+      isSendSelf &&
+      (prevProps.nextAddress != nextAddress ||
+        (publishTxResponse &&
+          publishTxResponse !== prevProps.publishTxResponse) ||
+        (prevState.isSendSelf != isSendSelf && nextAddress))
+    ) {
       newOutputs = (newOutputs || outputs).map((o) => ({
         ...o,
         data: { ...o.data, destination: nextAddress }
