@@ -50,7 +50,9 @@ class Send extends React.Component {
       unsignedRawTx,
       isWatchingOnly,
       nextAddress,
-      publishTxResponse
+      publishTxResponse,
+      nextAddressAccount,
+      getNextAddressAttempt
     } = this.props;
     const { isSendSelf, outputs } = this.state;
     let newOutputs;
@@ -58,14 +60,15 @@ class Send extends React.Component {
       publishTxResponse &&
       publishTxResponse !== prevProps.publishTxResponse
     ) {
+      if (isSendSelf) {
+        getNextAddressAttempt(nextAddressAccount.value);
+      }
       newOutputs = [{ key: "output_0", data: this.getBaseOutput() }];
       this.setState({ isSendAll: false });
     }
     if (
       isSendSelf &&
       (prevProps.nextAddress != nextAddress ||
-        (publishTxResponse &&
-          publishTxResponse !== prevProps.publishTxResponse) ||
         (prevState.isSendSelf != isSendSelf && nextAddress))
     ) {
       newOutputs = (newOutputs || outputs).map((o) => ({
