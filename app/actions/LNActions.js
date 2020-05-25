@@ -31,17 +31,11 @@ export const startDcrlnd = (
   const {
     grpc: { port }
   } = getState();
-  const {
-    daemon: { credentials, appData, walletName }
-  } = getState();
+  const { daemon: { walletName } } = getState();
   const isTestnet = sel.isTestNet(getState());
   const walletPath = getWalletPath(isTestnet, walletName);
   const walletPort = port;
-  const rpcCreds = {};
-
-  const cfg = getWalletCfg(isTestnet, walletName);
   const lnCfg = dispatch(getLNWalletConfig());
-  const cliOptions = ipcRenderer.sendSync("get-cli-options");
 
   // Use the stored account if it exists, the specified account if it's a number
   // or create an account specifically for LN usage.
@@ -65,30 +59,7 @@ export const startDcrlnd = (
     lnAccount = walletAccount;
   }
 
-  if (cliOptions.rpcPresent) {
-    rpcCreds.rpc_user = cliOptions.rpcUser;
-    rpcCreds.rpc_pass = cliOptions.rpcPass;
-    rpcCreds.rpc_cert = cliOptions.rpcCert;
-    rpcCreds.rpc_host = cliOptions.rpcHost;
-    rpcCreds.rpc_port = cliOptions.rpcPort;
-  } else if (credentials) {
-    rpcCreds.rpc_user = credentials.rpc_user;
-    rpcCreds.rpc_cert = credentials.rpc_cert;
-    rpcCreds.rpc_pass = credentials.rpc_pass;
-    rpcCreds.rpc_host = credentials.rpc_host;
-    rpcCreds.rpc_port = credentials.rpc_port;
-  } else if (appData) {
-    rpcCreds.rpc_user = cfg.get("rpc_user");
-    rpcCreds.rpc_pass = cfg.get("rpc_pass");
-    rpcCreds.rpc_cert = `${appData}/rpc.cert`;
-    rpcCreds.rpc_host = cfg.get("rpc_host");
-    rpcCreds.rpc_port = cfg.get("rpc_port");
-  } else {
-    rpcCreds.rpc_user = cfg.get("rpc_user");
-    rpcCreds.rpc_pass = cfg.get("rpc_pass");
-    rpcCreds.rpc_host = cfg.get("rpc_host");
-    rpcCreds.rpc_port = cfg.get("rpc_port");
-  }
+  const rpcCreds = ipcRenderer.sendSync("get-dcrd-rpc-credentials");
 
   try {
     const res = ipcRenderer.sendSync(
