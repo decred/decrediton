@@ -77,6 +77,7 @@ const fillVoteSummary = (proposal, voteSummary, blockTimestampFromNow) => {
   if (proposal.voteCounts["yes"] / totalVotes > passPercentage / 100) {
     proposal.voteResult = "passed";
   }
+  proposal.totalVotes = totalVotes;
 };
 
 // getProposalEligibleTickets gets the wallet eligible tickets from a specific proposal.

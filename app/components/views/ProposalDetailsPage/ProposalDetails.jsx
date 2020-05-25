@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { classNames, Button, StatusBar } from "pi-ui";
+import { classNames, Button, StatusBar, Tooltip, Text, useTheme } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
 import { InvisibleButton } from "buttons";
 import { PoliteiaLink, VerticalAccordion } from "shared";
@@ -27,6 +27,7 @@ const ProposalDetails = ({
     voteOptions,
     voteCounts,
     version,
+    totalVotes,
     quorumMinimumVotes,
     walletEligibleTickets
   },
@@ -41,7 +42,8 @@ const ProposalDetails = ({
     false
   );
   const { tsDate, hasTickets, isTestnet } = useProposalDetails();
-
+  const { themeName } = useTheme();
+  const isDarkTheme = themeName === "theme-dark";
   return (
     <div>
       <div className={styles.overview}>
@@ -110,6 +112,21 @@ const ProposalDetails = ({
             max={quorumMinimumVotes}
             status={getStatusBarData(voteCounts)}
             showMarker={false}
+            renderStatusInfoComponent={
+              <Tooltip
+                className={classNames(
+                  styles.quorumTooltip,
+                  isDarkTheme && styles.darkQuorumTooltip
+                )}
+                content={`${totalVotes} votes cast, quorum requirement is ${quorumMinimumVotes} votes`}>
+                <Text className={styles.votesReceived} size="small">
+                  {totalVotes}
+                </Text>
+                <Text className={styles.votesQuorum} size="small">
+                  /{`${quorumMinimumVotes} votes`}
+                </Text>
+              </Tooltip>
+            }
           />
         )}
         <div>

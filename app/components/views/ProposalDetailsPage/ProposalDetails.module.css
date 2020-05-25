@@ -181,6 +181,24 @@
   margin-bottom: 15px;
 }
 
+.quorumTooltip {
+  white-space: nowrap;
+  font-size: var(--font-size-small);
+  color: var(--color-gray);
+}
+
+.darkQuorumTooltip {
+  color: var(--text-color);
+}
+
+.votesQuorum {
+  color: var(--text-secondary-color) !important;
+}
+
+.votesReceived {
+  color: var(--tab-text-active-color) !important;
+}
+
 .voteOption {
   margin-bottom: 10px;
 }
