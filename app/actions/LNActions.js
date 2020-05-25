@@ -551,8 +551,9 @@ const createPaymentStream = () => (dispatch, getState) => {
     // was completed or errored.
     const outPayments = getState().ln.outstandingPayments;
     const rhashHex = Buffer.from(pay.paymentHash, "base64").toString("hex");
-    if (outPayments[rhashHex]) {
-      const { resolve, reject } = outPayments[rhashHex];
+    const prevOutPayment = outPayments[rhashHex];
+    if (prevOutPayment) {
+      const { resolve, reject } = prevOutPayment;
       if (pay.paymentError) {
         reject(new Error(pay.paymentError));
       } else {
@@ -564,6 +565,7 @@ const createPaymentStream = () => (dispatch, getState) => {
       dispatch({
         error: pay.paymentError,
         rhashHex,
+        payData: { paymentError: pay.paymentError, ...prevOutPayment },
         type: LNWALLET_SENDPAYMENT_FAILED
       });
     } else {

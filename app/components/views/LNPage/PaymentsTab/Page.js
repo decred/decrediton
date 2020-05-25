@@ -48,6 +48,30 @@ const OutstandingPayment = ({ payment, tsDate }) => (
   </div>
 );
 
+const FailedPayment = ({ payment, paymentError, tsDate }) => (
+  <div className="ln-payment failed">
+    <div>
+      <div className="value">
+        <Balance amount={payment.numAtoms} />
+      </div>
+    </div>
+    <div>
+      <div>
+        <T
+          id="ln.paymentsTab.failed.creationDate"
+          m="{creationDate, date, medium} {creationDate, time, short}"
+          values={{ creationDate: tsDate(payment.timestamp) }}
+        />
+      </div>
+      <div className="rhash">{payment.paymentHash}</div>
+    </div>
+    <div></div>
+    <div class="payment-error">{paymentError}</div>
+  </div>
+);
+
+
+
 const EmptyDescription = () => (
   <div className="empty-description">
     <T id="ln.paymentsTab.emptyDescr" m="(empty description)" />
@@ -117,6 +141,7 @@ const DecodedPayRequest = ({
 export default ({
   payments,
   outstandingPayments,
+  failedPayments,
   tsDate,
   payRequest,
   decodedPayRequest,
@@ -167,6 +192,23 @@ export default ({
         <OutstandingPayment
           payment={outstandingPayments[ph].decoded}
           key={"outstanding-" + ph}
+          tsDate={tsDate}
+        />
+      ))}
+    </div>
+
+    {failedPayments.length > 0 ? (
+      <h2 className="ln-payments-subheader">
+        <T id="ln.paymentsTag.failed" m="Failed Payments" />
+      </h2>
+    ) : null}
+
+    <div className="ln-payments-list">
+      {failedPayments.map(p => (
+        <FailedPayment
+          payment={p.decoded}
+          paymentError={p.paymentError}
+          key={"failed-"+p.decoded.paymentHash}
           tsDate={tsDate}
         />
       ))}

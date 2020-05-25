@@ -159,7 +159,8 @@ export default function ln(state = {}, action) {
         outstandingPayments: delOutstandingPayment(
           state.outstandingPayments,
           action.rhashHex
-        )
+        ),
+        failedPayments: [ ...state.failedPayments, action.payData ]
       };
     case LNWALLET_DCRLND_STOPPED:
       return {
@@ -173,6 +174,7 @@ export default function ln(state = {}, action) {
         payStream: null,
         payments: [],
         outstandingPayments: {},
+        failedPayments: [],
         invoices: [],
         info: {
           version: null,

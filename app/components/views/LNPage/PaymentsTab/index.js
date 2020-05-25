@@ -94,7 +94,7 @@ class PaymentsTab extends React.Component {
   }
 
   render() {
-    const { payments, outstandingPayments, tsDate } = this.props;
+    const { payments, outstandingPayments, failedPayments, tsDate } = this.props;
     const {
       payRequest,
       decodedPayRequest,
@@ -109,6 +109,7 @@ class PaymentsTab extends React.Component {
       <Page
         payments={payments}
         outstandingPayments={outstandingPayments}
+        failedPayments={failedPayments}
         tsDate={tsDate}
         payRequest={payRequest}
         decodedPayRequest={decodedPayRequest}
