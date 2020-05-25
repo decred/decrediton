@@ -253,8 +253,8 @@ export const waitForDcrlndSynced = (lnClient) => async () => {
 
   for (let i = 0; i < sleepCount; i++) {
     const info = await ln.getInfo(lnClient);
-    if (info.syncedToChain) {
-      sleep(); // Final sleep to let subsystems catch up.
+    if (info.serverActive) {
+      await sleep(); // Final sleep to let subsystems catch up.
       return;
     }
     await sleep();
