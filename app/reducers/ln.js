@@ -32,10 +32,8 @@ function addOutstandingPayment(oldOut, rhashHex, payData) {
 }
 
 function delOutstandingPayment(oldOut, rhashHex) {
-  console.log("deleting ", rhashHex, oldOut);
   const newOut = { ...oldOut };
   delete newOut[rhashHex];
-  console.log("new out", newOut);
   return newOut;
 }
 

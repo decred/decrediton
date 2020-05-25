@@ -31,10 +31,7 @@ const OutstandingPayment = ({ payment, tsDate }) => (
   <div className="ln-payment outstanding">
     <div>
       <div className="value">
-        <Balance amount={payment.valueAtoms} />
-      </div>
-      <div className="fee">
-        <Balance amount={payment.fee} />
+        <Balance amount={payment.numAtoms} />
       </div>
     </div>
     <div>
