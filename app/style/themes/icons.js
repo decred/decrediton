@@ -79,7 +79,6 @@ const icons = {
   "pending-animation": "url('style/icons/pending_dots.gif')",
   "plus-big-icon": "url('style/icons/plus-big.svg')",
   "plus-small-icon": "url('style/icons/plus-small.svg')",
-  "politeia-loading-icon": "url('style/icons/politeia-loading.gif')",
   "rebroadcast-transaction-icon":
     "url('style/icons/rebroadcastTransaction.svg')",
   "restore-wallet-icon": "url('style/icons/restorewallet.svg')",
