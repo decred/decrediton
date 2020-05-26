@@ -60,7 +60,6 @@ export const RedeemP2PKHSigScriptSize = 1 + 73 + 1 + 33;
 const AtomsPerCoin = 1e8;
 
 // MaxAmount is the maximum transaction amount allowed in atoms.
-// Decred - Changeme for release
 export const MaxAmount = 21e6 * AtomsPerCoin;
 
 // P2PKHPkScriptSize is the size of a transaction output script that

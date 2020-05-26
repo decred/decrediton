@@ -23,7 +23,8 @@ class PurchaseTickets extends React.Component {
       ticketFee: MIN_RELAY_FEE,
       txFee: MIN_RELAY_FEE,
       conf: 0,
-      expiry: 16
+      expiry: 16,
+      account: props.defaultSpendingAccount
     };
   }
 
@@ -115,7 +116,7 @@ class PurchaseTickets extends React.Component {
           ...this.props,
           ...this.state,
           canAffordTickets: this.getCanAffordTickets(),
-          account: this.getAccount(),
+          account: this.state.account,
           ...substruct(
             {
               onToggleShowAdvanced: null,
@@ -159,20 +160,11 @@ class PurchaseTickets extends React.Component {
       : null;
   }
 
-  getAccount() {
-    const account = this.props.onChangeAccount
-      ? this.props.account
-      : this.state.account;
-    return (
-      account &&
-      this.props.spendingAccounts.find(compose(eq(account.value), get("value")))
-    );
-  }
 
   getCanAffordTickets() {
     return (
-      this.getAccount() &&
-      this.getAccount().spendable >
+      this.state.account &&
+      this.state.account.spendable >
         this.props.ticketPrice * this.state.numTicketsToBuy
     );
   }
@@ -230,8 +222,8 @@ class PurchaseTickets extends React.Component {
     onPurchaseTickets &&
       onPurchaseTickets(
         privpass,
-        this.getAccount().value,
-        this.getAccount().spendable,
+        this.state.account.value,
+        this.state.account.spendable,
         this.state.conf,
         this.state.numTicketsToBuy,
         this.state.expiry,

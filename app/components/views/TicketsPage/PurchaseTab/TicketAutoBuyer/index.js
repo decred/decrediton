@@ -22,7 +22,7 @@ class TicketAutoBuyer extends React.Component {
         : this.props.stakePool,
       account: this.props.ticketBuyerSettings
         ? this.props.ticketBuyerSettings.account
-        : this.props.account,
+        : this.props.defaultSpendingAccount,
       balanceToMaintain: this.props.ticketBuyerSettings
         ? this.props.ticketBuyerSettings.balanceToMaintain
         : 0

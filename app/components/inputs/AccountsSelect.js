@@ -59,8 +59,12 @@ class AccountsSelect extends React.Component {
       spending: nextProps.spendingAccounts,
       visible: nextProps.visibleAccounts
     };
+    // If we have a mixed account, we show visible accounts as default instead
+    // of spending, because our mixed account can be empty, but still desired
+    // to be spent.
+    const type = this.props.mixedAccount ? "visible" : "spending";
     let filteredAccounts =
-      accountsPerType[this.props.accountsType || "spending"];
+      accountsPerType[this.props.accountsType || type];
     // filterAccounts remove accounts if needed. This is usefull to remove accounts
     // which are not supposed to be shown, for example, mixed accounts in privacy wallets
     if (Array.isArray(filterAccounts)) {
