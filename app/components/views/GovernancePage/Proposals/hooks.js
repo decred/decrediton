@@ -96,9 +96,7 @@ export function useProposalsList(tab) {
     }
   }, [proposals, previous, send, tab]);
 
-  const loadMore = useCallback(() => {
-    send("FETCH");
-  }, [send]);
+  const loadMore = useCallback(() => send("FETCH"), [send]);
 
   return { noMoreProposals, state, proposals, loadMore };
 }
