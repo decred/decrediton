@@ -1,6 +1,9 @@
 .loadingPage {
   width: 100%;
   text-align: center;
+  position: fixed;
+  top: 30px;
+  left: 30px;
 }
 
 .proposalList {

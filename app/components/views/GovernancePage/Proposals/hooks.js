@@ -1,4 +1,4 @@
-import { useState, useEffect, useReducer, useCallback } from "react";
+import { useState, useEffect, useReducer, useCallback, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchMachine } from "stateMachines/FetchStateMachine";
 import { useMachine } from "@xstate/react";
@@ -49,6 +49,7 @@ export function useProposalsList(tab) {
   const [noMoreProposals, setNoMore] = useState(false);
   const proposals = useSelector(sel.proposals);
   const inventory = useSelector(sel.inventory);
+  const messagesEndRef = useRef(null);
   const dispatch = useDispatch();
   const getProposalsAndUpdateVoteStatus = (proposalBatch) =>
     dispatch(gov.getProposalsAndUpdateVoteStatus(proposalBatch));
@@ -85,6 +86,7 @@ export function useProposalsList(tab) {
     }
   });
   const previous = usePrevious({ proposals, tab });
+
   useEffect(() => {
     if (!previous || !previous.proposals || !previous.proposals[tab]) return;
     if (previous.tab !== tab) return;
@@ -96,9 +98,11 @@ export function useProposalsList(tab) {
     }
   }, [proposals, previous, send, tab]);
 
-  const loadMore = useCallback(() => send("FETCH"), [send]);
+  const loadMore = useCallback(() => {
+    send("FETCH");
+  }, [send]);
 
-  return { noMoreProposals, state, proposals, loadMore };
+  return { noMoreProposals, state, proposals, loadMore, messagesEndRef };
 }
 
 const onLoadMoreProposals = async (
