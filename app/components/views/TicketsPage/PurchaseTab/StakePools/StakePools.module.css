@@ -48,6 +48,7 @@
   width: 270px;
   height: 35px;
   box-sizing: border-box;
+  text-align: center;
 }
 
 .txDetailsRaw {
@@ -111,14 +112,14 @@
 }
 
 .close {
-  width: 10px;
-  height: 10px;
+  width: 17px;
+  height: 17px;
   background-color: transparent;
-  background-image: var(--x-grey);
-  background-size: 10px 10px;
+  background-image: var(--delete-vsp);
+  background-size: 17px 17px;
   cursor: pointer;
   right: 20px;
-  top: 20px;
+  top: 21px;
   background-repeat: no-repeat;
   position: absolute;
 }

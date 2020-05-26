@@ -11,7 +11,7 @@ const StakePoolsList = ({
   onRemoveStakePool,
   rescanRequest,
   toggleBackupModal,
-  showModal,
+  showModal
 }) => (
   <>
     <div className={styles.configuredVSPs}>
@@ -46,7 +46,7 @@ const StakePoolsList = ({
                               values={{ value: PoolFees }}
                             />
                           </span>
-                        ),
+                        )
                       }}
                     />
                   </div>
@@ -59,7 +59,7 @@ const StakePoolsList = ({
                           <div className={styles.txDetails}>
                             {TicketAddress}
                           </div>
-                        ),
+                        )
                       }}
                     />
                     <T
@@ -75,7 +75,7 @@ const StakePoolsList = ({
                             />
                             <div className={styles.txDetailsRawShadow} />
                           </div>
-                        ),
+                        )
                       }}
                     />
                   </div>
@@ -100,15 +100,13 @@ const StakePoolsList = ({
     <div className={styles.buttonContainer}>
       <InvisibleButton
         className={styles.cancelVSP}
-        onClick={onHideStakePoolConfig}
-      >
+        onClick={onHideStakePoolConfig}>
         <T id="stakepools.list.form.cancel" m="Cancel" />
       </InvisibleButton>
       <KeyBlueButton
         className={styles.addVSP}
         disabled={rescanRequest}
-        onClick={onShowAddStakePool}
-      >
+        onClick={onShowAddStakePool}>
         <T id="stakepools.list.form.submit" m="Add VSP" />
       </KeyBlueButton>
     </div>
@@ -119,7 +117,7 @@ StakePoolsList.propTypes = {
   configuredStakePools: PropTypes.array.isRequired,
   unconfiguredStakePools: PropTypes.array.isRequired,
   onShowAddStakePool: PropTypes.func.isRequired,
-  onHideStakePoolConfig: PropTypes.func.isRequired,
+  onHideStakePoolConfig: PropTypes.func.isRequired
 };
 
 export default StakePoolsList;
