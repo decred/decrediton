@@ -85,7 +85,6 @@ export function useProposalsList(tab) {
     }
   });
   const previous = usePrevious({ proposals, tab });
-
   useEffect(() => {
     if (!previous || !previous.proposals || !previous.proposals[tab]) return;
     if (previous.tab !== tab) return;
