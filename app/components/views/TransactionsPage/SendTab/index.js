@@ -174,7 +174,9 @@ class Send extends React.Component {
       onShowSendAll,
       onHideSendAll
     } = this;
-    const filterAccounts = this.props.notMixedAccounts;
+    // if sending to another accounts from same wallet, there is no need to
+    // filter accounts.
+    const filterAccounts = isSendSelf ? [] : this.props.notMixedAccounts;
     const accountsType = filterAccounts ? "visible" : "spending";
     return outputs.map((output, index) => ({
       data: (
