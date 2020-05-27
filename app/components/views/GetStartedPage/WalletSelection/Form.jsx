@@ -26,7 +26,8 @@ const CreateRestoreButtons = ({ showCreateWalletForm }) => (
   </>
 );
 
-const WalletTypeLabel = ({ isWatchingOnly, finished, isTrezor }) => {
+const WalletTypeLabel = ({ isWatchingOnly, finished, isTrezor, isPrivacy }) => {
+  if (isPrivacy) return <T id="walletselection.privacy" m="Privacy" />;
   if (isTrezor) return <T id="walletselection.trezor" m="Trezor" />;
   if (isWatchingOnly)
     return <T id="walletselection.watchOnly" m="Watch Only" />;
@@ -113,6 +114,7 @@ const WalletSelectionForm = ({
                   isWatchingOnly={wallet.isWatchingOnly}
                   isTrezor={wallet.value.isTrezor}
                   finished={wallet.finished}
+                  isPrivacy={wallet.value.isPrivacy}
                 />
               </div>
               <div

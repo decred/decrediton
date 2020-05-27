@@ -22,8 +22,9 @@ const logger = createLogger();
 let watchingOnlyWallet;
 let dcrdIsRemote;
 
+// getAvailableWallets attempts to find all currently available wallet.db's
+// in the respective network direction in each wallets data dir.
 export const getAvailableWallets = (network) => {
-  // Attempt to find all currently available wallet.db's in the respective network direction in each wallets data dir
   const availableWallets = [];
   const isTestNet = network !== MAINNET;
 
@@ -37,6 +38,7 @@ export const getAvailableWallets = (network) => {
     const lastAccess = cfg.get("lastaccess");
     const watchingOnly = cfg.get("iswatchonly");
     const isTrezor = cfg.get("trezor");
+    const isPrivacy = cfg.get("mixedaccount");
     const walletDbFilePath = getWalletDb(isTestNet, wallet);
     const finished = fs.pathExistsSync(walletDbFilePath);
     availableWallets.push({
@@ -45,7 +47,8 @@ export const getAvailableWallets = (network) => {
       finished,
       lastAccess,
       watchingOnly,
-      isTrezor
+      isTrezor,
+      isPrivacy
     });
   });
 
