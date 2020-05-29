@@ -67,7 +67,7 @@ const fillVoteSummary = (proposal, voteSummary, blockTimestampFromNow) => {
   const passPercentage = voteSummary.passpercentage
     ? voteSummary.passpercentage
     : 60;
-  proposal.quorumMinimumVotes = eligibleVotes * (quorum / 100);
+  proposal.quorumMinimumVotes = Math.round(eligibleVotes * (quorum / 100));
   proposal.voteStatus = voteSummary.status;
 
   if (totalVotes > proposal.quorumMinimumVotes) {
@@ -77,6 +77,7 @@ const fillVoteSummary = (proposal, voteSummary, blockTimestampFromNow) => {
   if (proposal.voteCounts["yes"] / totalVotes > passPercentage / 100) {
     proposal.voteResult = "passed";
   }
+  proposal.totalVotes = totalVotes;
 };
 
 // getProposalEligibleTickets gets the wallet eligible tickets from a specific proposal.
