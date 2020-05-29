@@ -309,7 +309,7 @@ export const startRpcRequestFunc = (privPass, isRetry) => (
                 type: STARTRPC_RETRY
               });
               setTimeout(
-                () => dispatch(startRpcRequestFunc(isRetry, privPass)),
+                () => dispatch(startRpcRequestFunc(privPass, isRetry)),
                 RPC_RETRY_DELAY
               );
             } else {
@@ -328,7 +328,7 @@ export const startRpcRequestFunc = (privPass, isRetry) => (
             dispatch({ error: status, type: SYNC_FAILED });
             reject(status);
           } else {
-            dispatch(startRpcRequestFunc(true, privPass));
+            dispatch(startRpcRequestFunc(privPass, true));
           }
         }
       });

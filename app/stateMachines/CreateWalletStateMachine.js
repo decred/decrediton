@@ -1,16 +1,10 @@
-import { Machine, assign } from "xstate";
+import { Machine, assign, sendParent } from "xstate";
 
 // Hierarchical state machine called inside getStartedStateMachine.
+// This is done this way so we can exchange passPhrase between them without
+// the need of dispatching it to other place.
 // source: https://github.com/davidkpiano/xstate#hierarchical-nested-state-machines
-export const CreateWalletMachine = ({
-  cancelCreateWallet,
-  backToCredentials,
-  generateSeed,
-  sendEvent,
-  checkIsValid,
-  onCreateWatchOnly
-}) =>
-  Machine(
+export const CreateWalletMachine = Machine(
     {
       id: "getStarted",
       initial: "createWallet",
@@ -56,7 +50,9 @@ export const CreateWalletMachine = ({
           on: {
             CONTINUE: "creatingWallet",
             ERROR: "createWallet",
-            BACK: "finished",
+            BACK: {
+              actions: sendParent({ type: "BACK" })
+            },
             VALIDATE_DATA: {
               target: "writeSeed",
               // assign new context value to each one;
@@ -128,59 +124,24 @@ export const CreateWalletMachine = ({
         creatingWallet: {
           onEntry: "isAtCreatingWallet",
           on: {
-            CONTINUE: "walletCreated"
+            CONTINUE: {
+              target: "walletCreated",
+              actions: [
+                assign({ completed: true }),
+                sendParent(ctx => (console.log('sending to parent'), { type: "WALLET_CREATED", passPhrase: ctx.passPhrase }))
+              ]
+            }
           }
         },
         walletCreated: {
           type: "final",
-          onEntry: "isAtWalletCreated"
+          onEntry: "isAtWalletCreated",
         },
         finished: {
+          
           type: "final",
           onEntry: "isAtFinished"
         }
       }
-    },
-    {
-      actions: {
-        isAtCreateWallet: () => {
-          console.log("is at create wallet");
-        },
-        isAtNewWallet: (context, event) => {
-          // We only generate the seed once. If mnemonic already exists, we return it.
-          if (context.mnemonic) return;
-          generateSeed().then((response) => {
-            // Allows verification skip in dev
-            context.seed = event.isTestNet ? response.getSeedBytes() : null;
-            const mnemonic = response.getSeedMnemonic();
-            context.mnemonic = mnemonic;
-            sendEvent({ type: "GENERATED" });
-          });
-        },
-        isAtConfirmSeed: () => {
-          checkIsValid();
-        },
-        isAtWriteSeed: () => {
-          checkIsValid();
-        },
-        isAtRestoreWatchingOnly: () => {
-          console.log("is at restoring watching only");
-          onCreateWatchOnly();
-        },
-        isAtRestoreTrezor: () => {
-          console.log("is at restoring trezor");
-          onCreateWatchOnly();
-        },
-        isAtFinished: async () => {
-          await cancelCreateWallet();
-          backToCredentials();
-        },
-        isAtCreatingWallet: () => {
-          console.log("creating wallet");
-        },
-        isAtWalletCreated: () => {
-          backToCredentials();
-        }
-      }
     }
-  );
+);
