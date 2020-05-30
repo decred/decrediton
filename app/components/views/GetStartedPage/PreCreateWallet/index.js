@@ -147,7 +147,7 @@ class PreCreateWallet extends React.Component {
           this.props
             .onCreateWallet(walletSelected)
             .then(() =>
-              this.props.onShowCreateWallet({ isNew, walletMasterPubKey })
+              this.props.onShowCreateWallet({ isNew, walletMasterPubKey, isTrezor: true })
             )
         );
     }

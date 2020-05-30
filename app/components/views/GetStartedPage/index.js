@@ -388,11 +388,12 @@ class GetStarted extends React.Component {
     return this.service.send({ type: "CREATE_WALLET", isNew });
   }
 
-  onShowCreateWallet({ isNew, walletMasterPubKey }) {
+  onShowCreateWallet({ isNew, walletMasterPubKey, isTrezor }) {
     return this.service.send({
       type: "SHOW_CREATE_WALLET",
       isNew,
-      walletMasterPubKey
+      walletMasterPubKey,
+      isTrezor
     });
   }
 

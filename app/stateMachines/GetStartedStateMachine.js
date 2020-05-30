@@ -266,7 +266,8 @@ export const getStartedMachine = ({
                     spawnedMachine = spawn(
                       CreateWalletMachine.withContext({
                         isNew: e.isNew,
-                        walletMasterPubKey: e.walletMasterPubKey
+                        walletMasterPubKey: e.walletMasterPubKey,
+                        isTrezor: e.isTrezor
                       })
                     );
                   } catch (e) {
@@ -282,11 +283,7 @@ export const getStartedMachine = ({
             WALLET_CREATED: {
               target: "startMachine.preStart",
               actions: assign({
-                passPhrase: (context, event) => {
-                  console.log(context);
-                  console.log(event);
-                  return event.passPhrase;
-                }
+                passPhrase: (context, event) => event.passPhrase
               })
             },
             ERROR: {
