@@ -28,7 +28,7 @@ const mapDispatchToProps = (dispatch) =>
       decodeSeed: wla.decodeSeed,
       trezorEnable: trza.enableTrezor,
       trezorDisable: trza.disableTrezor,
-      trezorAlertNoConnectedDevice: trza.alertNoConnectedDevice,
+      trezorAlertNoConnectedDevice: trza.alertNoConnectedDevice
     },
     dispatch
   );

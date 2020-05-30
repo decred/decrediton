@@ -22,7 +22,7 @@ import {
   SIGNTX_SUCCESS,
   SIGNMESSAGE_ATTEMPT,
   SIGNMESSAGE_FAILED,
-  SIGNMESSAGE_SUCCESS,
+  SIGNMESSAGE_SUCCESS
 } from "./ControlActions";
 
 const hardeningConstant = 0x80000000;
@@ -115,7 +115,6 @@ export const loadDeviceList = () => (dispatch, getState) => {
     const opts = { debug, debugInfo: debug, config, transport };
     const devList = new trezorjs.DeviceList(opts);
     let resolvedTransport = false;
-    console.log(transport)
 
     devList.on("transport", (t) => {
       debug && console.log("transport", t);

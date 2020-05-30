@@ -220,8 +220,7 @@ class GetStarted extends React.Component {
       onSendError,
       onSendContinue,
       onShowReleaseNotes,
-      onShowCreateWallet,
-      sendEvent
+      onShowCreateWallet
     } = this;
     const { machine } = service;
     const { isTestNet } = this.props;

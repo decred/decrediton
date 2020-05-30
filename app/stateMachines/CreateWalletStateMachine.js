@@ -41,7 +41,7 @@ export const CreateWalletMachine = Machine(
         // generateNewSeed is the state responsible to generate a new seed.
         generateNewSeed: {
           on: {
-            CONTINUE: "loading",
+            CONTINUE: "loading"
           }
         },
         // newWallet is the state responsible for showing the new wallet seed
@@ -57,8 +57,8 @@ export const CreateWalletMachine = Machine(
               actions: [
                 assign({
                   mnemonic: (context, event) => {
-                    console.log(event)
-                    return event.mnemonic
+                    console.log(event);
+                    return event.mnemonic;
                   }
                 })
               ]
@@ -152,23 +152,23 @@ export const CreateWalletMachine = Machine(
               target: "walletCreated",
               actions: [
                 assign({ completed: true }),
-                sendParent((ctx, event) => (console.log('sending to parent'), { type: event.type, passPhrase: ctx.passPhrase }))
+                sendParent((ctx, event) => (console.log("sending to parent"), { type: event.type, passPhrase: ctx.passPhrase }))
               ]
             },
             SEED_GENERATED: {
               target: "newWallet",
               actions: [
                 assign({
-                mnemonic: (ctx, { payload: { mnemonic }}) => mnemonic,
-                  seed: (ctx, { payload: { seed }}) => seed
+                mnemonic: (ctx, { payload: { mnemonic } }) => mnemonic,
+                  seed: (ctx, { payload: { seed } }) => seed
                 })
               ]
-            },
+            }
           }
         },
         walletCreated: {
           type: "final",
-          onEntry: "isAtWalletCreated",
+          onEntry: "isAtWalletCreated"
         },
         finished: {
           type: "final",

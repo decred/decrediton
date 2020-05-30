@@ -263,11 +263,11 @@ export const getStartedMachine = ({
 
                   // source: https://xstate.js.org/docs/guides/actors.html#spawning-machines
                   try {
-                    spawnedMachine = spawn(CreateWalletMachine.withContext({ isNew: e.isNew, walletMasterPubKey: e.walletMasterPubKey }))
+                    spawnedMachine = spawn(CreateWalletMachine.withContext({ isNew: e.isNew, walletMasterPubKey: e.walletMasterPubKey }));
                   } catch (e) {
-                    console.log(e)
+                    console.log(e);
                   }
-                  return spawnedMachine
+                  return spawnedMachine;
                 }
               })
             }
@@ -278,9 +278,9 @@ export const getStartedMachine = ({
               target: "startMachine.preStart",
               actions: assign({
                 passPhrase: (context, event) => {
-                  console.log(context)
-                  console.log(event)
-                  return event.passPhrase
+                  console.log(context);
+                  console.log(event);
+                  return event.passPhrase;
                 }
               })
             },
