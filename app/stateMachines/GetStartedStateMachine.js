@@ -263,7 +263,7 @@ export const getStartedMachine = ({
 
                   // source: https://xstate.js.org/docs/guides/actors.html#spawning-machines
                   try {
-                    spawnedMachine = spawn(CreateWalletMachine.withContext({ isNew: e.isNew }))
+                    spawnedMachine = spawn(CreateWalletMachine.withContext({ isNew: e.isNew, walletMasterPubKey: e.walletMasterPubKey }))
                   } catch (e) {
                     console.log(e)
                   }

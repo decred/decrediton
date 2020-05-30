@@ -13,7 +13,8 @@ export const CreateWalletMachine = Machine(
         isNew: null,
         mnemonic: "",
         seed: "",
-        passPhrase: ""
+        passPhrase: "",
+        walletMasterPubKey: ""
       },
       states: {
         createWalletInit: {

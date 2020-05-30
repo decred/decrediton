@@ -145,13 +145,13 @@ class PreCreateWallet extends React.Component {
         .then(() =>
           this.props
             .onCreateWallet(walletSelected)
-            .then(() => this.props.onShowCreateWallet(isCreateNewWallet))
+            .then(() => this.props.onShowCreateWallet({ isCreateNewWallet }))
         );
     }
 
     return this.props
       .onCreateWallet(walletSelected)
-      .then(() => this.props.onShowCreateWallet(isCreateNewWallet))
+      .then(() => this.props.onShowCreateWallet({ isCreateNewWallet, walletMasterPubKey }))
       .catch((error) => this.props.onSendError(error));
   }
 

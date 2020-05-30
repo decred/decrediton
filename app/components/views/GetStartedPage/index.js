@@ -385,8 +385,8 @@ class GetStarted extends React.Component {
     return this.service.send({ type: "CREATE_WALLET", isNew });
   }
 
-  onShowCreateWallet(isNew) {
-    return this.service.send({ type: "SHOW_CREATE_WALLET", isNew });
+  onShowCreateWallet({ isNew, walletMasterPubKey }) {
+    return this.service.send({ type: "SHOW_CREATE_WALLET", isNew, walletMasterPubKey });
   }
 
   onSendContinue() {

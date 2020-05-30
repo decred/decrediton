@@ -17,15 +17,6 @@ import * as wla from "actions/WalletLoaderActions";
 import * as sel from "selectors";
 import {sendParent} from "xstate"
 
-  // onCreateWatchOnly() {
-  //   const { createWatchOnlyWalletRequest, walletMasterPubKey } = this.props;
-  //   createWatchOnlyWalletRequest(walletMasterPubKey)
-  //     .then(() => this.sendContinue())
-  //     .catch((error) => this.sendEvent({ type: "ERROR", error }));
-  //   // we send a continue so we go to creatingWallet state
-  //   this.sendContinue();
-  // }
-
 const CreateWallet = ({ createWalletRef, ...props }) => {
   // const isCreatingWatchingOnly = useSelector(sel.isWatchingOnly);
   // const walletMasterPubKey = useSelector(sel.walletMasterPubKey);
@@ -38,12 +29,17 @@ const CreateWallet = ({ createWalletRef, ...props }) => {
   const decodeSeed = (seed) => dispatch(wla.decodeSeed(seed));
   const cancelCreateWallet = () => dispatch(wla.cancelCreateWallet());
   const generateSeed = () => dispatch(wla.generateSeed());
-  const createWalletRequest = (pubpass, passPhrase, seed, isNew) => dispatch(wla.createWalletRequest(pubpass, passPhrase, seed, isNew));
+  // TODO implement pubpass
+  const createWatchOnlyWalletRequest = (extendedPubKey, pubPass = "") =>
+    dispatch(wla.createWatchOnlyWalletRequest(extendedPubKey, pubPass));
+  const createWalletRequest = (pubpass, passPhrase, seed, isNew) =>
+    dispatch(wla.createWalletRequest(pubpass, passPhrase, seed, isNew));
   const isTestNet = useSelector(sel.isTestNet);
   const [current, send] = useService(createWalletRef);
   const [StateComponent, setStateComponent] = useState(null);
   const [isValid, setIsValid] = useState(false);
   const [newWallet, setIsNew] = useState(null);
+  const [walletMasterPubKey, setWalletMasterPubkey] = useState(null);
 
   const {
     getDaemonSynced,
@@ -107,6 +103,14 @@ const CreateWallet = ({ createWalletRef, ...props }) => {
     sendContinue();
   }
 
+  const onCreateWatchOnly = () => {
+    createWatchOnlyWalletRequest(walletMasterPubKey)
+      .then(() => sendEvent({ type: "WALLET_CREATED" }))
+      .catch((error) => sendEvent({ type: "ERROR", error }));
+    // we send a continue so we go to loading state
+    sendContinue();
+  }
+
   const getStateComponent = () => {
     const { mnemonic, error } = current.context;
     let component, text;
@@ -141,6 +145,9 @@ const CreateWallet = ({ createWalletRef, ...props }) => {
           error
         });
         break;
+      case "restoreWatchingOnly":
+        component = h(DecredLoading, { ...props, isCreatingWallet: true });
+        break;
       case "loading": {
         component = h(DecredLoading, { ...props, isCreatingWallet: true });
         break;
@@ -155,14 +162,15 @@ const CreateWallet = ({ createWalletRef, ...props }) => {
   }
 
   useEffect(() => {
-    const { isNew, passPhrase, mnemonic } = current.context;
+    const { isNew, walletMasterPubKey, passPhrase, mnemonic } = current.context;
     switch (current.value) {
       case "createWalletInit":
-        setIsNew(isNew)
+        setIsNew(isNew);
+        setWalletMasterPubkey(walletMasterPubKey);
         console.log(current.context)
         const { isTrezor, isCreatingWatchingOnly } = props;
         send({ type: "CREATE_WALLET", isNew });
-        send({ type: "RESTORE_WATCHING_ONLY_WALLET", isWatchingOnly: isCreatingWatchingOnly });
+        send({ type: "RESTORE_WATCHING_ONLY_WALLET", isWatchingOnly: !!walletMasterPubKey });
         send({ type: "RESTORE_TREZOR_WALLET", isTrezor });
         send({
           type: "RESTORE_WALLET",
@@ -186,6 +194,9 @@ const CreateWallet = ({ createWalletRef, ...props }) => {
         break;
       case "confirmSeed":
         checkIsValid();
+        break;
+      case "restoreWatchingOnly":
+        onCreateWatchOnly();
         break;
       case "finished":
         break;
