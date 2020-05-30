@@ -7,9 +7,8 @@ import { Tooltip } from "shared";
 import "style/CreateWalletForm.less";
 
 const CreateWallet = ({
-  handleCopySeed,
   showCopySeedConfirm,
-  onCancelCopySeedConfirm,
+  toggleCopySeed,
   onSubmitCopySeedConfirm,
   mnemonic,
   sendBack,
@@ -39,7 +38,7 @@ const CreateWallet = ({
           </div>
         );
       })}
-      <div className="copy" onClick={handleCopySeed}>
+      <div className="copy" onClick={() => toggleCopySeed(true)}>
         <T id="createWallet.copy" m="Copy seed words to clipboard" />
       </div>
     </div>
@@ -54,7 +53,7 @@ const CreateWallet = ({
     <SeedCopyConfirmModal
       show={showCopySeedConfirm}
       onSubmit={onSubmitCopySeedConfirm}
-      onCancelModal={onCancelCopySeedConfirm}
+      onCancelModal={() => toggleCopySeed(false)}
     />
   </>
 );

@@ -5,7 +5,6 @@ import { withRouter } from "react-router";
 import CopySeed from "./CopySeed";
 import ConfirmSeed from "./ConfirmSeed";
 import ExistingSeed from "./ExistingSeed";
-import { createWallet } from "connectors";
 import { createElement as h } from "react";
 import { DecredLoading } from "indicators";
 import { useState, useEffect, useCallback } from "react";
@@ -16,13 +15,6 @@ import * as sel from "selectors";
 import { sendParent } from "xstate";
 
 const CreateWallet = ({ createWalletRef }) => {
-  // const isCreatingWatchingOnly = useSelector(sel.isWatchingOnly);
-  // const walletMasterPubKey = useSelector(sel.walletMasterPubKey);
-  // const maxWalletCount= useSelector(sel.maxWalletCount);
-  // const trezorDeviceList = useSelector(sel.trezorDeviceList);
-  // const trezorDevice = useSelector(sel.trezorDevice);
-  // const isTrezor = useSelector(sel.isTrezor);
-
   const dispatch = useDispatch();
   const decodeSeed = useCallback((seed) => dispatch(wla.decodeSeed(seed)), [
     dispatch
@@ -263,4 +255,4 @@ const CreateWallet = ({ createWalletRef }) => {
   return <Page {...{ StateComponent }} />;
 };
 
-export default injectIntl(withRouter(createWallet(CreateWallet)));
+export default injectIntl(withRouter(CreateWallet));
