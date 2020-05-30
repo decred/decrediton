@@ -162,10 +162,10 @@ export const CreateWalletMachine = Machine({
       }
     },
     walletCreated: {
-      type: "final",
+      type: "final"
     },
     finished: {
-      type: "final",
+      type: "final"
     }
   }
 });
