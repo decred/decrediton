@@ -945,8 +945,6 @@ export const validateAddressSuccess = compose(
   validateAddressResponse
 );
 
-export const walletMasterPubKey = get(["control", "masterPubKey"]);
-
 const getStakeInfoResponse = get(["grpc", "getStakeInfoResponse"]);
 
 export const ticketPoolSize = compose(
@@ -1133,11 +1131,6 @@ export const isPurchasingTickets = bool(purchaseTicketsRequestAttempt);
 export const isImportingScript = bool(importScriptRequestAttempt);
 
 export const newUnminedMessage = get(["notifications", "newUnminedMessage"]);
-
-export const createWalletExisting = get([
-  "walletLoader",
-  "createWalletExisting"
-]);
 
 export const lastBlockTimestamp = get(["grpc", "recentBlockTimestamp"]);
 

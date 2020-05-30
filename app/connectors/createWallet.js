@@ -8,10 +8,8 @@ import * as ca from "actions/ClientActions";
 import * as trza from "actions/TrezorActions";
 
 const mapStateToProps = selectorMap({
-  createWalletExisting: sel.createWalletExisting,
   isTestNet: sel.isTestNet,
   isCreatingWatchingOnly: sel.isWatchingOnly,
-  walletMasterPubKey: sel.walletMasterPubKey,
   maxWalletCount: sel.maxWalletCount,
   trezorDeviceList: sel.trezorDeviceList,
   trezorDevice: sel.trezorDevice,
