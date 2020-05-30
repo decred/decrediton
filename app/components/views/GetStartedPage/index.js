@@ -224,7 +224,11 @@ class GetStarted extends React.Component {
     } = this;
     const { machine } = service;
     const { isTestNet } = this.props;
-    const { isCreateNewWallet, isSPV, createWalletRef } = this.service._state.context;
+    const {
+      isCreateNewWallet,
+      isSPV,
+      createWalletRef
+    } = this.service._state.context;
     const error = this.getError();
     let component, text, animationType, PageComponent;
 
@@ -385,7 +389,11 @@ class GetStarted extends React.Component {
   }
 
   onShowCreateWallet({ isNew, walletMasterPubKey }) {
-    return this.service.send({ type: "SHOW_CREATE_WALLET", isNew, walletMasterPubKey });
+    return this.service.send({
+      type: "SHOW_CREATE_WALLET",
+      isNew,
+      walletMasterPubKey
+    });
   }
 
   onSendContinue() {

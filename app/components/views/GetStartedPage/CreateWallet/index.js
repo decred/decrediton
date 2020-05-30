@@ -24,14 +24,27 @@ const CreateWallet = ({ createWalletRef }) => {
   // const isTrezor = useSelector(sel.isTrezor);
 
   const dispatch = useDispatch();
-  const decodeSeed = useCallback((seed) => dispatch(wla.decodeSeed(seed)), [dispatch]);
-  const cancelCreateWallet = useCallback(() => dispatch(wla.cancelCreateWallet()), [dispatch]);
-  const generateSeed = useCallback(() => dispatch(wla.generateSeed()), [dispatch]);
+  const decodeSeed = useCallback((seed) => dispatch(wla.decodeSeed(seed)), [
+    dispatch
+  ]);
+  const cancelCreateWallet = useCallback(
+    () => dispatch(wla.cancelCreateWallet()),
+    [dispatch]
+  );
+  const generateSeed = useCallback(() => dispatch(wla.generateSeed()), [
+    dispatch
+  ]);
   // TODO implement pubpass
-  const createWatchOnlyWalletRequest = useCallback((extendedPubKey, pubPass = "") =>
-    dispatch(wla.createWatchOnlyWalletRequest(extendedPubKey, pubPass)), [dispatch]);
-  const createWalletRequest = useCallback((pubpass, passPhrase, seed, isNew) =>
-    dispatch(wla.createWalletRequest(pubpass, passPhrase, seed, isNew)), [dispatch]);
+  const createWatchOnlyWalletRequest = useCallback(
+    (extendedPubKey, pubPass = "") =>
+      dispatch(wla.createWatchOnlyWalletRequest(extendedPubKey, pubPass)),
+    [dispatch]
+  );
+  const createWalletRequest = useCallback(
+    (pubpass, passPhrase, seed, isNew) =>
+      dispatch(wla.createWalletRequest(pubpass, passPhrase, seed, isNew)),
+    [dispatch]
+  );
   const isTestNet = useSelector(sel.isTestNet);
   const [current, send] = useService(createWalletRef);
   const [StateComponent, setStateComponent] = useState(null);
@@ -39,10 +52,13 @@ const CreateWallet = ({ createWalletRef }) => {
   const [newWallet, setIsNew] = useState(null);
   const [walletMasterPubKey, setWalletMasterPubkey] = useState(null);
 
-  const sendEvent = useCallback((data) => {
-    const { type, payload } = data;
-    send({ type, payload });
-  }, [send]);
+  const sendEvent = useCallback(
+    (data) => {
+      const { type, payload } = data;
+      send({ type, payload });
+    },
+    [send]
+  );
 
   const sendContinue = useCallback(() => {
     send({ type: "CONTINUE" });
@@ -57,19 +73,28 @@ const CreateWallet = ({ createWalletRef }) => {
     send({ type: "BACK" });
   }, [send, cancelCreateWallet]);
 
-  const setError = useCallback((error) => {
-    send({ type: "VALIDATE_DATA", error });
-  }, [send]);
+  const setError = useCallback(
+    (error) => {
+      send({ type: "VALIDATE_DATA", error });
+    },
+    [send]
+  );
 
-  const setSeed = useCallback((seed) => {
-    const { passPhrase, error } = current.context;
-    send({ type: "VALIDATE_DATA", seed, passPhrase, error });
-  }, [send, current.context]);
+  const setSeed = useCallback(
+    (seed) => {
+      const { passPhrase, error } = current.context;
+      send({ type: "VALIDATE_DATA", seed, passPhrase, error });
+    },
+    [send, current.context]
+  );
 
-  const setPassPhrase = useCallback((passPhrase) => {
-    const { seed, error } = current.context;
-    send({ type: "VALIDATE_DATA", passPhrase, seed, error });
-  }, [send, current.context]);
+  const setPassPhrase = useCallback(
+    (passPhrase) => {
+      const { seed, error } = current.context;
+      send({ type: "VALIDATE_DATA", passPhrase, seed, error });
+    },
+    [send, current.context]
+  );
 
   const checkIsValid = useCallback(() => {
     const { seed, passPhrase } = current.context;
@@ -92,7 +117,13 @@ const CreateWallet = ({ createWalletRef }) => {
       .catch((error) => sendParent({ type: "ERROR", error }));
     // we send a continue so we go to loading state
     sendContinue();
-  }, [createWalletRequest, current.context, newWallet, sendContinue, sendEvent]);
+  }, [
+    createWalletRequest,
+    current.context,
+    newWallet,
+    sendContinue,
+    sendEvent
+  ]);
 
   const onCreateWatchOnly = useCallback(() => {
     createWatchOnlyWalletRequest(walletMasterPubKey)
@@ -100,7 +131,12 @@ const CreateWallet = ({ createWalletRef }) => {
       .catch((error) => sendEvent({ type: "ERROR", error }));
     // we send a continue so we go to loading state
     sendContinue();
-  }, [createWatchOnlyWalletRequest, sendEvent, sendContinue, walletMasterPubKey]);
+  }, [
+    createWatchOnlyWalletRequest,
+    sendEvent,
+    sendContinue,
+    walletMasterPubKey
+  ]);
 
   const getStateComponent = useCallback(() => {
     const { mnemonic, error } = current.context;
@@ -108,7 +144,11 @@ const CreateWallet = ({ createWalletRef }) => {
 
     switch (current.value) {
       case "newWallet":
-        component = h(CopySeed, { sendBack: cancelWalletCreation, sendContinue, mnemonic });
+        component = h(CopySeed, {
+          sendBack: cancelWalletCreation,
+          sendContinue,
+          mnemonic
+        });
         break;
       case "confirmSeed":
         if (!mnemonic) return;
@@ -151,7 +191,17 @@ const CreateWallet = ({ createWalletRef }) => {
 
     return setStateComponent(component);
   }, [
-    cancelWalletCreation, current.context, current.value, decodeSeed, isValid, onCreateWallet, sendBack, sendContinue, setError, setPassPhrase, setSeed
+    cancelWalletCreation,
+    current.context,
+    current.value,
+    decodeSeed,
+    isValid,
+    onCreateWallet,
+    sendBack,
+    sendContinue,
+    setError,
+    setPassPhrase,
+    setSeed
   ]);
 
   useEffect(() => {
@@ -161,7 +211,10 @@ const CreateWallet = ({ createWalletRef }) => {
         setIsNew(isNew);
         setWalletMasterPubkey(walletMasterPubKey);
         send({ type: "CREATE_WALLET", isNew });
-        send({ type: "RESTORE_WATCHING_ONLY_WALLET", isWatchingOnly: !!walletMasterPubKey });
+        send({
+          type: "RESTORE_WATCHING_ONLY_WALLET",
+          isWatchingOnly: !!walletMasterPubKey
+        });
         send({
           type: "RESTORE_WALLET",
           isRestore: !isNew,
@@ -169,16 +222,16 @@ const CreateWallet = ({ createWalletRef }) => {
         });
         break;
       case "generateNewSeed":
-          // We only generate the seed once. If mnemonic already exists, we return it.
-          if (mnemonic) return;
-          sendContinue();
-          generateSeed().then((response) => {
-            // Allows verification skip in dev
-            const seed = isTestNet ? response.getSeedBytes() : null;
-            const mnemonic = response.getSeedMnemonic();
-            sendEvent({ type: "SEED_GENERATED", payload: { mnemonic, seed } });
-          });
-          break;
+        // We only generate the seed once. If mnemonic already exists, we return it.
+        if (mnemonic) return;
+        sendContinue();
+        generateSeed().then((response) => {
+          // Allows verification skip in dev
+          const seed = isTestNet ? response.getSeedBytes() : null;
+          const mnemonic = response.getSeedMnemonic();
+          sendEvent({ type: "SEED_GENERATED", payload: { mnemonic, seed } });
+        });
+        break;
       case "writeSeed":
         checkIsValid();
         break;
@@ -194,7 +247,18 @@ const CreateWallet = ({ createWalletRef }) => {
         break;
     }
     getStateComponent();
-  }, [current, isValid, checkIsValid, generateSeed, getStateComponent, isTestNet, onCreateWatchOnly, send, sendContinue, sendEvent]);
+  }, [
+    current,
+    isValid,
+    checkIsValid,
+    generateSeed,
+    getStateComponent,
+    isTestNet,
+    onCreateWatchOnly,
+    send,
+    sendContinue,
+    sendEvent
+  ]);
 
   return <Page {...{ StateComponent }} />;
 };

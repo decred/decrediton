@@ -205,17 +205,15 @@ const updateStakePoolVoteChoicesConfig = (stakePool, voteChoices) => (
     agendaId: choice.getAgendaId(),
     choiceId: choice.getChoiceId()
   }));
-  const stakePoolConfigs = config
-    .get("stakepools")
-    .map((config) =>
-      config.Host === stakePool.Host
-        ? {
-            ...config,
-            VoteBits: voteChoices.getVotebits(),
-            VoteChoices: voteChoicesConfig
-          }
-        : config
-    );
+  const stakePoolConfigs = config.get("stakepools").map((config) =>
+    config.Host === stakePool.Host
+      ? {
+          ...config,
+          VoteBits: voteChoices.getVotebits(),
+          VoteChoices: voteChoicesConfig
+        }
+      : config
+  );
   const selectedStakePool = sel.selectedStakePool(getState());
 
   config.set("stakepools", stakePoolConfigs);
