@@ -257,8 +257,17 @@ export const getStartedMachine = ({
             creatingWallet: {
               entry: assign({
                 createWalletRef: (ctx, e) => {
-                  console.log(ctx)
-                  return spawn(CreateWalletMachine.withContext({ isNew: e.isNew }))
+                  let spawnedMachine;
+                  // spawn a new actor machine so we can comunicate with the
+                  // getStartedMachine.
+
+                  // source: https://xstate.js.org/docs/guides/actors.html#spawning-machines
+                  try {
+                    spawnedMachine = spawn(CreateWalletMachine.withContext({ isNew: e.isNew }))
+                  } catch (e) {
+                    console.log(e)
+                  }
+                  return spawnedMachine
                 }
               })
             }

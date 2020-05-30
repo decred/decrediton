@@ -14,6 +14,7 @@ import { useState, useEffect, useRef } from "react";
 import { useService } from "@xstate/react";
 import { useSelector, useDispatch } from "react-redux";
 import * as wla from "actions/WalletLoaderActions";
+import * as sel from "selectors";
 import {sendParent} from "xstate"
 
   // onCreateWatchOnly() {
@@ -36,7 +37,9 @@ const CreateWallet = ({ createWalletRef, ...props }) => {
   const dispatch = useDispatch();
   const decodeSeed = (seed) => dispatch(wla.decodeSeed(seed));
   const cancelCreateWallet = () => dispatch(wla.cancelCreateWallet());
+  const generateSeed = () => dispatch(wla.generateSeed());
   const createWalletRequest = (pubpass, passPhrase, seed, isNew) => dispatch(wla.createWalletRequest(pubpass, passPhrase, seed, isNew));
+  const isTestNet = useSelector(sel.isTestNet);
   const [current, send] = useService(createWalletRef);
   const [StateComponent, setStateComponent] = useState(null);
   const [isValid, setIsValid] = useState(false);
@@ -47,7 +50,6 @@ const CreateWallet = ({ createWalletRef, ...props }) => {
     getCurrentBlockCount,
     getNeededBlocks,
     getEstimatedTimeLeft,
-    isTestNet
   } = props;
 
   const sendEvent = (data) => {
@@ -78,7 +80,6 @@ const CreateWallet = ({ createWalletRef, ...props }) => {
   }
 
   const setPassPhrase = (passPhrase) => {
-    console.log(passPhrase)
     const { seed, error } = current.context;
     send({ type: "VALIDATE_DATA", passPhrase, seed, error });
   }
@@ -100,9 +101,9 @@ const CreateWallet = ({ createWalletRef, ...props }) => {
 
     if (!(seed && passPhrase)) return;
     createWalletRequest(pubpass, passPhrase, seed, newWallet)
-      .then(() => sendContinue())
+      .then(() => sendEvent({ type: "WALLET_CREATED" }))
       .catch((error) => sendParent({ type: "ERROR", error }));
-    // we send a continue so we go to creatingWallet state
+    // we send a continue so we go to loading state
     sendContinue();
   }
 
@@ -115,15 +116,16 @@ const CreateWallet = ({ createWalletRef, ...props }) => {
         component = h(CopySeed, { sendBack: cancelWalletCreation, sendContinue, mnemonic });
         break;
       case "confirmSeed":
+        if (!mnemonic) return;
         component = h(ConfirmSeed, {
-          // mnemonic,
-          // sendBack,
-          // setPassPhrase,
-          // onCreateWallet,
-          // isValid,
-          // decodeSeed,
-          // setSeed,
-          // setError
+          mnemonic,
+          sendBack,
+          setPassPhrase,
+          onCreateWallet,
+          isValid,
+          decodeSeed,
+          setSeed,
+          setError
         });
         break;
       case "writeSeed":
@@ -139,7 +141,7 @@ const CreateWallet = ({ createWalletRef, ...props }) => {
           error
         });
         break;
-      case "creatingWallet": {
+      case "loading": {
         component = h(DecredLoading, { ...props, isCreatingWallet: true });
         break;
       }
@@ -153,9 +155,9 @@ const CreateWallet = ({ createWalletRef, ...props }) => {
   }
 
   useEffect(() => {
-    const { isNew, passPhrase } = current.context;
+    const { isNew, passPhrase, mnemonic } = current.context;
     switch (current.value) {
-      case "createWallet":
+      case "createWalletInit":
         setIsNew(isNew)
         console.log(current.context)
         const { isTrezor, isCreatingWatchingOnly } = props;
@@ -168,7 +170,21 @@ const CreateWallet = ({ createWalletRef, ...props }) => {
           isWatchingOnly: isCreatingWatchingOnly
         });
         break;
+      case "generateNewSeed":
+          // We only generate the seed once. If mnemonic already exists, we return it.
+          if (mnemonic) return;
+          sendContinue();
+          generateSeed().then((response) => {
+            // Allows verification skip in dev
+            const seed = isTestNet ? response.getSeedBytes() : null;
+            const mnemonic = response.getSeedMnemonic();
+            sendEvent({ type: "SEED_GENERATED", payload: { mnemonic, seed } });
+          });
+          break;
       case "writeSeed":
+        checkIsValid();
+        break;
+      case "confirmSeed":
         checkIsValid();
         break;
       case "finished":
