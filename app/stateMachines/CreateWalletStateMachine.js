@@ -17,7 +17,6 @@ export const CreateWalletMachine = Machine({
   },
   states: {
     createWalletInit: {
-      onEntry: "isAtCreateWalletInit",
       on: {
         CREATE_WALLET: {
           target: "generateNewSeed",
@@ -67,7 +66,6 @@ export const CreateWalletMachine = Machine({
     // writeSeed is the state responsible for writing the whole seed when
     // recovering wallet.
     writeSeed: {
-      onEntry: "isAtWriteSeed",
       on: {
         CONTINUE: "loading",
         ERROR: "finished",
@@ -99,7 +97,6 @@ export const CreateWalletMachine = Machine({
     // confirmSeed is the state which will confirm the seed filing the blanks
     // when creating a new wallet.
     confirmSeed: {
-      onEntry: "isAtConfirmSeed",
       on: {
         CONTINUE: "loading",
         ERROR: "newWallet",
@@ -133,29 +130,23 @@ export const CreateWalletMachine = Machine({
       }
     },
     restoreWatchingOnly: {
-      onEntry: "isAtRestoreWatchingOnly",
       on: {
         CONTINUE: "loading"
       }
     },
     restoreTrezor: {
-      onEntry: "isAtRestoreTrezor",
       on: {
         CONTINUE: "loading"
       }
     },
     loading: {
-      onEntry: "isAtCreatingWallet",
       on: {
         WALLET_CREATED: {
           target: "walletCreated",
           actions: [
             assign({ completed: true }),
             sendParent(
-              (ctx, event) => (
-                console.log("sending to parent"),
-                { type: event.type, passPhrase: ctx.passPhrase }
-              )
+              (ctx, event) => ({ type: event.type, passPhrase: ctx.passPhrase })
             )
           ]
         },
@@ -172,11 +163,9 @@ export const CreateWalletMachine = Machine({
     },
     walletCreated: {
       type: "final",
-      onEntry: "isAtWalletCreated"
     },
     finished: {
       type: "final",
-      onEntry: "isAtFinished"
     }
   }
 });
