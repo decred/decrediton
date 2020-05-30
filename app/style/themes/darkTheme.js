@@ -191,7 +191,7 @@ const darkTheme = {
   "accounts-default": "url('style/icons/accountDefaultDark.svg')",
   "accounts-imported": "url('style/icons/accountImportedDark.svg')",
   password: "url('style/icons/passwordDark.svg')",
-  txDetailsArrowLeft: "url('style/icons/txDetailsArrowLeftDark.svg')",
+  "tx-details-arrow-left": "url('style/icons/txDetailsArrowLeftDark.svg')",
   "stake-pool-icon": "url('style/icons/stakepoolDark.svg')",
   "expiry-icon": "url('style/icons/expiryDark.svg')",
   "split-fee-icon": "url('style/icons/splitFeeDark.svg')",
@@ -221,7 +221,8 @@ const darkTheme = {
   "menu-trezor-active": "url('style/icons/trezorActiveDark.svg')",
   "menu-trezor-default": "url('style/icons/trezorDefaultDark.svg')",
   "menu-trezor-hover": "url('style/icons/trezorHoverDark.svg')",
-  "menu-cancel-rescan-icon": "url('style/icons/menuCancelRescanDark.svg')"
+  "menu-cancel-rescan-icon": "url('style/icons/menuCancelRescanDark.svg')",
+  "politeia-loading-icon": "url('style/icons/politeia-loading-dark.gif')"
 };
 
 export default darkTheme;
