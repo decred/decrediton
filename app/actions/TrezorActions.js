@@ -23,7 +23,6 @@ import {
   SIGNMESSAGE_ATTEMPT,
   SIGNMESSAGE_FAILED,
   SIGNMESSAGE_SUCCESS,
-  VALIDATEMASTERPUBKEY_SUCCESS
 } from "./ControlActions";
 
 const hardeningConstant = 0x80000000;
@@ -116,6 +115,7 @@ export const loadDeviceList = () => (dispatch, getState) => {
     const opts = { debug, debugInfo: debug, config, transport };
     const devList = new trezorjs.DeviceList(opts);
     let resolvedTransport = false;
+    console.log(transport)
 
     devList.on("transport", (t) => {
       debug && console.log("transport", t);
@@ -941,8 +941,9 @@ export const getWalletCreationMasterPubKey = () => async (
       }
     );
 
-    dispatch({ type: VALIDATEMASTERPUBKEY_SUCCESS, masterPubKey });
     dispatch({ type: TRZ_GETWALLETCREATIONMASTERPUBKEY_SUCCESS });
+
+    return masterPubKey;
   } catch (error) {
     dispatch({ error, type: TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED });
     throw error;

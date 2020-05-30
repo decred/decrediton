@@ -143,10 +143,10 @@ class PreCreateWallet extends React.Component {
       walletSelected.watchingOnly = true;
       return this.props
         .trezorGetWalletCreationMasterPubKey()
-        .then(() =>
+        .then((walletMasterPubKey) =>
           this.props
             .onCreateWallet(walletSelected)
-            .then(() => this.props.onShowCreateWallet({ isNew }))
+            .then(() => this.props.onShowCreateWallet({ isNew, walletMasterPubKey }))
         );
     }
 

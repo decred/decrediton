@@ -29,7 +29,6 @@ const mapDispatchToProps = (dispatch) =>
       trezorEnable: trza.enableTrezor,
       trezorDisable: trza.disableTrezor,
       trezorAlertNoConnectedDevice: trza.alertNoConnectedDevice,
-      trezorGetWalletCreationMasterPubKey: trza.getWalletCreationMasterPubKey
     },
     dispatch
   );
