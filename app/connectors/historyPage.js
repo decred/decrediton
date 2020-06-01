@@ -2,14 +2,14 @@ import { connect } from "react-redux";
 import { selectorMap } from "../fp";
 import { bindActionCreators } from "redux";
 import * as sel from "../selectors";
-import * as ca from "../actions/ClientActions";
+import * as ta from "actions/TransactionActions";
 
 const mapStateToProps = selectorMap({
   walletService: sel.walletService,
   totalBalance: sel.totalBalance,
-  transactions: sel.transactions,
+  transactions: sel.filteredRegularTxs,
   transactionsFilter: sel.transactionsFilter,
-  noMoreTransactions: sel.noMoreTransactions,
+  noMoreTransactions: sel.noMoreRegularTxs,
   window: sel.mainWindow,
   tsDate: sel.tsDate
 });
@@ -17,8 +17,8 @@ const mapStateToProps = selectorMap({
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      getTransactions: ca.getTransactions,
-      changeTransactionsFilter: ca.changeTransactionsFilter
+      getTransactions: ta.getTransactions,
+      changeTransactionsFilter: ta.changeTransactionsFilter
     },
     dispatch
   );

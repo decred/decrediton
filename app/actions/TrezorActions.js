@@ -3,18 +3,17 @@ import trezorTransports from "trezor-link";
 import * as wallet from "wallet";
 import * as selectors from "selectors";
 import fs from "fs";
-import { sprintf } from "sprintf-js";
+import { rawToHex, hexToBytes, str2utf8hex, hex2b64 } from "helpers";
 import {
-  rawHashToHex,
-  rawToHex,
-  hexToRaw,
-  str2utf8hex,
-  hex2b64
-} from "helpers";
+  walletTxToBtcjsTx,
+  walletTxToRefTx,
+  WALLET_ACCOUNT,
+  accountPath,
+  addressPath
+} from "helpers/trezor";
 import { publishTransactionAttempt } from "./ControlActions";
-import { model1_decred_homescreen, messages } from "helpers/trezor";
+import { model1_decred_homescreen, messages } from "constants/trezor";
 import { getWalletCfg } from "config";
-
 import { EXTERNALREQUEST_TREZOR_BRIDGE } from "main_dev/externalRequests";
 import {
   SIGNTX_ATTEMPT,
@@ -24,31 +23,7 @@ import {
   SIGNMESSAGE_FAILED,
   SIGNMESSAGE_SUCCESS
 } from "./ControlActions";
-
-const hardeningConstant = 0x80000000;
-
-// Right now (2018-07-06) dcrwallet only supports a single account on watch only
-// wallets. Therefore we are limited to using this single account when signing
-// transactions via trezor.
-const WALLET_ACCOUNT = 0;
-
-function addressPath(index, branch, account, coinType) {
-  return [
-    (44 | hardeningConstant) >>> 0, // purpose
-    ((coinType || 0) | hardeningConstant) >>> 0, // coin type
-    ((account || 0) | hardeningConstant) >>> 0, // account
-    (branch || 0) >>> 0, // branch
-    index >>> 0 // index
-  ];
-}
-
-function accountPath(account, coinType) {
-  return [
-    (44 | hardeningConstant) >>> 0, // purpose
-    ((coinType || 0) | hardeningConstant) >>> 0, // coin type
-    ((account || 0) | hardeningConstant) >>> 0 // account
-  ];
-}
+import { getAmountFromTxInputs, getTxFromInputs } from "./TransactionActions";
 
 export const TRZ_TREZOR_ENABLED = "TRZ_TREZOR_ENABLED";
 
@@ -375,7 +350,7 @@ export const signTransactionAttemptTrezor = (
   dispatch({ type: SIGNTX_ATTEMPT });
 
   const {
-    grpc: { decodeMessageService, walletService },
+    grpc: { walletService },
     trezor: { debug }
   } = getState();
   const chainParams = selectors.chainParams(getState());
@@ -389,21 +364,30 @@ export const signTransactionAttemptTrezor = (
   debug && console.log("construct tx response", constructTxResponse);
 
   try {
-    const decodedUnsigTxResp = await wallet.decodeTransaction(
-      decodeMessageService,
-      rawUnsigTx
-    );
-    const decodedUnsigTx = decodedUnsigTxResp.getTransaction();
-    const inputTxs = await wallet.getInputTransactions(
-      walletService,
-      decodeMessageService,
-      decodedUnsigTx
-    );
-    const refTxs = inputTxs.map(walletTxToRefTx);
-
     const changeIndex = constructTxResponse.getChangeIndex();
-    const txInfo = await dispatch(
-      walletTxToBtcjsTx(decodedUnsigTx, changeIndex, inputTxs)
+
+    const decodedUnsigTxResp = wallet.decodeRawTransaction(
+      Buffer.from(rawUnsigTx),
+      chainParams
+    );
+    const unsignedTx = await dispatch(
+      getAmountFromTxInputs(decodedUnsigTxResp)
+    );
+    const txCompletedInputs = await dispatch(getAmountFromTxInputs(unsignedTx));
+    const inputTxs = await dispatch(getTxFromInputs(unsignedTx));
+    const { inputs, outputs } = await walletTxToBtcjsTx(
+      walletService,
+      chainParams,
+      txCompletedInputs,
+      inputTxs,
+      changeIndex
+    );
+
+    const refTxs = await Promise.all(
+      inputTxs.map(async (inpTx) => {
+        const completeTx = await dispatch(getAmountFromTxInputs(inpTx));
+        return walletTxToRefTx(walletService, completeTx);
+      })
     );
 
     const signedRaw = await deviceRun(
@@ -414,8 +398,8 @@ export const signTransactionAttemptTrezor = (
         await dispatch(checkTrezorIsDcrwallet(session));
 
         const signedResp = await session.signTx(
-          txInfo.inputs,
-          txInfo.outputs,
+          inputs,
+          outputs,
           refTxs,
           chainParams.trezorCoinName,
           0
@@ -425,7 +409,7 @@ export const signTransactionAttemptTrezor = (
     );
 
     dispatch({ type: SIGNTX_SUCCESS });
-    dispatch(publishTransactionAttempt(hexToRaw(signedRaw)));
+    dispatch(publishTransactionAttempt(hexToBytes(signedRaw)));
   } catch (error) {
     dispatch({ error, type: SIGNTX_FAILED });
   }
@@ -485,154 +469,6 @@ export const signMessageAttemptTrezor = (address, message) => async (
     dispatch({ error, type: SIGNMESSAGE_FAILED });
   }
 };
-
-// walletTxToBtcjsTx converts a tx decoded by the decred wallet (ie,
-// returned from the decodeRawTransaction call) into a bitcoinjs-compatible
-// transaction (to be used in trezor)
-export const walletTxToBtcjsTx = (tx, changeIndex, inputTxs) => async (
-  dispatch,
-  getState
-) => {
-  const {
-    grpc: { walletService }
-  } = getState();
-  const chainParams = selectors.chainParams(getState());
-
-  const inputTxsMap = inputTxs.reduce((m, tx) => {
-    m[rawHashToHex(tx.getTransactionHash())] = tx;
-    return m;
-  }, {});
-
-  const inputs = [];
-  for (const inp of tx.getInputsList()) {
-    const inputTx = inputTxsMap[rawHashToHex(inp.getPreviousTransactionHash())];
-    if (!inputTx)
-      throw (
-        "Cannot sign transaction without knowing source tx " +
-        rawHashToHex(inp.getPreviousTransactionHash())
-      );
-
-    const inputTxOut = inputTx.getOutputsList()[
-      inp.getPreviousTransactionIndex()
-    ];
-    if (!inputTxOut)
-      throw sprintf(
-        "Trying to use unknown outpoint %s:%d as input",
-        rawHashToHex(inp.getPreviousTransactionHash()),
-        inp.getPreviousTransactionIndex()
-      );
-
-    const addr = inputTxOut.getAddressesList()[0];
-    if (!addr)
-      throw sprintf(
-        "Outpoint %s:%d does not have addresses.",
-        rawHashToHex(inp.getPreviousTransactionHash()),
-        inp.getPreviousTransactionIndex()
-      );
-
-    const addrValidResp = await wallet.validateAddress(walletService, addr);
-    if (!addrValidResp.getIsValid())
-      throw "Input has an invalid address " + addr;
-
-    // Trezor firmware (mcu) currently (2018-06-25) only support signing
-    // when all inputs of the transaction are from the wallet. This happens
-    // due to the fact that trezor firmware re-calculates the source
-    // pkscript given the address_n of the input, instead of using it (the
-    // pkscript) directly when hashing the tx prior to signing. This needs
-    // to be changed so that we can perform more advanced types of
-    // transactions.
-    if (!addrValidResp.getIsMine())
-      throw "Trezor only supports signing when all inputs are from the wallet.";
-
-    const addrIndex = addrValidResp.getIndex();
-    const addrBranch = addrValidResp.getIsInternal() ? 1 : 0;
-    inputs.push({
-      prev_hash: rawHashToHex(inp.getPreviousTransactionHash()),
-      prev_index: inp.getPreviousTransactionIndex(),
-      amount: inp.getAmountIn(),
-      sequence: inp.getSequence(),
-      address_n: addressPath(
-        addrIndex,
-        addrBranch,
-        WALLET_ACCOUNT,
-        chainParams.HDCoinType
-      ),
-      decred_tree: inp.getTree()
-    });
-  }
-
-  const outputs = [];
-  for (const outp of tx.getOutputsList()) {
-    if (outp.getAddressesList().length != 1) {
-      // TODO: this will be true on OP_RETURNs. Support those.
-      throw "Output has different number of addresses than expected";
-    }
-
-    let addr = outp.getAddressesList()[0];
-    const addrValidResp = await wallet.validateAddress(walletService, addr);
-    if (!addrValidResp.getIsValid()) throw "Not a valid address: " + addr;
-    let address_n = null;
-
-    if (outp.getIndex() === changeIndex && addrValidResp.getIsMine()) {
-      const addrIndex = addrValidResp.getIndex();
-      const addrBranch = addrValidResp.getIsInternal() ? 1 : 0;
-      address_n = addressPath(
-        addrIndex,
-        addrBranch,
-        WALLET_ACCOUNT,
-        chainParams.HDCoinType
-      );
-      addr = null;
-    }
-
-    outputs.push({
-      amount: outp.getValue(),
-      script_type: "PAYTOADDRESS", // needs to change on OP_RETURNs
-      address: addr,
-      address_n: address_n,
-      decred_script_version: outp.getVersion()
-    });
-  }
-
-  const txInfo = {
-    lock_time: tx.getLockTime(),
-    version: tx.getVersion(),
-    expiry: tx.getExpiry(),
-    inputs,
-    outputs
-  };
-
-  return txInfo;
-};
-
-// walletTxToRefTx converts a tx decoded by the decred wallet into a trezor
-// RefTransaction object to be used with SignTx.
-export function walletTxToRefTx(tx) {
-  const inputs = tx.getInputsList().map((inp) => ({
-    amount: inp.getAmountIn(),
-    prev_hash: rawHashToHex(inp.getPreviousTransactionHash()),
-    prev_index: inp.getPreviousTransactionIndex(),
-    decred_tree: inp.getTree(),
-    sequence: inp.getSequence()
-  }));
-
-  const bin_outputs = tx.getOutputsList().map((outp) => ({
-    amount: outp.getValue(),
-    script_pubkey: rawToHex(outp.getScript()),
-    decred_script_version: outp.getVersion()
-  }));
-
-  const txInfo = {
-    hash: rawHashToHex(tx.getTransactionHash()),
-    lock_time: tx.getLockTime(),
-    version: tx.getVersion(),
-    expiry: tx.getExpiry(),
-    inputs,
-    bin_outputs
-  };
-
-  return txInfo;
-}
 
 export const TRZ_TOGGLEPINPROTECTION_ATTEMPT =
   "TRZ_TOGGLEPINPROTECTION_ATTEMPT";

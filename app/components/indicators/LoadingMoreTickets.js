@@ -25,7 +25,7 @@ const AscMessage = ({ startRequestHeight, currentBlockHeight }) => (
   />
 );
 
-const CancelLoadingTicketsButton = ({ cancelGetTickets }) => (
+const CancelLoadingTicketsButton = ({ cancelGetTransactions }) => (
   <Tooltip
     text={
       <T
@@ -33,7 +33,10 @@ const CancelLoadingTicketsButton = ({ cancelGetTickets }) => (
         m={"Cancel listing tickets"}
       />
     }>
-    <button className={"gettickets-cancel-button"} onClick={cancelGetTickets} />
+    <button
+      className={"gettickets-cancel-button"}
+      onClick={cancelGetTransactions}
+    />
   </Tooltip>
 );
 
@@ -54,21 +57,28 @@ const LoadingTicketsProgress = ({
 const LoadingMoreTicketsIndicator = ({
   startRequestHeight,
   className,
-  cancelGetTickets,
+  cancelGetTransactions,
   ...props
 }) => (
   <div className={"loading-more-tickets is-row " + className}>
-    <div className="is-row loading-more-tickets-info">
-      <div className="loading-more-tickets-icon"></div>
-      <div>
-        <T id="myTickets.loadingMoreTickets" m="Loading more tickets..." />
-        {startRequestHeight && (
-          <LoadingTicketsProgress {...{ startRequestHeight, ...props }} />
-        )}
-      </div>
-    </div>
     {startRequestHeight && (
-      <CancelLoadingTicketsButton cancelGetTickets={cancelGetTickets} />
+      <>
+        <div className="is-row loading-more-tickets-info">
+          <div className="loading-more-tickets-icon"></div>
+          <div>
+            <>
+              <T
+                id="myTickets.loadingMoreTickets"
+                m="Loading more tickets..."
+              />
+              <LoadingTicketsProgress {...{ startRequestHeight, ...props }} />
+            </>
+          </div>
+        </div>
+        <CancelLoadingTicketsButton
+          cancelGetTransactions={cancelGetTransactions}
+        />
+      </>
     )}
   </div>
 );

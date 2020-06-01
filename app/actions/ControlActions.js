@@ -247,6 +247,7 @@ export const PUBLISHTX_SUCCESS = "PUBLISHTX_SUCCESS";
 
 export const publishTransactionAttempt = (tx) => (dispatch, getState) => {
   dispatch({ type: PUBLISHTX_ATTEMPT });
+  const chainParams = sel.chainParams(getState());
   return wallet
     .publishTransaction(sel.walletService(getState()), tx)
     .then((res) => {
@@ -254,7 +255,7 @@ export const publishTransactionAttempt = (tx) => (dispatch, getState) => {
       // change scripts, clear it as to prevent address reuse. This is needed
       // due to dcrwallet#1622.
       const rawTx = Buffer.from(tx, "hex");
-      const decoded = wallet.decodeRawTransaction(rawTx);
+      const decoded = wallet.decodeRawTransaction(rawTx, chainParams);
       const changeScriptByAccount =
         getState().control.changeScriptByAccount || {};
       const newChangeScriptByAccount = {};
@@ -283,6 +284,7 @@ export const PURCHASETICKETS_FAILED = "PURCHASETICKETS_FAILED";
 export const PURCHASETICKETS_SUCCESS = "PURCHASETICKETS_SUCCESS";
 export const CREATE_UNSIGNEDTICKETS_SUCCESS = "CREATE_UNSIGNEDTICKETS_SUCCESS";
 
+// TODO move purchaseTicketsAttempt to TransactionActions
 export const purchaseTicketsAttempt = (
   passphrase,
   accountNum,
@@ -478,6 +480,7 @@ export const constructTransactionAttempt = (
   }
 
   dispatch({ type: CONSTRUCTTX_ATTEMPT });
+  const chainParams = sel.chainParams(getState());
   const { walletService } = getState().grpc;
   walletService.constructTransaction(request, function (
     error,
@@ -515,7 +518,7 @@ export const constructTransactionAttempt = (
       const changeIndex = constructTxResponse.getChangeIndex();
       if (changeIndex > -1) {
         const rawTx = Buffer.from(constructTxResponse.getUnsignedTransaction());
-        const decoded = wallet.decodeRawTransaction(rawTx);
+        const decoded = wallet.decodeRawTransaction(rawTx, chainParams);
         changeScriptByAccount[account] = decoded.outputs[changeIndex].script;
       }
 

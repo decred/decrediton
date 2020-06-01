@@ -1,6 +1,10 @@
 import Row from "./Row";
 import { Balance } from "shared";
 import { FormattedMessage as T } from "react-intl";
+import {
+  TRANSACTION_DIR_RECEIVED,
+  TRANSACTION_DIR_TRANSFERRED
+} from "constants";
 
 export const RegularTxRow = ({
   txAmount,
@@ -19,10 +23,14 @@ export const RegularTxRow = ({
     <div className="is-row">
       <span className="icon" />
       <span className="transaction-amount-number">
-        <Balance amount={txDirection !== "in" ? -txAmount : txAmount} />
+        <Balance
+          amount={
+            txDirection !== TRANSACTION_DIR_RECEIVED ? -txAmount : txAmount
+          }
+        />
       </span>
       {!overview &&
-        (txDirection === "transfer" ? (
+        (txDirection === TRANSACTION_DIR_TRANSFERRED ? (
           <div className="transaction-info is-row">
             <T
               id="txHistory.transfer.tx"
@@ -45,7 +53,7 @@ export const RegularTxRow = ({
               }}
             />
           </div>
-        ) : txDirection !== "in" ? (
+        ) : txDirection !== TRANSACTION_DIR_RECEIVED ? (
           <div className="transaction-info is-row">
             <T
               id="txHistory.out.tx"
@@ -91,7 +99,7 @@ export const RegularTxRow = ({
     </div>
     {overview && (
       <div className="transaction-amount-hash">
-        {txDirection === "transfer" ? (
+        {txDirection === TRANSACTION_DIR_TRANSFERRED ? (
           <T
             id="txHistory.transfer.tx"
             m="From {debAcc} To {credAcc}"
@@ -100,7 +108,7 @@ export const RegularTxRow = ({
               credAcc: txAccountNameCredited
             }}
           />
-        ) : txDirection !== "in" ? (
+        ) : txDirection !== TRANSACTION_DIR_RECEIVED ? (
           <T
             id="txHistory.out.tx"
             m="From {debAcc} To {credAcc}"

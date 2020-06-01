@@ -173,17 +173,25 @@ const initialState = {
     getAccountsRequestAttempt: false,
     getAccountsResponse: null,
 
-    // Transactions for Overview Page
-    recentTransactionCount: 8,
-    recentTransactions: Array(),
-    recentStakeTransactions: Array(),
+    recentStakeTransactions: [],
 
     // GetTransactions
-    minedTransactions: Array(),
-    unminedTransactions: Array(),
-    transactions: Array(), // unmined + mined. Calculated on the grpc reducer.
-    maximumTransactionCount: 10,
-    noMoreTransactions: false,
+    // requestHeight of last getTransaction call
+    startRequestHeight: null,
+    unminedTransactions: [],
+    // map representing each txs type
+    stakeTransactions: {},
+    regularTransactions: {},
+    // getRegularTxsAux is a state helper to get regular transactions
+    getRegularTxsAux: {
+      noMoreTransactions: false,
+      lastTransaction: null
+    },
+    // getRegularTxsAux is a state helper to get stake transactions
+    getStakeTxsAux: {
+      noMoreTransactions: false,
+      lastTransaction: null
+    },
     transactionsFilter: {
       search: null, // The freeform text in the Search box
       listDirection: "desc", // asc = oldest -> newest, desc => newest -> oldest
@@ -192,36 +200,17 @@ const initialState = {
       maxAmount: null,
       minAmount: null
     },
-    lastTransaction: null, //last transaction obtained
-
-    getTransactionsError: null,
     getTransactionsRequestAttempt: false,
     getTransactionsResponse: null,
-
-    // GetTickets
-    getTicketsError: null,
-    getTicketsRequestAttempt: false,
-    tickets: Array(),
-    minedTickets: Array(),
-    unminedTickets: Array(),
-    noMoreTickets: false,
     ticketsFilter: {
       listDirection: "desc", // asc = oldest -> newest, desc => newest -> oldest
-      status: [] // desired ticket status (code). All if blank.
+      status: null // desired ticket status (code). All if blank.
     },
-    getTicketsStartRequestHeight: null,
-    getTicketsCancel: false, // user requested cancelation (but it hasn't happened yet)
-    getTicketsProgressStartRequestHeight: null,
 
     // Agenda/VoteChoices
     allAgendas: [],
     getAgendasResponse: null,
     getVoteChoicesResponse: null,
-
-    // GetMessageDecodeService
-    decodeMessageService: null,
-    getMessageDecodeServiceRequestAttempt: false,
-    getMessageDecodeServiceError: null,
 
     // map from (reversed) transaction hash to fully decoded transaction
     decodedTransactions: {},
@@ -230,10 +219,6 @@ const initialState = {
     // heights, due to maturing stake transactions. Keys are the heights,
     // values are arrays of account numbers.
     maturingBlockHeights: {},
-
-    // list of outstanding requests for additional stake data from transactions
-    // (indexed by transaction hash)
-    fetchMissingStakeTxDataAttempt: {},
 
     // Shown under governance tab
     treasuryBalance: null

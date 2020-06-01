@@ -2,12 +2,14 @@ import * as wallet from "wallet";
 import * as sel from "selectors";
 import fs from "fs";
 import { isNumber, isNullOrUndefined, isUndefined } from "util";
+import { endOfDay, formatLocalISODate, isSameDate } from "helpers";
 import {
-  endOfDay,
-  reverseRawHash,
-  formatLocalISODate,
-  isSameDate
-} from "helpers";
+  REGULAR,
+  COINBASE,
+  TICKET,
+  VOTE,
+  REVOCATION
+} from "constants/Decrediton";
 
 const VALUE_TYPE_ATOMAMOUNT = "VALUE_TYPE_ATOMAMOUNT";
 const VALUE_TYPE_DATETIME = "VALUE_TYPE_DATETIME";
@@ -198,7 +200,7 @@ export const getHeatmapStats = (opts) => (dispatch, getState) =>
         // pre-process tickets from all grabbed txs to avoid making the separate
         // getTransaction calls in voteRevokeInfo()
         toProcess.forEach((tx) => {
-          if (tx.txType === wallet.TRANSACTION_TYPE_TICKET_PURCHASE) {
+          if (tx.txType === TICKET) {
             const { isWallet, commitAmount } = ticketInfo(tx);
             recordTicket(
               maturingTxs,
@@ -255,7 +257,7 @@ const countTicketsBackwards = ({ mined, chainParams, tsDate }) => {
     const tsWillMatureDate = endOfDay(tsDate(tsWillMature));
 
     switch (tx.txType) {
-      case wallet.TRANSACTION_TYPE_TICKET_PURCHASE:
+      case TICKET:
         ticketsCounter.maturing++;
         values[tsWillMatureDate] = values[tsWillMatureDate]
           ? {
@@ -264,15 +266,15 @@ const countTicketsBackwards = ({ mined, chainParams, tsDate }) => {
             }
           : { live: 1, maturing: 0, vote: 0, revoke: 0 };
         break;
-      case wallet.TRANSACTION_TYPE_VOTE:
+      case VOTE:
         ticketsCounter.vote++;
         break;
-      case wallet.TRANSACTION_TYPE_REVOCATION:
+      case REVOCATION:
         ticketsCounter.revoke++;
         break;
-      case wallet.TRANSACTION_TYPE_COINBASE:
+      case COINBASE:
         break;
-      case wallet.TRANSACTION_TYPE_REGULAR:
+      case REGULAR:
         break;
       default:
         throw "Unknown tx type: " + tx.txType;
@@ -619,16 +621,15 @@ const ticketInfo = (tx) => {
 
 // closure that cals vote/revoke info necessary to correctly account for its
 // delta to balances, given a vote/revoke tx
-const voteRevokeInfo = async (tx, liveTickets, walletService) => {
-  const isVote = tx.txType === wallet.TRANSACTION_TYPE_VOTE;
+const voteRevokeInfo = async (tx, liveTickets, walletService, chainParams) => {
+  const isVote = tx.txType === VOTE;
 
   const decodedSpender = await wallet.decodeTransactionLocal(
-    tx.tx.getTransaction()
+    tx.tx.getTransaction(),
+    chainParams
   );
   const spenderInputs = decodedSpender.inputs;
-  const ticketHash = reverseRawHash(
-    spenderInputs[spenderInputs.length - 1].prevTxId
-  );
+  const ticketHash = spenderInputs[spenderInputs.length - 1].prevTxId;
 
   let ticket = liveTickets[ticketHash];
   if (!ticket) {
@@ -690,7 +691,7 @@ const txBalancesDelta = async (
   let tikcetinfo = null;
   let revokeInfo = null;
   switch (tx.txType) {
-    case wallet.TRANSACTION_TYPE_TICKET_PURCHASE:
+    case TICKET:
       tikcetinfo = ticketInfo(tx);
       recordTicket(
         maturingTxs,
@@ -718,9 +719,14 @@ const txBalancesDelta = async (
         tx
       };
       break;
-    case wallet.TRANSACTION_TYPE_VOTE:
-    case wallet.TRANSACTION_TYPE_REVOCATION:
-      revokeInfo = await voteRevokeInfo(tx, liveTickets, walletService);
+    case VOTE:
+    case REVOCATION:
+      revokeInfo = await voteRevokeInfo(
+        tx,
+        liveTickets,
+        walletService,
+        chainParams
+      );
       recordVoteRevoke(
         maturingTxs,
         tx,
@@ -748,8 +754,8 @@ const txBalancesDelta = async (
         tx
       };
       break;
-    case wallet.TRANSACTION_TYPE_COINBASE:
-    case wallet.TRANSACTION_TYPE_REGULAR:
+    case COINBASE:
+    case REGULAR:
       delta = {
         spendable: +tx.amount,
         locked: 0,
@@ -1128,7 +1134,7 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
       // pre-process tickets from all grabbed txs to avoid making the separate
       // getTransaction calls in voteRevokeInfo()
       toProcess.forEach((tx) => {
-        if (tx.txType == wallet.TRANSACTION_TYPE_TICKET_PURCHASE) {
+        if (tx.txType == TICKET) {
           const { isWallet, commitAmount } = ticketInfo(tx);
           recordTicket(
             maturingTxs,

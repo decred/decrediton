@@ -27,40 +27,51 @@ class MyTickets extends React.Component {
 
   getSortTypes() {
     return [
-      { value: "desc", label: <T id="tickets.sortby.newest" m="Newest" /> },
-      { value: "asc", label: <T id="tickets.sortby.oldest" m="Oldest" /> }
+      {
+        value: "desc",
+        key: "desc",
+        label: <T id="tickets.sortby.newest" m="Newest" />
+      },
+      {
+        value: "asc",
+        key: "asc",
+        label: <T id="tickets.sortby.oldest" m="Oldest" />
+      }
     ];
   }
 
+  // TODO use constants
   getTicketTypes() {
     return [
       {
         key: "all",
-        value: { status: [] },
+        value: { status: null },
         label: <T id="tickets.type.all" m="All" />
       },
-      { key: "unmined", value: { status: ["unmined"] }, label: labels.unmined },
+      { key: "unmined", value: { status: "unmined" }, label: labels.unmined },
       {
         key: "immature",
-        value: { status: ["immature"] },
+        value: { status: "immature" },
         label: labels.immature
       },
-      { key: "live", value: { status: ["live"] }, label: labels.live },
-      { key: "voted", value: { status: ["voted"] }, label: labels.voted },
-      { key: "missed", value: { status: ["missed"] }, label: labels.missed },
-      { key: "expired", value: { status: ["expired"] }, label: labels.expired },
-      { key: "revoked", value: { status: ["revoked"] }, label: labels.revoked }
+      { key: "live", value: { status: "live" }, label: labels.live },
+      { key: "voted", value: { status: "voted" }, label: labels.voted },
+      { key: "missed", value: { status: "missed" }, label: labels.missed },
+      { key: "expired", value: { status: "expired" }, label: labels.expired },
+      { key: "revoked", value: { status: "revoked" }, label: labels.revoked }
     ];
   }
 
   selectedTicketTypeFromFilter(filter) {
-    if (filter.status.length === 0) return "all";
-    const status = this.getTicketTypes();
-    status.shift(); //drop "all" which doesn't have value.types
-    return status.reduce(
-      (a, v) => (v.value.status[0] === filter.status[0] ? v.key : a),
-      null
-    );
+    const types = this.getTicketTypes();
+    let key;
+    types.forEach((type) => {
+      if (filter.status === type.value.status) {
+        key = type.key;
+        return;
+      }
+    });
+    return key;
   }
 
   onChangeFilter(value) {
@@ -93,6 +104,7 @@ class MyTickets extends React.Component {
           loadMoreThreshold,
           ticketTypes: this.getTicketTypes(),
           sortTypes: this.getSortTypes(),
+          tickets: this.props.tickets,
           ...substruct(
             {
               onChangeSelectedType: null,

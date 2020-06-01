@@ -10,8 +10,11 @@ import { spring, TransitionMotion } from "react-motion";
 import {
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_RECEIVED,
-  TRANSACTION_DIR_TRANSFERRED
-} from "wallet/service";
+  TRANSACTION_DIR_TRANSFERRED,
+  TICKET,
+  VOTE,
+  REVOCATION
+} from "constants/Decrediton";
 import "style/Snackbar.less";
 
 const propTypes = {
@@ -21,9 +24,9 @@ const propTypes = {
 
 const snackbarClasses = ({ type }) =>
   ({
-    Ticket: "snackbar snackbar-stake",
-    Vote: "snackbar snackbar-stake",
-    Revocation: "snackbar snackbar-stake",
+    [TICKET]: "snackbar snackbar-stake",
+    [VOTE]: "snackbar snackbar-stake",
+    [REVOCATION]: "snackbar snackbar-stake",
     [TRANSACTION_DIR_RECEIVED]: "snackbar snackbar-receive",
     [TRANSACTION_DIR_SENT]: "snackbar snackbar-send",
     [TRANSACTION_DIR_TRANSFERRED]: "snackbar snackbar-transfer",
@@ -31,6 +34,7 @@ const snackbarClasses = ({ type }) =>
     Error: "snackbar snackbar-error",
     Success: "snackbar snackbar-success"
   }[type] || "snackbar");
+console.log(snackbarClasses);
 
 @autobind
 class Snackbar extends React.Component {
@@ -171,24 +175,26 @@ class Snackbar extends React.Component {
         {(is) => (
           <>
             {" "}
-            {is.map((s, i) => (
-              <div
-                key={s.key}
-                className={snackbarClasses(s.data || "")}
-                onMouseEnter={clearHideTimer}
-                onMouseLeave={enableHideTimer}
-                style={s.style}
-                ref={(ref) => animatedNotifRef(s.key, ref)}>
-                <Notification
-                  {...{
-                    topNotification: i === 0,
-                    progress,
-                    onDismissMessage,
-                    ...s.data
-                  }}
-                />
-              </div>
-            ))}{" "}
+            {is.map((s, i) => {
+              return (
+                <div
+                  key={s.key}
+                  className={snackbarClasses(s.data || "")}
+                  onMouseEnter={clearHideTimer}
+                  onMouseLeave={enableHideTimer}
+                  style={s.style}
+                  ref={(ref) => animatedNotifRef(s.key, ref)}>
+                  <Notification
+                    {...{
+                      topNotification: i === 0,
+                      progress,
+                      onDismissMessage,
+                      ...s.data
+                    }}
+                  />
+                </div>
+              );
+            })}{" "}
           </>
         )}
       </TransitionMotion>
@@ -199,6 +205,8 @@ class Snackbar extends React.Component {
     const notification = this.props.uiAnimations
       ? this.getAnimatedNotification()
       : this.getStaticNotification();
+
+    // console.log(notification)
 
     return (
       <EventListener target="document">

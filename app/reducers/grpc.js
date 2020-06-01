@@ -27,23 +27,10 @@ import {
   GETACCOUNTS_ATTEMPT,
   GETACCOUNTS_FAILED,
   GETACCOUNTS_SUCCESS,
-  GETTRANSACTIONS_ATTEMPT,
-  GETTRANSACTIONS_FAILED,
-  GETTRANSACTIONS_COMPLETE,
-  NEW_TRANSACTIONS_RECEIVED,
-  CHANGE_TRANSACTIONS_FILTER,
   UPDATETIMESINCEBLOCK,
-  GETTICKETS_ATTEMPT,
-  GETTICKETS_FAILED,
-  GETTICKETS_COMPLETE,
-  CLEAR_TICKETS,
-  GETTICKETS_PROGRESS,
-  GETTICKETS_CANCEL,
   GETAGENDASERVICE_ATTEMPT,
   GETAGENDASERVICE_FAILED,
   GETAGENDASERVICE_SUCCESS,
-  RAWTICKETTRANSACTIONS_DECODED,
-  CHANGE_TICKETS_FILTER,
   GETMESSAGEVERIFICATIONSERVICE_ATTEMPT,
   GETMESSAGEVERIFICATIONSERVICE_FAILED,
   GETMESSAGEVERIFICATIONSERVICE_SUCCESS,
@@ -59,7 +46,6 @@ import {
   SETVOTECHOICES_ATTEMPT,
   SETVOTECHOICES_FAILED,
   SETVOTECHOICES_SUCCESS,
-  MATURINGHEIGHTS_CHANGED,
   GETBESTBLOCK_ATTEMPT,
   GETBESTBLOCK_FAILED,
   GETBESTBLOCK_SUCCESS,
@@ -68,10 +54,6 @@ import {
   STARTWALLETSERVICE_SUCCESS,
   GETTREASURY_BALANCE_SUCCESS,
   RESET_TREASURY_BALANCE,
-  FETCHMISSINGSTAKETXDATA_ATTEMPT,
-  FETCHMISSINGSTAKETXDATA_SUCCESS,
-  FETCHMISSINGSTAKETXDATA_FAILED,
-  GETSTARTUPTRANSACTIONS_SUCCESS,
   GETALLAGENDAS_SUCCESS,
   GETALLAGENDAS_FAILED,
   ABANDONTRANSACTION_ATTEMPT,
@@ -80,12 +62,6 @@ import {
 } from "../actions/ClientActions";
 import { DAEMONSYNCED, WALLETREADY } from "../actions/DaemonActions";
 import { NEWBLOCKCONNECTED } from "../actions/NotificationActions";
-import {
-  GETDECODEMESSAGESERVICE_ATTEMPT,
-  GETDECODEMESSAGESERVICE_FAILED,
-  GETDECODEMESSAGESERVICE_SUCCESS,
-  DECODERAWTXS_SUCCESS
-} from "../actions/DecodeMessageActions";
 import {
   SIGNMESSAGE_ATTEMPT,
   SIGNMESSAGE_SUCCESS,
@@ -104,11 +80,20 @@ import {
   RUNACCOUNTMIXER_SUCCESS,
   STOPMIXER_SUCCESS
 } from "actions/AccountMixerActions";
+import {
+  GETTRANSACTIONS_ATTEMPT,
+  GETTRANSACTIONS_FAILED,
+  GETTRANSACTIONS_COMPLETE,
+  GETTRANSACTIONS_CANCEL,
+  CHANGE_TICKETS_FILTER,
+  MATURINGHEIGHTS_CHANGED,
+  GETSTARTUPTRANSACTIONS_SUCCESS,
+  NEW_TRANSACTIONS_RECEIVED,
+  CHANGE_TRANSACTIONS_FILTER,
+  GETTRANSACTIONS_CANCELED
+} from "actions/TransactionActions";
 
 export default function grpc(state = {}, action) {
-  let idxOldTicket;
-  let newTickets;
-  let transactions;
   let newMaturingBlockHeights;
   switch (action.type) {
     case GETACCOUNTMIXERSERVICE_SUCCESS:
@@ -358,77 +343,20 @@ export default function grpc(state = {}, action) {
         getAccountsRequestAttempt: false,
         getAccountsResponse: action.response
       };
-    case GETTICKETS_ATTEMPT:
+    case GETTRANSACTIONS_CANCEL:
       return {
         ...state,
-        getTicketsRequestAttempt: true,
-        getTicketsCancel: false
-      };
-    case GETTICKETS_FAILED:
-      return {
-        ...state,
-        getTicketsRequestError: String(action.error),
-        getTicketsRequestAttempt: false,
-        getTicketsCancel: false,
-        getTicketsProgressStartRequestHeight: null
-      };
-    case GETTICKETS_COMPLETE:
-      return {
-        ...state,
-        tickets: [...action.unminedTickets, ...action.minedTickets],
-        unminedTickets: action.unminedTickets,
-        minedTickets: action.minedTickets,
-        noMoreTickets: action.noMoreTickets,
-        getTicketsRequestError: "",
-        getTicketsRequestAttempt: false,
-        getTicketsStartRequestHeight: action.getTicketsStartRequestHeight,
-        getTicketsCancel: false,
-        getTicketsProgressStartRequestHeight: null
-      };
-    case GETTICKETS_PROGRESS:
-      return {
-        ...state,
-        getTicketsProgressStartRequestHeight: action.startRequestHeight
-      };
-    case GETTICKETS_CANCEL:
-      return {
-        ...state,
-        getTicketsCancel: true
-      };
-    case CLEAR_TICKETS:
-      return {
-        ...state,
-        tickets: [],
-        unminedTickets: [],
-        minedTickets: [],
-        noMoreTickets: false,
-        lastTicket: null,
-        getTicketsStartRequestHeight: null
-      };
-    case RAWTICKETTRANSACTIONS_DECODED:
-      idxOldTicket = state.tickets.indexOf(action.ticket);
-      if (idxOldTicket < 0) {
-        console.log("decoded did not find", idxOldTicket);
-        return state;
-      }
-      newTickets = state.tickets.slice();
-      newTickets.splice(idxOldTicket, 1, action.newTicket);
-      return {
-        ...state,
-        tickets: newTickets
+        getTransactionsCancel: true,
+        getTransactionsRequestAttempt: false
       };
     case CHANGE_TICKETS_FILTER:
       return {
         ...state,
         ticketsFilter: action.ticketsFilter,
-        tickets: [],
-        unminedTickets: [],
-        minedTickets: [],
-        noMoreTickets: false,
         lastTicket: null,
         getTicketsRequestError: "",
-        getTicketsRequestAttempt: false,
-        getTicketsStartRequestHeight: null
+        stakeTransactions: action.stakeTransactions,
+        getStakeTxsAux: action.getStakeTxsAux
       };
     case GETTRANSACTIONS_ATTEMPT:
       return {
@@ -442,19 +370,19 @@ export default function grpc(state = {}, action) {
         getTransactionsRequestAttempt: false
       };
     case GETTRANSACTIONS_COMPLETE:
-      transactions = [
-        ...action.unminedTransactions,
-        ...action.minedTransactions
-      ];
       return {
         ...state,
-        minedTransactions: action.minedTransactions,
-        unminedTransactions: action.unminedTransactions,
-        transactions: transactions,
-        noMoreTransactions: action.noMoreTransactions,
-        lastTransaction: action.lastTransaction,
-        getTransactionsRequestError: "",
-        getTransactionsRequestAttempt: false
+        stakeTransactions: action.stakeTransactions,
+        regularTransactions: action.regularTransactions,
+        transactions: { ...state.transactions, ...action.transactions },
+        getRegularTxsAux: action.getRegularTxsAux,
+        getStakeTxsAux: action.getStakeTxsAux,
+        getTransactionsRequestAttempt: false,
+        startRequestHeight: action.startRequestHeight
+      };
+    case GETTRANSACTIONS_CANCELED:
+      return {
+        getTransactionsCancel: false
       };
     case ABANDONTRANSACTION_ATTEMPT:
       return { ...state, abandonTransactionRequestAttempt: true };
@@ -465,51 +393,24 @@ export default function grpc(state = {}, action) {
     case NEW_TRANSACTIONS_RECEIVED:
       return {
         ...state,
-        minedTransactions: action.minedTransactions,
         unminedTransactions: action.unminedTransactions,
-        transactions: [
-          ...action.unminedTransactions,
-          ...action.minedTransactions
-        ],
         recentRegularTransactions: action.recentRegularTransactions,
-        recentStakeTransactions: action.recentStakeTransactions
+        recentStakeTransactions: action.recentStakeTransactions,
+        stakeTransactions: {
+          ...state.stakeTransactions,
+          ...action.stakeTransactions
+        },
+        regularTransactions: {
+          ...state.regularTransactions,
+          ...action.regularTransactions
+        }
       };
     case CHANGE_TRANSACTIONS_FILTER:
       return {
         ...state,
         transactionsFilter: action.transactionsFilter,
-        minedTransactions: [],
-        unminedTransactions: [],
-        transactions: [],
-        lastTransaction: null,
-        noMoreTransactions: false
-      };
-    case FETCHMISSINGSTAKETXDATA_ATTEMPT:
-      return {
-        ...state,
-        fetchMissingStakeTxDataAttempt: {
-          ...state.fetchMissingStakeTxDataAttempt,
-          [action.txHash]: true
-        }
-      };
-    case FETCHMISSINGSTAKETXDATA_SUCCESS:
-      return {
-        ...state,
-        transactions: action.transactions || state.transactions,
-        recentStakeTransactions:
-          action.recentStakeTransactions || state.recentStakeTransactions,
-        fetchMissingStakeTxDataAttempt: {
-          ...state.fetchMissingStakeTxDataAttempt,
-          [action.txHash]: false
-        }
-      };
-    case FETCHMISSINGSTAKETXDATA_FAILED:
-      return {
-        ...state,
-        fetchMissingStakeTxDataAttempt: {
-          ...state.fetchMissingStakeTxDataAttempt,
-          [action.txHash]: false
-        }
+        regularTransactions: action.regularTransactions,
+        getRegularTxsAux: action.getRegularTxsAux
       };
     case UPDATETIMESINCEBLOCK:
       return {
@@ -679,39 +580,14 @@ export default function grpc(state = {}, action) {
         setVoteChoicesRequestAttempt: false,
         setVoteChoicesResponse: action.voteChoices
       };
-    case GETDECODEMESSAGESERVICE_ATTEMPT:
-      return {
-        ...state,
-        getMessageDecodeServiceRequestAttempt: true,
-        getMessageDecodeServiceError: null
-      };
-    case GETDECODEMESSAGESERVICE_FAILED:
-      return {
-        ...state,
-        getMessageDecodeServiceRequestAttempt: false,
-        getMessageDecodeServiceError: String(action.error)
-      };
-    case GETDECODEMESSAGESERVICE_SUCCESS:
-      return {
-        ...state,
-        getMessageDecodeServiceRequestAttempt: false,
-        getMessageDecodeServiceError: null,
-        decodeMessageService: action.decodeMessageService
-      };
-    case DECODERAWTXS_SUCCESS:
-      return {
-        ...state,
-        decodedTransactions: {
-          ...state.decodedTransactions,
-          ...action.transactions
-        }
-      };
     case GETSTARTUPTRANSACTIONS_SUCCESS:
       return {
         ...state,
         maturingBlockHeights: action.maturingBlockHeights,
         recentRegularTransactions: action.recentRegularTxs,
-        recentStakeTransactions: action.recentStakeTxs
+        recentStakeTransactions: action.recentStakeTxs,
+        stakeTransactions: action.stakeTransactions,
+        regularTransactions: action.regularTransactions
       };
     case MATURINGHEIGHTS_CHANGED:
       return {
@@ -729,7 +605,6 @@ export default function grpc(state = {}, action) {
         port: "9121",
         agendaService: null,
         balances: [],
-        decodeMessageService: null,
         decodedTransactions: {},
         getAccountsResponse: null,
         getAgendasResponse: null,
@@ -738,10 +613,8 @@ export default function grpc(state = {}, action) {
         getTicketPriceResponse: null,
         lastTransaction: null,
         maturingBlockHeights: {},
-        minedTransactions: Array(),
-        unminedTransactions: Array(),
-        tickets: Array(),
-        transactions: Array(),
+        unminedTransactions: [],
+        transactions: [],
         noMoreTransactions: false,
         transactionsFilter: {
           search: null,
@@ -749,8 +622,8 @@ export default function grpc(state = {}, action) {
           types: [],
           direction: null
         },
-        recentRegularTransactions: Array(),
-        recentStakeTransactions: Array(),
+        recentRegularTransactions: [],
+        recentStakeTransactions: [],
         ticketBuyerService: null,
         transactionsSinceLastOpened: null,
         votingService: null,

@@ -49,9 +49,6 @@ export const getAgendaService = getServiceClient(services.AgendaServiceClient);
 export const getMessageVerificationService = getServiceClient(
   services.MessageVerificationServiceClient
 );
-export const getDecodeMessageService = getServiceClient(
-  services.DecodeMessageServiceClient
-);
 export const getAccountMixerService = getServiceClient(
   services.AccountMixerServiceClient
 );

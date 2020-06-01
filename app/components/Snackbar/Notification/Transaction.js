@@ -6,21 +6,23 @@ import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import {
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_RECEIVED,
-  TRANSACTION_DIR_TRANSFERRED
-} from "wallet/service";
+  TRANSACTION_DIR_TRANSFERRED,
+  TICKET,
+  VOTE,
+  REVOCATION
+} from "constants/Decrediton";
 import "style/Header.less";
 
 const messages = defineMessages({
-  //same as the types used in index.js
-  Ticket: {
+  [TICKET]: {
     id: "notifications.type.ticket",
     defaultMessage: "Ticket"
   },
-  Vote: {
+  [VOTE]: {
     id: "notifications.type.vote",
     defaultMessage: "Voted"
   },
-  Revocation: {
+  [REVOCATION]: {
     id: "notifications.type.revocation",
     defaultMessage: "Revoked"
   },

@@ -1,8 +1,6 @@
 /* eslint-disable no-fallthrough */
 // we disable no-fallthrough rule in this file to simplify the select/case below.
-import * as wallet from "wallet";
 import { defineMessages } from "react-intl";
-import { DECODERAWTXS_FAILED } from "../actions/DecodeMessageActions";
 import {
   PUBLISHTX_FAILED,
   SIGNTX_FAILED,
@@ -40,7 +38,6 @@ import {
 import {
   ABANDONTRANSACTION_SUCCESS,
   ABANDONTRANSACTION_FAILED,
-  NEW_TRANSACTIONS_RECEIVED,
   GETSTARTUPWALLETINFO_FAILED,
   SEEDCOPIEDTOCLIPBOARD
 } from "../actions/ClientActions";
@@ -82,7 +79,11 @@ import {
   TRZ_NOCONNECTEDDEVICE,
   TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED
 } from "actions/TrezorActions";
-
+import {
+  NEW_TRANSACTIONS_RECEIVED,
+  TRANSACTION_TYPES,
+  DECODERAWTXS_FAILED
+} from "actions/TransactionActions";
 import {
   GETACTIVEVOTE_FAILED,
   GETVETTED_FAILED,
@@ -91,7 +92,6 @@ import {
   UPDATEVOTECHOICE_FAILED,
   GETVETTED_UPDATEDVOTERESULTS_FAILED
 } from "actions/GovernanceActions";
-
 import {
   LNWALLET_CONNECT_FAILED,
   LNWALLET_INVOICE_SETTLED,
@@ -228,10 +228,6 @@ const messages = defineMessages({
     id: "settings.errors.changePassphraseFailed",
     defaultMessage:
       "Update passphrase failed. Incorrect private passphrase, please try again."
-  },
-  DECODERAWTXS_FAILED: {
-    id: "decodeRawTx.errors.decodeFailed",
-    defaultMessage: "{originalError}"
   },
   DAEMONCONNECTING_TIMEOUT: {
     id: "daemonSyncingTimeout.errors",
@@ -453,14 +449,13 @@ export default function snackbar(state = {}, action) {
         break;
       }
 
-      type = tx.direction || wallet.TRANSACTION_TYPES[tx.type];
+      type = tx.direction || TRANSACTION_TYPES[tx.type];
       message = { ...tx, type };
       values = { message };
       break;
     }
 
     // Success messages
-
     case EXPORT_COMPLETED:
     case RENAMEACCOUNT_SUCCESS:
     case GETNEXTACCOUNT_SUCCESS:
