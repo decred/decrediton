@@ -442,7 +442,7 @@ export const extractPkScriptAddrs = (version, pkScript, chainParams) => {
     address: [],
     requiredSig: 0
   };
-}
+};
 
 // VarIntSerializeSize returns the number of bytes it would take to serialize
 // val as a variable length integer.

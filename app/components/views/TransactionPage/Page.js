@@ -196,13 +196,13 @@ const Page = ({
                 }>
                 <T id="txDetails.nonWalletInputs" m="Non Wallet Inputs" />
               </div>
-              {nonWalletInputs.map(({ outpointAddress, amountIn }, idx) => (
+              {nonWalletInputs.map(({ address, amount }, idx) => (
                 <div key={idx} className="txdetails-row">
                   <div className="txdetails-address">
-                    {addSpacingAroundText(outpointAddress)}
+                    {addSpacingAroundText(address)}
                   </div>
                   <div className="txdetails-amount">
-                    <Balance amount={amountIn} />
+                    <Balance amount={amount} />
                   </div>
                 </div>
               ))}
