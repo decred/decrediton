@@ -64,7 +64,7 @@ const ChooseOptions = React.memo(
             onChange={(option) => setVoteOption(option.value)}
             value={newVoteChoice || currentVoteChoice.id}
             vertical
-            disabled={votingComplete}
+            disabled={votingComplete || currentVoteChoice !== "abstain"}
             optionsListClassName={styles.radioButtonsList}
             optionsClassName={voteOptions.map((o) => styles[o.id])}
           />
