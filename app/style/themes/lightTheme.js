@@ -191,7 +191,7 @@ const lightTheme = {
   "accounts-default": "url('style/icons/accountDefault.svg')",
   "accounts-imported": "url('style/icons/accountImported.svg')",
   password: "url('style/icons/password.svg')",
-  txDetailsArrowLeft: "url('style/icons/txDetailsArrowLeft.svg')",
+  "tx-details-arrow-left": "url('style/icons/txDetailsArrowLeft.svg')",
   "stake-pool-icon": "url('style/icons/stake-pool.svg')",
   "expiry-icon": "url('style/icons/expiry.svg')",
   "split-fee-icon": "url('style/icons/split-fee.svg')",
@@ -220,7 +220,8 @@ const lightTheme = {
   "menu-trezor-active": "url('style/icons/trezorActive.svg')",
   "menu-trezor-default": "url('style/icons/trezorDefault.svg')",
   "menu-trezor-hover": "url('style/icons/trezorHover.svg')",
-  "menu-cancel-rescan-icon": "url('style/icons/menu-cancel-rescan.svg')"
+  "menu-cancel-rescan-icon": "url('style/icons/menu-cancel-rescan.svg')",
+  "politeia-loading-icon": "url('style/icons/politeia-loading.gif')"
 };
 
 export default lightTheme;
