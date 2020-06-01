@@ -3,6 +3,8 @@
 ////////////////////////////////////
 
 :root {
+  // TODO: check if these css variables aren't in style/themes/...
+  // and if not migrate theme and delete from here
   --sidebar-width: 296px;
   --sidebar-width-reduced: 60px;
   --disabled-box-shadow-color: rgba(0, 0, 0, 0.1);
@@ -55,6 +57,11 @@
 //  Global classes
 ////////////////////////////////////
 
+// TODO: delete box-sizing: content-box;
+// I added this ugly `:not` workaround to be able to skip pi-ui's classes
+// which are prefixed with 'styles_'.
+// Ideally we should use `* { box-sizing: inherit; } and html { box-sizing: border-box }`(already done in pi-ui)
+// we shouldn't override it in a global level - we should take care of this while migrating this file to a css module.
 *:not([class^="styles_"]),
 *:not([class^="styles_"])::before,
 *:not([class^="styles_"])::after {
