@@ -1,24 +1,29 @@
 import AccountsSelect from "./AccountsSelect";
-import { receiveAccountsSelect } from "connectors";
+import { useSelector, useDispatch } from "react-redux";
+import * as ca from "actions/ControlActions";
+import * as sel from "selectors";
 
-@autobind
-class ReceiveAccountsSelect extends React.Component {
-  render() {
-    return (
-      <AccountsSelect
-        {...{
-          ...this.props,
-          onChange: this.onChangeAccount,
-          accountsType: "visible"
-        }}
-      />
-    );
-  }
+function ReceiveAccountsSelect({ onChange }) {
+  const dispatch = useDispatch();
+  const getNextAddressAttempt = (value) =>
+    dispatch(ca.getNextAddressAttempt(value));
+  const mixedAccount = useSelector(sel.getMixedAccount);
+  const account = useSelector(sel.nextAddressAccount);
+  const onChangeAccount = (account) => {
+    onChange && onChange(account);
+    getNextAddressAttempt(account.value);
+  };
 
-  onChangeAccount(account) {
-    this.props.onChange && this.props.onChange(account);
-    this.props.getNextAddressAttempt(account.value);
-  }
+  return (
+    <AccountsSelect
+      {...{
+        onChange: onChangeAccount,
+        accountsType: "visible",
+        filterAccounts: [mixedAccount],
+        account
+      }}
+    />
+  );
 }
 
-export default receiveAccountsSelect(ReceiveAccountsSelect);
+export default ReceiveAccountsSelect;

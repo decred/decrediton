@@ -183,6 +183,10 @@ class Send extends React.Component {
       onShowSendAll,
       onHideSendAll
     } = this;
+    // if sending to another accounts from same wallet, there is no need to
+    // filter accounts.
+    const filterAccounts = isSendSelf ? [] : this.props.notMixedAccounts;
+    const accountsType = filterAccounts ? "visible" : "spending";
     return outputs.map((output, index) => ({
       data: (
         <OutputRow
@@ -205,7 +209,9 @@ class Send extends React.Component {
             onShowSendSelf,
             onShowSendOthers,
             onAddOutput,
-            onKeyDown
+            onKeyDown,
+            filterAccounts,
+            accountsType
           }}
         />
       ),

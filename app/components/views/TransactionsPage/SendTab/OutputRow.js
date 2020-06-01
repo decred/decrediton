@@ -108,7 +108,9 @@ const SendOutputRow = ({
   onChangeAccount,
   onShowSendSelf,
   account,
-  onShowSendOthers
+  onShowSendOthers,
+  filterAccounts,
+  accountsType
 }) => (
   <div className="is-row">
     <div>
@@ -133,9 +135,13 @@ const SendOutputRow = ({
         <div className="send-input-wrapper">
           <AccountsSelect
             className="send-input"
-            {...{ account }}
-            onChange={onChangeAccount}
-            onKeyDown={onKeyDown}
+            {...{
+              account,
+              filterAccounts,
+              onChange: onChangeAccount,
+              onKeyDown,
+              accountsType
+            }}
           />
         </div>
       )}

@@ -125,6 +125,8 @@ export const syncFetchHeadersComplete = get([
 ]);
 export const syncFetchTimeStart = get(["walletLoader", "syncFetchTimeStart"]);
 export const getPrivacyEnabled = get(["walletLoader", "privacyEnabled"]);
+// getMixedAccount gets the account number (int) which represents the mixed
+// account at decrediton.
 export const getMixedAccount = get(["walletLoader", "mixedAccount"]);
 export const getChangeAccount = get(["walletLoader", "changeAccount"]);
 export const getCsppServer = get(["walletLoader", "csppServer"]);
@@ -170,6 +172,8 @@ export const getAccountsResponse = get(["grpc", "getAccountsResponse"]);
 export const getNetworkResponse = get(["grpc", "getNetworkResponse"]);
 export const getNetworkError = get(["grpc", "getNetworkError"]);
 export const getAccountMixerRunning = get(["grpc", "accountMixerRunning"]);
+
+// accounts is a selector representing accountsList from gRPC response.
 const accounts = createSelector([getAccountsResponse], (r) =>
   r ? r.getAccountsList() : []
 );
@@ -195,6 +199,18 @@ export const spendableTotalBalance = createSelector(
       accountName === "imported" ? total : total + spendable,
     0
   )
+);
+
+// getNotMixedAccounts Is an array of all accountNumbers which is not the mixedaccount.
+// this ways we can filter our mixedAccount to send transactions in privacy wallets.
+export const getNotMixedAccounts = createSelector(
+  [getMixedAccount, balances],
+  (mixedAcc, balances) =>
+    mixedAcc
+      ? balances
+          .filter(({ accountNumber }) => accountNumber !== mixedAcc)
+          .map(({ accountNumber }) => accountNumber)
+      : null
 );
 
 export const lockedBalance = createSelector(
@@ -822,8 +838,8 @@ export const nextAddressAccount = createSelector(
 export const nextAddress = compose(get("address"), getNextAddressResponse);
 
 export const defaultSpendingAccount = createSelector(
-  [spendingAccounts],
-  find(compose(eq(0), get("value")))
+  [visibleAccounts, getMixedAccount],
+  (accounts, mixedAccount) => accounts.find(compose(eq(mixedAccount || 0), get("value")))
 );
 
 export const changePassphraseRequestAttempt = get([

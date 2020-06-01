@@ -22,7 +22,8 @@ const mapStateToProps = selectorMap({
   isTrezor: sel.isTrezor,
   unsignedRawTx: sel.unsignedRawTx,
   isWatchingOnly: sel.isWatchingOnly,
-  publishTxResponse: sel.publishTxResponse
+  publishTxResponse: sel.publishTxResponse,
+  notMixedAccounts: sel.getNotMixedAccounts
 });
 
 const mapDispatchToProps = (dispatch) =>

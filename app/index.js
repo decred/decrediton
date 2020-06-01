@@ -503,22 +503,23 @@ const themes = {
 const history = createMemoryHistory();
 const store = configureStore(initialState, history);
 
-const render = () => ReactDOM.render(
-  <AppContainer>
-    <ThemeProvider
-      themes={themes}
-      defaultThemeName={currentSettings.theme}
-      fonts={fonts}>
-      <Provider store={store}>
-        <ConnectedRouter history={history}>
-          <Switch>
-            <Route path="/" component={App} />
-          </Switch>
-        </ConnectedRouter>
-      </Provider>
-    </ThemeProvider>
-  </AppContainer>,
-  document.getElementById("root")
-);
+const render = () =>
+  ReactDOM.render(
+    <AppContainer>
+      <ThemeProvider
+        themes={themes}
+        defaultThemeName={currentSettings.theme}
+        fonts={fonts}>
+        <Provider store={store}>
+          <ConnectedRouter history={history}>
+            <Switch>
+              <Route path="/" component={App} />
+            </Switch>
+          </ConnectedRouter>
+        </Provider>
+      </ThemeProvider>
+    </AppContainer>,
+    document.getElementById("root")
+  );
 
 render();

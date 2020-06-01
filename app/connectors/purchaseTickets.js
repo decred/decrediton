@@ -8,7 +8,10 @@ const mapStateToProps = selectorMap({
   ticketPrice: sel.ticketPrice,
   spendingAccounts: sel.spendingAccounts,
   rescanRequest: sel.rescanRequest,
-  dismissBackupRedeemScript: sel.dismissBackupRedeemScript
+  dismissBackupRedeemScript: sel.dismissBackupRedeemScript,
+  visibleAccounts: sel.visibleAccounts,
+  mixedAccount: sel.getMixedAccount,
+  defaultSpendingAccount: sel.defaultSpendingAccount
 });
 
 const mapDispatchToProps = (dispatch) =>
