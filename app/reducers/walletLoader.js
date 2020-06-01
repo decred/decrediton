@@ -60,7 +60,6 @@ export default function walletLoader(state = {}, action) {
     case WALLETCREATED:
       return {
         ...state,
-        createWalletExisting: !action.createNewWallet,
         isWatchingOnly: action.isWatchingOnly,
         isTrezor: action.isTrezor
       };

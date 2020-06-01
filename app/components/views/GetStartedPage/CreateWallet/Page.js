@@ -1,13 +1,6 @@
-import { LoaderBarBottom } from "indicators";
 import "style/GetStarted.less";
 
-const CreateWalletPage = ({
-  StateComponent,
-  getCurrentBlockCount,
-  getNeededBlocks,
-  getEstimatedTimeLeft,
-  getDaemonSynced
-}) => (
+const CreateWalletPage = ({ StateComponent }) => (
   <div className="getstarted content">
     {StateComponent &&
       (React.isValidElement(StateComponent) ? (
@@ -15,14 +8,6 @@ const CreateWalletPage = ({
       ) : (
         <StateComponent />
       ))}
-    <LoaderBarBottom
-      {...{
-        getCurrentBlockCount,
-        getNeededBlocks,
-        getEstimatedTimeLeft,
-        getDaemonSynced
-      }}
-    />
   </div>
 );
 

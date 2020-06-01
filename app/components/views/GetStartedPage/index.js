@@ -5,13 +5,14 @@ import GetStartedPage from "./Page";
 import { AdvancedStartupBody } from "./AdvancedStartup";
 import { injectIntl } from "react-intl";
 import WalletSelection from "./WalletSelection";
+import CreateWalletMachine from "./CreateWallet";
 import Settings from "./Settings";
 import Logs from "./Logs";
 import { FormattedMessage as T } from "react-intl";
 import { createElement as h } from "react";
 import GetStartedMachinePage from "./GetStartedMachinePage";
 import TrezorConfig from "./TrezorConfig";
-import CreateWalletForm from "./PreCreateWallet";
+import PreCreateWalletForm from "./PreCreateWallet";
 import RescanWalletBody from "./RescanWallet";
 import WalletPubpassInput from "./OpenWallet";
 import ReleaseNotes from "./ReleaseNotes";
@@ -218,10 +219,16 @@ class GetStarted extends React.Component {
       onSendCreateWallet,
       onSendError,
       onSendContinue,
-      onShowReleaseNotes
+      onShowReleaseNotes,
+      onShowCreateWallet
     } = this;
     const { machine } = service;
-    const { isCreateNewWallet, isSPV } = this.service._state.context;
+    const { isTestNet } = this.props;
+    const {
+      isCreateNewWallet,
+      isSPV,
+      createWalletRef
+    } = this.service._state.context;
     const error = this.getError();
     let component, text, animationType, PageComponent;
 
@@ -279,8 +286,8 @@ class GetStarted extends React.Component {
           ) : (
             <T id="loaderBar.preCreateWalletRestore" m="Restore a Wallet..." />
           );
-          component = h(CreateWalletForm, {
-            onSendCreateWallet,
+          component = h(PreCreateWalletForm, {
+            onShowCreateWallet,
             onSendContinue,
             onSendBack,
             onSendError,
@@ -288,13 +295,6 @@ class GetStarted extends React.Component {
             isCreateNewWallet,
             error
           });
-          break;
-        case "creatingWallet":
-          text = isCreateNewWallet ? (
-            <T id="loaderBar.creatingWallet" m="Creating Wallet..." />
-          ) : (
-            <T id="loaderBar.restoringWallet" m="Restoring Wallet..." />
-          );
           break;
         case "walletPubpassInput":
           text = <T id="loaderBar.walletPubPass" m="Insert your pubkey" />;
@@ -343,6 +343,9 @@ class GetStarted extends React.Component {
     if (key === "releaseNotes") {
       PageComponent = h(ReleaseNotes, { onSendBack });
     }
+    if (key === "creatingWallet") {
+      PageComponent = h(CreateWalletMachine, { createWalletRef, isTestNet });
+    }
 
     return this.setState({ PageComponent });
   }
@@ -385,6 +388,15 @@ class GetStarted extends React.Component {
     return this.service.send({ type: "CREATE_WALLET", isNew });
   }
 
+  onShowCreateWallet({ isNew, walletMasterPubKey, isTrezor }) {
+    return this.service.send({
+      type: "SHOW_CREATE_WALLET",
+      isNew,
+      walletMasterPubKey,
+      isTrezor
+    });
+  }
+
   onSendContinue() {
     return this.service.send({ type: "CONTINUE" });
   }
@@ -416,12 +428,12 @@ class GetStarted extends React.Component {
   render() {
     const { PageComponent } = this.state;
     const { onShowLogs, onShowSettings } = this;
-    const { updateAvailable } = this.props;
+    const { updateAvailable, isTestNet } = this.props;
 
     return (
       <GetStartedPage
         PageComponent={PageComponent}
-        {...{ onShowLogs, onShowSettings, updateAvailable }}
+        {...{ onShowLogs, onShowSettings, updateAvailable, isTestNet }}
       />
     );
   }

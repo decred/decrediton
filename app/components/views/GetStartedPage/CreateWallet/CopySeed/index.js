@@ -1,51 +1,28 @@
 import CopySeed from "./Page";
-import { createWallet } from "connectors";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import * as cli from "actions/ClientActions";
 
-@autobind
-class CreateWalletForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showCopySeedConfirm: false
-    };
-  }
+export default function ({ mnemonic, sendContinue, sendBack }) {
+  const [showCopySeedConfirm, setShowCopySeed] = useState(false);
+  const dispatch = useDispatch();
+  const copySeedToClipboard = (mnemonic) => dispatch(cli.copySeedToClipboard(mnemonic));
 
-  handleCopySeed() {
-    this.setState({ showCopySeedConfirm: true });
-  }
+  const onSubmitCopySeedConfirm = () => {
+    setShowCopySeed(false);
+    copySeedToClipboard(mnemonic);
+  };
 
-  onSubmitCopySeedConfirm() {
-    const { mnemonic } = this.props;
-    this.setState({ showCopySeedConfirm: false });
-    this.props.copySeedToClipboard(mnemonic);
-  }
-
-  onCancelCopySeedConfirm() {
-    this.setState({ showCopySeedConfirm: false });
-  }
-  render() {
-    const { sendContinue, mnemonic, sendBack } = this.props;
-    const {
-      handleCopySeed,
-      onSubmitCopySeedConfirm,
-      onCancelCopySeedConfirm
-    } = this;
-    const { showCopySeedConfirm } = this.state;
-
-    return (
-      <CopySeed
-        {...{
-          mnemonic,
-          handleCopySeed,
-          showCopySeedConfirm,
-          onSubmitCopySeedConfirm,
-          onCancelCopySeedConfirm,
-          sendContinue,
-          sendBack
-        }}
-      />
-    );
-  }
+  return (
+    <CopySeed
+      {...{
+        mnemonic,
+        showCopySeedConfirm,
+        toggleCopySeed: setShowCopySeed,
+        onSubmitCopySeedConfirm,
+        sendContinue,
+        sendBack
+      }}
+    />
+  );
 }
-
-export default createWallet(CreateWalletForm);

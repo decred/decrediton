@@ -1,4 +1,4 @@
-import { Machine, assign } from "xstate";
+import { Machine, assign, spawn } from "xstate";
 import { CreateWalletMachine } from "stateMachines/CreateWalletStateMachine";
 import { OPENWALLET_INPUT } from "actions/WalletLoaderActions";
 
@@ -21,6 +21,9 @@ export const getStartedMachine = ({
       id: "getStarted",
       initial: "startMachine",
       context: {
+        // createWalletRef represents the a ref to the createWallet state
+        // machine.
+        createWalletRef: null,
         credentials: {},
         selectedWallet: null,
         appdata: null,
@@ -37,7 +40,8 @@ export const getStartedMachine = ({
             SHOW_SETTINGS: "settings",
             SHOW_LOGS: "logs",
             SHOW_TREZOR_CONFIG: "trezorConfig",
-            SHOW_RELEASE_NOTES: "releaseNotes"
+            SHOW_RELEASE_NOTES: "releaseNotes",
+            SHOW_CREATE_WALLET: "creatingWallet"
           },
           states: {
             preStart: {
@@ -170,9 +174,7 @@ export const getStartedMachine = ({
             // We have a step before wallet creation, which creates wallet directory and config.
             // preCreateWallet state is responsible to deal with that.
             preCreateWallet: {
-              onEntry: "isAtPreCreateWallet",
               on: {
-                CONTINUE: "creatingWallet",
                 BACK: "choosingWallet",
                 ERROR: {
                   target: "preCreateWallet",
@@ -181,18 +183,6 @@ export const getStartedMachine = ({
                   })
                 }
               }
-            },
-            creatingWallet: {
-              onEntry: "isAtCreatingWallet",
-              on: {
-                ERROR: {
-                  target: "preCreateWallet",
-                  actions: assign({
-                    error: (context, event) => event.error && event.error
-                  })
-                }
-              },
-              ...CreateWalletMachine
             },
             choosingWallet: {
               onEntry: "isAtChoosingWallet",
@@ -258,6 +248,49 @@ export const getStartedMachine = ({
             }
           }
           // end of startMachine states
+        },
+        creatingWallet: {
+          initial: "creatingWallet",
+          states: {
+            creatingWallet: {
+              entry: assign({
+                createWalletRef: (ctx, e) => {
+                  let spawnedMachine;
+                  // spawn a new actor machine so we can comunicate with the
+                  // getStartedMachine.
+
+                  // source: https://xstate.js.org/docs/guides/actors.html#spawning-machines
+                  try {
+                    spawnedMachine = spawn(
+                      CreateWalletMachine.withContext({
+                        isNew: e.isNew,
+                        walletMasterPubKey: e.walletMasterPubKey,
+                        isTrezor: e.isTrezor
+                      })
+                    );
+                  } catch (e) {
+                    console.log(e);
+                  }
+                  return spawnedMachine;
+                }
+              })
+            }
+          },
+          on: {
+            BACK: "startMachine.choosingWallet",
+            WALLET_CREATED: {
+              target: "startMachine.preStart",
+              actions: assign({
+                passPhrase: (context, event) => event.passPhrase
+              })
+            },
+            ERROR: {
+              target: "startMachine.preCreateWallet",
+              actions: assign({
+                error: (context, event) => event.error && event.error
+              })
+            }
+          }
         },
         releaseNotes: {
           initial: "releaseNotes",
@@ -393,6 +426,7 @@ export const getStartedMachine = ({
             });
         },
         isSyncingRPC: (context) => {
+          const { passPhrase } = context;
           if (context.isSPV) {
             return startSPVSync()
               .then((r) => r)
@@ -400,7 +434,7 @@ export const getStartedMachine = ({
                 sendEvent({ type: "ERROR_SYNCING_WALLET", payload: { error } })
               );
           }
-          onRetryStartRPC()
+          onRetryStartRPC(passPhrase)
             .then((r) => r)
             .catch((error) =>
               sendEvent({ type: "ERROR_SYNCING_WALLET", payload: { error } })

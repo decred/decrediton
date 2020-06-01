@@ -101,10 +101,6 @@ export const showPrivacy = () => (dispatch) => {
   dispatch(pushHistory("/getstarted/privacy"));
 };
 
-export const showCreateWallet = (isNew) => (dispatch) => {
-  dispatch(pushHistory("/getstarted/createwallet/" + isNew));
-};
-
 // toggleSpv enables and disables spv in decrediton when first starting.
 export const toggleSpv = (isSPV) => async (dispatch, getState) => {
   dispatch(updateStateSettingsChanged({ spvMode: isSPV }, true));

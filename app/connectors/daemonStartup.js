@@ -66,7 +66,6 @@ const mapDispatchToProps = (dispatch) =>
       onShowTutorial: da.showTutorial,
       onShowSpvChoice: da.showSpvChoice,
       onShowPrivacy: da.showPrivacy,
-      onShowCreateWallet: da.showCreateWallet,
       onShowLanguage: da.showLanguage,
       onShowGetStarted: da.showGetStarted,
 

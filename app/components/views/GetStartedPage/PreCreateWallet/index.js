@@ -111,6 +111,7 @@ class PreCreateWallet extends React.Component {
       isTrezor
     } = this.state;
     const { isTestNet, onSendContinue, isCreateNewWallet } = this.props;
+    const isNew = isCreateNewWallet;
 
     const walletSelected = {
       label: newWalletName,
@@ -118,7 +119,7 @@ class PreCreateWallet extends React.Component {
         wallet: newWalletName,
         isWatchingOnly,
         isTrezor,
-        isNew: isCreateNewWallet,
+        isNew,
         network: isTestNet ? "testnet" : "mainnet"
       }
     };
@@ -142,16 +143,18 @@ class PreCreateWallet extends React.Component {
       walletSelected.watchingOnly = true;
       return this.props
         .trezorGetWalletCreationMasterPubKey()
-        .then(() =>
+        .then((walletMasterPubKey) =>
           this.props
             .onCreateWallet(walletSelected)
-            .then(() => this.props.onShowCreateWallet(isCreateNewWallet))
+            .then(() =>
+              this.props.onShowCreateWallet({ isNew, walletMasterPubKey, isTrezor: true })
+            )
         );
     }
 
     return this.props
       .onCreateWallet(walletSelected)
-      .then(() => this.props.onShowCreateWallet(isCreateNewWallet))
+      .then(() => this.props.onShowCreateWallet({ isNew, walletMasterPubKey }))
       .catch((error) => this.props.onSendError(error));
   }
 

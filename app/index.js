@@ -257,9 +257,7 @@ const initialState = {
     // Loader
     getLoaderRequestAttempt: false,
     loader: null,
-    getLoaderError: null,
-    // WalletCreate
-    createWalletExisting: false
+    getLoaderError: null
   },
   notifications: {
     transactionNtfns: null,
@@ -357,7 +355,6 @@ const initialState = {
     validateAddressResponse: null,
     validateAddressError: null,
 
-    walletMasterPubKey: null,
     exportingData: false,
     modalVisible: false,
     aboutModalMacOSVisible: false,

@@ -22,8 +22,7 @@ import {
   SIGNTX_SUCCESS,
   SIGNMESSAGE_ATTEMPT,
   SIGNMESSAGE_FAILED,
-  SIGNMESSAGE_SUCCESS,
-  VALIDATEMASTERPUBKEY_SUCCESS
+  SIGNMESSAGE_SUCCESS
 } from "./ControlActions";
 
 const hardeningConstant = 0x80000000;
@@ -941,8 +940,9 @@ export const getWalletCreationMasterPubKey = () => async (
       }
     );
 
-    dispatch({ type: VALIDATEMASTERPUBKEY_SUCCESS, masterPubKey });
     dispatch({ type: TRZ_GETWALLETCREATIONMASTERPUBKEY_SUCCESS });
+
+    return masterPubKey;
   } catch (error) {
     dispatch({ error, type: TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED });
     throw error;

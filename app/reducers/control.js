@@ -70,8 +70,6 @@ import {
   MODAL_HIDDEN,
   SHOW_ABOUT_MODAL_MACOS,
   HIDE_ABOUT_MODAL_MACOS,
-  VALIDATEMASTERPUBKEY_SUCCESS,
-  VALIDATEMASTERPUBKEY_FAILED,
   GETACCOUNTEXTENDEDKEY_ATTEMPT,
   GETACCOUNTEXTENDEDKEY_FAILED,
   GETACCOUNTEXTENDEDKEY_SUCCESS,
@@ -510,14 +508,6 @@ export default function control(state = {}, action) {
       };
     case VALIDATEADDRESS_CLEANSTORE:
       return { ...state, validateAddressResponse: null };
-    case VALIDATEMASTERPUBKEY_SUCCESS:
-      return { ...state, masterPubKey: action.masterPubKey };
-    case VALIDATEMASTERPUBKEY_FAILED:
-      return {
-        ...state,
-        masterPubKey: null,
-        validateMasterPubKeyResponse: null
-      };
     case WALLET_AUTOBUYER_SETTINGS:
       return { ...state, balanceToMaintain: action.balanceToMaintain };
     case EXPORT_STARTED:

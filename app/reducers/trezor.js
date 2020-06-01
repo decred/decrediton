@@ -64,7 +64,7 @@ export default function trezor(state = {}, action) {
         deviceList: null,
         transportError: false,
         device: null,
-        getDeviceListAttempt: true
+        getDeviceListAttempt: false
       };
     case TRZ_LOADDEVICELIST_ATTEMPT:
       return {

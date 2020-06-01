@@ -6,6 +6,7 @@ import {
   AboutModalButton
 } from "./messages";
 import { LoaderBarBottom } from "indicators";
+import cx from "classnames";
 import "style/GetStarted.less";
 
 const DaemonLoadingBody = ({
@@ -16,9 +17,10 @@ const DaemonLoadingBody = ({
   onShowSettings,
   getCurrentBlockCount,
   getNeededBlocks,
-  getEstimatedTimeLeft
+  getEstimatedTimeLeft,
+  isTestNet
 }) => (
-  <div className="page-body getstarted">
+  <div className={cx("page-body getstarted", isTestNet && "testnet-body")}>
     <div className="getstarted loader">
       <div className="loader-settings-logs">
         {updateAvailable && (

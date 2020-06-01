@@ -1,82 +1,132 @@
 import { injectIntl } from "react-intl";
 import "style/GetStarted.less";
-import cx from "classnames";
-import { interpret } from "xstate";
-import { CreateWalletMachine } from "stateMachines/CreateWalletStateMachine";
 import Page from "./Page";
 import { withRouter } from "react-router";
 import CopySeed from "./CopySeed";
 import ConfirmSeed from "./ConfirmSeed";
 import ExistingSeed from "./ExistingSeed";
-import { createWallet } from "connectors";
 import { createElement as h } from "react";
 import { DecredLoading } from "indicators";
+import { useState, useEffect, useCallback } from "react";
+import { useService } from "@xstate/react";
+import { sendParent } from "xstate";
+import { createWalletHooks } from "./hooks";
 
-@autobind
-class CreateWallet extends React.Component {
-  service;
-  constructor(props) {
-    super(props);
-    const { sendEvent, sendContinue, checkIsValid, onCreateWatchOnly } = this;
-    const { backToCredentials, cancelCreateWallet, generateSeed } = props;
-    this.machine = CreateWalletMachine({
-      generateSeed,
-      backToCredentials,
-      cancelCreateWallet,
-      sendEvent,
-      sendContinue,
-      checkIsValid,
-      onCreateWatchOnly
-    });
-    this.service = interpret(this.machine).onTransition((current) =>
-      this.setState({ current }, this.getStateComponent)
-    );
-    this.state = {
-      current: this.machine.initialState,
-      StateComponent: null,
-      isValid: false
-    };
-  }
+const CreateWallet = ({ createWalletRef }) => {
+  const {
+    decodeSeed,
+    cancelCreateWallet,
+    generateSeed,
+    createWatchOnlyWalletRequest,
+    createWalletRequest,
+    isTestNet
+  } = createWalletHooks();
+  const [current, send] = useService(createWalletRef);
+  const [StateComponent, setStateComponent] = useState(null);
+  const [isValid, setIsValid] = useState(false);
+  const [newWallet, setIsNew] = useState(null);
+  const [walletMasterPubKey, setWalletMasterPubkey] = useState(null);
 
-  componentDidMount() {
-    this.service.start();
-    const isNew = !this.props.createWalletExisting;
-    const isWatchingOnly = this.props.isCreatingWatchingOnly;
-    // TODO Add watching only state and tezos
-    const { isTrezor, isTestNet } = this.props;
-    this.service.send({ type: "CREATE_WALLET", isNew, isTestNet });
-    this.service.send({ type: "RESTORE_WATCHING_ONLY_WALLET", isWatchingOnly });
-    this.service.send({ type: "RESTORE_TREZOR_WALLET", isTrezor });
-    this.service.send({
-      type: "RESTORE_WALLET",
-      isRestore: !isNew,
-      isWatchingOnly
-    });
-  }
+  const sendEvent = useCallback(
+    (data) => {
+      const { type, payload } = data;
+      send({ type, payload });
+    },
+    [send]
+  );
 
-  componentWillUnmount() {
-    this.service.stop();
-  }
+  const sendContinue = useCallback(() => {
+    send({ type: "CONTINUE" });
+  }, [send]);
 
-  getStateComponent() {
-    const { current, isValid } = this.state;
-    const {
-      sendBack,
-      sendContinue,
-      setPassPhrase,
-      setSeed,
-      setError,
-      onCreateWallet
-    } = this;
-    const { mnemonic, error } = this.service._state.context;
-    const { decodeSeed } = this.props;
-    let component, text;
+  const sendBack = useCallback(() => {
+    send({ type: "BACK" });
+  }, [send]);
+
+  const cancelWalletCreation = useCallback(async () => {
+    await cancelCreateWallet();
+    send({ type: "BACK" });
+  }, [send, cancelCreateWallet]);
+
+  const setError = useCallback(
+    (error) => {
+      send({ type: "VALIDATE_DATA", error });
+    },
+    [send]
+  );
+
+  const setSeed = useCallback(
+    (seed) => {
+      const { passPhrase, error } = current.context;
+      send({ type: "VALIDATE_DATA", seed, passPhrase, error });
+    },
+    [send, current.context]
+  );
+
+  const setPassPhrase = useCallback(
+    (passPhrase) => {
+      const { seed, error } = current.context;
+      send({ type: "VALIDATE_DATA", passPhrase, seed, error });
+    },
+    [send, current.context]
+  );
+
+  const checkIsValid = useCallback(() => {
+    const { seed, passPhrase } = current.context;
+    // We validate our seed and passphrase at their specific components
+    // So if they are set at the machine it means they have passed validation.
+    if (!seed || !passPhrase) return setIsValid(false);
+    if (seed.length === 0) return setIsValid(false);
+    if (passPhrase.length === 0) return setIsValid(false);
+
+    return setIsValid(true);
+  }, [setIsValid, current.context]);
+
+  const onCreateWallet = useCallback(() => {
+    const pubpass = ""; // Temporarily disabled?
+    const { seed, passPhrase } = current.context;
+
+    if (!(seed && passPhrase)) return;
+    createWalletRequest(pubpass, passPhrase, seed, newWallet)
+      .then(() => sendEvent({ type: "WALLET_CREATED" }))
+      .catch((error) => sendParent({ type: "ERROR", error }));
+    // we send a continue so we go to loading state
+    sendContinue();
+  }, [
+    createWalletRequest,
+    current.context,
+    newWallet,
+    sendContinue,
+    sendEvent
+  ]);
+
+  const onCreateWatchOnly = useCallback(() => {
+    createWatchOnlyWalletRequest(walletMasterPubKey)
+      .then(() => sendEvent({ type: "WALLET_CREATED" }))
+      .catch((error) => sendEvent({ type: "ERROR", error }));
+    // we send a continue so we go to loading state
+    sendContinue();
+  }, [
+    createWatchOnlyWalletRequest,
+    sendEvent,
+    sendContinue,
+    walletMasterPubKey
+  ]);
+
+  const getStateComponent = useCallback(() => {
+    const { mnemonic, error } = current.context;
+    let component;
 
     switch (current.value) {
       case "newWallet":
-        component = h(CopySeed, { sendBack, sendContinue, mnemonic });
+        component = h(CopySeed, {
+          sendBack: cancelWalletCreation,
+          sendContinue,
+          mnemonic
+        });
         break;
       case "confirmSeed":
+        if (!mnemonic) return;
         component = h(ConfirmSeed, {
           mnemonic,
           sendBack,
@@ -90,7 +140,7 @@ class CreateWallet extends React.Component {
         break;
       case "writeSeed":
         component = h(ExistingSeed, {
-          sendBack,
+          sendBack: cancelWalletCreation,
           decodeSeed,
           sendContinue,
           setSeed,
@@ -101,17 +151,11 @@ class CreateWallet extends React.Component {
           error
         });
         break;
-      case "creatingWallet": {
-        // If we already have rendered a component, get the last StateComponent
-        // and re-render it with all its props and isCreatingWallet props as true.
-        // Render DecredLoading, otherwise.
-        const c = this.state.StateComponent
-          ? this.state.StateComponent.type
-          : DecredLoading;
-        const props = this.state.StateComponent
-          ? { ...this.state.StateComponent.props }
-          : {};
-        component = h(c, { ...props, isCreatingWallet: true });
+      case "restoreWatchingOnly":
+        component = h(DecredLoading);
+        break;
+      case "loading": {
+        component = h(DecredLoading);
         break;
       }
       case "finished":
@@ -120,94 +164,78 @@ class CreateWallet extends React.Component {
         break;
     }
 
-    return this.setState({ StateComponent: component, text });
-  }
+    return setStateComponent(component);
+  }, [
+    cancelWalletCreation,
+    current.context,
+    current.value,
+    decodeSeed,
+    isValid,
+    onCreateWallet,
+    sendBack,
+    sendContinue,
+    setError,
+    setPassPhrase,
+    setSeed
+  ]);
 
-  sendEvent(data) {
-    const { type, payload } = data;
-    this.service.send({ type, payload });
-  }
+  useEffect(() => {
+    const { isNew, walletMasterPubKey, mnemonic } = current.context;
+    switch (current.value) {
+      case "createWalletInit":
+        setIsNew(isNew);
+        setWalletMasterPubkey(walletMasterPubKey);
+        send({ type: "CREATE_WALLET", isNew });
+        send({
+          type: "RESTORE_WATCHING_ONLY_WALLET",
+          isWatchingOnly: !!walletMasterPubKey
+        });
+        send({
+          type: "RESTORE_WALLET",
+          isRestore: !isNew,
+          isWatchingOnly: !!walletMasterPubKey
+        });
+        break;
+      case "generateNewSeed":
+        // We only generate the seed once. If mnemonic already exists, we return it.
+        if (mnemonic) return;
+        sendContinue();
+        generateSeed().then((response) => {
+          // Allows verification skip in dev
+          const seed = isTestNet ? response.getSeedBytes() : null;
+          const mnemonic = response.getSeedMnemonic();
+          sendEvent({ type: "SEED_GENERATED", payload: { mnemonic, seed } });
+        });
+        break;
+      case "writeSeed":
+        checkIsValid();
+        break;
+      case "confirmSeed":
+        checkIsValid();
+        break;
+      case "restoreWatchingOnly":
+        onCreateWatchOnly();
+        break;
+      case "finished":
+        break;
+      case "walletCreated":
+        break;
+    }
+    getStateComponent();
+  }, [
+    current,
+    isValid,
+    checkIsValid,
+    generateSeed,
+    getStateComponent,
+    isTestNet,
+    onCreateWatchOnly,
+    send,
+    sendContinue,
+    sendEvent
+  ]);
 
-  sendContinue() {
-    this.service.send({ type: "CONTINUE" });
-  }
+  return <Page {...{ StateComponent }} />;
+};
 
-  sendBack() {
-    this.service.send({ type: "BACK" });
-  }
-
-  onCreateWallet() {
-    const { createWalletRequest } = this.props;
-    const { isNew } = this.state;
-    const pubpass = ""; // Temporarily disabled?
-    const { seed, passPhrase } = this.service._state.context;
-
-    if (!(seed && passPhrase)) return;
-    createWalletRequest(pubpass, passPhrase, seed, isNew)
-      .then(() => this.sendContinue())
-      .catch((error) => this.sendEvent({ type: "ERROR", error }));
-    // we send a continue so we go to creatingWallet state
-    this.sendContinue();
-  }
-
-  onCreateWatchOnly() {
-    const { createWatchOnlyWalletRequest, walletMasterPubKey } = this.props;
-    createWatchOnlyWalletRequest(walletMasterPubKey)
-      .then(() => this.sendContinue())
-      .catch((error) => this.sendEvent({ type: "ERROR", error }));
-    // we send a continue so we go to creatingWallet state
-    this.sendContinue();
-  }
-
-  setError(error) {
-    this.service.send({ type: "VALIDATE_DATA", error });
-  }
-
-  setSeed(seed) {
-    const { passPhrase, error } = this.machine.context;
-    this.service.send({ type: "VALIDATE_DATA", seed, passPhrase, error });
-  }
-
-  setPassPhrase(passPhrase) {
-    const { seed, error } = this.machine.context;
-    this.service.send({ type: "VALIDATE_DATA", passPhrase, seed, error });
-  }
-
-  checkIsValid() {
-    const { seed, passPhrase } = this.service._state.context;
-    // We validate our seed and passphrase at their specific components
-    // So if they are set at the machine it means they have passed validation.
-    if (!seed || !passPhrase) return this.setState({ isValid: false });
-    if (seed.length === 0) return this.setState({ isValid: false });
-    if (passPhrase.length === 0) return this.setState({ isValid: false });
-
-    return this.setState({ isValid: true });
-  }
-
-  render() {
-    const {
-      getDaemonSynced,
-      getCurrentBlockCount,
-      getNeededBlocks,
-      getEstimatedTimeLeft,
-      isTestNet
-    } = this.props;
-    const { StateComponent, walletHeader } = this.state;
-    return (
-      <div className={cx("page-body getstarted", isTestNet && "testnet-body")}>
-        <Page
-          {...{
-            StateComponent,
-            getCurrentBlockCount,
-            getNeededBlocks,
-            getEstimatedTimeLeft,
-            getDaemonSynced,
-            walletHeader
-          }}
-        />
-      </div>
-    );
-  }
-}
-
-export default injectIntl(withRouter(createWallet(CreateWallet)));
+export default injectIntl(withRouter(CreateWallet));
