@@ -20,6 +20,7 @@ import {
   LNWALLET_PAYSTREAM_CREATED,
   LNWALLET_SENDPAYMENT_ATTEMPT,
   LNWALLET_SENDPAYMENT_SUCCESS,
+  LNWALLET_SENDPAYMENT_FAILED,
   LNWALLET_DCRLND_STOPPED,
   LNWALLET_CHECKED
 } from "actions/LNActions";
@@ -32,7 +33,7 @@ function addOutstandingPayment(oldOut, rhashHex, payData) {
 
 function delOutstandingPayment(oldOut, rhashHex) {
   const newOut = { ...oldOut };
-  delete (newOut, rhashHex);
+  delete newOut[rhashHex];
   return newOut;
 }
 
@@ -152,6 +153,15 @@ export default function ln(state = {}, action) {
           action.rhashHex
         )
       };
+    case LNWALLET_SENDPAYMENT_FAILED:
+      return {
+        ...state,
+        outstandingPayments: delOutstandingPayment(
+          state.outstandingPayments,
+          action.rhashHex
+        ),
+        failedPayments: [ ...state.failedPayments, action.payData ]
+      };
     case LNWALLET_DCRLND_STOPPED:
       return {
         ...state,
@@ -163,6 +173,8 @@ export default function ln(state = {}, action) {
         closedChannels: [],
         payStream: null,
         payments: [],
+        outstandingPayments: {},
+        failedPayments: [],
         invoices: [],
         info: {
           version: null,

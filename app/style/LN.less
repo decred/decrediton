@@ -222,13 +222,28 @@
 }
 
 .ln-payments-list {
+  margin-bottom: 1em;
+
   .ln-payment {
     margin-top: 1em;
     background-color: var(--background-back-color);
     padding: 1em 1em 1em 3em;
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 4fr 4fr 1fr;
     min-height: 40px;
+  }
+
+  .ln-payment .payment-error {
+    grid-column: 1 / 3;
+    color: var(--error-message-color);
+  }
+
+  .ln-payment.outstanding > .spinner {
+    align-self: center;
+
+    > div {
+      background-color: var(--checkbox-stroke-color);
+    }
   }
 
   .value { font-size: 32px; }
@@ -239,7 +254,6 @@
     width: 10em;
     color: var(--stroke-color-default);
   }
-
 }
 
 .ln-closechannelmodal-chaninfo {

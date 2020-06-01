@@ -1490,4 +1490,6 @@ export const lnPendingChannels = get(["ln", "pendingChannels"]);
 export const lnClosedChannels = get(["ln", "closedChannels"]);
 export const lnInvoices = get(["ln", "invoices"]);
 export const lnPayments = get(["ln", "payments"]);
+export const lnOutstandingPayments = get(["ln", "outstandingPayments"]);
+export const lnFailedPayments = get(["ln", "failedPayments"]);
 export const lnAddInvoiceAttempt = get(["ln", "addInvoiceAttempt"]);

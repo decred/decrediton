@@ -415,6 +415,8 @@ const initialState = {
     closedChannels: Array(),
     invoices: Array(),
     payments: Array(),
+    outstandingPayments: {}, // map paymentHash => payment data
+    failedPayments: Array(),
     addInvoiceAttempt: false,
     sendPaymentAttempt: false
   },
