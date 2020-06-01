@@ -4,29 +4,6 @@ import { RadioButtonGroup } from "pi-ui";
 import styles from "../ProposalDetails.module.css";
 import { PassphraseModalButton } from "buttons";
 
-// const VoteOption = React.memo(
-//   ({ value, description, onClick, checked, votingComplete }) => (
-//     <div className={styles.voteOption}>
-//       <input
-//         className={styles[value]}
-//         type="radio"
-//         id={value}
-//         name="proposalVoteChoice"
-//         readOnly={!onClick}
-//         onChange={onClick}
-//         disabled={votingComplete}
-//         value={value}
-//         checked={checked}
-//       />
-//       <label
-//         className={classNames(styles.radioLabel, styles[value])}
-//         htmlFor={value}
-//       />
-//       {description}
-//     </div>
-//   )
-// );
-
 const UpdateVoteChoiceModalButton = ({
   onSubmit,
   newVoteChoice,
@@ -88,6 +65,8 @@ const ChooseOptions = React.memo(
             value={newVoteChoice || currentVoteChoice.id}
             vertical
             disabled={votingComplete}
+            optionsListClassName={styles.radioButtonsList}
+            optionsClassName={voteOptions.map((o) => styles[o.id])}
           />
         </div>
       </div>

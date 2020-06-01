@@ -89,8 +89,16 @@
   height: 64px;
 }
 
+.votingPreference {
+  line-height: 0;
+}
+
 div.radioButtonsWrapper > * {
   box-sizing: border-box;
+}
+
+.radioButtonsList {
+  margin-left: -7px;
 }
 
 .notVoting {
@@ -107,7 +115,7 @@ div.radioButtonsWrapper > * {
 }
 
 .preferenceTitle {
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .noTickets {
@@ -203,65 +211,20 @@ div.radioButtonsWrapper > * {
   color: var(--tab-text-active-color) !important;
 }
 
-.voteOption {
-  margin-bottom: 10px;
-}
-
-.voteOption input[type="radio"] {
-  position: absolute;
-  opacity: 0;
-}
-
-.voteOption input[type="radio"] + .radioLabel::before {
-  content: "";
-  background: var(--disabled-background-color-lighter);
-  border-radius: 100%;
-  border: 1px solid var(--disabled-color);
-  display: inline-block;
-  width: 14px;
-  height: 14px;
-  position: relative;
-  cursor: pointer;
-  text-align: center;
-  transition: all 250ms ease;
-  margin-bottom: -3px;
-}
-
-.voteOption input[type="radio"] + .radioLabel:empty::before {
-  margin-right: 5px;
-  text-transform: capitalize;
-}
-
-.voteOption input[type="radio"] + .radioLabel.yes::before {
-  border: 1px solid var(--vote-yes-color);
-}
-
-.voteOption input[type="radio"] + .radioLabel.no::before {
-  border: 1px solid var(--vote-no-color);
-}
-
-.voteOption input[type="radio"]:checked + .radioLabel.yes::before {
-  background-color: var(--vote-yes-color);
-  box-shadow: inset 0 0 0 3px var(--disabled-background-color-lighter);
-}
-
-.voteOption input[type="radio"]:checked + .radioLabel.no::before {
-  background-color: var(--vote-no-color);
-  box-shadow: inset 0 0 0 3px var(--disabled-background-color-lighter);
-}
-
-.voteOption input[type="radio"]:focus + .radioLabel.no::before {
-  outline: none;
-  border-color: var(--vote-no-color);
-}
-
-.voteOption input[type="radio"]:focus + .radioLabel.yes::before {
-  outline: none;
+.yes > label > span:nth-child(1) {
   border-color: var(--vote-yes-color);
 }
 
-.voteOption input[type="radio"]:disabled + .radioLabel::before {
-  cursor: default;
+.yes > label > span:nth-child(2) {
+  background-color: var(--vote-yes-color);
+}
+
+.no > label > span:nth-child(1) {
+  border-color: var(--vote-no-color);
+}
+
+.no > label > span:nth-child(2) {
+  background-color: var(--vote-no-color);
 }
 
 .voteConfirmation {
