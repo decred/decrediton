@@ -9,35 +9,18 @@ import { createElement as h } from "react";
 import { DecredLoading } from "indicators";
 import { useState, useEffect, useCallback } from "react";
 import { useService } from "@xstate/react";
-import { useSelector, useDispatch } from "react-redux";
-import * as wla from "actions/WalletLoaderActions";
-import * as sel from "selectors";
 import { sendParent } from "xstate";
+import { createWalletHooks } from "./hooks";
 
 const CreateWallet = ({ createWalletRef }) => {
-  const dispatch = useDispatch();
-  const decodeSeed = useCallback((seed) => dispatch(wla.decodeSeed(seed)), [
-    dispatch
-  ]);
-  const cancelCreateWallet = useCallback(
-    () => dispatch(wla.cancelCreateWallet()),
-    [dispatch]
-  );
-  const generateSeed = useCallback(() => dispatch(wla.generateSeed()), [
-    dispatch
-  ]);
-  // TODO implement pubpass
-  const createWatchOnlyWalletRequest = useCallback(
-    (extendedPubKey, pubPass = "") =>
-      dispatch(wla.createWatchOnlyWalletRequest(extendedPubKey, pubPass)),
-    [dispatch]
-  );
-  const createWalletRequest = useCallback(
-    (pubpass, passPhrase, seed, isNew) =>
-      dispatch(wla.createWalletRequest(pubpass, passPhrase, seed, isNew)),
-    [dispatch]
-  );
-  const isTestNet = useSelector(sel.isTestNet);
+  const {
+    decodeSeed,
+    cancelCreateWallet,
+    generateSeed,
+    createWatchOnlyWalletRequest,
+    createWalletRequest,
+    isTestNet
+  } = createWalletHooks();
   const [current, send] = useService(createWalletRef);
   const [StateComponent, setStateComponent] = useState(null);
   const [isValid, setIsValid] = useState(false);
