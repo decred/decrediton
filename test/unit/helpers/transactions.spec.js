@@ -7,7 +7,7 @@ import {
 } from "../../data/HexTransactions";
 import {
     decodeRawTransaction
-} from "../../../app/wallet/service";
+} from "../../../app/helpers/msgTx";
 import {
     isMixTx,
     isMixedSplitTx
