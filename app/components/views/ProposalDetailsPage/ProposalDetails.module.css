@@ -89,6 +89,10 @@
   height: 64px;
 }
 
+div.radioButtonsWrapper > * {
+  box-sizing: border-box;
+}
+
 .notVoting {
   background-image: var(--chat-bubbles);
   background-repeat: no-repeat;

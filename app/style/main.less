@@ -55,12 +55,15 @@
 //  Global classes
 ////////////////////////////////////
 
-*,
-*::before,
-*::after {
+*:not([class^="styles_"]),
+*:not([class^="styles_"])::before,
+*:not([class^="styles_"])::after {
   box-sizing: content-box;
 }
 
+[class^="styles_"] > * {
+  box-sizing: inherit;
+}
 
 body {
   font-family: var(--font-family-regular);
@@ -133,19 +136,26 @@ main {
 }
 
 ////////////////////////////////////
-//  Disable element selection 
+//  Disable element selection
 ////////////////////////////////////
 
 .decrediton {
-	-webkit-user-select: none;
-	-webkit-user-drag: none;
-	-webkit-app-region: no-drag;
-	cursor: default;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-app-region: no-drag;
+  cursor: default;
 }
 
 //Exceptions
 
-.standalone-page.txdetails-standalone-page,.snackbar,.purchase-ticket-area,.receive-content-nest,
-.stakepool-flex-height,.tickets-list,.my-tickets-charts,.account-content-nest,.message-signature{
-	-webkit-user-select: text;
+.standalone-page.txdetails-standalone-page,
+.snackbar,
+.purchase-ticket-area,
+.receive-content-nest,
+.stakepool-flex-height,
+.tickets-list,
+.my-tickets-charts,
+.account-content-nest,
+.message-signature {
+  -webkit-user-select: text;
 }
