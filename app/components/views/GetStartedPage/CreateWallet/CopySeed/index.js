@@ -9,7 +9,6 @@ export default function ({ mnemonic, sendContinue, sendBack }) {
   const copySeedToClipboard = (mnemonic) => dispatch(cli.copySeedToClipboard(mnemonic));
 
   const onSubmitCopySeedConfirm = () => {
-    console.log(mnemonic);
     setShowCopySeed(false);
     copySeedToClipboard(mnemonic);
   };

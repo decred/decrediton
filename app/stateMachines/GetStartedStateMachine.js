@@ -174,9 +174,7 @@ export const getStartedMachine = ({
             // We have a step before wallet creation, which creates wallet directory and config.
             // preCreateWallet state is responsible to deal with that.
             preCreateWallet: {
-              // onEntry: "isAtPreCreateWallet",
               on: {
-                // CONTINUE: "creatingWallet",
                 BACK: "choosingWallet",
                 ERROR: {
                   target: "preCreateWallet",
