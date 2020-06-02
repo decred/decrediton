@@ -1,31 +1,8 @@
 import React from "react";
 import { FormattedMessage as T } from "react-intl";
-import { classNames } from "pi-ui";
+import { RadioButtonGroup } from "pi-ui";
 import styles from "../ProposalDetails.module.css";
 import { PassphraseModalButton } from "buttons";
-
-const VoteOption = React.memo(
-  ({ value, description, onClick, checked, votingComplete }) => (
-    <div className={styles.voteOption}>
-      <input
-        className={styles[value]}
-        type="radio"
-        id={value}
-        name="proposalVoteChoice"
-        readOnly={!onClick}
-        onChange={onClick}
-        disabled={votingComplete}
-        value={value}
-        checked={checked}
-      />
-      <label
-        className={classNames(styles.radioLabel, styles[value])}
-        htmlFor={value}
-      />
-      {description}
-    </div>
-  )
-);
 
 const UpdateVoteChoiceModalButton = ({
   onSubmit,
@@ -78,25 +55,19 @@ const ChooseOptions = React.memo(
             m="My Voting Preference"
           />
         </div>
-        <div>
-          {voteOptions.map((o) => (
-            <VoteOption
-              value={o.id}
-              key={o.id}
-              votingComplete={votingComplete}
-              description={o.id.charAt(0).toUpperCase() + o.id.slice(1)}
-              onClick={() =>
-                currentVoteChoice === "abstain" && setVoteOption(o.id)
-              }
-              checked={
-                newVoteChoice
-                  ? newVoteChoice === o.id
-                  : currentVoteChoice !== "abstain"
-                  ? currentVoteChoice.id === o.id
-                  : false
-              }
-            />
-          ))}
+        <div className={styles.radioButtonsWrapper}>
+          <RadioButtonGroup
+            options={voteOptions.map((o) => ({
+              label: o.id.charAt(0).toUpperCase() + o.id.slice(1),
+              value: o.id
+            }))}
+            onChange={(option) => setVoteOption(option.value)}
+            value={newVoteChoice || currentVoteChoice.id}
+            vertical
+            disabled={votingComplete || currentVoteChoice !== "abstain"}
+            optionsListClassName={styles.radioButtonsList}
+            optionsClassName={voteOptions.map((o) => styles[o.id])}
+          />
         </div>
       </div>
       {!votingComplete && (

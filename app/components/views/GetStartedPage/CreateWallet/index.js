@@ -10,7 +10,7 @@ import { DecredLoading } from "indicators";
 import { useState, useEffect, useCallback } from "react";
 import { useService } from "@xstate/react";
 import { sendParent } from "xstate";
-import { createWalletHooks } from "./hooks";
+import { useCreateWallet } from "./hooks";
 
 const CreateWallet = ({ createWalletRef }) => {
   const {
@@ -20,7 +20,7 @@ const CreateWallet = ({ createWalletRef }) => {
     createWatchOnlyWalletRequest,
     createWalletRequest,
     isTestNet
-  } = createWalletHooks();
+  } = useCreateWallet();
   const [current, send] = useService(createWalletRef);
   const [StateComponent, setStateComponent] = useState(null);
   const [isValid, setIsValid] = useState(false);
