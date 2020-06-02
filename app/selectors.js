@@ -40,7 +40,8 @@ import {
   MAINNET,
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_RECEIVED,
-  TRANSACTION_DIR_TRANSFERRED
+  TRANSACTION_DIR_TRANSFERRED,
+  VOTED
 } from "constants";
 import * as wallet from "wallet";
 
@@ -708,7 +709,7 @@ export const lastVotedTicket = createSelector(
   (transactions) => {
     const lastVotedTicket = Object.keys(transactions)
       .map((hash) => transactions[hash])
-      .filter((transaction) => transaction.status=="voted")
+      .filter((transaction) => transaction.status == VOTED)
       .reduce((prev, current) =>
         (prev.leaveTimestamp > current.leaveTimestamp) ? prev : current
       , []);
