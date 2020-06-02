@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import * as wla from "actions/WalletLoaderActions";
 import * as sel from "selectors";
 
-export const createWalletHooks = () => {
+export const useCreateWallet = () => {
   const dispatch = useDispatch();
   const decodeSeed = useCallback((seed) => dispatch(wla.decodeSeed(seed)), [
     dispatch
