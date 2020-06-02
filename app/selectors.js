@@ -703,6 +703,20 @@ export const filteredStakeTxs = createSelector(
   }
 );
 
+export const lastVotedTicket = createSelector(
+  [stakeTransactions],
+  (transactions) => {
+    const lastVotedTicket = Object.keys(transactions)
+      .map((hash) => transactions[hash])
+      .filter((transaction) => transaction.status=="voted")
+      .reduce((prev, current) =>
+        (prev.leaveTimestamp > current.leaveTimestamp) ? prev : current
+      , []);
+
+    return Array.isArray(lastVotedTicket) ? null : lastVotedTicket;
+  }
+);
+
 // note that hasTickets means "ever had any tickets", **NOT** "currently has live
 // tickets".
 export const hasTickets = compose(

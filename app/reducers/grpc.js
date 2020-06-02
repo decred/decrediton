@@ -353,7 +353,6 @@ export default function grpc(state = {}, action) {
       return {
         ...state,
         ticketsFilter: action.ticketsFilter,
-        lastTicket: null,
         getTicketsRequestError: "",
         stakeTransactions: action.stakeTransactions,
         getStakeTxsAux: action.getStakeTxsAux

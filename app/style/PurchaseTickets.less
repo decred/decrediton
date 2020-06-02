@@ -5,31 +5,6 @@
   width: 740px;
 }
 
-.stake-info-area {
-  background-color: var(--background-back-color);
-  height: 18px;
-  padding: 21px 0 23px 29px;
-  border-radius: 5px;
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-}
-
-.stake-info {
-  white-space: nowrap;
-}
-
-.stake-info-details {
-  padding: 21px 0 23px 29px;
-  background-color: var(--background-back-color);
-}
-
-.stake-info-details-row {
-  margin-bottom: 10px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-}
-
 .purchase-ticket-area-row-label {
   font-size: 19px;
   color: var(--input-color-default);
@@ -137,7 +112,7 @@
   height: 24px;
   margin-left: 6px;
   border-bottom: 1px var(--stroke-color-default) solid;
-  width: 120px;
+  width: 125px;
   position: relative;
 
   .input-errors-area {
@@ -385,7 +360,7 @@
   }
 
   .unit-area {
-    color: var(--stroke-color-default);
+    color: var(--tx-detail-text) !important;
   }
 
   &.input-and-unit.error {
@@ -486,6 +461,12 @@
   }
 }
 
+.detailsAccordion .vertical-accordion-header .vertical-accordion-arrow {
+  top: 15px !important;
+  right: 20px !important;
+  height: 13px !important;
+}
+
 .input-purchase-ticket-valid-message-area {
   width: 200px;
   height: 60px;
@@ -551,10 +532,6 @@
     }
   }
 
-  .stake-info-details-row {
-    grid-template-columns: 1fr;
-  }
-
   .stakepool-advanced-big-input {
     width: 150px;
   }
@@ -591,17 +568,8 @@
     }
   }
 
-  .stake-info-details {
-    padding-left: 20px;
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .stake-info {
-    width: 50%;
-  }
-
   .purchase-ticket-area-row {
-    height: 116px;
+    height: 130px;
     padding: 23px 0 0 35px;
 
     &.is-row {

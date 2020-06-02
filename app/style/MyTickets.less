@@ -1,140 +1,9 @@
 @import (reference) "./main.less";
 
-.ticket-list-wrapper {
-  width: 740px;
-}
-
-.tickets-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
 .tickets-buttons-area {
   text-align: right;
   margin-right: 20px;
   margin-left: auto;
-}
-
-.ticket-card {
-  width: 265px;
-  padding-left: 62px;
-  padding-bottom: 5px;
-  background-color: var(--background-back-color);
-  background-repeat: no-repeat;
-  background-size: 31px 43px;
-  background-position: 20px 26px;
-  margin-bottom: 20px;
-  justify-content: space-between;
-  flex-grow: 1;
-  margin-right: 20px;
-  overflow: hidden;
-  transition: all 125ms ease-in-out;
-  cursor: pointer;
-}
-
-.ticket-card.is-expanded {
-  height: 100%;
-}
-
-.ticket-overview-header {
-  font-family: var(--font-family-regular);
-  font-weight: bold;
-  font-size: 17px;
-  text-transform: uppercase;
-  text-align: center;
-  margin: 26px 0px 4px 0px;
-}
-
-.ticket-overview-count {
-  color: var(--disabled-color);
-  text-transform: uppercase;
-  text-align: center;
-}
-
-.ticket-info-price {
-  margin: 28px 0px 0px 0px;
-  font-size: 19px;
-  font-weight: bold;
-}
-
-.ticket-reward {
-  .inline-block-mixin;
-
-  color: var(--disabled-color);
-  border-right: 1px solid var(--input-color-disabled);
-  padding-right: 0.5em;
-  padding-left: 15px;
-  background-image: var(--ticket-reward-icon);
-  background-repeat: no-repeat;
-  background-size: 11px 11px;
-  background-position: 0px 5px;
-}
-
-.ticket-info-card-return-balance {
-  display: inline-block;
-}
-
-.ticket-timestamp {
-  .inline-block-mixin;
-
-  color: var(--disabled-color);
-  font-family: var(--font-family-regular);
-  border-right: 1px solid var(--input-color-disabled);
-  padding-right: 0.5em;
-}
-
-.ticket-days-to-vote {
-  .inline-block-mixin;
-
-  color: var(--disabled-color);
-  font-family: var(--font-family-regular);
-  background-image: var(--time-lock-icon);
-  background-repeat: no-repeat;
-  background-size: 12px 12px;
-  background-position: 0px 4px;
-  padding-left: 15px;
-}
-
-.ticket-info-expanded-indicator {
-  background-repeat: no-repeat;
-  background-image: var(--agenda-card-kebab-disabled);
-  float: right;
-  width: 10px;
-  background-size: 10px;
-  height: 10px;
-  margin-top: 15px;
-  margin-right: 10px;
-}
-
-.ticket-card.ticket-info-card.is-expanded .ticket-info-expanded-indicator {
-  background-image: var(--indicator-invalid-icon);
-}
-
-.ticket-expanded-info {
-  margin: 15px 0px 0px -40px;
-  padding-bottom: 1em;
-}
-
-.ticket-info-label {
-  .inline-block-mixin;
-
-  width: 5em;
-  text-align: right;
-}
-
-.ticket-transaction-hash {
-  .inline-block-mixin;
-
-  margin-left: 0.5em;
-  max-width: 60%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.ticket-list-back-btn {
-  float: right;
-  margin-right: 20px;
 }
 
 .vote-choice {
@@ -145,34 +14,6 @@
 .vote-choice-agenda-id {
   font-weight: bold;
   margin-right: 0.5em;
-}
-
-.ticket-card.ticket-expired {
-  background-image: var(--ticket-expired-icon);
-}
-
-.ticket-card.ticket-immature {
-  background-image: var(--ticket-immature-icon);
-}
-
-.ticket-card.ticket-live {
-  background-image: var(--ticket-live-icon);
-}
-
-.ticket-card.ticket-missed {
-  background-image: var(--ticket-missed-icon);
-}
-
-.ticket-card.ticket-revoked {
-  background-image: var(--ticket-revoked-icon);
-}
-
-.ticket-card.ticket-unmined {
-  background-image: var(--ticket-unmined-icon);
-}
-
-.ticket-card.ticket-voted {
-  background-image: var(--ticket-voted-icon);
 }
 
 .my-tickets-charts {
@@ -283,11 +124,6 @@
   line-height: 19px;
   float: right;
   text-align: right;
-}
-
-.tickets-list-bottom {
-  width: calc(100% - 20px);
-  background-color: var(--no-more-tickets-indicator-bg);
 }
 
 .loading-more-tickets {

@@ -1,5 +1,5 @@
 import { substruct } from "fp";
-import StakeInfoDisplay from "./Display";
+import StakeInfoDisplay from "./StakeInfoDisplay";
 import stakeInfo from "connectors/stakeInfo";
 
 @autobind
@@ -17,7 +17,8 @@ class StakeInfo extends React.Component {
       immatureTicketsCount,
       liveTicketsCount,
       unspentTicketsCount,
-      isSPV
+      isSPV,
+      lastVotedTicket
     } = this.props;
     return (
       <StakeInfoDisplay
@@ -27,6 +28,7 @@ class StakeInfo extends React.Component {
           liveTicketsCount,
           unspentTicketsCount,
           isSPV,
+          lastVotedTicket,
           ...this.props,
           ...this.state,
           ...substruct(
