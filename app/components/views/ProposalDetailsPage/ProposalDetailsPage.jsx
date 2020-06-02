@@ -51,6 +51,7 @@ const ProposalDetailsPage = () => {
         return (
           <LoadingError
             errorMessageDescription={String(getProposalError)}
+            cancelButton={true}
             reload={() => {
               send("RETRY");
             }}

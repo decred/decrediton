@@ -52,6 +52,7 @@ const ProposalsList = ({ finishedVote, tab }) => {
       return (
         <LoadingError
           errorMessageDescription={String(getProposalError)}
+          cancelButton={false}
           reload={() => {
             send("RETRY");
           }}

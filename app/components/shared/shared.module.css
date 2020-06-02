@@ -18,6 +18,12 @@
   width: 100px;
 }
 
+.cancelButton {
+  position: relative;
+  margin: 20px auto 0 auto;
+  width: 100px;
+}
+
 .messageDescription {
   font-style: italic;
   font-size: 13px;

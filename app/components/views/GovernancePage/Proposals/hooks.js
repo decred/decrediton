@@ -84,26 +84,27 @@ export function useProposalsList(tab) {
           getProposalsAndUpdateVoteStatus
         ).then((res) => {
           send({ type: "RESOLVE", data: res });
-        });
+        }).catch(() => send("REJECT"));
       }
     }
   });
 
-  useEffect(() => {
-    send(getProposalError ? "REJECT" : "RETRY");
-  }, [getProposalError, send]);
+  const previous = usePrevious({ proposals, tab, getProposalError });
 
-  const previous = usePrevious({ proposals, tab });
   useEffect(() => {
     if (!previous || !previous.proposals || !previous.proposals[tab]) return;
     if (previous.tab !== tab) return;
+    if (previous.getProposalError != getProposalError){
+      send(getProposalError ? "REJECT" : "RETRY");
+      return;
+    }
     // if proposals list is bigger goes to success. This is needed because
     // if enabling politeia decrediton gets the inventory and initial batch
     // in the same request.
     if (proposals[tab].length > previous.proposals[tab].length) {
       send("RESOLVE");
     }
-  }, [proposals, previous, send, tab]);
+  }, [proposals, previous, send, tab, getProposalError]);
 
   const loadMore = useCallback(() => send("FETCH"), [send]);
 
@@ -136,6 +137,7 @@ const onLoadMoreProposals = async (
     await getProposalsAndUpdateVoteStatus(proposalBatch);
   } catch (err) {
     console.log(err);
+    throw err;
   }
 };
 
