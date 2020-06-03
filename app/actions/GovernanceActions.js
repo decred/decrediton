@@ -80,6 +80,8 @@ const fillVoteSummary = (proposal, voteSummary, blockTimestampFromNow) => {
   proposal.totalVotes = totalVotes;
 };
 
+const ticketHashesToByte = (hashes) => hashes.map(hexReversedHashToArray);
+
 // getProposalEligibleTickets gets the wallet eligible tickets from a specific proposal.
 // if the proposal directory already exists it only returns the cached information,
 // otherwise it gets the eligible tickets from politeia and caches it.
@@ -93,7 +95,6 @@ const getProposalEligibleTickets = async (
   // (committed tickets) for a given proposal (given a list of eligible tickets
   // returned from an activevotes call)
   const getWalletEligibleTickets = async (eligibleTickets, walletService) => {
-    const ticketHashesToByte = (hashes) => hashes.map(hexReversedHashToArray);
     const commitedTicketsResp = await wallet.committedTickets(
       walletService,
       ticketHashesToByte(eligibleTickets)
@@ -121,7 +122,6 @@ const getProposalEligibleTickets = async (
   if (shouldCache) {
     saveEligibleTickets(token, { eligibleTickets: allEligibleTickets });
   }
-
   return await getWalletEligibleTickets(allEligibleTickets, walletService);
 };
 
@@ -572,7 +572,22 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
         savePiVote(votesToCache, token, testnet, walletName);
       }
     }
-
+    if (hasEligibleTickets) {
+      const tickets = await Promise.all(
+        walletEligibleTickets.map(({ ticket }) =>
+          wallet.getTicket(walletService, hexReversedHashToArray(ticket))
+        )
+      );
+      console.log(tickets);
+      walletEligibleTickets = walletEligibleTickets.map(
+        ({ ticket, address }, idx) => ({
+          ticket,
+          address,
+          status: tickets[idx].status
+          // TODO: map account data and price ?
+        })
+      );
+    }
     // update proposal reference from proposals state
     Object.keys(proposals).forEach((key) =>
       proposals[key].find((p, i) => {
