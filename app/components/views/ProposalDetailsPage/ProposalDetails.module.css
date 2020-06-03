@@ -257,31 +257,6 @@ div.radioButtonsWrapper > * {
   margin-right: 5px;
 }
 
-.walletEligibleTickets {
-  width: 100%;
-  font-size: 9pt;
-  color: var(--overview-balance-label);
-}
-
-.walletEligibleTicketsHeader {
-  margin-right: 30px;
-  text-align: right;
-}
-
-.walletEligibleTicketsArrow {
-  top: 5px;
-  right: -20px;
-}
-
-.walletEligibleTicketsLabel {
-  padding-right: 5px;
-}
-
-.walletEligibleTicketsRow {
-  border-top: 1px solid var(--tabbed-page-header-bg);
-  padding-left: 20px;
-}
-
 .loadingPage {
   width: 100%;
   text-align: center;

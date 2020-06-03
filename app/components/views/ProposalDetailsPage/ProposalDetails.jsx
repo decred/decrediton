@@ -46,7 +46,6 @@ const ProposalDetails = ({
   const { tsDate, hasTickets, isTestnet } = useProposalDetails();
   const { themeName } = useTheme();
   const isDarkTheme = themeName === "theme-dark";
-  console.log(walletEligibleTickets);
   return (
     <div>
       <div className={styles.overview}>
@@ -133,7 +132,9 @@ const ProposalDetails = ({
           />
         )}
       </div>
-      {walletEligibleTickets && <EligibleTickets />}
+      {walletEligibleTickets && (
+        <EligibleTickets tickets={walletEligibleTickets} />
+      )}
       <div className={styles.detailsText}>
         <div className={styles.links}>
           <PoliteiaLink

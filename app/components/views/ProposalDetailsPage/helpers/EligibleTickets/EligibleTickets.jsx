@@ -1,5 +1,19 @@
-const EligibleTickets = () => {
-  return <div>Testttt</div>;
+import styles from "./EligibleTickets.module.css";
+import { FormattedMessage as T } from "react-intl";
+
+const EligibleTickets = ({ tickets }) => {
+  const numOfTickets = tickets.length;
+  return (
+    <div className={styles.wrapper}>
+      <div>
+        <T
+          id="proposals.detail.wallet.eligible.header"
+          m="Tickets eligible for voting: "
+        />
+        <span>{`${numOfTickets}`} total</span>
+      </div>
+    </div>
+  );
 };
 
 /* <div>
