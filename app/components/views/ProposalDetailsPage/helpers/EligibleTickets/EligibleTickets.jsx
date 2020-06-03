@@ -19,7 +19,48 @@ const EligibleTickets = ({ tickets }) => {
         </div>
         <div className={styles.arrow}></div>
       </div>
-      {isExapnded && <div>Hellyeah</div>}
+      {isExapnded && (
+        <div>
+          <div className={styles.columnHeader}>
+            <div>
+              <T
+                id="proposals.detail.wallet.eligible.headers.status"
+                m="Ticket Status"
+              />
+            </div>
+            <div>
+              <T
+                id="proposals.detail.wallet.eligible.header.preference"
+                m="Vote Preference"
+              />
+            </div>
+            <div>
+              <T
+                id="proposals.detail.wallet.eligible.headers.price"
+                m="Price"
+              />
+            </div>
+            <div>
+              <T
+                id="proposals.detail.wallet.eligible.headers.transaction"
+                m="Transaction"
+              />
+            </div>
+            <div>
+              <T
+                id="proposals.detail.wallet.eligible.headers.account"
+                m="Account"
+              />
+            </div>
+            <div>
+              <T
+                id="proposals.detail.wallet.eligible.headers.purchased"
+                m="Purchased"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

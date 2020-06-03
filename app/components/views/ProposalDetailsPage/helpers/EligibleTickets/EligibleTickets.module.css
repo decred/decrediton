@@ -27,6 +27,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 20px;
 }
 
 .header:hover .arrow {
@@ -35,4 +36,17 @@
 
 .header.expanded .arrow {
   transform: rotate(90deg);
+}
+
+.columnHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 6px 20px;
+  background-color: var(--sidebar-color);
+}
+
+.columnHeader > div {
+  flex-basis: auto;
 }
