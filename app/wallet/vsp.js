@@ -1,5 +1,5 @@
 import Promise from "promise";
-import * as api from "../middleware/stakepoolapi";
+import * as api from "../middleware/vspapi";
 import { withLog as log, withLogNoData } from "./index";
 
 const promisifyReq = (fnName, Req) =>
