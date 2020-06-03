@@ -59,6 +59,7 @@ const EligibleTickets = ({ tickets }) => {
               />
             </div>
           </div>
+          {/* add tickets rows */}
         </div>
       )}
     </div>

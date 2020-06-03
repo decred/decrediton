@@ -28,6 +28,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+  padding-left: 20px;
 }
 
 .header:hover .arrow {
@@ -48,5 +49,5 @@
 }
 
 .columnHeader > div {
-  flex-basis: auto;
+  flex: 1 0 auto;
 }
