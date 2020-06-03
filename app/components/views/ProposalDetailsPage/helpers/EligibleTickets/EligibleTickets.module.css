@@ -5,27 +5,34 @@
   margin-top: 20px;
 }
 
-/* .walletEligibleTickets {
-  width: 100%;
-  font-size: 9pt;
-  color: var(--overview-balance-label);
+.arrow {
+  content: "";
+  background-image: var(--arrow-right-gray-icon);
+  background-repeat: no-repeat;
+  background-position: center right;
+  background-size: contain;
+  width: 10px;
+  height: 14px;
+  display: block;
+  transition: transform 0.25s ease-in-out;
+  transform: rotate(-90deg);
 }
 
-.walletEligibleTicketsHeader {
-  margin-right: 30px;
-  text-align: right;
+.total {
+  font-weight: 600;
 }
 
-.walletEligibleTicketsArrow {
-  top: 5px;
-  right: -20px;
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.walletEligibleTicketsLabel {
-  padding-right: 5px;
+.header:hover .arrow {
+  background-image: var(--arrow-right-blue-icon);
 }
 
-.walletEligibleTicketsRow {
-  border-top: 1px solid var(--tabbed-page-header-bg);
-  padding-left: 20px;
-} */
+.header.expanded .arrow {
+  transform: rotate(90deg);
+}
