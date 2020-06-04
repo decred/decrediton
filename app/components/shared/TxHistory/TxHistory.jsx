@@ -19,7 +19,8 @@ const TxRowByType = {
   [txTypes.TRANSACTION_DIR_SENT]: RegularTxRow,
   [txTypes.TRANSACTION_DIR_RECEIVED]: RegularTxRow,
   [txTypes.TRANSFER]: RegularTxRow,
-  [txTypes.COINBASE]: RegularTxRow
+  [txTypes.COINBASE]: RegularTxRow,
+  [txTypes.ELIGIBLE]: StakeTxRow
 };
 
 const timeMessageDefine = defineMessages({
@@ -43,6 +44,7 @@ const TxHistory = ({
   const isRegular = mode === "regular";
   const isStake = mode === "stake";
   const isEligibleTicket = mode === "eligible";
+  console.log({ transactions });
   return (
     <>
       {transactions.map((tx, index) => {
@@ -55,11 +57,10 @@ const TxHistory = ({
         // className props
         let rowType = tx.status || tx.txType;
         rowType = rowType.toLowerCase();
-        console.log(rowType);
         // If it is a regular tx we use its direction to show a proper icon.
         if (rowType === txTypes.REGULAR) rowType = tx.txDirection;
-        console.log(rowType);
-        const Component = TxRowByType[rowType];
+        const Component =
+          TxRowByType[isEligibleTicket ? txTypes.ELIGIBLE : rowType];
         if (Component === StakeTxRow && isRegular) return;
         if (Component === RegularTxRow && isStake) return;
         const key = tx.spenderHash ? tx.spenderHash : tx.txHash;

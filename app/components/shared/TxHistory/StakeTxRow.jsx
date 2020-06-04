@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import Row from "./Row";
 import { FormattedMessage as T } from "react-intl";
 import { Balance, Tooltip } from "shared";
@@ -33,44 +34,55 @@ export const StakeTxRow = ({
 }) => {
   const status = className;
 
-  const ticketRewardMessage = (
-    <T
-      id="history.ticket.rewardMesage"
-      m={"{rewardLabel}: {reward}"}
-      values={{
-        rewardLabel: <T id="history.ticket.rewardLabel" m="Ticket Reward" />,
-        reward: <Balance amount={ticketReward || 0} />
-      }}
-    />
+  const ticketRewardMessage = useMemo(
+    () => (
+      <T
+        id="history.ticket.rewardMesage"
+        m={"{rewardLabel}: {reward}"}
+        values={{
+          rewardLabel: <T id="history.ticket.rewardLabel" m="Ticket Reward" />,
+          reward: <Balance amount={ticketReward || 0} />
+        }}
+      />
+    ),
+    [ticketReward]
   );
 
-  const ticketPriceMessage = (
-    <T
-      id="ticket.priceMessage"
-      m={"{ticketPriceLabel}: {ticketPrice}"}
-      values={{
-        ticketPriceLabel: <T id="ticket.priceLabel" m="Ticket Price" />,
-        ticketPrice: <Balance amount={ticketPrice || 0} />
-      }}
-    />
+  const ticketPriceMessage = useMemo(
+    () => (
+      <T
+        id="ticket.priceMessage"
+        m={"{ticketPriceLabel}: {ticketPrice}"}
+        values={{
+          ticketPriceLabel: <T id="ticket.priceLabel" m="Ticket Price" />,
+          ticketPrice: <Balance amount={ticketPrice || 0} />
+        }}
+      />
+    ),
+    [ticketPrice]
   );
 
   // ticket can have leaveTimestamp equals null, which is not voted yet
-  const daysToVote = leaveTimestamp
-    ? diffBetweenTwoTs(leaveTimestamp, enterTimestamp)
-    : null;
+  const daysToVote = useMemo(
+    () =>
+      leaveTimestamp ? diffBetweenTwoTs(leaveTimestamp, enterTimestamp) : null,
+    [enterTimestamp, leaveTimestamp]
+  );
 
-  const daysToVoteMessage = (
-    <T
-      id="ticket.daysToVoteMessage"
-      m={"{daysToVoteLabel}: {daysToVote}"}
-      values={{
-        daysToVoteLabel: (
-          <T id="ticket.daysToVoteLabel" m="Ticket Days To Vote" />
-        ),
-        daysToVote: daysToVote || 0
-      }}
-    />
+  const daysToVoteMessage = useMemo(
+    () => (
+      <T
+        id="ticket.daysToVoteMessage"
+        m={"{daysToVoteLabel}: {daysToVote}"}
+        values={{
+          daysToVoteLabel: (
+            <T id="ticket.daysToVoteLabel" m="Ticket Days To Vote" />
+          ),
+          daysToVote: daysToVote || 0
+        }}
+      />
+    ),
+    [daysToVote]
   );
 
   const typeMsg = messageByType[status] || "(unknown type)";

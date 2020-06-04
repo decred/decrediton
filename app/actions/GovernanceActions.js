@@ -578,6 +578,7 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
           wallet.getTicket(walletService, hexReversedHashToArray(ticket))
         )
       );
+      // TODO: delete console
       console.log(tickets);
       walletEligibleTickets = walletEligibleTickets.map(
         ({ ticket, address }, idx) => ({
