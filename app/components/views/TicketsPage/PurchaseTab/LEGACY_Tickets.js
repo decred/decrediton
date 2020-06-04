@@ -1,5 +1,5 @@
-import PurchaseTickets from "./PurchaseTickets";
-import TicketAutoBuyer from "./TicketAutoBuyer";
+import PurchaseTickets from "./LEGACY_PurchaseTickets";
+import TicketAutoBuyer from "./LEGACY_TicketAutoBuyer";
 import { FormattedMessage as T } from "react-intl";
 import StakeInfo from "./StakeInfo";
 import { spv } from "connectors";
