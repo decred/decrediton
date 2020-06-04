@@ -70,7 +70,6 @@ const initialState = {
     currentStakePoolConfig: null,
     currentStakePoolConfigRequest: false,
     currentStakePoolConfigError: null,
-    currentStakePoolConfigSuccessMessage: "",
     activeStakePoolConfig: false,
     selectedStakePool: null,
     updatedStakePoolList: false,

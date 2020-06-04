@@ -1,134 +1,32 @@
 import { substruct, compose, eq, get } from "fp";
-import { service, ticketsPage } from "connectors";
 import PurchasePage from "./Page";
 import { FormattedMessage as T } from "react-intl";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import * as sel from "selectors";
+import { StakeyBounce } from "indicators";
+import StakePools from "./LEGACY_StakePools";
+import Tickets from "./LEGACY_Tickets";
+import "style/StakePool.less";
 
-@autobind
-class Purchase extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = this.getInitialState();
-  }
+function Purchase ({ props }) {
+  // Legacy hooks - this can be removed after stopping support vsp v1/v2.
+  // vsps v3 don't need to import script of configure them.
+  const [isShowingImportScript, setShowImportScript] = useState(false);
+  const [isShowingVsp, toggleShowVsp] = useState(false);
+  const [isLegacy, setIsLegacy] = useState(true);
+  const isPurchasingTickets = useSelector(sel.isPurchasingTickets);
+  // end of legacy hooks
 
-  getInitialState() {
-    return {
-      account: this.props.defaultSpendingAccount,
-      stakePool: this.props.stakePool,
-      isShowingStakePools: !this.props.stakePool,
-      isShowingVotingPrefs: false,
-      isShowingImportScript: false
-    };
-  }
-
-  componentDidMount() {
-    if (!this.props.stakePool && this.props.stakePool) {
-      this.setState({ stakePool: this.props.stakePool });
-    }
-  }
-
-  render() {
-    return (
-      <PurchasePage
-        {...{
-          ...this.props,
-          ...this.state,
-          stakePool: this.getStakePool(),
-          account: this.getAccount(),
-          ...substruct(
-            {
-              onChangeStakePool: null,
-              onChangeAccount: null,
-              onShowImportScript: null,
-              onShowRevokeTicket: null,
-              onCancelImportScript: null,
-              onToggleTicketStakePool: null,
-              onShowStakePoolConfig: null,
-              onHideStakePoolConfig: null,
-              onImportScript: null,
-              onRevokeTickets: null
-            },
-            this
-          )
-        }}
-      />
-    );
-  }
-
-  onToggleTicketStakePool(side) {
-    this.setState({
-      isShowingVotingPrefs: side === "right" ? true : false,
-      purchaseTicketsStakePoolConfig: false
-    });
-  }
-
-  getStakePool() {
-    const pool = this.props.onChangeStakePool
-      ? this.props.stakePool
-      : this.state.stakePool;
-    return pool
-      ? this.props.configuredStakePools.find(
-          compose(eq(pool.Host), get("Host"))
-        )
-      : null;
-  }
-
-  getAccount() {
-    const account = this.props.onChangeAccount
-      ? this.props.account
-      : this.state.account;
-    return this.props.spendingAccounts.find(
-      compose(eq(account.value), get("value"))
-    );
-  }
-
-  onChangeStakePool(stakePool) {
-    const { onChangeStakePool } = this.props;
-    this.setState({ stakePool });
-    onChangeStakePool && onChangeStakePool(stakePool);
-  }
-
-  onChangeAccount(account) {
-    const { onChangeAccount } = this.props;
-    this.setState({ account });
-    onChangeAccount && onChangeAccount(account);
-  }
-
-  onImportScript(privpass, script) {
-    const { onImportScript } = this.props;
-    onImportScript && onImportScript(privpass, script);
-  }
-
-  onRevokeTickets(privpass) {
-    const { onRevokeTickets } = this.props;
-    onRevokeTickets && onRevokeTickets(privpass);
-  }
-
-  onShowStakePoolConfig() {
-    this.setState({ isShowingStakePools: true });
-  }
-
-  onHideStakePoolConfig() {
-    this.setState({ isShowingStakePools: false });
-  }
-
-  onShowRevokeTicket() {
-    this.onRequestPassphrase(
-      <T
-        id="stake.revokeTicketsPassphrase"
-        m="Enter Passphrase to Revoke Tickets"
-      />,
-      null,
-      this.onRevokeTickets
-    );
-  }
-
-  onShowImportScript() {
-    this.setState({ isShowingImportScript: true });
-  }
-
-  onCancelImportScript() {
-    this.setState({ isShowingImportScript: false });
-  }
+  return (
+    isLegacy ? (
+      isPurchasingTickets ? (
+        <StakeyBounce center />
+      ) : isShowingVsp ? <StakePools {...{ toggleShowVsp }} />
+        : <Tickets {...{ toggleShowVsp, ...props }} />
+    ) :
+    <PurchasePage {...{ ...props, isShowingVsp, isShowingImportScript, toggleShowVsp }} />
+  );
 }
 
-export default service(ticketsPage(Purchase));
+export default Purchase;

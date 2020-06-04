@@ -117,10 +117,10 @@ class TicketAutoBuyer extends React.Component {
   }
 
   getAccount() {
-    const account = this.state.account;
-    return this.props.spendingAccounts.find(
-      compose(eq(account.value), get("value"))
-    );
+    // const account = this.state.account;
+    // return this.props.spendingAccounts.find(
+    //   compose(eq(account.value), get("value"))
+    // );
   }
 
   getStakePool() {

@@ -2,7 +2,7 @@ import PurchaseTickets from "./LEGACY_PurchaseTickets";
 import TicketAutoBuyer from "./LEGACY_TicketAutoBuyer";
 import { FormattedMessage as T } from "react-intl";
 import StakeInfo from "./StakeInfo";
-import { spv } from "connectors";
+import { purchaseTickets } from "connectors";
 import { ShowWarning, Subtitle } from "shared";
 import "style/PurchaseTickets.less";
 import { InfoDocModalButton } from "buttons";
@@ -59,4 +59,4 @@ const Tickets = ({
   </div>
 );
 
-export default spv(Tickets);
+export default purchaseTickets(Tickets);

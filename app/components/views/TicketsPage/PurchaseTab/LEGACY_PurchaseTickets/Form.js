@@ -36,7 +36,7 @@ const PurchaseTicketsForm = ({
   ticketPrice,
   willEnter,
   willLeave,
-  onShowStakePoolConfig,
+  toggleShowVsp,
   dismissBackupRedeemScript,
   onDismissBackupRedeemScript,
   isWatchingOnly
@@ -150,7 +150,7 @@ const PurchaseTicketsForm = ({
           />
           <KeyBlueButton
             className="vsp-warning-backup-redeem-button"
-            onClick={onShowStakePoolConfig}>
+            onClick={() => toggleShowVsp(true)}>
             <T id="purchase.ticket.warn.button" m="Backup Redeem Scripts" />
           </KeyBlueButton>
         </div>

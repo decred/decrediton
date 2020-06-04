@@ -24,7 +24,8 @@ class PurchaseTickets extends React.Component {
       txFee: MIN_RELAY_FEE,
       conf: 0,
       expiry: 16,
-      account: props.defaultSpendingAccount
+      account: props.defaultSpendingAccount,
+      stakePool: props.stakePool
     };
   }
 
@@ -53,7 +54,6 @@ class PurchaseTickets extends React.Component {
     const changeExpiry = (e) => this.onChangeExpiry(v(e));
     const {
       configuredStakePools,
-      onShowStakePoolConfig,
       onChangeStakePool,
       toggleShowVsp,
       intl: { formatMessage }
@@ -151,9 +151,7 @@ class PurchaseTickets extends React.Component {
   };
 
   getStakePool() {
-    const pool = this.props.onChangeStakePool
-      ? this.props.stakePool
-      : this.state.stakePool;
+    const pool = this.state.stakePool;
     return pool
       ? this.props.configuredStakePools.find(
           compose(eq(pool.Host), get("Host"))
