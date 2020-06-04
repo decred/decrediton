@@ -1,7 +1,7 @@
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { TextInput } from "inputs";
 import { Subtitle } from "shared";
-import cx from "classnames";
+import { classNames } from "pi-ui";
 
 const messages = defineMessages({
   addressFieldPlaceholder: {
@@ -67,7 +67,7 @@ const ValidateAddressForm = ({
         <T id="securitycenter.validate.field.address.label" m="Address" />
       </div>
       <div
-        className={cx(
+        className={classNames(
           "validate-address-form-address",
           address && validateAddressSuccess && "valid-address"
         )}>

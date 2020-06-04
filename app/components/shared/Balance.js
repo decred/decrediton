@@ -2,7 +2,7 @@ import "style/Balance.less";
 import { FormattedNumber } from "react-intl";
 import { balance } from "connectors";
 import { DCR, UNIT_DIVISOR } from "constants";
-import cx from "classnames";
+import { classNames } from "pi-ui";
 
 export const Balance = ({
   currencyDisplay,
@@ -40,7 +40,7 @@ export const Balance = ({
     return (
       <div className={classNameWrapper}>
         <span {...{ onClick }}>
-          <span className={cx(classNameAmount, bold && "bold")}>
+          <span className={classNames(classNameAmount, bold && "bold")}>
             {negativeZero ? "-" : ""}
             <FormattedNumber
               value={head}

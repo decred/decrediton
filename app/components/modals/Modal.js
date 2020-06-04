@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import EventListener from "react-event-listener";
 import "style/Modals.less";
 import Draggable from "react-draggable";
-import cx from "classnames";
+import { classNames } from "pi-ui";
 import { useRef } from "react";
 import { useSelector } from "react-redux";
 import * as sel from "selectors";
@@ -31,7 +31,7 @@ function Modal({ children, className, draggable, onCancelModal }) {
   const innerView = (
     <div
       ref={modalRef}
-      className={cx(
+      className={classNames(
         showingSidebarMenu
           ? expandSideBar
             ? "app-modal "
