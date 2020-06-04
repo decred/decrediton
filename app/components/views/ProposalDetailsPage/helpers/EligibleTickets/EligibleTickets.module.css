@@ -27,8 +27,11 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
   padding-left: 20px;
+}
+
+.header.expanded {
+  margin-bottom: 20px;
 }
 
 .header:hover .arrow {

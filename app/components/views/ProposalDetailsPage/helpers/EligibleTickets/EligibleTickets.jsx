@@ -2,6 +2,7 @@ import { useState } from "react";
 import styles from "./EligibleTickets.module.css";
 import { classNames } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
+import { TxHistory } from "shared";
 
 const EligibleTickets = ({ tickets }) => {
   const [isExapnded, setIsExpanded] = useState();
@@ -59,7 +60,7 @@ const EligibleTickets = ({ tickets }) => {
               />
             </div>
           </div>
-          {/* add tickets rows */}
+          <TxHistory {...{ transactions: tickets, isStake: true }} />
         </div>
       )}
     </div>
