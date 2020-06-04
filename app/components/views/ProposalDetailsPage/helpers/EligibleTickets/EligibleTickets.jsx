@@ -60,7 +60,7 @@ const EligibleTickets = ({ tickets }) => {
               />
             </div>
           </div>
-          <TxHistory {...{ transactions: tickets, isStake: true }} />
+          <TxHistory {...{ transactions: tickets, mode: "eligible" }} />
         </div>
       )}
     </div>

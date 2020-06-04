@@ -120,7 +120,7 @@ const Page = ({
       isReverse={isReverse}>
       <div className="history-page-content-wrapper">
         {transactions.length > 0 ? (
-          <TxHistory {...{ transactions, tsDate, isRegular: true }} />
+          <TxHistory {...{ transactions, tsDate, mode: "regular" }} />
         ) : null}
       </div>
     </InfiniteScroll>
