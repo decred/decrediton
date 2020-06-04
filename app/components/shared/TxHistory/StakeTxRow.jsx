@@ -19,7 +19,7 @@ const messageByType = {
   [txTypes.LIVE]: <T id="transaction.type.live" m="Live" />
 };
 
-export const StakeTxRow = ({
+const StakeTxRow = ({
   className,
   timeMessage,
   overview,
@@ -168,3 +168,5 @@ export const StakeTxRow = ({
     </Row>
   );
 };
+
+export default StakeTxRow;

@@ -1,5 +1,6 @@
-import { RegularTxRow } from "./RegularTxRow";
-import { StakeTxRow } from "./StakeTxRow";
+import RegularTxRow from "./RegularTxRow";
+import StakeTxRow from "./StakeTxRow";
+import EligibleRow from "./EligibleRow";
 import * as txTypes from "constants/Decrediton";
 import { defineMessages, injectIntl } from "react-intl";
 import { withRouter } from "react-router-dom";
@@ -20,7 +21,7 @@ const TxRowByType = {
   [txTypes.TRANSACTION_DIR_RECEIVED]: RegularTxRow,
   [txTypes.TRANSFER]: RegularTxRow,
   [txTypes.COINBASE]: RegularTxRow,
-  [txTypes.ELIGIBLE]: StakeTxRow
+  [txTypes.ELIGIBLE]: EligibleRow
 };
 
 const timeMessageDefine = defineMessages({

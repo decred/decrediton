@@ -1,3 +1,3 @@
-const EligibleRow = () => {};
+const EligibleRow = () => <div></div>;
 
 export default EligibleRow;

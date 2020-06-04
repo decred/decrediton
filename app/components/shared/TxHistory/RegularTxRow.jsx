@@ -6,7 +6,7 @@ import {
   TRANSACTION_DIR_TRANSFERRED
 } from "constants";
 
-export const RegularTxRow = ({
+const RegularTxRow = ({
   txAmount,
   txDirection,
   overview,
@@ -128,3 +128,5 @@ export const RegularTxRow = ({
     )}
   </Row>
 );
+
+export default RegularTxRow;
