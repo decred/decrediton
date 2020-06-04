@@ -54,7 +54,7 @@ const PurchaseTicketsAdvanced = ({
   ticketFeeError,
   txFeeError,
   expiryError,
-  onShowStakePoolConfig,
+  toggleShowVsp,
   onChangeStakePool,
   onChangeTicketFee,
   onChangeTxFee,
@@ -66,7 +66,7 @@ const PurchaseTicketsAdvanced = ({
     <PurchaseTicketAdvancedInfo
       label={<T id="purchaseTickets.stakePoolLabel" m="VSP" />}
       className="stake-pools"
-      onIconClick={onShowStakePoolConfig}>
+      onIconClick={() => toggleShowVsp(true)}>
       <StakePoolSelect
         options={configuredStakePools}
         value={stakePool}

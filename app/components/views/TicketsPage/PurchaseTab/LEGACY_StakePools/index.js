@@ -196,9 +196,9 @@ class StakePools extends React.Component {
   }
 
   onCancelAddStakePool() {
-    const { onHideStakePoolConfig } = this.props;
+    const { toggleShowVsp } = this.props;
     this.setState({ isAdding: false });
-    onHideStakePoolConfig && onHideStakePoolConfig();
+    toggleShowVsp && toggleShowVsp(false);
   }
 
   onSetStakePoolInfo(privpass) {

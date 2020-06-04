@@ -55,6 +55,7 @@ class PurchaseTickets extends React.Component {
       configuredStakePools,
       onShowStakePoolConfig,
       onChangeStakePool,
+      toggleShowVsp,
       intl: { formatMessage }
     } = this.props;
     const {
@@ -78,7 +79,7 @@ class PurchaseTickets extends React.Component {
               ticketFeeError,
               txFeeError,
               expiryError,
-              onShowStakePoolConfig,
+              toggleShowVsp,
               onChangeStakePool,
               onChangeTicketFee: changeTicketFee,
               onChangeTxFee: changeTxFee,
