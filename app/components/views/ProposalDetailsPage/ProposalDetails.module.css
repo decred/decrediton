@@ -167,6 +167,11 @@ div.radioButtonsWrapper > * {
 
 .detailsText p {
   word-wrap: break-word;
+  margin: 10px 0;
+}
+
+.proposalBody {
+  width: 66%;
 }
 
 .detailsText a {
