@@ -21,9 +21,7 @@ function Purchase({ props }) {
       {...{ isPurchasingTickets, isShowingVsp, toggleShowVsp, ...props }}
     />
   ) : (
-    <PurchasePage
-      {...{ ...props, isShowingVsp, isShowingImportScript, toggleShowVsp }}
-    />
+    <PurchasePage />
   );
 }
 

@@ -4,7 +4,7 @@ import {
   KeyBlueButton,
   InvisibleConfirmModalButton
 } from "buttons";
-import { AccountsSelect, NumTicketsInput } from "inputs";
+import { AccountsSelect, NumTicketsInput, VSPSelect } from "inputs";
 import { FormattedMessage as T } from "react-intl";
 import {
   TransitionMotionWrapper,
@@ -47,6 +47,10 @@ const PurchaseTicketsForm = ({
           <T id="purchaseTickets.accountFrom" m="From" />:
         </div>
         <AccountsSelect
+          className="stakepool-purchase-ticket-input-select"
+          {...{ account, onChange: onChangeAccount }}
+        />
+        <VSPSelect
           className="stakepool-purchase-ticket-input-select"
           {...{ account, onChange: onChangeAccount }}
         />
