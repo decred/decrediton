@@ -3,7 +3,7 @@ import { bindActionCreators } from "redux";
 import { selectorMap } from "../fp";
 import * as sel from "../selectors";
 import * as ca from "../actions/ControlActions";
-import * as spa from "actions/StakePoolActions";
+import * as spa from "actions/VSPActions";
 
 const mapStateToProps = selectorMap({
   ticketPrice: sel.ticketPrice,

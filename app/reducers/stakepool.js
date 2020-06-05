@@ -12,7 +12,7 @@ import {
   ADDCUSTOMSTAKEPOOL_ATTEMPT,
   ADDCUSTOMSTAKEPOOL_SUCCESS,
   ADDCUSTOMSTAKEPOOL_FAILED
-} from "../actions/StakePoolActions";
+} from "../actions/VSPActions";
 import { CLEARSTAKEPOOLCONFIG } from "../actions/WalletLoaderActions";
 import { WALLET_STAKEPOOL_SETTINGS } from "actions/DaemonActions";
 
