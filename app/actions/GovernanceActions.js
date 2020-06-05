@@ -606,7 +606,7 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
             });
           }
           return {
-            ticket,
+            txHash: ticket,
             address,
             status: status,
             accountName: txOutputs[0] && txOutputs[0].accountName,

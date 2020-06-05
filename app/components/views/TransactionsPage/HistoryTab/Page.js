@@ -94,7 +94,7 @@ const Page = ({
   <>
     <Subtitle
       title={<T id="history.subtitle" m="Transaction History" />}
-      className={"is-row"}
+      className="is-row"
       children={subtitleMenu({
         sortTypes,
         txTypes,

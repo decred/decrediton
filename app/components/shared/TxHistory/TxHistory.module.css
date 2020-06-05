@@ -1,6 +1,6 @@
 .eligibleRow {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
 }
 
 .icon {
@@ -218,5 +218,8 @@
 @media screen and (max-width: 768px) {
   .historyRow {
     width: 355px;
+  }
+  .accountName {
+    display: none;
   }
 }

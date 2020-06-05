@@ -1,10 +1,20 @@
 import Row from "./Row";
 import { messageByType } from "./helpers";
-import { classNames } from "pi-ui";
+import { classNames, Text } from "pi-ui";
 import styles from "./TxHistory.module.css";
+import { Balance } from "shared";
 
-const EligibleRow = ({ className, ...props }) => {
+const EligibleRow = ({
+  className,
+  price,
+  accountName,
+  timeMessage,
+  txTs,
+  txHash,
+  ...props
+}) => {
   const status = className;
+  console.log(props);
   const typeMsg = messageByType[status] || "(unknown type)";
 
   return (
@@ -14,6 +24,20 @@ const EligibleRow = ({ className, ...props }) => {
           <span className={classNames(styles[className], styles.icon)} />
           <span className={styles.stakeType}>{typeMsg}</span>
         </div>
+        <div>Text</div>
+        <Balance
+          bold
+          classNameAmount={styles.myTicketsPrice}
+          classNameUnit={styles.noBold}
+          amount={price}
+        />
+        <div>
+          <Text id={`truncated-${txHash}`} truncate>
+            {txHash}
+          </Text>
+        </div>
+        <div className={styles.accountName}>{accountName}</div>
+        <div>Testt</div>
       </div>
     </Row>
   );
