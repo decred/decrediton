@@ -95,4 +95,62 @@
 
 .timeDateSpacer {
   font-size: 11px;
+  margin-right: 20px;
+}
+
+.overviewPending .txInfo {
+  width: 100%;
+}
+
+.overviewRow {
+  width: 368px;
+  height: 54px;
+  background: var(--background-back-color);
+  border-bottom: 1px solid var(--disabled-background-color);
+  cursor: pointer;
+}
+
+.overviewRow .txInfo {
+  padding: 16px 20px 9px 10px;
+}
+
+.overviewRow .timeDateSpacer {
+  margin-left: auto;
+}
+
+.historyRow {
+  background-image: var(--arrow-right-gray-icon);
+  background-position: 715px;
+  background-size: 5px;
+  background-repeat: no-repeat;
+  border-bottom: 1px solid var(--disabled-background-color);
+  background-color: var(--background-back-color);
+  cursor: pointer;
+  height: 54px;
+}
+
+.historyRow:hover {
+  background-image: var(--arrow-right-blue-icon);
+  background-color: var(--tx-history-background-hover);
+}
+
+.historyRow .txInfo {
+  padding: 16px 20px;
+  width: 100%;
+}
+
+@media screen and (max-width: 1179px) {
+  .overviewRow {
+    width: 315px;
+  }
+  .historyRow {
+    width: 667px;
+    background-position: 642px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .historyRow {
+    width: 355px;
+  }
 }

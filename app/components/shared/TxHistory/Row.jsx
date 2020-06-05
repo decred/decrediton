@@ -1,16 +1,16 @@
 import { Tooltip } from "shared";
 import { FormattedMessage as T } from "react-intl";
 import { classNames } from "pi-ui";
-import "style/TxHistory.less";
+import styles from "./TxHistory.module.css";
 
 const Row = ({ pending, onClick, className, children, overview }) => (
   <div
     className={classNames(
-      overview && pending && "is-row tx-overview-pending",
-      overview && "tx-overview-row",
-      !overview && "tx-history-row is-row"
+      overview && pending && classNames("is-row", styles.overviewPending),
+      overview && styles.overviewRow,
+      !overview && classNames("is-row", styles.historyRow)
     )}>
-    <div className={classNames("tx-info", className)} onClick={onClick}>
+    <div className={classNames(styles.txInfo, className)} onClick={onClick}>
       {children}
     </div>
     {pending && (
