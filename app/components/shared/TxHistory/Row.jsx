@@ -15,7 +15,7 @@ const Row = ({ pending, onClick, className, children, overview }) => (
     </div>
     {pending && (
       <Tooltip text={<T id="txHistory.Pending" m="Pending" />}>
-        <div className="pending-overview-details" onClick={onClick} />
+        <div className={styles.pendingOverviewDetails} onClick={onClick} />
       </Tooltip>
     )}
   </div>

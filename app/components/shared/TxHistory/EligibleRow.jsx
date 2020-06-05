@@ -1,5 +1,6 @@
 import Row from "./Row";
 import { messageByType } from "./helpers";
+import { classNames } from "pi-ui";
 import styles from "./TxHistory.module.css";
 
 const EligibleRow = ({ className, ...props }) => {
@@ -10,8 +11,8 @@ const EligibleRow = ({ className, ...props }) => {
     <Row {...{ className, ...props }}>
       <div className={styles.eligibleRow}>
         <div>
-          <span className="icon" />
-          <span className="transaction-stake-type">{typeMsg}</span>
+          <span className={classNames(styles[className], styles.icon)} />
+          <span className={styles.stakeType}>{typeMsg}</span>
         </div>
       </div>
     </Row>

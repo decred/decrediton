@@ -102,6 +102,72 @@
   width: 100%;
 }
 
+.pendingOverviewDetails {
+  background-color: var(--disabled-background-color-lighter);
+  background-image: var(--pending-animation);
+  background-size: 14px;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  width: 32px;
+  height: 54px;
+  cursor: pointer;
+  text-align: center;
+  margin-left: -32px;
+}
+
+.myTickets {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 2fr 1fr 1fr;
+}
+
+.stakeType {
+  font-family: var(--font-family-regular);
+  color: var(--input-color-default);
+  font-size: 15px;
+  margin-left: 10px;
+}
+
+.stakeType:not(.overview) {
+  padding-top: 4px;
+}
+
+.priceReward {
+  display: flex;
+  font-family: var(--font-family-regular);
+  color: var(--settings-desc);
+  font-size: 12px;
+  margin-left: 30px;
+}
+
+.ticketReward {
+  background-image: var(--ticket-reward-icon);
+  background-repeat: no-repeat;
+  background-size: 11px 11px;
+  background-position: 0px 4px;
+  padding-left: 16px;
+}
+
+.ticketReward.overview {
+  margin-left: 50px;
+}
+
+.daysToVote {
+  background-image: var(--time-lock-icon);
+  background-repeat: no-repeat;
+  background-size: 12px 12px;
+  background-position: 0px 4px;
+  padding-left: 14px;
+  margin-left: 10px;
+}
+
+.noBold {
+  font-weight: 400 !important;
+}
+
+.myTickesPrice {
+  font-size: 15px;
+}
+
 .overviewRow {
   width: 368px;
   height: 54px;

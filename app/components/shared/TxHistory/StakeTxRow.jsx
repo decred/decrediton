@@ -3,21 +3,10 @@ import Row from "./Row";
 import { FormattedMessage as T } from "react-intl";
 import { Balance, Tooltip } from "shared";
 import { diffBetweenTwoTs } from "helpers/dateFormat";
-import * as txTypes from "constants/Decrediton";
 import { classNames } from "pi-ui";
-
-const messageByType = {
-  [txTypes.TICKET]: <T id="transaction.type.ticket" m="Purchased" />,
-  [txTypes.VOTE]: <T id="transaction.type.vote" m="Voted" />,
-  [txTypes.VOTED]: <T id="transaction.type.voted" m="Voted" />,
-  [txTypes.REVOCATION]: <T id="transaction.type.revocation" m="Revoked" />,
-  [txTypes.UNMINED]: <T id="transaction.type.unmined" m="Unmined" />,
-  [txTypes.IMMATURE]: <T id="transaction.type.immature" m="Immature" />,
-  [txTypes.MISSED]: <T id="transaction.type.missed" m="Missed" />,
-  [txTypes.EXPIRED]: <T id="transaction.type.expired" m="Expired" />,
-  [txTypes.REVOKED]: <T id="transaction.type.revoked" m="Revoked" />,
-  [txTypes.LIVE]: <T id="transaction.type.live" m="Live" />
-};
+import { messageByType } from "./helpers";
+import TicketPriceMessage from "./TicketPriceMessage";
+import styles from "./TxHistory.module.css";
 
 const StakeTxRow = ({
   className,
@@ -76,29 +65,24 @@ const StakeTxRow = ({
   return overview ? (
     <Row {...{ className, overview, pending, ...props }}>
       <div className="is-row">
-        <span className="icon" />
+        <span className={classNames(styles[className], styles.icon)} />
         <span
-          className={classNames(
-            "transaction-stake-type",
-            overview && "overview"
-          )}>
+          className={classNames(styles.stakeType, overview && styles.overview)}>
           {typeMsg}
         </span>
         {!pending && (
-          <div className="transaction-time-date-spacer">
-            {timeMessage(txTs)}
-          </div>
+          <div className={styles.timeDateSpacer}>{timeMessage(txTs)}</div>
         )}
       </div>
-      <div className="transaction-info-price-reward">
+      <div className={styles.priceReward}>
         <Tooltip text={<TicketPriceMessage ticketPrice={ticketPrice} />}>
           <Balance amount={ticketPrice} />
         </Tooltip>
         <Tooltip text={ticketRewardMessage}>
           <Balance
             classNameWrapper={classNames(
-              "stake-transaction-ticket-reward",
-              overview && "overview"
+              styles.ticketReward,
+              overview && styles.overview
             )}
             amount={ticketReward}
             noSmallAmount
@@ -106,7 +90,7 @@ const StakeTxRow = ({
         </Tooltip>
         {daysToVote !== null && !isNaN(daysToVote) && (
           <Tooltip text={daysToVoteMessage}>
-            <div className="transaction-info-overview-days-to-vote">
+            <div className={styles.daysToVote}>
               <T
                 id="statusSmall.daysToVotePlural"
                 m="{days, plural, one {# day} other {# days}}"
@@ -119,25 +103,25 @@ const StakeTxRow = ({
     </Row>
   ) : (
     <Row {...{ className, pending, ...props }}>
-      <div className="my-tickets-table">
+      <div className={styles.myTickets}>
         <div>
-          <span className="icon" />
-          <span className="transaction-stake-type">{typeMsg}</span>
+          <span className={classNames(styles[className], styles.icon)} />
+          <span className={styles.stakeType}>{typeMsg}</span>
         </div>
         <Balance
           bold
-          classNameAmount="my-tickes-price"
-          classNameUnit="no-bold"
+          classNameAmount={styles.myTicketsPrice}
+          classNameUnit={styles.noBold}
           amount={ticketPrice}
         />
         <Balance
-          classNameWrapper="stake-transaction-ticket-reward"
+          classNameWrapper={styles.ticketReward}
           noSmallAmount
           amount={ticketReward}
         />
         {daysToVote !== null && !isNaN(daysToVote) ? (
           <Tooltip text={daysToVoteMessage}>
-            <div className="transaction-info-overview-days-to-vote">
+            <div className={styles.daysToVote}>
               <T
                 id="statusSmall.daysToVotePlural"
                 m="{days, plural, one {# day} other {# days}}"
@@ -148,8 +132,8 @@ const StakeTxRow = ({
         ) : (
           <div />
         )}
-        <div className="transaction-account-name">{accountName}</div>
-        {!pending && <div className="">{timeMessage(txTs)}</div>}
+        <div className={styles.accountName}>{accountName}</div>
+        {!pending && <div>{timeMessage(txTs)}</div>}
       </div>
     </Row>
   );
