@@ -477,6 +477,13 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
     }
   };
 
+  const accounts = sel.accounts(getState());
+  console.log({ accounts });
+  const findAccount = (num) =>
+    accounts.find((account) => account.getAccountNumber() === num);
+  const getAccountName = (num) =>
+    ((act) => (act ? act.getAccountName() : ""))(findAccount(num));
+
   const getProposal = (proposals, token) => {
     let proposal;
     const keys = Object.keys(proposals);
@@ -578,15 +585,34 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
           wallet.getTicket(walletService, hexReversedHashToArray(ticket))
         )
       );
-      // TODO: delete console
-      console.log(tickets);
+      const txOutputs = [];
       walletEligibleTickets = walletEligibleTickets.map(
-        ({ ticket, address }, idx) => ({
-          ticket,
-          address,
-          status: tickets[idx].status
-          // TODO: map account data and price ?
-        })
+        ({ ticket, address }, idx) => {
+          const { status, spender } = tickets[idx];
+          const hasSpender = spender && spender.getHash();
+          const spenderTx = hasSpender ? spender : null;
+          if (spenderTx) {
+            spenderTx.getCreditsList().forEach((credit) => {
+              const amount = credit.getAmount();
+              const address = credit.getAddress();
+              const creditedAccount = credit.getAccount();
+              const creditedAccountName = getAccountName(creditedAccount);
+              txOutputs.push({
+                accountName: creditedAccountName,
+                amount,
+                address,
+                index: credit.getIndex()
+              });
+            });
+          }
+          return {
+            ticket,
+            address,
+            status: status,
+            accountName: txOutputs && txOutputs[0].accountName,
+            price: txOutputs && txOutputs[0].amount
+          };
+        }
       );
     }
     // update proposal reference from proposals state

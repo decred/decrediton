@@ -48,20 +48,6 @@ const StakeTxRow = ({
     [ticketReward]
   );
 
-  const ticketPriceMessage = useMemo(
-    () => (
-      <T
-        id="ticket.priceMessage"
-        m={"{ticketPriceLabel}: {ticketPrice}"}
-        values={{
-          ticketPriceLabel: <T id="ticket.priceLabel" m="Ticket Price" />,
-          ticketPrice: <Balance amount={ticketPrice || 0} />
-        }}
-      />
-    ),
-    [ticketPrice]
-  );
-
   // ticket can have leaveTimestamp equals null, which is not voted yet
   const daysToVote = useMemo(
     () =>
@@ -105,7 +91,7 @@ const StakeTxRow = ({
         )}
       </div>
       <div className="transaction-info-price-reward">
-        <Tooltip text={ticketPriceMessage}>
+        <Tooltip text={<TicketPriceMessage ticketPrice={ticketPrice} />}>
           <Balance amount={ticketPrice} />
         </Tooltip>
         <Tooltip text={ticketRewardMessage}>
