@@ -4,7 +4,7 @@ import { classNames } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
 import { TxHistory } from "shared";
 
-const EligibleTickets = ({ tickets }) => {
+const EligibleTickets = ({ tickets, tsDate }) => {
   const [isExapnded, setIsExpanded] = useState();
   const numOfTickets = tickets.length;
   const toggleExapndedHandler = () => setIsExpanded(!isExapnded);
@@ -60,7 +60,7 @@ const EligibleTickets = ({ tickets }) => {
               />
             </div>
           </div>
-          <TxHistory {...{ transactions: tickets, mode: "eligible" }} />
+          <TxHistory {...{ transactions: tickets, tsDate, mode: "eligible" }} />
         </div>
       )}
     </div>

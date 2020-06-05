@@ -14,7 +14,6 @@ const EligibleRow = ({
   ...props
 }) => {
   const status = className;
-  console.log(props);
   const typeMsg = messageByType[status] || "(unknown type)";
 
   return (
@@ -37,7 +36,7 @@ const EligibleRow = ({
           </Text>
         </div>
         <div className={styles.accountName}>{accountName}</div>
-        <div>Testt</div>
+        <div>{timeMessage(txTs)}</div>
       </div>
     </Row>
   );

@@ -585,35 +585,33 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
         )
       );
       let txOutputs = [];
-      walletEligibleTickets = walletEligibleTickets.map(
-        ({ ticket, address }, idx) => {
-          const { status, spender } = tickets[idx];
-          const hasSpender = spender && spender.getHash();
-          const spenderTx = hasSpender ? spender : null;
-          if (spenderTx) {
-            txOutputs = [];
-            spenderTx.getCreditsList().forEach((credit) => {
-              const amount = credit.getAmount();
-              const address = credit.getAddress();
-              const creditedAccount = credit.getAccount();
-              const creditedAccountName = getAccountName(creditedAccount);
-              txOutputs.push({
-                accountName: creditedAccountName,
-                amount,
-                address,
-                index: credit.getIndex()
-              });
+      walletEligibleTickets = walletEligibleTickets.map(({ ticket }, idx) => {
+        const { status, spender, ticket: tx } = tickets[idx];
+        const hasSpender = spender && spender.getHash();
+        const spenderTx = hasSpender ? spender : null;
+        if (spenderTx) {
+          txOutputs = [];
+          spenderTx.getCreditsList().forEach((credit) => {
+            const amount = credit.getAmount();
+            const address = credit.getAddress();
+            const creditedAccount = credit.getAccount();
+            const creditedAccountName = getAccountName(creditedAccount);
+            txOutputs.push({
+              accountName: creditedAccountName,
+              amount,
+              address,
+              index: credit.getIndex()
             });
-          }
-          return {
-            txHash: ticket,
-            address,
-            status: status,
-            accountName: txOutputs[0] && txOutputs[0].accountName,
-            price: txOutputs[0] && txOutputs[0].amount
-          };
+          });
         }
-      );
+        return {
+          txHash: ticket,
+          status: status,
+          timestamp: tx.getTimestamp(),
+          accountName: txOutputs[0] && txOutputs[0].accountName,
+          price: txOutputs[0] && txOutputs[0].amount
+        };
+      });
     }
     // update proposal reference from proposals state
     Object.keys(proposals).forEach((key) =>

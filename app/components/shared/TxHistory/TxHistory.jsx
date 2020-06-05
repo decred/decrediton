@@ -45,7 +45,6 @@ const TxHistory = ({
   const isRegular = mode === "regular";
   const isStake = mode === "stake";
   const isEligibleTicket = mode === "eligible";
-  console.log({ transactions });
   return (
     <>
       {transactions.map((tx, index) => {
