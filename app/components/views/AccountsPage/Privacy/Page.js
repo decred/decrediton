@@ -2,7 +2,7 @@ import { FormattedMessage as T } from "react-intl";
 import { TextInput, NumericInput } from "inputs";
 import { Subtitle } from "shared";
 import { PassphraseModalSwitch, AutoBuyerSwitch } from "buttons";
-import cx from "classnames";
+import { classNames } from "pi-ui";
 import "style/Privacy.less";
 
 const PrivacyPage = ({
@@ -20,8 +20,8 @@ const PrivacyPage = ({
     <Subtitle title={<T id="privacy.subtitle" m="Privacy" />} />
 
     <div className="privacy-page-wrapper is-column">
-      <div className={cx("is-row", "privacy-row")}>
-        <div className={cx("is-row", "privacy-item")}>
+      <div className={classNames("is-row", "privacy-row")}>
+        <div className={classNames("is-row", "privacy-item")}>
           <div className="">
             <T id="privacy.mixing.account" m="Mixing Account" />:
           </div>
@@ -38,8 +38,8 @@ const PrivacyPage = ({
         </div>
       </div>
 
-      <div className={cx("is-row", "privacy-row")}>
-        <div className={cx("is-row", "privacy-item")}>
+      <div className={classNames("is-row", "privacy-row")}>
+        <div className={classNames("is-row", "privacy-item")}>
           <div className="">
             <T id="privacy.change.account" m="Change Account" />:
           </div>
@@ -47,15 +47,15 @@ const PrivacyPage = ({
         </div>
       </div>
 
-      <div className={cx("is-row", "privacy-row")}>
-        <div className={cx("is-row", "privacy-item")}>
+      <div className={classNames("is-row", "privacy-row")}>
+        <div className={classNames("is-row", "privacy-item")}>
           <div className="">
             <T id="privacy.mixing.server" m="Shuffle Server" />:
           </div>
           <TextInput required disabled value={csppServer} />
         </div>
 
-        <div className={cx("is-row", "privacy-item")}>
+        <div className={classNames("is-row", "privacy-item")}>
           <div className="">
             <T id="privacy.mixing.server.port" m="Shuffle Port" />:
           </div>

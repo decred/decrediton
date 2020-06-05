@@ -1,8 +1,9 @@
 import TopLevelPrivacyOptions from "./TopLevelOptions";
-import cx from "classnames";
+import { classNames } from "pi-ui";
 
 export default ({ isTestNet, ...props }) => (
-  <div className={cx("page-body getstarted", isTestNet && "testnet-body")}>
+  <div
+    className={classNames("page-body getstarted", isTestNet && "testnet-body")}>
     <div className="getstarted-new">
       <TopLevelPrivacyOptions {...props} />
     </div>

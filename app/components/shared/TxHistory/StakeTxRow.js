@@ -3,7 +3,7 @@ import { FormattedMessage as T } from "react-intl";
 import { Balance, Tooltip } from "shared";
 import { diffBetweenTwoTs } from "helpers/dateFormat";
 import * as txTypes from "constants/Decrediton";
-import cx from "classnames";
+import { classNames } from "pi-ui";
 
 const messageByType = {
   [txTypes.TICKET]: <T id="transaction.type.ticket" m="Purchased" />,
@@ -79,7 +79,11 @@ export const StakeTxRow = ({
     <Row {...{ className, overview, pending, ...props }}>
       <div className="is-row">
         <span className="icon" />
-        <span className={cx("transaction-stake-type", overview && "overview")}>
+        <span
+          className={classNames(
+            "transaction-stake-type",
+            overview && "overview"
+          )}>
           {typeMsg}
         </span>
         {!pending && (
@@ -94,7 +98,7 @@ export const StakeTxRow = ({
         </Tooltip>
         <Tooltip text={ticketRewardMessage}>
           <Balance
-            classNameWrapper={cx(
+            classNameWrapper={classNames(
               "stake-transaction-ticket-reward",
               overview && "overview"
             )}

@@ -7,7 +7,7 @@ import LastBlockTime from "./LastBlockTime";
 import { Balance } from "shared";
 import { RescanButton, RescanCancelButton } from "buttons";
 import "style/SideBar.less";
-import cx from "classnames";
+import { classNames } from "pi-ui";
 
 const isImported = (accountNumber) => accountNumber === Math.pow(2, 31) - 1;
 const Bar = ({
@@ -30,7 +30,7 @@ const Bar = ({
   accountMixerRunning
 }) => (
   <div
-    className={cx(
+    className={classNames(
       "sidebar",
       !expandSideBar && "sidebar-reduced",
       !expandSideBar && sidebarOnBottom && "sidebar-on-bottom"
@@ -58,7 +58,7 @@ const Bar = ({
             ({ hidden, total, accountName, accountNumber }) =>
               !hidden && (
                 <div
-                  className={cx(
+                  className={classNames(
                     "sidebar-menu-total-balance-extended-bottom-account",
                     isImported(accountNumber) && "imported"
                   )}
@@ -90,7 +90,7 @@ const Bar = ({
           onMouseEnter={rescanRequest ? null : onShowAccounts}
           onMouseLeave={rescanRequest ? null : onHideAccounts}>
           <div
-            className={cx(
+            className={classNames(
               "sidebar-menu-bottom-total-balance-short-separator",
               isShowingAccounts && "showAccounts"
             )}></div>

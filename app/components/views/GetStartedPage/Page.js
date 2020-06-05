@@ -6,7 +6,7 @@ import {
   AboutModalButton
 } from "./messages";
 import { LoaderBarBottom } from "indicators";
-import cx from "classnames";
+import { classNames } from "pi-ui";
 import "style/GetStarted.less";
 
 const DaemonLoadingBody = ({
@@ -20,7 +20,8 @@ const DaemonLoadingBody = ({
   getEstimatedTimeLeft,
   isTestNet
 }) => (
-  <div className={cx("page-body getstarted", isTestNet && "testnet-body")}>
+  <div
+    className={classNames("page-body getstarted", isTestNet && "testnet-body")}>
     <div className="getstarted loader">
       <div className="loader-settings-logs">
         {updateAvailable && (

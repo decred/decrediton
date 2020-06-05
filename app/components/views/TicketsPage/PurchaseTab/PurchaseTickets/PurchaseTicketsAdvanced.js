@@ -6,7 +6,7 @@ import {
   StakePoolSelect
 } from "inputs";
 import { FormattedMessage as T, defineMessages } from "react-intl";
-import cx from "classnames";
+import { classNames } from "pi-ui";
 
 const messages = defineMessages({
   txFeePlaceholder: {
@@ -30,13 +30,15 @@ const PurchaseTicketAdvancedInfo = ({
   children
 }) => (
   <>
-    <div className={cx("purchase-ticket-advanced-info-label", className)}>
+    <div
+      className={classNames("purchase-ticket-advanced-info-label", className)}>
       {label}:
     </div>
-    <div className={cx("purchase-ticket-advanced-info-value", className)}>
+    <div
+      className={classNames("purchase-ticket-advanced-info-value", className)}>
       {children}
       <div
-        className={cx("stakepool-info-icon", className)}
+        className={classNames("stakepool-info-icon", className)}
         onClick={onIconClick}
       />
     </div>
