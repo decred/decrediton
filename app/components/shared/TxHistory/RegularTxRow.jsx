@@ -5,6 +5,8 @@ import {
   TRANSACTION_DIR_RECEIVED,
   TRANSACTION_DIR_TRANSFERRED
 } from "constants";
+import styles from "./TxHistory.module.css";
+import { classNames } from "pi-ui";
 
 const RegularTxRow = ({
   txAmount,
@@ -17,12 +19,13 @@ const RegularTxRow = ({
   txAccountNameCredited,
   txAccountNameDebited,
   timeMessage,
+  className,
   ...props
 }) => (
   <Row {...{ ...props, txAccountName, pending, overview }}>
     <div className="is-row">
-      <span className="icon" />
-      <span className="transaction-amount-number">
+      <span className={classNames(styles[className], styles.icon)} />
+      <span className={styles.amountValue}>
         <Balance
           amount={
             txDirection !== TRANSACTION_DIR_RECEIVED ? -txAmount : txAmount
@@ -31,21 +34,21 @@ const RegularTxRow = ({
       </span>
       {!overview &&
         (txDirection === TRANSACTION_DIR_TRANSFERRED ? (
-          <div className="transaction-info is-row">
+          <div className={classNames("is-row", styles.info)}>
             <T
               id="txHistory.transfer.tx"
               m="From {debAcc} To {credAcc}"
               values={{
                 debAcc: (
-                  <div className="transaction-status">
-                    <div className="transaction-account-name">
+                  <div className={styles.status}>
+                    <div className={styles.accountName}>
                       {txAccountNameDebited}
                     </div>
                   </div>
                 ),
                 credAcc: (
-                  <div className="transaction-status">
-                    <div className="transaction-account-name">
+                  <div className={styles.status}>
+                    <div className={styles.accountName}>
                       {txAccountNameCredited}
                     </div>
                   </div>
@@ -54,21 +57,19 @@ const RegularTxRow = ({
             />
           </div>
         ) : txDirection !== TRANSACTION_DIR_RECEIVED ? (
-          <div className="transaction-info is-row">
+          <div className={classNames("is-row", styles.info)}>
             <T
               id="txHistory.out.tx"
               m="From {debAcc} To {credAcc}"
               values={{
                 debAcc: (
-                  <div className="transaction-status">
-                    <div className="transaction-account-name">
-                      {txAccountName}
-                    </div>
+                  <div className={styles.status}>
+                    <div className={styles.accountName}>{txAccountName}</div>
                   </div>
                 ),
                 credAcc: (
-                  <div className="transaction-status">
-                    <div className="transaction-account-name">
+                  <div className={styles.status}>
+                    <div className={styles.accountName}>
                       {txOutputAddresses}
                     </div>
                   </div>
@@ -77,16 +78,14 @@ const RegularTxRow = ({
             />
           </div>
         ) : (
-          <div className="transaction-info is-row">
+          <div className={classNames("is-row", styles.info)}>
             <T
               id="txHistory.in.tx"
               m="To {credAcc}"
               values={{
                 credAcc: (
-                  <div className="transaction-status">
-                    <div className="transaction-account-name">
-                      {txAccountName}
-                    </div>
+                  <div className={styles.status}>
+                    <div className={styles.accountName}>{txAccountName}</div>
                   </div>
                 )
               }}
@@ -94,11 +93,11 @@ const RegularTxRow = ({
           </div>
         ))}
       {!pending && (
-        <div className="transaction-time-date-spacer">{timeMessage(txTs)}</div>
+        <div className={styles.timeDateSpacer}>{timeMessage(txTs)}</div>
       )}
     </div>
     {overview && (
-      <div className="transaction-amount-hash">
+      <div className={styles.amountHash}>
         {txDirection === TRANSACTION_DIR_TRANSFERRED ? (
           <T
             id="txHistory.transfer.tx"

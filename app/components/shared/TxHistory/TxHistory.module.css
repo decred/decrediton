@@ -1,0 +1,98 @@
+.eligibleRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.icon {
+  float: left;
+  width: 20px;
+  height: 20px;
+  background-repeat: no-repeat;
+  background-size: 20px 20px;
+}
+
+.icon.sent {
+  background-image: var(--minus-small-icon);
+}
+.icon.received,
+.icon.coinbase {
+  background-image: var(--plus-small-icon);
+}
+.icon.transfer {
+  background-image: var(--transfer-transaction-icon);
+}
+.icon.unknown,
+.icon.ticket {
+  background-image: var(--ticket-live-icon);
+}
+.icon.live {
+  background-image: var(--ticket-live-icon);
+}
+.icon.vote {
+  background-image: var(--ticket-voted-icon);
+}
+.icon.voted {
+  background-image: var(--ticket-voted-icon);
+}
+.icon.revocation {
+  background-image: var(--ticket-revoked-icon);
+}
+.icon.revoked {
+  background-image: var(--ticket-revoked-icon);
+}
+.icon.immature {
+  background-image: var(--ticket-immature-icon);
+}
+.icon.missed {
+  background-image: var(--ticket-missed-icon);
+}
+.icon.expired {
+  background-image: var(--ticket-expired-icon);
+}
+.icon.unmined {
+  background-image: var(--ticket-unmined-icon);
+}
+
+.amountValue {
+  font-size: 15px;
+  font-family: var(--font-family-regular-semi-bold);
+  margin-left: 10px;
+}
+
+.amountHash {
+  font-family: var(--font-family-monospace);
+  color: var(--overview-balance-label);
+  font-size: 11px;
+  line-height: 11px;
+  margin-left: 34px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.info {
+  margin-left: auto;
+}
+
+.status {
+  padding-top: 1px;
+  text-align: right;
+  flex-grow: 2;
+}
+
+.accountName {
+  background-color: var(--transaction-account-name-bg);
+  padding: 2px 4px;
+  border-radius: 5px;
+  font-size: 11px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-right: 20px;
+  height: 15px;
+  max-width: 210px;
+}
+
+.timeDateSpacer {
+  font-size: 11px;
+}

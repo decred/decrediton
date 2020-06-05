@@ -478,7 +478,6 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
   };
 
   const accounts = sel.accounts(getState());
-  console.log({ accounts });
   const findAccount = (num) =>
     accounts.find((account) => account.getAccountNumber() === num);
   const getAccountName = (num) =>
@@ -585,13 +584,14 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
           wallet.getTicket(walletService, hexReversedHashToArray(ticket))
         )
       );
-      const txOutputs = [];
+      let txOutputs = [];
       walletEligibleTickets = walletEligibleTickets.map(
         ({ ticket, address }, idx) => {
           const { status, spender } = tickets[idx];
           const hasSpender = spender && spender.getHash();
           const spenderTx = hasSpender ? spender : null;
           if (spenderTx) {
+            txOutputs = [];
             spenderTx.getCreditsList().forEach((credit) => {
               const amount = credit.getAmount();
               const address = credit.getAddress();
@@ -609,8 +609,8 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
             ticket,
             address,
             status: status,
-            accountName: txOutputs && txOutputs[0].accountName,
-            price: txOutputs && txOutputs[0].amount
+            accountName: txOutputs[0] && txOutputs[0].accountName,
+            price: txOutputs[0] && txOutputs[0].amount
           };
         }
       );
