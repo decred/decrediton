@@ -1,4 +1,6 @@
+import { useCallback } from "react";
 import Row from "./Row";
+import { shell } from "electron";
 import { messageByType } from "./helpers";
 import { classNames, Link, RadioButton } from "pi-ui";
 import styles from "./TxHistory.module.css";
@@ -10,15 +12,23 @@ const EligibleRow = ({
   accountName,
   timeMessage,
   txTs,
+  txUrl,
   txHash,
   voteChoice,
   ...props
 }) => {
   const status = className;
   const typeMsg = messageByType[status] || "(unknown type)";
+  const openTxUrl = useCallback(
+    (e) => {
+      shell.openExternal(txUrl);
+      e.stopPropagation();
+    },
+    [txUrl]
+  );
   return (
-    <Row {...{ className, ...props }}>
-      <div className={styles.eligibleRow}>
+    <Row {...{ className, ...props, eligible: true }}>
+      <div className={styles.eligible}>
         <div>
           <span className={classNames(styles[className], styles.icon)} />
           <span className={styles.stakeType}>{typeMsg}</span>
@@ -40,7 +50,11 @@ const EligibleRow = ({
           amount={price}
         />
         <div>
-          <Link href="#" id={`truncated-${txHash}`} truncate>
+          <Link
+            href="#"
+            onClick={openTxUrl}
+            id={`truncated-${txHash}`}
+            truncate>
             {txHash}
           </Link>
         </div>

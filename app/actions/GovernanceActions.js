@@ -498,6 +498,7 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
   const piURL = sel.politeiaURL(getState());
   const walletName = sel.getWalletName(getState());
   const testnet = sel.isTestNet(getState());
+  const txURLBuilder = sel.txURLBuilder(getState());
   let walletEligibleTickets;
   let hasEligibleTickets = false;
   let currentVoteChoice;
@@ -581,61 +582,67 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
     }
     if (hasEligibleTickets) {
       const transactions = await Promise.all(
-        walletEligibleTickets.map(({ ticket }) =>
-          wallet.getTransaction(walletService, ticket)
+        walletEligibleTickets.map(({ ticket: ticketHash }) =>
+          wallet.getTransaction(walletService, ticketHash)
         )
       );
       const tickets = await Promise.all(
-        walletEligibleTickets.map(({ ticket }) =>
-          wallet.getTicket(walletService, hexReversedHashToArray(ticket))
+        walletEligibleTickets.map(({ ticket: ticketHash }) =>
+          wallet.getTicket(walletService, hexReversedHashToArray(ticketHash))
         )
       );
-      const stakeTxs = walletEligibleTickets.map((_, idx) => {
-        const { status } = tickets[idx];
-        return {
-          ...tickets[idx],
-          ...transactions[idx],
-          ticket: transactions[idx].tx,
-          status
-        };
-      });
-      // apend eligible tickets details to stake transactions to show transaction details page
+      const stakeTxs = walletEligibleTickets
+        .map(({ ticket: ticketHash }, idx) => {
+          const { status } = tickets[idx];
+          return {
+            ...tickets[idx],
+            ...transactions[idx],
+            ticket: transactions[idx].tx,
+            status,
+            txUrl: txURLBuilder(ticketHash)
+          };
+        })
+        .reduce((m, t) => {
+          m[t.txHash] = t;
+          return m;
+        }, {});
+      // apend eligible tickets transactions details to stake transactions to show transaction details page
       // when user clicks on a eligble ticket is proposal detials page
       dispatch({
         type: GETTRANSACTIONS_COMPLETE,
-        stakeTransactions: stakeTxs.reduce((m, t) => {
-          m[t.txHash] = t;
-          return m;
-        }, {})
+        stakeTransactions: stakeTxs
       });
       let txOutputs = [];
-      walletEligibleTickets = walletEligibleTickets.map(({ ticket }, idx) => {
-        const { status, spender, ticket: tx } = tickets[idx];
-        const hasSpender = spender && spender.getHash();
-        const spenderTx = hasSpender ? spender : null;
-        if (spenderTx) {
-          txOutputs = [];
-          spenderTx.getCreditsList().forEach((credit) => {
-            const amount = credit.getAmount();
-            const address = credit.getAddress();
-            const creditedAccount = credit.getAccount();
-            const creditedAccountName = getAccountName(creditedAccount);
-            txOutputs.push({
-              accountName: creditedAccountName,
-              amount,
-              address,
-              index: credit.getIndex()
+      walletEligibleTickets = walletEligibleTickets.map(
+        ({ ticket: ticketHash }, idx) => {
+          const { status, spender, ticket: tx } = tickets[idx];
+          const hasSpender = spender && spender.getHash();
+          const spenderTx = hasSpender ? spender : null;
+          if (spenderTx) {
+            txOutputs = [];
+            spenderTx.getCreditsList().forEach((credit) => {
+              const amount = credit.getAmount();
+              const address = credit.getAddress();
+              const creditedAccount = credit.getAccount();
+              const creditedAccountName = getAccountName(creditedAccount);
+              txOutputs.push({
+                accountName: creditedAccountName,
+                amount,
+                address,
+                index: credit.getIndex()
+              });
             });
-          });
+          }
+          return {
+            txHash: ticketHash,
+            txUrl: stakeTxs[ticketHash].txUrl,
+            status: status,
+            timestamp: tx.getTimestamp(),
+            accountName: txOutputs[0] && txOutputs[0].accountName,
+            price: txOutputs[0] && txOutputs[0].amount
+          };
         }
-        return {
-          txHash: ticket,
-          status: status,
-          timestamp: tx.getTimestamp(),
-          accountName: txOutputs[0] && txOutputs[0].accountName,
-          price: txOutputs[0] && txOutputs[0].amount
-        };
-      });
+      );
     }
     // update proposal reference from proposals state
     Object.keys(proposals).forEach((key) =>

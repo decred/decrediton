@@ -3,12 +3,13 @@ import { FormattedMessage as T } from "react-intl";
 import { classNames } from "pi-ui";
 import styles from "./TxHistory.module.css";
 
-const Row = ({ pending, onClick, className, children, overview }) => (
+const Row = ({ pending, onClick, className, children, overview, eligible }) => (
   <div
     className={classNames(
       overview && pending && classNames("is-row", styles.overviewPending),
       overview && styles.overviewRow,
-      !overview && classNames("is-row", styles.historyRow)
+      !overview && classNames("is-row", styles.historyRow),
+      eligible && styles.eligibleRow
     )}>
     <div className={classNames(styles.txInfo, className)} onClick={onClick}>
       {children}

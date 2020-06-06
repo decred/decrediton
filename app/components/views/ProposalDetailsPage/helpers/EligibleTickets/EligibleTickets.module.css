@@ -43,14 +43,8 @@
 }
 
 .columnHeader {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-evenly;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   padding: 6px 20px;
   background-color: var(--sidebar-color);
-}
-
-.columnHeader > div {
-  flex: 1 0 auto;
 }

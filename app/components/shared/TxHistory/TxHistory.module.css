@@ -1,12 +1,6 @@
-.eligibleRow {
+.eligible {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
-}
-
-.eligibleRow > div {
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .voteChoice > * {
@@ -15,7 +9,7 @@
 
 .yes,
 .no {
-  margin: 0 !important;
+  margin: -5px 0 0 0 !important;
 }
 
 .yes > label > span:nth-child(1) {
@@ -234,6 +228,10 @@
 .historyRow .txInfo {
   padding: 16px 20px;
   width: 100%;
+}
+
+.eligibleRow {
+  background-position: 688px;
 }
 
 @media screen and (max-width: 1179px) {
