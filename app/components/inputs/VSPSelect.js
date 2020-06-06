@@ -1,7 +1,9 @@
-import { Creatable } from "react-select";
 import Select from "react-select";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
-import { newStakePool } from "connectors";
+import { useDispatch } from "react-redux";
+import * as vspa from "actions/VSPActions";
+import * as sel from "selectors";
+import { useState } from "react";
 
 const messages = defineMessages({
   placeholder: {
@@ -10,22 +12,18 @@ const messages = defineMessages({
   }
 });
 
-@autobind
-class StakePoolSelect extends React.Component {
-  constructor(props) {
-    super(props);
-    this.lastInput = "";
-  }
+function VSPSelect({ onChange, options, intl }) {
+  const dispatch = useDispatch();
+  // TODO how treat add custom vsp?
+  // const addCustomStakePool = () => dispatch(vspa.addCustomStakePool())
+  const [selectedOption, setSelected] = useState(null);
 
-  onChange(value) {
+  const handleOnChange = (option) => {
+    if (!option) return;
+    const { value } = option;
     if (!value || !value.Host) return;
 
-    const { onChange, addCustomStakePool } = this.props;
-    if (!onChange) return;
-
     if (value.newOption) {
-      if (!addCustomStakePool) return;
-
       const formattedHost = value.Host.replace(/\/$/, "");
       addCustomStakePool(formattedHost).then((poolInfo) => {
         if (!poolInfo) return;
@@ -39,71 +37,42 @@ class StakePoolSelect extends React.Component {
       });
       return;
     }
+    setSelected(option)
     onChange(value);
   }
 
-  addStakePoolLabel() {
-    return (
-      <T
-        id="stakePoolSelect.addNewPrompt"
-        m="Add VSP {host}"
-        values={{ host: this.lastInput }}
-      />
-    );
-  }
-
-  newOptionCreator() {
-    return {
-      value: { Host: this.lastInput },
-      label: this.lastInput,
-      Host: this.lastInput,
-      newOption: true
-    };
-  }
-
-  onInputChange(input) {
-    // not a state var because <Select> already accounts for it. It is used only
-    // when a new stakepool is supposed to be added.
-    this.lastInput = input;
-  }
-
-  getOptions() {
-    if (!this.props.creatable || this.lastInput) return this.props.options;
-    const options = [...this.props.options];
-    options.unshift({
-      label: (
-        <T id="stakePoolSelect.addNewPromptEmpty" m="Type to add new VSP" />
-      ),
-      Host: null
-    });
+  const getOptions = () => {
+    if (!options) return;
+    options = options.map((vsp) => ({
+      label: vsp.Host,
+      value: vsp
+    }))
+    // options.unshift({
+    //   label: (
+    //     <T id="stakePoolSelect.addNewPromptEmpty" m="Type to add new VSP" />
+    //   ),
+    //   Host: null
+    // });
     return options;
   }
 
-  isValidNewOption() {
-    return true;
-  }
+  return <Select
+    options={getOptions()}
+    placeholder={intl.formatMessage(messages.placeholder)}
 
-  render() {
-    const Component = this.props.creatable ? Creatable : Select;
-    const options = this.getOptions();
-
-    return (
-      <Component
-        {...this.props}
-        options={options}
-        placeholder={this.props.intl.formatMessage(messages.placeholder)}
-        promptTextCreator={this.addStakePoolLabel}
-        onChange={this.onChange}
-        newOptionCreator={this.newOptionCreator}
-        onInputChange={this.onInputChange}
-        isValidNewOption={this.isValidNewOption}
-      />
-    );
-  }
+    onChange={handleOnChange}
+    value={selectedOption}
+    // newOptionCreator={
+    //   {
+    //     value: { Host: lastInput },
+    //     label: lastInput,
+    //     Host: lastInput,
+    //     newOption: true
+    //   }
+    // }
+    // onInputChange={this.onInputChange}
+    // isValidNewOption={this.isValidNewOption}
+  />
 }
 
-StakePoolSelect.defaultProps = {
-  clearable: false
-};
-
-export default injectIntl(newStakePool(StakePoolSelect));
+export default injectIntl(VSPSelect);

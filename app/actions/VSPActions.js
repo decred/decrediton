@@ -269,20 +269,20 @@ export const setStakePoolVoteChoices = (stakePool, voteChoices) => (
 
 export const DISCOVERAVAILABLESTAKEPOOLS_SUCCESS =
   "DISCOVERAVAILABLESTAKEPOOLS_SUCCESS";
-export const discoverAvailableStakepools = () => (dispatch, getState) =>
-  wallet.getStakePoolInfo().then((foundStakepoolConfigs) => {
-    if (foundStakepoolConfigs) {
-      const {
-        daemon: { walletName }
-      } = getState();
-      const config = getWalletCfg(sel.isTestNet(getState()), walletName);
-      updateStakePoolConfig(config, foundStakepoolConfigs);
-      dispatch({
-        type: DISCOVERAVAILABLESTAKEPOOLS_SUCCESS,
-        currentStakePoolConfig: config.get("stakepools")
-      });
-    }
+export const discoverAvailableStakepools = () => async (dispatch, getState) => {
+  const vspInfo = await wallet.getStakePoolInfo();
+  // TODO treat error and return config values in that case
+  if (!vspInfo) return null;
+  const { daemon: { walletName } } = getState();
+  const config = getWalletCfg(sel.isTestNet(getState()), walletName);
+  updateStakePoolConfig(config, vspInfo);
+  dispatch({
+    type: DISCOVERAVAILABLESTAKEPOOLS_SUCCESS,
+    currentStakePoolConfig: config.get("stakepools")
   });
+
+  return vspInfo;
+}
 
 export const CHANGESELECTEDSTAKEPOOL = "CHANGESELECTEDSTAKEPOOL";
 export const changeSelectedStakePool = (selectedStakePool) => (dispatch) =>

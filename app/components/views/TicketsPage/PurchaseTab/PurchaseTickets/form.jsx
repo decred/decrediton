@@ -12,48 +12,48 @@ import {
   ExternalLink,
   Balance
 } from "shared";
+import styles from "../PurchaseTab.module.css";
 
 import "style/StakePool.less";
 
 const purchaseLabel = () => <T id="purchaseTickets.purchaseBtn" m="Purchase" />;
 
 const PurchaseTicketsForm = ({
-  isShowingAdvanced,
-  getQuickBarComponent,
-  getAdvancedComponent,
   isValid,
   handleOnKeyDown,
-  numTicketsToBuy,
-  onIncrementNumTickets,
-  onDecrementNumTickets,
+  numTickets,
   onChangeNumTickets,
-  onChangeAccount,
-  onPurchaseTickets,
-  onRevokeTickets,
-  onToggleShowAdvanced,
+  setNumTickets,
+  setAccount,
   account,
   ticketPrice,
-  willEnter,
-  willLeave,
-  toggleShowVsp,
-  dismissBackupRedeemScript,
-  onDismissBackupRedeemScript,
-  isWatchingOnly
+  isWatchingOnly,
+  vspOptions,
+  setVSP,
+
+  onPurchaseTickets,
+  onRevokeTickets,
 }) => (
   <>
     <div className="purchase-ticket-area-row is-row">
       <div className="is-row purchase-ticket-input-address">
-        <div className="purchase-ticket-area-row-label">
-          <T id="purchaseTickets.accountFrom" m="From" />:
+        <div className={styles.ticketForm}>
+          <div className="purchase-ticket-area-row-label">
+            <T id="purchaseTickets.accountFrom" m="From Account" />:
+          </div>
+          <AccountsSelect
+            className="stakepool-purchase-ticket-input-select"
+            {...{ account, onChange: setAccount }}
+          />
+          <div className="purchase-ticket-area-row-label">
+            <T id="purchaseTickets.vspFrom" m="From VSP" />:
+          </div>
+          <VSPSelect
+            className="stakepool-purchase-ticket-input-select"
+            {...{ options: vspOptions, account, onChange: setVSP }}
+          />
         </div>
-        <AccountsSelect
-          className="stakepool-purchase-ticket-input-select"
-          {...{ account, onChange: onChangeAccount }}
-        />
-        <VSPSelect
-          className="stakepool-purchase-ticket-input-select"
-          {...{ account, onChange: onChangeAccount }}
-        />
+
         <div className="stakepool-info-icon account-select-icon"></div>
       </div>
       <div className="is-row purchase-ticket-input-amount">
@@ -69,10 +69,10 @@ const PurchaseTicketsForm = ({
               m="Not enough funds"
             />
           }
-          numTickets={numTicketsToBuy}
-          incrementNumTickets={onIncrementNumTickets}
-          decrementNumTickets={onDecrementNumTickets}
-          onChangeNumTickets={onChangeNumTickets}
+          numTickets={numTickets}
+          incrementNumTickets={() => onChangeNumTickets(true)}
+          decrementNumTickets={() => onChangeNumTickets(false)}
+          onChangeNumTickets={setNumTickets}
           onKeyDown={handleOnKeyDown}
           showErrors={true}></NumTicketsInput>
         {isValid && (
@@ -81,11 +81,11 @@ const PurchaseTicketsForm = ({
               id="purchaseTickets.validMsg"
               m="Total: {amount} Remaining: {remaining}"
               values={{
-                amount: <Balance flat amount={numTicketsToBuy * ticketPrice} />,
+                amount: <Balance flat amount={numTickets * ticketPrice} />,
                 remaining: (
                   <Balance
                     flat
-                    amount={account.spendable - numTicketsToBuy * ticketPrice}
+                    amount={account.spendable - numTickets * ticketPrice}
                   />
                 )
               }}
@@ -96,10 +96,7 @@ const PurchaseTicketsForm = ({
     </div>
     <div className="stakepool-purchase-ticket-info">
       <div className="purchase-ticket-action-buttons is-column">
-        <TicketsCogs
-          opened={!isShowingAdvanced}
-          onClick={onToggleShowAdvanced}
-        />
+
       </div>
       <>{/* ADD VSP INFO HERE */}</>
     </div>

@@ -19,7 +19,15 @@ export function PurchasePage({
   blocksNumberToNextTicket,
   sidebarOnBottom,
   isWatchingOnly,
-  ...props
+  vspOptions,
+  account,
+  numTickets,
+  onChangeNumTickets,
+  setNumTickets,
+  handleOnKeyDown,
+  ticketPrice,
+  setVSP,
+  isValid
 }) {
   return (
     <div className="purchase-ticket-area">
@@ -39,7 +47,17 @@ export function PurchasePage({
           }
         />
       ) : (
-          <PurchaseTickets />
+          <PurchaseTickets {...{
+            ticketPrice,
+            setNumTickets,
+            handleOnKeyDown,
+            vspOptions,
+            account,
+            numTickets,
+            onChangeNumTickets,
+            setVSP,
+            isValid
+          }} />
         )}
       {isWatchingOnly && <UnsignedTickets {...{ ...props }} />}
     </div>
