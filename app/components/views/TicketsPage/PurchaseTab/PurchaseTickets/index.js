@@ -4,7 +4,7 @@ import {
   usePurchaseTab
 } from "../hooks";
 
-const Tickets = () => {
+const Tickets = ({ toggleIsLegacy }) => {
   const {
     spvMode,
     blocksNumberToNextTicket,
@@ -81,7 +81,8 @@ const Tickets = () => {
       setAccount,
       ticketPrice,
       setVSP,
-      isValid
+      isValid,
+      toggleIsLegacy
     }} />;
 };
 

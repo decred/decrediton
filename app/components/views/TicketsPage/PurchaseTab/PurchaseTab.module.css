@@ -2,3 +2,8 @@
   display: grid;
   grid-template-columns: 100px 250px;
 }
+
+.legacyIcon {
+  margin-left: auto;
+  cursor: pointer;
+}

@@ -4,14 +4,20 @@ import PurchaseTickets from "./form";
 import { ShowWarning, Subtitle } from "shared";
 import { InfoDocModalButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
+import styles from "../PurchaseTab.module.css";
 
-const getTitleIcon = () => (
-  <InfoDocModalButton
-    document="PurchaseTicketsInfo"
-    modalClassName="info-modal-fields"
-    className="info-title-icon"
-    draggable
-  />
+const getTitleIcon = ({ toggleIsLegacy }) => (
+  <>
+    <div className={styles.legacyIcon} onClick={() => toggleIsLegacy(true)}>
+      change to legacy
+    </div>
+    <InfoDocModalButton
+      document="PurchaseTicketsInfo"
+      modalClassName="info-modal-fields"
+      className="info-title-icon"
+      draggable
+    />
+  </>
 );
 
 export function PurchasePage({
@@ -27,13 +33,14 @@ export function PurchasePage({
   handleOnKeyDown,
   ticketPrice,
   setVSP,
-  isValid
+  isValid,
+  toggleIsLegacy
 }) {
   return (
     <div className="purchase-ticket-area">
       <Subtitle
         title={<T id="purchase.subtitle" m="Purchase Tickets" />}
-        children={getTitleIcon()}
+        children={getTitleIcon({ toggleIsLegacy })}
         className="is-row"
       />
       <StakeInfo {...{ sidebarOnBottom }} />
