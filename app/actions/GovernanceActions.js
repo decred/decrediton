@@ -1,6 +1,7 @@
 import * as sel from "selectors";
 import * as pi from "middleware/politeiaapi";
 import * as wallet from "wallet";
+import { GETTRANSACTIONS_COMPLETE } from "./TransactionActions";
 import { push as pushHistory } from "connected-react-router";
 import { hexReversedHashToArray, reverseRawHash } from "helpers";
 import {
@@ -579,11 +580,34 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
       }
     }
     if (hasEligibleTickets) {
+      const transactions = await Promise.all(
+        walletEligibleTickets.map(({ ticket }) =>
+          wallet.getTransaction(walletService, ticket)
+        )
+      );
       const tickets = await Promise.all(
         walletEligibleTickets.map(({ ticket }) =>
           wallet.getTicket(walletService, hexReversedHashToArray(ticket))
         )
       );
+      const stakeTxs = walletEligibleTickets.map((_, idx) => {
+        const { status } = tickets[idx];
+        return {
+          ...tickets[idx],
+          ...transactions[idx],
+          ticket: transactions[idx].tx,
+          status
+        };
+      });
+      // apend eligible tickets details to stake transactions to show transaction details page
+      // when user clicks on a eligble ticket is proposal detials page
+      dispatch({
+        type: GETTRANSACTIONS_COMPLETE,
+        stakeTransactions: stakeTxs.reduce((m, t) => {
+          m[t.txHash] = t;
+          return m;
+        }, {})
+      });
       let txOutputs = [];
       walletEligibleTickets = walletEligibleTickets.map(({ ticket }, idx) => {
         const { status, spender, ticket: tx } = tickets[idx];

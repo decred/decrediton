@@ -1,6 +1,6 @@
 import Row from "./Row";
 import { messageByType } from "./helpers";
-import { classNames, Text, RadioButton } from "pi-ui";
+import { classNames, Link, RadioButton } from "pi-ui";
 import styles from "./TxHistory.module.css";
 import { Balance } from "shared";
 
@@ -40,9 +40,9 @@ const EligibleRow = ({
           amount={price}
         />
         <div>
-          <Text id={`truncated-${txHash}`} truncate>
+          <Link href="#" id={`truncated-${txHash}`} truncate>
             {txHash}
-          </Text>
+          </Link>
         </div>
         <div className={styles.accountName}>{accountName}</div>
         <div>{timeMessage(txTs)}</div>

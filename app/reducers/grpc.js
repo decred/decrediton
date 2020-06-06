@@ -371,13 +371,20 @@ export default function grpc(state = {}, action) {
     case GETTRANSACTIONS_COMPLETE:
       return {
         ...state,
-        stakeTransactions: action.stakeTransactions,
-        regularTransactions: action.regularTransactions,
-        transactions: { ...state.transactions, ...action.transactions },
-        getRegularTxsAux: action.getRegularTxsAux,
-        getStakeTxsAux: action.getStakeTxsAux,
+        stakeTransactions: action.stakeTransactions
+          ? { ...state.stakeTransactions, ...action.stakeTransactions }
+          : state.stakeTransactions,
+        regularTransactions: action.regularTransactions
+          ? { ...state.regularTransactions, ...action.regularTransactions }
+          : state.regularTransactions,
+        transactions: action.transactions
+          ? { ...state.transactions, ...action.transactions }
+          : state.transactions,
+        getRegularTxsAux: action.getRegularTxsAux || state.getStakeTxsAux,
+        getStakeTxsAux: action.getStakeTxsAux || state.getStakeTxsAux,
         getTransactionsRequestAttempt: false,
-        startRequestHeight: action.startRequestHeight
+        startRequestHeight:
+          action.startRequestHeight || state.startRequestHeight
       };
     case GETTRANSACTIONS_CANCELED:
       return {

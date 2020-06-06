@@ -574,15 +574,14 @@ const getMissingStakeTxData = async (
 ) => {
   let ticketTx, spenderTx, status;
   const { txHash, txType, rawTx, tx } = transaction;
-
   if (txType === TICKET) {
     // This is currently a somewhat slow call in RPC mode due to having to check
     // in dcrd whether the ticket is live or not.
     const ticket = await wallet.getTicket(walletService, strHashToRaw(txHash));
     status = ticket.status;
-    if (ticket.spender.getHash()) {
+    const spenderHash = ticket.spender.getHash();
+    if (spenderHash) {
       try {
-        const spenderHash = ticket.spender.getHash();
         const spender = await wallet.getTransaction(walletService, spenderHash);
         spenderTx = spender.tx;
       } catch (error) {
@@ -628,7 +627,6 @@ const getMissingStakeTxData = async (
     }
     spenderTx = tx;
   }
-
   return { ticket: ticketTx, spender: spenderTx, status };
 };
 
