@@ -1,0 +1,468 @@
+.hamburger {
+	height: 20px;
+	width: 20px;
+	background-repeat: no-repeat;
+	background-image: var(--menu-hamburger);
+	cursor: pointer;
+}
+
+.hamburger:hover {
+	opacity: 0.7;
+}
+
+.sidebarReduceArrow {
+	height: 20px;
+	width: 20px;
+	background-repeat: no-repeat;
+	background-image: var(--menu-arrow);
+	cursor: pointer;
+	margin-left: 85px;
+}
+
+.sidebarReduceArrow:hover {
+	opacity: 0.7;
+}
+
+.sidebar {
+	display: flex;
+	flex-direction: column;
+	width: var(--sidebar-width);
+	z-index: 99;
+	transition: width 100ms cubic-bezier(0.86, 0, 0.07, 1);
+	box-shadow: 5px 0 21px rgba(9, 20, 64, 0.21);
+	background-color: var(--sidebar-color);
+}
+
+.sidebar.sidebarReduced {
+	width: var(--sidebar-width-reduced);
+}
+
+.sidebar.sidebarOnBottom {
+	height: 70px;
+	flex-direction: row;
+}
+
+.sidebarLogo,
+.reducedSidebarLogo {
+	display: flex;
+	position: relative;
+	z-index: 3;
+	padding: 20px 18px 20px 18px;
+	border-bottom: 1px solid var(--white-border);
+}
+
+.reducedSidebarLogo {
+	flex-direction: column;
+}
+
+.sidebarMain {
+	position: relative;
+	flex: 1;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+}
+
+.sidebarScroll {
+	position: relative;
+	overflow-y: auto;
+	overflow-x: hidden;
+	flex: 1;
+}
+
+.sidebarMenuTotalBalanceExtended {
+	z-index: 2;
+	position: absolute;
+	top: 0;
+	height: 100%;
+	width: 100%;
+	flex-direction: column;
+	justify-content: flex-end;
+	background-color: var(--background-container-opaque);
+	transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1);
+}
+
+.sidebarMenuTotalBalanceExtendedBottom {
+	padding-right: 18px;
+}
+
+.sidebarMenuTotalBalanceExtendedBottomAccount {
+	height: 44px;
+	display: flex;
+	padding-left: 52px;
+	justify-content: space-between;
+	background-image: var(--accounts-default);
+	background-size: 20px auto;
+	background-repeat: no-repeat;
+	background-position: 19px 0;
+}
+
+.sidebarMenuTotalBalanceExtendedBottomAccount.imported {
+	background-image: var(--accounts-imported);
+}
+
+.sidebarMenuTotalBalanceExtendedBottomAccountName {
+	color: var(--stroke-color-hovered);
+	font-size: 13px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.sidebarMenuTotalBalanceExtendedBottomAccountNumber {
+	font-family: var(--font-family-regular);
+	color: var(--input-color-default);
+	font-size: 11pt;
+	font-weight: 600;
+}
+
+.sidebarMenuTotalBalanceExtendedBottomAccountNumber .balanceSmall {
+	font-size: 11pt;
+}
+
+.sidebarMenuBottomTotalBalanceShort {
+	position: relative;
+	height: 56px;
+	padding: 0;
+	cursor: pointer;
+}
+
+.sidebarMenuBottomTotalBalanceShortSeparator {
+	height: 7px;
+	margin-bottom: 15px;
+	background-image: var(--menu-arrow-up);
+	background-position: 50% 8px;
+	background-repeat: no-repeat;
+	padding: 7px 16px 0 16px;
+	background-size: 12px 6px;
+	position: relative;
+}
+
+.sidebarMenuBottomTotalBalanceShortSeparator::before {
+	content: "";
+	border-bottom: 1px solid var(--short-separator-border);
+	position: absolute;
+	bottom: 0;
+	left: 19px;
+	right: 16px;
+}
+
+.sidebarMenuBottomTotalBalanceShortSeparator.showAccounts {
+	background-color: var(--background-container-opaque);
+}
+
+.sidebarMenuBottomTotalBalanceShortName {
+	float: left;
+	color: var(--disabled-color);
+	font-size: 13px;
+	text-align: left;
+	text-decoration: none;
+	padding-left: 36px;
+	margin-left: 4px;
+	background-image: var(--sidebar-balance-icon);
+	background-repeat: no-repeat;
+	background-size: 16px 16px;
+	background-position: 16px 50%;
+}
+
+.sidebarMenuBottomTotalBalanceShortValue {
+	float: right;
+	font-family: var(--font-family-regular);
+	color: var(--sidebar-bottom-light-text-color);
+	font-size: 13px;
+	text-align: right;
+	font-weight: 600;
+	padding-right: 16px;
+}
+
+.sidebarMenuBottomTotalBalanceShortValue .balanceSmall {
+	font-size: 13px;
+}
+
+.sidebarMenuBottomLatestBlock {
+	position: relative;
+	padding: 16px 16px 16px 20px;
+	background-color: var(--info-modal-button-text);
+	font-size: 13px;
+}
+
+.sidebar.sidebarReduced .sidebarMenuBottomLatestBlock {
+	padding: 14px 0 10px 0;
+}
+
+.sidebar.sidebarReduced .sidebarMenuBottomLatestBlock .rescanButtonArea {
+	text-align: center;
+	padding-right: 0;
+	float: none;
+}
+
+.sidebar.sidebarReduced.sidebarOnBottom .sidebarMenuBottomLatestBlock {
+	display: none;
+}
+
+.sidebarMenuBottomLatestBlock-name {
+	color: var(--disabled-color);
+	font-size: 13px;
+	line-height: 10px;
+	text-align: left;
+	text-decoration: none;
+}
+
+.sidebarMenuBottomLatestBlock-number {
+	font-family: var(--font-family-monospace);
+	color: var(--sidebar-bottom-light-text-color);
+}
+
+.sidebarMenuBottomLatestBlockTime {
+	float: right;
+	color: var(--disabled-color);
+	font-size: 13px;
+	text-align: right;
+	text-decoration: none;
+}
+
+.sidebarWatchOnlyIcon {
+	width: 16px;
+	height: 16px;
+	background-repeat: no-repeat;
+	background-image: var(--watch-only-icon);
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
+
+.sidebarMenuLinkNotificationIcon {
+	background-repeat: no-repeat;
+	background-image: var(--bell-notification-icon);
+	background-position: center;
+	background-size: 10px;
+	width: 14px;
+	height: 14px;
+	margin-left: 34px;
+	margin-top: 10px;
+	position: absolute;
+	display: inline-block;
+	z-index: 10;
+	border-radius: 50%;
+	background-color: var(--stroke-color-focused);
+}
+
+@keyframes spin {
+	from {
+		transform: rotate(0deg);
+	}
+
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.rescan-button.spin {
+	animation: spin 1s linear infinite;
+}
+
+.menuLink {
+	display: flex;
+	position: relative;
+	z-index: 1;
+	align-items: center;
+	cursor: pointer;
+	height: 52px;
+	padding-left: 65px;
+	color: var(--sidebar-menu-link);
+	font-size: 15px;
+	text-decoration: none;
+	transition: color 0.13s ease-in-out;
+	background-position: 20px 50%;
+	background-size: 20px;
+	background-repeat: no-repeat;
+	user-select: none;
+}
+
+.menuLink.settingsIcon {
+	background-image: var(--menu-settings-default);
+}
+
+.menuLink.settingsIcon:not(.menuLinkActive):hover {
+	background-image: var(--menu-animation-settings);
+}
+
+.menuLink.helpIcon {
+	background-image: var(--menu-help-default);
+}
+
+.menuLink.helpIcon:not(.menuLinkActive):hover {
+	background-image: var(--menu-animation-help);
+}
+
+.menuLink.ticketsIcon {
+	background-image: var(--menu-tickets-default);
+}
+
+.menuLink.ticketsIcon:not(.menuLinkActive):hover {
+	background-image: var(--menu-animation-tickets);
+}
+
+.menuLink.transactionsIcon {
+	background-image: var(--menu-transactions-default);
+}
+
+.menuLink.trezorIcon {
+	background-image: var(--menu-trezor-default);
+}
+
+.menuLink.trezorIcon:not(.menuLinkActive):hover {
+	background-image: var(--menu-trezor-hover);
+}
+
+.menuLink.transactionsIcon:not(.menuLinkActive):hover {
+	background-image: var(--menu-animation-transactions);
+}
+
+.menuLink.accountsIcon {
+	background-image: var(--menu-accounts-default);
+}
+
+.menuLink.accountsIcon:not(.menuLinkActive):hover {
+	background-image: var(--menu-animation-accounts);
+	background-size: 22px;
+	background-position: 19px 50%;
+}
+
+.menuLink.securitycntrIcon {
+	background-image: var(--menu-securitycntr-default);
+}
+
+.menuLink.securitycntrIcon:not(.menuLinkActive):hover {
+	background-image: var(--menu-animation-security);
+}
+
+.menuLink.overviewIcon {
+	background-image: var(--menu-overview-default);
+}
+
+.menuLink.overviewIcon:not(.menuLinkActive):hover {
+	background-image: var(--menu-animation-overview);
+}
+
+.menuLink.governanceIcon {
+	background-image: var(--menu-governance-default);
+}
+
+.menuLink.governanceIcon:not(.menuLinkActive):hover {
+	background-image: var(--menu-animation-governance);
+}
+
+.menuLink.lnIcon {
+	background-image: var(--menu-ln-default);
+}
+
+.menuLink.lnIcon:not(.menuLinkActive):hover {
+	background-image: var(--menu-ln-hover);
+}
+
+.menuLink:hover {
+	color: var(--input-color-default);
+}
+
+.menuLinkActive {
+	color: var(--input-color-default);
+}
+
+.menuLinkActive.settingsIcon {
+	background-image: var(--menu-settings-active);
+	cursor: default;
+}
+
+.menuLinkActive.helpIcon {
+	background-image: var(--menu-help-active);
+	cursor: default;
+}
+
+.menuLinkActive.ticketsIcon {
+	background-image: var(--menu-tickets-active);
+	cursor: default;
+}
+
+.menuLinkActive.transactionsIcon {
+	background-image: var(--menu-transactions-active);
+	cursor: default;
+}
+
+.menuLinkActive.accountsIcon {
+	background-image: var(--menu-accounts-active);
+	cursor: default;
+}
+
+.menuLinkActive.securitycntrIcon {
+	background-image: var(--menu-securitycntr-active);
+	cursor: default;
+}
+
+.menuLinkActive.overviewIcon {
+	background-image: var(--menu-overview-active);
+	cursor: default;
+}
+
+.menuLinkActive.governanceIcon {
+	background-image: var(--menu-governance-active);
+	cursor: default;
+}
+
+.menuLinkActive.trezorIcon {
+	background-image: var(--menu-trezor-active);
+}
+
+.menuLinkActive.lnIcon {
+	background-image: var(--menu-ln-active);
+}
+
+.menuCaret {
+	position: absolute;
+	height: 52px;
+	width: 100%;
+	border-left: 5px solid var(--accent-color);
+	background-color: var(--background-back-color);
+}
+
+@media screen and (max-width: 768px) {
+	.sidebar {
+		display: flex;
+		width: 100% !important;
+	}
+
+	.sidebarScroll {
+		overflow: hidden;
+		margin: 0 auto;
+	}
+
+	.sidebarLogo {
+		flex-direction: row-reverse;
+	}
+
+	.menuLink {
+		height: 70px;
+		width: 76px;
+		padding-left: 0;
+		background-position: 50%;
+	}
+
+	.menuCaret {
+		width: 76px;
+		height: 65px;
+		border-left: 0;
+		border-bottom: 5px solid var(--accent-color);
+	}
+
+	.sidebarReduceArrow {
+		margin-left: 0;
+		margin-right: auto;
+	}
+
+	.sidebarMenuBottomLatestBlock {
+		background-color: var(--sidebar-color);
+	}
+
+	.sidebarMenuBottomLatestBlock .tooltipContainer span {
+		visibility: hidden;
+	}
+}

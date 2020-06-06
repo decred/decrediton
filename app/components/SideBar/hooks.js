@@ -4,6 +4,7 @@ import { usePrevious } from "helpers"
 import { spring, Motion } from "react-motion";
 import theme from "theme";
 import { FormattedMessage as T } from "react-intl";
+import sideBarStyle from "./SideBar.module.css"
 
 export function useSideBar() {
   const [isShowingAccounts, setIsShowingAccounts] = useState(false);
@@ -19,7 +20,7 @@ export function useSideBar() {
   return { isShowingAccounts, onShowAccounts, onHideAccounts };
 }
 
-export function useLastBlockTime(lastBlockTimestamp, clearTimeout, setTimeout){
+export function useLastBlockTime(lastBlockTimestamp, clearTimeout, setTimeout) {
   const [state, setState] = useState(null);
 
   const getBlockDate = useCallback((lastBlockTimestamp) => {
@@ -51,7 +52,7 @@ export function useLastBlockTime(lastBlockTimestamp, clearTimeout, setTimeout){
     setState(getBlockDate(lastBlockTimestamp))
   }, [lastBlockTimestamp]);
 
-  return {state};
+  return { state };
 }
 
 export function useMenuLinks(sidebarOnBottom,
@@ -68,24 +69,6 @@ export function useMenuLinks(sidebarOnBottom,
 
   const links = useRef([...linkList]);
   const _nodes = useRef(new Map());
-
-  useEffect(() => {
-    if (isTrezor) {
-      links.current.push({
-        path: "/trezor",
-        link: <T id="sidebar.link.trezor" m="Trezor Setup" />,
-        icon: "trezor"
-      });
-    }
-
-    if (lnEnabled) {
-      links.current.push({
-        path: "/ln",
-        link: <T id="sidebar.link.ln" m="Lightning Network" />,
-        icon: "ln"
-      });
-    }
-  }, []);
 
   const neededCaretPosition = useCallback((path) => {
     const tabForRoute = _nodes.current.get(path);
@@ -136,6 +119,21 @@ export function useMenuLinks(sidebarOnBottom,
   }, [updateCaretPosition, sidebarOnBottom, previousSidebarOnBottom, selectedTab, location]);
 
   useEffect(() => {
+    if (isTrezor) {
+      links.current.push({
+        path: "/trezor",
+        link: <T id="sidebar.link.trezor" m="Trezor Setup" />,
+        icon: "trezor"
+      });
+    }
+
+    if (lnEnabled) {
+      links.current.push({
+        path: "/ln",
+        link: <T id="sidebar.link.ln" m="Lightning Network" />,
+        icon: "ln"
+      });
+    }
     updateCaretPosition();
   }, []);
 
@@ -145,7 +143,7 @@ export function useMenuLinks(sidebarOnBottom,
       : { top: top };
     return (
       <Motion style={style}>
-        {(style) => <div className="menu-caret" {...{ style }} />}
+        {(style) => <div className={sideBarStyle.menuCaret} {...{ style }} />}
       </Motion>
     );
   }, [sidebarOnBottom, left, top]);
@@ -154,7 +152,7 @@ export function useMenuLinks(sidebarOnBottom,
     const style = sidebarOnBottom
       ? { left: left.val, top: top.val }
       : { top: top.val };
-    return <div className="menu-caret" style={style} />;
+    return <div className={sideBarStyle.menuCaret} style={style} />;
   }, [sidebarOnBottom, left, top]);
 
   const getMenuLink = useCallback((linkItem) => {

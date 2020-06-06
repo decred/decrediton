@@ -8,6 +8,7 @@ import { Balance } from "shared";
 import { RescanButton, RescanCancelButton } from "buttons";
 import "style/SideBar.less";
 import { classNames } from "pi-ui";
+import style from "./SideBar.module.css"
 
 const isImported = (accountNumber) => accountNumber === Math.pow(2, 31) - 1;
 const Bar = ({
@@ -29,111 +30,111 @@ const Bar = ({
   rescanCancel,
   accountMixerRunning
 }) => (
-  <div
-    className={classNames(
-      "sidebar",
-      !expandSideBar && "sidebar-reduced",
-      !expandSideBar && sidebarOnBottom && "sidebar-on-bottom"
-    )}>
-    <Logo
-      {...{
-        isTestNet,
-        expandSideBar,
-        sidebarOnBottom,
-        onReduceSideBar,
-        onExpandSideBar,
-        isWatchingOnly,
-        accountMixerRunning
-      }}
-    />
-    <div className="sidebar-main">
-      <div className="sidebar-scroll">
-        <MenuLinks {...{ expandSideBar, sidebarOnBottom }} />
-      </div>
-      <div
-        className="sidebar-menu-total-balance-extended"
-        style={{ display: isShowingAccounts ? "flex" : "none" }}>
-        <div className="sidebar-menu-total-balance-extended-bottom">
-          {balances.map(
-            ({ hidden, total, accountName, accountNumber }) =>
-              !hidden && (
-                <div
-                  className={classNames(
-                    "sidebar-menu-total-balance-extended-bottom-account",
-                    isImported(accountNumber) && "imported"
-                  )}
-                  key={accountName}>
-                  <div className="sidebar-menu-total-balance-extended-bottom-account-name">
-                    {accountName === "default" ? (
-                      <T
-                        id="sidebar.accounts.name.default"
-                        m="Primary Account"
-                      />
-                    ) : (
-                      accountName
+    <div
+      className={classNames(
+        style.sidebar,
+        !expandSideBar && style.sidebarReduced,
+        !expandSideBar && sidebarOnBottom && style.sidebarOnBottom
+      )}>
+      <Logo
+        {...{
+          isTestNet,
+          expandSideBar,
+          sidebarOnBottom,
+          onReduceSideBar,
+          onExpandSideBar,
+          isWatchingOnly,
+          accountMixerRunning
+        }}
+      />
+      <div className={style.sidebarMain}>
+        <div className={style.sidebarScroll}>
+          <MenuLinks {...{ expandSideBar, sidebarOnBottom }} />
+        </div>
+        <div
+          className={style.sidebarMenuTotalBalanceExtended}
+          style={{ display: isShowingAccounts ? "flex" : "none" }}>
+          <div className={style.sidebarMenuTotalBalanceExtendedBottom}>
+            {balances.map(
+              ({ hidden, total, accountName, accountNumber }) =>
+                !hidden && (
+                  <div
+                    className={classNames(
+                      style.sidebarMenuTotalBalanceExtendedBottomAccount,
+                      isImported(accountNumber) && style.imported
                     )}
+                    key={accountName}>
+                    <div className={style.sidebarMenuTotalBalanceExtendedBottomAccountName}>
+                      {accountName === "default" ? (
+                        <T
+                          id="sidebar.accounts.name.default"
+                          m="Primary Account"
+                        />
+                      ) : (
+                          accountName
+                        )}
                     :
                   </div>
-                  <div className="sidebar-menu-total-balance-extended-bottom-account-number">
-                    {total ? <Balance hideCurrency amount={total} /> : 0}
+                    <div className={style.sidebarMenuTotalBalanceExtendedBottomAccountNumber}>
+                      {total ? <Balance hideCurrency amount={total} /> : 0}
+                    </div>
                   </div>
-                </div>
-              )
-          )}
+                )
+            )}
+          </div>
         </div>
       </div>
-    </div>
-    {expandSideBar ? (
-      <div className="sidebar-menu-bottom">
-        <div
-          className="sidebar-menu-bottom-total-balance-short"
-          onMouseEnter={rescanRequest ? null : onShowAccounts}
-          onMouseLeave={rescanRequest ? null : onHideAccounts}>
+      {expandSideBar ? (
+        <div className={style.sidebarMenuBottom}>
           <div
-            className={classNames(
-              "sidebar-menu-bottom-total-balance-short-separator",
-              isShowingAccounts && "showAccounts"
-            )}></div>
-          <div className="sidebar-menu-bottom-total-balance-short-name">
-            <T id="sidebar.totalBalance" m="Total Balance" />:
+            className={style.sidebarMenuBottomTotalBalanceShort}
+            onMouseEnter={rescanRequest ? null : onShowAccounts}
+            onMouseLeave={rescanRequest ? null : onHideAccounts}>
+            <div
+              className={classNames(
+                style.sidebarMenuBottomTotalBalanceShortSeparator,
+                isShowingAccounts && style.showAccounts
+              )}></div>
+            <div className={style.sidebarMenuBottomTotalBalanceShortName}>
+              <T id="sidebar.totalBalance" m="Total Balance" />:
           </div>
-          <div className="sidebar-menu-bottom-total-balance-short-value">
-            <Balance amount={totalBalance} />
+            <div className={style.sidebarMenuBottomTotalBalanceShortValue}>
+              <Balance amount={totalBalance} />
+            </div>
+          </div>
+          <div className={style.sidebarMenuBottomLatestBlock}>
+            {rescanRequest ? <RescanProgress /> : null}
+            {currentBlockHeight && !rescanRequest && (
+              <>
+                <div className={style.rescanAreaButton}>
+                  <RescanButton {...{ rescanRequest, rescanAttempt }} />
+                </div>
+                <a className={style.sidebarMenuBottomLatestBlockName}>
+                  <T id="sidebar.latestBlock" m="Latest Block" />
+                  <span className={style.sidebarMenuBottomLatestBlockNumber}>
+                    {" "}
+                    {currentBlockHeight}
+                  </span>
+                </a>
+                <div className={style.sidebarMenuBottomLatestBlockTime}>
+                  <LastBlockTime lastBlockTimestamp={lastBlockTimestamp} />
+                </div>
+              </>
+            )}
           </div>
         </div>
-        <div className="sidebar-menu-bottom-latest-block">
-          {rescanRequest ? <RescanProgress /> : null}
-          {currentBlockHeight && !rescanRequest && (
-            <>
-              <div className="rescan-button-area">
-                <RescanButton {...{ rescanRequest, rescanAttempt }} />
-              </div>
-              <a className="sidebar-menu-bottom-latest-block-name">
-                <T id="sidebar.latestBlock" m="Latest Block" />
-                <span className="sidebar-menu-bottom-latest-block-number">
-                  {" "}
-                  {currentBlockHeight}
-                </span>
-              </a>
-              <div className="sidebar-menu-bottom-latest-block-time">
-                <LastBlockTime lastBlockTimestamp={lastBlockTimestamp} />
-              </div>
-            </>
-          )}
-        </div>
-      </div>
-    ) : (
-      <div className="sidebar-menu-bottom-latest-block">
-        <div className="rescan-button-area">
-          <RescanButton {...{ rescanRequest, rescanAttempt }} />
-          {rescanRequest && (
-            <RescanCancelButton {...{ rescanRequest, rescanCancel }} />
-          )}
-        </div>
-      </div>
-    )}
-  </div>
-);
+      ) : (
+          <div className={style.sidebarMenuBottomLatestBlock}>
+            <div className={style.rescanAreaButton}>
+              <RescanButton {...{ rescanRequest, rescanAttempt }} />
+              {rescanRequest && (
+                <RescanCancelButton {...{ rescanRequest, rescanCancel }} />
+              )}
+            </div>
+          </div>
+        )}
+    </div>
+  );
 
 Bar.propTypes = {
   expandSideBar: PropTypes.bool.isRequired
