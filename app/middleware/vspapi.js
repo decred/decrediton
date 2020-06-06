@@ -48,7 +48,7 @@ function stakepPoolInfoResponseToConfig(response) {
     "ProportionLive":0,"ProportionMissed":0.11794871794871795,
     "UserCount":19,"UserCountActive":9,"Version":"1.5.0-pre"
     }
-  }`)
+  }`);
   const stakePoolNames = Object.keys(data);
 
   return stakePoolNames

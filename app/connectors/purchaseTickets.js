@@ -12,7 +12,6 @@ const mapStateToProps = selectorMap({
   dismissBackupRedeemScript: sel.dismissBackupRedeemScript,
   visibleAccounts: sel.visibleAccounts,
   mixedAccount: sel.getMixedAccount,
-  defaultSpendingAccount: sel.defaultSpendingAccount,
   configuredStakePools: sel.configuredStakePools,
   numTicketsToBuy: sel.numTicketsToBuy,
   defaultSpendingAccount: sel.defaultSpendingAccount,

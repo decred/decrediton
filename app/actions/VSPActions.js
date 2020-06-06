@@ -282,7 +282,7 @@ export const discoverAvailableStakepools = () => async (dispatch, getState) => {
   });
 
   return vspInfo;
-}
+};
 
 export const CHANGESELECTEDSTAKEPOOL = "CHANGESELECTEDSTAKEPOOL";
 export const changeSelectedStakePool = (selectedStakePool) => (dispatch) =>

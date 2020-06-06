@@ -26,5 +26,5 @@ export const usePurchaseTab = () => {
     defaultSpendingAccount,
     discoverAvailableVSPs,
     ticketPrice
-  }
+  };
 };

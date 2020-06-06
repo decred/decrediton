@@ -1,8 +1,5 @@
 import Select from "react-select";
-import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
-import { useDispatch } from "react-redux";
-import * as vspa from "actions/VSPActions";
-import * as sel from "selectors";
+import { injectIntl, defineMessages } from "react-intl";
 import { useState } from "react";
 
 const messages = defineMessages({
@@ -13,7 +10,6 @@ const messages = defineMessages({
 });
 
 function VSPSelect({ onChange, options, intl }) {
-  const dispatch = useDispatch();
   // TODO how treat add custom vsp?
   // const addCustomStakePool = () => dispatch(vspa.addCustomStakePool())
   const [selectedOption, setSelected] = useState(null);
@@ -23,30 +19,30 @@ function VSPSelect({ onChange, options, intl }) {
     const { value } = option;
     if (!value || !value.Host) return;
 
-    if (value.newOption) {
-      const formattedHost = value.Host.replace(/\/$/, "");
-      addCustomStakePool(formattedHost).then((poolInfo) => {
-        if (!poolInfo) return;
-        const opt = {
-          ...poolInfo,
-          label: poolInfo.Host,
-          value: poolInfo,
-          isVersionValid: true
-        };
-        onChange(opt);
-      });
-      return;
-    }
-    setSelected(option)
+    // if (value.newOption) {
+    //   const formattedHost = value.Host.replace(/\/$/, "");
+    //   addCustomStakePool(formattedHost).then((poolInfo) => {
+    //     if (!poolInfo) return;
+    //     const opt = {
+    //       ...poolInfo,
+    //       label: poolInfo.Host,
+    //       value: poolInfo,
+    //       isVersionValid: true
+    //     };
+    //     onChange(opt);
+    //   });
+    //   return;
+    // }
+    setSelected(option);
     onChange(value);
-  }
+  };
 
   const getOptions = () => {
     if (!options) return;
     options = options.map((vsp) => ({
       label: vsp.Host,
       value: vsp
-    }))
+    }));
     // options.unshift({
     //   label: (
     //     <T id="stakePoolSelect.addNewPromptEmpty" m="Type to add new VSP" />
@@ -54,7 +50,7 @@ function VSPSelect({ onChange, options, intl }) {
     //   Host: null
     // });
     return options;
-  }
+  };
 
   return <Select
     options={getOptions()}
@@ -72,7 +68,7 @@ function VSPSelect({ onChange, options, intl }) {
     // }
     // onInputChange={this.onInputChange}
     // isValidNewOption={this.isValidNewOption}
-  />
+  />;
 }
 
 export default injectIntl(VSPSelect);

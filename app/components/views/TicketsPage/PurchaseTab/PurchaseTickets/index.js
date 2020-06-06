@@ -26,16 +26,13 @@ const Tickets = ({ toggleIsLegacy }) => {
   const onChangeNumTickets = (increment) => {
     if (numTickets === 0 && !increment) return;
     increment ? setNumTickets(numTickets + 1) : setNumTickets(numTickets -1);
-  }
+  };
 
   useEffect(() => {
-    console.log(ticketPrice)
     const { spendable } = account;
     const canAfford = numTickets * ticketPrice <= spendable;
     const hasTickets = numTickets > 0;
-    console.log(canAfford)
-    console.log(hasTickets)
-    setIsValid(canAfford && hasTickets)
+    setIsValid(canAfford && hasTickets);
   }, [ticketPrice, numTickets]);
 
   useEffect(() => {
@@ -50,12 +47,12 @@ const Tickets = ({ toggleIsLegacy }) => {
       }, []);
 
       return filteredOpts;
-    }
+    };
 
     getAvailableVsps().then(filtered => {
-      return setVSPOptions(filtered)
+      return setVSPOptions(filtered);
     });
-  }, [discoverAvailableVSPs])
+  }, [discoverAvailableVSPs]);
 
   const handleOnKeyDown = (e) => {
     if (e.keyCode == 38) {
