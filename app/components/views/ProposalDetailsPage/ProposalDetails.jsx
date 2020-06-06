@@ -133,7 +133,11 @@ const ProposalDetails = ({
         )}
       </div>
       {walletEligibleTickets && (
-        <EligibleTickets tickets={walletEligibleTickets} tsDate={tsDate} />
+        <EligibleTickets
+          tickets={walletEligibleTickets}
+          tsDate={tsDate}
+          voteChoice={newVoteChoice || currentVoteChoice.id}
+        />
       )}
       <div className={styles.detailsText}>
         <div className={styles.links}>

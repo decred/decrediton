@@ -58,7 +58,7 @@ const ChooseOptions = React.memo(
         <div className={styles.radioButtonsWrapper}>
           <RadioButtonGroup
             options={voteOptions.map((o) => ({
-              label: o.id.charAt(0).toUpperCase() + o.id.slice(1),
+              label: `${o.id.charAt(0).toUpperCase()}${o.id.slice(1)}`,
               value: o.id
             }))}
             onChange={(option) => setVoteOption(option.value)}

@@ -3,6 +3,37 @@
   grid-template-columns: repeat(6, minmax(0, 1fr));
 }
 
+.eligibleRow > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.voteChoice > * {
+  box-sizing: border-box;
+}
+
+.yes,
+.no {
+  margin: 0 !important;
+}
+
+.yes > label > span:nth-child(1) {
+  border-color: var(--vote-yes-color);
+}
+
+.yes > label > span:nth-child(2) {
+  background-color: var(--vote-yes-color);
+}
+
+.no > label > span:nth-child(1) {
+  border-color: var(--vote-no-color);
+}
+
+.no > label > span:nth-child(2) {
+  background-color: var(--vote-no-color);
+}
+
 .icon {
   float: left;
   width: 20px;
