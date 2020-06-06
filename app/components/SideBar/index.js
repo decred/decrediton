@@ -1,39 +1,20 @@
 import Bar from "./Bar";
 import { rescan, sideBar } from "connectors";
+import { useSideBar } from "./hooks";
 
-@autobind
-class SideBar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isShowingAccounts: false
-    };
-  }
+function SideBar(props) {
+  const { isShowingAccounts, onShowAccounts, onHideAccounts } = useSideBar();
 
-  render() {
-    return (
-      <Bar
-        {...{
-          ...this.props,
-          isShowingAccounts: this.state.isShowingAccounts,
-          onShowAccounts: this.onShowAccounts,
-          onHideAccounts: this.onHideAccounts
-        }}
-      />
-    );
-  }
-
-  onShowAccounts() {
-    this.setState({ isShowingAccounts: true });
-  }
-
-  onHideAccounts() {
-    this.setState({ isShowingAccounts: false });
-  }
+  return (
+    <Bar
+      {...{
+        ...props,
+        isShowingAccounts,
+        onShowAccounts,
+        onHideAccounts,
+      }}
+    />
+  );
 }
-
-SideBar.propTypes = {
-  expandSideBar: PropTypes.bool.isRequired
-};
 
 export default sideBar(rescan(SideBar));
