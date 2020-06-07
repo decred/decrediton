@@ -1,5 +1,5 @@
 
-import { routing, theming, newProposalCounts } from "connectors";
+import { newProposalCounts } from "connectors";
 import { useMenuLinks } from "./hooks";
 import { FormattedMessage as T } from "react-intl";
 
@@ -46,28 +46,22 @@ const linkList = [
 // number of link in a row when sidebar is at bottom.
 const LINK_PER_ROW = 4;
 
-function MenuLinks({ sidebarOnBottom, location, uiAnimations, isTrezor, lnEnabled, ...props }) {
-  const { getAnimatedCaret, getStaticCaret, getLinks } = useMenuLinks(
-    sidebarOnBottom,
-    location,
-    isTrezor,
-    lnEnabled,
+function MenuLinks() {
+  const { uiAnimations, getAnimatedCaret, getStaticCaret, getLinks } = useMenuLinks(
     linkList,
-    LINK_PER_ROW,
-    props
+    LINK_PER_ROW
   );
-
-  const caret = uiAnimations
-    ? getAnimatedCaret
-    : getStaticCaret;
 
   return (
     <>
-      {getLinks()}
-      {caret}
+      {getLinks}
+      {uiAnimations
+        ? getAnimatedCaret
+        : getStaticCaret
+      }
     </>
   );
 }
 
 
-export default routing(theming(newProposalCounts(MenuLinks)));
+export default newProposalCounts(MenuLinks);

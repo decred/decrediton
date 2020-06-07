@@ -5,6 +5,47 @@ import { spring, Motion } from "react-motion";
 import theme from "theme";
 import { FormattedMessage as T } from "react-intl";
 import sideBarStyle from "./SideBar.module.css"
+import * as sel from "selectors";
+import * as ca from "../../actions/ControlActions";
+import * as sba from "../../actions/SidebarActions";
+import { useSelector, useDispatch } from "react-redux";
+
+export function useBar() {
+  const isTestNet = useSelector(sel.isTestNet);
+  const balances = useSelector(sel.balances);
+  const currentBlockHeight = useSelector(sel.currentBlockHeight);
+  const lastBlockTimestamp = useSelector(sel.lastBlockTimestamp);
+  const totalBalance = useSelector(sel.totalBalance);
+  const expandSideBar = useSelector(sel.expandSideBar);
+  const isWatchingOnly = useSelector(sel.isWatchingOnly);
+  const sidebarOnBottom = useSelector(sel.sidebarOnBottom);
+  const accountMixerRunning = useSelector(sel.getAccountMixerRunning);
+  const rescanRequest = useSelector(sel.rescanRequest);
+
+  const dispatch = useDispatch();
+
+  const onExpandSideBar = useCallback(() => sba.expandSideBar()(dispatch), [dispatch]);
+  const onReduceSideBar = useCallback(() => sba.reduceSideBar()(dispatch), [dispatch]);
+  const rescanAttempt = useCallback(() => ca.rescanAttempt()(dispatch), [dispatch]);
+  const rescanCancel = useCallback(() => ca.rescanCancel()(dispatch), [dispatch]);
+
+  return {
+    isTestNet,
+    balances,
+    currentBlockHeight,
+    lastBlockTimestamp,
+    totalBalance,
+    expandSideBar,
+    isWatchingOnly,
+    sidebarOnBottom,
+    accountMixerRunning,
+    rescanRequest,
+    onExpandSideBar,
+    onReduceSideBar,
+    rescanAttempt,
+    rescanCancel
+  };
+}
 
 export function useSideBar() {
   const [isShowingAccounts, setIsShowingAccounts] = useState(false);
@@ -55,20 +96,30 @@ export function useLastBlockTime(lastBlockTimestamp, clearTimeout, setTimeout) {
   return { state };
 }
 
-export function useMenuLinks(sidebarOnBottom,
-  location,
-  isTrezor,
-  lnEnabled,
+export function useMenuLinks(
   linkList,
-  LINK_PER_ROW,
-  props) {
+  LINK_PER_ROW) {
 
-  const [left, setLeft] = useState(0);
-  const [top, setTop] = useState(0);
+  const location = useSelector(sel.location);
+  const isTrezor = useSelector(sel.isTrezor);
+  const sidebarOnBottom = useSelector(sel.sidebarOnBottom);
+  const lnEnabled = useSelector(sel.lnEnabled);
+  const uiAnimations = useSelector(sel.uiAnimations);
+
+  const [sidebarOnBottomStyle, setSidebarOnBottomStyle] = useState({ top: 0, left: 0 });
   const [selectedTab, setSelectedTab] = useState(null);
 
   const links = useRef([...linkList]);
   const _nodes = useRef(new Map());
+
+  const notifProps = useMemo(() => {
+    return linkList.filter(linkItem => linkItem.notifProp);
+  }, [linkList]);
+
+  // const notiSelectors = notifProps.map((notifProp) => {
+  //   console.log(notifProp);
+  //   return props[notifProp]
+  // });
 
   const neededCaretPosition = useCallback((path) => {
     const tabForRoute = _nodes.current.get(path);
@@ -80,25 +131,23 @@ export function useMenuLinks(sidebarOnBottom,
     }
     const newTop = tabForRoute.offsetTop;
     return { top: spring(newTop, theme("springs.sideBar")), left: 0 };
-  }, [sidebarOnBottom, _nodes]);
+  }, [sidebarOnBottom, _nodes.current]);
 
   const updateCaretPosition = useCallback(() => {
     const tabbedPageCheck = location.pathname.indexOf("/", 1);
-    const selectedTabAux =
+    const selectedTab =
       tabbedPageCheck > 0
         ? location.pathname.substring(0, tabbedPageCheck)
         : location.pathname;
-    const caretPosition = neededCaretPosition(selectedTabAux);
+    const caretPosition = neededCaretPosition(selectedTab);
     if (caretPosition) {
-      setTop(caretPosition.top);
-      setLeft(caretPosition.left);
-      setSelectedTab(selectedTabAux);
+      setSidebarOnBottomStyle(caretPosition);
+      setSelectedTab(selectedTab);
     }
   }, [
     location,
     neededCaretPosition,
-    setTop,
-    setLeft,
+    setSidebarOnBottomStyle,
     setSelectedTab
   ]);
 
@@ -139,25 +188,26 @@ export function useMenuLinks(sidebarOnBottom,
 
   const getAnimatedCaret = useMemo(() => {
     const style = sidebarOnBottom
-      ? { left: left, top: top }
-      : { top: top };
+      ? { ...sidebarOnBottomStyle }
+      : { top: sidebarOnBottomStyle.top };
     return (
       <Motion style={style}>
         {(style) => <div className={sideBarStyle.menuCaret} {...{ style }} />}
       </Motion>
     );
-  }, [sidebarOnBottom, left, top]);
+  }, [sidebarOnBottom, sidebarOnBottomStyle]);
 
   const getStaticCaret = useMemo(() => {
+    const { left, top } = sidebarOnBottomStyle;
     const style = sidebarOnBottom
       ? { left: left.val, top: top.val }
       : { top: top.val };
     return <div className={sideBarStyle.menuCaret} style={style} />;
-  }, [sidebarOnBottom, left, top]);
+  }, [sidebarOnBottom, sidebarOnBottomStyle]);
 
   const getMenuLink = useCallback((linkItem) => {
     const { path, link, icon, notifProp } = linkItem;
-    const hasNotif = notifProp ? props[notifProp] : false;
+    const hasNotif = notifProp ? true : false;
 
     return (
       <MenuLink
@@ -169,9 +219,10 @@ export function useMenuLinks(sidebarOnBottom,
         {!sidebarOnBottom && link}
       </MenuLink>
     );
-  }, [props.notifProp, _nodes, sidebarOnBottom]);
+  }, [_nodes.current, sidebarOnBottom]);
 
-  const getLinks = useCallback(() => {
+  const getLinks = useMemo(() => {
+    console.log('getLinks called');
     let linksComponent = [];
     if (sidebarOnBottom) {
       const numberOfRows = links.current.length / LINK_PER_ROW;
@@ -193,9 +244,10 @@ export function useMenuLinks(sidebarOnBottom,
     }
 
     return (linksComponent = links.current.map((link) => getMenuLink(link)));
-  }, [sidebarOnBottom, links, getMenuLink]);
+  }, [sidebarOnBottom, links.current, getMenuLink]);
 
   return {
+    uiAnimations,
     getAnimatedCaret,
     getStaticCaret,
     getLinks

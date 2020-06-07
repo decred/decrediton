@@ -2,13 +2,12 @@ import Bar from "./Bar";
 import { rescan, sideBar } from "connectors";
 import { useSideBar } from "./hooks";
 
-function SideBar(props) {
+function SideBar() {
   const { isShowingAccounts, onShowAccounts, onHideAccounts } = useSideBar();
 
   return (
     <Bar
       {...{
-        ...props,
         isShowingAccounts,
         onShowAccounts,
         onHideAccounts,
@@ -17,4 +16,4 @@ function SideBar(props) {
   );
 }
 
-export default sideBar(rescan(SideBar));
+export default SideBar;

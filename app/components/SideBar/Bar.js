@@ -9,27 +9,33 @@ import { RescanButton, RescanCancelButton } from "buttons";
 import "style/SideBar.less";
 import { classNames } from "pi-ui";
 import style from "./SideBar.module.css"
+import { useBar } from "./hooks";
 
 const isImported = (accountNumber) => accountNumber === Math.pow(2, 31) - 1;
 const Bar = ({
-  isTestNet,
-  balances,
-  currentBlockHeight,
-  lastBlockTimestamp,
-  totalBalance,
   isShowingAccounts,
   onShowAccounts,
-  onHideAccounts,
-  rescanRequest,
-  rescanAttempt,
-  expandSideBar,
-  sidebarOnBottom,
-  onExpandSideBar,
-  onReduceSideBar,
-  isWatchingOnly,
-  rescanCancel,
-  accountMixerRunning
-}) => (
+  onHideAccounts
+}) => {
+
+  const {
+    isTestNet,
+    balances,
+    currentBlockHeight,
+    lastBlockTimestamp,
+    totalBalance,
+    expandSideBar,
+    isWatchingOnly,
+    sidebarOnBottom,
+    accountMixerRunning,
+    rescanRequest,
+    onExpandSideBar,
+    onReduceSideBar,
+    rescanAttempt,
+    rescanCancel
+  } = useBar();
+
+  return (
     <div
       className={classNames(
         style.sidebar,
@@ -49,7 +55,7 @@ const Bar = ({
       />
       <div className={style.sidebarMain}>
         <div className={style.sidebarScroll}>
-          <MenuLinks {...{ expandSideBar, sidebarOnBottom }} />
+          <MenuLinks />
         </div>
         <div
           className={style.sidebarMenuTotalBalanceExtended}
@@ -135,9 +141,6 @@ const Bar = ({
         )}
     </div>
   );
-
-Bar.propTypes = {
-  expandSideBar: PropTypes.bool.isRequired
-};
+}
 
 export default Bar;
