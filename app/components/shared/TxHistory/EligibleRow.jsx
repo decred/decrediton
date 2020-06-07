@@ -34,14 +34,16 @@ const EligibleRow = ({
           <span className={styles.stakeType}>{typeMsg}</span>
         </div>
         <div className={styles.voteChoice}>
-          <RadioButton
-            label={`${voteChoice.charAt(0).toUpperCase()}${voteChoice.slice(
-              1
-            )}`}
-            checked={true}
-            onChange={() => {}}
-            className={styles[voteChoice]}
-          />
+          {voteChoice && (
+            <RadioButton
+              label={`${voteChoice.charAt(0).toUpperCase()}${voteChoice.slice(
+                1
+              )}`}
+              checked={true}
+              onChange={() => {}}
+              className={styles[voteChoice]}
+            />
+          )}
         </div>
         <Balance
           bold
