@@ -1,6 +1,6 @@
-export { default as ImportScriptModal } from "./ImportScriptModal";
-export { default as AddAccountModal } from "./AddAccountModal";
-export { default as ChangePassphraseModal } from "./ChangePassphraseModal";
+export { default as ImportScriptModal } from "./ImportScriptModal/ImportScriptModal";
+export { default as AddAccountModal } from "./AddAccountModal/AddAccountModal";
+export { default as ChangePassphraseModal } from "./ChangePassphraseModal/ChangePassphraseModal";
 export { default as InfoModal } from "./InfoModal/Modal";
 export { default as InfoConfirmModal } from "./InfoConfirmModal";
 export { default as InfoDocumentModal } from "./InfoDocumentModal";
