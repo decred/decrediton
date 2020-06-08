@@ -28,6 +28,10 @@ const timeMessageDefine = defineMessages({
   dayMonthHourDisplay: {
     id: "txHistory.dayMonthHourDisplay",
     defaultMessage: "{value, date, short-month-24hour}"
+  },
+  dayMonthDisplay: {
+    id: "txHistory.dayMonthDisplay",
+    defaultMessage: "{value, date}"
   }
 });
 
@@ -84,9 +88,14 @@ const TxHistory = ({
               pending: tx.isPending,
               onClick: () => history.push(`/transaction/history/${tx.txHash}`),
               timeMessage: (txTimestamp) =>
-                intl.formatMessage(timeMessageDefine.dayMonthHourDisplay, {
-                  value: txTimestamp
-                })
+                intl.formatMessage(
+                  isEligibleTicket
+                    ? timeMessageDefine.dayMonthDisplay
+                    : timeMessageDefine.dayMonthHourDisplay,
+                  {
+                    value: txTimestamp
+                  }
+                )
             }}
           />
         );
