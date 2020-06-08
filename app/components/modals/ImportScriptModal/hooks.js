@@ -15,18 +15,18 @@ function useImportScriptModal(onCancelModal, onSubmit) {
   }, [resetState, onCancelModal]);
 
   const validationFailed = useCallback(() => {
-    setHasFailedAttempt(true)
+    setHasFailedAttempt(true);
   }, []);
 
   const setScriptCallback = useCallback((script) => {
     if (script == "") setHasFailedAttempt(true);
     setScript(script);
-  }, [script]);
+  }, []);
 
   const onSubmitCallback = useCallback((passPhrase) => {
     onSubmit(passPhrase, script);
     resetState();
-  }, [script, onSubmit]);
+  }, [resetState, script, onSubmit]);
 
   const isValid = useCallback(() =>
     !!script

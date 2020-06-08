@@ -26,7 +26,7 @@ function useAddAccountModal(onCancelModal, onSubmit) {
   const onSubmitCallback = useCallback((passPhrase) => {
     onSubmit(passPhrase, name);
     resetState();
-  }, [name, onSubmit]);
+  }, [resetState, name, onSubmit]);
 
   const isValid = useCallback(() =>
     !!name
