@@ -612,35 +612,21 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
         type: GETTRANSACTIONS_COMPLETE,
         stakeTransactions: stakeTxs
       });
-      let txOutputs = [];
       walletEligibleTickets = walletEligibleTickets.map(
         ({ ticket: ticketHash, address }, idx) => {
-          const { status, spender, ticket: tx } = tickets[idx];
-          const hasSpender = spender && spender.getHash();
-          const spenderTx = hasSpender ? spender : null;
-          if (spenderTx) {
-            txOutputs = [];
-            spenderTx.getCreditsList().forEach((credit) => {
-              const amount = credit.getAmount();
-              const address = credit.getAddress();
-              const creditedAccount = credit.getAccount();
-              const creditedAccountName = getAccountName(creditedAccount);
-              txOutputs.push({
-                accountName: creditedAccountName,
-                amount,
-                address,
-                index: credit.getIndex()
-              });
-            });
-          }
+          const { status, ticket: tx } = tickets[idx];
+          // get account name
+          const debitList = tx.getDebitsList();
+          const accountName = getAccountName(debitList[0].getPreviousAccount());
+          const ticketPrice = tx.getCreditsList()[0].getAmount();
           return {
             txHash: ticketHash,
             txUrl: stakeTxs[ticketHash].txUrl,
             status: status,
             address,
             timestamp: tx.getTimestamp(),
-            accountName: txOutputs[0] && txOutputs[0].accountName,
-            price: txOutputs[0] && txOutputs[0].amount
+            accountName,
+            ticketPrice
           };
         }
       );

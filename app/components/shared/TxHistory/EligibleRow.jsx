@@ -8,7 +8,7 @@ import { Balance } from "shared";
 
 const EligibleRow = ({
   className,
-  price,
+  ticketPrice,
   accountName,
   timeMessage,
   txTs,
@@ -49,7 +49,7 @@ const EligibleRow = ({
           bold
           classNameAmount={styles.myTicketsPrice}
           classNameUnit={styles.noBold}
-          amount={price}
+          amount={ticketPrice}
         />
         <div>
           <Link
