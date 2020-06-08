@@ -1,43 +1,43 @@
 import { useState, useCallback } from "react";
 
-const initialState = {
-  script: "",
-  hasFailedAttempt: false
-};
-
 function useImportScriptModal(onCancelModal, onSubmit) {
-  const [state, setState] = useState(initialState);
+  const [script, setScript] = useState("");
+  const [hasFailedAttempt, setHasFailedAttempt] = useState(false);
+
+  const resetState = useCallback(() => {
+    setScript("");
+    setHasFailedAttempt(false);
+  }, []);
 
   const onCancelModalCallback = useCallback(() => {
-    setState(initialState);
+    resetState();
     onCancelModal && onCancelModal();
-  }, [onCancelModal]);
+  }, [resetState, onCancelModal]);
 
   const validationFailed = useCallback(() => {
-    setState({ ...state, hasFailedAttempt: true });
-  }, [state]);
+    setHasFailedAttempt(true)
+  }, []);
 
-  const setScript = useCallback((script) => {
-    if (script == "") setState({ ...state, hasFailedAttempt: true });
-    setState({ ...state, script });
-  }, [state]);
+  const setScriptCallback = useCallback((script) => {
+    if (script == "") setHasFailedAttempt(true);
+    setScript(script);
+  }, [script]);
 
   const onSubmitCallback = useCallback((passPhrase) => {
-    const { script } = state;
     onSubmit(passPhrase, script);
-    setState({ ...state, initialState });
-  }, [state, onSubmit]);
+    resetState();
+  }, [script, onSubmit]);
 
-  const isValid = useCallback(() => {
-    const { script } = state;
-    return !!script;
-  }, [state]);
+  const isValid = useCallback(() =>
+    !!script
+    , [script]);
 
   return {
-    state,
+    script,
+    hasFailedAttempt,
     onCancelModalCallback,
     validationFailed,
-    setScript,
+    setScriptCallback,
     onSubmitCallback,
     isValid
   };

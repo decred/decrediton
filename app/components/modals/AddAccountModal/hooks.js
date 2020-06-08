@@ -1,43 +1,43 @@
 import { useState, useCallback } from "react";
 
-const initialState = {
-  name: "",
-  hasFailedAttempt: false
-};
-
 function useAddAccountModal(onCancelModal, onSubmit) {
-  const [state, setState] = useState(initialState);
+  const [name, setName] = useState("");
+  const [hasFailedAttempt, setHasFailedAttempt] = useState(false);
+
+  const resetState = useCallback(() => {
+    setName("");
+    setHasFailedAttempt(false);
+  }, []);
 
   const onCancelModalCallback = useCallback(() => {
-    setState(initialState);
+    resetState();
     onCancelModal && onCancelModal();
-  }, [onCancelModal]);
+  }, [onCancelModal, resetState]);
 
   const validationFailed = useCallback(() => {
-    setState({ ...state, hasFailedAttempt: true });
-  }, [state]);
+    setHasFailedAttempt(true);
+  }, []);
 
-  const setName = useCallback((name) => {
-    if (name == "") setState({ ...state, hasFailedAttempt: true });
-    setState({ ...state, name });
-  }, [state]);
+  const setNameCallback = useCallback((name) => {
+    if (name == "") setHasFailedAttempt(true);
+    setName(name);
+  }, []);
 
   const onSubmitCallback = useCallback((passPhrase) => {
-    const { name } = state;
     onSubmit(passPhrase, name);
-    setState(initialState);
-  }, [state, onSubmit]);
+    resetState();
+  }, [name, onSubmit]);
 
-  const isValid = useCallback(() => {
-    const { name } = state;
-    return !!name;
-  }, [state]);
+  const isValid = useCallback(() =>
+    !!name
+    , [name]);
 
   return {
-    state,
+    name,
+    hasFailedAttempt,
     onCancelModalCallback,
     validationFailed,
-    setName,
+    setNameCallback,
     onSubmitCallback,
     isValid
   };

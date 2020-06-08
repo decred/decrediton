@@ -3,19 +3,19 @@ import useAddAccountModal from "./hooks";
 
 function AddAccountModal({ onCancelModal, onSubmit, ...props }) {
   const {
-    state,
     onCancelModalCallback,
     validationFailed,
-    setName,
+    setNameCallback,
     onSubmitCallback,
-    isValid
+    isValid,
+    ...state
   } = useAddAccountModal(onCancelModal, onSubmit);
 
   return (
     <Modal
       {...{ ...props, ...state }}
       {...{
-        setName,
+        setName: setNameCallback,
         onSubmit: onSubmitCallback,
         onCancelModal: onCancelModalCallback,
         isValid,

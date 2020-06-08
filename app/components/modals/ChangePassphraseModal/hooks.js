@@ -1,62 +1,69 @@
 import { useState, useCallback } from "react";
 
-const initialState = {
-  privPass: "",
-  confirmPrivPass: "",
-  confirmPrivPassError: false,
-  hasFailedAttempt: false,
-  triggerPassphraseModalSubmit: false
-};
-
 function useChangePassphraseModal(onCancelModal, onSubmit) {
-  const [state, setState] = useState(initialState);
+  const [privPass, setPrivPass] = useState("");
+  const [privPassError, setPrivPassError] = useState(false);
+  const [confirmPrivPass, setConfirmPrivPass] = useState("");
+  const [confirmPrivPassError, setConfirmPrivPassError] = useState(false);
+  const [hasFailedAttempt, setHasFailedAttempt] = useState(false);
+  const [triggerPassphraseModalSubmit, setTriggerPassphraseModalSubmit] = useState(false);
+
+  const resetState = useCallback(() => {
+    setPrivPass("");
+    setPrivPassError(false);
+    setConfirmPrivPass("");
+    setConfirmPrivPassError(false);
+    setHasFailedAttempt(false);
+    setTriggerPassphraseModalSubmit(false);
+  }, []);
 
   const onCancelModalCallback = useCallback(() => {
-    setState(initialState);
+    resetState();
     onCancelModal && onCancelModal();
-  }, [onCancelModal]);
+  }, [resetState, onCancelModal]);
 
   const validationFailed = useCallback(() => {
-    const privPassError = !state.privPass;
-    const hasFailedAttempt = true;
-    const confirmPrivPassError =
-      state.privPass !== state.confirmPrivPass;
-    setState({ ...state, privPassError, hasFailedAttempt, confirmPrivPassError });
-  }, [state]);
+    setPrivPassError(!privPass);
+    setHasFailedAttempt(true);
+    setConfirmPrivPassError(privPass !== confirmPrivPass);
+  }, [privPass, confirmPrivPass]);
 
   const isValid = useCallback(() => {
     return (
-      !!state.privPass &&
-      state.privPass === state.confirmPrivPass
+      !!privPass &&
+      privPass === confirmPrivPass
     );
-  }, [state]);
+  }, [privPass, confirmPrivPass]);
 
   const onSubmitCallback = useCallback((passPhrase) => {
-    onSubmit(passPhrase, state.privPass, true);
-    setState(initialState);
-  }, [state, onSubmit]);
+    onSubmit(passPhrase, privPass, true);
+    resetState();
+  }, [privPass, onSubmit, resetState]);
 
   const updatePrivatePassphrase = useCallback((privPass) => {
-    if (privPass == "") setState({ ...state, hasFailedAttempt: true });
-    setState({ ...state, privPass, triggerPassphraseModalSubmit: false });
-  }, [state]);
+    if (privPass == "") setHasFailedAttempt(true);
+    setPrivPass(privPass);
+    setTriggerPassphraseModalSubmit(false);
+  }, []);
 
   const updateConfirmPrivatePassphrase = useCallback((confirmPrivPass) => {
-    if (confirmPrivPass == "") setState({ ...state, hasFailedAttempt: true });
-    setState({
-      ...state,
-      confirmPrivPass,
-      confirmPrivPassError: false,
-      triggerPassphraseModalSubmit: false
-    });
-  }, [state]);
+    if (confirmPrivPass == "") setHasFailedAttempt(true);
+    setConfirmPrivPass(confirmPrivPass);
+    setConfirmPrivPassError(false);
+    setTriggerPassphraseModalSubmit(false);
+  }, []);
 
   const onTriggerPassphraseModalSubmit = useCallback(() => {
-    setState({ ...state, triggerPassphraseModalSubmit: true });
-  }, [state]);
+    setTriggerPassphraseModalSubmit(true);
+  }, []);
 
   return {
-    state,
+    privPass,
+    privPassError,
+    confirmPrivPass,
+    confirmPrivPassError,
+    hasFailedAttempt,
+    triggerPassphraseModalSubmit,
     onCancelModalCallback,
     validationFailed,
     isValid,

@@ -3,14 +3,14 @@ import useChangePassphraseModal from "./hooks";
 
 function ChangePassphraseModal({ onCancelModal, onSubmit, ...props }) {
   const {
-    state,
     onCancelModalCallback,
     validationFailed,
     isValid,
     onSubmitCallback,
     updatePrivatePassphrase,
     updateConfirmPrivatePassphrase,
-    onTriggerPassphraseModalSubmit
+    onTriggerPassphraseModalSubmit,
+    ...state
   } = useChangePassphraseModal(onCancelModal, onSubmit);
 
   return (

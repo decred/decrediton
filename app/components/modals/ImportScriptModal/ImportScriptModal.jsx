@@ -3,19 +3,19 @@ import useImportScriptModal from "./hooks";
 
 function ImportScriptModal({ onCancelModal, onSubmit, ...props }) {
   const {
-    state,
     onCancelModalCallback,
     validationFailed,
-    setScript,
+    setScriptCallback,
     onSubmitCallback,
-    isValid
+    isValid,
+    ...state
   } = useImportScriptModal(onCancelModal, onSubmit);
 
   return (
     <Modal
       {...{ ...props, ...state }}
       {...{
-        setScript,
+        setScript: setScriptCallback,
         onSubmit: onSubmitCallback,
         onCancelModal: onCancelModalCallback,
         isValid,
