@@ -1,7 +1,6 @@
 .overview {
   background-color: var(--background-back-color);
   justify-content: space-between;
-  min-height: 200px;
   width: 740px;
   padding-bottom: 15px;
 }
