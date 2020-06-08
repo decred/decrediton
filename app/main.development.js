@@ -258,7 +258,7 @@ ipcMain.on("allow-stakepool-host", (event, host) => {
 ipcMain.on("allow-vsp-host", (event, host) => {
   allowVSPRequests(host);
   event.returnValue = true;
-})
+});
 
 ipcMain.on("allow-external-request", (event, requestType) => {
   allowExternalRequest(requestType);

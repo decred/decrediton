@@ -24,7 +24,8 @@ function VSPSelect({ onChange, options, intl }) {
     if (!value || !value.Host) return;
 
     const info = await getVSPInfo(value.Host);
-    // TODO store vsp pubkey into config files.    
+    // TODO store vsp pubkey into config files.
+    console.log(info);
 
     // if (value.newOption) {
     //   const formattedHost = value.Host.replace(/\/$/, "");

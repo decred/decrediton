@@ -24,7 +24,9 @@ const POST = (path, apiToken, json) => {
 
 // stakepPoolInfoResponseToConfig converts a response object for the
 // stakePoolInfo call into an object array of available stakepool configs.
-function stakepPoolInfoResponseToConfig(response) {
+function stakepPoolInfoResponseToConfig() {
+  // TODO remove this json.
+  // used to test with localhost and teststakepool
   const data = JSON.parse(`{
     "Tango":{
     "APIEnabled":true,

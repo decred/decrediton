@@ -14,7 +14,7 @@ export const getVSPInfo = (host) => async (dispatch) => {
   dispatch({ type: GETVSP_ATTEMPT });
   try {
     wallet.allowVSPHost(host);
-    const info = await wallet.getVSPInfo(host)
+    const info = await wallet.getVSPInfo(host);
     dispatch({ type: GETVSP_SUCCESS, info });
     return info.data;
   } catch (error) {

@@ -12,12 +12,12 @@ const Tickets = ({ toggleIsLegacy }) => {
     isWatchingOnly,
     discoverAvailableVSPs,
     defaultSpendingAccount,
-    spendingAccounts,
+    // spendingAccounts,
     ticketPrice
   } = usePurchaseTab();
 
   const [account, setAccount] = useState(defaultSpendingAccount);
-  const [vsp, setVSP] = useState(null);
+  // const [vsp, setVSP] = useState(null);
   const [numTickets, setNumTickets] = useState(1);
   const [vspOptions, setVSPOptions] = useState(null);
   const [isValid, setIsValid] = useState(false);
@@ -33,7 +33,7 @@ const Tickets = ({ toggleIsLegacy }) => {
     const canAfford = numTickets * ticketPrice <= spendable;
     const hasTickets = numTickets > 0;
     setIsValid(canAfford && hasTickets);
-  }, [ticketPrice, numTickets]);
+  }, [ticketPrice, numTickets, account]);
 
   useEffect(() => {
     const getAvailableVsps = async () => {
@@ -77,7 +77,6 @@ const Tickets = ({ toggleIsLegacy }) => {
       handleOnKeyDown,
       setAccount,
       ticketPrice,
-      setVSP,
       isValid,
       toggleIsLegacy
     }} />;
