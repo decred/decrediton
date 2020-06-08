@@ -10,7 +10,9 @@ const EligibleTickets = ({ tickets, tsDate, voteChoice }) => {
   const hasTickets = numOfTickets > 0;
   const toggleExapndedHandler = () => setIsExpanded(!isExapnded);
   return (
-    <div className={styles.wrapper} onClick={toggleExapndedHandler}>
+    <div
+      className={styles.wrapper}
+      onClick={hasTickets && toggleExapndedHandler}>
       <div
         className={classNames(
           styles.header,
