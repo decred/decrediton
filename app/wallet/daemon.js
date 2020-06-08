@@ -217,6 +217,7 @@ export const allowExternalRequest = log(
   "Allow External Request"
 );
 
+// TODO remove allowStakePoolHost after stop supporting vsp API's v1/v2.
 export const allowStakePoolHost = log(
   (host) => Promise.resolve(ipcRenderer.sendSync("allow-stakepool-host", host)),
   "Allow StakePool Host"

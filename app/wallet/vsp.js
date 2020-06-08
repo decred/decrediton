@@ -1,6 +1,7 @@
 import Promise from "promise";
 import * as api from "../middleware/vspapi";
 import { withLog as log, withLogNoData } from "./index";
+import { ipcRenderer } from "electron";
 
 const promisifyReq = (fnName, Req) =>
   log(
@@ -43,4 +44,14 @@ export const getStakePoolStats = promisifyReqLogNoData(
 export const getStakePoolInfo = promisifyReqLogNoData(
   "getStakePoolInfo",
   api.stakePoolInfo
+);
+export const getVSPInfo = promisifyReqLogNoData(
+  "getVSPInfo",
+  api.getVSPInfo
+);
+
+// allowVSPHost enables the external request to a specif VSP host.
+export const allowVSPHost = log(
+  (host) => Promise.resolve(ipcRenderer.sendSync("allow-vsp-host", host)),
+  "Allow StakePool Host"
 );

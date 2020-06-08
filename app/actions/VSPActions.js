@@ -6,6 +6,24 @@ import * as sel from "../selectors";
 import * as wallet from "wallet";
 import { TESTNET, MAINNET } from "constants";
 
+export const GETVSP_ATTEMPT = "GETVSP_ATTEMPT";
+export const GETVSP_FAILED = "GETVSP_FAILED";
+export const GETVSP_SUCCESS = "GETVSP_SUCCESS";
+
+export const getVSPInfo = (host) => async (dispatch) => {
+  dispatch({ type: GETVSP_ATTEMPT });
+  try {
+    wallet.allowVSPHost(host);
+    const info = await wallet.getVSPInfo(host)
+    dispatch({ type: GETVSP_SUCCESS, info });
+    return info.data;
+  } catch (error) {
+    dispatch({ type: GETVSP_FAILED, error });
+    return error;
+  }
+};
+
+// TODO After stop supporting v1/v2 vsp's API, remove legacy code.
 export const GETSTAKEPOOLSTATS_ATTEMPT = "GETSTAKEPOOLSTATS_ATTEMPT";
 export const GETSTAKEPOOLSTATS_FAILED = "GETSTAKEPOOLSTATS_FAILED";
 export const GETSTAKEPOOLSTATS_SUCCESS = "GETSTAKEPOOLSTATS_SUCCESS";

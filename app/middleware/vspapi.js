@@ -47,6 +47,17 @@ function stakepPoolInfoResponseToConfig(response) {
     ,"Immature":0,"Live":0,"Voted":516,"Missed":69,"PoolFees":2,
     "ProportionLive":0,"ProportionMissed":0.11794871794871795,
     "UserCount":19,"UserCountActive":9,"Version":"1.5.0-pre"
+    },
+  "teststakepool": {
+    "APIEnabled":true,
+    "APIVersionsSupported":[1,2, 3],
+    "Network":"testnet",
+    "URL":"https://teststakepool.decred.org",
+    "Launched":1535630100,
+    "LastUpdated":1587938189
+    ,"Immature":0,"Live":0,"Voted":516,"Missed":69,"PoolFees":2,
+    "ProportionLive":0,"ProportionMissed":0.11794871794871795,
+    "UserCount":19,"UserCountActive":9,"Version":"1.5.0-pre"
     }
   }`);
   const stakePoolNames = Object.keys(data);
@@ -133,6 +144,13 @@ export function getPurchaseInfo({ apiUrl, apiToken }, cb) {
 // stakepool host.
 export function statsFromStakePool(host, cb) {
   GET(host + "/api/v1/stats")
+    .then((resp) => cb(resp, null, host))
+    .catch((error) => cb(null, error, host));
+}
+
+// getVSPInfo gets the vspinfo.
+export function getVSPInfo(host, cb) {
+  GET(host + "/api/vspinfo")
     .then((resp) => cb(resp, null, host))
     .catch((error) => cb(null, error, host));
 }
