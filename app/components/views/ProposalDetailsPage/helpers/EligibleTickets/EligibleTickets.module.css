@@ -42,6 +42,10 @@
   transform: rotate(90deg);
 }
 
+.header.noTickets .arrow {
+  display: none;
+}
+
 .columnHeader {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));

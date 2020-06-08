@@ -7,10 +7,16 @@ import { TxHistory } from "shared";
 const EligibleTickets = ({ tickets, tsDate, voteChoice }) => {
   const [isExapnded, setIsExpanded] = useState();
   const numOfTickets = tickets.length;
+  const hasTickets = numOfTickets > 0;
   const toggleExapndedHandler = () => setIsExpanded(!isExapnded);
   return (
     <div className={styles.wrapper} onClick={toggleExapndedHandler}>
-      <div className={classNames(styles.header, isExapnded && styles.expanded)}>
+      <div
+        className={classNames(
+          styles.header,
+          isExapnded && styles.expanded,
+          !hasTickets && styles.noTickets
+        )}>
         <div>
           <T
             id="proposals.detail.wallet.eligible.header"
@@ -20,7 +26,7 @@ const EligibleTickets = ({ tickets, tsDate, voteChoice }) => {
         </div>
         <div className={styles.arrow}></div>
       </div>
-      {isExapnded && (
+      {isExapnded && hasTickets && (
         <div>
           <div className={styles.columnHeader}>
             <div>
