@@ -1,6 +1,8 @@
 @import (reference) "./main.less";
 @import "~nouislider/distribute/nouislider.min.css";
 
+// XXX: YOU NEXT!
+
 .history-content-title {
   color: var(--stroke-color-hovered);
   font-size: 20px;
@@ -13,32 +15,6 @@
 .history-page-content-wrapper {
   width: 740px;
   height: 100%;
-
-  .tx-info {
-    padding: 16px 20px;
-    width: 100%;
-  }
-
-  .transaction-time-date-spacer {
-    margin-right: 20px;
-  }
-}
-
-.tx-history-row {
-  background-image: var(--arrow-right-gray-icon);
-  background-position: 715px;
-  background-size: 5px;
-  background-repeat: no-repeat;
-  border-bottom: 1px solid var(--disabled-background-color);
-  background-color: var(--background-back-color);
-  cursor: pointer;
-  width: 740px;
-  height: 54px;
-}
-
-.tx-history-row:hover {
-  background-image: var(--arrow-right-blue-icon);
-  background-color: var(--tx-history-background-hover);
 }
 
 .history-select-tx-types-area {
@@ -158,26 +134,13 @@
     width: 667px;
   }
 
-  .tx-history-row {
-    width: 667px;
-    background-position: 642px;
-  }
-
   .history-content-title {
-    width: 608px
+    width: 608px;
   }
 }
 
 @media screen and (max-width: 768px) {
-  .transaction-account-name {
-    display: none;
-  }
-
   .history-page-content-wrapper {
-    width: 355px;
-  }
-
-  .tx-history-row {
     width: 355px;
   }
 

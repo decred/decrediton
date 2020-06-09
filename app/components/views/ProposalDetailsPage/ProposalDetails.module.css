@@ -1,8 +1,8 @@
 .overview {
   background-color: var(--background-back-color);
   justify-content: space-between;
-  min-height: 200px;
   width: 740px;
+  padding-bottom: 15px;
 }
 
 .overviewInfoWrapper {
@@ -151,10 +151,9 @@ div.radioButtonsWrapper > * {
 .detailsText {
   font-family: var(--font-family-regular-semi-bold);
   min-height: 100%;
-  padding-top: 30px;
-  padding-left: 40px;
+  padding: 40px 0 40px 40px;
   background-color: var(--background-back-color);
-  margin-bottom: 80px;
+  margin: 20px 0 80px;
   border-top: 1px solid var(--tabbed-page-header-bg);
   width: 700px;
 }
@@ -162,11 +161,16 @@ div.radioButtonsWrapper > * {
 .detailsText .links {
   float: right;
   margin-right: 20px;
-  margin-top: -10px;
+  margin-top: -20px;
 }
 
 .detailsText p {
   word-wrap: break-word;
+  margin: 10px 0;
+}
+
+.proposalBody {
+  width: 66%;
 }
 
 .detailsText a {
@@ -257,31 +261,6 @@ div.radioButtonsWrapper > * {
   margin-right: 5px;
 }
 
-.walletEligibleTickets {
-  width: 100%;
-  font-size: 9pt;
-  color: var(--overview-balance-label);
-}
-
-.walletEligibleTicketsHeader {
-  margin-right: 30px;
-  text-align: right;
-}
-
-.walletEligibleTicketsArrow {
-  top: 5px;
-  right: -20px;
-}
-
-.walletEligibleTicketsLabel {
-  padding-right: 5px;
-}
-
-.walletEligibleTicketsRow {
-  border-top: 1px solid var(--tabbed-page-header-bg);
-  padding-left: 20px;
-}
-
 .loadingPage {
   width: 100%;
   text-align: center;
@@ -297,6 +276,7 @@ div.radioButtonsWrapper > * {
   background-color: var(--info-modal-button-bg) !important;
   border: 0 !important;
   text-decoration: none !important;
+  box-shadow: 0 5px 13px var(--icons-shadow);
 }
 
 .politeiaButton:hover {

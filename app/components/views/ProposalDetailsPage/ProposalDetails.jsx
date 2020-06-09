@@ -1,9 +1,14 @@
-import { useState } from "react";
 import { classNames, Button, StatusBar, Tooltip, Text, useTheme } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
 import { InvisibleButton } from "buttons";
-import { PoliteiaLink, VerticalAccordion } from "shared";
-import { OverviewField, TimeValue, ProposalText, VoteInfo } from "./helpers";
+import { PoliteiaLink } from "shared";
+import {
+  OverviewField,
+  TimeValue,
+  ProposalText,
+  VoteInfo,
+  EligibleTickets
+} from "./helpers";
 import { getStatusBarData } from "./utils";
 import {
   VOTESTATUS_ACTIVEVOTE,
@@ -38,9 +43,6 @@ const ProposalDetails = ({
   goBackHistory,
   eligibleTicketCount
 }) => {
-  const [showWalletEligibleTickets, toggleWalletEligibleTickets] = useState(
-    false
-  );
   const { tsDate, hasTickets, isTestnet } = useProposalDetails();
   const { themeName } = useTheme();
   const isDarkTheme = themeName === "theme-dark";
@@ -129,42 +131,14 @@ const ProposalDetails = ({
             }
           />
         )}
-        <div>
-          {walletEligibleTickets && (
-            <VerticalAccordion
-              header={
-                <div>
-                  <T
-                    id="proposals.detail.wallet.eligible.header"
-                    m="Wallet Eligible Tickets "
-                  />
-                </div>
-              }
-              show={showWalletEligibleTickets}
-              onToggleAccordion={() =>
-                toggleWalletEligibleTickets(!showWalletEligibleTickets)
-              }
-              className={styles.walletEligibleTickets}
-              headerClassName={styles.walletEligibleTicketsHeader}
-              arrowClassName={styles.walletEligibleTicketsArrow}>
-              {walletEligibleTickets.map((t, i) => (
-                <div
-                  className={classNames(
-                    "is-row",
-                    styles.walletEligibleTicketsRow
-                  )}
-                  key={`ticket-${i + 1}`}>
-                  <div className={styles.walletEligibleTicketsLabel}>
-                    <T id="proposals.detail.tickets" m="Ticket " />
-                    {i + 1}:{" "}
-                  </div>
-                  <div>{t.ticket}</div>
-                </div>
-              ))}
-            </VerticalAccordion>
-          )}
-        </div>
       </div>
+      {walletEligibleTickets && (
+        <EligibleTickets
+          tickets={walletEligibleTickets}
+          tsDate={tsDate}
+          voteChoice={newVoteChoice || currentVoteChoice.id}
+        />
+      )}
       <div className={styles.detailsText}>
         <div className={styles.links}>
           <PoliteiaLink

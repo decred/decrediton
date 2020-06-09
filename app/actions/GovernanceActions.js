@@ -1,6 +1,7 @@
 import * as sel from "selectors";
 import * as pi from "middleware/politeiaapi";
 import * as wallet from "wallet";
+import { GETTRANSACTIONS_COMPLETE } from "./TransactionActions";
 import { push as pushHistory } from "connected-react-router";
 import { hexReversedHashToArray, reverseRawHash } from "helpers";
 import {
@@ -80,6 +81,8 @@ const fillVoteSummary = (proposal, voteSummary, blockTimestampFromNow) => {
   proposal.totalVotes = totalVotes;
 };
 
+const ticketHashesToByte = (hashes) => hashes.map(hexReversedHashToArray);
+
 // getProposalEligibleTickets gets the wallet eligible tickets from a specific proposal.
 // if the proposal directory already exists it only returns the cached information,
 // otherwise it gets the eligible tickets from politeia and caches it.
@@ -93,7 +96,6 @@ const getProposalEligibleTickets = async (
   // (committed tickets) for a given proposal (given a list of eligible tickets
   // returned from an activevotes call)
   const getWalletEligibleTickets = async (eligibleTickets, walletService) => {
-    const ticketHashesToByte = (hashes) => hashes.map(hexReversedHashToArray);
     const commitedTicketsResp = await wallet.committedTickets(
       walletService,
       ticketHashesToByte(eligibleTickets)
@@ -121,7 +123,6 @@ const getProposalEligibleTickets = async (
   if (shouldCache) {
     saveEligibleTickets(token, { eligibleTickets: allEligibleTickets });
   }
-
   return await getWalletEligibleTickets(allEligibleTickets, walletService);
 };
 
@@ -477,6 +478,12 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
     }
   };
 
+  const accounts = sel.accounts(getState());
+  const findAccount = (num) =>
+    accounts.find((account) => account.getAccountNumber() === num);
+  const getAccountName = (num) =>
+    ((act) => (act ? act.getAccountName() : ""))(findAccount(num));
+
   const getProposal = (proposals, token) => {
     let proposal;
     const keys = Object.keys(proposals);
@@ -491,6 +498,7 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
   const piURL = sel.politeiaURL(getState());
   const walletName = sel.getWalletName(getState());
   const testnet = sel.isTestNet(getState());
+  const txURLBuilder = sel.txURLBuilder(getState());
   let walletEligibleTickets;
   let hasEligibleTickets = false;
   let currentVoteChoice;
@@ -572,7 +580,57 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
         savePiVote(votesToCache, token, testnet, walletName);
       }
     }
-
+    if (hasEligibleTickets) {
+      const transactions = await Promise.all(
+        walletEligibleTickets.map(({ ticket: ticketHash }) =>
+          wallet.getTransaction(walletService, ticketHash)
+        )
+      );
+      const tickets = await Promise.all(
+        walletEligibleTickets.map(({ ticket: ticketHash }) =>
+          wallet.getTicket(walletService, hexReversedHashToArray(ticketHash))
+        )
+      );
+      const stakeTxs = walletEligibleTickets
+        .map(({ ticket: ticketHash }, idx) => {
+          const { status } = tickets[idx];
+          return {
+            ...tickets[idx],
+            ...transactions[idx],
+            ticket: transactions[idx].tx,
+            status,
+            txUrl: txURLBuilder(ticketHash)
+          };
+        })
+        .reduce((m, t) => {
+          m[t.txHash] = t;
+          return m;
+        }, {});
+      // apend eligible tickets transactions details to stake transactions to show transaction details page
+      // when user clicks on a eligble ticket is proposal detials page
+      dispatch({
+        type: GETTRANSACTIONS_COMPLETE,
+        stakeTransactions: stakeTxs
+      });
+      walletEligibleTickets = walletEligibleTickets.map(
+        ({ ticket: ticketHash, address }, idx) => {
+          const { status, ticket: tx } = tickets[idx];
+          // get account name
+          const debitList = tx.getDebitsList();
+          const accountName = getAccountName(debitList[0].getPreviousAccount());
+          const ticketPrice = tx.getCreditsList()[0].getAmount();
+          return {
+            txHash: ticketHash,
+            txUrl: stakeTxs[ticketHash].txUrl,
+            status: status,
+            address,
+            timestamp: tx.getTimestamp(),
+            accountName,
+            ticketPrice
+          };
+        }
+      );
+    }
     // update proposal reference from proposals state
     Object.keys(proposals).forEach((key) =>
       proposals[key].find((p, i) => {
@@ -617,18 +675,17 @@ export const updateVoteChoice = (
   const piURL = sel.politeiaURL(getState());
   const walletName = sel.getWalletName(getState());
   const testnet = sel.isTestNet(getState());
-  const { token } = proposal;
-  const { walletEligibleTickets } = proposal;
+  const { walletEligibleTickets, token } = proposal;
 
   const voteChoice = proposal.voteOptions.find((o) => o.id === newVoteChoiceID);
   if (!voteChoice) throw "Unknown vote choice for proposal";
 
-  const messages = walletEligibleTickets.map((t) => {
-    // msg here needs to follow the same syntax as what is defined on
-    // politeiavoter.
-    const msg = token + t.ticket + voteChoice.bits.toString(16);
-    return { address: t.address, message: msg };
-  });
+  // msg here needs to follow the same syntax as what is defined on
+  // politeiavoter.
+  const messages = walletEligibleTickets.map((t) => ({
+    address: t.address,
+    message: `${token}${t.txHash}${voteChoice.bits.toString(16)}`
+  }));
 
   const updatePropRef = (proposals, token, newProposal) => {
     const keys = Object.keys(proposals);
@@ -657,15 +714,14 @@ export const updateVoteChoice = (
     const votes = [];
     const votesToCache = { token, walletEligibleTickets, voteChoice };
     const sigs = signed.getRepliesList();
-    proposal.walletEligibleTickets.forEach((t, i) => {
+    walletEligibleTickets.forEach((t, i) => {
       const signature = sigs[i];
       if (signature.getError() != "") {
         return;
       }
       const hexSig = Buffer.from(signature.getSignature()).toString("hex");
-
       const voteBit = voteChoice.bits.toString(16);
-      const vote = { token, ticket: t.ticket, voteBit, signature: hexSig };
+      const vote = { token, ticket: t.txHash, voteBit, signature: hexSig };
       votes.push(vote);
     });
 

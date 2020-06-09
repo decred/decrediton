@@ -71,6 +71,7 @@ export const LIVE = "live";
 export const TRANSFER = "transfer";
 export const COINBASE = "coinbase";
 export const REGULAR = "regular";
+export const ELIGIBLE = "eligible";
 
 // tx directions
 export const TRANSACTION_DIR_SENT = "sent";

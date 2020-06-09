@@ -1,0 +1,54 @@
+.wrapper {
+  background-color: var(--background-back-color);
+  padding: 20px;
+  width: 700px;
+  margin-top: 20px;
+}
+
+.arrow {
+  content: "";
+  background-image: var(--arrow-right-gray-icon);
+  background-repeat: no-repeat;
+  background-position: center right;
+  background-size: contain;
+  width: 10px;
+  height: 14px;
+  display: block;
+  transition: transform 0.25s ease-in-out;
+  transform: rotate(-90deg);
+}
+
+.total {
+  font-weight: 600;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 20px;
+}
+
+.header.expanded {
+  margin-bottom: 20px;
+}
+
+.header:hover .arrow {
+  background-image: var(--arrow-right-blue-icon);
+}
+
+.header.expanded .arrow {
+  transform: rotate(90deg);
+}
+
+.header.noTickets .arrow {
+  display: none;
+}
+
+.columnHeader {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  padding: 6px 20px;
+  background-color: var(--sidebar-color);
+}

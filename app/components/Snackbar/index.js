@@ -206,8 +206,6 @@ class Snackbar extends React.Component {
       ? this.getAnimatedNotification()
       : this.getStaticNotification();
 
-    // console.log(notification)
-
     return (
       <EventListener target="document">
         <div className="snackbar-panel">{notification}</div>

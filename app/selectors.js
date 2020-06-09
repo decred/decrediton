@@ -16,7 +16,7 @@ import {
 import { appLocaleFromElectronLocale } from "./i18n/locales";
 import { reverseHash } from "./helpers/byteActions";
 import { MainNetParams, TestNetParams } from "constants";
-import { /*TicketTypes,*/ decodeVoteScript } from "./helpers/tickets";
+import { decodeVoteScript } from "./helpers/tickets";
 import {
   EXTERNALREQUEST_STAKEPOOL_LISTING,
   EXTERNALREQUEST_POLITEIA,
@@ -180,7 +180,7 @@ export const getNetworkError = get(["grpc", "getNetworkError"]);
 export const getAccountMixerRunning = get(["grpc", "accountMixerRunning"]);
 
 // accounts is a selector representing accountsList from gRPC response.
-const accounts = createSelector([getAccountsResponse], (r) =>
+export const accounts = createSelector([getAccountsResponse], (r) =>
   r ? r.getAccountsList() : []
 );
 
@@ -895,7 +895,8 @@ export const nextAddress = compose(get("address"), getNextAddressResponse);
 
 export const defaultSpendingAccount = createSelector(
   [visibleAccounts, getMixedAccount],
-  (accounts, mixedAccount) => accounts.find(compose(eq(mixedAccount || 0), get("value")))
+  (accounts, mixedAccount) =>
+    accounts.find(compose(eq(mixedAccount || 0), get("value")))
 );
 
 export const changePassphraseRequestAttempt = get([

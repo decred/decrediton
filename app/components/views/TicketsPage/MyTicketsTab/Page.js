@@ -97,7 +97,7 @@ const TicketListPage = ({
               <T id="tickets.table.header.purchased" m="Purchased" />
             </div>
           </div>
-          <TxHistory {...{ transactions: tickets, tsDate, isStake: true }} />
+          <TxHistory {...{ transactions: tickets, tsDate, mode: "stake" }} />
         </>
       )}
     </div>

@@ -11,3 +11,4 @@ export { default as Header } from "./Header";
 export { default as VoteInfo } from "./VoteInfo";
 export { default as ChooseOptions } from "./ChooseOptions";
 export { default as ChooseVoteOption } from "./ChooseVoteOption";
+export { default as EligibleTickets } from "./EligibleTickets/EligibleTickets";

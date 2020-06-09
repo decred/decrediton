@@ -1,0 +1,254 @@
+.eligible {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.voteChoice > * {
+  box-sizing: border-box;
+}
+
+.yes,
+.no {
+  margin: -5px 0 0 0 !important;
+}
+
+.yes > label > span:nth-child(1) {
+  border-color: var(--vote-yes-color);
+}
+
+.yes > label > span:nth-child(2) {
+  background-color: var(--vote-yes-color);
+}
+
+.no > label > span:nth-child(1) {
+  border-color: var(--vote-no-color);
+}
+
+.no > label > span:nth-child(2) {
+  background-color: var(--vote-no-color);
+}
+
+.icon {
+  float: left;
+  width: 20px;
+  height: 20px;
+  background-repeat: no-repeat;
+  background-size: 20px 20px;
+}
+
+.icon.sent {
+  background-image: var(--minus-small-icon);
+}
+.icon.received,
+.icon.coinbase {
+  background-image: var(--plus-small-icon);
+}
+.icon.transfer {
+  background-image: var(--transfer-transaction-icon);
+}
+.icon.unknown,
+.icon.ticket {
+  background-image: var(--ticket-live-icon);
+}
+.icon.live {
+  background-image: var(--ticket-live-icon);
+}
+.icon.vote {
+  background-image: var(--ticket-voted-icon);
+}
+.icon.voted {
+  background-image: var(--ticket-voted-icon);
+}
+.icon.revocation {
+  background-image: var(--ticket-revoked-icon);
+}
+.icon.revoked {
+  background-image: var(--ticket-revoked-icon);
+}
+.icon.immature {
+  background-image: var(--ticket-immature-icon);
+}
+.icon.missed {
+  background-image: var(--ticket-missed-icon);
+}
+.icon.expired {
+  background-image: var(--ticket-expired-icon);
+}
+.icon.unmined {
+  background-image: var(--ticket-unmined-icon);
+}
+
+.amountValue {
+  font-size: 15px;
+  font-family: var(--font-family-regular-semi-bold);
+  margin-left: 10px;
+}
+
+.amountHash {
+  font-family: var(--font-family-monospace);
+  color: var(--overview-balance-label);
+  font-size: 11px;
+  line-height: 11px;
+  margin-left: 34px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.info {
+  margin-left: auto;
+}
+
+.status {
+  padding-top: 1px;
+  text-align: right;
+  flex-grow: 2;
+}
+
+.accountName {
+  background-color: var(--transaction-account-name-bg);
+  padding: 2px 4px;
+  border-radius: 5px;
+  font-size: 11px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-right: 20px;
+  height: 15px;
+  max-width: 210px;
+}
+
+.timeDateSpacer {
+  font-size: 11px;
+  margin-right: 20px;
+}
+
+.overviewPending .txInfo {
+  width: 100%;
+}
+
+.pendingOverviewDetails {
+  background-color: var(--disabled-background-color-lighter);
+  background-image: var(--pending-animation);
+  background-size: 14px;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  width: 32px;
+  height: 54px;
+  cursor: pointer;
+  text-align: center;
+  margin-left: -32px;
+}
+
+.myTickets {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 2fr 1fr 1fr;
+}
+
+.stakeType {
+  font-family: var(--font-family-regular);
+  color: var(--input-color-default);
+  font-size: 15px;
+  margin-left: 10px;
+}
+
+.stakeType:not(.overview) {
+  padding-top: 4px;
+}
+
+.priceReward {
+  display: flex;
+  font-family: var(--font-family-regular);
+  color: var(--settings-desc);
+  font-size: 12px;
+  margin-left: 30px;
+}
+
+.ticketReward {
+  background-image: var(--ticket-reward-icon);
+  background-repeat: no-repeat;
+  background-size: 11px 11px;
+  background-position: 0px 4px;
+  padding-left: 16px;
+}
+
+.ticketReward.overview {
+  margin-left: 50px;
+}
+
+.daysToVote {
+  background-image: var(--time-lock-icon);
+  background-repeat: no-repeat;
+  background-size: 12px 12px;
+  background-position: 0px 4px;
+  padding-left: 14px;
+  margin-left: 10px;
+}
+
+.noBold {
+  font-weight: 400 !important;
+}
+
+.myTickesPrice {
+  font-size: 15px;
+}
+
+.overviewRow {
+  width: 368px;
+  height: 54px;
+  background: var(--background-back-color);
+  border-bottom: 1px solid var(--disabled-background-color);
+  cursor: pointer;
+}
+
+.overviewRow .txInfo {
+  padding: 16px 20px 9px 10px;
+}
+
+.overviewRow .timeDateSpacer {
+  margin-left: auto;
+}
+
+.historyRow {
+  background-image: var(--arrow-right-gray-icon);
+  background-position: 715px;
+  background-size: 5px;
+  background-repeat: no-repeat;
+  border-bottom: 1px solid var(--disabled-background-color);
+  background-color: var(--background-back-color);
+  cursor: pointer;
+  height: 54px;
+}
+
+.historyRow:hover {
+  background-image: var(--arrow-right-blue-icon);
+  background-color: var(--tx-history-background-hover);
+}
+
+.historyRow .txInfo {
+  padding: 16px 20px;
+  width: 100%;
+}
+
+.eligibleRow {
+  background-position: 688px;
+}
+
+@media screen and (max-width: 1179px) {
+  .overviewRow {
+    width: 315px;
+  }
+  .historyRow {
+    width: 667px;
+    background-position: 642px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .historyRow {
+    width: 355px;
+  }
+  .accountName {
+    display: none;
+  }
+}
