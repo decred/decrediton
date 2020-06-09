@@ -14,9 +14,9 @@ const NumTicketsInput = ({
 }) => {
   const ticketUnitLabel =
     numTickets === 1 ? (
-      <T id="numTicketInput.unit" m="ticket" />
+      <T id="numTicketInput.unit" m="Ticket" />
     ) : (
-      <T id="numTicketsInput.unit" m="tickets" />
+      <T id="numTicketsInput.unit" m="Tickets" />
     );
   return (
     <div

@@ -48,7 +48,7 @@ export default () => (
       path="/tickets/purchase"
       component={PurchaseTab}
       header={TabHeader}
-      link={<T id="tickets.tab.purchase" m="Purchase" />}
+      link={<T id="tickets.tab.purchase" m="Purchase Tickets" />}
     />
     <Tab
       path="/tickets/mytickets"

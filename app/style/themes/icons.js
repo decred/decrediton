@@ -134,7 +134,14 @@ const icons = {
   "release-image-v150": "url('style/icons/release-note-v150.png')",
   "tickets-loading-more-icon":
     "url('style/icons/ticket_live_loop_decrediton_grey.gif')",
-  "qr-icon": "url('style/icons/qr-logo.svg')"
+  "qr-icon": "url('style/icons/qr-logo.svg')",
+  "ticket-expired": "url('style/icons/ticketExpired.svg')",
+  "ticket-immature": "url('style/icons/ticketImmature.svg')",
+  "ticket-live": "url('style/icons/ticketLive.svg')",
+  "ticket-missed": "url('style/icons/ticketMissed.svg')",
+  "ticket-revoked": "url('style/icons/ticketRevoked.svg')",
+  "ticket-unmined": "url('style/icons/ticketUnmined.svg')",
+  "ticket-voted": "url('style/icons/ticketVoted.svg')"
 };
 
 export default icons;

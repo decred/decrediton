@@ -40,7 +40,8 @@ import {
   MAINNET,
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_RECEIVED,
-  TRANSACTION_DIR_TRANSFERRED
+  TRANSACTION_DIR_TRANSFERRED,
+  VOTED
 } from "constants";
 import * as wallet from "wallet";
 
@@ -700,6 +701,20 @@ export const filteredStakeTxs = createSelector(
       .filter((v) => (filter.status ? filter.status === v.status : true));
 
     return filteredTxs;
+  }
+);
+
+export const lastVotedTicket = createSelector(
+  [stakeTransactions],
+  (transactions) => {
+    const lastVotedTicket = Object.keys(transactions)
+      .map((hash) => transactions[hash])
+      .filter((transaction) => transaction.status == VOTED)
+      .reduce((prev, current) =>
+        (prev.leaveTimestamp > current.leaveTimestamp) ? prev : current
+      , []);
+
+    return Array.isArray(lastVotedTicket) ? null : lastVotedTicket;
   }
 );
 

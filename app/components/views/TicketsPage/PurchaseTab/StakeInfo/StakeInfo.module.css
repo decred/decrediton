@@ -1,0 +1,179 @@
+.area {
+  background-color: var(--background-back-color);
+  height: 128px;
+  padding: 16px 19px 0 19px;
+  border-radius: 5px;
+  position: relative;
+  display: grid;
+  grid-template-areas:
+    "purchaseTicketsTitle purchaseTicketsTitle purchaseTicketsTitle purchaseTicketsTitle"
+    "purchaseTicketsLive purchaseTicketsTotalVoted purchaseTicketsLastTicketVoted purchaseTicketsTotalRewardsEarned";
+  grid-template-rows: 57px 71px;
+}
+
+.purchaseTicketTitle {
+  box-sizing: content-box;
+  grid-area: purchaseTicketsTitle;
+  font-size: 15px;
+}
+
+.purchaseTicketFoot {
+  border-bottom: 1px var(--tx-detail-text) solid;
+}
+
+.purchaseTicketLabel {
+  font-size: 13px;
+}
+
+.balance {
+  display: inline;
+}
+
+.detailsBorder {
+  background-color: var(--background-back-color);
+}
+
+.details {
+  height: 70px;
+  display: grid;
+  grid-template-columns: 1.2fr repeat(3, 1fr);
+  grid-template-rows: 22px 22px;
+  row-gap: 11px;
+  box-sizing: content-box;
+  padding-top: 12px;
+  margin-left: 19px;
+  margin-right: 19px;
+  background-color: var(--background-back-color);
+  border-top: 1px solid;
+  border-color: var(--input-placeholder-color);
+}
+
+.stakeInfo {
+  display: grid;
+  grid-template-rows: 15px 24px 15px;
+}
+
+.label {
+  vertical-align: middle;
+  line-height: 15px;
+  font-size: 11px;
+}
+
+.value {
+  vertical-align: middle;
+  line-height: 24px;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.foot {
+  vertical-align: middle;
+  white-space: pre;
+  line-height: 15px;
+  font-size: 11px;
+  color: var(--tx-detail-text);
+}
+
+.detail {
+  margin-bottom: 10px;
+  display: inline-grid;
+  grid-template-columns: 22px auto 1fr;
+  vertical-align: middle;
+  line-height: 22px;
+  font-size: 13px;
+  min-width: 0;
+}
+
+.detailIcon {
+  background-repeat: no-repeat;
+}
+
+.detailLabel {
+  display: block;
+  padding-left: 6px;
+}
+
+.detailValue {
+  font-weight: 600;
+  padding-left: 5px;
+}
+
+.detailIconExpired {
+  background-image: var(--ticket-expired);
+}
+
+.detailIconImmature {
+  background-image: var(--ticket-immature);
+}
+
+.detailIconLive {
+  background-image: var(--ticket-live);
+}
+
+.detailIconMissed {
+  background-image: var(--ticket-missed);
+}
+
+.detailIconRevoked {
+  background-image: var(--ticket-revoked);
+}
+
+.detailIconUnmined {
+  background-image: var(--ticket-unmined);
+}
+
+.detailIconVoted {
+  background-image: var(--ticket-voted);
+}
+
+@media screen and (max-width: 1179px) {
+  .details {
+    height: 85px;
+    row-gap: 25px;
+  }
+
+  .detail {
+    grid-template-columns: 22px auto 1fr;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .area {
+    height: 200px;
+    grid-template-areas:
+      "purchaseTicketsTitle purchaseTicketsTitle"
+      "purchaseTicketsLive purchaseTicketsTotalVoted"
+      "purchaseTicketsLastTicketVoted purchaseTicketsTotalRewardsEarned";
+    grid-template-rows: 57px 71px 71px;
+  }
+
+  .details {
+    height: 130px;
+    row-gap: 25px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 22px 22px 22px;
+  }
+
+  .detail {
+    grid-template-columns: 22px auto 1fr;
+  }
+
+  .details .detail:first-child .detailLabel {
+    width: 80px;
+  }
+
+  .purchaseTicketLabel {
+    font-size: 13px;
+  }
+}
+.purchase-ticket-title {
+  box-sizing: content-box;
+  grid-area: purchaseTicketsTitle;
+  font-size: 15px;
+}
+
+.purchaseTicketTitle {
+  box-sizing: content-box;
+  grid-area: purchaseTicketsTitle;
+  font-size: 15px;
+}
