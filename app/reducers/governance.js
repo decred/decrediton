@@ -39,13 +39,14 @@ export default function governance(state = {}, action) {
       return {
         ...state,
         proposals: { ...action.proposals },
-        getProposalsAttempt: false
+        getProposalsAttempt: false,
+        getProposalError: null
       };
     case GETPROPROSAL_UPDATEVOTESTATUS_FAILED:
       return {
         ...state,
         getProposalsAttempt: false,
-        getProposalError: state.error
+        getProposalError: action.error
       };
     case GETPROPOSAL_ATTEMPT:
       return { ...state, getProposalsAttempt: true, getProposalError: null };
@@ -53,7 +54,7 @@ export default function governance(state = {}, action) {
       return {
         ...state,
         getProposalsAttempt: false,
-        getProposalError: state.error
+        getProposalError: action.error
       };
     case GETPROPOSAL_SUCCESS:
       return {

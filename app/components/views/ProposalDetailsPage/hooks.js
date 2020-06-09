@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as sel from "selectors";
 import * as gov from "actions/GovernanceActions";
@@ -48,10 +48,16 @@ export const useProposalDetailsPage = () => {
         return send("RESOLVE");
       },
       load: () => {
-        getProposalDetails(token).then(() => send({ type: "RESOLVE" }));
+        getProposalDetails(token)
+          .then(() => send({ type: "RESOLVE" }))
+          .catch(() => send("REJECT"));
       }
     }
   });
+
+  useEffect(() => {
+    send(getProposalError ? "REJECT" : "RETRY");
+  }, [getProposalError, send]);
 
   return {
     viewedProposalDetails,
@@ -62,6 +68,7 @@ export const useProposalDetailsPage = () => {
     token,
     dispatch,
     goBackHistory,
-    showPurchaseTicketsPage
+    showPurchaseTicketsPage,
+    send
   };
 };

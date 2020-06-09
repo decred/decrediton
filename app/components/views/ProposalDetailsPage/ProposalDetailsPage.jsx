@@ -1,11 +1,12 @@
 import { useMemo } from "react";
 import ProposalDetails from "./ProposalDetails";
 import { politeiaMarkdownIndexMd } from "./utils";
-import { ProposalError, Header } from "./helpers";
+import { Header } from "./helpers";
 import { PoliteiaLoading } from "indicators";
 import { StandalonePage } from "layout";
 import styles from "./ProposalDetails.module.css";
 import { useProposalDetailsPage } from "./hooks";
+import { LoadingError } from "shared";
 
 const ProposalDetailsPage = () => {
   const {
@@ -14,7 +15,8 @@ const ProposalDetailsPage = () => {
     votingStatus,
     getProposalError,
     goBackHistory,
-    showPurchaseTicketsPage
+    showPurchaseTicketsPage,
+    send
   } = useProposalDetailsPage();
 
   const stateComponent = useMemo(() => {
@@ -46,7 +48,15 @@ const ProposalDetailsPage = () => {
           />
         );
       case "failure":
-        return <ProposalError error={getProposalError} />;
+        return (
+          <LoadingError
+            errorMessageDescription={String(getProposalError)}
+            cancelButton={true}
+            reload={() => {
+              send("RETRY");
+            }}
+          />
+        );
       default:
         return null;
     }

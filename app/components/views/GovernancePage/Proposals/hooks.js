@@ -49,6 +49,7 @@ export function useProposalsList(tab) {
   const [noMoreProposals, setNoMore] = useState(false);
   const proposals = useSelector(sel.proposals);
   const inventory = useSelector(sel.inventory);
+  const getProposalError = useSelector(sel.getProposalError);
   const dispatch = useDispatch();
   const getProposalsAndUpdateVoteStatus = (proposalBatch) =>
     dispatch(gov.getProposalsAndUpdateVoteStatus(proposalBatch));
@@ -70,7 +71,10 @@ export function useProposalsList(tab) {
       load: () => {
         if (!proposals || !proposals[tab] || !inventory || !inventory[tab])
           return;
-        if (proposals[tab].length >= inventory[tab].length) {
+        if (
+          !getProposalError &&
+          proposals[tab].length >= inventory[tab].length
+        ) {
           setNoMore(true);
           return send("RESOLVE");
         }
@@ -80,25 +84,38 @@ export function useProposalsList(tab) {
           getProposalsAndUpdateVoteStatus
         ).then((res) => {
           send({ type: "RESOLVE", data: res });
-        });
+        }).catch(() => send("REJECT"));
       }
     }
   });
-  const previous = usePrevious({ proposals, tab });
+
+  const previous = usePrevious({ proposals, tab, getProposalError });
+
   useEffect(() => {
     if (!previous || !previous.proposals || !previous.proposals[tab]) return;
     if (previous.tab !== tab) return;
+    if (previous.getProposalError != getProposalError){
+      send(getProposalError ? "REJECT" : "RETRY");
+      return;
+    }
     // if proposals list is bigger goes to success. This is needed because
     // if enabling politeia decrediton gets the inventory and initial batch
     // in the same request.
     if (proposals[tab].length > previous.proposals[tab].length) {
       send("RESOLVE");
     }
-  }, [proposals, previous, send, tab]);
+  }, [proposals, previous, send, tab, getProposalError]);
 
   const loadMore = useCallback(() => send("FETCH"), [send]);
 
-  return { noMoreProposals, state, proposals, loadMore };
+  return {
+    noMoreProposals,
+    state,
+    proposals,
+    loadMore,
+    getProposalError,
+    send
+  };
 }
 
 const onLoadMoreProposals = async (
@@ -120,6 +137,7 @@ const onLoadMoreProposals = async (
     await getProposalsAndUpdateVoteStatus(proposalBatch);
   } catch (err) {
     console.log(err);
+    throw err;
   }
 };
 

@@ -2,11 +2,18 @@ import { PoliteiaLoading, NoProposals } from "indicators";
 import InfiniteScroll from "react-infinite-scroller";
 import ProposalsListItem from "../ProposalsListItem/ProposalsListItem";
 import { useProposalsList } from "../hooks";
+import { LoadingError } from "shared";
 import styles from "./ProposalsList.module.css";
 
 const ProposalsList = ({ finishedVote, tab }) => {
-  const { noMoreProposals, state, proposals, loadMore } = useProposalsList(tab);
-
+  const {
+    noMoreProposals,
+    state,
+    proposals,
+    loadMore,
+    getProposalError,
+    send
+  } = useProposalsList(tab);
   switch (state.value) {
     case "idle":
       return <NoProposals />;
@@ -40,6 +47,16 @@ const ProposalsList = ({ finishedVote, tab }) => {
             </div>
           )}
         </>
+      );
+    case "failure":
+      return (
+        <LoadingError
+          errorMessageDescription={String(getProposalError)}
+          cancelButton={false}
+          reload={() => {
+            send("RETRY");
+          }}
+        />
       );
     default:
       return null;

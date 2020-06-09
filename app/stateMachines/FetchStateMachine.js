@@ -13,7 +13,12 @@ export const fetchMachine = Machine({
       on: {
         FETCH: "loading",
         RESOLVE: "success",
-        REJECT: "failure"
+        REJECT: {
+          target: "failure",
+          actions: assign({
+            error: (context, event) => event.error
+          })
+        }
       }
     },
     loading: {
@@ -30,7 +35,13 @@ export const fetchMachine = Machine({
     },
     success: {
       on: {
-        FETCH: "loading"
+        FETCH: "loading",
+        REJECT: {
+          target: "failure",
+          actions: assign({
+            error: (context, event) => event.error
+          })
+        }
       }
     },
     failure: {
