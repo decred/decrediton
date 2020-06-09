@@ -306,6 +306,14 @@ export const purchaseTicketsAttempt = (
 
     dispatch({ numTicketsToBuy: numTickets, type: PURCHASETICKETS_ATTEMPT });
 
+    const stakePoolStats = await wallet.getStakePoolStats(stakepool.Host);
+
+    if(stakePoolStats.data.data.PoolStatus == "Closed"){
+      throw new Error(
+        "Unable to purchase a ticket from a closed VSP (" + stakepool.Host + ")"
+      );
+    }
+
     if (!dontSignTx) {
       // If we need to sign the tx, we re-import the script to ensure the
       // wallet will control the ticket.
