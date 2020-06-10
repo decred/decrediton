@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 
 function useImportScriptModal(onCancelModal, onSubmit) {
   const [script, setScript] = useState("");
@@ -28,7 +28,7 @@ function useImportScriptModal(onCancelModal, onSubmit) {
     resetState();
   }, [resetState, script, onSubmit]);
 
-  const isValid = useCallback(() =>
+  const isValid = useMemo(() =>
     !!script
     , [script]);
 

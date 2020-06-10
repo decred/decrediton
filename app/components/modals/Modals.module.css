@@ -1,0 +1,473 @@
+.passphraseModalToolbar {
+  margin-top: 20px;
+  height: 44px;
+  float: right;
+}
+
+.passphraseModalToolbar > .passphraseModalCloseButton {
+  margin-right: 10px;
+  float: left;
+}
+
+.passphraseModalHeader {
+  float: left;
+  background-image: var(--password);
+  background-size: 40px 40px;
+  background-repeat: no-repeat;
+  margin-bottom: 10px;
+}
+
+.passphraseModalHeaderTitle {
+  margin-left: 50px;
+  font-size: 27px;
+  text-transform: capitalize;
+  padding-top: 5px;
+  display: flex;
+}
+
+.passphraseModalContent {
+  float: left;
+  width: 100%;
+}
+
+.passphraseModalHeaderDescription {
+  margin-top: 10px;
+  margin-left: 50px;
+  font-size: 15px;
+  float: left;
+}
+
+.passphraseModalHeaderDescription .orange-warning {
+  position: inherit;
+}
+
+.passphraseModalConfirmSend {
+  width: 415px;
+}
+
+.passphraseModalConfirmSendLabel {
+  float: left;
+  width: 65%;
+  margin-top: 5px;
+}
+
+.passphraseModalConfirmSendAddress {
+  margin-left: 20px;
+  margin-top: 5px;
+  font-weight: 600;
+  float: right;
+}
+
+.passphraseModalConfirmSendBalance {
+  margin-left: 20px;
+  font-weight: 600;
+  margin-top: 5px;
+  float: right;
+}
+
+.passphraseModalField {
+  display: flex;
+  height: 36px;
+  margin-bottom: 5px;
+}
+
+.passphraseModalFieldLabel {
+  font-size: 13px;
+  text-align: right;
+  width: 12em;
+  margin-right: 0.5em;
+  padding-top: 4px;
+}
+
+.passphraseModalFieldValue {
+  width: 300px;
+}
+
+.appModal.infoModal.double,
+.appModal.confirmModal,
+.appModal.passphraseModal {
+  margin-left: 134px;
+}
+
+.appModal.passphraseModal,
+.appModalReducedBar.passphraseModal {
+  z-index: 200;
+  overflow-y: auto;
+  padding: 2em;
+  line-height: normal;
+  text-align: left;
+  color: var(--title-text-and-button-background);
+  box-shadow: 0 15px 34px 0 rgba(12, 30, 62, 0.34);
+}
+
+.confirmSeedCopyModalToolbar {
+  float: right;
+  margin-top: 2em;
+}
+
+.confirmSeedCopyModalToolbar > .confirmModalConfirmButton {
+  float: right;
+}
+
+.confirmSeedCopyModalToolbar > .confirmModalCloseButton {
+  float: right;
+}
+
+.confirmSeedCopyModalHeader {
+  margin-bottom: 1em;
+}
+
+.confirmSeedCopyModalHeaderTitle {
+  font-weight: 400;
+  font-size: 27px;
+  text-transform: capitalize;
+}
+
+.confirmSeedCopyModalContent .input-and-unit {
+  margin-left: 32px;
+  padding-left: 0;
+}
+
+.confirmSeedCopyModalContent .input-and-unit > input {
+  width: 100%;
+}
+
+.titleWarningCopyModal {
+  font-size: 27px;
+  margin-bottom: 10px;
+  background-image: var(--info-warning-icon);
+  background-repeat: no-repeat;
+  background-size: 30px;
+  padding-left: 42px;
+  margin-left: -10px;
+  background-position: 0 center;
+}
+
+.confirmSeedCopyWarningText {
+  white-space: pre-line;
+  margin-bottom: 20px;
+  margin-left: 32px;
+  column-count: 2;
+}
+
+.confirmSeedCopyWarningText p {
+  margin-top: 0;
+}
+
+.confirmSeedCopyWarningText strong {
+  text-decoration: underline;
+}
+
+.confirmSeedCopyWarningText em {
+  color: var(--error-text-color);
+}
+
+.confirmSeedCopyWarningText a {
+  color: var(--link-color);
+}
+
+.confirmSeedCopyPhrase {
+  text-decoration: underline;
+  margin: 0px 4px 0px 4px;
+}
+
+.confirmModalToolbar > .confirmModalConfirmButton {
+  float: right;
+}
+
+.appModalOverlay,
+.appModalOverlayReducedBar,
+.appModalOverlayStandalone {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.appModalOverlay {
+  left: 296px;
+}
+
+.appModalOverlayReducedBar {
+  left: 60px;
+}
+
+.appModalOverlayStandalone {
+  left: 0;
+}
+
+.appModal,
+.appModalReducedBar,
+.appModalStandalone {
+  position: fixed;
+  color: var(--title-text-and-button-background);
+  background-color: var(--background-back-color);
+  box-shadow: 0 15px 34px rgba(9, 20, 64, 0.21);
+  z-index: 200;
+  top: 0;
+  right: 0;
+}
+
+.appModal {
+  left: 296px;
+}
+
+.appModal.draggableModal {
+  left: initial;
+}
+
+.appModalReducedBar {
+  margin: auto;
+  left: 0;
+  top: 172px;
+  width: 540px !important;
+}
+
+.appModalStandalone {
+  left: 0;
+}
+
+.appModal.infoModal,
+.appModal.confirmModal,
+.appModalReducedBar.confirmModal,
+.appModalReducedBar.infoModal,
+.appModalStandalone.infoModal,
+.pseudo-modal.infoModal {
+  max-height: 60%;
+  z-index: 200;
+  overflow-y: auto;
+  text-align: left;
+  width: 262px;
+  margin-top: 156px;
+  background-image: var(--tickets-info-icon);
+  background-size: 32px 32px;
+  background-repeat: no-repeat;
+  background-position: 18px 32px;
+  padding: 30px 40px 20px 58px;
+  font-size: 13px;
+  line-height: 17px;
+}
+
+.appModal.infoModal {
+  margin-left: 272px;
+}
+
+.appModalReducedBar.infoModal {
+  margin-left: 390px;
+}
+
+.appModalStandalone.infoModal {
+  margin-left: 420px;
+}
+
+.appModal.infoModal.double,
+.appModalReducedBar.infoModal.double,
+.appModalStandalone.infoModal.double,
+.appModal.passphraseModal,
+.appModal.confirmModal,
+.appModalReducedBar.passphraseModal {
+  width: 540px;
+  margin-top: 172px;
+}
+
+.appModal.aboutModal,
+.appModalReducedBar.aboutModal,
+.appModalStandalone.aboutModal {
+  max-height: 60%;
+  z-index: 200;
+  overflow-y: auto;
+  text-align: left;
+  width: 611px !important;
+  height: 342px;
+  margin-top: 108px;
+  font-size: 13px;
+  line-height: 17px;
+  color: var(--modal-text);
+}
+
+.appModal.aboutModal a,
+.appModalReducedBar.aboutModal a,
+.appModalStandalone.aboutModal a {
+  cursor: pointer;
+  text-decoration: underline;
+  color: var(--modal-text);
+}
+
+.appModal.aboutModal a:hover,
+.appModalReducedBar.aboutModal a:hover,
+.appModalStandalone.aboutModal a:hover,
+.appModal.aboutModal a:active,
+.appModalReducedBar.aboutModal a:active,
+.appModalStandalone.aboutModal a:active {
+  color: var(--input-color);
+}
+
+.appModal.aboutModal {
+  margin-left: 95px;
+}
+
+.appModalReducedBar.aboutModal {
+  margin-left: 200px;
+}
+
+.appModalStandalone.aboutModal {
+  margin-left: 280px;
+}
+
+.appModalReducedBar.infoModal.double,
+.appModalReducedBar.passphraseModal {
+  margin-left: 252px;
+}
+
+.appModalStandalone.infoModal.double {
+  margin-left: 282px;
+}
+
+.appModalStandalone.confirmSeedCopyModal {
+  left: 10%;
+  right: 10%;
+  top: 20%;
+  box-shadow: 0 15px 34px 0 rgba(12, 30, 62, 0.34);
+  border-radius: 5px;
+  overflow-y: auto;
+  padding: 2em;
+  color: var(--input-color-default);
+  line-height: normal;
+  text-align: left;
+}
+
+.appModalStandalone.confirmModal {
+  width: 289px;
+  height: 239px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 15px 34px 0 rgba(12, 30, 62, 0.34);
+  border-radius: 5px;
+  overflow-y: auto;
+  padding: 2em;
+  color: var(--input-color-default);
+  line-height: normal;
+  text-align: left;
+}
+
+.appModalReducedBar.infoModal.double {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0 !important;
+}
+
+.appModalReducedBar.infoModal.double.draggableModal {
+  position: relative;
+  transform: initial;
+  top: initial;
+  left: initial;
+}
+
+.confirmModalToolbar > .confirmModalCloseButton {
+  float: right;
+}
+
+.draggableModal {
+  margin: 0 !important;
+  position: relative;
+}
+
+@media screen and (min-width: 768px) {
+  .appModalStandalone.confirmSeedCopyModal {
+    left: 20%;
+    right: 20%;
+  }
+}
+
+@media screen and (max-height: 420px) {
+  .appModal.passphraseModal,
+  .appModal.confirmModal,
+  .appModal.reduced-bar.passphraseModal {
+    top: 10%;
+    max-height: 60%;
+  }
+
+  .appModalStandalone.confirmSeedCopyModal {
+    top: 10%;
+    max-height: 60%;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .appModalReducedBar.infoModal.double {
+    width: 250px !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .confirmSeedCopyWarningText {
+    column-count: 1;
+  }
+
+  .appModalOverlayReducedBar {
+    left: 0;
+    bottom: 70px;
+  }
+
+  .appModalReducedBar.infoModal.double {
+    width: 300px !important;
+  }
+}
+
+@media screen and (max-width: 955px) {
+  .appModalStandalone.aboutModal {
+    margin-left: 0px;
+  }
+
+  .appModal.aboutModal,
+  .appModalReducedBar.aboutModal,
+  .appModalStandalone.aboutModal {
+    width: inherit;
+  }
+}
+
+@media screen and (max-width: 825px) {
+  .appModalReducedBar.aboutModal {
+    margin-left: 100px;
+  }
+}
+
+@media screen and (max-width: 588px) {
+  .appModalReducedBar.aboutModal {
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 455px !important;
+    height: 280px;
+  }
+
+  .appModalReducedBar.aboutModal .aboutModalContent {
+    margin-left: 25px;
+    padding-bottom: 20px;
+    margin-top: 20px;
+  }
+
+  .appModalReducedBar.aboutModal .aboutModalIcon {
+    margin-top: 20px;
+    height: 66px;
+    width: 66px;
+    background-size: 59px;
+  }
+
+  .appModalReducedBar.aboutModal .aboutModalBottomArea {
+    width: 413px;
+  }
+}
+

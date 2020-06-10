@@ -1,7 +1,7 @@
 import Modal from "./ImportScriptModalContent";
 import useImportScriptModal from "./hooks";
 
-function ImportScriptModal({ onCancelModal, onSubmit, ...props }) {
+const ImportScriptModal = ({ onCancelModal, onSubmit, ...props }) => {
   const {
     onCancelModalCallback,
     validationFailed,

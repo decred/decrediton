@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 
 function useAddAccountModal(onCancelModal, onSubmit) {
   const [name, setName] = useState("");
@@ -28,7 +28,7 @@ function useAddAccountModal(onCancelModal, onSubmit) {
     resetState();
   }, [resetState, name, onSubmit]);
 
-  const isValid = useCallback(() =>
+  const isValid = useMemo(() =>
     !!name
     , [name]);
 

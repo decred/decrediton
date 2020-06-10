@@ -1,7 +1,7 @@
 import Modal from "./AddAccountModalContent";
 import useAddAccountModal from "./hooks";
 
-function AddAccountModal({ onCancelModal, onSubmit, ...props }) {
+const AddAccountModal = ({ onCancelModal, onSubmit, ...props }) => {
   const {
     onCancelModalCallback,
     validationFailed,

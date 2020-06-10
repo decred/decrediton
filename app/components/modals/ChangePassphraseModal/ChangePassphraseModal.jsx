@@ -1,7 +1,7 @@
 import Modal from "./ChangePassphraseModalContent";
 import useChangePassphraseModal from "./hooks";
 
-function ChangePassphraseModal({ onCancelModal, onSubmit, ...props }) {
+const ChangePassphraseModal = ({ onCancelModal, onSubmit, ...props }) => {
   const {
     onCancelModalCallback,
     validationFailed,
