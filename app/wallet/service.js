@@ -24,6 +24,7 @@ import {
   decodeRawTransaction as decodeHelper
 } from "helpers";
 import { extractPkScriptAddrs } from "helpers/scripts";
+import { addrFromSStxPkScrCommitment } from "helpers/tickets";
 
 const promisify = (fn) => (...args) =>
   new Promise((ok, fail) =>
@@ -297,7 +298,12 @@ export const decodeRawTransaction = (rawTx, chainParams) => {
   }
 
   const decodedTx = decodeHelper(rawTx);
-  decodedTx.outputs = decodedTx.outputs.map((o) => {
+  decodedTx.outputs = decodedTx.outputs.map((o, i) => {
+    const decodedScript = extractPkScriptAddrs(0, o.script, chainParams);
+    // it is a stake tx. Get Address from SStxPkScrCommitment script
+    if (decodedScript.scriptClass === 0 && i&1 === 1) {
+      addrFromSStxPkScrCommitment(o.script, chainParams);
+    }
     return {
       ...o,
       decodedScript: extractPkScriptAddrs(0, o.script, chainParams)

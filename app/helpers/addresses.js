@@ -87,7 +87,7 @@ const checksum = (input) => {
 };
 
 // checkEncode prepends two version bytes and appends a four byte checksum.
-const checkEncode = (input, version) => {
+export const checkEncode = (input, version) => {
   let b = Buffer.from(version);
   b = Buffer.concat([b, input]);
   const calculatedChecksum = checksum(b);
@@ -149,7 +149,7 @@ export const newAddressScriptHashFromHash = (scriptHash, params) => {
 // known.
 const getNewAddressScriptHashFromHash = (scriptHash, netID) => {
   // Check for a valid script hash length.
-  if (scriptHash.length != ripemd160Size) {
+  if (scriptHash.length !== ripemd160Size) {
     return { error: "pkHash must be 20 bytes" };
   }
 

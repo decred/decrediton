@@ -1,4 +1,6 @@
 import { GetTicketsResponse } from "../middleware/walletrpc/api_pb";
+import { OP_RETURN, SStxPKHMinOutSize, ripemd160Size } from "constants";
+import { checkEncode } from "./addresses";
 
 export const TicketTypes = new Map([
   [GetTicketsResponse.TicketDetails.TicketStatus.UNKNOWN, "unknown"],
@@ -136,4 +138,75 @@ export function decodeVoteScript(network, outputScript) {
   }
 
   return voteChoices;
+}
+
+// addrFromSStxPkScrCommitment extracts a P2SH or P2PKH address from a ticket
+// commitment pkScript.
+export const addrFromSStxPkScrCommitment = (pkScript, params) => {
+  if (pkScript.length < SStxPKHMinOutSize) {
+    return { error: `pkScript must be ${SStxPKHMinOutSize} bytes` };
+  }
+
+  // The MSB of the encoded amount specifies if the output is P2SH.  Since
+	// it is encoded with little endian, the MSB is in final byte in the encoded
+	// amount.
+	//
+	// This is a faster equivalent of:
+	//
+	//	amtBytes := script[22:30]
+	//	amtEncoded := binary.LittleEndian.Uint64(amtBytes)
+	//	isP2SH := (amtEncoded & uint64(1<<63)) != 0
+
+  const isP2SH = pkScript[29]&0x80 != 0;
+  // The 20 byte PKH or SH.
+	const hashBytes = pkScript.slice(2,22);
+
+	// Return the correct address type.
+	if (isP2SH) {
+		return newAddressScriptHashFromHash(hashBytes, params)
+	}
+	return newAddressPubKeyHash(hashBytes, params, 0)
+}
+
+// newAddressScriptHashFromHash is the internal API to create a script hash
+// address with a known leading identifier byte for a network, rather than
+// looking it up through its parameters.  This is useful when creating a new
+// address structure from a string encoding where the identifier byte is already
+// known.
+const newAddressScriptHashFromHash = (scriptHash, netId) => {
+  if (scriptHash.length !== ripemd160Size) {
+    return { error: "pkHash must be 20 bytes" };
+  }
+
+  return checkEncode(scriptHash.slice(0, 20), netID);
+}
+
+// newAddressPubKeyHash returns a new AddressPubKeyHash.  pkHash must
+// be 20 bytes.
+const newAddressPubKeyHash = (pkHash, net, algo) => {
+	// Ensure the provided signature algo is supported.
+	let addrID;
+	switch (algo) {
+  // when extracting address from a SStxPkScrCommitment script, the algo used
+  // is dcrec.STEcdsaSecp256k1 equals 0.
+	case 0:
+    addrID = net.PubKeyHashAddrID
+  // TODO finish getting address from pubkeyHash to add support to decrediton.
+	// case dcrec.STEd25519:
+	// 	addrID = net.AddrIDPubKeyHashEd25519V0()
+	// case dcrec.STSchnorrSecp256k1:
+	// 	addrID = net.AddrIDPubKeyHashSchnorrV0()
+	default:
+		return null;
+  }
+
+	// Ensure the provided pubkey hash length is valid.
+  if (pkHash.length !== ripemd160Size) {
+    return { error: "pkHash must be 20 bytes" };
+  }
+
+  const addr = { netID: netId };
+  addr.hash = scriptHash.slice(0, ripemd160Size);
+
+  return checkEncode(scriptHash.slice(0, 20), addrID);
 }

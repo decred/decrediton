@@ -18,7 +18,10 @@ import {
   OP_SSTXCHANGE,
   OP_DATA_33,
   OP_DATA_65,
-  OP_CHECKSIGALT
+  OP_CHECKSIGALT,
+  OP_PUSHDATA4,
+  opcodeArray,
+  OP_RETURN
 } from "constants";
 
 const MaxUint16 = 1 << (16 - 1);
@@ -429,11 +432,27 @@ export const extractPkScriptAddrs = (version, pkScript, chainParams) => {
     };
   }
 
-  // // Check for null data script.
-  // if isNullDataScript(version, pkScript) {
-  // 	// Null data transactions have no addresses or required signatures.
-  // 	return NullDataTy, nil, 0, nil
-  // }
+  const parsedScript = parseScript(pkScript, opcodeArray);
+  let pops;
+  if (parsedScript) {
+    const { error, retScript } = parsedScript;
+    if (error) return error;
+    // console.log(retScript)
+    pops = retScript;
+  }
+  console.log(pops)
+  // console.log(isNullData(pops))
+  // Check for null data script.
+  if (isNullData(pops)) {
+    console.log("aqui no isnulldata script UHUL")
+    // Null data transactions have no addresses or required signatures.
+    return {
+      // scriptclass NullDataTy
+      scriptClass: 0,
+      address: [],
+      requiredSig: 0
+    };
+  }
 
   // Don't attempt to extract addresses or required signatures for nonstandard
   // transactions.
@@ -529,3 +548,96 @@ export const EstimateSerializeSizeFromScriptSizes = (
     changeSize
   );
 };
+
+// isNullData returns true if the passed script is a null data transaction,
+// false otherwise.
+const isNullData = (pops) => {
+  if (!pops) return;
+	// A nulldata transaction is either a single OP_RETURN or an
+	// OP_RETURN SMALLDATA (where SMALLDATA is a data push up to
+  // MaxDataCarrierSize bytes).
+  const MaxDataCarrierSize = 256;
+  const l = pops.length;
+	if (l === 1 && pops[0].opcode.value === OP_RETURN) {
+		return true
+	}
+
+	return l === 2 && pops[0].opcode.value == OP_RETURN &&
+		(isSmallInt(pops[1].opcode.value) || pops[1].opcode.value <=
+			OP_PUSHDATA4) &&
+		pops[1].data.length <= MaxDataCarrierSize
+}
+
+// parseScriptTemplate is the same as parseScript but allows the passing of the
+// template list for testing purposes.  When there are parse errors, it returns
+// the list of parsed opcodes up to the point of failure along with the error.
+const parseScript = (script, opcodes) => {
+  if (!script) return;
+  const retScript = [];
+	for (let i = 0; i < script.length; i++) {
+    const instr = script[i];
+    const op = opcodes[instr];
+    const pop = { opcode: op };
+
+    if (op.length == 1) {
+      retScript.push(pop);
+      continue;
+    } else if (op.length > 1) {
+      if (script.slice(i).length < op.length) {
+        return {
+          retScript,
+          error: `opcode ${op.name} requires ${op.length} bytes, but script only has ${script.slice(i).length} remaining.`
+        };
+      }
+      pop.data = script.slice(i+1, i+op.length);
+      i += op.length - 1;
+    } else if (op.legnth < 0) {
+			let l;
+			let off = i + 1;
+
+			if (script.slice(off).length < -op.length) {
+        return {
+          retScript,
+          error: `opcode ${op.name} requires ${-op.length} bytes, but script only has ${script.slice(off).length} remaining.`
+        };
+      }
+
+			// Next -length bytes are little endian length of data.
+			switch (op.length) {
+			case -1:
+				l = script[off];
+			case -2:
+				l = ((script[off+1] << 8) | script[off])
+			case -4:
+				l = (((script[off+3]) << 24) |
+					((script[off+2]) << 16) |
+					((script[off+1]) << 8) |
+					(script[off]))
+			default:
+        return {
+          retScript,
+          error: `invalid opcode length ${op.length}`
+        }
+			}
+
+			// Move offset to beginning of the data.
+			off += -op.length
+
+			// Disallow entries that do not fit script or were
+			// sign extended.
+			if (l > script.slice(off).length || l < 0) {
+        return {
+          retScript,
+          error: `opcode ${op.name} pushes ${l} bytes, but script only has ${script.slice(off).length} remaining`
+        }
+			}
+
+			pop.data = script.slice(off, off+l);
+			i += 1 - op.length + l;
+    }
+
+		retScript.push(pop);
+	}
+
+	return { retScript };
+}
