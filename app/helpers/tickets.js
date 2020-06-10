@@ -183,14 +183,15 @@ const newAddressScriptHashFromHash = (scriptHash, netId) => {
 
 // newAddressPubKeyHash returns a new AddressPubKeyHash.  pkHash must
 // be 20 bytes.
-const newAddressPubKeyHash = (pkHash, net, algo) => {
+const newAddressPubKeyHash = (scriptHash, net, algo) => {
 	// Ensure the provided signature algo is supported.
-	let addrID;
+  let addrID;
 	switch (algo) {
   // when extracting address from a SStxPkScrCommitment script, the algo used
   // is dcrec.STEcdsaSecp256k1 equals 0.
 	case 0:
     addrID = net.PubKeyHashAddrID
+    break;
   // TODO finish getting address from pubkeyHash to add support to decrediton.
 	// case dcrec.STEd25519:
 	// 	addrID = net.AddrIDPubKeyHashEd25519V0()
@@ -201,11 +202,11 @@ const newAddressPubKeyHash = (pkHash, net, algo) => {
   }
 
 	// Ensure the provided pubkey hash length is valid.
-  if (pkHash.length !== ripemd160Size) {
+  if (scriptHash.length !== ripemd160Size) {
     return { error: "pkHash must be 20 bytes" };
   }
 
-  const addr = { netID: netId };
+  const addr = { netID: addrID };
   addr.hash = scriptHash.slice(0, ripemd160Size);
 
   return checkEncode(scriptHash.slice(0, 20), addrID);

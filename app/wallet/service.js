@@ -299,14 +299,19 @@ export const decodeRawTransaction = (rawTx, chainParams) => {
 
   const decodedTx = decodeHelper(rawTx);
   decodedTx.outputs = decodedTx.outputs.map((o, i) => {
-    const decodedScript = extractPkScriptAddrs(0, o.script, chainParams);
-    // it is a stake tx. Get Address from SStxPkScrCommitment script
+    let decodedScript = extractPkScriptAddrs(0, o.script, chainParams);
+    // if scriptClass equals NullDataTy (which is 0) && i&1 == 1
+    // extract address from SStxPkScrCommitment script.
     if (decodedScript.scriptClass === 0 && i&1 === 1) {
-      addrFromSStxPkScrCommitment(o.script, chainParams);
+      decodedScript = {
+        address: addrFromSStxPkScrCommitment(o.script, chainParams),
+        scriptClass: 0,
+        requiredSig: 0
+      }
     }
     return {
       ...o,
-      decodedScript: extractPkScriptAddrs(0, o.script, chainParams)
+      decodedScript
     };
   });
 

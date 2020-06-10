@@ -437,14 +437,10 @@ export const extractPkScriptAddrs = (version, pkScript, chainParams) => {
   if (parsedScript) {
     const { error, retScript } = parsedScript;
     if (error) return error;
-    // console.log(retScript)
     pops = retScript;
   }
-  console.log(pops)
-  // console.log(isNullData(pops))
   // Check for null data script.
   if (isNullData(pops)) {
-    console.log("aqui no isnulldata script UHUL")
     // Null data transactions have no addresses or required signatures.
     return {
       // scriptclass NullDataTy

@@ -4,7 +4,8 @@ import {
   decodeRawTransaction
 } from "../../../app/helpers/msgTx";
 import { hexToBytes } from "../../../app/helpers/byteActions";
-import { multiTxPrefix, multiTxPrefixEncoded } from "../../data/transactionsToEncode";
+import { multiTxPrefixEncoded } from "../../data/rawTransactions";
+import { multiTxPrefix } from "../../data/decodedTransactions";
 import { txShouldFail } from "../../data/HexTransactions";
 
 test("Needed size to serialize tx calculated by calculateSerializeSize():", () => {
@@ -18,7 +19,3 @@ test("encode no witness tx: ", () => {
 test("test msgTx decodeRawTransaction: ", () => {
   expect(decodeRawTransaction(multiTxPrefixEncoded)).toStrictEqual(multiTxPrefix);
 });
-
-// test("should fail", () => {
-//   expect(decodeRawTransaction(Buffer.from(hexToBytes(txShouldFail)))).toStrictEqual(null)
-// });
