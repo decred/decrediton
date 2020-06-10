@@ -307,7 +307,7 @@ export const decodeRawTransaction = (rawTx, chainParams) => {
         address: addrFromSStxPkScrCommitment(o.script, chainParams),
         scriptClass: 0,
         requiredSig: 0
-      }
+      };
     }
     return {
       ...o,

@@ -549,28 +549,33 @@ export const EstimateSerializeSizeFromScriptSizes = (
 // false otherwise.
 const isNullData = (pops) => {
   if (!pops) return;
-	// A nulldata transaction is either a single OP_RETURN or an
-	// OP_RETURN SMALLDATA (where SMALLDATA is a data push up to
+  // A nulldata transaction is either a single OP_RETURN or an
+  // OP_RETURN SMALLDATA (where SMALLDATA is a data push up to
   // MaxDataCarrierSize bytes).
   const MaxDataCarrierSize = 256;
   const l = pops.length;
-	if (l === 1 && pops[0].opcode.value === OP_RETURN) {
-		return true
-	}
+  if (l === 1 && pops[0].opcode.value === OP_RETURN) {
+    return true;
+  }
 
-	return l === 2 && pops[0].opcode.value == OP_RETURN &&
-		(isSmallInt(pops[1].opcode.value) || pops[1].opcode.value <=
-			OP_PUSHDATA4) &&
-		pops[1].data.length <= MaxDataCarrierSize
-}
+  return (
+    l === 2 &&
+    pops[0].opcode.value == OP_RETURN &&
+    (isSmallInt(pops[1].opcode.value) ||
+      pops[1].opcode.value <= OP_PUSHDATA4) &&
+    pops[1].data.length <= MaxDataCarrierSize
+  );
+};
 
-// parseScriptTemplate is the same as parseScript but allows the passing of the
-// template list for testing purposes.  When there are parse errors, it returns
-// the list of parsed opcodes up to the point of failure along with the error.
+// parseScript parses a script getting all of its opcodes and which data they
+// may have. This code was removed from dcrd due to Zero alloc optimization
+// refactor optmization at txscript, but it is fine for decrediton as for now we
+// dont decode big scripts on it.
+// source: https://github.com/decred/dcrd/pull/1656/commits/fcb1f3a7a137f3d69091c23c0f349d35df6c1ee6
 const parseScript = (script, opcodes) => {
   if (!script) return;
   const retScript = [];
-	for (let i = 0; i < script.length; i++) {
+  for (let i = 0; i < script.length; i++) {
     const instr = script[i];
     const op = opcodes[instr];
     const pop = { opcode: op };
@@ -582,58 +587,77 @@ const parseScript = (script, opcodes) => {
       if (script.slice(i).length < op.length) {
         return {
           retScript,
-          error: `opcode ${op.name} requires ${op.length} bytes, but script only has ${script.slice(i).length} remaining.`
+          error: `opcode ${op.name} requires ${
+            op.length
+          } bytes, but script only has ${script.slice(i).length} remaining.`
         };
       }
-      pop.data = script.slice(i+1, i+op.length);
+      pop.data = script.slice(i + 1, i + op.length);
       i += op.length - 1;
     } else if (op.legnth < 0) {
-			let l;
-			let off = i + 1;
+      let l;
+      let off = i + 1;
 
-			if (script.slice(off).length < -op.length) {
+      // negativeLengthHelper is an aux method to help get data and move the offset
+      // of a script with negative length (little endian length) so we can get the
+      // data. This way we can avoid code repetition.
+      const negativeLengthHelper = () => {
+        // Move offset to beginning of the data.
+        off += -op.length;
+
+        // Disallow entries that do not fit script or were
+        // sign extended.
+        if (l > script.slice(off).length || l < 0) {
+          return {
+            retScript,
+            error: `opcode ${op.name} pushes ${l} bytes, but script only has ${
+              script.slice(off).length
+            } remaining`
+          };
+        }
+
+        pop.data = script.slice(off, off + l);
+        i += 1 - op.length + l;
+      };
+      if (script.slice(off).length < -op.length) {
         return {
           retScript,
-          error: `opcode ${op.name} requires ${-op.length} bytes, but script only has ${script.slice(off).length} remaining.`
+          error: `opcode ${
+            op.name
+          } requires ${-op.length} bytes, but script only has ${
+            script.slice(off).length
+          } remaining.`
         };
       }
 
-			// Next -length bytes are little endian length of data.
-			switch (op.length) {
-			case -1:
-				l = script[off];
-			case -2:
-				l = ((script[off+1] << 8) | script[off])
-			case -4:
-				l = (((script[off+3]) << 24) |
-					((script[off+2]) << 16) |
-					((script[off+1]) << 8) |
-					(script[off]))
-			default:
-        return {
-          retScript,
-          error: `invalid opcode length ${op.length}`
-        }
-			}
-
-			// Move offset to beginning of the data.
-			off += -op.length
-
-			// Disallow entries that do not fit script or were
-			// sign extended.
-			if (l > script.slice(off).length || l < 0) {
-        return {
-          retScript,
-          error: `opcode ${op.name} pushes ${l} bytes, but script only has ${script.slice(off).length} remaining`
-        }
-			}
-
-			pop.data = script.slice(off, off+l);
-			i += 1 - op.length + l;
+      // Next -length bytes are little endian length of data.
+      switch (op.length) {
+        case -1:
+          l = script[off];
+          negativeLengthHelper();
+          break;
+        case -2:
+          l = (script[off + 1] << 8) | script[off];
+          negativeLengthHelper();
+          break;
+        case -4:
+          l =
+            (script[off + 3] << 24) |
+            (script[off + 2] << 16) |
+            (script[off + 1] << 8) |
+            script[off];
+          negativeLengthHelper();
+          break;
+        default:
+          return {
+            retScript,
+            error: `invalid opcode length ${op.length}`
+          };
+      }
     }
 
-		retScript.push(pop);
-	}
+    retScript.push(pop);
+  }
 
-	return { retScript };
-}
+  return { retScript };
+};
