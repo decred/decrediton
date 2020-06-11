@@ -21,7 +21,7 @@ const StakePoolsList = ({
           configuredStakePools.map(
             ({ value: { Host, TicketAddress, PoolFees, Script } }) => {
               return (
-                <div className={styles.configuredVSP}>
+                <div className={styles.configuredVSP} key={Host}>
                   <div
                     className={styles.close}
                     onClick={() => onRemoveStakePool(Host)}
