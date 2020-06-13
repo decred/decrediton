@@ -1,9 +1,9 @@
 import { eventOutsideElement } from "helpers";
-import { useCallback, useRef } from "react";
+import { useEffect, useCallback, useRef } from "react";
 import { useSelector } from "react-redux";
 import * as sel from "selectors";
 
-function useModal(onCancelModal) {
+export function useModal(onCancelModal) {
   const expandSideBar = useSelector(sel.expandSideBar);
   const showingSidebarMenu = useSelector(sel.showingSidebarMenu);
   const modalRef = useRef(null);
@@ -31,4 +31,9 @@ function useModal(onCancelModal) {
   };
 }
 
-export default useModal;
+export function useAddMixerAccountsModal(show, setMixedAccountName, setChangeAccountName) {
+  useEffect(() => {
+    setMixedAccountName("");
+    setChangeAccountName("");
+  }, [show, setMixedAccountName, setChangeAccountName]);
+}

@@ -308,6 +308,61 @@
   color: var(--input-color);
 }
 
+.aboutModalIcon {
+  float: left;
+  height: 231px;
+  width: 231px;
+  box-shadow: 0px 13px 21px rgba(9, 20, 64, 0.34);
+  margin-left: 20px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  background-position: 50%;
+  background-image: var(--decred-macos-1024-logo);
+  background-size: 231px;
+  background-repeat: no-repeat;
+  border-radius: 40px;
+}
+.aboutModalContent {
+  float: left;
+  width: 260px;
+  margin-left: 50px;
+  margin-top: 30px;
+}
+.aboutModalTitle {
+  font-size: 27px;
+  line-height: 34px;
+  margin-bottom: 20px;
+}
+.aboutModalText {
+  font-size: 13px;
+  line-height: 17px;
+}
+.aboutModalBottomArea {
+  float: left;
+  width: 571px;
+  margin-left: 20px;
+  border-top: 1px solid var(--modal-stroke-color);
+  padding-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  color: var(--modal-bottom);
+}
+.aboutModalBottomArea .aboutModalBottomAreaMiddle a,
+.aboutModalBottomArea .aboutModalBottomAreaRight a {
+  color: var(--modal-bottom) !important;
+}
+.aboutModalBottomArea a.aboutModalUpgrade {
+  color: var(--input-color);
+  cursor: pointer;
+  text-decoration: none;
+}
+.aboutModalBottomArea a.aboutModalUpgrade:hover {
+  color: var(--input-color-hover);
+}
+.aboutModalTextParagraph {
+  margin-bottom: 10px;
+}
+
 .appModal.aboutModal {
   margin-left: 95px;
 }
@@ -373,8 +428,22 @@
   left: initial;
 }
 
+.confirmModalToolbar > .confirmModalConfirmButton {
+  float: right;
+}
 .confirmModalToolbar > .confirmModalCloseButton {
   float: right;
+}
+.confirmModalHeader {
+  margin-bottom: 1em;
+}
+.confirmModalHeaderTitle {
+  font-weight: 400;
+  font-size: 27px;
+  text-transform: capitalize;
+}
+.confirmModalHeaderTitle .mono {
+  text-transform: lowercase;
 }
 
 .draggableModal {
@@ -382,12 +451,25 @@
   position: relative;
 }
 
-@media screen and (min-width: 768px) {
-  .appModalStandalone.confirmSeedCopyModal {
-    left: 20%;
-    right: 20%;
-  }
+.backupRedeemScriptModal {
+  padding: 10px;
 }
+
+.backupRedeemScriptModalTextarea {
+  width: 100%;
+}
+
+.backupRedeemScriptModalTitle {
+  font-size: 19px;
+}
+
+.backupRedeemScriptModalMessage {
+  font-size: 16px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--white-border);
+}
+
 
 @media screen and (max-height: 420px) {
   .appModal.passphraseModal,
@@ -401,9 +483,7 @@
     top: 10%;
     max-height: 60%;
   }
-}
 
-@media screen and (max-width: 420px) {
   .appModalReducedBar.infoModal.double {
     width: 250px !important;
   }
@@ -421,6 +501,11 @@
 
   .appModalReducedBar.infoModal.double {
     width: 300px !important;
+  }
+
+  .appModalStandalone.confirmSeedCopyModal {
+    left: 20%;
+    right: 20%;
   }
 }
 

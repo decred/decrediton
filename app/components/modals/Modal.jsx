@@ -4,7 +4,7 @@ import EventListener from "react-event-listener";
 import Draggable from "react-draggable";
 import { classNames } from "pi-ui";
 import style from "./Modals.module.css";
-import useModal from "./hooks";
+import { useModal } from "./hooks";
 
 const Modal = showCheck(({ children, className, draggable, onCancelModal }) => {
   const {
