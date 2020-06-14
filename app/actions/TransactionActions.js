@@ -668,7 +668,7 @@ function transactionsMaturingHeights(txs, chainParams) {
 
 // getAmountFromTxInputs receives a decoded tx and adds the amount of
 // each input from the previous transaction. We need this because when decoding
-// a tx, the amount of the input is not deoded with it.
+// a tx, the amount of the input is not decoded with it.
 export const getAmountFromTxInputs = (decodedTx) => async (
   dispatch,
   getState
@@ -722,13 +722,11 @@ export const getTxFromInputs = (unsignedTx) => (dispatch, getState) =>
       const txs = unsignedTx.inputs.reduce(async (txs, inp) => {
         const { prevTxId } = inp;
         if (txsMap[prevTxId]) return;
-
         txsMap[prevTxId] = true;
         const oldTx = await wallet.getTransaction(walletService, prevTxId);
         if (!oldTx) {
           return reject(new Error(`Transaction ${prevTxId} not found`));
         }
-
         const rawTxBuffer = Buffer.from(hexToBytes(oldTx.rawTx));
         const decodedOldTx = wallet.decodeRawTransaction(
           rawTxBuffer,

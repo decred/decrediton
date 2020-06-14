@@ -219,7 +219,7 @@ const Page = ({
                 }>
                 <T id="txDetails.walletOutputs" m="Wallet Outputs" />
               </div>
-              {txOutputs.map(({ accountName, decodedScript, value }, idx) => (
+              {txOutputs.map(({ accountName, decodedScript, amount }, idx) => (
                 <div key={idx} className="txdetails-row">
                   <div className="txdetails-address">
                     {txDirection === TRANSACTION_DIR_SENT
@@ -229,7 +229,7 @@ const Page = ({
                       : addSpacingAroundText(decodedScript.address)}
                   </div>
                   <div className="txdetails-amount">
-                    <Balance amount={value} />
+                    <Balance amount={amount} />
                   </div>
                 </div>
               ))}
