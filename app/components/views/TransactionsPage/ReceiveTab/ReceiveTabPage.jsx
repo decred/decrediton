@@ -6,6 +6,7 @@ import { KeyBlueButton } from "buttons";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import QRCodeModal from "./QRCodeModal";
 import style from "./ReceiveTab.module.css";
+import { classNames } from "pi-ui";
 import { useRef } from "react";
 
 const messages = defineMessages({
@@ -73,16 +74,16 @@ const ReceivePage = ({
 
         <div className={style.line}>
           <div
-            className={
-              style.receiveContentNestQR + " " + (tooltip && style.border)
-            }>
+            className={classNames(
+              style.receiveContentNestQR,
+              tooltip && style.border
+            )}>
             {nextAddress}
             <div
-              className={
-                style.receiveContentNestCopyQR +
-                " " +
-                (tooltip && style.opacity)
-              }>
+              className={classNames(
+                style.receiveContentNestCopyQR,
+                tooltip && style.opacity
+              )}>
               <div className={style.receiveContentNestCopyQRArrow} />
               <div className={style.receiveContentNestCopyQRText}>
                 {tooltipText ? (
