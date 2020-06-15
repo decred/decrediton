@@ -41,7 +41,8 @@ import {
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_RECEIVED,
   TRANSACTION_DIR_TRANSFERRED,
-  VOTED
+  VOTED,
+  UNMINED
 } from "constants";
 import * as wallet from "wallet";
 
@@ -329,8 +330,8 @@ export const ticketNormalizer = createSelector(
       const txInputs = [];
       const txOutputs = [];
       const hasSpender = spender && spender.getHash();
-      const isVote = status === "voted";
-      const isPending = status === "unmined";
+      const isVote = status === VOTED;
+      const isPending = status === UNMINED;
       const ticketTx = ticket.ticket;
       const spenderTx = hasSpender ? spender : null;
       const txBlockHash = blockHash

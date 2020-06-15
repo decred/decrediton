@@ -718,26 +718,30 @@ export const getTxFromInputs = (unsignedTx) => (dispatch, getState) =>
     const chainParams = sel.chainParams(getState());
     // aux map to know if we already has gotten a tx.
     const txsMap = {};
-    const txs = unsignedTx.inputs.reduce(async (txs, inp) => {
-      const { prevTxId } = inp;
-      if (txsMap[prevTxId]) return;
+    try {
+      const txs = unsignedTx.inputs.reduce(async (txs, inp) => {
+        const { prevTxId } = inp;
+        if (txsMap[prevTxId]) return;
 
-      txsMap[prevTxId] = true;
-      const oldTx = await wallet.getTransaction(walletService, prevTxId);
-      if (!oldTx) {
-        return reject(new Error(`Transaction ${prevTxId} not found`));
-      }
+        txsMap[prevTxId] = true;
+        const oldTx = await wallet.getTransaction(walletService, prevTxId);
+        if (!oldTx) {
+          return reject(new Error(`Transaction ${prevTxId} not found`));
+        }
 
-      const rawTxBuffer = Buffer.from(hexToBytes(oldTx.rawTx));
-      const decodedOldTx = wallet.decodeRawTransaction(
-        rawTxBuffer,
-        chainParams
-      );
+        const rawTxBuffer = Buffer.from(hexToBytes(oldTx.rawTx));
+        const decodedOldTx = wallet.decodeRawTransaction(
+          rawTxBuffer,
+          chainParams
+        );
 
-      txs.push(decodedOldTx);
+        txs.push(decodedOldTx);
 
-      return txs;
-    }, []);
+        return txs;
+      }, []);
 
-    resolve(txs);
+      resolve(txs);
+    } catch (e) {
+      reject(e);
+    }
   });

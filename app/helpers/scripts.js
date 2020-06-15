@@ -690,42 +690,9 @@ const parseScript = (script, opcodes = opcodeArray) => {
   return { retScript };
 };
 
-// // DisasmString formats a disassembled script for one line printing.  When the
-// // script fails to parse, the returned string will contain the disassembled
-// // script up to the point the failure occurred along with the string '[error]'
-// // appended.  In addition, the reason the script failed to parse is returned
-// // if the caller wants more information about the failure.
-// const DisasmString = (buf) => {
-//   let disbuf = "";
-//   const parsedScript = parseScript(buf);
-//   if (parsedScript) {
-//     const { error, retScript } = parsedScript;
-//     if (error) {
-//       return { error };
-//     }
-//     for (let i = 0; i < retScript.length; i++) {
-//       disbuf += printPop(retScript[i])
-//     }
-//   }
-
-//   return disbuf;
-
-// 	// for _, pop := range opcodes {
-// 	// 	disbuf.WriteString(pop.print(true))
-// 	// 	disbuf.WriteByte(' ')
-// 	// }
-// 	// if disbuf.Len() > 0 {
-// 	// 	disbuf.Truncate(disbuf.Len() - 1)
-// 	// }
-// 	// if err != nil {
-// 	// 	disbuf.WriteString("[error]")
-// 	// }
-// 	// return disbuf.String(), err
-// }
-
 // print returns a human-readable string representation of the opcode for use
 // in script disassembly.
-const printPop = (pop, oneline) => {
+const printPop = (pop) => {
  	// The reference implementation one-line disassembly replaces opcodes
 	// which represent values (e.g. OP_0 through OP_16 and OP_1NEGATE)
 	// with the raw value.  However, when not doing a one-line dissassembly,
