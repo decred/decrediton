@@ -19,6 +19,7 @@ const StakeTxRow = ({
   pending,
   txTs,
   accountName,
+  txType,
   ...props
 }) => {
   const status = className;
@@ -60,7 +61,7 @@ const StakeTxRow = ({
     [daysToVote]
   );
 
-  const typeMsg = messageByType[status] || "(unknown type)";
+  const typeMsg = messageByType[txType] || "(unknown type)";
 
   return overview ? (
     <Row {...{ className, overview, pending, ...props }}>
