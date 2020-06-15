@@ -140,7 +140,7 @@ export const decodedVoteTx = {
         "asm": "OP_RETURN OP_DATA_36 50bda738744cec7aeeb40a93ed23a62a170091a540e32df643e2337f05000000d9c20600",
         "scriptClass": 0,
         "requiredSig": 0,
-        "address": [],
+        "address": null,
       },
     },
     {
@@ -152,7 +152,7 @@ export const decodedVoteTx = {
         "asm": "OP_RETURN OP_DATA_6 010008000000",
         "requiredSig": 0,
         "scriptClass": 0,
-        "address": [],
+        "address": null,
       }
     },
     {

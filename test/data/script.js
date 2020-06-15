@@ -195,7 +195,7 @@ export const MAINNET_scriptDataTest = [
   {
     name: "empty script",
     script: [],
-    expected: { "address": [], "requiredSig": 0, "scriptClass": 0, "asm": "" },
+    expected: { "address": null, "requiredSig": 0, "scriptClass": 0, "asm": "" },
     // reqSigs: 0,
     // class: NonStandardTy,
   },
@@ -215,7 +215,7 @@ export const TESTNET_scriptDataTest = [
     name: "sstxcommitment tx",
     script: [106,30,38,123,31,26,0,92,236,51,208,51,56,230,32,14,198,230,22,237,157,136,175,143,141,66,1,0,0,0,0,88],
     expected: {
-      "address": [],
+      "address": null,
       "requiredSig": 0,
       "scriptClass": 0,
       "asm": "OP_RETURN OP_DATA_30 267b1f1a005cec33d03338e6200ec6e616ed9d88af8f8d42010000000058"

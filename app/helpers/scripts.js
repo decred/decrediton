@@ -471,7 +471,7 @@ export const extractPkScriptAddrs = (version, pkScript, chainParams) => {
     return {
       // scriptclass NullDataTy
       scriptClass: 0,
-      address: [],
+      address: null,
       requiredSig: 0,
       asm
     };
@@ -481,7 +481,7 @@ export const extractPkScriptAddrs = (version, pkScript, chainParams) => {
   // transactions.
   return {
     scriptClass: 0,
-    address: [],
+    address: null,
     requiredSig: 0,
     asm
   };
