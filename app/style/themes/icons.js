@@ -141,7 +141,8 @@ const icons = {
   "ticket-missed": "url('style/icons/ticketMissed.svg')",
   "ticket-revoked": "url('style/icons/ticketRevoked.svg')",
   "ticket-unmined": "url('style/icons/ticketUnmined.svg')",
-  "ticket-voted": "url('style/icons/ticketVoted.svg')"
+  "ticket-voted": "url('style/icons/ticketVoted.svg')",
+  "delete-vsp": "url('style/icons/deleteVSP.svg')"
 };
 
 export default icons;
