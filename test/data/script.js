@@ -42,7 +42,12 @@ export const MAINNET_scriptDataTest = [
     name: "standard p2pkh",
     script: hexToBytes("76a914ad06dd6ddee55cbca9a9e3713bd" +
       "7587509a3056488ac"),
-    expected: { "address": "Dsgjncbv1fYMywusjnrSBrzvAde8APEPP1f", "requiredSig": 1, "scriptClass": 2 },
+    expected: {
+      "address": "Dsgjncbv1fYMywusjnrSBrzvAde8APEPP1f",
+      "requiredSig": 1,
+      "scriptClass": 2,
+      "asm": "OP_DUP OP_HASH160 OP_DATA_20 ad06dd6ddee55cbca9a9e3713bd7587509a30564 OP_EQUALVERIFY OP_CHECKSIG"
+    },
     // reqSigs: 1,
     // class: PubKeyHashTy == 2,
   },
@@ -50,7 +55,12 @@ export const MAINNET_scriptDataTest = [
     name: "standard p2sh",
     script: hexToBytes("a91463bcc565f9e68ee0189dd5cc67f1b" +
       "0e5f02f45cb87"),
-    expected: { "address": "DcgYx6SzsWsaTFYEHwZ83wyKntCMiJYrJ3M", "requiredSig": 1, "scriptClass": 3 },
+    expected: {
+      "address": "DcgYx6SzsWsaTFYEHwZ83wyKntCMiJYrJ3M",
+      "requiredSig": 1,
+      "scriptClass": 3,
+      "asm": "OP_HASH160 OP_DATA_20 63bcc565f9e68ee0189dd5cc67f1b0e5f02f45cb OP_EQUAL"
+    },
     // reqSigs: 1,
     // class: ScriptHashTy == 3,
   },
@@ -185,14 +195,14 @@ export const MAINNET_scriptDataTest = [
   {
     name: "empty script",
     script: [],
-    expected: { "address": [], "requiredSig": 0, "scriptClass": 0 },
+    expected: { "address": [], "requiredSig": 0, "scriptClass": 0, "asm": "" },
     // reqSigs: 0,
     // class: NonStandardTy,
   },
   {
     name: "script that does not parse",
     script: [OP_DATA_45],
-    expected: "opcode OP_DATA_45 requires 46 bytes, but script only has 1 remaining.",
+    expected: {"error": "opcode OP_DATA_45 requires 46 bytes, but script only has 1 remaining."},
     // reqSigs: 0,
     //   class: NonStandardTy,
     //     noparse: true,
@@ -204,6 +214,11 @@ export const TESTNET_scriptDataTest = [
   {
     name: "sstxcommitment tx",
     script: [106,30,38,123,31,26,0,92,236,51,208,51,56,230,32,14,198,230,22,237,157,136,175,143,141,66,1,0,0,0,0,88],
-    expected: { "address": [], "requiredSig": 0, "scriptClass": 0 },
+    expected: {
+      "address": [],
+      "requiredSig": 0,
+      "scriptClass": 0,
+      "asm": "OP_RETURN OP_DATA_30 267b1f1a005cec33d03338e6200ec6e616ed9d88af8f8d42010000000058"
+    },
   }
 ]

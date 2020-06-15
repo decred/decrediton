@@ -163,9 +163,9 @@ export const addrFromSStxPkScrCommitment = (pkScript, params) => {
 
   // Return the correct address type.
   if (isP2SH) {
-    return newAddressScriptHashFromHash(hashBytes, params);
+    return { address: newAddressScriptHashFromHash(hashBytes, params) };
   }
-  return newAddressPubKeyHash(hashBytes, params, 0);
+  return { address: newAddressPubKeyHash(hashBytes, params, 0) };
 };
 
 // newAddressScriptHashFromHash is the internal API to create a script hash

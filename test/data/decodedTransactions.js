@@ -18,7 +18,12 @@ export const decodedPurchasedTicketTx = {
       "version": 0,
       "script": Buffer.from([186, 118, 169, 20, 107, 161, 247, 166, 91, 127, 58, 29, 179, 69, 94, 23, 177, 27, 72, 252, 85, 223, 37, 183, 136, 172]),
       "index": 0,
-      "decodedScript": { "scriptClass": 6, "address": "TsaqEon1LTaYNUC1yj4mL4rm5ps5UuqvrZN", "requiredSig": 1 }
+      "decodedScript": {
+        "scriptClass": 6,
+        "address": "TsaqEon1LTaYNUC1yj4mL4rm5ps5UuqvrZN",
+        "requiredSig": 1,
+        "asm": "OP_SSTX OP_DUP OP_HASH160 OP_DATA_20 6ba1f7a65b7f3a1db3455e17b11b48fc55df25b7 OP_EQUALVERIFY OP_CHECKSIG",        
+      }
     },
     {
       "value": 0,
@@ -32,7 +37,12 @@ export const decodedPurchasedTicketTx = {
       "version": 0,
       "script": Buffer.from([189, 118, 169, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 136, 172]),
       "index": 2,
-      "decodedScript": { "scriptClass": 9, "address": "TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2", "requiredSig": 1 }
+      "decodedScript": {
+        "scriptClass": 9,
+        "address": "TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2",
+        "requiredSig": 1,
+        "asm": "OP_SSTXCHANGE OP_DUP OP_HASH160 OP_DATA_20 0000000000000000000000000000000000000000 OP_EQUALVERIFY OP_CHECKSIG"
+      }
     }
   ],
   "lockTime": 0,
@@ -95,4 +105,74 @@ export const multiTxPrefix = {
   ],
   lockTime: 0,
   expiry: 0,
+};
+
+export const decodedVoteTx = {
+  "version": 1,
+  "serType": 0,
+  "numInputs": 2,
+  "inputs": [
+    {
+      "opRawHash": Buffer.from([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]),
+      "prevTxId": "0000000000000000000000000000000000000000000000000000000000000000",
+      "outputIndex": 4294967295,
+      "outputTree": 0,
+      "sequence": 4294967295,
+      "index": 0
+    },
+    {
+      "opRawHash": Buffer.from([145, 73, 195, 133, 0, 45, 247, 225,149, 87, 66, 119, 58, 199, 148, 0, 23, 189, 204, 207, 20, 209, 234, 8, 79, 41, 241, 175, 96, 63, 31, 243 ]),
+      "prevTxId": "f31f3f60aff1294f08ead114cfccbd170094c73a77425795e1f72d0085c34991",
+      "outputIndex": 0,
+      "outputTree": 1,
+      "sequence": 4294967295,
+      "index": 1
+    }
+  ],
+  "numOutputs": 3,
+  "outputs": [
+    {
+      "value": 0,
+      "version": 0,
+      "script": Buffer.from([ 106, 36, 80, 189, 167, 56, 116, 76, 236, 122, 238, 180, 10, 147, 237, 35, 166, 42, 23, 0, 145, 165, 64, 227, 45, 246, 67, 226, 51, 127, 5, 0, 0, 0, 217, 194, 6, 0 ]),
+      "index": 0,
+      "decodedScript": {
+        "asm": "OP_RETURN OP_DATA_36 50bda738744cec7aeeb40a93ed23a62a170091a540e32df643e2337f05000000d9c20600",
+        "scriptClass": 0,
+        "requiredSig": 0,
+        "address": [],
+      },
+    },
+    {
+      "value": 0,
+      "index": 1,
+      "version": 0,
+      "script": Buffer.from([ 106, 6, 1, 0, 8, 0, 0, 0 ]),
+      "decodedScript": {
+        "asm": "OP_RETURN OP_DATA_6 010008000000",
+        "requiredSig": 0,
+        "scriptClass": 0,
+        "address": [],
+      }
+    },
+    {
+      "value": 6670425685,
+      "index": 2,
+      "version": 0,
+      "script": Buffer.from([
+        187, 118, 169,  20, 142, 225,  64,
+         16,  91, 233, 207, 135, 123, 201,
+        214, 105, 176,  85, 198,  79,  67,
+        147,  24, 105, 136, 172
+      ]),
+      "decodedScript": {
+        "asm": "OP_SSGEN OP_DUP OP_HASH160 OP_DATA_20 8ee140105be9cf877bc9d669b055c64f43931869 OP_EQUALVERIFY OP_CHECKSIG",
+        "requiredSig": 1,
+        "scriptClass": 7,
+        "address": "Tse3cGTiwBbZQYa3e4i4BiEdGQhSLpaaFvB"
+      }
+    }
+  ],
+  "lockTime": 0,
+  "expiry": 0
 };
