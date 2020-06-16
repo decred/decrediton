@@ -7,11 +7,12 @@ import { ShowWarning, Subtitle } from "shared";
 import "style/PurchaseTickets.less";
 import { InfoDocModalButton } from "buttons";
 import UnsignedTickets from "./UnsignedTickets";
+import modalStyle from "../../../modals/Modals.module.css";
 
 const getTitleIcon = () => (
   <InfoDocModalButton
     document="PurchaseTicketsInfo"
-    modalClassName="info-modal-fields"
+    modalClassName={modalStyle.infoModalFields}
     className="info-title-icon"
     draggable
   />

@@ -3,12 +3,13 @@ import AccountRow from "./AccountRow";
 import { DecredLoading } from "indicators";
 import { InfoDocModalButton } from "buttons";
 import { Subtitle } from "shared";
+import modalStyle from "../../../modals/Modals.module.css";
 
 const subtitleInfoIcon = () => (
   <div className="account-content-title-buttons-area">
     <InfoDocModalButton
       document="BalanceOverviewInfo"
-      modalClassName="info-modal-fields"
+      modalClassName={modalStyle.infoModalFields}
       double
       draggable
     />

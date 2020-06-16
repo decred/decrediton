@@ -1,6 +1,7 @@
 import { showCheck } from "helpers";
 import ReactDOM from "react-dom";
 import EventListener from "react-event-listener";
+import "style/Modals.less";
 import Draggable from "react-draggable";
 import { classNames } from "pi-ui";
 import style from "./Modals.module.css";

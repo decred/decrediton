@@ -42,7 +42,7 @@ import {
   PassphraseModal,
   ChangePassphraseModal,
   ConfirmModal,
-  InfoDocumentModal,
+  DocumentationInfoModal,
   AboutModal
 } from "modals";
 
@@ -82,10 +82,10 @@ const PoliteiaLinkButton = ({ children, onClick }) => (
 export const HelpLinkInfoModal = mbb(null, InfoModal, helpLinkButtonNew);
 export const HelpLinkAboutModal = mbb(null, AboutModal, helpLinkButtonNew);
 export const InfoModalButton = mbb("info-modal-button", InfoModal);
-export const InfoDocModalButton = mbb("info-modal-button", InfoDocumentModal);
+export const InfoDocModalButton = mbb("info-modal-button", DocumentationInfoModal);
 export const InfoDocFieldModalButton = mbb(
   "info-field-modal-button",
-  InfoDocumentModal
+  DocumentationInfoModal
 );
 export const ChangePassphraseButton = mbb(
   "change-password-default-icon",
