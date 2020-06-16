@@ -7,15 +7,16 @@ const Settings = () => {
     onCloseWallet,
     tempSettings,
     onSaveSettings,
-    onChangeTempSettings
+    onChangeTempSettings,
+    onAttemptChangePassphrase,
+    changePassphraseRequestAttempt,
+    isChangePassPhraseDisabled,
+    currencies,
+    locales,
+    networks,
+    areSettingsDirty
   } = useSettings();
   const { walletService } = useService();
-
-  const onAttemptChangePassphrase = (oldPass, newPass, priv) => {
-    const { onAttemptChangePassphrase } = this.props;
-    onAttemptChangePassphrase &&
-      onAttemptChangePassphrase(oldPass, newPass, priv);
-  };
 
   const onSaveSettingsHandler = () => {
     onSaveSettings && onSaveSettings(tempSettings);
@@ -28,9 +29,15 @@ const Settings = () => {
       {...{
         onAttemptChangePassphrase,
         onSaveSettings: onSaveSettingsHandler,
+        changePassphraseRequestAttempt,
+        isChangePassPhraseDisabled,
         onCloseWallet,
         tempSettings,
-        onChangeTempSettings
+        onChangeTempSettings,
+        currencies,
+        locales,
+        networks,
+        areSettingsDirty
       }}
     />
   );

@@ -29,20 +29,21 @@ const useSettings = () => {
   );
 
   const onChangeTempSettings = useCallback(
-    () => dispatch(sa.updateStateSettingsChanged()),
+    (settings) => dispatch(sa.updateStateSettingsChanged(settings)),
     [dispatch]
   );
 
-  const onSaveSettings = useCallback(() => dispatch(sa.saveSettings()), [
-    dispatch
-  ]);
+  const onSaveSettings = useCallback(
+    (settings) => dispatch(sa.saveSettings(settings)),
+    [dispatch]
+  );
 
   const onCloseWallet = useCallback(() => dispatch(wla.closeWalletRequest()), [
     dispatch
   ]);
 
   const onAddAllowedRequestType = useCallback(
-    () => dispatch(sa.addAllowedExternalRequest()),
+    (requestType) => dispatch(sa.addAllowedExternalRequest(requestType)),
     [dispatch]
   );
 
