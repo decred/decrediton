@@ -8,7 +8,6 @@ const mapStateToProps = selectorMap({
   isDaemonRemote: sel.isDaemonRemote,
   isDaemonStarted: sel.getDaemonStarted,
   lnActive: sel.lnActive,
-  lnConnectAttempt: sel.lnConnectAttempt,
   lnStartAttempt: sel.lnStartAttempt
 });
 

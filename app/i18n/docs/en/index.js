@@ -35,3 +35,5 @@ export { default as TicketLifecycleTutorialPage03 } from "./TicketLifecycleTutor
 export { default as TicketLifecycleTutorialPage04 } from "./TicketLifecycleTutorial/Page04.md";
 export { default as TicketLifecycleTutorialPage05 } from "./TicketLifecycleTutorial/Page05.md";
 export { default as TicketLifecycleTutorialPage06 } from "./TicketLifecycleTutorial/Page06.md";
+
+export { default as LNBackupInfo } from "./LN/BackupInfo.md";

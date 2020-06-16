@@ -1,3 +1,5 @@
+const electron = require("electron");
+const dialog = electron.remote.dialog;
 import { DescriptionHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
 import { lnPage } from "connectors";
@@ -22,7 +24,8 @@ class WalletTab extends React.Component {
     this.state = {
       amount: 0,
       account: props.defaultAccount,
-      actionsEnabled: false
+      actionsEnabled: false,
+      isShowingBackupInfo: false
     };
   }
 
@@ -60,19 +63,57 @@ class WalletTab extends React.Component {
       });
   }
 
+  onToggleShowBackupInfo() {
+    this.setState({ isShowingBackupInfo: !this.state.isShowingBackupInfo });
+  }
+
+  async onBackup() {
+    const opts = {
+      options: {
+        showOverwriteConfirmation: true
+      }
+    };
+    const { filePath } = await dialog.showSaveDialog(opts);
+    if (!filePath) {
+      return;
+    }
+
+    await this.props.exportBackup(filePath);
+  }
+
+  async onVerifyBackup() {
+    const { filePaths } = await dialog.showOpenDialog();
+    const filePath = filePaths[0];
+    if (!filePath) {
+      return;
+    }
+
+    await this.props.verifyBackup(filePath);
+  }
+
   render() {
     const {
       confirmedBalance,
       unconfirmedBalance,
       totalBalance
     } = this.props.walletBalances;
-    const { account, amount, actionsEnabled, sending } = this.state;
+    const {
+      account,
+      amount,
+      actionsEnabled,
+      sending,
+      isShowingBackupInfo
+    } = this.state;
     const { alias, identityPubkey } = this.props.info;
+    const { scbPath, scbUpdatedTime, tsDate } = this.props;
     const {
       onChangeAmount,
       onChangeAccount,
       onFundWallet,
-      onWithdrawWallet
+      onWithdrawWallet,
+      onToggleShowBackupInfo,
+      onBackup,
+      onVerifyBackup
     } = this;
 
     return (
@@ -85,10 +126,17 @@ class WalletTab extends React.Component {
         amount={amount}
         totalBalance={totalBalance}
         actionsEnabled={actionsEnabled && !sending}
+        isShowingBackupInfo={isShowingBackupInfo}
+        tsDate={tsDate}
+        scbPath={scbPath}
+        scbUpdatedTime={scbUpdatedTime}
         onChangeAmount={onChangeAmount}
         onChangeAccount={onChangeAccount}
         onFundWallet={onFundWallet}
         onWithdrawWallet={onWithdrawWallet}
+        onToggleShowBackupInfo={onToggleShowBackupInfo}
+        onBackup={onBackup}
+        onVerifyBackup={onVerifyBackup}
       />
     );
   }

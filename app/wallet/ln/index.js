@@ -1,6 +1,8 @@
 import * as client from "middleware/ln/client";
+import fs from "fs";
 import * as pb from "middleware/ln/rpc_pb";
 import { strHashToRaw } from "helpers/byteActions";
+import { ipcRenderer } from "electron";
 
 export const getLightningClient = client.getLightningClient;
 export const getWalletUnlockerClient = client.getWalletUnlockerClient;
@@ -248,6 +250,7 @@ export const unlockWallet = (wuClient, passphrase) => {
   const request = new pb.UnlockWalletRequest();
   const bytesPassphrase = new Uint8Array(Buffer.from(passphrase));
   request.setWalletPassword(bytesPassphrase);
+
   return new Promise((resolve, reject) =>
     wuClient.unlockWallet(request, (err, resp) =>
       err ? reject(err) : resolve(resp)
@@ -263,3 +266,69 @@ export const stopDaemon = (client) => {
     )
   );
 };
+
+export const removeDcrlnd = (walletName, testnet) =>
+  new Promise((resolve, reject) => {
+    const res = ipcRenderer.sendSync("ln-remove-dir", walletName, testnet);
+    res instanceof Error ? reject(res) : resolve(res);
+  });
+
+export const scbInfo = (walletPath, testnet) =>
+  new Promise((resolve, reject) => {
+    const res = ipcRenderer.sendSync("ln-scb-info", walletPath, testnet);
+    res instanceof Error ? reject(res) : resolve(res);
+  });
+
+export const exportBackup = (client, destPath) =>
+  new Promise((resolve, reject) => {
+    const req = new pb.ChanBackupExportRequest();
+    client.exportAllChannelBackups(req, (err, resp) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      const data = resp.getMultiChanBackup().getMultiChanBackup();
+      try {
+        fs.writeFileSync(destPath, data);
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+  });
+
+export const verifyBackup = (client, srcPath) =>
+  new Promise((resolve, reject) => {
+    let data;
+    try {
+      data = fs.readFileSync(srcPath);
+    } catch (error) {
+      reject(error);
+    }
+
+    const req = new pb.ChanBackupSnapshot();
+    const multi = new pb.MultiChanBackup();
+    multi.setMultiChanBackup(data);
+    req.setMultiChanBackup(multi);
+
+    client.verifyChanBackup(req, (err, resp) =>
+      err ? reject(err) : resolve(resp)
+    );
+  });
+
+export const restoreBackup = (client, scbFile) =>
+  new Promise((resolve, reject) => {
+    let data;
+    try {
+      data = fs.readFileSync(scbFile);
+    } catch (error) {
+      reject(error);
+      return;
+    }
+    const req = new pb.RestoreChanBackupRequest();
+    req.setMultiChanBackup(data);
+    client.restoreChannelBackups(req, (err, resp) =>
+      err ? reject(err) : resolve(resp)
+    );
+  });

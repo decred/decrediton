@@ -1510,8 +1510,8 @@ export const lnEnabled = bool(
   and(get(["ln", "enabled"]), not(isWatchingOnly), not(isTrezor), not(isSPV))
 );
 export const lnActive = bool(get(["ln", "active"]));
+export const lnStartupStage = get(["ln", "startupStage"]);
 export const lnStartAttempt = bool(get(["ln", "startAttempt"]));
-export const lnConnectAttempt = bool(get(["ln", "connectAttempt"]));
 export const lnWalletExists = bool(get(["ln", "exists"]));
 export const lnInfo = get(["ln", "info"]);
 export const lnWalletBalances = get(["ln", "walletBalances"]);
@@ -1524,3 +1524,5 @@ export const lnPayments = get(["ln", "payments"]);
 export const lnOutstandingPayments = get(["ln", "outstandingPayments"]);
 export const lnFailedPayments = get(["ln", "failedPayments"]);
 export const lnAddInvoiceAttempt = get(["ln", "addInvoiceAttempt"]);
+export const lnSCBPath = get(["ln", "scbPath"]);
+export const lnSCBUpdatedTime = get(["ln", "scbUpdatedTime"]);
