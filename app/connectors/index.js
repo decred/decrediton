@@ -11,8 +11,7 @@ export { default as purchaseTickets } from "./purchaseTickets";
 export { default as receive } from "./receive";
 export { default as rescan } from "./rescan";
 export { default as send } from "./send";
-export { default as service } from "./service";
-export { default as settings } from "./settings";
+export { default as service } from "./service"; // TODO: hook already exists in components/views/SettingsPage/hooks.js
 export { default as shutdownPage } from "./shutdownPage";
 export { default as sideBar } from "./sideBar";
 export { default as signMessagePage } from "./signMessagePage";
