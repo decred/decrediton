@@ -5,13 +5,13 @@ import * as sa from "actions/SettingsActions";
 import * as ca from "actions/ControlActions";
 import * as wla from "actions/WalletLoaderActions";
 
-export const useSettings = () => {
+const useSettings = () => {
   const dispatch = useDispatch();
   const currencies = useSelector(sel.currencies);
   const networks = useSelector(sel.networks);
-  const locales = useSelector(sel.locales);
+  const locales = useSelector(sel.sortedLocales);
   const tempSettings = useSelector(sel.tempSettings);
-  const areSettingsDirty = useSelector(sel.areSettingsDirty);
+  const areSettingsDirty = useSelector(sel.settingsChanged);
   const isChangePassPhraseDisabled = useSelector(
     sel.isChangePassPhraseDisabled
   );
@@ -69,10 +69,4 @@ export const useSettings = () => {
   };
 };
 
-export const useService = () => {
-  const walletService = useSelector(sel.walletService);
-  const ticketBuyerService = useSelector(sel.ticketBuyerService);
-  const isMainNet = useSelector(sel.isMainNet);
-  const isTestNet = useSelector(sel.isTestNet);
-  return { walletService, ticketBuyerService, isMainNet, isTestNet };
-};
+export default useSettings;

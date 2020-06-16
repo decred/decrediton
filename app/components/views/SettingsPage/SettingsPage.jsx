@@ -1,9 +1,14 @@
 import ErrorScreen from "ErrorScreen";
 import SettingsPage from "./Settings";
-import { useSettings, useService } from "./hooks";
+import { useSettings, useService } from "hooks";
 
 const Settings = () => {
-  const { onCloseWallet, tempSettings, onSaveSettings } = useSettings();
+  const {
+    onCloseWallet,
+    tempSettings,
+    onSaveSettings,
+    onChangeTempSettings
+  } = useSettings();
   const { walletService } = useService();
 
   const onAttemptChangePassphrase = (oldPass, newPass, priv) => {
@@ -23,7 +28,9 @@ const Settings = () => {
       {...{
         onAttemptChangePassphrase,
         onSaveSettings: onSaveSettingsHandler,
-        onCloseWallet
+        onCloseWallet,
+        tempSettings,
+        onChangeTempSettings
       }}
     />
   );
