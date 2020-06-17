@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { useTheme } from "pi-ui";
+import { useTheme, classNames } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
 import { StandaloneHeader, StandalonePage } from "layout";
 import {
@@ -15,7 +15,8 @@ import UISettings from "./UISettings";
 import MiscSettings from "./MiscSettings";
 import TimezoneSettings from "./TimezoneSettings";
 import "style/StakePool.less";
-import "style/Settings.less";
+import "style/Settings.less"; // todo: delete
+import styles from "./Settings.module.css";
 import * as configConstants from "constants/config";
 
 const closeWalletModalContent = (walletName) => (
@@ -99,16 +100,16 @@ const SettingsPage = ({
         />
       }
       className="settings-standalone-page">
-      <div className="settings-wrapper">
-        <div className="settings-group">
-          <div className="settings-group-title">
+      <div className={styles.wrapper}>
+        <div className={styles.group}>
+          <div className={styles.groupTitle}>
             <T
               id="settings.getstartpage.group-title.connectivity"
               m="Connectivity"
             />
           </div>
-          <div className="settings-column-wrapper">
-            <div className="settings-column">
+          <div className={styles.columnWrapper}>
+            <div className={styles.column}>
               <NetworkSettings
                 {...{
                   tempSettings,
@@ -116,27 +117,27 @@ const SettingsPage = ({
                 }}
               />
             </div>
-            <div className="settings-column">
+            <div className={styles.column}>
               <ProxySettings {...{ tempSettings, onChangeTempSettings }} />
             </div>
           </div>
         </div>
 
-        <div className="settings-group general">
-          <div className="settings-group-title">
+        <div className={classNames(styles.group, styles.general)}>
+          <div className={styles.groupTitle}>
             <T id="settings.getstartpage.group-title.general" m="General" />
           </div>
-          <div className="settings-column-wrapper">
-            <div className="settings-column">
+          <div className={styles.columnWrapper}>
+            <div className={styles.column}>
               <UISettings
                 {...{ tempSettings, locales, onChangeTempSettings }}
               />
             </div>
-            <div className="settings-column timezone">
+            <div className={classNames(styles.column, styles.timezone)}>
               <TimezoneSettings {...{ tempSettings, onChangeTempSettings }} />
             </div>
             {walletReady && (
-              <div className="settings-column">
+              <div className={styles.column}>
                 <MiscSettings
                   {...{
                     tempSettings,
@@ -150,15 +151,15 @@ const SettingsPage = ({
           </div>
         </div>
 
-        <div className="settings-group privacy">
-          <div className="settings-group-title">
+        <div className={classNames(styles.group, styles.privacy)}>
+          <div className={styles.groupTitle}>
             <T
               id="settings.getstartpage.group-title.privacy-and-security"
               m="Privacy and Security"
             />
           </div>
-          <div className="settings-column-wrapper">
-            <div className="settings-column">
+          <div className={styles.columnWrapper}>
+            <div className={styles.column}>
               <PrivacySettings
                 {...{
                   tempSettings,

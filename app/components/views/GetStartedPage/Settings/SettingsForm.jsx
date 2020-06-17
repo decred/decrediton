@@ -11,7 +11,9 @@ import { GoBackMsg } from "../messages";
 import { getGlobalCfg } from "config";
 import * as configConstants from "constants/config";
 import { useTheme } from "pi-ui";
+import styles from "views/SettingsPage/Settings.module.css";
 
+// XXX: use useSettings hook here as well :)
 export default ({
   areSettingsDirty,
   tempSettings,
@@ -35,14 +37,14 @@ export default ({
   }, [onSaveSettings, onSendBack, tempSettings, setThemeName]);
   return (
     <>
-      <div className="getstarted loader logs settings">
+      <div className="logs settings">
         <div className="go-back-screen-button-area">
           <Tooltip text={<GoBackMsg />}>
             <div className="go-back-screen-button" onClick={onSendBack} />
           </Tooltip>
         </div>
         <Subtitle title={<T id="settings.subtitle" m="Settings" />} />
-        <div className="settings-wrapper">
+        <div className={styles.wrapper}>
           <div className="settings-group">
             <div className="settings-group-title">
               <T id="settings.group-title.connectivity" m="Connectivity" />

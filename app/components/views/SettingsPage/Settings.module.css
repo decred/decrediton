@@ -1,0 +1,341 @@
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 1481px;
+  flex-direction: row;
+  font-size: 13px;
+  flex-wrap: wrap;
+}
+
+.languageSelectInput {
+  width: 150px;
+  margin-right: 0;
+}
+
+.languageLabel .flag {
+  margin: 5px 5px 0 0;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 37px;
+  width: 720px;
+}
+
+.privacy,
+.security,
+.timezone {
+  width: 100%;
+  float: left;
+}
+
+.privacy .columnTitle,
+.security .columnTitle,
+.timezone .columnTitle {
+  text-align: left;
+}
+
+.row {
+  display: flex;
+  margin-bottom: 20px;
+  justify-content: flex-end;
+}
+
+.rowChecklist {
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.rowChecklist .label {
+  text-align: left;
+  margin-left: 8px;
+  margin-right: 0;
+}
+
+.rowChecklist .timezoneRadio {
+  order: -1;
+  margin-top: 3px;
+  height: 12px;
+}
+
+.checklistDescription {
+  font-style: italic;
+  text-align: left;
+  margin-left: 22px;
+  color: var(--settings-desc);
+  font-size: 11px;
+  line-height: 15px;
+  width: 175px;
+}
+
+.label {
+  display: inline-block;
+  margin-right: 14px;
+  text-align: right;
+}
+
+.restart {
+  font-weight: bold;
+}
+
+.group.general {
+  order: 3;
+}
+
+.group.privacy .columnWrapper {
+  padding: 40px 40px 10px 40px;
+}
+
+.group.privacy .columnWrapper .column {
+  max-width: 100%;
+  width: 100%;
+}
+
+.groupTitle {
+  font-size: 20px;
+  line-height: 28px;
+  color: var(--vote-abstain-color);
+  margin-bottom: 14px;
+}
+
+.columnWrapper {
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  background: var(--background-back-color);
+  min-height: 190px;
+}
+
+.columnWrapper .column {
+  width: 300px;
+}
+
+.columnTitle {
+  font-size: 19px;
+  text-transform: capitalize;
+  margin-bottom: 14px;
+  line-height: 24px;
+}
+
+.columnWrapper .column .proxy .label {
+  width: 100px;
+}
+
+.privacy .columnContent {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.privacy .columnContent .row {
+  width: 300px;
+}
+
+.privacy .columnContent .row .label {
+  width: 130px;
+}
+
+.wrapper .label {
+  width: 116px;
+}
+
+.wrapper .label .infoLabel,
+.wrapper .label .infoFieldModalButton {
+  display: inline;
+}
+
+.infoFieldModalButton {
+  float: initial;
+  background-image: var(--info-icon);
+  background-size: 16px;
+  margin-right: 5px;
+}
+
+.privacy .columnContent .row .checklistDescription {
+  width: 220px;
+}
+
+.changePasswordDefaultIcon {
+  background: var(--changePassword-default-icon) no-repeat center;
+  background-color: var(--input-color);
+  background-size: 16px;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.13);
+}
+
+.changePasswordDefaultIcon:hover {
+  background-color: var(--input-color-hover);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
+}
+
+.changePasswordDisbledIcon,
+.changePasswordLoading {
+  background: var(--password-inactive-icon) no-repeat center;
+  background-color: var(--disabled-background-color);
+  cursor: default;
+}
+
+.changePasswordDisbledIcon:hover,
+.changePasswordLoading:hover {
+  background-color: var(--disabled-background-color) !important;
+  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.13) !important;
+}
+
+.input {
+  display: inline-block;
+  width: 150px;
+  min-width: 150px;
+  margin-right: 0;
+}
+
+.textInput {
+  width: 136px;
+  min-width: 136px;
+  height: 23px;
+  padding: 0px 4px 1px 10px;
+}
+
+.inputError {
+  width: 290px;
+  float: right;
+  height: 100%;
+  text-align: left;
+  color: var(--error-red);
+  padding-top: 5px;
+}
+
+.saveButtonWrapper {
+  width: 1481px;
+  text-align: right;
+}
+
+.saveButton {
+  display: inline-block;
+  margin-right: 0;
+}
+
+.closeWalletButton {
+  float: right;
+}
+
+.updatePassphraseButton {
+  font-size: 13px;
+  float: left;
+  line-height: 23px;
+}
+
+.updatePassphraseButton button {
+  margin-left: 0;
+  margin-right: 10px;
+}
+
+.updatePassphraseButton span {
+  float: left;
+  margin-top: 1px;
+  font-size: 13px;
+  line-height: 17px;
+}
+
+.getStartedContentNewSeed .general {
+  max-width: 400px;
+}
+
+.privacyCheckbox {
+  margin-top: 2px;
+  order: -1;
+}
+
+.closeModalButton {
+  height: 23px;
+  background-color: var(--wallet-close-button-bg);
+  color: var(--wallet-close-button-text);
+  background-image: var(--close-wallet-icon);
+  background-repeat: no-repeat;
+  background-size: 13px;
+  background-position: 10px 8px;
+  border-radius: 10px;
+  padding: 6px 15px 0 30px;
+}
+
+.privacyButtons {
+  text-align: right;
+}
+
+/* REPLACE ALLL THIS WITH PI-UI RADIO BUTTONS */
+input[type="checkbox"],
+input[type="radio"] {
+  display: none;
+}
+
+input[type="checkbox"]:disabled + label,
+input[type="radio"]:disabled + label {
+  display: inline-block;
+  background-color: var(--disabled-background-color);
+  border: 1px solid var(--disabled-color);
+}
+
+input[type="checkbox"]:checked:disabled + label,
+input[type="radio"]:checked:disabled + label {
+  display: inline-block;
+  border: 1px solid var(--disabled-color);
+  background-color: var(--disabled-background-color);
+  background-image: var(--checkmark-grey-icon);
+  background-repeat: no-repeat;
+  background-size: 10px;
+}
+
+input[type="checkbox"] + label,
+input[type="radio"] + label {
+  display: inline-block;
+  border: 1px solid var(--home-content-link);
+  background-color: none;
+}
+
+input[type="checkbox"]:checked + label,
+input[type="radio"]:checked + label {
+  display: inline-block;
+  border: 1px solid var(--input-color);
+  background-color: none;
+  background-image: var(--checkmark-blue-icon);
+  background-repeat: no-repeat;
+  background-size: 10px;
+}
+
+input[type="radio"]:checked + label {
+  background-image: none;
+  position: relative;
+}
+
+input[type="radio"]:checked + label:before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  background-color: var(--input-color);
+  border-radius: 3px;
+  position: absolute;
+  top: 4px;
+  left: 4px;
+}
+
+input[type="radio"] + label {
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  background-position: 2px;
+}
+
+input[type="checkbox"] + label {
+  width: 12px;
+  height: 12px;
+  background-position: 1px;
+}
+/* END REPLACE WITH PI-UI */

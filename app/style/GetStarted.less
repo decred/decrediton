@@ -1,6 +1,8 @@
 @import (reference) "./main.less";
 @import (reference) "./Layout.less";
 
+// TODO: you next!!!
+
 .advanced-page-form {
   width: 100%;
   float: left;
@@ -27,7 +29,7 @@
   float: left;
   width: 130px;
   text-align: right;
-  color:var(--wallet-tutorial-text);
+  color: var(--wallet-tutorial-text);
   font-size: 13px;
 }
 
@@ -37,7 +39,7 @@
   font-size: 13px;
   line-height: 16px;
   margin-bottom: 1em;
-  color:var(--new_wallet-label);
+  color: var(--new_wallet-label);
 
   p {
     margin-top: 0px;
@@ -61,7 +63,7 @@
     font-size: 13px;
 
     &::placeholder {
-      color: #C4CBD2;
+      color: #c4cbd2;
     }
   }
 }
@@ -78,8 +80,8 @@
   background-color: var(--background-container);
   z-index: 3;
   height: calc(100% - 60px);
-  
-  &::before{
+
+  &::before {
     content: "";
     width: 100%;
     height: 33px;
@@ -91,7 +93,7 @@
     background-size: 173px;
     background-position: 0 0;
   }
-  &.testnet-body::before{
+  &.testnet-body::before {
     background-image: var(--testnet-logo);
   }
   .tabbed-page-subtitle {
@@ -108,9 +110,6 @@
 }
 
 .getstarted.loader.logs {
-  margin-left: 42px;
-  padding-top: 107px;
-
   .active {
     color: var(--input-color);
   }
@@ -124,8 +123,7 @@
 }
 
 .getstarted.loader {
-  padding-top: 107px;
-  margin-left: 60px;
+  padding-top: 57px;
   position: relative;
 
   .tutorial-button {
@@ -164,12 +162,12 @@
     position: absolute;
     top: 365px;
     right: 0px;
-  }  
+  }
 
   .loader-settings-logs {
     position: absolute;
     right: 15px;
-    top: -25px;    
+    top: -25px;
     margin: inherit;
     user-select: none;
   }
@@ -251,14 +249,14 @@
       right: initial;
     }
     .save-button-wrapper {
-        width: 1484px;
-        text-align: right;
-        .key-blue-button {
-          margin-top: 0;
-          padding: 12px 30px 14px 30px;
-        }
-    } 
-  }  
+      width: 1484px;
+      text-align: right;
+      .key-blue-button {
+        margin-top: 0;
+        padding: 12px 30px 14px 30px;
+      }
+    }
+  }
 }
 
 .loader-bar-bottom {
@@ -309,13 +307,13 @@
     text-align: center;
     display: flex;
     align-items: center;
-    
+
     .number {
       width: 20px;
       border-right: 1px solid var(--seedword-number-color);
       color: var(--seedword-number-color);
       font-size: 10px;
-      height:23px;
+      height: 23px;
       line-height: 23px;
     }
     .word {
@@ -324,17 +322,17 @@
       width: 85px;
       font-size: 13px;
       line-height: 23px;
-    }      
-    
+    }
+
     .Select-control {
-      padding-left:0;
+      padding-left: 0;
       .Select-value {
-        padding-left:0;
+        padding-left: 0;
       }
     }
 
     .Select-input {
-      height:23px;
+      height: 23px;
       line-height: 23px;
       vertical-align: initial;
     }
@@ -352,27 +350,31 @@
     &.restore {
       border: 1px solid var(--seedword-select-border-default-border-color);
       background-color: initial !important;
-      
+
       .number {
-        border-right: 1px solid var(--seedword-select-border-default-border-color);
+        border-right: 1px solid
+          var(--seedword-select-border-default-border-color);
         color: var(--seedword-select-border-default-text-color);
       }
 
       &:hover {
-        border: 1px solid var(--seedword-select-border-default-hover-border-color);
+        border: 1px solid
+          var(--seedword-select-border-default-hover-border-color);
         .number {
-          border-right: 1px solid var(--seedword-select-border-default-hover-border-color);
-          color:var(--seedword-select-border-default-hover-text-color);
+          border-right: 1px solid
+            var(--seedword-select-border-default-hover-border-color);
+          color: var(--seedword-select-border-default-hover-text-color);
         }
       }
     }
 
     &.populated {
       border: 1px solid var(--seedword-select-border-default-hover-text-color);
-      background-color: initial !important;      
+      background-color: initial !important;
       .number {
-          border-right: 1px solid var(--seedword-select-border-default-hover-text-color);
-          color: var(--seedword-select-border-default-hover-text-color);
+        border-right: 1px solid
+          var(--seedword-select-border-default-hover-text-color);
+        color: var(--seedword-select-border-default-hover-text-color);
       }
     }
 
@@ -381,18 +383,18 @@
       border: 1px solid var(--error-red);
       .number {
         border-right: 1px solid var(--error-red);
-        color: var(--error-red); 
+        color: var(--error-red);
       }
-    }   
-    
+    }
+
     &.match {
       border: 1px solid var(--accent-color);
       .number {
         border-right: 1px solid var(--accent-color);
-        color: var(--accent-color); 
+        color: var(--accent-color);
       }
-    }    
-}
+    }
+  }
 
   .toolbar {
     display: flex;
@@ -446,13 +448,13 @@
     opacity: 0.7;
   }
 }
-.advanced-desc{
-  font-size: 19px;  
+.advanced-desc {
+  font-size: 19px;
   color: var(--modal-text);
   margin-bottom: 43px;
   margin-top: 60px;
   width: 444px;
-  float:left; 
+  float: left;
 }
 
 .release-notes {
@@ -470,8 +472,8 @@
     max-width: 410px;
 
     a {
-      color:var(--link-color);
-    }  
+      color: var(--link-color);
+    }
   }
 
   .release-notes-image {
@@ -481,20 +483,26 @@
     background-repeat: no-repeat;
     background-size: 590px;
 
-    &.release-image-v130 { background-image: var(--release-image-v130); }
-    &.release-image-v140 { background-image: var(--release-image-v140); }
-    &.release-image-v150 { background-image: var(--release-image-v150); }
+    &.release-image-v130 {
+      background-image: var(--release-image-v130);
+    }
+    &.release-image-v140 {
+      background-image: var(--release-image-v140);
+    }
+    &.release-image-v150 {
+      background-image: var(--release-image-v150);
+    }
   }
 
   @media screen and (max-width: 1140px) {
     .release-notes-image {
-      flex:1;
+      flex: 1;
       margin-top: 14px;
       background-repeat: no-repeat;
       width: 100%;
       height: 0;
       background-size: contain;
-      padding-bottom: 50%; 
+      padding-bottom: 50%;
     }
   }
 
@@ -505,7 +513,7 @@
     .release-notes-image {
       order: -1;
     }
-  }  
+  }
 }
 
 .release-notes-version-navigation {
@@ -624,12 +632,15 @@
 }
 
 .display-wallet.selected {
-  background: linear-gradient(45deg, var(--input-color), var(--display-wallet-gradient-selected-right));
+  background: linear-gradient(
+    45deg,
+    var(--input-color),
+    var(--display-wallet-gradient-selected-right)
+  );
   box-shadow: 0px 5px 21px var(--title-text-and-button-background-drop-shadow);
   border: 1px solid var(--input-color);
-  .display-wallet-name
-  {
-    color:var(--selected_wallet-label);
+  .display-wallet-name {
+    color: var(--selected_wallet-label);
   }
 }
 
@@ -800,12 +811,12 @@
 
 .privacy-text-container {
   margin: 0 30px;
-  flex:1;
+  flex: 1;
 }
 
 .privacy-option-title {
   font-size: 15px;
-  line-height: 19px;  
+  line-height: 19px;
   margin-bottom: 8px;
 }
 
@@ -824,44 +835,43 @@
   align-self: center;
 }
 @media screen and (max-width: 978px) {
-    .privacy-options.wide {
-      justify-content: flex-start;
-      margin-left:0;
+  .privacy-options.wide {
+    justify-content: flex-start;
+    margin-left: 0;
 
-      .privacy-option {
-        width: 209px;
-        min-width: 209px;
+    .privacy-option {
+      width: 209px;
+      min-width: 209px;
 
-        .privacy-option-icon
-        {
-          background-size: 114px;
-          width: 114;
-          height: 114px;
-        }
+      .privacy-option-icon {
+        background-size: 114px;
+        width: 114;
+        height: 114px;
+      }
 
-        .privacy-text-container {
-          margin: 0 20px;
-        }      
+      .privacy-text-container {
+        margin: 0 20px;
       }
     }
+  }
 }
 
 @media screen and (max-width: 710px) {
   .privacy-options.wide,
   .privacy-options {
-    flex-direction:column;
+    flex-direction: column;
     margin: 0;
     padding: 0;
 
     .privacy-option {
       width: 100%;
       margin: 0 0 10px 0;
-      padding: 0;  
-      flex-direction: row;  
+      padding: 0;
+      flex-direction: row;
       align-items: flex-start;
       min-height: 137px;
       height: inherit;
-      
+
       .privacy-option-icon {
         margin: 20px 0px;
         background-size: 40px;
@@ -870,7 +880,7 @@
         align-self: flex-start;
       }
       .privacy-text-container {
-        margin:20px 20px 20px 0;
+        margin: 20px 20px 20px 0;
       }
     }
   }
@@ -949,8 +959,8 @@
     }
     .save-button-wrapper {
       width: 1247px;
-    } 
-  }            
+    }
+  }
 }
 
 @media screen and (max-width: 1679px) {
@@ -960,8 +970,8 @@
     }
     .save-button-wrapper {
       width: 1002px;
-    } 
-  }            
+    }
+  }
 }
 
 @media screen and (max-width: 1439px) {
@@ -971,8 +981,8 @@
     }
     .save-button-wrapper {
       width: 740px;
-    } 
-  }            
+    }
+  }
 }
 
 @media screen and (max-width: 1180px) {
@@ -983,89 +993,88 @@
     }
     .save-button-wrapper {
       width: 650px;
-    } 
-  }            
+    }
+  }
 }
 
 @media screen and (max-width: 768px) {
   .release-notes {
     height: 70vh;
   }
-  
+
   .getstarted.content {
     margin-left: 10px;
   }
   .page-body.getstarted {
     height: calc(100% - 80px);
-  }  
+  }
 
-  .getstarted.loader{
+  .getstarted.loader {
     padding-top: 56px;
     margin-left: 0;
-    .loader-bar-estimation{
-        display: none;
+    .loader-bar-estimation {
+      display: none;
     }
-    .loader-settings-logs{
-      right:-30px !important;
-    }              
+    .loader-settings-logs {
+      right: -30px !important;
+    }
     &.logs {
       margin-left: -10px;
       margin-right: -10px;
       padding-top: 87px;
-      
-      .loader-bar-estimation{
-          display: none;
+
+      .loader-bar-estimation {
+        display: none;
       }
-      .log-container .tabbed-page-subtitle{
-        margin-left:10px;
+      .log-container .tabbed-page-subtitle {
+        margin-left: 10px;
       }
-      .go-back-screen-button-area{
-        right:40px;
-        top:180px;        
+      .go-back-screen-button-area {
+        right: 40px;
+        top: 180px;
       }
-      .loader-settings-logs{
-        right:-10px !important;
-      }               
-    }  
+      .loader-settings-logs {
+        right: -10px !important;
+      }
+    }
     &.settings {
       .tabbed-page-subtitle {
-        margin-left:20px;
+        margin-left: 20px;
       }
       .go-back-screen-button-area {
         top: 94px;
         left: 342px;
-      }      
+      }
       .save-button-wrapper {
         text-align: center;
         width: 355px;
-      } 
-    } 
+      }
+    }
   }
 
-  .advanced-daemon-row.multiple-row{
+  .advanced-daemon-row.multiple-row {
     width: 78%;
   }
-
 }
 @media screen and (max-width: 600px) {
- .advanced-daemon-row.multiple-row{
+  .advanced-daemon-row.multiple-row {
     width: 100%;
-  }  
+  }
 }
 @media screen and (max-width: 540px) {
-  .getstarted.loader .about-modal-button{
-      display: none;
-  }  
+  .getstarted.loader .about-modal-button {
+    display: none;
+  }
 }
 @media screen and (max-width: 430px) {
   .getstarted.loader .go-back-screen-button-area {
-    right:59px;
+    right: 59px;
   }
 }
 @media screen and (max-width: 768px) {
   .release-notes {
     height: 77vh;
-  }  
+  }
 
   .privacy-options {
     margin: 0 -10px;
@@ -1078,10 +1087,10 @@
     height: calc(100% - 40px);
 
     &.testnet-body::before,
-    &::before{
+    &::before {
       background-image: var(--small-logo);
       background-size: 30px;
-    }    
+    }
   }
 
   .getstarted.content {
@@ -1089,7 +1098,7 @@
       width: 380px !important;
       margin-left: -20px;
     }
-    
+
     .copy {
       grid-column: 1 / 4;
       background-position: 80px;
@@ -1098,7 +1107,7 @@
 
     .content-title {
       margin-bottom: 20px;
-    }  
+    }
   }
 
   .create-wallet-warning {
@@ -1107,30 +1116,30 @@
     margin-left: 10px;
   }
 
-  .getstarted.loader{
-    padding-top: 23px; 
-    .loader-settings-logs{
-      top:-40px !important;
-    }        
-    .content-title {
-      font-size:23px;
+  .getstarted.loader {
+    padding-top: 23px;
+    .loader-settings-logs {
+      top: -40px !important;
     }
-    .loader-bar{
+    .content-title {
+      font-size: 23px;
+    }
+    .loader-bar {
       margin-bottom: 0;
       position: fixed;
       bottom: 0;
       left: 0;
       display: flex;
-      flex-direction: column;    
-      
-      .linear-progress{
+      flex-direction: column;
+
+      .linear-progress {
         border-radius: 0;
 
-        .linear-progress-bar{
+        .linear-progress-bar {
           border-radius: 0;
         }
       }
-      .loader-bar-estimation{
+      .loader-bar-estimation {
         padding: 0px 20px;
         order: -1;
       }
@@ -1142,8 +1151,7 @@
       margin-bottom: 30px;
     }
     .advanced-page-form {
-      .loader-bar-buttons    
-      {
+      .loader-bar-buttons {
         position: fixed;
         margin-left: 115px;
         bottom: 75px;
@@ -1161,81 +1169,79 @@
       .advanced-daemon-input {
         width: 243px;
       }
-      
+
       .advanced-daemon-row.appdataform {
         .advanced-daemon-label {
           width: 130px;
         }
         .advanced-daemon-input {
           width: 190px;
-        }        
+        }
       }
     }
     .text-toggle-button-right {
       padding: 6px 10px;
     }
-    .loader-buttons{
-          margin-bottom: 50px;
+    .loader-buttons {
+      margin-bottom: 50px;
     }
-    .edit-wallets-button{
-      margin:5px 0;
-    }   
-    
+    .edit-wallets-button {
+      margin: 5px 0;
+    }
+
     &.logs {
       margin-left: -10px;
       margin-right: -10px;
       padding-top: 30px;
 
-      .log-area .log-area-logs{
+      .log-area .log-area-logs {
         margin: 20px;
       }
-      .log-container .tabbed-page-subtitle{
-        margin-left:10px;
+      .log-container .tabbed-page-subtitle {
+        margin-left: 10px;
       }
-      .go-back-screen-button-area{
-        top:85px;
-        right:20px;
-      }    
-    }    
+      .go-back-screen-button-area {
+        top: 85px;
+        right: 20px;
+      }
+    }
     &.settings {
       .go-back-screen-button-area {
         top: 40px;
         left: 342px;
-      }  
-    }    
+      }
+    }
   }
 
-
-  .display-wallet{
+  .display-wallet {
     width: 136px;
     height: 131px;
     font-size: 12px;
-    
-    .wallet-icon{
+
+    .wallet-icon {
       width: 50px;
       height: 50px;
       margin-left: 43px;
       background-size: 40px 40px;
       background-position: 6px 6px;
 
+      &.createnew {
+        background-size: 49px 49px;
+        background-position: 0px 0px;
+      }
 
-      &.createnew{
+      &.restore {
         background-size: 49px 49px;
         background-position: 0px 0px;
-      }    
-      
-      &.restore{
-        background-size: 49px 49px;
-        background-position: 0px 0px;
-      }          
+      }
     }
-    .display-wallet-complete{
+    .display-wallet-complete {
       min-height: 12px;
     }
-    .display-wallet-last-access{
+    .display-wallet-last-access {
       font-size: 9px;
     }
-    .display-wallet-launch{
+    .display-wallet-launch {
       font-size: 11px;
       margin-left: 34px;
     }
