@@ -1,3 +1,5 @@
+/* changed .app-modal.about-modal when find it! */
+
 .wrapper {
   display: flex;
   justify-content: space-between;
@@ -339,3 +341,235 @@ input[type="checkbox"] + label {
   background-position: 1px;
 }
 /* END REPLACE WITH PI-UI */
+
+@media screen and (min-width: 1680px) and (max-width: 1919px) {
+  .wrapper {
+    width: 1240px;
+  }
+
+  .group {
+    width: 600px;
+  }
+
+  .group.privacy .columnWrapper {
+    padding-left: 15px;
+    padding-right: 30px;
+    padding-top: 38px;
+  }
+
+  .column {
+    width: 100%;
+  }
+
+  .group .columnWrapper {
+    padding-left: 15px;
+    padding-right: 30px;
+  }
+
+  .group .columnWrapper .privacy .columnContent .row {
+    width: 250px;
+  }
+
+  .group .columnWrapper:nth-of-type(1),
+  .group .columnWrapper:nth-of-type(3) {
+    width: 280px;
+  }
+
+  .group .columnWrapper:nth-of-type(1) .columnTitle,
+  .group .columnWrapper:nth-of-type(3) .columnTitle {
+    margin-left: 0;
+  }
+
+  .group .columnWrapper .column {
+    width: 245px;
+  }
+
+  .saveButtonWrapper {
+    width: 1240px;
+  }
+}
+@media screen and (min-width: 1440px) and (max-width: 1679px) {
+  .wrapper {
+    flex-direction: column;
+  }
+
+  .group {
+    width: 1000px;
+  }
+
+  .group .privacy .columnContent .row {
+    width: 220px;
+    flex-wrap: wrap;
+    margin-right: 200px;
+  }
+
+  .group.privacy {
+    order: 3;
+  }
+
+  .group.privacy .columnWrapper {
+    padding: 20px 40px;
+  }
+
+  .group.general {
+    order: 2;
+  }
+
+  .group .wrapper .column {
+    width: 419px;
+  }
+
+  .group .wrapper .column.timezone .columnContent .row {
+    width: 220px;
+    flex-wrap: wrap;
+  }
+
+  .saveButtonWrapper {
+    width: 1000px;
+  }
+}
+
+@media screen and (max-width: 1439px) {
+  .wrapper {
+    flex-direction: column;
+  }
+
+  .wrapper .group {
+    width: 739px;
+  }
+
+  .wrapper .group.privacy {
+    order: 3;
+  }
+
+  .wrapper .group.general {
+    order: 2;
+  }
+
+  .wrapper .group .columnWrapper {
+    min-height: initial;
+    padding: 20px 40px;
+  }
+
+  .wrapper .group .columnWrapper .column {
+    width: 248px;
+  }
+
+  .wrapper .group .columnWrapper .column:nth-of-type(1),
+  .wrapper .group .columnWrapper .column:nth-of-type(3) {
+    width: 280px;
+  }
+
+  .wrapper .group .columnWrapper .column:nth-of-type(1) .columnTitle,
+  .wrapper .group .columnWrapper .column:nth-of-type(3) .columnTitle {
+    margin-left: 20px;
+  }
+
+  .saveButtonWrapper {
+    width: 740px;
+  }
+}
+
+@media screen and (max-width: 1179px) {
+  .group {
+    width: 649px;
+  }
+
+  .group.privacy .columnWrapper .column {
+    width: 100%;
+  }
+
+  .group .columnWrapper {
+    padding-left: 20px;
+  }
+
+  .group .columnWrapper .privacy .columnContent .row {
+    width: 250px;
+  }
+
+  .group .columnWrapper .column {
+    width: 248px;
+  }
+
+  .wrapper .group .columnWrapper .column:nth-of-type(1),
+  .wrapper .group .columnWrapper .column:nth-of-type(3) {
+    width: 280px;
+  }
+
+  .wrapper .group .columnWrapper .column:nth-of-type(1) .columnTitle,
+  .wrapper .group .columnWrapper .column:nth-of-type(3) .columnTitle {
+    margin-left: 20px;
+  }
+  .saveButtonWrapper {
+    width: 649px;
+  }
+
+  .app-modal.about-modal,
+  .app-modal-reduced-bar.about-modal,
+  .app-modal-standalone.about-modal {
+    margin-top: 30px;
+  }
+
+  .privacy .columnTitle,
+  .security .columnTitle {
+    text-align: left;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .wrapper {
+    margin-top: 0;
+    flex-direction: column;
+  }
+
+  .wrapper .group {
+    width: 355px;
+    margin-bottom: 27px;
+  }
+
+  .wrapper .group.privacy .columnWrapper {
+    padding-left: 15px;
+    padding-right: 35px;
+  }
+
+  .wrapper .group .columnWrapper {
+    padding-left: 15px;
+    padding-right: 35px;
+  }
+
+  .wrapper .group .columnWrapper .column {
+    width: 100%;
+  }
+
+  .wrapper .group .columnWrapper .column:nth-of-type(1),
+  .wrapper .group .columnWrapper .column:nth-of-type(3) {
+    width: 100%;
+  }
+
+  .wrapper .group .columnWrapper .column:nth-of-type(1) .columnTitle,
+  .wrapper .group .columnWrapper .column:nth-of-type(3) .columnTitle {
+    margin-left: 0;
+  }
+
+  .wrapper .group .columnWrapper .column.timezone {
+    order: 3;
+  }
+
+  .wrapper .group .columnWrapper .privacy .columnContent .row {
+    width: 250px;
+    margin-right: initial;
+  }
+
+  .saveButtonWrapper {
+    width: 355px;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 676px) {
+  .app-modal.about-modal,
+  .app-modal-reduced-bar.about-modal,
+  .app-modal-standalone.about-modal {
+    margin-left: 9px;
+  }
+}

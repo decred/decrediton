@@ -14,8 +14,7 @@ import PrivacySettings from "./PrivacySettings";
 import UISettings from "./UISettings";
 import MiscSettings from "./MiscSettings";
 import TimezoneSettings from "./TimezoneSettings";
-import "style/StakePool.less";
-import "style/Settings.less"; // todo: delete
+import "style/StakePool.less"; // TODO: delete this as well!
 import styles from "./Settings.module.css";
 import * as configConstants from "constants/config";
 
@@ -174,8 +173,8 @@ const SettingsPage = ({
         </div>
       </div>
 
-      <div className="settings-save-button-wrapper">
-        <div className="settings-save-button">
+      <div className={styles.saveButtonWrapper}>
+        <div className={styles.saveButton}>
           {needNetworkReset ? (
             <ResetNetworkButton
               modalTitle={

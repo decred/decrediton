@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+import { classNames } from "pi-ui";
 import NetworkSettings from "views/SettingsPage/NetworkSettings";
 import ProxySettings from "views/SettingsPage/ProxySettings";
 import PrivacySettings from "views/SettingsPage/PrivacySettings";
@@ -45,12 +46,12 @@ export default ({
         </div>
         <Subtitle title={<T id="settings.subtitle" m="Settings" />} />
         <div className={styles.wrapper}>
-          <div className="settings-group">
-            <div className="settings-group-title">
+          <div className={styles.group}>
+            <div className={styles.groupTitle}>
               <T id="settings.group-title.connectivity" m="Connectivity" />
             </div>
-            <div className="settings-column-wrapper">
-              <div className="settings-column">
+            <div className={styles.columnWrapper}>
+              <div className={styles.column}>
                 <NetworkSettings
                   {...{
                     tempSettings,
@@ -58,37 +59,37 @@ export default ({
                   }}
                 />
               </div>
-              <div className="settings-column">
+              <div className={styles.column}>
                 <ProxySettings {...{ tempSettings, onChangeTempSettings }} />
               </div>
             </div>
           </div>
 
-          <div className="settings-group general">
-            <div className="settings-group-title">
+          <div className={classNames(styles.group, styles.general)}>
+            <div className={styles.groupTitle}>
               <T id="settings.group-title.general" m="General" />
             </div>
-            <div className="settings-column-wrapper">
-              <div className="settings-column">
+            <div className={styles.columnWrapper}>
+              <div className={styles.column}>
                 <UISettings
                   {...{ tempSettings, locales, onChangeTempSettings }}
                 />
               </div>
-              <div className="settings-column timezone">
+              <div className={classNames(styles.column, styles.timezone)}>
                 <TimezoneSettings {...{ tempSettings, onChangeTempSettings }} />
               </div>
             </div>
           </div>
 
-          <div className="settings-group privacy">
-            <div className="settings-group-title">
+          <div className={classNames(styles.group, styles.privacy)}>
+            <div className={styles.groupTitle}>
               <T
                 id="settings.group-title.privacy-and-security"
                 m="Privacy and Security"
               />
             </div>
-            <div className="settings-column-wrapper">
-              <div className="settings-column">
+            <div className={styles.columnWrapper}>
+              <div className={styles.column}>
                 <PrivacySettings
                   {...{
                     tempSettings,
@@ -103,7 +104,7 @@ export default ({
           </div>
         </div>
       </div>
-      <div className="save-button-wrapper">
+      <div className={styles.formSaveButtonWrapper}>
         <KeyBlueButton
           disabled={!areSettingsDirty}
           size="large"
