@@ -1,10 +1,10 @@
 import MenuLink from "./MenuLink";
 import { createElement as h, useEffect, useState, useCallback, useMemo, useRef } from "react";
-import { usePrevious } from "helpers"
+import { usePrevious } from "helpers";
 import { spring, Motion } from "react-motion";
 import theme from "theme";
 import { FormattedMessage as T } from "react-intl";
-import sideBarStyle from "./SideBar.module.css"
+import sideBarStyle from "./SideBar.module.css";
 import * as sel from "selectors";
 import * as ca from "../../actions/ControlActions";
 import * as sba from "../../actions/SidebarActions";
@@ -81,7 +81,7 @@ export function useLastBlockTime(lastBlockTimestamp, clearTimeout, setTimeout) {
       lastBlockIsRecent = timeFromLastBlock < 60000;
       if (lastBlockIsRecent) {
         updateRecentTimer = setTimeout(
-          () => { setState(getBlockDate(lastBlockTimestamp)) },
+          () => { setState(getBlockDate(lastBlockTimestamp)); },
           60000 - timeFromLastBlock
         );
       }
@@ -90,7 +90,7 @@ export function useLastBlockTime(lastBlockTimestamp, clearTimeout, setTimeout) {
   }, [state, setState]);
 
   useEffect(() => {
-    setState(getBlockDate(lastBlockTimestamp))
+    setState(getBlockDate(lastBlockTimestamp));
   }, [lastBlockTimestamp]);
 
   return { state };
@@ -112,15 +112,6 @@ export function useMenuLinks(
   const links = useRef([...linkList]);
   const _nodes = useRef(new Map());
 
-  const notifProps = useMemo(() => {
-    return linkList.filter(linkItem => linkItem.notifProp);
-  }, [linkList]);
-
-  // const notiSelectors = notifProps.map((notifProp) => {
-  //   console.log(notifProp);
-  //   return props[notifProp]
-  // });
-
   const neededCaretPosition = useCallback((path) => {
     const tabForRoute = _nodes.current.get(path);
     if (!tabForRoute) return null;
@@ -131,7 +122,7 @@ export function useMenuLinks(
     }
     const newTop = tabForRoute.offsetTop;
     return { top: spring(newTop, theme("springs.sideBar")), left: 0 };
-  }, [sidebarOnBottom, _nodes.current]);
+  }, [sidebarOnBottom]);
 
   const updateCaretPosition = useCallback(() => {
     const tabbedPageCheck = location.pathname.indexOf("/", 1);
@@ -219,10 +210,9 @@ export function useMenuLinks(
         {!sidebarOnBottom && link}
       </MenuLink>
     );
-  }, [_nodes.current, sidebarOnBottom]);
+  }, [sidebarOnBottom]);
 
   const getLinks = useMemo(() => {
-    console.log('getLinks called');
     let linksComponent = [];
     if (sidebarOnBottom) {
       const numberOfRows = links.current.length / LINK_PER_ROW;
@@ -244,7 +234,7 @@ export function useMenuLinks(
     }
 
     return (linksComponent = links.current.map((link) => getMenuLink(link)));
-  }, [sidebarOnBottom, links.current, getMenuLink]);
+  }, [sidebarOnBottom, getMenuLink]);
 
   return {
     uiAnimations,

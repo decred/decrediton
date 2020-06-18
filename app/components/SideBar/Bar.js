@@ -8,7 +8,7 @@ import { Balance } from "shared";
 import { RescanButton, RescanCancelButton } from "buttons";
 import "style/SideBar.less";
 import { classNames } from "pi-ui";
-import style from "./SideBar.module.css"
+import style from "./SideBar.module.css";
 import { useBar } from "./hooks";
 
 const isImported = (accountNumber) => accountNumber === Math.pow(2, 31) - 1;
@@ -141,6 +141,6 @@ const Bar = ({
         )}
     </div>
   );
-}
+};
 
 export default Bar;

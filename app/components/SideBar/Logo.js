@@ -1,7 +1,7 @@
 import { Tooltip } from "shared";
 import { FormattedMessage as T } from "react-intl";
 import { TESTNET, MAINNET } from "constants";
-import style from "./SideBar.module.css"
+import style from "./SideBar.module.css";
 
 const Logo = ({
   isTestNet,
