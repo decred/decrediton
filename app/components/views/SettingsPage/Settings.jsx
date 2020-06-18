@@ -98,6 +98,7 @@ const SettingsPage = ({
           {...{ onCloseWallet, walletName, isTicketAutoBuyerEnabled }}
         />
       }
+      // XXX: this is pretty tought one to change, keeping to the end as it part of layout.less!!
       className="settings-standalone-page">
       <div className={styles.wrapper}>
         <div className={styles.group}>

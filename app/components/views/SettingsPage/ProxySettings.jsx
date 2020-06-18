@@ -6,6 +6,7 @@ import {
   PROXYTYPE_SOCKS4,
   PROXYTYPE_SOCKS5
 } from "main_dev/proxy";
+import styles from "./Settings.module.css";
 
 const availableProxyTypes = [
   { name: <T id="settings.proxy.type.none" m="No Proxy" />, value: null },
@@ -16,17 +17,17 @@ const availableProxyTypes = [
 ];
 
 const ProxySettings = ({ tempSettings, onChangeTempSettings }) => (
-  <div className="settings-proxy">
-    <div className="settings-column-title">
+  <div className={styles.proxy}>
+    <div className={styles.columnTitle}>
       <T id="settings.proxy.title" m="Proxy" />
     </div>
-    <div className="settings-column-content">
-      <div className="settings-row">
-        <div className="settings-label">
+    <div className={styles.columnContent}>
+      <div className={styles.row}>
+        <div className={styles.label}>
           <T id="settings.proxy.type" m="Proxy Type" />
         </div>
         <SettingsInput
-          className="settings-input"
+          className={styles.input}
           value={tempSettings.proxyType}
           onChange={(newProxyType) =>
             onChangeTempSettings({ proxyType: newProxyType.value })
@@ -37,8 +38,8 @@ const ProxySettings = ({ tempSettings, onChangeTempSettings }) => (
         />
       </div>
 
-      <div className="settings-row">
-        <div className="settings-label">
+      <div className={styles.row}>
+        <div className={styles.label}>
           <T id="settings.proxy.location" m="Proxy Location" />
         </div>
         <SettingsTextInput

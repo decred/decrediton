@@ -26,7 +26,6 @@ const LanguageSelectPage = ({
         </div>
         <div className="language-select-toolbar">
           <LanguageSelect
-            className="language-select-input"
             value={selectedLang}
             onChange={onChangeSelectedLang}
             valueKey="key"

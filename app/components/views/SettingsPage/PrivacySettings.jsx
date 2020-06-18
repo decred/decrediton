@@ -9,6 +9,8 @@ import {
 
 import { ChangePassphraseButton } from "buttons";
 import { WatchOnlyWarnNotification } from "shared";
+import { classNames } from "pi-ui";
+import styles from "./Settings.module.css";
 
 const propTypes = {
   tempSettings: PropTypes.object.isRequired,
@@ -25,13 +27,13 @@ const AllowableRequestType = ({
   checked,
   onChange
 }) => (
-  <div className="settings-row settings-row-checklist">
-    <div className="settings-label">{label}</div>
-    <div className="privacy-checkbox">
+  <div className={classNames(styles.row, styles.rowChecklist)}>
+    <div className={styles.label}>{label}</div>
+    <div className={styles.privacyCheckbox}>
       <input id={id} type="checkbox" checked={checked} onChange={onChange} />
       <label htmlFor={id}></label>
     </div>
-    <div className="settings-checklist-description">{description}</div>
+    <div className={styles.checklistDescription}>{description}</div>
   </div>
 );
 
@@ -54,26 +56,23 @@ const PrivacySettings = ({
   };
 
   return (
-    <div className="settings-privacy">
-      <div className="settings-column-content">
-        <div className="settings-row settings-row-checklist">
+    <div className={styles.privacy}>
+      <div className={styles.columnContent}>
+        <div className={classNames(styles.row, styles.rowChecklist)}>
           <div
             disabled={isChangePassPhraseDisabled}
-            className="settings-update-passphrase-button">
+            className={styles.updatePassphraseButton}>
             <T
               id="settings.updatePrivatePassphrase"
               m="Update Private Passphrase"
             />
             <WatchOnlyWarnNotification isActive={isChangePassPhraseDisabled}>
               <ChangePassphraseButton
-                className={[
-                  isChangePassPhraseDisabled
-                    ? "change-password-disabled-icon"
-                    : "",
-                  changePassphraseRequestAttempt
-                    ? "change-password-loading"
-                    : ""
-                ].join(" ")}
+                className={classNames(
+                  isChangePassPhraseDisabled &&
+                    styles.changePasswordDisabledIcon,
+                  changePassphraseRequestAttempt && styles.changePasswordLoading
+                )}
                 isDisabled={isChangePassPhraseDisabled}
                 modalTitle={
                   <T

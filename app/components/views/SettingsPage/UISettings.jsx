@@ -1,6 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import { SettingsInput, LanguageSelect } from "inputs";
-import "style/LanguageSelect.less";
+import styles from "./Settings.module.css";
 
 const propTypes = {
   tempSettings: PropTypes.object.isRequired,
@@ -17,17 +17,17 @@ const availableUIThemeTypes = [
 ];
 
 const UISettings = ({ tempSettings, locales, onChangeTempSettings }) => (
-  <div className="settings-ui">
-    <div className="settings-column-title">
+  <div>
+    <div className={styles.columnTitle}>
       <T id="settings.ui.title" m="UI" />
     </div>
-    <div className="settings-column-content">
-      <div className="settings-row">
-        <div className="settings-label">
+    <div className={styles.columnContent}>
+      <div className={styles.row}>
+        <div className={styles.label}>
           <T id="settings.uitheme.type" m="Tonality" />
         </div>
         <SettingsInput
-          className="settings-input"
+          className={styles.input}
           value={tempSettings.theme}
           onChange={(newTheme) =>
             onChangeTempSettings({ theme: newTheme.value })
@@ -38,12 +38,11 @@ const UISettings = ({ tempSettings, locales, onChangeTempSettings }) => (
         />
       </div>
 
-      <div className="settings-row">
-        <div className="settings-label">
+      <div className={styles.row}>
+        <div className={styles.label}>
           <T id="settings.locale" m="Locale" />
         </div>
         <LanguageSelect
-          className="language-select-input"
           value={tempSettings.locale}
           onChange={(newLocale) =>
             onChangeTempSettings({ locale: newLocale.key })

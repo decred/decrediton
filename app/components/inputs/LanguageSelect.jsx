@@ -1,6 +1,9 @@
 import Select from "react-select";
 import { injectIntl } from "react-intl";
 import "style/Input.less";
+import "style/LanguageSelect.less";
+
+// XXX: functional component & css module please.
 
 @autobind
 class SettingsInput extends React.Component {
@@ -23,10 +26,10 @@ class SettingsInput extends React.Component {
   }
 
   render() {
-    const { className, valueKey, labelKey, options } = this.props;
+    const { valueKey, labelKey, options } = this.props;
 
     return (
-      <div className={className}>
+      <div className="language-select-input">
         <Select
           clearable={false}
           multi={false}

@@ -1,4 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
+import { classNames } from "pi-ui";
+import styles from "./Settings.module.css";
 
 const AllowableRequestType = ({
   id,
@@ -8,9 +10,9 @@ const AllowableRequestType = ({
   checked,
   onChange
 }) => (
-  <div className="settings-row settings-row-checklist">
-    <div className="settings-label">{label}</div>
-    <div className="timezone-radio">
+  <div className={classNames(styles.row, styles.rowChecklist)}>
+    <div className={styles.label}>{label}</div>
+    <div className={styles.timezoneRadio}>
       <input
         type="radio"
         id={id}
@@ -20,7 +22,7 @@ const AllowableRequestType = ({
       />
       <label htmlFor={id}></label>
     </div>
-    <div className="settings-checklist-description">{description}</div>
+    <div className={styles.checklistDescription}>{description}</div>
   </div>
 );
 
@@ -30,11 +32,11 @@ const TimezoneSettings = ({ tempSettings, onChangeTempSettings }) => {
   };
 
   return (
-    <div className="settings-timezone">
-      <div className="settings-column-title">
+    <div className={styles.timezone}>
+      <div className={styles.columnTitle}>
         <T id="settings.timezone.title" m="Timezone" />
       </div>
-      <div className="settings-column-content">
+      <div className={styles.columnContent}>
         <AllowableRequestType
           label={<T id="settings.timezone.local.label" m="Local" />}
           id="local"
