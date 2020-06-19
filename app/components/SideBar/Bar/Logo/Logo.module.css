@@ -1,0 +1,30 @@
+.hamburger {
+  height: 20px;
+  width: 20px;
+  background-repeat: no-repeat;
+  background-image: var(--menu-hamburger);
+  cursor: pointer;
+}
+
+.hamburger:hover {
+  opacity: 0.7;
+}
+
+.sidebarLogo,
+.reducedSidebarLogo {
+  display: flex;
+  position: relative;
+  z-index: 3;
+  padding: 20px 18px 20px 18px;
+  border-bottom: 1px solid var(--white-border);
+}
+
+.reducedSidebarLogo {
+  flex-direction: column;
+}
+
+@media screen and (max-width: 768px) {
+  .sidebarLogo {
+    flex-direction: row-reverse;
+  }
+}

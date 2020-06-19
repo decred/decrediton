@@ -1,5 +1,5 @@
 import { NavLink as Link } from "react-router-dom";
-import style from "./SideBar.module.css";
+import style from "./MenuLink.module.css";
 import { classNames } from "pi-ui";
 
 const MenuLink = ({ icon, linkRef, hasNotification, ...props }) => (
