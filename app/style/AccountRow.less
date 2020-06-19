@@ -214,7 +214,7 @@
     background-color: var(--disabled-color);
     padding: 2px 20px 3px 20px;
     box-shadow: none;
-    transition: all 131ms @easeInOutQuart;
+    transition: all 131ms var(--ease-in-out-quart);
     cursor: auto;
   }
 
@@ -229,7 +229,7 @@
     height: 32px;
     width: 390px;
     word-break: break-all;
-    transition: all 131ms @easeInOutQuart;
+    transition: all 131ms var(--ease-in-out-quart);
   }
 
   .account-actions-pubkey-clipboard {
@@ -244,7 +244,7 @@
 @media screen and (max-width: 768px) {
   .account-actions.is-row {
     display: flex;
-    flex-direction: column
+    flex-direction: column;
   }
 
   .account-actions-buttons {
