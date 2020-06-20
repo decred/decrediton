@@ -6,6 +6,8 @@ import {
   setRemoteCredentials
 } from "config.js";
 
+// XXX: FIUNCTIONAL COMPONENT!!!
+
 @autobind
 class AdvancedStartupHeader extends React.Component {
   render() {

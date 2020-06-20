@@ -2,6 +2,8 @@ import Select from "react-select";
 import { SEED_WORDS } from "wallet/seed";
 import { clipboard } from "electron";
 
+// XXX: functional component please!!!!
+
 const SEED_WORD_OPTIONS = SEED_WORDS.map((name) => ({ name }));
 
 @autobind

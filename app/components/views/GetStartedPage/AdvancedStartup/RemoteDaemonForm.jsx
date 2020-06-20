@@ -1,5 +1,6 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { TextInput, PasswordInput, PathBrowseInput } from "inputs";
+import styles from "../GetStarted.module.css";
 
 const messages = defineMessages({
   messageLoginPlaceholder: {
@@ -44,11 +45,11 @@ const RemoteDaemonForm = ({
 }) => {
   return (
     <>
-      <div className="advanced-daemon-row">
-        <div className="advanced-daemon-label">
+      <div className={styles.advancedDaemonRow}>
+        <div className={styles.advancedDaemonLabel}>
           <T id="advanced.remote.rpcuser" m="RPC User" />
         </div>
-        <div className="advanced-daemon-input">
+        <div className={styles.advancedDaemonInput}>
           <TextInput
             required
             value={rpc_user}
@@ -58,11 +59,11 @@ const RemoteDaemonForm = ({
           />
         </div>
       </div>
-      <div className="advanced-daemon-row">
-        <div className="advanced-daemon-label">
+      <div className={styles.advancedDaemonRow}>
+        <div className={styles.advancedDaemonLabel}>
           <T id="advanced.remote.rpcpass" m="RPC Password" />
         </div>
-        <div className="advanced-daemon-input">
+        <div className={styles.advancedDaemonInput}>
           <PasswordInput
             required
             value={rpc_pass}
@@ -74,11 +75,11 @@ const RemoteDaemonForm = ({
           />
         </div>
       </div>
-      <div className="advanced-daemon-row">
-        <div className="advanced-daemon-label">
+      <div className={styles.advancedDaemonRow}>
+        <div className={styles.advancedDaemonLabel}>
           <T id="advanced.remote.rpccert" m="RPC Cert Path" />
         </div>
-        <div className="advanced-daemon-input">
+        <div className={styles.advancedDaemonInput}>
           <PathBrowseInput
             required
             type="file"
@@ -89,8 +90,8 @@ const RemoteDaemonForm = ({
           />
         </div>
       </div>
-      <div className="advanced-daemon-row">
-        <div className="advanced-daemon-label">
+      <div className={styles.advancedDaemonRow}>
+        <div className={styles.advancedDaemonLabel}>
           <T id="advanced.remote.rpchost" m="RPC Host" />
         </div>
         <div className="advanced-daemon-input">
@@ -103,11 +104,11 @@ const RemoteDaemonForm = ({
           />
         </div>
       </div>
-      <div className="advanced-daemon-row">
-        <div className="advanced-daemon-label">
+      <div className={styles.advancedDaemonRow}>
+        <div className={styles.advancedDaemonLabel}>
           <T id="advanced.remote.rpcport" m="RPC Port" />
         </div>
-        <div className="advanced-daemon-input">
+        <div className={styles.advancedDaemonInput}>
           <TextInput
             required
             value={rpc_port}

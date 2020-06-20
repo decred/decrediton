@@ -1,7 +1,6 @@
 import { LinearProgressSmall } from "indicators";
 import { FormattedMessage as T } from "react-intl";
 import { rescan } from "connectors";
-import "style/GetStarted.less";
 
 const RescanWalletFormBody = ({
   rescanEndBlock,

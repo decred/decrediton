@@ -4,9 +4,9 @@ import { Documentation } from "shared";
 import { KeyBlueButton, InvisibleButton } from "buttons";
 import { BackBtnMsg, GoBackMsg, CreateNewWalletTitle } from "../../messages";
 import { Tooltip } from "shared";
-import "style/CreateWalletForm.less";
+import "style/CreateWalletForm.less"; // kill me!
 
-const CreateWallet = ({
+const CopySeedPage = ({
   showCopySeedConfirm,
   toggleCopySeed,
   onSubmitCopySeedConfirm,
@@ -58,4 +58,4 @@ const CreateWallet = ({
   </>
 );
 
-export default CreateWallet;
+export default CopySeedPage;

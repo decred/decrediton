@@ -1,4 +1,4 @@
-import "style/CreateWalletForm.less";
+import "style/CreateWalletForm.less"; // DELETE THIS GUY
 import {
   InfoDocFieldModalButton,
   KeyBlueButton,
@@ -13,6 +13,8 @@ import {
   CreateNewWalletTitle
 } from "../../messages";
 import { Tooltip, CreatePassPhrase } from "shared";
+import { classNames } from "pi-ui";
+import styles from "../../GetStarted.module.css";
 
 export const ConfirmSeedForm = ({
   seedWords,
@@ -24,37 +26,44 @@ export const ConfirmSeedForm = ({
   isCreatingWallet
 }) => (
   <>
-    <div className="content-title-wrapper is-row">
-      <div className="content-title">
+    <div className={classNames(styles.contentTitleWrapper, "is-row")}>
+      <div className={styles.contentTitle}>
         <CreateNewWalletTitle />
       </div>
       {sendBack && (
         <Tooltip text={<GoBackMsg />}>
-          <div className="go-back-screen-button" onClick={sendBack} />
+          <div className={styles.goBackScreenButton} onClick={sendBack} />
         </Tooltip>
       )}
     </div>
-    <div className="seed is-row">
-      <div className="is-row confirm-seed-label-text seed">
+    <div className={classNames(styles.seed, "is-row")}>
+      <div
+        className={classNames(styles.confirmSeedLabel, styles.seed, "is-row")}>
         <InfoDocFieldModalButton document="SeedInfo" />
-        <div className="info-label">
+        <div className={styles.infoLabel}>
           <ConfirmSeedMsg />
         </div>
       </div>
-      <div className="seedArea">
+      <div className={styles.seedArea}>
         {seedWords.map((seedWord) => {
-          let className = "seedWord ";
-          if (seedWord.show) {
-            className += "filled";
-          } else if (seedWord.word != "") {
-            className += seedWord.match ? "match" : "no-match";
-          } else {
-            className += "empty";
-          }
           return (
-            <div key={`seeditem-${seedWord.index}`} className={className}>
-              <span className="number">{seedWord.index + 1}.</span>
-              <span className="word">
+            <div
+              key={`seeditem-${seedWord.index}`}
+              className={classNames(
+                styles.seedWord,
+                seedWord.show && styles.filled,
+                !seedWord.show &&
+                  seedWord.word != "" &&
+                  seedWord.match &&
+                  styles.match,
+                !seedWord.show &&
+                  seedWord.word != "" &&
+                  !seedWord.match &&
+                  styles.noMatch,
+                !seedWord.show && seedWord.word != "" && styles.empty
+              )}>
+              <span className={styles.number}>{seedWord.index + 1}.</span>
+              <span className={styles.word}>
                 {seedWord.show ? (
                   seedWord.word
                 ) : (
@@ -62,7 +71,7 @@ export const ConfirmSeedForm = ({
                     disabled={seedWord.show}
                     onChange={onChangeSeedWord}
                     seedWord={seedWord}
-                    className="Select-menu-with-arrow"
+                    className={styles.selectMenuWithArrow}
                     value={{ name: seedWord.word }}
                   />
                 )}
@@ -73,15 +82,15 @@ export const ConfirmSeedForm = ({
       </div>
     </div>
     <CreatePassPhrase onChange={setPassPhrase} onSubmit={onCreateWallet} />
-    <div className="create-wallet-button-container">
+    <div className={styles.createWalletButtonContainer}>
       <KeyBlueButton
-        className="wallet-key-blue-button"
+        className={styles.walletKeyBlueButton}
         disabled={!isValid}
         loading={isCreatingWallet}
         onClick={onCreateWallet}>
         <CreateWalletMsg />
       </KeyBlueButton>
-      <InvisibleButton className="go-back-button" onClick={sendBack}>
+      <InvisibleButton className={styles.goBackButton} onClick={sendBack}>
         <BackBtnMsg />
       </InvisibleButton>
     </div>

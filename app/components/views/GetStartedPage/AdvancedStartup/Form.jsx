@@ -2,6 +2,8 @@ import { KeyBlueButton, InvisibleButton } from "buttons";
 import RemoteDaemonForm from "./RemoteDaemonForm";
 import AppDataForm from "./AppDataForm";
 import { FormattedMessage as T, injectIntl } from "react-intl";
+import { classNames } from "pi-ui";
+import styles from "../GetStarted.module.css";
 
 const AdvancedBodyBase = ({
   onShowRemote,
@@ -35,27 +37,27 @@ const AdvancedBodyBase = ({
 }) => {
   return (
     <>
-      <div className="advanced-desc">
+      <div className={styles.advancedDesc}>
         <T
           id="login.form.advanced.desc"
           m="Complete one of the following forms to start Decrediton according to your local setup."
         />
       </div>
-      <div className="advanced-page-toggle">
-        <div className="text-toggle">
+      <div className={styles.advancedPageToggle}>
+        <div className={styles.txtToggle}>
           <div
-            className={
-              "text-toggle-button-left " +
-              (sideActive && "text-toggle-button-active")
-            }
+            className={classNames(
+              styles.textToggleButtonLeft,
+              sideActive && styles.textToggleButtonActive
+            )}
             onClick={!sideActive ? onShowAppData : null}>
             <T id="advancedDaemon.toggle.appdata" m="Remote Daemon" />
           </div>
           <div
-            className={
-              "text-toggle-button-right " +
-              (!sideActive && "text-toggle-button-active")
-            }
+            className={classNames(
+              styles.textToggleButtonRight,
+              sideActive && styles.textToggleButtonActive
+            )}
             onClick={sideActive ? onShowRemote : null}>
             <T
               id="advancedDaemon.toggle.remote"
@@ -64,7 +66,7 @@ const AdvancedBodyBase = ({
           </div>
         </div>
       </div>
-      <div className="advanced-page-form toggle">
+      <div className={styles.advancedPageFormToggle}>
         {sideActive ? (
           <RemoteDaemonForm
             {...{
@@ -98,7 +100,7 @@ const AdvancedBodyBase = ({
             }}
           />
         )}
-        <div className="loader-bar-buttons">
+        <div className={styles.loaderBarButtons}>
           <InvisibleButton onClick={skipAdvancedDaemon}>
             <T id="advancedStartup.skip" m="Skip" />
           </InvisibleButton>

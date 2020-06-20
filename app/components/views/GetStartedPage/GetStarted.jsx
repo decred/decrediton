@@ -7,9 +7,8 @@ import {
 } from "./messages";
 import { LoaderBarBottom } from "indicators";
 import { classNames } from "pi-ui";
-import "style/GetStarted.less";
 
-const DaemonLoadingBody = ({
+const GetStarted = ({
   PageComponent,
   updateAvailable,
   appVersion,
@@ -50,4 +49,4 @@ const DaemonLoadingBody = ({
   </div>
 );
 
-export default DaemonLoadingBody;
+export default GetStarted;

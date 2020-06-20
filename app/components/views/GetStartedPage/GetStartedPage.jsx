@@ -1,11 +1,11 @@
 import { daemonStartup } from "connectors";
 import { interpret } from "xstate";
 import { getStartedMachine } from "stateMachines/GetStartedStateMachine";
-import GetStartedPage from "./Page";
-import { AdvancedStartupBody } from "./AdvancedStartup";
+import GetStartedWrapper from "./GetStarted";
+import { AdvancedStartupBody } from "./AdvancedStartup/AdvancedStartup";
 import { injectIntl } from "react-intl";
 import WalletSelection from "./WalletSelection";
-import CreateWalletMachine from "./CreateWallet";
+import CreateWalletMachine from "./CreateWallet/CreateWallet";
 import Settings from "./Settings";
 import Logs from "./Logs";
 import { FormattedMessage as T } from "react-intl";
@@ -431,7 +431,7 @@ class GetStarted extends React.Component {
     const { updateAvailable, isTestNet } = this.props;
 
     return (
-      <GetStartedPage
+      <GetStartedWrapper
         PageComponent={PageComponent}
         {...{ onShowLogs, onShowSettings, updateAvailable, isTestNet }}
       />

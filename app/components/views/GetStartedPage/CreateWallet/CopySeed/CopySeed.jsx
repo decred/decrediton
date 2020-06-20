@@ -1,12 +1,13 @@
-import CopySeed from "./Page";
+import Form from "./Form";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import * as cli from "actions/ClientActions";
 
-export default function ({ mnemonic, sendContinue, sendBack }) {
+const CopySeed = ({ mnemonic, sendContinue, sendBack }) => {
   const [showCopySeedConfirm, setShowCopySeed] = useState(false);
   const dispatch = useDispatch();
-  const copySeedToClipboard = (mnemonic) => dispatch(cli.copySeedToClipboard(mnemonic));
+  const copySeedToClipboard = (mnemonic) =>
+    dispatch(cli.copySeedToClipboard(mnemonic));
 
   const onSubmitCopySeedConfirm = () => {
     setShowCopySeed(false);
@@ -14,7 +15,7 @@ export default function ({ mnemonic, sendContinue, sendBack }) {
   };
 
   return (
-    <CopySeed
+    <Form
       {...{
         mnemonic,
         showCopySeedConfirm,
@@ -25,4 +26,6 @@ export default function ({ mnemonic, sendContinue, sendBack }) {
       }}
     />
   );
-}
+};
+
+export default CopySeed;

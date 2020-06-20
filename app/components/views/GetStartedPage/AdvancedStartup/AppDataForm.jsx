@@ -1,5 +1,7 @@
+import { classNames } from "pi-ui";
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { PathBrowseInput } from "inputs";
+import styles from "../GetStarted.module.css";
 
 const messages = defineMessages({
   appdataFieldPlaceholder: {
@@ -15,11 +17,11 @@ const AppDataForm = ({
   intl
 }) => (
   <>
-    <div className="advanced-daemon-row appdataform">
-      <div className="advanced-daemon-label">
+    <div className={classNames(styles.advancedDeamonRow, styles.dataForm)}>
+      <div className={styles.advancedDaemonLabel}>
         <T id="login.form.appdata.label" m="Daemon Data Directory" />:
       </div>
-      <div className="advanced-daemon-input">
+      <div className={styles.advancedDaemonInput}>
         <PathBrowseInput
           required
           type="directory"

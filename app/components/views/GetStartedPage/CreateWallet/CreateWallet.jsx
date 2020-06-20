@@ -1,10 +1,9 @@
 import { injectIntl } from "react-intl";
-import "style/GetStarted.less";
 import Page from "./Page";
 import { withRouter } from "react-router";
 import CopySeed from "./CopySeed";
 import ConfirmSeed from "./ConfirmSeed";
-import ExistingSeed from "./ExistingSeed";
+import ExistingSeed from "./ExistingSeed/ExistingSeed";
 import { createElement as h } from "react";
 import { DecredLoading } from "indicators";
 import { useState, useEffect, useCallback } from "react";

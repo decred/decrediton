@@ -1,5 +1,7 @@
 import { daemonStartup } from "connectors";
 
+// xxx: functional compoennt please :)
+
 @autobind
 class GetStartedPosition extends React.Component {
   constructor(props) {

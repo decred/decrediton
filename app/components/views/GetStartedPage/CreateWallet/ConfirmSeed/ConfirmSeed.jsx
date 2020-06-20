@@ -1,5 +1,7 @@
 import ConfirmSeedForm from "./Form";
 
+// functional comp!!
+
 @autobind
 class ConfirmSeed extends React.Component {
   constructor(props) {
