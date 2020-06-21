@@ -371,10 +371,6 @@
   float: right;
 }
 
-.infoModal.infoModalFields .infoModalDocumentation strong {
-  color: var(--cyan-bold);
-}
-
 .infoModal.hasWarning .infoModalDocumentation strong {
   color: var(--error-text-color);
 }
@@ -414,16 +410,6 @@
 
 .confirmSeedCopyModalToolbar > .confirmModalCloseButton {
   float: right;
-}
-
-.confirmSeedCopyModalHeader {
-  margin-bottom: 1em;
-}
-
-.confirmSeedCopyModalHeaderTitle {
-  font-weight: 400;
-  font-size: 27px;
-  text-transform: capitalize;
 }
 
 .infoConfirmModal {
