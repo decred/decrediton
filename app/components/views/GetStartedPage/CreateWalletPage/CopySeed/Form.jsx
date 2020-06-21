@@ -40,7 +40,7 @@ const CopySeedPage = ({
         );
       })}
       <div className={styles.copy} onClick={() => toggleCopySeed(true)}>
-        <T id="createWallet.copy" m="Copy seed wosssrds to clipboard" />
+        <T id="createWallet.copy" m="Copy seed words to clipboard" />
       </div>
     </div>
     <div className={styles.toolbar}>
