@@ -1,4 +1,3 @@
-import MenuLink from "./MenuLink";
 import { usePrevious } from "helpers";
 import { spring, Motion } from "react-motion";
 import theme from "theme";
@@ -7,22 +6,15 @@ import sideBarStyle from "../SideBar.module.css";
 import * as sel from "selectors";
 import { useSelector } from "react-redux";
 import { useEffect, useState, useCallback, useMemo, useRef } from "react";
-import { createElement as h } from "react";
 
-export function useMenuLinks(
-  linkList,
-  LINK_PER_ROW) {
-
+export function useMenuLinks() {
   const location = useSelector(sel.location);
-  const isTrezor = useSelector(sel.isTrezor);
   const sidebarOnBottom = useSelector(sel.sidebarOnBottom);
-  const lnEnabled = useSelector(sel.lnEnabled);
   const uiAnimations = useSelector(sel.uiAnimations);
 
   const [sidebarOnBottomStyle, setSidebarOnBottomStyle] = useState({ top: 0, left: 0 });
   const [selectedTab, setSelectedTab] = useState(null);
 
-  const links = useRef([...linkList]);
   const _nodes = useRef(new Map());
 
   const neededCaretPosition = useCallback((path) => {
@@ -50,12 +42,12 @@ export function useMenuLinks(
     }
   }, [
     location,
-    neededCaretPosition,
-    setSidebarOnBottomStyle,
-    setSelectedTab
+    neededCaretPosition
   ]);
 
   const previousSidebarOnBottom = usePrevious(sidebarOnBottom);
+
+  useEffect(() => updateCaretPosition(), [updateCaretPosition]);
 
   useEffect(() => {
     const tabbedPageCheck = location.pathname.indexOf("/", 1);
@@ -70,25 +62,6 @@ export function useMenuLinks(
       updateCaretPosition();
     }
   }, [updateCaretPosition, sidebarOnBottom, previousSidebarOnBottom, selectedTab, location]);
-
-  useEffect(() => {
-    if (isTrezor) {
-      links.current.push({
-        path: "/trezor",
-        link: <T id="sidebar.link.trezor" m="Trezor Setup" />,
-        icon: "trezor"
-      });
-    }
-
-    if (lnEnabled) {
-      links.current.push({
-        path: "/ln",
-        link: <T id="sidebar.link.ln" m="Lightning Network" />,
-        icon: "ln"
-      });
-    }
-    updateCaretPosition();
-  }, []);
 
   const getAnimatedCaret = useMemo(() => {
     const style = sidebarOnBottom
@@ -109,50 +82,50 @@ export function useMenuLinks(
     return <div className={sideBarStyle.menuCaret} style={style} />;
   }, [sidebarOnBottom, sidebarOnBottomStyle]);
 
-  const getMenuLink = useCallback((linkItem) => {
-    const { path, link, icon, notifProp } = linkItem;
-    const hasNotif = notifProp ? true : false;
-
-    return (
-      <MenuLink
-        icon={icon}
-        to={path}
-        key={path}
-        hasNotification={hasNotif}
-        linkRef={(ref) => _nodes.current.set(path, ref)}>
-        {!sidebarOnBottom && link}
-      </MenuLink>
-    );
-  }, [sidebarOnBottom]);
-
-  const getLinks = useMemo(() => {
-    let linksComponent = [];
-    if (sidebarOnBottom) {
-      const numberOfRows = links.current.length / LINK_PER_ROW;
-      let n = 0;
-      const totalLinks = links.current.length;
-      for (let i = 0; i < numberOfRows && n < totalLinks; i++) {
-        linksComponent[i] = [];
-        for (let j = 0; j < LINK_PER_ROW && n < totalLinks; j++) {
-          linksComponent[i].push(getMenuLink(links.current[n]));
-          n++;
-        }
-        linksComponent[i] = h(
-          "div",
-          { className: "is-row", key: i },
-          linksComponent[i]
-        );
-      }
-      return linksComponent;
-    }
-
-    return (linksComponent = links.current.map((link) => getMenuLink(link)));
-  }, [sidebarOnBottom, getMenuLink]);
-
   return {
     uiAnimations,
     getAnimatedCaret,
     getStaticCaret,
-    getLinks
+    _nodes,
+    sidebarOnBottom
+  };
+}
+
+export function useMenuList(linkList) {
+  const isTrezor = useSelector(sel.isTrezor);
+  const lnEnabled = useSelector(sel.lnEnabled);
+  const sidebarOnBottom = useSelector(sel.sidebarOnBottom);
+
+  const links = useRef([...linkList]);
+  const LINK_PER_ROW = useRef(4);
+
+  useEffect(() => {
+    if (isTrezor) {
+      links.current.push({
+        path: "/trezor",
+        link: <T id="sidebar.link.trezor" m="Trezor Setup" />,
+        icon: "trezor"
+      });
+    }
+
+    if (lnEnabled) {
+      links.current.push({
+        path: "/ln",
+        link: <T id="sidebar.link.ln" m="Lightning Network" />,
+        icon: "ln"
+      });
+    }
+  }, [isTrezor, lnEnabled]);
+
+  const numberOfRows = useMemo(() => (links.current.length / LINK_PER_ROW.current), []);
+
+  const totalLinks = useMemo(() => (links.current.length), []);
+
+  return {
+    numberOfRows,
+    totalLinks,
+    LINK_PER_ROW,
+    sidebarOnBottom,
+    links
   };
 }
