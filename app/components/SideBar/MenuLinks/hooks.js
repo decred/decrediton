@@ -117,15 +117,27 @@ export function useMenuList(linkList) {
     }
   }, [isTrezor, lnEnabled]);
 
-  const numberOfRows = useMemo(() => (links.current.length / LINK_PER_ROW.current), []);
+  const linksComponents = useMemo(() => {
+    let linksComponent = [];
+    if (sidebarOnBottom) {
+      let n = 0;
+      const totalLinks = links.current.length;
+      const numberOfRows = totalLinks / LINK_PER_ROW.current;
+      for (let i = 0; i < numberOfRows && n < totalLinks; i++) {
+        linksComponent[i] = [];
+        for (let j = 0; j < LINK_PER_ROW.current && n < totalLinks; j++) {
+          linksComponent[i].push(links.current[n]);
+          n++;
+        }
+      }
+      return linksComponent;
+    }
 
-  const totalLinks = useMemo(() => (links.current.length), []);
+    return (linksComponent = links.current.map((link) => link));
+  }, [sidebarOnBottom]);
 
   return {
-    numberOfRows,
-    totalLinks,
-    LINK_PER_ROW,
     sidebarOnBottom,
-    links
+    linksComponents
   };
 }
