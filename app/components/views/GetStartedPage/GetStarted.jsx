@@ -7,6 +7,7 @@ import {
 } from "./messages";
 import { LoaderBarBottom } from "indicators";
 import { classNames } from "pi-ui";
+import styles from "./GetStarted.module.css";
 
 const GetStarted = ({
   PageComponent,
@@ -20,9 +21,13 @@ const GetStarted = ({
   isTestNet
 }) => (
   <div
-    className={classNames("page-body getstarted", isTestNet && "testnet-body")}>
-    <div className="getstarted loader">
-      <div className="loader-settings-logs">
+    className={classNames(
+      styles.pageBody,
+      styles.getstarted,
+      isTestNet && styles.testnetBody
+    )}>
+    <div className={classNames(styles.getstarted, styles.loader)}>
+      <div className={styles.loaderSettingsLogs}>
         {updateAvailable && (
           <UpdateAvailableLink updateAvailable={updateAvailable} />
         )}

@@ -1,6 +1,8 @@
 import { AnimatedLinearProgressFull } from "indicators";
 import { SlateGrayButton } from "buttons";
 import { LearnBasicsMsg, WhatsNewLink, LoaderTitleMsg } from "./messages";
+import { classNames } from "pi-ui";
+import styles from "./GetStarted.module.css";
 
 export default ({
   StateComponent,
@@ -20,16 +22,18 @@ export default ({
   ...props
 }) => (
   <>
-    <div className="content-title">
+    <div className={styles.contentTitle}>
       <LoaderTitleMsg />
     </div>
-    <div className="loader-buttons">
-      <SlateGrayButton onClick={onShowTutorial} className="tutorial-button">
+    <div className={styles.loaderButtons}>
+      <SlateGrayButton
+        onClick={onShowTutorial}
+        className={styles.tutorialButton}>
         <LearnBasicsMsg />
       </SlateGrayButton>
       <WhatsNewLink {...{ onShowReleaseNotes, appVersion }} />
     </div>
-    <div className="loader-bar">
+    <div className={styles.loaderBar}>
       <AnimatedLinearProgressFull
         {...{
           getDaemonStarted,
@@ -46,7 +50,11 @@ export default ({
         }}
       />
     </div>
-    {error && <div className="error launch-error">{error}</div>}
+    {error && (
+      <div className={classNames(styles.error, styles.launchError)}>
+        {error}
+      </div>
+    )}
     {StateComponent &&
       (React.isValidElement(StateComponent) ? (
         StateComponent

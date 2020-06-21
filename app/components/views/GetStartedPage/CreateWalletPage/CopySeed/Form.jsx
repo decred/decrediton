@@ -40,16 +40,16 @@ const CopySeedPage = ({
         );
       })}
       <div className={styles.copy} onClick={() => toggleCopySeed(true)}>
-        <T id="createWallet.copy" m="Copy seed words to clipboard" />
+        <T id="createWallet.copy" m="Copy seed wosssrds to clipboard" />
       </div>
     </div>
-    <div className="toolbar">
+    <div className={styles.toolbar}>
       <KeyBlueButton
         className={styles.walletKeyBlueButton}
         onClick={sendContinue}>
         <T id="createWallet.continueBtn" m="Continue" />
       </KeyBlueButton>
-      <InvisibleButton className="go-back-button" onClick={sendBack}>
+      <InvisibleButton className={styles.goBackButton} onClick={sendBack}>
         <BackBtnMsg />
       </InvisibleButton>
     </div>

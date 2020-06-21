@@ -1,6 +1,7 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { ExternalLink, Tooltip } from "shared";
 import { AboutModalButtonInvisible } from "buttons";
+import styles from "./GetStarted.module.css";
 
 export const LogsLinkMsg = () => <T id="getStarted.btnLogs" m="Logs" />;
 export const SettingsLinkMsg = () => (
@@ -68,16 +69,14 @@ export const UpdateAvailableLink = ({ updateAvailable }) => (
         values={{ version: updateAvailable }}
       />
     }>
-    <ExternalLink
-      className="update-available-button"
-      href="https://decred.org/downloads">
+    <ExternalLink href="https://decred.org/downloads">
       <T id="getStarted.updateAvailable" m="Update Available" />
     </ExternalLink>
   </Tooltip>
 );
 
 export const WhatsNewLink = ({ onShowReleaseNotes, appVersion }) => (
-  <span onClick={onShowReleaseNotes} className="whatsnew">
+  <span onClick={onShowReleaseNotes} className={styles.whatsnew}>
     <T
       id="getStarted.whatsNew"
       m="What's New in v{version}"

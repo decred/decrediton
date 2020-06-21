@@ -1,6 +1,7 @@
 import { Tooltip } from "shared";
 import { FormattedMessage as T } from "react-intl";
 import { Documentation } from "shared";
+import { classNames } from "pi-ui";
 import styles from "../GetStarted.module.css";
 
 export default ({
@@ -33,8 +34,10 @@ export default ({
       </div>
     </div>
     <div className={styles.releaseNotes}>
-      <Documentation name={docName} className="release-notes-text" />
-      <div className={["release-notes-image", imgClassName].join(" ")} />
+      <Documentation name={docName} className={styles.releaseNotesText} />
+      <div
+        className={classNames(styles.releaseNotesImage, styles[imgClassName])}
+      />
     </div>
   </>
 );

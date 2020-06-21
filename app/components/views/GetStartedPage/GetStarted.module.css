@@ -28,25 +28,6 @@
   font-size: 13px;
 }
 
-.createWalletWarning {
-  column-count: 2;
-  max-width: 48em;
-  font-size: 13px;
-  line-height: 16px;
-  margin-bottom: 1em;
-  color: var(--new_wallet-label);
-}
-
-.createWalletWarning p {
-  margin-top: 0;
-}
-.createWalletWarning em {
-  color: var(--error-text-color);
-}
-.createWalletWarning strong {
-  color: var(--title-text-and-button-background);
-}
-
 .daemonInput {
   padding-left: 10px;
   float: left;
@@ -121,7 +102,7 @@
   position: relative;
 }
 
-.getstarted.loader.settings .go-back-screen-button-area {
+.getstarted.loader.settings .goBackScreenButton-area {
   position: absolute;
   left: 1467px;
   top: 112px;
@@ -272,14 +253,6 @@
   margin-left: 280px;
 }
 
-.toolbar {
-  display: flex;
-  flex-direction: row-reverse;
-  width: 596px;
-  margin-top: 20px;
-  align-items: center;
-}
-
 .walletKeyBlueButton:not(.keyBlueButtonDisabled) {
   box-shadow: 0px 5px 13px rgba(0, 0, 0, 0.21);
 }
@@ -288,109 +261,254 @@
   box-shadow: none;
 }
 
-.copy {
-  grid-column: 4 / 6;
-  padding-top: 2px;
-  padding-left: 43px;
-  height: 21px;
-  color: var(--input-color);
-  border: 1px solid var(--input-color);
-  border-radius: 3px;
-  margin: 4px;
-  font-size: 13px;
-  background-image: var(--copy-to-clipboard-icon);
-  background-position: 26px 3px;
-  background-size: 16px auto;
+.walletIcon {
+  width: 50px;
+  height: 50px;
+  margin-left: 43px;
+  background-size: 40px 40px;
+  background-position: 6px 6px;
+}
+
+.walletIcon.createnew {
+  background-size: 49px 49px;
+  background-position: 0px 0px;
+}
+
+.walletIcon.restore {
+  background-size: 49px 49px;
+  background-position: 0px 0px;
+}
+
+.walletIcon {
+  margin-left: 54px;
+  height: 62px;
+  width: 62px;
   background-repeat: no-repeat;
-  cursor: pointer;
-  user-select: none;
+  background-size: 45px 45px;
+  background-position: 8px 10px;
 }
 
-.copy:hover {
-  opacity: 0.8;
+.walletIcon.wallet {
+  background-image: var(--wallet-gray-icon);
 }
 
-.go-back-screen-button {
-  height: 12px;
-  width: 12px;
-  background-repeat: no-repeat;
-  background-size: 12px;
-  background-image: var(--x-grey);
-  opacity: 1;
-  cursor: pointer;
+.walletIcon.selected {
+  background-image: var(--wallet-blue-icon);
 }
 
-.go-back-screen-button:hover {
-  opacity: 0.7;
+.walletIcon.createnew {
+  margin-top: 25px;
+  background-size: 58px 58px;
+  background-position: 0px 5px;
+  background-image: var(--createnewwallet);
 }
 
-.seedWord {
-  user-select: none;
-  height: 23px;
-  border-radius: 3px;
-  color: var(--info-modal-button-text);
-  margin: 5px;
+.walletIcon.restore {
+  margin-top: 25px;
+  background-size: 58px 58px;
+  background-position: 0px 5px;
+  background-image: var(--restore-wallet-icon);
+}
+
+.displayWallet {
+  width: 136px;
+  height: 131px;
+  font-size: 12px;
+}
+
+.displayWalletComplete {
+  min-height: 12px;
+}
+.displayWalletLastAccess {
+  font-size: 9px;
+}
+.displayWalletLaunch {
+  font-size: 11px;
+  margin-left: 34px;
+}
+
+.displayWallet {
+  color: transparent;
+  margin: 5px 10px 5px 0px;
+  float: left;
+  height: 161px;
+  width: 168px;
+  border-radius: 5px;
+  border: 1px solid var(--background-container);
+  background: var(--display-wallet-bg);
+  font-size: 15px;
+}
+
+.displayWallet:hover {
+  color: var(--background-back-color);
+}
+
+.displayWallet.new {
+  background: none;
+  background-color: var(--background-back-color);
+}
+
+.displayWalletName {
+  color: var(--new_wallet-label);
+  margin-top: 20px;
+}
+
+.displayWalletButtons {
   text-align: center;
-  display: flex;
-  align-items: center;
+  margin-top: 5px;
+  margin-right: 10px;
+  float: right;
 }
 
-.seedWord.filled {
-  background-color: var(--info-modal-button-bg);
+.displayWalletButton {
+  height: 20px;
+  width: 20px;
+  border-radius: 3px;
+  padding: 0;
+  background-repeat: no-repeat;
+  background-size: 14px;
+  background-position: 50% 50%;
+  box-shadow: 0px 3px 8px var(--title-text-and-button-background-drop-shadow);
 }
 
-.seedWord.empty,
-.seedWord.restore {
-  border: 1px solid var(--seedword-select-border-default-border-color);
-  background-color: initial !important;
+.displayWalletButton:hover {
+  box-shadow: 0px 1px 3px var(--title-text-and-button-background-drop-shadow);
 }
 
-.seedWord.empty:hover,
-.seedWord.restore:hover {
-  border: 1px solid var(--seedword-select-border-default-hover-border-color);
+.displayWalletButton.remove {
+  background-color: var(--button-text);
+  background-image: var(--launcher-wallet-delete);
 }
 
-.seedWord.empty:hover .number,
-.seedWord.restore:hover .number {
-  border-right: 1px solid
-    var(--seedword-select-border-default-hover-border-color);
-  color: var(--seedword-select-border-default-hover-text-color);
+.displayWalletButton.remove:hover {
+  background-image: var(--launcher-wallet-delete-hover);
 }
 
-.seedWord.empty .number,
-.seedWord.restore .number {
-  border-right: 1px solid var(--seedword-select-border-default-border-color);
-  color: var(--seedword-select-border-default-text-color);
+.displayWallet:hover:not(.selected) {
+  border: 1px solid var(--disabled-color);
 }
 
-.seedWord.populated {
-  border: 1px solid var(--seedword-select-border-default-hover-text-color);
-  background-color: initial !important;
+.displayWallet.selected {
+  background: linear-gradient(
+    45deg,
+    var(--input-color),
+    var(--display-wallet-gradient-selected-right)
+  );
+  box-shadow: 0px 5px 21px var(--title-text-and-button-background-drop-shadow);
+  border: 1px solid var(--input-color);
 }
 
-.seedWord.populated .number {
-  border-right: 1px solid var(--seedword-select-border-default-hover-text-color);
-  color: var(--seedword-select-border-default-hover-text-color);
+.displayWallet.selected .displayWalletName {
+  color: var(--selected_wallet-label);
 }
 
-.seedWord.no-match,
-.seedWord.error {
-  border: 1px solid var(--error-red);
+.displayWalletComplete {
+  color: var(--title-text-and-button-background);
+  margin-top: 5px;
+  min-height: 20px;
+  text-align: center;
+  text-transform: capitalize;
+  font-size: 12px;
 }
 
-.seedWord.no-match .number,
-.seedWord.error .number {
-  border-right: 1px solid var(--error-red);
-  color: var(--error-red);
+.displayWalletName {
+  color: var(--wallet-label);
+  text-align: center;
 }
 
-.seedWord.match {
-  border: 1px solid var(--accent-color);
+.displayWalletLastAccess {
+  height: 11px;
+  color: var(--button-text);
+  text-align: center;
+  font-size: 11px;
 }
 
-.seedWord.match .number {
-  border-right: 1px solid var(--accent-color);
-  color: var(--accent-color);
+.displayWalletCancelChanges {
+  float: left;
+  margin-top: 7px;
+  margin-left: 39px;
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 131ms var(--ease-in-out-quart);
+}
+
+.displayWalletLaunch {
+  color: var(--white-button-text);
+  float: left;
+  margin-top: 7px;
+  margin-left: 39px;
+  margin-right: 3px;
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+  transition: color 131ms var(--ease-in-out-quart);
+}
+
+.displayWalletCancelChanges:hover,
+.displayWalletLaunch:hover {
+  border-bottom: 1px solid var(--background-back-color);
+}
+
+.displayWalletLastAccess.selected,
+.displayWalletComplete.selected {
+  color: var(--wallet-desc);
+}
+
+.editWalletsButton {
+  margin: 5px;
+  float: left;
+  height: 36px;
+  width: 36px;
+  border-radius: 5px;
+  background-color: var(--background-back-color);
+  background-repeat: no-repeat;
+  background-size: 20px 20px;
+  background-position: 50% 50%;
+  background-image: var(--launcher-edit-wallets);
+  cursor: pointer;
+}
+
+.editWalletsButton:hover {
+  background-image: var(--launcher-edit-wallets-hover);
+}
+
+.editWalletsButton.close {
+  background-color: var(--disabled-color);
+  background-size: 12px 12px;
+  background-image: var(--x-white-icon);
+}
+
+.newWalletTitleArea {
+  float: left;
+  width: 100%;
+  margin-left: 22px;
+  margin-top: 20px;
+  margin-bottom: 22px;
+}
+
+.newWalletTitle {
+  float: left;
+  font-size: 15px;
+  line-height: 19px;
+  margin-top: 3px;
+}
+
+.walletIconSmall {
+  float: left;
+  height: 30px;
+  width: 30px;
+  background-repeat: no-repeat;
+  background-size: 30px;
+  margin-right: 10px;
+}
+
+.walletIconSmall.createnew {
+  background-image: var(--createnewwallet);
+}
+
+.walletIconSmall.restore {
+  background-image: var(--restore-wallet-icon);
 }
 
 .selectControl {
@@ -410,23 +528,6 @@
 .selectMenuOuter {
   left: -27px;
   width: calc(100% + 28px);
-}
-
-.number {
-  width: 20px;
-  border-right: 1px solid var(--seedword-number-color);
-  color: var(--seedword-number-color);
-  font-size: 10px;
-  height: 23px;
-  line-height: 23px;
-}
-
-.word {
-  text-align: center;
-  padding-left: 5px;
-  width: 85px;
-  font-size: 13px;
-  line-height: 23px;
 }
 
 .contentTitle {
@@ -541,160 +642,6 @@
   opacity: 0.7;
 }
 
-.displayWallet {
-  color: transparent;
-  margin: 5px 10px 5px 0px;
-  float: left;
-  height: 161px;
-  width: 168px;
-  border-radius: 5px;
-  border: 1px solid var(--background-container);
-  background: var(--display-wallet-bg);
-  font-size: 15px;
-}
-
-.walletIcon {
-  margin-left: 54px;
-  height: 62px;
-  width: 62px;
-  background-repeat: no-repeat;
-  background-size: 45px 45px;
-  background-position: 8px 10px;
-}
-
-.walletIcon.wallet {
-  background-image: var(--wallet-gray-icon);
-}
-
-.walletIcon.selected {
-  background-image: var(--wallet-blue-icon);
-}
-
-.walletIcon.createnew {
-  margin-top: 25px;
-  background-size: 58px 58px;
-  background-position: 0px 5px;
-  background-image: var(--createnewwallet);
-}
-
-.walletIcon.restore {
-  margin-top: 25px;
-  background-size: 58px 58px;
-  background-position: 0px 5px;
-  background-image: var(--restore-wallet-icon);
-}
-
-.displayWallet:hover {
-  color: var(--background-back-color);
-}
-
-.displayWallet.new {
-  background: none;
-  background-color: var(--background-back-color);
-}
-
-.displayWalletName {
-  color: var(--new_wallet-label);
-  margin-top: 20px;
-}
-
-.displayWalletButtons {
-  text-align: center;
-  margin-top: 5px;
-  margin-right: 10px;
-  float: right;
-}
-
-.displayWalletButton {
-  height: 20px;
-  width: 20px;
-  border-radius: 3px;
-  padding: 0;
-  background-repeat: no-repeat;
-  background-size: 14px;
-  background-position: 50% 50%;
-  box-shadow: 0px 3px 8px var(--title-text-and-button-background-drop-shadow);
-}
-
-.displayWalletButton:hover {
-  box-shadow: 0px 1px 3px var(--title-text-and-button-background-drop-shadow);
-}
-
-.displayWalletButton.remove {
-  background-color: var(--button-text);
-  background-image: var(--launcher-wallet-delete);
-}
-
-.displayWalletButton.remove:hover {
-  background-image: var(--launcher-wallet-delete-hover);
-}
-
-.displayWallet:hover:not(.selected) {
-  border: 1px solid var(--disabled-color);
-}
-
-.displayWallet.selected {
-  background: linear-gradient(
-    45deg,
-    var(--input-color),
-    var(--display-wallet-gradient-selected-right)
-  );
-  box-shadow: 0px 5px 21px var(--title-text-and-button-background-drop-shadow);
-  border: 1px solid var(--input-color);
-}
-
-.displayWallet.selected .displayWalletName {
-  color: var(--selected_wallet-label);
-}
-
-.displayWalletComplete {
-  color: var(--title-text-and-button-background);
-  margin-top: 5px;
-  min-height: 20px;
-  text-align: center;
-  text-transform: capitalize;
-  font-size: 12px;
-}
-
-.displayWalletName {
-  color: var(--wallet-label);
-  text-align: center;
-}
-
-.displayWalletLastAccess {
-  height: 11px;
-  color: var(--button-text);
-  text-align: center;
-  font-size: 11px;
-}
-
-.displayWalletCancelChanges {
-  float: left;
-  margin-top: 7px;
-  margin-left: 39px;
-  font-size: 14px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 131ms var(--ease-in-out-quart);
-}
-
-.displayWalletLaunch {
-  color: var(--white-button-text);
-  float: left;
-  margin-top: 7px;
-  margin-left: 39px;
-  margin-right: 3px;
-  font-size: 14px;
-  text-align: center;
-  cursor: pointer;
-  transition: color 131ms var(--ease-in-out-quart);
-}
-
-.displayWalletCancelChanges:hover,
-.displayWalletLaunch:hover {
-  border-bottom: 1px solid var(--background-back-color);
-}
-
 @keyframes bounce {
   0% {
     margin-left: 0px;
@@ -714,67 +661,6 @@
   float: left;
   margin-top: 6px;
   animation: bounce 1s var(--ease-in-out-quart) infinite;
-}
-
-.displayWalletLast-access.selected,
-.displayWalletComplete.selected {
-  color: var(--wallet-desc);
-}
-
-.editWalletsButton {
-  margin: 5px;
-  float: left;
-  height: 36px;
-  width: 36px;
-  border-radius: 5px;
-  background-color: var(--background-back-color);
-  background-repeat: no-repeat;
-  background-size: 20px 20px;
-  background-position: 50% 50%;
-  background-image: var(--launcher-edit-wallets);
-  cursor: pointer;
-}
-
-.editWalletsButton:hover {
-  background-image: var(--launcher-edit-wallets-hover);
-}
-
-.editWalletsButton.close {
-  background-color: var(--disabled-color);
-  background-size: 12px 12px;
-  background-image: var(--x-white-icon);
-}
-
-.newWalletTitleArea {
-  float: left;
-  width: 100%;
-  margin-left: 22px;
-  margin-top: 20px;
-  margin-bottom: 22px;
-}
-
-.newWalletTitle {
-  float: left;
-  font-size: 15px;
-  line-height: 19px;
-  margin-top: 3px;
-}
-
-.walletIconSmall {
-  float: left;
-  height: 30px;
-  width: 30px;
-  background-repeat: no-repeat;
-  background-size: 30px;
-  margin-right: 10px;
-}
-
-.walletIconSmall.createnew {
-  background-image: var(--createnewwallet);
-}
-
-.walletIconSmall.restore {
-  background-image: var(--restore-wallet-icon);
 }
 
 .customPrivacySettings {
@@ -1005,60 +891,8 @@
     background-size: 30px;
   }
 
-  .toolbar {
-    width: 380px !important;
-    margin-left: -20px;
-  }
-
-  .copy {
-    grid-column: 1 / 4;
-    background-position: 80px;
-    text-align: center;
-  }
-
   .contentTitle {
     margin-bottom: 20px;
-  }
-
-  .createWalletWarning {
-    column-count: 1;
-    width: 315px;
-    margin-left: 10px;
-  }
-
-  .displayWallet {
-    width: 136px;
-    height: 131px;
-    font-size: 12px;
-  }
-
-  .walletIcon {
-    width: 50px;
-    height: 50px;
-    margin-left: 43px;
-    background-size: 40px 40px;
-    background-position: 6px 6px;
-  }
-
-  .walletIcon.createnew {
-    background-size: 49px 49px;
-    background-position: 0px 0px;
-  }
-
-  .walletIcon.restore {
-    background-size: 49px 49px;
-    background-position: 0px 0px;
-  }
-
-  .display-wallet-complete {
-    min-height: 12px;
-  }
-  .display-wallet-last-access {
-    font-size: 9px;
-  }
-  .display-wallet-launch {
-    font-size: 11px;
-    margin-left: 34px;
   }
 
   .getstarted.content {

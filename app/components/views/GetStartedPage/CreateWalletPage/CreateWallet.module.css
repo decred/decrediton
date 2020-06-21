@@ -1,5 +1,136 @@
+.contentTitle {
+  font-size: 27px;
+  line-height: 34px;
+  margin-bottom: 35px;
+  width: 100%;
+}
+
+.goBackScreenButton {
+  height: 12px;
+  width: 12px;
+  background-repeat: no-repeat;
+  background-size: 12px;
+  background-image: var(--x-grey);
+  opacity: 1;
+  cursor: pointer;
+}
+
+.goBackScreenButton:hover {
+  opacity: 0.7;
+}
+
+.createWalletWarning {
+  column-count: 2;
+  max-width: 48em;
+  font-size: 13px;
+  line-height: 16px;
+  margin-bottom: 1em;
+  color: var(--new_wallet-label);
+}
+
+.createWalletWarning p {
+  margin-top: 0;
+}
+.createWalletWarning em {
+  color: var(--error-text-color);
+}
+.createWalletWarning strong {
+  color: var(--title-text-and-button-background);
+}
+
 .seedWarningMessage {
   margin-right: 5px;
+}
+
+.seedWord {
+  user-select: none;
+  height: 23px;
+  border-radius: 3px;
+  color: var(--info-modal-button-text);
+  margin: 5px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+}
+
+.seedWord.filled {
+  background-color: var(--info-modal-button-bg);
+}
+
+.seedWord.empty,
+.seedWord.restore {
+  border: 1px solid var(--seedword-select-border-default-border-color);
+  background-color: initial !important;
+}
+
+.seedWord.empty:hover,
+.seedWord.restore:hover {
+  border: 1px solid var(--seedword-select-border-default-hover-border-color);
+}
+
+.seedWord.empty:hover .number,
+.seedWord.restore:hover .number {
+  border-right: 1px solid
+    var(--seedword-select-border-default-hover-border-color);
+  color: var(--seedword-select-border-default-hover-text-color);
+}
+
+.seedWord.empty .number,
+.seedWord.restore .number {
+  border-right: 1px solid var(--seedword-select-border-default-border-color);
+  color: var(--seedword-select-border-default-text-color);
+}
+
+.seedWord.populated {
+  border: 1px solid var(--seedword-select-border-default-hover-text-color);
+  background-color: initial !important;
+}
+
+.seedWord.populated .number {
+  border-right: 1px solid var(--seedword-select-border-default-hover-text-color);
+  color: var(--seedword-select-border-default-hover-text-color);
+}
+
+.seedWord.no-match,
+.seedWord.error {
+  border: 1px solid var(--error-red);
+}
+
+.seedWord.no-match .number,
+.seedWord.error .number {
+  border-right: 1px solid var(--error-red);
+  color: var(--error-red);
+}
+
+.seedWord.match {
+  border: 1px solid var(--accent-color);
+}
+
+.seedWord.match .number {
+  border-right: 1px solid var(--accent-color);
+  color: var(--accent-color);
+}
+
+.copy {
+  grid-column: 4 / 6;
+  padding-top: 2px;
+  padding-left: 43px;
+  height: 21px;
+  color: var(--input-color);
+  border: 1px solid var(--input-color);
+  border-radius: 3px;
+  margin: 4px;
+  font-size: 13px;
+  background-image: var(--copy-to-clipboard-icon);
+  background-position: 26px 3px;
+  background-size: 16px auto;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  user-select: none;
+}
+
+.copy:hover {
+  opacity: 0.8;
 }
 
 .seedError {
@@ -18,7 +149,7 @@
   height: 50px;
 }
 
-.confirmSeedLabelText {
+.confirmSeedLabel {
   margin-top: 8px;
   margin-right: 10px;
   font-size: 13px;
@@ -30,7 +161,7 @@
   text-align: right;
 }
 
-.passphrase .confirmSeedLabelText {
+.passphrase .confirmSeedLabel {
   margin-top: 1px;
 }
 
@@ -93,6 +224,23 @@
   width: 560px;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
+}
+
+.number {
+  width: 20px;
+  border-right: 1px solid var(--seedword-number-color);
+  color: var(--seedword-number-color);
+  font-size: 10px;
+  height: 23px;
+  line-height: 23px;
+}
+
+.word {
+  text-align: center;
+  padding-left: 5px;
+  width: 85px;
+  font-size: 13px;
+  line-height: 23px;
 }
 
 .seedArea.hex {
@@ -183,6 +331,14 @@
   width: 692px;
 }
 
+.toolbar {
+  display: flex;
+  flex-direction: row-reverse;
+  width: 596px;
+  margin-top: 20px;
+  align-items: center;
+}
+
 @media screen and (max-width: 1179px) {
   .seed {
     margin-left: 0;
@@ -196,6 +352,17 @@
 @media screen and (max-width: 768px) {
   .isRow.seed {
     flex-direction: column;
+  }
+
+  .toolbar {
+    width: 380px !important;
+    margin-left: -20px;
+  }
+
+  .copy {
+    grid-column: 1 / 4;
+    background-position: 80px;
+    text-align: center;
   }
 
   .seedArea {

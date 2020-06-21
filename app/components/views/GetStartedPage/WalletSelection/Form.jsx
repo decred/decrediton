@@ -156,7 +156,7 @@ const WalletSelectionForm = ({
                     onClick={() => submitChosenWallet(selectedWallet)}>
                     <T id="walletselection.launchWallet" m="Launch Wallet " />
                   </div>
-                  <span className="launch-arrow-bounce">&#8594;</span>
+                  <span className={styles.launchArrowBounce}>&#8594;</span>
                 </>
               )}
             </div>
