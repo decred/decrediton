@@ -1,0 +1,68 @@
+import { KeyBlueButton, InvisibleButton } from "buttons";
+import { FormattedMessage as T } from "react-intl";
+import { Documentation } from "shared";
+import { StepIndicator } from "indicators";
+import { onboard01, onboard02, onboard03, onboard04 } from "assets/videos";
+import { classNames } from "pi-ui";
+import styles from "./Tutorial.module.css";
+
+const docByStep = {
+  0: "GetStartedTutorialPage01",
+  1: "GetStartedTutorialPage02",
+  2: "GetStartedTutorialPage03",
+  3: "GetStartedTutorialPage04"
+};
+
+const videosByStep = {
+  0: onboard01,
+  1: onboard02,
+  2: onboard03,
+  3: onboard04
+};
+
+const TutorialPage = ({
+  tutorialStep,
+  onNextTutorialStep,
+  onGoToStep,
+  finishTutorial
+}) => {
+  return (
+    <div className={styles.tutorial}>
+      {/* XXX: make sure below works! */}
+      <div className={classNames(styles.side, styles[`step${tutorialStep}`])}>
+        <video autoPlay loop src={videosByStep[tutorialStep]} width="100%" />
+      </div>
+
+      <div className={styles.main}>
+        <div className={styles.mainText}>
+          <Documentation name={docByStep[tutorialStep]} />
+        </div>
+
+        <div className={styles.mainToolbar}>
+          <InvisibleButton
+            className={styles.skipButton}
+            onClick={finishTutorial}>
+            {tutorialStep < 3 ? (
+              <T id="tutorial.skipBtn" m={"Skip"} />
+            ) : (
+              <T id="tutorial.finishBtn" m={"Finish"} />
+            )}
+          </InvisibleButton>
+
+          <StepIndicator
+            currentPageIndex={tutorialStep}
+            pageCount={4}
+            onGotoPage={onGoToStep}
+          />
+
+          <KeyBlueButton
+            className={styles.nextButton}
+            onClick={tutorialStep < 3 ? onNextTutorialStep : finishTutorial}>
+            <T id="tutorial.nextBtn" m={"Next"} />
+          </KeyBlueButton>
+        </div>
+      </div>
+    </div>
+  );
+};
+export default TutorialPage;

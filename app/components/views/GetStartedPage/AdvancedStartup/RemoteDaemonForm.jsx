@@ -45,11 +45,11 @@ const RemoteDaemonForm = ({
 }) => {
   return (
     <>
-      <div className={styles.advancedDaemonRow}>
-        <div className={styles.advancedDaemonLabel}>
+      <div className={styles.daemonRow}>
+        <div className={styles.daemonLabel}>
           <T id="advanced.remote.rpcuser" m="RPC User" />
         </div>
-        <div className={styles.advancedDaemonInput}>
+        <div className={styles.daemonInput}>
           <TextInput
             required
             value={rpc_user}
@@ -59,11 +59,11 @@ const RemoteDaemonForm = ({
           />
         </div>
       </div>
-      <div className={styles.advancedDaemonRow}>
-        <div className={styles.advancedDaemonLabel}>
+      <div className={styles.daemonRow}>
+        <div className={styles.daemonLabel}>
           <T id="advanced.remote.rpcpass" m="RPC Password" />
         </div>
-        <div className={styles.advancedDaemonInput}>
+        <div className={styles.daemonInput}>
           <PasswordInput
             required
             value={rpc_pass}
@@ -75,11 +75,11 @@ const RemoteDaemonForm = ({
           />
         </div>
       </div>
-      <div className={styles.advancedDaemonRow}>
-        <div className={styles.advancedDaemonLabel}>
+      <div className={styles.daemonRow}>
+        <div className={styles.daemonLabel}>
           <T id="advanced.remote.rpccert" m="RPC Cert Path" />
         </div>
-        <div className={styles.advancedDaemonInput}>
+        <div className={styles.daemonInput}>
           <PathBrowseInput
             required
             type="file"
@@ -90,8 +90,8 @@ const RemoteDaemonForm = ({
           />
         </div>
       </div>
-      <div className={styles.advancedDaemonRow}>
-        <div className={styles.advancedDaemonLabel}>
+      <div className={styles.daemonRow}>
+        <div className={styles.daemonLabel}>
           <T id="advanced.remote.rpchost" m="RPC Host" />
         </div>
         <div className="advanced-daemon-input">
@@ -104,11 +104,11 @@ const RemoteDaemonForm = ({
           />
         </div>
       </div>
-      <div className={styles.advancedDaemonRow}>
-        <div className={styles.advancedDaemonLabel}>
+      <div className={styles.daemonRow}>
+        <div className={styles.daemonLabel}>
           <T id="advanced.remote.rpcport" m="RPC Port" />
         </div>
-        <div className={styles.advancedDaemonInput}>
+        <div className={styles.daemonInput}>
           <TextInput
             required
             value={rpc_port}

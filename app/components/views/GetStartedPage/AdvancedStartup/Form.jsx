@@ -44,7 +44,7 @@ const AdvancedBodyBase = ({
         />
       </div>
       <div className={styles.advancedPageToggle}>
-        <div className={styles.txtToggle}>
+        <div className={styles.textToggle}>
           <div
             className={classNames(
               styles.textToggleButtonLeft,

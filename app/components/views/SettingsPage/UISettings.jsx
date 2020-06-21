@@ -1,5 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
-import { SettingsInput, LanguageSelect } from "inputs";
+import { SettingsInput, LanguageSelectInput } from "inputs";
 import styles from "./Settings.module.css";
 
 const propTypes = {
@@ -42,7 +42,7 @@ const UISettings = ({ tempSettings, locales, onChangeTempSettings }) => (
         <div className={styles.label}>
           <T id="settings.locale" m="Locale" />
         </div>
-        <LanguageSelect
+        <LanguageSelectInput
           value={tempSettings.locale}
           onChange={(newLocale) =>
             onChangeTempSettings({ locale: newLocale.key })

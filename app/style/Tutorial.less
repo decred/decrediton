@@ -1,92 +1,8 @@
 @import (reference) "./main.less";
 
-/** GetStarted tutorial classes **/
-.getstarted-tutorial {
-  display: flex;
-  background-color: var(--background-container);
-
-  .tutorial-side {
-    width: 47%;
-    height: 100vh;
-    overflow: hidden;
-
-
-    video {
-      vertical-align: middle;
-      height: 100%;
-      object-fit: cover;
-    }
-  }
-
-  .tutorial-main {
-    width: 46%;
-    height: 100vh;
-    padding: 22.8vh 40px 0px;
-    overflow-y: auto;
-  }
-
-  .tutorial-main-toolbar {
-    display: flex;
-
-    .next-button {
-      margin-left: 40px;
-      margin-top: 8px;
-      height: 16px;
-      padding: 5px 20px 6px 20px;
-    }
-
-    .skip-button {
-      margin-right: 10px;
-      margin-top: 8px;
-      height: 16px;
-      padding: 5px 20px 6px 0px;
-      width: 34px;
-    }
-  }
-
-  .tutorial-main-text {
-    color: var(--modal-text);
-    font-size: 13px;
-    column-count: 2;
-    margin-bottom: 2em;
-    min-height: 33em;
-    line-height: 19px;
-
-    h1 {
-      color: var(--tutorial-header);
-      font-size: 35px;
-      line-height: 35px;
-      column-span: all;
-      font-weight: 400;
-      -webkit-margin-before: 0px;
-    }
-
-    strong {
-      font-weight: 600;
-    }
-
-    p {
-      break-inside: avoid-column;
-    }
-
-    ul {
-      margin: 0em 2em 2em -3.1em;
-    }
-  }
-
-  @media (max-height: 700px) {
-    .tutorial-main {
-      padding-top: 10vh;
-      height: 89vh;
-    }
-  }
-
-  @media (max-height: 460px) {
-    .tutorial-main-toolbar {
-      height: 80px;
-    }
-  }
-}
+// XXX: Partially migrated to GetStartedPage/TutorialPage/Tutorial.module.css
+// the remaining part is used in views/TutorialsPage and should be refactored
+// with that part!
 
 /** Wallet Tutorial Classes */
 .wallet-tutorial {
@@ -102,7 +18,7 @@
   .tutorial-subtitle {
     font-size: 11px;
     margin-bottom: 20px;
-    color:var(--new_wallet-label);
+    color: var(--new_wallet-label);
   }
 
   .tutorial-close-button {
@@ -183,11 +99,11 @@
     padding: 30px 0;
 
     .tutorial-close-button {
-      margin-right:20px;
+      margin-right: 20px;
     }
     .tutorial-title,
-    .tutorial-subtitle{
-      margin-left:20px;
+    .tutorial-subtitle {
+      margin-left: 20px;
     }
 
     .tutorial-text {
@@ -200,122 +116,6 @@
     }
     .tutorial-standard-page {
       flex-direction: column;
-    }    
-  }  
-}
-@media screen and (max-width: 670px) {
-  .getstarted-tutorial .tutorial-main-text {
-    max-height: 650px;
-  }
-
-  .tutorial-main-toolbar {
-      justify-content: space-between;
-      flex-wrap: nowrap;
-
-      .next-button {
-        margin-left: 10px !important;
-        height: 16px;
-        padding: 5px 20px 6px 20px;
-        margin-top: 0px !important;
-      }
-      
-      .step-indicator {
-          display: flex;
-          flex: 1;
-          align-items: center;
-          justify-content: space-between;
-          flex-wrap: nowrap;
-          max-width: 100px;
-
-          .step.unchecked,
-          .step.current,
-          .step.checked {
-            margin:0;
-          }
-      }    
-      
-      .skip-button {
-          margin-top: 0 !important;
-          height: inherit;
-          width: 26px;
-          padding: 0;
-      }      
-  }  
-}
-@media screen and (max-width: 916px) {
-  .getstarted-tutorial .tutorial-main {
-    top: 88px;
-    left: 21px;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .getstarted-tutorial .tutorial-main {
-    padding-top: 10vh;
-  }
-  .getstarted-tutorial .tutorial-main-text {
-    column-count: 1;
-    padding-right: 55px;
-  }
-}
-
-@media screen and (max-width: 541px) {
-  .tutorial-main {
-    top: 8px;
-  }
-  .getstarted-tutorial .tutorial-main-text {
-    padding-right: 0;
-    padding-bottom: 0;
-    margin-bottom: 0;
-    min-height: inherit;
-  }
-}
-
-@media screen and (max-width: 500px) {
-  .getstarted-tutorial {
-    flex-direction: column;
-
-    .tutorial-main-text {
-      max-height: inherit;
-      h1 {
-        font-size: 21px;
-      }
-    }
-
-    .tutorial-side {
-      height: 42vh;
-      width: 100%;
-      
-      video {
-        height: 336px;
-      }
-    }
-
-    .tutorial-main {
-      top: 25px;
-      width: inherit;
-      padding: 30px;
-      height: 42vh;
-    }
-    
-    .tutorial-main-toolbar {
-      position: fixed;
-      bottom: 0px;
-      background-color: var(--onboard-toolbar-background);
-      left: 0;
-      height: 70px;
-      align-items: center;
-      padding: 0;
-      width: 100%;
-      box-shadow: 0px -5px 21px 0px var(--onboard-toolbar-shadow);
-
-      .next-button {
-        margin: 0 30px 0 0;
-      }
-      
-      .skip-button {
-        margin: 0 0 0 30px;
-      }
     }
   }
 }

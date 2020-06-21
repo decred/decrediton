@@ -1,7 +1,7 @@
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { PasswordInput } from "inputs";
 import { InfoDocFieldModalButton } from "buttons";
-import "style/CreateWalletForm.less";
+// import "style/CreateWalletForm.less"; // XXXXXX: this less files is dead, replace with local css module!!!
 
 const messages = defineMessages({
   passphrasePlaceholder: {

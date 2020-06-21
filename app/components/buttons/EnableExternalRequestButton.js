@@ -1,4 +1,4 @@
-import { settings } from "connectors";
+import { settings } from "connectors"; // use useSettings hook
 import KeyBlueButton from "./KeyBlueButton";
 
 const EnableExternalRequestButton = ({

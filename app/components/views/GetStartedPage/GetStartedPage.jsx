@@ -4,21 +4,22 @@ import { getStartedMachine } from "stateMachines/GetStartedStateMachine";
 import GetStartedWrapper from "./GetStarted";
 import { AdvancedStartupBody } from "./AdvancedStartup/AdvancedStartup";
 import { injectIntl } from "react-intl";
-import WalletSelection from "./WalletSelection";
-import CreateWalletMachine from "./CreateWallet/CreateWallet";
-import Settings from "./Settings";
-import Logs from "./Logs";
+import WalletSelection from "./WalletSelection/WalletSelection";
+import CreateWalletMachine from "./CreateWalletPage/CreateWalletPage";
+import Settings from "./Settings/Settings";
+import Logs from "./Logs/Logs";
 import { FormattedMessage as T } from "react-intl";
 import { createElement as h } from "react";
 import GetStartedMachinePage from "./GetStartedMachinePage";
-import TrezorConfig from "./TrezorConfig";
-import PreCreateWalletForm from "./PreCreateWallet";
-import RescanWalletBody from "./RescanWallet";
-import WalletPubpassInput from "./OpenWallet";
-import ReleaseNotes from "./ReleaseNotes";
+import TrezorConfig from "./TrezorConfig/TrezorConfig";
+import PreCreateWalletForm from "./PreCreateWallet/PreCreateWallet";
+import RescanWalletBody from "./RescanWallet/RescanWallet";
+import WalletPubpassInput from "./OpenWallet/OpenWallet";
+import ReleaseNotes from "./ReleaseNotes/ReleaseNotes";
 import { ipcRenderer } from "electron";
 
-// css animation classes:
+// XXX: what about these?
+// css animation classes
 const blockChainLoading = "blockchain-syncing";
 const daemonWaiting = "daemon-waiting";
 const discoveringAddresses = "discovering-addresses";
@@ -26,6 +27,8 @@ const scanningBlocks = "scanning-blocks";
 const finalizingSetup = "finalizing-setup";
 const fetchingHeaders = "fetching-headers";
 const establishingRpc = "establishing-rpc";
+
+// XXXX: functional component!
 
 @autobind
 class GetStarted extends React.Component {

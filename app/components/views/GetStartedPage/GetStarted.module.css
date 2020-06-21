@@ -777,11 +777,29 @@
   background-image: var(--restore-wallet-icon);
 }
 
-.getStartedCustomPrivacySettings {
+.customPrivacySettings {
   width: 300px;
 }
 
-.privacyPptions {
+.title {
+  font-size: 27px;
+  line-height: 34px;
+  margin-bottom: 6px;
+}
+
+.titleSub {
+  color: var(--header-desc-color);
+  font-size: 13px;
+  line-height: 17px;
+  margin-bottom: 42px;
+  width: 296px;
+}
+
+.titleSub a {
+  color: var(--link-color);
+}
+
+.privacyOptions {
   display: flex;
   justify-content: center;
   margin-left: 35px;
@@ -1092,17 +1110,17 @@
     border-radius: 0;
   }
 
-  .advancedDaemonLabel {
+  .daemonLabel {
     width: 77px;
   }
-  .advancedDaemonInput {
+  .daemonInput {
     width: 243px;
   }
 
-  .advancedDaemonRow.dataform .advancedDaemonLabel {
+  .daemonRow.dataform .daemonLabel {
     width: 130px;
   }
-  .advancedDaemonRow.dataform .advancedDaemonInput {
+  .daemonRow.dataform .daemonInput {
     width: 190px;
   }
 
@@ -1163,7 +1181,7 @@
     width: 355px;
   }
 
-  .advancedDaemonRow.multipleRow {
+  .daemonRow.multipleRow {
     width: 78%;
   }
 
@@ -1207,7 +1225,7 @@
 }
 
 @media screen and (max-width: 600px) {
-  .advancedDaemonRow.multipleRow {
+  .daemonRow.multipleRow {
     width: 100%;
   }
 }

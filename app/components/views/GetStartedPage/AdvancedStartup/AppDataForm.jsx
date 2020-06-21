@@ -18,10 +18,10 @@ const AppDataForm = ({
 }) => (
   <>
     <div className={classNames(styles.advancedDeamonRow, styles.dataForm)}>
-      <div className={styles.advancedDaemonLabel}>
+      <div className={styles.daemonLabel}>
         <T id="login.form.appdata.label" m="Daemon Data Directory" />:
       </div>
-      <div className={styles.advancedDaemonInput}>
+      <div className={styles.daemonInput}>
         <PathBrowseInput
           required
           type="directory"

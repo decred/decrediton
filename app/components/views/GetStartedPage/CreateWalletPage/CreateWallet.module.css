@@ -1,0 +1,216 @@
+.seedWarningMessage {
+  margin-right: 5px;
+}
+
+.seedError {
+  color: var(--error-red);
+}
+
+.walletKeyBlueButton {
+  float: left;
+}
+
+.seed {
+  margin-bottom: 30px;
+}
+
+.passphrase {
+  height: 50px;
+}
+
+.confirmSeedLabelText {
+  margin-top: 8px;
+  margin-right: 10px;
+  font-size: 13px;
+  line-height: 17px;
+  width: 150px;
+  margin-left: -160px;
+  color: var(--wallet-tutorial-text);
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.passphrase .confirmSeedLabelText {
+  margin-top: 1px;
+}
+
+.createWalletButtonContainer {
+  height: 44px;
+  width: 293px;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.getstartedPageBody .textToggle {
+  height: 29px;
+}
+
+/* TODO: shorter classes here please when done migrating!!!! */
+
+.textToggleButtonLeft {
+  color: var(--text-toggle-button-inactive-text);
+  background-color: var(--text-toggle-button-bg);
+  border: 1px solid var(--text-toggle-button-border);
+  border-radius: 3px 0px 0px 3px;
+  min-width: 0px;
+  padding: 6px 20px 6px 20px;
+}
+
+.textToggleButtonRight {
+  color: var(--text-toggle-button-inactive-text);
+  background-color: var(--text-toggle-button-bg);
+  border-radius: 0px 3px 3px 0px;
+  min-width: 0px;
+  padding: 6px 20px 6px 20px;
+}
+
+.textToggleButtonLeft.textToggleButtonActive {
+  color: var(--input-color-default);
+  background-color: var(--text-toggle-button-active-bg);
+  font-weight: 400;
+}
+
+.textToggleButtonRight.textToggleButtonActive {
+  color: var(--input-color-default);
+  background-color: var(--text-toggle-button-active-bg);
+  font-weight: 400;
+}
+
+.inputPrivatePassword {
+  width: 288px;
+  padding-bottom: 3px;
+}
+
+.goBackButton {
+  color: var(--home-content-link);
+}
+.goBackButton:hover {
+  color: var(--title-text-and-button-background-hovered);
+}
+
+.seedArea {
+  margin: 0px 5px 5px -5px;
+  width: 560px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.seedArea.hex {
+  width: 90%;
+  display: block;
+}
+
+.selectArrow {
+  border: none;
+  display: inherit;
+  height: 0;
+  width: 0;
+  position: relative;
+  transition: inherit;
+}
+
+.selectControl:hover:not(:disabled) {
+  border: inherit;
+}
+
+.selectControl:hover:not(:disabled) .Select-arrow {
+  border-top-color: inherit;
+}
+
+.isOpen .selectArrow,
+.isOpen .selectControl:hover:not(:disabled) .selectArrow,
+.selectArrowZone:hover > .selectArrow {
+  border-top-color: inherit;
+}
+
+.selectControl {
+  padding-left: 2px;
+  border-radius: 3px;
+  color: var(--modal-bottom);
+  border-bottom: none;
+}
+
+.selectControl:hover,
+.selectControl:focus {
+  border: 1px solid var(--disabled-color);
+}
+
+.buttonArea {
+  margin-left: 22px;
+  margin-top: 189px;
+  width: 380px;
+}
+
+.button {
+  background-color: var(--background-back-color);
+  border: 1px solid var(--background-back-color);
+  border-radius: 5px;
+  height: 161px;
+  width: 168px;
+  margin-right: 20px;
+  float: left;
+  background-position: 53px 32px;
+  background-repeat: no-repeat;
+  background-size: 62px 62px;
+}
+
+.button.new {
+  background-image: var(--createnewwallet);
+}
+
+.button.restore {
+  background-image: var(--restore-wallet-icon);
+}
+
+.button:hover,
+.button:focus {
+  border-color: var(--input-color);
+}
+
+.buttonLabel {
+  margin-top: 121px;
+  text-align: center;
+  font-size: 15px;
+  color: var(--title-text-and-button-background);
+  line-height: 19px;
+}
+
+.walletSwitch {
+  padding-right: 5px;
+}
+
+.contentTitleWrapper {
+  width: 692px;
+}
+
+@media screen and (max-width: 1179px) {
+  .seed {
+    margin-left: 0;
+  }
+
+  .passphrase {
+    margin-left: 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .isRow.seed {
+    flex-direction: column;
+  }
+
+  .seedArea {
+    grid-template-columns: repeat(3, 1fr);
+    width: 353px;
+  }
+
+  .createWalletButtonContainer {
+    display: flex;
+    justify-content: flex-end;
+    width: 365px;
+  }
+
+  .isRow.contentTitleWrapper {
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+}

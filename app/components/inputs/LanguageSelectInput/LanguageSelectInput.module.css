@@ -1,0 +1,79 @@
+.languageLabel {
+  display: flex;
+  margin-top: 5px;
+}
+
+.input {
+  width: 200px;
+  margin-right: 0.5em;
+}
+
+.input .selectControl {
+  border: 1px solid var(--select-border);
+  border-radius: 5px;
+  height: 29px;
+  padding-top: 5px;
+  padding-right: 5px;
+}
+
+.input .selectControl:hover {
+  border: 1px solid var(--disabled-color);
+}
+
+.button {
+  padding: 5px 16px 10px 16px;
+}
+
+.flag {
+  flex-grow: 2;
+  background-repeat: no-repeat;
+  background-size: 20px;
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+  margin-top: 2px;
+}
+
+.flag.en-AU {
+  background-image: var(--flag-au);
+}
+
+.flag.de {
+  background-image: var(--flag-de);
+}
+
+.flag.en {
+  background-image: var(--flag-en);
+}
+
+.flag.en-GB {
+  background-image: var(--flag-gb);
+}
+
+.flag.es {
+  background-image: var(--flag-es);
+}
+
+.flag.fr {
+  background-image: var(--flag-fr);
+}
+
+.flag.ja {
+  background-image: var(--flag-ja);
+}
+
+.flag.pt-BR {
+  background-image: var(--flag-ptbr);
+}
+
+.flag.zh {
+  background-image: var(--flag-zh);
+}
+
+.name {
+  flex-grow: 4;
+  width: 100px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
