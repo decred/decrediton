@@ -348,7 +348,7 @@
   background-color: var(--background-back-color);
 }
 
-.displayWalletName {
+.displayWallet.new .displayWalletName {
   color: var(--new_wallet-label);
   margin-top: 20px;
 }
