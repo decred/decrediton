@@ -1,49 +1,13 @@
 import { newProposalCounts } from "connectors";
 import { useMenuList, useMenuLinks } from "./hooks";
-import { FormattedMessage as T } from "react-intl";
 import MenuLink from "./MenuLink/MenuLink";
+import { linkList } from "./Links";
+import { Motion } from "react-motion";
+import style from "../SideBar.module.css";
 
-const linkList = [
-  {
-    path: "/home",
-    link: <T id="sidebar.link.home" m="Overview" />,
-    icon: "overview"
-  },
-  {
-    path: "/transactions",
-    link: <T id="sidebar.link.transactions" m="Transactions" />,
-    icon: "transactions"
-  },
-  {
-    path: "/governance",
-    link: <T id="sidebar.link.governance" m="Governance" />,
-    icon: "governance",
-    notifProp: "newProposalsStartedVoting"
-  },
-  {
-    path: "/tickets",
-    link: <T id="sidebar.link.tickets" m="Tickets" />,
-    icon: "tickets"
-  },
-  {
-    path: "/accounts",
-    link: <T id="sidebar.link.accounts" m="Accounts" />,
-    icon: "accounts"
-  },
-  {
-    path: "/security",
-    link: <T id="activesidebar.link.security" m="Security" />,
-    icon: "securitycntr"
-  },
-  { path: "/help", link: <T id="sidebar.link.help" m="Help" />, icon: "help" },
-  {
-    path: "/settings",
-    link: <T id="sidebar.link.settings" m="Settings" />,
-    icon: "settings"
-  }
-];
+const StandardMenuLink = ({ linkItem, sidebarOnBottom }) => {
+  const { _nodes } = useMenuLinks();
 
-const GetMenuLink = ({ linkItem, _nodes, sidebarOnBottom }) => {
   const { path, link, icon, notifProp } = linkItem;
   const hasNotif = notifProp ? true : false;
 
@@ -57,36 +21,37 @@ const GetMenuLink = ({ linkItem, _nodes, sidebarOnBottom }) => {
       {!sidebarOnBottom && link}
     </MenuLink>
   );
-  };
+};
 
-const MenuList = React.memo(({sidebarOnBottom, _nodes}) => {
+const MenuList = React.memo(({ sidebarOnBottom }) => {
   const { linksComponents } = useMenuList(linkList);
+
   return sidebarOnBottom
     ? linksComponents.map((menuLinks, index) => (
         <div className={"is-row"} key={index}>
           {menuLinks.map((b) => (
-            <GetMenuLink {...{ linkItem: b, _nodes, sidebarOnBottom }} />
+            <StandardMenuLink {...{ linkItem: b, sidebarOnBottom }} />
           ))}
         </div>
       ))
     : linksComponents.map((menuLink) => (
-        <GetMenuLink {...{ linkItem: menuLink, _nodes, sidebarOnBottom }} />
+        <StandardMenuLink {...{ linkItem: menuLink, sidebarOnBottom }} />
       ));
 });
 
 const MenuLinks = () => {
-  const {
-    sidebarOnBottom,
-    uiAnimations,
-    getAnimatedCaret,
-    getStaticCaret,
-    _nodes
-  } = useMenuLinks();
+  const { sidebarOnBottom, uiAnimations, caretStyle } = useMenuLinks();
 
   return (
     <>
-      <MenuList {...{ sidebarOnBottom, _nodes }} />
-      {uiAnimations ? getAnimatedCaret : getStaticCaret}
+      <MenuList {...{ sidebarOnBottom }} />
+      {uiAnimations ? (
+        <Motion style={caretStyle}>
+          {(caretStyle) => <div className={style.menuCaret} {...{ caretStyle }} />}
+        </Motion>
+      ) : (
+        <div className={style.menuCaret} style={caretStyle} />
+      )}
     </>
   );
 };

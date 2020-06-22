@@ -1,11 +1,11 @@
 import { usePrevious } from "helpers";
-import { spring, Motion } from "react-motion";
+import { spring } from "react-motion";
 import theme from "theme";
-import { FormattedMessage as T } from "react-intl";
-import sideBarStyle from "../SideBar.module.css";
 import * as sel from "selectors";
 import { useSelector } from "react-redux";
 import { useEffect, useState, useCallback, useMemo, useRef } from "react";
+import { trezorLink, lnLink } from "./Links";
+import { MENU_LINKS_PER_ROW } from "../../../constants/Decrediton";
 
 export function useMenuLinks() {
   const location = useSelector(sel.location);
@@ -63,29 +63,17 @@ export function useMenuLinks() {
     }
   }, [updateCaretPosition, sidebarOnBottom, previousSidebarOnBottom, selectedTab, location]);
 
-  const getAnimatedCaret = useMemo(() => {
-    const style = sidebarOnBottom
+  const caretStyle = useMemo(() => {
+    return uiAnimations ? sidebarOnBottom
       ? { ...sidebarOnBottomStyle }
-      : { top: sidebarOnBottomStyle.top };
-    return (
-      <Motion style={style}>
-        {(style) => <div className={sideBarStyle.menuCaret} {...{ style }} />}
-      </Motion>
-    );
-  }, [sidebarOnBottom, sidebarOnBottomStyle]);
-
-  const getStaticCaret = useMemo(() => {
-    const { left, top } = sidebarOnBottomStyle;
-    const style = sidebarOnBottom
-      ? { left: left.val, top: top.val }
-      : { top: top.val };
-    return <div className={sideBarStyle.menuCaret} style={style} />;
-  }, [sidebarOnBottom, sidebarOnBottomStyle]);
+      : { top: sidebarOnBottomStyle.top } : sidebarOnBottom
+        ? { left: sidebarOnBottomStyle.left.val, top: sidebarOnBottomStyle.top.val }
+        : { top: sidebarOnBottomStyle.top.val };
+  }, [uiAnimations, sidebarOnBottom, sidebarOnBottomStyle]);
 
   return {
     uiAnimations,
-    getAnimatedCaret,
-    getStaticCaret,
+    caretStyle,
     _nodes,
     sidebarOnBottom
   };
@@ -97,23 +85,13 @@ export function useMenuList(linkList) {
   const sidebarOnBottom = useSelector(sel.sidebarOnBottom);
 
   const links = useRef([...linkList]);
-  const LINK_PER_ROW = useRef(4);
 
   useEffect(() => {
     if (isTrezor) {
-      links.current.push({
-        path: "/trezor",
-        link: <T id="sidebar.link.trezor" m="Trezor Setup" />,
-        icon: "trezor"
-      });
+      links.current.push(trezorLink);
     }
-
     if (lnEnabled) {
-      links.current.push({
-        path: "/ln",
-        link: <T id="sidebar.link.ln" m="Lightning Network" />,
-        icon: "ln"
-      });
+      links.current.push(lnLink);
     }
   }, [isTrezor, lnEnabled]);
 
@@ -122,10 +100,10 @@ export function useMenuList(linkList) {
     if (sidebarOnBottom) {
       let n = 0;
       const totalLinks = links.current.length;
-      const numberOfRows = totalLinks / LINK_PER_ROW.current;
+      const numberOfRows = totalLinks / MENU_LINKS_PER_ROW;
       for (let i = 0; i < numberOfRows && n < totalLinks; i++) {
         linksComponent[i] = [];
-        for (let j = 0; j < LINK_PER_ROW.current && n < totalLinks; j++) {
+        for (let j = 0; j < MENU_LINKS_PER_ROW && n < totalLinks; j++) {
           linksComponent[i].push(links.current[n]);
           n++;
         }

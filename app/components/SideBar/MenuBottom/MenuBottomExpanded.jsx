@@ -1,13 +1,13 @@
 
 import { Balance } from "shared";
-import style from "../../SideBar.module.css";
+import style from "./MenuBottom.module.css";
 import { classNames } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
 import { RescanButton } from "buttons";
 import { RescanProgress } from "indicators";
 import LastBlockTime from "./LastBlockTime/LastBlockTime";
 
-const ExpandSideBar = ({
+const MenuBarExpanded = ({
   isShowingAccounts,
   totalBalance,
   rescanRequest,
@@ -57,4 +57,4 @@ const ExpandSideBar = ({
     </div>
   );
 
-export default ExpandSideBar;
+export default MenuBarExpanded;

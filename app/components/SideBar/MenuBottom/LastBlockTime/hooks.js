@@ -1,19 +1,19 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 
 export function useLastBlockTime(lastBlockTimestamp, clearTimeout, setTimeout) {
   const [lastBlockDate, setLastBlockDate] = useState(null);
   const [lastBlockIsRecent, setLastBlockIsRecent] = useState(null);
-  const [updateRecentTimer, setUpdateRecentTimer] = useState(null);
+
+  const updateRecentTimer = useRef(null);
 
   const getBlockDate = useCallback((lastBlockTimestamp) => {
     let _lastBlockDate;
     let _lastBlockIsRecent = false;
-    let _updateRecentTimer = updateRecentTimer || null;
 
     if (lastBlockTimestamp) {
-      if (_updateRecentTimer) {
-        clearTimeout(_updateRecentTimer);
-        _updateRecentTimer = null;
+      if (updateRecentTimer.current) {
+        clearTimeout(updateRecentTimer.current);
+        updateRecentTimer.current = null;
       }
 
       const now = new Date();
@@ -21,33 +21,29 @@ export function useLastBlockTime(lastBlockTimestamp, clearTimeout, setTimeout) {
       const timeFromLastBlock = now.getTime() - _lastBlockDate.getTime();
       _lastBlockIsRecent = timeFromLastBlock < 60000;
       if (_lastBlockIsRecent) {
-        _updateRecentTimer = setTimeout(
+        updateRecentTimer.current = setTimeout(
           () => {
             const {
               _lastBlockDate,
-              _lastBlockIsRecent,
-              _updateRecentTimer
+              _lastBlockIsRecent
             } = getBlockDate(lastBlockTimestamp);
             setLastBlockDate(_lastBlockDate);
             setLastBlockIsRecent(_lastBlockIsRecent);
-            setUpdateRecentTimer(_updateRecentTimer);
           },
           60000 - timeFromLastBlock
         );
       }
     }
-    return { _lastBlockDate, _lastBlockIsRecent, _updateRecentTimer };
+    return { _lastBlockDate, _lastBlockIsRecent };
   }, [updateRecentTimer, clearTimeout, setTimeout]);
 
   useEffect(() => {
     const {
       _lastBlockDate,
-      _lastBlockIsRecent,
-      _updateRecentTimer
+      _lastBlockIsRecent
     } = getBlockDate(lastBlockTimestamp);
     setLastBlockDate(_lastBlockDate);
     setLastBlockIsRecent(_lastBlockIsRecent);
-    setUpdateRecentTimer(_updateRecentTimer);
   }, [lastBlockTimestamp, getBlockDate]);
 
   return { lastBlockDate, lastBlockIsRecent };

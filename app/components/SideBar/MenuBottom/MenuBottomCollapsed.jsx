@@ -1,7 +1,7 @@
 import { RescanButton, RescanCancelButton } from "buttons";
-import style from "../../SideBar.module.css";
+import style from "./MenuBottom.module.css";
 
-const CollapseSideBar = ({
+const MenuBottomColllapsed = ({
   rescanRequest,
   rescanAttempt,
   rescanCancel
@@ -16,4 +16,4 @@ const CollapseSideBar = ({
     </div>
   );
 
-export default CollapseSideBar;
+export default MenuBottomColllapsed;
