@@ -53,29 +53,29 @@ const ExistingSeedForm = ({
       </div>
       {seedType === WORDS && Array.isArray(seedWords) ? (
         <div className={styles.seedArea}>
-          {seedWords.map((seedWord, index) => {
-            const className = seedWord.word
-              ? seedWord.error
-                ? "seedWord error"
-                : "seedWord populated"
-              : "seedWord restore";
-            return (
-              <div key={index} className={className}>
-                <span className={styles.number}>{index + 1}.</span>
-                <span className={styles.word}>
-                  <SingleSeedWordEntry
-                    onChange={onChangeSeedWord}
-                    onPaste={handleOnPaste}
-                    seedWord={seedWord}
-                    value={{ name: seedWord.word }}
-                    key={index}
-                    className="Select-menu-with-arrow" // this gonna change when moving to pi-ui's Select
-                    onPasteFromClipboard={pasteFromClipboard}
-                  />
-                </span>
-              </div>
-            );
-          })}
+          {seedWords.map((seedWord, index) => (
+            <div
+              key={index}
+              className={classNames(
+                styles.seedWord,
+                seedWord.word && seedWord.error && styles.error,
+                seedWord.word && !seedWord.error && styles.populated,
+                !seedWord.word && !seedWord.error && styles.restore
+              )}>
+              <span className={styles.number}>{index + 1}.</span>
+              <span className={styles.word}>
+                <SingleSeedWordEntry
+                  onChange={onChangeSeedWord}
+                  onPaste={handleOnPaste}
+                  seedWord={seedWord}
+                  value={{ name: seedWord.word }}
+                  key={index}
+                  className="Select-menu-with-arrow" // this gonna change when moving to pi-ui's Select
+                  onPasteFromClipboard={pasteFromClipboard}
+                />
+              </span>
+            </div>
+          ))}
         </div>
       ) : (
         <div className={classNames(styles.seedArea, styles.hex)}>
