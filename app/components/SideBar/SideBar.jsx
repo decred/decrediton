@@ -67,8 +67,7 @@ const SideBar = () => {
             rescanAttempt,
             lastBlockTimestamp,
             onShowAccounts,
-            onHideAccounts,
-            sidebarOnBottom
+            onHideAccounts
           }}
         />
       ) : (

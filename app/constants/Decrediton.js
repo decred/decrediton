@@ -82,5 +82,5 @@ export const TRANSACTION_DIR_TRANSFERRED = "transfer";
 export const MIXED_ACCOUNT = "mixed";
 export const CHANGE_ACCOUNT = "unmixed";
 
-// MENU_LINKS_PER_ROW is the default number of menu items showed in sidebar when it's located on bottom.
+// MENU_LINKS_PER_ROW is the default number of menu items shown in sidebar when it's located on bottom.
 export const MENU_LINKS_PER_ROW = 4;

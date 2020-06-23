@@ -16,7 +16,6 @@ const MenuBarExpanded = ({
   lastBlockTimestamp,
   onShowAccounts,
   onHideAccounts,
-  sidebarOnBottom
 }) => (
     <div className={style.sidebarMenuBottom}>
       <div
