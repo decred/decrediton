@@ -105,6 +105,7 @@ export const startDcrlnd = (
     dispatch({ type: LNWALLET_STARTDCRLND_SUCCESS });
   } catch (error) {
     dispatch({ error, type: LNWALLET_STARTDCRLND_FAILED });
+    throw error;
   }
 };
 
