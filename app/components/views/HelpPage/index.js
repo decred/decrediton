@@ -1,5 +1,5 @@
 import { LinksTab, LinksTabHeader } from "./LinksTab";
-import { LogsTab, LogsTabHeader } from "./LogsTab";
+import { LogsTab, LogsTabHeader } from "./LogsTab/LogsTab";
 import { TutorialsTab, TutorialsTabHeader } from "./TutorialsTab";
 import { TabbedPage, TabbedPageTab as Tab, TitleHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";

@@ -12,7 +12,8 @@ import { GoBackMsg } from "../messages";
 import { getGlobalCfg } from "config";
 import * as configConstants from "constants/config";
 import { useTheme } from "pi-ui";
-import styles from "views/SettingsPage/Settings.module.css";
+import stylesSettigs from "views/SettingsPage/Settings.module.css";
+import stylesGetStarted from "../GetStarted.module.css";
 import { useSettings } from "hooks";
 
 const SetttingsForm = ({ onSendBack }) => {
@@ -36,6 +37,10 @@ const SetttingsForm = ({ onSendBack }) => {
     onSaveSettings(tempSettings);
     onSendBack();
   }, [onSaveSettings, onSendBack, tempSettings, setThemeName]);
+  const styles = {
+    ...stylesSettigs,
+    ...stylesGetStarted
+  };
   return (
     <>
       <div className={classNames(styles.logs, styles.settings)}>

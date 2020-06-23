@@ -1,6 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
 import { Subtitle } from "shared";
-import "style/Logs.less";
+import { classNames } from "pi-ui";
+import styles from "./LogsTab.module.css";
 
 const Logs = ({
   showDcrdLogs,
@@ -30,17 +31,21 @@ const Logs = ({
     <Subtitle title={<T id="logs.subtitle" m="System Logs" />} />
     {!isDaemonRemote && isDaemonStarted ? (
       !showDcrdLogs ? (
-        <div className="log-area hidden">
-          <div className="log-area-title hidden" onClick={onShowDcrdLogs}>
+        <div className={classNames(styles.logArea, styles.hidden)}>
+          <div
+            className={classNames(styles.title, styles.hidden)}
+            onClick={onShowDcrdLogs}>
             <T id="help.logs.dcrd" m="dcrd" />
           </div>
         </div>
       ) : (
-        <div className="log-area expanded">
-          <div className="log-area-title expanded" onClick={onHideDcrdLogs}>
+        <div className={classNames(styles.logArea, styles.expanded)}>
+          <div
+            className={classNames(styles.title, styles.expanded)}
+            onClick={onHideDcrdLogs}>
             <T id="help.logs.dcrd" m="dcrd" />
           </div>
-          <div className="log-area-logs">
+          <div className={styles.logs}>
             <textarea rows="30" value={dcrdLogs} disabled />
           </div>
         </div>
@@ -49,14 +54,18 @@ const Logs = ({
       <div />
     )}
     {!walletReady ? null : !showDcrwalletLogs ? (
-      <div className="log-area hidden">
-        <div className="log-area-title hidden" onClick={onShowDcrwalletLogs}>
+      <div className={classNames(styles.logArea, styles.hidden)}>
+        <div
+          className={classNames(styles.title, styles.hidden)}
+          onClick={onShowDcrwalletLogs}>
           <T id="help.logs.dcrwallet" m="dcrwallet" />
         </div>
       </div>
     ) : (
-      <div className="log-area expanded">
-        <div className="log-area-title expanded" onClick={onHideDcrwalletLogs}>
+      <div className={classNames(styles.logArea, styles.expanded)}>
+        <div
+          className={classNames(styles.title, styles.expanded)}
+          onClick={onHideDcrwalletLogs}>
           <T id="help.logs.dcrwallet" m="dcrwallet" />
         </div>
         <div className="log-area-logs">
@@ -65,17 +74,21 @@ const Logs = ({
       </div>
     )}
     {!showDecreditonLogs ? (
-      <div className="log-area hidden">
-        <div className="log-area-title hidden" onClick={onShowDecreditonLogs}>
+      <div className={classNames(styles.logArea, styles.hidden)}>
+        <div
+          className={classNames(styles.title, styles.hidden)}
+          onClick={onShowDecreditonLogs}>
           <T id="help.logs.decrediton" m="decrediton" />
         </div>
       </div>
     ) : (
-      <div className="log-area expanded">
-        <div className="log-area-title expanded" onClick={onHideDecreditonLogs}>
+      <div className={classNames(styles.logArea, styles.expanded)}>
+        <div
+          className={classNames(styles.title, styles.expanded)}
+          onClick={onHideDecreditonLogs}>
           <T id="help.logs.decrediton" m="decrediton" />
         </div>
-        <div className="log-area-logs">
+        <div className={styles.logs}>
           <textarea rows="30" value={decreditonLogs} disabled />
         </div>
       </div>
@@ -83,17 +96,21 @@ const Logs = ({
     {!lnActive &&
     !lnConnectAttempt &&
     !lnStartAttempt ? null : !showDcrlndLogs ? (
-      <div className="log-area hidden">
-        <div className="log-area-title hidden" onClick={onShowDcrlndLogs}>
+      <div className={classNames(styles.logArea, styles.hidden)}>
+        <div
+          className={classNames(styles.title, styles.hidden)}
+          onClick={onShowDcrlndLogs}>
           <T id="help.logs.dcrlnd" m="dcrlnd" />
         </div>
       </div>
     ) : (
-      <div className="log-area expanded">
-        <div className="log-area-title expanded" onClick={onHideDcrlndLogs}>
+      <div className={classNames(styles.logArea, styles.expanded)}>
+        <div
+          className={classNames(styles.title, styles.expanded)}
+          onClick={onHideDcrlndLogs}>
           <T id="help.logs.dcrlnd" m="dcrlnd" />
         </div>
-        <div className="log-area-logs">
+        <div className={styles.logs}>
           <textarea rows="30" value={dcrlndLogs} disabled />
         </div>
       </div>

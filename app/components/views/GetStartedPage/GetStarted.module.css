@@ -102,19 +102,19 @@
   position: relative;
 }
 
-.getstarted.loader.settings .goBackScreenButton-area {
+.settings .goBackScreenButtonArea {
   position: absolute;
   left: 1467px;
-  top: 112px;
+  top: 66px;
   right: initial;
 }
 
-.getstarted.loader.settings .saveButtonWrapper {
+.settings .saveButtonWrapper {
   width: 1484px;
   text-align: right;
 }
 
-.getstarted.loader.settings .saveButtonWrapper .keyBlueButton {
+.settings .saveButtonWrapper .keyBlueButton {
   margin-top: 0;
   padding: 12px 30px 14px 30px;
 }
@@ -131,7 +131,7 @@
 .goBackScreenButtonArea {
   position: fixed;
   right: 55px;
-  top: 190px;
+  top: 135px;
 }
 
 .goBackScreenButton {
@@ -792,38 +792,38 @@
 }
 
 @media screen and (max-width: 1919px) {
-  .getstarted.loader.settings .goBackScreenButtonArea {
+  .settings .goBackScreenButtonArea {
     left: 1230px;
   }
-  .getstarted.loader.settings .saveButtonWrapper {
+  .settings .saveButtonWrapper {
     width: 1247px;
   }
 }
 
 @media screen and (max-width: 1679px) {
-  .getstarted.loader.settings .goBackScreenButtonArea {
+  .settings .goBackScreenButtonArea {
     left: 988px;
   }
-  .getstarted.loader.settings .saveButtonWrapper {
+  .settings .saveButtonWrapper {
     width: 1002px;
   }
 }
 
 @media screen and (max-width: 1439px) {
-  .getstarted.loader.settings .goBackScreenButtonArea {
-    left: 988px;
+  .settings .goBackScreenButtonArea {
+    left: 726px;
   }
-  .getstarted.loader.settings .saveButtonWrapper {
-    width: 1002px;
+  .settings .saveButtonWrapper {
+    width: 740px;
   }
 }
 
 @media screen and (max-width: 1180px) {
-  .getstarted.loader.settings .goBackScreenButtonArea {
+  .settings .goBackScreenButtonArea {
     left: 636px;
     top: 112px;
   }
-  .getstarted.loader.settings .saveButtonWrapper {
+  .settings .saveButtonWrapper {
     width: 650px;
   }
 }
@@ -982,16 +982,16 @@
     top: -40px !important;
   }
 
-  .getstarted.loader.settings .tabbedPageSubtitle {
+  .settings .tabbedPageSubtitle {
     margin-left: 20px;
   }
 
-  .getstarted.loader.settings .goBackScreenButtonArea {
+  .settings .goBackScreenButtonArea {
     top: 40px;
     left: 342px;
   }
 
-  .getstarted.loader.settings .saveButtonWrapper {
+  .settings .saveButtonWrapper {
     text-align: center;
     width: 355px;
   }

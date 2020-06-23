@@ -2,6 +2,7 @@ import { FormattedMessage as T } from "react-intl";
 import { SettingsInput, SettingsTextInput } from "inputs";
 import { Tooltip } from "shared";
 import { TESTNET, MAINNET } from "constants";
+import styles from "./Settings.module.css";
 
 const propTypes = {
   tempSettings: PropTypes.object.isRequired,
@@ -18,20 +19,20 @@ const AlreadySetMessage = () => (
 // Do **not** add stuff that depends on the wallet here, as this is also used
 // for startup config.
 const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
-  <div className="settings-network">
-    <div className="settings-column-title">
+  <div>
+    <div className={styles.columnTitle}>
       <T id="settings.network.title" m="Network" />
     </div>
-    <div className="settings-column-content">
-      <div className="settings-row">
-        <div className="settings-label">
+    <div className={styles.columnContent}>
+      <div className={styles.row}>
+        <div className={styles.label}>
           <T id="settings.network" m="Network" />
         </div>
         <Tooltip
           text={<AlreadySetMessage />}
           disabled={!tempSettings.networkFromCli}>
           <SettingsInput
-            className="settings-input"
+            className={styles.input}
             value={tempSettings.network}
             onChange={(opt) => onChangeTempSettings({ network: opt.value })}
             valueKey="value"
@@ -53,15 +54,15 @@ const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
         </Tooltip>
       </div>
 
-      <div className="settings-row">
-        <div className="settings-label">
+      <div className={styles.row}>
+        <div className={styles.label}>
           <T id="settings.SPV" m="SPV" />
         </div>
         <Tooltip
           text={<AlreadySetMessage />}
           disabled={!tempSettings.spvModeFromCli}>
           <SettingsInput
-            className="settings-input"
+            className={styles.input}
             value={tempSettings.spvMode ? "true" : "false"}
             onChange={(opt) => onChangeTempSettings({ spvMode: opt.value })}
             valueKey="key"
@@ -83,8 +84,8 @@ const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
         </Tooltip>
       </div>
 
-      <div className="settings-row">
-        <div className="settings-label">
+      <div className={styles.row}>
+        <div className={styles.label}>
           <T id="settings.SPVConnect" m="SPV Connect" />
         </div>
         <Tooltip
@@ -100,15 +101,15 @@ const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
         </Tooltip>
       </div>
 
-      <div className="settings-row">
-        <div className="settings-label">
+      <div className={styles.row}>
+        <div className={styles.label}>
           <T id="settings.advancedDaemon.label" m="Adv. Daemon Startup" />
         </div>
         <Tooltip
           text={<AlreadySetMessage />}
           disabled={!tempSettings.daemonStartAdvancedFromCli}>
           <SettingsInput
-            className="settings-input"
+            className={styles.input}
             value={tempSettings.daemonStartAdvanced ? "true" : "false"}
             onChange={(opt) =>
               onChangeTempSettings({ daemonStartAdvanced: opt.value })
