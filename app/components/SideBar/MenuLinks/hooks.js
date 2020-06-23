@@ -86,7 +86,7 @@ export function useMenuLinks(linkList) {
     if (uiAnimations) {
       return sidebarOnBottom
         ? { ...caretStyle }
-        : { top: caretStyle.top }
+        : { top: caretStyle.top };
     } else {
       const { top, left } = caretStyle;
       return sidebarOnBottom
@@ -114,7 +114,7 @@ export function useMenuLinks(linkList) {
 
     return (linksComponent = links.current.map((link) => {
       link.notifProp = notifProps[link.notifProp];
-      return link
+      return link;
     }));
   }, [sidebarOnBottom, notifProps]);
 
