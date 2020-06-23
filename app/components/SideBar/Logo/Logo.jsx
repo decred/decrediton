@@ -3,14 +3,15 @@ import { FormattedMessage as T } from "react-intl";
 import { TESTNET, MAINNET } from "constants";
 import style from "./Logo.module.css";
 
-const Logo = ({
-  isTestNet,
-  expandSideBar,
-  onReduceSideBar,
-  onExpandSideBar,
-  isWatchingOnly,
-  accountMixerRunning
-}) => (
+const Logo = React.memo(
+  ({
+    isTestNet,
+    expandSideBar,
+    onReduceSideBar,
+    onExpandSideBar,
+    isWatchingOnly,
+    accountMixerRunning
+  }) => (
     <div
       className={expandSideBar ? style.sidebarLogo : style.reducedSidebarLogo}
       onClick={!expandSideBar ? onExpandSideBar : null}>
@@ -26,7 +27,9 @@ const Logo = ({
         </Tooltip>
       )}
       <div
-        className={!expandSideBar ? style.hamburger : isTestNet ? TESTNET : MAINNET}
+        className={
+          !expandSideBar ? style.hamburger : isTestNet ? TESTNET : MAINNET
+        }
       />
       {accountMixerRunning && (
         <Tooltip
@@ -45,6 +48,7 @@ const Logo = ({
           onClick={expandSideBar ? onReduceSideBar : null}></div>
       )}
     </div>
-  );
+  )
+);
 
 export default Logo;

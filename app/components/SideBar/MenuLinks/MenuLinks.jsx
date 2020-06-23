@@ -1,53 +1,61 @@
 import { newProposalCounts } from "connectors";
-import { useMenuList, useMenuLinks } from "./hooks";
+import { useMenuLinks } from "./hooks";
 import MenuLink from "./MenuLink/MenuLink";
-import { linkList } from "./Links";
 import { Motion } from "react-motion";
 import style from "../SideBar.module.css";
+import { linkList } from "./Links";
 
-const StandardMenuLink = ({ linkItem, sidebarOnBottom }) => {
-  const { _nodes } = useMenuLinks();
-
-  const { path, link, icon, notifProp } = linkItem;
-  const hasNotif = notifProp ? true : false;
-
-  return (
-    <MenuLink
-      icon={icon}
-      to={path}
-      key={path}
-      hasNotification={hasNotif}
-      linkRef={(ref) => _nodes.current.set(path, ref)}>
-      {!sidebarOnBottom && link}
-    </MenuLink>
-  );
-};
-
-const MenuList = React.memo(({ sidebarOnBottom }) => {
-  const { linksComponents } = useMenuList(linkList);
-
-  return sidebarOnBottom
-    ? linksComponents.map((menuLinks, index) => (
+const MenuList = React.memo(({ sidebarOnBottom, nodes, menuLinks }) =>
+  sidebarOnBottom
+    ? menuLinks.map((menuLinkRow, index) => (
         <div className={"is-row"} key={index}>
-          {menuLinks.map((b) => (
-            <StandardMenuLink {...{ linkItem: b, sidebarOnBottom }} />
-          ))}
+          {menuLinkRow.map((menuLink) => {
+            const { path, link, icon, notifProp } = menuLink;
+            return (
+              <MenuLink
+                path={path}
+                link={link}
+                icon={icon}
+                notifProp={notifProp}
+                ref={(ref) => nodes.set(path, ref)}
+                sidebarOnBottom={sidebarOnBottom}
+              />
+            );
+          })}
         </div>
       ))
-    : linksComponents.map((menuLink) => (
-        <StandardMenuLink {...{ linkItem: menuLink, sidebarOnBottom }} />
-      ));
-});
+    : menuLinks.map((menuLink) => {
+        const { path, link, icon, notifProp } = menuLink;
+        return (
+          <MenuLink
+            path={path}
+            link={link}
+            icon={icon}
+            notifProp={notifProp}
+            ref={(ref) => nodes.set(path, ref)}
+            sidebarOnBottom={sidebarOnBottom}
+          />
+        );
+      })
+);
 
 const MenuLinks = () => {
-  const { sidebarOnBottom, uiAnimations, caretStyle } = useMenuLinks();
+  const {
+    sidebarOnBottom,
+    uiAnimations,
+    caretStyle,
+    nodes,
+    menuLinks
+  } = useMenuLinks(linkList);
 
   return (
     <>
-      <MenuList {...{ sidebarOnBottom }} />
+      <MenuList {...{ sidebarOnBottom, nodes, menuLinks }} />
       {uiAnimations ? (
         <Motion style={caretStyle}>
-          {(caretStyle) => <div className={style.menuCaret} {...{ caretStyle }} />}
+          {(caretStyle) => (
+            <div className={style.menuCaret} style={caretStyle} />
+          )}
         </Motion>
       ) : (
         <div className={style.menuCaret} style={caretStyle} />
@@ -56,4 +64,4 @@ const MenuLinks = () => {
   );
 };
 
-export default newProposalCounts(MenuLinks);
+export default MenuLinks;

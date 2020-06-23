@@ -15,7 +15,8 @@ const MenuBarExpanded = ({
   rescanAttempt,
   lastBlockTimestamp,
   onShowAccounts,
-  onHideAccounts
+  onHideAccounts,
+  sidebarOnBottom
 }) => (
     <div className={style.sidebarMenuBottom}>
       <div
@@ -38,7 +39,7 @@ const MenuBarExpanded = ({
         {rescanRequest ? <RescanProgress /> : null}
         {currentBlockHeight && !rescanRequest && (
           <>
-            <div className={style.rescanAreaButton}>
+            <div className={style.rescanButtonArea}>
               <RescanButton {...{ rescanRequest, rescanAttempt }} />
             </div>
             <a className={style.sidebarMenuBottomLatestBlockName}>

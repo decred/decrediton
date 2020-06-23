@@ -7,18 +7,39 @@ import { useEffect, useState, useCallback, useMemo, useRef } from "react";
 import { trezorLink, lnLink } from "./Links";
 import { MENU_LINKS_PER_ROW } from "../../../constants/Decrediton";
 
-export function useMenuLinks() {
+export function useMenuLinks(linkList) {
   const location = useSelector(sel.location);
   const sidebarOnBottom = useSelector(sel.sidebarOnBottom);
   const uiAnimations = useSelector(sel.uiAnimations);
+  const isTrezor = useSelector(sel.isTrezor);
+  const lnEnabled = useSelector(sel.lnEnabled);
 
-  const [sidebarOnBottomStyle, setSidebarOnBottomStyle] = useState({ top: 0, left: 0 });
+  const newActiveVoteProposalsCount = useSelector(sel.newActiveVoteProposalsCount);
+  const newPreVoteProposalsCount = useSelector(sel.newPreVoteProposalsCount);
+  const newProposalsStartedVoting = useSelector(sel.newProposalsStartedVoting);
+
+  const notifProps = useMemo(() => ({
+    newActiveVoteProposalsCount,
+    newPreVoteProposalsCount,
+    newProposalsStartedVoting
+  }), [
+    newActiveVoteProposalsCount,
+    newPreVoteProposalsCount,
+    newProposalsStartedVoting
+  ]);
+
+  const [caretStyle, setCaretStyle] = useState({ top: 0, left: 0 });
   const [selectedTab, setSelectedTab] = useState(null);
 
-  const _nodes = useRef(new Map());
+  const nodes = useRef(new Map());
+  const links = useRef([
+    ...linkList,
+    ...(isTrezor ? [trezorLink] : []),
+    ...(lnEnabled ? [lnLink] : [])
+  ]);
 
   const neededCaretPosition = useCallback((path) => {
-    const tabForRoute = _nodes.current.get(path);
+    const tabForRoute = nodes.current.get(path);
     if (!tabForRoute) return null;
     if (sidebarOnBottom) {
       const newLeft = tabForRoute.offsetLeft;
@@ -37,7 +58,7 @@ export function useMenuLinks() {
         : location.pathname;
     const caretPosition = neededCaretPosition(selectedTab);
     if (caretPosition) {
-      setSidebarOnBottomStyle(caretPosition);
+      setCaretStyle(caretPosition);
       setSelectedTab(selectedTab);
     }
   }, [
@@ -46,8 +67,6 @@ export function useMenuLinks() {
   ]);
 
   const previousSidebarOnBottom = usePrevious(sidebarOnBottom);
-
-  useEffect(() => updateCaretPosition(), [updateCaretPosition]);
 
   useEffect(() => {
     const tabbedPageCheck = location.pathname.indexOf("/", 1);
@@ -63,39 +82,20 @@ export function useMenuLinks() {
     }
   }, [updateCaretPosition, sidebarOnBottom, previousSidebarOnBottom, selectedTab, location]);
 
-  const caretStyle = useMemo(() => {
-    return uiAnimations ? sidebarOnBottom
-      ? { ...sidebarOnBottomStyle }
-      : { top: sidebarOnBottomStyle.top } : sidebarOnBottom
-        ? { left: sidebarOnBottomStyle.left.val, top: sidebarOnBottomStyle.top.val }
-        : { top: sidebarOnBottomStyle.top.val };
-  }, [uiAnimations, sidebarOnBottom, sidebarOnBottomStyle]);
-
-  return {
-    uiAnimations,
-    caretStyle,
-    _nodes,
-    sidebarOnBottom
-  };
-}
-
-export function useMenuList(linkList) {
-  const isTrezor = useSelector(sel.isTrezor);
-  const lnEnabled = useSelector(sel.lnEnabled);
-  const sidebarOnBottom = useSelector(sel.sidebarOnBottom);
-
-  const links = useRef([...linkList]);
-
-  useEffect(() => {
-    if (isTrezor) {
-      links.current.push(trezorLink);
+  const caretStyleMemo = useMemo(() => {
+    if (uiAnimations) {
+      return sidebarOnBottom
+        ? { ...caretStyle }
+        : { top: caretStyle.top }
+    } else {
+      const { top, left } = caretStyle;
+      return sidebarOnBottom
+        ? { left: left.val, top: top.val }
+        : { top: top.val };
     }
-    if (lnEnabled) {
-      links.current.push(lnLink);
-    }
-  }, [isTrezor, lnEnabled]);
+  }, [uiAnimations, sidebarOnBottom, caretStyle]);
 
-  const linksComponents = useMemo(() => {
+  const menuLinks = useMemo(() => {
     let linksComponent = [];
     if (sidebarOnBottom) {
       let n = 0;
@@ -104,6 +104,7 @@ export function useMenuList(linkList) {
       for (let i = 0; i < numberOfRows && n < totalLinks; i++) {
         linksComponent[i] = [];
         for (let j = 0; j < MENU_LINKS_PER_ROW && n < totalLinks; j++) {
+          links.current[n].notifProp = notifProps[links.current[n].notifProp];
           linksComponent[i].push(links.current[n]);
           n++;
         }
@@ -111,11 +112,17 @@ export function useMenuList(linkList) {
       return linksComponent;
     }
 
-    return (linksComponent = links.current.map((link) => link));
-  }, [sidebarOnBottom]);
+    return (linksComponent = links.current.map((link) => {
+      link.notifProp = notifProps[link.notifProp];
+      return link
+    }));
+  }, [sidebarOnBottom, notifProps]);
 
   return {
+    uiAnimations,
+    caretStyle: caretStyleMemo,
+    nodes: nodes.current,
     sidebarOnBottom,
-    linksComponents
+    menuLinks
   };
 }

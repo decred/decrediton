@@ -7,13 +7,8 @@ import * as sba from "../../actions/SidebarActions";
 export function useSideBar() {
   const [isShowingAccounts, setIsShowingAccounts] = useState(false);
 
-  const onShowAccounts = useCallback(() => {
-    setIsShowingAccounts(true);
-  }, [setIsShowingAccounts]);
-
-  const onHideAccounts = useCallback(() => {
-    setIsShowingAccounts(false);
-  }, [setIsShowingAccounts]);
+  const onShowAccounts = useCallback(() => setIsShowingAccounts(true), []);
+  const onHideAccounts = useCallback(() => setIsShowingAccounts(false), []);
 
   const isTestNet = useSelector(sel.isTestNet);
   const balances = useSelector(sel.balances);

@@ -18,9 +18,6 @@ function LastBlockTime({ lastBlockTimestamp, clearTimeout, setTimeout }) {
       <T id="sidebar.lastBlockIsRecent" m="< 1 minute ago" /> :
       <FormattedRelative value={lastBlockDate} updateInterval={1 * 1000} />
     : null;
-
 }
-
-export { LastBlockTime };
 
 export default ReactTimeout(LastBlockTime);

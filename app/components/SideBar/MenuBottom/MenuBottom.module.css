@@ -65,8 +65,15 @@
 	font-size: 13px;
 }
 
+.sidebarMenuBottomLatestBlockCollapsed {
+	padding: 14px 0 10px 0;
+}
 
-.sidebarMenuBottomLatestBlock-name {
+.sidebarOnBottom.sidebarMenuBottomLatestBlockCollapsed {
+	display: none;
+}
+
+.sidebarMenuBottomLatestBlockName {
 	color: var(--disabled-color);
 	font-size: 13px;
 	line-height: 10px;
@@ -74,7 +81,7 @@
 	text-decoration: none;
 }
 
-.sidebarMenuBottomLatestBlock-number {
+.sidebarMenuBottomLatestBlockNumber {
 	font-family: var(--font-family-monospace);
 	color: var(--sidebar-bottom-light-text-color);
 }
@@ -88,6 +95,12 @@
 }
 
 .rescanButtonArea {
+  padding-top: 2px;
+  padding-right: 5px;
+  float: left;
+}
+
+.rescanButtonAreaCollapsed {
 	text-align: center;
 	padding-right: 0;
 	float: none;
