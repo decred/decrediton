@@ -119,11 +119,6 @@
   padding: 12px 30px 14px 30px;
 }
 
-.loaderBarEstimation {
-  text-align: left;
-  font-size: 9px;
-}
-
 .linearProgress.small {
   float: left;
 }
@@ -146,14 +141,6 @@
 
 .goBackScreenButton:hover {
   opacity: 0.7;
-}
-
-.loaderBarEstimation .normal {
-  opacity: 0.5465;
-}
-
-.loaderBarEstimation .bold {
-  opacity: 1;
 }
 
 .loaderBarIcon {
@@ -240,12 +227,6 @@
   bottom: 0;
   left: 0;
   width: 100%;
-}
-
-.loaderBarEstimation {
-  float: left;
-  font-size: 11px;
-  margin-left: 82px;
 }
 
 .getstarted.content {
@@ -743,10 +724,6 @@
   background-image: var(--disable-spv);
 }
 
-.lastLogLines {
-  font-size: 9px;
-}
-
 .stakepoolAddRow {
   float: left;
   width: 100%;
@@ -912,11 +889,6 @@
     flex-direction: column;
   }
 
-  .loaderBarEstimation {
-    padding: 0px 20px;
-    order: -1;
-  }
-
   .linearProgress {
     border-radius: 0;
   }
@@ -966,9 +938,6 @@
     margin: 20px;
   }
 
-  .loaderBarEstimation {
-    display: none;
-  }
   .logContainer .tabbedPageSubtitle {
     margin-left: 10px;
   }
@@ -1000,9 +969,6 @@
     width: 78%;
   }
 
-  .loaderBarEstimation {
-    display: none;
-  }
   .loaderSettingsLogs {
     right: -30px !important;
   }

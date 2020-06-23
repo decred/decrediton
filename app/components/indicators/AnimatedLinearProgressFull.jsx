@@ -4,6 +4,7 @@ import { HeaderTimeMsg } from "views/GetStartedPage/messages";
 import { FormattedRelative } from "shared";
 import { FormattedMessage as T } from "react-intl";
 import ReactTimeout from "react-timeout";
+import styles from "./indicators.module.css";
 
 @autobind
 class AnimatedLinearProgressFull extends React.Component {
@@ -110,12 +111,12 @@ class AnimatedLinearProgressFull extends React.Component {
         </div>
         <div>
           {getCurrentBlockCount && !getDaemonSynced && (
-            <div className="loader-bar-estimation">
+            <div className={styles.loaderBarEstimation}>
               <T
                 id="getStarted.chainLoading.syncEstimation"
                 m="Blockchain download estimated complete: "
               />
-              <span className="bold">
+              <span className={styles.bold}>
                 {finishDateEstimation && (
                   <FormattedRelative value={finishDateEstimation} />
                 )}
@@ -124,18 +125,16 @@ class AnimatedLinearProgressFull extends React.Component {
             </div>
           )}
           {selectedWalletSelector && syncFetchHeadersLastHeaderTime && (
-            <div className="loader-bar-estimation">
+            <div className={styles.loaderBarEstimation}>
               <HeaderTimeMsg />
-              <span className="bold">
+              <span className={styles.bold}>
                 <FormattedRelative value={syncFetchHeadersLastHeaderTime} />
               </span>
             </div>
           )}
           {selectedWalletSelector && lastDcrwalletLogLine && (
-            <div className="get-started-last-log-lines">
-              <div className="last-dcrwallet-log-line">
-                {lastDcrwalletLogLine}
-              </div>
+            <div className={styles.lastLogLines}>
+              <div>{lastDcrwalletLogLine}</div>
             </div>
           )}
         </div>

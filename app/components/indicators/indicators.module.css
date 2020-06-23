@@ -14,3 +14,23 @@
   font-size: 120%;
   padding: 1em;
 }
+
+.lastLogLines {
+  font-size: 9px;
+}
+
+.loaderBarEstimation {
+  text-align: left;
+  font-size: 9px;
+}
+
+.loaderBarEstimation .bold {
+  opacity: 1;
+  font-weight: 700;
+}
+
+@media screen and (max-width: 768px) {
+  .loaderBarEstimation {
+    display: none;
+  }
+}
