@@ -59,6 +59,7 @@ const SettingsPageHeader = ({
             ? closeWalletWithAutobuyerModal(walletName)
             : closeWalletModalContent(walletName)
         }
+        className={styles.closeModalButton}
         onSubmit={onCloseWallet}
       />
     }
