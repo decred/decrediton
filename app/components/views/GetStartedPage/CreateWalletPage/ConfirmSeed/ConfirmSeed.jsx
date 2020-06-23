@@ -57,7 +57,7 @@ class ConfirmSeed extends React.Component {
       word: update,
       show: seedWord.show,
       index: seedWord.index,
-      match: splitMnemonic[seedWord.index] == update
+      match: splitMnemonic[seedWord.index] === update
     };
     this.setState({ seedWords: updatedSeedWords }, () => {
       const seedWordStr = seedWords.map((seedWord) => seedWord.word).join(" ");

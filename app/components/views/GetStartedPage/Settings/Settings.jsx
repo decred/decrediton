@@ -38,10 +38,10 @@ const SetttingsForm = ({ onSendBack }) => {
   }, [onSaveSettings, onSendBack, tempSettings, setThemeName]);
   return (
     <>
-      <div className="logs settings">
-        <div className="go-back-screen-button-area">
+      <div className={classNames(styles.logs, styles.settings)}>
+        <div className={styles.goBackScreenButtonArea}>
           <Tooltip text={<GoBackMsg />}>
-            <div className="go-back-screen-button" onClick={onSendBack} />
+            <div className={styles.goBackScreenButton} onClick={onSendBack} />
           </Tooltip>
         </div>
         <Subtitle title={<T id="settings.subtitle" m="Settings" />} />

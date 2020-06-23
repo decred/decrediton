@@ -52,14 +52,14 @@ export const ConfirmSeedForm = ({
                 styles.seedWord,
                 seedWord.show && styles.filled,
                 !seedWord.show &&
-                  seedWord.word != "" &&
+                  seedWord.word !== "" &&
                   seedWord.match &&
                   styles.match,
                 !seedWord.show &&
-                  seedWord.word != "" &&
+                  seedWord.word !== "" &&
                   !seedWord.match &&
                   styles.noMatch,
-                !seedWord.show && seedWord.word != "" && styles.empty
+                !seedWord.show && seedWord.word === "" && styles.empty
               )}>
               <span className={styles.number}>{seedWord.index + 1}.</span>
               <span className={styles.word}>
@@ -70,7 +70,7 @@ export const ConfirmSeedForm = ({
                     disabled={seedWord.show}
                     onChange={onChangeSeedWord}
                     seedWord={seedWord}
-                    className={styles.selectMenuWithArrow}
+                    className="Select-menu-with-arrow" // this gonna change when moving to pi-ui's Select
                     value={{ name: seedWord.word }}
                   />
                 )}

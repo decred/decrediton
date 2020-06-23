@@ -1,7 +1,8 @@
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { PasswordInput } from "inputs";
 import { InfoDocFieldModalButton } from "buttons";
-// import "style/CreateWalletForm.less"; // XXXXXX: this less files is dead, replace with local css module!!!
+import { classNames } from "pi-ui";
+import styles from "./CreatePassPhrase.module.css";
 
 const messages = defineMessages({
   passphrasePlaceholder: {
@@ -46,15 +47,20 @@ const PassPhraseInputs = ({
   isValid
 }) => (
   <>
-    <div className="is-row passphrase">
-      <div className="confirm-seed-label-text passphrase is-row">
+    <div className={classNames("is-row", styles.passphraseRow)}>
+      <div
+        className={classNames(
+          "is-row",
+          styles.confirmSeedLabel,
+          styles.passphraseRow
+        )}>
         <InfoDocFieldModalButton document="PassphraseInfo" />
         <div>{passPhraseLabel}</div>
       </div>
       <form>
         <PasswordInput
           required
-          className="input-private-password"
+          className={styles.inputPrivatePassword}
           placeholder={intl.formatMessage(messages.passphrasePlaceholder)}
           value={passPhrase}
           onKeyDown={onKeyDown}
@@ -64,13 +70,14 @@ const PassPhraseInputs = ({
         />
       </form>
     </div>
-    <div className="is-row passphrase">
-      <div className="confirm-seed-label-text passphrase">
+    <div className={classNames("is-row", styles.passphraseRow)}>
+      <div
+        className={classNames(styles.confirmSeedLabel, styles.passphraseRow)}>
         {passPhraseVerificationLabel}
       </div>
       <form>
         <PasswordInput
-          className="input-private-password"
+          className={styles.inputPrivatePassword}
           invalid={!isValid}
           invalidMessage={passPhraseVerificationError}
           placeholder={intl.formatMessage(messages.verifyPassphrasePlaceholder)}

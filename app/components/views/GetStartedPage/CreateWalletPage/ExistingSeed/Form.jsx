@@ -69,7 +69,7 @@ const ExistingSeedForm = ({
                     seedWord={seedWord}
                     value={{ name: seedWord.word }}
                     key={index}
-                    className={styles.selectMenuWithArrow}
+                    className="Select-menu-with-arrow" // this gonna change when moving to pi-ui's Select
                     onPasteFromClipboard={pasteFromClipboard}
                   />
                 </span>

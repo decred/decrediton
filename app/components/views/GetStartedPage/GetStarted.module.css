@@ -511,25 +511,6 @@
   background-image: var(--restore-wallet-icon);
 }
 
-.selectControl {
-  padding-left: 0;
-}
-
-.selectValue {
-  padding-left: 0;
-}
-
-.selectInput {
-  height: 23px;
-  line-height: 23px;
-  vertical-align: initial;
-}
-
-.selectMenuOuter {
-  left: -27px;
-  width: calc(100% + 28px);
-}
-
 .contentTitle {
   font-size: 27px;
   line-height: 34px;

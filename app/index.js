@@ -11,6 +11,9 @@ import locales from "./i18n/locales";
 import "pi-ui/dist/index.css";
 import "./style/main.less";
 import "./style/ReactSelectGlobal.less";
+// SeedWordSelect.css includes custom styling for seed word select which need to be loaded *after*
+// ReactSelectGlobal.less, both imports should be deleted when migrating to pi-ui's Select componentt!
+import "components/views/GetStartedPage/CreateWalletPage/SeedWordSelect.css";
 import pkg from "./package.json";
 import { log } from "./wallet";
 import { ipcRenderer } from "electron";

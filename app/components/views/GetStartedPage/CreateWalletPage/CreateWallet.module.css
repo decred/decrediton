@@ -91,12 +91,12 @@
   color: var(--seedword-select-border-default-hover-text-color);
 }
 
-.seedWord.no-match,
+.seedWord.noMatch,
 .seedWord.error {
   border: 1px solid var(--error-red);
 }
 
-.seedWord.no-match .number,
+.seedWord.noMatch .number,
 .seedWord.error .number {
   border-right: 1px solid var(--error-red);
   color: var(--error-red);
@@ -145,10 +145,6 @@
   margin-bottom: 30px;
 }
 
-.passphrase {
-  height: 50px;
-}
-
 .confirmSeedLabel {
   margin-top: 8px;
   margin-right: 10px;
@@ -159,10 +155,6 @@
   color: var(--wallet-tutorial-text);
   justify-content: flex-end;
   text-align: right;
-}
-
-.passphrase .confirmSeedLabel {
-  margin-top: 1px;
 }
 
 .createWalletButtonContainer {
@@ -207,11 +199,6 @@
   font-weight: 400;
 }
 
-.inputPrivatePassword {
-  width: 288px;
-  padding-bottom: 3px;
-}
-
 .goBackButton {
   color: var(--home-content-link);
 }
@@ -246,41 +233,6 @@
 .seedArea.hex {
   width: 90%;
   display: block;
-}
-
-.selectArrow {
-  border: none;
-  display: inherit;
-  height: 0;
-  width: 0;
-  position: relative;
-  transition: inherit;
-}
-
-.selectControl:hover:not(:disabled) {
-  border: inherit;
-}
-
-.selectControl:hover:not(:disabled) .Select-arrow {
-  border-top-color: inherit;
-}
-
-.isOpen .selectArrow,
-.isOpen .selectControl:hover:not(:disabled) .selectArrow,
-.selectArrowZone:hover > .selectArrow {
-  border-top-color: inherit;
-}
-
-.selectControl {
-  padding-left: 2px;
-  border-radius: 3px;
-  color: var(--modal-bottom);
-  border-bottom: none;
-}
-
-.selectControl:hover,
-.selectControl:focus {
-  border: 1px solid var(--disabled-color);
 }
 
 .buttonArea {

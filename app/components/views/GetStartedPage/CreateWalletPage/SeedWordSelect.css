@@ -1,0 +1,55 @@
+/* this includes custom styling for select used in SingleSeedWordEntry
+and ideally should be deleting when we migrate to use pi-ui's Select component
+please note that this isn't a module as we target react-select classes directly here
+and using a css module would hash the classes hence won't work !!
+*/
+
+.Select-value {
+  padding-left: 0;
+}
+
+.Select-input {
+  height: 23px;
+  line-height: 23px;
+  vertical-align: initial;
+}
+
+.Select-menu-outer {
+  left: -27px;
+  width: calc(100% + 28px);
+}
+
+.Select-arrow {
+  border: none;
+  display: inherit;
+  height: 0;
+  width: 0;
+  position: relative;
+  transition: inherit;
+}
+
+.Select-control:hover:not(:disabled) {
+  border: inherit;
+}
+
+.Select-control:hover:not(:disabled) .Select-arrow {
+  border-top-color: inherit;
+}
+
+.is-open .select-arrow,
+.is-open .select-control:hover:not(:disabled) .selectArrow,
+.Select-arrow-zone:hover > .Select-arrow {
+  border-top-color: inherit;
+}
+
+.Select-control {
+  padding-left: 0;
+  border-radius: 3px;
+  color: var(--modal-bottom);
+  border-bottom: none;
+}
+
+.Select-control:hover,
+.Select-control:focus {
+  border: 1px solid var(--disabled-color);
+}
