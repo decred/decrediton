@@ -154,7 +154,7 @@
   background-image: var(--menu-ln-active);
 }
 
-.sidebarMenuLinkNotificationIcon {
+.menuLinkNotificationIcon {
   background-repeat: no-repeat;
   background-image: var(--bell-notification-icon);
   background-position: center;

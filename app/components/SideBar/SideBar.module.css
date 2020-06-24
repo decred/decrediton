@@ -32,7 +32,7 @@
   flex: 1;
 }
 
-.sidebarWatchOnlyIcon {
+.watchOnlyIcon {
   width: 16px;
   height: 16px;
   background-repeat: no-repeat;
@@ -58,10 +58,6 @@
   .sidebarScroll {
     overflow: hidden;
     margin: 0 auto;
-  }
-
-  .sidebarLogo {
-    flex-direction: row-reverse;
   }
 
   .menuCaret {

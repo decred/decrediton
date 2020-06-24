@@ -7,32 +7,28 @@ const isImported = (accountNumber) => accountNumber === Math.pow(2, 31) - 1;
 
 const AccountsList = ({ isShowingAccounts, balances }) => (
   <div
-    className={style.sidebarMenuTotalBalanceExtended}
-    style={{ display: isShowingAccounts ? "flex" : "none" }}>
-    <div className={style.sidebarMenuTotalBalanceExtendedBottom}>
+    className={classNames(
+      style.extended,
+      isShowingAccounts && style.showingAccounts
+    )}>
+    <div className={style.extendedBottom}>
       {balances.map(
         ({ hidden, total, accountName, accountNumber }) =>
           !hidden && (
             <div
               className={classNames(
-                style.sidebarMenuTotalBalanceExtendedBottomAccount,
+                style.extendedBottomAccount,
                 isImported(accountNumber) && style.imported
               )}
               key={accountName}>
-              <div
-                className={
-                  style.sidebarMenuTotalBalanceExtendedBottomAccountName
-                }>
+              <div className={style.extendedBottomAccountName}>
                 {accountName === "default" ? (
                   <T id="sidebar.accounts.name.default" m="Primary Account" />
                 ) : (
                   accountName
                 )}
               </div>
-              <div
-                className={
-                  style.sidebarMenuTotalBalanceExtendedBottomAccountNumber
-                }>
+              <div className={style.extendedBottomAccountNumber}>
                 {total ? <Balance hideCurrency amount={total} /> : 0}
               </div>
             </div>

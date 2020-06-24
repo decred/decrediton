@@ -11,8 +11,8 @@ const MenuBottomCollapsed = ({
   <div
     className={classNames(
       sidebarOnBottom && style.sidebarOnBottom,
-      style.sidebarMenuBottomLatestBlock,
-      style.sidebarMenuBottomLatestBlockCollapsed
+      style.latestBlock,
+      style.latestBlockCollapsed
     )}>
     <div className={style.rescanButtonAreaCollapsed}>
       <RescanButton {...{ rescanRequest, rescanAttempt }} />

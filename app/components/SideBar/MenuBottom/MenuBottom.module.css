@@ -1,11 +1,11 @@
-.sidebarMenuBottomTotalBalanceShort {
+.short {
   position: relative;
   height: 56px;
   padding: 0;
   cursor: pointer;
 }
 
-.sidebarMenuBottomTotalBalanceShortSeparator {
+.shortSeparator {
   height: 7px;
   margin-bottom: 15px;
   background-image: var(--menu-arrow-up);
@@ -16,7 +16,7 @@
   position: relative;
 }
 
-.sidebarMenuBottomTotalBalanceShortSeparator::before {
+.shortSeparator::before {
   content: "";
   border-bottom: 1px solid var(--short-separator-border);
   position: absolute;
@@ -25,11 +25,11 @@
   right: 16px;
 }
 
-.sidebarMenuBottomTotalBalanceShortSeparator.showAccounts {
+.shortSeparator.showAccounts {
   background-color: var(--background-container-opaque);
 }
 
-.sidebarMenuBottomTotalBalanceShortName {
+.shortName {
   float: left;
   color: var(--disabled-color);
   font-size: 13px;
@@ -43,7 +43,7 @@
   background-position: 16px 50%;
 }
 
-.sidebarMenuBottomTotalBalanceShortValue {
+.shortValue {
   float: right;
   font-family: var(--font-family-regular);
   color: var(--sidebar-bottom-light-text-color);
@@ -53,26 +53,26 @@
   padding-right: 16px;
 }
 
-.sidebarMenuBottomTotalBalanceShortValue .balanceSmall {
+.shortValue .balanceSmall {
   font-size: 13px;
 }
 
-.sidebarMenuBottomLatestBlock {
+.latestBlock {
   position: relative;
   padding: 16px 16px 16px 20px;
   background-color: var(--info-modal-button-text);
   font-size: 13px;
 }
 
-.sidebarMenuBottomLatestBlockCollapsed {
+.latestBlockCollapsed {
   padding: 14px 0 10px 0;
 }
 
-.sidebarOnBottom.sidebarMenuBottomLatestBlockCollapsed {
+.sidebarOnBottom.latestBlockCollapsed {
   display: none;
 }
 
-.sidebarMenuBottomLatestBlockName {
+.latestBlockName {
   color: var(--disabled-color);
   font-size: 13px;
   line-height: 10px;
@@ -80,12 +80,12 @@
   text-decoration: none;
 }
 
-.sidebarMenuBottomLatestBlockNumber {
+.latestBlockNumber {
   font-family: var(--font-family-monospace);
   color: var(--sidebar-bottom-light-text-color);
 }
 
-.sidebarMenuBottomLatestBlockTime {
+.latestBlockTime {
   float: right;
   color: var(--disabled-color);
   font-size: 13px;
@@ -110,11 +110,11 @@
 }
 
 @media screen and (max-width: 768px) {
-  .sidebarMenuBottomLatestBlock {
+  .latestBlock {
     background-color: var(--sidebar-color);
   }
 
-  .sidebarMenuBottomLatestBlock .tooltipContainer span {
+  .latestBlock .tooltipContainer span {
     visibility: hidden;
   }
 }
