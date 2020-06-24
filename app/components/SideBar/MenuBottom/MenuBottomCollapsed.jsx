@@ -2,7 +2,7 @@ import { RescanButton, RescanCancelButton } from "buttons";
 import style from "./MenuBottom.module.css";
 import { classNames } from "pi-ui";
 
-const MenuBottomColllapsed = ({
+const MenuBottomCollapsed = ({
   rescanRequest,
   rescanAttempt,
   rescanCancel,
@@ -23,4 +23,4 @@ const MenuBottomColllapsed = ({
   </div>
 );
 
-export default MenuBottomColllapsed;
+export default MenuBottomCollapsed;
