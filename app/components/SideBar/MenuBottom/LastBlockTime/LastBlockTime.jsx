@@ -1,6 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
-import ReactTimeout from "react-timeout";
 import { FormattedRelative } from "shared";
+import ReactTimeout from "react-timeout";
 import { useLastBlockTime } from "./hooks";
 
 const LastBlockTime = ({ lastBlockTimestamp, clearTimeout, setTimeout }) => {
@@ -17,7 +17,7 @@ const LastBlockTime = ({ lastBlockTimestamp, clearTimeout, setTimeout }) => {
       <FormattedRelative value={lastBlockDate} updateInterval={1 * 1000} />
     )
   ) : null;
-}
+};
 
 export { LastBlockTime };
 

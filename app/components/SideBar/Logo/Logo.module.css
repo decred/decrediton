@@ -24,16 +24,16 @@
 }
 
 .sidebarReduceArrow {
-	height: 20px;
-	width: 20px;
-	background-repeat: no-repeat;
-	background-image: var(--menu-arrow);
-	cursor: pointer;
-	margin-left: 85px;
+  height: 20px;
+  width: 20px;
+  background-repeat: no-repeat;
+  background-image: var(--menu-arrow);
+  cursor: pointer;
+  margin-left: 85px;
 }
 
 .sidebarReduceArrow:hover {
-	opacity: 0.7;
+  opacity: 0.7;
 }
 
 @media screen and (max-width: 768px) {

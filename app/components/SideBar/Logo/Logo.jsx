@@ -1,5 +1,5 @@
-import { Tooltip } from "shared";
 import { FormattedMessage as T } from "react-intl";
+import { Tooltip } from "shared";
 import { TESTNET, MAINNET } from "constants";
 import style from "./Logo.module.css";
 

@@ -1,84 +1,83 @@
 .sidebar {
-	display: flex;
-	flex-direction: column;
-	width: var(--sidebar-width);
-	z-index: 99;
-	transition: width 100ms cubic-bezier(0.86, 0, 0.07, 1);
-	box-shadow: 5px 0 21px rgba(9, 20, 64, 0.21);
-	background-color: var(--sidebar-color);
+  display: flex;
+  flex-direction: column;
+  width: var(--sidebar-width);
+  z-index: 99;
+  transition: width 100ms cubic-bezier(0.86, 0, 0.07, 1);
+  box-shadow: 5px 0 21px rgba(9, 20, 64, 0.21);
+  background-color: var(--sidebar-color);
 }
 
 .sidebar.sidebarReduced {
-	width: var(--sidebar-width-reduced);
+  width: var(--sidebar-width-reduced);
 }
 
 .sidebar.sidebarOnBottom {
-	height: 70px;
-	flex-direction: row;
+  height: 70px;
+  flex-direction: row;
 }
 
 .sidebarMain {
-	position: relative;
-	flex: 1;
-	overflow: hidden;
-	display: flex;
-	flex-direction: column;
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .sidebarScroll {
-	position: relative;
-	overflow-y: auto;
-	overflow-x: hidden;
-	flex: 1;
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex: 1;
 }
 
 .sidebarWatchOnlyIcon {
-	width: 16px;
-	height: 16px;
-	background-repeat: no-repeat;
-	background-image: var(--watch-only-icon);
-	margin-right: 10px;
-	margin-bottom: 10px;
+  width: 16px;
+  height: 16px;
+  background-repeat: no-repeat;
+  background-image: var(--watch-only-icon);
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 .menuCaret {
-	position: absolute;
-	height: 52px;
-	width: 100%;
-	border-left: 5px solid var(--accent-color);
-	background-color: var(--background-back-color);
+  position: absolute;
+  height: 52px;
+  width: 100%;
+  border-left: 5px solid var(--accent-color);
+  background-color: var(--background-back-color);
 }
 
 @media screen and (max-width: 768px) {
-	.sidebar {
-		display: flex;
-		width: 100% !important;
-	}
+  .sidebar {
+    display: flex;
+    width: 100% !important;
+  }
 
-	.sidebarScroll {
-		overflow: hidden;
-		margin: 0 auto;
-	}
+  .sidebarScroll {
+    overflow: hidden;
+    margin: 0 auto;
+  }
 
-	.sidebarLogo {
-		flex-direction: row-reverse;
-	}
+  .sidebarLogo {
+    flex-direction: row-reverse;
+  }
 
-	.menuCaret {
-		width: 76px;
-		height: 65px;
-		border-left: 0;
-		border-bottom: 5px solid var(--accent-color);
-	}
-
+  .menuCaret {
+    width: 76px;
+    height: 65px;
+    border-left: 0;
+    border-bottom: 5px solid var(--accent-color);
+  }
 }
 
 @keyframes spin {
-	from {
-		transform: rotate(0deg);
-	}
+  from {
+    transform: rotate(0deg);
+  }
 
-	to {
-		transform: rotate(360deg);
-	}
+  to {
+    transform: rotate(360deg);
+  }
 }

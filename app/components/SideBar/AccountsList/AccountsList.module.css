@@ -1,49 +1,49 @@
 .sidebarMenuTotalBalanceExtended {
-	z-index: 2;
-	position: absolute;
-	top: 0;
-	height: 100%;
-	width: 100%;
-	flex-direction: column;
-	justify-content: flex-end;
-	background-color: var(--background-container-opaque);
-	transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1);
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  justify-content: flex-end;
+  background-color: var(--background-container-opaque);
+  transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1);
 }
 
 .sidebarMenuTotalBalanceExtendedBottom {
-	padding-right: 18px;
+  padding-right: 18px;
 }
 
 .sidebarMenuTotalBalanceExtendedBottomAccount {
-	height: 44px;
-	display: flex;
-	padding-left: 52px;
-	justify-content: space-between;
-	background-image: var(--accounts-default);
-	background-size: 20px auto;
-	background-repeat: no-repeat;
-	background-position: 19px 0;
+  height: 44px;
+  display: flex;
+  padding-left: 52px;
+  justify-content: space-between;
+  background-image: var(--accounts-default);
+  background-size: 20px auto;
+  background-repeat: no-repeat;
+  background-position: 19px 0;
 }
 
 .sidebarMenuTotalBalanceExtendedBottomAccount.imported {
-	background-image: var(--accounts-imported);
+  background-image: var(--accounts-imported);
 }
 
 .sidebarMenuTotalBalanceExtendedBottomAccountName {
-	color: var(--stroke-color-hovered);
-	font-size: 13px;
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
+  color: var(--stroke-color-hovered);
+  font-size: 13px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .sidebarMenuTotalBalanceExtendedBottomAccountNumber {
-	font-family: var(--font-family-regular);
-	color: var(--input-color-default);
-	font-size: 11pt;
-	font-weight: 600;
+  font-family: var(--font-family-regular);
+  color: var(--input-color-default);
+  font-size: 11pt;
+  font-weight: 600;
 }
 
 .sidebarMenuTotalBalanceExtendedBottomAccountNumber .balanceSmall {
-	font-size: 11pt;
+  font-size: 11pt;
 }

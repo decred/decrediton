@@ -1,11 +1,11 @@
+import AccountsList from "./AccountsList/AccountsList";
+import MenuBottomExpanded from "./MenuBottom/MenuBottomExpanded";
+import MenuBottomCollapsed from "./MenuBottom/MenuBottomCollapsed";
 import MenuLinks from "./MenuLinks/MenuLinks";
 import Logo from "./Logo/Logo";
-import { classNames } from "pi-ui";
 import style from "./SideBar.module.css";
+import { classNames } from "pi-ui";
 import { useSideBar } from "./hooks";
-import MenuBottomExpanded from "./MenuBottom/MenuBottomExpanded";
-import AccountsList from "./AccountsList/AccountsList";
-import MenuBottomCollapsed from "./MenuBottom/MenuBottomCollapsed";
 
 const SideBar = () => {
   const {

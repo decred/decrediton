@@ -1,9 +1,8 @@
-import { newProposalCounts } from "connectors";
-import { useMenuLinks } from "./hooks";
-import MenuLink from "./MenuLink/MenuLink";
-import { Motion } from "react-motion";
-import style from "../SideBar.module.css";
 import { linkList } from "./Links";
+import { Motion } from "react-motion";
+import MenuLink from "./MenuLink/MenuLink";
+import style from "../SideBar.module.css";
+import { useMenuLinks } from "./hooks";
 
 const MenuList = React.memo(({ sidebarOnBottom, nodes, menuLinks }) =>
   sidebarOnBottom
@@ -19,6 +18,7 @@ const MenuList = React.memo(({ sidebarOnBottom, nodes, menuLinks }) =>
                 notifProp={notifProp}
                 ref={(ref) => nodes.set(path, ref)}
                 sidebarOnBottom={sidebarOnBottom}
+                key={path}
               />
             );
           })}
@@ -34,6 +34,7 @@ const MenuList = React.memo(({ sidebarOnBottom, nodes, menuLinks }) =>
             notifProp={notifProp}
             ref={(ref) => nodes.set(path, ref)}
             sidebarOnBottom={sidebarOnBottom}
+            key={path}
           />
         );
       })

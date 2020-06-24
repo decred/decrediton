@@ -7,6 +7,7 @@ import locales, { defaultFormats } from "../../../../app/i18n/locales";
 
 afterEach(() => clear());
 
+// en
 const locale = locales[1];
 
 const Wrapper = ({ lastBlockTimestamp, setTimeout, clearTimeout }) => {

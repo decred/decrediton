@@ -1,9 +1,9 @@
+import { useEffect, useState, useCallback, useMemo, useRef } from "react";
+import { useSelector } from "react-redux";
 import { usePrevious } from "helpers";
 import { spring } from "react-motion";
 import theme from "theme";
 import * as sel from "selectors";
-import { useSelector } from "react-redux";
-import { useEffect, useState, useCallback, useMemo, useRef } from "react";
 import { trezorLink, lnLink } from "./Links";
 import { MENU_LINKS_PER_ROW } from "../../../constants/Decrediton";
 

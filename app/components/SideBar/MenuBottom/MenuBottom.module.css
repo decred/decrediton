@@ -1,97 +1,96 @@
-
 .sidebarMenuBottomTotalBalanceShort {
-	position: relative;
-	height: 56px;
-	padding: 0;
-	cursor: pointer;
+  position: relative;
+  height: 56px;
+  padding: 0;
+  cursor: pointer;
 }
 
 .sidebarMenuBottomTotalBalanceShortSeparator {
-	height: 7px;
-	margin-bottom: 15px;
-	background-image: var(--menu-arrow-up);
-	background-position: 50% 8px;
-	background-repeat: no-repeat;
-	padding: 7px 16px 0 16px;
-	background-size: 12px 6px;
-	position: relative;
+  height: 7px;
+  margin-bottom: 15px;
+  background-image: var(--menu-arrow-up);
+  background-position: 50% 8px;
+  background-repeat: no-repeat;
+  padding: 7px 16px 0 16px;
+  background-size: 12px 6px;
+  position: relative;
 }
 
 .sidebarMenuBottomTotalBalanceShortSeparator::before {
-	content: "";
-	border-bottom: 1px solid var(--short-separator-border);
-	position: absolute;
-	bottom: 0;
-	left: 19px;
-	right: 16px;
+  content: "";
+  border-bottom: 1px solid var(--short-separator-border);
+  position: absolute;
+  bottom: 0;
+  left: 19px;
+  right: 16px;
 }
 
 .sidebarMenuBottomTotalBalanceShortSeparator.showAccounts {
-	background-color: var(--background-container-opaque);
+  background-color: var(--background-container-opaque);
 }
 
 .sidebarMenuBottomTotalBalanceShortName {
-	float: left;
-	color: var(--disabled-color);
-	font-size: 13px;
-	text-align: left;
-	text-decoration: none;
-	padding-left: 36px;
-	margin-left: 4px;
-	background-image: var(--sidebar-balance-icon);
-	background-repeat: no-repeat;
-	background-size: 16px 16px;
-	background-position: 16px 50%;
+  float: left;
+  color: var(--disabled-color);
+  font-size: 13px;
+  text-align: left;
+  text-decoration: none;
+  padding-left: 36px;
+  margin-left: 4px;
+  background-image: var(--sidebar-balance-icon);
+  background-repeat: no-repeat;
+  background-size: 16px 16px;
+  background-position: 16px 50%;
 }
 
 .sidebarMenuBottomTotalBalanceShortValue {
-	float: right;
-	font-family: var(--font-family-regular);
-	color: var(--sidebar-bottom-light-text-color);
-	font-size: 13px;
-	text-align: right;
-	font-weight: 600;
-	padding-right: 16px;
+  float: right;
+  font-family: var(--font-family-regular);
+  color: var(--sidebar-bottom-light-text-color);
+  font-size: 13px;
+  text-align: right;
+  font-weight: 600;
+  padding-right: 16px;
 }
 
 .sidebarMenuBottomTotalBalanceShortValue .balanceSmall {
-	font-size: 13px;
+  font-size: 13px;
 }
 
 .sidebarMenuBottomLatestBlock {
-	position: relative;
-	padding: 16px 16px 16px 20px;
-	background-color: var(--info-modal-button-text);
-	font-size: 13px;
+  position: relative;
+  padding: 16px 16px 16px 20px;
+  background-color: var(--info-modal-button-text);
+  font-size: 13px;
 }
 
 .sidebarMenuBottomLatestBlockCollapsed {
-	padding: 14px 0 10px 0;
+  padding: 14px 0 10px 0;
 }
 
 .sidebarOnBottom.sidebarMenuBottomLatestBlockCollapsed {
-	display: none;
+  display: none;
 }
 
 .sidebarMenuBottomLatestBlockName {
-	color: var(--disabled-color);
-	font-size: 13px;
-	line-height: 10px;
-	text-align: left;
-	text-decoration: none;
+  color: var(--disabled-color);
+  font-size: 13px;
+  line-height: 10px;
+  text-align: left;
+  text-decoration: none;
 }
 
 .sidebarMenuBottomLatestBlockNumber {
-	font-family: var(--font-family-monospace);
-	color: var(--sidebar-bottom-light-text-color);
+  font-family: var(--font-family-monospace);
+  color: var(--sidebar-bottom-light-text-color);
 }
 
 .sidebarMenuBottomLatestBlockTime {
-	float: right;
-	color: var(--disabled-color);
-	font-size: 13px;
-	text-align: right;
-	text-decoration: none;
+  float: right;
+  color: var(--disabled-color);
+  font-size: 13px;
+  text-align: right;
+  text-decoration: none;
 }
 
 .rescanButtonArea {
@@ -101,21 +100,21 @@
 }
 
 .rescanButtonAreaCollapsed {
-	text-align: center;
-	padding-right: 0;
-	float: none;
+  text-align: center;
+  padding-right: 0;
+  float: none;
 }
 
 .rescanButton.spin {
-	animation: spin 1s linear infinite;
+  animation: spin 1s linear infinite;
 }
 
 @media screen and (max-width: 768px) {
-	.sidebarMenuBottomLatestBlock {
-		background-color: var(--sidebar-color);
-	}
+  .sidebarMenuBottomLatestBlock {
+    background-color: var(--sidebar-color);
+  }
 
-	.sidebarMenuBottomLatestBlock .tooltipContainer span {
-		visibility: hidden;
-	}
+  .sidebarMenuBottomLatestBlock .tooltipContainer span {
+    visibility: hidden;
+  }
 }
