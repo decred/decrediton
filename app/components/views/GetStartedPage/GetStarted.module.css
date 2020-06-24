@@ -500,20 +500,6 @@
   width: 100%;
 }
 
-.contentText {
-  font-size: 13px;
-}
-
-.contentText .bold {
-  font-weight: 600;
-}
-
-.contentText .column {
-  float: left;
-  width: 300px;
-  margin-right: 32px;
-}
-
 .desc {
   font-size: 19px;
   color: var(--modal-text);
