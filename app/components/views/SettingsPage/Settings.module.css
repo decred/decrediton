@@ -14,10 +14,6 @@
   margin-right: 0;
 }
 
-.languageLabel .flag {
-  margin: 5px 5px 0 0;
-}
-
 .group {
   display: flex;
   flex-direction: column;

@@ -59,7 +59,7 @@ class LanguageSelectInput extends React.Component {
   valueRenderer(option) {
     return (
       <div className={styles.label}>
-        <div className={classNames(styles.flag, +styles[option.language])} />
+        <div className={classNames(styles.flag, styles[option.language])} />
         <div className={styles.name}>{option.description}</div>
       </div>
     );
