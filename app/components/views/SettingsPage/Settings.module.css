@@ -158,7 +158,7 @@
 }
 
 .changePasswordDefaultIcon {
-  background: var(--changePassword-default-icon) no-repeat center;
+  background: var(--change-password-default-icon) no-repeat center;
   background-color: var(--input-color);
   background-size: 16px;
   cursor: pointer;

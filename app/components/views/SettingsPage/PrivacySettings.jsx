@@ -69,6 +69,7 @@ const PrivacySettings = ({
             <WatchOnlyWarnNotification isActive={isChangePassPhraseDisabled}>
               <ChangePassphraseButton
                 className={classNames(
+                  styles.changePasswordDefaultIcon,
                   isChangePassPhraseDisabled &&
                     styles.changePasswordDisabledIcon,
                   changePassphraseRequestAttempt && styles.changePasswordLoading
