@@ -55,6 +55,7 @@
   background-color: var(--background-container);
   z-index: 3;
   height: calc(100% - 60px);
+  overflow-x: hidden;
 }
 
 .pageBody.getstarted::before {
