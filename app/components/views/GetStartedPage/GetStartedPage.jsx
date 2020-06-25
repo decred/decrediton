@@ -18,7 +18,10 @@ import WalletPubpassInput from "./OpenWallet/OpenWallet";
 import ReleaseNotes from "./ReleaseNotes/ReleaseNotes";
 import { ipcRenderer } from "electron";
 
-// XXX: what about these?
+// XXX: these animations classes are passed down to AnimatedLinearProgressFull
+// and styling defined in Loading.less and need to handled when loading.less
+// is migrated, and classes should be defined then in ./GetStarted.module.css
+
 // css animation classes
 const blockChainLoading = "blockchain-syncing";
 const daemonWaiting = "daemon-waiting";
