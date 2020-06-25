@@ -120,10 +120,6 @@
   padding: 12px 30px 14px 30px;
 }
 
-.linearProgress.small {
-  float: left;
-}
-
 .goBackScreenButtonArea {
   position: fixed;
   right: 55px;
@@ -874,14 +870,6 @@
     left: 0;
     display: flex;
     flex-direction: column;
-  }
-
-  .linearProgress {
-    border-radius: 0;
-  }
-
-  .linearProgressBar {
-    border-radius: 0;
   }
 
   .daemonLabel {

@@ -4,6 +4,7 @@ import { HeaderTimeMsg } from "views/GetStartedPage/messages";
 import { FormattedRelative } from "shared";
 import { FormattedMessage as T } from "react-intl";
 import ReactTimeout from "react-timeout";
+import { classNames } from "pi-ui";
 import styles from "./indicators.module.css";
 
 @autobind
@@ -50,10 +51,9 @@ class AnimatedLinearProgressFull extends React.Component {
       );
     }
     const { lastDcrwalletLogLine } = this.state;
-
     return (
       <>
-        <div className={"linear-progress " + animationType}>
+        <div className={classNames("linear-progress", animationType)}>
           {getDaemonSynced || isSPV ? (
             <div
               className={"linear-progress-bar " + (error ? "error" : null)}
