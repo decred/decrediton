@@ -3,30 +3,39 @@ import useChangePassphraseModal from "./hooks";
 
 const ChangePassphraseModal = ({ onCancelModal, onSubmit, ...props }) => {
   const {
+    privPass,
+    confirmPrivPass,
+    confirmPrivPassError,
+    hasFailedAttempt,
+    triggerPassphraseModalSubmit,
     onCancelModalCallback,
     validationFailed,
     isValid,
     onSubmitCallback,
     updatePrivatePassphrase,
     updateConfirmPrivatePassphrase,
-    onTriggerPassphraseModalSubmit,
-    ...state
+    onTriggerPassphraseModalSubmit
   } = useChangePassphraseModal(onCancelModal, onSubmit);
 
   return (
     <Modal
-      {...{ ...props, ...state }}
+      {...props}
       {...{
+        privPass,
+        confirmPrivPass,
+        confirmPrivPassError,
+        hasFailedAttempt,
+        triggerPassphraseModalSubmit,
+        onCancelModal: onCancelModalCallback,
+        validationFailed,
+        isValid,
+        onSubmit: onSubmitCallback,
         updatePrivatePassphrase,
         updateConfirmPrivatePassphrase,
-        onSubmit: onSubmitCallback,
-        onCancelModal: onCancelModalCallback,
-        isValid,
-        validationFailed,
         onTriggerPassphraseModalSubmit
       }}
     />
   );
-}
+};
 
 export default ChangePassphraseModal;

@@ -10,11 +10,12 @@ const PassphraseModal = ({
   ...props
 }) => {
   const {
+    passPhrase,
+    hasFailedAttempt,
     onCancelModalCallback,
     setPassPhraseCallback,
     isValidCallback,
-    onSubmitCallback,
-    ...state
+    onSubmitCallback
   } = usePassphraseModal(
     triggerSubmit,
     onCancelModal,
@@ -25,12 +26,14 @@ const PassphraseModal = ({
 
   return (
     <Modal
-      {...{ ...props, ...state }}
+      {...props}
       {...{
-        setPassPhrase: setPassPhraseCallback,
-        onSubmit: onSubmitCallback,
+        passPhrase,
+        hasFailedAttempt,
         onCancelModal: onCancelModalCallback,
-        isValid: isValidCallback
+        setPassPhrase: setPassPhraseCallback,
+        isValid: isValidCallback,
+        onSubmit: onSubmitCallback
       }}
     />
   );

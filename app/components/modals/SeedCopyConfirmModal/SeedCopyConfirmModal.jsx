@@ -11,16 +11,19 @@ const message = defineMessages({
 
 const SeedCopyConfirmModal = ({ onSubmit, onCancelModal, ...props }) => {
   const {
+    copyConfirmationPhrase,
+    typedConfirmationPhrase,
     onTypedConfirmationPhraseChanged,
     onSubmitCallback,
-    onCancelModalCallback,
-    ...state
+    onCancelModalCallback
   } = useSeedCopyConfirmModal(onSubmit, onCancelModal, message);
 
   return (
     <Modal
-      {...{ ...props, ...state }}
+      {...props}
       {...{
+        copyConfirmationPhrase,
+        typedConfirmationPhrase,
         onTypedConfirmationPhraseChanged,
         onSubmit: onSubmitCallback,
         onCancelModal: onCancelModalCallback
