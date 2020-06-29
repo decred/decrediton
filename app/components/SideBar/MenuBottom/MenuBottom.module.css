@@ -1,0 +1,120 @@
+.short {
+  position: relative;
+  height: 56px;
+  padding: 0;
+  cursor: pointer;
+}
+
+.shortSeparator {
+  height: 7px;
+  margin-bottom: 15px;
+  background-image: var(--menu-arrow-up);
+  background-position: 50% 8px;
+  background-repeat: no-repeat;
+  padding: 7px 16px 0 16px;
+  background-size: 12px 6px;
+  position: relative;
+}
+
+.shortSeparator::before {
+  content: "";
+  border-bottom: 1px solid var(--short-separator-border);
+  position: absolute;
+  bottom: 0;
+  left: 19px;
+  right: 16px;
+}
+
+.shortSeparator.showAccounts {
+  background-color: var(--background-container-opaque);
+}
+
+.shortName {
+  float: left;
+  color: var(--disabled-color);
+  font-size: 13px;
+  text-align: left;
+  text-decoration: none;
+  padding-left: 36px;
+  margin-left: 4px;
+  background-image: var(--sidebar-balance-icon);
+  background-repeat: no-repeat;
+  background-size: 16px 16px;
+  background-position: 16px 50%;
+}
+
+.shortValue {
+  float: right;
+  font-family: var(--font-family-regular);
+  color: var(--sidebar-bottom-light-text-color);
+  font-size: 13px;
+  text-align: right;
+  font-weight: 600;
+  padding-right: 16px;
+}
+
+.shortValue .balanceSmall {
+  font-size: 13px;
+}
+
+.latestBlock {
+  position: relative;
+  padding: 16px 16px 16px 20px;
+  background-color: var(--info-modal-button-text);
+  font-size: 13px;
+}
+
+.latestBlockCollapsed {
+  padding: 14px 0 10px 0;
+}
+
+.sidebarOnBottom.latestBlockCollapsed {
+  display: none;
+}
+
+.latestBlockName {
+  color: var(--disabled-color);
+  font-size: 13px;
+  line-height: 10px;
+  text-align: left;
+  text-decoration: none;
+}
+
+.latestBlockNumber {
+  font-family: var(--font-family-monospace);
+  color: var(--sidebar-bottom-light-text-color);
+}
+
+.latestBlockTime {
+  float: right;
+  color: var(--disabled-color);
+  font-size: 13px;
+  text-align: right;
+  text-decoration: none;
+}
+
+.rescanButtonArea {
+  padding-top: 2px;
+  padding-right: 5px;
+  float: left;
+}
+
+.rescanButtonAreaCollapsed {
+  text-align: center;
+  padding-right: 0;
+  float: none;
+}
+
+.rescanButton.spin {
+  animation: spin 1s linear infinite;
+}
+
+@media screen and (max-width: 768px) {
+  .latestBlock {
+    background-color: var(--sidebar-color);
+  }
+
+  .latestBlock .tooltipContainer span {
+    visibility: hidden;
+  }
+}

@@ -1,0 +1,54 @@
+.extended {
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  justify-content: flex-end;
+  background-color: var(--background-container-opaque);
+  transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1);
+  display: none;
+}
+
+.extended.showingAccounts {
+  display: flex;
+}
+
+.extendedBottom {
+  padding-right: 18px;
+}
+
+.extendedBottomAccount {
+  height: 44px;
+  display: flex;
+  padding-left: 52px;
+  justify-content: space-between;
+  background-image: var(--accounts-default);
+  background-size: 20px auto;
+  background-repeat: no-repeat;
+  background-position: 19px 0;
+}
+
+.extendedBottomAccount.imported {
+  background-image: var(--accounts-imported);
+}
+
+.extendedBottomAccountName {
+  color: var(--stroke-color-hovered);
+  font-size: 13px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.extendedBottomAccountNumber {
+  font-family: var(--font-family-regular);
+  color: var(--input-color-default);
+  font-size: 11pt;
+  font-weight: 600;
+}
+
+.extendedBottomAccountNumber .balanceSmall {
+  font-size: 11pt;
+}

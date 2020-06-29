@@ -14,7 +14,6 @@ export { default as send } from "./send";
 export { default as service } from "./service"; // TODO: hook already exists in hooks/useService.js but connector is still used in class components
 export { default as settings } from "./settings"; // TODO: hook already exists in hooks/useSettings.js  but connector is still used in class components
 export { default as shutdownPage } from "./shutdownPage";
-export { default as sideBar } from "./sideBar";
 export { default as signMessagePage } from "./signMessagePage";
 export { default as spv } from "./spv";
 export { default as snackbar } from "./snackbar";
@@ -40,7 +39,6 @@ export { default as fatalErrorPage } from "./fatalErrorPage";
 export { default as theming } from "./theming";
 export { default as newStakePool } from "./newStakePool";
 export { default as helpPage } from "./helpPage";
-export { default as newProposalCounts } from "./newProposalCounts";
 export { default as network } from "./network";
 export { default as trezor } from "./trezor";
 export { default as importScript } from "./importScript";
