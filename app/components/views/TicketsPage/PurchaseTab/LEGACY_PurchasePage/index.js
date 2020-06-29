@@ -1,5 +1,5 @@
 import { StakeyBounce } from "indicators";
-import StakePools from "./LEGACY_StakePools";
+import StakePools from "./LEGACY_StakePools/StakePoolsList";
 import Tickets from "./LEGACY_Tickets";
 
 function LEGACY_PurchasePage({
