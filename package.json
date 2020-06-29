@@ -101,7 +101,9 @@
       "staticPages/",
       "main.js",
       "main.js.map",
-      "package.json"
+      "package.json",
+      "icons/*",
+      "icon.*"
     ],
     "extraResources": [
       {
@@ -126,7 +128,8 @@
         "deb",
         "rpm",
         "tar.gz"
-      ]
+      ],
+      "icon": "./build/icon/"
     },
     "directories": {
       "output": "release"
