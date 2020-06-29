@@ -1,5 +1,9 @@
 import { FormattedMessage as T } from "react-intl";
-import { KeyBlueButton, InvisibleButton } from "buttons";
+import {
+  KeyBlueButton,
+  InvisibleButton,
+  InvisibleConfirmModalButton
+} from "buttons";
 import { BackupRedeemScriptModal } from "modals";
 import { CopyToClipboard } from "shared";
 import styles from "./StakePools.module.css";
@@ -22,9 +26,18 @@ const StakePoolsList = ({
             ({ value: { Host, TicketAddress, PoolFees, Script } }) => {
               return (
                 <div className={styles.configuredVSP} key={Host}>
-                  <div
+                  <InvisibleConfirmModalButton
+                    modalTitle={
+                      <T id="stakePoolsList.removeModal.title" m="Remove VSP" />
+                    }
+                    modalContent={
+                      <T
+                        id="stakePoolsList.removeModal.description"
+                        m="Are you sure you want to remove this configured VSP? Make sure your redeem script is backed up."
+                      />
+                    }
+                    onSubmit={() => onRemoveStakePool(Host)}
                     className={styles.close}
-                    onClick={() => onRemoveStakePool(Host)}
                   />
                   <div className={styles.vspURL}>
                     <T
