@@ -86,6 +86,8 @@
 
 .appModal.infoModal {
   margin-left: 272px;
+  display: flex;
+  flex-direction: column;
 }
 
 .appModalReducedBar.infoModal {
@@ -233,6 +235,9 @@
   line-height: 17px;
   padding: 6px 20px;
   text-transform: none;
+  width: 40px;
+  height: 20px;
+  align-self: flex-end;
 }
 
 .infoModalCloseButtonTop {
@@ -277,13 +282,44 @@
 }
 
 .infoModalContent p {
-  margin: 0 0 2em 0;
+  /* margin: 0 0 2em 0; */
   break-inside: avoid-page;
   color: var(--modal-text);
+  margin-bottom: 2em;
 }
 
 .infoModalContent li {
-  margin-left: -28px;
+  list-style-position: inside;
+}
+
+.infoModalContent li p {
+  display: inline;
+}
+
+.infoModalContent ol {
+  margin: 0;
+  padding: 0;
+  counter-reset: item;
+}
+
+.infoModalContent ol > li {
+  margin: 0;
+  /* padding: 0 0 0 2em; */
+  /* text-indent: -2em; */
+  list-style-type: none;
+  counter-increment: item;
+  list-style-position: inside;
+  margin-bottom: 2em;
+}
+
+.infoModalContent ol > li:before {
+  display: inline-block;
+  width: 1em;
+  padding-right: 0.5em;
+  margin-left: -3px;
+  font-weight: 600;
+  text-align: right;
+  content: counter(item) ".";
 }
 
 .passphraseModalToolbar > .passphraseModalCloseButton {
@@ -659,4 +695,3 @@
     width: 413px;
   }
 }
-
