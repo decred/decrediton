@@ -205,10 +205,6 @@
   text-overflow: ellipsis;
 }
 
-.overviewRow .txInfo .txPeningRowWrapper {
-  flex-basis: auto;
-}
-
 .pendingOverviewDetails {
   background-color: var(--disabled-background-color-lighter);
   background-image: var(--pending-animation);

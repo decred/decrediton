@@ -11,13 +11,7 @@ const Row = ({ pending, onClick, className, children, overview, eligible }) => (
       eligible && styles.eligibleRow
     )}>
     <div className={classNames(styles.txInfo, className)} onClick={onClick}>
-      <div
-        class={classNames(
-          styles.txRowWrapper,
-          pending && styles.txPeningRowWrapper
-        )}>
-        {children}
-      </div>
+      <div class={styles.txRowWrapper}>{children}</div>
       {pending && (
         <Tooltip content={<T id="txHistory.Pending" m="Pending" />}>
           <div className={styles.pendingOverviewDetails} onClick={onClick} />
