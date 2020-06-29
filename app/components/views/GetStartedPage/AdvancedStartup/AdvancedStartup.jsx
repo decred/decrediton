@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { AdvancedHeader, AdvancedBody } from "./Form";
 import {
   setAppdataPath,
@@ -6,191 +7,174 @@ import {
   setRemoteCredentials
 } from "config.js";
 
-// XXX: FIUNCTIONAL COMPONENT!!!
+export const AdvancedStartupHeader = ({ ...props }) => (
+  <AdvancedHeader
+    {...{
+      ...props
+    }}
+  />
+);
 
-@autobind
-class AdvancedStartupHeader extends React.Component {
-  render() {
-    return (
-      <AdvancedHeader
-        {...{
-          ...this.props
-        }}
-      />
-    );
-  }
-}
+export const AdvancedStartupBody = ({
+  submitRemoteCredentials,
+  onStartDaemon,
+  submitAppdata,
+  ...props
+}) => {
+  useEffect(() => {
+    return () => {
+      resetState();
+    };
+  });
 
-@autobind
-class AdvancedStartupBody extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = this.getInitialState();
-  }
+  const {
+    rpc_pass: rpcpass,
+    rpc_user: rpcuser,
+    rpc_cert: rpccert,
+    rpc_host: rpchost,
+    rpc_port: rpcport
+  } = getRemoteCredentials();
+  const [sideActive, setSideActive] = useState(true);
+  const [rpc_user, setRpcUserState] = useState(rpcuser);
+  const [rpc_pass, setRpcPassState] = useState(rpcpass);
+  const [rpc_cert, setRpcCertState] = useState(rpccert);
+  const [rpc_host, setRpcHostState] = useState(rpchost);
+  const [rpc_port, setRpcPortState] = useState(rpcport);
+  const [rpcUserHasFailedAttempt, setUserHasFailedAttempt] = useState(false);
+  const [rpcPasswordHasFailedAttempt, setPasswordHasFailedAttempt] = useState(
+    false
+  );
+  const [rpcHostHasFailedAttempt, setHostHasFailedAttempt] = useState(false);
+  const [rpcPortHasFailedAttempt, setPortHasFailedAttempt] = useState(false);
+  const [rpcCertHasFailedAttempt, setCertHasFailedAttempt] = useState(false);
+  const [appDataHasFailedAttempt, setAppDataHasFailedAttempt] = useState(false);
+  const [appdata, setAppDataState] = useState(getAppdataPath());
 
-  getInitialState() {
-    const {
-      rpc_pass,
+  const resetState = () => {
+    // xxxx: set default values
+  };
+
+  const setRpcUser = (rpc_user) => {
+    if (rpc_user == "") {
+      setUserHasFailedAttempt(true);
+    }
+    setRpcUserState(rpc_user);
+  };
+
+  const setRpcPass = (rpc_pass) => {
+    if (rpc_pass == "") {
+      setPasswordHasFailedAttempt(true);
+    }
+    setRpcPassState(rpc_pass);
+  };
+
+  const setRpcHost = (rpc_host) => {
+    if (rpc_host == "") {
+      setHostHasFailedAttempt(true);
+    }
+    setRpcHostState(rpc_host);
+  };
+
+  const setRpcPort = (rpc_port) => {
+    if (rpc_port == "") {
+      setPortHasFailedAttempt(true);
+    }
+    setRpcPortState(rpc_port);
+  };
+
+  const setRpcCert = (rpc_cert) => {
+    if (rpc_cert == "") {
+      setCertHasFailedAttempt(true);
+    }
+    setRpcCertState(rpc_cert);
+  };
+
+  const setAppData = (appdata) => {
+    if (appdata == "") {
+      setAppDataHasFailedAttempt(true);
+    }
+    setAppDataState(appdata);
+  };
+
+  const isRemoteValid = () => {
+    return !!(rpc_user && rpc_pass && rpc_cert && rpc_host && rpc_port);
+  };
+
+  const onSubmitRemoteForm = () => {
+    if (!isRemoteValid()) {
+      setUserHasFailedAttempt(true);
+      setPasswordHasFailedAttempt(true);
+      setHostHasFailedAttempt(true);
+      setPortHasFailedAttempt(true);
+      setCertHasFailedAttempt(true);
+      return;
+    }
+    setRemoteCredentials(rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port);
+    submitRemoteCredentials({
       rpc_user,
+      rpc_pass,
       rpc_cert,
       rpc_host,
       rpc_port
-    } = getRemoteCredentials();
-    return {
-      sideActive: true,
-      rpc_user: rpc_user,
-      rpc_pass: rpc_pass,
-      rpc_cert: rpc_cert,
-      rpc_host: rpc_host,
-      rpc_port: rpc_port,
-      rpcUserHasFailedAttempt: false,
-      rpcPasswordHasFailedAttempt: false,
-      rpcHostHasFailedAttempt: false,
-      rpcPortHasFailedAttempt: false,
-      rpcCertHasFailedAttempt: false,
-      appDataHasFailedAttempt: false,
-      appdata: getAppdataPath()
-    };
-  }
+    });
+  };
 
-  componentWillUnmount() {
-    this.resetState();
-  }
-
-  render() {
-    const {
-      setRpcUser,
-      setRpcPass,
-      setRpcCert,
-      setRpcHost,
-      setRpcPort,
-      setAppData,
-      onSubmitAppDataForm,
-      onSubmitRemoteForm,
-      skipAdvancedDaemon,
-      onShowRemote,
-      onShowAppData,
-      isAppDataValid,
-      isRemoteValid
-    } = this;
-    const remoteValid = isRemoteValid();
-    const appDataValid = isAppDataValid();
-    return (
-      <AdvancedBody
-        {...{
-          ...this.props,
-          ...this.state,
-          onSubmitAppDataForm,
-          onSubmitRemoteForm,
-          skipAdvancedDaemon,
-          onShowRemote,
-          onShowAppData,
-          setRpcUser,
-          setRpcPass,
-          setRpcCert,
-          setRpcHost,
-          setRpcPort,
-          setAppData,
-          remoteValid,
-          appDataValid
-        }}
-      />
-    );
-  }
-
-  resetState() {
-    this.setState(this.getInitialState());
-  }
-
-  setRpcUser(rpc_user) {
-    if (rpc_user == "") {
-      this.setState({ rpcUserHasFailedAttempt: true });
-    }
-    this.setState({ rpc_user });
-  }
-
-  setRpcPass(rpc_pass) {
-    if (rpc_pass == "") {
-      this.setState({ rpcPasswordHasFailedAttempt: true });
-    }
-    this.setState({ rpc_pass });
-  }
-
-  setRpcHost(rpc_host) {
-    if (rpc_host == "") {
-      this.setState({ rpcHostHasFailedAttempt: true });
-    }
-    this.setState({ rpc_host });
-  }
-
-  setRpcPort(rpc_port) {
-    if (rpc_port == "") {
-      this.setState({ rpcPortHasFailedAttempt: true });
-    }
-    this.setState({ rpc_port });
-  }
-
-  setRpcCert(rpc_cert) {
-    if (rpc_cert == "") {
-      this.setState({ rpcCertHasFailedAttempt: true });
-    }
-    this.setState({ rpc_cert });
-  }
-
-  setAppData(appdata) {
-    if (appdata == "") {
-      this.setState({ appDataHasFailedAttempt: true });
-    }
-    this.setState({ appdata });
-  }
-
-  onSubmitRemoteForm() {
-    const { submitRemoteCredentials } = this.props;
-    if (!this.isRemoteValid()) {
-      this.setState({
-        rpcUserHasFailedAttempt: true,
-        rpcPasswordHasFailedAttempt: true,
-        rpcHostHasFailedAttempt: true,
-        rpcPortHasFailedAttempt: true,
-        rpcCertHasFailedAttempt: true
-      });
-      return;
-    }
-    const { rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port } = this.state;
-    setRemoteCredentials(rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port);
-    const args = { rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port };
-    submitRemoteCredentials(args);
-  }
-
-  onSubmitAppDataForm() {
-    const { appdata } = this.state;
-    if (!this.isAppDataValid()) {
-      this.setState({ appDataHasFailedAttempt: true });
+  const onSubmitAppDataForm = () => {
+    if (!isAppDataValid()) {
+      setAppDataHasFailedAttempt(true);
       return;
     }
     setAppdataPath(appdata);
-    this.props.submitAppdata(appdata);
-  }
+    submitAppdata(appdata);
+  };
 
-  isRemoteValid() {
-    const { rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port } = this.state;
-    return !!(rpc_user && rpc_pass && rpc_cert && rpc_host && rpc_port);
-  }
+  const isAppDataValid = () => !!appdata;
 
-  isAppDataValid() {
-    return !!this.state.appdata;
-  }
+  const skipAdvancedDaemon = () => {
+    onStartDaemon();
+  };
 
-  skipAdvancedDaemon() {
-    this.props.onStartDaemon();
-  }
+  const onShowRemote = () => {
+    setSideActive(false);
+  };
 
-  onShowRemote() {
-    this.setState({ sideActive: false });
-  }
-  onShowAppData() {
-    this.setState({ sideActive: true });
-  }
-}
+  const onShowAppData = () => {
+    setSideActive(true);
+  };
 
-export { AdvancedStartupHeader, AdvancedStartupBody };
+  const remoteValid = isRemoteValid();
+  const appDataValid = isAppDataValid();
+  return (
+    <AdvancedBody
+      {...{
+        ...props,
+        sideActive,
+        rpc_user,
+        rpc_pass,
+        rpc_cert,
+        rpc_host,
+        rpc_port,
+        rpcUserHasFailedAttempt,
+        rpcPasswordHasFailedAttempt,
+        rpcHostHasFailedAttempt,
+        rpcPortHasFailedAttempt,
+        rpcCertHasFailedAttempt,
+        appDataHasFailedAttempt,
+        appdata,
+        onSubmitAppDataForm,
+        onSubmitRemoteForm,
+        skipAdvancedDaemon,
+        onShowRemote,
+        onShowAppData,
+        setRpcUser,
+        setRpcPass,
+        setRpcCert,
+        setRpcHost,
+        setRpcPort,
+        setAppData,
+        remoteValid,
+        appDataValid
+      }}
+    />
+  );
+};
