@@ -34,6 +34,7 @@ export const AdvancedStartupBody = ({
     rpc_host: rpchost,
     rpc_port: rpcport
   } = getRemoteCredentials();
+  const appDataPath = getAppdataPath();
   const [sideActive, setSideActive] = useState(true);
   const [rpc_user, setRpcUserState] = useState(rpcuser);
   const [rpc_pass, setRpcPassState] = useState(rpcpass);
@@ -48,10 +49,22 @@ export const AdvancedStartupBody = ({
   const [rpcPortHasFailedAttempt, setPortHasFailedAttempt] = useState(false);
   const [rpcCertHasFailedAttempt, setCertHasFailedAttempt] = useState(false);
   const [appDataHasFailedAttempt, setAppDataHasFailedAttempt] = useState(false);
-  const [appdata, setAppDataState] = useState(getAppdataPath());
+  const [appdata, setAppDataState] = useState(appDataPath);
 
   const resetState = () => {
-    // xxxx: set default values
+    setSideActive(true);
+    setRpcUserState(rpcuser);
+    setRpcPassState(rpcpass);
+    setRpcCertState(rpccert);
+    setRpcHostState(rpchost);
+    setRpcPortState(rpcport);
+    setAppData(appDataPath);
+    setUserHasFailedAttempt(false);
+    setPasswordHasFailedAttempt(false);
+    setHostHasFailedAttempt(false);
+    setPortHasFailedAttempt(false);
+    setCertHasFailedAttempt(false);
+    setAppDataHasFailedAttempt(false);
   };
 
   const setRpcUser = (rpc_user) => {
