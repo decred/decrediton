@@ -308,7 +308,7 @@ export const purchaseTicketsAttempt = (
 
     const stakePoolStats = await wallet.getStakePoolStats(stakepool.Host);
 
-    if(stakePoolStats.data.data.PoolStatus == "Closed"){
+    if (stakePoolStats.data.data.PoolStatus == "Closed") {
       throw new Error(
         "Unable to purchase a ticket from a closed VSP (" + stakepool.Host + ")"
       );

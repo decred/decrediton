@@ -94,6 +94,10 @@ class Send extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this.onClearTransaction();
+  }
+
   render() {
     if (!this.props.walletService) {
       return <ErrorScreen />;
