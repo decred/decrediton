@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import * as ca from "actions/ControlActions";
 import * as sel from "selectors";
 
-function ReceiveAccountsSelect({ onChange }) {
+function ReceiveAccountsSelect({ onChange, className, showAccountsButton }) {
   const dispatch = useDispatch();
   const mixedAccount = useSelector(sel.getMixedAccount);
   const account = useSelector(sel.nextAddressAccount);
@@ -24,6 +24,8 @@ function ReceiveAccountsSelect({ onChange }) {
   return (
     <AccountsSelect
       {...{
+        showAccountsButton,
+        className,
         onChange: onChangeAccount,
         accountsType: "visible",
         filterAccounts: [mixedAccount],

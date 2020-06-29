@@ -119,6 +119,7 @@ const darkTheme = {
   "background-address-copy-color": "#2F4D8C",
   "icons-shadow": "#09144036",
   "no-more-tickets-indicator-bg": "#2F4D8C",
+  "input-copy-hover-color": "#78d9f8",
 
   /* icons */
   "menu-settings-default": "url('style/icons/settingsDefaultDark.svg')",

@@ -121,6 +121,7 @@ const lightTheme = {
   "icons-shadow": "#09144036",
   "no-more-tickets-indicator-bg": "#E6EAED",
   "ease-in-out-quart": "cubic-bezier(0.77, 0, 0.175, 1)",
+  "input-copy-hover-color": "#78d9f8",
 
   /* icons */
   "menu-settings-default": "url('style/icons/settings-default.png')",

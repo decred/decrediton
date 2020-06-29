@@ -1,0 +1,354 @@
+.root {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 100;
+  backdrop-filter: blur(5px);
+}
+
+.modal {
+  position: absolute;
+  height: 419px;
+  width: 355px;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.decredLogo {
+  width: 15px;
+  height: 13px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: var(--decred-logo);
+  z-index: 1;
+  background-size: 15px 13px;
+}
+
+.modalMain {
+  position: relative;
+  height: 355px;
+  width: 355px;
+  background-color: var(--background-back-color);
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+  padding-left: 20px;
+  box-shadow: 0px 5px 21px var(--icons-shadow);
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  box-sizing: border-box !important;
+}
+
+.modalAddress {
+  margin-right: 15px;
+  background-color: var(--background-address-copy-color);
+  border-radius: 5px;
+  vertical-align: middle;
+  height: 40px;
+  width: 316px;
+  color: var(--input-color-default);
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  line-height: 40px;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.modalLabel {
+  font-size: 13px;
+  line-height: 13px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.modalQR {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+}
+
+.qrCode {
+  height: 220px;
+  width: 220px;
+  background-position: 50% 50%;
+  background-size: contain;
+  background-color: white;
+  position: relative;
+}
+
+.qrCode::before {
+  position: absolute;
+  content: "";
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  background-repeat: no-repeat;
+  background-image: var(--qr-icon);
+  background-size: 60px;
+}
+
+.modalSecond {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  background-color: transparent;
+}
+
+.modalClose {
+  background: var(--info-modal-button-bg) 0% 0% no-repeat padding-box;
+  box-shadow: 0px 5px 13px var(--icons-shadow);
+  border-radius: 5px;
+  height: 44px;
+  width: 71px;
+  font-size: 13px;
+  line-height: 44px;
+  text-align: center;
+  color: var(--background-copy-color);
+  cursor: pointer;
+}
+
+.modalShare {
+  box-shadow: 0px 5px 13px var(--icons-shadow);
+  background-color: var(--background-back-color);
+  border-radius: 5px;
+  height: 44px;
+  width: 44px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: var(--share-icon);
+  background-size: 30px 30px;
+  cursor: pointer;
+}
+
+.receiveContent {
+  background-color: var(--background-back-color);
+  padding-top: 20px;
+  padding-left: 28px;
+  width: 740px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.receiveContentNestForAddress {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.receiveSelectAmountInput {
+  width: 300px;
+  display: flex;
+}
+
+.receiveSelectAccountInput {
+  width: 325px;
+}
+
+.requestedAmountInput {
+  width: 285px;
+}
+
+.receiveRequestedAmount {
+  display: flex;
+  margin-bottom: 20px;
+}
+.receiveContentNestQR {
+  margin-right: 15px;
+  background-color: var(--background-address-copy-color);
+  border-radius: 5px;
+  vertical-align: middle;
+  height: 40px;
+  width: 470px;
+  color: var(--input-color-default);
+  font-size: 19px;
+  font-weight: 600;
+  text-align: center;
+  line-height: 40px;
+  position: relative;
+  border: 1px transparent solid;
+  transition: border-color 1s;
+}
+
+.receiveContentNestQR:hover {
+  border-color: var(--input-copy-hover-color);
+}
+
+.border {
+  border-color: var(--input-copy-hover-color);
+}
+
+.receiveContentNestCopyQR {
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 41px auto auto auto;
+  width: 118px;
+  height: 35px;
+  background-color: transparent;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 1s;
+  transition-duration: 2s;
+}
+
+.opacity {
+  opacity: 1 !important;
+}
+
+.receiveContentNestCopyQRText {
+  width: 118px;
+  height: 20px;
+  background-color: var(--background-back-color);
+  box-shadow: 0px 3px 13px var(--icons-shadow);
+  border-radius: 5px;
+  color: var(--link-color);
+  font-size: 9px;
+  font-weight: normal;
+  line-height: 20px;
+  white-space: pre;
+}
+
+.receiveContentNestCopyQRArrow {
+  position: relative;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid var(--background-back-color);
+  margin-left: auto;
+  margin-right: auto;
+  width: 0;
+  height: 0;
+}
+
+.line {
+  height: 40px;
+  display: flex;
+  margin-bottom: 21px;
+  text-align: center;
+  font-size: 11px;
+}
+
+.receiveContentNestPrefix {
+  margin-right: 20px;
+  min-width: 125px;
+  margin-left: 0;
+  font-size: 19px;
+  line-height: 24px;
+  text-transform: capitalize;
+  text-align: right;
+}
+
+.receiveContentCopyButton {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: var(--copy-to-clipboard-icon);
+  background-size: 20px 20px;
+  height: 30px;
+  width: 30px;
+  box-shadow: 0px 3px 5px var(--icons-shadow);
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 15px 2px 15px;
+}
+
+.receiveContentQRButton {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: var(--view-qr-icon);
+  background-size: 20px 20px;
+  height: 30px;
+  width: 30px;
+  box-shadow: 0px 3px 5px var(--icons-shadow);
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 20px 2px 20px;
+}
+
+.receiveContentShareButton {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: var(--share-icon);
+  background-size: 20px 20px;
+  height: 30px;
+  width: 30px;
+  box-shadow: 0px 3px 5px var(--icons-shadow);
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 15px 2px 15px;
+}
+
+.receiveContentCopyButton:hover {
+  background-color: var(--background-copy-color);
+}
+
+.receiveContentQRButton:hover {
+  background-color: var(--background-copy-color);
+}
+
+.receiveContentShareButton:hover {
+  background-color: var(--background-copy-color);
+}
+
+.copyParent {
+  padding-top: 5px;
+  color: var(--tab-text-active-hover);
+}
+
+.viewQRParent {
+  padding-top: 5px;
+  margin-left: 5px;
+  color: var(--tab-text-active-hover);
+}
+
+.shareQRParent {
+  padding-top: 5px;
+  margin-left: 5px;
+  color: var(--tab-text-active-hover);
+}
+.copyParent:hover {
+  padding-top: 5px;
+  color: var(--input-color-default);
+}
+
+.viewQRParent:hover {
+  padding-top: 5px;
+  margin-left: 5px;
+  color: var(--input-color-default);
+}
+
+.shareQRParent:hover {
+  padding-top: 5px;
+  margin-left: 5px;
+  color: var(--input-color-default);
+}
+
+.generateButton {
+  position: relative;
+  margin-top: 20px;
+  margin-left: 600px;
+  width: 185px;
+  height: 45px;
+}
+
+.blueButton {
+  font-size: 13px;
+  padding: 12px 23px 14px 23px;
+}
+
+.receiveSelectAccountInput a {
+  margin-left: 10px;
+}
