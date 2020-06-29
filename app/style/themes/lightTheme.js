@@ -120,6 +120,7 @@ const lightTheme = {
   "background-address-copy-color": "#e9f8ff",
   "icons-shadow": "#09144036",
   "no-more-tickets-indicator-bg": "#E6EAED",
+  "ease-in-out-quart": "cubic-bezier(0.77, 0, 0.175, 1)",
 
   /* icons */
   "menu-settings-default": "url('style/icons/settings-default.png')",

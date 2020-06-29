@@ -2,6 +2,7 @@ import ChangeLabel from "./ChangeLabel";
 import ConfigButtons from "./ConfigButtons";
 import RecoveryButtons from "./RecoveryButtons";
 import FirmwareUpdate from "./FirmwareUpdate";
+import "style/Trezor.less";
 
 @autobind
 class TrezorConfigSections extends React.Component {

@@ -1,12 +1,24 @@
 @import (reference) "./main.less";
 
 @keyframes spin {
-  30% { transform: rotate(182deg); }
-  40% { transform: rotate(180deg); }
-  50% { transform: rotate(180deg); }
-  80% { transform: rotate(362deg); }
-  90% { transform: rotate(360deg); }
-  100% { transform: rotate(360deg); }
+  30% {
+    transform: rotate(182deg);
+  }
+  40% {
+    transform: rotate(180deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  80% {
+    transform: rotate(362deg);
+  }
+  90% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .loading {
@@ -34,7 +46,6 @@
   margin-top: 2em;
 
   .loading-more-tickets-progress-line {
-
     color: var(--disabled-color);
 
     .gettickets-cancel-button {
@@ -64,11 +75,11 @@
   width: 100%;
   border-radius: 8px;
   background-color: var(--loader-bg);
-  // background-color: var(--white-border);
   position: relative;
 }
 
 .linear-progress.small {
+  float: left;
   height: 4px;
   width: 100%;
 }
@@ -109,11 +120,17 @@
 }
 
 @keyframes slide {
-  0% { opacity: 0.01; }
+  0% {
+    opacity: 0.01;
+  }
 
-  25% { opacity: 0.08; }
+  25% {
+    opacity: 0.08;
+  }
 
-  75% { opacity: 0.08; }
+  75% {
+    opacity: 0.08;
+  }
 
   100% {
     left: 59px;
@@ -198,7 +215,11 @@
 }
 
 .linear-progress-bar {
-  background: linear-gradient(270deg, var(--display-wallet-gradient-selected-right), var(--input-color));
+  background: linear-gradient(
+    270deg,
+    var(--display-wallet-gradient-selected-right),
+    var(--input-color)
+  );
   border-radius: 8px;
   height: 100%;
   box-shadow: 0px 5px 13px var(--input-color-blue-shadow);

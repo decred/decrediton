@@ -6,6 +6,9 @@ import * as sa from "../actions/SettingsActions";
 import * as ca from "../actions/ControlActions";
 import * as wla from "../actions/WalletLoaderActions";
 
+// custom hook already used in some places src/hooks/useSettings
+// TODO: delete when fully migrated
+
 const mapStateToProps = selectorMap({
   currencies: sel.currencies,
   networks: sel.networks,

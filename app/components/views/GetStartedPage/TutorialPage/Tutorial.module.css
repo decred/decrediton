@@ -1,0 +1,209 @@
+.tutorial {
+  display: flex;
+  background-color: var(--background-container);
+}
+
+.mainText {
+  color: var(--modal-text);
+  font-size: 13px;
+  column-count: 2;
+  margin-bottom: 2em;
+  min-height: 33em;
+  line-height: 19px;
+}
+
+.mainText h1 {
+  color: var(--tutorial-header);
+  font-size: 35px;
+  line-height: 35px;
+  column-span: all;
+  font-weight: 400;
+  -webkit-margin-before: 0px;
+  margin-bottom: 30px;
+}
+
+.mainText strong {
+  font-weight: 600;
+}
+
+.mainText p {
+  break-inside: avoid-column;
+  margin-bottom: 10px;
+}
+
+.mainText ul {
+  margin: 0 2em 2em 2em;
+}
+
+.mainText div {
+  margin: 1px;
+}
+
+.side {
+  width: 47%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+video {
+  vertical-align: middle;
+  height: 100%;
+  object-fit: cover;
+}
+
+.main {
+  width: 46%;
+  height: 100vh;
+  padding: 22.8vh 40px 0px;
+  overflow-y: auto;
+}
+
+.mainToolbar {
+  display: flex;
+}
+
+.nextButton {
+  margin-left: 40px;
+  margin-top: 8px;
+  height: 16px;
+  padding: 5px 20px 6px 20px;
+}
+
+.skipButton {
+  margin-right: 10px;
+  margin-top: 8px;
+  height: 16px;
+  padding: 5px 20px 6px 0px;
+  width: 34px;
+}
+
+@media screen and (max-width: 670px) {
+  .tutorial .mainText {
+    max-height: 650px;
+  }
+
+  .tutorialMainToolbar {
+    justify-content: space-between;
+    flex-wrap: nowrap;
+  }
+
+  .skipButton {
+    margin-top: 0 !important;
+    height: inherit;
+    width: 26px;
+    padding: 0;
+  }
+
+  .nextButton {
+    margin-left: 10px !important;
+    height: 16px;
+    padding: 5px 20px 6px 20px;
+    margin-top: 0px !important;
+  }
+
+  .stepIndicator {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    max-width: 100px;
+  }
+
+  .step.unchecked,
+  .step.current,
+  .step.checked {
+    margin: 0;
+  }
+}
+@media screen and (max-width: 916px) {
+  .tutorial .main {
+    top: 88px;
+    left: 21px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .tutorial .main {
+    padding-top: 10vh;
+  }
+  .tutorial .main-text {
+    column-count: 1;
+    padding-right: 55px;
+  }
+}
+
+@media screen and (max-width: 541px) {
+  .main {
+    top: 8px;
+  }
+  .tutorial .mainText {
+    padding-right: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    min-height: inherit;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .tutorial {
+    flex-direction: column;
+  }
+
+  .mainText {
+    max-height: inherit;
+  }
+
+  h1 {
+    font-size: 21px;
+  }
+
+  .side {
+    height: 42vh;
+    width: 100%;
+  }
+
+  video {
+    height: 336px;
+  }
+
+  .main {
+    top: 25px;
+    width: inherit;
+    padding: 30px;
+    height: 42vh;
+  }
+
+  .mainToolbar {
+    position: fixed;
+    bottom: 0px;
+    background-color: var(--onboard-toolbar-background);
+    left: 0;
+    height: 70px;
+    align-items: center;
+    padding: 0;
+    width: 100%;
+    box-shadow: 0px -5px 21px 0px var(--onboard-toolbar-shadow);
+  }
+
+  .nextButton {
+    margin: 0 30px 0 0;
+  }
+
+  .skipButton {
+    margin: 0 0 0 30px;
+  }
+}
+
+@media (max-height: 700px) {
+  .main {
+    padding-top: 10vh;
+    height: 89vh;
+  }
+}
+
+@media (max-height: 460px) {
+  .mainToolbar {
+    height: 80px;
+  }
+}

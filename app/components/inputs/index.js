@@ -4,7 +4,7 @@ export { default as BlocksInput } from "./BlocksInput";
 export { default as DcrInput } from "./DcrInput";
 export { default as FeeInput } from "./FeeInput";
 export { default as Input } from "./Input";
-export { default as LanguageSelect } from "./LanguageSelect";
+export { default as LanguageSelectInput } from "./LanguageSelectInput/LanguageSelectInput";
 export { default as NumericInput } from "./NumericInput";
 export { default as NumTicketsInput } from "./NumTicketsInput";
 export { default as PasswordInput } from "./PasswordInput";
