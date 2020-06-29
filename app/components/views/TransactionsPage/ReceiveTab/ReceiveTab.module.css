@@ -44,6 +44,7 @@
   box-shadow: 0px 5px 21px var(--icons-shadow);
   box-sizing: border-box;
   margin-bottom: 20px;
+  box-sizing: border-box !important;
 }
 
 .modalAddress {
@@ -338,7 +339,7 @@
 .generateButton {
   position: relative;
   margin-top: 20px;
-  margin-left: 560px;
+  margin-left: 600px;
   width: 185px;
   height: 45px;
 }
