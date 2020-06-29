@@ -86,13 +86,16 @@
 
 .amountHash {
   font-family: var(--font-family-monospace);
-  color: var(--overview-balance-label);
-  font-size: 11px;
-  line-height: 11px;
   margin-left: 34px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.amountHash > span {
+  color: var(--overview-balance-label) !important;
+  font-size: 11px !important;
+  line-height: 11px !important;
 }
 
 .info {
@@ -125,19 +128,6 @@
 
 .overviewPending .txInfo {
   width: 100%;
-}
-
-.pendingOverviewDetails {
-  background-color: var(--disabled-background-color-lighter);
-  background-image: var(--pending-animation);
-  background-size: 14px;
-  background-position: 50%;
-  background-repeat: no-repeat;
-  width: 32px;
-  height: 54px;
-  cursor: pointer;
-  text-align: center;
-  margin-left: -32px;
 }
 
 .myTickets {
@@ -201,8 +191,31 @@
   cursor: pointer;
 }
 
-.overviewRow .txInfo {
-  padding: 16px 20px 9px 10px;
+.txInfo {
+  display: flex;
+}
+
+.overviewRow .txInfo .txRowWrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  flex-basis: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pendingOverviewDetails {
+  background-color: var(--disabled-background-color-lighter);
+  background-image: var(--pending-animation);
+  background-size: 14px;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  width: 40px;
+  flex-basis: 40px;
+  height: 54px;
+  cursor: pointer;
+  text-align: center;
 }
 
 .overviewRow .timeDateSpacer {
@@ -226,8 +239,12 @@
 }
 
 .historyRow .txInfo {
-  padding: 16px 20px;
   width: 100%;
+  justify-content: space-between;
+}
+
+.historyRow .txInfo .txRowWrapper {
+  padding: 16px 20px;
 }
 
 .eligibleRow {

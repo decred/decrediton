@@ -6,7 +6,7 @@ import {
   TRANSACTION_DIR_TRANSFERRED
 } from "constants";
 import styles from "./TxHistory.module.css";
-import { classNames } from "pi-ui";
+import { classNames, Text } from "pi-ui";
 
 const RegularTxRow = ({
   txAmount,
@@ -98,31 +98,33 @@ const RegularTxRow = ({
     </div>
     {overview && (
       <div className={styles.amountHash}>
-        {txDirection === TRANSACTION_DIR_TRANSFERRED ? (
-          <T
-            id="txHistory.transfer.tx"
-            m="From {debAcc} To {credAcc}"
-            values={{
-              debAcc: txAccountNameDebited,
-              credAcc: txAccountNameCredited
-            }}
-          />
-        ) : txDirection !== TRANSACTION_DIR_RECEIVED ? (
-          <T
-            id="txHistory.out.tx"
-            m="From {debAcc} To {credAcc}"
-            values={{
-              debAcc: txAccountName,
-              credAcc: txOutputAddresses
-            }}
-          />
-        ) : (
-          <T
-            id="txHistory.in.tx"
-            m="To {credAcc}"
-            values={{ credAcc: txAccountName }}
-          />
-        )}
+        <Text id={`fromto-${(txTs || new Date()).getTime()}`} truncate>
+          {txDirection === TRANSACTION_DIR_TRANSFERRED ? (
+            <T
+              id="txHistory.transfer.tx"
+              m="From {debAcc} To {credAcc}"
+              values={{
+                debAcc: txAccountNameDebited,
+                credAcc: txAccountNameCredited
+              }}
+            />
+          ) : txDirection !== TRANSACTION_DIR_RECEIVED ? (
+            <T
+              id="txHistory.out.tx"
+              m="From {debAcc} To {credAcc}"
+              values={{
+                debAcc: txAccountName,
+                credAcc: txOutputAddresses
+              }}
+            />
+          ) : (
+            <T
+              id="txHistory.in.tx"
+              m="To {credAcc}"
+              values={{ credAcc: txAccountName }}
+            />
+          )}
+        </Text>
       </div>
     )}
   </Row>
