@@ -40,7 +40,7 @@ const mapStateToProps = selectorMap({
   unsignedTickets: sel.ticketsList,
   defaultStakePool: sel.defaultStakePool,
   stakePoolListingEnabled: sel.stakePoolListingEnabled,
-  updatedStakePoolList: sel.updatedStakePoolList,
+  updatedStakePoolList: sel.updatedStakePoolList
 });
 
 const mapDispatchToProps = (dispatch) =>
