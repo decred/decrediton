@@ -2,7 +2,7 @@ import { KeyBlueButton } from "buttons";
 import { LanguageSelectInput } from "inputs";
 import { FormattedMessage as T } from "react-intl";
 import { classNames } from "pi-ui";
-import styles from "./LanguageSelectPage.module.css";
+import styles from "../GetStarted.module.css";
 
 const LanguageSelectPage = ({
   availableLanguages,

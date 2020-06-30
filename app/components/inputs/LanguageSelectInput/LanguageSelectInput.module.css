@@ -3,22 +3,6 @@
   margin-right: 0.5em;
 }
 
-.input .selectControl {
-  border: 1px solid var(--select-border);
-  border-radius: 5px;
-  height: 29px;
-  padding-top: 5px;
-  padding-right: 5px;
-}
-
-.input .selectControl:hover {
-  border: 1px solid var(--disabled-color);
-}
-
-.button {
-  padding: 5px 16px 10px 16px;
-}
-
 .label {
   display: flex;
 }
