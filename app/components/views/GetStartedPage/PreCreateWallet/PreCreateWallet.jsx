@@ -165,6 +165,7 @@ const PreCreateWallet = ({
         hasFailedAttemptPubKey,
         getDaemonSynced,
         isWatchingOnly,
+        isTrezor,
         walletMasterPubKey,
         masterPubKeyError,
         walletNameError,
