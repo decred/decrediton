@@ -8,8 +8,10 @@ import styles from "../PurchaseTab.module.css";
 
 const getTitleIcon = ({ toggleIsLegacy }) => (
   <>
-    <div className={styles.legacyIcon} onClick={() => toggleIsLegacy(true)}>
-      change to legacy
+    <div className={styles.checkbox}>
+      <div className={styles.label}><T id="purchase.isLegacy" m="Is Legacy" /></div>
+      <input id="box" type="checkbox" checked={false} onChange={() => toggleIsLegacy(true)} />
+      <label htmlFor="box" className={styles.checkboxLabel}></label>
     </div>
     <InfoDocModalButton
       document="PurchaseTicketsInfo"

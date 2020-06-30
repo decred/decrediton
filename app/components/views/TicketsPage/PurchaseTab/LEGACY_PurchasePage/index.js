@@ -10,7 +10,6 @@ function LEGACY_PurchasePage({
   toggleShowVsp,
   ...props
 }) {
-  console.log(props)
   return isPurchasingTickets ? (
     <StakeyBounce center />
   ) : isShowingVsp ? (
