@@ -1,6 +1,6 @@
 import { useMemo, useState, useCallback } from "react";
 import LanguageSelectPage from "./Page";
-import { daemonStartup } from "connectors"; // replace with a custom hook
+import { daemonStartup } from "connectors"; // XXX: replace with a custom hook - useDaemonStartup (used in many places, therefore should be global)
 
 const LanguageSelect = ({
   availableLanguages,
