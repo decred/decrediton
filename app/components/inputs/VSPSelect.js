@@ -4,6 +4,9 @@ import { useState } from "react";
 import * as vspa from "actions/VSPActions";
 import { useDispatch } from "react-redux";
 
+// TODO Finish building this component and workflow after integrating vspd to
+// dcrwallet.
+
 const messages = defineMessages({
   placeholder: {
     id: "selectStakepool.placeholder",
