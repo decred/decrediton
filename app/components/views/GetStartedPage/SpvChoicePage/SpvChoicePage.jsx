@@ -1,17 +1,6 @@
-import { daemonStartup, settings } from "connectors";
+import { daemonStartup, settings } from "connectors"; // hooks instead of connectors
 import Page from "./Page";
 
-// xxx: functional comp & hooks instead of connectors
-
-@autobind
-class SpvChoicePage extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return <Page {...this.props} {...this.state} />;
-  }
-}
+const SpvChoicePage = ({ ...props }) => <Page {...props} />;
 
 export default daemonStartup(settings(SpvChoicePage));
