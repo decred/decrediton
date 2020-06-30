@@ -5,7 +5,7 @@ import { newStakePool } from "connectors";
 
 const messages = defineMessages({
   placeholder: {
-    id: "selectStakepool.placeholder",
+    id: "selectStakepool.placeholder.legacy",
     defaultMessage: "Select VSP..."
   }
 });

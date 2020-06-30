@@ -12,7 +12,7 @@ import styles from "../PurchaseTab.module.css";
 const getTitleIcon = ({ toggleIsLegacy }) => (
   <>
     <div className={styles.checkbox}>
-      <div className={styles.label}><T id="purchase.isLegacy" m="Is Legacy" /></div>
+      <div className={styles.label}><T id="purchase.isLegacy.legacy" m="Is Legacy" /></div>
       <input id="box" type="checkbox" checked={true} onChange={() => toggleIsLegacy(false)} />
       <label htmlFor="box" className={styles.checkboxLabel}></label>
     </div>
@@ -35,7 +35,7 @@ const Tickets = ({
 }) => (
   <div className="purchase-ticket-area">
     <Subtitle
-      title={<T id="purchase.subtitle" m="Purchase Tickets" />}
+      title={<T id="purchase.subtitle.legacy" m="Purchase Tickets" />}
       children={getTitleIcon({ toggleIsLegacy })}
       className="is-row"
     />
@@ -44,7 +44,7 @@ const Tickets = ({
       <ShowWarning
         warn={
           <T
-            id="spv.purchase.warn"
+            id="spv.purchase.warn.legacy"
             m="Purchase Tickets is not available right now, because we are at the end of a ticket interval. After one block it will be available again."
           />
         }

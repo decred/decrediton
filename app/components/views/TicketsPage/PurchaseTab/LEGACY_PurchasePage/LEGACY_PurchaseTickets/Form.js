@@ -16,7 +16,7 @@ import {
 
 import "style/StakePool.less";
 
-const purchaseLabel = () => <T id="purchaseTickets.purchaseBtn" m="Purchase" />;
+const purchaseLabel = () => <T id="purchas.legacypurchaseTickets.revokeBtn" m="Purchase" />;
 
 const PurchaseTicketsForm = ({
   isShowingAdvanced,
@@ -45,7 +45,7 @@ const PurchaseTicketsForm = ({
     <div className="purchase-ticket-area-row is-row">
       <div className="is-row purchase-ticket-input-address">
         <div className="purchase-ticket-area-row-label">
-          <T id="purchaseTickets.accountFrom" m="From" />:
+          <T id="purchaseTickets.accountFrom.legacy" m="From" />:
         </div>
         <AccountsSelect
           className="stakepool-purchase-ticket-input-select"
@@ -55,14 +55,14 @@ const PurchaseTicketsForm = ({
       </div>
       <div className="is-row purchase-ticket-input-amount">
         <div className="purchase-ticket-area-row-label">
-          <T id="purchaseTickets.ticketAmount" m="Amount" />:
+          <T id="purchaseTickets.ticketAmount.legacy" m="Amount" />:
         </div>
         <NumTicketsInput
           required
           invalid={!getIsValid()}
           invalidMessage={
             <T
-              id="purchaseTickets.errors.insufficientBalance"
+              id="purchaseTickets.errors.insufficientBalance.legacy"
               m="Not enough funds"
             />
           }
@@ -75,7 +75,7 @@ const PurchaseTicketsForm = ({
         {getIsValid() && (
           <div className="input-purchase-ticket-valid-message-area">
             <T
-              id="purchaseTickets.validMsg"
+              id="purchaseTickets.validMsg.legacy"
               m="Total: {amount} Remaining: {remaining}"
               values={{
                 amount: <Balance flat amount={numTicketsToBuy * ticketPrice} />,
@@ -159,11 +159,11 @@ const PurchaseTicketsForm = ({
     <div className="stakepool-purchase-ticket-buttons-area">
       <PassphraseModalButton
         modalTitle={
-          <T id="tickets.revokeConfirmations" m="Revoke Tickets Confirmation" />
+          <T id="tickets.revokeConfirmations.legacy" m="Revoke Tickets Confirmation" />
         }
         className="stakepool-content-revoke-button"
         onSubmit={onRevokeTickets}
-        buttonLabel={<T id="purchaseTickets.revokeBtn" m="Revoke" />}
+        buttonLabel={<T id="purchaseTickets.revokeBtn.legacy" m="Revoke" />}
       />
       {isWatchingOnly ? (
         <KeyBlueButton
@@ -175,7 +175,7 @@ const PurchaseTicketsForm = ({
         <PassphraseModalButton
           modalTitle={
             <T
-              id="tickets.purchaseConfirmation"
+              id="tickets.purchaseConfirmation.legacy"
               m="Ticket Purchase Confirmation"
             />
           }
