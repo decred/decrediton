@@ -43,6 +43,11 @@ const ProposalDetails = ({
   goBackHistory,
   eligibleTicketCount
 }) => {
+  walletEligibleTickets = walletEligibleTickets.map((et, i) => {
+    walletEligibleTickets[i].txHash = et.ticket;
+    return walletEligibleTickets[i];
+  });
+
   const { tsDate, hasTickets, isTestnet } = useProposalDetails();
   const { themeName } = useTheme();
   const isDarkTheme = themeName === "theme-dark";

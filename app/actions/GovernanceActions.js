@@ -537,6 +537,8 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
       testnet,
       walletName
     );
+    // if voteAndEligibleTickets are already cached we just get them.
+    // Otherwise we get them from politea server and cache.
     if (voteAndEligibleTickets) {
       walletEligibleTickets = voteAndEligibleTickets.walletEligibleTickets;
       currentVoteChoice = voteAndEligibleTickets.voteChoice;
@@ -545,21 +547,12 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
     } else {
       const voteReq = await pi.getProposalVotes(piURL, token);
       const { startvotereply, castvotes } = voteReq.data;
-      if (proposal.voteStatus === VOTESTATUS_ACTIVEVOTE) {
-        walletEligibleTickets = await getProposalEligibleTickets(
-          proposal.token,
-          startvotereply.eligibletickets,
-          true,
-          walletService
-        );
-      } else if (proposal.voteStatus === VOTESTATUS_FINISHEDVOTE) {
-        walletEligibleTickets = await getProposalEligibleTickets(
-          proposal.token,
-          startvotereply.eligibletickets,
-          false,
-          walletService
-        );
-      }
+      walletEligibleTickets = await getProposalEligibleTickets(
+        proposal.token,
+        startvotereply.eligibletickets,
+        proposal.voteStatus === VOTESTATUS_ACTIVEVOTE,
+        walletService
+      );
       currentVoteChoice =
         getVoteOption(
           token,
@@ -582,24 +575,24 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
     }
     if (hasEligibleTickets) {
       const transactions = await Promise.all(
-        walletEligibleTickets.map(({ ticket: ticketHash }) =>
-          wallet.getTransaction(walletService, ticketHash)
+        walletEligibleTickets.map(({ ticket }) =>
+          wallet.getTransaction(walletService, ticket)
         )
       );
       const tickets = await Promise.all(
-        walletEligibleTickets.map(({ ticket: ticketHash }) =>
-          wallet.getTicket(walletService, hexReversedHashToArray(ticketHash))
+        walletEligibleTickets.map(({ ticket }) =>
+          wallet.getTicket(walletService, hexReversedHashToArray(ticket))
         )
       );
       const stakeTxs = walletEligibleTickets
-        .map(({ ticket: ticketHash }, idx) => {
+        .map(({ ticket }, idx) => {
           const { status } = tickets[idx];
           return {
             ...tickets[idx],
             ...transactions[idx],
             ticket: transactions[idx].tx,
             status,
-            txUrl: txURLBuilder(ticketHash)
+            txUrl: txURLBuilder(ticket)
           };
         })
         .reduce((m, t) => {
@@ -607,21 +600,21 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
           return m;
         }, {});
       // apend eligible tickets transactions details to stake transactions to show transaction details page
-      // when user clicks on a eligble ticket is proposal detials page
+      // when user clicks on a eligble ticket in proposal details page
       dispatch({
         type: GETTRANSACTIONS_COMPLETE,
         stakeTransactions: stakeTxs
       });
       walletEligibleTickets = walletEligibleTickets.map(
-        ({ ticket: ticketHash, address }, idx) => {
+        ({ ticket, address }, idx) => {
           const { status, ticket: tx } = tickets[idx];
           // get account name
           const debitList = tx.getDebitsList();
           const accountName = getAccountName(debitList[0].getPreviousAccount());
           const ticketPrice = tx.getCreditsList()[0].getAmount();
           return {
-            txHash: ticketHash,
-            txUrl: stakeTxs[ticketHash].txUrl,
+            ticket,
+            txUrl: stakeTxs[ticket].txUrl,
             status: status,
             address,
             timestamp: tx.getTimestamp(),
@@ -721,7 +714,7 @@ export const updateVoteChoice = (
       }
       const hexSig = Buffer.from(signature.getSignature()).toString("hex");
       const voteBit = voteChoice.bits.toString(16);
-      const vote = { token, ticket: t.txHash, voteBit, signature: hexSig };
+      const vote = { token, ticket: t.ticket, voteBit, signature: hexSig };
       votes.push(vote);
     });
 
