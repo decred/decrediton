@@ -46,17 +46,15 @@ export const LinksTab = () => (
         }
       />
       <HelpLinkInfoModal
+        document="DecredConstitution"
         className={"help-constitution-icon"}
         title={<T id="help.constitution" m="Constitution" />}
         subtitle={
           <T id="help.constitution.subtitle" m="Decred Project Constitution" />
         }
-        modalTitle={
-          <h1>
-            <T id="help.constitution.modal.title" m="Decred Constitution" />
-          </h1>
+        buttonLabel={
+          <T id="stake.notRedeemed" m={"Script not redeemable?"} />
         }
-        modalContent={<Documentation name="DecredConstitution" />}
         double
       />
       <HelpLinkAboutModal

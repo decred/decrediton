@@ -91,20 +91,10 @@ const StakePoolsAddForm = ({
             <div className="stakepool-link-button-container">
               <ScriptRedeemableButton
                 document="ScriptNotRedeemableInfo"
-                //  modalClassName={style.infoModalFields}
                 className="stakepool-add-not-redeemable"
                 buttonLabel={
                   <T id="stake.notRedeemed" m={"Script not redeemable?"} />
                 }
-
-              // modalTitle={
-              //   <T id="stake.notRedeemed" m="Script not redeemable?" />
-              // }
-              // modalContent={<Documentation name="ScriptNotRedeemableInfo" />}
-              // className="stakepool-add-not-redeemable"
-              // buttonLabel={
-              //   <T id="stake.notRedeemed" m={"Script not redeemable?"} />
-              // }
               />
               <ImportScriptIconButton />
             </div>

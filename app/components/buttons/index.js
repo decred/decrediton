@@ -79,7 +79,7 @@ const PoliteiaLinkButton = ({ children, onClick }) => (
   <span onClick={onClick}>{children}</span>
 );
 
-export const HelpLinkInfoModal = mbb(null, InfoModal, helpLinkButtonNew);
+export const HelpLinkInfoModal = mbb(null, DocumentationInfoModal, helpLinkButtonNew);
 export const HelpLinkAboutModal = mbb(null, AboutModal, helpLinkButtonNew);
 export const InfoModalButton = mbb("info-modal-button", InfoModal);
 export const InfoDocModalButton = mbb("info-modal-button", DocumentationInfoModal);
