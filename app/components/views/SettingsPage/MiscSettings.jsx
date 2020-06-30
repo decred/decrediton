@@ -43,11 +43,7 @@ const MiscSettings = ({
           <div className={styles.label}>
             <InfoDocFieldModalButton
               document="GapLimitInfo"
-              /*
-              TODO: has-warning class was defined in Modals.less. After the migration to CSS modules, it's now defined in Modals.module.css as hasWarning.
-              Please, import this CSS rule to the respective Settings CSS module file and use it here.
-              */
-              modalClassName="has-warning"
+              modalClassName={styles.hasWarning}
               double
               draggable
             />

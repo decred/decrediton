@@ -69,6 +69,7 @@
   width: 262px;
   margin-top: 156px;
   background-image: var(--tickets-info-icon);
+  background-attachment: local;
   background-size: 32px 32px;
   background-repeat: no-repeat;
   background-position: 18px 32px;
@@ -405,10 +406,6 @@
   margin-top: 20px;
   height: 44px;
   float: right;
-}
-
-.infoModal.hasWarning .infoModalDocumentation strong {
-  color: var(--error-text-color);
 }
 
 .appModalStandalone.confirmSeedCopyModal {
