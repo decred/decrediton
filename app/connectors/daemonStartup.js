@@ -75,6 +75,7 @@ const mapDispatchToProps = (dispatch) =>
       // privacy page
       setupStandardPrivacy: da.setupStandardPrivacy,
       setupDisabledPrivacy: da.setupDisabledPrivacy,
+      finishPrivacy: da.finishPrivacy,
 
       // spv page
       toggleSpv: da.toggleSpv,
