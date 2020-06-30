@@ -1,6 +1,9 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { InfoDocModalButton, SignMessageButton } from "buttons";
-import { TextInput } from "inputs";
+import { TextInput } from "pi-ui";
+// import { TextInput } from "inputs";
+import styles from "./SignMessageForm.module.css";
+
 import { WatchOnlyWarnNotification } from "shared";
 
 const messages = defineMessages({
@@ -15,61 +18,59 @@ const messages = defineMessages({
 });
 
 const SignMessageForm = ({
-  onChangeAddress,
-  onChangeMessage,
   address,
   message,
   addressError,
   messageError,
   isSigningMessage,
   formatMessage,
-  isSignMessageDisabled
+  isSignMessageDisabled,
+  onChangeAddress,
+  onChangeMessage
 }) => {
   return (
     <>
-      <div className="security-center-form">
-        <div className="button-right">
+      <div className={styles.securityCenterForm}>
+        <div className={styles.buttonRight}>
           <InfoDocModalButton document="SignMessageInfo" draggable />
         </div>
-        <div className="security-center-form-row">
-          <div className="security-center-form-row-label">
+        <div className={styles.securityCenterFormRow}>
+          <div className={styles.securityCenterFormRowLabel}>
             <T
               id="securitycenter.signMessage.field.address.label"
               m="Address"
             />
           </div>
-          <div className="security-center-form-row-field">
+          <div className={styles.securityCenterFormRowField}>
             <WatchOnlyWarnNotification isActive={isSignMessageDisabled}>
               <TextInput
+                id="address"
                 required
                 value={address}
-                invalid={addressError}
-                invalidMessage={addressError}
                 onChange={(e) => onChangeAddress(e.target.value)}
-                placeholder={formatMessage(messages.addressFieldPlaceholder)}
-                showErrors={addressError}
+                label={formatMessage(messages.addressFieldPlaceholder)}
+                error={addressError}
                 disabled={isSignMessageDisabled}
               />
             </WatchOnlyWarnNotification>
           </div>
         </div>
-        <div className="security-center-form-row">
-          <div className="security-center-form-row-label">
+        <div className={styles.securityCenterFormRow}>
+          <div className={styles.securityCenterFormRowLabel}>
             <T
               id="securitycenter.signMessage.field.message.label"
               m="Message"
             />
           </div>
-          <div className="security-center-form-row-field-message">
+          <div className={styles.securityCenterFormRowField}>
             <WatchOnlyWarnNotification isActive={isSignMessageDisabled}>
               <TextInput
+                id="msg"
                 required
                 value={message}
-                invalid={messageError}
-                invalidMessage={messageError}
                 onChange={(e) => onChangeMessage(e.target.value)}
-                placeholder={formatMessage(messages.messageFieldPlaceholder)}
-                showErrors={messageError}
+                label={formatMessage(messages.messageFieldPlaceholder)}
+                error={messageError}
                 disabled={isSignMessageDisabled}
               />
             </WatchOnlyWarnNotification>

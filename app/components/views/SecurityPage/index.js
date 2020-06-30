@@ -18,7 +18,7 @@ const SecurityHeader = () => (
 );
 
 @autobind
-class SecurityPage extends React.Component {
+class SecurityPage2 extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.getInitialState();
@@ -81,4 +81,4 @@ class SecurityPage extends React.Component {
   }
 }
 
-export default SecurityPage;
+export default SecurityPage2;
