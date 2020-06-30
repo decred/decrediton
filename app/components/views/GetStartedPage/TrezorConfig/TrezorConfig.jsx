@@ -4,6 +4,8 @@ import ConfigSections from "views/TrezorPage/ConfigSections";
 import Page from "./Page";
 import { InvisibleButton } from "buttons";
 
+// xxxx
+
 @autobind
 class TrezorConfig extends React.Component {
   constructor(props) {
