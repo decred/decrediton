@@ -37,7 +37,10 @@ const mapStateToProps = selectorMap({
   splitTx: sel.splitTx,
   spvMode: sel.isSPV,
   blocksNumberToNextTicket: sel.blocksNumberToNextTicket,
-  unsignedTickets: sel.ticketsList
+  unsignedTickets: sel.ticketsList,
+  defaultStakePool: sel.defaultStakePool,
+  stakePoolListingEnabled: sel.stakePoolListingEnabled,
+  updatedStakePoolList: sel.updatedStakePoolList,
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -51,7 +54,10 @@ const mapDispatchToProps = (dispatch) =>
       onClearRevokeTicketsSuccess: ca.clearRevokeTicketsSuccess,
       onClearImportScriptError: ca.clearImportScriptError,
       onClearImportScriptSuccess: ca.clearImportScriptSuccess,
-      onDismissBackupRedeemScript: spa.dismissBackupRedeemScript
+      onDismissBackupRedeemScript: spa.dismissBackupRedeemScript,
+      onSetStakePoolInfo: spa.setStakePoolInformation,
+      onRemoveStakePool: spa.removeStakePoolConfig,
+      discoverAvailableStakepools: spa.discoverAvailableStakepools
     },
     dispatch
   );

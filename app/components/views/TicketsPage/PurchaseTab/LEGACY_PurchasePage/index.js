@@ -1,6 +1,8 @@
 import { StakeyBounce } from "indicators";
 import StakePools from "./LEGACY_StakePools/StakePoolsList";
 import Tickets from "./LEGACY_Tickets";
+// after stop supporting old vsp code, we can remove this connector
+import { purchaseTickets } from "connectors"
 
 function LEGACY_PurchasePage({
   isPurchasingTickets,
@@ -8,13 +10,14 @@ function LEGACY_PurchasePage({
   toggleShowVsp,
   ...props
 }) {
+  console.log(props)
   return isPurchasingTickets ? (
     <StakeyBounce center />
   ) : isShowingVsp ? (
-    <StakePools {...{ toggleShowVsp }} />
+    <StakePools {...{ toggleShowVsp, ...props }} />
   ) : (
     <Tickets {...{ toggleShowVsp, ...props }} />
   );
 }
 
-export default LEGACY_PurchasePage;
+export default purchaseTickets(LEGACY_PurchasePage);

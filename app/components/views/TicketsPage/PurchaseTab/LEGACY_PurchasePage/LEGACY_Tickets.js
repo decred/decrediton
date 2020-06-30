@@ -66,4 +66,4 @@ const Tickets = ({
   </div>
 );
 
-export default purchaseTickets(Tickets);
+export default Tickets;
