@@ -52,9 +52,6 @@ export const LinksTab = () => (
         subtitle={
           <T id="help.constitution.subtitle" m="Decred Project Constitution" />
         }
-        buttonLabel={
-          <T id="stake.notRedeemed" m={"Script not redeemable?"} />
-        }
         double
       />
       <HelpLinkAboutModal
