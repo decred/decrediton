@@ -1,8 +1,6 @@
 import WalletSelectionForm from "./Form";
 import { substruct } from "fp";
-import { daemonStartup } from "connectors";
-
-// XXX: functional C.
+import { daemonStartup } from "connectors"; // XXX: custom hook,
 
 @autobind
 class WalletSelectionBody extends React.Component {
