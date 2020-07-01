@@ -1,68 +1,47 @@
+import { useState } from "react";
 import WalletSelectionForm from "./Form";
-import { substruct } from "fp";
 import { daemonStartup } from "connectors"; // XXX: custom hook,
 
-@autobind
-class WalletSelectionBody extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      editWallets: false
-    };
-  }
+const WalletSelectionBody = ({
+  maxWalletCount,
+  isSPV,
+  availableWallets,
+  getDaemonSynced,
+  submitChosenWallet,
+  creatingWallet,
+  onSendCreateWallet
+}) => {
+  const [editWallets, setEditWallets] = useState(false);
+  const [selectedWallet, setSelectedWallet] = useState(availableWallets[0]);
 
-  render() {
-    const {
-      maxWalletCount,
-      isSPV,
-      availableWallets,
-      getDaemonSynced,
-      submitChosenWallet,
-      creatingWallet
-    } = this.props;
-    const { editWallets } = this.state;
-    return (
-      <WalletSelectionForm
-        {...{
-          selectedWallet: availableWallets[0],
-          submitChosenWallet,
-          availableWallets,
-          editWallets,
-          getDaemonSynced,
-          maxWalletCount,
-          isSPV,
-          creatingWallet,
-          ...this.props,
-          ...this.state,
-          ...substruct(
-            {
-              onChangeAvailableWallets: null,
-              createWallet: null,
-              onChangeCreateWalletName: null,
-              showCreateWalletForm: null,
-              hideCreateWalletForm: null,
-              toggleWatchOnly: null,
-              onChangeCreateWalletMasterPubKey: null,
-              toggleTrezor: null,
-              onToggleEditWallet: null
-            },
-            this
-          )
-        }}
-      />
-    );
-  }
-  onToggleEditWallet() {
-    this.setState({ editWallets: !this.state.editWallets });
-  }
+  const onToggleEditWallet = () => {
+    setEditWallets(!editWallets);
+  };
 
-  showCreateWalletForm(isCreateNewWallet) {
-    this.props.onSendCreateWallet(isCreateNewWallet);
-  }
+  const showCreateWalletForm = (isCreateNewWallet) => {
+    onSendCreateWallet(isCreateNewWallet);
+  };
 
-  onChangeAvailableWallets(selectedWallet) {
-    this.setState({ selectedWallet });
-  }
-}
+  const onChangeAvailableWallets = (selectedWallet) =>
+    setSelectedWallet(selectedWallet);
+
+  return (
+    <WalletSelectionForm
+      {...{
+        selectedWallet,
+        submitChosenWallet,
+        availableWallets,
+        editWallets,
+        getDaemonSynced,
+        maxWalletCount,
+        isSPV,
+        creatingWallet,
+        onToggleEditWallet,
+        showCreateWalletForm,
+        onChangeAvailableWallets
+      }}
+    />
+  );
+};
 
 export default daemonStartup(WalletSelectionBody);
