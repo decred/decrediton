@@ -1,7 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
 import { HelpLink, HelpLinkInfoModal, HelpLinkAboutModal } from "buttons";
 import { DescriptionHeader } from "layout";
-import { Subtitle, Documentation } from "shared";
+import { Subtitle } from "shared";
 import "style/Help.less";
 
 export const LinksTabHeader = () => (

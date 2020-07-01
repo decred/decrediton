@@ -7,7 +7,6 @@ import {
 } from "buttons";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { TextInput, StakePoolSelect } from "inputs";
-import { Documentation } from "shared";
 import "style/Layout.less";
 import "style/StakePool.less";
 

@@ -15,6 +15,7 @@ const getTitleIcon = () => (
     modalClassName={style.infoModalFields}
     className="info-title-icon"
     draggable
+    double
   />
 );
 const Tickets = ({
