@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import WalletSelectionForm from "./Form";
 import { daemonStartup } from "connectors"; // XXX: custom hook,
 
@@ -14,16 +14,21 @@ const WalletSelectionBody = ({
   const [editWallets, setEditWallets] = useState(false);
   const [selectedWallet, setSelectedWallet] = useState(availableWallets[0]);
 
-  const onToggleEditWallet = () => {
+  const onToggleEditWallet = useCallback(() => {
     setEditWallets(!editWallets);
-  };
+  }, [editWallets]);
 
-  const showCreateWalletForm = (isCreateNewWallet) => {
-    onSendCreateWallet(isCreateNewWallet);
-  };
+  const showCreateWalletForm = useCallback(
+    (isCreateNewWallet) => {
+      onSendCreateWallet(isCreateNewWallet);
+    },
+    [onSendCreateWallet]
+  );
 
-  const onChangeAvailableWallets = (selectedWallet) =>
-    setSelectedWallet(selectedWallet);
+  const onChangeAvailableWallets = useCallback(
+    (selectedWallet) => setSelectedWallet(selectedWallet),
+    [setSelectedWallet]
+  );
 
   return (
     <WalletSelectionForm

@@ -1,11 +1,9 @@
-import { Machine, assign, spawn } from "xstate";
+import { Machine, assign, spawn, send } from "xstate";
 import { CreateWalletMachine } from "stateMachines/CreateWalletStateMachine";
 import { OPENWALLET_INPUT } from "actions/WalletLoaderActions";
 
 export const getStartedMachine = ({
-  preStartDaemon,
   onStartDaemon,
-  sendEvent,
   goToErrorPage,
   onConnectDaemon,
   checkNetworkMatch,
@@ -335,12 +333,8 @@ export const getStartedMachine = ({
     },
     {
       actions: {
-        isAtPreStart: () => {
-          console.log("is at pre start");
-          return preStartDaemon();
-        },
         isAtStartSPV: () => {
-          sendEvent({ type: "CONTINUE" });
+          send({ type: "CONTINUE" });
         },
         isAtStartingDaemon: (context, event) => {
           console.log("is at Starting Daemonn");
@@ -348,13 +342,14 @@ export const getStartedMachine = ({
           return onStartDaemon({ appdata })
             .then((started) => {
               const { credentials, appdata } = started;
-              sendEvent({
+              console.log(started);
+              return send({
                 type: "CONNECT_DAEMON",
                 payload: { started, credentials, appdata }
               });
             })
             .catch((error) =>
-              sendEvent({ type: "ERROR_STARTING_DAEMON", payload: { error } })
+              send({ type: "ERROR_STARTING_DAEMON", payload: { error } })
             );
         },
         isAtDaemonError: (context, event) => {
@@ -367,44 +362,44 @@ export const getStartedMachine = ({
           if (!isAdvancedDaemon) {
             return goToErrorPage();
           }
-          sendEvent({ type: "START_ADVANCED_DAEMON", payload: { error } });
+          send({ type: "START_ADVANCED_DAEMON", payload: { error } });
         },
         isAtConnectingDaemon: (context, event) => {
           console.log(" is at connect daemon ");
           const { remoteCredentials } = event;
           return onConnectDaemon(remoteCredentials)
             .then(() => {
-              sendEvent({ type: "SYNC_DAEMON" });
+              send({ type: "SYNC_DAEMON" });
             })
             .catch((error) =>
-              sendEvent({ type: "ERROR_CONNECTING_DAEMON", payload: { error } })
+              send({ type: "ERROR_CONNECTING_DAEMON", payload: { error } })
             );
         },
         isAtCheckNetworkMatch: () => {
           console.log(" is at check network ");
           // TODO add error when network does not match
           return checkNetworkMatch()
-            .then(() => sendEvent({ type: "CHOOSE_WALLET" }))
+            .then(() => send({ type: "CHOOSE_WALLET" }))
             .catch((error) =>
-              sendEvent({ type: "ERROR_NETWORK_DAEMON", payload: { error } })
+              send({ type: "ERROR_NETWORK_DAEMON", payload: { error } })
             );
         },
         isAtSyncingDaemon: () => {
           console.log(" is at syncing daemon ");
           syncDaemon()
-            .then(() => sendEvent({ type: "CHECK_NETWORK_MATCH" }))
+            .then(() => send({ type: "CHECK_NETWORK_MATCH" }))
             .catch((error) =>
-              sendEvent({ type: "ERROR_SYNCING_DAEMON", payload: { error } })
+              send({ type: "ERROR_SYNCING_DAEMON", payload: { error } })
             );
         },
         isAtChoosingWallet: (context, event) => {
           console.log("is at choosingWallet");
           const { selectedWallet } = event;
           if (selectedWallet) {
-            return sendEvent({ type: "SUBMIT_CHOOSE_WALLET", selectedWallet });
+            return send({ type: "SUBMIT_CHOOSE_WALLET", selectedWallet });
           }
           onGetAvailableWallets()
-            .then((w) => sendEvent({ type: "CHOOSE_WALLET", payload: { w } }))
+            .then((w) => send({ type: "CHOOSE_WALLET", payload: { w } }))
             .catch((e) => console.log(e));
         },
         isAtStartWallet: (context) => {
@@ -414,15 +409,15 @@ export const getStartedMachine = ({
 
           onStartWallet(selectedWallet)
             .then((r) => {
-              sendEvent({ type: "SYNC_RPC", r });
+              send({ type: "SYNC_RPC", r });
             })
             .catch((error) => {
               // If error is OPENWALLET_INPUT, the wallet has a pubpass and we
               // switch states, for inputing it and open the wallet.
               if (error === OPENWALLET_INPUT) {
-                return sendEvent({ type: "WALLET_PUBPASS_INPUT" });
+                return send({ type: "WALLET_PUBPASS_INPUT" });
               }
-              sendEvent({ type: "ERROR_STARTING_WALLET", payload: { error } });
+              send({ type: "ERROR_STARTING_WALLET", payload: { error } });
             });
         },
         isSyncingRPC: (context) => {
@@ -431,13 +426,13 @@ export const getStartedMachine = ({
             return startSPVSync()
               .then((r) => r)
               .catch((error) =>
-                sendEvent({ type: "ERROR_SYNCING_WALLET", payload: { error } })
+                send({ type: "ERROR_SYNCING_WALLET", payload: { error } })
               );
           }
           onRetryStartRPC(passPhrase)
             .then((r) => r)
             .catch((error) =>
-              sendEvent({ type: "ERROR_SYNCING_WALLET", payload: { error } })
+              send({ type: "ERROR_SYNCING_WALLET", payload: { error } })
             );
         }
       }
