@@ -18,6 +18,7 @@ import RescanWalletBody from "./RescanWallet/RescanWallet";
 import WalletPubpassInput from "./OpenWallet/OpenWallet";
 import ReleaseNotes from "./ReleaseNotes/ReleaseNotes";
 import { ipcRenderer } from "electron";
+import { OPENWALLET_INPUT } from "actions/WalletLoaderActions";
 
 // XXX: these animations classes are passed down to AnimatedLinearProgressFull
 // and styling defined in Loading.less and need to handled when loading.less
@@ -42,8 +43,6 @@ const GetStarted = ({
   onStartDaemon,
   setSelectedWallet,
   goToErrorPage,
-  goToSettings,
-  backToCredentials,
   startSPVSync,
   isSPV,
   isAdvancedDaemon,
@@ -58,21 +57,111 @@ const GetStarted = ({
   isTestNet
 }) => {
   const [PageComponent, setPageComponent] = useState(null);
-  const machine = getStartedMachine({
-    onConnectDaemon,
-    checkNetworkMatch,
-    syncDaemon,
-    onStartWallet,
-    onRetryStartRPC,
-    onGetAvailableWallets,
-    onStartDaemon,
-    setSelectedWallet,
-    goToErrorPage,
-    goToSettings,
-    backToCredentials,
-    startSPVSync
+  const [state, send] = useMachine(getStartedMachine, {
+    actions: {
+      isAtStartSPV: () => {
+        send({ type: "CONTINUE" });
+      },
+      isAtStartingDaemon: (context, event) => {
+        console.log("is at Starting Daemonn");
+        const { appdata } = event;
+        console.log(onStartDaemon);
+        return onStartDaemon({ appdata })
+          .then((started) => {
+            const { credentials, appdata } = started;
+            send({
+              type: "CONNECT_DAEMON",
+              payload: { started, credentials, appdata }
+            });
+          })
+          .catch((error) =>
+            send({ type: "ERROR_STARTING_DAEMON", payload: { error } })
+          );
+      },
+      isAtDaemonError: (context, event) => {
+        console.log("is at daemon error");
+        if (!event) return;
+        const { error } = event;
+        if (!error) return;
+        const { isAdvancedDaemon } = context;
+        // We send the user to the error page if decrediton is not in advanced mode.
+        if (!isAdvancedDaemon) {
+          return goToErrorPage();
+        }
+        send({ type: "START_ADVANCED_DAEMON", payload: { error } });
+      },
+      isAtConnectingDaemon: (context, event) => {
+        console.log(" is at connect daemon ");
+        const { remoteCredentials } = event;
+        return onConnectDaemon(remoteCredentials)
+          .then(() => {
+            send({ type: "SYNC_DAEMON" });
+          })
+          .catch((error) =>
+            send({ type: "ERROR_CONNECTING_DAEMON", payload: { error } })
+          );
+      },
+      isAtCheckNetworkMatch: () => {
+        console.log(" is at check network ");
+        // TODO add error when network does not match
+        return checkNetworkMatch()
+          .then(() => send({ type: "CHOOSE_WALLET" }))
+          .catch((error) =>
+            send({ type: "ERROR_NETWORK_DAEMON", payload: { error } })
+          );
+      },
+      isAtSyncingDaemon: () => {
+        console.log(" is at syncing daemon ");
+        syncDaemon()
+          .then(() => send({ type: "CHECK_NETWORK_MATCH" }))
+          .catch((error) =>
+            send({ type: "ERROR_SYNCING_DAEMON", payload: { error } })
+          );
+      },
+      isAtChoosingWallet: (context, event) => {
+        console.log("is at choosingWallet");
+        const { selectedWallet } = event;
+        if (selectedWallet) {
+          return send({ type: "SUBMIT_CHOOSE_WALLET", selectedWallet });
+        }
+        onGetAvailableWallets()
+          .then((w) => send({ type: "CHOOSE_WALLET", payload: { w } }))
+          .catch((e) => console.log(e));
+      },
+      isAtStartWallet: (context) => {
+        console.log("is At Start Wallet");
+        const { selectedWallet } = context;
+        onStartWallet(selectedWallet)
+          .then((r) => {
+            setSelectedWallet(selectedWallet);
+            send({ type: "SYNC_RPC", r });
+          })
+          .catch((error) => {
+            // If error is OPENWALLET_INPUT, the wallet has a pubpass and we
+            // switch states, for inputing it and open the wallet.
+            if (error === OPENWALLET_INPUT) {
+              return send({ type: "WALLET_PUBPASS_INPUT" });
+            }
+            send({ type: "ERROR_STARTING_WALLET", payload: { error } });
+          });
+      },
+      isSyncingRPC: (context) => {
+        const { passPhrase } = context;
+        if (context.isSPV) {
+          return startSPVSync()
+            .then((r) => r)
+            .catch((error) =>
+              send({ type: "ERROR_SYNCING_WALLET", payload: { error } })
+            );
+        }
+        onRetryStartRPC(passPhrase)
+          .then((r) => r)
+          .catch((error) =>
+            send({ type: "ERROR_SYNCING_WALLET", payload: { error } })
+          );
+      }
+    }
   });
-  const [state, send] = useMachine(machine);
   const getError = useCallback((serviceError) => {
     if (!serviceError) return;
     // We can return errors in the form of react component, which are objects.
@@ -124,21 +213,20 @@ const GetStarted = ({
       });
     }
     send({ type: "START_SPV", isSPV });
-    send({
-      type: "START_ADVANCED_DAEMON",
-      isSPV,
-      isAdvancedDaemon
-    });
-    send({
-      type: "START_REGULAR_DAEMON",
-      isSPV,
-      isAdvancedDaemon
-    });
+    if (isAdvancedDaemon) {
+      send({
+        type: "START_ADVANCED_DAEMON",
+        isSPV,
+        isAdvancedDaemon
+      });
+    } else {
+      send({
+        type: "START_REGULAR_DAEMON",
+        isSPV,
+        isAdvancedDaemon
+      });
+    }
   }, [send, getDaemonSynced, getSelectedWallet, isAdvancedDaemon, isSPV]);
-
-  useEffect(() => {
-    preStartDaemon();
-  });
 
   const onSendContinue = useCallback(() => send({ type: "CONTINUE" }), [send]);
 
@@ -195,13 +283,6 @@ const GetStarted = ({
       let component, text, animationType, PageComponent;
 
       const key = Object.keys(state.value)[0];
-      console.log({
-        updatedText,
-        updatedAnimationType,
-        updatedComponent,
-        key,
-        value: state.value[key]
-      });
       if (key === "startMachine") {
         switch (state.value[key]) {
           case "startAdvancedDaemon":
@@ -382,8 +463,6 @@ const GetStarted = ({
         />
       );
       getStateComponent(text, animationType, component);
-    } else if (state.value) {
-      getStateComponent(text, animationType, component);
     }
   }, [
     syncFetchMissingCfiltersAttempt,
@@ -391,8 +470,7 @@ const GetStarted = ({
     syncDiscoverAddressesAttempt,
     syncRescanAttempt,
     synced,
-    getStateComponent,
-    state.value
+    getStateComponent
   ]);
 
   const onShowSettings = useCallback(() => send({ type: "SHOW_SETTINGS" }), [
@@ -400,6 +478,11 @@ const GetStarted = ({
   ]);
 
   const onShowLogs = useCallback(() => send({ type: "SHOW_LOGS" }), [send]);
+
+  useEffect(() => {
+    getStateComponent();
+    preStartDaemon();
+  }, [preStartDaemon, getStateComponent]);
 
   return (
     <GetStartedWrapper
