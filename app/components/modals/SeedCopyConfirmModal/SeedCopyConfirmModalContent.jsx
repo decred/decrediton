@@ -14,11 +14,11 @@ const Modal = ({
   typedConfirmationPhrase,
   onTypedConfirmationPhraseChanged
 }) => (
-  <DefaultModal className={style.confirmSeedCopyModal} {...{ show }}>
+  <DefaultModal className={style.confirmSeedCopy} {...{ show }}>
     <div className={style.titleWarningCopyModal}>
       <T id="seedCopyConfirm.titleWarning" m="Seed Clipboard Copy Warning" />
     </div>
-    <div className={style.confirmSeedCopyModalContent}>
+    <div className={style.confirmSeedCopyContent}>
       <div className={style.confirmSeedCopyWarningText}>
         <Documentation name="SeedCopyWarning" />
         <T
@@ -43,9 +43,9 @@ const Modal = ({
         }
       />
     </div>
-    <div className={style.confirmSeedCopyModalToolbar}>
+    <div className={style.confirmSeedCopyToolbar}>
       <DangerButton
-        className={style.confirmModalConfirmButton}
+        className={style.confirmConfirmButton}
         onClick={onSubmit}
         disabled={
           typedConfirmationPhrase.toLowerCase() !==
@@ -54,7 +54,7 @@ const Modal = ({
         <T id="seedCopyConfirm.btnConfirm" m="Confirm Seed Copy" />
       </DangerButton>
       <InvisibleButton
-        className={style.confirmModalCloseButton}
+        className={style.confirmCloseButton}
         onClick={onCancelModal}>
         <T id="seedCopyConfirm.btnCancel" m="Cancel" />
       </InvisibleButton>

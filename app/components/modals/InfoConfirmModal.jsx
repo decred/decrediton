@@ -12,15 +12,15 @@ const ConfirmModal = ({
   className
 }) => (
   <Modal
-    className={classNames(style.infoConfirmModal, className)}
+    className={classNames(style.infoConfirm, className)}
     {...{ show, onCancelModal }}>
-    <div className={style.confirmModalHeader}>
-      <div className={style.confirmModalHeaderTitle}>{modalTitle}</div>
+    <div className={style.confirmHeader}>
+      <div className={style.confirmHeaderTitle}>{modalTitle}</div>
     </div>
-    <div className={style.confirmModalContent}>{modalContent}</div>
-    <div className={style.confirmModalToolbar}>
+    <div className={style.confirmContent}>{modalContent}</div>
+    <div className={style.confirmToolbar}>
       <CloseButton
-        className={style.confirmModalCloseButton}
+        className={style.confirmCloseButton}
         onClick={onCancelModal}>
         <T id="infoConfirmModal.btnClose" m="Close" />
       </CloseButton>

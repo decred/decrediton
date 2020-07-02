@@ -24,11 +24,11 @@ const Modal = showCheck(({ children, className, draggable, onCancelModal }) => {
       className={classNames(
         showingSidebarMenu
           ? expandSideBar
-            ? style.appModal
-            : style.appModalReducedBar
-          : style.appModalStandalone,
+            ? style.modal
+            : style.reducedBar
+          : style.standalone,
         className && className,
-        draggable && style.draggableModal
+        draggable && style.draggable
       )}>
       {children}
     </div>
@@ -40,9 +40,9 @@ const Modal = showCheck(({ children, className, draggable, onCancelModal }) => {
         className={
           showingSidebarMenu
             ? expandSideBar
-              ? style.appModalOverlay
-              : style.appModalOverlayReducedBar
-            : style.appModalOverlayStandalone
+              ? style.overlay
+              : style.overlayReducedBar
+            : style.overlayStandalone
         }>
         {draggable ? (
           <Draggable bounds="parent" cancel=".cancel-dragging">

@@ -9,7 +9,7 @@ const subtitleInfoIcon = () => (
   <div className="account-content-title-buttons-area">
     <InfoDocModalButton
       document="BalanceOverviewInfo"
-      modalClassName={style.infoModalFields}
+      modalClassName={style.infoFields}
       double
       draggable
     />

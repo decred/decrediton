@@ -6,7 +6,7 @@ const DocumentationInfoModal = ({ document, ...props }) => (
   <InfoModal
     {...props}
     modalContent={
-      <Documentation name={document} className={style.infoModalDocumentation} />
+      <Documentation name={document} className={style.infoDocumentation} />
     }
   />
 );

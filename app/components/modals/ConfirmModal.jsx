@@ -12,27 +12,27 @@ const ConfirmModal = ({
   confirmLabel,
   danger
 }) => (
-    <Modal className={style.confirmModal} {...{ show, onCancelModal }}>
-      <div className={style.confirmModalHeader}>
-        <div className={style.confirmModalHeaderTitle}>{modalTitle}</div>
+    <Modal className={style.confirm} {...{ show, onCancelModal }}>
+      <div className={style.confirmHeader}>
+        <div className={style.confirmHeaderTitle}>{modalTitle}</div>
       </div>
-      <div className={style.confirmModalContent}>{modalContent}</div>
-      <div className={style.confirmModalToolbar}>
+      <div className={style.confirmContent}>{modalContent}</div>
+      <div className={style.confirmToolbar}>
         {danger ? (
           <DangerButton
-            className={style.confirmModalConfirmButton}
+            className={style.confirmConfirmButton}
             onClick={onSubmit}>
             {confirmLabel || <T id="infoModal.btnConfirm" m="Confirm" />}
           </DangerButton>
         ) : (
             <KeyBlueButton
-              className={style.confirmModalConfirmButton}
+              className={style.confirmConfirmButton}
               onClick={onSubmit}>
               {confirmLabel || <T id="infoModal.btnConfirm" m="Confirm" />}
             </KeyBlueButton>
           )}
         <InvisibleButton
-          className={style.confirmModalCloseButton}
+          className={style.confirmCloseButton}
           onClick={onCancelModal}>
           <T id="confirmModal.btnCancel" m="Cancel" />
         </InvisibleButton>

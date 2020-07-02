@@ -4,24 +4,24 @@ import { InvisibleButton, KeyBlueButton } from "buttons";
 import style from "./Modals.module.css";
 
 const AutobuyerRunningModal = ({ show, onCancelModal, onSubmit }) => (
-  <Modal className={style.confirmModal} {...{ show, onCancelModal }}>
-    <div className={style.confirmModalHeader}>
-      <div className={style.confirmModalHeaderTitle}>
+  <Modal className={style.confirm} {...{ show, onCancelModal }}>
+    <div className={style.confirmHeader}>
+      <div className={style.confirmHeaderTitle}>
         <T
           id="tickets.autobuyerRunning.title"
           m="Auto Ticket Buyer Still Running"
         />
       </div>
     </div>
-    <div className={style.confirmModalContent}>
+    <div className={style.confirmContent}>
       <T
         id="tickets.autobuyerRunning.message"
         m="If you proceed, it will be closed and no more tickets will be purchased."
       />
     </div>
-    <div className={style.confirmModalToolbar}>
+    <div className={style.confirmToolbar}>
       <KeyBlueButton
-        className={style.confirmModalConfirmButton}
+        className={style.confirmConfirmButton}
         onClick={onSubmit}>
         {
           <T
@@ -31,7 +31,7 @@ const AutobuyerRunningModal = ({ show, onCancelModal, onSubmit }) => (
         }
       </KeyBlueButton>
       <InvisibleButton
-        className={style.confirmModalCloseButton}
+        className={style.confirmCloseButton}
         onClick={onCancelModal}>
         <T id="tickets.autobuyerRunning.confirmModal.btnCancel" m="Cancel" />
       </InvisibleButton>

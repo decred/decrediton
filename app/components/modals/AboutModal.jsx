@@ -5,23 +5,23 @@ import style from "./Modals.module.css";
 
 const AboutModal = ({ show, onCancelModal, version, updateAvailable }) => {
   return (
-    <Modal className={style.aboutModal} {...{ show, onCancelModal }}>
-      <div className={style.aboutModalIcon} />
-      <div className={style.aboutModalContent}>
-        <div className={style.aboutModalTitle}>
+    <Modal className={style.about} {...{ show, onCancelModal }}>
+      <div className={style.aboutIcon} />
+      <div className={style.aboutContent}>
+        <div className={style.aboutTitle}>
           <T id="aboutModal.decrediton" m="Decrediton" />
         </div>
         <div
-          className={style.infoModalCloseButtonTop}
+          className={style.infoCloseButtonTop}
           onClick={onCancelModal}
         />
-        <div className={style.aboutModalTextParagraph}>
+        <div className={style.aboutTextParagraph}>
           <T
             id="aboutModal.paragraph1"
             m="A cross platform GUI Wallet for Decred written in node.js using Electron"
           />
         </div>
-        <div className={style.aboutModalTextParagraph}>
+        <div className={style.aboutTextParagraph}>
           <T
             id="aboutModal.paragraph2a"
             m="Decrediton is free and open source software, developed and designed by the global team of"
@@ -33,7 +33,7 @@ const AboutModal = ({ show, onCancelModal, version, updateAvailable }) => {
             <T id="aboutModal.paragraph2b" m="Decred contributors" />
           </a>
         </div>
-        <div className={style.aboutModalTextParagraph}>
+        <div className={style.aboutTextParagraph}>
           <T
             id="aboutModal.paragraph3"
             m="Want to help or get involved, check out"
@@ -46,12 +46,12 @@ const AboutModal = ({ show, onCancelModal, version, updateAvailable }) => {
           </a>
         </div>
       </div>
-      <div className={style.aboutModalBottomArea}>
-        <div className={style.aboutModalBottomAreaLeft}>
+      <div className={style.aboutBottomArea}>
+        <div className={style.aboutBottomAreaLeft}>
           <T id="aboutModal.version" m="Version" /> {version} -&nbsp;
           {updateAvailable ? (
             <a
-              className={style.aboutModalUpgrade}
+              className={style.aboutUpgrade}
               onClick={() =>
                 shell.openExternal(
                   "https://github.com/decred/decred-binaries/releases"
@@ -61,7 +61,7 @@ const AboutModal = ({ show, onCancelModal, version, updateAvailable }) => {
             </a>
           ) : (
             <a
-              className={style.aboutModalUpgrade}
+              className={style.aboutUpgrade}
               onClick={() =>
                 shell.openExternal(
                   "https://github.com/decred/decred-binaries/releases/tag/v" +
@@ -72,11 +72,11 @@ const AboutModal = ({ show, onCancelModal, version, updateAvailable }) => {
             </a>
           )}
         </div>
-        <div className={style.aboutModalBottomAreaMiddle}>
+        <div className={style.aboutBottomAreaMiddle}>
           Copyright &copy; 2019{" "}
           <a onClick={() => shell.openExternal("https://decred.org")}>Decred</a>
         </div>
-        <div className={style.aboutModalBottomAreaRight}>
+        <div className={style.aboutBottomAreaRight}>
           <a
             onClick={() =>
               shell.openExternal(

@@ -5,7 +5,7 @@ import style from "./Modals.module.css";
 
 const Content = ({ script, key }) => (
   <>
-    <div key={key} className={style.backupRedeemScriptModalMessage}>
+    <div key={key} className={style.backupRedeemScriptMessage}>
       <T
         id="backup.redeem.script.message"
         m={`You must make a backup of the redeem script.
@@ -22,13 +22,13 @@ const Content = ({ script, key }) => (
         }}
       />
     </div>
-    <div className={style.backupRedeemScriptModalTitle}>
+    <div className={style.backupRedeemScriptTitle}>
       <T id="backup.redeem.script.title" m="Script" />
     </div>
     <textarea
       disabled
       value={script}
-      className={style.backupRedeemScriptModalTextarea}
+      className={style.backupRedeemScriptTextarea}
     />
   </>
 );

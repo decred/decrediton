@@ -26,10 +26,10 @@ const Modal = ({
 
   return (
     <DefaultModal
-      className={classNames(style.passphraseModal, modalClassName)}
+      className={classNames(style.passphrase, modalClassName)}
       {...{ show, onCancelModal }}>
-      <div className={style.passphraseModalHeader}>
-        <div className={style.passphraseModalHeaderTitle}>
+      <div className={style.passphraseHeader}>
+        <div className={style.passphraseHeaderTitle}>
           {modalTitle ? (
             modalTitle
           ) : (
@@ -39,11 +39,11 @@ const Modal = ({
             />
           )}
         </div>
-        <div className={style.passphraseModalHeaderDescription}>
+        <div className={style.passphraseHeaderDescription}>
           {modalDescription}
         </div>
       </div>
-      <div className={style.passphraseModalContent}>
+      <div className={style.passphraseContent}>
         {prependPassphraseRow ? inputRow : null}
         {children}
         {prependPassphraseRow ? null : inputRow}

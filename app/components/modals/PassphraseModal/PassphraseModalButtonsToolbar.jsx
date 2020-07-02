@@ -8,7 +8,7 @@ const PassphraseModalButtonsToolbar = ({
   submitLabel,
   isValid
 }) => (
-  <div className={style.passphraseModalToolbar}>
+  <div className={style.passphraseToolbar}>
     <KeyBlueButton disabled={!isValid} onClick={onSubmit}>
       {submitLabel ? (
         submitLabel
@@ -17,7 +17,7 @@ const PassphraseModalButtonsToolbar = ({
       )}
     </KeyBlueButton>
     <InvisibleButton
-      className={style.passphraseModalCloseButton}
+      className={style.passphraseCloseButton}
       onClick={onCancelModal}>
       <T id="passphraseModal.btnCancel" m="Cancel" />
     </InvisibleButton>

@@ -12,7 +12,7 @@ import style from "../TicketsPage.module.css";
 const getTitleIcon = () => (
   <InfoDocModalButton
     document="PurchaseTicketsInfo"
-    modalClassName={style.infoModalFields}
+    modalClassName={style.infoFields}
     className="info-title-icon"
     draggable
     double
