@@ -1,30 +1,32 @@
 import { useState, useCallback } from "react";
 import CreateWalletForm from "./CreateWalletForm";
-import { daemonStartup } from "connectors"; // xxx: use useDaemonStartup here
+import { useDaemonStartup } from "hooks";
 import { injectIntl } from "react-intl";
 
 const PreCreateWallet = ({
-  maxWalletCount,
-  isSPV,
-  availableWallets,
-  getDaemonSynced,
+  intl,
+  onSendContinue,
+  onSendBack,
+  onSendError,
   onShowTrezorConfig,
   isCreateNewWallet,
-  creatingWallet,
-  trezorDisable,
-  onSendBack,
-  isTestNet,
-  onSendContinue,
-  trezorDevice,
-  trezorAlertNoConnectedDevice,
-  trezorGetWalletCreationMasterPubKey,
-  onCreateWallet,
   onShowCreateWallet,
-  onSendError,
-  trezorEnable,
-  validateMasterPubKey,
-  intl
+  creatingWallet
 }) => {
+  const {
+    maxWalletCount,
+    isSPV,
+    availableWallets,
+    getDaemonSynced,
+    trezorDisable,
+    isTestNet,
+    trezorDevice,
+    trezorAlertNoConnectedDevice,
+    trezorGetWalletCreationMasterPubKey,
+    onCreateWallet,
+    trezorEnable,
+    validateMasterPubKey
+  } = useDaemonStartup();
   const [newWalletName, setNewWalletName] = useState("");
   const [isWatchingOnly, setIsWatchingOnly] = useState(false);
   const [walletMasterPubKey, setWalletMasterPubKey] = useState("");
@@ -185,4 +187,4 @@ const PreCreateWallet = ({
   );
 };
 
-export default injectIntl(daemonStartup(PreCreateWallet));
+export default injectIntl(PreCreateWallet);

@@ -1,17 +1,20 @@
 import { useState } from "react";
-import { daemonStartup, settings } from "connectors"; // XXX: use useSettings & useDaemonStartup hooks
+import { useDaemonStartup, useSettings } from "hooks";
 import Page from "./Page";
 
-const PrivacyPage = ({
-  finishPrivacy,
-  onSaveSettings,
-  tempSettings,
-  setupStandardPrivacy,
-  setupDisabledPrivacy,
-  isChangePassPhraseDisabled,
-  changePassphraseRequestAttempt,
-  onChangeTempSettings
-}) => {
+const PrivacyPage = () => {
+  const {
+    isChangePassPhraseDisabled,
+    changePassphraseRequestAttempt,
+    onSaveSettings,
+    tempSettings,
+    onChangeTempSettings
+  } = useSettings();
+  const {
+    finishPrivacy,
+    setupStandardPrivacy,
+    setupDisabledPrivacy
+  } = useDaemonStartup();
   const [showCustomPrivacy, setShowCustomPrivacy] = useState(false);
 
   const toggleCustomPrivacy = () => setShowCustomPrivacy(!showCustomPrivacy);
@@ -40,4 +43,4 @@ const PrivacyPage = ({
   );
 };
 
-export default daemonStartup(settings(PrivacyPage));
+export default PrivacyPage;

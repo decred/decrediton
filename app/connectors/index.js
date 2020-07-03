@@ -2,7 +2,6 @@ export { default as accountsPage } from "./accountsPage";
 export { default as accountsSelect } from "./accountsSelect";
 export { default as app } from "./app";
 export { default as balance } from "./balance";
-export { default as daemonStartup } from "./daemonStartup";
 export { default as historyPage } from "./historyPage";
 export { default as home } from "./home";
 export { default as invalidRPCVersion } from "./invalidRPCVersion";
@@ -12,7 +11,6 @@ export { default as receive } from "./receive";
 export { default as rescan } from "./rescan";
 export { default as send } from "./send";
 export { default as service } from "./service"; // TODO: hook already exists in hooks/useService.js but connector is still used in class components
-export { default as settings } from "./settings"; // TODO: hook already exists in hooks/useSettings.js  but connector is still used in class components
 export { default as shutdownPage } from "./shutdownPage";
 export { default as signMessagePage } from "./signMessagePage";
 export { default as snackbar } from "./snackbar";

@@ -1,16 +1,15 @@
 import { useState, useCallback } from "react";
 import WalletSelectionForm from "./Form";
-import { daemonStartup } from "connectors"; // XXX: custom hook,
+import { useDaemonStartup } from "hooks";
 
-const WalletSelectionBody = ({
-  maxWalletCount,
-  isSPV,
-  availableWallets,
-  getDaemonSynced,
-  submitChosenWallet,
-  creatingWallet,
-  onSendCreateWallet
-}) => {
+const WalletSelectionBody = ({ submitChosenWallet, onSendCreateWallet }) => {
+  const {
+    maxWalletCount,
+    isSPV,
+    availableWallets,
+    getDaemonSynced,
+    creatingWallet
+  } = useDaemonStartup();
   const [editWallets, setEditWallets] = useState(false);
   const [selectedWallet, setSelectedWallet] = useState(availableWallets[0]);
 
@@ -49,4 +48,4 @@ const WalletSelectionBody = ({
   );
 };
 
-export default daemonStartup(WalletSelectionBody);
+export default WalletSelectionBody;

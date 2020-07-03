@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
-import { daemonStartup } from "connectors";
+import { useDaemonStartup } from "hooks";
 import { useMachine } from "@xstate/react";
 import { getStartedMachine } from "stateMachines/GetStartedStateMachine";
 import GetStartedWrapper from "./GetStarted";
@@ -33,29 +33,30 @@ const finalizingSetup = "finalizing-setup";
 const fetchingHeaders = "fetching-headers";
 const establishingRpc = "establishing-rpc";
 
-const GetStarted = ({
-  onConnectDaemon,
-  checkNetworkMatch,
-  syncDaemon,
-  onStartWallet,
-  onRetryStartRPC,
-  onGetAvailableWallets,
-  onStartDaemon,
-  setSelectedWallet,
-  goToErrorPage,
-  startSPVSync,
-  isSPV,
-  isAdvancedDaemon,
-  getDaemonSynced,
-  getSelectedWallet,
-  syncFetchMissingCfiltersAttempt,
-  syncFetchHeadersAttempt,
-  syncRescanAttempt,
-  syncDiscoverAddressesAttempt,
-  synced,
-  updateAvailable,
-  isTestNet
-}) => {
+const GetStarted = () => {
+  const {
+    onRetryStartRPC,
+    onGetAvailableWallets,
+    onStartDaemon,
+    setSelectedWallet,
+    goToErrorPage,
+    startSPVSync,
+    isSPV,
+    isAdvancedDaemon,
+    getDaemonSynced,
+    getSelectedWallet,
+    syncFetchMissingCfiltersAttempt,
+    syncFetchHeadersAttempt,
+    syncRescanAttempt,
+    syncDiscoverAddressesAttempt,
+    synced,
+    updateAvailable,
+    isTestNet,
+    checkNetworkMatch,
+    onConnectDaemon,
+    onStartWallet,
+    syncDaemon
+  } = useDaemonStartup();
   const [PageComponent, setPageComponent] = useState(null);
   const [state, send] = useMachine(getStartedMachine, {
     actions: {
@@ -492,4 +493,4 @@ const GetStarted = ({
   );
 };
 
-export default injectIntl(daemonStartup(GetStarted));
+export default injectIntl(GetStarted);

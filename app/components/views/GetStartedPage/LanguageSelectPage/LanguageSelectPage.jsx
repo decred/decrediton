@@ -1,13 +1,14 @@
 import { useMemo, useState, useCallback } from "react";
 import LanguageSelectPage from "./Page";
-import { daemonStartup } from "connectors"; // XXX: replace with a custom hook - useDaemonStartup (used in many places, therefore should be global)
+import { useDaemonStartup } from "hooks";
 
-const LanguageSelect = ({
-  availableLanguages,
-  defaultLocale,
-  onSelectLanguage,
-  isTestNet
-}) => {
+const LanguageSelect = () => {
+  const {
+    availableLanguages,
+    defaultLocale,
+    onSelectLanguage,
+    isTestNet
+  } = useDaemonStartup();
   const defaultLang = useMemo(
     () =>
       availableLanguages.find((v) => v.language === defaultLocale) ||
@@ -34,4 +35,4 @@ const LanguageSelect = ({
   );
 };
 
-export default daemonStartup(LanguageSelect);
+export default LanguageSelect;

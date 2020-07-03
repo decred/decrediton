@@ -1,8 +1,9 @@
 import { useState, useCallback } from "react";
 import TutorialPage from "./Page";
-import { daemonStartup } from "connectors"; // xxxx: hook the hook
+import { useDaemonStartup } from "connectors";
 
-const Tutorial = ({ finishTutorial }) => {
+const Tutorial = () => {
+  const { finishTutorial } = useDaemonStartup();
   const [tutorialStep, setTutorialStep] = useState(0);
 
   const onNextTutorialStep = useCallback(() => {
@@ -30,4 +31,4 @@ const Tutorial = ({ finishTutorial }) => {
   );
 };
 
-export default daemonStartup(Tutorial);
+export default Tutorial;

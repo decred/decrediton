@@ -1,6 +1,9 @@
-import { daemonStartup, settings } from "connectors"; // hooks instead of connectors
+import { useDaemonStartup } from "hooks";
 import Page from "./Page";
 
-const SpvChoicePage = ({ ...props }) => <Page {...props} />;
+const SpvChoicePage = () => {
+  const { isTestNet, toggleSpv } = useDaemonStartup();
+  return <Page {...{ isTestNet, toggleSpv }} />;
+};
 
-export default daemonStartup(settings(SpvChoicePage));
+export default SpvChoicePage;

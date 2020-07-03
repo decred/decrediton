@@ -4,7 +4,7 @@ import { fetchMachine } from "stateMachines/FetchStateMachine";
 import { useMachine } from "@xstate/react";
 import * as sel from "selectors";
 import * as gov from "actions/GovernanceActions";
-import { usePrevious } from "helpers";
+import { usePrevious } from "hooks";
 import { setLastPoliteiaAccessTime } from "actions/WalletLoaderActions";
 
 export function useProposalsTab() {
@@ -82,9 +82,11 @@ export function useProposalsList(tab) {
           proposals[tab],
           inventory[tab],
           getProposalsAndUpdateVoteStatus
-        ).then((res) => {
-          send({ type: "RESOLVE", data: res });
-        }).catch(() => send("REJECT"));
+        )
+          .then((res) => {
+            send({ type: "RESOLVE", data: res });
+          })
+          .catch(() => send("REJECT"));
       }
     }
   });
@@ -94,7 +96,7 @@ export function useProposalsList(tab) {
   useEffect(() => {
     if (!previous || !previous.proposals || !previous.proposals[tab]) return;
     if (previous.tab !== tab) return;
-    if (previous.getProposalError != getProposalError){
+    if (previous.getProposalError != getProposalError) {
       send(getProposalError ? "REJECT" : "RETRY");
       return;
     }

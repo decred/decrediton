@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback, useMemo, useRef } from "react";
 import { useSelector } from "react-redux";
-import { usePrevious } from "helpers";
+import { usePrevious } from "hooks";
 import { spring } from "react-motion";
 import theme from "theme";
 import * as sel from "selectors";
@@ -14,19 +14,24 @@ export function useMenuLinks(linkList) {
   const isTrezor = useSelector(sel.isTrezor);
   const lnEnabled = useSelector(sel.lnEnabled);
 
-  const newActiveVoteProposalsCount = useSelector(sel.newActiveVoteProposalsCount);
+  const newActiveVoteProposalsCount = useSelector(
+    sel.newActiveVoteProposalsCount
+  );
   const newPreVoteProposalsCount = useSelector(sel.newPreVoteProposalsCount);
   const newProposalsStartedVoting = useSelector(sel.newProposalsStartedVoting);
 
-  const notifProps = useMemo(() => ({
-    newActiveVoteProposalsCount,
-    newPreVoteProposalsCount,
-    newProposalsStartedVoting
-  }), [
-    newActiveVoteProposalsCount,
-    newPreVoteProposalsCount,
-    newProposalsStartedVoting
-  ]);
+  const notifProps = useMemo(
+    () => ({
+      newActiveVoteProposalsCount,
+      newPreVoteProposalsCount,
+      newProposalsStartedVoting
+    }),
+    [
+      newActiveVoteProposalsCount,
+      newPreVoteProposalsCount,
+      newProposalsStartedVoting
+    ]
+  );
 
   const [caretStyle, setCaretStyle] = useState({ top: 0, left: 0 });
   const [selectedTab, setSelectedTab] = useState(null);
@@ -38,17 +43,20 @@ export function useMenuLinks(linkList) {
     ...(lnEnabled ? [lnLink] : [])
   ]);
 
-  const neededCaretPosition = useCallback((path) => {
-    const tabForRoute = nodes.current.get(path);
-    if (!tabForRoute) return null;
-    if (sidebarOnBottom) {
-      const newLeft = tabForRoute.offsetLeft;
+  const neededCaretPosition = useCallback(
+    (path) => {
+      const tabForRoute = nodes.current.get(path);
+      if (!tabForRoute) return null;
+      if (sidebarOnBottom) {
+        const newLeft = tabForRoute.offsetLeft;
+        const newTop = tabForRoute.offsetTop;
+        return { left: spring(newLeft, theme("springs.sideBar")), top: newTop };
+      }
       const newTop = tabForRoute.offsetTop;
-      return { left: spring(newLeft, theme("springs.sideBar")), top: newTop };
-    }
-    const newTop = tabForRoute.offsetTop;
-    return { top: spring(newTop, theme("springs.sideBar")), left: 0 };
-  }, [sidebarOnBottom]);
+      return { top: spring(newTop, theme("springs.sideBar")), left: 0 };
+    },
+    [sidebarOnBottom]
+  );
 
   const updateCaretPosition = useCallback(() => {
     const tabbedPageCheck = location.pathname.indexOf("/", 1);
@@ -61,10 +69,7 @@ export function useMenuLinks(linkList) {
       setCaretStyle(caretPosition);
       setSelectedTab(selectedTab);
     }
-  }, [
-    location,
-    neededCaretPosition
-  ]);
+  }, [location, neededCaretPosition]);
 
   const previousSidebarOnBottom = usePrevious(sidebarOnBottom);
 
@@ -80,13 +85,17 @@ export function useMenuLinks(linkList) {
     ) {
       updateCaretPosition();
     }
-  }, [updateCaretPosition, sidebarOnBottom, previousSidebarOnBottom, selectedTab, location]);
+  }, [
+    updateCaretPosition,
+    sidebarOnBottom,
+    previousSidebarOnBottom,
+    selectedTab,
+    location
+  ]);
 
   const caretStyleMemo = useMemo(() => {
     if (uiAnimations) {
-      return sidebarOnBottom
-        ? { ...caretStyle }
-        : { top: caretStyle.top };
+      return sidebarOnBottom ? { ...caretStyle } : { top: caretStyle.top };
     } else {
       const { top, left } = caretStyle;
       return sidebarOnBottom
