@@ -4,6 +4,7 @@ import { useReducer } from "react";
 import PrivacyPage from "./Page";
 import * as sel from "selectors";
 import ConfigMixer from "./ConfigMixer";
+import { usePrivacy } from "./hooks";
 
 function validateErrorReducer(state, action) {
   switch (action.type) {
@@ -16,19 +17,19 @@ function validateErrorReducer(state, action) {
 }
 
 function Privacy({ isCreateAccountDisabled }) {
-  const dispatch = useDispatch();
-  const runAccountMixer = (request) => dispatch(act.runAccountMixer(request));
-  const stopAccountMixer = () => dispatch(act.stopAccountMixer());
-  const accountMixerRunning = useSelector(sel.getAccountMixerRunning);
-  const mixedAccount = useSelector(sel.getMixedAccount);
-  const changeAccount = useSelector(sel.getChangeAccount);
-  const csppServer = useSelector(sel.getCsppServer);
-  const csppPort = useSelector(sel.getCsppPort);
-  const mixedAccountBranch = useSelector(sel.getMixedAccountBranch);
-  const accounts = useSelector(sel.sortedAccounts);
-  const [error, dispatchError] = useReducer(validateErrorReducer, {
-    mixedStart: null
-  });
+  const {
+    runAccountMixer,
+    stopAccountMixer,
+    accountMixerRunning,
+    mixedAccount,
+    changeAccount,
+    csppServer,
+    csppPort,
+    mixedAccountBranch,
+    accounts,
+    error,
+    dispatchError
+  } = usePrivacy(validateErrorReducer);
 
   if (!mixedAccount && !changeAccount) {
     return <ConfigMixer {...{ isCreateAccountDisabled, accounts }} />;
