@@ -95,7 +95,7 @@ const ExistingSeedForm = ({
       </div>
     )}
     {showPasteWarning && (
-      <div className={classNames(styles.warnig, styles.seedWarningMessage)}>
+      <div className={styles.seedError}>
         <T
           id="confirmSeed.warnings.pasteExistingSeed"
           m="*Please make sure you also have a physical, written down copy of your seed."
