@@ -613,6 +613,9 @@ const getMissingStakeTxData = async (
     // transaction
     try {
       const ticket = await wallet.getTransaction(walletService, ticketTxHash);
+      // tx which come from the gRPC call
+      // walletService.getTransactions().getMinedTransactions().getTransactionsList()
+      // at our wallet/service.js
       ticketTx = ticket.tx;
     } catch (error) {
       if (String(error).indexOf("NOT_FOUND") > -1) {

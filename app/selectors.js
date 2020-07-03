@@ -421,8 +421,16 @@ export const ticketNormalizer = createSelector(
         .reduce((s, c) => (s + isTicketChange(c) ? c.getAmount() : 0), 0);
 
       // ticket investment is the full amount paid by the wallet on the ticket purchase
+      let accountName = "";
       const debitList = ticketTx.getDebitsList();
-      const accountName = getAccountName(debitList[0].getPreviousAccount());
+      if (debitList.length > 0) {
+        accountName = getAccountName(debitList[0].getPreviousAccount());
+      } else {
+        // Mixer is set to ignore gap limit. If a wallet does not know tx
+        // details for some reason, can be due that or some other reason which
+        // needs to be investigated.
+        throw "Tx debit list is empty. Something is wrong.";
+      }
       const ticketInvestment =
         debitList.reduce((a, v) => a + v.getPreviousAmount(), 0) - ticketChange;
 
