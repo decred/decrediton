@@ -28,9 +28,6 @@ const ProposalsListItem = ({
   const isModified =
     (!isVoting && modifiedSinceLastAccess) ||
     (isVoting && votingSinceLastAccess);
-
-    console.log("in proposalsl ist items")
-    console.log(styles[voteResult])
   return (
     <div
       onClick={viewProposalDetailsHandler}
