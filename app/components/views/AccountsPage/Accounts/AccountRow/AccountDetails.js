@@ -1,6 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
 import { Balance, Tooltip, CopyToClipboard } from "shared";
 import { SlateGrayButton } from "buttons";
+import style from "../Accounts.module.css";
 
 function isHidable(account) {
   return (
@@ -11,9 +12,9 @@ function isHidable(account) {
 }
 
 const DataLine = ({ children }) => (
-  <div className="account-row-details-bottom-spec">
-    <div className="account-row-details-bottom-spec-name">{children[0]}</div>
-    <div className="account-row-details-bottom-spec-value">{children[1]}</div>
+  <div className={style["account-row-details-bottom-spec"]}>
+    <div className={style["account-row-details-bottom-spec-name"]}>{children[0]}</div>
+    <div className={style["account-row-details-bottom-spec-value"]}>{children[1]}</div>
   </div>
 );
 
@@ -28,9 +29,9 @@ const AccountsList = ({
   accountExtendedKey
 }) => (
   <div key={"details" + account.accountNumber}>
-    <div className="account-row-details-bottom-columns">
-      <div className="account-row-details-bottom-column-left">
-        <div className="account-row-details-bottom-title">
+    <div className={style["account-row-details-bottom-columns"]}>
+      <div className={style["account-row-details-bottom-column-left"]}>
+        <div className={style["account-row-details-bottom-title"]}>
           <T id="accounts.balances" m="Balances" />
         </div>
         <DataLine>
@@ -59,8 +60,8 @@ const AccountsList = ({
         </DataLine>
       </div>
 
-      <div className="account-row-details-bottom-column-right">
-        <div className="account-row-details-bottom-title">
+      <div className={style["account-row-details-bottom-column-right"]}>
+        <div className={style["account-row-details-bottom-title"]}>
           <T id="accounts.properties" m="Properties" />
         </div>
         <DataLine>
@@ -86,34 +87,34 @@ const AccountsList = ({
       </div>
     </div>
 
-    <div className="account-actions is-row">
+    <div className={style["account-actions is-row"]}>
       {account.accountName !== "imported" && (
-        <div className="account-actions-pubkey">
-          <div className="account-actions-pubkey-label">
+        <div className={style["account-actions-pubkey"]}>
+          <div className={style["account-actions-pubkey-label"]}>
             <T id="account.pubKey" m="Extended Public Key" />
           </div>
           {showPubKey && accountExtendedKey ? (
             <>
-              <div className="account-actions-pubkey-area">
+              <div className={style["account-actions-pubkey-area"]}>
                 {accountExtendedKey}
               </div>
               <CopyToClipboard
                 textToCopy={accountExtendedKey}
-                className="account-actions-pubkey-clipboard"
+                className={style["account-actions-pubkey-clipboard"]}
               />
             </>
           ) : (
-            <SlateGrayButton className="account-actions-pubkey-button">
+            <SlateGrayButton className={style["account-actions-pubkey-button"]}>
               <T id="account.Hidden" m="Hidden" />
             </SlateGrayButton>
           )}
         </div>
       )}
-      <div className="account-actions-buttons is-row">
+      <div className={style["account-actions-buttons is-row"]}>
         {account.accountName !== "imported" && (
           <Tooltip text={<T id="accounts.rename.tip" m="Rename Account" />}>
             <div
-              className="rename-account-button"
+              className={style["rename-account-button"]}
               onClick={showRenameAccount}
             />
           </Tooltip>
@@ -137,12 +138,12 @@ const AccountsList = ({
         )}
         {isHidable(account) && !hidden && (
           <Tooltip text={<T id="accounts.hide.tip" m="Hide" />}>
-            <div className="hide-account-button" onClick={hideAccount} />
+            <div className={style["hide-account-button"]} onClick={hideAccount} />
           </Tooltip>
         )}
         {hidden && (
           <Tooltip text={<T id="accounts.show.tip" m="Show" />}>
-            <div className="show-account-button" onClick={showAccount} />
+            <div className={style["show-account-button"]} onClick={showAccount} />
           </Tooltip>
         )}
       </div>

@@ -1,6 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
 import { Balance, VerticalAccordion } from "shared";
 import "style/AccountRow.less";
+import style from "../Accounts.module.css";
 
 // default account's number equals 2^31-1.
 // source https://github.com/decred/dcrwallet/blob/master/wallet/udb/addressmanager.go#L43
@@ -15,7 +16,7 @@ const Header = ({ account, hidden, hasTickets }) => (
       isImported(account) && "imported",
       isImported(account) && !hasTickets && "disabled"
     ].join(" ")}>
-    <div className="account-row-top-account-name">
+    <div className={style["account-row-top-account-name"]}>
       {account.accountName === "default" ? (
         <T id="accounts.name.default" m="Primary Account" />
       ) : (
@@ -23,15 +24,15 @@ const Header = ({ account, hidden, hasTickets }) => (
       )}
       {hidden ? <span>(hidden)</span> : null}
     </div>
-    <div className="account-row-top-account-funds">
-      <div className="account-row-top-total-value">
+    <div className={style["account-row-top-account-funds"]}>
+      <div className={style["account-row-top-total-value"]}>
         {isImported(account) ? (
           <Balance amount={account.votingAuthority} />
         ) : (
           <Balance amount={account.total} />
         )}
       </div>
-      <div className="account-row-top-spendable is-row">
+      <div className={style["account-row-top-spendable is-row"]}>
         <T id="accounts.row.spendable" m="Spendable:" />
         <Balance
           classNameWrapper="account-row-top-spendable-value"
@@ -58,7 +59,7 @@ const Row = ({
     disabled={isImported(account) && !hasTickets}
     onToggleAccordion={onToggleShowDetails}
     show={isShowingDetails}
-    className={"account-row-details-bottom"}>
+    className={style["account-row-details-bottom"]}>
     {isShowingDetails ? (
       isShowingRenameAccount ? (
         getRenameAccountStyles()
