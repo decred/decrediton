@@ -1,18 +1,11 @@
 import { Tooltip } from "shared";
-import { FormattedMessage as T } from "react-intl";
 import "style/EyeFilterMenu.less";
 import "style/StakePool.less";
 
-const WatchOnlyWalletSwitch = ({ enabled, onClick, className }) => (
+const RestoreWalletSwitch = ({ enabled, onClick, className, text }) => (
   <div className={className ? className : ""}>
     <Tooltip
-      text={
-        enabled ? (
-          <T id="watchOnly.enabled" m="Watch Only" />
-        ) : (
-          <T id="watchOnly.disabled" m="Normal" />
-        )
-      }>
+      text={text}>
       <div className="autobuyer-switch">
         <div
           className={
@@ -32,4 +25,4 @@ const WatchOnlyWalletSwitch = ({ enabled, onClick, className }) => (
   </div>
 );
 
-export default WatchOnlyWalletSwitch;
+export default RestoreWalletSwitch;

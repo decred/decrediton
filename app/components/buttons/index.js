@@ -11,12 +11,11 @@ export { default as TransactionLink } from "./TransactionLink";
 export { default as EnableExternalRequestButton } from "./EnableExternalRequestButton";
 export { default as SendTransactionButton } from "./SendTransactionButton";
 export { default as ImportScriptIconButton } from "./ImportScriptIconButton";
-export { default as TrezorWalletSwitch } from "./TrezorWalletSwitch";
+export { default as RestoreWalletSwitch } from "./RestoreWalletSwitch";
 
 import ModalButton from "./ModalButton";
 import KeyBlueButton from "./KeyBlueButton";
 import AutoBuyerSwitch from "./AutoBuyerSwitch";
-import WatchOnlyWalletSwitch from "./WatchOnlyWalletSwitch";
 import NetworkSwitch from "./NetworkSwitch";
 import DangerButton from "./DangerButton";
 import CloseButton from "./CloseButton";
@@ -29,8 +28,7 @@ export {
   DangerButton,
   CloseButton,
   NetworkSwitch,
-  InvisibleButton,
-  WatchOnlyWalletSwitch
+  InvisibleButton
 };
 
 /***************************************************
