@@ -43,6 +43,7 @@ const useDaemonStartup = () => {
   // sync dcrwallet spv or rpc selectors
   const peerCount = useSelector(sel.peerCount);
   const synced = useSelector(sel.synced);
+
   const syncFetchMissingCfiltersAttempt = useSelector(
     sel.syncFetchMissingCfiltersAttempt
   );
@@ -83,11 +84,14 @@ const useDaemonStartup = () => {
     dispatch
   ]);
   // language page
-  const onSelectLanguage = useCallback(() => dispatch(da.selectLanguage()), [
+  const onSelectLanguage = useCallback(
+    (selectedLanguage) => dispatch(da.selectLanguage(selectedLanguage)),
+    [dispatch]
+  );
+  // spv page
+  const toggleSpv = useCallback((isSPV) => dispatch(da.toggleSpv(isSPV)), [
     dispatch
   ]);
-  // spv page
-  const toggleSpv = useCallback(() => dispatch(da.toggleSpv()), [dispatch]);
   // privacy page
   const setupStandardPrivacy = useCallback(
     () => dispatch(da.setupStandardPrivacy()),
@@ -107,29 +111,34 @@ const useDaemonStartup = () => {
   ]);
   // start daemon and wallet methods
   const onRetryStartRPC = useCallback(
-    () => dispatch(wla.startRpcRequestFunc()),
+    (privPass, isRetry) => dispatch(wla.startRpcRequestFunc(privPass, isRetry)),
     [dispatch]
   );
-  const startSPVSync = useCallback(() => dispatch(wla.spvSyncAttempt()), [
-    dispatch
-  ]);
+  const startSPVSync = useCallback(
+    (privPass) => dispatch(wla.spvSyncAttempt(privPass)),
+    [dispatch]
+  );
   const setSelectedWallet = useCallback(
-    () => dispatch(wla.setSelectedWallet()),
+    (selectedWallet) => dispatch(wla.setSelectedWallet(selectedWallet)),
     [dispatch]
   );
   const getSelectedWallet = useCallback(
     () => dispatch(wla.getSelectedWallet()),
     [dispatch]
   );
-  const onOpenWallet = useCallback(() => dispatch(wla.openWalletAttempt()), [
-    dispatch
-  ]);
-  const onStartDaemon = useCallback(() => dispatch(da.startDaemon()), [
-    dispatch
-  ]);
-  const onConnectDaemon = useCallback(() => dispatch(da.connectDaemon()), [
-    dispatch
-  ]);
+  const onOpenWallet = useCallback(
+    (pubPass, retryAttempt) =>
+      dispatch(wla.openWalletAttempt(pubPass, retryAttempt)),
+    [dispatch]
+  );
+  const onStartDaemon = useCallback(
+    (params) => dispatch(da.startDaemon(params)),
+    [dispatch]
+  );
+  const onConnectDaemon = useCallback(
+    (rpcCreds) => dispatch(da.connectDaemon(rpcCreds)),
+    [dispatch]
+  );
   const checkNetworkMatch = useCallback(
     () => dispatch(da.checkNetworkMatch()),
     [dispatch]
@@ -139,18 +148,21 @@ const useDaemonStartup = () => {
     () => dispatch(da.getAvailableWallets()),
     [dispatch]
   );
-  const onStartWallet = useCallback(() => dispatch(da.startWallet()), [
-    dispatch
-  ]);
-  const onRemoveWallet = useCallback(() => dispatch(da.removeWallet()), [
-    dispatch
-  ]);
+  const onStartWallet = useCallback(
+    (selectedWallet) => dispatch(da.startWallet(selectedWallet)),
+    [dispatch]
+  );
+  const onRemoveWallet = useCallback(
+    (selectedWallet) => dispatch(da.removeWallet(selectedWallet)),
+    [dispatch]
+  );
   const goToErrorPage = useCallback(() => dispatch(ca.goToError()), [dispatch]);
 
   // create or restore wallet methods
-  const onCreateWallet = useCallback(() => dispatch(da.createWallet()), [
-    dispatch
-  ]);
+  const onCreateWallet = useCallback(
+    (selectedWallet) => dispatch(da.createWallet(selectedWallet)),
+    [dispatch]
+  );
   const getDcrwalletLogs = useCallback(() => dispatch(da.getDcrwalletLogs()), [
     dispatch
   ]);
@@ -173,7 +185,7 @@ const useDaemonStartup = () => {
     [dispatch]
   );
   const validateMasterPubKey = useCallback(
-    () => dispatch(ctrla.validateMasterPubKey),
+    (masterPubKey) => dispatch(ctrla.validateMasterPubKey(masterPubKey)),
     [dispatch]
   );
 
