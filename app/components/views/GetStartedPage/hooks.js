@@ -57,6 +57,7 @@ export const useGetStarted = () => {
   const [PageComponent, setPageComponent] = useState(null);
   const [state, send] = useMachine(getStartedMachine, {
     actions: {
+      isAtPreStart: () => {},
       isAtStartSPV: () => {
         send({ type: "CONTINUE" });
       },

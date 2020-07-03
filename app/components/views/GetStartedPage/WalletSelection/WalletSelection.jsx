@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import WalletSelectionForm from "./Form";
 import { useDaemonStartup } from "hooks";
 
@@ -12,7 +12,11 @@ const WalletSelectionBody = ({ submitChosenWallet, onSendCreateWallet }) => {
     creatingWallet
   } = useDaemonStartup();
   const [editWallets, setEditWallets] = useState(false);
-  const [selectedWallet, setSelectedWallet] = useState(availableWallets[0]);
+  const [selectedWallet, setSelectedWallet] = useState(null);
+
+  useEffect(() => {
+    setSelectedWallet(availableWallets[0]);
+  }, [availableWallets]);
 
   const onToggleEditWallet = useCallback(() => {
     setEditWallets(!editWallets);
