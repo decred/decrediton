@@ -14,7 +14,6 @@ export { default as send } from "./send";
 export { default as service } from "./service"; // TODO: hook already exists in hooks/useService.js but connector is still used in class components
 export { default as settings } from "./settings"; // TODO: hook already exists in hooks/useSettings.js  but connector is still used in class components
 export { default as shutdownPage } from "./shutdownPage";
-export { default as sideBar } from "./sideBar";
 export { default as spv } from "./spv";
 export { default as snackbar } from "./snackbar";
 export { default as stakeInfo } from "./stakeInfo";
