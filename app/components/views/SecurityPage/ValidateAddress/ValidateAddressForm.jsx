@@ -2,7 +2,6 @@ import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { Subtitle } from "shared";
 import { TextInput, classNames } from "pi-ui";
 import styles from "./ValidateAddressForm.module.css";
-import "style/SecurityCenterMessagePage.less";
 
 const messages = defineMessages({
   addressFieldPlaceholder: {
@@ -70,18 +69,13 @@ const ValidateAddressForm = ({
 }) => (
   <>
     <Subtitle
-      title={<T id="security.validate.title" m="Validate Addresses" />}
+      title={<T id="security.validate.title" m="Validate Address" />}
     />
     <div className={styles.validateAddressForm}>
       <div className={styles.validateAddressFormLabel}>
         <T id="securitycenter.validate.field.address.label" m="Address" />
       </div>
-      <div
-        className={classNames(
-          styles.validateAddressFormInput,
-          styles.validAddress,
-          address && validateAddressSuccess && styles.validAddress
-        )}>
+      <div className={styles.validateAddressFormInput}>
         <TextInput
           id="address-form"
           inputClassNames={address && validateAddressSuccess && styles.validAddress}
@@ -94,7 +88,7 @@ const ValidateAddressForm = ({
         <Result validateAddressSuccess={validateAddressSuccess} error={error} />
       )}
     </div>
-    {validateAddressSuccess && validateAddressSuccess.isMine && (
+    {validateAddressSuccess && validateAddressSuccess.isMine && address !== "" && (
       <OwnedData validateAddressSuccess={validateAddressSuccess} />
     )}
   </>

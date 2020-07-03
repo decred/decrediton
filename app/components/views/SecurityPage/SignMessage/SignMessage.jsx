@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { injectIntl } from "react-intl";
 import { withRouter } from "react-router-dom";
-import SignMessageForm from "./SignMessageForm";
-import { CopyToClipboard } from "shared";
+import { injectIntl } from "react-intl";
 import { useSignMessage } from "./hooks";
 import { useValidateAddress } from "../ValidateAddress/hooks";
-import styles from "./SignMessage.module.css";
+import SignMessageForm from "./SignMessageForm";
+import Signature from "./Signature";
 
 const SignMessage = ({ location, intl }) => {
   const {
@@ -13,6 +12,9 @@ const SignMessage = ({ location, intl }) => {
     signMessageSignature,
     isSigningMessage,
     isSignMessageDisabled,
+    isTrezor,
+    onSignMessageAttempt,
+    onSignMessageAttemptTrezor,
     onSignMessageCleanStore,
   } = useSignMessage();
   const { onValidateAddress } = useValidateAddress();
@@ -26,7 +28,7 @@ const SignMessage = ({ location, intl }) => {
       location.push("/error");
     }
     return () => onSignMessageCleanStore();
-  });
+  }, []);
 
   const onChangeAddress = async (address) => {
     setAddress(address);
@@ -51,34 +53,35 @@ const SignMessage = ({ location, intl }) => {
     }
   };
 
+  const onSubmit = (passphrase) => {
+    if (!isTrezor) {
+      onSignMessageAttempt(address, message, passphrase);
+    } else {
+      onSignMessageAttemptTrezor(address, message);
+    }
+  };
+  
   return (
     <>
       <SignMessageForm
         {...{
-          onChangeAddress,
-          onChangeMessage,
           address,
           message,
           addressError,
           messageError,
           formatMessage: intl.formatMessage,
+          isTrezor,
           isSigningMessage,
-          isSignMessageDisabled
+          isSignMessageDisabled,
+          signMessageSignature,
+          onSubmit,
+          onChangeAddress,
+          onChangeMessage
         }}
       />
-      {
-        signMessageSignature ? (
-          <div className={styles.sign}>
-            <div className={styles.messageSignature}>{signMessageSignature}</div>
-            <CopyToClipboard
-              textToCopy={signMessageSignature}
-              className={styles.messageContentCopyToClipboardIcon}
-            />
-          </div>
-        ) : null
-      }
+      {signMessageSignature && <Signature signature={signMessageSignature} />}      
     </>
   );
-};
+}
 
 export default withRouter(injectIntl(SignMessage));

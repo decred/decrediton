@@ -1,0 +1,131 @@
+.securityPage {
+  float: none;
+  position: absolute;
+  margin-left: 20px;
+
+  /* advanced-page-toggle */
+  float: left;
+  z-index: 10;
+  clear: left;
+}
+
+.securityPageTab {
+  float: left;
+  width: 740px;
+  margin-top: 22px;
+  margin-bottom: 30px;
+  text-align: right;
+}
+
+.securityPageForm {
+  background-color: var(--background-back-color);
+  margin-bottom: 20px;
+  padding: 51px 0 0 0;
+  float: left;
+  width: 100%;
+  position: relative;
+}
+
+.securityPageFormRow {
+  height: 50px;
+  width: 100%;
+}
+
+.securityPageFormRowLabel {
+  float: left;
+  text-align: right;
+  padding-right: 10px;
+  width: 111px;
+  font-size: 19px;
+  line-height: 15px;
+}
+
+.securityPageFormRowField {
+  float: left;
+  width: 300px;
+  height: 36px;
+}
+
+.securityPageFormRowFieldMessage {
+  float: left;
+  width: 540px;
+}
+
+.buttonRight {
+  position: absolute;
+  top: -35px;
+  right: 0;
+}
+
+.textToggle {
+  display: block;
+  height: 40px;
+  float: right;
+  text-align: left;
+}
+
+.textToggleButtonLeft {
+  min-width: 104px;
+  float: left;
+  border: 1px var(--disabled-background-color) solid;
+  background-color: var(--background-container);
+  box-shadow: none;
+  color: var(--disabled-color);
+  padding: 12px 18px;
+  font-size: 13px;
+  line-height: 17px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: capitalize;
+  cursor: pointer;
+  border-radius: 5px 0px 0px 5px;
+}
+
+.textToggleButtonRight {
+  min-width: 104px;
+  float: left;
+  border: 1px var(--disabled-background-color) solid;
+  background-color: var(--background-container);
+  box-shadow: none;
+  color: var(--disabled-color);
+  padding: 12px 18px;
+  font-size: 13px;
+  line-height: 17px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: capitalize;
+  cursor: pointer;
+  border-radius: 0px 5px 5px 0px;
+  border-left: none;
+}
+
+.textToggleButtonActive {
+  background-color: var(--background-back-color);
+  color: var(--input-color-default);
+  cursor: default;
+}
+
+@media screen and (max-width: 1180px) {
+  .securityPageTab {
+    width: 649px;
+  }
+
+  .securityPageFormRowFieldMessage {
+    width: 450px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .securityPageTab {
+    width: 355px;
+  }
+  
+  .securityPageFormRowField,
+  .securityPageFormRowFieldMessage {
+    width: 224px;
+  }
+   
+  .securityPage {
+    margin-left: 37px;
+  }
+}

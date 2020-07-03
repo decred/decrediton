@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import ValidateAddressForm from "./ValidateAddressForm";
 import { useValidateAddress } from "./hooks";
-import "style/SecurityCenterMessagePage.less";
 
 const ValidateAddress = () => {
   const {
@@ -15,9 +14,9 @@ const ValidateAddress = () => {
   useEffect(() => {
     onValidateAddressCleanStore();
     return () => onValidateAddressCleanStore();
-  });
+  }, []);
 
-  const onChangeAddress = async (address) => {
+  const onChangeAddress = async (address) => {  
     setAddress(address);
     if (address === "") {
       return;
@@ -28,7 +27,7 @@ const ValidateAddress = () => {
     } catch (e) {
       setError("Error: Address validation failed, please try again");
     }
-  }
+  };
 
   return (
     <ValidateAddressForm

@@ -1,0 +1,20 @@
+.copyableTextContainer {
+  float: left;
+  width: 100%;
+  background-color: var(--background-back-color);
+  position: relative;
+}
+
+.copyableText { 
+  max-width: 100%;
+  padding: 26px;
+}
+
+.subtitle {
+  float: left;
+  text-align: left;
+  padding-right: 51px 0 0 0;
+  width: 111px;
+  font-size: 19px;
+  line-height: 15px;
+}

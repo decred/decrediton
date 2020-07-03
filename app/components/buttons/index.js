@@ -10,7 +10,6 @@ export { default as TicketsCogs } from "./TicketsCogs";
 export { default as TransactionLink } from "./TransactionLink";
 export { default as EnableExternalRequestButton } from "./EnableExternalRequestButton";
 export { default as SendTransactionButton } from "./SendTransactionButton";
-export { default as SignMessageButton } from "./SignMessageButton";
 export { default as ImportScriptIconButton } from "./ImportScriptIconButton";
 export { default as TrezorWalletSwitch } from "./TrezorWalletSwitch";
 

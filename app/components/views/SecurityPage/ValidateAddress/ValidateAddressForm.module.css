@@ -60,3 +60,33 @@
   grid-template-columns: repeat(2, 1fr);
   max-width: 300px;
 }
+
+@media screen and (max-width: 1180px) {
+  .validateAddressForm {
+    width: 649px;
+  }
+
+  .validateAddressOwnedForm {
+    width: 591px;
+  }
+}
+
+
+@media screen and (max-width: 768px) {
+  .validateAddressForm {
+    width: 355px;
+  }
+  
+  .validateAddressFormInput {
+    width: 224px;
+  }
+   
+  .validateAddressFormResponse {
+    margin-right: 95px;
+    margin-top: 7px;
+  }
+
+  .validateAddressOwnedForm {
+    width: 297px;
+  }
+}

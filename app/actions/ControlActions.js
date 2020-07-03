@@ -608,7 +608,7 @@ export const validateMasterPubKey = (masterPubKey) => (dispatch) => {
   }
 };
 
-export const validateAddressCleanStore = (dispatch) => 
+export const validateAddressCleanStore = (dispatch) =>
   dispatch({ type: VALIDATEADDRESS_CLEANSTORE });
 
 export const SIGNMESSAGE_ATTEMPT = "SIGNMESSAGE_ATTEMPT";
