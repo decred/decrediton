@@ -60,7 +60,7 @@ function ConfigMixer({ isCreateAccountDisabled, accounts }) {
                 mixed: MIXED_ACCOUNT,
                 change: CHANGE_ACCOUNT,
                 boldMessage: (
-                  <span className="bold">
+                  <span className={"bold"}>
                     <T
                       id="privacy.create.undone.message"
                       m="This action can not be undone"
@@ -111,7 +111,7 @@ function ConfigMixer({ isCreateAccountDisabled, accounts }) {
                   mixed: MIXED_ACCOUNT,
                   change: CHANGE_ACCOUNT,
                   boldMessage: (
-                    <span className="bold">
+                    <span className={"bold"}>
                       <T
                         id="privacy.create.undone.message"
                         m="This action can not be undone"
