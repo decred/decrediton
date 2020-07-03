@@ -7,6 +7,7 @@ const WalletSelectionBody = ({ submitChosenWallet, onSendCreateWallet }) => {
     maxWalletCount,
     isSPV,
     availableWallets,
+    onRemoveWallet,
     getDaemonSynced,
     creatingWallet
   } = useDaemonStartup();
@@ -39,6 +40,7 @@ const WalletSelectionBody = ({ submitChosenWallet, onSendCreateWallet }) => {
         getDaemonSynced,
         maxWalletCount,
         isSPV,
+        onRemoveWallet,
         creatingWallet,
         onToggleEditWallet,
         showCreateWalletForm,
