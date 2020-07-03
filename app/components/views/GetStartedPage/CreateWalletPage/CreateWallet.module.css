@@ -13,6 +13,7 @@
   background-image: var(--x-grey);
   opacity: 1;
   cursor: pointer;
+  margin: -20px 0 0 20px;
 }
 
 .goBackScreenButton:hover {
