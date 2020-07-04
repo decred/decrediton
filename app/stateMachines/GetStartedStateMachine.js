@@ -105,7 +105,9 @@ export const getStartedMachine = Machine({
           on: {
             START_ADVANCED_DAEMON: {
               target: "startAdvancedDaemon",
-              actions: assign({ error: (context, event) => event.error })
+              actions: assign({
+                error: (context, event) => event.payload.error
+              })
             }
           }
         },
