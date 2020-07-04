@@ -26,7 +26,7 @@ const useDaemonStartup = () => {
   // end of general selectors
 
   // start daemon selectors
-  const sAdvancedDaemon = useSelector(sel.isAdvancedDaemon);
+  const isAdvancedDaemon = useSelector(sel.isAdvancedDaemon);
   const isSPV = useSelector(sel.isSPV);
   const isTestNet = useSelector(sel.isTestNet);
   const availableWallets = useSelector(sel.sortedAvailableWallets);
@@ -230,7 +230,7 @@ const useDaemonStartup = () => {
     showPrivacy,
     availableLanguages,
     defaultLocale,
-    sAdvancedDaemon,
+    isAdvancedDaemon,
     isSPV,
     isTestNet,
     availableWallets,

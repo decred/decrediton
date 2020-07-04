@@ -17,6 +17,7 @@ import { useDaemonStartup } from "hooks";
 import { useMachine } from "@xstate/react";
 import { getStartedMachine } from "stateMachines/GetStartedStateMachine";
 import { AdvancedStartupBody } from "./AdvancedStartup/AdvancedStartup";
+import { useMountEffect } from "hooks";
 
 // XXX: these animations classes are passed down to AnimatedLinearProgressFull
 // and styling defined in Loading.less and need to handled when loading.less
@@ -65,7 +66,6 @@ export const useGetStarted = () => {
       isAtStartingDaemon: (context, event) => {
         console.log("is at Starting Daemonn");
         const { appdata } = event;
-        console.log(onStartDaemon);
         return onStartDaemon({ appdata })
           .then((started) => {
             const { credentials, appdata } = started;
@@ -224,6 +224,7 @@ export const useGetStarted = () => {
       isAdvancedDaemon
     });
   }, [send, getDaemonSynced, getSelectedWallet, isAdvancedDaemon, isSPV]);
+  useMountEffect(preStartDaemon);
 
   const onSendContinue = useCallback(() => send({ type: "CONTINUE" }), [send]);
 
@@ -413,6 +414,7 @@ export const useGetStarted = () => {
     ]
   );
 
+  const machineStateValue = state && state.value;
   useEffect(() => {
     let text, animationType, component;
     if (syncFetchMissingCfiltersAttempt) {
@@ -460,6 +462,8 @@ export const useGetStarted = () => {
         />
       );
       getStateComponent(text, animationType, component);
+    } else if (machineStateValue) {
+      getStateComponent(text, animationType, component);
     }
   }, [
     syncFetchMissingCfiltersAttempt,
@@ -467,7 +471,8 @@ export const useGetStarted = () => {
     syncDiscoverAddressesAttempt,
     syncRescanAttempt,
     synced,
-    getStateComponent
+    getStateComponent,
+    machineStateValue
   ]);
 
   const onShowSettings = useCallback(() => send({ type: "SHOW_SETTINGS" }), [
@@ -475,11 +480,6 @@ export const useGetStarted = () => {
   ]);
 
   const onShowLogs = useCallback(() => send({ type: "SHOW_LOGS" }), [send]);
-
-  useEffect(() => {
-    getStateComponent();
-    preStartDaemon();
-  }, [preStartDaemon, getStateComponent]);
 
   return {
     onShowLogs,
