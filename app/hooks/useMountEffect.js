@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 
 /**
- * useMountEffect is a custom to run an effect on mount
- * it accepts an effect as function and executes it
+ * useMountEffect is a custom hook to run an effect on mount
+ * only once, it accepts an effect/function and executes it
  * only after succesful mount (empty array as second argument
  * in useEffect call)
  *
