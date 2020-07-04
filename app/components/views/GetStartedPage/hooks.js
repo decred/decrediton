@@ -58,6 +58,7 @@ export const useGetStarted = () => {
   const [state, send] = useMachine(getStartedMachine, {
     actions: {
       isAtPreStart: () => {},
+      isAtStartAdvancedDaemon: () => {},
       isAtStartSPV: () => {
         send({ type: "CONTINUE" });
       },
@@ -212,19 +213,16 @@ export const useGetStarted = () => {
       });
     }
     send({ type: "START_SPV", isSPV });
-    if (isAdvancedDaemon) {
-      send({
-        type: "START_ADVANCED_DAEMON",
-        isSPV,
-        isAdvancedDaemon
-      });
-    } else {
-      send({
-        type: "START_REGULAR_DAEMON",
-        isSPV,
-        isAdvancedDaemon
-      });
-    }
+    send({
+      type: "START_ADVANCED_DAEMON",
+      isSPV,
+      isAdvancedDaemon
+    });
+    send({
+      type: "START_REGULAR_DAEMON",
+      isSPV,
+      isAdvancedDaemon
+    });
   }, [send, getDaemonSynced, getSelectedWallet, isAdvancedDaemon, isSPV]);
 
   const onSendContinue = useCallback(() => send({ type: "CONTINUE" }), [send]);
