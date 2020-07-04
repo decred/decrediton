@@ -81,7 +81,9 @@ export const useGetStarted = () => {
       isAtDaemonError: (context, event) => {
         console.log("is at daemon error");
         if (!event) return;
-        const { error } = event;
+        const {
+          payload: { error }
+        } = event;
         if (!error) return;
         const { isAdvancedDaemon } = context;
         // We send the user to the error page if decrediton is not in advanced mode.
