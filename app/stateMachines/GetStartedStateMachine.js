@@ -14,7 +14,8 @@ export const getStartedMachine = Machine({
     error: null,
     isCreateNewWallet: null,
     isSPV: null,
-    isAdvancedDaemon: null
+    isAdvancedDaemon: null,
+    isPrivacy: null
   },
   states: {
     // startMachine represents the state with daemon and wallet starting operations.
@@ -223,7 +224,16 @@ export const getStartedMachine = Machine({
               actions: assign({
                 error: (context, event) => event.error && event.error
               })
+            },
+            SET_MIXED_ACCOUNT: {
+              target: "settingMixedAccount",
+              cond: (context, e) => !!context.isPrivacy
             }
+          }
+        },
+        settingMixedAccount: {
+          onEntry: "isAtSettingAccount",
+          on: {
           }
         },
         // history state so we can go back in the specific state when going to other view, like settings or log
@@ -257,7 +267,10 @@ export const getStartedMachine = Machine({
                 console.log(e);
               }
               return spawnedMachine;
-            }
+            },
+            // set isPrivacy in case recoverying a privacy wallet. With that
+            // it is possible to set mixed account when recoverying wallets.
+            isPrivacy: (ctx, e) => e.isPrivacy
           })
         }
       },

@@ -147,8 +147,8 @@ export const useGetStarted = () => {
             send({ type: "ERROR_STARTING_WALLET", payload: { error } });
           });
       },
-      isSyncingRPC: (context) => {
-        const { passPhrase } = context;
+      isSyncingRPC: async (context) => {
+        const { passPhrase, isPrivacy } = context;
         if (context.isSPV) {
           return startSPVSync()
             .then((r) => r)
@@ -156,11 +156,21 @@ export const useGetStarted = () => {
               send({ type: "ERROR_SYNCING_WALLET", payload: { error } })
             );
         }
-        onRetryStartRPC(passPhrase)
-          .then((r) => r)
-          .catch((error) =>
-            send({ type: "ERROR_SYNCING_WALLET", payload: { error } })
-          );
+        try {
+          await onRetryStartRPC(passPhrase);
+          if (isPrivacy) {
+            // if recoverying a privacy wallet, we go to settingMixedAccount
+            // state, so the user can set a mixed account based on their
+            // coinjoin outputs.
+            // This state should only be achievable if recoverying wallet.
+            send({ type: "SET_MIXED_ACCOUNT" });
+          }
+        } catch (error) {
+          send({ type: "ERROR_SYNCING_WALLET", payload: { error } });
+        }
+      },
+      isAtSettingAccount: (context) => {
+        console.log("AQUI NO SETTING ACCOUNT********************");
       }
     }
   });
@@ -241,12 +251,13 @@ export const useGetStarted = () => {
   );
 
   const onShowCreateWallet = useCallback(
-    ({ isNew, walletMasterPubKey, isTrezor }) =>
+    ({ isNew, walletMasterPubKey, isTrezor, isPrivacy }) =>
       send({
         type: "SHOW_CREATE_WALLET",
         isNew,
         walletMasterPubKey,
-        isTrezor
+        isTrezor,
+        isPrivacy
       }),
     [send]
   );

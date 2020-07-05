@@ -71,7 +71,7 @@ const startWalletServicesTrigger = () => (dispatch, getState) =>
       await dispatch(getStartupWalletInfo());
       await dispatch(transactionNtfnsStart());
       await dispatch(accountNtfnsStart());
-      await dispatch(pushHistory("/home"));
+      // await dispatch(pushHistory("/home"));
     };
 
     startServicesAsync()
@@ -272,14 +272,17 @@ export const getBestBlockHeightAttempt = (cb) => (dispatch, getState) => {
   dispatch({ type: GETBESTBLOCK_ATTEMPT });
   wallet
     .bestBlock(sel.walletService(getState()))
-    .then((resp) => {
+    .then(async (resp) => {
       dispatch({ height: resp.getHeight(), type: GETBESTBLOCK_SUCCESS });
       if (cb) {
-        dispatch(cb());
+        await dispatch(cb());
+        return true;
       }
+      return true;
     })
     .catch((error) => {
       dispatch({ error, type: GETBESTBLOCK_FAILED });
+      throw error;
     });
 };
 

@@ -111,7 +111,9 @@ const useDaemonStartup = () => {
   ]);
   // start daemon and wallet methods
   const onRetryStartRPC = useCallback(
-    (privPass, isRetry) => dispatch(wla.startRpcRequestFunc(privPass, isRetry)),
+    async (privPass, isRetry) => await dispatch(
+      wla.startRpcRequestFunc(privPass, isRetry)
+    ),
     [dispatch]
   );
   const startSPVSync = useCallback(
