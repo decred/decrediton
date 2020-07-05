@@ -6,6 +6,7 @@ import * as da from "actions/DaemonActions";
 import * as ca from "actions/ClientActions";
 import * as ctrla from "actions/ControlActions";
 import * as trza from "actions/TrezorActions";
+import * as ama from "actions/AccountMixerActions";
 
 const useDaemonStartup = () => {
   const dispatch = useDispatch();
@@ -120,6 +121,10 @@ const useDaemonStartup = () => {
     (privPass) => dispatch(wla.spvSyncAttempt(privPass)),
     [dispatch]
   );
+  const getCoinjoinOutputspByAcct = useCallback(
+    () => dispatch(ama.getCoinjoinOutputspByAcct()),
+    [dispatch]
+  );
   const setSelectedWallet = useCallback(
     (selectedWallet) => dispatch(wla.setSelectedWallet(selectedWallet)),
     [dispatch]
@@ -213,6 +218,7 @@ const useDaemonStartup = () => {
     getSelectedWallet,
     setSelectedWallet,
     startSPVSync,
+    getCoinjoinOutputspByAcct,
     onRetryStartRPC,
     finishPrivacy,
     setupStandardPrivacy,

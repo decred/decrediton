@@ -26,7 +26,11 @@ export const getStartedMachine = Machine({
         SHOW_LOGS: "logs",
         SHOW_TREZOR_CONFIG: "trezorConfig",
         SHOW_RELEASE_NOTES: "releaseNotes",
-        SHOW_CREATE_WALLET: "creatingWallet"
+        SHOW_CREATE_WALLET: "creatingWallet",
+        SET_MIXED_ACCOUNT: {
+          target: "settingMixedAccount",
+          // cond: (context, e) => !!context.isPrivacy
+        },
       },
       states: {
         preStart: {
@@ -225,15 +229,6 @@ export const getStartedMachine = Machine({
                 error: (context, event) => event.error && event.error
               })
             },
-            SET_MIXED_ACCOUNT: {
-              target: "settingMixedAccount",
-              cond: (context, e) => !!context.isPrivacy
-            }
-          }
-        },
-        settingMixedAccount: {
-          onEntry: "isAtSettingAccount",
-          on: {
           }
         },
         // history state so we can go back in the specific state when going to other view, like settings or log
@@ -290,6 +285,16 @@ export const getStartedMachine = Machine({
         }
       }
     },
+    settingMixedAccount: {
+      onEntry: "isAtSettingAccount",
+      initial: "settingMixedAccount",
+      states: {
+        settingMixedAccount: {}
+      },
+      on: {
+        CONTINUE: "goToHomeView"
+      }
+    },
     releaseNotes: {
       initial: "releaseNotes",
       states: {
@@ -328,6 +333,12 @@ export const getStartedMachine = Machine({
         BACK: "startMachine.hist",
         SHOW_SETTINGS: "settings"
       }
+    },
+    // goToHomeView goes to home view. We do that, instead of going to a final
+    // state, because the machine can still be called, like when a refresh
+    // happens in dev mode.
+    goToHomeView: {
+      onEntry: "isAtFinishMachine",
     }
   }
 });
