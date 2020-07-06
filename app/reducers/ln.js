@@ -160,7 +160,7 @@ export default function ln(state = {}, action) {
           state.outstandingPayments,
           action.rhashHex
         ),
-        failedPayments: [ ...state.failedPayments, action.payData ]
+        failedPayments: [...state.failedPayments, action.payData]
       };
     case LNWALLET_DCRLND_STOPPED:
       return {

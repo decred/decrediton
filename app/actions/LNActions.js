@@ -31,7 +31,9 @@ export const startDcrlnd = (
   const {
     grpc: { port }
   } = getState();
-  const { daemon: { walletName } } = getState();
+  const {
+    daemon: { walletName }
+  } = getState();
   const isTestnet = sel.isTestNet(getState());
   const walletPath = getWalletPath(isTestnet, walletName);
   const walletPort = port;

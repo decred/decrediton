@@ -70,8 +70,6 @@ const FailedPayment = ({ payment, paymentError, tsDate }) => (
   </div>
 );
 
-
-
 const EmptyDescription = () => (
   <div className="empty-description">
     <T id="ln.paymentsTab.emptyDescr" m="(empty description)" />
@@ -204,11 +202,11 @@ export default ({
     ) : null}
 
     <div className="ln-payments-list">
-      {failedPayments.map(p => (
+      {failedPayments.map((p) => (
         <FailedPayment
           payment={p.decoded}
           paymentError={p.paymentError}
-          key={"failed-"+p.decoded.paymentHash}
+          key={"failed-" + p.decoded.paymentHash}
           tsDate={tsDate}
         />
       ))}

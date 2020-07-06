@@ -718,9 +718,11 @@ export const lastVotedTicket = createSelector(
     const lastVotedTicket = Object.keys(transactions)
       .map((hash) => transactions[hash])
       .filter((transaction) => transaction.status == VOTED)
-      .reduce((prev, current) =>
-        (prev.leaveTimestamp > current.leaveTimestamp) ? prev : current
-      , []);
+      .reduce(
+        (prev, current) =>
+          prev.leaveTimestamp > current.leaveTimestamp ? prev : current,
+        []
+      );
 
     return Array.isArray(lastVotedTicket) ? null : lastVotedTicket;
   }

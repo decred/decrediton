@@ -159,7 +159,9 @@ const StakeInfoDisplay = ({
             label={<T id="stake.lastVotedTicket" m="Last Ticked Voted" />}
             value={
               lastVotedTicket
-                ? getDateDiffLabel(new Date(lastVotedTicket.leaveTimestamp * 1000))
+                ? getDateDiffLabel(
+                    new Date(lastVotedTicket.leaveTimestamp * 1000)
+                  )
                 : "None"
             }
             foot={
