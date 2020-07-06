@@ -17,7 +17,7 @@ export function useAccountRow(
   const [showPubKey, setShowPubKey] = useState(false);
   const [isShowingDetails, setIsShowingDetails] = useState(false);
 
-  const previousAccount = usePrevious(account);
+  // const previousAccount = usePrevious(account);
   const previousAccountNumDetailsShown = usePrevious(accountNumDetailsShown);
 
   useEffect(() => {
@@ -49,9 +49,9 @@ export function useAccountRow(
       return;
     }
     renameAccount(renameAccountNumber, renameAccountName);
-    setRenameAccountName(null)
+    setRenameAccountName(null);
     setIsShowingRenameAccount(false);
-  }, [renameAccountName, renameAccountNumber]);
+  }, [renameAccount, renameAccountName, renameAccountNumber]);
 
   const showRenameAccount = useCallback(() => {
     setHasFailedAttempt(false);
@@ -65,17 +65,17 @@ export function useAccountRow(
   const showAccountCallback = useCallback(() => {
     showAccount(account.accountNumber);
     setHidden(false);
-  }, []);
+  }, [showAccount, account.accountNumber]);
 
   const hideAccountCallback = useCallback(() => {
     hideAccount(account.accountNumber);
     setHidden(true);
-  }, []);
+  }, [hideAccount, account.accountNumber]);
 
   const onTogglePubkey = useCallback(() => {
     onGetAccountExtendedKey(account.accountNumber);
     setShowPubKey(!showPubKey);
-  }, [showPubKey]);
+  }, [onGetAccountExtendedKey, account.accountNumber, showPubKey]);
 
   const onToggleShowDetails = useCallback(() => {
     setIsShowingDetails(!isShowingDetails);
@@ -84,7 +84,6 @@ export function useAccountRow(
   return {
     isShowingRenameAccount,
     renameAccountName,
-    renameAccountNumber,
     hidden,
     hasFailedAttempt,
     showPubKey,

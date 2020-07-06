@@ -18,7 +18,6 @@ const AccountRow = ({
   const {
     isShowingRenameAccount,
     renameAccountName,
-    renameAccountNumber,
     hidden,
     hasFailedAttempt,
     showPubKey,
@@ -90,6 +89,6 @@ const AccountRow = ({
       }}
     />
   );
-}
+};
 
 export default AccountRow;

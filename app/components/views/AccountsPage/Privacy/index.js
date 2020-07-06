@@ -1,8 +1,4 @@
-import * as act from "actions/AccountMixerActions";
-import { useDispatch, useSelector } from "react-redux";
-import { useReducer } from "react";
 import PrivacyPage from "./Page";
-import * as sel from "selectors";
 import ConfigMixer from "./ConfigMixer";
 import { usePrivacy } from "./hooks";
 
