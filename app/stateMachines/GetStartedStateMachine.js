@@ -29,8 +29,8 @@ export const getStartedMachine = Machine({
         SHOW_CREATE_WALLET: "creatingWallet",
         SET_MIXED_ACCOUNT: {
           target: "settingMixedAccount",
-          // cond: (context, e) => !!context.isPrivacy
-        },
+          cond: (context, e) => !!context.isPrivacy
+        }
       },
       states: {
         preStart: {
@@ -228,7 +228,7 @@ export const getStartedMachine = Machine({
               actions: assign({
                 error: (context, event) => event.error && event.error
               })
-            },
+            }
           }
         },
         // history state so we can go back in the specific state when going to other view, like settings or log
@@ -338,7 +338,7 @@ export const getStartedMachine = Machine({
     // state, because the machine can still be called, like when a refresh
     // happens in dev mode.
     goToHomeView: {
-      onEntry: "isAtFinishMachine",
+      onEntry: "isAtFinishMachine"
     }
   }
 });

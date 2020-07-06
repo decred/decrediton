@@ -147,24 +147,22 @@ export const createNeededAccounts = (
   }
 };
 
-export const GETCOINJOINOUTPUTSBYACCT_ATTEMPT = "GETCOINJOINOUTPUTSBYACCT_ATTEMPT";
-export const GETCOINJOINOUTPUTSBYACCT_SUCCESS = "GETCOINJOINOUTPUTSBYACCT_SUCCESS";
-export const GETCOINJOINOUTPUTSBYACCT_FAILED = "GETCOINJOINOUTPUTSBYACCT_FAILED";
 
 export const getCoinjoinOutputspByAcct = () => (dispatch, getState) =>
-new Promise((resolve, reject) => {
-  dispatch({ type: GETCOINJOINOUTPUTSBYACCT_ATTEMPT });
-  wallet
-    .getCoinjoinOutputspByAcct(sel.walletService(getState()))
-    .then((response) => {
-      const coinjoinSumByAcctResp = response.wrappers_[1];
-      const coinjoinSumByAcct = coinjoinSumByAcctResp.map((v) => {
-        return {
-          acctIdx: v.getAccountNumber(),
-          coinjoinSum: v.getCoinjoinTxsSum()
-        }
+  new Promise((resolve, reject) => {
+    wallet
+      .getCoinjoinOutputspByAcct(sel.walletService(getState()))
+      .then((response) => {
+        const coinjoinSumByAcctResp = response.wrappers_[1];
+        const coinjoinSumByAcct = coinjoinSumByAcctResp.map((v) => {
+          return {
+            acctIdx: v.getAccountNumber(),
+            coinjoinSum: v.getCoinjoinTxsSum()
+          };
+        });
+        resolve(coinjoinSumByAcct);
       })
-      dispatch({ type: GETCOINJOINOUTPUTSBYACCT_SUCCESS, coinjoinSumByAcct });
-    })
-    .catch((error) => dispatch({ error, type: GETCOINJOINOUTPUTSBYACCT_FAILED }));
-});
+      .catch((error) =>
+        reject(error)
+      );
+  });
