@@ -37,8 +37,7 @@ const config = merge(baseConfig, {
             modules: true,
             localIdentName: "[hash:base64]"
           }
-        }
-        ],
+        }],
         include: /\.module\.css$/
       },
       {
@@ -121,14 +120,14 @@ const config = merge(baseConfig, {
     new CopyPlugin({
       patterns: [
         {
-          from: 'app/style/icons',
-          to: 'style/icons'
+          from: "app/style/icons",
+          to: "style/icons"
         },
         {
-          from: 'app/style/animations/*.gif',
-          to: 'style/animations/[name].[ext]'
-        },
-      ],
+          from: "app/style/animations/*.gif",
+          to: "style/animations/[name].[ext]"
+        }
+      ]
     }),
 
     new HtmlWebpackPlugin({
