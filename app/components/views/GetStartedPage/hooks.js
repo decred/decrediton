@@ -17,7 +17,6 @@ import { useDaemonStartup } from "hooks";
 import { useMachine } from "@xstate/react";
 import { getStartedMachine } from "stateMachines/GetStartedStateMachine";
 import { AdvancedStartupBody } from "./AdvancedStartup/AdvancedStartup";
-import { useMountEffect } from "hooks";
 
 // XXX: these animations classes are passed down to AnimatedLinearProgressFull
 // and styling defined in Loading.less and need to handled when loading.less
@@ -58,7 +57,10 @@ export const useGetStarted = () => {
   const [PageComponent, setPageComponent] = useState(null);
   const [state, send] = useMachine(getStartedMachine, {
     actions: {
-      isAtPreStart: () => {},
+      isAtPreStart: () => {
+        console.log("is at pre start");
+        preStartDaemon();
+      },
       isAtStartAdvancedDaemon: () => {},
       isAtStartSPV: () => {
         send({ type: "CONTINUE" });
@@ -226,7 +228,6 @@ export const useGetStarted = () => {
       isAdvancedDaemon
     });
   }, [send, getDaemonSynced, getSelectedWallet, isAdvancedDaemon, isSPV]);
-  useMountEffect(preStartDaemon);
 
   const onSendContinue = useCallback(() => send({ type: "CONTINUE" }), [send]);
 
