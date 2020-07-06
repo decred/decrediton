@@ -788,6 +788,7 @@
 
 .launchError {
   margin-bottom: 20px;
+  color: var(--error-text-color);
 }
 
 @media screen and (max-width: 1919px) {
