@@ -9,11 +9,11 @@ export function useAccountRow(
   hideAccount,
   onGetAccountExtendedKey
 ) {
-  const [, setIsShowingRenameAccount] = useState(false);
+  const [isShowingRenameAccount, setIsShowingRenameAccount] = useState(false);
   const [renameAccountName, setRenameAccountName] = useState(null);
   const [renameAccountNumber] = useState(account.accountNumber);
-  const [, setHidden] = useState(account.hidden);
-  const [, setHasFailedAttempt] = useState(false);
+  const [hidden, setHidden] = useState(account.hidden);
+  const [hasFailedAttempt, setHasFailedAttempt] = useState(false);
   const [showPubKey, setShowPubKey] = useState(false);
   const [isShowingDetails, setIsShowingDetails] = useState(false);
 
@@ -43,7 +43,7 @@ export function useAccountRow(
     setRenameAccountName(accountName);
   }, []);
 
-  const renameAccount = useCallback(() => {
+  const renameAccountCallback = useCallback(() => {
     if (!renameAccountName || renameAccountName == "") {
       setHasFailedAttempt(true);
       return;
@@ -62,12 +62,12 @@ export function useAccountRow(
     setIsShowingRenameAccount(false);
   }, []);
 
-  const showAccount = useCallback(() => {
+  const showAccountCallback = useCallback(() => {
     showAccount(account.accountNumber);
     setHidden(false);
   }, []);
 
-  const hideAccount = useCallback(() => {
+  const hideAccountCallback = useCallback(() => {
     hideAccount(account.accountNumber);
     setHidden(true);
   }, []);
@@ -82,12 +82,19 @@ export function useAccountRow(
   }, [isShowingDetails]);
 
   return {
+    isShowingRenameAccount,
+    renameAccountName,
+    renameAccountNumber,
+    hidden,
+    hasFailedAttempt,
+    showPubKey,
+    isShowingDetails,
     updateRenameAccountName,
-    renameAccount,
+    renameAccountCallback,
     showRenameAccount,
     hideRenameAccount,
-    showAccount,
-    hideAccount,
+    showAccountCallback,
+    hideAccountCallback,
     onTogglePubkey,
     onToggleShowDetails
   };
