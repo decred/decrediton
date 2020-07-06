@@ -4,7 +4,6 @@ export const decodedPurchasedTicketTx = {
   "numInputs": 1,
   "inputs": [
     {
-      "opRawHash": Buffer.from([132, 107, 192, 162, 131, 217, 8, 228, 140, 36, 137, 147, 128, 220, 21, 80, 233, 149, 72, 230, 4, 157, 215, 148, 83, 194, 10, 148, 245, 249, 167, 105]),
       "prevTxId": "69a7f9f5940ac25394d79d04e64895e95015dc809389248ce408d983a2c06b84",
       "outputIndex": 0,
       "outputTree": 0,
@@ -49,7 +48,6 @@ export const multiTxPrefix = {
   numOutputs: 2,
   inputs: [
     {
-      opRawHash: Buffer.from([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
       prevTxId: "0000000000000000000000000000000000000000000000000000000000000000",
       outputIndex: 0xffffffff,
       sequence: 0xffffffff,

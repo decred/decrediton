@@ -4,7 +4,8 @@ import {
   putUint8,
   putUint16,
   putUint32,
-  putUint64
+  putUint64,
+  hexToBytes
 } from "./byteActions";
 import { Uint64LE } from "int64-buffer";
 
@@ -136,8 +137,9 @@ function serializeSize(output) {
 // writeOutPoint encodes op to the Decred protocol encoding for an OutPoint
 // to w.
 function writeOutPoint(input, arr8, position) {
-  arr8.set(input.opRawHash, position);
-  position += input.opRawHash.length;
+  const opRawHash = hexToBytes(input.prevTxId);
+  arr8.set(opRawHash, position);
+  position += opRawHash.length;
   arr8.set(putUint32(input.outputIndex), position);
   position += 4;
   arr8.set(putUint8(input.outputTree), position);
@@ -197,8 +199,8 @@ export function decodeRawTransaction(rawTx) {
   tx.inputs = [];
   for (let i = 0; i < tx.numInputs; i++) {
     const input = {};
-    input.opRawHash = rawTx.slice(position, position + 32);
-    input.prevTxId = reverseHash(rawToHex(input.opRawHash));
+    const opRawHash = rawTx.slice(position, position + 32);
+    input.prevTxId = reverseHash(rawToHex(opRawHash));
     position += 32;
     input.outputIndex = rawTx.readUInt32LE(position);
     position += 4;
