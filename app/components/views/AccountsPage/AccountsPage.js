@@ -1,8 +1,8 @@
 import { TabbedPage, TabbedPageTab as Tab, StandaloneHeader } from "layout";
 import { Switch, Redirect } from "react-router-dom";
 import { FormattedMessage as T } from "react-intl";
-import AccountsTab from "./Accounts";
-import PrivacyTab from "./Privacy";
+import AccountsTab from "./Accounts/Accounts";
+import PrivacyTab from "./Privacy/Privacy";
 import { PassphraseModalButton } from "buttons";
 import { AddAccountModal } from "modals";
 import { WatchOnlyWarnNotification } from "shared";

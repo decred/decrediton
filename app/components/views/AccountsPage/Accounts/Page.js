@@ -1,5 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
-import AccountRow from "./AccountRow";
+import AccountRow from "./AccountRow/AccountRow";
 import { DecredLoading } from "indicators";
 import { InfoDocModalButton } from "buttons";
 import { Subtitle } from "shared";

@@ -3,7 +3,7 @@ import { AnimatedSwitch } from "react-router-transition";
 import { StaticSwitch } from "shared";
 import HomePage from "components/views/HomePage";
 import SettingsPage from "components/views/SettingsPage/SettingsPage";
-import AccountsPage from "components/views/AccountsPage";
+import AccountsPage from "components/views/AccountsPage/AccountsPage";
 import WalletError from "components/views/WalletError";
 import ErrorScreen from "components/ErrorScreen";
 import InvalidRPCVersion from "components/views/InvalidRPCVersion";
