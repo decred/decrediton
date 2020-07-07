@@ -1,0 +1,26 @@
+.acctRow {
+    padding: 10px;
+    margin-bottom: 5px;
+    background: white;
+    border-radius: 5px;
+}
+
+.title {
+    font-size: 16pt;
+    line-height: 34px;
+    margin-bottom: 6px;
+}
+
+.blueButton {
+    height: 10px;
+    margin-left: auto;
+    margin-bottom: 5px;
+}
+
+.rowLabel {
+    font-size: 12pt;
+}
+
+.rowWrapper {
+    width: 400px;
+}
