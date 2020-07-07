@@ -245,6 +245,7 @@
     "axios": "^0.18.1",
     "bs58": "^4.0.1",
     "connected-react-router": "^6.8.0",
+    "copy-webpack-plugin": "^6.0.3",
     "dom-helpers": "^3.4.0",
     "electron-builder": "^21.2.0",
     "electron-devtools-installer": "^2.2.4",
