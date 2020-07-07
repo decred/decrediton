@@ -3,13 +3,8 @@ import { InvisibleButton, DangerButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import { Documentation } from "shared";
 import { TextInput } from "inputs";
-
-const propTypes = {
-  show: PropTypes.bool.isRequired,
-  onCancelModal: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-  copyConfirmationPhrase: PropTypes.string.isRequired
-};
+import { classNames } from "pi-ui";
+import style from "../Modals.module.css";
 
 const Modal = ({
   show,
@@ -19,19 +14,19 @@ const Modal = ({
   typedConfirmationPhrase,
   onTypedConfirmationPhraseChanged
 }) => (
-  <DefaultModal className="confirm-seed-copy-modal" {...{ show }}>
-    <div className="title-warning-copy-modal">
+  <DefaultModal className={style.confirmSeedCopy} {...{ show }}>
+    <div className={style.titleWarningCopyModal}>
       <T id="seedCopyConfirm.titleWarning" m="Seed Clipboard Copy Warning" />
     </div>
-    <div className="confirm-seed-copy-modal-content">
-      <div className="confirm-seed-copy-warning-text">
+    <div className={style.confirmSeedCopyContent}>
+      <div className={style.confirmSeedCopyWarningText}>
         <Documentation name="SeedCopyWarning" />
         <T
           id="seedCopyConfirmModal.confirmPhraseInstruction"
           m="Please type {confirmationPhrase} to copy the seed."
           values={{
             confirmationPhrase: (
-              <span className="mono confirm-seed-copy-phrase">
+              <span className={classNames("mono", style.confirmSeedCopyPhrase)}>
                 '{copyConfirmationPhrase}'
               </span>
             )
@@ -48,9 +43,9 @@ const Modal = ({
         }
       />
     </div>
-    <div className="confirm-seed-copy-modal-toolbar">
+    <div className={style.confirmSeedCopyToolbar}>
       <DangerButton
-        className="confirm-modal-confirm-button"
+        className={style.confirmConfirmButton}
         onClick={onSubmit}
         disabled={
           typedConfirmationPhrase.toLowerCase() !==
@@ -59,14 +54,12 @@ const Modal = ({
         <T id="seedCopyConfirm.btnConfirm" m="Confirm Seed Copy" />
       </DangerButton>
       <InvisibleButton
-        className="confirm-modal-close-button"
+        className={style.confirmCloseButton}
         onClick={onCancelModal}>
         <T id="seedCopyConfirm.btnCancel" m="Cancel" />
       </InvisibleButton>
     </div>
   </DefaultModal>
 );
-
-Modal.propTypes = propTypes;
 
 export default Modal;

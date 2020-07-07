@@ -1,32 +1,27 @@
-import Modal from "../Modal";
+import Modal from "./Modal";
 import { FormattedMessage as T } from "react-intl";
 import { InvisibleButton, KeyBlueButton } from "buttons";
-
-const propTypes = {
-  show: PropTypes.bool.isRequired,
-  onCancelModal: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired
-};
+import style from "./Modals.module.css";
 
 const AutobuyerRunningModal = ({ show, onCancelModal, onSubmit }) => (
-  <Modal className="confirm-modal" {...{ show, onCancelModal }}>
-    <div className="confirm-modal-header">
-      <div className="confirm-modal-header-title">
+  <Modal className={style.confirm} {...{ show, onCancelModal }}>
+    <div className={style.confirmHeader}>
+      <div className={style.confirmHeaderTitle}>
         <T
           id="tickets.autobuyerRunning.title"
           m="Auto Ticket Buyer Still Running"
         />
       </div>
     </div>
-    <div className="confirm-modal-content">
+    <div className={style.confirmContent}>
       <T
         id="tickets.autobuyerRunning.message"
         m="If you proceed, it will be closed and no more tickets will be purchased."
       />
     </div>
-    <div className="confirm-modal-toolbar">
+    <div className={style.confirmToolbar}>
       <KeyBlueButton
-        className="confirm-modal-confirm-button"
+        className={style.confirmConfirmButton}
         onClick={onSubmit}>
         {
           <T
@@ -36,14 +31,12 @@ const AutobuyerRunningModal = ({ show, onCancelModal, onSubmit }) => (
         }
       </KeyBlueButton>
       <InvisibleButton
-        className="confirm-modal-close-button"
+        className={style.confirmCloseButton}
         onClick={onCancelModal}>
         <T id="tickets.autobuyerRunning.confirmModal.btnCancel" m="Cancel" />
       </InvisibleButton>
     </div>
   </Modal>
 );
-
-AutobuyerRunningModal.propTypes = propTypes;
 
 export default AutobuyerRunningModal;

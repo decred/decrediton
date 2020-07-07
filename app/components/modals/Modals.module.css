@@ -1,0 +1,691 @@
+.overlay,
+.overlayReducedBar,
+.overlayStandalone {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay {
+  left: 296px;
+}
+
+.overlayReducedBar {
+  left: 60px;
+}
+
+.overlayStandalone {
+  left: 0;
+}
+
+.modal,
+.reducedBar,
+.standalone {
+  position: fixed;
+  color: var(--title-text-and-button-background);
+  background-color: var(--background-back-color);
+  box-shadow: 0 15px 34px rgba(9, 20, 64, 0.21);
+  z-index: 200;
+  top: 0;
+  right: 0;
+}
+
+.modal {
+  left: 296px;
+}
+
+.modal.draggable {
+  left: initial;
+}
+
+.reducedBar {
+  margin: auto;
+  left: 0;
+  top: 172px;
+  width: 540px !important;
+}
+
+.standalone {
+  left: 0;
+}
+
+.modal.info,
+.modal.confirm,
+.reducedBar.confirm,
+.reducedBar.info,
+.standalone.info,
+.pseudo-modal.info {
+  max-height: 60%;
+  z-index: 200;
+  overflow-y: auto;
+  text-align: left;
+  width: 262px;
+  margin-top: 156px;
+  background-image: var(--tickets-info-icon);
+  background-attachment: local;
+  background-size: 32px 32px;
+  background-repeat: no-repeat;
+  background-position: 18px 32px;
+  padding: 30px 40px 20px 58px;
+  font-size: 13px;
+  line-height: 17px;
+}
+
+.pseudo-modal.info {
+  z-index: 98;
+  margin-top: 0;
+  margin-left: 150px;
+  padding: 30px 40px 30px 58px;
+}
+
+.modal.info {
+  margin-left: 272px;
+  display: flex;
+  flex-direction: column;
+}
+
+.reducedBar.info {
+  margin-left: 390px;
+}
+
+.standalone.info {
+  margin-left: 420px;
+}
+
+.modal.info.double,
+.reducedBar.info.double,
+.standalone.info.double,
+.modal.passphrase,
+.modal.confirm,
+.reducedBar.passphrase {
+  width: 540px;
+  margin-top: 172px;
+}
+
+.modal.about,
+.reducedBar.about,
+.standalone.about {
+  max-height: 60%;
+  z-index: 200;
+  overflow-y: auto;
+  text-align: left;
+  width: 611px !important;
+  height: 342px;
+  margin-top: 108px;
+  font-size: 13px;
+  line-height: 17px;
+  color: var(--modal-text);
+}
+
+.modal.about a,
+.reducedBar.about a,
+.standalone.about a {
+  cursor: pointer;
+  text-decoration: underline;
+  color: var(--modal-text);
+}
+
+.modal.about a:hover,
+.reducedBar.about a:hover,
+.standalone.about a:hover,
+.modal.about a:active,
+.reducedBar.about a:active,
+.standalone.about a:active {
+  color: var(--input-color);
+}
+
+.aboutIcon {
+  float: left;
+  height: 231px;
+  width: 231px;
+  box-shadow: 0px 13px 21px rgba(9, 20, 64, 0.34);
+  margin-left: 20px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  background-position: 50%;
+  background-image: var(--decred-macos-1024-logo);
+  background-size: 231px;
+  background-repeat: no-repeat;
+  border-radius: 40px;
+}
+
+.aboutContent {
+  float: left;
+  width: 260px;
+  margin-left: 50px;
+  margin-top: 30px;
+}
+
+.aboutTitle {
+  font-size: 27px;
+  line-height: 34px;
+  margin-bottom: 20px;
+}
+
+.aboutText {
+  font-size: 13px;
+  line-height: 17px;
+}
+
+.aboutBottomArea {
+  float: left;
+  width: 571px;
+  margin-left: 20px;
+  border-top: 1px solid var(--modal-stroke-color);
+  padding-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  color: var(--modal-bottom);
+}
+
+.aboutBottomArea .aboutBottomAreaMiddle a,
+.aboutBottomArea .aboutBottomAreaRight a {
+  color: var(--modal-bottom) !important;
+}
+
+.aboutBottomArea a.aboutUpgrade {
+  color: var(--input-color);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.aboutBottomArea a.aboutUpgrade:hover {
+  color: var(--input-color-hover);
+}
+
+.aboutTextParagraph {
+  margin-bottom: 10px;
+}
+
+.modal.about {
+  margin-left: 95px;
+}
+
+.reducedBar.about {
+  margin-left: 200px;
+}
+
+.standalone.about {
+  margin-left: 280px;
+}
+
+.modal.info.double,
+.modal.confirm,
+.modal.passphrase {
+  margin-left: 134px;
+}
+
+.reducedBar.info.double,
+.reducedBar.passphrase {
+  margin-left: 252px;
+}
+
+.standalone.info.double {
+  margin-left: 282px;
+}
+
+.infoCloseButton {
+  font-size: 13px;
+  line-height: 17px;
+  padding: 6px 20px;
+  text-transform: none;
+  width: 40px;
+  height: 20px;
+  align-self: flex-end;
+}
+
+.infoCloseButtonTop {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  height: 10px;
+  width: 10px;
+  background-image: var(--x-grey);
+  background-size: 10px 10px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.infoCloseButtonTop:hover {
+  opacity: 0.7;
+}
+
+.modal.passphrase,
+.reducedBar.passphrase {
+  z-index: 200;
+  overflow-y: auto;
+  padding: 2em;
+  line-height: normal;
+  text-align: left;
+  color: var(--title-text-and-button-background);
+  box-shadow: 0 15px 34px 0 rgba(12, 30, 62, 0.34);
+}
+
+.double .infoDocumentation:not(.constitution) {
+  column-count: 2;
+  margin-bottom: 20px;
+}
+
+.infoContent h1 {
+  font-size: 27px;
+  line-height: 34px;
+  font-weight: 400;
+  margin-top: 0;
+  margin-bottom: 8px;
+  column-span: all;
+}
+
+.infoContent p {
+  break-inside: avoid-page;
+  color: var(--modal-text);
+  margin-bottom: 2em;
+}
+
+.infoContent li {
+  list-style-position: inside;
+}
+
+.infoContent li p {
+  display: inline;
+}
+
+.infoContent ol {
+  margin: 0;
+  padding: 0;
+  counter-reset: item;
+}
+
+.infoContent ol > li {
+  margin: 0;
+  list-style-type: none;
+  counter-increment: item;
+  list-style-position: inside;
+  margin-bottom: 2em;
+}
+
+.infoContent ol > li:before {
+  display: inline-block;
+  width: 1em;
+  padding-right: 0.5em;
+  margin-left: -3px;
+  font-weight: 600;
+  text-align: right;
+  content: counter(item) ".";
+}
+
+.passphraseToolbar > .passphraseCloseButton {
+  margin-right: 10px;
+  float: left;
+}
+
+.passphraseHeader {
+  float: left;
+  background-image: var(--password);
+  background-size: 40px 40px;
+  background-repeat: no-repeat;
+  margin-bottom: 10px;
+}
+
+.passphraseHeaderTitle {
+  margin-left: 50px;
+  font-size: 27px;
+  text-transform: capitalize;
+  padding-top: 5px;
+  display: flex;
+}
+
+.passphraseContent {
+  float: left;
+  width: 100%;
+}
+
+.passphraseHeaderDescription {
+  margin-top: 10px;
+  margin-left: 50px;
+  font-size: 15px;
+  float: left;
+}
+
+.passphraseHeaderDescription .orange-warning {
+  position: inherit;
+}
+
+.passphraseConfirmSend {
+  width: 415px;
+}
+
+.passphraseConfirmSendLabel {
+  float: left;
+  width: 65%;
+  margin-top: 5px;
+}
+
+.passphraseConfirmSendAddress {
+  margin-left: 20px;
+  margin-top: 5px;
+  font-weight: 600;
+  float: right;
+}
+
+.passphraseConfirmSendBalance {
+  margin-left: 20px;
+  font-weight: 600;
+  margin-top: 5px;
+  float: right;
+}
+
+.passphraseField {
+  display: flex;
+  height: 36px;
+  margin-bottom: 5px;
+}
+
+.passphraseFieldLabel {
+  font-size: 13px;
+  text-align: right;
+  width: 12em;
+  margin-right: 0.5em;
+  padding-top: 4px;
+}
+
+.passphraseFieldValue {
+  width: 300px;
+}
+
+.passphraseToolbar {
+  margin-top: 20px;
+  height: 44px;
+  float: right;
+}
+
+.standalone.confirmSeedCopy {
+  left: 10%;
+  right: 10%;
+  top: 20%;
+  box-shadow: 0 15px 34px 0 rgba(12, 30, 62, 0.34);
+  border-radius: 5px;
+  overflow-y: auto;
+  padding: 2em;
+  color: var(--input-color-default);
+  line-height: normal;
+  text-align: left;
+}
+
+.confirmSeedCopyToolbar {
+  float: right;
+  margin-top: 2em;
+}
+
+.titleWarningCopyModal {
+  font-size: 27px;
+  margin-bottom: 10px;
+  background-image: var(--info-warning-icon);
+  background-repeat: no-repeat;
+  background-size: 30px;
+  padding-left: 42px;
+  margin-left: -10px;
+  background-position: 0 center;
+}
+
+.confirmSeedCopyToolbar > .confirmConfirmButton {
+  float: right;
+}
+
+.confirmSeedCopyToolbar > .confirmCloseButton {
+  float: right;
+}
+
+.infoConfirm {
+  top: 172px;
+  width: 70%;
+  margin: 0 auto;
+  box-shadow: 0 15px 34px 0 rgba(12, 30, 62, 0.34);
+  border-radius: 5px;
+  overflow-y: auto;
+  padding: 29px 20px 29px 20px;
+  color: var(--input-color-default);
+  line-height: normal;
+  text-align: left;
+}
+
+.standalone.confirm {
+  width: 289px;
+  height: 239px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 15px 34px 0 rgba(12, 30, 62, 0.34);
+  border-radius: 5px;
+  overflow-y: auto;
+  padding: 2em;
+  color: var(--input-color-default);
+  line-height: normal;
+  text-align: left;
+}
+
+.confirmToolbar {
+  margin-top: 2em;
+  bottom: 20px;
+  right: 20px;
+}
+
+.confirmToolbar > .confirmConfirmButton {
+  float: right;
+}
+
+.confirmToolbar > .confirmCloseButton {
+  float: right;
+}
+
+.confirmHeader {
+  margin-bottom: 1em;
+}
+
+.confirmHeaderTitle {
+  font-weight: 400;
+  font-size: 27px;
+  text-transform: capitalize;
+}
+
+.confirmHeaderTitle .mono {
+  text-transform: lowercase;
+}
+
+.confirmSeedCopyContent .input-and-unit {
+  margin-left: 32px;
+  padding-left: 0;
+}
+
+.confirmSeedCopyContent .input-and-unit > input {
+  width: 100%;
+}
+
+.confirmSeedCopyWarningText {
+  white-space: pre-line;
+  margin-bottom: 20px;
+  margin-left: 32px;
+  column-count: 2;
+}
+
+.confirmSeedCopyWarningText p {
+  margin-top: 0;
+}
+
+.confirmSeedCopyWarningText strong {
+  text-decoration: underline;
+}
+
+.confirmSeedCopyWarningText em {
+  color: var(--error-text-color);
+}
+
+.confirmSeedCopyWarningText a {
+  color: var(--link-color);
+}
+
+.confirmSeedCopyPhrase {
+  text-decoration: underline;
+  margin: 0px 4px 0px 4px;
+}
+
+.watchOnlyModalTitle {
+  font-size: 27px;
+  color: var(--title-text-and-button-background);
+  line-height: 1;
+  width: 215px;
+  height: 102px;
+}
+
+.watchOnlyModalContent {
+  color: var(--title-text-and-button-background);
+  font-size: 13px;
+}
+
+.pseudoModal {
+  position: fixed;
+  color: var(--title-text-and-button-background);
+  background-color: var(--background-back-color);
+  box-shadow: 0 15px 34px rgba(9, 20, 64, 0.21);
+  z-index: 98;
+}
+
+.pseudoModalOverlay {
+  position: fixed;
+  z-index: 99;
+  height: 100%;
+  width: 100%;
+}
+
+.infoContent a {
+  color: var(--input-color);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.draggable {
+  margin: 0 !important;
+  position: relative;
+}
+
+.reducedBar.info.double {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0 !important;
+}
+
+.reducedBar.info.double.draggable {
+  position: relative;
+  transform: initial;
+  top: initial;
+  left: initial;
+}
+
+.backupRedeemScript {
+  padding: 10px;
+}
+
+.backupRedeemScriptTextarea {
+  width: 100%;
+}
+
+.backupRedeemScriptTitle {
+  font-size: 19px;
+}
+
+.backupRedeemScriptMessage {
+  font-size: 16px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--white-border);
+}
+
+@media screen and (max-width: 768px) {
+  .confirmSeedCopyWarningText {
+    column-count: 1;
+  }
+
+  .overlayReducedBar {
+    left: 0;
+    bottom: 70px;
+  }
+
+  .reducedBar.info.double {
+    width: 300px !important;
+  }
+
+  .standalone.confirmSeedCopy {
+    left: 20%;
+    right: 20%;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .modal.passphrase,
+  .modal.confirm,
+  .reducedBar.passphrase,
+  .standalone.confirmSeedCopy {
+    top: 10%;
+    max-height: 60%;
+  }
+
+  .reducedBar.info.double {
+    width: 250px !important;
+  }
+}
+
+@media screen and (max-width: 955px) {
+  .standalone.about {
+    margin-left: 0px;
+  }
+
+  .modal.about,
+  .reducedBar.about,
+  .standalone.about {
+    width: inherit;
+  }
+}
+
+@media screen and (max-width: 825px) {
+  .reducedBar.about {
+    margin-left: 100px;
+  }
+}
+
+@media screen and (max-width: 588px) {
+  .reducedBar.about {
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 455px !important;
+    height: 280px;
+  }
+
+  .reducedBar.about .aboutContent {
+    margin-left: 25px;
+    padding-bottom: 20px;
+    margin-top: 20px;
+  }
+
+  .reducedBar.about .aboutIcon {
+    margin-top: 20px;
+    height: 66px;
+    width: 66px;
+    background-size: 59px;
+  }
+
+  .reducedBar.about .aboutBottomArea {
+    width: 413px;
+  }
+}

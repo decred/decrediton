@@ -42,7 +42,7 @@ import {
   PassphraseModal,
   ChangePassphraseModal,
   ConfirmModal,
-  InfoDocumentModal,
+  DocumentationInfoModal,
   AboutModal
 } from "modals";
 
@@ -79,13 +79,13 @@ const PoliteiaLinkButton = ({ children, onClick }) => (
   <span onClick={onClick}>{children}</span>
 );
 
-export const HelpLinkInfoModal = mbb(null, InfoModal, helpLinkButtonNew);
+export const HelpLinkInfoModal = mbb(null, DocumentationInfoModal, helpLinkButtonNew);
 export const HelpLinkAboutModal = mbb(null, AboutModal, helpLinkButtonNew);
 export const InfoModalButton = mbb("info-modal-button", InfoModal);
-export const InfoDocModalButton = mbb("info-modal-button", InfoDocumentModal);
+export const InfoDocModalButton = mbb("info-modal-button", DocumentationInfoModal);
 export const InfoDocFieldModalButton = mbb(
   "info-field-modal-button",
-  InfoDocumentModal
+  DocumentationInfoModal
 );
 export const ChangePassphraseButton = mbb(
   "change-password-default-icon",
@@ -106,7 +106,7 @@ export const RemoveStakePoolButton = mbb(null, ConfirmModal, DangerButton);
 export const RemoveWalletButton = mbb(null, ConfirmModal, DangerButton);
 export const RemoveDaemonButton = mbb(null, ConfirmModal, DangerButton);
 export const ResetNetworkButton = mbb(null, ConfirmModal, KeyBlueButton);
-export const ScriptRedeemableButton = mbb(null, InfoModal, helpLinkButton);
+export const ScriptRedeemableButton = mbb(null, DocumentationInfoModal, helpLinkButton);
 export const AboutModalButton = mbb(null, AboutModal, KeyBlueButton);
 export const AboutModalButtonInvisible = mbb(null, AboutModal, InvisibleButton);
 export const CloseWalletModalButton = mbb(

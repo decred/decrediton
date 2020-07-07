@@ -3,7 +3,7 @@ import { TextInput, PassphraseModalField } from "inputs";
 import { PassphraseModal } from "../PassphraseModal";
 
 const Modal = ({ script, hasFailedAttempt, setScript, ...props }) => (
-  <PassphraseModal {...{ ...props }}>
+  <PassphraseModal {...props}>
     <PassphraseModalField
       label={<T id="importScriptModal.redeemScript" m="Redeem Script" />}>
       <TextInput
