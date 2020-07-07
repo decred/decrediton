@@ -9,7 +9,7 @@ import WalletContainer from "./Wallet";
 import ShutdownAppPage from "components/views/ShutdownAppPage";
 import FatalErrorPage from "components/views/FatalErrorPage";
 import Snackbar from "components/Snackbar";
-import AboutModal from "../components/modals/AboutModal";
+import AboutModal from "../components/modals/AboutModal/AboutModal";
 import AutobuyerRunningModal from "../components/modals/AutobuyerRunningModal";
 import { log } from "wallet";
 import { TrezorModals } from "components/modals/trezor";
