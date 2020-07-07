@@ -178,7 +178,7 @@ const SettingsPage = ({
       <div className={styles.saveButtonWrapper}>
         <div className={styles.saveButton}>
           {needNetworkReset ? (
-            <ResetNetworkButton
+            <ConfirmModalKeyBlueBtn
               modalTitle={
                 <T id="settings.resetNetworkTitle" m="Reset required" />
               }
