@@ -2,7 +2,7 @@ import { hexToBytes } from "../../app/helpers";
 import { OP_DATA_45 } from "../../app/constants";
 
 // TODO finish importing extractPkScriptAddrs method so we can finish testing.
-export const scriptDataTest = [
+export const MAINNET_scriptDataTest = [
   // {
   //   name: "standard p2pk with compressed pubkey (0x02)",
   //   script: hexToBytes("2102192d74d0cb94344c9569c2e77901573d8d7903c3ebec3a957724895dca52c6b4ac"),
@@ -54,6 +54,18 @@ export const scriptDataTest = [
     // reqSigs: 1,
     // class: ScriptHashTy == 3,
   },
+  // {"version":1,"serType":0,"numInputs":1,"inputs":
+  // [{"opRawHash":{"type":"Buffer","data":
+  // [132,107,192,162,131,217,8,228,140,36,137,147,128,220,21,80,233,149,72,230,4,157,215,148,83,194,10,148,245,249,167,105]},
+  // "prevTxId":"69a7f9f5940ac25394d79d04e64895e95015dc809389248ce408d983a2c06b84","outputIndex":0,"outputTree":0,"sequence":4294967295,"index":0}],
+  // "numOutputs":3,
+  // "outputs":[{"value":5411537931,"version":0,"script":{"type":"Buffer","data":
+  // [186,118,169,20,107,161,247,166,91,127,58,29,179,69,94,23,177,27,72,252,85,223,37,183,136,172]},"index":0},
+  // {"value":0,"version":0,"script":{"type":"Buffer",
+  // "data":[106,30,38,123,31,26,0,92,236,51,208,51,56,230,32,14,198,230,22,237,157,136,175,143,141,66,1,0,0,0,0,88]},"index":1}
+  // ,{"value":0,"version":0,"script":{"type":"Buffer","data":[189,118,169,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,136,172]},"index":2}]
+  // ,"lockTime":0,"expiry":443268}
+
   // from real tx 60a20bd93aa49ab4b28d514ec10b06e1829ce6818ec06cd3aabd013ebcdc4bb1, vout 0
   // {
   //   name: "standard 1 of 2 multisig",
@@ -180,10 +192,18 @@ export const scriptDataTest = [
   {
     name: "script that does not parse",
     script: [OP_DATA_45],
-    expected: { "address": [], "requiredSig": 0, "scriptClass": 0 },
+    expected: "opcode OP_DATA_45 requires 46 bytes, but script only has 1 remaining.",
     // reqSigs: 0,
     //   class: NonStandardTy,
     //     noparse: true,
     // },
+  }
+];
+
+export const TESTNET_scriptDataTest = [
+  {
+    name: "sstxcommitment tx",
+    script: [106,30,38,123,31,26,0,92,236,51,208,51,56,230,32,14,198,230,22,237,157,136,175,143,141,66,1,0,0,0,0,88],
+    expected: { "address": [], "requiredSig": 0, "scriptClass": 0 },
   }
 ]
