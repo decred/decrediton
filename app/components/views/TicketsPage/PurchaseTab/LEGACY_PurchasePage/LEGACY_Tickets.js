@@ -6,7 +6,6 @@ import { ShowWarning, Subtitle } from "shared";
 import "style/PurchaseTickets.less";
 import { InfoDocModalButton } from "buttons";
 import UnsignedTickets from "../UnsignedTickets";
-import style from "../TicketsPage.module.css";
 import styles from "../PurchaseTab.module.css";
 
 const getTitleIcon = ({ toggleIsLegacy }) => (
@@ -18,7 +17,7 @@ const getTitleIcon = ({ toggleIsLegacy }) => (
     </div>
     <InfoDocModalButton
       document="PurchaseTicketsInfo"
-      modalClassName={style.infoFields}
+      modalClassName={styles.infoFields}
       className="info-title-icon"
       draggable
     />
