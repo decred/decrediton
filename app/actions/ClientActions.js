@@ -14,7 +14,7 @@ import {
   refreshStakepoolPurchaseInformation,
   setStakePoolVoteChoices,
   getStakepoolStats
-} from "./StakePoolActions";
+} from "./VSPActions";
 import { getStartupTransactions } from "./TransactionActions";
 import { getAccountMixerServiceAttempt } from "./AccountMixerActions";
 import { checkLnWallet } from "./LNActions";

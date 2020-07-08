@@ -1,7 +1,7 @@
 import fs from "fs";
 import Store from "electron-store";
 import ini from "ini";
-import { stakePoolInfo } from "./middleware/stakepoolapi";
+import { stakePoolInfo } from "./middleware/vspapi";
 import {
   getAppDataDirectory,
   getGlobalCfgPath,

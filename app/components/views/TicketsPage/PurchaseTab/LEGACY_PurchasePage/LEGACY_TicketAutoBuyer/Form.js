@@ -1,6 +1,6 @@
 import { AutoBuyerSwitch, PassphraseModalSwitch } from "buttons";
 import { FormattedMessage as T } from "react-intl";
-import { DcrInput, AccountsSelect, StakePoolSelect } from "inputs";
+import { DcrInput, AccountsSelect, LEGACY_StakePoolSelect } from "inputs";
 import { Balance, Subtitle } from "shared";
 
 const TicketAutoBuyerForm = ({
@@ -64,7 +64,7 @@ const TicketAutoBuyerForm = ({
                       <T id="autobuyer.modal.stakepool" m="VSP" />:
                     </div>
                     <div className="auto-buyer-modal-confirm-value">
-                      {stakePool.Host}
+                      {/* {stakePool.Host} */}
                     </div>
                   </div>
                 </div>
@@ -92,7 +92,7 @@ const TicketAutoBuyerForm = ({
             <T id="autobuyer.stakePoolLabel" m="VSP" />:
           </div>
           <div className="stakepool-autobuyer-input">
-            <StakePoolSelect
+            <LEGACY_StakePoolSelect
               options={configuredStakePools}
               disabled={isTicketAutoBuyerEnabled}
               value={stakePool}

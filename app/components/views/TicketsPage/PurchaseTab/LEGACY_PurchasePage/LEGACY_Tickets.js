@@ -1,34 +1,41 @@
-import PurchaseTickets from "./PurchaseTickets";
-import TicketAutoBuyer from "./TicketAutoBuyer";
+import PurchaseTickets from "./LEGACY_PurchaseTickets";
+import TicketAutoBuyer from "./LEGACY_TicketAutoBuyer";
 import { FormattedMessage as T } from "react-intl";
-import StakeInfo from "./StakeInfo";
-import { spv } from "connectors";
+import StakeInfo from "../StakeInfo";
 import { ShowWarning, Subtitle } from "shared";
 import "style/PurchaseTickets.less";
 import { InfoDocModalButton } from "buttons";
-import UnsignedTickets from "./UnsignedTickets";
-import style from "../TicketsPage.module.css";
+import UnsignedTickets from "../UnsignedTickets";
+import styles from "../PurchaseTab.module.css";
 
-const getTitleIcon = () => (
-  <InfoDocModalButton
-    document="PurchaseTicketsInfo"
-    modalClassName={style.infoFields}
-    className="info-title-icon"
-    draggable
-    double
-  />
+const getTitleIcon = ({ toggleIsLegacy }) => (
+  <>
+    <div className={styles.checkbox}>
+      <div className={styles.label}><T id="purchase.isLegacy.legacy" m="Is Legacy" /></div>
+      <input id="box" type="checkbox" checked={true} onChange={() => toggleIsLegacy(false)} />
+      <label htmlFor="box" className={styles.checkboxLabel}></label>
+    </div>
+    <InfoDocModalButton
+      document="PurchaseTicketsInfo"
+      modalClassName={styles.infoFields}
+      className="info-title-icon"
+      draggable
+    />
+  </>
 );
+
 const Tickets = ({
   spvMode,
   blocksNumberToNextTicket,
   sidebarOnBottom,
   isWatchingOnly,
+  toggleIsLegacy,
   ...props
 }) => (
   <div className="purchase-ticket-area">
     <Subtitle
-      title={<T id="purchase.subtitle" m="Purchase Tickets" />}
-      children={getTitleIcon()}
+      title={<T id="purchase.subtitle.legacy" m="Purchase Tickets" />}
+      children={getTitleIcon({ toggleIsLegacy })}
       className="is-row"
     />
     <StakeInfo {...{ sidebarOnBottom }} />
@@ -36,7 +43,7 @@ const Tickets = ({
       <ShowWarning
         warn={
           <T
-            id="spv.purchase.warn"
+            id="spv.purchase.warn.legacy"
             m="Purchase Tickets is not available right now, because we are at the end of a ticket interval. After one block it will be available again."
           />
         }
@@ -59,4 +66,4 @@ const Tickets = ({
   </div>
 );
 
-export default spv(Tickets);
+export default Tickets;

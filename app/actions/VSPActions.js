@@ -6,6 +6,24 @@ import * as sel from "../selectors";
 import * as wallet from "wallet";
 import { TESTNET, MAINNET } from "constants";
 
+export const GETVSP_ATTEMPT = "GETVSP_ATTEMPT";
+export const GETVSP_FAILED = "GETVSP_FAILED";
+export const GETVSP_SUCCESS = "GETVSP_SUCCESS";
+
+export const getVSPInfo = (host) => async (dispatch) => {
+  dispatch({ type: GETVSP_ATTEMPT });
+  try {
+    wallet.allowVSPHost(host);
+    const info = await wallet.getVSPInfo(host);
+    dispatch({ type: GETVSP_SUCCESS, info });
+    return info.data;
+  } catch (error) {
+    dispatch({ type: GETVSP_FAILED, error });
+    return error;
+  }
+};
+
+// TODO After stop supporting v1/v2 vsp's API, remove legacy code.
 export const GETSTAKEPOOLSTATS_ATTEMPT = "GETSTAKEPOOLSTATS_ATTEMPT";
 export const GETSTAKEPOOLSTATS_FAILED = "GETSTAKEPOOLSTATS_FAILED";
 export const GETSTAKEPOOLSTATS_SUCCESS = "GETSTAKEPOOLSTATS_SUCCESS";
@@ -269,20 +287,20 @@ export const setStakePoolVoteChoices = (stakePool, voteChoices) => (
 
 export const DISCOVERAVAILABLESTAKEPOOLS_SUCCESS =
   "DISCOVERAVAILABLESTAKEPOOLS_SUCCESS";
-export const discoverAvailableStakepools = () => (dispatch, getState) =>
-  wallet.getStakePoolInfo().then((foundStakepoolConfigs) => {
-    if (foundStakepoolConfigs) {
-      const {
-        daemon: { walletName }
-      } = getState();
-      const config = getWalletCfg(sel.isTestNet(getState()), walletName);
-      updateStakePoolConfig(config, foundStakepoolConfigs);
-      dispatch({
-        type: DISCOVERAVAILABLESTAKEPOOLS_SUCCESS,
-        currentStakePoolConfig: config.get("stakepools")
-      });
-    }
+export const discoverAvailableStakepools = () => async (dispatch, getState) => {
+  const vspInfo = await wallet.getStakePoolInfo();
+  // TODO treat error and return config values in that case
+  if (!vspInfo) return null;
+  const { daemon: { walletName } } = getState();
+  const config = getWalletCfg(sel.isTestNet(getState()), walletName);
+  updateStakePoolConfig(config, vspInfo);
+  dispatch({
+    type: DISCOVERAVAILABLESTAKEPOOLS_SUCCESS,
+    currentStakePoolConfig: config.get("stakepools")
   });
+
+  return vspInfo;
+};
 
 export const CHANGESELECTEDSTAKEPOOL = "CHANGESELECTEDSTAKEPOOL";
 export const changeSelectedStakePool = (selectedStakePool) => (dispatch) =>

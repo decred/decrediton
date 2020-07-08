@@ -3,7 +3,7 @@ import {
   PercentInput,
   BlocksInput,
   AddressInput,
-  StakePoolSelect
+  LEGACY_StakePoolSelect
 } from "inputs";
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { classNames } from "pi-ui";
@@ -54,7 +54,7 @@ const PurchaseTicketsAdvanced = ({
   ticketFeeError,
   txFeeError,
   expiryError,
-  onShowStakePoolConfig,
+  toggleShowVsp,
   onChangeStakePool,
   onChangeTicketFee,
   onChangeTxFee,
@@ -66,8 +66,8 @@ const PurchaseTicketsAdvanced = ({
     <PurchaseTicketAdvancedInfo
       label={<T id="purchaseTickets.stakePoolLabel" m="VSP" />}
       className="stake-pools"
-      onIconClick={onShowStakePoolConfig}>
-      <StakePoolSelect
+      onIconClick={() => toggleShowVsp(true)}>
+      <LEGACY_StakePoolSelect
         options={configuredStakePools}
         value={stakePool}
         onChange={onChangeStakePool}

@@ -147,7 +147,8 @@ export const allowExternalRequest = (externalReqType) => {
   allowedExternalRequests[externalReqType] = true;
 };
 
-export const allowStakepoolRequests = (stakePoolHost) => {
+// TODO remove after stopping support vsp v1/v2.
+export const LEGACY_allowStakepoolRequests = (stakePoolHost) => {
   const reqType = "stakepool_" + stakePoolHost;
   if (allowedExternalRequests[reqType]) return;
 
@@ -155,6 +156,14 @@ export const allowStakepoolRequests = (stakePoolHost) => {
   addAllowedURL(stakePoolHost + "/api/v2/voting");
   addAllowedURL(stakePoolHost + "/api/v1/getpurchaseinfo");
   addAllowedURL(stakePoolHost + "/api/v1/stats");
+};
+
+// allowVSPRequests allows external vsp request into decrediton.
+export const allowVSPRequests = (stakePoolHost) => {
+  const reqType = "stakepool_" + stakePoolHost;
+  if (allowedExternalRequests[reqType]) return;
+
+  addAllowedURL(stakePoolHost + "/api/vspinfo");
 };
 
 export const reloadAllowedExternalRequests = () => {

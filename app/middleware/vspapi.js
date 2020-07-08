@@ -26,7 +26,6 @@ const POST = (path, apiToken, json) => {
 // stakePoolInfo call into an object array of available stakepool configs.
 function stakepPoolInfoResponseToConfig(response) {
   const stakePoolNames = Object.keys(response.data);
-
   return stakePoolNames
     .map((name) => {
       const { APIEnabled, URL, Network, APIVersionsSupported } = response.data[
@@ -108,6 +107,13 @@ export function getPurchaseInfo({ apiUrl, apiToken }, cb) {
 // stakepool host.
 export function statsFromStakePool(host, cb) {
   GET(host + "/api/v1/stats")
+    .then((resp) => cb(resp, null, host))
+    .catch((error) => cb(null, error, host));
+}
+
+// getVSPInfo gets the vspinfo.
+export function getVSPInfo(host, cb) {
+  GET(host + "/api/vspinfo")
     .then((resp) => cb(resp, null, host))
     .catch((error) => cb(null, error, host));
 }

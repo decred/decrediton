@@ -1,7 +1,7 @@
 import { MeteredChart } from "charts";
 import { myTicketsCharts } from "connectors";
 import { FormattedMessage as T } from "react-intl";
-import { StakePoolSelect } from "inputs";
+import { LEGACY_StakePoolSelect } from "inputs";
 import { Tooltip } from "shared";
 
 @autobind
@@ -48,7 +48,8 @@ class StakePoolStats extends React.Component {
           </div>
           <div className="my-tickets-stakepool-stats-selector-row">
             <div className="stakepool-unconfigured-select">
-              <StakePoolSelect
+              {/* TODO change this select to VSPSelect.jsx */}
+              <LEGACY_StakePoolSelect
                 options={allStakePoolStats}
                 value={stakePool}
                 onChange={onChangeStakePoolStats}
