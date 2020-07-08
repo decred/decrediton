@@ -79,7 +79,7 @@ const startWalletServicesTrigger = () => (dispatch, getState) =>
       .catch((error) => reject(error));
   });
 
-export const startWalletServices = () => async (dispatch, getState) => new Promise((resolve, reject) => {
+export const startWalletServices = () => (dispatch, getState) => new Promise((resolve, reject) => {
   const { startWalletServiceAttempt } = getState().grpc;
   if (startWalletServiceAttempt) {
     return;
@@ -92,6 +92,7 @@ export const startWalletServices = () => async (dispatch, getState) => new Promi
     })
     .catch((error) => {
       dispatch({ type: STARTWALLETSERVICE_FAILED, error });
+      reject({ error });
     });
 });
 
@@ -269,7 +270,7 @@ export const GETBESTBLOCK_ATTEMPT = "GETBESTBLOCK_ATTEMPT";
 export const GETBESTBLOCK_FAILED = "GETBESTBLOCK_FAILED";
 export const GETBESTBLOCK_SUCCESS = "GETBESTBLOCK_SUCCESS";
 
-export const getBestBlockHeightAttempt = (cb) => (dispatch, getState) => new Promise((resolve,reject) => {
+export const getBestBlockHeightAttempt = (cb) => (dispatch, getState) => new Promise((resolve, reject) => {
   dispatch({ type: GETBESTBLOCK_ATTEMPT });
   wallet
     .bestBlock(sel.walletService(getState()))
@@ -283,6 +284,7 @@ export const getBestBlockHeightAttempt = (cb) => (dispatch, getState) => new Pro
     })
     .catch((error) => {
       dispatch({ error, type: GETBESTBLOCK_FAILED });
+      reject({ error });
       throw error;
     });
 });
