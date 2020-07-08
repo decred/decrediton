@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { AdvancedHeader, AdvancedBody } from "./Form";
 import {
   setAppdataPath,
@@ -6,6 +6,14 @@ import {
   getRemoteCredentials,
   setRemoteCredentials
 } from "config.js";
+
+const {
+  rpc_pass: rpcpass,
+  rpc_user: rpcuser,
+  rpc_cert: rpccert,
+  rpc_host: rpchost,
+  rpc_port: rpcport
+} = getRemoteCredentials();
 
 export const AdvancedStartupHeader = ({ ...props }) => (
   <AdvancedHeader
@@ -21,19 +29,6 @@ export const AdvancedStartupBody = ({
   submitAppdata,
   ...props
 }) => {
-  useEffect(() => {
-    return () => {
-      resetState();
-    };
-  });
-
-  const {
-    rpc_pass: rpcpass,
-    rpc_user: rpcuser,
-    rpc_cert: rpccert,
-    rpc_host: rpchost,
-    rpc_port: rpcport
-  } = getRemoteCredentials();
   const appDataPath = getAppdataPath();
   const [sideActive, setSideActive] = useState(true);
   const [rpc_user, setRpcUserState] = useState(rpcuser);
@@ -50,22 +45,6 @@ export const AdvancedStartupBody = ({
   const [rpcCertHasFailedAttempt, setCertHasFailedAttempt] = useState(false);
   const [appDataHasFailedAttempt, setAppDataHasFailedAttempt] = useState(false);
   const [appdata, setAppDataState] = useState(appDataPath);
-
-  const resetState = () => {
-    setSideActive(true);
-    setRpcUserState(rpcuser);
-    setRpcPassState(rpcpass);
-    setRpcCertState(rpccert);
-    setRpcHostState(rpchost);
-    setRpcPortState(rpcport);
-    setAppData(appDataPath);
-    setUserHasFailedAttempt(false);
-    setPasswordHasFailedAttempt(false);
-    setHostHasFailedAttempt(false);
-    setPortHasFailedAttempt(false);
-    setCertHasFailedAttempt(false);
-    setAppDataHasFailedAttempt(false);
-  };
 
   const setRpcUser = (rpc_user) => {
     if (rpc_user == "") {
