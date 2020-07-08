@@ -146,7 +146,8 @@ const icons = {
   "delete-vsp": "url('style/icons/deleteVSP.svg')",
   "view-qr-icon": "url('style/icons/showQR.svg')",
   "share-icon": "url('style/icons/share.svg')",
-  "decred-logo": "url('style/icons/dcrLogoShare.svg')"
+  "decred-logo": "url('style/icons/dcrLogoShare.svg')",
+  "mixed-account-rename": "url('style/icons/mixedAccountRename.svg')"
 };
 
 export default icons;
