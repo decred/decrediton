@@ -121,7 +121,8 @@ export const getStartedMachine = Machine({
                 appdata: (context, event) =>
                   event.appdata ? event.appdata : context.appdata
               })
-            }
+            },
+            CONTINUE: "startingDaemon"
           }
         },
         connectingDaemon: {

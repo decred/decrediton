@@ -62,10 +62,8 @@ export const useGetStarted = () => {
         preStartDaemon();
       },
       isAtStartAdvancedDaemon: () => {},
-      isAtStartSPV: () => {
-        send({ type: "CONTINUE" });
-      },
-      isAtStartingDaemon: (context, event) => {
+      isAtStartSPV: () => onSendContinue(),
+      isAtStartingDaemon: (_, event) => {
         console.log("is at Starting Daemonn");
         const { appdata } = event;
         return onStartDaemon({ appdata })
@@ -94,7 +92,7 @@ export const useGetStarted = () => {
         }
         send({ type: "START_ADVANCED_DAEMON", payload: { error } });
       },
-      isAtConnectingDaemon: (context, event) => {
+      isAtConnectingDaemon: (_, event) => {
         console.log(" is at connect daemon ");
         const { remoteCredentials } = event;
         return onConnectDaemon(remoteCredentials)
@@ -122,7 +120,7 @@ export const useGetStarted = () => {
             send({ type: "ERROR_SYNCING_DAEMON", payload: { error } })
           );
       },
-      isAtChoosingWallet: (context, event) => {
+      isAtChoosingWallet: (_, event) => {
         console.log("is at choosingWallet");
         const { selectedWallet } = event;
         if (selectedWallet) {
@@ -287,7 +285,15 @@ export const useGetStarted = () => {
       if (key === "startMachine") {
         switch (state.value[key]) {
           case "startAdvancedDaemon":
-            component = AdvancedStartupBody;
+            component = (
+              <AdvancedStartupBody
+                {...{
+                  submitRemoteCredentials,
+                  onStartDaemon: () => onSendContinue(),
+                  submitAppdata
+                }}
+              />
+            );
             text = (
               <T
                 id="loaderBar.WaitingDaemon"
@@ -406,6 +412,7 @@ export const useGetStarted = () => {
       onSendBack,
       onSendContinue,
       onSendCreateWallet,
+      onStartDaemon,
       onSendError,
       onShowCreateWallet,
       onShowReleaseNotes,
