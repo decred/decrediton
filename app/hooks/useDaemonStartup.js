@@ -196,6 +196,11 @@ const useDaemonStartup = () => {
     [dispatch]
   );
 
+  const goToHome = useCallback(
+    () => dispatch(ca.goToHomePage()),
+    [dispatch]
+  );
+
   return {
     onShowTutorial,
     validateMasterPubKey,
@@ -262,7 +267,8 @@ const useDaemonStartup = () => {
     syncRescanAttempt,
     syncFetchHeadersComplete,
     syncFetchTimeStart,
-    selectedWalletSelector
+    selectedWalletSelector,
+    goToHome
   };
 };
 

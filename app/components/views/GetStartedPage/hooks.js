@@ -17,6 +17,7 @@ import { useDaemonStartup } from "hooks";
 import { useMachine } from "@xstate/react";
 import { getStartedMachine } from "stateMachines/GetStartedStateMachine";
 import { AdvancedStartupBody } from "./AdvancedStartup/AdvancedStartup";
+import SettingMixedAccount from "./SetMixedAcctPage/SetMixedAcctPage";
 
 // XXX: these animations classes are passed down to AnimatedLinearProgressFull
 // and styling defined in Loading.less and need to handled when loading.less
@@ -52,7 +53,8 @@ export const useGetStarted = () => {
     checkNetworkMatch,
     onConnectDaemon,
     onStartWallet,
-    syncDaemon
+    syncDaemon,
+    goToHome
   } = useDaemonStartup();
   const [PageComponent, setPageComponent] = useState(null);
   const [state, send] = useMachine(getStartedMachine, {
@@ -158,6 +160,8 @@ export const useGetStarted = () => {
         }
         try {
           await onRetryStartRPC(passPhrase);
+          send({ type: "SET_MIXED_ACCOUNT" });
+
           if (isPrivacy) {
             // if recoverying a privacy wallet, we go to settingMixedAccount
             // state, so the user can set a mixed account based on their
@@ -169,9 +173,7 @@ export const useGetStarted = () => {
           send({ type: "ERROR_SYNCING_WALLET", payload: { error } });
         }
       },
-      isAtSettingAccount: (context) => {
-        console.log("AQUI NO SETTING ACCOUNT********************");
-      }
+      isAtFinishMachine: () => goToHome()
     }
   });
   const getError = useCallback((serviceError) => {
@@ -413,6 +415,9 @@ export const useGetStarted = () => {
       }
       if (key === "creatingWallet") {
         PageComponent = h(CreateWalletMachine, { createWalletRef, isTestNet });
+      }
+      if (key === "settingMixedAccount") {
+        PageComponent = h(SettingMixedAccount, { onSendBack, onSendContinue });
       }
 
       setPageComponent(PageComponent);

@@ -683,3 +683,6 @@ export const getAcctSpendableBalance = (acctId) => async (dispatch, getState) =>
   const acct = await wallet.getBalance(sel.walletService(getState()), acctId, 0);
   return acct.getSpendable();
 };
+
+export const goToHomePage = () => (dispatch) =>
+  dispatch(pushHistory("/home"));
