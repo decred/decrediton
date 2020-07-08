@@ -14,7 +14,7 @@
 
 .cardsWrapper {
   margin: 0 auto;
-  width: 350px;
+  width: 700px;
   margin-top: 60px;
   text-align: right;
 }
@@ -22,6 +22,7 @@
 .card {
   width: 335px;
   height: 90px;
+  margin-left: 10px;
   background-color: var(--background-back-color);
 }
 
@@ -76,7 +77,8 @@
 }
 
 .buttonWrapper {
-  justify-content: right;
+  text-align: right;
   margin-top: 10px;
   margin-right: 15px;
+  width: 700px;
 }

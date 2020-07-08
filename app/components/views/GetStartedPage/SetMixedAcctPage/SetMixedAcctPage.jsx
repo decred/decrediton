@@ -39,56 +39,60 @@ export default ({ onSendBack, onSendContinue }) => {
         </div>
       }
       {coinjoinSumByAcct && (
-        <div className={styles.cardsWrapper}>
-          {coinjoinSumByAcct.map(({ acctIdx, coinjoinSum }) => {
-            return (
-              <div className={classNames("is-row",styles.card)}>
-                <div className={classNames("is-column", styles.labelWrapper)}>
-                  <div className={"is-row"}>
-                    <div className={styles.accountIcon} />
-                    <div className={styles.accountLabel}>
+        <>
+          <div className={classNames("is-row", styles.cardsWrapper)}>
+            {coinjoinSumByAcct.map(({ acctIdx, coinjoinSum }) => {
+              return (
+                <div className={classNames("is-row",styles.card)}>
+                  <div className={classNames("is-column", styles.labelWrapper)}>
+                    <div className={"is-row"}>
+                      <div className={styles.accountIcon} />
+                      <div className={styles.accountLabel}>
+                        <T
+                          id="getstarted.setAccount.acctIdxRow"
+                          m="Account {acctIdx}"
+                          values={{ acctIdx: <span>{acctIdx}</span> }}
+                        />
+                      </div>
+                    </div>
+                    <div className={styles.coinjoinLabel}>
                       <T
-                        id="getstarted.setAccount.acctIdxRow"
-                        m="Account {acctIdx}"
-                        values={{ acctIdx: <span>{acctIdx}</span> }}
+                        id="getstarted.setAccount.sumCoinjoin"
+                        m="Coinjoin Sum outputs: {coinjoinSum}"
+                        values={{ coinjoinSum: <span className={styles.coinjoinSum}>{coinjoinSum}</span> }}
                       />
                     </div>
                   </div>
-                  <div className={styles.coinjoinLabel}>
-                    <T
-                      id="getstarted.setAccount.sumCoinjoin"
-                      m="Coinjoin Sum outputs: {coinjoinSum}"
-                      values={{ coinjoinSum: <span className={styles.coinjoinSum}>{coinjoinSum}</span> }}
-                    />
-                  </div>
+                  <InvisibleConfirmModalButton
+                    className={styles.iconButton}
+                    modalTitle={
+                      <T id="settings.resetNetworkTitle" m="Rename Account" />
+                    }
+                    buttonLabel={<div className={styles.renameIcon} />}
+                    modalContent={
+                      <T
+                        id="settings.resetNetworkContent"
+                        m={"Rename Account {acctIdx} to {mixed} account?"}
+                        values={{
+                          acctIdx: acctIdx,
+                          mixed: <span>mixed</span>
+                        }}
+                      />
+                    }
+                    size="large"
+                    block={false}
+                    onSubmit={() => onSubmit(acctIdx)}
+                  />
                 </div>
-                <InvisibleConfirmModalButton
-                  className={styles.iconButton}
-                  modalTitle={
-                    <T id="settings.resetNetworkTitle" m="Rename Account" />
-                  }
-                  buttonLabel={<div className={styles.renameIcon} />}
-                  modalContent={
-                    <T
-                      id="settings.resetNetworkContent"
-                      m={"Rename Account {acctIdx} to {mixed} account?"}
-                      values={{
-                        acctIdx: acctIdx,
-                        mixed: <span>mixed</span>
-                      }}
-                    />
-                  }
-                  size="large"
-                  block={false}
-                  onSubmit={() => onSubmit(acctIdx)}
-                />
-              </div>
-            );
-          })}
-          <KeyBlueButton className={styles.buttonWrapper} onClick={() => onSendContinue()}>
-            <T id="getstarted.setAccount.continue" m="Continue" />
-          </KeyBlueButton>
-        </div>
+              );
+            })}
+          </div>
+          <div className={styles.buttonWrapper}>
+            <KeyBlueButton onClick={() => onSendContinue()}>
+              <T id="getstarted.setAccount.continue" m="Continue" />
+            </KeyBlueButton>
+          </div>
+        </>
       )}
     </div>
   );
