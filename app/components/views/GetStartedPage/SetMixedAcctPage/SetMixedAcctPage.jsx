@@ -66,12 +66,12 @@ export default ({ onSendBack, onSendContinue }) => {
                   <InvisibleConfirmModalButton
                     className={styles.iconButton}
                     modalTitle={
-                      <T id="settings.resetNetworkTitle" m="Rename Account" />
+                      <T id="getstarted.setAccount.modalTitle" m="Rename Account" />
                     }
                     buttonLabel={<div className={styles.renameIcon} />}
                     modalContent={
                       <T
-                        id="settings.resetNetworkContent"
+                        id="getstarted.setAccount.modalContent"
                         m={"Rename Account {acctIdx} to {mixed} account?"}
                         values={{
                           acctIdx: acctIdx,
