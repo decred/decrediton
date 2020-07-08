@@ -169,6 +169,8 @@ export const useGetStarted = () => {
             // This state should only be achievable if recoverying wallet.
             send({ type: "SET_MIXED_ACCOUNT" });
           }
+          // if it is not privacy we can simply go to home view.
+          send({ type: "GO_TO_HOME_VIEW"});
         } catch (error) {
           send({ type: "ERROR_SYNCING_WALLET", payload: { error } });
         }

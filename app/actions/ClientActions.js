@@ -79,7 +79,7 @@ const startWalletServicesTrigger = () => (dispatch, getState) =>
       .catch((error) => reject(error));
   });
 
-export const startWalletServices = () => (dispatch, getState) => {
+export const startWalletServices = () => async (dispatch, getState) => new Promise((resolve, reject) => {
   const { startWalletServiceAttempt } = getState().grpc;
   if (startWalletServiceAttempt) {
     return;
@@ -88,11 +88,12 @@ export const startWalletServices = () => (dispatch, getState) => {
   dispatch(startWalletServicesTrigger())
     .then(() => {
       dispatch({ type: STARTWALLETSERVICE_SUCCESS });
+      resolve();
     })
     .catch((error) => {
       dispatch({ type: STARTWALLETSERVICE_FAILED, error });
     });
-};
+});
 
 export const GETSTARTUPWALLETINFO_ATTEMPT = "GETSTARTUPWALLETINFO_ATTEMPT";
 export const GETSTARTUPWALLETINFO_SUCCESS = "GETSTARTUPWALLETINFO_SUCCESS";
@@ -268,7 +269,7 @@ export const GETBESTBLOCK_ATTEMPT = "GETBESTBLOCK_ATTEMPT";
 export const GETBESTBLOCK_FAILED = "GETBESTBLOCK_FAILED";
 export const GETBESTBLOCK_SUCCESS = "GETBESTBLOCK_SUCCESS";
 
-export const getBestBlockHeightAttempt = (cb) => (dispatch, getState) => {
+export const getBestBlockHeightAttempt = (cb) => (dispatch, getState) => new Promise((resolve,reject) => {
   dispatch({ type: GETBESTBLOCK_ATTEMPT });
   wallet
     .bestBlock(sel.walletService(getState()))
@@ -276,15 +277,15 @@ export const getBestBlockHeightAttempt = (cb) => (dispatch, getState) => {
       dispatch({ height: resp.getHeight(), type: GETBESTBLOCK_SUCCESS });
       if (cb) {
         await dispatch(cb());
-        return true;
+        return resolve();
       }
-      return true;
+      return resolve();
     })
     .catch((error) => {
       dispatch({ error, type: GETBESTBLOCK_FAILED });
       throw error;
     });
-};
+});
 
 export const GETNETWORK_ATTEMPT = "GETNETWORK_ATTEMPT";
 export const GETNETWORK_FAILED = "GETNETWORK_FAILED";

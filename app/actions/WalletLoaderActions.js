@@ -289,8 +289,10 @@ export const startRpcRequestFunc = (privPass, isRetry) => (
       const rpcSyncCall = await loader.rpcSync(request);
       dispatch({ syncCall: rpcSyncCall, type: SYNC_UPDATE });
       rpcSyncCall.on("data", async (response) => {
-        await dispatch(syncConsumer(response));
-        return resolve();
+        const synced = await dispatch(syncConsumer(response));
+        if (synced) {
+          return resolve();
+        }
       });
       rpcSyncCall.on("end", function () {
         // It never gets here
