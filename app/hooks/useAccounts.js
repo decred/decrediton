@@ -6,7 +6,7 @@ import * as ca from "actions/ControlActions";
 const useAccounts = () => {
   const dispatch = useDispatch();
   const onRenameAccount = useCallback(
-    () => dispatch(ca.renameAccountAttempt()),
+    (acctIdx, newName) => dispatch(ca.renameAccountAttempt(acctIdx, newName)),
     [dispatch]
   );
 

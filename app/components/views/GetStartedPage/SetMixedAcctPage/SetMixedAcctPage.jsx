@@ -80,7 +80,7 @@ export default ({ onSendBack, onSendContinue }) => {
                   }
                   size="large"
                   block={false}
-                  onSubmit={onSubmit}
+                  onSubmit={() => onSubmit(acctIdx)}
                 />
               </div>
             );
