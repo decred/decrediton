@@ -412,7 +412,6 @@ export const useGetStarted = () => {
       onSendBack,
       onSendContinue,
       onSendCreateWallet,
-      onStartDaemon,
       onSendError,
       onShowCreateWallet,
       onShowReleaseNotes,
