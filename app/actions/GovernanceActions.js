@@ -81,7 +81,8 @@ const fillVoteSummary = (proposal, voteSummary, blockTimestampFromNow) => {
   proposal.totalVotes = totalVotes;
 };
 
-const ticketHashesToByte = (hashes) => hashes.map(hexReversedHashToArray);
+const ticketHashesToByte = (hashes) =>
+  hashes && hashes.map(hexReversedHashToArray);
 
 // getProposalEligibleTickets gets the wallet eligible tickets from a specific proposal.
 // if the proposal directory already exists it only returns the cached information,
