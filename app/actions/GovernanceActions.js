@@ -309,11 +309,16 @@ const getVoteOption = (
 
 export const getTokenAndInitialBatch = () => async (dispatch, getState) => {
   setPoliteiaPath();
-  await dispatch(getTokenInventory());
-  const inventory = sel.inventory(getState());
-  // remove proposals cache which are not in the inventory activeVote
-  removeCachedProposals(inventory.activeVote);
-  await dispatch(getInitialBatch());
+  try {
+    await dispatch(getTokenInventory());
+    const inventory = sel.inventory(getState());
+    // remove proposals cache which are not in the inventory activeVote
+    removeCachedProposals(inventory.activeVote);
+    await dispatch(getInitialBatch());
+  } catch (error) {
+    dispatch({ error, type: GETTOKEN_INVENTORY_FAILED });
+    throw error;
+  }
 };
 
 export const DISABLE_POLITEIA_SUCCESS = "DISABLE_POLITEIA_SUCCESS";

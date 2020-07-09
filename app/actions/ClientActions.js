@@ -412,7 +412,9 @@ export const UPDATEACCOUNT_SUCCESS = "UPDATEACCOUNT_SUCCESS";
 
 export function updateAccount(account) {
   return (dispatch, getState) => {
-    const { grpc: { balances } } = getState();
+    const {
+      grpc: { balances }
+    } = getState();
     const existingAccount = balances.find(
       (a) => a.accountNumber === account.accountNumber
     );

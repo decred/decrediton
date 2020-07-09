@@ -10,7 +10,8 @@ import {
   DISABLE_POLITEIA_SUCCESS,
   COMPARE_INVENTORY_SUCCESS,
   GETPROPROSAL_UPDATEVOTESTATUS_SUCCESS,
-  GETPROPROSAL_UPDATEVOTESTATUS_FAILED
+  GETPROPROSAL_UPDATEVOTESTATUS_FAILED,
+  GETTOKEN_INVENTORY_FAILED
 } from "actions/GovernanceActions";
 import { CLOSEWALLET_SUCCESS } from "actions/WalletLoaderActions";
 import { WALLETREADY } from "actions/DaemonActions";
@@ -18,20 +19,32 @@ import { WALLETREADY } from "actions/DaemonActions";
 export default function governance(state = {}, action) {
   switch (action.type) {
     case GETTOKEN_INVENTORY_ATTEMPT:
-      return { ...state, getProposalsAttempt: true };
+      return {
+        ...state,
+        getProposalsAttempt: true,
+        getTokenInventoryError: null
+      };
     case GETTOKEN_INVENTORY_SUCCESS:
       return {
         ...state,
         inventory: action.inventory,
-        getProposalsAttempt: false
+        getProposalsAttempt: false,
+        getTokenInventoryError: null
       };
     case CLOSEWALLET_SUCCESS:
       return {
         ...state,
         getProposalsAttempt: false,
         getProposalError: null,
+        getTokenInventoryError: null,
         proposals: null,
         inventory: null
+      };
+    case GETTOKEN_INVENTORY_FAILED:
+      return {
+        ...state,
+        getProposalsAttempt: false,
+        getTokenInventoryError: action.error
       };
     case GETPROPROSAL_UPDATEVOTESTATUS_ATTEMPT:
       return { ...state, getProposalsAttempt: true };

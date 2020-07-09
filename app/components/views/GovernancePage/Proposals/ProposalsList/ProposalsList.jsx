@@ -12,46 +12,44 @@ const ProposalsList = ({ finishedVote, tab }) => {
     proposals,
     loadMore,
     getProposalError,
+    inventoryError,
     send
   } = useProposalsList(tab);
+
   switch (state.value) {
     case "idle":
       return <NoProposals />;
     case "loading":
-    case "success":
       return (
-        <>
-          {proposals && proposals[tab] && proposals[tab].length ? (
-            <InfiniteScroll
-              hasMore={!noMoreProposals}
-              loadMore={loadMore}
-              initialLoad={false}
-              useWindow={false}
-              threshold={300}>
-              <div className={styles.proposalList}>
-                {proposals[tab].map((v) => (
-                  <ProposalsListItem
-                    key={v.token}
-                    {...v}
-                    finishedVote={finishedVote}
-                  />
-                ))}
-              </div>
-            </InfiniteScroll>
-          ) : (
-            <NoProposals />
-          )}
-          {state.value == "loading" && (
-            <div className={styles.loadingPage}>
-              <PoliteiaLoading center />
-            </div>
-          )}
-        </>
+        <div className={styles.loadingPage}>
+          <PoliteiaLoading center />
+        </div>
+      );
+    case "success":
+      return proposals && proposals[tab] && proposals[tab].length ? (
+        <InfiniteScroll
+          hasMore={!noMoreProposals}
+          loadMore={loadMore}
+          initialLoad={false}
+          useWindow={false}
+          threshold={300}>
+          <div className={styles.proposalList}>
+            {proposals[tab].map((v) => (
+              <ProposalsListItem
+                key={v.token}
+                {...v}
+                finishedVote={finishedVote}
+              />
+            ))}
+          </div>
+        </InfiniteScroll>
+      ) : (
+        <NoProposals />
       );
     case "failure":
       return (
         <LoadingError
-          errorMessageDescription={String(getProposalError)}
+          errorMessageDescription={String(getProposalError || inventoryError)}
           cancelButton={false}
           reload={() => {
             send("RETRY");
