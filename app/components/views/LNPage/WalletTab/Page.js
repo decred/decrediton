@@ -1,6 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
 import { Balance, VerticalAccordion } from "shared";
 import { InfoDocModalButton, InvisibleButton } from "buttons";
+import { ConfirmModal } from "modals";
 
 const BackupInfoHeader = ({ scbPath, scbUpdatedTime }) => (
   <div className="ln-backup-info-header">
@@ -54,9 +55,12 @@ export default ({
   isShowingBackupInfo,
   scbPath,
   scbUpdatedTime,
+  confirmFileOverwrite,
   onToggleShowBackupInfo,
   onBackup,
-  onVerifyBackup
+  onVerifyBackup,
+  onCancelFileOverwrite,
+  onConfirmFileOverwrite
 }) => (
   <>
     <div className="ln-wallet-balances">
@@ -96,5 +100,23 @@ export default ({
         />
       </VerticalAccordion>
     </div>
+
+    <ConfirmModal
+      show={!!confirmFileOverwrite}
+      onCancelModal={onCancelFileOverwrite}
+      onSubmit={onConfirmFileOverwrite}
+      modalTitle={<T id="ln.confirmBackupOverwrite.title" m="Confirm Backup Overwrite"/>}
+      modalContent={
+        <>
+          <T
+            id="ln.confirmBackupOverwrite.content"
+            m="Really overwrite the backup file {file}? The existing backup data will be LOST."
+            values={{ file: <span className="mono">{confirmFileOverwrite}</span> }}
+          />
+        </>
+      }
+    >
+
+    </ConfirmModal>
   </>
 );

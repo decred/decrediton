@@ -1,5 +1,6 @@
 const electron = require("electron");
 const dialog = electron.remote.dialog;
+import fs from "fs";
 import { DescriptionHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
 import { lnPage } from "connectors";
@@ -25,7 +26,8 @@ class WalletTab extends React.Component {
       amount: 0,
       account: props.defaultAccount,
       actionsEnabled: false,
-      isShowingBackupInfo: false
+      isShowingBackupInfo: false,
+      confirmFileOverwrite: null
     };
   }
 
@@ -67,14 +69,30 @@ class WalletTab extends React.Component {
     this.setState({ isShowingBackupInfo: !this.state.isShowingBackupInfo });
   }
 
-  async onBackup() {
-    const opts = {
-      options: {
-        showOverwriteConfirmation: true
-      }
-    };
-    const { filePath } = await dialog.showSaveDialog(opts);
+  async onConfirmFileOverwrite() {
+    const filePath = this.state.confirmFileOverwrite;
     if (!filePath) {
+      return;
+    }
+    this.setState({ confirmFileOverwrite: null });
+    await this.props.exportBackup(filePath);
+  }
+
+  onCancelFileOverwrite() {
+    this.setState({ confirmFileOverwrite: null });
+  }
+
+  async onBackup() {
+    this.setState({ confirmFileOverwrite: null });
+
+    const { filePath } = await dialog.showSaveDialog();
+    if (!filePath) {
+      return;
+    }
+
+    // If this file already exists, show the confirmation modal.
+    if (fs.existsSync(filePath)) {
+      this.setState({ confirmFileOverwrite: filePath });
       return;
     }
 
@@ -102,7 +120,8 @@ class WalletTab extends React.Component {
       amount,
       actionsEnabled,
       sending,
-      isShowingBackupInfo
+      isShowingBackupInfo,
+      confirmFileOverwrite
     } = this.state;
     const { alias, identityPubkey } = this.props.info;
     const { scbPath, scbUpdatedTime, tsDate } = this.props;
@@ -113,7 +132,9 @@ class WalletTab extends React.Component {
       onWithdrawWallet,
       onToggleShowBackupInfo,
       onBackup,
-      onVerifyBackup
+      onVerifyBackup,
+      onCancelFileOverwrite,
+      onConfirmFileOverwrite
     } = this;
 
     return (
@@ -130,6 +151,7 @@ class WalletTab extends React.Component {
         tsDate={tsDate}
         scbPath={scbPath}
         scbUpdatedTime={scbUpdatedTime}
+        confirmFileOverwrite={confirmFileOverwrite}
         onChangeAmount={onChangeAmount}
         onChangeAccount={onChangeAccount}
         onFundWallet={onFundWallet}
@@ -137,6 +159,8 @@ class WalletTab extends React.Component {
         onToggleShowBackupInfo={onToggleShowBackupInfo}
         onBackup={onBackup}
         onVerifyBackup={onVerifyBackup}
+        onCancelFileOverwrite={onCancelFileOverwrite}
+        onConfirmFileOverwrite={onConfirmFileOverwrite}
       />
     );
   }
