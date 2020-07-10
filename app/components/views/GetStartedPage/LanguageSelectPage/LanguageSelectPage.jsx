@@ -1,42 +1,38 @@
+import { useMemo, useState, useCallback } from "react";
 import LanguageSelectPage from "./Page";
-import { daemonStartup } from "connectors";
+import { useDaemonStartup } from "hooks";
 
-// xxxx: functionalllllll
+const LanguageSelect = () => {
+  const {
+    availableLanguages,
+    defaultLocale,
+    onSelectLanguage,
+    isTestNet
+  } = useDaemonStartup();
+  const defaultLang = useMemo(
+    () =>
+      availableLanguages.find((v) => v.language === defaultLocale) ||
+      availableLanguages[0],
+    [availableLanguages, defaultLocale]
+  );
 
-@autobind
-class LanguageSelect extends React.Component {
-  constructor(props) {
-    super(props);
-    const { availableLanguages, defaultLocale } = this.props;
-    this.state = {
-      selectedLang:
-        availableLanguages.find((v) => v.language === defaultLocale) ||
-        availableLanguages[0]
-    };
-  }
+  const [selectedLang, setSelectedLang] = useState(defaultLang);
 
-  render() {
-    const { selectedLang } = this.state;
-    const { onChangeSelectedLang, onSelectLang } = this;
-    const { availableLanguages, isTestNet } = this.props;
-    return (
-      <LanguageSelectPage
-        {...{
-          selectedLang,
-          availableLanguages,
-          onChangeSelectedLang,
-          onSelectLang,
-          isTestNet
-        }}
-      />
-    );
-  }
-  onChangeSelectedLang(newLang) {
-    this.setState({ selectedLang: newLang });
-  }
-  onSelectLang() {
-    this.props.onSelectLanguage(this.state.selectedLang);
-  }
-}
+  const onSelectLang = useCallback(() => {
+    onSelectLanguage(selectedLang);
+  }, [onSelectLanguage, selectedLang]);
 
-export default daemonStartup(LanguageSelect);
+  return (
+    <LanguageSelectPage
+      {...{
+        selectedLang,
+        availableLanguages,
+        onChangeSelectedLang: setSelectedLang,
+        onSelectLang,
+        isTestNet
+      }}
+    />
+  );
+};
+
+export default LanguageSelect;

@@ -1,73 +1,51 @@
+import { useState, useCallback } from "react";
 import OpenWalletDecryptFormBody from "./DecryptForm";
 import { FormattedMessage as T } from "react-intl";
-import { substruct } from "fp";
 import { OPENWALLET_FAILED_INPUT } from "actions/WalletLoaderActions";
 
-// xxxxx function component
+const OpenWallet = ({ onOpenWallet, onSendContinue, onSendError }) => {
+  const [publicPassPhrase, setPublicPassPhrase] = useState("");
 
-@autobind
-class OpenWallet extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      publicPassPhrase: ""
-    };
-  }
-
-  render() {
-    const { publicPassPhrase } = this.state;
-
-    return (
-      <OpenWalletDecryptFormBody
-        {...{
-          ...this.props,
-          // isOpeningWallet,
-          publicPassPhrase,
-          ...substruct(
-            {
-              onSetPublicPassPhrase: null,
-              onOpenWallet: null,
-              onKeyDown: null
-            },
-            this
-          )
-        }}
-      />
-    );
-  }
-
-  onSetPublicPassPhrase(publicPassPhrase) {
-    this.setState({ publicPassPhrase });
-  }
-
-  onOpenWallet() {
-    if (this.state.publicPassPhrase == "") {
+  const onOpenWalletHandler = useCallback(() => {
+    if (publicPassPhrase == "") {
       return;
     }
-
-    this.props
-      .onOpenWallet(this.state.publicPassPhrase, true)
-      .then(() => this.props.onSendContinue())
+    onOpenWallet(publicPassPhrase, true)
+      .then(() => onSendContinue())
       .catch((error) => {
         if (error === OPENWALLET_FAILED_INPUT) {
-          return this.props.onSendError(
+          return onSendError(
             <T
               id="getStarted.decrypt.error"
               m="Wrong public passphrase inserted."
             />
           );
         }
-        this.props.onSendError(error);
-      });
-    this.setState({ publicPassPhrase: "" });
-  }
+        onSendError(error);
+      })
+      .finally(() => setPublicPassPhrase(""));
+  }, [onOpenWallet, onSendContinue, onSendError, publicPassPhrase]);
 
-  onKeyDown(e) {
-    if (e.keyCode == 13) {
-      e.preventDefault();
-      this.onOpenWallet();
-    }
-  }
-}
+  const onKeyDown = useCallback(
+    (e) => {
+      if (e.keyCode == 13) {
+        e.preventDefault();
+        onOpenWalletHandler();
+      }
+    },
+    [onOpenWalletHandler]
+  );
+
+  return (
+    <OpenWalletDecryptFormBody
+      {...{
+        publicPassPhrase,
+        onSetPublicPassPhrase: setPublicPassPhrase,
+        onOpenWallet: onOpenWalletHandler,
+        onKeyDown
+      }}
+    />
+  );
+};
 
 export default OpenWallet;

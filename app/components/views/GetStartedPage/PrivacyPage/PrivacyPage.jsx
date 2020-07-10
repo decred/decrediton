@@ -1,37 +1,46 @@
-import { daemonStartup, settings } from "connectors"; // XXX: use useSettings hook
+import { useState } from "react";
+import { useDaemonStartup, useSettings } from "hooks";
 import Page from "./Page";
 
-// XXX: functional component
+const PrivacyPage = () => {
+  const {
+    isChangePassPhraseDisabled,
+    changePassphraseRequestAttempt,
+    onSaveSettings,
+    tempSettings,
+    onChangeTempSettings
+  } = useSettings();
+  const {
+    finishPrivacy,
+    setupStandardPrivacy,
+    setupDisabledPrivacy
+  } = useDaemonStartup();
+  const [showCustomPrivacy, setShowCustomPrivacy] = useState(false);
 
-@autobind
-class PrivacyPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { showCustomPrivacy: false };
-  }
+  const toggleCustomPrivacy = () => setShowCustomPrivacy(!showCustomPrivacy);
 
-  toggleCustomPrivacy() {
-    this.setState({ showCustomPrivacy: !this.state.showCustomPrivacy });
-  }
+  const acceptCustomPrivacy = () => {
+    onSaveSettings(tempSettings);
+    finishPrivacy();
+  };
 
-  acceptCustomPrivacy() {
-    this.props.onSaveSettings(this.props.tempSettings);
-    this.props.finishPrivacy();
-  }
+  return (
+    <Page
+      {...{
+        onSaveSettings,
+        tempSettings,
+        acceptCustomPrivacy,
+        toggleCustomPrivacy,
+        setupStandardPrivacy,
+        setupDisabledPrivacy,
+        finishPrivacy,
+        showCustomPrivacy,
+        isChangePassPhraseDisabled,
+        changePassphraseRequestAttempt,
+        onChangeTempSettings
+      }}
+    />
+  );
+};
 
-  render() {
-    const { acceptCustomPrivacy, toggleCustomPrivacy } = this;
-    return (
-      <Page
-        {...{
-          ...this.props,
-          ...this.state,
-          acceptCustomPrivacy,
-          toggleCustomPrivacy
-        }}
-      />
-    );
-  }
-}
-
-export default daemonStartup(settings(PrivacyPage));
+export default PrivacyPage;

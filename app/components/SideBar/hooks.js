@@ -23,10 +23,18 @@ export function useSideBar() {
 
   const dispatch = useDispatch();
 
-  const onExpandSideBar = useCallback(() => dispatch(sba.expandSideBar()), [dispatch]);
-  const onReduceSideBar = useCallback(() => dispatch(sba.reduceSideBar()), [dispatch]);
-  const rescanAttempt = useCallback(() => dispatch(ca.rescanAttempt()), [dispatch]);
-  const rescanCancel = useCallback(() => dispatch(ca.rescanCancel()), [dispatch]);
+  const onExpandSideBar = useCallback(() => dispatch(sba.expandSideBar()), [
+    dispatch
+  ]);
+  const onReduceSideBar = useCallback(() => dispatch(sba.reduceSideBar()), [
+    dispatch
+  ]);
+  const rescanAttempt = useCallback(() => dispatch(ca.rescanAttempt()), [
+    dispatch
+  ]);
+  const rescanCancel = useCallback(() => dispatch(ca.rescanCancel()), [
+    dispatch
+  ]);
 
   return {
     isShowingAccounts,

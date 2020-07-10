@@ -1,55 +1,34 @@
+import { useState, useCallback } from "react";
 import TutorialPage from "./Page";
-import { daemonStartup } from "connectors";
+import { useDaemonStartup } from "connectors";
 
-// XXXX: functional component!!!
+const Tutorial = () => {
+  const { finishTutorial } = useDaemonStartup();
+  const [tutorialStep, setTutorialStep] = useState(0);
 
-@autobind
-class Tutorial extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = this.getInitialState();
-  }
-
-  getInitialState() {
-    return {
-      tutorialStep: 0
-    };
-  }
-
-  render() {
-    const { tutorialStep } = this.state;
-    const { onNextTutorialStep, onPrevTutorialStep, onGoToStep } = this;
-    const { finishTutorial } = this.props;
-    return (
-      <TutorialPage
-        {...{
-          tutorialStep,
-          onNextTutorialStep,
-          onPrevTutorialStep,
-          onGoToStep,
-          finishTutorial
-        }}
-      />
-    );
-  }
-
-  onGoToStep(step) {
-    this.setState({ tutorialStep: step });
-  }
-
-  onNextTutorialStep() {
-    const { tutorialStep } = this.state;
+  const onNextTutorialStep = useCallback(() => {
     if (tutorialStep + 1 <= 3) {
-      this.setState({ tutorialStep: tutorialStep + 1 });
+      setTutorialStep(tutorialStep + 1);
     }
-  }
+  }, [tutorialStep]);
 
-  onPrevTutorialStep() {
-    const { tutorialStep } = this.state;
+  const onPrevTutorialStep = useCallback(() => {
     if (tutorialStep - 1 >= 0) {
-      this.setState({ tutorialStep: tutorialStep - 1 });
+      setTutorialStep(tutorialStep - 1);
     }
-  }
-}
+  }, [tutorialStep]);
 
-export default daemonStartup(Tutorial);
+  return (
+    <TutorialPage
+      {...{
+        tutorialStep,
+        onNextTutorialStep,
+        onPrevTutorialStep,
+        onGoToStep: setTutorialStep,
+        finishTutorial
+      }}
+    />
+  );
+};
+
+export default Tutorial;

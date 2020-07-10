@@ -4,7 +4,7 @@ import { fetchMachine } from "stateMachines/FetchStateMachine";
 import { useMachine } from "@xstate/react";
 import * as sel from "selectors";
 import * as gov from "actions/GovernanceActions";
-import { usePrevious } from "helpers";
+import { usePrevious } from "hooks";
 import { setLastPoliteiaAccessTime } from "actions/WalletLoaderActions";
 
 export function useProposalsTab() {

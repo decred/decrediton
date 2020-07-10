@@ -1,29 +1,42 @@
-import { daemonStartup } from "connectors";
+import { useEffect } from "react";
+import { useDaemonStartup } from "hooks";
 
-// xxx: functional compoennt please :)
-
-@autobind
-class GetStartedPosition extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  componentDidMount() {
-    if (this.props.setLanguage) {
-      this.props.onShowLanguage();
-    } else if (this.props.showPrivacy) {
-      this.props.onShowPrivacy();
-    } else if (this.props.showSpvChoice) {
-      this.props.onShowSpvChoice();
-    } else if (this.props.showTutorial) {
-      this.props.onShowTutorial();
+const GetStartedPosition = () => {
+  const {
+    setLanguage,
+    onShowLanguage,
+    showPrivacy,
+    onShowPrivacy,
+    showSpvChoice,
+    onShowGetStarted,
+    onShowSpvChoice,
+    onShowTutorial,
+    showTutorial
+  } = useDaemonStartup();
+  useEffect(() => {
+    if (setLanguage) {
+      onShowLanguage();
+    } else if (showPrivacy) {
+      onShowPrivacy();
+    } else if (showSpvChoice) {
+      onShowSpvChoice();
+    } else if (showTutorial) {
+      onShowTutorial();
     } else {
-      this.props.onShowGetStarted();
+      onShowGetStarted();
     }
-  }
-  render() {
-    return <></>;
-  }
-}
+  }, [
+    setLanguage,
+    onShowLanguage,
+    showPrivacy,
+    onShowPrivacy,
+    showSpvChoice,
+    onShowGetStarted,
+    onShowSpvChoice,
+    onShowTutorial,
+    showTutorial
+  ]);
+  return <></>;
+};
 
-export default daemonStartup(GetStartedPosition);
+export default GetStartedPosition;

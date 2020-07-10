@@ -28,7 +28,6 @@ const TutorialPage = ({
 }) => {
   return (
     <div className={styles.tutorial}>
-      {/* XXX: make sure below works! */}
       <div className={classNames(styles.side, styles[`step${tutorialStep}`])}>
         <video autoPlay loop src={videosByStep[tutorialStep]} width="100%" />
       </div>

@@ -3,54 +3,45 @@ import { FormattedMessage as T } from "react-intl";
 import ConfigSections from "views/TrezorPage/ConfigSections";
 import Page from "./Page";
 import { InvisibleButton } from "buttons";
+import { useEffect } from "react";
 
-@autobind
-class TrezorConfig extends React.Component {
-  constructor(props) {
-    super(props);
-    props.enableTrezor();
-  }
+const TrezorConfig = ({
+  enableTrezor,
+  device,
+  performingOperation,
+  reloadDeviceList,
+  ...props
+}) => {
+  useEffect(() => {
+    enableTrezor();
+  }, [enableTrezor]);
 
-  renderNoDevice() {
-    return (
-      <>
-        <div>
+  const renderNoDevice = (
+    <>
+      <div>
+        <T
+          id="trezor.getStartedConfig.noDeviceFound"
+          m="No trezor device found. Check the connection and the trezor bridge software."
+        />
+      </div>
+      <div>
+        <InvisibleButton onClick={reloadDeviceList}>
           <T
-            id="trezor.getStartedConfig.noDeviceFound"
-            m="No trezor device found. Check the connection and the trezor bridge software."
+            id="trezor.getStartedConfig.btnReloadDeviceList"
+            m="Reload Device List"
           />
-        </div>
-        <div>
-          <InvisibleButton onClick={this.props.reloadDeviceList}>
-            <T
-              id="trezor.getStartedConfig.btnReloadDeviceList"
-              m="Reload Device List"
-            />
-          </InvisibleButton>
-        </div>
-      </>
-    );
-  }
+        </InvisibleButton>
+      </div>
+    </>
+  );
 
-  render() {
-    const { device } = this.props;
-    let children;
+  const children = !device ? (
+    renderNoDevice
+  ) : (
+    <ConfigSections device={device} loading={performingOperation} {...props} />
+  );
 
-    if (!device) {
-      children = this.renderNoDevice();
-    } else {
-      const loading = this.props.performingOperation;
-      children = (
-        <ConfigSections device={device} loading={loading} {...this.props} />
-      );
-    }
-
-    return (
-      <Page {...this.props} {...this.state}>
-        {children}
-      </Page>
-    );
-  }
-}
+  return <Page {...props}>{children}</Page>;
+};
 
 export default trezor(TrezorConfig);

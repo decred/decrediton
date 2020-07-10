@@ -9,10 +9,10 @@ export default ({
   toggleCustomPrivacy
 }) => (
   <>
-    <div>
+    <div className={styles.title}>
       <T id="privacy.title" m={"Privacy Options"} />
     </div>
-    <div>
+    <div className={styles.titleSub}>
       <T
         id="privacy.titleSub"
         m={
