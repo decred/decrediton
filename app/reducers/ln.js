@@ -22,7 +22,13 @@ import {
   LNWALLET_SENDPAYMENT_FAILED,
   LNWALLET_DCRLND_STOPPED,
   LNWALLET_CHECKED,
-  LNWALLET_SCBINFO_UPDATED
+  LNWALLET_SCBINFO_UPDATED,
+  LNWALLET_GETNETWORKINFO_ATTEMPT,
+  LNWALLET_GETNETWORKINFO_SUCCESS,
+  LNWALLET_GETNETWORKINFO_FAILED,
+  LNWALLET_GETNODEINFO_ATTEMPT,
+  LNWALLET_GETNODEINFO_SUCCESS,
+  LNWALLET_GETNODEINFO_FAILED
 } from "actions/LNActions";
 
 function addOutstandingPayment(oldOut, rhashHex, payData) {
@@ -182,6 +188,10 @@ export default function ln(state = {}, action) {
         invoices: [],
         scbPath: "",
         scbUpdatedTime: 0,
+        getNetworkInfoAttempt: false,
+        network: null,
+        getNodeInfoAttempt: false,
+        nodeInfo: null,
         info: {
           version: null,
           identityPubkey: null,
@@ -203,6 +213,40 @@ export default function ln(state = {}, action) {
       return {
         ...state,
         exists: !!action.exists
+      };
+    case LNWALLET_GETNETWORKINFO_ATTEMPT:
+      return {
+        ...state,
+        getNetworkInfoAttempt: true
+      };
+    case LNWALLET_GETNETWORKINFO_SUCCESS:
+      return {
+        ...state,
+        getNetworkInfoAttempt: false,
+        network: action.network
+      };
+    case LNWALLET_GETNETWORKINFO_FAILED:
+      return {
+        ...state,
+        getNetworkInfoAttempt: false
+      };
+    case LNWALLET_GETNODEINFO_ATTEMPT:
+      return {
+        ...state,
+        getNodeInfoAttempt: true,
+        nodeInfo: null
+      };
+    case LNWALLET_GETNODEINFO_SUCCESS:
+      return {
+        ...state,
+        getNodeInfoAttempt: false,
+        nodeInfo: action.nodeInfo
+      };
+      case LNWALLET_GETNODEINFO_FAILED:
+      return {
+        ...state,
+        getNodeInfoAttempt: false,
+        nodeInfo: action.error
       };
     default:
       return state;

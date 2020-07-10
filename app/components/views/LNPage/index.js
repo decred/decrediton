@@ -7,6 +7,8 @@ import { default as WalletTab, WalletTabHeader } from "./WalletTab";
 import { default as ChannelsTab, ChannelsTabHeader } from "./ChannelsTab";
 import { default as InvoicesTab, InvoicesTabHeader } from "./InvoicesTab";
 import { default as PaymentsTab, PaymentsTabHeader } from "./PaymentsTab";
+import NetworkTabHeader from "./NetworkTab/NetworkTabHeader";
+import NetworkTab from "./NetworkTab/NetworkTab";
 import "style/LN.less";
 
 const LNPageHeader = () => (
@@ -44,6 +46,12 @@ const LNActivePage = () => (
       component={PaymentsTab}
       header={PaymentsTabHeader}
       link={<T id="ln.tab.payments" m="Payments" />}
+    />
+    <Tab
+      path="/ln/network"
+      component={NetworkTab}
+      header={NetworkTabHeader}
+      link={<T id="ln.tab.network" m="Network" />}
     />
   </TabbedPage>
 );
