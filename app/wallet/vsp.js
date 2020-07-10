@@ -50,6 +50,11 @@ export const getVSPInfo = promisifyReqLogNoData(
   api.getVSPInfo
 );
 
+export const getAllVSPs = promisifyReqLogNoData(
+  "getAllVspsInfo",
+  api.getAllVspsInfo
+);
+
 // allowVSPHost enables the external request to a specif VSP host.
 export const allowVSPHost = log(
   (host) => Promise.resolve(ipcRenderer.sendSync("allow-vsp-host", host)),

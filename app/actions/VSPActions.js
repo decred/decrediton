@@ -301,6 +301,27 @@ export const discoverAvailableStakepools = () => async (dispatch, getState) => {
   return vspInfo;
 };
 
+export const DISCOVERAVAILABLEVSPS_ATTEMPT = "DISCOVERAVAILABLEVSPS_ATTEMPT";
+export const DISCOVERAVAILABLEVSPS_SUCCESS = "DISCOVERAVAILABLEVSPS_SUCCESS";
+export const DISCOVERAVAILABLEVSPS_FAILED = "DISCOVERAVAILABLEVSPS_FAILED";
+
+export const discoverAvailableVSPs = () => async (dispatch, getState) => {
+  dispatch({ type: DISCOVERAVAILABLEVSPS_ATTEMPT })
+  try {
+    const allVSPsInfo = await wallet.getAllVSPs();
+    dispatch({
+      type: DISCOVERAVAILABLEVSPS_SUCCESS,
+      allVSPsInfo
+    });
+    return allVSPsInfo;
+  } catch (error) {
+    dispatch({
+      type: DISCOVERAVAILABLEVSPS_FAILED,
+      error
+    });
+  }
+}
+
 export const CHANGESELECTEDSTAKEPOOL = "CHANGESELECTEDSTAKEPOOL";
 export const changeSelectedStakePool = (selectedStakePool) => (dispatch) =>
   dispatch({ selectedStakePool, type: CHANGESELECTEDSTAKEPOOL });

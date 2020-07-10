@@ -22,24 +22,44 @@ const POST = (path, apiToken, json) => {
   return axios.post(path, querystring.stringify(json), config);
 };
 
-// stakepPoolInfoResponseToConfig converts a response object for the
-// stakePoolInfo call into an object array of available stakepool configs.
-function stakepPoolInfoResponseToConfig(response) {
-  const stakePoolNames = Object.keys(response.data);
-  return stakePoolNames
-    .map((name) => {
-      const { APIEnabled, URL, Network, APIVersionsSupported } = response.data[
-        name
-      ];
-      return !APIEnabled ? null : { Host: URL, Network, APIVersionsSupported };
-    })
-    .filter((v) => v);
-}
-
+// stakePoolInfo gets vsp info from vsps v1 and v2.
+// This can be removed after stopping to support them.
 export function stakePoolInfo(cb) {
+  // stakepPoolInfoResponseToConfig converts a response object for the
+  // stakePoolInfo call into an object array of available stakepool configs.
+  const stakepPoolInfoResponseToConfig = (response) => {
+    const stakePoolNames = Object.keys(response.data);
+    return stakePoolNames
+      .map((name) => {
+        const { APIEnabled, URL, Network, APIVersionsSupported } = response.data[
+          name
+        ];
+        return !APIEnabled ? null : { Host: URL, Network, APIVersionsSupported };
+      })
+      .filter((v) => v);
+  }
+
   GET(URL_BASE + "/?c=gsd")
     .then(function (response) {
       cb(stakepPoolInfoResponseToConfig(response));
+    })
+    .catch(function (error) {
+      console.log("Error contacting remote stakepools api.", error);
+      cb(null, error);
+    });
+}
+
+// getAllVspsInfo gets vsp info from vsps v1 and v2.
+// This can be removed after stopping to support them.
+export function getAllVspsInfo(cb) {
+  const readVspInfoResponse = (response) => {
+    console.log(response)
+    return response.data;
+  }
+
+  GET(URL_BASE + "/?c=vsp")
+    .then(function (response) {
+      cb(readVspInfoResponse(response));
     })
     .catch(function (error) {
       console.log("Error contacting remote stakepools api.", error);

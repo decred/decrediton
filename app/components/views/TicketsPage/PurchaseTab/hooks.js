@@ -13,7 +13,7 @@ export const usePurchaseTab = () => {
   const defaultSpendingAccount = useSelector(sel.defaultSpendingAccount);
   const ticketPrice = useSelector(sel.ticketPrice);
   const dispatch = useDispatch();
-  const discoverAvailableVSPs = useCallback(() => dispatch(vspa.discoverAvailableStakepools()), [
+  const discoverAvailableVSPs = useCallback(() => dispatch(vspa.discoverAvailableVSPs()), [
     dispatch
   ]);
 
