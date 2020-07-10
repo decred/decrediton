@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { PurchasePage } from "./Page";
-import { usePurchaseTab } from "../hooks";
+import {
+  usePurchaseTab
+} from "../hooks";
+import { useMountEffect } from "hooks"
 
 const Tickets = ({ toggleIsLegacy }) => {
   const {
@@ -9,11 +12,15 @@ const Tickets = ({ toggleIsLegacy }) => {
     sidebarOnBottom,
     isWatchingOnly,
     discoverAvailableVSPs,
+    availableVSPs,
     defaultSpendingAccount,
+    // spendingAccounts,
     ticketPrice
   } = usePurchaseTab();
+  useMountEffect(discoverAvailableVSPs);
 
   const [account, setAccount] = useState(defaultSpendingAccount);
+  // const [vsp, setVSP] = useState(null);
   const [numTickets, setNumTickets] = useState(1);
   const [vspOptions, setVSPOptions] = useState(null);
   const [isValid, setIsValid] = useState(false);
@@ -21,7 +28,7 @@ const Tickets = ({ toggleIsLegacy }) => {
   // onChangeNumTickets deals with ticket increment or decrement.
   const onChangeNumTickets = (increment) => {
     if (numTickets === 0 && !increment) return;
-    increment ? setNumTickets(numTickets + 1) : setNumTickets(numTickets - 1);
+    increment ? setNumTickets(numTickets + 1) : setNumTickets(numTickets -1);
   };
 
   useEffect(() => {
@@ -32,23 +39,12 @@ const Tickets = ({ toggleIsLegacy }) => {
   }, [ticketPrice, numTickets, account]);
 
   useEffect(() => {
-    const getAvailableVsps = async () => {
-      const options = await discoverAvailableVSPs();
-      // filter vsp which support API v3.
-      const filteredOpts = options.reduce((filtered, vsp) => {
-        if (vsp.APIVersionsSupported.indexOf(3) > -1) {
-          filtered.push(vsp);
-        }
-        return filtered;
-      }, []);
-
-      return filteredOpts;
-    };
-
-    getAvailableVsps().then((filtered) => {
-      return setVSPOptions(filtered);
-    });
-  }, [discoverAvailableVSPs]);
+    if (!availableVSPs) return;
+    // TODO we probably are not going to use the same end point of old stakepools
+    // so after having a new endpoint we can remove this filtering, but it is necessary
+    // for now.
+    setVSPOptions(availableVSPs);
+  }, [availableVSPs]);
 
   const handleOnKeyDown = (e) => {
     if (e.keyCode == 38) {
@@ -60,26 +56,22 @@ const Tickets = ({ toggleIsLegacy }) => {
     }
   };
 
-  return (
-    <PurchasePage
-      {...{
-        spvMode,
-        blocksNumberToNextTicket,
-        sidebarOnBottom,
-        isWatchingOnly,
-        vspOptions,
-        account,
-        numTickets,
-        onChangeNumTickets,
-        setNumTickets,
-        handleOnKeyDown,
-        setAccount,
-        ticketPrice,
-        isValid,
-        toggleIsLegacy
-      }}
-    />
-  );
+  return <PurchasePage {...{
+      spvMode,
+      blocksNumberToNextTicket,
+      sidebarOnBottom,
+      isWatchingOnly,
+      vspOptions,
+      account,
+      numTickets,
+      onChangeNumTickets,
+      setNumTickets,
+      handleOnKeyDown,
+      setAccount,
+      ticketPrice,
+      isValid,
+      toggleIsLegacy
+    }} />;
 };
 
 export default Tickets;

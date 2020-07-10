@@ -12,10 +12,18 @@ export const usePurchaseTab = () => {
   const spendingAccounts = useSelector(sel.spendingAccounts);
   const defaultSpendingAccount = useSelector(sel.defaultSpendingAccount);
   const ticketPrice = useSelector(sel.ticketPrice);
+  const availableVSPs = useSelector(sel.getAvailableVSPs);
   const dispatch = useDispatch();
   const discoverAvailableVSPs = useCallback(() => dispatch(vspa.discoverAvailableVSPs()), [
     dispatch
   ]);
+  const onEnableTicketAutoBuyer = useCallback((passphrase, account, balanceToMaintain, vsp) =>
+    dispatch(ca.startTicketBuyerV2Attempt(
+      passphrase,
+      account,
+      balanceToMaintain,
+      vsp)
+    ));
 
   return {
     spvMode,
@@ -25,6 +33,8 @@ export const usePurchaseTab = () => {
     spendingAccounts,
     defaultSpendingAccount,
     discoverAvailableVSPs,
-    ticketPrice
+    ticketPrice,
+    onEnableTicketAutoBuyer,
+    availableVSPs
   };
 };

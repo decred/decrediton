@@ -5,6 +5,7 @@ import { ShowWarning, Subtitle } from "shared";
 import { InfoDocModalButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import styles from "../PurchaseTab.module.css";
+import TicketAutoBuyer from "../TicketAutoBuyer/TicketAutoBuyer";
 
 const getTitleIcon = ({ toggleIsLegacy }) => (
   <>
@@ -79,6 +80,8 @@ export function PurchasePage({
         />
       )}
       {isWatchingOnly && <UnsignedTickets {...{ ...props }} />}
+      <TicketAutoBuyer />
+
     </div>
   );
 }
