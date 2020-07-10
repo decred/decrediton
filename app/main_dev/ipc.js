@@ -209,6 +209,31 @@ export const stopDcrlnd = () => {
   return closeDcrlnd();
 };
 
+export const removeDcrlnd = (walletName, testnet) => {
+  const walletPath = getWalletPath(testnet, walletName);
+  const dcrlndRoot = path.join(walletPath, "dcrlnd");
+  try {
+    if (fs.pathExistsSync(dcrlndRoot)) {
+      fs.removeSync(dcrlndRoot);
+      return true;
+    }
+    return false;
+  } catch (e) {
+    logger.log("error", "error removing dcrlnd dir: " + e);
+    return false;
+  }
+};
+
+export const lnScbInfo = (walletPath, testnet) => {
+  const netPath = testnet ? "testnet" : "mainnet";
+  const dcrlndRoot = path.join(walletPath, "dcrlnd");
+  const chainRoot = path.join(dcrlndRoot, "data", "chain", "decred", netPath);
+  const channelBackupPath = path.join(chainRoot, "channel.backup");
+  const scbFstat = fs.statSync(channelBackupPath);
+  const channelBackupMTime = scbFstat.mtime;
+  return { channelBackupPath, channelBackupMTime };
+};
+
 export const setWatchingOnlyWallet = (isWatchingOnly) => {
   watchingOnlyWallet = isWatchingOnly;
 };

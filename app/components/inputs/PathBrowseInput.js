@@ -1,11 +1,8 @@
 const electron = require("electron");
 const dialog = electron.remote.dialog;
-const mainWindow = electron.remote.getCurrentWindow();
-const ipc = electron.ipcRenderer;
 
 import PathInput from "./PathInput";
 import { PathButton } from "../buttons";
-import { isArray } from "util";
 import { defineMessages, injectIntl } from "react-intl";
 
 // Import this and pass one of the objects as a member of the filter prop
@@ -22,26 +19,9 @@ const FileBrowserFilterNames = defineMessages({
 
 @autobind
 class PathBrowseInput extends React.Component {
-  key = Math.random().toString(36).substring(2, 15);
-
   constructor(props) {
     super(props);
     this.state = { path: "" };
-  }
-
-  componentDidMount() {
-    const self = this;
-    const pathListener = function (event, data) {
-      const path = isArray(data) ? data[0] : data;
-      self.setState({ path });
-      self.props.onChange(path);
-    };
-
-    ipc.on(this.key, pathListener);
-  }
-
-  componentWillUnmount() {
-    ipc.removeAllListeners(this.key);
   }
 
   selectDirectory() {
@@ -57,13 +37,23 @@ class PathBrowseInput extends React.Component {
       ],
       filters: filters
     };
-    f(mainWindow, opts, this.directorySelectorCallback);
+    const cb = this.directorySelectorCallback;
+    f(opts, this.directorySelectorCallback).then(cb);
   }
 
-  directorySelectorCallback(filenames) {
-    if (filenames && filenames.length > 0) {
-      mainWindow.webContents.send(this.key, filenames);
+  directorySelectorCallback({ filePaths, filePath }) {
+    let path;
+
+    if (filePaths && filePaths.length > 0) {
+      path = filePaths[0];
+    } else if (filePath) {
+      path = filePath;
+    } else {
+      return;
     }
+
+    this.setState({ path });
+    this.props.onChange(path);
   }
 
   onChange(path) {

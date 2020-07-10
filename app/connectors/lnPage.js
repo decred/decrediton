@@ -6,8 +6,8 @@ import * as sel from "selectors";
 
 const mapStateToProps = selectorMap({
   lnActive: sel.lnActive,
+  startupStage: sel.lnStartupStage,
   startAttempt: sel.lnStartAttempt,
-  connectAttempt: sel.lnConnectAttempt,
   walletBalances: sel.lnWalletBalances,
   channelBalances: sel.lnChannelBalances,
   channels: sel.lnChannels,
@@ -22,13 +22,14 @@ const mapStateToProps = selectorMap({
   info: sel.lnInfo,
   defaultAccount: sel.defaultSpendingAccount,
   lightningWalletExists: sel.lnWalletExists,
-  isMainNet: sel.isMainNet
+  isMainNet: sel.isMainNet,
+  scbPath: sel.lnSCBPath,
+  scbUpdatedTime: sel.lnSCBUpdatedTime
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      connectToLNWallet: lna.connectToLNWallet,
       updateWalletBalances: lna.updateLNWalletBalances,
       addInvoice: lna.addInvoice,
       decodePayRequest: lna.decodePayRequest,
@@ -37,8 +38,9 @@ const mapDispatchToProps = (dispatch) =>
       closeChannel: lna.closeChannel,
       fundWallet: lna.fundWallet,
       withdrawWallet: lna.withdrawWallet,
-      getWalletConfig: lna.getLNWalletConfig,
-      startDcrlnd: lna.startDcrlnd
+      startDcrlnd: lna.startDcrlnd,
+      exportBackup: lna.exportBackup,
+      verifyBackup: lna.verifyBackup
     },
     dispatch
   );

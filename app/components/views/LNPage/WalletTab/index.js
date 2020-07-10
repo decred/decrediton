@@ -1,3 +1,6 @@
+const electron = require("electron");
+const dialog = electron.remote.dialog;
+import fs from "fs";
 import { DescriptionHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
 import { lnPage } from "connectors";
@@ -22,7 +25,9 @@ class WalletTab extends React.Component {
     this.state = {
       amount: 0,
       account: props.defaultAccount,
-      actionsEnabled: false
+      actionsEnabled: false,
+      isShowingBackupInfo: false,
+      confirmFileOverwrite: null
     };
   }
 
@@ -60,19 +65,76 @@ class WalletTab extends React.Component {
       });
   }
 
+  onToggleShowBackupInfo() {
+    this.setState({ isShowingBackupInfo: !this.state.isShowingBackupInfo });
+  }
+
+  async onConfirmFileOverwrite() {
+    const filePath = this.state.confirmFileOverwrite;
+    if (!filePath) {
+      return;
+    }
+    this.setState({ confirmFileOverwrite: null });
+    await this.props.exportBackup(filePath);
+  }
+
+  onCancelFileOverwrite() {
+    this.setState({ confirmFileOverwrite: null });
+  }
+
+  async onBackup() {
+    this.setState({ confirmFileOverwrite: null });
+
+    const { filePath } = await dialog.showSaveDialog();
+    if (!filePath) {
+      return;
+    }
+
+    // If this file already exists, show the confirmation modal.
+    if (fs.existsSync(filePath)) {
+      this.setState({ confirmFileOverwrite: filePath });
+      return;
+    }
+
+    await this.props.exportBackup(filePath);
+  }
+
+  async onVerifyBackup() {
+    const { filePaths } = await dialog.showOpenDialog();
+    const filePath = filePaths[0];
+    if (!filePath) {
+      return;
+    }
+
+    await this.props.verifyBackup(filePath);
+  }
+
   render() {
     const {
       confirmedBalance,
       unconfirmedBalance,
       totalBalance
     } = this.props.walletBalances;
-    const { account, amount, actionsEnabled, sending } = this.state;
+    const {
+      account,
+      amount,
+      actionsEnabled,
+      sending,
+      isShowingBackupInfo,
+      confirmFileOverwrite
+    } = this.state;
     const { alias, identityPubkey } = this.props.info;
+    const { scbPath, scbUpdatedTime, tsDate } = this.props;
     const {
       onChangeAmount,
       onChangeAccount,
       onFundWallet,
-      onWithdrawWallet
+      onWithdrawWallet,
+      onToggleShowBackupInfo,
+      onBackup,
+      onVerifyBackup,
+      onCancelFileOverwrite,
+      onConfirmFileOverwrite
     } = this;
 
     return (
@@ -85,10 +147,20 @@ class WalletTab extends React.Component {
         amount={amount}
         totalBalance={totalBalance}
         actionsEnabled={actionsEnabled && !sending}
+        isShowingBackupInfo={isShowingBackupInfo}
+        tsDate={tsDate}
+        scbPath={scbPath}
+        scbUpdatedTime={scbUpdatedTime}
+        confirmFileOverwrite={confirmFileOverwrite}
         onChangeAmount={onChangeAmount}
         onChangeAccount={onChangeAccount}
         onFundWallet={onFundWallet}
         onWithdrawWallet={onWithdrawWallet}
+        onToggleShowBackupInfo={onToggleShowBackupInfo}
+        onBackup={onBackup}
+        onVerifyBackup={onVerifyBackup}
+        onCancelFileOverwrite={onCancelFileOverwrite}
+        onConfirmFileOverwrite={onConfirmFileOverwrite}
       />
     );
   }

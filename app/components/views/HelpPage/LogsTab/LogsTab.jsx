@@ -94,9 +94,10 @@ class LogsTabBody extends React.Component {
       getDcrwalletLogs(),
       getDecreditonLogs(),
       getDcrlndLogs()
-    ]).then(([rawDcrdLogs, rawDcrwalletLogs, decreditonLogs, dcrlndLogs]) => {
+    ]).then(([rawDcrdLogs, rawDcrwalletLogs, decreditonLogs, rawDcrlndLogs]) => {
       const dcrdLogs = Buffer.from(rawDcrdLogs).toString("utf8");
       const dcrwalletLogs = Buffer.from(rawDcrwalletLogs).toString("utf8");
+      const dcrlndLogs = Buffer.from(rawDcrlndLogs).toString("utf8");
       if (dcrdLogs !== this.state.dcrdLogs) {
         this.setState({ dcrdLogs });
       }

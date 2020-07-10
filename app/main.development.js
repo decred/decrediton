@@ -54,7 +54,9 @@ import {
   setWatchingOnlyWallet,
   getWatchingOnlyWallet,
   startDcrlnd,
-  stopDcrlnd
+  stopDcrlnd,
+  removeDcrlnd,
+  lnScbInfo
 } from "./main_dev/ipc";
 import {
   initTemplate,
@@ -352,6 +354,30 @@ ipcMain.on("dcrlnd-creds", (event) => {
     event.returnValue = GetDcrlndCreds();
   } else {
     event.returnValue = null;
+  }
+});
+
+ipcMain.on("ln-scb-info", (event, walletPath, testnet) => {
+  try {
+    event.returnValue = lnScbInfo(walletPath, testnet);
+  } catch (error) {
+    if (!(error instanceof Error)) {
+      event.returnValue = new Error(error);
+    } else {
+      event.returnValue = error;
+    }
+  }
+});
+
+ipcMain.on("ln-remove-dir", (event, walletName, testnet) => {
+  try {
+    event.returnValue = removeDcrlnd(walletName, testnet);
+  } catch (error) {
+    if (!(error instanceof Error)) {
+      event.returnValue = new Error(error);
+    } else {
+      event.returnValue = error;
+    }
   }
 });
 

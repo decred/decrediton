@@ -92,7 +92,6 @@ import {
   GETVETTED_UPDATEDVOTERESULTS_FAILED
 } from "actions/GovernanceActions";
 import {
-  LNWALLET_CONNECT_FAILED,
   LNWALLET_INVOICE_SETTLED,
   LNWALLET_SENDPAYMENT_FAILED,
   LNWALLET_SENDPAYMENT_SUCCESS,
@@ -106,7 +105,17 @@ import {
   LNWALLET_WITHDRAWWALLET_FAILED,
   LNWALLET_FUNDWALLET_SUCCESS,
   LNWALLET_WITHDRAWWALLET_SUCCESS,
-  LNWALLET_STARTDCRLND_FAILED
+  LNWALLET_CREATEACCOUNT_FAILED,
+  LNWALLET_STARTDCRLND_FAILED,
+  LNWALLET_CONNECT_FAILED,
+  LNWALLET_UNLOCK_FAILED,
+  LNWALLET_STARTUPSYNC_FAILED,
+  LNWALLET_SCBRESTORE_FAILED,
+  LNWALLET_SCBRESTOREUNPACK_FAILED,
+  LNWALLET_EXPORTBACKUP_SUCCESS,
+  LNWALLET_EXPORTBACKUP_FAILED,
+  LNWALLET_VERIFYBACKUP_SUCCESS,
+  LNWALLET_VERIFYBACKUP_FAILED
 } from "actions/LNActions";
 
 const WRONG_PASSPHRASE_MSG = "WRONG_PASSPHRASE_MSG";
@@ -349,9 +358,34 @@ const messages = defineMessages({
     id: "snackbar.errorObject",
     defaultMessage: "The following error happened: {error}"
   },
+  LNWALLET_STARTDCRLND_FAILED: {
+    id: "ln.ntf.startDcrlndFailed",
+    defaultMessage: "dcrlnd failed to start: {originalError}"
+  },
   LNWALLET_CONNECT_FAILED: {
     id: "ln.ntf.connectFailed",
     defaultMessage: "Failed to connect to LN wallet: {originalError}"
+  },
+  LNWALLET_CREATEACCOUNT_FAILED: {
+    id: "ln.ntf.createAccountFailed",
+    defaultMessage: "Failed to create LN-specific account: {originalError}"
+  },
+  LNWALLET_UNLOCK_FAILED: {
+    id: "ln.ntf.unlockFailed",
+    defaultMessage: "Failed to unlock ln wallet: {originalError}"
+  },
+  LNWALLET_STARTUPSYNC_FAILED: {
+    id: "ln.ntf.startupSyncFailed",
+    defaultMessage: "Failed to sync to dcrlnd during startup: {originalError}"
+  },
+  LNWALLET_SCBRESTORE_FAILED: {
+    id: "ln.ntf.scbRestoreFailed",
+    defaultMessage: "SCB restore failed: {originalError}"
+  },
+  LNWALLET_SCBRESTOREUNPACK_FAILED: {
+    id: "ln.ntf.scbRestoreUnpackFailed",
+    defaultMessage:
+      "SCB restore failed due to backup file being for a different wallet, account or the file being damaged.\nTry other accounts, wallets or check the documentation for additional info."
   },
   LNWALLET_INVOICE_SETTLED: {
     id: "ln.ntf.invoiceSettled",
@@ -405,9 +439,22 @@ const messages = defineMessages({
     id: "ln.ntf.withdrawWalletSuccess",
     defaultMessage: "Sent withdraw transaction for LN Wallet"
   },
-  LNWALLET_STARTDCRLND_FAILED: {
-    id: "ln.ntf.startDcrlndFailed",
-    defaultMessage: "{originalError}"
+  LNWALLET_EXPORTBACKUP_SUCCESS: {
+    id: "ln.ntf.exportBackupSuccess",
+    defaultMessage: "Exported SCB backup file to {destPath}"
+  },
+  LNWALLET_EXPORTBACKUP_FAILED: {
+    id: "ln.ntf.exportBackupFailed",
+    defaultMessage: "Unable to export SCB file: {originalError}"
+  },
+  LNWALLET_VERIFYBACKUP_SUCCESS: {
+    id: "ln.ntf.verifyBackupSuccess",
+    defaultMessage: "SCB backup file is valid for this wallet!"
+  },
+  LNWALLET_VERIFYBACKUP_FAILED: {
+    id: "ln.ntf.verifyBackupFailed",
+    defaultMessage:
+      "SCB backup file is invalid for this wallet: {originalError}"
   },
   UPDATEVOTECHOICE_SUCCESS: {
     id: "governance.ntf.updateVoteChoiceSuccess",
@@ -484,6 +531,8 @@ export default function snackbar(state = {}, action) {
     case LNWALLET_CLOSECHANNEL_CHANCLOSE:
     case LNWALLET_FUNDWALLET_SUCCESS:
     case LNWALLET_WITHDRAWWALLET_SUCCESS:
+    case LNWALLET_EXPORTBACKUP_SUCCESS:
+    case LNWALLET_VERIFYBACKUP_SUCCESS:
     case UPDATEVOTECHOICE_SUCCESS:
       type = "Success";
       message = messages[action.type] || messages.defaultSuccessMessage;
@@ -509,6 +558,8 @@ export default function snackbar(state = {}, action) {
           break;
         case LNWALLET_INVOICE_SETTLED:
           values = { memo: action.invoice.memo };
+        case LNWALLET_EXPORTBACKUP_SUCCESS:
+          values = { destPath: action.destPath };
       }
 
       break;
@@ -555,13 +606,20 @@ export default function snackbar(state = {}, action) {
     case TRZ_UPDATEFIRMWARE_FAILED:
     case TRZ_NOCONNECTEDDEVICE:
     case TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED:
+    case LNWALLET_CREATEACCOUNT_FAILED:
+    case LNWALLET_STARTDCRLND_FAILED:
     case LNWALLET_CONNECT_FAILED:
+    case LNWALLET_UNLOCK_FAILED:
+    case LNWALLET_STARTUPSYNC_FAILED:
+    case LNWALLET_SCBRESTORE_FAILED:
+    case LNWALLET_SCBRESTOREUNPACK_FAILED:
     case LNWALLET_SENDPAYMENT_FAILED:
     case LNWALLET_OPENCHANNEL_FAILED:
     case LNWALLET_CLOSECHANNEL_FAILED:
     case LNWALLET_FUNDWALLET_FAILED:
     case LNWALLET_WITHDRAWWALLET_FAILED:
-    case LNWALLET_STARTDCRLND_FAILED:
+    case LNWALLET_EXPORTBACKUP_FAILED:
+    case LNWALLET_VERIFYBACKUP_FAILED:
       type = "Error";
       if (
         action.error &&
