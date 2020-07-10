@@ -1,5 +1,5 @@
 import * as sel from "selectors";
-import * as pi from "middleware/politeiaapi";
+import * as pi from "wallet/politeia";
 import * as wallet from "wallet";
 import { GETTRANSACTIONS_COMPLETE } from "./TransactionActions";
 import { push as pushHistory } from "connected-react-router";
@@ -147,7 +147,7 @@ const getTokenInventory = () => async (dispatch, getState) => {
   dispatch({ type: GETTOKEN_INVENTORY_ATTEMPT });
   const piURL = sel.politeiaURL(getState());
   try {
-    const { data } = await pi.getTokenInventory(piURL);
+    const { data } = await pi.getTokenInventory({ piURL });
     const inventory = updateInventoryFromApiData(data);
 
     dispatch({ type: GETTOKEN_INVENTORY_SUCCESS, inventory });
@@ -177,7 +177,7 @@ export const compareInventory = () => async (dispatch, getState) => {
     const oldProposals = sel.proposals(getState());
     const newProposalsList = getDefaultInventory();
 
-    const { data } = await pi.getTokenInventory(piURL);
+    const { data } = await pi.getTokenInventory({ piURL });
     const inventory = updateInventoryFromApiData(data);
 
     let isDifferent = false;
@@ -327,7 +327,7 @@ export const GET_PROPOSAL_BATCH_SUCCESS = "GET_PROPOSAL_BATCH_SUCCESS";
 export const GET_PROPOSAL_BATCH_FAILED = "GET_PROPOSAL_BATCH_FAILED";
 
 const getProposalsBatch = async (tokensBatch, piURL) => {
-  const requestResponse = await pi.getProposalsBatch(piURL, tokensBatch);
+  const requestResponse = await pi.getProposalsBatch({ piURL, tokens: tokensBatch });
   return requestResponse.data;
 };
 
@@ -340,8 +340,10 @@ export const GET_PROPOSALS_VOTESTATUS_BATCH_FAILED =
 
 const getProposalsVotestatusBatch = async (tokensBatch, piURL) => {
   const requestResponse = await pi.getProposalsVoteStatusBatch(
-    piURL,
-    tokensBatch
+    {
+      piURL,
+      tokens: tokensBatch
+    }
   );
   return requestResponse.data;
 };
@@ -504,7 +506,7 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
   let currentVoteChoice;
 
   try {
-    const request = await pi.getProposal(piURL, token);
+    const request = await pi.getProposal({ piURL, token });
 
     const { walletService } = getState().grpc;
     const proposals = getState().governance.proposals;
@@ -545,7 +547,7 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
       hasEligibleTickets =
         walletEligibleTickets && walletEligibleTickets.length > 0;
     } else {
-      const voteReq = await pi.getProposalVotes(piURL, token);
+      const voteReq = await pi.getProposalVotes({ piURL, token });
       const { startvotereply, castvotes } = voteReq.data;
       walletEligibleTickets = await getProposalEligibleTickets(
         proposal.token,
@@ -719,7 +721,7 @@ export const updateVoteChoice = (
     });
 
     // cast vote into pi server
-    await pi.castVotes(piURL, votes);
+    await pi.castVotes({ piURL, votes });
     // cache information locally so we can show them without querying from
     // pi server.
     savePiVote(votesToCache, token, testnet, walletName);
