@@ -17,7 +17,6 @@ const mapStateToProps = selectorMap({
   defaultSpendingAccount: sel.defaultSpendingAccount,
   stakePool: sel.selectedStakePool,
   unconfiguredStakePools: sel.unconfiguredStakePools,
-  currentStakePoolConfigError: sel.currentStakePoolConfigError,
   purchaseTicketsError: sel.purchaseTicketsError,
   purchaseTicketsSuccess: sel.purchaseTicketsSuccess,
   revokeTicketsError: sel.revokeTicketsError,
@@ -30,7 +29,6 @@ const mapStateToProps = selectorMap({
   importScriptSuccess: sel.importScriptSuccess,
   isImportingScript: sel.isImportingScript,
   isPurchasingTickets: sel.isPurchasingTickets,
-  isSavingStakePoolConfig: sel.isSavingStakePoolConfig,
   isTestNet: sel.isTestNet,
   sidebarOnBottom: sel.sidebarOnBottom,
   isWatchingOnly: sel.isWatchingOnly,
@@ -40,7 +38,7 @@ const mapStateToProps = selectorMap({
   unsignedTickets: sel.ticketsList,
   defaultStakePool: sel.defaultStakePool,
   stakePoolListingEnabled: sel.stakePoolListingEnabled,
-  updatedStakePoolList: sel.updatedStakePoolList
+  isAddingCustomStakePool: sel.isAddingCustomStakePool
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -57,7 +55,8 @@ const mapDispatchToProps = (dispatch) =>
       onDismissBackupRedeemScript: spa.dismissBackupRedeemScript,
       onSetStakePoolInfo: spa.setStakePoolInformation,
       onRemoveStakePool: spa.removeStakePoolConfig,
-      discoverAvailableStakepools: spa.discoverAvailableStakepools
+      discoverAvailableStakepools: spa.discoverAvailableVSPs,
+      addCustomStakePool: spa.addCustomStakePool
     },
     dispatch
   );

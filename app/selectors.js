@@ -169,6 +169,10 @@ export const agendaService = get(["grpc", "agendaService"]);
 export const votingService = get(["grpc", "votingService"]);
 export const accountMixerService = get(["grpc", "accountMixerService"]);
 
+// purchase tickets selectors
+
+export const getAvailableVSPs = get(["vsp", "availableVSPs"]);
+
 // TODO review selectors that are not being used anymore.
 export const getBalanceRequestAttempt = get([
   "grpc",
@@ -982,7 +986,6 @@ export const changePassphraseSuccess = get([
   "control",
   "changePassphraseSuccess"
 ]);
-export const updatedStakePoolList = get(["stakepool", "updatedStakePoolList"]);
 export const allowedExternalRequests = get([
   "settings",
   "currentSettings",
@@ -1099,11 +1102,6 @@ const requiredStakepoolAPIVersion = get([
   "requiredStakepoolAPIVersion"
 ]);
 
-export const currentStakePoolConfigError = get([
-  "stakepool",
-  "currentStakePoolConfigError"
-]);
-
 export const purchaseTicketsError = get(["control", "purchaseTicketsError"]);
 export const purchaseTicketsSuccess = get([
   "control",
@@ -1189,11 +1187,6 @@ export const unconfiguredStakePools = createSelector(
 export const defaultStakePool = compose(get(0), configuredStakePools);
 export const selectedStakePool = get(["stakepool", "selectedStakePool"]);
 
-const currentStakePoolConfigRequest = get([
-  "stakepool",
-  "currentStakePoolConfigRequest"
-]);
-
 const purchaseTicketsRequestAttempt = get([
   "control",
   "purchaseTicketsRequestAttempt"
@@ -1206,7 +1199,6 @@ const importScriptRequestAttempt = get([
 
 // LEGACY selectors.
 // Keep them while we still support old version of vsps.
-export const isSavingStakePoolConfig = bool(currentStakePoolConfigRequest);
 export const isAddingCustomStakePool = bool(
   get(["stakePool", "addCustomStakePoolAttempt"])
 );

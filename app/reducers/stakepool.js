@@ -2,7 +2,7 @@ import {
   UPDATESTAKEPOOLCONFIG_ATTEMPT,
   UPDATESTAKEPOOLCONFIG_FAILED,
   UPDATESTAKEPOOLCONFIG_SUCCESS,
-  DISCOVERAVAILABLESTAKEPOOLS_SUCCESS,
+  DISCOVERAVAILABLEVSPS_SUCCESS,
   CHANGESELECTEDSTAKEPOOL,
   REMOVESTAKEPOOLCONFIG,
   DISMISS_BACKUP_MSG_REDEEM_SCRIPT,
@@ -21,35 +21,29 @@ export default function stakepool(state = {}, action) {
     case UPDATESTAKEPOOLCONFIG_ATTEMPT:
       return {
         ...state,
-        currentStakePoolConfigRequest: true,
-        currentStakePoolConfigError: null
+        currentStakePoolConfigRequest: true
       };
     case UPDATESTAKEPOOLCONFIG_FAILED:
       return {
         ...state,
-        currentStakePoolConfigRequest: false,
-        currentStakePoolConfigError: String(action.error)
+        currentStakePoolConfigRequest: false
       };
     case UPDATESTAKEPOOLCONFIG_SUCCESS:
       return {
         ...state,
-        currentStakePoolConfigError: null,
         currentStakePoolConfigRequest: false,
         currentStakePoolConfig: action.currentStakePoolConfig,
-        activeStakePoolConfig: true,
         selectedStakePool: action.selectedStakePool
       };
     case CLEARSTAKEPOOLCONFIG:
       return {
         ...state,
-        activeStakePoolConfig: false,
         currentStakePoolConfig: action.currentStakePoolConfig
       };
-    case DISCOVERAVAILABLESTAKEPOOLS_SUCCESS:
+    case DISCOVERAVAILABLEVSPS_SUCCESS:
       return {
         ...state,
-        currentStakePoolConfig: action.currentStakePoolConfig,
-        updatedStakePoolList: true
+        availableVSPs: action.availableVSPs,
       };
     case CHANGESELECTEDSTAKEPOOL:
       return { ...state, selectedStakePool: action.selectedStakePool };
@@ -58,12 +52,10 @@ export default function stakepool(state = {}, action) {
         ...state,
         currentStakePoolConfig: action.currentStakePoolConfig,
         selectedStakePool: action.selectedStakePool,
-        activeStakePoolConfig: !!action.selectedStakePool
       };
     case WALLET_STAKEPOOL_SETTINGS:
       return {
         ...state,
-        activeStakePoolConfig: action.activeStakePoolConfig,
         selectedStakePool: action.selectedStakePool,
         currentStakePoolConfig: action.currentStakePoolConfig,
         dismissBackupRedeemScript: action.dismissBackupRedeemScript

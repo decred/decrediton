@@ -284,21 +284,29 @@ export const setStakePoolVoteChoices = (stakePool, voteChoices) => (
     );
 };
 
-export const DISCOVERAVAILABLESTAKEPOOLS_SUCCESS =
-  "DISCOVERAVAILABLESTAKEPOOLS_SUCCESS";
-export const discoverAvailableStakepools = () => async (dispatch, getState) => {
-  const vspInfo = await wallet.getStakePoolInfo();
-  // TODO treat error and return config values in that case
-  if (!vspInfo) return null;
-  const { daemon: { walletName } } = getState();
-  const config = getWalletCfg(sel.isTestNet(getState()), walletName);
-  updateStakePoolConfig(config, vspInfo);
-  dispatch({
-    type: DISCOVERAVAILABLESTAKEPOOLS_SUCCESS,
-    currentStakePoolConfig: config.get("stakepools")
-  });
-
-  return vspInfo;
+export const DISCOVERAVAILABLEVSPS_ATTEMPT =
+  "DISCOVERAVAILABLEVSPS_ATTEMPT";
+export const DISCOVERAVAILABLEVSPS_SUCCESS =
+"DISCOVERAVAILABLEVSPS_SUCCESS";
+export const DISCOVERAVAILABLEVSPS_FAILED =
+"DISCOVERAVAILABLEVSPS_FAILED";
+export const discoverAvailableVSPs = () => (dispatch, getState) => {
+  wallet.getStakePoolInfo().then(availableVSPs => {
+    const filteredOpts = availableVSPs.reduce((filtered, vsp) => {
+      if (vsp.APIVersionsSupported.indexOf(3) > -1) {
+        filtered.push(vsp);
+      }
+      return filtered;
+    }, []);
+    dispatch({
+      type: DISCOVERAVAILABLEVSPS_SUCCESS,
+      availableVSPs: filteredOpts
+    });
+  })
+  .catch(error => dispatch({
+    type: DISCOVERAVAILABLEVSPS_FAILED,
+    error
+  }));
 };
 
 export const DISCOVERAVAILABLEVSPS_ATTEMPT = "DISCOVERAVAILABLEVSPS_ATTEMPT";

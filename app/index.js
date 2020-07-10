@@ -69,12 +69,10 @@ const initialState = {
   },
   stakepool: {
     currentStakePoolConfig: null,
-    currentStakePoolConfigRequest: false,
-    currentStakePoolConfigError: null,
-    activeStakePoolConfig: false,
     selectedStakePool: null,
-    updatedStakePoolList: false,
-    addCustomStakePoolAttempt: false
+  },
+  vsp: {
+    availableVSPs: null,
   },
   daemon: {
     networkMatch: false,

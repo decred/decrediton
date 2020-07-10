@@ -21,7 +21,6 @@ export { default as modalVisible } from "./modalVisible";
 export { default as locale } from "./locale";
 export { default as fatalErrorPage } from "./fatalErrorPage";
 export { default as theming } from "./theming";
-export { default as newStakePool } from "./newStakePool";
 export { default as network } from "./network";
 export { default as trezor } from "./trezor";
 export { default as importScript } from "./importScript";

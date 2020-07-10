@@ -1,7 +1,6 @@
 import { Creatable } from "react-select";
 import Select from "react-select";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
-import { newStakePool } from "connectors";
 
 const messages = defineMessages({
   placeholder: {
@@ -106,4 +105,4 @@ StakePoolSelect.defaultProps = {
   clearable: false
 };
 
-export default injectIntl(newStakePool(StakePoolSelect));
+export default injectIntl(StakePoolSelect);

@@ -350,6 +350,10 @@ export const startWallet = (selectedWallet) => (dispatch, getState) =>
       );
       wallet.setPreviousWallet(selectedWallet);
 
+      // TODO clean up this found stakepool
+      // we will not need to save at the config the current stakepool
+      // anymore as now it is not needed to register into one.
+      // we can save a favorite vsp, though.
       const currentStakePoolConfig = walletCfg.get("stakepools");
       let foundStakePoolConfig = false;
       let firstConfiguredStakePool = null;
@@ -371,7 +375,6 @@ export const startWallet = (selectedWallet) => (dispatch, getState) =>
       const currencyDisplay = walletCfg.get("currency_display");
       const balanceToMaintain = walletCfg.get("balancetomaintain");
       const discoverAccountsComplete = walletCfg.get("discoveraccounts");
-      const activeStakePoolConfig = foundStakePoolConfig;
       const selectedStakePool = firstConfiguredStakePool;
       const lastPoliteiaAccessTime = walletCfg.get("politeia_last_access_time");
       const lastPoliteiaAccessBlock = walletCfg.get(
@@ -401,7 +404,6 @@ export const startWallet = (selectedWallet) => (dispatch, getState) =>
       dispatch({ type: WALLET_SETTINGS, currencyDisplay, gapLimit });
       dispatch({
         type: WALLET_STAKEPOOL_SETTINGS,
-        activeStakePoolConfig,
         selectedStakePool,
         currentStakePoolConfig,
         dismissBackupRedeemScript
