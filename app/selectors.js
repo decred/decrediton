@@ -321,7 +321,7 @@ export const ticketNormalizer = createSelector(
   [network, accounts, chainParams, txURLBuilder, blockURLBuilder],
   (network, accounts, chainParams, txURLBuilder, blockURLBuilder) => {
     return (ticket) => {
-      const { txType, status, spender, blockHash, rawTx, isStake } = ticket;
+      const { txType, status, spender, blockHash, rawTx, isStake, timestamp } = ticket;
       // TODO refactor same code to be used in tickets and regular tx normalizers.
       const findAccount = (num) =>
         accounts.find((account) => account.getAccountNumber() === num);
@@ -331,7 +331,7 @@ export const ticketNormalizer = createSelector(
       const txOutputs = [];
       const hasSpender = spender && spender.getHash();
       const isVote = status === VOTED;
-      const isPending = status === UNMINED;
+      const isPending = !timestamp;
       const ticketTx = ticket.ticket;
       const spenderTx = hasSpender ? spender : null;
       const txBlockHash = blockHash

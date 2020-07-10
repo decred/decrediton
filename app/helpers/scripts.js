@@ -277,8 +277,6 @@ export const extractPkScriptAddrs = (version, pkScript, chainParams) => {
       disbuf = disbuf.slice(0, -1);
     }
   }
-  // console.log(pkScript)
-  // console.log(pops)
 
   const asm = disbuf;
 

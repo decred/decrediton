@@ -146,7 +146,6 @@ export const addrFromSStxPkScrCommitment = (pkScript, params) => {
   if (pkScript.length < SStxPKHMinOutSize) {
     return { error: `pkScript must be ${SStxPKHMinOutSize} bytes` };
   }
-
   // The MSB of the encoded amount specifies if the output is P2SH.  Since
   // it is encoded with little endian, the MSB is in final byte in the encoded
   // amount.
