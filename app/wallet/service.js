@@ -25,6 +25,7 @@ import {
 } from "helpers";
 import { extractPkScriptAddrs } from "helpers/scripts";
 import { addrFromSStxPkScrCommitment } from "helpers/tickets";
+import { hexToBytes } from "../helpers/byteActions";
 
 const promisify = (fn) => (...args) =>
   new Promise((ok, fail) =>
@@ -320,6 +321,29 @@ export const decodeRawTransaction = (rawTx, chainParams) => {
 
   return decodedTx;
 };
+
+// getSstxCommitmentAddress gets a sstx commitiment address from a ticket.
+export const getSstxCommitmentAddress = (walletService, chainParams, ticketHash) => new Promise((resolve, reject) => {
+  if (!chainParams) {
+    throw new Error("chainParams can not be undefined");
+  }
+  let address;
+  getTransaction(walletService, ticketHash).then(tx => {
+    const { rawTx } = tx;
+    const bufferRawTx = Buffer.from(hexToBytes(rawTx));
+    const decodedTx = decodeHelper(bufferRawTx);
+    decodedTx.outputs = decodedTx.outputs.map((o, i) => {
+      const decodedScript = extractPkScriptAddrs(0, o.script, chainParams);
+      // if scriptClass equals NullDataTy (which is 0) && i&1 == 1
+      // extract address from SStxPkScrCommitment script.
+      if (decodedScript.scriptClass === 0 && i&1 === 1) {
+        address = addrFromSStxPkScrCommitment(o.script, chainParams);
+        resolve(address);
+      }
+      return;
+    });
+  }).catch(error => reject(error));
+});
 
 // calculateHashFromEncodedTx calculates a hash from a decoded tx prefix.
 export const calculateHashFromDecodedTx = (decodedTx) => {

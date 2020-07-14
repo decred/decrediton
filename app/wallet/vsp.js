@@ -49,6 +49,10 @@ export const getVSPInfo = promisifyReqLogNoData(
   "getVSPInfo",
   api.getVSPInfo
 );
+export const getVSPTicketStatus = promisifyReqLogNoData(
+  "getVSPTicketStatusInfo",
+  api.getTicketStatus
+);
 
 export const getAllVSPs = promisifyReqLogNoData(
   "getAllVspsInfo",

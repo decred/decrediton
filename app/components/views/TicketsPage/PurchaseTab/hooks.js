@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useCallback } from "react";
 
 import * as vspa from "actions/VSPActions";
+import * as ca from "actions/ControlActions.js";
 import * as sel from "selectors";
 
 export const usePurchaseTab = () => {
@@ -24,6 +25,11 @@ export const usePurchaseTab = () => {
       balanceToMaintain,
       vsp)
     ));
+  const onDisableTicketAutoBuyer = useCallback(() => ca.ticketBuyerCancel());
+  const getTicketStatus = useCallback((host, tickethash, passphrase) =>
+    dispatch(vspa.getVSPTicketStatus(host, tickethash, passphrase)),
+    [dispatch]
+  );
 
   return {
     spvMode,
@@ -35,6 +41,8 @@ export const usePurchaseTab = () => {
     discoverAvailableVSPs,
     ticketPrice,
     onEnableTicketAutoBuyer,
-    availableVSPs
+    availableVSPs,
+    onDisableTicketAutoBuyer,
+    getTicketStatus
   };
 };

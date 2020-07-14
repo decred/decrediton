@@ -4,7 +4,7 @@ import querystring from "querystring";
 
 const URL_BASE = "https://api.decred.org";
 
-const GET = (path, apiToken) => {
+const LEGACY_GET = (path, apiToken) => {
   const config = {
     headers: {
       Authorization: "Bearer " + apiToken
@@ -13,13 +13,32 @@ const GET = (path, apiToken) => {
   return axios.get(path, config);
 };
 
-const POST = (path, apiToken, json) => {
+const GET = (path, vspClientSig) => {
+  const config = {
+    headers: {
+      "VSP-CLIENT-SIGNATURE": vspClientSig
+    }
+  };
+  return axios.get(path, config);
+};
+
+const LEGACY_POST = (path, apiToken, json) => {
   const config = {
     headers: {
       Authorization: "Bearer " + apiToken
     }
   };
   return axios.post(path, querystring.stringify(json), config);
+};
+
+const POST = (path, vspClientSig, json) => {
+  const config = {
+    headers: {
+      "VSP-CLIENT-SIGNATURE": vspClientSig
+    }
+  };
+  // This json request is strigfied at the call which is making it.
+  return axios.post(path, json, config);
 };
 
 // stakePoolInfo gets vsp info from vsps v1 and v2.
@@ -114,7 +133,7 @@ export function setVoteChoices({ apiUrl, apiToken, voteChoices }, cb) {
 }
 
 export function getPurchaseInfo({ apiUrl, apiToken }, cb) {
-  GET(apiUrl + "/api/v1/getpurchaseinfo", apiToken)
+  LEGACY_GET(apiUrl + "/api/v1/getpurchaseinfo", apiToken)
     .then(function (response) {
       cb(response, null, apiUrl);
     })
@@ -126,7 +145,7 @@ export function getPurchaseInfo({ apiUrl, apiToken }, cb) {
 // statsFromStakePool grabs stats and config information directly from the
 // stakepool host.
 export function statsFromStakePool(host, cb) {
-  GET(host + "/api/v1/stats")
+  LEGACY_GET(host + "/api/v1/stats")
     .then((resp) => cb(resp, null, host))
     .catch((error) => cb(null, error, host));
 }
@@ -134,6 +153,13 @@ export function statsFromStakePool(host, cb) {
 // getVSPInfo gets the vspinfo.
 export function getVSPInfo(host, cb) {
   GET(host + "/api/vspinfo")
+    .then((resp) => cb(resp, null, host))
+    .catch((error) => cb(null, error, host));
+}
+
+export function getTicketStatus({ host, vspClientSig, request }, cb) {
+  console.log(request);
+  POST(host + "/api/ticketstatus", vspClientSig, request)
     .then((resp) => cb(resp, null, host))
     .catch((error) => cb(null, error, host));
 }
