@@ -106,3 +106,15 @@ export function putUint64(data) {
 
   return arr8;
 }
+
+// base64ToHex gets a base64 str and converts to hex.
+// source: https://stackoverflow.com/questions/39460182/decode-base64-to-hexadecimal-string-with-javascript
+export function base64ToHex(str) {
+  const raw = atob(str);
+  let result = "";
+  for (let i = 0; i < raw.length; i++) {
+    const hex = raw.charCodeAt(i).toString(16);
+    result += (hex.length === 2 ? hex : "0" + hex);
+  }
+  return result;
+}

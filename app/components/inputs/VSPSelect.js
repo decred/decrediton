@@ -3,10 +3,10 @@ import { injectIntl, defineMessages } from "react-intl";
 import { useState } from "react";
 import * as vspa from "actions/VSPActions";
 import { useDispatch } from "react-redux";
+import { base64ToHex } from "helpers";
 
 // TODO Finish building this component and workflow after integrating vspd to
 // dcrwallet.
-
 const messages = defineMessages({
   placeholder: {
     id: "selectStakepool.placeholder",
@@ -26,26 +26,16 @@ function VSPSelect({ className, onChange, options, intl }) {
     const { value } = option;
     if (!value || !value.Host) return;
 
+    // TODO add loading state. (use state machine?)
     const info = await getVSPInfo(value.Host);
-    // TODO store vsp pubkey into config files.
-    console.log(info);
+    // TODO remove this hard coded value, get it dinamically.
+    // depends on https://github.com/decred/dcrwebapi/pull/104
+    let { pubkey } = info;
+    pubkey = base64ToHex(pubkey);
+    const host = "teststakepool.decred.org"
 
-    // if (value.newOption) {
-    //   const formattedHost = value.Host.replace(/\/$/, "");
-    //   addCustomStakePool(formattedHost).then((poolInfo) => {
-    //     if (!poolInfo) return;
-    //     const opt = {
-    //       ...poolInfo,
-    //       label: poolInfo.Host,
-    //       value: poolInfo,
-    //       isVersionValid: true
-    //     };
-    //     onChange(opt);
-    //   });
-    //   return;
-    // }
     setSelected(option);
-    onChange(value);
+    onChange({ pubkey, host });
   };
 
   const getOptions = () => {
@@ -54,6 +44,8 @@ function VSPSelect({ className, onChange, options, intl }) {
       label: vsp.Host,
       value: vsp
     }));
+    // TODO handle add new vsp dinamically
+
     // options.unshift({
     //   label: (
     //     <T id="stakePoolSelect.addNewPromptEmpty" m="Type to add new VSP" />
@@ -69,6 +61,8 @@ function VSPSelect({ className, onChange, options, intl }) {
     className={className}
     onChange={handleOnChange}
     value={selectedOption}
+    // TODO handle add new vsp dinamically
+
     // newOptionCreator={
     //   {
     //     value: { Host: lastInput },

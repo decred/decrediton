@@ -19,7 +19,7 @@ export const usePurchaseTab = () => {
     dispatch
   ]);
   const onEnableTicketAutoBuyer = useCallback((passphrase, account, balanceToMaintain, vsp) =>
-    dispatch(ca.startTicketBuyerV2Attempt(
+    dispatch(ca.startTicketBuyerV3Attempt(
       passphrase,
       account,
       balanceToMaintain,
