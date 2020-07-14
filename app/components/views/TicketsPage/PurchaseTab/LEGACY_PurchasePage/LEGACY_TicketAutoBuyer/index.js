@@ -1,4 +1,3 @@
-import ticketAutoBuyer from "connectors/ticketAutoBuyer";
 import { substruct, compose, eq, get } from "fp";
 import { injectIntl } from "react-intl";
 import TicketAutoBuyerForm from "./Form";
@@ -166,4 +165,4 @@ class TicketAutoBuyer extends React.Component {
   }
 }
 
-export default ticketAutoBuyer(injectIntl(TicketAutoBuyer));
+export default injectIntl(TicketAutoBuyer);

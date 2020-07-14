@@ -9,7 +9,6 @@ export { default as send } from "./send";
 export { default as service } from "./service"; // TODO: hook already exists in hooks/useService.js but connector is still used in class components
 export { default as snackbar } from "./snackbar";
 export { default as stakeInfo } from "./stakeInfo";
-export { default as ticketAutoBuyer } from "./ticketAutoBuyer";
 export { default as ticketsList } from "./ticketsList";
 export { default as ticketsOverview } from "./ticketsOverview";
 export { default as transactionLink } from "./transactionLink";

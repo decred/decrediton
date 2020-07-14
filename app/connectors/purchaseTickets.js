@@ -38,7 +38,14 @@ const mapStateToProps = selectorMap({
   unsignedTickets: sel.ticketsList,
   defaultStakePool: sel.defaultStakePool,
   stakePoolListingEnabled: sel.stakePoolListingEnabled,
-  isAddingCustomStakePool: sel.isAddingCustomStakePool
+  isAddingCustomStakePool: sel.isAddingCustomStakePool,
+
+
+  // legacy ticket auto buyer selectors
+  balanceToMaintain: sel.balanceToMaintain,
+  isTicketAutoBuyerEnabled: sel.isTicketAutoBuyerEnabled,
+  currencyDisplay: sel.currencyDisplay,
+  ticketBuyerSettings: sel.ticketBuyerConfig
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -56,7 +63,15 @@ const mapDispatchToProps = (dispatch) =>
       onSetStakePoolInfo: spa.setStakePoolInformation,
       onRemoveStakePool: spa.removeStakePoolConfig,
       discoverAvailableStakepools: spa.discoverAvailableVSPs,
-      addCustomStakePool: spa.addCustomStakePool
+      addCustomStakePool: spa.addCustomStakePool,
+
+      // legacy ticket auto buyer
+      clearStartAutoBuyerSuccess: ca.clearStartAutoBuyerSuccess,
+      clearStartAutoBuyerError: ca.clearStartAutoBuyerError,
+      clearStopAutoBuyerSuccess: ca.clearStopAutoBuyerSuccess,
+      clearStopAutoBuyerError: ca.clearStopAutoBuyerError,
+      onEnableTicketAutoBuyer: ca.startTicketBuyerV2Attempt,
+      onDisableTicketAutoBuyer: ca.ticketBuyerCancel
     },
     dispatch
   );
