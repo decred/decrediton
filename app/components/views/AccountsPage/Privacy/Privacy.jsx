@@ -1,4 +1,4 @@
-import PrivacyPage from "./Page";
+import PrivacyContent from "./Page";
 import ConfigMixer from "./ConfigMixer";
 import { usePrivacy } from "./hooks";
 
@@ -55,7 +55,7 @@ const Privacy = ({ isCreateAccountDisabled }) => {
   }
 
   return (
-    <PrivacyPage
+    <PrivacyContent
       {...{
         mixedAccountName,
         accountMixerRunning,

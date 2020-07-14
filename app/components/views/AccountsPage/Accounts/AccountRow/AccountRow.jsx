@@ -1,4 +1,4 @@
-import Row from "./Row";
+import Row from "./AccountRowContent";
 import AccountDetails from "./helpers/AccountDetails";
 import RenameAccount from "./helpers/RenameAccount";
 import { useAccountRow } from "./hooks";

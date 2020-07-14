@@ -6,18 +6,16 @@ import PrivacyTab from "./Privacy/Privacy";
 import { PassphraseModalButton } from "buttons";
 import { AddAccountModal } from "modals";
 import { WatchOnlyWarnNotification } from "shared";
-import { useSelector, useDispatch } from "react-redux";
-import * as sel from "selectors";
-import * as ca from "actions/ControlActions";
+import { useAccountsPage } from "./hooks";
 
-function Main() {
-  const dispatch = useDispatch();
-  const privacyEnabled = useSelector(sel.getPrivacyEnabled);
-  const isCreateAccountDisabled = useSelector(sel.isWatchingOnly);
-  const onGetNextAccountAttempt = (passphrase, name) =>
-    dispatch(ca.getNextAccountAttempt(passphrase, name));
+const AccountsPage = () => {
+  const {
+    privacyEnabled,
+    isCreateAccountDisabled,
+    onGetNextAccountAttempt
+  } = useAccountsPage();
 
-  const AccountsListHeader = () => (
+  const AccountsListHeader = React.memo(() => (
     <StandaloneHeader
       title={<T id="accounts.title" m=" Accounts" />}
       description={
@@ -28,7 +26,7 @@ function Main() {
           }
         />
       }
-      iconClassName="accounts"
+      iconClassName={"accounts"}
       actionButton={
         <WatchOnlyWarnNotification isActive={isCreateAccountDisabled}>
           <PassphraseModalButton
@@ -43,7 +41,7 @@ function Main() {
         </WatchOnlyWarnNotification>
       }
     />
-  );
+  ));
 
   return (
     <TabbedPage header={<AccountsListHeader />}>
@@ -63,6 +61,6 @@ function Main() {
       />
     </TabbedPage>
   );
-}
+};
 
-export default Main;
+export default AccountsPage;

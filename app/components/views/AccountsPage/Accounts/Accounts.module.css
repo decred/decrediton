@@ -1,12 +1,10 @@
 .infoFields strong {
   color: var(--input-color);
 }
-
 .isRow {
   display: flex;
   flex-direction: row;
 }
-
 .accountContentTitle {
   display: block;
   height: 44px;
@@ -17,34 +15,28 @@
   color: var(--stroke-color-hovered);
   font-size: 27px;
 }
-
 .accountContentNest {
   padding-top: 1px;
   width: 740px;
 }
-
 .accountContentNest .verticalAccordionArrow {
   right: 0px;
   left: 65px;
   top: 44%;
   transform: rotate(0deg);
 }
-
 .accountContentTitleButtonsArea {
   margin-left: auto;
 }
-
 .walletName {
   margin-right: 5px;
   text-transform: capitalize;
 }
-
 @media screen and (max-width: 1179px) {
   .accountContentNest {
     width: 667px;
   }
 }
-
 .accountRowTopSpendable {
   color: var(--account-text);
   font-size: 13px;
