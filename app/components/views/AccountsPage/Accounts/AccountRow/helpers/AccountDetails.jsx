@@ -60,7 +60,6 @@ const AccountsList = ({
             <Balance flat amount={account.immatureStakeGeneration} />
           </DataLine>
         </div>
-
         <div className={style.accountRowDetailsBottomColumnRight}>
           <div className={style.accountRowDetailsBottomTitle}>
             <T id="accounts.properties" m="Properties" />
@@ -87,7 +86,6 @@ const AccountsList = ({
           </DataLine>
         </div>
       </div>
-
       <div className={classNames(style.accountActions, style.isRow)}>
         {account.accountName !== "imported" && (
           <div className={style.accountActionsPubkey}>

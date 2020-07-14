@@ -19,8 +19,38 @@ export function usePrivacy(validateErrorReducer) {
     mixedStart: null
   });
 
-  return {
+  const getAccountName = useCallback((n) => {
+    const account = accounts.find(({ accountNumber }) => accountNumber === n);
+    return account ? account.accountName : null;
+  }, [accounts]);
+
+  const mixedAccountName = getAccountName(mixedAccount);
+  const changeAccountName = getAccountName(changeAccount);
+
+  const onStartMixerAttempt = useCallback(async (passphrase) => {
+    const request = {
+      passphrase,
+      mixedAccount,
+      changeAccount,
+      mixedAccountBranch,
+      csppServer: `${csppServer}:${csppPort}`
+    };
+    try {
+      await runAccountMixer(request);
+    } catch (error) {
+      dispatchError({ type: "ACCOUNT_MIXER_START", error });
+    }
+  }, [
+    mixedAccount,
+    changeAccount,
+    mixedAccountBranch,
+    csppServer,
+    csppPort,
     runAccountMixer,
+    dispatchError
+  ]);
+
+  return {
     stopAccountMixer,
     accountMixerRunning,
     mixedAccount,
@@ -30,7 +60,9 @@ export function usePrivacy(validateErrorReducer) {
     mixedAccountBranch,
     accounts,
     error,
-    dispatchError
+    mixedAccountName,
+    changeAccountName,
+    onStartMixerAttempt
   };
 };
 

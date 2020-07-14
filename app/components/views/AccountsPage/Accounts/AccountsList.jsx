@@ -5,7 +5,7 @@ import { InfoDocModalButton } from "buttons";
 import { Subtitle } from "shared";
 import style from "./Accounts.module.css";
 
-const subtitleInfoIcon = () => (
+const SubtitleInfoIcon = React.memo(() => (
   <div className={style.accountContentTitleButtonsArea}>
     <InfoDocModalButton
       document="BalanceOverviewInfo"
@@ -14,14 +14,14 @@ const subtitleInfoIcon = () => (
       draggable
     />
   </div>
-);
+));
 
-const subtitleWalletName = ({ walletName }) => (
+const SubtitleWalletName = React.memo(({ walletName }) => (
   <span>
     <span className={style.walletName}>{walletName}</span>
     <T id="accounts.subtitle" m="Accounts" />
   </span>
-);
+));
 
 const AccountsList = ({
   accounts,
@@ -35,37 +35,37 @@ const AccountsList = ({
   walletName,
   hasTickets
 }) => (
-    <>
-      {isLoading ? (
-        <DecredLoading />
-      ) : (
-          <>
-            <Subtitle
-              title={subtitleWalletName({ walletName })}
-              className={style.isRow}
-              children={subtitleInfoIcon()}
+  <>
+    {isLoading ? (
+      <DecredLoading />
+    ) : (
+      <>
+        <Subtitle
+          title={<SubtitleWalletName {...{ walletName }} />}
+          className={style.isRow}
+          children={<SubtitleInfoIcon />}
+        />
+        <div className={style.accountContentNest}>
+          {accounts.map((account) => (
+            <AccountRow
+              {...{
+                hasTickets,
+                account,
+                accountNumDetailsShown,
+                onGetAccountExtendedKey,
+                accountExtendedKey
+              }}
+              key={account.accountName}
+              renameAccount={onRenameAccount}
+              hideAccount={onHideAccount}
+              showAccount={onShowAccount}
             />
-            <div className={style.accountContentNest}>
-              {accounts.map((account) => (
-                <AccountRow
-                  {...{
-                    hasTickets,
-                    account,
-                    accountNumDetailsShown,
-                    onGetAccountExtendedKey,
-                    accountExtendedKey
-                  }}
-                  key={account.accountName}
-                  renameAccount={onRenameAccount}
-                  hideAccount={onHideAccount}
-                  showAccount={onShowAccount}
-                />
-              ))}
-            </div>
-          </>
-        )}
-    </>
-  );
+          ))}
+        </div>
+      </>
+    )}
+  </>
+);
 
 AccountsList.propTypes = {
   accounts: PropTypes.array.isRequired,

@@ -8,14 +8,8 @@ import { AddAccountModal } from "modals";
 import { WatchOnlyWarnNotification } from "shared";
 import { useAccountsPage } from "./hooks";
 
-const AccountsPage = () => {
-  const {
-    privacyEnabled,
-    isCreateAccountDisabled,
-    onGetNextAccountAttempt
-  } = useAccountsPage();
-
-  const AccountsListHeader = React.memo(() => (
+const AccountsListHeader = React.memo(
+  ({ isCreateAccountDisabled, onGetNextAccountAttempt }) => (
     <StandaloneHeader
       title={<T id="accounts.title" m=" Accounts" />}
       description={
@@ -41,10 +35,23 @@ const AccountsPage = () => {
         </WatchOnlyWarnNotification>
       }
     />
-  ));
+  )
+);
+
+const AccountsPage = () => {
+  const {
+    privacyEnabled,
+    isCreateAccountDisabled,
+    onGetNextAccountAttempt
+  } = useAccountsPage();
 
   return (
-    <TabbedPage header={<AccountsListHeader />}>
+    <TabbedPage
+      header={
+        <AccountsListHeader
+          {...{ isCreateAccountDisabled, onGetNextAccountAttempt }}
+        />
+      }>
       <Switch>
         <Redirect from="/accounts" exact to="/accounts/list" />
       </Switch>

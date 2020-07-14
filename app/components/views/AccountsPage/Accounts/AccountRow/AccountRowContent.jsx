@@ -7,24 +7,22 @@ import { classNames } from "pi-ui";
 // source https://github.com/decred/dcrwallet/blob/master/wallet/udb/addressmanager.go#L43
 const isImported = ({ accountNumber }) => accountNumber === Math.pow(2, 31) - 1;
 
-const Header = ({ account, hidden, hasTickets }) => (
+const Header = React.memo(({ account, hidden, hasTickets }) => (
   // hasTickets shows if the account had ticket EVER. When the account had no tickets
   // we deactivate the imported account.
   <div
-    className={
-      classNames(
-        style.accountRowDetailsTop,
-        hidden && style.accountHidden,
-        isImported(account) && style.imported,
-        isImported(account) && !hasTickets && style.disabled
-      )
-    }>
+    className={classNames(
+      style.accountRowDetailsTop,
+      hidden && style.accountHidden,
+      isImported(account) && style.imported,
+      isImported(account) && !hasTickets && style.disabled
+    )}>
     <div className={style.accountRowTopAccountName}>
       {account.accountName === "default" ? (
         <T id="accounts.name.default" m="Primary Account" />
       ) : (
-          account.accountName
-        )}
+        account.accountName
+      )}
       {hidden ? <span>(hidden)</span> : null}
     </div>
     <div className={style.accountRowTopAccountFunds}>
@@ -32,8 +30,8 @@ const Header = ({ account, hidden, hasTickets }) => (
         {isImported(account) ? (
           <Balance amount={account.votingAuthority} />
         ) : (
-            <Balance amount={account.total} />
-          )}
+          <Balance amount={account.total} />
+        )}
       </div>
       <div className={classNames(style.accountRowTopSpendable, style.isRow)}>
         <T id="accounts.row.spendable" m="Spendable:" />
@@ -45,7 +43,7 @@ const Header = ({ account, hidden, hasTickets }) => (
       </div>
     </div>
   </div>
-);
+));
 
 const Row = ({
   account,
@@ -57,22 +55,22 @@ const Row = ({
   isShowingDetails,
   hasTickets
 }) => (
-    <VerticalAccordion
-      header={<Header {...{ account, hidden, hasTickets }} />}
-      disabled={isImported(account) && !hasTickets}
-      onToggleAccordion={onToggleShowDetails}
-      show={isShowingDetails}
-      className={style.accountRowDetailsBottom}>
-      {isShowingDetails ? (
-        isShowingRenameAccount ? (
-          getRenameAccountStyles()
-        ) : (
-            getAccountDetailsStyles()
-          )
+  <VerticalAccordion
+    header={<Header {...{ account, hidden, hasTickets }} />}
+    disabled={isImported(account) && !hasTickets}
+    onToggleAccordion={onToggleShowDetails}
+    show={isShowingDetails}
+    className={style.accountRowDetailsBottom}>
+    {isShowingDetails ? (
+      isShowingRenameAccount ? (
+        getRenameAccountStyles()
       ) : (
-          <></>
-        )}
-    </VerticalAccordion>
-  );
+        getAccountDetailsStyles()
+      )
+    ) : (
+      <></>
+    )}
+  </VerticalAccordion>
+);
 
 export default Row;
