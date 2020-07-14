@@ -1,11 +1,17 @@
 import { LastBlockTime } from "SideBar/MenuBottom/LastBlockTime/LastBlockTime";
 import { mount } from "enzyme";
-import { advanceBy, advanceTo, clear } from "jest-date-mock";
+import { advanceBy, clear } from "jest-date-mock";
 import { IntlProvider, FormattedMessage } from "react-intl";
 import { FormattedRelative } from "shared";
 import locales, { defaultFormats } from "../../../../app/i18n/locales";
+import { render, wait } from "@testing-library/react";
+import "@testing-library/jest-dom/extend-expect";
+import { act } from "react-dom/test-utils";
 
-afterEach(() => clear());
+afterEach(() => {
+  clear();
+  jest.useRealTimers();
+});
 
 // en
 const locale = locales[1];
@@ -47,32 +53,28 @@ test("Old mined block time displays correctly", () => {
   expect(lbt.find(LastBlockTime).find(FormattedRelative).prop("value")).toEqual(targetDate);
 });
 
-test("Block time updates after a minute", () => {
+test("Block time updates after a minute", async () => {
+  const now = new Date().getTime() / 1000;
+  jest.useFakeTimers();
 
-  let callback;
-
-  const testTime = 1539980438;
-
-  // mock as if this was the current new Date()
-  advanceTo(testTime * 1000);
-
-  const lbt = mount(
+  const { getByText, queryByText } = render(
     <Wrapper
-      lastBlockTimestamp={testTime} setTimeout={(cb) => callback = cb} clearTimeout={() => { }}
+      lastBlockTimestamp={now}
+      setTimeout={setTimeout}
+      clearTimeout={() => {}}
     />
   );
 
   // when the block has just been generated, shows the default message
-  expect(lbt.find(LastBlockTime).find(FormattedMessage).prop("defaultMessage")).toBe("< 1 minute ago");
+  expect(getByText("< 1 minute ago")).toBeInTheDocument();
+  // simulate that 61 seconds have passed
+  act(() => {
+    advanceBy(61 * 1000);
+    jest.advanceTimersByTime(61 * 1000);
+  });
 
-  // simulate that 61 seconds have passed and re-render component
-  advanceBy(61 * 1000);
-  callback();
-  lbt.update();
-
-  // check that we now have a <FormattedRelative value={blockDate} />
-  const targetDate = new Date(testTime * 1000);
-  expect(lbt.find(LastBlockTime).find(FormattedRelative).prop("value")).toEqual(targetDate);
+  await wait(() => expect(queryByText("< 1 minute ago")).not.toBeInTheDocument());
+  await wait(() => expect(queryByText("1 minute ago")).toBeInTheDocument());
 });
 
 test("Empty timestamp returns null", () => {
