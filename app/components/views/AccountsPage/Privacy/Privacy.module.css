@@ -1,19 +1,19 @@
-.accounts-select {
+.accountsSelect {
   width: 300px;
 }
-.privacy-item {
+.privacyItem {
   padding: 10px;
 }
-.privacy-item.error {
+.privacyItem.error {
   color: red;
 }
-.button-area {
+.buttonArea {
   margin-left: auto;
 }
-.privacy-row {
+.privacyRow {
   margin-bottom: 10px;
 }
-.privacy-page-wrapper {
+.privacyPageWrapper {
   padding: 20px 40px;
   background-color: var(--background-back-color);
   border-radius: 10px;

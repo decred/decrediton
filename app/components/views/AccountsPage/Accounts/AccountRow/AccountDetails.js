@@ -13,9 +13,9 @@ function isHidable(account) {
 }
 
 const DataLine = ({ children }) => (
-  <div className={style["account-row-details-bottom-spec"]}>
-    <div className={style["account-row-details-bottom-spec-name"]}>{children[0]}</div>
-    <div className={style["account-row-details-bottom-spec-value"]}>{children[1]}</div>
+  <div className={style.accountRowDetailsBottomSpec}>
+    <div className={style.accountRowDetailsBottomSpecName}>{children[0]}</div>
+    <div className={style.accountRowDetailsBottomSpecValue}>{children[1]}</div>
   </div>
 );
 
@@ -30,9 +30,9 @@ const AccountsList = ({
   accountExtendedKey
 }) => (
     <div key={"details" + account.accountNumber}>
-      <div className={style["account-row-details-bottom-columns"]}>
-        <div className={style["account-row-details-bottom-column-left"]}>
-          <div className={style["account-row-details-bottom-title"]}>
+      <div className={style.accountRowDetailsBottomColumns}>
+        <div className={style.accountRowDetailsBottomColumnLeft}>
+          <div className={style.accountRowDetailsBottomTitle}>
             <T id="accounts.balances" m="Balances" />
           </div>
           <DataLine>
@@ -61,8 +61,8 @@ const AccountsList = ({
           </DataLine>
         </div>
 
-        <div className={style["account-row-details-bottom-column-right"]}>
-          <div className={style["account-row-details-bottom-title"]}>
+        <div className={style.accountRowDetailsBottomColumnRight}>
+          <div className={style.accountRowDetailsBottomTitle}>
             <T id="accounts.properties" m="Properties" />
           </div>
           <DataLine>
@@ -88,34 +88,34 @@ const AccountsList = ({
         </div>
       </div>
 
-      <div className={style["account-actions is-row"]}>
+      <div className={classNames(style.accountActions, "is-row")}>
         {account.accountName !== "imported" && (
-          <div className={style["account-actions-pubkey"]}>
-            <div className={style["account-actions-pubkey-label"]}>
+          <div className={style.accountActionsPubkey}>
+            <div className={style.accountActionsPubkeyLabel}>
               <T id="account.pubKey" m="Extended Public Key" />
             </div>
             {showPubKey && accountExtendedKey ? (
               <>
-                <div className={style["account-actions-pubkey-area"]}>
+                <div className={style.accountActionsPubkeyArea}>
                   {accountExtendedKey}
                 </div>
                 <CopyToClipboard
                   textToCopy={accountExtendedKey}
-                  className={style["account-actions-pubkey-clipboard"]}
+                  className={style.accountActionsPubkeyClipboard}
                 />
               </>
             ) : (
-                <SlateGrayButton className={style["account-actions-pubkey-button"]}>
+                <SlateGrayButton className={style.accountActionsPubkeyButton}>
                   <T id="account.Hidden" m="Hidden" />
                 </SlateGrayButton>
               )}
           </div>
         )}
-        <div className={style["account-actions-buttons is-row"]}>
+        <div className={classNames(style.accountActionsButtons, "is-row")}>
           {account.accountName !== "imported" && (
             <Tooltip text={<T id="accounts.rename.tip" m="Rename Account" />}>
               <div
-                className={style["rename-account-button"]}
+                className={style.renameAccountButton}
                 onClick={showRenameAccount}
               />
             </Tooltip>
@@ -130,21 +130,22 @@ const AccountsList = ({
                   )
               }>
               <div
-                className={
-                  classNames(style["reveal-account-pubkey-button"], (showPubKey ? style["hide"] : style["show"]))
-                }
+                className={classNames(
+                  style.revealAccountPubkeyButton,
+                  showPubKey ? style.hide : style.show
+                )}
                 onClick={onTogglePubkey}
               />
             </Tooltip>
           )}
           {isHidable(account) && !hidden && (
             <Tooltip text={<T id="accounts.hide.tip" m="Hide" />}>
-              <div className={style["hide-account-button"]} onClick={hideAccount} />
+              <div className={style.hideAccountButton} onClick={hideAccount} />
             </Tooltip>
           )}
           {hidden && (
             <Tooltip text={<T id="accounts.show.tip" m="Show" />}>
-              <div className={style["show-account-button"]} onClick={showAccount} />
+              <div className={style.showAccountButton} onClick={showAccount} />
             </Tooltip>
           )}
         </div>

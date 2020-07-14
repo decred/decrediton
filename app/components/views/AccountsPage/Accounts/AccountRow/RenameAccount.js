@@ -19,46 +19,46 @@ const RenameAccount = ({
   intl,
   hasFailedAttempt
 }) => (
-  <div
-    className={style["account-row-rename-bottom"]}
-    key={"details" + account.accountNumber}>
-    <div className={style["account-row-rename-bottom-title"]}>
-      <T id="accounts.rename" m="Rename Account" />
-    </div>
-    <div className={style["account-row-rename-bottom-fields"]}>
-      <div className={style["account-row-rename-bottom-label"]}>
-        <T id="accounts.newName" m="New Account Name" />:
+    <div
+      className={style.accountRowRenameBottom}
+      key={"details" + account.accountNumber}>
+      <div className={style.accountRowRenameBottomTitle}>
+        <T id="accounts.rename" m="Rename Account" />
       </div>
-      <div className={style["account-row-rename-bottom-value"]}>
-        <TextInput
-          required
-          autoFocus={true}
-          key={"rename" + account.accountNumber}
-          placeholder={intl.formatMessage(messages.newNamePlaceholder)}
-          maxLength="50"
-          value={renameAccountName}
-          onChange={(e) => updateRenameAccountName(e.target.value)}
-          showErrors={
-            hasFailedAttempt ||
-            (renameAccountName && renameAccountName.length > 50)
-          }
-        />
+      <div className={style.accountRowRenameBottomFields}>
+        <div className={style.accountRowRenameBottomLabel}>
+          <T id="accounts.newName" m="New Account Name" />:
+      </div>
+        <div className={style.accountRowRenameBottomValue}>
+          <TextInput
+            required
+            autoFocus={true}
+            key={"rename" + account.accountNumber}
+            placeholder={intl.formatMessage(messages.newNamePlaceholder)}
+            maxLength="50"
+            value={renameAccountName}
+            onChange={(e) => updateRenameAccountName(e.target.value)}
+            showErrors={
+              hasFailedAttempt ||
+              (renameAccountName && renameAccountName.length > 50)
+            }
+          />
+        </div>
+      </div>
+      <div className={style.accountRowRenameBottomButtons}>
+        <KeyBlueButton
+          className={style.contentConfirmNewAccount}
+          onClick={renameAccount}>
+          <T id="accounts.renameBtn" m="Rename" />
+        </KeyBlueButton>
+        <InvisibleButton
+          className={style.contentConfirmNewAccount}
+          onClick={hideRenameAccount}>
+          <T id="accounts.cancelRenameBtn" m="Cancel" />
+        </InvisibleButton>
       </div>
     </div>
-    <div className={style["account-row-rename-bottom-buttons"]}>
-      <KeyBlueButton
-        className={style["content-confirm-new-account"]}
-        onClick={renameAccount}>
-        <T id="accounts.renameBtn" m="Rename" />
-      </KeyBlueButton>
-      <InvisibleButton
-        className={style["content-confirm-new-account"]}
-        onClick={hideRenameAccount}>
-        <T id="accounts.cancelRenameBtn" m="Cancel" />
-      </InvisibleButton>
-    </div>
-  </div>
-);
+  );
 
 RenameAccount.propTypes = {
   account: PropTypes.object.isRequired,

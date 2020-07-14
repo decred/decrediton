@@ -20,16 +20,16 @@ const PrivacyPage = ({
     <>
       <Subtitle title={<T id="privacy.subtitle" m="Privacy" />} />
 
-      <div className={classNames(style["privacy-page-wrapper"], "is-column")}>
-        <div className={classNames("is-row", "privacy-row")}>
-          <div className={classNames("is-row", "privacy-item")}>
+      <div className={classNames(style.privacyPageWrapper, "is-column")}>
+        <div className={classNames("is-row", style.privacyRow)}>
+          <div className={classNames("is-row", style.privacyItem)}>
             <div className={""}>
               <T id="privacy.mixing.account" m="Mixing Account" />:
           </div>
             <TextInput required disabled value={mixedAccountName} />
           </div>
 
-          <div className={style["privacy-item"]}>
+          <div className={style.privacyItem}>
             <div className={"is-row"}>
               <div className={""}>
                 <T id="privacy.mixing.account.branch" m="Account Branch" />:
@@ -39,8 +39,8 @@ const PrivacyPage = ({
           </div>
         </div>
 
-        <div className={classNames("is-row", style["privacy-row"])}>
-          <div className={classNames("is-row", style["privacy-item"])}>
+        <div className={classNames("is-row", style.privacyRow)}>
+          <div className={classNames("is-row", style.privacyItem)}>
             <div className={""}>
               <T id="privacy.change.account" m="Change Account" />:
           </div>
@@ -48,22 +48,22 @@ const PrivacyPage = ({
           </div>
         </div>
 
-        <div className={classNames("is-row", style["privacy-row"])}>
-          <div className={classNames("is-row", style["privacy-item"])}>
+        <div className={classNames("is-row", style.privacyRow)}>
+          <div className={classNames("is-row", style.privacyItem)}>
             <div className={""}>
               <T id="privacy.mixing.server" m="Shuffle Server" />:
           </div>
             <TextInput required disabled value={csppServer} />
           </div>
 
-          <div className={classNames("is-row", style["privacy-item"])}>
+          <div className={classNames("is-row", style.privacyItem)}>
             <div className={""}>
               <T id="privacy.mixing.server.port" m="Shuffle Port" />:
           </div>
             <TextInput required disabled value={csppPort} />
           </div>
         </div>
-        <div className={classNames(style["button-area"], style["privacy-row"])}>
+        <div className={classNames(style.buttonArea, style.privacyRow)}>
           {accountMixerRunning ? (
             <AutoBuyerSwitch enabled onClick={stopAccountMixer} />
           ) : (
@@ -79,7 +79,7 @@ const PrivacyPage = ({
                 Decrediton must remain running for mixer properly mix inputs.`}
                   />
                 }
-                className={style["start-mixer-button"]}
+                className={style.startMixerButton}
                 onSubmit={(passaphrase) => onStartMixerAttempt(passaphrase)}
               />
             )}

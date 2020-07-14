@@ -3,17 +3,13 @@ import AccountRow from "./AccountRow/AccountRow";
 import { DecredLoading } from "indicators";
 import { InfoDocModalButton } from "buttons";
 import { Subtitle } from "shared";
-<<<<<<< HEAD
-import style from "../AccountsPage.module.css";
-=======
 import style from "./Accounts.module.css";
->>>>>>> a5142a4d... Create Accounts.module.css
 
 const subtitleInfoIcon = () => (
-  <div className={style["account-content-title-buttons-area"]}>
+  <div className={style.accountContentTitleButtonsArea}>
     <InfoDocModalButton
       document="BalanceOverviewInfo"
-      modalClassName={style.infoFields}
+      modalClassName={style.infoModalFields}
       double
       draggable
     />
@@ -22,7 +18,7 @@ const subtitleInfoIcon = () => (
 
 const subtitleWalletName = ({ walletName }) => (
   <span>
-    <span className={style["wallet-name"]}>{walletName}</span>
+    <span className={style.walletName}>{walletName}</span>
     <T id="accounts.subtitle" m="Accounts" />
   </span>
 );
@@ -39,37 +35,37 @@ const AccountsList = ({
   walletName,
   hasTickets
 }) => (
-  <>
-    {isLoading ? (
-      <DecredLoading />
-    ) : (
-      <>
-        <Subtitle
-          title={subtitleWalletName({ walletName })}
-          className={"is-row"}
-          children={subtitleInfoIcon()}
-        />
-        <div className={style["account-content-nest"]}>
-          {accounts.map((account) => (
-            <AccountRow
-              {...{
-                hasTickets,
-                account,
-                accountNumDetailsShown,
-                onGetAccountExtendedKey,
-                accountExtendedKey
-              }}
-              key={account.accountName}
-              renameAccount={onRenameAccount}
-              hideAccount={onHideAccount}
-              showAccount={onShowAccount}
+    <>
+      {isLoading ? (
+        <DecredLoading />
+      ) : (
+          <>
+            <Subtitle
+              title={subtitleWalletName({ walletName })}
+              className={"is-row"}
+              children={subtitleInfoIcon()}
             />
-          ))}
-        </div>
-      </>
-    )}
-  </>
-);
+            <div className={style.accountContentNest}>
+              {accounts.map((account) => (
+                <AccountRow
+                  {...{
+                    hasTickets,
+                    account,
+                    accountNumDetailsShown,
+                    onGetAccountExtendedKey,
+                    accountExtendedKey
+                  }}
+                  key={account.accountName}
+                  renameAccount={onRenameAccount}
+                  hideAccount={onHideAccount}
+                  showAccount={onShowAccount}
+                />
+              ))}
+            </div>
+          </>
+        )}
+    </>
+  );
 
 AccountsList.propTypes = {
   accounts: PropTypes.array.isRequired,

@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { usePrevious } from "helpers";
+import { useIntl } from "react-intl";
 
 export function useAccountRow(
   account,
@@ -16,6 +17,8 @@ export function useAccountRow(
   const [hasFailedAttempt, setHasFailedAttempt] = useState(false);
   const [showPubKey, setShowPubKey] = useState(false);
   const [isShowingDetails, setIsShowingDetails] = useState(false);
+
+  const intl = useIntl();
 
   // const previousAccount = usePrevious(account);
   const previousAccountNumDetailsShown = usePrevious(accountNumDetailsShown);
@@ -95,6 +98,7 @@ export function useAccountRow(
     showAccountCallback,
     hideAccountCallback,
     onTogglePubkey,
-    onToggleShowDetails
+    onToggleShowDetails,
+    intl
   };
 }

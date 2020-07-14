@@ -6,6 +6,8 @@ import { MIXED_ACCOUNT, CHANGE_ACCOUNT } from "constants";
 import { useState, useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import * as amc from "actions/AccountMixerActions";
+import { classNames } from "pi-ui";
+import style from "./Privacy.module.css";
 
 function ConfigMixer({ isCreateAccountDisabled, accounts }) {
   const dispatch = useDispatch();
@@ -43,7 +45,7 @@ function ConfigMixer({ isCreateAccountDisabled, accounts }) {
       <Subtitle
         title={<T id="privacy.config.subtitle" m="Privacy Configuration" />}
       />
-      <div className="privacy-page-wrapper is-column">
+      <div className={classNames(style.privacyPageWrapper, "is-column")}>
         {areAccountsAvailable ? (
           <div>
             <div>

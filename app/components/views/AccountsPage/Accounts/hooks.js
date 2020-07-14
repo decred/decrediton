@@ -15,10 +15,10 @@ export function useAccounts() {
 
   const dispatch = useDispatch();
 
-  const onRenameAccount = useCallback(() => dispach(ca.renameAccountAttempt()), [dispatch]);
-  const onHideAccount = useCallback(() => dispach(cla.hideAccount()), [dispatch]);
-  const onShowAccount = useCallback(() => dispach(cla.showAccount()), [dispatch]);
-  const onGetAccountExtendedKey = useCallback(() => dispach(ca.getAccountExtendedKeyAttempt()), [dispatch]);
+  const onRenameAccount = useCallback(() => dispatch(ca.renameAccountAttempt()), [dispatch]);
+  const onHideAccount = useCallback(() => dispatch(cla.hideAccount()), [dispatch]);
+  const onShowAccount = useCallback(() => dispatch(cla.showAccount()), [dispatch]);
+  const onGetAccountExtendedKey = useCallback(() => dispatch(ca.getAccountExtendedKeyAttempt()), [dispatch]);
 
   return {
     walletService,
@@ -32,5 +32,5 @@ export function useAccounts() {
     onHideAccount,
     onShowAccount,
     onGetAccountExtendedKey
-  }
+  };
 }

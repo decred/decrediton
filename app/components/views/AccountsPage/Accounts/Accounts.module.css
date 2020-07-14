@@ -1,4 +1,4 @@
-.account-content-title {
+.accountContentTitle {
   display: block;
   height: 44px;
   margin-right: auto;
@@ -9,51 +9,51 @@
   font-size: 27px;
 }
 
-.account-content-nest {
+.accountContentNest {
   padding-top: 1px;
   width: 740px;
 }
 
-.account-content-nest .vertical-accordion-arrow {
+.accountContentNest .verticalAccordionArrow {
   right: 0px;
   left: 65px;
   top: 44%;
   transform: rotate(0deg);
 }
 
-.account-content-title-buttons-area {
+.accountContentTitleButtonsArea {
   margin-left: auto;
 }
 
-.wallet-name {
+.walletName {
   margin-right: 5px;
   text-transform: capitalize;
 }
 
 @media screen and (max-width: 1179px) {
-  .account-content-nest {
+  .accountContentNest {
     width: 667px;
   }
 }
 
-.account-row-top-spendable {
+.accountRowTopSpendable {
   color: var(--account-text);
   font-size: 13px;
 }
-.account-row-top-spendable-value {
+.accountRowTopSpendable-value {
   color: var(--tutorial-header);
   margin-left: 5px;
 }
-.account-row-top-account-name {
+.accountRowTopAccountName {
   color: var(--tutorial-header);
   font-size: 19px;
 }
-.account-row-top-account-funds {
+.accountRowTopAccountFunds {
   color: var(--tutorial-header);
   font-size: 19px;
   text-align: right;
 }
-.account-row-details-top {
+.accountRowDetailsTop {
   cursor: pointer;
   padding: 21px 30px 21px 90px;
   display: flex;
@@ -66,22 +66,22 @@
   background-position: 15px center;
   border-top: 1px solid var(--background-container-hover);
 }
-.account-row-details-top.imported {
+.accountRowDetailsTop.imported {
   background-image: var(--accounts-imported);
 }
-.account-row-details-top:hover {
+.accountRowDetailsTop:hover {
   background-color: var(--background-container-hover);
 }
-.account-row-details-top:hover.disabled {
+.accountRowDetailsTop:hover.disabled {
   background-color: var(--disabled-background-color);
 }
-.account-row-details-bottom {
+.accountRowDetailsBottom {
   background-color: var(--background-back-color);
 }
-.account-row-details-bottom.active {
+.accountRowDetailsBottom.active {
   background-color: var(--sidebar-color);
 }
-.account-row-details-bottom-columns {
+.accountRowDetailsBottomColumns {
   width: 100%;
   color: var(--account-text);
   margin-bottom: 20px;
@@ -89,54 +89,54 @@
   justify-content: space-between;
   flex-wrap: wrap;
 }
-.account-row-details-bottom-column-left, .account-row-details-bottom-column-right {
+.accountRowDetailsBottomColumnLeft, .accountRowDetailsBottomColumnRight {
   margin-top: 15px;
 }
-.account-row-details-bottom-title {
+.accountRowDetailsBottomTitle {
   font-size: 19px;
   text-align: right;
   padding-right: 200px;
   margin-bottom: 10px;
 }
-.account-row-rename-bottom-title {
+.accountRowRenameBottomTitle {
   font-size: 19px;
 }
-.account-row-details-bottom-spec {
+.accountRowDetailsBottomSpec {
   font-size: 12px;
   margin-bottom: 0.5em;
   display: grid;
   grid-template-columns: 160px 200px;
 }
-.account-row-details-bottom-spec-last {
+.accountRowDetailsBottomSpecLast {
   border-bottom: 1px solid var(--disabled-background-color);
   color: var(--tutorial-header);
   font-size: 12px;
 }
-.account-row-details-bottom-spec-name {
+.accountRowDetailsBottomSpecName {
   text-align: right;
 }
-.account-row-details-bottom-spec-value {
+.accountRowDetailsBottomSpecValue {
   margin-left: 1em;
   text-align: left;
   color: var(--tutorial-header);
 }
-.account-row-rename-bottom {
+.accountRowRenameBottom {
   color: var(--tutorial-header);
   font-size: 12px;
   padding: 14px;
 }
-.account-row-rename-bottom-fields {
+.accountRowRenameBottomFields {
   display: flex;
   margin: 12px 0px;
 }
-.account-row-rename-bottom-value {
+.accountRowRenameBottomValue {
   width: 70%;
   margin-left: 10px;
 }
-.content-confirm-new-account {
+.contentConfirmNewAccount {
   margin-right: 2em;
 }
-.rename-account-button, .show-account-button, .hide-account-button, .reveal-account-pubkey-button {
+.renameAccountButton, .showAccountButton, .hideAccountButton, .revealAccountPubkeyButton {
   border-radius: 5px;
   background-position: 50% 50%;
   background-size: 16px;
@@ -155,45 +155,45 @@
   float: right;
   margin-top: 17px;
 }
-.reveal-account-pubkey-button.show {
+.revealAccountPubkeyButtonShow {
   background-image: var(--show-pubkey-icon);
 }
-.reveal-account-pubkey-button.hide {
+.revealAccountPubkeyButtonHide {
   background-image: var(--hide-pubkey-icon);
 }
-.rename-account-button {
+.renameAccountButton {
   background-image: var(--account-rename-icon);
   background-size: 20px;
 }
-.show-account-button {
+.showAccountButton {
   background-image: var(--show-account-icon);
 }
-.hide-account-button {
+.hideAccountButton {
   background-image: var(--hide-account-icon);
 }
-.rename-account-button:hover, .show-account-button:hover, .hide-account-button:hover {
+.renameAccountButton:hover, .showAccountButton:hover, .hideAccountButton:hover {
   opacity: 0.7;
 }
-.account-actions {
+.accountActions {
   width: 93%;
   margin-left: 20px;
   height: 100px;
   border-top: 1px solid var(--text-toggle-button-border);
 }
-.account-actions-pubkey {
+.accountActionsPubkey {
   display: flex;
   flex-direction: row;
   margin-left: 30px;
   margin-top: 18px;
   width: 88%;
 }
-.account-actions-pubkey .account-actions-pubkey-label {
+.accountActionsPubkey .accountActionsPubkeyLabel {
   font-size: 13px;
   line-height: 17px;
   margin-top: 2px;
   margin-right: 14px;
 }
-.account-actions-pubkey .account-actions-pubkey-button {
+.accountActionsPubkey .accountActionsPubkeyButton {
   height: 15px;
   width: 37px;
   color: var(--input-color-default);
@@ -206,11 +206,11 @@
   transition: all 131ms var(--ease-in-out-quart);
   cursor: auto;
 }
-.account-actions-pubkey .account-actions-pubkey-area {
+.accountActionsPubkey .accountActionsBubkeyArea {
   color: var(--input-color);
   font-size: 13px;
   line-height: 17px;
-  font-weight: 400;
+  font-weight:N00;
   padding: 2px 20px 3px 20px;
   border-radius: 3px;
   background-color: var(--background-copy-color);
@@ -219,18 +219,18 @@
   word-break: break-all;
   transition: all 131ms var(--ease-in-out-quart);
 }
-.account-actions-pubkey .account-actions-pubkey-clipboard {
+.accountActionsPubkey .accountActionsPubkeyClipboard {
   margin-left: 10px;
 }
 .disabled {
   background-color: var(--disabled-background-color);
 }
 @media screen and (max-width: 768px) {
-  .account-actions.is-row {
+  .accountActions.is-row {
     display: flex;
     flex-direction: column;
  }
-  .account-actions-buttons {
+  .accountActionsButtons {
     margin: 0 auto;
  }
 }

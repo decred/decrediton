@@ -1,7 +1,6 @@
 import Row from "./Row";
 import AccountDetails from "./AccountDetails";
 import RenameAccount from "./RenameAccount";
-import { useIntl } from "react-intl";
 import { useAccountRow } from "./hooks";
 
 const AccountRow = ({
@@ -29,7 +28,8 @@ const AccountRow = ({
     showAccountCallback,
     hideAccountCallback,
     onTogglePubkey,
-    onToggleShowDetails
+    onToggleShowDetails,
+    intl
   } = useAccountRow(
     account,
     accountNumDetailsShown,
@@ -38,8 +38,6 @@ const AccountRow = ({
     hideAccount,
     onGetAccountExtendedKey
   );
-
-  const intl = useIntl();
 
   function getRenameAccountStyles() {
     return (

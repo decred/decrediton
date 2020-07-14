@@ -1,6 +1,5 @@
 import AccountsList from "./Page";
 import ErrorScreen from "ErrorScreen";
-import { accountsPage } from "connectors";
 import { useAccounts } from "./hooks";
 
 function AccountsPage() {

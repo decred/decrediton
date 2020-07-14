@@ -13,13 +13,13 @@ const Header = ({ account, hidden, hasTickets }) => (
   <div
     className={
       classNames(
-        style["account-row-details-top"],
-        hidden && style["account-hidden"],
-        isImported(account) && style["imported"],
-        isImported(account) && !hasTickets && style["disabled"]
+        style.accountRowDetailsTop,
+        hidden && style.accountHidden,
+        isImported(account) && style.imported,
+        isImported(account) && !hasTickets && style.disabled
       )
     }>
-    <div className={style["account-row-top-account-name"]}>
+    <div className={style.accountRowTopAccountName}>
       {account.accountName === "default" ? (
         <T id="accounts.name.default" m="Primary Account" />
       ) : (
@@ -27,18 +27,18 @@ const Header = ({ account, hidden, hasTickets }) => (
         )}
       {hidden ? <span>(hidden)</span> : null}
     </div>
-    <div className={style["account-row-top-account-funds"]}>
-      <div className={style["account-row-top-total-value"]}>
+    <div className={style.accountRowTopAccountFunds}>
+      <div className={style.accountRowTopTotalValue}>
         {isImported(account) ? (
           <Balance amount={account.votingAuthority} />
         ) : (
             <Balance amount={account.total} />
           )}
       </div>
-      <div className={classNames(style["account-row-top-spendable"], "is-row")}>
+      <div className={classNames(style.accountRowTopSpendable, "is-row")}>
         <T id="accounts.row.spendable" m="Spendable:" />
         <Balance
-          classNameWrapper={style["account-row-top-spendable-value"]}
+          classNameWrapper={style.accountRowTopSpendableValue}
           flat
           amount={account.spendable}
         />
@@ -62,7 +62,7 @@ const Row = ({
       disabled={isImported(account) && !hasTickets}
       onToggleAccordion={onToggleShowDetails}
       show={isShowingDetails}
-      className={style["account-row-details-bottom"]}>
+      className={style.accountRowDetailsBottom}>
       {isShowingDetails ? (
         isShowingRenameAccount ? (
           getRenameAccountStyles()
