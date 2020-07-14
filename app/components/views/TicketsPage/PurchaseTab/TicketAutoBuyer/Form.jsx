@@ -5,14 +5,13 @@ import { Balance, Subtitle } from "shared";
 
 const TicketAutoBuyerForm = ({
   onStartAutoBuyer,
-  onDisableTicketAutoBuyer,
-  isTicketAutoBuyerEnabled,
+  onStopAutoBuyer,
+  isRunning,
   balanceToMaintain,
   onChangeBalanceToMaintain,
   balanceToMaintainError,
   account,
   changeAccount,
-  configuredStakePools,
   vsp,
   changeVSP,
   availableVSPs
@@ -25,8 +24,8 @@ const TicketAutoBuyerForm = ({
     />
     <div className="stakepool-flex-height-auto-buyer-wrapper">
       <div className="stakepool-auto-buyer-row">
-        {isTicketAutoBuyerEnabled ? (
-          <AutoBuyerSwitch enabled onClick={onDisableTicketAutoBuyer} />
+        {isRunning ? (
+          <AutoBuyerSwitch enabled onClick={onStopAutoBuyer} />
         ) : (
           <PassphraseModalSwitch
             modalTitle={
@@ -81,7 +80,7 @@ const TicketAutoBuyerForm = ({
           <div className="stakepool-autobuyer-input">
             <AccountsSelect
               {...{ account }}
-              disabled={isTicketAutoBuyerEnabled}
+              disabled={isRunning}
               onChange={changeAccount}
               showAccountsButton={false}
               hideSpendable={true}
@@ -95,7 +94,7 @@ const TicketAutoBuyerForm = ({
           <div className="stakepool-autobuyer-input">
             <VSPSelect
               options={availableVSPs}
-              disabled={isTicketAutoBuyerEnabled}
+              disabled={isRunning}
               value={vsp}
               onChange={changeVSP}
             />
@@ -109,7 +108,7 @@ const TicketAutoBuyerForm = ({
           </div>
           <div className="stakepool-autobuyer-input">
             <DcrInput
-              disabled={isTicketAutoBuyerEnabled}
+              disabled={isRunning}
               amount={balanceToMaintain}
               onChangeAmount={onChangeBalanceToMaintain}
               invalid={balanceToMaintainError}

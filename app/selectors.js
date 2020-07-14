@@ -170,8 +170,10 @@ export const votingService = get(["grpc", "votingService"]);
 export const accountMixerService = get(["grpc", "accountMixerService"]);
 
 // purchase tickets selectors
-
 export const getAvailableVSPs = get(["vsp", "availableVSPs"]);
+
+// ticket auto buyer
+export const getTicketAutoBuyerRunning = get(["vsp", "ticketAutoBuyerRunning"]);
 
 // TODO review selectors that are not being used anymore.
 export const getBalanceRequestAttempt = get([
