@@ -12,7 +12,7 @@ function validateErrorReducer(state, action) {
   }
 }
 
-function Privacy({ isCreateAccountDisabled }) {
+const Privacy = ({ isCreateAccountDisabled }) => {
   const {
     runAccountMixer,
     stopAccountMixer,
@@ -69,6 +69,6 @@ function Privacy({ isCreateAccountDisabled }) {
       }}
     />
   );
-}
+};
 
 export default Privacy;

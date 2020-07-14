@@ -2,6 +2,11 @@
   color: var(--input-color);
 }
 
+.isRow {
+  display: flex;
+  flex-direction: row;
+}
+
 .accountContentTitle {
   display: block;
   height: 44px;
@@ -175,7 +180,7 @@
 .hideAccountButton {
   background-image: var(--hide-account-icon);
 }
-.renameAccountButton:hover, .showAccountButton:hover, .hideAccountButton:hover {
+.renameAccountButton:hover, .showAccountButton:hover, .hideAccountButton:hover .revealAccountPubkeyButton:hover {
   opacity: 0.7;
 }
 .accountActions {
@@ -210,7 +215,7 @@
   transition: all 131ms var(--ease-in-out-quart);
   cursor: auto;
 }
-.accountActionsPubkey .accountActionsBubkeyArea {
+.accountActionsPubkey .accountActionsPubkeyArea {
   color: var(--input-color);
   font-size: 13px;
   line-height: 17px;
@@ -230,7 +235,7 @@
   background-color: var(--disabled-background-color);
 }
 @media screen and (max-width: 768px) {
-  .accountActions.is-row {
+  .accountActions.isRow {
     display: flex;
     flex-direction: column;
  }

@@ -1,12 +1,12 @@
 import { FormattedMessage as T } from "react-intl";
 import { Balance, VerticalAccordion } from "shared";
-import "style/AccountRow.less";
 import style from "../Accounts.module.css";
 import { classNames } from "pi-ui";
 
 // default account's number equals 2^31-1.
 // source https://github.com/decred/dcrwallet/blob/master/wallet/udb/addressmanager.go#L43
 const isImported = ({ accountNumber }) => accountNumber === Math.pow(2, 31) - 1;
+
 const Header = ({ account, hidden, hasTickets }) => (
   // hasTickets shows if the account had ticket EVER. When the account had no tickets
   // we deactivate the imported account.
@@ -35,7 +35,7 @@ const Header = ({ account, hidden, hasTickets }) => (
             <Balance amount={account.total} />
           )}
       </div>
-      <div className={classNames(style.accountRowTopSpendable, "is-row")}>
+      <div className={classNames(style.accountRowTopSpendable, style.isRow)}>
         <T id="accounts.row.spendable" m="Spendable:" />
         <Balance
           classNameWrapper={style.accountRowTopSpendableValue}

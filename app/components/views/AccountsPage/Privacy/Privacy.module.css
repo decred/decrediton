@@ -1,3 +1,17 @@
+.isRow {
+  display: flex;
+  flex-direction: row;
+}
+
+.isColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.bold {
+  font-weight: 700;
+}
+
 .accountsSelect {
   width: 300px;
 }

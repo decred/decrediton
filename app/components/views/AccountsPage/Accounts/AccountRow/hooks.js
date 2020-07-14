@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { usePrevious } from "helpers";
+import { usePrevious } from "hooks";
 import { useIntl } from "react-intl";
 
 export function useAccountRow(

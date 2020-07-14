@@ -2,7 +2,7 @@ import AccountsList from "./Page";
 import ErrorScreen from "ErrorScreen";
 import { useAccounts } from "./hooks";
 
-function AccountsPage() {
+const AccountsPage = () => {
   const {
     walletService,
     accounts,
@@ -34,6 +34,6 @@ function AccountsPage() {
         }}
       />
     );
-}
+};
 
 export default AccountsPage;

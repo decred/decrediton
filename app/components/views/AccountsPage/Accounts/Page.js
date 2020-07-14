@@ -42,7 +42,7 @@ const AccountsList = ({
           <>
             <Subtitle
               title={subtitleWalletName({ walletName })}
-              className={"is-row"}
+              className={style.isRow}
               children={subtitleInfoIcon()}
             />
             <div className={style.accountContentNest}>

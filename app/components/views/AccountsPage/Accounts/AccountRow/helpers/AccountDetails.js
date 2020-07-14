@@ -1,7 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
 import { Balance, Tooltip, CopyToClipboard } from "shared";
 import { SlateGrayButton } from "buttons";
-import style from "../Accounts.module.css";
+import style from "../../Accounts.module.css";
 import { classNames } from "pi-ui";
 
 function isHidable(account) {
@@ -88,7 +88,7 @@ const AccountsList = ({
         </div>
       </div>
 
-      <div className={classNames(style.accountActions, "is-row")}>
+      <div className={classNames(style.accountActions, style.isRow)}>
         {account.accountName !== "imported" && (
           <div className={style.accountActionsPubkey}>
             <div className={style.accountActionsPubkeyLabel}>
@@ -111,7 +111,7 @@ const AccountsList = ({
               )}
           </div>
         )}
-        <div className={classNames(style.accountActionsButtons, "is-row")}>
+        <div className={classNames(style.accountActionsButtons, style.isRow)}>
           {account.accountName !== "imported" && (
             <Tooltip text={<T id="accounts.rename.tip" m="Rename Account" />}>
               <div
@@ -132,7 +132,7 @@ const AccountsList = ({
               <div
                 className={classNames(
                   style.revealAccountPubkeyButton,
-                  showPubKey ? style.hide : style.show
+                  showPubKey ? style.revealAccountPubkeyButtonHide : style.revealAccountPubkeyButtonShow
                 )}
                 onClick={onTogglePubkey}
               />

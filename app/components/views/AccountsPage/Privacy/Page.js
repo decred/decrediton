@@ -2,8 +2,8 @@ import { FormattedMessage as T } from "react-intl";
 import { TextInput, NumericInput } from "inputs";
 import { Subtitle } from "shared";
 import { PassphraseModalSwitch, AutoBuyerSwitch } from "buttons";
-import { classNames } from "pi-ui";
 import "style/Privacy.less";
+import { classNames } from "pi-ui";
 import style from "./Privacy.module.css";
 
 const PrivacyPage = ({
@@ -21,8 +21,8 @@ const PrivacyPage = ({
       <Subtitle title={<T id="privacy.subtitle" m="Privacy" />} />
 
       <div className={classNames(style.privacyPageWrapper, "is-column")}>
-        <div className={classNames("is-row", style.privacyRow)}>
-          <div className={classNames("is-row", style.privacyItem)}>
+        <div className={classNames(style.isRow, style.privacyRow)}>
+          <div className={classNames(style.isRow, style.privacyItem)}>
             <div className={""}>
               <T id="privacy.mixing.account" m="Mixing Account" />:
           </div>
@@ -30,7 +30,7 @@ const PrivacyPage = ({
           </div>
 
           <div className={style.privacyItem}>
-            <div className={"is-row"}>
+            <div className={style.isRow}>
               <div className={""}>
                 <T id="privacy.mixing.account.branch" m="Account Branch" />:
             </div>
@@ -39,8 +39,8 @@ const PrivacyPage = ({
           </div>
         </div>
 
-        <div className={classNames("is-row", style.privacyRow)}>
-          <div className={classNames("is-row", style.privacyItem)}>
+        <div className={classNames(style.isRow, style.privacyRow)}>
+          <div className={classNames(style.isRow, style.privacyItem)}>
             <div className={""}>
               <T id="privacy.change.account" m="Change Account" />:
           </div>
@@ -48,15 +48,15 @@ const PrivacyPage = ({
           </div>
         </div>
 
-        <div className={classNames("is-row", style.privacyRow)}>
-          <div className={classNames("is-row", style.privacyItem)}>
+        <div className={classNames(style.isRow, style.privacyRow)}>
+          <div className={classNames(style.isRow, style.privacyItem)}>
             <div className={""}>
               <T id="privacy.mixing.server" m="Shuffle Server" />:
           </div>
             <TextInput required disabled value={csppServer} />
           </div>
 
-          <div className={classNames("is-row", style.privacyItem)}>
+          <div className={classNames(style.isRow, style.privacyItem)}>
             <div className={""}>
               <T id="privacy.mixing.server.port" m="Shuffle Port" />:
           </div>

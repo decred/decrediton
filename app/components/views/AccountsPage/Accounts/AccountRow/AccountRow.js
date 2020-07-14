@@ -1,6 +1,6 @@
 import Row from "./Row";
-import AccountDetails from "./AccountDetails";
-import RenameAccount from "./RenameAccount";
+import AccountDetails from "./helpers/AccountDetails";
+import RenameAccount from "./helpers/RenameAccount";
 import { useAccountRow } from "./hooks";
 
 const AccountRow = ({
@@ -39,38 +39,32 @@ const AccountRow = ({
     onGetAccountExtendedKey
   );
 
-  function getRenameAccountStyles() {
-    return (
-      <RenameAccount
-        {...{
-          account,
-          updateRenameAccountName,
-          renameAccountName,
-          renameAccount: renameAccountCallback,
-          hideRenameAccount,
-          intl,
-          hasFailedAttempt
-        }}
-      />
-    );
-  }
+  const getRenameAccountStyles = () => (
+    <RenameAccount
+      {...{
+        account,
+        updateRenameAccountName,
+        renameAccountName,
+        renameAccount: renameAccountCallback,
+        hideRenameAccount,
+        intl,
+        hasFailedAttempt
+      }}
+    />);
 
-  function getAccountDetailsStyles() {
-    return (
-      <AccountDetails
-        {...{
-          account,
-          showRenameAccount,
-          hidden,
-          hideAccount: hideAccountCallback,
-          showAccount: showAccountCallback,
-          onTogglePubkey,
-          showPubKey,
-          accountExtendedKey
-        }}
-      />
-    );
-  }
+  const getAccountDetailsStyles = () => (
+    <AccountDetails
+      {...{
+        account,
+        showRenameAccount,
+        hidden,
+        hideAccount: hideAccountCallback,
+        showAccount: showAccountCallback,
+        onTogglePubkey,
+        showPubKey,
+        accountExtendedKey
+      }}
+    />);
 
   return (
     <Row
