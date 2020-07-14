@@ -43,7 +43,7 @@ export default function stakepool(state = {}, action) {
     case DISCOVERAVAILABLEVSPS_SUCCESS:
       return {
         ...state,
-        availableVSPs: action.availableVSPs,
+        availableVSPs: action.availableVSPs
       };
     case CHANGESELECTEDSTAKEPOOL:
       return { ...state, selectedStakePool: action.selectedStakePool };
@@ -51,7 +51,7 @@ export default function stakepool(state = {}, action) {
       return {
         ...state,
         currentStakePoolConfig: action.currentStakePoolConfig,
-        selectedStakePool: action.selectedStakePool,
+        selectedStakePool: action.selectedStakePool
       };
     case WALLET_STAKEPOOL_SETTINGS:
       return {

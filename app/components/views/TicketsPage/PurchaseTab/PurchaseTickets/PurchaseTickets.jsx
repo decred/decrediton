@@ -3,7 +3,7 @@ import { PurchasePage } from "./Page";
 import {
   usePurchaseTab
 } from "../hooks";
-import { useMountEffect } from "hooks"
+import { useMountEffect } from "hooks";
 
 const Tickets = ({ toggleIsLegacy }) => {
   const {

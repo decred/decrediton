@@ -28,7 +28,7 @@ export const GETVSPTICKETSTATUS_FAILED = "GETVSPTICKETSTATUS_FAILED";
 export const GETVSPTICKETSTATUS_SUCCESS = "GETVSPTICKETSTATUS_SUCCESS";
 
 // TODO cache signature information, so we can get ticket status without requesting a passphrase.
-export const getVSPTicketStatus = (vsp, tickethash, passphrase) => async (dispatch, getState) => {
+export const getVSPTicketStatus = (vsp, tickethash, passphrase) => async (dispatch) => {
   dispatch({ type: GETVSPTICKETSTATUS_ATTEMPT });
   try {
     const timestamp = Math.trunc(new Date()/1000);
@@ -324,7 +324,7 @@ export const DISCOVERAVAILABLEVSPS_SUCCESS =
 "DISCOVERAVAILABLEVSPS_SUCCESS";
 export const DISCOVERAVAILABLEVSPS_FAILED =
 "DISCOVERAVAILABLEVSPS_FAILED";
-export const discoverAvailableVSPs = () => (dispatch, getState) => {
+export const discoverAvailableVSPs = () => (dispatch) => {
   wallet.getStakePoolInfo().then(availableVSPs => {
     const filteredOpts = availableVSPs.reduce((filtered, vsp) => {
       if (vsp.APIVersionsSupported.indexOf(3) > -1) {

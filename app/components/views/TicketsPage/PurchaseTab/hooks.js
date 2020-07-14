@@ -25,8 +25,13 @@ export const usePurchaseTab = () => {
       account,
       balanceToMaintain,
       vsp)
-    ));
-  const onDisableTicketAutoBuyer = useCallback(() => ca.ticketBuyerCancel());
+    ),
+    [dispatch]
+  );
+  const onDisableTicketAutoBuyer = useCallback(
+    () => dispatch(ca.ticketBuyerCancel()),
+    [dispatch]
+  );
   const getTicketStatus = useCallback((host, tickethash, passphrase) =>
     dispatch(vspa.getVSPTicketStatus(host, tickethash, passphrase)),
     [dispatch]

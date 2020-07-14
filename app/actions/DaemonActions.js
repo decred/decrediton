@@ -355,7 +355,6 @@ export const startWallet = (selectedWallet) => (dispatch, getState) =>
       // anymore as now it is not needed to register into one.
       // we can save a favorite vsp, though.
       const currentStakePoolConfig = walletCfg.get("stakepools");
-      let foundStakePoolConfig = false;
       let firstConfiguredStakePool = null;
       if (currentStakePoolConfig !== undefined) {
         for (let i = 0; i < currentStakePoolConfig.length; i++) {
@@ -363,7 +362,6 @@ export const startWallet = (selectedWallet) => (dispatch, getState) =>
             currentStakePoolConfig[i].ApiKey &&
             currentStakePoolConfig[i].Network == network
           ) {
-            foundStakePoolConfig = true;
             firstConfiguredStakePool = currentStakePoolConfig[i];
             break;
           }

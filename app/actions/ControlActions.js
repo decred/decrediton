@@ -727,8 +727,7 @@ export const startTicketBuyerV2Attempt = (
   passphrase,
   account,
   balanceToMaintain,
-  vspPubkey,
-  vspHost
+  stakepool
 ) => (dispatch, getState) => {
   const request = new RunTicketBuyerRequest();
   request.setBalanceToMaintain(balanceToMaintain);
@@ -736,8 +735,6 @@ export const startTicketBuyerV2Attempt = (
   request.setVotingAccount(account.value);
   request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
   request.setVotingAddress(stakepool.TicketAddress);
-  request.setVspPubkey(vspPubkey);
-  request.setVspHost(vspHost);
   const ticketBuyerConfig = { stakepool, balanceToMaintain, account };
   return new Promise(() => {
     const { ticketBuyerService } = getState().grpc;

@@ -109,7 +109,7 @@ export function allStakePoolStats(cb) {
 }
 
 export function setStakePoolAddress({ apiUrl, apiToken, pKAddress }, cb) {
-  POST(apiUrl + "/api/v1/address", apiToken, {
+  LEGACY_POST(apiUrl + "/api/v1/address", apiToken, {
     UserPubKeyAddr: pKAddress
   })
     .then(function (response) {
@@ -121,7 +121,7 @@ export function setStakePoolAddress({ apiUrl, apiToken, pKAddress }, cb) {
 }
 
 export function setVoteChoices({ apiUrl, apiToken, voteChoices }, cb) {
-  POST(apiUrl + "/api/v2/voting", apiToken, {
+  LEGACY_POST(apiUrl + "/api/v2/voting", apiToken, {
     VoteBits: voteChoices.toString()
   })
     .then(function (response) {
