@@ -26050,7 +26050,9 @@ proto.walletrpc.RunTicketBuyerRequest.toObject = function(includeInstance, msg) 
     balanceToMaintain: jspb.Message.getFieldWithDefault(msg, 4, 0),
     votingAddress: jspb.Message.getFieldWithDefault(msg, 5, ""),
     poolAddress: jspb.Message.getFieldWithDefault(msg, 6, ""),
-    poolFees: +jspb.Message.getFieldWithDefault(msg, 7, 0.0)
+    poolFees: +jspb.Message.getFieldWithDefault(msg, 7, 0.0),
+    vspHost: jspb.Message.getFieldWithDefault(msg, 8, ""),
+    vspPubkey: jspb.Message.getFieldWithDefault(msg, 9, "")
   };
 
   if (includeInstance) {
@@ -26114,6 +26116,14 @@ proto.walletrpc.RunTicketBuyerRequest.deserializeBinaryFromReader = function(msg
     case 7:
       var value = /** @type {number} */ (reader.readDouble());
       msg.setPoolFees(value);
+      break;
+    case 8:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setVspHost(value);
+      break;
+    case 9:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setVspPubkey(value);
       break;
     default:
       reader.skipField();
@@ -26190,6 +26200,20 @@ proto.walletrpc.RunTicketBuyerRequest.serializeBinaryToWriter = function(message
   if (f !== 0.0) {
     writer.writeDouble(
       7,
+      f
+    );
+  }
+  f = message.getVspHost();
+  if (f.length > 0) {
+    writer.writeString(
+      8,
+      f
+    );
+  }
+  f = message.getVspPubkey();
+  if (f.length > 0) {
+    writer.writeString(
+      9,
       f
     );
   }
@@ -26322,6 +26346,36 @@ proto.walletrpc.RunTicketBuyerRequest.prototype.getPoolFees = function() {
 /** @param {number} value */
 proto.walletrpc.RunTicketBuyerRequest.prototype.setPoolFees = function(value) {
   jspb.Message.setProto3FloatField(this, 7, value);
+};
+
+
+/**
+ * optional string vsp_host = 8;
+ * @return {string}
+ */
+proto.walletrpc.RunTicketBuyerRequest.prototype.getVspHost = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
+};
+
+
+/** @param {string} value */
+proto.walletrpc.RunTicketBuyerRequest.prototype.setVspHost = function(value) {
+  jspb.Message.setProto3StringField(this, 8, value);
+};
+
+
+/**
+ * optional string vsp_pubkey = 9;
+ * @return {string}
+ */
+proto.walletrpc.RunTicketBuyerRequest.prototype.getVspPubkey = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 9, ""));
+};
+
+
+/** @param {string} value */
+proto.walletrpc.RunTicketBuyerRequest.prototype.setVspPubkey = function(value) {
+  jspb.Message.setProto3StringField(this, 9, value);
 };
 
 
