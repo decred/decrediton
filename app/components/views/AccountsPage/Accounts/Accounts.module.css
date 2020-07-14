@@ -1,3 +1,7 @@
+.infoFields strong {
+  color: var(--input-color);
+}
+
 .accountContentTitle {
   display: block;
   height: 44px;
