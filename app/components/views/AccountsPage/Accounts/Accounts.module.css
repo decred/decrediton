@@ -138,6 +138,9 @@
   margin-right: 2em;
 }
 .renameButton, .showButton, .hideButton, .revealPubkeyButton {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.5em;
   border-radius: 5px;
   background-position: 50% 50%;
   background-size: 16px;
@@ -153,7 +156,6 @@
   line-height: inherit;
   text-decoration: none;
   cursor: pointer;
-  float: right;
   margin-top: 17px;
 }
 .revealPubkeyButtonShow {
