@@ -46,6 +46,7 @@
     "verbose": true,
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga|md)$": "<rootDir>/test/mocks/fileMock.js",
+      "\\.module\\.css$": "identity-obj-proxy",
       "\\.(css|less)$": "<rootDir>/test/mocks/styleMock.js",
       "^grpc$": "<rootDir>/test/mocks/grpcMock.js",
       "^electron$": "<rootDir>/test/mocks/electronMock.js"
@@ -72,10 +73,15 @@
       "<rootDir>/test"
     ],
     "testEnvironment": "jsdom",
-    "moduleFileExtensions": ["js", "json", "jsx"],
-    "collectCoverageFrom": ["<rootDir>/app/**/*.+(js|jsx)"],
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "collectCoverageFrom": [
+      "<rootDir>/app/**/*.+(js|jsx)"
+    ],
     "coverageDirectory": "<rootDir>/coverage",
-    "coveragePathIgnorePatterns":[
+    "coveragePathIgnorePatterns": [
       "<rootDir>/node_modules/",
       "<rootDir>/app/middleware/walletrpc/api_grpc_pb.js",
       "<rootDir>/app/middleware/walletrpc/api_pb.js",
@@ -224,6 +230,7 @@
     "file-loader": "^2.0.0",
     "google-protobuf": "^3.11.2",
     "html-webpack-plugin": "^3.2.0",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^25.1.0",
     "jest-date-mock": "^1.0.8",
     "less": "^3.10.3",
