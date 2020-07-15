@@ -102,11 +102,6 @@ main {
   font-family: var(--font-family-monospace);
 }
 
-.shutdown-text {
-  font-size: 30px;
-  text-align: center;
-}
-
 .error {
   color: var(--error-text-color);
 }
@@ -124,6 +119,13 @@ main {
   display: flex;
   flex-direction: column;
 }
+
+////////////////////////////////////
+//  Animation curvers
+////////////////////////////////////
+
+// Check out standard curves in http://easings.net
+@easeInOutQuart: cubic-bezier(0.77, 0, 0.175, 1);
 
 // Main scroll bar styling
 ::-webkit-scrollbar {
