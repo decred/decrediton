@@ -44,33 +44,44 @@
   },
   "jest": {
     "verbose": true,
-    "rootDir": "test/unit",
     "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga|md)$": "<rootDir>/../mocks/fileMock.js",
-      "\\.(css|less)$": "<rootDir>/../mocks/styleMock.js",
-      "^grpc$": "<rootDir>/../mocks/grpcMock.js",
-      "^electron$": "<rootDir>/../mocks/electronMock.js"
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga|md)$": "<rootDir>/test/mocks/fileMock.js",
+      "\\.(css|less)$": "<rootDir>/test/mocks/styleMock.js",
+      "^grpc$": "<rootDir>/test/mocks/grpcMock.js",
+      "^electron$": "<rootDir>/test/mocks/electronMock.js"
     },
     "transformIgnorePatterns": [
-      "/node_modules/",
-      "app/middleware/walletrpc/api_grpc_pb.js",
-      "app/middleware/walletrpc/api_pb.js",
-      "app/middleware/ln/rpc_grpc_pb.js",
-      "app/middleware/ln/rpc_pb.js",
-      "app/middleware/ln/google/"
+      "<rootDir>/node_modules/",
+      "<rootDir>/app/middleware/walletrpc/api_grpc_pb.js",
+      "<rootDir>/app/middleware/walletrpc/api_pb.js",
+      "<rootDir>/app/middleware/ln/rpc_grpc_pb.js",
+      "<rootDir>/app/middleware/ln/rpc_pb.js",
+      "<rootDir>/app/middleware/ln/google/"
     ],
     "transform": {
       "^.+\\.(js|jsx)?$": "babel-jest"
     },
     "setupFiles": [
-      "<rootDir>/../setup.js"
+      "<rootDir>/test/setup.js"
     ],
     "modulePaths": [
-      "<rootDir>/../../app",
-      "<rootDir>/../../app/components",
-      "<rootDir>/../../node_modules",
-      "<rootDir>/../../app/node_modules",
-      "<rootDir>/../"
+      "<rootDir>/app",
+      "<rootDir>/app/components",
+      "<rootDir>/node_modules",
+      "<rootDir>/app/node_modules",
+      "<rootDir>/test"
+    ],
+    "testEnvironment": "jsdom",
+    "moduleFileExtensions": ["js", "json", "jsx"],
+    "collectCoverageFrom": ["<rootDir>/app/**/*.+(js|jsx)"],
+    "coverageDirectory": "<rootDir>/coverage",
+    "coveragePathIgnorePatterns":[
+      "<rootDir>/node_modules/",
+      "<rootDir>/app/middleware/walletrpc/api_grpc_pb.js",
+      "<rootDir>/app/middleware/walletrpc/api_pb.js",
+      "<rootDir>/app/middleware/ln/rpc_grpc_pb.js",
+      "<rootDir>/app/middleware/ln/rpc_pb.js",
+      "<rootDir>/app/middleware/ln/google/"
     ]
   },
   "build": {
