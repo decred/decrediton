@@ -2,16 +2,6 @@ import PrivacyContent from "./PrivacyContent";
 import ConfigMixer from "./ConfigMixer";
 import { usePrivacy } from "./hooks";
 
-function validateErrorReducer(state, action) {
-  switch (action.type) {
-    case "ACCOUNT_MIXER_START":
-      return {
-        ...state,
-        mixerStart: action.error
-      };
-  }
-}
-
 const Privacy = ({ isCreateAccountDisabled }) => {
   const {
     stopAccountMixer,
@@ -22,11 +12,11 @@ const Privacy = ({ isCreateAccountDisabled }) => {
     csppPort,
     mixedAccountBranch,
     accounts,
-    error,
+    accountMixerError,
     mixedAccountName,
     changeAccountName,
     onStartMixerAttempt
-  } = usePrivacy(validateErrorReducer);
+  } = usePrivacy();
 
   return !mixedAccount && !changeAccount ? (
     <ConfigMixer {...{ isCreateAccountDisabled, accounts }} />
@@ -35,7 +25,7 @@ const Privacy = ({ isCreateAccountDisabled }) => {
       {...{
         mixedAccountName,
         accountMixerRunning,
-        error,
+        accountMixerError,
         csppServer,
         csppPort,
         changeAccountName,

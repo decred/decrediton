@@ -178,6 +178,7 @@ export const getAccountsResponse = get(["grpc", "getAccountsResponse"]);
 export const getNetworkResponse = get(["grpc", "getNetworkResponse"]);
 export const getNetworkError = get(["grpc", "getNetworkError"]);
 export const getAccountMixerRunning = get(["grpc", "accountMixerRunning"]);
+export const getAccountMixerError = get(["grpc", "mixerStreamerError"]);
 
 // accounts is a selector representing accountsList from gRPC response.
 export const accounts = createSelector([getAccountsResponse], (r) =>

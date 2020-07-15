@@ -12,7 +12,7 @@ const PrivacyContent = ({
   changeAccountName,
   csppServer,
   csppPort,
-  error,
+  accountMixerError,
   accountMixerRunning,
   stopAccountMixer,
   onStartMixerAttempt
@@ -79,8 +79,8 @@ const PrivacyContent = ({
           />
         )}
       </div>
-      {error["mixerStart"] && (
-        <div className={style.error}>{error["mixerStart"]}</div>
+      {accountMixerError && (
+        <div className={style.error}>{accountMixerError}</div>
       )}
     </div>
   </>

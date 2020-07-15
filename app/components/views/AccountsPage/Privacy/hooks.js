@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useState, useEffect, useReducer, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { MIXED_ACCOUNT, CHANGE_ACCOUNT } from "constants";
 import * as act from "actions/AccountMixerActions";
 import * as sel from "selectors";
 
-export function usePrivacy(validateErrorReducer) {
+export function usePrivacy() {
   const dispatch = useDispatch();
   const runAccountMixer = useCallback((request) => dispatch(act.runAccountMixer(request)), [dispatch]);
   const stopAccountMixer = useCallback(() => dispatch(act.stopAccountMixer()), [dispatch]);
@@ -15,9 +15,7 @@ export function usePrivacy(validateErrorReducer) {
   const csppPort = useSelector(sel.getCsppPort);
   const mixedAccountBranch = useSelector(sel.getMixedAccountBranch);
   const accounts = useSelector(sel.sortedAccounts);
-  const [error, dispatchError] = useReducer(validateErrorReducer, {
-    mixedStart: null
-  });
+  const accountMixerError = useSelector(sel.getAccountMixerError);
 
   const getAccountName = useCallback((n) => {
     const account = accounts.find(({ accountNumber }) => accountNumber === n);
@@ -35,19 +33,14 @@ export function usePrivacy(validateErrorReducer) {
       mixedAccountBranch,
       csppServer: `${csppServer}:${csppPort}`
     };
-    try {
-      await runAccountMixer(request);
-    } catch (error) {
-      dispatchError({ type: "ACCOUNT_MIXER_START", error });
-    }
+    await runAccountMixer(request);
   }, [
     mixedAccount,
     changeAccount,
     mixedAccountBranch,
     csppServer,
     csppPort,
-    runAccountMixer,
-    dispatchError
+    runAccountMixer
   ]);
 
   return {
@@ -59,7 +52,7 @@ export function usePrivacy(validateErrorReducer) {
     csppPort,
     mixedAccountBranch,
     accounts,
-    error,
+    accountMixerError,
     mixedAccountName,
     changeAccountName,
     onStartMixerAttempt
