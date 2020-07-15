@@ -7,7 +7,9 @@ import styles from "../GetStartedPage/GetStarted.module.css";
 
 const ShutdownPage = () => {
   const { cleanShutdown } = useShutdown();
-  useMountEffect(cleanShutdown);
+  useMountEffect(() => {
+    cleanShutdown();
+  });
 
   return (
     <div className={classNames(styles.pageBody, styles.getstarted)}>
