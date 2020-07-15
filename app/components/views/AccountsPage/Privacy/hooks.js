@@ -17,6 +17,8 @@ export function usePrivacy() {
   const accounts = useSelector(sel.sortedAccounts);
   const accountMixerError = useSelector(sel.getAccountMixerError);
 
+  console.log("AAAAAAAAAAAAAAAAAA", accountMixerError);
+
   const getAccountName = useCallback((n) => {
     const account = accounts.find(({ accountNumber }) => accountNumber === n);
     return account ? account.accountName : null;

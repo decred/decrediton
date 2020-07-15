@@ -39,26 +39,28 @@ export const runAccountMixer = ({
   changeAccount,
   csppServer
 }) => (dispatch, getState) =>
-  new Promise((resolve, reject) => {
-    dispatch({ type: RUNACCOUNTMIXER_ATTEMPT });
-    wallet
-      .runAccountMixerRequest(sel.accountMixerService(getState()), {
-        passphrase,
-        mixedAccount,
-        mixedAccountBranch,
-        changeAccount,
-        csppServer
-      })
-      .then((mixerStreamer) => {
-        mixerStreamer.on("data", () => resolve());
-        mixerStreamer.on("error", (error) => reject(error + ""));
-        mixerStreamer.on("end", (data) => {
-          console.log(data);
-        });
-        dispatch({ type: RUNACCOUNTMIXER_SUCCESS, mixerStreamer });
-      })
-      .catch((error) => dispatch({ error, type: RUNACCOUNTMIXER_FAILED }));
-  });
+    new Promise((resolve) => {
+      dispatch({ type: RUNACCOUNTMIXER_ATTEMPT });
+      wallet
+        .runAccountMixerRequest(sel.accountMixerService(getState()), {
+          passphrase,
+          mixedAccount,
+          mixedAccountBranch,
+          changeAccount,
+          csppServer
+        })
+        .then((mixerStreamer) => {
+          mixerStreamer.on("data", () => resolve());
+          mixerStreamer.on("error", (error) => {
+            dispatch({ error: error + "", type: RUNACCOUNTMIXER_FAILED });
+          });
+          mixerStreamer.on("end", (data) => {
+            console.log(data);
+          });
+          dispatch({ type: RUNACCOUNTMIXER_SUCCESS, mixerStreamer });
+        })
+        .catch((error) => dispatch({ error: error + "", type: RUNACCOUNTMIXER_FAILED }));
+    });
 
 export const STOPMIXER_ATTEMPT = "STOPMIXER_ATTEMPT";
 export const STOPMIXER_FAILED = "STOPMIXER_FAILED";

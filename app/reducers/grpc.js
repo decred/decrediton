@@ -109,10 +109,13 @@ export default function grpc(state = {}, action) {
         mixerStreamer: action.mixerStreamer
       };
     case RUNACCOUNTMIXER_FAILED:
-      return {
-        ...state,
-        mixerStreamerError: action.error
-      };
+      {
+        console.log("BBBBBBBBBBBBBB", action.error)
+        return {
+          ...state,
+          mixerStreamerError: action.error
+        };
+      }
     case STOPMIXER_SUCCESS:
       return {
         ...state,
