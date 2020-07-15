@@ -1,3 +1,6 @@
+.error {
+  color: var(--error-text-color);
+}
 .isRow {
   display: flex;
   flex-direction: row;

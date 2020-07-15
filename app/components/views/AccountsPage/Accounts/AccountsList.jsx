@@ -3,7 +3,7 @@ import AccountRow from "./AccountRow/AccountRow";
 import { DecredLoading } from "indicators";
 import { InfoDocModalButton } from "buttons";
 import {classNames} from "pi-ui";
-import "../../../../style/AccountsPage.less";
+import "style/AccountsPage.less";
 import { Subtitle } from "shared";
 import style from "./Accounts.module.css";
 

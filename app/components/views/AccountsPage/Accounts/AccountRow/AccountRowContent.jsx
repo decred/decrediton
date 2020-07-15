@@ -1,6 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import { Balance, VerticalAccordion } from "shared";
-import "../../../../../style/AccountRow.less";
+import "style/AccountRow.less";
 import style from "../Accounts.module.css";
 import { classNames } from "pi-ui";
 
