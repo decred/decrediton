@@ -1,5 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import { Balance, VerticalAccordion } from "shared";
+import "../../../../../style/AccountRow.less";
 import style from "../Accounts.module.css";
 import { classNames } from "pi-ui";
 
@@ -60,7 +61,8 @@ const Row = ({
     disabled={isImported(account) && !hasTickets}
     onToggleAccordion={onToggleShowDetails}
     show={isShowingDetails}
-    className={style.detailsBottom}>
+    //TODO: encapsulate end provide .active CSS class in shared/VerticalAccordion.jsx
+    className={classNames(style.detailsBottom, "account-row-details-bottom")}>
     {isShowingDetails ? (
       isShowingRenameAccount ? (
         getRenameAccountStyles()

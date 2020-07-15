@@ -19,12 +19,6 @@
   padding-top: 1px;
   width: 740px;
 }
-.contentNest .verticalAccordionArrow {
-  right: 0px;
-  left: 65px;
-  top: 44%;
-  transform: rotate(0deg);
-}
 .contentTitleButtonsArea {
   margin-left: auto;
 }
@@ -78,9 +72,6 @@
 }
 .detailsBottom {
   background-color: var(--background-back-color);
-}
-.detailsBottom.active {
-  background-color: var(--sidebar-color);
 }
 .detailsBottomColumns {
   width: 100%;

@@ -2,6 +2,8 @@ import { FormattedMessage as T } from "react-intl";
 import AccountRow from "./AccountRow/AccountRow";
 import { DecredLoading } from "indicators";
 import { InfoDocModalButton } from "buttons";
+import {classNames} from "pi-ui";
+import "../../../../style/AccountsPage.less";
 import { Subtitle } from "shared";
 import style from "./Accounts.module.css";
 
@@ -45,7 +47,8 @@ const AccountsList = ({
           className={style.isRow}
           children={<SubtitleInfoIcon />}
         />
-        <div className={style.contentNest}>
+        {/* TODO: encapsulate end provide .vertical-accordion-arrow CSS class in shared/VerticalAccordion.jsx */}
+        <div className={classNames(style.contentNest,"account-content-nest")}>
           {accounts.map((account) => (
             <AccountRow
               {...{
