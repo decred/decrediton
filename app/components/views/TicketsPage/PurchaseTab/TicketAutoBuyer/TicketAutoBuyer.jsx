@@ -27,10 +27,10 @@ function TicketAutoBuyer({ intl }) {
   }
 
   // TODO remove this - using to test
-  // useEffect(() => {
-  //   if(!vsp) return;
-  //   getTicketStatus(vsp, "4018343932ae082d7534d405d806242eb6658dde755ffb03a226b92b9de21fec").then(r => console.log(r)).catch(err => console.log(err))
-  // }, [vsp])
+  useEffect(() => {
+    if(!vsp) return;
+    getTicketStatus(vsp, "1bb09f6fa90acf8d4be1dfa3a749bcbbb49ed04d9090bd89edeed39379b85a92").then(r => console.log(r)).catch(err => console.log(err))
+  }, [vsp])
 
 
   return (

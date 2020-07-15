@@ -28,7 +28,7 @@ export const GETVSPTICKETSTATUS_FAILED = "GETVSPTICKETSTATUS_FAILED";
 export const GETVSPTICKETSTATUS_SUCCESS = "GETVSPTICKETSTATUS_SUCCESS";
 
 // TODO cache signature information, so we can get ticket status without requesting a passphrase.
-export const getVSPTicketStatus = (vsp, tickethash, passphrase) => async (dispatch) => {
+export const getVSPTicketStatus = (vsp, tickethash, passphrase="123") => async (dispatch) => {
   dispatch({ type: GETVSPTICKETSTATUS_ATTEMPT });
   try {
     const timestamp = Math.trunc(new Date()/1000);
@@ -37,7 +37,8 @@ export const getVSPTicketStatus = (vsp, tickethash, passphrase) => async (dispat
       tickethash: tickethash
     });
     const signature = await dispatch(getTicketSignature(tickethash, request, passphrase));
-    const host = vsp.Host;
+    // host here needs "http://" or "https://". When sending it to dcrwallet it can not have.
+    const host = "https://teststakepool.decred.org"
     const ticketStatus = await wallet.getVSPTicketStatus({ host, vspClientSig: signature, request });
     dispatch({ type: GETVSPTICKETSTATUS_SUCCESS });
     return ticketStatus;
