@@ -6,7 +6,7 @@ import { Subtitle } from "shared";
 import style from "./Accounts.module.css";
 
 const SubtitleInfoIcon = React.memo(() => (
-  <div className={style.accountContentTitleButtonsArea}>
+  <div className={style.contentTitleButtonsArea}>
     <InfoDocModalButton
       document="BalanceOverviewInfo"
       modalClassName={style.infoFields}
@@ -45,7 +45,7 @@ const AccountsList = ({
           className={style.isRow}
           children={<SubtitleInfoIcon />}
         />
-        <div className={style.accountContentNest}>
+        <div className={style.contentNest}>
           {accounts.map((account) => (
             <AccountRow
               {...{

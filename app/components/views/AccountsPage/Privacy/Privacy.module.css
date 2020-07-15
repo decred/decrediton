@@ -9,22 +9,22 @@
 .bold {
   font-weight: 700;
 }
-.accountsSelect {
+.select {
   width: 300px;
 }
-.privacyItem {
+.item {
   padding: 10px;
 }
-.privacyItem.error {
+.item.error {
   color: red;
 }
-.buttonArea {
+.area {
   margin-left: auto;
 }
-.privacyRow {
+.row {
   margin-bottom: 10px;
 }
-.privacyPageWrapper {
+.pageWrapper {
   padding: 20px 40px;
   background-color: var(--background-back-color);
   border-radius: 10px;

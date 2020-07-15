@@ -7,23 +7,26 @@ import * as cla from "actions/ClientActions";
 export function useAccounts() {
   const walletService = useSelector(sel.walletService);
   const accounts = useSelector(sel.sortedAccounts);
-  const hiddenAccounts = useSelector(sel.hiddenAccounts);
-  const isLoading = useSelector(sel.getNextAccountRequestAttempt) || useSelector(sel.renameAccountRequestAttempt);
+  const isLoading = useSelector(sel.getNextAccountRequestAttempt)
+    || useSelector(sel.renameAccountRequestAttempt);
   const accountExtendedKey = useSelector(sel.accountExtendedKey);
   const walletName = useSelector(sel.getWalletName);
   const hasTickets = useSelector(sel.hasTickets);
 
   const dispatch = useDispatch();
 
-  const onRenameAccount = useCallback(() => dispatch(ca.renameAccountAttempt()), [dispatch]);
-  const onHideAccount = useCallback(() => dispatch(cla.hideAccount()), [dispatch]);
-  const onShowAccount = useCallback(() => dispatch(cla.showAccount()), [dispatch]);
-  const onGetAccountExtendedKey = useCallback(() => dispatch(ca.getAccountExtendedKeyAttempt()), [dispatch]);
+  const onRenameAccount = useCallback((accountNumber, accountName) =>
+    dispatch(ca.renameAccountAttempt(accountNumber, accountName)), [dispatch]);
+  const onHideAccount = useCallback((accountNumber) =>
+    dispatch(cla.hideAccount(accountNumber)), [dispatch]);
+  const onShowAccount = useCallback((accountNumber) =>
+    dispatch(cla.showAccount(accountNumber)), [dispatch]);
+  const onGetAccountExtendedKey = useCallback((accountNumber) =>
+    dispatch(ca.getAccountExtendedKeyAttempt(accountNumber)), [dispatch]);
 
   return {
     walletService,
     accounts,
-    hiddenAccounts,
     isLoading,
     accountExtendedKey,
     walletName,

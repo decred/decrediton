@@ -13,9 +13,9 @@ function isHidable(account) {
 }
 
 const DataLine = ({ children }) => (
-  <div className={style.accountRowDetailsBottomSpec}>
-    <div className={style.accountRowDetailsBottomSpecName}>{children[0]}</div>
-    <div className={style.accountRowDetailsBottomSpecValue}>{children[1]}</div>
+  <div className={style.detailsBottomSpec}>
+    <div className={style.detailsBottomSpecName}>{children[0]}</div>
+    <div className={style.detailsBottomSpecValue}>{children[1]}</div>
   </div>
 );
 
@@ -30,9 +30,9 @@ const AccountsList = ({
   accountExtendedKey
 }) => (
     <div key={"details" + account.accountNumber}>
-      <div className={style.accountRowDetailsBottomColumns}>
-        <div className={style.accountRowDetailsBottomColumnLeft}>
-          <div className={style.accountRowDetailsBottomTitle}>
+      <div className={style.detailsBottomColumns}>
+        <div className={style.detailsBottomColumnLeft}>
+          <div className={style.detailsBottomTitle}>
             <T id="accounts.balances" m="Balances" />
           </div>
           <DataLine>
@@ -60,8 +60,8 @@ const AccountsList = ({
             <Balance flat amount={account.immatureStakeGeneration} />
           </DataLine>
         </div>
-        <div className={style.accountRowDetailsBottomColumnRight}>
-          <div className={style.accountRowDetailsBottomTitle}>
+        <div className={style.detailsBottomColumnRight}>
+          <div className={style.detailsBottomTitle}>
             <T id="accounts.properties" m="Properties" />
           </div>
           <DataLine>
@@ -86,34 +86,34 @@ const AccountsList = ({
           </DataLine>
         </div>
       </div>
-      <div className={classNames(style.accountActions, style.isRow)}>
+      <div className={classNames(style.actions, style.isRow)}>
         {account.accountName !== "imported" && (
-          <div className={style.accountActionsPubkey}>
-            <div className={style.accountActionsPubkeyLabel}>
+          <div className={style.actionsPubkey}>
+            <div className={style.actionsPubkeyLabel}>
               <T id="account.pubKey" m="Extended Public Key" />
             </div>
             {showPubKey && accountExtendedKey ? (
               <>
-                <div className={style.accountActionsPubkeyArea}>
+                <div className={style.actionsPubkeyArea}>
                   {accountExtendedKey}
                 </div>
                 <CopyToClipboard
                   textToCopy={accountExtendedKey}
-                  className={style.accountActionsPubkeyClipboard}
+                  className={style.actionsPubkeyClipboard}
                 />
               </>
             ) : (
-                <SlateGrayButton className={style.accountActionsPubkeyButton}>
+                <SlateGrayButton className={style.actionsPubkeyButton}>
                   <T id="account.Hidden" m="Hidden" />
                 </SlateGrayButton>
               )}
           </div>
         )}
-        <div className={classNames(style.accountActionsButtons, style.isRow)}>
+        <div className={classNames(style.actionsButtons, style.isRow)}>
           {account.accountName !== "imported" && (
             <Tooltip text={<T id="accounts.rename.tip" m="Rename Account" />}>
               <div
-                className={style.renameAccountButton}
+                className={style.renameButton}
                 onClick={showRenameAccount}
               />
             </Tooltip>
@@ -129,8 +129,8 @@ const AccountsList = ({
               }>
               <div
                 className={classNames(
-                  style.revealAccountPubkeyButton,
-                  showPubKey ? style.revealAccountPubkeyButtonHide : style.revealAccountPubkeyButtonShow
+                  style.revealPubkeyButton,
+                  showPubKey ? style.revealPubkeyButtonHide : style.revealPubkeyButtonShow
                 )}
                 onClick={onTogglePubkey}
               />
@@ -138,12 +138,12 @@ const AccountsList = ({
           )}
           {isHidable(account) && !hidden && (
             <Tooltip text={<T id="accounts.hide.tip" m="Hide" />}>
-              <div className={style.hideAccountButton} onClick={hideAccount} />
+              <div className={style.hideButton} onClick={hideAccount} />
             </Tooltip>
           )}
           {hidden && (
             <Tooltip text={<T id="accounts.show.tip" m="Show" />}>
-              <div className={style.showAccountButton} onClick={showAccount} />
+              <div className={style.showButton} onClick={showAccount} />
             </Tooltip>
           )}
         </div>

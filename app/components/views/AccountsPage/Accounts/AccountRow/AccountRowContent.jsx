@@ -12,12 +12,12 @@ const Header = React.memo(({ account, hidden, hasTickets }) => (
   // we deactivate the imported account.
   <div
     className={classNames(
-      style.accountRowDetailsTop,
-      hidden && style.accountHidden,
+      style.detailsTop,
+      hidden && style.hidden,
       isImported(account) && style.imported,
       isImported(account) && !hasTickets && style.disabled
     )}>
-    <div className={style.accountRowTopAccountName}>
+    <div className={style.topName}>
       {account.accountName === "default" ? (
         <T id="accounts.name.default" m="Primary Account" />
       ) : (
@@ -25,18 +25,18 @@ const Header = React.memo(({ account, hidden, hasTickets }) => (
       )}
       {hidden ? <span>(hidden)</span> : null}
     </div>
-    <div className={style.accountRowTopAccountFunds}>
-      <div className={style.accountRowTopTotalValue}>
+    <div className={style.topFunds}>
+      <div className={style.topTotalValue}>
         {isImported(account) ? (
           <Balance amount={account.votingAuthority} />
         ) : (
           <Balance amount={account.total} />
         )}
       </div>
-      <div className={classNames(style.accountRowTopSpendable, style.isRow)}>
+      <div className={classNames(style.topSpendable, style.isRow)}>
         <T id="accounts.row.spendable" m="Spendable:" />
         <Balance
-          classNameWrapper={style.accountRowTopSpendableValue}
+          classNameWrapper={style.topSpendableValue}
           flat
           amount={account.spendable}
         />
@@ -60,7 +60,7 @@ const Row = ({
     disabled={isImported(account) && !hasTickets}
     onToggleAccordion={onToggleShowDetails}
     show={isShowingDetails}
-    className={style.accountRowDetailsBottom}>
+    className={style.detailsBottom}>
     {isShowingDetails ? (
       isShowingRenameAccount ? (
         getRenameAccountStyles()

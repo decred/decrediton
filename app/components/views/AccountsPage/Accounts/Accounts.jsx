@@ -6,7 +6,6 @@ const Accounts = () => {
   const {
     walletService,
     accounts,
-    // hiddenAccounts,
     isLoading,
     accountExtendedKey,
     walletName,

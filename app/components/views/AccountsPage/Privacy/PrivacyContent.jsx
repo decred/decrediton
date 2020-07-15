@@ -19,15 +19,15 @@ const PrivacyContent = ({
 }) => (
   <>
     <Subtitle title={<T id="privacy.subtitle" m="Privacy" />} />
-    <div className={classNames(style.privacyPageWrapper, "is-column")}>
-      <div className={classNames(style.isRow, style.privacyRow)}>
-        <div className={classNames(style.isRow, style.privacyItem)}>
+    <div className={classNames(style.pageWrapper, "is-column")}>
+      <div className={classNames(style.isRow, style.row)}>
+        <div className={classNames(style.isRow, style.item)}>
           <div className={""}>
             <T id="privacy.mixing.account" m="Mixing Account" />:
           </div>
           <TextInput required disabled value={mixedAccountName} />
         </div>
-        <div className={style.privacyItem}>
+        <div className={style.item}>
           <div className={style.isRow}>
             <div className={""}>
               <T id="privacy.mixing.account.branch" m="Account Branch" />:
@@ -36,29 +36,29 @@ const PrivacyContent = ({
           </div>
         </div>
       </div>
-      <div className={classNames(style.isRow, style.privacyRow)}>
-        <div className={classNames(style.isRow, style.privacyItem)}>
+      <div className={classNames(style.isRow, style.row)}>
+        <div className={classNames(style.isRow, style.item)}>
           <div className={""}>
             <T id="privacy.change.account" m="Change Account" />:
           </div>
           <TextInput required disabled value={changeAccountName} />
         </div>
       </div>
-      <div className={classNames(style.isRow, style.privacyRow)}>
-        <div className={classNames(style.isRow, style.privacyItem)}>
+      <div className={classNames(style.isRow, style.row)}>
+        <div className={classNames(style.isRow, style.item)}>
           <div className={""}>
             <T id="privacy.mixing.server" m="Shuffle Server" />:
           </div>
           <TextInput required disabled value={csppServer} />
         </div>
-        <div className={classNames(style.isRow, style.privacyItem)}>
+        <div className={classNames(style.isRow, style.item)}>
           <div className={""}>
             <T id="privacy.mixing.server.port" m="Shuffle Port" />:
           </div>
           <TextInput required disabled value={csppPort} />
         </div>
       </div>
-      <div className={classNames(style.buttonArea, style.privacyRow)}>
+      <div className={classNames(style.buttonArea, style.row)}>
         {accountMixerRunning ? (
           <AutoBuyerSwitch enabled onClick={stopAccountMixer} />
         ) : (

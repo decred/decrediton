@@ -51,7 +51,6 @@ export function useAccountRow(
       setHasFailedAttempt(true);
       return;
     }
-    console.log("AAAAAAAAAAAAAAAAAAAA",renameAccountNumber, renameAccountName);
     renameAccount(renameAccountNumber, renameAccountName);
     setRenameAccountName(null);
     setIsShowingRenameAccount(false);

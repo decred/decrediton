@@ -20,16 +20,16 @@ const RenameAccount = ({
   hasFailedAttempt
 }) => (
     <div
-      className={style.accountRowRenameBottom}
+      className={style.renameBottom}
       key={"details" + account.accountNumber}>
-      <div className={style.accountRowRenameBottomTitle}>
+      <div className={style.renameBottomTitle}>
         <T id="accounts.rename" m="Rename Account" />
       </div>
-      <div className={style.accountRowRenameBottomFields}>
-        <div className={style.accountRowRenameBottomLabel}>
+      <div className={style.renameBottomFields}>
+        <div className={style.renameBottomLabel}>
           <T id="accounts.newName" m="New Account Name" />:
       </div>
-        <div className={style.accountRowRenameBottomValue}>
+        <div className={style.renameBottomValue}>
           <TextInput
             required
             autoFocus={true}
@@ -45,7 +45,7 @@ const RenameAccount = ({
           />
         </div>
       </div>
-      <div className={style.accountRowRenameBottomButtons}>
+      <div className={style.renameBottomButtons}>
         <KeyBlueButton
           className={style.contentConfirmNewAccount}
           onClick={renameAccount}>
