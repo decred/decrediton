@@ -20,22 +20,22 @@ export function useAccountRow(
 
   const intl = useIntl();
 
-  // const previousAccount = usePrevious(account);
+  const previousAccountNumber = usePrevious(account.accountNumber);
   const previousAccountNumDetailsShown = usePrevious(accountNumDetailsShown);
 
   useEffect(() => {
     if (previousAccountNumDetailsShown === accountNumDetailsShown) {
       return;
     }
-    if (account.accountNumber !== accountNumDetailsShown) {
+    if (previousAccountNumber !== accountNumDetailsShown) {
       setIsShowingDetails(false);
     }
-    if (accountNumDetailsShown === account.accountNumber) {
+    if (previousAccountNumDetailsShown === previousAccountNumber) {
       setShowPubKey(false);
     }
   }, [
-    account,
     accountNumDetailsShown,
+    previousAccountNumber,
     previousAccountNumDetailsShown
   ]);
 
