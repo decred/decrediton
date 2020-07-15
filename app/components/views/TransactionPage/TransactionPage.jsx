@@ -43,7 +43,12 @@ function Transaction() {
           // we need to get the input amount from older txs. If it is not
           // a wallet input getAmountFromTxInputs will throw an error, which
           // we ignore.
-          if (!viewedTransaction.isStake) {
+          console.log(viewedTransaction)
+          if (viewedTransaction.isStake) {
+            const getSstxCommitmentAddress = () => {
+
+            }
+          } else {
             try {
               decodedTxWithInputs = await getAmountFromTxInputs(decodedTx);
             } catch (error) {

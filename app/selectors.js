@@ -41,8 +41,7 @@ import {
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_RECEIVED,
   TRANSACTION_DIR_TRANSFERRED,
-  VOTED,
-  UNMINED
+  VOTED
 } from "constants";
 import * as wallet from "wallet";
 
