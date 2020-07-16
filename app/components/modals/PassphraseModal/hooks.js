@@ -15,10 +15,6 @@ function usePassphraseModal(
     setHasFailedAttempt(false);
   }, []);
 
-  useEffect(() => {
-    if (triggerSubmit) onSubmit();
-  }, [triggerSubmit, onSubmit]);
-
   const onCancelModalCallback = useCallback(() => {
     resetState();
     onCancelModal && onCancelModal();
@@ -43,6 +39,10 @@ function usePassphraseModal(
     onSubmit(passPhrase);
     resetState();
   }, [passPhrase, validationFailed, isValidCallback, onSubmit, resetState]);
+
+  useEffect(() => {
+    triggerSubmit && onSubmitCallback();
+  }, [triggerSubmit, onSubmitCallback]);
 
   return {
     passPhrase,
