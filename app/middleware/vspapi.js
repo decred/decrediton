@@ -14,11 +14,11 @@ const LEGACY_GET = (path, apiToken) => {
 };
 
 const GET = (path, vspClientSig) => {
-  const config = {
+  const config = vspClientSig ? {
     headers: {
       "VSP-CLIENT-SIGNATURE": vspClientSig
     }
-  };
+  } : {};
   return axios.get(path, config);
 };
 
