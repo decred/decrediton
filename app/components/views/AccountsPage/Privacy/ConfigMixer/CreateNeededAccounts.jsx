@@ -30,7 +30,7 @@ const CreateNeededAccounts = ({
           boldMessage: (
             <span className={style.bold}>
               <T
-                id="privacy.create.undone.message"
+                id="privacy.create.needed.undone.message"
                 m="This action can not be undone"
               />
             </span>
