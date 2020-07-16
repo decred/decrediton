@@ -1,6 +1,6 @@
 import Row from "./AccountRowContent";
-import AccountDetails from "./helpers/AccountDetails";
-import RenameAccount from "./helpers/RenameAccount";
+import AccountDetails from "./AccountDetails";
+import RenameAccount from "./RenameAccount";
 import { useAccountRow } from "./hooks";
 
 const AccountRow = ({

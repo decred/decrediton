@@ -1,5 +1,5 @@
 import PrivacyContent from "./PrivacyContent";
-import ConfigMixer from "./ConfigMixer";
+import ConfigMixer from "./ConfigMixer/ConfigMixer";
 import { usePrivacy } from "./hooks";
 
 const Privacy = ({ isCreateAccountDisabled }) => {

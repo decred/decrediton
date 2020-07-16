@@ -26,11 +26,6 @@
   margin-right: 5px;
   text-transform: capitalize;
 }
-@media screen and (max-width: 1179px) {
-  .contentNest {
-    width: 667px;
-  }
-}
 .topSpendable {
   color: var(--account-text);
   font-size: 13px;
@@ -227,4 +222,9 @@
   .actionsButtons {
     margin: 0 auto;
  }
+}
+@media screen and (max-width: 1179px) {
+  .contentNest {
+    width: 667px;
+  }
 }

@@ -1,13 +1,14 @@
 import { FormattedMessage as T } from "react-intl";
 import { Balance, Tooltip, CopyToClipboard } from "shared";
 import { SlateGrayButton } from "buttons";
-import style from "../../Accounts.module.css";
+import style from "../Accounts.module.css";
 import { classNames } from "pi-ui";
+import { IMPORTED_ACCOUNT, DEFAULT_ACCOUNT } from "constants";
 
 function isHidable(account) {
   return (
-    account.accountName !== "imported" &&
-    account.accountName !== "default" &&
+    account.accountName !== IMPORTED_ACCOUNT &&
+    account.accountName !== DEFAULT_ACCOUNT &&
     !account.total
   );
 }
@@ -87,7 +88,7 @@ const AccountsList = ({
         </div>
       </div>
       <div className={classNames(style.actions, style.isRow)}>
-        {account.accountName !== "imported" && (
+        {account.accountName !== IMPORTED_ACCOUNT && (
           <div className={style.actionsPubkey}>
             <div className={style.actionsPubkeyLabel}>
               <T id="account.pubKey" m="Extended Public Key" />
@@ -110,7 +111,7 @@ const AccountsList = ({
           </div>
         )}
         <div className={classNames(style.actionsButtons, style.isRow)}>
-          {account.accountName !== "imported" && (
+          {account.accountName !== IMPORTED_ACCOUNT && (
             <Tooltip text={<T id="accounts.rename.tip" m="Rename Account" />}>
               <div
                 className={style.renameButton}
@@ -118,7 +119,7 @@ const AccountsList = ({
               />
             </Tooltip>
           )}
-          {account.accountName !== "imported" && (
+          {account.accountName !== IMPORTED_ACCOUNT && (
             <Tooltip
               text={
                 showPubKey ? (

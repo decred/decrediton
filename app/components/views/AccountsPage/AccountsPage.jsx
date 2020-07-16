@@ -8,10 +8,10 @@ import { AddAccountModal } from "modals";
 import { WatchOnlyWarnNotification } from "shared";
 import { useAccountsPage } from "./hooks";
 
-const AccountsListHeader = React.memo(
+const AccountsPageHeader = React.memo(
   ({ isCreateAccountDisabled, onGetNextAccountAttempt }) => (
     <StandaloneHeader
-      title={<T id="accounts.title" m=" Accounts" />}
+      title={<T id="accounts.title" m="Accounts" />}
       description={
         <T
           id="accounts.description"
@@ -48,7 +48,7 @@ const AccountsPage = () => {
   return (
     <TabbedPage
       header={
-        <AccountsListHeader
+        <AccountsPageHeader
           {...{ isCreateAccountDisabled, onGetNextAccountAttempt }}
         />
       }>

@@ -3,6 +3,7 @@ import { Balance, VerticalAccordion } from "shared";
 import "style/AccountRow.less";
 import style from "../Accounts.module.css";
 import { classNames } from "pi-ui";
+import { DEFAULT_ACCOUNT } from "constants";
 
 // default account's number equals 2^31-1.
 // source https://github.com/decred/dcrwallet/blob/master/wallet/udb/addressmanager.go#L43
@@ -19,7 +20,7 @@ const Header = React.memo(({ account, hidden, hasTickets }) => (
       isImported(account) && !hasTickets && style.disabled
     )}>
     <div className={style.topName}>
-      {account.accountName === "default" ? (
+      {account.accountName === DEFAULT_ACCOUNT ? (
         <T id="accounts.name.default" m="Primary Account" />
       ) : (
         account.accountName

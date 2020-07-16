@@ -1,7 +1,7 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { KeyBlueButton, InvisibleButton } from "buttons";
 import { TextInput } from "inputs";
-import style from "../../Accounts.module.css";
+import style from "../Accounts.module.css";
 
 const messages = defineMessages({
   newNamePlaceholder: {

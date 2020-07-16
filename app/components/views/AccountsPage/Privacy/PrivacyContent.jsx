@@ -19,7 +19,7 @@ const PrivacyContent = ({
 }) => (
   <>
     <Subtitle title={<T id="privacy.subtitle" m="Privacy" />} />
-    <div className={classNames(style.pageWrapper, "is-column")}>
+    <div className={classNames(style.pageWrapper, style.isColumn)}>
       <div className={classNames(style.isRow, style.row)}>
         <div className={classNames(style.isRow, style.item)}>
           <div className={""}>
