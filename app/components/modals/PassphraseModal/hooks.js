@@ -41,7 +41,7 @@ function usePassphraseModal(
   }, [passPhrase, validationFailed, isValidCallback, onSubmit, resetState]);
 
   useEffect(() => {
-    if (triggerSubmit) onSubmitCallback();
+    triggerSubmit && onSubmitCallback();
   }, [triggerSubmit, onSubmitCallback]);
 
   return {
