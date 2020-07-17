@@ -152,7 +152,7 @@ export function statsFromStakePool(host, cb) {
 
 // getVSPInfo gets the vspinfo.
 export function getVSPInfo(host, cb) {
-  GET(host + "/api/vspinfo")
+  GET(host + "/api/v3/vspinfo")
     .then((resp) => cb(resp, null, host))
     .catch((error) => cb(null, error, host));
 }

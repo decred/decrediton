@@ -31,7 +31,6 @@ function VSPSelect({ className, onChange, options, intl }) {
     // TODO remove this hard coded value, get it dinamically.
     // depends on https://github.com/decred/dcrwebapi/pull/104
     let { pubkey } = info;
-    pubkey = base64ToHex(pubkey);
     const host = "teststakepool.decred.org";
 
     setSelected(option);

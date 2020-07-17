@@ -164,7 +164,7 @@ export const allowVSPRequests = (stakePoolHost) => {
   const reqType = "stakepool_" + stakePoolHost;
   if (allowedExternalRequests[reqType]) return;
 
-  addAllowedURL(stakePoolHost + "/api/vspinfo");
+  addAllowedURL(stakePoolHost + "/api/v3/vspinfo");
   addAllowedURL(stakePoolHost + "/api/ticketstatus");
 };
 
