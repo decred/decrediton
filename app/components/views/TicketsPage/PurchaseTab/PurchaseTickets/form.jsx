@@ -1,17 +1,7 @@
-import {
-  TicketsCogs,
-  PassphraseModalButton,
-  KeyBlueButton,
-  InvisibleConfirmModalButton
-} from "buttons";
+import { PassphraseModalButton, KeyBlueButton } from "buttons";
 import { AccountsSelect, NumTicketsInput, VSPSelect } from "inputs";
 import { FormattedMessage as T } from "react-intl";
-import {
-  TransitionMotionWrapper,
-  ShowWarning,
-  ExternalLink,
-  Balance
-} from "shared";
+import { Balance } from "shared";
 import styles from "../PurchaseTab.module.css";
 
 import "style/StakePool.less";
@@ -30,7 +20,6 @@ const PurchaseTicketsForm = ({
   isWatchingOnly,
   vspOptions,
   setVSP,
-
   onPurchaseTickets,
   onRevokeTickets
 }) => (

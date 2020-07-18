@@ -43,7 +43,8 @@ export function PurchasePage({
   ticketPrice,
   setVSP,
   isValid,
-  toggleIsLegacy
+  toggleIsLegacy,
+  ...props
 }) {
   return (
     <div className="purchase-ticket-area">
