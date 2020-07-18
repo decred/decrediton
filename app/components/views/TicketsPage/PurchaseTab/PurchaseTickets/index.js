@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { PurchasePage } from "./Page";
-import {
-  usePurchaseTab
-} from "../hooks";
+import { usePurchaseTab } from "../hooks";
 
 const Tickets = ({ toggleIsLegacy }) => {
   const {
@@ -12,12 +10,10 @@ const Tickets = ({ toggleIsLegacy }) => {
     isWatchingOnly,
     discoverAvailableVSPs,
     defaultSpendingAccount,
-    // spendingAccounts,
     ticketPrice
   } = usePurchaseTab();
 
   const [account, setAccount] = useState(defaultSpendingAccount);
-  // const [vsp, setVSP] = useState(null);
   const [numTickets, setNumTickets] = useState(1);
   const [vspOptions, setVSPOptions] = useState(null);
   const [isValid, setIsValid] = useState(false);
@@ -25,7 +21,7 @@ const Tickets = ({ toggleIsLegacy }) => {
   // onChangeNumTickets deals with ticket increment or decrement.
   const onChangeNumTickets = (increment) => {
     if (numTickets === 0 && !increment) return;
-    increment ? setNumTickets(numTickets + 1) : setNumTickets(numTickets -1);
+    increment ? setNumTickets(numTickets + 1) : setNumTickets(numTickets - 1);
   };
 
   useEffect(() => {
@@ -49,7 +45,7 @@ const Tickets = ({ toggleIsLegacy }) => {
       return filteredOpts;
     };
 
-    getAvailableVsps().then(filtered => {
+    getAvailableVsps().then((filtered) => {
       return setVSPOptions(filtered);
     });
   }, [discoverAvailableVSPs]);
@@ -64,22 +60,26 @@ const Tickets = ({ toggleIsLegacy }) => {
     }
   };
 
-  return <PurchasePage {...{
-      spvMode,
-      blocksNumberToNextTicket,
-      sidebarOnBottom,
-      isWatchingOnly,
-      vspOptions,
-      account,
-      numTickets,
-      onChangeNumTickets,
-      setNumTickets,
-      handleOnKeyDown,
-      setAccount,
-      ticketPrice,
-      isValid,
-      toggleIsLegacy
-    }} />;
+  return (
+    <PurchasePage
+      {...{
+        spvMode,
+        blocksNumberToNextTicket,
+        sidebarOnBottom,
+        isWatchingOnly,
+        vspOptions,
+        account,
+        numTickets,
+        onChangeNumTickets,
+        setNumTickets,
+        handleOnKeyDown,
+        setAccount,
+        ticketPrice,
+        isValid,
+        toggleIsLegacy
+      }}
+    />
+  );
 };
 
 export default Tickets;

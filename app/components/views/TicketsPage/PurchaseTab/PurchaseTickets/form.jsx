@@ -32,7 +32,7 @@ const PurchaseTicketsForm = ({
   setVSP,
 
   onPurchaseTickets,
-  onRevokeTickets,
+  onRevokeTickets
 }) => (
   <>
     <div className="purchase-ticket-area-row is-row">
@@ -95,9 +95,7 @@ const PurchaseTicketsForm = ({
       </div>
     </div>
     <div className="stakepool-purchase-ticket-info">
-      <div className="purchase-ticket-action-buttons is-column">
-
-      </div>
+      <div className="purchase-ticket-action-buttons is-column"></div>
       <>{/* ADD VSP INFO HERE */}</>
     </div>
     <div className="stakepool-purchase-ticket-buttons-area">
