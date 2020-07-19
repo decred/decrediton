@@ -1,6 +1,8 @@
 import StatisticsPage from "./Page";
 import { myTicketsCharts } from "connectors";
 
+// xxxx: functional me!
+
 @autobind
 class Statistics extends React.Component {
   constructor(props) {

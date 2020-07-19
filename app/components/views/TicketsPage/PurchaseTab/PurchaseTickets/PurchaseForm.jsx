@@ -85,7 +85,7 @@ const PurchaseTicketsForm = ({
     </div>
     <div className="stakepool-purchase-ticket-info">
       <div className="purchase-ticket-action-buttons is-column"></div>
-      <>{/* ADD VSP INFO HERE */}</>
+      {/* ADD VSP INFO HERE */}
     </div>
     <div className="stakepool-purchase-ticket-buttons-area">
       <PassphraseModalButton

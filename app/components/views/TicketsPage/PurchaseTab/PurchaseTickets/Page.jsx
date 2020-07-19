@@ -1,6 +1,6 @@
 import UnsignedTickets from "../UnsignedTickets";
 import StakeInfo from "../StakeInfo/StakeInfo";
-import PurchaseTickets from "./Form";
+import PurchaseForm from "./PurchaseForm";
 import { ShowWarning, Subtitle } from "shared";
 import { InfoDocModalButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
@@ -64,7 +64,7 @@ export function PurchasePage({
           }
         />
       ) : (
-        <PurchaseTickets
+        <PurchaseForm
           {...{
             ticketPrice,
             setNumTickets,
