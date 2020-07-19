@@ -1,7 +1,7 @@
 import PurchaseTickets from "./LEGACY_PurchaseTickets";
 import TicketAutoBuyer from "./LEGACY_TicketAutoBuyer";
 import { FormattedMessage as T } from "react-intl";
-import StakeInfo from "../StakeInfo";
+import StakeInfo from "../StakeInfo/StakeInfo";
 import { ShowWarning, Subtitle } from "shared";
 import "style/PurchaseTickets.less";
 import { InfoDocModalButton } from "buttons";
@@ -11,8 +11,15 @@ import styles from "../PurchaseTab.module.css";
 const getTitleIcon = ({ toggleIsLegacy }) => (
   <>
     <div className={styles.checkbox}>
-      <div className={styles.label}><T id="purchase.isLegacy.legacy" m="Is Legacy" /></div>
-      <input id="box" type="checkbox" checked={true} onChange={() => toggleIsLegacy(false)} />
+      <div className={styles.label}>
+        <T id="purchase.isLegacy.legacy" m="Is Legacy" />
+      </div>
+      <input
+        id="box"
+        type="checkbox"
+        checked={true}
+        onChange={() => toggleIsLegacy(false)}
+      />
       <label htmlFor="box" className={styles.checkboxLabel}></label>
     </div>
     <InfoDocModalButton

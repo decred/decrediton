@@ -1,5 +1,5 @@
 import UnsignedTickets from "../UnsignedTickets";
-import StakeInfo from "../StakeInfo";
+import StakeInfo from "../StakeInfo/StakeInfo";
 import PurchaseTickets from "./Form";
 import { ShowWarning, Subtitle } from "shared";
 import { InfoDocModalButton } from "buttons";

@@ -1,4 +1,4 @@
-import PurchasePage from "./PurchaseTickets";
+import PurchasePage from "./PurchaseTickets/PurchaseTickets";
 import LEGACY_PurchasePage from "./LEGACY_PurchasePage";
 import { useState } from "react";
 import { useSelector } from "react-redux";
