@@ -8,9 +8,9 @@ import { Switch, Redirect } from "react-router-dom";
 import { FormattedMessage as T } from "react-intl";
 import { purchaseTickets } from "connectors";
 import { Balance } from "shared";
-import { default as PurchaseTab } from "./PurchaseTab";
-import { default as StatisticsTab } from "./StatisticsTab";
-import { default as MyTicketsTab } from "./MyTicketsTab";
+import { default as PurchaseTab } from "./PurchaseTab/PurchaseTab";
+import { default as StatisticsTab } from "./StatisticsTab/StatisticsTab";
+import { default as MyTicketsTab } from "./MyTicketsTab/MyTicketsTab";
 
 const PageHeader = () => (
   <TitleHeader
