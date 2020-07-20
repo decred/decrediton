@@ -1,4 +1,5 @@
 import { render as rtlRender } from "@testing-library/react";
+import "@testing-library/jest-dom/extend-expect";
 import { createMemoryHistory } from "history";
 import configureStore from "store/configureStore";
 import { Provider } from "react-redux";
@@ -8,17 +9,22 @@ import locales, { defaultFormats } from "i18n/locales";
 import { IntlProvider } from "react-intl";
 import { PropTypes } from "prop-types";
 
-beforeEach(() => {
+beforeAll(() => {
   jest.spyOn(console, "groupCollapsed").mockImplementation(() => {});
   jest.spyOn(console, "info").mockImplementation(() => {});
 });
 
-afterEach(() => {
+afterAll(() => {
   console.groupCollapsed.mockRestore();
   console.info.mockRestore();
 });
 
-const render = (ui, { locale = locales[1], ...options }) => {
+afterEach(() => {
+  jest.clearAllMocks();
+});
+
+function render(ui, renderOptions) {
+  const locale = locales[1];
   const Wrapper = ({ children }) => {
     const history = createMemoryHistory();
     const store = configureStore({}, history);
@@ -50,10 +56,8 @@ const render = (ui, { locale = locales[1], ...options }) => {
     children: PropTypes.node
   };
 
-  return rtlRender(ui, { wrapper: Wrapper, ...options });
+  return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
 };
-
-
 
 export * from "@testing-library/react";
 export { render };
