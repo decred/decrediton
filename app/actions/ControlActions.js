@@ -422,7 +422,7 @@ export const startTicketBuyerV3Attempt = (
 
 export function ticketBuyerCancel() {
   return (dispatch, getState) => {
-    const { ticketBuyerCall } = getState().control;
+    const { ticketBuyerCall } = getState().vsp;
     if (!ticketBuyerCall) return;
     if (ticketBuyerCall) {
       dispatch({ type: STOPTICKETBUYER_ATTEMPT });

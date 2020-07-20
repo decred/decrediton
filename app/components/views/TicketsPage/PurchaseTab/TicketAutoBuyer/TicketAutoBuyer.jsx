@@ -8,7 +8,13 @@ import { useMountEffect } from "hooks";
 import { usePurchaseTab } from "../hooks";
 
 function TicketAutoBuyer({ intl }) {
-  const { availableVSPs, onEnableTicketAutoBuyer, onDisableTicketAutoBuyer, getTicketStatus, ticketAutoBuyerRunning } = usePurchaseTab();
+  const {
+    availableVSPs,
+    onEnableTicketAutoBuyer,
+    onDisableTicketAutoBuyer,
+    getTicketStatus,
+    ticketAutoBuyerRunning
+  } = usePurchaseTab();
   const [balanceToMaintain, setBalanceToMaintain] = useState(0);
   const [account, setAccount] = useState(null);
   const [vsp, setVSP] = useState(null);
@@ -22,9 +28,7 @@ function TicketAutoBuyer({ intl }) {
     onEnableTicketAutoBuyer(passphrase, account, balanceToMaintain, vsp);
   }
 
-  const onStopAutoBuyer = () => {
-    onDisableTicketAutoBuyer();
-  }
+  const onStopAutoBuyer = () => onDisableTicketAutoBuyer();
 
   // TODO remove this - using to test
   useEffect(() => {

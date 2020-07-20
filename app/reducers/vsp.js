@@ -19,7 +19,8 @@ export default function vsp(state = {}, action) {
       };
     case STARTTICKETBUYERV3_SUCCESS:
       return { ...state,
-        ticketAutoBuyerRunning: true
+        ticketAutoBuyerRunning: true,
+        ticketBuyerCall: action.ticketBuyerCall
       };
     case STARTTICKETBUYERV3_FAILED:
       return { ...state,
