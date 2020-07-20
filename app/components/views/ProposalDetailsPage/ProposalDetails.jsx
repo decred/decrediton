@@ -58,7 +58,9 @@ const ProposalDetails = ({
           <div className={styles.overviewInfo}>
             <div className={styles.title}>{name}</div>
             <div className={styles.token}>
-              <PoliteiaLink path={"/proposals/" + token}>{token}</PoliteiaLink>
+              <PoliteiaLink isTestnet={isTestnet} path={"/proposals/" + token}>
+                {token}
+              </PoliteiaLink>
             </div>
             <div className={styles.fields}>
               <OverviewField
