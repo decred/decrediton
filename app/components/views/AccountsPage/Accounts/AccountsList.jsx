@@ -1,12 +1,14 @@
 import { FormattedMessage as T } from "react-intl";
-import AccountRow from "./AccountRow";
+import AccountRow from "./AccountRow/AccountRow";
 import { DecredLoading } from "indicators";
 import { InfoDocModalButton } from "buttons";
+import {classNames} from "pi-ui";
+import "style/AccountsPage.less";
 import { Subtitle } from "shared";
-import style from "../AccountsPage.module.css";
+import style from "./Accounts.module.css";
 
-const subtitleInfoIcon = () => (
-  <div className="account-content-title-buttons-area">
+const SubtitleInfoIcon = React.memo(() => (
+  <div className={style.contentTitleButtonsArea}>
     <InfoDocModalButton
       document="BalanceOverviewInfo"
       modalClassName={style.infoFields}
@@ -14,14 +16,14 @@ const subtitleInfoIcon = () => (
       draggable
     />
   </div>
-);
+));
 
-const subtitleWalletName = ({ walletName }) => (
+const SubtitleWalletName = React.memo(({ walletName }) => (
   <span>
-    <span className="wallet-name">{walletName}</span>
+    <span className={style.walletName}>{walletName}</span>
     <T id="accounts.subtitle" m="Accounts" />
   </span>
-);
+));
 
 const AccountsList = ({
   accounts,
@@ -41,11 +43,12 @@ const AccountsList = ({
     ) : (
       <>
         <Subtitle
-          title={subtitleWalletName({ walletName })}
-          className={"is-row"}
-          children={subtitleInfoIcon()}
+          title={<SubtitleWalletName {...{ walletName }} />}
+          className={style.isRow}
+          children={<SubtitleInfoIcon />}
         />
-        <div className="account-content-nest">
+        {/* TODO: encapsulate end provide .vertical-accordion-arrow CSS class in shared/VerticalAccordion.jsx */}
+        <div className={classNames(style.contentNest,"account-content-nest")}>
           {accounts.map((account) => (
             <AccountRow
               {...{

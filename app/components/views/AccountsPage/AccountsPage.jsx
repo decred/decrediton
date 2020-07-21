@@ -1,25 +1,17 @@
 import { TabbedPage, TabbedPageTab as Tab, StandaloneHeader } from "layout";
 import { Switch, Redirect } from "react-router-dom";
 import { FormattedMessage as T } from "react-intl";
-import AccountsTab from "./Accounts";
-import PrivacyTab from "./Privacy";
+import AccountsTab from "./Accounts/Accounts";
+import PrivacyTab from "./Privacy/Privacy";
 import { PassphraseModalButton } from "buttons";
 import { AddAccountModal } from "modals";
 import { WatchOnlyWarnNotification } from "shared";
-import { useSelector, useDispatch } from "react-redux";
-import * as sel from "selectors";
-import * as ca from "actions/ControlActions";
+import { useAccountsPage } from "./hooks";
 
-function Main() {
-  const dispatch = useDispatch();
-  const privacyEnabled = useSelector(sel.getPrivacyEnabled);
-  const isCreateAccountDisabled = useSelector(sel.isWatchingOnly);
-  const onGetNextAccountAttempt = (passphrase, name) =>
-    dispatch(ca.getNextAccountAttempt(passphrase, name));
-
-  const AccountsListHeader = () => (
+const AccountsPageHeader = React.memo(
+  ({ isCreateAccountDisabled, onGetNextAccountAttempt }) => (
     <StandaloneHeader
-      title={<T id="accounts.title" m=" Accounts" />}
+      title={<T id="accounts.title" m="Accounts" />}
       description={
         <T
           id="accounts.description"
@@ -28,7 +20,7 @@ function Main() {
           }
         />
       }
-      iconClassName="accounts"
+      iconClassName={"accounts"}
       actionButton={
         <WatchOnlyWarnNotification isActive={isCreateAccountDisabled}>
           <PassphraseModalButton
@@ -43,10 +35,23 @@ function Main() {
         </WatchOnlyWarnNotification>
       }
     />
-  );
+  )
+);
+
+const AccountsPage = () => {
+  const {
+    privacyEnabled,
+    isCreateAccountDisabled,
+    onGetNextAccountAttempt
+  } = useAccountsPage();
 
   return (
-    <TabbedPage header={<AccountsListHeader />}>
+    <TabbedPage
+      header={
+        <AccountsPageHeader
+          {...{ isCreateAccountDisabled, onGetNextAccountAttempt }}
+        />
+      }>
       <Switch>
         <Redirect from="/accounts" exact to="/accounts/list" />
       </Switch>
@@ -63,6 +68,6 @@ function Main() {
       />
     </TabbedPage>
   );
-}
+};
 
-export default Main;
+export default AccountsPage;

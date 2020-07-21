@@ -2,67 +2,63 @@ import { FormattedMessage as T } from "react-intl";
 import { TextInput, NumericInput } from "inputs";
 import { Subtitle } from "shared";
 import { PassphraseModalSwitch, AutoBuyerSwitch } from "buttons";
-import { classNames } from "pi-ui";
 import "style/Privacy.less";
+import { classNames } from "pi-ui";
+import style from "./Privacy.module.css";
 
-const PrivacyPage = ({
+const PrivacyContent = ({
   mixedAccountName,
   mixedAccountBranch,
   changeAccountName,
   csppServer,
   csppPort,
-  error,
+  accountMixerError,
   accountMixerRunning,
   stopAccountMixer,
   onStartMixerAttempt
 }) => (
   <>
     <Subtitle title={<T id="privacy.subtitle" m="Privacy" />} />
-
-    <div className="privacy-page-wrapper is-column">
-      <div className={classNames("is-row", "privacy-row")}>
-        <div className={classNames("is-row", "privacy-item")}>
-          <div className="">
+    <div className={classNames(style.pageWrapper, style.isColumn)}>
+      <div className={classNames(style.isRow, style.row)}>
+        <div className={classNames(style.isRow, style.item)}>
+          <div className={""}>
             <T id="privacy.mixing.account" m="Mixing Account" />:
           </div>
           <TextInput required disabled value={mixedAccountName} />
         </div>
-
-        <div className="privacy-item">
-          <div className="is-row">
-            <div className="">
+        <div className={style.item}>
+          <div className={style.isRow}>
+            <div className={""}>
               <T id="privacy.mixing.account.branch" m="Account Branch" />:
             </div>
             <NumericInput value={mixedAccountBranch} disabled />
           </div>
         </div>
       </div>
-
-      <div className={classNames("is-row", "privacy-row")}>
-        <div className={classNames("is-row", "privacy-item")}>
-          <div className="">
+      <div className={classNames(style.isRow, style.row)}>
+        <div className={classNames(style.isRow, style.item)}>
+          <div className={""}>
             <T id="privacy.change.account" m="Change Account" />:
           </div>
           <TextInput required disabled value={changeAccountName} />
         </div>
       </div>
-
-      <div className={classNames("is-row", "privacy-row")}>
-        <div className={classNames("is-row", "privacy-item")}>
-          <div className="">
+      <div className={classNames(style.isRow, style.row)}>
+        <div className={classNames(style.isRow, style.item)}>
+          <div className={""}>
             <T id="privacy.mixing.server" m="Shuffle Server" />:
           </div>
           <TextInput required disabled value={csppServer} />
         </div>
-
-        <div className={classNames("is-row", "privacy-item")}>
-          <div className="">
+        <div className={classNames(style.isRow, style.item)}>
+          <div className={""}>
             <T id="privacy.mixing.server.port" m="Shuffle Port" />:
           </div>
           <TextInput required disabled value={csppPort} />
         </div>
       </div>
-      <div className="button-area privacy-row">
+      <div className={classNames(style.buttonArea, style.row)}>
         {accountMixerRunning ? (
           <AutoBuyerSwitch enabled onClick={stopAccountMixer} />
         ) : (
@@ -78,16 +74,16 @@ const PrivacyPage = ({
                 Decrediton must remain running for mixer properly mix inputs.`}
               />
             }
-            className="start-mixer-button"
+            className={style.startMixerButton}
             onSubmit={(passaphrase) => onStartMixerAttempt(passaphrase)}
           />
         )}
       </div>
-      {error["mixerStart"] && (
-        <div className="error">{error["mixerStart"]}</div>
+      {accountMixerError && (
+        <div className={style.error}>{accountMixerError}</div>
       )}
     </div>
   </>
 );
 
-export default PrivacyPage;
+export default PrivacyContent;
