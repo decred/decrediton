@@ -10,7 +10,7 @@ const MenuLink = React.memo(
       ) : null}
       <Link
         className={classNames(style.menuLink, style[icon + "Icon"])}
-        activeClassName={classNames(style.menuLinkActive, style[icon + "Icon"])}
+        activeClassName={style.menuLinkActive}
         icon={icon}
         to={path}
         key={path}
