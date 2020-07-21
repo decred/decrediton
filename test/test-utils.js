@@ -27,8 +27,13 @@ function render(ui, renderOptions) {
   const locale = locales[1];
   const Wrapper = ({ children }) => {
     const history = createMemoryHistory();
-    const store = configureStore({}, history);
-
+    const initialState = (renderOptions && Object.prototype.hasOwnProperty.call(
+      renderOptions,
+      "initialState"
+    ))
+      ? renderOptions.initialState
+      : {};
+    const store = configureStore(initialState || {}, history);
     const ContainerApp = () => {
       return (
         <IntlProvider
