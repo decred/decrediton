@@ -12,11 +12,13 @@ import { PropTypes } from "prop-types";
 beforeAll(() => {
   jest.spyOn(console, "groupCollapsed").mockImplementation(() => {});
   jest.spyOn(console, "info").mockImplementation(() => {});
+  jest.spyOn(console, "warning").mockImplementation(() => {});
 });
 
 afterAll(() => {
   console.groupCollapsed.mockRestore();
   console.info.mockRestore();
+  console.warning.mockRestore();
 });
 
 afterEach(() => {

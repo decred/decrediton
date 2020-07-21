@@ -43,7 +43,9 @@ const toHaveDefaultMenuLinks = (params) => {
 };
 
 test("render default sidebar", () => {
-  render(<SideBar />);
+  render(<SideBar />, {
+    initialState: { settings: { uiAnimations: true } }
+  });
   toHaveDefaultMenuLinks();
 
   expect(screen.queryByRole("link", { name: "ln" })).not.toBeInTheDocument();
