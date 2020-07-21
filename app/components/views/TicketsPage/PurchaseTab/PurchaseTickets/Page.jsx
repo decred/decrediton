@@ -1,6 +1,6 @@
 import UnsignedTickets from "../UnsignedTickets";
-import StakeInfo from "../StakeInfo";
-import PurchaseTickets from "./form";
+import StakeInfo from "../StakeInfo/StakeInfo";
+import PurchaseForm from "./PurchaseForm";
 import { ShowWarning, Subtitle } from "shared";
 import { InfoDocModalButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
@@ -9,8 +9,15 @@ import styles from "../PurchaseTab.module.css";
 const getTitleIcon = ({ toggleIsLegacy }) => (
   <>
     <div className={styles.checkbox}>
-      <div className={styles.label}><T id="purchase.isLegacy" m="Is Legacy" /></div>
-      <input id="box" type="checkbox" checked={false} onChange={() => toggleIsLegacy(true)} />
+      <div className={styles.label}>
+        <T id="purchase.isLegacy" m="Is Legacy" />
+      </div>
+      <input
+        id="box"
+        type="checkbox"
+        checked={false}
+        onChange={() => toggleIsLegacy(true)}
+      />
       <label htmlFor="box" className={styles.checkboxLabel}></label>
     </div>
     <InfoDocModalButton
@@ -36,7 +43,8 @@ export function PurchasePage({
   ticketPrice,
   setVSP,
   isValid,
-  toggleIsLegacy
+  toggleIsLegacy,
+  ...props
 }) {
   return (
     <div className="purchase-ticket-area">
@@ -56,7 +64,8 @@ export function PurchasePage({
           }
         />
       ) : (
-          <PurchaseTickets {...{
+        <PurchaseForm
+          {...{
             ticketPrice,
             setNumTickets,
             handleOnKeyDown,
@@ -66,9 +75,10 @@ export function PurchasePage({
             onChangeNumTickets,
             setVSP,
             isValid
-          }} />
-        )}
+          }}
+        />
+      )}
       {isWatchingOnly && <UnsignedTickets {...{ ...props }} />}
     </div>
-  )
+  );
 }

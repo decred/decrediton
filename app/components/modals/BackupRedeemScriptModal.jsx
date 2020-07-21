@@ -12,7 +12,7 @@ const Content = ({ script, key }) => (
           If the VSP closes without notifying and you do not have access to your redeem script {warnMessage}`}
         values={{
           warnMessage: (
-            <span className={classNames("error","bold")}>
+            <span className={classNames("error", "bold")}>
               <T
                 id="backup.redeem.script.warn"
                 m="your funds may be lost forever."

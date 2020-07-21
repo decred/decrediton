@@ -1,6 +1,8 @@
-import Page from "./Heatmap";
+import Page from "./HeatmapWrapper";
 import { myTicketsCharts } from "connectors";
 import { DecredLoading } from "indicators";
+
+// xxxx: functional me!!
 
 @autobind
 class Heatmap extends React.Component {
