@@ -13,6 +13,7 @@ const Logo = React.memo(
     accountMixerRunning
   }) => (
     <div
+      data-testid="logo"
       className={expandSideBar ? style.logo : style.reducedLogo}
       onClick={!expandSideBar ? onExpandSideBar : null}>
       {isWatchingOnly && (
@@ -27,6 +28,7 @@ const Logo = React.memo(
         </Tooltip>
       )}
       <div
+        data-testid="logo-div"
         className={
           !expandSideBar ? style.hamburger : isTestNet ? TESTNET : MAINNET
         }
@@ -44,6 +46,7 @@ const Logo = React.memo(
       )}
       {expandSideBar && (
         <div
+          data-testid="reduced-arrow"
           className={style.reducedArrow}
           onClick={expandSideBar ? onReduceSideBar : null}></div>
       )}

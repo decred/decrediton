@@ -13,7 +13,8 @@ const MenuLink = React.memo(
         activeClassName={classNames(style.menuLinkActive, style[icon + "Icon"])}
         icon={icon}
         to={path}
-        key={path}>
+        key={path}
+        data-testid={icon}>
         {!sidebarOnBottom && link}
       </Link>
     </div>

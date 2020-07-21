@@ -30,6 +30,7 @@ const SideBar = () => {
 
   return (
     <div
+      data-testid="container"
       className={classNames(
         style.sidebar,
         !expandSideBar && style.sidebarReduced,
