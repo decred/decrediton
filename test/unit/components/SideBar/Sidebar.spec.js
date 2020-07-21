@@ -4,11 +4,8 @@ import "@testing-library/jest-dom/extend-expect";
 import user from "@testing-library/user-event";
 import { screen } from "@testing-library/react";
 
-const toHaveDefaultMenuLinks = ({
-  sidebarOnBottom,
-  isTrezorEnabled,
-  isLnEnabled
-}) => {
+const toHaveDefaultMenuLinks = (params) => {
+  const { sidebarOnBottom, isTrezorEnabled, isLnEnabled } = params || {};
   const toHaveMenuLink = (name, className, href, icon) => {
     const menulink = screen.queryByTestId(icon);
     expect(menulink).toHaveTextContent(sidebarOnBottom ? "" : name);
@@ -41,19 +38,13 @@ const toHaveDefaultMenuLinks = ({
   if (isLnEnabled) {
     toHaveMenuLink(/lightning network/i, "lnIcon", "/ln", "ln");
   } else {
-    expect(
-      screen.queryByRole("link", { name: "ln" })
-    ).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "ln" })).not.toBeInTheDocument();
   }
 };
 
 test("render default sidebar", () => {
   render(<SideBar />);
-  toHaveDefaultMenuLinks({
-    sidebarOnBottom: false,
-    isTrezorEnabled: false,
-    isLnEnabled: false
-  });
+  toHaveDefaultMenuLinks();
 
   expect(screen.queryByRole("link", { name: "ln" })).not.toBeInTheDocument();
   expect(
@@ -95,9 +86,7 @@ test("render sidebar on bottom", () => {
   });
 
   toHaveDefaultMenuLinks({
-    sidebarOnBottom: true,
-    isTrezorEnabled: false,
-    isLnEnabled: false
+    sidebarOnBottom: true
   });
   expect(
     screen.queryByRole("button", { class: "rescan-button" })
@@ -129,9 +118,7 @@ test("render sidebar with trezor enabled", () => {
   });
 
   toHaveDefaultMenuLinks({
-    sidebarOnBottom: false,
-    isTrezorEnabled: true,
-    isLnEnabled: false
+    isTrezorEnabled: true
   });
 });
 
@@ -141,8 +128,6 @@ test("render sidebar with lightning network enabled", () => {
   });
 
   toHaveDefaultMenuLinks({
-    sidebarOnBottom: false,
-    isTrezorEnabled: false,
     isLnEnabled: true
   });
 });
