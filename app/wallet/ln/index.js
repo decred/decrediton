@@ -16,6 +16,27 @@ export const getInfo = (client) => {
   );
 };
 
+export const getNetworkInfo = (client) => {
+  const request = new pb.NetworkInfoRequest();
+  return new Promise((resolve, reject) =>
+    client.getNetworkInfo(request, (err, resp) =>
+      err ? reject(err) : resolve(resp.toObject())
+    )
+  );
+};
+
+export const getNodeInfo = (client, nodeID) => {
+  const request = new pb.NodeInfoRequest();
+  request.setPubKey(nodeID);
+  request.setIncludeChannels(true);
+  return new Promise((resolve, reject) =>
+    client.getNodeInfo(request, (err, resp) =>
+      err ? reject(err) : resolve(resp.toObject())
+    )
+  );
+};
+
+
 export const getWalletBalance = (client) => {
   const request = new pb.WalletBalanceRequest();
   return new Promise((resolve, reject) =>

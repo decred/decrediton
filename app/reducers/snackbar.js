@@ -115,7 +115,8 @@ import {
   LNWALLET_EXPORTBACKUP_SUCCESS,
   LNWALLET_EXPORTBACKUP_FAILED,
   LNWALLET_VERIFYBACKUP_SUCCESS,
-  LNWALLET_VERIFYBACKUP_FAILED
+  LNWALLET_VERIFYBACKUP_FAILED,
+  LNWALLET_GETNETWORKINFO_FAILED
 } from "actions/LNActions";
 
 const WRONG_PASSPHRASE_MSG = "WRONG_PASSPHRASE_MSG";
@@ -456,6 +457,10 @@ const messages = defineMessages({
     defaultMessage:
       "SCB backup file is invalid for this wallet: {originalError}"
   },
+  LNWALLET_GETNETWORKINFO_FAILED: {
+    id: "ln.ntf.getNetworkInfoFailed",
+    defaultMessage: "Failed to get LN network info: {originalError}"
+  },
   UPDATEVOTECHOICE_SUCCESS: {
     id: "governance.ntf.updateVoteChoiceSuccess",
     defaultMessage:
@@ -620,6 +625,7 @@ export default function snackbar(state = {}, action) {
     case LNWALLET_WITHDRAWWALLET_FAILED:
     case LNWALLET_EXPORTBACKUP_FAILED:
     case LNWALLET_VERIFYBACKUP_FAILED:
+    case LNWALLET_GETNETWORKINFO_FAILED:
       type = "Error";
       if (
         action.error &&

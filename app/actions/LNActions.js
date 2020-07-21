@@ -923,3 +923,37 @@ export const verifyBackup = (destPath) => async (dispatch, getState) => {
     dispatch({ error, type: LNWALLET_VERIFYBACKUP_FAILED });
   }
 };
+
+export const LNWALLET_GETNETWORKINFO_ATTEMPT = "LNWALLET_GETNETWORKINFO_ATTEMPT";
+export const LNWALLET_GETNETWORKINFO_SUCCESS = "LNWALLET_GETNETWORKINFO_SUCCESS";
+export const LNWALLET_GETNETWORKINFO_FAILED = "LNWALLET_GETNETWORKINFO_FAILED";
+
+export const getNetworkInfo = () => async (dispatch, getState) => {
+  const { client } = getState().ln;
+  if (!client) throw new Error("unconnected to ln wallet");
+
+  dispatch({ type: LNWALLET_GETNETWORKINFO_ATTEMPT });
+  try {
+    const network = await ln.getNetworkInfo(client);
+    dispatch({ network, type: LNWALLET_GETNETWORKINFO_SUCCESS });
+  } catch (error) {
+    dispatch({ error, type: LNWALLET_GETNETWORKINFO_FAILED });
+  }
+};
+
+export const LNWALLET_GETNODEINFO_ATTEMPT = "LNWALLET_GETNODEINFO_ATTEMPT";
+export const LNWALLET_GETNODEINFO_SUCCESS = "LNWALLET_GETNODEINFO_SUCCESS";
+export const LNWALLET_GETNODEINFO_FAILED = "LNWALLET_GETNODEINFO_FAILED";
+
+export const getNodeInfo = nodeID => async (dispatch, getState) => {
+  const { client } = getState().ln;
+  if (!client) throw new Error("unconnected to ln wallet");
+
+  dispatch({ type: LNWALLET_GETNODEINFO_ATTEMPT });
+  try {
+    const nodeInfo = await ln.getNodeInfo(client, nodeID);
+    dispatch({ nodeInfo, type: LNWALLET_GETNODEINFO_SUCCESS });
+  } catch (error) {
+    dispatch({ error, type: LNWALLET_GETNODEINFO_FAILED });
+  }
+};

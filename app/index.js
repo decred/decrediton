@@ -419,7 +419,9 @@ const initialState = {
     addInvoiceAttempt: false,
     sendPaymentAttempt: false,
     scbPath: "",
-    scbUpdatedTime: 0
+    scbUpdatedTime: 0,
+    nodeInfo: null,
+    getNodeInfoAttempt: false
   },
   locales: locales
 };
