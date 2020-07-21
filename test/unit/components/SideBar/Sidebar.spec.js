@@ -4,7 +4,11 @@ import "@testing-library/jest-dom/extend-expect";
 import user from "@testing-library/user-event";
 import { screen } from "@testing-library/react";
 
-const toHaveDefaultMenuLinks = ({ sidebarOnBottom }) => {
+const toHaveDefaultMenuLinks = ({
+  sidebarOnBottom,
+  isTrezorEnabled,
+  isLnEnabled
+}) => {
   const toHaveMenuLink = (name, className, href, icon) => {
     const menulink = screen.queryByTestId(icon);
     expect(menulink).toHaveTextContent(sidebarOnBottom ? "" : name);
@@ -25,15 +29,32 @@ const toHaveDefaultMenuLinks = ({ sidebarOnBottom }) => {
   toHaveMenuLink(/security/i, "securitycntrIcon", "/security", "securitycntr");
   toHaveMenuLink(/help/i, "helpIcon", "/help", "help");
   toHaveMenuLink(/settings/i, "settingsIcon", "/settings", "settings");
+
+  if (isTrezorEnabled) {
+    toHaveMenuLink(/trezor setup/i, "trezorIcon", "/trezor", "trezor");
+  } else {
+    expect(
+      screen.queryByRole("link", { name: "trezor" })
+    ).not.toBeInTheDocument();
+  }
+
+  if (isLnEnabled) {
+    toHaveMenuLink(/lightning network/i, "lnIcon", "/ln", "ln");
+  } else {
+    expect(
+      screen.queryByRole("link", { name: "ln" })
+    ).not.toBeInTheDocument();
+  }
 };
 
 test("render default sidebar", () => {
   render(<SideBar />);
-  toHaveDefaultMenuLinks({ sidebarOnBottom: false });
+  toHaveDefaultMenuLinks({
+    sidebarOnBottom: false,
+    isTrezorEnabled: false,
+    isLnEnabled: false
+  });
 
-  expect(
-    screen.queryByRole("link", { name: "trezor" })
-  ).not.toBeInTheDocument();
   expect(screen.queryByRole("link", { name: "ln" })).not.toBeInTheDocument();
   expect(
     screen.getByRole("button", { class: "rescan-button" })
@@ -49,6 +70,7 @@ test("render default sidebar", () => {
   expect(logo).toHaveClass("reducedLogo");
   expect(screen.getByTestId("logo-div")).toHaveClass("hamburger");
   expect(screen.queryByTestId("reduced-arrow")).not.toBeInTheDocument();
+  expect(screen.queryByText(/total balance/i)).not.toBeInTheDocument();
 
   // expand the sidebar
   user.click(logo);
@@ -64,17 +86,63 @@ test("render default sidebar", () => {
   expect(logo).toHaveClass("reducedLogo");
   expect(screen.getByTestId("logo-div")).toHaveClass("hamburger");
   expect(screen.queryByTestId("reduced-arrow")).not.toBeInTheDocument();
+  expect(screen.queryByText(/total balance/i)).not.toBeInTheDocument();
 });
 
 test("render sidebar on bottom", () => {
-  const { debug } = render(<SideBar />, {
+  render(<SideBar />, {
     initialState: { sidebar: { sidebarOnBottom: true } }
   });
 
-  toHaveDefaultMenuLinks({ sidebarOnBottom: true });
+  toHaveDefaultMenuLinks({
+    sidebarOnBottom: true,
+    isTrezorEnabled: false,
+    isLnEnabled: false
+  });
   expect(
     screen.queryByRole("button", { class: "rescan-button" })
   ).not.toBeInTheDocument();
+  expect(screen.queryByText(/total balance/i)).not.toBeInTheDocument();
+  const logo = screen.queryByTestId("logo");
+  expect(logo).toHaveClass("reducedLogo");
 
-  debug();
+  // expand the sidebar
+  user.click(logo);
+
+  expect(screen.getByTestId("reduced-arrow")).toHaveClass("reducedArrow");
+  expect(screen.getByTestId("logo-div")).toHaveClass("mainnet");
+  expect(screen.getByText(/total balance/i)).toBeInTheDocument();
+
+  // collapse the sidebar
+  user.click(screen.getByTestId("reduced-arrow"));
+
+  expect(
+    screen.queryByRole("button", { class: "rescan-button" })
+  ).not.toBeInTheDocument();
+  expect(screen.queryByText(/total balance/i)).not.toBeInTheDocument();
+  expect(logo).toHaveClass("reducedLogo");
+});
+
+test("render sidebar with trezor enabled", () => {
+  render(<SideBar />, {
+    initialState: { trezor: { enabled: true } }
+  });
+
+  toHaveDefaultMenuLinks({
+    sidebarOnBottom: false,
+    isTrezorEnabled: true,
+    isLnEnabled: false
+  });
+});
+
+test("render sidebar with lightning network enabled", () => {
+  render(<SideBar />, {
+    initialState: { ln: { enabled: true } }
+  });
+
+  toHaveDefaultMenuLinks({
+    sidebarOnBottom: false,
+    isTrezorEnabled: false,
+    isLnEnabled: true
+  });
 });
