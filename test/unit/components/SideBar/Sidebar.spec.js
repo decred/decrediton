@@ -71,6 +71,15 @@ test("render default sidebar", () => {
   expect(screen.getByTestId("logo-div")).toHaveClass("mainnet");
   expect(screen.getByText(/total balance/i)).toBeInTheDocument();
 
+  // test mouse hover on account list
+  const accountList = screen.getByTestId("account-list");
+  expect(accountList).toHaveClass("extended");
+  const totalBalanceContainer = screen.getByTestId("total-balance-container");
+  user.hover(totalBalanceContainer);
+  expect(accountList).toHaveClass("extended showingAccounts");
+  user.unhover(totalBalanceContainer);
+  expect(accountList).toHaveClass("extended");
+
   // collapse the sidebar
   user.click(screen.getByTestId("reduced-arrow"));
 
@@ -133,7 +142,7 @@ test("render sidebar with lightning network enabled", () => {
 });
 
 test("render expanded sidebar with testnet network enabled", () => {
-  const { debug } = render(<SideBar />, {
+  render(<SideBar />, {
     initialState: {
       settings: {
         currentSettings: { network: "testnet" }
@@ -144,5 +153,4 @@ test("render expanded sidebar with testnet network enabled", () => {
     }
   });
   expect(screen.getByTestId("logo-div")).toHaveClass("testnet");
-  debug();
 });
