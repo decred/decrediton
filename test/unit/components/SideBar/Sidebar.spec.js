@@ -131,3 +131,18 @@ test("render sidebar with lightning network enabled", () => {
     isLnEnabled: true
   });
 });
+
+test("render expanded sidebar with testnet network enabled", () => {
+  const { debug } = render(<SideBar />, {
+    initialState: {
+      settings: {
+        currentSettings: { network: "testnet" }
+      },
+      sidebar: {
+        expandSideBar: true
+      }
+    }
+  });
+  expect(screen.getByTestId("logo-div")).toHaveClass("testnet");
+  debug();
+});
