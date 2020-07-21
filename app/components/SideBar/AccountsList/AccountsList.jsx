@@ -7,6 +7,7 @@ const isImported = (accountNumber) => accountNumber === Math.pow(2, 31) - 1;
 
 const AccountsList = ({ isShowingAccounts, balances }) => (
   <div
+    data-testid="account-list"
     className={classNames(
       style.extended,
       isShowingAccounts && style.showingAccounts
