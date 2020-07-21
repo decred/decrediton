@@ -22,8 +22,6 @@ const StakeTxRow = ({
   txType,
   ...props
 }) => {
-  const status = className;
-
   const ticketRewardMessage = useMemo(
     () => (
       <T

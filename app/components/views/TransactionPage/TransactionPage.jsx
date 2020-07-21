@@ -43,11 +43,11 @@ function Transaction() {
           // we need to get the input amount from older txs. If it is not
           // a wallet input getAmountFromTxInputs will throw an error, which
           // we ignore.
-          console.log(viewedTransaction)
+          console.log(viewedTransaction);
           if (viewedTransaction.isStake) {
-            const getSstxCommitmentAddress = () => {
-
-            }
+            // TODO
+            // Add sstxcommitment address to vote txs after
+            // https://github.com/decred/decrediton/pull/2577 being merged.
           } else {
             try {
               decodedTxWithInputs = await getAmountFromTxInputs(decodedTx);
