@@ -113,7 +113,6 @@ export const decodedVoteTx = {
   "numInputs": 2,
   "inputs": [
     {
-      "opRawHash": Buffer.from([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]),
       "prevTxId": "0000000000000000000000000000000000000000000000000000000000000000",
       "outputIndex": 4294967295,
       "outputTree": 0,
@@ -121,7 +120,6 @@ export const decodedVoteTx = {
       "index": 0
     },
     {
-      "opRawHash": Buffer.from([145, 73, 195, 133, 0, 45, 247, 225,149, 87, 66, 119, 58, 199, 148, 0, 23, 189, 204, 207, 20, 209, 234, 8, 79, 41, 241, 175, 96, 63, 31, 243 ]),
       "prevTxId": "f31f3f60aff1294f08ead114cfccbd170094c73a77425795e1f72d0085c34991",
       "outputIndex": 0,
       "outputTree": 1,
