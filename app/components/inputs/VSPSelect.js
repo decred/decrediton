@@ -30,7 +30,7 @@ function VSPSelect({ className, onChange, options, intl }) {
     const info = await getVSPInfo(value.Host);
     // TODO remove this hard coded value, get it dinamically.
     // depends on https://github.com/decred/dcrwebapi/pull/104
-    let { pubkey } = info;
+    const { pubkey } = info;
     const host = "teststakepool.decred.org";
 
     setSelected(option);
