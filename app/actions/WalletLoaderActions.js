@@ -12,7 +12,7 @@ import { rescanCancel, ticketBuyerCancel } from "./ControlActions";
 import {
   getWalletServiceAttempt,
   startWalletServices,
-  getBestBlockHeightAttempt,
+  getBestBlockHeightAttempt
 } from "./ClientActions";
 import { WALLETREMOVED_FAILED } from "./DaemonActions";
 import { getWalletCfg, getDcrdCert } from "config";
