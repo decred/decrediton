@@ -30,7 +30,7 @@ const HomePage = ({
           <div className="is-row">
             <div className="overview-balance-spendable-locked-text">
               <T
-                id="home.totalValueOfActiveTickets"
+                id="home.totalValueOfLiveTickets"
                 m="With a total value of {value}"
                 values={{
                   value: (
