@@ -50,7 +50,6 @@ export const getVoteChoices = promisifyReq(
   "voteChoices",
   api.VoteChoicesRequest
 );
-export const doPing = promisifyReq("ping", api.PingRequest);
 export const loadActiveDataFilters = promisifyReq(
   "loadActiveDataFilters",
   api.LoadActiveDataFiltersRequest

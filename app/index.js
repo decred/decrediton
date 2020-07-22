@@ -146,11 +146,6 @@ const initialState = {
     getNetworkError: null,
     getNetworkRequestAttempt: false,
     getNetworkResponse: null,
-    // Ping
-    getPingError: null,
-    getPingRequestAttempt: false,
-    getPingResponse: null,
-    pingTimer: null,
     // StakeInfo
     getStakeInfoError: null,
     getStakeInfoRequestAttempt: false,
