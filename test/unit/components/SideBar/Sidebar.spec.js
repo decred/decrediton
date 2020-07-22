@@ -42,15 +42,30 @@ const toHaveDefaultMenuLinks = (params) => {
   }
 };
 
+const clickOnMenuLink = (testid) => {
+  const menuLink = screen.queryByTestId(testid);
+  expect(menuLink).not.toHaveClass("menuLinkActive");
+  user.click(menuLink);
+  expect(menuLink).toHaveClass("menuLinkActive");
+};
+
 test("render default sidebar", () => {
   render(<SideBar />, {
-    initialState: { settings: { uiAnimations: true } }
+    initialState: {
+      settings: { uiAnimations: true }
+    }
   });
   toHaveDefaultMenuLinks();
 
-  expect(screen.queryByRole("link", { name: "ln" })).not.toBeInTheDocument();
   expect(
-    screen.getByRole("button", { class: "rescan-button" })
+    screen.queryByRole("link", {
+      name: "ln"
+    })
+  ).not.toBeInTheDocument();
+  expect(
+    screen.getByRole("button", {
+      class: "rescan-button"
+    })
   ).toBeInTheDocument();
 
   expect(screen.queryByTestId("container")).toHaveClass(
@@ -89,22 +104,32 @@ test("render default sidebar", () => {
   expect(screen.getByTestId("logo-div")).toHaveClass("hamburger");
   expect(screen.queryByTestId("reduced-arrow")).not.toBeInTheDocument();
   expect(screen.queryByText(/total balance/i)).not.toBeInTheDocument();
+
+  //click tickets menu link on sidebar
+  clickOnMenuLink("tickets");
 });
 
 test("render sidebar on bottom", () => {
   render(<SideBar />, {
-    initialState: { sidebar: { sidebarOnBottom: true } }
+    initialState: {
+      sidebar: { sidebarOnBottom: true }
+    }
   });
 
   toHaveDefaultMenuLinks({
     sidebarOnBottom: true
   });
   expect(
-    screen.queryByRole("button", { class: "rescan-button" })
+    screen.queryByRole("button", {
+      class: "rescan-button"
+    })
   ).not.toBeInTheDocument();
   expect(screen.queryByText(/total balance/i)).not.toBeInTheDocument();
   const logo = screen.queryByTestId("logo");
   expect(logo).toHaveClass("reducedLogo");
+
+  //click tickets menu link on sidebar
+  clickOnMenuLink("tickets");
 
   // expand the sidebar
   user.click(logo);
@@ -117,7 +142,9 @@ test("render sidebar on bottom", () => {
   user.click(screen.getByTestId("reduced-arrow"));
 
   expect(
-    screen.queryByRole("button", { class: "rescan-button" })
+    screen.queryByRole("button", {
+      class: "rescan-button"
+    })
   ).not.toBeInTheDocument();
   expect(screen.queryByText(/total balance/i)).not.toBeInTheDocument();
   expect(logo).toHaveClass("reducedLogo");
