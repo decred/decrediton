@@ -4,6 +4,16 @@ import "@testing-library/jest-dom/extend-expect";
 import user from "@testing-library/user-event";
 import { screen } from "@testing-library/react";
 
+import {
+  rescanAttempt as mockRescanAttempt
+} from "actions/ControlActions";
+
+jest.mock("actions/ControlActions", () => {
+  return {
+    rescanAttempt: jest.fn(() => () => null)
+  };
+});
+
 const toHaveDefaultMenuLinks = (params) => {
   const { sidebarOnBottom, isTrezorEnabled, isLnEnabled } = params || {};
   const toHaveMenuLink = (name, className, href, icon) => {
@@ -160,6 +170,18 @@ test("render sidebar with trezor enabled", () => {
   });
 });
 
+test("render sidebar on bottom with animation enabled", () => {
+  render(<SideBar />, {
+    initialState: {
+      sidebar: { sidebarOnBottom: true },
+      settings: { uiAnimations: true }
+    }
+  });
+
+  //click tickets menu link on sidebar
+  clickOnMenuLink("tickets");
+});
+
 test("render sidebar with lightning network enabled", () => {
   render(<SideBar />, {
     initialState: { ln: { enabled: true } }
@@ -182,4 +204,17 @@ test("render expanded sidebar with testnet network enabled", () => {
     }
   });
   expect(screen.getByTestId("logo-div")).toHaveClass("testnet");
+});
+
+test("test rescan", () => {
+  const { debug } = render(<SideBar />);
+
+  user.click(
+    screen.getByRole("button", {
+      class: "rescan-button"
+    })
+  );
+  expect(mockRescanAttempt).toHaveBeenCalledTimes(1);
+
+  debug();
 });
