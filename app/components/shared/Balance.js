@@ -36,12 +36,10 @@ export const Balance = ({
     const split = totalDcr.toFixed(8).toString().split(".");
     const head = [split[0], split[1].slice(0, 2)].join(".");
     const tail = split[1].slice(2).replace(/0{1,3}$/, "");
-    const negativeZero = parseFloat(head) === 0 && amount < 0;
     return (
       <div className={classNameWrapper}>
         <span {...{ onClick }}>
           <span className={classNames(classNameAmount, bold && "bold")}>
-            {negativeZero ? "-" : ""}
             <FormattedNumber
               value={head}
               maximumFractionDigits={2}
