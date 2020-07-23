@@ -48,7 +48,7 @@ const Logo = React.memo(
         <div
           data-testid="reduced-arrow"
           className={style.reducedArrow}
-          onClick={expandSideBar ? onReduceSideBar : null}></div>
+          onClick={onReduceSideBar}></div>
       )}
     </div>
   )
