@@ -13,6 +13,19 @@
   padding: 5px 16px 10px 16px;
 }
 
+.toggleWrapperExample {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 240px;
+  clear: left;
+}
+
+.toggleLabelExample {
+  margin-left: 0.1rem;
+  margin-top: 0.1rem;
+}
+
 .getstartedNew {
   color: var(--title-text-and-button-background);
   padding-left: 52px;
@@ -540,7 +553,7 @@
   width: 100%;
 }
 
-.desc {
+.advancedDesc {
   font-size: 19px;
   color: var(--modal-text);
   margin-bottom: 43px;
