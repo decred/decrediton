@@ -22,7 +22,9 @@ const AccountsList = ({ isShowingAccounts, balances }) => (
                 isImported(accountNumber) && style.imported
               )}
               key={accountName}>
-              <div className={style.extendedBottomAccountName}>
+              <div
+                data-testid="extended-bottom-account-name"
+                className={style.extendedBottomAccountName}>
                 {accountName === "default" ? (
                   <T id="sidebar.accounts.name.default" m="Primary Account" />
                 ) : (

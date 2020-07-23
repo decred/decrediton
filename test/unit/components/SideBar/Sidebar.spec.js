@@ -77,11 +77,44 @@ const clickOnMenuLink = (testid) => {
 };
 
 test("render default sidebar", () => {
+  const testBalances = [
+    {
+      accountNumber: 0,
+      accountName: "default",
+      hidden: false,
+      total: 143506029948
+    },
+    {
+      accountNumber: 1,
+      accountName: "test-account",
+      hidden: false,
+      total: 0
+    },
+    {
+      // imported
+      accountNumber: 2147483647,
+      accountName: "test-account2",
+      hidden: false,
+      total: 103506029948
+    },
+    {
+      //hidden
+      accountNumber: 3,
+      accountName: "test-account-hidden",
+      hidden: true,
+      total: 93506029948
+    }
+  ];
+
   render(<SideBar />, {
     initialState: {
-      settings: { uiAnimations: true }
+      settings: { uiAnimations: true },
+      grpc: {
+        balances: testBalances
+      }
     }
   });
+
   toHaveDefaultMenuLinks();
 
   expect(
@@ -120,7 +153,27 @@ test("render default sidebar", () => {
   expect(accountList).toHaveClass("extended");
   const totalBalanceContainer = screen.getByTestId("total-balance-container");
   user.hover(totalBalanceContainer);
-  expect(accountList).toHaveClass("extended showingAccounts");
+
+  // check AccountNames
+  const testAccountNames = testBalances.reduce((accumulator, balance) => {
+    if (!balance["hidden"]) {
+      accumulator.push(
+        balance["accountName"] == "default"
+          ? "Primary Account"
+          : balance["accountName"]
+      );
+    }
+    return accumulator;
+  }, []);
+
+  const renderedAccountNames = screen
+    .getAllByTestId("extended-bottom-account-name")
+    .map((node) => node.textContent);
+
+  expect(
+    JSON.stringify(renderedAccountNames) == JSON.stringify(testAccountNames)
+  ).toBeTruthy();
+
   user.unhover(totalBalanceContainer);
   expect(accountList).toHaveClass("extended");
 
@@ -256,7 +309,6 @@ test("test rescan on expanded sidebar", () => {
   expect(screen.getByTestId("rescan-button")).toHaveClass("rescan-button");
   expect(screen.queryByTestId("rescan-cancel-button")).not.toBeInTheDocument();
 });
-
 
 test("test rescan on collapsed sidebar", () => {
   render(<SideBar />, {
