@@ -3,14 +3,29 @@ import { render } from "test-utils.js";
 import "@testing-library/jest-dom/extend-expect";
 import user from "@testing-library/user-event";
 import { screen } from "@testing-library/react";
-
 import {
-  rescanAttempt as mockRescanAttempt
+  rescanAttempt as mockRescanAttempt,
+  rescanCancel as mockRescanCancel
 } from "actions/ControlActions";
 
 jest.mock("actions/ControlActions", () => {
+  const RESCAN_ATTEMPT = "RESCAN_ATTEMPT";
+  const RESCAN_CANCEL = "RESCAN_CANCEL";
   return {
-    rescanAttempt: jest.fn(() => () => null)
+    rescanAttempt: jest.fn(() => (dispatch) => {
+      dispatch({
+        request: { getBeginHeight: () => {} },
+        type: RESCAN_ATTEMPT
+      });
+    }),
+    rescanCancel: jest.fn(() => (dispatch) => {
+      dispatch({
+        type: RESCAN_CANCEL
+      });
+    }),
+
+    RESCAN_ATTEMPT: RESCAN_ATTEMPT,
+    RESCAN_CANCEL: RESCAN_CANCEL
   };
 });
 
@@ -207,14 +222,36 @@ test("render expanded sidebar with testnet network enabled", () => {
 });
 
 test("test rescan", () => {
-  const { debug } = render(<SideBar />);
+  const testCurrentBlockHeight = 12;
+  render(<SideBar />, {
+    initialState: {
+      sidebar: {
+        expandSideBar: true
+      },
+      grpc: {
+        currentBlockHeight: testCurrentBlockHeight,
+        recentBlockTimestamp: new Date().getTime() / 1000 - 1
+      }
+    }
+  });
 
-  user.click(
-    screen.getByRole("button", {
-      class: "rescan-button"
-    })
-  );
+  expect(screen.getByText(/< 1 minute ago/i)).toBeInTheDocument();
+  expect(screen.getByTestId("rescan-button")).toHaveClass("rescan-button");
+  expect(screen.queryByTestId("rescan-cancel-button")).not.toBeInTheDocument();
+
+  user.click(screen.getByTestId("rescan-button"));
   expect(mockRescanAttempt).toHaveBeenCalledTimes(1);
 
-  debug();
+  expect(screen.getByTestId("rescan-button")).toHaveClass("rescan-button spin");
+  expect(screen.getByTestId("rescan-cancel-button")).toBeInTheDocument();
+  expect(screen.queryByText(/< 1 minute ago/i)).not.toBeInTheDocument();
+  expect(screen.getByText(/rescanning/i)).toBeInTheDocument();
+  expect(screen.getByText(`0/${testCurrentBlockHeight}`)).toBeInTheDocument();
+  expect(screen.getByText(/(0%)/i)).toBeInTheDocument();
+
+  user.click(screen.getByTestId("rescan-cancel-button"));
+  expect(mockRescanCancel).toHaveBeenCalledTimes(1);
+
+  expect(screen.getByTestId("rescan-button")).toHaveClass("rescan-button");
+  expect(screen.queryByTestId("rescan-cancel-button")).not.toBeInTheDocument();
 });
