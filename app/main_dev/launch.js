@@ -279,6 +279,12 @@ export const launchDCRD = (reactIPC, testnet, appdata) =>
       dcrdAppdata,
       configFile
     } = readDcrdConfig(testnet, appdata);
+
+    // upgradeToElectron8 will remove the rpc_cert and rpc_key in case they
+    // exist and an upgrade to electron 8 is necessary.
+    // If an appdata was passed, it will remove its rpc.cert and rpc.key
+    // which can be annoying. We should do a backup or warn the user about it,
+    // but right now it will silently remove them.
     upgradeToElectron8(rpc_cert, rpc_key);
 
     const args = [
@@ -400,6 +406,7 @@ function readDcrdConfig(testnet, appdata) {
     if (appdata) {
       dcrdAppdata = appdata;
       rpc_cert = `${appdata}/rpc.cert`;
+      rpc_key = `${appdata}/rpc.key`;
       // if conf file of the appdata informed exists, we use it, otherwise
       // we use decrediton's own dcrd.conf file.
       if (fs.existsSync(dcrdCfg(appdata))) {
