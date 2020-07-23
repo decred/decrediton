@@ -133,6 +133,7 @@ test("render default sidebar", () => {
   );
   expect(screen.queryByText(/total balance/i)).not.toBeInTheDocument();
   expect(screen.queryByText(/watch-only/i)).not.toBeInTheDocument();
+  expect(screen.queryByText(/mixer is running/i)).not.toBeInTheDocument();
 
   // expect logo is a hamburger icon
   const logo = screen.queryByTestId("logo");
@@ -340,22 +341,37 @@ test("test rescan on collapsed sidebar", () => {
   expect(screen.queryByTestId("rescan-cancel-button")).not.toBeInTheDocument();
 });
 
-test("test isWatchingOnly mode sidebar", () => {
-  render(<SideBar />, {
+test("test Tooltip on Logo when isWatchingOnly mode is active", () => {
+  const { debug } = render(<SideBar />, {
     initialState: {
       walletLoader: {
         isWatchingOnly: true
       }
     }
   });
-  expect(screen.queryByText(/watch-only/i)).toBeInTheDocument();
-  expect(
-    screen.getByText("This is a watch-only wallet with limited functionality.")
-  ).toMatchInlineSnapshot(`
+  expect(screen.getByText(/watch-only/i)).toMatchInlineSnapshot(`
     <span
       class="tip "
     >
       This is a watch-only wallet with limited functionality.
     </span>
   `);
+  debug();
+});
+
+test("test Tooltip on Logo when accountMixerRunning mode is active", () => {
+  render(<SideBar />, {
+    initialState: {
+      grpc: {
+        accountMixerRunning: true
+      }
+    }
+  });
+  expect(screen.getByText(/mixer is running/i)).toMatchInlineSnapshot(`
+<span
+  class="tip "
+>
+  The mixer is running. Go to Privacy view for more information
+</span>
+`);
 });
