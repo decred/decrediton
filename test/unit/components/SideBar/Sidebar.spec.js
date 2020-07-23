@@ -132,6 +132,7 @@ test("render default sidebar", () => {
     "sidebar sidebarReduced"
   );
   expect(screen.queryByText(/total balance/i)).not.toBeInTheDocument();
+  expect(screen.queryByText(/watch-only/i)).not.toBeInTheDocument();
 
   // expect logo is a hamburger icon
   const logo = screen.queryByTestId("logo");
@@ -337,4 +338,24 @@ test("test rescan on collapsed sidebar", () => {
 
   expect(screen.getByTestId("rescan-button")).toHaveClass("rescan-button");
   expect(screen.queryByTestId("rescan-cancel-button")).not.toBeInTheDocument();
+});
+
+test("test isWatchingOnly mode sidebar", () => {
+  render(<SideBar />, {
+    initialState: {
+      walletLoader: {
+        isWatchingOnly: true
+      }
+    }
+  });
+  expect(screen.queryByText(/watch-only/i)).toBeInTheDocument();
+  expect(
+    screen.getByText("This is a watch-only wallet with limited functionality.")
+  ).toMatchInlineSnapshot(`
+    <span
+      class="tip "
+    >
+      This is a watch-only wallet with limited functionality.
+    </span>
+  `);
 });
