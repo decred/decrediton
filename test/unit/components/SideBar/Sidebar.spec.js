@@ -29,6 +29,8 @@ jest.mock("actions/ControlActions", () => {
   };
 });
 
+const testCurrentBlockHeight = 12;
+
 const toHaveDefaultMenuLinks = (params) => {
   const { sidebarOnBottom, isTrezorEnabled, isLnEnabled } = params || {};
   const toHaveMenuLink = (name, className, href, icon) => {
@@ -221,8 +223,7 @@ test("render expanded sidebar with testnet network enabled", () => {
   expect(screen.getByTestId("logo-div")).toHaveClass("testnet");
 });
 
-test("test rescan", () => {
-  const testCurrentBlockHeight = 12;
+test("test rescan on expanded sidebar", () => {
   render(<SideBar />, {
     initialState: {
       sidebar: {
@@ -248,6 +249,36 @@ test("test rescan", () => {
   expect(screen.getByText(/rescanning/i)).toBeInTheDocument();
   expect(screen.getByText(`0/${testCurrentBlockHeight}`)).toBeInTheDocument();
   expect(screen.getByText(/(0%)/i)).toBeInTheDocument();
+
+  user.click(screen.getByTestId("rescan-cancel-button"));
+  expect(mockRescanCancel).toHaveBeenCalledTimes(1);
+
+  expect(screen.getByTestId("rescan-button")).toHaveClass("rescan-button");
+  expect(screen.queryByTestId("rescan-cancel-button")).not.toBeInTheDocument();
+});
+
+
+test("test rescan on collapsed sidebar", () => {
+  render(<SideBar />, {
+    initialState: {
+      sidebar: {
+        expandSideBar: false
+      },
+      grpc: {
+        currentBlockHeight: testCurrentBlockHeight,
+        recentBlockTimestamp: new Date().getTime() / 1000 - 1
+      }
+    }
+  });
+
+  expect(screen.getByTestId("rescan-button")).toHaveClass("rescan-button");
+  expect(screen.queryByTestId("rescan-cancel-button")).not.toBeInTheDocument();
+
+  user.click(screen.getByTestId("rescan-button"));
+  expect(mockRescanAttempt).toHaveBeenCalledTimes(1);
+
+  expect(screen.getByTestId("rescan-button")).toHaveClass("rescan-button spin");
+  expect(screen.getByTestId("rescan-cancel-button")).toBeInTheDocument();
 
   user.click(screen.getByTestId("rescan-cancel-button"));
   expect(mockRescanCancel).toHaveBeenCalledTimes(1);
