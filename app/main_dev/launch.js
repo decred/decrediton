@@ -3,9 +3,10 @@ import {
   getWalletPath,
   getExecutablePath,
   dcrdCfg,
-  getDcrdRpcCert
+  getAppDataDirectory,
+  getDcrdPath
 } from "./paths";
-import { getWalletCfg, readDcrdConfig, getGlobalCfg } from "config";
+import { getWalletCfg, getGlobalCfg } from "config";
 import {
   createLogger,
   AddToDcrdLog,
@@ -30,6 +31,8 @@ import { concat, isString } from "../fp";
 import * as ln from "wallet/ln";
 import webSocket from "ws";
 import path from "path";
+import ini from "ini";
+import { makeRandomString } from "helpers";
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const debug = argv.debug || process.env.NODE_ENV === "development";
@@ -224,7 +227,37 @@ export function cleanShutdown(mainWindow, app) {
   });
 }
 
-// launchDCRD checks launches dcrd
+// upgradeToElectron8 updates for electron 8.0+ which doesn't support curve
+// P-521: in systems with the previous version of decrediton. Therefore we
+// create a new rpc.cert and rpc.key at our config file, so we can use it.
+// this method, removes old rpc.key and rpc.cert, passed as param, if they
+// exist and set UPGD_ELECTRON8 config param to true.
+// The new ones will be created once dcrd starts with its new rpccert and
+// rpckey params.
+const upgradeToElectron8 = (rpcCertPath, rpcKeyPath) => {
+  const globalCfg = getGlobalCfg();
+  if (!globalCfg.get(UPGD_ELECTRON8)) {
+    if (fs.existsSync(rpcKeyPath)) {
+      logger.log(
+        "info",
+        "Removing dcrd TLS key file for electron 8 upgrade at " + rpcKeyPath
+      );
+      fs.unlinkSync(rpcKeyPath);
+    }
+    if (fs.existsSync(rpcCertPath)) {
+      logger.log(
+        "info",
+        "Removing dcrd TLS cert file for electron 8 upgrade at " + rpcCertPath
+      );
+      fs.unlinkSync(rpcCertPath);
+    }
+    globalCfg.set(UPGD_ELECTRON8, true);
+  }
+};
+
+// launchDCRD launches dcrd with args passed to it. Store used data into the
+// node server memory, so it can be reused when refreshing decrediton.
+// decrediton consider dcrd as launched after dcrd finds a valid peer.
 export const launchDCRD = (reactIPC, testnet, appdata) =>
   new Promise((resolve, reject) => {
     const dcrdExe = getExecutablePath("dcrd", argv.custombinpath);
@@ -236,45 +269,36 @@ export const launchDCRD = (reactIPC, testnet, appdata) =>
       return;
     }
 
-    const args = ["--nolisten", "--tlscurve=P-256"];
-    const newConfig = readDcrdConfig(testnet, appdata);
+    const {
+      rpc_user,
+      rpc_pass,
+      rpc_cert,
+      rpc_key,
+      rpc_host,
+      rpc_port,
+      dcrdAppdata,
+      configFile
+    } = readDcrdConfig(testnet, appdata);
+    upgradeToElectron8(rpc_cert, rpc_key);
 
-    args.push(`--appdata=${newConfig.appdata}`);
-    args.push(`--configfile=${dcrdCfg(newConfig.configFile)}`);
+    const args = [
+      "--nolisten",
+      "--tlscurve=P-256",
+      `--rpccert=${rpc_cert}`,
+      `--rpckey=${rpc_key}`
+    ];
+
+    args.push(`--appdata=${dcrdAppdata}`);
+    args.push(`--configfile=${dcrdCfg(configFile)}`);
     if (testnet) {
       args.push("--testnet");
     }
 
-    // Upgrade for electron 8.0+ which doesn't support curve P-521: in systems
-    // with the previous version of decrediton installed we need to remove the
-    // rpc.key file so that the tls cert is recreated.
-    const rpcCertPath = getDcrdRpcCert(newConfig.appdata);
-    const rpcKeyPath = rpcCertPath.replace(/\.cert$/, ".key");
-    const globalCfg = getGlobalCfg();
-    if (!globalCfg.get(UPGD_ELECTRON8)) {
-      if (fs.existsSync(rpcKeyPath)) {
-        logger.log(
-          "info",
-          "Removing dcrd TLS key file for electron 8 upgrade at " + rpcKeyPath
-        );
-        fs.unlinkSync(rpcKeyPath);
-      }
-      if (fs.existsSync(rpcCertPath)) {
-        logger.log(
-          "info",
-          "Removing dcrd TLS cert file for electron 8 upgrade at " + rpcCertPath
-        );
-        fs.unlinkSync(rpcCertPath);
-      }
-      globalCfg.set(UPGD_ELECTRON8, true);
-    }
-
-    rpcuser = newConfig.rpc_user;
-    rpcpass = newConfig.rpc_pass;
-    newConfig.rpc_cert = rpcCertPath;
-    rpccert = newConfig.rpc_cert;
-    rpchost = newConfig.rpc_host;
-    rpcport = newConfig.rpc_port;
+    rpcuser = rpc_user;
+    rpcpass = rpc_pass;
+    rpccert = rpc_cert;
+    rpchost = rpc_host;
+    rpcport = rpc_port;
 
     if (os.platform() == "win32") {
       try {
@@ -319,12 +343,18 @@ export const launchDCRD = (reactIPC, testnet, appdata) =>
         reactIPC.send("warning-received", true, dataString);
       }
       if (dataString.includes("New valid peer")) {
-        newConfig.pid = dcrd.pid;
         dcrdPID = dcrd.pid;
-        logger.log("info", "dcrd started with pid:" + newConfig.pid);
+        logger.log("info", "dcrd started with pid:" + dcrdPID);
 
         dcrd.unref();
-        return resolve(newConfig);
+        return resolve({
+          rpc_user,
+          rpc_pass,
+          rpc_cert,
+          rpc_host,
+          rpc_port,
+          dcrdAppdata
+        });
       }
     });
 
@@ -334,6 +364,124 @@ export const launchDCRD = (reactIPC, testnet, appdata) =>
       reject(data.toString("utf-8"));
     });
   });
+
+// readDcrdConfig reads top level entries from dcrd.conf file. If appdata is
+// not defined, we read dcrd.conf file from our app directory. If it does not
+// exist, a new conf file is created with random rpc_user and rpc_pass.
+function readDcrdConfig(testnet, appdata) {
+  // createTempDcrdConf creates a temp dcrd conf file and writes it
+  // to decreditons config directory: getAppDataDirectory()
+  const createTempDcrdConf = (testnet) => {
+    let dcrdConf = {};
+    if (!fs.existsSync(dcrdCfg(getAppDataDirectory()))) {
+      const port = testnet ? "19109" : "9109";
+
+      dcrdConf = {
+        "Application Options": {
+          rpcuser: makeRandomString(10),
+          rpcpass: makeRandomString(10),
+          rpclisten: `127.0.0.1:${port}`
+        }
+      };
+      fs.writeFileSync(dcrdCfg(getAppDataDirectory()), ini.stringify(dcrdConf));
+    }
+    return getAppDataDirectory();
+  };
+
+  try {
+    let rpc_host = "127.0.0.1";
+    let rpc_port = testnet ? "19109" : "9109";
+    let dcrdAppdata = appdata;
+    let rpc_cert, rpc_key, configFile, rpc_user, rpc_pass;
+
+    // if appdata is set, it means it is an advanced start, so we need to
+    // warn about the need to update the rpc.cert and rpc.key files. Else
+    // we use decrediton's own rpc.cert and rpc.key.
+    if (appdata) {
+      dcrdAppdata = appdata;
+      rpc_cert = `${appdata}/rpc.cert`;
+      // if conf file of the appdata informed exists, we use it, otherwise
+      // we use decrediton's own dcrd.conf file.
+      if (fs.existsSync(dcrdCfg(appdata))) {
+        configFile = appdata;
+      } else {
+        configFile = getAppDataDirectory();
+      }
+    } else {
+      rpc_cert = `${getAppDataDirectory()}/rpc.cert`;
+      rpc_key = `${getAppDataDirectory()}/rpc.key`;
+      dcrdAppdata = getDcrdPath();
+      configFile = getAppDataDirectory();
+    }
+
+    // if dcrd.conf file is from decrediton dir and does not exist we create a
+    // new one.
+    if (
+      configFile === getAppDataDirectory() &&
+      !fs.existsSync(dcrdCfg(configFile))
+    ) {
+      createTempDcrdConf(testnet);
+    }
+    const readCfg = ini.parse(
+      Buffer.from(fs.readFileSync(dcrdCfg(configFile))).toString()
+    );
+
+    let userFound,
+      passFound = false;
+    // Look through all top level config entries
+    for (const [key, value] of Object.entries(readCfg)) {
+      if (key === "rpcuser") {
+        rpc_user = value;
+        userFound = true;
+      }
+      if (key === "rpcpass") {
+        rpc_pass = value;
+        passFound = true;
+      }
+      if (key === "rpclisten") {
+        const splitListen = value.split(":");
+        if (splitListen.length >= 2) {
+          rpc_host = splitListen[0];
+          rpc_port = splitListen[1];
+        }
+      }
+      if (!userFound && !passFound) {
+        // If user and pass aren't found on the top level, look through all
+        // next level config entries
+        for (const [key2, value2] of Object.entries(value)) {
+          if (key2 === "rpcuser") {
+            rpc_user = value2;
+            userFound = true;
+          }
+          if (key2 === "rpcpass") {
+            rpc_pass = value2;
+            passFound = true;
+          }
+          if (key2 === "rpclisten") {
+            const splitListen = value2.split(":");
+            if (splitListen.length >= 2) {
+              rpc_host = splitListen[0];
+              rpc_port = splitListen[1];
+            }
+          }
+        }
+      }
+    }
+    return {
+      rpc_user,
+      rpc_pass,
+      rpc_cert,
+      rpc_key,
+      rpc_host,
+      rpc_port,
+      configFile,
+      dcrdAppdata
+    };
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+}
 
 // DecodeDaemonIPCData decodes messages from an IPC message received from dcrd/
 // dcrwallet using their internal IPC protocol.
