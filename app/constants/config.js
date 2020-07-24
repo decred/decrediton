@@ -22,7 +22,7 @@ export const APPDATA = "appdata_path";
 export const DISABLE_HARDWARE_ACCEL = "disable_hardware_accel";
 export const LN_ENABLED = "ln_enabled";
 export const TREZOR_DEBUG = "trezor_debug";
-export const UPGD_ELECTRON8 = "upgd_electron8";
+export const UPGD_ELECTRON8 = "is_electron8";
 
 export const RPCUSER = "rpc_user";
 export const RPCPASS = "rpc_pass";
