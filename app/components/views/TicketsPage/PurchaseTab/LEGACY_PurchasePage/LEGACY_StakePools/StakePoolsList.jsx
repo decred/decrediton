@@ -11,10 +11,10 @@ import styles from "./StakePools.module.css";
 const StakePoolsList = ({
   configuredStakePools,
   onShowAddStakePool,
-  onHideStakePoolConfig,
   onRemoveStakePool,
   rescanRequest,
   toggleBackupModal,
+  toggleShowVsp,
   showModal
 }) => (
   <>
@@ -113,7 +113,7 @@ const StakePoolsList = ({
     <div className={styles.buttonContainer}>
       <InvisibleButton
         className={styles.cancelVSP}
-        onClick={onHideStakePoolConfig}>
+        onClick={() => toggleShowVsp(false)}>
         <T id="stakepools.list.form.cancel" m="Cancel" />
       </InvisibleButton>
       <KeyBlueButton
@@ -129,8 +129,7 @@ const StakePoolsList = ({
 StakePoolsList.propTypes = {
   configuredStakePools: PropTypes.array.isRequired,
   unconfiguredStakePools: PropTypes.array.isRequired,
-  onShowAddStakePool: PropTypes.func.isRequired,
-  onHideStakePoolConfig: PropTypes.func.isRequired
+  onShowAddStakePool: PropTypes.func.isRequired
 };
 
 export default StakePoolsList;
