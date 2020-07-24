@@ -41,40 +41,6 @@ export function hexReversedHashToArray(hexStr) {
   return res;
 }
 
-// readFileBackward reads a file backward and if maxSize is specified it will
-// only read until reach that size in bytes.
-export function readFileBackward(path, maxSize, end) {
-  fs.open(path, "r", function (error, descriptor) {
-    if (error) return end(error);
-    fs.fstat(descriptor, function (error, stats) {
-      if (error) return end(error);
-      let buffer, position;
-      if (stats.size > maxSize) {
-        buffer = Buffer.alloc(maxSize);
-        position = stats.size - maxSize;
-      } else {
-        buffer = Buffer.alloc(stats.size);
-        position = 0;
-      }
-      let offset = 0;
-      let length = buffer.length;
-      const read = function () {
-        fs.read(descriptor, buffer, offset, length, position, function (
-          error,
-          copied
-        ) {
-          if (error) return end(error);
-          offset += copied;
-          length -= copied;
-          if (length === 0) return end(undefined, buffer);
-          read();
-        });
-      };
-      read();
-    });
-  });
-}
-
 // str2utf8hex converts a (js, utf-16) string into (utf-8 encoded) hex.
 export function str2utf8hex(str) {
   return Buffer.from(str).toString("hex");

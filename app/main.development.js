@@ -66,7 +66,7 @@ import {
   inputMenu,
   selectionMenu
 } from "./main_dev/templates";
-import { readFileBackward } from "./helpers/byteActions";
+import { readFileBackward } from "./helpers";
 import electron from "electron";
 import { isString } from "./fp";
 import {
