@@ -238,7 +238,6 @@ export function cleanShutdown(mainWindow, app) {
 const upgradeToElectron8 = (rpcCert, rpcKey) => {
   const globalCfg = getGlobalCfg();
   if (!globalCfg.get(UPGD_ELECTRON8)) {
-    const files = [rpcCert, rpcKey];
     const directory = `${getAppDataDirectory()}/backup`;
 
     if (fs.existsSync(rpcKey)) {

@@ -1,5 +1,3 @@
-import fs from "fs-extra";
-
 // @flow
 export function reverseHash(s) {
   s = s.replace(/^(.(..)*)$/, "0$1"); // add a leading zero if needed

@@ -1,3 +1,4 @@
+import fs from "fs-extra";
 
 // readFileBackward reads a file backward and if maxSize is specified it will
 // only read until reach that size in bytes.
@@ -36,29 +37,22 @@ export function readFileBackward(path, maxSize, end) {
 // makeFileBackup makes a backup of the file on the directory specified.
 // If the directory does not exists, it will be created.
 export function makeFileBackup(file, directory) {
-  try {
-    if (!fs.existsSync(file)) {
-      throw "File does not exists";
-    }
-    // get file name. Which probably is everything after the last /
-    // ex: /home/.dcrd/rpc.cert
-    const fileName = file.substr(file.lastIndexOf('/') + 1);
-    console.log(fileName)
-    // if directory does not exists, create it.
-    if (!fs.existsSync(directory)) {
-      fs.mkdirSync(directory);
-    }
-    // copy it to directory specified
-    fs.copyFileSync(file, `${directory}/${fileName}`, err => {
-      if (err) {
-        throw err;
-        return;
-      };
-    });
-
-    return true;
-  } catch (err) {
-    throw err;
-    return false;
+  if (!fs.existsSync(file)) {
+    throw "File does not exists";
   }
+  // get file name. Which probably is everything after the last /
+  // ex: /home/.dcrd/rpc.cert
+  const fileName = file.substr(file.lastIndexOf("/") + 1);
+  // if directory does not exists, create it.
+  if (!fs.existsSync(directory)) {
+    fs.mkdirSync(directory);
+  }
+  // copy it to directory specified
+  fs.copyFileSync(file, `${directory}/${fileName}`, err => {
+    if (err) {
+      throw err;
+    };
+  });
+
+  return true;
 }
