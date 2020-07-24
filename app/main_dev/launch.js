@@ -32,7 +32,7 @@ import * as ln from "wallet/ln";
 import webSocket from "ws";
 import path from "path";
 import ini from "ini";
-import { makeRandomString } from "helpers";
+import { makeRandomString, makeFileBackup } from "helpers";
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const debug = argv.debug || process.env.NODE_ENV === "development";
@@ -229,27 +229,37 @@ export function cleanShutdown(mainWindow, app) {
 
 // upgradeToElectron8 updates for electron 8.0+ which doesn't support curve
 // P-521: in systems with the previous version of decrediton. Therefore we
-// create a new rpc.cert and rpc.key at our config file, so we can use it.
-// this method, removes old rpc.key and rpc.cert, passed as param, if they
-// exist and set UPGD_ELECTRON8 config param to true.
+// create a new rpc.cert and rpc.key where specified, so we can use them.
+// upgradeToElectron8 saves the passed old rpc.key and rpc.cert at a backup
+// directory at decrediton's config directory and  removes them, if they
+// exist. Set UPGD_ELECTRON8 config param to true.
 // The new ones will be created once dcrd starts with its new rpccert and
 // rpckey params.
-const upgradeToElectron8 = (rpcCertPath, rpcKeyPath) => {
+const upgradeToElectron8 = (rpcCert, rpcKey) => {
   const globalCfg = getGlobalCfg();
   if (!globalCfg.get(UPGD_ELECTRON8)) {
-    if (fs.existsSync(rpcKeyPath)) {
-      logger.log(
-        "info",
-        "Removing dcrd TLS key file for electron 8 upgrade at " + rpcKeyPath
-      );
-      fs.unlinkSync(rpcKeyPath);
+    const files = [rpcCert, rpcKey];
+    const directory = `${getAppDataDirectory()}/backup`;
+
+    if (fs.existsSync(rpcKey)) {
+      const backupDone = makeFileBackup(rpcKey, directory);
+      if (backupDone) {
+        logger.log(
+          "info",
+          "Removing dcrd TLS key file for electron 8 upgrade at " + rpcKey
+        );
+        fs.unlinkSync(rpcKey);
+      }
     }
-    if (fs.existsSync(rpcCertPath)) {
-      logger.log(
-        "info",
-        "Removing dcrd TLS cert file for electron 8 upgrade at " + rpcCertPath
-      );
-      fs.unlinkSync(rpcCertPath);
+    if (fs.existsSync(rpcCert)) {
+      const backupDone = makeFileBackup(rpcCert, directory);
+      if (backupDone) {
+        logger.log(
+          "info",
+          "Removing dcrd TLS cert file for electron 8 upgrade at " + rpcCert
+        );
+        fs.unlinkSync(rpcCert);
+      }
     }
     globalCfg.set(UPGD_ELECTRON8, true);
   }
@@ -280,11 +290,6 @@ export const launchDCRD = (reactIPC, testnet, appdata) =>
       configFile
     } = readDcrdConfig(testnet, appdata);
 
-    // upgradeToElectron8 will remove the rpc_cert and rpc_key in case they
-    // exist and an upgrade to electron 8 is necessary.
-    // If an appdata was passed, it will remove its rpc.cert and rpc.key
-    // which can be annoying. We should do a backup or warn the user about it,
-    // but right now it will silently remove them.
     upgradeToElectron8(rpc_cert, rpc_key);
 
     const args = [
@@ -532,7 +537,7 @@ export const launchDCRWallet = (
     logger.log(
       "error",
       "The dcrwallet executable does not exist. Expected to find it at " +
-        dcrwExe
+      dcrwExe
     );
     return;
   }
@@ -700,7 +705,7 @@ export const launchDCRLnd = (
       logger.log(
         "error",
         "The dcrlnd executable does not exist. Expected to find it at " +
-          dcrlndExe
+        dcrlndExe
       );
       reject("The dcrlnd executable does not exist at " + dcrlndExe);
     }
