@@ -1,5 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
-import { Tooltip } from "shared";
+import { Tooltip } from "pi-ui";
 
 const rescanBtnMessage = `Initiate a transaction rescan.
 
@@ -10,7 +10,7 @@ but does not re-download it.`;
 
 export default ({ rescanRequest, rescanAttempt }) => (
   <Tooltip
-    text={<T id="sidebar.rescanBtn.tip" m={rescanBtnMessage} />}
+    content={<T id="sidebar.rescanBtn.tip" m={rescanBtnMessage} />}
     disabled={rescanRequest}>
     <button
       disabled={!!rescanRequest}

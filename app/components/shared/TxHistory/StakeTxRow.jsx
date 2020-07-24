@@ -1,9 +1,9 @@
 import { useMemo } from "react";
 import Row from "./Row";
 import { FormattedMessage as T } from "react-intl";
-import { Balance, Tooltip } from "shared";
+import { Balance } from "shared";
 import { diffBetweenTwoTs } from "helpers/dateFormat";
-import { classNames } from "pi-ui";
+import { classNames, Tooltip } from "pi-ui";
 import { messageByType } from "./helpers";
 import TicketPriceMessage from "./TicketPriceMessage";
 import styles from "./TxHistory.module.css";
@@ -75,10 +75,10 @@ const StakeTxRow = ({
         )}
       </div>
       <div className={styles.priceReward}>
-        <Tooltip text={<TicketPriceMessage ticketPrice={ticketPrice} />}>
+        <Tooltip content={<TicketPriceMessage ticketPrice={ticketPrice} />}>
           <Balance amount={ticketPrice} />
         </Tooltip>
-        <Tooltip text={ticketRewardMessage}>
+        <Tooltip content={ticketRewardMessage}>
           <Balance
             classNameWrapper={classNames(
               styles.ticketReward,
@@ -89,7 +89,7 @@ const StakeTxRow = ({
           />
         </Tooltip>
         {daysToVote !== null && !isNaN(daysToVote) && (
-          <Tooltip text={daysToVoteMessage}>
+          <Tooltip content={daysToVoteMessage}>
             <div className={styles.daysToVote}>
               <T
                 id="statusSmall.daysToVotePlural"
@@ -120,7 +120,7 @@ const StakeTxRow = ({
           amount={ticketReward}
         />
         {daysToVote !== null && !isNaN(daysToVote) ? (
-          <Tooltip text={daysToVoteMessage}>
+          <Tooltip content={daysToVoteMessage}>
             <div className={styles.daysToVote}>
               <T
                 id="statusSmall.daysToVotePlural"

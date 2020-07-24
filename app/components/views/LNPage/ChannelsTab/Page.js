@@ -1,5 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
-import { Balance, VerticalAccordion, Tooltip } from "shared";
+import { Balance, VerticalAccordion } from "shared";
+import { Tooltip } from "pi-ui";
 import { KeyBlueButton, CloseChannelModalButton } from "buttons";
 import { TextInput, DcrInput } from "inputs";
 import {
@@ -112,7 +113,7 @@ export default ({
         <div className="openchannel-header-wrapper" key={c.channelPoint}>
           <Tooltip
             className="close-channel-btn"
-            text={
+            content={
               <T id="ln.channelsTab.closeChannelBtn" m="Close the channel" />
             }>
             <CloseChannelModalButton

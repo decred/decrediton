@@ -1,11 +1,11 @@
 import { FormattedMessage as T } from "react-intl";
-import { Tooltip } from "shared";
+import { Tooltip } from "pi-ui";
 
 const rescanBtnMessage = "Cancel rescan";
 
 export default ({ rescanRequest, rescanCancel }) => (
   <Tooltip
-    text={<T id="sidebar.rescanCancelBtn.tip" m={rescanBtnMessage} />}
+    content={<T id="sidebar.rescanCancelBtn.tip" m={rescanBtnMessage} />}
     disabled={!rescanRequest}>
     <button
       disabled={!rescanRequest}

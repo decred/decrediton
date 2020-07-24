@@ -1,6 +1,6 @@
 import { ImportScriptModal } from "modals";
 import { importScript } from "connectors";
-import { Tooltip } from "shared";
+import { Tooltip } from "pi-ui";
 import ModalButton from "./ModalButton";
 import InvisibleButton from "./InvisibleButton";
 import { FormattedMessage as T } from "react-intl";
@@ -13,7 +13,7 @@ const ImportScriptIconButton = ({
 }) => (
   <Tooltip
     warning={!!rescanRequest}
-    text={
+    content={
       !rescanRequest ? (
         <T
           id="purchaseTickets.import"

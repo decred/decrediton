@@ -9,8 +9,8 @@ import {
   CreateWalletMsg
 } from "../../messages";
 import { WORDS, HEX } from "constants";
-import { Tooltip, CreatePassPhrase } from "shared";
-import { classNames } from "pi-ui";
+import { CreatePassPhrase } from "shared";
+import { Tooltip, classNames } from "pi-ui";
 import styles from "../CreateWallet.module.css";
 
 const ExistingSeedForm = ({
@@ -42,7 +42,7 @@ const ExistingSeedForm = ({
         toggleAction={handleToggle}
       />
       {sendBack && (
-        <Tooltip text={<GoBackMsg />}>
+        <Tooltip content={<GoBackMsg />}>
           <div className={styles.goBackScreenButton} onClick={sendBack} />
         </Tooltip>
       )}

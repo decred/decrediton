@@ -1,12 +1,12 @@
 import "style/StakePool.less";
-import { Tooltip } from "shared";
+import { Tooltip } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
 
 // enabled shows the switch as on or off
 // disabled unable to trigger the onClick method
 const AutoBuyerSwitch = ({ enabled, onClick, disabled }) => (
   <Tooltip
-    text={
+    content={
       enabled ? (
         <T id="autobuyer.enabled" m="Turn off auto buyer" />
       ) : (

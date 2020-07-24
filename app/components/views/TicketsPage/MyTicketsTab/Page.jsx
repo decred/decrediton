@@ -5,7 +5,8 @@ import {
   NoMoreTicketsIndicator,
   NoTicketsIndicator
 } from "indicators";
-import { TxHistory, Subtitle, Tooltip } from "shared";
+import { TxHistory, Subtitle } from "shared";
+import { Tooltip } from "pi-ui";
 import { EyeFilterMenu } from "buttons";
 import "style/MyTickets.less";
 
@@ -32,7 +33,7 @@ const subtitleMenu = ({
     </Tooltip>
     <Tooltip
       tipWidth={300}
-      text={<T id="tickets.tickettypes.tooltip" m="Ticket Status" />}>
+      content={<T id="tickets.tickettypes.tooltip" m="Ticket Status" />}>
       <EyeFilterMenu
         labelKey="label"
         keyField="key"

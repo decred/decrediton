@@ -2,7 +2,7 @@ import { MeteredChart } from "charts";
 import { myTicketsCharts } from "connectors";
 import { FormattedMessage as T } from "react-intl";
 import { LEGACY_StakePoolSelect } from "inputs";
-import { Tooltip } from "shared";
+import { Tooltip } from "pi-ui";
 
 @autobind
 class StakePoolStats extends React.Component {
@@ -58,7 +58,7 @@ class StakePoolStats extends React.Component {
           </div>
           <div className="my-tickets-stakepool-stats-row">
             <Tooltip
-              text={
+              content={
                 <T
                   id="mytickets.statistics.stakepool.ticketsTip"
                   m="{percentage}% proportion of network tickets"
@@ -86,7 +86,7 @@ class StakePoolStats extends React.Component {
           </div>
           <div className="my-tickets-stakepool-stats-row">
             <Tooltip
-              text={
+              content={
                 <T
                   id="mytickets.statistics.stakepool.votedTip"
                   m="{percentage}% of tickets missed"

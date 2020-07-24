@@ -5,7 +5,8 @@ import {
   DcrInput,
   ReceiveAccountsSelect
 } from "inputs";
-import { Tooltip, Balance } from "shared";
+import { Balance } from "shared";
+import { Tooltip } from "pi-ui";
 import "style/SendPage.less";
 
 const messages = defineMessages({
@@ -27,7 +28,7 @@ const getSendAllFundsIcon = ({
 }) =>
   outputs.length > 1 ? (
     <Tooltip
-      text={
+      content={
         <T
           id="send.sendAllTitle.disabled"
           m="Send all funds from selected account - Disabled"
@@ -37,14 +38,14 @@ const getSendAllFundsIcon = ({
     </Tooltip>
   ) : !isSendAll ? (
     <Tooltip
-      text={
+      content={
         <T id="send.sendAllTitle" m="Send all funds from selected account" />
       }>
       <a className="send-icon-wrapper wallet-icon" onClick={onShowSendAll} />
     </Tooltip>
   ) : (
     <Tooltip
-      text={<T id="send.cancelSendAllTitle" m="Cancel sending all funds" />}>
+      content={<T id="send.cancelSendAllTitle" m="Cancel sending all funds" />}>
       <a className="send-icon-wrapper cancel-icon" onClick={onHideSendAll} />
     </Tooltip>
   );
@@ -72,7 +73,7 @@ const getAddInputIcon = ({
 const getSendSelfIcon = ({ isSendSelf, onShowSendSelf, onShowSendOthers }) =>
   !isSendSelf ? (
     <Tooltip
-      text={<T id="send.sendSelfTitle" m="Send funds to another account" />}>
+      content={<T id="send.sendSelfTitle" m="Send funds to another account" />}>
       <a
         className="send-icon-wrapper self-account-icon"
         onClick={onShowSendSelf}
@@ -80,7 +81,9 @@ const getSendSelfIcon = ({ isSendSelf, onShowSendSelf, onShowSendOthers }) =>
     </Tooltip>
   ) : (
     <Tooltip
-      text={<T id="send.sendOthersTitle" m="Send funds to another wallet" />}>
+      content={
+        <T id="send.sendOthersTitle" m="Send funds to another wallet" />
+      }>
       <a
         className="send-icon-wrapper cancel-icon "
         onClick={onShowSendOthers}

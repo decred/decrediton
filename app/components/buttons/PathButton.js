@@ -1,8 +1,8 @@
 import { FormattedMessage as T } from "react-intl";
-import { Tooltip } from "shared";
+import { Tooltip } from "pi-ui";
 
 const PathButton = ({ disabled, onClick }) => (
-  <Tooltip text={<T id="startup.dataDir.tip" m={"Select a path"} />}>
+  <Tooltip content={<T id="startup.dataDir.tip" m={"Select a path"} />}>
     <div className={"path-button"} {...{ disabled, onClick }} />
   </Tooltip>
 );

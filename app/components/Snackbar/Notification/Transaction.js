@@ -83,7 +83,7 @@ const Transaction = ({
         />
       </div>
       <div className="snackbar-information-row-tx">
-        <Tooltip width={300} text={`${message.txHash}`}>
+        <Tooltip content={`${message.txHash}`}>
           <Link
             onClick={onDismissMessage}
             to={`/transactions/history/${message.txHash}`}>

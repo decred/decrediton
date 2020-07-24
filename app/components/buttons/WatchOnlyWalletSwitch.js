@@ -1,4 +1,4 @@
-import { Tooltip } from "shared";
+import { Tooltip } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
 import "style/EyeFilterMenu.less";
 import "style/StakePool.less";
@@ -6,7 +6,7 @@ import "style/StakePool.less";
 const WatchOnlyWalletSwitch = ({ enabled, onClick, className }) => (
   <div className={className ? className : ""}>
     <Tooltip
-      text={
+      content={
         enabled ? (
           <T id="watchOnly.enabled" m="Watch Only" />
         ) : (

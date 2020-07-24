@@ -1,7 +1,8 @@
 // @flow
 import { rescan } from "connectors";
 import { FormattedMessage as T } from "react-intl";
-import { Balance, RoutedTabsHeader, RoutedTab, Tooltip } from "shared";
+import { Balance, RoutedTabsHeader, RoutedTab } from "shared";
+import { Tooltip } from "pi-ui";
 import { Switch, Route, Redirect } from "react-router-dom";
 import RecentTransactions from "./tables/RecentTransactions";
 import TicketActivity from "./tables/TicketActivity";
@@ -18,15 +19,15 @@ const tabMessages = [
 
 const tabLink = (i) => {
   const m = [
-    <Tooltip text={tabMessages[i]}>
+    <Tooltip content={tabMessages[i]}>
       <span className="overview-tab balance" />
       <span className="overview-tab-label">{tabMessages[i]}</span>
     </Tooltip>,
-    <Tooltip text={tabMessages[i]}>
+    <Tooltip content={tabMessages[i]}>
       <span className="overview-tab tickets" />
       <span className="overview-tab-label">{tabMessages[i]}</span>
     </Tooltip>,
-    <Tooltip text={tabMessages[i]}>
+    <Tooltip content={tabMessages[i]}>
       <span className="overview-tab tx" />
       <span className="overview-tab-label">{tabMessages[i]}</span>
     </Tooltip>

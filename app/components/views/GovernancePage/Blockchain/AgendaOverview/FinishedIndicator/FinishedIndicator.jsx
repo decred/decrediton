@@ -1,10 +1,10 @@
 import { FormattedMessage as T } from "react-intl";
-import { Tooltip } from "shared";
+import { Tooltip } from "pi-ui";
 import styles from "./FinishedIndicator.module.css";
 
 const FinishedIndicator = ({ passed }) => (
   <Tooltip
-    text={
+    content={
       <T
         id="agenda.card.finishedTooltip"
         m="This agenda has finished voting and {passed}.  You may still toggle your vote choices, but they will no longer be tallied."

@@ -1,6 +1,6 @@
 import { loadingTickets } from "connectors";
 import { FormattedMessage as T } from "react-intl";
-import { Tooltip } from "shared";
+import { Tooltip } from "pi-ui";
 import "style/Loading.less";
 
 const DescMessage = ({ startRequestHeight, currentBlockHeight }) => (
@@ -27,7 +27,7 @@ const AscMessage = ({ startRequestHeight, currentBlockHeight }) => (
 
 const CancelLoadingTicketsButton = ({ cancelGetTransactions }) => (
   <Tooltip
-    text={
+    content={
       <T
         id="mytickets.loadingMoreTickets.cancelBtn"
         m={"Cancel listing tickets"}

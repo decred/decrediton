@@ -5,13 +5,14 @@ import StakeRewardsChartPage from "./charts/StakeRewards";
 import HeatmapStats from "./Heatmap/Heatmap";
 import StakePoolStats from "./charts/StakePoolStats";
 import { DecredLoading, NoStats } from "indicators";
-import { Tooltip, Subtitle } from "shared";
+import { Subtitle } from "shared";
+import { Tooltip } from "pi-ui";
 
 const subtitleMenu = ({ allStakePoolStats, hasStats }) => (
   <div className="my-tickets-stats-links">
     {allStakePoolStats.length > 0 && (
       <Tooltip
-        text={<T id="mytickets.statistics.stakepoolstats.title" m="VSP" />}>
+        content={<T id="mytickets.statistics.stakepoolstats.title" m="VSP" />}>
         <Link
           to="/tickets/statistics/stakepool"
           activeClassName="my-tickets-active-chart-link stakepool"
@@ -22,7 +23,7 @@ const subtitleMenu = ({ allStakePoolStats, hasStats }) => (
     {hasStats && (
       <>
         <Tooltip
-          text={
+          content={
             <T id="mytickets.statistics.stakerewards.link" m="Stake Rewards" />
           }>
           <Link
@@ -32,7 +33,7 @@ const subtitleMenu = ({ allStakePoolStats, hasStats }) => (
           />
         </Tooltip>
         <Tooltip
-          text={<T id="mytickets.statistics.votetime.link" m="Vote Time" />}>
+          content={<T id="mytickets.statistics.votetime.link" m="Vote Time" />}>
           <Link
             to="/tickets/statistics/voteTime"
             activeClassName="my-tickets-active-chart-link vote-time"
@@ -40,7 +41,7 @@ const subtitleMenu = ({ allStakePoolStats, hasStats }) => (
           />
         </Tooltip>
         <Tooltip
-          text={<T id="mytickets.statistics.heatmap.link" m="Heatmap" />}>
+          content={<T id="mytickets.statistics.heatmap.link" m="Heatmap" />}>
           <Link
             to="/tickets/statistics/heatmap"
             activeClassName="my-tickets-active-chart-link heatmap-icon"

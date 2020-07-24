@@ -3,7 +3,7 @@ import { FormattedMessage as T } from "react-intl";
 import { Documentation } from "shared";
 import { KeyBlueButton, InvisibleButton } from "buttons";
 import { BackBtnMsg, GoBackMsg, CreateNewWalletTitle } from "../../messages";
-import { Tooltip } from "shared";
+import { Tooltip } from "pi-ui";
 import { classNames } from "pi-ui";
 import styles from "../CreateWallet.module.css";
 
@@ -21,7 +21,7 @@ const CopySeedPage = ({
         <CreateNewWalletTitle />
       </div>
       {sendBack && (
-        <Tooltip text={<GoBackMsg />}>
+        <Tooltip content={<GoBackMsg />}>
           <div className={styles.goBackScreenButton} onClick={sendBack} />
         </Tooltip>
       )}

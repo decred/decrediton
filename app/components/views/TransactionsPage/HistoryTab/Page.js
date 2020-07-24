@@ -1,8 +1,8 @@
 import { EyeFilterMenu, EyeFilterMenuWithSlider } from "buttons";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
-import { Tooltip, Subtitle } from "shared";
+import { TxHistory, Subtitle } from "shared";
 import { TextInput } from "inputs";
-import { TxHistory } from "shared";
+import { Tooltip } from "pi-ui";
 import {
   LoadingMoreTransactionsIndicator,
   NoMoreTransactionsIndicator,
@@ -44,7 +44,7 @@ const subtitleMenu = ({
     </div>
     <Tooltip
       tipWidth={300}
-      text={<T id="transactions.sortby.tooltip" m="Sort By" />}>
+      content={<T id="transactions.sortby.tooltip" m="Sort By" />}>
       <EyeFilterMenuWithSlider
         {...{ unitDivisor, currencyDisplay }}
         labelKey="label"
@@ -60,7 +60,7 @@ const subtitleMenu = ({
     </Tooltip>
     <Tooltip
       tipWidth={300}
-      text={<T id="transactions.txtypes.tooltip" m="Transaction Type" />}>
+      content={<T id="transactions.txtypes.tooltip" m="Transaction Type" />}>
       <EyeFilterMenu
         options={txTypes}
         selected={selectedTxTypeKey}
