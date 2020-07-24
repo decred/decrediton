@@ -1,3 +1,5 @@
+import { classNames } from "pi-ui";
+
 const InvisibleButton = ({
   className,
   style,
@@ -8,9 +10,9 @@ const InvisibleButton = ({
   children
 }) => (
   <div
-    className={"invisible-button" + (className ? " " + className : "")}
+    className={classNames("invisible-button", className && className)}
     style={{ ...style, display: block ? "block" : undefined }}
-    onClick={() => !disabled && onClick && onClick()}
+    onClick={() => (!disabled && onClick ? onClick() : undefined)}
     {...{ type, disabled }}>
     {children}
   </div>

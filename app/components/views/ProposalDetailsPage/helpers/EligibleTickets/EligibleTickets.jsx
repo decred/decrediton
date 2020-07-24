@@ -12,7 +12,7 @@ const EligibleTickets = ({ tickets, tsDate, voteChoice }) => {
   return (
     <div
       className={styles.wrapper}
-      onClick={hasTickets && toggleExapndedHandler}>
+      onClick={hasTickets ? toggleExapndedHandler : undefined}>
       <div
         className={classNames(
           styles.header,
