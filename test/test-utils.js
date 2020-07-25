@@ -27,8 +27,8 @@ afterEach(() => {
 
 function render(ui, renderOptions) {
   const locale = locales[1];
+  const history = createMemoryHistory();
   const Wrapper = ({ children }) => {
-    const history = createMemoryHistory();
     const initialState = (renderOptions && Object.prototype.hasOwnProperty.call(
       renderOptions,
       "initialState"
@@ -63,7 +63,10 @@ function render(ui, renderOptions) {
     children: PropTypes.node
   };
 
-  return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
+  return {
+    ...rtlRender(ui, { wrapper: Wrapper, ...renderOptions }),
+    history
+  };
 };
 
 export * from "@testing-library/react";

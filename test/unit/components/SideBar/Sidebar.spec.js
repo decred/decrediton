@@ -138,7 +138,7 @@ test("render default sidebar", () => {
   expect(
     screen.queryByTestId("menu-link-notification-icon")
   ).not.toBeInTheDocument();
-  
+
   // expect logo is a hamburger icon
   const logo = screen.queryByTestId("logo");
   expect(logo).toHaveClass("reducedLogo");
@@ -387,4 +387,13 @@ test("test menu link notification icon", () => {
   expect(screen.getByTestId("menu-link-notification-icon")).toBeInTheDocument();
   expect(mockNewProposalsStartedVoting).toHaveBeenCalled();
   mockNewProposalsStartedVoting.mockRestore();
+});
+
+test("test tabbedPage location", () => {
+  const { history } = render(<SideBar />);
+  expect(screen.queryByTestId("transactions")).not.toHaveClass(
+    "menuLinkActive"
+  );
+  history.push("transactions/send");
+  expect(screen.queryByTestId("transactions")).toHaveClass("menuLinkActive");
 });
