@@ -7,6 +7,7 @@
   "scripts": {
     "test": "cross-env NODE_ENV=test jest",
     "test-watch": "./node_modules/.bin/jest --watch",
+    "test-debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand --watch",
     "test-e2e": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 mocha --retries 2 --compilers js:@babel/register --require ./test/setup.js ./test/e2e.js",
     "lint": "./node_modules/.bin/eslint app scripts *.js && ./node_modules/.bin/stylelint app/style/*.less",
     "lint-fix": "./node_modules/.bin/eslint app scripts *.js --fix && ./node_modules/.bin/stylelint app/style/*.less --fix",
