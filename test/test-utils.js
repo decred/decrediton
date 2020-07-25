@@ -35,7 +35,7 @@ function render(ui, renderOptions) {
     ))
       ? renderOptions.initialState
       : {};
-    const store = configureStore(initialState || {}, history);
+    const store = configureStore(initialState, history);
     const ContainerApp = () => {
       return (
         <IntlProvider

@@ -3,6 +3,7 @@ import { render } from "test-utils.js";
 import "@testing-library/jest-dom/extend-expect";
 import user from "@testing-library/user-event";
 import { screen } from "@testing-library/react";
+import * as sel from "selectors";
 import {
   rescanAttempt as mockRescanAttempt,
   rescanCancel as mockRescanCancel
@@ -134,7 +135,10 @@ test("render default sidebar", () => {
   expect(screen.queryByText(/total balance/i)).not.toBeInTheDocument();
   expect(screen.queryByText(/watch-only/i)).not.toBeInTheDocument();
   expect(screen.queryByText(/mixer is running/i)).not.toBeInTheDocument();
-
+  expect(
+    screen.queryByTestId("menu-link-notification-icon")
+  ).not.toBeInTheDocument();
+  
   // expect logo is a hamburger icon
   const logo = screen.queryByTestId("logo");
   expect(logo).toHaveClass("reducedLogo");
@@ -342,7 +346,7 @@ test("test rescan on collapsed sidebar", () => {
 });
 
 test("test Tooltip on Logo when isWatchingOnly mode is active", () => {
-  const { debug } = render(<SideBar />, {
+  render(<SideBar />, {
     initialState: {
       walletLoader: {
         isWatchingOnly: true
@@ -356,7 +360,6 @@ test("test Tooltip on Logo when isWatchingOnly mode is active", () => {
       This is a watch-only wallet with limited functionality.
     </span>
   `);
-  debug();
 });
 
 test("test Tooltip on Logo when accountMixerRunning mode is active", () => {
@@ -374,4 +377,14 @@ test("test Tooltip on Logo when accountMixerRunning mode is active", () => {
   The mixer is running. Go to Privacy view for more information
 </span>
 `);
+});
+
+test("test menu link notification icon", () => {
+  const mockNewProposalsStartedVoting = (sel.newProposalsStartedVoting = jest.fn(
+    () => true
+  ));
+  render(<SideBar />);
+  expect(screen.getByTestId("menu-link-notification-icon")).toBeInTheDocument();
+  expect(mockNewProposalsStartedVoting).toHaveBeenCalled();
+  mockNewProposalsStartedVoting.mockRestore();
 });

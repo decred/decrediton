@@ -6,7 +6,9 @@ const MenuLink = React.memo(
   React.forwardRef(({ path, link, icon, notifProp, sidebarOnBottom }, ref) => (
     <div ref={ref}>
       {notifProp ? (
-        <span className={style.menuLinkNotificationIcon}></span>
+        <span
+          data-testid="menu-link-notification-icon"
+          className={style.menuLinkNotificationIcon}></span>
       ) : null}
       <Link
         className={classNames(style.menuLink, style[icon + "Icon"])}
