@@ -32,9 +32,9 @@ jest.mock("actions/ControlActions", () => {
 
 const testCurrentBlockHeight = 12;
 
-const toHaveDefaultMenuLinks = (params) => {
+const expectToHaveDefaultMenuLinks = (params) => {
   const { sidebarOnBottom, isTrezorEnabled, isLnEnabled } = params || {};
-  const toHaveMenuLink = (name, className, href, icon) => {
+  const expectToHaveMenuLink = (name, className, href, icon) => {
     const menulink = screen.queryByTestId(icon);
     expect(menulink).toHaveTextContent(sidebarOnBottom ? "" : name);
     expect(menulink).toHaveClass(className);
@@ -42,21 +42,26 @@ const toHaveDefaultMenuLinks = (params) => {
     expect(menulink).toHaveAttribute("icon", icon);
   };
 
-  toHaveMenuLink(/overview/i, "overviewIcon", "/home", "overview");
-  toHaveMenuLink(
+  expectToHaveMenuLink(/overview/i, "overviewIcon", "/home", "overview");
+  expectToHaveMenuLink(
     /transactions/i,
     "transactionsIcon",
     "/transactions",
     "transactions"
   );
-  toHaveMenuLink(/tickets/i, "ticketsIcon", "/tickets", "tickets");
-  toHaveMenuLink(/accounts/i, "accountsIcon", "/accounts", "accounts");
-  toHaveMenuLink(/security/i, "securitycntrIcon", "/security", "securitycntr");
-  toHaveMenuLink(/help/i, "helpIcon", "/help", "help");
-  toHaveMenuLink(/settings/i, "settingsIcon", "/settings", "settings");
+  expectToHaveMenuLink(/tickets/i, "ticketsIcon", "/tickets", "tickets");
+  expectToHaveMenuLink(/accounts/i, "accountsIcon", "/accounts", "accounts");
+  expectToHaveMenuLink(
+    /security/i,
+    "securitycntrIcon",
+    "/security",
+    "securitycntr"
+  );
+  expectToHaveMenuLink(/help/i, "helpIcon", "/help", "help");
+  expectToHaveMenuLink(/settings/i, "settingsIcon", "/settings", "settings");
 
   if (isTrezorEnabled) {
-    toHaveMenuLink(/trezor setup/i, "trezorIcon", "/trezor", "trezor");
+    expectToHaveMenuLink(/trezor setup/i, "trezorIcon", "/trezor", "trezor");
   } else {
     expect(
       screen.queryByRole("link", { name: "trezor" })
@@ -64,7 +69,7 @@ const toHaveDefaultMenuLinks = (params) => {
   }
 
   if (isLnEnabled) {
-    toHaveMenuLink(/lightning network/i, "lnIcon", "/ln", "ln");
+    expectToHaveMenuLink(/lightning network/i, "lnIcon", "/ln", "ln");
   } else {
     expect(screen.queryByRole("link", { name: "ln" })).not.toBeInTheDocument();
   }
@@ -77,7 +82,7 @@ const clickOnMenuLink = (testid) => {
   expect(menuLink).toHaveClass("menuLinkActive");
 };
 
-test("render default sidebar", () => {
+test("renders default sidebar", () => {
   const testBalances = [
     {
       accountNumber: 0,
@@ -116,7 +121,7 @@ test("render default sidebar", () => {
     }
   });
 
-  toHaveDefaultMenuLinks();
+  expectToHaveDefaultMenuLinks();
 
   expect(
     screen.queryByRole("link", {
@@ -139,14 +144,14 @@ test("render default sidebar", () => {
     screen.queryByTestId("menu-link-notification-icon")
   ).not.toBeInTheDocument();
 
-  // expect logo is a hamburger icon
+  // expects logo is a hamburger icon
   const logo = screen.queryByTestId("logo");
   expect(logo).toHaveClass("reducedLogo");
   expect(screen.getByTestId("logo-div")).toHaveClass("hamburger");
   expect(screen.queryByTestId("reduced-arrow")).not.toBeInTheDocument();
   expect(screen.queryByText(/total balance/i)).not.toBeInTheDocument();
 
-  // expand the sidebar
+  // expands the sidebar
   user.click(logo);
 
   expect(screen.queryByTestId("container")).toHaveClass("sidebar");
@@ -154,13 +159,13 @@ test("render default sidebar", () => {
   expect(screen.getByTestId("logo-div")).toHaveClass("mainnet");
   expect(screen.getByText(/total balance/i)).toBeInTheDocument();
 
-  // test mouse hover on account list
+  // tests mouse hover on the account list
   const accountList = screen.getByTestId("account-list");
   expect(accountList).toHaveClass("extended");
   const totalBalanceContainer = screen.getByTestId("total-balance-container");
   user.hover(totalBalanceContainer);
 
-  // check AccountNames
+  // checks AccountNames
   const testAccountNames = testBalances.reduce((accumulator, balance) => {
     if (!balance["hidden"]) {
       accumulator.push(
@@ -183,7 +188,7 @@ test("render default sidebar", () => {
   user.unhover(totalBalanceContainer);
   expect(accountList).toHaveClass("extended");
 
-  // collapse the sidebar
+  // collapses the sidebar
   user.click(screen.getByTestId("reduced-arrow"));
 
   expect(logo).toHaveClass("reducedLogo");
@@ -191,18 +196,18 @@ test("render default sidebar", () => {
   expect(screen.queryByTestId("reduced-arrow")).not.toBeInTheDocument();
   expect(screen.queryByText(/total balance/i)).not.toBeInTheDocument();
 
-  //click tickets menu link on sidebar
+  //clicks tickets menu link on the sidebar
   clickOnMenuLink("tickets");
 });
 
-test("render sidebar on bottom", () => {
+test("renders sidebar on the bottom", () => {
   render(<SideBar />, {
     initialState: {
       sidebar: { sidebarOnBottom: true }
     }
   });
 
-  toHaveDefaultMenuLinks({
+  expectToHaveDefaultMenuLinks({
     sidebarOnBottom: true
   });
   expect(
@@ -214,17 +219,17 @@ test("render sidebar on bottom", () => {
   const logo = screen.queryByTestId("logo");
   expect(logo).toHaveClass("reducedLogo");
 
-  //click tickets menu link on sidebar
+  //clicks tickets menu link on the sidebar
   clickOnMenuLink("tickets");
 
-  // expand the sidebar
+  // expands the sidebar
   user.click(logo);
 
   expect(screen.getByTestId("reduced-arrow")).toHaveClass("reducedArrow");
   expect(screen.getByTestId("logo-div")).toHaveClass("mainnet");
   expect(screen.getByText(/total balance/i)).toBeInTheDocument();
 
-  // collapse the sidebar
+  // collapses the sidebar
   user.click(screen.getByTestId("reduced-arrow"));
 
   expect(
@@ -236,17 +241,17 @@ test("render sidebar on bottom", () => {
   expect(logo).toHaveClass("reducedLogo");
 });
 
-test("render sidebar with trezor enabled", () => {
+test("renders sidebar with trezor enabled", () => {
   render(<SideBar />, {
     initialState: { trezor: { enabled: true } }
   });
 
-  toHaveDefaultMenuLinks({
+  expectToHaveDefaultMenuLinks({
     isTrezorEnabled: true
   });
 });
 
-test("render sidebar on bottom with animation enabled", () => {
+test("renders sidebar on the bottom with animation enabled", () => {
   render(<SideBar />, {
     initialState: {
       sidebar: { sidebarOnBottom: true },
@@ -254,21 +259,21 @@ test("render sidebar on bottom with animation enabled", () => {
     }
   });
 
-  //click tickets menu link on sidebar
+  //clicks tickets menu link on the sidebar
   clickOnMenuLink("tickets");
 });
 
-test("render sidebar with lightning network enabled", () => {
+test("renders sidebar with lightning network enabled", () => {
   render(<SideBar />, {
     initialState: { ln: { enabled: true } }
   });
 
-  toHaveDefaultMenuLinks({
+  expectToHaveDefaultMenuLinks({
     isLnEnabled: true
   });
 });
 
-test("render expanded sidebar with testnet network enabled", () => {
+test("renders expanded sidebar with testnet network enabled", () => {
   render(<SideBar />, {
     initialState: {
       settings: {
@@ -282,7 +287,7 @@ test("render expanded sidebar with testnet network enabled", () => {
   expect(screen.getByTestId("logo-div")).toHaveClass("testnet");
 });
 
-test("test rescan on expanded sidebar", () => {
+test("tests rescan on the expanded sidebar", () => {
   render(<SideBar />, {
     initialState: {
       sidebar: {
@@ -316,7 +321,7 @@ test("test rescan on expanded sidebar", () => {
   expect(screen.queryByTestId("rescan-cancel-button")).not.toBeInTheDocument();
 });
 
-test("test rescan on collapsed sidebar", () => {
+test("tests rescan on the collapsed sidebar", () => {
   render(<SideBar />, {
     initialState: {
       sidebar: {
@@ -345,7 +350,7 @@ test("test rescan on collapsed sidebar", () => {
   expect(screen.queryByTestId("rescan-cancel-button")).not.toBeInTheDocument();
 });
 
-test("test Tooltip on Logo when isWatchingOnly mode is active", () => {
+test("tests tooltip on Logo when isWatchingOnly mode is active", () => {
   render(<SideBar />, {
     initialState: {
       walletLoader: {
@@ -362,7 +367,7 @@ test("test Tooltip on Logo when isWatchingOnly mode is active", () => {
   `);
 });
 
-test("test Tooltip on Logo when accountMixerRunning mode is active", () => {
+test("tests tooltip on Logo when accountMixerRunning mode is active", () => {
   render(<SideBar />, {
     initialState: {
       grpc: {
@@ -379,7 +384,7 @@ test("test Tooltip on Logo when accountMixerRunning mode is active", () => {
 `);
 });
 
-test("test menu link notification icon", () => {
+test("tests notification icon on the menu link", () => {
   const mockNewProposalsStartedVoting = (sel.newProposalsStartedVoting = jest.fn(
     () => true
   ));
@@ -389,7 +394,7 @@ test("test menu link notification icon", () => {
   mockNewProposalsStartedVoting.mockRestore();
 });
 
-test("test tabbedPage location", () => {
+test("tests tabbedPage location", () => {
   const { history } = render(<SideBar />);
   expect(screen.queryByTestId("transactions")).not.toHaveClass(
     "menuLinkActive"
