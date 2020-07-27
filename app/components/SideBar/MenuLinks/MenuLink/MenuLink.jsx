@@ -52,7 +52,7 @@ const MenuLink = React.memo(
         {sidebarOnBottom || !expandSideBar ? (
           <Tooltip
             content={
-              <T id="autobuyer.enabled" m="{value}" values={{ value: link }} />
+              <T id="sidebar.menuLinkTooltip" m="{value}" values={{ value: link }} />
             }
             contentClassName={
               sidebarOnBottom ? style.tooltipOnBottom : style.tooltipOnSide
