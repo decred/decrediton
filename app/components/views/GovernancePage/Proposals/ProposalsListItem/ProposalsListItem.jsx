@@ -40,7 +40,7 @@ const ProposalsListItem = ({
       )}>
       <div>
         <div className={styles.name}>{name}</div>
-        <div className={styles.token}>{token}</div>
+        <div className={styles.token}>{token.substring(0, 7)}</div>
       </div>
       <div className={styles.resultsArea}>
         {(voteStatus === VOTESTATUS_ACTIVEVOTE ||
