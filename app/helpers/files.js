@@ -1,4 +1,5 @@
 import fs from "fs-extra";
+import path from "path";
 
 // readFileBackward reads a file backward and if maxSize is specified it will
 // only read until reach that size in bytes.
@@ -40,9 +41,8 @@ export function makeFileBackup(file, directory) {
   if (!fs.existsSync(file)) {
     throw "File does not exists";
   }
-  // get file name. Which probably is everything after the last /
-  // ex: /home/.dcrd/rpc.cert
-  const fileName = file.substr(file.lastIndexOf("/") + 1);
+  // get file name so we can use it to make the backup.
+  const fileName = path.basename(file);
   // if directory does not exists, create it.
   if (!fs.existsSync(directory)) {
     fs.mkdirSync(directory);
