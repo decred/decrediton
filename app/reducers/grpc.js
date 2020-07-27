@@ -14,10 +14,6 @@ import {
   GETNETWORK_ATTEMPT,
   GETNETWORK_FAILED,
   GETNETWORK_SUCCESS,
-  GETPING_ATTEMPT,
-  GETPING_FAILED,
-  GETPING_SUCCESS,
-  GETPING_CANCELED,
   GETSTAKEINFO_ATTEMPT,
   GETSTAKEINFO_FAILED,
   GETSTAKEINFO_SUCCESS,
@@ -261,36 +257,6 @@ export default function grpc(state = {}, action) {
         getNetworkError: null,
         getNetworkRequestAttempt: false,
         getNetworkResponse: action.getNetworkResponse
-      };
-    case GETPING_ATTEMPT:
-      return {
-        ...state,
-        getPingError: "",
-        getPingRequestAttempt: true,
-        pingTimer: null
-      };
-    case GETPING_FAILED:
-      return {
-        ...state,
-        getPingError: String(action.error),
-        getPingRequestAttempt: false,
-        pingTimer: null
-      };
-    case GETPING_SUCCESS:
-      return {
-        ...state,
-        getPingError: "",
-        getPingRequestAttempt: false,
-        getPingResponse: action.getPingResponse,
-        pingTimer: action.pingTimer
-      };
-    case GETPING_CANCELED:
-      return {
-        ...state,
-        getPingError: "",
-        getPingRequestAttempt: false,
-        getPingResponse: null,
-        pingTimer: null
       };
     case GETSTAKEINFO_ATTEMPT:
       return {

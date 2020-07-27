@@ -7,7 +7,6 @@ import { getVersionServiceAttempt } from "./VersionActions";
 import { stopNotifcations } from "./NotificationActions";
 import { saveSettings, updateStateSettingsChanged } from "./SettingsActions";
 import { rescanCancel } from "./ControlActions";
-import { cancelPingAttempt } from "./ClientActions";
 import { semverCompatible } from "./VersionActions";
 import * as wallet from "wallet";
 import { push as pushHistory, goBack } from "connected-react-router";
@@ -227,7 +226,6 @@ export const shutdownApp = () => (dispatch, getState) => {
   });
   dispatch(stopNotifcations());
   dispatch(rescanCancel());
-  dispatch(cancelPingAttempt());
   dispatch(syncCancel());
   dispatch(pushHistory("/shutdown"));
 };

@@ -12,8 +12,7 @@ import { rescanCancel, ticketBuyerCancel } from "./ControlActions";
 import {
   getWalletServiceAttempt,
   startWalletServices,
-  getBestBlockHeightAttempt,
-  cancelPingAttempt
+  getBestBlockHeightAttempt
 } from "./ClientActions";
 import { WALLETREMOVED_FAILED } from "./DaemonActions";
 import { getWalletCfg, getDcrdCert } from "config";
@@ -233,7 +232,6 @@ export const closeWalletRequest = () => async (dispatch, getState) => {
   const { walletReady } = getState().daemon;
   dispatch({ type: CLOSEWALLET_ATTEMPT });
   try {
-    await dispatch(cancelPingAttempt());
     await dispatch(stopNotifcations());
     await dispatch(syncCancel());
     await dispatch(rescanCancel());
