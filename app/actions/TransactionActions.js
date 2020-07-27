@@ -685,7 +685,7 @@ function transactionsMaturingHeights(txs, chainParams) {
 
 // getAmountFromTxInputs receives a decoded tx and adds the amount of
 // each input from the previous transaction. We need this because when decoding
-// a tx, the amount of the input is not deoded with it.
+// a tx, the amount of the input is not decoded with it.
 export const getAmountFromTxInputs = (decodedTx) => async (
   dispatch,
   getState
@@ -735,26 +735,28 @@ export const getTxFromInputs = (unsignedTx) => (dispatch, getState) =>
     const chainParams = sel.chainParams(getState());
     // aux map to know if we already has gotten a tx.
     const txsMap = {};
-    const txs = unsignedTx.inputs.reduce(async (txs, inp) => {
-      const { prevTxId } = inp;
-      if (txsMap[prevTxId]) return;
+    try {
+      const txs = unsignedTx.inputs.reduce(async (txs, inp) => {
+        const { prevTxId } = inp;
+        if (txsMap[prevTxId]) return;
+        txsMap[prevTxId] = true;
+        const oldTx = await wallet.getTransaction(walletService, prevTxId);
+        if (!oldTx) {
+          return reject(new Error(`Transaction ${prevTxId} not found`));
+        }
+        const rawTxBuffer = Buffer.from(hexToBytes(oldTx.rawTx));
+        const decodedOldTx = wallet.decodeRawTransaction(
+          rawTxBuffer,
+          chainParams
+        );
 
-      txsMap[prevTxId] = true;
-      const oldTx = await wallet.getTransaction(walletService, prevTxId);
-      if (!oldTx) {
-        return reject(new Error(`Transaction ${prevTxId} not found`));
-      }
+        txs.push(decodedOldTx);
 
-      const rawTxBuffer = Buffer.from(hexToBytes(oldTx.rawTx));
-      const decodedOldTx = wallet.decodeRawTransaction(
-        rawTxBuffer,
-        chainParams
-      );
+        return txs;
+      }, []);
 
-      txs.push(decodedOldTx);
-
-      return txs;
-    }, []);
-
-    resolve(txs);
+      resolve(txs);
+    } catch (e) {
+      reject(e);
+    }
   });

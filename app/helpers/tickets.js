@@ -146,7 +146,6 @@ export const addrFromSStxPkScrCommitment = (pkScript, params) => {
   if (pkScript.length < SStxPKHMinOutSize) {
     return { error: `pkScript must be ${SStxPKHMinOutSize} bytes` };
   }
-
   // The MSB of the encoded amount specifies if the output is P2SH.  Since
   // it is encoded with little endian, the MSB is in final byte in the encoded
   // amount.
@@ -163,9 +162,9 @@ export const addrFromSStxPkScrCommitment = (pkScript, params) => {
 
   // Return the correct address type.
   if (isP2SH) {
-    return newAddressScriptHashFromHash(hashBytes, params);
+    return { address: newAddressScriptHashFromHash(hashBytes, params) };
   }
-  return newAddressPubKeyHash(hashBytes, params, 0);
+  return { address: newAddressPubKeyHash(hashBytes, params, 0) };
 };
 
 // newAddressScriptHashFromHash is the internal API to create a script hash

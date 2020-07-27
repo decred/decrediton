@@ -303,11 +303,14 @@ export const decodeRawTransaction = (rawTx, chainParams) => {
     // if scriptClass equals NullDataTy (which is 0) && i&1 == 1
     // extract address from SStxPkScrCommitment script.
     if (decodedScript.scriptClass === 0 && i&1 === 1) {
-      decodedScript = {
-        address: addrFromSStxPkScrCommitment(o.script, chainParams),
-        scriptClass: 0,
-        requiredSig: 0
-      };
+      const { error, address } = addrFromSStxPkScrCommitment(o.script, chainParams);
+      if (!error && address) {
+        decodedScript = {
+          address,
+          scriptClass: 0,
+          requiredSig: 0
+        };
+      }
     }
     return {
       ...o,

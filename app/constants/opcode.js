@@ -265,6 +265,8 @@ export const OP_INVALIDOPCODE = 0xff; // 255 - bitcoin core internal
 // opcodeArray holds details about all possible opcodes such as how many bytes
 // the opcode and any associated data should take, its human-readable name, and
 // the handler function.
+// It is sorted by the opcode decimal value. We use its index to decode script
+// so we shouldn't change this array order.
 export const opcodeArray = [
   // Data push opcodes.
   { value: OP_FALSE, name: "OP_0", length: 1 },
@@ -374,8 +376,6 @@ export const opcodeArray = [
   { value: OP_ENDIF, name: "OP_ENDIF", length: 1 },
   { value: OP_VERIFY, name: "OP_VERIFY", length: 1 },
   { value: OP_RETURN, name: "OP_RETURN", length: 1 },
-  { value: OP_CHECKLOCKTIMEVERIFY, name: "OP_CHECKLOCKTIMEVERIFY", length: 1 },
-  { value: OP_CHECKSEQUENCEVERIFY, name: "OP_CHECKSEQUENCEVERIFY", length: 1 },
   { value: OP_TOALTSTACK, name: "OP_TOALTSTACK", length: 1 },
   { value: OP_FROMALTSTACK, name: "OP_FROMALTSTACK", length: 1 },
   { value: OP_2DROP, name: "OP_2DROP", length: 1 },
@@ -437,16 +437,17 @@ export const opcodeArray = [
   { value: OP_WITHIN, name: "OP_WITHIN", length: 1 },
   { value: OP_RIPEMD160, name: "OP_RIPEMD160", length: 1 },
   { value: OP_SHA1, name: "OP_SHA1", length: 1 },
-  { value: OP_SHA256, name: "OP_SHA256", length: 1 },
   { value: OP_BLAKE256, name: "OP_BLAKE256", length: 1 },
   { value: OP_HASH160, name: "OP_HASH160", length: 1 },
   { value: OP_HASH256, name: "OP_HASH256", length: 1 },
-  { value: OP_CODESEPARATOR, name: "OP_CODESEPARATOR", length: 1 }, // Disabled
+  { value: OP_CODESEPARATOR, name: "OP_CODESEPARATOR", length: 1 },
   { value: OP_CHECKSIG, name: "OP_CHECKSIG", length: 1 },
   { value: OP_CHECKSIGVERIFY, name: "OP_CHECKSIGVERIFY", length: 1 },
   { value: OP_CHECKMULTISIG, name: "OP_CHECKMULTISIG", length: 1 },
   { value: OP_CHECKMULTISIGVERIFY, name: "OP_CHECKMULTISIGVERIFY", length: 1 },
   { value: OP_NOP1, name: "OP_NOP1", length: 1 },
+  { value: OP_CHECKLOCKTIMEVERIFY, name: "OP_CHECKLOCKTIMEVERIFY", length: 1 },
+  { value: OP_CHECKSEQUENCEVERIFY, name: "OP_CHECKSEQUENCEVERIFY", length: 1 },
   { value: OP_NOP4, name: "OP_NOP4", length: 1 },
   { value: OP_NOP5, name: "OP_NOP5", length: 1 },
   { value: OP_NOP6, name: "OP_NOP6", length: 1 },
@@ -460,6 +461,7 @@ export const opcodeArray = [
   { value: OP_SSTXCHANGE, name: "OP_SSTXCHANGE", length: 1 },
   { value: OP_CHECKSIGALT, name: "OP_CHECKSIGALT", length: 1 },
   { value: OP_CHECKSIGALTVERIFY, name: "OP_CHECKSIGALTVERIFY", length: 1 },
+  { value: OP_SHA256, name: "OP_SHA256", length: 1 },
   { value: OP_UNKNOWN193, name: "OP_UNKNOWN193", length: 1 },
   { value: OP_UNKNOWN194, name: "OP_UNKNOWN194", length: 1 },
   { value: OP_UNKNOWN195, name: "OP_UNKNOWN195", length: 1 },

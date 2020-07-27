@@ -39,8 +39,25 @@ function Transaction() {
         if (!viewedDecodedTx) {
           const decodedTx = decodeRawTransactions(viewedTransaction.rawTx);
           let decodedTxWithInputs = decodedTx;
-          if (!viewedTransaction.isStake) {
-            decodedTxWithInputs = await getAmountFromTxInputs(decodedTx);
+          // if it is a regular transaction and transaction is not received,
+          // we need to get the input amount from older txs. If it is not
+          // a wallet input getAmountFromTxInputs will throw an error, which
+          // we ignore.
+          console.log(viewedTransaction);
+          if (viewedTransaction.isStake) {
+            // TODO
+            // Add sstxcommitment address to vote txs after
+            // https://github.com/decred/decrediton/pull/2577 being merged.
+          } else {
+            try {
+              decodedTxWithInputs = await getAmountFromTxInputs(decodedTx);
+            } catch (error) {
+              // if item does not exists it probably is a wallet non input
+              // so the amount was not founded. We can ignore it.
+              if (!error.toString().includes("item does not exist")) {
+                throw error;
+              }
+            }
           }
           setViewedDecodedTx(decodedTxWithInputs);
           return send({ type: "RESOLVE" });

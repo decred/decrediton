@@ -10,7 +10,7 @@ import InvalidRPCVersion from "components/views/InvalidRPCVersion";
 import HelpPage from "components/views/HelpPage";
 import SecurityPage from "components/views/SecurityPage";
 import TransactionsPage from "components/views/TransactionsPage";
-import TransactionPage from "components/views/TransactionPage";
+import TransactionPage from "components/views/TransactionPage/TransactionPage";
 import TicketsPage from "components/views/TicketsPage/TicketsPage";
 import TutorialsPage from "components/views/TutorialsPage";
 import GovernancePage from "components/views/GovernancePage/GovernancePage";
