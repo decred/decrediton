@@ -38,6 +38,8 @@ function checkForStakeTransactions(txs) {
   return stakeTxsFound;
 }
 
+// divideTransactions separate a transactions array into stake txs and regular
+// txs, so we can send them to selectors.
 const divideTransactions = (transactions) => {
   const stakeTransactions = transactions.reduce((m, t) => {
     t.isStake ? (m[t.txHash] = t) : null;
@@ -69,6 +71,9 @@ export const newTransactionsReceived = (
   } = getState().grpc;
   const { walletService, maturingBlockHeights } = getState().grpc;
   const chainParams = sel.chainParams(getState());
+  // Normalize transactions with missing data.
+  // All transactions must being normalized before being dispatched to the
+  // selector.
   newlyUnminedTransactions = await normalizeBatchTx(
     walletService,
     chainParams,
@@ -79,11 +84,6 @@ export const newTransactionsReceived = (
     chainParams,
     newlyMinedTransactions
   );
-
-  const transactions = [];
-  transactions.push(...newlyUnminedTransactions);
-  transactions.push(...newlyMinedTransactions);
-
   // aux maps of [txhash] => tx (used to ensure no duplicate txs)
   const newlyMinedMap = newlyMinedTransactions.reduce((m, v) => {
     m[v.txHash] = v;
@@ -94,6 +94,7 @@ export const newTransactionsReceived = (
     return m;
   }, {});
 
+  // update accounts related to the transaction balance.
   let accountsToUpdate = new Array();
   accountsToUpdate = checkAccountsToUpdate(
     newlyUnminedTransactions,
@@ -120,6 +121,7 @@ export const newTransactionsReceived = (
     )
   ];
 
+  // update recent regular and stake transactions selector
   recentRegularTransactions = [
     ...unminedTransactions,
     ...newlyMinedTransactions,
@@ -132,10 +134,23 @@ export const newTransactionsReceived = (
     ...unminedTransactions,
     ...newlyMinedTransactions,
     ...recentStakeTransactions.filter(
-      (tx) => !newlyMinedMap[tx.txHash] && !newlyUnminedMap[tx.txHash]
-    )
+      (tx) => {
+        // remove transactions which are already at the recent Stake Txs array
+        // to avoid duplicated txs.
+        const txIsAtArray = unminedTransactions.find(unminedTx =>
+          unminedTx.txHash === tx.txHash
+        );
+        if (txIsAtArray) {
+          return false;
+        }
+        if (!newlyMinedMap[tx.txHash] && !newlyUnminedMap[tx.txHash]) {
+          return true;
+        }
+      })
   ].filter((tx) => tx.isStake);
 
+  // update maturing heights, so we can know when to update account balances
+  // on their specific blocks.
   const newMaturingHeights = { ...maturingBlockHeights };
   const mergeNewMaturingHeights = (hs) =>
     Object.keys(hs).forEach((h) => {
@@ -145,7 +160,6 @@ export const newTransactionsReceived = (
       );
       newMaturingHeights[h] = accounts;
     });
-
   mergeNewMaturingHeights(
     transactionsMaturingHeights(newlyMinedTransactions, chainParams)
   );
@@ -154,6 +168,9 @@ export const newTransactionsReceived = (
     type: MATURINGHEIGHTS_CHANGED
   });
 
+  const transactions = [];
+  transactions.push(...newlyUnminedTransactions);
+  transactions.push(...newlyMinedTransactions);
   const { stakeTransactions, regularTransactions } = divideTransactions(
     transactions
   );
