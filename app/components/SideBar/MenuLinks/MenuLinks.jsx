@@ -3,25 +3,15 @@ import { Motion } from "react-motion";
 import MenuLink from "./MenuLink/MenuLink";
 import style from "../SideBar.module.css";
 import { useMenuLinks } from "./hooks";
-import { Tooltip, classNames } from "pi-ui";
-import { FormattedMessage as T } from "react-intl";
 
 const MenuList = React.memo(
   ({ sidebarOnBottom, nodes, menuLinks, expandSideBar }) =>
     sidebarOnBottom
       ? menuLinks.map((menuLinkRow, index) => (
-          <div className={"is-row"} key={index}>
+          <div className={style.isRow} key={index}>
             {menuLinkRow.map((menuLink) => {
               const { path, link, icon, notifProp, ariaLabel } = menuLink;
               return (
-                <Tooltip
-                  content={
-                    <T
-                      id="autobuyer.enabled"
-                      m="{value}"
-                      values={{ value: link }}
-                    />
-                  }>
                   <MenuLink
                     path={path}
                     link={link}
@@ -33,7 +23,6 @@ const MenuList = React.memo(
                     key={path}
                     expandSideBar={expandSideBar}
                   />
-                </Tooltip>
               );
             })}
           </div>

@@ -1,3 +1,8 @@
+.isRow {
+  display: flex;
+  flex-direction: row;
+}
+
 .sidebar {
   display: flex;
   flex-direction: column;
@@ -61,8 +66,16 @@
   }
 
   .sidebarScroll {
-    overflow: hidden;
+    overflow: visible;
     margin: 0 auto;
+  }
+
+  .sidebarMain {
+    overflow: visible;
+  }
+
+  .isShowingAccounts {
+    overflow: hidden;
   }
 
   .menuCaret {
