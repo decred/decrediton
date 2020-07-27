@@ -29,7 +29,13 @@
   position: relative;
   overflow-y: auto;
   overflow-x: hidden;
-  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar.sidebarReduced .sidebarMain,
+.sidebar.sidebarReduced .sidebarScroll {
+  overflow: visible;
 }
 
 .watchOnlyIcon {
@@ -44,7 +50,6 @@
 .menuCaret {
   position: absolute;
   height: 52px;
-  width: 100%;
   border-left: 5px solid var(--accent-color);
   background-color: var(--background-back-color);
 }
