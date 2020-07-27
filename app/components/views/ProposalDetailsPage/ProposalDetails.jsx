@@ -51,7 +51,8 @@ const ProposalDetails = ({
   const { tsDate, hasTickets, isTestnet } = useProposalDetails();
   const { themeName } = useTheme();
   const isDarkTheme = themeName === "theme-dark";
-  const proposalPath = `/proposals/${token.substring(0, 7)}`;
+  const shortToken = token.substring(0, 7);
+  const proposalPath = `/proposals/${shortToken}`;
   return (
     <div>
       <div className={styles.overview}>
@@ -60,7 +61,7 @@ const ProposalDetails = ({
             <div className={styles.title}>{name}</div>
             <div className={styles.token}>
               <PoliteiaLink isTestnet={isTestnet} path={proposalPath}>
-                {token}
+                {shortToken}
               </PoliteiaLink>
             </div>
             <div className={styles.fields}>
