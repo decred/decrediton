@@ -17,7 +17,7 @@
 }
 
 .menuLinkContainer {
-  height: 57px;
+  height: 52px;
 }
 
 .menuLink.settingsIcon {
@@ -189,5 +189,9 @@
     width: 76px;
     padding-left: 0;
     background-position: 50%;
+  }
+
+  .menuLinkContainer {
+    height: 70px;
   }
 }
