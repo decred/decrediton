@@ -27,7 +27,7 @@ const Modal = showCheck(({ children, className, draggable, onCancelModal }) => {
             ? style.modal
             : style.reducedBar
           : style.standalone,
-        className && className,
+        className,
         draggable && style.draggable
       )}>
       {children}
