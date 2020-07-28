@@ -15,6 +15,10 @@ export function usePrivacy() {
   const mixedAccountBranch = useSelector(sel.getMixedAccountBranch);
   const accounts = useSelector(sel.sortedAccounts);
   const accountMixerError = useSelector(sel.getAccountMixerError);
+  const createNeededAccounts = useCallback((passphrase, mixedAccountName, changeAccountName) =>
+    dispatch(act.createNeededAccounts(passphrase, mixedAccountName, changeAccountName)),
+    [dispatch]
+  );
 
   const getAccountName = useCallback((n) => {
     const account = accounts.find(({ accountNumber }) => accountNumber === n);
@@ -54,6 +58,7 @@ export function usePrivacy() {
     accountMixerError,
     mixedAccountName,
     changeAccountName,
-    onStartMixerAttempt
+    onStartMixerAttempt,
+    createNeededAccounts
   };
 };
