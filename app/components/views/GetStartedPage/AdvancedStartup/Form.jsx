@@ -48,9 +48,9 @@ const AdvancedBodyBase = ({
           m="Complete one of the following forms to start Decrediton according to your local setup."
         />
       </div>
-      <div className={styles.toggleWrapperExample}>
+      <div className={styles.toggleWrapper}>
         <Toggle onToggle={onFormModeToggle} toggled={!sideActive} />
-        <div className={styles.toggleLabelExample}>
+        <div className={styles.toggleLabel}>
           Different Local Daemon Location
         </div>
       </div>

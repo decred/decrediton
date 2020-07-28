@@ -13,10 +13,11 @@
   padding: 5px 16px 10px 16px;
 }
 
-.toggleWrapperExample {
+.toggleWrapper {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  box-sizing: border-box !important;
   width: 240px;
   clear: left;
 }
