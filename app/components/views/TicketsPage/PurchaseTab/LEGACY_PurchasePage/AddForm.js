@@ -44,7 +44,7 @@ const StakePoolsAddForm = ({
       <div className="stakepool-add-title">
         <T id="stakepool.addPoolTitle" m="Add a VSP" />
         <div className={styles.checkbox}>
-          <div className={styles.label}><T id="purchase.isLegacy.legacy" m="Is Legacy" /></div>
+          <div className={styles.label}><T id="purchase.isLegacy.legacy2" m="Is Legacy" /></div>
           <input id="box" type="checkbox" checked={true} onChange={() => toggleIsLegacy(false)} />
           <label htmlFor="box" className={styles.checkboxLabel}></label>
         </div>
