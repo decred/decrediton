@@ -18,7 +18,6 @@ const ConfigMixer = ({ isCreateAccountDisabled, accounts }) => {
   const { createNeededAccounts } = usePrivacy();
 
   const checkAvailableAccounts = () => {
-    console.log(accounts)
     const mixedExists = accounts.find(
       ({ accountName }) => accountName === MIXED_ACCOUNT
     );
@@ -27,10 +26,9 @@ const ConfigMixer = ({ isCreateAccountDisabled, accounts }) => {
     );
 
     return !(mixedExists || changeExists);
-  }
+  };
 
   useMountEffect(() => {
-    console.log(checkAvailableAccounts())
     if (checkAvailableAccounts()) {
       setAreAvailable(true);
       setMixedAccountName(MIXED_ACCOUNT);
