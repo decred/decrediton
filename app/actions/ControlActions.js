@@ -151,7 +151,7 @@ export const IMPORTSCRIPT_SUCCESS = "IMPORTSCRIPT_SUCCESS";
 
 // importScriptAttempt tries to import the given script into the wallet. It will
 // throw an exception in case of errors.
-export const importScriptAttempt = (passphrase, script) => async (
+export const importScriptAttempt = (script) => async (
   dispatch,
   getState
 ) => {
@@ -160,7 +160,6 @@ export const importScriptAttempt = (passphrase, script) => async (
   try {
     const importScriptResponse = await wallet.importScript(
       walletService,
-      passphrase,
       script
     );
     dispatch({ importScriptResponse, type: IMPORTSCRIPT_SUCCESS });
@@ -182,11 +181,11 @@ export const IMPORTSCRIPT_MANUAL_FAILED = "IMPORTSCRIPT_MANUAL_FAILED";
 // meant as a step during some other operation (eg: linking to a stakepool).
 //
 // This function always initiates a complete wallet rescan in case of success.
-export const manualImportScriptAttempt = (passphrase, script) => async (
+export const manualImportScriptAttempt = (script) => async (
   dispatch
 ) => {
   try {
-    await dispatch(importScriptAttempt(passphrase, script));
+    await dispatch(importScriptAttempt(script));
     dispatch({ type: IMPORTSCRIPT_MANUAL_SUCCESS });
     dispatch(rescanAttempt(0));
   } catch (error) {
