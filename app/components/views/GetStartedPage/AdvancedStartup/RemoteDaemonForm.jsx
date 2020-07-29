@@ -91,7 +91,7 @@ const RemoteDaemonForm = ({
       <div className={styles.daemonLabel}>
         <T id="advanced.remote.rpchost" m="RPC Host" />
       </div>
-      <div className="advanced-daemon-input">
+      <div className={styles.daemonInput}>
         <TextInput
           required
           value={rpc_host}
