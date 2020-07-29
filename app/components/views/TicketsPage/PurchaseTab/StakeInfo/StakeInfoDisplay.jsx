@@ -167,7 +167,7 @@ const StakeInfoDisplay = ({
             foot={
               lastVotedTicket && (
                 <Link
-                  to={`/transactions/history/${lastVotedTicket.txHash}`}
+                  to={`/transaction/history/${lastVotedTicket.txHash}`}
                   className={styles.foot}>
                   <span className={styles.purchaseTicketFoot}>
                     {lastVotedTicket.txHash.substr(0, 6) + "... "}
