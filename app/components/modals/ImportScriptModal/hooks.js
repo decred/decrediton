@@ -14,10 +14,6 @@ function useImportScriptModal(onCancelModal, onSubmit) {
     onCancelModal && onCancelModal();
   }, [resetState, onCancelModal]);
 
-  const validationFailed = useCallback(() => {
-    setHasFailedAttempt(true);
-  }, []);
-
   const setScriptCallback = useCallback((script) => {
     if (script == "") setHasFailedAttempt(true);
     setScript(script);
@@ -36,7 +32,6 @@ function useImportScriptModal(onCancelModal, onSubmit) {
     script,
     hasFailedAttempt,
     onCancelModalCallback,
-    validationFailed,
     setScriptCallback,
     onSubmitCallback,
     isValid
