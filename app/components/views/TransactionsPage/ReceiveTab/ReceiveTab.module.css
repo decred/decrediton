@@ -203,7 +203,7 @@
   z-index: 2;
   opacity: 0;
   transition: opacity 1s;
-  transition-duration: 2s;
+  transition-duration: 0.5s;
 }
 
 .opacity {
