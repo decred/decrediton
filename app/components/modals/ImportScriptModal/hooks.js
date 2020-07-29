@@ -23,8 +23,8 @@ function useImportScriptModal(onCancelModal, onSubmit) {
     setScript(script);
   }, []);
 
-  const onSubmitCallback = useCallback((passPhrase) => {
-    onSubmit(passPhrase, script);
+  const onSubmitCallback = useCallback(() => {
+    onSubmit(script);
     resetState();
   }, [resetState, script, onSubmit]);
 

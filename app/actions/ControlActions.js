@@ -151,7 +151,7 @@ export const IMPORTSCRIPT_SUCCESS = "IMPORTSCRIPT_SUCCESS";
 
 // importScriptAttempt tries to import the given script into the wallet. It will
 // throw an exception in case of errors.
-export const importScriptAttempt = (passphrase, script) => async (
+export const importScriptAttempt = (/*passphrase,*/ script) => async (
   dispatch,
   getState
 ) => {
@@ -160,7 +160,7 @@ export const importScriptAttempt = (passphrase, script) => async (
   try {
     const importScriptResponse = await wallet.importScript(
       walletService,
-      passphrase,
+      /*passphrase,*/
       script
     );
     dispatch({ importScriptResponse, type: IMPORTSCRIPT_SUCCESS });
@@ -182,11 +182,11 @@ export const IMPORTSCRIPT_MANUAL_FAILED = "IMPORTSCRIPT_MANUAL_FAILED";
 // meant as a step during some other operation (eg: linking to a stakepool).
 //
 // This function always initiates a complete wallet rescan in case of success.
-export const manualImportScriptAttempt = (passphrase, script) => async (
+export const manualImportScriptAttempt = (/*passphrase,*/ script) => async (
   dispatch
 ) => {
   try {
-    await dispatch(importScriptAttempt(passphrase, script));
+    await dispatch(importScriptAttempt(/*passphrase,*/ script));
     dispatch({ type: IMPORTSCRIPT_MANUAL_SUCCESS });
     dispatch(rescanAttempt(0));
   } catch (error) {
@@ -286,7 +286,7 @@ export const CREATE_UNSIGNEDTICKETS_SUCCESS = "CREATE_UNSIGNEDTICKETS_SUCCESS";
 
 // TODO move purchaseTicketsAttempt to TransactionActions
 export const purchaseTicketsAttempt = (
-  passphrase,
+  /*passphrase,*/
   accountNum,
   spendLimit,
   requiredConf,
@@ -318,7 +318,7 @@ export const purchaseTicketsAttempt = (
       // If we need to sign the tx, we re-import the script to ensure the
       // wallet will control the ticket.
       const importScriptResponse = await dispatch(
-        importScriptAttempt(passphrase, stakepool.Script)
+        importScriptAttempt(/*passphrase,*/ stakepool.Script)
       );
       if (importScriptResponse.getP2shAddress() !== stakepool.TicketAddress) {
         throw new Error(
