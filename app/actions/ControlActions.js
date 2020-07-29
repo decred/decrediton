@@ -285,7 +285,7 @@ export const CREATE_UNSIGNEDTICKETS_SUCCESS = "CREATE_UNSIGNEDTICKETS_SUCCESS";
 
 // TODO move purchaseTicketsAttempt to TransactionActions
 export const purchaseTicketsAttempt = (
-  passphrase,
+  /*passphrase,*/
   accountNum,
   spendLimit,
   requiredConf,
@@ -317,7 +317,11 @@ export const purchaseTicketsAttempt = (
       // If we need to sign the tx, we re-import the script to ensure the
       // wallet will control the ticket.
       const importScriptResponse = await dispatch(
+<<<<<<< HEAD
         importScriptAttempt(stakepool.Script)
+=======
+        importScriptAttempt(/*passphrase,*/ stakepool.Script)
+>>>>>>> ae4bdadc... Remove passphrase from ImportScriptModalContent
       );
       if (importScriptResponse.getP2shAddress() !== stakepool.TicketAddress) {
         throw new Error(
