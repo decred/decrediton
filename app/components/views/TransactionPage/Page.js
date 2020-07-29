@@ -4,14 +4,11 @@ import { KeyBlueButton } from "buttons";
 import { addSpacingAroundText } from "helpers";
 import { FormattedMessage as T } from "react-intl";
 import { DecodedTransaction } from "middleware/walletrpc/api_pb";
-import { useSelector, useDispatch } from "react-redux";
 import {
   VOTE,
   TRANSACTION_DIR_RECEIVED,
   TRANSACTION_DIR_SENT
 } from "constants/Decrediton";
-import * as cla from "actions/ControlActions";
-import * as sel from "selectors";
 import "style/TxDetails.less";
 
 function mapNonWalletOutput(output) {
@@ -38,12 +35,10 @@ function mapNonWalletInput(input) {
 const Page = ({
   transactionDetails,
   decodedTransaction,
-  abandonTransaction
+  abandonTransaction,
+  publishUnminedTransactions,
+  currentBlockHeight
 }) => {
-  const dispatch = useDispatch();
-  const publishUnminedTransactions = () =>
-    dispatch(cla.publishUnminedTransactionsAttempt);
-  const currentBlockHeight = useSelector(sel.currentBlockHeight);
   const {
     txHash,
     txUrl,
@@ -157,7 +152,7 @@ const Page = ({
           <div className="abandon-button-container">
             <KeyBlueButton
               className="abandon-button"
-              onClick={abandonTransaction}>
+              onClick={() => abandonTransaction(txHash)}>
               <T id="txDetails.abandontTransaction" m="Abandon Transaction" />
             </KeyBlueButton>
           </div>
