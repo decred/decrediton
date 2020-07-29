@@ -68,10 +68,9 @@ export const importPrivateKey = (
     );
   });
 
-export const importScript = (walletService/*, passphrase*/, script) =>
+export const importScript = (walletService, script) =>
   new Promise((ok, fail) => {
     const request = new api.ImportScriptRequest();
-    // request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
     request.setScript(new Uint8Array(Buffer.from(hexToBytes(script))));
     request.setRescan(false);
     request.setScanFrom(0);
