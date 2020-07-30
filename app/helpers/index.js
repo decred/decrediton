@@ -7,6 +7,7 @@ export * from "./arrays";
 export * from "./dom.js";
 export * from "./transactions";
 export * from "./msgTx";
+export * from "./files";
 
 // kidCheck takes a component and returns a component that only renders if it has children
 export const kidCheck = (C) => {

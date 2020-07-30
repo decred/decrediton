@@ -170,7 +170,7 @@ export const startDaemon = (params) => (dispatch, getState) =>
           rpc_host: started.rpc_host,
           rpc_port: started.rpc_port
         };
-        const appdata = started.appdata;
+        const appdata = started.dcrdAppdata;
         dispatch({ type: DAEMONSTART_SUCCESS, credentials: rpcCreds, appdata });
         resolve({ appdata, credentials: rpcCreds });
       })

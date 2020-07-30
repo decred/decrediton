@@ -3,13 +3,10 @@ import Store from "electron-store";
 import ini from "ini";
 import { stakePoolInfo } from "./middleware/vspapi";
 import {
-  getAppDataDirectory,
   getGlobalCfgPath,
-  dcrdCfg,
   getWalletPath,
   dcrwalletConf,
-  getDcrdRpcCert,
-  getDcrdPath
+  getDcrdRpcCert
 } from "./main_dev/paths";
 import * as cfgConstants from "constants/config";
 import { DCR } from "constants";
@@ -198,90 +195,6 @@ export function getWalletCert(certPath) {
   return cert;
 }
 
-// readDcrdConfig reads top level entries from dcrd.conf file. If appdata is
-// not defined, we read dcrd.conf file from our app directory. If it does not
-// exist, a new conf file is created with random rpc_user and rpc_pass.
-// return { appdata, rpc_cert, rpc_user, rpc_pass, rpc_host, rpc_port }
-export function readDcrdConfig(testnet, appdata) {
-  try {
-    const newCfg = {};
-    newCfg.rpc_host = "127.0.0.1";
-    newCfg.rpc_port = testnet ? "19109" : "9109";
-
-    if (appdata) {
-      newCfg.appdata = appdata;
-      newCfg.rpc_cert = `${appdata}/rpc.cert`;
-      if (fs.existsSync(dcrdCfg(appdata))) {
-        newCfg.configFile = appdata;
-      } else {
-        // if dcrd.conf from appdata does not exist, we use dcrd.conf from the decrediton dir.
-        newCfg.configFile = getAppDataDirectory();
-      }
-    } else {
-      newCfg.rpc_cert = `${getDcrdPath()}/rpc.cert`;
-      newCfg.appdata = getDcrdPath();
-      newCfg.configFile = getAppDataDirectory();
-    }
-
-    // if dcrd.conf file is from decrediton dir and does not exist we create a
-    // new one.
-    if (
-      newCfg.configFile === getAppDataDirectory() &&
-      !fs.existsSync(dcrdCfg(newCfg.configFile))
-    ) {
-      createTempDcrdConf(testnet);
-    }
-    const readCfg = ini.parse(
-      Buffer.from(fs.readFileSync(dcrdCfg(newCfg.configFile))).toString()
-    );
-
-    let userFound,
-      passFound = false;
-    // Look through all top level config entries
-    for (const [key, value] of Object.entries(readCfg)) {
-      if (key === "rpcuser") {
-        newCfg.rpc_user = value;
-        userFound = true;
-      }
-      if (key === "rpcpass") {
-        newCfg.rpc_pass = value;
-        passFound = true;
-      }
-      if (key === "rpclisten") {
-        const splitListen = value.split(":");
-        if (splitListen.length >= 2) {
-          newCfg.rpc_host = splitListen[0];
-          newCfg.rpc_port = splitListen[1];
-        }
-      }
-      if (!userFound && !passFound) {
-        // If user and pass aren't found on the top level, look through all
-        // next level config entries
-        for (const [key2, value2] of Object.entries(value)) {
-          if (key2 === "rpcuser") {
-            newCfg.rpc_user = value2;
-            userFound = true;
-          }
-          if (key2 === "rpcpass") {
-            newCfg.rpc_pass = value2;
-            passFound = true;
-          }
-          if (key2 === "rpclisten") {
-            const splitListen = value2.split(":");
-            if (splitListen.length >= 2) {
-              newCfg.rpc_host = splitListen[0];
-              newCfg.rpc_port = splitListen[1];
-            }
-          }
-        }
-      }
-    }
-    return newCfg;
-  } catch (err) {
-    console.error(err);
-  }
-}
-
 export function getDcrdCert(dcrdCertPath) {
   if (dcrdCertPath)
     if (fs.existsSync(dcrdCertPath)) return fs.readFileSync(dcrdCertPath);
@@ -374,36 +287,6 @@ export function setRemoteCredentials(
 
 export function setLastHeight(height) {
   return setConfigData(cfgConstants.LAST_HEIGHT, height);
-}
-
-function makeRandomString(length) {
-  let text = "";
-  const possible =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-  for (let i = 0; i < length; i++)
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-  return text;
-}
-
-// createTempDcrdConf creates a temp dcrd conf file and writes it
-// to decreditons config directory: getAppDataDirectory()
-function createTempDcrdConf(testnet) {
-  let dcrdConf = {};
-  if (!fs.existsSync(dcrdCfg(getAppDataDirectory()))) {
-    const port = testnet ? "19109" : "9109";
-
-    dcrdConf = {
-      "Application Options": {
-        rpcuser: makeRandomString(10),
-        rpcpass: makeRandomString(10),
-        rpclisten: `127.0.0.1:${port}`
-      }
-    };
-    fs.writeFileSync(dcrdCfg(getAppDataDirectory()), ini.stringify(dcrdConf));
-  }
-  return getAppDataDirectory();
 }
 
 export function newWalletConfigCreation(testnet, walletPath) {
