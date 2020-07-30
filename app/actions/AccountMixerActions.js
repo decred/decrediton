@@ -3,6 +3,8 @@ import Promise from "promise";
 import * as sel from "selectors";
 import * as wallet from "wallet";
 import { getWalletCfg } from "config";
+import { getAcctSpendebleBalance } from "./ClientActions";
+import { MIN_RELAY_FEE_ATOMS } from "constants";
 
 export const GETACCOUNTMIXERSERVICE_ATTEMPT = "GETACCOUNTMIXERSERVICE_ATTEMPT";
 export const GETACCOUNTMIXERSERVICE_SUCCESS = "GETACCOUNTMIXERSERVICE_SUCCESS";
@@ -41,25 +43,42 @@ export const runAccountMixer = ({
 }) => (dispatch, getState) =>
     new Promise((resolve) => {
       dispatch({ type: RUNACCOUNTMIXER_ATTEMPT });
-      wallet
+      const runMixerAsync = async () => {
+        // no start mixer if account balance is less than minimum possible fee.
+        const spendableBal = await dispatch(getAcctSpendebleBalance(changeAccount));
+        if (spendableBal < MIN_RELAY_FEE_ATOMS) {
+          return { error: "Account Balance Too Small" };
+        }
+        const mixerStreamer = await wallet
         .runAccountMixerRequest(sel.accountMixerService(getState()), {
           passphrase,
           mixedAccount,
           mixedAccountBranch,
           changeAccount,
           csppServer
-        })
-        .then((mixerStreamer) => {
-          mixerStreamer.on("data", () => resolve());
-          mixerStreamer.on("error", (error) => {
-            dispatch({ error: error + "", type: RUNACCOUNTMIXER_FAILED });
-          });
-          mixerStreamer.on("end", (data) => {
-            console.log(data);
-          });
-          dispatch({ type: RUNACCOUNTMIXER_SUCCESS, mixerStreamer });
-        })
-        .catch((error) => dispatch({ error: error + "", type: RUNACCOUNTMIXER_FAILED }));
+        });
+        return { mixerStreamer };
+      };
+
+      runMixerAsync().then((resp) => {
+        const { mixerStreamer, error } = resp;
+        // we can throw errors, like when the account has a small balance,
+        // so this check is necessary.
+        if (error) {
+          dispatch({ error: error + "", type: RUNACCOUNTMIXER_FAILED });
+          return;
+        }
+        mixerStreamer.on("data", () => resolve());
+        mixerStreamer.on("error", (error) => {
+          dispatch({ error: error + "", type: RUNACCOUNTMIXER_FAILED });
+        });
+        mixerStreamer.on("end", (data) => {
+          // not supposed to get here, but if it does, we log to see.
+          console.log(data);
+        });
+        dispatch({ type: RUNACCOUNTMIXER_SUCCESS, mixerStreamer });
+      })
+      .catch((error) => dispatch({ error: error + "", type: RUNACCOUNTMIXER_FAILED }));
     });
 
 export const STOPMIXER_ATTEMPT = "STOPMIXER_ATTEMPT";
