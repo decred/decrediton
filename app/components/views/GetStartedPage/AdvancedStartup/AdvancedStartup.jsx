@@ -7,14 +7,6 @@ import {
   setRemoteCredentials
 } from "config.js";
 
-const {
-  rpc_pass: rpcpass,
-  rpc_user: rpcuser,
-  rpc_cert: rpccert,
-  rpc_host: rpchost,
-  rpc_port: rpcport
-} = getRemoteCredentials();
-
 export const AdvancedStartupHeader = ({ ...props }) => (
   <AdvancedHeader
     {...{
@@ -29,6 +21,14 @@ export const AdvancedStartupBody = ({
   submitAppdata,
   ...props
 }) => {
+  const {
+    rpc_pass: rpcpass,
+    rpc_user: rpcuser,
+    rpc_cert: rpccert,
+    rpc_host: rpchost,
+    rpc_port: rpcport
+  } = getRemoteCredentials();
+
   const appDataPath = getAppdataPath();
   const [sideActive, setSideActive] = useState(true);
   const [rpc_user, setRpcUserState] = useState(rpcuser);

@@ -13,6 +13,20 @@
   padding: 5px 16px 10px 16px;
 }
 
+.toggleWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box !important;
+  width: 240px;
+  clear: left;
+}
+
+.toggleLabelExample {
+  margin-left: 0.1rem;
+  margin-top: 0.1rem;
+}
+
 .getstartedNew {
   color: var(--title-text-and-button-background);
   padding-left: 52px;
@@ -235,7 +249,7 @@
 
 .getstarted.loader .pageForm .loaderBarButtons {
   position: absolute;
-  top: 365px;
+  top: 320px;
   right: 0px;
 }
 
@@ -540,7 +554,7 @@
   width: 100%;
 }
 
-.desc {
+.advancedDesc {
   font-size: 19px;
   color: var(--modal-text);
   margin-bottom: 43px;

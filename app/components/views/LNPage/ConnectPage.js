@@ -164,6 +164,7 @@ class ConnectPage extends React.Component {
         </div>
         <div className="account-selection">
           <div>
+            {/* XXX: Can we use here pi-iu's toggle? */}
             <TextToggle
               leftText={<T id="ln.connectPage.createAccount" m="Create new" />}
               rightText={<T id="ln.connectPage.useAccount" m="Use existing" />}

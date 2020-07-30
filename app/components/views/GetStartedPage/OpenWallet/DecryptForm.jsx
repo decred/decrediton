@@ -17,7 +17,7 @@ const OpenWalletDecryptFormBodyBase = ({
   onOpenWallet,
   onKeyDown
 }) => (
-  <div className={styles.advancedPageForm}>
+  <div className={styles.pageForm}>
     <div className={styles.daemonRow}>
       <T
         id="getStarted.decrypt.info"
