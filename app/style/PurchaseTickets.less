@@ -5,28 +5,39 @@
   width: 740px;
 }
 
+.purchase-ticket-area .tabbed-page-subtitle {
+  width: auto;
+  justify-content: space-between;
+}
+
 .purchase-ticket-area-row-label {
   font-size: 19px;
   color: var(--input-color-default);
+  align-self: flex-end;
 }
 
 .purchase-ticket-input-address {
   .purchase-ticket-area-row-label {
     width: 82px;
     text-align: right;
+    justify-self: flex-end;
   }
 }
 
 .purchase-ticket-input-amount {
   flex-wrap: wrap;
+  align-self: flex-start;
 }
 
 .purchase-ticket-input-amount .purchase-ticket-area-row-label {
-  padding-left: 72px;
+  padding-left: 52px;
 }
 
 .stakepool-purchase-ticket-buttons-area {
   text-align: right;
+  display: flex;
+  width: 740px;
+  justify-content: flex-end;
 }
 
 .num-tickets-icon {
@@ -97,15 +108,21 @@
 }
 
 .info-title-icon {
-  margin-left: auto;
+  align-self: flex-end;
 }
 
 .purchase-ticket-area-row {
   padding: 29px 0 0 20px;
-  height: 75px;
   border-bottom: 1px var(--disabled-background-color) solid;
   background-color: var(--background-back-color);
   margin-top: 10px;
+  padding-bottom: 40px;
+  align-content: flex-start;
+}
+
+.stakepool-purchase-ticket-input-select-1 {
+  display: flex;
+  align-self: center;
 }
 
 .stakepool-purchase-ticket-num-select {
@@ -153,7 +170,7 @@
 .stakepool-purchase-ticket-input-select {
   font-size: 16px;
   text-align: left;
-  width: 295px;
+  width: 220px;
   margin-right: 6px;
   margin-left: 6px;
   margin-top: 3px;
@@ -299,7 +316,7 @@
   background-position: 0px 50%;
   background-size: 16px;
   background-repeat: no-repeat;
-  padding-left: 20px;
+  padding-left: 30px;
   width: 100%;
   font-family: var(--font-family-monospace);
   color: var(--header-desc-lighter-color);
@@ -335,9 +352,10 @@
 
   &.account-select-icon {
     background-image: var(--wallet-gray-icon);
-    width: 22px;
+    width: 25px;
     background-position: 2px 5px;
     background-size: 22px;
+    align-self: flex-end;
   }
 }
 
@@ -499,7 +517,8 @@
     }
   }
 
-  .purchase-ticket-area {
+  .purchase-ticket-area,
+  .stakepool-purchase-ticket-buttons-area {
     width: 667px;
   }
 
@@ -536,7 +555,8 @@
     width: 150px;
   }
 
-  .purchase-ticket-area {
+  .purchase-ticket-area,
+  .stakepool-purchase-ticket-buttons-area {
     width: 355px;
   }
 
@@ -569,8 +589,7 @@
   }
 
   .purchase-ticket-area-row {
-    height: 130px;
-    padding: 23px 0 0 35px;
+    padding: 23px 0 0 25px;
 
     &.is-row {
       flex-direction: column;
@@ -581,9 +600,18 @@
     width: 231px;
   }
 
+  .stakepool-purchase-ticket-input-select-1 {
+    display: flex;
+  }
+
+  .stakepool-purchase-ticket-input-select-1 .stakepool-purchase-ticket-input-select {
+    width: 205px;
+  }
+
   .stakepool-purchase-ticket-input-select {
-    width: 242px;
+    // width: 150px;
     margin-left: 10px;
+    align-self: flex-end;
   }
 
   .purchase-ticket-area-row-label {
@@ -593,13 +621,13 @@
   .purchase-ticket-input-address {
     .purchase-ticket-area-row-label {
       width: inherit;
-      text-align: left;
+      text-align: right;
     }
   }
 
   .purchase-ticket-input-amount {
-    margin-left: -10px;
     margin-top: 25px;
+    margin-bottom: 60px;
 
     .purchase-ticket-area-row-label {
       padding-left: 0;

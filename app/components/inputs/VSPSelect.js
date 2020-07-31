@@ -14,7 +14,7 @@ const messages = defineMessages({
   }
 });
 
-function VSPSelect({ onChange, options, intl }) {
+function VSPSelect({ className, onChange, options, intl }) {
   const dispatch = useDispatch();
   const getVSPInfo = (host) => dispatch(vspa.getVSPInfo(host));
   // TODO how treat add custom vsp?
@@ -66,7 +66,7 @@ function VSPSelect({ onChange, options, intl }) {
   return <Select
     options={getOptions()}
     placeholder={intl.formatMessage(messages.placeholder)}
-
+    className={className}
     onChange={handleOnChange}
     value={selectedOption}
     // newOptionCreator={

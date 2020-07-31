@@ -7,7 +7,6 @@ import {
 } from "buttons";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { TextInput, LEGACY_StakePoolSelect } from "inputs";
-import { Documentation } from "shared";
 import "style/Layout.less";
 import "style/StakePool.less";
 import styles from "../PurchaseTab.module.css";
@@ -97,10 +96,7 @@ const StakePoolsAddForm = ({
             </div>
             <div className="stakepool-link-button-container">
               <ScriptRedeemableButton
-                modalTitle={
-                  <T id="stake.notRedeemed" m="Script not redeemable?" />
-                }
-                modalContent={<Documentation name="ScriptNotRedeemableInfo" />}
+                document={"ScriptNotRedeemableInfo"}
                 className="stakepool-add-not-redeemable"
                 buttonLabel={
                   <T id="stake.notRedeemed" m={"Script not redeemable?"} />

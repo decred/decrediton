@@ -55,60 +55,63 @@ const TicketListPage = ({
   sortTypes,
   ticketTypes,
   tsDate
-}) => (
-  <InfiniteScroll
-    hasMore={!noMoreTickets}
-    loadMore={() => getTickets(true)}
-    initialLoad={!noMoreTickets}
-    useWindow={false}
-    threshold={90}>
-    <Subtitle
-      title={<T id="mytickets.subtitle" m="My Tickets" />}
-      className={"is-row"}
-      children={subtitleMenu({
-        sortTypes,
-        ticketTypes,
-        selectedSortOrderKey,
-        selectedTicketTypeKey,
-        onChangeSelectedType,
-        onChangeSortType
-      })}
-    />
-    <div className="history-page-content-wrapper">
-      {tickets.length > 0 && (
-        <>
-          <div className="my-tickets-table-header">
-            <div>
-              <T id="tickets.table.header.status" m="Ticket Status" />
+}) => {
+  console.log("AQUIIII", noMoreTickets, tickets);
+  return (
+    <InfiniteScroll
+      hasMore={!noMoreTickets}
+      loadMore={() => getTickets(true)}
+      initialLoad={!noMoreTickets}
+      useWindow={false}
+      threshold={90}>
+      <Subtitle
+        title={<T id="mytickets.subtitle" m="My Tickets" />}
+        className={"is-row"}
+        children={subtitleMenu({
+          sortTypes,
+          ticketTypes,
+          selectedSortOrderKey,
+          selectedTicketTypeKey,
+          onChangeSelectedType,
+          onChangeSortType
+        })}
+      />
+      <div className="history-page-content-wrapper">
+        {tickets.length > 0 && (
+          <>
+            <div className="my-tickets-table-header">
+              <div>
+                <T id="tickets.table.header.status" m="Ticket Status" />
+              </div>
+              <div>
+                <T id="tickets.table.header.price" m="Price" />
+              </div>
+              <div>
+                <T id="tickets.table.header.reward" m="Reward" />
+              </div>
+              <div>
+                <T id="tickets.table.header.votetime" m="Vote Time" />
+              </div>
+              <div>
+                <T id="tickets.table.header.account" m="Account" />
+              </div>
+              <div>
+                <T id="tickets.table.header.purchased" m="Purchased" />
+              </div>
             </div>
-            <div>
-              <T id="tickets.table.header.price" m="Price" />
-            </div>
-            <div>
-              <T id="tickets.table.header.reward" m="Reward" />
-            </div>
-            <div>
-              <T id="tickets.table.header.votetime" m="Vote Time" />
-            </div>
-            <div>
-              <T id="tickets.table.header.account" m="Account" />
-            </div>
-            <div>
-              <T id="tickets.table.header.purchased" m="Purchased" />
-            </div>
-          </div>
-          <TxHistory {...{ transactions: tickets, tsDate, mode: "stake" }} />
-        </>
+            <TxHistory {...{ transactions: tickets, tsDate, mode: "stake" }} />
+          </>
+        )}
+      </div>
+      {!noMoreTickets ? (
+        <LoadingMoreTicketsIndicator />
+      ) : tickets.length > 0 ? (
+        <NoMoreTicketsIndicator />
+      ) : (
+        <NoTicketsIndicator />
       )}
-    </div>
-    {!noMoreTickets ? (
-      <LoadingMoreTicketsIndicator />
-    ) : tickets.length > 0 ? (
-      <NoMoreTicketsIndicator />
-    ) : (
-      <NoTicketsIndicator />
-    )}
-  </InfiniteScroll>
-);
+    </InfiniteScroll>
+  );
+};
 
 export default TicketListPage;

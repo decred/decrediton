@@ -95,6 +95,7 @@ class MyTickets extends React.Component {
   render() {
     const loadMoreThreshold =
       90 + Math.max(0, this.props.window.innerHeight - 765);
+      console.log(this.props.noMoreTickets);
     return (
       <TicketListPage
         {...{
