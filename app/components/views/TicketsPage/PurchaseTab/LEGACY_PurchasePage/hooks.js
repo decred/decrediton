@@ -3,7 +3,7 @@ import { useEffect, useState, useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { usePrevious, useMountEffect } from "hooks";
 import * as sel from "selectors";
-import * as spa from "../../../../../actions/VSPActions";
+import * as spa from "actions/VSPActions";
 import { compose, eq, get } from "fp";
 
 export function useLegacyPurchasePage(toggleShowVsp) {

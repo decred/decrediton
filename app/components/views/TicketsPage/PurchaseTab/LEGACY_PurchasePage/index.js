@@ -2,7 +2,6 @@ import { StakeyBounce } from "indicators";
 import StakePools from "./LEGACY_StakePools/StakePoolsList";
 import Tickets from "./LEGACY_Tickets";
 // after stop supporting old vsp code, we can remove this connector
-import { purchaseTickets } from "connectors";
 import { useLegacyPurchasePage } from "./hooks";
 import { EnableExternalRequestButton } from "buttons";
 import { ExternalLink } from "shared";
@@ -109,4 +108,4 @@ const LEGACY_PurchasePage = ({
             );
 };
 
-export default purchaseTickets(LEGACY_PurchasePage);
+export default LEGACY_PurchasePage;

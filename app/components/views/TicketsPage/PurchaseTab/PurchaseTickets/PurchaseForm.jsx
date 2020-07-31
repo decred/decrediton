@@ -30,7 +30,7 @@ const PurchaseTicketsForm = ({
           <div className="purchase-ticket-area-row-label">
             <T id="purchaseTickets.accountFrom" m="From Account" />:
           </div>
-          <div className={"stakepool-purchase-ticket-input-select-1"}>
+          <div className={"stakepool-purchase-ticket-input-select-container"}>
             <AccountsSelect
               className="stakepool-purchase-ticket-input-select"
               {...{ account, onChange: setAccount }}

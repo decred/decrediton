@@ -17,6 +17,8 @@
 }
 
 .purchase-ticket-input-address {
+  align-self: flex-start;
+
   .purchase-ticket-area-row-label {
     width: 82px;
     text-align: right;
@@ -120,7 +122,7 @@
   align-content: flex-start;
 }
 
-.stakepool-purchase-ticket-input-select-1 {
+.stakepool-purchase-ticket-input-select-container {
   display: flex;
   align-self: center;
 }
@@ -242,6 +244,8 @@
 
 .stakepool-auto-buyer-row-portion-half {
   width: 50%;
+  display: flex;
+  margin-bottom: 10px;
 
   .stakepool-autobuyer-input {
     width: 230px;
@@ -264,6 +268,7 @@
 .autobuyer-switch {
   .inline-block-mixin;
 
+  margin-bottom: 10px;
   width: 85px;
 }
 
@@ -487,7 +492,6 @@
 
 .input-purchase-ticket-valid-message-area {
   width: 200px;
-  height: 60px;
   position: relative;
   display: grid;
   grid-template-rows: 20px 20px;
@@ -600,11 +604,11 @@
     width: 231px;
   }
 
-  .stakepool-purchase-ticket-input-select-1 {
+  .stakepool-purchase-ticket-input-select-container {
     display: flex;
   }
 
-  .stakepool-purchase-ticket-input-select-1 .stakepool-purchase-ticket-input-select {
+  .stakepool-purchase-ticket-input-select-container .stakepool-purchase-ticket-input-select {
     width: 205px;
   }
 
