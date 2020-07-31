@@ -1,0 +1,48 @@
+.ticketTxWrapper {
+  margin-left: 40px;
+}
+  
+.homeContentTitle {
+  color: var(--stroke-color-hovered);
+  font-size: 13px;
+  font-family: var(--font-family-regular);
+  margin-bottom: 10px;
+  justify-content: space-between;
+}
+
+.homeContentLink {
+  color: var(--home-content-link);
+  font-size: 9px;
+  font-family: var(--font-family-regular);
+  cursor: pointer;
+}
+
+.homeContentLink > a:hover {
+  color: var(--input-color-default);
+}
+
+.overviewNoTickets > a {
+  display: block;
+  background-color: var(--background-back-color);
+  padding: 20px 20px 20px 48px;
+  background-repeat: no-repeat;
+  background-position: 16px 20px;
+  background-size: 20px;
+  text-decoration: none;
+  color: var(--input-color-default);
+  margin-bottom: 1px;
+  cursor: pointer;
+}
+
+.overviewNoTickets {
+  width: 352px;
+}
+.overviewNoTickets a.purchaseTickets {
+  background-image: var(--dummy-icon);
+}
+.overviewNoTickets a.whatIsStaking {
+  background-image: var(--what-is-staking-icon);
+}
+.overviewNoTickets a.ticketLifeCycle {
+  background-image: var(--ticket-lifecycle-icon);
+}

@@ -1,7 +1,7 @@
 import { Route } from "react-router-dom";
 import { AnimatedSwitch } from "react-router-transition";
 import { StaticSwitch } from "shared";
-import HomePage from "components/views/HomePage";
+import HomePage from "components/views/HomePage/HomePage";
 import SettingsPage from "components/views/SettingsPage/SettingsPage";
 import AccountsPage from "components/views/AccountsPage/AccountsPage";
 import WalletError from "components/views/WalletError";
