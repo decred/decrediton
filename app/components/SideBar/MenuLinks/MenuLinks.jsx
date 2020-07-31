@@ -9,13 +9,14 @@ const MenuList = React.memo(({ sidebarOnBottom, nodes, menuLinks }) =>
     ? menuLinks.map((menuLinkRow, index) => (
         <div className={"is-row"} key={index}>
           {menuLinkRow.map((menuLink) => {
-            const { path, link, icon, notifProp } = menuLink;
+            const { path, link, icon, notifProp, ariaLabel } = menuLink;
             return (
               <MenuLink
                 path={path}
                 link={link}
                 icon={icon}
                 notifProp={notifProp}
+                ariaLabel={ariaLabel}
                 ref={(ref) => nodes.set(path, ref)}
                 sidebarOnBottom={sidebarOnBottom}
                 key={path}
@@ -25,13 +26,14 @@ const MenuList = React.memo(({ sidebarOnBottom, nodes, menuLinks }) =>
         </div>
       ))
     : menuLinks.map((menuLink) => {
-        const { path, link, icon, notifProp } = menuLink;
+        const { path, link, icon, notifProp, ariaLabel } = menuLink;
         return (
           <MenuLink
             path={path}
             link={link}
             icon={icon}
             notifProp={notifProp}
+            ariaLabel={ariaLabel}
             ref={(ref) => nodes.set(path, ref)}
             sidebarOnBottom={sidebarOnBottom}
             key={path}

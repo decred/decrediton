@@ -18,7 +18,6 @@ const MenuBarExpanded = ({
 }) => (
   <div className={style.bottom}>
     <div
-      data-testid="total-balance-container"
       className={style.short}
       onMouseEnter={rescanRequest ? null : onShowAccounts}
       onMouseLeave={rescanRequest ? null : onHideAccounts}>

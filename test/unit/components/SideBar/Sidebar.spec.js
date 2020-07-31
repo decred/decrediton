@@ -35,7 +35,7 @@ const testCurrentBlockHeight = 12;
 const expectToHaveDefaultMenuLinks = (params) => {
   const { sidebarOnBottom, isTrezorEnabled, isLnEnabled } = params || {};
   const expectToHaveMenuLink = (name, className, href, icon) => {
-    const menulink = screen.queryByTestId(icon);
+    const menulink = screen.queryByRole("link", { name: name });
     expect(menulink).toHaveTextContent(sidebarOnBottom ? "" : name);
     expect(menulink).toHaveClass(className);
     expect(menulink).toHaveAttribute("href", href);
@@ -64,19 +64,21 @@ const expectToHaveDefaultMenuLinks = (params) => {
     expectToHaveMenuLink(/trezor setup/i, "trezorIcon", "/trezor", "trezor");
   } else {
     expect(
-      screen.queryByRole("link", { name: "trezor" })
+      screen.queryByRole("link", { name: /trezor setup/i })
     ).not.toBeInTheDocument();
   }
 
   if (isLnEnabled) {
     expectToHaveMenuLink(/lightning network/i, "lnIcon", "/ln", "ln");
   } else {
-    expect(screen.queryByRole("link", { name: "ln" })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("link", { name: /lightning network/i })
+    ).not.toBeInTheDocument();
   }
 };
 
-const clickOnMenuLink = (testid) => {
-  const menuLink = screen.queryByTestId(testid);
+const clickOnMenuLink = (name) => {
+  const menuLink = screen.queryByRole("link", { name: name });
   expect(menuLink).not.toHaveClass("menuLinkActive");
   user.click(menuLink);
   expect(menuLink).toHaveClass("menuLinkActive");
@@ -130,13 +132,10 @@ test("renders default sidebar", () => {
   ).not.toBeInTheDocument();
   expect(
     screen.getByRole("button", {
-      class: "rescan-button"
+      name: /^rescan$/i
     })
   ).toBeInTheDocument();
 
-  expect(screen.queryByTestId("container")).toHaveClass(
-    "sidebar sidebarReduced"
-  );
   expect(screen.queryByText(/total balance/i)).not.toBeInTheDocument();
   expect(screen.queryByText(/watch-only/i)).not.toBeInTheDocument();
   expect(screen.queryByText(/mixer is running/i)).not.toBeInTheDocument();
@@ -144,60 +143,51 @@ test("renders default sidebar", () => {
     screen.queryByTestId("menu-link-notification-icon")
   ).not.toBeInTheDocument();
 
-  // expects logo is a hamburger icon
-  const logo = screen.queryByTestId("logo");
-  expect(logo).toHaveClass("reducedLogo");
-  expect(screen.getByTestId("logo-div")).toHaveClass("hamburger");
-  expect(screen.queryByTestId("reduced-arrow")).not.toBeInTheDocument();
+  expect(
+    screen.queryByRole("button", { name: /reduce sidebar/i })
+  ).not.toBeInTheDocument();
   expect(screen.queryByText(/total balance/i)).not.toBeInTheDocument();
 
   // expands the sidebar
-  user.click(logo);
+  user.click(screen.queryByRole("button", { name: /logo/i }));
 
-  expect(screen.queryByTestId("container")).toHaveClass("sidebar");
-  expect(screen.getByTestId("reduced-arrow")).toHaveClass("reducedArrow");
-  expect(screen.getByTestId("logo-div")).toHaveClass("mainnet");
+  expect(screen.queryByRole("button", { name: /reduce sidebar/i })).toHaveClass(
+    "reducedArrow"
+  );
+  expect(screen.getByRole("button", { name: /logo/i })).toHaveClass("mainnet");
   expect(screen.getByText(/total balance/i)).toBeInTheDocument();
 
   // tests mouse hover on the account list
   const accountList = screen.getByTestId("account-list");
   expect(accountList).toHaveClass("extended");
-  const totalBalanceContainer = screen.getByTestId("total-balance-container");
-  user.hover(totalBalanceContainer);
-
+  user.hover(screen.getByText(/total balance/i));
+  expect(accountList).toHaveClass("extended showingAccounts");
   // checks AccountNames
-  const testAccountNames = testBalances.reduce((accumulator, balance) => {
+  testBalances.map((balance) => {
     if (!balance["hidden"]) {
-      accumulator.push(
-        balance["accountName"] == "default"
-          ? "Primary Account"
-          : balance["accountName"]
-      );
+      expect(
+        screen.getByText(
+          balance["accountName"] == "default"
+            ? "Primary Account"
+            : balance["accountName"]
+        )
+      ).toBeInTheDocument();
     }
-    return accumulator;
-  }, []);
+  });
 
-  const renderedAccountNames = screen
-    .getAllByTestId("extended-bottom-account-name")
-    .map((node) => node.textContent);
-
-  expect(
-    JSON.stringify(renderedAccountNames) == JSON.stringify(testAccountNames)
-  ).toBeTruthy();
-
-  user.unhover(totalBalanceContainer);
-  expect(accountList).toHaveClass("extended");
+  user.unhover(screen.getByText(/total balance/i));
+  expect(accountList).not.toHaveClass("extended showingAccounts");
 
   // collapses the sidebar
-  user.click(screen.getByTestId("reduced-arrow"));
+  user.click(screen.getByRole("button", { name: /reduce sidebar/i }));
 
-  expect(logo).toHaveClass("reducedLogo");
-  expect(screen.getByTestId("logo-div")).toHaveClass("hamburger");
-  expect(screen.queryByTestId("reduced-arrow")).not.toBeInTheDocument();
+  expect(
+    screen.queryByRole("button", { name: /reduce sidebar/i })
+  ).not.toBeInTheDocument();
   expect(screen.queryByText(/total balance/i)).not.toBeInTheDocument();
 
   //clicks tickets menu link on the sidebar
-  clickOnMenuLink("tickets");
+  clickOnMenuLink("Tickets");
 });
 
 test("renders sidebar on the bottom", () => {
@@ -212,33 +202,32 @@ test("renders sidebar on the bottom", () => {
   });
   expect(
     screen.queryByRole("button", {
-      class: "rescan-button"
+      name: /^rescan$/i
     })
   ).not.toBeInTheDocument();
   expect(screen.queryByText(/total balance/i)).not.toBeInTheDocument();
-  const logo = screen.queryByTestId("logo");
-  expect(logo).toHaveClass("reducedLogo");
 
   //clicks tickets menu link on the sidebar
-  clickOnMenuLink("tickets");
+  clickOnMenuLink("Tickets");
 
   // expands the sidebar
-  user.click(logo);
+  user.click(screen.queryByRole("button", { name: /logo/i }));
 
-  expect(screen.getByTestId("reduced-arrow")).toHaveClass("reducedArrow");
-  expect(screen.getByTestId("logo-div")).toHaveClass("mainnet");
+  expect(screen.getByRole("button", { name: /reduce sidebar/i })).toHaveClass(
+    "reducedArrow"
+  );
+  expect(screen.getByRole("button", { name: /logo/i })).toHaveClass("mainnet");
   expect(screen.getByText(/total balance/i)).toBeInTheDocument();
 
   // collapses the sidebar
-  user.click(screen.getByTestId("reduced-arrow"));
+  user.click(screen.getByRole("button", { name: /reduce sidebar/i }));
 
   expect(
     screen.queryByRole("button", {
-      class: "rescan-button"
+      name: /^rescan$/i
     })
   ).not.toBeInTheDocument();
   expect(screen.queryByText(/total balance/i)).not.toBeInTheDocument();
-  expect(logo).toHaveClass("reducedLogo");
 });
 
 test("renders sidebar with trezor enabled", () => {
@@ -260,7 +249,7 @@ test("renders sidebar on the bottom with animation enabled", () => {
   });
 
   //clicks tickets menu link on the sidebar
-  clickOnMenuLink("tickets");
+  clickOnMenuLink("Tickets");
 });
 
 test("renders sidebar with lightning network enabled", () => {
@@ -284,7 +273,7 @@ test("renders expanded sidebar with testnet network enabled", () => {
       }
     }
   });
-  expect(screen.getByTestId("logo-div")).toHaveClass("testnet");
+  expect(screen.getByRole("button", { name: /logo/i })).toHaveClass("testnet");
 });
 
 test("tests rescan on the expanded sidebar", () => {
@@ -301,24 +290,48 @@ test("tests rescan on the expanded sidebar", () => {
   });
 
   expect(screen.getByText(/< 1 minute ago/i)).toBeInTheDocument();
-  expect(screen.getByTestId("rescan-button")).toHaveClass("rescan-button");
-  expect(screen.queryByTestId("rescan-cancel-button")).not.toBeInTheDocument();
+  expect(
+    screen.getByRole("button", {
+      name: /^rescan$/i
+    })
+  ).toHaveClass("rescan-button");
 
-  user.click(screen.getByTestId("rescan-button"));
+  expect(
+    screen.queryByRole("button", { name: /cancel rescan/i })
+  ).not.toBeInTheDocument();
+
+  user.click(
+    screen.getByRole("button", {
+      name: /^rescan$/i
+    })
+  );
   expect(mockRescanAttempt).toHaveBeenCalledTimes(1);
 
-  expect(screen.getByTestId("rescan-button")).toHaveClass("rescan-button spin");
-  expect(screen.getByTestId("rescan-cancel-button")).toBeInTheDocument();
+  expect(
+    screen.getByRole("button", {
+      name: /^rescan$/i
+    })
+  ).toHaveClass("rescan-button spin");
+
+  expect(
+    screen.getByRole("button", { name: /cancel rescan/i })
+  ).toBeInTheDocument();
   expect(screen.queryByText(/< 1 minute ago/i)).not.toBeInTheDocument();
   expect(screen.getByText(/rescanning/i)).toBeInTheDocument();
   expect(screen.getByText(`0/${testCurrentBlockHeight}`)).toBeInTheDocument();
   expect(screen.getByText(/(0%)/i)).toBeInTheDocument();
 
-  user.click(screen.getByTestId("rescan-cancel-button"));
+  user.click(screen.getByRole("button", { name: /cancel rescan/i }));
   expect(mockRescanCancel).toHaveBeenCalledTimes(1);
 
-  expect(screen.getByTestId("rescan-button")).toHaveClass("rescan-button");
-  expect(screen.queryByTestId("rescan-cancel-button")).not.toBeInTheDocument();
+  expect(
+    screen.getByRole("button", {
+      name: /^rescan$/i
+    })
+  ).toHaveClass("rescan-button");
+  expect(
+    screen.queryByRole("button", { name: /cancel rescan/i })
+  ).not.toBeInTheDocument();
 });
 
 test("tests rescan on the collapsed sidebar", () => {
@@ -334,20 +347,39 @@ test("tests rescan on the collapsed sidebar", () => {
     }
   });
 
-  expect(screen.getByTestId("rescan-button")).toHaveClass("rescan-button");
-  expect(screen.queryByTestId("rescan-cancel-button")).not.toBeInTheDocument();
+  expect(
+    screen.getByRole("button", {
+      name: /^rescan$/i
+    })
+  ).toHaveClass("rescan-button");
+  expect(
+    screen.queryByRole("button", { name: /cancel rescan/i })
+  ).not.toBeInTheDocument();
 
-  user.click(screen.getByTestId("rescan-button"));
+  user.click(screen.getByRole("button", { name: /^rescan$/i }));
+
   expect(mockRescanAttempt).toHaveBeenCalledTimes(1);
 
-  expect(screen.getByTestId("rescan-button")).toHaveClass("rescan-button spin");
-  expect(screen.getByTestId("rescan-cancel-button")).toBeInTheDocument();
+  expect(
+    screen.getByRole("button", {
+      name: /^rescan$/i
+    })
+  ).toHaveClass("rescan-button spin");
+  expect(
+    screen.getByRole("button", { name: /cancel rescan/i })
+  ).toBeInTheDocument();
 
-  user.click(screen.getByTestId("rescan-cancel-button"));
+  user.click(screen.getByRole("button", { name: /cancel rescan/i }));
   expect(mockRescanCancel).toHaveBeenCalledTimes(1);
 
-  expect(screen.getByTestId("rescan-button")).toHaveClass("rescan-button");
-  expect(screen.queryByTestId("rescan-cancel-button")).not.toBeInTheDocument();
+  expect(
+    screen.getByRole("button", {
+      name: /^rescan$/i
+    })
+  ).toHaveClass("rescan-button");
+  expect(
+    screen.queryByRole("button", { name: /cancel rescan/i })
+  ).not.toBeInTheDocument();
 });
 
 test("tests tooltip on Logo when isWatchingOnly mode is active", () => {
@@ -396,9 +428,11 @@ test("tests notification icon on the menu link", () => {
 
 test("tests tabbedPage location", () => {
   const { history } = render(<SideBar />);
-  expect(screen.queryByTestId("transactions")).not.toHaveClass(
+  expect(screen.queryByRole("link", { name: /transactions/i })).not.toHaveClass(
     "menuLinkActive"
   );
   history.push("transactions/send");
-  expect(screen.queryByTestId("transactions")).toHaveClass("menuLinkActive");
+  expect(screen.queryByRole("link", { name: /transactions/i })).toHaveClass(
+    "menuLinkActive"
+  );
 });

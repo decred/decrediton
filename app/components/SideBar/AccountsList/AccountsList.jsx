@@ -23,7 +23,6 @@ const AccountsList = ({ isShowingAccounts, balances }) => (
               )}
               key={accountName}>
               <div
-                data-testid="extended-bottom-account-name"
                 className={style.extendedBottomAccountName}>
                 {accountName === "default" ? (
                   <T id="sidebar.accounts.name.default" m="Primary Account" />
