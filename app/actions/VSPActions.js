@@ -150,7 +150,7 @@ export const setStakePoolInformation = (
       response.data.status == "error" &&
       response.data.message === "purchaseinfo error - no address submitted"
     ) {
-      // this error happens when setting up a pool connecprivpasstion for the first
+      // this error happens when setting up a pool connection for the first
       // time. We need to generate and send a wallet address to the stakepool,
       // so that it will bind it with a stakepool address and create the
       // multisig voting script.
