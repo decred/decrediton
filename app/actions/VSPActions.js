@@ -174,7 +174,7 @@ export const setStakePoolInformation = (
     // import the script and verify whether the imported address matches what the
     // stakepool has sent us
     const importScriptResponse = await dispatch(
-      importScriptAttempt(privpass, response.data.data.Script)
+      importScriptAttempt(response.data.data.Script)
     );
     if (
       importScriptResponse.getP2shAddress() !== response.data.data.TicketAddress
