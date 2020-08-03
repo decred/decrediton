@@ -7,7 +7,7 @@ import { EnableExternalRequestButton } from "buttons";
 import { ExternalLink } from "shared";
 import { EXTERNALREQUEST_STAKEPOOL_LISTING } from "main_dev/externalRequests";
 import { FormattedMessage as T } from "react-intl";
-import StakePoolsAddForm from "./AddForm";
+import StakePoolsAddForm from "./LEGACY_AddForm";
 
 const StakepoolListingDisabled = React.memo(() =>
   <div>

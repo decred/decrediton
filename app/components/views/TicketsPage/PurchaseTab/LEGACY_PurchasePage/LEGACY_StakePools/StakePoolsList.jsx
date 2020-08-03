@@ -126,10 +126,4 @@ const StakePoolsList = ({
   </>
 );
 
-StakePoolsList.propTypes = {
-  configuredStakePools: PropTypes.array.isRequired,
-  unconfiguredStakePools: PropTypes.array.isRequired,
-  onShowAddStakePool: PropTypes.func.isRequired
-};
-
 export default StakePoolsList;
