@@ -1,6 +1,7 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { InfoDocModalButton, PassphraseModalButton } from "buttons";
-import { TextInput, Button } from "pi-ui";
+import { Button } from "pi-ui";
+import { TextInput } from "inputs";
 import { WatchOnlyWarnNotification } from "shared";
 import sharedStyles from "../SecurityPage.module.css";
 
@@ -50,13 +51,14 @@ const SignMessageForm = ({
           <div className={sharedStyles.securityPageFormRowField}>
             <WatchOnlyWarnNotification isActive={isSignMessageDisabled}>
               <TextInput
-                id="address"
                 required
                 value={address}
-                error={addressError}
-                disabled={isSignMessageDisabled}
-                label={formatMessage(messages.addressFieldPlaceholder)}
+                invalid={addressError}
+                invalidMessage={addressError}
                 onChange={(e) => onChangeAddress(e.target.value)}
+                placeholder={formatMessage(messages.addressFieldPlaceholder)}
+                showErrors={addressError}
+                disabled={isSignMessageDisabled}
               />
             </WatchOnlyWarnNotification>
           </div>
@@ -71,13 +73,14 @@ const SignMessageForm = ({
           <div className={sharedStyles.securityPageFormRowField}>
             <WatchOnlyWarnNotification isActive={isSignMessageDisabled}>
               <TextInput
-                id="msg"
                 required
                 value={message}
-                error={messageError}
-                disabled={isSignMessageDisabled}
-                label={formatMessage(messages.messageFieldPlaceholder)}
+                invalid={messageError}
+                invalidMessage={messageError}
                 onChange={(e) => onChangeMessage(e.target.value)}
+                placeholder={formatMessage(messages.messageFieldPlaceholder)}
+                showErrors={messageError}
+                disabled={isSignMessageDisabled}
               />
             </WatchOnlyWarnNotification>
           </div>

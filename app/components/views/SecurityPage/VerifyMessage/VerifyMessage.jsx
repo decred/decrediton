@@ -7,6 +7,7 @@ import { useValidateAddress } from "../ValidateAddress/hooks";
 const VerifyMessage = ({ intl }) => {
   const {
     verifyMessageSuccess,
+    verifyMessageError,
     isVerifyingMessage,
     onVerifyMessageAttempt,
     onVerifyMessageCleanStore,
@@ -24,6 +25,12 @@ const VerifyMessage = ({ intl }) => {
     onGetMessageVerificationServiceAttempt();
     return () => onVerifyMessageCleanStore();
   }, []);
+
+  useEffect(() => {
+    if (verifyMessageSuccess && !verifyMessageSuccess.valid || verifyMessageError) {
+      setSignatureError("Invalid Signature")
+    }
+  }, [verifyMessageSuccess, verifyMessageError])
 
   const onChangeAddress = async (address) => {
     setAddress(address);

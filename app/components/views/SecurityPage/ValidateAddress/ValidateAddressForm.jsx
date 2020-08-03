@@ -1,6 +1,7 @@
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { Subtitle } from "shared";
-import { TextInput, classNames } from "pi-ui";
+import { TextInput } from "inputs";
+import { classNames } from "pi-ui";
 import styles from "./ValidateAddressForm.module.css";
 
 const messages = defineMessages({
@@ -75,12 +76,13 @@ const ValidateAddressForm = ({
       <div className={styles.validateAddressFormLabel}>
         <T id="securitycenter.validate.field.address.label" m="Address" />
       </div>
-      <div className={styles.validateAddressFormInput}>
+      <div className={classNames(
+        styles.validateAddressFormInput,
+        address && validateAddressSuccess && styles.validAddress
+      )}>
         <TextInput
-          id="address-form"
-          inputClassNames={address && validateAddressSuccess && styles.validAddress}
           value={address}
-          label={intl.formatMessage(messages.addressFieldPlaceholder)}
+          placeholder={intl.formatMessage(messages.addressFieldPlaceholder)}
           onChange={(e) => onChangeAddress(e.target.value)}
         />
       </div>

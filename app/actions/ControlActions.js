@@ -655,9 +655,8 @@ export function verifyMessageAttempt(address, message, signature) {
   };
 }
 
-export const verifyMessageCleanStore = () => ({
-  type: VERIFYMESSAGE_CLEANSTORE
-});
+export const verifyMessageCleanStore = (dispatch) =>
+  dispatch({ type: VERIFYMESSAGE_CLEANSTORE });
 
 export const PUBLISHUNMINEDTRANSACTIONS_ATTEMPT =
   "PUBLISHUNMINEDTRANSACTIONS_ATTEMPT";
