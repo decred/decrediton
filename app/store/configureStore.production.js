@@ -1,5 +1,5 @@
 // @flow
-import { createStore, applyMiddleware } from "redux";
+import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { connectRouter, routerMiddleware } from "connected-react-router";
 import rootReducer from "../reducers";
@@ -9,6 +9,8 @@ export default function configureStore(initialState: Object, history: Object) {
   const enhancer = applyMiddleware(thunk, routerMiddlware);
   const routing = connectRouter(history);
   rootReducer.router = routing;
+  const routingReducer = combineReducers(rootReducer);
 
-  return createStore(rootReducer, initialState, enhancer);
+
+  return createStore(routingReducer, initialState, enhancer);
 }

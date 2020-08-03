@@ -78,6 +78,10 @@ export const TRANSACTION_DIR_SENT = "sent";
 export const TRANSACTION_DIR_RECEIVED = "received";
 export const TRANSACTION_DIR_TRANSFERRED = "transfer";
 
+// Default name to particular accounts
+export const DEFAULT_ACCOUNT = "default";
+export const IMPORTED_ACCOUNT = "imported";
+
 // Default name to privacy accounts needed for creation
 export const MIXED_ACCOUNT = "mixed";
 export const CHANGE_ACCOUNT = "unmixed";

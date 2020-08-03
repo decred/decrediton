@@ -55,3 +55,16 @@ export function limitFractionalDigits(s, maxFracDigits) {
   if (match[2].length <= maxFracDigits) return s;
   return match[1] + "." + match[2].substr(0, maxFracDigits);
 }
+
+// makeRandomString makes a random string. We use it as a generator to
+// rpcuser and rpcpass when starting dcrd with no conf file.
+export function makeRandomString(length) {
+  let text = "";
+  const possible =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  for (let i = 0; i < length; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+  return text;
+}

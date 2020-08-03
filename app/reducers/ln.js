@@ -1,11 +1,10 @@
 import {
-  LNWALLET_STARTDCRLND_ATTEMPT,
-  LNWALLET_STARTDCRLND_FAILED,
-  LNWALLET_STARTDCRLND_SUCCESS,
+  LNWALLET_STARTUP_ATTEMPT,
+  LNWALLET_STARTUP_FAILED,
+  LNWALLET_STARTUP_SUCCESS,
+  LNWALLET_STARTUP_CHANGEDSTAGE,
   LNWALLET_INFO_UPDATED,
-  LNWALLET_CONNECT_ATTEMPT,
   LNWALLET_CONNECT_SUCCESS,
-  LNWALLET_CONNECT_FAILED,
   LNWALLET_BALANCE_UPDATED,
   LNWALLET_CHANNELBALANCE_UPDATED,
   LNWALLET_CHANNELLIST_UPDATED,
@@ -22,7 +21,14 @@ import {
   LNWALLET_SENDPAYMENT_SUCCESS,
   LNWALLET_SENDPAYMENT_FAILED,
   LNWALLET_DCRLND_STOPPED,
-  LNWALLET_CHECKED
+  LNWALLET_CHECKED,
+  LNWALLET_SCBINFO_UPDATED,
+  LNWALLET_GETNETWORKINFO_ATTEMPT,
+  LNWALLET_GETNETWORKINFO_SUCCESS,
+  LNWALLET_GETNETWORKINFO_FAILED,
+  LNWALLET_GETNODEINFO_ATTEMPT,
+  LNWALLET_GETNODEINFO_SUCCESS,
+  LNWALLET_GETNODEINFO_FAILED
 } from "actions/LNActions";
 
 function addOutstandingPayment(oldOut, rhashHex, payData) {
@@ -39,20 +45,32 @@ function delOutstandingPayment(oldOut, rhashHex) {
 
 export default function ln(state = {}, action) {
   switch (action.type) {
-    case LNWALLET_STARTDCRLND_ATTEMPT:
+    case LNWALLET_STARTUP_ATTEMPT:
       return {
         ...state,
-        startAttempt: true
+        startAttempt: true,
+        active: false,
+        client: null,
+        startupStage: null
       };
-    case LNWALLET_STARTDCRLND_FAILED:
+    case LNWALLET_STARTUP_FAILED:
       return {
         ...state,
-        startAttempt: false
+        startAttempt: false,
+        startupStage: null
       };
-    case LNWALLET_STARTDCRLND_SUCCESS:
+    case LNWALLET_STARTUP_SUCCESS:
       return {
         ...state,
-        startAttempt: false
+        startAttempt: false,
+        exists: true,
+        active: true,
+        startupStage: null
+      };
+    case LNWALLET_STARTUP_CHANGEDSTAGE:
+      return {
+        ...state,
+        startupStage: action.stage
       };
     case LNWALLET_INFO_UPDATED:
       return {
@@ -63,24 +81,10 @@ export default function ln(state = {}, action) {
           alias: action.alias
         }
       };
-    case LNWALLET_CONNECT_ATTEMPT:
-      return {
-        ...state,
-        active: false,
-        client: null,
-        connectAttempt: true
-      };
-    case LNWALLET_CONNECT_FAILED:
-      return {
-        ...state,
-        connectAttempt: false
-      };
     case LNWALLET_CONNECT_SUCCESS:
       return {
         ...state,
-        active: true,
-        client: action.lnClient,
-        connectAttempt: false
+        client: action.lnClient
       };
     case LNWALLET_BALANCE_UPDATED:
       return {
@@ -160,7 +164,13 @@ export default function ln(state = {}, action) {
           state.outstandingPayments,
           action.rhashHex
         ),
-        failedPayments: [ ...state.failedPayments, action.payData ]
+        failedPayments: [...state.failedPayments, action.payData]
+      };
+    case LNWALLET_SCBINFO_UPDATED:
+      return {
+        ...state,
+        scbPath: action.scbPath,
+        scbUpdatedTime: action.scbUpdatedTime
       };
     case LNWALLET_DCRLND_STOPPED:
       return {
@@ -176,6 +186,12 @@ export default function ln(state = {}, action) {
         outstandingPayments: {},
         failedPayments: [],
         invoices: [],
+        scbPath: "",
+        scbUpdatedTime: 0,
+        getNetworkInfoAttempt: false,
+        network: null,
+        getNodeInfoAttempt: false,
+        nodeInfo: null,
         info: {
           version: null,
           identityPubkey: null,
@@ -197,6 +213,40 @@ export default function ln(state = {}, action) {
       return {
         ...state,
         exists: !!action.exists
+      };
+    case LNWALLET_GETNETWORKINFO_ATTEMPT:
+      return {
+        ...state,
+        getNetworkInfoAttempt: true
+      };
+    case LNWALLET_GETNETWORKINFO_SUCCESS:
+      return {
+        ...state,
+        getNetworkInfoAttempt: false,
+        network: action.network
+      };
+    case LNWALLET_GETNETWORKINFO_FAILED:
+      return {
+        ...state,
+        getNetworkInfoAttempt: false
+      };
+    case LNWALLET_GETNODEINFO_ATTEMPT:
+      return {
+        ...state,
+        getNodeInfoAttempt: true,
+        nodeInfo: null
+      };
+    case LNWALLET_GETNODEINFO_SUCCESS:
+      return {
+        ...state,
+        getNodeInfoAttempt: false,
+        nodeInfo: action.nodeInfo
+      };
+      case LNWALLET_GETNODEINFO_FAILED:
+      return {
+        ...state,
+        getNodeInfoAttempt: false,
+        nodeInfo: action.error
       };
     default:
       return state;

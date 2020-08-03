@@ -18,7 +18,10 @@ import {
   OP_SSTXCHANGE,
   OP_DATA_33,
   OP_DATA_65,
-  OP_CHECKSIGALT
+  OP_CHECKSIGALT,
+  OP_PUSHDATA4,
+  opcodeArray,
+  OP_RETURN
 } from "constants";
 
 const MaxUint16 = 1 << (16 - 1);
@@ -258,6 +261,25 @@ export const extractPkScriptAddrs = (version, pkScript, chainParams) => {
     return { error: "invalid script version" };
   }
 
+  const parsedScript = parseScript(pkScript);
+  let pops;
+  let disbuf = "";
+  if (parsedScript) {
+    const { error, retScript } = parsedScript;
+    if (error) return { error };
+    pops = retScript;
+    for (let i = 0; i < retScript.length; i++) {
+      disbuf += printPop(retScript[i]);
+      disbuf += " ";
+    }
+    // remove last space (" ").
+    if (disbuf.length > 0) {
+      disbuf = disbuf.slice(0, -1);
+    }
+  }
+
+  const asm = disbuf;
+
   let hash;
   hash = extractPubKeyHash(pkScript);
   // Check for pay-to-pubkey-hash script.
@@ -265,7 +287,8 @@ export const extractPkScriptAddrs = (version, pkScript, chainParams) => {
     return {
       scriptClass: PubKeyHashTy,
       address: pubKeyHashToAddrs(hash, chainParams),
-      requiredSig: 1
+      requiredSig: 1,
+      asm
     };
   }
 
@@ -275,7 +298,8 @@ export const extractPkScriptAddrs = (version, pkScript, chainParams) => {
     return {
       scriptClass: ScriptHashTy,
       address: scriptHashToAddrs(hash, chainParams),
-      requiredSig: 1
+      requiredSig: 1,
+      asm
     };
   }
 
@@ -289,7 +313,8 @@ export const extractPkScriptAddrs = (version, pkScript, chainParams) => {
     return {
       scriptClass: PubkeyHashAltTy,
       address: addr,
-      requiredSig: 1
+      requiredSig: 1,
+      asm
     };
   }
   // TODO finish importing this methods so decrediton can support decoding
@@ -353,7 +378,8 @@ export const extractPkScriptAddrs = (version, pkScript, chainParams) => {
     return {
       scriptClass: StakeSubmissionTy,
       address: pubKeyHashToAddrs(hash, chainParams),
-      requiredSig: 1
+      requiredSig: 1,
+      asm
     };
   }
 
@@ -362,7 +388,8 @@ export const extractPkScriptAddrs = (version, pkScript, chainParams) => {
     return {
       scriptClass: StakeSubmissionTy,
       address: pubKeyHashToAddrs(hash, chainParams),
-      requiredSig: 1
+      requiredSig: 1,
+      asm
     };
   }
 
@@ -371,7 +398,8 @@ export const extractPkScriptAddrs = (version, pkScript, chainParams) => {
     return {
       scriptClass: StakeSubmissionTy,
       address: pubKeyHashToAddrs(hash, chainParams),
-      requiredSig: 1
+      requiredSig: 1,
+      asm
     };
   }
 
@@ -380,7 +408,8 @@ export const extractPkScriptAddrs = (version, pkScript, chainParams) => {
     return {
       scriptClass: StakeGenTy,
       address: pubKeyHashToAddrs(hash, chainParams),
-      requiredSig: 1
+      requiredSig: 1,
+      asm
     };
   }
 
@@ -389,7 +418,8 @@ export const extractPkScriptAddrs = (version, pkScript, chainParams) => {
     return {
       scriptClass: StakeGenTy,
       address: scriptHashToAddrs(hash, chainParams),
-      requiredSig: 1
+      requiredSig: 1,
+      asm
     };
   }
 
@@ -398,7 +428,8 @@ export const extractPkScriptAddrs = (version, pkScript, chainParams) => {
     return {
       scriptClass: StakeRevocationTy,
       address: pubKeyHashToAddrs(hash, chainParams),
-      requiredSig: 1
+      requiredSig: 1,
+      asm
     };
   }
 
@@ -407,7 +438,8 @@ export const extractPkScriptAddrs = (version, pkScript, chainParams) => {
     return {
       scriptClass: StakeRevocationTy,
       address: scriptHashToAddrs(hash, chainParams),
-      requiredSig: 1
+      requiredSig: 1,
+      asm
     };
   }
 
@@ -416,7 +448,8 @@ export const extractPkScriptAddrs = (version, pkScript, chainParams) => {
     return {
       scriptClass: StakeSubChangeTy,
       address: pubKeyHashToAddrs(hash, chainParams),
-      requiredSig: 1
+      requiredSig: 1,
+      asm
     };
   }
 
@@ -425,22 +458,30 @@ export const extractPkScriptAddrs = (version, pkScript, chainParams) => {
     return {
       scriptClass: StakeSubChangeTy,
       address: scriptHashToAddrs(hash, chainParams),
-      requiredSig: 1
+      requiredSig: 1,
+      asm
     };
   }
 
-  // // Check for null data script.
-  // if isNullDataScript(version, pkScript) {
-  // 	// Null data transactions have no addresses or required signatures.
-  // 	return NullDataTy, nil, 0, nil
-  // }
+  // Check for null data script.
+  if (isNullData(pops)) {
+    // Null data transactions have no addresses or required signatures.
+    return {
+      // scriptclass NullDataTy
+      scriptClass: 0,
+      address: null,
+      requiredSig: 0,
+      asm
+    };
+  }
 
   // Don't attempt to extract addresses or required signatures for nonstandard
   // transactions.
   return {
     scriptClass: 0,
-    address: [],
-    requiredSig: 0
+    address: null,
+    requiredSig: 0,
+    asm
   };
 };
 
@@ -528,4 +569,145 @@ export const EstimateSerializeSizeFromScriptSizes = (
     txOutsSize +
     changeSize
   );
+};
+
+// isNullData returns true if the passed script is a null data transaction,
+// false otherwise.
+const isNullData = (pops) => {
+  if (!pops) return;
+  // A nulldata transaction is either a single OP_RETURN or an
+  // OP_RETURN SMALLDATA (where SMALLDATA is a data push up to
+  // MaxDataCarrierSize bytes).
+  const MaxDataCarrierSize = 256;
+  const l = pops.length;
+  if (l === 1 && pops[0].opcode.value === OP_RETURN) {
+    return true;
+  }
+
+  return (
+    l === 2 &&
+    pops[0].opcode.value == OP_RETURN &&
+    (isSmallInt(pops[1].opcode.value) ||
+      pops[1].opcode.value <= OP_PUSHDATA4) &&
+    pops[1].data.length <= MaxDataCarrierSize
+  );
+};
+
+// parseScript parses a script getting all of its opcodes and which data they
+// may have. This code was removed from dcrd due to Zero alloc optimization
+// refactor optmization at txscript, but it is fine for decrediton as for now we
+// dont decode big scripts on it.
+// source: https://github.com/decred/dcrd/pull/1656/commits/fcb1f3a7a137f3d69091c23c0f349d35df6c1ee6
+const parseScript = (script, opcodes = opcodeArray) => {
+  if (!script) return;
+  const retScript = [];
+  for (let i = 0; i < script.length; i++) {
+    const instr = script[i];
+    const op = opcodes[instr];
+    const pop = { opcode: op };
+
+    if (op.length == 1) {
+      retScript.push(pop);
+      continue;
+    } else if (op.length > 1) {
+      if (script.slice(i).length < op.length) {
+        return {
+          retScript,
+          error: `opcode ${op.name} requires ${
+            op.length
+          } bytes, but script only has ${script.slice(i).length} remaining.`
+        };
+      }
+      pop.data = script.slice(i + 1, i + op.length);
+      i += op.length - 1;
+    } else if (op.legnth < 0) {
+      let l;
+      let off = i + 1;
+
+      // negativeLengthHelper is an aux method to help get data and move the offset
+      // of a script with negative length (little endian length) so we can get the
+      // data. This way we can avoid code repetition.
+      const negativeLengthHelper = () => {
+        // Move offset to beginning of the data.
+        off += -op.length;
+
+        // Disallow entries that do not fit script or were
+        // sign extended.
+        if (l > script.slice(off).length || l < 0) {
+          return {
+            retScript,
+            error: `opcode ${op.name} pushes ${l} bytes, but script only has ${
+              script.slice(off).length
+            } remaining`
+          };
+        }
+
+        pop.data = script.slice(off, off + l);
+        i += 1 - op.length + l;
+      };
+      if (script.slice(off).length < -op.length) {
+        return {
+          retScript,
+          error: `opcode ${
+            op.name
+          } requires ${-op.length} bytes, but script only has ${
+            script.slice(off).length
+          } remaining.`
+        };
+      }
+
+      // Next -length bytes are little endian length of data.
+      switch (op.length) {
+        case -1:
+          l = script[off];
+          negativeLengthHelper();
+          break;
+        case -2:
+          l = (script[off + 1] << 8) | script[off];
+          negativeLengthHelper();
+          break;
+        case -4:
+          l =
+            (script[off + 3] << 24) |
+            (script[off + 2] << 16) |
+            (script[off + 1] << 8) |
+            script[off];
+          negativeLengthHelper();
+          break;
+        default:
+          return {
+            retScript,
+            error: `invalid opcode length ${op.length}`
+          };
+      }
+    }
+
+    retScript.push(pop);
+  }
+
+  return { retScript };
+};
+
+// print returns a human-readable string representation of the opcode for use
+// in script disassembly.
+const printPop = (pop) => {
+ 	// The reference implementation one-line disassembly replaces opcodes
+	// which represent values (e.g. OP_0 through OP_16 and OP_1NEGATE)
+	// with the raw value.  However, when not doing a one-line dissassembly,
+	// we prefer to show the actual opcode names.  Thus, only replace the
+	// opcodes in question when the oneline flag is set.
+	let dataString = pop.opcode.name;
+
+  // Nothing more to do for non-data push opcodes.
+  if (pop.opcode.length === 1) {
+    return dataString;
+  }
+  dataString += " ";
+
+
+  pop.data.map(buff => {
+    dataString += ("00" + buff.toString(16)).slice(-2);
+  });
+
+  return dataString;
 };

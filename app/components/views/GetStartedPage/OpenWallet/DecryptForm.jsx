@@ -11,14 +11,13 @@ const messages = defineMessages({
 });
 
 const OpenWalletDecryptFormBodyBase = ({
-  isOpeningWallet,
   publicPassPhrase,
   intl,
   onSetPublicPassPhrase,
   onOpenWallet,
   onKeyDown
 }) => (
-  <div className={styles.advancedPageForm}>
+  <div className={styles.pageForm}>
     <div className={styles.daemonRow}>
       <T
         id="getStarted.decrypt.info"
@@ -41,10 +40,7 @@ const OpenWalletDecryptFormBodyBase = ({
       </div>
     </div>
     <div className={styles.loaderBarButtons}>
-      <KeyBlueButton
-        onClick={onOpenWallet}
-        disabled={publicPassPhrase == "" || isOpeningWallet}
-        loading={isOpeningWallet}>
+      <KeyBlueButton onClick={onOpenWallet} disabled={publicPassPhrase == ""}>
         <T id="decryptWalletForm.openBtn" m="Open Wallet" />
       </KeyBlueButton>
     </div>

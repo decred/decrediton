@@ -1,18 +1,16 @@
-import { settings } from "connectors"; // use useSettings hook
+import { useSettings } from "hooks";
 import KeyBlueButton from "./KeyBlueButton";
 
-const EnableExternalRequestButton = ({
-  children,
-  requestType,
-  onAddAllowedRequestType,
-  onClick
-}) => (
-  <KeyBlueButton
-    onClick={() =>
-      onAddAllowedRequestType(requestType).then(() => onClick && onClick())
-    }>
-    {children}
-  </KeyBlueButton>
-);
+const EnableExternalRequestButton = ({ children, requestType, onClick }) => {
+  const { onAddAllowedRequestType } = useSettings();
+  return (
+    <KeyBlueButton
+      onClick={() =>
+        onAddAllowedRequestType(requestType).then(() => onClick && onClick())
+      }>
+      {children}
+    </KeyBlueButton>
+  );
+};
 
-export default settings(EnableExternalRequestButton);
+export default EnableExternalRequestButton;

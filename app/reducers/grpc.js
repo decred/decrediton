@@ -14,10 +14,6 @@ import {
   GETNETWORK_ATTEMPT,
   GETNETWORK_FAILED,
   GETNETWORK_SUCCESS,
-  GETPING_ATTEMPT,
-  GETPING_FAILED,
-  GETPING_SUCCESS,
-  GETPING_CANCELED,
   GETSTAKEINFO_ATTEMPT,
   GETSTAKEINFO_FAILED,
   GETSTAKEINFO_SUCCESS,
@@ -78,6 +74,7 @@ import { CLOSEWALLET_SUCCESS } from "actions/WalletLoaderActions";
 import {
   GETACCOUNTMIXERSERVICE_SUCCESS,
   RUNACCOUNTMIXER_SUCCESS,
+  RUNACCOUNTMIXER_FAILED,
   STOPMIXER_SUCCESS
 } from "actions/AccountMixerActions";
 import {
@@ -107,6 +104,11 @@ export default function grpc(state = {}, action) {
         accountMixerRunning: true,
         mixerStreamer: action.mixerStreamer
       };
+    case RUNACCOUNTMIXER_FAILED:
+        return {
+          ...state,
+          mixerStreamerError: action.error
+        };
     case STOPMIXER_SUCCESS:
       return {
         ...state,
@@ -256,36 +258,6 @@ export default function grpc(state = {}, action) {
         getNetworkRequestAttempt: false,
         getNetworkResponse: action.getNetworkResponse
       };
-    case GETPING_ATTEMPT:
-      return {
-        ...state,
-        getPingError: "",
-        getPingRequestAttempt: true,
-        pingTimer: null
-      };
-    case GETPING_FAILED:
-      return {
-        ...state,
-        getPingError: String(action.error),
-        getPingRequestAttempt: false,
-        pingTimer: null
-      };
-    case GETPING_SUCCESS:
-      return {
-        ...state,
-        getPingError: "",
-        getPingRequestAttempt: false,
-        getPingResponse: action.getPingResponse,
-        pingTimer: action.pingTimer
-      };
-    case GETPING_CANCELED:
-      return {
-        ...state,
-        getPingError: "",
-        getPingRequestAttempt: false,
-        getPingResponse: null,
-        pingTimer: null
-      };
     case GETSTAKEINFO_ATTEMPT:
       return {
         ...state,
@@ -403,12 +375,12 @@ export default function grpc(state = {}, action) {
         recentRegularTransactions: action.recentRegularTransactions,
         recentStakeTransactions: action.recentStakeTransactions,
         stakeTransactions: {
-          ...state.stakeTransactions,
-          ...action.stakeTransactions
+          ...action.stakeTransactions,
+          ...state.stakeTransactions
         },
         regularTransactions: {
-          ...state.regularTransactions,
-          ...action.regularTransactions
+          ...action.regularTransactions,
+          ...state.regularTransactions
         }
       };
     case CHANGE_TRANSACTIONS_FILTER:

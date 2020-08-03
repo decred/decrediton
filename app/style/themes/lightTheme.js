@@ -136,7 +136,7 @@ const lightTheme = {
   "menu-overview-default": "url('style/icons/overview-default.png')",
   "menu-overview-active": "url('style/icons/overview-active.png')",
   "menu-securitycntr-default": "url('style/icons/securitycntr-default.png')",
-  "menu-securitycntrsactive": "url('style/icons/securitycntr-active.png')",
+  "menu-securitycntr-active": "url('style/icons/securitycntr-active.png')",
   "menu-tickets-default": "url('style/icons/tickets-default.png')",
   "menu-tickets-active": "url('style/icons/tickets-active.png')",
   "menu-help-default": "url('style/icons/help-default.png')",
@@ -224,7 +224,8 @@ const lightTheme = {
   "menu-trezor-default": "url('style/icons/trezorDefault.svg')",
   "menu-trezor-hover": "url('style/icons/trezorHover.svg')",
   "menu-cancel-rescan-icon": "url('style/icons/menu-cancel-rescan.svg')",
-  "politeia-loading-icon": "url('style/icons/politeia-loading.gif')"
+  "politeia-loading-icon": "url('style/icons/politeia-loading.gif')",
+  "backup-icon": "url('style/icons/backup.svg')"
 };
 
 export default lightTheme;

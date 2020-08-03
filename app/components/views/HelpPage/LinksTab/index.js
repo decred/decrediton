@@ -1,7 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
 import { HelpLink, HelpLinkInfoModal, HelpLinkAboutModal } from "buttons";
 import { DescriptionHeader } from "layout";
-import { Subtitle, Documentation } from "shared";
+import { Subtitle } from "shared";
 import "style/Help.less";
 
 export const LinksTabHeader = () => (
@@ -46,17 +46,12 @@ export const LinksTab = () => (
         }
       />
       <HelpLinkInfoModal
+        document="DecredConstitution"
         className={"help-constitution-icon"}
         title={<T id="help.constitution" m="Constitution" />}
         subtitle={
           <T id="help.constitution.subtitle" m="Decred Project Constitution" />
         }
-        modalTitle={
-          <h1>
-            <T id="help.constitution.modal.title" m="Decred Constitution" />
-          </h1>
-        }
-        modalContent={<Documentation name="DecredConstitution" />}
         double
       />
       <HelpLinkAboutModal

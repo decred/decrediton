@@ -14,7 +14,11 @@ const Settings = () => {
     currencies,
     locales,
     networks,
-    areSettingsDirty
+    areSettingsDirty,
+    isTicketAutoBuyerEnabled,
+    needNetworkReset,
+    walletName,
+    walletReady
   } = useSettings();
   const { walletService } = useService();
 
@@ -37,7 +41,11 @@ const Settings = () => {
         currencies,
         locales,
         networks,
-        areSettingsDirty
+        areSettingsDirty,
+        isTicketAutoBuyerEnabled,
+        needNetworkReset,
+        walletName,
+        walletReady
       }}
     />
   );

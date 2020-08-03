@@ -66,7 +66,8 @@ const ProposalDetailsPage = () => {
     viewedProposalDetails,
     getProposalError,
     votingStatus,
-    showPurchaseTicketsPage
+    showPurchaseTicketsPage,
+    send
   ]);
 
   return (

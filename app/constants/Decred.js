@@ -116,21 +116,7 @@ export const STSchnorrSecp256k1 = 2;
 // ripemd160Size is the size of the RIPEMD-160 hash algorithm checksum in bytes.
 export const ripemd160Size = 20;
 
-// OP_CODES
-export const OP_0 = 0x00; // 0
-export const OP_1 = 0x51; // 81 - AKA OP_TRUE
-export const OP_16 = 0x60; // 96
-export const OP_DUP = 0x76; // 118
-export const OP_HASH160 = 0xa9; // 169
-export const OP_DATA_20 = 0x14; // 20
-export const OP_EQUAL = 0x87; // 135
-export const OP_EQUALVERIFY = 0x88; // 136
-export const OP_CHECKSIG = 0xac; // 172
-export const OP_SSTX = 0xba; // 186 DECRED
-export const OP_SSGEN = 0xbb; // 187 DECRED
-export const OP_SSRTX = 0xbc; // 188 DECRED
-export const OP_SSTXCHANGE = 0xbd; // 189 DECRED
-export const OP_DATA_33 = 0x21; // 33
-export const OP_DATA_65 = 0x41; // 65
-export const OP_CHECKSIGALT = 0xbe; // 190 DECRED
-export const OP_DATA_45 = 0x2d; // 45
+// SStxPKHMinOutSize is the minimum size of an OP_RETURN commitment output
+// for an SStx tx.
+// 20 bytes P2SH/P2PKH + 8 byte amount + 4 byte fee range limits
+export const SStxPKHMinOutSize = 32;

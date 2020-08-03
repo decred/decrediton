@@ -6,11 +6,11 @@ import { AnimatedSwitch } from "react-router-transition";
 import { StaticSwitch } from "shared";
 import GetStartedContainer from "./GetStarted";
 import WalletContainer from "./Wallet";
-import ShutdownAppPage from "components/views/ShutdownAppPage";
+import ShutdownPage from "components/views/ShutdownPage/ShutdownPage";
 import FatalErrorPage from "components/views/FatalErrorPage";
 import Snackbar from "components/Snackbar";
 import AboutModal from "../components/modals/AboutModal/AboutModal";
-import AutobuyerRunningModal from "../components/modals/AutobuyerRunningModal/AutobuyerRunningModal";
+import AutobuyerRunningModal from "../components/modals/AutobuyerRunningModal";
 import { log } from "wallet";
 import { TrezorModals } from "components/modals/trezor";
 import "style/Layout.less";
@@ -148,7 +148,7 @@ class App extends React.Component {
           <Snackbar />
           <MainSwitch {...topLevelAnimation} className="top-level-container">
             <Route path="/getstarted" component={GetStartedContainer} />
-            <Route path="/shutdown" component={ShutdownAppPage} />
+            <Route path="/shutdown" component={ShutdownPage} />
             <Route path="/error" component={FatalErrorPage} />
             <Route path="/" component={WalletContainer} />
           </MainSwitch>

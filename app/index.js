@@ -70,7 +70,6 @@ const initialState = {
     currentStakePoolConfig: null,
     currentStakePoolConfigRequest: false,
     currentStakePoolConfigError: null,
-    currentStakePoolConfigSuccessMessage: "",
     activeStakePoolConfig: false,
     selectedStakePool: null,
     updatedStakePoolList: false,
@@ -147,11 +146,6 @@ const initialState = {
     getNetworkError: null,
     getNetworkRequestAttempt: false,
     getNetworkResponse: null,
-    // Ping
-    getPingError: null,
-    getPingRequestAttempt: false,
-    getPingResponse: null,
-    pingTimer: null,
     // StakeInfo
     getStakeInfoError: null,
     getStakeInfoRequestAttempt: false,
@@ -418,7 +412,11 @@ const initialState = {
     outstandingPayments: {}, // map paymentHash => payment data
     failedPayments: Array(),
     addInvoiceAttempt: false,
-    sendPaymentAttempt: false
+    sendPaymentAttempt: false,
+    scbPath: "",
+    scbUpdatedTime: 0,
+    nodeInfo: null,
+    getNodeInfoAttempt: false
   },
   locales: locales
 };

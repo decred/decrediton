@@ -159,13 +159,15 @@ const StakeInfoDisplay = ({
             label={<T id="stake.lastVotedTicket" m="Last Ticked Voted" />}
             value={
               lastVotedTicket
-                ? getDateDiffLabel(new Date(lastVotedTicket.leaveTimestamp * 1000))
+                ? getDateDiffLabel(
+                    new Date(lastVotedTicket.leaveTimestamp * 1000)
+                  )
                 : "None"
             }
             foot={
               lastVotedTicket && (
                 <Link
-                  to={`/transactions/history/${lastVotedTicket.txHash}`}
+                  to={`/transaction/history/${lastVotedTicket.txHash}`}
                   className={styles.foot}>
                   <span className={styles.purchaseTicketFoot}>
                     {lastVotedTicket.txHash.substr(0, 6) + "... "}

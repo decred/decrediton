@@ -1,8 +1,9 @@
+import { useCallback } from "react";
 import { KeyBlueButton, InvisibleButton } from "buttons";
 import RemoteDaemonForm from "./RemoteDaemonForm";
 import AppDataForm from "./AppDataForm";
 import { FormattedMessage as T, injectIntl } from "react-intl";
-import { classNames } from "pi-ui";
+import { Toggle, classNames } from "pi-ui";
 import styles from "../GetStarted.module.css";
 
 const AdvancedBodyBase = ({
@@ -35,6 +36,10 @@ const AdvancedBodyBase = ({
   appDataValid,
   ...props
 }) => {
+  const onFormModeToggle = useCallback(() => {
+    sideActive ? onShowRemote() : onShowAppData();
+  }, [sideActive, onShowAppData, onShowRemote]);
+
   return (
     <>
       <div className={styles.advancedDesc}>
@@ -43,30 +48,13 @@ const AdvancedBodyBase = ({
           m="Complete one of the following forms to start Decrediton according to your local setup."
         />
       </div>
-      <div className={styles.advancedPageToggle}>
-        <div className={styles.textToggle}>
-          <div
-            className={classNames(
-              styles.textToggleButtonLeft,
-              sideActive && styles.textToggleButtonActive
-            )}
-            onClick={!sideActive ? onShowAppData : null}>
-            <T id="advancedDaemon.toggle.appdata" m="Remote Daemon" />
-          </div>
-          <div
-            className={classNames(
-              styles.textToggleButtonRight,
-              sideActive && styles.textToggleButtonActive
-            )}
-            onClick={sideActive ? onShowRemote : null}>
-            <T
-              id="advancedDaemon.toggle.remote"
-              m="Different Local Daemon Location"
-            />
-          </div>
+      <div className={styles.toggleWrapper}>
+        <Toggle onToggle={onFormModeToggle} toggled={!sideActive} />
+        <div className={styles.toggleLabel}>
+          Different Local Daemon Location
         </div>
       </div>
-      <div className={styles.advancedPageFormToggle}>
+      <div className={classNames(styles.pageForm, styles.toggle)}>
         {sideActive ? (
           <RemoteDaemonForm
             {...{

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import ReleaseNotesForm from "./Form";
 
 // versions with release notes available. From newer to older.
@@ -24,47 +25,42 @@ const availableVersions = [
   }
 ];
 
-// XXX: functional component
+const ReleaseNotes = ({ ...props }) => {
+  const defaultVersionInfo = availableVersions[0];
+  const [versionInfo, setVersionInfo] = useState(defaultVersionInfo);
+  const [index, setIndex] = useState(0);
 
-@autobind
-class ReleaseNotes extends React.Component {
-  constructor(props) {
-    super(props);
-
-    const versionInfo = availableVersions[0];
-    this.state = { ...versionInfo, index: 0 };
-  }
-
-  showVersion(index) {
-    if (index < 0) index = 0;
-    if (index >= availableVersions.length) index = availableVersions.length - 1;
-    if (index !== this.state.index) {
-      const versionInfo = availableVersions[index];
-      this.setState({ ...versionInfo, index });
+  const showVersion = (idx) => {
+    if (idx < 0) idx = 0;
+    if (idx >= availableVersions.length) idx = availableVersions.length - 1;
+    if (idx !== index) {
+      const versionInfo = availableVersions[idx];
+      setVersionInfo(versionInfo);
+      setIndex(idx);
     }
-  }
+  };
 
-  onNewerVersion() {
-    this.showVersion(this.state.index - 1);
-  }
-  onOlderVersion() {
-    this.showVersion(this.state.index + 1);
-  }
+  const onNewerVersion = () => {
+    showVersion(index - 1);
+  };
 
-  render() {
-    const { onNewerVersion, onOlderVersion } = this;
+  const onOlderVersion = () => {
+    showVersion(index + 1);
+  };
 
-    return (
-      <ReleaseNotesForm
-        {...{
-          ...this.props,
-          ...this.state,
-          onNewerVersion,
-          onOlderVersion
-        }}
-      />
-    );
-  }
-}
+  return (
+    <ReleaseNotesForm
+      {...{
+        ...props,
+        onNewerVersion,
+        onOlderVersion,
+        version: versionInfo.version,
+        imgClassName: versionInfo.imgClassName,
+        docName: versionInfo.docName,
+        index
+      }}
+    />
+  );
+};
 
 export default ReleaseNotes;

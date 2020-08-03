@@ -22,7 +22,8 @@ import { getGlobalCfgPath, checkAndInitWalletCfg } from "./main_dev/paths";
 import {
   installSessionHandlers,
   reloadAllowedExternalRequests,
-  allowStakepoolRequests,
+  LEGACY_allowStakepoolRequests,
+  allowVSPRequests,
   allowExternalRequest
 } from "./main_dev/externalRequests";
 import { setupProxy } from "./main_dev/proxy";
@@ -53,7 +54,9 @@ import {
   setWatchingOnlyWallet,
   getWatchingOnlyWallet,
   startDcrlnd,
-  stopDcrlnd
+  stopDcrlnd,
+  removeDcrlnd,
+  lnScbInfo
 } from "./main_dev/ipc";
 import {
   initTemplate,
@@ -63,7 +66,7 @@ import {
   inputMenu,
   selectionMenu
 } from "./main_dev/templates";
-import { readFileBackward } from "./helpers/byteActions";
+import { readFileBackward } from "./helpers";
 import electron from "electron";
 import { isString } from "./fp";
 import {
@@ -248,8 +251,14 @@ ipcMain.on("reload-allowed-external-request", (event) => {
   event.returnValue = true;
 });
 
+// LEGACY ipc request - REMOVE AFTER SUPPORTING VSP's API V1/V2
 ipcMain.on("allow-stakepool-host", (event, host) => {
-  allowStakepoolRequests(host);
+  LEGACY_allowStakepoolRequests(host);
+  event.returnValue = true;
+});
+
+ipcMain.on("allow-vsp-host", (event, host) => {
+  allowVSPRequests(host);
   event.returnValue = true;
 });
 
@@ -345,6 +354,30 @@ ipcMain.on("dcrlnd-creds", (event) => {
     event.returnValue = GetDcrlndCreds();
   } else {
     event.returnValue = null;
+  }
+});
+
+ipcMain.on("ln-scb-info", (event, walletPath, testnet) => {
+  try {
+    event.returnValue = lnScbInfo(walletPath, testnet);
+  } catch (error) {
+    if (!(error instanceof Error)) {
+      event.returnValue = new Error(error);
+    } else {
+      event.returnValue = error;
+    }
+  }
+});
+
+ipcMain.on("ln-remove-dir", (event, walletName, testnet) => {
+  try {
+    event.returnValue = removeDcrlnd(walletName, testnet);
+  } catch (error) {
+    if (!(error instanceof Error)) {
+      event.returnValue = new Error(error);
+    } else {
+      event.returnValue = error;
+    }
   }
 });
 

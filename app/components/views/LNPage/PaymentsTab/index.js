@@ -94,7 +94,12 @@ class PaymentsTab extends React.Component {
   }
 
   render() {
-    const { payments, outstandingPayments, failedPayments, tsDate } = this.props;
+    const {
+      payments,
+      outstandingPayments,
+      failedPayments,
+      tsDate
+    } = this.props;
     const {
       payRequest,
       decodedPayRequest,

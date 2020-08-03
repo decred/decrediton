@@ -1,3 +1,61 @@
+.pageBody.getstarted {
+  padding: 40px;
+  background-color: var(--background-container);
+  display: block;
+}
+
+.shutdownText {
+  font-size: 30px;
+  text-align: center;
+}
+
+.button {
+  padding: 5px 16px 10px 16px;
+}
+
+.toggleWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box !important;
+  width: 240px;
+  clear: left;
+}
+
+.toggleLabelExample {
+  margin-left: 0.1rem;
+  margin-top: 0.1rem;
+}
+
+.getstartedNew {
+  color: var(--title-text-and-button-background);
+  padding-left: 52px;
+  padding-top: 106px;
+}
+
+.title {
+  font-size: 27px;
+  line-height: 34px;
+  margin-bottom: 6px;
+}
+
+.titleSub {
+  color: var(--header-desc-color);
+  font-size: 13px;
+  line-height: 17px;
+  margin-bottom: 42px;
+  width: 296px;
+}
+
+.titleSub a {
+  color: var(--link-color);
+}
+
+.toolbar {
+  height: 29px;
+  display: flex;
+}
+
 .pageForm {
   width: 100%;
   float: left;
@@ -191,7 +249,7 @@
 
 .getstarted.loader .pageForm .loaderBarButtons {
   position: absolute;
-  top: 365px;
+  top: 320px;
   right: 0px;
 }
 
@@ -496,7 +554,7 @@
   width: 100%;
 }
 
-.desc {
+.advancedDesc {
   font-size: 19px;
   color: var(--modal-text);
   margin-bottom: 43px;
@@ -703,7 +761,7 @@
   background-image: var(--enable-spv);
 }
 
-.privacyOptionIcon.disableSpv {
+.privacyOptionIcon.disable-spv {
   background-image: var(--disable-spv);
 }
 
@@ -749,6 +807,7 @@
 
 .launchError {
   margin-bottom: 20px;
+  color: var(--error-text-color);
 }
 
 @media screen and (max-width: 1919px) {
@@ -811,6 +870,10 @@
 }
 
 @media screen and (max-width: 768px) {
+  .getstartedNew {
+    padding: 86px 0 0 0;
+  }
+
   .releaseNotes {
     height: 77vh;
   }
@@ -949,6 +1012,18 @@
   }
 }
 
+@media screen and (max-height: 746px) {
+  .pageBody.getstarted {
+    height: calc(100% - 60px);
+  }
+}
+
+@media screen and (max-width: 511px) {
+  .keyBlueButton {
+    margin-top: 0px;
+  }
+}
+
 @media screen and (max-width: 710px) {
   .privacyOptions.wide,
   .privacyOptions {
@@ -995,5 +1070,14 @@
 @media screen and (max-width: 430px) {
   .getstarted.loader .goBackScreenButtonArea {
     right: 59px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .getstartedNew {
+    padding: 64px 0 0 0px;
+  }
+  .title {
+    font-size: 23px;
   }
 }

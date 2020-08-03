@@ -1,11 +1,18 @@
 import { spring } from "react-motion";
 import { StandalonePage, StandaloneHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
-import { ReceiveAccountsSelect } from "inputs";
-import { PassphraseModalButton, TextToggle } from "buttons";
+import { ReceiveAccountsSelect, PathBrowseInput } from "inputs";
+import { PassphraseModalButton, TextToggle, InfoDocModalButton } from "buttons";
 import { TransitionMotionWrapper } from "shared";
 import { lnPage } from "connectors";
-import { CREATE_LN_ACCOUNT } from "actions/LNActions";
+import {
+  CREATE_LN_ACCOUNT,
+  LNWALLET_STARTUPSTAGE_STARTDCRLND,
+  LNWALLET_STARTUPSTAGE_CONNECT,
+  LNWALLET_STARTUPSTAGE_UNLOCK,
+  LNWALLET_STARTUPSTAGE_STARTUPSYNC,
+  LNWALLET_STARTUPSTAGE_SCBRESTORE
+} from "actions/LNActions";
 
 const ConnectPageHeader = () => (
   <StandaloneHeader
@@ -20,6 +27,30 @@ const ConnectPageHeader = () => (
   />
 );
 
+const stageMsgs = {
+  [LNWALLET_STARTUPSTAGE_STARTDCRLND]: (
+    <T id="ln.startupStage.startDcrlnd" m="Starting dcrlnd" />
+  ),
+  [LNWALLET_STARTUPSTAGE_CONNECT]: (
+    <T id="ln.startupStage.connect" m="Connecting to dcrlnd" />
+  ),
+  [LNWALLET_STARTUPSTAGE_UNLOCK]: (
+    <T id="ln.startupStage.unlock" m="Unlocking LN wallet" />
+  ),
+  [LNWALLET_STARTUPSTAGE_STARTUPSYNC]: (
+    <T id="ln.startupStage.startupSync" m="Syncing LN wallet to network" />
+  ),
+  [LNWALLET_STARTUPSTAGE_SCBRESTORE]: (
+    <T id="ln.startupStage.scbRestore" m="Restoring backup" />
+  )
+};
+
+const LNStartupStage = ({ stage }) => (
+  <div className="ln-startup-stage">
+    {stageMsgs[stage] ? stageMsgs[stage] : null}
+  </div>
+);
+
 const wrapperComponent = (props) => <div className="account-list" {...props} />;
 
 // The below constant MUST match what TextToggle expects/uses.
@@ -30,11 +61,15 @@ class ConnectPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      launching: this.props.connectAttempt || this.props.startAttempt,
       autopilotEnabled: false,
       account: this.props.defaultAccount,
-      accountOption: NEW_ACCOUNT
+      accountOption: NEW_ACCOUNT,
+      scbFile: ""
     };
+  }
+
+  setScbFile(scbFile) {
+    this.setState({ scbFile });
   }
 
   onChangeAccount(account) {
@@ -42,7 +77,6 @@ class ConnectPage extends React.Component {
   }
 
   onLaunch(passphrase) {
-    this.setState({ launching: true });
     let account = null;
     if (!this.props.lightningWalletExists) {
       if (this.state.accountOption === NEW_ACCOUNT) {
@@ -52,9 +86,12 @@ class ConnectPage extends React.Component {
       }
     }
 
-    this.props
-      .startDcrlnd(passphrase, this.state.autopilotEnabled, account)
-      .catch(() => this.setState({ launching: false }));
+    this.props.startDcrlnd(
+      passphrase,
+      this.state.autopilotEnabled,
+      account,
+      this.state.scbFile
+    );
   }
 
   onChangeEnableAutopilot() {
@@ -127,6 +164,7 @@ class ConnectPage extends React.Component {
         </div>
         <div className="account-selection">
           <div>
+            {/* XXX: Can we use here pi-iu's toggle? */}
             <TextToggle
               leftText={<T id="ln.connectPage.createAccount" m="Create new" />}
               rightText={<T id="ln.connectPage.useAccount" m="Use existing" />}
@@ -154,10 +192,38 @@ class ConnectPage extends React.Component {
     );
   }
 
+  renderCreateLNWallet() {
+    return (
+      <>
+        {this.renderSelectLNAccount()}
+        <div className="ln-connect-opt">
+          <div className="label">
+            <T id="ln.connectPage.backupFile" m="Restore SCB backup file" />
+          </div>
+          <div>
+            <PathBrowseInput
+              open
+              type="file"
+              value={this.state.scbFile}
+              onChange={(value) => this.setScbFile(value)}
+            />
+
+            <InfoDocModalButton
+              document="LNBackupInfo"
+              modalClassName="info-modal-fields"
+              double
+              draggable
+            />
+          </div>
+        </div>
+      </>
+    );
+  }
+
   render() {
     const { onLaunch, onChangeEnableAutopilot } = this;
-    const { launching, autopilotEnabled } = this.state;
-    const { lightningWalletExists } = this.props;
+    const { autopilotEnabled } = this.state;
+    const { lightningWalletExists, startAttempt, startupStage } = this.props;
 
     return (
       <StandalonePage header={<ConnectPageHeader />}>
@@ -185,20 +251,22 @@ class ConnectPage extends React.Component {
               </div>
             </div>
 
-            {!lightningWalletExists ? this.renderSelectLNAccount() : null}
+            {!lightningWalletExists ? this.renderCreateLNWallet() : null}
           </div>
 
           <PassphraseModalButton
             modalTitle={
               <T id="ln.connectPage.unlockWalletModal" m="Unlock LN Wallet" />
             }
-            disabled={launching}
+            disabled={startAttempt}
             onSubmit={onLaunch}
-            loading={launching}
+            loading={startAttempt}
             buttonLabel={
               <T id="ln.connectPage.launchBtn" m="Start and Unlock LN Wallet" />
             }
           />
+
+          <LNStartupStage stage={startupStage} />
         </div>
       </StandalonePage>
     );

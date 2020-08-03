@@ -1,3 +1,5 @@
+// XXX: use pi-ui's themes instead!
+
 export const themes = {
   __test__: {
     background: "#ffffff",

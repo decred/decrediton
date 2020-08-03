@@ -38,24 +38,64 @@ function POST(piURL, path, payload) {
   });
 }
 
-export const getActiveVotes = (piURL) => GET(piURL, "/v1/proposals/activevote");
-export const getVetted = (piURL) => GET(piURL, "/v1/proposals/vetted");
-export const getVotesStatus = (piURL) => GET(piURL, "/v1/proposals/votestatus");
-export const getProposal = (piURL, token) =>
-  GET(piURL, "/v1/proposals/" + token);
-export const getProposalVotes = (piURL, token) =>
-  GET(piURL, "/v1/proposals/" + token + "/votes");
-export const getProposalVoteStatus = (piURL, token) =>
-  GET(piURL, "/v1/proposals/" + token + "/votestatus");
-export const getTokenInventory = (piURL) =>
-  GET(piURL, "/v1/proposals/tokeninventory");
+export const getActiveVotes = ({ piURL }, cb) => GET(piURL, "/v1/proposals/activevote").then(function (response) {
+  cb(response);
+}).catch(function (error) {
+  cb(null, error);
+});
+export const getVetted = ({ piURL }, cb) => GET(piURL, "/v1/proposals/vetted").then(function (response) {
+  cb(response);
+}).catch(function (error) {
+  cb(null, error);
+});
+export const getVotesStatus = ({ piURL }, cb) => GET(piURL, "/v1/proposals/votestatus").then(function (response) {
+  cb(response);
+}).catch(function (error) {
+  cb(null, error);
+});
+export const getProposal = ({ piURL, token }, cb) =>
+  GET(piURL, "/v1/proposals/" + token).then(function (response) {
+    cb(response);
+  }).catch(function (error) {
+    cb(null, error);
+  });
+export const getProposalVotes = ({ piURL, token }, cb) =>
+  GET(piURL, "/v1/proposals/" + token + "/votes").then(function (response) {
+    cb(response);
+  }).catch(function (error) {
+    cb(null, error);
+  });
+export const getProposalVoteStatus = ({ piURL, token }, cb) =>
+  GET(piURL, "/v1/proposals/" + token + "/votestatus").then(function (response) {
+    cb(response);
+  }).catch(function (error) {
+    cb(null, error);
+  });
+export const getTokenInventory = ({ piURL }, cb) => GET(piURL, "/v1/proposals/tokeninventory").then(function (response) {
+  cb(response);
+}).catch(function (error) {
+  cb(null, error);
+});
 
 // votes must be an array of Vote()-produced objects.
-export const castVotes = (piURL, votes) =>
-  POST(piURL, "/v1/proposals/castvotes", { votes });
+export const castVotes = ({ piURL, votes }, cb) =>
+  POST(piURL, "/v1/proposals/castvotes", { votes }).then(function (response) {
+    cb(response);
+  }).catch(function (error) {
+    cb(null, error);
+  });
 
 // tokens is an array of tokens to be fetched.
-export const getProposalsBatch = (piURL, tokens) =>
-  POST(piURL, "/v1/proposals/batch", { tokens });
-export const getProposalsVoteStatusBatch = (piURL, tokens) =>
-  POST(piURL, "/v1/proposals/batchvotesummary", { tokens });
+export const getProposalsBatch = ({ piURL, tokens }, cb) => POST(piURL, "/v1/proposals/batch", { tokens })
+  .then(function (response) {
+    cb(response);
+  }).catch(function (error) {
+    cb(null, error);
+  });
+
+export const getProposalsVoteStatusBatch = ({ piURL, tokens }, cb) =>
+  POST(piURL, "/v1/proposals/batchvotesummary", { tokens }).then(function (response) {
+    cb(response);
+  }).catch(function (error) {
+    cb(null, error);
+  });

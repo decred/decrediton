@@ -13,6 +13,7 @@
   background-image: var(--x-grey);
   opacity: 1;
   cursor: pointer;
+  margin: -20px 0 0 20px;
 }
 
 .goBackScreenButton:hover {
@@ -38,8 +39,9 @@
   color: var(--title-text-and-button-background);
 }
 
-.seedWarningMessage {
-  margin-right: 5px;
+.seedError {
+  margin: -10px 0 20px;
+  color: var(--error-text-color);
 }
 
 .seedWord {
@@ -131,10 +133,6 @@
 
 .copy:hover {
   opacity: 0.8;
-}
-
-.seedError {
-  color: var(--error-red);
 }
 
 .walletKeyBlueButton {

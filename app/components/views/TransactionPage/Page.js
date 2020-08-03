@@ -4,18 +4,15 @@ import { KeyBlueButton } from "buttons";
 import { addSpacingAroundText } from "helpers";
 import { FormattedMessage as T } from "react-intl";
 import { DecodedTransaction } from "middleware/walletrpc/api_pb";
-import { useSelector, useDispatch } from "react-redux";
 import {
   VOTE,
   TRANSACTION_DIR_RECEIVED,
   TRANSACTION_DIR_SENT
 } from "constants/Decrediton";
-import * as cla from "actions/ControlActions";
-import * as sel from "selectors";
 import "style/TxDetails.less";
 
 function mapNonWalletOutput(output) {
-  const address = output.decodedScript.address || "[script]";
+  const address = output.decodedScript.address || `[script] - ${output.decodedScript.asm}`;
 
   const amount =
     output.decodedScript.scriptClass ===
@@ -38,12 +35,10 @@ function mapNonWalletInput(input) {
 const Page = ({
   transactionDetails,
   decodedTransaction,
-  abandonTransaction
+  abandonTransaction,
+  publishUnminedTransactions,
+  currentBlockHeight
 }) => {
-  const dispatch = useDispatch();
-  const publishUnminedTransactions = () =>
-    dispatch(cla.publishUnminedTransactionsAttempt);
-  const currentBlockHeight = useSelector(sel.currentBlockHeight);
   const {
     txHash,
     txUrl,
@@ -157,7 +152,7 @@ const Page = ({
           <div className="abandon-button-container">
             <KeyBlueButton
               className="abandon-button"
-              onClick={abandonTransaction}>
+              onClick={() => abandonTransaction(txHash)}>
               <T id="txDetails.abandontTransaction" m="Abandon Transaction" />
             </KeyBlueButton>
           </div>
@@ -219,7 +214,7 @@ const Page = ({
                 }>
                 <T id="txDetails.walletOutputs" m="Wallet Outputs" />
               </div>
-              {txOutputs.map(({ accountName, decodedScript, value }, idx) => (
+              {txOutputs.map(({ accountName, decodedScript, amount }, idx) => (
                 <div key={idx} className="txdetails-row">
                   <div className="txdetails-address">
                     {txDirection === TRANSACTION_DIR_SENT
@@ -229,7 +224,7 @@ const Page = ({
                       : addSpacingAroundText(decodedScript.address)}
                   </div>
                   <div className="txdetails-amount">
-                    <Balance amount={value} />
+                    <Balance amount={amount} />
                   </div>
                 </div>
               ))}

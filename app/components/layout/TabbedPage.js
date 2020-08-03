@@ -13,7 +13,7 @@ import {
 } from "react";
 import { useSelector } from "react-redux";
 import * as sel from "selectors";
-import { usePrevious } from "helpers";
+import { usePrevious } from "hooks";
 
 export const TabbedPageTab = ({ children }) => children;
 TabbedPageTab.propTypes = {

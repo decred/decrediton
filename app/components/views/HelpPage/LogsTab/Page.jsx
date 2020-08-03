@@ -20,7 +20,6 @@ const Logs = ({
   onShowDecreditonLogs,
   onHideDecreditonLogs,
   lnActive,
-  lnConnectAttempt,
   lnStartAttempt,
   dcrlndLogs,
   showDcrlndLogs,
@@ -94,7 +93,6 @@ const Logs = ({
       </div>
     )}
     {!lnActive &&
-    !lnConnectAttempt &&
     !lnStartAttempt ? null : !showDcrlndLogs ? (
       <div className={classNames(styles.logArea, styles.hidden)}>
         <div

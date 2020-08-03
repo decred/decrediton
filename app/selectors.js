@@ -178,6 +178,7 @@ export const getAccountsResponse = get(["grpc", "getAccountsResponse"]);
 export const getNetworkResponse = get(["grpc", "getNetworkResponse"]);
 export const getNetworkError = get(["grpc", "getNetworkError"]);
 export const getAccountMixerRunning = get(["grpc", "accountMixerRunning"]);
+export const getAccountMixerError = get(["grpc", "mixerStreamerError"]);
 
 // accounts is a selector representing accountsList from gRPC response.
 export const accounts = createSelector([getAccountsResponse], (r) =>
@@ -319,7 +320,7 @@ export const ticketNormalizer = createSelector(
   [network, accounts, chainParams, txURLBuilder, blockURLBuilder],
   (network, accounts, chainParams, txURLBuilder, blockURLBuilder) => {
     return (ticket) => {
-      const { txType, status, spender, blockHash, rawTx, isStake } = ticket;
+      const { txType, status, spender, blockHash, rawTx, isStake, timestamp } = ticket;
       // TODO refactor same code to be used in tickets and regular tx normalizers.
       const findAccount = (num) =>
         accounts.find((account) => account.getAccountNumber() === num);
@@ -328,8 +329,8 @@ export const ticketNormalizer = createSelector(
       const txInputs = [];
       const txOutputs = [];
       const hasSpender = spender && spender.getHash();
-      const isVote = status === "voted";
-      const isPending = status === "unmined";
+      const isVote = status === VOTED;
+      const isPending = !timestamp;
       const ticketTx = ticket.ticket;
       const spenderTx = hasSpender ? spender : null;
       const txBlockHash = blockHash
@@ -421,8 +422,16 @@ export const ticketNormalizer = createSelector(
         .reduce((s, c) => (s + isTicketChange(c) ? c.getAmount() : 0), 0);
 
       // ticket investment is the full amount paid by the wallet on the ticket purchase
+      let accountName = "";
       const debitList = ticketTx.getDebitsList();
-      const accountName = getAccountName(debitList[0].getPreviousAccount());
+      if (debitList.length > 0) {
+        accountName = getAccountName(debitList[0].getPreviousAccount());
+      } else {
+        // Mixer is set to ignore gap limit. If a wallet does not know tx
+        // details for some reason, can be due that or some other reason which
+        // needs to be investigated.
+        throw "Tx debit list is empty. Something is wrong.";
+      }
       const ticketInvestment =
         debitList.reduce((a, v) => a + v.getPreviousAmount(), 0) - ticketChange;
 
@@ -710,9 +719,11 @@ export const lastVotedTicket = createSelector(
     const lastVotedTicket = Object.keys(transactions)
       .map((hash) => transactions[hash])
       .filter((transaction) => transaction.status == VOTED)
-      .reduce((prev, current) =>
-        (prev.leaveTimestamp > current.leaveTimestamp) ? prev : current
-      , []);
+      .reduce(
+        (prev, current) =>
+          prev.leaveTimestamp > current.leaveTimestamp ? prev : current,
+        []
+      );
 
     return Array.isArray(lastVotedTicket) ? null : lastVotedTicket;
   }
@@ -1092,10 +1103,7 @@ export const currentStakePoolConfigError = get([
   "stakepool",
   "currentStakePoolConfigError"
 ]);
-export const currentStakePoolConfigSuccessMessage = get([
-  "stakepool",
-  "currentStakePoolConfigSuccessMessage"
-]);
+
 export const purchaseTicketsError = get(["control", "purchaseTicketsError"]);
 export const purchaseTicketsSuccess = get([
   "control",
@@ -1196,12 +1204,16 @@ const importScriptRequestAttempt = get([
   "importScriptRequestAttempt"
 ]);
 
+// LEGACY selectors.
+// Keep them while we still support old version of vsps.
 export const isSavingStakePoolConfig = bool(currentStakePoolConfigRequest);
 export const isAddingCustomStakePool = bool(
   get(["stakePool", "addCustomStakePoolAttempt"])
 );
 export const isPurchasingTickets = bool(purchaseTicketsRequestAttempt);
 export const isImportingScript = bool(importScriptRequestAttempt);
+
+// end of LEGACY selectors
 
 export const newUnminedMessage = get(["notifications", "newUnminedMessage"]);
 
@@ -1467,6 +1479,10 @@ export const newProposalsStartedVoting = compose(
 );
 
 export const getProposalError = get(["governance", "getProposalError"]);
+export const getTokenInventoryError = get([
+  "governance",
+  "getTokenInventoryError"
+]);
 export const proposalsDetails = get(["governance", "proposalsDetails"]);
 export const lastPoliteiaAccessBlock = get([
   "governance",
@@ -1495,10 +1511,13 @@ export const lnEnabled = bool(
   and(get(["ln", "enabled"]), not(isWatchingOnly), not(isTrezor), not(isSPV))
 );
 export const lnActive = bool(get(["ln", "active"]));
+export const lnStartupStage = get(["ln", "startupStage"]);
 export const lnStartAttempt = bool(get(["ln", "startAttempt"]));
-export const lnConnectAttempt = bool(get(["ln", "connectAttempt"]));
 export const lnWalletExists = bool(get(["ln", "exists"]));
 export const lnInfo = get(["ln", "info"]);
+export const lnNetwork = get(["ln", "network"]);
+export const lnGetNodeInfoAttempt = bool(get(["ln", "getNodeInfoAttempt"]));
+export const lnNodeInfo = get(["ln", "nodeInfo"]);
 export const lnWalletBalances = get(["ln", "walletBalances"]);
 export const lnChannelBalances = get(["ln", "channelBalances"]);
 export const lnChannels = get(["ln", "channels"]);
@@ -1509,3 +1528,5 @@ export const lnPayments = get(["ln", "payments"]);
 export const lnOutstandingPayments = get(["ln", "outstandingPayments"]);
 export const lnFailedPayments = get(["ln", "failedPayments"]);
 export const lnAddInvoiceAttempt = get(["ln", "addInvoiceAttempt"]);
+export const lnSCBPath = get(["ln", "scbPath"]);
+export const lnSCBUpdatedTime = get(["ln", "scbUpdatedTime"]);

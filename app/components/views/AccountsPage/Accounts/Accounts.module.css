@@ -1,0 +1,230 @@
+.infoFields strong {
+  color: var(--input-color);
+}
+.isRow {
+  display: flex;
+  flex-direction: row;
+}
+.contentTitle {
+  display: block;
+  height: 44px;
+  margin-right: auto;
+  margin-bottom: 12px;
+  margin-left: auto;
+  border-bottom: 1px solid transparent;
+  color: var(--stroke-color-hovered);
+  font-size: 27px;
+}
+.contentNest {
+  padding-top: 1px;
+  width: 740px;
+}
+.contentTitleButtonsArea {
+  margin-left: auto;
+}
+.walletName {
+  margin-right: 5px;
+  text-transform: capitalize;
+}
+.topSpendable {
+  color: var(--account-text);
+  font-size: 13px;
+}
+.topSpendable-value {
+  color: var(--tutorial-header);
+  margin-left: 5px;
+}
+.topName {
+  color: var(--tutorial-header);
+  font-size: 19px;
+}
+.topFunds {
+  color: var(--tutorial-header);
+  font-size: 19px;
+  text-align: right;
+}
+.detailsTop {
+  cursor: pointer;
+  padding: 21px 30px 21px 90px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  background-image: var(--accounts-default);
+  background-size: 20px auto;
+  background-repeat: no-repeat;
+  background-position: 15px center;
+  border-top: 1px solid var(--background-container-hover);
+}
+.detailsTop.imported {
+  background-image: var(--accounts-imported);
+}
+.detailsTop:hover {
+  background-color: var(--background-container-hover);
+}
+.detailsTop:hover.disabled {
+  background-color: var(--disabled-background-color);
+}
+.detailsBottom {
+  background-color: var(--background-back-color);
+}
+.detailsBottomColumns {
+  width: 100%;
+  color: var(--account-text);
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.detailsBottomColumnLeft, .detailsBottomColumnRight {
+  margin-top: 15px;
+}
+.detailsBottomTitle {
+  font-size: 19px;
+  text-align: right;
+  padding-right: 200px;
+  margin-bottom: 10px;
+}
+.renameBottomTitle {
+  font-size: 19px;
+}
+.detailsBottomSpec {
+  font-size: 12px;
+  margin-bottom: 0.5em;
+  display: grid;
+  grid-template-columns: 160px 200px;
+}
+.detailsBottomSpecLast {
+  border-bottom: 1px solid var(--disabled-background-color);
+  color: var(--tutorial-header);
+  font-size: 12px;
+}
+.detailsBottomSpecName {
+  text-align: right;
+}
+.detailsBottomSpecValue {
+  margin-left: 1em;
+  text-align: left;
+  color: var(--tutorial-header);
+}
+.renameBottom {
+  color: var(--tutorial-header);
+  font-size: 12px;
+  padding: 14px;
+}
+.renameBottomFields {
+  display: flex;
+  margin: 12px 0px;
+}
+.renameBottomValue {
+  width: 70%;
+  margin-left: 10px;
+}
+.contentConfirmNewAccount {
+  margin-right: 2em;
+}
+.renameButton, .showButton, .hideButton, .revealPubkeyButton {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.5em;
+  border-radius: 5px;
+  background-position: 50% 50%;
+  background-size: 16px;
+  background-repeat: no-repeat;
+  box-shadow: 0px 3px 5px rgba(9,20,64,0.16);
+  outline: 0;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  padding: 0px;
+  background-color: var(--input-color);
+  border: 0;
+  line-height: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  margin-top: 17px;
+}
+.revealPubkeyButtonShow {
+  background-image: var(--show-pubkey-icon);
+}
+.revealPubkeyButtonHide {
+  background-image: var(--hide-pubkey-icon);
+}
+.renameButton {
+  background-image: var(--account-rename-icon);
+  background-size: 20px;
+}
+.showButton {
+  background-image: var(--show-account-icon);
+}
+.hideButton {
+  background-image: var(--hide-account-icon);
+}
+.renameButton:hover, .showButton:hover, .hideButton:hover, .revealPubkeyButton:hover {
+  opacity: 0.7;
+}
+.actions {
+  width: 93%;
+  margin-left: 20px;
+  height: 100px;
+  border-top: 1px solid var(--text-toggle-button-border);
+}
+.actionsPubkey {
+  display: flex;
+  flex-direction: row;
+  margin-left: 30px;
+  margin-top: 18px;
+  width: 88%;
+}
+.actionsPubkey .actionsPubkeyLabel {
+  font-size: 13px;
+  line-height: 17px;
+  margin-top: 2px;
+  margin-right: 14px;
+}
+.actionsPubkey .actionsPubkeyButton {
+  height: 15px;
+  width: 37px;
+  color: var(--input-color-default);
+  font-size: 13px;
+  line-height: 17px;
+  font-weight: 400;
+  background-color: var(--disabled-color);
+  padding: 2px 20px 3px 20px;
+  box-shadow: none;
+  transition: all 131ms var(--ease-in-out-quart);
+  cursor: auto;
+}
+.actionsPubkey .actionsPubkeyArea {
+  color: var(--input-color);
+  font-size: 13px;
+  line-height: 17px;
+  font-weight:N00;
+  padding: 2px 20px 3px 20px;
+  border-radius: 3px;
+  background-color: var(--background-copy-color);
+  height: 32px;
+  width: 390px;
+  word-break: break-all;
+  transition: all 131ms var(--ease-in-out-quart);
+}
+.actionsPubkey .actionsPubkeyClipboard {
+  margin-left: 10px;
+}
+.disabled {
+  background-color: var(--disabled-background-color);
+}
+@media screen and (max-width: 768px) {
+  .actions.isRow {
+    display: flex;
+    flex-direction: column;
+ }
+  .actionsButtons {
+    margin: 0 auto;
+ }
+}
+@media screen and (max-width: 1179px) {
+  .contentNest {
+    width: 667px;
+  }
+}

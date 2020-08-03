@@ -36,7 +36,7 @@ const ReceivePage = ({
     setTooltip(true);
     timeout.current = setTimeout(() => {
       setTooltip(false);
-    }, 2500);
+    }, 1000);
   }
 
   return (

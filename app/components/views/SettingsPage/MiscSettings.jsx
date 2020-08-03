@@ -43,7 +43,7 @@ const MiscSettings = ({
           <div className={styles.label}>
             <InfoDocFieldModalButton
               document="GapLimitInfo"
-              modalClassName="has-warning"
+              modalClassName={styles.hasWarning}
               double
               draggable
             />

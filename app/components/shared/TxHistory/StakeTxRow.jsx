@@ -19,10 +19,10 @@ const StakeTxRow = ({
   pending,
   txTs,
   accountName,
+  txType,
+  status,
   ...props
 }) => {
-  const status = className;
-
   const ticketRewardMessage = useMemo(
     () => (
       <T
@@ -60,8 +60,10 @@ const StakeTxRow = ({
     [daysToVote]
   );
 
-  const typeMsg = messageByType[status] || "(unknown type)";
-
+  // If txType equals ticket, we use the message bype by the tx status, so we
+  // can show the proper icon (Revoked, Voted). Although we show the message
+  // as Purchased, to avoid confusion.
+  const typeMsg = txType === "ticket" ? messageByType[status] : messageByType[txType] || "(unknown type)";
   return overview ? (
     <Row {...{ className, overview, pending, ...props }}>
       <div className="is-row">

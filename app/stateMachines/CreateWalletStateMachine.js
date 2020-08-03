@@ -145,9 +145,10 @@ export const CreateWalletMachine = Machine({
           target: "walletCreated",
           actions: [
             assign({ completed: true }),
-            sendParent(
-              (ctx, event) => ({ type: event.type, passPhrase: ctx.passPhrase })
-            )
+            sendParent((ctx, event) => ({
+              type: event.type,
+              passPhrase: ctx.passPhrase
+            }))
           ]
         },
         SEED_GENERATED: {

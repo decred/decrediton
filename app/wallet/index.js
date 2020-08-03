@@ -9,7 +9,8 @@ export * from "./message";
 export * from "./notifications";
 export * from "./seed";
 export * from "./service";
-export * from "./stakePool";
+export * from "./vsp";
 export * from "./version";
+export * from "./politeia";
 
 export const TransactionType = TransactionDetails.TransactionType;

@@ -35,6 +35,7 @@ const ExistingSeedForm = ({
       <div className={styles.contentTitle}>
         <T id="createWallet.restore.title" m={"Restore existing wallet"} />
       </div>
+      {/* XXX: Can we use here pi-iu's toggle? */}
       <TextToggle
         activeButton={"left"}
         leftText={WORDS}
@@ -95,7 +96,7 @@ const ExistingSeedForm = ({
       </div>
     )}
     {showPasteWarning && (
-      <div className={classNames(styles.warnig, styles.seedWarningMessage)}>
+      <div className={styles.seedError}>
         <T
           id="confirmSeed.warnings.pasteExistingSeed"
           m="*Please make sure you also have a physical, written down copy of your seed."

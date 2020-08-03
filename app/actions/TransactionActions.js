@@ -38,6 +38,8 @@ function checkForStakeTransactions(txs) {
   return stakeTxsFound;
 }
 
+// divideTransactions separate a transactions array into stake txs and regular
+// txs, so we can send them to selectors.
 const divideTransactions = (transactions) => {
   const stakeTransactions = transactions.reduce((m, t) => {
     t.isStake ? (m[t.txHash] = t) : null;
@@ -69,6 +71,9 @@ export const newTransactionsReceived = (
   } = getState().grpc;
   const { walletService, maturingBlockHeights } = getState().grpc;
   const chainParams = sel.chainParams(getState());
+  // Normalize transactions with missing data.
+  // All transactions must being normalized before being dispatched to the
+  // selector.
   newlyUnminedTransactions = await normalizeBatchTx(
     walletService,
     chainParams,
@@ -79,11 +84,6 @@ export const newTransactionsReceived = (
     chainParams,
     newlyMinedTransactions
   );
-
-  const transactions = [];
-  transactions.push(...newlyUnminedTransactions);
-  transactions.push(...newlyMinedTransactions);
-
   // aux maps of [txhash] => tx (used to ensure no duplicate txs)
   const newlyMinedMap = newlyMinedTransactions.reduce((m, v) => {
     m[v.txHash] = v;
@@ -94,6 +94,7 @@ export const newTransactionsReceived = (
     return m;
   }, {});
 
+  // update accounts related to the transaction balance.
   let accountsToUpdate = new Array();
   accountsToUpdate = checkAccountsToUpdate(
     newlyUnminedTransactions,
@@ -120,6 +121,7 @@ export const newTransactionsReceived = (
     )
   ];
 
+  // update recent regular and stake transactions selector
   recentRegularTransactions = [
     ...unminedTransactions,
     ...newlyMinedTransactions,
@@ -132,10 +134,23 @@ export const newTransactionsReceived = (
     ...unminedTransactions,
     ...newlyMinedTransactions,
     ...recentStakeTransactions.filter(
-      (tx) => !newlyMinedMap[tx.txHash] && !newlyUnminedMap[tx.txHash]
-    )
+      (tx) => {
+        // remove transactions which are already at the recent Stake Txs array
+        // to avoid duplicated txs.
+        const txIsAtArray = unminedTransactions.find(unminedTx =>
+          unminedTx.txHash === tx.txHash
+        );
+        if (txIsAtArray) {
+          return false;
+        }
+        if (!newlyMinedMap[tx.txHash] && !newlyUnminedMap[tx.txHash]) {
+          return true;
+        }
+      })
   ].filter((tx) => tx.isStake);
 
+  // update maturing heights, so we can know when to update account balances
+  // on their specific blocks.
   const newMaturingHeights = { ...maturingBlockHeights };
   const mergeNewMaturingHeights = (hs) =>
     Object.keys(hs).forEach((h) => {
@@ -145,7 +160,6 @@ export const newTransactionsReceived = (
       );
       newMaturingHeights[h] = accounts;
     });
-
   mergeNewMaturingHeights(
     transactionsMaturingHeights(newlyMinedTransactions, chainParams)
   );
@@ -154,6 +168,9 @@ export const newTransactionsReceived = (
     type: MATURINGHEIGHTS_CHANGED
   });
 
+  const transactions = [];
+  transactions.push(...newlyUnminedTransactions);
+  transactions.push(...newlyMinedTransactions);
   const { stakeTransactions, regularTransactions } = divideTransactions(
     transactions
   );
@@ -613,6 +630,9 @@ const getMissingStakeTxData = async (
     // transaction
     try {
       const ticket = await wallet.getTransaction(walletService, ticketTxHash);
+      // tx which come from the gRPC call
+      // walletService.getTransactions().getMinedTransactions().getTransactionsList()
+      // at our wallet/service.js
       ticketTx = ticket.tx;
     } catch (error) {
       if (String(error).indexOf("NOT_FOUND") > -1) {
@@ -665,7 +685,7 @@ function transactionsMaturingHeights(txs, chainParams) {
 
 // getAmountFromTxInputs receives a decoded tx and adds the amount of
 // each input from the previous transaction. We need this because when decoding
-// a tx, the amount of the input is not deoded with it.
+// a tx, the amount of the input is not decoded with it.
 export const getAmountFromTxInputs = (decodedTx) => async (
   dispatch,
   getState
@@ -715,26 +735,28 @@ export const getTxFromInputs = (unsignedTx) => (dispatch, getState) =>
     const chainParams = sel.chainParams(getState());
     // aux map to know if we already has gotten a tx.
     const txsMap = {};
-    const txs = unsignedTx.inputs.reduce(async (txs, inp) => {
-      const { prevTxId } = inp;
-      if (txsMap[prevTxId]) return;
+    try {
+      const txs = unsignedTx.inputs.reduce(async (txs, inp) => {
+        const { prevTxId } = inp;
+        if (txsMap[prevTxId]) return;
+        txsMap[prevTxId] = true;
+        const oldTx = await wallet.getTransaction(walletService, prevTxId);
+        if (!oldTx) {
+          return reject(new Error(`Transaction ${prevTxId} not found`));
+        }
+        const rawTxBuffer = Buffer.from(hexToBytes(oldTx.rawTx));
+        const decodedOldTx = wallet.decodeRawTransaction(
+          rawTxBuffer,
+          chainParams
+        );
 
-      txsMap[prevTxId] = true;
-      const oldTx = await wallet.getTransaction(walletService, prevTxId);
-      if (!oldTx) {
-        return reject(new Error(`Transaction ${prevTxId} not found`));
-      }
+        txs.push(decodedOldTx);
 
-      const rawTxBuffer = Buffer.from(hexToBytes(oldTx.rawTx));
-      const decodedOldTx = wallet.decodeRawTransaction(
-        rawTxBuffer,
-        chainParams
-      );
+        return txs;
+      }, []);
 
-      txs.push(decodedOldTx);
-
-      return txs;
-    }, []);
-
-    resolve(txs);
+      resolve(txs);
+    } catch (e) {
+      reject(e);
+    }
   });

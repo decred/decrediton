@@ -1,0 +1,29 @@
+.ticketForm {
+  display: grid;
+  grid-template-columns: 100px 250px;
+}
+
+.legacyIcon {
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.checkbox {
+  margin-left: auto;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.checkboxLabel {
+  cursor: pointer;
+}
+
+.label {
+  font-size: 14pt;
+  margin-top: -5px;
+  margin-left: 4px;
+}
+
+.infoFields strong {
+  color: var(--input-color);
+}

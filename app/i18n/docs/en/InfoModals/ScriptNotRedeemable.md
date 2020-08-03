@@ -1,3 +1,5 @@
+# Script not being redeemable?
+
 If you receive an error about the script not being redeemable when attempting to add your stakepool, you can try the following:
 
   1. Each stakepool account you create can only be associated with 1 wallet. If you have previously created this stakepool account with a different wallet (different seed), then you must create a new account.

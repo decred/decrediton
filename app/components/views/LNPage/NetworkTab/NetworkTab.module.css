@@ -1,0 +1,37 @@
+.networkInfo {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  margin-bottom: 2em;
+}
+
+.queryNode {
+  margin-top: 1em;
+}
+
+.nodeInfo {
+  margin-top: 2em;
+}
+
+.basicInfo {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  margin-bottom: 2em;
+}
+
+.channel {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  margin-top: 3em;
+}
+
+.policyGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column: 1;
+  grid-column-end: 3;
+  margin-top: 0.5em;
+}
+
+.policyLabel {
+  font-style: italic;
+}
