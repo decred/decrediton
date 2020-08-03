@@ -127,7 +127,6 @@ export const refreshStakepoolPurchaseInformation = () => (dispatch, getState) =>
 //
 // This is meant to be used when setting up a new stakepool.
 export const setStakePoolInformation = (
-  privpass,
   poolHost,
   apiKey,
   rescan

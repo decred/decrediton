@@ -19,11 +19,9 @@ export function useLegacyPurchasePage(toggleShowVsp) {
   const dispatch = useDispatch();
 
   const onSetStakePoolInfo = useCallback((
-    privpass,
     poolHost,
     apiKey,
     rescan) => dispatch(spa.setStakePoolInformation(
-      privpass,
       poolHost,
       apiKey,
       rescan
@@ -81,14 +79,14 @@ export function useLegacyPurchasePage(toggleShowVsp) {
     toggleShowVsp && toggleShowVsp(false);
   }, [toggleShowVsp]);
 
-  const onSetStakePoolInfoCallback = useCallback((privpass) => {
+  const onSetStakePoolInfoCallback = useCallback(() => {
     const onSetInfo = onSetStakePoolInfo;
     if (!onSetInfo) return;
     if (!apiKey) {
       setHasFailedAttempt(true);
       return;
     }
-    onSetInfo(privpass, getSelectedUnconfigured.Host, apiKey, true);
+    onSetInfo(getSelectedUnconfigured.Host, apiKey, true);
   }, [apiKey, onSetStakePoolInfo, setHasFailedAttempt, getSelectedUnconfigured]);
 
   const onRemoveStakePoolCallback = useCallback((host) => {

@@ -1,6 +1,5 @@
 import { ExternalLink } from "shared";
 import {
-  PassphraseModalButton,
   ScriptRedeemableButton,
   SlateGrayButton,
   ImportScriptIconButton
@@ -10,6 +9,7 @@ import { TextInput, LEGACY_StakePoolSelect } from "inputs";
 import "style/Layout.less";
 import "style/StakePool.less";
 import styles from "../PurchaseTab.module.css";
+import { AddVSPButton } from "buttons";
 
 const messages = defineMessages({
   apiKeyPlaceholder: {
@@ -107,13 +107,14 @@ const StakePoolsAddForm = ({
           </div>
         </div>
         <div className="stakepool-add-toolbar">
-          <PassphraseModalButton
+          <AddVSPButton
             modalTitle={<T id="stake.addPoolConfirmation" m="VSP Confirmation" />}
             loading={isSavingStakePoolConfig}
             disabled={!apiKey || isSavingStakePoolConfig}
             className="stakepool-confirm-button"
             onSubmit={onSetStakePoolInfo}
             buttonLabel={<T id="stake.addPool.addBtn" m="Continue" />}
+            modalContent={<T id="stake.addPool.modalContent" m="Are you sure you want to add this new VSP?" />}
           />
           {configuredStakePools.length ? (
             <SlateGrayButton
