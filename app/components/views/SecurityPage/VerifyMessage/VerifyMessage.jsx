@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FormattedMessage as T, injectIntl } from "react-intl";
+import { injectIntl } from "react-intl";
 import VerifyMessageForm from "./VerifyMessageForm";
 import { useVerifyMessage } from "./hooks";
 import { useValidateAddress } from "../ValidateAddress/hooks";
@@ -20,17 +20,17 @@ const VerifyMessage = ({ intl }) => {
   const [messageError, setMessageError] = useState(null);
   const [signature, setSignature] = useState("");
   const [signatureError, setSignatureError] = useState(null);
-  
+
   useEffect(() => {
     onGetMessageVerificationServiceAttempt();
     return () => onVerifyMessageCleanStore();
-  }, []);
+  }, [onGetMessageVerificationServiceAttempt, onVerifyMessageCleanStore]);
 
   useEffect(() => {
     if (verifyMessageSuccess && !verifyMessageSuccess.valid || verifyMessageError) {
-      setSignatureError("Invalid Signature")
+      setSignatureError("Invalid Signature");
     }
-  }, [verifyMessageSuccess, verifyMessageError])
+  }, [verifyMessageSuccess, verifyMessageError]);
 
   const onChangeAddress = async (address) => {
     setAddress(address);
@@ -43,7 +43,7 @@ const VerifyMessage = ({ intl }) => {
     } catch (e) {
       setAddressError("Error: Address validation failed, please try again");
     }
-  }
+  };
 
   const onChangeMessage = (msg) => {
     setMessage(msg);
@@ -61,12 +61,12 @@ const VerifyMessage = ({ intl }) => {
     } else {
       setMessageError(null);
     }
-  }
+  };
 
   const onSubmit = () => {
     if (addressError || messageError || signatureError) return;
     onVerifyMessageAttempt(address, message, signature);
-  }
+  };
 
   return (
     <>
@@ -89,6 +89,6 @@ const VerifyMessage = ({ intl }) => {
       />
     </>
   );
-}
+};
 
 export default injectIntl(VerifyMessage);

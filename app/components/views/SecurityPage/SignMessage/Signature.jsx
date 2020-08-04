@@ -11,7 +11,7 @@ const Signature = ({ signature }) => (
       />
     </div>
     <div className={styles.copyableTextContainer}>
-      <CopyableText 
+      <CopyableText
         className={styles.copyableText}
         id="copyable"
         hoverText="Copy signature to clipboard"

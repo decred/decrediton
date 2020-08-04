@@ -89,13 +89,13 @@ const VerifyMessageForm = ({
           </div>
           <div className={sharedStyles.securityPageFormRowFieldMessage}>
             <TextInput
-              required	
-              value={message}	
-              invalid={messageError}	
-              invalidMessage={messageError}	
+              required
+              value={message}
+              invalid={messageError}
+              invalidMessage={messageError}
               showErrors={messageError}
-              placeholder={formatMessage(messages.messageFieldPlaceholder)}	
-              onChange={(e) => onChangeMessage(e.target.value)}	
+              placeholder={formatMessage(messages.messageFieldPlaceholder)}
+              onChange={(e) => onChangeMessage(e.target.value)}
             />
           </div>
         </div>
@@ -106,10 +106,10 @@ const VerifyMessageForm = ({
         loading={isVerifyingMessage}
         onClick={onSubmit}>
         Verify Message
-      </Button>  
+      </Button>
     </>
   );
-}
+};
 
 VerifyMessageForm.propTypes = {
   formatMessage: PropTypes.func.isRequired,

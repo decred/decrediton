@@ -14,9 +14,9 @@ const ValidateAddress = () => {
   useEffect(() => {
     onValidateAddressCleanStore();
     return () => onValidateAddressCleanStore();
-  }, []);
+  }, [onValidateAddressCleanStore]);
 
-  const onChangeAddress = async (address) => {  
+  const onChangeAddress = async (address) => {
     setAddress(address);
     if (address === "") {
       return;
@@ -39,6 +39,6 @@ const ValidateAddress = () => {
       }}
     />
   );
-}
+};
 
 export default ValidateAddress;

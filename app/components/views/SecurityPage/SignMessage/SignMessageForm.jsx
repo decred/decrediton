@@ -29,11 +29,11 @@ const SignMessageForm = ({
   onChangeAddress,
   onChangeMessage
 }) => {
-  const disabled = isSigningMessage 
+  const disabled = isSigningMessage
     || address == ""
     || message == ""
-    || addressError 
-    || messageError 
+    || addressError
+    || messageError
     || isSignMessageDisabled;
   return (
     <>
@@ -91,7 +91,7 @@ const SignMessageForm = ({
           kind={disabled ? "disabled" : "primary"}
           loading={isSigningMessage}
           onSubmit={onSubmit}>
-          Sign Message 
+          Sign Message
         </Button>
       ) : (
         <PassphraseModalButton
@@ -108,7 +108,7 @@ const SignMessageForm = ({
       )}
     </>
   );
-}
+};
 
 SignMessageForm.propTypes = {
   formatMessage: PropTypes.func.isRequired,

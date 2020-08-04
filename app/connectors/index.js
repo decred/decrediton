@@ -20,7 +20,6 @@ export { default as ticketAutoBuyer } from "./ticketAutoBuyer";
 export { default as ticketsList } from "./ticketsList";
 export { default as ticketsOverview } from "./ticketsOverview";
 export { default as transactionLink } from "./transactionLink";
-export { default as validateAddressPage } from "./validateAddressPage";
 export { default as walletError } from "./walletError";
 export { default as walletContainer } from "./walletContainer";
 export { default as balanceHome } from "./balanceHome";

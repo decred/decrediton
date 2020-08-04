@@ -15,7 +15,7 @@ const SignMessage = ({ location, intl }) => {
     isTrezor,
     onSignMessageAttempt,
     onSignMessageAttemptTrezor,
-    onSignMessageCleanStore,
+    onSignMessageCleanStore
   } = useSignMessage();
   const { onValidateAddress } = useValidateAddress();
   const [address, setAddress] = useState("");
@@ -28,14 +28,14 @@ const SignMessage = ({ location, intl }) => {
       location.push("/error");
     }
     return () => onSignMessageCleanStore();
-  }, []);
+  }, [walletService, location, onSignMessageCleanStore]);
 
   const onChangeAddress = async (address) => {
     setAddress(address);
     if (address == "") {
       setAddressError("Please enter an address");
-      return
-    } 
+      return;
+    }
     try {
       const resp = await onValidateAddress(address);
       setAddressError(!resp.getIsValid() ? "Please enter a valid address" : null);
@@ -60,7 +60,7 @@ const SignMessage = ({ location, intl }) => {
       onSignMessageAttemptTrezor(address, message);
     }
   };
-  
+
   return (
     <>
       <SignMessageForm
@@ -79,9 +79,9 @@ const SignMessage = ({ location, intl }) => {
           onChangeMessage
         }}
       />
-      {signMessageSignature && <Signature signature={signMessageSignature} />}      
+      {signMessageSignature && <Signature signature={signMessageSignature} />}
     </>
   );
-}
+};
 
 export default withRouter(injectIntl(SignMessage));
