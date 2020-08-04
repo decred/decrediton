@@ -317,7 +317,7 @@ export const purchaseTicketsAttempt = (
       // If we need to sign the tx, we re-import the script to ensure the
       // wallet will control the ticket.
       const importScriptResponse = await dispatch(
-        importScriptAttempt(passphrase, stakepool.Script)
+        importScriptAttempt(stakepool.Script)
       );
       if (importScriptResponse.getP2shAddress() !== stakepool.TicketAddress) {
         throw new Error(
