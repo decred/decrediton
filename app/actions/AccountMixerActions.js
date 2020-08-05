@@ -3,7 +3,7 @@ import Promise from "promise";
 import * as sel from "selectors";
 import * as wallet from "wallet";
 import { getWalletCfg } from "config";
-import { getAcctSpendebleBalance } from "./ClientActions";
+import { getAcctSpendableBalance } from "./ClientActions";
 import { MIN_RELAY_FEE_ATOMS } from "constants";
 
 export const GETACCOUNTMIXERSERVICE_ATTEMPT = "GETACCOUNTMIXERSERVICE_ATTEMPT";
@@ -45,7 +45,7 @@ export const runAccountMixer = ({
       dispatch({ type: RUNACCOUNTMIXER_ATTEMPT });
       const runMixerAsync = async () => {
         // no start mixer if account balance is less than minimum possible fee.
-        const spendableBal = await dispatch(getAcctSpendebleBalance(changeAccount));
+        const spendableBal = await dispatch(getAcctSpendableBalance(changeAccount));
         if (spendableBal < MIN_RELAY_FEE_ATOMS) {
           return { error: "Account Balance Too Small" };
         }

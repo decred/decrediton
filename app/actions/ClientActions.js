@@ -676,7 +676,7 @@ export const abandonTransactionAttempt = (txid) => (dispatch, getState) => {
     .catch((error) => dispatch({ error, type: ABANDONTRANSACTION_FAILED }));
 };
 
-export const getAcctSpendebleBalance = (acctId) => async (dispatch, getState) => {
+export const getAcctSpendableBalance = (acctId) => async (dispatch, getState) => {
   const acct = await wallet.getBalance(sel.walletService(getState()), acctId, 0);
   return acct.getSpendable();
 };
