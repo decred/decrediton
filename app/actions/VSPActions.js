@@ -319,31 +319,6 @@ export const setStakePoolVoteChoices = (stakePool, voteChoices) => (
     );
 };
 
-export const DISCOVERAVAILABLEVSPS_ATTEMPT =
-  "DISCOVERAVAILABLEVSPS_ATTEMPT";
-export const DISCOVERAVAILABLEVSPS_SUCCESS =
-"DISCOVERAVAILABLEVSPS_SUCCESS";
-export const DISCOVERAVAILABLEVSPS_FAILED =
-"DISCOVERAVAILABLEVSPS_FAILED";
-export const discoverAvailableVSPs = () => (dispatch) => {
-  wallet.getStakePoolInfo().then(availableVSPs => {
-    const filteredOpts = availableVSPs.reduce((filtered, vsp) => {
-      if (vsp.APIVersionsSupported.indexOf(3) > -1) {
-        filtered.push(vsp);
-      }
-      return filtered;
-    }, []);
-    dispatch({
-      type: DISCOVERAVAILABLEVSPS_SUCCESS,
-      availableVSPs: filteredOpts
-    });
-  })
-  .catch(error => dispatch({
-    type: DISCOVERAVAILABLEVSPS_FAILED,
-    error
-  }));
-};
-
 export const DISCOVERAVAILABLEVSPS_ATTEMPT = "DISCOVERAVAILABLEVSPS_ATTEMPT";
 export const DISCOVERAVAILABLEVSPS_SUCCESS = "DISCOVERAVAILABLEVSPS_SUCCESS";
 export const DISCOVERAVAILABLEVSPS_FAILED = "DISCOVERAVAILABLEVSPS_FAILED";
@@ -351,12 +326,12 @@ export const DISCOVERAVAILABLEVSPS_FAILED = "DISCOVERAVAILABLEVSPS_FAILED";
 export const discoverAvailableVSPs = () => async (dispatch, getState) => {
   dispatch({ type: DISCOVERAVAILABLEVSPS_ATTEMPT })
   try {
-    const allVSPsInfo = await wallet.getAllVSPs();
+    const availableVSPs = await wallet.getAllVSPs();
     dispatch({
       type: DISCOVERAVAILABLEVSPS_SUCCESS,
-      allVSPsInfo
+      availableVSPs
     });
-    return allVSPsInfo;
+    return availableVSPs;
   } catch (error) {
     dispatch({
       type: DISCOVERAVAILABLEVSPS_FAILED,

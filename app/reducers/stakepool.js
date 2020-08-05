@@ -2,7 +2,6 @@ import {
   UPDATESTAKEPOOLCONFIG_ATTEMPT,
   UPDATESTAKEPOOLCONFIG_FAILED,
   UPDATESTAKEPOOLCONFIG_SUCCESS,
-  DISCOVERAVAILABLEVSPS_SUCCESS,
   CHANGESELECTEDSTAKEPOOL,
   REMOVESTAKEPOOLCONFIG,
   DISMISS_BACKUP_MSG_REDEEM_SCRIPT,
@@ -39,11 +38,6 @@ export default function stakepool(state = {}, action) {
       return {
         ...state,
         currentStakePoolConfig: action.currentStakePoolConfig
-      };
-    case DISCOVERAVAILABLEVSPS_SUCCESS:
-      return {
-        ...state,
-        availableVSPs: action.availableVSPs
       };
     case CHANGESELECTEDSTAKEPOOL:
       return { ...state, selectedStakePool: action.selectedStakePool };

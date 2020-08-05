@@ -72,8 +72,19 @@ export function stakePoolInfo(cb) {
 // This can be removed after stopping to support them.
 export function getAllVspsInfo(cb) {
   const readVspInfoResponse = (response) => {
-    console.log(response)
-    return response.data;
+    const hosts = Object.keys(response.data)
+    const vsps = hosts.reduce((availableVsps, host) => {
+      const vspData = response.data[host];
+      if (vspData.closed) return availableVsps;
+      // call from /?c=vsp does not include its protocol, becaise when calling
+      // from dcrwallet, it is not used. Therefore, we need to add them.
+      availableVsps.push({
+        host: "https://" + host,
+        vspData
+      });
+      return availableVsps;
+    }, []);
+    return vsps;
   }
 
   GET(URL_BASE + "/?c=vsp")

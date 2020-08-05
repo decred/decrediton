@@ -24,6 +24,7 @@ import { getWalletCfg, getGlobalCfg } from "config";
 import { clipboard } from "electron";
 import { getStartupStats } from "./StatisticsActions";
 import { getTokenAndInitialBatch } from "./GovernanceActions";
+import { discoverAvailableVSPs } from "./VSPActions";
 import * as da from "../middleware/dcrdataapi";
 import {
   EXTERNALREQUEST_DCRDATA,
@@ -61,6 +62,7 @@ const startWalletServicesTrigger = () => (dispatch, getState) =>
       if (privacyEnabled) {
         dispatch(getAccountMixerServiceAttempt());
       }
+      dispatch(discoverAvailableVSPs());
       await dispatch(getNextAddressAttempt(0));
       await dispatch(getTicketPriceAttempt());
       await dispatch(getNetworkAttempt());
@@ -79,6 +81,8 @@ const startWalletServicesTrigger = () => (dispatch, getState) =>
       .catch((error) => reject(error));
   });
 
+// TODO move startWalletServices to WalletLoaderActions, as it is not related
+// to ClientActions.
 export const startWalletServices = () => (dispatch, getState) => new Promise((resolve, reject) => {
   const { startWalletServiceAttempt } = getState().grpc;
   if (startWalletServiceAttempt) {

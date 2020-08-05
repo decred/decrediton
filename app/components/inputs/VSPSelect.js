@@ -24,10 +24,10 @@ function VSPSelect({ className, onChange, options, intl }) {
   const handleOnChange = async (option) => {
     if (!option) return;
     const { value } = option;
-    if (!value || !value.Host) return;
+    if (!value || !value.host) return;
 
     // TODO add loading state. (use state machine?)
-    const info = await getVSPInfo(value.Host);
+    const info = await getVSPInfo(value.host);
     // TODO remove this hard coded value, get it dinamically.
     // depends on https://github.com/decred/dcrwebapi/pull/104
     const { pubkey } = info;
@@ -40,7 +40,7 @@ function VSPSelect({ className, onChange, options, intl }) {
   const getOptions = () => {
     if (!options) return;
     options = options.map((vsp) => ({
-      label: vsp.Host,
+      label: vsp.host,
       value: vsp
     }));
     // TODO handle add new vsp dinamically
