@@ -1,4 +1,7 @@
-import { DISCOVERAVAILABLEVSPS_SUCCESS } from "actions/VSPActions";
+import {
+  DISCOVERAVAILABLEVSPS_SUCCESS,
+  DISCOVERAVAILABLEVSPS_FAILED
+} from "actions/VSPActions";
 import {
   STARTTICKETBUYERV3_ATTEMPT,
   STARTTICKETBUYERV3_SUCCESS,
@@ -12,6 +15,12 @@ export default function vsp(state = {}, action) {
       return {
         ...state,
         availableVSPs: action.availableVSPs
+      };
+    case DISCOVERAVAILABLEVSPS_FAILED:
+      return {
+        ...state,
+        availableVSPs: null,
+        availableVSPsError: action.error
       };
     case STARTTICKETBUYERV3_ATTEMPT:
       return { ...state,

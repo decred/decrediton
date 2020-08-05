@@ -171,6 +171,7 @@ export const accountMixerService = get(["grpc", "accountMixerService"]);
 
 // purchase tickets selectors
 export const getAvailableVSPs = get(["vsp", "availableVSPs"]);
+export const getDiscoverAvailableVSPError = get(["vsp", "availableVSPsError"]);
 
 // ticket auto buyer
 export const getTicketAutoBuyerRunning = get(["vsp", "ticketAutoBuyerRunning"]);
