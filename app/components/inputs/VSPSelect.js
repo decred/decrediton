@@ -3,7 +3,6 @@ import { injectIntl, defineMessages } from "react-intl";
 import { useState } from "react";
 import * as vspa from "actions/VSPActions";
 import { useDispatch } from "react-redux";
-import { base64ToHex } from "helpers";
 
 // TODO Finish building this component and workflow after integrating vspd to
 // dcrwallet.

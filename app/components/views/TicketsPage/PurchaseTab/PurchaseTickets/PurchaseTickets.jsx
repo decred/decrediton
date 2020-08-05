@@ -3,7 +3,6 @@ import { PurchasePage } from "./Page";
 import {
   usePurchaseTab
 } from "../hooks";
-import { useMountEffect } from "hooks";
 
 const Tickets = ({ toggleIsLegacy }) => {
   const {
@@ -11,15 +10,17 @@ const Tickets = ({ toggleIsLegacy }) => {
     blocksNumberToNextTicket,
     sidebarOnBottom,
     isWatchingOnly,
-    discoverAvailableVSPs,
+    // TODO add retry wiith discoverAvailableVsps in case of failure:
+    // discoverAvailableVSPs,
     availableVSPs,
-    availableVSPsError,
+    // TODO treat errors:
+    // availableVSPsError,
     defaultSpendingAccount,
     ticketPrice
   } = usePurchaseTab();
 
   const [account, setAccount] = useState(defaultSpendingAccount);
-  const [vsp, setVSP] = useState(null);
+  // const [vsp, setVSP] = useState(null);
   const [numTickets, setNumTickets] = useState(1);
   const [isValid, setIsValid] = useState(false);
 
@@ -60,8 +61,7 @@ const Tickets = ({ toggleIsLegacy }) => {
       ticketPrice,
       isValid,
       toggleIsLegacy,
-      availableVSPs,
-      setVSP
+      availableVSPs
     }} />;
 };
 

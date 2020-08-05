@@ -27,7 +27,7 @@ export const GETVSPTICKETSTATUS_ATTEMPT = "GETVSPTICKETSTATUS_ATTEMPT";
 export const GETVSPTICKETSTATUS_FAILED = "GETVSPTICKETSTATUS_FAILED";
 export const GETVSPTICKETSTATUS_SUCCESS = "GETVSPTICKETSTATUS_SUCCESS";
 
-// TODO cache signature information, so we can get ticket status without requesting a passphrase.
+// TODO check if we need get ticket status, as dcrwallet makes this call.
 export const getVSPTicketStatus = (vsp, tickethash, passphrase="123") => async (dispatch) => {
   dispatch({ type: GETVSPTICKETSTATUS_ATTEMPT });
   try {
@@ -38,8 +38,7 @@ export const getVSPTicketStatus = (vsp, tickethash, passphrase="123") => async (
     });
     const signature = await dispatch(getTicketSignature(tickethash, request, passphrase));
     // host here needs "http://" or "https://". When sending it to dcrwallet it can not have.
-    const host = "https://teststakepool.decred.org"
-    const ticketStatus = await wallet.getVSPTicketStatus({ host, vspClientSig: signature, request });
+    const ticketStatus = await wallet.getVSPTicketStatus({ host: vsp.host, vspClientSig: signature, request });
     dispatch({ type: GETVSPTICKETSTATUS_SUCCESS });
     return ticketStatus;
   } catch (error) {
@@ -323,8 +322,8 @@ export const DISCOVERAVAILABLEVSPS_ATTEMPT = "DISCOVERAVAILABLEVSPS_ATTEMPT";
 export const DISCOVERAVAILABLEVSPS_SUCCESS = "DISCOVERAVAILABLEVSPS_SUCCESS";
 export const DISCOVERAVAILABLEVSPS_FAILED = "DISCOVERAVAILABLEVSPS_FAILED";
 
-export const discoverAvailableVSPs = () => async (dispatch, getState) => {
-  dispatch({ type: DISCOVERAVAILABLEVSPS_ATTEMPT })
+export const discoverAvailableVSPs = () => async (dispatch) => {
+  dispatch({ type: DISCOVERAVAILABLEVSPS_ATTEMPT });
   try {
     const availableVSPs = await wallet.getAllVSPs();
     dispatch({
@@ -338,7 +337,7 @@ export const discoverAvailableVSPs = () => async (dispatch, getState) => {
       error
     });
   }
-}
+};
 
 export const CHANGESELECTEDSTAKEPOOL = "CHANGESELECTEDSTAKEPOOL";
 export const changeSelectedStakePool = (selectedStakePool) => (dispatch) =>

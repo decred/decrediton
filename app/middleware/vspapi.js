@@ -56,7 +56,7 @@ export function stakePoolInfo(cb) {
         return !APIEnabled ? null : { Host: URL, Network, APIVersionsSupported };
       })
       .filter((v) => v);
-  }
+  };
 
   GET(URL_BASE + "/?c=gsd")
     .then(function (response) {
@@ -72,7 +72,7 @@ export function stakePoolInfo(cb) {
 // This can be removed after stopping to support them.
 export function getAllVspsInfo(cb) {
   const readVspInfoResponse = (response) => {
-    const hosts = Object.keys(response.data)
+    const hosts = Object.keys(response.data);
     const vsps = hosts.reduce((availableVsps, host) => {
       const vspData = response.data[host];
       if (vspData.closed) return availableVsps;
@@ -85,7 +85,7 @@ export function getAllVspsInfo(cb) {
       return availableVsps;
     }, []);
     return vsps;
-  }
+  };
 
   GET(URL_BASE + "/?c=vsp")
     .then(function (response) {
