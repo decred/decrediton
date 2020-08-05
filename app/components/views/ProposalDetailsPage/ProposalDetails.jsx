@@ -53,6 +53,9 @@ const ProposalDetails = ({
   const isDarkTheme = themeName === "theme-dark";
   const shortToken = token.substring(0, 7);
   const proposalPath = `/proposals/${shortToken}`;
+  const votingActiveOrFinished =
+    voteStatus === VOTESTATUS_ACTIVEVOTE ||
+    voteStatus === VOTESTATUS_FINISHEDVOTE;
   return (
     <div>
       <div className={styles.overview}>
@@ -116,8 +119,7 @@ const ProposalDetails = ({
             />
           </div>
         </div>
-        {(voteStatus === VOTESTATUS_ACTIVEVOTE ||
-          voteStatus === VOTESTATUS_FINISHEDVOTE) && (
+        {votingActiveOrFinished && (
           <StatusBar
             className={styles.voteStatusBar}
             max={quorumMinimumVotes}
@@ -141,7 +143,7 @@ const ProposalDetails = ({
           />
         )}
       </div>
-      {walletEligibleTickets && (
+      {votingActiveOrFinished && walletEligibleTickets && (
         <EligibleTickets
           tickets={walletEligibleTickets}
           tsDate={tsDate}

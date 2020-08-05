@@ -79,4 +79,3 @@ const ProposalDetailsPage = () => {
 };
 
 export default ProposalDetailsPage;
-
