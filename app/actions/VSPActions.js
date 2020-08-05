@@ -325,7 +325,14 @@ export const DISCOVERAVAILABLEVSPS_FAILED = "DISCOVERAVAILABLEVSPS_FAILED";
 export const discoverAvailableVSPs = () => async (dispatch) => {
   dispatch({ type: DISCOVERAVAILABLEVSPS_ATTEMPT });
   try {
-    const availableVSPs = await wallet.getAllVSPs();
+    let availableVSPs = await wallet.getAllVSPs();
+    // add label and value so we can show this values on a select input.
+    availableVSPs = availableVSPs.map(vsp => ({
+        ...vsp,
+        label: vsp.host,
+        value: vsp.host
+      })
+    );
     dispatch({
       type: DISCOVERAVAILABLEVSPS_SUCCESS,
       availableVSPs
