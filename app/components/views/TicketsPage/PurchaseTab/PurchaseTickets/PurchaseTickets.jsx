@@ -20,7 +20,8 @@ const Tickets = ({ toggleIsLegacy }) => {
   } = usePurchaseTab();
 
   const [account, setAccount] = useState(defaultSpendingAccount);
-  // const [vsp, setVSP] = useState(null);
+  // todo use this vsp to buy solo tickets.
+  const [vsp, setVSP] = useState(null);
   const [numTickets, setNumTickets] = useState(1);
   const [isValid, setIsValid] = useState(false);
 
@@ -61,7 +62,9 @@ const Tickets = ({ toggleIsLegacy }) => {
       ticketPrice,
       isValid,
       toggleIsLegacy,
-      availableVSPs
+      availableVSPs,
+      setVSP,
+      vsp
     }} />;
 };
 

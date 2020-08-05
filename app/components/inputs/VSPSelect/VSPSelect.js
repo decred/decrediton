@@ -1,11 +1,8 @@
 import Select from "react-select";
 import { injectIntl, defineMessages } from "react-intl";
-import { useState, useEffect } from "react";
-import * as vspa from "actions/VSPActions";
-import { useDispatch } from "react-redux";
-import { fetchMachine } from "stateMachines/FetchStateMachine";
-import { useMachine } from "@xstate/react";
-import { LoadingError } from "shared";
+import { useEffect } from "react";
+import { useVSPSelect } from "./hooks";
+import { FormattedMessage as T } from "react-intl";
 import styles from "./VSPSelect.modules.css";
 
 const messages = defineMessages({
@@ -16,46 +13,23 @@ const messages = defineMessages({
 });
 
 function VSPSelect({ onChange, options, intl }) {
-  const dispatch = useDispatch();
-
-  const getVSPInfo = (host) => dispatch(vspa.getVSPInfo(host));
+  const { send, state, selectedOption, vspInfo } = useVSPSelect(options);
   // TODO how treat add custom vsp?
   // const addCustomStakePool = () => dispatch(vspa.addCustomStakePool())
-  const [selectedOption, setSelected] = useState(null);
-  const [vspInfo, setVspInfo] = useState({});
-
-  const [state, send] = useMachine(fetchMachine, {
-    actions: {
-      initial: () => {
-        if (!options) send({ type: "REJECT", error: "Options not defined." });
-      },
-      load: (c, event) => {
-        const { value } = event;
-        getVSPInfo(value.host)
-          .then((info) => {
-            setSelected(value);
-            const { pubkey } = info;
-            setVspInfo({ pubkey, host: value.host });
-            send("RESOLVE");
-          })
-          .catch((error) => send({ type: "REJECT", error }));
-      }
-    }
-  });
 
   useEffect(() => {
     const { pubkey, host } = vspInfo;
     onChange && onChange({ pubkey, host });
-  }, [vspInfo]);
+  }, [vspInfo, onChange]);
 
-  const handleOnChange = async (option) => {
+  const handleOnChange = (option) => {
     if (!option) return;
     const { value } = option;
     if (!value || !value.host) return;
     send({ type: "FETCH", value });
   };
 
-  const handleOnRetry = async (option) => {
+  const handleOnRetry = (option) => {
     if (!option) return;
     const { value } = option;
     if (!value || !value.host) return;
@@ -87,11 +61,11 @@ function VSPSelect({ onChange, options, intl }) {
         return           <Select
         options={getOptions()}
         placeholder={intl.formatMessage(messages.placeholder)}
-    
+
         onChange={handleOnChange}
         value={selectedOption}
         // TODO handle add new vsp dinamically
-    
+
         // newOptionCreator={
         //   {
         //     value: { Host: lastInput },
@@ -102,11 +76,11 @@ function VSPSelect({ onChange, options, intl }) {
         // }
         // onInputChange={this.onInputChange}
         // isValidNewOption={this.isValidNewOption}
-      />
+      />;
       case "loading":
         return (
           <div>
-            loading
+            <T id="vspselct.loading" m="Loading" />
           </div>
         );
       case "success":
@@ -114,11 +88,11 @@ function VSPSelect({ onChange, options, intl }) {
           <Select
             options={getOptions()}
             placeholder={intl.formatMessage(messages.placeholder)}
-        
+
             onChange={handleOnChange}
             value={selectedOption}
             // TODO handle add new vsp dinamically
-        
+
             // newOptionCreator={
             //   {
             //     value: { Host: lastInput },
@@ -137,11 +111,11 @@ function VSPSelect({ onChange, options, intl }) {
             <Select
               options={getOptions()}
               placeholder={intl.formatMessage(messages.placeholder)}
-          
+
               onChange={handleOnRetry}
               value={selectedOption}
               // TODO handle add new vsp dinamically
-          
+
               // newOptionCreator={
               //   {
               //     value: { Host: lastInput },
@@ -159,7 +133,7 @@ function VSPSelect({ onChange, options, intl }) {
       default:
         return null;
     }
-  }
+  };
 
   return getComponentState(state);
 }
