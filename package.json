@@ -53,12 +53,14 @@
       "^electron$": "<rootDir>/test/mocks/electronMock.js"
     },
     "transformIgnorePatterns": [
-      "<rootDir>/node_modules/",
-      "<rootDir>/app/middleware/walletrpc/api_grpc_pb.js",
-      "<rootDir>/app/middleware/walletrpc/api_pb.js",
-      "<rootDir>/app/middleware/ln/rpc_grpc_pb.js",
-      "<rootDir>/app/middleware/ln/rpc_pb.js",
-      "<rootDir>/app/middleware/ln/google/"
+      "/node_modules/",
+      "app/middleware/walletrpc/api_grpc_pb.js",
+      "app/middleware/walletrpc/api_pb.js",
+      "app/middleware/ln/rpc_grpc_pb.js",
+      "app/middleware/ln/rpc_pb.js",
+      "app/middleware/ln/wtclient_grpc_pb.js",
+      "app/middleware/ln/wtclient_pb.js",
+      "app/middleware/ln/google/"
     ],
     "transform": {
       "^.+\\.(js|jsx)?$": "babel-jest"

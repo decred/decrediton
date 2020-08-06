@@ -417,7 +417,8 @@ const initialState = {
     scbPath: "",
     scbUpdatedTime: 0,
     nodeInfo: null,
-    getNodeInfoAttempt: false
+    getNodeInfoAttempt: false,
+    towersList: []
   },
   locales: locales
 };

@@ -5,6 +5,7 @@ import fs from "fs";
 
 const services = require("./rpc_grpc_pb.js");
 const wuServices = require("./walletunlocker_grpc_pb.js");
+const wtServices = require("./wtclient_grpc_pb.js");
 
 const getServiceClient = (clientClass) => async (
   address,
@@ -75,6 +76,7 @@ const getServiceClient = (clientClass) => async (
 };
 
 export const getLightningClient = getServiceClient(services.LightningClient);
+export const getWatchtowerClient = getServiceClient(wtServices.WatchtowerClientClient);
 export const getWalletUnlockerClient = getServiceClient(
   wuServices.WalletUnlockerClient
 );

@@ -289,6 +289,12 @@ const connectToLNWallet = (
     certPath,
     macaroonPath
   );
+  const wtClient = await ln.getWatchtowerClient(
+    address,
+    port,
+    certPath,
+    macaroonPath
+  );
 
   // Ensure the dcrlnd instance and decrediton are connected to the same(ish)
   // wallet. For this test to fail the user would have had to manually change a
@@ -317,9 +323,9 @@ const connectToLNWallet = (
     );
   }
 
-  dispatch({ lnClient, type: LNWALLET_CONNECT_SUCCESS });
+  dispatch({ lnClient, wtClient, type: LNWALLET_CONNECT_SUCCESS });
 
-  return { client: lnClient };
+  return { client: lnClient, wtClient };
 };
 
 const waitForDcrlndSynced = (lnClient) => async () => {
@@ -925,8 +931,10 @@ export const verifyBackup = (destPath) => async (dispatch, getState) => {
   }
 };
 
-export const LNWALLET_GETNETWORKINFO_ATTEMPT = "LNWALLET_GETNETWORKINFO_ATTEMPT";
-export const LNWALLET_GETNETWORKINFO_SUCCESS = "LNWALLET_GETNETWORKINFO_SUCCESS";
+export const LNWALLET_GETNETWORKINFO_ATTEMPT =
+  "LNWALLET_GETNETWORKINFO_ATTEMPT";
+export const LNWALLET_GETNETWORKINFO_SUCCESS =
+  "LNWALLET_GETNETWORKINFO_SUCCESS";
 export const LNWALLET_GETNETWORKINFO_FAILED = "LNWALLET_GETNETWORKINFO_FAILED";
 
 export const getNetworkInfo = () => async (dispatch, getState) => {
@@ -946,7 +954,7 @@ export const LNWALLET_GETNODEINFO_ATTEMPT = "LNWALLET_GETNODEINFO_ATTEMPT";
 export const LNWALLET_GETNODEINFO_SUCCESS = "LNWALLET_GETNODEINFO_SUCCESS";
 export const LNWALLET_GETNODEINFO_FAILED = "LNWALLET_GETNODEINFO_FAILED";
 
-export const getNodeInfo = nodeID => async (dispatch, getState) => {
+export const getNodeInfo = (nodeID) => async (dispatch, getState) => {
   const { client } = getState().ln;
   if (!client) throw new Error("unconnected to ln wallet");
 
@@ -973,5 +981,65 @@ export const getRoutesInfo = (nodeID, amt) => async (dispatch, getState) => {
     dispatch({ routes, type: LNWALLET_GETROUTESINFO_SUCCESS });
   } catch (error) {
     dispatch({ error, type: LNWALLET_GETROUTESINFO_FAILED });
+  }
+};
+
+export const LNWALLET_ADDWATCHTOWER_ATTEMPT = "LNWALLET_ADDWATCHTOWER_ATTEMPT";
+export const LNWALLET_ADDWATCHTOWER_SUCCESS = "LNWALLET_ADDWATCHTOWER_SUCCESS";
+export const LNWALLET_ADDWATCHTOWER_FAILED = "LNWALLET_ADDWATCHTOWER_FAILED";
+
+export const addWatchtower = (wtPubKey, addr) => async (
+  dispatch,
+  getState
+) => {
+  const { wtClient } = getState().ln;
+  if (!wtClient) throw new Error("unconnected to ln wallet");
+
+  dispatch({ type: LNWALLET_ADDWATCHTOWER_ATTEMPT });
+  try {
+    await ln.addTower(wtClient, wtPubKey, addr);
+    dispatch({ type: LNWALLET_ADDWATCHTOWER_SUCCESS });
+  } catch (error) {
+    dispatch({ error, type: LNWALLET_ADDWATCHTOWER_FAILED });
+  }
+};
+
+export const LNWALLET_LISTWATCHTOWERS_ATTEMPT = "LNWALLET_LISTWATCHTOWERS_ATTEMPT";
+export const LNWALLET_LISTWATCHTOWERS_SUCCESS = "LNWALLET_LISTWATCHTOWERS_SUCCESS";
+export const LNWALLET_LISTWATCHTOWERS_FAILED = "LNWALLET_LISTWATCHTOWERS_FAILED";
+
+export const listWatchtowers = () => async (
+  dispatch,
+  getState
+) => {
+  const { wtClient } = getState().ln;
+  if (!wtClient) throw new Error("unconnected to ln wallet");
+
+  dispatch({ type: LNWALLET_LISTWATCHTOWERS_ATTEMPT });
+  try {
+    const towersList = await ln.listWatchtowers(wtClient);
+    dispatch({ towersList, type: LNWALLET_LISTWATCHTOWERS_SUCCESS });
+  } catch (error) {
+    dispatch({ error, type: LNWALLET_LISTWATCHTOWERS_FAILED });
+  }
+};
+
+export const LNWALLET_REMOVEWATCHTOWER_ATTEMPT = "LNWALLET_REMOVEWATCHTOWER_ATTEMPT";
+export const LNWALLET_REMOVEWATCHTOWER_SUCCESS = "LNWALLET_REMOVEWATCHTOWER_SUCCESS";
+export const LNWALLET_REMOVEWATCHTOWER_FAILED = "LNWALLET_REMOVEWATCHTOWER_FAILED";
+
+export const removeWatchtower = wtPubKey => async (
+  dispatch,
+  getState
+) => {
+  const { wtClient } = getState().ln;
+  if (!wtClient) throw new Error("unconnected to ln wallet");
+
+  dispatch({ type: LNWALLET_REMOVEWATCHTOWER_ATTEMPT });
+  try {
+    await ln.removeTower(wtClient, wtPubKey);
+    dispatch({ type: LNWALLET_REMOVEWATCHTOWER_SUCCESS });
+  } catch (error) {
+    dispatch({ error, type: LNWALLET_REMOVEWATCHTOWER_FAILED });
   }
 };

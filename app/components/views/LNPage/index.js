@@ -9,6 +9,8 @@ import { default as InvoicesTab, InvoicesTabHeader } from "./InvoicesTab";
 import { default as PaymentsTab, PaymentsTabHeader } from "./PaymentsTab";
 import NetworkTabHeader from "./NetworkTab/NetworkTabHeader";
 import NetworkTab from "./NetworkTab/NetworkTab";
+import WatchtowersTab from "./WatchtowersTab/WatchtowersTab";
+import WatchtowersTabHeader from "./WatchtowersTab/WatchtowersTabHeader";
 import "style/LN.less";
 
 const LNPageHeader = () => (
@@ -52,6 +54,12 @@ const LNActivePage = () => (
       component={NetworkTab}
       header={NetworkTabHeader}
       link={<T id="ln.tab.network" m="Network" />}
+    />
+    <Tab
+      path="/ln/watchtowers"
+      component={WatchtowersTab}
+      header={WatchtowersTabHeader}
+      link={<T id="ln.tab.watchtowers" m="Watchtowers" />}
     />
   </TabbedPage>
 );

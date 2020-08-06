@@ -109,7 +109,6 @@ export const getStartupWalletInfo = () => (dispatch) => {
   const politeiaEnabled =
     config.get("allowed_external_requests").indexOf(EXTERNALREQUEST_POLITEIA) >
     -1;
-  const lnEnabled = config.get("ln_enabled");
 
   return new Promise((resolve, reject) => {
     setTimeout(async () => {
@@ -126,9 +125,7 @@ export const getStartupWalletInfo = () => (dispatch) => {
         if (politeiaEnabled) {
           dispatch(getTokenAndInitialBatch());
         }
-        if (lnEnabled) {
-          dispatch(checkLnWallet());
-        }
+        dispatch(checkLnWallet());
         dispatch({ type: GETSTARTUPWALLETINFO_SUCCESS });
         resolve();
       } catch (error) {
