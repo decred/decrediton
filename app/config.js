@@ -55,6 +55,8 @@ export function initWalletCfg(testnet, walletPath) {
   if (!config.has("trezor")) {
     config.set("trezor", false);
   }
+  // TODO remove this from here before release, as it will be an optional
+  // config option for now.
   if (!config.has("enableprivacy")) {
     config.set("enableprivacy", true);
   }
@@ -70,21 +72,7 @@ export function initWalletCfg(testnet, walletPath) {
   if (!config.has("ln_macaroonpath")) {
     config.set("ln_macaroonpath", "");
   }
-  if (!config.has("mixedaccount")) {
-    config.set("mixedaccount", "");
-  }
-  if (!config.has("changeaccount")) {
-    config.set("changeaccount", "");
-  }
-  if (!config.has("csppserver")) {
-    config.set("csppserver", "");
-  }
-  if (!config.has("csppport")) {
-    config.set("csppport", "");
-  }
-  if (!config.has("mixedaccbranch")) {
-    config.set("mixedaccbranch", "");
-  }
+
   stakePoolInfo(function (foundStakePoolConfigs) {
     if (foundStakePoolConfigs !== null) {
       updateStakePoolConfig(config, foundStakePoolConfigs);

@@ -2,20 +2,46 @@ import { FormattedMessage as T } from "react-intl";
 import { Subtitle } from "shared";
 import { classNames } from "pi-ui";
 import style from "../Privacy.module.css";
-import { useConfigMixer } from "./hooks";
+import { usePrivacy } from "../hooks";
 import CreateDefaultAccounts from "./CreateDefaultAccounts";
 import CreateNeededAccounts from "./CreateNeededAccounts";
+import { useMountEffect } from "hooks";
+import { useEffect, useState } from "react";
+import { MIXED_ACCOUNT, CHANGE_ACCOUNT } from "constants";
 
 const ConfigMixer = ({ isCreateAccountDisabled, accounts }) => {
-  const {
-    areAccountsAvailable,
-    mixedAccountName,
-    setMixedAccountName,
-    changeAccountName,
-    setChangeAccountName,
-    onSubmit,
-    isValid
-  } = useConfigMixer(accounts);
+  const [mixedAccountName, setMixedAccountName] = useState("");
+  const [changeAccountName, setChangeAccountName] = useState("");
+  const [areAccountsAvailable, setAreAvailable] = useState(false);
+  const [isValid, setIsValid] = useState(false);
+
+  const { createNeededAccounts } = usePrivacy();
+
+  const checkAvailableAccounts = () => {
+    const mixedExists = accounts.find(
+      ({ accountName }) => accountName === MIXED_ACCOUNT
+    );
+    const changeExists = accounts.find(
+      ({ accountName }) => accountName === CHANGE_ACCOUNT
+    );
+
+    return !(mixedExists || changeExists);
+  };
+
+  useMountEffect(() => {
+    if (checkAvailableAccounts()) {
+      setAreAvailable(true);
+      setMixedAccountName(MIXED_ACCOUNT);
+      setChangeAccountName(CHANGE_ACCOUNT);
+    }
+  });
+
+  useEffect(() => {
+    setIsValid(mixedAccountName  && changeAccountName);
+  }, [mixedAccountName, changeAccountName]);
+
+  const onSubmit = (passphrase) =>
+    createNeededAccounts(passphrase, mixedAccountName, changeAccountName);
 
   return (
     <>
@@ -24,7 +50,7 @@ const ConfigMixer = ({ isCreateAccountDisabled, accounts }) => {
       />
       <div className={classNames(style.pageWrapper, style.isColumn)}>
         {areAccountsAvailable ? (
-          <CreateNeededAccounts
+          <CreateDefaultAccounts
             {...{
               onSubmit,
               mixedAccountName,
@@ -36,7 +62,7 @@ const ConfigMixer = ({ isCreateAccountDisabled, accounts }) => {
             }}
           />
         ) : (
-          <CreateDefaultAccounts
+          <CreateNeededAccounts
             {...{
               onSubmit,
               mixedAccountName,
