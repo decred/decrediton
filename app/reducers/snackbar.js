@@ -118,6 +118,10 @@ import {
   LNWALLET_VERIFYBACKUP_FAILED,
   LNWALLET_GETNETWORKINFO_FAILED
 } from "actions/LNActions";
+import {
+  CREATEMIXERACCOUNTS_SUCCESS,
+  CREATEMIXERACCOUNTS_FAILED
+} from "actions/AccountMixerActions";
 
 const WRONG_PASSPHRASE_MSG = "WRONG_PASSPHRASE_MSG";
 const ERROR_IS_OBJECT = "ERROR_IS_OBJECT";
@@ -465,6 +469,10 @@ const messages = defineMessages({
     id: "governance.ntf.updateVoteChoiceSuccess",
     defaultMessage:
       "Your vote has been casted with success!\n Thanks for participating in decred's governance"
+  },
+  CREATEMIXERACCOUNTS_SUCCESS: {
+    id: "mixer.ntf.createdAcct",
+    defaultMessage: "Accounts successfully created and mixer configured."
   }
 });
 
@@ -539,6 +547,7 @@ export default function snackbar(state = {}, action) {
     case LNWALLET_EXPORTBACKUP_SUCCESS:
     case LNWALLET_VERIFYBACKUP_SUCCESS:
     case UPDATEVOTECHOICE_SUCCESS:
+    case CREATEMIXERACCOUNTS_SUCCESS:
       type = "Success";
       message = messages[action.type] || messages.defaultSuccessMessage;
 
@@ -626,6 +635,7 @@ export default function snackbar(state = {}, action) {
     case LNWALLET_EXPORTBACKUP_FAILED:
     case LNWALLET_VERIFYBACKUP_FAILED:
     case LNWALLET_GETNETWORKINFO_FAILED:
+    case CREATEMIXERACCOUNTS_FAILED:
       type = "Error";
       if (
         action.error &&
