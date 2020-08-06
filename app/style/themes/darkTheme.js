@@ -31,6 +31,7 @@ const darkTheme = {
   "disabled-color": "#3C62B0",
   "disabled-background-color": "#1F325F",
   "disabled-background-color-lighter": "#2F4D8C",
+  "success-text-color": "#41be53",
   "error-text-color": "#fd714b",
   "error-red": "#ED6D47",
   "error-red-hover": "red",

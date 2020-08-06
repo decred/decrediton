@@ -27,6 +27,7 @@ const VerifyMessage = ({ intl }) => {
   }, [onGetMessageVerificationServiceAttempt, onVerifyMessageCleanStore]);
 
   useEffect(() => {
+    setSignatureError(null);
     if (verifyMessageSuccess && !verifyMessageSuccess.valid || verifyMessageError) {
       setSignatureError("Invalid Signature");
     }
@@ -64,7 +65,6 @@ const VerifyMessage = ({ intl }) => {
   };
 
   const onSubmit = () => {
-    if (addressError || messageError || signatureError) return;
     onVerifyMessageAttempt(address, message, signature);
   };
 

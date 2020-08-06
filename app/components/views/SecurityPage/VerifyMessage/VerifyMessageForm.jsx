@@ -40,8 +40,7 @@ const VerifyMessageForm = ({
     || message === ""
     || signature === ""
     || addressError
-    || messageError
-    || signatureError;
+    || messageError;
   const isValid = verifyMessageSuccess && verifyMessageSuccess.valid;
   return (
     <>
