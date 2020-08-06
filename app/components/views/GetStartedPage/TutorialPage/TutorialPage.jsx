@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 import TutorialPage from "./Page";
-import { useDaemonStartup } from "connectors";
+import { useDaemonStartup } from "hooks";
 
 const Tutorial = () => {
   const { finishTutorial } = useDaemonStartup();
