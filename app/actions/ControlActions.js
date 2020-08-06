@@ -630,7 +630,7 @@ export function signMessageAttempt(address, message, passphrase) {
   };
 }
 
-export const signMessageCleanStore = (dispatch) => 
+export const signMessageCleanStore = (dispatch) =>
   dispatch({ type: SIGNMESSAGE_CLEANSTORE });
 
 export const VERIFYMESSAGE_ATTEMPT = "VERIFYMESSAGE_ATTEMPT";
