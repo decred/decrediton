@@ -290,6 +290,18 @@
   grid-row-gap: 10px;
 }
 
+.ln-createwallet-warning-doc {
+  max-width: 36em;
+
+  p, ul, h1 {
+    margin-bottom: 1em;
+  }
+
+  ul > li > p {
+    margin-bottom: 0.2em;
+  }
+}
+
 .ln-connect-opts .ln-connect-opt {
   flex-wrap: wrap;
   display: flex;
@@ -305,6 +317,10 @@
 
   .checkbox {
     margin-top: 2px;
+
+    input[type="checkbox"] {
+      display: initial;
+    }
   }
 
   .account-selection {

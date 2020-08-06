@@ -2,8 +2,8 @@ import { spring } from "react-motion";
 import { StandalonePage, StandaloneHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
 import { ReceiveAccountsSelect, PathBrowseInput } from "inputs";
-import { PassphraseModalButton, TextToggle, InfoDocModalButton } from "buttons";
-import { TransitionMotionWrapper } from "shared";
+import { PassphraseModalButton, TextToggle, InfoDocModalButton, KeyBlueButton } from "buttons";
+import { TransitionMotionWrapper, Documentation } from "shared";
 import { lnPage } from "connectors";
 import {
   CREATE_LN_ACCOUNT,
@@ -16,11 +16,24 @@ import {
 
 const ConnectPageHeader = () => (
   <StandaloneHeader
-    title={<T id="ln.connectPage.title" m="Connect" />}
+    title={<T id="ln.connectPage.title" m="Start LN Wallet" />}
     description={
       <T
         id="ln.connectPage.description"
-        m={"Connect to an unlocked DCRLND wallet."}
+        m={"Start, unlock and connect to the dcrlnd wallet."}
+      />
+    }
+    iconClassName="accounts"
+  />
+);
+
+const CreateLNWalletPageHeader = () => (
+  <StandaloneHeader
+    title={<T id="ln.createLNWalletPage.title" m="Create LN Wallet" />}
+    description={
+      <T
+        id="ln.createLNWalletPage.description"
+        m={"Create a new LN wallet backed by the Decrediton wallet."}
       />
     }
     iconClassName="accounts"
@@ -51,6 +64,15 @@ const LNStartupStage = ({ stage }) => (
   </div>
 );
 
+const LNCreationWarning = ({ onAcceptCreationWarning }) => (
+  <div className="ln-createwallet-warning-doc">
+    <Documentation name="LNWalletCreationWarning" />
+    <KeyBlueButton onClick={onAcceptCreationWarning}>
+      <T id="ln.createWalletWarning.okBtn" m="I understand and accept the risks"/>
+    </KeyBlueButton>
+  </div>
+);
+
 const wrapperComponent = (props) => <div className="account-list" {...props} />;
 
 // The below constant MUST match what TextToggle expects/uses.
@@ -64,7 +86,8 @@ class ConnectPage extends React.Component {
       autopilotEnabled: false,
       account: this.props.defaultAccount,
       accountOption: NEW_ACCOUNT,
-      scbFile: ""
+      scbFile: "",
+      displayCreationWarning: !props.lightningWalletExists
     };
   }
 
@@ -100,6 +123,10 @@ class ConnectPage extends React.Component {
 
   onAccountOptionClick(value) {
     this.setState({ accountOption: value });
+  }
+
+  onAcceptCreationWarning() {
+    this.setState({ displayCreationWarning: false });
   }
 
   getAccountsListComponent() {
@@ -220,12 +247,24 @@ class ConnectPage extends React.Component {
   }
 
   render() {
-    const { onLaunch, onChangeEnableAutopilot } = this;
-    const { autopilotEnabled } = this.state;
+    const { onLaunch, onChangeEnableAutopilot, onAcceptCreationWarning } = this;
+    const { autopilotEnabled, displayCreationWarning } = this.state;
     const { lightningWalletExists, startAttempt, startupStage } = this.props;
 
+    if (displayCreationWarning) {
+      return (
+        <StandalonePage header={<CreateLNWalletPageHeader />}>
+          <LNCreationWarning onAcceptCreationWarning={onAcceptCreationWarning}/>
+        </StandalonePage>
+      );
+    }
+
+    const header = lightningWalletExists
+      ? <ConnectPageHeader />
+      : <CreateLNWalletPageHeader />;
+
     return (
-      <StandalonePage header={<ConnectPageHeader />}>
+      <StandalonePage header={header}>
         <div>
           <div className="ln-connect-opts">
             <div className="ln-connect-opt">
