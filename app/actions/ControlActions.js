@@ -285,6 +285,7 @@ export const CREATE_UNSIGNEDTICKETS_SUCCESS = "CREATE_UNSIGNEDTICKETS_SUCCESS";
 
 // TODO move purchaseTicketsAttempt to TransactionActions
 export const purchaseTicketsAttempt = (
+  passphrase,
   accountNum,
   spendLimit,
   requiredConf,
