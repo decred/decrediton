@@ -178,12 +178,12 @@ const initialState = {
     regularTransactions: {},
     // getRegularTxsAux is a state helper to get regular transactions
     getRegularTxsAux: {
-      noMoreTransactions: true,
+      noMoreTransactions: false,
       lastTransaction: null
     },
     // getRegularTxsAux is a state helper to get stake transactions
     getStakeTxsAux: {
-      noMoreTransactions: true,
+      noMoreTransactions: false,
       lastTransaction: null
     },
     transactionsFilter: {

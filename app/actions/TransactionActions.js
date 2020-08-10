@@ -516,9 +516,6 @@ export const getTransactions = (isStake) => async (dispatch, getState) => {
 
   let startRequestHeight, endRequestHeight;
   while (!noMoreTransactions && !reachedGenesis) {
-    const transactionsLength = transactions.length;
-    if (transactionsLength >= BATCH_TX_COUNT) break;
-
     if (listDirection === DESC) {
       endRequestHeight = 1;
       startRequestHeight = lastTransaction
@@ -552,6 +549,11 @@ export const getTransactions = (isStake) => async (dispatch, getState) => {
 
       // concat txs
       transactions.push(...mined);
+
+      const transactionsLength = transactions.length;
+      if (transactionsLength >= BATCH_TX_COUNT) {
+        break;
+      }
     } catch (error) {
       dispatch({ type: GETTRANSACTIONS_FAILED, error });
       return;
