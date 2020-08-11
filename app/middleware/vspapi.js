@@ -79,7 +79,7 @@ export function getAllVspsInfo(cb) {
       // call from /?c=vsp does not include its protocol, becaise when calling
       // from dcrwallet, it is not used. Therefore, we need to add them.
       availableVsps.push({
-        host: "https://" + host,
+        host,
         vspData
       });
       return availableVsps;
