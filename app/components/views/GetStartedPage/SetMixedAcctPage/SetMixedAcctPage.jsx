@@ -25,19 +25,19 @@ export default ({ onSendBack, onSendContinue }) => {
   };
   const onSubmitSetChange = (acctIdx) => {
     setChangeAcctIdx(acctIdx);
-  }
+  };
   const onSubmitContinue = () => {
     onRenameAccount(changeAcctIdx, CHANGE_ACCOUNT);
-    onRenameAccount(mixedAcctIdx, MIXED_ACCOUNT)
-    setCoinjoinCfg(mixedAcctIdx, changeAcctIdx)
+    onRenameAccount(mixedAcctIdx, MIXED_ACCOUNT);
+    setCoinjoinCfg(mixedAcctIdx, changeAcctIdx);
     onSendContinue();
-  }
+  };
   useEffect(() => {
     const isValid = mixedAcctIdx !== null &&
       changeAcctIdx !== null &&
       mixedAcctIdx !== changeAcctIdx;
-    setIsValid(isValid)
-  }, [mixedAcctIdx && changeAcctIdx]);
+    setIsValid(isValid);
+  }, [mixedAcctIdx, changeAcctIdx]);
 
   return (
     <div className={styles.content}>

@@ -80,8 +80,8 @@ const PreCreateWallet = ({
   }, [isTrezor, trezorEnable, trezorDisable]);
 
   const toggleIsPrivacy = () => {
-    setPrivacy(!isPrivacy)
-  }
+    setPrivacy(!isPrivacy);
+  };
 
   const createWallet = useCallback(() => {
     const isNew = isCreateNewWallet;
