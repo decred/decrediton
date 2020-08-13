@@ -160,7 +160,6 @@ export const useGetStarted = () => {
         }
         try {
           await onRetryStartRPC(passPhrase);
-          send({ type: "SET_MIXED_ACCOUNT" });
 
           if (isPrivacy) {
             // if recoverying a privacy wallet, we go to settingMixedAccount
