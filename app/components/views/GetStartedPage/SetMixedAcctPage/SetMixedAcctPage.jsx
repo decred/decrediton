@@ -9,13 +9,23 @@ import styles from "./SetMixedAcctPage.module.css";
 import { classNames } from "pi-ui";
 
 export default ({ onSendBack, onSendContinue }) => {
-  const { getCoinjoinOutputspByAcct } = useDaemonStartup();
+  const { getCoinjoinOutputspByAcct, setCoinjoinCfg } = useDaemonStartup();
   const { onRenameAccount } = useAccounts();
   const [coinjoinSumByAcct, setCjSumByAcct] = useState(null);
+  const [mixedAcctIdx, setMixedAcctIdx] = useState(null);
+  const [changeAcctIdx, setChangeAcctIdx] = useState(null);
   useMountEffect(() => {
-    getCoinjoinOutputspByAcct().then((r) => setCjSumByAcct(r));
+    getCoinjoinOutputspByAcct().then((r) => setCjSumByAcct(r)).catch(err => console.log(err));
   });
-  const onSubmit = (acctIdx, newName = "mixed") => onRenameAccount(acctIdx, newName);
+  const onSubmitRename = (acctIdx, newName = "mixed") => {
+    setMixedAcctIdx(acctIdx);
+    onRenameAccount(acctIdx, newName)
+  };
+  const onSubmitSetChange = (acctIdx) => setChangeAcctIdx(acctIdx);
+  const onSubmitContinue = () => {
+    setCoinjoinCfg(mixedAcctIdx, changeAcctIdx)
+    onSendContinue();
+  }
 
   return (
     <div className={styles.content}>
@@ -31,19 +41,22 @@ export default ({ onSendBack, onSendContinue }) => {
       {coinjoinSumByAcct &&
         <div className={styles.description}>
           <T id="getstarted.setAccount.description"
-            m={`Looks like you have {acctsNumber} accounts with
+            m={`Looks like you have accounts with
                 coinjoin outputs. Past account names cannot be restored during
-                Recovery, you can rename them now or later in Accounts view.`}
+                Recovery, you can rename them now and set an unmixed account,
+                so we can config the mixer.
+                
+                This can also be done later on privacy page.`}
             values={{ acctsNumber: coinjoinSumByAcct.length }}
           />
         </div>
       }
-      {coinjoinSumByAcct && (
+      {coinjoinSumByAcct &&
         <>
           <div className={classNames("is-row", styles.cardsWrapper)}>
             {coinjoinSumByAcct.map(({ acctIdx, coinjoinSum }) => {
               return (
-                <div className={classNames("is-row",styles.card)}>
+                <div key={acctIdx} className={classNames("is-row", styles.card)}>
                   <div className={classNames("is-column", styles.labelWrapper)}>
                     <div className={"is-row"}>
                       <div className={styles.accountIcon} />
@@ -63,37 +76,58 @@ export default ({ onSendBack, onSendContinue }) => {
                       />
                     </div>
                   </div>
-                  <InvisibleConfirmModalButton
-                    className={styles.iconButton}
-                    modalTitle={
-                      <T id="getstarted.setAccount.modalTitle" m="Rename Account" />
-                    }
-                    buttonLabel={<div className={styles.renameIcon} />}
-                    modalContent={
-                      <T
-                        id="getstarted.setAccount.modalContent"
-                        m={"Rename Account {acctIdx} to {mixed} account?"}
-                        values={{
-                          acctIdx: acctIdx,
-                          mixed: <span>mixed</span>
-                        }}
-                      />
-                    }
-                    size="large"
-                    block={false}
-                    onSubmit={() => onSubmit(acctIdx)}
-                  />
+                  <div className={classNames("is-column", styles.buttons)}>
+                    <InvisibleConfirmModalButton
+                      className={styles.iconButton}
+                      modalTitle={
+                        <T id="getstarted.setAccount.modalTitle" m="Rename Account" />
+                      }
+                      buttonLabel={<div className={styles.renameIcon} />}
+                      modalContent={
+                        <T
+                          id="getstarted.setAccount.modalContent"
+                          m={"Rename Account {acctIdx} to {mixed} account?"}
+                          values={{
+                            acctIdx: acctIdx,
+                            mixed: <span>mixed</span>
+                          }}
+                        />
+                      }
+                      size="large"
+                      block={false}
+                      onSubmit={() => onSubmitRename(acctIdx)}
+                    />
+                    <InvisibleConfirmModalButton
+                      className={styles.changeAcctBttn}
+                      modalTitle={
+                        <T id="getstarted.setChangeAccount.modalTitle" m="Set Change Account" />
+                      }
+                      buttonLabel={<span>Set change Account</span>}
+                      modalContent={
+                        <T
+                          id="getstarted.setChangeAccount.modalContent"
+                          m={"Set Account {acctIdx} as your change account?"}
+                          values={{ acctIdx: acctIdx }}
+                        />
+                      }
+                      size="large"
+                      block={false}
+                      onSubmit={() => onSubmitSetChange(acctIdx)}
+                    >
+                      
+                    </InvisibleConfirmModalButton>
+                  </div>
                 </div>
               );
             })}
           </div>
           <div className={styles.buttonWrapper}>
-            <KeyBlueButton onClick={() => onSendContinue()}>
+            <KeyBlueButton onClick={onSubmitContinue}>
               <T id="getstarted.setAccount.continue" m="Continue" />
             </KeyBlueButton>
           </div>
         </>
-      )}
+      }
     </div>
   );
 };

@@ -111,22 +111,41 @@ export const createNeededAccounts = (
   dispatch({ type: CREATEMIXERACCOUNTS_ATTEMPT });
 
   const walletService = sel.walletService(getState());
-  // TODO use constants here
   const walletName = sel.getWalletName(getState());
-  const isTestnet = sel.isTestNet(getState());
-  const csppPort = isTestnet ? "15760" : "5760";
-  const csppServer = "cspp.decred.org";
 
-  const cfg = getWalletCfg(isTestnet, walletName);
-  const createAccout = (pass, name) =>
+  const createAccount = (pass, name) =>
     wallet.getNextAccount(walletService, pass, name);
 
   try {
-    const mixedAccount = await createAccout(passphrase, mixedAccountName);
-    const changeAccount = await createAccout(passphrase, changeAccountName);
+    const mixedAccount = await createAccount(passphrase, mixedAccountName);
+    const changeAccount = await createAccount(passphrase, changeAccountName);
 
     const mixedNumber = mixedAccount.getAccountNumber();
     const changeNumber = changeAccount.getAccountNumber();
+
+    dispatch(setCoinjoinCfg(
+      csppServer,
+      csppPort,
+      mixedNumber,
+      changeNumber
+    ));
+  } catch (error) {
+    dispatch({ type: CREATEMIXERACCOUNTS_FAILED, error });
+  }
+};
+
+export const setCoinjoinCfg = ({ mixedNumber, changeNumber }) =>
+  (dispatch, getState) => {
+    const isTestnet = sel.isTestNet(getState());
+    const walletName = sel.getWalletName(getState());
+    const cfg = getWalletCfg(isTestnet, walletName);
+
+    // TODO use constants here
+    // On this first moment we are hard coding the cspp decred's server.
+    // the idea is to allow more server on upcoming releases, but we decided
+    // to go with this approach on this first integration.
+    const csppServer = "cspp.decred.org";
+    const csppPort = isTestnet ? "15760" : "5760";
 
     cfg.set("csppserver", csppServer);
     cfg.set("csppport", csppPort);
@@ -142,24 +161,40 @@ export const createNeededAccounts = (
       csppServer,
       mixedAccountBranch: 0
     });
-  } catch (error) {
-    dispatch({ type: CREATEMIXERACCOUNTS_FAILED, error });
-  }
-};
+}
 
-
+// getCoinjoinOutputspByAcct get all possible coinjoin outputs which an account
+// may have. This is used so we can recover privacy wallets and don't miss
+// spend outputs. It returns all accounts, so the user also can choose the
+// change account.
 export const getCoinjoinOutputspByAcct = () => (dispatch, getState) =>
   new Promise((resolve, reject) => {
+    const { balances, walletService } = getState().grpc;
+
     wallet
-      .getCoinjoinOutputspByAcct(sel.walletService(getState()))
+      .getCoinjoinOutputspByAcct(walletService)
       .then((response) => {
         const coinjoinSumByAcctResp = response.wrappers_[1];
-        const coinjoinSumByAcct = coinjoinSumByAcctResp.map((v) => {
-          return {
-            acctIdx: v.getAccountNumber(),
-            coinjoinSum: v.getCoinjoinTxsSum()
-          };
-        });
+        const coinjoinSumByAcct = balances.reduce((allAccts, { accountNumber }) => {
+          // if account number is equals imported account, we ignore it.
+          if (accountNumber === Math.pow(2, 31) - 1) {
+            return allAccts;
+          }
+          const coinjoinAcct = coinjoinSumByAcctResp.find((a) => a.getAccountNumber() === accountNumber);
+          if (coinjoinAcct === undefined) {
+            allAccts.push({
+              acctIdx: accountNumber,
+              coinjoinSum: 0
+            });
+          } else {
+            allAccts.push({
+              acctIdx: accountNumber,
+              coinjoinSum: coinjoinAcct.getCoinjoinTxsSum()
+            });
+          }
+          return allAccts;
+        }, []);
+
         resolve(coinjoinSumByAcct);
       })
       .catch((error) =>

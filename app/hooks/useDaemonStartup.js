@@ -201,6 +201,11 @@ const useDaemonStartup = () => {
     [dispatch]
   );
 
+  const setCoinjoinCfg = useCallback(
+    (mixedNumber, changeNumber) => dispatch(ama.setCoinjoinCfg({ mixedNumber, changeNumber })),
+    [dispatch]
+  )
+
   return {
     onShowTutorial,
     validateMasterPubKey,
@@ -268,7 +273,8 @@ const useDaemonStartup = () => {
     syncFetchHeadersComplete,
     syncFetchTimeStart,
     selectedWalletSelector,
-    goToHome
+    goToHome,
+    setCoinjoinCfg
   };
 };
 

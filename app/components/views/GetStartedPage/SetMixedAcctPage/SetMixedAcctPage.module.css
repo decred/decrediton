@@ -17,12 +17,14 @@
   width: 700px;
   margin-top: 60px;
   text-align: right;
+  flex-wrap: wrap;
 }
 
 .card {
   width: 335px;
   height: 90px;
   margin-left: 10px;
+  margin-bottom: 10px;
   background-color: var(--background-back-color);
 }
 
@@ -71,9 +73,21 @@
 
 .iconButton {
   padding: 0;
-  margin-top: 28px;
-  margin-left: auto;
+  margin-top: 15px;
   margin-right: 20px;
+  margin-left: 90px;
+  height: 30px;
+  width: 30px;
+}
+
+.changeAcctBttn {
+  padding: 0;
+  padding-left: 10px;
+  margin-top: 10px;
+}
+
+.buttons {
+  margin-left: 10px
 }
 
 .buttonWrapper {
