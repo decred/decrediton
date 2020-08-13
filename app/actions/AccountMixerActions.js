@@ -111,7 +111,6 @@ export const createNeededAccounts = (
   dispatch({ type: CREATEMIXERACCOUNTS_ATTEMPT });
 
   const walletService = sel.walletService(getState());
-  const walletName = sel.getWalletName(getState());
 
   const createAccount = (pass, name) =>
     wallet.getNextAccount(walletService, pass, name);
@@ -124,8 +123,6 @@ export const createNeededAccounts = (
     const changeNumber = changeAccount.getAccountNumber();
 
     dispatch(setCoinjoinCfg(
-      csppServer,
-      csppPort,
       mixedNumber,
       changeNumber
     ));
@@ -161,7 +158,7 @@ export const setCoinjoinCfg = ({ mixedNumber, changeNumber }) =>
       csppServer,
       mixedAccountBranch: 0
     });
-}
+};
 
 // getCoinjoinOutputspByAcct get all possible coinjoin outputs which an account
 // may have. This is used so we can recover privacy wallets and don't miss

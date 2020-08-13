@@ -204,7 +204,7 @@ const useDaemonStartup = () => {
   const setCoinjoinCfg = useCallback(
     (mixedNumber, changeNumber) => dispatch(ama.setCoinjoinCfg({ mixedNumber, changeNumber })),
     [dispatch]
-  )
+  );
 
   return {
     onShowTutorial,
