@@ -7,6 +7,8 @@ import { useState } from "react";
 import { InvisibleConfirmModalButton, KeyBlueButton } from "buttons";
 import styles from "./SetMixedAcctPage.module.css";
 import { classNames } from "pi-ui";
+import { useEffect } from "react";
+import { MIXED_ACCOUNT, CHANGE_ACCOUNT } from "constants";
 
 export default ({ onSendBack, onSendContinue }) => {
   const { getCoinjoinOutputspByAcct, setCoinjoinCfg } = useDaemonStartup();
@@ -14,18 +16,28 @@ export default ({ onSendBack, onSendContinue }) => {
   const [coinjoinSumByAcct, setCjSumByAcct] = useState(null);
   const [mixedAcctIdx, setMixedAcctIdx] = useState(null);
   const [changeAcctIdx, setChangeAcctIdx] = useState(null);
+  const [isValid, setIsValid] = useState(false);
   useMountEffect(() => {
     getCoinjoinOutputspByAcct().then((r) => setCjSumByAcct(r)).catch(err => console.log(err));
   });
-  const onSubmitRename = (acctIdx, newName = "mixed") => {
+  const onSubmitRename = (acctIdx) => {
     setMixedAcctIdx(acctIdx);
-    onRenameAccount(acctIdx, newName)
   };
-  const onSubmitSetChange = (acctIdx) => setChangeAcctIdx(acctIdx);
+  const onSubmitSetChange = (acctIdx) => {
+    setChangeAcctIdx(acctIdx);
+  }
   const onSubmitContinue = () => {
+    onRenameAccount(changeAcctIdx, CHANGE_ACCOUNT);
+    onRenameAccount(mixedAcctIdx, MIXED_ACCOUNT)
     setCoinjoinCfg(mixedAcctIdx, changeAcctIdx)
     onSendContinue();
   }
+  useEffect(() => {
+    const isValid = mixedAcctIdx !== null &&
+      changeAcctIdx !== null &&
+      mixedAcctIdx !== changeAcctIdx;
+    setIsValid(isValid)
+  }, [mixedAcctIdx && changeAcctIdx]);
 
   return (
     <div className={styles.content}>
@@ -41,14 +53,32 @@ export default ({ onSendBack, onSendContinue }) => {
       {coinjoinSumByAcct &&
         <div className={styles.description}>
           <T id="getstarted.setAccount.description"
-            m={`Looks like you have accounts with
-                coinjoin outputs. Past account names cannot be restored during
-                Recovery, you can rename them now and set an unmixed account,
-                so we can config the mixer.
+            m={ `Looks like you have accounts with coinjoin outputs. Past
+                account names cannot be restored during Recovery, so it is not
+                possible to know which account was the mix account. You can
+                set a mix and unmix account now or this can be done later on
+                the privacy page.
                 
-                This can also be done later on privacy page.`}
+                With this action the chosen accounts will be renamed.`
+              }
             values={{ acctsNumber: coinjoinSumByAcct.length }}
           />
+        </div>
+      }
+      {
+        mixedAcctIdx !== null &&
+        <div>
+          <T id="getstarted.setAcct.mixedAcct"
+            m="Mixed Acct: {value}"
+            values = {{ value: <span>{mixedAcctIdx}</span> }} />
+        </div>
+      }
+      {
+        changeAcctIdx !== null &&
+        <div>
+          <T id="getstarted.setAcct.changAcct"
+            m="Change Acct: {value}"
+            values = {{ value: <span>{changeAcctIdx}</span> }} />
         </div>
       }
       {coinjoinSumByAcct &&
@@ -86,10 +116,10 @@ export default ({ onSendBack, onSendContinue }) => {
                       modalContent={
                         <T
                           id="getstarted.setAccount.modalContent"
-                          m={"Rename Account {acctIdx} to {mixed} account?"}
+                          m={"Set Account {acctIdx} as your {mixed} account?"}
                           values={{
                             acctIdx: acctIdx,
-                            mixed: <span>mixed</span>
+                            mixed: <span>{MIXED_ACCOUNT}</span>
                           }}
                         />
                       }
@@ -106,23 +136,36 @@ export default ({ onSendBack, onSendContinue }) => {
                       modalContent={
                         <T
                           id="getstarted.setChangeAccount.modalContent"
-                          m={"Set Account {acctIdx} as your change account?"}
-                          values={{ acctIdx: acctIdx }}
+                          m={"Set Account {acctIdx} as your {change} account?"}
+                          values={{
+                            acctIdx: acctIdx,
+                            change: <span>{CHANGE_ACCOUNT}</span>
+                          }}
                         />
                       }
                       size="large"
                       block={false}
                       onSubmit={() => onSubmitSetChange(acctIdx)}
                     >
-                      
                     </InvisibleConfirmModalButton>
                   </div>
                 </div>
               );
             })}
           </div>
+          { !isValid &&
+            <div className="error">
+              <T id="getstarted.setAccount.isValidMessage"
+                m="You need to set a mixed and change account and they can not
+                  be  the same"
+              />
+            </div>
+          }
           <div className={styles.buttonWrapper}>
-            <KeyBlueButton onClick={onSubmitContinue}>
+            <KeyBlueButton
+              onClick={onSubmitContinue}
+              disabled={!isValid}
+            >
               <T id="getstarted.setAccount.continue" m="Continue" />
             </KeyBlueButton>
           </div>
