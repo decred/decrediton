@@ -122,7 +122,7 @@ const darkTheme = {
   "icons-shadow": "#09144036",
   "no-more-tickets-indicator-bg": "#2F4D8C",
   "input-copy-hover-color": "#78d9f8",
-  "coinjoin-sum-color": "#d4f0fd",
+  "coinjoin-sum-color": "#7DA7D9",
 
   /* icons */
   "menu-settings-default": "url('style/icons/settingsDefaultDark.svg')",
