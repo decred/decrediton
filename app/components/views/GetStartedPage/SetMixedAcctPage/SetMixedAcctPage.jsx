@@ -4,7 +4,7 @@ import { FormattedMessage as T } from "react-intl";
 import { useDaemonStartup, useMountEffect, useAccounts } from "hooks";
 import GetStartedStyles from "../GetStarted.module.css";
 import { useState } from "react";
-import { InvisibleConfirmModalButton, KeyBlueButton } from "buttons";
+import { KeyBlueButton } from "buttons";
 import styles from "./SetMixedAcctPage.module.css";
 import { classNames } from "pi-ui";
 import { useEffect } from "react";
@@ -21,11 +21,9 @@ export default ({ onSendBack, onSendContinue }) => {
     getCoinjoinOutputspByAcct().then((r) => setCjSumByAcct(r)).catch(err => console.log(err));
   });
   const onSetMixedAcct = (acctIdx) => {
-    console.log(acctIdx)
     setMixedAcctIdx(acctIdx);
   };
   const onSubmitSetChange = (acctIdx) => {
-    console.log(acctIdx)
     setChangeAcctIdx(acctIdx);
   };
   const onSubmitContinue = () => {
