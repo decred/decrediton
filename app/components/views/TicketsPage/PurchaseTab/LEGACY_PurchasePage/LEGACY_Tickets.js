@@ -38,39 +38,41 @@ const Tickets = ({
   isWatchingOnly,
   toggleIsLegacy,
   ...props
-}) => (
-  <div className="purchase-ticket-area">
-    <Subtitle
-      title={<T id="purchase.subtitle.legacy" m="Purchase Tickets" />}
-      children={getTitleIcon({ toggleIsLegacy })}
-      className="is-row"
-    />
-    <StakeInfo {...{ sidebarOnBottom }} />
-    {spvMode && blocksNumberToNextTicket === 2 ? (
-      <ShowWarning
-        warn={
-          <T
-            id="spv.purchase.warn.legacy"
-            m="Purchase Tickets is not available right now, because we are at the end of a ticket interval. After one block it will be available again."
-          />
-        }
+}) => {
+  return (
+    <div className="purchase-ticket-area">
+      <Subtitle
+        title={<T id="purchase.subtitle.legacy" m="Purchase Tickets" />}
+        children={getTitleIcon({ toggleIsLegacy })}
+        className="is-row"
       />
-    ) : (
-      <PurchaseTickets {...{ ...props }} />
-    )}
-    {isWatchingOnly ? (
-      <UnsignedTickets {...{ ...props }} />
-    ) : spvMode ? (
-      <div className="spv-autobuyer-warning">
-        <T
-          id="spv.auto.buyer.warn"
-          m="Ticket Auto Buyer not available while using SPV"
+      <StakeInfo {...{ sidebarOnBottom }} />
+      {spvMode && blocksNumberToNextTicket === 2 ? (
+        <ShowWarning
+          warn={
+            <T
+              id="spv.purchase.warn.legacy"
+              m="Purchase Tickets is not available right now, because we are at the end of a ticket interval. After one block it will be available again."
+            />
+          }
         />
-      </div>
-    ) : (
-      <TicketAutoBuyer {...{ ...props }} />
-    )}
-  </div>
-);
+      ) : (
+          <PurchaseTickets {...{ ...props }} />
+        )}
+      {isWatchingOnly ? (
+        <UnsignedTickets {...{ ...props }} />
+      ) : spvMode ? (
+        <div className="spv-autobuyer-warning">
+          <T
+            id="spv.auto.buyer.warn"
+            m="Ticket Auto Buyer not available while using SPV"
+          />
+        </div>
+      ) : (
+            <TicketAutoBuyer {...{ ...props }} />
+          )}
+    </div>
+  );
+};
 
 export default Tickets;

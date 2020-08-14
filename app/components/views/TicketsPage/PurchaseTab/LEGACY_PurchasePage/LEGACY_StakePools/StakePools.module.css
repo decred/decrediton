@@ -58,7 +58,7 @@
   height: 35px;
   overflow-y: auto;
   overflow-x: hidden;
-  background-color: var(--wallet-close-button-text);
+  background-color: var(--background-container);
   padding: 10px;
   word-wrap: break-word;
   box-sizing: border-box !important;
@@ -71,14 +71,9 @@
   left: 0;
   width: 315px;
   height: 35px;
-  background: linear-gradient(
-    to top,
-    rgb(243, 246, 246, 0.6) 10%,
-    rgb(243, 246, 246, 0.5) 20%,
-    rgb(243, 246, 246, 0) 70%
-  );
-  border-bottom: 1px var(--wallet-close-button-text) solid;
-  border-left: 1px var(--wallet-close-button-text) solid;
+  background: var(--tx-detail-raw-shadow);
+  border-bottom: 1px var(--background-container) solid;
+  border-left: 1px var(--background-container) solid;
   box-sizing: border-box !important;
 }
 

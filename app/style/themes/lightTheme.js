@@ -89,6 +89,7 @@ const lightTheme = {
   "back-button-text": "#f3f5f6",
   "back-button-dark-text": "#f3f5f6",
   "tx-detail-text": "#596d81",
+  "tx-detail-raw-shadow": "linear-gradient(to top, rgb(243, 246, 246, 0.6) 10%, rgb(243, 246, 246, 0.5) 20%, rgb(243, 246, 246, 0) 70%)",
   "home-content-link": "#8997a5",
   "transfer-details-bg": "#edeff1",
   "filter-menu-arrow": "#fff",

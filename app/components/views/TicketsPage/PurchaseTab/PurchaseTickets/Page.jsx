@@ -22,8 +22,8 @@ const getTitleIcon = ({ toggleIsLegacy }) => (
     </div>
     <InfoDocModalButton
       document="PurchaseTicketsInfo"
-      modalClassName="info-modal-fields"
-      className="info-title-icon"
+      modalClassName={styles.infoFields}
+      className={"info-title-icon"}
       draggable
     />
   </>
