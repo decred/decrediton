@@ -17,6 +17,7 @@ import { useDaemonStartup } from "hooks";
 import { useMachine } from "@xstate/react";
 import { getStartedMachine } from "stateMachines/GetStartedStateMachine";
 import { AdvancedStartupBody } from "./AdvancedStartup/AdvancedStartup";
+import SettingMixedAccount from "./SetMixedAcctPage/SetMixedAcctPage";
 
 // XXX: these animations classes are passed down to AnimatedLinearProgressFull
 // and styling defined in Loading.less and need to handled when loading.less
@@ -52,7 +53,8 @@ export const useGetStarted = () => {
     checkNetworkMatch,
     onConnectDaemon,
     onStartWallet,
-    syncDaemon
+    syncDaemon,
+    goToHome
   } = useDaemonStartup();
   const [PageComponent, setPageComponent] = useState(null);
   const [state, send] = useMachine(getStartedMachine, {
@@ -147,8 +149,8 @@ export const useGetStarted = () => {
             send({ type: "ERROR_STARTING_WALLET", payload: { error } });
           });
       },
-      isSyncingRPC: (context) => {
-        const { passPhrase } = context;
+      isSyncingRPC: async (context) => {
+        const { passPhrase, isPrivacy } = context;
         if (context.isSPV) {
           return startSPVSync()
             .then((r) => r)
@@ -156,12 +158,23 @@ export const useGetStarted = () => {
               send({ type: "ERROR_SYNCING_WALLET", payload: { error } })
             );
         }
-        onRetryStartRPC(passPhrase)
-          .then((r) => r)
-          .catch((error) =>
-            send({ type: "ERROR_SYNCING_WALLET", payload: { error } })
-          );
-      }
+        try {
+          await onRetryStartRPC(passPhrase);
+
+          if (isPrivacy) {
+            // if recoverying a privacy wallet, we go to settingMixedAccount
+            // state, so the user can set a mixed account based on their
+            // coinjoin outputs.
+            // This state should only be achievable if recoverying wallet.
+            send({ type: "SET_MIXED_ACCOUNT" });
+          }
+          // if it is not privacy we can simply go to home view.
+          send({ type: "GO_TO_HOME_VIEW" });
+        } catch (error) {
+          send({ type: "ERROR_SYNCING_WALLET", payload: { error } });
+        }
+      },
+      isAtFinishMachine: () => goToHome()
     }
   });
   const getError = useCallback((serviceError) => {
@@ -241,12 +254,13 @@ export const useGetStarted = () => {
   );
 
   const onShowCreateWallet = useCallback(
-    ({ isNew, walletMasterPubKey, isTrezor }) =>
+    ({ isNew, walletMasterPubKey, isTrezor, isPrivacy }) =>
       send({
         type: "SHOW_CREATE_WALLET",
         isNew,
         walletMasterPubKey,
-        isTrezor
+        isTrezor,
+        isPrivacy
       }),
     [send]
   );
@@ -402,6 +416,9 @@ export const useGetStarted = () => {
       }
       if (key === "creatingWallet") {
         PageComponent = h(CreateWalletMachine, { createWalletRef, isTestNet });
+      }
+      if (key === "settingMixedAccount") {
+        PageComponent = h(SettingMixedAccount, { onSendBack, onSendContinue });
       }
 
       setPageComponent(PageComponent);

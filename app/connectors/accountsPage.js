@@ -5,6 +5,7 @@ import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
 import * as cla from "actions/ClientActions";
 
+// TODO change this hook to hooks/useAccount instead.
 const mapStateToProps = selectorMap({
   walletService: sel.walletService,
   accounts: sel.sortedAccounts,

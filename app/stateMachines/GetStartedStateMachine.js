@@ -14,7 +14,8 @@ export const getStartedMachine = Machine({
     error: null,
     isCreateNewWallet: null,
     isSPV: null,
-    isAdvancedDaemon: null
+    isAdvancedDaemon: null,
+    isPrivacy: null
   },
   states: {
     // startMachine represents the state with daemon and wallet starting operations.
@@ -25,7 +26,12 @@ export const getStartedMachine = Machine({
         SHOW_LOGS: "logs",
         SHOW_TREZOR_CONFIG: "trezorConfig",
         SHOW_RELEASE_NOTES: "releaseNotes",
-        SHOW_CREATE_WALLET: "creatingWallet"
+        SHOW_CREATE_WALLET: "creatingWallet",
+        SET_MIXED_ACCOUNT: {
+          target: "settingMixedAccount",
+          cond: (context) => !!context.isPrivacy
+        },
+        GO_TO_HOME_VIEW: "goToHomeView"
       },
       states: {
         preStart: {
@@ -257,7 +263,10 @@ export const getStartedMachine = Machine({
                 console.log(e);
               }
               return spawnedMachine;
-            }
+            },
+            // set isPrivacy in case recoverying a privacy wallet. With that
+            // it is possible to set mixed account when recoverying wallets.
+            isPrivacy: (ctx, e) => e.isPrivacy
           })
         }
       },
@@ -275,6 +284,16 @@ export const getStartedMachine = Machine({
             error: (context, event) => event.error && event.error
           })
         }
+      }
+    },
+    settingMixedAccount: {
+      onEntry: "isAtSettingAccount",
+      initial: "settingMixedAccount",
+      states: {
+        settingMixedAccount: {}
+      },
+      on: {
+        CONTINUE: "goToHomeView"
       }
     },
     releaseNotes: {
@@ -315,6 +334,12 @@ export const getStartedMachine = Machine({
         BACK: "startMachine.hist",
         SHOW_SETTINGS: "settings"
       }
+    },
+    // goToHomeView goes to home view. We do that, instead of going to a final
+    // state, because the machine can still be called, like when a refresh
+    // happens in dev mode.
+    goToHomeView: {
+      onEntry: "isAtFinishMachine"
     }
   }
 });

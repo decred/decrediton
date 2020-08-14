@@ -288,10 +288,15 @@ export const startRpcRequestFunc = (privPass, isRetry) => (
     setTimeout(async () => {
       const rpcSyncCall = await loader.rpcSync(request);
       dispatch({ syncCall: rpcSyncCall, type: SYNC_UPDATE });
-      rpcSyncCall.on("data", function (response) {
-        dispatch(syncConsumer(response));
+      rpcSyncCall.on("data", async (response) => {
+        const synced = await dispatch(syncConsumer(response));
+        if (synced) {
+          return resolve();
+        }
       });
       rpcSyncCall.on("end", function () {
+        // It never gets here
+        // TODO investigate if this code is necessary.
         dispatch({ type: SYNC_SUCCESS });
         resolve({ synced: true });
       });
@@ -496,13 +501,13 @@ export function syncCancel() {
   };
 }
 
-const syncConsumer = (response) => (dispatch, getState) => {
+const syncConsumer = (response) => async (dispatch, getState) => {
   const { discoverAccountsComplete } = getState().walletLoader;
   switch (response.getNotificationType()) {
     case SyncNotificationType.SYNCED: {
-      dispatch(getBestBlockHeightAttempt(startWalletServices));
+      await dispatch(getBestBlockHeightAttempt(startWalletServices));
       dispatch({ type: SYNC_SYNCED });
-      break;
+      return true;
     }
     case SyncNotificationType.UNSYNCED: {
       dispatch({ type: SYNC_UNSYNCED });

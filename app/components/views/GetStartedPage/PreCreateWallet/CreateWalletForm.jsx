@@ -3,8 +3,7 @@ import { TextInput } from "inputs";
 import {
   KeyBlueButton,
   InvisibleButton,
-  WatchOnlyWalletSwitch,
-  TrezorWalletSwitch
+  RestoreWalletSwitch
 } from "buttons";
 import { NewSeedTabMsg, RestoreTabMsg } from "../messages";
 import { classNames } from "pi-ui";
@@ -45,6 +44,8 @@ const CreateWalletForm = ({
   masterPubKeyError,
   isTrezor,
   toggleTrezor,
+  isPrivacy,
+  toggleIsPrivacy,
   onShowTrezorConfig,
   isCreateNewWallet,
   creatingWallet
@@ -58,13 +59,13 @@ const CreateWalletForm = ({
         </div>
       </div>
     ) : (
-      <div className={styles.newWalletTitleArea}>
-        <div className={classNames(styles.walletIconSmall, styles.restore)} />
-        <div className={styles.newWalletTitle}>
-          <RestoreTabMsg />
+        <div className={styles.newWalletTitleArea}>
+          <div className={classNames(styles.walletIconSmall, styles.restore)} />
+          <div className={styles.newWalletTitle}>
+            <RestoreTabMsg />
+          </div>
         </div>
-      </div>
-    )}
+      )}
     <div className={styles.daemonRow}>
       <div className={styles.daemonLabel}>
         <T id="createwallet.walletname.label" m="Wallet Name" />
@@ -92,10 +93,17 @@ const CreateWalletForm = ({
             <T id="createwallet.walletOnly.label" m="Watch only" />
           </div>
           <div className={styles.daemonInput}>
-            <WatchOnlyWalletSwitch
+            <RestoreWalletSwitch
               className={styles.walletSwitch}
               enabled={isWatchingOnly}
               onClick={toggleWatchOnly}
+              text={
+                isWatchingOnly ? (
+                  <T id="watchOnly.enabled" m="Watch Only" />
+                ) : (
+                    <T id="watchOnly.disabled" m="Normal" />
+                  )
+              }
             />
           </div>
         </div>
@@ -104,14 +112,40 @@ const CreateWalletForm = ({
             <T id="createwallet.isTrezor.label" m="Trezor" />
           </div>
           <div className={styles.daemonInput}>
-            <TrezorWalletSwitch
+            <RestoreWalletSwitch
               className={styles.walletSwitch}
               enabled={isTrezor}
               onClick={toggleTrezor}
+              text={
+                isTrezor ? (
+                  <T id="createWallet.restore.trezor.enabled" m="Enabled" />
+                ) : (
+                  <T id="createWallet.restore.trezor.disabled" m="Disabled" />
+                )
+              }
             />
             <span onClick={onShowTrezorConfig} className={styles.whatsnew}>
               <T id="createWallet.isTrezor.setupLink" m="(setup device)" />
             </span>
+          </div>
+        </div>
+        <div className={styles.daemonRow}>
+          <div className={styles.daemonLabel}>
+            <T id="privacy.label" m="Privacy" />
+          </div>
+          <div className={styles.daemonInput}>
+            <RestoreWalletSwitch
+              className={styles.walletSwitch}
+              enabled={isPrivacy}
+              onClick={toggleIsPrivacy}
+              text={
+                isPrivacy ? (
+                  <T id="privacy.label" m="Privacy" />
+                ) : (
+                    <T id="watchOnly.disabled" m="Normal" />
+                  )
+              }
+            />
           </div>
         </div>
         {isWatchingOnly && (

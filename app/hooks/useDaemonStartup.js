@@ -6,6 +6,7 @@ import * as da from "actions/DaemonActions";
 import * as ca from "actions/ClientActions";
 import * as ctrla from "actions/ControlActions";
 import * as trza from "actions/TrezorActions";
+import * as ama from "actions/AccountMixerActions";
 
 const useDaemonStartup = () => {
   const dispatch = useDispatch();
@@ -111,11 +112,17 @@ const useDaemonStartup = () => {
   ]);
   // start daemon and wallet methods
   const onRetryStartRPC = useCallback(
-    (privPass, isRetry) => dispatch(wla.startRpcRequestFunc(privPass, isRetry)),
+    async (privPass, isRetry) => await dispatch(
+      wla.startRpcRequestFunc(privPass, isRetry)
+    ),
     [dispatch]
   );
   const startSPVSync = useCallback(
     (privPass) => dispatch(wla.spvSyncAttempt(privPass)),
+    [dispatch]
+  );
+  const getCoinjoinOutputspByAcct = useCallback(
+    () => dispatch(ama.getCoinjoinOutputspByAcct()),
     [dispatch]
   );
   const setSelectedWallet = useCallback(
@@ -189,6 +196,16 @@ const useDaemonStartup = () => {
     [dispatch]
   );
 
+  const goToHome = useCallback(
+    () => dispatch(ca.goToHomePage()),
+    [dispatch]
+  );
+
+  const setCoinjoinCfg = useCallback(
+    (mixedNumber, changeNumber) => dispatch(ama.setCoinjoinCfg({ mixedNumber, changeNumber })),
+    [dispatch]
+  );
+
   return {
     onShowTutorial,
     validateMasterPubKey,
@@ -211,6 +228,7 @@ const useDaemonStartup = () => {
     getSelectedWallet,
     setSelectedWallet,
     startSPVSync,
+    getCoinjoinOutputspByAcct,
     onRetryStartRPC,
     finishPrivacy,
     setupStandardPrivacy,
@@ -254,7 +272,9 @@ const useDaemonStartup = () => {
     syncRescanAttempt,
     syncFetchHeadersComplete,
     syncFetchTimeStart,
-    selectedWalletSelector
+    selectedWalletSelector,
+    goToHome,
+    setCoinjoinCfg
   };
 };
 
