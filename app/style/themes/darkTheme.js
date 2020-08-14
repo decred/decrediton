@@ -123,6 +123,7 @@ const darkTheme = {
   "no-more-tickets-indicator-bg": "#2F4D8C",
   "input-copy-hover-color": "#78d9f8",
   "coinjoin-sum-color": "#7DA7D9",
+  "coinjoin-sum-text-color": "#fff",
 
   /* icons */
   "menu-settings-default": "url('style/icons/settingsDefaultDark.svg')",
