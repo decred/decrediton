@@ -21,9 +21,17 @@ export default ({ onSendBack, onSendContinue }) => {
     getCoinjoinOutputspByAcct().then((r) => setCjSumByAcct(r)).catch(err => console.log(err));
   });
   const onSetMixedAcct = (acctIdx) => {
+    // can't set same mixed and change acct
+    if (acctIdx === changeAcctIdx) {
+      return;
+    }
     setMixedAcctIdx(acctIdx);
   };
   const onSubmitSetChange = (acctIdx) => {
+    // can't set same mixed and change acct
+    if (acctIdx === mixedAcctIdx) {
+      return;
+    }
     setChangeAcctIdx(acctIdx);
   };
   const onSubmitContinue = () => {
