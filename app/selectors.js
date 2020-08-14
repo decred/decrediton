@@ -1508,7 +1508,7 @@ export const trezorWalletCreationMasterPubkeyAttempt = get([
 ]);
 
 export const lnEnabled = bool(
-  and(get(["ln", "enabled"]), not(isWatchingOnly), not(isTrezor), not(isSPV))
+  and(not(isWatchingOnly), not(isTrezor))
 );
 export const lnActive = bool(get(["ln", "active"]));
 export const lnStartupStage = get(["ln", "startupStage"]);
