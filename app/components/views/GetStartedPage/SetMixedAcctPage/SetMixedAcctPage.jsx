@@ -20,10 +20,12 @@ export default ({ onSendBack, onSendContinue }) => {
   useMountEffect(() => {
     getCoinjoinOutputspByAcct().then((r) => setCjSumByAcct(r)).catch(err => console.log(err));
   });
-  const onSubmitRename = (acctIdx) => {
+  const onSetMixedAcct = (acctIdx) => {
+    console.log(acctIdx)
     setMixedAcctIdx(acctIdx);
   };
   const onSubmitSetChange = (acctIdx) => {
+    console.log(acctIdx)
     setChangeAcctIdx(acctIdx);
   };
   const onSubmitContinue = () => {
@@ -107,47 +109,34 @@ export default ({ onSendBack, onSendContinue }) => {
                     </div>
                   </div>
                   <div className={classNames("is-column", styles.buttons)}>
-                    <InvisibleConfirmModalButton
-                      className={styles.iconButton}
-                      modalTitle={
-                        <T id="getstarted.setAccount.modalTitle" m="Rename Account" />
-                      }
-                      buttonLabel={<div className={styles.renameIcon} />}
-                      modalContent={
-                        <T
-                          id="getstarted.setAccount.modalContent"
-                          m={"Set Account {acctIdx} as your {mixed} account?"}
-                          values={{
-                            acctIdx: acctIdx,
-                            mixed: <span>{MIXED_ACCOUNT}</span>
-                          }}
-                        />
-                      }
-                      size="large"
-                      block={false}
-                      onSubmit={() => onSubmitRename(acctIdx)}
-                    />
-                    <InvisibleConfirmModalButton
-                      className={styles.changeAcctBttn}
-                      modalTitle={
-                        <T id="getstarted.setChangeAccount.modalTitle" m="Set Change Account" />
-                      }
-                      buttonLabel={<span>Set change Account</span>}
-                      modalContent={
-                        <T
-                          id="getstarted.setChangeAccount.modalContent"
-                          m={"Set Account {acctIdx} as your {change} account?"}
-                          values={{
-                            acctIdx: acctIdx,
-                            change: <span>{CHANGE_ACCOUNT}</span>
-                          }}
-                        />
-                      }
-                      size="large"
-                      block={false}
-                      onSubmit={() => onSubmitSetChange(acctIdx)}
-                    >
-                    </InvisibleConfirmModalButton>
+                    <div className={classNames("is-row", styles.checkboxRow)}>
+                      <input
+                        id={"mixed"+acctIdx}
+                        name={acctIdx}
+                        type="checkbox"
+                        checked={mixedAcctIdx === acctIdx}
+                        onChange={() => onSetMixedAcct(acctIdx)}
+                        value={acctIdx}
+                      />
+                      <label htmlFor={"mixed"+acctIdx} className={styles.checkboxLabel}></label>
+                      <div className={styles.label}>
+                        <T id="getstarted.setAccount.mix" m="Set Mixed Account" />
+                      </div>
+                    </div>
+                    <div className={classNames("is-row", styles.checkboxRow)}>
+                      <input
+                        id={"change"+acctIdx}
+                        name={"a"+acctIdx}
+                        type="checkbox"
+                        checked={changeAcctIdx === acctIdx}
+                        onChange={() => onSubmitSetChange(acctIdx)}
+                        value={acctIdx}
+                      />
+                      <label htmlFor={"change"+acctIdx} className={styles.checkboxLabel}></label>
+                      <div className={styles.label}>
+                        <T id="getstarted.setAccount.change" m="Set Change Account" />
+                      </div>
+                    </div>
                   </div>
                 </div>
               );

@@ -96,3 +96,14 @@
   margin-right: 15px;
   width: 700px;
 }
+
+.checkboxLabel {
+  margin-right: 5px;
+  margin-top: 2px;
+  cursor: pointer;
+}
+
+.checkboxRow {
+  margin-top: 10px;
+  margin-left: 5px;
+}
