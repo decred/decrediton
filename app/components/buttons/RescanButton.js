@@ -13,6 +13,7 @@ export default ({ rescanRequest, rescanAttempt }) => (
     text={<T id="sidebar.rescanBtn.tip" m={rescanBtnMessage} />}
     disabled={rescanRequest}>
     <button
+      aria-label="Rescan"
       disabled={!!rescanRequest}
       className={"rescan-button" + (rescanRequest ? " spin" : "")}
       onClick={() => rescanAttempt(0)}

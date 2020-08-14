@@ -8,19 +8,22 @@ const MenuBottomCollapsed = ({
   rescanCancel,
   sidebarOnBottom
 }) => (
-  <div
-    className={classNames(
-      sidebarOnBottom && style.sidebarOnBottom,
-      style.latestBlock,
-      style.latestBlockCollapsed
-    )}>
-    <div className={style.rescanButtonAreaCollapsed}>
-      <RescanButton {...{ rescanRequest, rescanAttempt }} />
-      {rescanRequest && (
-        <RescanCancelButton {...{ rescanRequest, rescanCancel }} />
-      )}
-    </div>
-  </div>
+  <>
+    {!sidebarOnBottom && (
+      <div
+        className={classNames(
+          style.latestBlock,
+          style.latestBlockCollapsed
+        )}>
+        <div className={style.rescanButtonAreaCollapsed}>
+          <RescanButton {...{ rescanRequest, rescanAttempt }} />
+          {rescanRequest && (
+            <RescanCancelButton {...{ rescanRequest, rescanCancel }} />
+          )}
+        </div>
+      </div>
+    )}
+  </>
 );
 
 export default MenuBottomCollapsed;

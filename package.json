@@ -7,6 +7,7 @@
   "scripts": {
     "test": "cross-env NODE_ENV=test jest",
     "test-watch": "./node_modules/.bin/jest --watch",
+    "test-debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand --watch",
     "test-e2e": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 mocha --retries 2 --compilers js:@babel/register --require ./test/setup.js ./test/e2e.js",
     "lint": "./node_modules/.bin/eslint app --ext .js --ext .jsx && ./node_modules/.bin/stylelint app/style/*.less",
     "lint-fix": "./node_modules/.bin/eslint app --ext .js --ext .jsx --fix && ./node_modules/.bin/stylelint app/style/*.less --fix",
@@ -44,33 +45,53 @@
   },
   "jest": {
     "verbose": true,
-    "rootDir": "test/unit",
     "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga|md)$": "<rootDir>/../mocks/fileMock.js",
-      "\\.(css|less)$": "<rootDir>/../mocks/styleMock.js",
-      "^grpc$": "<rootDir>/../mocks/grpcMock.js",
-      "^electron$": "<rootDir>/../mocks/electronMock.js"
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga|md)$": "<rootDir>/test/mocks/fileMock.js",
+      "\\.module\\.css$": "identity-obj-proxy",
+      "\\.(css|less)$": "<rootDir>/test/mocks/styleMock.js",
+      "^grpc$": "<rootDir>/test/mocks/grpcMock.js",
+      "^electron$": "<rootDir>/test/mocks/electronMock.js"
     },
     "transformIgnorePatterns": [
-      "/node_modules/",
-      "app/middleware/walletrpc/api_grpc_pb.js",
-      "app/middleware/walletrpc/api_pb.js",
-      "app/middleware/ln/rpc_grpc_pb.js",
-      "app/middleware/ln/rpc_pb.js",
-      "app/middleware/ln/google/"
+      "<rootDir>/node_modules/",
+      "<rootDir>/app/middleware/walletrpc/api_grpc_pb.js",
+      "<rootDir>/app/middleware/walletrpc/api_pb.js",
+      "<rootDir>/app/middleware/ln/rpc_grpc_pb.js",
+      "<rootDir>/app/middleware/ln/rpc_pb.js",
+      "<rootDir>/app/middleware/ln/google/"
     ],
     "transform": {
       "^.+\\.(js|jsx)?$": "babel-jest"
     },
     "setupFiles": [
-      "<rootDir>/../setup.js"
+      "<rootDir>/test/setup.js"
+    ],
+    "setupFilesAfterEnv": [
+      "@testing-library/jest-dom/extend-expect"
     ],
     "modulePaths": [
-      "<rootDir>/../../app",
-      "<rootDir>/../../app/components",
-      "<rootDir>/../../node_modules",
-      "<rootDir>/../../app/node_modules",
-      "<rootDir>/../"
+      "<rootDir>/app",
+      "<rootDir>/app/components",
+      "<rootDir>/node_modules",
+      "<rootDir>/app/node_modules",
+      "<rootDir>/test"
+    ],
+    "testEnvironment": "jsdom",
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "collectCoverageFrom": [
+      "<rootDir>/app/**/*.+(js|jsx)"
+    ],
+    "coverageDirectory": "<rootDir>/coverage",
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/app/middleware/walletrpc/api_grpc_pb.js",
+      "<rootDir>/app/middleware/walletrpc/api_pb.js",
+      "<rootDir>/app/middleware/ln/rpc_grpc_pb.js",
+      "<rootDir>/app/middleware/ln/rpc_pb.js",
+      "<rootDir>/app/middleware/ln/google/"
     ]
   },
   "build": {
@@ -187,8 +208,10 @@
     "@babel/preset-flow": "^7.8.3",
     "@babel/preset-react": "^7.9.4",
     "@babel/register": "^7.9.0",
+    "@testing-library/dom": "^7.21.3",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
+    "@testing-library/user-event": "^12.0.11",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^25.1.0",
@@ -213,6 +236,7 @@
     "file-loader": "^2.0.0",
     "google-protobuf": "^3.11.2",
     "html-webpack-plugin": "^3.2.0",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^25.1.0",
     "jest-date-mock": "^1.0.8",
     "less": "^3.10.3",

@@ -68,10 +68,6 @@
   padding: 14px 0 10px 0;
 }
 
-.sidebarOnBottom.latestBlockCollapsed {
-  display: none;
-}
-
 .latestBlockName {
   color: var(--disabled-color);
   font-size: 13px;

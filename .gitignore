@@ -13,3 +13,4 @@ bin/
 dist/
 app/i18n/extracted/app
 /*.node
+coverage/

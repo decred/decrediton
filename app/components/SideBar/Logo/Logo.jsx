@@ -13,8 +13,7 @@ const Logo = React.memo(
     accountMixerRunning
   }) => (
     <div
-      className={expandSideBar ? style.logo : style.reducedLogo}
-      onClick={!expandSideBar ? onExpandSideBar : null}>
+      className={expandSideBar ? style.logo : style.reducedLogo}>
       {isWatchingOnly && (
         <Tooltip
           text={
@@ -26,7 +25,9 @@ const Logo = React.memo(
           <div className={style.watchOnlyIcon} />
         </Tooltip>
       )}
-      <div
+      <button
+        aria-label="Logo"
+        onClick={!expandSideBar ? onExpandSideBar : null}
         className={
           !expandSideBar ? style.hamburger : isTestNet ? TESTNET : MAINNET
         }
@@ -43,9 +44,11 @@ const Logo = React.memo(
         </Tooltip>
       )}
       {expandSideBar && (
-        <div
+        <button
+          aria-label="Reduce sidebar"
           className={style.reducedArrow}
-          onClick={expandSideBar ? onReduceSideBar : null}></div>
+          onClick={onReduceSideBar}
+        />
       )}
     </div>
   )
