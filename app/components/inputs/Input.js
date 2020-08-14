@@ -59,7 +59,9 @@ class Input extends React.Component {
   render() {
     const {
       showErrors,
+      showSuccess,
       invalidMessage,
+      successMessage,
       requiredMessage,
       required,
       invalid,
@@ -80,6 +82,8 @@ class Input extends React.Component {
           className={
             hasErrorToShow
               ? this.state.divClassName + " error"
+            : showSuccess
+              ? this.state.divClassName + " success"
               : this.state.divClassName
           }
           ref={(div) => {
@@ -125,6 +129,13 @@ class Input extends React.Component {
                   <T id="input.requiredInput" m="This field is required" />
                 )}
               </div>
+            ) : null}
+          </div>
+        ) : null}
+        {showSuccess ? (
+          <div className="input-success-area">
+            {successMessage ? (
+              successMessage
             ) : null}
           </div>
         ) : null}

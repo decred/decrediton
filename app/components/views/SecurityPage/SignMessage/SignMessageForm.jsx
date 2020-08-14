@@ -1,7 +1,9 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
-import { InfoDocModalButton, SignMessageButton } from "buttons";
+import { InfoDocModalButton, PassphraseModalButton } from "buttons";
+import { Button } from "pi-ui";
 import { TextInput } from "inputs";
 import { WatchOnlyWarnNotification } from "shared";
+import sharedStyles from "../SecurityPage.module.css";
 
 const messages = defineMessages({
   addressFieldPlaceholder: {
@@ -15,30 +17,38 @@ const messages = defineMessages({
 });
 
 const SignMessageForm = ({
-  onChangeAddress,
-  onChangeMessage,
   address,
   message,
   addressError,
   messageError,
-  isSigningMessage,
   formatMessage,
-  isSignMessageDisabled
+  isTrezor,
+  isSigningMessage,
+  isSignMessageDisabled,
+  onSubmit,
+  onChangeAddress,
+  onChangeMessage
 }) => {
+  const disabled = isSigningMessage
+    || address == ""
+    || message == ""
+    || addressError
+    || messageError
+    || isSignMessageDisabled;
   return (
     <>
-      <div className="security-center-form">
-        <div className="button-right">
+      <div className={sharedStyles.securityPageForm}>
+        <div className={sharedStyles.buttonRight}>
           <InfoDocModalButton document="SignMessageInfo" draggable />
         </div>
-        <div className="security-center-form-row">
-          <div className="security-center-form-row-label">
+        <div className={sharedStyles.securityPageFormRow}>
+          <div className={sharedStyles.securityPageFormRowLabel}>
             <T
               id="securitycenter.signMessage.field.address.label"
               m="Address"
             />
           </div>
-          <div className="security-center-form-row-field">
+          <div className={sharedStyles.securityPageFormRowField}>
             <WatchOnlyWarnNotification isActive={isSignMessageDisabled}>
               <TextInput
                 required
@@ -53,14 +63,14 @@ const SignMessageForm = ({
             </WatchOnlyWarnNotification>
           </div>
         </div>
-        <div className="security-center-form-row">
-          <div className="security-center-form-row-label">
+        <div className={sharedStyles.securityPageFormRow}>
+          <div className={sharedStyles.securityPageFormRowLabel}>
             <T
               id="securitycenter.signMessage.field.message.label"
               m="Message"
             />
           </div>
-          <div className="security-center-form-row-field-message">
+          <div className={sharedStyles.securityPageFormRowField}>
             <WatchOnlyWarnNotification isActive={isSignMessageDisabled}>
               <TextInput
                 required
@@ -76,18 +86,26 @@ const SignMessageForm = ({
           </div>
         </div>
       </div>
-      <SignMessageButton
-        address={address}
-        message={message}
-        disabled={
-          isSigningMessage ||
-          address == "" ||
-          message == "" ||
-          addressError ||
-          messageError ||
-          isSignMessageDisabled
-        }
-      />
+      {isTrezor ? (
+        <Button
+          kind={disabled ? "disabled" : "primary"}
+          loading={isSigningMessage}
+          onSubmit={onSubmit}>
+          Sign Message
+        </Button>
+      ) : (
+        <PassphraseModalButton
+          modalTitle={
+            <T id="securitycenter.signMessageModal" m="Sign Message" />
+          }
+          buttonLabel={
+            <T id="securitycenter.signMessageBtn" m="Sign Message" />
+          }
+          loading={isSigningMessage}
+          disabled={disabled}
+          onSubmit={onSubmit}
+        />
+      )}
     </>
   );
 };

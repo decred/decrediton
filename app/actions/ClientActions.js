@@ -592,7 +592,7 @@ export const GETMESSAGEVERIFICATIONSERVICE_FAILED =
 export const GETMESSAGEVERIFICATIONSERVICE_SUCCESS =
   "GETMESSAGEVERIFICATIONSERVICE_SUCCESS";
 
-export const getMessageVerificationServiceAttempt = () => (
+export const getMessageVerificationServiceAttempt = (
   dispatch,
   getState
 ) => {

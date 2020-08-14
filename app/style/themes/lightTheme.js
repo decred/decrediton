@@ -31,6 +31,7 @@ const lightTheme = {
   "disabled-color": "#8997a5",
   "disabled-background-color": "#e7eaed",
   "disabled-background-color-lighter": "#edeff1",
+  "success-text-color": "#41be53",
   "error-text-color": "#fd714b",
   "error-red": "#ED6D47",
   "error-red-hover": "red",
