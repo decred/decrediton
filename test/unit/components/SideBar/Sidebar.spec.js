@@ -31,9 +31,39 @@ jest.mock("actions/ControlActions", () => {
 });
 
 const testCurrentBlockHeight = 12;
+const testBalances = [
+  {
+    accountNumber: 0,
+    accountName: "default",
+    hidden: false,
+    total: 143506029948
+  },
+  {
+    accountNumber: 1,
+    accountName: "test-account",
+    hidden: false,
+    total: 0
+  },
+  {
+    // imported
+    accountNumber: 2147483647,
+    accountName: "test-account2",
+    hidden: false,
+    total: 103506029948
+  },
+  {
+    //hidden
+    accountNumber: 3,
+    accountName: "test-account-hidden",
+    hidden: true,
+    total: 93506029948
+  }
+];
+const mockBalances = (sel.balances = jest.fn(() => testBalances));
 
 const expectToHaveDefaultMenuLinks = (params) => {
-  const { sidebarOnBottom, isTrezorEnabled, isLnEnabled } = params || {};
+  const { sidebarOnBottom, isTrezorEnabled, isLnEnabled = true } = params || {};
+
   const expectToHaveMenuLink = (name, className, href, icon) => {
     const menulink = screen.queryByRole("link", { name: name });
     expect(menulink).toHaveTextContent(sidebarOnBottom ? "" : name);
@@ -85,43 +115,8 @@ const clickOnMenuLink = (name) => {
 };
 
 test("renders default sidebar", () => {
-  const testBalances = [
-    {
-      accountNumber: 0,
-      accountName: "default",
-      hidden: false,
-      total: 143506029948
-    },
-    {
-      accountNumber: 1,
-      accountName: "test-account",
-      hidden: false,
-      total: 0
-    },
-    {
-      // imported
-      accountNumber: 2147483647,
-      accountName: "test-account2",
-      hidden: false,
-      total: 103506029948
-    },
-    {
-      //hidden
-      accountNumber: 3,
-      accountName: "test-account-hidden",
-      hidden: true,
-      total: 93506029948
-    }
-  ];
-
-  render(<SideBar />, {
-    initialState: {
-      settings: { uiAnimations: true },
-      grpc: {
-        balances: testBalances
-      }
-    }
-  });
+  const mockUiAnimations = (sel.uiAnimations = jest.fn(() => true));
+  render(<SideBar />);
 
   expectToHaveDefaultMenuLinks();
 
@@ -188,14 +183,15 @@ test("renders default sidebar", () => {
 
   //clicks tickets menu link on the sidebar
   clickOnMenuLink("Tickets");
+
+  expect(mockUiAnimations).toHaveBeenCalled();
+  expect(mockBalances).toHaveBeenCalled();
+  mockUiAnimations.mockRestore();
 });
 
 test("renders sidebar on the bottom", () => {
-  render(<SideBar />, {
-    initialState: {
-      sidebar: { sidebarOnBottom: true }
-    }
-  });
+  const mockSidebarOnBottom = (sel.sidebarOnBottom = jest.fn(() => true));
+  render(<SideBar />);
 
   expectToHaveDefaultMenuLinks({
     sidebarOnBottom: true
@@ -228,60 +224,66 @@ test("renders sidebar on the bottom", () => {
     })
   ).not.toBeInTheDocument();
   expect(screen.queryByText(/total balance/i)).not.toBeInTheDocument();
+
+  expect(mockSidebarOnBottom).toHaveBeenCalled();
+  mockSidebarOnBottom.mockRestore();
 });
 
 test("renders sidebar with trezor enabled", () => {
-  render(<SideBar />, {
-    initialState: { trezor: { enabled: true } }
-  });
-
+  const mockIsTrezor = (sel.isTrezor = jest.fn(() => true));
+  render(<SideBar />);
   expectToHaveDefaultMenuLinks({
     isTrezorEnabled: true
   });
+
+  expect(mockIsTrezor).toHaveBeenCalled();
+  mockIsTrezor.mockRestore();
 });
 
 test("renders sidebar on the bottom with animation enabled", () => {
-  render(<SideBar />, {
-    initialState: {
-      sidebar: { sidebarOnBottom: true },
-      settings: { uiAnimations: true }
-    }
-  });
+  const mockSidebarOnBottom = (sel.sidebarOnBottom = jest.fn(() => true));
+  const mockUiAnimations = (sel.uiAnimations = jest.fn(() => true));
 
+  render(<SideBar />);
   //clicks tickets menu link on the sidebar
   clickOnMenuLink("Tickets");
+
+  expect(mockSidebarOnBottom).toHaveBeenCalled();
+  expect(mockUiAnimations).toHaveBeenCalled();
+  mockSidebarOnBottom.mockRestore();
+  mockUiAnimations.mockRestore();
 });
 
-test("renders sidebar with lightning network enabled", () => {
-  render(<SideBar />, {
-    initialState: { ln: { enabled: true } }
+test("renders sidebar with lightning network not enabled", () => {
+  const mockLnEnabled = (sel.lnEnabled = jest.fn(() => false));
+
+  render(<SideBar />);
+  expectToHaveDefaultMenuLinks({
+    isLnEnabled: false
   });
 
-  expectToHaveDefaultMenuLinks({
-    isLnEnabled: true
-  });
+  expect(mockLnEnabled).toHaveBeenCalled();
+  mockLnEnabled.mockRestore();
 });
 
 test("renders expanded sidebar with testnet network enabled", () => {
-  render(<SideBar />, {
-    initialState: {
-      settings: {
-        currentSettings: { network: "testnet" }
-      },
-      sidebar: {
-        expandSideBar: true
-      }
-    }
-  });
+  const mockIsTestNet = (sel.isTestNet = jest.fn(() => true));
+  const mockExpandSideBar = (sel.expandSideBar = jest.fn(() => true));
+
+  render(<SideBar />);
   expect(screen.getByRole("button", { name: /logo/i })).toHaveClass("testnet");
+
+  expect(mockExpandSideBar).toHaveBeenCalled();
+  expect(mockIsTestNet).toHaveBeenCalled();
+  mockIsTestNet.mockRestore();
+  mockExpandSideBar.mockRestore();
 });
 
 test("tests rescan on the expanded sidebar", () => {
+  const mockExpandSideBar = (sel.expandSideBar = jest.fn(() => true));
+
   render(<SideBar />, {
     initialState: {
-      sidebar: {
-        expandSideBar: true
-      },
       grpc: {
         currentBlockHeight: testCurrentBlockHeight,
         recentBlockTimestamp: new Date().getTime() / 1000 - 1
@@ -332,14 +334,16 @@ test("tests rescan on the expanded sidebar", () => {
   expect(
     screen.queryByRole("button", { name: /cancel rescan/i })
   ).not.toBeInTheDocument();
+
+  expect(mockExpandSideBar).toHaveBeenCalled();
+  mockExpandSideBar.mockRestore();
 });
 
 test("tests rescan on the collapsed sidebar", () => {
+  const mockExpandSideBar = (sel.expandSideBar = jest.fn(() => false));
+
   render(<SideBar />, {
     initialState: {
-      sidebar: {
-        expandSideBar: false
-      },
       grpc: {
         currentBlockHeight: testCurrentBlockHeight,
         recentBlockTimestamp: new Date().getTime() / 1000 - 1
@@ -380,16 +384,15 @@ test("tests rescan on the collapsed sidebar", () => {
   expect(
     screen.queryByRole("button", { name: /cancel rescan/i })
   ).not.toBeInTheDocument();
+
+  expect(mockExpandSideBar).toHaveBeenCalled();
+  mockExpandSideBar.mockRestore();
 });
 
 test("tests tooltip on Logo when isWatchingOnly mode is active", () => {
-  render(<SideBar />, {
-    initialState: {
-      walletLoader: {
-        isWatchingOnly: true
-      }
-    }
-  });
+  const mockIsWatchingOnly = (sel.isWatchingOnly = jest.fn(() => true));
+
+  render(<SideBar />);
   expect(screen.getByText(/watch-only/i)).toMatchInlineSnapshot(`
     <span
       class="tip "
@@ -397,16 +400,17 @@ test("tests tooltip on Logo when isWatchingOnly mode is active", () => {
       This is a watch-only wallet with limited functionality.
     </span>
   `);
+
+  expect(mockIsWatchingOnly).toHaveBeenCalled();
+  mockIsWatchingOnly.mockRestore();
 });
 
 test("tests tooltip on Logo when accountMixerRunning mode is active", () => {
-  render(<SideBar />, {
-    initialState: {
-      grpc: {
-        accountMixerRunning: true
-      }
-    }
-  });
+  const mockGetAccountMixerRunning = (sel.getAccountMixerRunning = jest.fn(
+    () => true
+  ));
+
+  render(<SideBar />);
   expect(screen.getByText(/mixer is running/i)).toMatchInlineSnapshot(`
 <span
   class="tip "
@@ -414,6 +418,9 @@ test("tests tooltip on Logo when accountMixerRunning mode is active", () => {
   The mixer is running. Go to Privacy view for more information
 </span>
 `);
+
+  expect(mockGetAccountMixerRunning).toHaveBeenCalled();
+  mockGetAccountMixerRunning.mockRestore();
 });
 
 test("tests notification icon on the menu link", () => {
