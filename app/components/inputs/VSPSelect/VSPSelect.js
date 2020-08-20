@@ -1,6 +1,6 @@
 import { Creatable } from "react-select";
 import { injectIntl, defineMessages } from "react-intl";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useVSPSelect } from "./hooks";
 import { FormattedMessage as T } from "react-intl";
 import styles from "./VSPSelect.modules.css";
@@ -17,15 +17,13 @@ function VSPSelect({ onChange, options, intl }) {
 
   const [newOption, setNewOption] = useState("");
   const [newOptions, setNewOptions] = useState([]);
-  const [vspList, setVSPList] = useState([]);
-
-  useEffect(() => {
+  const vspList = useMemo(() => {
     if (!options) return;
-    options = options.map((vsp) => ({
+    let opts = options.map((vsp) => ({
       label: vsp.host,
       value: vsp
     }));
-    options = [
+    opts = [
       {
         label: (
           <T id="stakePoolSelect.addNewPromptEmpty" m="Type to add new VSP" />
@@ -33,12 +31,11 @@ function VSPSelect({ onChange, options, intl }) {
         host: null
       },
       ...newOptions,
-      ...options
+      ...opts
     ];
 
-    setVSPList(options);
-  }, [options, newOptions])
-
+    return opts;
+  }, [options, newOptions]);
 
   useEffect(() => {
     const { pubkey, host } = vspInfo;
@@ -59,7 +56,7 @@ function VSPSelect({ onChange, options, intl }) {
         value: host
       });
 
-      setNewOptions(newOptions)
+      setNewOptions(newOptions);
     }
     isRetry ? send({ type: "RETRY", value }) : send({ type: "FETCH", value });
   };
@@ -70,7 +67,7 @@ function VSPSelect({ onChange, options, intl }) {
 
     // remove last `/` case exists.
     setNewOption(newInput.replace(/\/$/, ""));
-  }
+  };
 
   const getSelect = (isRetry) => {
     return <Creatable
@@ -85,12 +82,12 @@ function VSPSelect({ onChange, options, intl }) {
             label: newOption,
             host: newOption,
             newOption: true
-          }
+          };
         }}
         onInputChange={(input) => onSetNewOption(input)}
         isValidNewOption={() => !!newOption}
       />;
-  }
+  };
 
   const getComponentState = (state) => {
     const stateValue = state.value;

@@ -33,7 +33,7 @@ export const useVSPSelect = (options) => {
           .then((info) => {
             const { pubkey, error } = info;
             if (error) {
-              return send({ type: "REJECT", error })
+              return send({ type: "REJECT", error });
             }
             onSetVspInfo({ pubkey, host: value.host });
             send("RESOLVE");
