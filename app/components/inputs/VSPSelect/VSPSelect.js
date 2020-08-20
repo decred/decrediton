@@ -1,6 +1,6 @@
-import Select from "react-select";
+import { Creatable } from "react-select";
 import { injectIntl, defineMessages } from "react-intl";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useVSPSelect } from "./hooks";
 import { FormattedMessage as T } from "react-intl";
 import styles from "./VSPSelect.modules.css";
@@ -14,69 +14,90 @@ const messages = defineMessages({
 
 function VSPSelect({ onChange, options, intl }) {
   const { send, state, selectedOption, vspInfo } = useVSPSelect(options);
-  // TODO how treat add custom vsp?
-  // const addCustomStakePool = () => dispatch(vspa.addCustomStakePool())
+
+  const [newOption, setNewOption] = useState("");
+  const [newOptions, setNewOptions] = useState([]);
+  const [vspList, setVSPList] = useState([]);
+
+  useEffect(() => {
+    if (!options) return;
+    options = options.map((vsp) => ({
+      label: vsp.host,
+      value: vsp
+    }));
+    options = [
+      {
+        label: (
+          <T id="stakePoolSelect.addNewPromptEmpty" m="Type to add new VSP" />
+        ),
+        host: null
+      },
+      ...newOptions,
+      ...options
+    ];
+
+    setVSPList(options);
+  }, [options, newOptions])
+
 
   useEffect(() => {
     const { pubkey, host } = vspInfo;
     onChange && onChange({ pubkey, host });
   }, [vspInfo, onChange]);
 
-  const handleOnChange = (option) => {
+  const handleOnChange = (option, isRetry) => {
     if (!option) return;
     const { value } = option;
     if (!value || !value.host) return;
-    send({ type: "FETCH", value });
+
+    // push new value if it is a new vsp option.
+    if (value.newOption) {
+      const host = value.host;
+      newOptions.push({
+        host,
+        label: host,
+        value: host
+      });
+
+      setNewOptions(newOptions)
+    }
+    isRetry ? send({ type: "RETRY", value }) : send({ type: "FETCH", value });
   };
 
-  const handleOnRetry = (option) => {
-    if (!option) return;
-    const { value } = option;
-    if (!value || !value.host) return;
-    send({ type: "RETRY", value });
-  };
+  const onSetNewOption = (input) => {
+    // remove `htpp://` or `https://` case they exists.
+    const newInput = input.replace(/https?:\/\/?/, "");
 
-  const getOptions = () => {
-    if (!options) return;
-    options = options.map((vsp) => ({
-      label: vsp.host,
-      value: vsp
-    }));
-    // TODO handle add new vsp dinamically
+    // remove last `/` case exists.
+    setNewOption(newInput.replace(/\/$/, ""));
+  }
 
-    // options.unshift({
-    //   label: (
-    //     <T id="stakePoolSelect.addNewPromptEmpty" m="Type to add new VSP" />
-    //   ),
-    //   Host: null
-    // });
-    return options;
-  };
+  const getSelect = (isRetry) => {
+    return <Creatable
+        options={vspList}
+        placeholder={intl.formatMessage(messages.placeholder)}
+        // className={className}
+        onChange={(option) => handleOnChange(option, isRetry)}
+        value={selectedOption}
+        newOptionCreator={() => {
+          return {
+            value: { host: newOption, label: newOption },
+            label: newOption,
+            host: newOption,
+            newOption: true
+          }
+        }}
+        onInputChange={(input) => onSetNewOption(input)}
+        isValidNewOption={() => !!newOption}
+      />;
+  }
 
   const getComponentState = (state) => {
     const stateValue = state.value;
     const { error } = state.context;
     switch (stateValue) {
       case "idle":
-        return           <Select
-        options={getOptions()}
-        placeholder={intl.formatMessage(messages.placeholder)}
-
-        onChange={handleOnChange}
-        value={selectedOption}
-        // TODO handle add new vsp dinamically
-
-        // newOptionCreator={
-        //   {
-        //     value: { Host: lastInput },
-        //     label: lastInput,
-        //     Host: lastInput,
-        //     newOption: true
-        //   }
-        // }
-        // onInputChange={this.onInputChange}
-        // isValidNewOption={this.isValidNewOption}
-      />;
+        return getSelect();
       case "loading":
         return (
           <div>
@@ -84,49 +105,11 @@ function VSPSelect({ onChange, options, intl }) {
           </div>
         );
       case "success":
-        return (
-          <Select
-            options={getOptions()}
-            placeholder={intl.formatMessage(messages.placeholder)}
-
-            onChange={handleOnChange}
-            value={selectedOption}
-            // TODO handle add new vsp dinamically
-
-            // newOptionCreator={
-            //   {
-            //     value: { Host: lastInput },
-            //     label: lastInput,
-            //     Host: lastInput,
-            //     newOption: true
-            //   }
-            // }
-            // onInputChange={this.onInputChange}
-            // isValidNewOption={this.isValidNewOption}
-          />
-        );
+        return getSelect();
       case "failure":
         return (
           <div>
-            <Select
-              options={getOptions()}
-              placeholder={intl.formatMessage(messages.placeholder)}
-
-              onChange={handleOnRetry}
-              value={selectedOption}
-              // TODO handle add new vsp dinamically
-
-              // newOptionCreator={
-              //   {
-              //     value: { Host: lastInput },
-              //     label: lastInput,
-              //     Host: lastInput,
-              //     newOption: true
-              //   }
-              // }
-              // onInputChange={this.onInputChange}
-              // isValidNewOption={this.isValidNewOption}
-            />
+            {getSelect(true)}
             <div className={styles.error}>{String(error)}</div>
           </div>
         );

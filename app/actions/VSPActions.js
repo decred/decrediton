@@ -13,7 +13,7 @@ export const GETVSP_SUCCESS = "GETVSP_SUCCESS";
 export const getVSPInfo = (host) => async (dispatch) => {
   dispatch({ type: GETVSP_ATTEMPT });
   try {
-    // add https into vsp host, so we can getch its information.
+    // add https into vsp host, so we can fetch its information.
     host = "https://" + host;
     wallet.allowVSPHost(host);
     const info = await wallet.getVSPInfo(host);
@@ -21,7 +21,7 @@ export const getVSPInfo = (host) => async (dispatch) => {
     return info.data;
   } catch (error) {
     dispatch({ type: GETVSP_FAILED, error });
-    return error;
+    return { error };
   }
 };
 

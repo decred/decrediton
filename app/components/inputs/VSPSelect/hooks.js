@@ -28,10 +28,13 @@ export const useVSPSelect = (options) => {
       },
       load: (c, event) => {
         const { value } = event;
+        setSelected(value);
         getVSPInfo(value.host)
           .then((info) => {
-            setSelected(value);
-            const { pubkey } = info;
+            const { pubkey, error } = info;
+            if (error) {
+              return send({ type: "REJECT", error })
+            }
             onSetVspInfo({ pubkey, host: value.host });
             send("RESOLVE");
           })
