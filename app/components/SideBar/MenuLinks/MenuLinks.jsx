@@ -30,14 +30,6 @@ const MenuList = React.memo(
       : menuLinks.map((menuLink) => {
           const { path, link, icon, notifProp, ariaLabel } = menuLink;
           return (
-            <Tooltip
-              content={
-                <T
-                  id="autobuyer.enabled"
-                  m="{value}"
-                  values={{ value: link }}
-                />
-              }>
               <MenuLink
                 path={path}
                 link={link}
@@ -49,7 +41,6 @@ const MenuList = React.memo(
                 key={path}
                 expandSideBar={expandSideBar}
               />
-            </Tooltip>
           );
         })
 );

@@ -9,6 +9,7 @@ const MenuLinkContent = ({
   icon,
   notifProp,
   sidebarOnBottom,
+  ariaLabel,
   expandSideBar
 }) => (
   <>
@@ -20,7 +21,8 @@ const MenuLinkContent = ({
       activeClassName={classNames(style.menuLinkActive, style[icon + "Icon"])}
       icon={icon}
       to={path}
-      key={path}>
+      key={path}
+      aria-label={ariaLabel}>
       {!sidebarOnBottom && expandSideBar && link}
     </Link>
   </>
@@ -28,26 +30,7 @@ const MenuLinkContent = ({
 
 const MenuLink = React.memo(
   React.forwardRef(
-<<<<<<< HEAD
-    ({ path, link, icon, notifProp, ariaLabel, sidebarOnBottom, expandSideBar }, ref) => (
-      <div ref={ref}>
-        {notifProp ? (
-          <span className={style.menuLinkNotificationIcon}></span>
-        ) : null}
-        <Link
-          className={classNames(style.menuLink, style[icon + "Icon"])}
-          activeClassName={classNames(
-            style.menuLinkActive,
-            style[icon + "Icon"]
-          )}
-          icon={icon}
-          to={path}
-          key={path}
-          aria-label={ariaLabel}>
-          {!sidebarOnBottom && expandSideBar && link}
-        </Link>
-=======
-    ({ path, link, icon, notifProp, sidebarOnBottom, expandSideBar }, ref) => (
+    ({ path, link, icon, notifProp, sidebarOnBottom, ariaLabel, expandSideBar }, ref) => (
       <div ref={ref} className={style.menuLinkContainer}>
         {sidebarOnBottom || !expandSideBar ? (
           <Tooltip
@@ -66,6 +49,7 @@ const MenuLink = React.memo(
               icon={icon}
               notifProp={notifProp}
               sidebarOnBottom={sidebarOnBottom}
+              ariaLabel={ariaLabel}
               expandSideBar={expandSideBar}
             />
           </Tooltip>
@@ -76,10 +60,10 @@ const MenuLink = React.memo(
             icon={icon}
             notifProp={notifProp}
             sidebarOnBottom={sidebarOnBottom}
+            ariaLabel={ariaLabel}
             expandSideBar={expandSideBar}
           />
         )}
->>>>>>> abad03da... Fix tooltips when sidebar is on bottom
       </div>
     )
   )
