@@ -1,5 +1,7 @@
+import { useNetworkTab } from "./hooks";
 import { FormattedMessage as T } from "react-intl";
-import { Balance } from "shared";
+import { Subtitle, Balance, ExternalLink } from "shared";
+import { CopyableText } from "pi-ui";
 import styles from "./NetworkTab.module.css";
 
 const DisabledBool = ({ disabled }) => {
@@ -9,11 +11,11 @@ const DisabledBool = ({ disabled }) => {
 };
 
 const UpdateDate = ({ tsDate, timestamp }) => (
-    <T
-      id="ln.nodeInfo.updateDate"
-      m={"{lastUpdate, date, medium} {lastUpdate, time, medium}"}
-      values={{ lastUpdate: tsDate(timestamp) }}
-    />
+  <T
+  id="ln.nodeInfo.updateDate"
+  m={"{lastUpdate, date, medium} {lastUpdate, time, medium}"}
+  values={{ lastUpdate: tsDate(timestamp) }}
+  />
 );
 
 
@@ -29,65 +31,133 @@ const Channel = ({ tsDate, nodeID, channel }) => {
     nPolicy = channel.node2Policy;
   }
 
-  return (<div className={styles.channel}>
-    <span><T id="ln.nodeInfo.channel.capacity" m="Capacity" /></span>
-    <span><Balance amount={channel.capacity} /></span>
-    <span><T id="ln.nodeInfo.channel.lastUpdate" m="Last Update" /></span>
-    <span><UpdateDate tsDate={tsDate} timestamp={channel.lastUpdate} /></span>
-    <span><T id="ln.nodeInfo.channel.chanPoint" m="Channel Point" /></span>
-    <span>{channel.chanPoint}</span>
-    <span><T id="ln.nodeInfo.channel.otherNode" m="Counterparty" /></span>
-    <span>{cpNodePub}</span>
-    <div className={styles.policyGrid}>
-      <span className={styles.policyLabel}><T id="ln.nodeInfo.channel.policy.name" m="Policy" /></span>
-      <span className={styles.policyLabel}><T id="ln.nodeInfo.channel.policy.node" m="Node" /></span>
-      <span className={styles.policyLabel}><T id="ln.nodeInfo.channel.policy.counterparty" m="Counterparty" /></span>
-      <span className={styles.policyLabel}><T id="ln.nodeInfo.channel.policy.disabled" m="Chan Disabled" /></span>
-      <span><DisabledBool disabled={nPolicy.disabled}/></span>
-      <span><DisabledBool disabled={cpPolicy.disabled}/></span>
-      <span className={styles.policyLabel}><T id="ln.nodeInfo.channel.policy.timelock" m="Timelock Delta" /></span>
-      <span>{nPolicy.timeLockDelta}</span>
-      <span>{cpPolicy.timeLockDelta}</span>
-      <span className={styles.policyLabel}><T id="ln.nodeInfo.channel.policy.minHtlc" m="Min HTLC" /></span>
-      <span><Balance amount={nPolicy.minHtlc} /></span>
-      <span><Balance amount={cpPolicy.minHtlc} /></span>
-      <span className={styles.policyLabel}><T id="ln.nodeInfo.channel.policy.maxHtlc" m="Max HTLC" /></span>
-      <span><Balance amount={nPolicy.maxHtlcMAtoms / 1000} /></span>
-      <span><Balance amount={cpPolicy.maxHtlcMAtoms / 1000} /></span>
-      <span className={styles.policyLabel}><T id="ln.nodeInfo.channel.policy.lastUpdate" m="Last Update" /></span>
-      <span><UpdateDate tsDate={tsDate} timestamp={nPolicy.lastUpdate} /></span>
-      <span><UpdateDate tsDate={tsDate} timestamp={cpPolicy.lastUpdate} /></span>
-    </div>
-  </div>);
+  const { chanpointURL } = useNetworkTab();
+  return (
+    <div className={styles.channel}>
+      <div className={styles.channelInfo}>
+        <div>
+          <span><T id="ln.nodeInfo.channel.capacity" m="Capacity" /></span>
+          <div className={styles.infoContent}><Balance amount={channel.capacity} /></div>
+        </div>
+        <div>
+          <span><T id="ln.nodeInfo.channel.chanPoint" m="Channel Point" /></span>
+          <div className={styles.infoContent}>
+            <ExternalLink href={chanpointURL(channel.chanPoint)}>
+              {channel.chanPoint}
+            </ExternalLink>
+          </div>
+        </div>
+        <div>
+          <span><T id="ln.nodeInfo.channel.lastUpdate" m="Last Update" /></span>
+          <div className={styles.infoContent}><UpdateDate tsDate={tsDate} timestamp={channel.lastUpdate} /></div>
+        </div>
+
+        <div>
+          <span><T id="ln.nodeInfo.channel.otherNode" m="Counterparty" /></span>
+          <CopyableText id="copyable" className={styles.copyableNode}>{cpNodePub}</CopyableText>
+        </div>
+      </div>
+      <div className={styles.policyGrid}>
+        <span className={styles.policyLabel}><T id="ln.nodeInfo.channel.policy.name" m="Policy" /></span>
+        <span className={styles.policyLabel}><T id="ln.nodeInfo.channel.policy.node" m="Node" /></span>
+        <span className={styles.policyLabel}><T id="ln.nodeInfo.channel.policy.counterparty" m="Counterparty" /></span>
+        <span className={styles.policyLabel}><T id="ln.nodeInfo.channel.policy.disabled" m="Chan Disabled" /></span>
+        <span>
+          {nPolicy ?
+            (<DisabledBool disabled={nPolicy.disabled}/>)
+            : <T id="ln.nodeInfo.channel.policy.noInfo" m="no info" />
+          }
+        </span>
+        <span>
+          {cpPolicy ?
+            (<DisabledBool disabled={cpPolicy.disabled}/>)
+            : <T id="ln.nodeInfo.channel.policy.noInfo" m="no info" />
+          }
+        </span>
+        <span className={styles.policyLabel}><T id="ln.nodeInfo.channel.policy.timelock" m="Timelock Delta" /></span>
+        <span>
+          {nPolicy ?
+            nPolicy.timeLockDelta : (<T id="ln.nodeInfo.channel.policy.noInfo" m="no info" />)
+          }
+        </span>
+        <span>
+          {cpPolicy ?
+            cpPolicy.timeLockDelta : (<T id="ln.nodeInfo.channel.policy.noInfo" m="no info" />)
+          }
+        </span>
+        <span className={styles.policyLabel}><T id="ln.nodeInfo.channel.policy.minHtlc" m="Min HTLC" /></span>
+        <span>
+          {nPolicy ?
+            (<Balance amount={nPolicy.minHtlc} />)
+            : <T id="ln.nodeInfo.channel.policy.noInfo" m="no info" />
+          }
+        </span>
+        <span>
+          {cpPolicy ?
+            (<Balance amount={cpPolicy.minHtlc} />)
+            : <T id="ln.nodeInfo.channel.policy.noInfo" m="no info" />
+          }
+        </span>
+
+        <span className={styles.policyLabel}><T id="ln.nodeInfo.channel.policy.maxHtlc" m="Max HTLC" /></span>
+        <span>
+          {nPolicy ?
+            (<Balance amount={nPolicy.maxHtlcMAtoms / 1000} />)
+            : <T id="ln.nodeInfo.channel.policy.noInfo" m="no info" />
+          }
+        </span>
+        <span>
+          {cpPolicy ?
+            (<Balance amount={cpPolicy.maxHtlcMAtoms / 1000} />)
+            : <T id="ln.nodeInfo.channel.policy.noInfo" m="no info" />
+          }
+        </span>
+        <span className={styles.policyLabel}><T id="ln.nodeInfo.channel.policy.lastUpdate" m="Last Update" /></span>
+        <span>
+          {nPolicy ?
+            (<UpdateDate tsDate={tsDate} timestamp={nPolicy.lastUpdate} />)
+            : <T id="ln.nodeInfo.channel.policy.noInfo" m="no info" />
+          }
+        </span>
+        <span>
+          {cpPolicy ?
+            (<UpdateDate tsDate={tsDate} timestamp={cpPolicy.lastUpdate} />)
+            : <T id="ln.nodeInfo.channel.policy.noInfo" m="no info" />
+          }
+        </span>
+      </div>
+    </div>);
 };
 
 const NodeInfo = ({ nodeInfo, tsDate }) => (
   <div className={styles.nodeInfo}>
     <div className={styles.basicInfo}>
       <span><T id="ln.nodeInfo.pubkey" m="PubKey" /></span>
-      <span>{nodeInfo.node.pubKey}</span>
+      <div className={styles.basicInfoContent}>{nodeInfo.node.pubKey}</div>
       <span><T id="ln.nodeInfo.alias" m="Alias" /></span>
-      <span>{nodeInfo.node.alias || ""}</span>
+      <div className={styles.basicInfoContent}>{nodeInfo.node.alias || ""}</div>
       <span><T id="ln.nodeInfo.totalCapacity" m="Total Capacity" /></span>
-      <span><Balance amount={nodeInfo.totalCapacity} /></span>
+      <div className={styles.basicInfoContent}><Balance amount={nodeInfo.totalCapacity} /></div>
       <span><T id="ln.nodeInfo.lastUpdate" m="Last Update" /></span>
-      <span><T
+      <div className={styles.basicInfoContent}><T
         id="ln.nodeInfo.lastUpdateDate"
         m={"{lastUpdate, date, medium} {lastUpdate, time, medium}"}
         values={{ lastUpdate: tsDate(nodeInfo.node.lastUpdate) }}
-        />
-      </span>
+      />
+      </div>
     </div>
 
-    <h2><T id="ln.nodeInfo.channelsList" m="Channels"/></h2>
+    <Subtitle title={
+      <T id="ln.nodeInfo.channelsList" m="Channels"/>
+      } />
     <div className={styles.channelList}>
       { nodeInfo.channelsList.map( c =>
-        <Channel
-          key={c.channelId}
-          tsDate={tsDate}
-          nodeID={nodeInfo.node.pubKey}
-          channel={c}
-        />) }
+      <Channel
+        key={c.channelId}
+        tsDate={tsDate}
+        nodeID={nodeInfo.node.pubKey}
+        channel={c}
+      />) }
     </div>
   </div>
 );

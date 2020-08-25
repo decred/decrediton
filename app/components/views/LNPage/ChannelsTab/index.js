@@ -77,13 +77,13 @@ class ChannelsTab extends React.Component {
 
   render() {
     const {
-      balance,
-      pendingOpenBalance,
-      maxInboundAmount,
-      maxOutboundAmount
-    } = this.props.channelBalances;
-
-    const { channels, pendingChannels, closedChannels, isMainNet } = this.props;
+      walletBalances,
+      channelBalances,
+      channels,
+      pendingChannels,
+      closedChannels,
+      isMainNet
+    } = this.props;
     const {
       node,
       localAmtAtoms,
@@ -103,10 +103,8 @@ class ChannelsTab extends React.Component {
 
     return (
       <Page
-        balance={balance}
-        pendingOpenBalance={pendingOpenBalance}
-        maxInboundAmount={maxInboundAmount}
-        maxOutboundAmount={maxOutboundAmount}
+        walletBalances={walletBalances}
+        channelBalances={channelBalances}
         channels={channels}
         pendingChannels={pendingChannels}
         closedChannels={closedChannels}

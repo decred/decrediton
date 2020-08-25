@@ -1,6 +1,7 @@
 import * as client from "middleware/ln/client";
 import fs from "fs";
 import * as pb from "middleware/ln/rpc_pb";
+import * as wupb from "middleware/ln/walletunlocker_pb";
 import { strHashToRaw } from "helpers/byteActions";
 import { ipcRenderer } from "electron";
 
@@ -36,6 +37,16 @@ export const getNodeInfo = (client, nodeID) => {
   );
 };
 
+export const getRoutes = (client, nodeID, amt) => {
+  const request = new pb.QueryRoutesRequest();
+  request.setPubKey(nodeID);
+  request.setAmt(amt);
+  return new Promise((resolve, reject) =>
+    client.queryRoutes(request, (err, resp) =>
+      err ? reject(err) : resolve(resp.toObject())
+    )
+  );
+};
 
 export const getWalletBalance = (client) => {
   const request = new pb.WalletBalanceRequest();
@@ -268,7 +279,7 @@ export const sendCoins = (client, address, amount) => {
 };
 
 export const unlockWallet = (wuClient, passphrase) => {
-  const request = new pb.UnlockWalletRequest();
+  const request = new wupb.UnlockWalletRequest();
   const bytesPassphrase = new Uint8Array(Buffer.from(passphrase));
   request.setWalletPassword(bytesPassphrase);
 

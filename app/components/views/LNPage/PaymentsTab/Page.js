@@ -1,13 +1,24 @@
+import { usePaymentsTab } from "./hooks";
 import { FormattedMessage as T } from "react-intl";
-import { Balance, FormattedRelative } from "shared";
 import { KeyBlueButton } from "buttons";
 import { TextInput, DcrInput } from "inputs";
 import { SimpleLoading } from "indicators";
+import { CopyableText } from "pi-ui";
+import styles from "./PaymentsTab.module.css";
+import {
+  Subtitle,
+  Balance,
+  FormattedRelative,
+  VerticalAccordion
+} from "shared";
 
-const Payment = ({ payment, tsDate }) => (
-  <div className="ln-payment">
+const Payment = ({
+  payment,
+  tsDate
+}) => (
+  <div className={styles.lnPayment}>
     <div>
-      <div className="value">
+      <div className={styles.value}>
         <Balance amount={payment.valueAtoms} />
       </div>
       <div className="fee">
@@ -22,15 +33,15 @@ const Payment = ({ payment, tsDate }) => (
           values={{ creationDate: tsDate(payment.creationDate) }}
         />
       </div>
-      <div className="rhash">{payment.paymentHash}</div>
+      <div className={styles.rhash}>{payment.paymentHash}</div>
     </div>
   </div>
 );
 
 const OutstandingPayment = ({ payment, tsDate }) => (
-  <div className="ln-payment outstanding">
+  <div className={styles.lnPayment}>
     <div>
-      <div className="value">
+      <div className={styles.value}>
         <Balance amount={payment.numAtoms} />
       </div>
     </div>
@@ -42,16 +53,16 @@ const OutstandingPayment = ({ payment, tsDate }) => (
           values={{ creationDate: tsDate(payment.timestamp) }}
         />
       </div>
-      <div className="rhash">{payment.paymentHash}</div>
+      <div className={styles.rhash}>{payment.paymentHash}</div>
     </div>
     <SimpleLoading />
   </div>
 );
 
 const FailedPayment = ({ payment, paymentError, tsDate }) => (
-  <div className="ln-payment failed">
+  <div className={styles.lnPayment}>
     <div>
-      <div className="value">
+      <div className={styles.value}>
         <Balance amount={payment.numAtoms} />
       </div>
     </div>
@@ -63,10 +74,10 @@ const FailedPayment = ({ payment, paymentError, tsDate }) => (
           values={{ creationDate: tsDate(payment.timestamp) }}
         />
       </div>
-      <div className="rhash">{payment.paymentHash}</div>
+      <div className={styles.rhash}>{payment.paymentHash}</div>
     </div>
     <div></div>
-    <div class="payment-error">{paymentError}</div>
+    <div class={styles.paymentError}>{paymentError}</div>
   </div>
 );
 
@@ -80,27 +91,27 @@ const ExpiryTime = ({ expired, decoded, tsDate }) => (
   <div className={expired ? "expiry expired" : "expiry"}>
     {expired ? (
       <T
-        id="ln.paymentsTab.expired"
-        m="Expired {relTime}"
-        values={{
-          relTime: (
-            <FormattedRelative
-              value={tsDate(decoded.expiry + decoded.timestamp)}
-            />
-          )
-        }}
+      id="ln.paymentsTab.expired"
+      m="Expired {relTime}"
+      values={{
+        relTime: (
+          <FormattedRelative
+            value={tsDate(decoded.expiry + decoded.timestamp)}
+          />
+        )
+      }}
       />
     ) : (
       <T
-        id="ln.paymentsTab.expires"
-        m="Expires {relTime}"
-        values={{
-          relTime: (
-            <FormattedRelative
-              value={tsDate(decoded.expiry + decoded.timestamp)}
-            />
-          )
-        }}
+      id="ln.paymentsTab.expires"
+      m="Expires {relTime}"
+      values={{
+        relTime: (
+          <FormattedRelative
+            value={tsDate(decoded.expiry + decoded.timestamp)}
+          />
+        )
+      }}
       />
     )}
   </div>
@@ -113,28 +124,49 @@ const DecodedPayRequest = ({
   sendValue,
   onSendValueChanged
 }) => (
-  <div className="decoded-payreq">
+  <div className={styles.decodedPayreq}>
     {decoded.numAtoms ? (
-      <div className="num-atoms">
+      <div className={styles.numAtoms}>
         <Balance amount={decoded.numAtoms} />
       </div>
     ) : (
       <DcrInput amount={sendValue} onChangeAmount={onSendValueChanged} />
     )}
     {decoded.description ? (
-      <div className="description">{decoded.description}</div>
+      <div className={styles.description}>{decoded.description}</div>
     ) : (
       <EmptyDescription />
     )}
     <ExpiryTime expired={expired} decoded={decoded} tsDate={tsDate} />
-    <div className="dest-details">
+    <div className={styles.destDetails}>
       <T id="ln.paymentsTab.destLabel" m="Destination" />
-      <div className="dest">{decoded.destination}</div>
+        <CopyableText id="copyable" className={styles.copyableText}>{decoded.destination}</CopyableText>
       <T id="ln.paymentsTab.hashLabel" m="Payment Hash" />
-      <div className="rhash">{decoded.paymentHash}</div>
+      <div>{decoded.paymentHash}</div>
     </div>
   </div>
 );
+
+const BalanceHeader = () => {
+  const { channelBalances } = usePaymentsTab();
+  return(
+    <div className={styles.balanceHeader}>
+      <div className={`${styles.balanceTile} ${
+        channelBalances.maxOutboundAmount === 0 ?
+          styles.zeroFunds
+          :styles.hasOutbound}
+        `}>
+        <div className={styles.balanceValue}>
+          <Balance amount={channelBalances.maxOutboundAmount} />
+        </div>
+        <T
+          id="ln.paymentsTab.balance.maxPayable"
+          m="Max. Payable"
+        />
+      </div>
+    </div>
+  );
+};
 
 export default ({
   payments,
@@ -149,77 +181,134 @@ export default ({
   onPayRequestChanged,
   onSendPayment,
   onSendValueChanged
-}) => (
-  <>
-    <h2 className="ln-payments-subheader">
-      <T id="ln.paymentsTab.sendPayment" m="Send Payment" />
-    </h2>
+}) => {
+  const {
+    isShowingDetails,
+    selectedPaymentDetails,
+    onToggleShowDetails
+  } = usePaymentsTab();
+  return(
+    <>
+      <Subtitle
+        title={
+          <T id="ln.paymentsTab.balanceHeader" m="Balance" />
+        } />
+      <BalanceHeader />
 
-    <div className="ln-send-payment">
-      <div className="payreq">
-        <T id="ln.paymentsTab.payReq" m="Payment Request" />
-        <TextInput value={payRequest} onChange={onPayRequestChanged} />
+      <Subtitle title={
+        <T id="ln.paymentsTab.sendPayment" m="Send Payment" />
+        } />
+
+      <div className={styles.lnSendPayment}>
+        <div className="payreq">
+          <T id="ln.paymentsTab.payReq" m="Payment Request" />
+          <TextInput value={payRequest} onChange={onPayRequestChanged} />
+        </div>
+        {decodingError ? (
+          <div className="decoding-error">{"" + decodingError}</div>
+        ) : null}
+        {decodedPayRequest ? (
+          <>
+            <DecodedPayRequest
+              decoded={decodedPayRequest}
+              tsDate={tsDate}
+              expired={expired}
+              sendValue={sendValue}
+              onSendValueChanged={onSendValueChanged}
+            />
+            <KeyBlueButton className="sendpayment" onClick={onSendPayment}>
+              <T id="ln.paymentsTab.sendBtn" m="Send" />
+            </KeyBlueButton>
+          </>
+        ) : null}
       </div>
-      {decodingError ? (
-        <div className="decoding-error">{"" + decodingError}</div>
+
+      {Object.keys(outstandingPayments).length > 0 ? (
+        <Subtitle title={
+          <T id="ln.paymentsTab.outstanding" m="Ongoing Payments" />
+          } />
       ) : null}
-      {decodedPayRequest ? (
-        <>
-          <DecodedPayRequest
-            decoded={decodedPayRequest}
+
+      <div className={styles.lnPaymentsList}>
+        {Object.keys(outstandingPayments).map((ph) => (
+          <OutstandingPayment
+            payment={outstandingPayments[ph].decoded}
+            key={`outstanding-${ph}`}
             tsDate={tsDate}
-            expired={expired}
-            sendValue={sendValue}
-            onSendValueChanged={onSendValueChanged}
           />
-          <KeyBlueButton className="sendpayment" onClick={onSendPayment}>
-            <T id="ln.paymentsTab.sendBtn" m="Send" />
-          </KeyBlueButton>
-        </>
+        ))}
+      </div>
+
+      {failedPayments.length > 0 ? (
+        <Subtitle title={
+          <T id="ln.paymentsTag.failed" m="Failed Payments" />
+          } />
       ) : null}
-    </div>
 
-    {Object.keys(outstandingPayments).length > 0 ? (
-      <h2 className="ln-payments-subheader">
-        <T id="ln.paymentsTab.outstanding" m="Ongoing Payments" />
-      </h2>
-    ) : null}
+      <div className={styles.lnPaymentsList}>
+        {failedPayments.map((p) => (
+          <FailedPayment
+            payment={p.decoded}
+            paymentError={p.paymentError}
+            key={`failed-${p.decoded.paymentHash}`}
+            tsDate={tsDate}
+          />
+        ))}
+      </div>
 
-    <div className="ln-payments-list">
-      {Object.keys(outstandingPayments).map((ph) => (
-        <OutstandingPayment
-          payment={outstandingPayments[ph].decoded}
-          key={"outstanding-" + ph}
-          tsDate={tsDate}
-        />
-      ))}
-    </div>
+      {payments.length > 0 ? (<Subtitle title={
+        <T id="ln.paymentsTab.latestPayments" m="Latest Payments" />
+        } />) : null}
 
-    {failedPayments.length > 0 ? (
-      <h2 className="ln-payments-subheader">
-        <T id="ln.paymentsTag.failed" m="Failed Payments" />
-      </h2>
-    ) : null}
-
-    <div className="ln-payments-list">
-      {failedPayments.map((p) => (
-        <FailedPayment
-          payment={p.decoded}
-          paymentError={p.paymentError}
-          key={"failed-" + p.decoded.paymentHash}
-          tsDate={tsDate}
-        />
-      ))}
-    </div>
-
-    <h2 className="ln-payments-subheader">
-      <T id="ln.paymentsTab.latestPayments" m="Latest Payments" />
-    </h2>
-
-    <div className="ln-payments-list">
-      {payments.map((p) => (
-        <Payment payment={p} key={p.paymentHash} tsDate={tsDate} />
-      ))}
-    </div>
-  </>
-);
+      <div className={styles.lnPaymentsList}>
+        {payments.map((p) => (
+          <VerticalAccordion
+            key={`accordion-${p.paymentHash}`}
+            className={styles.paymentAccordion}
+            header={
+              <Payment
+                payment={p}
+                tsDate={tsDate}
+              />}
+            onToggleAccordion={() => onToggleShowDetails(p.paymentHash)}
+            show={
+            p.paymentHash === selectedPaymentDetails
+            && isShowingDetails}
+          >
+            <div className={styles.paymentDetails}>
+              <span>PayReq</span>
+              <div><b>{p.paymentRequest}</b></div>
+              {p.htlcsList.map((htlc, i) => (
+                <div key={`htlc-${i}`} className={styles.htlc}>
+                  <span>HTLC {i}</span>
+                  <hr/>
+                  <div className={styles.paymentDetailsGrid}>
+                    <span>Status</span>
+                    <span>{htlc.status}</span>
+                    <span>Total Amount</span>
+                    <Balance amount={htlc.route.totalAmt} />
+                    <span>Total fees</span>
+                    <Balance amount={htlc.route.totalFees} />
+                  </div>
+                  <span>Route</span>
+                  <div className={styles.paymentRouteGrid}>
+                    <span>Hop</span>
+                    <span>Fee</span>
+                    <span>PubKey</span>
+                    {htlc.route.hopsList.map((hop, i) => (
+                      <React.Fragment key={`hop-${+i}`}>
+                        <span>{i}</span>
+                        <span><Balance amount={hop.fee} /></span>
+                        <span>{hop.pubKey}</span>
+                      </React.Fragment>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </VerticalAccordion>
+        ))}
+      </div>
+    </>
+  );
+};

@@ -1,12 +1,18 @@
+import { useChannelBalances } from "./index";
 import { FormattedMessage as T } from "react-intl";
-import { Balance, CopyToClipboard } from "shared";
+import { Balance, CopyToClipboard, Subtitle } from "shared";
 import { KeyBlueButton } from "buttons";
 import { TextInput, DcrInput } from "inputs";
+import styles from "./InvoicesTab.module.css";
 
 const InvoiceRow = ({ invoice, tsDate }) => (
-  <div className={["ln-invoice", "status-" + invoice.status].join(" ")}>
+  <div className={`${styles.lnInvoice} ${
+      invoice.status === "expired" ? styles.statusExpired
+      : invoice.status === "settled" ? styles.statusSettled
+      : styles.statusOpen
+    }`}>
     <div className="values-wrapper">
-      <div className="value">
+      <div className={styles.value}>
         <Balance amount={invoice.value} />
       </div>
       {invoice.amtPaidAtoms && invoice.amtPaidAtoms !== invoice.value ? (
@@ -16,8 +22,8 @@ const InvoiceRow = ({ invoice, tsDate }) => (
       ) : null}
     </div>
     <div className="memo-wrapper">
-      <div className="memo">{invoice.memo}</div>
-      <div className="rhash">{invoice.rHashHex}</div>
+      <div className={styles.memo}>{invoice.memo}</div>
+      <div className={styles.rhash}>{invoice.rHashHex}</div>
     </div>
     <div className="dates-wrapper">
       <div className="creationdate">
@@ -40,6 +46,27 @@ const InvoiceRow = ({ invoice, tsDate }) => (
   </div>
 );
 
+const BalanceHeader = () => {
+  const { channelBalances } = useChannelBalances();
+  return(
+    <div className={styles.balanceHeader}>
+      <div className={`${styles.balanceTile} ${
+        channelBalances.maxInboundAmount === 0 ?
+          styles.zeroFunds
+          :styles.hasInbound}
+        `}>
+        <div className={styles.balanceValue}>
+          <Balance amount={channelBalances.maxInboundAmount} />
+        </div>
+        <T
+          id="ln.invoicesTab.balance.maxReceivable"
+          m="Max. Receivable"
+        />
+      </div>
+    </div>
+  );
+};
+
 export default ({
   invoices,
   tsDate,
@@ -53,11 +80,15 @@ export default ({
   onAddInvoice
 }) => (
   <>
-    <h2 className="ln-invoice-subheader">
-      <T id="ln.invoicesTab.addInvoiceHeader" m="Add Invoice" />
-    </h2>
-
-    <div className="ln-add-invoice">
+    <Subtitle title={
+      <T id="ln.invoicesTab.balanceHeader" m="Balance" />
+    } />
+    <BalanceHeader />
+    <Subtitle
+      title={
+        <T id="ln.invoicesTab.addInvoiceHeader" m="Add Invoice" />
+      } />
+    <div className={styles.lnAddInvoice}>
       <div className="memo">
         <T id="ln.invoicesTab.addInvoice.memo" m="Description" />
         <TextInput value={memo} onChange={onMemoChanged} />
@@ -66,25 +97,32 @@ export default ({
         <T id="ln.invoicesTab.addInvoice.value" m="Value" />
         <DcrInput amount={value} onChangeAmount={onValueChanged} />
       </div>
-      <KeyBlueButton onClick={onAddInvoice} disabled={addInvoiceAttempt}>
+      <KeyBlueButton
+        className={styles.invoiceButton}
+        onClick={onAddInvoice}
+        disabled={addInvoiceAttempt}>
         +
       </KeyBlueButton>
       {!lastPayRequest ? null : (
         <>
-          <div className="last-pay-request">{lastPayRequest}</div>
-          <CopyToClipboard textToCopy={lastPayRequest} />
+          <div className={styles.lastPayRequest}>{lastPayRequest}</div>
+          <CopyToClipboard
+            className={styles.clipboardBox}
+            textToCopy={lastPayRequest} />
         </>
       )}
       {!lastError ? null : (
         <>
-          <div className="last-error">{"" + lastError}</div>
+          <div className={styles.lastError}>{"" + lastError}</div>
         </>
       )}
     </div>
 
-    <h2 className="ln-invoice-subheader">
-      <T id="ln.invoicesTab.invoicesHeader" m="Latest Invoices" />
-    </h2>
+    {invoices > 0 ? (
+    <Subtitle
+      title={
+        <T id="ln.invoicesTab.invoicesHeader" m="Latest Invoices" />
+      } />) : null }
     <div className="ln-invoice-list">
       {invoices.map((inv) => (
         <InvoiceRow key={inv.addIndex} invoice={inv} tsDate={tsDate} />

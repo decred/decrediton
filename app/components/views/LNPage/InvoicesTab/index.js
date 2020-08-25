@@ -1,7 +1,13 @@
 import { DescriptionHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
 import { lnPage } from "connectors";
+import * as sel from "selectors";
+import { useSelector } from "react-redux";
 import Page from "./Page";
+
+export const useChannelBalances = () => ({
+  channelBalances: useSelector(sel.lnChannelBalances)
+});
 
 export const InvoicesTabHeader = () => (
   <DescriptionHeader

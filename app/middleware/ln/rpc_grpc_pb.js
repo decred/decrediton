@@ -3,7 +3,6 @@
 'use strict';
 var grpc = require('grpc');
 var rpc_pb = require('./rpc_pb.js');
-var google_api_annotations_pb = require('./google/api/annotations_pb.js');
 
 function serialize_lnrpc_AbandonChannelRequest(arg) {
   if (!(arg instanceof rpc_pb.AbandonChannelRequest)) {
@@ -91,28 +90,6 @@ function serialize_lnrpc_ChanInfoRequest(arg) {
 
 function deserialize_lnrpc_ChanInfoRequest(buffer_arg) {
   return rpc_pb.ChanInfoRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_lnrpc_ChangePasswordRequest(arg) {
-  if (!(arg instanceof rpc_pb.ChangePasswordRequest)) {
-    throw new Error('Expected argument of type lnrpc.ChangePasswordRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_lnrpc_ChangePasswordRequest(buffer_arg) {
-  return rpc_pb.ChangePasswordRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_lnrpc_ChangePasswordResponse(arg) {
-  if (!(arg instanceof rpc_pb.ChangePasswordResponse)) {
-    throw new Error('Expected argument of type lnrpc.ChangePasswordResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_lnrpc_ChangePasswordResponse(buffer_arg) {
-  return rpc_pb.ChangePasswordResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_lnrpc_ChannelAcceptRequest(arg) {
@@ -357,6 +334,28 @@ function deserialize_lnrpc_DeleteAllPaymentsResponse(buffer_arg) {
   return rpc_pb.DeleteAllPaymentsResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_lnrpc_DeleteMacaroonIDRequest(arg) {
+  if (!(arg instanceof rpc_pb.DeleteMacaroonIDRequest)) {
+    throw new Error('Expected argument of type lnrpc.DeleteMacaroonIDRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_lnrpc_DeleteMacaroonIDRequest(buffer_arg) {
+  return rpc_pb.DeleteMacaroonIDRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_lnrpc_DeleteMacaroonIDResponse(arg) {
+  if (!(arg instanceof rpc_pb.DeleteMacaroonIDResponse)) {
+    throw new Error('Expected argument of type lnrpc.DeleteMacaroonIDResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_lnrpc_DeleteMacaroonIDResponse(buffer_arg) {
+  return rpc_pb.DeleteMacaroonIDResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_lnrpc_DisconnectPeerRequest(arg) {
   if (!(arg instanceof rpc_pb.DisconnectPeerRequest)) {
     throw new Error('Expected argument of type lnrpc.DisconnectPeerRequest');
@@ -478,28 +477,6 @@ function deserialize_lnrpc_FundingTransitionMsg(buffer_arg) {
   return rpc_pb.FundingTransitionMsg.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_lnrpc_GenSeedRequest(arg) {
-  if (!(arg instanceof rpc_pb.GenSeedRequest)) {
-    throw new Error('Expected argument of type lnrpc.GenSeedRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_lnrpc_GenSeedRequest(buffer_arg) {
-  return rpc_pb.GenSeedRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_lnrpc_GenSeedResponse(arg) {
-  if (!(arg instanceof rpc_pb.GenSeedResponse)) {
-    throw new Error('Expected argument of type lnrpc.GenSeedResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_lnrpc_GenSeedResponse(buffer_arg) {
-  return rpc_pb.GenSeedResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_lnrpc_GetInfoRequest(arg) {
   if (!(arg instanceof rpc_pb.GetInfoRequest)) {
     throw new Error('Expected argument of type lnrpc.GetInfoRequest');
@@ -520,6 +497,28 @@ function serialize_lnrpc_GetInfoResponse(arg) {
 
 function deserialize_lnrpc_GetInfoResponse(buffer_arg) {
   return rpc_pb.GetInfoResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_lnrpc_GetRecoveryInfoRequest(arg) {
+  if (!(arg instanceof rpc_pb.GetRecoveryInfoRequest)) {
+    throw new Error('Expected argument of type lnrpc.GetRecoveryInfoRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_lnrpc_GetRecoveryInfoRequest(buffer_arg) {
+  return rpc_pb.GetRecoveryInfoRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_lnrpc_GetRecoveryInfoResponse(arg) {
+  if (!(arg instanceof rpc_pb.GetRecoveryInfoResponse)) {
+    throw new Error('Expected argument of type lnrpc.GetRecoveryInfoResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_lnrpc_GetRecoveryInfoResponse(buffer_arg) {
+  return rpc_pb.GetRecoveryInfoResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_lnrpc_GetTransactionsRequest(arg) {
@@ -553,28 +552,6 @@ function serialize_lnrpc_GraphTopologyUpdate(arg) {
 
 function deserialize_lnrpc_GraphTopologyUpdate(buffer_arg) {
   return rpc_pb.GraphTopologyUpdate.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_lnrpc_InitWalletRequest(arg) {
-  if (!(arg instanceof rpc_pb.InitWalletRequest)) {
-    throw new Error('Expected argument of type lnrpc.InitWalletRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_lnrpc_InitWalletRequest(buffer_arg) {
-  return rpc_pb.InitWalletRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_lnrpc_InitWalletResponse(arg) {
-  if (!(arg instanceof rpc_pb.InitWalletResponse)) {
-    throw new Error('Expected argument of type lnrpc.InitWalletResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_lnrpc_InitWalletResponse(buffer_arg) {
-  return rpc_pb.InitWalletResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_lnrpc_Invoice(arg) {
@@ -643,6 +620,28 @@ function deserialize_lnrpc_ListInvoiceResponse(buffer_arg) {
   return rpc_pb.ListInvoiceResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_lnrpc_ListMacaroonIDsRequest(arg) {
+  if (!(arg instanceof rpc_pb.ListMacaroonIDsRequest)) {
+    throw new Error('Expected argument of type lnrpc.ListMacaroonIDsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_lnrpc_ListMacaroonIDsRequest(buffer_arg) {
+  return rpc_pb.ListMacaroonIDsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_lnrpc_ListMacaroonIDsResponse(arg) {
+  if (!(arg instanceof rpc_pb.ListMacaroonIDsResponse)) {
+    throw new Error('Expected argument of type lnrpc.ListMacaroonIDsResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_lnrpc_ListMacaroonIDsResponse(buffer_arg) {
+  return rpc_pb.ListMacaroonIDsResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_lnrpc_ListPaymentsRequest(arg) {
   if (!(arg instanceof rpc_pb.ListPaymentsRequest)) {
     throw new Error('Expected argument of type lnrpc.ListPaymentsRequest');
@@ -685,6 +684,28 @@ function serialize_lnrpc_ListPeersResponse(arg) {
 
 function deserialize_lnrpc_ListPeersResponse(buffer_arg) {
   return rpc_pb.ListPeersResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_lnrpc_ListPermissionsRequest(arg) {
+  if (!(arg instanceof rpc_pb.ListPermissionsRequest)) {
+    throw new Error('Expected argument of type lnrpc.ListPermissionsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_lnrpc_ListPermissionsRequest(buffer_arg) {
+  return rpc_pb.ListPermissionsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_lnrpc_ListPermissionsResponse(arg) {
+  if (!(arg instanceof rpc_pb.ListPermissionsResponse)) {
+    throw new Error('Expected argument of type lnrpc.ListPermissionsResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_lnrpc_ListPermissionsResponse(buffer_arg) {
+  return rpc_pb.ListPermissionsResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_lnrpc_ListUnspentRequest(arg) {
@@ -773,6 +794,28 @@ function serialize_lnrpc_NodeInfoRequest(arg) {
 
 function deserialize_lnrpc_NodeInfoRequest(buffer_arg) {
   return rpc_pb.NodeInfoRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_lnrpc_NodeMetricsRequest(arg) {
+  if (!(arg instanceof rpc_pb.NodeMetricsRequest)) {
+    throw new Error('Expected argument of type lnrpc.NodeMetricsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_lnrpc_NodeMetricsRequest(buffer_arg) {
+  return rpc_pb.NodeMetricsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_lnrpc_NodeMetricsResponse(arg) {
+  if (!(arg instanceof rpc_pb.NodeMetricsResponse)) {
+    throw new Error('Expected argument of type lnrpc.NodeMetricsResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_lnrpc_NodeMetricsResponse(buffer_arg) {
+  return rpc_pb.NodeMetricsResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_lnrpc_OpenChannelRequest(arg) {
@@ -1083,28 +1126,6 @@ function deserialize_lnrpc_TransactionDetails(buffer_arg) {
   return rpc_pb.TransactionDetails.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_lnrpc_UnlockWalletRequest(arg) {
-  if (!(arg instanceof rpc_pb.UnlockWalletRequest)) {
-    throw new Error('Expected argument of type lnrpc.UnlockWalletRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_lnrpc_UnlockWalletRequest(buffer_arg) {
-  return rpc_pb.UnlockWalletRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_lnrpc_UnlockWalletResponse(arg) {
-  if (!(arg instanceof rpc_pb.UnlockWalletResponse)) {
-    throw new Error('Expected argument of type lnrpc.UnlockWalletResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_lnrpc_UnlockWalletResponse(buffer_arg) {
-  return rpc_pb.UnlockWalletResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_lnrpc_VerifyChanBackupResponse(arg) {
   if (!(arg instanceof rpc_pb.VerifyChanBackupResponse)) {
     throw new Error('Expected argument of type lnrpc.VerifyChanBackupResponse');
@@ -1161,107 +1182,26 @@ function deserialize_lnrpc_WalletBalanceResponse(buffer_arg) {
 }
 
 
-// *
+//
 // Comments in this file will be directly parsed into the API
 // Documentation as descriptions of the associated method, message, or field.
 // These descriptions should go right above the definition of the object, and
-// can be in either block or /// comment format. 
-// 
-// One edge case exists where a // comment followed by a /// comment in the
-// next line will cause the description not to show up in the documentation. In
-// that instance, simply separate the two comments with a blank line.
-// 
+// can be in either block or // comment format.
+//
 // An RPC method can be matched to an lncli command by placing a line in the
 // beginning of the description in exactly the following format:
 // lncli: `methodname`
-// 
+//
 // Failure to specify the exact name of the command will cause documentation
 // generation to fail.
-// 
+//
 // More information on how exactly the gRPC documentation is generated from
 // this proto file can be found here:
 // https://github.com/lightninglabs/lightning-api
 //
-// The WalletUnlocker service is used to set up a wallet password for
-// lnd at first startup, and unlock a previously set up wallet.
-var WalletUnlockerService = exports.WalletUnlockerService = {
-  // *
-// GenSeed is the first method that should be used to instantiate a new lnd
-// instance. This method allows a caller to generate a new aezeed cipher seed
-// given an optional passphrase. If provided, the passphrase will be necessary
-// to decrypt the cipherseed to expose the internal wallet seed.
-//
-// Once the cipherseed is obtained and verified by the user, the InitWallet
-// method should be used to commit the newly generated seed, and create the
-// wallet.
-genSeed: {
-    path: '/lnrpc.WalletUnlocker/GenSeed',
-    requestStream: false,
-    responseStream: false,
-    requestType: rpc_pb.GenSeedRequest,
-    responseType: rpc_pb.GenSeedResponse,
-    requestSerialize: serialize_lnrpc_GenSeedRequest,
-    requestDeserialize: deserialize_lnrpc_GenSeedRequest,
-    responseSerialize: serialize_lnrpc_GenSeedResponse,
-    responseDeserialize: deserialize_lnrpc_GenSeedResponse,
-  },
-  // * 
-// InitWallet is used when lnd is starting up for the first time to fully
-// initialize the daemon and its internal wallet. At the very least a wallet
-// password must be provided. This will be used to encrypt sensitive material
-// on disk.
-//
-// In the case of a recovery scenario, the user can also specify their aezeed
-// mnemonic and passphrase. If set, then the daemon will use this prior state
-// to initialize its internal wallet.
-//
-// Alternatively, this can be used along with the GenSeed RPC to obtain a
-// seed, then present it to the user. Once it has been verified by the user,
-// the seed can be fed into this RPC in order to commit the new wallet.
-initWallet: {
-    path: '/lnrpc.WalletUnlocker/InitWallet',
-    requestStream: false,
-    responseStream: false,
-    requestType: rpc_pb.InitWalletRequest,
-    responseType: rpc_pb.InitWalletResponse,
-    requestSerialize: serialize_lnrpc_InitWalletRequest,
-    requestDeserialize: deserialize_lnrpc_InitWalletRequest,
-    responseSerialize: serialize_lnrpc_InitWalletResponse,
-    responseDeserialize: deserialize_lnrpc_InitWalletResponse,
-  },
-  // * lncli: `unlock`
-// UnlockWallet is used at startup of lnd to provide a password to unlock
-// the wallet database.
-unlockWallet: {
-    path: '/lnrpc.WalletUnlocker/UnlockWallet',
-    requestStream: false,
-    responseStream: false,
-    requestType: rpc_pb.UnlockWalletRequest,
-    responseType: rpc_pb.UnlockWalletResponse,
-    requestSerialize: serialize_lnrpc_UnlockWalletRequest,
-    requestDeserialize: deserialize_lnrpc_UnlockWalletRequest,
-    responseSerialize: serialize_lnrpc_UnlockWalletResponse,
-    responseDeserialize: deserialize_lnrpc_UnlockWalletResponse,
-  },
-  // * lncli: `changepassword`
-// ChangePassword changes the password of the encrypted wallet. This will
-// automatically unlock the wallet database if successful.
-changePassword: {
-    path: '/lnrpc.WalletUnlocker/ChangePassword',
-    requestStream: false,
-    responseStream: false,
-    requestType: rpc_pb.ChangePasswordRequest,
-    responseType: rpc_pb.ChangePasswordResponse,
-    requestSerialize: serialize_lnrpc_ChangePasswordRequest,
-    requestDeserialize: deserialize_lnrpc_ChangePasswordRequest,
-    responseSerialize: serialize_lnrpc_ChangePasswordResponse,
-    responseDeserialize: deserialize_lnrpc_ChangePasswordResponse,
-  },
-};
-
-exports.WalletUnlockerClient = grpc.makeGenericClientConstructor(WalletUnlockerService);
+// Lightning is the main RPC server of the daemon.
 var LightningService = exports.LightningService = {
-  // * lncli: `walletbalance`
+  // lncli: `walletbalance`
 // WalletBalance returns total unspent outputs(confirmed and unconfirmed), all
 // confirmed unspent outputs and all unconfirmed unspent outputs under control
 // of the wallet.
@@ -1276,7 +1216,7 @@ walletBalance: {
     responseSerialize: serialize_lnrpc_WalletBalanceResponse,
     responseDeserialize: deserialize_lnrpc_WalletBalanceResponse,
   },
-  // * lncli: `channelbalance`
+  // lncli: `channelbalance`
 // ChannelBalance returns the total funds available across all open channels
 // in atoms.
 channelBalance: {
@@ -1290,7 +1230,7 @@ channelBalance: {
     responseSerialize: serialize_lnrpc_ChannelBalanceResponse,
     responseDeserialize: deserialize_lnrpc_ChannelBalanceResponse,
   },
-  // * lncli: `listchaintxns`
+  // lncli: `listchaintxns`
 // GetTransactions returns a list describing all the known transactions
 // relevant to the wallet.
 getTransactions: {
@@ -1304,9 +1244,14 @@ getTransactions: {
     responseSerialize: serialize_lnrpc_TransactionDetails,
     responseDeserialize: deserialize_lnrpc_TransactionDetails,
   },
-  // * lncli: `estimatefee`
+  // lncli: `estimatefee`
 // EstimateFee asks the chain backend to estimate the fee rate and total fees
 // for a transaction that pays to multiple specified outputs.
+//
+// When using REST, the `AddrToAmount` map type can be set by appending
+// `&AddrToAmount[<address>]=<amount_to_send>` to the URL. Unfortunately this
+// map type doesn't appear in the REST API documentation because of a bug in
+// the grpc-gateway library.
 estimateFee: {
     path: '/lnrpc.Lightning/EstimateFee',
     requestStream: false,
@@ -1318,11 +1263,11 @@ estimateFee: {
     responseSerialize: serialize_lnrpc_EstimateFeeResponse,
     responseDeserialize: deserialize_lnrpc_EstimateFeeResponse,
   },
-  // * lncli: `sendcoins`
+  // lncli: `sendcoins`
 // SendCoins executes a request to send coins to a particular address. Unlike
 // SendMany, this RPC call only allows creating a single output at a time. If
-// neither target_conf, or atoms_per_byte are set, then the internal wallet will
-// consult its fee model to determine a fee for the default confirmation
+// neither target_conf, or atoms_per_byte are set, then the internal wallet
+// will consult its fee model to determine a fee for the default confirmation
 // target.
 sendCoins: {
     path: '/lnrpc.Lightning/SendCoins',
@@ -1335,7 +1280,9 @@ sendCoins: {
     responseSerialize: serialize_lnrpc_SendCoinsResponse,
     responseDeserialize: deserialize_lnrpc_SendCoinsResponse,
   },
-  // * lncli: `listunspent`
+  // lncli: `listunspent`
+// Deprecated, use walletrpc.ListUnspent instead.
+//
 // ListUnspent returns a list of all utxos spendable by the wallet with a
 // number of confirmations between the specified minimum and maximum.
 listUnspent: {
@@ -1349,7 +1296,7 @@ listUnspent: {
     responseSerialize: serialize_lnrpc_ListUnspentResponse,
     responseDeserialize: deserialize_lnrpc_ListUnspentResponse,
   },
-  // *
+  //
 // SubscribeTransactions creates a uni-directional stream from the server to
 // the client in which any newly discovered transactions relevant to the
 // wallet are sent over.
@@ -1364,7 +1311,7 @@ subscribeTransactions: {
     responseSerialize: serialize_lnrpc_Transaction,
     responseDeserialize: deserialize_lnrpc_Transaction,
   },
-  // * lncli: `sendmany`
+  // lncli: `sendmany`
 // SendMany handles a request for a transaction that creates multiple specified
 // outputs in parallel. If neither target_conf, or atoms_per_byte are set, then
 // the internal wallet will consult its fee model to determine a fee for the
@@ -1380,7 +1327,7 @@ sendMany: {
     responseSerialize: serialize_lnrpc_SendManyResponse,
     responseDeserialize: deserialize_lnrpc_SendManyResponse,
   },
-  // * lncli: `newaddress`
+  // lncli: `newaddress`
 // NewAddress creates a new address under control of the local wallet.
 newAddress: {
     path: '/lnrpc.Lightning/NewAddress',
@@ -1393,7 +1340,7 @@ newAddress: {
     responseSerialize: serialize_lnrpc_NewAddressResponse,
     responseDeserialize: deserialize_lnrpc_NewAddressResponse,
   },
-  // * lncli: `signmessage`
+  // lncli: `signmessage`
 // SignMessage signs a message with this node's private key. The returned
 // signature string is `zbase32` encoded and pubkey recoverable, meaning that
 // only the message digest and signature are needed for verification.
@@ -1408,7 +1355,7 @@ signMessage: {
     responseSerialize: serialize_lnrpc_SignMessageResponse,
     responseDeserialize: deserialize_lnrpc_SignMessageResponse,
   },
-  // * lncli: `verifymessage`
+  // lncli: `verifymessage`
 // VerifyMessage verifies a signature over a msg. The signature must be
 // zbase32 encoded and signed by an active node in the resident node's
 // channel database. In addition to returning the validity of the signature,
@@ -1424,7 +1371,7 @@ verifyMessage: {
     responseSerialize: serialize_lnrpc_VerifyMessageResponse,
     responseDeserialize: deserialize_lnrpc_VerifyMessageResponse,
   },
-  // * lncli: `connect`
+  // lncli: `connect`
 // ConnectPeer attempts to establish a connection to a remote peer. This is at
 // the networking level, and is used for communication between nodes. This is
 // distinct from establishing a channel with a peer.
@@ -1439,7 +1386,7 @@ connectPeer: {
     responseSerialize: serialize_lnrpc_ConnectPeerResponse,
     responseDeserialize: deserialize_lnrpc_ConnectPeerResponse,
   },
-  // * lncli: `disconnect`
+  // lncli: `disconnect`
 // DisconnectPeer attempts to disconnect one peer from another identified by a
 // given pubKey. In the case that we currently have a pending or active channel
 // with the target peer, then this action will be not be allowed.
@@ -1454,7 +1401,7 @@ disconnectPeer: {
     responseSerialize: serialize_lnrpc_DisconnectPeerResponse,
     responseDeserialize: deserialize_lnrpc_DisconnectPeerResponse,
   },
-  // * lncli: `listpeers`
+  // lncli: `listpeers`
 // ListPeers returns a verbose listing of all currently active peers.
 listPeers: {
     path: '/lnrpc.Lightning/ListPeers',
@@ -1467,7 +1414,7 @@ listPeers: {
     responseSerialize: serialize_lnrpc_ListPeersResponse,
     responseDeserialize: deserialize_lnrpc_ListPeersResponse,
   },
-  // *
+  //
 // SubscribePeerEvents creates a uni-directional stream from the server to
 // the client in which any events relevant to the state of peers are sent
 // over. Events include peers going online and offline.
@@ -1482,7 +1429,7 @@ subscribePeerEvents: {
     responseSerialize: serialize_lnrpc_PeerEvent,
     responseDeserialize: deserialize_lnrpc_PeerEvent,
   },
-  // * lncli: `getinfo`
+  // lncli: `getinfo`
 // GetInfo returns general information concerning the lightning node including
 // it's identity pubkey, alias, the chains it is connected to, and information
 // concerning the number of open+pending channels.
@@ -1497,9 +1444,24 @@ getInfo: {
     responseSerialize: serialize_lnrpc_GetInfoResponse,
     responseDeserialize: deserialize_lnrpc_GetInfoResponse,
   },
+  // * lncli: `getrecoveryinfo`
+// GetRecoveryInfo returns information concerning the recovery mode including
+// whether it's in a recovery mode, whether the recovery is finished, and the
+// progress made so far.
+getRecoveryInfo: {
+    path: '/lnrpc.Lightning/GetRecoveryInfo',
+    requestStream: false,
+    responseStream: false,
+    requestType: rpc_pb.GetRecoveryInfoRequest,
+    responseType: rpc_pb.GetRecoveryInfoResponse,
+    requestSerialize: serialize_lnrpc_GetRecoveryInfoRequest,
+    requestDeserialize: deserialize_lnrpc_GetRecoveryInfoRequest,
+    responseSerialize: serialize_lnrpc_GetRecoveryInfoResponse,
+    responseDeserialize: deserialize_lnrpc_GetRecoveryInfoResponse,
+  },
   // TODO(roasbeef): merge with below with bool?
 //
-// * lncli: `pendingchannels`
+// lncli: `pendingchannels`
 // PendingChannels returns a list of all the channels that are currently
 // considered "pending". A channel is pending if it has finished the funding
 // workflow and is waiting for confirmations for the funding txn, or is in the
@@ -1515,7 +1477,7 @@ pendingChannels: {
     responseSerialize: serialize_lnrpc_PendingChannelsResponse,
     responseDeserialize: deserialize_lnrpc_PendingChannelsResponse,
   },
-  // * lncli: `listchannels`
+  // lncli: `listchannels`
 // ListChannels returns a description of all the open channels that this node
 // is a participant in.
 listChannels: {
@@ -1529,7 +1491,7 @@ listChannels: {
     responseSerialize: serialize_lnrpc_ListChannelsResponse,
     responseDeserialize: deserialize_lnrpc_ListChannelsResponse,
   },
-  // *
+  //
 // SubscribeChannelEvents creates a uni-directional stream from the server to
 // the client in which any updates relevant to the state of the channels are
 // sent over. Events include new active channels, inactive channels, and closed
@@ -1545,7 +1507,7 @@ subscribeChannelEvents: {
     responseSerialize: serialize_lnrpc_ChannelEventUpdate,
     responseDeserialize: deserialize_lnrpc_ChannelEventUpdate,
   },
-  // * lncli: `closedchannels`
+  // lncli: `closedchannels`
 // ClosedChannels returns a description of all the closed channels that
 // this node was a participant in.
 closedChannels: {
@@ -1559,7 +1521,7 @@ closedChannels: {
     responseSerialize: serialize_lnrpc_ClosedChannelsResponse,
     responseDeserialize: deserialize_lnrpc_ClosedChannelsResponse,
   },
-  // *
+  //
 // OpenChannelSync is a synchronous version of the OpenChannel RPC call. This
 // call is meant to be consumed by clients to the REST proxy. As with all
 // other sync calls, all byte slices are intended to be populated as hex
@@ -1575,7 +1537,7 @@ openChannelSync: {
     responseSerialize: serialize_lnrpc_ChannelPoint,
     responseDeserialize: deserialize_lnrpc_ChannelPoint,
   },
-  // * lncli: `openchannel`
+  // lncli: `openchannel`
 // OpenChannel attempts to open a singly funded channel specified in the
 // request to a remote peer. Users are able to specify a target number of
 // blocks that the funding transaction should be confirmed in, or a manual fee
@@ -1595,7 +1557,7 @@ openChannel: {
     responseSerialize: serialize_lnrpc_OpenStatusUpdate,
     responseDeserialize: deserialize_lnrpc_OpenStatusUpdate,
   },
-  // *
+  //
 // FundingStateStep is an advanced funding related call that allows the caller
 // to either execute some preparatory steps for a funding workflow, or
 // manually progress a funding workflow. The primary way a funding flow is
@@ -1615,7 +1577,7 @@ fundingStateStep: {
     responseSerialize: serialize_lnrpc_FundingStateStepResp,
     responseDeserialize: deserialize_lnrpc_FundingStateStepResp,
   },
-  // *
+  //
 // ChannelAcceptor dispatches a bi-directional streaming RPC in which
 // OpenChannel requests are sent to the client and the client responds with
 // a boolean that tells LND whether or not to accept the channel. This allows
@@ -1632,7 +1594,7 @@ channelAcceptor: {
     responseSerialize: serialize_lnrpc_ChannelAcceptRequest,
     responseDeserialize: deserialize_lnrpc_ChannelAcceptRequest,
   },
-  // * lncli: `closechannel`
+  // lncli: `closechannel`
 // CloseChannel attempts to close an active channel identified by its channel
 // outpoint (ChannelPoint). The actions of this method can additionally be
 // augmented to attempt a force close after a timeout period in the case of an
@@ -1651,11 +1613,13 @@ closeChannel: {
     responseSerialize: serialize_lnrpc_CloseStatusUpdate,
     responseDeserialize: deserialize_lnrpc_CloseStatusUpdate,
   },
-  // * lncli: `abandonchannel`
+  // lncli: `abandonchannel`
 // AbandonChannel removes all channel state from the database except for a
 // close summary. This method can be used to get rid of permanently unusable
-// channels due to bugs fixed in newer versions of lnd. Only available
-// when in debug builds of lnd.
+// channels due to bugs fixed in newer versions of lnd. This method can also be
+// used to remove externally funded channels where the funding transaction was
+// never broadcast. Only available for non-externally funded channels in dev
+// build.
 abandonChannel: {
     path: '/lnrpc.Lightning/AbandonChannel',
     requestStream: false,
@@ -1667,11 +1631,12 @@ abandonChannel: {
     responseSerialize: serialize_lnrpc_AbandonChannelResponse,
     responseDeserialize: deserialize_lnrpc_AbandonChannelResponse,
   },
-  // * lncli: `sendpayment`
-// SendPayment dispatches a bi-directional streaming RPC for sending payments
-// through the Lightning Network. A single RPC invocation creates a persistent
-// bi-directional stream allowing clients to rapidly send payments through the
-// Lightning Network with a single persistent connection.
+  // lncli: `sendpayment`
+// Deprecated, use routerrpc.SendPaymentV2. SendPayment dispatches a
+// bi-directional streaming RPC for sending payments through the Lightning
+// Network. A single RPC invocation creates a persistent bi-directional
+// stream allowing clients to rapidly send payments through the Lightning
+// Network with a single persistent connection.
 sendPayment: {
     path: '/lnrpc.Lightning/SendPayment',
     requestStream: true,
@@ -1683,7 +1648,7 @@ sendPayment: {
     responseSerialize: serialize_lnrpc_SendResponse,
     responseDeserialize: deserialize_lnrpc_SendResponse,
   },
-  // *
+  //
 // SendPaymentSync is the synchronous non-streaming version of SendPayment.
 // This RPC is intended to be consumed by clients of the REST proxy.
 // Additionally, this RPC expects the destination's public key and the payment
@@ -1699,11 +1664,12 @@ sendPaymentSync: {
     responseSerialize: serialize_lnrpc_SendResponse,
     responseDeserialize: deserialize_lnrpc_SendResponse,
   },
-  // * lncli: `sendtoroute`
-// SendToRoute is a bi-directional streaming RPC for sending payment through
-// the Lightning Network. This method differs from SendPayment in that it
-// allows users to specify a full route manually. This can be used for things
-// like rebalancing, and atomic swaps.
+  // lncli: `sendtoroute`
+// Deprecated, use routerrpc.SendToRouteV2. SendToRoute is a bi-directional
+// streaming RPC for sending payment through the Lightning Network. This
+// method differs from SendPayment in that it allows users to specify a full
+// route manually. This can be used for things like rebalancing, and atomic
+// swaps.
 sendToRoute: {
     path: '/lnrpc.Lightning/SendToRoute',
     requestStream: true,
@@ -1715,7 +1681,7 @@ sendToRoute: {
     responseSerialize: serialize_lnrpc_SendResponse,
     responseDeserialize: deserialize_lnrpc_SendResponse,
   },
-  // *
+  //
 // SendToRouteSync is a synchronous version of SendToRoute. It Will block
 // until the payment either fails or succeeds.
 sendToRouteSync: {
@@ -1729,7 +1695,7 @@ sendToRouteSync: {
     responseSerialize: serialize_lnrpc_SendResponse,
     responseDeserialize: deserialize_lnrpc_SendResponse,
   },
-  // * lncli: `addinvoice`
+  // lncli: `addinvoice`
 // AddInvoice attempts to add a new invoice to the invoice database. Any
 // duplicated invoices are rejected, therefore all invoices *must* have a
 // unique payment preimage.
@@ -1744,7 +1710,7 @@ addInvoice: {
     responseSerialize: serialize_lnrpc_AddInvoiceResponse,
     responseDeserialize: deserialize_lnrpc_AddInvoiceResponse,
   },
-  // * lncli: `listinvoices`
+  // lncli: `listinvoices`
 // ListInvoices returns a list of all the invoices currently stored within the
 // database. Any active debug invoices are ignored. It has full support for
 // paginated responses, allowing users to query for specific invoices through
@@ -1763,7 +1729,7 @@ listInvoices: {
     responseSerialize: serialize_lnrpc_ListInvoiceResponse,
     responseDeserialize: deserialize_lnrpc_ListInvoiceResponse,
   },
-  // * lncli: `lookupinvoice`
+  // lncli: `lookupinvoice`
 // LookupInvoice attempts to look up an invoice according to its payment hash.
 // The passed payment hash *must* be exactly 32 bytes, if not, an error is
 // returned.
@@ -1778,7 +1744,7 @@ lookupInvoice: {
     responseSerialize: serialize_lnrpc_Invoice,
     responseDeserialize: deserialize_lnrpc_Invoice,
   },
-  // *
+  //
 // SubscribeInvoices returns a uni-directional stream (server -> client) for
 // notifying the client of newly added/settled invoices. The caller can
 // optionally specify the add_index and/or the settle_index. If the add_index
@@ -1799,7 +1765,7 @@ subscribeInvoices: {
     responseSerialize: serialize_lnrpc_Invoice,
     responseDeserialize: deserialize_lnrpc_Invoice,
   },
-  // * lncli: `decodepayreq`
+  // lncli: `decodepayreq`
 // DecodePayReq takes an encoded payment request string and attempts to decode
 // it, returning a full description of the conditions encoded within the
 // payment request.
@@ -1814,7 +1780,7 @@ decodePayReq: {
     responseSerialize: serialize_lnrpc_PayReq,
     responseDeserialize: deserialize_lnrpc_PayReq,
   },
-  // * lncli: `listpayments`
+  // lncli: `listpayments`
 // ListPayments returns a list of all outgoing payments.
 listPayments: {
     path: '/lnrpc.Lightning/ListPayments',
@@ -1827,7 +1793,7 @@ listPayments: {
     responseSerialize: serialize_lnrpc_ListPaymentsResponse,
     responseDeserialize: deserialize_lnrpc_ListPaymentsResponse,
   },
-  // *
+  //
 // DeleteAllPayments deletes all outgoing payments from DB.
 deleteAllPayments: {
     path: '/lnrpc.Lightning/DeleteAllPayments',
@@ -1840,7 +1806,7 @@ deleteAllPayments: {
     responseSerialize: serialize_lnrpc_DeleteAllPaymentsResponse,
     responseDeserialize: deserialize_lnrpc_DeleteAllPaymentsResponse,
   },
-  // * lncli: `describegraph`
+  // lncli: `describegraph`
 // DescribeGraph returns a description of the latest graph state from the
 // point of view of the node. The graph information is partitioned into two
 // components: all the nodes/vertexes, and all the edges that connect the
@@ -1858,7 +1824,21 @@ describeGraph: {
     responseSerialize: serialize_lnrpc_ChannelGraph,
     responseDeserialize: deserialize_lnrpc_ChannelGraph,
   },
-  // * lncli: `getchaninfo`
+  // lncli: `getnodemetrics`
+// GetNodeMetrics returns node metrics calculated from the graph. Currently
+// the only supported metric is betweenness centrality of individual nodes.
+getNodeMetrics: {
+    path: '/lnrpc.Lightning/GetNodeMetrics',
+    requestStream: false,
+    responseStream: false,
+    requestType: rpc_pb.NodeMetricsRequest,
+    responseType: rpc_pb.NodeMetricsResponse,
+    requestSerialize: serialize_lnrpc_NodeMetricsRequest,
+    requestDeserialize: deserialize_lnrpc_NodeMetricsRequest,
+    responseSerialize: serialize_lnrpc_NodeMetricsResponse,
+    responseDeserialize: deserialize_lnrpc_NodeMetricsResponse,
+  },
+  // lncli: `getchaninfo`
 // GetChanInfo returns the latest authenticated network announcement for the
 // given channel identified by its channel ID: an 8-byte integer which
 // uniquely identifies the location of transaction's funding output within the
@@ -1874,7 +1854,7 @@ getChanInfo: {
     responseSerialize: serialize_lnrpc_ChannelEdge,
     responseDeserialize: deserialize_lnrpc_ChannelEdge,
   },
-  // * lncli: `getnodeinfo`
+  // lncli: `getnodeinfo`
 // GetNodeInfo returns the latest advertised, aggregated, and authenticated
 // channel information for the specified node identified by its public key.
 getNodeInfo: {
@@ -1888,12 +1868,17 @@ getNodeInfo: {
     responseSerialize: serialize_lnrpc_NodeInfo,
     responseDeserialize: deserialize_lnrpc_NodeInfo,
   },
-  // * lncli: `queryroutes`
+  // lncli: `queryroutes`
 // QueryRoutes attempts to query the daemon's Channel Router for a possible
 // route to a target destination capable of carrying a specific amount of
 // atoms. The retuned route contains the full details required to craft and
 // send an HTLC, also including the necessary information that should be
 // present within the Sphinx packet encapsulated within the HTLC.
+//
+// When using REST, the `dest_custom_records` map type can be set by appending
+// `&dest_custom_records[<record_number>]=<record_data_base64_url_encoded>`
+// to the URL. Unfortunately this map type doesn't appear in the REST API
+// documentation because of a bug in the grpc-gateway library.
 queryRoutes: {
     path: '/lnrpc.Lightning/QueryRoutes',
     requestStream: false,
@@ -1905,7 +1890,7 @@ queryRoutes: {
     responseSerialize: serialize_lnrpc_QueryRoutesResponse,
     responseDeserialize: deserialize_lnrpc_QueryRoutesResponse,
   },
-  // * lncli: `getnetworkinfo`
+  // lncli: `getnetworkinfo`
 // GetNetworkInfo returns some basic stats about the known channel graph from
 // the point of view of the node.
 getNetworkInfo: {
@@ -1919,7 +1904,7 @@ getNetworkInfo: {
     responseSerialize: serialize_lnrpc_NetworkInfo,
     responseDeserialize: deserialize_lnrpc_NetworkInfo,
   },
-  // * lncli: `stop`
+  // lncli: `stop`
 // StopDaemon will send a shutdown request to the interrupt handler, triggering
 // a graceful shutdown of the daemon.
 stopDaemon: {
@@ -1933,7 +1918,7 @@ stopDaemon: {
     responseSerialize: serialize_lnrpc_StopResponse,
     responseDeserialize: deserialize_lnrpc_StopResponse,
   },
-  // *
+  //
 // SubscribeChannelGraph launches a streaming RPC that allows the caller to
 // receive notifications upon any changes to the channel graph topology from
 // the point of view of the responding node. Events notified include: new
@@ -1951,7 +1936,7 @@ subscribeChannelGraph: {
     responseSerialize: serialize_lnrpc_GraphTopologyUpdate,
     responseDeserialize: deserialize_lnrpc_GraphTopologyUpdate,
   },
-  // * lncli: `debuglevel`
+  // lncli: `debuglevel`
 // DebugLevel allows a caller to programmatically set the logging verbosity of
 // lnd. The logging can be targeted according to a coarse daemon-wide logging
 // level, or in a granular fashion to specify the logging for a target
@@ -1967,7 +1952,7 @@ debugLevel: {
     responseSerialize: serialize_lnrpc_DebugLevelResponse,
     responseDeserialize: deserialize_lnrpc_DebugLevelResponse,
   },
-  // * lncli: `feereport`
+  // lncli: `feereport`
 // FeeReport allows the caller to obtain a report detailing the current fee
 // schedule enforced by the node globally for each channel.
 feeReport: {
@@ -1981,7 +1966,7 @@ feeReport: {
     responseSerialize: serialize_lnrpc_FeeReportResponse,
     responseDeserialize: deserialize_lnrpc_FeeReportResponse,
   },
-  // * lncli: `updatechanpolicy`
+  // lncli: `updatechanpolicy`
 // UpdateChannelPolicy allows the caller to update the fee schedule and
 // channel policies for all channels globally, or a particular channel.
 updateChannelPolicy: {
@@ -1995,7 +1980,7 @@ updateChannelPolicy: {
     responseSerialize: serialize_lnrpc_PolicyUpdateResponse,
     responseDeserialize: deserialize_lnrpc_PolicyUpdateResponse,
   },
-  // * lncli: `fwdinghistory`
+  // lncli: `fwdinghistory`
 // ForwardingHistory allows the caller to query the htlcswitch for a record of
 // all HTLCs forwarded within the target time range, and integer offset
 // within that time range. If no time-range is specified, then the first chunk
@@ -2017,7 +2002,7 @@ forwardingHistory: {
     responseSerialize: serialize_lnrpc_ForwardingHistoryResponse,
     responseDeserialize: deserialize_lnrpc_ForwardingHistoryResponse,
   },
-  // * lncli: `exportchanbackup`
+  // lncli: `exportchanbackup`
 // ExportChannelBackup attempts to return an encrypted static channel backup
 // for the target channel identified by it channel point. The backup is
 // encrypted with a key generated from the aezeed seed of the user. The
@@ -2035,7 +2020,7 @@ exportChannelBackup: {
     responseSerialize: serialize_lnrpc_ChannelBackup,
     responseDeserialize: deserialize_lnrpc_ChannelBackup,
   },
-  // *
+  //
 // ExportAllChannelBackups returns static channel backups for all existing
 // channels known to lnd. A set of regular singular static channel backups for
 // each channel are returned. Additionally, a multi-channel backup is returned
@@ -2052,7 +2037,7 @@ exportAllChannelBackups: {
     responseSerialize: serialize_lnrpc_ChanBackupSnapshot,
     responseDeserialize: deserialize_lnrpc_ChanBackupSnapshot,
   },
-  // *
+  //
 // VerifyChanBackup allows a caller to verify the integrity of a channel backup
 // snapshot. This method will accept either a packed Single or a packed Multi.
 // Specifying both will result in an error.
@@ -2067,7 +2052,7 @@ verifyChanBackup: {
     responseSerialize: serialize_lnrpc_VerifyChanBackupResponse,
     responseDeserialize: deserialize_lnrpc_VerifyChanBackupResponse,
   },
-  // * lncli: `restorechanbackup`
+  // lncli: `restorechanbackup`
 // RestoreChannelBackups accepts a set of singular channel backups, or a
 // single encrypted multi-chan backup and attempts to recover any funds
 // remaining within the channel. If we are able to unpack the backup, then the
@@ -2083,7 +2068,7 @@ restoreChannelBackups: {
     responseSerialize: serialize_lnrpc_RestoreBackupResponse,
     responseDeserialize: deserialize_lnrpc_RestoreBackupResponse,
   },
-  // *
+  //
 // SubscribeChannelBackups allows a client to sub-subscribe to the most up to
 // date information concerning the state of all channel backups. Each time a
 // new channel is added, we return the new set of channels, along with a
@@ -2102,7 +2087,7 @@ subscribeChannelBackups: {
     responseSerialize: serialize_lnrpc_ChanBackupSnapshot,
     responseDeserialize: deserialize_lnrpc_ChanBackupSnapshot,
   },
-  // * lncli: `bakemacaroon`
+  // lncli: `bakemacaroon`
 // BakeMacaroon allows the creation of a new macaroon with custom read and
 // write permissions. No first-party caveats are added since this can be done
 // offline.
@@ -2116,6 +2101,47 @@ bakeMacaroon: {
     requestDeserialize: deserialize_lnrpc_BakeMacaroonRequest,
     responseSerialize: serialize_lnrpc_BakeMacaroonResponse,
     responseDeserialize: deserialize_lnrpc_BakeMacaroonResponse,
+  },
+  // lncli: `listmacaroonids`
+// ListMacaroonIDs returns all root key IDs that are in use.
+listMacaroonIDs: {
+    path: '/lnrpc.Lightning/ListMacaroonIDs',
+    requestStream: false,
+    responseStream: false,
+    requestType: rpc_pb.ListMacaroonIDsRequest,
+    responseType: rpc_pb.ListMacaroonIDsResponse,
+    requestSerialize: serialize_lnrpc_ListMacaroonIDsRequest,
+    requestDeserialize: deserialize_lnrpc_ListMacaroonIDsRequest,
+    responseSerialize: serialize_lnrpc_ListMacaroonIDsResponse,
+    responseDeserialize: deserialize_lnrpc_ListMacaroonIDsResponse,
+  },
+  // lncli: `deletemacaroonid`
+// DeleteMacaroonID deletes the specified macaroon ID and invalidates all
+// macaroons derived from that ID.
+deleteMacaroonID: {
+    path: '/lnrpc.Lightning/DeleteMacaroonID',
+    requestStream: false,
+    responseStream: false,
+    requestType: rpc_pb.DeleteMacaroonIDRequest,
+    responseType: rpc_pb.DeleteMacaroonIDResponse,
+    requestSerialize: serialize_lnrpc_DeleteMacaroonIDRequest,
+    requestDeserialize: deserialize_lnrpc_DeleteMacaroonIDRequest,
+    responseSerialize: serialize_lnrpc_DeleteMacaroonIDResponse,
+    responseDeserialize: deserialize_lnrpc_DeleteMacaroonIDResponse,
+  },
+  // lncli: `listpermissions`
+// ListPermissions lists all RPC method URIs and their required macaroon
+// permissions to access them.
+listPermissions: {
+    path: '/lnrpc.Lightning/ListPermissions',
+    requestStream: false,
+    responseStream: false,
+    requestType: rpc_pb.ListPermissionsRequest,
+    responseType: rpc_pb.ListPermissionsResponse,
+    requestSerialize: serialize_lnrpc_ListPermissionsRequest,
+    requestDeserialize: deserialize_lnrpc_ListPermissionsRequest,
+    responseSerialize: serialize_lnrpc_ListPermissionsResponse,
+    responseDeserialize: deserialize_lnrpc_ListPermissionsResponse,
   },
 };
 
