@@ -432,7 +432,7 @@ input[type="checkbox"] + label {
   }
 }
 
-@media screen and (max-width: 1439px) {
+@media screen and (max-width: 1539px) {
   .wrapper {
     flex-direction: column;
   }

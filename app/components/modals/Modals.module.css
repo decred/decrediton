@@ -685,7 +685,8 @@
     margin-left: 0 !important;
     margin-right: 0 !important;
     width: 455px !important;
-    height: 280px;
+    height: 290px;
+    overflow: hidden;
   }
 
   .reducedBar.about .aboutContent {
