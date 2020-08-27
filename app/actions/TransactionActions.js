@@ -121,32 +121,37 @@ export const newTransactionsReceived = (
     )
   ];
 
+  // filterTxsArray is an aux function to filter the passed transactions so
+  // we avoid duplicated txs.
+  const filterTxsArray = (transactions) => transactions.filter(
+    (tx) => {
+      // remove transactions which are already at the old state of unmined
+      // transactions array to avoid duplicated txs. If the tx is already at
+      // the array, no need for re-adding it.
+      const txIsAtArray = unminedTransactions.find(unminedTx =>
+        unminedTx.txHash === tx.txHash
+      );
+      if (txIsAtArray) {
+        return false;
+      }
+      // If it is not on the older array, nor the newly ones, we re-add it.
+      if (!newlyMinedMap[tx.txHash] && !newlyUnminedMap[tx.txHash]) {
+        return true;
+      }
+    }
+  );
+
   // update recent regular and stake transactions selector
   recentRegularTransactions = [
     ...unminedTransactions,
     ...newlyMinedTransactions,
-    ...recentRegularTransactions.filter(
-      (tx) => !newlyMinedMap[tx.txHash] && !newlyUnminedMap[tx.txHash]
-    )
+    ...filterTxsArray(recentRegularTransactions)
   ].filter((tx) => !tx.isStake);
 
   recentStakeTransactions = [
     ...unminedTransactions,
     ...newlyMinedTransactions,
-    ...recentStakeTransactions.filter(
-      (tx) => {
-        // remove transactions which are already at the recent Stake Txs array
-        // to avoid duplicated txs.
-        const txIsAtArray = unminedTransactions.find(unminedTx =>
-          unminedTx.txHash === tx.txHash
-        );
-        if (txIsAtArray) {
-          return false;
-        }
-        if (!newlyMinedMap[tx.txHash] && !newlyUnminedMap[tx.txHash]) {
-          return true;
-        }
-      })
+    ...filterTxsArray(recentStakeTransactions)
   ].filter((tx) => tx.isStake);
 
   // update maturing heights, so we can know when to update account balances
