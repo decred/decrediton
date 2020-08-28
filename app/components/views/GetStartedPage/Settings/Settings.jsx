@@ -94,7 +94,6 @@ const SetttingsForm = ({ onSendBack }) => {
               />
             </div>
             <div className={styles.columnWrapper}>
-              <div className={styles.column}>
                 <PrivacySettings
                   {...{
                     tempSettings,
@@ -108,7 +107,6 @@ const SetttingsForm = ({ onSendBack }) => {
             </div>
           </div>
         </div>
-      </div>
       <div className={styles.formSaveButtonWrapper}>
         <KeyBlueButton
           disabled={!areSettingsDirty}

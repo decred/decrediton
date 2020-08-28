@@ -353,10 +353,6 @@
   margin-left: 10px;
 }
 
-@media screen and (max-width: 1180px) {
-
-}
-
 @media screen and (max-width: 768px) {
   .receiveContent {
     width: 355px;
@@ -384,5 +380,9 @@
 
   .generateButton {
     margin-left: 216px;
+  }
+
+  .copyParent {
+    margin-left: -28px;
   }
 }
