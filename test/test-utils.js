@@ -29,12 +29,11 @@ function render(ui, renderOptions) {
   const locale = enLocale;
   const history = createMemoryHistory();
   const Wrapper = ({ children }) => {
-    const initialState = (renderOptions && Object.prototype.hasOwnProperty.call(
-      renderOptions,
-      "initialState"
-    ))
-      ? renderOptions.initialState
-      : {};
+    const initialState =
+      renderOptions &&
+      Object.prototype.hasOwnProperty.call(renderOptions, "initialState")
+        ? renderOptions.initialState
+        : { locales: locales };
     const store = configureStore(initialState, history);
     const ContainerApp = () => {
       return (
@@ -67,7 +66,7 @@ function render(ui, renderOptions) {
     ...rtlRender(ui, { wrapper: Wrapper, ...renderOptions }),
     history
   };
-};
+}
 
 export * from "@testing-library/react";
 export { render };
