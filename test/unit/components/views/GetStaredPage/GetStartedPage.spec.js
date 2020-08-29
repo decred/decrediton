@@ -26,22 +26,32 @@ test("render empty wallet chooser view and click around", async () => {
   expect(screen.getByText(/logs/i)).toBeInTheDocument();
   expect(screen.getByText(/settings/i)).toBeInTheDocument();
 
-  expect(screen.getByText(/about decrediton/i)).toBeInTheDocument();
-  expect(screen.getByText(/learn the basics/i)).toBeInTheDocument();
-  
-  // check if releasNotes reachable
+
   user.click(screen.getByText(/what's new in/i));
   await wait(() => screen.getByText(/newer version/i));
   // todo test realase page
   user.click(screen.getByText(/go back/i).previousSibling);
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
 
-  expect(screen.getByText(/choose a wallet to open/i)).toBeInTheDocument();
-  expect(screen.getByText(/create a new wallet/i)).toBeInTheDocument();
-  expect(screen.getByText(/restore existing wallet/i)).toBeInTheDocument();
-  expect(screen.getByText(/edit wallets/i)).toBeInTheDocument();
-  debug();
 
+  user.click(screen.getByText(/create a new wallet/i));
+  await wait(() => screen.getByText(/wallet name/i));
+  // todo test create wallet 
+  user.click(screen.getByText(/cancel/i));
+  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
+  
+
+  user.click(screen.getByText(/restore existing wallet/i));
+  await wait(() => screen.getByText(/wallet name/i));
+  // todo test create wallet 
+  user.click(screen.getByText(/cancel/i));
+  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
+
+  expect(screen.getByText(/about decrediton/i)).toBeInTheDocument();
+  expect(screen.getByText(/choose a wallet to open/i)).toBeInTheDocument();
+  expect(screen.getByText(/learn the basics/i)).toBeInTheDocument();
+  expect(screen.getByText(/edit wallets/i)).toBeInTheDocument();
+  
   expect(mockGetDaemonSynced).toHaveBeenCalled();
   expect(mockIsSPV).toHaveBeenCalled();
   expect(mockGetSelectedWallet).toHaveBeenCalled();
