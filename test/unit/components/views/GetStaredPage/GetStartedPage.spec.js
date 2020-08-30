@@ -7,9 +7,12 @@ import * as sel from "selectors";
 import * as wla from "actions/WalletLoaderActions";
 import * as da from "actions/DaemonActions";
 
+const testAppVersion = "0.test-version.0";
+
 let mockGetDaemonSynced;
 let mockMaxWalletCount;
 let mockIsSPV;
+let mockAppVersion;
 let mockGetSelectedWallet;
 let mockGetAvailableWallets;
 let mockIsTestNet;
@@ -18,6 +21,7 @@ beforeEach(() => {
   mockGetDaemonSynced = sel.getDaemonSynced = jest.fn(() => true);
   mockMaxWalletCount = sel.maxWalletCount = jest.fn(() => 3);
   mockIsSPV = sel.isSPV = jest.fn(() => false);
+  mockAppVersion = sel.appVersion = jest.fn(() => testAppVersion);
   mockGetSelectedWallet = wla.getSelectedWallet = jest.fn(() => () => null);
   mockGetAvailableWallets = da.getAvailableWallets = jest.fn(() => () =>
     Promise.resolve({ availableWallets: [], previousWallet: null })
@@ -29,19 +33,20 @@ afterEach(() => {
   mockGetDaemonSynced.mockRestore();
   mockMaxWalletCount.mockRestore();
   mockIsSPV.mockRestore();
+  mockAppVersion.mockRestore();
   mockGetSelectedWallet.mockRestore();
   mockGetAvailableWallets.mockRestore();
 });
 
 //todo: remove debugs
 
-test("render empty wallet chooser view", async () => {
+test("render empty wallet chooser view first", async () => {
   render(<GetStartedPage />);
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
 
   expect(screen.getByText(/logs/i)).toBeInTheDocument();
   expect(screen.getByText(/settings/i)).toBeInTheDocument();
-  expect(screen.getByText(/what's new in/i)).toBeInTheDocument();
+  expect(screen.getByText(`What's New in v${testAppVersion}`)).toBeInTheDocument();
   expect(screen.getByText(/create a new wallet/i)).toBeInTheDocument();
   expect(screen.getByText(/restore existing wallet/i)).toBeInTheDocument();
   expect(screen.getByText(/about decrediton/i)).toBeInTheDocument();
@@ -51,6 +56,7 @@ test("render empty wallet chooser view", async () => {
 
   expect(mockGetDaemonSynced).toHaveBeenCalled();
   expect(mockIsSPV).toHaveBeenCalled();
+  expect(mockAppVersion).toHaveBeenCalled();
   expect(mockGetSelectedWallet).toHaveBeenCalled();
   expect(mockGetAvailableWallets).toHaveBeenCalled();
   expect(mockMaxWalletCount).toHaveBeenCalled();
