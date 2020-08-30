@@ -40,13 +40,15 @@ afterEach(() => {
 
 //todo: remove debugs
 
-test("render empty wallet chooser view first", async () => {
+test("render empty wallet chooser view", async () => {
   render(<GetStartedPage />);
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
 
   expect(screen.getByText(/logs/i)).toBeInTheDocument();
   expect(screen.getByText(/settings/i)).toBeInTheDocument();
-  expect(screen.getByText(`What's New in v${testAppVersion}`)).toBeInTheDocument();
+  expect(
+    screen.getByText(`What's New in v${testAppVersion}`)
+  ).toBeInTheDocument();
   expect(screen.getByText(/create a new wallet/i)).toBeInTheDocument();
   expect(screen.getByText(/restore existing wallet/i)).toBeInTheDocument();
   expect(screen.getByText(/about decrediton/i)).toBeInTheDocument();
@@ -62,7 +64,6 @@ test("render empty wallet chooser view first", async () => {
   expect(mockMaxWalletCount).toHaveBeenCalled();
   expect(mockIsTestNet).toHaveBeenCalled();
 });
-
 
 test("render empty wallet chooser view in SPV mode", async () => {
   mockIsSPV = sel.isSPV = jest.fn(() => true);
@@ -87,14 +88,52 @@ test("render empty wallet chooser view in testnet mode", async () => {
   expect(mockIsTestNet).toHaveBeenCalled();
 });
 
-test("render empty wallet chooser view and click on release notes", async () => {
-  const { debug } = render(<GetStartedPage />);
+test("render empty wallet chooser view and click-on&test release notes", async () => {
+  const readRenderedVersionNumber = (headerText) => {
+    return /Decrediton v(.*) Released/i.exec(headerText)[1].replace(/\D/g, "");
+  };
+
+  const oldestVersionNumber = 130;
+  render(<GetStartedPage />);
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
 
   user.click(screen.getByText(/what's new in/i));
   await wait(() => screen.getByText(/newer version/i));
-  debug();
-  // todo test realase page
+  const header = screen.getByText(/Decrediton (.*) Released/i);
+  expect(header).toBeInTheDocument();
+  const newestVersionNumber = readRenderedVersionNumber(header.textContent);
+
+  // click on `newer version` button in vain
+  user.click(screen.getByText(/newer version/i));
+  expect(+readRenderedVersionNumber(header.textContent)).toBe(
+    +newestVersionNumber
+  );
+
+  // click on `older version` button until the oldest version reached
+  const olderVersionButton = screen.getByText(/older version/i);
+  user.click(olderVersionButton);
+  let olderVersionNumber = readRenderedVersionNumber(header.textContent);
+  expect(+olderVersionNumber).toBeLessThan(+newestVersionNumber);
+  do {
+    user.click(olderVersionButton);
+    olderVersionNumber = readRenderedVersionNumber(header.textContent);
+    console.log("older",olderVersionNumber);
+    expect(+olderVersionNumber).toBeLessThan(+newestVersionNumber);
+  } while (+olderVersionNumber > +oldestVersionNumber);
+
+  // click on `older version` button in vain
+  user.click(olderVersionButton);
+  expect(+readRenderedVersionNumber(header.textContent)).toBe(
+    +oldestVersionNumber
+  );
+
+  // go back to the newer versions view
+  user.click(screen.getByText(/newer version/i));
+  expect(+readRenderedVersionNumber(header.textContent)).toBeGreaterThan(
+    +oldestVersionNumber
+  );
+
+  // go back to the wallet chooser view
   user.click(screen.getByText(/go back/i).previousSibling);
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
 });
@@ -122,4 +161,3 @@ test("render empty wallet chooser view and click on restore wallet", async () =>
   user.click(screen.getByText(/cancel/i));
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
 });
-
