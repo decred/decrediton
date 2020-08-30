@@ -7,19 +7,35 @@ import * as sel from "selectors";
 import * as wla from "actions/WalletLoaderActions";
 import * as da from "actions/DaemonActions";
 
+let mockGetDaemonSynced;
+let mockMaxWalletCount;
+let mockIsSPV;
+let mockGetSelectedWallet;
+let mockGetAvailableWallets;
+let mockIsTestNet;
+
+beforeEach(() => {
+  mockGetDaemonSynced = sel.getDaemonSynced = jest.fn(() => true);
+  mockMaxWalletCount = sel.maxWalletCount = jest.fn(() => 3);
+  mockIsSPV = sel.isSPV = jest.fn(() => false);
+  mockGetSelectedWallet = wla.getSelectedWallet = jest.fn(() => () => null);
+  mockGetAvailableWallets = da.getAvailableWallets = jest.fn(() => () =>
+    Promise.resolve({ availableWallets: [], previousWallet: null })
+  );
+  mockIsTestNet = sel.isTestNet = jest.fn(() => false);
+});
+
+afterEach(() => {
+  mockGetDaemonSynced.mockRestore();
+  mockMaxWalletCount.mockRestore();
+  mockIsSPV.mockRestore();
+  mockGetSelectedWallet.mockRestore();
+  mockGetAvailableWallets.mockRestore();
+});
+
 //todo: remove debugs
 
-test("render empty wallet chooser view and click around", async () => {
-  const mockGetDaemonSynced = (sel.getDaemonSynced = jest.fn(() => true));
-  const mockMaxWalletCount = (sel.maxWalletCount = jest.fn(() => 3));
-  const mockIsSPV = (sel.isSPV = jest.fn(() => false));
-  const mockGetSelectedWallet = (wla.getSelectedWallet = jest.fn(() => () =>
-    null
-  ));
-  const mockGetAvailableWallets = (da.getAvailableWallets = jest.fn(() => () =>
-    Promise.resolve({ availableWallets: [], previousWallet: null })
-  ));
-
+test("render empty wallet chooser view", async () => {
   render(<GetStartedPage />);
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
 
@@ -32,30 +48,40 @@ test("render empty wallet chooser view and click around", async () => {
   expect(screen.getByText(/choose a wallet to open/i)).toBeInTheDocument();
   expect(screen.getByText(/learn the basics/i)).toBeInTheDocument();
   expect(screen.getByText(/edit wallets/i)).toBeInTheDocument();
-  
+
   expect(mockGetDaemonSynced).toHaveBeenCalled();
   expect(mockIsSPV).toHaveBeenCalled();
   expect(mockGetSelectedWallet).toHaveBeenCalled();
   expect(mockGetAvailableWallets).toHaveBeenCalled();
   expect(mockMaxWalletCount).toHaveBeenCalled();
-  mockGetDaemonSynced.mockRestore();
-  mockIsSPV.mockRestore();
-  mockGetSelectedWallet.mockRestore();
-  mockGetAvailableWallets.mockRestore();
-  mockMaxWalletCount.mockRestore();
+  expect(mockIsTestNet).toHaveBeenCalled();
+});
+
+
+test("render empty wallet chooser view in SPV mode", async () => {
+  mockIsSPV = sel.isSPV = jest.fn(() => true);
+
+  const { debug } = render(<GetStartedPage />);
+  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
+
+  expect(
+    screen.getByText(/choose a wallet to open in spv mode/i)
+  ).toBeInTheDocument();
+  debug();
+});
+
+test("render empty wallet chooser view in testnet mode", async () => {
+  mockIsTestNet = sel.isTestNet = jest.fn(() => true);
+
+  const { debug } = render(<GetStartedPage />);
+  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
+  // todo: check testnet logo
+  debug();
+
+  expect(mockIsTestNet).toHaveBeenCalled();
 });
 
 test("render empty wallet chooser view and click on release notes", async () => {
-  const mockGetDaemonSynced = (sel.getDaemonSynced = jest.fn(() => true));
-  const mockMaxWalletCount = (sel.maxWalletCount = jest.fn(() => 3));
-  const mockIsSPV = (sel.isSPV = jest.fn(() => false));
-  const mockGetSelectedWallet = (wla.getSelectedWallet = jest.fn(() => () =>
-    null
-  ));
-  const mockGetAvailableWallets = (da.getAvailableWallets = jest.fn(() => () =>
-    Promise.resolve({ availableWallets: [], previousWallet: null })
-  ));
-
   const { debug } = render(<GetStartedPage />);
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
 
@@ -65,123 +91,29 @@ test("render empty wallet chooser view and click on release notes", async () => 
   // todo test realase page
   user.click(screen.getByText(/go back/i).previousSibling);
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
-  
-  expect(mockGetDaemonSynced).toHaveBeenCalled();
-  expect(mockIsSPV).toHaveBeenCalled();
-  expect(mockGetSelectedWallet).toHaveBeenCalled();
-  expect(mockGetAvailableWallets).toHaveBeenCalled();
-  expect(mockMaxWalletCount).toHaveBeenCalled();
-  mockGetDaemonSynced.mockRestore();
-  mockIsSPV.mockRestore();
-  mockGetSelectedWallet.mockRestore();
-  mockGetAvailableWallets.mockRestore();
-  mockMaxWalletCount.mockRestore();
 });
 
 test("render empty wallet chooser view and click on create wallet", async () => {
-  const mockGetDaemonSynced = (sel.getDaemonSynced = jest.fn(() => true));
-  const mockMaxWalletCount = (sel.maxWalletCount = jest.fn(() => 3));
-  const mockIsSPV = (sel.isSPV = jest.fn(() => false));
-  const mockGetSelectedWallet = (wla.getSelectedWallet = jest.fn(() => () =>
-    null
-  ));
-  const mockGetAvailableWallets = (da.getAvailableWallets = jest.fn(() => () =>
-    Promise.resolve({ availableWallets: [], previousWallet: null })
-  ));
-
   const { debug } = render(<GetStartedPage />);
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
 
   user.click(screen.getByText(/create a new wallet/i));
   await wait(() => screen.getByText(/wallet name/i));
   debug();
-  // todo test create wallet 
+  // todo test create wallet
   user.click(screen.getByText(/cancel/i));
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
-
-  expect(mockGetDaemonSynced).toHaveBeenCalled();
-  expect(mockIsSPV).toHaveBeenCalled();
-  expect(mockGetSelectedWallet).toHaveBeenCalled();
-  expect(mockGetAvailableWallets).toHaveBeenCalled();
-  expect(mockMaxWalletCount).toHaveBeenCalled();
-  mockGetDaemonSynced.mockRestore();
-  mockIsSPV.mockRestore();
-  mockGetSelectedWallet.mockRestore();
-  mockGetAvailableWallets.mockRestore();
-  mockMaxWalletCount.mockRestore();
 });
 
 test("render empty wallet chooser view and click on restore wallet", async () => {
-  const mockGetDaemonSynced = (sel.getDaemonSynced = jest.fn(() => true));
-  const mockMaxWalletCount = (sel.maxWalletCount = jest.fn(() => 3));
-  const mockIsSPV = (sel.isSPV = jest.fn(() => false));
-  const mockGetSelectedWallet = (wla.getSelectedWallet = jest.fn(() => () =>
-    null
-  ));
-  const mockGetAvailableWallets = (da.getAvailableWallets = jest.fn(() => () =>
-    Promise.resolve({ availableWallets: [], previousWallet: null })
-  ));
-
   const { debug } = render(<GetStartedPage />);
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
 
   user.click(screen.getByText(/restore existing wallet/i));
   await wait(() => screen.getByText(/wallet name/i));
   debug();
-  // todo test create wallet 
+  // todo test create wallet
   user.click(screen.getByText(/cancel/i));
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
-
-  expect(mockGetDaemonSynced).toHaveBeenCalled();
-  expect(mockIsSPV).toHaveBeenCalled();
-  expect(mockGetSelectedWallet).toHaveBeenCalled();
-  expect(mockGetAvailableWallets).toHaveBeenCalled();
-  expect(mockMaxWalletCount).toHaveBeenCalled();
-  mockGetDaemonSynced.mockRestore();
-  mockIsSPV.mockRestore();
-  mockGetSelectedWallet.mockRestore();
-  mockGetAvailableWallets.mockRestore();
-  mockMaxWalletCount.mockRestore();
-});
-test("render empty wallet chooser view in SPV mode", async () => {
-  const mockGetDaemonSynced = (sel.getDaemonSynced = jest.fn(() => true));
-  const mockMaxWalletCount = (sel.maxWalletCount = jest.fn(() => 3));
-  const mockIsSPV = (sel.isSPV = jest.fn(() => true));
-  const mockGetSelectedWallet = (wla.getSelectedWallet = jest.fn(() => () =>
-    null
-  ));
-  const mockGetAvailableWallets = (da.getAvailableWallets = jest.fn(() => () =>
-    Promise.resolve({ availableWallets: [], previousWallet: null })
-  ));
-
-  const { debug } = render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
-
-  expect(
-    screen.getByText(/choose a wallet to open in spv mode/i)
-  ).toBeInTheDocument();
-  debug();
-
-  expect(mockGetDaemonSynced).toHaveBeenCalled();
-  expect(mockIsSPV).toHaveBeenCalled();
-  expect(mockGetSelectedWallet).toHaveBeenCalled();
-  expect(mockGetAvailableWallets).toHaveBeenCalled();
-  expect(mockMaxWalletCount).toHaveBeenCalled();
-  mockGetDaemonSynced.mockRestore();
-  mockIsSPV.mockRestore();
-  mockGetSelectedWallet.mockRestore();
-  mockGetAvailableWallets.mockRestore();
-  mockMaxWalletCount.mockRestore();
 });
 
-test("render empty wallet chooser view in testnet mode", async () => {
-  const mockIsTestNet = (sel.isTestNet = jest.fn(() => true));
-
-  const { debug } = render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
-  // todo: check testnet logo
-  debug();
-
-  expect(mockIsTestNet).toHaveBeenCalled();
-  mockIsTestNet.mockRestore();
-});
