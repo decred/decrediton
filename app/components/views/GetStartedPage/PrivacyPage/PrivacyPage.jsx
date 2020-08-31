@@ -13,7 +13,8 @@ const PrivacyPage = () => {
   const {
     finishPrivacy,
     setupStandardPrivacy,
-    setupDisabledPrivacy
+    setupDisabledPrivacy,
+    isTestNet
   } = useDaemonStartup();
   const [showCustomPrivacy, setShowCustomPrivacy] = useState(false);
 
@@ -37,7 +38,8 @@ const PrivacyPage = () => {
         showCustomPrivacy,
         isChangePassPhraseDisabled,
         changePassphraseRequestAttempt,
-        onChangeTempSettings
+        onChangeTempSettings,
+        isTestNet
       }}
     />
   );
