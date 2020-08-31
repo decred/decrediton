@@ -1,32 +1,33 @@
 import Select from "react-select";
 import { FormattedMessage as T } from "react-intl";
+import { classNames } from "pi-ui";
 import { KeyBlueButton } from "buttons";
 import { InlineField, PathBrowseInput, FileBrowserFilters } from "inputs";
 import { Subtitle } from "shared";
-import "style/ExportPage.less";
+import styles from "./ExportPage.module.css";
 
 const FieldDescription = ({ name, description }) => (
   <li>
-    <span className="export-info-field-name">{name}:</span>
+    <span className={styles.exportInfoFieldName}>{name}:</span>
     {description}
   </li>
 );
 
 const ExportPage = ({
   exportingData,
-  exportCSV,
   availableExports,
-  onChangeSelectedExport,
   selectedExport,
+  expanded,
+  expandFields,
   destinationFile,
   setDestinationFile,
-  expanded,
-  expandFields
+  onExportCSV,
+  onChangeSelectedExport
 }) => (
   <>
     <Subtitle title={<T id="export.subtitle" m="Export Transactions" />} />
-    <div className="export-area">
-      <div className="export-area-left">
+    <div className={styles.exportArea}>
+      <div className={styles.exportAreaLeft}>
         <InlineField label={<T id="export.select" m="Export Type" />}>
           <Select
             clearable={false}
@@ -50,25 +51,28 @@ const ExportPage = ({
         </InlineField>
       </div>
       <div
-        className={[
-          "export-area-right",
-          !expanded && "export-info-not-expanded "
-        ].join(" ")}
+        className={classNames(
+          styles.exportAreaRight,
+          !expanded && styles.exportInfoNotExpanded
+        )}
         onClick={expandFields}>
         <div
-          className={expanded ? "vertical-expand expanded" : "vertical-expand"}
+          className={expanded ? 
+            classNames(styles.verticalExpand, styles.expanded) : 
+            styles.verticalExpand
+          }
         />
-        <p className="export-info-description">{selectedExport.description}</p>
+        <p className={styles.exportInfoDescription}>{selectedExport.description}</p>
         <T id="export.infoFieldsHeader" m="Exported Fields" />
         :&nbsp;
         {expanded ? (
-          <ul className="export-info-fields">
+          <ul className={styles.exportInfoFields}>
             {selectedExport.fields.map((p) => (
               <FieldDescription key={p.name} {...p} />
             ))}
           </ul>
         ) : (
-          <div className="export-info-not-expanded">
+          <div className={styles.exportInfoNotExpanded}>
             {selectedExport.fields.map((p, i) =>
               i == selectedExport.fields.length - 1 ? (
                 <span key={p.name}>{p.name}.</span>
@@ -80,9 +84,9 @@ const ExportPage = ({
         )}
       </div>
     </div>
-    <div className="export-area-button-wrapper">
+    <div className={styles.exportAreaButton}>
       <KeyBlueButton
-        onClick={exportCSV}
+        onClick={onExportCSV}
         disabled={exportingData || !destinationFile}
         loading={exportingData}>
         <T id="export.btnExport" m="Export" />

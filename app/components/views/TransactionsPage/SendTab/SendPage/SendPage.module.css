@@ -1,0 +1,127 @@
+.isRow {
+  display: flex;
+  flex-direction: row;
+}
+
+.outputRow {
+  background-color: var(--background-back-color);
+  padding-top: 14px;
+  padding-bottom: 1px;
+}
+
+.sendArea{
+  width: 740px;
+  margin-bottom: 20px;
+}
+
+.detailsArea {
+  width: 298px;
+  height: 145px;
+  background-color: var(--transfer-details-bg);
+  padding: 14px 20px 0 0;
+  font-size: 11px;
+  color: var(--account-text);
+}
+
+.detailsArea .detailsValueColumn {
+  color: var(--sidebar-bottom-light-text-color);
+}
+
+.detailsArea .detailsValueColumn .totalAmountBytes {
+  color: var(--account-text);
+}
+
+.detailsValueColumn {
+  text-align: right;
+  flex-grow: 1;
+}
+
+.detailsTitle {
+  text-align: right;
+  margin-bottom: 45px;
+}
+
+
+.detailsLabelColumn {
+  white-space: nowrap;
+}
+
+.detailsLabelColumn .totalAmountText {
+  margin-left: 27px;
+}
+
+.detailsLabelColumn .estimatedFeeText {
+  margin-left: 64px;
+}
+
+.detailsLabelColumn .estimatedSizeText {
+  margin-left: 61px;
+}
+
+.sendButtonArea {
+  width: 740px;
+  text-align: right;
+}
+
+.passphraseModal {
+  width: 415px;
+}
+
+.passphraseModalLabel {
+  float: left;
+  width: 65%;
+  margin-top: 5px;
+}
+
+.passphraseModalAddress {
+  margin-left: 20px;
+  margin-top: 5px;
+  font-weight: 600;
+  float: right;
+}
+
+.passphraseModalBalance {
+  margin-left: 20px;
+  font-weight: 600;
+  margin-top: 5px;
+  float: right;
+}
+
+@media screen and (max-width: 768px) {
+  .isRow.sendArea {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .outputRow {
+    width: 355px;
+  }
+
+  .sendButtonArea {
+    width: 355px;
+  }
+
+  .detailsArea {
+    padding: 0;
+    display: flex;
+    width: 355px;
+    height: 85px;
+  }
+
+  .detailsTitle {
+    text-align: left;
+    padding-left: 20px;
+    padding-top: 20px;
+  }
+
+  .detailsValueColumn {
+    padding-top: 20px;
+    padding-left: 25px;
+  }
+
+
+  .detailsLabelColumn {
+    padding-top: 20px;
+    padding-left: 70px;
+  }
+}

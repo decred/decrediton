@@ -1,0 +1,51 @@
+.isRow {
+  display: flex;
+  flex-direction: row;
+}
+
+.historyContainer {
+  margin-left: auto;
+}
+
+.historySearchTx {
+  display: inline-block;
+}
+
+.historyPageContent {
+  width: 740px;
+  height: 100%;
+}
+
+
+@media screen and (max-width: 1179px) {
+  /* .history-page-content-wrapper {
+    width: 667px;
+  }
+
+  .history-content-title {
+    width: 608px;
+  } */
+}
+
+@media screen and (max-width: 768px) {
+  /* .history-page-content-wrapper {
+    width: 355px;
+  }
+
+  .history-content-title {
+    width: 355px;
+    margin-left: 0;
+  } */
+
+  .isRow {
+    flex-direction: column;
+  }
+
+  /* .history-select-tx-types-area {
+    margin-left: 0;
+  }
+
+  .history-search-tx {
+    width: 250px;
+  } */
+}

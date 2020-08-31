@@ -1,0 +1,105 @@
+.exportInfoFieldName {
+  font-weight: 600;
+  margin-right: 0.5em;
+  margin-left: -0.5em;
+}
+  
+.exportArea {
+  display: flex;
+  width: 740px;
+}
+
+.exportAreaLeft {
+  color: var(--title-text-and-button-background);
+  font-size: 13px;
+  line-height: 17px;
+  padding: 30px 20px 0px 28px;
+  width: 366px;
+  height: 98px;
+  background-color: var(--background-back-color);
+}
+
+.exportAreaRight {
+  background-color: var(--disabled-background-color-dark);
+  padding: 30px 30px 10px 30px;
+  width: 266px;
+  font-size: 13px;
+  line-height: 19px;
+  cursor: pointer;
+  color: var(--wallet-label);
+  position: relative;
+}
+
+.exportAreaRight .verticalExpand {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  background-image: var(--arrow-right-gray-icon);
+  background-repeat: no-repeat;
+  background-size: 20px 10px;
+  display: inline-block;
+  width: 20px;
+  height: 10px;
+  transform: rotate(90deg);
+  transition: all 0.5s;
+  position: absolute;
+  top: 28px;
+  right: 25px;
+}
+
+.exportAreaRight .verticalExpand.expanded {
+  transform: rotate(270deg);
+}
+
+.exportAreaRight .exportInfoNotExpanded {
+  font-weight: 600;
+  display: inline;
+}
+
+.exportInfoDescription {
+  margin-top: 0px;
+}
+
+ul.exportInfoFields {
+  margin-top: 0;
+  margin-left: 10px;
+}
+
+.exportAreaButton {
+  margin-top: 20px;
+  width: 740px;
+  text-align: right;
+}
+
+@media screen and (max-width: 1180px) {
+  .exportAreaLeft {
+    width: 273px;
+  }
+  .exportAreaRight {
+    padding-right: 20px;
+    width: 263px;
+  }  
+
+  .exportAreaButton {
+    width: 634px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .exportArea {
+    flex-direction: column;
+  }
+
+  .exportAreaLeft {
+      width: 307px;
+  }
+
+  .exportAreaRight {
+    width: 305px;
+    min-height: 88px;
+  }
+
+  .exportAreaButton {
+    width: 355px;
+  }
+}

@@ -1,0 +1,26 @@
+.tabbedPageSubtitle {
+  color: var(--stroke-color-hovered);
+  font-size: 20px;
+  line-height: 25px;
+  margin-bottom: 17px;
+  margin-left: 0;
+  width: 740px;
+}
+
+.tabbedPageSubtitle.export {
+  margin-top: -20px;
+}
+
+@media screen and (max-width: 1179px) {
+  .tabbedPageSubtitle {
+    margin-left: 0;
+    width: 630px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .tabbedPageSubtitle {
+    width: 355px;
+    margin-left: 0;
+  }
+}

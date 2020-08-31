@@ -1,6 +1,13 @@
 import { FormattedMessage as T } from "react-intl";
+import {
+  transactionStats,
+  dailyBalancesStats,
+  balancesStats,
+  voteTimeStats,
+  ticketStats
+} from "actions/StatisticsActions";
 
-export default {
+export const messages = {
   transactions: {
     name: <T id="export.transactions.name" m="Transactions" />,
     description: (
@@ -411,3 +418,22 @@ export default {
     ]
   }
 };
+
+export const availableExports = [
+  {
+    ...messages.transactions,
+    key: "transactions",
+    calcFunction: transactionStats
+  },
+  {
+    ...messages.dailyBalances,
+    key: "dailyBalances",
+    calcFunction: dailyBalancesStats
+  },
+  { ...messages.balances, key: "balances", calcFunction: balancesStats },
+  { ...messages.voteTime, key: "votetime", calcFunction: voteTimeStats },
+  { ...messages.tickets, key: "tickets", calcFunction: ticketStats }
+];
+
+
+  

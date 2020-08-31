@@ -2,12 +2,10 @@ export { default as accountsPage } from "./accountsPage";
 export { default as accountsSelect } from "./accountsSelect";
 export { default as app } from "./app";
 export { default as balance } from "./balance";
-export { default as historyPage } from "./historyPage";
 export { default as home } from "./home";
 export { default as invalidRPCVersion } from "./invalidRPCVersion";
 export { default as logging } from "./logging";
 export { default as purchaseTickets } from "./purchaseTickets";
-export { default as receive } from "./receive";
 export { default as rescan } from "./rescan";
 export { default as send } from "./send";
 export { default as service } from "./service"; // TODO: hook already exists in hooks/useService.js but connector is still used in class components
