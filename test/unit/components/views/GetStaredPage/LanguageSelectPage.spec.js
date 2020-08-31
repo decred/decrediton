@@ -23,12 +23,6 @@ beforeEach(() => {
   mockIsTestNet = sel.isTestNet = jest.fn(() => false);
 });
 
-afterEach(() => {
-  mockSortedLocales.mockRestore();
-  mockSelectLanguage.mockRestore();
-  mockIsTestNet.mockRestore();
-});
-
 test("render language select page", () => {
   render(<LanguageSelectPage />);
   expect(screen.getByText(/welcome to decrediton wallet/i)).toBeInTheDocument();
@@ -78,6 +72,7 @@ test("render language select page", () => {
 test("render language select page in testnet mode", () => {
   mockIsTestNet = sel.isTestNet = jest.fn(() => true);
   render(<LanguageSelectPage />);
+  expect(mockIsTestNet).toHaveBeenCalled();
   expect(screen.getByTestId("getstarted-pagebody").className).toMatch(
     /testnetBody/
   );

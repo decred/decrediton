@@ -4,6 +4,7 @@ import styles from "../GetStarted.module.css";
 
 export default ({ isTestNet, ...props }) => (
   <div
+    data-testid="getstarted-pagebody"
     className={classNames(
       styles.pageBody,
       styles.getstarted,
