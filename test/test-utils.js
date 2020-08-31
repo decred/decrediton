@@ -24,6 +24,7 @@ afterAll(() => {
 afterEach(() => {
   jest.clearAllMocks();
 });
+const locale = locales[1];
 
 function render(ui, renderOptions) {
   const locale = enLocale;

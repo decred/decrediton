@@ -55,6 +55,9 @@ test("render empty wallet chooser view", async () => {
   expect(screen.getByText(/choose a wallet to open/i)).toBeInTheDocument();
   expect(screen.getByText(/learn the basics/i)).toBeInTheDocument();
   expect(screen.getByText(/edit wallets/i)).toBeInTheDocument();
+  expect(screen.getByTestId("getstarted-pagebody").className).not.toMatch(
+    /testnetBody/
+  );
 
   expect(mockGetDaemonSynced).toHaveBeenCalled();
   expect(mockIsSPV).toHaveBeenCalled();
@@ -80,11 +83,11 @@ test("render empty wallet chooser view in SPV mode", async () => {
 test("render empty wallet chooser view in testnet mode", async () => {
   mockIsTestNet = sel.isTestNet = jest.fn(() => true);
 
-  const { debug } = render(<GetStartedPage />);
+  render(<GetStartedPage />);
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
-  // todo: check testnet logo
-  debug();
-
+  expect(screen.getByTestId("getstarted-pagebody").className).toMatch(
+    /testnetBody/
+  );
   expect(mockIsTestNet).toHaveBeenCalled();
 });
 
