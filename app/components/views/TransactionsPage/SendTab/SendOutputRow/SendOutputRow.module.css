@@ -9,8 +9,11 @@
 }
 
 .sendIconWrapper {
+  display:inline-block;
+  vertical-align: middle;
   width: 24px;
   height: 24px;
+  margin-right: 0.5em;
   background-position: 50% 50%;
   background-size: 19px;
   background-repeat: no-repeat;
@@ -29,7 +32,7 @@
 }
 
 .sendIconWrapper.add.disabled {
-  background-image: var(--add-icon)-disabled;
+  background-image: var(--add-icon);
   background-color: #E7EAED;
   cursor: auto;
 }
@@ -59,10 +62,6 @@
   cursor: auto;
 }
 
-.sendIconWrapper.walletIcon.disabled:hover {
-  background-image: var(--send-all-disabled);
-}
-
 .sendIconWrapper.cancelIcon {
   background-image: var(--indicator-invalid-icon);
 }
@@ -90,6 +89,7 @@
 .sendInputWrapper {
   margin-bottom: 23px;
 }
+
 .sendInputWrapper .inputErrorsArea {
   margin-bottom: -14px;
 }
@@ -99,10 +99,12 @@
   margin-left: 10px;
   margin-right: 10px;
 }
+
 .sendInput.inputAndUnit {
   width: 255px;
   padding-bottom: 2px;
 }
+
 .sendInput.sendAll {
   border-bottom: 1px var(--stroke-color-default) solid;
   text-align: right;

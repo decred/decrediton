@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
 import * as tza from "actions/TrezorActions";
