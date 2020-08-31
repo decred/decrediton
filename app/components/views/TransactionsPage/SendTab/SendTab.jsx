@@ -1,5 +1,4 @@
-import { service, send } from "connectors";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import SendPage from "./SendPage/SendPage";
 import SendOutputRow from "./SendOutputRow/SendOutputRow";
 import ErrorScreen from "ErrorScreen";
@@ -32,7 +31,7 @@ export const SendTabHeader = () => {
         )
       }
     />
-  )
+  );
 };
 
 const SendTab = () => {
@@ -42,18 +41,19 @@ const SendTab = () => {
     unsignedRawTx,
     nextAddress,
     nextAddressAccount,
+    estimatedFee,
+    estimatedSignedSize,
     constructTxLowBalance,
     publishTxResponse,
     totalSpent,
     notMixedAccounts,
-    estimatedFee,
-    estimatedSignedSize,
+    isTrezor,
     isWatchingOnly,
     isConstructingTransaction,
-    isTrezor,
-    validateAddress,
     attemptConstructTransaction,
-    onClearTransaction
+    validateAddress,
+    onClearTransaction,
+    onGetNextAddressAttempt
   } = useSendTab();
 
   const {
@@ -82,14 +82,14 @@ const SendTab = () => {
     let newOutputs;
     if (publishTxResponse && publishTxResponse != prevPublishTxResponse) {
       if (isSendSelf) {
-        getNextAddressAttempt(nextAddressAccount.value)
+        onGetNextAddressAttempt(nextAddressAccount.value);
       }
       setIsSendAll(false);
       newOutputs = [baseOutput()];
     }
     if (
-      isSendSelf && 
-      (prevNextAddress != nextAddress || 
+      isSendSelf &&
+      (prevNextAddress != nextAddress ||
         (prevIsSendSelf != isSendSelf && nextAddress))
     ) {
       newOutputs = (newOutputs || outputs).map((o) => ({
@@ -97,7 +97,7 @@ const SendTab = () => {
         data: { ...o.data, destination: nextAddress }
       }));
     }
-    if (newOutputs) {     
+    if (newOutputs) {
       onSetOutputs(newOutputs);
       onAttemptConstructTransaction();
     }
@@ -108,9 +108,23 @@ const SendTab = () => {
     }
 
     return () => onClearTransaction();
-  });
+  }, [
+    publishTxResponse,
+    prevPublishTxResponse,
+    isSendSelf,
+    prevNextAddress,
+    nextAddress,
+    prevIsSendSelf,
+    constructTxLowBalance,
+    nextAddressAccount.value,
+    outputs,
+    onSetOutputs,
+    onAttemptConstructTransaction,
+    onClearTransaction,
+    onGetNextAddressAttempt
+  ]);
 
-  const onAttemptConstructTransaction = () => {
+  const onAttemptConstructTransaction = useCallback(() => {
     const confirmations = 0;
     setSendAllAmount(account.spendable);
     if (hasError()) return;
@@ -131,7 +145,15 @@ const SendTab = () => {
         true
       );
     }
-  };
+  }, [
+    setSendAllAmount,
+    hasError,
+    isSendAll,
+    attemptConstructTransaction,
+    account.spendable,
+    account.value,
+    outputs
+  ]);
 
   const onValidateAddress = async ({ address, index }) => {
     let error;
@@ -179,25 +201,25 @@ const SendTab = () => {
     onAttemptConstructTransaction();
   };
 
-  const onChangeAccount = (account) => { 
+  const onChangeAccount = (account) => {
     setAccount(account);
     onAttemptConstructTransaction();
   };
-  
+
   const onShowSendSelf = () => {
     const newOutputs = [{ ...outputs[0], data: baseOutput().data }];
     setIsSendSelf(true);
     onSetOutputs(newOutputs);
     onAttemptConstructTransaction();
   };
-  
+
   const onShowSendOthers = () => {
     const newOutputs = [{ ...outputs[0], data: baseOutput().data }];
     setIsSendSelf(false);
     onSetOutputs(newOutputs);
     onAttemptConstructTransaction();
   };
-  
+
   const onShowSendAll = () => {
     const newOutputs = [{
       ...outputs[0],
@@ -216,7 +238,7 @@ const SendTab = () => {
       setShowPassphraseModal(true);
     }
   };
-  
+
   const onHideSendAll = () => {
     const newOutputs = [{
       ...outputs[0],
@@ -226,11 +248,11 @@ const SendTab = () => {
       }
     }];
     setIsSendAll(false);
-    setOutputs(newOutputs);
+    onSetOutputs(newOutputs);
     onAttemptConstructTransaction();
   };
 
-  const hasError = () => {
+  const hasError = useCallback(() => {
     let hasError = false;
     outputs.forEach((o) => {
       if (
@@ -244,19 +266,19 @@ const SendTab = () => {
       }
     });
     return hasError;
-  };
+  }, [outputs]);
 
-  const isValid = () =>!!(
-    !hasError() && 
-    unsignedTransaction && 
-    !isConstructingTransaction && 
+  const isValid = () => !!(
+    !hasError() &&
+    unsignedTransaction &&
+    !isConstructingTransaction &&
     !constructTxLowBalance
   );
 
   const willEnter = () => ({
     opacity: 0
   });
-  
+
   const willLeave = () => ({
     opacity: spring(0, { stiffness: 210, damping: 20 })
   });
@@ -312,7 +334,7 @@ const SendTab = () => {
         estimatedFee,
         estimatedSignedSize,
         isValid,
-        getOutputRows,  
+        getOutputRows,
         nextAddressAccount,
         showPassphraseModal,
         resetShowPassphraseModal,

@@ -7,7 +7,7 @@ import {
 } from "inputs";
 import { Tooltip, Balance } from "shared";
 import { classNames } from "pi-ui";
-import styles from "./SendOutputRow.module.css"
+import styles from "./SendOutputRow.module.css";
 
 const messages = defineMessages({
   destinationAddrPlaceholder: {

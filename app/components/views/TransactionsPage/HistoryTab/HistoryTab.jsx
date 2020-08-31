@@ -117,7 +117,7 @@ const HistoryTab = () => {
         onChangeSortType,
         onChangeSearchText,
         onLoadMoreTransactions,
-        onChangeSliderValue,
+        onChangeSliderValue
       }}
     />
   );

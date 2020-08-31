@@ -34,7 +34,7 @@ const subtitleMenu = ({
   transactionsFilter,
   unitDivisor
 }) => (
-  <div className={styles.historyContainer}> 
+  <div className={styles.historyContainer}>
     <div className={styles.historySearchTx}>
       <TextInput
         type="text"
@@ -89,7 +89,7 @@ const Page = ({
   onChangeSortType,
   onChangeSearchText,
   onLoadMoreTransactions,
-  onChangeSliderValue,
+  onChangeSliderValue
 }) => (
   <>
     <Subtitle

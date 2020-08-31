@@ -434,6 +434,3 @@ export const availableExports = [
   { ...messages.voteTime, key: "votetime", calcFunction: voteTimeStats },
   { ...messages.tickets, key: "tickets", calcFunction: ticketStats }
 ];
-
-
-  

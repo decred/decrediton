@@ -39,10 +39,10 @@ const ReceiveTab = () => {
         />
       );
     }
-    setAmount({ 
+    setAmount({
       amount: value,
       amountAtomValue: atomValue,
-      error: { amount: error } 
+      error: { amount: error }
     });
   };
 

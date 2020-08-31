@@ -57,8 +57,8 @@ const ExportPage = ({
         )}
         onClick={expandFields}>
         <div
-          className={expanded ? 
-            classNames(styles.verticalExpand, styles.expanded) : 
+          className={expanded ?
+            classNames(styles.verticalExpand, styles.expanded) :
             styles.verticalExpand
           }
         />

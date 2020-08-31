@@ -45,7 +45,7 @@ const ExportTab = () => {
       onExportCSV={onExportCSV}
       onChangeSelectedExport={onSetSelectedExport}
     />
-  )
-}
+  );
+};
 
 export default ExportTab;
