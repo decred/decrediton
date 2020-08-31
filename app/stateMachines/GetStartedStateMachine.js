@@ -76,7 +76,8 @@ export const getStartedMachine = Machine({
                 selectedWallet: (context, event) =>
                   event.selectedWallet
                     ? event.selectedWallet
-                    : context.selectedWallet
+                    : context.selectedWallet,
+                error: (context, event) => event.error
               })
             }
           }
@@ -184,7 +185,8 @@ export const getStartedMachine = Machine({
                 selectedWallet: (context, event) =>
                   event.selectedWallet
                     ? event.selectedWallet
-                    : context.selectedWallet
+                    : context.selectedWallet,
+                error: (context, event) => event.error
               })
             },
             CREATE_WALLET: {
@@ -195,6 +197,12 @@ export const getStartedMachine = Machine({
                     ? event.isNew
                     : context.isCreateNewWallet
               })
+            },
+            ERROR: {
+              target: "choosingWallet",
+              actions: assign({
+                error: (_, event) => event.error
+              })
             }
           }
         },
@@ -203,9 +211,11 @@ export const getStartedMachine = Machine({
           on: {
             SYNC_RPC: "syncingRPC",
             WALLET_PUBPASS_INPUT: "walletPubpassInput",
-            ERROR_STARTING_WALLET: {
+            ERROR: {
               target: "choosingWallet",
-              actions: assign({ error: (context, event) => event.error })
+              actions: assign({
+                error: (context, event) => event.error
+              })
             }
           }
         },

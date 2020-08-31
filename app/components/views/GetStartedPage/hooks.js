@@ -124,13 +124,18 @@ export const useGetStarted = () => {
       },
       isAtChoosingWallet: (_, event) => {
         console.log("is at choosingWallet");
-        const { selectedWallet } = event;
+        const { selectedWallet, error } = event;
         if (selectedWallet) {
-          return send({ type: "SUBMIT_CHOOSE_WALLET", selectedWallet });
+          return submitChosenWallet(selectedWallet);
+        }
+        // if there is an error, we return as retrying getting available
+        // wallets will probably cause an infinite loop.
+        if (error) {
+          return;
         }
         onGetAvailableWallets()
           .then((w) => send({ type: "CHOOSE_WALLET", payload: { w } }))
-          .catch((e) => console.log(e));
+          .catch((error) => onSendError(error));
       },
       isAtStartWallet: (context) => {
         console.log("is At Start Wallet");
@@ -146,7 +151,7 @@ export const useGetStarted = () => {
             if (error === OPENWALLET_INPUT) {
               return send({ type: "WALLET_PUBPASS_INPUT" });
             }
-            send({ type: "ERROR_STARTING_WALLET", payload: { error } });
+            onSendError(error);
           });
       },
       isSyncingRPC: async (context) => {
@@ -271,7 +276,11 @@ export const useGetStarted = () => {
   );
 
   const submitChosenWallet = useCallback(
-    (selectedWallet) => send({ type: "SUBMIT_CHOOSE_WALLET", selectedWallet }),
+    ({ selectedWallet, error }) => send({
+      type: "SUBMIT_CHOOSE_WALLET",
+      selectedWallet,
+      error
+    }),
     [send]
   );
 
