@@ -58,7 +58,6 @@ const SendTab = () => {
 
   const {
     outputs,
-    outputsError,
     onAddOutput,
     onUpdateOutput,
     onRemoveOutput,
@@ -86,7 +85,7 @@ const SendTab = () => {
         getNextAddressAttempt(nextAddressAccount.value)
       }
       setIsSendAll(false);
-      newOutputs = baseOutput();
+      newOutputs = [baseOutput()];
     }
     if (
       isSendSelf && 
@@ -98,7 +97,7 @@ const SendTab = () => {
         data: { ...o.data, destination: nextAddress }
       }));
     }
-    if (newOutputs) {      
+    if (newOutputs) {     
       onSetOutputs(newOutputs);
       onAttemptConstructTransaction();
     }
@@ -114,7 +113,7 @@ const SendTab = () => {
   const onAttemptConstructTransaction = () => {
     const confirmations = 0;
     setSendAllAmount(account.spendable);
-    if (outputsError) return;
+    if (hasError()) return;
     if (!isSendAll) {
       return attemptConstructTransaction(
         account.value,
@@ -231,8 +230,24 @@ const SendTab = () => {
     onAttemptConstructTransaction();
   };
 
+  const hasError = () => {
+    let hasError = false;
+    outputs.forEach((o) => {
+      if (
+        !o.data.amount ||
+        o.data.destination.length === 0 ||
+        o.data.error.amount ||
+        o.data.error.address
+      ) {
+        hasError = true;
+        return;
+      }
+    });
+    return hasError;
+  };
+
   const isValid = () =>!!(
-    !outputsError && 
+    !hasError() && 
     unsignedTransaction && 
     !isConstructingTransaction && 
     !constructTxLowBalance
@@ -249,7 +264,7 @@ const SendTab = () => {
   const resetShowPassphraseModal = () =>
     setShowPassphraseModal(false);
 
-  const getStyles = () => {
+  const getOutputRows = () => {
     // if sending to another accounts from same wallet, there is no need to
     // filter accounts.
     const filterAccounts = isSendSelf ? [] : notMixedAccounts;
@@ -297,7 +312,7 @@ const SendTab = () => {
         estimatedFee,
         estimatedSignedSize,
         isValid,
-        getStyles,  
+        getOutputRows,  
         nextAddressAccount,
         showPassphraseModal,
         resetShowPassphraseModal,

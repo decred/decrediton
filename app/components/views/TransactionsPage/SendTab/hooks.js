@@ -91,21 +91,6 @@ export function useSendTab() {
 
 export function useOutputs() {
   const [outputs, setOutputs] = useState([baseOutput()]);
-  const [error, setError] = useState(false);
-
-  // Check for errors in outputs
-  useEffect(() => {
-    outputs.forEach((o) => {
-      if (
-        !o.data.amount ||
-        o.data.destination.length === 0 ||
-        o.data.error.amount ||
-        o.data.error.address
-      ) {
-        setError(true);
-      }
-    });
-  }, [outputs]);
 
   const onAddOutput = () => {
     const newOutputs = [ ...outputs ];
@@ -128,10 +113,9 @@ export function useOutputs() {
 
   return {
     outputs,
-    outputsError: error,
-    onSetOutputs: setOutputs,
     onAddOutput,
     onUpdateOutput,
-    onRemoveOutput
+    onRemoveOutput,
+    onSetOutputs: setOutputs,
   };
 }

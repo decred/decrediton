@@ -14,7 +14,7 @@ const SendPage = ({
   estimatedFee,
   estimatedSignedSize,
   isValid,
-  getStyles,
+  getOutputRows,
   willLeave,
   willEnter,
   nextAddressAccount,
@@ -29,7 +29,7 @@ const SendPage = ({
     <Subtitle title={<T id="send.subtitle" m="Send DCR" />} />
     <div className={classNames(styles.sendArea, styles.isRow)}>
       <TransitionMotionWrapper
-        {...{ styles: getStyles(), willLeave, willEnter, wrapperComponent }}
+        {...{ styles: getOutputRows(), willLeave, willEnter, wrapperComponent }}
       />
       <div className={styles.detailsArea}>
         <div className={styles.detailsTitle}>Details</div>
