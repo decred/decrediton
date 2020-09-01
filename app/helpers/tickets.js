@@ -162,7 +162,7 @@ export const addrFromSStxPkScrCommitment = (pkScript, params) => {
 
   // Return the correct address type.
   if (isP2SH) {
-    return { address: newAddressScriptHashFromHash(hashBytes, params) };
+    return { address: newAddressScriptHashFromHash(hashBytes, params.ScriptHashAddrID) };
   }
   return { address: newAddressPubKeyHash(hashBytes, params, 0) };
 };
