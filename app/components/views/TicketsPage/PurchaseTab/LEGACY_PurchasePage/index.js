@@ -66,8 +66,6 @@ const LEGACY_PurchasePage = ({
     hasFailedAttempt
   } = useLegacyPurchasePage(toggleShowVsp);
 
-  console.log("isPurchasingTickets isPurchasingTickets isPurchasingTickets isPurchasingTickets", isPurchasingTickets);
-
   return (
     getNoAvailableStakepools && !getStakepoolListingEnabled()) ?
     <StakepoolListingDisabled /> :
