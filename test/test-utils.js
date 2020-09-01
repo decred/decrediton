@@ -30,11 +30,20 @@ function render(ui, renderOptions) {
   const locale = enLocale;
   const history = createMemoryHistory();
   const Wrapper = ({ children }) => {
-    const initialState =
+    let initialState = {
+      settings: {
+        currentSettings: {
+          locale: "en"
+        }
+      },
+      locales: locales
+    };
+    if (
       renderOptions &&
       Object.prototype.hasOwnProperty.call(renderOptions, "initialState")
-        ? renderOptions.initialState
-        : { locales: locales };
+    ) {
+      initialState = { ...initialState, ...renderOptions.initialState };
+    }
     const store = configureStore(initialState, history);
     const ContainerApp = () => {
       return (
