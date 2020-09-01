@@ -77,84 +77,6 @@ const SendTab = () => {
   const prevNextAddress = usePrevious(nextAddress);
   const prevIsSendSelf = usePrevious(isSendSelf);
 
-  // Executes on component updates
-  useEffect(() => {
-    let newOutputs;
-    if (publishTxResponse && publishTxResponse != prevPublishTxResponse) {
-      if (isSendSelf) {
-        onGetNextAddressAttempt(nextAddressAccount.value);
-      }
-      setIsSendAll(false);
-      newOutputs = [baseOutput()];
-    }
-    if (
-      isSendSelf &&
-      (prevNextAddress != nextAddress ||
-        (prevIsSendSelf != isSendSelf && nextAddress))
-    ) {
-      newOutputs = (newOutputs || outputs).map((o) => ({
-        ...o,
-        data: { ...o.data, destination: nextAddress }
-      }));
-    }
-    if (newOutputs) {
-      onSetOutputs(newOutputs);
-      onAttemptConstructTransaction();
-    }
-    if (constructTxLowBalance) {
-      setInsuficientFunds(true);
-    } else {
-      setInsuficientFunds(false);
-    }
-
-    return () => onClearTransaction();
-  }, [
-    publishTxResponse,
-    prevPublishTxResponse,
-    isSendSelf,
-    prevNextAddress,
-    nextAddress,
-    prevIsSendSelf,
-    constructTxLowBalance,
-    nextAddressAccount.value,
-    outputs,
-    onSetOutputs,
-    onAttemptConstructTransaction,
-    onClearTransaction,
-    onGetNextAddressAttempt
-  ]);
-
-  const onAttemptConstructTransaction = useCallback(() => {
-    const confirmations = 0;
-    setSendAllAmount(account.spendable);
-    if (hasError()) return;
-    if (!isSendAll) {
-      return attemptConstructTransaction(
-        account.value,
-        confirmations,
-        outputs.map(({ data }) => ({
-          amount: data.amount,
-          destination: data.destination
-        }))
-      );
-    } else {
-      return attemptConstructTransaction(
-        account.value,
-        confirmations,
-        outputs,
-        true
-      );
-    }
-  }, [
-    setSendAllAmount,
-    hasError,
-    isSendAll,
-    attemptConstructTransaction,
-    account.spendable,
-    account.value,
-    outputs
-  ]);
-
   const onValidateAddress = async ({ address, index }) => {
     let error;
     const ref = { ...outputs[index] };
@@ -324,6 +246,84 @@ const SendTab = () => {
       }
     }));
   };
+
+  const onAttemptConstructTransaction = useCallback(() => {
+    const confirmations = 0;
+    setSendAllAmount(account.spendable);
+    if (hasError()) return;
+    if (!isSendAll) {
+      return attemptConstructTransaction(
+        account.value,
+        confirmations,
+        outputs.map(({ data }) => ({
+          amount: data.amount,
+          destination: data.destination
+        }))
+      );
+    } else {
+      return attemptConstructTransaction(
+        account.value,
+        confirmations,
+        outputs,
+        true
+      );
+    }
+  }, [
+    setSendAllAmount,
+    hasError,
+    isSendAll,
+    attemptConstructTransaction,
+    account.spendable,
+    account.value,
+    outputs
+  ]);
+
+  // Executes on component updates
+  useEffect(() => {
+    let newOutputs;
+    if (publishTxResponse && publishTxResponse != prevPublishTxResponse) {
+      if (isSendSelf) {
+        onGetNextAddressAttempt(nextAddressAccount.value);
+      }
+      setIsSendAll(false);
+      newOutputs = [baseOutput()];
+    }
+    if (
+      isSendSelf &&
+      (prevNextAddress != nextAddress ||
+        (prevIsSendSelf != isSendSelf && nextAddress))
+    ) {
+      newOutputs = (newOutputs || outputs).map((o) => ({
+        ...o,
+        data: { ...o.data, destination: nextAddress }
+      }));
+    }
+    if (newOutputs) {
+      onSetOutputs(newOutputs);
+      onAttemptConstructTransaction();
+    }
+    if (constructTxLowBalance) {
+      setInsuficientFunds(true);
+    } else {
+      setInsuficientFunds(false);
+    }
+
+    return () => onClearTransaction();
+  }, [
+    publishTxResponse,
+    prevPublishTxResponse,
+    isSendSelf,
+    prevNextAddress,
+    nextAddress,
+    prevIsSendSelf,
+    constructTxLowBalance,
+    nextAddressAccount.value,
+    outputs,
+    onSetOutputs,
+    onAttemptConstructTransaction,
+    onClearTransaction,
+    onGetNextAddressAttempt
+  ]);
 
   return !walletService ? <ErrorScreen /> : (
     <SendPage
