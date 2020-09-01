@@ -276,20 +276,20 @@
 }
 
 /* REPLACE ALLL THIS WITH PI-UI RADIO BUTTONS */
-input[type="checkbox"],
-input[type="radio"] {
+.wrapper input[type="checkbox"],
+.wrapper input[type="radio"] {
   display: none;
 }
 
-input[type="checkbox"]:disabled + label,
-input[type="radio"]:disabled + label {
+.wrapper input[type="checkbox"]:disabled + label,
+.wrapper input[type="radio"]:disabled + label {
   display: inline-block;
   background-color: var(--disabled-background-color);
   border: 1px solid var(--disabled-color);
 }
 
-input[type="checkbox"]:checked:disabled + label,
-input[type="radio"]:checked:disabled + label {
+.wrapper input[type="checkbox"]:checked:disabled + label,
+.wrapper input[type="radio"]:checked:disabled + label {
   display: inline-block;
   border: 1px solid var(--disabled-color);
   background-color: var(--disabled-background-color);
@@ -298,15 +298,15 @@ input[type="radio"]:checked:disabled + label {
   background-size: 10px;
 }
 
-input[type="checkbox"] + label,
-input[type="radio"] + label {
+.wrapper input[type="checkbox"] + label,
+.wrapper input[type="radio"] + label {
   display: inline-block;
   border: 1px solid var(--home-content-link);
   background-color: none;
 }
 
-input[type="checkbox"]:checked + label,
-input[type="radio"]:checked + label {
+.wrapper input[type="checkbox"]:checked + label,
+.wrapper input[type="radio"]:checked + label {
   display: inline-block;
   border: 1px solid var(--input-color);
   background-color: none;
@@ -315,12 +315,12 @@ input[type="radio"]:checked + label {
   background-size: 10px;
 }
 
-input[type="radio"]:checked + label {
+.wrapper input[type="radio"]:checked + label {
   background-image: none;
   position: relative;
 }
 
-input[type="radio"]:checked + label:before {
+.wrapper input[type="radio"]:checked + label:before {
   content: "";
   width: 6px;
   height: 6px;
@@ -331,14 +331,14 @@ input[type="radio"]:checked + label:before {
   left: 4px;
 }
 
-input[type="radio"] + label {
+.wrapper input[type="radio"] + label {
   border-radius: 50%;
   width: 14px;
   height: 14px;
   background-position: 2px;
 }
 
-input[type="checkbox"] + label {
+.wrapper input[type="checkbox"] + label {
   width: 12px;
   height: 12px;
   background-position: 1px;
