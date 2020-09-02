@@ -1,14 +1,16 @@
 import { Route, Switch } from "react-router-dom";
+import { StandalonePage } from "layout";
 import TicketLifecycle from "./TicketLifecycle";
 import Staking from "./Staking";
-import { StandalonePage } from "layout";
-import "style/Tutorial.less";
+import styles from "./TutorialsPage.module.css";
 
-export default () => (
-  <StandalonePage className="wallet-tutorial">
+const TutorialsPage = () => (
+  <StandalonePage className={styles.walletTutorial}>
     <Switch>
       <Route path="/tutorial/ticketLifecycle" component={TicketLifecycle} />
       <Route path="/tutorial/staking" component={Staking} />
     </Switch>
   </StandalonePage>
 );
+
+export default TutorialsPage

@@ -3,86 +3,9 @@
   padding: 60px;
   color: var(--title-text-and-button-background);
 }
-.walletTutorial .tutorialTitle {
-  font-size: 27px;
-  margin-bottom: 10px;
-  }
 
-    .tutorialSubtitle {
-      font-size: 11px;
-      margin-bottom: 20px;
-      color: var(--new_wallet-label);
-    }
-  
-    .tutorialCloseButton {
-      height: 12px;
-      width: 12px;
-      background-repeat: no-repeat;
-      background-size: 12px;
-      background-image: var(--x-grey);
-      float: right;
-      padding: 0;
-    }
-  
-    .tutorialStandardPage {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-    }
-  
-    .tutorialText {
-      width: 40%;
-      margin-right: 30px;
-      white-space: pre-line;
-      color: var(--wallet-tutorial-text);
-    }
-  
-    .tutorialPageIndicator a {
-      cursor: pointer;
-      color: var(--wallet-tutorial-link);
-    }
-  
-    .tutorialImageAndIndicator {
-      text-align: center;
-      height: 35vw;
-      width: 35vw;
-      min-width: 340px;
-      min-height: 340px;
-    }
-  
-    .tutorialImage {
-      background-repeat: no-repeat;
-      background-size: 100%;
-      background-position: center;
-      width: 100%;
-      height: 100%;
-    }
-  
-    .tutorialImageLifecycle-01 {
-      background-image: var(--llifecycle-01);
-    }
-  
-    .tutorialImageLifecycle-02 {
-      background-image: var(--llifecycle-02);
-    }
-  
-    .tutorialImageLifecycle-03 {
-      background-image: var(--llifecycle-03);
-    }
-  
-    .tutorialImageLifecycle-04 {
-      background-image: var(--llifecycle-04);
-    }
-  
-    .tutorialImageLifecycle-05 {
-      background-image: var(--llifecycle-05);
-    }
-  
-    .tutorialImageLifecycle-06 {
-      background-image: var(--llifecycle-06);
-    }
-  
-    .tutorialImageStaking-01 {
-      background-image: var(--sstaking-01-icon);
-    }
+@media screen and (max-width: 800px) {
+  .walletTutorial {
+    padding: 30px 0;
   }
+}
