@@ -57,10 +57,11 @@ export default () => {
     transactions,
     getAccountsResponse,
     getTransactionsRequestAttempt,
+    goToTransactionHistory,
     goToMyTickets,
     tsDate
   } = useHomePage();
-
+  
   return walletService ? (
     <>
       <div className={classNames(
@@ -107,7 +108,7 @@ export default () => {
             getTransactionsRequestAttempt,
             getAccountsResponse,
             rowNumber: ROWS_NUMBER_ON_TABLE,
-            goToMyTickets,
+            goToTransactionHistory,
             tsDate
           }}
         />

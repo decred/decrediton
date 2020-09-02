@@ -22,12 +22,12 @@ export function useHomePage() {
   );
 
   const goToMyTickets = useCallback(
-    () => dispatch(cla.goToMyTickets),
+    () => dispatch(cla.goToMyTickets()),
     [dispatch]
   );
 
   const goToTransactionHistory = useCallback(
-    () => dispatch(cla.goToTransactionHistory),
+    () => dispatch(cla.goToTransactionHistory()),
     [dispatch]
   );
 
