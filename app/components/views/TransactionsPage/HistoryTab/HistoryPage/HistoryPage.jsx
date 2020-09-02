@@ -10,7 +10,7 @@ import {
 } from "indicators";
 import InfiniteScroll from "react-infinite-scroller";
 import styles from "./HistoryPage.module.css";
-import "style/EyeFilterMenu.less";
+import "style/HistoryPage.less";
 
 const messages = defineMessages({
   filterByAddrPlaceholder: {

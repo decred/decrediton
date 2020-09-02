@@ -18,34 +18,26 @@
 
 
 @media screen and (max-width: 1179px) {
-  /* .history-page-content-wrapper {
+  .historyContainer {
     width: 667px;
   }
-
-  .history-content-title {
-    width: 608px;
-  } */
 }
 
 @media screen and (max-width: 768px) {
-  /* .history-page-content-wrapper {
+  .historyContainer {
     width: 355px;
   }
 
   .history-content-title {
     width: 355px;
     margin-left: 0;
-  } */
+  }
 
   .isRow {
     flex-direction: column;
   }
 
-  /* .history-select-tx-types-area {
-    margin-left: 0;
-  }
-
-  .history-search-tx {
+  .historySearchTx {
     width: 250px;
-  } */
+  }
 }
