@@ -18,14 +18,18 @@
 
 
 @media screen and (max-width: 1179px) {
-  .historyContainer {
+  .historyPageContent {
     width: 667px;
   }
 }
 
 @media screen and (max-width: 768px) {
-  .historyContainer {
+  .historyPageContent {
     width: 355px;
+  }
+
+  .historyContainer {
+    margin-left: 0;
   }
 
   .history-content-title {
