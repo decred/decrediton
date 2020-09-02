@@ -120,7 +120,6 @@ test("render empty wallet chooser view and click-on&test release notes", async (
   do {
     user.click(olderVersionButton);
     olderVersionNumber = readRenderedVersionNumber(header.textContent);
-    console.log("older",olderVersionNumber);
     expect(+olderVersionNumber).toBeLessThan(+newestVersionNumber);
   } while (+olderVersionNumber > +oldestVersionNumber);
 
