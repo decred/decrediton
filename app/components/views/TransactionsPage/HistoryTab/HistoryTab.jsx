@@ -89,8 +89,8 @@ const HistoryTab = () => {
     }
     const changeFilter = (vs) => {
       const newFilter = {
-        ...transactionsFilter,
-        ...vs
+        ...vs,
+        ...transactionsFilter
       };
       clearTimeout(isChangingFilterTimer);
       onChangeTransactionsFilter(newFilter);
