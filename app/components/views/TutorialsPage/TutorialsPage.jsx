@@ -13,4 +13,4 @@ const TutorialsPage = () => (
   </StandalonePage>
 );
 
-export default TutorialsPage
+export default TutorialsPage;
