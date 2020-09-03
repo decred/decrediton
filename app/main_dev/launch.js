@@ -117,6 +117,10 @@ export function closeDCRD() {
   return true;
 }
 
+export function dropDCRDSocket() {
+  dcrdSocket = null;
+}
+
 export const closeDCRW = () => {
   if (dcrwPID === -1) {
     // process is not started by decrediton
