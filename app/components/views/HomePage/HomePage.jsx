@@ -61,7 +61,7 @@ export default () => {
     goToMyTickets,
     tsDate
   } = useHomePage();
-  
+
   return walletService ? (
     <>
       <div className={classNames(
