@@ -3,6 +3,7 @@ import { useService } from "hooks";
 import { useHomePage } from "./hooks";
 import { FormattedMessage as T } from "react-intl";
 import { Balance, RoutedTab, Tooltip } from "shared";
+import { StandalonePage } from "layout";
 import RoutedTabsHeader from "shared/RoutedTabsHeader/RoutedTabsHeader";
 import { Switch, Route, Redirect } from "react-router-dom";
 import RecentTransactions from "./RecentTransactions/RecentTransactions";
@@ -64,6 +65,7 @@ export default () => {
 
   return walletService ? (
     <>
+    <StandalonePage>
       <div className={classNames(
         styles.overviewHeader,
         styles.isRow
@@ -123,6 +125,7 @@ export default () => {
           }}
         />
       </div>
+      </StandalonePage>
     </>
   ) : <ErrorScreen />;
 };
