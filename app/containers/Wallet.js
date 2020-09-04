@@ -12,7 +12,7 @@ import SecurityPage from "components/views/SecurityPage/SecurityPage";
 import TransactionsPage from "components/views/TransactionsPage";
 import TransactionPage from "components/views/TransactionPage/TransactionPage";
 import TicketsPage from "components/views/TicketsPage/TicketsPage";
-import TutorialsPage from "components/views/TutorialsPage";
+import TutorialsPage from "components/views/TutorialsPage/TutorialsPage";
 import GovernancePage from "components/views/GovernancePage/GovernancePage";
 import ProposalDetailsPage from "components/views/ProposalDetailsPage/ProposalDetailsPage";
 import TrezorPage from "components/views/TrezorPage";
