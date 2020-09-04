@@ -66,7 +66,8 @@ const LEGACY_PurchasePage = ({
     hasFailedAttempt
   } = useLegacyPurchasePage(toggleShowVsp);
 
-  return (getNoAvailableStakepools && !getStakepoolListingEnabled()) ?
+  return (
+    getNoAvailableStakepools && !getStakepoolListingEnabled()) ?
     <StakepoolListingDisabled /> :
     getNoAvailableStakepools ?
       <NoAvailableStakepools /> :
