@@ -71,36 +71,35 @@ const LEGACY_PurchasePage = ({
     <StakepoolListingDisabled /> :
     getNoAvailableStakepools ?
       <NoAvailableStakepools /> :
-      getIsAdding ?
-        <StakePoolsAddForm
-          {...{
-            selectedUnconfigured,
-            unconfiguredStakePools,
-            configuredStakePools,
-            apiKey,
-            isSavingStakePoolConfig,
-            onChangeSelectedUnconfigured,
-            onChangeApiKey,
-            onSetStakePoolInfo,
-            onCancelAddStakePool,
-            hasFailedAttempt,
-            toggleIsLegacy
-          }}
-        /> :
-        isPurchasingTickets ? (
-          <StakeyBounce center />
-        ) : isShowingVsp ? (
-          <StakePools {...{
-            configuredStakePools,
-            onRemoveStakePool,
-            showModal,
-            toggleShowVsp,
-            toggleBackupModal,
-            onShowAddStakePool,
-            rescanRequest,
-            ...props
-          }} />
-        ) : (
+      isPurchasingTickets ? (
+        <StakeyBounce center />) :
+        getIsAdding ?
+          <StakePoolsAddForm
+            {...{
+              selectedUnconfigured,
+              unconfiguredStakePools,
+              configuredStakePools,
+              apiKey,
+              isSavingStakePoolConfig,
+              onChangeSelectedUnconfigured,
+              onChangeApiKey,
+              onSetStakePoolInfo,
+              onCancelAddStakePool,
+              hasFailedAttempt,
+              toggleIsLegacy
+            }}
+          /> : isShowingVsp ? (
+            <StakePools {...{
+              configuredStakePools,
+              onRemoveStakePool,
+              showModal,
+              toggleShowVsp,
+              toggleBackupModal,
+              onShowAddStakePool,
+              rescanRequest,
+              ...props
+            }} />
+          ) : (
               <Tickets {...{
                 toggleIsLegacy,
                 toggleShowVsp,
