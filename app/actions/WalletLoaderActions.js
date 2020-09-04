@@ -474,8 +474,11 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
     const { loader } = getState().walletLoader;
     const spvSyncCall = loader.spvSync(request);
     dispatch({ syncCall: spvSyncCall, type: SYNC_UPDATE });
-    spvSyncCall.on("data", function (response) {
-      dispatch(syncConsumer(response));
+    spvSyncCall.on("data", async function (response) {
+      const synced = await dispatch(syncConsumer(response));
+      if (synced) {
+        return resolve();
+      }
     });
     spvSyncCall.on("end", function () {
       dispatch({ type: SYNC_SUCCESS });

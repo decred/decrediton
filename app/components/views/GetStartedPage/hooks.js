@@ -153,7 +153,7 @@ export const useGetStarted = () => {
         const { passPhrase, isPrivacy } = context;
         if (context.isSPV) {
           return startSPVSync()
-            .then((r) => r)
+            .then(() => send({ type: "GO_TO_HOME_VIEW" }))
             .catch((error) =>
               send({ type: "ERROR_SYNCING_WALLET", payload: { error } })
             );
