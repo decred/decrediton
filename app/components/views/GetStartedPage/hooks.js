@@ -222,7 +222,6 @@ export const useGetStarted = () => {
     // If daemon is synced or isSPV mode we check for a selectedWallet.
     // If it is selected, it probably means a wallet was just pre created or
     // a refresh (common when in dev mode).
-    if (!isAdvancedDaemon && (getDaemonSynced || isSPV)) {
     if (getDaemonSynced || isSPV) {
       const selectedWallet = getSelectedWallet();
       return send({
