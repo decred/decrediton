@@ -19,7 +19,7 @@ import { getStartedMachine } from "stateMachines/GetStartedStateMachine";
 import { AdvancedStartupBody } from "./AdvancedStartup/AdvancedStartup";
 import SettingMixedAccount from "./SetMixedAcctPage/SetMixedAcctPage";
 
-// XXX: these animations classes are passed down to AnimatedLinearProgressFull
+// XXX these animations classes are passed down to AnimatedLinearProgressFull
 // and styling defined in Loading.less and need to handled when loading.less
 // is migrated, and classes should be defined then in ./GetStarted.module.css
 // css animation classes
@@ -107,7 +107,6 @@ export const useGetStarted = () => {
       },
       isAtCheckNetworkMatch: () => {
         console.log(" is at check network ");
-        // TODO add error when network does not match
         return checkNetworkMatch()
           .then(() => send({ type: "CHOOSE_WALLET" }))
           .catch((error) =>
@@ -224,6 +223,7 @@ export const useGetStarted = () => {
     // If it is selected, it probably means a wallet was just pre created or
     // a refresh (common when in dev mode).
     if (!isAdvancedDaemon && (getDaemonSynced || isSPV)) {
+    if (getDaemonSynced || isSPV) {
       const selectedWallet = getSelectedWallet();
       return send({
         type: "CHOOSE_WALLET",
