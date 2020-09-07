@@ -10,7 +10,7 @@ export const SettingsLinkMsg = () => (
 export const HeaderTimeMsg = () => (
   <T
     id="getStarted.chainLoading.headerTime"
-    m="Time from last fetched header:"
+    m="Time from last fetched header: "
   />
 );
 export const BackBtnMsg = () => <T id="getStarted.backBtn" m="Cancel" />;
