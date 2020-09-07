@@ -13,7 +13,7 @@ beforeEach(() => {
   mockToggleSpv = da.toggleSpv = jest.fn(() => () => {});
 });
 
-test("render spv choice page", () => {
+test("render SPV choice page", () => {
   render(<SpvChoicePage />);
 
   expect(screen.getByTestId("getstarted-pagebody").className).not.toMatch(
@@ -44,7 +44,7 @@ test("render spv choice page", () => {
   expect(mockToggleSpv).toHaveBeenCalledWith(false);
 });
 
-test("render spv choice page in testnet mode", () => {
+test("render SPV choice page in testnet mode", () => {
   mockIsTestNet = sel.isTestNet = jest.fn(() => true);
   render(<SpvChoicePage />);
   expect(mockIsTestNet).toHaveBeenCalled();

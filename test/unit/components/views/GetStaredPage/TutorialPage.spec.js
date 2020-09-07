@@ -12,7 +12,7 @@ beforeEach(() => {
 });
 
 const checkIndicator = (currentIndex) => {
-  for (var i = 0; i <= 3; i++) {
+  for (let i = 0; i <= 3; i++) {
     const currentIndicator = screen.getByRole("link", { name: `step-${i}` });
     if (i == currentIndex) {
       expect(currentIndicator.className).toMatch(/current/);
@@ -24,7 +24,7 @@ const checkIndicator = (currentIndex) => {
   }
 };
 
-test("clicking through tutorial page using `Next` button", () => {
+test("clicking through the tutorial page using `Next` button", () => {
   render(<TutorialPage />);
   // check first page
   checkIndicator(0);
@@ -45,21 +45,21 @@ test("clicking through tutorial page using `Next` button", () => {
   expect(mockFinishTutorial).toHaveBeenCalledTimes(2);
 });
 
-test("clicking through tutorial page using the indicators", () => {
+test("clicking through the tutorial page using the indicators", () => {
   render(<TutorialPage />);
   // check first page
   checkIndicator(0);
   // check second page
-  user.click(screen.getByRole("link", { name: `step-1` }));
+  user.click(screen.getByRole("link", { name: "step-1" }));
   checkIndicator(1);
   // check third page
-  user.click(screen.getByRole("link", { name: `step-2` }));
+  user.click(screen.getByRole("link", { name: "step-2" }));
   checkIndicator(2);
   // check fourth page
-  user.click(screen.getByRole("link", { name: `step-3` }));
+  user.click(screen.getByRole("link", { name: "step-3" }));
   checkIndicator(3);
   // check first page again
-  user.click(screen.getByRole("link", { name: `step-0` }));
+  user.click(screen.getByRole("link", { name: "step-0" }));
   checkIndicator(0);
 });
 
@@ -69,4 +69,3 @@ test("leave tutorial page using `Skip` button", () => {
   user.click(screen.getByText(/skip/i));
   expect(mockFinishTutorial).toHaveBeenCalledTimes(1);
 });
-

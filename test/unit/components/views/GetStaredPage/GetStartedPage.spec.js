@@ -29,17 +29,6 @@ beforeEach(() => {
   mockIsTestNet = sel.isTestNet = jest.fn(() => false);
 });
 
-afterEach(() => {
-  mockGetDaemonSynced.mockRestore();
-  mockMaxWalletCount.mockRestore();
-  mockIsSPV.mockRestore();
-  mockAppVersion.mockRestore();
-  mockGetSelectedWallet.mockRestore();
-  mockGetAvailableWallets.mockRestore();
-});
-
-//todo: remove debugs
-
 test("render empty wallet chooser view", async () => {
   render(<GetStartedPage />);
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
@@ -71,13 +60,12 @@ test("render empty wallet chooser view", async () => {
 test("render empty wallet chooser view in SPV mode", async () => {
   mockIsSPV = sel.isSPV = jest.fn(() => true);
 
-  const { debug } = render(<GetStartedPage />);
+  render(<GetStartedPage />);
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
 
   expect(
     screen.getByText(/choose a wallet to open in spv mode/i)
   ).toBeInTheDocument();
-  debug();
 });
 
 test("render empty wallet chooser view in testnet mode", async () => {

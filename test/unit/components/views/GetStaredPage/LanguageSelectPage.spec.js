@@ -33,7 +33,7 @@ test("render language select page", () => {
   );
 
   // rest of the languages should not visible
-  for (var i = 1; i < testLocalesArray.length; i++) {
+  for (let i = 1; i < testLocalesArray.length; i++) {
     expect(
       screen.queryByText(testLocalesArray[i].description)
     ).not.toBeInTheDocument();
@@ -44,7 +44,7 @@ test("render language select page", () => {
   mockSortedLocales.mockRestore();
 
   // rest of the languages should visible
-  for (var i = 1; i < testLocalesArray.length; i++) {
+  for (let i = 1; i < testLocalesArray.length; i++) {
     expect(
       screen.getByText(testLocalesArray[i].description)
     ).toBeInTheDocument();
@@ -57,7 +57,7 @@ test("render language select page", () => {
   expect(
     screen.getByText(testLocalesArray[testLocalesArray.length - 1].description)
   ).toBeInTheDocument();
-  for (var i = 1; i < testLocalesArray.length - 1; i++) {
+  for (let i = 1; i < testLocalesArray.length - 1; i++) {
     expect(
       screen.queryByText(testLocalesArray[i].description)
     ).not.toBeInTheDocument();

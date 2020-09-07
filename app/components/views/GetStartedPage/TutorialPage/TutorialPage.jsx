@@ -14,7 +14,7 @@ const Tutorial = () => {
   }, [tutorialStep]);
 
   /*
-   * comment out this function because it not used 
+   * comment out this function because it not used
    *
   const onPrevTutorialStep = useCallback(() => {
     if (tutorialStep - 1 >= 0) {

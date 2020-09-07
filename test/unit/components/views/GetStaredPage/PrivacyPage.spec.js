@@ -30,18 +30,9 @@ beforeEach(() => {
   mockFinishPrivacy = da.finishPrivacy = jest.fn(() => () => {});
   mockIsTestNet = sel.isTestNet = jest.fn(() => false);
 });
-afterEach(() => {
-  mockSetupStandardPrivacy.mockRestore();
-  mockSetupDisabledPrivacy.mockRestore();
-  mockUpdateStateSettingsChanged.mockRestore();
-  mockTempSettings.mockRestore();
-  mockSaveSettings.mockRestore();
-  mockFinishPrivacy.mockRestore();
-  mockIsTestNet.mockRestore();
-});
 
 test("render privacy page", () => {
-  const { debug } = render(<PrivacyPage />);
+  render(<PrivacyPage />);
 
   expect(screen.getByTestId("getstarted-pagebody").className).not.toMatch(
     /testnetBody/
@@ -82,6 +73,8 @@ test("render privacy page", () => {
   ).toMatchInlineSnapshot(
     `"Allows you to choose exactly which third party services can be accessed by the app."`
   );
+
+  expect(mockTempSettings).toHaveBeenCalled();
 });
 
 test("test custom privacy options", () => {
@@ -153,9 +146,10 @@ test("test custom privacy options", () => {
 });
 
 test("render privacy page in testnet mode", () => {
- mockIsTestNet = sel.isTestNet = jest.fn(() => true);
+  mockIsTestNet = sel.isTestNet = jest.fn(() => true);
   render(<PrivacyPage />);
   expect(screen.getByTestId("getstarted-pagebody").className).toMatch(
     /testnetBody/
   );
+  expect(mockIsTestNet).toHaveBeenCalled();
 });
