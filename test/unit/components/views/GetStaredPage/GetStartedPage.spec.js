@@ -139,27 +139,3 @@ test("render empty wallet chooser view and click-on&test release notes", async (
   user.click(screen.getByText(/go back/i).previousSibling);
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
 });
-
-test("render empty wallet chooser view and click on create wallet", async () => {
-  const { debug } = render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
-
-  user.click(screen.getByText(/create a new wallet/i));
-  await wait(() => screen.getByText(/wallet name/i));
-  debug();
-  // todo test create wallet
-  user.click(screen.getByText(/cancel/i));
-  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
-});
-
-test("render empty wallet chooser view and click on restore wallet", async () => {
-  const { debug } = render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
-
-  user.click(screen.getByText(/restore existing wallet/i));
-  await wait(() => screen.getByText(/wallet name/i));
-  debug();
-  // todo test create wallet
-  user.click(screen.getByText(/cancel/i));
-  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
-});
