@@ -9,11 +9,23 @@ const TimezoneSettings = ({ tempSettings, onChangeTempSettings }) => {
   const timezoneOptions = [
     {
       value: "local",
-      label: "Local"
+      label: "Local",
+      description: (
+        <T
+          id="settings.timezone.local.description"
+          m="Use your local timezone"
+        />
+      )
     },
     {
       value: "utc",
-      label: "UTC"
+      label: "UTC",
+      description: (
+        <T
+          id="settings.timezone.utx.description"
+          m="Use Universal Coordinated Time"
+        />
+      )
     }
   ];
 
