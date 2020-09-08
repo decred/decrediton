@@ -9319,9 +9319,9 @@ performance-now@^2.1.0:
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
   integrity sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=
 
-"pi-ui@https://github.com/decred/pi-ui":
+"pi-ui@https://github.com/amassarwi/pi-ui#rbDescription":
   version "1.0.0"
-  resolved "https://github.com/decred/pi-ui#c9741462323ab7d7c30059827f8b618f7bfc5b8d"
+  resolved "https://github.com/amassarwi/pi-ui#ed5cb576390d40c117b2f4cc9ef7249e69a29fcd"
   dependencies:
     clamp-js-main "^0.11.5"
     lodash "^4.17.15"
