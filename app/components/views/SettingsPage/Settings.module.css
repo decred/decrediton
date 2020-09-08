@@ -1,5 +1,3 @@
-/* changed .app-modal.about-modal when find it! */
-
 .wrapper {
   display: flex;
   justify-content: space-between;
@@ -50,12 +48,6 @@
   margin-right: 0;
 }
 
-.rowChecklist .timezoneRadio {
-  order: -1;
-  margin-top: 3px;
-  height: 12px;
-}
-
 .checklistDescription {
   font-style: italic;
   text-align: left;
@@ -80,7 +72,7 @@
   order: 3;
 }
 
-.wrapper group.privacy .columnWrapper {
+.wrapper .group.privacy .columnWrapper {
   padding: 40px 40px 10px 40px;
 }
 
@@ -268,21 +260,30 @@
   color: var(--error-text-color);
 }
 
-/* REPLACE ALLL THIS WITH PI-UI RADIO BUTTONS */
-.wrapper input[type="checkbox"],
-.wrapper input[type="radio"] {
+div.radioButtonsWrapper > * {
+  box-sizing: border-box;
+}
+
+.timezoneOption > label > span:nth-child(1) {
+  border-color: var(--input-color);
+}
+
+.timezoneOption > label > span:nth-child(2) {
+  background-color: var(--input-color);
+}
+
+/* REPLACE ALLL THIS WITH PI-UI's CHECKBOX */
+.wrapper input[type="checkbox"] {
   display: none;
 }
 
-.wrapper input[type="checkbox"]:disabled + label,
-.wrapper input[type="radio"]:disabled + label {
+.wrapper input[type="checkbox"]:disabled + label {
   display: inline-block;
   background-color: var(--disabled-background-color);
   border: 1px solid var(--disabled-color);
 }
 
-.wrapper input[type="checkbox"]:checked:disabled + label,
-.wrapper input[type="radio"]:checked:disabled + label {
+.wrapper input[type="checkbox"]:checked:disabled + label {
   display: inline-block;
   border: 1px solid var(--disabled-color);
   background-color: var(--disabled-background-color);
@@ -291,15 +292,16 @@
   background-size: 10px;
 }
 
-.wrapper input[type="checkbox"] + label,
-.wrapper input[type="radio"] + label {
+.wrapper input[type="checkbox"] + label {
   display: inline-block;
   border: 1px solid var(--home-content-link);
   background-color: none;
+  width: 12px;
+  height: 12px;
+  background-position: 1px;
 }
 
-.wrapper input[type="checkbox"]:checked + label,
-.wrapper input[type="radio"]:checked + label {
+.wrapper input[type="checkbox"]:checked + label {
   display: inline-block;
   border: 1px solid var(--input-color);
   background-color: none;
@@ -308,34 +310,6 @@
   background-size: 10px;
 }
 
-.wrapper input[type="radio"]:checked + label {
-  background-image: none;
-  position: relative;
-}
-
-.wrapper input[type="radio"]:checked + label:before {
-  content: "";
-  width: 6px;
-  height: 6px;
-  background-color: var(--input-color);
-  border-radius: 3px;
-  position: absolute;
-  top: 4px;
-  left: 4px;
-}
-
-.wrapper input[type="radio"] + label {
-  border-radius: 50%;
-  width: 14px;
-  height: 14px;
-  background-position: 2px;
-}
-
-.wrapper input[type="checkbox"] + label {
-  width: 12px;
-  height: 12px;
-  background-position: 1px;
-}
 /* END REPLACE WITH PI-UI */
 
 @media screen and (min-width: 1680px) and (max-width: 1919px) {
