@@ -13,13 +13,10 @@
   "dependencies": {
     "blake-hash": "^1.1.0",
     "bs58check": "^2.1.1",
-    "electron-store": "1.2.0",
+    "electron-store": "^6.0.0",
     "fs-extra": "^5.0.0",
     "grpc": "1.24.2",
     "minimist": "^1.2.3"
-  },
-  "resolutions": {
-    "conf": "1.1.2"
   },
   "optionalDependencies": {
     "win32ipc": "./modules/win32ipc"
