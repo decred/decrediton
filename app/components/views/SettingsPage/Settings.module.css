@@ -48,16 +48,6 @@
   margin-right: 0;
 }
 
-.checklistDescription {
-  font-style: italic;
-  text-align: left;
-  margin-left: 22px;
-  color: var(--settings-desc);
-  font-size: 11px;
-  line-height: 15px;
-  width: 175px;
-}
-
 .label {
   display: inline-block;
   margin-right: 14px;
@@ -135,10 +125,6 @@
   background-image: var(--info-icon);
   background-size: 16px;
   margin-right: 5px;
-}
-
-.privacy .columnContent .row .checklistDescription {
-  width: 220px;
 }
 
 .changePasswordDefaultIcon {
@@ -235,11 +221,6 @@
   max-width: 400px;
 }
 
-.privacyCheckbox {
-  margin-top: 2px;
-  order: -1;
-}
-
 .closeModalButton {
   height: 23px;
   background-color: var(--wallet-close-button-bg);
@@ -275,46 +256,6 @@ div.radioButtonsWrapper > * {
 .timezoneOption > label > span:nth-child(2) {
   background-color: var(--input-color);
 }
-
-/* REPLACE ALLL THIS WITH PI-UI's CHECKBOX */
-.wrapper input[type="checkbox"] {
-  display: none;
-}
-
-.wrapper input[type="checkbox"]:disabled + label {
-  display: inline-block;
-  background-color: var(--disabled-background-color);
-  border: 1px solid var(--disabled-color);
-}
-
-.wrapper input[type="checkbox"]:checked:disabled + label {
-  display: inline-block;
-  border: 1px solid var(--disabled-color);
-  background-color: var(--disabled-background-color);
-  background-image: var(--checkmark-grey-icon);
-  background-repeat: no-repeat;
-  background-size: 10px;
-}
-
-.wrapper input[type="checkbox"] + label {
-  display: inline-block;
-  border: 1px solid var(--home-content-link);
-  background-color: none;
-  width: 12px;
-  height: 12px;
-  background-position: 1px;
-}
-
-.wrapper input[type="checkbox"]:checked + label {
-  display: inline-block;
-  border: 1px solid var(--input-color);
-  background-color: none;
-  background-image: var(--checkmark-blue-icon);
-  background-repeat: no-repeat;
-  background-size: 10px;
-}
-
-/* END REPLACE WITH PI-UI */
 
 @media screen and (min-width: 1680px) and (max-width: 1919px) {
   .wrapper {
