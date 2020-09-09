@@ -283,7 +283,7 @@
     "node-abi": "^2.15.0",
     "node-addon-loader": "decred/node-addon-loader#master",
     "nouislider": "^12.0.0",
-    "pi-ui": "https://github.com/amassarwi/pi-ui#rbDescription",
+    "pi-ui": "https://github.com/decred/pi-ui",
     "prop-types": "^15.7.2",
     "qr-image": "^3.2.0",
     "raw-loader": "^0.5.1",
