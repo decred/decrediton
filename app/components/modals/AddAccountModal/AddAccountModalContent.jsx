@@ -1,6 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import { TextInput, PassphraseModalField } from "inputs";
-import { PassphraseModal } from "../PassphraseModal";
+import { PassphraseModal } from "modals";
 
 const Modal = ({ name, hasFailedAttempt, setName, ...props }) => (
   <PassphraseModal {...props}>

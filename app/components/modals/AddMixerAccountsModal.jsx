@@ -1,6 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import { TextInput, PassphraseModalField } from "inputs";
-import { PassphraseModal } from "./PassphraseModal";
+import { PassphraseModal } from "modals";
 import { useAddMixerAccountsModal } from "./hooks";
 
 const AddMixerAccountsModal = ({

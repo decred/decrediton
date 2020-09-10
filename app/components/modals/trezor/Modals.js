@@ -1,6 +1,6 @@
 import { trezor } from "connectors";
 import PinModal from "./PinModal";
-import PassPhraseModal from "./PassPhraseModal";
+import { PassPhraseModal } from "modals";
 import WalletCreationPassPhraseModal from "./WalletCreationPassPhraseModal";
 import WordModal from "./WordModal";
 import "style/Trezor.less";
