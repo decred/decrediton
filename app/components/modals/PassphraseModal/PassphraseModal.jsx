@@ -5,6 +5,7 @@ import { useEffect } from "react";
 const PassphraseModal = ({
   onCancelModal,
   onSubmit,
+  parentIsValid,
   ...props
 }) => {
   const [passPhrase, setPassPhrase] = useState("");
@@ -28,7 +29,7 @@ const PassphraseModal = ({
     resetState();
   }, [passPhrase, onSubmit, resetState, isValid]);
 
-  useEffect(() => setIsValid(!!passPhrase), [passPhrase]);
+  useEffect(() => setIsValid(parentIsValid && !!passPhrase), [passPhrase, parentIsValid]);
 
   return (
     <Modal
