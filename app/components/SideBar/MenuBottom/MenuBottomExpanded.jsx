@@ -14,7 +14,8 @@ const MenuBarExpanded = ({
   rescanAttempt,
   lastBlockTimestamp,
   onShowAccounts,
-  onHideAccounts
+  onHideAccounts,
+  isSPV
 }) => (
   <div className={style.bottom}>
     <div
@@ -46,6 +47,7 @@ const MenuBarExpanded = ({
               {" "}
               {currentBlockHeight}
             </span>
+            {isSPV && <span> (SPV)</span>}
           </a>
           <div className={style.latestBlockTime}>
             <LastBlockTime lastBlockTimestamp={lastBlockTimestamp} />

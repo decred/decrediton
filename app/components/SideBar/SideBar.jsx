@@ -25,7 +25,8 @@ const SideBar = () => {
     onExpandSideBar,
     onReduceSideBar,
     rescanAttempt,
-    rescanCancel
+    rescanCancel,
+    isSPV
   } = useSideBar();
 
   return (
@@ -67,7 +68,8 @@ const SideBar = () => {
             rescanAttempt,
             lastBlockTimestamp,
             onShowAccounts,
-            onHideAccounts
+            onHideAccounts,
+            isSPV
           }}
         />
       ) : (
