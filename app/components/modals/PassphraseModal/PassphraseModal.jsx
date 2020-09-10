@@ -1,38 +1,43 @@
 import Modal from "./PassphraseModalContent";
-import usePassphraseModal from "./hooks";
+import { useState, useCallback } from "react";
+import { useEffect } from "react";
 
 const PassphraseModal = ({
-  triggerSubmit,
   onCancelModal,
-  isValid,
-  validationFailed,
   onSubmit,
   ...props
 }) => {
-  const {
-    passPhrase,
-    hasFailedAttempt,
-    onCancelModalCallback,
-    setPassPhraseCallback,
-    isValidCallback,
-    onSubmitCallback
-  } = usePassphraseModal(
-    triggerSubmit,
-    onCancelModal,
-    isValid,
-    validationFailed,
-    onSubmit
-  );
+  const [passPhrase, setPassPhrase] = useState("");
+  const [isValid, setIsValid] = useState(false);
+
+  const resetState = useCallback(() => {
+    setPassPhrase("");
+  }, []);
+
+  const onCancelModalCallback = useCallback(() => {
+    resetState();
+    onCancelModal && onCancelModal();
+  }, [resetState, onCancelModal]);
+
+  const onSubmitCallback = useCallback(() => {
+    if (!isValid) {
+      return;
+    }
+
+    onSubmit(passPhrase);
+    resetState();
+  }, [passPhrase, onSubmit, resetState, isValid]);
+
+  useEffect(() => setIsValid(!!passPhrase), [passPhrase]);
 
   return (
     <Modal
       {...props}
       {...{
         passPhrase,
-        hasFailedAttempt,
         onCancelModal: onCancelModalCallback,
-        setPassPhrase: setPassPhraseCallback,
-        isValid: isValidCallback,
+        setPassPhrase,
+        isValid,
         onSubmit: onSubmitCallback
       }}
     />
