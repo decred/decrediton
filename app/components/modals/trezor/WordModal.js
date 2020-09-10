@@ -1,6 +1,6 @@
 import Modal from "../Modal";
 import { FormattedMessage as T } from "react-intl";
-import { ButtonsToolbar } from "../PassphraseModal";
+import { ButtonsToolbar } from "shared";
 import Select from "react-select";
 import { word_list } from "constants/trezor";
 

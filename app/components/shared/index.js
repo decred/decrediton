@@ -19,4 +19,5 @@ export { default as CreatePassPhrase } from "./CreatePassPhrase/CreatePassPhrase
 export { default as UnsignedTx } from "./UnsignedTx";
 export { default as TxHistory } from "./TxHistory/TxHistory";
 export { default as LoadingError } from "./LoadingError";
+export { default as ButtonsToolbar } from "./ButtonsToolbar";
 export * from "./RoutedTabsHeader";

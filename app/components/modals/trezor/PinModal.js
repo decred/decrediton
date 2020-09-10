@@ -1,7 +1,7 @@
 import Modal from "../Modal";
 import { FormattedMessage as T } from "react-intl";
 import { PasswordInput } from "inputs";
-import { ButtonsToolbar } from "../PassphraseModal";
+import { ButtonsToolbar } from "shared";
 import { InvisibleButton } from "buttons";
 
 const PIN_LABELS = "ABCDEFGHI";
