@@ -7,7 +7,6 @@ const Modal = ({
   setNewPassphrase,
   setConfirmPrivPass,
   confirmPrivPass,
-  confirmPrivPassError,
   isValid,
   onSubmit,
   onTriggerPassphraseModalSubmit,
@@ -26,7 +25,7 @@ const Modal = ({
       }>
       <PasswordInput
         required
-        showErrors={!isValid}
+        showErrors={newPassphrase !== null && !isValid}
         id="passphrase"
         placeholder=""
         value={newPassphrase}
@@ -37,15 +36,8 @@ const Modal = ({
     <PassphraseModalField
       label={<T id="changePassModal.confirm" m="Confirm" />}>
       <PasswordInput
-        invalid={!!confirmPrivPassError}
-        invalidMessage={
-          <T
-            id="changePassModal.confirmMismatch"
-            m="New passphrase and confirmation don't match"
-          />
-        }
         required
-        showErrors={!isValid}
+        showErrors={confirmPrivPass !== null && !isValid}
         id="confirmPassphrase"
         placeholder=""
         value={confirmPrivPass}

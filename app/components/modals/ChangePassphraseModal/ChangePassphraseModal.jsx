@@ -3,14 +3,14 @@ import { useEffect, useState, useCallback } from "react";
 import { FormattedMessage as T } from "react-intl";
 
 const ChangePassphraseModal = ({ onCancelModal, onSubmit, ...props }) => {
-  const [newPassphrase, setNewPassphrase] = useState("");
-  const [confirmPrivPass, setConfirmPrivPass] = useState("");
+  const [newPassphrase, setNewPassphrase] = useState(null);
+  const [confirmPrivPass, setConfirmPrivPass] = useState(null);
   const [isValid, setIsValid] = useState(false);
   const [error, setIsError] = useState("");
 
   const resetState = useCallback(() => {
-    setNewPassphrase("");
-    setConfirmPrivPass("");
+    setNewPassphrase(null);
+    setConfirmPrivPass(null);
   }, []);
 
   const onCancelModalCallback = useCallback(() => {
@@ -19,7 +19,7 @@ const ChangePassphraseModal = ({ onCancelModal, onSubmit, ...props }) => {
   }, [resetState, onCancelModal]);
 
   const onSubmitCallback = useCallback((passPhrase) => {
-    onSubmit(passPhrase, newPassphrase, true);
+    onSubmit(passPhrase, { newPassphrase, priv: true });
     resetState();
   }, [newPassphrase, onSubmit, resetState]);
 
@@ -29,6 +29,9 @@ const ChangePassphraseModal = ({ onCancelModal, onSubmit, ...props }) => {
   }, [newPassphrase, confirmPrivPass]);
 
   useEffect(() => {
+    if (newPassphrase === null || confirmPrivPass === null) {
+      return;
+    }
     if (isValid) {
       setIsError(null);
       return;

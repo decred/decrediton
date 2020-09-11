@@ -48,7 +48,7 @@ const Modal = ({
             value={passPhrase}
             onChange={(e) => setPassPhrase(e.target.value)}
             onKeyDownSubmit={onSubmit}
-            showErrors={true}
+            showErrors={passPhrase !== null && !passPhrase}
           />
         </PassphraseModalField>
         {children}

@@ -8,11 +8,11 @@ const PassphraseModal = ({
   parentIsValid,
   ...props
 }) => {
-  const [passPhrase, setPassPhrase] = useState("");
-  const [isValid, setIsValid] = useState(false);
+  const [passPhrase, setPassPhrase] = useState(null);
+  const [isValid, setIsValid] = useState(null);
 
   const resetState = useCallback(() => {
-    setPassPhrase("");
+    setPassPhrase(null);
   }, []);
 
   const onCancelModalCallback = useCallback(() => {
@@ -29,7 +29,10 @@ const PassphraseModal = ({
     resetState();
   }, [passPhrase, onSubmit, resetState, isValid]);
 
-  useEffect(() => setIsValid(parentIsValid && !!passPhrase), [passPhrase, parentIsValid]);
+  useEffect(() => setIsValid(
+    // if parentIsValid is not passed as props, we consider it as true.
+    (parentIsValid === undefined ? true : parentIsValid) && !!passPhrase
+  ), [passPhrase, parentIsValid]);
 
   return (
     <Modal
