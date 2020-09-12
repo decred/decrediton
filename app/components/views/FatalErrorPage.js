@@ -3,6 +3,7 @@ import { fatalErrorPage } from "connectors";
 import { KeyBlueButton, RemoveDaemonButton } from "buttons";
 import { CopyToClipboard, ExternalLink } from "shared";
 import { DIFF_CONNECTION_ERROR } from "constants";
+import { getAppDataDirectory } from "main_dev/paths.js";
 import "style/Layout.less";
 
 const resourcesUnavailableError = "resource temporarily unavailable";
@@ -26,10 +27,13 @@ class FatalErrorPage extends React.Component {
         break;
       case daemonError.indexOf(DIFF_CONNECTION_ERROR) !== -1:
         errorMessage = (
+          <>
           <T
             id="fatal.suggestion.diffConnection"
             m="This error typically means you have the testnet flag in your dcrd.conf file. You should check your dcrd.conf file and remove the testnet=1."
           />
+          <div>config files path:{getAppDataDirectory()}</div>
+          </>
         );
         break;
       case daemonError.indexOf(corruptedError) !== -1 ||
