@@ -79,7 +79,6 @@ test("render privacy page", () => {
 
 test("test custom privacy options", () => {
   render(<PrivacyPage />);
-
   const customizeAllowedConnectionsLabel = screen.getByText(
     /customize allowed connections/i
   );
@@ -96,38 +95,38 @@ test("test custom privacy options", () => {
   );
 
   const updateCheckLabel = screen.getByText(/update check/i);
-  expect(updateCheckLabel.parentElement.textContent).toMatchInlineSnapshot(
-    `"Update CheckGet latest released version from github.org"`
+  expect(updateCheckLabel.parentElement.nextSibling.textContent).toMatchInlineSnapshot(
+    `"Get latest released version from github.org"`
   );
   user.click(updateCheckLabel.parentElement.getElementsByTagName("input")[0]);
 
   const networkInformationLabel = screen.getByText("Network Information");
   expect(
-    networkInformationLabel.parentElement.textContent
+    networkInformationLabel.parentElement.nextSibling.textContent
   ).toMatchInlineSnapshot(
-    `"Network InformationGeneral network information (block height, etc) from decred.org"`
+    `"General network information (block height, etc) from decred.org"`
   );
   user.click(
     networkInformationLabel.parentElement.getElementsByTagName("input")[0]
   );
 
   const politeiaLabel = screen.getByText(/politeia/i);
-  expect(politeiaLabel.parentElement.textContent).toMatchInlineSnapshot(
-    `"PoliteiaList and vote on proposals on proposals.decred.org"`
+  expect(politeiaLabel.parentElement.nextSibling.textContent).toMatchInlineSnapshot(
+    `"List and vote on proposals on proposals.decred.org"`
   );
   user.click(politeiaLabel.parentElement.getElementsByTagName("input")[0]);
 
   const vspListingLabel = screen.getByText(/vsp listing/i);
-  expect(vspListingLabel.parentElement.textContent).toMatchInlineSnapshot(
-    `"VSP ListingList of currently available VSPs from decred.org"`
+  expect(vspListingLabel.parentElement.nextSibling.textContent).toMatchInlineSnapshot(
+    `"List of currently available VSPs from decred.org"`
   );
   user.click(vspListingLabel.parentElement.getElementsByTagName("input")[0]);
 
   const decredBlockExplorerLabel = screen.getByText(/decred block explorer/i);
   expect(
-    decredBlockExplorerLabel.parentElement.textContent
+    decredBlockExplorerLabel.parentElement.nextSibling.textContent
   ).toMatchInlineSnapshot(
-    `"Decred Block ExplorerAccess chain information from dcrdata.decred.org"`
+    `"Access chain information from dcrdata.decred.org"`
   );
   user.click(
     decredBlockExplorerLabel.parentElement.getElementsByTagName("input")[0]
