@@ -496,7 +496,8 @@ export const checkNetworkMatch = () => (dispatch, getState) =>
             error: DIFF_CONNECTION_ERROR,
             type: CHECK_NETWORKMATCH_FAILED
           });
-          return dispatch(pushHistory("/error"));
+          ipcRenderer.send("drop-dcrd");
+          return reject(DIFF_CONNECTION_ERROR);
         }
         dispatch({ type: CHECK_NETWORKMATCH_SUCCESS });
         resolve(daemonInfo);

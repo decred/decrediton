@@ -40,7 +40,8 @@ import {
   setSelectedWallet,
   getSelectedWallet,
   GetDcrlndPID,
-  GetDcrlndCreds
+  GetDcrlndCreds,
+  dropDCRDSocket
 } from "./main_dev/launch";
 import {
   getAvailableWallets,
@@ -298,6 +299,10 @@ ipcMain.on("remove-wallet", (event, walletPath, testnet) => {
 
 ipcMain.on("stop-daemon", (event) => {
   event.returnValue = stopDaemon();
+});
+
+ipcMain.on("drop-dcrd", (event) => {
+  event.returnValue = dropDCRDSocket();
 });
 
 ipcMain.on("stop-wallet", (event) => {
