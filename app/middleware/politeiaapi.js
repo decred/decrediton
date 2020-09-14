@@ -38,21 +38,6 @@ function POST(piURL, path, payload) {
   });
 }
 
-export const getActiveVotes = ({ piURL }, cb) => GET(piURL, "/v1/proposals/activevote").then(function (response) {
-  cb(response);
-}).catch(function (error) {
-  cb(null, error);
-});
-export const getVetted = ({ piURL }, cb) => GET(piURL, "/v1/proposals/vetted").then(function (response) {
-  cb(response);
-}).catch(function (error) {
-  cb(null, error);
-});
-export const getVotesStatus = ({ piURL }, cb) => GET(piURL, "/v1/proposals/votestatus").then(function (response) {
-  cb(response);
-}).catch(function (error) {
-  cb(null, error);
-});
 export const getProposal = ({ piURL, token }, cb) =>
   GET(piURL, "/v1/proposals/" + token).then(function (response) {
     cb(response);
@@ -61,12 +46,6 @@ export const getProposal = ({ piURL, token }, cb) =>
   });
 export const getProposalVotes = ({ piURL, token }, cb) =>
   GET(piURL, "/v1/proposals/" + token + "/votes").then(function (response) {
-    cb(response);
-  }).catch(function (error) {
-    cb(null, error);
-  });
-export const getProposalVoteStatus = ({ piURL, token }, cb) =>
-  GET(piURL, "/v1/proposals/" + token + "/votestatus").then(function (response) {
     cb(response);
   }).catch(function (error) {
     cb(null, error);
