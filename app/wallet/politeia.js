@@ -12,18 +12,6 @@ const promisifyReqLogNoData = (fnName, Req) => {
   );
 };
 
-export const getActiveVotes = promisifyReqLogNoData(
-  "getActiveVotes",
-  api.getActiveVotes
-);
-export const getVetted = promisifyReqLogNoData(
-  "getVetted",
-  api.getVetted
-);
-export const getVotesStatus = promisifyReqLogNoData(
-  "getVotesStatus",
-  api.getVotesStatus
-);
 export const getProposal = promisifyReqLogNoData(
   "getProposal",
   api.getProposal
@@ -31,10 +19,6 @@ export const getProposal = promisifyReqLogNoData(
 export const getProposalVotes = promisifyReqLogNoData(
   "getProposalVotes",
   api.getProposalVotes
-);
-export const getProposalVoteStatus = promisifyReqLogNoData(
-  "getProposalVoteStatus",
-  api.getProposalVoteStatus
 );
 export const getTokenInventory = promisifyReqLogNoData(
   "getTokenInventory",
