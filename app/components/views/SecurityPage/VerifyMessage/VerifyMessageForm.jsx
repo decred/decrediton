@@ -1,6 +1,9 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { TextInput } from "inputs";
-import { InfoDocModalButton, KeyBlueButton } from "buttons";
+import { Button } from "pi-ui";
+import { InfoDocModalButton } from "buttons";
+import sharedStyles from "../SecurityPage.module.css";
+import styles from "./VerifyMessageForm.module.css";
 
 const messages = defineMessages({
   addressFieldPlaceholder: {
@@ -29,77 +32,80 @@ const VerifyMessageForm = ({
   messageError,
   signatureError,
   isVerifyingMessage,
-  formatMessage
+  formatMessage,
+  verifyMessageSuccess
 }) => {
+  const disabled = isVerifyingMessage
+    || address === ""
+    || message === ""
+    || signature === ""
+    || addressError
+    || messageError;
+  const isValid = verifyMessageSuccess && verifyMessageSuccess.valid;
   return (
     <>
-      <div className="security-center-form">
-        <div className="button-right">
+      <div className={sharedStyles.securityPageForm}>
+        <div className={sharedStyles.buttonRight}>
           <InfoDocModalButton document="VerifyMessageInfo" />
         </div>
-        <div className="security-center-form-row">
-          <div className="security-center-form-row-label">
+        <div className={sharedStyles.securityPageFormRow}>
+          <div className={sharedStyles.securityPageFormRowLabel}>
             <T id="securitycenter.verify.field.address.label" m="Address" />
           </div>
-          <div className="security-center-form-row-field">
+          <div className={sharedStyles.securityPageFormRowField}>
             <TextInput
               required
               value={address}
               invalid={addressError}
               invalidMessage={addressError}
-              onChange={(e) => onChangeAddress(e.target.value)}
-              placeholder={formatMessage(messages.addressFieldPlaceholder)}
               showErrors={addressError}
+              placeholder={formatMessage(messages.addressFieldPlaceholder)}
+              onChange={(e) => onChangeAddress(e.target.value)}
             />
           </div>
         </div>
-        <div className="security-center-form-row">
-          <div className="security-center-form-row-label">
+        <div className={sharedStyles.securityPageFormRow}>
+          <div className={sharedStyles.securityPageFormRowLabel}>
             <T id="securitycenter.verify.field.signature.label" m="Signature" />
           </div>
-          <div className="security-center-form-row-field">
+          <div className={sharedStyles.securityPageFormRowField}>
             <TextInput
               required
               value={signature}
               invalid={signatureError}
               invalidMessage={signatureError}
-              onChange={(e) => onChangeSignature(e.target.value)}
-              placeholder={formatMessage(messages.signatureFieldPlaceholder)}
+              successMessage={"Valid Signature"}
               showErrors={signatureError}
+              showSuccess={isValid && !disabled}
+              placeholder={formatMessage(messages.signatureFieldPlaceholder)}
+              onChange={(e) => onChangeSignature(e.target.value)}
             />
           </div>
         </div>
-        <div className="security-center-form-row">
-          <div className="security-center-form-row-label">
+        <div className={sharedStyles.securityPageFormRow}>
+          <div className={sharedStyles.securityPageFormRowLabel}>
             <T id="securitycenter.verify.field.message.label" m="Message" />
           </div>
-          <div className="security-center-form-row-field-message">
+          <div className={sharedStyles.securityPageFormRowFieldMessage}>
             <TextInput
               required
               value={message}
               invalid={messageError}
               invalidMessage={messageError}
-              onChange={(e) => onChangeMessage(e.target.value)}
-              placeholder={formatMessage(messages.messageFieldPlaceholder)}
               showErrors={messageError}
+              placeholder={formatMessage(messages.messageFieldPlaceholder)}
+              onChange={(e) => onChangeMessage(e.target.value)}
             />
           </div>
         </div>
       </div>
-      <KeyBlueButton
-        disabled={
-          isVerifyingMessage ||
-          address == "" ||
-          message == "" ||
-          signature == "" ||
-          addressError ||
-          messageError ||
-          signatureError
-        }
-        onClick={onSubmit}
-        loading={isVerifyingMessage}>
-        <T id="securitycenter.verify.form.submit" m="Verify Message" />
-      </KeyBlueButton>
+      <Button
+        className={styles.button}
+        kind={disabled ? "disabled" : "primary"}
+        loading={isVerifyingMessage}
+        onClick={onSubmit}>
+        Verify Message
+      </Button>
     </>
   );
 };

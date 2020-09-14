@@ -1,26 +1,33 @@
 import { FormattedMessage as T } from "react-intl";
+import { classNames } from "pi-ui";
 import { StepIndicator } from "indicators";
 import { Documentation } from "shared";
+import styles from "./StandardPage.module.css";
 
-export const StandardPage = ({
+export const MakeStandardPage = (image, docName) => (props) => (
+  <StandardPage {...props} docName={docName} image={image} />
+);
+
+const StandardPage = ({
   image,
   docName,
   currentPageIndex,
   pageCount,
   onNextPage,
   onPreviousPage,
-  onGotoPage,
+  onGoToPage,
   onFinish
-}) => (
-  <div className="tutorial-standard-page">
-    <div className="tutorial-text">
+}) => {
+return (
+  <div className={styles.standardPage}>
+    <div className={styles.text}>
       <Documentation name={docName} />
     </div>
-    <div className="tutorial-image-and-indicator">
+    <div className={styles.imageAndIndicator}>
       <div
-        className={["tutorial-image", "tutorial-image-" + image].join(" ")}
+        className={classNames(styles.image, styles[image])}
       />
-      <div className={"tutorial-page-indicator"}>
+      <div className={styles.indicator}>
         {pageCount < 2 ? null : (
           <a onClick={onPreviousPage}>
             <T id="tutorial.standardPage.previousPage" m="Previous" />
@@ -30,7 +37,7 @@ export const StandardPage = ({
           <StepIndicator
             currentPageIndex={currentPageIndex}
             pageCount={pageCount}
-            onGotoPage={onGotoPage}
+            onGotoPage={onGoToPage}
           />
         )}
         {currentPageIndex === pageCount - 1 ? (
@@ -46,7 +53,4 @@ export const StandardPage = ({
     </div>
   </div>
 );
-
-export const MakeStandardPage = (image, docName) => (props) => (
-  <StandardPage {...props} docName={docName} image={image} />
-);
+};

@@ -1,0 +1,47 @@
+.closeButton {
+  height: 12px;
+  width: 12px;
+  background-repeat: no-repeat;
+  background-size: 12px;
+  background-image: var(--x-grey);
+  float: right;
+  padding: 0;
+}
+
+.title {
+  font-size: 27px;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  font-size: 11px;
+  margin-bottom: 20px;
+  color: var(--new_wallet-label);
+}
+
+.tutorial-subtitle {
+  font-size: 11px;
+  margin-bottom: 20px;
+  color: var(--new_wallet-label);
+}
+
+@media screen and (max-width: 800px) {
+  .closeButton {
+    margin-right: 20px;
+  }
+  
+  .title,
+  .subtitle {
+    margin-left: 20px;
+  }
+
+  .tutorial-text {
+    width: 100%;
+    margin-right: 20px;
+  }
+
+  .page {
+    padding: 0 20px 125px 20px;
+    background-color: var(--background-back-color);
+  }
+}

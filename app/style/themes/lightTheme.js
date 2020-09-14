@@ -31,6 +31,7 @@ const lightTheme = {
   "disabled-color": "#8997a5",
   "disabled-background-color": "#e7eaed",
   "disabled-background-color-lighter": "#edeff1",
+  "success-text-color": "#41be53",
   "error-text-color": "#fd714b",
   "error-red": "#ED6D47",
   "error-red-hover": "red",
@@ -89,6 +90,7 @@ const lightTheme = {
   "back-button-text": "#f3f5f6",
   "back-button-dark-text": "#f3f5f6",
   "tx-detail-text": "#596d81",
+  "tx-detail-raw-shadow": "linear-gradient(to top, rgb(243, 246, 246, 0.6) 10%, rgb(243, 246, 246, 0.5) 20%, rgb(243, 246, 246, 0) 70%)",
   "home-content-link": "#8997a5",
   "transfer-details-bg": "#edeff1",
   "filter-menu-arrow": "#fff",
@@ -122,6 +124,8 @@ const lightTheme = {
   "no-more-tickets-indicator-bg": "#E6EAED",
   "ease-in-out-quart": "cubic-bezier(0.77, 0, 0.175, 1)",
   "input-copy-hover-color": "#78d9f8",
+  "coinjoin-sum-color": "#d4f0fd",
+  "coinjoin-sum-text-color": "#596d81",
 
   /* icons */
   "menu-settings-default": "url('style/icons/settings-default.png')",

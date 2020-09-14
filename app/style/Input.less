@@ -23,6 +23,18 @@
   }
 }
 
+.input-and-unit.success {
+  border-bottom: 1px var(--success-text-color) solid;
+  background-size: 16px 16px;
+  background-position: 100% 50%;
+  background-repeat: no-repeat;
+  background-image: var(--notification-success-icon);
+
+  &:hover {
+    border-bottom: 1px var(--success-text-color) solid;
+  }
+}
+
 .input-and-unit.numeric-input {
   font-family: var(--font-family-regular);
 
@@ -68,6 +80,15 @@
 .input-errors-area {
   text-align: left;
   color: var(--error-text-color);
+  font-size: 9px;
+  line-height: 11px;
+  padding-top: 3px;
+  margin-left: 10px;
+}
+
+.input-success-area {
+  text-align: left;
+  color: var(--success-text-color);
   font-size: 9px;
   line-height: 11px;
   padding-top: 3px;

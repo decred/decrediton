@@ -10,14 +10,12 @@ export { default as TicketsCogs } from "./TicketsCogs";
 export { default as TransactionLink } from "./TransactionLink";
 export { default as EnableExternalRequestButton } from "./EnableExternalRequestButton";
 export { default as SendTransactionButton } from "./SendTransactionButton";
-export { default as SignMessageButton } from "./SignMessageButton";
 export { default as ImportScriptIconButton } from "./ImportScriptIconButton";
-export { default as TrezorWalletSwitch } from "./TrezorWalletSwitch";
+export { default as RestoreWalletSwitch } from "./RestoreWalletSwitch";
 
 import ModalButton from "./ModalButton";
 import KeyBlueButton from "./KeyBlueButton";
 import AutoBuyerSwitch from "./AutoBuyerSwitch";
-import WatchOnlyWalletSwitch from "./WatchOnlyWalletSwitch";
 import NetworkSwitch from "./NetworkSwitch";
 import DangerButton from "./DangerButton";
 import CloseButton from "./CloseButton";
@@ -30,8 +28,7 @@ export {
   DangerButton,
   CloseButton,
   NetworkSwitch,
-  InvisibleButton,
-  WatchOnlyWalletSwitch
+  InvisibleButton
 };
 
 /***************************************************
@@ -106,6 +103,7 @@ export const RemoveStakePoolButton = mbb(null, ConfirmModal, DangerButton);
 export const RemoveWalletButton = mbb(null, ConfirmModal, DangerButton);
 export const RemoveDaemonButton = mbb(null, ConfirmModal, DangerButton);
 export const ResetNetworkButton = mbb(null, ConfirmModal, KeyBlueButton);
+export const AddVSPButton = mbb(null, ConfirmModal, KeyBlueButton);
 export const ScriptRedeemableButton = mbb(null, DocumentationInfoModal, helpLinkButton);
 export const AboutModalButton = mbb(null, AboutModal, KeyBlueButton);
 export const AboutModalButtonInvisible = mbb(null, AboutModal, InvisibleButton);

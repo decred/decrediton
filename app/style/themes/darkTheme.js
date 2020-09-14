@@ -31,6 +31,7 @@ const darkTheme = {
   "disabled-color": "#3C62B0",
   "disabled-background-color": "#1F325F",
   "disabled-background-color-lighter": "#2F4D8C",
+  "success-text-color": "#41be53",
   "error-text-color": "#fd714b",
   "error-red": "#ED6D47",
   "error-red-hover": "red",
@@ -89,6 +90,7 @@ const darkTheme = {
   "back-button-text": "#E9F8FE",
   "back-button-dark-text": "#0E152F",
   "tx-detail-text": "#E9F8FE",
+  "tx-detail-raw-shadow": "linear-gradient(to top, rgb(243, 246, 246, 0.25) 10%, rgb(243, 246, 246, 0.20) 20%, rgb(243, 246, 246, 0) 70%)",
   "home-content-link": "#99C1E3",
   "transfer-details-bg": "#152042",
   "filter-menu-arrow": "#99C1E3",
@@ -120,6 +122,8 @@ const darkTheme = {
   "icons-shadow": "#09144036",
   "no-more-tickets-indicator-bg": "#2F4D8C",
   "input-copy-hover-color": "#78d9f8",
+  "coinjoin-sum-color": "#7DA7D9",
+  "coinjoin-sum-text-color": "#fff",
 
   /* icons */
   "menu-settings-default": "url('style/icons/settingsDefaultDark.svg')",

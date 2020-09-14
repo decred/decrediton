@@ -1,0 +1,72 @@
+.standardPage {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.text {
+  width: 40%;
+  margin-right: 30px;
+  white-space: pre-line;
+  color: var(--wallet-tutorial-text);
+}
+
+.image {
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+  width: 100%;
+  height: 100%;
+}
+
+.lifecycle01 {
+  background-image: var(--lifecycle-01);
+}
+
+.lifecycle02 {
+  background-image: var(--lifecycle-02);
+}
+
+.lifecycle03 {
+  background-image: var(--lifecycle-03);
+}
+
+.lifecycle04 {
+  background-image: var(--lifecycle-04);
+}
+
+.lifecycle05 {
+  background-image: var(--lifecycle-05);
+}
+
+.lifecycle06 {
+  background-image: var(--lifecycle-06);
+}
+
+.staking01 {
+  background-image: var(--staking-01-icon);
+}
+
+.imageAndIndicator {
+  text-align: center;
+  height: 35vw;
+  width: 35vw;
+  min-width: 340px;
+  min-height: 340px;
+}
+
+.indicator a {
+  cursor: pointer;
+  color: var(--wallet-tutorial-link);
+}
+
+@media screen and (max-width: 800px) {
+  .standardPage {
+    flex-direction: column;
+  }
+
+  .text {
+    width: 100%;
+    margin-right: 20px;
+  }
+}

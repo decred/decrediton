@@ -607,9 +607,8 @@ export const validateMasterPubKey = (masterPubKey) => (dispatch) => {
   }
 };
 
-export const validateAddressCleanStore = () => (dispatch) => {
+export const validateAddressCleanStore = (dispatch) =>
   dispatch({ type: VALIDATEADDRESS_CLEANSTORE });
-};
 
 export const SIGNMESSAGE_ATTEMPT = "SIGNMESSAGE_ATTEMPT";
 export const SIGNMESSAGE_FAILED = "SIGNMESSAGE_FAILED";
@@ -631,7 +630,8 @@ export function signMessageAttempt(address, message, passphrase) {
   };
 }
 
-export const signMessageCleanStore = () => ({ type: SIGNMESSAGE_CLEANSTORE });
+export const signMessageCleanStore = (dispatch) =>
+  dispatch({ type: SIGNMESSAGE_CLEANSTORE });
 
 export const VERIFYMESSAGE_ATTEMPT = "VERIFYMESSAGE_ATTEMPT";
 export const VERIFYMESSAGE_FAILED = "VERIFYMESSAGE_FAILED";
@@ -655,9 +655,8 @@ export function verifyMessageAttempt(address, message, signature) {
   };
 }
 
-export const verifyMessageCleanStore = () => ({
-  type: VERIFYMESSAGE_CLEANSTORE
-});
+export const verifyMessageCleanStore = (dispatch) =>
+  dispatch({ type: VERIFYMESSAGE_CLEANSTORE });
 
 export const PUBLISHUNMINEDTRANSACTIONS_ATTEMPT =
   "PUBLISHUNMINEDTRANSACTIONS_ATTEMPT";

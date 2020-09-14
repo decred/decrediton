@@ -160,7 +160,6 @@ const SettingsPage = ({
             />
           </div>
           <div className={styles.columnWrapper}>
-            <div className={styles.column}>
               <PrivacySettings
                 {...{
                   tempSettings,
@@ -173,7 +172,6 @@ const SettingsPage = ({
             </div>
           </div>
         </div>
-      </div>
 
       <div className={styles.saveButtonWrapper}>
         <div className={styles.saveButton}>

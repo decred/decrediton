@@ -281,7 +281,7 @@ const messages = defineMessages({
   },
   ADDCUSTOMSTAKEPOOL_SUCCESS: {
     id: "addCustomStakePool.success",
-    defaultMessage: "Successfully added stakepool {host}!"
+    defaultMessage: "Successfully added stakepool {host}."
   },
   GETACCOUNTEXTENDEDKEY_FAILED: {
     id: "accountExtendedKey.failed",

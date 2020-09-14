@@ -9,9 +9,9 @@
 }
 
 .checkbox {
-  margin-left: auto;
   display: flex;
   flex-direction: row-reverse;
+  align-self: center;
 }
 
 .checkboxLabel {
@@ -26,4 +26,12 @@
 
 .infoFields strong {
   color: var(--input-color);
+}
+
+@media screen and (max-width: 768px) {
+  .ticketForm {
+    display: grid;
+    grid-template-columns: 50px 225px;
+    text-align: right;
+  }
 }

@@ -105,26 +105,27 @@ export function useMenuLinks(linkList) {
   }, [uiAnimations, sidebarOnBottom, caretStyle]);
 
   const menuLinks = useMemo(() => {
-    let linksComponent = [];
     if (sidebarOnBottom) {
+      const linksComponent = [];
       let n = 0;
       const totalLinks = links.current.length;
       const numberOfRows = totalLinks / MENU_LINKS_PER_ROW;
       for (let i = 0; i < numberOfRows && n < totalLinks; i++) {
         linksComponent[i] = [];
         for (let j = 0; j < MENU_LINKS_PER_ROW && n < totalLinks; j++) {
-          links.current[n].notifProp = notifProps[links.current[n].notifProp];
-          linksComponent[i].push(links.current[n]);
+          linksComponent[i].push({
+            ...links.current[n],
+            notifProp: notifProps[links.current[n].notifProp]
+          });
           n++;
         }
       }
       return linksComponent;
     }
 
-    return (linksComponent = links.current.map((link) => {
-      link.notifProp = notifProps[link.notifProp];
-      return link;
-    }));
+    return links.current.map((link) => {
+      return { ...link, notifProp: notifProps[link.notifProp] };
+    });
   }, [sidebarOnBottom, notifProps]);
 
   return {

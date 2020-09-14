@@ -7,6 +7,7 @@ const isImported = (accountNumber) => accountNumber === Math.pow(2, 31) - 1;
 
 const AccountsList = ({ isShowingAccounts, balances }) => (
   <div
+    data-testid="account-list"
     className={classNames(
       style.extended,
       isShowingAccounts && style.showingAccounts
@@ -21,7 +22,8 @@ const AccountsList = ({ isShowingAccounts, balances }) => (
                 isImported(accountNumber) && style.imported
               )}
               key={accountName}>
-              <div className={style.extendedBottomAccountName}>
+              <div
+                className={style.extendedBottomAccountName}>
                 {accountName === "default" ? (
                   <T id="sidebar.accounts.name.default" m="Primary Account" />
                 ) : (

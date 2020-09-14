@@ -37,6 +37,7 @@ service WalletService {
 	rpc BlockInfo (BlockInfoRequest) returns (BlockInfoResponse);
 	rpc BestBlock (BestBlockRequest) returns (BestBlockResponse);
 	rpc Spender (SpenderRequest) returns (SpenderResponse);
+	rpc GetCFilters (GetCFiltersRequest) returns (stream GetCFiltersResponse);
 
 	// Notifications
 	rpc TransactionNotifications (TransactionNotificationsRequest) returns (stream TransactionNotificationsResponse);
@@ -69,6 +70,7 @@ service WalletService {
 	rpc SweepAccount (SweepAccountRequest) returns (SweepAccountResponse);
 	rpc AbandonTransaction (AbandonTransactionRequest) returns (AbandonTransactionResponse);
 	rpc SignHashes (SignHashesRequest) returns (SignHashesResponse);
+	rpc GetCoinjoinOutputspByAcct (GetCoinjoinOutputspByAcctRequest) returns (GetCoinjoinOutputspByAcctResponse);
 }
 
 service WalletLoaderService {
@@ -119,6 +121,10 @@ service VotingService {
 
 service MessageVerificationService {
 	rpc VerifyMessage (VerifyMessageRequest) returns (VerifyMessageResponse);
+}
+
+service NetworkService {
+	rpc GetRawBlock (GetRawBlockRequest) returns (GetRawBlockResponse);
 }
 
 message TransactionDetails {
@@ -569,6 +575,11 @@ message PurchaseTicketsRequest {
 	int64 tx_fee = 10;
 	int64 ticket_fee = 11;
 	bool dont_sign_tx = 12;
+	string cspp_server = 13;
+	uint32 mixed_account = 14;
+	uint32 mixed_account_branch = 15;
+	uint32 mixed_split_account = 16;
+	uint32 change_account = 17;
 }
 message PurchaseTicketsResponse {
 	repeated bytes ticket_hashes = 1;
@@ -934,7 +945,9 @@ message AgendasResponse {
 	repeated Agenda agendas = 2;
 }
 
-message VoteChoicesRequest {}
+message VoteChoicesRequest {
+	bytes ticket_hash = 1;
+}
 message VoteChoicesResponse {
 	message Choice {
 		string agenda_id = 1;
@@ -953,6 +966,7 @@ message SetVoteChoicesRequest {
 		string choice_id = 2;
 	}
 	repeated Choice choices = 1;
+	bytes ticket_hash = 2;
 }
 message SetVoteChoicesResponse {
 	uint32 votebits = 1;
@@ -1137,4 +1151,37 @@ message SpenderRequest {
 message SpenderResponse {
 	bytes spender_transaction = 1;
 	uint32 input_index = 2;
+}
+
+message GetCFiltersRequest {
+	bytes starting_block_hash = 1;
+	sint32 starting_block_height = 2;
+	bytes ending_block_hash = 3;
+	sint32 ending_block_height = 4;
+}
+
+message GetCFiltersResponse {
+	bytes key = 1;
+	bytes filter = 2;
+	bytes block_hash = 3;
+}
+
+message GetRawBlockRequest {
+	bytes block_hash = 1;
+	sint32 block_height = 2;
+}
+
+message GetRawBlockResponse {
+	bytes block = 1;
+}
+
+message GetCoinjoinOutputspByAcctRequest {}
+
+message coinjoinTxsSumByAcct {
+	uint32 account_number = 1;
+	int32 coinjoin_txs_sum = 2;
+}
+
+message GetCoinjoinOutputspByAcctResponse {
+	repeated coinjoinTxsSumByAcct data = 1;
 }

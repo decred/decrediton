@@ -1,0 +1,83 @@
+.content {
+  margin-left: 90px;
+  margin-top: 48px;
+}
+
+.subtitle {
+  font-size: 27px !important;
+}
+
+.description {
+  width: 330px;
+  font-size: 13px;
+}
+
+.cardsWrapper {
+  margin: 0 auto;
+  width: 700px;
+  margin-top: 60px;
+  text-align: right;
+  flex-wrap: wrap;
+}
+
+.card {
+  width: 335px;
+  height: 90px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  background-color: var(--background-back-color);
+}
+
+.labelWrapper {
+  margin-left: 20px;
+  margin-top: 24px;
+}
+
+.coinjoinLabel {
+  margin-top: 8px;
+}
+
+.accountLabel {
+  font-size: 19px;
+  margin-left: 10px;
+}
+
+.coinjoinLabel {
+  font-size: 13px;
+}
+
+.coinjoinSum {
+  background-color: var(--coinjoin-sum-color);
+  color: var(--coinjoin-sum-text-color);
+  padding: 2px;
+  border-radius: 5px;
+}
+
+.accountIcon {
+  background-image: var(--accounts-default);
+  background-size: 20px auto;
+  width: 20px;
+  height: 20px;
+}
+
+.buttons {
+  margin-left: 10px
+}
+
+.buttonWrapper {
+  text-align: right;
+  margin-top: 10px;
+  margin-right: 15px;
+  width: 700px;
+}
+
+.checkboxLabel {
+  margin-right: 5px;
+  margin-top: 2px;
+  cursor: pointer;
+}
+
+.checkboxRow {
+  margin-top: 10px;
+  margin-left: 5px;
+}

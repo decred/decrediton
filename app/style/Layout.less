@@ -110,13 +110,13 @@
   width: 750px;
   position: relative;
   justify-content: space-between;
-  align-items: center; 
-  flex-wrap: wrap;   
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .standalone-page.settings-standalone-page .standalone-page-header-container {
   width: 1240px;
-} 
+}
 
 .tabbed-page-body {
   overflow: hidden;
@@ -209,7 +209,7 @@
         a {
           margin: 0;
           border-radius: 5px;
-          span 
+          span
           {
             color:var(--tabbed-page-header-text);
           }
@@ -231,6 +231,7 @@
   position: absolute;
   bottom: 0px;
   left: 100px;
+  white-space: nowrap;
 }
 
 .tabbed-page-header > .tabs > .tab {
@@ -362,25 +363,25 @@
 @media screen and (max-width: 1919px) {
   .standalone-page.settings-standalone-page .standalone-page-header-container {
     width: 1240px;
-  } 
+  }
 }
 
 @media screen and (max-width: 1679px) {
   .standalone-page.settings-standalone-page .standalone-page-header-container {
     width: 1000px;
-  } 
+  }
 }
 
-@media screen and (max-width: 1439px) { 
+@media screen and (max-width: 1439px) {
   .standalone-page.settings-standalone-page .standalone-page-header-container {
     width: 740px;
-  }   
+  }
 }
 
 @media screen and (max-width: 1179px) {
   .standalone-page.settings-standalone-page .standalone-page-header-container {
     width: 649px;
-  }   
+  }
   .tabbed-page .tab-content {
     padding: 38px 20px 30px 20px;
   }
@@ -394,7 +395,7 @@
   .standalone-page-header,
   .standalone-page-body {
     padding-left: 20px;
-  }  
+  }
   .tabbed-page-subtitle {
     margin-left: 0;
     width: 630px;
@@ -405,14 +406,14 @@
   .standalone-page-header-container,
   .standalone-page.settings-standalone-page .standalone-page-header-container {
     width: 649px;
-  }  
+  }
 }
 
 @media screen and (max-width: 768px) {
-  .standalone-page-header-container, 
+  .standalone-page-header-container,
   .standalone-page.settings-standalone-page .standalone-page-header-container {
     width: 345px;
-  }  
+  }
 
   .standalone-page-body {
       top:113px;
@@ -430,7 +431,7 @@
   .page-view {
     width: 100%;
   }
-  
+
   .page-view-reduced-bar {
     width: 100%;
   }
@@ -457,7 +458,11 @@
     height: 82px;
     padding-top:30px;
   }
-  
+
+  .tabbed-page-header > .standalone-page-header {
+    padding: 0;
+  }
+
   .standalone-page-header {
     height: initial;
     display: flex;
@@ -466,7 +471,7 @@
     position: relative;
     padding-bottom: 48px;
     padding-top: 30px;
-  }    
+  }
 
   .standalone-page.settings-standalone-page {
     .title-header-button {
@@ -477,7 +482,7 @@
       padding: 30px 10px 90px 10px;
       top:initial;
       overflow-y: initial;
-    }      
+    }
   }
 
   .standalone-page.txdetails-standalone-page {
@@ -497,7 +502,7 @@
       position: relative;
       top:initial;
       overflow-y: initial;
-    }    
+    }
 
     .tx-details-subtitle {
       width: 355px;

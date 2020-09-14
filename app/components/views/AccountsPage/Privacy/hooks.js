@@ -28,7 +28,7 @@ export function usePrivacy() {
   const mixedAccountName = getAccountName(mixedAccount);
   const changeAccountName = getAccountName(changeAccount);
 
-  const onStartMixerAttempt = useCallback(async (passphrase) => {
+  const onStartMixerAttempt = useCallback((passphrase) => {
     const request = {
       passphrase,
       mixedAccount,
@@ -36,7 +36,7 @@ export function usePrivacy() {
       mixedAccountBranch,
       csppServer: `${csppServer}:${csppPort}`
     };
-    await runAccountMixer(request);
+    runAccountMixer(request).then(r => r).catch(err => err);
   }, [
     mixedAccount,
     changeAccount,

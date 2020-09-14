@@ -30,10 +30,13 @@ const PurchaseTicketsForm = ({
           <div className="purchase-ticket-area-row-label">
             <T id="purchaseTickets.accountFrom" m="From Account" />:
           </div>
-          <AccountsSelect
-            className="stakepool-purchase-ticket-input-select"
-            {...{ account, onChange: setAccount }}
-          />
+          <div className={"stakepool-purchase-ticket-input-select-container"}>
+            <AccountsSelect
+              className="stakepool-purchase-ticket-input-select"
+              {...{ account, onChange: setAccount }}
+            />
+            <div className="stakepool-info-icon account-select-icon" />
+          </div>
           <div className="purchase-ticket-area-row-label">
             <T id="purchaseTickets.vspFrom" m="From VSP" />:
           </div>
@@ -42,8 +45,6 @@ const PurchaseTicketsForm = ({
             {...{ options: vspOptions, account, onChange: setVSP }}
           />
         </div>
-
-        <div className="stakepool-info-icon account-select-icon"></div>
       </div>
       <div className="is-row purchase-ticket-input-amount">
         <div className="purchase-ticket-area-row-label">
