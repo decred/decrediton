@@ -75,18 +75,57 @@ beforeEach(() => {
   mockTrezorDevice = sel.trezorDevice = jest.fn(() => null);
 });
 
-test("render empty wallet chooser view and click on create wallet", async () => {
+const goToGetStartedView = async () => {
   render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
+  return await wait(() => screen.getByText(/welcome to decrediton wallet/i));
+};
 
+const goToCreateNewWalletView = async () => {
+  await goToGetStartedView();
   user.click(screen.getByText(/create a new wallet/i));
-  await wait(() => screen.getByText(/wallet name/i));
+  return await wait(() => screen.getByText(/wallet name/i));
+};
 
-  expect(screen.getByTestId("getstarted-pagebody").className).not.toMatch(
-    /testnetBody/
+const goToRestoreWalletView = async () => {
+  await goToGetStartedView();
+  user.click(screen.getByText(/restore existing wallet/i));
+  return await wait(() => screen.getByText(/wallet name/i));
+};
+
+test("test when createWallet has been rejected", async () => {
+  await goToCreateNewWalletView();
+  user.type(screen.getByPlaceholderText(/choose a name/i), testWalletName);
+
+  user.click(screen.getByText(/continue/i));
+  await wait(() => screen.getByText(testWalletCreateErrorMsg));
+  expect(mockCreateWallet).toHaveBeenCalledWith(testSelectedWallet);
+
+  user.click(screen.getByText(/cancel/i));
+  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
+});
+
+test("daemon response success through createWallet function and createWalletPage has been reached", async () => {
+  mockCreateWallet = da.createWallet = jest.fn(() => () =>
+    Promise.resolve(testSelectedWallet)
   );
-  
+  await goToCreateNewWalletView();
+  user.type(screen.getByPlaceholderText(/choose a name/i), testWalletName);
+
+  user.click(screen.getByText(/continue/i));
+  await wait(() => screen.getByText(/copy seed words to clipboard/i));
+  expect(mockCreateWallet).toHaveBeenCalledWith(testSelectedWallet);
+  expect(mockGenerateSeed).toHaveBeenCalled();
+});
+
+test("test wallet name input on creating new wallet view", async () => {
+  await goToCreateNewWalletView();
+
+  const continueButton = screen.getByText(/continue/i);
   const walletNameInput = screen.getByPlaceholderText(/choose a name/i);
+
+  user.click(continueButton);
+  // walletNameInput is requiered
+  expect(screen.getByText(/this field is required/i)).toBeInTheDocument();
   // enter reserved wallet name
   user.type(walletNameInput, usedTestWalletName);
   expect(
@@ -98,62 +137,22 @@ test("render empty wallet chooser view and click on create wallet", async () => 
   user.type(walletNameInput, testWalletName + invalidCharacters);
   expect(walletNameInput).toHaveValue(testWalletName);
 
-  user.click(screen.getByText(/cancel/i));
-  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
-});
-
-test("test when createWallet has been rejected", async () => {
-  render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
-
-  user.click(screen.getByText(/create a new wallet/i));
-  await wait(() => screen.getByText(/wallet name/i));
-
-  const walletNameInput = screen.getByPlaceholderText(/choose a name/i);
-  user.type(walletNameInput, testWalletName);
-
-  user.click(screen.getByText(/continue/i));
-  expect(mockCreateWallet).toHaveBeenCalledWith(testSelectedWallet);
-  await wait(() => screen.getByText(testWalletCreateErrorMsg));
-});
-
-// todo: move this function to a separate test file: CreateWalletPage/copySeed
-test("daemon response success through createWallet fc and createWalletPage has been reached", async () => {
-  mockCreateWallet = da.createWallet = jest.fn(() => () =>
-    Promise.resolve(testSelectedWallet)
+  user.click(continueButton);
+  await wait(() =>
+    expect(mockCreateWallet).toHaveBeenCalledWith(testSelectedWallet)
   );
-  render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
-
-  user.click(screen.getByText(/create a new wallet/i));
-  await wait(() => screen.getByText(/wallet name/i));
-
-  const walletNameInput = screen.getByPlaceholderText(/choose a name/i);
-  user.type(walletNameInput, testWalletName);
-
-  user.click(screen.getByText(/continue/i));
-  expect(mockCreateWallet).toHaveBeenCalledWith(testSelectedWallet);
-  await wait(() => screen.getByText(/copy seed words to clipboard/i));
 });
 
-test("render empty wallet chooser view and click on restore wallet", async () => {
+test("test wallet name input on restore wallet", async () => {
   const testRestoreSelectedWallet = {
     ...testSelectedWallet,
     value: { ...testSelectedWallet.value, isNew: false }
   };
 
-  const { debug } = render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
-
-  expect(mockTrezorDevice).toHaveBeenCalled();
-  user.click(screen.getByText(/restore existing wallet/i));
-  await wait(() => screen.getByText(/wallet name/i));
-  expect(screen.getByTestId("getstarted-pagebody").className).not.toMatch(
-    /testnetBody/
-  );
+  await goToRestoreWalletView();
   const continueButton = screen.getByText(/continue/i);
-
   const walletNameInput = screen.getByPlaceholderText(/choose a name/i);
+
   // walletNameInput is requiered
   user.click(continueButton);
   expect(screen.getByText(/this field is required/i)).toBeInTheDocument();
@@ -169,7 +168,20 @@ test("render empty wallet chooser view and click on restore wallet", async () =>
   expect(walletNameInput).toHaveValue(testWalletName);
 
   user.click(continueButton);
-  expect(mockCreateWallet).toHaveBeenCalledWith(testRestoreSelectedWallet);
+  await wait(() =>
+    expect(mockCreateWallet).toHaveBeenCalledWith(testRestoreSelectedWallet)
+  );
+});
+
+test("test watch only control on restore wallet", async () => {
+  const testRestoreSelectedWallet = {
+    ...testSelectedWallet,
+    value: { ...testSelectedWallet.value, isNew: false, isWatchingOnly: true }
+  };
+  await goToRestoreWalletView();
+
+  const continueButton = screen.getByText(/continue/i);
+  user.type(screen.getByPlaceholderText(/choose a name/i), testWalletName);
 
   // toggle Watch only switch
   const watchOnlySwitch = screen.getByText(/watch only/i).nextSibling.firstChild
@@ -178,7 +190,7 @@ test("render empty wallet chooser view and click on restore wallet", async () =>
   expect(watchOnlySwitch.className).toMatch(/enabled/i);
   const masterPubKeyInput = screen.getByPlaceholderText(/master pub key/i);
   expect(masterPubKeyInput).toBeInTheDocument();
-  // master pub key is requiered
+  // master pub key is required
   user.click(continueButton);
   expect(screen.getByText(/this field is required/i)).toBeInTheDocument();
   // test invalid master pub key
@@ -204,19 +216,36 @@ test("render empty wallet chooser view and click on restore wallet", async () =>
     expect(mockValidateMasterPubKey).toHaveBeenCalledWith(testValidMasterPubKey)
   );
   expect(screen.queryByText(/invalid master pubkey/i)).not.toBeInTheDocument();
-  // test empty input 
+  // test empty input
   fireEvent.change(masterPubKeyInput, {
     target: { value: "" }
   });
   await wait(() =>
     expect(screen.getByText(/this field is required/i)).toBeInTheDocument()
   );
-  
+
+  fireEvent.change(masterPubKeyInput, {
+    target: { value: testValidMasterPubKey }
+  });
+  await wait(() =>
+    expect(mockValidateMasterPubKey).toHaveBeenCalledWith(testValidMasterPubKey)
+  );
   user.click(continueButton);
-  expect(mockCreateWallet).toHaveBeenCalledWith(testRestoreSelectedWallet);
+  await wait(() =>
+    expect(mockCreateWallet).toHaveBeenCalledWith(testRestoreSelectedWallet)
+  );
+});
+
+test("test trezor switch toggling", async () => {
+  await goToRestoreWalletView();
+
+  const continueButton = screen.getByText(/continue/i);
+  user.type(screen.getByPlaceholderText(/choose a name/i), testWalletName);
 
   // toggle Trezor switch
   const trezorSwitch = screen.getByText(/trezor/i).nextSibling.firstChild
+    .firstChild.firstChild.firstChild;
+  const watchOnlySwitch = screen.getByText(/watch only/i).nextSibling.firstChild
     .firstChild.firstChild.firstChild;
   user.click(trezorSwitch);
   expect(mockEnableTrezor).toHaveBeenCalled();
@@ -234,9 +263,6 @@ test("render empty wallet chooser view and click on restore wallet", async () =>
   user.click(trezorSwitch);
   expect(mockDisableTrezor).toHaveBeenCalled();
   expect(trezorSwitch.className).toMatch(/disable/i);
-
-  user.click(screen.getByText(/cancel/i));
-  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
 });
 
 test("trezor device is connected", async () => {
@@ -251,17 +277,11 @@ test("trezor device is connected", async () => {
   mockCreateWallet = da.createWallet = jest.fn(() => () =>
     Promise.resolve(testRestoreSelectedWallet)
   );
-
-  render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
-
-  user.click(screen.getByText(/restore existing wallet/i));
-  await wait(() => screen.getByText(/wallet name/i));
+  await goToRestoreWalletView();
   expect(mockTrezorDevice).toHaveBeenCalled();
 
   const continueButton = screen.getByText(/continue/i);
-  const walletNameInput = screen.getByPlaceholderText(/choose a name/i);
-  user.type(walletNameInput, testWalletName);
+  user.type(screen.getByPlaceholderText(/choose a name/i), testWalletName);
 
   // toggle Trezor switch
   const trezorSwitch = screen.getByText(/trezor/i).nextSibling.firstChild
@@ -271,21 +291,18 @@ test("trezor device is connected", async () => {
 
   user.click(continueButton);
   expect(mockGetWalletCreationMasterPubKey).toHaveBeenCalled();
-  await wait(() => expect(mockCreateWallet).toHaveBeenCalledWith(testRestoreSelectedWallet));
+  await wait(() =>
+    expect(mockCreateWallet).toHaveBeenCalledWith(testRestoreSelectedWallet)
+  );
   expect(mockAlertNoConnectedDevice).not.toHaveBeenCalled();
   expect(screen.getByTestId("decred-loading").style.display).toMatch(/block/i);
 });
 
-test("trezor has to auto disable when step back from restore view", async () => {
+test("trezor has to auto-disable when step back from restore view", async () => {
   mockTrezorDevice = sel.trezorDevice = jest.fn(() => {
     return { connected: true };
   });
-  render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
-
-  user.click(screen.getByText(/restore existing wallet/i));
-  await wait(() => screen.getByText(/wallet name/i));
-
+  await goToRestoreWalletView();
   // toggle Trezor switch
   const trezorSwitch = screen.getByText(/trezor/i).nextSibling.firstChild
     .firstChild.firstChild.firstChild;
@@ -306,18 +323,11 @@ test("test privacy switch on restore wallet view", async () => {
   mockCreateWallet = da.createWallet = jest.fn(() => () =>
     Promise.resolve(testRestoreSelectedWallet)
   );
-
-  render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
-
-  user.click(screen.getByText(/restore existing wallet/i));
-  await wait(() => screen.getByText(/wallet name/i));
-  expect(mockTrezorDevice).toHaveBeenCalled();
+  await goToRestoreWalletView();
 
   const continueButton = screen.getByText(/continue/i);
   user.type(screen.getByPlaceholderText(/choose a name/i), testWalletName);
-  
-  // toggle Privacy switch
+
   const privacySwitch = screen.getByText(/privacy/i).nextSibling.firstChild
     .firstChild.firstChild.firstChild;
   // toggle switch on
@@ -336,29 +346,29 @@ test("test privacy switch on restore wallet view", async () => {
   user.click(continueButton);
   expect(mockCreateWallet).toHaveBeenCalledWith(testRestoreSelectedWallet);
 
-  await wait(() => expect(mockCreateWallet).toHaveBeenCalledWith(testRestoreSelectedWallet));
+  await wait(() =>
+    expect(mockCreateWallet).toHaveBeenCalledWith(testRestoreSelectedWallet)
+  );
   expect(screen.getByText(/confirm seed key/i)).toBeInTheDocument();
 });
 
-test("test testnet logo on create new wallet view", async () => {
+test("test testnet logo on creating new wallet view", async () => {
   const testRestoreSelectedWallet = {
     ...testSelectedWallet,
     value: { ...testSelectedWallet.value, network: "testnet" }
   };
   mockIsTestNet = sel.isTestNet = jest.fn(() => true);
-  render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
-  expect(mockIsTestNet).toHaveBeenCalled();
 
-  user.click(screen.getByText(/create a new wallet/i));
-  await wait(() => screen.getByText(/wallet name/i));
+  await goToCreateNewWalletView();
   expect(screen.getByTestId("getstarted-pagebody").className).toMatch(
     /testnetBody/
   );
 
   user.type(screen.getByPlaceholderText(/choose a name/i), testWalletName);
   user.click(screen.getByText(/continue/i));
-  await wait(() => expect(mockCreateWallet).toHaveBeenCalledWith(testRestoreSelectedWallet));
+  await wait(() =>
+    expect(mockCreateWallet).toHaveBeenCalledWith(testRestoreSelectedWallet)
+  );
 });
 
 test("test testnet logo on restore wallet view", async () => {
@@ -367,18 +377,16 @@ test("test testnet logo on restore wallet view", async () => {
     value: { ...testSelectedWallet.value, isNew: false, network: "testnet" }
   };
   mockIsTestNet = sel.isTestNet = jest.fn(() => true);
-  render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
-  expect(mockIsTestNet).toHaveBeenCalled();
 
-  user.click(screen.getByText(/restore existing wallet/i));
-  await wait(() => screen.getByText(/wallet name/i));
+  await goToRestoreWalletView();
+  expect(mockIsTestNet).toHaveBeenCalled();
   expect(screen.getByTestId("getstarted-pagebody").className).toMatch(
     /testnetBody/
   );
 
   user.type(screen.getByPlaceholderText(/choose a name/i), testWalletName);
   user.click(screen.getByText(/continue/i));
-  await wait(() => expect(mockCreateWallet).toHaveBeenCalledWith(testRestoreSelectedWallet));
+  await wait(() =>
+    expect(mockCreateWallet).toHaveBeenCalledWith(testRestoreSelectedWallet)
+  );
 });
-
