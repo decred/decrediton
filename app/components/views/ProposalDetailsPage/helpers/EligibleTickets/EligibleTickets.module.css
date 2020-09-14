@@ -52,3 +52,15 @@
   padding: 6px 20px;
   background-color: var(--sidebar-color);
 }
+
+@media screen and (max-width: 1179px) {
+  .wrapper {
+    width: 594px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .wrapper {
+    width: 315px;
+  }
+}

@@ -175,19 +175,12 @@ const SendTab = () => {
   };
 
   const hasError = useCallback(() => {
-    let hasError = false;
-    outputs.forEach((o) => {
-      if (
+    const outputHasError = (o) =>
         !o.data.amount ||
         o.data.destination.length === 0 ||
         o.data.error.amount ||
-        o.data.error.address
-      ) {
-        hasError = true;
-        return;
-      }
-    });
-    return hasError;
+        o.data.error.address;
+    return outputs.some(outputHasError);
   }, [outputs]);
 
   const isValid = () => !!(

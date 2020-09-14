@@ -1,5 +1,3 @@
-/* changed .app-modal.about-modal when find it! */
-
 .wrapper {
   display: flex;
   justify-content: space-between;
@@ -24,7 +22,6 @@
 .privacy,
 .security,
 .timezone {
-  width: 100%;
   float: left;
 }
 
@@ -51,22 +48,6 @@
   margin-right: 0;
 }
 
-.rowChecklist .timezoneRadio {
-  order: -1;
-  margin-top: 3px;
-  height: 12px;
-}
-
-.checklistDescription {
-  font-style: italic;
-  text-align: left;
-  margin-left: 22px;
-  color: var(--settings-desc);
-  font-size: 11px;
-  line-height: 15px;
-  width: 175px;
-}
-
 .label {
   display: inline-block;
   margin-right: 14px;
@@ -81,15 +62,8 @@
   order: 3;
 }
 
-.wrapper group.privacy .columnWrapper {
+.wrapper .group.privacy .columnWrapper {
   padding: 40px 40px 10px 40px;
-}
-
-.wrapper .group .columnWrapper .column,
-.wrapper .group.privacy .columnWrapper .column:nth-of-type(1),
-.wrapper .group.privacy .columnWrapper .column:nth-of-type(3) {
-  max-width: 100%;
-  width: 100%;
 }
 
 .groupTitle {
@@ -151,10 +125,6 @@
   background-image: var(--info-icon);
   background-size: 16px;
   margin-right: 5px;
-}
-
-.privacy .columnContent .row .checklistDescription {
-  width: 220px;
 }
 
 .changePasswordDefaultIcon {
@@ -232,6 +202,7 @@
   font-size: 13px;
   float: left;
   line-height: 23px;
+  margin-bottom: 26px;
 }
 
 .updatePassphraseButton button {
@@ -248,11 +219,6 @@
 
 .getStartedContentNewSeed .general {
   max-width: 400px;
-}
-
-.privacyCheckbox {
-  margin-top: 2px;
-  order: -1;
 }
 
 .closeModalButton {
@@ -275,75 +241,21 @@
   color: var(--error-text-color);
 }
 
-/* REPLACE ALLL THIS WITH PI-UI RADIO BUTTONS */
-input[type="checkbox"],
-input[type="radio"] {
-  display: none;
+div.radioButtonsWrapper > * {
+  box-sizing: border-box;
 }
 
-input[type="checkbox"]:disabled + label,
-input[type="radio"]:disabled + label {
-  display: inline-block;
-  background-color: var(--disabled-background-color);
-  border: 1px solid var(--disabled-color);
+.timezoneOption {
+  margin: 0 0 1rem 0 !important;
 }
 
-input[type="checkbox"]:checked:disabled + label,
-input[type="radio"]:checked:disabled + label {
-  display: inline-block;
-  border: 1px solid var(--disabled-color);
-  background-color: var(--disabled-background-color);
-  background-image: var(--checkmark-grey-icon);
-  background-repeat: no-repeat;
-  background-size: 10px;
+.timezoneOption > label > span:nth-child(1) {
+  border-color: var(--input-color);
 }
 
-input[type="checkbox"] + label,
-input[type="radio"] + label {
-  display: inline-block;
-  border: 1px solid var(--home-content-link);
-  background-color: none;
-}
-
-input[type="checkbox"]:checked + label,
-input[type="radio"]:checked + label {
-  display: inline-block;
-  border: 1px solid var(--input-color);
-  background-color: none;
-  background-image: var(--checkmark-blue-icon);
-  background-repeat: no-repeat;
-  background-size: 10px;
-}
-
-input[type="radio"]:checked + label {
-  background-image: none;
-  position: relative;
-}
-
-input[type="radio"]:checked + label:before {
-  content: "";
-  width: 6px;
-  height: 6px;
+.timezoneOption > label > span:nth-child(2) {
   background-color: var(--input-color);
-  border-radius: 3px;
-  position: absolute;
-  top: 4px;
-  left: 4px;
 }
-
-input[type="radio"] + label {
-  border-radius: 50%;
-  width: 14px;
-  height: 14px;
-  background-position: 2px;
-}
-
-input[type="checkbox"] + label {
-  width: 12px;
-  height: 12px;
-  background-position: 1px;
-}
-/* END REPLACE WITH PI-UI */
 
 @media screen and (min-width: 1680px) and (max-width: 1919px) {
   .wrapper {
@@ -430,9 +342,14 @@ input[type="checkbox"] + label {
   .saveButtonWrapper {
     width: 1000px;
   }
+
+  .timezone {
+    margin-left: 20px;
+    width: 200px;
+  }
 }
 
-@media screen and (max-width: 1439px) {
+@media screen and (max-width: 1539px) {
   .wrapper {
     flex-direction: column;
   }
@@ -478,10 +395,6 @@ input[type="checkbox"] + label {
     width: 649px;
   }
 
-  .group.privacy .columnWrapper .column {
-    width: 100%;
-  }
-
   .group .columnWrapper {
     padding-left: 20px;
   }
@@ -504,7 +417,7 @@ input[type="checkbox"] + label {
     margin-left: 20px;
   }
   .saveButtonWrapper {
-    width: 649px;
+    width: 740px;
   }
 
   .app-modal.about-modal,
@@ -541,11 +454,6 @@ input[type="checkbox"] + label {
   }
 
   .wrapper .group .columnWrapper .column {
-    width: 100%;
-  }
-
-  .wrapper .group .columnWrapper .column:nth-of-type(1),
-  .wrapper .group .columnWrapper .column:nth-of-type(3) {
     width: 100%;
   }
 

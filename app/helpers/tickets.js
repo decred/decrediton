@@ -1,6 +1,6 @@
 import { GetTicketsResponse } from "../middleware/walletrpc/api_pb";
 import { OP_RETURN, SStxPKHMinOutSize, ripemd160Size } from "constants";
-import { checkEncode } from "./addresses";
+import { checkEncode, newAddressScriptHashFromHash } from "./addresses";
 
 export const TicketTypes = new Map([
   [GetTicketsResponse.TicketDetails.TicketStatus.UNKNOWN, "unknown"],
@@ -165,19 +165,6 @@ export const addrFromSStxPkScrCommitment = (pkScript, params) => {
     return { address: newAddressScriptHashFromHash(hashBytes, params) };
   }
   return { address: newAddressPubKeyHash(hashBytes, params, 0) };
-};
-
-// newAddressScriptHashFromHash is the internal API to create a script hash
-// address with a known leading identifier byte for a network, rather than
-// looking it up through its parameters.  This is useful when creating a new
-// address structure from a string encoding where the identifier byte is already
-// known.
-const newAddressScriptHashFromHash = (scriptHash, netId) => {
-  if (scriptHash.length !== ripemd160Size) {
-    return { error: "pkHash must be 20 bytes" };
-  }
-
-  return checkEncode(scriptHash.slice(0, 20), netId);
 };
 
 // newAddressPubKeyHash returns a new AddressPubKeyHash.  pkHash must

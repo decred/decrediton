@@ -62,7 +62,7 @@
 
 ul.exportInfoFields {
   margin-top: 0;
-  margin-left: 10px;
+  margin-left: 40px;
 }
 
 .exportAreaButton {
@@ -78,7 +78,7 @@ ul.exportInfoFields {
   .exportAreaRight {
     padding-right: 20px;
     width: 263px;
-  }  
+  }
 
   .exportAreaButton {
     width: 634px;

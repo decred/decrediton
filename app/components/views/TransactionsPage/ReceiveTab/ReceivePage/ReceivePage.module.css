@@ -217,4 +217,37 @@
 .receiveSelectAccountInput a {
   margin-left: 10px;
 }
-  
+
+@media screen and (max-width: 768px) {
+  .receiveContent {
+    width: 355px;
+    height: 280px;
+  }
+
+  .receiveContentNestPrefix {
+    margin-bottom: 10px;
+  }
+
+  .receiveContentNestForAddress,
+  .receiveRequestedAmount {
+    flex-wrap: wrap;
+  }
+
+  .line {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .receiveContentNestQR {
+    margin-bottom: 20px;
+    font-size: 17px;
+  }
+
+  .generateButton {
+    margin-left: 216px;
+  }
+
+  .copyParent {
+    margin-left: -28px;
+  }
+}
