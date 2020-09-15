@@ -1,4 +1,3 @@
-import { useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as sel from "selectors";
 import * as ta from "actions/TransactionActions";
@@ -15,15 +14,10 @@ export function useHistoryTab() {
 
   const dispatch = useDispatch();
 
-  const onGetTransactions = useCallback(
-    (isStake) => dispatch(ta.getTransactions(isStake)),
-    [dispatch]
-  );
+  const onGetTransactions = (isStake) => dispatch(ta.getTransactions(isStake));
 
-  const onChangeTransactionsFilter = useCallback(
-    (newFilter) => dispatch(ta.changeTransactionsFilter(newFilter)),
-    [dispatch]
-  );
+  const onChangeTransactionsFilter = (newFilter) => 
+    dispatch(ta.changeTransactionsFilter(newFilter));
 
   return {
     window,

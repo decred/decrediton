@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
 import { baseOutput } from "./helpers";
@@ -22,26 +22,17 @@ export function useSendTab() {
 
   const dispatch = useDispatch();
 
-  const attemptConstructTransaction = useCallback(
-    (account, confirmations, outputs, all) =>
-      dispatch(ca.constructTransactionAttempt(account, confirmations, outputs, all)),
-    [dispatch]
-  );
+  const attemptConstructTransaction = (account, confirmations, outputs, all) =>
+    dispatch(
+      ca.constructTransactionAttempt(account, confirmations, outputs, all)
+    );
 
-  const validateAddress = useCallback(
-    (address) => dispatch(ca.validateAddress(address)),
-    [dispatch]
-  );
+  const validateAddress = (address) => dispatch(ca.validateAddress(address));
 
-  const onClearTransaction = useCallback(
-    () => dispatch(ca.clearTransaction),
-    [dispatch]
-  );
+  const onClearTransaction = () => dispatch(ca.clearTransaction);
 
-  const onGetNextAddressAttempt = useCallback(
-    (account) => dispatch(ca.getNextAddressAttempt(account)),
-    [dispatch]
-  );
+  const onGetNextAddressAttempt = (account) => 
+    dispatch(ca.getNextAddressAttempt(account));
 
   return {
     defaultSpendingAccount,

@@ -1,4 +1,3 @@
-import { useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
@@ -9,11 +8,8 @@ export function useReceiveTab() {
 
   const dispatch = useDispatch();
 
-  const onGetNextAddressAttempt = useCallback(
-    (accountNumber) => dispatch(ca.getNextAddressAttempt(accountNumber)),
-    [dispatch]
-  );
-
+  const onGetNextAddressAttempt = (accountNumber) =>
+    dispatch(ca.getNextAddressAttempt(accountNumber));
 
   return {
     nextAddress,
