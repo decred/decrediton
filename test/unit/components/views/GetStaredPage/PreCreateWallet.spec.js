@@ -36,6 +36,7 @@ let mockAlertNoConnectedDevice;
 let mockTrezorDevice;
 let mockGetWalletCreationMasterPubKey;
 let mockIsTestNet;
+let mockReloadTrezorDeviceList;
 
 beforeEach(() => {
   sel.getDaemonSynced = jest.fn(() => true);
@@ -73,6 +74,9 @@ beforeEach(() => {
     return { isValid: false, error: "" };
   });
   mockTrezorDevice = sel.trezorDevice = jest.fn(() => null);
+  mockReloadTrezorDeviceList = trza.reloadTrezorDeviceList = jest.fn(
+    () => () => {}
+  );
 });
 
 const goToGetStartedView = async () => {
@@ -236,7 +240,7 @@ test("test watch only control on restore wallet", async () => {
   );
 });
 
-test("test trezor switch toggling", async () => {
+test("test trezor switch toggling and setup device page", async () => {
   await goToRestoreWalletView();
 
   const continueButton = screen.getByText(/continue/i);
@@ -263,6 +267,21 @@ test("test trezor switch toggling", async () => {
   user.click(trezorSwitch);
   expect(mockDisableTrezor).toHaveBeenCalled();
   expect(trezorSwitch.className).toMatch(/disable/i);
+
+  // go to trezor config view when device is not connected
+  user.click(screen.queryByText(/setup device/i));
+  await wait(() => screen.getByText(/no trezor device found/i));
+  expect(
+    screen.getByText(/no trezor device found/i).textContent
+  ).toMatchInlineSnapshot(
+    `"No trezor device found. Check the connection and the trezor bridge software."`
+  );
+  user.click(screen.getByText(/reload device list/i));
+  expect(mockReloadTrezorDeviceList).toHaveBeenCalled();
+
+  // go back
+  user.click(screen.getByText(/go back/i).previousSibling);
+  await wait(() => screen.getByText(/wallet name/i));
 });
 
 test("trezor device is connected", async () => {
@@ -277,8 +296,24 @@ test("trezor device is connected", async () => {
   mockCreateWallet = da.createWallet = jest.fn(() => () =>
     Promise.resolve(testRestoreSelectedWallet)
   );
-  await goToRestoreWalletView();
+
+  render(<GetStartedPage />, {
+    initialState: {
+      trezor: { device: { connected: true } }
+    }
+  });
+  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
+  user.click(screen.getByText(/restore existing wallet/i));
+  await wait(() => screen.getByText(/wallet name/i));
+
   expect(mockTrezorDevice).toHaveBeenCalled();
+
+  // go to trezor config view when device is connected
+  user.click(screen.queryByText(/setup device/i));
+  await wait(() => screen.getByText(/config trezor/i));
+  // go back
+  user.click(screen.getByText(/go back/i).previousSibling);
+  await wait(() => screen.getByText(/wallet name/i));
 
   const continueButton = screen.getByText(/continue/i);
   user.type(screen.getByPlaceholderText(/choose a name/i), testWalletName);
