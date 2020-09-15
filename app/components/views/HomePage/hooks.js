@@ -16,20 +16,12 @@ export function useHomePage() {
   const totalBalance = useSelector(sel.totalBalance);
   const tsDate = useSelector(sel.tsDate);
 
-  const onRevokeTickets = useCallback(
-    (passphrase) => dispatch(ca.revokeTicketsAttempt(passphrase)),
-    [dispatch]
-  );
+  const onRevokeTickets = (passphrase) =>
+    dispatch(ca.revokeTicketsAttempt(passphrase));
 
-  const goToMyTickets = useCallback(
-    () => dispatch(cla.goToMyTickets()),
-    [dispatch]
-  );
+  const goToMyTickets = () => dispatch(cla.goToMyTickets());
 
-  const goToTransactionHistory = useCallback(
-    () => dispatch(cla.goToTransactionHistory()),
-    [dispatch]
-  );
+  const goToTransactionHistory = () => dispatch(cla.goToTransactionHistory());
 
   return {
     getTransactionsRequestAttempt,
