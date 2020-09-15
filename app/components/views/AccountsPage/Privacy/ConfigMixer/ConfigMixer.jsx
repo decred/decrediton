@@ -5,39 +5,34 @@ import style from "../Privacy.module.css";
 import { usePrivacy } from "../hooks";
 import CreateDefaultAccounts from "./CreateDefaultAccounts";
 import CreateNeededAccounts from "./CreateNeededAccounts";
-import { useMountEffect } from "hooks";
 import { useEffect, useState } from "react";
 import { MIXED_ACCOUNT, CHANGE_ACCOUNT } from "constants";
 
+const checkAvailableAccounts = (accounts) => {
+  const mixedExists = accounts.find(
+    ({ accountName }) => accountName === MIXED_ACCOUNT
+  );
+  const changeExists = accounts.find(
+    ({ accountName }) => accountName === CHANGE_ACCOUNT
+  );
+
+  return !(mixedExists || changeExists);
+};
+
 const ConfigMixer = ({ isCreateAccountDisabled, accounts }) => {
-  const [mixedAccountName, setMixedAccountName] = useState("");
-  const [changeAccountName, setChangeAccountName] = useState("");
-  const [areAccountsAvailable, setAreAvailable] = useState(false);
+  const areAccountsAvailable = checkAvailableAccounts(accounts);
+  const [mixedAccountName, setMixedAccountName] = useState(
+    areAccountsAvailable && MIXED_ACCOUNT
+  );
+  const [changeAccountName, setChangeAccountName] = useState(
+    areAccountsAvailable && CHANGE_ACCOUNT
+  );
   const [isValid, setIsValid] = useState(false);
 
   const { createNeededAccounts } = usePrivacy();
 
-  const checkAvailableAccounts = () => {
-    const mixedExists = accounts.find(
-      ({ accountName }) => accountName === MIXED_ACCOUNT
-    );
-    const changeExists = accounts.find(
-      ({ accountName }) => accountName === CHANGE_ACCOUNT
-    );
-
-    return !(mixedExists || changeExists);
-  };
-
-  useMountEffect(() => {
-    if (checkAvailableAccounts()) {
-      setAreAvailable(true);
-      setMixedAccountName(MIXED_ACCOUNT);
-      setChangeAccountName(CHANGE_ACCOUNT);
-    }
-  });
-
   useEffect(() => {
-    setIsValid(mixedAccountName  && changeAccountName);
+    setIsValid(mixedAccountName && changeAccountName);
   }, [mixedAccountName, changeAccountName]);
 
   const onSubmit = (passphrase) =>
