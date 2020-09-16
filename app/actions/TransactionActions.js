@@ -736,34 +736,32 @@ export const getAmountFromTxInputs = (decodedTx) => async (
 
 // getTxFromInputs receives a decoded unsignedTx as parameter and gets the txs
 // which participate in the input.
-export const getTxFromInputs = (unsignedTx) => (dispatch, getState) =>
-  new Promise((resolve, reject) => {
-    const { walletService } = getState().grpc;
-    const chainParams = sel.chainParams(getState());
-    // aux map to know if we already has gotten a tx.
-    const txsMap = {};
-    try {
-      const txs = unsignedTx.inputs.reduce(async (txs, inp) => {
-        const { prevTxId } = inp;
-        if (txsMap[prevTxId]) return;
-        txsMap[prevTxId] = true;
-        const oldTx = await wallet.getTransaction(walletService, prevTxId);
-        if (!oldTx) {
-          return reject(new Error(`Transaction ${prevTxId} not found`));
-        }
-        const rawTxBuffer = Buffer.from(hexToBytes(oldTx.rawTx));
-        const decodedOldTx = wallet.decodeRawTransaction(
-          rawTxBuffer,
-          chainParams
-        );
+export const getTxFromInputs = (unsignedTx) => (dispatch, getState) => {
+  const { walletService } = getState().grpc;
+  const chainParams = sel.chainParams(getState());
 
-        txs.push(decodedOldTx);
+  // Create a map with all the unique tx hashes we need to fetch.
+  const txsMap = {};
+  unsignedTx.inputs.forEach(inp => txsMap[inp.prevTxId] = true);
 
-        return txs;
-      }, []);
-
-      resolve(txs);
-    } catch (e) {
-      reject(e);
+  // Start fetching all txs concurrently.
+  const txPromises = Object.keys(txsMap).map(async prevTxId => {
+    const oldTx = await wallet.getTransaction(walletService, prevTxId);
+    if (!oldTx) {
+      throw new Error(`Transaction ${prevTxId} not found`);
     }
+
+    const rawTxBuffer = Buffer.from(hexToBytes(oldTx.rawTx));
+    const tx = wallet.decodeRawTransaction(
+      rawTxBuffer,
+      chainParams
+    );
+
+    // Fill in the hash to avoid having to recalculate it.
+    tx.hash = prevTxId;
+    return tx;
   });
+
+  // Resolve all promises.
+  return Promise.all(txPromises);
+};

@@ -74,11 +74,11 @@ export const walletTxToBtcjsTx = async (
   });
 
   const outputs = tx.outputs.map(async (outp, i) => {
-    if (outp.addresses.length !== 1) {
+    if (!outp.decodedScript.address) {
       // TODO: this will be true on OP_RETURNs. Support those.
       throw new Error("Output has different number of addresses than expected");
     }
-    let addr = outp.addresses[0].address;
+    let addr = outp.decodedScript.address;
     const addrValidResp = await wallet.validateAddress(walletService, addr);
     if (!addrValidResp.getIsValid()) throw "Not a valid address: " + addr;
     let address_n = null;
@@ -113,36 +113,16 @@ export const walletTxToBtcjsTx = async (
 // returned from wallet.decoreRawTransaction call) into a trezor
 // RefTransaction object to aux when SignTx.
 export const walletTxToRefTx = async (walletService, tx) => {
-  const inputs = tx.inputs.map(async (inp) => {
-    const addr = inp.outpointAddress;
-    if (!addr)
-      throw sprintf(`Outpoint ${inp.outpoint} does not have addresses.`);
-
-    const addrValidResp = await wallet.validateAddress(walletService, addr);
-    if (!addrValidResp.getIsValid())
-      throw "Input has an invalid address " + addr;
-
-    // Trezor firmware (mcu) currently (2018-06-25) only support signing
-    // when all inputs of the transaction are from the wallet. This happens
-    // due to the fact that trezor firmware re-calculates the source
-    // pkscript given the address_n of the input, instead of using it (the
-    // pkscript) directly when hashing the tx prior to signing. This needs
-    // to be changed so that we can perform more advanced types of
-    // transactions.
-    if (!addrValidResp.getIsMine())
-      throw "Trezor only supports signing when all inputs are from the wallet.";
-
-    return {
+  const inputs = tx.inputs.map(inp => ({
       prev_hash: inp.prevTxId,
       prev_index: inp.outputIndex,
       amount: inp.amountIn,
       sequence: inp.sequence,
       decred_tree: inp.outputTree
-    };
-  });
+  }));
 
   const outputs = tx.outputs.map(async (outp) => {
-    const addr = outp.addresses[0].address;
+    const addr = outp.decodedScript.address;
     const addrValidResp = await wallet.validateAddress(walletService, addr);
     if (!addrValidResp.getIsValid())
       throw new Error("Not a valid address: " + addr);
@@ -154,7 +134,7 @@ export const walletTxToRefTx = async (walletService, tx) => {
   });
 
   const txInfo = {
-    hash: wallet.calculateHashFromDecodedTx(tx),
+    hash: tx.hash,
     lock_time: tx.lockTime,
     version: tx.version,
     expiry: tx.expiry,

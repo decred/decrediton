@@ -384,10 +384,7 @@ export const signTransactionAttemptTrezor = (
     );
 
     const refTxs = await Promise.all(
-      inputTxs.map(async (inpTx) => {
-        const completeTx = await dispatch(getAmountFromTxInputs(inpTx));
-        return walletTxToRefTx(walletService, completeTx);
-      })
+      inputTxs.map(inpTx => walletTxToRefTx(walletService, inpTx))
     );
 
     const signedRaw = await deviceRun(
