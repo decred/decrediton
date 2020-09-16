@@ -11,8 +11,12 @@ import {
 import * as cfgConstants from "constants/config";
 import { DCR } from "constants";
 
+let config = null;
 export function getGlobalCfg() {
-  const config = new Store();
+  if (!config) {
+    config = initGlobalCfg()
+  }
+
   return config;
 }
 
@@ -119,7 +123,10 @@ function cleanWalletCfg(config) {
 }
 
 export function initGlobalCfg() {
-  const config = new Store();
+  if (config) {
+    return config;
+  }
+  config = new Store();
   Object.keys(cfgConstants.INITIAL_VALUES).map((key) => {
     if (!config.has(key)) {
       config.set(key, cfgConstants.INITIAL_VALUES[key]);
