@@ -1,32 +1,11 @@
 @import (reference) "./main.less";
 @import "~nouislider/distribute/nouislider.min.css";
 
-// XXX: YOU NEXT!
-
-.history-content-title {
-  color: var(--stroke-color-hovered);
-  font-size: 20px;
-  margin-left: 43px;
-  margin-bottom: 19px;
-  line-height: 25px;
-  width: 697px;
-}
-
-.history-page-content-wrapper {
-  width: 740px;
-  height: 100%;
-}
-
-.history-select-tx-types-area {
-  margin-left: auto;
-}
-
-.history-search-tx {
-  display: inline-block;
-}
+// XXX: This file is still needed to style the noUI slider.
+// Once the noUI slider component gets refactored, we can nuke
+// this .less file.
 
 // noUiSlider style
-
 .min-max-slider {
   width: 142px;
   height: 10px;
@@ -114,50 +93,7 @@
   top: 85px;
 }
 
-.history-select-tx-slider-info {
-  display: flex;
-  margin-left: 23px;
-  margin-top: 10px;
-}
-
 .sort-by .eye-filter-menu-items {
   width: 220px;
   padding-bottom: 0;
-}
-
-.history-slider-wrapper {
-  border-top: 1px solid #f3f5f6;
-}
-
-@media screen and (max-width: 1179px) {
-  .history-page-content-wrapper {
-    width: 667px;
-  }
-
-  .history-content-title {
-    width: 608px;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .history-page-content-wrapper {
-    width: 355px;
-  }
-
-  .history-content-title {
-    width: 355px;
-    margin-left: 0;
-  }
-
-  .history-content-title.is-row {
-    flex-direction: column;
-  }
-
-  .history-select-tx-types-area {
-    margin-left: 0;
-  }
-
-  .history-search-tx {
-    width: 250px;
-  }
 }

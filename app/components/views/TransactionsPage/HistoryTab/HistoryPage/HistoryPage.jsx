@@ -9,6 +9,7 @@ import {
   NoTransactions
 } from "indicators";
 import InfiniteScroll from "react-infinite-scroller";
+import styles from "./HistoryPage.module.css";
 import "style/HistoryPage.less";
 
 const messages = defineMessages({
@@ -33,8 +34,8 @@ const subtitleMenu = ({
   transactionsFilter,
   unitDivisor
 }) => (
-  <div className="history-select-tx-types-area">
-    <div className="history-search-tx">
+  <div className={styles.historyContainer}>
+    <div className={styles.historySearchTx}>
       <TextInput
         type="text"
         placeholder={intl.formatMessage(messages.filterByAddrPlaceholder)}
@@ -71,30 +72,29 @@ const subtitleMenu = ({
 );
 
 const Page = ({
-  sortTypes,
-  txTypes,
-  transactions,
   tsDate,
+  loadMoreThreshold,
+  transactions,
+  transactionsFilter,
+  noMoreTransactions,
   selectedSortOrderKey,
   selectedTxTypeKey,
   searchText,
-  loadMoreThreshold,
-  noMoreTransactions,
+  currencyDisplay,
+  unitDivisor,
+  txTypes,
+  sortTypes,
   intl,
   onChangeSelectedType,
   onChangeSortType,
   onChangeSearchText,
   onLoadMoreTransactions,
-  onChangeSliderValue,
-  currencyDisplay,
-  transactionsFilter,
-  unitDivisor,
-  isReverse
+  onChangeSliderValue
 }) => (
   <>
     <Subtitle
       title={<T id="history.subtitle" m="Transaction History" />}
-      className="is-row"
+      className={styles.isRow}
       children={subtitleMenu({
         sortTypes,
         txTypes,
@@ -117,8 +117,8 @@ const Page = ({
       initialLoad={loadMoreThreshold > 90}
       useWindow={false}
       threshold={loadMoreThreshold}
-      isReverse={isReverse}>
-      <div className="history-page-content-wrapper">
+    >
+      <div className={styles.historyPageContent}>
         {transactions.length > 0 ? (
           <TxHistory {...{ transactions, tsDate, mode: "regular" }} />
         ) : null}

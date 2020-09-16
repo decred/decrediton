@@ -1,0 +1,133 @@
+.isRow {
+  display: flex;
+  flex-direction: row;
+}
+
+.isColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.sendIconWrapper {
+  display:inline-block;
+  vertical-align: middle;
+  width: 24px;
+  height: 24px;
+  margin-right: 0.5em;
+  background-position: 50% 50%;
+  background-size: 19px;
+  background-repeat: no-repeat;
+  margin-bottom: 23px;
+  cursor: pointer;
+}
+
+.sendIconWrapper.add {
+  width: 20px;
+  height: 20px;
+  background-image: var(--add-icon);
+  background-size: 6px;
+  background-color: var(--account-pubkey-text);
+  box-shadow: 0px 3px 8px var(--icons-shadow);
+  border-radius: 5px;
+}
+
+.sendIconWrapper.add.disabled {
+  background-image: var(--add-icon);
+  background-color: #E7EAED;
+  cursor: auto;
+}
+
+.sendIconWrapper.delete {
+  width: 20px;
+  height: 20px;
+  background-image: var(--delete-icon);
+  background-size: 10px;
+}
+
+.sendIconWrapper.delete:hover {
+  opacity: 0.7;
+}
+
+.sendIconWrapper.walletIcon {
+  background-image: var(--send-all-default);
+}
+
+.sendIconWrapper.walletIcon:hover {
+  background-image: var(--send-all-hover);
+}
+
+.sendIconWrapper.walletIcon.disabled {
+  background-color: var(--background-back-color);
+  background-image: var(--send-all-disabled);
+  cursor: auto;
+}
+
+.sendIconWrapper.cancelIcon {
+  background-image: var(--indicator-invalid-icon);
+}
+
+.sendIconWrapper.cancelIcon:hover {
+  opacity: 0.85;
+}
+
+.sendIconWrapper.selfAccountIcon {
+  background-image: var(--send-self-default);
+}
+
+.sendIconWrapper.selfAccountIcon:hover {
+  background-image: var(--send-self-hover);
+}
+
+.sendLabel {
+  font-size: 19px;
+  line-height: 24px;
+  width: 86px;
+  text-align: right;
+  margin-bottom: 19px;
+}
+
+.sendInputWrapper {
+  margin-bottom: 23px;
+}
+
+.sendInputWrapper .inputErrorsArea {
+  margin-bottom: -14px;
+}
+
+.sendInput {
+  width: 260px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.sendInput.inputAndUnit {
+  width: 255px;
+  padding-bottom: 2px;
+}
+
+.sendInput.sendAll {
+  border-bottom: 1px var(--stroke-color-default) solid;
+  text-align: right;
+  background-color: var(--disabled-background-color);
+}
+
+@media screen and (max-width: 768px) {
+  .sendLabel {
+    width: 70px;
+    font-size: 13px;
+  }
+
+  .sendInputWrapper {
+    margin-bottom: 22px;
+  }
+
+  .sendInput {
+    width: 240px;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  .sendIconWrapper {
+    margin-bottom: 20px;
+  }
+}

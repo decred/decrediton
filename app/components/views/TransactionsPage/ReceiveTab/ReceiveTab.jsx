@@ -1,8 +1,10 @@
-import ErrorScreen from "ErrorScreen";
-import ReceivePage from "./ReceiveTabPage";
-import { service, receive } from "connectors";
-import { DescriptionHeader } from "layout";
+import { useState } from "react";
 import { FormattedMessage as T } from "react-intl";
+import ErrorScreen from "ErrorScreen";
+import ReceivePage from "./ReceivePage/ReceivePage";
+import { DescriptionHeader } from "layout";
+import { useService } from "hooks";
+import { useReceiveTab } from "./hooks";
 
 export const ReceiveTabHeader = () => (
   <DescriptionHeader
@@ -15,34 +17,14 @@ export const ReceiveTabHeader = () => (
   />
 );
 
-@autobind
-class Receive extends React.Component {
-  render() {
-    const { walletService } = this.props;
-    const { onRequestAddress, onValidateAmount } = this;
+const ReceiveTab = () => {
+  const { walletService } = useService();
+  const { nextAddress, account, onGetNextAddressAttempt } = useReceiveTab();
+  const [amount, setAmount] = useState({});
 
-    return !walletService ? (
-      <ErrorScreen />
-    ) : (
-      <ReceivePage
-        {...{
-          ...this.props,
-          ...this.state,
-          onRequestAddress,
-          onValidateAmount
-        }}
-      />
-    );
-  }
-
-  onRequestAddress() {
-    const { getNextAddressAttempt, account } = this.props;
-    getNextAddressAttempt(account.value);
-  }
-
-  onValidateAmount(data) {
+  const onRequestAddress = () => onGetNextAddressAttempt(account.value);
+  const onValidateAmount = (data) => {
     const { value, atomValue } = data;
-
     let error;
     if (!atomValue || isNaN(atomValue)) {
       error = (
@@ -57,13 +39,25 @@ class Receive extends React.Component {
         />
       );
     }
-
-    this.setState({
+    setAmount({
       amount: value,
       amountAtomValue: atomValue,
       error: { amount: error }
     });
-  }
-}
+  };
 
-export default service(receive(Receive));
+  return !walletService ? (
+    <ErrorScreen />
+  ) : (
+    <ReceivePage
+      {...{
+        ...amount,
+        nextAddress,
+        onRequestAddress,
+        onValidateAmount
+      }}
+    />
+  );
+};
+
+export default ReceiveTab;
