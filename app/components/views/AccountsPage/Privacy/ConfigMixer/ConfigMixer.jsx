@@ -37,7 +37,7 @@ const ConfigMixer = ({ isCreateAccountDisabled, accounts }) => {
   });
 
   useEffect(() => {
-    setIsValid(mixedAccountName  && changeAccountName);
+    setIsValid(mixedAccountName && changeAccountName);
   }, [mixedAccountName, changeAccountName]);
 
   const onSubmit = (passphrase) =>
