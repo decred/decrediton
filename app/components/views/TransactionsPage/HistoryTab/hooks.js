@@ -16,7 +16,7 @@ export function useHistoryTab() {
 
   const onGetTransactions = (isStake) => dispatch(ta.getTransactions(isStake));
 
-  const onChangeTransactionsFilter = (newFilter) => 
+  const onChangeTransactionsFilter = (newFilter) =>
     dispatch(ta.changeTransactionsFilter(newFilter));
 
   return {

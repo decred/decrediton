@@ -31,7 +31,7 @@ export function useSendTab() {
 
   const onClearTransaction = () => dispatch(ca.clearTransaction);
 
-  const onGetNextAddressAttempt = (account) => 
+  const onGetNextAddressAttempt = (account) =>
     dispatch(ca.getNextAddressAttempt(account));
 
   return {
