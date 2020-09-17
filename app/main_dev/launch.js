@@ -4,7 +4,8 @@ import {
   getExecutablePath,
   dcrdCfg,
   getAppDataDirectory,
-  getDcrdPath
+  getDcrdPath,
+  getBackupDirectory
 } from "./paths";
 import { getWalletCfg, getGlobalCfg } from "config";
 import {
@@ -242,7 +243,7 @@ export function cleanShutdown(mainWindow, app) {
 const upgradeToElectron8 = (rpcCert, rpcKey) => {
   const globalCfg = getGlobalCfg();
   if (!globalCfg.get(UPGD_ELECTRON8)) {
-    const directory = `${getAppDataDirectory()}/backup`;
+    const directory = getBackupDirectory();
 
     if (fs.existsSync(rpcKey)) {
       const backupDone = makeFileBackup(rpcKey, directory);

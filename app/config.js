@@ -6,15 +6,17 @@ import {
   getGlobalCfgPath,
   getWalletPath,
   dcrwalletConf,
-  getDcrdRpcCert
+  getDcrdRpcCert,
+  getBackupDirectory
 } from "./main_dev/paths";
 import * as cfgConstants from "constants/config";
+import { makeFileBackup } from "helpers";
 import { DCR } from "constants";
 
 let config = null;
 export function getGlobalCfg() {
   if (!config) {
-    config = initGlobalCfg()
+    config = initGlobalCfg();
   }
 
   return config;
@@ -157,14 +159,10 @@ export function validateGlobalCfgFile() {
   let fileContents;
   try {
     fileContents = fs.readFileSync(getGlobalCfgPath(), "utf8");
-  } catch (err) {
-    return null;
-  }
-
-  try {
     JSON.parse(fileContents);
+    // make a config.json backup if fileContents is valid.
+    makeFileBackup(getGlobalCfgPath(), getBackupDirectory());
   } catch (err) {
-    console.error(err);
     return err;
   }
 
