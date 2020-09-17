@@ -187,7 +187,7 @@ export function decodeRawTransaction(rawTx) {
   tx.serType = version >> 16;
   position += 4;
 
-  if (tx.serType != SERTYPE_ONLYWITNESS) {
+  if (tx.serType !== SERTYPE_ONLYWITNESS) {
     // Equivalent to decodePrefix().
     let first = rawTx.readUInt8(position);
     position += 1;
