@@ -54,6 +54,7 @@ function render(ui, renderOptions) {
           defaultFormats={defaultFormats}
           key={locale.key}>
           {children}
+          <div id="modal-portal" />
         </IntlProvider>
       );
     };
