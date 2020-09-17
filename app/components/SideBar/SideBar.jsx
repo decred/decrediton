@@ -78,7 +78,8 @@ const SideBar = () => {
             rescanRequest,
             rescanAttempt,
             rescanCancel,
-            sidebarOnBottom
+            sidebarOnBottom,
+            isSPV
           }}
         />
       )}

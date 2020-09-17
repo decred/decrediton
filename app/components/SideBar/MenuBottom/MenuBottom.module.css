@@ -116,6 +116,10 @@
   position: absolute;
 }
 
+.spvLabel {
+  display: block;
+}
+
 @media screen and (max-width: 768px) {
   .latestBlock {
     background-color: var(--sidebar-color);
