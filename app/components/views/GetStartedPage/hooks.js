@@ -54,7 +54,8 @@ export const useGetStarted = () => {
     onConnectDaemon,
     onStartWallet,
     syncDaemon,
-    goToHome
+    goToHome,
+    onOpenWallet
   } = useDaemonStartup();
   const [PageComponent, setPageComponent] = useState(null);
   const [state, send] = useMachine(getStartedMachine, {
@@ -383,6 +384,7 @@ export const useGetStarted = () => {
             component = h(WalletPubpassInput, {
               onSendContinue,
               onSendError,
+              onOpenWallet,
               error
             });
             break;
@@ -444,6 +446,7 @@ export const useGetStarted = () => {
       submitAppdata,
       submitChosenWallet,
       submitRemoteCredentials,
+      onOpenWallet,
       error
     ]
   );
