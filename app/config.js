@@ -1,4 +1,5 @@
 import fs from "fs";
+import path from "path";
 import Store from "electron-store";
 import ini from "ini";
 import { stakePoolInfo } from "./middleware/vspapi";
@@ -7,7 +8,8 @@ import {
   getWalletPath,
   dcrwalletConf,
   getDcrdRpcCert,
-  getBackupDirectory
+  getBackupDirectory,
+  getAppDataDirectory
 } from "./main_dev/paths";
 import * as cfgConstants from "constants/config";
 import { makeFileBackup } from "helpers";
@@ -156,16 +158,23 @@ function cleanGlobalCfg(config) {
 }
 
 export function validateGlobalCfgFile() {
-  let fileContents;
+  const fileContents = fs.readFileSync(getGlobalCfgPath(), "utf8");
   try {
-    fileContents = fs.readFileSync(getGlobalCfgPath(), "utf8");
     JSON.parse(fileContents);
-    // make a config.json backup if fileContents is valid.
-    makeFileBackup(getGlobalCfgPath(), getBackupDirectory());
   } catch (err) {
+    const backupSrc = path.resolve(getBackupDirectory(), "config.json");
+    const backupConfigJson = fs.readFileSync(backupSrc, "utf8");
+    const parsedBackupCfg = JSON.parse(backupConfigJson);
+    if (parsedBackupCfg) {
+      makeFileBackup(backupSrc, getAppDataDirectory());
+      return null;
+    }
+
     return err;
   }
 
+  // make a config.json backup if fileContents is valid.
+  makeFileBackup(getGlobalCfgPath(), getBackupDirectory());
   return null;
 }
 
