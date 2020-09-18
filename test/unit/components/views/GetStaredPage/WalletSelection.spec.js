@@ -6,19 +6,25 @@ import { screen, wait } from "@testing-library/react";
 import * as sel from "selectors";
 import * as da from "actions/DaemonActions";
 import * as wla from "actions/WalletLoaderActions";
+import {
+  OPENWALLET_INPUT,
+  OPENWALLET_SUCCESS,
+  OPENWALLET_FAILED_INPUT
+} from "actions/WalletLoaderActions";
 
 let mockSortedAvailableWallets;
 let mockMaxWalletCount;
 let mockRemoveWallet;
 let mockStartWallet;
 let mockSetSelectedWallet;
+let mockOpenWalletAttempt;
 
 const testLastAccessNow = new Date();
 const testLastAccessOneHourAgo = new Date();
 testLastAccessOneHourAgo.setHours(testLastAccessNow.getHours() - 1);
 
 const testLastAccessYesterday = new Date();
-testLastAccessYesterday.setHours(testLastAccessNow.getHours() - 30);
+testLastAccessYesterday.setHours(testLastAccessNow.getHours() - 24);
 
 const testAvailableWallets = [
   {
@@ -70,6 +76,10 @@ beforeEach(() => {
   sel.getDaemonSynced = jest.fn(() => true);
   mockRemoveWallet = da.removeWallet = jest.fn(() => () => {});
   mockSetSelectedWallet = wla.setSelectedWallet = jest.fn(() => () => {});
+  mockOpenWalletAttempt = wla.openWalletAttempt = jest.fn(() => () =>
+    Promise.reject(OPENWALLET_FAILED_INPUT)
+  );
+  wla.mockStartSPVSync = jest.fn(() => () => Promise.resolve());
   mockStartWallet = da.startWallet = jest.fn(() => () => Promise.resolve());
   mockMaxWalletCount = sel.maxWalletCount = jest.fn(() => 6);
   mockSortedAvailableWallets = sel.sortedAvailableWallets = jest.fn(
@@ -83,7 +93,7 @@ test("render wallet chooser view", async () => {
 
   expect(mockSortedAvailableWallets).toHaveBeenCalled();
   expect(mockMaxWalletCount).toHaveBeenCalled();
-  
+
   // check regular wallet
   const regularWallet = screen.getByText(testAvailableWallets[0].value.wallet);
   expect(regularWallet).toBeInTheDocument();
@@ -181,4 +191,76 @@ test("launch a wallet", async () => {
     expect(mockStartWallet).toHaveBeenCalledWith(testAvailableWallets[1])
   );
   expect(mockSetSelectedWallet).toHaveBeenCalled();
+});
+
+test("launch an encrypted wallet", async () => {
+  render(<GetStartedPage />);
+  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
+
+  mockStartWallet = da.startWallet = jest.fn(() => () =>
+    Promise.reject(OPENWALLET_INPUT)
+  );
+  user.click(screen.getByText(/launch wallet/i));
+  await wait(() => expect(mockStartWallet).toHaveBeenCalled());
+  expect(screen.getByText(/insert your pubkey/i)).toBeInTheDocument();
+  expect(screen.getByText(/decrypt wallet/i)).toBeInTheDocument();
+  expect(
+    screen.getByText(/this wallet is encrypted/i).textContent
+  ).toMatchInlineSnapshot(
+    `"This wallet is encrypted, please enter the public passphrase to decrypt it."`
+  );
+
+  const publicPassphraseInput = screen.getByPlaceholderText(
+    /public passphrase/i
+  );
+  const testInvalidPassphrase = "invalid-passphrase";
+  const testValidPassphrase = "valid-passphrase";
+  const openWalletButton = screen.getByText("Open Wallet");
+
+  // invalid passphrase
+  user.type(publicPassphraseInput, testInvalidPassphrase);
+  user.click(openWalletButton);
+  await wait(() =>
+    expect(mockOpenWalletAttempt).toHaveBeenCalledWith(
+      testInvalidPassphrase,
+      true
+    )
+  );
+  expect(
+    screen.getByText(/wrong public passphrase/i).textContent
+  ).toMatchInlineSnapshot(`"Wrong public passphrase inserted."`);
+
+  // invalid passphrase & unknown error
+  const UNKNOWN_ERROR = "UNKNOWN_ERROR";
+  mockOpenWalletAttempt = wla.openWalletAttempt = jest.fn(() => () =>
+    Promise.reject(UNKNOWN_ERROR)
+  );
+  user.type(publicPassphraseInput, testInvalidPassphrase);
+  user.click(openWalletButton);
+  await wait(() =>
+    expect(mockOpenWalletAttempt).toHaveBeenCalledWith(
+      testInvalidPassphrase,
+      true
+    )
+  );
+  expect(screen.getByText(UNKNOWN_ERROR)).toBeInTheDocument();
+
+  // submit empty input by pressing enter
+  user.clear(publicPassphraseInput);
+  user.type(publicPassphraseInput, "{enter}");
+  mockOpenWalletAttempt.mockClear();
+  expect(mockOpenWalletAttempt).not.toHaveBeenCalled();
+
+  // valid passphrase + submit the form by press enter
+  mockOpenWalletAttempt = wla.openWalletAttempt = jest.fn(() => () =>
+    Promise.resolve(OPENWALLET_SUCCESS)
+  );
+  user.type(publicPassphraseInput, testValidPassphrase + "{enter}");
+  await wait(() =>
+    expect(mockOpenWalletAttempt).toHaveBeenCalledWith(
+      testValidPassphrase,
+      true
+    )
+  );
+  await wait(() => expect(mockSetSelectedWallet).toHaveBeenCalled());
 });
