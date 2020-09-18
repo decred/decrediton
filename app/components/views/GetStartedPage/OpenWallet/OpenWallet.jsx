@@ -11,8 +11,12 @@ const OpenWallet = ({ onOpenWallet, onSendContinue, onSendError, onSendDiscoverA
       return;
     }
     onOpenWallet(publicPassPhrase, true)
-      .then(() => onSendContinue())
+      .then(() => {
+        setPublicPassPhrase("");
+        onSendContinue();
+      })
       .catch((error) => {
+        setPublicPassPhrase("");
         if (error === OPENWALLET_INPUTPRIVPASS) {
           onSendError(null);
           return onSendDiscoverAccountsPassInput();
@@ -27,8 +31,7 @@ const OpenWallet = ({ onOpenWallet, onSendContinue, onSendError, onSendDiscoverA
           );
         }
         onSendError(error);
-      })
-      .finally(() => setPublicPassPhrase(""));
+      });
   }, [onOpenWallet, onSendContinue, onSendError, publicPassPhrase, onSendDiscoverAccountsPassInput]);
 
   const onKeyDown = useCallback(
