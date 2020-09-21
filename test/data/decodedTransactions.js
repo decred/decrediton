@@ -8,7 +8,11 @@ export const decodedPurchasedTicketTx = {
       "outputIndex": 0,
       "outputTree": 0,
       "sequence": 4294967295,
-      "index": 0
+      "index": 0,
+      "valueIn": 5411540911,
+      "blockHeight": 0,
+      "blockIndex": 4294967295,
+      "sigScript": Buffer.from("473044022043f26897017cdb9cf61d9f13aa0ece87c1eb61c2cf83371568d4d2093830beff02203948589692b7a0dd3e504286afe9e309989f9f298c7e9070610c0b6f2aa873410121030875038ca21fee734f101888fef4315270e59d36eaff9830616e1e4dcf22f82b", "hex")
     }
   ],
   "numOutputs": 3,
@@ -22,7 +26,7 @@ export const decodedPurchasedTicketTx = {
         "scriptClass": 6,
         "address": "TsaqEon1LTaYNUC1yj4mL4rm5ps5UuqvrZN",
         "requiredSig": 1,
-        "asm": "OP_SSTX OP_DUP OP_HASH160 OP_DATA_20 6ba1f7a65b7f3a1db3455e17b11b48fc55df25b7 OP_EQUALVERIFY OP_CHECKSIG",        
+        "asm": "OP_SSTX OP_DUP OP_HASH160 OP_DATA_20 6ba1f7a65b7f3a1db3455e17b11b48fc55df25b7 OP_EQUALVERIFY OP_CHECKSIG",
       }
     },
     {
@@ -117,14 +121,22 @@ export const decodedVoteTx = {
       "outputIndex": 4294967295,
       "outputTree": 0,
       "sequence": 4294967295,
-      "index": 0
+      "index": 0,
+      "valueIn": 17485354,
+      "blockHeight": 0,
+      "blockIndex": 4294967295,
+      "sigScript": Buffer.from("0000", "hex")
     },
     {
       "prevTxId": "f31f3f60aff1294f08ead114cfccbd170094c73a77425795e1f72d0085c34991",
       "outputIndex": 0,
       "outputTree": 1,
       "sequence": 4294967295,
-      "index": 1
+      "index": 1,
+      "valueIn": 6652940331,
+      "blockHeight": 0,
+      "blockIndex": 4294967295,
+      "sigScript": Buffer.from("47304402204c430c4ef577cbdcb51c3fe97340835964961c4c6d7efc47c1565292c486991f022037e02467ed5016dbebdb56061511491d55f7776eae72aad7a068278e7b9d885801210287d1de16a57eafa02035619991b53d1e4a878eb7e1028ebf634d36fb4f18bef4", "hex")
     }
   ],
   "numOutputs": 3,

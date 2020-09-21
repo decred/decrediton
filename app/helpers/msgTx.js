@@ -9,6 +9,10 @@ import {
 } from "./byteActions";
 import { Uint64LE } from "int64-buffer";
 
+// const SERTYPE_FULL = 0
+const SERTYPE_NOWITNESS = 1;
+const SERTYPE_ONLYWITNESS = 2;
+
 // selializeNoWitnessEncode gets a decoded tx and serialize it.
 // it returns its bytes buffer.
 
@@ -182,84 +186,136 @@ export function decodeRawTransaction(rawTx) {
   tx.version = version & 0xffff;
   tx.serType = version >> 16;
   position += 4;
-  let first = rawTx.readUInt8(position);
-  position += 1;
-  switch (first) {
-    case 0xfd:
-      tx.numInputs = rawTx.readUInt16LE(position);
-      position += 2;
-      break;
-    case 0xfe:
-      tx.numInputs = rawTx.readUInt32LE(position);
-      position += 4;
-      break;
-    default:
-      tx.numInputs = first;
-  }
-  tx.inputs = [];
-  for (let i = 0; i < tx.numInputs; i++) {
-    const input = {};
-    const opRawHash = rawTx.slice(position, position + 32);
-    input.prevTxId = reverseHash(rawToHex(opRawHash));
-    position += 32;
-    input.outputIndex = rawTx.readUInt32LE(position);
-    position += 4;
-    input.outputTree = rawTx.readUInt8(position);
+
+  if (tx.serType !== SERTYPE_ONLYWITNESS) {
+    // Equivalent to decodePrefix().
+    let first = rawTx.readUInt8(position);
     position += 1;
-    input.sequence = rawTx.readUInt32LE(position);
-    position += 4;
-    input.index = i;
-    tx.inputs.push(input);
-  }
-
-  first = rawTx.readUInt8(position);
-  position += 1;
-  switch (first) {
-    case 0xfd:
-      tx.numOutputs = rawTx.readUInt16LE(position);
-      position += 2;
-      break;
-    case 0xfe:
-      tx.numOutputs = rawTx.readUInt32LE(position);
+    switch (first) {
+      case 0xfd:
+        tx.numInputs = rawTx.readUInt16LE(position);
+        position += 2;
+        break;
+      case 0xfe:
+        tx.numInputs = rawTx.readUInt32LE(position);
+        position += 4;
+        break;
+      default:
+        tx.numInputs = first;
+    }
+    tx.inputs = [];
+    for (let i = 0; i < tx.numInputs; i++) {
+      const input = {};
+      const opRawHash = rawTx.slice(position, position + 32);
+      input.prevTxId = reverseHash(rawToHex(opRawHash));
+      position += 32;
+      input.outputIndex = rawTx.readUInt32LE(position);
       position += 4;
-      break;
-    default:
-      tx.numOutputs = first;
-  }
+      input.outputTree = rawTx.readUInt8(position);
+      position += 1;
+      input.sequence = rawTx.readUInt32LE(position);
+      position += 4;
+      input.index = i;
+      tx.inputs.push(input);
+    }
 
-  tx.outputs = [];
-  for (let j = 0; j < tx.numOutputs; j++) {
-    const output = {};
-    output.value = Uint64LE(rawTx.slice(position, position + 8)).toNumber();
-    position += 8;
-    output.version = rawTx.readUInt16LE(position);
-    position += 2;
-    // check length of scripts
-    let scriptLen;
     first = rawTx.readUInt8(position);
     position += 1;
     switch (first) {
       case 0xfd:
-        scriptLen = rawTx.readUInt16LE(position);
+        tx.numOutputs = rawTx.readUInt16LE(position);
         position += 2;
         break;
       case 0xfe:
-        scriptLen = rawTx.readUInt32LE(position);
+        tx.numOutputs = rawTx.readUInt32LE(position);
         position += 4;
         break;
       default:
-        scriptLen = first;
+        tx.numOutputs = first;
     }
-    output.script = rawTx.slice(position, position + scriptLen);
-    output.index = j;
 
-    position += scriptLen;
-    tx.outputs.push(output);
+    tx.outputs = [];
+    for (let j = 0; j < tx.numOutputs; j++) {
+      const output = {};
+      output.value = Uint64LE(rawTx.slice(position, position + 8)).toNumber();
+      position += 8;
+      output.version = rawTx.readUInt16LE(position);
+      position += 2;
+      // check length of scripts
+      let scriptLen;
+      first = rawTx.readUInt8(position);
+      position += 1;
+      switch (first) {
+        case 0xfd:
+          scriptLen = rawTx.readUInt16LE(position);
+          position += 2;
+          break;
+        case 0xfe:
+          scriptLen = rawTx.readUInt32LE(position);
+          position += 4;
+          break;
+        default:
+          scriptLen = first;
+      }
+      output.script = rawTx.slice(position, position + scriptLen);
+      output.index = j;
+
+      position += scriptLen;
+      tx.outputs.push(output);
+    }
+
+    tx.lockTime = rawTx.readUInt32LE(position);
+    position += 4;
+    tx.expiry = rawTx.readUInt32LE(position);
+    position += 4;
   }
 
-  tx.lockTime = rawTx.readUInt32LE(position);
-  position += 4;
-  tx.expiry = rawTx.readUInt32LE(position);
-  position += 4;
+  if (tx.serType !== SERTYPE_NOWITNESS) {
+    // Equivalent to decodeWitness().
+    let first = rawTx.readUInt8(position);
+    position += 1;
+    let numWitness;
+    switch (first) {
+      case 0xfd:
+        numWitness = rawTx.readUInt16LE(position);
+        position += 2;
+        break;
+      case 0xfe:
+        numWitness = rawTx.readUInt32LE(position);
+        position += 4;
+        break;
+      default:
+        numWitness = first;
+    }
+
+    for (let i = 0; i < numWitness; i++) {
+      const inp = tx.inputs[i];
+      inp.valueIn = Uint64LE(rawTx.slice(position, position + 8)).toNumber();
+      position += 8;
+      inp.blockHeight = rawTx.readUInt32LE(position);
+      position += 4;
+      inp.blockIndex = rawTx.readUInt32LE(position);
+      position += 4;
+
+      first = rawTx.readUInt8(position);
+      position += 1;
+      let scriptLen;
+      switch (first) {
+        case 0xfd:
+          scriptLen = rawTx.readUInt16LE(position);
+          position += 2;
+          break;
+        case 0xfe:
+          scriptLen = rawTx.readUInt32LE(position);
+          position += 4;
+          break;
+        default:
+          scriptLen = first;
+      }
+      inp.sigScript = rawTx.slice(position, position + scriptLen);
+      position += scriptLen;
+    }
+  }
+
   return tx;
 }
