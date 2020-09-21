@@ -14,7 +14,7 @@ const MenuLinkContent = ({
 }) => (
   <>
     {notifProp ? (
-      <span className={style.menuLinkNotificationIcon}></span>
+      <span className={style.menuLinkNotificationIcon} data-testid="menu-link-notification-icon"></span>
     ) : null}
     <Link
       className={classNames(style.menuLink, style[icon + "Icon"])}
@@ -40,9 +40,6 @@ const MenuLink = React.memo(
             contentClassName={
               sidebarOnBottom ? style.tooltipOnBottom : style.tooltipOnSide
             }>
-            {notifProp ? (
-              <span className={style.menuLinkNotificationIcon}></span>
-            ) : null}
             <MenuLinkContent
               path={path}
               link={link}
