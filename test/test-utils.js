@@ -8,6 +8,8 @@ import { Switch, Route } from "react-router-dom";
 import { en as enLocale, defaultFormats } from "i18n/locales";
 import { IntlProvider } from "react-intl";
 import { PropTypes } from "prop-types";
+import { lightTheme, darkTheme, icons } from "style/themes";
+import { defaultLightTheme, ThemeProvider, defaultDarkTheme } from "pi-ui";
 
 beforeAll(() => {
   jest.spyOn(console, "groupCollapsed").mockImplementation(() => {});
@@ -25,15 +27,22 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 const locale = locales[1];
+const fonts = [];
+const themes = {
+  "theme-light": { ...defaultLightTheme, ...lightTheme, ...icons },
+  "theme-dark": { ...defaultDarkTheme, ...darkTheme, ...icons }
+};
 
 function render(ui, renderOptions) {
   const locale = enLocale;
   const history = createMemoryHistory();
+
   const Wrapper = ({ children }) => {
     let initialState = {
       settings: {
         currentSettings: {
-          locale: "en"
+          locale: "en",
+          theme: "theme-light"
         }
       },
       locales: locales
@@ -59,13 +68,18 @@ function render(ui, renderOptions) {
       );
     };
     return (
-      <Provider store={store}>
-        <ConnectedRouter history={history}>
-          <Switch>
-            <Route path="/" component={ContainerApp} />
-          </Switch>
-        </ConnectedRouter>
-      </Provider>
+      <ThemeProvider
+        themes={themes}
+        defaultThemeName={initialState.settings.currentSettings.theme}
+        fonts={fonts}>
+        <Provider store={store}>
+          <ConnectedRouter history={history}>
+            <Switch>
+              <Route path="/" component={ContainerApp} />
+            </Switch>
+          </ConnectedRouter>
+        </Provider>
+      </ThemeProvider>
     );
   };
 
