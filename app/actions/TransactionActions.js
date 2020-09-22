@@ -123,13 +123,13 @@ export const newTransactionsReceived = (
 
   // filterTxsArray is an aux function to filter the passed transactions so
   // we avoid duplicated txs.
-  const filterTxsArray = (transactions) => transactions.filter(
-    (tx) => {
+  const filterTxsArray = (transactions) =>
+    transactions.filter((tx) => {
       // remove transactions which are already at the old state of unmined
       // transactions array to avoid duplicated txs. If the tx is already at
       // the array, no need for re-adding it.
-      const txIsAtArray = unminedTransactions.find(unminedTx =>
-        unminedTx.txHash === tx.txHash
+      const txIsAtArray = unminedTransactions.find(
+        (unminedTx) => unminedTx.txHash === tx.txHash
       );
       if (txIsAtArray) {
         return false;
@@ -138,8 +138,7 @@ export const newTransactionsReceived = (
       if (!newlyMinedMap[tx.txHash] && !newlyUnminedMap[tx.txHash]) {
         return true;
       }
-    }
-  );
+    });
 
   // update recent regular and stake transactions selector
   recentRegularTransactions = [
@@ -231,7 +230,7 @@ export const CHANGE_TICKETS_FILTER = "CHANGE_TICKETS_FILTER";
 export const changeTicketsFilter = (newFilter) => (dispatch, getState) =>
   new Promise((resolve) => {
     const {
-      transactionsFilter: { listDirection }
+      ticketsFilter: { listDirection }
     } = getState().grpc;
     let { stakeTransactions, getStakeTxsAux } = getState().grpc;
     // If list direction changes (from asc to desc or vice versa), we need to

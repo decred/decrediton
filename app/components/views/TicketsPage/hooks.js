@@ -14,7 +14,7 @@ export const useTicketsList = () => {
   const window = useSelector(sel.mainWindow);
 
   // actions
-  const goBackHistory = () => dispatch(ca.goBackHistory);
+  const goBackHistory = () => dispatch(ca.goBackHistory());
   const getTickets = (isStake) => dispatch(ta.getTransactions(isStake));
   const changeTicketsFilter = (newFilter) =>
     dispatch(ta.changeTicketsFilter(newFilter));
