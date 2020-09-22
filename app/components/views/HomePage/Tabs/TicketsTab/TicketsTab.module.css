@@ -1,0 +1,21 @@
+.headerSmallBalance {
+  display: inline;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 14px;
+  padding: 3px;
+  color: var(--input-color-default);
+  background-color: var(--blue-highlight-background);
+  margin-left: 5px;
+  margin-right: 5px;
+  border-radius: 3px;
+}
+
+.overviewBalanceSpendableLockedText {
+  font-size: 11px;
+  color: var(--agenda-card-bottom-cfg);
+  font-family: var(--font-family-regular);
+  line-height: 13px;
+  padding-top: 3px;
+  margin-left: 10px;
+}

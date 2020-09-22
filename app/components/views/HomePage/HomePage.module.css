@@ -1,0 +1,267 @@
+.isRow {
+  display: flex;
+  flex-direction: row;
+}
+
+.overviewHeader {
+  padding-left: 63px;
+  padding-top: 47px;
+  padding-right: 56px;
+  justify-content: space-between;
+  background-color: var(--background-back-color);
+}
+
+.overviewHeader .tabs > .tab > a {
+  margin-right: 8px;
+  font-size: 11px;
+  padding: 5px 10px 5px 10px;
+  color: var(--tab-text);
+  text-decoration: none;
+}
+
+.overviewHeader .tabs > .tab > .active {
+  border: 1px solid var(--home-content-link);
+  border-radius: 3px;
+  color: var(--tab-text-active-hover);
+}
+
+.overviewHeader .tabs > .tab > a:hover {
+  color: var(--tab-text-active-hover);
+}
+
+.overviewHeader .overviewHeaderWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.overviewContentWrapper {
+  justify-content: space-between;
+  display: flex;
+  background-color: var(--background-back-color);
+  padding-left: 63px;
+}
+
+.overviewSpendableLockedWrapper {
+  padding-top: 132px;
+}
+
+.overviewTransactionsTicket {
+  padding: 30px 63px;
+}
+
+.overviewBalance {
+  font-size: 42px;
+  color: var(--input-color-default);
+  font-family: var(--font-family-monospaced);
+}
+
+.overviewBalanceLabel {
+  font-family: var(--font-family-regular);
+  font-size: 11px;
+  color: var(--overview-balance-label);
+}
+
+.overviewBalanceUnit {
+  font-size: 17px;
+  color: var(--input-color-default);
+}
+
+.overviewBalanceSpendableLocked {
+  font-family: var(--font-family-regular);
+  line-height: 13px;
+  color: var(--input-color-default);
+  padding-left: 10px;
+  margin-right: 2px;
+  background-repeat: no-repeat;
+  background-position: 0 50%;
+  background-size: 7px;
+}
+
+.overviewBalanceSpendableLocked.amount {
+  font-size: 17px;
+  font-family: var(--font-family-monospaced);
+  line-height: 18px;
+}
+
+.overviewBalanceSpendableLocked.active {
+  background-image: var(--legend-active);
+}
+
+.overviewBalanceSpendableLocked.voted {
+  background-image: var(--legend-voted);
+}
+
+.overviewBalanceSpendableLocked.received {
+  background-image: var(--legend-received);
+}
+
+.overviewBalanceSpendableLocked.sent {
+  background-image: var(--legend-sent);
+}
+
+.overviewBalanceSpendableLocked.available {
+  background-image: var(--legend-available);
+}
+
+.overviewBalanceSpendableLocked.locked {
+  background-image: var(--legend-locked);
+}
+
+.overviewBalanceSpendableLockedLabel {
+  font-size: 11px;
+  color: var(--agenda-card-bottom-cfg);
+  font-family: var(--font-family-regular);
+  line-height: 13px;
+  margin-left: 10px;
+  margin-top: 4px;
+}
+
+.overviewSpendableLockedWrapperArea {
+  margin-bottom: 14px;
+}
+
+.overviewSpendableLockedWrapperArea.tickets {
+  margin-bottom: 8px;
+}
+
+@media screen and (max-width: 1179px) {
+  .overviewTransactionsTicket {
+    padding: 30px 20px;
+  }
+
+  .overviewHeader {
+    padding-top: 60px;
+    padding-left: 20px;
+  }
+
+  .overviewContentWrapper {
+    padding-left: 20px;
+  }
+
+  .overviewSpendableLockedWrapper {
+    padding-top: 114px;
+  }
+}
+
+
+@media screen and (max-width: 768px) {
+  .overviewTabLabel {
+    font-size: 0;
+  }
+
+  .overviewTab {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-size: 16px;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+  }
+
+  .overviewTab.balance {
+    background-image: var(--balance-tab-icon);
+  }
+  .overviewTab.tickets {
+    background-image: var(--menu-tickets-default);    
+  }
+  .overviewTab.tx {
+    background-image: var(--menu-transactions-default);    
+  }
+
+  .overviewHeader {
+    padding-left: 11px;
+    padding-top: 40px;
+    padding-right: 0;
+  }
+
+  .overviewHeader .overviewHeaderWrapper {
+    width: 394px;
+    min-width: 394px;
+  }
+
+  .overviewHeader .tabs > .tab > a {
+    padding: 0;
+  }
+
+  .overviewHeader .tabs > .tab > a.active {
+    border: 0;
+  }
+
+  .overviewHeader .tabs > .tab > a.active {
+    border: 1px solid var(--home-content-link);
+    border-radius: 3px;
+  }
+
+  .overviewContentWrapper {
+    padding-left: 11px;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .overviewSpendableLockedWrapper {
+    padding-top: 0;
+    display: flex;
+    justify-content: space-between;
+    width: 315px;
+    padding-left: 9px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .overviewTabLabel {
+    font-size: 0;
+  }
+
+  .overviewTab {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-size: 16px;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+  }
+
+  .overviewTab.balance {
+    background-image: var(--balance-tab-icon);
+  }
+  
+  .overviewTab.tickets {
+    background-image: var(--menu-tickets-default);
+  }
+
+  .overviewTab.tx {
+    background-image: var(--menu-transactions-default);
+  }
+
+  .overviewBalance {
+    font-size: 27px;
+  }
+
+  .overview-content-wrapper {
+    padding-left: 11px;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .overview-transactions-ticket.is-row {
+    flex-direction: column;
+  }
+
+  .ticket-tx-wrapper {
+    margin-left: 0;
+    margin-top: 25px;
+  }
+
+  .home-content-title {
+    width: 315px;
+  }
+
+  .overview-spendable-locked-wrapper {
+    padding-top: 0;
+    display: flex;
+    justify-content: space-between;
+    width: 315px;
+    padding-left: 9px;
+  }
+}
