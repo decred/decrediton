@@ -1,9 +1,9 @@
 import DefaultModal from "../Modal";
-import ButtonsToolbar from "./PassphraseModalButtonsToolbar";
-import PassphraseInputRow from "./PassphraseModalInputRow";
 import { FormattedMessage as T } from "react-intl";
 import style from "../Modals.module.css";
 import { classNames } from "pi-ui";
+import { PasswordInput, PassphraseModalField } from "inputs";
+import { ButtonsToolbar } from "shared";
 
 const Modal = ({
   modalClassName,
@@ -11,19 +11,13 @@ const Modal = ({
   modalDescription,
   modalTitle,
   children,
-  prependPassphraseRow,
   onCancelModal,
-  ...props
+  passPhrase,
+  onSubmit,
+  setPassPhrase,
+  submitLabel,
+  isValid
 }) => {
-  const inputRow = (
-    <PassphraseInputRow
-      {...{
-        ...props,
-        autoFocusPassword: prependPassphraseRow || !children
-      }}
-    />
-  );
-
   return (
     <DefaultModal
       className={classNames(style.passphrase, modalClassName)}
@@ -44,11 +38,24 @@ const Modal = ({
         </div>
       </div>
       <div className={style.passphraseContent}>
-        {prependPassphraseRow ? inputRow : null}
+        <PassphraseModalField
+          label={<T id="passphraseModal.privatePassphrase" m="Private Passphrase" />}>
+          <PasswordInput
+            autoFocus={true}
+            required
+            id="passphrase"
+            placeholder=""
+            value={passPhrase}
+            onChange={(e) => setPassPhrase(e.target.value)}
+            onKeyDownSubmit={onSubmit}
+            showErrors={passPhrase !== null && !passPhrase}
+          />
+        </PassphraseModalField>
         {children}
-        {prependPassphraseRow ? null : inputRow}
       </div>
-      <ButtonsToolbar {...{ ...props, onCancelModal }} />
+      <div className={style.passphraseToolbar}>
+        <ButtonsToolbar {...{ onCancelModal, onSubmit, isValid, submitLabel }} />
+      </div>
     </DefaultModal>
   );
 };

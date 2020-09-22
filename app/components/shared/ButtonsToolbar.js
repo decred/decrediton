@@ -1,15 +1,21 @@
 import { KeyBlueButton, InvisibleButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
-import style from "../Modals.module.css";
+import style from "./shared.module.css";
 
-const PassphraseModalButtonsToolbar = ({
+const ButtonsToolbar = ({
   onSubmit,
   onCancelModal,
   submitLabel,
-  isValid
+  isValid,
+  className
 }) => (
-  <div className={style.passphraseToolbar}>
-    <KeyBlueButton disabled={!isValid} onClick={onSubmit}>
+  <div className={className}>
+    <KeyBlueButton disabled={
+        // if isValid is not passed as props, we never validate it.
+        isValid === undefined ? false : !isValid
+      }
+      onClick={onSubmit}
+    >
       {submitLabel ? (
         submitLabel
       ) : (
@@ -24,4 +30,4 @@ const PassphraseModalButtonsToolbar = ({
   </div>
 );
 
-export default PassphraseModalButtonsToolbar;
+export default ButtonsToolbar;

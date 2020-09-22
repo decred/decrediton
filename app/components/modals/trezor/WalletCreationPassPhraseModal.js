@@ -2,7 +2,7 @@ import Modal from "../Modal";
 import { FormattedMessage as T } from "react-intl";
 import { Documentation } from "shared";
 import { PasswordInput, PassphraseModalField } from "inputs";
-import { ButtonsToolbar } from "../PassphraseModal";
+import { ButtonsToolbar } from "shared";
 
 @autobind
 class TrezorWalletCreationPassphraseModal extends React.Component {

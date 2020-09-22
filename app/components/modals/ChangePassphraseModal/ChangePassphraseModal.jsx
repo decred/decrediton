@@ -1,38 +1,65 @@
 import Modal from "./ChangePassphraseModalContent";
-import useChangePassphraseModal from "./hooks";
+import { useEffect, useState, useCallback } from "react";
+import { FormattedMessage as T } from "react-intl";
 
 const ChangePassphraseModal = ({ onCancelModal, onSubmit, ...props }) => {
-  const {
-    privPass,
-    confirmPrivPass,
-    confirmPrivPassError,
-    hasFailedAttempt,
-    triggerPassphraseModalSubmit,
-    onCancelModalCallback,
-    validationFailed,
-    isValid,
-    onSubmitCallback,
-    updatePrivatePassphrase,
-    updateConfirmPrivatePassphrase,
-    onTriggerPassphraseModalSubmit
-  } = useChangePassphraseModal(onCancelModal, onSubmit);
+  const [newPassphrase, setNewPassphrase] = useState(null);
+  const [confirmPrivPass, setConfirmPrivPass] = useState(null);
+  const [isValid, setIsValid] = useState(false);
+  const [error, setIsError] = useState("");
+
+  const resetState = useCallback(() => {
+    setNewPassphrase(null);
+    setConfirmPrivPass(null);
+  }, []);
+
+  const onCancelModalCallback = useCallback(() => {
+    resetState();
+    onCancelModal && onCancelModal();
+  }, [resetState, onCancelModal]);
+
+  const onSubmitCallback = useCallback((passPhrase) => {
+    onSubmit(passPhrase, { newPassphrase, priv: true });
+    resetState();
+  }, [newPassphrase, onSubmit, resetState]);
+
+  useEffect(() => {
+    setIsValid(!!newPassphrase &&
+      newPassphrase === confirmPrivPass);
+  }, [newPassphrase, confirmPrivPass]);
+
+  useEffect(() => {
+    if (newPassphrase === null || confirmPrivPass === null) {
+      return;
+    }
+    if (isValid) {
+      setIsError(null);
+      return;
+    }
+    if (!newPassphrase) {
+      const error = <T id="error.empty.fields" m="Fill all fields." />;
+      setIsError(error);
+      return;
+    }
+    if (newPassphrase !== confirmPrivPass) {
+      const error = <T id="error.not.same.pass" m="Passwords does not match." />;
+      setIsError(error);
+      return;
+    }
+  }, [isValid, newPassphrase, confirmPrivPass]);
 
   return (
     <Modal
       {...props}
       {...{
-        privPass,
+        newPassphrase,
         confirmPrivPass,
-        confirmPrivPassError,
-        hasFailedAttempt,
-        triggerPassphraseModalSubmit,
         onCancelModal: onCancelModalCallback,
-        validationFailed,
         isValid,
         onSubmit: onSubmitCallback,
-        updatePrivatePassphrase,
-        updateConfirmPrivatePassphrase,
-        onTriggerPassphraseModalSubmit
+        setNewPassphrase,
+        setConfirmPrivPass,
+        error
       }}
     />
   );

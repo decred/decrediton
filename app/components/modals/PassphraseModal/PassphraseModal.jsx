@@ -1,38 +1,47 @@
 import Modal from "./PassphraseModalContent";
-import usePassphraseModal from "./hooks";
+import { useState, useCallback } from "react";
+import { useEffect } from "react";
 
 const PassphraseModal = ({
-  triggerSubmit,
   onCancelModal,
-  isValid,
-  validationFailed,
   onSubmit,
+  parentIsValid,
   ...props
 }) => {
-  const {
-    passPhrase,
-    hasFailedAttempt,
-    onCancelModalCallback,
-    setPassPhraseCallback,
-    isValidCallback,
-    onSubmitCallback
-  } = usePassphraseModal(
-    triggerSubmit,
-    onCancelModal,
-    isValid,
-    validationFailed,
-    onSubmit
-  );
+  const [passPhrase, setPassPhrase] = useState(null);
+  const [isValid, setIsValid] = useState(null);
+
+  const resetState = useCallback(() => {
+    setPassPhrase(null);
+  }, []);
+
+  const onCancelModalCallback = useCallback(() => {
+    resetState();
+    onCancelModal && onCancelModal();
+  }, [resetState, onCancelModal]);
+
+  const onSubmitCallback = useCallback(() => {
+    if (!isValid) {
+      return;
+    }
+
+    onSubmit(passPhrase);
+    resetState();
+  }, [passPhrase, onSubmit, resetState, isValid]);
+
+  useEffect(() => setIsValid(
+    // if parentIsValid is not passed as props, we consider it as true.
+    (parentIsValid === undefined ? true : parentIsValid) && !!passPhrase
+  ), [passPhrase, parentIsValid]);
 
   return (
     <Modal
       {...props}
       {...{
         passPhrase,
-        hasFailedAttempt,
         onCancelModal: onCancelModalCallback,
-        setPassPhrase: setPassPhraseCallback,
-        isValid: isValidCallback,
+        setPassPhrase,
+        isValid,
         onSubmit: onSubmitCallback
       }}
     />

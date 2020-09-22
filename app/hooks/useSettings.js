@@ -24,8 +24,10 @@ const useSettings = () => {
   const walletReady = useSelector(sel.getWalletReady);
 
   const onAttemptChangePassphrase = useCallback(
-    (oldPass, newPass, priv) =>
-      dispatch(ca.changePassphraseAttempt(oldPass, newPass, priv)),
+    (oldPass, args) => {
+      const { newPassphrase, priv } = args;
+      dispatch(ca.changePassphraseAttempt(oldPass, newPassphrase, priv));
+    },
     [dispatch]
   );
 

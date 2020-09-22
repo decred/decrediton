@@ -1,4 +1,4 @@
-import { PassphraseModal } from "../PassphraseModal";
+import { PassphraseModal } from "modals";
 import { FormattedMessage as T } from "react-intl";
 
 @autobind

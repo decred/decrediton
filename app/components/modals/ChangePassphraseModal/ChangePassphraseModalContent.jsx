@@ -1,25 +1,23 @@
 import { FormattedMessage as T } from "react-intl";
 import { PasswordInput, PassphraseModalField } from "inputs";
-import { PassphraseModal } from "../PassphraseModal";
+import { PassphraseModal } from "modals";
 
 const Modal = ({
-  privPass,
-  updatePrivatePassphrase,
+  newPassphrase,
+  setNewPassphrase,
+  setConfirmPrivPass,
   confirmPrivPass,
-  updateConfirmPrivatePassphrase,
-  confirmPrivPassError,
-  hasFailedAttempt,
-  triggerPassphraseModalSubmit,
+  isValid,
   onSubmit,
   onTriggerPassphraseModalSubmit,
+  error,
   ...props
 }) => (
   <PassphraseModal
     {...{
       ...props,
       onSubmit,
-      prependPassphraseRow: true,
-      triggerSubmit: triggerPassphraseModalSubmit
+      parentIsValid: isValid
     }}>
     <PassphraseModalField
       label={
@@ -27,33 +25,29 @@ const Modal = ({
       }>
       <PasswordInput
         required
-        showErrors={hasFailedAttempt}
+        showErrors={newPassphrase !== null && !isValid}
         id="passphrase"
         placeholder=""
-        value={privPass}
-        onChange={(e) => updatePrivatePassphrase(e.target.value)}
+        value={newPassphrase}
+        onChange={(e) => setNewPassphrase(e.target.value)}
         onKeyDownSubmit={onTriggerPassphraseModalSubmit}
       />
     </PassphraseModalField>
-
     <PassphraseModalField
       label={<T id="changePassModal.confirm" m="Confirm" />}>
       <PasswordInput
-        invalid={!!confirmPrivPassError}
-        invalidMessage={
-          <T
-            id="changePassModal.confirmMismatch"
-            m="New passphrase and confirmation don't match"
-          />
-        }
-        showErrors={hasFailedAttempt}
+        required
+        showErrors={confirmPrivPass !== null && !isValid}
         id="confirmPassphrase"
         placeholder=""
         value={confirmPrivPass}
-        onChange={(e) => updateConfirmPrivatePassphrase(e.target.value)}
+        onChange={(e) => setConfirmPrivPass(e.target.value)}
         onKeyDownSubmit={onTriggerPassphraseModalSubmit}
       />
     </PassphraseModalField>
+    {
+      error && <div className="error">{error}</div>
+    }
   </PassphraseModal>
 );
 
