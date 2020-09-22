@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import TicketListPage from "./Page";
 import { FormattedMessage as T } from "react-intl";
 import { useTicketsList } from "../hooks";
@@ -53,7 +53,7 @@ const selectTicketTypeFromFilter = (filter) => {
   return ticketType && ticketType.key;
 };
 
-const MyTicketsR = (props) => {
+const MyTickets = (props) => {
   const {
     tickets,
     tsDate,
@@ -112,4 +112,4 @@ const MyTicketsR = (props) => {
   );
 };
 
-export default MyTicketsR;
+export default MyTickets;

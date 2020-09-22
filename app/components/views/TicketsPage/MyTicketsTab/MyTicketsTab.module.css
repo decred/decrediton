@@ -1,0 +1,35 @@
+.ticketsButtons {
+  text-align: right;
+  margin-right: 20px;
+  margin-left: auto;
+}
+
+.vote {
+  padding: 4px;
+  background-color: rgba(105, 211, 245, 0.3);
+}
+
+.voteAgenda {
+  font-weight: bold;
+  margin-right: 0.5em;
+}
+
+.tableHeader {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 2fr 1fr 1fr 0.2fr;
+  padding: 16px 20px;
+  background-color: var(--sidebar-color);
+}
+
+@media screen and (max-width: 1179px) {
+  /* to fit table's width */
+  .tableHeader {
+    width: calc(667px - 40px);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .tableHeader {
+    display: none;
+  }
+}

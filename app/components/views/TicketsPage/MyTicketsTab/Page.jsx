@@ -8,6 +8,7 @@ import {
 import { TxHistory, Subtitle, Tooltip } from "shared";
 import { EyeFilterMenu } from "buttons";
 import "style/MyTickets.less";
+import style from "./MyTicketsTab.module.css";
 
 const subtitleMenu = ({
   sortTypes,
@@ -17,7 +18,7 @@ const subtitleMenu = ({
   onChangeSelectedType,
   onChangeSortType
 }) => (
-  <div className="tickets-buttons-area">
+  <div className={style.ticketsButtons}>
     <Tooltip
       tipWidth={300}
       text={<T id="tickets.sortby.tooltip" m="Sort By" />}>
@@ -64,7 +65,7 @@ const TicketListPage = ({
     threshold={90}>
     <Subtitle
       title={<T id="mytickets.subtitle" m="My Tickets" />}
-      className={"is-row"}
+      className="is-row"
       children={subtitleMenu({
         sortTypes,
         ticketTypes,
@@ -74,33 +75,31 @@ const TicketListPage = ({
         onChangeSortType
       })}
     />
-    <div className="history-page-content-wrapper">
-      {tickets.length > 0 && (
-        <>
-          <div className="my-tickets-table-header">
-            <div>
-              <T id="tickets.table.header.status" m="Ticket Status" />
-            </div>
-            <div>
-              <T id="tickets.table.header.price" m="Price" />
-            </div>
-            <div>
-              <T id="tickets.table.header.reward" m="Reward" />
-            </div>
-            <div>
-              <T id="tickets.table.header.votetime" m="Vote Time" />
-            </div>
-            <div>
-              <T id="tickets.table.header.account" m="Account" />
-            </div>
-            <div>
-              <T id="tickets.table.header.purchased" m="Purchased" />
-            </div>
+    {tickets.length > 0 && (
+      <>
+        <div className={style.tableHeader}>
+          <div>
+            <T id="tickets.table.header.status" m="Ticket Status" />
           </div>
-          <TxHistory {...{ transactions: tickets, tsDate, mode: "stake" }} />
-        </>
-      )}
-    </div>
+          <div>
+            <T id="tickets.table.header.price" m="Price" />
+          </div>
+          <div>
+            <T id="tickets.table.header.reward" m="Reward" />
+          </div>
+          <div>
+            <T id="tickets.table.header.votetime" m="Vote Time" />
+          </div>
+          <div>
+            <T id="tickets.table.header.account" m="Account" />
+          </div>
+          <div>
+            <T id="tickets.table.header.purchased" m="Purchased" />
+          </div>
+        </div>
+        <TxHistory {...{ transactions: tickets, tsDate, mode: "stake" }} />
+      </>
+    )}
     {!noMoreTickets ? (
       <LoadingMoreTicketsIndicator />
     ) : tickets.length > 0 ? (
