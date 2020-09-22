@@ -84,13 +84,13 @@ const TicketListPage = ({
           <div>
             <T id="tickets.table.header.price" m="Price" />
           </div>
-          <div>
+          <div className={style.ticketReward}>
             <T id="tickets.table.header.reward" m="Reward" />
           </div>
           <div>
             <T id="tickets.table.header.votetime" m="Vote Time" />
           </div>
-          <div>
+          <div className={style.accountName}>
             <T id="tickets.table.header.account" m="Account" />
           </div>
           <div>

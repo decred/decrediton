@@ -21,14 +21,13 @@
   background-color: var(--sidebar-color);
 }
 
-@media screen and (max-width: 1179px) {
-  /* to fit table's width */
-  .tableHeader {
-    width: calc(667px - 40px);
-  }
-}
-
 @media screen and (max-width: 768px) {
+  .ticketReward {
+    display: none;
+  }
+  .accountName {
+    display: none;
+  }
   .tableHeader {
     display: none;
   }
