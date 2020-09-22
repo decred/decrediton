@@ -6,7 +6,8 @@ import {
   ReceiveAccountsSelect
 } from "inputs";
 import { Tooltip, Balance } from "shared";
-import "style/SendPage.less";
+import { classNames } from "pi-ui";
+import styles from "./SendOutputRow.module.css";
 
 const messages = defineMessages({
   destinationAddrPlaceholder: {
@@ -33,19 +34,29 @@ const getSendAllFundsIcon = ({
           m="Send all funds from selected account - Disabled"
         />
       }>
-      <a className="send-icon-wrapper wallet-icon disabled" />
+      <a className={classNames(
+        styles.sendIconWrapper,
+        styles.walletIcon,
+        styles.disabled
+      )}/>
     </Tooltip>
   ) : !isSendAll ? (
     <Tooltip
       text={
         <T id="send.sendAllTitle" m="Send all funds from selected account" />
       }>
-      <a className="send-icon-wrapper wallet-icon" onClick={onShowSendAll} />
+      <a className={classNames(
+        styles.sendIconWrapper,
+        styles.walletIcon
+      )} onClick={onShowSendAll} />
     </Tooltip>
   ) : (
     <Tooltip
       text={<T id="send.cancelSendAllTitle" m="Cancel sending all funds" />}>
-      <a className="send-icon-wrapper cancel-icon" onClick={onHideSendAll} />
+      <a className={classNames(
+        styles.sendIconWrapper,
+        styles.cancelIcon
+      )} onClick={onHideSendAll} s/>
     </Tooltip>
   );
 
@@ -57,14 +68,21 @@ const getAddInputIcon = ({
   isSendAll
 }) =>
   isSendSelf ? (
-    <div className="send-icon-wrapper add disabled"></div>
+    <div className={classNames(
+      styles.sendIconWrapper,
+      styles.add,
+      styles.disabled
+    )}></div>
   ) : (
     !isSendAll &&
     (index === 0 ? (
-      <div className="send-icon-wrapper add" onClick={onAddOutput}></div>
+      <div className={classNames(
+        styles.sendIconWrapper,
+        styles.add
+      )}onClick={onAddOutput}></div>
     ) : (
       <div
-        className="send-icon-wrapper delete"
+        className={classNames(styles.sendIconWrapper, styles.delete)}
         onClick={() => onRemoveOutput(index)}></div>
     ))
   );
@@ -74,7 +92,7 @@ const getSendSelfIcon = ({ isSendSelf, onShowSendSelf, onShowSendOthers }) =>
     <Tooltip
       text={<T id="send.sendSelfTitle" m="Send funds to another account" />}>
       <a
-        className="send-icon-wrapper self-account-icon"
+        className={classNames(styles.sendIconWrapper, styles.selfAccountIcon)}
         onClick={onShowSendSelf}
       />
     </Tooltip>
@@ -82,7 +100,7 @@ const getSendSelfIcon = ({ isSendSelf, onShowSendSelf, onShowSendOthers }) =>
     <Tooltip
       text={<T id="send.sendOthersTitle" m="Send funds to another wallet" />}>
       <a
-        className="send-icon-wrapper cancel-icon "
+        className={classNames(styles.sendIconWrapper, styles.cancelIcon)}
         onClick={onShowSendOthers}
       />
     </Tooltip>
@@ -112,19 +130,19 @@ const SendOutputRow = ({
   filterAccounts,
   accountsType
 }) => (
-  <div className="is-row">
+  <div className={styles.isRow}>
     <div>
       {index === 0 && (
-        <div className="send-label">
+        <div className={styles.sendLabel}>
           <T id="send.from" m="From" />:
         </div>
       )}
-      <div className="send-label">
+      <div className={styles.sendLabel}>
         <span>
           <T id="send.to" m="To" />:
         </span>
       </div>
-      <div className="send-label">
+      <div className={styles.sendLabel}>
         <span>
           <T id="send.amount" m="Amount" />:
         </span>
@@ -132,9 +150,9 @@ const SendOutputRow = ({
     </div>
     <div>
       {index === 0 && (
-        <div className="send-input-wrapper">
+        <div className={styles.sendInputWrapper}>
           <AccountsSelect
-            className="send-input"
+            className={styles.sendInput}
             {...{
               account,
               filterAccounts,
@@ -145,16 +163,17 @@ const SendOutputRow = ({
           />
         </div>
       )}
-      <div className="send-input-wrapper">
+      <div className={styles.sendInputWrapper}>
         {isSendSelf ? (
           <ReceiveAccountsSelect
+            className={styles.sendInput}
             getAddressForSelected={true}
             showAccountsButton={false}
             onKeyDown={onKeyDown}
-            className="send-input"
           />
         ) : (
           <AddressInput
+            className={styles.sendInput}
             required={true}
             autoFocus={index === 0}
             showErrors={error && error.address}
@@ -168,20 +187,19 @@ const SendOutputRow = ({
               onValidateAddress({ address: e.target.value, index })
             }
             onKeyDown={onKeyDown}
-            className="send-input"
           />
         )}
       </div>
-      <div className="send-input-wrapper">
+      <div className={styles.sendInputWrapper}>
         {isSendAll ? (
           <Balance
+            classNameWrapper={classNames(styles.sendInput, styles.sendAll)}
             flat
             amount={sendAllAmount}
-            classNameWrapper="send-input send-all"
           />
         ) : (
           <DcrInput
-            className="send-input"
+            className={styles.sendInput}
             required={true}
             showErrors={error && error.amount}
             invalid={error && error.amount}
@@ -196,7 +214,7 @@ const SendOutputRow = ({
         )}
       </div>
     </div>
-    <div className="is-column">
+    <div className={styles.isColumn}>
       {index === 0 &&
         getSendSelfIcon({ isSendSelf, onShowSendSelf, onShowSendOthers })}
       {getAddInputIcon({

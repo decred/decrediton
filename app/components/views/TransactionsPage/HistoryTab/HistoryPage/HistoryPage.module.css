@@ -1,0 +1,47 @@
+.isRow {
+  display: flex;
+  flex-direction: row;
+}
+
+.historyContainer {
+  margin-left: auto;
+}
+
+.historySearchTx {
+  display: inline-block;
+}
+
+.historyPageContent {
+  width: 740px;
+  height: 100%;
+}
+
+
+@media screen and (max-width: 1179px) {
+  .historyPageContent {
+    width: 667px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .historyPageContent {
+    width: 355px;
+  }
+
+  .historyContainer {
+    margin-left: 0;
+  }
+
+  .history-content-title {
+    width: 355px;
+    margin-left: 0;
+  }
+
+  .isRow {
+    flex-direction: column;
+  }
+
+  .historySearchTx {
+    width: 250px;
+  }
+}

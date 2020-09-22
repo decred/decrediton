@@ -19,7 +19,7 @@ import { getStartedMachine } from "stateMachines/GetStartedStateMachine";
 import { AdvancedStartupBody } from "./AdvancedStartup/AdvancedStartup";
 import SettingMixedAccount from "./SetMixedAcctPage/SetMixedAcctPage";
 
-// XXX: these animations classes are passed down to AnimatedLinearProgressFull
+// XXX these animations classes are passed down to AnimatedLinearProgressFull
 // and styling defined in Loading.less and need to handled when loading.less
 // is migrated, and classes should be defined then in ./GetStarted.module.css
 // css animation classes
@@ -54,7 +54,8 @@ export const useGetStarted = () => {
     onConnectDaemon,
     onStartWallet,
     syncDaemon,
-    goToHome
+    goToHome,
+    onOpenWallet
   } = useDaemonStartup();
   const [PageComponent, setPageComponent] = useState(null);
   const [state, send] = useMachine(getStartedMachine, {
@@ -107,7 +108,6 @@ export const useGetStarted = () => {
       },
       isAtCheckNetworkMatch: () => {
         console.log(" is at check network ");
-        // TODO add error when network does not match
         return checkNetworkMatch()
           .then(() => send({ type: "CHOOSE_WALLET" }))
           .catch((error) =>
@@ -384,6 +384,7 @@ export const useGetStarted = () => {
             component = h(WalletPubpassInput, {
               onSendContinue,
               onSendError,
+              onOpenWallet,
               error
             });
             break;
@@ -445,6 +446,7 @@ export const useGetStarted = () => {
       submitAppdata,
       submitChosenWallet,
       submitRemoteCredentials,
+      onOpenWallet,
       error
     ]
   );

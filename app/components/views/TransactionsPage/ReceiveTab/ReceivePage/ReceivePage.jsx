@@ -1,13 +1,12 @@
+import { useState, useRef } from "react";
 import copy from "clipboard-copy";
-import { useState } from "react";
+import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { ReceiveAccountsSelect, DcrInput } from "inputs";
 import { Subtitle } from "shared";
 import { KeyBlueButton } from "buttons";
-import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
-import QRCodeModal from "./QRCodeModal";
-import style from "./ReceiveTab.module.css";
+import QRCodeModal from "./QRCodeModal/QRCodeModal";
 import { classNames } from "pi-ui";
-import { useRef } from "react";
+import style from "./ReceivePage.module.css";
 
 const messages = defineMessages({
   amountPlaceholder: {
@@ -23,8 +22,7 @@ const ReceivePage = ({
   amount,
   error,
   intl,
-  onValidateAmount,
-  onKeyDown
+  onValidateAmount
 }) => {
   const [modal, setModal] = useState(false);
   const [tooltip, setTooltip] = useState(false);
@@ -67,7 +65,6 @@ const ReceivePage = ({
               amount={amountAtomValue}
               placeholder={intl.formatMessage(messages.amountPlaceholder)}
               onChangeAmount={(e) => onValidateAmount(e)}
-              onKeyDown={onKeyDown}
             />
           </div>
         </div>

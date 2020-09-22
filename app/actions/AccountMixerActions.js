@@ -41,26 +41,31 @@ export const runAccountMixer = ({
   changeAccount,
   csppServer
 }) => (dispatch, getState) =>
-    new Promise((resolve) => {
-      dispatch({ type: RUNACCOUNTMIXER_ATTEMPT });
-      const runMixerAsync = async () => {
-        // no start mixer if account balance is less than minimum possible fee.
-        const spendableBal = await dispatch(getAcctSpendableBalance(changeAccount));
-        if (spendableBal < MIN_RELAY_FEE_ATOMS) {
-          return { error: "Account Balance Too Small" };
-        }
-        const mixerStreamer = await wallet
-        .runAccountMixerRequest(sel.accountMixerService(getState()), {
+  new Promise((resolve) => {
+    dispatch({ type: RUNACCOUNTMIXER_ATTEMPT });
+    const runMixerAsync = async () => {
+      // no start mixer if account balance is less than minimum possible fee.
+      const spendableBal = await dispatch(
+        getAcctSpendableBalance(changeAccount)
+      );
+      if (spendableBal < MIN_RELAY_FEE_ATOMS) {
+        return { error: "Account Balance Too Small" };
+      }
+      const mixerStreamer = await wallet.runAccountMixerRequest(
+        sel.accountMixerService(getState()),
+        {
           passphrase,
           mixedAccount,
           mixedAccountBranch,
           changeAccount,
           csppServer
-        });
-        return { mixerStreamer };
-      };
+        }
+      );
+      return { mixerStreamer };
+    };
 
-      runMixerAsync().then((resp) => {
+    runMixerAsync()
+      .then((resp) => {
         const { mixerStreamer, error } = resp;
         // we can throw errors, like when the account has a small balance,
         // so this check is necessary.
@@ -78,8 +83,10 @@ export const runAccountMixer = ({
         });
         dispatch({ type: RUNACCOUNTMIXER_SUCCESS, mixerStreamer });
       })
-      .catch((error) => dispatch({ error: error + "", type: RUNACCOUNTMIXER_FAILED }));
-    });
+      .catch((error) =>
+        dispatch({ error: error + "", type: RUNACCOUNTMIXER_FAILED })
+      );
+  });
 
 export const STOPMIXER_ATTEMPT = "STOPMIXER_ATTEMPT";
 export const STOPMIXER_FAILED = "STOPMIXER_FAILED";
@@ -122,42 +129,46 @@ export const createNeededAccounts = (
     const mixedNumber = mixedAccount.getAccountNumber();
     const changeNumber = changeAccount.getAccountNumber();
 
-    dispatch(setCoinjoinCfg(
-      mixedNumber,
-      changeNumber
-    ));
+    dispatch(
+      setCoinjoinCfg({
+        mixedNumber,
+        changeNumber
+      })
+    );
   } catch (error) {
     dispatch({ type: CREATEMIXERACCOUNTS_FAILED, error });
   }
 };
 
-export const setCoinjoinCfg = ({ mixedNumber, changeNumber }) =>
-  (dispatch, getState) => {
-    const isTestnet = sel.isTestNet(getState());
-    const walletName = sel.getWalletName(getState());
-    const cfg = getWalletCfg(isTestnet, walletName);
+export const setCoinjoinCfg = ({ mixedNumber, changeNumber }) => (
+  dispatch,
+  getState
+) => {
+  const isTestnet = sel.isTestNet(getState());
+  const walletName = sel.getWalletName(getState());
+  const cfg = getWalletCfg(isTestnet, walletName);
 
-    // TODO use constants here
-    // On this first moment we are hard coding the cspp decred's server.
-    // the idea is to allow more server on upcoming releases, but we decided
-    // to go with this approach on this first integration.
-    const csppServer = "cspp.decred.org";
-    const csppPort = isTestnet ? "15760" : "5760";
+  // TODO use constants here
+  // On this first moment we are hard coding the cspp decred's server.
+  // the idea is to allow more server on upcoming releases, but we decided
+  // to go with this approach on this first integration.
+  const csppServer = "cspp.decred.org";
+  const csppPort = isTestnet ? "15760" : "5760";
 
-    cfg.set("csppserver", csppServer);
-    cfg.set("csppport", csppPort);
-    cfg.set("mixedaccount", mixedNumber);
-    cfg.set("changeaccount", changeNumber);
-    cfg.set("mixedaccbranch", 0);
+  cfg.set("csppserver", csppServer);
+  cfg.set("csppport", csppPort);
+  cfg.set("mixedaccount", mixedNumber);
+  cfg.set("changeaccount", changeNumber);
+  cfg.set("mixedaccbranch", 0);
 
-    dispatch({
-      type: CREATEMIXERACCOUNTS_SUCCESS,
-      mixedAccount: mixedNumber,
-      changeAccount: changeNumber,
-      csppPort,
-      csppServer,
-      mixedAccountBranch: 0
-    });
+  dispatch({
+    type: CREATEMIXERACCOUNTS_SUCCESS,
+    mixedAccount: mixedNumber,
+    changeAccount: changeNumber,
+    csppPort,
+    csppServer,
+    mixedAccountBranch: 0
+  });
 };
 
 // getCoinjoinOutputspByAcct get all possible coinjoin outputs which an account
@@ -172,29 +183,32 @@ export const getCoinjoinOutputspByAcct = () => (dispatch, getState) =>
       .getCoinjoinOutputspByAcct(walletService)
       .then((response) => {
         const coinjoinSumByAcctResp = response.wrappers_[1];
-        const coinjoinSumByAcct = balances.reduce((allAccts, { accountNumber }) => {
-          // if account number is equals imported account, we ignore it.
-          if (accountNumber === Math.pow(2, 31) - 1) {
+        const coinjoinSumByAcct = balances.reduce(
+          (allAccts, { accountNumber }) => {
+            // if account number is equals imported account, we ignore it.
+            if (accountNumber === Math.pow(2, 31) - 1) {
+              return allAccts;
+            }
+            const coinjoinAcct = coinjoinSumByAcctResp.find(
+              (a) => a.getAccountNumber() === accountNumber
+            );
+            if (coinjoinAcct === undefined) {
+              allAccts.push({
+                acctIdx: accountNumber,
+                coinjoinSum: 0
+              });
+            } else {
+              allAccts.push({
+                acctIdx: accountNumber,
+                coinjoinSum: coinjoinAcct.getCoinjoinTxsSum()
+              });
+            }
             return allAccts;
-          }
-          const coinjoinAcct = coinjoinSumByAcctResp.find((a) => a.getAccountNumber() === accountNumber);
-          if (coinjoinAcct === undefined) {
-            allAccts.push({
-              acctIdx: accountNumber,
-              coinjoinSum: 0
-            });
-          } else {
-            allAccts.push({
-              acctIdx: accountNumber,
-              coinjoinSum: coinjoinAcct.getCoinjoinTxsSum()
-            });
-          }
-          return allAccts;
-        }, []);
+          },
+          []
+        );
 
         resolve(coinjoinSumByAcct);
       })
-      .catch((error) =>
-        reject(error)
-      );
+      .catch((error) => reject(error));
   });

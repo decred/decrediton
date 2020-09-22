@@ -57,8 +57,7 @@ class TrezorWalletCreationPassphraseModal extends React.Component {
     const {
       submitAttempted,
       passphraseValue,
-      passphraseConfirmValue,
-      mismatchedValues
+      passphraseConfirmValue
     } = this.state;
 
     const trezorLabel = this.props.device
@@ -69,6 +68,8 @@ class TrezorWalletCreationPassphraseModal extends React.Component {
       "trezor-passphrase-modal",
       this.props.isGetStarted ? "get-started" : ""
     ].join(" ");
+
+    const isValid = passphraseValue === passphraseConfirmValue && !!passphraseValue;
 
     return (
       <Modal className={className} onCancelModal={onCancelModal}>
@@ -121,7 +122,7 @@ class TrezorWalletCreationPassphraseModal extends React.Component {
             onChange={(e) => onChangePassphraseConfirmValue(e.target.value)}
             onKeyDownSubmit={onSubmit}
             showErrors={submitAttempted}
-            invalid={mismatchedValues}
+            invalid={!isValid}
             invalidMessage={
               <T
                 id="trezor.walletCreationPassphrasesMismatched"
@@ -131,7 +132,7 @@ class TrezorWalletCreationPassphraseModal extends React.Component {
           />
         </PassphraseModalField>
 
-        <ButtonsToolbar {...{ onCancelModal, onSubmit }} />
+        <ButtonsToolbar {...{ isValid, onCancelModal, onSubmit }} />
       </Modal>
     );
   }
