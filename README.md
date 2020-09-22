@@ -169,6 +169,8 @@ to start the node for your respective system.
 
 CLI options (including ```--advanced```) when running `yarn dev` are currently not supported.
 
+When generating the TLS keypairs for the rpc endpoint you should use the P-256 curve by starting the daemon with `--tlscurve=P-256`. Note that the rpccert/rpckey files need to be deleted before this.
+
 ## Platform-specific instructions
 
 ### macOS 
