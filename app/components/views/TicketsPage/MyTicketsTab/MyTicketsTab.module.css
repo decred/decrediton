@@ -4,6 +4,11 @@
   margin-left: auto;
 }
 
+.subtitle {
+  width: 100%;
+  display: inline-flex;
+}
+
 .vote {
   padding: 4px;
   background-color: rgba(105, 211, 245, 0.3);

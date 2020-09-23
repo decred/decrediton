@@ -65,7 +65,7 @@ const TicketListPage = ({
     threshold={90}>
     <Subtitle
       title={<T id="mytickets.subtitle" m="My Tickets" />}
-      className="is-row"
+      className={style.subtitle}
       children={subtitleMenu({
         sortTypes,
         ticketTypes,
