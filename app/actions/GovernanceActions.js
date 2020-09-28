@@ -247,23 +247,18 @@ export const compareInventory = () => async (dispatch, getState) => {
 // getInitialBatch Gets the first pre and active proposals batch
 const getInitialBatch = () => async (dispatch, getState) => {
   const inventory = sel.inventory(getState());
-  const proposallistpagesize = sel.proposallistpagesize(getState());
-  if (!inventory) return;
-  if (!inventory.activeVote && !inventory.preVote) return;
+  if (!inventory || (!inventory.activeVote && !inventory.preVote)) return;
 
-  let activeVoteProposalNumber = proposallistpagesize;
-  let preVoteProposalNumber = proposallistpagesize;
-  if (inventory.activeVote.length < proposallistpagesize) {
-    activeVoteProposalNumber = inventory.activeVote.length;
+  const proposallistpagesize = sel.proposallistpagesize(getState());
+  const { activeVote: active, preVote: pre } = inventory;
+
+  const activeVoteBatch = active.slice(0, proposallistpagesize);
+  const preVoteBatch = pre.slice(0, proposallistpagesize);
+  const activeAndPreVoteBatch = [...activeVoteBatch, ...preVoteBatch];
+  if (activeAndPreVoteBatch.length < proposallistpagesize) {
+    await dispatch(getProposalsAndUpdateVoteStatus(activeAndPreVoteBatch));
+    return;
   }
-  if (inventory.preVote.length < proposallistpagesize) {
-    preVoteProposalNumber = inventory.preVote.length;
-  }
-  const activeVoteBatch = inventory.activeVote.slice(
-    0,
-    activeVoteProposalNumber
-  );
-  const preVoteBatch = inventory.preVote.slice(0, preVoteProposalNumber);
   await dispatch(getProposalsAndUpdateVoteStatus(activeVoteBatch));
   await dispatch(getProposalsAndUpdateVoteStatus(preVoteBatch));
 };
@@ -333,7 +328,10 @@ export const GET_PROPOSAL_BATCH_SUCCESS = "GET_PROPOSAL_BATCH_SUCCESS";
 export const GET_PROPOSAL_BATCH_FAILED = "GET_PROPOSAL_BATCH_FAILED";
 
 const getProposalsBatch = async (tokensBatch, piURL) => {
-  const requestResponse = await pi.getProposalsBatch({ piURL, tokens: tokensBatch });
+  const requestResponse = await pi.getProposalsBatch({
+    piURL,
+    tokens: tokensBatch
+  });
   return requestResponse.data;
 };
 
@@ -345,12 +343,10 @@ export const GET_PROPOSALS_VOTESTATUS_BATCH_FAILED =
   "GET_PROPOSALS_VOTESTATUS_BATCH_FAILED";
 
 const getProposalsVotestatusBatch = async (tokensBatch, piURL) => {
-  const requestResponse = await pi.getProposalsVoteStatusBatch(
-    {
-      piURL,
-      tokens: tokensBatch
-    }
-  );
+  const requestResponse = await pi.getProposalsVoteStatusBatch({
+    piURL,
+    tokens: tokensBatch
+  });
   return requestResponse.data;
 };
 
