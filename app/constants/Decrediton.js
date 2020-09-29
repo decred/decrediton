@@ -55,6 +55,7 @@ export const RECENT_TX_COUNT = 8;
 
 // tx filter direction - descending order
 export const DESC = "desc";
+export const ASC = "asc";
 
 // tx types
 export const TICKET = "ticket";
@@ -72,6 +73,7 @@ export const TRANSFER = "transfer";
 export const COINBASE = "coinbase";
 export const REGULAR = "regular";
 export const ELIGIBLE = "eligible";
+export const ALL = "all";
 
 // tx directions
 export const TRANSACTION_DIR_SENT = "sent";

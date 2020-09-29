@@ -2,48 +2,73 @@ import { useState } from "react";
 import TicketListPage from "./Page";
 import { FormattedMessage as T } from "react-intl";
 import { useTicketsList } from "../hooks";
+import * as txTypes from "constants/Decrediton";
 
 const labels = {
-  unknown: <T id="ticket.status.multiple.unknown" m="unknown" />,
-  unmined: <T id="ticket.status.multiple.unmined" m="unmined" />,
-  immature: <T id="ticket.status.multiple.immature" m="immature" />,
-  live: <T id="ticket.status.multiple.live" m="live" />,
-  voted: <T id="ticket.status.multiple.voted" m="voted" />,
-  missed: <T id="ticket.status.multiple.missed" m="missed" />,
-  expired: <T id="ticket.status.multiple.expired" m="expired" />,
-  revoked: <T id="ticket.status.multiple.revoked" m="revoked" />
+  [txTypes.UNKNOWN]: <T id="ticket.status.multiple.unknown" m="unknown" />,
+  [txTypes.UNMINED]: <T id="ticket.status.multiple.unmined" m="unmined" />,
+  [txTypes.IMMATURE]: <T id="ticket.status.multiple.immature" m="immature" />,
+  [txTypes.LIVE]: <T id="ticket.status.multiple.live" m="live" />,
+  [txTypes.VOTED]: <T id="ticket.status.multiple.voted" m="voted" />,
+  [txTypes.MISSED]: <T id="ticket.status.multiple.missed" m="missed" />,
+  [txTypes.EXPIRED]: <T id="ticket.status.multiple.expired" m="expired" />,
+  [txTypes.REVOKED]: <T id="ticket.status.multiple.revoked" m="revoked" />
 };
 
 const sortTypes = [
   {
-    value: "desc",
-    key: "desc",
+    value: txTypes.DESC,
+    key: txTypes.DESC,
     label: <T id="tickets.sortby.newest" m="Newest" />
   },
   {
-    value: "asc",
-    key: "asc",
+    value: txTypes.ASC,
+    key: txTypes.ASC,
     label: <T id="tickets.sortby.oldest" m="Oldest" />
   }
 ];
 
 const ticketTypes = [
   {
-    key: "all",
+    key: txTypes.ALL,
     value: { status: null },
     label: <T id="tickets.type.all" m="All" />
   },
-  { key: "unmined", value: { status: "unmined" }, label: labels.unmined },
   {
-    key: "immature",
-    value: { status: "immature" },
-    label: labels.immature
+    key: txTypes.UNMINED,
+    value: { status: txTypes.UNMINED },
+    label: labels[txTypes.UNMINED]
   },
-  { key: "live", value: { status: "live" }, label: labels.live },
-  { key: "voted", value: { status: "voted" }, label: labels.voted },
-  { key: "missed", value: { status: "missed" }, label: labels.missed },
-  { key: "expired", value: { status: "expired" }, label: labels.expired },
-  { key: "revoked", value: { status: "revoked" }, label: labels.revoked }
+  {
+    key: txTypes.IMMATURE,
+    value: { status: txTypes.IMMATURE },
+    label: labels[txTypes.IMMATURE]
+  },
+  {
+    key: txTypes.LIVE,
+    value: { status: txTypes.LIVE },
+    label: labels[txTypes.LIVE]
+  },
+  {
+    key: txTypes.VOTED,
+    value: { status: txTypes.VOTED },
+    label: labels[txTypes.VOTED]
+  },
+  {
+    key: txTypes.MISSED,
+    value: { status: txTypes.MISSED },
+    label: labels[txTypes.MISSED]
+  },
+  {
+    key: txTypes.EXPIRED,
+    value: { status: txTypes.EXPIRED },
+    label: labels[txTypes.EXPIRED]
+  },
+  {
+    key: txTypes.REVOKED,
+    value: { status: txTypes.REVOKED },
+    label: labels[txTypes.REVOKED]
+  }
 ];
 
 const selectTicketTypeFromFilter = (filter) => {
