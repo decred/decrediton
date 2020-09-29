@@ -270,6 +270,7 @@
     "autobind-decorator": "^2.1.0",
     "axios": "^0.18.1",
     "bs58": "^4.0.1",
+    "connect": "https://github.com/JoeGruffins/npm-extended-dcr#139ffdccfccb3ab94f6f8f9098de2a868f18bf41",
     "connected-react-router": "^6.8.0",
     "copy-webpack-plugin": "^6.0.3",
     "dom-helpers": "^3.4.0",
@@ -313,7 +314,6 @@
     "string-argv": "0.1.1",
     "stylelint": "^13.0.0",
     "timezone-mock": "^1.0.12",
-    "trezor.js": "^8.1.0",
     "winston": "^2.3.1",
     "xstate": "^4.10.0"
   },
