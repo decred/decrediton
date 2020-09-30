@@ -10,3 +10,7 @@ export const ipcRenderer = {
     return {};
   })
 };
+
+export const clipboard = {
+  readText: jest.fn(() => "")
+};

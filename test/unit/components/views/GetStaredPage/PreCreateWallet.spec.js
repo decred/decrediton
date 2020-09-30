@@ -37,6 +37,7 @@ let mockTrezorDevice;
 let mockGetWalletCreationMasterPubKey;
 let mockIsTestNet;
 let mockReloadTrezorDeviceList;
+let mockCreateWatchOnlyWalletRequest;
 
 beforeEach(() => {
   sel.getDaemonSynced = jest.fn(() => true);
@@ -76,6 +77,9 @@ beforeEach(() => {
   mockTrezorDevice = sel.trezorDevice = jest.fn(() => null);
   mockReloadTrezorDeviceList = trza.reloadTrezorDeviceList = jest.fn(
     () => () => {}
+  );
+  mockCreateWatchOnlyWalletRequest = wla.createWatchOnlyWalletRequest = jest.fn(
+    () => () => Promise.reject()
   );
 });
 
@@ -175,7 +179,7 @@ test("test wallet name input on restore wallet", async () => {
   await wait(() =>
     expect(mockCreateWallet).toHaveBeenCalledWith(testRestoreSelectedWallet)
   );
-});
+});0
 
 test("test watch only control on restore wallet", async () => {
   const testRestoreSelectedWallet = {
@@ -234,11 +238,24 @@ test("test watch only control on restore wallet", async () => {
   await wait(() =>
     expect(mockValidateMasterPubKey).toHaveBeenCalledWith(testValidMasterPubKey)
   );
+  mockCreateWallet = da.createWallet = jest.fn(() => () =>
+    Promise.resolve(true)
+  );
+
+  mockCreateWatchOnlyWalletRequest = wla.createWatchOnlyWalletRequest = jest.fn(
+    () => () => Promise.resolve()
+  );
   user.click(continueButton);
   await wait(() =>
     expect(mockCreateWallet).toHaveBeenCalledWith(testRestoreSelectedWallet)
   );
-});
+  await wait(() =>
+    expect(mockCreateWatchOnlyWalletRequest).toHaveBeenCalledWith(
+      testValidMasterPubKey,
+      ""
+    )
+  );
+}, 30000);
 
 test("test trezor switch toggling and setup device page", async () => {
   await goToRestoreWalletView();

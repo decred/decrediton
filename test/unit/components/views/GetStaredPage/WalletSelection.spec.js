@@ -18,61 +18,62 @@ let mockRemoveWallet;
 let mockStartWallet;
 let mockSetSelectedWallet;
 let mockOpenWalletAttempt;
-
-const testLastAccessNow = new Date();
-const testLastAccessOneHourAgo = new Date();
-testLastAccessOneHourAgo.setHours(testLastAccessNow.getHours() - 1);
-
-const testLastAccessYesterday = new Date();
-testLastAccessYesterday.setHours(testLastAccessNow.getHours() - 24);
-
-const testAvailableWallets = [
-  {
-    label: "test-regular-wallet",
-    value: {
-      wallet: "test-regular-wallet-name"
-    },
-    finished: true,
-    lastAccess: testLastAccessOneHourAgo
-  },
-  {
-    label: "test-unfinished-wallet",
-    value: {
-      wallet: "test-unfinished-wallet-name"
-    },
-    finished: false,
-    lastAccess: testLastAccessYesterday
-  },
-  {
-    label: "test-trezor-wallet",
-    value: {
-      wallet: "test-trezor-wallet-name",
-      isTrezor: true
-    },
-    finished: true,
-    lastAccess: testLastAccessNow
-  },
-  {
-    label: "test-privacy-wallet",
-    value: {
-      wallet: "test-privacy-wallet-name",
-      isPrivacy: true
-    },
-    finished: true,
-    lastAccess: testLastAccessNow
-  },
-  {
-    label: "test-watch-only-wallet",
-    value: {
-      wallet: "test-watch-only-wallet-name"
-    },
-    finished: true,
-    isWatchingOnly: true,
-    lastAccess: testLastAccessNow
-  }
-];
+let testAvailableWallets;
 
 beforeEach(() => {
+  const testLastAccessNow = new Date();
+  const testLastAccessOneHourAgo = new Date();
+  testLastAccessOneHourAgo.setHours(testLastAccessNow.getHours() - 1);
+
+  const testLastAccessYesterday = new Date();
+  testLastAccessYesterday.setHours(testLastAccessNow.getHours() - 24);
+
+  testAvailableWallets = [
+    {
+      label: "test-regular-wallet",
+      value: {
+        wallet: "test-regular-wallet-name"
+      },
+      finished: true,
+      lastAccess: testLastAccessOneHourAgo
+    },
+    {
+      label: "test-unfinished-wallet",
+      value: {
+        wallet: "test-unfinished-wallet-name"
+      },
+      finished: false,
+      lastAccess: testLastAccessYesterday
+    },
+    {
+      label: "test-trezor-wallet",
+      value: {
+        wallet: "test-trezor-wallet-name",
+        isTrezor: true
+      },
+      finished: true,
+      lastAccess: testLastAccessNow
+    },
+    {
+      label: "test-privacy-wallet",
+      value: {
+        wallet: "test-privacy-wallet-name",
+        isPrivacy: true
+      },
+      finished: true,
+      lastAccess: testLastAccessNow
+    },
+    {
+      label: "test-watch-only-wallet",
+      value: {
+        wallet: "test-watch-only-wallet-name"
+      },
+      finished: true,
+      isWatchingOnly: true,
+      lastAccess: testLastAccessNow
+    }
+  ];
+
   sel.getDaemonSynced = jest.fn(() => true);
   mockRemoveWallet = da.removeWallet = jest.fn(() => () => {});
   mockSetSelectedWallet = wla.setSelectedWallet = jest.fn(() => () => {});
