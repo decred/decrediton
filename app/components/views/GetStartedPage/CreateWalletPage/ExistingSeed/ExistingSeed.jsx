@@ -53,7 +53,7 @@ const ExistingSeed = ({
 
   const onError = useCallback(
     (seedError, seedWord) => {
-      let seedErrorStr = seedError || "";
+      const seedErrorStr = seedError.details || "";
 
       const countWords = () => {
         let count = 0;
@@ -70,21 +70,24 @@ const ExistingSeed = ({
       if (seedErrorStr.includes(MISMATCH_ERROR) && countWords() < 33) {
         return;
       }
-      const fixPositionError = (errorStr, seedWord) => {
-        if (!seedWord) return;
-        const index = errorStr.indexOf(POSITION_ERROR);
-        const numberPosition = index + POSITION_ERROR.length + 1;
-        const endErrorStr = errorStr.slice(numberPosition + 1);
-        const beginErrorStr = errorStr.slice(0, numberPosition);
-        return beginErrorStr + (seedWord.index + 1) + endErrorStr;
-      };
-      if (seedErrorStr.includes(POSITION_ERROR)) {
-        seedErrorStr = fixPositionError(seedErrorStr, seedWord);
+      if (seedErrorStr.includes(POSITION_ERROR) && seedWord) {
+        const regexp = new RegExp(`${POSITION_ERROR} (\\d+)`, "g");
+        const regexpArray = regexp.exec(seedErrorStr);
+        if (regexpArray != null && typeof regexpArray[1] !== "undefined") {
+          const updatedSeedWords = [...seedWords];
+          updatedSeedWords[seedWord.index] = seedWord;
+          updatedSeedWords[regexpArray[1]] = {
+            ...updatedSeedWords[regexpArray[1]],
+            error: true
+          };
+          setSeedWords(updatedSeedWords);
+        } else {
+          console.log("invalid position error msg format");
+        }
       }
       setSeed([]);
-      setError(seedErrorStr);
     },
-    [seedWords, setSeed, setError]
+    [setSeed, seedWords]
   );
 
   useEffect(() => {
@@ -187,11 +190,10 @@ const ExistingSeed = ({
       if (seedType === WORDS) {
         setSeedWords(updatedSeedWords);
         return validateSeed(updatedSeedWords).catch((err) =>
-          onError(err, seedWord)
+          onError(err, updatedSeedWords[seedWord.index])
         );
-      }
-      // validate seed inputed as HEX
-      if (seedType === HEX) {
+      } else {
+        // validate seed inputed as HEX
         const trimmedSeed = seedWord.trim();
         if (isHexValid(trimmedSeed)) {
           setSeedHex(trimmedSeed);
