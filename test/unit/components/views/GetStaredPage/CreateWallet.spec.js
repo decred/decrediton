@@ -170,38 +170,48 @@ test("test copy seed view", async () => {
   expect(mockCopySeedToClipboard).toHaveBeenCalledWith(testSeedMnemonic);
 });
 
-const fillSeedWordEntry = (index, word) => {
-  const combobox = screen.getByText(`${index + 1}.`).nextSibling.firstChild
-    .firstChild.firstChild;
+const fillSeedWordEntryUsingSpaceKey = (combobox, word) => {
+  user.click(combobox);
+  user.type(combobox, word + " ");
+};
+
+const fillSeedWordEntryByCLickingOnOption = (combobox, word) => {
   user.click(combobox);
   user.type(combobox, word);
   user.click(screen.getByRole("option", { name: word }));
 };
 
-test("test confirm seed view", async () => {
+test("test typing a seed word and click on the combobox option on confirm seed view", async () => {
   await goToConfirmView();
 
   const createWalletButton = screen.getByText(/create wallet/i);
   expect(createWalletButton).toHaveAttribute("disabled");
 
-  let savedInvalidInputIndex = null;
+  const comboboxArray = screen.getAllByRole("combobox");
+  let savedInvalidCombobox = null;
   let savedValidSeedWord;
-  for (let i = 0; i < testSeedArray.length; i++) {
-    const word = testSeedArray[i];
-    if (!screen.queryByText(word)) {
-      if (savedInvalidInputIndex === null) {
-        // type one invalid seed word
-        savedInvalidInputIndex = i;
-        savedValidSeedWord = word;
-        fillSeedWordEntry(i, invalidSeedWord);
-      } else {
-        fillSeedWordEntry(i, word);
-      }
+  for (let i = 0; i < comboboxArray.length; i++) {
+    const combobox = comboboxArray[i];
+    const seedWordIndex = parseInt(
+      combobox.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.previousSibling.textContent.replace(
+        ".",
+        ""
+      )
+    );
+    const word = testSeedArray[seedWordIndex - 1];
+    if (savedInvalidCombobox === null) {
+      // type one invalid seed word
+      savedInvalidCombobox = combobox;
+      savedValidSeedWord = word;
+      fillSeedWordEntryUsingSpaceKey(combobox, invalidSeedWord);
+    } else {
+      fillSeedWordEntryUsingSpaceKey(combobox, word);
     }
   }
   expect(mockDecodeSeed).not.toHaveBeenCalled();
+
   // fix invalid seed word
-  fillSeedWordEntry(savedInvalidInputIndex, savedValidSeedWord);
+  fillSeedWordEntryByCLickingOnOption(savedInvalidCombobox, savedValidSeedWord);
   expect(mockDecodeSeed).toHaveBeenCalledWith(testSeedMnemonic);
 
   await testPrivatePassphraseInputs();
@@ -211,14 +221,14 @@ test("test confirm seed view", async () => {
       getDecodedSeed: () => testSeedArray
     })
   );
-  // trigger decode again by entering saved seed word again
-  fillSeedWordEntry(savedInvalidInputIndex, savedValidSeedWord);
+  // trigger decode again by entering saved seed word
+  fillSeedWordEntryUsingSpaceKey(savedInvalidCombobox, savedValidSeedWord);
   expect(mockDecodeSeed).toHaveBeenCalledWith(testSeedMnemonic);
 
   await wait(() => expect(createWalletButton).not.toHaveAttribute("disabled"));
   user.click(createWalletButton);
   expect(mockCreateWallet).toHaveBeenCalled();
-}, 30000);
+});
 
 test("test confirm seed view in testnet mode (allows verification skip in dev)", async () => {
   mockIsTestNet = sel.isTestNet = jest.fn(() => true);
@@ -243,34 +253,25 @@ test("test confirm seed view in testnet mode (allows verification skip in dev)",
   user.click(createWalletButton);
   expect(mockCreateWallet).toHaveBeenCalled();
   expect(mockIsTestNet).toHaveBeenCalled();
-}, 30000);
+});
 
-test("test existing seed view", async () => {
+test("test typing a valid seed word on existing seed view", async () => {
   mockDecodeSeed = wla.decodeSeed = jest.fn(() => () =>
     Promise.resolve({
       getDecodedSeed: () => testSeedArray
     })
   );
   await goToExistingSeedView();
-  const comboboxArray = screen.getAllByRole("combobox");
-  expect(comboboxArray.length).toBe(testSeedArray.length);
+
   const createWalletButton = screen.getByText(/create wallet/i);
   expect(createWalletButton).toHaveAttribute("disabled");
 
-  for (let i = 0; i < testSeedArray.length; i++) {
-    const word = testSeedArray[i];
-    const combobox = comboboxArray[i];
-    user.click(combobox);
-    user.type(combobox, word);
-    user.click(screen.getByRole("option", { name: word }));
-    await wait(() => expect(mockDecodeSeed).toHaveBeenCalled());
-  }
+  const comboboxArray = screen.getAllByRole("combobox");
+  expect(comboboxArray.length).toBe(testSeedArray.length);
 
-  await testPrivatePassphraseInputs();
-  await wait(() => expect(createWalletButton).not.toHaveAttribute("disabled"));
-  user.click(createWalletButton);
-  expect(mockCreateWallet).toHaveBeenCalled();
-}, 100000);
+  fillSeedWordEntryUsingSpaceKey(comboboxArray[0], testSeedArray[0]);
+  expect(mockDecodeSeed).toHaveBeenCalled();
+});
 
 test("pasting invalid seed words on existing seed view", async () => {
   await goToExistingSeedView();
@@ -304,7 +305,7 @@ test("pasting valid seed words on existing seed view and receive decode error an
   await wait(() =>
     expect(screen.getByTestId("decred-loading").style.display).toMatch(/block/i)
   );
-}, 30000);
+});
 
 test("pasting valid seed words on existing seed view and successfully create wallet", async () => {
   mockDecodeSeed = wla.decodeSeed = jest.fn(() => () =>
@@ -332,49 +333,61 @@ test("pasting valid seed words on existing seed view and successfully create wal
   await wait(() =>
     expect(screen.getByText(/choose a wallet to open/i)).toBeInTheDocument()
   );
-}, 30000);
+});
 
-test("POSITION_ERROR and MISMATCH_ERROR handling on restore view", async () => {
+test("test POSITION_ERROR handling on restore view", async () => {
   await goToExistingSeedView();
 
   // reject with an empty error object
   mockDecodeSeed = wla.decodeSeed = jest.fn(() => () => Promise.reject({}));
-  fillSeedWordEntry(0, testSeedArray[0]);
+  const comboboxArray = screen.getAllByRole("combobox");
+  fillSeedWordEntryUsingSpaceKey(comboboxArray[0], testSeedArray[0]);
   expect(screen.getByText("1.").parentNode.className).toMatch(/populated/);
-  fillSeedWordEntry(1, testSeedArray[1]);
+  fillSeedWordEntryUsingSpaceKey(comboboxArray[1], testSeedArray[1]);
   expect(screen.getByText("2.").parentNode.className).toMatch(/populated/);
 
-  // check position error
   mockDecodeSeed = wla.decodeSeed = jest.fn(() => () =>
     Promise.reject({
       details: `is ${POSITION_ERROR} 2, check for missing words`
     })
   );
-  fillSeedWordEntry(2, testSeedArray[2]);
+  fillSeedWordEntryUsingSpaceKey(comboboxArray[2], testSeedArray[2]);
   await wait(() =>
     expect(screen.getByText("3.").parentNode.className).toMatch(/error/)
   );
+});
 
-  // invalid position error msg format
+test("test invalid POSITION_ERROR msg format handling on restore view", async () => {
+  await goToExistingSeedView();
+
   mockDecodeSeed = wla.decodeSeed = jest.fn(() => () =>
     Promise.reject({
       details: `is ${POSITION_ERROR} at 4, check for missing words`
     })
   );
-  fillSeedWordEntry(3, testSeedArray[3]);
+  const comboboxArray = screen.getAllByRole("combobox");
+  fillSeedWordEntryUsingSpaceKey(comboboxArray[0], testSeedArray[0]);
+  fillSeedWordEntryUsingSpaceKey(comboboxArray[1], testSeedArray[1]);
+  fillSeedWordEntryUsingSpaceKey(comboboxArray[3], testSeedArray[3]);
   await wait(() =>
     expect(screen.getByText("4.").parentNode.className).toMatch(/populated/)
   );
+});
 
-  // check mismatch error
+test("test MISMATCH_ERROR handling on restore view", async () => {
+  await goToExistingSeedView();
+
   mockDecodeSeed = wla.decodeSeed = jest.fn(() => () =>
     Promise.reject({ details: MISMATCH_ERROR })
   );
-  fillSeedWordEntry(4, testSeedArray[4]);
+  const comboboxArray = screen.getAllByRole("combobox");
+  fillSeedWordEntryUsingSpaceKey(comboboxArray[0], testSeedArray[0]);
+  fillSeedWordEntryUsingSpaceKey(comboboxArray[1], testSeedArray[1]);
+  fillSeedWordEntryUsingSpaceKey(comboboxArray[2], testSeedArray[2]);
   await wait(() =>
-    expect(screen.getByText("5.").parentNode.className).toMatch(/populated/)
+    expect(screen.getByText("3.").parentNode.className).toMatch(/populated/)
   );
-}, 30000);
+});
 
 test("text hex input tab on restore view", async () => {
   await goToExistingSeedView();
