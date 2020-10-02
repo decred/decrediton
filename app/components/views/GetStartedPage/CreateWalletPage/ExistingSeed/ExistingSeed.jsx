@@ -71,6 +71,8 @@ const ExistingSeed = ({
         return;
       }
       if (seedErrorStr.includes(POSITION_ERROR) && seedWord) {
+        // read invalid word position from the error msg
+        // (e.g. `word aardvark is not valid at position 1, check for missing words`)
         const regexp = new RegExp(`${POSITION_ERROR} (\\d+)`, "g");
         const regexpArray = regexp.exec(seedErrorStr);
         if (regexpArray != null && typeof regexpArray[1] !== "undefined") {
@@ -81,8 +83,6 @@ const ExistingSeed = ({
             error: true
           };
           setSeedWords(updatedSeedWords);
-        } else {
-          console.log("invalid position error msg format");
         }
       }
       setSeed([]);
