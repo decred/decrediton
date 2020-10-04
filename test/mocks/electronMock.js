@@ -8,7 +8,8 @@ export const remote = {
 export const ipcRenderer = {
   sendSync: jest.fn(channel => {
     return {};
-  })
+  }),
+  send: jest.fn(() => {})
 };
 
 export const clipboard = {

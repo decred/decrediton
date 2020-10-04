@@ -6,6 +6,7 @@ import { screen, wait } from "@testing-library/react";
 import * as sel from "selectors";
 import * as wla from "actions/WalletLoaderActions";
 import * as da from "actions/DaemonActions";
+import * as conf from "config";
 
 const testAppVersion = "0.test-version.0";
 
@@ -16,6 +17,7 @@ let mockAppVersion;
 let mockGetSelectedWallet;
 let mockGetAvailableWallets;
 let mockIsTestNet;
+let mockGetGlobalCfg;
 
 beforeEach(() => {
   mockGetDaemonSynced = sel.getDaemonSynced = jest.fn(() => true);
@@ -27,6 +29,14 @@ beforeEach(() => {
     Promise.resolve({ availableWallets: [], previousWallet: null })
   );
   mockIsTestNet = sel.isTestNet = jest.fn(() => false);
+  sel.changePassphraseRequestAttempt = jest.fn(() => false);
+  sel.settingsChanged = jest.fn(() => true);
+  mockGetGlobalCfg = conf.getGlobalCfg = jest.fn(() => {
+    return {
+      get: () => "theme-light",
+      set: () => {}
+    };
+  });
 });
 
 test("render empty wallet chooser view", async () => {
@@ -126,4 +136,36 @@ test("render empty wallet chooser view and click-on&test release notes", async (
   // go back to the wallet chooser view
   user.click(screen.getByText(/go back/i).previousSibling);
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
+});
+
+test("click on settings link", async () => {
+  render(<GetStartedPage />);
+  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
+
+  user.click(screen.getByText(/settings/i));
+  await wait(() => screen.getByText(/connectivity/i));
+
+  user.click(screen.getByText(/save/i));
+  expect(mockGetGlobalCfg).toHaveBeenCalled();
+
+  // go back
+  user.click(screen.getByText(/go back/i).previousSibling);
+  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
+});
+
+test("click on settings link and change theme", async () => {
+  render(<GetStartedPage />);
+  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
+
+  user.click(screen.getByText(/settings/i));
+  await wait(() => screen.getByText(/connectivity/i));
+
+  mockGetGlobalCfg = conf.getGlobalCfg = jest.fn(() => {
+    return {
+      get: () => "theme-dark",
+      set: () => {}
+    };
+  });
+  user.click(screen.getByText(/save/i));
+  expect(mockGetGlobalCfg).toHaveBeenCalled();
 });

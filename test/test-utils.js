@@ -36,14 +36,16 @@ const themes = {
 function render(ui, renderOptions) {
   const locale = enLocale;
   const history = createMemoryHistory();
-
+  const currentSettings = {
+    locale: "en",
+    theme: "theme-light",
+    allowedExternalRequests: []
+  };
   const Wrapper = ({ children }) => {
     let initialState = {
       settings: {
-        currentSettings: {
-          locale: "en",
-          theme: "theme-light"
-        }
+        currentSettings,
+        tempSettings: currentSettings
       },
       locales: locales
     };
