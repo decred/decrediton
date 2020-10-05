@@ -42,6 +42,21 @@
   opacity: 0.7;
 }
 
+.peersCount {
+  border-radius: 50%;
+  width: 10px;
+  height: 12px;
+  margin-top: 4px;
+
+  background: #fff;
+  border: 1px solid var(--white-border);
+  color: var(--sidebar-menu-link);;
+  text-align: center;
+  padding-bottom: 4px;
+
+  font-size: 7pt;
+}
+
 @media screen and (max-width: 768px) {
   .logo {
     flex-direction: row-reverse;

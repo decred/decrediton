@@ -32,12 +32,19 @@ const pageAnimation = {
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
-    const { compareInventory, politeiaEnabled } = props;
+    const { compareInventory, politeiaEnabled, getPeerInfo } = props;
     // Compare politeias inventory and update proposal list if they are different
     // every 1 minute.
     this.fetchPoliteiaInventory = this.props.setInterval(() => {
       if (politeiaEnabled) {
         compareInventory();
+      }
+    }, 60000);
+    // Get peer info every 1 minute, so we can no if there are no available
+    // peers.
+    this.props.setInterval(() => {
+      if (politeiaEnabled) {
+        getPeerInfo();
       }
     }, 60000);
   }

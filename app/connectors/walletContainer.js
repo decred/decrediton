@@ -2,6 +2,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { selectorMap } from "fp";
 import * as ga from "actions/GovernanceActions";
+import { getPeerInfo } from "actions/ControlActions";
 import * as sel from "selectors";
 
 const mapStateToProps = selectorMap({
@@ -12,7 +13,8 @@ const mapStateToProps = selectorMap({
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      compareInventory: ga.compareInventory
+      compareInventory: ga.compareInventory,
+      getPeerInfo
     },
     dispatch
   );

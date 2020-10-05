@@ -68,7 +68,9 @@ import {
   VERIFYMESSAGE_ATTEMPT,
   VERIFYMESSAGE_SUCCESS,
   VERIFYMESSAGE_FAILED,
-  VERIFYMESSAGE_CLEANSTORE
+  VERIFYMESSAGE_CLEANSTORE,
+  GETPEERINFO_SUCCESS,
+  GETPEERINFO_FAILED
 } from "../actions/ControlActions";
 import { CLOSEWALLET_SUCCESS } from "actions/WalletLoaderActions";
 import {
@@ -632,6 +634,16 @@ export default function grpc(state = {}, action) {
       return { ...state, allAgendas: action.allAgendas };
     case GETALLAGENDAS_FAILED:
       return { ...state, getAllAgendasError: String(action.error) };
+    case GETPEERINFO_SUCCESS:
+      return {
+        ...state,
+        peersCount: action.peersCount
+      };
+    case GETPEERINFO_FAILED:
+        return {
+          ...state,
+          getPeerInfoError: action.error
+        };
     default:
       return state;
   }

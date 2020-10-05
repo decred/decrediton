@@ -785,4 +785,18 @@ export const startTicketBuyerV2Attempt = (
       type: STARTTICKETBUYERV2_SUCCESS
     });
   });
+}
+
+export const GETPEERINFO_ATTEMPT = "GETPEERINFO_ATTEMPT";
+export const GETPEERINFO_FAILED = "GETPEERINFO_FAILED";
+export const GETPEERINFO_SUCCESS = "GETPEERINFO_SUCCESS";
+
+export const getPeerInfo = () => (dispatch, getState) => {
+  dispatch({ type: GETPEERINFO_ATTEMPT });
+  return wallet.getPeerInfo(getState().grpc.walletService)
+    .then(resp => {
+      const peersCount = resp.wrappers_[1].length;
+      dispatch({ type: GETPEERINFO_SUCCESS, peersCount });
+    })
+    .catch((error) => dispatch({ type: GETPEERINFO_FAILED, error }));
 };
