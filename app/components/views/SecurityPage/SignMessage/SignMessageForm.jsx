@@ -90,7 +90,7 @@ const SignMessageForm = ({
         <Button
           kind={disabled ? "disabled" : "primary"}
           loading={isSigningMessage}
-          onSubmit={onSubmit}>
+          onClick={onSubmit}>
           Sign Message
         </Button>
       ) : (
