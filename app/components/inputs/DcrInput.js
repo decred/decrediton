@@ -1,22 +1,11 @@
 import FloatInput from "./FloatInput";
 import IntegerInput from "./IntegerInput";
-import { strToDcrAtoms } from "helpers/strings";
-import balanceConnector from "connectors/balance";
-import { MAX_DCR_AMOUNT } from "constants";
-
-/**
- * FixedDcrInput is a simple numeric input that is assumed to **always** hold
- * a floating point number representing a DCR amount (ie, an amount that
- * will be mutiplied by 1e8 to get to the actual atoms value).
- *
- * This is **not** affected by the global currencyDisplay state.
- *
- * Whenever possible, use the DcrInput component, as it is more flexible and
- * already manages the underlying input value in atoms.
- */
-export const FixedDcrInput = ({ currencyDisplay, ...props }) => (
-  <FloatInput {...{ ...props, unit: currencyDisplay, maxFracDigits: 8 }} />
-);
+import { restrictToStdDecimalNumber } from "helpers";
+import { MAX_DCR_AMOUNT, UNIT_DIVISOR } from "constants";
+import { useSelector } from "react-redux";
+import { useState } from "react";
+import { ATOMS } from "constants";
+import * as sel from "selectors";
 
 function countDecimalDigits(s) {
   for (let i = s.length - 1; i >= 0; i--) {
@@ -35,84 +24,64 @@ function countDecimalDigits(s) {
  * users should ordinarily only use amount/onChangeAmount so that storing
  * and later re-displaying the value is consistent.
  */
-@autobind
-class DcrInput extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      decimal: false,
-      decimalDigits: 0
-    };
-  }
+function DcrInput({ onChangeAmount, amount, ...props }) {
+  const [value, setValue] = useState(null);
+  const currencyDisplay = useSelector(sel.currencyDisplay);
 
-  componentDidUpdate(prevProps) {
-    if (
-      this.props.amount !== prevProps.amount &&
-      !this.props.amount &&
-      this.props.amount !== 0
-    ) {
-      // Amount just got cleared, so clear decimalDigits as well to display a
-      // blank input.
-      this.setState({ decimalDigits: 0 });
+  // parseInput parses the passed amount and returns its respective atom
+  // value.
+  const parseInput = (amount) => {
+    if (currencyDisplay === ATOMS) {
+      return parseInt(amount, 10);
     }
+
+    const atomsValue = strToDcrAtoms(amount, UNIT_DIVISOR);
+    return atomsValue;
   }
 
-  // amountToDisplayStr converts the given amount in atoms to the appropriate
-  // string to display given the current config of this input.
-  amountToDisplayStr(amount) {
-    if (!amount) {
-      if (this.state.decimal) {
-        return "0.";
-      } else if (this.state.decimalDigits) {
-        return (0).toFixed(this.state.decimalDigits);
-      }
-      return amount;
-    }
-    const { unitDivisor } = this.props;
-    const scaled = amount / unitDivisor;
-    if (this.state.decimal) {
-      return scaled.toFixed(0) + ".";
-    }
-    return scaled.toFixed(this.state.decimalDigits);
-  }
-
-  // typedValueToAmount converts the given string value typed into the input to
-  // the appropriate atom amount.
-  typedValueToAmount(value) {
-    return strToDcrAtoms(value, this.props.unitDivisor);
-  }
-
-  onChange(e) {
-    const { onChangeAmount } = this.props;
-    let amount;
+  const onChange = (e) => {
+    // set value which will be shown.
     const value = e.target.value;
-    const decimal = value && value.length > 0 && value[value.length - 1] == ".";
-    const decimalDigits = countDecimalDigits(value);
-    if (value) {
-      amount = this.typedValueToAmount(value);
+    setValue(value)
 
-      // Pre-validate if <= max supply
-      if (amount > MAX_DCR_AMOUNT) return;
-    }
-    if (onChangeAmount) onChangeAmount({ ...e, value, atomValue: amount });
-    this.setState({ decimal, decimalDigits });
+    // get atom value as in decrediton we make use atoms for requests.
+    const atomValue = parseInput(value);
+    if (atomValue > MAX_DCR_AMOUNT) return;
+
+    if (onChangeAmount) onChangeAmount({ ...e, value, atomValue });
   }
 
-  render() {
-    const { unitDivisor, currencyDisplay } = this.props;
-    const maxFracDigits = Math.log10(unitDivisor);
-
-    const Comp = unitDivisor !== 1 ? FloatInput : IntegerInput;
-    return (
-      <Comp
-        {...this.props}
-        unit={currencyDisplay}
-        value={this.amountToDisplayStr(this.props.amount)}
-        onChange={this.onChange}
-        maxFracDigits={maxFracDigits}
-      />
-    );
-  }
+  // If UNIT_DIVISOR is 1 decrediton is being used in atoms.
+  const Comp = currencyDisplay === ATOMS ? IntegerInput : FloatInput;
+  return (
+    <Comp
+      { ...props }
+      unit={currencyDisplay}
+      value={value}
+      onChange={onChange}
+      maxFracDigits={Math.log10(UNIT_DIVISOR)}
+    />
+  );
 }
 
-export default balanceConnector(DcrInput);
+// Converts a string encoded as stdDecimalString (ie, a string protected by
+// restrictToStdDecimalNumber) into a decred atom amount. This performs a
+// conversion from a string into a JS number and then scales the number
+// according to unitDivisor so the value represents an atom amount.
+//
+// Due to floating point inacuracies, a rounding function compatible to dcrutil
+// `round` is used (see:
+// https://github.com/decred/dcrd/blob/v1.1.2/dcrutil/amount.go#L77)
+//
+// Note that, since JS doesn't actually have an integer type (all numbers
+// are floating-point numbers), the Math.trunc function is used to simulate
+// the float64 -> int64 conversion.
+//
+// This is fine for representing numbers within the range of the total decred
+// supply (up to 21e14) but may not be arbitrarily applicable.
+function strToDcrAtoms(s, unitDivisor) {
+  return Math.trunc(parseFloat(s) * unitDivisor + 0.5);
+}
+
+
+export default DcrInput;
