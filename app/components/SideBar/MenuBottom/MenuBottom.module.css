@@ -105,6 +105,21 @@
   animation: spin 1s linear infinite;
 }
 
+.spvIcon {
+  background-image: var(--enable-spv);
+  height: 1.6rem;
+  display: flex;
+  width: 1.6rem;
+  margin-left: 1rem;
+  align-items: center;
+  top: -1.3rem;
+  position: absolute;
+}
+
+.spvLabel {
+  display: block;
+}
+
 @media screen and (max-width: 768px) {
   .latestBlock {
     background-color: var(--sidebar-color);

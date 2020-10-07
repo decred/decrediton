@@ -4,7 +4,7 @@ import { RescanButton } from "buttons";
 import { RescanProgress } from "indicators";
 import LastBlockTime from "./LastBlockTime/LastBlockTime";
 import style from "./MenuBottom.module.css";
-import { classNames } from "pi-ui";
+import { classNames, Tooltip } from "pi-ui";
 
 const MenuBarExpanded = ({
   isShowingAccounts,
@@ -14,7 +14,8 @@ const MenuBarExpanded = ({
   rescanAttempt,
   lastBlockTimestamp,
   onShowAccounts,
-  onHideAccounts
+  onHideAccounts,
+  isSPV
 }) => (
   <div className={style.bottom}>
     <div
@@ -47,6 +48,11 @@ const MenuBarExpanded = ({
               {currentBlockHeight}
             </span>
           </a>
+          {isSPV && (
+            <Tooltip content={<T id="sidebar.spvMode" m="SPV Mode" />}>
+              <div className={style.spvIcon} />
+            </Tooltip>
+          )}
           <div className={style.latestBlockTime}>
             <LastBlockTime lastBlockTimestamp={lastBlockTimestamp} />
           </div>

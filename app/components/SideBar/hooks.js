@@ -20,6 +20,7 @@ export function useSideBar() {
   const sidebarOnBottom = useSelector(sel.sidebarOnBottom);
   const accountMixerRunning = useSelector(sel.getAccountMixerRunning);
   const rescanRequest = useSelector(sel.rescanRequest);
+  const isSPV = useSelector(sel.isSPV);
 
   const dispatch = useDispatch();
 
@@ -53,6 +54,7 @@ export function useSideBar() {
     onExpandSideBar,
     onReduceSideBar,
     rescanAttempt,
-    rescanCancel
+    rescanCancel,
+    isSPV
   };
 }

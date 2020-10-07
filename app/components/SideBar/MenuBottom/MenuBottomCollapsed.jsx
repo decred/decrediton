@@ -6,7 +6,8 @@ const MenuBottomCollapsed = ({
   rescanRequest,
   rescanAttempt,
   rescanCancel,
-  sidebarOnBottom
+  sidebarOnBottom,
+  isSPV
 }) => (
   <>
     {!sidebarOnBottom && (
@@ -20,6 +21,7 @@ const MenuBottomCollapsed = ({
           {rescanRequest && (
             <RescanCancelButton {...{ rescanRequest, rescanCancel }} />
           )}
+          {isSPV && <span className={style.spvLabel}>SPV</span>}
         </div>
       </div>
     )}
