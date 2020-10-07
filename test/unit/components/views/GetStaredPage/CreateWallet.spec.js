@@ -271,6 +271,9 @@ test("test typing a valid seed word on existing seed view", async () => {
 
   fillSeedWordEntryUsingSpaceKey(comboboxArray[0], testSeedArray[0]);
   expect(mockDecodeSeed).toHaveBeenCalled();
+  await wait(() =>
+    expect(screen.getByText("1.").parentNode.className).toMatch(/populated/)
+  );
 });
 
 test("pasting invalid seed words on existing seed view", async () => {

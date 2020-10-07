@@ -7,6 +7,9 @@ import * as sel from "selectors";
 import * as wla from "actions/WalletLoaderActions";
 import * as da from "actions/DaemonActions";
 import * as conf from "config";
+import * as wa from "wallet/daemon";
+import { ipcRenderer } from "electron";
+jest.mock("electron");
 
 const testAppVersion = "0.test-version.0";
 
@@ -18,9 +21,15 @@ let mockGetSelectedWallet;
 let mockGetAvailableWallets;
 let mockIsTestNet;
 let mockGetGlobalCfg;
+let mockConnectDaemon;
+let mockStartDaemon;
+let mockSyncDaemon;
+let mockCheckNetworkMatch;
+let mockUpdateAvailable;
 
 beforeEach(() => {
   mockGetDaemonSynced = sel.getDaemonSynced = jest.fn(() => true);
+  mockUpdateAvailable = sel.updateAvailable = jest.fn(() => true);
   mockMaxWalletCount = sel.maxWalletCount = jest.fn(() => 3);
   mockIsSPV = sel.isSPV = jest.fn(() => false);
   mockAppVersion = sel.appVersion = jest.fn(() => testAppVersion);
@@ -37,6 +46,20 @@ beforeEach(() => {
       set: () => {}
     };
   });
+  wa.getDcrdLogs = jest.fn(() => Promise.resolve(Buffer.from("", "utf-8")));
+  wa.getDcrwalletLogs = jest.fn(() =>
+    Promise.resolve(Buffer.from("", "utf-8"))
+  );
+  wa.getDecreditonLogs = jest.fn(() =>
+    Promise.resolve(Buffer.from("", "utf-8"))
+  );
+  wa.getDcrlndLogs = jest.fn(() => Promise.resolve(Buffer.from("", "utf-8")));
+  mockConnectDaemon = da.connectDaemon = jest.fn(() => () =>
+    Promise.resolve(true)
+  );
+  mockStartDaemon = da.startDaemon = jest.fn(() => () => Promise.resolve(true));
+  mockSyncDaemon = da.syncDaemon = jest.fn(() => () => Promise.resolve());
+  mockCheckNetworkMatch = da.checkNetworkMatch = jest.fn(() => () => Promise.resolve());
 });
 
 test("render empty wallet chooser view", async () => {
@@ -57,6 +80,8 @@ test("render empty wallet chooser view", async () => {
   expect(screen.getByTestId("getstarted-pagebody").className).not.toMatch(
     /testnetBody/
   );
+  expect(screen.getByText(/update available/i)).toBeInTheDocument();
+  expect(screen.getByText(/new version available/i)).toBeInTheDocument();
 
   expect(mockGetDaemonSynced).toHaveBeenCalled();
   expect(mockIsSPV).toHaveBeenCalled();
@@ -65,6 +90,7 @@ test("render empty wallet chooser view", async () => {
   expect(mockGetAvailableWallets).toHaveBeenCalled();
   expect(mockMaxWalletCount).toHaveBeenCalled();
   expect(mockIsTestNet).toHaveBeenCalled();
+  expect(mockUpdateAvailable).toHaveBeenCalled();
 });
 
 test("render empty wallet chooser view in SPV mode", async () => {
@@ -168,4 +194,104 @@ test("click on settings link and change theme", async () => {
   });
   user.click(screen.getByText(/save/i));
   expect(mockGetGlobalCfg).toHaveBeenCalled();
+});
+
+test("click on logs view", async () => {
+  render(<GetStartedPage />);
+  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
+
+  user.click(screen.getByText(/logs/i));
+  await wait(() => screen.queryByText(/system logs/i));
+
+  // go back
+  user.click(screen.getByText(/go back/i).previousSibling);
+  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
+});
+
+test("test if app receive daemon connection data from cli", async () => {
+  const rpcCreds = {
+    rpcUser: "test-rpc-user",
+    rpcPass: "test-rpc-pass",
+    rpcCert: "test-rpc-cert",
+    rpcHost: "test-rpc-host",
+    rpcPort: "test-rpc-port"
+  };
+  ipcRenderer.sendSync.mockImplementation(() => {
+    return {
+      rpcPresent: true,
+      ...rpcCreds
+    };
+  });
+  render(<GetStartedPage />);
+
+  await wait(() =>
+    expect(mockConnectDaemon).toHaveBeenCalledWith({
+      rpc_user: rpcCreds.rpcUser,
+      rpc_pass: rpcCreds.rpcPass,
+      rpc_cert: rpcCreds.rpcCert,
+      rpc_host: rpcCreds.rpcHost,
+      rpc_port: rpcCreds.rpcPort
+    })
+  );
+  ipcRenderer.sendSync.mockRestore();
+});
+
+test("start regular daemon and not receive available wallet", async () => {
+  ipcRenderer.sendSync.mockImplementation(() => {
+    return {
+      rpcPresent: false
+    };
+  });
+  const testGetAvailableWalletsErrorMsg = "get-available-wallet-error-msg";
+  mockGetAvailableWallets = da.getAvailableWallets = jest.fn(() => () =>
+    Promise.reject(testGetAvailableWalletsErrorMsg)
+  );
+  mockGetDaemonSynced = sel.getDaemonSynced = jest.fn(() => false);
+  mockIsSPV = sel.isSPV = jest.fn(() => false);
+
+  render(<GetStartedPage />);
+  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
+  expect(mockStartDaemon).toHaveBeenCalled();
+  expect(mockSyncDaemon).toHaveBeenCalled();
+  expect(mockCheckNetworkMatch).toHaveBeenCalled();
+  ipcRenderer.sendSync.mockRestore();
+  expect(screen.getByText(testGetAvailableWalletsErrorMsg)).toBeInTheDocument();
+});
+
+test("start regular daemon and receive sync daemon error", async () => {
+  ipcRenderer.sendSync.mockImplementation(() => {
+    return {
+      rpcPresent: false
+    };
+  });
+  const testSyncErrorMsg = "sync-error-msg";
+  mockSyncDaemon = da.syncDaemon = jest.fn(() => () => Promise.reject(testSyncErrorMsg));
+  mockGetDaemonSynced = sel.getDaemonSynced = jest.fn(() => false);
+  mockIsSPV = sel.isSPV = jest.fn(() => false);
+
+  render(<GetStartedPage />);
+  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
+  expect(mockStartDaemon).toHaveBeenCalled();
+  expect(mockSyncDaemon).toHaveBeenCalled();
+  expect(mockCheckNetworkMatch).not.toHaveBeenCalled();
+  ipcRenderer.sendSync.mockRestore();
+});
+
+test("start regular daemon and receive network match error", async () => {
+  ipcRenderer.sendSync.mockImplementation(() => {
+    return {
+      rpcPresent: false
+    };
+  });
+  const testNetworkMatchErrorMsg = "network-match-error-msg";
+  mockCheckNetworkMatch = da.checkNetworkMatch = jest.fn(() => () => Promise.reject(testNetworkMatchErrorMsg));
+  mockGetDaemonSynced = sel.getDaemonSynced = jest.fn(() => false);
+  mockIsSPV = sel.isSPV = jest.fn(() => false);
+
+  render(<GetStartedPage />);
+  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
+  expect(mockStartDaemon).toHaveBeenCalled();
+  expect(mockSyncDaemon).toHaveBeenCalled();
+  expect(mockCheckNetworkMatch).toHaveBeenCalled();
+  ipcRenderer.sendSync.mockRestore();
 });

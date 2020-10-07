@@ -11,6 +11,7 @@ import {
   OPENWALLET_SUCCESS,
   OPENWALLET_FAILED_INPUT
 } from "actions/WalletLoaderActions";
+import * as ca from "actions/ClientActions";
 
 let mockSortedAvailableWallets;
 let mockMaxWalletCount;
@@ -18,6 +19,11 @@ let mockRemoveWallet;
 let mockStartWallet;
 let mockSetSelectedWallet;
 let mockOpenWalletAttempt;
+let mockIsSPV;
+let mockSpvSyncAttempt;
+let mockGoToHomePage;
+let mockStartRpcRequestFunc;
+
 let testAvailableWallets;
 
 beforeEach(() => {
@@ -80,12 +86,19 @@ beforeEach(() => {
   mockOpenWalletAttempt = wla.openWalletAttempt = jest.fn(() => () =>
     Promise.reject(OPENWALLET_FAILED_INPUT)
   );
-  wla.mockStartSPVSync = jest.fn(() => () => Promise.resolve());
+  mockSpvSyncAttempt = wla.spvSyncAttempt = jest.fn(() => () =>
+    Promise.reject()
+  );
+  mockStartRpcRequestFunc = wla.startRpcRequestFunc = jest.fn(() => () =>
+    Promise.reject()
+  );
   mockStartWallet = da.startWallet = jest.fn(() => () => Promise.resolve());
   mockMaxWalletCount = sel.maxWalletCount = jest.fn(() => 6);
   mockSortedAvailableWallets = sel.sortedAvailableWallets = jest.fn(
     () => testAvailableWallets
   );
+  mockIsSPV = sel.isSPV = jest.fn(() => false);
+  mockGoToHomePage = ca.goToHomePage = jest.fn(() => {});
 });
 
 test("render wallet chooser view", async () => {
@@ -264,4 +277,43 @@ test("launch an encrypted wallet", async () => {
     )
   );
   await wait(() => expect(mockSetSelectedWallet).toHaveBeenCalled());
+});
+
+test("test isSyncingRPC", async () => {
+  mockStartRpcRequestFunc = wla.startRpcRequestFunc = jest.fn(() => () =>
+    Promise.resolve()
+  );
+
+  render(<GetStartedPage />);
+  await wait(() => expect(mockStartRpcRequestFunc).toHaveBeenCalled());
+  await wait(() => expect(mockGoToHomePage).toHaveBeenCalled());
+});
+
+test("test isSyncingRPC and receive error from startRpcRequestFunc", async () => {
+  mockStartRpcRequestFunc = wla.startRpcRequestFunc = jest.fn(() => () =>
+    Promise.reject()
+  );
+  render(<GetStartedPage />);
+  await wait(() => expect(mockStartRpcRequestFunc).toHaveBeenCalled());
+  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
+});
+
+test("test isSyncingRPC in SPV mode", async () => {
+  mockSpvSyncAttempt = wla.spvSyncAttempt = jest.fn(() => () =>
+    Promise.resolve()
+  );
+  mockIsSPV = sel.isSPV = jest.fn(() => true);
+  render(<GetStartedPage />);
+  await wait(() => expect(mockGoToHomePage).toHaveBeenCalled());
+  expect(mockIsSPV).toHaveBeenCalled();
+  expect(mockSpvSyncAttempt).toHaveBeenCalled();
+});
+
+test("test isSyncingRPC in SPV mode and receive error from SPV sync", async () => {
+  mockIsSPV = sel.isSPV = jest.fn(() => true);
+  mockSpvSyncAttempt = wla.spvSyncAttempt = jest.fn(() => () =>
+    Promise.reject()
+  );
+  render(<GetStartedPage />);
+  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
 });
