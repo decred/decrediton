@@ -310,20 +310,20 @@ const messages = defineMessages({
   },
   TRZ_TOGGLEPINPROTECTION_SUCCESS_ENABLED: {
     id: "trezor.pinProtectionSuccess.enabled",
-    defaultMessage: "Pin protection has been enabled in trezor '{label}'"
+    defaultMessage: "Pin protection has been enabled in trezor {label}"
   },
   TRZ_TOGGLEPINPROTECTION_SUCCESS_DISABLED: {
     id: "trezor.pinProtectionSuccess.disabled",
-    defaultMessage: "Pin protection has been disabled in trezor '{label}'"
+    defaultMessage: "Pin protection has been disabled in trezor {label}"
   },
   TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS_ENABLED: {
     id: "trezor.passphraseProtectionSuccess.enabled",
-    defaultMessage: "Passphrase protection has been enabled in trezor '{label}'"
+    defaultMessage: "Passphrase protection has been enabled in trezor {label}"
   },
   TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS_DISABLED: {
     id: "trezor.passphraseProtectionSuccess.disabled",
     defaultMessage:
-      "Passphrase protection has been disabled in trezor '{label}'"
+      "Passphrase protection has been disabled in trezor {label}"
   },
   TRZ_CHANGEHOMESCREEN_SUCCESS: {
     id: "trezor.changeHomeScreen.success",
@@ -331,7 +331,7 @@ const messages = defineMessages({
   },
   TRZ_CHANGELABEL_SUCCESS: {
     id: "trezor.changeLabel.success",
-    defaultMessage: "Changed label on selected trezor to '{label}'"
+    defaultMessage: "Changed label on selected trezor to {label}"
   },
   TRZ_WIPEDEVICE_SUCCESS: {
     id: "trezor.wipeDevice.success",
@@ -536,6 +536,8 @@ export default function snackbar(state = {}, action) {
     case TRZ_INITDEVICE_SUCCESS:
     case TRZ_UPDATEFIRMWARE_SUCCESS:
     case TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS:
+    case TRZ_CHANGELABEL_SUCCESS:
+    case TRZ_TOGGLEPINPROTECTION_SUCCESS:
     case LNWALLET_INVOICE_SETTLED:
     case LNWALLET_SENDPAYMENT_SUCCESS:
     case LNWALLET_OPENCHANNEL_CHANPENDING:
@@ -566,7 +568,21 @@ export default function snackbar(state = {}, action) {
           };
           break;
         case TRZ_TOGGLEPINPROTECTION_SUCCESS:
+          message =
+            messages[
+              "TRZ_TOGGLEPINPROTECTION_SUCCESS_" +
+                (action.clearProtection ? "DISABLED" : "ENABLED")
+            ];
+          values = { label: action.deviceLabel };
+          break;
         case TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS:
+          message =
+            messages[
+              "TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS_" +
+                (action.enableProtection ? "ENABLED" : "DISABLED")
+            ];
+          values = { label: action.deviceLabel };
+          break;
         case TRZ_CHANGELABEL_SUCCESS:
           values = { label: action.deviceLabel };
           break;
@@ -670,15 +686,6 @@ export default function snackbar(state = {}, action) {
         // handled in an action.
         console.error(action.type, "\n", action.error);
       }
-      break;
-    case TRZ_TOGGLEPINPROTECTION_SUCCESS:
-      type = "Success";
-      message =
-        messages[
-          "TRZ_TOGGLEPINPROTECTION_SUCCESS_" +
-            (action.clearProtection ? "DISABLED" : "ENABLED")
-        ];
-      values = { label: action.deviceLabel };
       break;
     case CONNECTDAEMON_FAILURE:
       type = "Error";
