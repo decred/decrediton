@@ -23,7 +23,7 @@ export function useSignMessage() {
     [dispatch]
   );
   const onSignMessageAttemptTrezor = useCallback(
-    () => dispatch(trza.signMessageAttemptTrezor),
+    (address, message) => dispatch(trza.signMessageAttemptTrezor(address, message)),
     [dispatch]
   );
 
