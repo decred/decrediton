@@ -486,7 +486,6 @@
   height: 35px;
   background-color: var(--no-more-tickets-indicator-bg);
   line-height: 35px;
-  margin-right: 20px;
 }
 
 .no-tickets-indicator {
@@ -546,7 +545,6 @@
   }
 }
 
-
 .tutorial-page-indicator .step-indicator {
   .step.current {
     border: 2px solid var(--wallet-tutorial-step-indicator);
@@ -554,7 +552,7 @@
   .step.checked {
     background-image: var(--wallet-tutorial-check-circle);
   }
-   .step.unchecked {
+  .step.unchecked {
     background-color: var(--wallet-tutorial-step-indicator);
   }
 }
@@ -657,9 +655,9 @@
     margin-top: 0;
     padding: 12px 30px 14px 30px;
   }
-  .confirm-modal-toolbar .key-blue-button{
-    margin-top:0;
-    padding:12px 30px 14px 30px;
+  .confirm-modal-toolbar .key-blue-button {
+    margin-top: 0;
+    padding: 12px 30px 14px 30px;
   }
 
   .danger-button {
@@ -747,7 +745,8 @@
   }
 }
 
-.rebroadcast-button-container, .abandon-button-container {
+.rebroadcast-button-container,
+.abandon-button-container {
   width: 815px;
 }
 
@@ -768,7 +767,8 @@
 }
 
 @media screen and (max-width: 1179px) {
-  .rebroadcast-button-container, .abandon-button-container {
+  .rebroadcast-button-container,
+  .abandon-button-container {
     width: 770px;
   }
 
@@ -778,7 +778,8 @@
 }
 
 @media screen and (max-width: 1106px) {
-  .rebroadcast-button-container, .abandon-button-container {
+  .rebroadcast-button-container,
+  .abandon-button-container {
     width: 670px;
   }
 
@@ -788,19 +789,24 @@
 }
 
 @media screen and (max-width: 768px) {
-  .rebroadcast-button-container, .abandon-button-container {
+  .rebroadcast-button-container,
+  .abandon-button-container {
     width: 375px;
     text-align: center;
     display: block;
     margin-top: -22px;
 
-    .rebroadcast-button, .abandon-button {
+    .rebroadcast-button,
+    .abandon-button {
       float: none;
       padding: 12px 30px 14px 48px;
       margin-top: 0;
     }
   }
 
+  .no-more-tickets-indicator {
+    width: 315px;
+  }
   .voting-progress-indicator {
     width: 120px;
   }
