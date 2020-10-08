@@ -85,10 +85,12 @@ export const CreateWalletMachine = Machine({
                   : "",
               seed: (context, event) =>
                 event.seed ? event.seed : context.seed ? context.seed : [],
-              error: (context, event) => {
-                console.log(event);
-                return event.error && event.error;
-              }
+              error: (context, event) =>
+                event.error !== undefined
+                  ? event.error
+                  : context.error
+                  ? context.error
+                  : ""
             })
           ]
         }
@@ -123,7 +125,12 @@ export const CreateWalletMachine = Machine({
                   : "",
               seed: (context, event) =>
                 event.seed ? event.seed : context.seed ? context.seed : [],
-              error: (context, event) => event.error && event.error
+              error: (context, event) =>
+                event.error !== undefined
+                  ? event.error
+                  : context.error
+                  ? context.error
+                  : ""
             })
           ]
         }

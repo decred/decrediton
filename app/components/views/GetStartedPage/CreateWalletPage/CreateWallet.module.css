@@ -44,6 +44,11 @@
   color: var(--error-text-color);
 }
 
+.seedWarning {
+  margin: -10px 0 20px;
+  color: var(--error-text-color);
+}
+
 .seedWord {
   user-select: none;
   height: 23px;
