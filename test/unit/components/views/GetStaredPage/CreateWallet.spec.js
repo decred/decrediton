@@ -134,6 +134,17 @@ const firePasteEvent = (combobox, text) => {
   fireEvent(combobox, pasteEvent);
 };
 
+const fillSeedWordEntryUsingSpaceKey = (combobox, word) => {
+  user.click(combobox);
+  user.type(combobox, word + " ");
+};
+
+const fillSeedWordEntryByCLickingOnOption = (combobox, word) => {
+  user.click(combobox);
+  user.type(combobox, word);
+  user.click(screen.getByRole("option", { name: word }));
+};
+
 test("test copy seed view", async () => {
   await goToCopySeedView();
 
@@ -169,17 +180,6 @@ test("test copy seed view", async () => {
   user.click(confirmSeedCopyButton);
   expect(mockCopySeedToClipboard).toHaveBeenCalledWith(testSeedMnemonic);
 });
-
-const fillSeedWordEntryUsingSpaceKey = (combobox, word) => {
-  user.click(combobox);
-  user.type(combobox, word + " ");
-};
-
-const fillSeedWordEntryByCLickingOnOption = (combobox, word) => {
-  user.click(combobox);
-  user.type(combobox, word);
-  user.click(screen.getByRole("option", { name: word }));
-};
 
 test("test typing a seed word and click on the combobox option on confirm seed view", async () => {
   await goToConfirmView();
@@ -222,7 +222,10 @@ test("test typing a seed word and click on the combobox option on confirm seed v
     })
   );
   // trigger decode again by entering saved seed word
-  fillSeedWordEntryUsingSpaceKey(savedInvalidCombobox, savedValidSeedWord);
+  fillSeedWordEntryUsingSpaceKey(
+    savedInvalidCombobox,
+    savedValidSeedWord + " "
+  );
   expect(mockDecodeSeed).toHaveBeenCalledWith(testSeedMnemonic);
 
   await wait(() => expect(createWalletButton).not.toHaveAttribute("disabled"));
@@ -358,6 +361,24 @@ test("test POSITION_ERROR handling on restore view", async () => {
   await wait(() =>
     expect(screen.getByText("3.").parentNode.className).toMatch(/error/)
   );
+
+  mockDecodeSeed = wla.decodeSeed = jest.fn(() => () =>
+    Promise.reject({ details: MISMATCH_ERROR })
+  );
+  fillSeedWordEntryUsingSpaceKey(comboboxArray[4], testSeedArray[4]);
+  await wait(() =>
+    expect(screen.getByText("5.").parentNode.className).toMatch(/populated/)
+  );
+
+  // if entered the same word, the decodeSeed should not be called
+  mockDecodeSeed.mockClear();
+  fillSeedWordEntryUsingSpaceKey(comboboxArray[4], testSeedArray[4]);
+  expect(mockDecodeSeed).not.toHaveBeenCalled();
+
+  fillSeedWordEntryUsingSpaceKey(comboboxArray[5], testSeedArray[5]);
+  await wait(() =>
+    expect(screen.getByText("6.").parentNode.className).toMatch(/populated/)
+  );
 });
 
 test("test invalid POSITION_ERROR msg format handling on restore view", async () => {
@@ -377,22 +398,7 @@ test("test invalid POSITION_ERROR msg format handling on restore view", async ()
   );
 });
 
-test("test MISMATCH_ERROR handling on restore view", async () => {
-  await goToExistingSeedView();
-
-  mockDecodeSeed = wla.decodeSeed = jest.fn(() => () =>
-    Promise.reject({ details: MISMATCH_ERROR })
-  );
-  const comboboxArray = screen.getAllByRole("combobox");
-  fillSeedWordEntryUsingSpaceKey(comboboxArray[0], testSeedArray[0]);
-  fillSeedWordEntryUsingSpaceKey(comboboxArray[1], testSeedArray[1]);
-  fillSeedWordEntryUsingSpaceKey(comboboxArray[2], testSeedArray[2]);
-  await wait(() =>
-    expect(screen.getByText("3.").parentNode.className).toMatch(/populated/)
-  );
-});
-
-test("text hex input tab on restore view", async () => {
+test("test hex input tab on restore view", async () => {
   await goToExistingSeedView();
 
   const wordsTab = screen.getByText("words");
