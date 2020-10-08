@@ -28,7 +28,10 @@ const VerifyMessage = ({ intl }) => {
 
   useEffect(() => {
     setSignatureError(null);
-    if (verifyMessageSuccess && !verifyMessageSuccess.valid || verifyMessageError) {
+    if (
+      (verifyMessageSuccess && !verifyMessageSuccess.valid) ||
+      verifyMessageError
+    ) {
       setSignatureError("Invalid Signature");
     }
   }, [verifyMessageSuccess, verifyMessageError]);
@@ -40,7 +43,9 @@ const VerifyMessage = ({ intl }) => {
     }
     try {
       const resp = await onValidateAddress(address);
-      setAddressError(!resp.getIsValid() ? "Please enter a valid address" : null);
+      setAddressError(
+        !resp.getIsValid() ? "Please enter a valid address" : null
+      );
     } catch (e) {
       setAddressError("Error: Address validation failed, please try again");
     }
@@ -65,6 +70,7 @@ const VerifyMessage = ({ intl }) => {
   };
 
   const onSubmit = () => {
+    onVerifyMessageCleanStore();
     onVerifyMessageAttempt(address, message, signature);
   };
 
