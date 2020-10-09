@@ -422,6 +422,28 @@ function deserialize_walletrpc_DecodeSeedResponse(buffer_arg) {
   return api_pb.DecodeSeedResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_walletrpc_FailedVSPTicketsProcessRequest(arg) {
+  if (!(arg instanceof api_pb.FailedVSPTicketsProcessRequest)) {
+    throw new Error('Expected argument of type walletrpc.FailedVSPTicketsProcessRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_FailedVSPTicketsProcessRequest(buffer_arg) {
+  return api_pb.FailedVSPTicketsProcessRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_FailedVSPTicketsProcessResponse(arg) {
+  if (!(arg instanceof api_pb.FailedVSPTicketsProcessResponse)) {
+    throw new Error('Expected argument of type walletrpc.FailedVSPTicketsProcessResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_FailedVSPTicketsProcessResponse(buffer_arg) {
+  return api_pb.FailedVSPTicketsProcessResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_walletrpc_FundTransactionRequest(arg) {
   if (!(arg instanceof api_pb.FundTransactionRequest)) {
     throw new Error('Expected argument of type walletrpc.FundTransactionRequest');
@@ -717,6 +739,28 @@ function serialize_walletrpc_LoadActiveDataFiltersResponse(arg) {
 
 function deserialize_walletrpc_LoadActiveDataFiltersResponse(buffer_arg) {
   return api_pb.LoadActiveDataFiltersResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_LockAccountRequest(arg) {
+  if (!(arg instanceof api_pb.LockAccountRequest)) {
+    throw new Error('Expected argument of type walletrpc.LockAccountRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_LockAccountRequest(buffer_arg) {
+  return api_pb.LockAccountRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_LockAccountResponse(arg) {
+  if (!(arg instanceof api_pb.LockAccountResponse)) {
+    throw new Error('Expected argument of type walletrpc.LockAccountResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_LockAccountResponse(buffer_arg) {
+  return api_pb.LockAccountResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_walletrpc_NetworkRequest(arg) {
@@ -1047,6 +1091,28 @@ function serialize_walletrpc_RunTicketBuyerResponse(arg) {
 
 function deserialize_walletrpc_RunTicketBuyerResponse(buffer_arg) {
   return api_pb.RunTicketBuyerResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_SetAccountPassphraseRequest(arg) {
+  if (!(arg instanceof api_pb.SetAccountPassphraseRequest)) {
+    throw new Error('Expected argument of type walletrpc.SetAccountPassphraseRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_SetAccountPassphraseRequest(buffer_arg) {
+  return api_pb.SetAccountPassphraseRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_SetAccountPassphraseResponse(arg) {
+  if (!(arg instanceof api_pb.SetAccountPassphraseResponse)) {
+    throw new Error('Expected argument of type walletrpc.SetAccountPassphraseResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_SetAccountPassphraseResponse(buffer_arg) {
+  return api_pb.SetAccountPassphraseResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_walletrpc_SetAccountRequest(arg) {
@@ -1511,6 +1577,28 @@ function deserialize_walletrpc_SweepAccountResponse(buffer_arg) {
   return api_pb.SweepAccountResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_walletrpc_SyncVSPTicketsRequest(arg) {
+  if (!(arg instanceof api_pb.SyncVSPTicketsRequest)) {
+    throw new Error('Expected argument of type walletrpc.SyncVSPTicketsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_SyncVSPTicketsRequest(buffer_arg) {
+  return api_pb.SyncVSPTicketsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_SyncVSPTicketsResponse(arg) {
+  if (!(arg instanceof api_pb.SyncVSPTicketsResponse)) {
+    throw new Error('Expected argument of type walletrpc.SyncVSPTicketsResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_SyncVSPTicketsResponse(buffer_arg) {
+  return api_pb.SyncVSPTicketsResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_walletrpc_TicketBuyerConfigRequest(arg) {
   if (!(arg instanceof api_pb.TicketBuyerConfigRequest)) {
     throw new Error('Expected argument of type walletrpc.TicketBuyerConfigRequest');
@@ -1575,6 +1663,28 @@ function serialize_walletrpc_TransactionNotificationsResponse(arg) {
 
 function deserialize_walletrpc_TransactionNotificationsResponse(buffer_arg) {
   return api_pb.TransactionNotificationsResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_UnlockAccountRequest(arg) {
+  if (!(arg instanceof api_pb.UnlockAccountRequest)) {
+    throw new Error('Expected argument of type walletrpc.UnlockAccountRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_UnlockAccountRequest(buffer_arg) {
+  return api_pb.UnlockAccountRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_UnlockAccountResponse(arg) {
+  if (!(arg instanceof api_pb.UnlockAccountResponse)) {
+    throw new Error('Expected argument of type walletrpc.UnlockAccountResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_UnlockAccountResponse(buffer_arg) {
+  return api_pb.UnlockAccountResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_walletrpc_UnspentOutputResponse(arg) {
@@ -2245,6 +2355,61 @@ changePassphrase: {
     requestDeserialize: deserialize_walletrpc_GetCoinjoinOutputspByAcctRequest,
     responseSerialize: serialize_walletrpc_GetCoinjoinOutputspByAcctResponse,
     responseDeserialize: deserialize_walletrpc_GetCoinjoinOutputspByAcctResponse,
+  },
+  setAccountPassphrase: {
+    path: '/walletrpc.WalletService/SetAccountPassphrase',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.SetAccountPassphraseRequest,
+    responseType: api_pb.SetAccountPassphraseResponse,
+    requestSerialize: serialize_walletrpc_SetAccountPassphraseRequest,
+    requestDeserialize: deserialize_walletrpc_SetAccountPassphraseRequest,
+    responseSerialize: serialize_walletrpc_SetAccountPassphraseResponse,
+    responseDeserialize: deserialize_walletrpc_SetAccountPassphraseResponse,
+  },
+  unlockAccount: {
+    path: '/walletrpc.WalletService/UnlockAccount',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.UnlockAccountRequest,
+    responseType: api_pb.UnlockAccountResponse,
+    requestSerialize: serialize_walletrpc_UnlockAccountRequest,
+    requestDeserialize: deserialize_walletrpc_UnlockAccountRequest,
+    responseSerialize: serialize_walletrpc_UnlockAccountResponse,
+    responseDeserialize: deserialize_walletrpc_UnlockAccountResponse,
+  },
+  lockAccount: {
+    path: '/walletrpc.WalletService/LockAccount',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.LockAccountRequest,
+    responseType: api_pb.LockAccountResponse,
+    requestSerialize: serialize_walletrpc_LockAccountRequest,
+    requestDeserialize: deserialize_walletrpc_LockAccountRequest,
+    responseSerialize: serialize_walletrpc_LockAccountResponse,
+    responseDeserialize: deserialize_walletrpc_LockAccountResponse,
+  },
+  syncVSPFailedTickets: {
+    path: '/walletrpc.WalletService/SyncVSPFailedTickets',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.SyncVSPTicketsRequest,
+    responseType: api_pb.SyncVSPTicketsResponse,
+    requestSerialize: serialize_walletrpc_SyncVSPTicketsRequest,
+    requestDeserialize: deserialize_walletrpc_SyncVSPTicketsRequest,
+    responseSerialize: serialize_walletrpc_SyncVSPTicketsResponse,
+    responseDeserialize: deserialize_walletrpc_SyncVSPTicketsResponse,
+  },
+  failedVSPTicketsProcess: {
+    path: '/walletrpc.WalletService/FailedVSPTicketsProcess',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.FailedVSPTicketsProcessRequest,
+    responseType: api_pb.FailedVSPTicketsProcessResponse,
+    requestSerialize: serialize_walletrpc_FailedVSPTicketsProcessRequest,
+    requestDeserialize: deserialize_walletrpc_FailedVSPTicketsProcessRequest,
+    responseSerialize: serialize_walletrpc_FailedVSPTicketsProcessResponse,
+    responseDeserialize: deserialize_walletrpc_FailedVSPTicketsProcessResponse,
   },
 };
 

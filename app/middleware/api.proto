@@ -71,6 +71,11 @@ service WalletService {
 	rpc AbandonTransaction (AbandonTransactionRequest) returns (AbandonTransactionResponse);
 	rpc SignHashes (SignHashesRequest) returns (SignHashesResponse);
 	rpc GetCoinjoinOutputspByAcct (GetCoinjoinOutputspByAcctRequest) returns (GetCoinjoinOutputspByAcctResponse);
+	rpc SetAccountPassphrase (SetAccountPassphraseRequest) returns (SetAccountPassphraseResponse);
+	rpc UnlockAccount (UnlockAccountRequest) returns (UnlockAccountResponse);
+	rpc LockAccount (LockAccountRequest) returns (LockAccountResponse);
+	rpc SyncVSPFailedTickets(SyncVSPTicketsRequest) returns (SyncVSPTicketsResponse);
+	rpc FailedVSPTicketsProcess (FailedVSPTicketsProcessRequest) returns (FailedVSPTicketsProcessResponse);
 }
 
 service WalletLoaderService {
@@ -207,6 +212,8 @@ message AccountsResponse {
 		uint32 external_key_count = 4;
 		uint32 internal_key_count = 5;
 		uint32 imported_key_count = 6;
+		bool account_encrypted = 7;
+		bool account_unlocked = 8;
 	}
 	repeated Account accounts = 1;
 	bytes current_block_hash = 2;
@@ -580,6 +587,8 @@ message PurchaseTicketsRequest {
 	uint32 mixed_account_branch = 15;
 	uint32 mixed_split_account = 16;
 	uint32 change_account = 17;
+	string vsp_host = 18;
+	string vsp_pubkey = 19;
 }
 message PurchaseTicketsResponse {
 	repeated bytes ticket_hashes = 1;
@@ -1186,4 +1195,41 @@ message coinjoinTxsSumByAcct {
 
 message GetCoinjoinOutputspByAcctResponse {
 	repeated coinjoinTxsSumByAcct data = 1;
+}
+
+message SetAccountPassphraseRequest {
+	bytes account_passphrase = 1;
+	bytes new_account_passphrase = 2;
+	uint32 account_number = 3;
+	// used only in case account pass not yet set.
+	bytes wallet_passphrase = 4;
+}
+
+message UnlockAccountRequest {
+	bytes passphrase = 1;
+	uint32 account_number = 2;
+}
+
+message LockAccountRequest {
+	uint32 account_number = 1;
+}
+
+message SetAccountPassphraseResponse {}
+
+message UnlockAccountResponse {}
+
+message LockAccountResponse {}
+
+message SyncVSPTicketsRequest {
+	string vsp_host = 1;
+	string vsp_pubkey = 2;
+	uint32 account = 3;
+}
+
+message SyncVSPTicketsResponse {}
+
+message FailedVSPTicketsProcessRequest {}
+
+message FailedVSPTicketsProcessResponse {
+	repeated bytes failed_tickets_hashes = 1;
 }

@@ -5,7 +5,8 @@ import * as sel from "selectors";
 import eq from "lodash/fp/eq";
 import {
   getNextAddressAttempt,
-  publishUnminedTransactionsAttempt
+  publishUnminedTransactionsAttempt,
+  getVSPTicketsFailedToProcess
 } from "./ControlActions";
 import {
   transactionNtfnsStart,
@@ -73,6 +74,7 @@ const startWalletServicesTrigger = () => (dispatch, getState) =>
       await dispatch(getStartupWalletInfo());
       await dispatch(transactionNtfnsStart());
       await dispatch(accountNtfnsStart());
+      await dispatch(getVSPTicketsFailedToProcess());
       // await dispatch(pushHistory("/home"));
     };
 

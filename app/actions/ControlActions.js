@@ -764,3 +764,20 @@ export const startTicketBuyerV2Attempt = (
     });
   });
 };
+
+export const GETVSPTICKETSFAILED_ATTEMPT = "GETVSPTICKETSFAILED_ATTEMPT";
+export const GETVSPTICKETSFAILED_SUCCESS = "GETVSPTICKETSFAILED_SUCCESS";
+export const GETVSPTICKETSFAILED_FAILED = "GETVSPTICKETSFAILED_FAILED";
+
+export const getVSPTicketsFailedToProcess = () => (dispatch, getState) => {
+  dispatch({ type: GETVSPTICKETSFAILED_ATTEMPT });
+  wallet.failedVSPTicketsProcess(getState().grpc.walletService)
+    .then(response => {
+      const failedTickets = response.getFailedTicketsHashesList();
+      dispatch({ type: GETVSPTICKETSFAILED_SUCCESS, ticketsFailed: response });
+      console.log(failedTickets)
+    })
+    .catch(err => {
+      dispatch({ type: GETVSPTICKETSFAILED_FAILED, err });
+    })
+}

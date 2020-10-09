@@ -1,5 +1,6 @@
 import Promise from "promise";
 import * as api from "middleware/walletrpc/api_pb";
+import { walletService } from "../selectors";
 
 const hexToBytes = (hex) => {
   const bytes = [];
@@ -211,5 +212,14 @@ export const getCoinjoinOutputspByAcct = (walletService) =>
     const request = new api.GetCoinjoinOutputspByAcctRequest();
     walletService.getCoinjoinOutputspByAcct(request, (err, res) =>
       err ? fail(err) : ok({ ...res })
+    );
+  });
+
+export const failedVSPTicketsProcess = (walletService) =>
+  new Promise((resolve, reject) => {
+    const request = new api.FailedVSPTicketsProcessRequest();
+    console.log(walletService)
+    walletService.failedVSPTicketsProcess(request, (error, response) =>
+      error ? reject(error) : resolve(response)
     );
   });
