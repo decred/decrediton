@@ -302,18 +302,6 @@
   .historyRow {
     width: 100%;
   }
-  .stakeType {
-    display: none;
-  }
-  .ticketReward {
-    display: none;
-  }
-  .voteReward {
-    display: none;
-  }
-  .myTickets {
-    grid-template-columns: 1fr 2fr 2fr 1fr;
-  }
   .accountName {
     background: transparent;
     padding: 0 3px;
