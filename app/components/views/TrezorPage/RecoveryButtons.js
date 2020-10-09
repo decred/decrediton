@@ -1,6 +1,7 @@
 import { VerticalAccordion } from "shared";
 import { FormattedMessage as T } from "react-intl";
-import { DangerButton } from "buttons";
+import { DangerButton, KeyBlueButton } from "buttons";
+
 import { Documentation } from "shared";
 
 @autobind
@@ -21,7 +22,7 @@ class RecoveryButtons extends React.Component {
       </>
     );
 
-    const { loading, onWipeDevice, onRecoverDevice, onInitDevice } = this.props;
+    const { loading, onWipeDevice, onRecoverDevice, onInitDevice, onBackupDevice } = this.props;
 
     return (
       <VerticalAccordion
@@ -52,6 +53,13 @@ class RecoveryButtons extends React.Component {
           disabled={loading}>
           <T id="trezorPage.initDeviceBtn" m="Init Device" />
         </DangerButton>
+
+        <KeyBlueButton
+          onClick={onBackupDevice}
+          loading={loading}
+          disabled={loading}>
+          <T id="trezorPage.backupDeviceBtn" m="Backup Device" />
+        </KeyBlueButton>
       </VerticalAccordion>
     );
   }

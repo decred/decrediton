@@ -69,7 +69,7 @@ class PinModal extends React.Component {
     );
 
     const trezorLabel = this.props.device
-      ? this.props.device.features.label
+      ? this.props.deviceLabel
       : "";
     const className = [
       "passphrase-modal",

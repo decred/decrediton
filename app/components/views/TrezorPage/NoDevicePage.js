@@ -3,7 +3,7 @@ import Header from "./Header";
 import { StandalonePage } from "layout";
 import { InvisibleButton } from "buttons";
 
-export default ({ onReloadDeviceList }) => (
+export default ({ onConnect }) => (
   <StandalonePage header={<Header />}>
     <div>
       <T
@@ -12,8 +12,8 @@ export default ({ onReloadDeviceList }) => (
       />
     </div>
     <div>
-      <InvisibleButton onClick={onReloadDeviceList}>
-        <T id="trezor.noDevice.btnReloadDeviceList" m="Reload Device List" />
+      <InvisibleButton onClick={onConnect}>
+        <T id="trezor.noDevice.btnConnect" m="Connect to Trezor" />
       </InvisibleButton>
     </div>
   </StandalonePage>

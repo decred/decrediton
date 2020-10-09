@@ -1,10 +1,16 @@
 import {
   TRZ_TREZOR_ENABLED,
   TRZ_TREZOR_DISABLED,
-  TRZ_LOADDEVICELIST_ATTEMPT,
-  TRZ_LOADDEVICELIST_FAILED,
-  TRZ_LOADDEVICELIST_SUCCESS,
-  TRZ_DEVICELISTTRANSPORT_LOST,
+  TRZ_CONNECT_ATTEMPT,
+  TRZ_CONNECT_FAILED,
+  TRZ_CONNECT_SUCCESS,
+  TRZ_NOCONNECTEDDEVICE,
+  TRZ_BACKUPDEVICE_ATTEMPT,
+  TRZ_BACKUPDEVICE_SUCCESS,
+  TRZ_BACKUPDEVICE_FAILED,
+  TRZ_LOADDEVICE,
+  TRZ_DEVICETRANSPORT_START,
+  TRZ_DEVICETRANSPORT_LOST,
   TRZ_SELECTEDDEVICE_CHANGED,
   TRZ_PIN_REQUESTED,
   TRZ_PIN_ENTERED,
@@ -42,8 +48,7 @@ import {
   TRZ_UPDATEFIRMWARE_SUCCESS,
   TRZ_GETWALLETCREATIONMASTERPUBKEY_ATTEMPT,
   TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED,
-  TRZ_GETWALLETCREATIONMASTERPUBKEY_SUCCESS,
-  TRZ_CLEAR_DEVICELIST
+  TRZ_GETWALLETCREATIONMASTERPUBKEY_SUCCESS
 } from "actions/TrezorActions";
 import {
   SIGNTX_ATTEMPT,
@@ -58,45 +63,50 @@ export default function trezor(state = {}, action) {
       return { ...state, enabled: true };
     case TRZ_TREZOR_DISABLED:
       return { ...state, enabled: false };
-    case TRZ_CLEAR_DEVICELIST:
+    case TRZ_CONNECT_ATTEMPT:
       return {
         ...state,
-        deviceList: null,
-        transportError: false,
-        device: null,
-        getDeviceListAttempt: false
+        connectAttempt: true
       };
-    case TRZ_LOADDEVICELIST_ATTEMPT:
+    case TRZ_CONNECT_SUCCESS:
       return {
         ...state,
-        deviceList: null,
-        transportError: false,
-        device: null,
-        getDeviceListAttempt: true
+        connectAttempt: false
       };
-    case TRZ_LOADDEVICELIST_SUCCESS:
+    case TRZ_CONNECT_FAILED:
       return {
         ...state,
-        deviceList: action.deviceList,
-        transportError: false,
-        getDeviceListAttempt: false
+        connectError: action.error,
+        connectAttempt: false
       };
-    case TRZ_LOADDEVICELIST_FAILED:
+    case TRZ_DEVICETRANSPORT_START:
+      return {
+        ...state,
+        transportError: false,
+        connected: true
+      };
+    case TRZ_DEVICETRANSPORT_LOST:
       return {
         ...state,
         transportError: action.error,
-        getDeviceListAttempt: false
+        device: null,
+        deviceLabel: null,
+        performingOperation: false,
+        connected: false
       };
-    case TRZ_DEVICELISTTRANSPORT_LOST:
+    case TRZ_NOCONNECTEDDEVICE:
       return {
         ...state,
-        deviceList: null,
-        transportError: action.error,
         device: null,
-        performingOperation: false
+        deviceLabel: null
       };
     case TRZ_SELECTEDDEVICE_CHANGED:
-      return { ...state, device: action.device };
+    case TRZ_LOADDEVICE:
+      return {
+        ...state,
+        device: action.device,
+        deviceLabel: action.deviceLabel
+      };
     case TRZ_PIN_REQUESTED:
       return {
         ...state,
@@ -163,6 +173,7 @@ export default function trezor(state = {}, action) {
       return { ...state, walletCreationMasterPubkeyAttempt: false };
     case SIGNTX_ATTEMPT:
     case TRZ_TOGGLEPINPROTECTION_ATTEMPT:
+    case TRZ_BACKUPDEVICE_ATTEMPT:
     case TRZ_TOGGLEPASSPHRASEPROTECTION_ATTEMPT:
     case TRZ_CHANGEHOMESCREEN_ATTEMPT:
     case TRZ_CHANGELABEL_ATTEMPT:
@@ -171,6 +182,12 @@ export default function trezor(state = {}, action) {
     case TRZ_INITDEVICE_ATTEMPT:
     case TRZ_UPDATEFIRMWARE_ATTEMPT:
       return { ...state, performingOperation: true };
+    case TRZ_CHANGELABEL_SUCCESS:
+      return {
+        ...state,
+        deviceLabel: action.deviceLabel,
+        performingOperation: false
+      };
     case SIGNTX_FAILED:
     case SIGNTX_SUCCESS:
     case TRZ_TOGGLEPINPROTECTION_FAILED:
@@ -180,7 +197,6 @@ export default function trezor(state = {}, action) {
     case TRZ_CHANGEHOMESCREEN_FAILED:
     case TRZ_CHANGEHOMESCREEN_SUCCESS:
     case TRZ_CHANGELABEL_FAILED:
-    case TRZ_CHANGELABEL_SUCCESS:
     case TRZ_WIPEDEVICE_FAILED:
     case TRZ_WIPEDEVICE_SUCCESS:
     case TRZ_RECOVERDEVICE_FAILED:
@@ -189,6 +205,8 @@ export default function trezor(state = {}, action) {
     case TRZ_INITDEVICE_SUCCESS:
     case TRZ_UPDATEFIRMWARE_FAILED:
     case TRZ_UPDATEFIRMWARE_SUCCESS:
+    case TRZ_BACKUPDEVICE_FAILED:
+    case TRZ_BACKUPDEVICE_SUCCESS:
       return { ...state, performingOperation: false };
     case CLOSEWALLET_SUCCESS:
       return { ...state, enabled: false };

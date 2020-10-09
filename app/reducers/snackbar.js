@@ -74,10 +74,13 @@ import {
   TRZ_RECOVERDEVICE_FAILED,
   TRZ_INITDEVICE_SUCCESS,
   TRZ_INITDEVICE_FAILED,
+  TRZ_BACKUPDEVICE_FAILED,
+  TRZ_BACKUPDEVICE_SUCCESS,
   TRZ_UPDATEFIRMWARE_SUCCESS,
   TRZ_UPDATEFIRMWARE_FAILED,
   TRZ_NOCONNECTEDDEVICE,
-  TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED
+  TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED,
+  TRZ_NOTBACKEDUP
 } from "actions/TrezorActions";
 import {
   NEW_TRANSACTIONS_RECEIVED,
@@ -315,20 +318,20 @@ const messages = defineMessages({
   },
   TRZ_TOGGLEPINPROTECTION_SUCCESS_ENABLED: {
     id: "trezor.pinProtectionSuccess.enabled",
-    defaultMessage: "Pin protection has been enabled in trezor '{label}'"
+    defaultMessage: "Pin protection has been enabled in trezor {label}"
   },
   TRZ_TOGGLEPINPROTECTION_SUCCESS_DISABLED: {
     id: "trezor.pinProtectionSuccess.disabled",
-    defaultMessage: "Pin protection has been disabled in trezor '{label}'"
+    defaultMessage: "Pin protection has been disabled in trezor {label}"
   },
   TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS_ENABLED: {
     id: "trezor.passphraseProtectionSuccess.enabled",
-    defaultMessage: "Passphrase protection has been enabled in trezor '{label}'"
+    defaultMessage: "Passphrase protection has been enabled in trezor {label}"
   },
   TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS_DISABLED: {
     id: "trezor.passphraseProtectionSuccess.disabled",
     defaultMessage:
-      "Passphrase protection has been disabled in trezor '{label}'"
+      "Passphrase protection has been disabled in trezor {label}"
   },
   TRZ_CHANGEHOMESCREEN_SUCCESS: {
     id: "trezor.changeHomeScreen.success",
@@ -336,7 +339,7 @@ const messages = defineMessages({
   },
   TRZ_CHANGELABEL_SUCCESS: {
     id: "trezor.changeLabel.success",
-    defaultMessage: "Changed label on selected trezor to '{label}'"
+    defaultMessage: "Changed label on selected trezor to {label}"
   },
   TRZ_WIPEDEVICE_SUCCESS: {
     id: "trezor.wipeDevice.success",
@@ -349,6 +352,10 @@ const messages = defineMessages({
   TRZ_INITDEVICE_SUCCESS: {
     id: "trezor.initDevice.success",
     defaultMessage: "Trezor device initialized with new seed"
+  },
+  TRZ_BACKUPDEVICE_SUCCESS: {
+    id: "trezor.backupDevice.success",
+    defaultMessage: "Trezor device backed up."
   },
   TRZ_UPDATEFIRMWARE_SUCCESS: {
     id: "trezor.updateFirmware.success",
@@ -363,6 +370,10 @@ const messages = defineMessages({
     id: "trezor.getWalletCreationMasterPubKey.failed",
     defaultMessage:
       "Failed to obtain master extended pubkey from trezor device: {originalError}"
+  },
+  TRZ_NOTBACKEDUP: {
+    id: "trezor.notBackedUp",
+    defaultMessage: "Trezor must be backed up in order to perform this operation."
   },
   ERROR_IS_OBJECT: {
     id: "snackbar.errorObject",
@@ -561,6 +572,9 @@ export default function snackbar(state = {}, action) {
     case TRZ_INITDEVICE_SUCCESS:
     case TRZ_UPDATEFIRMWARE_SUCCESS:
     case TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS:
+    case TRZ_CHANGELABEL_SUCCESS:
+    case TRZ_TOGGLEPINPROTECTION_SUCCESS:
+    case TRZ_BACKUPDEVICE_SUCCESS:
     case LNWALLET_INVOICE_SETTLED:
     case LNWALLET_SENDPAYMENT_SUCCESS:
     case LNWALLET_OPENCHANNEL_CHANPENDING:
@@ -593,7 +607,21 @@ export default function snackbar(state = {}, action) {
           };
           break;
         case TRZ_TOGGLEPINPROTECTION_SUCCESS:
+          message =
+            messages[
+              "TRZ_TOGGLEPINPROTECTION_SUCCESS_" +
+                (action.clearProtection ? "DISABLED" : "ENABLED")
+            ];
+          values = { label: action.deviceLabel };
+          break;
         case TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS:
+          message =
+            messages[
+              "TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS_" +
+                (action.enableProtection ? "ENABLED" : "DISABLED")
+            ];
+          values = { label: action.deviceLabel };
+          break;
         case TRZ_CHANGELABEL_SUCCESS:
           values = { label: action.deviceLabel };
           break;
@@ -646,6 +674,8 @@ export default function snackbar(state = {}, action) {
     case TRZ_INITDEVICE_FAILED:
     case TRZ_UPDATEFIRMWARE_FAILED:
     case TRZ_NOCONNECTEDDEVICE:
+    case TRZ_NOTBACKEDUP:
+    case TRZ_BACKUPDEVICE_FAILED:
     case TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED:
     case LNWALLET_CREATEACCOUNT_FAILED:
     case LNWALLET_STARTDCRLND_FAILED:
@@ -700,15 +730,6 @@ export default function snackbar(state = {}, action) {
         // handled in an action.
         console.error(action.type, "\n", action.error);
       }
-      break;
-    case TRZ_TOGGLEPINPROTECTION_SUCCESS:
-      type = "Success";
-      message =
-        messages[
-          "TRZ_TOGGLEPINPROTECTION_SUCCESS_" +
-            (action.clearProtection ? "DISABLED" : "ENABLED")
-        ];
-      values = { label: action.deviceLabel };
       break;
     case CONNECTDAEMON_FAILURE:
       type = "Error";

@@ -42,12 +42,8 @@ class TrezorConfigSections extends React.Component {
     this.props.initDevice();
   }
 
-  onReloadDeviceList() {
-    this.props.reloadDeviceList();
-  }
-
-  onClearDeviceSession() {
-    this.props.clearDeviceSession();
+  onBackupDevice() {
+    this.props.backupDevice();
   }
 
   render() {
@@ -59,8 +55,8 @@ class TrezorConfigSections extends React.Component {
       onWipeDevice,
       onRecoverDevice,
       onInitDevice,
+      onBackupDevice,
       onUpdateFirmware,
-      onClearDeviceSession,
       loading
     } = this;
 
@@ -71,7 +67,6 @@ class TrezorConfigSections extends React.Component {
             onTogglePinProtection,
             onTogglePassPhraseProtection,
             onChangeHomeScreen,
-            onClearDeviceSession,
             loading
           }}
         />
@@ -79,7 +74,7 @@ class TrezorConfigSections extends React.Component {
         <ChangeLabel {...{ onChangeLabel, loading }} />
 
         <RecoveryButtons
-          {...{ onWipeDevice, onRecoverDevice, onInitDevice, loading }}
+          {...{ onWipeDevice, onRecoverDevice, onInitDevice, onBackupDevice, loading }}
         />
 
         <FirmwareUpdate {...{ onUpdateFirmware, loading }} />
