@@ -8,6 +8,40 @@ import {
 import styles from "./TxHistory.module.css";
 import { classNames, Text } from "pi-ui";
 
+const TxDirection = ({ account, isCred, flat }) => (
+  <span className={"is-row"}>
+    {isCred ? (
+      <T
+        id="txHistory.out.tx"
+        m="To {acc}"
+        values={{
+          acc: !flat ? (
+            <div className={styles.status}>
+              <div className={styles.accountName}>{account}</div>
+            </div>
+          ) : (
+            account
+          )
+        }}
+      />
+    ) : (
+      <T
+        id="txHistory.in.tx"
+        m="From {acc}"
+        values={{
+          acc: !flat ? (
+            <div className={styles.status}>
+              <div className={styles.accountName}>{account}</div>
+            </div>
+          ) : (
+            account
+          )
+        }}
+      />
+    )}
+  </span>
+);
+
 const RegularTxRow = ({
   txAmount,
   txDirection,
@@ -23,7 +57,7 @@ const RegularTxRow = ({
   ...props
 }) => (
   <Row {...{ ...props, txAccountName, pending, overview }}>
-    <div className="is-row">
+    <div className={classNames(styles.info, overview && styles.overviewInfo)}>
       <span className={classNames(styles[className], styles.icon)} />
       <span className={styles.amountValue}>
         <Balance
@@ -34,62 +68,18 @@ const RegularTxRow = ({
       </span>
       {!overview &&
         (txDirection === TRANSACTION_DIR_TRANSFERRED ? (
-          <div className={classNames("is-row", styles.info)}>
-            <T
-              id="txHistory.transfer.tx"
-              m="From {debAcc} To {credAcc}"
-              values={{
-                debAcc: (
-                  <div className={styles.status}>
-                    <div className={styles.accountName}>
-                      {txAccountNameDebited}
-                    </div>
-                  </div>
-                ),
-                credAcc: (
-                  <div className={styles.status}>
-                    <div className={styles.accountName}>
-                      {txAccountNameCredited}
-                    </div>
-                  </div>
-                )
-              }}
-            />
+          <div className={classNames("is-row", styles.txDirection)}>
+            <TxDirection account={txAccountNameDebited} />
+            <TxDirection account={txAccountNameCredited} isCred />
           </div>
         ) : txDirection !== TRANSACTION_DIR_RECEIVED ? (
-          <div className={classNames("is-row", styles.info)}>
-            <T
-              id="txHistory.out.tx"
-              m="From {debAcc} To {credAcc}"
-              values={{
-                debAcc: (
-                  <div className={styles.status}>
-                    <div className={styles.accountName}>{txAccountName}</div>
-                  </div>
-                ),
-                credAcc: (
-                  <div className={styles.status}>
-                    <div className={styles.accountName}>
-                      {txOutputAddresses}
-                    </div>
-                  </div>
-                )
-              }}
-            />
+          <div className={classNames("is-row", styles.txDirection)}>
+            <TxDirection account={txAccountName} />
+            <TxDirection account={txOutputAddresses} isCred />
           </div>
         ) : (
-          <div className={classNames("is-row", styles.info)}>
-            <T
-              id="txHistory.in.tx"
-              m="To {credAcc}"
-              values={{
-                credAcc: (
-                  <div className={styles.status}>
-                    <div className={styles.accountName}>{txAccountName}</div>
-                  </div>
-                )
-              }}
-            />
+          <div className={classNames("is-row", styles.txDirection)}>
+            <TxDirection account={txAccountName} isCred />
           </div>
         ))}
       {!pending && (
@@ -100,17 +90,13 @@ const RegularTxRow = ({
       <div className={styles.amountHash}>
         <Text id={`fromto-${(txTs || new Date()).getTime()}`} truncate>
           {txDirection === TRANSACTION_DIR_TRANSFERRED ? (
-            <T
-              id="txHistory.transfer.tx"
-              m="From {debAcc} To {credAcc}"
-              values={{
-                debAcc: txAccountNameDebited,
-                credAcc: txAccountNameCredited
-              }}
-            />
+            <>
+              <TxDirection account={txAccountNameDebited} flat />
+              <TxDirection account={txAccountNameDebited} flat isCred />
+            </>
           ) : txDirection !== TRANSACTION_DIR_RECEIVED ? (
             <T
-              id="txHistory.out.tx"
+              id="txHistory.overview.tx"
               m="From {debAcc} To {credAcc}"
               values={{
                 debAcc: txAccountName,
@@ -119,7 +105,7 @@ const RegularTxRow = ({
             />
           ) : (
             <T
-              id="txHistory.in.tx"
+              id="txHistory.overview.in.tx"
               m="To {credAcc}"
               values={{ credAcc: txAccountName }}
             />

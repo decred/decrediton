@@ -99,13 +99,25 @@
 }
 
 .info {
-  margin-left: auto;
+  display: grid;
+  grid-template-columns: 0.5fr 3fr 10fr 3fr;
+  width: 100%;
+}
+
+.overviewInfo {
+  display: grid;
+  grid-template-columns: 1fr 8fr 8fr;
 }
 
 .status {
   padding-top: 1px;
   text-align: right;
-  flex-grow: 2;
+  margin-left: 5px;
+  max-width: 210px;
+}
+
+.txDirection {
+  justify-self: right;
 }
 
 .accountName {
@@ -123,7 +135,7 @@
 
 .timeDateSpacer {
   font-size: 11px;
-  margin-right: 20px;
+  text-align: right;
 }
 
 .overviewPending .txInfo {
@@ -245,6 +257,7 @@
 
 .historyRow .txInfo .txRowWrapper {
   padding: 16px 20px;
+  width: 90%;
 }
 
 .eligibleRow {
@@ -266,6 +279,27 @@
     width: 355px;
   }
   .accountName {
-    display: none;
+    background: transparent;
+    padding: 0 3px;
+    height: 20px;
+  }
+  .status {
+    padding-top: 0px;
+  }
+  .txDirection {
+    align-self: center;
+    order: 4;
+    grid-column-start: 1;
+    justify-self: left;
+    grid-column-end: 4;
+    font-size: 11px;
+    padding-bottom: 3px;
+  }
+  .txRowWrapper {
+    padding: 5px 20px 27px 20px !important;
+  }
+  .info {
+    grid-template-columns: 0.5fr 3fr 3fr;
+    padding-bottom: 1rem;
   }
 }
