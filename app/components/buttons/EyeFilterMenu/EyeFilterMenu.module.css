@@ -1,11 +1,9 @@
-@import (reference) "./main.less";
-
-.eye-filter-menu {
+.menu {
   margin-left: 0.5em;
   position: relative;
 }
 
-.eye-filter-menu.menu-open::after {
+.menu.open::after {
   content: "";
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
@@ -16,13 +14,13 @@
   transition: all 100ms ease-in-out;
 }
 
-.eye-filter-menu-button {
+.menuButton {
   height: 31px;
   width: 40px;
   padding: 0px;
 }
 
-.eye-filter-menu-button-icon {
+.buttonIcon {
   background-position: 6px 5px;
   background-repeat: no-repeat;
   background-size: 13px 10px;
@@ -34,13 +32,7 @@
   background-color: var(--text-toggle-button-inactive-text);
 }
 
-.eye-filter-menu-button-icon-disabled {
-  .eye-filter-menu-button-icon;
-
-  background-image: var(--contextbutton-eye-disabled-icon);
-}
-
-.eye-filter-menu-button-icon::after {
+.buttonIcon::after {
   content: "";
   border-color: var(--filter-menu-arrow) transparent transparent;
   border-style: solid;
@@ -52,23 +44,27 @@
   position: relative;
 }
 
-.eye-filter-menu-button-icon:hover {
+.buttonIcon:hover {
   background-color: var(--filter-menu-bg-hover);
 }
 
-.eye-filter-menu-button-icon-disabled:hover {
-  background-color: var(--stroke-color-hovered);
-}
-
-.eye-filter-menu-button-icon:disabled {
+.buttonIcon.disabled {
   background-image: var(--contextbutton-eye-disabled-icon);
 }
 
-.sort-by .eye-filter-menu-button-icon {
+.buttonIcon.disabled:hover {
+  background-color: var(--stroke-color-hovered);
+}
+
+.buttonIcon:disabled {
+  background-image: var(--contextbutton-eye-disabled-icon);
+}
+
+.sortBy .buttonIcon {
   background-image: var(--sort-by-icon);
 }
 
-.eye-filter-menu-items {
+.menuItems {
   border-radius: 5px;
   background-color: var(--background-back-color);
   position: absolute;
@@ -79,43 +75,43 @@
   text-align: left;
   box-shadow: 0px 3px 8px var(--input-color-shadow);
   user-select: none;
-
-  .context-menu-item {
-    font-size: 13px;
-    line-height: 2em;
-    min-width: 10em;
-    padding-left: 28px;
-    padding-bottom: 5px;
-
-    &:hover {
-      background-color: var(--white-border);
-    }
-  }
-
-  .context-menu-item.selected::before {
-    content: "";
-    height: 10px;
-    width: 10px;
-    background-image: var(--checkmark-context-icon);
-    background-repeat: no-repeat;
-    position: absolute;
-    margin-left: -18px;
-    margin-top: 9px;
-  }
-
-  .arrow-up {
-    float: right;
-    margin-top: -13px;
-    margin-right: 23px;
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-bottom: 5px solid var(--background-back-color);
-  }
 }
 
-.sort-by .eye-filter-menu-items {
+.contextMenuItem {
+  font-size: 13px;
+  line-height: 2em;
+  min-width: 10em;
+  padding-left: 28px;
+  padding-bottom: 5px;
+}
+
+.contextMenuItem:hover {
+  background-color: var(--white-border);
+}
+
+.contextMenuItem.selected::before {
+  content: "";
+  height: 10px;
+  width: 10px;
+  background-image: var(--checkmark-context-icon);
+  background-repeat: no-repeat;
+  position: absolute;
+  margin-left: -18px;
+  margin-top: 9px;
+}
+
+.arrowUp {
+  float: right;
+  margin-top: -13px;
+  margin-right: 23px;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid var(--background-back-color);
+}
+
+.sortBy .menuItems {
   width: 220px;
   padding-bottom: 0;
 }

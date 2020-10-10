@@ -1,5 +1,5 @@
 export { default as EyeFilterMenu } from "./EyeFilterMenu/EyeFilterMenu";
-export { default as EyeFilterMenuWithSlider } from "./EyeFilterMenuWithSlider";
+export { default as EyeFilterMenuWithSlider } from "./EyeFilterMenu/EyeFilterMenuWithSlider/EyeFilterMenuWithSlider";
 export { default as HelpLink } from "./HelpLink";
 export { default as SlateGrayButton } from "./SlateGrayButton";
 export { default as PathButton } from "./PathButton";

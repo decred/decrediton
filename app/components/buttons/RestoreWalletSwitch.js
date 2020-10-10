@@ -1,5 +1,6 @@
 import { Tooltip } from "shared";
-import "style/EyeFilterMenu.less";
+// XXX the following .less file is dead, adjust accordingly
+// import "style/EyeFilterMenu.less";
 import "style/StakePool.less";
 
 const RestoreWalletSwitch = ({ enabled, onClick, className, text }) => (

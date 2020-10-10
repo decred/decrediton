@@ -2,9 +2,7 @@ import { useState, useRef } from "react";
 import { classNames } from "pi-ui";
 import InvisibleButton from "../InvisibleButton";
 import { useClickOutside } from "hooks";
-
-import "style/EyeFilterMenu.less";
-import "style/MiscComponents.less";
+import styles from "./EyeFilterMenu.module.css";
 
 const EyeFilterMenu = ({
   onChange,
@@ -39,14 +37,14 @@ const EyeFilterMenu = ({
   const openedMenu = () => {
     const belowMenu = getOpenedMenu && getOpenedMenu();
     return (
-      <div className="eye-filter-menu-items">
-        <div className={"arrow-up"} />
+      <div className={styles.menuItem}>
+        <div className={styles.arrowUp} />
         {options.map((option, i) => (
           <div
             key={i}
             className={classNames(
-              "context-menu-item",
-              selected === option.key && "selected"
+              styles.contextMenuItem,
+              selected === option.key && styles.selected
             )}
             onClick={(e) =>
               onMenuChanged(e, { value: option.value, key: option.key })
@@ -62,14 +60,14 @@ const EyeFilterMenu = ({
   return (
     <div
       className={classNames(
-        "eye-filter-menu",
+        styles.menu,
         className,
-        menuOpen && "menu-open"
+        menuOpen && styles.open
       )}
       ref={wrapperRef}>
-      <div className="eye-filter-menu-button">
+      <div className={styles.menuButton}>
         <InvisibleButton
-          className="eye-filter-menu-button-icon"
+          className={styles.buttonIcon}
           onClick={toggleMenuOpen}
         />
       </div>

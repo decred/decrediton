@@ -1,0 +1,56 @@
+.rangeLabel {
+  font-family: var(--font-family-regular);
+  font-size: 13px;
+  padding-left: 24px;
+  padding-top: 10px;
+  font-weight: 600;
+  color: #0c1e3e;
+}
+
+.minMaxSlider {
+  width: 142px;
+  height: 10px;
+  margin: 14px 23px 10px 23px;
+}
+
+.valueShower {
+  height: 33px;
+  background: #f3f5f6;
+  font-family: var(--font-family-regular);
+  font-size: 13px;
+  color: #0c1e3e;
+  margin-top: 10px;
+  padding-left: 24px;
+  padding-top: 8px;
+}
+
+.valueShowerCloser {
+  background-image: var(--indicator-invalid-icon);
+  float: right;
+  height: 20px;
+  width: 20px;
+  background-size: 15px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  position: relative;
+}
+
+.amountsArea {
+  text-align: left;
+  font-size: 13px;
+  width: 200px;
+  margin-bottom: 5px;
+}
+
+.kebab {
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-size: 15px;
+  background-image: var(--agenda-card-kebab-disabled);
+  float: right;
+  position: absolute;
+  right: 10px;
+  top: 85px;
+}

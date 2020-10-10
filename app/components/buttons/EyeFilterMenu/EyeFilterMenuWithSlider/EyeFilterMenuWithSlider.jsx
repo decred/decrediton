@@ -1,10 +1,9 @@
 import { EyeFilterMenu } from "buttons";
 import { FormattedMessage as T } from "react-intl";
-import "style/EyeFilterMenu.less";
-import "style/MiscComponents.less";
 import noUiSlider from "nouislider";
 import { NumericInput } from "inputs";
 import { DCR } from "constants";
+import styles from "./EyeFilterMenuWithSlider.module.css";
 
 @autobind
 class EyeFilterMenuWithSlider extends React.Component {
@@ -112,21 +111,21 @@ class EyeFilterMenuWithSlider extends React.Component {
     } = this.state;
 
     return (
-      <div className="history-slider-wrapper">
-        <div className="history-amount-range-label">
+      <div>
+        <div className={styles.rangeLabel}>
           <T id="history.amount.range" m="Amount Range" />
         </div>
         <div
           ref={(r) => this.mountSliderRangeInElement(r)}
-          className="min-max-slider"></div>
-        <div className="history-select-tx-amounts-area">
-          <div className="history-select-tx-amounts">
+          className={styles.minMaxSlider}></div>
+        <div className={styles.amountsArea}>
+          <div>
             <span
               onClick={() => this.onToggleSliderInfo()}
-              className="history-select-tx-kebab"></span>
+              className={styles.kebab}></span>
           </div>
           {expandedSliderInfo && (
-            <div className="history-select-tx-slider-info">
+            <div>
               <div>
                 <T id="history.min.value" m="Slider min" />:
                 <NumericInput
@@ -145,10 +144,10 @@ class EyeFilterMenuWithSlider extends React.Component {
           )}
         </div>
         {sliderShower && (
-          <div className="history-slider-value-shower">
+          <div className={styles.valueShower}>
             {minAmount} {currencyDisplay} - {maxAmount} {currencyDisplay}
             <div
-              className="history-slider-value-shower-closer"
+              className={styles.valueShowerCloser}
               onClick={() => this.onToggleSliderShower()}></div>
           </div>
         )}
