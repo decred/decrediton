@@ -9,7 +9,7 @@
 
 .minMaxSlider {
   width: 142px;
-  height: 10px;
+  height: 10px !important;
   margin: 14px 23px 10px 23px;
 }
 

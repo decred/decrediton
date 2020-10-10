@@ -1,3 +1,4 @@
+import { useState, useEffect, useCallback } from "react";
 import { EyeFilterMenu } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import noUiSlider from "nouislider";
@@ -5,123 +6,149 @@ import { NumericInput } from "inputs";
 import { DCR } from "constants";
 import styles from "./EyeFilterMenuWithSlider.module.css";
 
-@autobind
-class EyeFilterMenuWithSlider extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      minAmount: 0,
-      maxAmount: 100,
-      min: 0,
-      max: 100,
-      sliderShower: true,
-      expandedSliderInfo: false,
-      rangeSlider: null
-    };
-  }
+const EyeFilterMenuWithSlider = ({
+  maxFilterValue,
+  minFilterValue,
+  unitDivisor,
+  currencyDisplay,
+  onChangeSlider,
+  ...props
+}) => {
+  const [minAmount, setMinAmount] = useState(0);
+  const [maxAmount, setMaxAmount] = useState(100);
+  const [min, setMin] = useState(0);
+  const [max, setMax] = useState(100);
+  const [sliderShower, setSliderShower] = useState(true);
+  const [expandedSliderInfo, setExpandedSliderInfo] = useState(false);
+  const [rangeSlider, setRangeSlider] = useState(null);
 
-  componentDidMount() {
-    const {
-      maxFilterValue,
-      minFilterValue,
-      unitDivisor,
-      currencyDisplay
-    } = this.props;
+  useEffect(() => {
     if (maxFilterValue) {
       const maxValue =
         currencyDisplay === DCR ? maxFilterValue / unitDivisor : maxFilterValue;
-      this.setState({ maxAmount: maxValue });
-      if (maxValue > this.state.max) {
-        this.setState({ max: maxValue });
+      setMaxAmount(maxValue);
+      if (maxValue > max) {
+        setMax(maxValue);
       }
     }
     if (minFilterValue) {
       const minValue =
         currencyDisplay === DCR ? minFilterValue / unitDivisor : minFilterValue;
-      this.setState({ minAmount: minValue });
-      if (minValue > this.state.min) {
-        this.setState({ min: minValue });
+      setMinAmount(minValue);
+      if (minValue > min) {
+        setMin(minValue);
       }
     }
-  }
+  }, [maxFilterValue, minFilterValue, unitDivisor, currencyDisplay, max, min]);
 
-  mountSliderRangeInElement(range) {
-    setTimeout(() => {
-      if (!range) {
-        return;
-      }
-
-      const { rangeSlider, minAmount, maxAmount, min, max } = this.state;
-      const toolTipFormatter = {
-        to: (value) => {
-          return value;
+  const mountSliderRangeInElement = useCallback(
+    (range) => {
+      setTimeout(() => {
+        if (!range) {
+          return;
         }
-      };
 
-      if (!rangeSlider) {
-        noUiSlider.create(range, {
-          start: [minAmount, maxAmount],
-          range: {
-            min: [parseInt(min)],
-            max: [parseInt(max)]
-          },
-          step: 1,
-          connect: true,
-          tooltips: [true, toolTipFormatter]
-        });
-        this.setState({ rangeSlider: range });
-
-        range.noUiSlider.on("set", (values, handle) => {
-          const value = parseInt(values[handle]);
-          if (handle) {
-            this.props.onChangeSlider(value, "max");
-            this.setState({ maxAmount: value });
-          } else {
-            this.setState({ minAmount: value });
-            this.props.onChangeSlider(value, "min");
+        const toolTipFormatter = {
+          to: (value) => {
+            return value;
           }
-        });
+        };
 
-        range.noUiSlider.on("update", (values, handle) => {
-          const value = parseInt(values[handle]);
-          if (handle) {
-            this.setState({ maxAmount: value });
-          } else {
-            this.setState({ minAmount: value });
-          }
-        });
-      }
-    }, 25);
-  }
+        if (!rangeSlider) {
+          noUiSlider.create(range, {
+            start: [minAmount, maxAmount],
+            range: {
+              min: [parseInt(min)],
+              max: [parseInt(max)]
+            },
+            step: 1,
+            connect: true,
+            tooltips: [true, toolTipFormatter]
+          });
+          setRangeSlider(range);
 
-  unmountSliderRangeInElement() {
-    this.setState({ rangeSlider: null });
-  }
+          range.noUiSlider.on("set", (values, handle) => {
+            const value = parseInt(values[handle]);
+            if (handle) {
+              onChangeSlider(value, "max");
+              setMaxAmount(value);
+            } else {
+              setMinAmount(value);
+              onChangeSlider(value, "min");
+            }
+          });
 
-  getSliderWhenOpenedMenu() {
-    const { currencyDisplay } = this.props;
+          range.noUiSlider.on("update", (values, handle) => {
+            const value = parseInt(values[handle]);
+            if (handle) {
+              setMaxAmount(value);
+            } else {
+              setMinAmount(value);
+            }
+          });
+        }
+      }, 25);
+    },
+    [max, min, maxAmount, minAmount, onChangeSlider, rangeSlider]
+  );
 
-    const {
-      sliderShower,
-      expandedSliderInfo,
-      min,
-      max,
-      maxAmount,
-      minAmount
-    } = this.state;
+  const unmountSliderRangeInElement = () => {
+    setRangeSlider(null);
+  };
 
-    return (
+  const onToggleSliderShower = useCallback(
+    () => setSliderShower(!sliderShower),
+    [sliderShower, setSliderShower]
+  );
+
+  const onToggleSliderInfo = useCallback(
+    () => setExpandedSliderInfo(!expandedSliderInfo),
+    [expandedSliderInfo, setExpandedSliderInfo]
+  );
+
+  const slider = rangeSlider && rangeSlider.noUiSlider;
+
+  const onChangeMinValue = useCallback(
+    (min) => {
+      setMin(min);
+      const intMin = isNaN(parseInt(min)) ? 0 : parseInt(min);
+      slider.updateOptions({
+        range: {
+          min: [intMin],
+          max: [parseInt(max)]
+        }
+      });
+    },
+    [max, slider]
+  );
+
+  const onChangeMaxValue = useCallback(
+    (max) => {
+      setMax(max);
+      const intMax = isNaN(parseInt(max)) ? 0 : parseInt(max);
+      slider.updateOptions({
+        range: {
+          min: [parseInt(min)],
+          max: [intMax]
+        }
+      });
+    },
+    [min, slider]
+  );
+
+  const getSliderWhenOpenedMenu = useCallback(
+    () => (
       <div>
         <div className={styles.rangeLabel}>
           <T id="history.amount.range" m="Amount Range" />
         </div>
         <div
-          ref={(r) => this.mountSliderRangeInElement(r)}
+          ref={(r) => mountSliderRangeInElement(r)}
           className={styles.minMaxSlider}></div>
         <div className={styles.amountsArea}>
           <div>
             <span
-              onClick={() => this.onToggleSliderInfo()}
+              onClick={() => onToggleSliderInfo()}
               className={styles.kebab}></span>
           </div>
           {expandedSliderInfo && (
@@ -130,14 +157,14 @@ class EyeFilterMenuWithSlider extends React.Component {
                 <T id="history.min.value" m="Slider min" />:
                 <NumericInput
                   value={min}
-                  onChange={(e) => this.onChangeMinValue(e.target.value)}
+                  onChange={(e) => onChangeMinValue(e.target.value)}
                 />
               </div>
               <div>
                 <T id="history.max.value" m="Slider max" />:
                 <NumericInput
                   value={max}
-                  onChange={(e) => this.onChangeMaxValue(e.target.value)}
+                  onChange={(e) => onChangeMaxValue(e.target.value)}
                 />
               </div>
             </div>
@@ -148,54 +175,42 @@ class EyeFilterMenuWithSlider extends React.Component {
             {minAmount} {currencyDisplay} - {maxAmount} {currencyDisplay}
             <div
               className={styles.valueShowerCloser}
-              onClick={() => this.onToggleSliderShower()}></div>
+              onClick={() => onToggleSliderShower()}></div>
           </div>
         )}
       </div>
-    );
-  }
+    ),
+    [
+      sliderShower,
+      currencyDisplay,
+      expandedSliderInfo,
+      max,
+      maxAmount,
+      min,
+      minAmount,
+      mountSliderRangeInElement,
+      onChangeMaxValue,
+      onChangeMinValue,
+      onToggleSliderInfo,
+      onToggleSliderShower
+    ]
+  );
 
-  onChangeMinValue(min) {
-    const { rangeSlider, max } = this.state;
-    this.setState({ min });
-    const intMin = isNaN(parseInt(min)) ? 0 : parseInt(min);
-    rangeSlider.noUiSlider.updateOptions({
-      range: {
-        min: [intMin],
-        max: [parseInt(max)]
-      }
-    });
-  }
-
-  onChangeMaxValue(max) {
-    const { rangeSlider, min } = this.state;
-    this.setState({ max });
-    const intMax = isNaN(parseInt(max)) ? 0 : parseInt(max);
-    rangeSlider.noUiSlider.updateOptions({
-      range: {
-        min: [parseInt(min)],
-        max: [intMax]
-      }
-    });
-  }
-
-  onToggleSliderShower() {
-    this.setState({ sliderShower: !this.state.sliderShower });
-  }
-
-  onToggleSliderInfo() {
-    this.setState({ expandedSliderInfo: !this.state.expandedSliderInfo });
-  }
-
-  render() {
-    return (
-      <EyeFilterMenu
-        {...{ ...this.state, ...this.props }}
-        getOpenedMenu={this.getSliderWhenOpenedMenu}
-        unmountMenu={this.unmountSliderRangeInElement}
-      />
-    );
-  }
-}
+  return (
+    <EyeFilterMenu
+      {...{
+        sliderShower,
+        expandedSliderInfo,
+        min,
+        max,
+        maxAmount,
+        minAmount,
+        ...props
+      }}
+      getOpenedMenu={getSliderWhenOpenedMenu}
+      unmountMenu={unmountSliderRangeInElement}
+    />
+  );
+};
 
 export default EyeFilterMenuWithSlider;
