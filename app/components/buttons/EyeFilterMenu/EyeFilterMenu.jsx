@@ -10,7 +10,7 @@ const EyeFilterMenu = ({
   options,
   selected,
   getOpenedMenu,
-  className
+  type
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const wrapperRef = useRef(null);
@@ -34,10 +34,13 @@ const EyeFilterMenu = ({
     }
   };
 
-  const openedMenu = () => {
+  const openedMenu = (type) => {
     const belowMenu = getOpenedMenu && getOpenedMenu();
     return (
-      <div className={styles.menuItems}>
+      <div className={classNames(
+        styles.menuItems,
+        styles[type]
+      )}>
         <div className={styles.arrowUp} />
         {options.map((option, i) => (
           <div
@@ -59,19 +62,15 @@ const EyeFilterMenu = ({
 
   return (
     <div
-      className={classNames(
-        styles.menu,
-        styles[className],
-        menuOpen && styles.open
-      )}
+      className={classNames(styles.menu, menuOpen && styles.open)}
       ref={wrapperRef}>
       <div className={styles.menuButton}>
         <InvisibleButton
-          className={styles.buttonIcon}
+          className={classNames(styles.buttonIcon, styles[type])}
           onClick={toggleMenuOpen}
         />
       </div>
-      {menuOpen && openedMenu()}
+      {menuOpen && openedMenu(type)}
     </div>
   );
 };

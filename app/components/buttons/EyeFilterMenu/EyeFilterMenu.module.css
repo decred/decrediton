@@ -32,6 +32,10 @@
   background-color: var(--text-toggle-button-inactive-text);
 }
 
+.buttonIcon.sortBy {
+  background-image: var(--sort-by-icon);
+}
+
 .buttonIcon::after {
   content: "";
   border-color: var(--filter-menu-arrow) transparent transparent;
@@ -60,10 +64,6 @@
   background-image: var(--contextbutton-eye-disabled-icon);
 }
 
-.sortBy .buttonIcon {
-  background-image: var(--sort-by-icon);
-}
-
 .menuItems {
   border-radius: 5px;
   background-color: var(--background-back-color);
@@ -75,6 +75,11 @@
   text-align: left;
   box-shadow: 0px 3px 8px var(--input-color-shadow);
   user-select: none;
+}
+
+.menuItems.sortBy {
+  width: 220px;
+  padding-bottom: 0;
 }
 
 .contextMenuItem {
@@ -111,7 +116,3 @@
   border-bottom: 5px solid var(--background-back-color);
 }
 
-.sortBy .menuItems {
-  width: 220px;
-  padding-bottom: 0;
-}

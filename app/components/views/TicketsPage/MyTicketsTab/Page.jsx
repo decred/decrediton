@@ -27,7 +27,7 @@ const subtitleMenu = ({
         options={sortTypes}
         selected={selectedSortOrderKey}
         onChange={onChangeSortType}
-        className="sort-by"
+        type="sortBy"
       />
     </Tooltip>
     <Tooltip
