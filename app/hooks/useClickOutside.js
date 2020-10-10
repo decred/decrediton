@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 
 /**
  * useClickOutside custom hooks calls given callback in case
@@ -8,23 +8,26 @@ import { useEffect } from "react";
  * @param {Func} cb - callback function.
  */
 const useClickOutside = (ref, cb) => {
-  useEffect(() => {
-        /**
-         * Fire callback if clicked outside of element
-         */
-        function handleClickOutside(event) {
-            if (ref.current && !ref.current.contains(event.target)) {
-              cb();
-            }
-        }
+  // Memorize callback ref
+  const useCb = useCallback(() => cb(), [cb]);
 
-        // Bind the event listener
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            // Unbind the event listener on clean up
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, [ref, cb]);
+  useEffect(() => {
+    /**
+     * Fire callback if clicked outside of element
+     */
+    function handleClickOutside(event) {
+      if (ref.current && !ref.current.contains(event.target)) {
+        useCb();
+      }
+    }
+
+    // Bind the event listener
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [ref, useCb]);
 };
 
 export default useClickOutside;
