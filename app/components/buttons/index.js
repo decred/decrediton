@@ -1,4 +1,4 @@
-export { default as EyeFilterMenu } from "./EyeFilterMenu";
+export { default as EyeFilterMenu } from "./EyeFilterMenu/EyeFilterMenu";
 export { default as EyeFilterMenuWithSlider } from "./EyeFilterMenuWithSlider";
 export { default as HelpLink } from "./HelpLink";
 export { default as SlateGrayButton } from "./SlateGrayButton";
