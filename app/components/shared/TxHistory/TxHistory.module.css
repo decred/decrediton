@@ -84,20 +84,6 @@
   margin-left: 10px;
 }
 
-.amountHash {
-  font-family: var(--font-family-monospace);
-  margin-left: 34px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.amountHash > span {
-  color: var(--overview-balance-label) !important;
-  font-size: 11px !important;
-  line-height: 11px !important;
-}
-
 .info {
   display: grid;
   grid-template-columns: 0.5fr 3fr 10fr 3fr;
@@ -109,8 +95,25 @@
   grid-template-columns: 1fr 8fr 8fr;
 }
 
+.overviewInfo .txDirection {
+  align-self: center;
+  order: 4;
+  grid-column-start: 1;
+  justify-self: left;
+  grid-column-end: 4;
+  font-size: 11px;
+  padding-bottom: 3px;
+  color: var(--overview-balance-label) !important;
+  font-family: var(--font-family-monospace);
+}
+
+.overviewInfo .txDirection .accountName {
+  background: transparent;
+  padding: 0 3px;
+  height: 20px;
+}
+
 .status {
-  padding-top: 1px;
   text-align: right;
   margin-left: 5px;
   max-width: 210px;
@@ -294,6 +297,8 @@
     grid-column-end: 4;
     font-size: 11px;
     padding-bottom: 3px;
+    color: var(--overview-balance-label) !important;
+    font-family: var(--font-family-monospace);
   }
   .txRowWrapper {
     padding: 5px 20px 27px 20px !important;
