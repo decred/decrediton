@@ -37,7 +37,7 @@ const EyeFilterMenu = ({
   const openedMenu = () => {
     const belowMenu = getOpenedMenu && getOpenedMenu();
     return (
-      <div className={styles.menuItem}>
+      <div className={styles.menuItems}>
         <div className={styles.arrowUp} />
         {options.map((option, i) => (
           <div
@@ -61,7 +61,7 @@ const EyeFilterMenu = ({
     <div
       className={classNames(
         styles.menu,
-        className,
+        styles[className],
         menuOpen && styles.open
       )}
       ref={wrapperRef}>
