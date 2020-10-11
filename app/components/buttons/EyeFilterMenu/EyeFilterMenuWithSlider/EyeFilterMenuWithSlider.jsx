@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
+import { useMountEffect } from "hooks";
 import { EyeFilterMenu } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import noUiSlider from "nouislider";
@@ -22,7 +23,7 @@ const EyeFilterMenuWithSlider = ({
   const [expandedSliderInfo, setExpandedSliderInfo] = useState(false);
   const [rangeSlider, setRangeSlider] = useState(null);
 
-  useEffect(() => {
+  useMountEffect(() => {
     if (maxFilterValue) {
       const maxValue =
         currencyDisplay === DCR ? maxFilterValue / unitDivisor : maxFilterValue;
@@ -39,7 +40,7 @@ const EyeFilterMenuWithSlider = ({
         setMin(minValue);
       }
     }
-  }, [maxFilterValue, minFilterValue, unitDivisor, currencyDisplay, max, min]);
+  });
 
   const mountSliderRangeInElement = useCallback(
     (range) => {
@@ -68,6 +69,7 @@ const EyeFilterMenuWithSlider = ({
           setRangeSlider(range);
 
           range.noUiSlider.on("set", (values, handle) => {
+            console.log({values, handle})
             const value = parseInt(values[handle]);
             if (handle) {
               onChangeSlider(value, "max");

@@ -21,9 +21,7 @@ const EyeFilterMenu = ({
   });
 
   const onMenuChanged = (event, value) => {
-    if (onChange) {
-      onChange(value);
-    }
+    onChange && onChange(value);
     setMenuOpen(false);
   };
 
@@ -37,10 +35,7 @@ const EyeFilterMenu = ({
   const openedMenu = (type) => {
     const belowMenu = getOpenedMenu && getOpenedMenu();
     return (
-      <div className={classNames(
-        styles.menuItems,
-        styles[type]
-      )}>
+      <div className={classNames(styles.menuItems, styles[type])}>
         <div className={styles.arrowUp} />
         {options.map((option, i) => (
           <div
