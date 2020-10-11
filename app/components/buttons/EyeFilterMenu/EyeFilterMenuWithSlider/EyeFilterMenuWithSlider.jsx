@@ -19,7 +19,6 @@ const EyeFilterMenuWithSlider = ({
   const [maxAmount, setMaxAmount] = useState(100);
   const [min, setMin] = useState(0);
   const [max, setMax] = useState(100);
-  const [sliderShower, setSliderShower] = useState(true);
   const [expandedSliderInfo, setExpandedSliderInfo] = useState(false);
   const [rangeSlider, setRangeSlider] = useState(null);
 
@@ -97,11 +96,6 @@ const EyeFilterMenuWithSlider = ({
     setRangeSlider(null);
   };
 
-  const onToggleSliderShower = useCallback(
-    () => setSliderShower(!sliderShower),
-    [sliderShower, setSliderShower]
-  );
-
   const onToggleSliderInfo = useCallback(
     () => setExpandedSliderInfo(!expandedSliderInfo),
     [expandedSliderInfo, setExpandedSliderInfo]
@@ -171,18 +165,12 @@ const EyeFilterMenuWithSlider = ({
             </div>
           )}
         </div>
-        {sliderShower && (
-          <div className={styles.valueShower}>
-            {minAmount} {currencyDisplay} - {maxAmount} {currencyDisplay}
-            <div
-              className={styles.valueShowerCloser}
-              onClick={() => onToggleSliderShower()}></div>
-          </div>
-        )}
+        <div className={styles.valueShower}>
+          {minAmount} {currencyDisplay} - {maxAmount} {currencyDisplay}
+        </div>
       </div>
     ),
     [
-      sliderShower,
       currencyDisplay,
       expandedSliderInfo,
       max,
@@ -192,15 +180,13 @@ const EyeFilterMenuWithSlider = ({
       mountSliderRangeInElement,
       onChangeMaxValue,
       onChangeMinValue,
-      onToggleSliderInfo,
-      onToggleSliderShower
+      onToggleSliderInfo
     ]
   );
 
   return (
     <EyeFilterMenu
       {...{
-        sliderShower,
         expandedSliderInfo,
         min,
         max,

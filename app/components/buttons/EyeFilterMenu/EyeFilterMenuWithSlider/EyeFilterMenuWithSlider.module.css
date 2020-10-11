@@ -4,7 +4,6 @@
   padding-left: 24px;
   padding-top: 10px;
   font-weight: 600;
-  color: #0c1e3e;
 }
 
 .minMaxSlider {
@@ -15,10 +14,9 @@
 
 .valueShower {
   height: 33px;
-  background: #f3f5f6;
+  background: var(--background-back-color);
   font-family: var(--font-family-regular);
   font-size: 13px;
-  color: #0c1e3e;
   margin-top: 10px;
   padding-left: 24px;
   padding-top: 8px;
