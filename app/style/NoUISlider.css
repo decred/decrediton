@@ -1,9 +1,5 @@
-@import (reference) "./main.less";
 @import "~nouislider/distribute/nouislider.min.css";
 
-// XXX change to .css file and re-import
-
-// noUiSlider style
 .noUi-handle {
   border-radius: 50%;
   background: #2970ff;
@@ -31,5 +27,3 @@
 .noUi-active .noUi-tooltip {
   display: block;
 }
-
-// end of noUiSlider Style

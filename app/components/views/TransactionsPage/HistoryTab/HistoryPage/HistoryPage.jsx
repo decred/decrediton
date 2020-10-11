@@ -10,8 +10,6 @@ import {
 } from "indicators";
 import InfiniteScroll from "react-infinite-scroller";
 import styles from "./HistoryPage.module.css";
-// XXX replace with .css file (include noUi slider styles)
-import "style/HistoryPage.less";
 
 const messages = defineMessages({
   filterByAddrPlaceholder: {
