@@ -69,7 +69,6 @@ const EyeFilterMenuWithSlider = ({
           setRangeSlider(range);
 
           range.noUiSlider.on("set", (values, handle) => {
-            console.log({values, handle})
             const value = parseInt(values[handle]);
             if (handle) {
               onChangeSlider(value, "max");
