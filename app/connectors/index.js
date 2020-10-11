@@ -5,7 +5,6 @@ export { default as balance } from "./balance";
 export { default as invalidRPCVersion } from "./invalidRPCVersion";
 export { default as logging } from "./logging";
 export { default as purchaseTickets } from "./purchaseTickets";
-export { default as rescan } from "./rescan";
 export { default as send } from "./send";
 export { default as service } from "./service"; // TODO: hook already exists in hooks/useService.js but connector is still used in class components
 export { default as snackbar } from "./snackbar";

@@ -6,6 +6,7 @@ import Logo from "./Logo/Logo";
 import style from "./SideBar.module.css";
 import { classNames } from "pi-ui";
 import { useSideBar } from "./hooks";
+import { useRescan } from "hooks";
 
 const SideBar = () => {
   const {
@@ -24,10 +25,9 @@ const SideBar = () => {
     rescanRequest,
     onExpandSideBar,
     onReduceSideBar,
-    rescanAttempt,
-    rescanCancel,
     isSPV
   } = useSideBar();
+  const { rescanAttempt, rescanCancel } = useRescan();
 
   return (
     <div

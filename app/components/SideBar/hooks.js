@@ -1,7 +1,6 @@
 import { useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as sel from "selectors";
-import * as ca from "../../actions/ControlActions";
 import * as sba from "../../actions/SidebarActions";
 
 export function useSideBar() {
@@ -30,12 +29,6 @@ export function useSideBar() {
   const onReduceSideBar = useCallback(() => dispatch(sba.reduceSideBar()), [
     dispatch
   ]);
-  const rescanAttempt = useCallback(() => dispatch(ca.rescanAttempt()), [
-    dispatch
-  ]);
-  const rescanCancel = useCallback(() => dispatch(ca.rescanCancel()), [
-    dispatch
-  ]);
 
   return {
     isShowingAccounts,
@@ -53,8 +46,6 @@ export function useSideBar() {
     rescanRequest,
     onExpandSideBar,
     onReduceSideBar,
-    rescanAttempt,
-    rescanCancel,
     isSPV
   };
 }

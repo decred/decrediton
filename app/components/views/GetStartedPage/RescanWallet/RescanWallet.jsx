@@ -1,30 +1,29 @@
 import { LinearProgressSmall } from "indicators";
 import { FormattedMessage as T } from "react-intl";
-import { rescan } from "connectors";
+import { useRescan } from "hooks";
 
-const RescanWalletFormBody = ({
-  rescanEndBlock,
-  rescanStartBlock,
-  rescanCurrentBlock
-}) => (
-  <>
-    <LinearProgressSmall
-      min={rescanStartBlock}
-      max={rescanEndBlock}
-      value={rescanCurrentBlock}
-    />
-    <T
-      id="getStarted.walletRescan.progress"
-      m="Rescan Progress ({rescanCurrentBlock} / {rescanEndBlock})"
-      values={{
-        rescanCurrentBlock:
-          rescanCurrentBlock > rescanStartBlock
-            ? rescanCurrentBlock
-            : rescanStartBlock,
-        rescanEndBlock: rescanEndBlock
-      }}
-    />
-  </>
-);
+const RescanWalletFormBody = () => {
+  const { rescanEndBlock, rescanStartBlock, rescanCurrentBlock } = useRescan();
+  return (
+    <>
+      <LinearProgressSmall
+        min={rescanStartBlock}
+        max={rescanEndBlock}
+        value={rescanCurrentBlock}
+      />
+      <T
+        id="getStarted.walletRescan.progress"
+        m="Rescan Progress ({rescanCurrentBlock} / {rescanEndBlock})"
+        values={{
+          rescanCurrentBlock:
+            rescanCurrentBlock > rescanStartBlock
+              ? rescanCurrentBlock
+              : rescanStartBlock,
+          rescanEndBlock: rescanEndBlock
+        }}
+      />
+    </>
+  );
+};
 
-export default rescan(RescanWalletFormBody);
+export default RescanWalletFormBody;
