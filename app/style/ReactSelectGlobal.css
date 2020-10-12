@@ -5,7 +5,6 @@
  * https://twitter.com/jedwatson https://twitter.com/jossmackison https://twitter.com/keystonejs
  * MIT License: https://github.com/JedWatson/react-select
 */
-@import (reference) "./main.less";
 
 .Select {
   position: relative;

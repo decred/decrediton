@@ -5,6 +5,8 @@ import ReactTimeout from "react-timeout";
 import EventListener from "react-event-listener";
 import Notification from "./Notification";
 import theme from "theme";
+// XXX replace this helper function with useClickOutside hooks, located in
+// hooks/ dir
 import { eventOutsideComponent } from "helpers";
 import { spring, TransitionMotion } from "react-motion";
 import {

@@ -10,7 +10,6 @@ import {
 } from "indicators";
 import InfiniteScroll from "react-infinite-scroller";
 import styles from "./HistoryPage.module.css";
-import "style/HistoryPage.less";
 
 const messages = defineMessages({
   filterByAddrPlaceholder: {
@@ -53,7 +52,7 @@ const subtitleMenu = ({
         options={sortTypes}
         selected={selectedSortOrderKey}
         onChange={onChangeSortType}
-        className="sort-by"
+        type="sortBy"
         onChangeSlider={onChangeSliderValue}
         minFilterValue={transactionsFilter.minAmount}
         maxFilterValue={transactionsFilter.maxAmount}
