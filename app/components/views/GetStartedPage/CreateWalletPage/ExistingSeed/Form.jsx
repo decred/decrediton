@@ -103,7 +103,7 @@ const ExistingSeedForm = ({
         />
       </div>
     )}
-    {error && <div className={styles.wraning}>{error}</div>}
+    {error && <div className={styles.seedWarning}>{error}</div>}
     <CreatePassPhrase onChange={setPassPhrase} onSubmit={onCreateWallet} />
     <div className={styles.createWalletButtonContainer}>
       <KeyBlueButton

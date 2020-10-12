@@ -57,18 +57,16 @@ const CreateWalletPage = ({ createWalletRef }) => {
 
   const setSeed = useCallback(
     (seed) => {
-      const { passPhrase, error } = current.context;
-      send({ type: "VALIDATE_DATA", seed, passPhrase, error });
+      send({ type: "VALIDATE_DATA", seed });
     },
-    [send, current.context]
+    [send]
   );
 
   const setPassPhrase = useCallback(
     (passPhrase) => {
-      const { seed, error } = current.context;
-      send({ type: "VALIDATE_DATA", passPhrase, seed, error });
+      send({ type: "VALIDATE_DATA", passPhrase });
     },
-    [send, current.context]
+    [send]
   );
 
   const checkIsValid = useCallback(() => {

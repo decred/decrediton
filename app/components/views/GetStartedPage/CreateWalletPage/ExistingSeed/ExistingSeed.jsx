@@ -52,49 +52,89 @@ const ExistingSeed = ({
   );
 
   const onError = useCallback(
-    (seedError, seedWord) => {
-      let seedErrorStr = seedError || "";
+    (seedError) => {
+      const seedErrorStr = seedError.details || "";
 
-      const countWords = () => {
-        let count = 0;
-        seedWords.forEach((wordObj) => {
-          if (wordObj.word && wordObj.word.length > 0) count++;
-        });
-        return count;
+      const populatedSeedWords = seedWords.filter(
+        (seedWord) => seedWord.word && seedWord.word.length > 0
+      );
+
+      // hide all error messages and indicators
+      const hideError = () => {
+        setError("");
+        if (seedWords.filter((seedWord) => seedWord.error).length > 0) {
+          setSeedWords(
+            seedWords.map((seedWord) => {
+              return {
+                ...seedWord,
+                error: false
+              };
+            })
+          );
+        }
       };
-      if (countWords() <= 1) {
+
+      if (populatedSeedWords.length <= 1) {
         // Weird errors with one word, better to avoid them.
         return;
       }
-      // if user has not completed filing all words we avoid showing invalid decoding.
-      if (seedErrorStr.includes(MISMATCH_ERROR) && countWords() < 33) {
+
+      if (
+        seedErrorStr.includes(MISMATCH_ERROR) &&
+        populatedSeedWords.length < 33
+      ) {
+        hideError();
         return;
       }
-      const fixPositionError = (errorStr, seedWord) => {
-        if (!seedWord) return;
-        const index = errorStr.indexOf(POSITION_ERROR);
-        const numberPosition = index + POSITION_ERROR.length + 1;
-        const endErrorStr = errorStr.slice(numberPosition + 1);
-        const beginErrorStr = errorStr.slice(0, numberPosition);
-        return beginErrorStr + (seedWord.index + 1) + endErrorStr;
-      };
+
       if (seedErrorStr.includes(POSITION_ERROR)) {
-        seedErrorStr = fixPositionError(seedErrorStr, seedWord);
+        // read invalid word position from the error msg
+        // (e.g. `word aardvark is not valid at position 1, check for missing words`)
+        const regexp = new RegExp(`${POSITION_ERROR} (\\d+)`, "g");
+        const regexpArray = regexp.exec(seedErrorStr);
+        if (regexpArray != null) {
+          const position = regexpArray[1];
+
+          // The position index in the position error message
+          // does not take count of empty inputs.
+          const fixedPosition = populatedSeedWords[position].index;
+
+          const updatedSeedWords = [...seedWords];
+          updatedSeedWords[fixedPosition] = {
+            ...updatedSeedWords[fixedPosition],
+            error: true
+          };
+          setSeedWords(updatedSeedWords);
+
+          setError(
+            <T
+              id="existingSeed.errors.positionError"
+              m="Error: word on position {position} is not valid."
+              values={{ position: fixedPosition + 1 }}
+            />
+          );
+        }
       }
       setSeed([]);
-      setError(seedErrorStr);
     },
-    [seedWords, setSeed, setError]
+    [setSeed, seedWords, setError]
   );
 
   useEffect(() => {
+    const validateSeed = (updatedSeedWords) =>
+      decodeSeed(getSeedWordsStr(updatedSeedWords))
+        // if no errors happened we set the seed at our state machine
+        .then((response) => {
+          setSeed(response.getDecodedSeed());
+          setError("");
+        });
+
     // compare provided hex against previous values
     // and return if values didn't change
     if (seedType === WORDS) {
       if (
         !prevSeedWords ||
         !seedWords ||
-        seedWords.length !== 33 ||
         isEqualPreviousSeed({
           prevSeedWords,
           seedWords
@@ -105,14 +145,7 @@ const ExistingSeed = ({
     } else if (prevHexSeed === hexSeed) {
       return;
     }
-    const seedWordStr = getSeedWordsStr(seedWords);
-    decodeSeed(seedWordStr)
-      // if no errors happened we set the seed at our machine state
-      .then((response) => {
-        setSeed(response.getDecodedSeed());
-        setError("");
-      })
-      .catch(onError);
+    validateSeed(seedWords).catch((err) => onError(err));
   }, [
     seedWords,
     seedType,
@@ -126,11 +159,11 @@ const ExistingSeed = ({
     onError
   ]);
 
-  const handleOnPaste = useCallback((e) => {
+  const handleOnPaste = (e) => {
     e.preventDefault();
     const clipboardData = e.clipboardData.getData("text");
     pasteFromClipboard(clipboardData);
-  }, []);
+  };
 
   const pasteFromClipboard = (wordsFromClipboard) => {
     const lowercaseSeedWords = SEED_WORDS.map((w) => w.toLowerCase());
@@ -152,46 +185,33 @@ const ExistingSeed = ({
     }
   };
 
-  const handleToggle = useCallback((side) => {
+  const handleToggle = (side) => {
     setSeedType(side === "left" ? WORDS : HEX);
-  }, []);
+  };
 
-  const validateSeed = useCallback(
-    (updatedSeedWords) =>
-      decodeSeed(getSeedWordsStr(updatedSeedWords))
-        // if no errors happened we set the seed at our state machine
-        .then((response) => {
-          setSeed(response.getDecodedSeed());
-          setError("");
-        }),
-    [decodeSeed, getSeedWordsStr, setError, setSeed]
-  );
-
-  const isHexValid = useCallback((seed) => {
+  const isHexValid = (seed) => {
     if (seed.length !== 64 && seed.length > SEED_LENGTH.HEX_MIN) {
       return false;
     }
     return /^[0-9a-fA-F]*$/.test(seed) && seed.length <= SEED_LENGTH.HEX_MAX;
-  }, []);
+  };
 
   const onChangeSeedWord = useCallback(
     (seedWord, update) => {
-      const updatedSeedWords = [...seedWords];
-      updatedSeedWords[seedWord.index] = {
-        word: update,
-        index: seedWord.index,
-        error: false
-      };
-
       // validate seed inputed as words
       if (seedType === WORDS) {
-        setSeedWords(updatedSeedWords);
-        return validateSeed(updatedSeedWords).catch((err) =>
-          onError(err, seedWord)
-        );
-      }
-      // validate seed inputed as HEX
-      if (seedType === HEX) {
+        // only need update the seedWords if there was a change
+        if (seedWords[seedWord.index].word != update) {
+          const updatedSeedWords = [...seedWords];
+          updatedSeedWords[seedWord.index] = {
+            word: update,
+            index: seedWord.index,
+            error: false
+          };
+          setSeedWords(updatedSeedWords);
+        }
+      } else {
+        // validate seed inputed as HEX
         const trimmedSeed = seedWord.trim();
         if (isHexValid(trimmedSeed)) {
           setSeedHex(trimmedSeed);
@@ -207,7 +227,7 @@ const ExistingSeed = ({
         }
       }
     },
-    [isHexValid, seedType, onError, seedWords, setError, validateSeed]
+    [seedType, seedWords, setError]
   );
 
   return (
