@@ -1,51 +1,55 @@
 import { LinearProgressSmall } from "indicators";
-import { rescan } from "connectors";
+import { useRescan } from "hooks";
 import { FormattedMessage as T } from "react-intl";
 import { RescanButton, RescanCancelButton } from "buttons";
-import "style/MiscComponents.less";
+import styles from "./indicators.module.css";
 
-const RescanProgress = ({
-  rescanEndBlock,
-  rescanCurrentBlock,
-  rescanPercentFinished,
-  rescanRequest,
-  rescanCancel
-}) => (
-  <div className="rescan-progress-area">
-    <div className="rescan-progress-indicator">
-      <LinearProgressSmall
-        min={0}
-        max={1}
-        value={rescanCurrentBlock / rescanEndBlock}
+const RescanProgress = () => {
+  const {
+    rescanEndBlock,
+    rescanCurrentBlock,
+    rescanPercentFinished,
+    rescanRequest,
+    rescanCancel
+  } = useRescan();
+
+  return (
+    <div className={styles.rescanProgressArea}>
+      <div className={styles.rescanProgressIndicator}>
+        <LinearProgressSmall
+          min={0}
+          max={1}
+          value={rescanCurrentBlock / rescanEndBlock}
+        />
+      </div>
+      <div className={styles.rescanButtonArea}>
+        <RescanButton {...{ rescanRequest }} />
+      </div>
+      <T
+        id="rescan.rescanning"
+        m="Rescanning {blockProgress} ({progressPercent})"
+        values={{
+          blockProgress: (
+            <span className={styles.rescanProgressFraction}>
+              {rescanCurrentBlock}/{rescanEndBlock}
+            </span>
+          ),
+          progressPercent: (
+            <span className={styles.rescanProgressPercent}>
+              <T
+                id="rescan.progressPercent"
+                m="{progress, number, percent}"
+                values={{ progress: rescanPercentFinished / 100 }}
+              />
+            </span>
+          )
+        }}
       />
+      <div className={styles.rescanCancelButtonArea}>
+        <RescanCancelButton {...{ rescanRequest, rescanCancel }} />
+      </div>
     </div>
-    <div className="rescan-button-area">
-      <RescanButton {...{ rescanRequest }} />
-    </div>
-    <T
-      id="rescan.rescanning"
-      m="Rescanning {blockProgress} ({progressPercent})"
-      values={{
-        blockProgress: (
-          <span className="rescan-progress-fraction">
-            {rescanCurrentBlock}/{rescanEndBlock}
-          </span>
-        ),
-        progressPercent: (
-          <span className="rescan-progress-percent">
-            <T
-              id="rescan.progressPercent"
-              m="{progress, number, percent}"
-              values={{ progress: rescanPercentFinished / 100 }}
-            />
-          </span>
-        )
-      }}
-    />
-    <div className="rescan-cancel-button-area">
-      <RescanCancelButton {...{ rescanRequest, rescanCancel }} />
-    </div>
-  </div>
-);
+  );
+};
 
-export default rescan(RescanProgress);
+export default RescanProgress;
