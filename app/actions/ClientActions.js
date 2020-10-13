@@ -1,5 +1,6 @@
 // @flow
 import * as wallet from "wallet";
+import { onAppReloadRequested, getDcrwalletGrpcKeyCert } from "wallet";
 import * as sel from "selectors";
 import eq from "lodash/fp/eq";
 import {
@@ -20,7 +21,6 @@ import { getAccountMixerServiceAttempt } from "./AccountMixerActions";
 import { checkLnWallet } from "./LNActions";
 import { push as pushHistory, goBack } from "connected-react-router";
 import { getWalletCfg, getGlobalCfg } from "config";
-import { onAppReloadRequested } from "wallet";
 import { clipboard } from "electron";
 import { getStartupStats } from "./StatisticsActions";
 import { getTokenAndInitialBatch } from "./GovernanceActions";
@@ -147,8 +147,9 @@ export const getWalletServiceAttempt = () => (dispatch, getState) => {
     daemon: { walletName }
   } = getState();
   dispatch({ type: GETWALLETSERVICE_ATTEMPT });
+  const grpcCertAndKey = getDcrwalletGrpcKeyCert();
   wallet
-    .getWalletService(sel.isTestNet(getState()), walletName, address, port)
+    .getWalletService(sel.isTestNet(getState()), walletName, address, port, grpcCertAndKey, grpcCertAndKey)
     .then((walletService) =>
       dispatch({ walletService, type: GETWALLETSERVICE_SUCCESS })
     )
@@ -167,8 +168,9 @@ export const getTicketBuyerServiceAttempt = () => (dispatch, getState) => {
     daemon: { walletName }
   } = getState();
   dispatch({ type: GETTICKETBUYERSERVICE_ATTEMPT });
+  const grpcCertAndKey = getDcrwalletGrpcKeyCert();
   wallet
-    .getTicketBuyerService(sel.isTestNet(getState()), walletName, address, port)
+    .getTicketBuyerService(sel.isTestNet(getState()), walletName, address, port, grpcCertAndKey, grpcCertAndKey)
     .then((ticketBuyerService) => {
       dispatch({ ticketBuyerService, type: GETTICKETBUYERSERVICE_SUCCESS });
     })
@@ -495,8 +497,9 @@ export const getAgendaServiceAttempt = () => (dispatch, getState) => {
     daemon: { walletName }
   } = getState();
   dispatch({ type: GETAGENDASERVICE_ATTEMPT });
+  const grpcCertAndKey = getDcrwalletGrpcKeyCert();
   wallet
-    .getAgendaService(sel.isTestNet(getState()), walletName, address, port)
+    .getAgendaService(sel.isTestNet(getState()), walletName, address, port, grpcCertAndKey, grpcCertAndKey)
     .then((agendaService) => {
       dispatch({ agendaService, type: GETAGENDASERVICE_SUCCESS });
       setTimeout(() => {
@@ -518,8 +521,9 @@ export const getVotingServiceAttempt = () => (dispatch, getState) => {
     daemon: { walletName }
   } = getState();
   dispatch({ type: GETVOTINGSERVICE_ATTEMPT });
+  const grpcCertAndKey = getDcrwalletGrpcKeyCert();
   wallet
-    .getVotingService(sel.isTestNet(getState()), walletName, address, port)
+    .getVotingService(sel.isTestNet(getState()), walletName, address, port, grpcCertAndKey, grpcCertAndKey)
     .then((votingService) =>
       dispatch({ votingService, type: GETVOTINGSERVICE_SUCCESS })
     )

@@ -1,4 +1,4 @@
-import { getAccountMixerService } from "wallet";
+import { getAccountMixerService, getDcrwalletGrpcKeyCert } from "wallet";
 import Promise from "promise";
 import * as sel from "selectors";
 import * as wallet from "wallet";
@@ -17,12 +17,15 @@ export const getAccountMixerServiceAttempt = () => (dispatch, getState) => {
   const {
     daemon: { walletName }
   } = getState();
+  const grpcCertAndKey = getDcrwalletGrpcKeyCert();
   dispatch({ type: GETACCOUNTMIXERSERVICE_ATTEMPT });
   return getAccountMixerService(
     sel.isTestNet(getState()),
     walletName,
     address,
-    port
+    port,
+    grpcCertAndKey,
+    grpcCertAndKey
   )
     .then((accountMixerService) =>
       dispatch({ accountMixerService, type: GETACCOUNTMIXERSERVICE_SUCCESS })

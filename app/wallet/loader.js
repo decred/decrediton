@@ -16,9 +16,9 @@ import {
 } from "middleware/walletrpc/api_pb";
 
 export const getLoader = log(
-  ({ isTestNet, walletName, address, port }) =>
+  ({ isTestNet, walletName, address, port, cert, key }) =>
     new Promise((resolve, reject) =>
-      rpcLoader(isTestNet, walletName, address, port, (loader, error) =>
+      rpcLoader(isTestNet, walletName, address, port, cert, key, (loader, error) =>
         error ? reject(error) : resolve(loader)
       )
     ),
