@@ -28,7 +28,7 @@ export const Balance = ({
     : "balance-small";
   if (currencyDisplay === DCR) {
     let totalDcr = 0;
-    if (typeof amount !== "undefined" && amount !== 0 && !isNaN(amount)) {
+    if (amount && !isNaN(amount)) {
       totalDcr = preScaled
         ? parseFloat(amount)
         : parseInt(amount) / UNIT_DIVISOR;
@@ -66,10 +66,14 @@ export const Balance = ({
     <div className={classNameWrapper}>
       <span className="mono" {...{ onClick }}>
         <span className={[secondary, bold ? "bold" : null].join(" ")}>
-          {amount + " "}
+          <FormattedNumber
+            value={amount && !isNaN(amount) ? amount : 0}
+            maximumFractionDigits={0}
+            minimumFractionDigits={0}
+          />
         </span>
         {!hideCurrency && (
-          <span className={[secondary, classNameUnit].join(" ")}>atoms</span>
+          <span className={[secondary, classNameUnit].join(" ")}> atoms</span>
         )}
       </span>
     </div>
