@@ -1,18 +1,10 @@
 import FloatInput from "./FloatInput";
 import IntegerInput from "./IntegerInput";
-import { restrictToStdDecimalNumber } from "helpers";
 import { MAX_DCR_AMOUNT, UNIT_DIVISOR } from "constants";
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ATOMS } from "constants";
 import * as sel from "selectors";
-
-function countDecimalDigits(s) {
-  for (let i = s.length - 1; i >= 0; i--) {
-    if (s[i] === ".") return s.length - i - 1;
-  }
-  return 0;
-}
 
 /**
  * DcrInput provides a way to receive decred amount inputs. Instead of the usual
@@ -28,6 +20,15 @@ function DcrInput({ onChangeAmount, amount, ...props }) {
   const [value, setValue] = useState(null);
   const currencyDisplay = useSelector(sel.currencyDisplay);
 
+  useEffect(() => {
+    if (amount === undefined || isNaN(amount)) {
+      return;
+    }
+    // if amount is 0 or null, we set its value.
+    if (!amount) {
+      setValue(amount);
+    }
+  }, [amount]);
   // parseInput parses the passed amount and returns its respective atom
   // value.
   const parseInput = (amount) => {
@@ -37,19 +38,19 @@ function DcrInput({ onChangeAmount, amount, ...props }) {
 
     const atomsValue = strToDcrAtoms(amount, UNIT_DIVISOR);
     return atomsValue;
-  }
+  };
 
   const onChange = (e) => {
     // set value which will be shown.
     const value = e.target.value;
-    setValue(value)
+    setValue(value);
 
     // get atom value as in decrediton we make use atoms for requests.
     const atomValue = parseInput(value);
     if (atomValue > MAX_DCR_AMOUNT) return;
 
     if (onChangeAmount) onChangeAmount({ ...e, value, atomValue });
-  }
+  };
 
   // If UNIT_DIVISOR is 1 decrediton is being used in atoms.
   const Comp = currencyDisplay === ATOMS ? IntegerInput : FloatInput;

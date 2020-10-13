@@ -279,7 +279,7 @@ const SendTab = () => {
         onGetNextAddressAttempt(nextAddressAccount.value);
       }
       setIsSendAll(false);
-      newOutputs = [baseOutput()];
+      onSetOutputs([baseOutput()]);
     }
     if (
       isSendSelf &&
