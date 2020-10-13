@@ -1,31 +1,31 @@
-
 import { Balance } from "shared/Balance";
-import { shallow } from "enzyme";
-import sinon from "sinon";
+import { render } from "test-utils.js";
+import user from "@testing-library/user-event";
+import { screen } from "@testing-library/react";
 
-test("atoms display", () => {
-  const spy = sinon.spy();
-
-  const balance = shallow(
-    <Balance currencyDisplay="atoms" amount={42} onClick={spy} />
+const testDisplay = (currency, amount, display) => {
+  const mockClick = jest.fn(() => {});
+  render(
+    <Balance currencyDisplay={currency} amount={amount} onClick={mockClick} />
   );
 
-  expect(balance.childAt(0).text()).toEqual("42 atoms");
+  const balanceNode = screen.getByText(currency).parentElement;
+  expect(balanceNode.textContent).toBe(`${display} ${currency}`);
 
-  balance.childAt(0).simulate("click");
-  expect(spy.calledOnce).toEqual(true);
-});
+  user.click(balanceNode);
+  expect(mockClick).toHaveBeenCalled();
+};
 
-test("DCR display", () => {
-  const spy = sinon.spy();
-
-  const balance = shallow(
-    <Balance currencyDisplay="DCR" amount={420000001} onClick={spy} />
-  );
-
-  expect(balance.childAt(0).childAt(0).childAt(0).prop("value")).toEqual("4.20");
-
-  balance.childAt(0).simulate("click");
-
-  expect(spy.calledOnce).toEqual(true);
-});
+test.each([
+  ["atoms", null, "0"],
+  ["atoms", undefined, "0"],
+  ["atoms", 42, "42"],
+  ["atoms", 420, "420"],
+  ["atoms", 4201, "4,201"],
+  ["atoms", 420000001, "420,000,001"],
+  ["DCR", null, "0.00000"],
+  ["DCR", undefined, "0.00000"],
+  ["DCR", 42, "0.00000042"],
+  ["DCR", 420000001, "4.20000001"],
+  ["DCR", 420000001323, "4,200.00001323"]
+])("(%s) %s display '%s'", testDisplay);
