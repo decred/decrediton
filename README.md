@@ -295,10 +295,7 @@ yarn package-dev-linux
 ## Contact
 
 If you have any further questions you can find us at:
-
-- irc.freenode.net (channel #decred)
-- [webchat](https://webchat.freenode.net/?channels=decred)
-- forum.decred.org
+<https://decred.org/community/>
 
 ## Issue Tracker
 
