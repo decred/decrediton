@@ -545,8 +545,10 @@ export const launchDCRWallet = (
     : "";
   let args = [confFile];
 
+  // add needed dcrwallet flags
   args.push("--gaplimit=" + cfg.get("gaplimit"));
-
+  args.push("--authtype=clientcert");
+  args.push("--issueclientcert");
   const dcrwExe = getExecutablePath("dcrwallet", argv.custombinpath);
   if (!fs.existsSync(dcrwExe)) {
     logger.log(
