@@ -14,7 +14,10 @@ const TicketAutoBuyerForm = ({
   changeAccount,
   vsp,
   changeVSP,
-  availableVSPs
+  availableVSPs,
+  isValid,
+  onClick,
+  clicked
 }) => (
   <>
     <Subtitle
@@ -71,6 +74,8 @@ const TicketAutoBuyerForm = ({
               </div>
             }
             onSubmit={onStartAutoBuyer}
+            onClick={onClick}
+            isValid={isValid}
           />
         )}
         <div className="stakepool-auto-buyer-row-portion-half">
@@ -123,6 +128,13 @@ const TicketAutoBuyerForm = ({
           </div>
         </div>
       </div>
+      {
+        (clicked && isValid === false) && (
+          <div className="error">
+            <T id="autobuyer.startErr" m="Fill all fields." />
+          </div>
+        )
+      }
     </div>
   </>
 );

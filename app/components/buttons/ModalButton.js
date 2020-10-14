@@ -38,6 +38,16 @@ class ModalButton extends React.Component {
     }
   }
 
+  handleOnClick() {
+    const { isValid, onClick } = this.props;
+    onClick && onClick();
+    // isValid can be not passed, so we ignore it.
+    if(isValid !== undefined && !isValid) {
+      return;
+    }
+    this.showModal();
+  }
+
   render() {
     const { buttonLabel, modalComponent, isDisabled } = this.props;
     const ButtonComponent = this.props.buttonComponent || defaultButton;
@@ -49,7 +59,7 @@ class ModalButton extends React.Component {
       <>
         <ButtonComponent
           {...this.props}
-          onClick={!isDisabled ? this.showModal : null}>
+          onClick={!isDisabled ? this.handleOnClick : null}>
           {buttonLabel}
         </ButtonComponent>
 
