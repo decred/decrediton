@@ -249,7 +249,7 @@ export const dismissBackupRedeemScript = () => (dispatch, getState) => {
     daemon: { walletName }
   } = getState();
   const walletCfg = getWalletCfg(sel.isTestNet(getState()), walletName);
-  walletCfg.set("dismiss_backup_msg_redeem_scrip", true);
+  walletCfg.set("dismiss_backup_msg_redeem_script", true);
   dispatch({ type: DISMISS_BACKUP_MSG_REDEEM_SCRIPT });
 };
 
