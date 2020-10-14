@@ -16,6 +16,11 @@ export const usePurchaseTab = () => {
   const availableVSPs = useSelector(sel.getAvailableVSPs);
   const availableVSPsError = useSelector(sel.getDiscoverAvailableVSPError);
   const ticketAutoBuyerRunning = useSelector(sel.getTicketAutoBuyerRunning);
+
+  const buyerVSP = useSelector(sel.buyerVSP);
+  const buyerBalanceToMantain = useSelector(sel.buyerBalanceToMantain);
+  const buyerAccount = useSelector(sel.buyerAccount);
+  
   const dispatch = useDispatch();
   const discoverAvailableVSPs = useCallback(() => dispatch(vspa.discoverAvailableVSPs()), [
     dispatch
@@ -52,6 +57,9 @@ export const usePurchaseTab = () => {
     availableVSPsError,
     onDisableTicketAutoBuyer,
     getTicketStatus,
-    ticketAutoBuyerRunning
+    ticketAutoBuyerRunning,
+    buyerVSP,
+    buyerAccount,
+    buyerBalanceToMantain
   };
 };

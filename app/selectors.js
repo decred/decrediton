@@ -169,12 +169,19 @@ export const agendaService = get(["grpc", "agendaService"]);
 export const votingService = get(["grpc", "votingService"]);
 export const accountMixerService = get(["grpc", "accountMixerService"]);
 
+
+// VSP selectors
 // purchase tickets selectors
 export const getAvailableVSPs = get(["vsp", "availableVSPs"]);
 export const getDiscoverAvailableVSPError = get(["vsp", "availableVSPsError"]);
 
 // ticket auto buyer
 export const getTicketAutoBuyerRunning = get(["vsp", "ticketAutoBuyerRunning"]);
+export const buyerVSP = get(["vsp", "vsp"]);
+export const buyerBalanceToMantain = get(["vsp", "balanceToMaintain"]);
+export const buyerAccount = get(["vsp", "account"]);
+
+// end of vsp selectors
 
 // TODO review selectors that are not being used anymore.
 export const getBalanceRequestAttempt = get([

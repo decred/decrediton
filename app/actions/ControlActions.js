@@ -415,6 +415,9 @@ export const startTicketBuyerV3Attempt = (
     });
     dispatch({
       ticketBuyerCall: ticketBuyer,
+      vsp,
+      balanceToMaintain,
+      account,
       type: STARTTICKETBUYERV3_SUCCESS
     });
   });

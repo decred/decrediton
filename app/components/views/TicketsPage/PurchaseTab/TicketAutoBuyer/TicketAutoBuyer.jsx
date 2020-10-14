@@ -8,11 +8,14 @@ function TicketAutoBuyer({ intl }) {
     availableVSPs,
     onEnableTicketAutoBuyer,
     onDisableTicketAutoBuyer,
-    ticketAutoBuyerRunning
+    ticketAutoBuyerRunning,
+    buyerAccount,
+    buyerBalanceToMantain,
+    buyerVSP
   } = usePurchaseTab();
-  const [balanceToMaintain, setBalanceToMaintain] = useState(0);
-  const [account, setAccount] = useState(null);
-  const [vsp, setVSP] = useState(null);
+  const [balanceToMaintain, setBalanceToMaintain] = useState(buyerBalanceToMantain);
+  const [account, setAccount] = useState(buyerAccount);
+  const [vsp, setVSP] = useState(buyerVSP);
   // we use this bool flag so the error does not show before trying.
   const [clicked, setClicked] = useState(false);
   // isValid check if we can show the modal to start the auto buyer.

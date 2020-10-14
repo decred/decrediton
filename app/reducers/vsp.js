@@ -29,7 +29,10 @@ export default function vsp(state = {}, action) {
     case STARTTICKETBUYERV3_SUCCESS:
       return { ...state,
         ticketAutoBuyerRunning: true,
-        ticketBuyerCall: action.ticketBuyerCall
+        ticketBuyerCall: action.ticketBuyerCall,
+        vsp: action.vsp,
+        balanceToMaintain: action.balanceToMaintain,
+        account: action.account
       };
     case STARTTICKETBUYERV3_FAILED:
       return { ...state,

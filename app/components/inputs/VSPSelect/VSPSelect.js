@@ -12,8 +12,8 @@ const messages = defineMessages({
   }
 });
 
-function VSPSelect({ onChange, options, intl }) {
-  const { send, state, selectedOption, vspInfo } = useVSPSelect(options);
+function VSPSelect({ onChange, options, intl, value }) {
+  const { send, state, selectedOption, vspInfo } = useVSPSelect(options, value);
 
   const [newOption, setNewOption] = useState("");
   const [newOptions, setNewOptions] = useState([]);
@@ -37,10 +37,13 @@ function VSPSelect({ onChange, options, intl }) {
     return opts;
   }, [options, newOptions]);
 
+  const handleParentOnChange = (host, pubkey) => {
+    onChange && onChange({ host, pubkey });
+  }
+
   useEffect(() => {
-    const { pubkey, host } = vspInfo;
-    onChange && onChange({ pubkey, host });
-  }, [vspInfo, onChange]);
+    handleParentOnChange(vspInfo.host, vspInfo.pubkey);
+  }, [vspInfo.host, vspInfo.pubkey]);
 
   const handleOnChange = (option, isRetry) => {
     if (!option) return;
