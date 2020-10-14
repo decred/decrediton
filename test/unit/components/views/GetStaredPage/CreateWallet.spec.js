@@ -279,7 +279,7 @@ test("test typing a valid seed word on existing seed view", async () => {
   );
 });
 
-test("pasting invalid seed words on existing seed view", async () => {
+test("pasting just 32 seed words on existing seed view", async () => {
   await goToExistingSeedView();
   const testInvalidSeedArray = testSeedArray.slice(0, 10);
   const testInvalidSeedMnemonic = testInvalidSeedArray.join(" ");
@@ -287,6 +287,17 @@ test("pasting invalid seed words on existing seed view", async () => {
   firePasteEvent(screen.getAllByRole("combobox")[0], testInvalidSeedMnemonic);
 
   await wait(() => screen.getByText(/please paste a valid 33 word seed./i));
+});
+
+test("pasting invalid seed words on existing seed view", async () => {
+  mockDecodeSeed = wla.decodeSeed = jest.fn(() => () =>
+    Promise.reject({ details: MISMATCH_ERROR })
+  );
+  await goToExistingSeedView();
+
+  firePasteEvent(screen.getAllByRole("combobox")[0], testSeedMnemonic);
+  await wait(() => screen.getByText(/Error: seed is not valid./i));
+  screen.debug();
 });
 
 test("pasting valid seed words on existing seed view and receive decode error and create wallet request error", async () => {
