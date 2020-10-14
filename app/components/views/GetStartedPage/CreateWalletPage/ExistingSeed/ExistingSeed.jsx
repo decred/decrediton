@@ -79,11 +79,17 @@ const ExistingSeed = ({
         return;
       }
 
-      if (
-        seedErrorStr.includes(MISMATCH_ERROR) &&
-        populatedSeedWords.length < 33
-      ) {
-        hideError();
+      if (seedErrorStr.includes(MISMATCH_ERROR)) {
+        if (populatedSeedWords.length == 33) {
+          setError(
+            <T
+              id="existingSeed.errors.seedError"
+              m="Error: seed is not valid."
+            />
+          );
+        } else {
+          hideError();
+        }
         return;
       }
 
