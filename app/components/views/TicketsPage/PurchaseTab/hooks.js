@@ -20,7 +20,7 @@ export const usePurchaseTab = () => {
   const buyerVSP = useSelector(sel.buyerVSP);
   const buyerBalanceToMantain = useSelector(sel.buyerBalanceToMantain);
   const buyerAccount = useSelector(sel.buyerAccount);
-  
+
   const dispatch = useDispatch();
   const discoverAvailableVSPs = useCallback(() => dispatch(vspa.discoverAvailableVSPs()), [
     dispatch

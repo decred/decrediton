@@ -36,7 +36,9 @@ function TicketAutoBuyer({ intl }) {
     } else {
       isValid = false;
     }
-    return isValid && (!!balanceToMaintain && !!account);
+
+    // balance to mantain can be 0.
+    return isValid && ((!!balanceToMaintain || balanceToMaintain === 0) && !!account);
   };
 
   const onClick = () => {

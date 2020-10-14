@@ -1,8 +1,8 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { fetchMachine } from "stateMachines/FetchStateMachine";
 import { useMachine } from "@xstate/react";
 import * as vspa from "actions/VSPActions";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 
 export const useVSPSelect = (options, vsp) => {
   const dispatch = useDispatch();
@@ -28,10 +28,10 @@ export const useVSPSelect = (options, vsp) => {
         // is already running.
         if (vsp) {
           const { host, pubkey } = vsp;
-          onSetVspInfo({ pubkey, host })
           // we add label to the selected option, as the vsp is already
           // selected.
-          setSelected({ host, label: host })
+          setSelected({ host, label: host });
+          onSetVspInfo({ pubkey, host });
         }
         if (!options) send({ type: "REJECT", error: "Options not defined." });
       },

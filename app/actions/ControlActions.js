@@ -778,9 +778,11 @@ export const getVSPTicketsFailedToProcess = () => (dispatch, getState) => {
     .then(response => {
       const failedTickets = response.getFailedTicketsHashesList();
       dispatch({ type: GETVSPTICKETSFAILED_SUCCESS, ticketsFailed: response });
-      console.log(failedTickets)
+       // TODO check for default vsp and retry with it.
+       // notify user about the failed tickets.
+       console.log(failedTickets);
     })
     .catch(err => {
       dispatch({ type: GETVSPTICKETSFAILED_FAILED, err });
-    })
-}
+    });
+};

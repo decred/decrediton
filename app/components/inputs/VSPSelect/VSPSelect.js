@@ -37,13 +37,14 @@ function VSPSelect({ onChange, options, intl, value }) {
     return opts;
   }, [options, newOptions]);
 
-  const handleParentOnChange = (host, pubkey) => {
-    onChange && onChange({ host, pubkey });
-  }
 
   useEffect(() => {
-    handleParentOnChange(vspInfo.host, vspInfo.pubkey);
-  }, [vspInfo.host, vspInfo.pubkey]);
+    const { host, pubkey } = vspInfo;
+    if (!host || !pubkey) {
+      return;
+    }
+    onChange && onChange({ host, pubkey });
+  }, [onChange, vspInfo]);
 
   const handleOnChange = (option, isRetry) => {
     if (!option) return;
