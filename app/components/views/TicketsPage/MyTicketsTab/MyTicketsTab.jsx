@@ -78,7 +78,7 @@ const selectTicketTypeFromFilter = (filter) => {
   return ticketType && ticketType.key;
 };
 
-const MyTickets = (props) => {
+const MyTickets = () => {
   const {
     tickets,
     tsDate,
@@ -117,7 +117,6 @@ const MyTickets = (props) => {
   return (
     <TicketListPage
       {...{
-        ...props,
         selectedTicketTypeKey,
         selectedSortOrderKey,
         loadMoreThreshold,
