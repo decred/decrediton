@@ -3,7 +3,6 @@ export { default as accountsSelect } from "./accountsSelect";
 export { default as app } from "./app";
 export { default as balance } from "./balance";
 export { default as invalidRPCVersion } from "./invalidRPCVersion";
-export { default as logging } from "./logging";
 export { default as purchaseTickets } from "./purchaseTickets";
 export { default as send } from "./send";
 export { default as snackbar } from "./snackbar";

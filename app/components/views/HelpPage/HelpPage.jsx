@@ -1,6 +1,6 @@
 import { LinksTab, LinksTabHeader } from "./LinksTab";
 import { LogsTab, LogsTabHeader } from "./LogsTab/LogsTab";
-import { TutorialsTab, TutorialsTabHeader } from "./TutorialsTab";
+import { TutorialsTab, TutorialsTabHeader } from "./TutorialsTab/TutorialsTab";
 import { TabbedPage, TabbedPageTab as Tab, TitleHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
 import { Switch, Redirect } from "react-router-dom";
