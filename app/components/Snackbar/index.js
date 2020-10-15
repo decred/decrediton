@@ -36,7 +36,6 @@ const snackbarClasses = ({ type }) =>
     Error: "snackbar snackbar-error",
     Success: "snackbar snackbar-success"
   }[type] || "snackbar");
-console.log(snackbarClasses);
 
 @autobind
 class Snackbar extends React.Component {

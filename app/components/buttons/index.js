@@ -7,7 +7,6 @@ export { default as RescanButton } from "./RescanButton";
 export { default as RescanCancelButton } from "./RescanCancelButton";
 export { default as TextToggle } from "./TextToggle";
 export { default as TicketsCogs } from "./TicketsCogs";
-export { default as TransactionLink } from "./TransactionLink";
 export { default as EnableExternalRequestButton } from "./EnableExternalRequestButton";
 export { default as SendTransactionButton } from "./SendTransactionButton";
 export { default as ImportScriptIconButton } from "./ImportScriptIconButton";
