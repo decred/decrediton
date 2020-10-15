@@ -352,7 +352,6 @@ export const newPurchaseTicketsAttempt = (
   numTickets,
   vsp
 ) => async (dispatch, getState) => {
-  console.log("safsdf")
   try {
     const currentBlockHeight = sel.currentBlockHeight(getState());
     const walletService = sel.walletService(getState());

@@ -155,14 +155,12 @@ export const purchaseTickets = (
     new Promise((ok, fail) => {
       const request = new api.PurchaseTicketsRequest();
       signTx && request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
-      request.setAccount(accountNum);
+      request.setAccount(accountNum.value);
       request.setNumTickets(numTickets);
       request.setDontSignTx(!signTx);
-      if (vsp) {
-        const { pubkey, host } = vsp;
-        request.setVspPubkey(pubkey);
-        request.setVspHost(host);
-      }
+      const { pubkey, host } = vsp;
+      request.setVspPubkey(pubkey);
+      request.setVspHost(host);
       walletService.purchaseTickets(request, (err, res) =>
         err ? fail(err) : ok(res)
       );
