@@ -26174,7 +26174,8 @@ proto.walletrpc.RunTicketBuyerRequest.toObject = function(includeInstance, msg) 
     poolAddress: jspb.Message.getFieldWithDefault(msg, 6, ""),
     poolFees: +jspb.Message.getFieldWithDefault(msg, 7, 0.0),
     vspHost: jspb.Message.getFieldWithDefault(msg, 8, ""),
-    vspPubkey: jspb.Message.getFieldWithDefault(msg, 9, "")
+    vspPubkey: jspb.Message.getFieldWithDefault(msg, 9, ""),
+    limit: jspb.Message.getFieldWithDefault(msg, 10, 0)
   };
 
   if (includeInstance) {
@@ -26246,6 +26247,10 @@ proto.walletrpc.RunTicketBuyerRequest.deserializeBinaryFromReader = function(msg
     case 9:
       var value = /** @type {string} */ (reader.readString());
       msg.setVspPubkey(value);
+      break;
+    case 10:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setLimit(value);
       break;
     default:
       reader.skipField();
@@ -26336,6 +26341,13 @@ proto.walletrpc.RunTicketBuyerRequest.serializeBinaryToWriter = function(message
   if (f.length > 0) {
     writer.writeString(
       9,
+      f
+    );
+  }
+  f = message.getLimit();
+  if (f !== 0) {
+    writer.writeInt32(
+      10,
       f
     );
   }
@@ -26498,6 +26510,21 @@ proto.walletrpc.RunTicketBuyerRequest.prototype.getVspPubkey = function() {
 /** @param {string} value */
 proto.walletrpc.RunTicketBuyerRequest.prototype.setVspPubkey = function(value) {
   jspb.Message.setProto3StringField(this, 9, value);
+};
+
+
+/**
+ * optional int32 limit = 10;
+ * @return {number}
+ */
+proto.walletrpc.RunTicketBuyerRequest.prototype.getLimit = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 10, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.RunTicketBuyerRequest.prototype.setLimit = function(value) {
+  jspb.Message.setProto3IntField(this, 10, value);
 };
 
 
