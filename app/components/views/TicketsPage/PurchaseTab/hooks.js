@@ -43,6 +43,10 @@ export const usePurchaseTab = () => {
     [dispatch]
   );
 
+  const getVSPTicketsByFeeStatus = (feeStatus) => {
+    dispatch(vspa.getVSPTicketsByFeeStatus(feeStatus));
+  };
+
   return {
     spvMode,
     blocksNumberToNextTicket,
@@ -60,6 +64,7 @@ export const usePurchaseTab = () => {
     ticketAutoBuyerRunning,
     buyerVSP,
     buyerAccount,
-    buyerBalanceToMantain
+    buyerBalanceToMantain,
+    getVSPTicketsByFeeStatus
   };
 };

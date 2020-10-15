@@ -75,7 +75,7 @@ service WalletService {
 	rpc UnlockAccount (UnlockAccountRequest) returns (UnlockAccountResponse);
 	rpc LockAccount (LockAccountRequest) returns (LockAccountResponse);
 	rpc SyncVSPFailedTickets(SyncVSPTicketsRequest) returns (SyncVSPTicketsResponse);
-	rpc FailedVSPTicketsProcess (FailedVSPTicketsProcessRequest) returns (FailedVSPTicketsProcessResponse);
+	rpc GetVSPTicketsByFeeStatus (GetVSPTicketsByFeeStatusRequest) returns (GetVSPTicketsByFeeStatusResponse);
 }
 
 service WalletLoaderService {
@@ -1229,8 +1229,10 @@ message SyncVSPTicketsRequest {
 
 message SyncVSPTicketsResponse {}
 
-message FailedVSPTicketsProcessRequest {}
+message GetVSPTicketsByFeeStatusRequest {
+	int32 fee_status = 1;
+}
 
-message FailedVSPTicketsProcessResponse {
+message GetVSPTicketsByFeeStatusResponse {
 	repeated bytes failed_tickets_hashes = 1;
 }

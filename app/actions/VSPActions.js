@@ -29,23 +29,19 @@ export const GETVSPTICKETSTATUS_ATTEMPT = "GETVSPTICKETSTATUS_ATTEMPT";
 export const GETVSPTICKETSTATUS_FAILED = "GETVSPTICKETSTATUS_FAILED";
 export const GETVSPTICKETSTATUS_SUCCESS = "GETVSPTICKETSTATUS_SUCCESS";
 
-// TODO check if we need get ticket status, as dcrwallet makes this call.
-export const getVSPTicketStatus = (vsp, tickethash, passphrase="123") => async (dispatch) => {
+export const getVSPTicketsByFeeStatus = (feeStatus) => (dispatch, getState) => {
   dispatch({ type: GETVSPTICKETSTATUS_ATTEMPT });
-  try {
-    const timestamp = Math.trunc(new Date()/1000);
-    const request = JSON.stringify({
-      timestamp: timestamp,
-      tickethash: tickethash
+  wallet.getVSPTicketsByFeeStatus(getState().grpc.walletService, feeStatus)
+    .then(response => {
+      const failedTickets = response.getFailedTicketsHashesList();
+      dispatch({ type: GETVSPTICKETSTATUS_SUCCESS, vspTickets: response });
+       // TODO check for default vsp and retry with it.
+       // notify user about the failed tickets.
+       console.log(failedTickets);
+    })
+    .catch(err => {
+      dispatch({ type: GETVSPTICKETSTATUS_FAILED, err });
     });
-    const signature = await dispatch(getTicketSignature(tickethash, request, passphrase));
-    // host here needs "http://" or "https://". When sending it to dcrwallet it can not have.
-    const ticketStatus = await wallet.getVSPTicketStatus({ host: vsp.host, vspClientSig: signature, request });
-    dispatch({ type: GETVSPTICKETSTATUS_SUCCESS });
-    return ticketStatus;
-  } catch (error) {
-    dispatch({ error, type: GETVSPTICKETSTATUS_FAILED });
-  }
 };
 
 // getTicketSignature receives the tickethash and request and sign it using the

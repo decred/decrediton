@@ -6,7 +6,6 @@ import eq from "lodash/fp/eq";
 import {
   getNextAddressAttempt,
   publishUnminedTransactionsAttempt,
-  getVSPTicketsFailedToProcess
 } from "./ControlActions";
 import {
   transactionNtfnsStart,
@@ -15,7 +14,8 @@ import {
 import {
   refreshStakepoolPurchaseInformation,
   setStakePoolVoteChoices,
-  getStakepoolStats
+  getStakepoolStats,
+  getVSPTicketsByFeeStatus
 } from "./VSPActions";
 import { getStartupTransactions } from "./TransactionActions";
 import { getAccountMixerServiceAttempt } from "./AccountMixerActions";
@@ -31,7 +31,7 @@ import {
   EXTERNALREQUEST_DCRDATA,
   EXTERNALREQUEST_POLITEIA
 } from "main_dev/externalRequests";
-import { TESTNET, MAINNET } from "constants";
+import { TESTNET, MAINNET, VSP_FEE_ERRORED } from "constants";
 
 export const goToTransactionHistory = () => (dispatch) => {
   dispatch(pushHistory("/transactions/history"));
@@ -74,7 +74,7 @@ const startWalletServicesTrigger = () => (dispatch, getState) =>
       await dispatch(getStartupWalletInfo());
       await dispatch(transactionNtfnsStart());
       await dispatch(accountNtfnsStart());
-      await dispatch(getVSPTicketsFailedToProcess());
+      await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_ERRORED));
       // await dispatch(pushHistory("/home"));
     };
 

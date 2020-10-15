@@ -69,8 +69,6 @@ goog.exportSymbol('proto.walletrpc.DecodedTransaction.Output.ScriptClass', null,
 goog.exportSymbol('proto.walletrpc.DetachedBlockDetails', null, global);
 goog.exportSymbol('proto.walletrpc.DiscoverAddressesRequest', null, global);
 goog.exportSymbol('proto.walletrpc.DiscoverAddressesResponse', null, global);
-goog.exportSymbol('proto.walletrpc.FailedVSPTicketsProcessRequest', null, global);
-goog.exportSymbol('proto.walletrpc.FailedVSPTicketsProcessResponse', null, global);
 goog.exportSymbol('proto.walletrpc.FetchHeadersNotification', null, global);
 goog.exportSymbol('proto.walletrpc.FetchHeadersRequest', null, global);
 goog.exportSymbol('proto.walletrpc.FetchHeadersResponse', null, global);
@@ -102,6 +100,8 @@ goog.exportSymbol('proto.walletrpc.GetTransactionRequest', null, global);
 goog.exportSymbol('proto.walletrpc.GetTransactionResponse', null, global);
 goog.exportSymbol('proto.walletrpc.GetTransactionsRequest', null, global);
 goog.exportSymbol('proto.walletrpc.GetTransactionsResponse', null, global);
+goog.exportSymbol('proto.walletrpc.GetVSPTicketsByFeeStatusRequest', null, global);
+goog.exportSymbol('proto.walletrpc.GetVSPTicketsByFeeStatusResponse', null, global);
 goog.exportSymbol('proto.walletrpc.ImportPrivateKeyRequest', null, global);
 goog.exportSymbol('proto.walletrpc.ImportPrivateKeyResponse', null, global);
 goog.exportSymbol('proto.walletrpc.ImportScriptRequest', null, global);
@@ -41240,12 +41240,12 @@ proto.walletrpc.SyncVSPTicketsResponse.serializeBinaryToWriter = function(messag
  * @extends {jspb.Message}
  * @constructor
  */
-proto.walletrpc.FailedVSPTicketsProcessRequest = function(opt_data) {
+proto.walletrpc.GetVSPTicketsByFeeStatusRequest = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
-goog.inherits(proto.walletrpc.FailedVSPTicketsProcessRequest, jspb.Message);
+goog.inherits(proto.walletrpc.GetVSPTicketsByFeeStatusRequest, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
-  proto.walletrpc.FailedVSPTicketsProcessRequest.displayName = 'proto.walletrpc.FailedVSPTicketsProcessRequest';
+  proto.walletrpc.GetVSPTicketsByFeeStatusRequest.displayName = 'proto.walletrpc.GetVSPTicketsByFeeStatusRequest';
 }
 
 
@@ -41260,8 +41260,8 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-proto.walletrpc.FailedVSPTicketsProcessRequest.prototype.toObject = function(opt_includeInstance) {
-  return proto.walletrpc.FailedVSPTicketsProcessRequest.toObject(opt_includeInstance, this);
+proto.walletrpc.GetVSPTicketsByFeeStatusRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.GetVSPTicketsByFeeStatusRequest.toObject(opt_includeInstance, this);
 };
 
 
@@ -41270,13 +41270,13 @@ proto.walletrpc.FailedVSPTicketsProcessRequest.prototype.toObject = function(opt
  * @param {boolean|undefined} includeInstance Whether to include the JSPB
  *     instance for transitional soy proto support:
  *     http://goto/soy-param-migration
- * @param {!proto.walletrpc.FailedVSPTicketsProcessRequest} msg The msg instance to transform.
+ * @param {!proto.walletrpc.GetVSPTicketsByFeeStatusRequest} msg The msg instance to transform.
  * @return {!Object}
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.walletrpc.FailedVSPTicketsProcessRequest.toObject = function(includeInstance, msg) {
+proto.walletrpc.GetVSPTicketsByFeeStatusRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-
+    feeStatus: jspb.Message.getFieldWithDefault(msg, 1, 0)
   };
 
   if (includeInstance) {
@@ -41290,29 +41290,33 @@ proto.walletrpc.FailedVSPTicketsProcessRequest.toObject = function(includeInstan
 /**
  * Deserializes binary data (in protobuf wire format).
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.walletrpc.FailedVSPTicketsProcessRequest}
+ * @return {!proto.walletrpc.GetVSPTicketsByFeeStatusRequest}
  */
-proto.walletrpc.FailedVSPTicketsProcessRequest.deserializeBinary = function(bytes) {
+proto.walletrpc.GetVSPTicketsByFeeStatusRequest.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.walletrpc.FailedVSPTicketsProcessRequest;
-  return proto.walletrpc.FailedVSPTicketsProcessRequest.deserializeBinaryFromReader(msg, reader);
+  var msg = new proto.walletrpc.GetVSPTicketsByFeeStatusRequest;
+  return proto.walletrpc.GetVSPTicketsByFeeStatusRequest.deserializeBinaryFromReader(msg, reader);
 };
 
 
 /**
  * Deserializes binary data (in protobuf wire format) from the
  * given reader into the given message object.
- * @param {!proto.walletrpc.FailedVSPTicketsProcessRequest} msg The message object to deserialize into.
+ * @param {!proto.walletrpc.GetVSPTicketsByFeeStatusRequest} msg The message object to deserialize into.
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.walletrpc.FailedVSPTicketsProcessRequest}
+ * @return {!proto.walletrpc.GetVSPTicketsByFeeStatusRequest}
  */
-proto.walletrpc.FailedVSPTicketsProcessRequest.deserializeBinaryFromReader = function(msg, reader) {
+proto.walletrpc.GetVSPTicketsByFeeStatusRequest.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setFeeStatus(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -41326,9 +41330,9 @@ proto.walletrpc.FailedVSPTicketsProcessRequest.deserializeBinaryFromReader = fun
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.walletrpc.FailedVSPTicketsProcessRequest.prototype.serializeBinary = function() {
+proto.walletrpc.GetVSPTicketsByFeeStatusRequest.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  proto.walletrpc.FailedVSPTicketsProcessRequest.serializeBinaryToWriter(this, writer);
+  proto.walletrpc.GetVSPTicketsByFeeStatusRequest.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
 
@@ -41336,12 +41340,34 @@ proto.walletrpc.FailedVSPTicketsProcessRequest.prototype.serializeBinary = funct
 /**
  * Serializes the given message to binary data (in protobuf wire
  * format), writing to the given BinaryWriter.
- * @param {!proto.walletrpc.FailedVSPTicketsProcessRequest} message
+ * @param {!proto.walletrpc.GetVSPTicketsByFeeStatusRequest} message
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.walletrpc.FailedVSPTicketsProcessRequest.serializeBinaryToWriter = function(message, writer) {
+proto.walletrpc.GetVSPTicketsByFeeStatusRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
+  f = message.getFeeStatus();
+  if (f !== 0) {
+    writer.writeInt32(
+      1,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional int32 fee_status = 1;
+ * @return {number}
+ */
+proto.walletrpc.GetVSPTicketsByFeeStatusRequest.prototype.getFeeStatus = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.GetVSPTicketsByFeeStatusRequest.prototype.setFeeStatus = function(value) {
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -41356,19 +41382,19 @@ proto.walletrpc.FailedVSPTicketsProcessRequest.serializeBinaryToWriter = functio
  * @extends {jspb.Message}
  * @constructor
  */
-proto.walletrpc.FailedVSPTicketsProcessResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.walletrpc.FailedVSPTicketsProcessResponse.repeatedFields_, null);
+proto.walletrpc.GetVSPTicketsByFeeStatusResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.walletrpc.GetVSPTicketsByFeeStatusResponse.repeatedFields_, null);
 };
-goog.inherits(proto.walletrpc.FailedVSPTicketsProcessResponse, jspb.Message);
+goog.inherits(proto.walletrpc.GetVSPTicketsByFeeStatusResponse, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
-  proto.walletrpc.FailedVSPTicketsProcessResponse.displayName = 'proto.walletrpc.FailedVSPTicketsProcessResponse';
+  proto.walletrpc.GetVSPTicketsByFeeStatusResponse.displayName = 'proto.walletrpc.GetVSPTicketsByFeeStatusResponse';
 }
 /**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
  * @const
  */
-proto.walletrpc.FailedVSPTicketsProcessResponse.repeatedFields_ = [1];
+proto.walletrpc.GetVSPTicketsByFeeStatusResponse.repeatedFields_ = [1];
 
 
 
@@ -41383,8 +41409,8 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-proto.walletrpc.FailedVSPTicketsProcessResponse.prototype.toObject = function(opt_includeInstance) {
-  return proto.walletrpc.FailedVSPTicketsProcessResponse.toObject(opt_includeInstance, this);
+proto.walletrpc.GetVSPTicketsByFeeStatusResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.GetVSPTicketsByFeeStatusResponse.toObject(opt_includeInstance, this);
 };
 
 
@@ -41393,11 +41419,11 @@ proto.walletrpc.FailedVSPTicketsProcessResponse.prototype.toObject = function(op
  * @param {boolean|undefined} includeInstance Whether to include the JSPB
  *     instance for transitional soy proto support:
  *     http://goto/soy-param-migration
- * @param {!proto.walletrpc.FailedVSPTicketsProcessResponse} msg The msg instance to transform.
+ * @param {!proto.walletrpc.GetVSPTicketsByFeeStatusResponse} msg The msg instance to transform.
  * @return {!Object}
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.walletrpc.FailedVSPTicketsProcessResponse.toObject = function(includeInstance, msg) {
+proto.walletrpc.GetVSPTicketsByFeeStatusResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
     failedTicketsHashesList: msg.getFailedTicketsHashesList_asB64()
   };
@@ -41413,23 +41439,23 @@ proto.walletrpc.FailedVSPTicketsProcessResponse.toObject = function(includeInsta
 /**
  * Deserializes binary data (in protobuf wire format).
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.walletrpc.FailedVSPTicketsProcessResponse}
+ * @return {!proto.walletrpc.GetVSPTicketsByFeeStatusResponse}
  */
-proto.walletrpc.FailedVSPTicketsProcessResponse.deserializeBinary = function(bytes) {
+proto.walletrpc.GetVSPTicketsByFeeStatusResponse.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.walletrpc.FailedVSPTicketsProcessResponse;
-  return proto.walletrpc.FailedVSPTicketsProcessResponse.deserializeBinaryFromReader(msg, reader);
+  var msg = new proto.walletrpc.GetVSPTicketsByFeeStatusResponse;
+  return proto.walletrpc.GetVSPTicketsByFeeStatusResponse.deserializeBinaryFromReader(msg, reader);
 };
 
 
 /**
  * Deserializes binary data (in protobuf wire format) from the
  * given reader into the given message object.
- * @param {!proto.walletrpc.FailedVSPTicketsProcessResponse} msg The message object to deserialize into.
+ * @param {!proto.walletrpc.GetVSPTicketsByFeeStatusResponse} msg The message object to deserialize into.
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.walletrpc.FailedVSPTicketsProcessResponse}
+ * @return {!proto.walletrpc.GetVSPTicketsByFeeStatusResponse}
  */
-proto.walletrpc.FailedVSPTicketsProcessResponse.deserializeBinaryFromReader = function(msg, reader) {
+proto.walletrpc.GetVSPTicketsByFeeStatusResponse.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
@@ -41453,9 +41479,9 @@ proto.walletrpc.FailedVSPTicketsProcessResponse.deserializeBinaryFromReader = fu
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.walletrpc.FailedVSPTicketsProcessResponse.prototype.serializeBinary = function() {
+proto.walletrpc.GetVSPTicketsByFeeStatusResponse.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  proto.walletrpc.FailedVSPTicketsProcessResponse.serializeBinaryToWriter(this, writer);
+  proto.walletrpc.GetVSPTicketsByFeeStatusResponse.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
 
@@ -41463,11 +41489,11 @@ proto.walletrpc.FailedVSPTicketsProcessResponse.prototype.serializeBinary = func
 /**
  * Serializes the given message to binary data (in protobuf wire
  * format), writing to the given BinaryWriter.
- * @param {!proto.walletrpc.FailedVSPTicketsProcessResponse} message
+ * @param {!proto.walletrpc.GetVSPTicketsByFeeStatusResponse} message
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.walletrpc.FailedVSPTicketsProcessResponse.serializeBinaryToWriter = function(message, writer) {
+proto.walletrpc.GetVSPTicketsByFeeStatusResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getFailedTicketsHashesList_asU8();
   if (f.length > 0) {
@@ -41483,7 +41509,7 @@ proto.walletrpc.FailedVSPTicketsProcessResponse.serializeBinaryToWriter = functi
  * repeated bytes failed_tickets_hashes = 1;
  * @return {!(Array<!Uint8Array>|Array<string>)}
  */
-proto.walletrpc.FailedVSPTicketsProcessResponse.prototype.getFailedTicketsHashesList = function() {
+proto.walletrpc.GetVSPTicketsByFeeStatusResponse.prototype.getFailedTicketsHashesList = function() {
   return /** @type {!(Array<!Uint8Array>|Array<string>)} */ (jspb.Message.getRepeatedField(this, 1));
 };
 
@@ -41493,7 +41519,7 @@ proto.walletrpc.FailedVSPTicketsProcessResponse.prototype.getFailedTicketsHashes
  * This is a type-conversion wrapper around `getFailedTicketsHashesList()`
  * @return {!Array<string>}
  */
-proto.walletrpc.FailedVSPTicketsProcessResponse.prototype.getFailedTicketsHashesList_asB64 = function() {
+proto.walletrpc.GetVSPTicketsByFeeStatusResponse.prototype.getFailedTicketsHashesList_asB64 = function() {
   return /** @type {!Array<string>} */ (jspb.Message.bytesListAsB64(
       this.getFailedTicketsHashesList()));
 };
@@ -41506,14 +41532,14 @@ proto.walletrpc.FailedVSPTicketsProcessResponse.prototype.getFailedTicketsHashes
  * This is a type-conversion wrapper around `getFailedTicketsHashesList()`
  * @return {!Array<!Uint8Array>}
  */
-proto.walletrpc.FailedVSPTicketsProcessResponse.prototype.getFailedTicketsHashesList_asU8 = function() {
+proto.walletrpc.GetVSPTicketsByFeeStatusResponse.prototype.getFailedTicketsHashesList_asU8 = function() {
   return /** @type {!Array<!Uint8Array>} */ (jspb.Message.bytesListAsU8(
       this.getFailedTicketsHashesList()));
 };
 
 
 /** @param {!(Array<!Uint8Array>|Array<string>)} value */
-proto.walletrpc.FailedVSPTicketsProcessResponse.prototype.setFailedTicketsHashesList = function(value) {
+proto.walletrpc.GetVSPTicketsByFeeStatusResponse.prototype.setFailedTicketsHashesList = function(value) {
   jspb.Message.setField(this, 1, value || []);
 };
 
@@ -41522,12 +41548,12 @@ proto.walletrpc.FailedVSPTicketsProcessResponse.prototype.setFailedTicketsHashes
  * @param {!(string|Uint8Array)} value
  * @param {number=} opt_index
  */
-proto.walletrpc.FailedVSPTicketsProcessResponse.prototype.addFailedTicketsHashes = function(value, opt_index) {
+proto.walletrpc.GetVSPTicketsByFeeStatusResponse.prototype.addFailedTicketsHashes = function(value, opt_index) {
   jspb.Message.addToRepeatedField(this, 1, value, opt_index);
 };
 
 
-proto.walletrpc.FailedVSPTicketsProcessResponse.prototype.clearFailedTicketsHashesList = function() {
+proto.walletrpc.GetVSPTicketsByFeeStatusResponse.prototype.clearFailedTicketsHashesList = function() {
   this.setFailedTicketsHashesList([]);
 };
 

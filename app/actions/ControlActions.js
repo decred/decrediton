@@ -768,22 +768,3 @@ export const startTicketBuyerV2Attempt = (
     });
   });
 };
-
-export const GETVSPTICKETSFAILED_ATTEMPT = "GETVSPTICKETSFAILED_ATTEMPT";
-export const GETVSPTICKETSFAILED_SUCCESS = "GETVSPTICKETSFAILED_SUCCESS";
-export const GETVSPTICKETSFAILED_FAILED = "GETVSPTICKETSFAILED_FAILED";
-
-export const getVSPTicketsFailedToProcess = () => (dispatch, getState) => {
-  dispatch({ type: GETVSPTICKETSFAILED_ATTEMPT });
-  wallet.failedVSPTicketsProcess(getState().grpc.walletService)
-    .then(response => {
-      const failedTickets = response.getFailedTicketsHashesList();
-      dispatch({ type: GETVSPTICKETSFAILED_SUCCESS, ticketsFailed: response });
-       // TODO check for default vsp and retry with it.
-       // notify user about the failed tickets.
-       console.log(failedTickets);
-    })
-    .catch(err => {
-      dispatch({ type: GETVSPTICKETSFAILED_FAILED, err });
-    });
-};
