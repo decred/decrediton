@@ -10,7 +10,6 @@ export { default as service } from "./service"; // TODO: hook already exists in 
 export { default as snackbar } from "./snackbar";
 export { default as stakeInfo } from "./stakeInfo";
 export { default as ticketAutoBuyer } from "./ticketAutoBuyer";
-export { default as ticketsList } from "./ticketsList";
 export { default as ticketsOverview } from "./ticketsOverview";
 export { default as transactionLink } from "./transactionLink";
 export { default as walletError } from "./walletError";
