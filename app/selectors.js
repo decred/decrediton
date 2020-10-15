@@ -320,7 +320,15 @@ export const ticketNormalizer = createSelector(
   [network, accounts, chainParams, txURLBuilder, blockURLBuilder],
   (network, accounts, chainParams, txURLBuilder, blockURLBuilder) => {
     return (ticket) => {
-      const { txType, status, spender, blockHash, rawTx, isStake, timestamp } = ticket;
+      const {
+        txType,
+        status,
+        spender,
+        blockHash,
+        rawTx,
+        isStake,
+        timestamp
+      } = ticket;
       // TODO refactor same code to be used in tickets and regular tx normalizers.
       const findAccount = (num) =>
         accounts.find((account) => account.getAccountNumber() === num);
@@ -1015,19 +1023,6 @@ export const verifyMessageSuccess = compose(
   (r) => (r ? r.toObject() : null),
   verifyMessageResponse
 );
-export const validateAddressRequestAttempt = get([
-  "control",
-  "validateAddressRequestAttempt"
-]);
-export const validateAddressError = get(["control", "validateAddressError"]);
-export const validateAddressResponse = get([
-  "control",
-  "validateAddressResponse"
-]);
-export const validateAddressSuccess = compose(
-  (r) => (r ? r.toObject() : null),
-  validateAddressResponse
-);
 
 const getStakeInfoResponse = get(["grpc", "getStakeInfoResponse"]);
 
@@ -1507,9 +1502,7 @@ export const trezorWalletCreationMasterPubkeyAttempt = get([
   "walletCreationMasterPubkeyAttempt"
 ]);
 
-export const lnEnabled = bool(
-  and(not(isWatchingOnly), not(isTrezor))
-);
+export const lnEnabled = bool(and(not(isWatchingOnly), not(isTrezor)));
 export const lnActive = bool(get(["ln", "active"]));
 export const lnStartupStage = get(["ln", "startupStage"]);
 export const lnStartAttempt = bool(get(["ln", "startAttempt"]));

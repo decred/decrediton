@@ -32,13 +32,17 @@ const SignMessage = ({ location, intl }) => {
 
   const onChangeAddress = async (address) => {
     setAddress(address);
-    if (address == "") {
+    if (address === "") {
       setAddressError("Please enter an address");
       return;
     }
     try {
       const resp = await onValidateAddress(address);
-      setAddressError(!resp.getIsValid() ? "Please enter a valid address" : null);
+      setAddressError(
+        !resp.getIsValid() || !resp.isMine
+          ? "Please enter a valid address owned by you"
+          : null
+      );
     } catch (e) {
       setAddressError("Error: Address validation failed, please try again");
     }
@@ -46,7 +50,7 @@ const SignMessage = ({ location, intl }) => {
 
   const onChangeMessage = (msg) => {
     setMessage(msg);
-    if (msg == "") {
+    if (msg === "") {
       setMessageError("Please enter a message");
     } else {
       setMessageError(null);
