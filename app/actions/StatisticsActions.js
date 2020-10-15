@@ -1323,7 +1323,7 @@ export const ticketStats = (opts) => (dispatch, getState) => {
           ? tsDate(ticket.leaveTimestamp)
           : null,
         status: ticket.status,
-        ticketHash: ticket.hash,
+        ticketHash: ticket.ticketHash,
         spenderHash: ticket.spenderHash,
         sentAmount: ticket.ticketInvestment,
         returnedAmount: ticket.ticketReturnAmount

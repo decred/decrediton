@@ -14,7 +14,7 @@ import {
   createSelectorEager as createSelector
 } from "./fp";
 import { appLocaleFromElectronLocale } from "./i18n/locales";
-import { reverseHash } from "./helpers/byteActions";
+import { reverseHash, reverseRawHash } from "./helpers/byteActions";
 import { MainNetParams, TestNetParams } from "constants";
 import { decodeVoteScript } from "./helpers/tickets";
 import {
@@ -331,6 +331,7 @@ export const ticketNormalizer = createSelector(
       const hasSpender = spender && spender.getHash();
       const isVote = status === VOTED;
       const isPending = !timestamp;
+      const ticketHash = reverseRawHash(ticket.ticket.getHash());
       const ticketTx = ticket.ticket;
       const spenderTx = hasSpender ? spender : null;
       const txBlockHash = blockHash
@@ -486,6 +487,7 @@ export const ticketNormalizer = createSelector(
         txHash,
         txBlockHash,
         spenderHash,
+        ticketHash,
         ticketTx,
         spenderTx,
         ticketPrice,

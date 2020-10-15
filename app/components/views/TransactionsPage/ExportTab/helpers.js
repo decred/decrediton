@@ -362,6 +362,15 @@ export const messages = {
     ),
     fields: [
       {
+        name: "time",
+        description: (
+          <T
+            id="export.tickets.fields.time"
+            m="Date/Time of ticket purchase."
+          />
+        )
+      },
+      {
         name: "spenderTimestamp",
         description: (
           <T
