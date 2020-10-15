@@ -40,6 +40,10 @@ const Tickets = ({ toggleIsLegacy }) => {
     increment ? setNumTickets(numTickets + 1) : setNumTickets(numTickets -1);
   };
 
+  const onV3PurchaseTicket = (passphrase) => {
+    onPurchaseTicketV3(passphrase, account, numTickets, vsp);
+  };
+
   useEffect(() => {
     const { spendable } = account;
     const canAfford = numTickets * ticketPrice <= spendable;
@@ -73,7 +77,7 @@ const Tickets = ({ toggleIsLegacy }) => {
       toggleIsLegacy,
       availableVSPs,
       setVSP,
-      onPurchaseTicketV3,
+      onV3PurchaseTicket,
       vsp
     }} />;
 };

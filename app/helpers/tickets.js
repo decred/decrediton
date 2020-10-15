@@ -75,6 +75,14 @@ export function decodeVoteScript(network, outputScript) {
           choices: { 0x02: "no", 0x04: "yes" },
           defaultChoice: "abstain"
         }
+      ],
+      9: [
+        {
+          mask: 0x06,
+          name: "DCP0006",
+          choices: { 0x02: "no", 0x04: "yes" },
+          defaultChoice: "abstain"
+        }
       ]
     },
     mainnet: {
@@ -112,6 +120,14 @@ export function decodeVoteScript(network, outputScript) {
         {
           mask: 0x06,
           name: "DCP0005",
+          choices: { 0x02: "no", 0x04: "yes" },
+          defaultChoice: "abstain"
+        }
+      ],
+      8: [
+        {
+          mask: 0x06,
+          name: "DCP0006",
           choices: { 0x02: "no", 0x04: "yes" },
           defaultChoice: "abstain"
         }
