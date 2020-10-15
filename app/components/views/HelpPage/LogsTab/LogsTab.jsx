@@ -53,17 +53,10 @@ const LogsTabBody = ({ setInterval, clearInterval }) => {
       getDecreditonLogs(),
       getDcrlndLogs()
     ]);
-    console.log({
-      rawDcrdLogs,
-      rawDcrwalletLogs,
-      decreditonLogsNew,
-      rawDcrlndLogs
-    });
     const dcrdLogsNew = Buffer.from(rawDcrdLogs).toString("utf8");
     const dcrwalletLogsNew = Buffer.from(rawDcrwalletLogs).toString("utf8");
     const dcrlndLogsNew = Buffer.from(rawDcrlndLogs).toString("utf8");
     if (dcrdLogsNew !== dcrdLogs) {
-      console.log(1111111);
       setDcrdLogs(dcrdLogsNew);
     }
     if (dcrwalletLogsNew !== dcrwalletLogs) {
@@ -81,7 +74,7 @@ const LogsTabBody = ({ setInterval, clearInterval }) => {
     if (interval) {
       return;
     }
-
+    getLogs();
     const int = setInterval(() => getLogs(), 2000);
     setIntervalState(int);
 
@@ -114,11 +107,10 @@ const LogsTabBody = ({ setInterval, clearInterval }) => {
         isDaemonStarted,
         lnActive,
         lnStartAttempt,
-        
-dcrdLogs,
-dcrwalletLogs,
-      decreditonLogs,
-      dcrlndLogs,
+        dcrdLogs,
+        dcrwalletLogs,
+        decreditonLogs,
+        dcrlndLogs,
         showDcrdLogs,
         showDcrwalletLogs,
         showDecreditonLogs,
