@@ -66,13 +66,6 @@
   padding: 40px 40px 10px 40px;
 }
 
-.groupTitle {
-  font-size: 20px;
-  line-height: 28px;
-  color: var(--vote-abstain-color);
-  margin-bottom: 14px;
-}
-
 .columnWrapper {
   padding: 20px 40px;
   display: flex;

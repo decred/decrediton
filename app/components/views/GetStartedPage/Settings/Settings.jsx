@@ -52,9 +52,9 @@ const SetttingsForm = ({ onSendBack }) => {
         <Subtitle title={<T id="settings.subtitle" m="Settings" />} />
         <div className={styles.wrapper}>
           <div className={styles.group}>
-            <div className={styles.groupTitle}>
+            <Subtitle title={
               <T id="settings.group-title.connectivity" m="Connectivity" />
-            </div>
+            } />
             <div className={styles.columnWrapper}>
               <div className={styles.column}>
                 <NetworkSettings
@@ -71,9 +71,9 @@ const SetttingsForm = ({ onSendBack }) => {
           </div>
 
           <div className={classNames(styles.group, styles.general)}>
-            <div className={styles.groupTitle}>
+            <Subtitle title={
               <T id="settings.group-title.general" m="General" />
-            </div>
+            } />
             <div className={styles.columnWrapper}>
               <div className={styles.column}>
                 <UISettings
@@ -87,12 +87,12 @@ const SetttingsForm = ({ onSendBack }) => {
           </div>
 
           <div className={classNames(styles.group, styles.privacy)}>
-            <div className={styles.groupTitle}>
+            <Subtitle title={
               <T
                 id="settings.group-title.privacy-and-security"
                 m="Privacy and Security"
               />
-            </div>
+            } />
             <div className={styles.columnWrapper}>
                 <PrivacySettings
                   {...{
