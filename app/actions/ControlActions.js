@@ -346,6 +346,60 @@ export const purchaseTicketsAttempt = (
   }
 };
 
+export const newPurchaseTicketsAttempt = (
+  passphrase,
+  accountNum,
+  numTickets,
+  vsp
+) => async (dispatch, getState) => {
+  console.log("safsdf")
+  try {
+    const currentBlockHeight = sel.currentBlockHeight(getState());
+    const walletService = sel.walletService(getState());
+    const dontSignTx = sel.isWatchingOnly(getState());
+
+    dispatch({ numTicketsToBuy: numTickets, type: PURCHASETICKETS_ATTEMPT });
+
+    const stakePoolStats = await wallet.getStakePoolStats(stakepool.Host);
+
+    if (stakePoolStats.data.data.PoolStatus == "Closed") {
+      throw new Error(
+        "Unable to purchase a ticket from a closed VSP (" + stakepool.Host + ")"
+      );
+    }
+
+    if (!dontSignTx) {
+      // If we need to sign the tx, we re-import the script to ensure the
+      // wallet will control the ticket.
+      const importScriptResponse = await dispatch(
+        importScriptAttempt(stakepool.Script)
+      );
+      if (importScriptResponse.getP2shAddress() !== stakepool.TicketAddress) {
+        throw new Error(
+          "Trying to use a ticket address not corresponding to script"
+        );
+      }
+    }
+
+    const purchaseTicketsResponse = await wallet.purchaseTicketsV3(
+      walletService,
+      passphrase,
+      accountNum,
+      !dontSignTx,
+      vsp
+    );
+    if (dontSignTx) {
+      return dispatch({
+        purchaseTicketsResponse,
+        type: CREATE_UNSIGNEDTICKETS_SUCCESS
+      });
+    }
+    dispatch({ purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
+  } catch (error) {
+    dispatch({ error, type: PURCHASETICKETS_FAILED });
+  }
+};
+
 export const REVOKETICKETS_ATTEMPT = "REVOKETICKETS_ATTEMPT";
 export const REVOKETICKETS_FAILED = "REVOKETICKETS_FAILED";
 export const REVOKETICKETS_SUCCESS = "REVOKETICKETS_SUCCESS";

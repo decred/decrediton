@@ -144,6 +144,30 @@ export const purchaseTickets = (
     );
   });
 
+  export const purchaseTicketsV3 = (
+    walletService,
+    passphrase,
+    accountNum,
+    numTickets,
+    signTx,
+    vsp
+  ) =>
+    new Promise((ok, fail) => {
+      const request = new api.PurchaseTicketsRequest();
+      signTx && request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
+      request.setAccount(accountNum);
+      request.setNumTickets(numTickets);
+      request.setDontSignTx(!signTx);
+      if (vsp) {
+        const { pubkey, host } = vsp;
+        request.setVspPubkey(pubkey);
+        request.setVspHost(host);
+      }
+      walletService.purchaseTickets(request, (err, res) =>
+        err ? fail(err) : ok(res)
+      );
+    });
+  
 export const revokeTickets = (walletService, passphrase) =>
   new Promise((ok, fail) => {
     const request = new api.RevokeTicketsRequest();

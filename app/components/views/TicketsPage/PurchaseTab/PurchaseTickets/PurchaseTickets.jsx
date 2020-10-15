@@ -17,7 +17,8 @@ const Tickets = ({ toggleIsLegacy }) => {
     // availableVSPsError,
     defaultSpendingAccount,
     ticketPrice,
-    getVSPTicketsByFeeStatus
+    getVSPTicketsByFeeStatus,
+    onPurchaseTicketV3
   } = usePurchaseTab();
 
   const [account, setAccount] = useState(defaultSpendingAccount);
@@ -72,6 +73,7 @@ const Tickets = ({ toggleIsLegacy }) => {
       toggleIsLegacy,
       availableVSPs,
       setVSP,
+      onPurchaseTicketV3,
       vsp
     }} />;
 };

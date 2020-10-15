@@ -19,7 +19,7 @@ const PurchaseTicketsForm = ({
   ticketPrice,
   isWatchingOnly,
   setVSP,
-  onPurchaseTickets,
+  onPurchaseTicketV3,
   onRevokeTickets,
   availableVSPs
 }) => (
@@ -98,7 +98,7 @@ const PurchaseTicketsForm = ({
         buttonLabel={<T id="purchaseTickets.revokeBtn" m="Revoke" />}
       />
       {isWatchingOnly ? (
-        <KeyBlueButton disabled={!isValid} onClick={onPurchaseTickets}>
+        <KeyBlueButton disabled={!isValid} onClick={onPurchaseTicketV3}>
           {purchaseLabel()}
         </KeyBlueButton>
       ) : (
@@ -110,7 +110,7 @@ const PurchaseTicketsForm = ({
             />
           }
           disabled={!isValid}
-          onSubmit={onPurchaseTickets}
+          onSubmit={onPurchaseTicketV3}
           buttonLabel={purchaseLabel()}
         />
       )}
