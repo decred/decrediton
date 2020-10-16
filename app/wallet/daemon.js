@@ -203,6 +203,8 @@ export const getAvailableWallets = log(
   logOptionNoResponseData()
 );
 
+export const getDcrwalletGrpcKeyCert = () => ipcRenderer.sendSync("get-dcrwallet-grpc-cert-key");
+
 export const reloadAllowedExternalRequests = log(
   () =>
     Promise.resolve(ipcRenderer.sendSync("reload-allowed-external-request")),

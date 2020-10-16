@@ -4,9 +4,9 @@ const messages = require("../middleware/walletrpc/api_pb");
 import { withLog as log } from "./index";
 
 export const getVersionService = log(
-  (network, walletPath, address, port) =>
+  (network, walletPath, address, port, grpckey, grpccert) =>
     new Promise((resolve, reject) =>
-      getService(network, walletPath, address, port, (versionService, error) =>
+      getService(network, walletPath, address, port, grpckey, grpccert, (versionService, error) =>
         error ? reject(error) : resolve(versionService)
       )
     ),

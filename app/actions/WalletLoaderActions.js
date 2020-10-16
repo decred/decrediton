@@ -5,7 +5,8 @@ import {
   openWallet,
   closeWallet,
   getStakePoolInfo,
-  rescanPoint
+  rescanPoint,
+  getDcrwalletGrpcKeyCert
 } from "wallet";
 import * as wallet from "wallet";
 import { rescanCancel, ticketBuyerCancel } from "./ControlActions";
@@ -47,11 +48,14 @@ export const loaderRequest = () => (dispatch, getState) =>
       const {
         daemon: { walletName }
       } = getState();
+      const grpcCertAndKey = getDcrwalletGrpcKeyCert();
       const request = {
         isTestNet: isTestNet(getState()),
         walletName,
         address,
-        port
+        port,
+        cert: grpcCertAndKey,
+        key: grpcCertAndKey
       };
       dispatch({ request, type: LOADER_ATTEMPT });
       try {
@@ -81,8 +85,9 @@ export const getWalletSeedService = () => (dispatch, getState) => {
     daemon: { walletName }
   } = getState();
   dispatch({ type: GETWALLETSEEDSVC_ATTEMPT });
+  const grpcCertAndKey = getDcrwalletGrpcKeyCert();
   return wallet
-    .getSeedService(isTestNet(getState()), walletName, address, port)
+    .getSeedService(isTestNet(getState()), walletName, address, port, grpcCertAndKey, grpcCertAndKey)
     .then((seedService) => {
       dispatch({ seedService, type: GETWALLETSEEDSVC_SUCCESS });
     })

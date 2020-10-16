@@ -41,7 +41,8 @@ import {
   getSelectedWallet,
   GetDcrlndPID,
   GetDcrlndCreds,
-  dropDCRDSocket
+  dropDCRDSocket,
+  getDcrwalletGrpcKeyCert
 } from "./main_dev/launch";
 import {
   getAvailableWallets,
@@ -477,6 +478,10 @@ ipcMain.on("set-selected-wallet", (event, wallet) => {
 
 ipcMain.on("get-dcrd-rpc-credentials", (event) => {
   event.returnValue = getDcrdRpcCredentials();
+});
+
+ipcMain.on("get-dcrwallet-grpc-cert-key", (event) => {
+  event.returnValue = getDcrwalletGrpcKeyCert();
 });
 
 ipcMain.on("set-previous-wallet", (event, cfg) => {

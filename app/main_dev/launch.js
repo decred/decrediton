@@ -43,9 +43,11 @@ let dcrdPID, dcrwPID, dcrlndPID;
 // windows-only stuff
 let dcrwPipeRx, dcrwPipeTx, dcrdPipeRx, dcrwTxStream;
 
+// general data that needs to keep consistency while decrediton is running.
 let dcrwPort;
 let rpcuser, rpcpass, rpccert, rpchost, rpcport;
 let dcrlndCreds;
+let dcrwalletGrpcKeyCert;
 
 let dcrdSocket,
   heightIsSynced,
@@ -94,6 +96,16 @@ export const setSelectedWallet = (w) => {
 };
 
 export const getSelectedWallet = () => selectedWallet;
+
+export const getDcrwalletGrpcKeyCert = () => dcrwalletGrpcKeyCert;
+
+export const setDcrwalletGrpcKeyCert = (grpcKeyCert) => {
+  if (!Buffer.isBuffer(grpcKeyCert)) {
+    logger.log("error", "Error getting grpc key and cert from dcrwallet, " +
+     "grpc key and cert value: " + grpcKeyCert);
+  }
+  dcrwalletGrpcKeyCert = grpcKeyCert;
+};
 
 export function closeDCRD() {
   if (dcrdPID === -1) {
@@ -533,8 +545,10 @@ export const launchDCRWallet = (
     : "";
   let args = [confFile];
 
+  // add needed dcrwallet flags
   args.push("--gaplimit=" + cfg.get("gaplimit"));
-
+  args.push("--authtype=clientcert");
+  args.push("--issueclientcert");
   const dcrwExe = getExecutablePath("dcrwallet", argv.custombinpath);
   if (!fs.existsSync(dcrwExe)) {
     logger.log(
@@ -564,6 +578,11 @@ export const launchDCRWallet = (
             "GRPC port not found on IPC channel to dcrwallet: " + intf
           );
         }
+      }
+      if (mtype === "issuedclientcertificate") {
+        logger.log("info", "wallet grpc cert registered");
+        // store dcrwallet grpc cert and key.
+        setDcrwalletGrpcKeyCert(payload);
       }
     });
 

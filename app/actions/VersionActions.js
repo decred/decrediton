@@ -1,6 +1,6 @@
 // @flow
 import { loaderRequest, getWalletSeedService } from "./WalletLoaderActions";
-import { getVersionService, getVersionResponse } from "wallet";
+import { getVersionService, getVersionResponse, getDcrwalletGrpcKeyCert } from "wallet";
 import { push as pushHistory } from "connected-react-router";
 import { ipcRenderer } from "electron";
 import { isTestNet } from "selectors";
@@ -19,12 +19,15 @@ export const getVersionServiceAttempt = () => (dispatch, getState) =>
       const {
         daemon: { walletName }
       } = getState();
+      const grpcCertAndKey = getDcrwalletGrpcKeyCert();
       try {
         const versionService = await getVersionService(
           isTestNet(getState()),
           walletName,
           address,
-          port
+          port,
+          grpcCertAndKey,
+          grpcCertAndKey
         );
         dispatch({ versionService, type: GETVERSIONSERVICE_SUCCESS });
         await dispatch(getWalletRPCVersionAttempt(versionService));

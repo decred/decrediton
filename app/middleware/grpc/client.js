@@ -11,6 +11,8 @@ const getServiceClient = (clientClass) => (
   walletPath,
   address,
   port,
+  grpcKey,
+  grpccert,
   cb
 ) => {
   const cert = getWalletCert(getWalletPath(isTestNet, walletPath));
@@ -20,19 +22,26 @@ const getServiceClient = (clientClass) => (
       "Unable to load dcrwallet certificate.  dcrwallet not running?"
     );
   }
-  const creds = grpc.credentials.createSsl(cert);
-  const client = new clientClass(address + ":" + port, creds);
 
-  const deadline = new Date();
-  const deadlineInSeconds = 30;
-  deadline.setSeconds(deadline.getSeconds() + deadlineInSeconds);
-  grpc.waitForClientReady(client, deadline, function (err) {
-    if (err) {
-      return cb(null, err);
-    } else {
-      return cb(client);
-    }
-  });
+  try {
+    // dcrwallet sends the key and cert on the same payload after starting.
+    // So we can use the same value for both of them.
+    const creds = grpc.credentials.createSsl(cert, grpcKey, grpccert);
+    const client = new clientClass(address + ":" + port, creds);
+
+    const deadline = new Date();
+    const deadlineInSeconds = 30;
+    deadline.setSeconds(deadline.getSeconds() + deadlineInSeconds);
+    grpc.waitForClientReady(client, deadline, function (err) {
+      if (err) {
+        return cb(null, err);
+      } else {
+        return cb(client);
+      }
+    });
+  } catch (err) {
+    return cb(null, err);
+  }
 };
 
 export const getWalletService = getServiceClient(services.WalletServiceClient);
