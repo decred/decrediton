@@ -6,17 +6,24 @@
 
 #include "pipe_wrapper.h"
 
+#define NORMAL_STRING v8::String::NewStringType::kNormalString
+v8::Local<v8::String> newFromUtf8(v8::Isolate* isolate, char const* str) {
+        v8::MaybeLocal<v8::String> v = v8::String::NewFromUtf8(isolate, str,
+                v8::String::NewStringType::kNormalString);
+        return v.ToLocalChecked();
+}
+
 void CreatePipe(v8::FunctionCallbackInfo<v8::Value> const& args) {
     auto isolate = v8::Isolate::GetCurrent();
 
     if (args.Length() != 1) {
         isolate->ThrowException(v8::Exception::TypeError(
-            v8::String::NewFromUtf8Literal(isolate, "Wrong number of arguments")));
+            v8::String::NewFromUtf8(isolate, "Wrong number of arguments", NORMAL_STRING)));
         return;
     }
     if (!args[0]->IsString()) {
         isolate->ThrowException(v8::Exception::TypeError(
-            v8::String::NewFromUtf8Literal(isolate, "Argument type error")));
+            v8::String::NewFromUtf8(isolate, "Argument type error", NORMAL_STRING)));
         return;
     }
 
@@ -29,15 +36,15 @@ void CreatePipe(v8::FunctionCallbackInfo<v8::Value> const& args) {
         direction = pipe_wrapper::pipe_direction::OUT;
     } else {
         isolate->ThrowException(v8::Exception::Error(
-            v8::String::NewFromUtf8Literal(isolate, "Unknown pipe direction, must " \
-                "be 'in' or 'out'")));
+            v8::String::NewFromUtf8(isolate, "Unknown pipe direction, must " \
+                "be 'in' or 'out'", NORMAL_STRING)));
         return;
     }
 
     auto const pipe_result = pipe_wrapper::create_pipe(direction);
     if (pipe_result.err_msg != nullptr) {
         isolate->ThrowException(v8::Exception::Error(
-            v8::String::NewFromUtf8(isolate, pipe_result.err_msg).ToLocalChecked()));
+            newFromUtf8(isolate, pipe_result.err_msg)));
         return;
     }
     auto& pipe = pipe_result.value;
@@ -46,15 +53,15 @@ void CreatePipe(v8::FunctionCallbackInfo<v8::Value> const& args) {
     if ((uintptr_t)(double)pipe.read_end_handle != pipe.read_end_handle ||
         (uintptr_t)(double)pipe.write_end_handle != pipe.write_end_handle) {
         isolate->ThrowException(v8::Exception::Error(
-            v8::String::NewFromUtf8(isolate, "Handle is too large for double").ToLocalChecked()));
+            newFromUtf8(isolate, "Handle is too large for double")));
         return;
     }
 
     auto obj = v8::Object::New(isolate);
     auto context = isolate->GetCurrentContext();
-    obj->Set(context, v8::String::NewFromUtf8Literal(isolate, "readEnd"),
+    obj->Set(context, v8::String::NewFromUtf8(isolate, "readEnd"),
         v8::Number::New(isolate, (double)pipe.read_end_handle));
-    obj->Set(context, v8::String::NewFromUtf8Literal(isolate, "writeEnd"),
+    obj->Set(context, v8::String::NewFromUtf8(isolate, "writeEnd"),
         v8::Number::New(isolate, (double)pipe.write_end_handle));
 
     args.GetReturnValue().Set(obj);
@@ -65,30 +72,30 @@ void ClosePipe(v8::FunctionCallbackInfo<v8::Value> const& args) {
 
     if (args.Length() != 1) {
         isolate->ThrowException(v8::Exception::TypeError(
-            v8::String::NewFromUtf8Literal(isolate, "Wrong number of arguments")));
+            v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
         return;
     }
 
     if (!args[0]->IsObject()) {
         isolate->ThrowException(v8::Exception::TypeError(
-            v8::String::NewFromUtf8Literal(isolate, "Argument type error")));
+            v8::String::NewFromUtf8(isolate, "Argument type error")));
         return;
     }
 
     auto context = isolate->GetCurrentContext();
     auto obj = args[0]->ToObject(context);
-    auto read_end_prop = v8::String::NewFromUtf8Literal(isolate, "readEnd");
-    auto write_end_prop = v8::String::NewFromUtf8Literal(isolate, "writeEnd");
+    auto read_end_prop = v8::String::NewFromUtf8(isolate, "readEnd");
+    auto write_end_prop = v8::String::NewFromUtf8(isolate, "writeEnd");
 
     if (!obj.ToLocalChecked()->Has(context, read_end_prop).ToChecked()) {
         isolate->ThrowException(v8::Exception::TypeError(
-            v8::String::NewFromUtf8Literal(isolate, "Object does not have readEnd prop")));
+            v8::String::NewFromUtf8(isolate, "Object does not have readEnd prop")));
         return;
     }
 
     if (!obj.ToLocalChecked()->Has(context, write_end_prop).ToChecked()) {
         isolate->ThrowException(v8::Exception::TypeError(
-            v8::String::NewFromUtf8Literal(isolate, "Object does not have writeEnd prop")));
+            v8::String::NewFromUtf8(isolate, "Object does not have writeEnd prop")));
         return;
     }
 
@@ -100,7 +107,7 @@ void ClosePipe(v8::FunctionCallbackInfo<v8::Value> const& args) {
 
     if (close_error_msg != nullptr) {
         isolate->ThrowException(v8::Exception::Error(
-            v8::String::NewFromUtf8(isolate, close_error_msg).ToLocalChecked()));
+            newFromUtf8(isolate, close_error_msg)));
         return;
     }
 }
@@ -110,13 +117,13 @@ void GetPipeEndFd(v8::FunctionCallbackInfo<v8::Value> const& args) {
     auto context = isolate->GetCurrentContext();
     if (args.Length() != 1) {
         isolate->ThrowException(v8::Exception::TypeError(
-            v8::String::NewFromUtf8Literal(isolate, "Wrong number of arguments")));
+            v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
         return;
     }
 
     if (!args[0]->IsNumber()) {
         isolate->ThrowException(v8::Exception::TypeError(
-            v8::String::NewFromUtf8Literal(isolate, "Argument type error")));
+            v8::String::NewFromUtf8(isolate, "Argument type error")));
         return;
     }
 
