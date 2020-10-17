@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "test": "node moduleTest.js",
-    "install": "node-gyp configure build"
+    "install": "node-gyp configure build",
+    "install-electron": "node-gyp rebuild --target=8.5.2 --arch=x64 --dist-url=https://electronjs.org/headers"
   },
   "gypfile": true,
   "dependencies": {
