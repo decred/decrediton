@@ -389,7 +389,7 @@ export const startTicketBuyerV3Attempt = (
   request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
   const { pubkey, host } = vsp;
   request.setVspPubkey(pubkey);
-  request.setVspHost(host);
+  request.setVspHost("https://" + host);
   request.setLimit(1);
   const ticketBuyerConfig = { vsp, balanceToMaintain, account };
   return new Promise(() => {
