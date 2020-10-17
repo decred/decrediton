@@ -74,7 +74,7 @@ export const removeWallet = log(
       ipcRenderer.sendSync("remove-wallet", walletPath, testnet)
     ).then((pid) => {
       if (pid) return pid;
-      throw "Error creating wallet";
+      throw "Error removing wallet";
     }),
   "Remove Wallet"
 );
