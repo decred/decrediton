@@ -26,7 +26,7 @@ function VSPSelect({ onChange, options, intl, value }) {
     opts = [
       {
         label: (
-          <T id="stakePoolSelect.addNewPromptEmpty" m="Type to add new VSP" />
+          <T id="vsp.addNewPromptEmpty" m="Type to add new VSP" />
         ),
         host: null
       },

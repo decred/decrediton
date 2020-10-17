@@ -22,7 +22,7 @@ const TicketAutoBuyerForm = ({
   <>
     <Subtitle
       title={
-        <T id="automatictickets.subtitle" m="Automatic Ticket Purchases" />
+        <T id="vsp.automatictickets.subtitle" m="Automatic Ticket Purchases" />
       }
     />
     <div className="stakepool-flex-height-auto-buyer-wrapper">
@@ -33,7 +33,7 @@ const TicketAutoBuyerForm = ({
           <PassphraseModalSwitch
             modalTitle={
               <T
-                id="tickets.startAutoBuyerConfirmation"
+                id="vsp.tickets.startAutoBuyerConfirmation"
                 m="Start Ticket Buyer Confirmation"
               />
             }
@@ -41,19 +41,19 @@ const TicketAutoBuyerForm = ({
               <div>
                 <span className="orange-warning">
                   <T
-                    id="tickets.startAutoBuyerConfirmation.attention"
+                    id="vsp.tickets.startAutoBuyerConfirmation.attention"
                     m="Attention!"
                   />
                 </span>
                 <T
-                  id="tickets.startAutoBuyerConfirmation.description"
+                  id="vsp.tickets.startAutoBuyerConfirmation.description"
                   m="Decrediton must remain running for tickets to be automatically purchased."
                 />
                 <div className="auto-buyer-modal-confirm">
                   <div className="auto-buyer-modal-confirm-row">
                     <div className="auto-buyer-modal-confirm-label">
                       <T
-                        id="autobuyer.modal.balanceToMaintain"
+                        id="vsp.autobuyer.modal.balanceToMaintain"
                         m="Balance To Maintain"
                       />
                       :
@@ -64,7 +64,7 @@ const TicketAutoBuyerForm = ({
                   </div>
                   <div className="auto-buyer-modal-confirm-row">
                     <div className="auto-buyer-modal-confirm-label">
-                      <T id="autobuyer.modal.stakepool" m="VSP" />:
+                      <T id="vsp.autobuyer.modal.stakepool" m="VSP" />:
                     </div>
                     <div className="auto-buyer-modal-confirm-value">
                       {vsp && vsp.Host}
@@ -80,7 +80,7 @@ const TicketAutoBuyerForm = ({
         )}
         <div className="stakepool-auto-buyer-row-portion-half">
           <div className="stakepool-autobuyer-label">
-            <T id="autobuyer.accountFrom" m="From" />:
+            <T id="vsp.autobuyer.accountFrom" m="From" />:
           </div>
           <div className="stakepool-autobuyer-input">
             <AccountsSelect
@@ -94,7 +94,7 @@ const TicketAutoBuyerForm = ({
         </div>
         <div className="stakepool-auto-buyer-row-portion-half is-row">
           <div className="stakepool-autobuyer-label">
-            <T id="autobuyer.stakePoolLabel" m="VSP" />:
+            <T id="vsp.autobuyer.stakePoolLabel" m="VSP" />:
           </div>
           <div className="stakepool-autobuyer-input">
             <VSPSelect
@@ -109,7 +109,7 @@ const TicketAutoBuyerForm = ({
       <div className="stakepool-auto-buyer-row">
         <div className="stakepool-auto-buyer-row-portion-full">
           <div className="stakepool-autobuyer-label">
-            <T id="autobuyer.balanceToMaintain" m="Balance to Maintain" />:
+            <T id="vsp.autobuyer.balanceToMaintain" m="Balance to Maintain" />:
           </div>
           <div className="stakepool-autobuyer-input">
             <DcrInput
@@ -119,7 +119,7 @@ const TicketAutoBuyerForm = ({
               invalid={balanceToMaintainError}
               invalidMessage={
                 <T
-                  id="autobuyer.balanceToMaintainError"
+                  id="vsp.autobuyer.balanceToMaintainError"
                   m="Your balance to mantain is invalid"
                 />
               }
@@ -131,7 +131,7 @@ const TicketAutoBuyerForm = ({
       {
         (clicked && isValid === false) && (
           <div className="error">
-            <T id="autobuyer.startErr" m="Fill all fields." />
+            <T id="vsp.autobuyer.startErr" m="Fill all fields." />
           </div>
         )
       }
