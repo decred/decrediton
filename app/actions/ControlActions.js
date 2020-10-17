@@ -390,7 +390,6 @@ export const startTicketBuyerV3Attempt = (
   const { pubkey, host } = vsp;
   request.setVspPubkey(pubkey);
   request.setVspHost("https://" + host);
-  request.setLimit(1);
   const ticketBuyerConfig = { vsp, balanceToMaintain, account };
   return new Promise(() => {
     const { ticketBuyerService } = getState().grpc;
