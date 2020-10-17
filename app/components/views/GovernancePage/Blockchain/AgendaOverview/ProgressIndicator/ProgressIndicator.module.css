@@ -1,0 +1,45 @@
+.finishedIndicator {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  border-color: var(--disabled-color);
+  background-image: var(--agenda-indicator-finished);
+  background-position: 6px 50%;
+  background-size: 10px;
+  background-repeat: no-repeat;
+  color: var(--disabled-color);
+  display: inline-block;
+  padding: 5px 8px 5px 20px;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 3px;
+  font-size: 12px;
+  line-height: 8px;
+  text-align: right;
+  text-transform: capitalize;
+}
+
+.inProgressIndicator {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  border-color: var(--color-blue-alt);
+  background-image: var(--agenda-indicator-pending);
+  background-position: 6px 50%;
+  background-size: 10px;
+  background-repeat: no-repeat;
+  color: var(--color-blue-alt);
+  display: inline-block;
+  padding: 5px 8px 5px 20px;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 3px;
+  font-size: 12px;
+  line-height: 8px;
+  text-align: right;
+  text-transform: capitalize;
+}

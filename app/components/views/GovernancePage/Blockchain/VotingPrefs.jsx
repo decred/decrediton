@@ -51,6 +51,7 @@ const VotingPrefs = ({
               selectedChoice: getAgendaSelectedChoice(agenda),
               showVoteChoice: index === selectedAgenda
             }}
+            disabled={agenda.finished}
             onClick={() => onShowAgenda(index)}
           />
         ))
