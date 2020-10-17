@@ -244,7 +244,7 @@
     "lint-staged": "^10.2.0",
     "mini-css-extract-plugin": "^0.8.2",
     "minimist": "^1.2.0",
-    "node-gyp": "^5.0.7",
+    "node-gyp": "6.1.0",
     "node-loader": "^0.6.0",
     "prettier": "^2.0.5",
     "react-intl-translations-manager": "^5.0.0",
