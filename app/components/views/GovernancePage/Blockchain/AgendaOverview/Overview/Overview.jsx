@@ -1,4 +1,4 @@
-import { RadioButtonGroup } from "pi-ui";
+import { RadioButtonGroup, classNames } from "pi-ui";
 import { KeyBlueButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import ProgressIndicator from "../ProgressIndicator/ProgressIndicator";
@@ -45,7 +45,8 @@ const AgendaVotingOptions = ({
 
   return (
     showVotingOptions && (
-      <div className={styles.optionsArea}>
+      <div
+        className={classNames(styles.optionsArea, disabled && styles.disabled)}>
         {finished && selected ? (
           <T id="agenda.votedFor" m="Voted for" />
         ) : (

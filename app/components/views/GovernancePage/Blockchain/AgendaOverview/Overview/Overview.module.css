@@ -1,6 +1,5 @@
 .overview {
   position: relative;
-  /* float: left; */
   margin-bottom: 15px;
 }
 
@@ -40,13 +39,6 @@
   font-weight: 600;
 }
 
-.readMore {
-  display: block;
-  color: var(--input-color);
-  text-decoration: none;
-  background-color: transparent;
-}
-
 .optionsArea {
   flex-direction: column;
   align-items: stretch;
@@ -61,6 +53,10 @@
 
 div.radioButtonsWrapper > * {
   box-sizing: border-box;
+}
+
+.disabled {
+  color: var(--btn-disabled-text-color);
 }
 
 .bottom {
