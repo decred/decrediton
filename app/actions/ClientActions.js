@@ -5,7 +5,7 @@ import * as sel from "selectors";
 import eq from "lodash/fp/eq";
 import {
   getNextAddressAttempt,
-  publishUnminedTransactionsAttempt,
+  publishUnminedTransactionsAttempt
 } from "./ControlActions";
 import {
   transactionNtfnsStart,

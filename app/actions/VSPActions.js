@@ -46,7 +46,7 @@ export const getVSPTicketsByFeeStatus = (feeStatus) => (dispatch, getState) => {
 
 // getTicketSignature receives the tickethash and request and sign it using the
 // ticket sstxcommitment address.
-const getTicketSignature = (tickethash, message, passphrase) => async (dispatch, getState) => {
+export const getTicketSignature = (tickethash, message, passphrase) => async (dispatch, getState) => {
   const walletService = sel.walletService(getState());
   const chainParams = sel.chainParams(getState());
 

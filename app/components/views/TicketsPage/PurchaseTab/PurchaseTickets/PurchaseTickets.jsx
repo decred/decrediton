@@ -29,9 +29,9 @@ const Tickets = ({ toggleIsLegacy }) => {
 
   useMountEffect(() => {
     // TODO where to show the processing tickets?
-    console.log(VSP_FEE_PROCESSING)
+    console.log(VSP_FEE_PROCESSING);
     getVSPTicketsByFeeStatus(VSP_FEE_PROCESSING);
-  })
+  });
 
   // onChangeNumTickets deals with ticket increment or decrement.
   const onChangeNumTickets = (increment) => {
