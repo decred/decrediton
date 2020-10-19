@@ -160,7 +160,7 @@ export const purchaseTickets = (
       request.setDontSignTx(!signTx);
       const { pubkey, host } = vsp;
       request.setVspPubkey(pubkey);
-      request.setVspHost(host);
+      request.setVspHost("https://" + host);
       walletService.purchaseTickets(request, (err, res) =>
         err ? fail(err) : ok(res)
       );
