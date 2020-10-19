@@ -7,8 +7,9 @@ import * as cla from "actions/ClientActions";
 export function useAccounts() {
   const walletService = useSelector(sel.walletService);
   const accounts = useSelector(sel.sortedAccounts);
-  const isLoading = useSelector(sel.getNextAccountRequestAttempt)
-    || useSelector(sel.renameAccountRequestAttempt);
+  const nextAccountRequestAttempt = useSelector(sel.getNextAccountRequestAttempt);
+  const renameAccountRequestAttempt = useSelector(sel.renameAccountRequestAttempt);
+  const isLoading = nextAccountRequestAttempt ||  renameAccountRequestAttempt;
   const accountExtendedKey = useSelector(sel.accountExtendedKey);
   const walletName = useSelector(sel.getWalletName);
   const hasTickets = useSelector(sel.hasTickets);
