@@ -14,6 +14,7 @@ import PrivacySettings from "./PrivacySettings";
 import UISettings from "./UISettings";
 import MiscSettings from "./MiscSettings";
 import TimezoneSettings from "./TimezoneSettings";
+import { Subtitle } from "shared";
 import "style/StakePool.less"; // TODO: delete this as well!
 import styles from "./Settings.module.css";
 import * as configConstants from "constants/config";
@@ -103,12 +104,12 @@ const SettingsPage = ({
       className="settings-standalone-page">
       <div className={styles.wrapper}>
         <div className={styles.group}>
-          <div className={styles.groupTitle}>
+          <Subtitle title={
             <T
               id="settings.getstartpage.group-title.connectivity"
               m="Connectivity"
             />
-          </div>
+          } />
           <div className={styles.columnWrapper}>
             <div className={styles.column}>
               <NetworkSettings
@@ -125,9 +126,9 @@ const SettingsPage = ({
         </div>
 
         <div className={classNames(styles.group, styles.general)}>
-          <div className={styles.groupTitle}>
+          <Subtitle title={
             <T id="settings.getstartpage.group-title.general" m="General" />
-          </div>
+          } />
           <div className={styles.columnWrapper}>
             <div className={styles.column}>
               <UISettings
@@ -153,12 +154,12 @@ const SettingsPage = ({
         </div>
 
         <div className={classNames(styles.group, styles.privacy)}>
-          <div className={styles.groupTitle}>
+          <Subtitle title={
             <T
               id="settings.getstartpage.group-title.privacy-and-security"
               m="Privacy and Security"
             />
-          </div>
+          } />
           <div className={styles.columnWrapper}>
               <PrivacySettings
                 {...{
