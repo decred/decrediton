@@ -85,6 +85,7 @@ export const startDcrlnd = (
   }
 
   const rpcCreds = ipcRenderer.sendSync("get-dcrd-rpc-credentials");
+  const walletClientKeyCert = wallet.getDcrwalletGrpcKeyCert();
 
   let dcrlndCreds;
   let wuClient;
@@ -140,7 +141,7 @@ export const startDcrlnd = (
       stage: LNWALLET_STARTUPSTAGE_UNLOCK,
       type: LNWALLET_STARTUP_CHANGEDSTAGE
     });
-    await ln.unlockWallet(wuClient, passphrase);
+    await ln.unlockWallet(wuClient, passphrase, walletClientKeyCert);
   } catch (error) {
     // An unimplemented error here probably means dcrlnd was already running,
     // so just continue with the connection attempt.

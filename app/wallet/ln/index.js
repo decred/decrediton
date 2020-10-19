@@ -278,10 +278,11 @@ export const sendCoins = (client, address, amount) => {
   );
 };
 
-export const unlockWallet = (wuClient, passphrase) => {
+export const unlockWallet = (wuClient, passphrase, dcrwClientKeyCert) => {
   const request = new wupb.UnlockWalletRequest();
   const bytesPassphrase = new Uint8Array(Buffer.from(passphrase));
   request.setWalletPassword(bytesPassphrase);
+  request.setDcrwClientKeyCert(dcrwClientKeyCert);
 
   return new Promise((resolve, reject) =>
     wuClient.unlockWallet(request, (err, resp) =>
