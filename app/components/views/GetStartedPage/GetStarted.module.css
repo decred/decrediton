@@ -806,8 +806,9 @@
 }
 
 .launchError {
-  margin-bottom: 20px;
+  margin: 0 300px 20px 0;
   color: var(--error-text-color);
+  overflow-wrap: break-word;
 }
 
 @media screen and (max-width: 1919px) {
@@ -1010,6 +1011,11 @@
 
   .loaderSettingsLogs {
     right: -30px !important;
+  }
+
+  .launchError {
+    margin: 0 0 20px 0;
+    width: 315px;
   }
 }
 
