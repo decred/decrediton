@@ -6,11 +6,7 @@ import theme from "theme";
 
 export const RoutedTab = (path, link) => ({ path, link });
 
-const RoutedTabsHeader = ({
-  tabs,
-  caret,
-  styles
-}) => {
+const RoutedTabsHeader = ({ tabs, caret, styles }) => {
   const nodes = new Map();
 
   const [caretLeft, setCaretLeft] = useState(null);
@@ -18,11 +14,7 @@ const RoutedTabsHeader = ({
   const [selectedTab, setSelectedTab] = useState(null);
   const [localSidebarOnBottom, setLocalSidebarOnBottom] = useState(null);
 
-  const {
-    location,
-    uiAnimations,
-    sidebarOnBottom
-  } = useRoutedTabsHeader();
+  const { location, uiAnimations, sidebarOnBottom } = useRoutedTabsHeader();
 
   const getAnimatedCaret = () => {
     const caretStyle = {
@@ -87,10 +79,18 @@ const RoutedTabsHeader = ({
   useEffect(() => {
     if (
       selectedTab != location.pathname ||
-      localSidebarOnBottom != sidebarOnBottom) {
-        updateCaretPosition();
-      }
-  }, [location, selectedTab, sidebarOnBottom, localSidebarOnBottom, localCaret, updateCaretPosition]);
+      localSidebarOnBottom != sidebarOnBottom
+    ) {
+      updateCaretPosition();
+    }
+  }, [
+    location,
+    selectedTab,
+    sidebarOnBottom,
+    localSidebarOnBottom,
+    localCaret,
+    updateCaretPosition
+  ]);
 
   return (
     <div className={styles.tabs}>

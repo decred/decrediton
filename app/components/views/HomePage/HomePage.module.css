@@ -7,32 +7,8 @@
   padding-left: 63px;
   padding-top: 47px;
   padding-right: 56px;
-  justify-content: space-between;
+  flex-flow: column wrap;
   background-color: var(--background-back-color);
-}
-
-.overviewHeader .tabs > .tab > a {
-  margin-right: 8px;
-  font-size: 11px;
-  padding: 5px 10px 5px 10px;
-  color: var(--tab-text);
-  text-decoration: none;
-}
-
-.overviewHeader .tabs > .tab > .active {
-  border: 1px solid var(--home-content-link);
-  border-radius: 3px;
-  color: var(--tab-text-active-hover);
-}
-
-.overviewHeader .tabs > .tab > a:hover {
-  color: var(--tab-text-active-hover);
-}
-
-.overviewHeader .overviewHeaderWrapper {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
 }
 
 .overviewContentWrapper {
@@ -144,12 +120,7 @@
   }
 }
 
-
 @media screen and (max-width: 768px) {
-  .overviewTabLabel {
-    font-size: 0;
-  }
-
   .overviewTab {
     display: inline-block;
     width: 30px;
@@ -163,34 +134,16 @@
     background-image: var(--balance-tab-icon);
   }
   .overviewTab.tickets {
-    background-image: var(--menu-tickets-default);    
+    background-image: var(--menu-tickets-default);
   }
   .overviewTab.tx {
-    background-image: var(--menu-transactions-default);    
+    background-image: var(--menu-transactions-default);
   }
 
   .overviewHeader {
     padding-left: 11px;
     padding-top: 40px;
     padding-right: 0;
-  }
-
-  .overviewHeader .overviewHeaderWrapper {
-    width: 394px;
-    min-width: 394px;
-  }
-
-  .overviewHeader .tabs > .tab > a {
-    padding: 0;
-  }
-
-  .overviewHeader .tabs > .tab > a.active {
-    border: 0;
-  }
-
-  .overviewHeader .tabs > .tab > a.active {
-    border: 1px solid var(--home-content-link);
-    border-radius: 3px;
   }
 
   .overviewContentWrapper {
@@ -209,10 +162,6 @@
 }
 
 @media screen and (max-width: 768px) {
-  .overviewTabLabel {
-    font-size: 0;
-  }
-
   .overviewTab {
     display: inline-block;
     width: 30px;
@@ -222,15 +171,18 @@
     background-repeat: no-repeat;
   }
 
-  .overviewTab.balance {
+  .balanceIcon {
+    color: transparent;
     background-image: var(--balance-tab-icon);
   }
-  
-  .overviewTab.tickets {
+
+  .ticketsIcon {
+    color: transparent;
     background-image: var(--menu-tickets-default);
   }
 
-  .overviewTab.tx {
+  .txIcon {
+    color: transparent;
     background-image: var(--menu-transactions-default);
   }
 
@@ -238,26 +190,21 @@
     font-size: 27px;
   }
 
-  .overview-content-wrapper {
+  .overviewContentWrapper {
     padding-left: 11px;
     display: flex;
     flex-direction: column-reverse;
   }
 
-  .overview-transactions-ticket.is-row {
-    flex-direction: column;
+  .overviewTransactionsTicket.isRow {
+    flex-flow: column wrap;
   }
 
-  .ticket-tx-wrapper {
-    margin-left: 0;
-    margin-top: 25px;
-  }
-
-  .home-content-title {
+  .homeContentTitle {
     width: 315px;
   }
 
-  .overview-spendable-locked-wrapper {
+  .overviewSpendableLockedWrapper {
     padding-top: 0;
     display: flex;
     justify-content: space-between;

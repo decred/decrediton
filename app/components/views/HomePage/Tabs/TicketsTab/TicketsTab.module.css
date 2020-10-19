@@ -15,7 +15,7 @@
   font-size: 11px;
   color: var(--agenda-card-bottom-cfg);
   font-family: var(--font-family-regular);
-  line-height: 13px;
+  line-height: 20px;
   padding-top: 3px;
   margin-left: 10px;
 }
