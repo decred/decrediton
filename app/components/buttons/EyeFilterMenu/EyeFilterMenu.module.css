@@ -75,6 +75,8 @@
   text-align: left;
   box-shadow: 0px 3px 8px var(--input-color-shadow);
   user-select: none;
+  /* set z-index to cover the animated ellipsis of a pending tx */
+  z-index: 1;
 }
 
 .menuItems.sortBy {
