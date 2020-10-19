@@ -14,6 +14,7 @@ import statistics from "./statistics";
 import governance from "./governance";
 import trezor from "./trezor";
 import ln from "./ln";
+import vsp from "./vsp";
 
 export default {
   grpc,
@@ -30,5 +31,6 @@ export default {
   statistics,
   governance,
   trezor,
-  ln
+  ln,
+  vsp
 };

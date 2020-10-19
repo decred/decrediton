@@ -20,4 +20,4 @@ export * from "./PathBrowseInput";
 export { default as PassphraseModalField } from "./PassphraseModalField";
 export { default as InlineField } from "./InlineField";
 export { default as SettingsTextInput } from "./SettingsTextInput";
-export { default as VSPSelect } from "./VSPSelect";
+export { default as VSPSelect } from "./VSPSelect/VSPSelect";

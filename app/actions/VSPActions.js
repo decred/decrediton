@@ -13,14 +13,46 @@ export const GETVSP_SUCCESS = "GETVSP_SUCCESS";
 export const getVSPInfo = (host) => async (dispatch) => {
   dispatch({ type: GETVSP_ATTEMPT });
   try {
+    // add https into vsp host, so we can fetch its information.
+    host = "https://" + host;
     wallet.allowVSPHost(host);
     const info = await wallet.getVSPInfo(host);
     dispatch({ type: GETVSP_SUCCESS, info });
     return info.data;
   } catch (error) {
     dispatch({ type: GETVSP_FAILED, error });
-    return error;
+    return { error };
   }
+};
+
+export const GETVSPTICKETSTATUS_ATTEMPT = "GETVSPTICKETSTATUS_ATTEMPT";
+export const GETVSPTICKETSTATUS_FAILED = "GETVSPTICKETSTATUS_FAILED";
+export const GETVSPTICKETSTATUS_SUCCESS = "GETVSPTICKETSTATUS_SUCCESS";
+
+export const getVSPTicketsByFeeStatus = (feeStatus) => (dispatch, getState) => {
+  dispatch({ type: GETVSPTICKETSTATUS_ATTEMPT });
+  wallet.getVSPTicketsByFeeStatus(getState().grpc.walletService, feeStatus)
+    .then(response => {
+      const failedTickets = response.getFailedTicketsHashesList();
+      dispatch({ type: GETVSPTICKETSTATUS_SUCCESS, vspTickets: response });
+       // TODO check for default vsp and retry with it.
+       // notify user about the failed tickets.
+       console.log(failedTickets);
+    })
+    .catch(err => {
+      dispatch({ type: GETVSPTICKETSTATUS_FAILED, err });
+    });
+};
+
+// getTicketSignature receives the tickethash and request and sign it using the
+// ticket sstxcommitment address.
+export const getTicketSignature = (tickethash, message, passphrase) => async (dispatch, getState) => {
+  const walletService = sel.walletService(getState());
+  const chainParams = sel.chainParams(getState());
+
+  const sstxAddr = await wallet.getSstxCommitmentAddress(walletService, chainParams, tickethash);
+  const resp = await wallet.signMessage(walletService, sstxAddr, message, passphrase);
+  return resp.toObject().signature;
 };
 
 // TODO After stop supporting v1/v2 vsp's API, remove legacy code.
@@ -284,21 +316,32 @@ export const setStakePoolVoteChoices = (stakePool, voteChoices) => (
     );
 };
 
-export const DISCOVERAVAILABLESTAKEPOOLS_SUCCESS =
-  "DISCOVERAVAILABLESTAKEPOOLS_SUCCESS";
-export const discoverAvailableStakepools = () => async (dispatch, getState) => {
-  const vspInfo = await wallet.getStakePoolInfo();
-  // TODO treat error and return config values in that case
-  if (!vspInfo) return null;
-  const { daemon: { walletName } } = getState();
-  const config = getWalletCfg(sel.isTestNet(getState()), walletName);
-  updateStakePoolConfig(config, vspInfo);
-  dispatch({
-    type: DISCOVERAVAILABLESTAKEPOOLS_SUCCESS,
-    currentStakePoolConfig: config.get("stakepools")
-  });
+export const DISCOVERAVAILABLEVSPS_ATTEMPT = "DISCOVERAVAILABLEVSPS_ATTEMPT";
+export const DISCOVERAVAILABLEVSPS_SUCCESS = "DISCOVERAVAILABLEVSPS_SUCCESS";
+export const DISCOVERAVAILABLEVSPS_FAILED = "DISCOVERAVAILABLEVSPS_FAILED";
 
-  return vspInfo;
+export const discoverAvailableVSPs = () => async (dispatch) => {
+  dispatch({ type: DISCOVERAVAILABLEVSPS_ATTEMPT });
+  try {
+    let availableVSPs = await wallet.getAllVSPs();
+    // add label and value so we can show this values on a select input.
+    availableVSPs = availableVSPs.map(vsp => ({
+        ...vsp,
+        label: vsp.host,
+        value: vsp.host
+      })
+    );
+    dispatch({
+      type: DISCOVERAVAILABLEVSPS_SUCCESS,
+      availableVSPs
+    });
+    return availableVSPs;
+  } catch (error) {
+    dispatch({
+      type: DISCOVERAVAILABLEVSPS_FAILED,
+      error
+    });
+  }
 };
 
 export const CHANGESELECTEDSTAKEPOOL = "CHANGESELECTEDSTAKEPOOL";
@@ -380,4 +423,21 @@ export const addCustomStakePool = (host) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({ error, type: ADDCUSTOMSTAKEPOOL_FAILED });
   }
+};
+
+export const DISCOVERAVAILABLESTAKEPOOLS_SUCCESS =
+  "DISCOVERAVAILABLESTAKEPOOLS_SUCCESS";
+export const discoverAvailableStakepools = () => async (dispatch, getState) => {
+  const vspInfo = await wallet.getStakePoolInfo();
+  // TODO treat error and return config values in that case
+  if (!vspInfo) return null;
+  const { daemon: { walletName } } = getState();
+  const config = getWalletCfg(sel.isTestNet(getState()), walletName);
+  updateStakePoolConfig(config, vspInfo);
+  dispatch({
+    type: DISCOVERAVAILABLESTAKEPOOLS_SUCCESS,
+    currentStakePoolConfig: config.get("stakepools")
+  });
+
+  return vspInfo;
 };

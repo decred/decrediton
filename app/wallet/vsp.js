@@ -49,6 +49,15 @@ export const getVSPInfo = promisifyReqLogNoData(
   "getVSPInfo",
   api.getVSPInfo
 );
+export const getVSPTicketStatus = promisifyReqLogNoData(
+  "getVSPTicketStatusInfo",
+  api.getTicketStatus
+);
+
+export const getAllVSPs = promisifyReqLogNoData(
+  "getAllVspsInfo",
+  api.getAllVspsInfo
+);
 
 // allowVSPHost enables the external request to a specif VSP host.
 export const allowVSPHost = log(

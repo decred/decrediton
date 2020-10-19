@@ -113,6 +113,7 @@ export const allowExternalRequest = (externalReqType) => {
       break;
     case EXTERNALREQUEST_STAKEPOOL_LISTING:
       addAllowedURL(/^https:\/\/api\.decred\.org\/\?c=gsd$/);
+      addAllowedURL(/^https:\/\/api\.decred\.org\/\?c=vsp$/);
       break;
     case EXTERNALREQUEST_UPDATE_CHECK:
       addAllowedURL("https://api.github.com/repos/decred/decrediton/releases");
@@ -163,7 +164,8 @@ export const allowVSPRequests = (stakePoolHost) => {
   const reqType = "stakepool_" + stakePoolHost;
   if (allowedExternalRequests[reqType]) return;
 
-  addAllowedURL(stakePoolHost + "/api/vspinfo");
+  addAllowedURL(stakePoolHost + "/api/v3/vspinfo");
+  addAllowedURL(stakePoolHost + "/api/ticketstatus");
 };
 
 export const reloadAllowedExternalRequests = () => {

@@ -9,7 +9,6 @@ export { default as send } from "./send";
 export { default as service } from "./service"; // TODO: hook already exists in hooks/useService.js but connector is still used in class components
 export { default as snackbar } from "./snackbar";
 export { default as stakeInfo } from "./stakeInfo";
-export { default as ticketAutoBuyer } from "./ticketAutoBuyer";
 export { default as ticketsList } from "./ticketsList";
 export { default as ticketsOverview } from "./ticketsOverview";
 export { default as transactionLink } from "./transactionLink";
@@ -21,7 +20,6 @@ export { default as modalVisible } from "./modalVisible";
 export { default as locale } from "./locale";
 export { default as fatalErrorPage } from "./fatalErrorPage";
 export { default as theming } from "./theming";
-export { default as newStakePool } from "./newStakePool";
 export { default as network } from "./network";
 export { default as trezor } from "./trezor";
 export { default as importScript } from "./importScript";

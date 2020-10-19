@@ -363,32 +363,32 @@ export const revokeTicketsAttempt = (passphrase) => (dispatch, getState) => {
     .catch((error) => dispatch({ error, type: REVOKETICKETS_FAILED }));
 };
 
-export const STARTTICKETBUYERV2_ATTEMPT = "STARTTICKETBUYERV2_ATTEMPT";
-export const STARTTICKETBUYERV2_FAILED = "STARTTICKETBUYERV2_FAILED";
-export const STARTTICKETBUYERV2_SUCCESS = "STARTTICKETBUYERV2_SUCCESS";
+export const STARTTICKETBUYERV3_ATTEMPT = "STARTTICKETBUYERV3_ATTEMPT";
+export const STARTTICKETBUYERV3_FAILED = "STARTTICKETBUYERV3_FAILED";
+export const STARTTICKETBUYERV3_SUCCESS = "STARTTICKETBUYERV3_SUCCESS";
 
-export const STOPTICKETBUYERV2_ATTEMPT = "STOPTICKETBUYERV2_ATTEMPT";
-export const STOPTICKETBUYERV2_FAILED = "STOPTICKETBUYERV2_FAILED";
-export const STOPTICKETBUYERV2_SUCCESS = "STOPTICKETBUYERV2_SUCCESS";
+export const STOPTICKETBUYER_ATTEMPT = "STOPTICKETBUYER_ATTEMPT";
+export const STOPTICKETBUYER_FAILED = "STOPTICKETBUYER_FAILED";
+export const STOPTICKETBUYER_SUCCESS = "STOPTICKETBUYER_SUCCESS";
 
-export const startTicketBuyerV2Attempt = (
+export const startTicketBuyerV3Attempt = (
   passphrase,
   account,
   balanceToMaintain,
-  stakepool
+  vsp
 ) => (dispatch, getState) => {
   const request = new RunTicketBuyerRequest();
   request.setBalanceToMaintain(balanceToMaintain);
   request.setAccount(account.value);
   request.setVotingAccount(account.value);
   request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
-  request.setVotingAddress(stakepool.TicketAddress);
-  request.setPoolAddress(stakepool.PoolAddress);
-  request.setPoolFees(stakepool.PoolFees);
-  const ticketBuyerConfig = { stakepool, balanceToMaintain, account };
+  const { pubkey, host } = vsp;
+  request.setVspPubkey(pubkey);
+  request.setVspHost("https://" + host);
+  const ticketBuyerConfig = { vsp, balanceToMaintain, account };
   return new Promise(() => {
     const { ticketBuyerService } = getState().grpc;
-    dispatch({ ticketBuyerConfig, type: STARTTICKETBUYERV2_ATTEMPT });
+    dispatch({ ticketBuyerConfig, type: STARTTICKETBUYERV3_ATTEMPT });
     const ticketBuyer = ticketBuyerService.runTicketBuyer(request);
     ticketBuyer.on("data", function (response) {
       // No expected responses but log in case.
@@ -402,25 +402,28 @@ export const startTicketBuyerV2Attempt = (
       status = status + "";
       if (status.indexOf("Cancelled") < 0) {
         if (status.indexOf("invalid passphrase") > 0) {
-          dispatch({ error: status, type: STARTTICKETBUYERV2_FAILED });
+          dispatch({ error: status, type: STARTTICKETBUYERV3_FAILED });
         }
       } else {
-        dispatch({ type: STOPTICKETBUYERV2_SUCCESS });
+        dispatch({ type: STOPTICKETBUYER_SUCCESS });
       }
     });
     dispatch({
       ticketBuyerCall: ticketBuyer,
-      type: STARTTICKETBUYERV2_SUCCESS
+      vsp,
+      balanceToMaintain,
+      account,
+      type: STARTTICKETBUYERV3_SUCCESS
     });
   });
 };
 
 export function ticketBuyerCancel() {
   return (dispatch, getState) => {
-    const { ticketBuyerCall } = getState().control;
+    const { ticketBuyerCall } = getState().vsp;
     if (!ticketBuyerCall) return;
     if (ticketBuyerCall) {
-      dispatch({ type: STOPTICKETBUYERV2_ATTEMPT });
+      dispatch({ type: STOPTICKETBUYER_ATTEMPT });
       ticketBuyerCall.cancel();
     }
   };
@@ -702,4 +705,52 @@ export const getAccountExtendedKeyAttempt = (accountNumber) => (
       });
     })
     .catch((error) => dispatch({ error, type: GETACCOUNTEXTENDEDKEY_FAILED }));
+};
+
+// LEGACY CODE
+// this can be removed after stopping support for vsp v1 and v2.
+export const STARTTICKETBUYERV2_ATTEMPT = "STARTTICKETBUYERV2_ATTEMPT";
+export const STARTTICKETBUYERV2_FAILED = "STARTTICKETBUYERV2_FAILED";
+export const STARTTICKETBUYERV2_SUCCESS = "STARTTICKETBUYERV2_SUCCESS";
+
+export const startTicketBuyerV2Attempt = (
+  passphrase,
+  account,
+  balanceToMaintain,
+  stakepool
+) => (dispatch, getState) => {
+  const request = new RunTicketBuyerRequest();
+  request.setBalanceToMaintain(balanceToMaintain);
+  request.setAccount(account.value);
+  request.setVotingAccount(account.value);
+  request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
+  request.setVotingAddress(stakepool.TicketAddress);
+  const ticketBuyerConfig = { stakepool, balanceToMaintain, account };
+  return new Promise(() => {
+    const { ticketBuyerService } = getState().grpc;
+    dispatch({ ticketBuyerConfig, type: STARTTICKETBUYERV2_ATTEMPT });
+    const ticketBuyer = ticketBuyerService.runTicketBuyer(request);
+    ticketBuyer.on("data", function (response) {
+      // No expected responses but log in case.
+      console.log(response);
+    });
+    ticketBuyer.on("end", function (response) {
+      // No expected response in end but log in case.
+      console.log(response);
+    });
+    ticketBuyer.on("error", function (status) {
+      status = status + "";
+      if (status.indexOf("Cancelled") < 0) {
+        if (status.indexOf("invalid passphrase") > 0) {
+          dispatch({ error: status, type: STARTTICKETBUYERV2_FAILED });
+        }
+      } else {
+        dispatch({ type: STOPTICKETBUYER_SUCCESS });
+      }
+    });
+    dispatch({
+      ticketBuyerCall: ticketBuyer,
+      type: STARTTICKETBUYERV2_SUCCESS
+    });
+  });
 };

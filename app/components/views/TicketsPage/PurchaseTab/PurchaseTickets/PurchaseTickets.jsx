@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { PurchasePage } from "./Page";
 import { usePurchaseTab } from "../hooks";
+import { VSP_FEE_PROCESSING } from "constants";
+import { useMountEffect } from "hooks";
 
 const Tickets = ({ toggleIsLegacy }) => {
   const {
@@ -8,20 +10,33 @@ const Tickets = ({ toggleIsLegacy }) => {
     blocksNumberToNextTicket,
     sidebarOnBottom,
     isWatchingOnly,
-    discoverAvailableVSPs,
+    // TODO add retry wiith discoverAvailableVsps in case of failure:
+    // discoverAvailableVSPs,
+    availableVSPs,
+    // TODO treat errors:
+    // availableVSPsError,
     defaultSpendingAccount,
-    ticketPrice
+    ticketPrice,
+    getVSPTicketsByFeeStatus
   } = usePurchaseTab();
 
   const [account, setAccount] = useState(defaultSpendingAccount);
+  // todo use this vsp to buy solo tickets.
+  const [vsp, setVSP] = useState(null);
   const [numTickets, setNumTickets] = useState(1);
-  const [vspOptions, setVSPOptions] = useState(null);
   const [isValid, setIsValid] = useState(false);
+
+
+  useMountEffect(() => {
+    // TODO where to show the processing tickets?
+    console.log(VSP_FEE_PROCESSING);
+    getVSPTicketsByFeeStatus(VSP_FEE_PROCESSING);
+  });
 
   // onChangeNumTickets deals with ticket increment or decrement.
   const onChangeNumTickets = (increment) => {
     if (numTickets === 0 && !increment) return;
-    increment ? setNumTickets(numTickets + 1) : setNumTickets(numTickets - 1);
+    increment ? setNumTickets(numTickets + 1) : setNumTickets(numTickets -1);
   };
 
   useEffect(() => {
@@ -30,25 +45,6 @@ const Tickets = ({ toggleIsLegacy }) => {
     const hasTickets = numTickets > 0;
     setIsValid(canAfford && hasTickets);
   }, [ticketPrice, numTickets, account]);
-
-  useEffect(() => {
-    const getAvailableVsps = async () => {
-      const options = await discoverAvailableVSPs();
-      // filter vsp which support API v3.
-      const filteredOpts = options.reduce((filtered, vsp) => {
-        if (vsp.APIVersionsSupported.indexOf(3) > -1) {
-          filtered.push(vsp);
-        }
-        return filtered;
-      }, []);
-
-      return filteredOpts;
-    };
-
-    getAvailableVsps().then((filtered) => {
-      return setVSPOptions(filtered);
-    });
-  }, [discoverAvailableVSPs]);
 
   const handleOnKeyDown = (e) => {
     if (e.keyCode == 38) {
@@ -60,26 +56,24 @@ const Tickets = ({ toggleIsLegacy }) => {
     }
   };
 
-  return (
-    <PurchasePage
-      {...{
-        spvMode,
-        blocksNumberToNextTicket,
-        sidebarOnBottom,
-        isWatchingOnly,
-        vspOptions,
-        account,
-        numTickets,
-        onChangeNumTickets,
-        setNumTickets,
-        handleOnKeyDown,
-        setAccount,
-        ticketPrice,
-        isValid,
-        toggleIsLegacy
-      }}
-    />
-  );
+  return <PurchasePage {...{
+      spvMode,
+      blocksNumberToNextTicket,
+      sidebarOnBottom,
+      isWatchingOnly,
+      account,
+      numTickets,
+      onChangeNumTickets,
+      setNumTickets,
+      handleOnKeyDown,
+      setAccount,
+      ticketPrice,
+      isValid,
+      toggleIsLegacy,
+      availableVSPs,
+      setVSP,
+      vsp
+    }} />;
 };
 
 export default Tickets;

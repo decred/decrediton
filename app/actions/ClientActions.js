@@ -14,7 +14,8 @@ import {
 import {
   refreshStakepoolPurchaseInformation,
   setStakePoolVoteChoices,
-  getStakepoolStats
+  getStakepoolStats,
+  getVSPTicketsByFeeStatus
 } from "./VSPActions";
 import { getStartupTransactions } from "./TransactionActions";
 import { getAccountMixerServiceAttempt } from "./AccountMixerActions";
@@ -24,12 +25,13 @@ import { getWalletCfg, getGlobalCfg } from "config";
 import { clipboard } from "electron";
 import { getStartupStats } from "./StatisticsActions";
 import { getTokenAndInitialBatch } from "./GovernanceActions";
+import { discoverAvailableVSPs } from "./VSPActions";
 import * as da from "../middleware/dcrdataapi";
 import {
   EXTERNALREQUEST_DCRDATA,
   EXTERNALREQUEST_POLITEIA
 } from "main_dev/externalRequests";
-import { TESTNET, MAINNET } from "constants";
+import { TESTNET, MAINNET, VSP_FEE_ERRORED } from "constants";
 
 export const goToTransactionHistory = () => (dispatch) => {
   dispatch(pushHistory("/transactions/history"));
@@ -61,6 +63,7 @@ const startWalletServicesTrigger = () => (dispatch, getState) =>
       if (privacyEnabled) {
         dispatch(getAccountMixerServiceAttempt());
       }
+      dispatch(discoverAvailableVSPs());
       await dispatch(getNextAddressAttempt(0));
       await dispatch(getTicketPriceAttempt());
       await dispatch(getNetworkAttempt());
@@ -71,6 +74,7 @@ const startWalletServicesTrigger = () => (dispatch, getState) =>
       await dispatch(getStartupWalletInfo());
       await dispatch(transactionNtfnsStart());
       await dispatch(accountNtfnsStart());
+      await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_ERRORED));
       // await dispatch(pushHistory("/home"));
     };
 
@@ -79,6 +83,8 @@ const startWalletServicesTrigger = () => (dispatch, getState) =>
       .catch((error) => reject(error));
   });
 
+// TODO move startWalletServices to WalletLoaderActions, as it is not related
+// to ClientActions.
 export const startWalletServices = () => (dispatch, getState) => new Promise((resolve, reject) => {
   const { startWalletServiceAttempt } = getState().grpc;
   if (startWalletServiceAttempt) {

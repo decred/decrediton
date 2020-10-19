@@ -213,3 +213,12 @@ export const getCoinjoinOutputspByAcct = (walletService) =>
       err ? fail(err) : ok({ ...res })
     );
   });
+
+export const getVSPTicketsByFeeStatus = (walletService, feeStatus) =>
+  new Promise((resolve, reject) => {
+    const request = new api.GetVSPTicketsByFeeStatusRequest();
+    request.setFeeStatus(feeStatus);
+    walletService.getVSPTicketsByFeeStatus(request, (error, response) =>
+      error ? reject(error) : resolve(response)
+    );
+  });
