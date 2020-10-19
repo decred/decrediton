@@ -1,120 +1,139 @@
-import { ticketsList } from "connectors";
+import { useState } from "react";
 import TicketListPage from "./Page";
 import { FormattedMessage as T } from "react-intl";
-import { substruct } from "fp";
+import { useTicketsList } from "../hooks";
+import * as txTypes from "constants/Decrediton";
 
 const labels = {
-  unknown: <T id="ticket.status.multiple.unknown" m="unknown" />,
-  unmined: <T id="ticket.status.multiple.unmined" m="unmined" />,
-  immature: <T id="ticket.status.multiple.immature" m="immature" />,
-  live: <T id="ticket.status.multiple.live" m="live" />,
-  voted: <T id="ticket.status.multiple.voted" m="voted" />,
-  missed: <T id="ticket.status.multiple.missed" m="missed" />,
-  expired: <T id="ticket.status.multiple.expired" m="expired" />,
-  revoked: <T id="ticket.status.multiple.revoked" m="revoked" />
+  [txTypes.UNKNOWN]: <T id="ticket.status.multiple.unknown" m="unknown" />,
+  [txTypes.UNMINED]: <T id="ticket.status.multiple.unmined" m="unmined" />,
+  [txTypes.IMMATURE]: <T id="ticket.status.multiple.immature" m="immature" />,
+  [txTypes.LIVE]: <T id="ticket.status.multiple.live" m="live" />,
+  [txTypes.VOTED]: <T id="ticket.status.multiple.voted" m="voted" />,
+  [txTypes.MISSED]: <T id="ticket.status.multiple.missed" m="missed" />,
+  [txTypes.EXPIRED]: <T id="ticket.status.multiple.expired" m="expired" />,
+  [txTypes.REVOKED]: <T id="ticket.status.multiple.revoked" m="revoked" />
 };
 
-@autobind
-class MyTickets extends React.Component {
-  constructor(props) {
-    super(props);
-    const selectedTicketTypeKey = this.selectedTicketTypeFromFilter(
-      this.props.ticketsFilter
-    );
-    const selectedSortOrderKey = this.props.ticketsFilter.listDirection;
-    this.state = { selectedTicketTypeKey, selectedSortOrderKey };
+const sortTypes = [
+  {
+    value: txTypes.DESC,
+    key: txTypes.DESC,
+    label: <T id="tickets.sortby.newest" m="Newest" />
+  },
+  {
+    value: txTypes.ASC,
+    key: txTypes.ASC,
+    label: <T id="tickets.sortby.oldest" m="Oldest" />
   }
+];
 
-  getSortTypes() {
-    return [
-      {
-        value: "desc",
-        key: "desc",
-        label: <T id="tickets.sortby.newest" m="Newest" />
-      },
-      {
-        value: "asc",
-        key: "asc",
-        label: <T id="tickets.sortby.oldest" m="Oldest" />
-      }
-    ];
+const ticketTypes = [
+  {
+    key: txTypes.ALL,
+    value: { status: null },
+    label: <T id="tickets.type.all" m="All" />
+  },
+  {
+    key: txTypes.UNMINED,
+    value: { status: txTypes.UNMINED },
+    label: labels[txTypes.UNMINED]
+  },
+  {
+    key: txTypes.IMMATURE,
+    value: { status: txTypes.IMMATURE },
+    label: labels[txTypes.IMMATURE]
+  },
+  {
+    key: txTypes.LIVE,
+    value: { status: txTypes.LIVE },
+    label: labels[txTypes.LIVE]
+  },
+  {
+    key: txTypes.VOTED,
+    value: { status: txTypes.VOTED },
+    label: labels[txTypes.VOTED]
+  },
+  {
+    key: txTypes.MISSED,
+    value: { status: txTypes.MISSED },
+    label: labels[txTypes.MISSED]
+  },
+  {
+    key: txTypes.EXPIRED,
+    value: { status: txTypes.EXPIRED },
+    label: labels[txTypes.EXPIRED]
+  },
+  {
+    key: txTypes.REVOKED,
+    value: { status: txTypes.REVOKED },
+    label: labels[txTypes.REVOKED]
   }
+];
 
-  // TODO use constants
-  getTicketTypes() {
-    return [
-      {
-        key: "all",
-        value: { status: null },
-        label: <T id="tickets.type.all" m="All" />
-      },
-      { key: "unmined", value: { status: "unmined" }, label: labels.unmined },
-      {
-        key: "immature",
-        value: { status: "immature" },
-        label: labels.immature
-      },
-      { key: "live", value: { status: "live" }, label: labels.live },
-      { key: "voted", value: { status: "voted" }, label: labels.voted },
-      { key: "missed", value: { status: "missed" }, label: labels.missed },
-      { key: "expired", value: { status: "expired" }, label: labels.expired },
-      { key: "revoked", value: { status: "revoked" }, label: labels.revoked }
-    ];
-  }
+const selectTicketTypeFromFilter = (filter) => {
+  const ticketType = ticketTypes.find(
+    (ticket) => filter.status === ticket.value.status
+  );
+  return ticketType && ticketType.key;
+};
 
-  selectedTicketTypeFromFilter(filter) {
-    const types = this.getTicketTypes();
-    let key;
-    types.forEach((type) => {
-      if (filter.status === type.value.status) {
-        key = type.key;
-        return;
-      }
-    });
-    return key;
-  }
+const MyTickets = () => {
+  const {
+    tickets,
+    tsDate,
+    noMoreTickets,
+    ticketsFilter,
+    window,
+    goBackHistory,
+    getTickets,
+    changeTicketsFilter
+  } = useTicketsList();
 
-  onChangeFilter(value) {
-    const newFilter = {
-      ...this.props.ticketsFilter,
-      ...value
-    };
-    this.props.changeTicketsFilter(newFilter);
-  }
+  const [selectedTicketTypeKey, setTicketTypeKey] = useState(
+    selectTicketTypeFromFilter(ticketsFilter)
+  );
+  const [selectedSortOrderKey, setSortOrderKey] = useState(
+    ticketsFilter.listDirection
+  );
 
-  onChangeSelectedType(type) {
-    this.onChangeFilter(type.value);
-    this.setState({ selectedTicketTypeKey: type.key });
-  }
+  const onChangeFilter = (filter) => {
+    const newFilter = { ...ticketsFilter, ...filter };
+    changeTicketsFilter(newFilter);
+  };
 
-  onChangeSortType(type) {
-    this.onChangeFilter({ listDirection: type.value });
-    this.setState({ selectedSortOrderKey: type.value });
-  }
+  const onChangeSelectedType = (type) => {
+    onChangeFilter(type.value);
+    setTicketTypeKey(type.key);
+  };
 
-  render() {
-    const loadMoreThreshold =
-      90 + Math.max(0, this.props.window.innerHeight - 765);
-    return (
-      <TicketListPage
-        {...{
-          ...this.props,
-          ...this.state,
-          loadMoreThreshold,
-          ticketTypes: this.getTicketTypes(),
-          sortTypes: this.getSortTypes(),
-          tickets: this.props.tickets,
-          ...substruct(
-            {
-              onChangeSelectedType: null,
-              onChangeSortType: null
-            },
-            this
-          )
-        }}
-      />
-    );
-  }
-}
+  const onChangeSortType = (type) => {
+    onChangeFilter({ listDirection: type.value });
+    setSortOrderKey(type.value);
+  };
 
-export default ticketsList(MyTickets);
+  const loadMoreThreshold = 90 + Math.max(0, window.innerHeight - 765);
+
+  return (
+    <TicketListPage
+      {...{
+        selectedTicketTypeKey,
+        selectedSortOrderKey,
+        loadMoreThreshold,
+        ticketTypes,
+        sortTypes,
+        tickets,
+        ticketsFilter,
+        changeTicketsFilter,
+        onChangeSortType,
+        onChangeSelectedType,
+        tsDate,
+        getTickets,
+        goBackHistory,
+        noMoreTickets
+      }}
+    />
+  );
+};
+
+export default MyTickets;

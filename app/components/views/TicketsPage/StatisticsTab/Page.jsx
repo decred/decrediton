@@ -6,6 +6,7 @@ import HeatmapStats from "./Heatmap/Heatmap";
 import StakePoolStats from "./charts/StakePoolStats";
 import { DecredLoading, NoStats } from "indicators";
 import { Tooltip, Subtitle } from "shared";
+import "style/MyTickets.less";
 
 const subtitleMenu = ({ allStakePoolStats, hasStats }) => (
   <div className="my-tickets-stats-links">

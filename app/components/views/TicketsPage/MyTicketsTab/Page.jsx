@@ -7,7 +7,7 @@ import {
 } from "indicators";
 import { TxHistory, Subtitle, Tooltip } from "shared";
 import { EyeFilterMenu } from "buttons";
-import "style/MyTickets.less";
+import style from "./MyTicketsTab.module.css";
 
 const subtitleMenu = ({
   sortTypes,
@@ -17,7 +17,7 @@ const subtitleMenu = ({
   onChangeSelectedType,
   onChangeSortType
 }) => (
-  <div className="tickets-buttons-area">
+  <div className={style.ticketsButtons}>
     <Tooltip
       tipWidth={300}
       text={<T id="tickets.sortby.tooltip" m="Sort By" />}>
@@ -55,29 +55,30 @@ const TicketListPage = ({
   sortTypes,
   ticketTypes,
   tsDate
-}) => (
-  <InfiniteScroll
-    hasMore={!noMoreTickets}
-    loadMore={() => getTickets(true)}
-    initialLoad={!noMoreTickets}
-    useWindow={false}
-    threshold={90}>
-    <Subtitle
-      title={<T id="mytickets.subtitle" m="My Tickets" />}
-      className={"is-row"}
-      children={subtitleMenu({
-        sortTypes,
-        ticketTypes,
-        selectedSortOrderKey,
-        selectedTicketTypeKey,
-        onChangeSelectedType,
-        onChangeSortType
-      })}
-    />
-    <div className="history-page-content-wrapper">
+}) => {
+  const isOverview = window.innerWidth < 768; // small width
+  return (
+    <InfiniteScroll
+      hasMore={!noMoreTickets}
+      loadMore={() => getTickets(true)}
+      initialLoad={!noMoreTickets}
+      useWindow={false}
+      threshold={90}>
+      <Subtitle
+        title={<T id="mytickets.subtitle" m="My Tickets" />}
+        className={style.subtitle}
+        children={subtitleMenu({
+          sortTypes,
+          ticketTypes,
+          selectedSortOrderKey,
+          selectedTicketTypeKey,
+          onChangeSelectedType,
+          onChangeSortType
+        })}
+      />
       {tickets.length > 0 && (
         <>
-          <div className="my-tickets-table-header">
+          <div className={style.tableHeader}>
             <div>
               <T id="tickets.table.header.status" m="Ticket Status" />
             </div>
@@ -97,18 +98,25 @@ const TicketListPage = ({
               <T id="tickets.table.header.purchased" m="Purchased" />
             </div>
           </div>
-          <TxHistory {...{ transactions: tickets, tsDate, mode: "stake" }} />
+          <TxHistory
+            {...{
+              transactions: tickets,
+              tsDate,
+              mode: "stake",
+              overview: isOverview
+            }}
+          />
         </>
       )}
-    </div>
-    {!noMoreTickets ? (
-      <LoadingMoreTicketsIndicator />
-    ) : tickets.length > 0 ? (
-      <NoMoreTicketsIndicator />
-    ) : (
-      <NoTicketsIndicator />
-    )}
-  </InfiniteScroll>
-);
+      {!noMoreTickets ? (
+        <LoadingMoreTicketsIndicator />
+      ) : tickets.length > 0 ? (
+        <NoMoreTicketsIndicator />
+      ) : (
+        <NoTicketsIndicator />
+      )}
+    </InfiniteScroll>
+  );
+};
 
 export default TicketListPage;

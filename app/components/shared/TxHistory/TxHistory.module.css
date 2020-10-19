@@ -148,6 +148,16 @@
 .myTickets {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 2fr 1fr 1fr;
+  width: 100%;
+}
+
+.myTickets.overview {
+  grid-template-columns: 1fr 1fr 1fr;
+  padding-bottom: 1rem;
+  font-size: 11px;
+  align-items: center;
+  color: var(--overview-balance-label) !important;
+  font-family: var(--font-family-monospace);
 }
 
 .stakeType {
@@ -175,10 +185,6 @@
   background-size: 11px 11px;
   background-position: 0px 4px;
   padding-left: 16px;
-}
-
-.ticketReward.overview {
-  margin-left: 50px;
 }
 
 .daysToVote {
@@ -239,7 +245,7 @@
 
 .historyRow {
   background-image: var(--arrow-right-gray-icon);
-  background-position: 715px;
+  background-position: 98%;
   background-size: 5px;
   background-repeat: no-repeat;
   border-bottom: 1px solid var(--disabled-background-color);
@@ -267,19 +273,34 @@
   background-position: 688px;
 }
 
+.overviewRow .txInfo .ticketStatus {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  color: var(--input-color-default);
+}
+
+.overviewRow .txInfo .myTickets .timeDateSpacer {
+  grid-column-end: 4;
+  grid-row-start: 1;
+  grid-column-start: 2;
+  justify-self: right;
+  background: none;
+  color: var(--input-color-default);
+}
+
+.overviewRow .txInfo .stakeAccount {
+  display: none !important;
+}
+
 @media screen and (max-width: 1179px) {
   .overviewRow {
     width: 315px;
-  }
-  .historyRow {
-    width: 667px;
-    background-position: 642px;
   }
 }
 
 @media screen and (max-width: 768px) {
   .historyRow {
-    width: 355px;
+    width: 100%;
   }
   .accountName {
     background: transparent;
@@ -306,5 +327,30 @@
   .info {
     grid-template-columns: 0.5fr 3fr 3fr;
     padding-bottom: 1rem;
+  }
+  .myTickets {
+    grid-template-columns: 1fr 1fr 1fr;
+    padding-bottom: 1rem;
+    font-size: 11px;
+    align-items: stretch;
+    color: var(--overview-balance-label) !important;
+    font-family: var(--font-family-monospace);
+  }
+
+  .ticketStatus {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    color: var(--input-color-default);
+  }
+  .stakeAccount {
+    display: none !important;
+  }
+  .myTickets .timeDateSpacer {
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-column-start: 2;
+    justify-self: right;
+    background: none;
+    color: var(--input-color-default);
   }
 }

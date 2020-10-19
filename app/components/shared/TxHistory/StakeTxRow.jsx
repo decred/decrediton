@@ -60,6 +60,8 @@ const StakeTxRow = ({
     [daysToVote]
   );
 
+  const showDaysToVote = daysToVote !== null && !isNaN(daysToVote);
+
   // If txType equals ticket, we use the message bype by the tx status, so we
   // can show the proper icon (Revoked, Voted). Although we show the message
   // as Purchased, to avoid confusion.
@@ -67,64 +69,30 @@ const StakeTxRow = ({
     txType === "ticket"
       ? messageByType[status]
       : messageByType[txType] || "(unknown type)";
-  return overview ? (
-    <Row {...{ className, overview, pending, ...props }}>
-      <div className={styles.overviewInfo}>
-        <span className={classNames(styles[className], styles.icon)} />
-        <span
-          className={classNames(styles.stakeType, overview && styles.overview)}>
-          {typeMsg}
-        </span>
-        {!pending && (
-          <div className={styles.timeDateSpacer}>{timeMessage(txTs)}</div>
-        )}
-      </div>
-      <div className={styles.priceReward}>
-        <Tooltip text={<TicketPriceMessage ticketPrice={ticketPrice} />}>
-          <Balance amount={ticketPrice} />
-        </Tooltip>
-        <Tooltip text={ticketRewardMessage}>
-          <Balance
-            classNameWrapper={classNames(
-              styles.ticketReward,
-              overview && styles.overview
-            )}
-            amount={ticketReward}
-            noSmallAmount
-          />
-        </Tooltip>
-        {daysToVote !== null && !isNaN(daysToVote) && (
-          <Tooltip text={daysToVoteMessage}>
-            <div className={styles.daysToVote}>
-              <T
-                id="statusSmall.daysToVotePlural"
-                m="{days, plural, one {# day} other {# days}}"
-                values={{ days: daysToVote }}
-              />
-            </div>
-          </Tooltip>
-        )}
-      </div>
-    </Row>
-  ) : (
-    <Row {...{ className, pending, ...props }}>
-      <div className={styles.myTickets}>
-        <div>
+  return (
+    <Row {...{ className, pending, ...props, overview }}>
+      <div
+        className={classNames(styles.myTickets, overview && styles.overview)}>
+        <div className={styles.ticketStatus}>
           <span className={classNames(styles[className], styles.icon)} />
           <span className={styles.stakeType}>{typeMsg}</span>
         </div>
-        <Balance
-          bold
-          classNameAmount={styles.myTicketsPrice}
-          classNameUnit={styles.noBold}
-          amount={ticketPrice}
-        />
-        <Balance
-          classNameWrapper={styles.ticketReward}
-          noSmallAmount
-          amount={ticketReward}
-        />
-        {daysToVote !== null && !isNaN(daysToVote) ? (
+        <Tooltip text={<TicketPriceMessage ticketPrice={ticketPrice} />}>
+          <Balance
+            bold
+            classNameAmount={styles.myTicketsPrice}
+            classNameUnit={styles.noBold}
+            amount={ticketPrice}
+          />
+        </Tooltip>
+        <Tooltip text={ticketRewardMessage}>
+          <Balance
+            classNameWrapper={styles.ticketReward}
+            noSmallAmount
+            amount={ticketReward}
+          />
+        </Tooltip>
+        {showDaysToVote ? (
           <Tooltip text={daysToVoteMessage}>
             <div className={styles.daysToVote}>
               <T
@@ -137,8 +105,12 @@ const StakeTxRow = ({
         ) : (
           <div />
         )}
-        <div className={styles.accountName}>{accountName}</div>
-        {!pending && <div>{timeMessage(txTs)}</div>}
+        <div className={classNames(styles.accountName, styles.stakeAccount)}>
+          {accountName}
+        </div>
+        {!pending && (
+          <div className={styles.timeDateSpacer}>{timeMessage(txTs)}</div>
+        )}
       </div>
     </Row>
   );
