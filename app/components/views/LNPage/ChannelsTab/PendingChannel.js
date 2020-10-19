@@ -1,5 +1,7 @@
 import { Balance, ExternalLink } from "shared";
+import { CopyableText } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
+import styles from "./ChannelsTab.module.css";
 
 const PendingOpenChannelDetails = ({ channel }) => (
   <>
@@ -83,7 +85,7 @@ export const PendingChannelDetails = ({ channel }) => {
   }
 
   return (
-    <div className="ln-pending-channel-details">
+    <div className={styles.channelDetails}>
       <span>
         <T id="ln.pendingChannelDetails.type" m="Type" />
       </span>
@@ -97,7 +99,7 @@ export const PendingChannelDetails = ({ channel }) => {
       <span>
         <T id="ln.pendingChannelDetails.remotePubKey" m="Remote Pubkey" />
       </span>
-      <span>{channel.remotePubkey}</span>
+      <span><CopyableText id="copyable" className={styles.copyableText}>{channel.remotePubkey}</CopyableText></span>
       <DetailsCompo channel={channel} />
     </div>
   );
@@ -105,14 +107,21 @@ export const PendingChannelDetails = ({ channel }) => {
 
 export default ({ channel }) => (
   <div
-    className={["ln-open-channel", "pending-" + channel.pendingStatus].join(
-      " "
-    )}>
-    <div className="data-wrapper">
-      <div className="capacity">
+    className={`
+      ${styles.openChannel}
+      ${
+        channel.pendingStatus === "open" ? styles.pendingOpen
+        : channel.pendingStatus === "close" ? styles.pendingClose
+        : channel.pendingStatus === "forceclose" ? styles.pendingForceclose
+        : channel.pendingStatus === "waitclose" ? styles.pendingWaitclose
+        : ""
+      }
+    `}>
+    <div className={styles.dataWrapper}>
+      <div className={styles.capacity}>
         <Balance amount={channel.capacity} />
       </div>
-      <div className="peer-balances">
+      <div className={styles.peerBalances}>
         <div className="local-balance">
           <T id="ln.channelsTab.pendingChannel.localBalance" m="Local" />
           <Balance amount={channel.localBalance} />
@@ -123,6 +132,6 @@ export default ({ channel }) => (
         </div>
       </div>
     </div>
-    <div className="remote-pubkey">{channel.channelPoint}</div>
+    <div className={styles.remotePubkey}>{channel.channelPoint}</div>
   </div>
 );

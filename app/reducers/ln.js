@@ -28,7 +28,10 @@ import {
   LNWALLET_GETNETWORKINFO_FAILED,
   LNWALLET_GETNODEINFO_ATTEMPT,
   LNWALLET_GETNODEINFO_SUCCESS,
-  LNWALLET_GETNODEINFO_FAILED
+  LNWALLET_GETNODEINFO_FAILED,
+  LNWALLET_GETROUTESINFO_ATTEMPT,
+  LNWALLET_GETROUTESINFO_SUCCESS,
+  LNWALLET_GETROUTESINFO_FAILED
 } from "actions/LNActions";
 
 function addOutstandingPayment(oldOut, rhashHex, payData) {
@@ -191,7 +194,9 @@ export default function ln(state = {}, action) {
         getNetworkInfoAttempt: false,
         network: null,
         getNodeInfoAttempt: false,
+        getRoutesInfoAttempt: false,
         nodeInfo: null,
+        routes: null,
         info: {
           version: null,
           identityPubkey: null,
@@ -248,6 +253,26 @@ export default function ln(state = {}, action) {
         getNodeInfoAttempt: false,
         nodeInfo: action.error
       };
+    case LNWALLET_GETROUTESINFO_ATTEMPT:
+      return {
+        ...state,
+        getRoutesInfoAttempt: true,
+        routes: null
+      };
+    case LNWALLET_GETROUTESINFO_SUCCESS:
+      return {
+        ...state,
+        getRoutesInfoAttempt: false,
+        routes: action.routes,
+        nodeInfo: null
+      };
+    case LNWALLET_GETROUTESINFO_FAILED:
+      return {
+        ...state,
+        getRoutesInfoAttempt: false,
+        nodeInfo: action.error
+      };
+
     default:
       return state;
   }

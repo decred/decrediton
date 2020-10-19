@@ -1,7 +1,8 @@
 import { FormattedMessage as T } from "react-intl";
-import { Balance, VerticalAccordion, Tooltip } from "shared";
+import { Balance, Subtitle, VerticalAccordion, Tooltip } from "shared";
 import { KeyBlueButton, CloseChannelModalButton } from "buttons";
 import { TextInput, DcrInput } from "inputs";
+import styles from "./ChannelsTab.module.css";
 import {
   default as OpenChannel,
   OpenChannelDetails,
@@ -16,11 +17,40 @@ import {
   ClosedChannelDetails
 } from "./ClosedChannel";
 
+const BalanceHeader = ({ walletBalance, totalBandwidth }) => (
+  <div className={styles.balanceHeader}>
+    <div className={`${styles.balanceTile} ${
+        walletBalance === 0 ?
+        styles.zeroFunds
+        :styles.hasFunds}
+        `}>
+      <div className={styles.balanceValue}>
+        <Balance amount={walletBalance} />
+      </div>
+      <T
+        id="ln.channelsTab.balance.onChain"
+        m="Confirmed on-chain balance"
+      />
+    </div>
+    <div className={`${styles.balanceTile} ${
+        totalBandwidth === 0 ?
+        styles.zeroFunds
+        :styles.hasFunds}
+        `}>
+      <div className={styles.balanceValue}>
+        <Balance amount={totalBandwidth} />
+      </div>
+      <T
+        id="ln.channelsTab.balance.channelsCapacity"
+        m="Total channels capacity"
+      />
+    </div>
+  </div>
+);
+
 export default ({
-  balance,
-  pendingOpenBalance,
-  maxInboundAmount,
-  maxOutboundAmount,
+  walletBalances,
+  channelBalances,
   channels,
   pendingChannels,
   closedChannels,
@@ -39,31 +69,23 @@ export default ({
   onToggleChannelDetails
 }) => (
   <>
-    <div className="ln-wallet-balances">
-      <div>
-        <T id="ln.channelsTab.balance" m="Balance" />
-      </div>
-      <Balance amount={balance} />
-      <div>
-        <T id="ln.channelsTab.pendingOpenBalance" m="Pending Open" />
-      </div>
-      <Balance amount={pendingOpenBalance} />
-      <div>
-        <T id="ln.walletTab.maxInboundAmt" m="Max. Receivable" />
-      </div>
-      <Balance amount={maxInboundAmount} />
-      <div>
-        <T id="ln.walletTab.maxOutboundAmt" m="Max. Payable" />
-      </div>
-      <Balance amount={maxOutboundAmount} />
-    </div>
+    <Subtitle title={
+      <T id="ln.channelsTab.balance" m="Balance" />
+    } />
+    <BalanceHeader
+      walletBalance={walletBalances.confirmedBalance}
+      totalBandwidth={
+        channelBalances.maxInboundAmount
+        + channelBalances.maxOutboundAmount
+      }
+    />
 
-    <h2 className="ln-invoice-subheader">
+    <Subtitle title={
       <T id="ln.channelsTab.openChannel" m="Open Channel" />
-    </h2>
+    } />
 
-    <div className="ln-open-new-channel">
-      <div className="node">
+    <div className={styles.openNewChannel}>
+      <div className={styles.node}>
         <T id="ln.openChannel.node" m="Counterparty (node@ip:port)" />
         <TextInput value={node} onChange={onNodeChanged} />
       </div>
@@ -78,7 +100,7 @@ export default ({
         </div>
       )}
       <KeyBlueButton
-        className="open-btn"
+        className={styles.openButton}
         onClick={onOpenChannel}
         loading={opening}
         disabled={opening || !canOpen}>
@@ -86,12 +108,12 @@ export default ({
       </KeyBlueButton>
     </div>
 
-    {pendingChannels.length > 0 ? (
-      <h2 className="ln-invoice-subheader">
-        <T id="ln.channelsTab.pendingList" m="Pending Channels" />
-      </h2>
-    ) : null}
-    <div className="ln-wallet-open-channels-list">
+    <div className={styles.channelsContent}>
+      {pendingChannels.length > 0 ? (
+        <Subtitle title={
+          <T id="ln.channelsTab.pendingList" m="Pending Channels" />
+          } />
+      ) : null}
       {pendingChannels.map((c) => (
         <VerticalAccordion
           key={c.channelPoint}
@@ -104,29 +126,30 @@ export default ({
       ))}
     </div>
 
-    <h2 className="ln-invoice-subheader">
-      <T id="ln.channelsTab.channelList" m="Open Channels" />
-    </h2>
-    <div className="ln-wallet-open-channels-list">
+    <div className={styles.channelsContent}>
+      {channels.length > 0 ? (
+        <Subtitle title={
+          <T id="ln.channelsTab.channelList" m="Open Channels" />
+          } />
+      ) : null}
       {channels.map((c) => (
-        <div className="openchannel-header-wrapper" key={c.channelPoint}>
+        <div className={styles.headerWrapper} key={c.channelPoint}>
           <Tooltip
-            className="close-channel-btn"
+            className={styles.closeChannelBtn}
             text={
               <T id="ln.channelsTab.closeChannelBtn" m="Close the channel" />
             }>
             <CloseChannelModalButton
               modalTitle={
                 <T
-                  id="ln.channelsTab.closeChannelModalTitle"
-                  m="Close Channel"
-                />
+                id="ln.channelsTab.closeChannelModalTitle"
+                m="Close Channel"
+                  />
               }
               modalContent={<CloseChannelModalContent channel={c} />}
               onSubmit={() => onCloseChannel(c)}
             />
           </Tooltip>
-
           <VerticalAccordion
             height={280}
             onToggleAccordion={() => onToggleChannelDetails(c)}
@@ -140,12 +163,12 @@ export default ({
       ))}
     </div>
 
-    {closedChannels.length > 0 ? (
-      <h2 className="ln-invoice-subheader">
-        <T id="ln.channelsTab.closedList" m="Closed Channels" />
-      </h2>
-    ) : null}
-    <div className="ln-wallet-closed-channels-list">
+    <div className={styles.channelsContent}>
+      {closedChannels.length > 0 ? (
+        <Subtitle title={
+          <T id="ln.channelsTab.closedList" m="Closed Channels" />
+          } />
+      ) : null}
       {closedChannels.map((c) => (
         <VerticalAccordion
           key={c.channelPoint}

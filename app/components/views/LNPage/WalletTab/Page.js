@@ -1,13 +1,59 @@
+import { CopyableText, classNames } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
-import { Balance, VerticalAccordion } from "shared";
+import { Subtitle, Balance, VerticalAccordion } from "shared";
 import { InfoDocModalButton, InvisibleButton } from "buttons";
 import { ConfirmModal } from "modals";
+import styles from "./WalletTab.module.css";
+
+const BalanceHeader = ({
+  confirmedBalance,
+  unconfirmedBalance,
+  totalBalance
+}) => (
+  <div className={styles.balanceHeader}>
+    <div className={`${styles.balanceTile} ${
+        confirmedBalance === 0 ?
+        styles.zeroFunds
+        :styles.hasFunds}
+        `}>
+      <div className={styles.balanceValue}>
+        <Balance amount={confirmedBalance} />
+      </div>
+      <T
+        id="ln.walletTab.balance.confirmed"
+        m="Confirmed balance"
+      />
+    </div>
+    <div className={classNames(styles.balanceTile, styles.unconfirmed)}>
+      <div className={styles.balanceValue}>
+        <Balance amount={unconfirmedBalance} />
+      </div>
+      <T
+        id="ln.walletTab.balance.unconfirmed"
+        m="Unconfirmed balance"
+      />
+    </div>
+    <div className={classNames(styles.balanceTile,
+      totalBalance === 0 ?
+      styles.zeroFunds
+      :null)
+      }>
+      <div className={styles.balanceValue}>
+        <Balance amount={totalBalance} />
+      </div>
+      <T
+        id="ln.walletTab.balance.totalBalance"
+        m="Total balance"
+      />
+    </div>
+  </div>
+);
 
 const BackupInfoHeader = ({ scbPath, scbUpdatedTime }) => (
-  <div className="ln-backup-info-header">
-    <div className="backup-icon" />
-    <div className="info">
-      <div className="text">
+  <div className={styles.backupInfoHeader}>
+    <div className={styles.backupIcon} />
+    <div className={styles.backupInfo}>
+      <div className={styles.backupInfoText}>
         <div>
           <T
             id="ln.backupInfo.location"
@@ -23,7 +69,7 @@ const BackupInfoHeader = ({ scbPath, scbUpdatedTime }) => (
           />
         </div>
       </div>
-      <div className="info-btn">
+      <div className={styles.backupInfoBtn}>
         <InfoDocModalButton
           document="LNBackupInfo"
           modalClassName="info-modal-fields"
@@ -36,7 +82,7 @@ const BackupInfoHeader = ({ scbPath, scbUpdatedTime }) => (
 );
 
 const BackupInfoDetails = ({ onBackup, onVerifyBackup }) => (
-  <div className="ln-backup-info-details">
+  <div>
     <InvisibleButton onClick={onBackup}>
       <T id="ln.backup.backupBtn" m="Backup Now" />
     </InvisibleButton>
@@ -63,30 +109,34 @@ export default ({
   onConfirmFileOverwrite
 }) => (
   <>
-    <div className="ln-wallet-balances">
-      <div>
-        <T id="ln.walletTab.alias" m="Node Alias" />
+    <Subtitle title={
+      <T id="ln.walletTab.balances" m="Balances" />
+      } />
+    <BalanceHeader
+      confirmedBalance={confirmedBalance}
+      unconfirmedBalance={unconfirmedBalance}
+      totalBalance={totalBalance}
+    />
+    <Subtitle title={
+      <T id="ln.walletTab.infos" m="Infos" />
+      } />
+    <div className={styles.nodeInfos}>
+      <T id="ln.walletTab.nodeInfos.alias" m="Node Alias" />
+      <div className={styles.nodeAlias}>
+        {alias}
       </div>
-      <span>{alias}</span>
-      <div>
-        <T id="ln.walletTab.pubkey" m="Node Pubkey" />
-      </div>
-      <span>{identityPubkey}</span>
-      <div>
-        <T id="ln.walletTab.confirmedBalance" m="Confirmed" />
-      </div>
-      <Balance amount={confirmedBalance} />
-      <div>
-        <T id="ln.walletTab.unconfirmedBalance" m="Unconfirmed" />
-      </div>
-      <Balance amount={unconfirmedBalance} />
-      <div>
-        <T id="ln.walletTab.totalBalance" m="Total" />
-      </div>
-      <Balance amount={totalBalance} />
+    </div>
+    <div className={classNames(styles.nodeInfos, styles.lastItem)}>
+      <T id="ln.walletTab.nodeInfos.ID" m="Node ID" />
+      <CopyableText id="copyablePubkey" className={styles.copyableText}>
+        {identityPubkey}
+      </CopyableText>
     </div>
 
-    <div className="ln-backup-info">
+    <Subtitle title={
+      <T id="ln.walletTab.backup" m="Backup" />
+      } />
+    <div>
       <VerticalAccordion
         header={
           <BackupInfoHeader scbPath={scbPath} scbUpdatedTime={scbUpdatedTime} />

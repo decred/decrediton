@@ -563,6 +563,7 @@ const subscribeToInvoices = () => (dispatch, getState) => {
     }
 
     dispatch({ invoice: inv, invoices: newInvoices, type });
+    dispatch(updateLNChannelBalances());
 
     // These updates are less than ideal if the list of channels starts to grow,
     // but it's enough for the moment.
@@ -955,5 +956,22 @@ export const getNodeInfo = nodeID => async (dispatch, getState) => {
     dispatch({ nodeInfo, type: LNWALLET_GETNODEINFO_SUCCESS });
   } catch (error) {
     dispatch({ error, type: LNWALLET_GETNODEINFO_FAILED });
+  }
+};
+
+export const LNWALLET_GETROUTESINFO_ATTEMPT = "LNWALLET_GETROUTESINFO_ATTEMPT";
+export const LNWALLET_GETROUTESINFO_SUCCESS = "LNWALLET_GETROUTESINFO_SUCCESS";
+export const LNWALLET_GETROUTESINFO_FAILED = "LNWALLET_GETROUTESINFO_FAILED";
+
+export const getRoutesInfo = (nodeID, amt) => async (dispatch, getState) => {
+  const { client } = getState().ln;
+  if (!client) throw new Error("unconnected to ln wallet");
+
+  dispatch({ type: LNWALLET_GETROUTESINFO_ATTEMPT });
+  try {
+    const routes = await ln.getRoutes(client, nodeID, amt);
+    dispatch({ routes, type: LNWALLET_GETROUTESINFO_SUCCESS });
+  } catch (error) {
+    dispatch({ error, type: LNWALLET_GETROUTESINFO_FAILED });
   }
 };

@@ -1,6 +1,8 @@
 import { FormattedMessage as T } from "react-intl";
 import { Balance, ExternalLink } from "shared";
+import { CopyableText } from "pi-ui";
 import * as lna from "actions/LNActions";
+import styles from "./ChannelsTab.module.css";
 
 const closeTypes = {
   [lna.CLOSETYPE_COOPERATIVE_CLOSE]: (
@@ -22,7 +24,7 @@ const closeTypes = {
 };
 
 export const ClosedChannelDetails = ({ channel }) => (
-  <div className="ln-closed-channel-details">
+  <div className={styles.channelDetails}>
     <div>
       <T id="ln.closedChannelDetails.chanId" m="Channel ID" />
     </div>
@@ -44,17 +46,17 @@ export const ClosedChannelDetails = ({ channel }) => (
     <span>
       <T id="ln.closedChannelDetails.remotePubKey" m="Remote PubKey" />
     </span>
-    <span>{channel.remotePubkey}</span>
+    <span><CopyableText id="copyable" className={styles.copyableText}>{channel.remotePubkey}</CopyableText></span>
   </div>
 );
 
 export default ({ channel }) => (
-  <div className="ln-open-channel channel-closed">
-    <div className="data-wrapper">
-      <div className="capacity">
+  <div className={`${styles.openChannel} ${styles.channelClosed}`}>
+    <div className={styles.dataWrapper}>
+      <div className={styles.capacity}>
         <Balance amount={channel.capacity} />
       </div>
-      <div className="peer-balances">
+      <div className={styles.peerBalances}>
         <div className="local-balance">
           <T id="ln.channelsTab.closedChannel.settledBalance" m="Settled" />
           <Balance amount={channel.settledBalance} />
@@ -68,6 +70,6 @@ export default ({ channel }) => (
         </div>
       </div>
     </div>
-    <div className="remote-pubkey">{channel.channelPoint}</div>
+    <div className={styles.remotePubkey}>{channel.channelPoint}</div>
   </div>
 );

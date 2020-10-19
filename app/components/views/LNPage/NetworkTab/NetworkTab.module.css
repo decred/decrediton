@@ -1,28 +1,82 @@
 .networkInfo {
-  display: grid;
-  grid-template-columns: 1fr 4fr;
-  margin-bottom: 2em;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 40px;
 }
+
+.networkTile {
+  padding: 30px;
+  background-color: var(--background-back-color);
+  width: 400px;
+  flex: 0 1 26%;
+  border-bottom: 10px solid var(--color-primary-dark);
+}
+
+.networkTileNumber { font-size:32px; }
 
 .queryNode {
   margin-top: 1em;
+  background-color: var(--background-back-color);
+  padding: 3em 2em 3em;
 }
 
-.nodeInfo {
-  margin-top: 2em;
+.queryRoutes {
+  margin-top: 1em;
+  background-color: var(--background-back-color);
+  padding: 3em 2em 3em;
+  display: grid;
+  grid-template-columns: 23fr 8fr 50px;
+  grid-column-gap: 20px;
+  margin-bottom: 4em;
+}
+
+.queryRoutesButton {
+  background-image: var(--search-icon);
+  background-size: 25px 25px;
+  background-repeat: no-repeat;
+  background-position: 8px 8px;
+  padding: 12px;
+  height: 16px;
+  width: 16px;
 }
 
 .basicInfo {
-  display: grid;
-  grid-template-columns: 1fr 4fr;
+  margin-top: 2em;
   margin-bottom: 2em;
+  padding: 1em 2em 1em 2em;
+  background-color: var(--background-back-color);
+  border-bottom: 10px solid var(--color-primary);
+}
+
+.basicInfoContent {
+  font-size: 19px;
+  font-weight: 600;
+  margin-bottom: 1em;
 }
 
 .channel {
-  display: grid;
-  grid-template-columns: 1fr 4fr;
-  margin-top: 3em;
+  margin-top: 1em;
+  padding: 1em 2em 1em 2em;
+  background-color: var(--background-back-color);
 }
+
+.channelInfo {
+  padding-bottom: 1em;
+  border-bottom: 1px solid var(--color-primary-dark);
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+
+.infoContent {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 0.5em;
+}
+
+.infoContent a { color: var(--link-color); }
+.infoContent a:hover { color: var(--link-color-hovered); }
 
 .policyGrid {
   display: grid;
@@ -34,4 +88,77 @@
 
 .policyLabel {
   font-style: italic;
+}
+
+.tabsWrapper {
+  position: relative;
+}
+
+.tabs {
+  display: flex;
+  z-index: 999;
+  width: 240px;
+  position: absolute;
+  margin-left: 30px;
+  margin-top: -20px;
+  opacity: 1;
+  color: var(--input-color-default);
+}
+
+.tabLeft {
+  width: 120px;
+  height: 30px;
+  border: 1px var(--disabled-background-color) solid;
+  border-radius: 5px 0px 0px 5px;
+  text-align: center;
+  font-size: 13px;
+  letter-spacing: 0;
+  padding-top: 10px;
+  cursor: pointer;
+}
+
+.tabRight {
+  width: 120px;
+  height: 30px;
+  border: 1px var(--disabled-background-color) solid;
+  border-left: none;
+  border-radius: 0px 5px 5px 0px;
+  text-align: center;
+  font-size: 13px;
+  letter-spacing: 0;
+  padding-top: 10px;
+  cursor: pointer;
+}
+
+.tabBackgroundSelected {
+  background: var(--background-back-color);
+}
+
+.tabBackgroundUnselected {
+  background: var(--disabled-background-color);
+  color: var(--disabled-color);
+}
+
+.route {
+  margin-top: 1em;
+  padding: 1em 2em 1em 2em;
+  background-color: var(--background-back-color);
+}
+
+.hopsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr;
+}
+
+.copyableText span {
+  font-size: 14px;
+  background: none;
+  padding: 0;
+}
+
+.copyableNode span {
+  font-size: 15px;
+  font-weight: 600;
+  background: none;
+  padding: 0;
 }
