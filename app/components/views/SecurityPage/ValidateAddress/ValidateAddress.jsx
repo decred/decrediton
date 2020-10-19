@@ -1,20 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ValidateAddressForm from "./ValidateAddressForm";
 import { useValidateAddress } from "./hooks";
 
 const ValidateAddress = () => {
-  const {
-    validateAddressSuccess,
-    onValidateAddress,
-    onValidateAddressCleanStore
-  } = useValidateAddress();
+  const { onValidateAddress, validateAddressSuccess } = useValidateAddress();
   const [address, setAddress] = useState("");
   const [error, setError] = useState(null);
-
-  useEffect(() => {
-    onValidateAddressCleanStore();
-    return () => onValidateAddressCleanStore();
-  }, [onValidateAddressCleanStore]);
 
   const onChangeAddress = async (address) => {
     setAddress(address);

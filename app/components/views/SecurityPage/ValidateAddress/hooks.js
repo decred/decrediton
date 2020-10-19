@@ -1,28 +1,19 @@
-import { useCallback } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import * as sel from "selectors";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import * as ca from "actions/ControlActions";
 
 export function useValidateAddress() {
+  const [validateAddressSuccess, setValidateAddressSuccess] = useState();
   const dispatch = useDispatch();
-  const validateAddressError = useSelector(sel.validateAddressError);
-  const validateAddressSuccess = useSelector(sel.validateAddressSuccess);
-  const validateAddressRequestAttempt = useSelector(sel.validateAddressRequestAttempt);
 
-  const onValidateAddress = useCallback(
-    (address) => dispatch(ca.validateAddress(address)),
-    [dispatch]
-  );
-  const onValidateAddressCleanStore = useCallback(
-    () => dispatch(ca.validateAddressCleanStore),
-    [dispatch]
-  );
+  const onValidateAddress = async (address) => {
+    const resp = await dispatch(ca.validateAddress(address));
+    setValidateAddressSuccess(resp);
+    return resp;
+  };
 
   return {
-    validateAddressError,
     validateAddressSuccess,
-    validateAddressRequestAttempt,
-    onValidateAddress,
-    onValidateAddressCleanStore
+    onValidateAddress
   };
 }

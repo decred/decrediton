@@ -151,10 +151,7 @@ export const IMPORTSCRIPT_SUCCESS = "IMPORTSCRIPT_SUCCESS";
 
 // importScriptAttempt tries to import the given script into the wallet. It will
 // throw an exception in case of errors.
-export const importScriptAttempt = (script) => async (
-  dispatch,
-  getState
-) => {
+export const importScriptAttempt = (script) => async (dispatch, getState) => {
   dispatch({ type: IMPORTSCRIPT_ATTEMPT });
   const walletService = sel.walletService(getState());
   try {
@@ -181,9 +178,7 @@ export const IMPORTSCRIPT_MANUAL_FAILED = "IMPORTSCRIPT_MANUAL_FAILED";
 // meant as a step during some other operation (eg: linking to a stakepool).
 //
 // This function always initiates a complete wallet rescan in case of success.
-export const manualImportScriptAttempt = (script) => async (
-  dispatch
-) => {
+export const manualImportScriptAttempt = (script) => async (dispatch) => {
   try {
     await dispatch(importScriptAttempt(script));
     dispatch({ type: IMPORTSCRIPT_MANUAL_SUCCESS });
@@ -544,9 +539,6 @@ export const constructTransactionAttempt = (
   });
 };
 
-export const VALIDATEADDRESS_ATTEMPT = "VALIDATEADDRESS_ATTEMPT";
-export const VALIDATEADDRESS_FAILED = "VALIDATEADDRESS_FAILED";
-export const VALIDATEADDRESS_SUCCESS = "VALIDATEADDRESS_SUCCESS";
 export const VALIDATEADDRESS_CLEANSTORE = "VALIDATEADDRESS_CLEANSTORE";
 
 export const validateAddress = (address) => async (dispatch, getState) => {
@@ -555,7 +547,6 @@ export const validateAddress = (address) => async (dispatch, getState) => {
     const network = currentSettings.network;
     const validationErr = isValidAddress(address, network);
     if (validationErr) {
-      dispatch({ type: VALIDATEADDRESS_FAILED });
       return {
         isValid: false,
         error: validationErr,
@@ -564,13 +555,13 @@ export const validateAddress = (address) => async (dispatch, getState) => {
         }
       };
     }
-    dispatch({ type: VALIDATEADDRESS_ATTEMPT });
     const response = await wallet.validateAddress(
       sel.walletService(getState()),
       address
     );
-    dispatch({ response, type: VALIDATEADDRESS_SUCCESS });
+    const responseObj = response ? response.toObject() : {};
     return {
+      ...responseObj,
       isValid: response.getIsValid(),
       error: null,
       getIsValid() {
@@ -578,7 +569,6 @@ export const validateAddress = (address) => async (dispatch, getState) => {
       }
     };
   } catch (error) {
-    dispatch({ type: VALIDATEADDRESS_FAILED });
     return {
       isValid: false,
       error,
@@ -606,9 +596,6 @@ export const validateMasterPubKey = (masterPubKey) => (dispatch) => {
     return { isValid: false, error };
   }
 };
-
-export const validateAddressCleanStore = (dispatch) =>
-  dispatch({ type: VALIDATEADDRESS_CLEANSTORE });
 
 export const SIGNMESSAGE_ATTEMPT = "SIGNMESSAGE_ATTEMPT";
 export const SIGNMESSAGE_FAILED = "SIGNMESSAGE_FAILED";

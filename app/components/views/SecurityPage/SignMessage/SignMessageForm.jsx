@@ -29,12 +29,13 @@ const SignMessageForm = ({
   onChangeAddress,
   onChangeMessage
 }) => {
-  const disabled = isSigningMessage
-    || address == ""
-    || message == ""
-    || addressError
-    || messageError
-    || isSignMessageDisabled;
+  const disabled =
+    isSigningMessage ||
+    address === "" ||
+    message === "" ||
+    addressError ||
+    messageError ||
+    isSignMessageDisabled;
   return (
     <>
       <div className={sharedStyles.securityPageForm}>

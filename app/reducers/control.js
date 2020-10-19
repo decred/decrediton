@@ -62,10 +62,6 @@ import {
   CONSTRUCTTX_SUCCESS,
   CONSTRUCTTX_FAILED_LOW_BALANCE,
   SETBALANCETOMAINTAIN,
-  VALIDATEADDRESS_ATTEMPT,
-  VALIDATEADDRESS_SUCCESS,
-  VALIDATEADDRESS_FAILED,
-  VALIDATEADDRESS_CLEANSTORE,
   MODAL_SHOWN,
   MODAL_HIDDEN,
   SHOW_ABOUT_MODAL_MACOS,
@@ -488,26 +484,6 @@ export default function control(state = {}, action) {
         constructTxRequestAttempt: false,
         constructTxResponse: action.constructTxResponse
       };
-    case VALIDATEADDRESS_ATTEMPT:
-      return {
-        ...state,
-        validateAddressRequestAttempt: true,
-        validateAddressResponse: null
-      };
-    case VALIDATEADDRESS_SUCCESS:
-      return {
-        ...state,
-        validateAddressRequestAttempt: false,
-        validateAddressResponse: action.response
-      };
-    case VALIDATEADDRESS_FAILED:
-      return {
-        ...state,
-        validateAddressRequestAttempt: false,
-        validateAddressResponse: null
-      };
-    case VALIDATEADDRESS_CLEANSTORE:
-      return { ...state, validateAddressResponse: null };
     case WALLET_AUTOBUYER_SETTINGS:
       return { ...state, balanceToMaintain: action.balanceToMaintain };
     case EXPORT_STARTED:
