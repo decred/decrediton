@@ -77,7 +77,7 @@ export function PurchasePage({
             onChangeNumTickets,
             setVSP,
             isValid,
-            onV3PurchaseTicket,
+            onV3PurchaseTicket
           }}
         />
       )}

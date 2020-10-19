@@ -353,7 +353,6 @@ export const newPurchaseTicketsAttempt = (
   vsp
 ) => async (dispatch, getState) => {
   try {
-    const currentBlockHeight = sel.currentBlockHeight(getState());
     const walletService = sel.walletService(getState());
     const dontSignTx = sel.isWatchingOnly(getState());
 

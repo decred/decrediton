@@ -165,7 +165,7 @@ export const purchaseTickets = (
         err ? fail(err) : ok(res)
       );
     });
-  
+
 export const revokeTickets = (walletService, passphrase) =>
   new Promise((ok, fail) => {
     const request = new api.RevokeTicketsRequest();
