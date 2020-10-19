@@ -949,9 +949,10 @@
     width: 190px;
   }
 
-  .loaderBarButtons {
+  .loaderBarButtons,
+  .getstarted.loader .pageForm .loaderBarButtons {
     position: fixed;
-    margin-left: 115px;
+    margin-left: 10px;
     bottom: 75px;
     right: 20px;
     top: initial;
