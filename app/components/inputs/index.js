@@ -19,6 +19,5 @@ export { default as IntegerInput } from "./IntegerInput";
 export * from "./PathBrowseInput";
 export { default as PassphraseModalField } from "./PassphraseModalField";
 export { default as InlineField } from "./InlineField";
-export { FixedDcrInput } from "./DcrInput";
 export { default as SettingsTextInput } from "./SettingsTextInput";
 export { default as VSPSelect } from "./VSPSelect";
