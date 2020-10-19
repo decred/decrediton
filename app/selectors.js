@@ -181,6 +181,8 @@ export const buyerVSP = get(["vsp", "vsp"]);
 export const buyerBalanceToMantain = get(["vsp", "balanceToMaintain"]);
 export const buyerAccount = get(["vsp", "account"]);
 
+export const getVSPTickets = get(["vsp", "vspTickets"]);
+
 // end of vsp selectors
 
 // TODO review selectors that are not being used anymore.

@@ -5,6 +5,7 @@ import { importScriptAttempt, rescanAttempt } from "./ControlActions";
 import * as sel from "../selectors";
 import * as wallet from "wallet";
 import { TESTNET, MAINNET } from "constants";
+import { reverseRawHash } from "../helpers/byteActions";
 
 export const GETVSP_ATTEMPT = "GETVSP_ATTEMPT";
 export const GETVSP_FAILED = "GETVSP_FAILED";
@@ -33,11 +34,12 @@ export const getVSPTicketsByFeeStatus = (feeStatus) => (dispatch, getState) => {
   dispatch({ type: GETVSPTICKETSTATUS_ATTEMPT });
   wallet.getVSPTicketsByFeeStatus(getState().grpc.walletService, feeStatus)
     .then(response => {
-      const failedTickets = response.getFailedTicketsHashesList();
-      dispatch({ type: GETVSPTICKETSTATUS_SUCCESS, vspTickets: response });
-       // TODO check for default vsp and retry with it.
-       // notify user about the failed tickets.
-       console.log(failedTickets);
+      const hashesBytes = response.getTicketsHashesList();
+      const ticketsHashes = hashesBytes.map((bytesHash) => {
+        return reverseRawHash(bytesHash);
+      });
+
+      dispatch({ type: GETVSPTICKETSTATUS_SUCCESS, vspTickets: { [feeStatus]: ticketsHashes }, feeStatus });
     })
     .catch(err => {
       dispatch({ type: GETVSPTICKETSTATUS_FAILED, err });

@@ -105,7 +105,7 @@ const initialState = {
   },
   version: {
     // RequiredVersion
-    requiredVersion: "7.4.0",
+    requiredVersion: "7.6.0",
     versionInvalid: false,
     versionInvalidError: null,
     // VersionService

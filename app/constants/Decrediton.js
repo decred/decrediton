@@ -91,7 +91,7 @@ export const CHANGE_ACCOUNT = "unmixed";
 // MENU_LINKS_PER_ROW is the default number of menu items shown in sidebar when it's located on bottom.
 export const MENU_LINKS_PER_ROW = 4;
 
-// vsp fee status values. Those values are hard coded on dcrwallet.
-export const VSP_FEE_PROCESSING = 0;
-export const VSP_FEE_PROCESSED  = 1;
-export const VSP_FEE_ERRORED    = 2;
+// VSP_FEE_PROCESS_STARTED represents the state which process has being
+export const VSP_FEE_PROCESS_STARTED   = 0;
+export const VSP_FEE_PROCESS_PAID = 1;
+export const VSP_FEE_PROCESS_ERRORED   = 2;

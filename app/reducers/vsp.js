@@ -1,6 +1,7 @@
 import {
   DISCOVERAVAILABLEVSPS_SUCCESS,
-  DISCOVERAVAILABLEVSPS_FAILED
+  DISCOVERAVAILABLEVSPS_FAILED,
+  GETVSPTICKETSTATUS_SUCCESS
 } from "actions/VSPActions";
 import {
   STARTTICKETBUYERV3_ATTEMPT,
@@ -42,6 +43,13 @@ export default function vsp(state = {}, action) {
       return { ...state,
         ticketAutoBuyerRunning: false
       };
+    case GETVSPTICKETSTATUS_SUCCESS:
+      return { ...state,
+        vspTickets: {
+          ...state.vspTickets,
+          ...action.vspTickets
+        }
+      }
     default:
       return state;
   }

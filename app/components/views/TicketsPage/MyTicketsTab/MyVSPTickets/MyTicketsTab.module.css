@@ -1,0 +1,33 @@
+.ticketsButtons {
+  text-align: right;
+  margin-right: 20px;
+  margin-left: auto;
+}
+
+.subtitle {
+  width: 100%;
+  display: inline-flex;
+}
+
+.vote {
+  padding: 4px;
+  background-color: rgba(105, 211, 245, 0.3);
+}
+
+.voteAgenda {
+  font-weight: bold;
+  margin-right: 0.5em;
+}
+
+.tableHeader {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 2fr 1fr 1fr 0.2fr;
+  padding: 16px 20px;
+  background-color: var(--sidebar-color);
+}
+
+@media screen and (max-width: 768px) {
+  .tableHeader {
+    display: none;
+  }
+}

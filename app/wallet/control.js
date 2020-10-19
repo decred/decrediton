@@ -1,5 +1,6 @@
 import Promise from "promise";
 import * as api from "middleware/walletrpc/api_pb";
+import { VSP_FEE_PROCESS_STARTED, VSP_FEE_PROCESS_PAID, VSP_FEE_PROCESS_ERRORED } from "../constants/Decrediton";
 
 const hexToBytes = (hex) => {
   const bytes = [];
@@ -238,10 +239,17 @@ export const getCoinjoinOutputspByAcct = (walletService) =>
     );
   });
 
+// Map from numerical into defined fee status type
+const FeeStatus = {
+  [VSP_FEE_PROCESS_STARTED]: api.GetVSPTicketsByFeeStatusRequest.FeeStatus.VSP_FEE_PROCESS_STARTED,
+  [VSP_FEE_PROCESS_PAID]:  api.GetVSPTicketsByFeeStatusRequest.FeeStatus.VSP_FEE_PROCESS_PAID,
+  [VSP_FEE_PROCESS_ERRORED]:  api.GetVSPTicketsByFeeStatusRequest.FeeStatus.VSP_FEE_PROCESS_ERRORED
+};
+
 export const getVSPTicketsByFeeStatus = (walletService, feeStatus) =>
   new Promise((resolve, reject) => {
     const request = new api.GetVSPTicketsByFeeStatusRequest();
-    request.setFeeStatus(feeStatus);
+    request.setFeeStatus(FeeStatus[feeStatus]);
     walletService.getVSPTicketsByFeeStatus(request, (error, response) =>
       error ? reject(error) : resolve(response)
     );
