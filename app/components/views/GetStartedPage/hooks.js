@@ -54,8 +54,10 @@ export const useGetStarted = () => {
     onConnectDaemon,
     onStartWallet,
     syncDaemon,
+    onOpenWallet,
     goToHome,
-    onOpenWallet
+    onShowTutorial,
+    appVersion
   } = useDaemonStartup();
   const [PageComponent, setPageComponent] = useState(null);
   const [state, send] = useMachine(getStartedMachine, {
@@ -404,6 +406,8 @@ export const useGetStarted = () => {
           error,
           isSPV,
           onShowReleaseNotes,
+          onShowTutorial,
+          appVersion,
           // if updated* is set, we use it, as it means it is called by the componentDidUpdate.
           text: updatedText ? updatedText : text,
           animationType: updatedAnimationType
@@ -438,6 +442,8 @@ export const useGetStarted = () => {
       isTestNet,
       onSendBack,
       onSendContinue,
+      onShowTutorial,
+      appVersion,
       onSendCreateWallet,
       onSendError,
       onShowCreateWallet,

@@ -377,6 +377,7 @@
 
 .displayWallet:hover {
   color: var(--background-back-color);
+  cursor: pointer;
 }
 
 .displayWallet.new {
