@@ -171,6 +171,8 @@ message UnlockWalletRequest {
     recover the funds in each channel from a remote force closed transaction.
     */
     ChanBackupSnapshot channel_backups = 3;
+
+    bytes dcrw_client_key_cert = 901;
 }
 message UnlockWalletResponse {
 }
