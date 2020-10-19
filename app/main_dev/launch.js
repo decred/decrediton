@@ -708,7 +708,9 @@ export const launchDCRLnd = (
       "--node=dcrw",
       "--dcrwallet.grpchost=localhost:" + walletPort,
       "--dcrwallet.certpath=" + path.join(walletPath, "rpc.cert"),
-      "--dcrwallet.accountnumber=" + walletAccount
+      "--dcrwallet.accountnumber=" + walletAccount,
+      "--wtclient.active",
+      "--wtclient.sweep-fee-rate=10000000" // In atoms/byte, so 1e4 (default fee rate) * 1e3
     ];
 
     if (testnet) {

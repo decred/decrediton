@@ -6,7 +6,10 @@ import { strHashToRaw } from "helpers/byteActions";
 import { ipcRenderer } from "electron";
 
 export const getLightningClient = client.getLightningClient;
+export const getWatchtowerClient = client.getWatchtowerClient;
 export const getWalletUnlockerClient = client.getWalletUnlockerClient;
+
+export * from "./watchtower";
 
 export const getInfo = (client) => {
   const request = new pb.GetInfoRequest();

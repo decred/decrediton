@@ -1,0 +1,81 @@
+.addWatchtowerContent {
+  background-color: var(--background-back-color);
+  padding-top: 20px;
+  padding-left: 30px;
+  width: 784px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.addWatchtowerNest {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.addWatchtowerNest input {
+  width: 550px;
+}
+
+.addWatchtowerNestPrefix {
+  margin-right: 20px;
+  min-width: 125px;
+  margin-left: 0;
+  font-size: 19px;
+  line-height: 24px;
+  text-transform: capitalize;
+  text-align: right;
+}
+
+.addWatchtowerButton {
+  position: relative;
+  margin: 20px 0 0 730px;
+}
+
+.tower {
+  margin-top: 1em;
+  background-color: var(--background-back-color);
+  padding: 2em;
+  display: grid;
+  grid-template-columns: 1fr 5fr 0fr;
+  width: 750px;
+  min-height: 40px;
+}
+
+.tower.statusFalse {
+  border-left: 10px solid var(--vote-no-color);
+}
+
+.tower.statusTrue {
+  border-left: 10px solid var(--accent-color);
+}
+
+.addrsWrapper {
+  margin-right: 2em;
+}
+
+.removeTowerBtn { position: absolute; }
+
+.removeIcon,
+.removeIcon:link,
+.removeIcon:visited {
+  position: absolute;
+  font-size: var(--font-size-xxlarge);
+  bottom: 0.1rem;
+  left: 75.5rem;
+  color: var(--modal-close-color);
+  transition: all 0.3s;
+}
+
+.removeIcon:hover,
+.removeIcon:link:hover,
+.removeIcon:visited:hover {
+  color: var(--color-primary);
+}
+
+.tower div { align-items: unset; }
+.copyableText span {
+  font-size: 14px;
+  background: none;
+  padding: 0;
+}

@@ -31,7 +31,8 @@ import {
   LNWALLET_GETNODEINFO_FAILED,
   LNWALLET_GETROUTESINFO_ATTEMPT,
   LNWALLET_GETROUTESINFO_SUCCESS,
-  LNWALLET_GETROUTESINFO_FAILED
+  LNWALLET_GETROUTESINFO_FAILED,
+  LNWALLET_LISTWATCHTOWERS_SUCCESS
 } from "actions/LNActions";
 
 function addOutstandingPayment(oldOut, rhashHex, payData) {
@@ -54,6 +55,7 @@ export default function ln(state = {}, action) {
         startAttempt: true,
         active: false,
         client: null,
+        wtClient: null,
         startupStage: null
       };
     case LNWALLET_STARTUP_FAILED:
@@ -87,7 +89,8 @@ export default function ln(state = {}, action) {
     case LNWALLET_CONNECT_SUCCESS:
       return {
         ...state,
-        client: action.lnClient
+        client: action.lnClient,
+        wtClient: action.wtClient
       };
     case LNWALLET_BALANCE_UPDATED:
       return {
@@ -181,6 +184,7 @@ export default function ln(state = {}, action) {
         active: false,
         exists: false,
         client: null,
+        wtClient: null,
         channels: [],
         pendingChannels: [],
         closedChannels: [],
@@ -212,7 +216,8 @@ export default function ln(state = {}, action) {
           pendingOpenBalance: 0,
           maxInboundAmount: 0,
           maxOutboundAmount: 0
-        }
+        },
+        towersList: []
       };
     case LNWALLET_CHECKED:
       return {
@@ -247,7 +252,7 @@ export default function ln(state = {}, action) {
         getNodeInfoAttempt: false,
         nodeInfo: action.nodeInfo
       };
-      case LNWALLET_GETNODEINFO_FAILED:
+    case LNWALLET_GETNODEINFO_FAILED:
       return {
         ...state,
         getNodeInfoAttempt: false,
@@ -271,6 +276,11 @@ export default function ln(state = {}, action) {
         ...state,
         getRoutesInfoAttempt: false,
         nodeInfo: action.error
+      };
+    case LNWALLET_LISTWATCHTOWERS_SUCCESS:
+      return {
+        ...state,
+        towersList: action.towersList
       };
 
     default:

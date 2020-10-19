@@ -116,7 +116,12 @@ import {
   LNWALLET_EXPORTBACKUP_FAILED,
   LNWALLET_VERIFYBACKUP_SUCCESS,
   LNWALLET_VERIFYBACKUP_FAILED,
-  LNWALLET_GETNETWORKINFO_FAILED
+  LNWALLET_GETNETWORKINFO_FAILED,
+  LNWALLET_ADDWATCHTOWER_SUCCESS,
+  LNWALLET_ADDWATCHTOWER_FAILED,
+  LNWALLET_REMOVEWATCHTOWER_SUCCESS,
+  LNWALLET_REMOVEWATCHTOWER_FAILED,
+  LNWALLET_LISTWATCHTOWERS_FAILED
 } from "actions/LNActions";
 import {
   CREATEMIXERACCOUNTS_SUCCESS,
@@ -465,6 +470,26 @@ const messages = defineMessages({
     id: "ln.ntf.getNetworkInfoFailed",
     defaultMessage: "Failed to get LN network info: {originalError}"
   },
+  LNWALLET_ADDWATCHTOWER_SUCCESS: {
+    id: "ln.ntf.addWatchtowerSuccess",
+    defaultMessage: "Successfully added watchtower!"
+  },
+  LNWALLET_ADDWATCHTOWER_FAILED: {
+    id: "ln.ntf.addWatchtowerFailed",
+    defaultMessage: "Failed to add watchtower: {originalError}"
+  },
+  LNWALLET_REMOVEWATCHTOWER_SUCCESS: {
+    id: "ln.ntf.removeWatchtowerSuccess",
+    defaultMessage: "Watchtower successfully removed!"
+  },
+  LNWALLET_REMOVEWATCHTOWER_FAILED: {
+    id: "ln.ntf.removeWatchtowerFailed",
+    defaultMessage: "Failed to remove watchtower: {originalError}"
+  },
+  LNWALLET_LISTWATCHTOWERS_FAILED: {
+    id: "ln.ntf.listWatchtowerFailed",
+    defaultMessage: "Failed to list watchtowers: {originalError}"
+  },
   UPDATEVOTECHOICE_SUCCESS: {
     id: "governance.ntf.updateVoteChoiceSuccess",
     defaultMessage:
@@ -546,6 +571,8 @@ export default function snackbar(state = {}, action) {
     case LNWALLET_WITHDRAWWALLET_SUCCESS:
     case LNWALLET_EXPORTBACKUP_SUCCESS:
     case LNWALLET_VERIFYBACKUP_SUCCESS:
+    case LNWALLET_ADDWATCHTOWER_SUCCESS:
+    case LNWALLET_REMOVEWATCHTOWER_SUCCESS:
     case UPDATEVOTECHOICE_SUCCESS:
     case CREATEMIXERACCOUNTS_SUCCESS:
       type = "Success";
@@ -636,6 +663,9 @@ export default function snackbar(state = {}, action) {
     case LNWALLET_VERIFYBACKUP_FAILED:
     case LNWALLET_GETNETWORKINFO_FAILED:
     case CREATEMIXERACCOUNTS_FAILED:
+    case LNWALLET_ADDWATCHTOWER_FAILED:
+    case LNWALLET_REMOVEWATCHTOWER_FAILED:
+    case LNWALLET_LISTWATCHTOWERS_FAILED:
       type = "Error";
       if (
         action.error &&

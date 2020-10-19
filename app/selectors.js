@@ -1527,3 +1527,4 @@ export const lnFailedPayments = get(["ln", "failedPayments"]);
 export const lnAddInvoiceAttempt = get(["ln", "addInvoiceAttempt"]);
 export const lnSCBPath = get(["ln", "scbPath"]);
 export const lnSCBUpdatedTime = get(["ln", "scbUpdatedTime"]);
+export const lnTowersList = get(["ln", "towersList"]);

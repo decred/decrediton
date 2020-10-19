@@ -27,3 +27,12 @@ protoc \
   --grpc_out=./ \
   --plugin=protoc-gen-grpc=./../../../node_modules/grpc-tools/bin/grpc_node_plugin \
   ./walletunlocker.proto
+
+protoc \
+  -I/usr/local/include \
+  -I. \
+  -I../../../node_modules/google-proto-files \
+  --js_out=import_style=commonjs,binary:./ \
+  --grpc_out=./ \
+  --plugin=protoc-gen-grpc=./../../../node_modules/grpc-tools/bin/grpc_node_plugin \
+  ./wtclient.proto
