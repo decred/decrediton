@@ -40,8 +40,8 @@ const CreateWalletPage = ({ createWalletRef }) => {
   }, [send]);
 
   const sendBack = useCallback(() => {
-    send({ type: "BACK" });
-  }, [send]);
+    send({ type: "BACK", isTestNet });
+  }, [send, isTestNet]);
 
   const cancelWalletCreation = useCallback(async () => {
     await cancelCreateWallet();

@@ -107,7 +107,8 @@ export const CreateWalletMachine = Machine({
           actions: [
             assign({
               passPhrase: "",
-              seed: [],
+              seed: (context, { isTestNet }) =>
+                isTestNet && context.seed ? context.seed : [],
               error: ""
             })
           ]
