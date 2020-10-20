@@ -297,7 +297,6 @@ test("pasting invalid seed words on existing seed view", async () => {
 
   firePasteEvent(screen.getAllByRole("combobox")[0], testSeedMnemonic);
   await wait(() => screen.getByText(/Error: seed is not valid./i));
-  screen.debug();
 });
 
 test("pasting valid seed words on existing seed view and receive decode error and create wallet request error", async () => {

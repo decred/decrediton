@@ -63,7 +63,6 @@ export const useGetStarted = () => {
     syncDaemon,
     onOpenWallet,
     goToHome,
-    onOpenWallet,
     onShowTutorial,
     appVersion,
     syncAttemptRequest,

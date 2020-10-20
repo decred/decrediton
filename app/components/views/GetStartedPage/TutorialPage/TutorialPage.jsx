@@ -7,14 +7,13 @@ const Tutorial = () => {
   const [tutorialStep, setTutorialStep] = useState(0);
 
   const onNextTutorialStep = useCallback(() => {
-    /* istanbul ignore else */
     if (tutorialStep + 1 <= 3) {
       setTutorialStep(tutorialStep + 1);
     }
   }, [tutorialStep]);
 
   /*
-   * comment out this function because it not used
+   * commented out this function because it not used
    *
   const onPrevTutorialStep = useCallback(() => {
     if (tutorialStep - 1 >= 0) {

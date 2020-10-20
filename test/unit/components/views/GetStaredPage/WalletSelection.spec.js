@@ -58,7 +58,7 @@ beforeEach(() => {
         isTrezor: true
       },
       finished: true,
-      lastAccess: testLastAccessNow
+      lastAccess: testLastAccessOneHourAgo
     },
     {
       label: "test-privacy-wallet",
@@ -67,7 +67,7 @@ beforeEach(() => {
         isPrivacy: true
       },
       finished: true,
-      lastAccess: testLastAccessNow
+      lastAccess: testLastAccessOneHourAgo
     },
     {
       label: "test-watch-only-wallet",
@@ -76,7 +76,7 @@ beforeEach(() => {
       },
       finished: true,
       isWatchingOnly: true,
-      lastAccess: testLastAccessNow
+      lastAccess: testLastAccessOneHourAgo
     }
   ];
 
@@ -133,7 +133,6 @@ test("render wallet chooser view", async () => {
   // check trezor wallet
   const trezorWallet = screen.getByText(testAvailableWallets[2].value.wallet);
   expect(trezorWallet).toBeInTheDocument();
-  expect(trezorWallet.nextSibling.textContent).toMatch(/last accessed: now/i);
   expect(trezorWallet.previousSibling.previousSibling.textContent).toMatch(
     /trezor/i
   );
@@ -141,7 +140,6 @@ test("render wallet chooser view", async () => {
   // check privacy wallet
   const privacyWallet = screen.getByText(testAvailableWallets[3].value.wallet);
   expect(privacyWallet).toBeInTheDocument();
-  expect(privacyWallet.nextSibling.textContent).toMatch(/Last accessed: now/i);
   expect(privacyWallet.previousSibling.previousSibling.textContent).toMatch(
     /privacy/i
   );
@@ -151,9 +149,6 @@ test("render wallet chooser view", async () => {
     testAvailableWallets[4].value.wallet
   );
   expect(watchOnlyWallet).toBeInTheDocument();
-  expect(watchOnlyWallet.nextSibling.textContent).toMatch(
-    /last accessed: now/i
-  );
   expect(watchOnlyWallet.previousSibling.previousSibling.textContent).toMatch(
     /watch only/i
   );
