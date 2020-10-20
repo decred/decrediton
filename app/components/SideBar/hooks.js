@@ -6,9 +6,6 @@ import * as sba from "../../actions/SidebarActions";
 export function useSideBar() {
   const [isShowingAccounts, setIsShowingAccounts] = useState(false);
 
-  const onShowAccounts = useCallback(() => setIsShowingAccounts(true), []);
-  const onHideAccounts = useCallback(() => setIsShowingAccounts(false), []);
-
   const isTestNet = useSelector(sel.isTestNet);
   const balances = useSelector(sel.balances);
   const currentBlockHeight = useSelector(sel.currentBlockHeight);
@@ -20,6 +17,7 @@ export function useSideBar() {
   const accountMixerRunning = useSelector(sel.getAccountMixerRunning);
   const rescanRequest = useSelector(sel.rescanRequest);
   const isSPV = useSelector(sel.isSPV);
+  const peersCount = useSelector(sel.getPeersCount);
 
   const dispatch = useDispatch();
 
@@ -32,8 +30,8 @@ export function useSideBar() {
 
   return {
     isShowingAccounts,
-    onShowAccounts,
-    onHideAccounts,
+    onShowAccounts: () => setIsShowingAccounts(true),
+    onHideAccounts: () => setIsShowingAccounts(false),
     isTestNet,
     balances,
     currentBlockHeight,
@@ -46,6 +44,7 @@ export function useSideBar() {
     rescanRequest,
     onExpandSideBar,
     onReduceSideBar,
-    isSPV
+    isSPV,
+    peersCount
   };
 }

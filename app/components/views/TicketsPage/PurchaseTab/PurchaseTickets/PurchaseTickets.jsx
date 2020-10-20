@@ -15,7 +15,6 @@ const Tickets = ({ toggleIsLegacy }) => {
     // availableVSPsError,
     defaultSpendingAccount,
     ticketPrice,
-    getVSPTicketsByFeeStatus,
     onPurchaseTicketV3
   } = usePurchaseTab();
 

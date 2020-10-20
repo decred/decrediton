@@ -25,7 +25,8 @@ const SideBar = () => {
     rescanRequest,
     onExpandSideBar,
     onReduceSideBar,
-    isSPV
+    isSPV,
+    peersCount
   } = useSideBar();
   const { rescanAttempt, rescanCancel } = useRescan();
 
@@ -44,7 +45,8 @@ const SideBar = () => {
           onReduceSideBar,
           onExpandSideBar,
           isWatchingOnly,
-          accountMixerRunning
+          accountMixerRunning,
+          peersCount
         }}
       />
       <div className={style.sidebarMain}>

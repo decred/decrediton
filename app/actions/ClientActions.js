@@ -5,6 +5,7 @@ import * as sel from "selectors";
 import eq from "lodash/fp/eq";
 import {
   getNextAddressAttempt,
+  getPeerInfo,
   publishUnminedTransactionsAttempt
 } from "./ControlActions";
 import {
@@ -65,6 +66,7 @@ const startWalletServicesTrigger = () => (dispatch, getState) =>
       }
       dispatch(discoverAvailableVSPs());
       await dispatch(getNextAddressAttempt(0));
+      await dispatch(getPeerInfo());
       await dispatch(getTicketPriceAttempt());
       await dispatch(getNetworkAttempt());
       await dispatch(refreshStakepoolPurchaseInformation());

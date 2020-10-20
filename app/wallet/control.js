@@ -293,3 +293,10 @@ export const syncVSPTickets = (walletService, passphrase, vspHost, vspPubkey, ac
       });
     });
   });
+
+export const getPeerInfo = (walletService) => new Promise((ok, fail) => {
+  const request = new api.GetPeerInfoRequest();
+  walletService.getPeerInfo(request, (err, res) =>
+    err ? fail(err) : ok({ ...res })
+  );
+});

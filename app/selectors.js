@@ -1016,6 +1016,8 @@ export const estimatedFee = compose(
   estimatedSignedSize
 );
 
+export const getPeersCount = get(["grpc", "peersCount"]);
+
 export const totalSpent = createSelector(
   [totalPreviousOutputAmount, totalOutputAmount, totalAmount],
   (totalPreviousOutputAmount, totalOutputAmount, totalAmount) =>
