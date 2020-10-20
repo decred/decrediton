@@ -550,10 +550,10 @@ export const launchDCRWallet = (
   args.push("--issueclientcert");
 
   // add cspp cert path.
-  // We always include it, because if it doensn't have the cert and a user sets
-  // mixing config, we would need to restart dcrwallet.
+  // When in mainnet, we always include it, because if we doensn't and a user
+  // sets mixing config, we would need to restart dcrwallet.
   const certPath = path.resolve(process.cwd(), "app", "certs", "cspp.decred.org.pem");
-  !testnet && args.push("--csppserver.ca="+certPath)
+  !testnet && args.push("--csppserver.ca="+certPath);
 
   const dcrwExe = getExecutablePath("dcrwallet", argv.custombinpath);
   if (!fs.existsSync(dcrwExe)) {
