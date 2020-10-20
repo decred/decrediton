@@ -1,7 +1,8 @@
 .ticketTxWrapper {
-  margin-left: 40px;
+  margin-left: 20px;
+  margin-right: auto;
 }
-  
+
 .homeContentTitle {
   color: var(--stroke-color-hovered);
   font-size: 13px;
@@ -45,4 +46,11 @@
 }
 .overviewNoTickets a.ticketLifeCycle {
   background-image: var(--ticket-lifecycle-icon);
+}
+
+@media screen and (max-width: 768px) {
+  .ticketTxWrapper {
+    margin-top: 20px;
+    margin-left: 0;
+  }
 }
