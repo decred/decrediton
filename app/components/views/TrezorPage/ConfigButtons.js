@@ -1,6 +1,6 @@
 import { VerticalAccordion } from "shared";
 import { FormattedMessage as T } from "react-intl";
-import { KeyBlueButton } from "buttons";
+import { KeyBlueButton, DangerButton } from "buttons";
 
 @autobind
 class ConfigButtons extends React.Component {
@@ -24,8 +24,7 @@ class ConfigButtons extends React.Component {
       loading,
       onTogglePinProtection,
       onTogglePassPhraseProtection,
-      onChangeHomeScreen,
-      onClearDeviceSession
+      onChangeHomeScreen
     } = this.props;
 
     return (
@@ -41,7 +40,7 @@ class ConfigButtons extends React.Component {
           <T id="trezorPage.togglePinProtectionBtn" m="Toggle Pin Protection" />
         </KeyBlueButton>
 
-        <KeyBlueButton
+        <DangerButton
           onClick={onTogglePassPhraseProtection}
           loading={loading}
           disabled={loading}>
@@ -49,7 +48,7 @@ class ConfigButtons extends React.Component {
             id="trezorPage.togglePassPhraseProtectionBtn"
             m="Toggle Passphrase Protection"
           />
-        </KeyBlueButton>
+        </DangerButton>
 
         <KeyBlueButton
           onClick={onChangeHomeScreen}
@@ -58,12 +57,6 @@ class ConfigButtons extends React.Component {
           <T id="trezorPage.changeHomeScreen" m="Change Home Screen" />
         </KeyBlueButton>
 
-        <KeyBlueButton
-          onClick={onClearDeviceSession}
-          loading={loading}
-          disabled={loading}>
-          <T id="trezorPage.clearSession" m="Clear Session" />
-        </KeyBlueButton>
       </VerticalAccordion>
     );
   }

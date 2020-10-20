@@ -3,9 +3,9 @@ import Page from "./Page";
 import NoDevicePage from "./NoDevicePage";
 import "style/Trezor.less";
 
-const TrezorPage = ({ device, reloadDeviceList, ...props }) =>
+const TrezorPage = ({ device, connect, ...props }) =>
   !device ? (
-    <NoDevicePage onReloadDeviceList={reloadDeviceList} />
+    <NoDevicePage onConnect={connect} />
   ) : (
     <Page device={device} {...props} />
   );

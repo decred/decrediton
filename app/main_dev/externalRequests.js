@@ -127,19 +127,7 @@ export const allowExternalRequest = (externalReqType) => {
       addAllowedURL(DCRDATA_URL_MAINNET);
       break;
     case EXTERNALREQUEST_TREZOR_BRIDGE:
-      addAllowedURL(/^http:\/\/127.0.0.1:21324\//);
       addAllowedURL(/^http:\/\/127.0.0.1:21325\//);
-
-      // TODO: decide whether we want to provide our own signed config
-      addAllowedURL(
-        /^https:\/\/wallet.trezor.io\/data\/config_signed.bin\?[\d]+$/
-      );
-
-      // TODO: decide if we wanna block this
-      addAllowedURL(
-        /^https:\/\/wallet.trezor.io\/data\/bridge\/latest.txt\?[\d]+$/
-      );
-
       break;
     default:
       logger.log("error", "Unknown external request type: " + externalReqType);

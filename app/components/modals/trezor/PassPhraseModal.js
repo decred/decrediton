@@ -16,7 +16,7 @@ class TrezorPassphraseModal extends React.Component {
     const { onSubmit } = this;
 
     const trezorLabel = this.props.device
-      ? this.props.device.features.label
+      ? this.props.deviceLabel
       : "";
 
     const className = [

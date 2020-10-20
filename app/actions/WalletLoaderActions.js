@@ -26,7 +26,6 @@ import {
 } from "../middleware/walletrpc/api_pb";
 import { push as pushHistory } from "connected-react-router";
 import { stopNotifcations } from "./NotificationActions";
-import { clearDeviceSession as trezorClearDeviceSession } from "./TrezorActions";
 import { stopDcrlnd } from "./LNActions";
 import { TESTNET } from "constants";
 import { ipcRenderer } from "electron";
@@ -240,7 +239,6 @@ export const closeWalletRequest = () => async (dispatch, getState) => {
     await dispatch(stopNotifcations());
     await dispatch(syncCancel());
     await dispatch(rescanCancel());
-    await dispatch(trezorClearDeviceSession());
     await dispatch(stopDcrlnd());
     await dispatch(ticketBuyerCancel());
     await dispatch(setSelectedWallet(null));

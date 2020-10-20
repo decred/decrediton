@@ -61,7 +61,7 @@ class TrezorWalletCreationPassphraseModal extends React.Component {
     } = this.state;
 
     const trezorLabel = this.props.device
-      ? this.props.device.features.label
+      ? this.props.deviceLabel
       : "";
 
     const className = [

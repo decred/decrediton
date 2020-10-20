@@ -44,10 +44,6 @@ export function str2utf8hex(str) {
   return Buffer.from(str).toString("hex");
 }
 
-export function hex2b64(hex) {
-  return new Buffer(hex, "hex").toString("base64");
-}
-
 // PutUint8 copies the provided uint8 into a buffer from the free list and
 // writes the resulting byte to the given writer.
 export function putUint8(data) {

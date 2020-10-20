@@ -9,7 +9,7 @@ const TrezorConfig = ({
   enableTrezor,
   device,
   performingOperation,
-  reloadDeviceList,
+  connect,
   ...props
 }) => {
   useEffect(() => {
@@ -25,10 +25,10 @@ const TrezorConfig = ({
         />
       </div>
       <div>
-        <InvisibleButton onClick={reloadDeviceList}>
+        <InvisibleButton onClick={connect}>
           <T
-            id="trezor.getStartedConfig.btnReloadDeviceList"
-            m="Reload Device List"
+            id="trezor.getStartedConfig.btnConnect"
+            m="Connect to Trezor"
           />
         </InvisibleButton>
       </div>

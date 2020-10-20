@@ -61,7 +61,7 @@ export const walletTxToBtcjsTx = async (
     return {
       prev_hash: inp.prevTxId,
       prev_index: inp.outputIndex,
-      amount: inp.amountIn,
+      amount: inp.amountIn.toString(),
       sequence: inp.sequence,
       address_n: addressPath(
         addrIndex,
@@ -94,13 +94,16 @@ export const walletTxToBtcjsTx = async (
       );
       addr = null;
     }
-    return {
-      amount: outp.value,
-      script_type: "PAYTOADDRESS", // needs to change on OP_RETURNs
-      address: addr,
-      address_n: address_n,
-      decred_script_version: outp.version
+    const out = {
+      amount: outp.value.toString(),
+      script_type: "PAYTOADDRESS" // needs to change on OP_RETURNs
     };
+    if (address_n) {
+      out.address_n = address_n;
+    } else {
+      out.address = addr;
+    }
+    return out;
   });
 
   return {
@@ -110,13 +113,14 @@ export const walletTxToBtcjsTx = async (
 };
 
 // walletTxToRefTx converts a tx decoded by the decred wallet (ie,
-// returned from wallet.decoreRawTransaction call) into a trezor
+// returned from wallet.decodeRawTransaction call) into a trezor
 // RefTransaction object to aux when SignTx.
 export const walletTxToRefTx = async (walletService, tx) => {
   const inputs = tx.inputs.map(inp => ({
       prev_hash: inp.prevTxId,
       prev_index: inp.outputIndex,
-      amount: inp.amountIn,
+      amount: inp.valueIn.toString(),
+      script_sig: inp.sigScript,
       sequence: inp.sequence,
       decred_tree: inp.outputTree
   }));
