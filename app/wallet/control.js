@@ -129,6 +129,7 @@ export const purchaseTickets = (
     const request = new api.PurchaseTicketsRequest();
     signTx && request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
     request.setAccount(accountNum);
+    request.setChangeAccount(accountNum.value);
     request.setSpendLimit(spendLimit);
     request.setRequiredConfirmations(requiredConf);
     request.setTicketAddress(stakepool.TicketAddress);
@@ -156,6 +157,7 @@ export const purchaseTickets = (
       const request = new api.PurchaseTicketsRequest();
       signTx && request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
       request.setAccount(accountNum.value);
+      request.setChangeAccount(accountNum.value);
       request.setNumTickets(numTickets);
       request.setDontSignTx(!signTx);
       const { pubkey, host } = vsp;
