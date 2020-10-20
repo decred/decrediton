@@ -37,6 +37,7 @@ export function PurchasePage({
   isWatchingOnly,
   availableVSPs,
   account,
+  setAccount,
   numTickets,
   onChangeNumTickets,
   setNumTickets,
@@ -69,6 +70,7 @@ export function PurchasePage({
         <PurchaseForm
           {...{
             ticketPrice,
+            setAccount,
             setNumTickets,
             handleOnKeyDown,
             availableVSPs,
