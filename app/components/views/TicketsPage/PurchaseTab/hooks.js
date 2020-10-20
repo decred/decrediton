@@ -25,6 +25,15 @@ export const usePurchaseTab = () => {
   const discoverAvailableVSPs = useCallback(() => dispatch(vspa.discoverAvailableVSPs()), [
     dispatch
   ]);
+  const onPurchaseTicketV3 = useCallback((passphrase, account, numTickets, vsp) =>
+    dispatch(ca.newPurchaseTicketsAttempt(
+      passphrase,
+      account,
+      numTickets,
+      vsp)
+    ),
+    [dispatch]
+  );
   const onEnableTicketAutoBuyer = useCallback((passphrase, account, balanceToMaintain, vsp) =>
     dispatch(ca.startTicketBuyerV3Attempt(
       passphrase,
@@ -57,6 +66,7 @@ export const usePurchaseTab = () => {
     discoverAvailableVSPs,
     ticketPrice,
     onEnableTicketAutoBuyer,
+    onPurchaseTicketV3,
     availableVSPs,
     availableVSPsError,
     onDisableTicketAutoBuyer,

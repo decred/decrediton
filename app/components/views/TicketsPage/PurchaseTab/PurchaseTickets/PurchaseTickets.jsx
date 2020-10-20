@@ -17,7 +17,8 @@ const Tickets = ({ toggleIsLegacy }) => {
     // availableVSPsError,
     defaultSpendingAccount,
     ticketPrice,
-    getVSPTicketsByFeeStatus
+    getVSPTicketsByFeeStatus,
+    onPurchaseTicketV3
   } = usePurchaseTab();
 
   const [account, setAccount] = useState(defaultSpendingAccount);
@@ -37,6 +38,10 @@ const Tickets = ({ toggleIsLegacy }) => {
   const onChangeNumTickets = (increment) => {
     if (numTickets === 0 && !increment) return;
     increment ? setNumTickets(numTickets + 1) : setNumTickets(numTickets -1);
+  };
+
+  const onV3PurchaseTicket = (passphrase) => {
+    onPurchaseTicketV3(passphrase, account, numTickets, vsp);
   };
 
   useEffect(() => {
@@ -72,6 +77,7 @@ const Tickets = ({ toggleIsLegacy }) => {
       toggleIsLegacy,
       availableVSPs,
       setVSP,
+      onV3PurchaseTicket,
       vsp
     }} />;
 };

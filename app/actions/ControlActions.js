@@ -346,6 +346,38 @@ export const purchaseTicketsAttempt = (
   }
 };
 
+export const newPurchaseTicketsAttempt = (
+  passphrase,
+  accountNum,
+  numTickets,
+  vsp
+) => async (dispatch, getState) => {
+  try {
+    const walletService = sel.walletService(getState());
+    const dontSignTx = sel.isWatchingOnly(getState());
+
+    dispatch({ numTicketsToBuy: numTickets, type: PURCHASETICKETS_ATTEMPT });
+
+    const purchaseTicketsResponse = await wallet.purchaseTicketsV3(
+      walletService,
+      passphrase,
+      accountNum,
+      numTickets,
+      !dontSignTx,
+      vsp
+    );
+    if (dontSignTx) {
+      return dispatch({
+        purchaseTicketsResponse,
+        type: CREATE_UNSIGNEDTICKETS_SUCCESS
+      });
+    }
+    dispatch({ purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
+  } catch (error) {
+    dispatch({ error, type: PURCHASETICKETS_FAILED });
+  }
+};
+
 export const REVOKETICKETS_ATTEMPT = "REVOKETICKETS_ATTEMPT";
 export const REVOKETICKETS_FAILED = "REVOKETICKETS_FAILED";
 export const REVOKETICKETS_SUCCESS = "REVOKETICKETS_SUCCESS";

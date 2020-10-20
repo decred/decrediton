@@ -37,6 +37,7 @@ export function PurchasePage({
   isWatchingOnly,
   availableVSPs,
   account,
+  setAccount,
   numTickets,
   onChangeNumTickets,
   setNumTickets,
@@ -45,6 +46,7 @@ export function PurchasePage({
   setVSP,
   isValid,
   toggleIsLegacy,
+  onV3PurchaseTicket,
   ...props
 }) {
   return (
@@ -68,6 +70,7 @@ export function PurchasePage({
         <PurchaseForm
           {...{
             ticketPrice,
+            setAccount,
             setNumTickets,
             handleOnKeyDown,
             availableVSPs,
@@ -75,7 +78,8 @@ export function PurchasePage({
             numTickets,
             onChangeNumTickets,
             setVSP,
-            isValid
+            isValid,
+            onV3PurchaseTicket
           }}
         />
       )}

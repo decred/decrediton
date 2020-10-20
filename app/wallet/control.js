@@ -129,6 +129,7 @@ export const purchaseTickets = (
     const request = new api.PurchaseTicketsRequest();
     signTx && request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
     request.setAccount(accountNum);
+    request.setChangeAccount(accountNum.value);
     request.setSpendLimit(spendLimit);
     request.setRequiredConfirmations(requiredConf);
     request.setTicketAddress(stakepool.TicketAddress);
@@ -143,6 +144,29 @@ export const purchaseTickets = (
       err ? fail(err) : ok(res)
     );
   });
+
+  export const purchaseTicketsV3 = (
+    walletService,
+    passphrase,
+    accountNum,
+    numTickets,
+    signTx,
+    vsp
+  ) =>
+    new Promise((ok, fail) => {
+      const request = new api.PurchaseTicketsRequest();
+      signTx && request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
+      request.setAccount(accountNum.value);
+      request.setChangeAccount(accountNum.value);
+      request.setNumTickets(numTickets);
+      request.setDontSignTx(!signTx);
+      const { pubkey, host } = vsp;
+      request.setVspPubkey(pubkey);
+      request.setVspHost("https://" + host);
+      walletService.purchaseTickets(request, (err, res) =>
+        err ? fail(err) : ok(res)
+      );
+    });
 
 export const revokeTickets = (walletService, passphrase) =>
   new Promise((ok, fail) => {
