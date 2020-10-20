@@ -44,8 +44,8 @@
 
 .peersCount {
   border-radius: 50%;
-  width: 10px;
-  height: 12px;
+  width: 15px;
+  height: 15px;
   margin-top: 4px;
 
   background: #fff;
@@ -54,7 +54,7 @@
   text-align: center;
   padding-bottom: 4px;
 
-  font-size: 7pt;
+  font-size: 13pt;
 }
 
 @media screen and (max-width: 768px) {
