@@ -38,6 +38,7 @@ service WalletService {
 	rpc BestBlock (BestBlockRequest) returns (BestBlockResponse);
 	rpc Spender (SpenderRequest) returns (SpenderResponse);
 	rpc GetCFilters (GetCFiltersRequest) returns (stream GetCFiltersResponse);
+	rpc GetPeerInfo(GetPeerInfoRequest) returns (GetPeerInfoResponse);
 
 	// Notifications
 	rpc TransactionNotifications (TransactionNotificationsRequest) returns (stream TransactionNotificationsResponse);
@@ -74,6 +75,8 @@ service WalletService {
 	rpc SetAccountPassphrase (SetAccountPassphraseRequest) returns (SetAccountPassphraseResponse);
 	rpc UnlockAccount (UnlockAccountRequest) returns (UnlockAccountResponse);
 	rpc LockAccount (LockAccountRequest) returns (LockAccountResponse);
+	rpc UnlockWallet (UnlockWalletRequest) returns (UnlockWalletResponse);
+	rpc LockWallet (LockWalletRequest) returns (LockWalletResponse);
 	rpc SyncVSPFailedTickets(SyncVSPTicketsRequest) returns (SyncVSPTicketsResponse);
 	rpc GetVSPTicketsByFeeStatus (GetVSPTicketsByFeeStatusRequest) returns (GetVSPTicketsByFeeStatusResponse);
 }
@@ -1221,6 +1224,29 @@ message UnlockAccountResponse {}
 
 message LockAccountResponse {}
 
+message UnlockWalletRequest {
+	bytes passphrase = 1;
+}
+message UnlockWalletResponse {}
+
+message LockWalletRequest {}
+message LockWalletResponse {}
+
+message GetPeerInfoRequest {}
+message GetPeerInfoResponse {
+	message PeerInfo {
+		int32 id = 1;
+		string addr = 2;
+		string addr_local = 3;
+		string services = 4;
+		uint32 version = 5;
+		string sub_ver = 6;
+		int64 starting_height = 7;
+		int32 ban_score = 8;
+	}
+	repeated PeerInfo peer_info = 1;
+}
+
 message SyncVSPTicketsRequest {
 	string vsp_host = 1;
 	string vsp_pubkey = 2;
@@ -1230,9 +1256,14 @@ message SyncVSPTicketsRequest {
 message SyncVSPTicketsResponse {}
 
 message GetVSPTicketsByFeeStatusRequest {
-	int32 fee_status = 1;
+	enum FeeStatus {
+		VSP_FEE_PROCESS_STARTED = 0;
+		VSP_FEE_PROCESS_PAID = 1;
+		VSP_FEE_PROCESS_ERRORED = 2;
+	}
+	FeeStatus fee_status = 3;
 }
 
 message GetVSPTicketsByFeeStatusResponse {
-	repeated bytes failed_tickets_hashes = 1;
+	repeated bytes tickets_hashes = 1;
 }

@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { PurchasePage } from "./Page";
 import { usePurchaseTab } from "../hooks";
-import { VSP_FEE_PROCESSING } from "constants";
-import { useMountEffect } from "hooks";
 
 const Tickets = ({ toggleIsLegacy }) => {
   const {
@@ -26,13 +24,6 @@ const Tickets = ({ toggleIsLegacy }) => {
   const [vsp, setVSP] = useState(null);
   const [numTickets, setNumTickets] = useState(1);
   const [isValid, setIsValid] = useState(false);
-
-
-  useMountEffect(() => {
-    // TODO where to show the processing tickets?
-    console.log(VSP_FEE_PROCESSING);
-    getVSPTicketsByFeeStatus(VSP_FEE_PROCESSING);
-  });
 
   // onChangeNumTickets deals with ticket increment or decrement.
   const onChangeNumTickets = (increment) => {

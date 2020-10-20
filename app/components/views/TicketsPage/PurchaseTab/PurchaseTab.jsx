@@ -10,7 +10,7 @@ function Purchase() {
   // vsps v3 don't need to import script to configure them.
   const [isShowingVsp, toggleShowVsp] = useState(false);
   // const [isShowingImportScript, setShowImportScript] = useState(false);
-  const [isLegacy, toggleIsLegacy] = useState(true);
+  const [isLegacy, toggleIsLegacy] = useState(false);
   const isPurchasingTickets = useSelector(sel.isPurchasingTickets);
   // end of legacy hooks
 

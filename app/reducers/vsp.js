@@ -1,6 +1,8 @@
 import {
   DISCOVERAVAILABLEVSPS_SUCCESS,
-  DISCOVERAVAILABLEVSPS_FAILED
+  DISCOVERAVAILABLEVSPS_FAILED,
+  GETVSPTICKETSTATUS_SUCCESS,
+  HASVSPTICKETSERRORED
 } from "actions/VSPActions";
 import {
   STARTTICKETBUYERV3_ATTEMPT,
@@ -41,6 +43,17 @@ export default function vsp(state = {}, action) {
     case STOPTICKETBUYER_SUCCESS:
       return { ...state,
         ticketAutoBuyerRunning: false
+      };
+    case GETVSPTICKETSTATUS_SUCCESS:
+      return { ...state,
+        vspTickets: {
+          ...state.vspTickets,
+          ...action.vspTickets
+        }
+      };
+    case HASVSPTICKETSERRORED:
+      return { ...state,
+        hasVSPTicketsError: action.hasVSPTicketsError
       };
     default:
       return state;

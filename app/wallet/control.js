@@ -1,5 +1,6 @@
 import Promise from "promise";
 import * as api from "middleware/walletrpc/api_pb";
+import { VSP_FEE_PROCESS_STARTED, VSP_FEE_PROCESS_PAID, VSP_FEE_PROCESS_ERRORED } from "../constants/Decrediton";
 
 const hexToBytes = (hex) => {
   const bytes = [];
@@ -238,11 +239,57 @@ export const getCoinjoinOutputspByAcct = (walletService) =>
     );
   });
 
+// Map from numerical into defined fee status type
+const FeeStatus = {
+  [VSP_FEE_PROCESS_STARTED]: api.GetVSPTicketsByFeeStatusRequest.FeeStatus.VSP_FEE_PROCESS_STARTED,
+  [VSP_FEE_PROCESS_PAID]: api.GetVSPTicketsByFeeStatusRequest.FeeStatus.VSP_FEE_PROCESS_PAID,
+  [VSP_FEE_PROCESS_ERRORED]: api.GetVSPTicketsByFeeStatusRequest.FeeStatus.VSP_FEE_PROCESS_ERRORED
+};
+
 export const getVSPTicketsByFeeStatus = (walletService, feeStatus) =>
   new Promise((resolve, reject) => {
     const request = new api.GetVSPTicketsByFeeStatusRequest();
-    request.setFeeStatus(feeStatus);
+    request.setFeeStatus(FeeStatus[feeStatus]);
     walletService.getVSPTicketsByFeeStatus(request, (error, response) =>
       error ? reject(error) : resolve(response)
     );
+  });
+
+export const syncVSPTickets = (walletService, passphrase, vspHost, vspPubkey, account) =>
+  new Promise((resolve, reject) => {
+    // console.log(walletService)
+    const unlockReq = new api.UnlockWalletRequest();
+    // console.log(unlockReq)
+    unlockReq.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
+    // Unlock wallet so we can call the request.
+    walletService.unlockWallet(unlockReq, (error) => {
+      if (error) {
+        reject(error);
+      }
+      const request = new api.SyncVSPTicketsRequest();
+      console.log(vspHost);
+      console.log(vspPubkey);
+      console.log(account);
+
+      console.log(walletService);
+      request.setAccount(account);
+      request.setVspPubkey(vspPubkey);
+      request.setVspHost("https://" + vspHost);
+
+      // Call the request
+      walletService.syncVSPFailedTickets(request, (error, response) => {
+        if (error) {
+          reject(error);
+        }
+        const lockReq = new api.LockWalletRequest();
+
+        // Lock wallet and return response from the request.
+        walletService.lockWallet(lockReq, (error) => {
+          if (error) {
+            reject(error);
+          }
+          resolve(response);
+        });
+      });
+    });
   });
