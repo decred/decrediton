@@ -14,12 +14,10 @@ function Purchase() {
   const isPurchasingTickets = useSelector(sel.isPurchasingTickets);
   // end of legacy hooks
 
-  return isLegacy ? (
+  return !isLegacy ? <MyVSPTicket {...{ toggleIsLegacy }} /> : (
     <MyTickets
       {...{ isPurchasingTickets, isShowingVsp, toggleShowVsp, toggleIsLegacy }}
     />
-  ) : (
-    <MyVSPTicket {...{ toggleIsLegacy }} />
   );
 }
 

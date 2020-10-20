@@ -16,59 +16,11 @@ const labels = {
   "vspFeeErrored": <T id="vsp.ticket.vsp.fee.errored" m="Fee Error" />
 };
 
-// const sortTypes = [
-//   {
-//     value: txTypes.DESC,
-//     key: txTypes.DESC,
-//     label: <T id="tickets.sortby.newest" m="Newest" />
-//   },
-//   {
-//     value: txTypes.ASC,
-//     key: txTypes.ASC,
-//     label: <T id="tickets.sortby.oldest" m="Oldest" />
-//   }
-// ];
-
 const ticketTypes = [
   {
     key: txTypes.ALL,
     value: { status: null },
     label: <T id="tickets.type.all" m="All" />
-  },
-  {
-    key: txTypes.UNMINED,
-    value: { status: txTypes.UNMINED },
-    label: labels[txTypes.UNMINED]
-  },
-  {
-    key: txTypes.IMMATURE,
-    value: { status: txTypes.IMMATURE },
-    label: labels[txTypes.IMMATURE]
-  },
-  {
-    key: txTypes.LIVE,
-    value: { status: txTypes.LIVE },
-    label: labels[txTypes.LIVE]
-  },
-  {
-    key: txTypes.VOTED,
-    value: { status: txTypes.VOTED },
-    label: labels[txTypes.VOTED]
-  },
-  {
-    key: txTypes.MISSED,
-    value: { status: txTypes.MISSED },
-    label: labels[txTypes.MISSED]
-  },
-  {
-    key: txTypes.EXPIRED,
-    value: { status: txTypes.EXPIRED },
-    label: labels[txTypes.EXPIRED]
-  },
-  {
-    key: txTypes.REVOKED,
-    value: { status: txTypes.REVOKED },
-    label: labels[txTypes.REVOKED]
   },
   // VSPFeeProcessStarted FeeStatus = iota
 	// // VSPFeeProcessPaid represents the state where the process has being
@@ -76,17 +28,17 @@ const ticketTypes = [
 	// VSPFeeProcessPaid
 	// VSPFeeProcessErrored
   {
-    key: "vspFeeStarted",
+    key: VSP_FEE_PROCESS_STARTED,
     value: { vspFeeStatus: VSP_FEE_PROCESS_STARTED },
     label: labels["vspFeeStarted"]
   },
   {
-    key: "vspFeePaid",
+    key: VSP_FEE_PROCESS_PAID,
     value: { vspFeeStatus: VSP_FEE_PROCESS_PAID },
     label: labels["vspFeePaid"]
   },
   {
-    key: "vspFeeErrored",
+    key: VSP_FEE_PROCESS_ERRORED,
     value: { vspFeeStatus: VSP_FEE_PROCESS_ERRORED },
     label: labels["vspFeeErrored"]
   }
@@ -99,9 +51,8 @@ const selectTicketTypeFromFilter = (filter) => {
   return ticketType && ticketType.key;
 };
 
-const MyVSPTickets = () => {
+const MyVSPTickets = ({ toggleIsLegacy }) => {
   const {
-    tickets,
     tsDate,
     noMoreTickets,
     ticketsFilter,
@@ -109,21 +60,38 @@ const MyVSPTickets = () => {
     goBackHistory,
     getTickets,
     changeTicketsFilter,
-    vspTickets
+    vspTickets,
+    getVSPTicketsByFeeStatus
   } = useVSPTicketsList();
 
-  console.log(vspTickets)
-
-  // useMountEffect(() => {
-
-  // })
-
+  const [tickets, setTickets] = useState([]);
   const [selectedTicketTypeKey, setTicketTypeKey] = useState(
     selectTicketTypeFromFilter(ticketsFilter)
   );
   const [selectedSortOrderKey, setSortOrderKey] = useState(
     ticketsFilter.listDirection
   );
+
+  useMountEffect(() => {
+    // get vsp tickets fee status
+    getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_STARTED);
+    getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_PAID);
+    getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED);
+  });
+
+  useEffect(() => {
+    let tickets = [];
+    Object.keys(vspTickets).forEach((feeStatus) => {
+      // if the ticket type is all, always add it to ticket. Otherwise
+      // add only  the selected type key.
+      if (selectedTicketTypeKey === "all") {
+        tickets = [ ...tickets, ...vspTickets[feeStatus] ];
+      } else if (selectedTicketTypeKey == feeStatus) {
+          tickets = [ ...tickets, ...vspTickets[feeStatus] ];
+        }
+    });
+    setTickets(tickets);
+  }, [selectedTicketTypeKey, vspTickets]);
 
   const onChangeFilter = (filter) => {
     const newFilter = { ...ticketsFilter, ...filter };
@@ -149,7 +117,7 @@ const MyVSPTickets = () => {
         selectedSortOrderKey,
         loadMoreThreshold,
         ticketTypes,
-        // sortTypes,
+        toggleIsLegacy,
         tickets,
         ticketsFilter,
         changeTicketsFilter,

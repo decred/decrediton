@@ -8,13 +8,12 @@ export const useVSPTicketsList = () => {
   const dispatch = useDispatch();
 
   // selectors
-  const tickets = useSelector(sel.filteredStakeTxs);
-  console.log(tickets)
+  const vspTickets = useSelector(sel.getVSPTickets);
+
   const tsDate = useSelector(sel.tsDate);
   const noMoreTickets = useSelector(sel.noMoreStakeTxs);
   const ticketsFilter = useSelector(sel.ticketsFilter);
   const window = useSelector(sel.mainWindow);
-  const vspTickets = useSelector(sel.getVSPTickets);
 
   // actions
   const goBackHistory = () => dispatch(ca.goBackHistory());
@@ -24,7 +23,6 @@ export const useVSPTicketsList = () => {
   const getVSPTicketsByFeeStatus = (feeStatus) => dispatch(vspa.getVSPTicketsByFeeStatus(feeStatus));
 
   return {
-    tickets,
     tsDate,
     noMoreTickets,
     ticketsFilter,

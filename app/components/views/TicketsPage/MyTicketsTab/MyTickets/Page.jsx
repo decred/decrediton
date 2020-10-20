@@ -54,68 +54,76 @@ const TicketListPage = ({
   selectedTicketTypeKey,
   sortTypes,
   ticketTypes,
-  tsDate
+  tsDate,
+  toggleIsLegacy
 }) => {
   const isOverview = window.innerWidth < 768; // small width
   return (
-    <InfiniteScroll
-      hasMore={!noMoreTickets}
-      loadMore={() => getTickets(true)}
-      initialLoad={!noMoreTickets}
-      useWindow={false}
-      threshold={90}>
-      <Subtitle
-        title={<T id="mytickets.subtitle" m="My Tickets" />}
-        className={style.subtitle}
-        children={subtitleMenu({
-          sortTypes,
-          ticketTypes,
-          selectedSortOrderKey,
-          selectedTicketTypeKey,
-          onChangeSelectedType,
-          onChangeSortType
-        })}
-      />
-      {tickets.length > 0 && (
-        <>
-          <div className={style.tableHeader}>
-            <div>
-              <T id="tickets.table.header.status" m="Ticket Status" />
+    <>
+      <div className={style.checkbox}>
+        <div className={style.label}><T id="purchase.isLegacy.legacy.add" m="Is Legacy" /></div>
+        <input id="box" type="checkbox" checked={true} onChange={() => toggleIsLegacy(false)} />
+        <label htmlFor="box" className={style.checkboxLabel}></label>
+      </div>
+      <InfiniteScroll
+        hasMore={!noMoreTickets}
+        loadMore={() => getTickets(true)}
+        initialLoad={!noMoreTickets}
+        useWindow={false}
+        threshold={90}>
+        <Subtitle
+          title={<T id="mytickets.subtitle" m="My Tickets" />}
+          className={style.subtitle}
+          children={subtitleMenu({
+            sortTypes,
+            ticketTypes,
+            selectedSortOrderKey,
+            selectedTicketTypeKey,
+            onChangeSelectedType,
+            onChangeSortType
+          })}
+        />
+        {tickets.length > 0 && (
+          <>
+            <div className={style.tableHeader}>
+              <div>
+                <T id="tickets.table.header.status" m="Ticket Status" />
+              </div>
+              <div>
+                <T id="tickets.table.header.price" m="Price" />
+              </div>
+              <div>
+                <T id="tickets.table.header.reward" m="Reward" />
+              </div>
+              <div>
+                <T id="tickets.table.header.votetime" m="Vote Time" />
+              </div>
+              <div>
+                <T id="tickets.table.header.account" m="Account" />
+              </div>
+              <div>
+                <T id="tickets.table.header.purchased" m="Purchased" />
+              </div>
             </div>
-            <div>
-              <T id="tickets.table.header.price" m="Price" />
-            </div>
-            <div>
-              <T id="tickets.table.header.reward" m="Reward" />
-            </div>
-            <div>
-              <T id="tickets.table.header.votetime" m="Vote Time" />
-            </div>
-            <div>
-              <T id="tickets.table.header.account" m="Account" />
-            </div>
-            <div>
-              <T id="tickets.table.header.purchased" m="Purchased" />
-            </div>
-          </div>
-          <TxHistory
-            {...{
-              transactions: tickets,
-              tsDate,
-              mode: "stake",
-              overview: isOverview
-            }}
-          />
-        </>
-      )}
-      {!noMoreTickets ? (
-        <LoadingMoreTicketsIndicator />
-      ) : tickets.length > 0 ? (
-        <NoMoreTicketsIndicator />
-      ) : (
-        <NoTicketsIndicator />
-      )}
-    </InfiniteScroll>
+            <TxHistory
+              {...{
+                transactions: tickets,
+                tsDate,
+                mode: "stake",
+                overview: isOverview
+              }}
+            />
+          </>
+        )}
+        {!noMoreTickets ? (
+          <LoadingMoreTicketsIndicator />
+        ) : tickets.length > 0 ? (
+          <NoMoreTicketsIndicator />
+        ) : (
+          <NoTicketsIndicator />
+        )}
+      </InfiniteScroll>
+    </>
   );
 };
 

@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { PurchasePage } from "./Page";
 import { usePurchaseTab } from "../hooks";
-import { VSP_FEE_PROCESS_STARTED } from "constants";
-import { useMountEffect } from "hooks";
 
 const Tickets = ({ toggleIsLegacy }) => {
   const {

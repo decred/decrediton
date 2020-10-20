@@ -78,7 +78,7 @@ const selectTicketTypeFromFilter = (filter) => {
   return ticketType && ticketType.key;
 };
 
-const MyTickets = () => {
+const MyTickets = ({ toggleIsLegacy }) => {
   const {
     tickets,
     tsDate,
@@ -130,7 +130,8 @@ const MyTickets = () => {
         tsDate,
         getTickets,
         goBackHistory,
-        noMoreTickets
+        noMoreTickets,
+        toggleIsLegacy
       }}
     />
   );

@@ -242,8 +242,8 @@ export const getCoinjoinOutputspByAcct = (walletService) =>
 // Map from numerical into defined fee status type
 const FeeStatus = {
   [VSP_FEE_PROCESS_STARTED]: api.GetVSPTicketsByFeeStatusRequest.FeeStatus.VSP_FEE_PROCESS_STARTED,
-  [VSP_FEE_PROCESS_PAID]:  api.GetVSPTicketsByFeeStatusRequest.FeeStatus.VSP_FEE_PROCESS_PAID,
-  [VSP_FEE_PROCESS_ERRORED]:  api.GetVSPTicketsByFeeStatusRequest.FeeStatus.VSP_FEE_PROCESS_ERRORED
+  [VSP_FEE_PROCESS_PAID]: api.GetVSPTicketsByFeeStatusRequest.FeeStatus.VSP_FEE_PROCESS_PAID,
+  [VSP_FEE_PROCESS_ERRORED]: api.GetVSPTicketsByFeeStatusRequest.FeeStatus.VSP_FEE_PROCESS_ERRORED
 };
 
 export const getVSPTicketsByFeeStatus = (walletService, feeStatus) =>

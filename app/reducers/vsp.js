@@ -49,7 +49,7 @@ export default function vsp(state = {}, action) {
           ...state.vspTickets,
           ...action.vspTickets
         }
-      }
+      };
     default:
       return state;
   }

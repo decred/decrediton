@@ -26,6 +26,25 @@
   background-color: var(--sidebar-color);
 }
 
+.legacyIcon {
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.checkbox {
+  display: flex;
+  flex-direction: row-reverse;
+  align-self: center;
+  margin-left: auto;
+  margin-right: 50px;
+}
+
+.label {
+  font-size: 14pt;
+  margin-top: -5px;
+  margin-left: 4px;
+}
+
 @media screen and (max-width: 768px) {
   .tableHeader {
     display: none;

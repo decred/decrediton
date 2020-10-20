@@ -169,22 +169,6 @@ export const agendaService = get(["grpc", "agendaService"]);
 export const votingService = get(["grpc", "votingService"]);
 export const accountMixerService = get(["grpc", "accountMixerService"]);
 
-
-// VSP selectors
-// purchase tickets selectors
-export const getAvailableVSPs = get(["vsp", "availableVSPs"]);
-export const getDiscoverAvailableVSPError = get(["vsp", "availableVSPsError"]);
-
-// ticket auto buyer
-export const getTicketAutoBuyerRunning = get(["vsp", "ticketAutoBuyerRunning"]);
-export const buyerVSP = get(["vsp", "vsp"]);
-export const buyerBalanceToMantain = get(["vsp", "balanceToMaintain"]);
-export const buyerAccount = get(["vsp", "account"]);
-
-export const getVSPTickets = get(["vsp", "vspTickets"]);
-
-// end of vsp selectors
-
 // TODO review selectors that are not being used anymore.
 export const getBalanceRequestAttempt = get([
   "grpc",
@@ -648,11 +632,15 @@ export const transactionNormalizer = createSelector(
   }
 );
 
+// ****** Transactions selectors ********
+
 // transactions selectors before normalized
+// these selectors are maps containing all transactions which decrediton
+// already known about them.
 const stakeTxs = get(["grpc", "stakeTransactions"]);
 const regularTxs = get(["grpc", "regularTransactions"]);
 
-// transactions selectors normalized
+// transactions selectors normalized.
 export const regularTransactions = createSelector(
   [transactionNormalizer, regularTxs],
   (normalizerFn, txsMap) => {
@@ -774,6 +762,45 @@ export const homeHistoryTransactions = createSelector(
   [transactionsNormalizer, get(["grpc", "recentRegularTransactions"])],
   apply
 );
+
+// ******* end of transactions selectors ************
+
+// ************** VSP selectors ******************
+// purchase tickets selectors
+export const getAvailableVSPs = get(["vsp", "availableVSPs"]);
+export const getDiscoverAvailableVSPError = get(["vsp", "availableVSPsError"]);
+
+// ticket auto buyer
+export const getTicketAutoBuyerRunning = get(["vsp", "ticketAutoBuyerRunning"]);
+export const buyerVSP = get(["vsp", "vsp"]);
+export const buyerBalanceToMantain = get(["vsp", "balanceToMaintain"]);
+export const buyerAccount = get(["vsp", "account"]);
+
+const getVSPTicketsHashes = get(["vsp", "vspTickets"]);
+
+export const getVSPTickets = createSelector(
+  [getVSPTicketsHashes, stakeTransactions],
+  (hashes, txsMap) => {
+    console.log(txsMap);
+    // hashes is an object with fee status as key and its value is hashes.
+    const vspTickets = {};
+    Object.keys(hashes).forEach((feeStatus) => {
+      const fsHashes = hashes[feeStatus];
+      vspTickets[feeStatus] = fsHashes.map((hash) => {
+        if (!hash) return null;
+        if (txsMap[hash]) {
+          return Object.assign({}, txsMap[hash]);
+        }
+        // it should not have an uknown tx. If there is, we should get this tx
+        // before showing the vsp tickets.
+        return null;
+      });
+    });
+    return vspTickets;
+  }
+);
+
+// ****************** end of vsp selectors ******************
 
 export const dailyBalancesStats = get(["statistics", "dailyBalances"]);
 
