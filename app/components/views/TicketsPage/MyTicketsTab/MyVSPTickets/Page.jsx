@@ -54,7 +54,7 @@ const TicketListPage = ({
   return (
     <>
       <div className={style.checkbox}>
-        <div className={style.label}><T id="purchase.isLegacy.legacy.add" m="Is Legacy" /></div>
+        <div className={style.label}><T id="mytickets.isLegacy.legacy.add" m="Is Legacy" /></div>
         <input id="box" type="checkbox" checked={false} onChange={() => toggleIsLegacy(true)} />
         <label htmlFor="box" className={style.checkboxLabel}></label>
       </div>
@@ -88,11 +88,11 @@ const TicketListPage = ({
               }}
               disabled={!hasVSPTicketsError}
               modalTitle={
-                <T id="accounts.createNeededAcc" m="Sync Failed VSP Tickets" />
+                <T id="myTicket.syncVSP" m="Sync Failed VSP Tickets" />
               }
               modalComponent={SyncVSPFailedTickets}
               buttonLabel={
-                <T id="accounts.createNeededAcc" m="Sync Failed VSP Tickets" />
+                <T id="myTicket.syncVSP" m="Sync Failed VSP Tickets" />
               }
             />
           )

@@ -14,8 +14,8 @@ const SyncVSPFailedTickets = ({
     <PassphraseModalField
       label={
         <T
-          id="addMixerAccountModal.mixedAccountName"
-          m="Mixed Account Name"
+          id="syncVsp.vsp"
+          m="VSP Select"
         />
       }>
       <VSPSelect
@@ -27,7 +27,7 @@ const SyncVSPFailedTickets = ({
     <PassphraseModalField
       label={
         <T
-          id="addMixerAccountModal.changeAccountName"
+          id="syncVsp.account"
           m="Account"
         />
       }>
