@@ -2,8 +2,9 @@
   background-color: var(--background-back-color);
   padding-top: 20px;
   padding-left: 28px;
-  width: 740px;
-  box-sizing: border-box;
+  max-width: 740px;
+  width: 100%;
+  box-sizing: border-box !important;
   display: flex;
   flex-direction: column;
 }
@@ -204,8 +205,9 @@
 .generateButton {
   position: relative;
   margin-top: 20px;
-  margin-left: 600px;
-  width: 185px;
+  text-align: right;
+  width: 100%;
+  max-width: 740px;
   height: 45px;
 }
 
@@ -244,7 +246,7 @@
   }
 
   .generateButton {
-    margin-left: 216px;
+    width: 355px;
   }
 
   .copyParent {
