@@ -85,22 +85,23 @@ const startWalletServicesTrigger = () => (dispatch, getState) =>
 
 // TODO move startWalletServices to WalletLoaderActions, as it is not related
 // to ClientActions.
-export const startWalletServices = () => (dispatch, getState) => new Promise((resolve, reject) => {
-  const { startWalletServiceAttempt } = getState().grpc;
-  if (startWalletServiceAttempt) {
-    return;
-  }
-  dispatch({ type: STARTWALLETSERVICE_ATTEMPT });
-  dispatch(startWalletServicesTrigger())
-    .then(() => {
-      dispatch({ type: STARTWALLETSERVICE_SUCCESS });
-      resolve();
-    })
-    .catch((error) => {
-      dispatch({ type: STARTWALLETSERVICE_FAILED, error });
-      reject({ error });
-    });
-});
+export const startWalletServices = () => (dispatch, getState) =>
+  new Promise((resolve, reject) => {
+    const { startWalletServiceAttempt } = getState().grpc;
+    if (startWalletServiceAttempt) {
+      return;
+    }
+    dispatch({ type: STARTWALLETSERVICE_ATTEMPT });
+    dispatch(startWalletServicesTrigger())
+      .then(() => {
+        dispatch({ type: STARTWALLETSERVICE_SUCCESS });
+        resolve();
+      })
+      .catch((error) => {
+        dispatch({ type: STARTWALLETSERVICE_FAILED, error });
+        reject({ error });
+      });
+  });
 
 export const GETSTARTUPWALLETINFO_ATTEMPT = "GETSTARTUPWALLETINFO_ATTEMPT";
 export const GETSTARTUPWALLETINFO_SUCCESS = "GETSTARTUPWALLETINFO_SUCCESS";
@@ -152,7 +153,14 @@ export const getWalletServiceAttempt = () => (dispatch, getState) => {
   dispatch({ type: GETWALLETSERVICE_ATTEMPT });
   const grpcCertAndKey = getDcrwalletGrpcKeyCert();
   wallet
-    .getWalletService(sel.isTestNet(getState()), walletName, address, port, grpcCertAndKey, grpcCertAndKey)
+    .getWalletService(
+      sel.isTestNet(getState()),
+      walletName,
+      address,
+      port,
+      grpcCertAndKey,
+      grpcCertAndKey
+    )
     .then((walletService) =>
       dispatch({ walletService, type: GETWALLETSERVICE_SUCCESS })
     )
@@ -173,7 +181,14 @@ export const getTicketBuyerServiceAttempt = () => (dispatch, getState) => {
   dispatch({ type: GETTICKETBUYERSERVICE_ATTEMPT });
   const grpcCertAndKey = getDcrwalletGrpcKeyCert();
   wallet
-    .getTicketBuyerService(sel.isTestNet(getState()), walletName, address, port, grpcCertAndKey, grpcCertAndKey)
+    .getTicketBuyerService(
+      sel.isTestNet(getState()),
+      walletName,
+      address,
+      port,
+      grpcCertAndKey,
+      grpcCertAndKey
+    )
     .then((ticketBuyerService) => {
       dispatch({ ticketBuyerService, type: GETTICKETBUYERSERVICE_SUCCESS });
     })
@@ -275,24 +290,25 @@ export const GETBESTBLOCK_ATTEMPT = "GETBESTBLOCK_ATTEMPT";
 export const GETBESTBLOCK_FAILED = "GETBESTBLOCK_FAILED";
 export const GETBESTBLOCK_SUCCESS = "GETBESTBLOCK_SUCCESS";
 
-export const getBestBlockHeightAttempt = (cb) => (dispatch, getState) => new Promise((resolve, reject) => {
-  dispatch({ type: GETBESTBLOCK_ATTEMPT });
-  wallet
-    .bestBlock(sel.walletService(getState()))
-    .then(async (resp) => {
-      dispatch({ height: resp.getHeight(), type: GETBESTBLOCK_SUCCESS });
-      if (cb) {
-        await dispatch(cb());
+export const getBestBlockHeightAttempt = (cb) => (dispatch, getState) =>
+  new Promise((resolve, reject) => {
+    dispatch({ type: GETBESTBLOCK_ATTEMPT });
+    wallet
+      .bestBlock(sel.walletService(getState()))
+      .then(async (resp) => {
+        dispatch({ height: resp.getHeight(), type: GETBESTBLOCK_SUCCESS });
+        if (cb) {
+          await dispatch(cb());
+          return resolve();
+        }
         return resolve();
-      }
-      return resolve();
-    })
-    .catch((error) => {
-      dispatch({ error, type: GETBESTBLOCK_FAILED });
-      reject({ error });
-      throw error;
-    });
-});
+      })
+      .catch((error) => {
+        dispatch({ error, type: GETBESTBLOCK_FAILED });
+        reject({ error });
+        throw error;
+      });
+  });
 
 export const GETNETWORK_ATTEMPT = "GETNETWORK_ATTEMPT";
 export const GETNETWORK_FAILED = "GETNETWORK_FAILED";
@@ -502,7 +518,14 @@ export const getAgendaServiceAttempt = () => (dispatch, getState) => {
   dispatch({ type: GETAGENDASERVICE_ATTEMPT });
   const grpcCertAndKey = getDcrwalletGrpcKeyCert();
   wallet
-    .getAgendaService(sel.isTestNet(getState()), walletName, address, port, grpcCertAndKey, grpcCertAndKey)
+    .getAgendaService(
+      sel.isTestNet(getState()),
+      walletName,
+      address,
+      port,
+      grpcCertAndKey,
+      grpcCertAndKey
+    )
     .then((agendaService) => {
       dispatch({ agendaService, type: GETAGENDASERVICE_SUCCESS });
       setTimeout(() => {
@@ -526,7 +549,14 @@ export const getVotingServiceAttempt = () => (dispatch, getState) => {
   dispatch({ type: GETVOTINGSERVICE_ATTEMPT });
   const grpcCertAndKey = getDcrwalletGrpcKeyCert();
   wallet
-    .getVotingService(sel.isTestNet(getState()), walletName, address, port, grpcCertAndKey, grpcCertAndKey)
+    .getVotingService(
+      sel.isTestNet(getState()),
+      walletName,
+      address,
+      port,
+      grpcCertAndKey,
+      grpcCertAndKey
+    )
     .then((votingService) =>
       dispatch({ votingService, type: GETVOTINGSERVICE_SUCCESS })
     )
@@ -605,23 +635,23 @@ export const GETMESSAGEVERIFICATIONSERVICE_FAILED =
 export const GETMESSAGEVERIFICATIONSERVICE_SUCCESS =
   "GETMESSAGEVERIFICATIONSERVICE_SUCCESS";
 
-export const getMessageVerificationServiceAttempt = (
-  dispatch,
-  getState
-) => {
+export const getMessageVerificationServiceAttempt = (dispatch, getState) => {
   const {
     grpc: { address, port }
   } = getState();
   const {
     daemon: { walletName }
   } = getState();
+  const grpcCertAndKey = getDcrwalletGrpcKeyCert();
   dispatch({ type: GETMESSAGEVERIFICATIONSERVICE_ATTEMPT });
   wallet
     .getMessageVerificationService(
       sel.isTestNet(getState()),
       walletName,
       address,
-      port
+      port,
+      grpcCertAndKey,
+      grpcCertAndKey
     )
     .then((messageVerificationService) =>
       dispatch({
@@ -689,10 +719,16 @@ export const abandonTransactionAttempt = (txid) => (dispatch, getState) => {
     .catch((error) => dispatch({ error, type: ABANDONTRANSACTION_FAILED }));
 };
 
-export const getAcctSpendableBalance = (acctId) => async (dispatch, getState) => {
-  const acct = await wallet.getBalance(sel.walletService(getState()), acctId, 0);
+export const getAcctSpendableBalance = (acctId) => async (
+  dispatch,
+  getState
+) => {
+  const acct = await wallet.getBalance(
+    sel.walletService(getState()),
+    acctId,
+    0
+  );
   return acct.getSpendable();
 };
 
-export const goToHomePage = () => (dispatch) =>
-  dispatch(pushHistory("/home"));
+export const goToHomePage = () => (dispatch) => dispatch(pushHistory("/home"));
