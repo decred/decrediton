@@ -10,3 +10,4 @@ export { default as SeedCopyConfirmModal } from "./SeedCopyConfirmModal/SeedCopy
 export { default as AboutModal } from "./AboutModal/AboutModal";
 export { default as BackupRedeemScriptModal } from "./BackupRedeemScriptModal";
 export { default as AddMixerAccountsModal } from "./AddMixerAccountsModal";
+export { default as SyncVSPFailedTickets } from "./SyncVSPFailedTickets";

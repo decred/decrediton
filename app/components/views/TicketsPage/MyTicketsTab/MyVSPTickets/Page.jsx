@@ -6,8 +6,10 @@ import {
   NoTicketsIndicator
 } from "indicators";
 import { TxHistory, Subtitle, Tooltip } from "shared";
-import { EyeFilterMenu } from "buttons";
+import { EyeFilterMenu, PassphraseModalButton } from "buttons";
 import style from "./MyTicketsTab.module.css";
+import { VSP_FEE_PROCESS_ERRORED } from "constants";
+import { SyncVSPFailedTickets } from "modals";
 
 const subtitleMenu = ({
   ticketTypes,
@@ -17,7 +19,7 @@ const subtitleMenu = ({
   <div className={style.ticketsButtons}>
     <Tooltip
       tipWidth={300}
-      text={<T id="tickets.tickettypes.tooltip" m="Ticket Status" />}>
+      text={<T id="vsptickets.tickettypes.tooltip" m="Ticket Status" />}>
       <EyeFilterMenu
         labelKey="label"
         keyField="key"
@@ -40,7 +42,13 @@ const TicketListPage = ({
   sortTypes,
   ticketTypes,
   tsDate,
-  toggleIsLegacy
+  toggleIsLegacy,
+  hasVSPTicketsError,
+  account,
+  setVSP,
+  setAccount,
+  onSyncVspTicketsRequest,
+  isValid
 }) => {
   const isOverview = window.innerWidth < 768; // small width
   return (
@@ -55,7 +63,7 @@ const TicketListPage = ({
         loadMore={() => getTickets(true)}
         initialLoad={!noMoreTickets}
         useWindow={false}
-        threshold={90}>
+        threshold={0}>
         <Subtitle
           title={<T id="vsp.mytickets.subtitle" m="My VSP Tickets" />}
           className={style.subtitle}
@@ -68,26 +76,47 @@ const TicketListPage = ({
             onChangeSortType
           })}
         />
+        {
+          selectedTicketTypeKey == VSP_FEE_PROCESS_ERRORED && (
+            <PassphraseModalButton
+              {...{
+                onSubmit: onSyncVspTicketsRequest,
+                setVSP,
+                account,
+                setAccount,
+                isValid
+              }}
+              disabled={!hasVSPTicketsError}
+              modalTitle={
+                <T id="accounts.createNeededAcc" m="Sync Failed VSP Tickets" />
+              }
+              modalComponent={SyncVSPFailedTickets}
+              buttonLabel={
+                <T id="accounts.createNeededAcc" m="Sync Failed VSP Tickets" />
+              }
+            />
+          )
+        }
         {tickets.length > 0 && (
           <>
             <div className={style.tableHeader}>
               <div>
-                <T id="tickets.table.header.status" m="Ticket Status" />
+                <T id="vsptickets.table.header.status" m="Ticket Status" />
               </div>
               <div>
-                <T id="tickets.table.header.price" m="Price" />
+                <T id="vsptickets.table.header.price" m="Price" />
               </div>
               <div>
-                <T id="tickets.table.header.reward" m="Reward" />
+                <T id="vsptickets.table.header.reward" m="Reward" />
               </div>
               <div>
-                <T id="tickets.table.header.votetime" m="Vote Time" />
+                <T id="vsptickets.table.header.votetime" m="Vote Time" />
               </div>
               <div>
-                <T id="tickets.table.header.account" m="Account" />
+                <T id="vsptickets.table.header.account" m="Account" />
               </div>
               <div>
-                <T id="tickets.table.header.purchased" m="Purchased" />
+                <T id="vsptickets.table.header.purchased" m="Purchased" />
               </div>
             </div>
             <TxHistory

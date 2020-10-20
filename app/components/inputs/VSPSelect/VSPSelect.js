@@ -13,8 +13,11 @@ const messages = defineMessages({
 });
 
 function VSPSelect({ onChange, options, intl, value }) {
-  const { send, state, selectedOption, vspInfo } = useVSPSelect(options, value);
+  const { send, state, selectedOption, vspInfo, availableVSPs } = useVSPSelect(options, value);
 
+  if (!options) {
+    options = availableVSPs;
+  }
   const [newOption, setNewOption] = useState("");
   const [newOptions, setNewOptions] = useState([]);
   const vspList = useMemo(() => {

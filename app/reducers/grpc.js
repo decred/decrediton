@@ -359,7 +359,7 @@ export default function grpc(state = {}, action) {
           action.startRequestHeight || state.startRequestHeight
       };
     case GETTRANSACTIONS_CANCELED:
-      return {
+      return { ...state,
         getTransactionsCancel: false
       };
     case ABANDONTRANSACTION_ATTEMPT:

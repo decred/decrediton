@@ -4,7 +4,7 @@ import { getWalletCfg, updateStakePoolConfig } from "config";
 import { importScriptAttempt, rescanAttempt } from "./ControlActions";
 import * as sel from "../selectors";
 import * as wallet from "wallet";
-import { TESTNET, MAINNET } from "constants";
+import { TESTNET, MAINNET, VSP_FEE_PROCESS_ERRORED } from "constants";
 import { reverseRawHash } from "../helpers/byteActions";
 
 export const GETVSP_ATTEMPT = "GETVSP_ATTEMPT";
@@ -29,6 +29,7 @@ export const getVSPInfo = (host) => async (dispatch) => {
 export const GETVSPTICKETSTATUS_ATTEMPT = "GETVSPTICKETSTATUS_ATTEMPT";
 export const GETVSPTICKETSTATUS_FAILED = "GETVSPTICKETSTATUS_FAILED";
 export const GETVSPTICKETSTATUS_SUCCESS = "GETVSPTICKETSTATUS_SUCCESS";
+export const HASVSPTICKETSERRORED = "HASVSPTICKETSERRORED";
 
 export const getVSPTicketsByFeeStatus = (feeStatus) => (dispatch, getState) => {
   dispatch({ type: GETVSPTICKETSTATUS_ATTEMPT });
@@ -39,12 +40,31 @@ export const getVSPTicketsByFeeStatus = (feeStatus) => (dispatch, getState) => {
         return reverseRawHash(bytesHash);
       });
 
+      // dispatch if we have tickets with error to register.
+      if (feeStatus == VSP_FEE_PROCESS_ERRORED && ticketsHashes.length > 0) {
+        dispatch({ type: HASVSPTICKETSERRORED, hasVSPTicketsError: true });
+      }
+
       dispatch({ type: GETVSPTICKETSTATUS_SUCCESS, vspTickets: { [feeStatus]: ticketsHashes }, feeStatus });
     })
     .catch(err => {
       dispatch({ type: GETVSPTICKETSTATUS_FAILED, err });
     });
 };
+
+export const SYNCVSPTICKETS_ATTEMPT = "SYNCVSPTICKETS_ATTEMPT";
+export const SYNCVSPTICKETS_FAILED = "SYNCVSPTICKETS_FAILED";
+export const SYNCVSPTICKETS_SUCCESS = "SYNCVSPTICKETS_SUCCESS";
+
+export const syncVSPTicketsRequest = ({ passphrase, vspHost, vspPubkey, account }) => (dispatch, getState) => {
+  dispatch({ type: SYNCVSPTICKETS_ATTEMPT });
+  wallet.syncVSPTickets(getState().grpc.walletService, passphrase, vspHost, vspPubkey, account)
+    .then(() => dispatch({ type: SYNCVSPTICKETS_SUCCESS }))
+    .catch(err => {
+      dispatch({ type: SYNCVSPTICKETS_FAILED, err });
+    });
+};
+
 
 // getTicketSignature receives the tickethash and request and sign it using the
 // ticket sstxcommitment address.

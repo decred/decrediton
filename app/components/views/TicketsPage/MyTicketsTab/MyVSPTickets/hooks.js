@@ -14,6 +14,8 @@ export const useVSPTicketsList = () => {
   const noMoreTickets = useSelector(sel.noMoreStakeTxs);
   const ticketsFilter = useSelector(sel.ticketsFilter);
   const window = useSelector(sel.mainWindow);
+  const hasVSPTicketsError = useSelector(sel.getHasVSPTicketsError);
+  const defaultSpendingAccount = useSelector(sel.defaultSpendingAccount);
 
   // actions
   const goBackHistory = () => dispatch(ca.goBackHistory());
@@ -21,6 +23,7 @@ export const useVSPTicketsList = () => {
   const changeTicketsFilter = (newFilter) =>
     dispatch(ta.changeTicketsFilter(newFilter));
   const getVSPTicketsByFeeStatus = (feeStatus) => dispatch(vspa.getVSPTicketsByFeeStatus(feeStatus));
+  const syncVSPTicketsRequest = ({ passphrase, vspHost, vspPubkey, account }) => dispatch(vspa.syncVSPTicketsRequest({ passphrase, vspHost, vspPubkey, account }));
 
   return {
     tsDate,
@@ -31,6 +34,9 @@ export const useVSPTicketsList = () => {
     getTickets,
     changeTicketsFilter,
     getVSPTicketsByFeeStatus,
-    vspTickets
+    vspTickets,
+    hasVSPTicketsError,
+    defaultSpendingAccount,
+    syncVSPTicketsRequest
   };
 };

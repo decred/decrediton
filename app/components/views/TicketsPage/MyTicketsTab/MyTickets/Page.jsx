@@ -61,7 +61,7 @@ const TicketListPage = ({
   return (
     <>
       <div className={style.checkbox}>
-        <div className={style.label}><T id="purchase.isLegacy.legacy.add" m="Is Legacy" /></div>
+        <div className={style.label}><T id="myTickets.isLegacy.legacy.add" m="Is Legacy" /></div>
         <input id="box" type="checkbox" checked={true} onChange={() => toggleIsLegacy(false)} />
         <label htmlFor="box" className={style.checkboxLabel}></label>
       </div>

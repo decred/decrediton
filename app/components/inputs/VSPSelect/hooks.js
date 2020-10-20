@@ -1,11 +1,13 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchMachine } from "stateMachines/FetchStateMachine";
 import { useMachine } from "@xstate/react";
 import * as vspa from "actions/VSPActions";
+import * as sel from "selectors";
 import { useState, useMemo } from "react";
 
 export const useVSPSelect = (options, vsp) => {
   const dispatch = useDispatch();
+  const availableVSPs = useSelector(sel.getAvailableVSPs);
   const getVSPInfo = (host) => dispatch(vspa.getVSPInfo(host));
   const [selectedOption, setSelected] = useState(null);
   const [pubkey, setPubkey] = useState(null);
@@ -56,6 +58,7 @@ export const useVSPSelect = (options, vsp) => {
     send,
     state,
     selectedOption,
-    vspInfo
+    vspInfo,
+    availableVSPs
   };
 };

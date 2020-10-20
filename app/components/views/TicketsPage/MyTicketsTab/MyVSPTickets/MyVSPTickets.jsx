@@ -20,7 +20,7 @@ const ticketTypes = [
   {
     key: txTypes.ALL,
     value: { status: null },
-    label: <T id="tickets.type.all" m="All" />
+    label: <T id="vsptickets.type.all" m="All" />
   },
   // VSPFeeProcessStarted FeeStatus = iota
 	// // VSPFeeProcessPaid represents the state where the process has being
@@ -61,10 +61,15 @@ const MyVSPTickets = ({ toggleIsLegacy }) => {
     getTickets,
     changeTicketsFilter,
     vspTickets,
-    getVSPTicketsByFeeStatus
+    getVSPTicketsByFeeStatus,
+    hasVSPTicketsError,
+    defaultSpendingAccount,
+    syncVSPTicketsRequest
   } = useVSPTicketsList();
 
   const [tickets, setTickets] = useState([]);
+  const [account, setAccount] = useState(defaultSpendingAccount);
+  const [vsp, setVSP] = useState(null);
   const [selectedTicketTypeKey, setTicketTypeKey] = useState(
     selectTicketTypeFromFilter(ticketsFilter)
   );
@@ -108,7 +113,16 @@ const MyVSPTickets = ({ toggleIsLegacy }) => {
     setSortOrderKey(type.value);
   };
 
-  const loadMoreThreshold = 90 + Math.max(0, window.innerHeight - 765);
+  const onSyncVspTicketsRequest = (passphrase) => {
+    syncVSPTicketsRequest({
+      passphrase,
+      account: account.value,
+      vspHost: vsp.host,
+      vspPubkey: vsp.pubkey
+    });
+  };
+
+  const loadMoreThreshold = Math.max(0, window.innerHeight - 765);
 
   return (
     <TicketListPage
@@ -126,7 +140,13 @@ const MyVSPTickets = ({ toggleIsLegacy }) => {
         tsDate,
         getTickets,
         goBackHistory,
-        noMoreTickets
+        noMoreTickets,
+        hasVSPTicketsError,
+        account,
+        setAccount,
+        vsp,
+        setVSP,
+        onSyncVspTicketsRequest
       }}
     />
   );
