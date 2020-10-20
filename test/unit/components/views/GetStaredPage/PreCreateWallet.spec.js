@@ -36,7 +36,7 @@ let mockAlertNoConnectedDevice;
 let mockTrezorDevice;
 let mockGetWalletCreationMasterPubKey;
 let mockIsTestNet;
-let mockReloadTrezorDeviceList;
+let mockTrezorConnect;
 let mockCreateWatchOnlyWalletRequest;
 
 beforeEach(() => {
@@ -75,7 +75,7 @@ beforeEach(() => {
     return { isValid: false, error: "" };
   });
   mockTrezorDevice = sel.trezorDevice = jest.fn(() => null);
-  mockReloadTrezorDeviceList = trza.reloadTrezorDeviceList = jest.fn(
+  mockTrezorConnect = trza.connect = jest.fn(
     () => () => {}
   );
   mockCreateWatchOnlyWalletRequest = wla.createWatchOnlyWalletRequest = jest.fn(
@@ -293,8 +293,8 @@ test("test trezor switch toggling and setup device page", async () => {
   ).toMatchInlineSnapshot(
     `"No trezor device found. Check the connection and the trezor bridge software."`
   );
-  user.click(screen.getByText(/reload device list/i));
-  expect(mockReloadTrezorDeviceList).toHaveBeenCalled();
+  user.click(screen.getByText(/connect to trezor/i));
+  expect(mockTrezorConnect).toHaveBeenCalled();
 
   // go back
   user.click(screen.getByText(/go back/i).previousSibling);
