@@ -785,7 +785,7 @@ export const startTicketBuyerV2Attempt = (
       type: STARTTICKETBUYERV2_SUCCESS
     });
   });
-}
+};
 
 export const GETPEERINFO_ATTEMPT = "GETPEERINFO_ATTEMPT";
 export const GETPEERINFO_FAILED = "GETPEERINFO_FAILED";
