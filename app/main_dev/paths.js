@@ -90,6 +90,16 @@ export function getDcrdRpcCert(appDataPath) {
   return path.resolve(appDataPath ? appDataPath : getDcrdPath(), "rpc.cert");
 }
 
+export function getCertsPath(name, custombinpath) {
+  const binPath = custombinpath
+    ? custombinpath
+    : process.env.NODE_ENV === "development"
+    ? path.join(__dirname, "..", "..", "certs")
+    : path.join(process.resourcesPath, "certs");
+
+  return binPath;
+}
+
 export function getExecutablePath(name, custombinpath) {
   const binPath = custombinpath
     ? custombinpath
