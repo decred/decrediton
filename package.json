@@ -133,7 +133,8 @@
         "from": "bin",
         "to": "bin"
       },
-      "*.node"
+      "*.node",
+      "certs"
     ],
     "mac": {
       "extendInfo": {
