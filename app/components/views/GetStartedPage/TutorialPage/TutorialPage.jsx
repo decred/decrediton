@@ -12,22 +12,11 @@ const Tutorial = () => {
     }
   }, [tutorialStep]);
 
-  /*
-   * commented out this function because it not used
-   *
-  const onPrevTutorialStep = useCallback(() => {
-    if (tutorialStep - 1 >= 0) {
-      setTutorialStep(tutorialStep - 1);
-    }
-  }, [tutorialStep]);
-  */
-
   return (
     <TutorialPage
       {...{
         tutorialStep,
         onNextTutorialStep,
-        // onPrevTutorialStep,
         onGoToStep: setTutorialStep,
         finishTutorial
       }}
