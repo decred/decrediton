@@ -174,6 +174,9 @@ const initialState = {
     // GetTransactions
     // requestHeight of last getTransaction call
     startRequestHeight: null,
+    // stakeTransactionsCancel checks if a stake transaction is canceled from
+    // getting more transactions.
+    stakeTransactionsCancel: false,
     unminedTransactions: [],
     // map representing each txs type
     stakeTransactions: {},

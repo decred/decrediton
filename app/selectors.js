@@ -679,6 +679,8 @@ export const noMoreStakeTxs = get([
 export const transactionsFilter = get(["grpc", "transactionsFilter"]);
 export const ticketsFilter = get(["grpc", "ticketsFilter"]);
 
+export const getStakeTransactionsCancel = get(["grpc", "stakeTransactionsCancel"]);
+
 // filterTransactions filters a list of transactions given a filtering object.
 //
 // Currently supported filters in the filter object:
@@ -783,7 +785,6 @@ const getVSPTicketsHashes = get(["vsp", "vspTickets"]);
 export const getVSPTickets = createSelector(
   [getVSPTicketsHashes, stakeTransactions],
   (hashes, txsMap) => {
-    console.log(txsMap);
     // hashes is an object with fee status as key and its value is hashes.
     const vspTickets = {};
     Object.keys(hashes).forEach((feeStatus) => {
