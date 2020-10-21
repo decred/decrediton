@@ -37,6 +37,8 @@ export function readFileBackward(path, maxSize, end) {
 
 // makeFileBackup makes a backup of the file on the directory specified.
 // If the directory does not exists, it will be created.
+// @params file - file path string
+// directory - directory path string where backup will be created.
 export function makeFileBackup(file, directory) {
   if (!fs.existsSync(file)) {
     throw "File does not exists";

@@ -1,4 +1,5 @@
 import fs from "fs";
+import path from "path";
 import Store from "electron-store";
 import ini from "ini";
 import { stakePoolInfo } from "./middleware/vspapi";
@@ -6,13 +7,20 @@ import {
   getGlobalCfgPath,
   getWalletPath,
   dcrwalletConf,
-  getDcrdRpcCert
+  getDcrdRpcCert,
+  getBackupDirectory,
+  getAppDataDirectory
 } from "./main_dev/paths";
 import * as cfgConstants from "constants/config";
+import { makeFileBackup } from "helpers";
 import { DCR } from "constants";
 
+let config = null;
 export function getGlobalCfg() {
-  const config = new Store();
+  if (!config) {
+    config = initGlobalCfg();
+  }
+
   return config;
 }
 
@@ -120,7 +128,10 @@ function cleanWalletCfg(config) {
 }
 
 export function initGlobalCfg() {
-  const config = new Store();
+  if (config) {
+    return config;
+  }
+  config = new Store();
   Object.keys(cfgConstants.INITIAL_VALUES).map((key) => {
     if (!config.has(key)) {
       config.set(key, cfgConstants.INITIAL_VALUES[key]);
@@ -148,20 +159,23 @@ function cleanGlobalCfg(config) {
 }
 
 export function validateGlobalCfgFile() {
-  let fileContents;
-  try {
-    fileContents = fs.readFileSync(getGlobalCfgPath(), "utf8");
-  } catch (err) {
-    return null;
-  }
-
+  const fileContents = fs.readFileSync(getGlobalCfgPath(), "utf8");
   try {
     JSON.parse(fileContents);
   } catch (err) {
-    console.error(err);
+    const backupSrc = path.resolve(getBackupDirectory(), "config.json");
+    const backupConfigJson = fs.readFileSync(backupSrc, "utf8");
+    const parsedBackupCfg = JSON.parse(backupConfigJson);
+    if (parsedBackupCfg) {
+      makeFileBackup(backupSrc, getAppDataDirectory());
+      return null;
+    }
+
     return err;
   }
 
+  // make a config.json backup if fileContents is valid.
+  makeFileBackup(getGlobalCfgPath(), getBackupDirectory());
   return null;
 }
 

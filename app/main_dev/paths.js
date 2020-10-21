@@ -23,6 +23,11 @@ export function getAppDataDirectory() {
   }
 }
 
+// getWalletsDirectoryPath gets the wallets directory.
+export function getBackupDirectory() {
+  return path.join(getAppDataDirectory(), "backup");
+}
+
 // getGlobalCfgPath gets decrediton's config.json file.
 // example of result in unix: ~/.config/decrediton/config.json
 export function getGlobalCfgPath() {
