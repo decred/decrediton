@@ -60,6 +60,10 @@ export const usePurchaseTab = () => {
     dispatch(vspa.toggleIsLegacy(isLegacy));
   };
 
+  // purchase cspp ticket
+  const mixedAccount = useSelector(sel.getMixedAccount);
+  const changeAccount = useSelector(sel.getChangeAccount);
+
   return {
     spvMode,
     blocksNumberToNextTicket,
@@ -81,6 +85,8 @@ export const usePurchaseTab = () => {
     buyerBalanceToMantain,
     getVSPTicketsByFeeStatus,
     isLegacy,
-    toggleIsLegacy
+    toggleIsLegacy,
+    mixedAccount,
+    changeAccount
   };
 };
