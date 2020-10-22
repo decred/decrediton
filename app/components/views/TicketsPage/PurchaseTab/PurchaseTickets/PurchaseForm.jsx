@@ -22,7 +22,8 @@ const PurchaseTicketsForm = ({
   setVSP,
   onV3PurchaseTicket,
   onRevokeTickets,
-  availableVSPs
+  availableVSPs,
+  isLoading
 }) => (
   <>
     <div className={classNames(styles.purchaseForm, "is-row")}>
@@ -53,7 +54,7 @@ const PurchaseTicketsForm = ({
         </div>
         <NumTicketsInput
           required
-          invalid={!isValid}
+          invalid={account.spendable < (numTickets * ticketPrice)}
           invalidMessage={
             <T
               id="purchaseTickets.errors.insufficientBalance"
@@ -66,7 +67,7 @@ const PurchaseTicketsForm = ({
           onChangeNumTickets={setNumTickets}
           onKeyDown={handleOnKeyDown}
           showErrors={true}></NumTicketsInput>
-        {isValid && (
+        {account.spendable >= (numTickets * ticketPrice) && (
           <div className="input-purchase-ticket-valid-message-area">
             <T
               id="purchaseTickets.validMsg"
@@ -101,6 +102,10 @@ const PurchaseTicketsForm = ({
       {isWatchingOnly ? (
         <KeyBlueButton disabled={!isValid} onClick={onV3PurchaseTicket}>
           {purchaseLabel()}
+        </KeyBlueButton>
+      ) : isLoading ? (
+        <KeyBlueButton disabled={true}>
+          <T id="tickets.purchase.loading" m="Loading" />
         </KeyBlueButton>
       ) : (
         <PassphraseModalButton

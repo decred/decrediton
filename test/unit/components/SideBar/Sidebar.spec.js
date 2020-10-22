@@ -406,7 +406,7 @@ test("tests tooltip on Logo when isWatchingOnly mode is active", () => {
 });
 
 test("tests tooltip on Logo when accountMixerRunning mode is active", () => {
-  const mockGetAccountMixerRunning = (sel.getAccountMixerRunning = jest.fn(
+  const mockGetAccountMixerRunning = (sel.getRunningIndicator = jest.fn(
     () => true
   ));
 

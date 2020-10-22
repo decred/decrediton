@@ -10,7 +10,7 @@ const Logo = React.memo(
     onReduceSideBar,
     onExpandSideBar,
     isWatchingOnly,
-    accountMixerRunning,
+    getRunningIndicator,
     peersCount
   }) => (
     <div
@@ -43,7 +43,7 @@ const Logo = React.memo(
         }>
         <div className={style.peersCount}>{peersCount}</div>
       </Tooltip>
-      {accountMixerRunning && (
+      {getRunningIndicator && (
         <Tooltip
           text={
             <T

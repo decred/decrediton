@@ -51,6 +51,7 @@ export function PurchasePage({
   onV3PurchaseTicket,
   mixedAccount,
   changeAccount,
+  isLoading,
   ...props
 }) {
   return (
@@ -84,7 +85,8 @@ export function PurchasePage({
             onChangeNumTickets,
             setVSP,
             isValid,
-            onV3PurchaseTicket
+            onV3PurchaseTicket,
+            isLoading
           }}
         />
       )}
