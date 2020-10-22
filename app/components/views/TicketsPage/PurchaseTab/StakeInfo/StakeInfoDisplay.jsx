@@ -1,4 +1,4 @@
-import { VerticalAccordion, Balance } from "shared";
+import { VerticalAccordion, Balance, FormattedRelative } from "shared";
 import { FormattedNumber, FormattedMessage as T } from "react-intl";
 import StakeInfoDetails from "./StakeInfoDetails";
 import { Link } from "react-router-dom";
@@ -13,92 +13,21 @@ const StakeInfoDisplayItem = ({ label, value, foot }) => (
 );
 
 const StakeInfoDisplayTicketCount = ({ value }) => (
-  <T
-    id="stake.ticketCount"
-    m="{value} {label}"
-    values={{
-      value: <FormattedNumber value={value} />,
-      label: (
-        <span className={styles.purchaseTicketLabel}>
-          <T
-            id="stake.ticketCountLabel"
-            m="{label}"
-            values={{ label: value == 1 ? "Ticket" : "Tickets" }}
-          />
-        </span>
-      )
-    }}
-  />
+  <span className={styles.purchaseTicketLabel}>
+    <T
+      id="stake.ticketCount"
+      m="{ticketsFmt} {tickets, plural, one {ticket} other {tickets}}"
+      values={{
+        ticketsFmt: (
+          <span className={styles.purchaseTicketCount}>
+            <FormattedNumber value={value} />
+          </span>
+        ),
+        tickets: value
+      }}
+    />
+  </span>
 );
-
-const getDateDiffLabel = (targetDate) => {
-  const nowMillis = new Date().getTime();
-  const targetMillis = targetDate.getTime();
-  const duration = Math.abs(targetMillis - nowMillis);
-  const years = Math.floor(duration / 3.154e10);
-  const months = Math.floor(duration / 2.628e9) % 12;
-  const days = Math.floor(
-    (duration - years * 3.154e10 - months * 2.628e9) / 8.64e7
-  );
-  const hours = Math.floor(duration / 3.6e6) % 24;
-  const mins = Math.floor(duration / 60000) % 60;
-  const secs = Math.floor(duration / 1000) % 60;
-
-  const diff = [
-    { value: years, label: "y" },
-    { value: months, label: "m" },
-    { value: days, label: "d" },
-    { value: hours, label: "h" },
-    { value: mins, label: "m" },
-    { value: secs, label: "s" }
-  ];
-
-  for (let i = 0; i < diff.length; i = i + 1) {
-    if (diff[i].value) {
-      return (
-        <T
-          id="stake.lastTicketDateDiff"
-          m="{value}{label} {value1}{label1} {label2}"
-          values={{
-            value: <FormattedNumber value={diff[i].value} />,
-            label: (
-              <span className={styles.purchaseTicketLabel}>
-                <T
-                  id="stake.lastTicketDiff"
-                  m="{label}"
-                  values={{ label: diff[i].label }}
-                />
-              </span>
-            ),
-            value1:
-              i + 1 < diff.length ? (
-                <FormattedNumber value={diff[i + 1].value} />
-              ) : (
-                ""
-              ),
-            label1:
-              i + 1 < diff.length ? (
-                <span className={styles.purchaseTicketLabel}>
-                  <T
-                    id="stake.lastTicketDiff2"
-                    m="{label}"
-                    values={{ label: diff[i + 1].label }}
-                  />
-                </span>
-              ) : (
-                ""
-              ),
-            label2: (
-              <span className={styles.purchaseTicketLabel}>
-                <T id="stake.lastTicketAgo" m="ago" />
-              </span>
-            )
-          }}
-        />
-      );
-    }
-  }
-};
 
 const StakeInfoDisplay = ({
   isShowingDetails,
@@ -115,7 +44,9 @@ const StakeInfoDisplay = ({
   expiredTicketsCount,
   totalSubsidy,
   isSPV,
-  lastVotedTicket
+  lastVotedTicket,
+  currencyDisplay,
+  tsDate
 }) => {
   return (
     <VerticalAccordion
@@ -159,10 +90,8 @@ const StakeInfoDisplay = ({
             label={<T id="stake.lastVotedTicket" m="Last Ticked Voted" />}
             value={
               lastVotedTicket
-                ? getDateDiffLabel(
-                    new Date(lastVotedTicket.leaveTimestamp * 1000)
-                  )
-                : "None"
+                ? <FormattedRelative value={tsDate(lastVotedTicket.leaveTimestamp)} />
+                : <T id="stake.lastVotedTicket.none" m="None" />
             }
             foot={
               lastVotedTicket && (
@@ -170,8 +99,11 @@ const StakeInfoDisplay = ({
                   to={`/transaction/history/${lastVotedTicket.txHash}`}
                   className={styles.foot}>
                   <span className={styles.purchaseTicketFoot}>
-                    {lastVotedTicket.txHash.substr(0, 6) + "... "}
-                    <T id="stake.lastTicketLink" m="View &rarr;" />
+                    <T
+                      id="stake.lastTicketLink"
+                      m="{shortHash}... View &rarr;"
+                      values={{ shortHash: lastVotedTicket.txHash.substr(0, 6) }}
+                    />
                   </span>
                 </Link>
               )
@@ -182,7 +114,7 @@ const StakeInfoDisplay = ({
             value={
               <T
                 id="stake.totalRewardsValue"
-                m="{value}{currency}"
+                m="{value} {currency}"
                 values={{
                   value: (
                     <Balance
@@ -194,7 +126,7 @@ const StakeInfoDisplay = ({
                   ),
                   currency: (
                     <span className={styles.purchaseTicketLabel}>
-                      <T id="stake.dcr" m=" DCR" />
+                      {currencyDisplay}
                     </span>
                   )
                 }}

@@ -15,7 +15,9 @@ const mapStateToProps = selectorMap({
   unspentTicketsCount: sel.unspentTicketsCount,
   totalSubsidy: sel.totalSubsidy,
   isSPV: sel.isSPV,
-  lastVotedTicket: sel.lastVotedTicket
+  lastVotedTicket: sel.lastVotedTicket,
+  currencyDisplay: sel.currencyDisplay,
+  tsDate: sel.tsDate
 });
 
 export default connect(mapStateToProps);

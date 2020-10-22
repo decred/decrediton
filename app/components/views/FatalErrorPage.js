@@ -74,10 +74,7 @@ class FatalErrorPage extends React.Component {
             values={{
               link: (
                 <ExternalLink href="https://decred.org/community">
-                  <T
-                    id="getStarted.community.link"
-                    m="https://decred.org/community"
-                  />
+                  https://decred.org/community
                 </ExternalLink>
               )
             }}

@@ -88,7 +88,10 @@ const WatchtowersTab = () => {
               href="#">
               &times;
             </a></Tooltip>
-          <p>Sessions: {tower.numSessions}</p>
+          <p><T
+            id="ln.watchtowersTab.sessions"
+            m="Sessions {sessions}"
+            values={{ sessions: tower.numSessions }}/></p>
           <CopyableText id="copyable" className={styles.copyableText}>{tower.pubkeyHex}</CopyableText>
           <div className={styles.addrsWrapper}>
             {tower.addressesList.map((addrs) => (

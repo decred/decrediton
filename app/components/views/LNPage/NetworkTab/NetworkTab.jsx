@@ -120,7 +120,7 @@ const Tabs = ({ active, set }) => {
           )}
           onClick={() => set(QUERY_NODE)}
         >
-          Query Node
+          <T id="ln.networkTab.tabQueryNode" m="Query Node" />
         </div>
         <div
           className={classNames(
@@ -131,7 +131,7 @@ const Tabs = ({ active, set }) => {
           )}
           onClick={() => set(QUERY_ROUTE)}
         >
-          Query Route
+          <T id="ln.networkTab.tabQueryRoute" m="Query Route" />
         </div>
       </div>
     </div>
