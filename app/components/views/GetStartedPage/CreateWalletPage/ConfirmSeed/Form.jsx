@@ -24,7 +24,7 @@ export const ConfirmSeedForm = ({
   setPassPhrase,
   isCreatingWallet
 }) => (
-  <>
+  <div className={styles.createWalletWrapper}>
     <div className={classNames(styles.contentTitleWrapper, "is-row")}>
       <div className={styles.contentTitle}>
         <CreateNewWalletTitle />
@@ -93,7 +93,7 @@ export const ConfirmSeedForm = ({
         <BackBtnMsg />
       </InvisibleButton>
     </div>
-  </>
+  </div>
 );
 
 export default ConfirmSeedForm;

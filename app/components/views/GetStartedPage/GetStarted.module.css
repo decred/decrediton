@@ -286,7 +286,6 @@
 
 .getstarted.content {
   margin-top: 55px;
-  margin-left: 280px;
 }
 
 .walletKeyBlueButton:not(.keyBlueButtonDisabled) {
@@ -899,10 +898,6 @@
 
   .contentTitle {
     margin-bottom: 20px;
-  }
-
-  .getstarted.content {
-    margin-left: 10px;
   }
 
   .getstarted.loader {

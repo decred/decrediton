@@ -30,7 +30,7 @@ const ExistingSeedForm = ({
   setPassPhrase,
   error
 }) => (
-  <>
+  <div className={styles.createWalletWrapper}>
     <div className={classNames(styles.contentTitleWrapper, "is-row")}>
       <div className={styles.contentTitle}>
         <T id="createWallet.restore.title" m={"Restore existing wallet"} />
@@ -117,7 +117,7 @@ const ExistingSeedForm = ({
         <BackBtnMsg />
       </InvisibleButton>
     </div>
-  </>
+  </div>
 );
 
 export default ExistingSeedForm;

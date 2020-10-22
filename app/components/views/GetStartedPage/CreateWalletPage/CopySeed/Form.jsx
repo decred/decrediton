@@ -15,7 +15,7 @@ const CopySeedPage = ({
   sendBack,
   sendContinue
 }) => (
-  <>
+  <div className={styles.createWalletWrapper}>
     <div className={classNames(styles.contentTitleWrapper, "is-row")}>
       <div className={styles.contentTitle}>
         <CreateNewWalletTitle />
@@ -58,7 +58,7 @@ const CopySeedPage = ({
       onSubmit={onSubmitCopySeedConfirm}
       onCancelModal={() => toggleCopySeed(false)}
     />
-  </>
+  </div>
 );
 
 export default CopySeedPage;
