@@ -154,8 +154,14 @@ export const purchaseTickets = (
     signTx,
     vsp,
     csppReq
-  ) =>
-    new Promise((ok, fail) => {
+  ) => new Promise((resolve, reject) => {
+    const unlockReq = new api.UnlockWalletRequest();
+    unlockReq.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
+    // Unlock wallet so we can call the request.
+    walletService.unlockWallet(unlockReq, (error) => {
+      if (error) {
+        reject(error);
+      }
       const request = new api.PurchaseTicketsRequest();
       const {
         mixedAccount,
@@ -179,7 +185,6 @@ export const purchaseTickets = (
         request.setCsppServer(csppServer + ":" + csppPort);
         request.setMixedAccountBranch(mixedAcctBranch);
       }
-      signTx && request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
       request.setAccount(accountNum.value);
       request.setChangeAccount(accountNum.value);
       request.setNumTickets(numTickets);
@@ -187,10 +192,22 @@ export const purchaseTickets = (
       const { pubkey, host } = vsp;
       request.setVspPubkey(pubkey);
       request.setVspHost("https://" + host);
-      walletService.purchaseTickets(request, (err, res) =>
-        err ? fail(err) : ok(res)
-      );
+      walletService.purchaseTickets(request, (error, response) => {
+        if (error) {
+          reject(error);
+        }
+        // Lock wallet and return response from the request.
+        const lockReq = new api.LockWalletRequest();
+        walletService.lockWallet(lockReq, (error) => {
+          if (error) {
+            reject(error);
+          }
+          resolve(response);
+        });
+      });
+
     });
+  });
 
 export const revokeTickets = (walletService, passphrase) =>
   new Promise((ok, fail) => {
