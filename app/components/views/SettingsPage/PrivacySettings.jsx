@@ -137,7 +137,7 @@ const PrivacySettings = ({
                   EXTERNALREQUEST_UPDATE_CHECK
                 ) > -1
               }
-              onClick={toggle(EXTERNALREQUEST_UPDATE_CHECK)}
+              onChange={toggle(EXTERNALREQUEST_UPDATE_CHECK)}
             />
           </div>
           <div className={classNames(styles.row, styles.rowChecklist)}>
