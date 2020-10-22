@@ -1248,7 +1248,7 @@ export const purchaseTicketsRequestAttempt = get([
 export const getRunningIndicator = or(
   getAccountMixerRunning,
   getTicketAutoBuyerRunning,
-  purchaseTicketsRequestAttempt,
+  purchaseTicketsRequestAttempt
 );
 
 
