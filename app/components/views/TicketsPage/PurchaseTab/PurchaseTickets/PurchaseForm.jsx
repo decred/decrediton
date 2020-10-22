@@ -2,6 +2,7 @@ import { PassphraseModalButton, KeyBlueButton } from "buttons";
 import { AccountsSelect, NumTicketsInput, VSPSelect } from "inputs";
 import { FormattedMessage as T } from "react-intl";
 import { Balance } from "shared";
+import { classNames } from "pi-ui";
 import styles from "../PurchaseTab.module.css";
 
 import "style/StakePool.less";
@@ -24,7 +25,7 @@ const PurchaseTicketsForm = ({
   availableVSPs
 }) => (
   <>
-    <div className="purchase-ticket-area-row is-row">
+    <div className={classNames(styles.purchaseForm, "is-row")}>
       <div className="is-row purchase-ticket-input-address">
         <div className={styles.ticketForm}>
           <div className="purchase-ticket-area-row-label">

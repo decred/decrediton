@@ -8,11 +8,14 @@
   cursor: pointer;
 }
 
-.checkbox {
+.iconWrapper {
   display: flex;
   flex-direction: row-reverse;
   align-self: center;
   margin-left: auto;
+}
+
+.checkbox {
   margin-right: 50px;
 }
 
@@ -28,6 +31,34 @@
 
 .infoFields strong {
   color: var(--input-color);
+}
+
+.privacyForm {
+  background-color: var(--background-back-color);
+  border-radius: 10px;
+}
+
+.purchaseForm {
+  background-color: var(--background-back-color);
+  padding: 20px 40px;
+}
+
+.privacyArea {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 16px 19px;
+  background-color: var(--background-back-color);
+}
+
+.title {
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+.autobuyerWrapper {
+  margin-top: 10px;
+  background-color: var(--background-back-color);
+  padding: 10px 20px;
 }
 
 @media screen and (max-width: 768px) {

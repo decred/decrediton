@@ -15,7 +15,6 @@ const PrivacyForm = ({
     mixedAccountBranch
   } = usePrivacyForm();
 
-  console.log(className);
   return (
     <div className={className ? className : null}>
       <div className={classNames(style.isRow, style.row)}>

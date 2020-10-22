@@ -1,15 +1,17 @@
 import UnsignedTickets from "../UnsignedTickets";
 import StakeInfo from "../StakeInfo/StakeInfo";
+import PrivacyInfo from "../PrivacyInfo/PrivacyInfo";
 import PurchaseForm from "./PurchaseForm";
 import { ShowWarning, Subtitle } from "shared";
 import { InfoDocModalButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import styles from "../PurchaseTab.module.css";
+import { classNames } from "pi-ui";
 import TicketAutoBuyer from "../TicketAutoBuyer/TicketAutoBuyer";
 
 const getTitleIcon = ({ toggleIsLegacy }) => (
   <>
-    <div className={styles.checkbox}>
+    <div className={classNames(styles.iconWrapper, styles.checkbox)}>
       <div className={styles.label}>
         <T id="purchase.isLegacy" m="Is Legacy" />
       </div>
@@ -47,6 +49,8 @@ export function PurchasePage({
   isValid,
   toggleIsLegacy,
   onV3PurchaseTicket,
+  mixedAccount,
+  changeAccount,
   ...props
 }) {
   return (
@@ -57,6 +61,7 @@ export function PurchasePage({
         className="is-row"
       />
       <StakeInfo {...{ sidebarOnBottom }} />
+      { mixedAccount && changeAccount && <PrivacyInfo /> }
       {spvMode && blocksNumberToNextTicket === 2 ? (
         <ShowWarning
           warn={
