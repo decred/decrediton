@@ -46,7 +46,7 @@ const CreateNeededAccounts = ({
           changeAccountName,
           setMixedAccountName,
           setChangeAccountName,
-          isValid
+          parentIsValid: isValid
         }}
         disabled={isCreateAccountDisabled}
         modalTitle={
