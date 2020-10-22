@@ -418,6 +418,23 @@ export const startTicketBuyerV3Attempt = (
   vsp
 ) => (dispatch, getState) => {
   const request = new RunTicketBuyerRequest();
+  const mixedAccount = sel.getMixedAccount(getState());
+  const changeAccount = sel.getChangeAccount(getState());
+  const csppServer = sel.getCsppServer(getState());
+  const csppPort = sel.getCsppPort(getState());
+  const mixedAcctBranch = sel.getMixedAccountBranch(getState());
+
+  if (mixedAccount && changeAccount) {
+    if (!mixedAccount || !changeAccount || !csppServer || !csppPort || (!mixedAcctBranch && mixedAcctBranch !== 0)) {
+      throw "missing cspp argument";
+    }
+    request.setMixedAccount(mixedAccount);
+    request.setMixedSplitAccount(mixedAccount);
+    request.setChangeAccount(changeAccount);
+    request.setCsppServer(csppServer + ":" + csppPort);
+    request.setMixedAccountBranch(mixedAcctBranch);
+  }
+
   request.setBalanceToMaintain(balanceToMaintain);
   request.setAccount(account.value);
   request.setVotingAccount(account.value);

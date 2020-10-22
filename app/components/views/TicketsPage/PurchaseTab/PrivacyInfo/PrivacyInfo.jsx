@@ -5,7 +5,7 @@ import styles from "../PurchaseTab.module.css";
 const StakeInfo = () => (
   <div className={styles.privacyArea}>
     <div className={styles.title}>
-      <T id="stake.stackingOverview" m="Privacy Settings" />
+      <T id="stake.privacySettings" m="Privacy Settings" />
     </div>
     <PrivacyForm className={styles.privacyForm} />
   </div>
