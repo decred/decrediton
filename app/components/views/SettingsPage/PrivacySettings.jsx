@@ -90,7 +90,7 @@ const PrivacySettings = ({
                   EXTERNALREQUEST_NETWORK_STATUS
                 ) > -1
               }
-              onClick={toggle(EXTERNALREQUEST_NETWORK_STATUS)}
+              onChange={toggle(EXTERNALREQUEST_NETWORK_STATUS)}
             />
           </div>
           <div className={classNames(styles.row, styles.rowChecklist)}>
@@ -113,7 +113,7 @@ const PrivacySettings = ({
                   EXTERNALREQUEST_STAKEPOOL_LISTING
                 ) > -1
               }
-              onClick={toggle(EXTERNALREQUEST_STAKEPOOL_LISTING)}
+              onChange={toggle(EXTERNALREQUEST_STAKEPOOL_LISTING)}
             />
           </div>
         </div>
@@ -155,7 +155,7 @@ const PrivacySettings = ({
                   EXTERNALREQUEST_POLITEIA
                 ) > -1
               }
-              onClick={toggle(EXTERNALREQUEST_POLITEIA)}
+              onChange={toggle(EXTERNALREQUEST_POLITEIA)}
             />
           </div>
           <div className={classNames(styles.row, styles.rowChecklist)}>
@@ -178,7 +178,7 @@ const PrivacySettings = ({
                   EXTERNALREQUEST_DCRDATA
                 ) > -1
               }
-              onClick={toggle(EXTERNALREQUEST_DCRDATA)}
+              onChange={toggle(EXTERNALREQUEST_DCRDATA)}
             />
           </div>
         </div>
