@@ -463,3 +463,12 @@ export const discoverAvailableStakepools = () => async (dispatch, getState) => {
 
   return vspInfo;
 };
+
+
+export const TOGGLE_ISLEGACY = "TOGGLE_ISLEGACY";
+export const toggleIsLegacy = (isLegacy) => (dispatch) => {
+  dispatch({
+    type: TOGGLE_ISLEGACY,
+    isLegacy
+  });
+};

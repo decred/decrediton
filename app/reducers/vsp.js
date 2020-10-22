@@ -2,7 +2,8 @@ import {
   DISCOVERAVAILABLEVSPS_SUCCESS,
   DISCOVERAVAILABLEVSPS_FAILED,
   GETVSPTICKETSTATUS_SUCCESS,
-  HASVSPTICKETSERRORED
+  HASVSPTICKETSERRORED,
+  TOGGLE_ISLEGACY
 } from "actions/VSPActions";
 import {
   STARTTICKETBUYERV3_ATTEMPT,
@@ -54,6 +55,10 @@ export default function vsp(state = {}, action) {
     case HASVSPTICKETSERRORED:
       return { ...state,
         hasVSPTicketsError: action.hasVSPTicketsError
+      };
+    case TOGGLE_ISLEGACY:
+      return { ...state,
+        isLegacy: action.isLegacy
       };
     default:
       return state;

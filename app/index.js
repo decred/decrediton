@@ -74,7 +74,8 @@ const initialState = {
   vsp: {
     availableVSPs: null,
     availableVSPsError: null,
-    ticketAutoBuyerRunning: null
+    ticketAutoBuyerRunning: null,
+    isLegacy: false
   },
   daemon: {
     networkMatch: false,
