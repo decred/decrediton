@@ -58,7 +58,8 @@ import {
   startDcrlnd,
   stopDcrlnd,
   removeDcrlnd,
-  lnScbInfo
+  lnScbInfo,
+  updateTrezorFirmware
 } from "./main_dev/ipc";
 import {
   initTemplate,
@@ -296,6 +297,11 @@ ipcMain.on("create-wallet", (event, walletPath, testnet) => {
 
 ipcMain.on("remove-wallet", (event, walletPath, testnet) => {
   event.returnValue = removeWallet(testnet, walletPath);
+});
+
+ipcMain.handle("upload-firmware", async (event, firmware) => {
+  const res = await updateTrezorFirmware(firmware);
+  return res;
 });
 
 ipcMain.on("stop-daemon", (event) => {

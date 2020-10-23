@@ -17,6 +17,8 @@ import {
   setDcrdRpcCredentials
 } from "./launch";
 import { MAINNET } from "constants";
+import { initTransport } from "actions/TrezorActions.js";
+import * as connect from "connect";
 
 const logger = createLogger();
 let watchingOnlyWallet;
@@ -138,6 +140,28 @@ export const removeWallet = (testnet, walletPath) => {
   } catch (e) {
     logger.log("error", "error creating wallet: " + e);
     return false;
+  }
+};
+
+// updateTrezorFirmware attempts to make a temporary connection to a trezor
+// device and update it with the supplied firmware. It returns an error string
+// in case of error.
+export const updateTrezorFirmware = async ( firmware ) => {
+  let session = connect.default;
+  try {
+    await initTransport(session, false);
+    const res = await session.firmwareUpdate({
+       binary: firmware
+    });
+    if (res.payload && res.payload.error) {
+      throw res.payload.error;
+    }
+    return null;
+  } catch (e) {
+    logger.log("error", "error uploading trezor firmware: " + e);
+    return e.toString();
+  } finally {
+    session = null;
   }
 };
 
