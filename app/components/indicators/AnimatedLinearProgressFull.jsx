@@ -23,15 +23,25 @@ const AnimatedLinearProgressFull = ({
     getCurrentBlockCount,
     syncFetchHeadersLastHeaderTime,
     getDcrwalletLogs,
-    getDaemonSynced
+    getDaemonSynced,
+    onGetDcrdLogs,
   } = useDaemonStartup();
   const [lastDcrwalletLogLine, setLogLine] = useState("");
+  const [lastDcrdLogLine, setDcrdLogLine] = useState("");
 
   useEffect(() => {
     setInterval(async () => {
       try {
         const lastDcrwalletLogLine = await getDcrwalletLogs();
         setLogLine(lastDcrwalletLogLine);
+      } catch (err) {
+        console.log(err);
+      }
+    }, 2000);
+    setInterval(async () => {
+      try {
+        const lastDcrdLogLine = await onGetDcrdLogs();
+        setDcrdLogLine(lastDcrdLogLine);
       } catch (err) {
         console.log(err);
       }
@@ -126,6 +136,11 @@ const AnimatedLinearProgressFull = ({
             <span className={styles.bold}>
               <FormattedRelative value={syncFetchHeadersLastHeaderTime} />
             </span>
+          </div>
+        )}
+        { !getDaemonSynced && lastDcrdLogLine && (
+          <div className={styles.lastLogLines}>
+            <div>{lastDcrdLogLine}</div>
           </div>
         )}
         {selectedWalletSelector && lastDcrwalletLogLine && (

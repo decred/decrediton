@@ -579,6 +579,12 @@ export const getDcrdLogs = () => {
     });
 };
 
+export const getDcrdLastLineLogs = () => new Promise((resolve, reject) => {
+  wallet.getDcrdLastLogLine()
+    .then((log) => resolve(log))
+    .catch(err => reject(err));
+});
+
 export const getDcrwalletLogs = () => () =>
   new Promise((resolve, reject) =>
     wallet

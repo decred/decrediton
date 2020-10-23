@@ -28,7 +28,7 @@ const Logs = ({
 }) => (
   <>
     <Subtitle title={<T id="logs.subtitle" m="System Logs" />} />
-    {!isDaemonRemote && isDaemonStarted ? (
+    {!isDaemonRemote ? (
       !showDcrdLogs ? (
         <div className={classNames(styles.logArea, styles.hidden)}>
           <div

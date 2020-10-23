@@ -206,6 +206,8 @@ const useDaemonStartup = () => {
     [dispatch]
   );
 
+  const onGetDcrdLogs = () => da.getDcrdLastLineLogs();
+
   return {
     onShowTutorial,
     validateMasterPubKey,
@@ -274,7 +276,8 @@ const useDaemonStartup = () => {
     syncFetchTimeStart,
     selectedWalletSelector,
     goToHome,
-    setCoinjoinCfg
+    setCoinjoinCfg,
+    onGetDcrdLogs
   };
 };
 
