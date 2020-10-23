@@ -16,7 +16,7 @@ export const usePurchaseTab = () => {
   const availableVSPs = useSelector(sel.getAvailableVSPs);
   const availableVSPsError = useSelector(sel.getDiscoverAvailableVSPError);
   const ticketAutoBuyerRunning = useSelector(sel.getTicketAutoBuyerRunning);
-
+  const isLegacy = useSelector(sel.getIsLegacy);
   const buyerVSP = useSelector(sel.buyerVSP);
   const buyerBalanceToMantain = useSelector(sel.buyerBalanceToMantain);
   const buyerAccount = useSelector(sel.buyerAccount);
@@ -56,6 +56,10 @@ export const usePurchaseTab = () => {
     dispatch(vspa.getVSPTicketsByFeeStatus(feeStatus));
   };
 
+  const toggleIsLegacy = (isLegacy) => {
+    dispatch(vspa.toggleIsLegacy(isLegacy));
+  };
+
   return {
     spvMode,
     blocksNumberToNextTicket,
@@ -75,6 +79,8 @@ export const usePurchaseTab = () => {
     buyerVSP,
     buyerAccount,
     buyerBalanceToMantain,
-    getVSPTicketsByFeeStatus
+    getVSPTicketsByFeeStatus,
+    isLegacy,
+    toggleIsLegacy
   };
 };
