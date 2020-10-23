@@ -1,3 +1,7 @@
+.createWalletWrapper {
+  margin-left: 280px;
+}
+
 .contentTitle {
   font-size: 27px;
   line-height: 34px;
@@ -305,6 +309,10 @@
 }
 
 @media screen and (max-width: 768px) {
+  .createWalletWrapper {
+    margin-left: 10px;
+  }
+  
   .isRow.seed {
     flex-direction: column;
   }
