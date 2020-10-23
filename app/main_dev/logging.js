@@ -143,16 +143,27 @@ export function ClearDcrwalletLogs() {
   dcrlndLogs = Buffer.from("");
 }
 
+// dcrd upgrades warning.
 const reindexCheck = "Reindexing to height";
 const upgradeDatabase = "Upgrading database to version 6";
+const reindexing = "Reindexing block information in the database";
+const upgradeDB7 = "Upgrading database to version 7";
 
+// CheckDaemonLogs checks if dcrd send a message which need to be notified
+// to the user.
 export function CheckDaemonLogs(data) {
-  if (data.indexOf(reindexCheck) > 0) {
-    return true;
-  }
-  if (data.indexOf(upgradeDatabase) > 0) {
-    return true;
-  }
-
-  return false;
+  let hasWarning = false;
+  const warningArray = [
+    reindexCheck,
+    upgradeDatabase,
+    reindexing,
+    upgradeDB7
+  ]; 
+  warningArray.forEach((warnMsg) => {
+    if (data.indexOf(warnMsg) > 0) {
+      hasWarning = true;
+      return;
+    }
+  });
+  return hasWarning;
 }
