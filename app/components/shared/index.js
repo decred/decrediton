@@ -21,4 +21,5 @@ export { default as TxHistory } from "./TxHistory/TxHistory";
 export { default as LoadingError } from "./LoadingError";
 export { default as ButtonsToolbar } from "./ButtonsToolbar";
 export { default as TabsHeader } from "./TabsHeader/TabsHeader";
+export { default as PrivacyForm } from "./PrivacyForm/PrivacyForm";
 export * from "./RoutedTabsHeader";

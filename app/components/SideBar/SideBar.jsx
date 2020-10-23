@@ -21,7 +21,7 @@ const SideBar = () => {
     expandSideBar,
     isWatchingOnly,
     sidebarOnBottom,
-    accountMixerRunning,
+    getRunningIndicator,
     rescanRequest,
     onExpandSideBar,
     onReduceSideBar,
@@ -45,7 +45,7 @@ const SideBar = () => {
           onReduceSideBar,
           onExpandSideBar,
           isWatchingOnly,
-          accountMixerRunning,
+          getRunningIndicator,
           peersCount
         }}
       />

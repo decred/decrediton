@@ -15,7 +15,10 @@ const Tickets = ({ toggleIsLegacy }) => {
     // availableVSPsError,
     defaultSpendingAccount,
     ticketPrice,
-    onPurchaseTicketV3
+    onPurchaseTicketV3,
+    mixedAccount,
+    changeAccount,
+    isLoading
   } = usePurchaseTab();
 
   const [account, setAccount] = useState(defaultSpendingAccount);
@@ -38,8 +41,8 @@ const Tickets = ({ toggleIsLegacy }) => {
     const { spendable } = account;
     const canAfford = numTickets * ticketPrice <= spendable;
     const hasTickets = numTickets > 0;
-    setIsValid(canAfford && hasTickets);
-  }, [ticketPrice, numTickets, account]);
+    setIsValid(canAfford && hasTickets && !!vsp);
+  }, [ticketPrice, numTickets, account, vsp]);
 
   const handleOnKeyDown = (e) => {
     if (e.keyCode == 38) {
@@ -68,7 +71,10 @@ const Tickets = ({ toggleIsLegacy }) => {
       availableVSPs,
       setVSP,
       onV3PurchaseTicket,
-      vsp
+      vsp,
+      mixedAccount,
+      changeAccount,
+      isLoading
     }} />;
 };
 

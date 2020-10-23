@@ -555,6 +555,7 @@ export const launchDCRWallet = (
   // sets mixing config, we would need to restart dcrwallet.
   const certPath = path.resolve(getCertsPath(), "cspp.decred.org.pem");
   !testnet && args.push("--csppserver.ca="+certPath);
+  args.push(testnet ? "--csppserver=cspp.decred.org:5760" : "--csppserver=cspp.decred.org:15760");
 
   const dcrwExe = getExecutablePath("dcrwallet", argv.custombinpath);
   if (!fs.existsSync(dcrwExe)) {

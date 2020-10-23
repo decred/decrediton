@@ -4,6 +4,7 @@ export { default as GapLimitInfo } from "./InfoModals/GapLimit.md";
 export { default as PassphraseInfo } from "./InfoModals/Passphrase.md";
 export { default as SeedInfo } from "./InfoModals/Seed.md";
 export { default as PurchaseTicketsInfo } from "./InfoModals/PurchaseTickets.md";
+export { default as PurchasePrivacyTicketsInfo } from "./InfoModals/PurchasePrivacyTickets.md";
 export { default as BalanceOverviewInfo } from "./InfoModals/BalanceOverview.md";
 export { default as TicketAutoBuyerInfo } from "./InfoModals/TicketAutoBuyer.md";
 export { default as ScriptNotRedeemableInfo } from "./InfoModals/ScriptNotRedeemable.md";

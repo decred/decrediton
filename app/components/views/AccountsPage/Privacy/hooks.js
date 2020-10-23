@@ -23,14 +23,6 @@ export function usePrivacy() {
       act.createNeededAccounts(passphrase, mixedAccountName, changeAccountName)
     );
 
-  const getAccountName = (n) => {
-    const account = accounts.find(({ accountNumber }) => accountNumber === n);
-    return account ? account.accountName : null;
-  };
-
-  const mixedAccountName = getAccountName(mixedAccount);
-  const changeAccountName = getAccountName(changeAccount);
-
   const onStartMixerAttempt = (passphrase) => {
     const request = {
       passphrase,
@@ -49,13 +41,8 @@ export function usePrivacy() {
     accountMixerRunning,
     mixedAccount,
     changeAccount,
-    csppServer,
-    csppPort,
-    mixedAccountBranch,
     accounts,
     accountMixerError,
-    mixedAccountName,
-    changeAccountName,
     onStartMixerAttempt,
     createNeededAccounts
   };

@@ -1,0 +1,27 @@
+.error {
+  color: var(--error-text-color);
+}
+
+.isRow {
+  display: flex;
+  flex-direction: row;
+}
+
+.bold {
+  font-weight: 700;
+}
+.select {
+  width: 300px;
+}
+.item {
+  padding: 10px;
+}
+.item.error {
+  color: red;
+}
+.area {
+  margin-left: auto;
+}
+.row {
+  margin-bottom: 10px;
+}

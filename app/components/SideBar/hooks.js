@@ -14,7 +14,7 @@ export function useSideBar() {
   const expandSideBar = useSelector(sel.expandSideBar);
   const isWatchingOnly = useSelector(sel.isWatchingOnly);
   const sidebarOnBottom = useSelector(sel.sidebarOnBottom);
-  const accountMixerRunning = useSelector(sel.getAccountMixerRunning);
+  const getRunningIndicator = useSelector(sel.getRunningIndicator);
   const rescanRequest = useSelector(sel.rescanRequest);
   const isSPV = useSelector(sel.isSPV);
   const peersCount = useSelector(sel.getPeersCount);
@@ -40,7 +40,7 @@ export function useSideBar() {
     expandSideBar,
     isWatchingOnly,
     sidebarOnBottom,
-    accountMixerRunning,
+    getRunningIndicator,
     rescanRequest,
     onExpandSideBar,
     onReduceSideBar,

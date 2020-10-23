@@ -355,8 +355,15 @@ export const newPurchaseTicketsAttempt = (
   try {
     const walletService = sel.walletService(getState());
     const dontSignTx = sel.isWatchingOnly(getState());
-
     dispatch({ numTicketsToBuy: numTickets, type: PURCHASETICKETS_ATTEMPT });
+
+    const csppReq = {
+      mixedAccount: sel.getMixedAccount(getState()),
+      changeAccount: sel.getChangeAccount(getState()),
+      csppServer: sel.getCsppServer(getState()),
+      csppPort: sel.getCsppPort(getState()),
+      mixedAcctBranch: sel.getMixedAccountBranch(getState())
+    };
 
     const purchaseTicketsResponse = await wallet.purchaseTicketsV3(
       walletService,
@@ -364,7 +371,8 @@ export const newPurchaseTicketsAttempt = (
       accountNum,
       numTickets,
       !dontSignTx,
-      vsp
+      vsp,
+      csppReq
     );
     if (dontSignTx) {
       return dispatch({
@@ -410,6 +418,23 @@ export const startTicketBuyerV3Attempt = (
   vsp
 ) => (dispatch, getState) => {
   const request = new RunTicketBuyerRequest();
+  const mixedAccount = sel.getMixedAccount(getState());
+  const changeAccount = sel.getChangeAccount(getState());
+  const csppServer = sel.getCsppServer(getState());
+  const csppPort = sel.getCsppPort(getState());
+  const mixedAcctBranch = sel.getMixedAccountBranch(getState());
+
+  if (mixedAccount && changeAccount) {
+    if (!mixedAccount || !changeAccount || !csppServer || !csppPort || (!mixedAcctBranch && mixedAcctBranch !== 0)) {
+      throw "missing cspp argument";
+    }
+    request.setMixedAccount(mixedAccount);
+    request.setMixedSplitAccount(mixedAccount);
+    request.setChangeAccount(changeAccount);
+    request.setCsppServer(csppServer + ":" + csppPort);
+    request.setMixedAccountBranch(mixedAcctBranch);
+  }
+
   request.setBalanceToMaintain(balanceToMaintain);
   request.setAccount(account.value);
   request.setVotingAccount(account.value);

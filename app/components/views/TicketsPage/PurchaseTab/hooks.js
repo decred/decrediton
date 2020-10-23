@@ -17,6 +17,8 @@ export const usePurchaseTab = () => {
   const availableVSPsError = useSelector(sel.getDiscoverAvailableVSPError);
   const ticketAutoBuyerRunning = useSelector(sel.getTicketAutoBuyerRunning);
   const isLegacy = useSelector(sel.getIsLegacy);
+  const isLoading = useSelector(sel.purchaseTicketsRequestAttempt);
+
   const buyerVSP = useSelector(sel.buyerVSP);
   const buyerBalanceToMantain = useSelector(sel.buyerBalanceToMantain);
   const buyerAccount = useSelector(sel.buyerAccount);
@@ -60,6 +62,10 @@ export const usePurchaseTab = () => {
     dispatch(vspa.toggleIsLegacy(isLegacy));
   };
 
+  // purchase cspp ticket
+  const mixedAccount = useSelector(sel.getMixedAccount);
+  const changeAccount = useSelector(sel.getChangeAccount);
+
   return {
     spvMode,
     blocksNumberToNextTicket,
@@ -81,6 +87,9 @@ export const usePurchaseTab = () => {
     buyerBalanceToMantain,
     getVSPTicketsByFeeStatus,
     isLegacy,
-    toggleIsLegacy
+    toggleIsLegacy,
+    mixedAccount,
+    changeAccount,
+    isLoading
   };
 };

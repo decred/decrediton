@@ -26183,7 +26183,12 @@ proto.walletrpc.RunTicketBuyerRequest.toObject = function(includeInstance, msg) 
     poolFees: +jspb.Message.getFieldWithDefault(msg, 7, 0.0),
     vspHost: jspb.Message.getFieldWithDefault(msg, 8, ""),
     vspPubkey: jspb.Message.getFieldWithDefault(msg, 9, ""),
-    limit: jspb.Message.getFieldWithDefault(msg, 10, 0)
+    limit: jspb.Message.getFieldWithDefault(msg, 10, 0),
+    csppServer: jspb.Message.getFieldWithDefault(msg, 11, ""),
+    mixedAccount: jspb.Message.getFieldWithDefault(msg, 12, 0),
+    mixedAccountBranch: jspb.Message.getFieldWithDefault(msg, 13, 0),
+    mixedSplitAccount: jspb.Message.getFieldWithDefault(msg, 14, 0),
+    changeAccount: jspb.Message.getFieldWithDefault(msg, 15, 0)
   };
 
   if (includeInstance) {
@@ -26259,6 +26264,26 @@ proto.walletrpc.RunTicketBuyerRequest.deserializeBinaryFromReader = function(msg
     case 10:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setLimit(value);
+      break;
+    case 11:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCsppServer(value);
+      break;
+    case 12:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setMixedAccount(value);
+      break;
+    case 13:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setMixedAccountBranch(value);
+      break;
+    case 14:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setMixedSplitAccount(value);
+      break;
+    case 15:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setChangeAccount(value);
       break;
     default:
       reader.skipField();
@@ -26356,6 +26381,41 @@ proto.walletrpc.RunTicketBuyerRequest.serializeBinaryToWriter = function(message
   if (f !== 0) {
     writer.writeInt32(
       10,
+      f
+    );
+  }
+  f = message.getCsppServer();
+  if (f.length > 0) {
+    writer.writeString(
+      11,
+      f
+    );
+  }
+  f = message.getMixedAccount();
+  if (f !== 0) {
+    writer.writeUint32(
+      12,
+      f
+    );
+  }
+  f = message.getMixedAccountBranch();
+  if (f !== 0) {
+    writer.writeUint32(
+      13,
+      f
+    );
+  }
+  f = message.getMixedSplitAccount();
+  if (f !== 0) {
+    writer.writeUint32(
+      14,
+      f
+    );
+  }
+  f = message.getChangeAccount();
+  if (f !== 0) {
+    writer.writeUint32(
+      15,
       f
     );
   }
@@ -26533,6 +26593,81 @@ proto.walletrpc.RunTicketBuyerRequest.prototype.getLimit = function() {
 /** @param {number} value */
 proto.walletrpc.RunTicketBuyerRequest.prototype.setLimit = function(value) {
   jspb.Message.setProto3IntField(this, 10, value);
+};
+
+
+/**
+ * optional string cspp_server = 11;
+ * @return {string}
+ */
+proto.walletrpc.RunTicketBuyerRequest.prototype.getCsppServer = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 11, ""));
+};
+
+
+/** @param {string} value */
+proto.walletrpc.RunTicketBuyerRequest.prototype.setCsppServer = function(value) {
+  jspb.Message.setProto3StringField(this, 11, value);
+};
+
+
+/**
+ * optional uint32 mixed_account = 12;
+ * @return {number}
+ */
+proto.walletrpc.RunTicketBuyerRequest.prototype.getMixedAccount = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 12, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.RunTicketBuyerRequest.prototype.setMixedAccount = function(value) {
+  jspb.Message.setProto3IntField(this, 12, value);
+};
+
+
+/**
+ * optional uint32 mixed_account_branch = 13;
+ * @return {number}
+ */
+proto.walletrpc.RunTicketBuyerRequest.prototype.getMixedAccountBranch = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 13, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.RunTicketBuyerRequest.prototype.setMixedAccountBranch = function(value) {
+  jspb.Message.setProto3IntField(this, 13, value);
+};
+
+
+/**
+ * optional uint32 mixed_split_account = 14;
+ * @return {number}
+ */
+proto.walletrpc.RunTicketBuyerRequest.prototype.getMixedSplitAccount = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 14, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.RunTicketBuyerRequest.prototype.setMixedSplitAccount = function(value) {
+  jspb.Message.setProto3IntField(this, 14, value);
+};
+
+
+/**
+ * optional uint32 change_account = 15;
+ * @return {number}
+ */
+proto.walletrpc.RunTicketBuyerRequest.prototype.getChangeAccount = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 15, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.RunTicketBuyerRequest.prototype.setChangeAccount = function(value) {
+  jspb.Message.setProto3IntField(this, 15, value);
 };
 
 

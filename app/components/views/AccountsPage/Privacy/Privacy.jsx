@@ -8,13 +8,8 @@ const Privacy = ({ isCreateAccountDisabled }) => {
     accountMixerRunning,
     mixedAccount,
     changeAccount,
-    csppServer,
-    csppPort,
-    mixedAccountBranch,
     accounts,
     accountMixerError,
-    mixedAccountName,
-    changeAccountName,
     onStartMixerAttempt
   } = usePrivacy();
 
@@ -23,15 +18,10 @@ const Privacy = ({ isCreateAccountDisabled }) => {
   ) : (
     <PrivacyContent
       {...{
-        mixedAccountName,
         accountMixerRunning,
         accountMixerError,
-        csppServer,
-        csppPort,
-        changeAccountName,
         onStartMixerAttempt,
-        stopAccountMixer,
-        mixedAccountBranch
+        stopAccountMixer
       }}
     />
   );

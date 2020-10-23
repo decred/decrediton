@@ -1,0 +1,28 @@
+import { useSelector } from "react-redux";
+import * as sel from "selectors";
+
+export function usePrivacyForm() {
+  const mixedAccount = useSelector(sel.getMixedAccount);
+  const changeAccount = useSelector(sel.getChangeAccount);
+  const csppServer = useSelector(sel.getCsppServer);
+  const csppPort = useSelector(sel.getCsppPort);
+  const mixedAccountBranch = useSelector(sel.getMixedAccountBranch);
+
+  const accounts = useSelector(sel.sortedAccounts);
+
+  const getAccountName = (n) => {
+    const account = accounts.find(({ accountNumber }) => accountNumber === n);
+    return account ? account.accountName : null;
+  };
+
+  const mixedAccountName = getAccountName(mixedAccount);
+  const changeAccountName = getAccountName(changeAccount);
+
+  return {
+    mixedAccountName,
+    changeAccountName,
+    csppServer,
+    csppPort,
+    mixedAccountBranch
+  };
+}

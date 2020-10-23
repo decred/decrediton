@@ -1238,10 +1238,19 @@ const currentStakePoolConfigRequest = get([
   "currentStakePoolConfigRequest"
 ]);
 
-const purchaseTicketsRequestAttempt = get([
+export const purchaseTicketsRequestAttempt = get([
   "control",
   "purchaseTicketsRequestAttempt"
 ]);
+
+// getRunningIndicator is a indicator for indicate something is runnning on
+// decrediton, like the ticket auto buyer or the mixer.
+export const getRunningIndicator = or(
+  getAccountMixerRunning,
+  getTicketAutoBuyerRunning,
+  purchaseTicketsRequestAttempt
+);
+
 
 const importScriptRequestAttempt = get([
   "control",
