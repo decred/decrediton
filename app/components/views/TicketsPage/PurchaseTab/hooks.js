@@ -20,6 +20,7 @@ export const usePurchaseTab = () => {
   const buyerVSP = useSelector(sel.buyerVSP);
   const buyerBalanceToMantain = useSelector(sel.buyerBalanceToMantain);
   const buyerAccount = useSelector(sel.buyerAccount);
+  const isPurchasingTickets = useSelector(sel.isPurchasingTickets);
 
   const dispatch = useDispatch();
   const discoverAvailableVSPs = useCallback(() => dispatch(vspa.discoverAvailableVSPs()), [
@@ -81,6 +82,7 @@ export const usePurchaseTab = () => {
     buyerBalanceToMantain,
     getVSPTicketsByFeeStatus,
     isLegacy,
-    toggleIsLegacy
+    toggleIsLegacy,
+    isPurchasingTickets
   };
 };

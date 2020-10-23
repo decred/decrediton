@@ -21,7 +21,8 @@ const PurchaseTicketsForm = ({
   setVSP,
   onV3PurchaseTicket,
   onRevokeTickets,
-  availableVSPs
+  availableVSPs,
+  isPurchasingTickets
 }) => (
   <>
     <div className="purchase-ticket-area-row is-row">
@@ -109,7 +110,8 @@ const PurchaseTicketsForm = ({
               m="Ticket Purchase Confirmation"
             />
           }
-          disabled={!isValid}
+          disabled={!isValid || isPurchasingTickets}
+          loading={isPurchasingTickets}
           onSubmit={onV3PurchaseTicket}
           buttonLabel={purchaseLabel()}
         />

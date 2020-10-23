@@ -47,6 +47,7 @@ export function PurchasePage({
   isValid,
   toggleIsLegacy,
   onV3PurchaseTicket,
+  isPurchasingTickets,
   ...props
 }) {
   return (
@@ -79,7 +80,8 @@ export function PurchasePage({
             onChangeNumTickets,
             setVSP,
             isValid,
-            onV3PurchaseTicket
+            onV3PurchaseTicket,
+            isPurchasingTickets
           }}
         />
       )}
