@@ -21,7 +21,6 @@ export default ({
   onShowReleaseNotes,
   onShowTutorial,
   appVersion,
-  onGetDcrdLogs,
   ...props
 }) => {
   const daemonWarning = useSelector(sel.daemonWarning);
@@ -77,4 +76,4 @@ export default ({
           ))}
     </>
   );
-}
+};

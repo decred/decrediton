@@ -158,7 +158,7 @@ export function CheckDaemonLogs(data) {
     upgradeDatabase,
     reindexing,
     upgradeDB7
-  ]; 
+  ];
   warningArray.forEach((warnMsg) => {
     if (data.indexOf(warnMsg) > 0) {
       hasWarning = true;

@@ -455,7 +455,8 @@ export const useGetStarted = () => {
       submitChosenWallet,
       submitRemoteCredentials,
       onOpenWallet,
-      error
+      error,
+      onGetDcrdLogs
     ]
   );
 

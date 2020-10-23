@@ -13,7 +13,6 @@ const Logs = ({
   dcrdLogs,
   dcrwalletLogs,
   isDaemonRemote,
-  isDaemonStarted,
   walletReady,
   decreditonLogs,
   showDecreditonLogs,
