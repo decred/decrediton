@@ -13,7 +13,8 @@ const CreateDefaultAccounts = ({
   setMixedAccountName,
   setChangeAccountName,
   isValid,
-  isCreateAccountDisabled
+  isCreateAccountDisabled,
+  createMixerAccountAttempt
 }) => (
   <div>
     <div>
@@ -47,7 +48,8 @@ const CreateDefaultAccounts = ({
             setChangeAccountName,
             isValid
           }}
-          disabled={isCreateAccountDisabled}
+          loading={createMixerAccountAttempt}
+          disabled={isCreateAccountDisabled || createMixerAccountAttempt}
           modalTitle={
             <T
               id="accounts.defaultAccountConfirmations"

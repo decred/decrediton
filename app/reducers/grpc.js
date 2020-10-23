@@ -77,7 +77,10 @@ import {
   GETACCOUNTMIXERSERVICE_SUCCESS,
   RUNACCOUNTMIXER_SUCCESS,
   RUNACCOUNTMIXER_FAILED,
-  STOPMIXER_SUCCESS
+  STOPMIXER_SUCCESS,
+  CREATEMIXERACCOUNTS_ATTEMPT,
+  CREATEMIXERACCOUNTS_FAILED,
+  CREATEMIXERACCOUNTS_SUCCESS
 } from "actions/AccountMixerActions";
 import {
   GETTRANSACTIONS_ATTEMPT,
@@ -116,6 +119,21 @@ export default function grpc(state = {}, action) {
         ...state,
         accountMixerRunning: false,
         mixerStreamer: null
+      };
+    case CREATEMIXERACCOUNTS_ATTEMPT:
+      return {
+        ...state,
+        createMixerAccountAttempt: true
+      };
+    case CREATEMIXERACCOUNTS_FAILED:
+      return {
+        ...state,
+        createMixerAccountAttempt: false
+      };
+    case CREATEMIXERACCOUNTS_SUCCESS:
+      return {
+        ...state,
+        createMixerAccountAttempt: false
       };
     case GETTREASURY_BALANCE_SUCCESS:
       return {
