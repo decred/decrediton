@@ -180,8 +180,13 @@ export default function trezor(state = {}, action) {
     case TRZ_WIPEDEVICE_ATTEMPT:
     case TRZ_RECOVERDEVICE_ATTEMPT:
     case TRZ_INITDEVICE_ATTEMPT:
-    case TRZ_UPDATEFIRMWARE_ATTEMPT:
       return { ...state, performingOperation: true };
+    case TRZ_UPDATEFIRMWARE_ATTEMPT:
+      return {
+        ...state,
+        performingOperation: true,
+        performingUpdate: true
+      };
     case TRZ_CHANGELABEL_SUCCESS:
       return {
         ...state,
@@ -203,11 +208,16 @@ export default function trezor(state = {}, action) {
     case TRZ_RECOVERDEVICE_SUCCESS:
     case TRZ_INITDEVICE_FAILED:
     case TRZ_INITDEVICE_SUCCESS:
-    case TRZ_UPDATEFIRMWARE_FAILED:
-    case TRZ_UPDATEFIRMWARE_SUCCESS:
     case TRZ_BACKUPDEVICE_FAILED:
     case TRZ_BACKUPDEVICE_SUCCESS:
       return { ...state, performingOperation: false };
+    case TRZ_UPDATEFIRMWARE_FAILED:
+    case TRZ_UPDATEFIRMWARE_SUCCESS:
+      return {
+        ...state,
+        performingOperation: false,
+        performingUpdate: false
+      };
     case CLOSEWALLET_SUCCESS:
       return { ...state, enabled: false };
     default:

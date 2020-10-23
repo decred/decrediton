@@ -1,6 +1,5 @@
 import * as wallet from "wallet";
 import * as selectors from "selectors";
-import fs from "fs";
 import { hexToBytes, str2utf8hex } from "helpers";
 import {
   walletTxToBtcjsTx,
@@ -22,6 +21,7 @@ import {
   SIGNMESSAGE_SUCCESS
 } from "./ControlActions";
 import { getAmountFromTxInputs, getTxFromInputs } from "./TransactionActions";
+import { ipcRenderer } from "electron";
 
 const session = require("connect").default;
 const { TRANSPORT_EVENT, UI, UI_EVENT, DEVICE_EVENT } = require("connect");
@@ -32,6 +32,7 @@ const AQUIRED = "acquired";
 const NOBACKUP = "no-backup";
 const TRANSPORT_ERROR = "transport-error";
 const TRANSPORT_START = "transport-start";
+const BOOTLOADER_MODE = "bootloader";
 
 let setListeners = false;
 
@@ -56,7 +57,7 @@ export const enableTrezor = () => (dispatch, getState) => {
   connect()(dispatch, getState);
 };
 
-async function initTransport(dispatch, debug) {
+export const initTransport = async (session, debug) => {
   await session.init({
     connectSrc: "https://localhost:8088/",
     env: "web",
@@ -71,7 +72,7 @@ async function initTransport(dispatch, debug) {
     .catch(err => {
       throw err;
     });
-}
+};
 
 export const TRZ_CONNECT_ATTEMPT = "TRZ_CONNECT_ATTEMPT";
 export const TRZ_CONNECT_FAILED = "TRZ_CONNECT_FAILED";
@@ -87,7 +88,7 @@ export const connect = () => async (dispatch, getState) => {
   wallet.allowExternalRequest(EXTERNALREQUEST_TREZOR_BRIDGE);
 
   const debug = getState().trezor.debug;
-  await initTransport(dispatch, debug)
+  await initTransport(session, debug)
     .catch(error => {
       dispatch({ error, type: TRZ_CONNECT_FAILED });
       return;
@@ -113,9 +114,12 @@ export const TRZ_NOCONNECTEDDEVICE = "TRZ_NOCONNECTEDDEVICE";
 function onChange(dispatch, getState, features) {
   if (features == null) throw "no features on change";
   const currentDevice = selectors.trezorDevice(getState());
-  const device = features.id;
   // No current device handle by connect.
   if (!currentDevice) return;
+  let device = features.id;
+  if (features.mode == BOOTLOADER_MODE) {
+    device = BOOTLOADER_MODE;
+  }
   if (device == currentDevice) return;
   const deviceLabel = features.label;
   dispatch({ deviceLabel, device, type: TRZ_SELECTEDDEVICE_CHANGED });
@@ -123,14 +127,17 @@ function onChange(dispatch, getState, features) {
 
 function onConnect(dispatch, getState, features) {
   if (features == null) throw "no features on connect";
-  const device = features.id;
+  let device = features.id;
   const deviceLabel = features.label;
+  if (features.mode == BOOTLOADER_MODE) {
+    device = BOOTLOADER_MODE;
+  }
   dispatch({ deviceLabel, device, type: TRZ_LOADDEVICE });
   return device;
 };
 
 function onDisconnect(dispatch, getState, features) {
-  if (features == null) throw "no features on change";
+  if (features == null) throw "no features on disconnect";
   const currentDevice = selectors.trezorDevice(getState());
   const device = features.id;
   // If this is not the device we presume is current, ignore.
@@ -175,11 +182,12 @@ function setDeviceListeners(dispatch, getState) {
         break;
     };
   });
+
   session.on(DEVICE_EVENT, (event) => {
     const type = event.type;
     switch (type) {
       case CHANGE:
-        if (event.payload.type == AQUIRED) {
+        if (event.payload && event.payload.type == AQUIRED) {
           onChange(dispatch, getState, event.payload);
         }
         break;
@@ -191,6 +199,7 @@ function setDeviceListeners(dispatch, getState) {
         break;
     };
   });
+
   // TODO: Trezor needs some time to start listening for the responses to its
   // requests. Find a better way than static sleeps to accomplish this.
   session.on(UI_EVENT, async (event) => {
@@ -274,9 +283,8 @@ async function deviceRun(dispatch, getState, fn) {
   if (noDevice(getState)) throw "no trezor device";
   const handleError = (error) => {
     const {
-      trezor: { waitingForPin, waitingForPassphrase, debug }
+      trezor: { waitingForPin, waitingForPassphrase }
     } = getState();
-    debug && console.log("Handle error no deviceRun", error);
     if (waitingForPin) dispatch({ error, type: TRZ_PIN_CANCELED });
     if (waitingForPassphrase)
       dispatch({ error, type: TRZ_PASSPHRASE_CANCELED });
@@ -289,21 +297,11 @@ async function deviceRun(dispatch, getState, fn) {
   };
 
   try {
-    const waitFor = async () => {
-      try {
-        return await fn();
-      } catch (err) {
-        // doesn't seem to be reachable by trezor interruptions, but might be
-        // caused by fn() failing in some other way (even though it's
-        // recommended not to do (non-trezor) lengthy operations inside fn())
-        throw handleError(err);
-      }
-    };
-    const res = await waitFor();
+    const res = await fn();
     if (res && res.error) throw handleError(res.error);
     return res;
-  } catch (outerErr) {
-    throw handleError(outerErr);
+  } catch (error) {
+    throw handleError(error);
   }
 };
 
@@ -776,13 +774,22 @@ export const TRZ_UPDATEFIRMWARE_ATTEMPT = "TRZ_UPDATEFIRMWARE_ATTEMPT";
 export const TRZ_UPDATEFIRMWARE_FAILED = "TRZ_UPDATEFIRMWARE_FAILED";
 export const TRZ_UPDATEFIRMWARE_SUCCESS = "TRZ_UPDATEFIRMWARE_SUCCESS";
 
+// updateFirmware attempts to update the device's firmware. For some reason,
+// possibly the size of the firmware, this action will not complete if called
+// from here. We send the firmware to a higher place in the electron hiearchy
+// to send it for us.
 export const updateFirmware = (path) => async (dispatch, getState) => {
+  // Attempting to update the firmware while already updating will cause the
+  // trezor to lock up.
+  const {
+    trezor: { performingUpdate, device }
+  } = getState();
+  if (performingUpdate) {
+    console.log("already updating firmware");
+    return;
+  }
+
   dispatch({ type: TRZ_UPDATEFIRMWARE_ATTEMPT });
-  // TODO: Allow firmware installation.
-  dispatch({ error: "firware install currently disabled", type: TRZ_UPDATEFIRMWARE_FAILED });
-  // Strange var to fool linter.
-  const abort = true;
-  if (abort) return;
 
   if (noDevice(getState)) {
     dispatch({
@@ -793,14 +800,13 @@ export const updateFirmware = (path) => async (dispatch, getState) => {
   }
 
   try {
-    const rawFirmware = fs.readFileSync(path);
-
-    await deviceRun(dispatch, getState, async () => {
-      const res = await session.firmwareUpdate({
-        binary: rawFirmware.buffer
-      });
-      return res.payload;
-    });
+    if (device != BOOTLOADER_MODE) throw "device must be in bootloader mode";
+    // Ask main.development.js to send the firmware for us.
+    const { error, started } = await ipcRenderer.invoke("upload-firmware", path);
+    // If the updated started, the device must be disconnected before further
+    // use.
+    if (started) alertNoConnectedDevice()(dispatch);
+    if (error) throw error;
     dispatch({ type: TRZ_UPDATEFIRMWARE_SUCCESS });
   } catch (error) {
     dispatch({ error, type: TRZ_UPDATEFIRMWARE_FAILED });
