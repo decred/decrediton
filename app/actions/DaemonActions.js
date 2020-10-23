@@ -154,8 +154,14 @@ export const finishPrivacy = () => (dispatch) => {
 
 export const startDaemon = (params) => (dispatch, getState) =>
   new Promise((resolve, reject) => {
+    const { daemonStarted, daemonStarting } = getState().daemon;
+    // we only consider dcrd as started when it has valid peers, but dcrd can
+    // be started doing a long process (like a db upgrade), so we check is it
+    // is starting, before dispatching a new DAEMONSTART_ATTEMPT.
+    if (daemonStarting) {
+      return;
+    }
     dispatch({ type: DAEMONSTART_ATTEMPT });
-    const { daemonStarted } = getState().daemon;
     if (daemonStarted) {
       return dispatch({ type: DAEMONSTART_SUCCESS });
     }

@@ -3,6 +3,7 @@ import {
   FINISH_TUTORIAL,
   FINISH_PRIVACY,
   FINISH_SPVCHOICE,
+  DAEMONSTART_ATTEMPT,
   DAEMONSTART_SUCCESS,
   CONNECTDAEMON_ATTEMPT,
   CONNECTDAEMON_SUCCESS,
@@ -43,6 +44,14 @@ export default function version(state = {}, action) {
       return { ...state, showSpvChoice: false };
     case FINISH_PRIVACY:
       return { ...state, showPrivacy: false };
+    case DAEMONSTART_ATTEMPT:
+      return {
+        ...state,
+        // we consider it as started here, because dcrd can start a long process
+        // like upgrading its db, before having valid peers (which is when we consider)
+        // dcrd as started and ready to run.
+        daemonStarting: true
+      };
     case DAEMONSTART_SUCCESS:
       return {
         ...state,
