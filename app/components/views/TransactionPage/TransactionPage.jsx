@@ -16,6 +16,7 @@ function Transaction() {
     decodedTx
   } = useTransactionPage(txHash);
 
+  if (!viewedTransaction) return null;
   switch (state.value) {
     case "idle":
       return <></>;

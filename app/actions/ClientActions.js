@@ -716,7 +716,7 @@ export const abandonTransactionAttempt = (txid) => (dispatch, getState) => {
   wallet
     .abandonTransaction(sel.walletService(getState()), txid)
     .then(() => {
-      dispatch({ type: ABANDONTRANSACTION_SUCCESS });
+      dispatch({ type: ABANDONTRANSACTION_SUCCESS, txid });
       dispatch(goBack());
     })
     .catch((error) => dispatch({ error, type: ABANDONTRANSACTION_FAILED }));

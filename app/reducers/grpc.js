@@ -109,10 +109,10 @@ export default function grpc(state = {}, action) {
         mixerStreamer: action.mixerStreamer
       };
     case RUNACCOUNTMIXER_FAILED:
-        return {
-          ...state,
-          mixerStreamerError: action.error
-        };
+      return {
+        ...state,
+        mixerStreamerError: action.error
+      };
     case STOPMIXER_SUCCESS:
       return {
         ...state,
@@ -377,12 +377,22 @@ export default function grpc(state = {}, action) {
         startRequestHeight:
           action.startRequestHeight || state.startRequestHeight
       };
+    case GETTRANSACTIONS_CANCELED:
+      return { ...state, getTransactionsCancel: false };
     case ABANDONTRANSACTION_ATTEMPT:
       return { ...state, abandonTransactionRequestAttempt: true };
     case ABANDONTRANSACTION_FAILED:
       return { ...state, abandonTransactionRequestAttempt: false };
     case ABANDONTRANSACTION_SUCCESS:
-      return { ...state, abandonTransactionRequestAttempt: false };
+      // remove the transaction from transactions reducers
+      delete state.regularTransactions[action.txid];
+      return {
+        ...state,
+        abandonTransactionRequestAttempt: false,
+        recentRegularTransactions: state.recentRegularTransactions.filter(
+          (t) => t.txHash !== action.txid
+        )
+      };
     case NEW_TRANSACTIONS_RECEIVED:
       return {
         ...state,
@@ -653,10 +663,10 @@ export default function grpc(state = {}, action) {
         peersCount: action.peersCount
       };
     case GETPEERINFO_FAILED:
-        return {
-          ...state,
-          getPeerInfoError: action.error
-        };
+      return {
+        ...state,
+        getPeerInfoError: action.error
+      };
     default:
       return state;
   }
