@@ -1,6 +1,6 @@
 // @flow
 import Promise from "promise";
-import { getWalletCfg, updateStakePoolConfig } from "config";
+import { getWalletCfg, getGlobalCfg, updateStakePoolConfig } from "config";
 import { importScriptAttempt, rescanAttempt } from "./ControlActions";
 import * as sel from "../selectors";
 import * as wallet from "wallet";
@@ -475,6 +475,8 @@ export const discoverAvailableStakepools = () => async (dispatch, getState) => {
 
 export const TOGGLE_ISLEGACY = "TOGGLE_ISLEGACY";
 export const toggleIsLegacy = (isLegacy) => (dispatch) => {
+  const config = getGlobalCfg();
+  config.set("vsp_is_legacy", isLegacy);
   dispatch({
     type: TOGGLE_ISLEGACY,
     isLegacy
