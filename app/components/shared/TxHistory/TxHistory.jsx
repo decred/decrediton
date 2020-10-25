@@ -53,9 +53,9 @@ const TxHistory = ({
     <>
       {transactions.map((tx, index) => {
         if (limit && index >= limit) return;
-
-        const txTimestamp = tx.leaveTimestamp
-          ? tx.leaveTimestamp
+        if (!tx) return;
+        const txTimestamp = tx && tx.enterTimestamp
+          ? tx.enterTimestamp
           : tx.timestamp;
         // we define the transaction icon by its rowType, so we pass it as a
         // className props
