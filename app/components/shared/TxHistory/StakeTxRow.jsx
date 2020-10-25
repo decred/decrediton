@@ -17,7 +17,6 @@ const StakeTxRow = ({
   leaveTimestamp,
   enterTimestamp,
   pending,
-  tsDate,
   txTs,
   accountName,
   txType,
