@@ -13,9 +13,11 @@ const MenuLinkContent = ({
   expandSideBar
 }) => (
   <>
-    {notifProp ? (
-      <span className={style.menuLinkNotificationIcon} data-testid="menu-link-notification-icon"></span>
-    ) : null}
+    {notifProp && (
+      <span
+        className={style.menuLinkNotificationIcon}
+        data-testid="menu-link-notification-icon"></span>
+    )}
     <Link
       className={classNames(style.menuLink, style[icon + "Icon"])}
       activeClassName={classNames(style.menuLinkActive, style[icon + "Icon"])}
@@ -30,12 +32,27 @@ const MenuLinkContent = ({
 
 const MenuLink = React.memo(
   React.forwardRef(
-    ({ path, link, icon, notifProp, sidebarOnBottom, ariaLabel, expandSideBar }, ref) => (
+    (
+      {
+        path,
+        link,
+        icon,
+        notifProp,
+        sidebarOnBottom,
+        ariaLabel,
+        expandSideBar
+      },
+      ref
+    ) => (
       <div ref={ref} className={style.menuLinkContainer}>
         {sidebarOnBottom || !expandSideBar ? (
           <Tooltip
             content={
-              <T id="sidebar.menuLinkTooltip" m="{value}" values={{ value: link }} />
+              <T
+                id="sidebar.menuLinkTooltip"
+                m="{value}"
+                values={{ value: link }}
+              />
             }
             contentClassName={
               sidebarOnBottom ? style.tooltipOnBottom : style.tooltipOnSide

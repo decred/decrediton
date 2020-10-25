@@ -177,6 +177,7 @@
 .tooltipOnSide {
   bottom: 70% !important;
   left: 90% !important;
+  transform: translateX(0%) !important;
 }
 
 .tooltipOnBottom {
