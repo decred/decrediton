@@ -13,6 +13,7 @@ import {
   RunTicketBuyerRequest
 } from "../middleware/walletrpc/api_pb";
 import { reverseRawHash, rawToHex } from "helpers/byteActions";
+import { getGlobalCfg } from "config";
 
 export const GETNEXTADDRESS_ATTEMPT = "GETNEXTADDRESS_ATTEMPT";
 export const GETNEXTADDRESS_FAILED = "GETNEXTADDRESS_FAILED";
@@ -380,7 +381,9 @@ export const newPurchaseTicketsAttempt = (
         type: CREATE_UNSIGNEDTICKETS_SUCCESS
       });
     }
-    dispatch({ purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
+    const config = getGlobalCfg();
+    config.set("vsp_host", vsp.host);
+    dispatch({ purchaseTicketsResponse, vsp, type: PURCHASETICKETS_SUCCESS });
   } catch (error) {
     dispatch({ error, type: PURCHASETICKETS_FAILED });
   }

@@ -24,7 +24,7 @@ const Tickets = ({ toggleIsLegacy }) => {
 
   const [account, setAccount] = useState(defaultSpendingAccount);
   // todo use this vsp to buy solo tickets.
-  const [vsp, setVSP] = useState(null);
+  const [vsp, setVSP] = useState(buyerVSP);
   const [numTickets, setNumTickets] = useState(1);
   const [isValid, setIsValid] = useState(false);
 

@@ -20,6 +20,7 @@ const PurchaseTicketsForm = ({
   ticketPrice,
   isWatchingOnly,
   setVSP,
+  vsp,
   onV3PurchaseTicket,
   onRevokeTickets,
   availableVSPs,
@@ -44,7 +45,7 @@ const PurchaseTicketsForm = ({
           </div>
           <VSPSelect
             className="stakepool-purchase-ticket-input-select"
-            {...{ options: availableVSPs, account, onChange: setVSP }}
+            {...{ options: availableVSPs, account, onChange: setVSP, value: vsp }}
           />
         </div>
       </div>
