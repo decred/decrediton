@@ -408,7 +408,9 @@ export const startWallet = (selectedWallet) => (dispatch, getState) =>
       });
       dispatch({ type: WALLET_AUTOBUYER_SETTINGS, balanceToMaintain });
       dispatch({ type: WALLET_SETTINGS, currencyDisplay, gapLimit });
-      dispatch({ type: SET_VSP_HOST, vsp: vsp_host });
+      if(vsp_host) {
+        dispatch({ type: SET_VSP_HOST, vsp: vsp_host });
+      }
       dispatch({
         type: WALLET_STAKEPOOL_SETTINGS,
         selectedStakePool,

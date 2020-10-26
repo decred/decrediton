@@ -61,6 +61,11 @@
   padding: 10px 20px;
 }
 
+.rememberVspCheckBox {
+  grid-column: 2;
+  justify-self: right;
+}
+
 @media screen and (max-width: 768px) {
   .ticketForm {
     display: grid;

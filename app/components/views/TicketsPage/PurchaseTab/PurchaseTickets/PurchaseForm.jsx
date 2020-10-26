@@ -2,7 +2,7 @@ import { PassphraseModalButton, KeyBlueButton } from "buttons";
 import { AccountsSelect, NumTicketsInput, VSPSelect } from "inputs";
 import { FormattedMessage as T } from "react-intl";
 import { Balance } from "shared";
-import { classNames } from "pi-ui";
+import { classNames, Checkbox } from "pi-ui";
 import styles from "../PurchaseTab.module.css";
 
 import "style/StakePool.less";
@@ -24,7 +24,9 @@ const PurchaseTicketsForm = ({
   onV3PurchaseTicket,
   onRevokeTickets,
   availableVSPs,
-  isLoading
+  isLoading,
+  rememberVsp,
+  toggleRememberVsp
 }) => (
   <>
     <div className={classNames(styles.purchaseForm, "is-row")}>
@@ -46,6 +48,18 @@ const PurchaseTicketsForm = ({
           <VSPSelect
             className="stakepool-purchase-ticket-input-select"
             {...{ options: availableVSPs, account, onChange: setVSP, value: vsp }}
+          />
+          <Checkbox
+            className={styles.rememberVspCheckBox}
+            label={
+              <T
+                id="purchaseTickets.usedefault"
+                m="use default"
+              />
+            }
+            id="rememberVsp"
+            checked={rememberVsp}
+            onChange={toggleRememberVsp}
           />
         </div>
       </div>

@@ -10,8 +10,7 @@ import {
   STARTTICKETBUYERV3_ATTEMPT,
   STARTTICKETBUYERV3_SUCCESS,
   STARTTICKETBUYERV3_FAILED,
-  STOPTICKETBUYER_SUCCESS,
-  PURCHASETICKETS_SUCCESS
+  STOPTICKETBUYER_SUCCESS
 } from "actions/ControlActions";
 
 export default function vsp(state = {}, action) {
@@ -61,10 +60,6 @@ export default function vsp(state = {}, action) {
     case TOGGLE_ISLEGACY:
       return { ...state,
         isLegacy: action.isLegacy
-      };
-    case PURCHASETICKETS_SUCCESS:
-      return { ...state,
-        vsp: action.vsp ? action.vsp: state.vsp
       };
     case SET_VSP_HOST:
       return { ...state,

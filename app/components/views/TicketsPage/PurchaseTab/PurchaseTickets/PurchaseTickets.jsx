@@ -27,6 +27,11 @@ const Tickets = ({ toggleIsLegacy }) => {
   const [vsp, setVSP] = useState(buyerVSP);
   const [numTickets, setNumTickets] = useState(1);
   const [isValid, setIsValid] = useState(false);
+  const [rememberVsp, setRememberVsp] = useState(false);
+
+  const toggleRememberVsp = () => {
+    setRememberVsp(!rememberVsp);
+  };
 
   // onChangeNumTickets deals with ticket increment or decrement.
   const onChangeNumTickets = (increment) => {
@@ -35,7 +40,7 @@ const Tickets = ({ toggleIsLegacy }) => {
   };
 
   const onV3PurchaseTicket = (passphrase) => {
-    onPurchaseTicketV3(passphrase, account, numTickets, vsp);
+    onPurchaseTicketV3(passphrase, account, numTickets, vsp, rememberVsp);
   };
 
   useEffect(() => {
@@ -75,6 +80,8 @@ const Tickets = ({ toggleIsLegacy }) => {
       vsp,
       mixedAccount,
       changeAccount,
+      rememberVsp,
+      toggleRememberVsp
       isLoading,
       onRevokeTickets
     }} />;

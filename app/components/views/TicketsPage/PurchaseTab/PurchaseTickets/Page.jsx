@@ -53,6 +53,8 @@ export function PurchasePage({
   mixedAccount,
   changeAccount,
   isLoading,
+  rememberVsp,
+  toggleRememberVsp,
   onRevokeTickets,
   ...props
 }) {
@@ -91,6 +93,8 @@ export function PurchasePage({
             onV3PurchaseTicket,
             isLoading,
             onRevokeTickets
+            rememberVsp,
+            toggleRememberVsp
           }}
         />
       )}

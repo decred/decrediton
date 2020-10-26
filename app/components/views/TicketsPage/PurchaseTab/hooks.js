@@ -27,12 +27,13 @@ export const usePurchaseTab = () => {
   const discoverAvailableVSPs = useCallback(() => dispatch(vspa.discoverAvailableVSPs()), [
     dispatch
   ]);
-  const onPurchaseTicketV3 = useCallback((passphrase, account, numTickets, vsp) =>
+  const onPurchaseTicketV3 = useCallback((passphrase, account, numTickets, vsp, rememberVsp) =>
     dispatch(ca.newPurchaseTicketsAttempt(
       passphrase,
       account,
       numTickets,
-      vsp)
+      vsp,
+      rememberVsp)
     ),
     [dispatch]
   );
