@@ -1,3 +1,5 @@
+import { useState, useEffect, useCallback } from "react";
+import { useLogging } from "./hooks";
 import Logs from "./Page";
 import {
   getDcrdLogs,
@@ -5,7 +7,6 @@ import {
   getDecreditonLogs,
   getDcrlndLogs
 } from "wallet";
-import { logging } from "connectors";
 import { DescriptionHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
 import ReactTimeout from "react-timeout";
@@ -20,130 +21,111 @@ export const LogsTabHeader = () => (
     }
   />
 );
-@autobind
-class LogsTabBody extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = this.getInitialState();
-  }
 
-  componentDidMount() {
-    this.getLogs();
-  }
+const LogsTabBody = ({ setInterval, clearInterval }) => {
+  const [interval, setIntervalState] = useState(null);
+  const [dcrdLogs, setDcrdLogs] = useState("");
+  const [dcrwalletLogs, setDcrwalletLogs] = useState("");
+  const [decreditonLogs, setDecreditonLogs] = useState("");
+  const [dcrlndLogs, setDcrlndLogs] = useState("");
+  const [showDcrdLogs, setShowDcrdLogs] = useState(false);
+  const [showDcrwalletLogs, setShowDcrwalletLogs] = useState(false);
+  const [showDecreditonLogs, setShowDecreditonLogs] = useState(false);
+  const [showDcrlndLogs, setShowDcrlndLogs] = useState(false);
 
-  componentDidUpdate() {
-    if (this.state.interval) {
-      return;
-    }
-    const interval = this.props.setInterval(() => {
-      this.getLogs();
-    }, 2000);
-    this.setState({ interval });
-  }
+  const {
+    walletReady,
+    isDaemonRemote,
+    isDaemonStarted,
+    lnActive,
+    lnStartAttempt
+  } = useLogging();
 
-  componentWillUnmount() {
-    this.props.clearInterval(this.state.interval);
-  }
-
-  getInitialState() {
-    return {
-      interval: null,
-      dcrdLogs: "",
-      dcrwalletLogs: "",
-      decreditonLogs: "",
-      dcrlndLogs: "",
-      showDcrdLogs: false,
-      showDcrwalletLogs: false,
-      showDecreditonLogs: false,
-      showDcrlndLogs: false
-    };
-  }
-
-  render() {
-    const {
-      onShowDecreditonLogs,
-      onShowDcrdLogs,
-      onShowDcrwalletLogs,
-      onHideDecreditonLogs,
-      onHideDcrdLogs,
-      onHideDcrwalletLogs,
-      onShowDcrlndLogs,
-      onHideDcrlndLogs
-    } = this;
-    return (
-      <Logs
-        {...{
-          ...this.props,
-          ...this.state,
-          onShowDecreditonLogs,
-          onShowDcrdLogs,
-          onShowDcrwalletLogs,
-          onShowDcrlndLogs,
-          onHideDecreditonLogs,
-          onHideDcrdLogs,
-          onHideDcrwalletLogs,
-          onHideDcrlndLogs
-        }}
-      />
-    );
-  }
-
-  getLogs() {
-    return Promise.all([
+  const getLogs = useCallback(async () => {
+    const [
+      rawDcrdLogs,
+      rawDcrwalletLogs,
+      decreditonLogsNew,
+      rawDcrlndLogs
+    ] = await Promise.all([
       getDcrdLogs(),
       getDcrwalletLogs(),
       getDecreditonLogs(),
       getDcrlndLogs()
-    ]).then(([rawDcrdLogs, rawDcrwalletLogs, decreditonLogs, rawDcrlndLogs]) => {
-      const dcrdLogs = Buffer.from(rawDcrdLogs).toString("utf8");
-      const dcrwalletLogs = Buffer.from(rawDcrwalletLogs).toString("utf8");
-      const dcrlndLogs = Buffer.from(rawDcrlndLogs).toString("utf8");
-      if (dcrdLogs !== this.state.dcrdLogs) {
-        this.setState({ dcrdLogs });
-      }
-      if (dcrwalletLogs !== this.state.dcrwalletLogs) {
-        this.setState({ dcrwalletLogs });
-      }
-      if (decreditonLogs !== this.state.decreditonLogs) {
-        this.setState({ decreditonLogs });
-      }
-      if (dcrlndLogs !== this.state.dcrlndLogs) {
-        this.setState({ dcrlndLogs });
-      }
-    });
-  }
+    ]);
+    const dcrdLogsNew = Buffer.from(rawDcrdLogs).toString("utf8");
+    const dcrwalletLogsNew = Buffer.from(rawDcrwalletLogs).toString("utf8");
+    const dcrlndLogsNew = Buffer.from(rawDcrlndLogs).toString("utf8");
+    if (dcrdLogsNew !== dcrdLogs) {
+      setDcrdLogs(dcrdLogsNew);
+    }
+    if (dcrwalletLogsNew !== dcrwalletLogs) {
+      setDcrwalletLogs(dcrwalletLogsNew);
+    }
+    if (decreditonLogsNew !== decreditonLogs) {
+      setDecreditonLogs(decreditonLogsNew);
+    }
+    if (dcrlndLogsNew !== dcrlndLogs) {
+      setDcrlndLogs(dcrlndLogsNew);
+    }
+  }, [decreditonLogs, dcrwalletLogs, dcrdLogs, dcrlndLogs]);
 
-  onShowDecreditonLogs() {
-    this.setState({ showDecreditonLogs: true });
-  }
+  useEffect(() => {
+    if (interval) {
+      return;
+    }
+    getLogs();
+    const int = setInterval(() => getLogs(), 2000);
+    setIntervalState(int);
 
-  onHideDecreditonLogs() {
-    this.setState({ showDecreditonLogs: false });
-  }
+    return () => {
+      clearInterval(interval);
+    };
+  }, [setInterval, interval, setIntervalState, clearInterval, getLogs]);
 
-  onShowDcrdLogs() {
-    this.setState({ showDcrdLogs: true });
-  }
+  const onShowDecreditonLogs = () => setShowDecreditonLogs(true);
 
-  onHideDcrdLogs() {
-    this.setState({ showDcrdLogs: false });
-  }
+  const onHideDecreditonLogs = () => setShowDecreditonLogs(false);
 
-  onShowDcrwalletLogs() {
-    this.setState({ showDcrwalletLogs: true });
-  }
+  const onShowDcrdLogs = () => setShowDcrdLogs(true);
 
-  onHideDcrwalletLogs() {
-    this.setState({ showDcrwalletLogs: false });
-  }
+  const onHideDcrdLogs = () => setShowDcrdLogs(false);
 
-  onShowDcrlndLogs() {
-    this.setState({ showDcrlndLogs: true });
-  }
+  const onShowDcrwalletLogs = () => setShowDcrwalletLogs(true);
 
-  onHideDcrlndLogs() {
-    this.setState({ showDcrlndLogs: false });
-  }
-}
+  const onHideDcrwalletLogs = () => setShowDcrwalletLogs(false);
 
-export const LogsTab = ReactTimeout(logging(LogsTabBody));
+  const onShowDcrlndLogs = () => setShowDcrlndLogs(true);
+
+  const onHideDcrlndLogs = () => setShowDcrlndLogs(false);
+
+  return (
+    <Logs
+      {...{
+        walletReady,
+        isDaemonRemote,
+        isDaemonStarted,
+        lnActive,
+        lnStartAttempt,
+        dcrdLogs,
+        dcrwalletLogs,
+        decreditonLogs,
+        dcrlndLogs,
+        showDcrdLogs,
+        showDcrwalletLogs,
+        showDecreditonLogs,
+        showDcrlndLogs,
+        onShowDecreditonLogs,
+        onShowDcrdLogs,
+        onShowDcrwalletLogs,
+        onShowDcrlndLogs,
+        onHideDecreditonLogs,
+        onHideDcrdLogs,
+        onHideDcrwalletLogs,
+        onHideDcrlndLogs
+      }}
+    />
+  );
+};
+
+export const LogsTab = ReactTimeout(LogsTabBody);

@@ -19,9 +19,6 @@ export const TutorialsTab = () => (
   <>
     <Subtitle title={<T id="tutorials.subtitle" m="Tutorials" />} />
     <div className={styles.overviewNoTickets}>
-      {/* <Link to="/mytickets/purchase" className="purchaseTickets">
-        <T id="home.noTickets.purchase" m="Stake Your Idle DCR and Earn Rewards" /> →
-      </Link> */}
       <Link to="/tutorial/staking" className={styles.whatIsStaking}>
         <T id="tutorials.staking" m="What is Staking (Proof-of-Stake)?" /> →
       </Link>

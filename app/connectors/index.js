@@ -3,15 +3,12 @@ export { default as accountsSelect } from "./accountsSelect";
 export { default as app } from "./app";
 export { default as balance } from "./balance";
 export { default as invalidRPCVersion } from "./invalidRPCVersion";
-export { default as logging } from "./logging";
 export { default as purchaseTickets } from "./purchaseTickets";
 export { default as send } from "./send";
-export { default as service } from "./service"; // TODO: hook already exists in hooks/useService.js but connector is still used in class components
 export { default as snackbar } from "./snackbar";
 export { default as stakeInfo } from "./stakeInfo";
 export { default as ticketsList } from "./ticketsList";
 export { default as ticketsOverview } from "./ticketsOverview";
-export { default as transactionLink } from "./transactionLink";
 export { default as walletError } from "./walletError";
 export { default as walletContainer } from "./walletContainer";
 export { default as routing } from "./routing";
