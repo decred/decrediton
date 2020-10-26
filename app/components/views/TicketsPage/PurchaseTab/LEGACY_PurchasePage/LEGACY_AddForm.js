@@ -37,7 +37,8 @@ const StakePoolsAddForm = ({
   onSetStakePoolInfo,
   onCancelAddStakePool,
   hasFailedAttempt,
-  toggleIsLegacy
+  toggleIsLegacy,
+  addCustomStakePool
 }) => (
     <>
       <div className="stakepool-add-title">
@@ -60,6 +61,7 @@ const StakePoolsAddForm = ({
                 options={unconfiguredStakePools}
                 value={selectedUnconfigured}
                 onChange={onChangeSelectedUnconfigured}
+                addCustomStakePool={addCustomStakePool}
               />
             </div>
           </div>
