@@ -134,6 +134,8 @@
   margin-right: 20px;
   height: 15px;
   max-width: 210px;
+  line-height: 15px;
+  text-align: center;
 }
 
 .timeDateSpacer {
@@ -271,6 +273,11 @@
 
 .eligibleRow {
   background-position: 688px;
+}
+
+.historyRow.eligibleRow .txInfo .txRowWrapper {
+  padding: 16px 20px 16px 20px;
+  width: 100%;
 }
 
 .overviewRow .txInfo .ticketStatus {
