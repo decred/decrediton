@@ -377,21 +377,16 @@ export default function grpc(state = {}, action) {
         startRequestHeight:
           action.startRequestHeight || state.startRequestHeight
       };
-    case GETTRANSACTIONS_CANCELED:
-      return { ...state, getTransactionsCancel: false };
     case ABANDONTRANSACTION_ATTEMPT:
       return { ...state, abandonTransactionRequestAttempt: true };
     case ABANDONTRANSACTION_FAILED:
       return { ...state, abandonTransactionRequestAttempt: false };
     case ABANDONTRANSACTION_SUCCESS:
-      // remove the transaction from transactions reducers
-      delete state.regularTransactions[action.txid];
       return {
         ...state,
         abandonTransactionRequestAttempt: false,
-        recentRegularTransactions: state.recentRegularTransactions.filter(
-          (t) => t.txHash !== action.txid
-        )
+        recentRegularTransactions: action.recentRegularTransactions,
+        regularTransactions: action.regularTransactions
       };
     case NEW_TRANSACTIONS_RECEIVED:
       return {
