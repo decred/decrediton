@@ -10,8 +10,14 @@ import { TICKET, VOTE, VOTED, REVOKED } from "constants/Decrediton";
 export const { TRANSACTION_TYPES } = wallet;
 
 export const GETTRANSACTIONS_CANCEL = "GETTRANSACTIONS_CANCEL";
-export const cancelGetTransactions = () => (dispatch) =>
-  dispatch({ type: GETTRANSACTIONS_CANCEL });
+// toggleGetTransactions toggles getting stake transactions.
+export const toggleGetTransactions = () => (dispatch, getState) => {
+  const stakeTransactionsCancel = sel.getStakeTransactionsCancel(getState());
+  dispatch({
+    type: GETTRANSACTIONS_CANCEL,
+    stakeTransactionsCancel: !stakeTransactionsCancel
+  });
+};
 
 function checkAccountsToUpdate(txs, accountsToUpdate) {
   txs.forEach((tx) => {
@@ -435,7 +441,6 @@ const getNonWalletOutputs = (walletService, chainParams, tx) =>
 export const GETTRANSACTIONS_ATTEMPT = "GETTRANSACTIONS_ATTEMPT";
 export const GETTRANSACTIONS_FAILED = "GETTRANSACTIONS_FAILED";
 export const GETTRANSACTIONS_COMPLETE = "GETTRANSACTIONS_COMPLETE";
-export const GETTRANSACTIONS_CANCELED = "GETTRANSACTIONS_CANCELED";
 
 // normalizeTx is used to normalize txs after fetched from dcrwallet.
 // this is needed because we do not have all information right after
@@ -480,7 +485,7 @@ export const getTransactions = (isStake) => async (dispatch, getState) => {
     transactionsFilter,
     ticketsFilter,
     walletService,
-    getTransactionsCancel
+    stakeTransactionsCancel
   } = getState().grpc;
   const chainParams = sel.chainParams(getState());
   let {
@@ -498,8 +503,9 @@ export const getTransactions = (isStake) => async (dispatch, getState) => {
   const transactions = [];
 
   if (getTransactionsRequestAttempt || noMoreTransactions) return;
-  if (getTransactionsCancel) {
-    dispatch({ type: GETTRANSACTIONS_CANCELED });
+  // getting stake transactions is stopped.
+  if (isStake && stakeTransactionsCancel) {
+    return;
   }
 
   if (!currentBlockHeight) {

@@ -20,5 +20,4 @@ export { default as theming } from "./theming";
 export { default as network } from "./network";
 export { default as trezor } from "./trezor";
 export { default as importScript } from "./importScript";
-export { default as loadingTickets } from "./loadingTickets";
 export { default as lnPage } from "./lnPage";

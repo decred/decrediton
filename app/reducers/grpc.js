@@ -91,8 +91,7 @@ import {
   MATURINGHEIGHTS_CHANGED,
   GETSTARTUPTRANSACTIONS_SUCCESS,
   NEW_TRANSACTIONS_RECEIVED,
-  CHANGE_TRANSACTIONS_FILTER,
-  GETTRANSACTIONS_CANCELED
+  CHANGE_TRANSACTIONS_FILTER
 } from "actions/TransactionActions";
 
 export default function grpc(state = {}, action) {
@@ -338,7 +337,7 @@ export default function grpc(state = {}, action) {
     case GETTRANSACTIONS_CANCEL:
       return {
         ...state,
-        getTransactionsCancel: true,
+        stakeTransactionsCancel: action.stakeTransactionsCancel,
         getTransactionsRequestAttempt: false
       };
     case CHANGE_TICKETS_FILTER:
@@ -377,10 +376,6 @@ export default function grpc(state = {}, action) {
         getTransactionsRequestAttempt: false,
         startRequestHeight:
           action.startRequestHeight || state.startRequestHeight
-      };
-    case GETTRANSACTIONS_CANCELED:
-      return { ...state,
-        getTransactionsCancel: false
       };
     case ABANDONTRANSACTION_ATTEMPT:
       return { ...state, abandonTransactionRequestAttempt: true };
