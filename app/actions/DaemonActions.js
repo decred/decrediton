@@ -17,6 +17,7 @@ import axios from "axios";
 import { STANDARD_EXTERNAL_REQUESTS } from "main_dev/externalRequests";
 import { DIFF_CONNECTION_ERROR, LOCALE, TESTNET } from "constants";
 import { enableTrezor } from "./TrezorActions";
+import { SET_VSP_HOST } from "actions/VSPActions";
 
 export const DECREDITON_VERSION = "DECREDITON_VERSION";
 export const SELECT_LANGUAGE = "SELECT_LANGUAGE";
@@ -393,6 +394,7 @@ export const startWallet = (selectedWallet) => (dispatch, getState) =>
       const csppServer = walletCfg.get("csppserver");
       const csppPort = walletCfg.get("csppport");
       const mixedAccountBranch = walletCfg.get("mixedaccbranch");
+      const vsp_host = walletCfg.get("vsp_host");
 
       walletCfg.set("lastaccess", Date.now());
       dispatch({
@@ -406,6 +408,7 @@ export const startWallet = (selectedWallet) => (dispatch, getState) =>
       });
       dispatch({ type: WALLET_AUTOBUYER_SETTINGS, balanceToMaintain });
       dispatch({ type: WALLET_SETTINGS, currencyDisplay, gapLimit });
+      dispatch({ type: SET_VSP_HOST, vsp: vsp_host });
       dispatch({
         type: WALLET_STAKEPOOL_SETTINGS,
         selectedStakePool,

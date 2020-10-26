@@ -104,7 +104,8 @@ function cleanWalletCfg(config) {
     "politeia_last_access_block",
     "csppserver",
     "csppport",
-    "dismiss_backup_msg_redeem_script"
+    "dismiss_backup_msg_redeem_script",
+    "vsp_host"
   ];
   for (key in config.store) {
     let found = false;

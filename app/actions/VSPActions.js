@@ -480,3 +480,12 @@ export const toggleIsLegacy = (isLegacy) => (dispatch) => {
     isLegacy
   });
 };
+
+
+export const SET_VSP_HOST = "SET_VSP_HOST";
+export const setVspHost = (vsp) => (dispatch) => {
+  dispatch({
+    type: SET_VSP_HOST,
+    vsp
+  });
+};

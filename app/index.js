@@ -76,7 +76,7 @@ const initialState = {
     availableVSPsError: null,
     ticketAutoBuyerRunning: null,
     isLegacy: false,
-    vsp: { host: globalCfg.get("vsp_host") }
+    vsp: null
   },
   daemon: {
     networkMatch: false,
