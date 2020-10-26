@@ -58,7 +58,7 @@ const PrivacySettings = ({
                     className={classNames(
                       styles.changePasswordDefaultIcon,
                       isChangePassPhraseDisabled &&
-                        stylesshowChangePassPhraseOption.changePasswordDisabledIcon,
+                        styles.changePasswordDisabledIcon,
                       changePassphraseRequestAttempt &&
                         styles.changePasswordLoading
                     )}
