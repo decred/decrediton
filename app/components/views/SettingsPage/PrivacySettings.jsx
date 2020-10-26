@@ -15,6 +15,7 @@ const propTypes = {
   tempSettings: PropTypes.object.isRequired,
   onAttemptChangePassphrase: PropTypes.func,
   isChangePassPhraseDisabled: PropTypes.bool.isRequired,
+  showChangePassPhraseOption: PropTypes.bool.isRequired,
   changePassphraseRequestAttempt: PropTypes.bool.isRequired,
   onChangeTempSettings: PropTypes.func.isRequired
 };
@@ -22,6 +23,7 @@ const propTypes = {
 const PrivacySettings = ({
   tempSettings,
   isChangePassPhraseDisabled,
+  showChangePassPhraseOption,
   changePassphraseRequestAttempt,
   onAttemptChangePassphrase,
   onChangeTempSettings
@@ -41,35 +43,38 @@ const PrivacySettings = ({
     <>
       <div className={styles.column}>
         <div>
-          <div className={classNames(styles.row, styles.rowChecklist)}>
-            <div
-              disabled={isChangePassPhraseDisabled}
-              className={styles.updatePassphraseButton}>
-              <T
-                id="settings.updatePrivatePassphrase"
-                m="Update Private Passphrase"
-              />
-              <WatchOnlyWarnNotification isActive={isChangePassPhraseDisabled}>
-                <ChangePassphraseButton
-                  className={classNames(
-                    styles.changePasswordDefaultIcon,
-                    isChangePassPhraseDisabled &&
-                      styles.changePasswordDisabledIcon,
-                    changePassphraseRequestAttempt &&
-                      styles.changePasswordLoading
-                  )}
-                  isDisabled={isChangePassPhraseDisabled}
-                  modalTitle={
-                    <T
-                      id="settings.changeConfirmation"
-                      m="Change your passphrase"
-                    />
-                  }
-                  onSubmit={onAttemptChangePassphrase}
+          {showChangePassPhraseOption && (
+            <div className={classNames(styles.row, styles.rowChecklist)}>
+              <div
+                disabled={isChangePassPhraseDisabled}
+                className={styles.updatePassphraseButton}>
+                <T
+                  id="settings.updatePrivatePassphrase"
+                  m="Update Private Passphrase"
                 />
-              </WatchOnlyWarnNotification>
+                <WatchOnlyWarnNotification
+                  isActive={isChangePassPhraseDisabled}>
+                  <ChangePassphraseButton
+                    className={classNames(
+                      styles.changePasswordDefaultIcon,
+                      isChangePassPhraseDisabled &&
+                        stylesshowChangePassPhraseOption.changePasswordDisabledIcon,
+                      changePassphraseRequestAttempt &&
+                        styles.changePasswordLoading
+                    )}
+                    isDisabled={isChangePassPhraseDisabled}
+                    modalTitle={
+                      <T
+                        id="settings.changeConfirmation"
+                        m="Change your passphrase"
+                      />
+                    }
+                    onSubmit={onAttemptChangePassphrase}
+                  />
+                </WatchOnlyWarnNotification>
+              </div>
             </div>
-          </div>
+          )}
           <div className={classNames(styles.row, styles.rowChecklist)}>
             <Checkbox
               label={

@@ -166,6 +166,7 @@ const SettingsPage = ({
                   tempSettings,
                   onAttemptChangePassphrase,
                   isChangePassPhraseDisabled,
+                  showChangePassPhraseOption: true,
                   onChangeTempSettings,
                   changePassphraseRequestAttempt
                 }}

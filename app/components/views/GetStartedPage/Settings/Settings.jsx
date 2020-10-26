@@ -99,6 +99,7 @@ const SetttingsForm = ({ onSendBack }) => {
                     tempSettings,
                     onAttemptChangePassphrase,
                     isChangePassPhraseDisabled,
+                    showChangePassPhraseOption: false,
                     onChangeTempSettings,
                     changePassphraseRequestAttempt
                   }}
