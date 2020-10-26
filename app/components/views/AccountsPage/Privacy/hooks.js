@@ -14,6 +14,7 @@ export function usePrivacy() {
   const mixedAccountBranch = useSelector(sel.getMixedAccountBranch);
   const accounts = useSelector(sel.sortedAccounts);
   const accountMixerError = useSelector(sel.getAccountMixerError);
+  const createMixerAccountAttempt = useSelector(sel.createMixerAccountAttempt);
   const createNeededAccounts = (
     passphrase,
     mixedAccountName,
@@ -44,6 +45,7 @@ export function usePrivacy() {
     accounts,
     accountMixerError,
     onStartMixerAttempt,
-    createNeededAccounts
+    createNeededAccounts,
+    createMixerAccountAttempt
   };
 }

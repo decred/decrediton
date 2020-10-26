@@ -15,7 +15,7 @@ const ConfigMixer = ({ isCreateAccountDisabled, accounts }) => {
   const [areAccountsAvailable, setAreAvailable] = useState(false);
   const [isValid, setIsValid] = useState(false);
 
-  const { createNeededAccounts } = usePrivacy();
+  const { createNeededAccounts, createMixerAccountAttempt } = usePrivacy();
 
   const checkAvailableAccounts = () => {
     const mixedExists = accounts.find(
@@ -58,7 +58,8 @@ const ConfigMixer = ({ isCreateAccountDisabled, accounts }) => {
               setMixedAccountName,
               setChangeAccountName,
               isValid,
-              isCreateAccountDisabled
+              isCreateAccountDisabled,
+              createMixerAccountAttempt
             }}
           />
         ) : (
@@ -70,7 +71,8 @@ const ConfigMixer = ({ isCreateAccountDisabled, accounts }) => {
               setMixedAccountName,
               setChangeAccountName,
               isValid,
-              isCreateAccountDisabled
+              isCreateAccountDisabled,
+              createMixerAccountAttempt
             }}
           />
         )}
