@@ -15,7 +15,6 @@ const propTypes = {
   tempSettings: PropTypes.object.isRequired,
   onAttemptChangePassphrase: PropTypes.func,
   isChangePassPhraseDisabled: PropTypes.bool.isRequired,
-  showChangePassPhraseOption: PropTypes.bool.isRequired,
   changePassphraseRequestAttempt: PropTypes.bool.isRequired,
   onChangeTempSettings: PropTypes.func.isRequired
 };
@@ -23,10 +22,10 @@ const propTypes = {
 const PrivacySettings = ({
   tempSettings,
   isChangePassPhraseDisabled,
-  showChangePassPhraseOption,
   changePassphraseRequestAttempt,
   onAttemptChangePassphrase,
-  onChangeTempSettings
+  onChangeTempSettings,
+  walletReady
 }) => {
   const toggle = (value) => () => {
     const allowedExternalRequests = [...tempSettings.allowedExternalRequests];
@@ -43,7 +42,7 @@ const PrivacySettings = ({
     <>
       <div className={styles.column}>
         <div>
-          {showChangePassPhraseOption && (
+          {walletReady && (
             <div className={classNames(styles.row, styles.rowChecklist)}>
               <div
                 disabled={isChangePassPhraseDisabled}

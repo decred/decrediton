@@ -26,7 +26,8 @@ const SetttingsForm = ({ onSendBack }) => {
     onSaveSettings,
     onAttemptChangePassphrase,
     isChangePassPhraseDisabled,
-    changePassphraseRequestAttempt
+    changePassphraseRequestAttempt,
+    walletReady
   } = useSettings();
   const saveSettingsHandler = useCallback(() => {
     const config = getGlobalCfg();
@@ -99,8 +100,8 @@ const SetttingsForm = ({ onSendBack }) => {
                     tempSettings,
                     onAttemptChangePassphrase,
                     isChangePassPhraseDisabled,
-                    showChangePassPhraseOption: false,
                     onChangeTempSettings,
+                    walletReady,
                     changePassphraseRequestAttempt
                   }}
                 />
