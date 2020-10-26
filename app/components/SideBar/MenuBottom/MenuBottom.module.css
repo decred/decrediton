@@ -58,14 +58,11 @@
 }
 
 .latestBlock {
-  position: relative;
-  padding: 16px 16px 16px 20px;
+  display: flex;
+  align-items: center;
+  padding: 16px;
   background-color: var(--info-modal-button-text);
   font-size: 13px;
-}
-
-.latestBlockCollapsed {
-  padding: 14px 0 10px 0;
 }
 
 .latestBlockName {
@@ -82,7 +79,8 @@
 }
 
 .latestBlockTime {
-  float: right;
+  display: inline-block;
+  margin-left: auto;
   color: var(--disabled-color);
   font-size: 13px;
   text-align: right;
