@@ -138,6 +138,27 @@
   text-align: center;
 }
 
+.overviewRow .feeStatus {
+  margin-left: auto;
+  margin-right: 0;
+  width: 70px;
+}
+
+.feeStatus {
+  background-color: var(--transaction-account-name-bg);
+  padding: 2px 4px;
+  border-radius: 5px;
+  font-size: 11px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  height: 15px; 
+  max-width: 180px;
+  margin-left: 20px;
+  line-height: 15px;
+  text-align: center;
+}
+
 .timeDateSpacer {
   font-size: 11px;
   text-align: right;
@@ -153,6 +174,10 @@
   width: 100%;
 }
 
+.myTickets.live {
+  grid-template-columns: 1fr 1fr 2fr 1fr 1fr;
+}
+
 .myTickets.overview {
   grid-template-columns: 1fr 1fr 1fr;
   padding-bottom: 1rem;
@@ -160,6 +185,10 @@
   align-items: center;
   color: var(--overview-balance-label) !important;
   font-family: var(--font-family-monospace);
+}
+
+.myTickets.overview.live {
+  grid-template-columns: 1fr 1fr;
 }
 
 .stakeType {
@@ -313,6 +342,9 @@
     background: transparent;
     padding: 0 3px;
     height: 20px;
+  }
+  .feeStatus {
+    width: 70px;
   }
   .status {
     padding-top: 0px;

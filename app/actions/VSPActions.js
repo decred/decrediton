@@ -36,16 +36,24 @@ export const getVSPTicketsByFeeStatus = (feeStatus) => (dispatch, getState) => {
   wallet.getVSPTicketsByFeeStatus(getState().grpc.walletService, feeStatus)
     .then(response => {
       const hashesBytes = response.getTicketsHashesList();
-      const ticketsHashes = hashesBytes.map((bytesHash) => {
-        return reverseRawHash(bytesHash);
-      });
+      const ticketsHashes = hashesBytes.map(
+        (bytesHash) => reverseRawHash(bytesHash)
+      );
 
+      // add fee status into our stake transactions map.
+      const { stakeTransactions } = getState().grpc;
+      ticketsHashes.forEach(ticketHash => {
+        const tx = stakeTransactions[ticketHash];
+        if (tx) {
+          tx.feeStatus = feeStatus;
+        }
+      });
       // dispatch if we have tickets with error to register.
       if (feeStatus == VSP_FEE_PROCESS_ERRORED && ticketsHashes.length > 0) {
         dispatch({ type: HASVSPTICKETSERRORED, hasVSPTicketsError: true });
       }
 
-      dispatch({ type: GETVSPTICKETSTATUS_SUCCESS, vspTickets: { [feeStatus]: ticketsHashes }, feeStatus });
+      dispatch({ type: GETVSPTICKETSTATUS_SUCCESS, vspTickets: { [feeStatus]: ticketsHashes }, feeStatus, stakeTransactions });
     })
     .catch(err => {
       dispatch({ type: GETVSPTICKETSTATUS_FAILED, err });

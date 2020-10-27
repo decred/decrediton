@@ -1,22 +1,25 @@
 import RegularTxRow from "./RegularTxRow";
 import StakeTxRow from "./StakeTxRow";
 import EligibleRow from "./EligibleRow";
+import LiveStakeTxRow from "./LiveStakeTxRow";
 import * as txTypes from "constants/Decrediton";
 import { defineMessages, injectIntl } from "react-intl";
 import { withRouter } from "react-router-dom";
 
 const TxRowByType = {
+  // LiveStakeTxRow is used for tickets which can still be voted.
+  [txTypes.UNMINED]: LiveStakeTxRow,
+  [txTypes.IMMATURE]: LiveStakeTxRow,
+  [txTypes.LIVE]: LiveStakeTxRow,
+  // Otherwise we use stakeTxRow
   [txTypes.TICKET]: StakeTxRow,
   [txTypes.VOTE]: StakeTxRow,
   [txTypes.REVOCATION]: StakeTxRow,
   [txTypes.UNKNOWN]: StakeTxRow,
   [txTypes.VOTED]: StakeTxRow,
-  [txTypes.UNMINED]: StakeTxRow,
-  [txTypes.IMMATURE]: StakeTxRow,
   [txTypes.MISSED]: StakeTxRow,
   [txTypes.EXPIRED]: StakeTxRow,
   [txTypes.REVOKED]: StakeTxRow,
-  [txTypes.LIVE]: StakeTxRow,
   [txTypes.TRANSACTION_DIR_SENT]: RegularTxRow,
   [txTypes.TRANSACTION_DIR_RECEIVED]: RegularTxRow,
   [txTypes.TRANSFER]: RegularTxRow,
@@ -46,9 +49,9 @@ const TxHistory = ({
   intl,
   history
 }) => {
-  const isRegular = mode === "regular";
-  const isStake = mode === "stake";
   const isEligibleTicket = mode === "eligible";
+  // mode for live tickets is stakeLive.
+  const isStake = mode === "stake";
   return (
     <>
       {transactions.map((tx, index) => {
@@ -63,11 +66,14 @@ const TxHistory = ({
         rowType = rowType.toLowerCase();
         // If it is a regular tx we use its direction to show a proper icon.
         if (rowType === txTypes.REGULAR) rowType = tx.txDirection;
+
+        // gets the proper component to show, based on it rowType
         const Component =
           TxRowByType[isEligibleTicket ? txTypes.ELIGIBLE : rowType];
-        if (Component === StakeTxRow && isRegular) return;
-        if (Component === RegularTxRow && isStake) return;
         const key = tx.spenderHash ? tx.spenderHash : tx.txHash;
+
+        // do not show live tickets on stakeTxRow. Use LiveStakeTxRow, instead.
+        if (isStake && Component === LiveStakeTxRow) return;
 
         const txOutputAddresses =
           tx.outputs &&
