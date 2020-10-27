@@ -29,6 +29,7 @@ export function useLegacyPurchasePage(toggleShowVsp) {
 
   const onRemoveStakePool = useCallback((host) => dispatch(spa.removeStakePoolConfig(host)), [dispatch]);
   const discoverAvailableStakepools = useCallback(() => dispatch(spa.discoverAvailableStakepools()), [dispatch]);
+  const addCustomStakePool = (host) => dispatch(spa.addCustomStakePool(host));
 
   const [isAdding, setIsAdding] = useState(false);
   const [show, setShow] = useState(false);
@@ -171,7 +172,8 @@ export function useLegacyPurchasePage(toggleShowVsp) {
     onChangeApiKey,
     onSetStakePoolInfo: onSetStakePoolInfoCallback,
     onCancelAddStakePool,
-    hasFailedAttempt
+    hasFailedAttempt,
+    addCustomStakePool
   };
 
 }

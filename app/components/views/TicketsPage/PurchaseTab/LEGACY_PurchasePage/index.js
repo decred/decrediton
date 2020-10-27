@@ -63,7 +63,8 @@ const LEGACY_PurchasePage = ({
     onChangeApiKey,
     onSetStakePoolInfo,
     onCancelAddStakePool,
-    hasFailedAttempt
+    hasFailedAttempt,
+    addCustomStakePool
   } = useLegacyPurchasePage(toggleShowVsp);
 
   return (
@@ -86,7 +87,8 @@ const LEGACY_PurchasePage = ({
               onSetStakePoolInfo,
               onCancelAddStakePool,
               hasFailedAttempt,
-              toggleIsLegacy
+              toggleIsLegacy,
+              addCustomStakePool
             }}
           /> : isShowingVsp ? (
             <StakePools {...{
