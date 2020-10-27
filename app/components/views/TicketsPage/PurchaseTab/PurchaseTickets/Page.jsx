@@ -93,7 +93,7 @@ export function PurchasePage({
             onV3PurchaseTicket,
             isLoading,
             rememberedVspHost,
-            toggleRememberVspHostCheckBox
+            toggleRememberVspHostCheckBox,
             onRevokeTickets
           }}
         />

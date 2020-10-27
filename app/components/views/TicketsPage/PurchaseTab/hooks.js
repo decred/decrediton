@@ -64,11 +64,10 @@ export const usePurchaseTab = () => {
   };
 
   const onRevokeTickets = (passphrase) =>
-  dispatch(ca.revokeTicketsAttempt(passphrase));
+    dispatch(ca.revokeTicketsAttempt(passphrase));
 
-  const setRememberedVspHost = (vspHost) => {
+  const setRememberedVspHost = (vspHost) =>
     dispatch(vspa.setRememberedVspHost(vspHost));
-  };
 
   // purchase cspp ticket
   const mixedAccount = useSelector(sel.getMixedAccount);
@@ -100,7 +99,7 @@ export const usePurchaseTab = () => {
     changeAccount,
     isLoading,
     rememberedVspHost,
-    setRememberedVspHost
+    setRememberedVspHost,
     onRevokeTickets
   };
 };
