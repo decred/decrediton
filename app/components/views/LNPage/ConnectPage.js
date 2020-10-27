@@ -29,11 +29,11 @@ const ConnectPageHeader = () => (
 
 const CreateLNWalletPageHeader = () => (
   <StandaloneHeader
-    title={<T id="ln.createLNWalletPage.title" m="Create LN Wallet" />}
+    title={<T id="ln.createLNWalletPage.title" m="Create Lightning Wallet" />}
     description={
       <T
         id="ln.createLNWalletPage.description"
-        m={"Create a new LN wallet backed by the Decrediton wallet."}
+        m={"Create a new Lightning Network wallet backed by the Decrediton wallet."}
       />
     }
     iconClassName="accounts"
