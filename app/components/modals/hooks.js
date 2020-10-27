@@ -1,5 +1,5 @@
 import { eventOutsideElement } from "helpers";
-import { useEffect, useCallback, useRef } from "react";
+import { useCallback, useRef } from "react";
 import { useSelector } from "react-redux";
 import * as sel from "selectors";
 
@@ -29,11 +29,4 @@ export function useModal(onCancelModal) {
     onKeyDown,
     modalRef
   };
-}
-
-export function useAddMixerAccountsModal(show, setMixedAccountName, setChangeAccountName) {
-  useEffect(() => {
-    setMixedAccountName("");
-    setChangeAccountName("");
-  }, [show, setMixedAccountName, setChangeAccountName]);
 }

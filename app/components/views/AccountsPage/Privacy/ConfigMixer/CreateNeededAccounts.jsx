@@ -47,7 +47,7 @@ const CreateNeededAccounts = ({
           changeAccountName,
           setMixedAccountName,
           setChangeAccountName,
-          isValid
+          parentIsValid: isValid
         }}
         loading={createMixerAccountAttempt}
         disabled={isCreateAccountDisabled || createMixerAccountAttempt}

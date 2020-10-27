@@ -1,7 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
 import { TextInput, PassphraseModalField } from "inputs";
 import { PassphraseModal } from "modals";
-import { useAddMixerAccountsModal } from "./hooks";
+import { useMountEffect } from "hooks";
 
 const AddMixerAccountsModal = ({
   mixedAccountName,
@@ -11,7 +11,10 @@ const AddMixerAccountsModal = ({
   show,
   ...props
 }) => {
-  useAddMixerAccountsModal(show, setMixedAccountName, setChangeAccountName);
+  useMountEffect(() => {
+    setMixedAccountName("");
+    setChangeAccountName("");
+  });
 
   return (
     <PassphraseModal {...{ show, ...props }}>
