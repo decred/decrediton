@@ -32,7 +32,13 @@ import {
   EXTERNALREQUEST_DCRDATA,
   EXTERNALREQUEST_POLITEIA
 } from "main_dev/externalRequests";
-import { TESTNET, MAINNET, VSP_FEE_PROCESS_ERRORED } from "constants";
+import {
+  TESTNET,
+  MAINNET,
+  VSP_FEE_PROCESS_ERRORED,
+  VSP_FEE_PROCESS_STARTED,
+  VSP_FEE_PROCESS_PAID
+} from "constants";
 
 export const goToTransactionHistory = () => (dispatch) => {
   dispatch(pushHistory("/transactions/history"));
@@ -79,6 +85,8 @@ const startWalletServicesTrigger = () => (dispatch, getState) =>
 
       // get vsp tickets fee status errored so we can resync them
       await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED));
+      await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_STARTED));
+      await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_PAID));
     };
 
     startServicesAsync()

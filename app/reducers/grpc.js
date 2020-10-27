@@ -93,6 +93,7 @@ import {
   NEW_TRANSACTIONS_RECEIVED,
   CHANGE_TRANSACTIONS_FILTER
 } from "actions/TransactionActions";
+import { GETVSPTICKETSTATUS_SUCCESS } from "actions/VSPActions";
 
 export default function grpc(state = {}, action) {
   let newMaturingBlockHeights;
@@ -118,6 +119,11 @@ export default function grpc(state = {}, action) {
         ...state,
         accountMixerRunning: false,
         mixerStreamer: null
+      };
+    case GETVSPTICKETSTATUS_SUCCESS:
+      return {
+        ...state,
+        stakeTransactions: action.stakeTransactions
       };
     case CREATEMIXERACCOUNTS_ATTEMPT:
       return {

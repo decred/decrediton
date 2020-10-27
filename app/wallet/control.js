@@ -170,9 +170,7 @@ export const purchaseTickets = (
         csppPort,
         mixedAcctBranch
       } = csppReq;
-      console.log(request);
-      console.log(mixedAccount, changeAccount, csppServer, csppPort, mixedAcctBranch);
-      // if mixed ou change account is defined it is a privacy request.
+      // if mixed or change account is defined it is a privacy request.
       if (mixedAccount || changeAccount) {
         // check if any cspp argument is missing.
         // mixed acct branch can be 0.

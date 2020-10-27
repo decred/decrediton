@@ -58,7 +58,7 @@ const TicketListPage = ({
       useWindow={false}
       threshold={0}>
       <Subtitle
-        title={<T id="vsp.mytickets.subtitle" m="My VSP Tickets" />}
+        title={<T id="vsp.mytickets.subtitle" m="Live Tickets" />}
         className={style.subtitle}
         children={subtitleMenu({
           sortTypes,
@@ -100,13 +100,11 @@ const TicketListPage = ({
               <T id="vsptickets.table.header.price" m="Price" />
             </div>
             <div>
-              <T id="vsptickets.table.header.reward" m="Reward" />
             </div>
             <div>
-              <T id="vsptickets.table.header.votetime" m="Vote Time" />
             </div>
             <div>
-              <T id="vsptickets.table.header.account" m="Account" />
+              <T id="vsptickets.table.header.account" m="Fee Status" />
             </div>
             <div>
               <T id="vsptickets.table.header.purchased" m="Purchased" />
@@ -116,7 +114,7 @@ const TicketListPage = ({
             {...{
               transactions: tickets,
               tsDate,
-              mode: "stake",
+              mode: "liveStake",
               overview: isOverview
             }}
           />

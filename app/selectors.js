@@ -41,7 +41,10 @@ import {
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_RECEIVED,
   TRANSACTION_DIR_TRANSFERRED,
-  VOTED
+  VOTED,
+  LIVE,
+  UNMINED,
+  IMMATURE
 } from "constants";
 import * as wallet from "wallet";
 
@@ -328,7 +331,8 @@ export const ticketNormalizer = createSelector(
         blockHash,
         rawTx,
         isStake,
-        timestamp
+        timestamp,
+        feeStatus
       } = ticket;
       // TODO refactor same code to be used in tickets and regular tx normalizers.
       const findAccount = (num) =>
@@ -522,7 +526,8 @@ export const ticketNormalizer = createSelector(
         txHeight: ticket.height,
         txUrl,
         txBlockUrl,
-        isStake
+        isStake,
+        feeStatus
       };
     };
   }
@@ -636,8 +641,8 @@ export const transactionNormalizer = createSelector(
 // ****** Transactions selectors ********
 
 // transactions selectors before normalized
-// these selectors are maps containing all transactions which decrediton
-// already known about them.
+// these selectors are maps, with tx hash as key, containing all transactions
+// which decrediton already known about them.
 const stakeTxs = get(["grpc", "stakeTransactions"]);
 const regularTxs = get(["grpc", "regularTransactions"]);
 
@@ -783,20 +788,32 @@ export const getIsLegacy = get(["vsp", "isLegacy"]);
 
 const getVSPTicketsHashes = get(["vsp", "vspTickets"]);
 
+// getVSPTickets is a selector for getting an object with feeStatus as keys
+// and an array of tickets which have this feeStatus.
 export const getVSPTickets = createSelector(
   [getVSPTicketsHashes, stakeTransactions],
   (hashes, txsMap) => {
-    // hashes is an object with fee status as key and its value is hashes.
     const vspTickets = {};
     Object.keys(hashes).forEach((feeStatus) => {
+      // fee status hashes
       const fsHashes = hashes[feeStatus];
       vspTickets[feeStatus] = fsHashes.map((hash) => {
         if (!hash) return null;
-        if (txsMap[hash]) {
-          return Object.assign({}, txsMap[hash]);
+        // right now we only show fee status for tickets which can be voted.
+        if (!txsMap[hash]) {
+          // it should not have an uknown tx. If there is, we should get this tx
+          // before showing the vsp tickets.
+          return null;
         }
-        // it should not have an uknown tx. If there is, we should get this tx
-        // before showing the vsp tickets.
+        if (
+          txsMap[hash].status === IMMATURE ||
+          txsMap[hash].status === LIVE ||
+          txsMap[hash].status === UNMINED
+        ) {
+          const objCopy = Object.assign({}, txsMap[hash]);
+          objCopy.feeStatus = feeStatus;
+          return objCopy;
+        }
         return null;
       });
     });
