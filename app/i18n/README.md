@@ -165,10 +165,15 @@ The files inside the `po/` and `pot/` subdir are managed by the scripts and by t
 
 ## Generating files for translation
 
-Assuming all strings in the app have been properly recorded on the `extracted/` dir by the babel plugin, to generate the `decrediton.pot` file to be sent for translation, run the following:
+To generate the `decrediton.pot` file to be sent for translation, run the following:
 
 ```shell
-$ npm run i18n-prepare-untranslated
+# Ensure all strings have been picked up by babel.
+$ rm -r app/i18n/extracted/app
+$ yarn build
+
+# Prepare the .pot, dev.json and original.json files.
+$ yarn i18n-prepare-untranslated
 ```
 
 ## Obtaining translated files
@@ -192,7 +197,7 @@ $ tx pull -a
 Transifex will generate a bunch of *.po files (one per language). Save them on the `po/` dir. To get back the json files that the app actually uses, execute the following:
 
 ```shell
-$ npm run i18n-assemble-translated
+$ yarn i18n-assemble-translated
 ```
 
 **:exclamation: Note**: Transifex generates files with a filename following the pattern `decrediton_(lang).po` but react-intl-po expects a filename with the pattern `decrediton.(lang).po`. The `i18n-assemble-translated` script deletes old and renames the files in the po dir accordingly, so just extract the zip with all translations in the appropriate directory and the script will take care of the rest.

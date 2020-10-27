@@ -23,8 +23,7 @@ const QRCodeModal = ({ nextAddress, amount, setModal }) => (
         <div className={style.modalLabel}>
           <T
             id="receive.modalLabel"
-            m="{value}"
-            values={{ value: "This is My Decred (DCR) Address" }}
+            m="This is My Decred (DCR) Address"
           />
         </div>
         <div className={style.modalAddress}>{nextAddress}</div>

@@ -13,6 +13,7 @@ export { default as TrezorWipeWarning } from "./Warnings/TrezorWipe.md";
 export { default as TrezorFirmwareUpdateWarning } from "./Warnings/TrezorFirmwareUpdate.md";
 export { default as TrezorWalletCreationPassPhraseWarning } from "./Warnings/TrezorWalletCreationPassPhrase.md";
 export { default as LNForceCloseChannelWarning } from "./Warnings/LNForceCloseChannel.md";
+export { default as LNWalletCreationWarning } from "./Warnings/LNWalletCreation.md";
 
 export { default as GetStartedTutorialPage01 } from "./GetStarted/TutorialPage01.md";
 export { default as GetStartedTutorialPage02 } from "./GetStarted/TutorialPage02.md";
@@ -30,3 +31,5 @@ export { default as TicketLifecycleTutorialPage03 } from "./TicketLifecycleTutor
 export { default as TicketLifecycleTutorialPage04 } from "./TicketLifecycleTutorial/Page04.md";
 export { default as TicketLifecycleTutorialPage05 } from "./TicketLifecycleTutorial/Page05.md";
 export { default as TicketLifecycleTutorialPage06 } from "./TicketLifecycleTutorial/Page06.md";
+
+export { default as LNBackupInfo } from "./LN/BackupInfo.md";

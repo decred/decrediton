@@ -39,13 +39,7 @@ const StakePoolsList = ({
                     onSubmit={() => onRemoveStakePool(Host)}
                     className={styles.close}
                   />
-                  <div className={styles.vspURL}>
-                    <T
-                      id="stakePoolsList.vspURL"
-                      m="{value}"
-                      values={{ value: Host }}
-                    />
-                  </div>
+                  <div className={styles.vspURL}>{Host}</div>
                   <div className={styles.poolFee}>
                     <T
                       id="stakePoolsList.poolFee"

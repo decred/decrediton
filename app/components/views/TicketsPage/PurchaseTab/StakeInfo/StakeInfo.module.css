@@ -25,6 +25,10 @@
   font-size: 13px;
 }
 
+.purchaseTicketCount {
+  font-size: 17px;
+}
+
 .balance {
   display: inline;
 }

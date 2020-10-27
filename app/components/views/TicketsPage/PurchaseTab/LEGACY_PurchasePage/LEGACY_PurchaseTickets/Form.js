@@ -16,7 +16,7 @@ import {
 
 import "style/StakePool.less";
 
-const purchaseLabel = () => <T id="purchas.legacypurchaseTickets.revokeBtn" m="Purchase" />;
+const purchaseLabel = () => <T id="purchas.legacypurchaseTickets.purchaseBtn" m="Purchase" />;
 
 const PurchaseTicketsForm = ({
   isShowingAdvanced,
@@ -134,7 +134,7 @@ const PurchaseTicketsForm = ({
         <div className="is-row backup-buttons-row-area">
           <InvisibleConfirmModalButton
             modalTitle={
-              <T id="purchase.ticket.modal.title" m="Dismiss Button" />
+              <T id="purchase.ticket.modal.title" m="Dismiss" />
             }
             modalContent={
               <T
