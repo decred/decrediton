@@ -52,6 +52,7 @@ export function PurchasePage({
   mixedAccount,
   changeAccount,
   isLoading,
+  onRevokeTickets,
   ...props
 }) {
   return (
@@ -86,7 +87,8 @@ export function PurchasePage({
             setVSP,
             isValid,
             onV3PurchaseTicket,
-            isLoading
+            isLoading,
+            onRevokeTickets
           }}
         />
       )}

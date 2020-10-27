@@ -18,7 +18,8 @@ const Tickets = ({ toggleIsLegacy }) => {
     onPurchaseTicketV3,
     mixedAccount,
     changeAccount,
-    isLoading
+    isLoading,
+    onRevokeTickets
   } = usePurchaseTab();
 
   const [account, setAccount] = useState(defaultSpendingAccount);
@@ -74,7 +75,8 @@ const Tickets = ({ toggleIsLegacy }) => {
       vsp,
       mixedAccount,
       changeAccount,
-      isLoading
+      isLoading,
+      onRevokeTickets
     }} />;
 };
 

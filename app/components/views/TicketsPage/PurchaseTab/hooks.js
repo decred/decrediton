@@ -62,6 +62,9 @@ export const usePurchaseTab = () => {
     dispatch(vspa.toggleIsLegacy(isLegacy));
   };
 
+  const onRevokeTickets = (passphrase) =>
+  dispatch(ca.revokeTicketsAttempt(passphrase));
+
   // purchase cspp ticket
   const mixedAccount = useSelector(sel.getMixedAccount);
   const changeAccount = useSelector(sel.getChangeAccount);
@@ -90,6 +93,7 @@ export const usePurchaseTab = () => {
     toggleIsLegacy,
     mixedAccount,
     changeAccount,
-    isLoading
+    isLoading,
+    onRevokeTickets
   };
 };
