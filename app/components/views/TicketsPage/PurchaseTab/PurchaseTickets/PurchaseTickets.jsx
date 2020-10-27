@@ -27,7 +27,7 @@ const Tickets = ({ toggleIsLegacy }) => {
   const [vsp, setVSP] = useState(buyerVSP);
   const [numTickets, setNumTickets] = useState(1);
   const [isValid, setIsValid] = useState(false);
-  const [rememberVsp, setRememberVsp] = useState(false);
+  const [rememberVsp, setRememberVsp] = useState(!!buyerVSP);
 
   const toggleRememberVsp = () => {
     setRememberVsp(!rememberVsp);

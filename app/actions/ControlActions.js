@@ -384,15 +384,13 @@ export const newPurchaseTicketsAttempt = (
       });
     }
 
-    // save vsp_host to wallet config
-    if (rememberVsp) {
-      const {
-        daemon: { walletName }
-      } = getState();
-      const walletCfg = getWalletCfg(sel.isTestNet(getState()), walletName);
-      walletCfg.set("vsp_host", vsp.host);
-      dispatch({ type: SET_VSP_HOST, vsp });
-    }
+    // remember or forget vps_host depends on the rememberVsp checkbox
+    const {
+      daemon: { walletName }
+    } = getState();
+    const walletCfg = getWalletCfg(sel.isTestNet(getState()), walletName);
+    walletCfg.set("vsp_host", rememberVsp ? vsp.host : null);
+    dispatch({ type: SET_VSP_HOST, vsp: (rememberVsp ? vsp : null) });
 
     dispatch({ purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
   } catch (error) {

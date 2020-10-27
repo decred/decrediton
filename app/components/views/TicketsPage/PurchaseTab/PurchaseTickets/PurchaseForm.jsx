@@ -47,20 +47,21 @@ const PurchaseTicketsForm = ({
           </div>
           <VSPSelect
             className="stakepool-purchase-ticket-input-select"
-            {...{ options: availableVSPs, account, onChange: setVSP, value: vsp }}
+            {...{ options: availableVSPs, account, onChange: setVSP, value: vsp, isDisabled: rememberVsp }}
           />
-          <Checkbox
+          {vsp && <Checkbox
             className={styles.rememberVspCheckBox}
             label={
               <T
-                id="purchaseTickets.usedefault"
-                m="use default"
+                id="purchaseTickets.alwaysUseThisVSP"
+                m="Always use this VSP"
               />
             }
             id="rememberVsp"
             checked={rememberVsp}
             onChange={toggleRememberVsp}
           />
+          }
         </div>
       </div>
       <div className="is-row purchase-ticket-input-amount">

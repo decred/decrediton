@@ -12,7 +12,7 @@ const messages = defineMessages({
   }
 });
 
-function VSPSelect({ onChange, options, intl, value }) {
+function VSPSelect({ onChange, options, intl, value, isDisabled }) {
   const { send, state, selectedOption, vspInfo, availableVSPs } = useVSPSelect(options, value);
 
   if (!options) {
@@ -91,6 +91,7 @@ function VSPSelect({ onChange, options, intl, value }) {
             newOption: true
           };
         }}
+        disabled={isDisabled}
         onInputChange={(input) => onSetNewOption(input)}
         isValidNewOption={() => !!newOption}
       />;
