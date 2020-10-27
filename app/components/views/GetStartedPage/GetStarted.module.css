@@ -811,6 +811,10 @@
   overflow-wrap: break-word;
 }
 
+.daemonWarning {
+  padding: 10px;
+}
+
 @media screen and (max-width: 1919px) {
   .settings .goBackScreenButtonArea {
     left: 1230px;

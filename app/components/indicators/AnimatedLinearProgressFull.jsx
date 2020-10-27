@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { useDaemonStartup } from "hooks";
+import { useState } from "react";
+import { useDaemonStartup, useMountEffect } from "hooks";
 import "style/Loading.less"; // XXX: continue css module here!
 import { HeaderTimeMsg } from "views/GetStartedPage/messages";
 import { FormattedRelative } from "shared";
@@ -23,11 +23,13 @@ const AnimatedLinearProgressFull = ({
     getCurrentBlockCount,
     syncFetchHeadersLastHeaderTime,
     getDcrwalletLogs,
-    getDaemonSynced
+    getDaemonSynced,
+    onGetDcrdLogs
   } = useDaemonStartup();
   const [lastDcrwalletLogLine, setLogLine] = useState("");
+  const [lastDcrdLogLine, setDcrdLogLine] = useState("");
 
-  useEffect(() => {
+  useMountEffect(() => {
     setInterval(async () => {
       try {
         const lastDcrwalletLogLine = await getDcrwalletLogs();
@@ -36,7 +38,15 @@ const AnimatedLinearProgressFull = ({
         console.log(err);
       }
     }, 2000);
-  }, [setInterval, getDcrwalletLogs]);
+    setInterval(async () => {
+      try {
+        const lastDcrdLogLine = await onGetDcrdLogs();
+        setDcrdLogLine(lastDcrdLogLine);
+      } catch (err) {
+        console.log(err);
+      }
+    }, 2000);
+  }, [setInterval, getDcrwalletLogs, onGetDcrdLogs]);
 
   const perComplete = (getCurrentBlockCount - min) / (getNeededBlocks - min);
   const leftStartingPoint = perComplete ? perComplete * 100 : 0;
@@ -126,6 +136,11 @@ const AnimatedLinearProgressFull = ({
             <span className={styles.bold}>
               <FormattedRelative value={syncFetchHeadersLastHeaderTime} />
             </span>
+          </div>
+        )}
+        { !getDaemonSynced && lastDcrdLogLine && (
+          <div className={styles.lastLogLines}>
+            <div>{lastDcrdLogLine}</div>
           </div>
         )}
         {selectedWalletSelector && lastDcrwalletLogLine && (

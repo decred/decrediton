@@ -170,6 +170,9 @@ const useDaemonStartup = () => {
     (selectedWallet) => dispatch(da.createWallet(selectedWallet)),
     [dispatch]
   );
+  const onGetDcrdLogs = useCallback(() => dispatch(da.getDcrdLastLineLogs()), [
+    dispatch
+  ]);
   const getDcrwalletLogs = useCallback(() => dispatch(da.getDcrwalletLogs()), [
     dispatch
   ]);
@@ -274,7 +277,8 @@ const useDaemonStartup = () => {
     syncFetchTimeStart,
     selectedWalletSelector,
     goToHome,
-    setCoinjoinCfg
+    setCoinjoinCfg,
+    onGetDcrdLogs
   };
 };
 
