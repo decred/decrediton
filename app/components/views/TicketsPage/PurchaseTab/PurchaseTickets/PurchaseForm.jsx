@@ -25,8 +25,8 @@ const PurchaseTicketsForm = ({
   onRevokeTickets,
   availableVSPs,
   isLoading,
-  rememberVsp,
-  toggleRememberVsp
+  rememberedVspHost,
+  toggleRememberVspHostCheckBox
 }) => (
   <>
     <div className={classNames(styles.purchaseForm, "is-row")}>
@@ -47,7 +47,7 @@ const PurchaseTicketsForm = ({
           </div>
           <VSPSelect
             className="stakepool-purchase-ticket-input-select"
-            {...{ options: availableVSPs, account, onChange: setVSP, value: vsp, isDisabled: rememberVsp }}
+            {...{ options: availableVSPs, account, onChange: setVSP, value: vsp, isDisabled: !!rememberedVspHost }}
           />
           {vsp && <Checkbox
             className={styles.rememberVspCheckBox}
@@ -57,9 +57,9 @@ const PurchaseTicketsForm = ({
                 m="Always use this VSP"
               />
             }
-            id="rememberVsp"
-            checked={rememberVsp}
-            onChange={toggleRememberVsp}
+            id="rememberVspHost"
+            checked={!!rememberedVspHost}
+            onChange={toggleRememberVspHostCheckBox}
           />
           }
         </div>

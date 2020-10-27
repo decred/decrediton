@@ -4,7 +4,7 @@ import {
   GETVSPTICKETSTATUS_SUCCESS,
   HASVSPTICKETSERRORED,
   TOGGLE_ISLEGACY,
-  SET_VSP_HOST
+  SET_REMEMBERED_VSP_HOST
 } from "actions/VSPActions";
 import {
   STARTTICKETBUYERV3_ATTEMPT,
@@ -61,9 +61,9 @@ export default function vsp(state = {}, action) {
       return { ...state,
         isLegacy: action.isLegacy
       };
-    case SET_VSP_HOST:
+    case SET_REMEMBERED_VSP_HOST:
       return { ...state,
-        vsp: { host: action.vsp }
+        rememberedVspHost: action.rememberedVspHost
       };
     default:
       return state;

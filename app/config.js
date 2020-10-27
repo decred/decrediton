@@ -105,7 +105,7 @@ function cleanWalletCfg(config) {
     "csppserver",
     "csppport",
     "dismiss_backup_msg_redeem_script",
-    "vsp_host"
+    "remembered_vsp_host"
   ];
   for (key in config.store) {
     let found = false;

@@ -19,18 +19,19 @@ const Tickets = ({ toggleIsLegacy }) => {
     mixedAccount,
     changeAccount,
     isLoading,
+    rememberedVspHost,
+    setRememberedVspHost
     onRevokeTickets
   } = usePurchaseTab();
 
   const [account, setAccount] = useState(defaultSpendingAccount);
   // todo use this vsp to buy solo tickets.
-  const [vsp, setVSP] = useState(buyerVSP);
+  const [vsp, setVSP] = useState(rememberedVspHost ? { host: rememberedVspHost } : null);
   const [numTickets, setNumTickets] = useState(1);
   const [isValid, setIsValid] = useState(false);
-  const [rememberVsp, setRememberVsp] = useState(!!buyerVSP);
 
-  const toggleRememberVsp = () => {
-    setRememberVsp(!rememberVsp);
+  const toggleRememberVspHostCheckBox = () => {
+    setRememberedVspHost(!rememberedVspHost ? vsp.host : null);
   };
 
   // onChangeNumTickets deals with ticket increment or decrement.
@@ -40,7 +41,7 @@ const Tickets = ({ toggleIsLegacy }) => {
   };
 
   const onV3PurchaseTicket = (passphrase) => {
-    onPurchaseTicketV3(passphrase, account, numTickets, vsp, rememberVsp);
+    onPurchaseTicketV3(passphrase, account, numTickets, vsp);
   };
 
   useEffect(() => {
@@ -80,9 +81,9 @@ const Tickets = ({ toggleIsLegacy }) => {
       vsp,
       mixedAccount,
       changeAccount,
-      rememberVsp,
-      toggleRememberVsp
       isLoading,
+      rememberedVspHost,
+      toggleRememberVspHostCheckBox
       onRevokeTickets
     }} />;
 };

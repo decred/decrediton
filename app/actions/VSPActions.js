@@ -482,10 +482,11 @@ export const toggleIsLegacy = (isLegacy) => (dispatch) => {
 };
 
 
-export const SET_VSP_HOST = "SET_VSP_HOST";
-export const setVspHost = (vsp) => (dispatch) => {
-  dispatch({
-    type: SET_VSP_HOST,
-    vsp
-  });
+export const SET_REMEMBERED_VSP_HOST = "SET_REMEMBERED_VSP_HOST";
+export const setRememberedVspHost = (rememberedVspHost) => (dispatch, getState) => {
+  dispatch({ type: SET_REMEMBERED_VSP_HOST, rememberedVspHost });
+
+  const { daemon: { walletName } } = getState();
+  const walletCfg = getWalletCfg(sel.isTestNet(getState()), walletName);
+  walletCfg.set("remembered_vsp_host", rememberedVspHost);
 };

@@ -785,6 +785,7 @@ export const buyerBalanceToMantain = get(["vsp", "balanceToMaintain"]);
 export const buyerAccount = get(["vsp", "account"]);
 export const getHasVSPTicketsError = get(["vsp", "hasVSPTicketsError"]);
 export const getIsLegacy = get(["vsp", "isLegacy"]);
+export const getRememberedVspHost = get(["vsp", "rememberedVspHost"]);
 
 const getVSPTicketsHashes = get(["vsp", "vspTickets"]);
 

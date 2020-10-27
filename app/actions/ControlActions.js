@@ -7,14 +7,12 @@ import {
   startWalletServices,
   getStartupWalletInfo
 } from "./ClientActions";
-import { SET_VSP_HOST } from "actions/VSPActions";
 import {
   RescanRequest,
   ConstructTransactionRequest,
   RunTicketBuyerRequest
 } from "../middleware/walletrpc/api_pb";
 import { reverseRawHash, rawToHex } from "helpers/byteActions";
-import { getWalletCfg } from "config";
 
 export const GETNEXTADDRESS_ATTEMPT = "GETNEXTADDRESS_ATTEMPT";
 export const GETNEXTADDRESS_FAILED = "GETNEXTADDRESS_FAILED";
@@ -352,8 +350,7 @@ export const newPurchaseTicketsAttempt = (
   passphrase,
   accountNum,
   numTickets,
-  vsp,
-  rememberVsp
+  vsp
 ) => async (dispatch, getState) => {
   try {
     const walletService = sel.walletService(getState());
@@ -383,15 +380,6 @@ export const newPurchaseTicketsAttempt = (
         type: CREATE_UNSIGNEDTICKETS_SUCCESS
       });
     }
-
-    // remember or forget vps_host depends on the rememberVsp checkbox
-    const {
-      daemon: { walletName }
-    } = getState();
-    const walletCfg = getWalletCfg(sel.isTestNet(getState()), walletName);
-    walletCfg.set("vsp_host", rememberVsp ? vsp.host : null);
-    dispatch({ type: SET_VSP_HOST, vsp: (rememberVsp ? vsp : null) });
-
     dispatch({ purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
   } catch (error) {
     dispatch({ error, type: PURCHASETICKETS_FAILED });
