@@ -11,10 +11,12 @@ import RoutesInfo from "./RoutesInfo";
 import styles from "./NetworkTab.module.css";
 
 const NodeInfoError = ({ error }) => (
-  <div>
-    {(""+error).indexOf("unable to find node") > -1 ?
-      <T id="ln.networkTab.queryNode.errNotFound" m="Node not found" /> :
-      ("" + error)}
+  <div className={styles.decodingError}>
+    {("" + error).indexOf("unable to find node") > -1 ? (
+      <T id="ln.networkTab.queryNode.errNotFound" m="Node not found" />
+    ) : (
+      "" + error
+    )}
   </div>
 );
 
@@ -31,7 +33,9 @@ const NetworkInfo = ({ network }) => (
     </div>
 
     <div className={styles.networkTile}>
-      <div className={styles.networkTileNumber}><Balance amount={network.totalNetworkCapacity}/></div>
+      <div className={styles.networkTileNumber}>
+        <Balance amount={network.totalNetworkCapacity} />
+      </div>
       <T id="ln.networkTab.totalCapacity" m="Total Capacity" />
     </div>
   </div>
@@ -40,7 +44,7 @@ const NetworkInfo = ({ network }) => (
 const QueryNode = ({ getNodeInfo }) => {
   const [node, setNode] = useState("");
 
-  const nodeChanged = e => {
+  const nodeChanged = (e) => {
     const newNode = e.target.value;
     setNode(newNode);
     if (newNode.length === 66) {
@@ -51,10 +55,7 @@ const QueryNode = ({ getNodeInfo }) => {
   return (
     <div className={styles.queryNode}>
       <T id="ln.networkTab.queryNodeId" m="Node ID" />
-      <TextInput
-        value={node}
-        onChange={nodeChanged}
-      />
+      <TextInput value={node} onChange={nodeChanged} />
     </div>
   );
 };
@@ -67,8 +68,7 @@ const QueryRoutes = ({
   getRoutes,
   setShowResult
 }) => {
-
-  const nodeChanged = e => {
+  const nodeChanged = (e) => {
     const newNode = e.target.value;
     if (newNode.length > 66) {
       return;
@@ -99,8 +99,7 @@ const QueryRoutes = ({
       </div>
       <KeyBlueButton
         className={styles.queryRoutesButton}
-        onClick={requestRoutes}>
-      </KeyBlueButton>
+        onClick={requestRoutes}></KeyBlueButton>
     </div>
   );
 };
@@ -155,27 +154,32 @@ const NetworkTab = () => {
   const [showResult, setShowResult] = useState(false);
   return (
     <>
-      { network ? <NetworkInfo network={network} /> : null }
+      {network ? <NetworkInfo network={network} /> : null}
       <Tabs active={activeTab} set={setActiveTab} />
-      { activeTab === 0 ? <QueryNode getNodeInfo={getNodeInfo} />
-      : activeTab === 1 ? <QueryRoutes
-        getRoutes={getRoutesInfo}
-        nodeID={nodeID}
-        amount={amount}
-        setNodeID={setNodeID}
-        setAmount={setAmount}
-        setShowResult={setShowResult} />
-        : null
-      }
-      { nodeInfo instanceof Error ? <NodeInfoError error={nodeInfo} /> :
-          getNodeInfoAttempt || getRoutesInfoAttempt ? <SimpleLoading /> :
-          nodeInfo && activeTab === 0 ? <NodeInfo nodeInfo={nodeInfo} tsDate={tsDate} />
-          : showResult &&nodeID.length === 66 && routesInfo && activeTab === 1 ?
-            <RoutesInfo
-              nodeID={nodeID}
-              amount={amount}
-              routes={routesInfo} /> : null
-      }
+      {activeTab === 0 ? (
+        <QueryNode getNodeInfo={getNodeInfo} />
+      ) : activeTab === 1 ? (
+        <QueryRoutes
+          getRoutes={getRoutesInfo}
+          nodeID={nodeID}
+          amount={amount}
+          setNodeID={setNodeID}
+          setAmount={setAmount}
+          setShowResult={setShowResult}
+        />
+      ) : null}
+      {nodeInfo instanceof Error ? (
+        <NodeInfoError error={nodeInfo} />
+      ) : getNodeInfoAttempt || getRoutesInfoAttempt ? (
+        <SimpleLoading />
+      ) : nodeInfo && activeTab === 0 ? (
+        <NodeInfo nodeInfo={nodeInfo} tsDate={tsDate} />
+      ) : showResult &&
+        nodeID.length === 66 &&
+        routesInfo &&
+        activeTab === 1 ? (
+        <RoutesInfo nodeID={nodeID} amount={amount} routes={routesInfo} />
+      ) : null}
     </>
   );
 };

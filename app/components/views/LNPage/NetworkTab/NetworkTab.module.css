@@ -15,7 +15,13 @@
   border-bottom: 10px solid var(--color-primary-dark);
 }
 
-.networkTileNumber { font-size:32px; }
+.networkTileNumber {
+  font-size: 32px;
+}
+
+.decodingError {
+  color: var(--error-red);
+}
 
 .queryNode {
   margin-top: 1em;
@@ -34,7 +40,7 @@
 }
 
 .queryRoutesButton {
-  background-image: var(--search-icon);
+  background-image: var(--search-icon-light);
   background-size: 25px 25px;
   background-repeat: no-repeat;
   background-position: 8px 8px;
@@ -76,8 +82,13 @@
   margin-bottom: 0.5em;
 }
 
-.infoContent a { color: var(--link-color); }
-.infoContent a:hover { color: var(--link-color-hovered); }
+.infoContent a {
+  color: var(--link-color);
+}
+
+.infoContent a:hover {
+  color: var(--link-color-hovered);
+}
 
 .policyGrid {
   display: grid;

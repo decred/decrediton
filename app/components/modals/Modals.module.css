@@ -288,10 +288,12 @@
   break-inside: avoid-page;
   color: var(--modal-text);
   margin-bottom: 2em;
+  text-align: justify;
 }
 
 .infoContent li {
   list-style-position: inside;
+  text-align: justify;
 }
 
 .infoContent li p {
@@ -572,6 +574,7 @@
   color: var(--input-color);
   cursor: pointer;
   text-decoration: none;
+  word-break: break-word;
 }
 
 .draggable {

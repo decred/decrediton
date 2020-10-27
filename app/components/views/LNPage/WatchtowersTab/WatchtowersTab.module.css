@@ -1,8 +1,12 @@
+.addWatchtower {
+  display: flex;
+  flex-direction: column;
+}
+
 .addWatchtowerContent {
   background-color: var(--background-back-color);
   padding-top: 20px;
   padding-left: 30px;
-  width: 784px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -13,13 +17,14 @@
   margin-bottom: 20px;
 }
 
-.addWatchtowerNest input {
-  width: 550px;
+.addWatchtowerNest > div:nth-child(2) {
+  width: 100%;
+  margin-right: 40px;
 }
 
 .addWatchtowerNestPrefix {
   margin-right: 20px;
-  min-width: 125px;
+  min-width: 80px;
   margin-left: 0;
   font-size: 19px;
   line-height: 24px;
@@ -29,7 +34,8 @@
 
 .addWatchtowerButton {
   position: relative;
-  margin: 20px 0 0 730px;
+  margin-top: 20px;
+  margin-left: auto;
 }
 
 .tower {
@@ -54,7 +60,9 @@
   margin-right: 2em;
 }
 
-.removeTowerBtn { position: absolute; }
+.removeTowerBtn {
+  position: absolute;
+}
 
 .removeIcon,
 .removeIcon:link,
@@ -73,7 +81,9 @@
   color: var(--color-primary);
 }
 
-.tower div { align-items: unset; }
+.tower div {
+  align-items: unset;
+}
 .copyableText span {
   font-size: 14px;
   background: none;

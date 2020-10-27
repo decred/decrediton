@@ -46,6 +46,21 @@
   background-color: var(--background-copy-color);
 }
 
+.copyableText > div > div:nth-child(1) {
+  position: absolute;
+  top: 35px;
+  left: -20px;
+  text-align: center;
+  transform: none;
+}
+
+.backupSubtitle {
+  margin-left: 0;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
 .backupInfoHeader {
   display: flex;
 }
@@ -56,21 +71,21 @@
   background-repeat: no-repeat;
   width: 45px;
   height: 45px;
+  min-width: 45px;
 }
 
 .backupInfo {
   margin-left: 20px;
-  flex-grow: 1;
   display: flex;
 }
 
 .backupInfoText {
-  flex-grow: 1;
+  word-break: break-all;
+  padding-right: 40px;
 }
 
 .backupInfoBtn {
-  margin-right: 33px;
-  margin-top: 10px;
+  margin-right: 2px;
 }
 
 .balanceHeader {
