@@ -11,6 +11,7 @@ import { Balance } from "shared";
 import { default as PurchaseTab } from "./PurchaseTab/PurchaseTab";
 import { default as StatisticsTab } from "./StatisticsTab/StatisticsTab";
 import { default as MyTicketsTab } from "./MyTicketsTab/MyTicketsTab";
+import { default as VSPTicketsStatusTab } from "./VSPTicketsStatusTab/MyVSPTickets";
 
 const PageHeader = () => (
   <TitleHeader
@@ -49,6 +50,12 @@ export default () => (
       component={PurchaseTab}
       header={TabHeader}
       link={<T id="tickets.tab.purchase" m="Purchase Tickets" />}
+    />
+    <Tab
+      path="/tickets/vspTicketsStatus"
+      component={VSPTicketsStatusTab}
+      header={TabHeader}
+      link={<T id="tickets.tab.vsptickets" m="VSP Tickets Status" />}
     />
     <Tab
       path="/tickets/mytickets"
