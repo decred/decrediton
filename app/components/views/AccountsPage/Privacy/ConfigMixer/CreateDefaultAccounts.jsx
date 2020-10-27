@@ -22,8 +22,7 @@ const CreateDefaultAccounts = ({
     </div>
     <T
       id="privacy.create.default.description"
-      m={`If continue the accounts {mixed} and {change} are going to be created.
-          Which are the default ones for the mixer. {boldMessage}`}
+      m="Do you wish to create default mixing accounts {mixed} and {change}? {boldMessage}"
       values={{
         mixed: MIXED_ACCOUNT,
         change: CHANGE_ACCOUNT,

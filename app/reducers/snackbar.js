@@ -393,7 +393,7 @@ const messages = defineMessages({
   },
   LNWALLET_UNLOCK_FAILED: {
     id: "ln.ntf.unlockFailed",
-    defaultMessage: "Failed to unlock ln wallet: {originalError}"
+    defaultMessage: "Failed to unlock LN wallet: {originalError}"
   },
   LNWALLET_STARTUPSYNC_FAILED: {
     id: "ln.ntf.startupSyncFailed",
@@ -504,7 +504,7 @@ const messages = defineMessages({
   UPDATEVOTECHOICE_SUCCESS: {
     id: "governance.ntf.updateVoteChoiceSuccess",
     defaultMessage:
-      "Your vote has been casted with success!\n Thanks for participating in decred's governance"
+    "Your vote has been cast!\nThanks for participating in Decred's governance"
   },
   CREATEMIXERACCOUNTS_SUCCESS: {
     id: "mixer.ntf.createdAcct",
