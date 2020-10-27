@@ -17,6 +17,10 @@
   flex-direction: row;
 }
 
+.sidebar.sidebarReduced.sidebarOnBottom > div {
+  flex-direction: row;
+}
+
 .sidebarMain {
   position: relative;
   flex: 1;
