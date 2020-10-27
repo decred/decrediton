@@ -333,7 +333,7 @@ export const closeDaemonRequest = () => async (dispatch, getState) => {
   }
 };
 
-export const startWallet = (selectedWallet) => (dispatch, getState) =>
+export const startWallet = (selectedWallet, hasPassPhrase) => (dispatch, getState) =>
   new Promise((resolve, reject) => {
     const start = async () => {
       const { currentSettings } = getState().settings;
@@ -412,9 +412,11 @@ export const startWallet = (selectedWallet) => (dispatch, getState) =>
         currentStakePoolConfig,
         dismissBackupRedeemScript
       });
+      const needsPassPhrase = !discoverAccountsComplete && !hasPassPhrase;
       dispatch({
         type: WALLET_LOADER_SETTINGS,
         discoverAccountsComplete,
+        needsPassPhrase,
         enablePrivacy,
         mixedAccount,
         changeAccount,

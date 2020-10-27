@@ -9,9 +9,10 @@ import TrezorConfig from "./TrezorConfig/TrezorConfig";
 import PreCreateWalletForm from "./PreCreateWallet/PreCreateWallet";
 import RescanWalletBody from "./RescanWallet/RescanWallet";
 import WalletPubpassInput from "./OpenWallet/OpenWallet";
+import DiscoverAccounts from "./OpenWallet/DiscoverAccounts";
 import ReleaseNotes from "./ReleaseNotes/ReleaseNotes";
 import { ipcRenderer } from "electron";
-import { OPENWALLET_INPUT } from "actions/WalletLoaderActions";
+import { OPENWALLET_INPUT, OPENWALLET_INPUTPRIVPASS } from "actions/WalletLoaderActions";
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { useDaemonStartup } from "hooks";
 import { useMachine } from "@xstate/react";
@@ -143,12 +144,28 @@ export const useGetStarted = () => {
       isAtStartWallet: (context) => {
         console.log("is At Start Wallet");
         const { selectedWallet } = context;
-        onStartWallet(selectedWallet)
-          .then((r) => {
+        const { passPhrase } = context;
+        const hasPassPhrase = !!passPhrase;
+        onStartWallet(selectedWallet, hasPassPhrase)
+          .then((discoverAccountsComplete) => {
             setSelectedWallet(selectedWallet);
-            send({ type: "SYNC_RPC", r });
+            const { passPhrase } = context;
+            if (!discoverAccountsComplete && !passPhrase) {
+              // Need to discover accounts and the passphrase isn't stored in
+              // context, so ask for the private passphrase before continuing.
+              send({ type: "WALLET_DISCOVERACCOUNTS_PASS" });
+            } else {
+              send({ type: "SYNC_RPC" });
+            }
           })
           .catch((error) => {
+            // If the error is OPENWALLET_INPUTPRIVPASS, the wallet needs the
+            // private passphrase to discover accounts and the user typed a wrong
+            // one.
+            if (error == OPENWALLET_INPUTPRIVPASS) {
+              return send({ type: "WALLET_DISCOVERACCOUNTS_PASS" });
+            }
+
             // If error is OPENWALLET_INPUT, the wallet has a pubpass and we
             // switch states, for inputing it and open the wallet.
             if (error === OPENWALLET_INPUT) {
@@ -162,12 +179,27 @@ export const useGetStarted = () => {
         if (context.isSPV) {
           return startSPVSync(passPhrase)
             .then(() => send({ type: "GO_TO_HOME_VIEW" }))
-            .catch((error) =>
-              send({ type: "ERROR_SYNCING_WALLET", payload: { error } })
-            );
+            .catch((error) => {
+              // If the error is OPENWALLET_INPUTPRIVPASS, the wallet needs the
+              // private passphrase to discover accounts and the user typed a wrong
+              // one.
+              if (error == OPENWALLET_INPUTPRIVPASS) {
+                send({ type: "WALLET_DISCOVERACCOUNTS_PASS" });
+              }
+
+              send({ type: "ERROR_SYNCING_WALLET", payload: { error } });
+            });
         }
         try {
-          await onRetryStartRPC(passPhrase);
+          try {
+            await onRetryStartRPC(passPhrase);
+          } catch (error) {
+            if (error === OPENWALLET_INPUTPRIVPASS) {
+              send({ type: "WALLET_DISCOVERACCOUNTS_PASS" });
+              return;
+            }
+            throw error;
+          }
 
           if (isPrivacy) {
             // if recoverying a privacy wallet, we go to settingMixedAccount
@@ -260,6 +292,12 @@ export const useGetStarted = () => {
     (isNew) => send({ type: "CREATE_WALLET", isNew }),
     [send]
   );
+
+  const onSendSetPassphrase = useCallback((passPhrase) =>
+    send({ type: "SETPASSPHRASE", passPhrase }), [send]);
+
+  const onSendDiscoverAccountsPassInput = useCallback(() =>
+    send({ type: "WALLET_DISCOVERACCOUNTS_PASS" }), [send]);
 
   const onShowCreateWallet = useCallback(
     ({ isNew, walletMasterPubKey, isTrezor, isPrivacy }) =>
@@ -388,6 +426,14 @@ export const useGetStarted = () => {
               onSendContinue,
               onSendError,
               onOpenWallet,
+              error,
+              onSendDiscoverAccountsPassInput
+            });
+            break;
+          case "walletDiscoverAccountsPassInput":
+            text = <T id="loaderBar.walletDiscoverAccountsPass" m="Type passphrase to discover accounts" />;
+            component = h(DiscoverAccounts, {
+              onSendSetPassphrase,
               error
             });
             break;
@@ -455,8 +501,10 @@ export const useGetStarted = () => {
       submitChosenWallet,
       submitRemoteCredentials,
       onOpenWallet,
-      error,
-      onGetDcrdLogs
+      onGetDcrdLogs,
+      onSendDiscoverAccountsPassInput,
+      onSendSetPassphrase,
+      error
     ]
   );
 

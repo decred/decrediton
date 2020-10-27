@@ -66,7 +66,11 @@ export default function walletLoader(state = {}, action) {
     case WALLET_SELECTED:
       return { ...state, selectedWallet: action.selectedWallet };
     case OPENWALLET_SUCCESS:
-      return { ...state, isWatchingOnly: action.isWatchingOnly };
+      return {
+        ...state,
+        isWatchingOnly: action.isWatchingOnly,
+        needsPassPhrase: false
+      };
     case CLOSEWALLET_FAILED:
       return {
         ...state,
@@ -88,7 +92,8 @@ export default function walletLoader(state = {}, action) {
         syncAttemptRequest: false,
         syncError: null,
         synced: false,
-        syncLastFetchedHeaderTime: null
+        syncLastFetchedHeaderTime: null,
+        needsPassPhrase: false
       };
     case UPDATEDISCOVERACCOUNTS:
       return { ...state, discoverAccountsComplete: action.complete };
@@ -96,6 +101,7 @@ export default function walletLoader(state = {}, action) {
       return {
         ...state,
         discoverAccountsComplete: action.discoverAccountsComplete,
+        needsPassPhrase: action.needsPassPhrase,
         privacyEnabled: action.enablePrivacy,
         mixedAccount: action.mixedAccount,
         changeAccount: action.changeAccount,

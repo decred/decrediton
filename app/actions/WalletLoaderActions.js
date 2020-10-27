@@ -179,6 +179,7 @@ export const createWatchOnlyWalletRequest = (extendedPubKey, pubPass = "") => (
   });
 
 export const OPENWALLET_INPUT = "OPENWALLET_INPUT";
+export const OPENWALLET_INPUTPRIVPASS = "OPENWALLET_INPUTPRIVPASS";
 export const OPENWALLET_FAILED_INPUT = "OPENWALLET_FAILED_INPUT";
 export const OPENWALLET_ATTEMPT = "OPENWALLET_ATTEMPT";
 export const OPENWALLET_FAILED = "OPENWALLET_FAILED";
@@ -194,10 +195,18 @@ export const openWalletAttempt = (pubPass, retryAttempt) => (
       .then(async (response) => {
         await dispatch(getWalletServiceAttempt());
         wallet.setIsWatchingOnly(response.getWatchingOnly());
+        // needsPassPhrase is reset by OPENWALLET_SUCCESS, so store it here if
+        // we need to ask for the passphrase before starting the sync process.
+        const needsPassPhrase = getState().walletLoader.needsPassPhrase;
         dispatch({
           isWatchingOnly: response.getWatchingOnly(),
           type: OPENWALLET_SUCCESS
         });
+
+        if (needsPassPhrase) {
+          reject(OPENWALLET_INPUTPRIVPASS);
+          return;
+        }
         resolve(true);
       })
       .catch(async (error) => {
@@ -327,6 +336,10 @@ export const startRpcRequestFunc = (privPass, isRetry) => (
                 type: STARTRPC_FAILED
               });
             }
+          } else if (status.includes("wallet.Unlock: invalid passphrase")) {
+            // Wallet needs unlocking to discover accounts and passphrase is wrong.
+            dispatch({ error: status, type: SYNC_FAILED });
+            return reject(OPENWALLET_INPUTPRIVPASS);
           } else if (
             status.indexOf("invalid passphrase") > 0 ||
             status.indexOf("Stream removed")
@@ -489,6 +502,13 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
     });
     spvSyncCall.on("error", function (status) {
       status = status + "";
+
+      // Wallet needs unlocking to discover accounts and passphrase is wrong.
+      if (status.includes("wallet.Unlock: invalid passphrase")) {
+        dispatch({ error: status, type: SYNC_FAILED });
+        return reject(OPENWALLET_INPUTPRIVPASS);
+      }
+
       if (status.indexOf("Cancelled") < 0) {
         console.error(status);
         dispatch({ error: status, type: SYNC_FAILED });

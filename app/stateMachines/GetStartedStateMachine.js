@@ -211,6 +211,7 @@ export const getStartedMachine = Machine({
           on: {
             SYNC_RPC: "syncingRPC",
             WALLET_PUBPASS_INPUT: "walletPubpassInput",
+            WALLET_DISCOVERACCOUNTS_PASS: "walletDiscoverAccountsPassInput",
             ERROR: {
               target: "choosingWallet",
               actions: assign({
@@ -222,6 +223,7 @@ export const getStartedMachine = Machine({
         walletPubpassInput: {
           onEntry: "isAtWalletPubpassInput",
           on: {
+            WALLET_DISCOVERACCOUNTS_PASS: "walletDiscoverAccountsPassInput",
             CONTINUE: "syncingRPC",
             ERROR: {
               target: "walletPubpassInput",
@@ -231,9 +233,27 @@ export const getStartedMachine = Machine({
             }
           }
         },
+        walletDiscoverAccountsPassInput: {
+          onEntry: "isAtWalletDiscoverAccountsPassInput",
+          on: {
+            SETPASSPHRASE: {
+              target: "syncingRPC",
+              actions: assign({
+                passPhrase: (context, event) => event.passPhrase
+              })
+            },
+            ERROR: {
+              target: "walletDiscoverAccountsPassInput",
+              actions: assign({
+                error: (context, event) => event.error && event.error
+              })
+            }
+          }
+        },
         syncingRPC: {
           onEntry: "isSyncingRPC",
           on: {
+            WALLET_DISCOVERACCOUNTS_PASS: "walletDiscoverAccountsPassInput",
             ERROR_SYNCING_WALLET: {
               target: "choosingWallet",
               actions: assign({
