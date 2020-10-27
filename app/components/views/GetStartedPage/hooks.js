@@ -160,7 +160,7 @@ export const useGetStarted = () => {
       isSyncingRPC: async (context) => {
         const { passPhrase, isPrivacy } = context;
         if (context.isSPV) {
-          return startSPVSync()
+          return startSPVSync(passPhrase)
             .then(() => send({ type: "GO_TO_HOME_VIEW" }))
             .catch((error) =>
               send({ type: "ERROR_SYNCING_WALLET", payload: { error } })
