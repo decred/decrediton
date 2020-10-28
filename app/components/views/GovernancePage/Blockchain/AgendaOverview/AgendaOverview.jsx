@@ -18,9 +18,6 @@ const AgendaOverview = ({
     }
   }, [selectedChoice, selectedChoiceId]);
 
-  const setSelecedChoiceId = (selectedChoiceId) =>
-    setSelectedChoiceId(selectedChoiceId);
-
   const hasModifiedChoice = () => selectedChoiceId !== selectedChoice;
 
   const updatePreferences = () => {
@@ -46,7 +43,7 @@ const AgendaOverview = ({
         activeChoiceId: selectedChoice,
         hasModifiedChoice,
         choices,
-        setSelecedChoiceId,
+        setSelectedChoiceId,
         updatePreferences,
         closeCurrentAgenda: onCloseAgenda,
         disabled

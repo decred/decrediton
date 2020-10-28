@@ -1,8 +1,6 @@
 .overview {
   position: relative;
-  width: 420px;
-  padding: 10px 20px 4px;
-  float: left;
+  margin-bottom: 15px;
 }
 
 .titleArea {
@@ -17,27 +15,20 @@
 }
 
 .agenda {
-  position: relative;
-  overflow: hidden;
-  width: 700px;
-  height: 256px;
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
   margin-bottom: 20px;
-  float: left;
+  border-left: 1px solid var(--text-color-light);
   background-color: var(--background-back-color);
-  background-image: var(--agenda-stripe);
-  background-position: 460px 50%;
-  background-size: 1px;
-  background-repeat: repeat-y;
-}
-
-.middle {
-  color: var(--stroke-color-hovered);
-  font-size: 13px;
-  position: relative;
 }
 
 .text {
+  position: relative;
   line-height: 18px;
+  color: var(--stroke-color-hovered);
+  font-size: 13px;
 }
 
 .idCt {
@@ -48,75 +39,42 @@
   font-weight: 600;
 }
 
-.readMore {
-  display: block;
-  color: var(--input-color);
-  text-decoration: none;
-  background-color: transparent;
-}
-
 .optionsArea {
-  position: relative;
-  display: inline;
-  width: 170px;
-  padding-top: 20px;
-  padding-right: 35px;
-  padding-left: 35px;
-  float: left;
-  flex-direction: row;
+  flex-direction: column;
   align-items: stretch;
-}
-
-.optionsSection {
-  margin-bottom: 29px;
-}
-
-.nameOptions {
-  padding-right: 10px;
-  float: left;
   font-size: 19px;
+  margin: 15px 0px;
 }
 
-.optionsRadio {
-  float: left;
+.optionsGroup {
+  font-size: 15px;
+  text-transform: capitalize;
 }
 
-.optionsRadioLabel {
-  display: block;
-  width: 100%;
-  color: var(--tab-text-active-hover);
-  font-size: 11px;
-  line-height: 14px;
-  cursor: pointer;
-  margin-bottom: 8px;
+div.radioButtonsWrapper > * {
   box-sizing: border-box;
+}
+
+.disabled {
+  color: var(--btn-disabled-text-color);
 }
 
 .bottom {
   padding-top: 15px;
-  float: left;
-  width: 700px;
-  height: 64px;
+  display: flex;
 }
 
 .bottomOverview {
+  width: 100%;
   position: relative;
-  width: 420px;
-  padding: 15px 20px 20px 20px;
-  float: left;
 }
 
 .bottomOptions {
-  width: 240px;
-  float: left;
+  min-width: 240px;
 }
 
 .updatePreferencesButton {
   width: 134px;
-  display: block;
-  margin-right: 35px;
-  margin-bottom: 20px;
-  margin-left: 35px;
 }
 
 .overviewTitleClose {

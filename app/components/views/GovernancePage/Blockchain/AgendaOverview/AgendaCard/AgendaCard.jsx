@@ -1,6 +1,6 @@
 import { classNames } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
-import AgendaFinishedIndicator from "../FinishedIndicator/FinishedIndicator";
+import AgendaProgressIndicator from "../ProgressIndicator/ProgressIndicator";
 import styles from "./AgendaCard.module.css";
 
 const AgendaCard = ({ agenda, onClick, selectedChoice }) => (
@@ -8,15 +8,13 @@ const AgendaCard = ({ agenda, onClick, selectedChoice }) => (
     className={classNames(
       agenda.finished && styles.agendaCardDisabled,
       onClick && styles.agendaCard
-    )}>
+    )}
+    onClick={onClick}>
     <div className={styles.bottom}>
-      {agenda.finished ? (
-        <AgendaFinishedIndicator passed={agenda.passed} />
-      ) : (
-        <div className={styles.indicatorPending}>
-          <T id="agenda.card.inProgressIndicator" m="In Progress" />
-        </div>
-      )}
+      <AgendaProgressIndicator
+        passed={agenda.passed}
+        inProgress={!agenda.finished}
+      />
       <div className={styles.bottomCfg}>
         {agenda.description}{" "}
         <span className={styles.bottomCfgLast}>
