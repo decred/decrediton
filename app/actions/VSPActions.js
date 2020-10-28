@@ -67,7 +67,10 @@ export const SYNCVSPTICKETS_SUCCESS = "SYNCVSPTICKETS_SUCCESS";
 export const syncVSPTicketsRequest = ({ passphrase, vspHost, vspPubkey, account }) => (dispatch, getState) => {
   dispatch({ type: SYNCVSPTICKETS_ATTEMPT });
   wallet.syncVSPTickets(getState().grpc.walletService, passphrase, vspHost, vspPubkey, account)
-    .then(() => dispatch({ type: SYNCVSPTICKETS_SUCCESS }))
+    .then(() => {
+      dispatch({ type: SYNCVSPTICKETS_SUCCESS });
+      dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED));
+    })
     .catch(err => {
       dispatch({ type: SYNCVSPTICKETS_FAILED, err });
     });

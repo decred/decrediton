@@ -36,8 +36,7 @@ class App extends React.Component {
     shutdownApp: PropTypes.func.isRequired,
     shutdownRequested: PropTypes.bool.isRequired,
     daemonStopped: PropTypes.bool.isRequired,
-    autobuyerRunningModalVisible: PropTypes.bool.isRequired,
-    hideCantCloseModal: PropTypes.func.isRequired
+    autobuyerRunningModalVisible: PropTypes.bool.isRequired
   };
 
   constructor(props) {
