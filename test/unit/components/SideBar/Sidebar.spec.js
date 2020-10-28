@@ -15,7 +15,7 @@ jest.mock("actions/ControlActions", () => {
   return {
     rescanAttempt: jest.fn(() => (dispatch) => {
       dispatch({
-        request: { getBeginHeight: () => {} },
+        request: { getBeginHeight: () => { } },
         type: RESCAN_ATTEMPT
       });
     }),
@@ -62,11 +62,13 @@ const testBalances = [
 const mockBalances = (sel.balances = jest.fn(() => testBalances));
 
 const expectToHaveDefaultMenuLinks = (params) => {
-  const { sidebarOnBottom, isTrezorEnabled, isLnEnabled = true } = params || {};
+  const { sidebarOnBottom, isTrezorEnabled, isLnEnabled = true, expandSideBar } = params || {};
 
   const expectToHaveMenuLink = (name, className, href, icon) => {
     const menulink = screen.queryByRole("link", { name: name });
-    expect(menulink).toHaveTextContent(sidebarOnBottom ? "" : name);
+    if (!sidebarOnBottom && expandSideBar) {
+      expect(menulink).toHaveTextContent(name);
+    }
     expect(menulink).toHaveClass(className);
     expect(menulink).toHaveAttribute("href", href);
     expect(menulink).toHaveAttribute("icon", icon);
@@ -118,7 +120,7 @@ test("renders default sidebar", () => {
   const mockUiAnimations = (sel.uiAnimations = jest.fn(() => true));
   render(<SideBar />);
 
-  expectToHaveDefaultMenuLinks();
+  expectToHaveDefaultMenuLinks({ sidebarOnBottom: false, expandSideBar: false });
 
   expect(
     screen.queryByRole("link", {
@@ -269,10 +271,18 @@ test("renders sidebar with lightning network not enabled", () => {
 test("renders expanded sidebar with testnet network enabled", () => {
   const mockIsTestNet = (sel.isTestNet = jest.fn(() => true));
   const mockExpandSideBar = (sel.expandSideBar = jest.fn(() => true));
+  const mockSidebarOnBottom = (sel.sidebarOnBottom = jest.fn(() => false));
+  const mockLnEnabled = (sel.lnEnabled = jest.fn(() => true));
 
   render(<SideBar />);
+  expectToHaveDefaultMenuLinks({
+    sidebarOnBottom: false,
+    expandSideBar: true,
+  });
   expect(screen.getByRole("button", { name: /logo/i })).toHaveClass("testnet");
 
+  expect(mockLnEnabled).toHaveBeenCalled();
+  expect(mockSidebarOnBottom).toHaveBeenCalled();
   expect(mockExpandSideBar).toHaveBeenCalled();
   expect(mockIsTestNet).toHaveBeenCalled();
   mockIsTestNet.mockRestore();

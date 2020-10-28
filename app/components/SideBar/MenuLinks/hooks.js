@@ -5,11 +5,12 @@ import { spring } from "react-motion";
 import theme from "theme";
 import * as sel from "selectors";
 import { trezorLink, lnLink } from "./Links";
-import { MENU_LINKS_PER_ROW } from "../../../constants/Decrediton";
+import { MENU_LINKS_PER_ROW } from "constants/Decrediton";
 
 export function useMenuLinks(linkList) {
   const location = useSelector(sel.location);
   const sidebarOnBottom = useSelector(sel.sidebarOnBottom);
+  const expandSideBar = useSelector(sel.expandSideBar);
   const uiAnimations = useSelector(sel.uiAnimations);
   const isTrezor = useSelector(sel.isTrezor);
   const lnEnabled = useSelector(sel.lnEnabled);
@@ -133,6 +134,7 @@ export function useMenuLinks(linkList) {
     caretStyle: caretStyleMemo,
     nodes: nodes.current,
     sidebarOnBottom,
-    menuLinks
+    menuLinks,
+    expandSideBar
   };
 }

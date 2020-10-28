@@ -16,6 +16,10 @@
   user-select: none;
 }
 
+.menuLinkContainer {
+  height: 52px;
+}
+
 .menuLink.settingsIcon {
   background-image: var(--menu-settings-default);
 }
@@ -170,11 +174,25 @@
   background-color: var(--stroke-color-focused);
 }
 
+.tooltipOnSide {
+  bottom: 70% !important;
+  left: 90% !important;
+  transform: translateX(0%) !important;
+}
+
+.tooltipOnBottom {
+  bottom: 70% !important;
+}
+
 @media screen and (max-width: 768px) {
   .menuLink {
     height: 70px;
     width: 76px;
     padding-left: 0;
     background-position: 50%;
+  }
+
+  .menuLinkContainer {
+    height: 70px;
   }
 }

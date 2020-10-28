@@ -4,42 +4,45 @@ import MenuLink from "./MenuLink/MenuLink";
 import style from "../SideBar.module.css";
 import { useMenuLinks } from "./hooks";
 
-const MenuList = React.memo(({ sidebarOnBottom, nodes, menuLinks }) =>
-  sidebarOnBottom
-    ? menuLinks.map((menuLinkRow, index) => (
-        <div className={"is-row"} key={index}>
-          {menuLinkRow.map((menuLink) => {
-            const { path, link, icon, notifProp, ariaLabel } = menuLink;
-            return (
-              <MenuLink
-                path={path}
-                link={link}
-                icon={icon}
-                notifProp={notifProp}
-                ariaLabel={ariaLabel}
-                ref={(ref) => nodes.set(path, ref)}
-                sidebarOnBottom={sidebarOnBottom}
-                key={path}
-              />
-            );
-          })}
+const MenuListLinks = ({ menuLinks, nodes, sidebarOnBottom, expandSideBar }) =>
+  menuLinks.map((menuLink) => {
+    const { path, link, icon, notifProp, ariaLabel } = menuLink;
+    return (
+      <MenuLink
+        path={path}
+        link={link}
+        icon={icon}
+        notifProp={notifProp}
+        ariaLabel={ariaLabel}
+        ref={(ref) => nodes.set(path, ref)}
+        sidebarOnBottom={sidebarOnBottom}
+        key={path}
+        expandSideBar={expandSideBar}
+      />
+    );
+  });
+
+const MenuList = React.memo(
+  ({ sidebarOnBottom, nodes, menuLinks, expandSideBar }) =>
+    sidebarOnBottom ? (
+      menuLinks.map((menuLinkRow, index) => (
+        <div className={style.isRow} key={index}>
+          <MenuListLinks
+            menuLinks={menuLinkRow}
+            nodes={nodes}
+            sidebarOnBottom={sidebarOnBottom}
+            expandSideBar={expandSideBar}
+          />
         </div>
       ))
-    : menuLinks.map((menuLink) => {
-        const { path, link, icon, notifProp, ariaLabel } = menuLink;
-        return (
-          <MenuLink
-            path={path}
-            link={link}
-            icon={icon}
-            notifProp={notifProp}
-            ariaLabel={ariaLabel}
-            ref={(ref) => nodes.set(path, ref)}
-            sidebarOnBottom={sidebarOnBottom}
-            key={path}
-          />
-        );
-      })
+    ) : (
+      <MenuListLinks
+        menuLinks={menuLinks}
+        nodes={nodes}
+        sidebarOnBottom={sidebarOnBottom}
+        expandSideBar={expandSideBar}
+      />
+    )
 );
 
 const MenuLinks = () => {
@@ -48,12 +51,13 @@ const MenuLinks = () => {
     uiAnimations,
     caretStyle,
     nodes,
-    menuLinks
+    menuLinks,
+    expandSideBar
   } = useMenuLinks(linkList);
 
   return (
     <>
-      <MenuList {...{ sidebarOnBottom, nodes, menuLinks }} />
+      <MenuList {...{ sidebarOnBottom, nodes, menuLinks, expandSideBar }} />
       {uiAnimations ? (
         <Motion style={caretStyle}>
           {(caretStyle) => (

@@ -49,7 +49,11 @@ const SideBar = () => {
           peersCount
         }}
       />
-      <div className={style.sidebarMain}>
+      <div
+        className={classNames(
+          style.sidebarMain,
+          isShowingAccounts && style.isShowingAccounts
+        )}>
         <div className={style.sidebarScroll}>
           <MenuLinks />
         </div>
