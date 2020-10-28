@@ -61,7 +61,8 @@ const SendTab = () => {
     onAddOutput,
     onUpdateOutput,
     onRemoveOutput,
-    onSetOutputs
+    onSetOutputs,
+    prevOutputs
   } = useOutputs();
 
   const { walletService } = useService();
@@ -76,6 +77,7 @@ const SendTab = () => {
   const prevPublishTxResponse = usePrevious(publishTxResponse);
   const prevNextAddress = usePrevious(nextAddress);
   const prevIsSendSelf = usePrevious(isSendSelf);
+  const prevAccount = usePrevious(account);
 
   const onValidateAddress = async ({ address, index }) => {
     let error;
@@ -95,7 +97,6 @@ const SendTab = () => {
       }
       ref.data.error.address = error;
       onUpdateOutput(ref);
-      onAttemptConstructTransaction();
     } catch (err) {
       return err;
     }
@@ -120,26 +121,22 @@ const SendTab = () => {
     ref.data.amount = atomValue;
     ref.data.error.amount = error;
     onUpdateOutput(ref);
-    onAttemptConstructTransaction();
   };
 
   const onChangeAccount = (account) => {
     setAccount(account);
-    onAttemptConstructTransaction();
   };
 
   const onShowSendSelf = () => {
     const newOutputs = [{ ...outputs[0], data: baseOutput().data }];
     setIsSendSelf(true);
     onSetOutputs(newOutputs);
-    onAttemptConstructTransaction();
   };
 
   const onShowSendOthers = () => {
     const newOutputs = [{ ...outputs[0], data: baseOutput().data }];
     setIsSendSelf(false);
     onSetOutputs(newOutputs);
-    onAttemptConstructTransaction();
   };
 
   const onShowSendAll = () => {
@@ -152,7 +149,6 @@ const SendTab = () => {
     }];
     setIsSendAll(true);
     onSetOutputs(newOutputs);
-    onAttemptConstructTransaction();
   };
 
   const onKeyDown = (e) => {
@@ -171,7 +167,6 @@ const SendTab = () => {
     }];
     setIsSendAll(false);
     onSetOutputs(newOutputs);
-    onAttemptConstructTransaction();
   };
 
   const hasError = useCallback(() => {
@@ -293,15 +288,17 @@ const SendTab = () => {
     }
     if (newOutputs) {
       onSetOutputs(newOutputs);
-      onAttemptConstructTransaction();
     }
+
     if (constructTxLowBalance) {
       setInsuficientFunds(true);
     } else {
       setInsuficientFunds(false);
     }
 
-    return () => onClearTransaction();
+    if(prevOutputs != outputs || prevAccount != account) {
+      onAttemptConstructTransaction();
+    }
   }, [
     publishTxResponse,
     prevPublishTxResponse,
@@ -312,11 +309,18 @@ const SendTab = () => {
     constructTxLowBalance,
     nextAddressAccount.value,
     outputs,
+    prevOutputs,
     onSetOutputs,
     onAttemptConstructTransaction,
     onClearTransaction,
-    onGetNextAddressAttempt
+    onGetNextAddressAttempt,
+    account,
+    prevAccount
   ]);
+
+  useEffect(() => {
+    return () => onClearTransaction;
+  });
 
   return !walletService ? <ErrorScreen /> : (
     <SendPage

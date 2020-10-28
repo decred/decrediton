@@ -3,6 +3,7 @@ import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
 import { baseOutput } from "./helpers";
 import { useSelector, useDispatch } from "react-redux";
+import { usePrevious } from "hooks";
 
 export function useSendTab() {
   const defaultSpendingAccount = useSelector(sel.defaultSpendingAccount);
@@ -58,6 +59,7 @@ export function useSendTab() {
 
 export function useOutputs() {
   const [outputs, setOutputs] = useState([baseOutput()]);
+  const prevOutputs = usePrevious(outputs);
 
   const onAddOutput = () => {
     const newOutputs = [ ...outputs ];
@@ -83,6 +85,7 @@ export function useOutputs() {
     onAddOutput,
     onUpdateOutput,
     onRemoveOutput,
-    onSetOutputs: setOutputs
+    onSetOutputs: setOutputs,
+    prevOutputs
   };
 }
