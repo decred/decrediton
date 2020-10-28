@@ -3,14 +3,15 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin-bottom: 40px;
+  margin: 0px -5px 35px -5px;
 }
 
 .networkTile {
   padding: 30px;
   background-color: var(--background-back-color);
-  width: 400px;
-  flex: 0 1 26%;
+  max-width: 400px;
+  flex: 1 1 0;
+  margin: 0px 5px 10px 5px;
   border-bottom: 10px solid var(--color-primary-dark);
 }
 
