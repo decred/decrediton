@@ -14,9 +14,8 @@ const mapStateToProps = selectorMap({
   daemonStopped: sel.daemonStopped,
   shutdownRequested: sel.shutdownRequested,
   aboutModalMacOSVisible: sel.aboutModalMacOSVisible,
-  autobuyerRunningModalVisible: sel.autobuyerRunningModalVisible,
   modalVisible: sel.modalVisible,
-  isTicketAutoBuyerEnabled: sel.isTicketAutoBuyerEnabled,
+  canClose: sel.getCanClose,
   theme: sel.theme
 });
 
@@ -28,8 +27,7 @@ const mapDispatchToProps = (dispatch) =>
       listenForAppReloadRequest: cla.listenForAppReloadRequest,
       showAboutModalMacOS: ca.showAboutModalMacOS,
       hideAboutModalMacOS: ca.hideAboutModalMacOS,
-      showAutobuyerRunningModal: ca.showAutobuyerRunningModal,
-      hideAutobuyerRunningModal: ca.hideAutobuyerRunningModal,
+      showCantCloseModal: ca.showCantCloseModal,
       onExpandSideBar: sba.expandSideBar,
       onReduceSideBar: sba.reduceSideBar,
       onSidebarToBottom: sba.sidebarToBottom,

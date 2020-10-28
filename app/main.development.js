@@ -513,7 +513,7 @@ app.on("ready", async () => {
     console.log(
       "Received system shutdown request, checking if auto buyer is running"
     );
-    mainWindow.webContents.send("check-auto-buyer-running");
+    mainWindow.webContents.send("check-can-close");
     e.preventDefault();
   });
 
@@ -572,7 +572,7 @@ app.on("ready", async () => {
   });
 
   mainWindow.on("close", (e) => {
-    mainWindow.webContents.send("check-auto-buyer-running");
+    mainWindow.webContents.send("check-can-close");
     e.preventDefault();
     if (stopSecondInstance) {
       app.quit();

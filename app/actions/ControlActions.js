@@ -736,11 +736,11 @@ export const hideAboutModalMacOS = () => (dispatch) =>
   dispatch({ type: HIDE_ABOUT_MODAL_MACOS });
 
 export const SHOW_AUTOBUYER_RUNNING_MODAL = "SHOW_AUTOBUYER_RUNNING_MODAL";
-export const showAutobuyerRunningModal = () => (dispatch) =>
+export const showCantCloseModal = () => (dispatch) =>
   dispatch({ type: SHOW_AUTOBUYER_RUNNING_MODAL });
 
 export const HIDE_AUTOBUYER_RUNNING_MODAL = "HIDE_AUTOBUYER_RUNNING_MODAL";
-export const hideAutobuyerRunningModal = () => (dispatch) =>
+export const hideCantCloseModal = () => (dispatch) =>
   dispatch({ type: HIDE_AUTOBUYER_RUNNING_MODAL });
 
 export const GETACCOUNTEXTENDEDKEY_ATTEMPT = "GETACCOUNTEXTENDEDKEY_ATTEMPT";
