@@ -1,8 +1,6 @@
-import { TabbedPage, TabbedPageTab as Tab, StandaloneHeader } from "layout";
-import { Switch, Redirect } from "react-router-dom";
+import { StandalonePage, StandaloneHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
-import AccountsTab from "./Accounts/Accounts";
-import PrivacyTab from "./Privacy/Privacy";
+import AccountsList from "./Accounts/Accounts";
 import { PassphraseModalButton } from "buttons";
 import { AddAccountModal } from "modals";
 import { WatchOnlyWarnNotification } from "shared";
@@ -40,33 +38,19 @@ const AccountsPageHeader = React.memo(
 
 const AccountsPage = () => {
   const {
-    privacyEnabled,
     isCreateAccountDisabled,
     onGetNextAccountAttempt
   } = useAccountsPage();
 
   return (
-    <TabbedPage
+    <StandalonePage
       header={
         <AccountsPageHeader
           {...{ isCreateAccountDisabled, onGetNextAccountAttempt }}
         />
       }>
-      <Switch>
-        <Redirect from="/accounts" exact to="/accounts/list" />
-      </Switch>
-      <Tab
-        path="/accounts/list"
-        component={AccountsTab}
-        link={<T id="accounts.tab.listAccounts" m="List Accounts" />}
-      />
-      <Tab
-        path="/accounts/privacy"
-        component={<PrivacyTab {...{ isCreateAccountDisabled }} />}
-        link={<T id="accounts.tab.privacy" m="Privacy" />}
-        disabled={!privacyEnabled}
-      />
-    </TabbedPage>
+      <AccountsList/>
+    </StandalonePage>
   );
 };
 
