@@ -17,7 +17,7 @@ export default ({ toggleCustomPrivacy, acceptCustomPrivacy, ...props }) => (
       />
     </div>
     <div className={styles.customPrivacySettings}>
-      <PrivacySettings {...props} />
+      <PrivacySettings {...props } />
       <div className={styles.privacyButtons}>
         <InvisibleButton onClick={toggleCustomPrivacy}>
           <T id="privacy.custom.cancel" m="Cancel" />

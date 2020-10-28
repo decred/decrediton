@@ -24,7 +24,8 @@ const PrivacySettings = ({
   isChangePassPhraseDisabled,
   changePassphraseRequestAttempt,
   onAttemptChangePassphrase,
-  onChangeTempSettings
+  onChangeTempSettings,
+  walletReady
 }) => {
   const toggle = (value) => () => {
     const allowedExternalRequests = [...tempSettings.allowedExternalRequests];
@@ -41,35 +42,38 @@ const PrivacySettings = ({
     <>
       <div className={styles.column}>
         <div>
-          <div className={classNames(styles.row, styles.rowChecklist)}>
-            <div
-              disabled={isChangePassPhraseDisabled}
-              className={styles.updatePassphraseButton}>
-              <T
-                id="settings.updatePrivatePassphrase"
-                m="Update Private Passphrase"
-              />
-              <WatchOnlyWarnNotification isActive={isChangePassPhraseDisabled}>
-                <ChangePassphraseButton
-                  className={classNames(
-                    styles.changePasswordDefaultIcon,
-                    isChangePassPhraseDisabled &&
-                      styles.changePasswordDisabledIcon,
-                    changePassphraseRequestAttempt &&
-                      styles.changePasswordLoading
-                  )}
-                  isDisabled={isChangePassPhraseDisabled}
-                  modalTitle={
-                    <T
-                      id="settings.changeConfirmation"
-                      m="Change your passphrase"
-                    />
-                  }
-                  onSubmit={onAttemptChangePassphrase}
+          {walletReady && (
+            <div className={classNames(styles.row, styles.rowChecklist)}>
+              <div
+                disabled={isChangePassPhraseDisabled}
+                className={styles.updatePassphraseButton}>
+                <T
+                  id="settings.updatePrivatePassphrase"
+                  m="Update Private Passphrase"
                 />
-              </WatchOnlyWarnNotification>
+                <WatchOnlyWarnNotification
+                  isActive={isChangePassPhraseDisabled}>
+                  <ChangePassphraseButton
+                    className={classNames(
+                      styles.changePasswordDefaultIcon,
+                      isChangePassPhraseDisabled &&
+                        styles.changePasswordDisabledIcon,
+                      changePassphraseRequestAttempt &&
+                        styles.changePasswordLoading
+                    )}
+                    isDisabled={isChangePassPhraseDisabled}
+                    modalTitle={
+                      <T
+                        id="settings.changeConfirmation"
+                        m="Change your passphrase"
+                      />
+                    }
+                    onSubmit={onAttemptChangePassphrase}
+                  />
+                </WatchOnlyWarnNotification>
+              </div>
             </div>
-          </div>
+          )}
           <div className={classNames(styles.row, styles.rowChecklist)}>
             <Checkbox
               label={

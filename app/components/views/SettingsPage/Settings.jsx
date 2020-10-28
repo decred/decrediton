@@ -167,6 +167,7 @@ const SettingsPage = ({
                   onAttemptChangePassphrase,
                   isChangePassPhraseDisabled,
                   onChangeTempSettings,
+                  walletReady,
                   changePassphraseRequestAttempt
                 }}
               />

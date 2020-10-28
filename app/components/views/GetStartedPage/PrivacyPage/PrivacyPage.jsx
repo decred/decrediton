@@ -8,7 +8,8 @@ const PrivacyPage = () => {
     changePassphraseRequestAttempt,
     onSaveSettings,
     tempSettings,
-    onChangeTempSettings
+    onChangeTempSettings,
+    walletReady
   } = useSettings();
   const {
     finishPrivacy,
@@ -39,6 +40,7 @@ const PrivacyPage = () => {
         isChangePassPhraseDisabled,
         changePassphraseRequestAttempt,
         onChangeTempSettings,
+        walletReady,
         isTestNet
       }}
     />
