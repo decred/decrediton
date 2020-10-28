@@ -43,7 +43,7 @@ const darwinTemplate = (mainWindow, locale) => [
         label: locale.messages["appMenu.quit"],
         accelerator: "Command+Q",
         click() {
-          mainWindow.webContents.send("check-auto-buyer-running");
+          mainWindow.webContents.send("check-can-close");
         }
       }
     ]

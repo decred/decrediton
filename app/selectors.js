@@ -47,6 +47,7 @@ import {
   IMMATURE
 } from "constants";
 import * as wallet from "wallet";
+import { VSP_FEE_PROCESS_ERRORED } from "./constants/Decrediton";
 
 const EMPTY_ARRAY = []; // Maintaining identity (will) improve performance;
 
@@ -793,6 +794,7 @@ const getVSPTicketsHashes = get(["vsp", "vspTickets"]);
 export const getVSPTickets = createSelector(
   [getVSPTicketsHashes, stakeTransactions],
   (hashes, txsMap) => {
+    if (!hashes) return;
     const vspTickets = {};
     Object.keys(hashes).forEach((feeStatus) => {
       // fee status hashes
@@ -1180,7 +1182,20 @@ export const startAutoBuyerError = get(["control", "startAutoBuyerError"]);
 export const startAutoBuyerSuccess = get(["control", "startAutoBuyerSuccess"]);
 export const stopAutoBuyerError = get(["control", "stopAutoBuyerError"]);
 export const stopAutoBuyerSuccess = get(["control", "stopAutoBuyerSuccess"]);
+
+// selectors for checking if decrediton can be closed.
+
 export const isTicketAutoBuyerEnabled = bool(startAutoBuyerResponse);
+export const getHasUnpaidFee = createSelector([getVSPTickets], (vspTickets) => {
+  if (!vspTickets) return;
+  return vspTickets[VSP_FEE_PROCESS_ERRORED] ? vspTickets[VSP_FEE_PROCESS_ERRORED].length > 0 : false;
+});
+export const getCanClose = not(or(
+  isTicketAutoBuyerEnabled,
+  getHasUnpaidFee
+));
+
+// end of selectors for closing decrediton.
 
 const purchaseTicketsResponse = get(["control", "purchaseTicketsResponse"]);
 

@@ -10,12 +10,12 @@ import ShutdownPage from "components/views/ShutdownPage/ShutdownPage";
 import FatalErrorPage from "components/views/FatalErrorPage";
 import Snackbar from "components/Snackbar";
 import AboutModal from "../components/modals/AboutModal/AboutModal";
-import AutobuyerRunningModal from "../components/modals/AutobuyerRunningModal";
 import { log } from "wallet";
 import { TrezorModals } from "components/modals/trezor";
 import "style/Layout.less";
 import { ipcRenderer } from "electron";
 import { hot } from "react-hot-loader/root";
+import { CantCloseModals } from "modals";
 
 const topLevelAnimation = {
   atEnter: { opacity: 0 },
@@ -37,7 +37,7 @@ class App extends React.Component {
     shutdownRequested: PropTypes.bool.isRequired,
     daemonStopped: PropTypes.bool.isRequired,
     autobuyerRunningModalVisible: PropTypes.bool.isRequired,
-    hideAutobuyerRunningModal: PropTypes.func.isRequired
+    hideCantCloseModal: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -68,12 +68,12 @@ class App extends React.Component {
         this.props.showAboutModalMacOS();
       }
     });
-    ipcRenderer.on("check-auto-buyer-running", () => {
-      if (this.props.isTicketAutoBuyerEnabled) {
-        log("warning", "Auto buyer is still running, preventing shutdown");
-        this.props.showAutobuyerRunningModal();
-      } else {
+    ipcRenderer.on("check-can-close", () => {
+      if (this.props.canClose) {
         this.props.shutdownApp();
+      } else {
+        log("warning", "Auto buyer is still running, preventing shutdown");
+        this.props.showCantCloseModal();
       }
     });
   }
@@ -127,10 +127,7 @@ class App extends React.Component {
       locale,
       theme,
       aboutModalMacOSVisible,
-      hideAboutModalMacOS,
-      autobuyerRunningModalVisible,
-      hideAutobuyerRunningModal,
-      shutdownApp
+      hideAboutModalMacOS
     } = this.props;
     const MainSwitch = this.props.uiAnimations ? AnimatedSwitch : StaticSwitch;
 
@@ -161,14 +158,7 @@ class App extends React.Component {
           </div>
           <TrezorModals />
           <div id="modal-portal-autobuyer-running">
-            <AutobuyerRunningModal
-              show={autobuyerRunningModalVisible}
-              onSubmit={() => {
-                hideAutobuyerRunningModal();
-                shutdownApp();
-              }}
-              onCancelModal={hideAutobuyerRunningModal}
-            />
+            <CantCloseModals />
           </div>
         </main>
       </IntlProvider>
