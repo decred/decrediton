@@ -84,9 +84,9 @@ const expectToHaveDefaultMenuLinks = (params) => {
   expectToHaveMenuLink(/tickets/i, "ticketsIcon", "/tickets", "tickets");
   expectToHaveMenuLink(/accounts/i, "accountsIcon", "/accounts", "accounts");
   expectToHaveMenuLink(
-    /security/i,
+    /privacy/i,
     "securitycntrIcon",
-    "/security",
+    "/privacy",
     "securitycntr"
   );
   expectToHaveMenuLink(/help/i, "helpIcon", "/help", "help");
