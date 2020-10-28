@@ -78,7 +78,7 @@
   grid-column-gap: 10px;
   grid-row-gap: 10px;
   background-color: var(--background-back-color);
-  padding: 1em 2em;
+  padding: 1em 1.3em;
   min-height: 10em;
 }
 

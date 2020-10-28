@@ -16,27 +16,27 @@ const Payment = ({
   payment,
   tsDate
 }) => (
-  <div className={styles.lnPayment}>
-    <div>
-      <div className={styles.value}>
-        <Balance amount={payment.valueAtoms} />
-      </div>
-      <div className="fee">
-        <Balance amount={payment.fee} />
-      </div>
-    </div>
-    <div>
+    <div className={styles.lnPayment}>
       <div>
-        <T
-          id="ln.paymentsTab.payment.creationDate"
-          m="{creationDate, date, medium} {creationDate, time, short}"
-          values={{ creationDate: tsDate(payment.creationDate) }}
-        />
+        <div className={styles.value}>
+          <Balance amount={payment.valueAtoms} />
+        </div>
+        <div className="fee">
+          <Balance amount={payment.fee} />
+        </div>
       </div>
-      <div className={styles.rhash}>{payment.paymentHash}</div>
+      <div>
+        <div>
+          <T
+            id="ln.paymentsTab.payment.creationDate"
+            m="{creationDate, date, medium} {creationDate, time, short}"
+            values={{ creationDate: tsDate(payment.creationDate) }}
+          />
+        </div>
+        <div className={styles.rhash}>{payment.paymentHash}</div>
+      </div>
     </div>
-  </div>
-);
+  );
 
 const OutstandingPayment = ({ payment, tsDate }) => (
   <div className={styles.lnPayment}>
@@ -91,29 +91,29 @@ const ExpiryTime = ({ expired, decoded, tsDate }) => (
   <div className={expired ? "expiry expired" : "expiry"}>
     {expired ? (
       <T
-      id="ln.paymentsTab.expired"
-      m="Expired {relTime}"
-      values={{
-        relTime: (
-          <FormattedRelative
-            value={tsDate(decoded.expiry + decoded.timestamp)}
-          />
-        )
-      }}
+        id="ln.paymentsTab.expired"
+        m="Expired {relTime}"
+        values={{
+          relTime: (
+            <FormattedRelative
+              value={tsDate(decoded.expiry + decoded.timestamp)}
+            />
+          )
+        }}
       />
     ) : (
-      <T
-      id="ln.paymentsTab.expires"
-      m="Expires {relTime}"
-      values={{
-        relTime: (
-          <FormattedRelative
-            value={tsDate(decoded.expiry + decoded.timestamp)}
-          />
-        )
-      }}
-      />
-    )}
+        <T
+          id="ln.paymentsTab.expires"
+          m="Expires {relTime}"
+          values={{
+            relTime: (
+              <FormattedRelative
+                value={tsDate(decoded.expiry + decoded.timestamp)}
+              />
+            )
+          }}
+        />
+      )}
   </div>
 );
 
@@ -124,37 +124,36 @@ const DecodedPayRequest = ({
   sendValue,
   onSendValueChanged
 }) => (
-  <div className={styles.decodedPayreq}>
-    {decoded.numAtoms ? (
-      <div className={styles.numAtoms}>
-        <Balance amount={decoded.numAtoms} />
-      </div>
-    ) : (
-      <DcrInput amount={sendValue} onChangeAmount={onSendValueChanged} />
-    )}
-    {decoded.description ? (
-      <div className={styles.description}>{decoded.description}</div>
-    ) : (
-      <EmptyDescription />
-    )}
-    <ExpiryTime expired={expired} decoded={decoded} tsDate={tsDate} />
-    <div className={styles.destDetails}>
-      <T id="ln.paymentsTab.destLabel" m="Destination" />
+    <div className={styles.decodedPayreq}>
+      {decoded.numAtoms ? (
+        <div className={styles.numAtoms}>
+          <Balance amount={decoded.numAtoms} />
+        </div>
+      ) : (
+          <DcrInput amount={sendValue} onChangeAmount={onSendValueChanged} />
+        )}
+      {decoded.description ? (
+        <div className={styles.description}>{decoded.description}</div>
+      ) : (
+          <EmptyDescription />
+        )}
+      <ExpiryTime expired={expired} decoded={decoded} tsDate={tsDate} />
+      <div className={styles.destDetails}>
+        <T id="ln.paymentsTab.destLabel" m="Destination" />
         <CopyableText id="copyable" className={styles.copyableText}>{decoded.destination}</CopyableText>
-      <T id="ln.paymentsTab.hashLabel" m="Payment Hash" />
-      <div>{decoded.paymentHash}</div>
+        <T id="ln.paymentsTab.hashLabel" m="Payment Hash" />
+        <div>{decoded.paymentHash}</div>
+      </div>
     </div>
-  </div>
-);
+  );
 
 const BalanceHeader = () => {
   const { channelBalances } = usePaymentsTab();
-  return(
+  return (
     <div className={styles.balanceHeader}>
-      <div className={`${styles.balanceTile} ${
-        channelBalances.maxOutboundAmount === 0 ?
+      <div className={`${styles.balanceTile} ${channelBalances.maxOutboundAmount === 0 ?
           styles.zeroFunds
-          :styles.hasOutbound}
+          : styles.hasOutbound}
         `}>
         <div className={styles.balanceValue}>
           <Balance amount={channelBalances.maxOutboundAmount} />
@@ -187,7 +186,7 @@ export default ({
     selectedPaymentDetails,
     onToggleShowDetails
   } = usePaymentsTab();
-  return(
+  return (
     <>
       <Subtitle
         title={
@@ -197,7 +196,7 @@ export default ({
 
       <Subtitle title={
         <T id="ln.paymentsTab.sendPayment" m="Send Payment" />
-        } />
+      } />
 
       <div className={styles.lnSendPayment}>
         <div className="payreq">
@@ -205,7 +204,7 @@ export default ({
           <TextInput value={payRequest} onChange={onPayRequestChanged} />
         </div>
         {decodingError ? (
-          <div className="decoding-error">{"" + decodingError}</div>
+          <div className={styles.decodingError}>{"" + decodingError}</div>
         ) : null}
         {decodedPayRequest ? (
           <>
@@ -226,7 +225,7 @@ export default ({
       {Object.keys(outstandingPayments).length > 0 ? (
         <Subtitle title={
           <T id="ln.paymentsTab.outstanding" m="Ongoing Payments" />
-          } />
+        } />
       ) : null}
 
       <div className={styles.lnPaymentsList}>
@@ -242,7 +241,7 @@ export default ({
       {failedPayments.length > 0 ? (
         <Subtitle title={
           <T id="ln.paymentsTag.failed" m="Failed Payments" />
-          } />
+        } />
       ) : null}
 
       <div className={styles.lnPaymentsList}>
@@ -258,7 +257,7 @@ export default ({
 
       {payments.length > 0 ? (<Subtitle title={
         <T id="ln.paymentsTab.latestPayments" m="Latest Payments" />
-        } />) : null}
+      } />) : null}
 
       <div className={styles.lnPaymentsList}>
         {payments.map((p) => (
@@ -272,8 +271,8 @@ export default ({
               />}
             onToggleAccordion={() => onToggleShowDetails(p.paymentHash)}
             show={
-            p.paymentHash === selectedPaymentDetails
-            && isShowingDetails}
+              p.paymentHash === selectedPaymentDetails
+              && isShowingDetails}
           >
             <div className={styles.paymentDetails}>
               <span>PayReq</span>
@@ -281,7 +280,7 @@ export default ({
               {p.htlcsList.map((htlc, i) => (
                 <div key={`htlc-${i}`} className={styles.htlc}>
                   <span>HTLC {i}</span>
-                  <hr/>
+                  <hr />
                   <div className={styles.paymentDetailsGrid}>
                     <span>Status</span>
                     <span>{htlc.status}</span>

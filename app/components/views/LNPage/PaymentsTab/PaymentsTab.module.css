@@ -5,7 +5,7 @@
   min-height: 18em;
 }
 
-.decoding-error {
+.decodingError {
   margin-top: 2em;
   color: var(--error-red);
 }

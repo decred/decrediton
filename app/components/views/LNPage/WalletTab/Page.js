@@ -10,44 +10,43 @@ const BalanceHeader = ({
   unconfirmedBalance,
   totalBalance
 }) => (
-  <div className={styles.balanceHeader}>
-    <div className={`${styles.balanceTile} ${
-        confirmedBalance === 0 ?
+    <div className={styles.balanceHeader}>
+      <div className={`${styles.balanceTile} ${confirmedBalance === 0 ?
         styles.zeroFunds
-        :styles.hasFunds}
+        : styles.hasFunds}
         `}>
-      <div className={styles.balanceValue}>
-        <Balance amount={confirmedBalance} />
+        <div className={styles.balanceValue}>
+          <Balance amount={confirmedBalance} />
+        </div>
+        <T
+          id="ln.walletTab.balance.confirmed"
+          m="Confirmed balance"
+        />
       </div>
-      <T
-        id="ln.walletTab.balance.confirmed"
-        m="Confirmed balance"
-      />
-    </div>
-    <div className={classNames(styles.balanceTile, styles.unconfirmed)}>
-      <div className={styles.balanceValue}>
-        <Balance amount={unconfirmedBalance} />
+      <div className={classNames(styles.balanceTile, styles.unconfirmed)}>
+        <div className={styles.balanceValue}>
+          <Balance amount={unconfirmedBalance} />
+        </div>
+        <T
+          id="ln.walletTab.balance.unconfirmed"
+          m="Unconfirmed balance"
+        />
       </div>
-      <T
-        id="ln.walletTab.balance.unconfirmed"
-        m="Unconfirmed balance"
-      />
-    </div>
-    <div className={classNames(styles.balanceTile,
-      totalBalance === 0 ?
-      styles.zeroFunds
-      :null)
+      <div className={classNames(styles.balanceTile,
+        totalBalance === 0 ?
+          styles.zeroFunds
+          : null)
       }>
-      <div className={styles.balanceValue}>
-        <Balance amount={totalBalance} />
+        <div className={styles.balanceValue}>
+          <Balance amount={totalBalance} />
+        </div>
+        <T
+          id="ln.walletTab.balance.totalBalance"
+          m="Total balance"
+        />
       </div>
-      <T
-        id="ln.walletTab.balance.totalBalance"
-        m="Total balance"
-      />
     </div>
-  </div>
-);
+  );
 
 const BackupInfoHeader = ({ scbPath, scbUpdatedTime }) => (
   <div className={styles.backupInfoHeader}>
@@ -68,14 +67,6 @@ const BackupInfoHeader = ({ scbPath, scbUpdatedTime }) => (
             values={{ lastUpdate: scbUpdatedTime }}
           />
         </div>
-      </div>
-      <div className={styles.backupInfoBtn}>
-        <InfoDocModalButton
-          document="LNBackupInfo"
-          modalClassName="info-modal-fields"
-          double
-          draggable
-        />
       </div>
     </div>
   </div>
@@ -108,65 +99,74 @@ export default ({
   onCancelFileOverwrite,
   onConfirmFileOverwrite
 }) => (
-  <>
-    <Subtitle title={
-      <T id="ln.walletTab.balances" m="Balances" />
+    <>
+      <Subtitle title={
+        <T id="ln.walletTab.balances" m="Balances" />
       } />
-    <BalanceHeader
-      confirmedBalance={confirmedBalance}
-      unconfirmedBalance={unconfirmedBalance}
-      totalBalance={totalBalance}
-    />
-    <Subtitle title={
-      <T id="ln.walletTab.infos" m="Infos" />
+      <BalanceHeader
+        confirmedBalance={confirmedBalance}
+        unconfirmedBalance={unconfirmedBalance}
+        totalBalance={totalBalance}
+      />
+      <Subtitle title={
+        <T id="ln.walletTab.infos" m="Infos" />
       } />
-    <div className={styles.nodeInfos}>
-      <T id="ln.walletTab.nodeInfos.alias" m="Node Alias" />
-      <div className={styles.nodeAlias}>
-        {alias}
+      <div className={styles.nodeInfos}>
+        <T id="ln.walletTab.nodeInfos.alias" m="Node Alias" />
+        <div className={styles.nodeAlias}>
+          {alias}
+        </div>
       </div>
-    </div>
-    <div className={classNames(styles.nodeInfos, styles.lastItem)}>
-      <T id="ln.walletTab.nodeInfos.ID" m="Node ID" />
-      <CopyableText id="copyablePubkey" className={styles.copyableText}>
-        {identityPubkey}
-      </CopyableText>
-    </div>
+      <div className={classNames(styles.nodeInfos, styles.lastItem)}>
+        <T id="ln.walletTab.nodeInfos.ID" m="Node ID" />
+        <CopyableText id="copyablePubkey" className={styles.copyableText}>
+          {identityPubkey}
+        </CopyableText>
+      </div>
 
-    <Subtitle title={
-      <T id="ln.walletTab.backup" m="Backup" />
-      } />
-    <div>
-      <VerticalAccordion
-        header={
-          <BackupInfoHeader scbPath={scbPath} scbUpdatedTime={scbUpdatedTime} />
-        }
-        onToggleAccordion={onToggleShowBackupInfo}
-        show={isShowingBackupInfo}
-        className={""}>
-        <BackupInfoDetails
-          onBackup={onBackup}
-          onVerifyBackup={onVerifyBackup}
-        />
-      </VerticalAccordion>
-    </div>
-
-    <ConfirmModal
-      show={!!confirmFileOverwrite}
-      onCancelModal={onCancelFileOverwrite}
-      onSubmit={onConfirmFileOverwrite}
-      modalTitle={<T id="ln.confirmBackupOverwrite.title" m="Confirm Backup Overwrite"/>}
-      modalContent={
-        <>
-          <T
-            id="ln.confirmBackupOverwrite.content"
-            m="Really overwrite the backup file {file}? The existing backup data will be LOST."
-            values={{ file: <span className="mono">{confirmFileOverwrite}</span> }}
+      <Subtitle title={
+        <T id="ln.walletTab.backup" m="Backup" />
+      } className={styles.backupSubtitle}>
+        <div className={styles.backupInfoBtn}>
+          <InfoDocModalButton
+            document="LNBackupInfo"
+            modalClassName="info-modal-fields"
+            double
+            draggable
           />
-        </>
-      }
-    >
+        </div>
+      </Subtitle>
+      <div>
+        <VerticalAccordion
+          header={
+            <BackupInfoHeader scbPath={scbPath} scbUpdatedTime={scbUpdatedTime} />
+          }
+          onToggleAccordion={onToggleShowBackupInfo}
+          show={isShowingBackupInfo}
+          className={""}>
+          <BackupInfoDetails
+            onBackup={onBackup}
+            onVerifyBackup={onVerifyBackup}
+          />
+        </VerticalAccordion>
+      </div>
 
-    </ConfirmModal>
-  </>
-);
+      <ConfirmModal
+        show={!!confirmFileOverwrite}
+        onCancelModal={onCancelFileOverwrite}
+        onSubmit={onConfirmFileOverwrite}
+        modalTitle={<T id="ln.confirmBackupOverwrite.title" m="Confirm Backup Overwrite" />}
+        modalContent={
+          <>
+            <T
+              id="ln.confirmBackupOverwrite.content"
+              m="Really overwrite the backup file {file}? The existing backup data will be LOST."
+              values={{ file: <span className="mono">{confirmFileOverwrite}</span> }}
+            />
+          </>
+        }
+      >
+
+      </ConfirmModal>
+    </>
+  );
