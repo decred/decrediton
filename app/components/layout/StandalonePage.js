@@ -1,4 +1,5 @@
 import StandalonePageBody from "./StandalonePageBody";
+import { classNames } from "pi-ui";
 
 export default ({ header, children, className }) => {
   const body = header ? (
@@ -8,7 +9,7 @@ export default ({ header, children, className }) => {
   );
 
   return (
-    <div className={["standalone-page", className ? className : ""].join(" ")}>
+    <div className={classNames("standalone-page", className)}>
       {header}
       {body}
     </div>

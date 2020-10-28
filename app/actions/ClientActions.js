@@ -721,10 +721,21 @@ export const ABANDONTRANSACTION_FAILED = "ABANDONTRANSACTION_FAILED";
 
 export const abandonTransactionAttempt = (txid) => (dispatch, getState) => {
   dispatch({ type: ABANDONTRANSACTION_ATTEMPT });
+  const state = getState();
   wallet
-    .abandonTransaction(sel.walletService(getState()), txid)
+    .abandonTransaction(sel.walletService(state), txid)
     .then(() => {
-      dispatch({ type: ABANDONTRANSACTION_SUCCESS });
+      const { regularTransactions, recentRegularTransactions } = state.grpc;
+      // remove from transactions
+      delete regularTransactions[txid];
+      const newRecentRegularTransactions = recentRegularTransactions.filter(
+        (t) => t.txHash !== txid
+      );
+      dispatch({
+        type: ABANDONTRANSACTION_SUCCESS,
+        regularTransactions,
+        recentRegularTransactions: newRecentRegularTransactions
+      });
       dispatch(goBack());
     })
     .catch((error) => dispatch({ error, type: ABANDONTRANSACTION_FAILED }));
