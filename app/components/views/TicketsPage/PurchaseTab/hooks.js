@@ -22,6 +22,7 @@ export const usePurchaseTab = () => {
   const buyerVSP = useSelector(sel.buyerVSP);
   const buyerBalanceToMantain = useSelector(sel.buyerBalanceToMantain);
   const buyerAccount = useSelector(sel.buyerAccount);
+  const rememberedVspHost = useSelector(sel.getRememberedVspHost);
 
   const dispatch = useDispatch();
   const discoverAvailableVSPs = useCallback(() => dispatch(vspa.discoverAvailableVSPs()), [
@@ -63,7 +64,10 @@ export const usePurchaseTab = () => {
   };
 
   const onRevokeTickets = (passphrase) =>
-  dispatch(ca.revokeTicketsAttempt(passphrase));
+    dispatch(ca.revokeTicketsAttempt(passphrase));
+
+  const setRememberedVspHost = (vspHost) =>
+    dispatch(vspa.setRememberedVspHost(vspHost));
 
   // purchase cspp ticket
   const mixedAccount = useSelector(sel.getMixedAccount);
@@ -94,6 +98,8 @@ export const usePurchaseTab = () => {
     mixedAccount,
     changeAccount,
     isLoading,
+    rememberedVspHost,
+    setRememberedVspHost,
     onRevokeTickets
   };
 };

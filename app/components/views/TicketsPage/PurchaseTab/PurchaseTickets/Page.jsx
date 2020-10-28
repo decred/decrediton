@@ -46,12 +46,15 @@ export function PurchasePage({
   handleOnKeyDown,
   ticketPrice,
   setVSP,
+  vsp,
   isValid,
   toggleIsLegacy,
   onV3PurchaseTicket,
   mixedAccount,
   changeAccount,
   isLoading,
+  rememberedVspHost,
+  toggleRememberVspHostCheckBox,
   onRevokeTickets,
   ...props
 }) {
@@ -85,9 +88,12 @@ export function PurchasePage({
             numTickets,
             onChangeNumTickets,
             setVSP,
+            vsp,
             isValid,
             onV3PurchaseTicket,
             isLoading,
+            rememberedVspHost,
+            toggleRememberVspHostCheckBox,
             onRevokeTickets
           }}
         />

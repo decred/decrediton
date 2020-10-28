@@ -28,12 +28,19 @@ export const useVSPSelect = (options, vsp) => {
       initial: () => {
         // set vsp if it is already selected. This can happen if the auto buyer
         // is already running.
-        if (vsp) {
+        if (vsp && vsp.host) {
           const { host, pubkey } = vsp;
           // we add label to the selected option, as the vsp is already
           // selected.
           setSelected({ host, label: host });
-          onSetVspInfo({ pubkey, host });
+
+          if (pubkey) {
+            onSetVspInfo({ pubkey, host });
+          } else {
+            // Fetch the missing fetch pubkey.
+            // Probably the host has read from the config
+           send({ type: "FETCH", value: { host, label: host } });
+          }
         }
         if (!options) send({ type: "REJECT", error: "Options not defined." });
       },
