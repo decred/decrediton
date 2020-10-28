@@ -1,8 +1,9 @@
 import { useState } from "react";
-import VotingPrefs from "./VotingPrefs";
+import VotingPrefs from "./Page";
 import { find, compose, eq, get } from "fp";
 import { useVotingPrefs } from "./hooks";
 
+// TODO this agenda component needs some love.
 const VotingPrefsTab = () => {
   const [selectedAgenda, setSelectedAgenda] = useState(null);
   const {

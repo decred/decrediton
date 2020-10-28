@@ -1,7 +1,7 @@
 import { classNames } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
-import AgendaProgressIndicator from "../ProgressIndicator/ProgressIndicator";
-import styles from "./AgendaCard.module.css";
+import AgendaProgressIndicator from "./ProgressIndicator";
+import styles from "./Overview.module.css";
 
 const AgendaCard = ({ agenda, onClick, selectedChoice }) => (
   <div
@@ -10,7 +10,7 @@ const AgendaCard = ({ agenda, onClick, selectedChoice }) => (
       onClick && styles.agendaCard
     )}
     onClick={onClick}>
-    <div className={styles.bottom}>
+    <div className={styles.cardBottom}>
       <AgendaProgressIndicator
         passed={agenda.passed}
         inProgress={!agenda.finished}

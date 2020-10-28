@@ -1494,7 +1494,7 @@ const allAgendasVerify = createSelector(
   // If allAgendas length is 0 we return the agenda from dcrwallet, as dcrdata
   // may be down.
   (currentAgenda, dcrdataEnabled, allAgendas) =>
-    !dcrdataEnabled || allAgendas.length === 0 ? [currentAgenda] : allAgendas
+    !dcrdataEnabled || allAgendas.length === 0 ? [currentAgenda] : [currentAgenda, ...allAgendas]
 );
 
 const normalizeAgenda = createSelector([currentAgenda], (currentAgenda) => {

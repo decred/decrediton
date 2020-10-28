@@ -1,5 +1,5 @@
-import Overview from "./Overview/Overview";
-import AgendaCard from "./AgendaCard/AgendaCard";
+import Overview from "./Overview";
+import AgendaCard from "./AgendaCard";
 import { useState, useEffect, useMemo } from "react";
 
 const AgendaOverview = ({
@@ -14,16 +14,14 @@ const AgendaOverview = ({
   const [selectedChoiceId, setSelectedChoiceId] = useState(selectedChoice);
   useEffect(() => {
     if (selectedChoice !== selectedChoiceId) {
-      setSelectedChoiceId(selectedChoice);
+      setSelectedChoiceId(selectedChoiceId);
     }
   }, [selectedChoice, selectedChoiceId]);
 
-  const hasModifiedChoice = () => selectedChoiceId !== selectedChoice;
-
   const updatePreferences = () => {
-    if (!hasModifiedChoice()) return;
     onUpdateVotePreference(agenda.name, selectedChoiceId);
   };
+
   const agendaChoices = agenda.choices;
   const choices = useMemo(
     () =>
@@ -41,7 +39,6 @@ const AgendaOverview = ({
         passed: agenda.passed,
         selectedChoiceId,
         activeChoiceId: selectedChoice,
-        hasModifiedChoice,
         choices,
         setSelectedChoiceId,
         updatePreferences,

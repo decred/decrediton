@@ -1,7 +1,7 @@
 import { RadioButtonGroup, classNames } from "pi-ui";
 import { KeyBlueButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
-import ProgressIndicator from "../ProgressIndicator/ProgressIndicator";
+import ProgressIndicator from "./ProgressIndicator";
 import styles from "./Overview.module.css";
 
 const AgendaDetails = ({ name, onClose, description }) => (
@@ -37,10 +37,7 @@ const AgendaVotingOptions = ({
     label: choiceId,
     value: choiceId
   }));
-  const handleChange = (option) => {
-    setSelected(option.value);
-  };
-
+  const handleChange = (option) => setSelected(option.value);
   const showVotingOptions = !!options.length && (!finished || selected);
 
   return (
@@ -74,7 +71,6 @@ const Overview = ({
   agendaDescription,
   choices,
   selectedChoiceId,
-  hasModifiedChoice,
   closeCurrentAgenda,
   setSelectedChoiceId,
   updatePreferences,
@@ -98,7 +94,7 @@ const Overview = ({
       {!isFinished && (
         <div className={styles.bottomOptions}>
           <KeyBlueButton
-            disabled={!hasModifiedChoice || disabled}
+            disabled={disabled}
             className={styles.updatePreferencesButton}
             onClick={updatePreferences}>
             <T id="agenda.updatePreference" m="Update Preference" />
