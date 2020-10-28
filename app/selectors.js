@@ -800,8 +800,12 @@ export const getVSPTickets = createSelector(
     Object.keys(hashes).forEach((feeStatus) => {
       // fee status hashes
       const fsHashes = hashes[feeStatus];
-      vspTickets[feeStatus] = fsHashes.map((hash) => {
-        if (!hash) return null;
+
+      fsHashes.forEach((hash) => {
+        if (!vspTickets[feeStatus]) {
+          vspTickets[feeStatus] = [];
+        }
+        if (!hash) return;
         // right now we only show fee status for tickets which can be voted.
         if (!txsMap[hash]) {
           // it should not have an uknown tx. If there is, we should get this tx
@@ -815,7 +819,7 @@ export const getVSPTickets = createSelector(
         ) {
           const objCopy = Object.assign({}, txsMap[hash]);
           objCopy.feeStatus = feeStatus;
-          return objCopy;
+          vspTickets[feeStatus] = [objCopy, ...vspTickets[feeStatus]];
         }
         return null;
       });
