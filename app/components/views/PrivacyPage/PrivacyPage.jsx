@@ -9,7 +9,7 @@ const PrivacyPageHeader = React.memo(
   () => (
     <StandaloneHeader
     iconClassName="security"
-    title={<T id="privacy.title" m="Privacy and Security Center" />}
+    title={<T id="privacypage.title" m="Privacy and Security Center" />}
     description={
       <T
         id="privacy.description"
