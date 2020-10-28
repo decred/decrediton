@@ -17,7 +17,6 @@ const StakeTxRow = ({
   leaveTimestamp,
   enterTimestamp,
   pending,
-  txTs,
   txLeaveTs,
   accountName,
   txType,
@@ -110,7 +109,9 @@ const StakeTxRow = ({
           {accountName}
         </div>
         {!pending && (
-          <div className={styles.timeDateSpacer}>{timeMessage(txLeaveTs)}</div>
+          <div className={styles.timeDateSpacer}>
+            {txLeaveTs && timeMessage(txLeaveTs)}
+          </div>
         )}
       </div>
     </Row>
