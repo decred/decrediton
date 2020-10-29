@@ -56,7 +56,7 @@ const getSendAllFundsIcon = ({
       <a className={classNames(
         styles.sendIconWrapper,
         styles.cancelIcon
-      )} onClick={onHideSendAll} s/>
+      )} onClick={onHideSendAll} />
     </Tooltip>
   );
 
