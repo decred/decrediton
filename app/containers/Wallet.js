@@ -40,13 +40,13 @@ class Wallet extends React.Component {
         compareInventory();
       }
     }, 60000);
-    // Get peer info every 1 minute, so we can no if there are no available
+    // Get peer info every 10 seconds, so we can no if there are no available
     // peers.
     this.props.setInterval(() => {
       if (politeiaEnabled) {
         getPeerInfo();
       }
-    }, 60000);
+    }, 10000);
   }
 
   render() {
