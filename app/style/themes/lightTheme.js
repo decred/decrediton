@@ -228,7 +228,7 @@ const lightTheme = {
   "menu-trezor-hover": "url('style/icons/trezorHover.svg')",
   "menu-cancel-rescan-icon": "url('style/icons/menu-cancel-rescan.svg')",
   "politeia-loading-icon": "url('style/icons/politeia-loading.gif')",
-  "backup-icon": "url('style/icons/backup.svg')"
+  "backup-icon": "url('style/icons/harddrive.svg')"
 };
 
 export default lightTheme;

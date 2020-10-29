@@ -228,7 +228,7 @@ const darkTheme = {
   "menu-trezor-hover": "url('style/icons/trezorHoverDark.svg')",
   "menu-cancel-rescan-icon": "url('style/icons/menuCancelRescanDark.svg')",
   "politeia-loading-icon": "url('style/icons/politeia-loading-dark.gif')",
-  "backup-icon": "url('style/icons/backup.svg')"
+  "backup-icon": "url('style/icons/harddriveDark.svg')"
 };
 
 export default darkTheme;

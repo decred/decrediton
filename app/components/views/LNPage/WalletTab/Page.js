@@ -1,6 +1,6 @@
 import { CopyableText, classNames } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
-import { Subtitle, Balance, VerticalAccordion } from "shared";
+import { Subtitle, Balance } from "shared";
 import { InfoDocModalButton, InvisibleButton } from "buttons";
 import { ConfirmModal } from "modals";
 import styles from "./WalletTab.module.css";
@@ -50,23 +50,20 @@ const BalanceHeader = ({
 
 const BackupInfoHeader = ({ scbPath, scbUpdatedTime }) => (
   <div className={styles.backupInfoHeader}>
-    <div className={styles.backupIcon} />
-    <div className={styles.backupInfo}>
-      <div className={styles.backupInfoText}>
-        <div>
-          <T
-            id="ln.backupInfo.location"
-            m="SCB backup file location: {path}"
-            values={{ path: scbPath }}
-          />
-        </div>
-        <div>
-          <T
-            id="ln.backupInfo.lastUpdated"
-            m="Last Updated: {lastUpdate, date} {lastUpdate, time, short}"
-            values={{ lastUpdate: scbUpdatedTime }}
-          />
-        </div>
+    <div className={styles.backupInfoText}>
+      <div>
+        <T
+          id="ln.backupInfo.location"
+          m="SCB backup file location: {path}"
+          values={{ path: scbPath }}
+        />
+      </div>
+      <div>
+        <T
+          id="ln.backupInfo.lastUpdated"
+          m="Last Updated: {lastUpdate, date} {lastUpdate, time, short}"
+          values={{ lastUpdate: scbUpdatedTime }}
+        />
       </div>
     </div>
   </div>
@@ -89,11 +86,9 @@ export default ({
   confirmedBalance,
   totalBalance,
   unconfirmedBalance,
-  isShowingBackupInfo,
   scbPath,
   scbUpdatedTime,
   confirmFileOverwrite,
-  onToggleShowBackupInfo,
   onBackup,
   onVerifyBackup,
   onCancelFileOverwrite,
@@ -136,19 +131,12 @@ export default ({
           />
         </div>
       </Subtitle>
-      <div>
-        <VerticalAccordion
-          header={
-            <BackupInfoHeader scbPath={scbPath} scbUpdatedTime={scbUpdatedTime} />
-          }
-          onToggleAccordion={onToggleShowBackupInfo}
-          show={isShowingBackupInfo}
-          className={""}>
-          <BackupInfoDetails
-            onBackup={onBackup}
-            onVerifyBackup={onVerifyBackup}
-          />
-        </VerticalAccordion>
+      <div className={styles.backupPanel}>
+        <BackupInfoHeader scbPath={scbPath} scbUpdatedTime={scbUpdatedTime} />
+        <BackupInfoDetails
+          onBackup={onBackup}
+          onVerifyBackup={onVerifyBackup}
+        />
       </div>
 
       <ConfirmModal
