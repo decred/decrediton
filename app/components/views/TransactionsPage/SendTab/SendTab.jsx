@@ -144,7 +144,11 @@ const SendTab = () => {
       ...outputs[0],
       data: {
         ...outputs[0].data,
-        amount: account.spendable
+        amount: account.spendable,
+        error: {
+         ...outputs[0].data.error,
+          amount: null
+        }
       }
     }];
     setIsSendAll(true);
