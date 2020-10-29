@@ -1,6 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import { Tooltip } from "shared";
-import styles from "./ProgressIndicator.module.css";
+import styles from "./Overview.module.css";
 
 // TODO: we should improve this component and use the StatusTag component
 //       from pi-ui. But since the component is not able to receive React

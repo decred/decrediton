@@ -10,10 +10,7 @@ export function useVotingPrefs() {
   const defaultStakePool = useSelector(sel.defaultStakePool);
   const stakePool = useSelector(sel.selectedStakePool);
   const allAgendas = useSelector(sel.allAgendas);
-  const onUpdateVotePreference = useCallback(
-    () => dispatch(ca.setVoteChoicesAttempt),
-    [dispatch]
-  );
+  const onUpdateVotePreference = (agendaId, choiceId) => dispatch(ca.setVoteChoicesAttempt(agendaId, choiceId));
   const onChangeStakePool = useCallback(
     () => dispatch(spa.changeSelectedStakePool),
     [dispatch]

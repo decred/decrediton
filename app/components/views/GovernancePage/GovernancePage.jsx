@@ -2,7 +2,7 @@ import { TabbedPage, TabbedPageTab as Tab, TitleHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
 import { Switch, Redirect } from "react-router-dom";
 import ProposalsTab from "./Proposals/ProposalsTab";
-import VotingPrefsTab from "./Blockchain/VotingPrefsTab";
+import VotingPrefsTab from "./Blockchain/Blockchain";
 import TabHeader from "./TabHeader/TabHeader";
 
 const PageHeader = () => (
