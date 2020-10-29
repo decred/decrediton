@@ -26,7 +26,6 @@ class WalletTab extends React.Component {
       amount: 0,
       account: props.defaultAccount,
       actionsEnabled: false,
-      isShowingBackupInfo: false,
       confirmFileOverwrite: null
     };
   }
@@ -63,10 +62,6 @@ class WalletTab extends React.Component {
       .catch(() => {
         this.setState({ sending: false });
       });
-  }
-
-  onToggleShowBackupInfo() {
-    this.setState({ isShowingBackupInfo: !this.state.isShowingBackupInfo });
   }
 
   async onConfirmFileOverwrite() {
@@ -120,7 +115,6 @@ class WalletTab extends React.Component {
       amount,
       actionsEnabled,
       sending,
-      isShowingBackupInfo,
       confirmFileOverwrite
     } = this.state;
     const { alias, identityPubkey } = this.props.info;
@@ -130,7 +124,6 @@ class WalletTab extends React.Component {
       onChangeAccount,
       onFundWallet,
       onWithdrawWallet,
-      onToggleShowBackupInfo,
       onBackup,
       onVerifyBackup,
       onCancelFileOverwrite,
@@ -147,7 +140,6 @@ class WalletTab extends React.Component {
         amount={amount}
         totalBalance={totalBalance}
         actionsEnabled={actionsEnabled && !sending}
-        isShowingBackupInfo={isShowingBackupInfo}
         tsDate={tsDate}
         scbPath={scbPath}
         scbUpdatedTime={scbUpdatedTime}
@@ -156,7 +148,6 @@ class WalletTab extends React.Component {
         onChangeAccount={onChangeAccount}
         onFundWallet={onFundWallet}
         onWithdrawWallet={onWithdrawWallet}
-        onToggleShowBackupInfo={onToggleShowBackupInfo}
         onBackup={onBackup}
         onVerifyBackup={onVerifyBackup}
         onCancelFileOverwrite={onCancelFileOverwrite}

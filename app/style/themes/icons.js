@@ -15,7 +15,6 @@ const icons = {
   "arrow-down-mid-blue-icon": "url('style/icons/arrow-down-mid-blue.svg')",
   "arrow-right-blue-icon": "url('style/icons/arrow-right-key-blue.svg')",
   "arrow-right-key-blue-icon": "url('style/icons/arrow-right-key-blue.svg')",
-  "backup-icon": "url('style/icons/backup.svg')",
   "balance-tab-icon": "url('style/icons/balanceSelector.svg')",
   "bell-notification-icon": "url('style/icons/bell-notification.svg')",
   "buy-decred-icon": "url('style/icons/buy-decred.svg')",

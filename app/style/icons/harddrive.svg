@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="450" height="450" viewBox="0 0 450 450">
+  <title>harddrive</title>
+  <g>
+    <rect x="75" y="25" width="300" height="49.999" fill="#c4cbd2"/>
+    <path d="M375,50H75V425H375Z" fill="#091440"/>
+    <path d="M225,112.18a125,125,0,1,0,125,125A125,125,0,0,0,225,112.18Z" fill="#c4cbd2"/>
+    <circle cx="225.126" cy="237.055" r="25" fill="#091440"/>
+    <rect width="450" height="450" fill="none"/>
+    <circle cx="112.5" cy="87.499" r="12.5" fill="#c4cbd2"/>
+    <circle cx="337.5" cy="87.499" r="12.5" fill="#c4cbd2"/>
+    <circle cx="112.5" cy="387.5" r="12.5" fill="#c4cbd2"/>
+    <circle cx="337.5" cy="387.5" r="12.5" fill="#c4cbd2"/>
+  </g>
+</svg>
