@@ -125,6 +125,17 @@ const SendTab = () => {
 
   const onChangeAccount = (account) => {
     setAccount(account);
+
+    if (isSendAll) {
+      const newOutputs = [{
+        ...outputs[0],
+        data: {
+          ...outputs[0].data,
+          amount: account.spendable
+        }
+      }];
+      onSetOutputs(newOutputs);
+    }
   };
 
   const onShowSendSelf = () => {
