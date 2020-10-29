@@ -17,32 +17,32 @@ const subtitleMenu = ({
   onChangeSelectedType,
   onChangeSortType
 }) => (
-    <div className={style.ticketsButtons}>
-      <Tooltip
-        tipWidth={300}
-        text={<T id="tickets.sortby.tooltip" m="Sort By" />}>
-        <EyeFilterMenu
-          labelKey="label"
-          keyField="value"
-          options={sortTypes}
-          selected={selectedSortOrderKey}
-          onChange={onChangeSortType}
-          type="sortBy"
-        />
-      </Tooltip>
-      <Tooltip
-        tipWidth={300}
-        text={<T id="tickets.tickettypes.tooltip" m="Ticket Status" />}>
-        <EyeFilterMenu
-          labelKey="label"
-          keyField="key"
-          options={ticketTypes}
-          selected={selectedTicketTypeKey}
-          onChange={onChangeSelectedType}
-        />
-      </Tooltip>
-    </div>
-  );
+  <div className={style.ticketsButtons}>
+    <Tooltip
+      tipWidth={300}
+      text={<T id="tickets.sortby.tooltip" m="Sort By" />}>
+      <EyeFilterMenu
+        labelKey="label"
+        keyField="value"
+        options={sortTypes}
+        selected={selectedSortOrderKey}
+        onChange={onChangeSortType}
+        type="sortBy"
+      />
+    </Tooltip>
+    <Tooltip
+      tipWidth={300}
+      text={<T id="tickets.tickettypes.tooltip" m="Ticket Status" />}>
+      <EyeFilterMenu
+        labelKey="label"
+        keyField="key"
+        options={ticketTypes}
+        selected={selectedTicketTypeKey}
+        onChange={onChangeSelectedType}
+      />
+    </Tooltip>
+  </div>
+);
 
 const TicketListPage = ({
   tickets,
@@ -95,7 +95,7 @@ const TicketListPage = ({
               <T id="tickets.table.header.account" m="Account" />
             </div>
             <div>
-              <T id="tickets.table.header.purchased" m="Purchased" />
+              <T id="tickets.table.header.purchased" m="Voted" />
             </div>
           </div>
           <TxHistory
@@ -113,8 +113,8 @@ const TicketListPage = ({
       ) : tickets.length > 0 ? (
         <NoMoreTicketsIndicator />
       ) : (
-            <NoTicketsIndicator />
-          )}
+        <NoTicketsIndicator />
+      )}
     </InfiniteScroll>
   );
 };
