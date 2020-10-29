@@ -33,10 +33,10 @@ export const linkList = [
     ariaLabel: "Accounts"
   },
   {
-    path: "/security",
-    link: <T id="activesidebar.link.security" m="Security" />,
+    path: "/privacy",
+    link: <T id="sidebar.link.privacy" m="Privacy" />,
     icon: "securitycntr",
-    ariaLabel: "Security"
+    ariaLabel: "Privacy"
   },
   {
     path: "/help",

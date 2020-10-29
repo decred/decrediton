@@ -8,7 +8,7 @@ import WalletError from "components/views/WalletError";
 import ErrorScreen from "components/ErrorScreen";
 import InvalidRPCVersion from "components/views/InvalidRPCVersion";
 import HelpPage from "components/views/HelpPage/HelpPage";
-import SecurityPage from "components/views/SecurityPage/SecurityPage";
+import PrivacyPage from "components/views/PrivacyPage/PrivacyPage";
 import TransactionsPage from "components/views/TransactionsPage/TransactionsPage";
 import TransactionPage from "components/views/TransactionPage/TransactionPage";
 import TicketsPage from "components/views/TicketsPage/TicketsPage";
@@ -66,7 +66,7 @@ class Wallet extends React.Component {
             <Route path="/error" component={ErrorScreen} />
             <Route path="/invalidRPCVersion" component={InvalidRPCVersion} />
             <Route path="/help" component={HelpPage} />
-            <Route path="/security" component={SecurityPage} />
+            <Route path="/privacy" component={PrivacyPage} />
             <Route path="/transactions" component={TransactionsPage} />
             <Route path="/tickets" component={TicketsPage} />
             <Route path="/tutorial" component={TutorialsPage} />
