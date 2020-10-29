@@ -105,7 +105,7 @@ const darkTheme = {
   "transaction-account-name-bg": "#2F4D8C",
   "account-row-hover": "#1F325F",
   "chart-cursor-color": "#36579E",
-  "linear-progress-text-default": "#7DA7D9",
+  "linear-progress-text-default": "#fff",
   "onboard-toolbar-shadow": "rgba(9,20,64,0.13)",
   "onboard-toolbar-background": "#152042",
   "background-copy-color": "#e9f8ff",
