@@ -7,10 +7,11 @@ import "style/PurchaseTickets.less";
 import { InfoDocModalButton } from "buttons";
 import UnsignedTickets from "../UnsignedTickets";
 import styles from "../PurchaseTab.module.css";
+import { classNames } from "pi-ui";
 
 const getTitleIcon = ({ toggleIsLegacy }) => (
   <>
-    <div className={styles.checkbox}>
+    <div className={classNames(styles.iconWrapper, styles.checkbox)}>
       <div className={styles.label}>
         <T id="purchase.isLegacy.legacy" m="Is Legacy" />
       </div>

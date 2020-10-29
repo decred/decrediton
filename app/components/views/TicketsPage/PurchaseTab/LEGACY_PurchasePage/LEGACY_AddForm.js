@@ -10,6 +10,7 @@ import "style/Layout.less";
 import "style/StakePool.less";
 import styles from "../PurchaseTab.module.css";
 import { AddVSPButton } from "buttons";
+import { classNames } from "pi-ui";
 
 const messages = defineMessages({
   apiKeyPlaceholder: {
@@ -43,7 +44,7 @@ const StakePoolsAddForm = ({
     <>
       <div className="stakepool-add-title">
         <T id="stakepool.addPoolTitle" m="Add a VSP" />
-        <div className={styles.checkbox}>
+        <div className={classNames(styles.iconWrapper, styles.checkbox)}>
           <div className={styles.label}><T id="purchase.isLegacy.legacy.add" m="Is Legacy" /></div>
           <input id="box" type="checkbox" checked={true} onChange={() => toggleIsLegacy(false)} />
           <label htmlFor="box" className={styles.checkboxLabel}></label>

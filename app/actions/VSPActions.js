@@ -475,9 +475,13 @@ export const discoverAvailableStakepools = () => async (dispatch, getState) => {
   return vspInfo;
 };
 
-
 export const TOGGLE_ISLEGACY = "TOGGLE_ISLEGACY";
-export const toggleIsLegacy = (isLegacy) => (dispatch) => {
+export const toggleIsLegacy = (isLegacy) => (dispatch, getState) => {
+  const {
+    daemon: { walletName }
+  } = getState();
+  const walletCfg = getWalletCfg(sel.isTestNet(getState()), walletName);
+  walletCfg.set("vsp_is_legacy", isLegacy);
   dispatch({
     type: TOGGLE_ISLEGACY,
     isLegacy

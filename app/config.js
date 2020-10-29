@@ -55,6 +55,9 @@ export function initWalletCfg(testnet, walletPath) {
   if (!config.has("trezor")) {
     config.set("trezor", false);
   }
+  if (!config.has("vsp_is_legacy")) {
+    config.set("vsp_is_legacy", false);
+  }
   // TODO remove this from here before release, as it will be an optional
   // config option for now.
   if (!config.has("enableprivacy")) {
@@ -105,6 +108,7 @@ function cleanWalletCfg(config) {
     "csppserver",
     "csppport",
     "dismiss_backup_msg_redeem_script",
+    "vsp_is_legacy",
     "remembered_vsp_host"
   ];
   for (key in config.store) {

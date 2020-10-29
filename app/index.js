@@ -75,7 +75,7 @@ const initialState = {
     availableVSPs: null,
     availableVSPsError: null,
     ticketAutoBuyerRunning: null,
-    isLegacy: false,
+    isLegacy: null,
     rememberedVspHost: null
   },
   daemon: {
