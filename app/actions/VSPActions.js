@@ -353,8 +353,9 @@ export const DISCOVERAVAILABLEVSPS_ATTEMPT = "DISCOVERAVAILABLEVSPS_ATTEMPT";
 export const DISCOVERAVAILABLEVSPS_SUCCESS = "DISCOVERAVAILABLEVSPS_SUCCESS";
 export const DISCOVERAVAILABLEVSPS_FAILED = "DISCOVERAVAILABLEVSPS_FAILED";
 
-export const discoverAvailableVSPs = () => async (dispatch) => {
+export const discoverAvailableVSPs = () => async (dispatch, getState) => {
   dispatch({ type: DISCOVERAVAILABLEVSPS_ATTEMPT });
+  const isTestnet = sel.isTestNet(getState());
   try {
     let availableVSPs = await wallet.getAllVSPs();
     // add label and value so we can show this values on a select input.
@@ -363,7 +364,12 @@ export const discoverAvailableVSPs = () => async (dispatch) => {
         label: vsp.host,
         value: vsp.host
       })
-    );
+    ).filter(({ vspData }) => {
+      if(!vspData) return false;
+      const vspTestnet = vspData.network === TESTNET;
+      return vspTestnet === isTestnet;
+    });
+
     dispatch({
       type: DISCOVERAVAILABLEVSPS_SUCCESS,
       availableVSPs
