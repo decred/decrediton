@@ -13,7 +13,7 @@ const PrivacyPageHeader = React.memo(
     description={
       <T
         id="privacy.description"
-        m="Various tools that help in different aspects of crypto currency privacy and security will be located here."
+        m="Tools that help in different aspects of cryptocurrency privacy and security."
       />
     }
   />
