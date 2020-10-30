@@ -106,6 +106,7 @@ const darkTheme = {
   "account-row-hover": "#1F325F",
   "chart-cursor-color": "#36579E",
   "linear-progress-text-default": "#fff",
+  "linear-progress-text-initial": "#7DA7D9",
   "onboard-toolbar-shadow": "rgba(9,20,64,0.13)",
   "onboard-toolbar-background": "#152042",
   "background-copy-color": "#e9f8ff",
@@ -153,6 +154,7 @@ const darkTheme = {
   "wallet-gray-icon": "url('style/icons/walletGrayDark.svg')",
   blockchain: "url('style/icons/blockchainDark.svg')",
   "blockchain-default": "url('style/icons/blockchainDefaultDark.svg')",
+  "blockchain-initial": "url('style/icons/blockchainInitialDark.svg')",
   "launcher-edit-wallets": "url('style/icons/editDefaultDark.svg')",
   "launcher-edit-wallets-hover": "url('style/icons/editHoverDark.svg')",
   "onboarding-checkcircle": "url('style/icons/onboardingCheckcircleDark.svg')",
@@ -228,7 +230,8 @@ const darkTheme = {
   "menu-trezor-hover": "url('style/icons/trezorHoverDark.svg')",
   "menu-cancel-rescan-icon": "url('style/icons/menuCancelRescanDark.svg')",
   "politeia-loading-icon": "url('style/icons/politeia-loading-dark.gif')",
-  "backup-icon": "url('style/icons/harddriveDark.svg')"
+  "loader-animation-daemon-waiting-initial":
+    "url('style/icons/daemonWaitingLoaderInitialDark.gif')"
 };
 
 export default darkTheme;

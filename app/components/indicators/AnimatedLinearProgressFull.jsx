@@ -59,19 +59,22 @@ const AnimatedLinearProgressFull = ({
   }
   return (
     <>
-      <div className={classNames("linear-progress", animationType)}>
+      <div className={classNames("linear-progress", animationType && animationType)}>
         {getDaemonSynced || isSPV ? (
+          <>
           <div
-            className={"linear-progress-bar " + (error ? "error" : null)}
+            className={classNames("linear-progress-bar", error && "error")}
             style={
               error || getDaemonSynced
                 ? {}
                 : { width: `${perComplete * 100}` + "%" }
             }></div>
+            <div className={classNames("linear-progress-text", animationType && animationType)}>{text}</div>
+          </>
         ) : (
           <>
             <div
-              className={"linear-progress-bar " + (error && "error")}
+              className={classNames("linear-progress-bar", error && "error")}
               style={{ width: `${leftStartingPoint}%` }}></div>
             <div className="is-row">
               {perComplete > 0.1 && perComplete < 1 && (
@@ -111,9 +114,9 @@ const AnimatedLinearProgressFull = ({
                 />
               )}
             </div>
+            <div className={classNames("linear-progress-text", animationType ?? animationType, leftStartingPoint == 0 && "initial")}>{text}</div>
           </>
         )}
-        <div className={"linear-progress-text " + animationType}>{text}</div>
       </div>
       <div>
         {getCurrentBlockCount && !getDaemonSynced && (
