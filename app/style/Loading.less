@@ -159,6 +159,11 @@
   width: 100%;
 }
 
+.linear-progress-text.initial {
+  color: var(--linear-progress-text-initial);
+  background-image: var(--blockchain-initial);
+}
+
 .linear-progress-text.blockchain-syncing {
   padding-left: 56px;
   background-image: var(--loader-animation-blockchain-syncing);
@@ -171,6 +176,9 @@
   background-image: var(--loader-animation-daemon-waiting);
   background-position: 15px 15px;
   background-size: 30px;
+}
+.linear-progress-text.daemon-waiting.initial {
+  background-image: var(--loader-animation-daemon-waiting-initial);
 }
 
 .linear-progress-text.discovering-addresses {
