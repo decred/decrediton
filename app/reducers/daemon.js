@@ -88,6 +88,7 @@ export default function version(state = {}, action) {
         daemonCloseRequestAttempt: false,
         daemonCloseResponse: action.response,
         daemonStarted: false,
+        daemonStarting: false,
         daemonStopped: true,
         credentials: null,
         appdata: null,
@@ -133,7 +134,12 @@ export default function version(state = {}, action) {
     case SHUTDOWN_REQUESTED:
       return { ...state, shutdownRequested: true };
     case DAEMONSTOPPED:
-      return { ...state, daemonStarted: false, daemonStopped: true };
+      return {
+        ...state,
+        daemonStarted: false,
+        daemonStarting: false,
+        daemonStopped: true
+      };
     case AVAILABLE_WALLETS:
       return {
         ...state,
