@@ -6,7 +6,6 @@ export function usePrivacyForm() {
   const changeAccount = useSelector(sel.getChangeAccount);
   const csppServer = useSelector(sel.getCsppServer);
   const csppPort = useSelector(sel.getCsppPort);
-  const mixedAccountBranch = useSelector(sel.getMixedAccountBranch);
 
   const accounts = useSelector(sel.sortedAccounts);
 
@@ -22,7 +21,6 @@ export function usePrivacyForm() {
     mixedAccountName,
     changeAccountName,
     csppServer,
-    csppPort,
-    mixedAccountBranch
+    csppPort
   };
 }

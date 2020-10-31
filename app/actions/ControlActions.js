@@ -422,17 +422,16 @@ export const startTicketBuyerV3Attempt = (
   const changeAccount = sel.getChangeAccount(getState());
   const csppServer = sel.getCsppServer(getState());
   const csppPort = sel.getCsppPort(getState());
-  const mixedAcctBranch = sel.getMixedAccountBranch(getState());
 
   if (mixedAccount && changeAccount) {
-    if (!mixedAccount || !changeAccount || !csppServer || !csppPort || (!mixedAcctBranch && mixedAcctBranch !== 0)) {
+    if (!mixedAccount || !changeAccount || !csppServer || !csppPort) {
       throw "missing cspp argument";
     }
     request.setMixedAccount(mixedAccount);
     request.setMixedSplitAccount(mixedAccount);
     request.setChangeAccount(changeAccount);
     request.setCsppServer(csppServer + ":" + csppPort);
-    request.setMixedAccountBranch(mixedAcctBranch);
+    request.setMixedAccountBranch(0);
   }
 
   request.setBalanceToMaintain(balanceToMaintain);
@@ -818,8 +817,9 @@ export const GETPEERINFO_SUCCESS = "GETPEERINFO_SUCCESS";
 
 export const getPeerInfo = () => (dispatch, getState) => {
   dispatch({ type: GETPEERINFO_ATTEMPT });
-  return wallet.getPeerInfo(getState().grpc.walletService)
-    .then(resp => {
+  return wallet
+    .getPeerInfo(getState().grpc.walletService)
+    .then((resp) => {
       const peersCount = resp.wrappers_[1].length;
       dispatch({ type: GETPEERINFO_SUCCESS, peersCount });
     })
