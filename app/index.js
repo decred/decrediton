@@ -19,7 +19,13 @@ import { DCR, THEME, LOCALE, NETWORK } from "constants";
 import { getSelectedWallet } from "./main_dev/launch";
 import { AppContainer } from "react-hot-loader";
 
-import { defaultLightTheme, ThemeProvider, defaultDarkTheme } from "pi-ui";
+import {
+  defaultLightTheme,
+  ThemeProvider,
+  defaultDarkTheme,
+  DEFAULT_DARK_THEME_NAME,
+  DEFAULT_LIGHT_THEME_NAME
+} from "pi-ui";
 import { lightTheme, darkTheme, icons } from "style/themes";
 import SourceSansProLight from "style/fonts/SourceSansPro-Light.ttf";
 import SourceSansProLightItalic from "style/fonts/SourceSansPro-LightItalic.ttf";
@@ -485,19 +491,24 @@ const fonts = [
 ];
 
 const themes = {
-  "theme-light": { ...defaultLightTheme, ...lightTheme, ...icons },
-  "theme-dark": { ...defaultDarkTheme, ...darkTheme, ...icons }
+  [DEFAULT_LIGHT_THEME_NAME]: { ...defaultLightTheme, ...lightTheme, ...icons },
+  [DEFAULT_DARK_THEME_NAME]: { ...defaultDarkTheme, ...darkTheme, ...icons }
 };
 
 const history = createMemoryHistory();
 const store = configureStore(initialState, history);
+
+const currentTheme = currentSettings && currentSettings.theme;
+const defaultThemeName = currentTheme.includes("dark")
+  ? DEFAULT_DARK_THEME_NAME
+  : DEFAULT_LIGHT_THEME_NAME;
 
 const render = () =>
   ReactDOM.render(
     <AppContainer>
       <ThemeProvider
         themes={themes}
-        defaultThemeName={currentSettings.theme}
+        defaultThemeName={defaultThemeName}
         fonts={fonts}>
         <Provider store={store}>
           <ConnectedRouter history={history}>
