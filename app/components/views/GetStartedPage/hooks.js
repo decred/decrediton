@@ -145,12 +145,13 @@ export const useGetStarted = () => {
         console.log("is At Start Wallet");
         const { selectedWallet } = context;
         const { passPhrase } = context;
+        const { isWatchingOnly, isTrezor } = selectedWallet.value;
         const hasPassPhrase = !!passPhrase;
         onStartWallet(selectedWallet, hasPassPhrase)
           .then((discoverAccountsComplete) => {
             setSelectedWallet(selectedWallet);
             const { passPhrase } = context;
-            if (!discoverAccountsComplete && !passPhrase) {
+            if (!discoverAccountsComplete && !passPhrase && !isWatchingOnly && !isTrezor) {
               // Need to discover accounts and the passphrase isn't stored in
               // context, so ask for the private passphrase before continuing.
               send({ type: "WALLET_DISCOVERACCOUNTS_PASS" });
