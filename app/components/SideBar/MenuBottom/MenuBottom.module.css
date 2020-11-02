@@ -87,6 +87,23 @@
   text-decoration: none;
 }
 
+.peersCount {
+  display: flex;
+  align-items: center;
+  padding-left: 47px;
+  padding-bottom: 16px;
+  background-color: var(--info-modal-button-text);
+}
+
+.peersCountLabel {
+  color: var(--disabled-color);
+}
+
+.peersCountValue {
+  font-family: var(--font-family-monospace);
+  color: var(--sidebar-bottom-light-text-color);
+}
+
 .rescanButtonArea {
   padding-top: 2px;
   padding-right: 5px;

@@ -10,12 +10,9 @@ const Logo = React.memo(
     onReduceSideBar,
     onExpandSideBar,
     isWatchingOnly,
-    getRunningIndicator,
-    peersCount
+    getRunningIndicator
   }) => (
-    <div
-      className={expandSideBar ? style.logo : style.reducedLogo}
-    >
+    <div className={expandSideBar ? style.logo : style.reducedLogo}>
       {isWatchingOnly && (
         <Tooltip
           text={
@@ -34,15 +31,6 @@ const Logo = React.memo(
           !expandSideBar ? style.hamburger : isTestNet ? TESTNET : MAINNET
         }
       />
-      <Tooltip
-        text={
-          <T
-            id="sidebar.peersCount"
-            m="Peers Count"
-          />
-        }>
-        <div className={style.peersCount}>{peersCount}</div>
-      </Tooltip>
       {getRunningIndicator && (
         <Tooltip
           text={

@@ -3,7 +3,7 @@ import { Balance } from "shared";
 import { RescanButton } from "buttons";
 import { RescanProgress } from "indicators";
 import LastBlockTime from "./LastBlockTime/LastBlockTime";
-import style from "./MenuBottom.module.css";
+import styles from "./MenuBottom.module.css";
 import { classNames, Tooltip } from "pi-ui";
 
 const MenuBarExpanded = ({
@@ -15,49 +15,56 @@ const MenuBarExpanded = ({
   lastBlockTimestamp,
   onShowAccounts,
   onHideAccounts,
-  isSPV
+  isSPV,
+  peersCount
 }) => (
-  <div className={style.bottom}>
+  <div className={styles.bottom}>
     <div
-      className={style.short}
+      className={styles.short}
       onMouseEnter={rescanRequest ? null : onShowAccounts}
       onMouseLeave={rescanRequest ? null : onHideAccounts}>
       <div
         className={classNames(
-          style.shortSeparator,
-          isShowingAccounts && style.showAccounts
+          styles.shortSeparator,
+          isShowingAccounts && styles.showAccounts
         )}></div>
-      <div className={style.shortName}>
+      <div className={styles.shortName}>
         <T id="sidebar.totalBalance" m="Total Balance" />:
       </div>
-      <div className={style.shortValue}>
+      <div className={styles.shortValue}>
         <Balance amount={totalBalance} />
       </div>
     </div>
-    <div className={style.latestBlock}>
+    <div className={styles.latestBlock}>
       {rescanRequest ? <RescanProgress /> : null}
       {currentBlockHeight && !rescanRequest && (
         <>
-          <div className={style.rescanButtonArea}>
+          <div className={styles.rescanButtonArea}>
             <RescanButton {...{ rescanRequest, rescanAttempt }} />
           </div>
-          <a className={style.latestBlockName}>
+          <a className={styles.latestBlockName}>
             <T id="sidebar.latestBlock" m="Latest Block" />
-            <span className={style.latestBlockNumber}>
+            <span className={styles.latestBlockNumber}>
               {" "}
               {currentBlockHeight}
             </span>
           </a>
           {isSPV && (
             <Tooltip content={<T id="sidebar.spvMode" m="SPV Mode" />}>
-              <div className={style.spvIcon} />
+              <div className={styles.spvIcon} />
             </Tooltip>
           )}
-          <div className={style.latestBlockTime}>
+          <div className={styles.latestBlockTime}>
             <LastBlockTime lastBlockTimestamp={lastBlockTimestamp} />
           </div>
         </>
       )}
+    </div>
+    <div className={styles.peersCount}>
+      <span className={styles.peersCountLabel}>
+        <T id="sidebar.peersCount" m="Peers" />
+      </span>
+      <span className={styles.peersCountValue}>&nbsp;{peersCount}</span>
     </div>
   </div>
 );
