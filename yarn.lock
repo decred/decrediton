@@ -3952,9 +3952,9 @@ configstore@^5.0.1:
     write-file-atomic "^3.0.0"
     xdg-basedir "^4.0.0"
 
-"connect@https://github.com/JoeGruffins/npm-extended-dcr#139ffdccfccb3ab94f6f8f9098de2a868f18bf41":
-  version "8.1.14-extended"
-  resolved "https://github.com/JoeGruffins/npm-extended-dcr#139ffdccfccb3ab94f6f8f9098de2a868f18bf41"
+"connect@https://github.com/JoeGruffins/npm-extended-dcr#bed54ad6d4acecd906d79946d62718c67411ec96":
+  version "8.1.16-extended"
+  resolved "https://github.com/JoeGruffins/npm-extended-dcr#bed54ad6d4acecd906d79946d62718c67411ec96"
   dependencies:
     "@babel/runtime" "^7.11.2"
     "@trezor/blockchain-link" "^1.0.14"

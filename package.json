@@ -271,7 +271,7 @@
     "autobind-decorator": "^2.1.0",
     "axios": "^0.18.1",
     "bs58": "^4.0.1",
-    "connect": "https://github.com/JoeGruffins/npm-extended-dcr#139ffdccfccb3ab94f6f8f9098de2a868f18bf41",
+    "connect": "https://github.com/JoeGruffins/npm-extended-dcr#bed54ad6d4acecd906d79946d62718c67411ec96",
     "connected-react-router": "^6.8.0",
     "copy-webpack-plugin": "^6.0.3",
     "dom-helpers": "^3.4.0",
