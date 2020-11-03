@@ -4,11 +4,11 @@
 
 **Number of tickets** The number of tickets to attempt to purchase.
 
-**Ticket fee (DCR/kB** Tickets are entered into the voting pool by order of their fee. In times of demand, you will need to increase this value in order to have your tickets accepted. You can view current ticket fees here.
+**Ticket fee (DCR/kB)** Tickets are entered into the voting pool by order of their fee. In times of demand, you will need to increase this value in order to have your tickets accepted.
 
 **Ticket price** The current price of a ticket as calculated by the network.  Changes every 144 Blocks.
 
-**Stake pool preference** Automate setup with PoS pools. See below for more information.
+**VSP preference** Automate setup with Voting Service Providers. See below for more information.
 
 **Expiry (blocks)** Often ticket fees will increase during a window and you may be stopped out by higher fees. By setting an expiry, tickets that are not mined in the given number of blocks are cancelled so you can try again with higher fees if you wish. If this is empty, they will not expire until the end of the window.
 
@@ -16,6 +16,6 @@
 
 **Voting address** The Decred address that will do the voting.
 
-**Pool fee address** The address that your stakepool fee will end up getting paid.
+**VSP fee address** The address your VSP fee will be paid to.
 
-**Pool fees (%)** The fee in which you will be charged for using the stakepool's service.
+**VSP fees (%)** The fee percentage you will pay for using the VSP's service.
