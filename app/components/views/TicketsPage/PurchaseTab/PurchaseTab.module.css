@@ -16,7 +16,8 @@
 }
 
 .checkbox {
-  margin-right: 50px;
+  margin-right: 65px;
+  align-items: center;
 }
 
 .checkboxLabel {
@@ -25,7 +26,6 @@
 
 .label {
   font-size: 14pt;
-  margin-top: -5px;
   margin-left: 4px;
 }
 
@@ -40,7 +40,7 @@
 
 .purchaseForm {
   background-color: var(--background-back-color);
-  padding: 20px 40px;
+  padding: 29px 20px 29px 20px;
 }
 
 .privacyArea {
@@ -56,9 +56,8 @@
 }
 
 .autobuyerWrapper {
-  margin-top: 10px;
   background-color: var(--background-back-color);
-  padding: 10px 20px;
+  padding: 29px 20px 29px 20px;
 }
 
 .rememberVspCheckBox {

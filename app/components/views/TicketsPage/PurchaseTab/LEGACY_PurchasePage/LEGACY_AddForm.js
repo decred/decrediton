@@ -1,4 +1,4 @@
-import { ExternalLink } from "shared";
+import { ExternalLink, Tooltip } from "shared";
 import {
   ScriptRedeemableButton,
   SlateGrayButton,
@@ -45,7 +45,11 @@ const StakePoolsAddForm = ({
       <div className="stakepool-add-title">
         <T id="stakepool.addPoolTitle" m="Add a VSP" />
         <div className={classNames(styles.iconWrapper, styles.checkbox)}>
-          <div className={styles.label}><T id="purchase.isLegacy.legacy.add" m="Is Legacy" /></div>
+          <Tooltip
+          text={<T id="purchase.isLegacyDescription.legacy.add" m="Use a VSP which has not yet updated to vspd" />}
+          >
+            <div className={styles.label}><T id="purchase.isLegacy.legacy.add" m="Use Legacy VSP" /></div>
+          </Tooltip>
           <input id="box" type="checkbox" checked={true} onChange={() => toggleIsLegacy(false)} />
           <label htmlFor="box" className={styles.checkboxLabel}></label>
         </div>

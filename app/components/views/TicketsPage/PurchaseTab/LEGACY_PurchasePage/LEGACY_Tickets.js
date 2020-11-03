@@ -2,7 +2,7 @@ import PurchaseTickets from "./LEGACY_PurchaseTickets";
 import TicketAutoBuyer from "./LEGACY_TicketAutoBuyer";
 import { FormattedMessage as T } from "react-intl";
 import StakeInfo from "../StakeInfo/StakeInfo";
-import { ShowWarning, Subtitle } from "shared";
+import { ShowWarning, Subtitle, Tooltip } from "shared";
 import "style/PurchaseTickets.less";
 import { InfoDocModalButton } from "buttons";
 import UnsignedTickets from "../UnsignedTickets";
@@ -11,16 +11,20 @@ import { classNames } from "pi-ui";
 
 const getTitleIcon = ({ toggleIsLegacy }) => (
   <>
-    <div className={classNames(styles.iconWrapper, styles.checkbox)}>
-      <div className={styles.label}>
-        <T id="purchase.isLegacy.legacy" m="Is Legacy" />
-      </div>
+  <div className={classNames(styles.iconWrapper, styles.checkbox)}>
+    <Tooltip
+      text={<T id="purchase.isLegacyDescription.legacy" m="Use a VSP which has not yet updated to vspd" />}
+      >
+        <div className={styles.label}>
+          <T id="purchase.isLegacy.legacy" m="Use Legacy VSP" />
+        </div>
+      </Tooltip>
       <input
         id="box"
         type="checkbox"
         checked={true}
         onChange={() => toggleIsLegacy(false)}
-      />
+        />
       <label htmlFor="box" className={styles.checkboxLabel}></label>
     </div>
     <InfoDocModalButton
@@ -42,12 +46,12 @@ const Tickets = ({
 }) => {
   return (
     <div className="purchase-ticket-area">
+      <StakeInfo {...{ sidebarOnBottom }} />
       <Subtitle
         title={<T id="purchase.subtitle.legacy" m="Purchase Tickets" />}
         children={getTitleIcon({ toggleIsLegacy })}
         className="is-row"
       />
-      <StakeInfo {...{ sidebarOnBottom }} />
       {spvMode && blocksNumberToNextTicket === 2 ? (
         <ShowWarning
           warn={
