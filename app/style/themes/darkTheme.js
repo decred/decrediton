@@ -228,6 +228,7 @@ const darkTheme = {
   "menu-trezor-active": "url('style/icons/trezorActiveDark.svg')",
   "menu-trezor-default": "url('style/icons/trezorDefaultDark.svg')",
   "menu-trezor-hover": "url('style/icons/trezorHoverDark.svg')",
+  "menu-rescan-hover-icon": "url('style/icons/menu-rescanDark-hover.svg')",
   "menu-cancel-rescan-icon": "url('style/icons/menuCancelRescanDark.svg')",
   "politeia-loading-icon": "url('style/icons/politeia-loading-dark.gif')",
   "loader-animation-daemon-waiting-initial":
