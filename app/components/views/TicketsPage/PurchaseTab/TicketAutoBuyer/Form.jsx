@@ -65,7 +65,7 @@ const TicketAutoBuyerForm = ({
                       <T id="vsp.autobuyer.modal.stakepool" m="VSP" />:
                   </div>
                     <div className="auto-buyer-modal-confirm-value">
-                      {vsp && vsp.Host}
+                      {vsp && vsp.host}
                     </div>
                   </div>
                 </div>
