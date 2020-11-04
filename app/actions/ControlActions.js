@@ -769,6 +769,10 @@ export const STARTTICKETBUYERV2_ATTEMPT = "STARTTICKETBUYERV2_ATTEMPT";
 export const STARTTICKETBUYERV2_FAILED = "STARTTICKETBUYERV2_FAILED";
 export const STARTTICKETBUYERV2_SUCCESS = "STARTTICKETBUYERV2_SUCCESS";
 
+export const STOPTICKETBUYERV2_ATTEMPT = "STOPTICKETBUYERV2_ATTEMPT";
+export const STOPTICKETBUYERV2_FAILED = "STOPTICKETBUYERV2_FAILED";
+export const STOPTICKETBUYERV2_SUCCESS = "STOPTICKETBUYERV2_SUCCESS";
+
 export const startTicketBuyerV2Attempt = (
   passphrase,
   account,
@@ -801,7 +805,7 @@ export const startTicketBuyerV2Attempt = (
           dispatch({ error: status, type: STARTTICKETBUYERV2_FAILED });
         }
       } else {
-        dispatch({ type: STOPTICKETBUYER_SUCCESS });
+        dispatch({ type: STOPTICKETBUYERV2_SUCCESS });
       }
     });
     dispatch({
@@ -810,6 +814,17 @@ export const startTicketBuyerV2Attempt = (
     });
   });
 };
+
+export function ticketBuyerV2Cancel() {
+  return (dispatch, getState) => {
+    const { ticketBuyerCall } = getState().control;
+    if (!ticketBuyerCall) return;
+    if (ticketBuyerCall) {
+      dispatch({ type: STOPTICKETBUYERV2_ATTEMPT });
+      ticketBuyerCall.cancel();
+    }
+  };
+}
 
 export const GETPEERINFO_ATTEMPT = "GETPEERINFO_ATTEMPT";
 export const GETPEERINFO_FAILED = "GETPEERINFO_FAILED";

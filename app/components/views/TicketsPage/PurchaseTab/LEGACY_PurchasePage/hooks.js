@@ -1,9 +1,9 @@
-
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { usePrevious, useMountEffect } from "hooks";
 import * as sel from "selectors";
 import * as spa from "actions/VSPActions";
+import * as ca from "actions/ControlActions.js";
 import { compose, eq, get } from "fp";
 
 export function useLegacyPurchasePage(toggleShowVsp) {
@@ -18,49 +18,69 @@ export function useLegacyPurchasePage(toggleShowVsp) {
 
   const dispatch = useDispatch();
 
-  const onSetStakePoolInfo = useCallback((
-    poolHost,
-    apiKey,
-    rescan) => dispatch(spa.setStakePoolInformation(
-      poolHost,
-      apiKey,
-      rescan
-    )), [dispatch]);
+  const onSetStakePoolInfo = useCallback(
+    (poolHost, apiKey, rescan) =>
+      dispatch(spa.setStakePoolInformation(poolHost, apiKey, rescan)),
+    [dispatch]
+  );
 
-  const onRemoveStakePool = useCallback((host) => dispatch(spa.removeStakePoolConfig(host)), [dispatch]);
-  const discoverAvailableStakepools = useCallback(() => dispatch(spa.discoverAvailableStakepools()), [dispatch]);
+  const onRemoveStakePool = useCallback(
+    (host) => dispatch(spa.removeStakePoolConfig(host)),
+    [dispatch]
+  );
+  const discoverAvailableStakepools = useCallback(
+    () => dispatch(spa.discoverAvailableStakepools()),
+    [dispatch]
+  );
   const addCustomStakePool = (host) => dispatch(spa.addCustomStakePool(host));
 
   const [isAdding, setIsAdding] = useState(false);
   const [show, setShow] = useState(false);
   const [apiKey, setApiKey] = useState("");
   const [hasFailedAttempt, setHasFailedAttempt] = useState(false);
-  const [selectedUnconfigured, setSelectedUnconfigured] = useState(unconfiguredStakePools[0]);
+  const [selectedUnconfigured, setSelectedUnconfigured] = useState(
+    unconfiguredStakePools[0]
+  );
+
+  const onEnableTicketAutoBuyer = useCallback(
+    (passphrase, account, balanceToMaintain, vsp) =>
+      dispatch(
+        ca.startTicketBuyerV2Attempt(
+          passphrase,
+          account,
+          balanceToMaintain,
+          vsp
+        )
+      ),
+    [dispatch]
+  );
+
+  const onDisableTicketAutoBuyer = useCallback(
+    () => dispatch(ca.ticketBuyerV2Cancel()),
+    [dispatch]
+  );
+
+  const isTicketAutoBuyerEnabled = useSelector(sel.isTicketAutoBuyerEnabled);
 
   const onShowAddStakePool = useCallback(() => {
     setIsAdding(true);
   }, []);
 
   const getIsAdding = useMemo(() => {
-    return (
-      isAdding ||
-      configuredStakePools.length <= 0 ||
-      isImportingScript
-    );
+    return isAdding || configuredStakePools.length <= 0 || isImportingScript;
   }, [isAdding, configuredStakePools.length, isImportingScript]);
 
   const getNoAvailableStakepools = useMemo(() => {
     return (
-      unconfiguredStakePools.length === 0 &&
-      configuredStakePools.length === 0
+      unconfiguredStakePools.length === 0 && configuredStakePools.length === 0
     );
   }, [unconfiguredStakePools.length, configuredStakePools.length]);
 
   const getSelectedUnconfigured = useMemo(() => {
     return selectedUnconfigured
       ? unconfiguredStakePools.find(
-        compose(eq(selectedUnconfigured.Host), get("Host"))
-      )
+          compose(eq(selectedUnconfigured.Host), get("Host"))
+        )
       : null;
   }, [selectedUnconfigured, unconfiguredStakePools]);
 
@@ -88,11 +108,19 @@ export function useLegacyPurchasePage(toggleShowVsp) {
       return;
     }
     onSetInfo(getSelectedUnconfigured.Host, apiKey, true);
-  }, [apiKey, onSetStakePoolInfo, setHasFailedAttempt, getSelectedUnconfigured]);
+  }, [
+    apiKey,
+    onSetStakePoolInfo,
+    setHasFailedAttempt,
+    getSelectedUnconfigured
+  ]);
 
-  const onRemoveStakePoolCallback = useCallback((host) => {
-    onRemoveStakePool && onRemoveStakePool(host);
-  }, [onRemoveStakePool]);
+  const onRemoveStakePoolCallback = useCallback(
+    (host) => {
+      onRemoveStakePool && onRemoveStakePool(host);
+    },
+    [onRemoveStakePool]
+  );
 
   const getStakepoolListingEnabled = useCallback(() => {
     return stakePoolListingEnabled;
@@ -102,9 +130,10 @@ export function useLegacyPurchasePage(toggleShowVsp) {
   const previousStakePoolProps = usePrevious(stakePoolProps);
 
   useEffect(() => {
-    if (configuredStakePools && previousConfiguredStakePools &&
-      configuredStakePools.length >
-      previousConfiguredStakePools.length
+    if (
+      configuredStakePools &&
+      previousConfiguredStakePools &&
+      configuredStakePools.length > previousConfiguredStakePools.length
     ) {
       if (stakePoolProps !== previousStakePoolProps) {
         setShow(true);
@@ -139,10 +168,7 @@ export function useLegacyPurchasePage(toggleShowVsp) {
     if (!selectedUnconfigured) {
       setSelectedUnconfigured(unconfiguredStakePools[0]);
     }
-    if (
-      !getStakepoolListingEnabled() &&
-      stakePoolListingEnabled
-    ) {
+    if (!getStakepoolListingEnabled() && stakePoolListingEnabled) {
       discoverAvailableStakepools();
     }
     if (!updatedStakePoolList && getStakepoolListingEnabled()) {
@@ -173,9 +199,9 @@ export function useLegacyPurchasePage(toggleShowVsp) {
     onSetStakePoolInfo: onSetStakePoolInfoCallback,
     onCancelAddStakePool,
     hasFailedAttempt,
-    addCustomStakePool
+    addCustomStakePool,
+    onEnableTicketAutoBuyer,
+    onDisableTicketAutoBuyer,
+    isTicketAutoBuyerEnabled
   };
-
 }
-
-
