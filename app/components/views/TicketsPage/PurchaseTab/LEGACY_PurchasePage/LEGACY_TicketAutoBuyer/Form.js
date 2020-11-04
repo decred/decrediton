@@ -14,7 +14,8 @@ const TicketAutoBuyerForm = ({
   changeAccount,
   configuredStakePools,
   stakePool,
-  changeStakePool
+  changeStakePool,
+  isFormValid
 }) => (
   <>
     <Subtitle
@@ -28,6 +29,7 @@ const TicketAutoBuyerForm = ({
           <AutoBuyerSwitch enabled onClick={onDisableTicketAutoBuyer} />
         ) : (
           <PassphraseModalSwitch
+            disabled={!isFormValid}
             modalTitle={
               <T
                 id="tickets.startAutoBuyerConfirmation"
@@ -64,7 +66,7 @@ const TicketAutoBuyerForm = ({
                       <T id="autobuyer.modal.stakepool" m="VSP" />:
                     </div>
                     <div className="auto-buyer-modal-confirm-value">
-                      {/* {stakePool.Host} */}
+                      {stakePool && stakePool.Host}
                     </div>
                   </div>
                 </div>
