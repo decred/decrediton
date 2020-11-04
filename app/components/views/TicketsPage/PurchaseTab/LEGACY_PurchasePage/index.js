@@ -9,7 +9,7 @@ import { EXTERNALREQUEST_STAKEPOOL_LISTING } from "main_dev/externalRequests";
 import { FormattedMessage as T } from "react-intl";
 import StakePoolsAddForm from "./LEGACY_AddForm";
 
-const StakepoolListingDisabled = React.memo(() =>
+const StakepoolListingDisabled = React.memo(() => (
   <div>
     <p>
       <T
@@ -22,21 +22,23 @@ const StakepoolListingDisabled = React.memo(() =>
       <T id="stake.enableStakePoolListing.button" m="Enable VSP Listing" />
     </EnableExternalRequestButton>
   </div>
-);
+));
 
-const NoAvailableStakepools = React.memo(() =>
+const NoAvailableStakepools = React.memo(() => (
   <T
     id="stake.noAvailableStakepools"
     m="No VSP found. Check your internet connection or {link} to see if the VSP API is down."
     values={{
       link: (
-        <ExternalLink href="https://api.decred.org/?c=gsd" className="stakepool-link">
+        <ExternalLink
+          href="https://api.decred.org/?c=gsd"
+          className="stakepool-link">
           <T id="stake.discoverStakeOoolsAPILink" m="this link" />
         </ExternalLink>
       )
     }}
   />
-);
+));
 
 const LEGACY_PurchasePage = ({
   isPurchasingTickets,
@@ -67,47 +69,52 @@ const LEGACY_PurchasePage = ({
     addCustomStakePool
   } = useLegacyPurchasePage(toggleShowVsp);
 
-  return (
-    getNoAvailableStakepools && !getStakepoolListingEnabled()) ?
-    <StakepoolListingDisabled /> :
-    getNoAvailableStakepools ?
-      <NoAvailableStakepools /> :
-      isPurchasingTickets ? (
-        <StakeyBounce center />) :
-        getIsAdding ?
-          <StakePoolsAddForm
-            {...{
-              selectedUnconfigured,
-              unconfiguredStakePools,
-              configuredStakePools,
-              apiKey,
-              isSavingStakePoolConfig,
-              onChangeSelectedUnconfigured,
-              onChangeApiKey,
-              onSetStakePoolInfo,
-              onCancelAddStakePool,
-              hasFailedAttempt,
-              toggleIsLegacy,
-              addCustomStakePool
-            }}
-          /> : isShowingVsp ? (
-            <StakePools {...{
-              configuredStakePools,
-              onRemoveStakePool,
-              showModal,
-              toggleShowVsp,
-              toggleBackupModal,
-              onShowAddStakePool,
-              rescanRequest,
-              ...props
-            }} />
-          ) : (
-              <Tickets {...{
-                toggleIsLegacy,
-                toggleShowVsp,
-                ...props
-              }} />
-            );
+  return getNoAvailableStakepools && !getStakepoolListingEnabled() ? (
+    <StakepoolListingDisabled />
+  ) : getNoAvailableStakepools ? (
+    <NoAvailableStakepools />
+  ) : isPurchasingTickets ? (
+    <StakeyBounce center />
+  ) : getIsAdding ? (
+    <StakePoolsAddForm
+      {...{
+        selectedUnconfigured,
+        unconfiguredStakePools,
+        configuredStakePools,
+        apiKey,
+        isSavingStakePoolConfig,
+        onChangeSelectedUnconfigured,
+        onChangeApiKey,
+        onSetStakePoolInfo,
+        onCancelAddStakePool,
+        hasFailedAttempt,
+        toggleIsLegacy,
+        addCustomStakePool
+      }}
+    />
+  ) : isShowingVsp ? (
+    <StakePools
+      {...{
+        configuredStakePools,
+        onRemoveStakePool,
+        showModal,
+        toggleShowVsp,
+        toggleBackupModal,
+        onShowAddStakePool,
+        rescanRequest,
+        ...props
+      }}
+    />
+  ) : (
+    <Tickets
+      {...{
+        toggleIsLegacy,
+        toggleShowVsp,
+        configuredStakePools,
+        ...props
+      }}
+    />
+  );
 };
 
 export default LEGACY_PurchasePage;
