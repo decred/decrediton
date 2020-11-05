@@ -11,6 +11,7 @@ import "style/StakePool.less";
 import styles from "../PurchaseTab.module.css";
 import { AddVSPButton } from "buttons";
 import { classNames } from "pi-ui";
+import { LegacyVSPWarning } from "../PurchaseTickets/Page";
 
 const messages = defineMessages({
   apiKeyPlaceholder: {
@@ -45,9 +46,7 @@ const StakePoolsAddForm = ({
       <div className="stakepool-add-title">
         <T id="stakepool.addPoolTitle" m="Add a VSP" />
         <div className={classNames(styles.iconWrapper, styles.checkbox)}>
-          <Tooltip
-          text={<T id="purchase.isLegacyDescription.legacy.add" m="Use a VSP which has not yet updated to vspd" />}
-          >
+          <Tooltip md={true} text={<LegacyVSPWarning />}>
             <div className={styles.label}><T id="purchase.isLegacy.legacy.add" m="Use Legacy VSP" /></div>
           </Tooltip>
           <input id="box" type="checkbox" checked={true} onChange={() => toggleIsLegacy(false)} />

@@ -8,12 +8,17 @@ import styles from "../PurchaseTab.module.css";
 import { classNames } from "pi-ui";
 import TicketAutoBuyer from "../TicketAutoBuyer/TicketAutoBuyer";
 
+export const LegacyVSPWarning = () => (
+  <T
+    id="purchase.isLegacyDescription"
+    m="Use a VSP which has not updated to vspd. Not recommended, legacy VSP support will soon be removed."
+  />
+);
+
 const getTitleIcon = ({ toggleIsLegacy }) => (
   <>
     <div className={classNames(styles.iconWrapper, styles.checkbox)}>
-      <Tooltip
-        text={<T id="purchase.isLegacyDescription" m="Use a VSP which has not yet updated to vspd" />}
-        >
+      <Tooltip md={true} text={<LegacyVSPWarning />}>
         <div className={styles.label}>
           <T id="purchase.isLegacy" m="Use Legacy VSP" />
         </div>

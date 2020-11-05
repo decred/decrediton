@@ -8,13 +8,12 @@ import { InfoDocModalButton } from "buttons";
 import UnsignedTickets from "../UnsignedTickets";
 import styles from "../PurchaseTab.module.css";
 import { classNames } from "pi-ui";
+import { LegacyVSPWarning } from "../PurchaseTickets/Page";
 
 const getTitleIcon = ({ toggleIsLegacy }) => (
   <>
   <div className={classNames(styles.iconWrapper, styles.checkbox)}>
-    <Tooltip
-      text={<T id="purchase.isLegacyDescription.legacy" m="Use a VSP which has not yet updated to vspd" />}
-      >
+      <Tooltip md={true} text={<LegacyVSPWarning />}>
         <div className={styles.label}>
           <T id="purchase.isLegacy.legacy" m="Use Legacy VSP" />
         </div>
