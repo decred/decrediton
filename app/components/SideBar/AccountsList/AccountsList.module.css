@@ -17,6 +17,7 @@
 
 .extendedBottom {
   padding-right: 18px;
+  overflow-y: auto;
 }
 
 .extendedBottomAccount {

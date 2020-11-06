@@ -5,14 +5,14 @@ import { classNames } from "pi-ui";
 
 const isImported = (accountNumber) => accountNumber === Math.pow(2, 31) - 1;
 
-const AccountsList = ({ isShowingAccounts, balances }) => (
+const AccountsList = ({ isShowingAccounts, balances, accountsListRef }) => (
   <div
     data-testid="account-list"
     className={classNames(
       style.extended,
       isShowingAccounts && style.showingAccounts
     )}>
-    <div className={style.extendedBottom}>
+    <div className={style.extendedBottom} ref={accountsListRef}>
       {balances.map(
         ({ hidden, total, accountName, accountNumber }) =>
           !hidden && (
@@ -22,8 +22,7 @@ const AccountsList = ({ isShowingAccounts, balances }) => (
                 isImported(accountNumber) && style.imported
               )}
               key={accountName}>
-              <div
-                className={style.extendedBottomAccountName}>
+              <div className={style.extendedBottomAccountName}>
                 {accountName === "default" ? (
                   <T id="sidebar.accounts.name.default" m="Primary Account" />
                 ) : (
