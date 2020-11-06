@@ -235,6 +235,7 @@ const darkTheme = {
   "menu-rescan-hover-icon": "url('style/icons/menu-rescanDark-hover.svg')",
   "menu-cancel-rescan-icon": "url('style/icons/menuCancelRescanDark.svg')",
   "politeia-loading-icon": "url('style/icons/politeia-loading-dark.gif')",
+  "backup-icon": "url('style/icons/harddriveDark.svg')",
   "loader-animation-daemon-waiting-initial":
     "url('style/icons/daemonWaitingLoaderInitialDark.gif')"
 };
