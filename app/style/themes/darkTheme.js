@@ -90,7 +90,8 @@ const darkTheme = {
   "back-button-text": "#E9F8FE",
   "back-button-dark-text": "#0E152F",
   "tx-detail-text": "#E9F8FE",
-  "tx-detail-raw-shadow": "linear-gradient(to top, rgb(243, 246, 246, 0.25) 10%, rgb(243, 246, 246, 0.20) 20%, rgb(243, 246, 246, 0) 70%)",
+  "tx-detail-raw-shadow":
+    "linear-gradient(to top, rgb(243, 246, 246, 0.25) 10%, rgb(243, 246, 246, 0.20) 20%, rgb(243, 246, 246, 0) 70%)",
   "home-content-link": "#99C1E3",
   "transfer-details-bg": "#152042",
   "filter-menu-arrow": "#99C1E3",
@@ -125,6 +126,9 @@ const darkTheme = {
   "input-copy-hover-color": "#78d9f8",
   "coinjoin-sum-color": "#7DA7D9",
   "coinjoin-sum-text-color": "#fff",
+
+  // override pi-ui's toggle default dark background
+  "toggle-bar-color": "var(--background-copy-color)",
 
   /* icons */
   "menu-settings-default": "url('style/icons/settingsDefaultDark.svg')",

@@ -1,4 +1,12 @@
-import { classNames, Button, StatusBar, Tooltip, Text, useTheme } from "pi-ui";
+import {
+  classNames,
+  Button,
+  StatusBar,
+  Tooltip,
+  Text,
+  useTheme,
+  DEFAULT_DARK_THEME_NAME
+} from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
 import { InvisibleButton } from "buttons";
 import { PoliteiaLink } from "shared";
@@ -50,7 +58,7 @@ const ProposalDetails = ({
 
   const { tsDate, hasTickets, isTestnet } = useProposalDetails();
   const { themeName } = useTheme();
-  const isDarkTheme = themeName === "theme-dark";
+  const isDarkTheme = themeName === DEFAULT_DARK_THEME_NAME;
   const shortToken = token.substring(0, 7);
   const proposalPath = `/proposals/${shortToken}`;
   const votingActiveOrFinished =

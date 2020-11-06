@@ -1,5 +1,10 @@
 import { useCallback } from "react";
-import { useTheme, classNames } from "pi-ui";
+import {
+  useTheme,
+  classNames,
+  DEFAULT_DARK_THEME_NAME,
+  DEFAULT_LIGHT_THEME_NAME
+} from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
 import { StandaloneHeader, StandalonePage } from "layout";
 import {
@@ -88,7 +93,11 @@ const SettingsPage = ({
     const config = getGlobalCfg();
     const oldTheme = config.get(configConstants.THEME);
     if (oldTheme != tempSettings.theme) {
-      setThemeName(tempSettings.theme);
+      setThemeName(
+        tempSettings.theme.includes("dark")
+          ? DEFAULT_DARK_THEME_NAME
+          : DEFAULT_LIGHT_THEME_NAME
+      );
     }
     onSaveSettings(tempSettings);
   }, [onSaveSettings, tempSettings, setThemeName]);
@@ -104,12 +113,14 @@ const SettingsPage = ({
       className="settings-standalone-page">
       <div className={styles.wrapper}>
         <div className={styles.group}>
-          <Subtitle title={
-            <T
-              id="settings.getstartpage.group-title.connectivity"
-              m="Connectivity"
-            />
-          } />
+          <Subtitle
+            title={
+              <T
+                id="settings.getstartpage.group-title.connectivity"
+                m="Connectivity"
+              />
+            }
+          />
           <div className={styles.columnWrapper}>
             <div className={styles.column}>
               <NetworkSettings
@@ -126,9 +137,11 @@ const SettingsPage = ({
         </div>
 
         <div className={classNames(styles.group, styles.general)}>
-          <Subtitle title={
-            <T id="settings.getstartpage.group-title.general" m="General" />
-          } />
+          <Subtitle
+            title={
+              <T id="settings.getstartpage.group-title.general" m="General" />
+            }
+          />
           <div className={styles.columnWrapper}>
             <div className={styles.column}>
               <UISettings
@@ -154,26 +167,28 @@ const SettingsPage = ({
         </div>
 
         <div className={classNames(styles.group, styles.privacy)}>
-          <Subtitle title={
-            <T
-              id="settings.getstartpage.group-title.privacy-and-security"
-              m="Privacy and Security"
-            />
-          } />
-          <div className={styles.columnWrapper}>
-              <PrivacySettings
-                {...{
-                  tempSettings,
-                  onAttemptChangePassphrase,
-                  isChangePassPhraseDisabled,
-                  onChangeTempSettings,
-                  walletReady,
-                  changePassphraseRequestAttempt
-                }}
+          <Subtitle
+            title={
+              <T
+                id="settings.getstartpage.group-title.privacy-and-security"
+                m="Privacy and Security"
               />
-            </div>
+            }
+          />
+          <div className={styles.columnWrapper}>
+            <PrivacySettings
+              {...{
+                tempSettings,
+                onAttemptChangePassphrase,
+                isChangePassPhraseDisabled,
+                onChangeTempSettings,
+                walletReady,
+                changePassphraseRequestAttempt
+              }}
+            />
           </div>
         </div>
+      </div>
 
       <div className={styles.saveButtonWrapper}>
         <div className={styles.saveButton}>
