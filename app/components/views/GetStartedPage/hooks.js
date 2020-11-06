@@ -12,7 +12,10 @@ import WalletPubpassInput from "./OpenWallet/OpenWallet";
 import DiscoverAccounts from "./OpenWallet/DiscoverAccounts";
 import ReleaseNotes from "./ReleaseNotes/ReleaseNotes";
 import { ipcRenderer } from "electron";
-import { OPENWALLET_INPUT, OPENWALLET_INPUTPRIVPASS } from "actions/WalletLoaderActions";
+import {
+  OPENWALLET_INPUT,
+  OPENWALLET_INPUTPRIVPASS
+} from "actions/WalletLoaderActions";
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { useDaemonStartup } from "hooks";
 import { useMachine } from "@xstate/react";
@@ -107,9 +110,21 @@ export const useGetStarted = () => {
           .then(() => {
             send({ type: "SYNC_DAEMON" });
           })
-          .catch((error) =>
-            send({ type: "ERROR_CONNECTING_DAEMON", payload: { error } })
-          );
+          .catch((error) => {
+            if (
+              !error.connected &&
+              error.error.includes &&
+              error.error.includes("SSLV3_ALERT_HANDSHAKE_FAILURE")
+            ) {
+              error = (
+                <T
+                  id="getStarted.P_521_error"
+                  m="Connection error. Probably you got this error because Decrediton no longer supports the P-521 curve. To fix it, you need to remove the rpc.cert and rpc.key and restart dcrd with the --tlscurve=P-256 param to allow it to generate a cert and key with that supported curve."
+                />
+              );
+            }
+            send({ type: "ERROR_CONNECTING_DAEMON", payload: { error } });
+          });
       },
       isAtCheckNetworkMatch: () => {
         console.log(" is at check network ");
@@ -152,7 +167,12 @@ export const useGetStarted = () => {
           .then((discoverAccountsComplete) => {
             setSelectedWallet(selectedWallet);
             const { passPhrase } = context;
-            if (!discoverAccountsComplete && !passPhrase && !isWatchingOnly && !isTrezor) {
+            if (
+              !discoverAccountsComplete &&
+              !passPhrase &&
+              !isWatchingOnly &&
+              !isTrezor
+            ) {
               // Need to discover accounts and the passphrase isn't stored in
               // context, so ask for the private passphrase before continuing.
               send({ type: "WALLET_DISCOVERACCOUNTS_PASS" });
@@ -304,11 +324,15 @@ export const useGetStarted = () => {
     [send]
   );
 
-  const onSendSetPassphrase = useCallback((passPhrase) =>
-    send({ type: "SETPASSPHRASE", passPhrase }), [send]);
+  const onSendSetPassphrase = useCallback(
+    (passPhrase) => send({ type: "SETPASSPHRASE", passPhrase }),
+    [send]
+  );
 
-  const onSendDiscoverAccountsPassInput = useCallback(() =>
-    send({ type: "WALLET_DISCOVERACCOUNTS_PASS" }), [send]);
+  const onSendDiscoverAccountsPassInput = useCallback(
+    () => send({ type: "WALLET_DISCOVERACCOUNTS_PASS" }),
+    [send]
+  );
 
   const onShowCreateWallet = useCallback(
     ({ isNew, walletMasterPubKey, isTrezor, isPrivacy }) =>
@@ -328,11 +352,12 @@ export const useGetStarted = () => {
   );
 
   const submitChosenWallet = useCallback(
-    ({ selectedWallet, error }) => send({
-      type: "SUBMIT_CHOOSE_WALLET",
-      selectedWallet,
-      error
-    }),
+    ({ selectedWallet, error }) =>
+      send({
+        type: "SUBMIT_CHOOSE_WALLET",
+        selectedWallet,
+        error
+      }),
     [send]
   );
 
@@ -442,7 +467,12 @@ export const useGetStarted = () => {
             });
             break;
           case "walletDiscoverAccountsPassInput":
-            text = <T id="loaderBar.walletDiscoverAccountsPass" m="Type passphrase to discover accounts" />;
+            text = (
+              <T
+                id="loaderBar.walletDiscoverAccountsPass"
+                m="Type passphrase to discover accounts"
+              />
+            );
             component = h(DiscoverAccounts, {
               onSendSetPassphrase,
               error
