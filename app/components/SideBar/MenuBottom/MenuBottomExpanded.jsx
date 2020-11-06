@@ -49,11 +49,6 @@ const MenuBarExpanded = ({
               {currentBlockHeight}
             </span>
           </a>
-          {isSPV && (
-            <Tooltip content={<T id="sidebar.spvMode" m="SPV Mode" />}>
-              <div className={styles.spvIcon} />
-            </Tooltip>
-          )}
           <div className={styles.latestBlockTime}>
             <LastBlockTime lastBlockTimestamp={lastBlockTimestamp} />
           </div>
@@ -61,10 +56,16 @@ const MenuBarExpanded = ({
       )}
     </div>
     <div className={styles.peersCount}>
+      <div className={styles.peersIcon}></div>
       <span className={styles.peersCountLabel}>
         <T id="sidebar.peersCount" m="Peers" />
       </span>
       <span className={styles.peersCountValue}>&nbsp;{peersCount}</span>
+      {isSPV && (
+        <Tooltip className={styles.spvIcon} content={<T id="sidebar.spvMode" m="SPV Mode" />}>
+          <div  />
+        </Tooltip>
+      )}
     </div>
   </div>
 );

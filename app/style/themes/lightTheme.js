@@ -148,6 +148,7 @@ const lightTheme = {
   "menu-hamburger": "url('style/icons/hamburger.svg')",
   "menu-arrow": "url('style/icons/arrow.svg')",
   "menu-rescan-icon": "url('style/icons/menu-rescan.svg')",
+  "menu-peers-icon": "url('style/icons/peers.svg')",
   "sidebar-balance-icon": "url('style/icons/sidebar-balance.svg')",
   "testnet-logo": "url('style/icons/testnet-logo.svg')",
   "mainnet-logo": "url('style/icons/decred-logo.svg')",
