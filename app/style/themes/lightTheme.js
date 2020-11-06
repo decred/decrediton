@@ -229,6 +229,7 @@ const lightTheme = {
   "menu-trezor-default": "url('style/icons/trezorDefault.svg')",
   "menu-trezor-hover": "url('style/icons/trezorHover.svg')",
   "menu-cancel-rescan-icon": "url('style/icons/menu-cancel-rescan.svg')",
+  "menu-rescan-hover-icon": "url('style/icons/menu-rescan-hover.svg')",
   "politeia-loading-icon": "url('style/icons/politeia-loading.gif')",
   "backup-icon": "url('style/icons/harddrive.svg')",
   "loader-animation-daemon-waiting-initial":

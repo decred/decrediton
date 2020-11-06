@@ -65,7 +65,6 @@ const icons = {
   "lifecycle-05": "url('style/icons/lifecycle-05.png')",
   "lifecycle-06": "url('style/icons/lifecycle-06.png')",
   "manage-pools-icon": "url('style/icons/tickets-manage-stakepools.svg')",
-  "menu-rescan-hover-icon": "url('style/icons/menu-rescan-hover.svg')",
   "menu-ln-active": "url('style/icons/ln.png')",
   "menu-ln-default": "url('style/icons/ln.png')",
   "menu-ln-hover": "url('style/icons/ln.png')",
