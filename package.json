@@ -149,6 +149,7 @@
     "linux": {
       "category": "public.app-category.tools",
       "target": [
+        "AppImage",
         "deb",
         "rpm",
         "tar.gz"
