@@ -8,7 +8,6 @@ import {
   UPDATEDISCOVERACCOUNTS,
   GETWALLETSEEDSVC_ATTEMPT,
   GETWALLETSEEDSVC_SUCCESS,
-  SYNC_SUCCESS,
   SYNC_UPDATE,
   RESCANPOINT_ATTEMPT,
   RESCANPOINT_FAILED,
@@ -89,7 +88,7 @@ export default function walletLoader(state = {}, action) {
         seedService: null,
         rescanPointResponse: null,
         syncInput: false,
-        syncAttemptRequest: false,
+        syncAttemptRequest: null,
         syncError: null,
         synced: false,
         syncLastFetchedHeaderTime: null,
@@ -156,15 +155,12 @@ export default function walletLoader(state = {}, action) {
       return { ...state, syncError: null, syncCall: action.syncCall };
     case SYNC_CANCEL:
       return { ...state, syncError: null, synced: false, syncCall: null };
-    case SYNC_SUCCESS:
+    case SYNC_SYNCED:
       return {
         ...state,
         syncAttemptRequest: false,
-        syncError: null,
-        synced: false
+        synced: true
       };
-    case SYNC_SYNCED:
-      return { ...state, synced: true };
     case SYNC_UNSYNCED:
       return { ...state, synced: false };
     case SYNC_PEER_CONNECTED:

@@ -226,7 +226,7 @@ const initialState = {
   walletLoader: {
     syncInput: false,
     syncError: null,
-    syncAttemptRequest: false,
+    syncAttemptRequest: null,
     syncCall: null,
     peerCount: 0,
     rpcRetryAttempts: 0,
