@@ -90,9 +90,20 @@
 .peersCount {
   display: flex;
   align-items: center;
-  padding-left: 47px;
-  padding-bottom: 16px;
+  padding: 0 16px 8px;
   background-color: var(--info-modal-button-text);
+}
+
+.peersIcon {
+  margin: 5px 10px 5px 5px;
+  width: 16px;
+  height: 16px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  background-image: var(--menu-peers-icon);
+  background-size: 16px 16px;
+  cursor: pointer;
 }
 
 .peersCountLabel {
@@ -123,12 +134,9 @@
 .spvIcon {
   background-image: var(--enable-spv);
   height: 1.6rem;
-  display: flex;
   width: 1.6rem;
-  margin-left: 1rem;
   align-items: center;
-  top: -1.3rem;
-  position: absolute;
+  left: 16rem;
 }
 
 .spvLabel {

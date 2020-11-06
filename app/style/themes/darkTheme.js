@@ -150,6 +150,7 @@ const darkTheme = {
   "menu-hamburger": "url('style/icons/hamburgerDark.svg')",
   "menu-arrow": "url('style/icons/arrowDark.svg')",
   "menu-rescan-icon": "url('style/icons/menuRescanDark.svg')",
+  "menu-peers-icon": "url('style/icons/peersDark.svg')",
   "sidebar-balance-icon": "url('style/icons/sidebarBalanceDark.svg')",
   "testnet-logo": "url('style/icons/testnetLogoDark.svg')",
   "mainnet-logo": "url('style/icons/decredLogoDark.svg')",
