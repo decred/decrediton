@@ -54,7 +54,7 @@ const HistoryTab = () => {
   const [selectedSortOrderKey, setSelectedSortOrderKey] = useState(listDirection);
   const [isChangingFilterTimer, setIsChangingFilterTimer] = useState(null);
 
-  const loadMoreThreshold = 90 + Math.max(0, window.innerHeight - 765);
+  const loadMoreThreshold = 250 + Math.max(0, window.innerHeight - 765);
 
   const onChangeSelectedType = (type) => {
     onChangeFilter(type.value);
