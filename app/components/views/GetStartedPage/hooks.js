@@ -59,6 +59,7 @@ export const useGetStarted = () => {
     goToHome,
     onShowTutorial,
     appVersion,
+    syncAttemptRequest,
     onGetDcrdLogs
   } = useDaemonStartup();
   const [PageComponent, setPageComponent] = useState(null);
@@ -176,6 +177,15 @@ export const useGetStarted = () => {
       },
       isSyncingRPC: async (context) => {
         const { passPhrase, isPrivacy } = context;
+        if (syncAttemptRequest) {
+          return;
+        }
+
+        // if synced, it means that the wallet is finished to sync and we can
+        // push decrediton to home view.
+        if (synced === true) {
+          send({ type: "GO_TO_HOME_VIEW" });
+        }
         if (context.isSPV) {
           return startSPVSync(passPhrase)
             .then(() => send({ type: "GO_TO_HOME_VIEW" }))
@@ -519,7 +529,6 @@ export const useGetStarted = () => {
           m="Fetching missing committed filters"
         />
       );
-      getStateComponent(text, animationType, component);
     } else if (syncFetchHeadersAttempt) {
       animationType = fetchingHeaders;
       text = (
@@ -536,7 +545,6 @@ export const useGetStarted = () => {
           m="Discovering addresses"
         />
       );
-      getStateComponent(text, animationType, component);
     } else if (syncRescanAttempt) {
       animationType = scanningBlocks;
       text = (
@@ -546,7 +554,6 @@ export const useGetStarted = () => {
         />
       );
       component = RescanWalletBody;
-      getStateComponent(text, animationType, component);
     } else if (synced) {
       animationType = finalizingSetup;
       text = (
@@ -555,10 +562,8 @@ export const useGetStarted = () => {
           m="Finishing to load wallet"
         />
       );
-      getStateComponent(text, animationType, component);
-    } else if (machineStateValue) {
-      getStateComponent(text, animationType, component);
     }
+    getStateComponent(text, animationType, component);
   }, [
     syncFetchMissingCfiltersAttempt,
     syncFetchHeadersAttempt,

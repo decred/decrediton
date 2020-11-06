@@ -306,11 +306,9 @@ export const startRpcRequestFunc = (privPass, isRetry) => (
           return resolve();
         }
       });
-      rpcSyncCall.on("end", function () {
-        // It never gets here
-        // TODO investigate if this code is necessary.
-        dispatch({ type: SYNC_SUCCESS });
-        resolve({ synced: true });
+      rpcSyncCall.on("end", function (data) {
+        // It never gets here but log if it does.
+        console.log(data);
       });
       rpcSyncCall.on("error", function (status) {
         status = status + "";
@@ -444,7 +442,6 @@ export const decodeSeed = (mnemonic) => async (dispatch, getState) => {
 
 export const SYNC_ATTEMPT = "SYNC_ATTEMPT";
 export const SYNC_FAILED = "SYNC_FAILED";
-export const SYNC_SUCCESS = "SYNC_SUCCESS";
 export const SYNC_UPDATE = "SYNC_UPDATE";
 export const SYNC_INPUT = "SYNC_INPUT";
 export const SYNC_CANCEL = "SYNC_CANCEL";
@@ -496,9 +493,9 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
         return resolve();
       }
     });
-    spvSyncCall.on("end", function () {
-      dispatch({ type: SYNC_SUCCESS });
-      resolve();
+    spvSyncCall.on("end", function (data) {
+      // It never gets here but log if it does.
+      console.log(data);
     });
     spvSyncCall.on("error", function (status) {
       status = status + "";
