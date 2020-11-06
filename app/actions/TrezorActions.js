@@ -68,16 +68,16 @@ async function initTransport(dispatch, debug) {
     },
     debug: debug
   })
-  .catch(err => {
-    throw err;
-  });
+    .catch(err => {
+      throw err;
+    });
 }
 
 export const TRZ_CONNECT_ATTEMPT = "TRZ_CONNECT_ATTEMPT";
 export const TRZ_CONNECT_FAILED = "TRZ_CONNECT_FAILED";
 export const TRZ_CONNECT_SUCCESS = "TRZ_CONNECT_SUCCESS";
 
-export const connect  = () => async (dispatch, getState) => {
+export const connect = () => async (dispatch, getState) => {
   const {
     trezor: { connected, connectAttempt }
   } = getState();
@@ -88,10 +88,10 @@ export const connect  = () => async (dispatch, getState) => {
 
   const debug = getState().trezor.debug;
   await initTransport(dispatch, debug)
-  .catch(error => {
-    dispatch({ error, type: TRZ_CONNECT_FAILED });
-    return;
-  });
+    .catch(error => {
+      dispatch({ error, type: TRZ_CONNECT_FAILED });
+      return;
+    });
   dispatch({ type: TRZ_CONNECT_SUCCESS });
 };
 
@@ -110,7 +110,7 @@ export const TRZ_DEVICETRANSPORT_START = "TRZ_DEVICETRANSPORT_START";
 export const TRZ_SELECTEDDEVICE_CHANGED = "TRZ_SELECTEDDEVICE_CHANGED";
 export const TRZ_NOCONNECTEDDEVICE = "TRZ_NOCONNECTEDDEVICE";
 
-function onChange (dispatch, getState, features) {
+function onChange(dispatch, getState, features) {
   if (features == null) throw "no features on change";
   const currentDevice = selectors.trezorDevice(getState());
   const device = features.id;
@@ -121,7 +121,7 @@ function onChange (dispatch, getState, features) {
   dispatch({ deviceLabel, device, type: TRZ_SELECTEDDEVICE_CHANGED });
 };
 
-function onConnect (dispatch, getState, features) {
+function onConnect(dispatch, getState, features) {
   if (features == null) throw "no features on connect";
   const device = features.id;
   const deviceLabel = features.label;
@@ -129,7 +129,7 @@ function onConnect (dispatch, getState, features) {
   return device;
 };
 
-function onDisconnect (dispatch, getState, features) {
+function onDisconnect(dispatch, getState, features) {
   if (features == null) throw "no features on change";
   const currentDevice = selectors.trezorDevice(getState());
   const device = features.id;
@@ -140,7 +140,7 @@ function onDisconnect (dispatch, getState, features) {
   alertNoConnectedDevice()(dispatch);
 };
 
-function noDevice (getState) {
+function noDevice(getState) {
   const device = selectors.trezorDevice(getState());
   if (!device) {
     return true;
@@ -207,13 +207,15 @@ function setDeviceListeners(dispatch, getState) {
             payload: false
           });
         };
-      dispatch({ type: TRZ_NOTBACKEDUP });
-      break;
+        dispatch({ type: TRZ_NOTBACKEDUP });
+        break;
       case UI.REQUEST_PASSPHRASE: {
-          console.log("passphrase requested, waiting two seconds to respond");
-          await new Promise(r => setTimeout(r, 2000));
-          const passPhraseCallBack = (canceled, passphrase) => {
-            if (canceled) return;
+        console.log("passphrase requested, waiting two seconds to respond");
+        await new Promise(r => setTimeout(r, 2000));
+        const passPhraseCallBack = (canceled, passphrase) => {
+          if (canceled) {
+            session.cancel();
+          } else {
             session.uiResponse({
               type: UI.RECEIVE_PASSPHRASE,
               payload: {
@@ -221,35 +223,42 @@ function setDeviceListeners(dispatch, getState) {
                 save: true
               }
             });
-          };
-          dispatch({ passPhraseCallBack, type: TRZ_PASSPHRASE_REQUESTED });
-          break;
+          }
+        };
+        dispatch({ passPhraseCallBack, type: TRZ_PASSPHRASE_REQUESTED });
+        break;
       }
       case UI.REQUEST_PIN: {
-          console.log("pin requested, waiting two seconds to respond");
-          await new Promise(r => setTimeout(r, 2000));
-          const pinCallBack = (canceled, pin) => {
-            if (canceled) return;
+        console.log("pin requested, waiting two seconds to respond");
+        await new Promise(r => setTimeout(r, 2000));
+        const pinCallBack = (canceled, pin) => {
+          if (canceled) {
+            session.cancel();
+          } else {
             session.uiResponse({
               type: UI.RECEIVE_PIN,
               payload: pin
             });
-          };
-          dispatch({ pinCallBack, type: TRZ_PIN_REQUESTED });
-          break;
+          }
+        };
+        dispatch({ pinCallBack, type: TRZ_PIN_REQUESTED });
+        break;
       }
       case UI.REQUEST_WORD: {
-          console.log("word requested, waiting two seconds to respond");
-          await new Promise(r => setTimeout(r, 2000));
-          const wordCallBack = (canceled, word) => {
-            if (canceled) return;
+        console.log("word requested, waiting two seconds to respond");
+        await new Promise(r => setTimeout(r, 2000));
+        const wordCallBack = (canceled, word) => {
+          if (canceled) {
+            session.cancel();
+          } else {
             session.uiResponse({
               type: UI.RECEIVE_WORD,
               payload: word
             });
-          };
-          dispatch({ wordCallBack, type: TRZ_WORD_REQUESTED });
-          break;
+          }
+        };
+        dispatch({ wordCallBack, type: TRZ_WORD_REQUESTED });
+        break;
       }
     }
   });
@@ -318,7 +327,7 @@ export const TRZ_CANCELOPERATION_FAILED = "TRZ_CANCELOPERATION_FAILED";
 
 // TODO: Add the ability to logout of trezor/clear session.
 export const cancelCurrentOperation = () => async (dispatch, getState) => {
-  if (noDevice()) return;
+  if (noDevice(getState)) return;
 
   const {
     trezor: { pinCallBack, passPhraseCallBack, wordCallBack }
@@ -507,7 +516,7 @@ export const signMessageAttemptTrezor = (address, message) => async (
       async () => {
         await dispatch(checkTrezorIsDcrwallet());
 
-        const res =  await session.signMessage({
+        const res = await session.signMessage({
           path: address_n,
           coin: chainParams.trezorCoinName,
           message: str2utf8hex(message),
@@ -532,10 +541,10 @@ export const togglePinProtection = () => async (dispatch, getState) => {
   dispatch({ type: TRZ_TOGGLEPINPROTECTION_ATTEMPT });
 
   const features = await getFeatures(dispatch, getState)
-  .catch(error => {
-    dispatch({ error, type: TRZ_TOGGLEPINPROTECTION_FAILED });
-    return;
-  });
+    .catch(error => {
+      dispatch({ error, type: TRZ_TOGGLEPINPROTECTION_FAILED });
+      return;
+    });
 
   const clearProtection = !!features.pin_protection;
 
@@ -567,10 +576,10 @@ export const togglePassPhraseProtection = () => async (dispatch, getState) => {
   dispatch({ type: TRZ_TOGGLEPASSPHRASEPROTECTION_ATTEMPT });
 
   const features = await getFeatures(dispatch, getState)
-  .catch(error => {
-    dispatch({ error, type: TRZ_TOGGLEPASSPHRASEPROTECTION_FAILED });
-    return;
-  });
+    .catch(error => {
+      dispatch({ error, type: TRZ_TOGGLEPASSPHRASEPROTECTION_FAILED });
+      return;
+    });
 
   const enableProtection = !features.passphrase_protection;
 
@@ -599,10 +608,10 @@ export const changeToDecredHomeScreen = () => async (dispatch, getState) => {
   dispatch({ type: TRZ_CHANGEHOMESCREEN_ATTEMPT });
 
   const features = await getFeatures(dispatch, getState)
-  .catch(error => {
-    dispatch({ error, type: TRZ_CHANGEHOMESCREEN_FAILED });
-    return;
-  });
+    .catch(error => {
+      dispatch({ error, type: TRZ_CHANGEHOMESCREEN_FAILED });
+      return;
+    });
 
   const hs = features.model == "T" ? modelT_decred_homescreen : model1_decred_homescreen;
 
@@ -737,10 +746,10 @@ export const backupDevice = () => async (dispatch, getState) => {
   dispatch({ type: TRZ_BACKUPDEVICE_ATTEMPT });
 
   const features = await getFeatures(dispatch, getState)
-  .catch(error => {
-    dispatch({ error, type: TRZ_BACKUPDEVICE_FAILED });
-    return;
-  });
+    .catch(error => {
+      dispatch({ error, type: TRZ_BACKUPDEVICE_FAILED });
+      return;
+    });
   if (features.unfinished_backup) {
     const error = "backup in unrecoverable state";
     dispatch({ error, type: TRZ_BACKUPDEVICE_FAILED });
@@ -833,22 +842,22 @@ export const getWalletCreationMasterPubKey = () => async (
     if (features.model == 1 && versionLessThan(1, 9)) {
       throw new Error(
         "Trezor Model One needs to run on firmware >= 1.9.0. Found " +
-          features.major_version +
-          "." +
-          features.minor_version +
-          "." +
-          features.patch_version
+        features.major_version +
+        "." +
+        features.minor_version +
+        "." +
+        features.patch_version
       );
-    // TODO: Confirm these versions. Confirmed on 2.3.4. Older versions may
-    // not give us decred specific addresses with connect.
+      // TODO: Confirm these versions. Confirmed on 2.3.4. Older versions may
+      // not give us decred specific addresses with connect.
     } else if (features.model == "T" && versionLessThan(2, 3)) {
       throw new Error(
         "Trezor Model T needs to run on firmware >= 2.1.0. Found " +
-          features.major_version +
-          "." +
-          features.minor_version +
-          "." +
-          features.patch_version
+        features.major_version +
+        "." +
+        features.minor_version +
+        "." +
+        features.patch_version
       );
     } else if (!features.model) {
       throw new Error("Unknown firmware model/version");
