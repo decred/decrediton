@@ -66,7 +66,7 @@ const Logs = ({
           onClick={onHideDcrwalletLogs}>
           <T id="help.logs.dcrwallet" m="dcrwallet" />
         </div>
-        <div className="log-area-logs">
+        <div className={styles.logs}>
           <textarea rows="30" value={dcrwalletLogs} disabled />
         </div>
       </div>
