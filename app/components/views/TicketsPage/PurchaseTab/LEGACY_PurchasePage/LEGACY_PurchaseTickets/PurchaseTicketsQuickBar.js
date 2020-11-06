@@ -33,7 +33,7 @@ const PurchaseTicketsAdvanced = ({ stakePool, ticketFee, txFee, expiry }) => (
       </div>
     </Tooltip>
     <Tooltip
-      text={<T id="purchaseTickets.poolFee" m="Pool Fee" />}
+      text={<T id="purchaseTickets.poolFee" m="VSP Fee" />}
       className="ticket_pool_fee">
       <div className="stakepool-info-icon stakepool-pool-fee-icon">
         {stakePool && stakePool.value.PoolFees}%
@@ -47,7 +47,7 @@ const PurchaseTicketsAdvanced = ({ stakePool, ticketFee, txFee, expiry }) => (
       </div>
     </Tooltip>
     <Tooltip
-      text={<T id="purchaseTickets.poolAddress" m="Pool Address" />}
+      text={<T id="purchaseTickets.poolAddress" m="VSP Address" />}
       className="ticket_pool_address">
       <div className="stakepool-info-icon stakepool-fee-address-icon">
         {stakePool && addSpacingAroundText(stakePool.value.PoolAddress)}

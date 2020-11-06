@@ -90,7 +90,7 @@ const WatchtowersTab = () => {
             </a></Tooltip>
           <p><T
             id="ln.watchtowersTab.sessions"
-            m="Sessions {sessions}"
+            m="Sessions: {sessions}"
             values={{ sessions: tower.numSessions }}/></p>
           <CopyableText id="copyable" className={styles.copyableText}>{tower.pubkeyHex}</CopyableText>
           <div className={styles.addrsWrapper}>

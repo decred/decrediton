@@ -43,7 +43,7 @@ const StakePoolsList = ({
                   <div className={styles.poolFee}>
                     <T
                       id="stakePoolsList.poolFee"
-                      m="Pool fees: {value}"
+                      m="VSP fees: {value}"
                       values={{
                         value: (
                           <span className={styles.poolFeePercentage}>
