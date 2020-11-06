@@ -45,8 +45,7 @@ const SideBar = () => {
           onReduceSideBar,
           onExpandSideBar,
           isWatchingOnly,
-          getRunningIndicator,
-          peersCount
+          getRunningIndicator
         }}
       />
       <div
@@ -75,7 +74,8 @@ const SideBar = () => {
             lastBlockTimestamp,
             onShowAccounts,
             onHideAccounts,
-            isSPV
+            isSPV,
+            peersCount
           }}
         />
       ) : (
