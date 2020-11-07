@@ -9,7 +9,13 @@ import { en as enLocale, defaultFormats } from "i18n/locales";
 import { IntlProvider } from "react-intl";
 import { PropTypes } from "prop-types";
 import { lightTheme, darkTheme, icons } from "style/themes";
-import { defaultLightTheme, ThemeProvider, defaultDarkTheme } from "pi-ui";
+import {
+  defaultLightTheme,
+  ThemeProvider,
+  defaultDarkTheme,
+  DEFAULT_DARK_THEME_NAME,
+  DEFAULT_LIGHT_THEME_NAME
+} from "pi-ui";
 
 beforeAll(() => {
   jest.spyOn(console, "groupCollapsed").mockImplementation(() => {});
@@ -29,8 +35,8 @@ afterEach(() => {
 const locale = locales[1];
 const fonts = [];
 const themes = {
-  "theme-light": { ...defaultLightTheme, ...lightTheme, ...icons },
-  "theme-dark": { ...defaultDarkTheme, ...darkTheme, ...icons }
+  [DEFAULT_LIGHT_THEME_NAME]: { ...defaultLightTheme, ...lightTheme, ...icons },
+  [DEFAULT_DARK_THEME_NAME]: { ...defaultDarkTheme, ...darkTheme, ...icons }
 };
 
 function render(ui, renderOptions) {
@@ -38,7 +44,7 @@ function render(ui, renderOptions) {
   const history = createMemoryHistory();
   const currentSettings = {
     locale: "en",
-    theme: "theme-light",
+    theme: DEFAULT_LIGHT_THEME_NAME,
     allowedExternalRequests: []
   };
   const Wrapper = ({ children }) => {
