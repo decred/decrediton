@@ -1,4 +1,5 @@
 import GetStartedPage from "components/views/GetStartedPage/GetStartedPage";
+import { DEFAULT_LIGHT_THEME_NAME, DEFAULT_DARK_THEME_NAME } from "pi-ui";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
 
@@ -42,7 +43,7 @@ beforeEach(() => {
   sel.settingsChanged = jest.fn(() => true);
   mockGetGlobalCfg = conf.getGlobalCfg = jest.fn(() => {
     return {
-      get: () => "theme-light",
+      get: () => DEFAULT_LIGHT_THEME_NAME,
       set: () => {}
     };
   });
@@ -59,7 +60,9 @@ beforeEach(() => {
   );
   mockStartDaemon = da.startDaemon = jest.fn(() => () => Promise.resolve(true));
   mockSyncDaemon = da.syncDaemon = jest.fn(() => () => Promise.resolve());
-  mockCheckNetworkMatch = da.checkNetworkMatch = jest.fn(() => () => Promise.resolve());
+  mockCheckNetworkMatch = da.checkNetworkMatch = jest.fn(() => () =>
+    Promise.resolve()
+  );
 });
 
 test("render empty wallet chooser view", async () => {
@@ -188,7 +191,7 @@ test("click on settings link and change theme", async () => {
 
   mockGetGlobalCfg = conf.getGlobalCfg = jest.fn(() => {
     return {
-      get: () => "theme-dark",
+      get: () => DEFAULT_DARK_THEME_NAME,
       set: () => {}
     };
   });
@@ -265,7 +268,9 @@ test("start regular daemon and receive sync daemon error", async () => {
     };
   });
   const testSyncErrorMsg = "sync-error-msg";
-  mockSyncDaemon = da.syncDaemon = jest.fn(() => () => Promise.reject(testSyncErrorMsg));
+  mockSyncDaemon = da.syncDaemon = jest.fn(() => () =>
+    Promise.reject(testSyncErrorMsg)
+  );
   mockGetDaemonSynced = sel.getDaemonSynced = jest.fn(() => false);
   mockIsSPV = sel.isSPV = jest.fn(() => false);
 
@@ -284,7 +289,9 @@ test("start regular daemon and receive network match error", async () => {
     };
   });
   const testNetworkMatchErrorMsg = "network-match-error-msg";
-  mockCheckNetworkMatch = da.checkNetworkMatch = jest.fn(() => () => Promise.reject(testNetworkMatchErrorMsg));
+  mockCheckNetworkMatch = da.checkNetworkMatch = jest.fn(() => () =>
+    Promise.reject(testNetworkMatchErrorMsg)
+  );
   mockGetDaemonSynced = sel.getDaemonSynced = jest.fn(() => false);
   mockIsSPV = sel.isSPV = jest.fn(() => false);
 

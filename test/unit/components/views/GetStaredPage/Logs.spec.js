@@ -55,11 +55,11 @@ const collapseLogs = async (linkText, expectedLogs) => {
 test("render default logs page", async () => {
   render(<Logs />);
 
-  expect(screen.queryByText(/dcrd/i)).not.toBeInTheDocument();
   expect(screen.queryByText(/dcrwallet/i)).not.toBeInTheDocument();
   expect(screen.queryByText(/dcrlnd/i)).not.toBeInTheDocument();
 
   await expandLogs("decrediton", testDcrDecreditonLogString);
+  expect(screen.getByText("dcrd")).toBeInTheDocument();
 
   expect(mockGetDcrdLogs).toHaveBeenCalled();
   expect(mockGetDcrwalletLogs).toHaveBeenCalled();
