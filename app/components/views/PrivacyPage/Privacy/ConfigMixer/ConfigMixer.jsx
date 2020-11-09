@@ -1,5 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
-import { Subtitle } from "shared";
+import { Documentation, Subtitle } from "shared";
 import { classNames } from "pi-ui";
 import style from "../Privacy.module.css";
 import { usePrivacy } from "../hooks";
@@ -8,6 +8,7 @@ import CreateNeededAccounts from "./CreateNeededAccounts";
 import { useMountEffect } from "hooks";
 import { useEffect, useState } from "react";
 import { MIXED_ACCOUNT, CHANGE_ACCOUNT } from "constants";
+import "style/Documentation.less";
 
 const ConfigMixer = ({ isCreateAccountDisabled, accounts }) => {
   const [mixedAccountName, setMixedAccountName] = useState("");
@@ -47,6 +48,10 @@ const ConfigMixer = ({ isCreateAccountDisabled, accounts }) => {
     <>
       <Subtitle
         title={<T id="privacy.config.subtitle" m="Privacy Configuration" />}
+      />
+      <Documentation
+        name="MixerIntroduction"
+        className="documentation"
       />
       <div className={classNames(style.pageWrapper, style.isColumn)}>
         {areAccountsAvailable ? (

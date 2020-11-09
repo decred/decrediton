@@ -1,5 +1,3 @@
-
-
 import { FormattedMessage as T } from "react-intl";
 import { PassphraseModalButton } from "buttons";
 import { WatchOnlyWarnNotification } from "shared";
@@ -17,9 +15,6 @@ const CreateDefaultAccounts = ({
   createMixerAccountAttempt
 }) => (
   <div>
-    <div>
-      <T id="privacy.create.default.title" m="Create Default Accounts" />
-    </div>
     <T
       id="privacy.create.default.description"
       m="Do you wish to create default mixing accounts {mixed} and {change}? {boldMessage}"

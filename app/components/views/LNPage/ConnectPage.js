@@ -65,7 +65,7 @@ const LNStartupStage = ({ stage }) => (
 );
 
 const LNCreationWarning = ({ onAcceptCreationWarning }) => (
-  <div className="ln-createwallet-warning-doc">
+  <div className="documentation">
     <Documentation name="LNWalletCreationWarning" />
     <KeyBlueButton onClick={onAcceptCreationWarning}>
       <T id="ln.createWalletWarning.okBtn" m="I understand and accept the risks"/>

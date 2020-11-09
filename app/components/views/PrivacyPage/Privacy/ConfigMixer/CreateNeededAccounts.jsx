@@ -1,4 +1,3 @@
-
 import { FormattedMessage as T } from "react-intl";
 import { PassphraseModalButton } from "buttons";
 import { WatchOnlyWarnNotification } from "shared";
@@ -17,9 +16,6 @@ const CreateNeededAccounts = ({
   createMixerAccountAttempt
 }) => (
   <>
-    <div>
-      <T id="privacy.create.accounts" m="Create Needed Accounts" />
-    </div>
     <div>
       <T
         id="privacy.create.needed.description"

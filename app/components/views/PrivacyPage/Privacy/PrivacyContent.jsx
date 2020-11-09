@@ -1,6 +1,10 @@
 import { FormattedMessage as T } from "react-intl";
 import { Subtitle, PrivacyForm } from "shared";
-import { PassphraseModalSwitch, AutoBuyerSwitch } from "buttons";
+import {
+  AutoBuyerSwitch,
+  InfoDocModalButton,
+  PassphraseModalSwitch
+} from "buttons";
 import "style/Privacy.less";
 import { classNames } from "pi-ui";
 import style from "./Privacy.module.css";
@@ -12,10 +16,21 @@ const PrivacyContent = ({
   onStartMixerAttempt
 }) => (
   <>
-    <Subtitle title={<T id="privacy.subtitle" m="Privacy" />} />
-      <PrivacyForm
-        className={classNames(style.pageWrapper, style.isColumn)}
-      />
+    <Subtitle
+      title={<T id="privacy.subtitle" m="Privacy" />}
+      className={classNames(style.isRow)}
+      children={
+        <div className={classNames(style.contentTitleButtonsArea)}>
+          <InfoDocModalButton
+            document="MixerIntroduction"
+            draggable
+          />
+        </div>
+      }
+    />
+    <PrivacyForm
+      className={classNames(style.pageWrapper, style.isColumn)}
+    />
     <div className={classNames(style.buttonArea, style.row)}>
       {accountMixerRunning ? (
         <AutoBuyerSwitch enabled onClick={stopAccountMixer} />
@@ -28,8 +43,8 @@ const PrivacyContent = ({
             modalDescription={
               <T
                 id="privacy.mixer.modal.description"
-                m={`Do you want to start the shuffle Mixer?
-                Decrediton must remain running for mixer properly mix inputs.`}
+                m={`Do you want to start the mixer?
+                Decrediton should not be closed while the mixer is running.`}
               />
             }
             className={style.startMixerButton}
