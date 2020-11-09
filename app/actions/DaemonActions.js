@@ -607,11 +607,11 @@ export const getDcrwalletLogs = () => () =>
       .catch((err) => reject(err))
   );
 
-export const getPrivacyLogs = () => () => new Promise((resolve, reject) => {
+export const getPrivacyLogs = () => () => new Promise((resolve, reject) =>
   wallet.getPrivacyLogs()
     .then((logs) => resolve(logs))
-    .catch(err => reject(err));
-});
+    .catch(err => reject(err))
+);
 
 export const getDecreditonLogs = () => {
   wallet
