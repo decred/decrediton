@@ -936,7 +936,7 @@
   "sidebar.link.transactions": "Transactions",
   "sidebar.link.trezor": "Trezor Setup",
   "sidebar.mixer.running": "The mixer is running. Go to Privacy view for more information",
-  "sidebar.peersCount": "Peers Count",
+  "sidebar.peersCount": "Peers",
   "sidebar.rescanBtn.tip": "Initiate a transaction rescan.\n\nRescanning may help resolve some balance errors.\n\nNote: This scans the entire blockchain for transactions,\nbut does not re-download it.",
   "sidebar.rescanCancelBtn.tip": "Cancel rescan",
   "sidebar.spvMode": "SPV Mode",

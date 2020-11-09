@@ -5144,10 +5144,10 @@ msgstr "Pagamentos enviados por essa carteira LN."
 
 #. [sidebar.peersCount]
 #. defaultMessage is:
-#. Peers Count
+#. Peers
 #: app/i18n/extracted/app/components/SideBar/Logo/Logo.json
 msgctxt "sidebar.peersCount"
-msgid "Peers Count"
+msgid "Peers"
 msgstr "Número de Pares"
 
 #. [txHistory.Pending]
