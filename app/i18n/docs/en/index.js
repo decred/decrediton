@@ -17,6 +17,7 @@ export { default as TrezorFirmwareUpdateWarning } from "./Warnings/TrezorFirmwar
 export { default as TrezorWalletCreationPassPhraseWarning } from "./Warnings/TrezorWalletCreationPassPhrase.md";
 export { default as LNForceCloseChannelWarning } from "./Warnings/LNForceCloseChannel.md";
 export { default as LNWalletCreationWarning } from "./Warnings/LNWalletCreation.md";
+export { default as MixerIntroduction } from "./Warnings/MixerIntroduction.md";
 
 export { default as GetStartedTutorialPage01 } from "./GetStarted/TutorialPage01.md";
 export { default as GetStartedTutorialPage02 } from "./GetStarted/TutorialPage02.md";
