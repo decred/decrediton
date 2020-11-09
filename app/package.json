@@ -15,7 +15,7 @@
     "bs58check": "^2.1.1",
     "electron-store": "^6.0.0",
     "fs-extra": "^5.0.0",
-    "grpc": "1.24.2",
+    "grpc": "1.24.3",
     "minimist": "^1.2.3"
   },
   "optionalDependencies": {
