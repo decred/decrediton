@@ -84,8 +84,6 @@ test("test custom privacy options", () => {
   );
   user.click(customizeAllowedConnectionsLabel);
 
-  expect(screen.getByText(/update private passphrase/i)).toBeInTheDocument();
-
   const customPrivacyOptionsLabel = screen.getByText(/custom privacy options/i);
   expect(customPrivacyOptionsLabel).toBeInTheDocument();
   expect(
@@ -95,9 +93,9 @@ test("test custom privacy options", () => {
   );
 
   const updateCheckLabel = screen.getByText(/update check/i);
-  expect(updateCheckLabel.parentElement.nextSibling.textContent).toMatchInlineSnapshot(
-    `"Get latest released version from github.org"`
-  );
+  expect(
+    updateCheckLabel.parentElement.nextSibling.textContent
+  ).toMatchInlineSnapshot(`"Get latest released version from github.org"`);
   user.click(updateCheckLabel.parentElement.getElementsByTagName("input")[0]);
 
   const networkInformationLabel = screen.getByText("Network Information");
@@ -111,23 +109,23 @@ test("test custom privacy options", () => {
   );
 
   const politeiaLabel = screen.getByText(/politeia/i);
-  expect(politeiaLabel.parentElement.nextSibling.textContent).toMatchInlineSnapshot(
+  expect(
+    politeiaLabel.parentElement.nextSibling.textContent
+  ).toMatchInlineSnapshot(
     `"List and vote on proposals on proposals.decred.org"`
   );
   user.click(politeiaLabel.parentElement.getElementsByTagName("input")[0]);
 
   const vspListingLabel = screen.getByText(/vsp listing/i);
-  expect(vspListingLabel.parentElement.nextSibling.textContent).toMatchInlineSnapshot(
-    `"List of currently available VSPs from decred.org"`
-  );
+  expect(
+    vspListingLabel.parentElement.nextSibling.textContent
+  ).toMatchInlineSnapshot(`"List of currently available VSPs from decred.org"`);
   user.click(vspListingLabel.parentElement.getElementsByTagName("input")[0]);
 
   const decredBlockExplorerLabel = screen.getByText(/decred block explorer/i);
   expect(
     decredBlockExplorerLabel.parentElement.nextSibling.textContent
-  ).toMatchInlineSnapshot(
-    `"Access chain information from dcrdata.decred.org"`
-  );
+  ).toMatchInlineSnapshot(`"Access chain information from dcrdata.decred.org"`);
   user.click(
     decredBlockExplorerLabel.parentElement.getElementsByTagName("input")[0]
   );

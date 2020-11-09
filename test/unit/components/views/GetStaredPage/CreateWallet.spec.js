@@ -45,6 +45,8 @@ const testCreateWalletRequestErrorMsg = "create-wallet-request-error-msg";
 
 beforeEach(() => {
   sel.getDaemonSynced = jest.fn(() => true);
+  sel.isSPV = jest.fn(() => false);
+  wla.getSelectedWallet = jest.fn(() => () => null);
   mockCreateWallet = da.createWallet = jest.fn(() => () =>
     Promise.resolve(testSelectedWallet)
   );

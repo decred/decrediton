@@ -9,7 +9,9 @@ import * as wla from "actions/WalletLoaderActions";
 import {
   OPENWALLET_INPUT,
   OPENWALLET_SUCCESS,
-  OPENWALLET_FAILED_INPUT
+  OPENWALLET_FAILED_INPUT,
+  OPENWALLET_INPUTPRIVPASS,
+  SYNC_FAILED
 } from "actions/WalletLoaderActions";
 import * as ca from "actions/ClientActions";
 
@@ -221,7 +223,6 @@ test("launch an encrypted wallet", async () => {
   ).toMatchInlineSnapshot(
     `"This wallet is encrypted, please enter the public passphrase to decrypt it."`
   );
-
   const publicPassphraseInput = screen.getByPlaceholderText(
     /public passphrase/i
   );
@@ -274,37 +275,98 @@ test("launch an encrypted wallet", async () => {
       true
     )
   );
-  await wait(() => expect(mockSetSelectedWallet).toHaveBeenCalled());
 });
 
-test("test isSyncingRPC", async () => {
-  mockStartRpcRequestFunc = wla.startRpcRequestFunc = jest.fn(() => () =>
-    Promise.resolve()
-  );
-
+test("ask for passphrase if account discovery is needed", async () => {
   render(<GetStartedPage />);
-  await wait(() => expect(mockStartRpcRequestFunc).toHaveBeenCalled());
-  await wait(() => expect(mockGoToHomePage).toHaveBeenCalled());
-});
-
-test("test isSyncingRPC and receive error from startRpcRequestFunc", async () => {
-  mockStartRpcRequestFunc = wla.startRpcRequestFunc = jest.fn(() => () =>
-    Promise.reject()
-  );
-  render(<GetStartedPage />);
-  await wait(() => expect(mockStartRpcRequestFunc).toHaveBeenCalled());
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
-});
 
-test("test isSyncingRPC in SPV mode", async () => {
-  mockSpvSyncAttempt = wla.spvSyncAttempt = jest.fn(() => () =>
+  mockStartWallet = da.startWallet = jest.fn(() => () =>
+    Promise.reject(OPENWALLET_INPUTPRIVPASS)
+  );
+  mockStartRpcRequestFunc = wla.startRpcRequestFunc = jest.fn(
+    () => (dispatch) => {
+      dispatch({ error: "status", type: SYNC_FAILED });
+      return Promise.reject(OPENWALLET_INPUTPRIVPASS);
+    }
+  );
+  user.click(screen.getByText(/launch wallet/i));
+  await wait(() => expect(mockStartWallet).toHaveBeenCalled());
+  let privatePassphraseInput = screen.getByPlaceholderText(
+    /private passphrase/i
+  );
+  const testInvalidPassphrase = "invalid-passphrase";
+  const testValidPassphrase = "valid-passphrase";
+  let continueButton = screen.getByText("Continue");
+
+  expect(
+    screen.getByText(/type passphrase to discover accounts/i)
+  ).toBeInTheDocument();
+  expect(
+    screen.getByText(/the accounts for this wallet/i).textContent
+  ).toMatchInlineSnapshot(
+    `"The accounts for this wallet haven't been discovered yet. Please enter the wallet's private passphrase to perform account discovery."`
+  );
+
+  // type invalid private key
+  user.type(privatePassphraseInput, testInvalidPassphrase);
+  user.click(continueButton);
+  await wait(() =>
+    expect(mockStartRpcRequestFunc).toHaveBeenCalledWith(
+      testInvalidPassphrase,
+      undefined
+    )
+  );
+
+  privatePassphraseInput = screen.getByPlaceholderText(/private passphrase/i);
+  continueButton = screen.getByText("Continue");
+  // submit empty input by pressing enter
+  user.clear(privatePassphraseInput);
+  user.type(privatePassphraseInput, "{enter}");
+  mockStartRpcRequestFunc.mockClear();
+  expect(mockStartRpcRequestFunc).not.toHaveBeenCalled();
+
+  // valid passphrase + submit the form by press enter
+  mockStartRpcRequestFunc = wla.startRpcRequestFunc = jest.fn(() => () =>
     Promise.resolve()
   );
-  mockIsSPV = sel.isSPV = jest.fn(() => true);
+  user.type(privatePassphraseInput, testValidPassphrase + "{enter}");
+  await wait(() =>
+    expect(mockStartRpcRequestFunc).toHaveBeenCalledWith(
+      testValidPassphrase,
+      undefined
+    )
+  );
+});
+
+test("launch an encrypted wallet and ask private passphrase too if account discovery is needed", async () => {
   render(<GetStartedPage />);
-  await wait(() => expect(mockGoToHomePage).toHaveBeenCalled());
-  expect(mockIsSPV).toHaveBeenCalled();
-  expect(mockSpvSyncAttempt).toHaveBeenCalled();
+  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
+
+  mockStartWallet = da.startWallet = jest.fn(() => () =>
+    Promise.reject(OPENWALLET_INPUT)
+  );
+  mockOpenWalletAttempt = wla.openWalletAttempt = jest.fn(() => () =>
+    Promise.reject(OPENWALLET_INPUTPRIVPASS)
+  );
+  user.click(screen.getByText(/launch wallet/i));
+  await wait(() => expect(mockStartWallet).toHaveBeenCalled());
+  const publicPassphraseInput = screen.getByPlaceholderText(
+    /public passphrase/i
+  );
+  const testValidPassphrase = "valid-passphrase";
+
+  user.type(publicPassphraseInput, testValidPassphrase + "{enter}");
+  await wait(() =>
+    expect(mockOpenWalletAttempt).toHaveBeenCalledWith(
+      testValidPassphrase,
+      true
+    )
+  );
+
+  expect(
+    screen.getByText(/type passphrase to discover accounts/i)
+  ).toBeInTheDocument();
 });
 
 test("test isSyncingRPC in SPV mode and receive error from SPV sync", async () => {

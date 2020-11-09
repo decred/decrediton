@@ -27,10 +27,12 @@ let mockStartDaemon;
 let mockSyncDaemon;
 let mockCheckNetworkMatch;
 let mockUpdateAvailable;
+let mockDaemonWarning;
 
 beforeEach(() => {
   mockGetDaemonSynced = sel.getDaemonSynced = jest.fn(() => true);
   mockUpdateAvailable = sel.updateAvailable = jest.fn(() => true);
+  mockDaemonWarning = sel.daemonWarning = jest.fn(() => null);
   mockMaxWalletCount = sel.maxWalletCount = jest.fn(() => 3);
   mockIsSPV = sel.isSPV = jest.fn(() => false);
   mockAppVersion = sel.appVersion = jest.fn(() => testAppVersion);
@@ -300,5 +302,19 @@ test("start regular daemon and receive network match error", async () => {
   expect(mockStartDaemon).toHaveBeenCalled();
   expect(mockSyncDaemon).toHaveBeenCalled();
   expect(mockCheckNetworkMatch).toHaveBeenCalled();
+  ipcRenderer.sendSync.mockRestore();
+});
+
+test("test daemon warning", async () => {
+  ipcRenderer.sendSync.mockImplementation(() => {
+    return {
+      rpcPresent: false
+    };
+  });
+  const testDaemonWarningText = "test-daemon-warning-text";
+  mockDaemonWarning = sel.daemonWarning = jest.fn(() => testDaemonWarningText);
+  render(<GetStartedPage />);
+  await wait(() => screen.getByText(testDaemonWarningText));
+  expect(mockDaemonWarning).toHaveBeenCalled();
   ipcRenderer.sendSync.mockRestore();
 });

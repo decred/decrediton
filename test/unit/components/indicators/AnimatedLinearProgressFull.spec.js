@@ -127,9 +127,7 @@ test("dcrwallet log line is shown or log the error to console", async () => {
   jest.useFakeTimers();
 
   const mockIsSPV = (sel.isSPV = jest.fn(() => false));
-  const mockGetSelectedWallet = (sel.getSelectedWallet = jest.fn(() => {
-    return {};
-  }));
+  const mockGetSelectedWallet = (sel.getSelectedWallet = jest.fn(() => true));
   const mockGetCurrentBlockCount = (sel.getCurrentBlockCount = jest.fn(
     () => 0
   ));
@@ -146,6 +144,9 @@ test("dcrwallet log line is shown or log the error to console", async () => {
     Promise.resolve(testDcrwalletLogLine)
   ));
 
+  let mockGetDcrdLastLineLogs = (da.getDcrdLastLineLogs = jest.fn(() => () =>
+    Promise.reject()
+  ));
   render(<AnimatedLinearProgressFull {...testProps} />);
   expect(mockGetSelectedWallet).toHaveBeenCalled();
 
@@ -155,18 +156,19 @@ test("dcrwallet log line is shown or log the error to console", async () => {
     jest.advanceTimersByTime(2001);
   });
   await wait(() =>
-    expect(screen.queryByText(testDcrwalletLogLine)).toBeInTheDocument()
+    expect(screen.getByText(testDcrwalletLogLine)).toBeInTheDocument()
   );
 
   // test DcrwalletLogLine error
   mockGetDcrwalletLogs = da.getDcrwalletLogs = jest.fn(() => () =>
-    Promise.reject("Error")
+    Promise.reject()
   );
   act(() => {
     jest.advanceTimersByTime(2001);
   });
   await wait(() => expect(mockConsoleLog).toHaveBeenCalled());
 
+  mockGetDcrdLastLineLogs.mockRestore();
   mockConsoleLog.mockRestore();
   mockIsSPV.mockRestore();
   mockGetNeededBlocks.mockRestore();
