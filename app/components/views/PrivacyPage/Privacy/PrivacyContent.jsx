@@ -13,7 +13,8 @@ const PrivacyContent = ({
   accountMixerError,
   accountMixerRunning,
   stopAccountMixer,
-  onStartMixerAttempt
+  onStartMixerAttempt,
+  logs
 }) => (
   <>
     <Subtitle
@@ -54,6 +55,14 @@ const PrivacyContent = ({
     </div>
     {accountMixerError && (
       <div className={style.error}>{accountMixerError}</div>
+    )}
+    { accountMixerRunning && (
+      <div className={style.logs}>
+        <div className={style.logsTitle}>
+          <T id="privacy.mixer.logs" m="Logs:" />
+        </div>
+        { logs }
+      </div>
     )}
   </>
 );
