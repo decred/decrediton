@@ -532,7 +532,7 @@ export const constructTransactionAttempt = (
       // Otherwise, we can left it empty and it will be filled by dcrwallet.
       const mixAcct = sel.getMixedAccount(getState());
       const unmixedAcct = sel.getChangeAccount(getState());
-      if (unmixedAcct) {
+      if (unmixedAcct && account === mixAcct) {
         if (!mixAcct) {
           return (dispatch) => {
             const error = "unmixed account set but no mix account found.";
