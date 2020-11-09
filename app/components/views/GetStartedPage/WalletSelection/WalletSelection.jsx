@@ -4,7 +4,6 @@ import { useDaemonStartup } from "hooks";
 
 const WalletSelectionBody = ({ submitChosenWallet, onSendCreateWallet }) => {
   const {
-    maxWalletCount,
     isSPV,
     availableWallets,
     onRemoveWallet,
@@ -42,7 +41,6 @@ const WalletSelectionBody = ({ submitChosenWallet, onSendCreateWallet }) => {
         availableWallets,
         editWallets,
         getDaemonSynced,
-        maxWalletCount,
         isSPV,
         onRemoveWallet,
         creatingWallet,

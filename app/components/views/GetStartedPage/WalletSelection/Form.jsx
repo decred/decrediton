@@ -44,7 +44,6 @@ const WalletSelectionForm = ({
   onChangeAvailableWallets,
   onToggleEditWallet,
   editWallets,
-  maxWalletCount,
   submitChosenWallet
 }) => (
   <div>
@@ -164,9 +163,7 @@ const WalletSelectionForm = ({
             </div>
           );
         })}
-        {availableWallets.length < maxWalletCount && (
-          <CreateRestoreButtons {...{ showCreateWalletForm }} />
-        )}
+        <CreateRestoreButtons {...{ showCreateWalletForm }} />
         {editWallets ? (
           <Tooltip text={<T id="walletselection.closeEditWallets" m="Close" />}>
             <div

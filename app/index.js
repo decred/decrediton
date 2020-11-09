@@ -237,7 +237,6 @@ const initialState = {
     peerCount: 0,
     rpcRetryAttempts: 0,
     curBlocks: 0,
-    maxWalletCount: globalCfg.get("max_wallet_count"),
     isWatchingOnly: false,
     // getSelectedWallet returns null if no wallet is selected.
     selectedWallet: getSelectedWallet(),
