@@ -23,6 +23,7 @@ let mockIsSPV;
 let mockSpvSyncAttempt;
 let mockGoToHomePage;
 let mockStartRpcRequestFunc;
+let mockGetSelectedWallet;
 
 let testAvailableWallets;
 
@@ -83,6 +84,7 @@ beforeEach(() => {
   sel.getDaemonSynced = jest.fn(() => true);
   mockRemoveWallet = da.removeWallet = jest.fn(() => () => {});
   mockSetSelectedWallet = wla.setSelectedWallet = jest.fn(() => () => {});
+  mockGetSelectedWallet = wla.getSelectedWallet = jest.fn(() => () => null);
   mockOpenWalletAttempt = wla.openWalletAttempt = jest.fn(() => () =>
     Promise.reject(OPENWALLET_FAILED_INPUT)
   );
@@ -106,6 +108,7 @@ test("render wallet chooser view", async () => {
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
 
   expect(mockSortedAvailableWallets).toHaveBeenCalled();
+  expect(mockGetSelectedWallet).toHaveBeenCalled();
   expect(mockMaxWalletCount).toHaveBeenCalled();
 
   // check regular wallet
