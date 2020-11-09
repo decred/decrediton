@@ -15,7 +15,6 @@ export { default as RestoreWalletSwitch } from "./RestoreWalletSwitch";
 import ModalButton from "./ModalButton";
 import KeyBlueButton from "./KeyBlueButton";
 import AutoBuyerSwitch from "./AutoBuyerSwitch";
-import NetworkSwitch from "./NetworkSwitch";
 import DangerButton from "./DangerButton";
 import CloseButton from "./CloseButton";
 import HelpLink from "./HelpLink";
@@ -26,7 +25,6 @@ export {
   KeyBlueButton,
   DangerButton,
   CloseButton,
-  NetworkSwitch,
   InvisibleButton
 };
 
