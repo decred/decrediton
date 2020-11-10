@@ -19,6 +19,11 @@ const Privacy = ({ isCreateAccountDisabled, setInterval }) => {
 
   const [logs, setLogs] = useState(null);
   useMountEffect(() => {
+    // get initial logs
+    onGetPrivacyLogs()
+      .then(privacyLogs => setLogs(privacyLogs.toString("utf-8")))
+      .catch(err => err);
+
     setInterval(async () => {
       try {
         const privacyLogs = await onGetPrivacyLogs();

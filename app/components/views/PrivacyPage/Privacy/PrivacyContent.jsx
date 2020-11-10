@@ -56,13 +56,17 @@ const PrivacyContent = ({
     {accountMixerError && (
       <div className={style.error}>{accountMixerError}</div>
     )}
+    {/*
+      TODO
+      create a shared component and use it on logs page and here.
+    */}
     { accountMixerRunning && (
-      <div className={style.logs}>
-        <div className={style.logsTitle}>
-          <T id="privacy.mixer.logs" m="Logs:" />
+      <>
+        <Subtitle title={<T id="privacy.logs" m="Logs" />} />
+        <div className={style.logs}>
+          <textarea rows="10" value={logs} disabled />
         </div>
-        { logs }
-      </div>
+      </>
     )}
   </>
 );
