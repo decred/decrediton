@@ -64,7 +64,6 @@ export const getNeededBlocks = get(["daemon", "neededBlocks"]);
 export const getEstimatedTimeLeft = get(["daemon", "timeLeftEstimate"]);
 export const getDaemonSynced = get(["daemon", "daemonSynced"]);
 export const getWalletReady = get(["daemon", "walletReady"]);
-export const maxWalletCount = get(["walletLoader", "maxWalletCount"]);
 export const getSyncAttemptRequest = get(["walletLoader", "syncAttemptRequest"]);
 
 // general startup selector

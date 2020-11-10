@@ -38,7 +38,6 @@ const useDaemonStartup = () => {
   const getEstimatedTimeLeft = useSelector(sel.getEstimatedTimeLeft);
   const trezorDevice = useSelector(sel.trezorDevice);
   const isTrezor = useSelector(sel.isTrezor);
-  const maxWalletCount = useSelector(sel.maxWalletCount);
   const syncAttemptRequest = useSelector(sel.getSyncAttemptRequest);
   // end of daemon selectors
 
@@ -263,7 +262,6 @@ const useDaemonStartup = () => {
     getEstimatedTimeLeft,
     trezorDevice,
     isTrezor,
-    maxWalletCount,
     peerCount,
     synced,
     syncFetchMissingCfiltersAttempt,

@@ -15,7 +15,6 @@ export const PROXY_LOCATION = "proxy_location";
 export const REMOTE_CREDENTIALS = "remote_credentials";
 export const SPV_MODE = "spv_mode";
 export const SPV_CONNECT = "spv_connect";
-export const MAX_WALLET_COUNT = "max_wallet_count";
 export const TIMEZONE = "timezone";
 export const LAST_HEIGHT = "last_height";
 export const APPDATA = "appdata_path";
@@ -62,7 +61,6 @@ export const INITIAL_VALUES = {
   [REMOTE_CREDENTIALS]: {},
   [SPV_MODE]: false,
   [SPV_CONNECT]: [],
-  [MAX_WALLET_COUNT]: 3,
   [TIMEZONE]: "local",
   [LAST_HEIGHT]: 0,
   [APPDATA]: "",

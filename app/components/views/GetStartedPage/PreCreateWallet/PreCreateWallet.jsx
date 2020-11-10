@@ -14,7 +14,6 @@ const PreCreateWallet = ({
   creatingWallet
 }) => {
   const {
-    maxWalletCount,
     isSPV,
     availableWallets,
     getDaemonSynced,
@@ -179,7 +178,6 @@ const PreCreateWallet = ({
         walletMasterPubKey,
         masterPubKeyError,
         walletNameError,
-        maxWalletCount,
         isSPV,
         onShowTrezorConfig,
         creatingWallet,
