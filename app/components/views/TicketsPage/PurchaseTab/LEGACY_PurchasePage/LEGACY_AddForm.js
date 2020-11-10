@@ -10,7 +10,7 @@ import "style/Layout.less";
 import "style/StakePool.less";
 import styles from "../PurchaseTab.module.css";
 import { AddVSPButton } from "buttons";
-import { classNames } from "pi-ui";
+import { Checkbox } from "pi-ui";
 import { LegacyVSPWarning } from "../PurchaseTickets/Page";
 
 const messages = defineMessages({
@@ -45,12 +45,16 @@ const StakePoolsAddForm = ({
     <>
       <div className="stakepool-add-title">
         <T id="stakepool.addPoolTitle" m="Add a VSP" />
-        <div className={classNames(styles.iconWrapper, styles.checkbox)}>
+        <div className={styles.iconWrapper}>
           <Tooltip md={true} text={<LegacyVSPWarning />}>
-            <div className={styles.label}><T id="purchase.isLegacy.legacy.add" m="Use Legacy VSP" /></div>
+            <Checkbox
+              label={<T id="purchase.isLegacy.legacy.add" m="Use Legacy VSP" />}
+              className={styles.useLegacyLabel}
+              id="box"
+              checked={true}
+              onChange={() => toggleIsLegacy(false)}
+            />
           </Tooltip>
-          <input id="box" type="checkbox" checked={true} onChange={() => toggleIsLegacy(false)} />
-          <label htmlFor="box" className={styles.checkboxLabel}></label>
         </div>
       </div>
       <div className="stakepool-add-area">

@@ -11,22 +11,12 @@
 
 .iconWrapper {
   display: flex;
-  flex-direction: row-reverse;
-  align-self: center;
+  align-items: center;
   margin-left: auto;
 }
 
-.checkbox {
-  align-items: center;
-}
-
-.checkboxLabel {
-  cursor: pointer;
-}
-
-.label {
-  font-size: 14pt;
-  margin-left: 4px;
+.useLegacyLabel {
+  font-size: 16px;
 }
 
 .infoFields strong {

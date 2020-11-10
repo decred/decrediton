@@ -7,30 +7,27 @@ import "style/PurchaseTickets.less";
 import { InfoDocModalButton } from "buttons";
 import UnsignedTickets from "../UnsignedTickets";
 import styles from "../PurchaseTab.module.css";
-import { classNames } from "pi-ui";
+import { Checkbox } from "pi-ui";
 import { LegacyVSPWarning } from "../PurchaseTickets/Page";
 
 const getTitleIcon = ({ toggleIsLegacy }) => (
   <>
-    <div className={classNames(styles.iconWrapper, styles.checkbox)}>
-      <Tooltip md={true} text={<LegacyVSPWarning />}>
-        <div className={styles.label}>
-          <T id="purchase.isLegacy.legacy" m="Use Legacy VSP" />
-        </div>
-      </Tooltip>
-      <input
-        id="box"
-        type="checkbox"
-        checked={true}
-        onChange={() => toggleIsLegacy(false)}
-        />
-      <label htmlFor="box" className={styles.checkboxLabel}></label>
+    <div className={styles.iconWrapper}>
       <InfoDocModalButton
         document="PurchaseTicketsInfo"
         modalClassName={styles.infoFields}
         className="info-title-icon"
         draggable
       />
+      <Tooltip md={true} text={<LegacyVSPWarning />}>
+        <Checkbox
+          label={<T id="purchase.isLegacy.legacy" m="Use Legacy VSP" />}
+          className={styles.useLegacyLabel}
+          id="box"
+          checked={true}
+          onChange={() => toggleIsLegacy(false)}
+        />
+      </Tooltip>
     </div>
   </>
 );
