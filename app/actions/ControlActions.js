@@ -21,19 +21,23 @@ export const GETNEXTADDRESS_SUCCESS = "GETNEXTADDRESS_SUCCESS";
 export const getNextAddressAttempt = (accountNumber) => (
   dispatch,
   getState
-) => {
+) => new Promise((resolve, reject) => {
   dispatch({ type: GETNEXTADDRESS_ATTEMPT });
   return wallet
     .getNextAddress(sel.walletService(getState()), accountNumber)
     .then((res) => {
       res.accountNumber = accountNumber;
-      return dispatch({
+      dispatch({
         getNextAddressResponse: res,
         type: GETNEXTADDRESS_SUCCESS
       });
+      resolve(res);
     })
-    .catch((error) => dispatch({ error, type: GETNEXTACCOUNT_FAILED }));
-};
+    .catch((error) => {
+      dispatch({ error, type: GETNEXTACCOUNT_FAILED });
+      reject(error);
+    });
+});
 
 export const RENAMEACCOUNT_ATTEMPT = "RENAMEACCOUNT_ATTEMPT";
 export const RENAMEACCOUNT_FAILED = "RENAMEACCOUNT_FAILED";
@@ -495,7 +499,7 @@ export const constructTransactionAttempt = (
   confirmations,
   outputs,
   all
-) => (dispatch, getState) => {
+) => async (dispatch, getState) => {
   const request = new ConstructTransactionRequest();
   let totalAmount;
   request.setSourceAccount(parseInt(account));
@@ -522,18 +526,39 @@ export const constructTransactionAttempt = (
       const changeDest = new ConstructTransactionRequest.OutputDestination();
       changeDest.setScript(changeScript);
       request.setChangeDestination(changeDest);
+    } else {
+      // set change destination. If it is a privacy wallet we get the
+      // next unmixed address.
+      // Otherwise, we can left it empty and it will be filled by dcrwallet.
+      const mixAcct = sel.getMixedAccount(getState());
+      const unmixedAcct = sel.getChangeAccount(getState());
+      if (unmixedAcct && account === mixAcct) {
+        if (!mixAcct) {
+          return (dispatch) => {
+            const error = "unmixed account set but no mix account found.";
+            dispatch({ error, type: CONSTRUCTTX_FAILED });
+          };
+        }
+        const newChangeAddr = await dispatch(getNextAddressAttempt(unmixedAcct));
+        const outputDest = new ConstructTransactionRequest.OutputDestination();
+        outputDest.setAddress(newChangeAddr.address);
+        request.setChangeDestination(outputDest);
+      }
     }
-  } else if (outputs.length > 1) {
-    return (dispatch) => {
-      const error = "Too many outputs provided for a send all request.";
-      dispatch({ error, type: CONSTRUCTTX_FAILED });
-    };
-  } else if (outputs.length == 0) {
-    return (dispatch) => {
-      const error = "No destination specified for send all request.";
-      dispatch({ error, type: CONSTRUCTTX_FAILED });
-    };
   } else {
+      if (outputs.length > 1) {
+        return (dispatch) => {
+          const error = "Too many outputs provided for a send all request.";
+          dispatch({ error, type: CONSTRUCTTX_FAILED });
+        };
+      }
+      if (outputs.length == 0) {
+        return (dispatch) => {
+          const error = "No destination specified for send all request.";
+          dispatch({ error, type: CONSTRUCTTX_FAILED });
+      };
+    }
+    // set change to same destination as it is a send all tx.
     request.setOutputSelectionAlgorithm(1);
     const outputDest = new ConstructTransactionRequest.OutputDestination();
     outputDest.setAddress(outputs[0].data.destination);
