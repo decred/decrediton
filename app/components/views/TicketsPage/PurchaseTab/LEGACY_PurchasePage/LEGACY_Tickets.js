@@ -12,7 +12,7 @@ import { LegacyVSPWarning } from "../PurchaseTickets/Page";
 
 const getTitleIcon = ({ toggleIsLegacy }) => (
   <>
-  <div className={classNames(styles.iconWrapper, styles.checkbox)}>
+    <div className={classNames(styles.iconWrapper, styles.checkbox)}>
       <Tooltip md={true} text={<LegacyVSPWarning />}>
         <div className={styles.label}>
           <T id="purchase.isLegacy.legacy" m="Use Legacy VSP" />
@@ -25,13 +25,13 @@ const getTitleIcon = ({ toggleIsLegacy }) => (
         onChange={() => toggleIsLegacy(false)}
         />
       <label htmlFor="box" className={styles.checkboxLabel}></label>
+      <InfoDocModalButton
+        document="PurchaseTicketsInfo"
+        modalClassName={styles.infoFields}
+        className="info-title-icon"
+        draggable
+      />
     </div>
-    <InfoDocModalButton
-      document="PurchaseTicketsInfo"
-      modalClassName={styles.infoFields}
-      className="info-title-icon"
-      draggable
-    />
   </>
 );
 

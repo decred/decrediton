@@ -30,12 +30,12 @@ const getTitleIcon = ({ toggleIsLegacy }) => (
         onChange={() => toggleIsLegacy(true)}
         />
       <label htmlFor="box" className={styles.checkboxLabel}></label>
-    </div>
-    {/* The div below is a placeholder for the info modal "i" icon which is not
+      {/* The div below is a placeholder for the info modal "i" icon which is not
         displayed on the new VSP form. Including this here ensures the layout is
         consistent and prevents things from moving then the "i" is hidden.
         This div can be removed when the legacy VSP form is removed. */}
-    <div style={{ width: "20px", height: "20px", padding: "3px", margin: "4px 0 4px 0" }}></div>
+      <div style={{ width: "20px", height: "20px", padding: "3px", margin: "4px 0 4px 0" }}></div>
+    </div>
   </>
 );
 
