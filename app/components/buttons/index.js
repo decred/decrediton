@@ -13,7 +13,7 @@ export { default as ImportScriptIconButton } from "./ImportScriptIconButton";
 
 import ModalButton from "./ModalButton";
 import KeyBlueButton from "./KeyBlueButton";
-import ToggleSwitch from "./ToggleSwitch";
+import ToggleSwitch from "./ToggleSwitch/ToggleSwitch";
 import MixerSwitch from "./MixerSwitch";
 import AutoBuyerSwitch from "./AutoBuyerSwitch";
 import DangerButton from "./DangerButton";
