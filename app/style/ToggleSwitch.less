@@ -1,0 +1,47 @@
+@import (reference) "./main.less";
+
+.toggle-switch {
+  .inline-block-mixin;
+
+  margin-bottom: 10px;
+  width: 85px;
+}
+
+.toggle-switch-enabled,
+.toggle-switch-disabled {
+  display: block;
+  width: 50px;
+  height: 20px;
+  border-radius: 3px;
+  transition: all 200ms ease-in-out;
+  background-color: var(--toggle-switch-bg);
+  float: left;
+}
+
+.toggle-switch-enabled:hover {
+  width: 47px;
+  padding-left: 3px;
+}
+
+.toggle-switch-disabled:hover {
+  width: 47px;
+  padding-right: 3px;
+}
+
+.toggle-switch-knob-enabled,
+.toggle-switch-knob-disabled {
+  width: 25px;
+  height: 100%;
+  border-radius: 3px;
+  box-shadow: 0 3px 8px rgba(12, 30, 62, 0.21);
+  transition: all 200ms ease-in-out;
+}
+  
+  .toggle-switch-knob-enabled {
+    background-color: var(--input-color);
+  }
+  
+  .toggle-switch-knob-disabled {
+    float: right;
+    background-color: var(--toggle-switch-knob-bg);
+  }

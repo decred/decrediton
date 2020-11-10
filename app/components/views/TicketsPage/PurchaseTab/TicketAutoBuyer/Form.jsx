@@ -1,4 +1,4 @@
-import { AutoBuyerSwitch, PassphraseModalSwitch } from "buttons";
+import { AutoBuyerSwitch, AutoBuyerPassphraseModalSwitch } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import { DcrInput, AccountsSelect, VSPSelect } from "inputs";
 import { Balance } from "shared";
@@ -28,7 +28,7 @@ const TicketAutoBuyerForm = ({
       {isRunning ? (
         <AutoBuyerSwitch enabled onClick={onStopAutoBuyer} />
       ) : (
-          <PassphraseModalSwitch
+          <AutoBuyerPassphraseModalSwitch
             modalTitle={
               <T
                 id="vsp.tickets.startAutoBuyerConfirmation"
