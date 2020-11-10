@@ -16,13 +16,15 @@ const MenuBarExpanded = ({
   onShowAccounts,
   onHideAccounts,
   isSPV,
-  peersCount
+  peersCount,
+  onAccountsListWheel
 }) => (
   <div className={styles.bottom}>
     <div
       className={styles.short}
       onMouseEnter={rescanRequest ? null : onShowAccounts}
-      onMouseLeave={rescanRequest ? null : onHideAccounts}>
+      onMouseLeave={rescanRequest ? null : onHideAccounts}
+      onWheel={onAccountsListWheel}>
       <div
         className={classNames(
           styles.shortSeparator,
@@ -45,7 +47,6 @@ const MenuBarExpanded = ({
           <a className={styles.latestBlockName}>
             <T id="sidebar.latestBlock" m="Latest Block" />
             <span className={styles.latestBlockNumber}>
-              {" "}
               {currentBlockHeight}
             </span>
           </a>

@@ -26,7 +26,9 @@ const SideBar = () => {
     onExpandSideBar,
     onReduceSideBar,
     isSPV,
-    peersCount
+    peersCount,
+    accountsListRef,
+    onAccountsListWheel
   } = useSideBar();
   const { rescanAttempt, rescanCancel } = useRescan();
 
@@ -59,7 +61,8 @@ const SideBar = () => {
         <AccountsList
           {...{
             isShowingAccounts,
-            balances
+            balances,
+            accountsListRef
           }}
         />
       </div>
@@ -75,7 +78,8 @@ const SideBar = () => {
             onShowAccounts,
             onHideAccounts,
             isSPV,
-            peersCount
+            peersCount,
+            onAccountsListWheel
           }}
         />
       ) : (

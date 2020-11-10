@@ -1,10 +1,19 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as sel from "selectors";
 import * as sba from "../../actions/SidebarActions";
 
 export function useSideBar() {
   const [isShowingAccounts, setIsShowingAccounts] = useState(false);
+
+  const accountsListRef = useRef(null);
+
+  const onAccountsListWheel = useCallback((e) =>
+    accountsListRef.current.scrollBy({
+      top: e.deltaY * 2,
+      behavior: "smooth"
+    })
+    , []);
 
   const isTestNet = useSelector(sel.isTestNet);
   const balances = useSelector(sel.balances);
@@ -45,6 +54,8 @@ export function useSideBar() {
     onExpandSideBar,
     onReduceSideBar,
     isSPV,
-    peersCount
+    peersCount,
+    accountsListRef,
+    onAccountsListWheel
   };
 }
