@@ -1,4 +1,4 @@
-import { AutoBuyerSwitch, PassphraseModalSwitch } from "buttons";
+import { AutoBuyerSwitch, AutoBuyerPassphraseModalSwitch } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import { DcrInput, AccountsSelect, LEGACY_StakePoolSelect } from "inputs";
 import { Balance, Subtitle } from "shared";
@@ -27,7 +27,7 @@ const TicketAutoBuyerForm = ({
         {isTicketAutoBuyerEnabled ? (
           <AutoBuyerSwitch enabled onClick={onDisableTicketAutoBuyer} />
         ) : (
-          <PassphraseModalSwitch
+          <AutoBuyerPassphraseModalSwitch
             modalTitle={
               <T
                 id="tickets.startAutoBuyerConfirmation"

@@ -10,23 +10,24 @@ export { default as TicketsCogs } from "./TicketsCogs";
 export { default as EnableExternalRequestButton } from "./EnableExternalRequestButton";
 export { default as SendTransactionButton } from "./SendTransactionButton";
 export { default as ImportScriptIconButton } from "./ImportScriptIconButton";
-export { default as RestoreWalletSwitch } from "./RestoreWalletSwitch";
 
 import ModalButton from "./ModalButton";
 import KeyBlueButton from "./KeyBlueButton";
+import ToggleSwitch from "./ToggleSwitch/ToggleSwitch";
+import MixerSwitch from "./MixerSwitch";
 import AutoBuyerSwitch from "./AutoBuyerSwitch";
-import NetworkSwitch from "./NetworkSwitch";
 import DangerButton from "./DangerButton";
 import CloseButton from "./CloseButton";
 import HelpLink from "./HelpLink";
 import InvisibleButton from "./InvisibleButton";
 export {
   ModalButton,
+  ToggleSwitch,
+  MixerSwitch,
   AutoBuyerSwitch,
   KeyBlueButton,
   DangerButton,
   CloseButton,
-  NetworkSwitch,
   InvisibleButton
 };
 
@@ -100,10 +101,15 @@ export const InvisiblePassphraseModalButton = mbb(
   InvisibleButton
 );
 export const PassphraseModalButton = mbb(null, PassphraseModal, KeyBlueButton);
-export const PassphraseModalSwitch = mbb(
+export const AutoBuyerPassphraseModalSwitch = mbb(
   null,
   PassphraseModal,
   AutoBuyerSwitch
+);
+export const MixerPassphraseModalSwitch = mbb(
+  null,
+  PassphraseModal,
+  MixerSwitch
 );
 export const RemoveStakePoolButton = mbb(null, ConfirmModal, DangerButton);
 export const RemoveWalletButton = mbb(null, ConfirmModal, DangerButton);

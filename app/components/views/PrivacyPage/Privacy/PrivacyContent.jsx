@@ -1,9 +1,9 @@
 import { FormattedMessage as T } from "react-intl";
 import { Subtitle, PrivacyForm } from "shared";
 import {
-  AutoBuyerSwitch,
   InfoDocModalButton,
-  PassphraseModalSwitch
+  MixerPassphraseModalSwitch,
+  MixerSwitch
 } from "buttons";
 import "style/Privacy.less";
 import { classNames } from "pi-ui";
@@ -33,9 +33,9 @@ const PrivacyContent = ({
     />
     <div className={classNames(style.buttonArea, style.row)}>
       {accountMixerRunning ? (
-        <AutoBuyerSwitch enabled onClick={stopAccountMixer} />
+        <MixerSwitch enabled onClick={stopAccountMixer} />
       ) : (
-          <PassphraseModalSwitch
+          <MixerPassphraseModalSwitch
             modalTitle={
               <T id="privacy.start.mixer.confirmation" m="Start Mixer" />
             }
