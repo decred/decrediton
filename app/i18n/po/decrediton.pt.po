@@ -1234,26 +1234,26 @@ msgstr "Mudar"
 
 #. [privacy.change.account]
 #. defaultMessage is:
-#. Change Account
+#. Unmixed Account
 #: app/i18n/extracted/app/components/views/AccountsPage/Privacy/PrivacyContent.json
 msgctxt "privacy.change.account"
-msgid "Change Account"
+msgid "Unmixed Account"
 msgstr "Conta de Troco"
 
 #. [addMixerAccountModal.changeAccountName]
 #. defaultMessage is:
-#. Change Account Name
+#. Unmixed Account Name
 #: app/i18n/extracted/app/components/modals/AddMixerAccountsModal.json
 msgctxt "addMixerAccountModal.changeAccountName"
-msgid "Change Account Name"
+msgid "Unmixed Account Name"
 msgstr "Nome da Conta de Troco"
 
 #. [getstarted.setAcct.changAcct]
 #. defaultMessage is:
-#. Change Acct: {value}
+#. Unmixed Account: {value}
 #: app/i18n/extracted/app/components/views/GetStartedPage/SetMixedAcctPage/SetMixedAcctPage.json
 msgctxt "getstarted.setAcct.changAcct"
-msgid "Change Acct: {value}"
+msgid "Unmixed Account: {value}"
 msgstr "Conta Troco: {value}"
 
 #. [trezorPage.changeHomeScreen]
@@ -4271,8 +4271,8 @@ msgstr "Logs"
 #. Looks like you have accounts with coinjoin outputs. Past
 #.                 account names cannot be restored during Recovery, so it is
 #. not
-#.                 possible to know which account was the mix account. You can
-#.                 set a mix and unmix account now or this can be done later
+#.                 possible to know which account was the mixed account. You can
+#.                 set a mixed and unmixed account now or this can be done later
 #. on
 #.                 the privacy page.
 #.                 With this action the chosen accounts will be renamed.
@@ -4281,8 +4281,8 @@ msgctxt "getstarted.setAccount.description"
 msgid ""
 "Looks like you have accounts with coinjoin outputs. Past\n"
 "                account names cannot be restored during Recovery, so it is not\n"
-"                possible to know which account was the mix account. You can\n"
-"                set a mix and unmix account now or this can be done later on\n"
+"                possible to know which account was the mixed account. You can\n"
+"                set a mixed and unmixed account now or this can be done later on\n"
 "                the privacy page.\n"
 "                \n"
 "                With this action the chosen accounts will be renamed."
@@ -4447,18 +4447,18 @@ msgstr "Nome da Conta Mix"
 
 #. [getstarted.setAcct.mixedAcct]
 #. defaultMessage is:
-#. Mixed Acct: {value}
+#. Mixed Account: {value}
 #: app/i18n/extracted/app/components/views/GetStartedPage/SetMixedAcctPage/SetMixedAcctPage.json
 msgctxt "getstarted.setAcct.mixedAcct"
-msgid "Mixed Acct: {value}"
+msgid "Mixed Account: {value}"
 msgstr "Conta Mix: {value}"
 
 #. [privacy.mixing.account]
 #. defaultMessage is:
-#. Mixing Account
+#. Mixed Account
 #: app/i18n/extracted/app/components/views/AccountsPage/Privacy/PrivacyContent.json
 msgctxt "privacy.mixing.account"
-msgid "Mixing Account"
+msgid "Mixed Account"
 msgstr "Conta Mix"
 
 #. [mytickets.subtitle]
@@ -6771,10 +6771,10 @@ msgstr "Sessões {sessions}"
 
 #. [getstarted.setAccount.change]
 #. defaultMessage is:
-#. Set Change Account
+#. Set Unmixed Account
 #: app/i18n/extracted/app/components/views/GetStartedPage/SetMixedAcctPage/SetMixedAcctPage.json
 msgctxt "getstarted.setAccount.change"
-msgid "Set Change Account"
+msgid "Set Unmixed Account"
 msgstr "Selecionar Conta de Troco"
 
 #. [getstarted.setAccount.title]
@@ -9546,12 +9546,12 @@ msgstr ""
 
 #. [getstarted.setAccount.isValidMessage]
 #. defaultMessage is:
-#. You need to set a mixed and change account and they can not
+#. You need to set a mixed and unmixed account, and they can not
 #.                   be  the same
 #: app/i18n/extracted/app/components/views/GetStartedPage/SetMixedAcctPage/SetMixedAcctPage.json
 msgctxt "getstarted.setAccount.isValidMessage"
 msgid ""
-"You need to set a mixed and change account and they can not\n"
+"You need to set a mixed and unmixed account, and they can not\n"
 "                  be  the same"
 msgstr ""
 "Você precisa especificar as contas mix e de troco e elas não podem ser a "
