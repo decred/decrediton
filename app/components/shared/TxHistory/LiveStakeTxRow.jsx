@@ -35,7 +35,7 @@ const StakeTxRow = ({
       : messageByType[txType] || "(unknown type)";
   let oldVsp = false;
   // an old vsp ticket has two inputs, the vsp fee input and the ticket price.
-  if (!feeStatus && txInputs.length > 1) {
+  if (!feeStatus) {
     oldVsp = true;
   }
   return (
