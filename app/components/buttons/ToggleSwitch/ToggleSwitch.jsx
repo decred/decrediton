@@ -12,15 +12,15 @@ const ToggleSwitch = ({ enabled, onClick, disabled, enabledText, notEnabledText 
       <div
         className={classNames(
           enabled
-          ? style.toggleSwitchEnabled
-          : style.toggleSwitchDisabled
+          ? style.enabled
+          : style.disabled
         )}
         onClick={!disabled ? onClick : undefined}>
         <div
           className={classNames(
             enabled
-              ? style.toggleSwitchKnobEnabled
-              : style.toggleSwitchKnobDisabled
+              ? style.knobEnabled
+              : style.knobDisabled
           )}></div>
       </div>
     </div>

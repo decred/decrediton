@@ -7,8 +7,8 @@
   width: 85px;
 }
 
-.toggleSwitchEnabled,
-.toggleSwitchDisabled {
+.enabled,
+.disabled {
   display: block;
   width: 50px;
   height: 20px;
@@ -18,18 +18,18 @@
   float: left;
 }
 
-.toggleSwitchEnabled:hover {
+.enabled:hover {
   width: 47px;
   padding-left: 3px;
 }
 
-.toggleSwitchDisabled:hover {
+.disabled:hover {
   width: 47px;
   padding-right: 3px;
 }
 
-.toggleSwitchKnobEnabled,
-.toggleSwitchKnobDisabled {
+.knobEnabled,
+.knobDisabled {
   width: 25px;
   height: 100%;
   border-radius: 3px;
@@ -37,11 +37,11 @@
   transition: all 200ms ease-in-out;
 }
   
-.toggleSwitchKnobEnabled {
+.knobEnabled {
   background-color: var(--input-color);
 }
 
-.toggleSwitchKnobDisabled {
+.knobDisabled {
   float: right;
   background-color: var(--toggle-switch-knob-bg);
 }
