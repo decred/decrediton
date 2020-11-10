@@ -5,8 +5,6 @@ import * as ta from "actions/TransactionActions";
 import * as vspa from "actions/VSPActions";
 
 export const useVSPTicketsList = () => {
-  const dispatch = useDispatch();
-
   // selectors
   const vspTickets = useSelector(sel.getVSPTickets);
 
@@ -18,6 +16,7 @@ export const useVSPTicketsList = () => {
   const defaultSpendingAccount = useSelector(sel.defaultSpendingAccount);
 
   // actions
+  const dispatch = useDispatch();
   const goBackHistory = () => dispatch(ca.goBackHistory());
   const getTickets = (isStake) => dispatch(ta.getTransactions(isStake));
   const changeTicketsFilter = (newFilter) =>

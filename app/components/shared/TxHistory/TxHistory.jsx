@@ -50,8 +50,6 @@ const TxHistory = ({
   history
 }) => {
   const isEligibleTicket = mode === "eligible";
-  // mode for live tickets is stakeLive.
-  const isStake = mode === "stake";
   return (
     <>
       {transactions.map((tx, index) => {
@@ -69,9 +67,6 @@ const TxHistory = ({
         const Component =
           TxRowByType[isEligibleTicket ? txTypes.ELIGIBLE : rowType];
         const key = tx.spenderHash ? tx.spenderHash : tx.txHash;
-
-        // do not show live tickets on stakeTxRow. Use LiveStakeTxRow, instead.
-        if (isStake && Component === LiveStakeTxRow) return;
 
         const txOutputAddresses =
           tx.outputs &&

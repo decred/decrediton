@@ -23,6 +23,7 @@ const StakeTxRow = ({
   txType,
   status,
   feeStatus,
+  txInputs,
   ...props
 }) => {
   // If txType equals ticket, we use the message bype by the tx status, so we
@@ -32,6 +33,11 @@ const StakeTxRow = ({
     txType === "ticket"
       ? messageByType[status]
       : messageByType[txType] || "(unknown type)";
+  let oldVsp = false;
+  // an old vsp ticket has two inputs, the vsp fee input and the ticket price.
+  if (!feeStatus && txInputs.length > 1) {
+    oldVsp = true;
+  }
   return (
     <Row {...{ className, pending, ...props, overview }}>
       <div
@@ -51,7 +57,7 @@ const StakeTxRow = ({
         <div></div>
         <Tooltip text={<T id="txRow.live.feeStatus.tooltip" m="Fee Status" />} >
           <div className={classNames(styles.feeStatus)}>
-            {feeStatusToStringMap[feeStatus]}
+            {oldVsp ? <T id="vsp.ticket.oldvsp" m="Old VSP" /> : feeStatusToStringMap[feeStatus]}
           </div>
         </Tooltip>
         {!pending && (
