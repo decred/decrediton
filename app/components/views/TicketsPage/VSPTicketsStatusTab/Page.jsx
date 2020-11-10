@@ -8,7 +8,6 @@ import {
 import { TxHistory, Subtitle, Tooltip } from "shared";
 import { EyeFilterMenu, PassphraseModalButton } from "buttons";
 import style from "./MyTicketsTab.module.css";
-import { VSP_FEE_PROCESS_ERRORED } from "constants";
 import { SyncVSPFailedTickets } from "modals";
 
 const subtitleMenu = ({
@@ -70,7 +69,7 @@ const TicketListPage = ({
         })}
       />
       {
-        selectedTicketTypeKey == VSP_FEE_PROCESS_ERRORED && (
+        hasVSPTicketsError && (
           <PassphraseModalButton
             {...{
               onSubmit: onSyncVspTicketsRequest,
