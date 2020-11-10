@@ -13,6 +13,14 @@ const feeStatusToStringMap = ({
   [VSP_FEE_PROCESS_ERRORED]: <T id="vsp.ticket.error" m="Error" />
 });
 
+const OLD_VSP = "OLD_VSP";
+const SOLO_PURCHASE = "SOLO_PURCHASE";
+
+const ticketMap = ({
+  [OLD_VSP]: <T id="privacy.ticket.old" m="Old VSP" />,
+  [SOLO_PURCHASE]: <T id="privacy.ticket.solo" m="Solo" />
+});
+
 const StakeTxRow = ({
   className,
   timeMessage,
@@ -23,6 +31,7 @@ const StakeTxRow = ({
   txType,
   status,
   feeStatus,
+  txInputs,
   ...props
 }) => {
   // If txType equals ticket, we use the message bype by the tx status, so we
@@ -32,6 +41,15 @@ const StakeTxRow = ({
     txType === "ticket"
       ? messageByType[status]
       : messageByType[txType] || "(unknown type)";
+  let feeStatusString;
+  if (feeStatus) {
+    feeStatusString = feeStatusToStringMap[feeStatus];
+  } else {
+    // an old vsp ticket has two inputs, the vsp fee input and the ticket price.
+    // if it has only one input and no fee status, then it is probably a
+    // solo ticket purchase.
+    feeStatusString = txInputs.length > 1 ? ticketMap[OLD_VSP] : ticketMap[SOLO_PURCHASE];
+  }
   return (
     <Row {...{ className, pending, ...props, overview }}>
       <div
@@ -51,7 +69,7 @@ const StakeTxRow = ({
         <div></div>
         <Tooltip text={<T id="txRow.live.feeStatus.tooltip" m="Fee Status" />} >
           <div className={classNames(styles.feeStatus)}>
-            {feeStatusToStringMap[feeStatus]}
+            {feeStatusString}
           </div>
         </Tooltip>
         {!pending && (

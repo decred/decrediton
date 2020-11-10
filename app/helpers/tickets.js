@@ -136,7 +136,6 @@ export function decodeVoteScript(network, outputScript) {
   };
 
   if (!(version in agendas[network])) {
-    console.log(`Error: unknown agenda ${version}`);
     return null;
   }
 

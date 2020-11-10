@@ -516,7 +516,6 @@ export const getTransactions = (isStake) => async (dispatch, getState) => {
     return;
   }
   dispatch({ type: GETTRANSACTIONS_ATTEMPT });
-
   // first, request unmined transactions. They always come first in decrediton.
   let { unmined } = await wallet.getTransactions(walletService, -1, -1, 0);
   unmined = await normalizeBatchTx(walletService, chainParams, unmined);

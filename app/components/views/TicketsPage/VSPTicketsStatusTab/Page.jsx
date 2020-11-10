@@ -49,13 +49,15 @@ const TicketListPage = ({
   isValid
 }) => {
   const isOverview = window.innerWidth < 768; // small width
+  const loadMoreThreshold = 90 + Math.max(0, window.innerHeight - 765);
+
   return (
     <InfiniteScroll
       hasMore={!noMoreTickets}
       loadMore={() => getTickets(true)}
       initialLoad={!noMoreTickets}
       useWindow={false}
-      threshold={0}>
+      threshold={loadMoreThreshold}>
       <Subtitle
         title={<T id="vsp.mytickets.subtitle" m="Live Tickets" />}
         className={style.subtitle}
