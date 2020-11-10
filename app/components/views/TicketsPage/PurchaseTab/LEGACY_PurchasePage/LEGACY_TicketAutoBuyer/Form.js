@@ -15,7 +15,9 @@ const TicketAutoBuyerForm = ({
   configuredStakePools,
   stakePool,
   changeStakePool,
-  isFormValid
+  isFormValid,
+  clicked,
+  onClick
 }) => (
   <>
     <Subtitle
@@ -29,7 +31,6 @@ const TicketAutoBuyerForm = ({
           <AutoBuyerSwitch enabled onClick={onDisableTicketAutoBuyer} />
         ) : (
           <PassphraseModalSwitch
-            disabled={!isFormValid}
             modalTitle={
               <T
                 id="tickets.startAutoBuyerConfirmation"
@@ -73,6 +74,8 @@ const TicketAutoBuyerForm = ({
               </div>
             }
             onSubmit={onStartAutoBuyer}
+            isValid={isFormValid}
+            onClick={onClick}
           />
         )}
         <div className="stakepool-auto-buyer-row-portion-half">
@@ -125,6 +128,11 @@ const TicketAutoBuyerForm = ({
           </div>
         </div>
       </div>
+      {clicked && isFormValid === false && (
+        <div className="error">
+          <T id="autobuyer.startErr" m="Fill all fields." />
+        </div>
+      )}
     </div>
   </>
 );

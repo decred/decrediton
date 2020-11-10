@@ -13,6 +13,7 @@ class TicketAutoBuyer extends React.Component {
   getInitialState() {
     return {
       ...this.getCurrentSettings(),
+      clicked: false, // we use this bool flag so the error does not show before trying.
       isScrollingDown: false,
       canNotEnableAutobuyer: false,
       balanceToMaintainError: false,
@@ -62,6 +63,7 @@ class TicketAutoBuyer extends React.Component {
     const changeBalanceToMaintain = (e) => this.onChangeBalanceToMaintain(e);
     const changeAccount = (e) => this.onChangeAccount(e);
     const changeStakePool = (e) => this.onChangeStakePool(e);
+    const onClick = () => this.onClick();
     return (
       <TicketAutoBuyerForm
         {...{
@@ -70,9 +72,10 @@ class TicketAutoBuyer extends React.Component {
           onChangeBalanceToMaintain: changeBalanceToMaintain,
           changeAccount,
           changeStakePool,
-          isFormValid: this.getIsFormValid(),
+          isFormValid: !!this.getIsFormValid(),
           account: this.getAccount(),
           stakePool: this.getStakePool(),
+          onClick,
           ...this.props,
           ...this.state,
           ...substruct(
@@ -137,6 +140,10 @@ class TicketAutoBuyer extends React.Component {
     this.setState({
       balanceToMaintain: atomValue
     });
+  }
+
+  onClick() {
+    this.setState({ clicked: true });
   }
 
   onStartAutoBuyer(passphrase) {
