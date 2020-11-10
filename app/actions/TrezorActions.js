@@ -1,7 +1,6 @@
 import * as wallet from "wallet";
 import * as selectors from "selectors";
-import fs from "fs";
-import { rawToHex, hexToBytes, str2utf8hex } from "helpers";
+import { hexToBytes, str2utf8hex } from "helpers";
 import {
   walletTxToBtcjsTx,
   walletTxToRefTx,
@@ -34,7 +33,6 @@ const NOBACKUP = "no-backup";
 const TRANSPORT_ERROR = "transport-error";
 const TRANSPORT_START = "transport-start";
 const BOOTLOADER_MODE = "bootloader";
-const DISCONNECTED_DURING_ACTION = "device disconnected during action";
 
 let setListeners = false;
 
@@ -114,7 +112,7 @@ export const TRZ_SELECTEDDEVICE_CHANGED = "TRZ_SELECTEDDEVICE_CHANGED";
 export const TRZ_NOCONNECTEDDEVICE = "TRZ_NOCONNECTEDDEVICE";
 
 function onChange(dispatch, getState, features) {
-  if (features == null) return;
+  if (features == null) throw "no features on change";
   const currentDevice = selectors.trezorDevice(getState());
   // No current device handle by connect.
   if (!currentDevice) return;
@@ -128,7 +126,7 @@ function onChange(dispatch, getState, features) {
 };
 
 function onConnect(dispatch, getState, features) {
-  if (features == null) return;
+  if (features == null) throw "no features on connect";
   let device = features.id;
   const deviceLabel = features.label;
   if (features.mode == BOOTLOADER_MODE) {
@@ -139,7 +137,7 @@ function onConnect(dispatch, getState, features) {
 };
 
 function onDisconnect(dispatch, getState, features) {
-  if (features == null) throw "no features on change";
+  if (features == null) throw "no features on disconnect";
   const currentDevice = selectors.trezorDevice(getState());
   const device = features.id;
   // If this is not the device we presume is current, ignore.
@@ -802,12 +800,9 @@ export const updateFirmware = (path) => async (dispatch, getState) => {
   }
 
   try {
-    const rawFirmware = fs.readFileSync(path);
-    const hexFirmware = rawToHex(rawFirmware);
     // Ask main.development.js to send the firmware for us.
-    const errorStr = await ipcRenderer.invoke("upload-firmware", hexFirmware);
-    // A successful upload will end with the user unplugging the device.
-    if (errorStr != DISCONNECTED_DURING_ACTION) throw errorStr;
+    const errorStr = await ipcRenderer.invoke("upload-firmware", path);
+    if (errorStr) throw errorStr;
     dispatch({ type: TRZ_UPDATEFIRMWARE_SUCCESS });
   } catch (error) {
     dispatch({ error, type: TRZ_UPDATEFIRMWARE_FAILED });

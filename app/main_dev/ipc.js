@@ -19,6 +19,8 @@ import {
 import { MAINNET } from "constants";
 import { initTransport } from "actions/TrezorActions.js";
 import * as connect from "connect";
+import { rawToHex } from "helpers";
+
 
 const logger = createLogger();
 let watchingOnlyWallet;
@@ -144,20 +146,34 @@ export const removeWallet = (testnet, walletPath) => {
 };
 
 // updateTrezorFirmware attempts to make a temporary connection to a trezor
-// device and update it with the supplied firmware. It returns an error string
+// device and update it with the firmware at path. It returns an error string
 // in case of error.
-export const updateTrezorFirmware = async ( firmware ) => {
+export const updateTrezorFirmware = async ( firmwarePath ) => {
+  const rawFirmware = fs.readFileSync(firmwarePath);
+  const hexFirmware = rawToHex(rawFirmware);
   let session = connect.default;
+  let completed = false;
   try {
     await initTransport(session, false);
+    session.on(connect.UI_EVENT, (event) => {
+      if (event.type == connect.UI.FIRMWARE_PROGRESS) {
+        logger.log("info", "Trezor update progress: " + event.payload.progress+"%");
+        // session.cancel() will cause an error but we ignore it if completed.
+        if (event.payload.progress == 100) {
+          completed = true;
+          if (session) session.cancel();
+        }
+      }
+    });
     const res = await session.firmwareUpdate({
-       binary: firmware
+       binary: hexFirmware
     });
     if (res.payload && res.payload.error) {
       throw res.payload.error;
     }
     return null;
   } catch (e) {
+    if (completed) return null;
     logger.log("error", "error uploading trezor firmware: " + e);
     return e.toString();
   } finally {
