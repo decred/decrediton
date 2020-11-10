@@ -3,68 +3,57 @@ import { FormattedMessage as T } from "react-intl";
 import { Documentation } from "shared";
 import { PasswordInput, PassphraseModalField } from "inputs";
 import { ButtonsToolbar } from "shared";
+import { useEffect, useState } from "react";
 
-@autobind
-class TrezorWalletCreationPassphraseModal extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      passphraseValue: "",
-      passphraseConfirmValue: "",
-      submitAttempted: false,
-      mismatchedValues: false
-    };
-  }
+const TrezorWalletCreationPassphraseModal = (
+  isGetStarted,
+  device,
+  onCancelModal,
+  onSubmitPassPhrase
+) => {
+  const [passphraseValue, setPassphraseValue] = useState("");
+  const [passphraseConfirmValue, setPassphraseConfirmValue] = useState("");
+  const [submitAttempted, setSubmitAttempted] = useState(false);
+  const [mismatchedValues, setMismatchedValues] = useState(false);
 
-  componentWillUnmount() {
-    this.setState = { passphraseValue: "", passphraseConfirmValue: "" };
-  }
+  useEffect(() =>
+    () => {
+      setPassphraseValue("");
+      setPassphraseConfirmValue("");
+    }
+    , [])
 
-  onSubmit() {
-    const { passphraseValue, passphraseConfirmValue } = this.state;
+  const onSubmit = () => {
     if (passphraseValue != passphraseConfirmValue) {
-      this.setState({ submitAttempted: true, mismatchedValues: true });
+      setSubmitAttempted(true);
+      setMismatchedValues(true);
       return;
     }
 
-    this.props.submitPassPhrase(passphraseValue);
-    this.setState({ passphraseValue: "", passphraseConfirmValue: "" });
+    onSubmitPassPhrase(passphraseValue);
+    setPassphraseValue("");
+    setPassphraseConfirmValue("");
   }
 
-  onChangePassphraseValue(passphraseValue) {
-    this.setState({
-      passphraseValue,
-      submitAttempted: false,
-      mismatchedValues: false
-    });
+  const onChangePassphraseValue = (passphraseValue) => {
+    setPassphraseValue(passphraseValue);
+    setSubmitAttempted(false);
+    setMismatchedValues(false);
   }
 
-  onChangePassphraseConfirmValue(passphraseConfirmValue) {
-    this.setState({
-      passphraseConfirmValue,
-      submitAttempted: false,
-      mismatchedValues: false
-    });
+  const onChangePassphraseConfirmValue = (passphraseConfirmValue) => {
+    setPassphraseConfirmValue(passphraseConfirmValue);
+    setSubmitAttempted(false);
+    setMismatchedValues(false);
   }
 
-  render() {
-    const { onCancelModal } = this.props;
-    const {
-      onSubmit,
-      onChangePassphraseValue,
-      onChangePassphraseConfirmValue
-    } = this;
-    const {
-      submitAttempted,
-      passphraseValue,
-      passphraseConfirmValue
-    } = this.state;
-
-    const trezorLabel = this.props.device ? this.props.deviceLabel : "";
+    const trezorLabel = device
+      ? deviceLabel
+      : "";
 
     const className = [
       "trezor-passphrase-modal",
-      this.props.isGetStarted ? "get-started" : ""
+      isGetStarted ? "get-started" : ""
     ].join(" ");
 
     const isValid =
@@ -134,7 +123,6 @@ class TrezorWalletCreationPassphraseModal extends React.Component {
         <ButtonsToolbar {...{ isValid, onCancelModal, onSubmit }} />
       </Modal>
     );
-  }
 }
 
 export default TrezorWalletCreationPassphraseModal;
