@@ -33,7 +33,7 @@ const PurchaseTicketsForm = ({
       <div className="is-row purchase-ticket-input-address">
         <div className={styles.ticketForm}>
           <div className="purchase-ticket-area-row-label">
-            <T id="purchaseTickets.accountFrom" m="From Account" />:
+            <T id="purchaseTickets.accountFrom" m="Account" />:
           </div>
           <div className={"stakepool-purchase-ticket-input-select-container"}>
             <AccountsSelect
@@ -43,7 +43,7 @@ const PurchaseTicketsForm = ({
             <div className="stakepool-info-icon account-select-icon" />
           </div>
           <div className="purchase-ticket-area-row-label">
-            <T id="purchaseTickets.vspFrom" m="From VSP" />:
+            <T id="purchaseTickets.vspFrom" m="VSP" />:
           </div>
           <VSPSelect
             className="stakepool-purchase-ticket-input-select"

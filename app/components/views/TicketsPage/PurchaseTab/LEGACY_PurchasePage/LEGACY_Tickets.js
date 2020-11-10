@@ -2,33 +2,33 @@ import PurchaseTickets from "./LEGACY_PurchaseTickets";
 import TicketAutoBuyer from "./LEGACY_TicketAutoBuyer";
 import { FormattedMessage as T } from "react-intl";
 import StakeInfo from "../StakeInfo/StakeInfo";
-import { ShowWarning, Subtitle } from "shared";
+import { ShowWarning, Subtitle, Tooltip } from "shared";
 import "style/PurchaseTickets.less";
 import { InfoDocModalButton } from "buttons";
 import UnsignedTickets from "../UnsignedTickets";
 import styles from "../PurchaseTab.module.css";
-import { classNames } from "pi-ui";
+import { Checkbox } from "pi-ui";
+import { LegacyVSPWarning } from "../PurchaseTickets/Page";
 
 const getTitleIcon = ({ toggleIsLegacy }) => (
   <>
-    <div className={classNames(styles.iconWrapper, styles.checkbox)}>
-      <div className={styles.label}>
-        <T id="purchase.isLegacy.legacy" m="Is Legacy" />
-      </div>
-      <input
-        id="box"
-        type="checkbox"
-        checked={true}
-        onChange={() => toggleIsLegacy(false)}
+    <div className={styles.iconWrapper}>
+      <InfoDocModalButton
+        document="PurchaseTicketsInfo"
+        modalClassName={styles.infoFields}
+        className="info-title-icon"
+        draggable
       />
-      <label htmlFor="box" className={styles.checkboxLabel}></label>
+      <Tooltip md={true} text={<LegacyVSPWarning />}>
+        <Checkbox
+          label={<T id="purchase.isLegacy.legacy" m="Use Legacy VSP" />}
+          className={styles.useLegacyLabel}
+          id="box"
+          checked={true}
+          onChange={() => toggleIsLegacy(false)}
+        />
+      </Tooltip>
     </div>
-    <InfoDocModalButton
-      document="PurchaseTicketsInfo"
-      modalClassName={styles.infoFields}
-      className="info-title-icon"
-      draggable
-    />
   </>
 );
 
@@ -42,12 +42,12 @@ const Tickets = ({
 }) => {
   return (
     <div className="purchase-ticket-area">
+      <StakeInfo {...{ sidebarOnBottom }} />
       <Subtitle
         title={<T id="purchase.subtitle.legacy" m="Purchase Tickets" />}
         children={getTitleIcon({ toggleIsLegacy })}
         className="is-row"
       />
-      <StakeInfo {...{ sidebarOnBottom }} />
       {spvMode && blocksNumberToNextTicket === 2 ? (
         <ShowWarning
           warn={

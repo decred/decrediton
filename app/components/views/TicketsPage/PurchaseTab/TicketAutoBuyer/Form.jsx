@@ -1,7 +1,7 @@
 import { AutoBuyerSwitch, AutoBuyerPassphraseModalSwitch } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import { DcrInput, AccountsSelect, VSPSelect } from "inputs";
-import { Balance } from "shared";
+import { Balance, Subtitle } from "shared";
 import styles from "../PurchaseTab.module.css";
 
 const TicketAutoBuyerForm = ({
@@ -20,10 +20,13 @@ const TicketAutoBuyerForm = ({
   onClick,
   clicked
 }) => (
+  <>
+    <Subtitle
+    title={
+      <T id="vsp.autobuyer.subtitle" m="Automatic Ticket Purchases" />
+    }
+  />
   <div className={styles.autobuyerWrapper}>
-    <div className={styles.title}>
-      <T id="vsp.automatictickets.subtitle" m="Automatic Ticket Purchases" />
-    </div>
     <div className="stakepool-auto-buyer-row">
       {isRunning ? (
         <AutoBuyerSwitch enabled onClick={onStopAutoBuyer} />
@@ -134,6 +137,7 @@ const TicketAutoBuyerForm = ({
       )
     }
   </div>
+  </>
 );
 
 export default TicketAutoBuyerForm;

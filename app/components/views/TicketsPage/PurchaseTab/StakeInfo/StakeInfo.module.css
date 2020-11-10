@@ -1,14 +1,11 @@
 .area {
   background-color: var(--background-back-color);
-  height: 128px;
-  padding: 16px 19px 0 19px;
+  padding: 16px 19px 16px 19px;
   border-radius: 5px;
   position: relative;
   display: grid;
   grid-template-areas:
-    "purchaseTicketsTitle purchaseTicketsTitle purchaseTicketsTitle purchaseTicketsTitle"
-    "purchaseTicketsLive purchaseTicketsTotalVoted purchaseTicketsLastTicketVoted purchaseTicketsTotalRewardsEarned";
-  grid-template-rows: 57px 71px;
+    "purchaseTicketsTitle purchaseTicketsTitle purchaseTicketsTitle purchaseTicketsTitle";
 }
 
 .purchaseTicketTitle {

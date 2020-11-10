@@ -3116,17 +3116,17 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/PurchaseForm.json
 #. [purchaseTickets.accountFrom]
 #. defaultMessage is:
-#. From Account
+#. From
 msgctxt "purchaseTickets.accountFrom"
-msgid "From Account"
+msgid "From"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/PurchaseForm.json
 #. [purchaseTickets.vspFrom]
 #. defaultMessage is:
-#. From VSP
+#. VSP
 msgctxt "purchaseTickets.vspFrom"
-msgid "From VSP"
+msgid "VSP"
 msgstr ""
 
 #: app/i18n/extracted/app/components/shared/TxHistory/RegularTxRow.json
@@ -3666,41 +3666,41 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyTickets/Page.json
 #. [myTickets.isLegacy.legacy.add]
 #. defaultMessage is:
-#. Is Legacy
+#. Use Legacy VSP
 msgctxt "myTickets.isLegacy.legacy.add"
-msgid "Is Legacy"
+msgid "Use Legacy VSP"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyVSPTickets/Page.json
 #. [mytickets.isLegacy.legacy.add]
 #. defaultMessage is:
-#. Is Legacy
+#. Use Legacy VSP
 msgctxt "mytickets.isLegacy.legacy.add"
-msgid "Is Legacy"
+msgid "Use Legacy VSP"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_AddForm.json
 #. [purchase.isLegacy.legacy.add]
 #. defaultMessage is:
-#. Is Legacy
+#. Use Legacy VSP
 msgctxt "purchase.isLegacy.legacy.add"
-msgid "Is Legacy"
+msgid "Use Legacy VSP"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_Tickets.json
 #. [purchase.isLegacy.legacy]
 #. defaultMessage is:
-#. Is Legacy
+#. Use Legacy VSP
 msgctxt "purchase.isLegacy.legacy"
-msgid "Is Legacy"
+msgid "Use Legacy VSP"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/Page.json
 #. [purchase.isLegacy]
 #. defaultMessage is:
-#. Is Legacy
+#. Use Legacy VSP
 msgctxt "purchase.isLegacy"
-msgid "Is Legacy"
+msgid "Use Legacy VSP"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/AccountsPage/Privacy/ConfigMixer/CreateNeededAccounts.json

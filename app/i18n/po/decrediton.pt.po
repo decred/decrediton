@@ -3844,42 +3844,42 @@ msgstr "Faturas (pedidos de pagamento) criados por essa carteira LN"
 
 #. [myTickets.isLegacy.legacy.add]
 #. defaultMessage is:
-#. Is Legacy
+#. Use Legacy VSP
 #: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyTickets/Page.json
 msgctxt "myTickets.isLegacy.legacy.add"
-msgid "Is Legacy"
+msgid "Use Legacy VSP"
 msgstr "Legado"
 
 #. [mytickets.isLegacy.legacy.add]
 #. defaultMessage is:
-#. Is Legacy
+#. Use Legacy VSP
 #: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyVSPTickets/Page.json
 msgctxt "mytickets.isLegacy.legacy.add"
-msgid "Is Legacy"
+msgid "Use Legacy VSP"
 msgstr "Legado"
 
 #. [purchase.isLegacy.legacy.add]
 #. defaultMessage is:
-#. Is Legacy
+#. Use Legacy VSP
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_AddForm.json
 msgctxt "purchase.isLegacy.legacy.add"
-msgid "Is Legacy"
+msgid "Use Legacy VSP"
 msgstr "Legado"
 
 #. [purchase.isLegacy.legacy]
 #. defaultMessage is:
-#. Is Legacy
+#. Use Legacy VSP
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_Tickets.json
 msgctxt "purchase.isLegacy.legacy"
-msgid "Is Legacy"
+msgid "Use Legacy VSP"
 msgstr "Legado"
 
 #. [purchase.isLegacy]
 #. defaultMessage is:
-#. Is Legacy
+#. Use Legacy VSP
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/Page.json
 msgctxt "purchase.isLegacy"
-msgid "Is Legacy"
+msgid "Use Legacy VSP"
 msgstr "Legado"
 
 #. [privacy.create.needed.description]
