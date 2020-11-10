@@ -63,8 +63,8 @@ export default ({ onSendBack, onSendContinue }) => {
           <T id="getstarted.setAccount.description"
             m={ `Looks like you have accounts with coinjoin outputs. Past
                 account names cannot be restored during Recovery, so it is not
-                possible to know which account was the mix account. You can
-                set a mix and unmix account now or this can be done later on
+                possible to know which account was the mixed account. You can
+                set a mixed and unmixed account now or this can be done later on
                 the privacy page.
                 
                 With this action the chosen accounts will be renamed.`
@@ -77,7 +77,7 @@ export default ({ onSendBack, onSendContinue }) => {
         mixedAcctIdx !== null &&
         <div>
           <T id="getstarted.setAcct.mixedAcct"
-            m="Mixed Acct: {value}"
+            m="Mixed Account: {value}"
             values = {{ value: <span>{mixedAcctIdx}</span> }} />
         </div>
       }
@@ -85,7 +85,7 @@ export default ({ onSendBack, onSendContinue }) => {
         changeAcctIdx !== null &&
         <div>
           <T id="getstarted.setAcct.changAcct"
-            m="Change Acct: {value}"
+            m="Unmixed Account: {value}"
             values = {{ value: <span>{changeAcctIdx}</span> }} />
         </div>
       }
@@ -140,7 +140,7 @@ export default ({ onSendBack, onSendContinue }) => {
                       />
                       <label htmlFor={"change"+acctIdx} className={styles.checkboxLabel}></label>
                       <div className={styles.label}>
-                        <T id="getstarted.setAccount.change" m="Set Change Account" />
+                        <T id="getstarted.setAccount.change" m="Set Unmixed Account" />
                       </div>
                     </div>
                   </div>
@@ -151,8 +151,8 @@ export default ({ onSendBack, onSendContinue }) => {
           { !isValid &&
             <div className="error">
               <T id="getstarted.setAccount.isValidMessage"
-                m="You need to set a mixed and change account and they can not
-                  be  the same"
+                m="You need to set a mixed and unimxed account, and they can not
+                  be the same"
               />
             </div>
           }

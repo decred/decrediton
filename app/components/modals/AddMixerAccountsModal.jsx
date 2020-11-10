@@ -39,7 +39,7 @@ const AddMixerAccountsModal = ({
         label={
           <T
             id="addMixerAccountModal.changeAccountName"
-            m="Change Account Name"
+            m="Unmixed Account Name"
           />
         }>
         <TextInput
@@ -47,7 +47,7 @@ const AddMixerAccountsModal = ({
           required
           id="name"
           type="text"
-          placeholder="Change Account Name"
+          placeholder="Unmixed Account Name"
           value={changeAccountName}
           onChange={(e) => setChangeAccountName(e.target.value)}
         />

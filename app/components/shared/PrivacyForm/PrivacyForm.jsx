@@ -17,13 +17,13 @@ const PrivacyForm = ({ className }) => {
       <div className={classNames(style.isRow, style.row)}>
         <div className={classNames(style.isRow, style.item)}>
           <div>
-            <T id="privacy.mixing.account" m="Mixing Account" />:
+            <T id="privacy.mixing.account" m="Mixed Account" />:
           </div>
           <TextInput required disabled value={mixedAccountName} />
         </div>
         <div className={classNames(style.isRow, style.item)}>
           <div className={""}>
-            <T id="privacy.change.account" m="Change Account" />:
+            <T id="privacy.change.account" m="Unmixed Account" />:
           </div>
           <TextInput required disabled value={changeAccountName} />
         </div>
