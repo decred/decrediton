@@ -4906,9 +4906,9 @@ msgstr ""
 #: app/i18n/extracted/app/components/SideBar/Logo/Logo.json
 #. [sidebar.peersCount]
 #. defaultMessage is:
-#. Peers Count
+#. Peers
 msgctxt "sidebar.peersCount"
-msgid "Peers Count"
+msgid "Peers"
 msgstr ""
 
 #: app/i18n/extracted/app/components/shared/TxHistory/Row.json
