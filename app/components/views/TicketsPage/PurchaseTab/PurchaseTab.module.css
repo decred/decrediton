@@ -1,6 +1,7 @@
 .ticketForm {
   display: grid;
   grid-template-columns: 100px 250px;
+  grid-gap: 12px;
 }
 
 .legacyIcon {
