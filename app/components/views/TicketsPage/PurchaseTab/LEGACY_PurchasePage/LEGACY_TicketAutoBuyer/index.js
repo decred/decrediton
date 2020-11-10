@@ -151,11 +151,7 @@ class TicketAutoBuyer extends React.Component {
   }
 
   getIsFormValid() {
-    return (
-      this.getAccount() &&
-      this.state.balanceToMaintain > 0 &&
-      this.getStakePool()
-    );
+    return this.getAccount() && this.getStakePool();
   }
 
   getErrors() {
