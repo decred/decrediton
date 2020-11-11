@@ -24,7 +24,7 @@ const Privacy = ({ isCreateAccountDisabled, setInterval }) => {
       .then(privacyLogs => setLogs(privacyLogs.toString("utf-8")))
       .catch(err => err);
 
-    setInterval(async () => {
+    const privacyInterval = setInterval(async () => {
       try {
         const privacyLogs = await onGetPrivacyLogs();
         setLogs(privacyLogs.toString("utf-8"));
@@ -32,6 +32,11 @@ const Privacy = ({ isCreateAccountDisabled, setInterval }) => {
         console.log(err);
       }
     }, 2000);
+
+    // Cleanup intervals on unmount
+    return () => {
+      clearInterval(privacyInterval);
+    };
   });
 
   return !mixedAccount && !changeAccount ? (
