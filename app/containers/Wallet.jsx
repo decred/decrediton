@@ -41,12 +41,10 @@ const Wallet = ({ setInterval }) => {
   const { uiAnimations } = useTheming();
 
   useMountEffect(() => {
-    console.log("grrrrr");
     // Compare politeias inventory and update proposal list if they are different
     // every 1 minute.
     const piInvInterval = setInterval(() => {
       if (politeiaEnabled) {
-        console.log(11111);
         compareInventory();
       }
     }, 60000);
@@ -55,14 +53,12 @@ const Wallet = ({ setInterval }) => {
     // peers.
     const peerInfoInterval = setInterval(() => {
       if (politeiaEnabled) {
-        console.log(222222);
         getPeerInfo();
       }
     }, 10000);
 
     // Cleanup intervals on unmount
     return () => {
-      console.log("brrrrrr");
       clearInterval(piInvInterval);
       clearInterval(peerInfoInterval);
     };
