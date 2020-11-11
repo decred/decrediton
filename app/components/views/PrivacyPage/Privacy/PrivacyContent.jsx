@@ -60,14 +60,10 @@ const PrivacyContent = ({
       TODO
       create a shared component and use it on logs page and here.
     */}
-    { accountMixerRunning && (
-      <>
-        <Subtitle title={<T id="privacy.logs" m="Logs" />} />
-        <div className={style.logs}>
-          <textarea rows="10" value={logs} disabled />
-        </div>
-      </>
-    )}
+    <Subtitle title={<T id="privacy.logs" m="Logs" />} />
+    <div className={style.logs}>
+      <textarea rows="10" value={logs} disabled />
+    </div>
   </>
 );
 

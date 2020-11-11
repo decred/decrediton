@@ -17,7 +17,7 @@ const Privacy = ({ isCreateAccountDisabled, setInterval }) => {
     onGetPrivacyLogs
   } = usePrivacy();
 
-  const [logs, setLogs] = useState(null);
+  const [logs, setLogs] = useState("");
   useMountEffect(() => {
     // get initial logs
     onGetPrivacyLogs()
