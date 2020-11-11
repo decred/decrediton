@@ -14,7 +14,10 @@ const TicketAutoBuyerForm = ({
   changeAccount,
   configuredStakePools,
   stakePool,
-  changeStakePool
+  changeStakePool,
+  isFormValid,
+  clicked,
+  onClick
 }) => (
   <>
     <Subtitle
@@ -64,13 +67,15 @@ const TicketAutoBuyerForm = ({
                       <T id="autobuyer.modal.stakepool" m="VSP" />:
                     </div>
                     <div className="auto-buyer-modal-confirm-value">
-                      {/* {stakePool.Host} */}
+                      {stakePool && stakePool.Host}
                     </div>
                   </div>
                 </div>
               </div>
             }
             onSubmit={onStartAutoBuyer}
+            isValid={isFormValid}
+            onClick={onClick}
           />
         )}
         <div className="stakepool-auto-buyer-row-portion-half">
@@ -123,6 +128,11 @@ const TicketAutoBuyerForm = ({
           </div>
         </div>
       </div>
+      {clicked && isFormValid === false && (
+        <div className="error">
+          <T id="autobuyer.startErr" m="Fill all fields." />
+        </div>
+      )}
     </div>
   </>
 );

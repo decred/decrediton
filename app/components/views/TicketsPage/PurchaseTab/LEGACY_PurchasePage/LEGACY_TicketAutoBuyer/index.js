@@ -13,6 +13,7 @@ class TicketAutoBuyer extends React.Component {
   getInitialState() {
     return {
       ...this.getCurrentSettings(),
+      clicked: false, // we use this bool flag so the error does not show before trying.
       isScrollingDown: false,
       canNotEnableAutobuyer: false,
       balanceToMaintainError: false,
@@ -62,6 +63,7 @@ class TicketAutoBuyer extends React.Component {
     const changeBalanceToMaintain = (e) => this.onChangeBalanceToMaintain(e);
     const changeAccount = (e) => this.onChangeAccount(e);
     const changeStakePool = (e) => this.onChangeStakePool(e);
+    const onClick = () => this.onClick();
     return (
       <TicketAutoBuyerForm
         {...{
@@ -70,8 +72,10 @@ class TicketAutoBuyer extends React.Component {
           onChangeBalanceToMaintain: changeBalanceToMaintain,
           changeAccount,
           changeStakePool,
+          isFormValid: !!this.getIsFormValid(),
           account: this.getAccount(),
           stakePool: this.getStakePool(),
+          onClick,
           ...this.props,
           ...this.state,
           ...substruct(
@@ -116,6 +120,7 @@ class TicketAutoBuyer extends React.Component {
   }
 
   getAccount() {
+    return this.state.account;
     // const account = this.state.account;
     // return this.props.spendingAccounts.find(
     //   compose(eq(account.value), get("value"))
@@ -137,6 +142,10 @@ class TicketAutoBuyer extends React.Component {
     });
   }
 
+  onClick() {
+    this.setState({ clicked: true });
+  }
+
   onStartAutoBuyer(passphrase) {
     const { onEnableTicketAutoBuyer } = this.props;
     onEnableTicketAutoBuyer &&
@@ -146,6 +155,14 @@ class TicketAutoBuyer extends React.Component {
         this.state.balanceToMaintain,
         this.getStakePool()
       );
+  }
+
+  getIsFormValid() {
+    return (
+      this.getAccount() &&
+      this.state.balanceToMaintain >= 0 &&
+      this.getStakePool()
+    );
   }
 
   getErrors() {
