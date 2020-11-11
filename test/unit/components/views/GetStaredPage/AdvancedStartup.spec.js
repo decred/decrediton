@@ -21,7 +21,7 @@ const testEmptyRemoteCredentials = {
   rpc_host: "",
   rpc_port: ""
 };
-const testConnectDaemonErrorMsg = "test-connect-daemon-error-msw";
+const testConnectDaemonErrorMsg = { error: "test-connect-daemon-error-msw" };
 const testStartDaemonErrorMsg = "test-start-daemon-error-msw";
 const testDaemonDataDirectory = "test-daemon-data-directory";
 
@@ -119,7 +119,7 @@ test("test remote daemon form", async () => {
   user.click(screen.getByText(/use remote daemon/i));
   expect(mockSetRemoteCredentials).toHaveBeenCalled();
   expect(mockConnectDaemon).toHaveBeenCalledWith(testRemoteCredentials);
-  await wait(() => screen.getByText(testConnectDaemonErrorMsg));
+  await wait(() => screen.getByText(JSON.stringify(testConnectDaemonErrorMsg)));
 });
 
 test("test local daemon form", async () => {

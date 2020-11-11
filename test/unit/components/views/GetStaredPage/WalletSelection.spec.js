@@ -16,7 +16,6 @@ import {
 import * as ca from "actions/ClientActions";
 
 let mockSortedAvailableWallets;
-let mockMaxWalletCount;
 let mockRemoveWallet;
 let mockStartWallet;
 let mockSetSelectedWallet;
@@ -97,7 +96,6 @@ beforeEach(() => {
     Promise.reject()
   );
   mockStartWallet = da.startWallet = jest.fn(() => () => Promise.resolve());
-  mockMaxWalletCount = sel.maxWalletCount = jest.fn(() => 6);
   mockSortedAvailableWallets = sel.sortedAvailableWallets = jest.fn(
     () => testAvailableWallets
   );
@@ -111,7 +109,6 @@ test("render wallet chooser view", async () => {
 
   expect(mockSortedAvailableWallets).toHaveBeenCalled();
   expect(mockGetSelectedWallet).toHaveBeenCalled();
-  expect(mockMaxWalletCount).toHaveBeenCalled();
 
   // check regular wallet
   const regularWallet = screen.getByText(testAvailableWallets[0].value.wallet);

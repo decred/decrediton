@@ -15,7 +15,6 @@ jest.mock("electron");
 const testAppVersion = "0.test-version.0";
 
 let mockGetDaemonSynced;
-let mockMaxWalletCount;
 let mockIsSPV;
 let mockAppVersion;
 let mockGetSelectedWallet;
@@ -33,7 +32,6 @@ beforeEach(() => {
   mockGetDaemonSynced = sel.getDaemonSynced = jest.fn(() => true);
   mockUpdateAvailable = sel.updateAvailable = jest.fn(() => true);
   mockDaemonWarning = sel.daemonWarning = jest.fn(() => null);
-  mockMaxWalletCount = sel.maxWalletCount = jest.fn(() => 3);
   mockIsSPV = sel.isSPV = jest.fn(() => false);
   mockAppVersion = sel.appVersion = jest.fn(() => testAppVersion);
   mockGetSelectedWallet = wla.getSelectedWallet = jest.fn(() => () => null);
@@ -93,7 +91,6 @@ test("render empty wallet chooser view", async () => {
   expect(mockAppVersion).toHaveBeenCalled();
   expect(mockGetSelectedWallet).toHaveBeenCalled();
   expect(mockGetAvailableWallets).toHaveBeenCalled();
-  expect(mockMaxWalletCount).toHaveBeenCalled();
   expect(mockIsTestNet).toHaveBeenCalled();
   expect(mockUpdateAvailable).toHaveBeenCalled();
 });

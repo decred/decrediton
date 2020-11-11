@@ -40,20 +40,20 @@ test("test SetMixedAcctPage", async () => {
     .toMatchInlineSnapshot(`
     "Looks like you have accounts with coinjoin outputs. Past
                     account names cannot be restored during Recovery, so it is not
-                    possible to know which account was the mix account. You can
-                    set a mix and unmix account now or this can be done later on
+                    possible to know which account was the mixed account. You can
+                    set a mixed and unmixed account now or this can be done later on
                     the privacy page.
                     
                     With this action the chosen accounts will be renamed."
   `);
 
   const mixedAccountCheckboxes = screen.getAllByLabelText(/set mixed account/i);
-  const changeAccountCheckboxes = screen.getAllByLabelText(
-    /set change account/i
+  const unmixedAccountCheckboxes = screen.getAllByLabelText(
+    /set unmixed account/i
   );
 
   expect(mixedAccountCheckboxes.length).toBe(testCoinjoinSumByAcct.length);
-  expect(changeAccountCheckboxes.length).toBe(testCoinjoinSumByAcct.length);
+  expect(unmixedAccountCheckboxes.length).toBe(testCoinjoinSumByAcct.length);
   const continueButton = screen.getByText(/continue/i);
   expect(continueButton.className).toMatch(/disabled/i);
 
@@ -61,17 +61,17 @@ test("test SetMixedAcctPage", async () => {
   await wait(() => expect(mixedAccountCheckboxes[0].checked).toEqual(true));
 
   // can not check the same account for change as for mixed
-  fireEvent.click(changeAccountCheckboxes[0]);
-  await wait(() => expect(changeAccountCheckboxes[0].checked).toEqual(false));
+  fireEvent.click(unmixedAccountCheckboxes[0]);
+  await wait(() => expect(unmixedAccountCheckboxes[0].checked).toEqual(false));
   expect(
     screen.getByText(/you need to set/i).textContent
   ).toMatchInlineSnapshot(
-    `"You need to set a mixed and change account and they can not be the same"`
+    `"You need to set a mixed and unmixed account, and they can not be the same"`
   );
 
   // Click on another account for change account
-  fireEvent.click(changeAccountCheckboxes[1]);
-  await wait(() => expect(changeAccountCheckboxes[1].checked).toEqual(true));
+  fireEvent.click(unmixedAccountCheckboxes[1]);
+  await wait(() => expect(unmixedAccountCheckboxes[1].checked).toEqual(true));
 
   // can not check the same account for mixed as for change
   fireEvent.click(mixedAccountCheckboxes[1]);
