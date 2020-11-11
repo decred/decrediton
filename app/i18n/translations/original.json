@@ -706,7 +706,7 @@
   "proposalDetails.votingInfo.updatingVoteChoice": "Updating vote choice",
   "proposalDetails.votingInfo.voted": "Voting has ended for this proposal",
   "proposalDetails.votingInfo.votingPreferenceTitle": "My Voting Preference",
-  "proposalItem.lastUpdatedAt": "Last Updated {reldate}",
+  "proposalItem.lastUpdatedAt": "Last updated {reldate}",
   "proposals.community.createLink": "Create a Proposal",
   "proposals.community.descr": "Voting on community proposals allows you to have a say on how the project treasury is spent.\n          Participation in voting requires (PoS) tickets. Proposal creation, discussions and other features are available at {link}",
   "proposals.community.goToProposal": "See proposal comments on Politeia",

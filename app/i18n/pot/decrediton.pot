@@ -3763,9 +3763,9 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalsListItem/ProposalsListItem.json
 #. [proposalItem.lastUpdatedAt]
 #. defaultMessage is:
-#. Last Updated {reldate}
+#. Last updated {reldate}
 msgctxt "proposalItem.lastUpdatedAt"
-msgid "Last Updated {reldate}"
+msgid "Last updated {reldate}"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/LNPage/WalletTab/Page.json

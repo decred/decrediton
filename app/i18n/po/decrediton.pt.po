@@ -3947,10 +3947,10 @@ msgstr "Última Mudança"
 
 #. [proposalItem.lastUpdatedAt]
 #. defaultMessage is:
-#. Last Updated {reldate}
+#. Last updated {reldate}
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalsListItem/ProposalsListItem.json
 msgctxt "proposalItem.lastUpdatedAt"
-msgid "Last Updated {reldate}"
+msgid "Last updated {reldate}"
 msgstr "Última Mudança {reldate}"
 
 #. [ln.backupInfo.lastUpdated]
