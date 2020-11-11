@@ -1,23 +1,25 @@
 import { PassphraseModal } from "modals";
 import { FormattedMessage as T } from "react-intl";
+import { classNames } from "pi-ui";
+import styles from "./trezor.module.css";
 
-const TrezorPassphraseModal = (
+const TrezorPassphraseModal = ({
   isGetStarted,
   device,
-  onSubmitPassPhrase
-) => {
+  deviceLabel,
+  onSubmitPassPhrase,
+  onCancelModal
+}) => {
   const onSubmit = (passPhrase) => {
     onSubmitPassPhrase(passPhrase);
-  }
+  };
 
-  const trezorLabel = device
-    ? deviceLabel
-    : "";
+  const trezorLabel = device ? deviceLabel : "";
 
-  const className = [
-    "trezor-passphrase-modal",
-    isGetStarted ? "get-started" : ""
-  ].join(" ");
+  const className = classNames(
+    styles.trezorPassphraseModal,
+    isGetStarted && getStarted
+  );
 
   return (
     <PassphraseModal
@@ -32,7 +34,7 @@ const TrezorPassphraseModal = (
             id="trezor.passphraseModal.description"
             m="Type the secret passphrase for the wallet stored in trezor {label}"
             values={{
-              label: <span className="trezor-label">'{trezorLabel}'</span>
+              label: <span className={styles.trezorLabel}>'{trezorLabel}'</span>
             }}
           />
         </p>
@@ -40,6 +42,6 @@ const TrezorPassphraseModal = (
       {...{ onCancelModal, onSubmit }}
     />
   );
-}
+};
 
 export default TrezorPassphraseModal;

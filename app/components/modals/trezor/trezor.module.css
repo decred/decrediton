@@ -1,0 +1,39 @@
+.trezorPinModal h1 {
+  margin: 0;
+}
+
+.trezorPinModal .pinPad {
+  display: grid;
+  grid-template-columns: 2em 2em 2em;
+  text-align: center;
+  font-size: 150%;
+}
+
+.trezorPinModal .pinPad .pinPadButton {
+  padding: 0.5em 0em;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.trezorPinModal .pinPad .pinPadButton:hover {
+  border: 1px solid #6397ff;
+}
+
+.trezorWordModal {
+  margin: 0;
+}
+
+.trezorPinModal.getStarted,
+.trezorWordModal.getStarted,
+.trezorPassphraseModal.getStarted {
+  margin: 10%;
+  padding: 2em;
+}
+
+.trezorLabel {
+  font-family: var(--font-family-regular);
+}
+
+.trezorWordSelect {
+  min-height: 10em;
+}

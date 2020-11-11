@@ -3,40 +3,36 @@ import { FormattedMessage as T } from "react-intl";
 import { PasswordInput } from "inputs";
 import { ButtonsToolbar } from "shared";
 import { InvisibleButton } from "buttons";
-import { useState } from "react";
-
-const PIN_LABELS = "ABCDEFGHI";
+import { useState, useMemo } from "react";
+import styles from "./trezor.module.css";
+import { classNames } from "pi-ui";
+import { PIN_LABELS } from "constants/trezor";
 
 const PinButton = ({ index, label, onClick }) => (
-  <div className="pin-pad-button" onClick={() => onClick(index)}>
+  <div className={styles.pinPadButton} onClick={() => onClick(index)}>
     {label}
   </div>
 );
 
-const PinModal = ({
-  isGetStarted,
-  device,
-  onCancelModal,
-}) => {
-
+const PinModal = ({ isGetStarted, device, deviceLabel, onCancelModal }) => {
   const [currentPin, setCurrentPin] = useState("");
 
   const onPinButtonClick = (index) => {
     setCurrentPin(currentPin + index);
-  }
+  };
 
-  const onCancelModal = () => {
+  const onCancelPinModal = () => {
     setCurrentPin("");
     onCancelModal();
-  }
+  };
 
   const onSubmit = () => {
     submitPin(currentPin);
-  }
+  };
 
   const onClearPin = () => {
     setCurrentPin("");
-  }
+  };
 
   const onChangeCurrentPin = (e) => {
     const txt = (e.target.value || "").toUpperCase().trim();
@@ -46,12 +42,16 @@ const PinModal = ({
       if (idx > -1) pin = pin + "" + (idx + 1);
     }
     setCurrentPin(pin);
-  }
+  };
 
-  const currentPin = currentPin
-    .split("")
-    .map((v) => PIN_LABELS[parseInt(v) - 1])
-    .join("");
+  const currentPinMemo = useMemo(
+    () =>
+      currentPin
+        .split("")
+        .map((v) => PIN_LABELS[parseInt(v) - 1])
+        .join(""),
+    [currentPin]
+  );
 
   const Button = ({ index }) => (
     <PinButton
@@ -61,17 +61,16 @@ const PinModal = ({
     />
   );
 
-  const trezorLabel = device
-    ? deviceLabel
-    : "";
-  const className = [
+  const trezorLabel = device ? deviceLabel : "";
+
+  const className = classNames(
     "passphrase-modal",
-    "trezor-pin-modal",
-    isGetStarted ? "get-started" : ""
-  ].join(" ");
+    styles.trezorPinModal,
+    isGetStarted && styles.getStarted
+  );
 
   return (
-    <Modal {...{ className, onCancelModal }}>
+    <Modal {...{ className, onCancelModal: onCancelPinModal }}>
       <h1>
         <T id="trezor.pinModal.title" m="Enter Pin" />
       </h1>
@@ -80,11 +79,11 @@ const PinModal = ({
           id="trezor.pinModal.description"
           m="Click button sequence that corresponds to your pin on trezor {label}"
           values={{
-            label: <span className="trezor-label">'{trezorLabel}'</span>
+            label: <span className={styles.trezorLabel}>'{trezorLabel}'</span>
           }}
         />
       </p>
-      <div className="pin-pad">
+      <div className={styles.pinPad}>
         <Button index={7} />
         <Button index={8} />
         <Button index={9} />
@@ -101,9 +100,9 @@ const PinModal = ({
         </InvisibleButton>
       </div>
       <div className="password-field">
-        <PasswordInput value={currentPin} onChange={onChangeCurrentPin} />
+        <PasswordInput value={currentPinMemo} onChange={onChangeCurrentPin} />
       </div>
-      <ButtonsToolbar {...{ onCancelModal, onSubmit }} />
+      <ButtonsToolbar {...{ onCancelModal: onCancelPinModal, onSubmit }} />
     </Modal>
   );
 };

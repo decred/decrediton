@@ -1,10 +1,8 @@
-import { trezor } from "connectors";
 import PinModal from "./PinModal";
 import PassPhraseModal from "./PassPhraseModal";
 import WalletCreationPassPhraseModal from "./WalletCreationPassPhraseModal";
 import WordModal from "./WordModal";
-import "style/Trezor.less";
-import { useTrezor } from "./hooks";
+import { useTrezor } from "hooks";
 
 const TrezorModals = () => {
   const {

@@ -1,8 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
-import * as sel from "../selectors";
-import * as trza from "../actions/TrezorActions";
+import { useCallback } from "react";
+import * as sel from "selectors";
+import * as trza from "actions/TrezorActions";
 
-export function useTrezor() {
+const useTrezor = () => {
   const isTrezor = useSelector(sel.isTrezor);
   const waitingForPin = useSelector(sel.trezorWaitingForPin);
   const waitingForPassPhrase = useSelector(sel.trezorWaitingForPassPhrase);
@@ -10,6 +11,7 @@ export function useTrezor() {
   const performingOperation = useSelector(sel.trezorPerformingOperation);
   const isGetStarted = useSelector(sel.isGetStarted);
   const device = useSelector(sel.trezorDevice);
+  const deviceLabel = useSelector(sel.trezorLabel);
   const walletCreationMasterPubkeyAttempt = useSelector(sel.trezorWalletCreationMasterPubkeyAttempt);
 
   const dispatch = useDispatch();
@@ -38,6 +40,7 @@ export function useTrezor() {
     performingOperation,
     isGetStarted,
     device,
+    deviceLabel,
     walletCreationMasterPubkeyAttempt,
     onConnect,
     onCancelCurrentOperation,
@@ -56,3 +59,5 @@ export function useTrezor() {
     onEnableTrezor,
   }
 }
+
+export default useTrezor;

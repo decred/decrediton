@@ -3,40 +3,37 @@ import { FormattedMessage as T } from "react-intl";
 import { ButtonsToolbar } from "shared";
 import Select from "react-select";
 import { word_list } from "constants/trezor";
+import styles from "./trezor.module.css";
 
 const input_options = word_list.map((w) => ({ word: w }));
 
-const WordModal = (
-  isGetStarted,
-  onCancelModal,
-  onSubmitWord
-) => {
+const WordModal = ({ isGetStarted, onCancelModal, onSubmitWord }) => {
   const [word, setWord] = useState("");
   const [value, setValue] = useState(null);
 
-  const onCancelModal = () => {
+  const onCancelWordModal = () => {
     setWord("");
     setValue(null);
     onCancelModal();
-  }
+  };
 
   const onSubmit = () => {
     if (!word) return;
     onSubmitWord(word);
     setWord("");
     setValue(null);
-  }
+  };
 
   const onWordChanged = (value) => {
     setWord(value);
     setValue({ word: value });
-  }
+  };
 
   const onSelectKeyDown = (e) => {
     if (e.keyCode === 13 && word) {
       onSubmit();
     }
-  }
+  };
 
   const getSeedWords = (input, callback) => {
     input = input.toLowerCase();
@@ -46,16 +43,16 @@ const WordModal = (
     callback(null, {
       options: options.slice(0, 5)
     });
-  }
+  };
 
-  const className = [
+  const className = classNames(
     "passphrase-modal",
-    "trezor-word-modal",
-    isGetStarted ? "get-started" : ""
-  ].join(" ");
+    styles.trezorWordModal,
+    isGetStarted && styles.getStarted
+  );
 
   return (
-    <Modal {...{ className, onCancelModal }}>
+    <Modal {...{ className, onCancelModal: onCancelWordModal }}>
       <h1>
         <T id="trezor.wordModal.title" m="Type the requested word" />
       </h1>
@@ -66,7 +63,7 @@ const WordModal = (
         />
       </p>
 
-      <div className="trezor-word-select">
+      <div className={styles.trezorWordSelect}>
         <Select.Async
           ref={(n) => n && n.focus()}
           autoFocus
@@ -90,9 +87,9 @@ const WordModal = (
         />
       </div>
 
-      <ButtonsToolbar {...{ onCancelModal, onSubmit }} />
+      <ButtonsToolbar {...{ onCancelModal: onCancelWordModal, onSubmit }} />
     </Modal>
   );
-}
+};
 
 export default WordModal;
