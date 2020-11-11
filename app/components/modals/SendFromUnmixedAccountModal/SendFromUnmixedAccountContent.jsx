@@ -51,7 +51,7 @@ const Modal = ({
           typedConfirmationPhrase.toLowerCase() !==
           copyConfirmationPhrase.toLowerCase()
         }>
-        <T id="SendFromUnmixed.btnConfirm" m="Confirm Seed Copy" />
+        <T id="SendFromUnmixed.btnConfirm" m="Allow send from Unmixed" />
       </DangerButton>
       <InvisibleButton
         className={style.confirmCloseButton}

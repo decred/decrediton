@@ -662,6 +662,12 @@
   background-position: 0 center;
 }
 
+@media screen and (max-width: 1179px) {
+  .confirmSendFromUnmixed {
+    margin-left: 150px;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .confirmSeedCopyWarningText {
     column-count: 1;
